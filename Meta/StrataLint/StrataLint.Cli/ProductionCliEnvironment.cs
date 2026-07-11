@@ -7,15 +7,23 @@ namespace StrataLint.Cli;
 
 internal sealed record PreparedRepository(string Revision, RawChangeSet Changes);
 
+internal sealed record FrozenRevisionIdentity(string Revision, string CommitOid, string TreeOid);
+
 internal interface IRepositoryGateway
 {
     AdmissionTopologyOutcome InspectAdmissionTopology();
 
     PreparedRepository Prepare(string? protectedBase);
 
+    FrozenRevisionIdentity ResolveFrozenRevision(string revision);
+
     RawRepositorySnapshot ReadCurrent();
 
     RawRepositorySnapshot ReadRevision(string revision);
+
+    RawRepositorySnapshot ReadFrozenRevision(string revision);
+
+    TrustedFrozenGitReferences ValidateFrozenReferences(FrozenLedgerReferenceSet references);
 }
 
 internal interface ILeanInspector
@@ -111,7 +119,15 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             }
 
             var baselineLean = ValidateLean(baseline, leanInspector.Inspect(baseline));
-            return AdmissionPipeline.Evaluate(
+            var baselineDag = AcyclicTruthDag.Build(baseline, baselineLean);
+            if (baselineDag is DagBuildOutcome.Rejected baselineRejected)
+            {
+                return new AdmissionOutcome.InfrastructureFailure(
+                    "protected baseline truth DAG is cyclic: "
+                    + string.Join(" -> ", baselineRejected.Witness.Select(static path => path.Value)));
+            }
+
+            var admission = AdmissionPipeline.Evaluate(
                 current,
                 baseline,
                 registry.Policy,
@@ -119,6 +135,20 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 baselineLean,
                 prepared.Changes,
                 metaClear);
+            if (admission is not AdmissionOutcome.Admitted)
+            {
+                return admission;
+            }
+
+            return ProductionFrozenLedgerValidator.Validate(
+                current,
+                baseline,
+                lean,
+                baselineLean,
+                ((DagBuildOutcome.Accepted)dag).Capability,
+                ((DagBuildOutcome.Accepted)baselineDag).Capability,
+                repository)
+                ?? admission;
         }
         catch (Exception exception)
         {
@@ -225,6 +255,13 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         }
     }
 
+    public CommandResult GenerateLedger(IReadOnlyList<string> arguments) =>
+        DagLedgerGenesisWriter.Generate(
+            repositoryRoot,
+            repository,
+            leanInspector,
+            arguments);
+
     private RegistryLoadOutcome.Accepted LoadRegistry()
     {
         var registryPath = Path.Combine(repositoryRoot, "Meta", "registry.yaml");
@@ -299,4 +336,5 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             witness[0].Value,
             "managed import cycle: " + string.Join(" -> ", witness.Select(static path => path.Value)))));
     }
+
 }

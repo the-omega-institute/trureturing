@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Text.Json;
 
 namespace StrataLint.Engine;
 
@@ -23,11 +24,26 @@ public sealed class RuleCatalog
     {
         Descriptors = descriptors;
         this.rules = rules;
+        var material = JsonSerializer.SerializeToElement(descriptors.Select(static descriptor => new
+        {
+            admission_effect = descriptor.AdmissionEffect.ToString(),
+            category = descriptor.Category,
+            deferred_case = descriptor.DeferredCase?.Value,
+            display_severity = descriptor.DisplaySeverity.ToString(),
+            id = descriptor.Id.Value,
+            lifecycle = descriptor.Lifecycle.ToString(),
+            title = descriptor.Title,
+        }));
+        RootSha256 = FrozenContentHash.Compute(
+            FrozenHashDomains.RuleCatalog,
+            StructuredCanonicalWriter.WriteJson(material).AsSpan());
     }
 
     public static RuleCatalog Default => DefaultCatalog.Value;
 
     public ImmutableArray<RuleDescriptor> Descriptors { get; }
+
+    public string RootSha256 { get; }
 
     internal static RuleCatalog CreateForTesting(
         ImmutableArray<RuleDescriptor> descriptors,

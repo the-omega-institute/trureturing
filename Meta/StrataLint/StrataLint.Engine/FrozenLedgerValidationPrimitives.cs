@@ -1,0 +1,376 @@
+using System.Buffers.Binary;
+using System.Collections.Immutable;
+using System.Text.Json;
+
+namespace StrataLint.Engine;
+
+public static partial class FrozenLedger
+{
+    private static void ValidateSyntaxEnvelope(FrozenLedgerSyntax syntax)
+    {
+        var concatenated = syntax.Lines.SelectMany(static line => line.RawBytes).ToArray();
+        if (!syntax.RawBytes.AsSpan().SequenceEqual(concatenated))
+        {
+            throw new FormatException("Frozen ledger syntax lines do not reproduce the raw bytes.");
+        }
+    }
+
+    private static void RequireCanonicalLine(FrozenLedgerLineSyntax line)
+    {
+        var canonical = StructuredCanonicalWriter.WriteJson(line.Value);
+        if (!line.RawBytes.AsSpan().SequenceEqual(canonical.AsSpan()))
+        {
+            throw new FormatException("Frozen event bytes are not canonical JSONL.");
+        }
+    }
+
+    private static FrozenGenesisPayload ParseGenesis(JsonElement payload, FrozenMaterialCatalog catalog)
+    {
+        RequireObjectFields(
+            payload,
+            "Genesis payload",
+            "generator_blob_oid", "origin_commit_oid", "origin_tree_oid", "protocol_version", "rule_catalog_root");
+        var result = new FrozenGenesisPayload(
+            RequiredString(payload, "generator_blob_oid"),
+            RequiredString(payload, "origin_commit_oid"),
+            RequiredString(payload, "origin_tree_oid"),
+            RequiredNonnegativeInteger(payload, "protocol_version"),
+            RequiredString(payload, "rule_catalog_root"));
+        if (!FrozenHashSyntax.IsGitOid(result.GeneratorBlobOid)
+            || result.ProtocolVersion != 1
+            || !string.Equals(result.OriginCommitOid, catalog.Environment.OriginCommitOid, StringComparison.Ordinal)
+            || !string.Equals(result.OriginTreeOid, catalog.Environment.OriginTreeOid, StringComparison.Ordinal)
+            || !string.Equals(result.RuleCatalogRoot, RuleCatalog.Default.RootSha256, StringComparison.Ordinal))
+        {
+            throw new FormatException("Genesis payload does not bind the validated origin/environment/catalog.");
+        }
+
+        return result;
+    }
+
+    private static FrozenFreezePayload ParseFreeze(
+        JsonElement payload,
+        FrozenMaterialCatalog catalog,
+        TrustedFrozenGitReferences trustedReferences)
+    {
+        RequireObjectFields(
+            payload,
+            "Freeze payload",
+            "case_class", "case_id", "declaration_statement_ids", "evaluation", "expected",
+            "frozen_node_id", "input", "input_fingerprint", "node_path", "prerequisite_frozen_node_ids",
+            "semantic_receipt", "statement_id", "truth_state", "witness_id");
+        var pathText = RequiredString(payload, "node_path");
+        if (!RepoPath.TryCreate(pathText, out var path) || !catalog.ByPath.TryGetValue(path, out var expectedMaterial))
+        {
+            throw new FormatException($"Freeze targets a non-Closed or unknown module {pathText}.");
+        }
+
+        var statementText = RequiredString(payload, "statement_id");
+        var witnessText = RequiredString(payload, "witness_id");
+        var frozenText = RequiredString(payload, "frozen_node_id");
+        if (!FrozenHashSyntax.IsSha256(statementText)
+            || !FrozenHashSyntax.IsSha256(witnessText)
+            || !FrozenHashSyntax.IsSha256(frozenText))
+        {
+            throw new FormatException("Freeze contains a malformed content address.");
+        }
+
+        var expectedVerdict = ParseExpected(payload.GetProperty("expected"));
+        var declarationStatementIds = ParseDeclarationStatementIds(payload);
+        var input = ParseInput(payload.GetProperty("input"));
+        var prerequisites = RequiredStringArray(payload, "prerequisite_frozen_node_ids")
+            .Select(FrozenNodeId.Create)
+            .ToImmutableArray();
+        var result = new FrozenFreezePayload(
+            RequiredString(payload, "case_class"),
+            RequiredString(payload, "case_id"),
+            declarationStatementIds,
+            RequiredString(payload, "evaluation"),
+            expectedVerdict,
+            FrozenNodeId.Create(frozenText),
+            input,
+            RequiredString(payload, "input_fingerprint"),
+            path,
+            prerequisites,
+            RequiredString(payload, "semantic_receipt"),
+            StatementId.Create(statementText),
+            RequiredString(payload, "truth_state"),
+            WitnessId.Create(witnessText));
+        if (!trustedReferences.Covers(result.Input))
+        {
+            throw new FormatException("Freeze input has no validated Git commit/tree/blob capability.");
+        }
+        var expectedCaseId = FrozenLedgerCanonicalWriter.CaseId(expectedMaterial.FrozenNodeId);
+        if (result.CaseClass != "active-frozen"
+            || result.CaseId != expectedCaseId
+            || result.Evaluation != "admission"
+            || result.TruthState != nameof(TruthState.Closed)
+            || !result.Expected.AllowedDispositions.SequenceEqual(new[] { "admit" }, StringComparer.Ordinal)
+            || result.Expected.DiagnosticMatch != "none"
+            || result.Expected.RequiredDiagnostics.Length != 0
+            || !result.DeclarationStatementIds.SequenceEqual(expectedMaterial.DeclarationStatementIds)
+            || result.StatementId != expectedMaterial.StatementId
+            || result.WitnessId != expectedMaterial.WitnessId
+            || result.FrozenNodeId != expectedMaterial.FrozenNodeId
+            || result.InputFingerprint != expectedMaterial.WitnessId.Value
+            || result.SemanticReceipt != expectedMaterial.FrozenNodeId.Value
+            || !result.PrerequisiteFrozenNodeIds.SequenceEqual(expectedMaterial.PrerequisiteFrozenNodeIds)
+            || result.Input.BaseCommitOid
+                != (expectedMaterial.Attestation.BaseCommitOid ?? catalog.Environment.OriginCommitOid)
+            || result.Input.BaseTreeOid
+                != (expectedMaterial.Attestation.BaseTreeOid ?? catalog.Environment.OriginTreeOid)
+            || result.Input.DescriptorBlobOid != expectedMaterial.Attestation.SourceBlobOid
+            || result.Input.DescriptorSelector != expectedMaterial.RepoPath.Value
+            || result.Input.Materializer != "repository-snapshot-v1"
+            || !result.Input.SupportingBlobOids.SequenceEqual(
+                new[]
+                {
+                    catalog.Environment.LakeManifestBlobOid,
+                    catalog.Environment.LeanToolchainBlobOid,
+                }.Order(StringComparer.Ordinal),
+                StringComparer.Ordinal))
+        {
+            throw new FormatException($"Freeze payload does not match recomputed material for {path.Value}.");
+        }
+
+        return result;
+    }
+
+    private static ImmutableArray<FrozenDeclarationStatement> ParseDeclarationStatementIds(
+        JsonElement payload)
+    {
+        var value = payload.GetProperty("declaration_statement_ids");
+        if (value.ValueKind != JsonValueKind.Array)
+        {
+            throw new FormatException("declaration_statement_ids must be an array.");
+        }
+
+        var result = value.EnumerateArray().Select(item =>
+        {
+            RequireObjectFields(item, "declaration statement", "declaration_name_key", "kind", "statement_id");
+            var statementId = RequiredString(item, "statement_id");
+            if (!FrozenHashSyntax.IsSha256(statementId))
+            {
+                throw new FormatException("Declaration statement contains a malformed content address.");
+            }
+
+            return new FrozenDeclarationStatement(
+                RequiredString(item, "declaration_name_key"),
+                RequiredString(item, "kind"),
+                StatementId.Create(statementId));
+        }).ToImmutableArray();
+        var sorted = result
+            .OrderBy(static item => item.DeclarationNameKey, StringComparer.Ordinal)
+            .ThenBy(static item => item.Kind, StringComparer.Ordinal)
+            .ThenBy(static item => item.StatementId.Value, StringComparer.Ordinal);
+        if (!result.SequenceEqual(sorted)
+            || result.Select(static item => item.DeclarationNameKey).Distinct(StringComparer.Ordinal).Count()
+                != result.Length)
+        {
+            throw new FormatException(
+                "declaration_statement_ids must have unique names and canonical ordinal order.");
+        }
+
+        return result;
+    }
+
+    private static FrozenExpectedVerdict ParseExpected(JsonElement value)
+    {
+        RequireObjectFields(
+            value,
+            "expected verdict",
+            "allowed_dispositions", "diagnostic_match", "required_diagnostics");
+        var diagnostics = value.GetProperty("required_diagnostics");
+        if (diagnostics.ValueKind != JsonValueKind.Array)
+        {
+            throw new FormatException("required_diagnostics must be an array.");
+        }
+
+        var parsed = diagnostics.EnumerateArray().Select(item =>
+        {
+            RequireObjectFields(item, "expected diagnostic", "message_sha256", "path", "rule_id");
+            return new FrozenExpectedDiagnostic(
+                RequiredString(item, "message_sha256"),
+                RequiredString(item, "path"),
+                RequiredString(item, "rule_id"));
+        }).ToImmutableArray();
+        return new FrozenExpectedVerdict(
+            RequiredStringArray(value, "allowed_dispositions"),
+            RequiredString(value, "diagnostic_match"),
+            parsed);
+    }
+
+    private static FrozenLedgerInput ParseInput(JsonElement value)
+    {
+        RequireObjectFields(
+            value,
+            "Freeze input",
+            "base_commit_oid", "base_tree_oid", "descriptor_blob_oid", "descriptor_selector",
+            "materializer", "supporting_blob_oids");
+        var result = new FrozenLedgerInput(
+            RequiredString(value, "base_commit_oid"),
+            RequiredString(value, "base_tree_oid"),
+            RequiredString(value, "descriptor_blob_oid"),
+            RequiredString(value, "descriptor_selector"),
+            RequiredString(value, "materializer"),
+            RequiredStringArray(value, "supporting_blob_oids"));
+        if (!FrozenHashSyntax.IsGitOid(result.BaseCommitOid)
+            || !FrozenHashSyntax.IsGitOid(result.BaseTreeOid)
+            || !FrozenHashSyntax.IsGitOid(result.DescriptorBlobOid)
+            || result.SupportingBlobOids.Any(static oid => !FrozenHashSyntax.IsGitOid(oid)))
+        {
+            throw new FormatException("Freeze input has a malformed Git object reference.");
+        }
+
+        return result;
+    }
+
+    private static string ComputeEventHash(JsonElement root)
+    {
+        var material = JsonSerializer.SerializeToElement(new
+        {
+            event_type = RequiredString(root, "event_type"),
+            payload = root.GetProperty("payload"),
+            previous_hash = RequiredString(root, "previous_hash"),
+            schema_version = RequiredNonnegativeInteger(root, "schema_version"),
+            sequence = RequiredNonnegativeInteger(root, "sequence"),
+        });
+        return FrozenContentHash.Compute(
+            FrozenHashDomains.FrozenEvent,
+            StructuredCanonicalWriter.WriteJson(material).AsSpan());
+    }
+
+    private static string ComputeCorpusRoot(
+        string headHash,
+        ImmutableArray<FrozenFreezePayload> activeFreezes)
+    {
+        var leaves = activeFreezes
+            .Select(payload => (payload.CaseId, Hash: ComputeCaseLeaf(payload)))
+            .OrderBy(static item => item.CaseId, StringComparer.Ordinal)
+            .ThenBy(static item => item.Hash, StringComparer.Ordinal)
+            .ToImmutableArray();
+        var activeRoot = ComputeClassRoot("active-frozen", leaves.Select(static item => item.Hash).ToImmutableArray());
+        var admitRoot = ComputeClassRoot("must-admit", ImmutableArray<string>.Empty);
+        var rejectRoot = ComputeClassRoot("must-reject", ImmutableArray<string>.Empty);
+        using var stream = new MemoryStream();
+        stream.Write(FrozenContentHash.Raw(headHash).AsSpan());
+        stream.Write(FrozenContentHash.Raw(activeRoot).AsSpan());
+        stream.Write(FrozenContentHash.Raw(admitRoot).AsSpan());
+        stream.Write(FrozenContentHash.Raw(rejectRoot).AsSpan());
+        WriteUInt64(stream, (ulong)leaves.Length);
+        WriteUInt64(stream, 0);
+        WriteUInt64(stream, 0);
+        Span<byte> version = stackalloc byte[sizeof(uint)];
+        BinaryPrimitives.WriteUInt32BigEndian(version, 1);
+        stream.Write(version);
+        return FrozenContentHash.Compute(FrozenHashDomains.FrozenCorpus, stream.ToArray());
+    }
+
+    private static string ComputeFrozenGraphRoot(
+        IEnumerable<FrozenNodeMaterial> nodes)
+    {
+        var material = JsonSerializer.SerializeToElement(new
+        {
+            nodes = nodes
+                .OrderBy(static node => node.FrozenNodeId.Value, StringComparer.Ordinal)
+                .Select(static node => new
+                {
+                    frozen_node_id = node.FrozenNodeId.Value,
+                    prerequisite_frozen_node_ids = node.PrerequisiteFrozenNodeIds
+                        .OrderBy(static id => id.Value, StringComparer.Ordinal)
+                        .Select(static id => id.Value),
+                }),
+            schema = "frozen-graph-v1",
+        });
+        return FrozenContentHash.Compute(
+            FrozenHashDomains.FrozenGraph,
+            StructuredCanonicalWriter.WriteJson(material).AsSpan());
+    }
+
+    private static string ComputeCaseLeaf(FrozenFreezePayload payload)
+    {
+        var material = JsonSerializer.SerializeToElement(new
+        {
+            case_class = payload.CaseClass,
+            case_id = payload.CaseId,
+            evaluation = payload.Evaluation,
+            expected = FrozenLedgerCanonicalWriter.ExpectedElement(payload.Expected),
+            input = FrozenLedgerCanonicalWriter.InputElement(payload.Input),
+            input_fingerprint = payload.InputFingerprint,
+            semantic_receipt = payload.SemanticReceipt,
+        });
+        return FrozenContentHash.Compute(
+            FrozenHashDomains.FrozenCase,
+            StructuredCanonicalWriter.WriteJson(material).AsSpan());
+    }
+
+    private static string ComputeClassRoot(string className, ImmutableArray<string> leaves)
+    {
+        using var stream = new MemoryStream();
+        var name = System.Text.Encoding.UTF8.GetBytes(className);
+        stream.Write(name);
+        stream.WriteByte(0);
+        WriteUInt64(stream, (ulong)leaves.Length);
+        foreach (var leaf in leaves)
+        {
+            stream.Write(FrozenContentHash.Raw(leaf).AsSpan());
+        }
+
+        return FrozenContentHash.Compute(FrozenHashDomains.FrozenClass, stream.ToArray());
+    }
+
+    private static void WriteUInt64(Stream stream, ulong value)
+    {
+        Span<byte> bytes = stackalloc byte[sizeof(ulong)];
+        BinaryPrimitives.WriteUInt64BigEndian(bytes, value);
+        stream.Write(bytes);
+    }
+
+    private static void RequireObjectFields(JsonElement value, string label, params string[] names)
+    {
+        if (value.ValueKind != JsonValueKind.Object)
+        {
+            throw new FormatException($"{label} must be an object.");
+        }
+
+        var actual = value.EnumerateObject().Select(static property => property.Name).ToArray();
+        if (actual.Distinct(StringComparer.Ordinal).Count() != actual.Length
+            || !actual.Order(StringComparer.Ordinal).SequenceEqual(names.Order(StringComparer.Ordinal), StringComparer.Ordinal))
+        {
+            throw new FormatException($"{label} has unknown, missing, or duplicate fields.");
+        }
+    }
+
+    private static string RequiredString(JsonElement value, string name) =>
+        value.TryGetProperty(name, out var property) && property.ValueKind == JsonValueKind.String
+            ? property.GetString() ?? throw new FormatException($"{name} must not be null.")
+            : throw new FormatException($"{name} must be a string.");
+
+    private static int RequiredNonnegativeInteger(JsonElement value, string name) =>
+        value.TryGetProperty(name, out var property)
+        && property.ValueKind == JsonValueKind.Number
+        && property.TryGetInt32(out var result)
+        && result >= 0
+            ? result
+            : throw new FormatException($"{name} must be a nonnegative integer.");
+
+    private static ImmutableArray<string> RequiredStringArray(JsonElement value, string name)
+    {
+        if (!value.TryGetProperty(name, out var property) || property.ValueKind != JsonValueKind.Array)
+        {
+            throw new FormatException($"{name} must be an array.");
+        }
+
+        var result = property.EnumerateArray()
+            .Select(item => item.ValueKind == JsonValueKind.String
+                ? item.GetString() ?? throw new FormatException($"{name} contains null.")
+                : throw new FormatException($"{name} contains a non-string."))
+            .ToImmutableArray();
+        if (!result.SequenceEqual(result.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal), StringComparer.Ordinal))
+        {
+            throw new FormatException($"{name} must be distinct and ordinal-sorted.");
+        }
+
+        return result;
+    }
+}
