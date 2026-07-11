@@ -300,6 +300,21 @@ internal sealed class RuleFixture
 
     internal void AddBackfillTargets()
     {
+        var ticketsByGid = new Dictionary<string, string[]>(StringComparer.Ordinal)
+        {
+            ["D5/X_Frontier/D5P001"] = ["D5-T0006"],
+            ["D5/X_Frontier/FutureInstances"] = ["D5-T0009"],
+            ["D5/X_Frontier/GoldenUnitsUFD"] = ["D5-T0008"],
+            ["D5/X_Frontier/GovernanceDeferrals"] =
+                ["D5-T0011", "D5-T0012", "D5-T0013", "D5-T0014", "D5-T0015", "D5-T0016"],
+            ["D5/X_Frontier/HeartsDraft"] = ["D5-T0001", "D5-T0018"],
+            ["D5/X_Frontier/PaperGenerator"] = ["D5-T0005"],
+            ["D5/X_Frontier/RequiredChecks"] = ["D5-T0007", "D5-T0017"],
+            ["D5/X_Frontier/SplitTool"] = ["D5-T0004"],
+            ["D5/X_Frontier/StrataLintLeanEnvironment"] = ["D5-T0002"],
+            ["D5/X_Frontier/ToolchainUpgrade"] = ["D5-T0010"],
+            ["D5/X_Frontier/ValuesProducer"] = ["D5-T0003"],
+        };
         foreach (var gid in new[]
         {
             "D5/S0/Carrier/Norm",
@@ -321,6 +336,14 @@ internal sealed class RuleFixture
             Files[path] = HeaderFor(gid, gid.Contains("/S0/", StringComparison.Ordinal) ? "G" : "E")
                 + (gid.Contains("/X_Frontier/", StringComparison.Ordinal) ? "-- D5-T9999\n" : string.Empty)
                 + "def protectedTargetFixture : Unit := ()\n";
+            if (ticketsByGid.TryGetValue(gid, out var cases))
+            {
+                Files[path] += string.Concat(cases.Select(static caseId =>
+                    $"/-- TASK {caseId} | 难度:3 | 依赖:就绪 | 尝试:0\n"
+                    + "    提示:Fixture task.\n"
+                    + "    尸检:none -/\n"
+                    + $"def fixtureTask{caseId[4..]} : Unit := ()\n"));
+            }
             Reports[path] = Report();
             if (gid == "D5/X_Frontier/Hearts")
             {
@@ -328,6 +351,19 @@ internal sealed class RuleFixture
                 BaselineReports[path] = Reports[path];
             }
         }
+    }
+
+    internal void AddNormalizedBackfillTicketTarget()
+    {
+        const string gid = "D5/X_Frontier/BackfillTasks";
+        var path = gid + ".lean";
+        Files[path] = HeaderFor(gid, "E")
+            + string.Concat(Enumerable.Range(1, 18).Select(static number =>
+                $"/-- TASK D5-T{number:0000} | 难度:3 | 依赖:就绪 | 尝试:0\n"
+                + "    提示:Fixture task.\n"
+                + "    尸检:none -/\n"
+                + $"def fixtureTask{number:0000} : Unit := ()\n"));
+        Reports[path] = Report();
     }
 
     private static RepositorySnapshot Decode(IReadOnlyDictionary<string, string> files)

@@ -176,6 +176,12 @@ public sealed class FullPythonCorpusCompatibilityTests
                             + "    提示:Fixture task.\n"
                             + "    尸检:none -/\n"
                             + "def fixtureTask : Unit := ()\n");
+                        if (code.StartsWith("D5-T", StringComparison.Ordinal)
+                            && caseName is not ("frontier-task-missing-ticket-index" or "retired-task-code")
+                            && !files["Meta/BACKFILL.yaml"].Contains($"case_id: {code}\n", StringComparison.Ordinal))
+                        {
+                            files["Meta/BACKFILL.yaml"] += $"  - case_id: {code}\n    gid: {gid}\n";
+                        }
                         break;
                     }
                 case "directory_capacity":
@@ -378,6 +384,7 @@ public sealed class FullPythonCorpusCompatibilityTests
 
     private static void NormalizeBackfillTargets(RuleFixture fixture)
     {
+        fixture.AddNormalizedBackfillTicketTarget();
         foreach (var files in new[] { fixture.Files, fixture.Baseline })
         {
             var lines = files["Meta/BACKFILL.yaml"].Split('\n');
@@ -391,7 +398,7 @@ public sealed class FullPythonCorpusCompatibilityTests
                 }
                 else if (trimmed.StartsWith("gid: ", StringComparison.Ordinal))
                 {
-                    lines[index] = indentation + "gid: D5/S0/Carrier/Ring";
+                    lines[index] = indentation + "gid: D5/X_Frontier/BackfillTasks";
                 }
             }
 
@@ -424,10 +431,10 @@ public sealed class FullPythonCorpusCompatibilityTests
     {
         var lines = files["Meta/BACKFILL.yaml"].Split('\n').ToList();
         var index = lines.FindIndex(line => string.Equals(line.Trim(), $"- anchor: {anchor}", StringComparison.Ordinal));
-        if (index < 0 || index + 4 > lines.Count) throw new InvalidOperationException("unknown protected anchor");
-        var block = lines.GetRange(index, 4);
-        if (duplicate) lines.InsertRange(index + 4, block);
-        else lines.RemoveRange(index, 4);
+        if (index < 0 || index + 2 > lines.Count) throw new InvalidOperationException("unknown protected anchor");
+        var block = lines.GetRange(index, 2);
+        if (duplicate) lines.InsertRange(index + 2, block);
+        else lines.RemoveRange(index, 2);
         files["Meta/BACKFILL.yaml"] = string.Join('\n', lines);
     }
 }

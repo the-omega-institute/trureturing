@@ -69,6 +69,64 @@ public sealed class ReviewRegressionTests
     }
 
     [Fact]
+    public void Sl016RejectsTicketWhoseTargetDoesNotDeclareItsCase()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.Files["Meta/BACKFILL.yaml"] = fixture.Files["Meta/BACKFILL.yaml"].Replace(
+            "  - case_id: D5-T0018\n    gid: D5/X_Frontier/HeartsDraft\n",
+            "  - case_id: D5-T0018\n    gid: D5/X_Frontier/Hearts\n",
+            StringComparison.Ordinal);
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build());
+
+        Assert.Contains(
+            evaluation.Diagnostics,
+            diagnostic => diagnostic.Message.Contains(
+                "ticket D5-T0018 target does not declare TASK D5-T0018",
+                StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void Sl016RejectsFrontierTaskMissingFromTicketIndex()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.Files["D5/X_Frontier/HeartsDraft.lean"] += "\n/-- TASK D5-T0099 -/\n";
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build());
+
+        Assert.Contains(
+            evaluation.Diagnostics,
+            diagnostic => diagnostic.Message.Contains(
+                "frontier TASK cases are missing from ticket_index: D5-T0099",
+                StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void Sl016AcceptsCurrentRepositoryTicketDeclarations()
+    {
+        var repositoryRoot = FindRepositoryRoot();
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        foreach (var path in Directory.EnumerateFiles(
+                     Path.Combine(repositoryRoot, "D5", "X_Frontier"),
+                     "*.lean",
+                     SearchOption.TopDirectoryOnly))
+        {
+            var repoPath = Path.GetRelativePath(repositoryRoot, path).Replace('\\', '/');
+            fixture.Files[repoPath] = File.ReadAllText(path, Encoding.UTF8);
+        }
+
+        const string normPath = "D5/S0/Carrier/Norm.lean";
+        fixture.Files[normPath] = File.ReadAllText(Path.Combine(repositoryRoot, normPath), Encoding.UTF8);
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build());
+
+        Assert.Empty(evaluation.Diagnostics);
+    }
+
+    [Fact]
     public void Cf2RenameReportsBothProtectedOldPathAndNewPath()
     {
         using var repository = new TemporaryDirectory();
@@ -241,7 +299,9 @@ public sealed class ReviewRegressionTests
 
         Assert.Contains(
             evaluation.Diagnostics,
-            item => item.Message.Contains("protected source spec-v7.11-section-10 path changed", StringComparison.Ordinal));
+            item => item.Message.Contains(
+                "source spec-v7.11-section-10 has an invalid governance path",
+                StringComparison.Ordinal));
         var engineSource = File.ReadAllText(
             Path.Combine(FindRepositoryRoot(), "Meta", "StrataLint", "StrataLint.Engine", "BackfillInventoryRule.cs"),
             Encoding.UTF8);
