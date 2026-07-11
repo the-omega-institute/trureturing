@@ -51,7 +51,7 @@ public sealed class CliOutcomeTests
                 "Meta bootstrap gate",
                 DisplaySeverity.Warning,
                 AdmissionEffect.HumanGate,
-                "Meta/StrataLint/StrataLint.Engine/Gid.cs",
+                "Meta/StrataLint/StrataLint.Engine/Coordinates/Gid.cs",
                 "meta change requires external human review"))),
         _ => throw new ArgumentOutOfRangeException(nameof(fixture)),
     };

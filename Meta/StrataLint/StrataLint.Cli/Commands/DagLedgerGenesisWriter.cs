@@ -8,7 +8,7 @@ namespace StrataLint.Cli;
 internal static class DagLedgerGenesisWriter
 {
     private const string GeneratorSourcePath =
-        "Meta/StrataLint/StrataLint.Cli/DagLedgerGenesisWriter.cs";
+        "Meta/StrataLint/StrataLint.Cli/Commands/DagLedgerGenesisWriter.cs";
 
     internal static CommandResult Generate(
         string repositoryRoot,

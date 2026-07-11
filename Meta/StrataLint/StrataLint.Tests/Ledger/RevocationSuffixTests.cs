@@ -42,7 +42,7 @@ public sealed partial class RevocationTests
         var changes = RawChangeSet.Create(new[]
         {
             "Meta/StrataLint/Golden/Frozen/events.jsonl",
-            "Meta/StrataLint/StrataLint.Engine/RuleCatalog.cs",
+            "Meta/StrataLint/StrataLint.Engine/Rules/RuleCatalog.cs",
         });
 
         Assert.IsType<FrozenLedgerChangeOutcome.ForbiddenMixed>(
