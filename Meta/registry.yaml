@@ -1,0 +1,90 @@
+schema_version: 1
+root_files:
+  - ".gitignore"
+  - "AGENTS.md"
+  - "CLAUDE.md"
+  - "Directory.Build.props"
+  - "Directory.Packages.props"
+  - "README.md"
+  - "Trureturing.lean"
+  - "global.json"
+  - "lake-manifest.json"
+  - "lakefile.toml"
+  - "lean-toolchain"
+governance_documents:
+  - "docs/CONTRIBUTING.md"
+  - "docs/GOVERNANCE.md"
+  - "docs/develop/spec/golden-ledger-repo-spec.md"
+  - "docs/develop/theory/GICT_complete_development_v3 (3).md"
+  - "docs/develop/theory/PZG_BEDC_kernel_formal_170.md"
+agent_files:
+  - "CONTEXT.md"
+  - "adversary.md"
+  - "echo-template.md"
+  - "gate.md"
+  - "librarian.md"
+  - "numericist.md"
+  - "prover.md"
+  - "scout.md"
+  - "scribe.md"
+  - "theorist.md"
+  - "verdict-template.md"
+artifact_kinds:
+  csv:
+    profile: opaque-text
+    selectors:
+      - "result"
+    path_selectors:
+      - "formal"
+  json:
+    profile: structured-json
+    selectors:
+      - "check"
+      - "legacy"
+      - "quote"
+      - "result"
+      - "run"
+    path_selectors:
+      - "experiments"
+      - "formal"
+      - "kernels"
+      - "special"
+      - "values"
+  md:
+    profile: opaque-text
+    selectors:
+      - "result"
+    path_selectors:
+      - "formal"
+      - "special"
+  py:
+    profile: opaque-text
+    selectors:
+      - "source"
+    path_selectors:
+      - "formal"
+      - "kernels"
+  txt:
+    profile: opaque-text
+    selectors:
+      - "result"
+    path_selectors:
+      - "formal"
+  yaml:
+    profile: structured-yaml
+    selectors:
+      - "result"
+      - "run"
+      - "spec"
+    path_selectors:
+      - "experiments"
+      - "formal"
+  yml:
+    profile: structured-yaml
+    selectors:
+      - "result"
+      - "run"
+      - "spec"
+    path_selectors:
+      - "experiments"
+      - "formal"

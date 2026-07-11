@@ -1,0 +1,99 @@
+using System.Collections.Immutable;
+using Dunet;
+
+namespace StrataLint.Engine;
+
+public sealed class RawChangeSet
+{
+    private RawChangeSet(ImmutableArray<RepoPath> paths) => Paths = paths;
+
+    public ImmutableArray<RepoPath> Paths { get; }
+
+    public static RawChangeSet Create(IEnumerable<string> paths)
+    {
+        ArgumentNullException.ThrowIfNull(paths);
+        var builder = ImmutableArray.CreateBuilder<RepoPath>();
+        var exact = new HashSet<string>(StringComparer.Ordinal);
+        var folded = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        foreach (var rawPath in paths)
+        {
+            if (!RepoPath.TryCreate(rawPath, out var path))
+            {
+                throw new ArgumentException($"Invalid raw changed path: {rawPath}", nameof(paths));
+            }
+
+            if (!exact.Add(path.Value) || !folded.Add(path.Value))
+            {
+                throw new ArgumentException($"Duplicate or case-colliding changed path: {path.Value}", nameof(paths));
+            }
+
+            builder.Add(path);
+        }
+
+        return new RawChangeSet(builder.ToImmutable());
+    }
+}
+
+public sealed class MetaChangeSet
+{
+    internal MetaChangeSet(ImmutableArray<RepoPath> paths) => Paths = paths;
+
+    public ImmutableArray<RepoPath> Paths { get; }
+}
+
+public sealed class MetaClear
+{
+    private MetaClear() { }
+
+    internal static MetaClear Create() => new();
+}
+
+[Union(EnableImplicitConversions = false)]
+public partial record BootstrapOutcome
+{
+    public partial record Clear(MetaClear Capability);
+
+    public partial record HumanReviewRequired(MetaChangeSet ChangeSet);
+
+    public partial record InfrastructureFailure(string Message);
+}
+
+public static class BootstrapGate
+{
+    private static readonly StringComparer Ordinal = StringComparer.Ordinal;
+
+    public static BootstrapOutcome Evaluate(RawChangeSet changes)
+    {
+        ArgumentNullException.ThrowIfNull(changes);
+        var protectedPaths = changes.Paths.Where(IsProtected).ToImmutableArray();
+        return protectedPaths.Length == 0
+            ? new BootstrapOutcome.Clear(MetaClear.Create())
+            : new BootstrapOutcome.HumanReviewRequired(new MetaChangeSet(protectedPaths));
+    }
+
+    internal static bool IsProtected(RepoPath path)
+    {
+        var value = path.Value;
+        return value.StartsWith("Meta/StrataLint/", StringComparison.Ordinal)
+            || Ordinal.Equals(value, "docs/develop/spec/golden-ledger-repo-spec.md")
+            || Ordinal.Equals(value, "Meta/registry.yaml")
+            || Ordinal.Equals(value, "Meta/domains.yaml")
+            || value.EndsWith("/Hearts.lean", StringComparison.Ordinal)
+            || value.Contains("/X_Assumptions/", StringComparison.Ordinal)
+            || value.StartsWith("Meta/golden/", StringComparison.OrdinalIgnoreCase)
+            || value.Contains("/Golden/", StringComparison.OrdinalIgnoreCase)
+            || value.EndsWith(".sln", StringComparison.Ordinal)
+            || value.EndsWith(".slnx", StringComparison.Ordinal)
+            || value.EndsWith(".csproj", StringComparison.Ordinal)
+            || Ordinal.Equals(value, "global.json")
+            || value.StartsWith("Directory.Build.", StringComparison.Ordinal)
+            || value.StartsWith("Directory.Packages.", StringComparison.Ordinal)
+            || value.EndsWith("packages.lock.json", StringComparison.Ordinal)
+            || value.EndsWith("NuGet.Config", StringComparison.OrdinalIgnoreCase)
+            || Ordinal.Equals(value, "lean-toolchain")
+            || Ordinal.Equals(value, "lakefile.toml")
+            || Ordinal.Equals(value, "lake-manifest.json")
+            || Ordinal.Equals(value, ".github/CODEOWNERS")
+            || value.StartsWith(".github/workflows/", StringComparison.Ordinal);
+    }
+}

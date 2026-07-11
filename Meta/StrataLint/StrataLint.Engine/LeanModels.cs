@@ -1,0 +1,111 @@
+using System.Collections.Immutable;
+using Dunet;
+
+namespace StrataLint.Engine;
+
+public sealed record LeanDeclaration(
+    string Name,
+    string Kind,
+    string TypeRepresentation,
+    ImmutableArray<string> Axioms)
+{
+    public (string Name, string Kind, string TypeRepresentation) Signature =>
+        (Name, Kind, TypeRepresentation);
+}
+
+public sealed record LeanFileReport(
+    ImmutableArray<string> Imports,
+    ImmutableArray<LeanDeclaration> Declarations,
+    string? Error = null);
+
+public sealed class LeanAxiomReport
+{
+    private LeanAxiomReport(ImmutableDictionary<RepoPath, LeanFileReport> files) => Files = files;
+
+    public ImmutableDictionary<RepoPath, LeanFileReport> Files { get; }
+
+    public static LeanAxiomReport Create(IReadOnlyDictionary<string, LeanFileReport> reports)
+    {
+        ArgumentNullException.ThrowIfNull(reports);
+        var builder = ImmutableDictionary.CreateBuilder<RepoPath, LeanFileReport>();
+        foreach (var (rawPath, report) in reports)
+        {
+            if (!RepoPath.TryCreate(rawPath, out var path) || !builder.TryAdd(path, report))
+            {
+                throw new ArgumentException($"Invalid or duplicate Lean report path: {rawPath}.", nameof(reports));
+            }
+        }
+
+        return new LeanAxiomReport(builder.ToImmutable());
+    }
+}
+
+public sealed class AcceptedLeanClosure
+{
+    private AcceptedLeanClosure(LeanAxiomReport report) => Report = report;
+
+    internal LeanAxiomReport Report { get; }
+
+    internal static AcceptedLeanClosure Create(LeanAxiomReport report) => new(report);
+}
+
+[Union(EnableImplicitConversions = false)]
+public partial record LeanValidationOutcome
+{
+    public partial record Accepted(AcceptedLeanClosure Capability);
+
+    public partial record InfrastructureFailure(string Message);
+}
+
+public static class LeanClosureValidator
+{
+    public static LeanValidationOutcome Validate(RepositorySnapshot snapshot, LeanAxiomReport report)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        ArgumentNullException.ThrowIfNull(report);
+        foreach (var (path, file) in snapshot.Files)
+        {
+            if (!IsManagedLean(path.Value))
+            {
+                continue;
+            }
+
+            if (!report.Files.TryGetValue(path, out var fileReport))
+            {
+                return new LeanValidationOutcome.InfrastructureFailure(
+                    $"Lean environment report is missing for {path.Value}.");
+            }
+
+            if (!string.IsNullOrEmpty(fileReport.Error))
+            {
+                return new LeanValidationOutcome.InfrastructureFailure(
+                    $"Lean environment inspection failed for {path.Value}: {fileReport.Error}");
+            }
+
+            if (file.RawBytes.IsDefault)
+            {
+                return new LeanValidationOutcome.InfrastructureFailure(
+                    $"Lean source bytes are unavailable for {path.Value}.");
+            }
+
+            if (fileReport.Imports.Any(string.IsNullOrWhiteSpace)
+                || fileReport.Declarations.Any(static declaration =>
+                    string.IsNullOrWhiteSpace(declaration.Name)
+                    || string.IsNullOrWhiteSpace(declaration.Kind)
+                    || string.IsNullOrWhiteSpace(declaration.TypeRepresentation)
+                    || declaration.Axioms.Any(string.IsNullOrWhiteSpace)))
+            {
+                return new LeanValidationOutcome.InfrastructureFailure(
+                    $"Lean environment report is malformed for {path.Value}.");
+            }
+
+            // Axiom allowlisting is admission semantics and is stamped as SL-020 by RuleCatalog.
+        }
+
+        return new LeanValidationOutcome.Accepted(AcceptedLeanClosure.Create(report));
+    }
+
+    public static bool IsManagedLean(string path) =>
+        string.Equals(path, "Trureturing.lean", StringComparison.Ordinal)
+        || path.StartsWith("D5/", StringComparison.Ordinal) && path.EndsWith(".lean", StringComparison.Ordinal);
+}

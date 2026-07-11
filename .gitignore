@@ -6,3 +6,5 @@
 *.ilean
 __pycache__/
 *.py[cod]
+**/bin/
+**/obj/
