@@ -1,0 +1,111 @@
+# TEMPORARY diagnostic workflow — dispatched from branch, never merged to dev.
+# Purpose: reproduce the silent SIGTERM(143) in the baseline admission step with
+# memory/process instrumentation, and validate the lake-prebuild reordering fix.
+name: debug-baseline
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  instrumented-admission:
+    name: Instrumented baseline admission repro
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out candidate
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          path: candidate
+
+      - name: Resolve pinned Lean toolchain
+        id: lean
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "hash=$(sha256sum candidate/lean-toolchain | cut -d ' ' -f 1)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache elan and pinned Lean toolchain
+        uses: actions/cache@v4
+        with:
+          path: ~/.elan
+          key: ${{ runner.os }}-${{ runner.arch }}-elan-${{ steps.lean.outputs.hash }}
+
+      - name: Install pinned Lean toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          toolchain="$(tr -d '\r\n' < candidate/lean-toolchain)"
+          if [[ ! -x "$HOME/.elan/bin/elan" ]]; then
+            curl --proto '=https' --tlsv1.2 -sSf https://elan.lean-lang.org/elan-init.sh \
+              | sh -s -- -y --default-toolchain none
+          fi
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          if ! "$HOME/.elan/bin/elan" toolchain list 2>/dev/null | grep -qF "$toolchain"; then
+            "$HOME/.elan/bin/elan" toolchain install "$toolchain"
+          fi
+          "$HOME/.elan/bin/elan" default "$toolchain"
+
+      - name: Install pinned SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.103
+
+      - name: Cache candidate Lean build artifacts
+        uses: actions/cache@v4
+        with:
+          path: |
+            candidate/.lake
+            ~/.cache/mathlib
+          key: ${{ runner.os }}-lake-${{ hashFiles('candidate/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain') }}
+
+      - name: Start memory and process sampler
+        shell: bash
+        run: |
+          set -euo pipefail
+          nohup bash -c 'while true; do
+            echo "=== $(date -u +%H:%M:%S) ==="
+            free -m | sed -n "1,2p"
+            ps -eo rss,etimes,comm --sort=-rss | head -6
+            sleep 5
+          done' > "$RUNNER_TEMP/sampler.log" 2>&1 &
+          echo "$!" > "$RUNNER_TEMP/sampler.pid"
+
+      - name: Fetch mathlib cloud cache
+        working-directory: candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          time "$HOME/.elan/bin/lake" exe cache get || echo "cache get failed"
+          du -sh .lake 2>/dev/null || true
+
+      - name: Prebuild candidate Lean library (proposed fix)
+        working-directory: candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          time "$HOME/.elan/bin/lake" build
+          echo "prebuild rc=$?"
+
+      - name: Build judge and run admission check (instrumented)
+        shell: bash
+        run: |
+          set -uo pipefail
+          dotnet restore candidate/Meta/StrataLint/StrataLint.sln --locked-mode
+          dotnet build candidate/Meta/StrataLint/StrataLint.sln --no-restore --configuration Release --warnaserror
+          cd candidate
+          set +e
+          time dotnet Meta/StrataLint/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll check --protected-base "$(git rev-parse HEAD~1)"
+          rc=$?
+          set -e
+          echo "check rc=$rc"
+
+      - name: Dump sampler
+        if: always()
+        shell: bash
+        run: |
+          kill "$(cat "$RUNNER_TEMP/sampler.pid")" 2>/dev/null || true
+          tail -n 120 "$RUNNER_TEMP/sampler.log"
