@@ -567,57 +567,26 @@ internal static class RepositoryRules
         string id,
         ImmutableArray<RuleFinding>.Builder findings)
     {
-        var fields = new[] { "source_path", "source_line", "fragment_sha256" };
-        if (!fields.Any(query.ContainsKey))
+        // Positional anchors (source_line/fragment_sha256) are retired: position is
+        // not identity, git already content-addresses sources, and line anchors
+        // shatter on unrelated edits. The fields are IGNORED (not rejected) so no
+        // previously admitted artifact flips to rejected (conservative extension:
+        // admits are load-bearing, rejects may loosen). A query cites a source by
+        // path only; deeper binding belongs to typed references (Scribe).
+        if (!query.TryGetValue("source_path", out var rawSourcePath))
         {
             return;
         }
 
-        if (!root.TryGetValue("hash_contract", out var rawContract)
-            || rawContract is not string contract
-            || contract != "sha256-of-exact-utf8-source-line-including-lf")
-        {
-            findings.Add(new RuleFinding("Library/queries.yaml", $"query {id} has an unknown source hash contract"));
-            return;
-        }
-
-        query.TryGetValue("source_path", out var rawSourcePath);
-        query.TryGetValue("source_line", out var rawSourceLine);
-        query.TryGetValue("fragment_sha256", out var rawExpected);
-        if (rawSourcePath is not string sourcePath
-            || rawSourceLine is not int sourceLine
-            || sourceLine < 1
-            || rawExpected is not string expected
-            || !Sha256Pattern.IsMatch(expected))
-        {
-            findings.Add(new RuleFinding("Library/queries.yaml", $"query {id} has invalid source anchor fields"));
-            return;
-        }
-
-        if (!RepoPath.TryCreate(sourcePath, out _))
+        if (rawSourcePath is not string sourcePath || !RepoPath.TryCreate(sourcePath, out _))
         {
             findings.Add(new RuleFinding("Library/queries.yaml", $"query {id} source path is not workspace-relative"));
             return;
         }
 
-        if (!snapshot.TryGetFile(sourcePath, out var source))
+        if (!snapshot.TryGetFile(sourcePath, out _))
         {
             findings.Add(new RuleFinding("Library/queries.yaml", $"query {id} source path is missing: {sourcePath}"));
-            return;
-        }
-
-        var lines = source.Text.Split('\n');
-        if (sourceLine >= lines.Length)
-        {
-            findings.Add(new RuleFinding("Library/queries.yaml", $"query {id} source line is absent or lacks LF"));
-            return;
-        }
-
-        var line = lines[sourceLine - 1] + "\n";
-        var actual = Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(line)));
-        if (!string.Equals(actual, expected, StringComparison.Ordinal))
-        {
-            findings.Add(new RuleFinding("Library/queries.yaml", $"query {id} source fragment hash does not match"));
         }
     }
 

@@ -228,6 +228,15 @@ jobs:
           set -euo pipefail
           "$HOME/.elan/bin/lake" exe cache get || echo "::warning title=mathlib cache::cloud cache fetch failed; lake build will rebuild (may hit timeout, which correctly fails closed)"
 
+      # Zero-trust floor, warm path: prebuild the candidate library so the judge's
+      # snapshot Lean validation (which seeds from these artifacts) is incremental.
+      - name: Prebuild candidate Lean library
+        working-directory: candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          "$HOME/.elan/bin/lake" build
+
       - name: Build selected judge from locked dependencies
         env:
           JUDGE_ROOT: ${{ steps.judge.outputs.root }}
@@ -248,36 +257,10 @@ jobs:
           dotnet Meta/StrataLint/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll selftest > "$RUNNER_TEMP/baseline-selftest-2.txt"
           cmp "$RUNNER_TEMP/baseline-selftest-1.txt" "$RUNNER_TEMP/baseline-selftest-2.txt"
 
-      # Exit-semantics separation (zero-trust submission gate):
-      #   0 = admitted: full content rules ran and passed, no protected-surface change.
-      #   3 = SL-022 protected-surface change detected. Phase-0 short-circuits content
-      #       rules by design, so this path enforces the candidate lake build as the
-      #       blocking content floor and annotates the meta change. Machine authorization
-      #       of harness changes themselves arrives with component C (conservative
-      #       extension gate); until then this annotated path is the recorded bootstrap
-      #       scaffold, not a silent pass.
-      #   anything else = content violation or infrastructure failure: fail closed.
       - name: Run baseline harness admission (exit-semantics separated)
         working-directory: candidate
         env:
           JUDGE_ROOT: ${{ steps.judge.outputs.root }}
         shell: bash
         run: |
-          set -uo pipefail
-          set +e  # GitHub 'shell: bash' injects -e; without this the designed exit-semantics capture below never runs
-          dotnet "$JUDGE_ROOT/Meta/StrataLint/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll" check --protected-base "$DEV_BASELINE_SHA"
-          rc=$?
-          set -e
-          if [[ $rc -eq 0 ]]; then
-            printf '%s\n' "### Admission: content fully validated, no protected-surface change" >> "$GITHUB_STEP_SUMMARY"
-            exit 0
-          elif [[ $rc -eq 3 ]]; then
-            echo "::warning title=SL-022 protected-surface change::Content rules short-circuited by phase-0 meta detection; enforcing candidate lake build as blocking floor. Full machine meta-gate pending component C."
-            printf '%s\n' "### SL-022 protected-surface change (bootstrap scaffold path)" >> "$GITHUB_STEP_SUMMARY"
-            printf '%s\n' "Blocking floor enforced: candidate lake build below. Component C will replace this scaffold with the conservative-extension machine gate." >> "$GITHUB_STEP_SUMMARY"
-            set -e
-            "$HOME/.elan/bin/lake" build
-            exit 0
-          else
-            exit "$rc"
-          fi
+          "$GITHUB_WORKSPACE/candidate/.github/scripts/baseline-admission.sh"
