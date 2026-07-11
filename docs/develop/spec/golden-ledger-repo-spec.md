@@ -136,6 +136,8 @@ golden-ledger/
 
 **A15 提交与 PR 文法** `COMMIT := <官>"("<GID>"): "<动词短语>`;PR 模板 = 四段判词(立了什么/依赖什么/试了什么死了什么/账平声明勾选:无既有 closed 被推翻)。
 
+**A16 零信任合并门(v7.12,CLAUDE.md 第 19 条之 spec 形)** 提交者身份(维护者/agent/fork)与准入无关,一切 PR 过同一道纯机器门:dev 分支 `enforce_admins` + **双 required check(strict)**——① engineering(build --warnaserror + 全测试 + selftest 字节比对 + 能力链编译证明);② baseline admission(内容寻址 dev-baseline harness 判 candidate;`pull_request_target` 保证法官取 **base 侧** workflow 与 harness,提交者不可改判自己的法官)。绿=auto-merge;红=无人可合。**exit 语义**:0=内容全验;1=违规;2=基础设施(含快照拒非常规 git 条目,如 mode 120000 symlink——AGENTS.md 由此裁定为常规指针文件);3=SL-022 保护面变更 → 标注入账 + candidate `lake build` 阻断地板(**bootstrap 脚手架,有案在录**:组件 C 保守扩展门现役后,harness 变更由机器判保守性与成本,此路径关闭)。人审与 AI 审=质量增益,非准入权威;削弱门=元层自改,须付 τ=0 成本(CLAUDE.md 第 21 条)。
+
 ---
 
 # 第四部:harness 执法(不变量·状态机)
