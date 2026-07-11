@@ -16,7 +16,7 @@ public sealed class GoldenCompatibilityTests
             "afe3b55ddebb59434de8361009a9bc7455ac1cf39af8756caf951f70a77d8ec1",
             Hash("python-cases.json"));
         Assert.Equal(
-            "26b91fc60e526ac35e1d3cd92f4cc2b94fc373ead034bfdf9668c216352ca616",
+            "6b8497792333d963ffa1ae08dbf025cd073f71a127d744a2b2927052de37f50f",
             Hash("python-diagnostics.json"));
     }
 

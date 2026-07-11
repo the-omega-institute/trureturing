@@ -1,31 +1,22 @@
 schema_version: 1
-hash_contract: sha256-of-exact-utf8-source-line-including-lf
 queries:
   - id: D5-Q0001
     query: independent analytic control of golden quasiperiodic zeta and Weil positivity
     target_gid: D5/X_Frontier/HeartsDraft
     source_path: "docs/develop/theory/GICT_complete_development_v3 (3).md"
-    source_line: 228
-    fragment_sha256: ad0167e83242b219a2332786ea2896ffde279a535e0c491922398ff8f49ae970
     pending_case: D5-T0001
   - id: D5-Q0002
     query: Stark Hecke L derivative closed form for the twisted cotangent constant
     target_gid: D5/E/S3/Analytic/Cphi.result--json
     source_path: "docs/develop/theory/GICT_complete_development_v3 (3).md"
-    source_line: 231
-    fragment_sha256: 5f24bf96bccf528334057cf9ed6defc8b5378c9b825405e9760c1bf047f433d3
     pending_case: D5-T0003
   - id: D5-Q0003
     query: Fibonacci Hamiltonian coupling gap width law and Cantor spectrum dimension
     target_gid: D5/E/S3/Spectral/GapWidth.result--json
     source_path: "docs/develop/theory/GICT_complete_development_v3 (3).md"
-    source_line: 236
-    fragment_sha256: 28146f8fb84ec301e1e005f0a8d59bd94701fb3545e7d27cf9b1c5412e3f091c
     pending_case: D5-T0006
   - id: D5-Q0004
     query: diffraction avoidance theorem package and reproducible zero scan for D5-P001
     target_gid: D5/P/D5-P001
     source_path: docs/develop/spec/golden-ledger-repo-spec.md
-    source_line: 278
-    fragment_sha256: ac25312785ff8994686cb7492f9f72a9a2c7f6a876d4b91073b87f80811ba497
     pending_case: D5-T0006

@@ -253,11 +253,18 @@ public sealed class ReviewRegressionTests
     [Fact]
     public void Cf10AdmissionWorkflowRunsRepositoryCheckAndByteStableSelftest()
     {
+        var root = FindRepositoryRoot();
         var workflow = File.ReadAllText(
-            Path.Combine(FindRepositoryRoot(), ".github", "workflows", "ci.yml"),
+            Path.Combine(root, ".github", "workflows", "ci.yml"),
+            Encoding.UTF8);
+        // The admission logic was extracted to a script (SL-019: long inline run
+        // blocks trip the anomaly scanner; a .sh file is also independently reviewable).
+        var admission = File.ReadAllText(
+            Path.Combine(root, ".github", "scripts", "baseline-admission.sh"),
             Encoding.UTF8);
 
-        Assert.Contains("check --protected-base", workflow, StringComparison.Ordinal);
+        Assert.Contains("baseline-admission.sh", workflow, StringComparison.Ordinal);
+        Assert.Contains("check --protected-base", admission, StringComparison.Ordinal);
         Assert.True(Count(workflow, " selftest") >= 2, "selftest must run twice");
         Assert.Contains("cmp", workflow, StringComparison.Ordinal);
     }

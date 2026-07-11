@@ -88,6 +88,7 @@ internal sealed class LeanProcessInspector(string repositoryRoot) : ILeanInspect
         {
             Materialize(snapshot, snapshotRoot);
             LinkPinnedPackages(packageLink);
+            SeedBuildArtifacts(snapshotRoot);
             var build = BoundedProcessRunner.Run(
                 "lake",
                 new[] { "build" },
@@ -186,6 +187,32 @@ internal sealed class LeanProcessInspector(string repositoryRoot) : ILeanInspect
                 ?? throw new InvalidOperationException($"snapshot path has no parent: {path.Value}");
             Directory.CreateDirectory(parent);
             File.WriteAllBytes(destination, file.RawBytes.AsSpan());
+        }
+    }
+
+    // Seed the snapshot with the repository's own build artifacts so the snapshot
+    // lake build is incremental. Correctness is unaffected: lake re-validates every
+    // artifact against its own input-trace hashes and rebuilds on any mismatch. A
+    // copy (not a symlink) keeps the judge from writing through into the real tree.
+    private void SeedBuildArtifacts(string snapshotRoot)
+    {
+        var source = Path.Combine(root, ".lake", "build");
+        if (!Directory.Exists(source))
+        {
+            return;
+        }
+
+        var destination = Path.Combine(snapshotRoot, ".lake", "build");
+        foreach (var directory in Directory.EnumerateDirectories(source, "*", SearchOption.AllDirectories))
+        {
+            Directory.CreateDirectory(Path.Combine(destination, Path.GetRelativePath(source, directory)));
+        }
+
+        Directory.CreateDirectory(destination);
+        foreach (var file in Directory.EnumerateFiles(source, "*", SearchOption.AllDirectories))
+        {
+            var target = Path.Combine(destination, Path.GetRelativePath(source, file));
+            File.Copy(file, target, overwrite: true);
         }
     }
 
