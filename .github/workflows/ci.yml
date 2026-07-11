@@ -264,8 +264,10 @@ jobs:
         shell: bash
         run: |
           set -uo pipefail
+          set +e  # GitHub 'shell: bash' injects -e; without this the designed exit-semantics capture below never runs
           dotnet "$JUDGE_ROOT/Meta/StrataLint/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll" check --protected-base "$DEV_BASELINE_SHA"
           rc=$?
+          set -e
           if [[ $rc -eq 0 ]]; then
             printf '%s\n' "### Admission: content fully validated, no protected-surface change" >> "$GITHUB_STEP_SUMMARY"
             exit 0
