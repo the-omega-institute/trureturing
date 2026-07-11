@@ -4,7 +4,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
-internal sealed class GitRepositoryGateway : IRepositoryGateway
+internal sealed partial class GitRepositoryGateway : IRepositoryGateway
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     private readonly string root;
@@ -169,7 +169,7 @@ internal sealed class GitRepositoryGateway : IRepositoryGateway
                 throw new InvalidOperationException($"git tree emitted invalid entry: {path}");
             }
 
-            yield return new TreeEntry(metadata[0], metadata[1], path);
+            yield return new TreeEntry(metadata[0], metadata[1], metadata[2], path);
         }
     }
 
@@ -276,5 +276,5 @@ internal sealed class GitRepositoryGateway : IRepositoryGateway
         }
     }
 
-    private sealed record TreeEntry(string Mode, string ObjectType, string Path);
+    private sealed record TreeEntry(string Mode, string ObjectType, string ObjectId, string Path);
 }

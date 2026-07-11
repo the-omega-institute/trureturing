@@ -1,0 +1,264 @@
+using System.Collections.Immutable;
+using System.Text.Json;
+
+namespace StrataLint.Engine;
+
+public static partial class FrozenLedger
+{
+    public static FrozenLedgerValidationOutcome ValidateHistory(
+        FrozenLedgerSyntax syntax,
+        FrozenMaterialCatalog catalog,
+        TrustedFrozenGitReferences trustedReferences)
+    {
+        ArgumentNullException.ThrowIfNull(syntax);
+        ArgumentNullException.ThrowIfNull(catalog);
+        ArgumentNullException.ThrowIfNull(trustedReferences);
+        try
+        {
+            ValidateSyntaxEnvelope(syntax);
+            if (syntax.Lines.Length == 0)
+            {
+                throw new FormatException("Frozen ledger is empty.");
+            }
+
+            var events = ImmutableArray.CreateBuilder<FrozenLedgerEvent>(syntax.Lines.Length);
+            var active = new Dictionary<string, FrozenActiveEntry>(StringComparer.Ordinal);
+            var activePaths = new HashSet<RepoPath>();
+            var allCaseIds = new HashSet<string>(StringComparer.Ordinal);
+            var revoked = new HashSet<FrozenNodeId>();
+            var previous = ZeroHash;
+            for (var index = 0; index < syntax.Lines.Length; index++)
+            {
+                var line = syntax.Lines[index];
+                var root = line.Value;
+                RequireObjectFields(
+                    root,
+                    "event envelope",
+                    "event_hash", "event_type", "payload", "previous_hash", "schema_version", "sequence");
+                RequireCanonicalLine(line);
+                var sequence = RequiredNonnegativeInteger(root, "sequence");
+                var previousHash = RequiredString(root, "previous_hash");
+                var eventHash = RequiredString(root, "event_hash");
+                if (sequence != index
+                    || RequiredNonnegativeInteger(root, "schema_version") != 1
+                    || previousHash != previous
+                    || !FrozenHashSyntax.IsSha256(eventHash)
+                    || eventHash != ComputeEventHash(root))
+                {
+                    throw new FormatException("Frozen history has an invalid sequence/hash chain.");
+                }
+
+                var eventType = RequiredString(root, "event_type");
+                var payload = root.GetProperty("payload");
+                if (index == 0)
+                {
+                    if (eventType != "Genesis")
+                    {
+                        throw new FormatException("Sequence zero must be Genesis.");
+                    }
+
+                    events.Add(new FrozenLedgerEvent.Genesis(
+                        sequence,
+                        eventHash,
+                        previousHash,
+                        ParseGenesis(payload, catalog)));
+                }
+                else if (eventType == "Freeze")
+                {
+                    var freeze = ParseHistoricalFreeze(payload, trustedReferences);
+                    if (!allCaseIds.Add(freeze.CaseId)
+                        || !activePaths.Add(freeze.NodePath))
+                    {
+                        throw new FormatException("Frozen history reused a case ID or active module path.");
+                    }
+
+                    active.Add(
+                        freeze.CaseId,
+                        new FrozenActiveEntry(HistoricalMaterial(freeze), freeze, eventHash));
+                    events.Add(new FrozenLedgerEvent.Freeze(sequence, eventHash, previousHash, freeze));
+                }
+                else if (eventType == "Reattest")
+                {
+                    var reattest = ParseReattest(payload, active, trustedReferences);
+                    var entry = active[reattest.CaseId];
+                    active[reattest.CaseId] = entry with
+                    {
+                        Payload = entry.Payload with
+                        {
+                            Input = reattest.Input,
+                            InputFingerprint = reattest.InputFingerprint,
+                            SemanticReceipt = reattest.SemanticReceipt,
+                        },
+                        LastAttestationEventHash = eventHash,
+                    };
+                    events.Add(new FrozenLedgerEvent.Reattest(
+                        sequence,
+                        eventHash,
+                        previousHash,
+                        reattest));
+                }
+                else if (eventType == "Revoke")
+                {
+                    var revoke = ParseHistoricalRevoke(payload, events, active, previous);
+                    foreach (var caseId in revoke.AffectedCaseIds)
+                    {
+                        var entry = active[caseId];
+                        active.Remove(caseId);
+                        activePaths.Remove(entry.Material.RepoPath);
+                        revoked.Add(entry.Material.FrozenNodeId);
+                    }
+
+                    events.Add(new FrozenLedgerEvent.Revoke(
+                        sequence,
+                        eventHash,
+                        previousHash,
+                        revoke));
+                }
+                else
+                {
+                    throw new FormatException($"Unknown frozen event type {eventType}.");
+                }
+
+                previous = eventHash;
+            }
+
+            var expectedByPath = catalog.ClosedNodes.ToDictionary(static node => node.RepoPath);
+            var actualByPath = active.Values.ToDictionary(static entry => entry.Material.RepoPath);
+            var missing = expectedByPath.Keys.Except(actualByPath.Keys)
+                .OrderBy(static path => path.Value, StringComparer.Ordinal)
+                .Select(static path => path.Value)
+                .ToArray();
+            if (missing.Length > 0)
+            {
+                throw new FormatException("Closed modules are missing Freeze events: " + string.Join(", ", missing));
+            }
+
+            if (actualByPath.Count != expectedByPath.Count)
+            {
+                throw new FormatException("Active frozen history contains modules outside the current Closed catalog.");
+            }
+
+            foreach (var (caseId, entry) in active.ToArray())
+            {
+                var material = expectedByPath[entry.Material.RepoPath];
+                ValidateHistoricalActiveFreeze(entry.Payload, material);
+                active[caseId] = entry with { Material = material };
+            }
+
+            var activeEntries = active.ToImmutableDictionary(StringComparer.Ordinal);
+            return new FrozenLedgerValidationOutcome.Accepted(FrozenLedgerConsistent.Create(
+                syntax.RawBytes,
+                events.MoveToImmutable(),
+                activeEntries.Values
+                    .Select(static entry => entry.Material)
+                    .OrderBy(static node => node.RepoPath.Value, StringComparer.Ordinal)
+                    .ToImmutableArray(),
+                previous,
+                ComputeCorpusRoot(
+                    previous,
+                    activeEntries.Values.Select(static entry => entry.Payload).ToImmutableArray()),
+                ComputeFrozenGraphRoot(catalog.ClosedNodes),
+                activeEntries,
+                allCaseIds.ToImmutableHashSet(StringComparer.Ordinal),
+                revoked.ToImmutableHashSet()));
+        }
+        catch (Exception exception) when (
+            exception is FormatException or JsonException or InvalidOperationException or KeyNotFoundException)
+        {
+            return new FrozenLedgerValidationOutcome.Rejected(exception.Message);
+        }
+    }
+
+    private static FrozenFreezePayload ParseHistoricalFreeze(
+        JsonElement payload,
+        TrustedFrozenGitReferences trustedReferences)
+    {
+        RequireObjectFields(
+            payload,
+            "Freeze payload",
+            "case_class", "case_id", "declaration_statement_ids", "evaluation", "expected",
+            "frozen_node_id", "input", "input_fingerprint", "node_path", "prerequisite_frozen_node_ids",
+            "semantic_receipt", "statement_id", "truth_state", "witness_id");
+        var pathText = RequiredString(payload, "node_path");
+        if (!RepoPath.TryCreate(pathText, out var path))
+        {
+            throw new FormatException($"Freeze has invalid node_path {pathText}.");
+        }
+
+        var statement = ParseStatementId(RequiredString(payload, "statement_id"), "Freeze statement");
+        var witness = ParseWitnessId(RequiredString(payload, "witness_id"), "Freeze witness");
+        var frozen = ParseFrozenNodeId(RequiredString(payload, "frozen_node_id"), "Freeze node");
+        var result = new FrozenFreezePayload(
+            RequiredString(payload, "case_class"),
+            RequiredString(payload, "case_id"),
+            ParseDeclarationStatementIds(payload),
+            RequiredString(payload, "evaluation"),
+            ParseExpected(payload.GetProperty("expected")),
+            frozen,
+            ParseInput(payload.GetProperty("input")),
+            RequiredString(payload, "input_fingerprint"),
+            path,
+            ParseFrozenNodeIds(payload, "prerequisite_frozen_node_ids"),
+            RequiredString(payload, "semantic_receipt"),
+            statement,
+            RequiredString(payload, "truth_state"),
+            witness);
+        if (!trustedReferences.Covers(result.Input))
+        {
+            throw new FormatException("Historical Freeze input has no validated Git commit/tree/blob capability.");
+        }
+        if (result.CaseClass != "active-frozen"
+            || result.CaseId != FrozenLedgerCanonicalWriter.CaseId(frozen)
+            || result.Evaluation != "admission"
+            || result.TruthState != nameof(TruthState.Closed)
+            || !result.Expected.AllowedDispositions.SequenceEqual(new[] { "admit" }, StringComparer.Ordinal)
+            || result.Expected.DiagnosticMatch != "none"
+            || result.Expected.RequiredDiagnostics.Length != 0
+            || result.InputFingerprint != witness.Value
+            || result.SemanticReceipt != frozen.Value
+            || result.Input.DescriptorSelector != path.Value
+            || result.Input.Materializer != "repository-snapshot-v1")
+        {
+            throw new FormatException($"Historical Freeze payload is not a canonical Closed module at {path.Value}.");
+        }
+
+        return result;
+    }
+
+    private static FrozenNodeMaterial HistoricalMaterial(FrozenFreezePayload payload) => new(
+        payload.NodePath,
+        payload.DeclarationStatementIds,
+        payload.StatementId,
+        payload.WitnessId,
+        payload.FrozenNodeId,
+        payload.PrerequisiteFrozenNodeIds,
+        ImmutableArray<string>.Empty,
+        new FrozenModuleAttestation(payload.NodePath, payload.Input.DescriptorBlobOid));
+
+    private static void ValidateHistoricalActiveFreeze(
+        FrozenFreezePayload payload,
+        FrozenNodeMaterial material)
+    {
+        if (!payload.DeclarationStatementIds.SequenceEqual(material.DeclarationStatementIds)
+            || payload.StatementId != material.StatementId
+            || payload.WitnessId != material.WitnessId
+            || payload.FrozenNodeId != material.FrozenNodeId
+            || !payload.PrerequisiteFrozenNodeIds.SequenceEqual(material.PrerequisiteFrozenNodeIds)
+            || payload.Input.DescriptorBlobOid != material.Attestation.SourceBlobOid
+            || payload.Input.DescriptorSelector != material.RepoPath.Value)
+        {
+            throw new FormatException(
+                $"Active historical Freeze does not match recomputed material for {material.RepoPath.Value}.");
+        }
+    }
+
+    private static StatementId ParseStatementId(string value, string label) =>
+        FrozenHashSyntax.IsSha256(value)
+            ? StatementId.Create(value)
+            : throw new FormatException($"{label} is malformed.");
+
+    private static WitnessId ParseWitnessId(string value, string label) =>
+        FrozenHashSyntax.IsSha256(value)
+            ? WitnessId.Create(value)
+            : throw new FormatException($"{label} is malformed.");
+}
