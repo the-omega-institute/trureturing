@@ -12,9 +12,67 @@ internal sealed class LeanProcessInspector(string repositoryRoot) : ILeanInspect
     private const string InspectorSource = """
         import Lean.Environment
         import Lean.CoreM
+        import Lean.PrivateName
         import Lean.Util.CollectAxioms
 
         open Lean
+
+        def atom (value : String) : String := s!"{value.utf8ByteSize}:{value}"
+
+        partial def encodeName : Name → String
+          | .anonymous => "n0"
+          | .str parent value => s!"ns({encodeName parent},{atom value})"
+          | .num parent value => s!"nn({encodeName parent},{value})"
+
+        partial def encodeLevel : Level → String
+          | .zero => "l0"
+          | .succ level => s!"ls({encodeLevel level})"
+          | .max left right => s!"lm({encodeLevel left},{encodeLevel right})"
+          | .imax left right => s!"li({encodeLevel left},{encodeLevel right})"
+          | .param name => s!"lp({encodeName name})"
+          | .mvar id => s!"lv({encodeName id.name})"
+
+        def encodeBinderInfo : BinderInfo → String
+          | .default => "bd"
+          | .implicit => "bi"
+          | .strictImplicit => "bs"
+          | .instImplicit => "bc"
+
+        def encodeLiteral : Literal → String
+          | .natVal value => s!"ln({value})"
+          | .strVal value => s!"lt({atom value})"
+
+        partial def encodeExpr : Expr → String
+          | .bvar index => s!"eb({index})"
+          | .fvar id => s!"ef({encodeName id.name})"
+          | .mvar id => s!"em({encodeName id.name})"
+          | .sort level => s!"es({encodeLevel level})"
+          | .const name levels =>
+              s!"ec({encodeName name},[{String.intercalate "," (levels.map encodeLevel)}])"
+          | .app function argument => s!"ea({encodeExpr function},{encodeExpr argument})"
+          | .lam _ type body binderInfo =>
+              s!"el({encodeBinderInfo binderInfo},{encodeExpr type},{encodeExpr body})"
+          | .forallE _ type body binderInfo =>
+              s!"ep({encodeBinderInfo binderInfo},{encodeExpr type},{encodeExpr body})"
+          | .letE _ type value body nondependent =>
+              s!"ee({if nondependent then "1" else "0"},{encodeExpr type},{encodeExpr value},{encodeExpr body})"
+          | .lit literal => s!"ei({encodeLiteral literal})"
+          | .mdata _ body => s!"ed({encodeExpr body})"
+          | .proj name index body => s!"ej({encodeName name},{index},{encodeExpr body})"
+
+        def encodeStatement (info : ConstantInfo) : String :=
+          let parameters := info.levelParams.map encodeName
+          let header := s!"statement-v1(uparams=[{String.intercalate "," parameters}],type={encodeExpr info.type}"
+          match info with
+          | .defnInfo _ | .opaqueInfo _ =>
+              match info.value? (allowOpaque := true) with
+              | some value => header ++ s!",value={encodeExpr value})"
+              | none => header ++ ",value=missing)"
+          | _ => header ++ ")"
+
+        def includeInStatement (name : Name) : ConstantInfo -> Bool
+          | .thmInfo _ => !(privateToUserName name).isInternalDetail
+          | _ => true
 
         def kindOf : ConstantInfo → String
           | .axiomInfo _ => "axiom"
@@ -39,9 +97,11 @@ internal sealed class LeanProcessInspector(string repositoryRoot) : ILeanInspect
               | throwError "declaration missing: {name}"
             let axioms ← Lean.collectAxioms name
             return Json.mkObj [
+              ("include_in_statement", toJson (includeInStatement name info)),
               ("name", toJson name.toString),
+              ("name_key", toJson (encodeName name)),
               ("kind", toJson (kindOf info)),
-              ("type", toJson (toString (repr info.type))),
+              ("type", toJson (encodeStatement info)),
               ("axioms", toJson (axioms.map Name.toString))
             ]
           let declarations ← Prod.fst <$> Lean.Core.CoreM.toIO action context state
@@ -213,8 +273,12 @@ internal sealed class LeanProcessInspector(string repositoryRoot) : ILeanInspect
                             .Select(static axiom => axiom.GetString() ?? throw new JsonException("non-string axiom"))
                             .Distinct(StringComparer.Ordinal)
                             .Order(StringComparer.Ordinal)
-                            .ToImmutableArray()))
-                    .OrderBy(static item => item.Name, StringComparer.Ordinal)
+                            .ToImmutableArray())
+                    {
+                        IncludeInStatement = RequiredBoolean(item, "include_in_statement"),
+                        NameKey = RequiredString(item, "name_key"),
+                    })
+                    .OrderBy(static item => item.NameKey, StringComparer.Ordinal)
                     .ToImmutableArray();
                 reports.Add(path, new LeanFileReport(imports, declarations));
             }
@@ -309,6 +373,11 @@ internal sealed class LeanProcessInspector(string repositoryRoot) : ILeanInspect
     private static string RequiredString(JsonElement value, string property) =>
         value.TryGetProperty(property, out var child) && child.ValueKind == JsonValueKind.String
             ? child.GetString() ?? throw new JsonException($"null {property}")
+            : throw new JsonException($"missing {property}");
+
+    private static bool RequiredBoolean(JsonElement value, string property) =>
+        value.TryGetProperty(property, out var child) && child.ValueKind is JsonValueKind.True or JsonValueKind.False
+            ? child.GetBoolean()
             : throw new JsonException($"missing {property}");
 
     private static string Tail(string value) =>

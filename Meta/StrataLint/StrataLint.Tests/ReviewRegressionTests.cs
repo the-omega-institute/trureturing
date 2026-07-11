@@ -311,7 +311,7 @@ public sealed class ReviewRegressionTests
         RunGit(repositoryRoot, "push", "--set-upstream", "origin", "dev");
     }
 
-    private static string RunGit(string root, params string[] arguments)
+    internal static string RunGit(string root, params string[] arguments)
     {
         var startInfo = new ProcessStartInfo("git")
         {

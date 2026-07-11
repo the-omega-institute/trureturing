@@ -9,6 +9,10 @@ public sealed record LeanDeclaration(
     string TypeRepresentation,
     ImmutableArray<string> Axioms)
 {
+    public string NameKey { get; init; } = Name;
+
+    public bool IncludeInStatement { get; init; } = true;
+
     public (string Name, string Kind, string TypeRepresentation) Signature =>
         (Name, Kind, TypeRepresentation);
 }
@@ -91,6 +95,7 @@ public static class LeanClosureValidator
             if (fileReport.Imports.Any(string.IsNullOrWhiteSpace)
                 || fileReport.Declarations.Any(static declaration =>
                     string.IsNullOrWhiteSpace(declaration.Name)
+                    || string.IsNullOrWhiteSpace(declaration.NameKey)
                     || string.IsNullOrWhiteSpace(declaration.Kind)
                     || string.IsNullOrWhiteSpace(declaration.TypeRepresentation)
                     || declaration.Axioms.Any(string.IsNullOrWhiteSpace)))

@@ -5,7 +5,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-public sealed class ProductionEnvironmentTests
+public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
     public void CheckShortCircuitsAtSl022BeforeCandidateContentOrLeanIsRead()
@@ -34,6 +34,7 @@ public sealed class ProductionEnvironmentTests
         fixture.Baseline["Meta/registry.yaml"] = TestRegistry.Canonical;
         fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
         fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
+        AddFrozenLedger(fixture);
         var gateway = new FakeRepositoryGateway(
             RawChangeSet.Create(new[] { RuleFixture.BlueprintPath }),
             Snapshot(fixture.Files),
@@ -46,6 +47,83 @@ public sealed class ProductionEnvironmentTests
         Assert.IsType<AdmissionOutcome.Admitted>(outcome);
         Assert.Equal(2, gateway.ReadCount);
         Assert.Equal(2, inspector.CallCount);
+    }
+
+    [Fact]
+    public void CheckMapsMissingFrozenLedgerToSl008()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical;
+        fixture.Baseline["Meta/registry.yaml"] = TestRegistry.Canonical;
+        fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
+        fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
+        var gateway = new FakeRepositoryGateway(
+            RawChangeSet.Create(new[] { RuleFixture.BlueprintPath }),
+            Snapshot(fixture.Files),
+            Snapshot(fixture.Baseline));
+        var inspector = new FakeLeanInspector(LeanAxiomReport.Create(fixture.Reports));
+        var environment = new ProductionCliEnvironment("/repo", gateway, inspector);
+
+        var outcome = environment.Check(Array.Empty<string>());
+
+        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
+        Assert.All(rejected.Diagnostics, item => Assert.Equal(RuleId.CreateKnown(8), item.RuleId));
+        Assert.Contains(rejected.Diagnostics, item => item.Message.Contains("missing", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public void CheckMapsCorruptFrozenLedgerToSl008()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical;
+        fixture.Baseline["Meta/registry.yaml"] = TestRegistry.Canonical;
+        fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
+        fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
+        AddFrozenLedger(fixture);
+        const string ledgerPath = FrozenLedgerChangeClassifier.LedgerPath;
+        fixture.Files[ledgerPath] = fixture.Files[ledgerPath].Replace(
+            "\"previous_hash\": \"sha256:",
+            "\"previous_hash\": \"sha256:f",
+            StringComparison.Ordinal);
+        var gateway = new FakeRepositoryGateway(
+            RawChangeSet.Create(new[] { RuleFixture.BlueprintPath }),
+            Snapshot(fixture.Files),
+            Snapshot(fixture.Baseline));
+        var inspector = new FakeLeanInspector(LeanAxiomReport.Create(fixture.Reports));
+        var environment = new ProductionCliEnvironment("/repo", gateway, inspector);
+
+        var outcome = environment.Check(Array.Empty<string>());
+
+        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
+        Assert.All(rejected.Diagnostics, item => Assert.Equal(RuleId.CreateKnown(8), item.RuleId));
+    }
+
+    [Fact]
+    public void CheckMapsCanonicalLedgerWithMissingEnvelopeFieldsToSl008()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical;
+        fixture.Baseline["Meta/registry.yaml"] = TestRegistry.Canonical;
+        fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
+        fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
+        AddFrozenLedger(fixture);
+        fixture.Files[FrozenLedgerChangeClassifier.LedgerPath] = "{}\n";
+        var gateway = new FakeRepositoryGateway(
+            RawChangeSet.Create(new[] { RuleFixture.BlueprintPath }),
+            Snapshot(fixture.Files),
+            Snapshot(fixture.Baseline));
+        var inspector = new FakeLeanInspector(LeanAxiomReport.Create(fixture.Reports));
+        var environment = new ProductionCliEnvironment("/repo", gateway, inspector);
+
+        var outcome = environment.Check(Array.Empty<string>());
+
+        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
+        Assert.All(rejected.Diagnostics, item => Assert.Equal(RuleId.CreateKnown(8), item.RuleId));
+        Assert.Contains(rejected.Diagnostics, item =>
+            item.Message.Contains("field", StringComparison.OrdinalIgnoreCase));
     }
 
     [Fact]
@@ -129,6 +207,69 @@ public sealed class ProductionEnvironmentTests
 
     private static RawRepositorySnapshot Snapshot(IReadOnlyDictionary<string, string> files) =>
         RawRepositorySnapshot.Create(files.Select(pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
+
+    private static (RepositorySnapshot Snapshot, AcceptedLeanClosure Lean, AcyclicTruthDag Dag) BuildState(
+        IReadOnlyDictionary<string, string> files,
+        IReadOnlyDictionary<string, LeanFileReport> reports)
+    {
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(Snapshot(files))).Snapshot;
+        var lean = Assert.IsType<LeanValidationOutcome.Accepted>(
+            LeanClosureValidator.Validate(snapshot, LeanAxiomReport.Create(reports))).Capability;
+        var dag = Assert.IsType<DagBuildOutcome.Accepted>(
+            AcyclicTruthDag.Build(snapshot, lean)).Capability;
+        return (snapshot, lean, dag);
+    }
+
+    private static void AddFrozenLedger(RuleFixture fixture)
+    {
+        const string toolchain = "leanprover/lean4:v4.24.0\n";
+        const string manifest = "{}\n";
+        fixture.Files["lean-toolchain"] = toolchain;
+        fixture.Baseline["lean-toolchain"] = toolchain;
+        fixture.Files["lake-manifest.json"] = manifest;
+        fixture.Baseline["lake-manifest.json"] = manifest;
+        var environment = new FrozenEnvironmentAttestation(
+            FrozenLedgerTestData.GitOid('a'),
+            FrozenLedgerTestData.GitOid('b'),
+            FrozenLedgerTestData.GitBlobOid(toolchain),
+            FrozenLedgerTestData.GitBlobOid(manifest));
+        var baselineCatalog = Catalog(fixture.Baseline, fixture.BaselineReports, environment);
+        var currentCatalog = Catalog(fixture.Files, fixture.Reports, environment);
+        var baselineLedger = FrozenLedgerGenerator.GenerateGenesis(
+            baselineCatalog,
+            new FrozenGenesisDescriptor(
+                FrozenLedgerTestData.GitOid('e'),
+                RuleCatalog.Default.RootSha256));
+        var baselineSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+            DagLedgerLoader.Load(baselineLedger.AsSpan())).Syntax;
+        var baselineCapability = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+            FrozenLedgerTestData.ValidateGenesis(baselineSyntax, baselineCatalog)).Capability;
+        var currentLedger = FrozenLedgerGenerator.AppendMissingFreezes(
+            baselineCapability,
+            currentCatalog);
+        fixture.Files[FrozenLedgerChangeClassifier.LedgerPath] = Encoding.UTF8.GetString(currentLedger.AsSpan());
+        fixture.Baseline[FrozenLedgerChangeClassifier.LedgerPath] = Encoding.UTF8.GetString(baselineLedger.AsSpan());
+
+        static FrozenMaterialCatalog Catalog(
+            IReadOnlyDictionary<string, string> files,
+            IReadOnlyDictionary<string, LeanFileReport> reports,
+            FrozenEnvironmentAttestation environment)
+        {
+            var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+                SnapshotDecoder.Decode(Snapshot(files))).Snapshot;
+            var closure = Assert.IsType<LeanValidationOutcome.Accepted>(
+                LeanClosureValidator.Validate(snapshot, LeanAxiomReport.Create(reports))).Capability;
+            var dag = Assert.IsType<DagBuildOutcome.Accepted>(AcyclicTruthDag.Build(snapshot, closure)).Capability;
+            var attestations = dag.Nodes
+                .Where(static node => node.State is TruthState.Closed && node.ModuleName is not null)
+                .Select(node => new FrozenModuleAttestation(
+                    node.RepoPath,
+                    FrozenLedgerTestData.GitBlobOid(files[node.RepoPath.Value])));
+            return Assert.IsType<FrozenMaterialOutcome.Accepted>(
+                FrozenContentAddress.Build(snapshot, closure, dag, environment, attestations)).Capability;
+        }
+    }
 }
 
 internal sealed class FakeRepositoryGateway(
@@ -143,6 +284,15 @@ internal sealed class FakeRepositoryGateway(
 
     public PreparedRepository Prepare(string? protectedBase) => new("baseline", changes);
 
+    public FrozenRevisionIdentity ResolveFrozenRevision(string revision)
+    {
+        var algorithm = revision.Length == 40 ? "git-sha1:" : "git-sha256:";
+        return new FrozenRevisionIdentity(
+            revision,
+            algorithm + revision,
+            algorithm + new string('b', revision.Length));
+    }
+
     public RawRepositorySnapshot ReadCurrent()
     {
         ReadCount++;
@@ -154,6 +304,15 @@ internal sealed class FakeRepositoryGateway(
         ReadCount++;
         return baseline ?? throw new InvalidOperationException("baseline snapshot should not be read");
     }
+
+    public RawRepositorySnapshot ReadFrozenRevision(string revision)
+    {
+        ReadCount++;
+        return baseline ?? throw new InvalidOperationException("frozen revision snapshot should not be read");
+    }
+
+    public TrustedFrozenGitReferences ValidateFrozenReferences(FrozenLedgerReferenceSet references) =>
+        TrustedFrozenGitReferences.CreateForTrustedAdapter(references.Inputs);
 }
 
 internal sealed class FakeLeanInspector(LeanAxiomReport? report) : ILeanInspector
