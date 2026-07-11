@@ -108,6 +108,25 @@ import 只许向下;**投影不当骨骼**——文档、书、论文都是图�
 *成熟锚*:feature branch / worktree 隔离、trunk-based 的可发布主干、并行开发的冲突避免。
 〔守护:**半硬**·并行不撞由 GID 地址代数 + 分支锁 + required-check 机器保证;"在 worktree 做"靠 agent 遵此条 + 本授权〕
 
+**17. harness 是真值机器,可持续自建,不与前违背;违背由升层判,不可判标 open。**
+**本系统判形式对错的权威机器,就是 harness 自己**——lint、编译、双射、状态、一致性,由它判;它就是这里的逻辑与真值机器,不假手于人。harness 可**持续自我扩建**(新规则、新分类、新流程),唯一硬约束是**不与之前的 harness 相违背**(保守/单调扩展:旧的判为对的,新的不得判为错)。是否违背,**由 harness 自身判**:SL-022 元层门控 + 一致性巡检 + 升层——新 harness 判旧 harness(内化塔,塔无封顶)。**但诚实标边界**:harness 不在同层自证自己的一致性(Gödel,PZG 16.2);它够不着的真值(形式不可判者)诚实标 `open`/`sorry`(Hearts),**不冒充判得了**。判可判的、标不可判的——这才是真值机器的完整、不说谎的形态。
+*成熟锚*:内化塔 / 反射原理(每层判前层)、保守扩展(conservative extension)、哥德尔第二不完备(系统不自证一致)、可判 vs 半可判的诚实分栏。
+〔守护:**元准则 + 半硬**·可判对错由 harness 机器判(全部 SL + 编译 + SL-022 一致性);升层自建靠"不违背前 harness"之机器巡检 + 元层门控;不可判者标 open,人不越俎〕
+
+**18. 先定义类,再处理实例(事事有规范)。**
+harness 的本质,就是**给各类事定义"这类该怎么处理"**——先分类,再定处理规范,再处理具体实例。遇到一类**新的事**(新工件类型、新流程、新决策类),**先在 harness/规范里定义这类怎么处理**(过评审/元层门控立定义),**再**处理实例;无定义不即兴处理——即兴就是无坐标的点,会乱。理论一脉相承:分类即坐标化(GICT 7.5)、读数即分类(PZG)、内容路由总表"任何产物一查定址"(spec)。**先有坐标,点才有位置;先有类定义,事才有归宿。**
+*成熟锚*:policy-as-code(先定策略再执行)、类型先于值、schema 先于数据、分类学 / 本体论先行。
+〔守护:**元准则**·新类的定义过评审/SL-022 门控进 harness;定义后实例由机器按定义判。无定义即"未实例化(案号)",非"未知"〕
+
+**19. git 开发流程:dev 集成、main 发布、PR 门控、worktree 隔离。**
+- **`dev`** = 集成主分支(default);一切实施经 PR 合入 dev。
+- **`main`** = 发布分支;dev 稳定后经 release PR + `tag E<n>`(spec A14)推进,main 即"已发布/可复现"的冻结态。
+- **实施分支**:在独立 worktree(第 16 条),命名 `harness/*` 或 `agent/<官>/<任务码>`(spec 分支锁 + TTL)。
+- **合并门控**:PR → dev 须过 **required-check**(harness `check` + `dotnet build/test` 绿 = 对错机器判)+ **review**(利益回避 H7,不自并)+ **溯源**(H9,LLM PR 携转录)。
+- **元层变更**(改 harness/spec/registry/domains/Hearts/X_Assumptions/CODEOWNERS)由 **SL-022** 识别 → 人类门控授权(不是判对错,是授权不可逆动作)。
+*成熟锚*:trunk-based(dev 集成)+ release branch(main 冻结)、PR + required status checks、CODEOWNERS 职责分离。
+〔守护:**硬**·dev/main 分支保护 + required-check 机器强制;元层变更 SL-022 机器识别 + CODEOWNERS 门控〕
+
 ---
 
 ## 收束
