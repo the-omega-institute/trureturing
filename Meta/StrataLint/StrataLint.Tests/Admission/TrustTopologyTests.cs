@@ -6,9 +6,9 @@ public sealed class TrustTopologyTests
 {
     public static TheoryData<string> ProtectedPaths => new()
     {
-        "Meta/StrataLint/StrataLint.Engine/Gid.cs",
+        "Meta/StrataLint/StrataLint.Engine/Coordinates/Gid.cs",
         "Meta/StrataLint/StrataLint.Cli/Program.cs",
-        "Meta/StrataLint/StrataLint.Tests/TrustTopologyTests.cs",
+        "Meta/StrataLint/StrataLint.Tests/Admission/TrustTopologyTests.cs",
         "docs/develop/spec/golden-ledger-repo-spec.md",
         "Meta/registry.yaml",
         "Meta/domains.yaml",

@@ -37,12 +37,14 @@ public sealed partial class ProductionEnvironmentTests
             "Meta",
             "StrataLint",
             "StrataLint.Engine",
+            "Ledger",
             "FrozenLedgerCanonicalWriter.cs");
         var generatorPath = Path.Combine(
             temporary.Path,
             "Meta",
             "StrataLint",
             "StrataLint.Cli",
+            "Commands",
             "DagLedgerGenesisWriter.cs");
         Directory.CreateDirectory(Path.GetDirectoryName(canonicalWriterPath)!);
         Directory.CreateDirectory(Path.GetDirectoryName(generatorPath)!);
