@@ -8,7 +8,7 @@ sources:
       - anchor: GICT-heart-O5
         source_line: 228
         line_sha256: ad0167e83242b219a2332786ea2896ffde279a535e0c491922398ff8f49ae970
-        disposition: D5/X_Frontier/HeartsDraft
+        disposition: D5/X_Frontier/Hearts
       - anchor: GICT-heart-O6
         source_line: 228
         line_sha256: ad0167e83242b219a2332786ea2896ffde279a535e0c491922398ff8f49ae970
@@ -76,7 +76,7 @@ sources:
       - anchor: PZG-chapter-29-O5
         source_line: 2784
         line_sha256: bf0a0ef5fe508a4b82f611d1f6431bacf25b039929015b061664c778c86fb29f
-        disposition: D5/X_Frontier/HeartsDraft
+        disposition: D5/X_Frontier/Hearts
       - anchor: PZG-chapter-29-O6
         source_line: 2785
         line_sha256: 84efc878d587793ec813af69649561317fad57fdc1b626eca8a0f2c87fe23147
@@ -168,3 +168,5 @@ ticket_index:
     gid: D5/X_Frontier/GovernanceDeferrals
   - case_id: D5-T0017
     gid: D5/X_Frontier/RequiredChecks
+  - case_id: D5-T0018
+    gid: D5/X_Frontier/HeartsDraft

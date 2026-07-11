@@ -307,6 +307,7 @@ internal sealed class RuleFixture
             "D5/X_Frontier/FutureInstances",
             "D5/X_Frontier/GoldenUnitsUFD",
             "D5/X_Frontier/GovernanceDeferrals",
+            "D5/X_Frontier/Hearts",
             "D5/X_Frontier/HeartsDraft",
             "D5/X_Frontier/PaperGenerator",
             "D5/X_Frontier/RequiredChecks",
@@ -320,6 +321,11 @@ internal sealed class RuleFixture
             Files[path] = HeaderFor(gid, gid.Contains("/S0/", StringComparison.Ordinal) ? "G" : "E")
                 + "def protectedTargetFixture : Unit := ()\n";
             Reports[path] = Report();
+            if (gid == "D5/X_Frontier/Hearts")
+            {
+                Baseline[path] = Files[path];
+                BaselineReports[path] = Reports[path];
+            }
         }
     }
 
