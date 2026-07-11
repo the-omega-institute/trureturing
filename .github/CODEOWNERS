@@ -1,0 +1,14 @@
+* @loning
+
+/Meta/ @loning
+/docs/develop/spec/golden-ledger-repo-spec.md @loning
+/D5/X_Frontier/Hearts.lean @loning
+/D5/X_Assumptions/ @loning
+/global.json @loning
+/Directory.Build.* @loning
+/Directory.Packages.* @loning
+/lean-toolchain @loning
+/lakefile.toml @loning
+/lake-manifest.json @loning
+/.github/CODEOWNERS @loning
+/.github/workflows/ci.yml @loning

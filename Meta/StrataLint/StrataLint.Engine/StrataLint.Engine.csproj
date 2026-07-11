@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>StrataLint.Engine</RootNamespace>
+    <AssemblyName>StrataLint.Engine</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Dunet" />
+    <PackageReference Include="Pidgin" />
+  </ItemGroup>
+</Project>

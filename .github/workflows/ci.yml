@@ -1,0 +1,169 @@
+# BOOTSTRAP-NOT-ACTIVE until this workflow and the C# harness exist on the actual
+# default branch (dev). D5-T0017 requires one trusted admin injection; no candidate
+# workflow can machine-authorize that first placement. After injection, the dev
+# baseline workflow below adjudicates every later PR.
+name: admission
+
+on:
+  push:
+    branches: [dev]
+  pull_request_target:
+    branches: [dev]
+
+permissions:
+  contents: read
+
+# Trust topology: candidate engineering checks are non-authoritative. Admission is
+# issued only by the harness checked out at the content-addressed dev event-base SHA.
+# D5-T0017's candidate judge is a post-injection observation, not predecessor machine
+# authorization. It can run only after an admin has placed this workflow on dev, and it
+# emits both an annotation and a job-summary ledger entry when exercised.
+jobs:
+  candidate-engineering:
+    name: Candidate harness engineering checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out candidate
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+          path: candidate
+
+      - name: Install pinned SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.103
+
+      - name: Restore candidate locked dependencies
+        run: |
+          dotnet restore candidate/Meta/StrataLint/StrataLint.sln --locked-mode
+          dotnet restore candidate/Meta/StrataLint/CompileFailProof/CompileFailProof.csproj --locked-mode
+
+      - name: Build candidate with warnings as errors
+        run: dotnet build candidate/Meta/StrataLint/StrataLint.sln --no-restore --configuration Release --warnaserror
+
+      - name: Run candidate golden and integration tests
+        run: dotnet test candidate/Meta/StrataLint/StrataLint.sln --no-build --no-restore --configuration Release --verbosity normal
+
+      - name: Run candidate selftest twice and compare bytes
+        working-directory: candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          dotnet Meta/StrataLint/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll selftest > "$RUNNER_TEMP/candidate-selftest-1.txt"
+          dotnet Meta/StrataLint/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll selftest > "$RUNNER_TEMP/candidate-selftest-2.txt"
+          cmp "$RUNNER_TEMP/candidate-selftest-1.txt" "$RUNNER_TEMP/candidate-selftest-2.txt"
+
+      - name: Prove missing capability does not compile
+        shell: bash
+        run: |
+          set +e
+          output="$(dotnet build candidate/Meta/StrataLint/CompileFailProof/CompileFailProof.csproj --no-restore --configuration Release 2>&1)"
+          status=$?
+          set -e
+          printf '%s\n' "$output"
+          test "$status" -ne 0
+          grep -F "CS7036" <<<"$output"
+          grep -F "MetaClear" <<<"$output"
+
+  baseline-admission:
+    name: Content-addressed dev baseline admission
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out candidate with history
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+          path: candidate
+
+      - name: Resolve dev baseline content address
+        id: baseline
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
+            sha="${{ github.event.pull_request.base.sha }}"
+          else
+            sha="${{ github.event.before }}"
+            if [[ -z "$sha" || "$sha" =~ ^0+$ ]]; then
+              sha="$(git -C candidate rev-parse "$GITHUB_SHA^")"
+            fi
+          fi
+          if [[ -z "$sha" || "$sha" =~ ^0+$ ]]; then
+            printf '%s\n' "event has no content-addressable dev baseline" >&2
+            exit 1
+          fi
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          echo "DEV_BASELINE_SHA=$sha" >> "$GITHUB_ENV"
+
+      - name: Check out content-addressed dev baseline
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.baseline.outputs.sha }}
+          fetch-depth: 1
+          persist-credentials: false
+          path: baseline
+
+      - name: Verify baseline checkout and select judge
+        id: judge
+        shell: bash
+        run: |
+          set -euo pipefail
+          actual="$(git -C baseline rev-parse HEAD)"
+          test "$actual" = "$DEV_BASELINE_SHA"
+          if [[ -f baseline/Meta/StrataLint/StrataLint.sln ]]; then
+            judge_root="$GITHUB_WORKSPACE/baseline"
+            mode="dev-baseline"
+          elif git -C candidate log --format=%H "$DEV_BASELINE_SHA" -- Meta/StrataLint/StrataLint.sln | grep -q .; then
+            printf '%s\n' "D5-T0017 one-time bootstrap cannot recur after harness history exists" >&2
+            exit 1
+          else
+            judge_root="$GITHUB_WORKSPACE/candidate"
+            mode="trusted-bootstrap-observation"
+            echo "::warning title=D5-T0017 trusted bootstrap::No predecessor harness exists; this admin-injected candidate is observed, not independently admitted."
+            printf '%s\n' "### D5-T0017 trusted bootstrap observation" >> "$GITHUB_STEP_SUMMARY"
+            printf '%s\n' "No machine gate was active before the admin injection. Candidate observation at $DEV_BASELINE_SHA does not retroactively authorize it." >> "$GITHUB_STEP_SUMMARY"
+          fi
+          echo "root=$judge_root" >> "$GITHUB_OUTPUT"
+          echo "mode=$mode" >> "$GITHUB_OUTPUT"
+          printf '%s\n' "Baseline mode: $mode; content address: $DEV_BASELINE_SHA" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Install pinned SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.103
+
+      - name: Build selected judge from locked dependencies
+        env:
+          JUDGE_ROOT: ${{ steps.judge.outputs.root }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          dotnet restore "$JUDGE_ROOT/Meta/StrataLint/StrataLint.sln" --locked-mode
+          dotnet build "$JUDGE_ROOT/Meta/StrataLint/StrataLint.sln" --no-restore --configuration Release --warnaserror
+
+      - name: Run selected judge selftest twice and compare bytes
+        env:
+          JUDGE_ROOT: ${{ steps.judge.outputs.root }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$JUDGE_ROOT"
+          dotnet Meta/StrataLint/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll selftest > "$RUNNER_TEMP/baseline-selftest-1.txt"
+          dotnet Meta/StrataLint/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll selftest > "$RUNNER_TEMP/baseline-selftest-2.txt"
+          cmp "$RUNNER_TEMP/baseline-selftest-1.txt" "$RUNNER_TEMP/baseline-selftest-2.txt"
+
+      - name: Run baseline harness check against candidate repository
+        working-directory: candidate
+        env:
+          JUDGE_ROOT: ${{ steps.judge.outputs.root }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          dotnet "$JUDGE_ROOT/Meta/StrataLint/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll" check --protected-base "$DEV_BASELINE_SHA"

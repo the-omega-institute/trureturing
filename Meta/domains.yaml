@@ -1,0 +1,7 @@
+domains:
+  Carrier:
+    stratum: S0
+    definition: The golden integer carrier, conjugation, norm, and units.
+  Conventions:
+    stratum: S0
+    definition: Canonical W-digit and notation conventions used by later strata.
