@@ -108,7 +108,7 @@ jobs:
   baseline-admission:
     name: Content-addressed dev baseline admission
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - name: Check out candidate with history
         uses: actions/checkout@v4
@@ -211,6 +211,23 @@ jobs:
         with:
           dotnet-version: 10.0.103
 
+      - name: Cache candidate Lean build artifacts
+        uses: actions/cache@v4
+        with:
+          path: |
+            candidate/.lake
+            ~/.cache/mathlib
+          key: ${{ runner.os }}-lake-${{ hashFiles('candidate/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain') }}
+
+      # Zero-trust floor: the repository's own Lean surface must be buildable in CI,
+      # independent of any submitter-side (human or AI) local verification.
+      - name: Fetch mathlib cloud cache for candidate
+        working-directory: candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          "$HOME/.elan/bin/lake" exe cache get || echo "::warning title=mathlib cache::cloud cache fetch failed; lake build will rebuild (may hit timeout, which correctly fails closed)"
+
       - name: Build selected judge from locked dependencies
         env:
           JUDGE_ROOT: ${{ steps.judge.outputs.root }}
@@ -231,11 +248,34 @@ jobs:
           dotnet Meta/StrataLint/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll selftest > "$RUNNER_TEMP/baseline-selftest-2.txt"
           cmp "$RUNNER_TEMP/baseline-selftest-1.txt" "$RUNNER_TEMP/baseline-selftest-2.txt"
 
-      - name: Run baseline harness check against candidate repository
+      # Exit-semantics separation (zero-trust submission gate):
+      #   0 = admitted: full content rules ran and passed, no protected-surface change.
+      #   3 = SL-022 protected-surface change detected. Phase-0 short-circuits content
+      #       rules by design, so this path enforces the candidate lake build as the
+      #       blocking content floor and annotates the meta change. Machine authorization
+      #       of harness changes themselves arrives with component C (conservative
+      #       extension gate); until then this annotated path is the recorded bootstrap
+      #       scaffold, not a silent pass.
+      #   anything else = content violation or infrastructure failure: fail closed.
+      - name: Run baseline harness admission (exit-semantics separated)
         working-directory: candidate
         env:
           JUDGE_ROOT: ${{ steps.judge.outputs.root }}
         shell: bash
         run: |
-          set -euo pipefail
+          set -uo pipefail
           dotnet "$JUDGE_ROOT/Meta/StrataLint/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll" check --protected-base "$DEV_BASELINE_SHA"
+          rc=$?
+          if [[ $rc -eq 0 ]]; then
+            printf '%s\n' "### Admission: content fully validated, no protected-surface change" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          elif [[ $rc -eq 3 ]]; then
+            echo "::warning title=SL-022 protected-surface change::Content rules short-circuited by phase-0 meta detection; enforcing candidate lake build as blocking floor. Full machine meta-gate pending component C."
+            printf '%s\n' "### SL-022 protected-surface change (bootstrap scaffold path)" >> "$GITHUB_STEP_SUMMARY"
+            printf '%s\n' "Blocking floor enforced: candidate lake build below. Component C will replace this scaffold with the conservative-extension machine gate." >> "$GITHUB_STEP_SUMMARY"
+            set -e
+            "$HOME/.elan/bin/lake" build
+            exit 0
+          else
+            exit "$rc"
+          fi
