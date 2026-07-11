@@ -11,7 +11,7 @@ public sealed partial class ProductionEnvironmentTests
     public void CheckShortCircuitsAtSl022BeforeCandidateContentOrLeanIsRead()
     {
         var gateway = new FakeRepositoryGateway(
-            RawChangeSet.Create(new[] { "Meta/StrataLint/StrataLint.Engine/Gid.cs" }),
+            RawChangeSet.Create(new[] { "Meta/StrataLint/StrataLint.Engine/Coordinates/Gid.cs" }),
             current: null,
             baseline: null);
         var inspector = new FakeLeanInspector(null);
