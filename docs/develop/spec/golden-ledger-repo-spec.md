@@ -136,6 +136,8 @@ golden-ledger/
 
 **A15 提交与 PR 文法** `COMMIT := <官>"("<GID>"): "<动词短语>`;PR 模板 = 四段判词(立了什么/依赖什么/试了什么死了什么/账平声明勾选:无既有 closed 被推翻)。
 
+**A17 Scribe:文档即代码(v7.12)** 叙事层(Blueprint/Papers,渐及 spec)的 canonical 源=C# 类型化文档 AST(`Meta/StrataLint/StrataLint.Scribe`):文件头/章节/段落/公式(自建封闭 Formula AST→LaTeX)/GID 引用(经 Engine Gid 构造期解析,悬空即失败——取代已废的行号/片段哈希位置锚);canonical MD writer 确定性字节,发射输出==提交字节由测试自洽;PDF 经 QuestPDF(钉版,社区条款,许可年检入账);依赖闸门判词:Markdig/CSharpMath/MathNet.Symbolics/AngouriMath 未准入(证据闸门),iText7 永拒(AGPL)。markdown/PDF 自此为构建产物(1.1 三定律与 CLAUDE.md 第 7 条之工程兑现)。
+
 **A16 零信任合并门(v7.12,CLAUDE.md 第 19 条之 spec 形)** 提交者身份(维护者/agent/fork)与准入无关,一切 PR 过同一道纯机器门:dev 分支 `enforce_admins` + **双 required check(strict)**——① engineering(build --warnaserror + 全测试 + selftest 字节比对 + 能力链编译证明);② baseline admission(内容寻址 dev-baseline harness 判 candidate;`pull_request_target` 保证法官取 **base 侧** workflow 与 harness,提交者不可改判自己的法官)。绿=auto-merge;红=无人可合。**exit 语义**:0=内容全验;1=违规;2=基础设施(含快照拒非常规 git 条目,如 mode 120000 symlink——AGENTS.md 由此裁定为常规指针文件);3=SL-022 保护面变更 → 标注入账 + candidate `lake build` 阻断地板(**bootstrap 脚手架,有案在录**:组件 C 保守扩展门现役后,harness 变更由机器判保守性与成本,此路径关闭)。人审与 AI 审=质量增益,非准入权威;削弱门=元层自改,须付 τ=0 成本(CLAUDE.md 第 21 条)。
 
 ---
