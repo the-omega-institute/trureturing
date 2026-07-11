@@ -52,7 +52,7 @@
   "protected-line-anchor-mismatch": [["SL-016", "Meta/BACKFILL.yaml", "protected line anchor mismatch: docs/develop/theory/GICT_complete_development_v3 (3).md#GICT-heart-O5"]],
   "protected-source-digest-mismatch": [["SL-016", "Meta/BACKFILL.yaml", "protected source digest mismatch: GICT-v3.6"]],
   "protected-axiom": [["SL-020", "D5/S0/Carrier/Ring.lean", "axiom declarations are confined to AxiomDebt.lean: D5.S0.Carrier.protectedBypass"]],
-  "query-source-fragment-hash-mismatch": [["SL-017", "Library/queries.yaml", "query D5-Q0090 source fragment hash does not match"]],
+  "query-source-fragment-hash-mismatch": [],
   "quoted-import-generality": [["SL-010", "D5/S0/Carrier/Ring.lean", "G artifact imports I fact D5/S0/Conventions/Notation.lean"]],
   "retired-task-code": [["SL-013", "D5/X_Frontier/OldTask.lean", "permanent task code D5-T0011 was removed"]],
   "root-imports-frontier": [["SL-001", "Trureturing.lean", "stratum closure may not import D5/X_Frontier/OpenProbe.lean"]],

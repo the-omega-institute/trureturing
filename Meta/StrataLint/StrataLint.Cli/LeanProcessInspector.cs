@@ -80,6 +80,17 @@ internal sealed class LeanProcessInspector(string repositoryRoot) : ILeanInspect
             return LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>(StringComparer.Ordinal));
         }
 
+        var timing = Environment.GetEnvironmentVariable("STRATALINT_TIMING") == "1";
+        var clock = System.Diagnostics.Stopwatch.StartNew();
+        void Mark(string phase)
+        {
+            if (timing)
+            {
+                Console.Error.WriteLine($"[timing] {phase}: {clock.ElapsedMilliseconds}ms");
+                clock.Restart();
+            }
+        }
+
         var temporary = Path.Combine(Path.GetTempPath(), "stratalint-lean-" + Guid.NewGuid().ToString("N"));
         var snapshotRoot = Path.Combine(temporary, "repository");
         var packageLink = Path.Combine(snapshotRoot, ".lake", "packages");
@@ -87,7 +98,10 @@ internal sealed class LeanProcessInspector(string repositoryRoot) : ILeanInspect
         try
         {
             Materialize(snapshot, snapshotRoot);
+            Mark("materialize");
             LinkPinnedPackages(packageLink);
+            SeedBuildArtifacts(snapshotRoot);
+            Mark("seed");
             var build = BoundedProcessRunner.Run(
                 "lake",
                 new[] { "build" },
@@ -100,10 +114,59 @@ internal sealed class LeanProcessInspector(string repositoryRoot) : ILeanInspect
                     "snapshot lake build failed: " + Tail(StrictUtf8.GetString(build.StandardError)));
             }
 
+            Mark("lake-build");
+
+            // Content-addressed inspection memo: a module report is keyed by the
+            // SHA-256 of its .olean. Lake rebuilds a module's .olean whenever the
+            // module or anything upstream changes, so the key self-invalidates and
+            // a memo hit is exactly as trustworthy as re-running the inspector.
+            // Hits need no lean process at all; only misses are inspected.
+            var oleanHashes = new Dictionary<string, string>(StringComparer.Ordinal);
+            foreach (var module in modules.Keys)
+            {
+                var oleanPath = Path.Combine(
+                    snapshotRoot, ".lake", "build", "lib", "lean",
+                    module.Replace('.', Path.DirectorySeparatorChar) + ".olean");
+                if (!File.Exists(oleanPath))
+                {
+                    throw new InvalidOperationException($"snapshot build left no olean for {module}");
+                }
+
+                oleanHashes[module] = Convert.ToHexStringLower(
+                    System.Security.Cryptography.SHA256.HashData(File.ReadAllBytes(oleanPath)));
+            }
+
+            Mark("olean-hash");
+            var memo = InspectionMemo.Load(root);
+            var pending = modules.Keys
+                .Where(module => !memo.TryGet(module, oleanHashes[module], out _))
+                .Order(StringComparer.Ordinal)
+                .ToArray();
+
+            var reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal);
+            foreach (var module in modules.Keys)
+            {
+                if (memo.TryGet(module, oleanHashes[module], out var cached))
+                {
+                    reports.Add(modules[module], cached);
+                }
+            }
+
+            if (timing)
+            {
+                Console.Error.WriteLine($"[timing] memo: hits={modules.Count - pending.Length} misses={pending.Length}");
+            }
+
+            if (pending.Length == 0)
+            {
+                Mark("memo-hit-return");
+                return LeanAxiomReport.Create(reports);
+            }
+
             var inspector = Path.Combine(temporary, "Inspector.lean");
             File.WriteAllText(inspector, InspectorSource + "\n", StrictUtf8);
             var arguments = new List<string> { "env", "lean", "--run", inspector };
-            arguments.AddRange(modules.Keys.Order(StringComparer.Ordinal));
+            arguments.AddRange(pending);
             var output = BoundedProcessRunner.Run(
                 "lake",
                 arguments,
@@ -116,7 +179,6 @@ internal sealed class LeanProcessInspector(string repositoryRoot) : ILeanInspect
                     "trusted Lean inspector failed: " + Tail(StrictUtf8.GetString(output.StandardError)));
             }
 
-            var reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal);
             foreach (var line in StrictUtf8.GetString(output.StandardOutput).Split('\n'))
             {
                 if (!line.StartsWith(Marker, StringComparison.Ordinal)) continue;
@@ -164,6 +226,13 @@ internal sealed class LeanProcessInspector(string repositoryRoot) : ILeanInspect
                     "trusted Lean inspector omitted module reports: " + string.Join(", ", missing));
             }
 
+            foreach (var module in pending)
+            {
+                memo.Put(module, oleanHashes[module], reports[modules[module]]);
+            }
+
+            memo.Save(root);
+            Mark("inspect+save");
             return LeanAxiomReport.Create(reports);
         }
         catch (Exception exception) when (exception is IOException or TimeoutException or InvalidOperationException or JsonException)
@@ -186,6 +255,32 @@ internal sealed class LeanProcessInspector(string repositoryRoot) : ILeanInspect
                 ?? throw new InvalidOperationException($"snapshot path has no parent: {path.Value}");
             Directory.CreateDirectory(parent);
             File.WriteAllBytes(destination, file.RawBytes.AsSpan());
+        }
+    }
+
+    // Seed the snapshot with the repository's own build artifacts so the snapshot
+    // lake build is incremental. Correctness is unaffected: lake re-validates every
+    // artifact against its own input-trace hashes and rebuilds on any mismatch. A
+    // copy (not a symlink) keeps the judge from writing through into the real tree.
+    private void SeedBuildArtifacts(string snapshotRoot)
+    {
+        var source = Path.Combine(root, ".lake", "build");
+        if (!Directory.Exists(source))
+        {
+            return;
+        }
+
+        var destination = Path.Combine(snapshotRoot, ".lake", "build");
+        foreach (var directory in Directory.EnumerateDirectories(source, "*", SearchOption.AllDirectories))
+        {
+            Directory.CreateDirectory(Path.Combine(destination, Path.GetRelativePath(source, directory)));
+        }
+
+        Directory.CreateDirectory(destination);
+        foreach (var file in Directory.EnumerateFiles(source, "*", SearchOption.AllDirectories))
+        {
+            var target = Path.Combine(destination, Path.GetRelativePath(source, file));
+            File.Copy(file, target, overwrite: true);
         }
     }
 
