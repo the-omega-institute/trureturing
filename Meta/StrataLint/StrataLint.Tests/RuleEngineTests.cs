@@ -319,6 +319,7 @@ internal sealed class RuleFixture
         {
             var path = gid + ".lean";
             Files[path] = HeaderFor(gid, gid.Contains("/S0/", StringComparison.Ordinal) ? "G" : "E")
+                + (gid.Contains("/X_Frontier/", StringComparison.Ordinal) ? "-- D5-T9999\n" : string.Empty)
                 + "def protectedTargetFixture : Unit := ()\n";
             Reports[path] = Report();
             if (gid == "D5/X_Frontier/Hearts")

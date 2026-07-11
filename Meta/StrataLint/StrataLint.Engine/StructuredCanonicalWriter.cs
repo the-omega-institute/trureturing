@@ -18,8 +18,13 @@ internal static class StructuredCanonicalWriter
     internal static ImmutableArray<byte> WriteJson(string text)
     {
         using var document = JsonDocument.Parse(text);
+        return WriteJson(document.RootElement);
+    }
+
+    internal static ImmutableArray<byte> WriteJson(JsonElement element)
+    {
         var builder = new StringBuilder();
-        WriteJsonValue(builder, document.RootElement);
+        WriteJsonValue(builder, element);
         builder.Append('\n');
         return ImmutableArray.CreateRange(StrictUtf8.GetBytes(builder.ToString()));
     }

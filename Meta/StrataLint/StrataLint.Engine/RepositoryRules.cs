@@ -240,8 +240,8 @@ internal static class RepositoryRules
             return ImmutableArray.Create(new RuleFinding(path, $"Hearts semantic report failed: {current.Error}"));
         }
 
-        return baseline.Declarations.Select(static item => item.Signature)
-            .SequenceEqual(current.Declarations.Select(static item => item.Signature))
+        return CanonicalStatementWriter.WriteModule(repoPath, baseline).AsSpan()
+            .SequenceEqual(CanonicalStatementWriter.WriteModule(repoPath, current).AsSpan())
                 ? ImmutableArray<RuleFinding>.Empty
                 : ImmutableArray.Create(new RuleFinding(path, "semantic declaration identities and types are frozen"));
     }
