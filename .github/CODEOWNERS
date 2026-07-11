@@ -1,4 +1,5 @@
-* @loning
+# 只列元层保护面:改这些=元层变更,需 code-owner(人类)审(SL-022/CLAUDE.md 第5/15条)。
+# 内容工件(S0/Evidence/Blueprint/Library/Chronicle)无 code-owner → 由 candidate harness 机器门裁决(对错机器判,CLAUDE.md 第2条)。
 
 /Meta/ @loning
 /docs/develop/spec/golden-ledger-repo-spec.md @loning
