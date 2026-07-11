@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>StrataLint.Scribe</RootNamespace>
+    <AssemblyName>StrataLint.Scribe</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../StrataLint.Engine/StrataLint.Engine.csproj" />
+    <PackageReference Include="Dunet" />
+    <PackageReference Include="QuestPDF" />
+  </ItemGroup>
+</Project>
