@@ -49,6 +49,41 @@ public sealed class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void CheckMapsTruthDagCyclesToSl001BeforeRuleCatalog()
+    {
+        const string loopPath = "D5/S0/Carrier/Loop.lean";
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical;
+        fixture.Baseline["Meta/registry.yaml"] = TestRegistry.Canonical;
+        fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
+        fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
+        fixture.Files[loopPath] = "def loop : Nat := 0\n";
+        fixture.Reports[RuleFixture.RingPath] = new LeanFileReport(
+            ImmutableArray.Create("D5.S0.Carrier.Loop"),
+            ImmutableArray<LeanDeclaration>.Empty);
+        fixture.Reports[loopPath] = new LeanFileReport(
+            ImmutableArray.Create("D5.S0.Carrier.Ring"),
+            ImmutableArray<LeanDeclaration>.Empty);
+        var gateway = new FakeRepositoryGateway(
+            RawChangeSet.Create(new[] { RuleFixture.BlueprintPath }),
+            Snapshot(fixture.Files),
+            Snapshot(fixture.Baseline));
+        var inspector = new FakeLeanInspector(LeanAxiomReport.Create(fixture.Reports));
+        var environment = new ProductionCliEnvironment("/repo", gateway, inspector);
+
+        var outcome = environment.Check(Array.Empty<string>());
+
+        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
+        var cycle = Assert.Single(rejected.Diagnostics);
+        Assert.Equal(RuleId.CreateKnown(1), cycle.RuleId);
+        Assert.Equal(loopPath, cycle.Path);
+        Assert.Equal(
+            $"managed import cycle: {loopPath} -> {RuleFixture.RingPath} -> {loopPath}",
+            cycle.Message);
+    }
+
+    [Fact]
     public void RouteUsesTheRepositoryRegistryAndEmitsStableJson()
     {
         using var temporary = new TemporaryDirectory();
