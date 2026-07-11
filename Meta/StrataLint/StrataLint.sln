@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.Cli", "StrataLin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.Tests", "StrataLint.Tests/StrataLint.Tests.csproj", "{7B712EF8-0E6F-4F14-972D-51518C355D44}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.Scribe", "StrataLint.Scribe/StrataLint.Scribe.csproj", "{8F559351-871D-44A0-8D99-6CE7C83D7001}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.Scribe.Tests", "StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj", "{B26A0B2F-7288-4C1F-AE3F-C8742C534876}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,5 +31,13 @@ Global
 		{7B712EF8-0E6F-4F14-972D-51518C355D44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B712EF8-0E6F-4F14-972D-51518C355D44}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B712EF8-0E6F-4F14-972D-51518C355D44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F559351-871D-44A0-8D99-6CE7C83D7001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F559351-871D-44A0-8D99-6CE7C83D7001}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F559351-871D-44A0-8D99-6CE7C83D7001}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F559351-871D-44A0-8D99-6CE7C83D7001}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B26A0B2F-7288-4C1F-AE3F-C8742C534876}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B26A0B2F-7288-4C1F-AE3F-C8742C534876}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B26A0B2F-7288-4C1F-AE3F-C8742C534876}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B26A0B2F-7288-4C1F-AE3F-C8742C534876}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
