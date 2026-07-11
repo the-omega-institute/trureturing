@@ -6,7 +6,7 @@
 >
 > **诚实分栏:硬不动点 vs 软不动点。** 只有机器强制的才是**变换下真正不变**的硬不动点(违则 lint 红,逃不掉);其余是靠评审与自觉守护的软不动点(不可机器判,会漂移,须对手官与人类门看住)。每条都标了**〔守护〕**——不让"不动点"这个名字比它实际保证的强。这条自省本身,就是下面第 4 条("不冒领")与第 13 条("再聪明的单点也会错")对本文件自己的应用。
 >
-> **一名一址**:本文件是权威原文,`AGENTS.md` 指向它(同一真源)。链接方式(symlink / include)以落地时实测各 agent 确能读到同一份为准——在验证前,这是一个待核实假设,不是既成事实。
+> **一名一址**:本文件是权威原文,`AGENTS.md` 指向它(同一真源)。链接方式曾是待核实假设;**已由机器裁决**:symlink 被 harness 闭世界快照解码器 fail-closed 拒绝(git mode 120000 非常规文件,PR#17 首测),故 `AGENTS.md` 为**常规指针文件**(一行指到本文件,不复制内容——零重复真源)。
 
 ---
 
@@ -86,9 +86,9 @@ import 只许向下;**投影不当骨骼**——文档、书、论文都是图�
 〔守护:**半硬**·门官查溯源(H9)+ 无库外信道;「未见于工件视同未发生」靠纪律〕
 
 **10. 利益回避,旗判分离。**
-对手官 ≠ 证师;禁自并;评审独立于实现。提出问题的人不判自己的答案。
+对手官 ≠ 证师;评审独立于实现。提出问题的人不判自己的答案。
 *成熟锚*:同行评审、四眼原则、职责分离(separation of duties)、code review。
-〔守护:**硬**·门官策略 H7(对手≠证师、禁自并)〕
+〔守护:**流程纪律**·sshx 编排(实施席≠评审席,异 bias 隔离)——这是**质量层**;**准入层**不依赖它(第 19 条零信任:合并由机器门判,"自并"已无意义,因为合并者是机器不是人)。旧形式"禁自并+人审 H7"已被机器门取代〕
 
 **11. 陈述回声先行。**
 先审题(回声核对陈述)后判卷,防"证对了错题"。动手前先确认"要证的是不是对的东西"。
@@ -138,14 +138,15 @@ harness 的本质,就是**给各类事定义"这类该怎么处理"**——先�
 *成熟锚*:policy-as-code(先定策略再执行)、类型先于值、schema 先于数据、分类学 / 本体论先行。
 〔守护:**元准则**·新类的定义过评审/SL-022 门控进 harness;定义后实例由机器按定义判。无定义即"未实例化(案号)",非"未知"〕
 
-**19. git 开发流程:dev 集成、main 发布、PR 门控、worktree 隔离。**
-- **`dev`** = 集成主分支(default);一切实施经 PR 合入 dev。
-- **`main`** = 发布分支;dev 稳定后经 release PR + `tag E<n>`(spec A14)推进,main 即"已发布/可复现"的冻结态。
+**19. 零信任提交:一切合并由机械 harness 判,身份无关;dev 集成、main 发布、worktree 隔离。**
+开源仓库的约束模型:**约束人与约束 AI 是同一件事**——提交者是谁(维护者/agent/陌生 fork)与准入无关,一切提交经**同一道机械 harness 门**;人审与 AI 审是**质量增益,绝不是准入权威**。
+- **`dev`** = 集成主分支(default);一切实施经 PR 合入 dev。**`main`** = 发布分支;dev 稳定后经 release PR + `tag E<n>`(spec A14)推进,main 即"已发布/可复现"的冻结态。
 - **实施分支**:在独立 worktree(第 16 条),命名 `harness/*` 或 `agent/<官>/<任务码>`(spec 分支锁 + TTL)。
-- **合并门控**:PR → dev 须过 **required-check**(harness `check` + `dotnet build/test` 绿 = 对错机器判)+ **review**(利益回避 H7,不自并)+ **溯源**(H9,LLM PR 携转录)。
-- **元层变更**(改 harness/spec/registry/domains/Hearts/X_Assumptions/CODEOWNERS)由 **SL-022** 识别 → 人类门控授权(不是判对错,是授权不可逆动作)。
-*成熟锚*:trunk-based(dev 集成)+ release branch(main 冻结)、PR + required status checks、CODEOWNERS 职责分离。
-〔守护:**硬**·dev/main 分支保护 + required-check 机器强制;元层变更 SL-022 机器识别 + CODEOWNERS 门控〕
+- **合并门(纯机器,`enforce_admins` 连管理员无豁免)**:PR → dev 须过 **双 required check(strict)**:① engineering(build --warnaserror + 全测试 + selftest 字节比对 + 能力链编译证明);② **baseline admission**(内容寻址的 dev-baseline harness 判 candidate;`pull_request_target` 保证**法官用 base 侧 workflow,提交者改不了判自己的法官**)。绿=auto-merge 自动合;红=谁都合不进,修根因不绕。
+- **baseline 的 exit 语义分离**:0=内容全验通过;1/2=违规/基础设施,红;3=SL-022 元层变更——标注入账 + 强制 candidate `lake build` 阻断地板(**记录在案的 bootstrap 脚手架**:组件 C 保守扩展门到位后,改 harness 本身也由机器判成本与保守性,此路径关闭)。
+- **溯源**(H9):LLM PR 携转录/卷宗引用——审计与复盘用,不是准入条件。
+*成熟锚*:zero-trust(永不信任、始终验证)、OSS 的 required status checks 治理、能力安全模型(权威在门不在人)、pull_request_target 信任拓扑。
+〔守护:**硬**·双 required check(strict)+ enforce_admins + auto-merge 机器强制;exit-3 脚手架有案在录,由组件 C/G 关闭;削弱门=元层自改,须付 τ=0 成本〕
 
 **20. 执法分级:预防贵、检测廉;可逆的允许犯错,但必可发现、可勘正。**
 不是所有洞都值得事前堵死——堵住无穷的绕过是无穷贵(SL-019 打了四轮地鼠即教训)。这**不是**放松,而是回到账本本义:四状态账本从不要求一切 `closed`,`open` 是合法状态;纪律公理 D 要的是"每个异常**检出或入账**",不是"一切必须证明";11.14 判词可诉制明说**允许判错、当庭勘正为荣誉**。按 **可逆性 × 风险** 分级:
