@@ -13,10 +13,10 @@ public sealed class GoldenCompatibilityTests
     public void ExtractedPythonOracleBytesArePinned()
     {
         Assert.Equal(
-            "afe3b55ddebb59434de8361009a9bc7455ac1cf39af8756caf951f70a77d8ec1",
+            "5333ac10ccbcd467f08ead3bdf525b10c2d9392093083b2e7f9fd15f2e29b1bc",
             Hash("python-cases.json"));
         Assert.Equal(
-            "6b8497792333d963ffa1ae08dbf025cd073f71a127d744a2b2927052de37f50f",
+            "d492002956b43da9cbd9fe5243b96676736c6d23afc0fd456068fa0f08fa979e",
             Hash("python-diagnostics.json"));
     }
 
@@ -56,14 +56,13 @@ public sealed class GoldenCompatibilityTests
     public static TheoryData<string> Sl016RedCases => new()
     {
         "empty-protected-backfill-inventory",
-        "deleted-protected-backfill-entry",
+        "missing-backfill-disposition",
         "duplicate-protected-backfill-entry",
         "dangling-backfill-entry",
         "invalid-protected-backfill-schema",
         "changed-protected-source-path",
-        "protected-source-digest-mismatch",
-        "protected-line-anchor-mismatch",
-        "missing-protected-ticket-index-case",
+        "ticket-target-task-mismatch",
+        "frontier-task-missing-ticket-index",
     };
 
     [Theory]
@@ -290,6 +289,7 @@ public sealed class GoldenCompatibilityTests
 
     private static void NormalizeBackfillTargetsToPythonFixture(RuleFixture fixture)
     {
+        fixture.AddNormalizedBackfillTicketTarget();
         var lines = fixture.Files["Meta/BACKFILL.yaml"].Split('\n');
         for (var index = 0; index < lines.Length; index++)
         {
@@ -301,7 +301,7 @@ public sealed class GoldenCompatibilityTests
             }
             else if (trimmed.StartsWith("gid: ", StringComparison.Ordinal))
             {
-                lines[index] = indentation + "gid: D5/S0/Carrier/Ring";
+                lines[index] = indentation + "gid: D5/X_Frontier/BackfillTasks";
             }
         }
 
@@ -313,19 +313,19 @@ public sealed class GoldenCompatibilityTests
         var lines = fixture.Files["Meta/BACKFILL.yaml"].Split('\n').ToList();
         var marker = $"- anchor: {anchor}";
         var index = lines.FindIndex(line => string.Equals(line.Trim(), marker, StringComparison.Ordinal));
-        if (index < 0 || index + 4 > lines.Count)
+        if (index < 0 || index + 2 > lines.Count)
         {
             throw new InvalidOperationException($"unknown protected fixture anchor '{anchor}'");
         }
 
-        var block = lines.GetRange(index, 4);
+        var block = lines.GetRange(index, 2);
         if (duplicate)
         {
-            lines.InsertRange(index + 4, block);
+            lines.InsertRange(index + 2, block);
         }
         else
         {
-            lines.RemoveRange(index, 4);
+            lines.RemoveRange(index, 2);
         }
 
         fixture.Files["Meta/BACKFILL.yaml"] = string.Join('\n', lines);
