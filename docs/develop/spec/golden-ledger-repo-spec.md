@@ -1,4 +1,4 @@
-# trureturing / D5 —— 仓库规范全卷 v7.10(定本:宪法·地层·编码·执法·八官·管线·治理·引导)
+# trureturing / D5 —— 仓库规范全卷 v7.11(定本:宪法·地层·编码·执法·八官·管线·治理·引导)
 
 > ⚑ **铭牌**。组织:**trureturing**(收据三张:27.99 真理为攀登而不可达之 ν、27.90 理论过自家分类器返回原点、仪文"账本的最后一行永远是下一轮的第一行")。仓库名:**trureturing**——**仓库即模空间,单库承全族**(v7.4 裁决,撤姊妹分库):`Metallic/`(G 层参数化机器)+ `D5/ D8/ …`(实例层,按需生长)+ `Moduli/`(跨理论比较定理之家);分库仅当已证实压力(治理/许可/规模),**裂由压力,不预裂**。
 > README 首行:*trureturing — the last line of the ledger is always the first line of the next round.*
@@ -34,7 +34,7 @@
 定义/定理/证明→F(地层算法);开放问题→`X_Frontier/`;命名假设→`X_Assumptions/`;条件定理→`X_Certificates/`;数学叙事→B(镜像);数值/实验→E(镜像);常数表→`Evidence/values.json`;评注/判词→C(日期);文献→L(bibkey);论文→P(recipe-id);工具词表→Meta;宪章→agents;治理文件→`docs/`;旧卷→`docs/history/`(只读)。
 
 ## 1.4 状态即语法(评级零元数据)
-无 sorry 无私 axiom 且 lake 过 = **已证**;引 Mathlib 或登记 axiom(AxiomDebt.lean)= **承典**;携 `(h : Assumptions.X)` = **条件定理(证书)**;居 X_Frontier 带 sorry = **开放**;居 C 层 = **评注(永不承重)**。状态徽章由语法自动生成,全库禁手写状态。
+无 sorry 且 axiom 闭包 ⊆ `{propext, Classical.choice, Quot.sound}` = **已证**;axiom 闭包含 `AxiomDebt.lean` 登记之额外公理 = **承典**;签名携 `(h : Assumptions.X)` = **条件定理(证书)**;居 X_Frontier 带 sorry = **开放**;居 C 层 = **评注(永不承重)**。Mathlib 的标准三公理为底座,不改变状态;未登记额外公理一律拒收。状态徽章由语法自动生成,全库禁手写状态。
 
 ## 1.6 真理条款(承重 ⊊ 真理:Lean 之双角色,防口号误读)
 Lean 于本库任**两职**:**公证**(证明——无 sorry 即已证)与**登记**(语言——陈述其不能证明者:Frontier 之 sorry 是被形式化*表示*的未知,非被验证的真理)。
@@ -48,7 +48,7 @@ X_Assumptions 变更;新增 axiom;论文签发;Hearts.lean 任何触碰。**门�
 
 # 第二部:目录与地层(harness 骨架)
 
-## 2.1 完整树(v7.4 注:下示为 D5 实例侧之树;库顶层为 `Metallic/ + D5/ + Moduli/ + 平面与特区`,`GoldenLedger/` 即 `D5/` 之旧称,GID 从此 = 字面仓库路径)
+## 2.1 完整树(v7.4 注:下示为 D5 实例侧之树;库顶层为 `Metallic/ + D5/ + Moduli/ + 平面与特区`,`GoldenLedger/` 即 `D5/` 之旧称,F 层 GID 从此 = 字面仓库路径去 `.lean` 后缀)
 ```
 golden-ledger/
 ├── Trureturing.lean                     # 根导入
@@ -77,7 +77,7 @@ golden-ledger/
 **顶层永远 = S0–S4 + 三特区 + 八固定目录:骨架尺寸恒定,与内容量无关。**
 
 ## 2.2 地址算法(零会议)
-地层 = 1 + max(import 之地层)(Kernel=0);疆域查 `Meta/domains.yaml`;落格 `S<层>/<疆域>/<模块>.lean`。
+地层是显式语义坐标,由疆域词表决定:`Meta/domains.yaml` 每个疆域必须携 `stratum` 字段,落格 `S<stratum>/<疆域>/<模块>.lean`。执法两条:(i)H1 闭包不变量:S_k 单元之库内 import 闭包 ⊆ S_{≤k}(同层互引合法,S0 亦然);(ii)一致性:单元 import 闭包之最高地层 ≤ 其疆域地层。`1 + max(import 之地层)` 仅为新概念选层之下界启发,不再定义地层。
 
 ## 2.3 生长律
 目录 >12 文件或文件 >400 行 ⟹ **局部分裂**(按子疆域,组名先入词表;`Meta/split.py` 单 PR 完成 mv+import 重写;该目录 MAP.md 追加记录);**只裂不迁,永不全局重排;深度对数增长,结构演化 append-only。**
@@ -89,12 +89,12 @@ golden-ledger/
 
 # 第三部:编码规范(A1–A15:一名一址,机器可判)
 
-**A1 理论码** `THEORY := "D"<基本判别式> | "T"<次数>"D"<判别式>`——D5 金、D8 银、D13 铜;由分类器(6.205 不变量)签发,唯一典范可排序;姊妹实例化 = 换 D。
+**A1 理论码** `THEORY := "D"<基本判别式> | "T"<次数>"D"<判别式>`——D5 金、D8 银、D13 铜;由分类器(6.205 不变量)签发,唯一典范可排序;姊妹实例化 = 换 D。**M0 admission 只实例化 D5**;`Metallic/`、`Moduli/` 与其余合法理论码保留为未实例化坐标,压力案 D5-T0009 成立前 route 与 check 均以 SL-021 拒收并报告该案,不得降格为“未知路径”。
 
-**A2 全域标识符 GID(v6.2 安全字符集文法)** `GID := THEORY "/" [PLANE "/"] PATH ["." DECL] ["--" TAG]`,PLANE∈{F(省),B,E,C,L,P}。例:`D5/S3/Spectral/GapLabeling.gap_label_mem`、`D5/E/S3/Analytic/cphi`、`D5/C/2026-07-06/r168`、`D5/P/D5-P001--frozen`。**papergen/blueprint 只接受 GID;跨库引用自带理论坐标。**
-**A2.1 字符集律**(SL-015):机器读字段(GID、键、formula、任务/实验/论文码)字符集恒为 `[A-Za-z0-9_/.-]`——禁 `:`(Windows 文件名/git refname 非法)、`#`(YAML/shell 注释、URL fragment)、`@`(refspec 歧义)及一切需转义符;首段 `D<数字>` 即理论码(无歧义);声明分隔 `.` 与 Lean 全限定名同构;**GID 可直接作文件路径、URL 段、无引号 YAML 值**;分支只用任务码(`agent/prover/D5-T0042`),GID 不入 refname;Unicode 仅居散文与 docstring。
+**A2 全域标识符 GID(v7.11 规范虚拟地址)** `GID := THEORY "/" [PLANE "/"] PATH ["." DECL] ["--" TAG]`,PLANE∈{F(省),B,E,C,L,P};每个 PATH segment 必须非空且不得为 `.`/`..`;GID 与**语义目标**立总双射,逐平面唯一反解:F:`D5/<S 层>/<疆域>/<模块>[.<DECL>]` ↔ `D5/<S 层>/<疆域>/<模块>.lean` 中之文件或声明;B:`D5/B/<PATH>` ↔ `Blueprint/D5/<PATH>.md`;E:`D5/E/<PATH>.<DECL>--<KIND>` ↔ **唯一单文件** `Evidence/D5/<PATH>.<DECL>.<KIND>`(目录永不充当 E 目标,同一选择子只许一种工件类型);C:`D5/C/<YYYY-MM-DD>/<slug>` ↔ `Chronicle/<YYYY>/<MM>/<DD>-<slug>.md`;L:`D5/L/<bibkey>` ↔ `Library/notes/<bibkey>.md`;P:`D5/P/<paper-id>` ↔ `Papers/recipes/<paper-id>.yaml`,`D5/P/<paper-id>--frozen` ↔ 该冻结包唯一 `manifest.sha256`。F 层工件 GID 即字面 Lean 路径去 `.lean` 后缀,`.DECL` 是该文件内声明选择子;其余平面 GID 是虚拟地址,不得与物理路径混写。例:`D5/S3/Spectral/GapLabeling.gap_label_mem`、`D5/E/S3/Analytic/Cphi.result--json`、`D5/C/2026-07-06/r168`、`D5/P/D5-P001--frozen`。**papergen/blueprint 只接受全 GID;跨库引用自带理论坐标。**
+**A2.1 字符集律**(SL-015):除 `formula` 外,机器读字段(GID、键、任务/实验/论文码)字符集恒为 `[A-Za-z0-9_/.-]`——禁 `:`(Windows 文件名/git refname 非法)、`#`(YAML/shell 注释、URL fragment)、`@`(refspec 歧义)及一切需转义符;首段 `D<数字>` 即理论码(无歧义);声明分隔 `.` 与 Lean 全限定名同构;GID 可直接作 URL 段与无引号 YAML 值,物理路径只由 A2 双射求得;分支只用任务码(`agent/prover/D5-T0042`),GID 不入 refname;Unicode 仅居散文与 docstring。`formula` 为显式例外,使用独立 ASCII 算术文法:`expr := term (("+"|"-") term)*`;`term := factor (("*"|"/") factor)*`;`factor := number | ref | "sqrt" "(" expr ")" | "(" expr ")" | ("+"|"-") factor`;token 间允许空格,`number` 为十进制整数或小数,`ref` 必须是同记录 `refs` 中声明的 ASCII 键;除此之外的字符、函数或未绑定 ref 一律拒收。
 
-**A3 地层码**(封闭集永不扩容)S0–S4;X_Assumptions/X_Certificates/X_Frontier。语义:S_k 之 import 闭包 ⊆ S_{≤k}∪Mathlib;X_C 另可引 X_A;X_F 引一切、被引于无。**目录名即纯地层码(v7.8 正名:助记词 Kernel/Axes/… 入各层 INDEX.md 首行)——GID = 字面仓库路径自此成立。**
+**A3 地层码**(封闭集永不扩容)S0–S4;X_Assumptions/X_Certificates/X_Frontier。普通疆域之地层由 `Meta/domains.yaml` 的 `stratum` 显式给定;语义:S_k 之库内 import 闭包 ⊆ S_{≤k}(同层互引合法,S0 亦然),且闭包最高地层不得高于该疆域地层;X_C 另可引 X_A;X_F 引一切、被引于无。**目录名即纯地层码(v7.8 正名:助记词 Kernel/Axes/… 入各层 INDEX.md 首行)——F 层 GID 与字面仓库路径去 `.lean` 后缀同构。**
 
 **A4 疆域码** 受控词表 `Meta/domains.yaml`(CamelCase+一行定义);新疆域 = 词表 PR(人类门控);词表外目录名 = SL-011 红。
 
@@ -102,8 +102,8 @@ golden-ledger/
 ```lean
 /- GID: D5/S3/Spectral/GapLabeling
    generality: G|I|E
-   mirror-B: B/S3/Spectral/GapLabeling.md
-   mirror-E: E/S3/Spectral/gap_labeling.py | none(waiver:<理由>)
+   mirror-B: D5/B/S3/Spectral/GapLabeling
+   mirror-E: D5/E/S3/Spectral/GapLabeling.result--json | none(waiver:<理由>)
    anchors: [bellissard1992gap]
    digest: 谱隙处 IDS 取值于 Z+Zphi(隙标定;衍射-谱同迹像之谱侧) -/
 ```
@@ -120,7 +120,7 @@ golden-ledger/
 
 **A8 常数码** values.json 键 `D5/Cphi`;schema `{value,err,method,source_pr,assumption:GID|null,history:[{value,err,pr}]}`;误差条为最坏项负责。
 **A8.1 复合常数**(验收补丁):非标量常数用点分子键——`D5/delta.mean`、`D5/delta.amp`、`D5/delta.period`(δ-亏项之形态学三元);家族共享 `D5/delta._meta` 记法。
-**A8.2 关系式校验**(验收补丁):派生常数须声明 `formula` 字段(如 `formula: "2*sqrt(5)*T0 + (137-61*sqrt(5))/24", refs: {T0: D5/T0}`(纯 ASCII));CI 重算关系式,超出合成误差条即黄牌 issue——**验收穿行首捕:c₁↔T₀ 差 3.6×10⁻⁶(即账本在册之 T₀ 双法仲裁残差),此机制使挂案永不隐身。**
+**A8.2 关系式校验**(验收补丁):派生常数须声明 `formula` 字段(如 `formula: "2*sqrt(5)*T0 + (137-61*sqrt(5))/24", refs: {T0: D5/T0}`);其语法独立于 GID 字符集,严格采用 A2.1 的 ASCII 算术表达式文法,且只能引用 `refs` 已绑定键;CI 以语法树重算关系式,超出合成误差条即黄牌 issue——**验收穿行首捕:c₁↔T₀ 差 3.6×10⁻⁶(即账本在册之 T₀ 双法仲裁残差),此机制使挂案永不隐身。**
 
 **A9 假设码与升级级联** `Assumptions.<CamelCase>` + REGISTRY(active/proven/refuted)。**级联律**:假设被证 ⟹ 结构获实例 ⟹ lint 全库扫 `(h:Assumptions.X)` ⟹ 自动开除氢任务;被反证 ⟹ errata 级联,依赖证书全体降回 Frontier。
 
@@ -130,7 +130,7 @@ golden-ledger/
 
 **A12 文献码** bibkey `<姓><年><首词>`;笔记 schema `{claim,strata_touched:[GID],license,triage:anchor|task(GID)|rejected(理由)}`。
 
-**A13 编年码** `C/<YYYY>/<MM>/<DD>-<slug>.md`;LEGACY.md 存旧评注号(27.x)映射;过去条目不可改(H5),勘误以新条目引旧。
+**A13 编年码** `D5/C/<YYYY-MM-DD>/<slug>`;物理路径由 A2 双射至 `Chronicle/<YYYY>/<MM>/<DD>-<slug>.md`;LEGACY.md 存旧评注号(27.x)映射;过去条目不可改(H5),勘误以新条目引旧。
 
 **A14 版本码** 版辑 tag `E<n>`+Zenodo DOI;工具链钉版;升级仅季度维护窗,升级 PR 只改证明不改陈述(SL-014 diff 检查)。
 
@@ -156,7 +156,7 @@ golden-ledger/
 | H11 | 词表律(目录名∈domains.yaml) | SL-011 |
 | H12 | 任务码永久、尸检只增 | SL-013 |
 
-注:SL-007/009 保留空号(H7/H9 为门官策略非 lint);现役至 SL-019(落账律)。
+注:SL-007/009 保留空号(H7/H9 为门官策略非 lint);现役至 SL-021:SL-020 为 Lean 环境公理/状态律,SL-021 为未实例化坐标律。
 
 ## 4.2 生命周期状态机(四台;状态机无台账,git 历史即台账)
 ```
@@ -216,7 +216,7 @@ recipe(A11)→ `Meta/papergen`(决定论):拉 Blueprint 散文 + **语法生成�
 | 作业 | 触发 | 内容 |
 |---|---|---|
 | build | 每 PR | lake build 全库 |
-| lint | 每 PR | StrataLint SL-001…014 全规 |
+| lint | 每 PR | 所有 active StrataLint 规则 + 每个案号延后项 |
 | evidence-fast / full | 每 PR / nightly | 受影响脚本 / 全量+实验队列 |
 | blueprint | 每合并 | 蓝图编译+依赖网页(理论之可视 DAG) |
 | papers-dry | 每合并 | 全 recipe 干跑(论文永远可装配) |
@@ -234,7 +234,7 @@ recipe(A11)→ `Meta/papergen`(决定论):拉 Blueprint 散文 + **语法生成�
 
 # 第九部:引导与里程碑
 
-**M0(第一日)**:① lakefile+mathlib 钉版;② S0 四文件当日全证;③ Hearts.lean 立碑(两 sorry+冻结注);④ Meta 四件(StrataLint/split/domains/papergen 壳);⑤ agents 全套(CONTEXT≤2K+七宪章+两模板);⑥ queries.yaml 首批;⑦ kernels 三件移植+values.json 十四常数;⑧ Blueprint 骨架+D5-P001 配方(避峰);⑨ CI 全绿;⑩ tag E0+旧卷归档。
+**M0(第一日)**:① lakefile+mathlib 钉版;② S0 四文件当日全证;③ Hearts 精确命题草案交人类门控(D5-T0001),核准后另轮立碑;④ Meta:StrataLint + domains.yaml 现役;split.py 随首次真实容量压力生长(D5-T0004),papergen 随首份全可解析 recipe 生长(D5-T0005),本轮立永久工单,不建空壳;⑤ agents 全套(CONTEXT≤2K+八宪章+两模板);⑥ queries.yaml 首批;⑦ 十四常数保持 values legacy 隔离态,kernels/producer/晋升产物延后 D5-T0003;⑧ Blueprint 骨架;D5-P001 立永久工单(依赖 S3@M3,成稿@M5);⑨ CI:lint+build 真实作业绿(required-check 配置属人类门控 D5-T0007);⑩ tag E0+旧卷归档(人类门控)。
 **M1** S1 全证(Zeck 加法闭合为首障)→ **M2** S2+解压定理 → **M3** S3 恰值群+mod5 → **M4** X_A 化数值链(c₁ 条件定理立)→ **M5** blueprint 上线+D5-P001 出稿 → **M∞** Frontier 蚕食;G 层上收 metallic-core。
 
 ---
@@ -245,9 +245,9 @@ recipe(A11)→ `Meta/papergen`(决定论):拉 Blueprint 散文 + **语法生成�
 > 方法:取十二个真实样本覆盖全部内容类型,逐一穿行本卷机器;缝隙即补丁(A8.1/A8.2 与 10.13)。
 
 **样例 1|定义(GICT I.1 定义 1.2)** ℤ[φ] → `D5/S0/Carrier/Ring`,文件头:
-`GID: D5/S0/Carrier/Ring | generality: G | mirror-B: B/S0/Carrier/Ring.md | mirror-E: none(waiver:纯定义) | anchors:[] | digest: 黄金整数环之构造`
+`GID: D5/S0/Carrier/Ring | generality: G | mirror-B: D5/B/S0/Carrier/Ring | mirror-E: none(waiver:纯定义) | anchors:[] | digest: 黄金整数环之构造`
 
-**样例 2|已证定理(GICT 定理 1.3ii;轮 163 十万例)** 范数乘性 → `D5/S0/Carrier/Norm.norm_mul`;mirror-E: `E/S0/Carrier/norm_check.py`(10⁵ 例证物);状态由语法=已证(M0 当日 Lean 化)。
+**样例 2|已证定理(GICT 定理 1.3ii;轮 163 十万例)** 范数乘性 → `D5/S0/Carrier/Norm.norm_mul`;mirror-E: `D5/E/S0/Carrier/Norm.norm_check--json`(10⁵ 例证物);状态由语法=已证(M0 当日 Lean 化)。
 
 **样例 3|极值定理(GICT 定理 3.2;轮 154)** p(n)=n+1 复杂度地板 → `D5/S2/Word/Complexity.complexity_floor`;**generality: E**(极值指纹,禁一般化);anchors:[morsehedlund1940symbolic]。
 
@@ -256,7 +256,7 @@ recipe(A11)→ `Meta/papergen`(决定论):拉 Blueprint 散文 + **语法生成�
 **样例 5|数值证书旗舰(GICT 定理 5.3;轮 143/151)** C_φ 之 A9 拆分:
 - 假设:`D5/X_Assumptions/Convergence.WindowConv`(全周期窗均收敛速率,REGISTRY: active);
 - 证书:`theorem cphi_bound (h : Assumptions.WindowConv) : |CphiLim − 0.045759332| < 1.1e-8` → 状态=条件定理(语法);
-- 证物:`D5/E/S3/Analytic/cphi`(kernels 三件:精确 {kφ}/Kahan/全周期窗——轮 143 工艺固化);
+- 证物:`D5/E/S3/Analytic/Cphi.result--json`(kernels 三件:精确 {kφ}/Kahan/全周期窗——轮 143 工艺固化);
 - 台账:`"D5/Cphi": {value:0.045759332, err:1.1e-8, method:"int-exact+Kahan+full-window", source_pr:…, assumption:"D5/X_Assumptions/Convergence.WindowConv", history:[{value:0.0457626, err:5e-7, pr:r142}]}`——**修订史真实入册。**
 
 **样例 6|条件链(GICT 定理 5.3)** c₁ = 2√5·T₀+(137−61√5)/24:外壳 E=(137−61√5)/24 为 ring 级已证(`S3/Analytic/Constants#E_exact`);装配为 X_Certificates 条件定理(前提:T₀ 之假设束);**A8.2 关系式校验现役——首捕 c₁↔T₀ 之 3.6×10⁻⁶ 张力(=在册 T₀ 双法残差),黄牌 issue 自动挂起。**
@@ -267,15 +267,15 @@ recipe(A11)→ `Meta/papergen`(决定论):拉 Blueprint 散文 + **语法生成�
     尸检:log(4/3)/2π 毙于 46σ(r143);κ² 毙于 5.6σ(r151);−2/63 毙(r150);1/40 死于代数(r144) -/`
 **四旗四毙之战史直接成为尸检行——账本纪律无损迁移。** Hearts.lean 同式(O-5/O-6,冻结注)。
 
-**样例 8|实验规格(6.204 登记之续航靶)** `E/experiments/D5-X0001.yaml`:
+**样例 8|实验规格(6.204 登记之续航靶)** `D5/E/experiments/D5-X0001.spec--yaml`:
 `{id: D5-X0001, hypothesis: "隙宽随 λ 之标度律", method: "N=3000 纤维词哈密顿量 λ∈[0.1,4] 扫描", budget: 30min, tolerance: 1e-3, target_stratum: S3/Spectral, outputs: observation}`
 
-**样例 9|编年(评注 27.94,轮 164)** → `Chronicle/2026/07/06-r164-两种看不见.md`;LEGACY.md 行:`27.94 → C/2026/07/06-r164-两种看不见`;**166 版旧账本整体入 docs/history/(只读),LEGACY 全表由 CI 生成。**
+**样例 9|编年(评注 27.94,轮 164)** → `Chronicle/2026/07/06-r164-two-invisibilities.md`;LEGACY.md 行:`27.94 → D5/C/2026-07-06/r164-two-invisibilities`;**166 版旧账本整体入 docs/history/(只读),LEGACY 全表由 CI 生成。**
 
-**样例 10|文献(轮 157 检索)** `L/notes/bellissard1992gap.md`:`{claim:"IDS 于谱隙取值于频率模", strata_touched:[D5/S3/Spectral/GapLabeling], license: ok, triage: anchor}`;kraus2012topological 同式(另触 S4/PhysicsDict)。
+**样例 10|文献(轮 157 检索)** `D5/L/bellissard1992gap`:`{claim:"IDS 于谱隙取值于频率模", strata_touched:[D5/S3/Spectral/GapLabeling], license: ok, triage: anchor}`;kraus2012topological 同式(另触 S4/PhysicsDict)。
 
 **样例 11|论文配方(O-14 全卷)** `Papers/recipes/D5-P001.yaml`:
-`{id: D5-P001, decls:[D5/S3/Diffraction/Avoidance.peak_height, ….zero_free_arc, ….dk_bound, ….sharpness], blueprint:[B/S3/Diffraction/*], evidence:[D5/E/S3/Diffraction/zeros_scan], narrative_order:[闭式,四款,数据], venue: arXiv-math.NT}`——papers-dry 干跑即验"论文永远可装配"。
+`{id: D5-P001, decls:[D5/S3/Diffraction/Avoidance.peak_height, ….zero_free_arc, ….dk_bound, ….sharpness], blueprint:[D5/B/S3/Diffraction/*], evidence:[D5/E/S3/Diffraction/Avoidance.zeros_scan--json], narrative_order:[闭式,四款,数据], venue: arXiv-math.NT}`——papers-dry 干跑即验"论文永远可装配"。
 
 **样例 12|通用性三例(理论自分类落地)** ModelSet→G(以 `Zsqrtd d` 陈述,末行特化);Mod5→I(模数为实例值);Hurwitz→E(指纹)——**G 层上收 metallic-core 之路径由此三例定标。**
 
@@ -392,6 +392,9 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 
 # CHANGELOG(原位演进史;只追加)
 
+- **v7.11 R2 续**(2026-07-11):M0④按 D5-T0004/D5-T0005 勘正为压力到达时再生长 split.py/papergen,不建空壳;Meta admission 改由现役/未实例化案号 schema 治理;CI lint 契约改为所有 active 规则及每个案号延后项。
+- **v7.11 续**(2026-07-11):M0 正文与 CHANGELOG 时序对齐(architecture 席 A5);A2 的 E 目标收紧为带声明选择子与工件类型的唯一单文件并禁空/点路径段,M0 admission 明示只实例化 D5(SL-021);values 晋升按 D5-T0003 延后。
+- **v7.11**(2026-07-11):**六席 sshx 审出、用户门控核准之 M0 harness 勘误**——GID 定为规范虚拟地址并逐平面立 gid↔path 总双射,mirror-B/E 统一全 GID;`formula` 析出为带绑定 refs 的独立 ASCII 算术文法;M0 八宪章勘正;地层改为 `domains.yaml:stratum` 显式语义坐标,H1 同层闭包与疆域一致性成文,`1+max` 降为下界启发;声明状态改由 sorry/axiom 闭包/Assumptions 签名判定,Mathlib 标准三公理不降级。执行时序勘误:D5-P001 依赖 S3,本轮仅立永久工单,成稿仍居 M5;Hearts 先交精确命题草案,经四处人类门控核准后另轮立碑。
 - **v7.10**(2026-07-06):**真理条款成文**(外部审:v2.x"形式化非唯一真理源"与 v3.0"唯一真实源=Lean 库本体"是否矛盾?)——判:不悖,系一词二义之焊接:**载体唯一 ≠ 公证独尊;F=唯一承重层而承重⊊真理**;Lean 双角色(公证/登记)成文;四真理之语法下落表入宪法 1.6;Hearts.lean 判为 Gödel 条款之建筑形态。
 - **v7.9**(2026-07-06):**机器审计轮**——审计器落地为代码(十一项检查,= Meta/conformance 种子);9/11 过,两鱼当轮结:标题行与平面表"七官"正名、宪章表补演绎官行(八官全席)。**审计自此可执行:通读让位于运行。**
 - **v7.8**(2026-07-06):**完整审计轮(双轴)**——缺口轴连续第二零:**11.24 之 μ 正式达成,"能否复现"移交 CI(金丝雀+一致性巡检)**;自洽轴结六张誊写债:11.x 章节重排为数字序(历轮锚前插入之积弊)、八官正名、**目录纯码化使"GID=字面路径"主张为真**、样例补 digest、机制计数更新、平面表回灌模空间结构;SL 空号注记。
