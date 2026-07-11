@@ -63,9 +63,6 @@ internal static class RepositoryRules
         "^[0-9a-f]{64}$",
         RegexOptions.CultureInvariant);
 
-    private static readonly ImmutableHashSet<string> StandardAxioms =
-        ImmutableHashSet.Create(StringComparer.Ordinal, "propext", "Classical.choice", "Quot.sound");
-
     private static readonly ImmutableHashSet<string> AnomalySchemaKeys =
         ImmutableHashSet.Create(
             StringComparer.Ordinal,
@@ -769,7 +766,7 @@ internal static class RepositoryRules
                 .Where(axiom => axiom != "sorryAx"
                     && !direct.Contains(axiom)
                     && !registered.Contains(axiom)
-                    && !StandardAxioms.Contains(axiom))
+                    && !LeanAxiomFacts.IsStandard(axiom))
                 .Distinct(StringComparer.Ordinal)
                 .Order(StringComparer.Ordinal)
                 .ToArray();

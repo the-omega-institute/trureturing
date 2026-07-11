@@ -14,6 +14,17 @@ public sealed class LeanProcessInspectorTests
         name = "Trureturing"
         """;
 
+    private const string LakefileWithD5 = """
+        name = "snapshot_probe"
+        version = "0.1.0"
+        defaultTargets = ["Trureturing"]
+
+        [[lean_lib]]
+        name = "Trureturing"
+        roots = ["Trureturing", "D5"]
+        globs = ["Trureturing", "D5.+"]
+        """;
+
     [Fact]
     public void InspectorBuildsAndReadsTheProvidedSnapshotInsteadOfCandidateDiskState()
     {
@@ -41,5 +52,28 @@ public sealed class LeanProcessInspectorTests
         var file = report.Files.Single(static item => item.Key.Value == "Trureturing.lean").Value;
         Assert.Contains(file.Declarations, static item => item.Name == "snapshotOnly" && item.Kind == "axiom");
         Assert.DoesNotContain(file.Declarations, static item => item.Name == "diskOnly");
+    }
+
+    [Fact]
+    public void InspectorRoundTripsDirectModuleImportsFromModuleData()
+    {
+        using var repository = new TemporaryDirectory();
+        var raw = RawRepositorySnapshot.Create(new[]
+        {
+            RawRepositoryEntry.FromText("lakefile.toml", LakefileWithD5 + "\n"),
+            RawRepositoryEntry.FromText("lean-toolchain", "leanprover/lean4:v4.31.0\n"),
+            RawRepositoryEntry.FromText(
+                "D5/S0/Carrier/Dependency.lean",
+                "def dependency : Nat := 7\n"),
+            RawRepositoryEntry.FromText(
+                "Trureturing.lean",
+                "import D5.S0.Carrier.Dependency\n\ndef importer : Nat := dependency\n"),
+        });
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+
+        var report = new LeanProcessInspector(repository.Path).Inspect(snapshot);
+
+        var importer = report.Files.Single(static item => item.Key.Value == "Trureturing.lean").Value;
+        Assert.Contains("D5.S0.Carrier.Dependency", importer.Imports);
     }
 }

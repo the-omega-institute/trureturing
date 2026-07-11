@@ -104,6 +104,12 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
 
             var registry = (RegistryLoadOutcome.Accepted)registryOutcome;
             var lean = ValidateLean(current, leanInspector.Inspect(current));
+            var dag = AcyclicTruthDag.Build(current, lean);
+            if (dag is DagBuildOutcome.Rejected rejectedDag)
+            {
+                return RejectCycle(rejectedDag.Witness);
+            }
+
             var baselineLean = ValidateLean(baseline, leanInspector.Inspect(baseline));
             return AdmissionPipeline.Evaluate(
                 current,
@@ -276,4 +282,21 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             LeanValidationOutcome.InfrastructureFailure failure =>
                 throw new InvalidOperationException(failure.Message),
         };
+
+    private static AdmissionOutcome RejectCycle(ImmutableArray<RepoPath> witness)
+    {
+        if (witness.Length < 2 || witness[0] != witness[^1])
+        {
+            throw new InvalidOperationException("Truth DAG cycle rejection did not carry a closed witness.");
+        }
+
+        var descriptor = RuleCatalog.Default.Descriptors[0];
+        return new AdmissionOutcome.RuleRejected(ImmutableArray.Create(new Diagnostic(
+            descriptor.Id,
+            descriptor.Title,
+            descriptor.DisplaySeverity,
+            descriptor.AdmissionEffect,
+            witness[0].Value,
+            "managed import cycle: " + string.Join(" -> ", witness.Select(static path => path.Value)))));
+    }
 }

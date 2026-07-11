@@ -95,7 +95,13 @@ internal static class RepositoryPathPolicy
     {
         gid = null;
         return Validate(path, policy) is null
-            && TryDescribeSemanticPath(path.Value, out var gidText, out _, out var reason)
+            && TryResolve(path, out gid);
+    }
+
+    internal static bool TryResolve(RepoPath path, out Gid? gid)
+    {
+        gid = null;
+        return TryDescribeSemanticPath(path.Value, out var gidText, out _, out var reason)
             && reason is null
             && Gid.TryParse(gidText, out gid)
             && gid.Path == path;
