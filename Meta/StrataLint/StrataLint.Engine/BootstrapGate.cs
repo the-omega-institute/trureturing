@@ -94,6 +94,7 @@ public static class BootstrapGate
             || Ordinal.Equals(value, "lakefile.toml")
             || Ordinal.Equals(value, "lake-manifest.json")
             || Ordinal.Equals(value, ".github/CODEOWNERS")
-            || value.StartsWith(".github/workflows/", StringComparison.Ordinal);
+            || value.StartsWith(".github/workflows/", StringComparison.Ordinal)
+            || value.StartsWith(".github/scripts/", StringComparison.Ordinal);
     }
 }
