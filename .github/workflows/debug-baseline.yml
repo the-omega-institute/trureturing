@@ -3,7 +3,8 @@
 # memory/process instrumentation, and validate the lake-prebuild reordering fix.
 name: debug-baseline
 on:
-  workflow_dispatch: {}
+  push:
+    branches: [harness/ci-lean-budget]
 
 permissions:
   contents: read
