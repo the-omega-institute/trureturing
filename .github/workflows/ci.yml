@@ -226,10 +226,19 @@ jobs:
             gate="$GITHUB_WORKSPACE/candidate/.github/scripts/harness-gate.sh"
             echo "::warning title=harness-gate bootstrap::The predecessor predates the shared gate; using the candidate only for this one-time introduction observation."
           fi
+          set +e
           "$gate" \
             --candidate "$GITHUB_WORKSPACE/candidate" \
             --judge-root "$GITHUB_WORKSPACE/baseline" \
-            --base "$DEV_BASELINE_SHA"
+            --base "$DEV_BASELINE_SHA" 2>&1 | tee "$RUNNER_TEMP/gate.log"
+          rc="${PIPESTATUS[0]}"
+          set -e
+          if [[ "$rc" -ne 0 ]]; then
+            echo "::error title=harness gate failed::rc=$rc — full tail below"
+            printf '%s\n' "### harness gate FAILED rc=$rc" >> "$GITHUB_STEP_SUMMARY"
+            tail -n 60 "$RUNNER_TEMP/gate.log" | sed 's/^/GATEFAIL │ /'
+          fi
+          exit "$rc"
 
       - name: Save candidate and baseline Lean build artifacts
         if: always()
