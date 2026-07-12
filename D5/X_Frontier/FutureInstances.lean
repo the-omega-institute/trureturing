@@ -9,5 +9,3 @@
     提示:Instantiate a future theory root only after governance, license, or scale pressure is evidenced.
     尸检:none -/
 def futureInstancesTicket : Unit := ()
-
--- verify probe
