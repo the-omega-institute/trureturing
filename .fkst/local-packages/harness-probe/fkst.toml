@@ -1,0 +1,9 @@
+kind = "package"
+name = "harness-probe"
+persistence_class = "stateless_adapter"
+
+[code]
+root = "."
+
+[lib_deps]
+libraries = []
