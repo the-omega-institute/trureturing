@@ -58,6 +58,45 @@ public sealed class RuleEngineTests
         Assert.Null(redResult.DeferredCase);
     }
 
+    [Fact]
+    public void Sl001AllowsContentToImportTheAssumptionFoundationButNotTheReverse()
+    {
+        // Stratum content -> X_Assumptions (carrying a registered classical debt): allowed.
+        var allowed = new RuleFixture();
+        allowed.AddAssumptionImport();
+        Assert.Empty(RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(1), allowed.Build()).Diagnostics);
+
+        // X_Assumptions -> stratum content: forbidden, so the foundation stays a sink.
+        var forbidden = new RuleFixture();
+        forbidden.AddAssumptionImportingStratum();
+        var diagnostic = Assert.Single(
+            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(1), forbidden.Build()).Diagnostics);
+        Assert.Equal(RuleId.CreateKnown(1), diagnostic.RuleId);
+        Assert.Equal(RuleFixture.AssumptionDebtPath, diagnostic.Path);
+        Assert.Contains("may not import", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Sl003CapacityHardBlocksAtEightHundredAndSoftWarnsAtSixHundred()
+    {
+        // 600 < n <= 800: a non-blocking soft warning, not a rejection.
+        var soft = new RuleFixture();
+        soft.Files[RuleFixture.RingPath] += string.Concat(Enumerable.Repeat("-- pad\n", 700));
+        var softDiag = Assert.Single(
+            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), soft.Build()).Diagnostics);
+        Assert.Equal(AdmissionEffect.Observe, softDiag.AdmissionEffect);
+        Assert.Equal(DisplaySeverity.Warning, softDiag.DisplaySeverity);
+        Assert.Contains("soft limit 600", softDiag.Message, StringComparison.Ordinal);
+
+        // > 800: a hard block.
+        var hard = new RuleFixture();
+        hard.Files[RuleFixture.RingPath] += string.Concat(Enumerable.Repeat("-- pad\n", 801));
+        var hardDiag = Assert.Single(
+            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), hard.Build()).Diagnostics);
+        Assert.Equal(AdmissionEffect.Block, hardDiag.AdmissionEffect);
+        Assert.Equal("artifact exceeds 800 lines", hardDiag.Message);
+    }
+
     [Theory]
     [InlineData(7, "D5-T0011")]
     [InlineData(9, "D5-T0012")]
