@@ -1,5 +1,4 @@
 using System.Text;
-using StrataLint.Scribe.Definitions;
 
 namespace StrataLint.Scribe.Tests;
 
@@ -22,11 +21,11 @@ public sealed class EmissionTests
 
             Assert.Equal(0, emitExit);
             Assert.Empty(error.ToString());
-            foreach (var pilot in PilotDocuments.All)
+            foreach (var definition in DocumentDefinitions.All)
             {
-                var path = Path.Combine(root, pilot.RelativePath.Value);
+                var path = Path.Combine(root, definition.RelativePath.Value);
                 Assert.Equal(
-                    CanonicalMarkdownWriter.Write(pilot.Document).ToArray(),
+                    CanonicalMarkdownWriter.Write(definition.Document).ToArray(),
                     File.ReadAllBytes(path));
             }
 
@@ -43,7 +42,7 @@ public sealed class EmissionTests
                 error);
             Assert.Equal(0, cliCheckExit);
 
-            var driftedPath = Path.Combine(root, PilotDocuments.All[0].RelativePath.Value);
+            var driftedPath = Path.Combine(root, DocumentDefinitions.All[0].RelativePath.Value);
             File.WriteAllText(driftedPath, "drift\n", new UTF8Encoding(false, true));
 
             var checkExit = ScribeEmitter.Emit(root, check: true, output, error);

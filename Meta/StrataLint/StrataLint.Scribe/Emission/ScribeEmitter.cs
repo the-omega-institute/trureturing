@@ -1,5 +1,3 @@
-using StrataLint.Scribe.Definitions;
-
 namespace StrataLint.Scribe;
 
 public static class ScribeEmitter
@@ -16,10 +14,10 @@ public static class ScribeEmitter
 
         var differences = 0;
         var writes = 0;
-        foreach (var pilot in PilotDocuments.All)
+        foreach (var definition in DocumentDefinitions.All)
         {
-            var path = Path.Combine(repositoryRoot, pilot.RelativePath.Value);
-            var expected = CanonicalMarkdownWriter.Write(pilot.Document);
+            var path = Path.Combine(repositoryRoot, definition.RelativePath.Value);
+            var expected = CanonicalMarkdownWriter.Write(definition.Document);
             var current = File.Exists(path) ? File.ReadAllBytes(path) : [];
             if (current.AsSpan().SequenceEqual(expected.AsSpan()))
             {
@@ -29,7 +27,7 @@ public static class ScribeEmitter
             if (check)
             {
                 differences++;
-                error.WriteLine($"out of date: {pilot.RelativePath.Value}");
+                error.WriteLine($"out of date: {definition.RelativePath.Value}");
                 continue;
             }
 
@@ -38,12 +36,12 @@ public static class ScribeEmitter
             Directory.CreateDirectory(parent);
             File.WriteAllBytes(path, expected.AsSpan());
             writes++;
-            output.WriteLine($"wrote: {pilot.RelativePath.Value}");
+            output.WriteLine($"wrote: {definition.RelativePath.Value}");
         }
 
         if (check && differences == 0)
         {
-            output.WriteLine($"checked: {PilotDocuments.All.Length} blueprint(s)");
+            output.WriteLine($"checked: {DocumentDefinitions.All.Length} blueprint(s)");
         }
         else if (!check)
         {
