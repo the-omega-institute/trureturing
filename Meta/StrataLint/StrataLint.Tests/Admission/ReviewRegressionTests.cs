@@ -311,22 +311,40 @@ public sealed partial class ReviewRegressionTests
     }
 
     [Fact]
-    public void Cf10AdmissionWorkflowRunsRepositoryCheckAndByteStableSelftest()
+    public void Cf10BaselineWorkflowDelegatesTheWholeGateToTheRegisteredScript()
     {
         var root = FindRepositoryRoot();
         var workflow = File.ReadAllText(
             Path.Combine(root, ".github", "workflows", "ci.yml"),
             Encoding.UTF8);
-        // The admission logic was extracted to a script (SL-019: long inline run
-        // blocks trip the anomaly scanner; a .sh file is also independently reviewable).
-        var admission = File.ReadAllText(
-            Path.Combine(root, ".github", "scripts", "baseline-admission.sh"),
+        var gate = File.ReadAllText(
+            Path.Combine(root, ".github", "scripts", "harness-gate.sh"),
             Encoding.UTF8);
+        var baselineJob = workflow[workflow.IndexOf("  baseline-admission:", StringComparison.Ordinal)..];
 
-        Assert.Contains("baseline-admission.sh", workflow, StringComparison.Ordinal);
-        Assert.Contains("check --protected-base", admission, StringComparison.Ordinal);
-        Assert.True(Count(workflow, " selftest") >= 2, "selftest must run twice");
-        Assert.Contains("cmp", workflow, StringComparison.Ordinal);
+        Assert.Contains("harness-gate.sh", baselineJob, StringComparison.Ordinal);
+        Assert.Contains("baseline/.github/scripts/harness-gate.sh", baselineJob, StringComparison.Ordinal);
+        Assert.DoesNotContain("baseline-admission.sh", baselineJob, StringComparison.Ordinal);
+        Assert.Contains("--candidate", baselineJob, StringComparison.Ordinal);
+        Assert.Contains("--judge-root", baselineJob, StringComparison.Ordinal);
+        Assert.Contains("--base", baselineJob, StringComparison.Ordinal);
+        Assert.DoesNotContain("dotnet build", baselineJob, StringComparison.Ordinal);
+        Assert.DoesNotContain(" selftest", baselineJob, StringComparison.Ordinal);
+        Assert.Contains("candidate/.lake", baselineJob, StringComparison.Ordinal);
+        Assert.Contains("baseline/.lake", baselineJob, StringComparison.Ordinal);
+        Assert.True(
+            Count(baselineJob, "${{ github.event.pull_request.head.sha || github.sha }}") >= 3,
+            "checkout and both rolling cache keys must follow the candidate head");
+
+        Assert.Contains("set -euo pipefail", gate, StringComparison.Ordinal);
+        Assert.Contains("command -v elan", gate, StringComparison.Ordinal);
+        Assert.Contains("check --protected-base", gate, StringComparison.Ordinal);
+        Assert.True(Count(gate, " selftest") >= 2, "selftest must run twice in the shared gate");
+        Assert.Contains("cmp", gate, StringComparison.Ordinal);
+        Assert.Contains("prepare_lean_root \"$CANDIDATE_ROOT\"", gate, StringComparison.Ordinal);
+        Assert.Contains("prepare_lean_root \"$JUDGE_ROOT\"", gate, StringComparison.Ordinal);
+        Assert.Contains("prebuild_lean_root \"$CANDIDATE_ROOT\"", gate, StringComparison.Ordinal);
+        Assert.Contains("prebuild_lean_root \"$JUDGE_ROOT\"", gate, StringComparison.Ordinal);
     }
 
 }
