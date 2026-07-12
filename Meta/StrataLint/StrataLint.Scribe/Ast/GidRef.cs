@@ -78,15 +78,31 @@ public sealed class GidRef : IEquatable<GidRef>
 
 public sealed class LeanDeclarationRef : IEquatable<LeanDeclarationRef>
 {
-    private LeanDeclarationRef(GidRef reference) => Reference = reference;
+    private LeanDeclarationRef(
+        GidRef reference,
+        LeanDeclarationKind? expectedKind,
+        bool requireNoSorry)
+    {
+        Reference = reference;
+        ExpectedKind = expectedKind;
+        RequireNoSorry = requireNoSorry;
+    }
 
     public GidRef Reference { get; }
 
     public string Value => Reference.Value;
 
+    public LeanDeclarationKind? ExpectedKind { get; }
+
+    public bool RequireNoSorry { get; }
+
+    public string DeclarationName => Value[(Value.LastIndexOf('.') + 1)..];
+
     public static LeanDeclarationRef Create(
         string value,
-        IGidExistenceValidator? existenceValidator = null)
+        IGidExistenceValidator? existenceValidator = null,
+        LeanDeclarationKind? expectedKind = null,
+        bool requireNoSorry = false)
     {
         var reference = GidRef.Create(value, existenceValidator);
         if (!reference.IsFormalDeclaration)
@@ -94,16 +110,32 @@ public sealed class LeanDeclarationRef : IEquatable<LeanDeclarationRef>
             throw new ArgumentException("Value must select a Lean declaration.", nameof(value));
         }
 
-        return new LeanDeclarationRef(reference);
+        return new LeanDeclarationRef(reference, expectedKind, requireNoSorry);
     }
 
     public bool Equals(LeanDeclarationRef? other) =>
-        other is not null && Reference.Equals(other.Reference);
+        other is not null
+        && Reference.Equals(other.Reference)
+        && ExpectedKind == other.ExpectedKind
+        && RequireNoSorry == other.RequireNoSorry;
 
     public override bool Equals(object? obj) =>
         obj is LeanDeclarationRef other && Equals(other);
 
-    public override int GetHashCode() => Reference.GetHashCode();
+    public override int GetHashCode() =>
+        HashCode.Combine(Reference, ExpectedKind, RequireNoSorry);
 
     public override string ToString() => Value;
+}
+
+public enum LeanDeclarationKind
+{
+    Axiom,
+    Definition,
+    Theorem,
+    Opaque,
+    Quotient,
+    Constructor,
+    Recursor,
+    Inductive,
 }

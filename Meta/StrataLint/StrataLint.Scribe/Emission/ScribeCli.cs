@@ -1,3 +1,5 @@
+using StrataLint.Engine;
+
 namespace StrataLint.Scribe;
 
 public static class ScribeCli
@@ -6,7 +8,15 @@ public static class ScribeCli
         IReadOnlyList<string> arguments,
         string workingDirectory,
         TextWriter output,
-        TextWriter error)
+        TextWriter error) =>
+        Run(arguments, workingDirectory, output, error, leanReport: null);
+
+    internal static int Run(
+        IReadOnlyList<string> arguments,
+        string workingDirectory,
+        TextWriter output,
+        TextWriter error,
+        LeanAxiomReport? leanReport)
     {
         ArgumentNullException.ThrowIfNull(arguments);
         ArgumentException.ThrowIfNullOrWhiteSpace(workingDirectory);
@@ -26,7 +36,9 @@ public static class ScribeCli
         try
         {
             var repositoryRoot = FindRepositoryRoot(workingDirectory);
-            return ScribeEmitter.Emit(repositoryRoot, check, output, error);
+            return leanReport is null
+                ? ScribeEmitter.Emit(repositoryRoot, check, output, error)
+                : ScribeEmitter.Emit(repositoryRoot, check, output, error, leanReport);
         }
         catch (Exception exception) when (
             exception is IOException or UnauthorizedAccessException or ArgumentException)

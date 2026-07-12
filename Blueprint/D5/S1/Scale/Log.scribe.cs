@@ -27,11 +27,11 @@ internal sealed class LogDocument : IScribeDocumentDefinition
                     Text(". Zero is represented by `none`, never by a fabricated integer.")),
                 new DocumentBlock.Proposition(
                     H("Zero has no scale"),
-                    LeanDeclarationRef.Create("D5/S1/Scale/Log.logScale_zero"),
+                    LeanTheorem("D5/S1/Scale/Log.logScale_zero"),
                     Blocks(Paragraph(Text("The option-valued definition returns `none` at zero.")))),
                 new DocumentBlock.Proposition(
                     H("Nonzero scale"),
-                    LeanDeclarationRef.Create("D5/S1/Scale/Log.logScale_ne_zero"),
+                    LeanTheorem("D5/S1/Scale/Log.logScale_ne_zero"),
                     Blocks(
                         Paragraph(Text("For nonzero input the following integer is wrapped in `some`:")),
                         new DocumentBlock.DisplayFormula(
@@ -43,7 +43,7 @@ internal sealed class LogDocument : IScribeDocumentDefinition
                     Blocks(
                         new DocumentBlock.Proposition(
                             H("Embedding of a unit power"),
-                            LeanDeclarationRef.Create(
+                            LeanTheorem(
                                 "D5/S1/Scale/Log.embedding_phiUnitZPowMul"),
                             Blocks(new DocumentBlock.DisplayFormula(
                                 Equal(
@@ -53,7 +53,7 @@ internal sealed class LogDocument : IScribeDocumentDefinition
                                         Call("embedding", x)))))),
                         new DocumentBlock.Theorem(
                             H("Exact scale translation"),
-                            LeanDeclarationRef.Create(
+                            LeanTheorem(
                                 "D5/S1/Scale/Log.logScale_phiUnit_zpow_mul"),
                             Blocks(
                                 Paragraph(

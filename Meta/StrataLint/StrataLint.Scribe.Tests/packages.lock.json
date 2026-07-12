@@ -93,6 +93,13 @@
           "xunit.extensibility.core": "[2.9.3]"
         }
       },
+      "StrataLint": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )",
+          "YamlDotNet": "[16.3.0, )"
+        }
+      },
       "stratalint.engine": {
         "type": "Project",
         "dependencies": {
@@ -105,6 +112,7 @@
         "dependencies": {
           "Dunet": "[1.16.2, )",
           "QuestPDF": "[2026.7.1, 2026.7.1]",
+          "StrataLint": "[1.0.0, )",
           "StrataLint.Engine": "[1.0.0, )"
         }
       },
@@ -125,6 +133,12 @@
         "requested": "[2026.7.1, 2026.7.1]",
         "resolved": "2026.7.1",
         "contentHash": "GsBxQb48dFAGmvI1eP3SHyz0Pua4uH6aUHX7f0ywTin6hordAviZRAiTiIQiKMLwq6hN1FmgS+qLjfh2v7vhOg=="
+      },
+      "YamlDotNet": {
+        "type": "CentralTransitive",
+        "requested": "[16.3.0, )",
+        "resolved": "16.3.0",
+        "contentHash": "SgMOdxbz8X65z8hraIs6hOEdnkH6hESTAIUa7viEngHOYaH+6q5XJmwr1+yb9vJpNQ19hCQY69xbFsLtXpobQA=="
       }
     }
   }
