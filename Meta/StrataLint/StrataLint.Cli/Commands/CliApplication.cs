@@ -15,6 +15,8 @@ internal interface ICliEnvironment
     CommandResult SelfTest(IReadOnlyList<string> arguments);
 
     CommandResult GenerateLedger(IReadOnlyList<string> arguments);
+
+    CommandResult Worktree(IReadOnlyList<string> arguments);
 }
 
 internal interface ICliConsole
@@ -67,7 +69,7 @@ internal static class CliApplication
     {
         if (arguments.Count == 0)
         {
-            console.WriteError("USAGE: StrataLint check|ledger-genesis|route|selftest|topology\n");
+            console.WriteError("USAGE: StrataLint check|ledger-genesis|route|selftest|topology|worktree\n");
             return 2;
         }
 
@@ -79,6 +81,7 @@ internal static class CliApplication
             "route" => RenderCommand(environment.Route(tail), console),
             "selftest" => RenderCommand(environment.SelfTest(tail), console),
             "topology" => RenderTopology(environment.Topology(tail), console),
+            "worktree" => RenderCommand(environment.Worktree(tail), console),
             _ => UnknownCommand(arguments[0], console),
         };
     }
