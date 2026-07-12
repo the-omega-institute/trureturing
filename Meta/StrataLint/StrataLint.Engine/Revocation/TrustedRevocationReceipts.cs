@@ -321,7 +321,13 @@ public sealed class TrustedRevocationReceiptStore
 [Union(EnableImplicitConversions = false)]
 public partial record RevocationReceiptStoreOutcome
 {
-    public partial record Accepted(TrustedRevocationReceiptStore Capability);
+    public partial record Accepted
+    {
+        internal Accepted(TrustedRevocationReceiptStore capability) =>
+            Capability = capability ?? throw new ArgumentNullException(nameof(capability));
+
+        public TrustedRevocationReceiptStore Capability { get; }
+    }
 
     public partial record Rejected(string Message);
 }

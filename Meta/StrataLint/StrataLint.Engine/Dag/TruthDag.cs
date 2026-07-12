@@ -56,7 +56,13 @@ public sealed record NodeImpact(
 [Union(EnableImplicitConversions = false)]
 public partial record DagBuildOutcome
 {
-    public partial record Accepted(AcyclicTruthDag Capability);
+    public partial record Accepted
+    {
+        internal Accepted(AcyclicTruthDag capability) =>
+            Capability = capability ?? throw new ArgumentNullException(nameof(capability));
+
+        public AcyclicTruthDag Capability { get; }
+    }
 
     public partial record Rejected(ImmutableArray<RepoPath> Witness);
 }

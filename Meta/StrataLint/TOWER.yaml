@@ -87,6 +87,43 @@ components:
     judged_by:
       - engineering-ci
     verification: verified
+  - id: csharp-architecture
+    kind: repository-files
+    members:
+      - Meta/StrataLint/Architecture/MAP.md
+      - Meta/StrataLint/StrataLint.ArchitectureTests/MAP.md
+      - Meta/StrataLint/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj
+    judged_by:
+      - architecture-tests
+      - banned-api-analyzers
+      - engineering-ci
+    verification: verified
+  - id: architecture-tests
+    kind: repository-files
+    members:
+      - Meta/StrataLint/StrataLint.ArchitectureTests/Capabilities/CapabilityConstructionTests.cs
+      - Meta/StrataLint/StrataLint.ArchitectureTests/Dependencies/CSharpArchitectureTowerTests.cs
+      - Meta/StrataLint/StrataLint.ArchitectureTests/Dependencies/DependencyDirectionTests.cs
+      - Meta/StrataLint/StrataLint.ArchitectureTests/Namespaces/NamespaceLayoutTests.cs
+      - Meta/StrataLint/StrataLint.ArchitectureTests/PublicSurface/EnginePublicSurfaceTests.cs
+      - Meta/StrataLint/StrataLint.sln
+    judged_by:
+      - engineering-ci
+    verification: verified
+  - id: banned-api-analyzers
+    kind: repository-files
+    members:
+      - Directory.Packages.props
+      - .github/workflows/ci.yml
+      - Meta/StrataLint/Architecture/BannedSymbols.txt
+      - Meta/StrataLint/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj
+      - Meta/StrataLint/BannedApiCompileFailProof/BannedApiViolations.cs
+      - Meta/StrataLint/BannedApiCompileFailProof/packages.lock.json
+      - Meta/StrataLint/StrataLint.Engine/StrataLint.Engine.csproj
+      - Meta/StrataLint/StrataLint.Scribe/StrataLint.Scribe.csproj
+    judged_by:
+      - engineering-ci
+    verification: verified
   - id: harness-changes
     kind: path-prefixes
     members:
@@ -120,7 +157,7 @@ bootstrap:
   id: bootstrap-pr-1
   judge: open
   reason: "Godel boundary: the bootstrap trust root cannot prove its own consistency."
-  genesis_event: sha256:fc2ee6be0dd3cabb9b6a9118592671c9d5a81f691b7b4ad07674d9c3037ce262
+  genesis_event: sha256:afba1cf5df4b821f8cdcfa89945832cac338c04f8ec3887c8b888d173fcc9149
   commit: f3f471846dd81cfcc39ecaa386966fcf0b058464
   pull_request: 1
   verification: ASSUMED-UNVERIFIED

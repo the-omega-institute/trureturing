@@ -162,7 +162,13 @@ public sealed class FrozenMaterialCatalog
 [Union(EnableImplicitConversions = false)]
 public partial record FrozenMaterialOutcome
 {
-    public partial record Accepted(FrozenMaterialCatalog Capability);
+    public partial record Accepted
+    {
+        internal Accepted(FrozenMaterialCatalog capability) =>
+            Capability = capability ?? throw new ArgumentNullException(nameof(capability));
+
+        public FrozenMaterialCatalog Capability { get; }
+    }
 
     public partial record Rejected(string Message);
 }

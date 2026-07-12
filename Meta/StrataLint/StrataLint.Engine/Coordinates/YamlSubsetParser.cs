@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace StrataLint.Engine;
 
 internal static class YamlSubsetParser
@@ -197,7 +199,15 @@ internal static class YamlSubsetParser
     {
         if (value == "[]") return new List<object?>();
         if (value is "null" or "~") return null;
-        if (int.TryParse(value, out var integer) && integer >= 0) return integer;
+        if (int.TryParse(
+                value,
+                NumberStyles.Integer,
+                CultureInfo.InvariantCulture,
+                out var integer)
+            && integer >= 0)
+        {
+            return integer;
+        }
         if (value.Length >= 2
             && value[0] == value[^1]
             && value[0] is '\'' or '"') return value[1..^1];

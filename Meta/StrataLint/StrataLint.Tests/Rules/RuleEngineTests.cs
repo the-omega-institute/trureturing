@@ -82,4 +82,68 @@ public sealed class RuleEngineTests
 
         Assert.Equal(Enumerable.Range(1, 22), exercised);
     }
+
+    [Fact]
+    public void Sl019AcceptsAValidTowerManifestAsAKnownGovernanceSchema()
+    {
+        var fixture = new RuleFixture();
+        fixture.Files["Meta/StrataLint/TOWER.yaml"] = """
+            schema_version: 1
+            components:
+              - id: failure-detector
+                kind: repository-files
+                members:
+                  - Meta/StrataLint/TOWER.yaml
+                judged_by:
+                  - bootstrap-pr-1
+                verification: verified
+            bootstrap:
+              id: bootstrap-pr-1
+              judge: open
+              reason: "Godel boundary."
+              genesis_event: sha256:fc2ee6be0dd3cabb9b6a9118592671c9d5a81f691b7b4ad07674d9c3037ce262
+              commit: f3f471846dd81cfcc39ecaa386966fcf0b058464
+              pull_request: 1
+              verification: ASSUMED-UNVERIFIED
+            """ + "\n";
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(19),
+            fixture.Build());
+
+        Assert.Empty(evaluation.Diagnostics);
+    }
+
+    [Fact]
+    public void Sl019RejectsMalformedTowerManifestThroughItsSchemaParser()
+    {
+        var fixture = new RuleFixture();
+        fixture.Files["Meta/StrataLint/TOWER.yaml"] = """
+            schema_version: 1
+            components:
+              - id: component
+                kind: repository-files
+                members: []
+                judged_by:
+                  - bootstrap-pr-1
+            bootstrap:
+              id: bootstrap-pr-1
+              judge: open
+              reason: "Godel boundary."
+              genesis_event: sha256:fc2ee6be0dd3cabb9b6a9118592671c9d5a81f691b7b4ad07674d9c3037ce262
+              commit: f3f471846dd81cfcc39ecaa386966fcf0b058464
+              pull_request: 1
+              verification: ASSUMED-UNVERIFIED
+            """ + "\n";
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(19),
+            fixture.Build());
+
+        var diagnostic = Assert.Single(evaluation.Diagnostics);
+        Assert.Contains(
+            "invalid TOWER schema: tower components[0] keys are not canonical",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
 }

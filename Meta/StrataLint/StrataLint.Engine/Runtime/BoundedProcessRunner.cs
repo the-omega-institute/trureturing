@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace StrataLint.Cli;
+namespace StrataLint.Engine;
 
 internal sealed record ProcessOutput(int ExitCode, byte[] StandardOutput, byte[] StandardError);
 

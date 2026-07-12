@@ -165,7 +165,13 @@ internal sealed record FrozenActiveEntry(
 [Union(EnableImplicitConversions = false)]
 public partial record FrozenLedgerValidationOutcome
 {
-    public partial record Accepted(FrozenLedgerConsistent Capability);
+    public partial record Accepted
+    {
+        internal Accepted(FrozenLedgerConsistent capability) =>
+            Capability = capability ?? throw new ArgumentNullException(nameof(capability));
+
+        public FrozenLedgerConsistent Capability { get; }
+    }
 
     public partial record Rejected(string Message);
 }

@@ -24,6 +24,7 @@ public sealed class TrustTopologyTests
         "lean-toolchain",
         ".github/CODEOWNERS",
         ".github/workflows/ci.yml",
+        ".github/scripts/harness-gate.sh",
     };
 
     [Theory]

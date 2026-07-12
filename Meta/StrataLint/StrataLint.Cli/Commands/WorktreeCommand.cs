@@ -1,3 +1,5 @@
+using StrataLint.Engine;
+
 namespace StrataLint.Cli;
 
 internal sealed record WorktreeOptions(

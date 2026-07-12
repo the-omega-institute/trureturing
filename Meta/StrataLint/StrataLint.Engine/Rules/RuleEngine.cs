@@ -75,7 +75,13 @@ public sealed class CompletedRuleSet
 [Union(EnableImplicitConversions = false)]
 public partial record RuleExecutionOutcome
 {
-    public partial record Completed(CompletedRuleSet Capability);
+    public partial record Completed
+    {
+        internal Completed(CompletedRuleSet capability) =>
+            Capability = capability ?? throw new ArgumentNullException(nameof(capability));
+
+        public CompletedRuleSet Capability { get; }
+    }
 
     public partial record InfrastructureFailure(string Message);
 }

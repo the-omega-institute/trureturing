@@ -2,24 +2,17 @@
   "version": 2,
   "dependencies": {
     "net10.0": {
-      "Dunet": {
+      "Microsoft.CodeAnalysis.BannedApiAnalyzers": {
         "type": "Direct",
-        "requested": "[1.16.2, )",
-        "resolved": "1.16.2",
-        "contentHash": "R4PEZo50RK76wRW1kq4xiQqX/hnrx8Gn+8T1XIEYuigyjVh3Guhtt3+b4GG2j3h+E3VadLINtbV+Id79nsFy/Q=="
+        "requested": "[5.6.0, )",
+        "resolved": "5.6.0",
+        "contentHash": "Kcobt3pnOdO0A+6CKiMHZdTEluJpsfxiV20axtZdmfBQnDmiWTKPJADlgAfdTuKNAnVarrkJa0UEGwuOo91muw=="
       },
       "QuestPDF": {
         "type": "Direct",
         "requested": "[2026.7.1, 2026.7.1]",
         "resolved": "2026.7.1",
         "contentHash": "GsBxQb48dFAGmvI1eP3SHyz0Pua4uH6aUHX7f0ywTin6hordAviZRAiTiIQiKMLwq6hN1FmgS+qLjfh2v7vhOg=="
-      },
-      "StrataLint": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.Engine": "[1.0.0, )",
-          "YamlDotNet": "[16.3.0, )"
-        }
       },
       "stratalint.engine": {
         "type": "Project",
@@ -28,17 +21,17 @@
           "Pidgin": "[3.5.1, )"
         }
       },
+      "Dunet": {
+        "type": "CentralTransitive",
+        "requested": "[1.16.2, )",
+        "resolved": "1.16.2",
+        "contentHash": "R4PEZo50RK76wRW1kq4xiQqX/hnrx8Gn+8T1XIEYuigyjVh3Guhtt3+b4GG2j3h+E3VadLINtbV+Id79nsFy/Q=="
+      },
       "Pidgin": {
         "type": "CentralTransitive",
         "requested": "[3.5.1, )",
         "resolved": "3.5.1",
         "contentHash": "zU7tkXlF3D6d2GLTjJDomAL3nnl4AwfZvSgSz8D4b+Ry21/clqedYlxBnEAkAU/bkGfEv6uRR7QCdWZUpKrB/g=="
-      },
-      "YamlDotNet": {
-        "type": "CentralTransitive",
-        "requested": "[16.3.0, )",
-        "resolved": "16.3.0",
-        "contentHash": "SgMOdxbz8X65z8hraIs6hOEdnkH6hESTAIUa7viEngHOYaH+6q5XJmwr1+yb9vJpNQ19hCQY69xbFsLtXpobQA=="
       }
     }
   }

@@ -1,6 +1,5 @@
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;
-using Dunet;
 using StrataLint.Engine;
 
 namespace StrataLint.Scribe;
@@ -57,12 +56,13 @@ public sealed record Digest
     public override string ToString() => Value;
 }
 
-[Union(EnableImplicitConversions = false)]
-public partial record EvidenceMirror
+public abstract record EvidenceMirror
 {
-    public partial record Artifact(GidRef Reference);
+    private EvidenceMirror() { }
 
-    public partial record Waiver(WaiverReason Reason);
+    public sealed record Artifact(GidRef Reference) : EvidenceMirror;
+
+    public sealed record Waiver(WaiverReason Reason) : EvidenceMirror;
 }
 
 public sealed class DocumentHeader

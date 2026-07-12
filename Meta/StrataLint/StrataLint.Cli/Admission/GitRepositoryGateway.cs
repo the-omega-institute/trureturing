@@ -86,39 +86,7 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
         return new PreparedRepository(revision, RawChangeSet.Create(paths));
     }
 
-    public RawRepositorySnapshot ReadCurrent()
-    {
-        var tracked = ParseIndex(GitBytes("ls-files", "--stage", "-z"));
-        var paths = tracked.Keys
-            .Concat(ParseNulStrings(GitBytes("ls-files", "--others", "--exclude-standard", "-z")))
-            .Distinct(StringComparer.Ordinal)
-            .Order(StringComparer.Ordinal);
-        var entries = ImmutableArray.CreateBuilder<RawRepositoryEntry>();
-        foreach (var path in paths)
-        {
-            if (!RepoPath.TryCreate(path, out _))
-            {
-                throw new InvalidOperationException($"git emitted an invalid repository path: {path}");
-            }
-
-            if (tracked.TryGetValue(path, out var mode) && mode is not ("100644" or "100755"))
-            {
-                throw new InvalidOperationException($"non-regular repository entry {path} has git mode {mode}");
-            }
-
-            var fullPath = Path.Combine(root, path);
-            var info = new FileInfo(fullPath);
-            if (!info.Exists) continue;
-            if (info.LinkTarget is not null || (info.Attributes & FileAttributes.ReparsePoint) != 0)
-            {
-                throw new InvalidOperationException($"non-regular repository entry {path} is not a plain file");
-            }
-
-            entries.Add(new RawRepositoryEntry(path, ImmutableArray.CreateRange(File.ReadAllBytes(fullPath))));
-        }
-
-        return RawRepositorySnapshot.Create(entries);
-    }
+    public RawRepositorySnapshot ReadCurrent() => GitRepositorySnapshotReader.ReadCurrent(root);
 
     public RawRepositorySnapshot ReadRevision(string revision)
     {
@@ -136,24 +104,6 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
         }
 
         return RawRepositorySnapshot.Create(entries);
-    }
-
-    private Dictionary<string, string> ParseIndex(byte[] bytes)
-    {
-        var result = new Dictionary<string, string>(StringComparer.Ordinal);
-        foreach (var entry in SplitNul(bytes))
-        {
-            var tab = Array.IndexOf(entry, (byte)'\t');
-            if (tab <= 0) throw new InvalidOperationException("git index emitted invalid metadata");
-            var metadata = StrictUtf8.GetString(entry.AsSpan(0, tab)).Split(' ');
-            var path = StrictUtf8.GetString(entry.AsSpan(tab + 1));
-            if (metadata.Length != 3 || metadata[2] != "0" || !result.TryAdd(path, metadata[0]))
-            {
-                throw new InvalidOperationException($"unmerged or duplicate repository entry: {path}");
-            }
-        }
-
-        return result;
     }
 
     private IEnumerable<TreeEntry> ParseTree(byte[] bytes)
