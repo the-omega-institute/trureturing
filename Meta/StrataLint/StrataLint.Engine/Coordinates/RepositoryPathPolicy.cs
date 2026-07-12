@@ -104,6 +104,57 @@ internal static class RepositoryPathPolicy
             && TryResolve(path, out gid);
     }
 
+    internal static bool TryGetValidationProfile(
+        RepoPath path,
+        ValidatedPolicy policy,
+        out string? profile)
+    {
+        profile = null;
+        if (!TryResolve(path, policy, out var gid)
+            || gid?.ToTarget() is not Target.Evidence evidence
+            || !policy.ArtifactKinds.TryGetValue(evidence.ArtifactKind, out var artifact))
+        {
+            return false;
+        }
+
+        profile = artifact.Profile switch
+        {
+            ValidationProfile.StructuredJson => "structured-json",
+            ValidationProfile.StructuredYaml => "structured-yaml",
+            ValidationProfile.LeanModule => "lean-module",
+            ValidationProfile.OpaqueText => "opaque-text",
+        };
+        return true;
+    }
+
+    internal static ImmutableArray<string> RegistrationSources(
+        RepoPath path,
+        ValidatedPolicy policy)
+    {
+        var sources = ImmutableArray.CreateBuilder<string>();
+        if (Validate(path, policy) is null) sources.Add("path-policy");
+        if (policy.RootFiles.Contains(path)) sources.Add("registry:root-files");
+        if (policy.GovernanceDocuments.Contains(path)) sources.Add("registry:governance-documents");
+        if (path.Value.StartsWith("agents/", StringComparison.Ordinal)
+            && policy.AgentFiles.Contains(path.Value["agents/".Length..]))
+        {
+            sources.Add("registry:agent-files");
+        }
+
+        if (TryResolve(path, policy, out var gid) && gid is not null)
+        {
+            if (gid.ToTarget() is Target.Evidence evidence
+                && policy.ArtifactKinds.ContainsKey(evidence.ArtifactKind))
+            {
+                sources.Add("registry:artifact-kinds");
+            }
+
+            if (HasControlledDomain(path, policy)) sources.Add("domains");
+        }
+
+        return sources.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToImmutableArray();
+    }
+
     internal static bool TryResolve(RepoPath path, out Gid? gid)
     {
         gid = null;
@@ -159,6 +210,21 @@ internal static class RepositoryPathPolicy
         }
 
         return artifact.PathSelectors.Contains(scope);
+    }
+
+    private static bool HasControlledDomain(RepoPath path, ValidatedPolicy policy)
+    {
+        var parts = path.Value.Split('/');
+        var offset = parts[0] is "Blueprint" or "Evidence" ? 1 : 0;
+        if (parts.Length <= offset + 2
+            || parts[offset] != "D5"
+            || !Enum.TryParse<Stratum>(parts[offset + 1], ignoreCase: false, out var stratum)
+            || !DomainId.TryCreate(parts[offset + 2], out var domain))
+        {
+            return false;
+        }
+
+        return policy.Domains.TryGetValue(domain, out var registered) && registered == stratum;
     }
 
     private static bool TryDescribeSemanticPath(

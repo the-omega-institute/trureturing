@@ -75,6 +75,19 @@ public sealed class RuleCatalog
         return new SingleRuleEvaluation(Stamp(descriptor, rules[index].Evaluate(context)), null);
     }
 
+    internal ImmutableArray<RuleDescriptor> ApplicableTo(
+        RepositoryFile artifact,
+        RuleApplicabilityContext context)
+    {
+        ArgumentNullException.ThrowIfNull(artifact);
+        ArgumentNullException.ThrowIfNull(context);
+        return rules
+            .Select((rule, index) => (Rule: rule, Descriptor: Descriptors[index]))
+            .Where(item => item.Rule.AppliesTo(artifact, context))
+            .Select(static item => item.Descriptor)
+            .ToImmutableArray();
+    }
+
     internal RuleExecutionOutcome Execute(RuleEvaluationContext context)
     {
         try
@@ -191,8 +204,6 @@ public sealed class RuleCatalog
 
         return new RuleCatalog(
             builder.MoveToImmutable(),
-            Enumerable.Range(1, 22)
-                .Select(static number => (IRepositoryRule)new RepositoryRule(number))
-                .ToImmutableArray());
+            RepositoryRules.CreateRuleSet());
     }
 }

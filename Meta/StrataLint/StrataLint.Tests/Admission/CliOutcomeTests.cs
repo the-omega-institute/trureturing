@@ -85,6 +85,9 @@ internal sealed class StubCliEnvironment(AdmissionOutcome outcome) : ICliEnviron
     public AdmissionTopologyOutcome Topology(IReadOnlyList<string> arguments) =>
         new AdmissionTopologyOutcome.InfrastructureFailure("topology is not configured in this fixture");
 
+    public CommandResult Coverage(IReadOnlyList<string> arguments) =>
+        new(false, string.Empty, "coverage is not configured in this fixture");
+
     public CommandResult Route(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "route is not configured in this fixture");
 

@@ -9,6 +9,7 @@
 
 - `Admission/`: CLI outcomes, production admission, topology, and review regressions.
 - `Commands/`: command parsing and end-to-end command behavior.
+- `Coverage/`: applicability, UNGOVERNED, tower, ledger-state, and canonical coverage behavior.
 - `Dag/`: truth DAG behavior.
 - `Golden/`: Python corpus and golden compatibility.
 - `Ledger/`: frozen ledger, content address, revocation, and genesis behavior.
