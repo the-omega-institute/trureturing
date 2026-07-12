@@ -16,7 +16,7 @@
 - `Ledger/`: frozen content and ledger mechanics; `Validation/` holds validation phases.
 - `Revocation/`: revocation planning and trusted receipts.
 - `Rules/`: rule catalog, execution, and repository rule implementations.
-- `Runtime/`: bounded processes, Git working-tree snapshots, and compiled Lean inspection.
-- `Snapshot/`: repository snapshots and canonical writers.
+- `Runtime/`: bounded processes, Git working-tree snapshots, and precomputed report adapters.
+- `Snapshot/`: repository snapshots, canonical writers, and the source-bound raw Lean report contract.
 
 The root contains only assembly and SDK project metadata plus this map.

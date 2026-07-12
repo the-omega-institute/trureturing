@@ -58,14 +58,13 @@ public sealed class DocumentDiscoveryTests
     public void GeneratedMarkdownIsDeterministicAndMatchesTheCommittedTree()
     {
         var repositoryRoot = FindRepositoryRoot();
-        var rootOlean = Path.Combine(
+        var rawLeanReport = Path.Combine(
             repositoryRoot,
             ".lake",
             "build",
-            "lib",
-            "lean",
-            "Trureturing.olean");
-        if (!File.Exists(rootOlean))
+            "stratalint",
+            "raw-lean-report.json");
+        if (!File.Exists(rawLeanReport))
         {
             var error = new StringWriter();
             var exit = ScribeEmitter.Emit(
@@ -75,7 +74,7 @@ public sealed class DocumentDiscoveryTests
                 error);
 
             Assert.Equal(1, exit);
-            Assert.Contains("lake build", error.ToString(), StringComparison.Ordinal);
+            Assert.Contains("inspect.sh", error.ToString(), StringComparison.Ordinal);
             return;
         }
 

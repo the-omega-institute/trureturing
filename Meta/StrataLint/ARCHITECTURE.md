@@ -3,12 +3,16 @@
 The admission judge is selected before candidate policy, assemblies, or helpers are read.
 The steady-state workflow is orchestrated by base-controlled `pull_request_target`, not
 the candidate's workflow definition; candidate checkout credentials are not persisted.
-For pull requests targeting `dev`, the baseline is the harness built from the exact
+For pull requests targeting `dev`, the baseline is the exact
 `github.event.pull_request.base.sha`; for pushes to `dev`, it is the exact
 `github.event.before` SHA (or the candidate parent when the first branch-creation event
-has an all-zero `before`). The workflow verifies that checkout, records the SHA, builds
-the baseline with locked dependencies, and runs its DLL from the candidate repository
-directory with `check --protected-base <dev-baseline-sha>`. Candidate build, tests, and
+has an all-zero `before`). A Lean-native predecessor job uses the base producer to build
+both trees and emit source-bound canonical reports. It uploads the reports, SHA-256
+sidecars, and complete phase logs. The .NET admission job downloads and verifies those
+artifacts, builds the content-addressed baseline judge with locked dependencies, and runs
+its DLL from the candidate repository with `check --protected-base <dev-baseline-sha>`
+plus `--candidate-lean-report <file>` and `--baseline-lean-report <file>`. The admission
+job installs no Lean tooling and starts no Lean process. Candidate build, tests, and
 selftest are engineering signals only and cannot issue admission.
 
 ## D5-T0017: one-time bootstrap

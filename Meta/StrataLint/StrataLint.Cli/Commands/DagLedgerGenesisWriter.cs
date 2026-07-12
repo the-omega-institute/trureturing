@@ -13,7 +13,7 @@ internal static class DagLedgerGenesisWriter
     internal static CommandResult Generate(
         string repositoryRoot,
         IRepositoryGateway repository,
-        ILeanInspector leanInspector,
+        ILeanReportSource leanReportSource,
         IReadOnlyList<string> arguments)
     {
         try
@@ -26,7 +26,7 @@ internal static class DagLedgerGenesisWriter
 
             var identity = repository.ResolveFrozenRevision(arguments[1]);
             var snapshot = Decode(repository.ReadFrozenRevision(identity.Revision));
-            var lean = ValidateLean(snapshot, leanInspector.Inspect(snapshot));
+            var lean = ValidateLean(snapshot, leanReportSource.Load(snapshot));
             var dag = AcyclicTruthDag.Build(snapshot, lean) switch
             {
                 DagBuildOutcome.Accepted accepted => accepted.Capability,

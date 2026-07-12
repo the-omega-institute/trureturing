@@ -87,13 +87,4 @@ public sealed partial class ReviewRegressionTests
         throw new DirectoryNotFoundException("could not locate repository root");
     }
 
-    private sealed class SequencedLeanInspector(params LeanAxiomReport[] reports) : ILeanInspector
-    {
-        private int index;
-
-        public LeanAxiomReport Inspect(RepositorySnapshot snapshot) =>
-            index < reports.Length
-                ? reports[index++]
-                : throw new InvalidOperationException("Lean inspector was called too many times");
-    }
 }

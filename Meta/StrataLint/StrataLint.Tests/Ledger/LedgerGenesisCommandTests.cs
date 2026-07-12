@@ -53,7 +53,7 @@ public sealed partial class ProductionEnvironmentTests
         var environment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(RawChangeSet.Create(Array.Empty<string>()), raw, raw),
-            new FakeLeanInspector(report));
+            new FakeLeanReportSource(report));
 
         var first = environment.GenerateLedger(new[] { "--revision", revision });
         var ledgerPath = Path.Combine(

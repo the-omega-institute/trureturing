@@ -14,20 +14,21 @@ public sealed partial class ProductionEnvironmentTests
             RawChangeSet.Create(new[] { "Meta/StrataLint/StrataLint.Engine/Coordinates/Gid.cs" }),
             current: null,
             baseline: null);
-        var inspector = new FakeLeanInspector(null);
-        var environment = new ProductionCliEnvironment("/repo", gateway, inspector);
+        var source = new FakeLeanReportSource(null);
+        var environment = new ProductionCliEnvironment("/repo", gateway, source);
 
         var outcome = environment.Check(Array.Empty<string>());
 
         var required = Assert.IsType<AdmissionOutcome.HumanReviewRequired>(outcome);
         Assert.Contains(required.Diagnostics, item => item.RuleId == RuleId.CreateKnown(22));
         Assert.Equal(0, gateway.ReadCount);
-        Assert.Equal(0, inspector.CallCount);
+        Assert.Equal(0, source.CallCount);
     }
 
     [Fact]
     public void CheckRunsTheCompleteCapabilityChainForOrdinaryChanges()
     {
+        using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical;
@@ -35,18 +36,60 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
         fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
         AddFrozenLedger(fixture);
+        var currentRaw = Snapshot(fixture.Files);
+        var baselineRaw = Snapshot(fixture.Baseline);
+        var gateway = new FakeRepositoryGateway(
+            RawChangeSet.Create(new[] { RuleFixture.BlueprintPath }),
+            currentRaw,
+            baselineRaw);
+        var candidateReport = Path.Combine(temporary.Path, "candidate.json");
+        var baselineReport = Path.Combine(temporary.Path, "baseline.json");
+        File.WriteAllBytes(
+            candidateReport,
+            RawLeanReportArtifact.Write(
+                Decode(currentRaw),
+                LeanAxiomReport.Create(fixture.Reports)).AsSpan());
+        File.WriteAllBytes(
+            baselineReport,
+            RawLeanReportArtifact.Write(
+                Decode(baselineRaw),
+                LeanAxiomReport.Create(fixture.BaselineReports)).AsSpan());
+        var source = new FakeLeanReportSource(null);
+        var environment = new ProductionCliEnvironment("/repo", gateway, source);
+
+        var outcome = environment.Check(new[]
+        {
+            "--candidate-lean-report", candidateReport,
+            "--baseline-lean-report", baselineReport,
+        });
+
+        Assert.IsType<AdmissionOutcome.Admitted>(outcome);
+        Assert.Equal(2, gateway.ReadCount);
+        Assert.Equal(0, source.CallCount);
+    }
+
+    [Fact]
+    public void CheckRequiresBothPrecomputedLeanReportsForOrdinaryChanges()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical;
+        fixture.Baseline["Meta/registry.yaml"] = TestRegistry.Canonical;
+        fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
+        fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
         var gateway = new FakeRepositoryGateway(
             RawChangeSet.Create(new[] { RuleFixture.BlueprintPath }),
             Snapshot(fixture.Files),
             Snapshot(fixture.Baseline));
-        var inspector = new FakeLeanInspector(LeanAxiomReport.Create(fixture.Reports));
-        var environment = new ProductionCliEnvironment("/repo", gateway, inspector);
+        var source = new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports));
+        var environment = new ProductionCliEnvironment("/repo", gateway, source);
 
         var outcome = environment.Check(Array.Empty<string>());
 
-        Assert.IsType<AdmissionOutcome.Admitted>(outcome);
-        Assert.Equal(2, gateway.ReadCount);
-        Assert.Equal(2, inspector.CallCount);
+        var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
+        Assert.Contains("--candidate-lean-report", failure.Message, StringComparison.Ordinal);
+        Assert.Contains("--baseline-lean-report", failure.Message, StringComparison.Ordinal);
+        Assert.Equal(0, source.CallCount);
     }
 
     [Fact]
@@ -62,10 +105,10 @@ public sealed partial class ProductionEnvironmentTests
             RawChangeSet.Create(new[] { RuleFixture.BlueprintPath }),
             Snapshot(fixture.Files),
             Snapshot(fixture.Baseline));
-        var inspector = new FakeLeanInspector(LeanAxiomReport.Create(fixture.Reports));
-        var environment = new ProductionCliEnvironment("/repo", gateway, inspector);
+        var source = new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports));
+        var environment = new ProductionCliEnvironment("/repo", gateway, source);
 
-        var outcome = environment.Check(Array.Empty<string>());
+        var outcome = CheckWithReports(environment, fixture);
 
         var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
         Assert.All(rejected.Diagnostics, item => Assert.Equal(RuleId.CreateKnown(8), item.RuleId));
@@ -91,10 +134,10 @@ public sealed partial class ProductionEnvironmentTests
             RawChangeSet.Create(new[] { RuleFixture.BlueprintPath }),
             Snapshot(fixture.Files),
             Snapshot(fixture.Baseline));
-        var inspector = new FakeLeanInspector(LeanAxiomReport.Create(fixture.Reports));
-        var environment = new ProductionCliEnvironment("/repo", gateway, inspector);
+        var source = new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports));
+        var environment = new ProductionCliEnvironment("/repo", gateway, source);
 
-        var outcome = environment.Check(Array.Empty<string>());
+        var outcome = CheckWithReports(environment, fixture);
 
         var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
         Assert.All(rejected.Diagnostics, item => Assert.Equal(RuleId.CreateKnown(8), item.RuleId));
@@ -115,10 +158,10 @@ public sealed partial class ProductionEnvironmentTests
             RawChangeSet.Create(new[] { RuleFixture.BlueprintPath }),
             Snapshot(fixture.Files),
             Snapshot(fixture.Baseline));
-        var inspector = new FakeLeanInspector(LeanAxiomReport.Create(fixture.Reports));
-        var environment = new ProductionCliEnvironment("/repo", gateway, inspector);
+        var source = new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports));
+        var environment = new ProductionCliEnvironment("/repo", gateway, source);
 
-        var outcome = environment.Check(Array.Empty<string>());
+        var outcome = CheckWithReports(environment, fixture);
 
         var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
         Assert.All(rejected.Diagnostics, item => Assert.Equal(RuleId.CreateKnown(8), item.RuleId));
@@ -147,10 +190,10 @@ public sealed partial class ProductionEnvironmentTests
             RawChangeSet.Create(new[] { RuleFixture.BlueprintPath }),
             Snapshot(fixture.Files),
             Snapshot(fixture.Baseline));
-        var inspector = new FakeLeanInspector(LeanAxiomReport.Create(fixture.Reports));
-        var environment = new ProductionCliEnvironment("/repo", gateway, inspector);
+        var source = new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports));
+        var environment = new ProductionCliEnvironment("/repo", gateway, source);
 
-        var outcome = environment.Check(Array.Empty<string>());
+        var outcome = CheckWithReports(environment, fixture);
 
         var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
         var cycle = Assert.Single(rejected.Diagnostics);
@@ -175,7 +218,7 @@ public sealed partial class ProductionEnvironmentTests
         var environment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(RawChangeSet.Create(Array.Empty<string>()), null, null),
-            new FakeLeanInspector(null));
+            new FakeLeanReportSource(null));
 
         var result = environment.Route(new[] { "manifest.json" });
 
@@ -194,7 +237,7 @@ public sealed partial class ProductionEnvironmentTests
         var environment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(RawChangeSet.Create(Array.Empty<string>()), null, null),
-            new FakeLeanInspector(null));
+            new FakeLeanReportSource(null));
 
         var first = environment.SelfTest(Array.Empty<string>());
         var second = environment.SelfTest(Array.Empty<string>());
@@ -207,6 +250,33 @@ public sealed partial class ProductionEnvironmentTests
 
     private static RawRepositorySnapshot Snapshot(IReadOnlyDictionary<string, string> files) =>
         RawRepositorySnapshot.Create(files.Select(pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
+
+    private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
+        Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+
+    private static AdmissionOutcome CheckWithReports(
+        ProductionCliEnvironment environment,
+        RuleFixture fixture)
+    {
+        using var temporary = new TemporaryDirectory();
+        var candidateReport = Path.Combine(temporary.Path, "candidate.json");
+        var baselineReport = Path.Combine(temporary.Path, "baseline.json");
+        File.WriteAllBytes(
+            candidateReport,
+            RawLeanReportArtifact.Write(
+                Decode(Snapshot(fixture.Files)),
+                LeanAxiomReport.Create(fixture.Reports)).AsSpan());
+        File.WriteAllBytes(
+            baselineReport,
+            RawLeanReportArtifact.Write(
+                Decode(Snapshot(fixture.Baseline)),
+                LeanAxiomReport.Create(fixture.BaselineReports)).AsSpan());
+        return environment.Check(new[]
+        {
+            "--candidate-lean-report", candidateReport,
+            "--baseline-lean-report", baselineReport,
+        });
+    }
 
     private static (RepositorySnapshot Snapshot, AcceptedLeanClosure Lean, AcyclicTruthDag Dag) BuildState(
         IReadOnlyDictionary<string, string> files,
@@ -315,14 +385,14 @@ internal sealed class FakeRepositoryGateway(
         TrustedFrozenGitReferences.CreateForTrustedAdapter(references.Inputs);
 }
 
-internal sealed class FakeLeanInspector(LeanAxiomReport? report) : ILeanInspector
+internal sealed class FakeLeanReportSource(LeanAxiomReport? report) : ILeanReportSource
 {
     internal int CallCount { get; private set; }
 
-    public LeanAxiomReport Inspect(RepositorySnapshot snapshot)
+    public LeanAxiomReport Load(RepositorySnapshot snapshot)
     {
         CallCount++;
-        return report ?? throw new InvalidOperationException("Lean inspector should not be called");
+        return report ?? throw new InvalidOperationException("Lean report source should not be called");
     }
 }
 

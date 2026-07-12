@@ -14,6 +14,6 @@
 - `Golden/`: Python corpus and golden compatibility.
 - `Ledger/`: frozen ledger, content address, revocation, and genesis behavior.
 - `Rules/`: rule fixtures, registry, routing, and type-model behavior.
-- `Runtime/`: snapshot and Lean process inspection behavior.
+- `Runtime/`: snapshots, canonical raw Lean reports, and standalone Lean producer behavior.
 
 The root contains shared global usings, SDK project metadata, and this map.

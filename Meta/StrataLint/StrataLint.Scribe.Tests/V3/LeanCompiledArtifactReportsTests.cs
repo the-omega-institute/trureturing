@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Tests;
 public sealed class LeanCompiledArtifactReportsTests
 {
     [Fact]
-    public void MissingLakeArtifactsFailWithBuildInstruction()
+    public void MissingRawLeanReportFailsWithProducerInstruction()
     {
         var root = Path.Combine(
             Path.GetTempPath(),
@@ -17,8 +17,8 @@ public sealed class LeanCompiledArtifactReportsTests
             var exception = Assert.Throws<InvalidOperationException>(
                 () => LeanCompiledArtifactReports.InspectRepository(root));
 
-            Assert.Contains(".lake", exception.Message, StringComparison.Ordinal);
-            Assert.Contains("lake build", exception.Message, StringComparison.Ordinal);
+            Assert.Contains("raw Lean report", exception.Message, StringComparison.Ordinal);
+            Assert.Contains("inspect.sh", exception.Message, StringComparison.Ordinal);
         }
         finally
         {
