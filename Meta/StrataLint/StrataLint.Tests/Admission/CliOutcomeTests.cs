@@ -93,6 +93,9 @@ internal sealed class StubCliEnvironment(AdmissionOutcome outcome) : ICliEnviron
 
     public CommandResult GenerateLedger(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "ledger generation is not configured in this fixture");
+
+    public CommandResult Worktree(IReadOnlyList<string> arguments) =>
+        new(false, string.Empty, "worktree is not configured in this fixture");
 }
 
 internal sealed class BufferedConsole : ICliConsole

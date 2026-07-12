@@ -8,8 +8,8 @@
 ## Buckets
 
 - `Admission/`: repository preparation, topology checks, and production admission.
-- `Commands/`: command dispatch inputs, registry loading, and ledger commands.
-- `Runtime/`: bounded processes, Lean inspection, and inspection memoization.
+- `Commands/`: command dispatch inputs, registry loading, ledger commands, and worktree provisioning.
+- `Runtime/`: bounded processes, Lean inspection, memoization, and Lean cache cloning.
 
 The root contains the executable entry point, assembly metadata, SDK project metadata,
 and this map.
