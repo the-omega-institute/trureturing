@@ -64,6 +64,7 @@ jobs:
           if ! "$HOME/.elan/bin/elan" toolchain list 2>/dev/null | grep -qF "$toolchain"; then
             "$HOME/.elan/bin/elan" toolchain install "$toolchain"
           fi
+          "$HOME/.elan/bin/elan" default "$toolchain"
           "$HOME/.elan/bin/lake" --version
 
       - name: Install pinned SDK
@@ -189,13 +190,16 @@ jobs:
             curl --proto '=https' --tlsv1.2 -sSf https://elan.lean-lang.org/elan-init.sh \
               | sh -s -- -y --default-toolchain none
           fi
+          default_toolchain=""
           for toolchain_file in candidate/lean-toolchain baseline/lean-toolchain; do
             toolchain="$(tr -d '\r\n' < "$toolchain_file")"
             test -n "$toolchain"
             if ! "$HOME/.elan/bin/elan" toolchain list 2>/dev/null | grep -qF "$toolchain"; then
               "$HOME/.elan/bin/elan" toolchain install "$toolchain"
             fi
+            default_toolchain="$toolchain"
           done
+          "$HOME/.elan/bin/elan" default "$default_toolchain"
           "$HOME/.elan/bin/lake" --version
 
       - name: Restore candidate and baseline Lean build artifacts
