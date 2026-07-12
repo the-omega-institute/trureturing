@@ -1,10 +1,10 @@
-using static StrataLint.Scribe.Definitions.DefinitionDsl;
+using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Definitions;
+namespace StrataLint.Scribe.Blueprint.D5.S1.Phase;
 
-internal static class PhaseBasicDocument
+internal sealed class BasicDocument : IScribeDocumentDefinition
 {
-    internal static ScribeDocument Create()
+    public DocumentDefinition Create()
     {
         var n = Id("n");
         var m = Id("m");
@@ -20,7 +20,7 @@ internal static class PhaseBasicDocument
             Math(phaseValue),
             Text(" in the additive circle. The map preserves zero, addition, and negation."));
 
-        return ScribeDocument.Create(
+        return DocumentDefinition.Create(ScribeDocument.Create(
             Header(
                 "D5/S1/Phase/Basic",
                 "Integer golden-ratio phases form an injective additive orbit on the unit circle."),
@@ -67,6 +67,6 @@ internal static class PhaseBasicDocument
                     Blocks(Paragraph(
                         Text("Two phases could coincide only if a nonzero integer multiple of "),
                         Math(new Formula.Phi()),
-                        Text(" were an integer. Irrationality excludes this. No three-distance theorem is asserted here."))))));
+                        Text(" were an integer. Irrationality excludes this. No three-distance theorem is asserted here.")))))));
     }
 }

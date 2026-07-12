@@ -1,3 +1,5 @@
+using System.Text;
+using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -71,4 +73,27 @@ public sealed class TypeModelTests
     {
         Assert.False(Gid.TryParse(text, out _));
     }
+
+    [Fact]
+    public void BlueprintDefinitionSourceIsContentButNotASecondSemanticTarget()
+    {
+        var path = RepoPath.CreateKnown("Blueprint/D5/S1/Digit/Raw.scribe.cs");
+
+        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
+        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
+    }
+
+    [Fact]
+    public void BlueprintDefinitionSourceStillObeysCanonicalAddressGrammar()
+    {
+        var path = RepoPath.CreateKnown("Blueprint/D5/S1/Digit/raw.scribe.cs");
+
+        Assert.NotNull(RepositoryPathPolicy.Validate(path, Policy()));
+    }
+
+    private static ValidatedPolicy Policy() =>
+        Assert.IsType<RegistryLoadOutcome.Accepted>(
+            RegistryLoader.Load(
+                Encoding.UTF8.GetBytes(TestRegistry.Canonical),
+                Encoding.UTF8.GetBytes(TestRegistry.Domains))).Policy;
 }

@@ -64,6 +64,11 @@ internal static class RepositoryPathPolicy
             return null;
         }
 
+        if (IsCanonicalBlueprintDefinitionSource(value))
+        {
+            return null;
+        }
+
         if (TryDescribeSemanticPath(value, out var gidText, out var label, out var reason))
         {
             if (reason is not null
@@ -272,6 +277,22 @@ internal static class RepositoryPathPolicy
 
         label = string.Empty;
         return false;
+    }
+
+    private static bool IsCanonicalBlueprintDefinitionSource(string path)
+    {
+        const string suffix = ".scribe.cs";
+        if (!path.StartsWith("Blueprint/D5/", StringComparison.Ordinal)
+            || !path.EndsWith(suffix, StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        var markdownPath = path[..^suffix.Length] + ".md";
+        return TryDescribeSemanticPath(markdownPath, out var gidText, out _, out var reason)
+            && reason is null
+            && Gid.TryParse(gidText, out var gid)
+            && string.Equals(gid.Path.Value, markdownPath, StringComparison.Ordinal);
     }
 
     private static string InferParseFailure(string path, string label)
