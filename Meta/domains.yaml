@@ -17,3 +17,6 @@ domains:
   Scale:
     stratum: S1
     definition: Real embeddings and logarithmic scales of golden integers.
+  Weil:
+    stratum: S3
+    definition: Classical zeta conventions, Weil test functions, and Fourier-Laplace analysis.
