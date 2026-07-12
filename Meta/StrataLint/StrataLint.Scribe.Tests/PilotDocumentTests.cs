@@ -1,39 +1,69 @@
-using StrataLint.Scribe.Definitions;
+using System.Reflection;
 
 namespace StrataLint.Scribe.Tests;
 
-public sealed class PilotDocumentTests
+public sealed class DocumentDiscoveryTests
 {
     [Fact]
-    public void PilotCatalogHasExactlyTheThreeAdjudicatedBlueprints()
+    public void DiscoveryFindsEveryDefinitionInCanonicalPathOrder()
     {
         Assert.Equal(
             [
+                "D5/S1/Digit/Carry",
+                "D5/S1/Digit/Raw",
                 "D5/S1/Phase/Basic",
                 "D5/S1/Scale/Embedding",
                 "D5/S1/Scale/Log",
             ],
-            PilotDocuments.All.Select(static item => item.Document.Header.Gid.Value));
+            DocumentDefinitions.All.Select(static item => item.Document.Header.Gid.Value));
         Assert.Equal(
             [
+                "Blueprint/D5/S1/Digit/Carry.md",
+                "Blueprint/D5/S1/Digit/Raw.md",
                 "Blueprint/D5/S1/Phase/Basic.md",
                 "Blueprint/D5/S1/Scale/Embedding.md",
                 "Blueprint/D5/S1/Scale/Log.md",
             ],
-            PilotDocuments.All.Select(static item => item.RelativePath.Value));
+            DocumentDefinitions.All.Select(static item => item.RelativePath.Value));
     }
 
     [Fact]
-    public void PilotMarkdownIsDeterministicAndMatchesTheCommittedTree()
+    public void ReflectionDiscoveryIsDeterministic()
+    {
+        var assembly = typeof(DocumentDefinitions).Assembly;
+
+        var first = DocumentDefinitions.Discover(assembly);
+        var second = DocumentDefinitions.Discover(assembly);
+
+        Assert.Equal(
+            first.Select(static item => (item.Document.Header.Gid.Value, item.SourcePath)),
+            second.Select(static item => (item.Document.Header.Gid.Value, item.SourcePath)));
+    }
+
+    [Fact]
+    public void DiscoveryRejectsDefinitionWhoseGidDoesNotMatchItsSourcePath()
+    {
+        var exception = Assert.Throws<InvalidOperationException>(
+            () => DocumentDefinitions.Discover(Assembly.GetExecutingAssembly()));
+
+        Assert.Contains("D5/S1/Phase/Basic", exception.Message, StringComparison.Ordinal);
+        Assert.Contains(
+            "Blueprint/D5/S1/Phase/Basic.scribe.cs",
+            exception.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void GeneratedMarkdownIsDeterministicAndMatchesTheCommittedTree()
     {
         var repositoryRoot = FindRepositoryRoot();
 
-        foreach (var pilot in PilotDocuments.All)
+        foreach (var definition in DocumentDefinitions.All)
         {
-            var first = CanonicalMarkdownWriter.Write(pilot.Document);
-            var second = CanonicalMarkdownWriter.Write(pilot.Document);
+            var first = CanonicalMarkdownWriter.Write(definition.Document);
+            var second = CanonicalMarkdownWriter.Write(definition.Document);
             var committed = File.ReadAllBytes(
-                Path.Combine(repositoryRoot, pilot.RelativePath.Value));
+                Path.Combine(repositoryRoot, definition.RelativePath.Value));
 
             Assert.Equal(first.ToArray(), second.ToArray());
             Assert.Equal(committed, first.ToArray());
@@ -54,5 +84,14 @@ public sealed class PilotDocumentTests
         }
 
         throw new DirectoryNotFoundException("Could not locate the repository root.");
+    }
+
+    private sealed class MismatchedDefinition : IScribeDocumentDefinition
+    {
+        public DocumentDefinition Create() => DocumentDefinition.Create(
+            ScribeDocument.Create(
+                DefinitionDsl.Header("D5/S1/Phase/Basic", "Mismatch fixture."),
+                DefinitionDsl.H("Mismatch"),
+                DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("fixture")))));
     }
 }

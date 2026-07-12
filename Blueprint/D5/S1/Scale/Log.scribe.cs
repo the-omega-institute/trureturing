@@ -1,10 +1,10 @@
-using static StrataLint.Scribe.Definitions.DefinitionDsl;
+using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Definitions;
+namespace StrataLint.Scribe.Blueprint.D5.S1.Scale;
 
-internal static class ScaleLogDocument
+internal sealed class LogDocument : IScribeDocumentDefinition
 {
-    internal static ScribeDocument Create()
+    public DocumentDefinition Create()
     {
         var n = Id("n");
         var x = Id("x");
@@ -14,7 +14,7 @@ internal static class ScaleLogDocument
                 new Formula.Absolute(Call("embedding", x))));
         var shifted = Call("phiUnitZPowMul", n, x);
 
-        return ScribeDocument.Create(
+        return DocumentDefinition.Create(ScribeDocument.Create(
             Header(
                 "D5/S1/Scale/Log",
                 "Nonzero golden integers have an integer logarithmic scale with exact unit shifts."),
@@ -64,6 +64,6 @@ internal static class ScaleLogDocument
                                         Call(
                                             "map",
                                             Add(n, new Formula.Placeholder()),
-                                            Call("logScale", x))))))))));
+                                            Call("logScale", x)))))))))));
     }
 }

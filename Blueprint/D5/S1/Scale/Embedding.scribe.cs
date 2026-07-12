@@ -1,10 +1,10 @@
-using static StrataLint.Scribe.Definitions.DefinitionDsl;
+using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Definitions;
+namespace StrataLint.Scribe.Blueprint.D5.S1.Scale;
 
-internal static class ScaleEmbeddingDocument
+internal sealed class EmbeddingDocument : IScribeDocumentDefinition
 {
-    internal static ScribeDocument Create()
+    public DocumentDefinition Create()
     {
         var a = Id("a");
         var b = Id("b");
@@ -13,7 +13,7 @@ internal static class ScaleEmbeddingDocument
         var embedded = Call("embedding", x);
         var conjugate = Call("conj", x);
 
-        return ScribeDocument.Create(
+        return DocumentDefinition.Create(ScribeDocument.Create(
             Header(
                 "D5/S1/Scale/Embedding",
                 "The real embedding of golden integers is an injective ring homomorphism."),
@@ -81,6 +81,6 @@ internal static class ScaleEmbeddingDocument
                                         Multiply(
                                             new Formula.Absolute(embedded),
                                             new Formula.Absolute(Call("embedding", conjugate))),
-                                        new Formula.Absolute(Call("norm", x))))))))));
+                                        new Formula.Absolute(Call("norm", x)))))))))));
     }
 }
