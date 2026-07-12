@@ -1,0 +1,9 @@
+kind = "package"
+name = "trureturing-devtask"
+persistence_class = "stateless_adapter"
+
+[code]
+root = "."
+
+[lib_deps]
+libraries = []

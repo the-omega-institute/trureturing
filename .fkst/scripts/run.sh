@@ -3,7 +3,7 @@ set -euo pipefail
 
 readonly ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd -P)"
 readonly PACKAGE_ROOT="$ROOT/local-packages/harness-probe"
-readonly FALLBACK_BIN="/Users/auric/fkst-substrate/target/debug/fkst-framework"
+readonly PLATFORM_PACKAGES="github-proxy consensus github-devloop github-devloop-pr github-devloop-intake github-devloop-decompose github-devloop-intake-default"
 temporary=""
 
 die() {
@@ -17,6 +17,33 @@ cleanup() {
   fi
 }
 
+resolve_bin() {
+  local selected="" repo_root primary_worktree
+  if [[ -n "${BIN:-}" ]]; then
+    selected="$BIN"
+  elif [[ -f "$ROOT/env" ]]; then
+    selected="$(bash -c 'source "$1"; printf "%s" "${BIN:-}"' bash "$ROOT/env")" \
+      || die "could not load BIN from $ROOT/env"
+    [[ -n "$selected" ]] || die "$ROOT/env does not set a non-empty BIN"
+  elif command -v fkst-framework >/dev/null 2>&1; then
+    selected="$(command -v fkst-framework)"
+  else
+    repo_root="$(cd -- "$ROOT/.." && pwd -P)"
+    primary_worktree="$(
+      git -C "$repo_root" worktree list --porcelain 2>/dev/null \
+        | awk '/^worktree / { sub(/^worktree /, ""); print; exit }'
+    )"
+    if [[ -n "$primary_worktree" ]]; then
+      selected="$(dirname -- "$primary_worktree")/fkst-substrate/target/debug/fkst-framework"
+    else
+      selected="$ROOT/../../fkst-substrate/target/debug/fkst-framework"
+    fi
+  fi
+  [[ -f "$selected" && -x "$selected" ]] \
+    || die "BIN is not an executable regular file: $selected"
+  printf '%s\n' "$selected"
+}
+
 check_layer() {
   local required=(
     "substrate-ref"
@@ -25,6 +52,7 @@ check_layer() {
     "scripts/g5_check.py"
     "scripts/run.sh"
     "tests/g5_check_test.py"
+    "tests/host_contract_test.sh"
     "tests/provenance_test.sh"
     "local-packages/harness-probe/fkst.toml"
     "local-packages/harness-probe/raisers/development_request.lua"
@@ -52,9 +80,26 @@ if len(pin_lines) != 1 or re.fullmatch(r"[0-9a-fA-F]{40}", pin_lines[0]) is None
 
 with (root / "fkst.workspace.toml").open("rb") as stream:
     workspace = tomllib.load(stream)
-expected_workspace = {"workspace": {"units": ["local-packages/*"]}}
+expected_workspace = {
+    "workspace": {"units": ["local-packages/*"]},
+    "external_sources": [{
+        "id": "fkst-packages-platform",
+        "git": "https://github.com/ChronoAIProject/fkst-packages.git",
+        "rev": "9090b5dea4ffad6ff3f0cad4a0cf7b5fcf93d549",
+        "packages": [
+            "github-proxy",
+            "consensus",
+            "github-devloop",
+            "github-devloop-pr",
+            "github-devloop-intake",
+            "github-devloop-decompose",
+            "github-devloop-intake-default",
+        ],
+        "libraries": ["contract", "workflow", "testkit", "forge", "devloop"],
+    }],
+}
 if workspace != expected_workspace:
-    raise SystemExit("fkst.workspace.toml must discover only local-packages/*")
+    raise SystemExit("fkst.workspace.toml does not match the pinned host composition")
 
 with (package_root / "fkst.toml").open("rb") as stream:
     manifest = tomllib.load(stream)
@@ -184,8 +229,8 @@ PY
 run_test() {
   check_layer
 
-  local bin="${BIN:-$FALLBACK_BIN}"
-  [[ -f "$bin" && -x "$bin" ]] || die "BIN is not an executable regular file: $bin"
+  local bin
+  bin="$(resolve_bin)"
   verify_provenance "$bin"
 
   local report
@@ -208,17 +253,66 @@ run_test() {
   printf 'fkst test: ok\n'
 }
 
-[[ $# -eq 1 ]] || die "usage: $0 check|test"
-case "$1" in
+run_supervise() {
+  local platform_root="${FKST_PLATFORM_ROOT:-}"
+  local durable_root="${FKST_DURABLE_ROOT:-}"
+  local runtime_root="" restart=0
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --runtime-root)
+        [[ $# -ge 2 ]] || die "--runtime-root requires a path"
+        runtime_root="$2"
+        shift 2
+        ;;
+      --restart)
+        restart=1
+        shift
+        ;;
+      *) die "usage: $0 supervise [--runtime-root <scratch>] [--restart]" ;;
+    esac
+  done
+  [[ -n "$platform_root" ]] || die "FKST_PLATFORM_ROOT is required for supervise"
+  [[ -x "$platform_root/scripts/run.sh" ]] \
+    || die "platform runner is not executable: $platform_root/scripts/run.sh"
+  [[ -n "$durable_root" ]] || die "FKST_DURABLE_ROOT is required for supervise"
+
+  BIN="$(resolve_bin)"
+  export BIN
+  unset FKST_GITHUB_WRITE
+  local args=(
+    "$platform_root/scripts/run.sh" supervise
+    --project-root "$ROOT"
+    --platform-root "$platform_root"
+    --platform-packages "$PLATFORM_PACKAGES"
+    --local-packages "$ROOT/local-packages"
+    --host-packages trureturing-devtask
+    --durable-root "$durable_root"
+  )
+  [[ -z "$runtime_root" ]] || args+=(--runtime-root "$runtime_root")
+  [[ "$restart" -eq 0 ]] || args+=(--restart)
+  exec "${args[@]}"
+}
+
+[[ $# -ge 1 ]] || die "usage: $0 check|test|supervise"
+readonly command="$1"
+shift
+case "$command" in
   check)
+    [[ $# -eq 0 ]] || die "usage: $0 check"
     check_layer
     python3 "$ROOT/tests/g5_check_test.py"
-    bash "$ROOT/tests/provenance_test.sh"
+    resolved_bin="$(resolve_bin)"
+    BIN="$resolved_bin" bash "$ROOT/tests/provenance_test.sh"
+    bash "$ROOT/tests/host_contract_test.sh"
     ;;
   test)
+    [[ $# -eq 0 ]] || die "usage: $0 test"
     run_test
     ;;
+  supervise)
+    run_supervise "$@"
+    ;;
   *)
-    die "usage: $0 check|test"
+    die "usage: $0 check|test|supervise"
     ;;
 esac

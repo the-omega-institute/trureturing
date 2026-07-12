@@ -2,7 +2,6 @@
 set -euo pipefail
 
 readonly ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd -P)"
-readonly PINNED_CHECKOUT="${FKST_SUBSTRATE_ROOT:-/Users/auric/fkst-substrate}"
 temporary=""
 
 die() {
@@ -42,6 +41,24 @@ assert_rejected() {
 }
 
 readonly PIN="$(<"$ROOT/substrate-ref")"
+if [[ -n "${FKST_SUBSTRATE_ROOT:-}" ]]; then
+  PINNED_CHECKOUT="$FKST_SUBSTRATE_ROOT"
+elif [[ -n "${BIN:-}" && -e "$BIN" ]]; then
+  physical_bin="$(python3 - "$BIN" <<'PY'
+import os
+import sys
+print(os.path.realpath(sys.argv[1]))
+PY
+)"
+  PINNED_CHECKOUT="$(
+    env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE -u GIT_COMMON_DIR \
+      -u GIT_OBJECT_DIRECTORY -u GIT_ALTERNATE_OBJECT_DIRECTORIES \
+      git -C "$(dirname -- "$physical_bin")" rev-parse --show-toplevel 2>/dev/null
+  )" || die "set FKST_SUBSTRATE_ROOT or pass BIN inside the pinned substrate checkout"
+else
+  die "set FKST_SUBSTRATE_ROOT or pass BIN inside the pinned substrate checkout"
+fi
+readonly PINNED_CHECKOUT
 readonly CHECKOUT_HEAD="$(
   env -u GIT_DIR \
     -u GIT_WORK_TREE \

@@ -1,0 +1,35 @@
+[[external_source]]
+id = "fkst-packages-platform"
+git = "https://github.com/ChronoAIProject/fkst-packages.git"
+
+[external_source.intent]
+rev = "9090b5dea4ffad6ff3f0cad4a0cf7b5fcf93d549"
+
+[external_source.resolved]
+rev = "9090b5dea4ffad6ff3f0cad4a0cf7b5fcf93d549"
+tree_sha256 = "sha256-d383ce89b70ea571d10b404ef39ebc4aaf0d149705058e733a07fbd3615eb9bd"
+
+[[external_source.libraries]]
+name = "contract"
+unit = "libraries/contract"
+exports_sha256 = "sha256-a7066e2de2616188a5d3e055a0181db3a6c7034500a31b0d36ebc486b6ffa73d"
+
+[[external_source.libraries]]
+name = "workflow"
+unit = "libraries/workflow"
+exports_sha256 = "sha256-4b33c2f9e7002470fa6f9db800fa5f8e137e19a5f3a717ed2b2d027c90af5065"
+
+[[external_source.libraries]]
+name = "testkit"
+unit = "libraries/testkit"
+exports_sha256 = "sha256-94c492f2b507494001995f3b98e5b4d6b3a6b953ffb9b7fcdc496e18493382bb"
+
+[[external_source.libraries]]
+name = "forge"
+unit = "libraries/forge"
+exports_sha256 = "sha256-09b0be9b740598287711a7f317c9e4ae531d0954862578316537efb7d7dacc61"
+
+[[external_source.libraries]]
+name = "devloop"
+unit = "libraries/devloop"
+exports_sha256 = "sha256-a7040dde3e9276005a3b122d8b93536eb2d67e9190452309faf1ec2f2f5360a2"
