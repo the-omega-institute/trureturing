@@ -5,6 +5,12 @@ namespace StrataLint.Cli;
 
 internal sealed partial class GitRepositoryGateway
 {
+    public FrozenRevisionIdentity ResolveCurrentRevision()
+    {
+        var revision = GitText("rev-parse", "--verify", "HEAD^{commit}").Trim();
+        return ResolveFrozenRevision(revision);
+    }
+
     public FrozenRevisionIdentity ResolveFrozenRevision(string revision)
     {
         if (!IsObjectId(revision))

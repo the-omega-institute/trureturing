@@ -363,6 +363,9 @@ internal sealed class FakeRepositoryGateway(
             algorithm + new string('b', revision.Length));
     }
 
+    public FrozenRevisionIdentity ResolveCurrentRevision() =>
+        ResolveFrozenRevision(new string('a', 40));
+
     public RawRepositorySnapshot ReadCurrent()
     {
         ReadCount++;
