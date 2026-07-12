@@ -6,7 +6,13 @@
       "python": "hard-coded path and artifact membership",
       "csharp": "strict canonical Meta/registry.yaml membership",
       "case_id": "D5-T0011",
-      "case_diffs": []
+      "case_diffs": [
+        {
+          "case": "capacity-over-400-lines",
+          "python": ["SL-003 D5/S0/Carrier/Ring.lean: artifact exceeds 400 lines"],
+          "csharp": []
+        }
+      ]
     },
     {
       "item": "SL-022-baseline-meta-gate",
@@ -19,6 +25,12 @@
       "python": "有且仅有一种 canonical representation",
       "csharp": "AtMostOne/zero-or-one canonical representation",
       "case_id": "D5-T0015"
+    },
+    {
+      "item": "sl003-capacity-threshold",
+      "python": "artifact exceeds 400 lines (single hard limit)",
+      "csharp": "artifact exceeds 800 lines (hard block) with a 600-line non-blocking soft warning",
+      "case_id": "D5-T0021"
     }
   ]
 }

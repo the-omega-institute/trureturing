@@ -154,7 +154,6 @@ public sealed class GoldenCompatibilityTests
     {
         { "wrong-layer-import", 1, "upward-import" },
         { "stray-sorry", 2, "sorry" },
-        { "capacity-over-400-lines", 3, "file-capacity" },
         { "missing-blueprint-mirror", 4, "mirror" },
         { "chronicle-rewrite", 5, "chronicle" },
         { "manual-status-badge", 6, "badge" },
@@ -201,7 +200,7 @@ public sealed class GoldenCompatibilityTests
         using var document = JsonDocument.Parse(File.ReadAllBytes(Path.Combine(GoldenRoot, "differences.json")));
         var differences = document.RootElement.GetProperty("differences").EnumerateArray().ToArray();
         Assert.Equal(
-            new[] { "SL-022-baseline-meta-gate", "canonical-uniqueness-name", "registry-externalization" },
+            new[] { "SL-022-baseline-meta-gate", "canonical-uniqueness-name", "registry-externalization", "sl003-capacity-threshold" },
             differences.Select(static item => item.GetProperty("item").GetString()).Order(StringComparer.Ordinal));
         Assert.All(differences, static item =>
         {
@@ -212,7 +211,10 @@ public sealed class GoldenCompatibilityTests
         var registry = differences.Single(
             static item => item.GetProperty("item").GetString() == "registry-externalization");
         var cases = registry.GetProperty("case_diffs").EnumerateArray().ToArray();
-        Assert.Empty(cases);
+        var capacity = Assert.Single(cases);
+        Assert.Equal("capacity-over-400-lines", capacity.GetProperty("case").GetString());
+        Assert.NotEmpty(capacity.GetProperty("python").EnumerateArray().ToArray());
+        Assert.Equal(JsonValueKind.Array, capacity.GetProperty("csharp").ValueKind);
     }
 
     private static void ApplyLanguageNeutralMutations(RuleFixture fixture, JsonElement mutations)

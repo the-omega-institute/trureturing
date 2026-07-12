@@ -140,13 +140,23 @@ public sealed class RuleCatalog
     private static ImmutableArray<Diagnostic> Stamp(
         RuleDescriptor descriptor,
         ImmutableArray<RuleFinding> findings) =>
-        findings.Select(finding => new Diagnostic(
-                descriptor.Id,
-                descriptor.Title,
-                descriptor.DisplaySeverity,
-                descriptor.AdmissionEffect,
-                finding.Path,
-                finding.Message))
+        findings.Select(finding =>
+            {
+                // A finding may soften its own admission effect (e.g. a soft-limit
+                // warning under a rule whose default effect blocks); severity tracks
+                // the effect that actually applies.
+                var effect = finding.Effect ?? descriptor.AdmissionEffect;
+                var severity = finding.Effect is null
+                    ? descriptor.DisplaySeverity
+                    : effect is AdmissionEffect.Block ? DisplaySeverity.Error : DisplaySeverity.Warning;
+                return new Diagnostic(
+                    descriptor.Id,
+                    descriptor.Title,
+                    severity,
+                    effect,
+                    finding.Path,
+                    finding.Message);
+            })
             .ToImmutableArray();
 
     private static RuleCatalog CreateDefault()

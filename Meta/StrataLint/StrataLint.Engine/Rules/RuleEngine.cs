@@ -16,7 +16,7 @@ public sealed record Diagnostic(
 
 public sealed record DeferredRule(RuleId RuleId, CaseId CaseId, string Title);
 
-internal sealed record RuleFinding(string Path, string Message);
+internal sealed record RuleFinding(string Path, string Message, AdmissionEffect? Effect = null);
 
 internal interface IRepositoryRule
 {
