@@ -1,6 +1,5 @@
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;
-using Dunet;
 
 namespace StrataLint.Scribe;
 
@@ -35,54 +34,55 @@ public enum FormulaRelationOperator
     NotEqual,
 }
 
-[Union(EnableImplicitConversions = false)]
-public partial record Formula
+public abstract record Formula
 {
-    public partial record Symbol(FormulaIdentifier Name);
+    private Formula() { }
 
-    public partial record Number(long Value);
+    public sealed record Symbol(FormulaIdentifier Name) : Formula;
 
-    public partial record Phi;
+    public sealed record Number(long Value) : Formula;
 
-    public partial record Psi;
+    public sealed record Phi : Formula;
 
-    public partial record Placeholder;
+    public sealed record Psi : Formula;
 
-    public partial record Integers;
+    public sealed record Placeholder : Formula;
 
-    public partial record Negate(Formula Operand);
+    public sealed record Integers : Formula;
 
-    public partial record Absolute(Formula Operand);
+    public sealed record Negate(Formula Operand) : Formula;
 
-    public partial record Binary(
+    public sealed record Absolute(Formula Operand) : Formula;
+
+    public sealed record Binary(
         Formula Left,
         FormulaBinaryOperator Operator,
-        Formula Right);
+        Formula Right) : Formula;
 
-    public partial record Fraction(Formula Numerator, Formula Denominator);
+    public sealed record Fraction(Formula Numerator, Formula Denominator) : Formula;
 
-    public partial record Subscript(Formula Base, Formula Index);
+    public sealed record Subscript(Formula Base, Formula Index) : Formula;
 
-    public partial record Power(Formula Base, Formula Exponent);
+    public sealed record Power(Formula Base, Formula Exponent) : Formula;
 
-    public partial record Floor(Formula Operand);
+    public sealed record Floor(Formula Operand) : Formula;
 
-    public partial record Log(Formula Base, Formula Argument);
+    public sealed record Log(Formula Base, Formula Argument) : Formula;
 
-    public partial record Modulo(Formula Value, Formula Modulus);
+    public sealed record Modulo(Formula Value, Formula Modulus) : Formula;
 
-    public partial record Sequence(Formula Element, Formula Index, Formula Domain);
+    public sealed record Sequence(Formula Element, Formula Index, Formula Domain) : Formula;
 
-    public partial record SetLiteral(ImmutableArray<Formula> Elements);
+    public sealed record SetLiteral(ImmutableArray<Formula> Elements) : Formula;
 
-    public partial record SetBuilder(Formula Element, Formula Variable, Formula Domain);
+    public sealed record SetBuilder(Formula Element, Formula Variable, Formula Domain) : Formula;
 
-    public partial record FunctionCall(
+    public sealed record FunctionCall(
         FormulaIdentifier Name,
-        ImmutableArray<Formula> Arguments);
+        ImmutableArray<Formula> Arguments) : Formula;
 
-    public partial record Relation(
+    public sealed record Relation(
         Formula Left,
         FormulaRelationOperator Operator,
-        Formula Right);
+        Formula Right) : Formula;
 }

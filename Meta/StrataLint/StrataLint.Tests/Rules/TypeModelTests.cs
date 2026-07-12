@@ -91,6 +91,18 @@ public sealed class TypeModelTests
         Assert.NotNull(RepositoryPathPolicy.Validate(path, Policy()));
     }
 
+    [Fact]
+    public void HarnessGateScriptIsClosedWorldRegisteredAndBootstrapProtected()
+    {
+        const string value = ".github/scripts/harness-gate.sh";
+        var path = RepoPath.CreateKnown(value);
+
+        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
+        var outcome = BootstrapGate.Evaluate(RawChangeSet.Create(new[] { value }));
+        var required = Assert.IsType<BootstrapOutcome.HumanReviewRequired>(outcome);
+        Assert.Contains(required.ChangeSet.Paths, item => item == path);
+    }
+
     private static ValidatedPolicy Policy() =>
         Assert.IsType<RegistryLoadOutcome.Accepted>(
             RegistryLoader.Load(

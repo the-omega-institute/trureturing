@@ -1,6 +1,4 @@
-using StrataLint.Engine;
-
-namespace StrataLint.Cli;
+namespace StrataLint.Engine;
 
 public static class LeanCompiledArtifactReports
 {
@@ -22,14 +20,14 @@ public static class LeanCompiledArtifactReports
                 + "run `lake build` before Scribe emit.");
         }
 
-        var decoded = SnapshotDecoder.Decode(new GitRepositoryGateway(root).ReadCurrent());
+        var decoded = SnapshotDecoder.Decode(GitRepositorySnapshotReader.ReadCurrent(root));
         if (decoded is SnapshotDecodeOutcome.InfrastructureFailure failure)
         {
             throw new InvalidOperationException(
                 $"Repository snapshot for Lean inspection is unavailable: {failure.Message}");
         }
 
-        return new LeanProcessInspector(root).Inspect(
+        return new CompiledLeanProcessInspector(root).Inspect(
             ((SnapshotDecodeOutcome.Decoded)decoded).Snapshot);
     }
 }

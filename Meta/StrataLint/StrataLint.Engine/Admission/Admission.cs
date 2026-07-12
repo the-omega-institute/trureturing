@@ -50,7 +50,13 @@ public sealed class AdmissionCertificate
 [Union(EnableImplicitConversions = false)]
 public partial record AdmissionOutcome
 {
-    public partial record Admitted(AdmissionCertificate Certificate);
+    public partial record Admitted
+    {
+        internal Admitted(AdmissionCertificate certificate) =>
+            Certificate = certificate ?? throw new ArgumentNullException(nameof(certificate));
+
+        public AdmissionCertificate Certificate { get; }
+    }
 
     public partial record RuleRejected(ImmutableArray<Diagnostic> Diagnostics);
 

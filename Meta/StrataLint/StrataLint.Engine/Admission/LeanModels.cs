@@ -56,7 +56,13 @@ public sealed class AcceptedLeanClosure
 [Union(EnableImplicitConversions = false)]
 public partial record LeanValidationOutcome
 {
-    public partial record Accepted(AcceptedLeanClosure Capability);
+    public partial record Accepted
+    {
+        internal Accepted(AcceptedLeanClosure capability) =>
+            Capability = capability ?? throw new ArgumentNullException(nameof(capability));
+
+        public AcceptedLeanClosure Capability { get; }
+    }
 
     public partial record InfrastructureFailure(string Message);
 }

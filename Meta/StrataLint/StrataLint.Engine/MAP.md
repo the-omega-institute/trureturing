@@ -4,6 +4,8 @@
 
 - 2026-07-12 (SL-003): split the over-capacity engine bucket by cohesive domain.
   This was a local subdivision only; all C# namespaces remain `StrataLint.Engine`.
+- 2026-07-12 (SL-003): split semantic path parsing from `RepositoryPathPolicy.cs`
+  into a same-namespace partial source after the file crossed 400 lines.
 
 ## Buckets
 
@@ -14,6 +16,7 @@
 - `Ledger/`: frozen content and ledger mechanics; `Validation/` holds validation phases.
 - `Revocation/`: revocation planning and trusted receipts.
 - `Rules/`: rule catalog, execution, and repository rule implementations.
+- `Runtime/`: bounded processes, Git working-tree snapshots, and compiled Lean inspection.
 - `Snapshot/`: repository snapshots and canonical writers.
 
 The root contains only assembly and SDK project metadata plus this map.

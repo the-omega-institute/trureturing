@@ -166,6 +166,79 @@ public sealed class LeanProcessInspectorTests
             static declaration => declaration.DeclarationNameKey.Contains("_proof_", StringComparison.Ordinal));
     }
 
+    [Fact]
+    public void InspectorDiscardsLegacyMemoAndRecomputesMatchingOleanReport()
+    {
+        using var repository = new TemporaryDirectory();
+        File.WriteAllText(Path.Combine(repository.Path, "lakefile.toml"), Lakefile + "\n");
+        File.WriteAllText(Path.Combine(repository.Path, "lean-toolchain"), "leanprover/lean4:v4.31.0\n");
+        File.WriteAllText(Path.Combine(repository.Path, "Trureturing.lean"), "def liveDeclaration : Nat := 1\n");
+        var build = BoundedProcessRunner.Run(
+            "lake",
+            new[] { "build" },
+            repository.Path,
+            TimeSpan.FromSeconds(120),
+            4 * 1024 * 1024);
+        Assert.Equal(0, build.ExitCode);
+        var olean = Path.Combine(repository.Path, ".lake", "build", "lib", "lean", "Trureturing.olean");
+        var oleanSha256 = Convert.ToHexStringLower(
+            System.Security.Cryptography.SHA256.HashData(File.ReadAllBytes(olean)));
+        File.WriteAllText(
+            Path.Combine(repository.Path, ".lake", "build", "stratalint-inspection-v1.json"),
+            $$$$"""
+            {"version":1,"entries":{"Trureturing":{"olean_sha256":"{{{{oleanSha256}}}}","imports":[],"declarations":[{"name":"legacy.memo","kind":"def","type":"Nat","axioms":[]}]}}}
+            """ + "\n");
+        var raw = RawRepositorySnapshot.Create(new[]
+        {
+            RawRepositoryEntry.FromText("lakefile.toml", Lakefile + "\n"),
+            RawRepositoryEntry.FromText("lean-toolchain", "leanprover/lean4:v4.31.0\n"),
+            RawRepositoryEntry.FromText("Trureturing.lean", "def liveDeclaration : Nat := 1\n"),
+        });
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+
+        var report = new LeanProcessInspector(repository.Path).Inspect(snapshot).Files.Single().Value;
+
+        Assert.Contains(report.Declarations, static item => item.Name == "liveDeclaration");
+        Assert.DoesNotContain(report.Declarations, static item => item.Name == "legacy.memo");
+    }
+
+    [Fact]
+    public void InspectionMemoRoundTripsStatementIdentityMetadataForItsFormatVersion()
+    {
+        using var repository = new TemporaryDirectory();
+        const string formatVersion = "test-harness-format-v2";
+        var memo = InspectionMemo.Load(repository.Path, formatVersion);
+        memo.Put(
+            "Trureturing",
+            "abc123",
+            new LeanFileReport(
+                [],
+                [new LeanDeclaration("private._proof_1", "theorem", "statement-v1(test)", [])
+                {
+                    NameKey = "ns(n0,4:test)",
+                    IncludeInStatement = false,
+                }]));
+
+        memo.Save(repository.Path);
+        var reloaded = InspectionMemo.Load(repository.Path, formatVersion);
+
+        Assert.True(reloaded.TryGet("Trureturing", "abc123", out var report));
+        var declaration = Assert.Single(report.Declarations);
+        Assert.Equal("ns(n0,4:test)", declaration.NameKey);
+        Assert.False(declaration.IncludeInStatement);
+        Assert.False(
+            InspectionMemo.Load(repository.Path, formatVersion + "-changed")
+                .TryGet("Trureturing", "abc123", out _));
+        Assert.Contains(
+            "\"harness_format_version\":\"test-harness-format-v2\"",
+            File.ReadAllText(Path.Combine(
+                repository.Path,
+                ".lake",
+                "build",
+                "stratalint-inspection-v1.json")),
+            StringComparison.Ordinal);
+    }
+
     private static LeanFileReport InspectSingleModule(string source)
     {
         using var repository = new TemporaryDirectory();
