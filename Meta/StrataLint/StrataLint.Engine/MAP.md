@@ -15,7 +15,7 @@
 - `Dag/`: truth DAG models and construction.
 - `Ledger/`: frozen content and ledger mechanics; `Validation/` holds validation phases.
 - `Revocation/`: revocation planning and trusted receipts.
-- `Rules/`: rule catalog, execution, and repository rule implementations.
+- `Rules/`: rule catalog, execution, repository rule implementations, and the shared BACKFILL loader.
 - `Runtime/`: bounded processes, Git working-tree snapshots, and precomputed report adapters.
 - `Snapshot/`: repository snapshots, canonical writers, and the source-bound raw Lean report contract.
 

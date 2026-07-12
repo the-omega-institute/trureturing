@@ -243,54 +243,47 @@ internal sealed class RuleFixture
 
     internal void AddBackfillTargets()
     {
-        var ticketsByGid = new Dictionary<string, string[]>(StringComparer.Ordinal)
+        var inventory = BackfillInventoryLoader.Load(Files["Meta/BACKFILL.yaml"]);
+        var ticketsByGid = inventory.RequireTickets()
+            .GroupBy(static ticket => ticket.Gid, StringComparer.Ordinal)
+            .ToDictionary(
+                static group => group.Key,
+                static group => group.Select(static ticket => ticket.CaseId).ToArray(),
+                StringComparer.Ordinal);
+        foreach (var gidText in inventory.RequireReferencedGids())
         {
-            ["D5/X_Frontier/D5P001"] = ["D5-T0006"],
-            ["D5/X_Frontier/FutureInstances"] = ["D5-T0009"],
-            ["D5/X_Frontier/GoldenUnitsUFD"] = ["D5-T0008"],
-            ["D5/X_Frontier/GovernanceDeferrals"] =
-                ["D5-T0011", "D5-T0012", "D5-T0013", "D5-T0014", "D5-T0015", "D5-T0016"],
-            ["D5/X_Frontier/HeartsDraft"] = ["D5-T0001", "D5-T0018"],
-            ["D5/X_Frontier/PaperGenerator"] = ["D5-T0005"],
-            ["D5/X_Frontier/RequiredChecks"] = ["D5-T0007", "D5-T0017"],
-            ["D5/X_Frontier/SplitTool"] = ["D5-T0004"],
-            ["D5/X_Frontier/StrataLintLeanEnvironment"] = ["D5-T0002"],
-            ["D5/X_Frontier/ToolchainUpgrade"] = ["D5-T0010"],
-            ["D5/X_Frontier/ValuesProducer"] = ["D5-T0003"],
-        };
-        foreach (var gid in new[]
-        {
-            "D5/S0/Carrier/Norm",
-            "D5/X_Frontier/D5P001",
-            "D5/X_Frontier/FutureInstances",
-            "D5/X_Frontier/GoldenUnitsUFD",
-            "D5/X_Frontier/GovernanceDeferrals",
-            "D5/X_Frontier/Hearts",
-            "D5/X_Frontier/HeartsDraft",
-            "D5/X_Frontier/PaperGenerator",
-            "D5/X_Frontier/RequiredChecks",
-            "D5/X_Frontier/SplitTool",
-            "D5/X_Frontier/StrataLintLeanEnvironment",
-            "D5/X_Frontier/ToolchainUpgrade",
-            "D5/X_Frontier/ValuesProducer",
-        })
-        {
-            var path = gid + ".lean";
-            Files[path] = HeaderFor(gid, gid.Contains("/S0/", StringComparison.Ordinal) ? "G" : "E")
-                + (gid.Contains("/X_Frontier/", StringComparison.Ordinal) ? "-- D5-T9999\n" : string.Empty)
-                + "def protectedTargetFixture : Unit := ()\n";
-            if (ticketsByGid.TryGetValue(gid, out var cases))
+            if (!Gid.TryParse(gidText, out var gid))
             {
-                Files[path] += string.Concat(cases.Select(static caseId =>
+                throw new FormatException($"canonical BACKFILL contains invalid GID {gidText}");
+            }
+
+            var path = gid.Path.Value;
+            if (!path.EndsWith(".lean", StringComparison.Ordinal))
+            {
+                continue;
+            }
+
+            if (!Files.TryGetValue(path, out var text))
+            {
+                text = HeaderFor(gidText, path.Contains("/S0/", StringComparison.Ordinal) ? "G" : "E")
+                    + (path.Contains("/X_Frontier/", StringComparison.Ordinal) ? "-- D5-T9999\n" : string.Empty)
+                    + "def protectedTargetFixture : Unit := ()\n";
+                Reports[path] = Report();
+            }
+
+            if (ticketsByGid.TryGetValue(gidText, out var cases))
+            {
+                text += string.Concat(cases.Select(static caseId =>
                     $"/-- TASK {caseId} | 难度:3 | 依赖:就绪 | 尝试:0\n"
                     + "    提示:Fixture task.\n"
                     + "    尸检:none -/\n"
                     + $"def fixtureTask{caseId[4..]} : Unit := ()\n"));
             }
-            Reports[path] = Report();
-            if (gid == "D5/X_Frontier/Hearts")
+
+            Files[path] = text;
+            if (path == "D5/X_Frontier/Hearts.lean")
             {
-                Baseline[path] = Files[path];
+                Baseline[path] = text;
                 BaselineReports[path] = Reports[path];
             }
         }
