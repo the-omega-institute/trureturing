@@ -38,10 +38,12 @@ public sealed class TrustTopologyTests
         Assert.Contains(required.ChangeSet.Paths, item => item.Value == path);
     }
 
-    [Fact]
-    public void OrdinaryContributionProducesAnUnforgeableMetaClearCapability()
+    [Theory]
+    [InlineData("Blueprint/D5/S0/Carrier/Ring.md")]
+    [InlineData("Blueprint/D5/S1/Digit/Raw.scribe.cs")]
+    public void ContentContributionProducesAnUnforgeableMetaClearCapability(string path)
     {
-        var changes = RawChangeSet.Create(new[] { "Blueprint/D5/S0/Carrier/Ring.md" });
+        var changes = RawChangeSet.Create(new[] { path });
 
         var outcome = BootstrapGate.Evaluate(changes);
 
