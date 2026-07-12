@@ -85,6 +85,7 @@ jobs:
         run: |
           dotnet restore candidate/Meta/StrataLint/StrataLint.sln --locked-mode
           dotnet restore candidate/Meta/StrataLint/CompileFailProof/CompileFailProof.csproj --locked-mode
+          dotnet restore candidate/Meta/StrataLint/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj --locked-mode
 
       - name: Build candidate with warnings as errors
         run: dotnet build candidate/Meta/StrataLint/StrataLint.sln --no-restore --configuration Release --warnaserror
@@ -112,6 +113,29 @@ jobs:
           test "$status" -ne 0
           grep -F "CS7036" <<<"$output"
           grep -F "MetaClear" <<<"$output"
+
+      - name: Prove banned deterministic APIs do not compile
+        shell: bash
+        run: |
+          proof="candidate/Meta/StrataLint/BannedApiCompileFailProof/BannedApiViolations.cs"
+          set +e
+          output="$(dotnet build candidate/Meta/StrataLint/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj --no-restore --configuration Release 2>&1)"
+          status=$?
+          set -e
+          printf '%s\n' "$output"
+          test "$status" -ne 0
+          mapfile -t expected_lines < <(
+            grep -nF "// banned-api-proof" "$proof" | cut -d: -f1
+          )
+          mapfile -t actual_lines < <(
+            sed -n 's#.*BannedApiViolations.cs(\([0-9][0-9]*\),[0-9][0-9]*): error RS0030:.*#\1#p' <<<"$output" | sort -nu
+          )
+          test "${#expected_lines[@]}" -gt 0
+          test "${#actual_lines[@]}" -eq "${#expected_lines[@]}"
+          test -z "$(grep -F ': error ' <<<"$output" | grep -vF ': error RS0030:' || true)"
+          for index in "${!expected_lines[@]}"; do
+            test "${actual_lines[$index]}" = "${expected_lines[$index]}"
+          done
 
   baseline-admission:
     name: Content-addressed dev baseline admission

@@ -29,14 +29,31 @@ public sealed record TowerFinding(string Code, string Component, string Message)
 
 public sealed record TowerCheck(string Subject, string Status, string Detail);
 
-public sealed record ValidatedTowerManifest(
-    TowerManifestSyntax Syntax,
-    ImmutableArray<TowerCheck> Checks);
+public sealed record ValidatedTowerManifest
+{
+    internal ValidatedTowerManifest(
+        TowerManifestSyntax syntax,
+        ImmutableArray<TowerCheck> checks)
+    {
+        Syntax = syntax ?? throw new ArgumentNullException(nameof(syntax));
+        Checks = checks;
+    }
+
+    public TowerManifestSyntax Syntax { get; }
+
+    public ImmutableArray<TowerCheck> Checks { get; }
+}
 
 [Union(EnableImplicitConversions = false)]
 public partial record TowerValidationOutcome
 {
-    public partial record Accepted(ValidatedTowerManifest Manifest);
+    public partial record Accepted
+    {
+        internal Accepted(ValidatedTowerManifest manifest) =>
+            Manifest = manifest ?? throw new ArgumentNullException(nameof(manifest));
+
+        public ValidatedTowerManifest Manifest { get; }
+    }
 
     public partial record Rejected(ImmutableArray<TowerFinding> Findings);
 }

@@ -1,0 +1,151 @@
+P:System.DateTime.Now;Inject a clock or pass an explicit deterministic timestamp.
+P:System.DateTime.UtcNow;Inject a clock or pass an explicit deterministic timestamp.
+P:System.DateTimeOffset.Now;Inject a clock or pass an explicit deterministic timestamp.
+P:System.DateTimeOffset.UtcNow;Inject a clock or pass an explicit deterministic timestamp.
+T:System.Random;Inject a deterministic entropy source with an explicit seed.
+P:System.Environment.TickCount;Use an injected monotonic clock outside deterministic code.
+P:System.Environment.TickCount64;Use an injected monotonic clock outside deterministic code.
+M:System.Guid.NewGuid;Pass a stable identifier into deterministic code.
+M:System.Byte.Parse(System.String);Use Parse with CultureInfo.InvariantCulture.
+M:System.Byte.Parse(System.String,System.Globalization.NumberStyles);Use Parse with CultureInfo.InvariantCulture.
+M:System.Byte.ToString;Use ToString(CultureInfo.InvariantCulture).
+M:System.Byte.ToString(System.String);Use ToString(CultureInfo.InvariantCulture).
+M:System.Byte.TryParse(System.ReadOnlySpan{System.Byte},System.Byte@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.Byte.TryParse(System.ReadOnlySpan{System.Char},System.Byte@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.Byte.TryParse(System.String,System.Byte@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.SByte.Parse(System.String);Use Parse with CultureInfo.InvariantCulture.
+M:System.SByte.Parse(System.String,System.Globalization.NumberStyles);Use Parse with CultureInfo.InvariantCulture.
+M:System.SByte.ToString;Use ToString(CultureInfo.InvariantCulture).
+M:System.SByte.ToString(System.String);Use ToString(CultureInfo.InvariantCulture).
+M:System.SByte.TryParse(System.ReadOnlySpan{System.Byte},System.SByte@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.SByte.TryParse(System.ReadOnlySpan{System.Char},System.SByte@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.SByte.TryParse(System.String,System.SByte@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.Int16.Parse(System.String);Use Parse with CultureInfo.InvariantCulture.
+M:System.Int16.Parse(System.String,System.Globalization.NumberStyles);Use Parse with CultureInfo.InvariantCulture.
+M:System.Int16.ToString;Use ToString(CultureInfo.InvariantCulture).
+M:System.Int16.ToString(System.String);Use ToString(CultureInfo.InvariantCulture).
+M:System.Int16.TryParse(System.ReadOnlySpan{System.Byte},System.Int16@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.Int16.TryParse(System.ReadOnlySpan{System.Char},System.Int16@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.Int16.TryParse(System.String,System.Int16@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.UInt16.Parse(System.String);Use Parse with CultureInfo.InvariantCulture.
+M:System.UInt16.Parse(System.String,System.Globalization.NumberStyles);Use Parse with CultureInfo.InvariantCulture.
+M:System.UInt16.ToString;Use ToString(CultureInfo.InvariantCulture).
+M:System.UInt16.ToString(System.String);Use ToString(CultureInfo.InvariantCulture).
+M:System.UInt16.TryParse(System.ReadOnlySpan{System.Byte},System.UInt16@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.UInt16.TryParse(System.ReadOnlySpan{System.Char},System.UInt16@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.UInt16.TryParse(System.String,System.UInt16@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.Int32.Parse(System.String);Use Parse with CultureInfo.InvariantCulture.
+M:System.Int32.Parse(System.String,System.Globalization.NumberStyles);Use Parse with CultureInfo.InvariantCulture.
+M:System.Int32.ToString;Use ToString(CultureInfo.InvariantCulture).
+M:System.Int32.ToString(System.String);Use ToString(CultureInfo.InvariantCulture).
+M:System.Int32.TryParse(System.ReadOnlySpan{System.Byte},System.Int32@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.Int32.TryParse(System.ReadOnlySpan{System.Char},System.Int32@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.Int32.TryParse(System.String,System.Int32@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.UInt32.Parse(System.String);Use Parse with CultureInfo.InvariantCulture.
+M:System.UInt32.Parse(System.String,System.Globalization.NumberStyles);Use Parse with CultureInfo.InvariantCulture.
+M:System.UInt32.ToString;Use ToString(CultureInfo.InvariantCulture).
+M:System.UInt32.ToString(System.String);Use ToString(CultureInfo.InvariantCulture).
+M:System.UInt32.TryParse(System.ReadOnlySpan{System.Byte},System.UInt32@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.UInt32.TryParse(System.ReadOnlySpan{System.Char},System.UInt32@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.UInt32.TryParse(System.String,System.UInt32@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.Int64.Parse(System.String);Use Parse with CultureInfo.InvariantCulture.
+M:System.Int64.Parse(System.String,System.Globalization.NumberStyles);Use Parse with CultureInfo.InvariantCulture.
+M:System.Int64.ToString;Use ToString(CultureInfo.InvariantCulture).
+M:System.Int64.ToString(System.String);Use ToString(CultureInfo.InvariantCulture).
+M:System.Int64.TryParse(System.ReadOnlySpan{System.Byte},System.Int64@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.Int64.TryParse(System.ReadOnlySpan{System.Char},System.Int64@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.Int64.TryParse(System.String,System.Int64@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.UInt64.Parse(System.String);Use Parse with CultureInfo.InvariantCulture.
+M:System.UInt64.Parse(System.String,System.Globalization.NumberStyles);Use Parse with CultureInfo.InvariantCulture.
+M:System.UInt64.ToString;Use ToString(CultureInfo.InvariantCulture).
+M:System.UInt64.ToString(System.String);Use ToString(CultureInfo.InvariantCulture).
+M:System.UInt64.TryParse(System.ReadOnlySpan{System.Byte},System.UInt64@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.UInt64.TryParse(System.ReadOnlySpan{System.Char},System.UInt64@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.UInt64.TryParse(System.String,System.UInt64@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.Int128.Parse(System.String);Use Parse with CultureInfo.InvariantCulture.
+M:System.Int128.Parse(System.String,System.Globalization.NumberStyles);Use Parse with CultureInfo.InvariantCulture.
+M:System.Int128.ToString;Use ToString(CultureInfo.InvariantCulture).
+M:System.Int128.ToString(System.String);Use ToString(CultureInfo.InvariantCulture).
+M:System.Int128.TryParse(System.ReadOnlySpan{System.Byte},System.Int128@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.Int128.TryParse(System.ReadOnlySpan{System.Char},System.Int128@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.Int128.TryParse(System.String,System.Int128@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.UInt128.Parse(System.String);Use Parse with CultureInfo.InvariantCulture.
+M:System.UInt128.Parse(System.String,System.Globalization.NumberStyles);Use Parse with CultureInfo.InvariantCulture.
+M:System.UInt128.ToString;Use ToString(CultureInfo.InvariantCulture).
+M:System.UInt128.ToString(System.String);Use ToString(CultureInfo.InvariantCulture).
+M:System.UInt128.TryParse(System.ReadOnlySpan{System.Byte},System.UInt128@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.UInt128.TryParse(System.ReadOnlySpan{System.Char},System.UInt128@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.UInt128.TryParse(System.String,System.UInt128@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.Half.Parse(System.String);Use Parse with CultureInfo.InvariantCulture.
+M:System.Half.Parse(System.String,System.Globalization.NumberStyles);Use Parse with CultureInfo.InvariantCulture.
+M:System.Half.ToString;Use ToString(CultureInfo.InvariantCulture).
+M:System.Half.ToString(System.String);Use ToString(CultureInfo.InvariantCulture).
+M:System.Half.TryParse(System.ReadOnlySpan{System.Byte},System.Half@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.Half.TryParse(System.ReadOnlySpan{System.Char},System.Half@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.Half.TryParse(System.String,System.Half@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.Single.Parse(System.String);Use Parse with CultureInfo.InvariantCulture.
+M:System.Single.Parse(System.String,System.Globalization.NumberStyles);Use Parse with CultureInfo.InvariantCulture.
+M:System.Single.ToString;Use ToString(CultureInfo.InvariantCulture).
+M:System.Single.ToString(System.String);Use ToString(CultureInfo.InvariantCulture).
+M:System.Single.TryParse(System.ReadOnlySpan{System.Byte},System.Single@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.Single.TryParse(System.ReadOnlySpan{System.Char},System.Single@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.Single.TryParse(System.String,System.Single@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.Double.Parse(System.String);Use Parse with CultureInfo.InvariantCulture.
+M:System.Double.Parse(System.String,System.Globalization.NumberStyles);Use Parse with CultureInfo.InvariantCulture.
+M:System.Double.ToString;Use ToString(CultureInfo.InvariantCulture).
+M:System.Double.ToString(System.String);Use ToString(CultureInfo.InvariantCulture).
+M:System.Double.TryParse(System.ReadOnlySpan{System.Byte},System.Double@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.Double.TryParse(System.ReadOnlySpan{System.Char},System.Double@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.Double.TryParse(System.String,System.Double@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.Decimal.Parse(System.String);Use Parse with CultureInfo.InvariantCulture.
+M:System.Decimal.Parse(System.String,System.Globalization.NumberStyles);Use Parse with CultureInfo.InvariantCulture.
+M:System.Decimal.ToString;Use ToString(CultureInfo.InvariantCulture).
+M:System.Decimal.ToString(System.String);Use ToString(CultureInfo.InvariantCulture).
+M:System.Decimal.TryParse(System.ReadOnlySpan{System.Byte},System.Decimal@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.Decimal.TryParse(System.ReadOnlySpan{System.Char},System.Decimal@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.Decimal.TryParse(System.String,System.Decimal@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.Numerics.BigInteger.Parse(System.String);Use Parse with CultureInfo.InvariantCulture.
+M:System.Numerics.BigInteger.Parse(System.String,System.Globalization.NumberStyles);Use Parse with CultureInfo.InvariantCulture.
+M:System.Numerics.BigInteger.ToString;Use ToString(CultureInfo.InvariantCulture).
+M:System.Numerics.BigInteger.ToString(System.String);Use ToString(CultureInfo.InvariantCulture).
+M:System.Numerics.BigInteger.TryParse(System.ReadOnlySpan{System.Char},System.Numerics.BigInteger@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.Numerics.BigInteger.TryParse(System.String,System.Numerics.BigInteger@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.DateTime.Parse(System.String);Use Parse with CultureInfo.InvariantCulture.
+M:System.DateTime.ToString;Use ToString(CultureInfo.InvariantCulture).
+M:System.DateTime.ToString(System.String);Use ToString(CultureInfo.InvariantCulture).
+M:System.DateTime.TryParse(System.ReadOnlySpan{System.Char},System.DateTime@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.DateTime.TryParse(System.String,System.DateTime@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.DateTimeOffset.Parse(System.String);Use Parse with CultureInfo.InvariantCulture.
+M:System.DateTimeOffset.ToString;Use ToString(CultureInfo.InvariantCulture).
+M:System.DateTimeOffset.ToString(System.String);Use ToString(CultureInfo.InvariantCulture).
+M:System.DateTimeOffset.TryParse(System.ReadOnlySpan{System.Char},System.DateTimeOffset@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.DateTimeOffset.TryParse(System.String,System.DateTimeOffset@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.TimeSpan.Parse(System.String);Use Parse with CultureInfo.InvariantCulture.
+M:System.TimeSpan.ToString;Use ToString(CultureInfo.InvariantCulture).
+M:System.TimeSpan.ToString(System.String);Use ToString(CultureInfo.InvariantCulture).
+M:System.TimeSpan.TryParse(System.ReadOnlySpan{System.Char},System.TimeSpan@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.TimeSpan.TryParse(System.String,System.TimeSpan@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.DateOnly.Parse(System.String);Use Parse with CultureInfo.InvariantCulture.
+M:System.DateOnly.ParseExact(System.ReadOnlySpan{System.Char},System.String[]);Use ParseExact with CultureInfo.InvariantCulture.
+M:System.DateOnly.ParseExact(System.String,System.String);Use ParseExact with CultureInfo.InvariantCulture.
+M:System.DateOnly.ParseExact(System.String,System.String[]);Use ParseExact with CultureInfo.InvariantCulture.
+M:System.DateOnly.ToString;Use ToString(CultureInfo.InvariantCulture).
+M:System.DateOnly.ToString(System.String);Use ToString(CultureInfo.InvariantCulture).
+M:System.DateOnly.TryParse(System.ReadOnlySpan{System.Char},System.DateOnly@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.DateOnly.TryParse(System.String,System.DateOnly@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.DateOnly.TryParseExact(System.ReadOnlySpan{System.Char},System.ReadOnlySpan{System.Char},System.DateOnly@);Use TryParseExact with CultureInfo.InvariantCulture.
+M:System.DateOnly.TryParseExact(System.ReadOnlySpan{System.Char},System.String[],System.DateOnly@);Use TryParseExact with CultureInfo.InvariantCulture.
+M:System.DateOnly.TryParseExact(System.String,System.String,System.DateOnly@);Use TryParseExact with CultureInfo.InvariantCulture.
+M:System.DateOnly.TryParseExact(System.String,System.String[],System.DateOnly@);Use TryParseExact with CultureInfo.InvariantCulture.
+M:System.TimeOnly.Parse(System.String);Use Parse with CultureInfo.InvariantCulture.
+M:System.TimeOnly.ParseExact(System.ReadOnlySpan{System.Char},System.String[]);Use ParseExact with CultureInfo.InvariantCulture.
+M:System.TimeOnly.ParseExact(System.String,System.String);Use ParseExact with CultureInfo.InvariantCulture.
+M:System.TimeOnly.ParseExact(System.String,System.String[]);Use ParseExact with CultureInfo.InvariantCulture.
+M:System.TimeOnly.ToString;Use ToString(CultureInfo.InvariantCulture).
+M:System.TimeOnly.ToString(System.String);Use ToString(CultureInfo.InvariantCulture).
+M:System.TimeOnly.TryParse(System.ReadOnlySpan{System.Char},System.TimeOnly@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.TimeOnly.TryParse(System.String,System.TimeOnly@);Use TryParse with CultureInfo.InvariantCulture.
+M:System.TimeOnly.TryParseExact(System.ReadOnlySpan{System.Char},System.ReadOnlySpan{System.Char},System.TimeOnly@);Use TryParseExact with CultureInfo.InvariantCulture.
+M:System.TimeOnly.TryParseExact(System.ReadOnlySpan{System.Char},System.String[],System.TimeOnly@);Use TryParseExact with CultureInfo.InvariantCulture.
+M:System.TimeOnly.TryParseExact(System.String,System.String,System.TimeOnly@);Use TryParseExact with CultureInfo.InvariantCulture.
+M:System.TimeOnly.TryParseExact(System.String,System.String[],System.TimeOnly@);Use TryParseExact with CultureInfo.InvariantCulture.

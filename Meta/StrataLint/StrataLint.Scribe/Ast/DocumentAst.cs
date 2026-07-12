@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using Dunet;
 
 namespace StrataLint.Scribe;
 
@@ -33,14 +32,15 @@ public sealed record TextRun
     public override string ToString() => Value;
 }
 
-[Union(EnableImplicitConversions = false)]
-public partial record Inline
+public abstract record Inline
 {
-    public partial record Text(TextRun Run);
+    private Inline() { }
 
-    public partial record InlineFormula(Formula Value);
+    public sealed record Text(TextRun Run) : Inline;
 
-    public partial record GidReference(GidRef Reference);
+    public sealed record InlineFormula(Formula Value) : Inline;
+
+    public sealed record GidReference(GidRef Reference) : Inline;
 }
 
 public sealed class InlineSequence
@@ -85,30 +85,31 @@ public sealed class BlockSequence
     }
 }
 
-[Union(EnableImplicitConversions = false)]
-public partial record DocumentBlock
+public abstract record DocumentBlock
 {
-    public partial record Paragraph(InlineSequence Content);
+    private DocumentBlock() { }
 
-    public partial record DisplayFormula(Formula Value);
+    public sealed record Paragraph(InlineSequence Content) : DocumentBlock;
 
-    public partial record ComputedValue(
+    public sealed record DisplayFormula(Formula Value) : DocumentBlock;
+
+    public sealed record ComputedValue(
         Heading Label,
-        DeterministicComputation Computation);
+        DeterministicComputation Computation) : DocumentBlock;
 
-    public partial record RenderedStatement(LeanDeclarationRef Declaration);
+    public sealed record RenderedStatement(LeanDeclarationRef Declaration) : DocumentBlock;
 
-    public partial record Section(Heading Title, BlockSequence Content);
+    public sealed record Section(Heading Title, BlockSequence Content) : DocumentBlock;
 
-    public partial record Proposition(
+    public sealed record Proposition(
         Heading Title,
         LeanDeclarationRef Declaration,
-        BlockSequence Content);
+        BlockSequence Content) : DocumentBlock;
 
-    public partial record Theorem(
+    public sealed record Theorem(
         Heading Title,
         LeanDeclarationRef Declaration,
-        BlockSequence Content);
+        BlockSequence Content) : DocumentBlock;
 }
 
 public sealed class ScribeDocument

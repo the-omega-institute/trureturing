@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace StrataLint.Engine;
@@ -96,7 +97,11 @@ public sealed record RuleId
     {
         if (value is { Length: 6 }
             && value.StartsWith("SL-", StringComparison.Ordinal)
-            && int.TryParse(value.AsSpan(3), out var number)
+            && int.TryParse(
+                value.AsSpan(3),
+                NumberStyles.None,
+                CultureInfo.InvariantCulture,
+                out var number)
             && number is >= 0 and <= 22)
         {
             ruleId = new RuleId(value);

@@ -1,5 +1,5 @@
 using System.Reflection;
-using StrataLint.Cli;
+using StrataLint.Engine;
 
 namespace StrataLint.Scribe.Tests;
 
