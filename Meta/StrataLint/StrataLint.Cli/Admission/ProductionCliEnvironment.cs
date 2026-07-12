@@ -262,6 +262,9 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             leanInspector,
             arguments);
 
+    public CommandResult Worktree(IReadOnlyList<string> arguments) =>
+        WorktreeCommand.Run(repositoryRoot, arguments);
+
     private RegistryLoadOutcome.Accepted LoadRegistry()
     {
         var registryPath = Path.Combine(repositoryRoot, "Meta", "registry.yaml");
