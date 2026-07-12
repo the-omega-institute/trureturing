@@ -11,10 +11,6 @@ die() {
   exit 1
 }
 
-warn() {
-  printf 'warning: %s\n' "$*" >&2
-}
-
 cleanup() {
   if [[ -n "${temporary:-}" ]]; then
     rm -rf -- "$temporary"
@@ -26,7 +22,10 @@ check_layer() {
     "substrate-ref"
     "env.example"
     "fkst.workspace.toml"
+    "g5_check.py"
     "run.sh"
+    "tests/g5_check_test.py"
+    "tests/provenance_test.sh"
     "packages/harness-probe/fkst.toml"
     "packages/harness-probe/raisers/development_request.lua"
     "packages/harness-probe/departments/preflight/main.lua"
@@ -105,7 +104,18 @@ PY
 
 verify_provenance() {
   local bin="$1"
-  local physical_bin pin checkout head
+  local physical_bin pin discovered_checkout checkout head
+  local worktree_list line candidate registered
+  local clean_git=(
+    env
+    -u GIT_DIR
+    -u GIT_WORK_TREE
+    -u GIT_INDEX_FILE
+    -u GIT_COMMON_DIR
+    -u GIT_OBJECT_DIRECTORY
+    -u GIT_ALTERNATE_OBJECT_DIRECTORIES
+    git
+  )
   physical_bin="$(python3 - "$bin" <<'PY'
 import os
 import sys
@@ -115,73 +125,46 @@ PY
 )"
   pin="$(<"$ROOT/substrate-ref")"
 
-  if checkout="$(git -C "$(dirname -- "$physical_bin")" rev-parse --show-toplevel 2>/dev/null)"; then
-    head="$(git -C "$checkout" rev-parse HEAD 2>/dev/null)" \
-      || die "could not read engine checkout HEAD: $checkout"
-    if [[ "$head" != "$pin" ]]; then
-      if [[ "${FKST_ALLOW_PIN_MISMATCH:-0}" == "1" ]]; then
-        warn "engine checkout HEAD $head does not match pin $pin; explicitly allowed"
-      else
-        die "engine checkout HEAD $head does not match pin $pin"
-      fi
-    fi
-    printf 'fkst provenance: verified %s at %s\n' "$head" "$checkout"
-  else
-    warn "engine provenance-unverified for physical path: $physical_bin"
-  fi
-}
-
-check_g5_coverage() {
-  local report="$1"
-  python3 - "$report" "$PACKAGE_ROOT" <<'PY'
-import json
-import pathlib
+  discovered_checkout="$(
+    "${clean_git[@]}" \
+      -C "$(dirname -- "$physical_bin")" \
+      rev-parse --show-toplevel 2>/dev/null
+  )" \
+    || die "engine provenance-unverified: physical BIN is not inside a git checkout: $physical_bin"
+  checkout="$(python3 - "$discovered_checkout" <<'PY'
+import os
 import sys
 
-report_path = pathlib.Path(sys.argv[1])
-package_root = pathlib.Path(sys.argv[2])
-with report_path.open(encoding="utf-8") as stream:
-    report = json.load(stream)
-
-if report.get("schema") != "fkst.test.report.v1":
-    raise SystemExit("G5: unexpected test report schema")
-summary = report.get("summary")
-if not isinstance(summary, dict):
-    raise SystemExit("G5: test report summary is missing")
-passed = summary.get("passed")
-failed = summary.get("failed")
-if isinstance(passed, bool) or not isinstance(passed, int):
-    raise SystemExit("G5: summary.passed must be an integer")
-if isinstance(failed, bool) or not isinstance(failed, int) or failed != 0:
-    raise SystemExit(f"G5: summary.failed must be 0, got {failed!r}")
-tests = report.get("tests")
-if not isinstance(tests, list):
-    raise SystemExit("G5: test inventory is missing")
-
-test_files = sorted(
-    path.relative_to(package_root).as_posix()
-    for path in package_root.rglob("*_test.lua")
-    if path.is_file()
-)
-if not test_files:
-    raise SystemExit("G5: package contains no *_test.lua files")
-uncovered = [
-    test_file
-    for test_file in test_files
-    if not any(
-        entry.get("file") == test_file and entry.get("status") == "pass"
-        for entry in tests
-        if isinstance(entry, dict)
-    )
-]
-if uncovered:
-    raise SystemExit(f"G5: no passing test reported for {uncovered}")
-
-print(
-    f"G5 coverage: {len(test_files)}/{len(test_files)} *_test.lua files covered; "
-    f"summary {passed} passed, {failed} failed"
-)
+print(os.path.realpath(sys.argv[1]))
 PY
+)"
+
+  worktree_list="$(
+    "${clean_git[@]}" -C "$checkout" worktree list --porcelain 2>/dev/null
+  )" || die "could not read registered engine worktrees: $checkout"
+  registered=""
+  while IFS= read -r line; do
+    [[ "$line" == worktree\ * ]] || continue
+    candidate="$(python3 - "${line#worktree }" <<'PY'
+import os
+import sys
+
+print(os.path.realpath(sys.argv[1]))
+PY
+)"
+    if [[ "$candidate" == "$checkout" ]]; then
+      registered=1
+      break
+    fi
+  done <<<"$worktree_list"
+  [[ -n "$registered" ]] \
+    || die "engine provenance-unverified: checkout is not a registered worktree: $checkout"
+
+  head="$("${clean_git[@]}" -C "$checkout" rev-parse HEAD 2>/dev/null)" \
+    || die "could not read engine checkout HEAD: $checkout"
+  [[ "$head" == "$pin" ]] \
+    || die "engine checkout HEAD $head does not match pin $pin"
+  printf 'fkst provenance: verified %s at %s\n' "$head" "$checkout"
 }
 
 run_test() {
@@ -196,6 +179,8 @@ run_test() {
   trap cleanup EXIT
   report="$temporary/test-report.json"
   export FKST_RUNTIME_ROOT="$temporary/runtime"
+  mkdir "$temporary/sub"
+  export TMPDIR="$temporary/sub"
 
   "$bin" --self-test
   "$bin" conformance \
@@ -205,7 +190,7 @@ run_test() {
     --project-root "$ROOT" \
     --package-root "$PACKAGE_ROOT" \
     --report-json "$report"
-  check_g5_coverage "$report"
+  python3 "$ROOT/g5_check.py" "$report" "$PACKAGE_ROOT"
   printf 'fkst test: ok\n'
 }
 
@@ -213,6 +198,8 @@ run_test() {
 case "$1" in
   check)
     check_layer
+    python3 "$ROOT/tests/g5_check_test.py"
+    bash "$ROOT/tests/provenance_test.sh"
     ;;
   test)
     run_test
