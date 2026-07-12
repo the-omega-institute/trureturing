@@ -180,135 +180,63 @@ jobs:
           persist-credentials: false
           path: baseline
 
-      - name: Verify baseline checkout and select judge
-        id: judge
+      - name: Verify baseline checkout
         shell: bash
         run: |
           set -euo pipefail
           actual="$(git -C baseline rev-parse HEAD)"
           test "$actual" = "$DEV_BASELINE_SHA"
-          if [[ -f baseline/Meta/StrataLint/StrataLint.sln ]]; then
-            judge_root="$GITHUB_WORKSPACE/baseline"
-            mode="dev-baseline"
-          elif git -C candidate log --format=%H "$DEV_BASELINE_SHA" -- Meta/StrataLint/StrataLint.sln | grep -q .; then
-            printf '%s\n' "D5-T0017 one-time bootstrap cannot recur after harness history exists" >&2
-            exit 1
-          else
-            judge_root="$GITHUB_WORKSPACE/candidate"
-            mode="trusted-bootstrap-observation"
-            echo "::warning title=D5-T0017 trusted bootstrap::No predecessor harness exists; this admin-injected candidate is observed, not independently admitted."
-            printf '%s\n' "### D5-T0017 trusted bootstrap observation" >> "$GITHUB_STEP_SUMMARY"
-            printf '%s\n' "No machine gate was active before the admin injection. Candidate observation at $DEV_BASELINE_SHA does not retroactively authorize it." >> "$GITHUB_STEP_SUMMARY"
-          fi
-          echo "root=$judge_root" >> "$GITHUB_OUTPUT"
-          echo "mode=$mode" >> "$GITHUB_OUTPUT"
-          printf '%s\n' "Baseline mode: $mode; content address: $DEV_BASELINE_SHA" >> "$GITHUB_STEP_SUMMARY"
-
-      - name: Resolve pinned Lean toolchain
-        id: lean
-        shell: bash
-        env:
-          LEAN_TOOLCHAIN_FILE: ${{ steps.judge.outputs.root }}/lean-toolchain
-        run: |
-          set -euo pipefail
-          test -s "$LEAN_TOOLCHAIN_FILE"
-          echo "file=$LEAN_TOOLCHAIN_FILE" >> "$GITHUB_OUTPUT"
-          echo "hash=$(sha256sum "$LEAN_TOOLCHAIN_FILE" | cut -d ' ' -f 1)" >> "$GITHUB_OUTPUT"
+          test -f baseline/Meta/StrataLint/StrataLint.sln
+          printf '%s\n' "Baseline judge content address: $DEV_BASELINE_SHA" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Cache elan and pinned Lean toolchain
         uses: actions/cache@v4
         with:
           path: ~/.elan
-          key: ${{ runner.os }}-${{ runner.arch }}-elan-${{ steps.lean.outputs.hash }}
-
-      - name: Install pinned Lean toolchain
-        shell: bash
-        env:
-          LEAN_TOOLCHAIN_FILE: ${{ steps.lean.outputs.file }}
-        run: |
-          set -euo pipefail
-          toolchain="$(tr -d '\r\n' < "$LEAN_TOOLCHAIN_FILE")"
-          test -n "$toolchain"
-          if [[ ! -x "$HOME/.elan/bin/elan" ]]; then
-            curl --proto '=https' --tlsv1.2 -sSf https://elan.lean-lang.org/elan-init.sh \
-              | sh -s -- -y --default-toolchain none
-          fi
-          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-          if ! "$HOME/.elan/bin/elan" toolchain list 2>/dev/null | grep -qF "$toolchain"; then
-            "$HOME/.elan/bin/elan" toolchain install "$toolchain"
-          fi
-          "$HOME/.elan/bin/elan" default "$toolchain"
-          "$HOME/.elan/bin/lake" --version
+          key: ${{ runner.os }}-${{ runner.arch }}-elan-${{ hashFiles('candidate/lean-toolchain', 'baseline/lean-toolchain') }}
 
       - name: Install pinned SDK
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 10.0.103
 
-      # restore/save split: actions/cache entries are immutable per key, so a
-      # static key would pin the oldest artifacts forever and the inspection memo
-      # could never accumulate. Per-sha keys + prefix restore give rolling reuse.
-      - name: Restore candidate Lean build artifacts
+      # Per-sha keys plus prefix restore let both trees and their versioned
+      # inspection memos accumulate without pinning the oldest cache forever.
+      - name: Restore candidate and baseline Lean build artifacts
         uses: actions/cache/restore@v4
         with:
           path: |
             candidate/.lake
+            baseline/.lake
             ~/.cache/mathlib
-          key: ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain') }}-${{ github.sha }}
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json', 'baseline/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain', 'baseline/lean-toolchain') }}-${{ github.event.pull_request.head.sha || github.sha }}-${{ steps.baseline.outputs.sha }}
           restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain') }}-
+            ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json', 'baseline/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain', 'baseline/lean-toolchain') }}-
 
-      # Zero-trust floor: the repository's own Lean surface must be buildable in CI,
-      # independent of any submitter-side (human or AI) local verification.
-      - name: Fetch mathlib cloud cache for candidate
-        working-directory: candidate
+      - name: Run the shared baseline harness gate
         shell: bash
         run: |
           set -euo pipefail
-          "$HOME/.elan/bin/lake" exe cache get || echo "::warning title=mathlib cache::cloud cache fetch failed; lake build will rebuild (may hit timeout, which correctly fails closed)"
+          gate="$GITHUB_WORKSPACE/baseline/.github/scripts/harness-gate.sh"
+          if [[ ! -x "$gate" ]]; then
+            if git -C candidate log --format=%H "$DEV_BASELINE_SHA" -- .github/scripts/harness-gate.sh | grep -q .; then
+              printf '%s\n' "baseline harness-gate.sh disappeared after its recorded introduction" >&2
+              exit 1
+            fi
+            gate="$GITHUB_WORKSPACE/candidate/.github/scripts/harness-gate.sh"
+            echo "::warning title=harness-gate bootstrap::The predecessor predates the shared gate; using the candidate only for this one-time introduction observation."
+          fi
+          "$gate" \
+            --candidate "$GITHUB_WORKSPACE/candidate" \
+            --judge-root "$GITHUB_WORKSPACE/baseline" \
+            --base "$DEV_BASELINE_SHA"
 
-      # Zero-trust floor, warm path: prebuild the candidate library so the judge's
-      # snapshot Lean validation (which seeds from these artifacts) is incremental.
-      - name: Prebuild candidate Lean library
-        working-directory: candidate
-        shell: bash
-        run: |
-          set -euo pipefail
-          "$HOME/.elan/bin/lake" build
-
-      - name: Build selected judge from locked dependencies
-        env:
-          JUDGE_ROOT: ${{ steps.judge.outputs.root }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          dotnet restore "$JUDGE_ROOT/Meta/StrataLint/StrataLint.sln" --locked-mode
-          dotnet build "$JUDGE_ROOT/Meta/StrataLint/StrataLint.sln" --no-restore --configuration Release --warnaserror
-
-      - name: Run selected judge selftest twice and compare bytes
-        env:
-          JUDGE_ROOT: ${{ steps.judge.outputs.root }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          cd "$JUDGE_ROOT"
-          dotnet Meta/StrataLint/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll selftest > "$RUNNER_TEMP/baseline-selftest-1.txt"
-          dotnet Meta/StrataLint/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll selftest > "$RUNNER_TEMP/baseline-selftest-2.txt"
-          cmp "$RUNNER_TEMP/baseline-selftest-1.txt" "$RUNNER_TEMP/baseline-selftest-2.txt"
-
-      - name: Run baseline harness admission (exit-semantics separated)
-        working-directory: candidate
-        env:
-          JUDGE_ROOT: ${{ steps.judge.outputs.root }}
-        shell: bash
-        run: |
-          "$GITHUB_WORKSPACE/candidate/.github/scripts/baseline-admission.sh"
-
-      - name: Save candidate Lean build artifacts
+      - name: Save candidate and baseline Lean build artifacts
         if: always()
         uses: actions/cache/save@v4
         with:
           path: |
             candidate/.lake
+            baseline/.lake
             ~/.cache/mathlib
-          key: ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain') }}-${{ github.sha }}
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json', 'baseline/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain', 'baseline/lean-toolchain') }}-${{ github.event.pull_request.head.sha || github.sha }}-${{ steps.baseline.outputs.sha }}
