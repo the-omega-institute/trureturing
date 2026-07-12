@@ -234,7 +234,7 @@ public sealed partial class ReviewRegressionTests
         var environment = new ProductionCliEnvironment(
             repository.Path,
             new FakeRepositoryGateway(RawChangeSet.Create(Array.Empty<string>()), null, null),
-            new FakeLeanInspector(null));
+            new FakeLeanReportSource(null));
 
         var result = environment.Route(new[] { "manifest.json" });
 
@@ -245,6 +245,7 @@ public sealed partial class ReviewRegressionTests
     [Fact]
     public void Cf7UnknownLeanAxiomIsSl020BlockInsteadOfInfrastructureFailure()
     {
+        using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         var baselineReport = LeanAxiomReport.Create(fixture.BaselineReports);
@@ -257,9 +258,27 @@ public sealed partial class ReviewRegressionTests
         var environment = new ProductionCliEnvironment(
             "/repo",
             gateway,
-            new SequencedLeanInspector(currentReport, baselineReport));
+            new FakeLeanReportSource(null));
+        var candidateReportPath = Path.Combine(temporary.Path, "candidate.json");
+        var baselineReportPath = Path.Combine(temporary.Path, "baseline.json");
+        File.WriteAllBytes(
+            candidateReportPath,
+            RawLeanReportArtifact.Write(
+                Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+                    SnapshotDecoder.Decode(Snapshot(fixture.Files))).Snapshot,
+                currentReport).AsSpan());
+        File.WriteAllBytes(
+            baselineReportPath,
+            RawLeanReportArtifact.Write(
+                Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+                    SnapshotDecoder.Decode(Snapshot(fixture.Baseline))).Snapshot,
+                baselineReport).AsSpan());
 
-        var outcome = environment.Check(Array.Empty<string>());
+        var outcome = environment.Check(new[]
+        {
+            "--candidate-lean-report", candidateReportPath,
+            "--baseline-lean-report", baselineReportPath,
+        });
 
         var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
         var diagnostic = Assert.Single(
@@ -311,7 +330,7 @@ public sealed partial class ReviewRegressionTests
     }
 
     [Fact]
-    public void Cf10BaselineWorkflowDelegatesTheWholeGateToTheRegisteredScript()
+    public void Cf10WorkflowSeparatesLeanInspectionFromDotnetAdmission()
     {
         var root = FindRepositoryRoot();
         var workflow = File.ReadAllText(
@@ -320,31 +339,55 @@ public sealed partial class ReviewRegressionTests
         var gate = File.ReadAllText(
             Path.Combine(root, ".github", "scripts", "harness-gate.sh"),
             Encoding.UTF8);
+        var producer = File.ReadAllText(
+            Path.Combine(root, "Meta", "StrataLint", "lean-inspector", "inspect.sh"),
+            Encoding.UTF8);
+        var inspectJob = workflow[
+            workflow.IndexOf("  lean-inspect:", StringComparison.Ordinal)..
+            workflow.IndexOf("  baseline-admission:", StringComparison.Ordinal)];
         var baselineJob = workflow[workflow.IndexOf("  baseline-admission:", StringComparison.Ordinal)..];
 
+        Assert.Contains("exe cache get", producer, StringComparison.Ordinal);
+        Assert.Contains("build", producer, StringComparison.Ordinal);
+        Assert.Contains("env", producer, StringComparison.Ordinal);
+        Assert.Contains("lean", producer, StringComparison.Ordinal);
+        Assert.Contains("--run", producer, StringComparison.Ordinal);
+        Assert.Contains("stdout.log", producer, StringComparison.Ordinal);
+        Assert.Contains("stderr.log", producer, StringComparison.Ordinal);
+        Assert.Contains("cat", producer, StringComparison.Ordinal);
+        Assert.DoesNotContain("tail -", producer, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("actions/upload-artifact", inspectJob, StringComparison.Ordinal);
+        Assert.Contains("candidate-lean-report.json", inspectJob, StringComparison.Ordinal);
+        Assert.Contains("baseline-lean-report.json", inspectJob, StringComparison.Ordinal);
+
+        Assert.Contains("needs: lean-inspect", baselineJob, StringComparison.Ordinal);
+        Assert.Contains("actions/download-artifact", baselineJob, StringComparison.Ordinal);
         Assert.Contains("harness-gate.sh", baselineJob, StringComparison.Ordinal);
         Assert.Contains("baseline/.github/scripts/harness-gate.sh", baselineJob, StringComparison.Ordinal);
         Assert.DoesNotContain("baseline-admission.sh", baselineJob, StringComparison.Ordinal);
         Assert.Contains("--candidate", baselineJob, StringComparison.Ordinal);
         Assert.Contains("--judge-root", baselineJob, StringComparison.Ordinal);
         Assert.Contains("--base", baselineJob, StringComparison.Ordinal);
+        Assert.Contains("--candidate-lean-report", baselineJob, StringComparison.Ordinal);
+        Assert.Contains("--baseline-lean-report", baselineJob, StringComparison.Ordinal);
+        Assert.Contains("--legacy-bootstrap", baselineJob, StringComparison.Ordinal);
         Assert.DoesNotContain("dotnet build", baselineJob, StringComparison.Ordinal);
         Assert.DoesNotContain(" selftest", baselineJob, StringComparison.Ordinal);
-        Assert.Contains("candidate/.lake", baselineJob, StringComparison.Ordinal);
-        Assert.Contains("baseline/.lake", baselineJob, StringComparison.Ordinal);
-        Assert.True(
-            Count(baselineJob, "${{ github.event.pull_request.head.sha || github.sha }}") >= 3,
-            "checkout and both rolling cache keys must follow the candidate head");
+        Assert.DoesNotContain(".lake", baselineJob, StringComparison.Ordinal);
+        Assert.DoesNotContain("elan", baselineJob, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("lake build", baselineJob, StringComparison.Ordinal);
 
         Assert.Contains("set -euo pipefail", gate, StringComparison.Ordinal);
-        Assert.Contains("command -v elan", gate, StringComparison.Ordinal);
         Assert.Contains("check --protected-base", gate, StringComparison.Ordinal);
+        Assert.Contains("--candidate-lean-report", gate, StringComparison.Ordinal);
+        Assert.Contains("--baseline-lean-report", gate, StringComparison.Ordinal);
+        Assert.Contains("--legacy-bootstrap", gate, StringComparison.Ordinal);
         Assert.True(Count(gate, " selftest") >= 2, "selftest must run twice in the shared gate");
         Assert.Contains("cmp", gate, StringComparison.Ordinal);
-        Assert.Contains("prepare_lean_root \"$CANDIDATE_ROOT\"", gate, StringComparison.Ordinal);
-        Assert.Contains("prepare_lean_root \"$JUDGE_ROOT\"", gate, StringComparison.Ordinal);
-        Assert.Contains("prebuild_lean_root \"$CANDIDATE_ROOT\"", gate, StringComparison.Ordinal);
-        Assert.Contains("prebuild_lean_root \"$JUDGE_ROOT\"", gate, StringComparison.Ordinal);
+        Assert.DoesNotContain("LAKE", gate, StringComparison.Ordinal);
+        Assert.DoesNotContain("elan", gate, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("tail -", workflow, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("Tail(", workflow + gate + producer, StringComparison.Ordinal);
     }
 
 }

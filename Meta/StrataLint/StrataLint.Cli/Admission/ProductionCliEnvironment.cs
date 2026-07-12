@@ -9,6 +9,11 @@ internal sealed record PreparedRepository(string Revision, RawChangeSet Changes)
 
 internal sealed record FrozenRevisionIdentity(string Revision, string CommitOid, string TreeOid);
 
+internal sealed record CheckArguments(
+    string? ProtectedBase,
+    string? CandidateLeanReport,
+    string? BaselineLeanReport);
+
 internal interface IRepositoryGateway
 {
     AdmissionTopologyOutcome InspectAdmissionTopology();
@@ -26,9 +31,9 @@ internal interface IRepositoryGateway
     TrustedFrozenGitReferences ValidateFrozenReferences(FrozenLedgerReferenceSet references);
 }
 
-internal interface ILeanInspector
+internal interface ILeanReportSource
 {
-    LeanAxiomReport Inspect(RepositorySnapshot snapshot);
+    LeanAxiomReport Load(RepositorySnapshot snapshot);
 }
 
 internal sealed class ProductionCliEnvironment : ICliEnvironment
@@ -41,32 +46,32 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
 
     private readonly string repositoryRoot;
     private readonly IRepositoryGateway repository;
-    private readonly ILeanInspector leanInspector;
+    private readonly ILeanReportSource leanReportSource;
 
     internal ProductionCliEnvironment(string repositoryRoot)
         : this(
             repositoryRoot,
             new GitRepositoryGateway(repositoryRoot),
-            new LeanProcessInspector(repositoryRoot))
+            new PrecomputedLeanReportSource(repositoryRoot))
     {
     }
 
     internal ProductionCliEnvironment(
         string repositoryRoot,
         IRepositoryGateway repository,
-        ILeanInspector leanInspector)
+        ILeanReportSource leanReportSource)
     {
         this.repositoryRoot = Path.GetFullPath(repositoryRoot);
         this.repository = repository;
-        this.leanInspector = leanInspector;
+        this.leanReportSource = leanReportSource;
     }
 
     public AdmissionOutcome Check(IReadOnlyList<string> arguments)
     {
         try
         {
-            var protectedBase = ParseCheckArguments(arguments);
-            var prepared = repository.Prepare(protectedBase);
+            var options = ParseCheckArguments(arguments);
+            var prepared = repository.Prepare(options.ProtectedBase);
             var bootstrap = BootstrapGate.Evaluate(prepared.Changes);
             if (bootstrap is BootstrapOutcome.HumanReviewRequired review)
             {
@@ -90,6 +95,12 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             }
 
             var metaClear = ((BootstrapOutcome.Clear)bootstrap).Capability;
+            if (options.CandidateLeanReport is null || options.BaselineLeanReport is null)
+            {
+                return new AdmissionOutcome.InfrastructureFailure(
+                    "check requires --candidate-lean-report FILE and --baseline-lean-report FILE");
+            }
+
             var current = Decode(repository.ReadCurrent());
             var baseline = Decode(repository.ReadRevision(prepared.Revision));
             if (!current.TryGetFile("Meta/registry.yaml", out var registryFile))
@@ -111,14 +122,18 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             }
 
             var registry = (RegistryLoadOutcome.Accepted)registryOutcome;
-            var lean = ValidateLean(current, leanInspector.Inspect(current));
+            var lean = ValidateLean(
+                current,
+                RawLeanReportArtifact.ReadFile(options.CandidateLeanReport, current));
             var dag = AcyclicTruthDag.Build(current, lean);
             if (dag is DagBuildOutcome.Rejected rejectedDag)
             {
                 return RejectCycle(rejectedDag.Witness);
             }
 
-            var baselineLean = ValidateLean(baseline, leanInspector.Inspect(baseline));
+            var baselineLean = ValidateLean(
+                baseline,
+                RawLeanReportArtifact.ReadFile(options.BaselineLeanReport, baseline));
             var baselineDag = AcyclicTruthDag.Build(baseline, baselineLean);
             if (baselineDag is DagBuildOutcome.Rejected baselineRejected)
             {
@@ -171,7 +186,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
     }
 
     public CommandResult Coverage(IReadOnlyList<string> arguments) =>
-        CoverageCommand.Run(repository, leanInspector, arguments);
+        CoverageCommand.Run(repository, leanReportSource, arguments);
 
     public CommandResult Route(IReadOnlyList<string> arguments)
     {
@@ -262,7 +277,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         DagLedgerGenesisWriter.Generate(
             repositoryRoot,
             repository,
-            leanInspector,
+            leanReportSource,
             arguments);
 
     public CommandResult Worktree(IReadOnlyList<string> arguments) =>
@@ -297,16 +312,45 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         return memory.ToArray();
     }
 
-    private static string? ParseCheckArguments(IReadOnlyList<string> arguments)
+    private static CheckArguments ParseCheckArguments(IReadOnlyList<string> arguments)
     {
-        if (arguments.Count == 0) return null;
-        if (arguments.Count == 2 && arguments[0] is "--protected-base" or "--merge-base")
+        string? protectedBase = null;
+        string? candidateLeanReport = null;
+        string? baselineLeanReport = null;
+        for (var index = 0; index < arguments.Count; index += 2)
         {
-            return arguments[1];
+            if (index + 1 >= arguments.Count)
+            {
+                throw CheckUsage();
+            }
+
+            var target = arguments[index] switch
+            {
+                "--protected-base" or "--merge-base" when protectedBase is null => 0,
+                "--candidate-lean-report" when candidateLeanReport is null => 1,
+                "--baseline-lean-report" when baselineLeanReport is null => 2,
+                _ => throw CheckUsage(),
+            };
+            switch (target)
+            {
+                case 0:
+                    protectedBase = arguments[index + 1];
+                    break;
+                case 1:
+                    candidateLeanReport = arguments[index + 1];
+                    break;
+                case 2:
+                    baselineLeanReport = arguments[index + 1];
+                    break;
+            }
         }
 
-        throw new InvalidOperationException("USAGE: StrataLint check [--protected-base REV]");
+        return new CheckArguments(protectedBase, candidateLeanReport, baselineLeanReport);
     }
+
+    private static InvalidOperationException CheckUsage() => new(
+        "USAGE: StrataLint check [--protected-base REV] "
+        + "--candidate-lean-report FILE --baseline-lean-report FILE");
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         SnapshotDecoder.Decode(raw) switch

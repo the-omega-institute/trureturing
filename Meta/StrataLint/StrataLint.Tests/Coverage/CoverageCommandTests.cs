@@ -16,9 +16,9 @@ public sealed class CoverageCommandTests
         using var directory = new TemporaryDirectory();
         var raw = Snapshot();
         var gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), raw, null);
-        var inspector = new FakeLeanInspector(LeanAxiomReport.Create(
+        var source = new FakeLeanReportSource(LeanAxiomReport.Create(
             ImmutableDictionary<string, LeanFileReport>.Empty));
-        var environment = new ProductionCliEnvironment(directory.Path, gateway, inspector);
+        var environment = new ProductionCliEnvironment(directory.Path, gateway, source);
         var arguments = json ? new[] { "coverage", "--json" } : new[] { "coverage" };
 
         var first = new BufferedConsole();

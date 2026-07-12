@@ -1,0 +1,133 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+export LC_ALL=C
+
+REPOSITORY=""
+OUTPUT=""
+LOG_DIR=""
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --repository)
+      [[ $# -ge 2 ]] || { echo "inspect.sh: --repository requires a value" >&2; exit 2; }
+      REPOSITORY="$2"
+      shift 2
+      ;;
+    --output)
+      [[ $# -ge 2 ]] || { echo "inspect.sh: --output requires a value" >&2; exit 2; }
+      OUTPUT="$2"
+      shift 2
+      ;;
+    --log-dir)
+      [[ $# -ge 2 ]] || { echo "inspect.sh: --log-dir requires a value" >&2; exit 2; }
+      LOG_DIR="$2"
+      shift 2
+      ;;
+    *)
+      echo "inspect.sh: unknown argument '$1'" >&2
+      exit 2
+      ;;
+  esac
+done
+
+[[ -n "$REPOSITORY" ]] || { echo "inspect.sh: --repository ROOT is required" >&2; exit 2; }
+[[ -n "$OUTPUT" ]] || { echo "inspect.sh: --output FILE is required" >&2; exit 2; }
+[[ -d "$REPOSITORY" ]] || { echo "inspect.sh: repository '$REPOSITORY' is absent" >&2; exit 2; }
+
+REPOSITORY="$(cd "$REPOSITORY" && pwd -P)"
+if [[ "$OUTPUT" != /* ]]; then OUTPUT="$REPOSITORY/$OUTPUT"; fi
+if [[ -z "$LOG_DIR" ]]; then LOG_DIR="${OUTPUT}.logs"; fi
+if [[ "$LOG_DIR" != /* ]]; then LOG_DIR="$REPOSITORY/$LOG_DIR"; fi
+mkdir -p "$(dirname "$OUTPUT")" "$LOG_DIR"
+rm -f "$OUTPUT" "${OUTPUT}.sha256"
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+INSPECTOR="$SCRIPT_DIR/Inspector.lean"
+[[ -f "$INSPECTOR" ]] || { echo "inspect.sh: Lean producer is absent: $INSPECTOR" >&2; exit 2; }
+
+LAKE="${LAKE_BIN:-}"
+if [[ -z "$LAKE" && -x "$HOME/.elan/bin/lake" ]]; then
+  LAKE="$HOME/.elan/bin/lake"
+fi
+if [[ -z "$LAKE" ]]; then
+  LAKE="$(command -v lake || true)"
+fi
+[[ -n "$LAKE" && "$LAKE" == /* && -x "$LAKE" ]] \
+  || { echo "inspect.sh: an absolute executable lake path is required (set LAKE_BIN)" >&2; exit 2; }
+
+hash_file() {
+  local file="$1"
+  if command -v sha256sum >/dev/null 2>&1; then
+    sha256sum "$file" | awk '{print $1}'
+  elif command -v openssl >/dev/null 2>&1; then
+    openssl dgst -sha256 "$file" | awk '{print $NF}'
+  else
+    shasum -a 256 "$file" | awk '{print $1}'
+  fi
+}
+
+run_phase() {
+  local phase="$1"
+  shift
+  local stdout_log="$LOG_DIR/${phase}.stdout.log"
+  local stderr_log="$LOG_DIR/${phase}.stderr.log"
+  local command_log="$LOG_DIR/${phase}.command.log"
+  local exit_log="$LOG_DIR/${phase}.exit.log"
+
+  {
+    printf 'cwd=%q\n' "$REPOSITORY"
+    printf 'argv='
+    printf ' %q' "$@"
+    printf '\n'
+  } > "$command_log"
+
+  set +e
+  (cd "$REPOSITORY" && "$@") > "$stdout_log" 2> "$stderr_log"
+  local status=$?
+  set -e
+  printf '%s\n' "$status" > "$exit_log"
+  if [[ "$status" -ne 0 ]]; then
+    printf 'LEAN_INSPECTOR_FAILED phase=%s exit=%s\n' "$phase" "$status" >&2
+    printf '%s\n' '--- command ---' >&2
+    cat "$command_log" >&2
+    printf '%s\n' '--- stdout ---' >&2
+    cat "$stdout_log" >&2
+    printf '%s\n' '--- stderr ---' >&2
+    cat "$stderr_log" >&2
+    printf '%s\n' '--- exit ---' >&2
+    cat "$exit_log" >&2
+    return "$status"
+  fi
+}
+
+# mathlib artifacts come from its binary cache; lake build then compiles only
+# repository modules whose oleans are not already cached.
+run_phase cache-get "$LAKE" exe cache get
+run_phase build "$LAKE" build
+
+module_paths=("Trureturing.lean")
+while IFS= read -r path; do
+  module_paths+=("$path")
+done < <(cd "$REPOSITORY" && find D5 -type f -name '*.lean' -print | sort)
+
+inspector_arguments=()
+for path in "${module_paths[@]}"; do
+  [[ -f "$REPOSITORY/$path" ]] || { echo "inspect.sh: managed module is absent: $path" >&2; exit 2; }
+  module="${path%.lean}"
+  module="${module//\//.}"
+  inspector_arguments+=(
+    "$module"
+    "$path"
+    "sha256:$(hash_file "$REPOSITORY/$path")"
+  )
+done
+
+run_phase inspect \
+  "$LAKE" env lean --run "$INSPECTOR" --output "$OUTPUT" \
+  "${inspector_arguments[@]}"
+
+[[ -s "$OUTPUT" ]] || { echo "inspect.sh: producer left no report at $OUTPUT" >&2; exit 2; }
+report_sha256="$(hash_file "$OUTPUT")"
+printf '%s  %s\n' "$report_sha256" "$(basename "$OUTPUT")" > "${OUTPUT}.sha256"
+printf 'RAW_LEAN_REPORT file=%s content_address=sha256:%s\n' "$OUTPUT" "$report_sha256"

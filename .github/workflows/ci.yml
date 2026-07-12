@@ -1,7 +1,4 @@
-# BOOTSTRAP-NOT-ACTIVE until this workflow and the C# harness exist on the actual
-# default branch (dev). D5-T0017 requires one trusted admin injection; no candidate
-# workflow can machine-authorize that first placement. After injection, the dev
-# baseline workflow below adjudicates every later PR.
+# BOOTSTRAP-NOT-ACTIVE until this workflow and the C# harness exist on dev.
 name: admission
 
 on:
@@ -13,19 +10,13 @@ on:
 permissions:
   contents: read
 
-# Superseded runs cancel cleanly instead of lingering and racing. A PR scopes to
-# its number (concurrent PRs never cancel each other); a branch push scopes to the
-# ref. This removes the false SIGTERM(143) failures a new head produced while an old
-# head's run was still executing — the cancel is now an explicit, expected cancel.
 concurrency:
   group: ci-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
-# Trust topology: candidate engineering checks are non-authoritative. Admission is
-# issued only by the harness checked out at the content-addressed dev event-base SHA.
-# D5-T0017's candidate judge is a post-injection observation, not predecessor machine
-# authorization. It can run only after an admin has placed this workflow on dev, and it
-# emits both an annotation and a job-summary ledger entry when exercised.
+# Trust topology: the pull_request_target workflow, Lean producer, and .NET judge
+# all come from the content-addressed dev base. Candidate engineering is only a
+# signal. Admission consumes immutable raw reports produced in a predecessor job.
 jobs:
   candidate-engineering:
     name: Candidate harness engineering checks
@@ -51,13 +42,13 @@ jobs:
           echo "file=$LEAN_TOOLCHAIN_FILE" >> "$GITHUB_OUTPUT"
           echo "hash=$(sha256sum "$LEAN_TOOLCHAIN_FILE" | cut -d ' ' -f 1)" >> "$GITHUB_OUTPUT"
 
-      - name: Cache elan and pinned Lean toolchain
-        uses: actions/cache@v4
+      - name: Restore elan and pinned Lean toolchain
+        uses: actions/cache/restore@v4
         with:
           path: ~/.elan
           key: ${{ runner.os }}-${{ runner.arch }}-elan-${{ steps.lean.outputs.hash }}
 
-      - name: Install pinned Lean toolchain
+      - name: Install pinned Lean toolchain for producer integration tests
         shell: bash
         env:
           LEAN_TOOLCHAIN_FILE: ${{ steps.lean.outputs.file }}
@@ -73,7 +64,6 @@ jobs:
           if ! "$HOME/.elan/bin/elan" toolchain list 2>/dev/null | grep -qF "$toolchain"; then
             "$HOME/.elan/bin/elan" toolchain install "$toolchain"
           fi
-          "$HOME/.elan/bin/elan" default "$toolchain"
           "$HOME/.elan/bin/lake" --version
 
       - name: Install pinned SDK
@@ -124,9 +114,7 @@ jobs:
           set -e
           printf '%s\n' "$output"
           test "$status" -ne 0
-          mapfile -t expected_lines < <(
-            grep -nF "// banned-api-proof" "$proof" | cut -d: -f1
-          )
+          mapfile -t expected_lines < <(grep -nF "// banned-api-proof" "$proof" | cut -d: -f1)
           mapfile -t actual_lines < <(
             sed -n 's#.*BannedApiViolations.cs(\([0-9][0-9]*\),[0-9][0-9]*): error RS0030:.*#\1#p' <<<"$output" | sort -nu
           )
@@ -137,12 +125,12 @@ jobs:
             test "${actual_lines[$index]}" = "${expected_lines[$index]}"
           done
 
-  baseline-admission:
-    name: Content-addressed dev baseline admission
-    # 16 GB arm runner (free for public repos): the judge's Lean inspection loads
-    # the mathlib environment; 7 GB x64 runners get VM-killed (runner shutdown).
+  lean-inspect:
+    name: Canonical Lean report production
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 45
+    outputs:
+      baseline_sha: ${{ steps.baseline.outputs.sha }}
     steps:
       - name: Check out candidate with history
         uses: actions/checkout@v4
@@ -170,7 +158,6 @@ jobs:
             exit 1
           fi
           echo "sha=$sha" >> "$GITHUB_OUTPUT"
-          echo "DEV_BASELINE_SHA=$sha" >> "$GITHUB_ENV"
 
       - name: Check out content-addressed dev baseline
         uses: actions/checkout@v4
@@ -185,23 +172,32 @@ jobs:
         run: |
           set -euo pipefail
           actual="$(git -C baseline rev-parse HEAD)"
-          test "$actual" = "$DEV_BASELINE_SHA"
-          test -f baseline/Meta/StrataLint/StrataLint.sln
-          printf '%s\n' "Baseline judge content address: $DEV_BASELINE_SHA" >> "$GITHUB_STEP_SUMMARY"
+          test "$actual" = "${{ steps.baseline.outputs.sha }}"
+          printf '%s\n' "Lean producer base content address: $actual" >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Cache elan and pinned Lean toolchain
-        uses: actions/cache@v4
+      - name: Restore elan and pinned Lean toolchains
+        uses: actions/cache/restore@v4
         with:
           path: ~/.elan
           key: ${{ runner.os }}-${{ runner.arch }}-elan-${{ hashFiles('candidate/lean-toolchain', 'baseline/lean-toolchain') }}
 
-      - name: Install pinned SDK
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 10.0.103
+      - name: Install pinned Lean toolchains
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ ! -x "$HOME/.elan/bin/elan" ]]; then
+            curl --proto '=https' --tlsv1.2 -sSf https://elan.lean-lang.org/elan-init.sh \
+              | sh -s -- -y --default-toolchain none
+          fi
+          for toolchain_file in candidate/lean-toolchain baseline/lean-toolchain; do
+            toolchain="$(tr -d '\r\n' < "$toolchain_file")"
+            test -n "$toolchain"
+            if ! "$HOME/.elan/bin/elan" toolchain list 2>/dev/null | grep -qF "$toolchain"; then
+              "$HOME/.elan/bin/elan" toolchain install "$toolchain"
+            fi
+          done
+          "$HOME/.elan/bin/lake" --version
 
-      # Per-sha keys plus prefix restore let both trees and their versioned
-      # inspection memos accumulate without pinning the oldest cache forever.
       - name: Restore candidate and baseline Lean build artifacts
         uses: actions/cache/restore@v4
         with:
@@ -213,39 +209,46 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json', 'baseline/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain', 'baseline/lean-toolchain') }}-
 
-      - name: Run the shared baseline harness gate
+      - name: Produce source-bound canonical Lean reports
         shell: bash
         run: |
           set -euo pipefail
-          gate="$GITHUB_WORKSPACE/baseline/.github/scripts/harness-gate.sh"
-          if [[ ! -x "$gate" ]]; then
-            if git -C candidate log --format=%H "$DEV_BASELINE_SHA" -- .github/scripts/harness-gate.sh | grep -q .; then
-              printf '%s\n' "baseline harness-gate.sh disappeared after its recorded introduction" >&2
+          producer="$GITHUB_WORKSPACE/baseline/Meta/StrataLint/lean-inspector/inspect.sh"
+          if [[ ! -x "$producer" || ! -f "$GITHUB_WORKSPACE/baseline/Meta/StrataLint/lean-inspector/Inspector.lean" ]]; then
+            if git -C candidate log --format=%H "${{ steps.baseline.outputs.sha }}" -- Meta/StrataLint/lean-inspector/inspect.sh | grep -q .; then
+              printf '%s\n' "baseline Lean producer disappeared after its recorded introduction" >&2
               exit 1
             fi
-            gate="$GITHUB_WORKSPACE/candidate/.github/scripts/harness-gate.sh"
-            echo "::warning title=harness-gate bootstrap::The predecessor predates the shared gate; using the candidate only for this one-time introduction observation."
+            producer="$GITHUB_WORKSPACE/candidate/Meta/StrataLint/lean-inspector/inspect.sh"
+            echo "::warning title=Lean producer bootstrap::The predecessor predates the producer; using canonical dev candidate for its one-time introduction run."
           fi
-          set +e
-          "$gate" \
-            --candidate "$GITHUB_WORKSPACE/candidate" \
-            --judge-root "$GITHUB_WORKSPACE/baseline" \
-            --base "$DEV_BASELINE_SHA" 2>&1 | tee "$RUNNER_TEMP/gate.log"
-          rc="${PIPESTATUS[0]}"
-          set -e
-          if [[ "$rc" -ne 0 ]]; then
-            echo "::error title=harness gate failed::rc=$rc — full tail below"
-            printf '%s\n' "### harness gate FAILED rc=$rc" >> "$GITHUB_STEP_SUMMARY"
-            tail -n 60 "$RUNNER_TEMP/gate.log" | sed 's/^/GATEFAIL │ /'
-          fi
-          exit "$rc"
+          reports="$RUNNER_TEMP/raw-lean-reports"
+          mkdir -p "$reports"
+          LAKE_BIN="$HOME/.elan/bin/lake" "$producer" \
+            --repository "$GITHUB_WORKSPACE/candidate" \
+            --output "$reports/candidate-lean-report.json"
+          LAKE_BIN="$HOME/.elan/bin/lake" "$producer" \
+            --repository "$GITHUB_WORKSPACE/baseline" \
+            --output "$reports/baseline-lean-report.json"
 
-      # newmath 模式(见贤思齐):cache 只在 canonical dev push 保存,PR run 从不
-      # save——否则每 PR 上传 14GB(candidate+baseline+mathlib)会卡死 job、拖到
-      # 超时、日志随取消一并销毁。这同时解释了"所有 PR 卡住"与"错误日志读不到"。
-      # PR run 只 restore(上文);dev push 负责刷新缓存供后续 restore。
+      - name: Upload raw Lean reports and producer logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: raw-lean-reports
+          path: ${{ runner.temp }}/raw-lean-reports
+          if-no-files-found: warn
+          retention-days: 7
+
+      - name: Save elan toolchains (dev push only)
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.elan
+          key: ${{ runner.os }}-${{ runner.arch }}-elan-${{ hashFiles('candidate/lean-toolchain', 'baseline/lean-toolchain') }}
+
       - name: Save Lean build artifacts (dev push only)
-        if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/dev'
         continue-on-error: true
         timeout-minutes: 12
         uses: actions/cache/save@v4
@@ -255,3 +258,89 @@ jobs:
             baseline/.lake
             ~/.cache/mathlib
           key: ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json', 'baseline/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain', 'baseline/lean-toolchain') }}-${{ github.event.pull_request.head.sha || github.sha }}-${{ steps.baseline.outputs.sha }}
+
+  baseline-admission:
+    name: Content-addressed dev baseline admission
+    needs: lean-inspect
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out candidate with history
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+          path: candidate
+
+      - name: Check out content-addressed dev baseline
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.lean-inspect.outputs.baseline_sha }}
+          fetch-depth: 1
+          persist-credentials: false
+          path: baseline
+
+      - name: Verify baseline checkout
+        shell: bash
+        run: |
+          set -euo pipefail
+          actual="$(git -C baseline rev-parse HEAD)"
+          test "$actual" = "${{ needs.lean-inspect.outputs.baseline_sha }}"
+          echo "DEV_BASELINE_SHA=$actual" >> "$GITHUB_ENV"
+          printf '%s\n' "Baseline judge content address: $actual" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Install pinned SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.103
+
+      - name: Download canonical Lean reports
+        uses: actions/download-artifact@v4
+        with:
+          name: raw-lean-reports
+          path: ${{ runner.temp }}/raw-lean-reports
+
+      - name: Verify report content addresses
+        shell: bash
+        working-directory: ${{ runner.temp }}/raw-lean-reports
+        run: |
+          set -euo pipefail
+          sha256sum -c candidate-lean-report.json.sha256
+          sha256sum -c baseline-lean-report.json.sha256
+
+      - name: Run the shared baseline harness gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          gate="$GITHUB_WORKSPACE/baseline/.github/scripts/harness-gate.sh"
+          legacy_args=()
+          if [[ ! -x "$gate" ]]; then
+            if git -C candidate log --format=%H "$DEV_BASELINE_SHA" -- .github/scripts/harness-gate.sh | grep -q .; then
+              printf '%s\n' "baseline harness gate disappeared after its recorded introduction" >&2
+              exit 1
+            fi
+            gate="$GITHUB_WORKSPACE/candidate/.github/scripts/harness-gate.sh"
+            legacy_args+=(--legacy-bootstrap)
+            echo "::warning title=harness gate bootstrap::The predecessor predates the shared gate; using canonical dev candidate for its one-time introduction run."
+          elif ! grep -qF -- '--candidate-lean-report' "$gate"; then
+            gate="$GITHUB_WORKSPACE/candidate/.github/scripts/harness-gate.sh"
+            legacy_args+=(--legacy-bootstrap)
+            echo "::warning title=harness gate bootstrap::The predecessor predates report consumption; using canonical dev candidate for its one-time introduction run."
+          fi
+          set +e
+          "$gate" \
+            --candidate "$GITHUB_WORKSPACE/candidate" \
+            --judge-root "$GITHUB_WORKSPACE/baseline" \
+            --base "$DEV_BASELINE_SHA" \
+            --candidate-lean-report "$RUNNER_TEMP/raw-lean-reports/candidate-lean-report.json" \
+            --baseline-lean-report "$RUNNER_TEMP/raw-lean-reports/baseline-lean-report.json" \
+            "${legacy_args[@]}" \
+            2>&1 | tee "$RUNNER_TEMP/gate.log"
+          rc="${PIPESTATUS[0]}"
+          set -e
+          if [[ "$rc" -ne 0 ]]; then
+            echo "::error title=harness gate failed::rc=$rc; complete output was emitted above"
+            printf '%s\n' "### harness gate FAILED rc=$rc" >> "$GITHUB_STEP_SUMMARY"
+          fi
+          exit "$rc"

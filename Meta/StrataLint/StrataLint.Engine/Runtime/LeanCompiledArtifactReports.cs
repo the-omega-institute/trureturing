@@ -2,22 +2,22 @@ namespace StrataLint.Engine;
 
 public static class LeanCompiledArtifactReports
 {
-    public static LeanAxiomReport InspectRepository(string repositoryRoot)
+    public static LeanAxiomReport InspectRepository(string repositoryRoot) =>
+        ReadRepository(repositoryRoot, reportPath: null);
+
+    public static LeanAxiomReport ReadRepository(string repositoryRoot, string? reportPath)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         var root = Path.GetFullPath(repositoryRoot);
-        var rootOlean = Path.Combine(
-            root,
-            ".lake",
-            "build",
-            "lib",
-            "lean",
-            "Trureturing.olean");
-        if (!File.Exists(rootOlean))
+        var artifactPath = reportPath is null
+            ? RawLeanReportArtifact.DefaultPath(root)
+            : Path.GetFullPath(reportPath, root);
+        if (!File.Exists(artifactPath))
         {
             throw new InvalidOperationException(
-                "Lean compiled artifacts are unavailable under .lake/build/lib/lean; "
-                + "run `lake build` before Scribe emit.");
+                $"Precomputed raw Lean report is unavailable at {artifactPath}; "
+                + "run `Meta/StrataLint/lean-inspector/inspect.sh --repository . "
+                + "--output .lake/build/stratalint/raw-lean-report.json` first.");
         }
 
         var decoded = SnapshotDecoder.Decode(GitRepositorySnapshotReader.ReadCurrent(root));
@@ -27,7 +27,8 @@ public static class LeanCompiledArtifactReports
                 $"Repository snapshot for Lean inspection is unavailable: {failure.Message}");
         }
 
-        return new CompiledLeanProcessInspector(root).Inspect(
+        return RawLeanReportArtifact.ReadFile(
+            artifactPath,
             ((SnapshotDecodeOutcome.Decoded)decoded).Snapshot);
     }
 }

@@ -10,7 +10,7 @@ internal static class CoverageCommand
 
     internal static CommandResult Run(
         IRepositoryGateway repository,
-        ILeanInspector leanInspector,
+        ILeanReportSource leanReportSource,
         IReadOnlyList<string> arguments)
     {
         try
@@ -18,7 +18,7 @@ internal static class CoverageCommand
             var json = ParseArguments(arguments);
             var snapshot = Decode(repository.ReadCurrent());
             var policy = LoadPolicy(snapshot);
-            var lean = ValidateLean(snapshot, leanInspector.Inspect(snapshot));
+            var lean = ValidateLean(snapshot, leanReportSource.Load(snapshot));
             var dag = AcyclicTruthDag.Build(snapshot, lean);
             if (dag is DagBuildOutcome.Rejected rejected)
             {
