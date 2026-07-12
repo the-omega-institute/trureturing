@@ -6,12 +6,12 @@ using System.Text.RegularExpressions;
 
 namespace StrataLint.Engine;
 
-internal static class LeanAxiomFacts
+public static class LeanAxiomFacts
 {
     private static readonly ImmutableHashSet<string> StandardAxioms =
         ImmutableHashSet.Create(StringComparer.Ordinal, "propext", "Classical.choice", "Quot.sound");
 
-    internal static bool IsStandard(string axiom) => StandardAxioms.Contains(axiom);
+    public static bool IsStandard(string axiom) => StandardAxioms.Contains(axiom);
 }
 
 public sealed partial class AcyclicTruthDag

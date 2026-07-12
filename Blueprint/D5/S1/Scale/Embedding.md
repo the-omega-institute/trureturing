@@ -4,7 +4,7 @@
 
 ## Proposition: Coordinate formula
 
-Lean declaration: `D5/S1/Scale/Embedding.embedding_apply`
+Lean declaration: `D5/S1/Scale/Embedding.embedding_apply` `✓ std3`
 
 $$
 \operatorname{embedding}\left(a + b \varphi\right) = a + b \varphi
@@ -28,7 +28,7 @@ $$
 
 ## Theorem: Injectivity
 
-Lean declaration: `D5/S1/Scale/Embedding.embedding_injective`
+Lean declaration: `D5/S1/Scale/Embedding.embedding_injective` `✓ std3`
 
 A coordinate collision with $b \ne 0$ would force the forbidden rational identity
 
@@ -40,7 +40,7 @@ $$
 
 ### Theorem: Embedding times conjugate
 
-Lean declaration: `D5/S1/Scale/Embedding.embedding_mul_conj`
+Lean declaration: `D5/S1/Scale/Embedding.embedding_mul_conj` `✓ std3`
 
 $$
 \operatorname{embedding}\left(x\right) \operatorname{embedding}\left(\operatorname{conj}\left(x\right)\right) = \operatorname{norm}\left(x\right)
@@ -48,7 +48,7 @@ $$
 
 ### Theorem: Absolute norm relation
 
-Lean declaration: `D5/S1/Scale/Embedding.abs_embedding_mul_abs_conj`
+Lean declaration: `D5/S1/Scale/Embedding.abs_embedding_mul_abs_conj` `✓ std3`
 
 Taking absolute values gives the corresponding multiplicative relation.
 
