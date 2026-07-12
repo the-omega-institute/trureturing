@@ -138,6 +138,20 @@ import sys
 print(os.path.realpath(sys.argv[1]))
 PY
 )"
+  if ! python3 - "$(dirname -- "$physical_bin")" "$checkout" <<'PY'
+import os
+import sys
+
+bin_directory, checkout = sys.argv[1:]
+try:
+    inside_checkout = os.path.commonpath((bin_directory, checkout)) == checkout
+except ValueError:
+    inside_checkout = False
+raise SystemExit(0 if inside_checkout else 1)
+PY
+  then
+    die "engine provenance-unverified: BIN is not inside the pinned checkout: $physical_bin"
+  fi
 
   worktree_list="$(
     "${clean_git[@]}" -C "$checkout" worktree list --porcelain 2>/dev/null

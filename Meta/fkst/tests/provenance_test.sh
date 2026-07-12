@@ -57,9 +57,10 @@ readonly CHECKOUT_HEAD="$(
 temporary="$(mktemp -d "${TMPDIR:-/tmp}/fkst-provenance-test.XXXXXX")"
 trap cleanup EXIT
 
-mkdir "$temporary/ambient" "$temporary/gitfile"
+mkdir "$temporary/ambient" "$temporary/gitfile" "$temporary/core-worktree"
 make_stub "$temporary/ambient/fkst-framework"
 make_stub "$temporary/gitfile/fkst-framework"
+make_stub "$temporary/core-worktree/fkst-framework"
 
 assert_rejected \
   ambient-git-dir \
@@ -84,6 +85,20 @@ assert_rejected \
     -u GIT_OBJECT_DIRECTORY \
     -u GIT_ALTERNATE_OBJECT_DIRECTORIES \
     BIN="$temporary/gitfile/fkst-framework" \
+    bash "$ROOT/run.sh" test
+
+git -C "$temporary/core-worktree" init -q
+git -C "$temporary/core-worktree" config core.worktree "$PINNED_CHECKOUT"
+assert_rejected \
+  redirected-core-worktree \
+  "engine provenance-unverified: BIN is not inside the pinned checkout" \
+  env -u GIT_DIR \
+    -u GIT_WORK_TREE \
+    -u GIT_INDEX_FILE \
+    -u GIT_COMMON_DIR \
+    -u GIT_OBJECT_DIRECTORY \
+    -u GIT_ALTERNATE_OBJECT_DIRECTORIES \
+    BIN="$temporary/core-worktree/fkst-framework" \
     bash "$ROOT/run.sh" test
 
 printf 'provenance tests: ok\n'
