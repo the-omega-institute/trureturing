@@ -226,13 +226,28 @@ jobs:
             gate="$GITHUB_WORKSPACE/candidate/.github/scripts/harness-gate.sh"
             echo "::warning title=harness-gate bootstrap::The predecessor predates the shared gate; using the candidate only for this one-time introduction observation."
           fi
+          set +e
           "$gate" \
             --candidate "$GITHUB_WORKSPACE/candidate" \
             --judge-root "$GITHUB_WORKSPACE/baseline" \
-            --base "$DEV_BASELINE_SHA"
+            --base "$DEV_BASELINE_SHA" 2>&1 | tee "$RUNNER_TEMP/gate.log"
+          rc="${PIPESTATUS[0]}"
+          set -e
+          if [[ "$rc" -ne 0 ]]; then
+            echo "::error title=harness gate failed::rc=$rc — full tail below"
+            printf '%s\n' "### harness gate FAILED rc=$rc" >> "$GITHUB_STEP_SUMMARY"
+            tail -n 60 "$RUNNER_TEMP/gate.log" | sed 's/^/GATEFAIL │ /'
+          fi
+          exit "$rc"
 
-      - name: Save candidate and baseline Lean build artifacts
-        if: always()
+      # newmath 模式(见贤思齐):cache 只在 canonical dev push 保存,PR run 从不
+      # save——否则每 PR 上传 14GB(candidate+baseline+mathlib)会卡死 job、拖到
+      # 超时、日志随取消一并销毁。这同时解释了"所有 PR 卡住"与"错误日志读不到"。
+      # PR run 只 restore(上文);dev push 负责刷新缓存供后续 restore。
+      - name: Save Lean build artifacts (dev push only)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        continue-on-error: true
+        timeout-minutes: 12
         uses: actions/cache/save@v4
         with:
           path: |
