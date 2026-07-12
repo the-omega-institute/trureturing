@@ -170,6 +170,9 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         }
     }
 
+    public CommandResult Coverage(IReadOnlyList<string> arguments) =>
+        CoverageCommand.Run(repository, leanInspector, arguments);
+
     public CommandResult Route(IReadOnlyList<string> arguments)
     {
         try

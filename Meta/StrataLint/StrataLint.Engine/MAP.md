@@ -9,6 +9,7 @@
 
 - `Admission/`: admission capabilities, bootstrap gating, Lean validation, and profiles.
 - `Coordinates/`: repository coordinates, registry policy, routing, and target syntax.
+- `Coverage/`: harness coverage models, tower validation, ledger indexing, and canonical reports.
 - `Dag/`: truth DAG models and construction.
 - `Ledger/`: frozen content and ledger mechanics; `Validation/` holds validation phases.
 - `Revocation/`: revocation planning and trusted receipts.

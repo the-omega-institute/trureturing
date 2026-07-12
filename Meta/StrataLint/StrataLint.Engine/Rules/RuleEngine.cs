@@ -20,7 +20,27 @@ internal sealed record RuleFinding(string Path, string Message);
 
 internal interface IRepositoryRule
 {
+    bool AppliesTo(RepositoryFile artifact, RuleApplicabilityContext context);
+
     ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context);
+}
+
+internal sealed class RuleApplicabilityContext
+{
+    private RuleApplicabilityContext(RepositorySnapshot current, ValidatedPolicy policy)
+    {
+        Current = current;
+        Policy = policy;
+    }
+
+    internal RepositorySnapshot Current { get; }
+
+    internal ValidatedPolicy Policy { get; }
+
+    internal static RuleApplicabilityContext Create(
+        RepositorySnapshot current,
+        ValidatedPolicy policy) =>
+        new(current, policy);
 }
 
 internal sealed record SingleRuleEvaluation(
@@ -105,8 +125,13 @@ internal sealed class RuleEvaluationContext
         new(current, baseline, policy, lean, baselineLean, changes, metaClear);
 }
 
-internal sealed class RepositoryRule(int number) : IRepositoryRule
+internal sealed class RepositoryRule(
+    Func<RepositoryFile, RuleApplicabilityContext, bool> appliesTo,
+    Func<RuleEvaluationContext, ImmutableArray<RuleFinding>> evaluate) : IRepositoryRule
 {
+    public bool AppliesTo(RepositoryFile artifact, RuleApplicabilityContext context) =>
+        appliesTo(artifact, context);
+
     public ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context) =>
-        RepositoryRules.Evaluate(number, context);
+        evaluate(context);
 }

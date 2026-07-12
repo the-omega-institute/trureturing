@@ -70,31 +70,32 @@ internal static partial class RepositoryRules
             "failure", "failures", "kind", "record_type", "resolution", "state", "tension",
             "tensions", "type", "unresolved");
 
-    internal static ImmutableArray<RuleFinding> Evaluate(int number, RuleEvaluationContext context) =>
-        number switch
-        {
-            1 => Imports(context),
-            2 => Sorry(context),
-            3 => Capacity(context),
-            4 => Mirrors(context),
-            5 => Chronicle(context),
-            6 => Badges(context),
-            7 => ImmutableArray<RuleFinding>.Empty,
-            8 => Hearts(context),
-            9 => ImmutableArray<RuleFinding>.Empty,
-            10 => Generality(context),
-            11 => Domains(context),
-            12 => Headers(context),
-            13 => Tasks(context),
-            14 => ImmutableArray<RuleFinding>.Empty,
-            15 => AddressesAndFormulas(context),
-            16 => BackfillInventoryRule.Evaluate(context),
-            17 => Literature(context),
-            18 => Values(context),
-            19 => Ledger(context),
-            20 => Axioms(context),
-            21 => Instantiation(context),
-            22 => Bootstrap(context),
-            _ => throw new InvalidOperationException($"Unknown rule number {number}."),
-        };
+    internal static ImmutableArray<IRepositoryRule> CreateRuleSet() =>
+    [
+        new RepositoryRule(ManagedLean, Imports),
+        new RepositoryRule(ManagedLean, Sorry),
+        new RepositoryRule(CapacityScoped, Capacity),
+        new RepositoryRule(Formal, Mirrors),
+        new RepositoryRule(ChronicleScoped, Chronicle),
+        new RepositoryRule(StatusScoped, Badges),
+        new RepositoryRule(RepositoryScoped, NoFindings),
+        new RepositoryRule(HeartsScoped, Hearts),
+        new RepositoryRule(RepositoryScoped, NoFindings),
+        new RepositoryRule(GeneralSource, Generality),
+        new RepositoryRule(DomainScoped, Domains),
+        new RepositoryRule(Formal, Headers),
+        new RepositoryRule(Formal, Tasks),
+        new RepositoryRule(ToolchainScoped, NoFindings),
+        new RepositoryRule(AllArtifacts, AddressesAndFormulas),
+        new RepositoryRule(BackfillScoped, BackfillInventoryRule.Evaluate),
+        new RepositoryRule(LiteratureScoped, Literature),
+        new RepositoryRule(ValuesScoped, Values),
+        new RepositoryRule(StructuredOrChronicle, Ledger),
+        new RepositoryRule(ManagedLean, Axioms),
+        new RepositoryRule(InstantiationScoped, Instantiation),
+        new RepositoryRule(BootstrapScoped, Bootstrap),
+    ];
+
+    private static ImmutableArray<RuleFinding> NoFindings(RuleEvaluationContext context) =>
+        ImmutableArray<RuleFinding>.Empty;
 }
