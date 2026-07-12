@@ -23,15 +23,17 @@ internal static class BackfillInventoryRule
             return [new RuleFinding(BackfillPath, "required governance document is missing")];
         }
 
-        Dictionary<string, object?> root;
+        BackfillInventoryDocument document;
         try
         {
-            root = (Dictionary<string, object?>)YamlSubsetParser.Parse(file.Text);
+            document = BackfillInventoryLoader.Load(file.Text);
         }
         catch (FormatException exception)
         {
             return [new RuleFinding(BackfillPath, exception.Message)];
         }
+
+        var root = document.Root;
 
         if (!root.TryGetValue("schema_version", out var schema)
             || schema is not int version

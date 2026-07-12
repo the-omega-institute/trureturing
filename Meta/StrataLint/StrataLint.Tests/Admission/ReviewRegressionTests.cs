@@ -121,7 +121,21 @@ public sealed partial class ReviewRegressionTests
         const string normPath = "D5/S0/Carrier/Norm.lean";
         fixture.Files[normPath] = File.ReadAllText(Path.Combine(repositoryRoot, normPath), Encoding.UTF8);
 
-        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build());
+        // This SL-016 probe deliberately has no synthetic Lean report or imported-module closure.
+        fixture.Files["D5/X_Frontier/DownwardImportTail.lean"] = """
+            /- GID: D5/X_Frontier/DownwardImportTail
+               generality: E
+               mirror-B: none(waiver:test-fixture)
+               mirror-E: none(waiver:test-fixture)
+               anchors: []
+               digest: SL-016 downward-import regression fixture. -/
+            import D5.S3.Weil.FourierLaplace
+            def downwardImportTail : Unit := ()
+            """;
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(16),
+            fixture.BuildForRuleCompatibility());
 
         Assert.Empty(evaluation.Diagnostics);
     }
