@@ -8,7 +8,20 @@ public static partial class FrozenLedger
     public static FrozenLedgerValidationOutcome ValidateHistory(
         FrozenLedgerSyntax syntax,
         FrozenMaterialCatalog catalog,
-        TrustedFrozenGitReferences trustedReferences)
+        TrustedFrozenGitReferences trustedReferences) =>
+        ValidateHistory(syntax, catalog, trustedReferences, requireCompleteCatalog: true);
+
+    internal static FrozenLedgerValidationOutcome ValidateHistoryPrefix(
+        FrozenLedgerSyntax syntax,
+        FrozenMaterialCatalog catalog,
+        TrustedFrozenGitReferences trustedReferences) =>
+        ValidateHistory(syntax, catalog, trustedReferences, requireCompleteCatalog: false);
+
+    private static FrozenLedgerValidationOutcome ValidateHistory(
+        FrozenLedgerSyntax syntax,
+        FrozenMaterialCatalog catalog,
+        TrustedFrozenGitReferences trustedReferences,
+        bool requireCompleteCatalog)
     {
         ArgumentNullException.ThrowIfNull(syntax);
         ArgumentNullException.ThrowIfNull(catalog);
@@ -128,14 +141,20 @@ public static partial class FrozenLedger
                 .OrderBy(static path => path.Value, StringComparer.Ordinal)
                 .Select(static path => path.Value)
                 .ToArray();
-            if (missing.Length > 0)
+            if (requireCompleteCatalog && missing.Length > 0)
             {
                 throw new FormatException("Closed modules are missing Freeze events: " + string.Join(", ", missing));
             }
 
-            if (actualByPath.Count != expectedByPath.Count)
+            var outside = actualByPath.Keys.Except(expectedByPath.Keys)
+                .OrderBy(static path => path.Value, StringComparer.Ordinal)
+                .Select(static path => path.Value)
+                .ToArray();
+            if (outside.Length > 0)
             {
-                throw new FormatException("Active frozen history contains modules outside the current Closed catalog.");
+                throw new FormatException(
+                    "Active frozen history contains modules outside the current Closed catalog: "
+                    + string.Join(", ", outside));
             }
 
             foreach (var (caseId, entry) in active.ToArray())
@@ -146,18 +165,19 @@ public static partial class FrozenLedger
             }
 
             var activeEntries = active.ToImmutableDictionary(StringComparer.Ordinal);
+            var activeNodes = activeEntries.Values
+                .Select(static entry => entry.Material)
+                .OrderBy(static node => node.RepoPath.Value, StringComparer.Ordinal)
+                .ToImmutableArray();
             return new FrozenLedgerValidationOutcome.Accepted(FrozenLedgerConsistent.Create(
                 syntax.RawBytes,
                 events.MoveToImmutable(),
-                activeEntries.Values
-                    .Select(static entry => entry.Material)
-                    .OrderBy(static node => node.RepoPath.Value, StringComparer.Ordinal)
-                    .ToImmutableArray(),
+                activeNodes,
                 previous,
                 ComputeCorpusRoot(
                     previous,
                     activeEntries.Values.Select(static entry => entry.Payload).ToImmutableArray()),
-                ComputeFrozenGraphRoot(catalog.ClosedNodes),
+                ComputeFrozenGraphRoot(activeNodes),
                 activeEntries,
                 allCaseIds.ToImmutableHashSet(StringComparer.Ordinal),
                 revoked.ToImmutableHashSet()));
