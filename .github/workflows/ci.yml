@@ -13,6 +13,14 @@ on:
 permissions:
   contents: read
 
+# Superseded runs cancel cleanly instead of lingering and racing. A PR scopes to
+# its number (concurrent PRs never cancel each other); a branch push scopes to the
+# ref. This removes the false SIGTERM(143) failures a new head produced while an old
+# head's run was still executing — the cancel is now an explicit, expected cancel.
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 # Trust topology: candidate engineering checks are non-authoritative. Admission is
 # issued only by the harness checked out at the content-addressed dev event-base SHA.
 # D5-T0017's candidate judge is a post-injection observation, not predecessor machine
