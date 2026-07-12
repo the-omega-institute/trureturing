@@ -1,0 +1,126 @@
+schema_version: 1
+components:
+  - id: content-artifacts
+    kind: artifact-classes
+    members:
+      - F
+      - B
+      - E
+      - C
+      - L
+      - P
+      - Meta
+      - ".github"
+      - agents
+      - docs
+      - root
+      - other
+    judged_by:
+      - sl-rules
+    verification: verified
+  - id: sl-rules
+    kind: rule-catalog
+    members:
+      - SL-001
+      - SL-002
+      - SL-003
+      - SL-004
+      - SL-005
+      - SL-006
+      - SL-007
+      - SL-008
+      - SL-009
+      - SL-010
+      - SL-011
+      - SL-012
+      - SL-013
+      - SL-014
+      - SL-015
+      - SL-016
+      - SL-017
+      - SL-018
+      - SL-019
+      - SL-020
+      - SL-021
+      - SL-022
+    judged_by:
+      - rule-catalog-selfcheck
+      - rule-fixtures
+      - golden-compatibility
+    verification: verified
+  - id: rule-catalog-selfcheck
+    kind: repository-files
+    members:
+      - Meta/StrataLint/StrataLint.Engine/Rules/RuleCatalog.cs
+      - Meta/StrataLint/StrataLint.Tests/Rules/RuleEngineTests.cs
+    judged_by:
+      - engineering-ci
+    verification: verified
+  - id: rule-fixtures
+    kind: repository-files
+    members:
+      - Meta/StrataLint/StrataLint.Tests/Rules/RuleEngineTests.cs
+      - Meta/StrataLint/StrataLint.Tests/Rules/RuleFixture.cs
+    judged_by:
+      - engineering-ci
+    verification: verified
+  - id: golden-compatibility
+    kind: repository-files
+    members:
+      - Meta/StrataLint/Golden/differences.json
+      - Meta/StrataLint/Golden/python-cases.json
+      - Meta/StrataLint/Golden/python-diagnostics.json
+      - Meta/StrataLint/StrataLint.Tests/Golden/FullPythonCorpusCompatibilityTests.cs
+      - Meta/StrataLint/StrataLint.Tests/Golden/GoldenCompatibilityTests.cs
+    judged_by:
+      - engineering-ci
+    verification: verified
+  - id: engine-binary
+    kind: repository-files
+    members:
+      - Directory.Build.props
+      - Directory.Packages.props
+      - Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj
+      - Meta/StrataLint/StrataLint.Engine/StrataLint.Engine.csproj
+      - Meta/StrataLint/StrataLint.sln
+      - global.json
+    judged_by:
+      - engineering-ci
+    verification: verified
+  - id: harness-changes
+    kind: path-prefixes
+    members:
+      - .github/workflows/
+      - Meta/StrataLint/
+    judged_by:
+      - dev-baseline
+    verification: verified
+  - id: engineering-ci
+    kind: ci-jobs
+    members:
+      - candidate-engineering
+    judged_by:
+      - dev-baseline
+    verification: verified
+  - id: dev-baseline
+    kind: ci-jobs
+    members:
+      - baseline-admission
+    judged_by:
+      - conservative-extension-gate-c
+    verification: verified
+  - id: conservative-extension-gate-c
+    kind: future-gate
+    members:
+      - component-c
+    judged_by:
+      - bootstrap-pr-1
+    verification: ASSUMED-UNVERIFIED
+bootstrap:
+  id: bootstrap-pr-1
+  judge: open
+  reason: "Godel boundary: the bootstrap trust root cannot prove its own consistency."
+  genesis_event: sha256:fc2ee6be0dd3cabb9b6a9118592671c9d5a81f691b7b4ad07674d9c3037ce262
+  commit: f3f471846dd81cfcc39ecaa386966fcf0b058464
+  pull_request: 1
+  verification: ASSUMED-UNVERIFIED

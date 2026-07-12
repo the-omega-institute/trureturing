@@ -1,0 +1,143 @@
+using System.Collections.Immutable;
+using System.Text;
+using StrataLint.Engine;
+
+namespace StrataLint.Cli;
+
+internal static class CoverageCommand
+{
+    private const string TowerPath = "Meta/StrataLint/TOWER.yaml";
+
+    internal static CommandResult Run(
+        IRepositoryGateway repository,
+        ILeanInspector leanInspector,
+        IReadOnlyList<string> arguments)
+    {
+        try
+        {
+            var json = ParseArguments(arguments);
+            var snapshot = Decode(repository.ReadCurrent());
+            var policy = LoadPolicy(snapshot);
+            var lean = ValidateLean(snapshot, leanInspector.Inspect(snapshot));
+            var dag = AcyclicTruthDag.Build(snapshot, lean);
+            if (dag is DagBuildOutcome.Rejected rejected)
+            {
+                throw new InvalidOperationException(
+                    "coverage truth DAG is cyclic: "
+                    + string.Join(" -> ", rejected.Witness.Select(static path => path.Value)));
+            }
+
+            var frozen = LoadFrozenPaths(snapshot);
+            var ledger = CoverageLedgerIndex.FromDag(
+                ((DagBuildOutcome.Accepted)dag).Capability,
+                frozen);
+            var tower = LoadTower(snapshot);
+            var validatedTower = TowerManifestValidator.Validate(tower, snapshot, RuleCatalog.Default);
+            if (validatedTower is TowerValidationOutcome.Rejected invalidTower)
+            {
+                throw new InvalidOperationException(
+                    "tower validation failed: "
+                    + string.Join(
+                        "; ",
+                        invalidTower.Findings.Select(static item =>
+                            $"{item.Code}/{item.Component}: {item.Message}")));
+            }
+
+            var report = CoverageAnalyzer.Analyze(snapshot, policy, RuleCatalog.Default, ledger);
+            var bytes = json
+                ? CoverageCanonicalWriter.WriteJson(
+                    report,
+                    ((TowerValidationOutcome.Accepted)validatedTower).Manifest)
+                : CoverageCanonicalWriter.WriteText(
+                    report,
+                    ((TowerValidationOutcome.Accepted)validatedTower).Manifest);
+            return new CommandResult(true, Encoding.UTF8.GetString(bytes.AsSpan()), string.Empty);
+        }
+        catch (Exception exception) when (
+            exception is InvalidOperationException or FormatException or DecoderFallbackException)
+        {
+            return new CommandResult(
+                false,
+                string.Empty,
+                $"INFRASTRUCTURE_FAILURE coverage: {exception.Message}\n");
+        }
+    }
+
+    private static bool ParseArguments(IReadOnlyList<string> arguments)
+    {
+        if (arguments.Count == 0) return false;
+        if (arguments.Count == 1 && arguments[0] == "--json") return true;
+        throw new InvalidOperationException("USAGE: StrataLint coverage [--json]");
+    }
+
+    private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
+        SnapshotDecoder.Decode(raw) switch
+        {
+            SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
+            SnapshotDecodeOutcome.InfrastructureFailure failure =>
+                throw new InvalidOperationException(failure.Message),
+        };
+
+    private static ValidatedPolicy LoadPolicy(RepositorySnapshot snapshot)
+    {
+        if (!snapshot.TryGetFile("Meta/registry.yaml", out var registry)
+            || !snapshot.TryGetFile("Meta/domains.yaml", out var domains))
+        {
+            throw new InvalidOperationException("coverage requires Meta/registry.yaml and Meta/domains.yaml");
+        }
+
+        return RegistryLoader.Load(registry.RawBytes.AsSpan(), domains.RawBytes.AsSpan()) switch
+        {
+            RegistryLoadOutcome.Accepted accepted => accepted.Policy,
+            RegistryLoadOutcome.InfrastructureFailure failure =>
+                throw new InvalidOperationException(failure.Message),
+        };
+    }
+
+    private static AcceptedLeanClosure ValidateLean(
+        RepositorySnapshot snapshot,
+        LeanAxiomReport report) =>
+        LeanClosureValidator.Validate(snapshot, report) switch
+        {
+            LeanValidationOutcome.Accepted accepted => accepted.Capability,
+            LeanValidationOutcome.InfrastructureFailure failure =>
+                throw new InvalidOperationException(failure.Message),
+        };
+
+    private static ImmutableArray<RepoPath> LoadFrozenPaths(RepositorySnapshot snapshot)
+    {
+        if (!snapshot.TryGetFile(FrozenLedgerChangeClassifier.LedgerPath, out var file))
+        {
+            throw new InvalidOperationException("frozen ledger is missing");
+        }
+
+        var syntax = DagLedgerLoader.Load(file.RawBytes.AsSpan()) switch
+        {
+            DagLedgerLoadOutcome.Loaded loaded => loaded.Syntax,
+            DagLedgerLoadOutcome.Invalid invalid =>
+                throw new InvalidOperationException(invalid.Message),
+            _ => throw new InvalidOperationException("unknown frozen ledger load outcome"),
+        };
+        return FrozenCoverageLedger.Load(syntax) switch
+        {
+            FrozenCoverageLoadOutcome.Loaded loaded => loaded.ActiveFrozenPaths,
+            FrozenCoverageLoadOutcome.Invalid invalid =>
+                throw new InvalidOperationException(invalid.Message),
+        };
+    }
+
+    private static TowerManifestSyntax LoadTower(RepositorySnapshot snapshot)
+    {
+        if (!snapshot.TryGetFile(TowerPath, out var file))
+        {
+            throw new InvalidOperationException($"tower manifest is missing: {TowerPath}");
+        }
+
+        return TowerManifestParser.Parse(file.RawBytes.AsSpan()) switch
+        {
+            TowerManifestParseOutcome.Loaded loaded => loaded.Syntax,
+            TowerManifestParseOutcome.Invalid invalid =>
+                throw new InvalidOperationException(invalid.Message),
+        };
+    }
+}
