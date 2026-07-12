@@ -121,6 +121,11 @@ internal sealed class CompiledLeanProcessInspector(string repositoryRoot)
         """;
 
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
+    // Inspector source changes alter the hash directly; canonical statement
+    // writer changes must bump its explicit encoding version.
+    private static readonly string HarnessFormatVersion = Convert.ToHexStringLower(
+        System.Security.Cryptography.SHA256.HashData(Encoding.UTF8.GetBytes(
+            InspectorSource + "\n" + CanonicalStatementWriter.StatementIdEncodingVersion)));
     private readonly string root = Path.GetFullPath(repositoryRoot);
 
     public LeanAxiomReport Inspect(RepositorySnapshot snapshot)
@@ -195,7 +200,7 @@ internal sealed class CompiledLeanProcessInspector(string repositoryRoot)
             }
 
             Mark("olean-hash");
-            var memo = InspectionMemo.Load(root);
+            var memo = InspectionMemo.Load(root, HarnessFormatVersion);
             var pending = modules.Keys
                 .Where(module => !memo.TryGet(module, oleanHashes[module], out _))
                 .Order(StringComparer.Ordinal)

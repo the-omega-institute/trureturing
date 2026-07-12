@@ -9,7 +9,8 @@ namespace StrataLint.Engine;
 internal static partial class RepositoryRules
 {
     private static bool IsGovernedStructured(RepoPath path, ValidatedPolicy policy) =>
-        RepositoryPathPolicy.TryResolve(path, policy, out _)
+        (RepositoryPathPolicy.TryResolve(path, policy, out _)
+            || path.Value == TowerManifestPath)
         && (path.Value.EndsWith(".json", StringComparison.Ordinal)
             || path.Value.EndsWith(".yaml", StringComparison.Ordinal)
             || path.Value.EndsWith(".yml", StringComparison.Ordinal));
