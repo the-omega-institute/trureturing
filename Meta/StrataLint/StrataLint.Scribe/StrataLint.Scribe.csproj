@@ -6,6 +6,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="../../../Blueprint/**/*.scribe.cs" LinkBase="Definitions" />
+    <ProjectReference Include="../StrataLint.Cli/StrataLint.Cli.csproj" />
     <ProjectReference Include="../StrataLint.Engine/StrataLint.Engine.csproj" />
     <PackageReference Include="Dunet" />
     <PackageReference Include="QuestPDF" />

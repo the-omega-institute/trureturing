@@ -26,7 +26,7 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
                     Text(" to the real number with the same coordinate formula.")),
                 new DocumentBlock.Proposition(
                     H("Coordinate formula"),
-                    LeanDeclarationRef.Create("D5/S1/Scale/Embedding.embedding_apply"),
+                    LeanTheorem("D5/S1/Scale/Embedding.embedding_apply"),
                     Blocks(new DocumentBlock.DisplayFormula(
                         Equal(Call("embedding", coordinates), coordinates)))),
                 new DocumentBlock.Section(
@@ -48,7 +48,7 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
                             new Formula.SetLiteral([new Formula.Phi(), new Formula.Psi()])))),
                 new DocumentBlock.Theorem(
                     H("Injectivity"),
-                    LeanDeclarationRef.Create("D5/S1/Scale/Embedding.embedding_injective"),
+                    LeanTheorem("D5/S1/Scale/Embedding.embedding_injective"),
                     Blocks(
                         Paragraph(
                             Text("A coordinate collision with "),
@@ -63,7 +63,7 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
                     Blocks(
                         new DocumentBlock.Theorem(
                             H("Embedding times conjugate"),
-                            LeanDeclarationRef.Create(
+                            LeanTheorem(
                                 "D5/S1/Scale/Embedding.embedding_mul_conj"),
                             Blocks(new DocumentBlock.DisplayFormula(
                                 Equal(
@@ -71,7 +71,7 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
                                     Call("norm", x))))),
                         new DocumentBlock.Theorem(
                             H("Absolute norm relation"),
-                            LeanDeclarationRef.Create(
+                            LeanTheorem(
                                 "D5/S1/Scale/Embedding.abs_embedding_mul_abs_conj"),
                             Blocks(
                                 Paragraph(
