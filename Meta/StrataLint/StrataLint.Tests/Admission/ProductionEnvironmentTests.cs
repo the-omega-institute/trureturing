@@ -8,25 +8,60 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
-    public void CheckShortCircuitsAtSl022BeforeCandidateContentOrLeanIsRead()
+    public void CheckEvaluatesProtectedChangeContentAndReturnsStructuredMetaSignal()
     {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        AddFrozenLedger(fixture);
+        const string protectedPath = "Meta/StrataLint/StrataLint.Engine/Coordinates/Gid.cs";
         var gateway = new FakeRepositoryGateway(
-            RawChangeSet.Create(new[] { "Meta/StrataLint/StrataLint.Engine/Coordinates/Gid.cs" }),
-            current: null,
-            baseline: null);
+            RawChangeSet.Create(new[] { protectedPath }),
+            Snapshot(fixture.Files),
+            Snapshot(fixture.Baseline));
         var source = new FakeLeanReportSource(null);
         var environment = new ProductionCliEnvironment("/repo", gateway, source);
 
-        var outcome = environment.Check(Array.Empty<string>());
+        var outcome = CheckWithReports(environment, fixture);
 
-        var required = Assert.IsType<AdmissionOutcome.HumanReviewRequired>(outcome);
-        Assert.Contains(required.Diagnostics, item => item.RuleId == RuleId.CreateKnown(22));
-        Assert.Equal(0, gateway.ReadCount);
+        var protectedChange = Assert.IsType<AdmissionOutcome.ProtectedSurfaceChange>(outcome);
+        Assert.Equal(
+            Enumerable.Range(1, 22).Select(RuleId.CreateKnown),
+            protectedChange.ContentCertificate.ExecutedRules);
+        Assert.Contains(protectedChange.ChangeSet.Paths, item => item.Value == protectedPath);
+        Assert.Contains(
+            protectedChange.Sl022Diagnostics,
+            item => item.RuleId == RuleId.CreateKnown(22) && item.Path == protectedPath);
+        Assert.Equal(2, gateway.ReadCount);
+        Assert.Equal(2, gateway.FrozenReferenceValidationCount);
         Assert.Equal(0, source.CallCount);
     }
 
     [Fact]
-    public void CheckRunsTheCompleteCapabilityChainForOrdinaryChanges()
+    public void CheckRejectsProtectedChangeWhenContentViolatesSl001()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.Apply("upward-import");
+        const string protectedPath = "Meta/StrataLint/StrataLint.Engine/Coordinates/Gid.cs";
+        var gateway = new FakeRepositoryGateway(
+            RawChangeSet.Create(new[] { protectedPath, RuleFixture.RingPath }),
+            Snapshot(fixture.Files),
+            Snapshot(fixture.Baseline));
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            gateway,
+            new FakeLeanReportSource(null));
+
+        var outcome = CheckWithReports(environment, fixture);
+
+        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
+        Assert.Contains(rejected.Diagnostics, item => item.RuleId == RuleId.CreateKnown(1));
+        Assert.Contains(rejected.Diagnostics, item => item.RuleId == RuleId.CreateKnown(22));
+        Assert.Equal(2, gateway.ReadCount);
+    }
+
+    [Fact]
+    public void CheckReturnsAdmittedForFullyCleanOrdinaryChange()
     {
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
@@ -63,13 +98,16 @@ public sealed partial class ProductionEnvironmentTests
             "--baseline-lean-report", baselineReport,
         });
 
-        Assert.IsType<AdmissionOutcome.Admitted>(outcome);
+        var admitted = Assert.IsType<AdmissionOutcome.Admitted>(outcome);
+        Assert.Equal(
+            Enumerable.Range(1, 22).Select(RuleId.CreateKnown),
+            admitted.Certificate.ExecutedRules);
         Assert.Equal(2, gateway.ReadCount);
         Assert.Equal(0, source.CallCount);
     }
 
     [Fact]
-    public void CheckRequiresBothPrecomputedLeanReportsForOrdinaryChanges()
+    public void CheckRequiresBothPrecomputedLeanReportsForProtectedChanges()
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
@@ -78,7 +116,7 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
         fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
         var gateway = new FakeRepositoryGateway(
-            RawChangeSet.Create(new[] { RuleFixture.BlueprintPath }),
+            RawChangeSet.Create(new[] { "Meta/StrataLint/StrataLint.Engine/Coordinates/Gid.cs" }),
             Snapshot(fixture.Files),
             Snapshot(fixture.Baseline));
         var source = new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports));
@@ -102,7 +140,7 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
         fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
         var gateway = new FakeRepositoryGateway(
-            RawChangeSet.Create(new[] { RuleFixture.BlueprintPath }),
+            RawChangeSet.Create(new[] { "Meta/StrataLint/StrataLint.Engine/Coordinates/Gid.cs" }),
             Snapshot(fixture.Files),
             Snapshot(fixture.Baseline));
         var source = new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports));
@@ -111,7 +149,8 @@ public sealed partial class ProductionEnvironmentTests
         var outcome = CheckWithReports(environment, fixture);
 
         var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
-        Assert.All(rejected.Diagnostics, item => Assert.Equal(RuleId.CreateKnown(8), item.RuleId));
+        Assert.Contains(rejected.Diagnostics, item => item.RuleId == RuleId.CreateKnown(8));
+        Assert.Contains(rejected.Diagnostics, item => item.RuleId == RuleId.CreateKnown(22));
         Assert.Contains(rejected.Diagnostics, item => item.Message.Contains("missing", StringComparison.OrdinalIgnoreCase));
     }
 
@@ -131,7 +170,11 @@ public sealed partial class ProductionEnvironmentTests
             "\"previous_hash\": \"sha256:f",
             StringComparison.Ordinal);
         var gateway = new FakeRepositoryGateway(
-            RawChangeSet.Create(new[] { RuleFixture.BlueprintPath }),
+            RawChangeSet.Create(new[]
+            {
+                "Meta/StrataLint/StrataLint.Engine/Coordinates/Gid.cs",
+                RuleFixture.BlueprintPath,
+            }),
             Snapshot(fixture.Files),
             Snapshot(fixture.Baseline));
         var source = new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports));
@@ -140,7 +183,8 @@ public sealed partial class ProductionEnvironmentTests
         var outcome = CheckWithReports(environment, fixture);
 
         var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
-        Assert.All(rejected.Diagnostics, item => Assert.Equal(RuleId.CreateKnown(8), item.RuleId));
+        Assert.Contains(rejected.Diagnostics, item => item.RuleId == RuleId.CreateKnown(8));
+        Assert.Contains(rejected.Diagnostics, item => item.RuleId == RuleId.CreateKnown(22));
     }
 
     [Fact]
@@ -187,7 +231,11 @@ public sealed partial class ProductionEnvironmentTests
             ImmutableArray.Create("D5.S0.Carrier.Ring"),
             ImmutableArray<LeanDeclaration>.Empty);
         var gateway = new FakeRepositoryGateway(
-            RawChangeSet.Create(new[] { RuleFixture.BlueprintPath }),
+            RawChangeSet.Create(new[]
+            {
+                "Meta/StrataLint/StrataLint.Engine/Coordinates/Gid.cs",
+                RuleFixture.BlueprintPath,
+            }),
             Snapshot(fixture.Files),
             Snapshot(fixture.Baseline));
         var source = new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports));
@@ -196,12 +244,16 @@ public sealed partial class ProductionEnvironmentTests
         var outcome = CheckWithReports(environment, fixture);
 
         var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
-        var cycle = Assert.Single(rejected.Diagnostics);
+        var cycle = Assert.Single(
+            rejected.Diagnostics.Where(item => item.RuleId == RuleId.CreateKnown(1)));
+        var meta = Assert.Single(
+            rejected.Diagnostics.Where(item => item.RuleId == RuleId.CreateKnown(22)));
         Assert.Equal(RuleId.CreateKnown(1), cycle.RuleId);
         Assert.Equal(loopPath, cycle.Path);
         Assert.Equal(
             $"managed import cycle: {loopPath} -> {RuleFixture.RingPath} -> {loopPath}",
             cycle.Message);
+        Assert.Equal("Meta/StrataLint/StrataLint.Engine/Coordinates/Gid.cs", meta.Path);
     }
 
     [Fact]
@@ -349,6 +401,8 @@ internal sealed class FakeRepositoryGateway(
 {
     internal int ReadCount { get; private set; }
 
+    internal int FrozenReferenceValidationCount { get; private set; }
+
     public AdmissionTopologyOutcome InspectAdmissionTopology() =>
         throw new InvalidOperationException("topology should not be inspected");
 
@@ -384,8 +438,11 @@ internal sealed class FakeRepositoryGateway(
         return baseline ?? throw new InvalidOperationException("frozen revision snapshot should not be read");
     }
 
-    public TrustedFrozenGitReferences ValidateFrozenReferences(FrozenLedgerReferenceSet references) =>
-        TrustedFrozenGitReferences.CreateForTrustedAdapter(references.Inputs);
+    public TrustedFrozenGitReferences ValidateFrozenReferences(FrozenLedgerReferenceSet references)
+    {
+        FrozenReferenceValidationCount++;
+        return TrustedFrozenGitReferences.CreateForTrustedAdapter(references.Inputs);
+    }
 }
 
 internal sealed class FakeLeanReportSource(LeanAxiomReport? report) : ILeanReportSource

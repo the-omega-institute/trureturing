@@ -148,7 +148,7 @@ public sealed class FaultInjectionTests
             canonical.Capability,
             context.Lean,
             completed.Capability,
-            context.MetaClear);
+            context.MetaEvaluation);
     }
 }
 

@@ -10,6 +10,7 @@ public sealed class CapabilityConstructionTests
         "StrataLint.Engine.AcyclicTruthDag",
         "StrataLint.Engine.AdmissionCertificate",
         "StrataLint.Engine.AdmissionOutcome+Admitted",
+        "StrataLint.Engine.AdmissionOutcome+ProtectedSurfaceChange",
         "StrataLint.Engine.BootstrapOutcome+Clear",
         "StrataLint.Engine.CanonicalFixedPoint",
         "StrataLint.Engine.CanonicalizationOutcome+Accepted",

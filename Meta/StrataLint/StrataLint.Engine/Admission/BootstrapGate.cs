@@ -48,6 +48,35 @@ public sealed class MetaClear
     internal static MetaClear Create() => new();
 }
 
+internal sealed class MetaEvaluationProfile
+{
+    private MetaEvaluationProfile(MetaClear? clearCapability, MetaChangeSet? protectedChangeSet)
+    {
+        ClearCapability = clearCapability;
+        ProtectedChangeSet = protectedChangeSet;
+    }
+
+    internal MetaClear? ClearCapability { get; }
+
+    internal MetaChangeSet? ProtectedChangeSet { get; }
+
+    internal static MetaEvaluationProfile ForClear(MetaClear capability) =>
+        new(capability ?? throw new ArgumentNullException(nameof(capability)), null);
+
+    internal static MetaEvaluationProfile ForProtectedSurface(MetaChangeSet changeSet)
+    {
+        ArgumentNullException.ThrowIfNull(changeSet);
+        if (changeSet.Paths.IsDefaultOrEmpty || changeSet.Paths.Any(static path => !BootstrapGate.IsProtected(path)))
+        {
+            throw new ArgumentException(
+                "Protected-surface evaluation requires a non-empty protected change set.",
+                nameof(changeSet));
+        }
+
+        return new MetaEvaluationProfile(null, changeSet);
+    }
+}
+
 [Union(EnableImplicitConversions = false)]
 public partial record BootstrapOutcome
 {
@@ -66,6 +95,8 @@ public partial record BootstrapOutcome
 
 public static class BootstrapGate
 {
+    internal const string ProtectedSurfaceMessage = "meta change requires external human review";
+
     private static readonly StringComparer Ordinal = StringComparer.Ordinal;
 
     public static BootstrapOutcome Evaluate(RawChangeSet changes)
@@ -75,6 +106,30 @@ public static class BootstrapGate
         return protectedPaths.Length == 0
             ? new BootstrapOutcome.Clear(MetaClear.Create())
             : new BootstrapOutcome.HumanReviewRequired(new MetaChangeSet(protectedPaths));
+    }
+
+    internal static ImmutableArray<Diagnostic> CreateSl022Diagnostics(MetaChangeSet changeSet)
+    {
+        ArgumentNullException.ThrowIfNull(changeSet);
+        if (changeSet.Paths.IsDefaultOrEmpty
+            || changeSet.Paths.Any(static path => !IsProtected(path)))
+        {
+            throw new ArgumentException(
+                "SL-022 diagnostics require a non-empty protected change set.",
+                nameof(changeSet));
+        }
+
+        var descriptor = RuleCatalog.Default.Descriptors[21];
+        return changeSet.Paths
+            .OrderBy(static path => path.Value, StringComparer.Ordinal)
+            .Select(path => new Diagnostic(
+                descriptor.Id,
+                descriptor.Title,
+                descriptor.DisplaySeverity,
+                descriptor.AdmissionEffect,
+                path.Value,
+                ProtectedSurfaceMessage))
+            .ToImmutableArray();
     }
 
     internal static bool IsProtected(RepoPath path)

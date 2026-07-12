@@ -119,6 +119,8 @@ internal static class CliApplication
         AdmissionOutcome.RuleRejected rejected => RenderRejected(rejected, console),
         AdmissionOutcome.InfrastructureFailure failure => RenderInfrastructureFailure(failure, console),
         AdmissionOutcome.HumanReviewRequired required => RenderHumanReview(required, console),
+        AdmissionOutcome.ProtectedSurfaceChange protectedChange =>
+            RenderProtectedSurfaceChange(protectedChange, console),
     };
 
     private static int RenderAdmitted(AdmissionOutcome.Admitted admitted, ICliConsole console)
@@ -166,6 +168,29 @@ internal static class CliApplication
         }
 
         console.WriteOutput($"HUMAN_REVIEW_REQUIRED count={required.Diagnostics.Length}\n");
+        return 3;
+    }
+
+    private static int RenderProtectedSurfaceChange(
+        AdmissionOutcome.ProtectedSurfaceChange protectedChange,
+        ICliConsole console)
+    {
+        foreach (var diagnostic in protectedChange.Sl022Diagnostics
+            .OrderBy(static item => item.Path, StringComparer.Ordinal))
+        {
+            console.WriteOutput(diagnostic.Render() + "\n");
+        }
+
+        foreach (var deferred in protectedChange.ContentCertificate.DeferredRules)
+        {
+            console.WriteOutput(
+                $"DEFERRED {deferred.RuleId.Value} case={deferred.CaseId.Value} {deferred.Title}\n");
+        }
+
+        console.WriteOutput(
+            $"PROTECTED_SURFACE_CHANGE count={protectedChange.Sl022Diagnostics.Length} "
+            + $"content={protectedChange.ContentCertificate.Fingerprint} "
+            + $"canonical={protectedChange.ContentCertificate.CanonicalSha256}\n");
         return 3;
     }
 

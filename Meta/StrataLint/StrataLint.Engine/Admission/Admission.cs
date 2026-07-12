@@ -63,6 +63,43 @@ public partial record AdmissionOutcome
     public partial record InfrastructureFailure(string Message);
 
     public partial record HumanReviewRequired(ImmutableArray<Diagnostic> Diagnostics);
+
+    public partial record ProtectedSurfaceChange
+    {
+        internal ProtectedSurfaceChange(
+            AdmissionCertificate contentCertificate,
+            MetaChangeSet changeSet,
+            ImmutableArray<Diagnostic> sl022Diagnostics)
+        {
+            ContentCertificate = contentCertificate
+                ?? throw new ArgumentNullException(nameof(contentCertificate));
+            ChangeSet = changeSet ?? throw new ArgumentNullException(nameof(changeSet));
+            if (sl022Diagnostics.IsDefaultOrEmpty
+                || sl022Diagnostics.Any(static diagnostic =>
+                    diagnostic.RuleId != RuleId.CreateKnown(22)
+                    || diagnostic.AdmissionEffect is not AdmissionEffect.HumanGate)
+                || !ChangeSet.Paths
+                    .Select(static path => path.Value)
+                    .Order(StringComparer.Ordinal)
+                    .SequenceEqual(
+                        sl022Diagnostics.Select(static diagnostic => diagnostic.Path)
+                            .Order(StringComparer.Ordinal),
+                        StringComparer.Ordinal))
+            {
+                throw new ArgumentException(
+                    "Protected-surface outcome requires exact SL-022 diagnostics for its meta change set.",
+                    nameof(sl022Diagnostics));
+            }
+
+            Sl022Diagnostics = sl022Diagnostics;
+        }
+
+        public AdmissionCertificate ContentCertificate { get; }
+
+        public MetaChangeSet ChangeSet { get; }
+
+        public ImmutableArray<Diagnostic> Sl022Diagnostics { get; }
+    }
 }
 
 internal static class AdmissionEngine
@@ -72,42 +109,63 @@ internal static class AdmissionEngine
         CanonicalFixedPoint canonical,
         AcceptedLeanClosure lean,
         CompletedRuleSet rules,
-        MetaClear metaClear)
+        MetaEvaluationProfile metaEvaluation)
     {
         ArgumentNullException.ThrowIfNull(policy);
         ArgumentNullException.ThrowIfNull(canonical);
         ArgumentNullException.ThrowIfNull(lean);
         ArgumentNullException.ThrowIfNull(rules);
-        ArgumentNullException.ThrowIfNull(metaClear);
+        ArgumentNullException.ThrowIfNull(metaEvaluation);
 
-        var rejected = RejectIfNeeded(rules);
+        var rejected = RejectIfNeeded(rules, metaEvaluation);
         if (rejected is not null)
         {
             return rejected;
         }
 
-        return new AdmissionOutcome.Admitted(AdmissionCertificate.Create(canonical, rules));
+        var certificate = AdmissionCertificate.Create(canonical, rules);
+        if (metaEvaluation.ProtectedChangeSet is not { } protectedChanges)
+        {
+            return new AdmissionOutcome.Admitted(certificate);
+        }
+
+        var sl022Diagnostics = rules.Diagnostics
+            .Where(static diagnostic => diagnostic.RuleId == RuleId.CreateKnown(22))
+            .ToImmutableArray();
+        try
+        {
+            return new AdmissionOutcome.ProtectedSurfaceChange(
+                certificate,
+                protectedChanges,
+                sl022Diagnostics);
+        }
+        catch (ArgumentException exception)
+        {
+            return new AdmissionOutcome.InfrastructureFailure(
+                $"SL-022 routing evidence failed closed: {exception.Message}");
+        }
     }
 
-    internal static AdmissionOutcome? RejectIfNeeded(CompletedRuleSet rules)
+    internal static AdmissionOutcome? RejectIfNeeded(
+        CompletedRuleSet rules,
+        MetaEvaluationProfile metaEvaluation)
     {
-        var humanGates = rules.Diagnostics
-            .Where(static item => item.AdmissionEffect is AdmissionEffect.HumanGate)
+        ArgumentNullException.ThrowIfNull(rules);
+        ArgumentNullException.ThrowIfNull(metaEvaluation);
+        var contentViolations = rules.Diagnostics
+            .Where(static item => item.AdmissionEffect is AdmissionEffect.Block or AdmissionEffect.HumanGate)
+            .Where(item => metaEvaluation.ProtectedChangeSet is null
+                || item.RuleId != RuleId.CreateKnown(22))
             .ToImmutableArray();
-        if (humanGates.Length > 0)
+        if (contentViolations.Length == 0)
         {
-            return new AdmissionOutcome.HumanReviewRequired(humanGates);
+            return null;
         }
 
-        var blocks = rules.Diagnostics
-            .Where(static item => item.AdmissionEffect is AdmissionEffect.Block)
+        var violationsWithMetaEvidence = rules.Diagnostics
+            .Where(static item => item.AdmissionEffect is AdmissionEffect.Block or AdmissionEffect.HumanGate)
             .ToImmutableArray();
-        if (blocks.Length > 0)
-        {
-            return new AdmissionOutcome.RuleRejected(blocks);
-        }
-
-        return null;
+        return new AdmissionOutcome.RuleRejected(violationsWithMetaEvidence);
     }
 }
 
@@ -121,6 +179,40 @@ public static class AdmissionPipeline
         AcceptedLeanClosure baselineLean,
         RawChangeSet changes,
         MetaClear metaClear)
+        => Evaluate(
+            current,
+            baseline,
+            policy,
+            lean,
+            baselineLean,
+            changes,
+            MetaEvaluationProfile.ForClear(metaClear));
+
+    internal static AdmissionOutcome EvaluateProtectedSurface(
+        RepositorySnapshot current,
+        RepositorySnapshot baseline,
+        ValidatedPolicy policy,
+        AcceptedLeanClosure lean,
+        AcceptedLeanClosure baselineLean,
+        RawChangeSet changes,
+        MetaChangeSet protectedChanges)
+        => Evaluate(
+            current,
+            baseline,
+            policy,
+            lean,
+            baselineLean,
+            changes,
+            MetaEvaluationProfile.ForProtectedSurface(protectedChanges));
+
+    private static AdmissionOutcome Evaluate(
+        RepositorySnapshot current,
+        RepositorySnapshot baseline,
+        ValidatedPolicy policy,
+        AcceptedLeanClosure lean,
+        AcceptedLeanClosure baselineLean,
+        RawChangeSet changes,
+        MetaEvaluationProfile metaEvaluation)
     {
         var context = RuleEvaluationContext.Create(
             current,
@@ -129,11 +221,11 @@ public static class AdmissionPipeline
             lean,
             baselineLean,
             changes,
-            metaClear);
+            metaEvaluation);
         return RuleCatalog.Default.Execute(context) switch
         {
             RuleExecutionOutcome.Completed completed => Complete(
-                current, policy, lean, completed.Capability, metaClear),
+                current, policy, lean, completed.Capability, metaEvaluation),
             RuleExecutionOutcome.InfrastructureFailure failure =>
                 new AdmissionOutcome.InfrastructureFailure(failure.Message),
         };
@@ -144,9 +236,9 @@ public static class AdmissionPipeline
         ValidatedPolicy policy,
         AcceptedLeanClosure lean,
         CompletedRuleSet rules,
-        MetaClear metaClear)
+        MetaEvaluationProfile metaEvaluation)
     {
-        var rejected = AdmissionEngine.RejectIfNeeded(rules);
+        var rejected = AdmissionEngine.RejectIfNeeded(rules, metaEvaluation);
         if (rejected is not null)
         {
             return rejected;
@@ -159,7 +251,7 @@ public static class AdmissionPipeline
                 accepted.Capability,
                 lean,
                 rules,
-                metaClear),
+                metaEvaluation),
             CanonicalizationOutcome.InfrastructureFailure failure =>
                 new AdmissionOutcome.InfrastructureFailure(failure.Message),
         };

@@ -95,7 +95,7 @@ internal sealed class RuleEvaluationContext
         AcceptedLeanClosure lean,
         AcceptedLeanClosure baselineLean,
         RawChangeSet changes,
-        MetaClear metaClear)
+        MetaEvaluationProfile metaEvaluation)
     {
         Current = current;
         Baseline = baseline;
@@ -103,7 +103,7 @@ internal sealed class RuleEvaluationContext
         Lean = lean;
         BaselineLean = baselineLean;
         Changes = changes;
-        MetaClear = metaClear;
+        MetaEvaluation = metaEvaluation;
     }
 
     internal RepositorySnapshot Current { get; }
@@ -118,7 +118,7 @@ internal sealed class RuleEvaluationContext
 
     internal RawChangeSet Changes { get; }
 
-    internal MetaClear MetaClear { get; }
+    internal MetaEvaluationProfile MetaEvaluation { get; }
 
     internal static RuleEvaluationContext Create(
         RepositorySnapshot current,
@@ -128,7 +128,24 @@ internal sealed class RuleEvaluationContext
         AcceptedLeanClosure baselineLean,
         RawChangeSet changes,
         MetaClear metaClear) =>
-        new(current, baseline, policy, lean, baselineLean, changes, metaClear);
+        Create(
+            current,
+            baseline,
+            policy,
+            lean,
+            baselineLean,
+            changes,
+            MetaEvaluationProfile.ForClear(metaClear));
+
+    internal static RuleEvaluationContext Create(
+        RepositorySnapshot current,
+        RepositorySnapshot baseline,
+        ValidatedPolicy policy,
+        AcceptedLeanClosure lean,
+        AcceptedLeanClosure baselineLean,
+        RawChangeSet changes,
+        MetaEvaluationProfile metaEvaluation) =>
+        new(current, baseline, policy, lean, baselineLean, changes, metaEvaluation);
 }
 
 internal sealed class RepositoryRule(
