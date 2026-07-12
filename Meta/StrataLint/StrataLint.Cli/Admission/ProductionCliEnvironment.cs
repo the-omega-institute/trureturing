@@ -22,6 +22,8 @@ internal interface IRepositoryGateway
 
     FrozenRevisionIdentity ResolveFrozenRevision(string revision);
 
+    FrozenRevisionIdentity ResolveCurrentRevision();
+
     RawRepositorySnapshot ReadCurrent();
 
     RawRepositorySnapshot ReadRevision(string revision);
@@ -279,6 +281,9 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             repository,
             leanReportSource,
             arguments);
+
+    public CommandResult AppendLedger(IReadOnlyList<string> arguments) =>
+        DagLedgerAppendWriter.Append(repositoryRoot, repository, arguments);
 
     public CommandResult Worktree(IReadOnlyList<string> arguments) =>
         WorktreeCommand.Run(repositoryRoot, arguments);
