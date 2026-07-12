@@ -51,7 +51,13 @@ public sealed class MetaClear
 [Union(EnableImplicitConversions = false)]
 public partial record BootstrapOutcome
 {
-    public partial record Clear(MetaClear Capability);
+    public partial record Clear
+    {
+        internal Clear(MetaClear capability) =>
+            Capability = capability ?? throw new ArgumentNullException(nameof(capability));
+
+        public MetaClear Capability { get; }
+    }
 
     public partial record HumanReviewRequired(MetaChangeSet ChangeSet);
 

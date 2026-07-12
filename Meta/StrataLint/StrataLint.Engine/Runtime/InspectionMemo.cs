@@ -1,9 +1,8 @@
 using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
-using StrataLint.Engine;
 
-namespace StrataLint.Cli;
+namespace StrataLint.Engine;
 
 // Content-addressed memo for trusted Lean inspection reports. Each entry is
 // keyed by (module, sha256 of the module's .olean). Lake rebuilds an .olean

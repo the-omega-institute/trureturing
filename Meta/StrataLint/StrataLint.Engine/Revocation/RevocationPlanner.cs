@@ -71,7 +71,13 @@ public sealed class ValidatedRevocationEvidence
 [Union(EnableImplicitConversions = false)]
 public partial record RevocationEvidenceValidationOutcome
 {
-    public partial record Accepted(ValidatedRevocationEvidence Capability);
+    public partial record Accepted
+    {
+        internal Accepted(ValidatedRevocationEvidence capability) =>
+            Capability = capability ?? throw new ArgumentNullException(nameof(capability));
+
+        public ValidatedRevocationEvidence Capability { get; }
+    }
 
     public partial record Rejected(string Message);
 }
@@ -182,7 +188,13 @@ public sealed class RevocationPlan
 [Union(EnableImplicitConversions = false)]
 public partial record RevocationPlanOutcome
 {
-    public partial record Accepted(RevocationPlan Capability);
+    public partial record Accepted
+    {
+        internal Accepted(RevocationPlan capability) =>
+            Capability = capability ?? throw new ArgumentNullException(nameof(capability));
+
+        public RevocationPlan Capability { get; }
+    }
 
     public partial record Rejected(string Message);
 }

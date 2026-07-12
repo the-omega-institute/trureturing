@@ -27,7 +27,13 @@ public sealed class FrozenLedgerReferenceSet
 [Union(EnableImplicitConversions = false)]
 public partial record FrozenLedgerReferenceScanOutcome
 {
-    public partial record Accepted(FrozenLedgerReferenceSet References);
+    public partial record Accepted
+    {
+        internal Accepted(FrozenLedgerReferenceSet references) =>
+            References = references ?? throw new ArgumentNullException(nameof(references));
+
+        public FrozenLedgerReferenceSet References { get; }
+    }
 
     public partial record Rejected(string Message);
 }

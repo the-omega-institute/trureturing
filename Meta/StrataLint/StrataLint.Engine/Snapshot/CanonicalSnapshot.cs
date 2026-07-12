@@ -29,7 +29,13 @@ public sealed class CanonicalFixedPoint
 [Union(EnableImplicitConversions = false)]
 public partial record CanonicalizationOutcome
 {
-    public partial record Accepted(CanonicalFixedPoint Capability);
+    public partial record Accepted
+    {
+        internal Accepted(CanonicalFixedPoint capability) =>
+            Capability = capability ?? throw new ArgumentNullException(nameof(capability));
+
+        public CanonicalFixedPoint Capability { get; }
+    }
 
     public partial record InfrastructureFailure(string Message);
 }

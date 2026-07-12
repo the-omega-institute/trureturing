@@ -5,6 +5,8 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Dunet" />
+    <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />
     <PackageReference Include="Pidgin" />
+    <AdditionalFiles Include="../Architecture/BannedSymbols.txt" />
   </ItemGroup>
 </Project>

@@ -89,7 +89,13 @@ public sealed class ValidatedPolicy
 [Union(EnableImplicitConversions = false)]
 public partial record RegistryLoadOutcome
 {
-    public partial record Accepted(ValidatedPolicy Policy);
+    public partial record Accepted
+    {
+        internal Accepted(ValidatedPolicy policy) =>
+            Policy = policy ?? throw new ArgumentNullException(nameof(policy));
+
+        public ValidatedPolicy Policy { get; }
+    }
 
     public partial record InfrastructureFailure(string Message);
 }
