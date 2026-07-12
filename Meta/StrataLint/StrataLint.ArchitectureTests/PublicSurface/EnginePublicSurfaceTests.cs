@@ -14,6 +14,7 @@ public sealed class EnginePublicSurfaceTests
         "StrataLint.Engine.AdmissionOutcome+Admitted",
         "StrataLint.Engine.AdmissionOutcome+HumanReviewRequired",
         "StrataLint.Engine.AdmissionOutcome+InfrastructureFailure",
+        "StrataLint.Engine.AdmissionOutcome+ProtectedSurfaceChange",
         "StrataLint.Engine.AdmissionOutcome+RuleRejected",
         "StrataLint.Engine.AdmissionOutcome0MatchExtensions",
         "StrataLint.Engine.AdmissionPipeline",

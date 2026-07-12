@@ -89,6 +89,6 @@ internal static partial class RepositoryRules
     private static ImmutableArray<RuleFinding> Bootstrap(RuleEvaluationContext context) =>
         context.Changes.Paths
             .Where(BootstrapGate.IsProtected)
-            .Select(static path => new RuleFinding(path.Value, "meta change requires external human review"))
+            .Select(static path => new RuleFinding(path.Value, BootstrapGate.ProtectedSurfaceMessage))
             .ToImmutableArray();
 }

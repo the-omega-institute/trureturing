@@ -13,6 +13,7 @@ public sealed class CliOutcomeTests
         { "rejected", 1, "RULE_REJECTED", false },
         { "infrastructure", 2, "INFRASTRUCTURE_FAILURE", true },
         { "human", 3, "HUMAN_REVIEW_REQUIRED", false },
+        { "protected", 3, "PROTECTED_SURFACE_CHANGE", false },
     };
 
     [Theory]
@@ -47,14 +48,34 @@ public sealed class CliOutcomeTests
         "infrastructure" => new AdmissionOutcome.InfrastructureFailure("fixture tool failure"),
         "human" => new AdmissionOutcome.HumanReviewRequired(ImmutableArray.Create(
             new Diagnostic(
-                RuleId.CreateKnown(22),
-                "Meta bootstrap gate",
+                RuleId.CreateKnown(7),
+                "Conflict-of-interest gate",
                 DisplaySeverity.Warning,
                 AdmissionEffect.HumanGate,
-                "Meta/StrataLint/StrataLint.Engine/Coordinates/Gid.cs",
-                "meta change requires external human review"))),
+                "Blueprint/D5/S0/Carrier/Ring.md",
+                "legacy structured human-review outcome"))),
+        "protected" => ProtectedSurfaceChange(),
         _ => throw new ArgumentOutOfRangeException(nameof(fixture)),
     };
+
+    private static AdmissionOutcome ProtectedSurfaceChange()
+    {
+        const string path = "Meta/StrataLint/StrataLint.Engine/Coordinates/Gid.cs";
+        var admitted = Assert.IsType<AdmissionOutcome.Admitted>(Admitted());
+        var bootstrap = Assert.IsType<BootstrapOutcome.HumanReviewRequired>(
+            BootstrapGate.Evaluate(RawChangeSet.Create(new[] { path })));
+        var descriptor = RuleCatalog.Default.Descriptors[21];
+        return new AdmissionOutcome.ProtectedSurfaceChange(
+            admitted.Certificate,
+            bootstrap.ChangeSet,
+            ImmutableArray.Create(new Diagnostic(
+                descriptor.Id,
+                descriptor.Title,
+                descriptor.DisplaySeverity,
+                descriptor.AdmissionEffect,
+                path,
+                "meta change requires external human review")));
+    }
 
     private static AdmissionOutcome Admitted()
     {
@@ -74,7 +95,7 @@ public sealed class CliOutcomeTests
             canonical.Capability,
             context.Lean,
             completed.Capability,
-            context.MetaClear);
+            context.MetaEvaluation);
     }
 }
 
