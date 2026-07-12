@@ -107,7 +107,9 @@ jobs:
 
   baseline-admission:
     name: Content-addressed dev baseline admission
-    runs-on: ubuntu-latest
+    # 16 GB arm runner (free for public repos): the judge's Lean inspection loads
+    # the mathlib environment; 7 GB x64 runners get VM-killed (runner shutdown).
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 45
     steps:
       - name: Check out candidate with history
@@ -211,13 +213,18 @@ jobs:
         with:
           dotnet-version: 10.0.103
 
-      - name: Cache candidate Lean build artifacts
-        uses: actions/cache@v4
+      # restore/save split: actions/cache entries are immutable per key, so a
+      # static key would pin the oldest artifacts forever and the inspection memo
+      # could never accumulate. Per-sha keys + prefix restore give rolling reuse.
+      - name: Restore candidate Lean build artifacts
+        uses: actions/cache/restore@v4
         with:
           path: |
             candidate/.lake
             ~/.cache/mathlib
-          key: ${{ runner.os }}-lake-${{ hashFiles('candidate/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain') }}
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain') }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain') }}-
 
       # Zero-trust floor: the repository's own Lean surface must be buildable in CI,
       # independent of any submitter-side (human or AI) local verification.
@@ -264,3 +271,12 @@ jobs:
         shell: bash
         run: |
           "$GITHUB_WORKSPACE/candidate/.github/scripts/baseline-admission.sh"
+
+      - name: Save candidate Lean build artifacts
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            candidate/.lake
+            ~/.cache/mathlib
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain') }}-${{ github.sha }}
