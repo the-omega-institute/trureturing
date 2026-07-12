@@ -103,6 +103,15 @@ public sealed class TypeModelTests
         Assert.Contains(required.ChangeSet.Paths, item => item == path);
     }
 
+    [Fact]
+    public void FkstIntegrationLayerIsClosedWorldRegistered()
+    {
+        var path = RepoPath.CreateKnown("Meta/fkst/fkst.workspace.toml");
+
+        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
+        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
+    }
+
     private static ValidatedPolicy Policy() =>
         Assert.IsType<RegistryLoadOutcome.Accepted>(
             RegistryLoader.Load(

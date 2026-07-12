@@ -1,0 +1,2 @@
+[workspace]
+units = ["packages/harness-probe"]
