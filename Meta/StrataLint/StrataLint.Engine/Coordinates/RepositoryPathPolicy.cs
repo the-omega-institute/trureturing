@@ -52,7 +52,7 @@ internal static partial class RepositoryPathPolicy
             or "Library/queries.yaml" or "D5/X_Assumptions/REGISTRY.md"
             or "Meta/split.py" or "Meta/papergen"
             or ".github/workflows/ci.yml" or ".github/CODEOWNERS"
-            or ".github/scripts/baseline-admission.sh"
+            or ".github/scripts/baseline-admission.sh" or ".github/scripts/harness-gate.sh"
             || value.StartsWith("Meta/StrataLint/", StringComparison.Ordinal)
             || IsCanonicalFutureCoordinate(value))
         {

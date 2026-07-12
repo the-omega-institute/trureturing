@@ -8,6 +8,8 @@ namespace StrataLint.Engine;
 
 internal static partial class RepositoryRules
 {
+    private const string TowerManifestPath = "Meta/StrataLint/TOWER.yaml";
+
     private static ImmutableArray<RuleFinding> Ledger(RuleEvaluationContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
@@ -40,6 +42,17 @@ internal static partial class RepositoryRules
                     findings.Add(new RuleFinding(path.Value, "structured artifact must end with exactly one LF"));
                     continue;
                 }
+            }
+
+            if (path.Value == TowerManifestPath)
+            {
+                if (TowerManifestParser.Parse(file.RawBytes.AsSpan())
+                    is TowerManifestParseOutcome.Invalid invalid)
+                {
+                    findings.Add(new RuleFinding(path.Value, $"invalid TOWER schema: {invalid.Message}"));
+                }
+
+                continue;
             }
 
             if (path.Value.EndsWith(".json", StringComparison.Ordinal))
