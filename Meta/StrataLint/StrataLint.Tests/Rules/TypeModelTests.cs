@@ -106,7 +106,7 @@ public sealed class TypeModelTests
     [Fact]
     public void FkstIntegrationLayerIsClosedWorldRegistered()
     {
-        var path = RepoPath.CreateKnown("Meta/fkst/fkst.workspace.toml");
+        var path = RepoPath.CreateKnown(".fkst/fkst.workspace.toml");
 
         Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
         Assert.False(RepositoryPathPolicy.TryResolve(path, out _));

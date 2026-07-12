@@ -8,7 +8,7 @@ import unittest
 
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-CHECKER = ROOT / "g5_check.py"
+CHECKER = ROOT / "scripts" / "g5_check.py"
 
 
 class G5CheckTest(unittest.TestCase):

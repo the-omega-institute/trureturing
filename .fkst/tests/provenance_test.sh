@@ -72,7 +72,7 @@ assert_rejected \
     -u GIT_ALTERNATE_OBJECT_DIRECTORIES \
     GIT_DIR="$PINNED_CHECKOUT/.git" \
     BIN="$temporary/ambient/fkst-framework" \
-    bash "$ROOT/run.sh" test
+    bash "$ROOT/scripts/run.sh" test
 
 printf 'gitdir: %s\n' "$PINNED_CHECKOUT/.git" >"$temporary/gitfile/.git"
 assert_rejected \
@@ -85,7 +85,7 @@ assert_rejected \
     -u GIT_OBJECT_DIRECTORY \
     -u GIT_ALTERNATE_OBJECT_DIRECTORIES \
     BIN="$temporary/gitfile/fkst-framework" \
-    bash "$ROOT/run.sh" test
+    bash "$ROOT/scripts/run.sh" test
 
 git -C "$temporary/core-worktree" init -q
 git -C "$temporary/core-worktree" config core.worktree "$PINNED_CHECKOUT"
@@ -99,6 +99,6 @@ assert_rejected \
     -u GIT_OBJECT_DIRECTORY \
     -u GIT_ALTERNATE_OBJECT_DIRECTORIES \
     BIN="$temporary/core-worktree/fkst-framework" \
-    bash "$ROOT/run.sh" test
+    bash "$ROOT/scripts/run.sh" test
 
 printf 'provenance tests: ok\n'

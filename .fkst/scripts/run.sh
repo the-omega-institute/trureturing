@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-readonly ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
-readonly PACKAGE_ROOT="$ROOT/packages/harness-probe"
+readonly ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd -P)"
+readonly PACKAGE_ROOT="$ROOT/local-packages/harness-probe"
 readonly FALLBACK_BIN="/Users/auric/fkst-substrate/target/debug/fkst-framework"
 temporary=""
 
@@ -22,14 +22,14 @@ check_layer() {
     "substrate-ref"
     "env.example"
     "fkst.workspace.toml"
-    "g5_check.py"
-    "run.sh"
+    "scripts/g5_check.py"
+    "scripts/run.sh"
     "tests/g5_check_test.py"
     "tests/provenance_test.sh"
-    "packages/harness-probe/fkst.toml"
-    "packages/harness-probe/raisers/development_request.lua"
-    "packages/harness-probe/departments/preflight/main.lua"
-    "packages/harness-probe/tests/preflight_test.lua"
+    "local-packages/harness-probe/fkst.toml"
+    "local-packages/harness-probe/raisers/development_request.lua"
+    "local-packages/harness-probe/departments/preflight/main.lua"
+    "local-packages/harness-probe/tests/preflight_test.lua"
   )
   local relative
   for relative in "${required[@]}"; do
@@ -44,7 +44,7 @@ import sys
 import tomllib
 
 root = pathlib.Path(sys.argv[1])
-package_root = root / "packages" / "harness-probe"
+package_root = root / "local-packages" / "harness-probe"
 
 pin_lines = (root / "substrate-ref").read_text(encoding="ascii").splitlines()
 if len(pin_lines) != 1 or re.fullmatch(r"[0-9a-fA-F]{40}", pin_lines[0]) is None:
@@ -52,9 +52,9 @@ if len(pin_lines) != 1 or re.fullmatch(r"[0-9a-fA-F]{40}", pin_lines[0]) is None
 
 with (root / "fkst.workspace.toml").open("rb") as stream:
     workspace = tomllib.load(stream)
-expected_workspace = {"workspace": {"units": ["packages/harness-probe"]}}
+expected_workspace = {"workspace": {"units": ["local-packages/*"]}}
 if workspace != expected_workspace:
-    raise SystemExit("fkst.workspace.toml must discover only packages/harness-probe")
+    raise SystemExit("fkst.workspace.toml must discover only local-packages/*")
 
 with (package_root / "fkst.toml").open("rb") as stream:
     manifest = tomllib.load(stream)
@@ -204,7 +204,7 @@ run_test() {
     --project-root "$ROOT" \
     --package-root "$PACKAGE_ROOT" \
     --report-json "$report"
-  python3 "$ROOT/g5_check.py" "$report" "$PACKAGE_ROOT"
+  python3 "$ROOT/scripts/g5_check.py" "$report" "$PACKAGE_ROOT"
   printf 'fkst test: ok\n'
 }
 
