@@ -24,6 +24,12 @@ public static class DefinitionDsl
 
     public static Inline Ref(string value) => new Inline.GidReference(GidRef.Create(value));
 
+    public static LeanDeclarationRef LeanTheorem(string value) =>
+        LeanDeclarationRef.Create(
+            value,
+            expectedKind: LeanDeclarationKind.Theorem,
+            requireNoSorry: true);
+
     public static DocumentBlock Paragraph(params Inline[] content) =>
         new DocumentBlock.Paragraph(InlineSequence.Create(content));
 

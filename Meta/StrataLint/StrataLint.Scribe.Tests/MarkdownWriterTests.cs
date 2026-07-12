@@ -45,7 +45,8 @@ public sealed class MarkdownWriterTests
                     ])),
             ]));
 
-        var text = Encoding.UTF8.GetString(CanonicalMarkdownWriter.Write(document).AsSpan());
+        var report = LeanReportFixture.ForDocuments([document]);
+        var text = Encoding.UTF8.GetString(CanonicalMarkdownWriter.Write(document, report).AsSpan());
 
         Assert.Equal(
             "# Sample\n\n"
@@ -53,10 +54,10 @@ public sealed class MarkdownWriterTests
             + "$$\n\\varphi^{2} = \\varphi + 1\n$$\n\n"
             + "## Results\n\n"
             + "### Proposition: Formula\n\n"
-            + "Lean declaration: `D5/S1/Scale/Embedding.embedding_apply`\n\n"
+            + "Lean declaration: `D5/S1/Scale/Embedding.embedding_apply` `✓ std3`\n\n"
             + "Map $\\varphi$ mirrors `D5/B/S1/Scale/Embedding`.\n\n"
             + "### Theorem: Injectivity\n\n"
-            + "Lean declaration: `D5/S1/Scale/Embedding.embedding_injective`\n\n"
+            + "Lean declaration: `D5/S1/Scale/Embedding.embedding_injective` `✓ std3`\n\n"
             + "Map $\\varphi$ mirrors `D5/B/S1/Scale/Embedding`.\n",
             text);
     }

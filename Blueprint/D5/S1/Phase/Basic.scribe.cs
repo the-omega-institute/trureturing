@@ -12,6 +12,8 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
         var phaseValue = new Formula.Modulo(
             Multiply(n, new Formula.Phi()),
             Num(1));
+        var injectivity = LeanTheorem(
+            "D5/S1/Phase/Basic.goldenPhase_injective");
         var opening = Paragraph(
             Ref("D5/S1/Phase/Basic"),
             Text(" maps an integer "),
@@ -33,19 +35,19 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                     Blocks(
                         new DocumentBlock.Proposition(
                             H("Zero"),
-                            LeanDeclarationRef.Create("D5/S1/Phase/Basic.goldenPhase_zero"),
+                            LeanTheorem("D5/S1/Phase/Basic.goldenPhase_zero"),
                             Blocks(new DocumentBlock.DisplayFormula(
                                 Equal(Call("goldenPhase", Num(0)), Num(0))))),
                         new DocumentBlock.Proposition(
                             H("Addition"),
-                            LeanDeclarationRef.Create("D5/S1/Phase/Basic.goldenPhase_add"),
+                            LeanTheorem("D5/S1/Phase/Basic.goldenPhase_add"),
                             Blocks(new DocumentBlock.DisplayFormula(
                                 Equal(
                                     Call("goldenPhase", Add(n, m)),
                                     Add(phaseN, Call("goldenPhase", m)))))),
                         new DocumentBlock.Proposition(
                             H("Negation"),
-                            LeanDeclarationRef.Create("D5/S1/Phase/Basic.goldenPhase_neg"),
+                            LeanTheorem("D5/S1/Phase/Basic.goldenPhase_neg"),
                             Blocks(new DocumentBlock.DisplayFormula(
                                 Equal(
                                     Call("goldenPhase", new Formula.Negate(n)),
@@ -63,10 +65,12 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                             new Formula.SetBuilder(phaseValue, n, new Formula.Integers())))),
                 new DocumentBlock.Theorem(
                     H("Injectivity"),
-                    LeanDeclarationRef.Create("D5/S1/Phase/Basic.goldenPhase_injective"),
-                    Blocks(Paragraph(
-                        Text("Two phases could coincide only if a nonzero integer multiple of "),
-                        Math(new Formula.Phi()),
-                        Text(" were an integer. Irrationality excludes this. No three-distance theorem is asserted here.")))))));
+                    injectivity,
+                    Blocks(
+                        new DocumentBlock.RenderedStatement(injectivity),
+                        Paragraph(
+                            Text("Two phases could coincide only if a nonzero integer multiple of "),
+                            Math(new Formula.Phi()),
+                            Text(" were an integer. Irrationality excludes this. No three-distance theorem is asserted here.")))))));
     }
 }

@@ -92,6 +92,12 @@ public partial record DocumentBlock
 
     public partial record DisplayFormula(Formula Value);
 
+    public partial record ComputedValue(
+        Heading Label,
+        DeterministicComputation Computation);
+
+    public partial record RenderedStatement(LeanDeclarationRef Declaration);
+
     public partial record Section(Heading Title, BlockSequence Content);
 
     public partial record Proposition(

@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Text;
+using StrataLint.Engine;
 
 namespace StrataLint.Scribe;
 
@@ -8,12 +9,14 @@ public static class CanonicalMarkdownWriter
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
-    public static ImmutableArray<byte> Write(ScribeDocument document)
+    public static ImmutableArray<byte> Write(
+        ScribeDocument document,
+        LeanAxiomReport? leanReport = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         var builder = new StringBuilder();
         builder.Append("# ").Append(document.Title.Value).Append("\n\n");
-        WriteBlocks(builder, document.Content, 2);
+        WriteBlocks(builder, document.Content, 2, leanReport);
         builder.Append('\n');
         return ImmutableArray.CreateRange(StrictUtf8.GetBytes(builder.ToString()));
     }
@@ -21,7 +24,8 @@ public static class CanonicalMarkdownWriter
     private static void WriteBlocks(
         StringBuilder builder,
         BlockSequence content,
-        int headingLevel)
+        int headingLevel,
+        LeanAxiomReport? leanReport)
     {
         for (var index = 0; index < content.Items.Length; index++)
         {
@@ -30,14 +34,15 @@ public static class CanonicalMarkdownWriter
                 builder.Append("\n\n");
             }
 
-            WriteBlock(builder, content.Items[index], headingLevel);
+            WriteBlock(builder, content.Items[index], headingLevel, leanReport);
         }
     }
 
     private static void WriteBlock(
         StringBuilder builder,
         DocumentBlock block,
-        int headingLevel)
+        int headingLevel,
+        LeanAxiomReport? leanReport)
     {
         switch (block)
         {
@@ -49,10 +54,23 @@ public static class CanonicalMarkdownWriter
                     .Append(LatexWriter.Write(display.Value))
                     .Append("\n$$");
                 break;
+            case DocumentBlock.ComputedValue computed:
+                builder.Append("**")
+                    .Append(computed.Label.Value)
+                    .Append(":** `")
+                    .Append(computed.Computation.EvaluateCanonical())
+                    .Append("` ")
+                    .Append(DeterministicComputation.ProvenanceMarker);
+                break;
+            case DocumentBlock.RenderedStatement statement:
+                WriteRenderedStatement(
+                    builder,
+                    Resolve(statement.Declaration, leanReport));
+                break;
             case DocumentBlock.Section section:
                 WriteHeading(builder, headingLevel, section.Title.Value);
                 builder.Append("\n\n");
-                WriteBlocks(builder, section.Content, headingLevel + 1);
+                WriteBlocks(builder, section.Content, headingLevel + 1, leanReport);
                 break;
             case DocumentBlock.Proposition proposition:
                 WriteStatement(
@@ -61,7 +79,8 @@ public static class CanonicalMarkdownWriter
                     proposition.Title,
                     proposition.Declaration,
                     proposition.Content,
-                    headingLevel);
+                    headingLevel,
+                    leanReport);
                 break;
             case DocumentBlock.Theorem theorem:
                 WriteStatement(
@@ -70,7 +89,8 @@ public static class CanonicalMarkdownWriter
                     theorem.Title,
                     theorem.Declaration,
                     theorem.Content,
-                    headingLevel);
+                    headingLevel,
+                    leanReport);
                 break;
             default:
                 throw new UnreachableException("Unknown document block.");
@@ -106,14 +126,39 @@ public static class CanonicalMarkdownWriter
         Heading title,
         LeanDeclarationRef declaration,
         BlockSequence content,
-        int headingLevel)
+        int headingLevel,
+        LeanAxiomReport? leanReport)
     {
+        var verified = Resolve(declaration, leanReport);
         WriteHeading(builder, headingLevel, $"{kind}: {title.Value}");
         builder.Append("\n\nLean declaration: `")
             .Append(declaration.Value)
+            .Append("` `")
+            .Append(verified.AxiomBadge)
             .Append("`\n\n");
-        WriteBlocks(builder, content, headingLevel + 1);
+        WriteBlocks(builder, content, headingLevel + 1, leanReport);
     }
+
+    private static void WriteRenderedStatement(
+        StringBuilder builder,
+        VerifiedLeanDeclaration declaration)
+    {
+        builder.Append("Compiled Lean statement: `")
+            .Append(declaration.Reference.Value)
+            .Append("` `")
+            .Append(declaration.AxiomBadge)
+            .Append("`\n\n```text\n")
+            .Append(declaration.Declaration.TypeRepresentation)
+            .Append("\n```");
+    }
+
+    private static VerifiedLeanDeclaration Resolve(
+        LeanDeclarationRef declaration,
+        LeanAxiomReport? leanReport) =>
+        LeanReferenceResolver.Resolve(
+            declaration,
+            leanReport ?? throw new InvalidOperationException(
+                $"Lean compiled-artifact report is required for {declaration.Value}."));
 
     private static void WriteHeading(
         StringBuilder builder,
