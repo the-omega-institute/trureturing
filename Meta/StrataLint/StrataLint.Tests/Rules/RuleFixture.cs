@@ -70,7 +70,7 @@ internal sealed class RuleFixture
         {
             case "upward-import": AddUpwardImport(); break;
             case "sorry": SetRingDeclaration("unfinished", "theorem", "sorryAx"); break;
-            case "file-capacity": Files[RingPath] += string.Concat(Enumerable.Repeat("-- pad\n", 401)); break;
+            case "file-capacity": Files[RingPath] += string.Concat(Enumerable.Repeat("-- pad\n", 801)); break;
             case "mirror": Files.Remove(BlueprintPath); break;
             case "chronicle": RewriteChronicle(); break;
             case "badge": Files[BlueprintPath] = "status: proven\n"; break;
@@ -145,6 +145,28 @@ internal sealed class RuleFixture
             new LeanDeclaration("high", "def", "Nat", ImmutableArray<string>.Empty),
         });
         Reports[RingPath] = Report(imports: new[] { "D5.S1.Upper.High" });
+    }
+
+    internal const string AssumptionDebtPath = "D5/X_Assumptions/AxiomDebt.lean";
+
+    // A stratum content file carrying a classical theorem via a registered
+    // assumption: importing the X_Assumptions foundation is allowed (SL-001).
+    internal void AddAssumptionImport()
+    {
+        Files[AssumptionDebtPath] = HeaderFor("D5/X_Assumptions/AxiomDebt", "G") + "axiom classicalDebt : True\n";
+        Reports[AssumptionDebtPath] = Report(declarations: new[]
+        {
+            new LeanDeclaration("classicalDebt", "axiom", "True", ImmutableArray.Create("classicalDebt")),
+        });
+        Reports[RingPath] = Report(imports: new[] { "D5.X_Assumptions.AxiomDebt" });
+    }
+
+    // The X_Assumptions foundation may not import content: keeping it a sink
+    // makes the import partial order acyclic (SL-001).
+    internal void AddAssumptionImportingStratum()
+    {
+        Files[AssumptionDebtPath] = HeaderFor("D5/X_Assumptions/AxiomDebt", "G") + "axiom classicalDebt : True\n";
+        Reports[AssumptionDebtPath] = Report(imports: new[] { "D5.S0.Carrier.Ring" });
     }
 
     internal void SetRingDeclaration(string name, string kind, string axiom)

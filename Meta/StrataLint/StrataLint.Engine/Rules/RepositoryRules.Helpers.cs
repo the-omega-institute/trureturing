@@ -29,12 +29,17 @@ internal static partial class RepositoryRules
         if (targetZone == "X_Frontier") return false;
         if (IsStratum(sourceZone))
         {
-            return IsStratum(targetZone) && targetZone[1] <= sourceZone[1];
+            // Strata build up on the registered-assumption foundation: content that
+            // carries a classical theorem via AxiomDebt must import X_Assumptions.
+            return (IsStratum(targetZone) && targetZone[1] <= sourceZone[1])
+                || targetZone == "X_Assumptions";
         }
 
         return sourceZone switch
         {
-            "X_Assumptions" => IsStratum(targetZone),
+            // X_Assumptions is the foundation (imports only external Mathlib, nothing
+            // in-repo); keeping it a sink makes the import partial order acyclic.
+            "X_Assumptions" => false,
             "X_Certificates" => IsStratum(targetZone) || targetZone == "X_Assumptions",
             _ => false,
         };

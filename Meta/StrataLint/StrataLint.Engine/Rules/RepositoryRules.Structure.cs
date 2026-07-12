@@ -64,9 +64,16 @@ internal static partial class RepositoryRules
             }
 
             var lineCount = file.Text.Split('\n').Length - (file.Text.EndsWith('\n') ? 1 : 0);
-            if (lineCount > 400)
+            if (lineCount > 800)
             {
-                findings.Add(new RuleFinding(path.Value, "artifact exceeds 400 lines"));
+                findings.Add(new RuleFinding(path.Value, "artifact exceeds 800 lines"));
+            }
+            else if (lineCount > 600)
+            {
+                findings.Add(new RuleFinding(
+                    path.Value,
+                    $"artifact spans {lineCount} lines (soft limit 600, hard limit 800)",
+                    AdmissionEffect.Observe));
             }
 
             var slash = path.Value.LastIndexOf('/');
