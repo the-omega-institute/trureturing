@@ -335,9 +335,11 @@ public sealed partial class ReviewRegressionTests
             item => item.Message.Contains(
                 "source spec-v7.11-section-10 has an invalid governance path",
                 StringComparison.Ordinal));
-        var engineSource = File.ReadAllText(
-            Path.Combine(FindRepositoryRoot(), "Meta", "StrataLint", "StrataLint.Engine", "Rules", "BackfillInventoryRule.cs"),
-            Encoding.UTF8);
+        var enginePath = Directory.EnumerateFiles(
+            Path.Combine(FindRepositoryRoot(), "Meta", "StrataLint", "StrataLint.Engine"),
+            "BackfillInventoryRule.cs",
+            SearchOption.AllDirectories).Single();
+        var engineSource = File.ReadAllText(enginePath, Encoding.UTF8);
         Assert.DoesNotContain(sourcePath, engineSource, StringComparison.Ordinal);
         Assert.DoesNotContain("GICT_complete_development_v3 (3).md", engineSource, StringComparison.Ordinal);
         Assert.DoesNotContain("PZG_BEDC_kernel_formal_170.md", engineSource, StringComparison.Ordinal);
