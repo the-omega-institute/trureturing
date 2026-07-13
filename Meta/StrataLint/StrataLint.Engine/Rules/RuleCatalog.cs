@@ -179,7 +179,7 @@ public sealed class RuleCatalog
             "Toolchain upgrade compatibility",
             "Machine field and GID grammar",
             "Backfill inventory",
-            "Resolvable typed anchors",
+            "Typed anchor membership",
             "Machine-produced values",
             "Balanced anomaly ledger",
             "Lean axiom closure",

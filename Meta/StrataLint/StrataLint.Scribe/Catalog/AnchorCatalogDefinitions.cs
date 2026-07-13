@@ -83,9 +83,6 @@ public static class AnchorCatalogDefinitions
 
     public static ImmutableArray<AnchorDefinition> All => AllDefinitions.Value;
 
-    public static AnchorDefinition GictI1Definition1_1Definition =>
-        TheoryAnchorManifest.GictI1Definition1_1;
-
     internal static bool TryGet(string canonical, out AnchorDefinition? definition)
     {
         definition = All.FirstOrDefault(item =>

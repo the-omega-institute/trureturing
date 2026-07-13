@@ -132,6 +132,11 @@ internal static partial class GoldenCorpus
             [W("Library/queries.yaml", "schema_version: 1\nqueries:\n  - id: D5-Q0099\n    query: invented paper\n    target_gid: D5/S0/Carrier/Ring\n    bibkey: invented2026result\n")],
             [D(17, "Library/queries.yaml", "query D5-Q0099 needs DOI/arXiv or a pending case")]),
         C(
+            "resolved-query-target-gid-must-exist",
+            [],
+            [W("Library/queries.yaml", "schema_version: 1\nqueries:\n  - id: D5-Q0096\n    query: missing formal target\n    target_gid: D5/S0/Carrier/Missing\n    bibkey: fixture2026missing\n    doi: 10.1000/missing\n")],
+            [D(17, "Library/queries.yaml", "query D5-Q0096 target GID is missing: D5/S0/Carrier/Missing")]),
+        C(
             "valid-ledgered-anomaly",
             [],
             [T("D5/X_Frontier/LedgerTask.lean", "D5/X_Frontier/LedgerTask", "D5-T0097"), WP("Evidence/D5/S0/Carrier/Result.run.json", "{", "\"anomaly\": \"fixture drift\", \"case_id\": \"D5-T0097\"}\n")],

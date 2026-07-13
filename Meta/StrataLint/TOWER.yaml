@@ -61,7 +61,7 @@ components:
     members:
       - Meta/StrataLint/StrataLint.Scribe/Ast/Anchor.cs
       - Meta/StrataLint/StrataLint.Scribe/Ast/AnchorSchemes.cs
-      - Meta/StrataLint/StrataLint.Scribe/Ast/AnchorTarget.cs
+      - Meta/StrataLint/StrataLint.Scribe/Ast/AnchorDefinition.cs
       - Meta/StrataLint/StrataLint.Scribe/Catalog/AnchorCatalogDefinitions.cs
       - Meta/StrataLint/StrataLint.Scribe/Catalog/ExternalAnchorManifest.cs
       - Meta/StrataLint/StrataLint.Scribe/Catalog/SpecAnchorManifest.cs

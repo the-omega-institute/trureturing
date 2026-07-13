@@ -16,18 +16,7 @@ public static class CanonicalAnchorCatalogWriter
             .Select(static item => new
             {
                 anchor = item.Anchor.CanonicalString,
-                case_id = item.CaseId,
-                expected_sha256 = item.Target.ExpectedSha256,
-                open_reason = item.OpenReason,
-                source_id = item.Target.SourceId,
-                source_path = item.Target.SourcePath,
-                source_revision = item.Target.SourceRevision,
-                status = item.Status is AnchorRegistrationStatus.Resolved
-                    ? "resolved"
-                    : "registered-open",
-                structural_selector = item.Target.Selector.CanonicalString,
-                target_key = item.Target.SemanticKey,
-                target_kind = item.Target.TargetKind,
+                provenance = item.Provenance,
             })
             .ToArray();
         var document = JsonSerializer.SerializeToElement(new
@@ -42,11 +31,9 @@ public static class CanonicalAnchorCatalogWriter
     {
         var definitions = AnchorCatalogDefinitions.All;
         if (definitions.Select(static item => item.Anchor.CanonicalString)
-                .Distinct(StringComparer.Ordinal).Count() != definitions.Length
-            || definitions.Select(static item => item.Target.SemanticKey)
                 .Distinct(StringComparer.Ordinal).Count() != definitions.Length)
         {
-            throw new InvalidOperationException("Anchor catalog is not a canonical target bijection.");
+            throw new InvalidOperationException("Anchor catalog does not have unique canonical members.");
         }
 
         foreach (var definition in definitions)
