@@ -103,6 +103,24 @@ public sealed class TypeModelTests
         Assert.Contains(required.ChangeSet.Paths, item => item == path);
     }
 
+    [Fact]
+    public void FkstIntegrationLayerIsClosedWorldRegistered()
+    {
+        var path = RepoPath.CreateKnown(".fkst/fkst.workspace.toml");
+
+        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
+        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
+    }
+
+    [Fact]
+    public void ClaudeSkillsLayerIsClosedWorldRegistered()
+    {
+        var path = RepoPath.CreateKnown(".claude/skills/fkst-monitor/SKILL.md");
+
+        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
+        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
+    }
+
     private static ValidatedPolicy Policy() =>
         Assert.IsType<RegistryLoadOutcome.Accepted>(
             RegistryLoader.Load(
