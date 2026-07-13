@@ -1,5 +1,5 @@
 /- GID: D5/S3/Weil/FourierLaplace
-   generality: G
+   generality: I
    mirror-B: none(waiver:formal-analysis-foundation-only)
    mirror-E: none(waiver:classical-analysis-tail-without-numerical-dependency)
    anchors: [PZG-v170-26.4, paleywiener1934fourier]
