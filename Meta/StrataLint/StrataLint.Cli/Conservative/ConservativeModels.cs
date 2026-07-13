@@ -41,6 +41,7 @@ internal sealed record ConservativeVerificationInput(
     string BaselineLeanReportRoot,
     string CandidateLeanReportRoot,
     string CorpusRoot,
+    string ReplayRoot,
     ImmutableArray<string> CorpusCaseIds,
     int GoldenCaseCount,
     string BaseTreeCaseId,

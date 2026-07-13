@@ -12,53 +12,38 @@ internal static class ConservativeActualTreeEvaluator
         var repository = new GitRepositoryGateway(invocation.BaselineRoot);
         var snapshot = Decode(repository.ReadRevision(invocation.BaselineIdentity.CommitOid));
         var report = RawLeanReportArtifact.ReadFile(invocation.BaselineLeanReport, snapshot);
-        var lean = ValidateLean(snapshot, report);
-        if (!snapshot.TryGetFile("Meta/registry.yaml", out var registryFile)
-            || !snapshot.TryGetFile("Meta/domains.yaml", out var domainsFile))
-        {
-            throw new InvalidOperationException("baseline actual tree lacks policy files");
-        }
-
-        var registry = RegistryLoader.Load(
-            registryFile.RawBytes.AsSpan(),
-            domainsFile.RawBytes.AsSpan()) switch
-        {
-            RegistryLoadOutcome.Accepted accepted => accepted,
-            RegistryLoadOutcome.InfrastructureFailure failure =>
-                throw new InvalidOperationException(failure.Message),
-        };
-        var dag = AcyclicTruthDag.Build(snapshot, lean) switch
-        {
-            DagBuildOutcome.Accepted accepted => accepted.Capability,
-            DagBuildOutcome.Rejected rejected => throw new InvalidOperationException(
-                "baseline actual tree truth DAG is cyclic: "
-                + string.Join(" -> ", rejected.Witness.Select(static path => path.Value))),
-        };
         var verifiedScribe = new ProductionScribeEmissionVerifier(invocation.BaselineRoot).Verify(report);
         var changes = RawChangeSet.Create(Array.Empty<string>());
-        var bootstrap = BootstrapGate.Evaluate(changes) switch
-        {
-            BootstrapOutcome.Clear clear => clear.Capability,
-            _ => throw new InvalidOperationException("empty baseline change set unexpectedly triggered SL-022"),
-        };
-        var admission = AdmissionPipeline.EvaluateWithScribe(
+        var evaluation = SnapshotAdmissionCore.Evaluate(
             snapshot,
             snapshot,
-            registry.Policy,
-            lean,
-            lean,
+            report,
+            report,
             changes,
-            bootstrap,
+            BootstrapGate.Evaluate(changes),
             verifiedScribe);
+        var admission = evaluation.Outcome;
         if (admission is AdmissionOutcome.Admitted)
         {
+            if (evaluation is not
+                {
+                    CurrentLean: { } lean,
+                    BaselineLean: { } baselineLean,
+                    CurrentDag: { } dag,
+                    BaselineDag: { } baselineDag,
+                })
+            {
+                throw new InvalidOperationException(
+                    "baseline actual admission omitted frozen-ledger capabilities");
+            }
+
             admission = ProductionFrozenLedgerValidator.Validate(
                     snapshot,
                     snapshot,
                     lean,
-                    lean,
+                    baselineLean,
                     dag,
-                    dag,
+                    baselineDag,
                     repository)
                 ?? admission;
         }
@@ -132,9 +117,11 @@ internal static class ConservativeActualTreeEvaluator
     private static string BaseTreeCaseRoot(ConservativeHarnessInvocation invocation) =>
         CaseRoot(new
         {
-            baseline_report_root = FileRoot(invocation.BaselineLeanReport),
+            baseline_report_root = GoldenCorpusMaterializer.ContentRoot(
+                invocation.Replay.BaselineLeanReport.AsSpan()),
             baseline_tree_oid = invocation.BaselineIdentity.TreeOid,
-            candidate_report_root = FileRoot(invocation.BaselineLeanReport),
+            candidate_report_root = GoldenCorpusMaterializer.ContentRoot(
+                invocation.Replay.BaselineLeanReport.AsSpan()),
             candidate_tree_oid = invocation.BaselineIdentity.TreeOid,
             case_id = ConservativeExtensionCommand.BaseTreeCaseId,
             changes = Array.Empty<string>(),
@@ -143,9 +130,11 @@ internal static class ConservativeActualTreeEvaluator
     private static string CandidateTreeCaseRoot(ConservativeHarnessInvocation invocation) =>
         CaseRoot(new
         {
-            baseline_report_root = FileRoot(invocation.BaselineLeanReport),
+            baseline_report_root = GoldenCorpusMaterializer.ContentRoot(
+                invocation.Replay.BaselineLeanReport.AsSpan()),
             baseline_tree_oid = invocation.BaselineIdentity.TreeOid,
-            candidate_report_root = FileRoot(invocation.CandidateLeanReport),
+            candidate_report_root = GoldenCorpusMaterializer.ContentRoot(
+                invocation.Replay.CandidateLeanReport.AsSpan()),
             candidate_tree_oid = invocation.CandidateIdentity.TreeOid,
             case_id = ConservativeExtensionCommand.CandidateTreeCaseId,
         });
@@ -156,9 +145,6 @@ internal static class ConservativeActualTreeEvaluator
         return GoldenCorpusMaterializer.ContentRoot(bytes.AsSpan());
     }
 
-    private static string FileRoot(string path) =>
-        GoldenCorpusMaterializer.ContentRoot(File.ReadAllBytes(path));
-
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         SnapshotDecoder.Decode(raw) switch
         {
@@ -167,13 +153,4 @@ internal static class ConservativeActualTreeEvaluator
                 throw new InvalidOperationException(failure.Message),
         };
 
-    private static AcceptedLeanClosure ValidateLean(
-        RepositorySnapshot snapshot,
-        LeanAxiomReport report) =>
-        LeanClosureValidator.Validate(snapshot, report) switch
-        {
-            LeanValidationOutcome.Accepted accepted => accepted.Capability,
-            LeanValidationOutcome.InfrastructureFailure failure =>
-                throw new InvalidOperationException(failure.Message),
-        };
 }

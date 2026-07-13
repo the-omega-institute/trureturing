@@ -44,9 +44,7 @@ public sealed class ConservativeCorpusEvaluatorTests
         var witnessed = run.Cases
             .SelectMany(static item => item.BlockingRules)
             .ToHashSet(StringComparer.Ordinal);
-        Assert.All(
-            run.ActiveRules.Where(static rule => rule != "SL-022"),
-            rule => Assert.Contains(rule, witnessed));
+        Assert.All(run.ActiveRules, rule => Assert.Contains(rule, witnessed));
     }
 
     [Fact]

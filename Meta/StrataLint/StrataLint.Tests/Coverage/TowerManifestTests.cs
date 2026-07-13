@@ -141,13 +141,15 @@ public sealed class TowerManifestTests
         var accepted = Assert.IsType<TowerValidationOutcome.Accepted>(
             TowerManifestValidator.Validate(syntax, Snapshot(GenesisFile()), Catalog()));
 
-        Assert.Contains(
+        var check = Assert.Single(
             accepted.Manifest.Checks,
             static item => item is
             {
                 Subject: "conservative-extension-gate-c",
                 Status: "ASSUMED-UNVERIFIED",
             });
+        Assert.Contains("Phase2 dual-harness gate implemented", check.Detail, StringComparison.Ordinal);
+        Assert.Contains("C0", check.Detail, StringComparison.Ordinal);
     }
 
     private static TowerValidationOutcome Validate(params TowerComponentSyntax[] components) =>

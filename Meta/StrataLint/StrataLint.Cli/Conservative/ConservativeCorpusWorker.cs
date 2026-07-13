@@ -5,52 +5,35 @@ namespace StrataLint.Cli;
 
 internal static class ConservativeCorpusWorker
 {
+    private const int MaximumEnvelopeBytes = 128 * 1024 * 1024;
+
     internal static ExplicitCommandResult Run(IReadOnlyList<string> arguments)
     {
         try
         {
-            var options = Parse(arguments);
-            var environment = new ProductionConservativeExtensionEnvironment();
-            var baselineIdentity = environment.IdentifyRepository(options.BaselineRoot);
-            var candidateIdentity = environment.IdentifyRepository(options.CandidateRoot);
-            RequireIdentity("baseline", baselineIdentity, options.BaselineCommit, options.BaselineTree);
-            RequireIdentity("candidate", candidateIdentity, options.CandidateCommit, options.CandidateTree);
-
+            if (arguments.Count != 0) throw Usage();
+            var replay = ConservativeReplayEnvelopeCodec.Read(ReadStandardInput().AsSpan());
             var loadedAssembly = Path.GetFullPath(typeof(Program).Assembly.Location);
-            var baselineProgram = environment.LoadHarness(options.BaselineRoot);
-            var candidateProgram = environment.LoadHarness(options.CandidateRoot);
-            var program = string.Equals(
-                loadedAssembly,
-                Path.GetFullPath(baselineProgram.DllPath),
-                StringComparison.Ordinal)
-                ? baselineProgram
-                : string.Equals(
-                    loadedAssembly,
-                    Path.GetFullPath(candidateProgram.DllPath),
-                    StringComparison.Ordinal)
-                    ? candidateProgram
-                    : throw new InvalidOperationException(
-                        "loaded harness does not belong to either supplied repository root");
-            var corpusBytes = ImmutableArray.CreateRange(File.ReadAllBytes(options.CorpusPath));
-            var corpus = new MaterializedConservativeCorpus(
-                corpusBytes,
-                GoldenCorpusMaterializer.ContentRoot(corpusBytes.AsSpan()),
-                ImmutableArray<string>.Empty);
+            var program = ProductionConservativeExtensionEnvironment.LoadHarnessAssembly(
+                loadedAssembly);
+            using var workspace = ConservativeReplayWorkspace.Materialize(replay);
             var invocation = new ConservativeHarnessInvocation(
                 program,
-                corpus,
-                options.BaselineRoot,
-                options.CandidateRoot,
-                baselineIdentity,
-                candidateIdentity,
-                options.BaselineLeanReport,
-                options.CandidateLeanReport);
-            var synthetic = ConservativeCorpusEvaluator.Evaluate(corpusBytes.AsSpan(), program.Root);
+                replay,
+                replay.Corpus,
+                workspace.BaselineRoot,
+                workspace.CandidateRoot,
+                replay.BaselineIdentity,
+                replay.CandidateIdentity,
+                workspace.BaselineLeanReport,
+                workspace.CandidateLeanReport);
+            var synthetic = ConservativeCorpusEvaluator.Evaluate(
+                replay.Corpus.CanonicalBytes.AsSpan(),
+                program.Root);
             var cases = synthetic.Cases
                 .Add(ConservativeActualTreeEvaluator.EvaluateBaselineTree(invocation))
                 .Add(ConservativeActualTreeEvaluator.EvaluateCandidateTree(invocation));
-            var run = synthetic with { Cases = cases };
-            var output = ConservativeHarnessRunCodec.Write(run);
+            var output = ConservativeHarnessRunCodec.Write(synthetic with { Cases = cases });
             return new ExplicitCommandResult(
                 0,
                 new UTF8Encoding(false, true).GetString(output.AsSpan()),
@@ -65,85 +48,27 @@ internal static class ConservativeCorpusWorker
         }
     }
 
-    private static WorkerOptions Parse(IReadOnlyList<string> arguments)
+    private static ImmutableArray<byte> ReadStandardInput()
     {
-        var values = new Dictionary<string, string>(StringComparer.Ordinal);
-        for (var index = 0; index < arguments.Count; index += 2)
+        using var input = Console.OpenStandardInput();
+        using var memory = new MemoryStream();
+        var buffer = new byte[8192];
+        while (true)
         {
-            if (index + 1 >= arguments.Count
-                || arguments[index] is not (
-                    "--corpus"
-                    or "--baseline-root"
-                    or "--candidate-root"
-                    or "--baseline-commit"
-                    or "--baseline-tree"
-                    or "--candidate-commit"
-                    or "--candidate-tree"
-                    or "--baseline-lean-report"
-                    or "--candidate-lean-report")
-                || !values.TryAdd(arguments[index], arguments[index + 1]))
+            var count = input.Read(buffer, 0, buffer.Length);
+            if (count == 0) break;
+            if (memory.Length + count > MaximumEnvelopeBytes)
             {
-                throw Usage();
+                throw new InvalidOperationException(
+                    $"conservative replay envelope exceeds {MaximumEnvelopeBytes} bytes");
             }
+
+            memory.Write(buffer, 0, count);
         }
 
-        if (values.Count != 9) throw Usage();
-        return new WorkerOptions(
-            RequireFile(values["--corpus"], "corpus"),
-            RequireDirectory(values["--baseline-root"], "baseline root"),
-            RequireDirectory(values["--candidate-root"], "candidate root"),
-            values["--baseline-commit"],
-            values["--baseline-tree"],
-            values["--candidate-commit"],
-            values["--candidate-tree"],
-            RequireFile(values["--baseline-lean-report"], "baseline Lean report"),
-            RequireFile(values["--candidate-lean-report"], "candidate Lean report"));
-    }
-
-    private static void RequireIdentity(
-        string side,
-        ConservativeRepositoryIdentity actual,
-        string commit,
-        string tree)
-    {
-        if (!string.Equals(actual.CommitOid, commit, StringComparison.Ordinal)
-            || !string.Equals(actual.TreeOid, tree, StringComparison.Ordinal))
-        {
-            throw new InvalidOperationException($"{side} repository identity changed before replay");
-        }
-    }
-
-    private static string RequireDirectory(string path, string label)
-    {
-        var full = Path.GetFullPath(path);
-        return Directory.Exists(full)
-            ? full
-            : throw new DirectoryNotFoundException($"{label} is absent: {full}");
-    }
-
-    private static string RequireFile(string path, string label)
-    {
-        var full = Path.GetFullPath(path);
-        return File.Exists(full)
-            ? full
-            : throw new FileNotFoundException($"{label} is absent", full);
+        return ImmutableArray.CreateRange(memory.ToArray());
     }
 
     private static InvalidOperationException Usage() => new(
-        "USAGE: StrataLint evaluate-conservative-corpus "
-        + "--corpus FILE --baseline-root DIR --candidate-root DIR "
-        + "--baseline-commit OID --baseline-tree OID "
-        + "--candidate-commit OID --candidate-tree OID "
-        + "--baseline-lean-report FILE --candidate-lean-report FILE");
-
-    private sealed record WorkerOptions(
-        string CorpusPath,
-        string BaselineRoot,
-        string CandidateRoot,
-        string BaselineCommit,
-        string BaselineTree,
-        string CandidateCommit,
-        string CandidateTree,
-        string BaselineLeanReport,
-        string CandidateLeanReport);
+        "USAGE: StrataLint evaluate-conservative-corpus < replay-envelope.json");
 }

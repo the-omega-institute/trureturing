@@ -7,6 +7,7 @@ internal static class ConservativeTestData
 {
     internal const string AdmitCase = "golden:admit-existing";
     internal const string RejectCase = "golden:reject-existing";
+    internal const string Sl022RejectCase = "golden:reject-protected-surface";
     internal const string BaseTreeCase = "actual:baseline-tree";
     internal const string CandidateTreeCase = "actual:candidate-tree";
 
@@ -21,16 +22,17 @@ internal static class ConservativeTestData
             : mutateCandidate(baselineCases);
         return new ConservativeVerificationInput(
             BaselineCommitOid: GitOid('a'),
-            BaselineTreeOid: GitOid('b'),
+            BaselineTreeOid: "git-sha1:" + GitOid('b'),
             CandidateCommitOid: GitOid('c'),
-            CandidateTreeOid: GitOid('d'),
+            CandidateTreeOid: "git-sha1:" + GitOid('d'),
             BaselineHarnessRoot: Sha256('1'),
             CandidateHarnessRoot: Sha256('2'),
             BaselineLeanReportRoot: Sha256('3'),
             CandidateLeanReportRoot: Sha256('4'),
             CorpusRoot: Sha256('5'),
-            CorpusCaseIds: [AdmitCase, RejectCase, BaseTreeCase],
-            GoldenCaseCount: 2,
+            ReplayRoot: Sha256('6'),
+            CorpusCaseIds: [AdmitCase, RejectCase, Sl022RejectCase, BaseTreeCase],
+            GoldenCaseCount: 3,
             BaseTreeCaseId: BaseTreeCase,
             CandidateTreeCaseId: CandidateTreeCase,
             BaselineExecution: new ConservativeHarnessExecution.Completed(new ConservativeHarnessRun(
@@ -61,6 +63,7 @@ internal static class ConservativeTestData
     [
         Case(AdmitCase, ConservativeDisposition.Admit),
         Case(RejectCase, ConservativeDisposition.Block, ["SL-001"]),
+        Case(Sl022RejectCase, ConservativeDisposition.Block, ["SL-022"]),
         Case(BaseTreeCase, ConservativeDisposition.Admit),
         Case(
             CandidateTreeCase,

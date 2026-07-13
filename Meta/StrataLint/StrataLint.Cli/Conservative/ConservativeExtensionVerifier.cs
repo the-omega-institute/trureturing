@@ -172,9 +172,11 @@ internal static class ConservativeExtensionVerifier
 
         foreach (var ruleId in activeRules)
         {
-            var witnessCases = baseline.Values
-                .Where(item => item.BlockingRules.Contains(ruleId, StringComparer.Ordinal))
-                .Select(static item => item.CaseId)
+            var witnessCases = input.CorpusCaseIds
+                .Take(input.GoldenCaseCount)
+                .Where(caseId =>
+                    baseline[caseId].Disposition is ConservativeDisposition.Block
+                    && baseline[caseId].BlockingRules.Contains(ruleId, StringComparer.Ordinal))
                 .Order(StringComparer.Ordinal)
                 .ToArray();
             if (witnessCases.Length == 0)
@@ -184,7 +186,8 @@ internal static class ConservativeExtensionVerifier
             }
 
             if (!witnessCases.Any(caseId =>
-                candidate[caseId].BlockingRules.Contains(ruleId, StringComparer.Ordinal)))
+                candidate[caseId].Disposition is ConservativeDisposition.Block
+                && candidate[caseId].BlockingRules.Contains(ruleId, StringComparer.Ordinal)))
             {
                 findings.Add(new ConservativeFinding(
                     "CONSERVATIVE-BLOCK-WITNESS-LOST",
@@ -288,6 +291,7 @@ internal static class ConservativeExtensionVerifier
                 baseline_admit_count = baselineAdmits,
                 preserved_admit_count = preservedAdmits,
             },
+            replay_root = input.ReplayRoot,
             schema = CertificateSchema,
             sl022_diagnostics = new
             {

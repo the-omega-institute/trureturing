@@ -4,7 +4,8 @@ internal sealed record GoldenCase(
     string Name,
     IReadOnlyList<GoldenMutation> BaselineMutations,
     IReadOnlyList<GoldenMutation> Mutations,
-    IReadOnlyList<GoldenDiagnostic> ExpectedDiagnostics);
+    IReadOnlyList<GoldenDiagnostic> ExpectedDiagnostics,
+    IReadOnlyList<string> Changes);
 
 internal sealed record GoldenDiagnostic(int RuleNumber, string Path, string Message);
 
@@ -127,6 +128,8 @@ internal static partial class GoldenCorpus
     internal const string NotationPath = "D5/S0/Conventions/Notation.lean";
     internal const string AssumptionDebtPath = "D5/X_Assumptions/AxiomDebt.lean";
     internal const string HeartsPath = "D5/X_Frontier/Hearts.lean";
+    internal const string SyntheticProtectedPath =
+        "Meta/StrataLint/StrataLint.Engine/SyntheticProtected.cs";
 
     internal static IReadOnlyList<GoldenCase> All { get; } =
     [
@@ -140,8 +143,14 @@ internal static partial class GoldenCorpus
         string name,
         GoldenMutation[] baselineMutations,
         GoldenMutation[] mutations,
-        GoldenDiagnostic[] expectedDiagnostics) =>
-        new(name, baselineMutations, mutations, expectedDiagnostics);
+        GoldenDiagnostic[] expectedDiagnostics,
+        string[]? changes = null) =>
+        new(
+            name,
+            baselineMutations,
+            mutations,
+            expectedDiagnostics,
+            changes ?? [BlueprintPath]);
 
     private static GoldenDiagnostic D(int rule, string path, string message) =>
         new(rule, path, message);

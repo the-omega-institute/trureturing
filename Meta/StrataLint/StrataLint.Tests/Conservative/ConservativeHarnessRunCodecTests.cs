@@ -1,4 +1,6 @@
 using StrataLint.Cli;
+using System.Text;
+using System.Collections.Immutable;
 
 namespace StrataLint.Tests;
 
@@ -34,5 +36,44 @@ public sealed class ConservativeHarnessRunCodecTests
             ConservativeHarnessRunCodec.Read(padded.AsSpan()));
 
         Assert.Contains("canonical", exception.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void ForgedSl022DiagnosticTupleFailsClosed()
+    {
+        var input = Assert.IsType<ConservativeHarnessExecution.Completed>(
+            ConservativeTestData.Input().BaselineExecution).Run;
+        var canonical = ConservativeHarnessRunCodec.Write(input);
+        var text = Encoding.UTF8.GetString(canonical.AsSpan()).Replace(
+            "\"rule_id\": \"SL-022\"",
+            "\"rule_id\": \"SL-001\"",
+            StringComparison.Ordinal);
+
+        var exception = Assert.Throws<FormatException>(() =>
+            ConservativeHarnessRunCodec.Read(Encoding.UTF8.GetBytes(text)));
+
+        Assert.Contains("SL-022", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void GoldenAdmitCannotCarryBlockingRules()
+    {
+        var input = Assert.IsType<ConservativeHarnessExecution.Completed>(
+            ConservativeTestData.Input().BaselineExecution).Run;
+        var contradictory = input with
+        {
+            Cases = input.Cases.Select(item => ConservativeTestData.WithDisposition(
+                    item,
+                    ConservativeTestData.RejectCase,
+                    ConservativeDisposition.Admit,
+                    "SL-001"))
+                .ToImmutableArray(),
+        };
+        var canonical = ConservativeHarnessRunCodec.Write(contradictory);
+
+        var exception = Assert.Throws<FormatException>(() =>
+            ConservativeHarnessRunCodec.Read(canonical.AsSpan()));
+
+        Assert.Contains("blocking", exception.Message, StringComparison.OrdinalIgnoreCase);
     }
 }

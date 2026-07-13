@@ -203,49 +203,35 @@ internal static class ConservativeCorpusEvaluator
             throw new FormatException($"conservative corpus case lacks policy files: {source.CaseId}");
         }
 
-        var registry = RegistryLoader.Load(
-            registryFile.RawBytes.AsSpan(),
-            domainsFile.RawBytes.AsSpan()) switch
-        {
-            RegistryLoadOutcome.Accepted accepted => accepted,
-            RegistryLoadOutcome.InfrastructureFailure failure =>
-                throw new FormatException(
-                    $"conservative corpus policy failed for {source.CaseId}: {failure.Message}"),
-        };
         var changes = RawChangeSet.Create(source.Changes);
         var bootstrap = BootstrapGate.Evaluate(changes);
-        var meta = bootstrap switch
-        {
-            BootstrapOutcome.Clear clear => MetaEvaluationProfile.ForClear(clear.Capability),
-            BootstrapOutcome.HumanReviewRequired review =>
-                MetaEvaluationProfile.ForProtectedSurface(review.ChangeSet),
-            BootstrapOutcome.InfrastructureFailure failure =>
-                throw new FormatException(
-                    $"conservative corpus bootstrap failed for {source.CaseId}: {failure.Message}"),
-        };
-        var context = RuleEvaluationContext.Create(
+        var evaluation = SnapshotAdmissionCore.Evaluate(
             current,
             baseline,
-            registry.Policy,
-            AcceptedLeanClosure.Create(LeanAxiomReport.Create(Reports(source.CurrentLean))),
-            AcceptedLeanClosure.Create(LeanAxiomReport.Create(Reports(source.BaselineLean))),
+            LeanAxiomReport.Create(Reports(source.CurrentLean)),
+            LeanAxiomReport.Create(Reports(source.BaselineLean)),
             changes,
-            meta);
-        var completed = RuleCatalog.Default.Execute(context) switch
+            bootstrap,
+            verifiedScribeEmissions: null);
+        var diagnostics = evaluation.Outcome switch
         {
-            RuleExecutionOutcome.Completed result => result.Capability,
-            RuleExecutionOutcome.InfrastructureFailure failure =>
+            AdmissionOutcome.Admitted => ImmutableArray<Diagnostic>.Empty,
+            AdmissionOutcome.ProtectedSurfaceChange protectedChange =>
+                protectedChange.Sl022Diagnostics,
+            AdmissionOutcome.RuleRejected rejected => rejected.Diagnostics,
+            AdmissionOutcome.HumanReviewRequired required => required.Diagnostics,
+            AdmissionOutcome.InfrastructureFailure failure =>
                 throw new InvalidOperationException(
-                    $"conservative corpus execution failed for {source.CaseId}: {failure.Message}"),
+                    $"conservative corpus admission failed for {source.CaseId}: {failure.Message}"),
         };
-        var blocking = completed.Diagnostics
+        var blocking = diagnostics
             .Where(static diagnostic =>
                 diagnostic.AdmissionEffect is AdmissionEffect.Block or AdmissionEffect.HumanGate)
             .Select(static diagnostic => diagnostic.RuleId.Value)
             .Distinct(StringComparer.Ordinal)
             .Order(StringComparer.Ordinal)
             .ToImmutableArray();
-        var sl022 = completed.Diagnostics
+        var sl022 = diagnostics
             .Where(static diagnostic => diagnostic.RuleId == RuleId.CreateKnown(22))
             .OrderBy(static diagnostic => diagnostic.Path, StringComparer.Ordinal)
             .ThenBy(static diagnostic => diagnostic.Message, StringComparer.Ordinal)
@@ -257,7 +243,9 @@ internal static class ConservativeCorpusEvaluator
         return new ConservativeCaseResult(
             source.CaseId,
             source.CaseRoot,
-            blocking.IsEmpty ? ConservativeDisposition.Admit : ConservativeDisposition.Block,
+            evaluation.Outcome is AdmissionOutcome.Admitted
+                ? ConservativeDisposition.Admit
+                : ConservativeDisposition.Block,
             blocking,
             sl022);
     }

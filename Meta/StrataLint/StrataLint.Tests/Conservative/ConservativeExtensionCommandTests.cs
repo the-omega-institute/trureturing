@@ -16,10 +16,16 @@ public sealed class ConservativeExtensionCommandTests
         Assert.Equal(0, result.ExitCode);
         Assert.Contains("CORPUS_CONSERVATIVE", result.Output, StringComparison.Ordinal);
         Assert.Empty(result.Error);
+        Assert.Equal(1, fixture.Environment.FreezeCount);
         Assert.Equal(2, fixture.Environment.Invocations.Count);
+        Assert.Single(
+            fixture.Environment.Invocations.Select(static invocation => invocation.Replay.Root)
+                .Distinct(StringComparer.Ordinal));
         Assert.All(
             fixture.Environment.Invocations,
-            invocation => Assert.Equal(fixture.Environment.Corpus.Root, invocation.Corpus.Root));
+            invocation => Assert.Equal(
+                fixture.Environment.Corpus.Root,
+                invocation.Replay.Corpus.Root));
     }
 
     [Fact]
@@ -78,6 +84,30 @@ public sealed class ConservativeExtensionCommandTests
 
         Assert.Equal(2, result.ExitCode);
         Assert.Contains("timed out", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void LeanReportMutationDuringReplayIsInfrastructureFailure()
+    {
+        using var fixture = new CommandFixture();
+        fixture.Environment.MutateCandidateReportDuringFirstExecution = true;
+
+        var result = ConservativeExtensionCommand.Run(fixture.Arguments, fixture.Environment);
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains("report changed", result.Error, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void RepositoryIdentityMutationDuringReplayIsInfrastructureFailure()
+    {
+        using var fixture = new CommandFixture();
+        fixture.Environment.ChangeCandidateIdentityAfterFirstExecution = true;
+
+        var result = ConservativeExtensionCommand.Run(fixture.Arguments, fixture.Environment);
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains("identity changed", result.Error, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
@@ -146,42 +176,82 @@ public sealed class ConservativeExtensionCommandTests
                 mutateCandidate)
         {
             input = ConservativeTestData.Input(mutateCandidate);
+            var corpusBytes = Encoding.UTF8.GetBytes("{}\n").ToImmutableArray();
             Corpus = new MaterializedConservativeCorpus(
-                Encoding.UTF8.GetBytes("{}\n").ToImmutableArray(),
-                input.CorpusRoot,
-                [ConservativeTestData.AdmitCase, ConservativeTestData.RejectCase]);
+                corpusBytes,
+                GoldenCorpusMaterializer.ContentRoot(corpusBytes.AsSpan()),
+                [
+                    ConservativeTestData.AdmitCase,
+                    ConservativeTestData.RejectCase,
+                    ConservativeTestData.Sl022RejectCase,
+                ]);
         }
 
         internal MaterializedConservativeCorpus Corpus { get; }
 
         internal List<ConservativeHarnessInvocation> Invocations { get; } = [];
 
+        internal int FreezeCount { get; private set; }
+
         internal Exception? MaterializationFailure { get; set; }
 
         internal Exception? ExecutionFailure { get; set; }
 
+        internal bool MutateCandidateReportDuringFirstExecution { get; set; }
+
+        internal bool ChangeCandidateIdentityAfterFirstExecution { get; set; }
+
         public MaterializedConservativeCorpus Materialize(string baselineRoot) =>
             MaterializationFailure is null ? Corpus : throw MaterializationFailure;
 
-        public ConservativeRepositoryIdentity IdentifyRepository(string root) =>
-            root.EndsWith("baseline", StringComparison.Ordinal)
-                ? new ConservativeRepositoryIdentity(input.BaselineCommitOid, input.BaselineTreeOid)
+        public ConservativeRepositoryIdentity IdentifyRepository(string root)
+        {
+            if (root.EndsWith("baseline", StringComparison.Ordinal))
+            {
+                return new ConservativeRepositoryIdentity(input.BaselineCommitOid, input.BaselineTreeOid);
+            }
+
+            return ChangeCandidateIdentityAfterFirstExecution && Invocations.Count > 0
+                ? new ConservativeRepositoryIdentity(input.CandidateCommitOid, new string('e', 40))
                 : new ConservativeRepositoryIdentity(input.CandidateCommitOid, input.CandidateTreeOid);
+        }
 
         public ConservativeHarnessProgram LoadHarness(string root) =>
             root.EndsWith("baseline", StringComparison.Ordinal)
                 ? new ConservativeHarnessProgram("baseline.dll", input.BaselineHarnessRoot)
                 : new ConservativeHarnessProgram("candidate.dll", input.CandidateHarnessRoot);
 
+        public ConservativeReplayEnvelope Freeze(
+            string baselineRoot,
+            string candidateRoot,
+            ConservativeRepositoryIdentity baselineIdentity,
+            ConservativeRepositoryIdentity candidateIdentity,
+            string baselineLeanReport,
+            string candidateLeanReport,
+            MaterializedConservativeCorpus corpus)
+        {
+            FreezeCount++;
+            return ConservativeReplayEnvelopeCodec.Create(
+                corpus,
+                baselineIdentity,
+                candidateIdentity,
+                File.ReadAllBytes(baselineLeanReport),
+                File.ReadAllBytes(candidateLeanReport),
+                Encoding.UTF8.GetBytes("synthetic git bundle\n"));
+        }
+
         public string FileRoot(string path) =>
-            path.EndsWith("baseline.json", StringComparison.Ordinal)
-                ? input.BaselineLeanReportRoot
-                : input.CandidateLeanReportRoot;
+            GoldenCorpusMaterializer.ContentRoot(File.ReadAllBytes(path));
 
         public ConservativeHarnessExecution Execute(ConservativeHarnessInvocation invocation)
         {
             Invocations.Add(invocation);
             if (ExecutionFailure is not null) throw ExecutionFailure;
+            if (MutateCandidateReportDuringFirstExecution && Invocations.Count == 1)
+            {
+                File.AppendAllText(invocation.CandidateLeanReport, "changed\n", new UTF8Encoding(false));
+            }
+
             return invocation.Program.Root == input.BaselineHarnessRoot
                 ? input.BaselineExecution
                 : input.CandidateExecution;

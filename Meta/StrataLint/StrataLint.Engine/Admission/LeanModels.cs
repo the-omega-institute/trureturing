@@ -86,12 +86,6 @@ public static class LeanClosureValidator
                     $"Lean environment report is missing for {path.Value}.");
             }
 
-            if (!string.IsNullOrEmpty(fileReport.Error))
-            {
-                return new LeanValidationOutcome.InfrastructureFailure(
-                    $"Lean environment inspection failed for {path.Value}: {fileReport.Error}");
-            }
-
             if (file.RawBytes.IsDefault)
             {
                 return new LeanValidationOutcome.InfrastructureFailure(

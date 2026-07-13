@@ -101,7 +101,7 @@ internal static partial class GoldenCorpusMaterializer
             Files(state.Baseline, objects),
             LeanFiles(state.Reports),
             LeanFiles(state.BaselineReports),
-            [GoldenCorpus.BlueprintPath]);
+            source.Changes.Order(StringComparer.Ordinal).ToImmutableArray());
         return prototype with { CaseRoot = CaseRoot(prototype) };
     }
 

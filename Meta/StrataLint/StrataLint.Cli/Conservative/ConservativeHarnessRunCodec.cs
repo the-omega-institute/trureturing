@@ -107,6 +107,15 @@ internal static class ConservativeHarnessRunCodec
             }
 
             RequireSortedUnique(item.BlockingRules, $"{item.CaseId} blocking rules");
+            if (item.CaseId.StartsWith("golden:", StringComparison.Ordinal)
+                && disposition is ConservativeDisposition.Admit
+                && !item.BlockingRules.IsEmpty)
+            {
+                throw new FormatException(
+                    $"harness result golden admit carries blocking rules: {item.CaseId}");
+            }
+
+            ValidateSl022Diagnostics(item.CaseId, item.BlockingRules, item.Sl022Diagnostics);
             return new ConservativeCaseResult(
                 item.CaseId,
                 item.CaseRoot,
@@ -118,6 +127,41 @@ internal static class ConservativeHarnessRunCodec
                     diagnostic.Message)).ToImmutableArray());
         }).ToImmutableArray();
         return new ConservativeHarnessRun(document.HarnessRoot, document.ActiveRules, cases);
+    }
+
+    private static void ValidateSl022Diagnostics(
+        string caseId,
+        ImmutableArray<string> blockingRules,
+        ImmutableArray<HarnessDiagnostic> diagnostics)
+    {
+        string? previous = null;
+        foreach (var diagnostic in diagnostics)
+        {
+            if (!string.Equals(diagnostic.RuleId, "SL-022", StringComparison.Ordinal)
+                || string.IsNullOrWhiteSpace(diagnostic.Message)
+                || !RepoPath.TryCreate(diagnostic.Path, out var path)
+                || !BootstrapGate.IsProtected(path))
+            {
+                throw new FormatException(
+                    $"harness result {caseId} has a malformed SL-022 diagnostic");
+            }
+
+            var key = diagnostic.Path + "\n" + diagnostic.Message;
+            if (previous is not null && string.CompareOrdinal(previous, key) >= 0)
+            {
+                throw new FormatException(
+                    $"harness result {caseId} SL-022 diagnostics must be sorted and unique");
+            }
+
+            previous = key;
+        }
+
+        if (!diagnostics.IsEmpty
+            && !blockingRules.Contains("SL-022", StringComparer.Ordinal))
+        {
+            throw new FormatException(
+                $"harness result {caseId} has SL-022 diagnostics without its blocking rule");
+        }
     }
 
     private static void RequireSortedUnique(IEnumerable<string> values, string context)

@@ -14,8 +14,9 @@ public sealed class ConservativeExtensionVerifierTests
         var accepted = Assert.IsType<ConservativeExtensionOutcome.Accepted>(outcome);
         var certificate = Encoding.UTF8.GetString(accepted.Certificate.AsSpan());
         Assert.Contains("\"status\": \"CORPUS_CONSERVATIVE\"", certificate, StringComparison.Ordinal);
-        Assert.Contains("\"corpus_case_count\": 3", certificate, StringComparison.Ordinal);
-        Assert.Contains("\"golden_case_count\": 2", certificate, StringComparison.Ordinal);
+        Assert.Contains("\"corpus_case_count\": 4", certificate, StringComparison.Ordinal);
+        Assert.Contains("\"golden_case_count\": 3", certificate, StringComparison.Ordinal);
+        Assert.Contains("\"replay_root\": \"sha256:", certificate, StringComparison.Ordinal);
         Assert.Contains("\"SL-022\"", certificate, StringComparison.Ordinal);
     }
 
@@ -47,6 +48,26 @@ public sealed class ConservativeExtensionVerifierTests
                 item,
                 ConservativeTestData.RejectCase,
                 ConservativeDisposition.Admit))
+            .ToImmutableArray());
+
+        var outcome = ConservativeExtensionVerifier.Verify(input);
+
+        var violated = Assert.IsType<ConservativeExtensionOutcome.Violated>(outcome);
+        Assert.Contains(
+            violated.Findings,
+            finding => finding.Code == "CONSERVATIVE-BLOCK-WITNESS-LOST"
+                && finding.RuleId == "SL-001");
+    }
+
+    [Fact]
+    public void AdmitDispositionCannotRetainARuleIdToFakeABlockingWitness()
+    {
+        var input = ConservativeTestData.Input(cases => cases
+            .Select(item => ConservativeTestData.WithDisposition(
+                item,
+                ConservativeTestData.RejectCase,
+                ConservativeDisposition.Admit,
+                "SL-001"))
             .ToImmutableArray());
 
         var outcome = ConservativeExtensionVerifier.Verify(input);
