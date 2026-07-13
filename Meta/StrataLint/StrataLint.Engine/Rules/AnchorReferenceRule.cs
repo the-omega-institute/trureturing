@@ -23,7 +23,6 @@ internal static class AnchorReferenceRule
     internal static ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context)
     {
         var catalog = AnchorCatalogLoader.Load(context.Current);
-        var baseline = BaselineAnchorsByGid(context.Baseline);
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         var governance = LoadGovernance(context.Current);
         var referencedDefinitions = new HashSet<string>(StringComparer.Ordinal);
@@ -35,9 +34,6 @@ internal static class AnchorReferenceRule
                 continue;
             }
 
-            var unchangedLegacySet = baseline.TryGetValue(header.Gid, out var baselineSets)
-                && baselineSets.Length == 1
-                && AnchorMultisetsEqual(header.Anchors, baselineSets[0]);
             foreach (var anchor in header.Anchors)
             {
                 if (catalog.Definitions.TryGetValue(anchor, out var definition))
@@ -46,24 +42,6 @@ internal static class AnchorReferenceRule
                     EvaluateDefinition(
                         path.Value,
                         definition,
-                        context.Current,
-                        governance,
-                        findings);
-                    continue;
-                }
-
-                if (catalog.Legacy.TryGetValue(anchor, out var legacy))
-                {
-                    if (unchangedLegacySet)
-                    {
-                        referencedDefinitions.UnionWith(legacy.CanonicalTargets);
-                    }
-
-                    EvaluateLegacy(
-                        path.Value,
-                        legacy,
-                        unchangedLegacySet,
-                        catalog,
                         context.Current,
                         governance,
                         findings);
@@ -136,71 +114,6 @@ internal static class AnchorReferenceRule
                 $"anchor '{definition.Anchor}' is registered open (RegisteredOpen) under {definition.CaseId}: {definition.OpenReason}",
                 AdmissionEffect.Observe));
         }
-    }
-
-    private static void EvaluateLegacy(
-        string path,
-        LegacyAnchorCatalogEntry legacy,
-        bool unchangedLegacySet,
-        AnchorCatalog catalog,
-        RepositorySnapshot snapshot,
-        AnchorGovernance governance,
-        ImmutableArray<RuleFinding>.Builder findings)
-    {
-        if (!unchangedLegacySet)
-        {
-            findings.Add(new RuleFinding(
-                path,
-                $"legacy anchor '{legacy.Legacy}' cannot be added or changed; write canonical anchors"));
-            return;
-        }
-
-        if (legacy.CaseId is not null
-            && !CaseIsRegistered(legacy.CaseId, governance, out var caseReason))
-        {
-            findings.Add(new RuleFinding(
-                path,
-                $"legacy anchor '{legacy.Legacy}' has invalid target (InvalidTarget): {caseReason}"));
-            return;
-        }
-
-        foreach (var canonical in legacy.CanonicalTargets)
-        {
-            var definition = catalog.Definitions[canonical];
-            if (definition.Status == "registered-open"
-                && !CaseIsRegistered(definition.CaseId!, governance, out caseReason))
-            {
-                findings.Add(new RuleFinding(
-                    path,
-                    $"legacy anchor '{legacy.Legacy}' has invalid target (InvalidTarget): {caseReason}"));
-                return;
-            }
-
-            var target = ValidateTarget(definition, snapshot, governance);
-            if (target.State is TargetState.InvalidTarget)
-            {
-                findings.Add(new RuleFinding(
-                    path,
-                    $"legacy anchor '{legacy.Legacy}' has invalid target (InvalidTarget): {target.Reason}"));
-                return;
-            }
-
-            if (target.State is TargetState.Ambiguous)
-            {
-                findings.Add(new RuleFinding(
-                    path,
-                    $"legacy anchor '{legacy.Legacy}' is ambiguous (Ambiguous): {target.Reason}"));
-                return;
-            }
-        }
-
-        var disposition = legacy.Disposition == "grandfathered-unresolved"
-            ? $"grandfathered unresolved under {legacy.CaseId}"
-            : $"baseline grandfathered legacy anchor ({legacy.Disposition})";
-        findings.Add(new RuleFinding(
-            path,
-            $"legacy anchor '{legacy.Legacy}' is {disposition}; migrate to canonical anchors",
-            AdmissionEffect.Observe));
     }
 
     private static TargetCheck ValidateTarget(
@@ -360,23 +273,6 @@ internal static class AnchorReferenceRule
 
         return matches;
     }
-
-    private static ImmutableDictionary<string, ImmutableArray<string[]>> BaselineAnchorsByGid(
-        RepositorySnapshot baseline) =>
-        RepositoryRules.FormalFiles(baseline)
-            .Select(static item => RepositoryRules.TryHeader(item.File.Text, out var header)
-                ? header
-                : null)
-            .Where(static header => header is not null)
-            .GroupBy(static header => header!.Gid, StringComparer.Ordinal)
-            .ToImmutableDictionary(
-                static group => group.Key,
-                static group => group.Select(static header => header!.Anchors).ToImmutableArray(),
-                StringComparer.Ordinal);
-
-    private static bool AnchorMultisetsEqual(string[] current, string[] baseline) =>
-        current.Order(StringComparer.Ordinal)
-            .SequenceEqual(baseline.Order(StringComparer.Ordinal), StringComparer.Ordinal);
 
     private static AnchorGovernance LoadGovernance(RepositorySnapshot snapshot)
     {

@@ -30,37 +30,13 @@ public static class CanonicalAnchorCatalogWriter
                 target_kind = item.Target.TargetKind,
             })
             .ToArray();
-        var legacy = LegacyAnchorEntries.All
-            .OrderBy(static item => item.LegacyValue, StringComparer.Ordinal)
-            .Select(static item => new
-            {
-                canonical = item.CanonicalTargets
-                    .Select(static target => target.CanonicalString)
-                    .Order(StringComparer.Ordinal)
-                    .ToArray(),
-                case_id = item.CaseId,
-                disposition = DispositionText(item.Disposition),
-                evidence = item.Evidence,
-                legacy = item.LegacyValue,
-            })
-            .ToArray();
         var document = JsonSerializer.SerializeToElement(new
         {
             definitions,
-            legacy,
             schema_version = 1,
         });
         return StructuredCanonicalWriter.WriteJson(document);
     }
-
-    private static string DispositionText(LegacyAnchorDisposition disposition) => disposition switch
-    {
-        LegacyAnchorDisposition.Direct => "direct",
-        LegacyAnchorDisposition.Alias => "alias",
-        LegacyAnchorDisposition.RegisteredOpen => "registered-open",
-        LegacyAnchorDisposition.GrandfatheredUnresolved => "grandfathered-unresolved",
-        _ => throw new InvalidOperationException("Unknown legacy anchor disposition."),
-    };
 
     private static void ValidateDefinitions()
     {
@@ -71,38 +47,6 @@ public static class CanonicalAnchorCatalogWriter
                 .Distinct(StringComparer.Ordinal).Count() != definitions.Length)
         {
             throw new InvalidOperationException("Anchor catalog is not a canonical target bijection.");
-        }
-
-        var registered = definitions
-            .Select(static item => item.Anchor.CanonicalString)
-            .ToHashSet(StringComparer.Ordinal);
-        var legacy = LegacyAnchorEntries.All;
-        if (legacy.Select(static item => item.LegacyValue)
-                .Distinct(StringComparer.Ordinal).Count() != legacy.Length
-            || legacy.Any(item => item.CanonicalTargets.Any(target =>
-                !registered.Contains(target.CanonicalString))))
-        {
-            throw new InvalidOperationException("Legacy anchor table is duplicated or points outside the catalog.");
-        }
-
-        var definitionsByAnchor = definitions.ToDictionary(
-            static item => item.Anchor.CanonicalString,
-            StringComparer.Ordinal);
-        foreach (var entry in legacy)
-        {
-            var targets = entry.CanonicalTargets
-                .Select(target => definitionsByAnchor[target.CanonicalString])
-                .ToArray();
-            if (entry.Disposition is LegacyAnchorDisposition.RegisteredOpen
-                ? targets.Any(target =>
-                    target.Status is not AnchorRegistrationStatus.RegisteredOpen
-                    || !string.Equals(target.CaseId, entry.CaseId, StringComparison.Ordinal))
-                : targets.Any(static target =>
-                    target.Status is AnchorRegistrationStatus.RegisteredOpen))
-            {
-                throw new InvalidOperationException(
-                    $"Legacy open disposition does not match {entry.LegacyValue} targets.");
-            }
         }
 
         foreach (var definition in definitions)

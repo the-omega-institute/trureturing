@@ -2,7 +2,7 @@
    generality: G
    mirror-B: none(waiver:hosting-configuration-ticket)
    mirror-E: none(waiver:hosting-configuration-ticket)
-   anchors: [golden-ledger-spec-v7.11-human-gates]
+   anchors: [spec/v7.11/human-gates]
    digest: A human operator must install the bootstrap and configure required checks on the hosting platform. -/
 
 /-- TASK D5-T0007 | 难度:2 | 依赖:欠(human-hosting-access) | 尝试:0

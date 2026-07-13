@@ -17,13 +17,6 @@ internal sealed record AnchorCatalogDefinition(
     string TargetKey,
     string TargetKind);
 
-internal sealed record LegacyAnchorCatalogEntry(
-    string Legacy,
-    string Disposition,
-    ImmutableArray<string> CanonicalTargets,
-    string? CaseId,
-    string Evidence);
-
 internal readonly record struct AnchorCatalogStructuralSelector(
     string? HeadingPrefix,
     string LinePrefix,
@@ -31,17 +24,10 @@ internal readonly record struct AnchorCatalogStructuralSelector(
 
 internal sealed class AnchorCatalog
 {
-    internal AnchorCatalog(
-        ImmutableDictionary<string, AnchorCatalogDefinition> definitions,
-        ImmutableDictionary<string, LegacyAnchorCatalogEntry> legacy)
-    {
+    internal AnchorCatalog(ImmutableDictionary<string, AnchorCatalogDefinition> definitions) =>
         Definitions = definitions;
-        Legacy = legacy;
-    }
 
     internal ImmutableDictionary<string, AnchorCatalogDefinition> Definitions { get; }
-
-    internal ImmutableDictionary<string, LegacyAnchorCatalogEntry> Legacy { get; }
 }
 
 internal static class AnchorCatalogLoader
@@ -74,19 +60,17 @@ internal static class AnchorCatalogLoader
         var root = document.RootElement;
         if (root.ValueKind != JsonValueKind.Object
             || !PropertyNames(root).SequenceEqual(
-                ["definitions", "legacy", "schema_version"],
+                ["definitions", "schema_version"],
                 StringComparer.Ordinal)
             || root.GetProperty("schema_version").ValueKind != JsonValueKind.Number
             || root.GetProperty("schema_version").GetInt32() != 1
-            || root.GetProperty("definitions").ValueKind != JsonValueKind.Array
-            || root.GetProperty("legacy").ValueKind != JsonValueKind.Array)
+            || root.GetProperty("definitions").ValueKind != JsonValueKind.Array)
         {
             throw new FormatException("Anchor catalog root schema is invalid.");
         }
 
         var definitions = ParseDefinitions(root.GetProperty("definitions"));
-        var legacy = ParseLegacy(root.GetProperty("legacy"), definitions);
-        return new AnchorCatalog(definitions, legacy);
+        return new AnchorCatalog(definitions);
     }
 
     private static ImmutableDictionary<string, AnchorCatalogDefinition> ParseDefinitions(
@@ -171,77 +155,6 @@ internal static class AnchorCatalogLoader
         }
 
         return definitions.ToImmutable();
-    }
-
-    private static ImmutableDictionary<string, LegacyAnchorCatalogEntry> ParseLegacy(
-        JsonElement array,
-        ImmutableDictionary<string, AnchorCatalogDefinition> definitions)
-    {
-        var legacy = ImmutableDictionary.CreateBuilder<string, LegacyAnchorCatalogEntry>(
-            StringComparer.Ordinal);
-        string? previous = null;
-        foreach (var element in array.EnumerateArray())
-        {
-            if (element.ValueKind != JsonValueKind.Object
-                || !PropertyNames(element).SequenceEqual(
-                    ["canonical", "case_id", "disposition", "evidence", "legacy"],
-                    StringComparer.Ordinal)
-                || element.GetProperty("canonical").ValueKind != JsonValueKind.Array)
-            {
-                throw new FormatException("Legacy anchor catalog entry schema is invalid.");
-            }
-
-            var legacyValue = RequiredString(element, "legacy");
-            var disposition = RequiredString(element, "disposition");
-            var caseId = OptionalString(element, "case_id");
-            var evidence = RequiredString(element, "evidence");
-            var targets = element.GetProperty("canonical").EnumerateArray()
-                .Select(static item => item.ValueKind == JsonValueKind.String
-                    ? item.GetString()!
-                    : throw new FormatException("Legacy canonical target must be a string."))
-                .ToImmutableArray();
-            if (previous is not null && string.CompareOrdinal(previous, legacyValue) >= 0
-                || !targets.SequenceEqual(targets.Order(StringComparer.Ordinal), StringComparer.Ordinal)
-                || targets.Distinct(StringComparer.Ordinal).Count() != targets.Length
-                || targets.Any(target => !definitions.ContainsKey(target))
-                || definitions.ContainsKey(legacyValue)
-                || disposition is "direct" && (targets.Length != 1 || caseId is not null)
-                || disposition is "alias" && (targets.Length == 0 || caseId is not null)
-                || disposition is "registered-open"
-                    && (targets.Length == 0 || caseId is null || !CasePattern.IsMatch(caseId))
-                || disposition is "grandfathered-unresolved"
-                    && (targets.Length != 0 || caseId is null || !CasePattern.IsMatch(caseId))
-                || disposition is not ("direct" or "alias" or "registered-open" or "grandfathered-unresolved"))
-            {
-                throw new FormatException($"Legacy anchor entry is noncanonical: {legacyValue}.");
-            }
-
-            previous = legacyValue;
-            var targetDefinitions = targets.Select(target => definitions[target]).ToArray();
-            if (disposition == "registered-open"
-                ? targetDefinitions.Any(target =>
-                    target.Status != "registered-open"
-                    || !string.Equals(target.CaseId, caseId, StringComparison.Ordinal))
-                : targetDefinitions.Any(static target => target.Status == "registered-open"))
-            {
-                throw new FormatException(
-                    $"Legacy registered-open disposition does not match its definitions: {legacyValue}.");
-            }
-
-            if (!legacy.TryAdd(
-                    legacyValue,
-                    new LegacyAnchorCatalogEntry(
-                        legacyValue,
-                        disposition,
-                        targets,
-                        caseId,
-                        evidence)))
-            {
-                throw new FormatException("Legacy anchor table contains a duplicate key.");
-            }
-        }
-
-        return legacy.ToImmutable();
     }
 
     internal static bool TryParseStructuralSelector(

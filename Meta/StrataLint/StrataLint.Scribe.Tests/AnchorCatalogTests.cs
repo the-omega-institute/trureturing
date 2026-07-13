@@ -10,7 +10,7 @@ public sealed class AnchorCatalogTests
     {
         var definitions = TheoryAnchorManifest.All;
 
-        Assert.Equal(13, definitions.Length);
+        Assert.Equal(14, definitions.Length);
     }
 
     [Fact]
@@ -18,7 +18,7 @@ public sealed class AnchorCatalogTests
     {
         var definitions = AnchorCatalogDefinitions.All;
 
-        Assert.Equal(26, definitions.Length);
+        Assert.Equal(27, definitions.Length);
         Assert.Equal(
             definitions.Length,
             definitions.Select(static item => item.Anchor.CanonicalString)
@@ -38,62 +38,38 @@ public sealed class AnchorCatalogTests
     }
 
     [Fact]
-    public void LegacyInventoryHasAnExactDispositionForAllThirtyValues()
+    public void CatalogProjectionContainsNoCompatibilityTable()
     {
-        var entries = LegacyAnchorEntries.All;
+        using var document = System.Text.Json.JsonDocument.Parse(
+            CanonicalAnchorCatalogWriter.Write().ToArray());
 
-        Assert.Equal(30, entries.Length);
-        Assert.Equal(30, entries.Select(static item => item.LegacyValue)
-            .Distinct(StringComparer.Ordinal)
-            .Count());
-        Assert.Equal(23, entries.Count(static item => item.Disposition == LegacyAnchorDisposition.Direct));
-        Assert.Equal(3, entries.Count(static item => item.Disposition == LegacyAnchorDisposition.Alias));
-        Assert.Single(entries, static item => item.Disposition == LegacyAnchorDisposition.RegisteredOpen);
-        Assert.Equal(3, entries.Count(static item =>
-            item.Disposition == LegacyAnchorDisposition.GrandfatheredUnresolved));
-    }
-
-    [Fact]
-    public void CompositeLegacyAliasExpandsToAtomicCanonicalAnchors()
-    {
-        var entry = Assert.Single(LegacyAnchorEntries.All, static item =>
-            item.LegacyValue == "GICT-v3.6-I.1-definitions-1.1-1.2");
-
-        Assert.Equal(LegacyAnchorDisposition.Alias, entry.Disposition);
         Assert.Equal(
-            [
-                "gict/v3.6/I.1/definition/1.1",
-                "gict/v3.6/I.1/definition/1.2",
-            ],
-            entry.CanonicalTargets.Select(static item => item.CanonicalString));
+            ["definitions", "schema_version"],
+            document.RootElement.EnumerateObject().Select(static property => property.Name));
     }
 
     [Fact]
-    public void MissingGictTheoremTwentyNineIsOnlyGrandfathered()
+    public void GictSevenFifteenResolvesToTheThreeDistanceSourceNode()
     {
-        var entry = Assert.Single(LegacyAnchorEntries.All, static item =>
-            item.LegacyValue == "GICT-v3.6-I.2-theorem-2.9");
+        var definition = Assert.Single(AnchorCatalogDefinitions.All, static item =>
+            item.Anchor.CanonicalString == "gict/v3.6/VII.7/theorem/7.15");
 
-        Assert.Equal(LegacyAnchorDisposition.GrandfatheredUnresolved, entry.Disposition);
-        Assert.Empty(entry.CanonicalTargets);
-        Assert.Equal("D5-T0011", entry.CaseId);
-        Assert.DoesNotContain(
-            AnchorCatalogDefinitions.All,
-            static definition => definition.Anchor.CanonicalString.Contains("theorem/2.9", StringComparison.Ordinal));
+        Assert.Equal("gict:v3.6:VII.7:theorem:7.15", definition.Target.SemanticKey);
+        Assert.Equal("## VII.7 ", definition.Target.Selector.HeadingPrefix);
+        Assert.Equal("**定理 7.15(", definition.Target.Selector.LinePrefix);
+        Assert.IsType<AnchorResolution.Resolved>(
+            AnchorResolver.Resolve(definition.Anchor, FindRepositoryRoot()));
     }
 
     [Theory]
     [InlineData("sos1957threegap")]
     [InlineData("paleywiener1934fourier")]
-    public void MissingLibraryTargetsAreOnlyGrandfathered(string legacy)
+    public void LiteratureWithoutALocalLibraryTargetIsUnregistered(string bibKey)
     {
-        var entry = Assert.Single(LegacyAnchorEntries.All, item => item.LegacyValue == legacy);
-
-        Assert.Equal(LegacyAnchorDisposition.GrandfatheredUnresolved, entry.Disposition);
-        Assert.Empty(entry.CanonicalTargets);
-        Assert.Equal("D5-T0012", entry.CaseId);
+        Assert.DoesNotContain(AnchorCatalogDefinitions.All, item =>
+            item.Anchor.CanonicalString == "lit/" + bibKey);
         Assert.IsType<AnchorResolution.Unregistered>(
-            AnchorResolver.Resolve(Anchor.ParseCanonical("lit/" + legacy), FindRepositoryRoot()));
+            AnchorResolver.Resolve(Anchor.ParseCanonical("lit/" + bibKey), FindRepositoryRoot()));
     }
 
     [Fact]
@@ -142,7 +118,7 @@ public sealed class AnchorCatalogTests
             .Where(static item => item.Status == AnchorRegistrationStatus.Resolved)
             .ToArray();
 
-        Assert.Equal(25, local.Length);
+        Assert.Equal(26, local.Length);
         Assert.All(local, definition =>
         {
             var resolved = Assert.IsType<AnchorResolution.Resolved>(

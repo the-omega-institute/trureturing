@@ -43,7 +43,7 @@ public sealed class AnchorReferenceRuleTests
     }
 
     [Fact]
-    public void ExistingCorpusHasNoNewSl017BlocksUnderBaselineGrandfathering()
+    public void ExistingCorpusUsesOnlyCanonicalAnchors()
     {
         var fixture = new RuleFixture();
         var root = FindRepositoryRoot();
@@ -74,10 +74,9 @@ public sealed class AnchorReferenceRuleTests
             RuleId.CreateKnown(17),
             fixture.BuildForRuleCompatibility());
 
-        Assert.DoesNotContain(
-            result.Diagnostics,
-            static diagnostic => diagnostic.AdmissionEffect == AdmissionEffect.Block);
-        Assert.Equal(51, result.Diagnostics.Count(static diagnostic =>
+        Assert.DoesNotContain(result.Diagnostics, static diagnostic =>
+            diagnostic.AdmissionEffect == AdmissionEffect.Block);
+        Assert.Equal(4, result.Diagnostics.Count(static diagnostic =>
             diagnostic.AdmissionEffect == AdmissionEffect.Observe));
     }
 
@@ -146,40 +145,15 @@ public sealed class AnchorReferenceRuleTests
     }
 
     [Fact]
-    public void UnchangedGrandfatheredAnchorOnlyObserves()
+    public void UnregisteredAnchorBlocksEvenWhenBaselineMatches()
     {
         var fixture = new RuleFixture();
         SetBaselineAndCurrentAnchors(fixture, "GICT-v3.6-I.2-theorem-2.9");
 
         var diagnostic = Assert.Single(Evaluate(fixture).Diagnostics);
 
-        Assert.Equal(AdmissionEffect.Observe, diagnostic.AdmissionEffect);
-        Assert.Contains("grandfathered", diagnostic.Message, StringComparison.Ordinal);
-        Assert.Contains("D5-T0011", diagnostic.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void UnchangedCorrectedAliasOnlyObserves()
-    {
-        var fixture = new RuleFixture();
-        SetBaselineAndCurrentAnchors(fixture, "GICT-v3.6-I.1-definition-1.4");
-
-        var diagnostic = Assert.Single(Evaluate(fixture).Diagnostics);
-
-        Assert.Equal(AdmissionEffect.Observe, diagnostic.AdmissionEffect);
-        Assert.Contains("legacy anchor", diagnostic.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void NewLegacyAnchorBlocks()
-    {
-        var fixture = new RuleFixture();
-        SetCurrentAnchors(fixture, "GICT-v3.6-I.1-definition-1.4");
-
-        var diagnostic = Assert.Single(Evaluate(fixture).Diagnostics);
-
         Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
-        Assert.Contains("cannot be added or changed", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains("unregistered", diagnostic.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -282,21 +256,6 @@ public sealed class AnchorReferenceRuleTests
         Assert.Contains("canonical", failure.Message, StringComparison.OrdinalIgnoreCase);
     }
 
-    [Fact]
-    public void RegisteredOpenLegacyMustPointToTheMatchingOpenDefinition()
-    {
-        var fixture = new RuleFixture();
-        fixture.Files[CatalogPath] = fixture.Files[CatalogPath].Replace(
-            "\"canonical\": [\"mathlib/module/Mathlib.Data.Nat.Fib.Zeckendorf\"], \"case_id\": \"D5-T0016\", \"disposition\": \"registered-open\"",
-            "\"canonical\": [\"gict/v3.6/I.1/definition/1.1\"], \"case_id\": \"D5-T0016\", \"disposition\": \"registered-open\"",
-            StringComparison.Ordinal);
-
-        var outcome = RuleCatalog.Default.Execute(fixture.Build());
-
-        var failure = Assert.IsType<RuleExecutionOutcome.InfrastructureFailure>(outcome);
-        Assert.Contains("registered-open", failure.Message, StringComparison.Ordinal);
-    }
-
     private static SingleRuleEvaluation Evaluate(RuleFixture fixture) =>
         RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(17), fixture.Build());
 
@@ -335,7 +294,6 @@ public sealed class AnchorReferenceRuleTests
         var catalog = JsonSerializer.SerializeToElement(new
         {
             definitions,
-            legacy = document.RootElement.GetProperty("legacy").Clone(),
             schema_version = 1,
         });
         fixture.Files[CatalogPath] = Encoding.UTF8.GetString(

@@ -27,6 +27,9 @@ public static class AnchorCatalogDefinitions
     public static GictAnchor GictI1Theorem1_3IV { get; } =
         Require<GictAnchor>("gict/v3.6/I.1/theorem/1.3/iv");
 
+    public static GictAnchor GictVII7Theorem7_15 { get; } =
+        Require<GictAnchor>("gict/v3.6/VII.7/theorem/7.15");
+
     public static GictAnchor GictVIIIHearts { get; } =
         Require<GictAnchor>("gict/v3.6/VIII/section/hearts");
 

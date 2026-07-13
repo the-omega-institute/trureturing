@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Carrier/Norm
    mirror-E: none(waiver:algebraically-proved)
-   anchors: [GICT-v3.6-I.1-theorem-1.3-ii]
+   anchors: [gict/v3.6/I.1/theorem/1.3/ii]
    digest: The explicit golden norm is conjugate multiplication and is multiplicative. -/
 
 import D5.S0.Carrier.Conj

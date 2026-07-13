@@ -23,6 +23,7 @@ public static class TheoryAnchorManifest
         Gict(AnchorCatalogDefinitions.GictI1Theorem1_3II, "I.1:theorem:1.3:ii", "**定理 1.3**", "(ii)"),
         Gict(AnchorCatalogDefinitions.GictI1Theorem1_3III, "I.1:theorem:1.3:iii", "**定理 1.3**", "(iii)"),
         Gict(AnchorCatalogDefinitions.GictI1Theorem1_3IV, "I.1:theorem:1.3:iv", "**定理 1.3**", "(iv)"),
+        Gict(AnchorCatalogDefinitions.GictVII7Theorem7_15, "VII.7:theorem:7.15", "**定理 7.15("),
         Gict(AnchorCatalogDefinitions.GictVIIIHearts, "VIII:section:hearts", "# 第 VIII 卷:开放问题与两颗心脏"),
         Gict(AnchorCatalogDefinitions.GictAppendixA, "appendix:A", "## 附录 A:常数总表"),
         Pzg(AnchorCatalogDefinitions.Pzg6_18, "6.18", "**评注 6.18("),
