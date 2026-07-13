@@ -9,33 +9,33 @@ sources:
       - anchor: GICT-heart-O6
         disposition: D5/X_Frontier/HeartsDraft
       - anchor: constant-kappa
-        disposition: D5/X_Frontier/ValuesProducer
+        disposition: D5/E/values--json
       - anchor: constant-C0
-        disposition: D5/X_Frontier/ValuesProducer
+        disposition: D5/E/values--json
       - anchor: constant-cstar
-        disposition: D5/X_Frontier/ValuesProducer
+        disposition: D5/E/values--json
       - anchor: constant-hbar
-        disposition: D5/X_Frontier/ValuesProducer
+        disposition: D5/E/values--json
       - anchor: constant-s1
-        disposition: D5/X_Frontier/ValuesProducer
+        disposition: D5/E/values--json
       - anchor: constant-Ah
-        disposition: D5/X_Frontier/ValuesProducer
+        disposition: D5/E/values--json
       - anchor: constant-E
-        disposition: D5/X_Frontier/ValuesProducer
+        disposition: D5/E/values--json
       - anchor: constant-Cphi
-        disposition: D5/X_Frontier/ValuesProducer
+        disposition: D5/E/values--json
       - anchor: constant-T0
-        disposition: D5/X_Frontier/ValuesProducer
+        disposition: D5/E/values--json
       - anchor: constant-delta-mean
-        disposition: D5/X_Frontier/ValuesProducer
+        disposition: D5/E/values--json
       - anchor: constant-T1
-        disposition: D5/X_Frontier/ValuesProducer
+        disposition: D5/E/values--json
       - anchor: constant-Bh
-        disposition: D5/X_Frontier/ValuesProducer
+        disposition: D5/E/values--json
       - anchor: constant-c1
-        disposition: D5/X_Frontier/ValuesProducer
+        disposition: D5/E/values--json
       - anchor: constant-c2
-        disposition: D5/X_Frontier/ValuesProducer
+        disposition: D5/E/values--json
   - id: PZG-v170
     path: docs/develop/theory/PZG_BEDC_kernel_formal_170.md
     entries:
