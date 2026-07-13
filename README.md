@@ -1,5 +1,7 @@
 trureturing — the last line of the ledger is always the first line of the next round.
 
+trureturing is a formal ledger for the golden-integer/Zeckendorf coordinate system, currently centered on D5, with Lean formalization and a separate machine-checkable .NET admission harness, StrataLint.
+
 GitHub required-check configuration is a human gate and has not been verified by this repository.
 
 StrataLint commands:
