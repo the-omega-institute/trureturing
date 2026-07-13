@@ -1,0 +1,25 @@
+{
+  "schema": "fkst.workflow.v1",
+  "id": "blueprint-then-formalize",
+  "version": "2026-07-13",
+  "summary": "Deliver one new D5 mathematical result as two independently mergeable increments: canonical Blueprint narrative first, then Lean formalization.",
+  "applies_when": "Conservative router: choose this only when the origin issue text unambiguously matches this flow and exactly one flow: it asks to deliver one NEW D5 mathematical result in two ordered, independently mergeable increments, first a Blueprint narrative and then Lean formalization. This follows the repository's B/F routing and Lean dual-role rules in spec sections 1.2, 1.3, and 1.6. Do not choose it for epics, trackers, broad multi-slice work, trivial one-PR changes, bug fixes, refactors, contract migrations, docs-only work, spikes, or ambiguous requests; choose none/plain devloop instead.",
+  "steps": [
+    {
+      "id": "blueprint-narrative",
+      "title": "Write the Blueprint narrative",
+      "content": {
+        "kind": "generated",
+        "generator": "Read the origin issue from its source_ref and emit exactly one child issue title and body for the blueprint-narrative step. Scope the child PR to only one new D5 mathematical result at its future F address mirrored under Blueprint/: author the canonical `*.scribe.cs` typed document definition and deterministically emit its Markdown projection, covering the definition or statement and proof idea, with no Lean changes. Follow spec sections 1.2, 1.3, and 2.1 plus A17; validate that the emitted Markdown is byte-identical to the canonical writer output and that narrative consistency and typed GID references pass. Keep this one independently mergeable increment. Do not ask the child to duplicate devloop consensus, CI, PR review, or merge gates; devloop provides those. If no mergeable narrative increment exists, the child must produce no changes with a clear WHY; no-changes is fatal and blocks the origin."
+      }
+    },
+    {
+      "id": "lean-formalization",
+      "title": "Add the Lean formalization",
+      "content": {
+        "kind": "generated",
+        "generator": "Read the origin issue and the MERGED blueprint-narrative result through the predecessor source_ref, then emit exactly one child issue title and body for the lean-formalization step. Scope the child PR to formalize that same result at the corresponding D5 F-layer stratum address, on top of the merged Blueprint increment. Require the exact six-line Lean header from spec A5, machine-derived status under spec sections 1.4 and 1.6, `sorry` only under `X_Frontier`, `lake build` green, and no private or unregistered axioms. Keep this one independently mergeable increment; make no Blueprint or other narrative changes in this step. Do not ask the child to duplicate devloop consensus, CI, PR review, or merge gates; devloop provides those. If no mergeable Lean increment exists, the child must produce no changes with a clear WHY; no-changes is fatal and blocks the origin."
+      }
+    }
+  ]
+}
