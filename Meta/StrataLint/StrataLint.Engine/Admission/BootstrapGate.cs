@@ -96,6 +96,7 @@ public partial record BootstrapOutcome
 public static class BootstrapGate
 {
     internal const string ProtectedSurfaceMessage = "meta change requires external human review";
+    internal const string SpecificationPath = "docs/develop/spec/golden-ledger-repo-spec.md";
 
     private static readonly StringComparer Ordinal = StringComparer.Ordinal;
 
@@ -136,7 +137,7 @@ public static class BootstrapGate
     {
         var value = path.Value;
         return value.StartsWith("Meta/StrataLint/", StringComparison.Ordinal)
-            || Ordinal.Equals(value, "docs/develop/spec/golden-ledger-repo-spec.md")
+            || Ordinal.Equals(value, SpecificationPath)
             || Ordinal.Equals(value, "Meta/registry.yaml")
             || Ordinal.Equals(value, "Meta/domains.yaml")
             || value.EndsWith("/Hearts.lean", StringComparison.Ordinal)
@@ -146,6 +147,7 @@ public static class BootstrapGate
             || value.EndsWith(".sln", StringComparison.Ordinal)
             || value.EndsWith(".slnx", StringComparison.Ordinal)
             || value.EndsWith(".csproj", StringComparison.Ordinal)
+            || Ordinal.Equals(value, "Makefile")
             || Ordinal.Equals(value, "global.json")
             || value.StartsWith("Directory.Build.", StringComparison.Ordinal)
             || value.StartsWith("Directory.Packages.", StringComparison.Ordinal)

@@ -9,6 +9,20 @@ internal sealed partial class RuleFixture
 {
     internal const string RingPath = "D5/S0/Carrier/Ring.lean";
     internal const string BlueprintPath = "Blueprint/D5/S0/Carrier/Ring.md";
+    internal const string NotationPath = "D5/S0/Conventions/Notation.lean";
+    internal const string AssumptionDebtPath = "D5/X_Assumptions/AxiomDebt.lean";
+    internal const string HeartsPath = RepositoryRules.HeartsPath;
+    internal const string HeartsDraftPath = "D5/X_Frontier/HeartsDraft.lean";
+    internal const string AnchorCatalogPath = AnchorCatalogLoader.RelativePath;
+    internal const string TowerManifestPath = RepositoryRules.TowerManifestPath;
+    internal const string ValuesProjectionPath = ValuesProjectionLoader.RelativePath;
+    internal const string WorkflowPath = RepositoryPathPolicy.WorkflowPath;
+    internal const string HarnessGatePath = RepositoryPathPolicy.HarnessGatePath;
+    internal const string SpecificationPath = BootstrapGate.SpecificationPath;
+    internal const string GictTheoryPath = "docs/develop/theory/GICT_complete_development_v3 (3).md";
+    internal const string PzgTheoryPath = "docs/develop/theory/PZG_BEDC_kernel_formal_170.md";
+    internal const string SyntheticProtectedPath =
+        "Meta/StrataLint/StrataLint.Engine/SyntheticProtected.cs";
 
     private const string Header = """
         /- GID: D5/S0/Carrier/Ring
@@ -27,7 +41,7 @@ internal sealed partial class RuleFixture
             ["Meta/domains.yaml"] = TestRegistry.Domains,
             ["Meta/BACKFILL.yaml"] = File.ReadAllText(Path.Combine(repositoryRoot, "Meta", "BACKFILL.yaml"), Encoding.UTF8),
             ["Meta/registry.yaml"] = TestRegistry.Canonical,
-            ["Meta/StrataLint/Generated/anchor-catalog.v1.json"] = File.ReadAllText(
+            [AnchorCatalogPath] = File.ReadAllText(
                 Path.Combine(repositoryRoot, "Meta", "StrataLint", "Generated", "anchor-catalog.v1.json"),
                 Encoding.UTF8),
             ["Library/queries.yaml"] = "schema_version: 1\nqueries: []\n",
@@ -36,14 +50,14 @@ internal sealed partial class RuleFixture
         };
         foreach (var theoryPath in new[]
         {
-            "docs/develop/theory/GICT_complete_development_v3 (3).md",
-            "docs/develop/theory/PZG_BEDC_kernel_formal_170.md",
+            GictTheoryPath,
+            PzgTheoryPath,
         })
         {
             Files[theoryPath] = File.ReadAllText(Path.Combine(repositoryRoot, theoryPath), Encoding.UTF8);
         }
 
-        const string specPath = "docs/develop/spec/golden-ledger-repo-spec.md";
+        const string specPath = SpecificationPath;
         Files[specPath] = RestoreApprovedCanonicalClaim(
             File.ReadAllText(Path.Combine(repositoryRoot, specPath), Encoding.UTF8));
         Baseline = new Dictionary<string, string>(Files, StringComparer.Ordinal);
@@ -169,8 +183,6 @@ internal sealed partial class RuleFixture
         Reports[RingPath] = Report(imports: new[] { "D5.S1.Upper.High" });
     }
 
-    internal const string AssumptionDebtPath = "D5/X_Assumptions/AxiomDebt.lean";
-
     // A stratum content file carrying a classical theorem via a registered
     // assumption: importing the X_Assumptions foundation is allowed (SL-001).
     internal void AddAssumptionImport()
@@ -208,7 +220,7 @@ internal sealed partial class RuleFixture
 
     internal void ChangeHeartSignature()
     {
-        const string path = "D5/X_Frontier/Hearts.lean";
+        const string path = HeartsPath;
         Baseline[path] = HeaderFor("D5/X_Frontier/Hearts", "E") + "theorem heart : True := by sorry\n";
         Files[path] = HeaderFor("D5/X_Frontier/Hearts", "E") + "theorem heart : False := by sorry\n";
         BaselineReports[path] = Report(declarations: new[]
@@ -223,7 +235,7 @@ internal sealed partial class RuleFixture
 
     internal void AddInstanceImport()
     {
-        const string path = "D5/S0/Conventions/Notation.lean";
+        const string path = NotationPath;
         Files[path] = HeaderFor("D5/S0/Conventions/Notation", "I") + "def instanceFact : Nat := 1\n";
         Reports[path] = Report(declarations: new[]
         {
@@ -286,14 +298,7 @@ internal sealed partial class RuleFixture
                 {
                     var repositoryRoot = FindRepositoryRoot();
                     Files[path] = File.ReadAllText(Path.Combine(repositoryRoot, path), Encoding.UTF8);
-                    foreach (var inputPath in new[]
-                    {
-                        ValuesProjectionLoader.InputPath,
-                        "Directory.Build.props",
-                        "Directory.Packages.props",
-                        "Meta/StrataLint/StrataLint.Scribe/packages.lock.json",
-                        "global.json",
-                    })
+                    foreach (var inputPath in ValuesProjectionLoader.InputPaths)
                     {
                         Files[inputPath] = File.ReadAllText(
                             Path.Combine(repositoryRoot, inputPath),
@@ -333,7 +338,7 @@ internal sealed partial class RuleFixture
             }
 
             Files[path] = text;
-            if (path == "D5/X_Frontier/Hearts.lean")
+            if (path == HeartsPath)
             {
                 Baseline[path] = text;
                 BaselineReports[path] = Reports[path];

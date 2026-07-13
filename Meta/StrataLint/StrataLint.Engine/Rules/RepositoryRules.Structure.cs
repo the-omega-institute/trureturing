@@ -8,6 +8,8 @@ namespace StrataLint.Engine;
 
 internal static partial class RepositoryRules
 {
+    internal const string HeartsPath = "D5/X_Frontier/Hearts.lean";
+
     private static ImmutableArray<RuleFinding> Imports(RuleEvaluationContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
@@ -122,7 +124,7 @@ internal static partial class RepositoryRules
 
     private static ImmutableArray<RuleFinding> Hearts(RuleEvaluationContext context)
     {
-        const string path = "D5/X_Frontier/Hearts.lean";
+        const string path = HeartsPath;
         var hadBaseline = context.Baseline.TryGetFile(path, out _);
         var hasCurrent = context.Current.TryGetFile(path, out _);
         if (hadBaseline && !hasCurrent)

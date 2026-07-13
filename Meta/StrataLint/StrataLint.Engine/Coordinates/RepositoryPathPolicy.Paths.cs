@@ -52,7 +52,7 @@ internal static partial class RepositoryPathPolicy
                 return true;
             }
 
-            if (string.Equals(path, "Evidence/D5/values.json", StringComparison.Ordinal))
+            if (string.Equals(path, ValuesProjectionLoader.RelativePath, StringComparison.Ordinal))
             {
                 gid = "D5/E/values--json";
                 return true;

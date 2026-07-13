@@ -20,6 +20,13 @@ public sealed class CanonicalSourceDuplicationTests
             File.WriteAllText(
                 Path.Combine(root, "Meta", "BACKFILL.yaml"),
                 "ticket_index:\n  - case_id: SYNTHETIC-CASE\n    gid: synthetic/gid\n");
+            var repositoryRoot = RepositoryLayout.FindRoot();
+            File.Copy(
+                Path.Combine(repositoryRoot, "Meta", "registry.yaml"),
+                Path.Combine(root, "Meta", "registry.yaml"));
+            File.Copy(
+                Path.Combine(repositoryRoot, "Meta", "domains.yaml"),
+                Path.Combine(root, "Meta", "domains.yaml"));
             var blueprint = Path.Combine(root, "Blueprint");
             Directory.CreateDirectory(blueprint);
             File.WriteAllText(
@@ -77,5 +84,47 @@ public sealed class CanonicalSourceDuplicationTests
             "Meta/StrataLint/Synthetic.cs",
             source,
             tickets));
+    }
+
+    [Theory]
+    [InlineData("S0")]
+    [InlineData("S4")]
+    public void RegisteredDomainDictionaryEntryIsRejectedByTheRedFixture(string stratum)
+    {
+        var source = $$"""
+            var copied = new Dictionary<string, string>
+            {
+                ["Carrier"] = "{{stratum}}",
+            };
+            """;
+        var domains = new[]
+        {
+            (Name: "Carrier", Stratum: "S0"),
+        };
+
+        var finding = Assert.Single(CanonicalSourceDuplicationPolicy.InspectDomainMappings(
+            "Meta/StrataLint/Synthetic.cs",
+            source,
+            domains));
+
+        Assert.Contains("Meta/domains.yaml", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void SeparateDomainAndStratumLiteralsAreNotTreatedAsADomainMap()
+    {
+        const string source = """
+            const string domain = "Carrier";
+            const string stratum = "S0";
+            """;
+        var domains = new[]
+        {
+            (Name: "Carrier", Stratum: "S0"),
+        };
+
+        Assert.Empty(CanonicalSourceDuplicationPolicy.InspectDomainMappings(
+            "Meta/StrataLint/Synthetic.cs",
+            source,
+            domains));
     }
 }

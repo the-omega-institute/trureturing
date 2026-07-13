@@ -45,7 +45,7 @@ public sealed class SnapshotTests
     {
         var collision = RawRepositorySnapshot.Create(new[]
         {
-            RawRepositoryEntry.FromText("D5/S0/Carrier/Ring.lean", "a"),
+            RawRepositoryEntry.FromText(RuleFixture.RingPath, "a"),
             RawRepositoryEntry.FromText("D5/S0/carrier/Ring.lean", "b"),
         });
         var traversal = RawRepositorySnapshot.Create(new[]

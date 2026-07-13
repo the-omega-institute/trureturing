@@ -1,4 +1,5 @@
 using System.Text;
+using StrataLint.Engine;
 using YamlDotNet.Core;
 using YamlDotNet.RepresentationModel;
 
@@ -17,7 +18,7 @@ internal abstract record AdmissionTopologyOutcome
 
 internal static class AdmissionWorkflowTopology
 {
-    internal const string WorkflowPath = ".github/workflows/ci.yml";
+    internal const string WorkflowPath = RepositoryPathPolicy.WorkflowPath;
 
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 

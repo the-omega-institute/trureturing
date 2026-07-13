@@ -8,16 +8,10 @@ namespace StrataLint.Scribe;
 
 public static class CanonicalValuesWriter
 {
-    public const string RelativePath = "Evidence/D5/values.json";
-    public const string InputPath = "D5/X_Frontier/ValuesProducer.lean";
-    public static ImmutableArray<string> InputPaths { get; } =
-    [
-        InputPath,
-        "Directory.Build.props",
-        "Directory.Packages.props",
-        "Meta/StrataLint/StrataLint.Scribe/packages.lock.json",
-        "global.json",
-    ];
+    public const string RelativePath = ValuesProjectionLoader.RelativePath;
+    public const string InputPath = ValuesProjectionLoader.InputPath;
+    public const string ScribeLockPath = ValuesProjectionLoader.ScribeLockPath;
+    public static ImmutableArray<string> InputPaths { get; } = ValuesProjectionLoader.InputPaths;
 
     public static ImmutableArray<byte> Write(string repositoryRoot)
     {

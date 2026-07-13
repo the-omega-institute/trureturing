@@ -20,15 +20,17 @@ internal static class ValuesProjectionLoader
 {
     internal const string RelativePath = "Evidence/D5/values.json";
     internal const string InputPath = "D5/X_Frontier/ValuesProducer.lean";
+    internal const string ScribeLockPath =
+        "Meta/StrataLint/StrataLint.Scribe/packages.lock.json";
 
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     private static readonly Regex Sha256Pattern = new("^[0-9a-f]{64}$", RegexOptions.CultureInvariant);
-    private static readonly ImmutableArray<string> ExpectedInputPaths =
+    internal static ImmutableArray<string> InputPaths { get; } =
     [
         InputPath,
         "Directory.Build.props",
         "Directory.Packages.props",
-        "Meta/StrataLint/StrataLint.Scribe/packages.lock.json",
+        ScribeLockPath,
         "global.json",
     ];
     private static readonly ImmutableArray<string> ExpectedIds =
@@ -84,7 +86,7 @@ internal static class ValuesProjectionLoader
         }
 
         var inputs = attestation.GetProperty("inputs").EnumerateArray().ToArray();
-        if (inputs.Length != ExpectedInputPaths.Length)
+        if (inputs.Length != InputPaths.Length)
         {
             throw new FormatException("Values producer input manifest is invalid.");
         }
@@ -93,7 +95,7 @@ internal static class ValuesProjectionLoader
         for (var index = 0; index < inputs.Length; index++)
         {
             var input = inputs[index];
-            var expectedPath = ExpectedInputPaths[index];
+            var expectedPath = InputPaths[index];
             if (input.ValueKind != JsonValueKind.Object
                 || !PropertyNames(input).SequenceEqual(["path", "sha256"], StringComparer.Ordinal)
                 || RequiredString(input, "path") != expectedPath)

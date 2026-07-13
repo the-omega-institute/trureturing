@@ -110,6 +110,19 @@ public sealed class RuleEngineTests
         Assert.Equal("canonical values projection must be Evidence/D5/values.json", diagnostic.Message);
     }
 
+    [Fact]
+    public void Sl018RejectsAttestedValuesWhenTheLeanInputDrifts()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.Files[ValuesProjectionLoader.InputPath] += "-- drift\n";
+
+        var diagnostic = Assert.Single(
+            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(18), fixture.Build()).Diagnostics);
+
+        Assert.Contains("input SHA-256", diagnostic.Message, StringComparison.Ordinal);
+    }
+
 
     [Theory]
     [InlineData(7, "D5-T0011")]
@@ -140,7 +153,7 @@ public sealed class RuleEngineTests
     public void Sl019AcceptsAValidTowerManifestAsAKnownGovernanceSchema()
     {
         var fixture = new RuleFixture();
-        fixture.Files["Meta/StrataLint/TOWER.yaml"] = """
+        fixture.Files[RuleFixture.TowerManifestPath] = """
             schema_version: 1
             components:
               - id: failure-detector
@@ -171,7 +184,7 @@ public sealed class RuleEngineTests
     public void Sl019RejectsMalformedTowerManifestThroughItsSchemaParser()
     {
         var fixture = new RuleFixture();
-        fixture.Files["Meta/StrataLint/TOWER.yaml"] = """
+        fixture.Files[RuleFixture.TowerManifestPath] = """
             schema_version: 1
             components:
               - id: component

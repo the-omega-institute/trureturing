@@ -5,6 +5,7 @@ root_files:
   - "CLAUDE.md"
   - "Directory.Build.props"
   - "Directory.Packages.props"
+  - "Makefile"
   - "README.md"
   - "Trureturing.lean"
   - "global.json"

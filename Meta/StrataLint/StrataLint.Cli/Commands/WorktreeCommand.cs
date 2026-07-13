@@ -1,3 +1,5 @@
+using System.Text;
+using System.Text.Json;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -7,13 +9,15 @@ internal sealed record WorktreeOptions(
     string Path,
     string Base,
     string Source,
-    bool Warm);
+    bool SkipRestore);
 
 internal static class WorktreeCommand
 {
+    internal const string SolutionPath = "Meta/StrataLint/StrataLint.sln";
     internal const string Usage =
         "USAGE: StrataLint worktree --branch NAME --path DIR "
-        + "[--base REV] [--source REPO_ROOT] [--warm]";
+        + "[--base REV] [--source REPO_ROOT] [--skip-restore]. "
+        + ".lake caches are copied for isolation; symlink sharing is forbidden.";
 
     private static readonly HashSet<string> OfficialRoles = new(StringComparer.Ordinal)
     {
@@ -27,44 +31,71 @@ internal static class WorktreeCommand
         "theorist",
     };
 
-    internal static CommandResult Run(string repositoryRoot, IReadOnlyList<string> arguments)
+    internal static CommandResult Run(string repositoryRoot, IReadOnlyList<string> arguments) =>
+        Run(repositoryRoot, arguments, new ProductionWorktreeProcessRunner());
+
+    internal static CommandResult Run(
+        string repositoryRoot,
+        IReadOnlyList<string> arguments,
+        IWorktreeProcessRunner runner)
     {
+        ArgumentNullException.ThrowIfNull(runner);
         WorktreeOptions? options = null;
-        var provisioningStarted = false;
+        var worktreeCreated = false;
         var stopwatch = System.Diagnostics.Stopwatch.StartNew();
         try
         {
             options = ParseArguments(repositoryRoot, arguments);
-            Validate(options);
-            provisioningStarted = true;
+            ValidatePreflight(options, runner);
+            GitWorktreeInventory.FetchRemoteBase(options.Source, options.Base, runner);
+            VerifyBase(options, runner);
+            var pins = LeanPinSet.ReadBase(options.Source, options.Base, runner);
+            var donor = GitWorktreeInventory.SelectDonor(options.Source, pins, runner);
+
             RunRequired(
+                runner,
                 "git",
-                new[] { "worktree", "add", "-b", options.Branch, options.Path, options.Base },
+                ["worktree", "add", "-b", options.Branch, options.Path, options.Base],
                 options.Source,
-                TimeSpan.FromSeconds(120));
-            var clone = LeanCacheCloner.Clone(options.Source, options.Path);
-            if (options.Warm)
+                TimeSpan.FromSeconds(120),
+                "git worktree add failed");
+            worktreeCreated = true;
+            var cache = LeanCacheProvisioner.Provision(donor, options.Path, runner);
+            if (!options.SkipRestore)
             {
                 RunRequired(
-                    "lake",
-                    new[] { "build" },
+                    runner,
+                    "dotnet",
+                    ["restore", SolutionPath, "--locked-mode"],
                     options.Path,
-                    TimeSpan.FromSeconds(1800));
+                    TimeSpan.FromSeconds(1800),
+                    "dotnet restore failed");
             }
 
             stopwatch.Stop();
-            var summary = $"WORKTREE path={options.Path} branch={options.Branch} "
-                + $"clone={clone.Strategy} warm={options.Warm.ToString().ToLowerInvariant()} "
-                + $"elapsed_ms={stopwatch.ElapsedMilliseconds}\n";
-            var warning = clone.Warning is null
+            var summary = JsonSerializer.Serialize(new
+            {
+                @event = "worktree_init",
+                branch = options.Branch,
+                path = options.Path,
+                base_revision = options.Base,
+                donor = donor.Donor,
+                pin_sha256 = pins.Sha256,
+                cache_strategy = cache.Strategy,
+                cache_method = cache.Method,
+                dotnet_restore = options.SkipRestore ? "skipped" : "restored",
+                elapsed_ms = stopwatch.ElapsedMilliseconds,
+            }) + "\n";
+            var warning = cache.Warning is null
                 ? string.Empty
-                : $"WORKTREE_WARNING {clone.Warning}\n";
+                : $"WORKTREE_WARNING {cache.Warning}\n";
             return new CommandResult(true, summary, warning);
         }
         catch (Exception exception)
         {
-            var cleanup = options is not null && provisioningStarted
-                ? Cleanup(options)
+            stopwatch.Stop();
+            var cleanup = options is not null && worktreeCreated
+                ? Cleanup(options, runner)
                 : string.Empty;
             return new CommandResult(
                 false,
@@ -83,14 +114,14 @@ internal static class WorktreeCommand
         string? path = null;
         var baseRevision = "origin/dev";
         var source = repositoryRoot;
-        var warm = false;
+        var skipRestore = false;
 
         for (var index = 0; index < arguments.Count; index++)
         {
             switch (arguments[index])
             {
-                case "--warm" when !warm:
-                    warm = true;
+                case "--skip-restore" when !skipRestore:
+                    skipRestore = true;
                     break;
                 case "--branch" when branch is null:
                     branch = ReadValue(arguments, ref index);
@@ -120,7 +151,7 @@ internal static class WorktreeCommand
             System.IO.Path.GetFullPath(path),
             baseRevision,
             System.IO.Path.GetFullPath(source),
-            warm);
+            skipRestore);
     }
 
     private static string ReadValue(IReadOnlyList<string> arguments, ref int index)
@@ -154,7 +185,7 @@ internal static class WorktreeCommand
             "branch must match harness/* or agent/<official>/<task-code>");
     }
 
-    private static void Validate(WorktreeOptions options)
+    private static void ValidatePreflight(WorktreeOptions options, IWorktreeProcessRunner runner)
     {
         if (!Directory.Exists(options.Source))
         {
@@ -167,8 +198,9 @@ internal static class WorktreeCommand
         }
 
         var branchFormat = RunProcess(
+            runner,
             "git",
-            new[] { "check-ref-format", "--branch", options.Branch },
+            ["check-ref-format", "--branch", options.Branch],
             options.Source,
             TimeSpan.FromSeconds(30));
         if (branchFormat.ExitCode != 0)
@@ -178,8 +210,9 @@ internal static class WorktreeCommand
         }
 
         var existingBranch = RunProcess(
+            runner,
             "git",
-            new[] { "show-ref", "--verify", "--quiet", $"refs/heads/{options.Branch}" },
+            ["show-ref", "--verify", "--quiet", $"refs/heads/{options.Branch}"],
             options.Source,
             TimeSpan.FromSeconds(30));
         if (existingBranch.ExitCode == 0)
@@ -191,20 +224,24 @@ internal static class WorktreeCommand
         {
             throw new InvalidOperationException(ProcessError(existingBranch, "could not inspect branch"));
         }
-
-        RunRequired(
-            "git",
-            new[] { "rev-parse", "--verify", "--end-of-options", $"{options.Base}^{{commit}}" },
-            options.Source,
-            TimeSpan.FromSeconds(30));
     }
 
-    private static string Cleanup(WorktreeOptions options)
+    private static void VerifyBase(WorktreeOptions options, IWorktreeProcessRunner runner) =>
+        RunRequired(
+            runner,
+            "git",
+            ["rev-parse", "--verify", "--end-of-options", $"{options.Base}^{{commit}}"],
+            options.Source,
+            TimeSpan.FromSeconds(30),
+            $"base revision does not resolve: {options.Base}");
+
+    private static string Cleanup(WorktreeOptions options, IWorktreeProcessRunner runner)
     {
         var errors = new List<string>();
         var removal = RunProcess(
+            runner,
             "git",
-            new[] { "worktree", "remove", "--force", options.Path },
+            ["worktree", "remove", "--force", options.Path],
             options.Source,
             TimeSpan.FromSeconds(120));
         if (removal.ExitCode != 0 && Directory.Exists(options.Path))
@@ -212,7 +249,7 @@ internal static class WorktreeCommand
             errors.Add(ProcessError(removal, "git worktree remove failed"));
             try
             {
-                if (Directory.Exists(options.Path)) Directory.Delete(options.Path, recursive: true);
+                Directory.Delete(options.Path, recursive: true);
             }
             catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
             {
@@ -221,15 +258,17 @@ internal static class WorktreeCommand
         }
 
         var branchLookup = RunProcess(
+            runner,
             "git",
-            new[] { "show-ref", "--verify", "--quiet", $"refs/heads/{options.Branch}" },
+            ["show-ref", "--verify", "--quiet", $"refs/heads/{options.Branch}"],
             options.Source,
             TimeSpan.FromSeconds(30));
         if (branchLookup.ExitCode == 0)
         {
             var branchRemoval = RunProcess(
+                runner,
                 "git",
-                new[] { "branch", "-D", options.Branch },
+                ["branch", "-D", options.Branch],
                 options.Source,
                 TimeSpan.FromSeconds(30));
             if (branchRemoval.ExitCode != 0)
@@ -248,28 +287,31 @@ internal static class WorktreeCommand
     }
 
     private static void RunRequired(
+        IWorktreeProcessRunner runner,
         string fileName,
-        IEnumerable<string> arguments,
+        IReadOnlyList<string> arguments,
         string workingDirectory,
-        TimeSpan timeout)
+        TimeSpan timeout,
+        string fallback)
     {
-        var result = RunProcess(fileName, arguments, workingDirectory, timeout);
+        var result = RunProcess(runner, fileName, arguments, workingDirectory, timeout);
         if (result.ExitCode != 0)
         {
-            throw new InvalidOperationException(ProcessError(result, $"{fileName} command failed"));
+            throw new InvalidOperationException(ProcessError(result, fallback));
         }
     }
 
     private static ProcessOutput RunProcess(
+        IWorktreeProcessRunner runner,
         string fileName,
-        IEnumerable<string> arguments,
+        IReadOnlyList<string> arguments,
         string workingDirectory,
         TimeSpan timeout) =>
-        BoundedProcessRunner.Run(fileName, arguments, workingDirectory, timeout, 64 * 1024 * 1024);
+        runner.Run(fileName, arguments, workingDirectory, timeout);
 
     private static string ProcessError(ProcessOutput output, string fallback)
     {
-        var error = System.Text.Encoding.UTF8.GetString(output.StandardError).Trim();
+        var error = Encoding.UTF8.GetString(output.StandardError).Trim();
         return error.Length == 0 ? fallback : error;
     }
 }

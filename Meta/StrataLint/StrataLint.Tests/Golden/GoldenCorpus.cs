@@ -48,6 +48,12 @@ internal abstract record GoldenMutation
 
 internal static partial class GoldenCorpus
 {
+    private const string RingPath = RuleFixture.RingPath;
+    private const string BlueprintPath = RuleFixture.BlueprintPath;
+    private const string NotationPath = RuleFixture.NotationPath;
+    private const string AssumptionDebtPath = RuleFixture.AssumptionDebtPath;
+    private const string HeartsPath = RuleFixture.HeartsPath;
+
     internal static IReadOnlyList<GoldenCase> All { get; } =
     [
         .. Corpus1,

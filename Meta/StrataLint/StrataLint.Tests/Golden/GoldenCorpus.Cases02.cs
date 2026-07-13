@@ -19,8 +19,8 @@ internal static partial class GoldenCorpus
         C(
             "unregistered-axiom",
             [],
-            [L("D5/S0/Carrier/Ring.lean", "D5/S0/Carrier/Ring", Generality.General, "axiom invented : False\n")],
-            [D(20, "D5/S0/Carrier/Ring.lean", "axiom declarations are confined to AxiomDebt.lean: invented")]),
+            [L(RingPath, "D5/S0/Carrier/Ring", Generality.General, "axiom invented : False\n")],
+            [D(20, RingPath, "axiom declarations are confined to AxiomDebt.lean: invented")]),
         C(
             "unknown-top-level-file",
             [],
@@ -59,18 +59,18 @@ internal static partial class GoldenCorpus
         C(
             "protected-axiom",
             [],
-            [L("D5/S0/Carrier/Ring.lean", "D5/S0/Carrier/Ring", Generality.General, "namespace D5.S0.Carrier\nprotected axiom protectedBypass : False\nend D5.S0.Carrier\n")],
-            [D(20, "D5/S0/Carrier/Ring.lean", "axiom declarations are confined to AxiomDebt.lean: D5.S0.Carrier.protectedBypass")]),
+            [L(RingPath, "D5/S0/Carrier/Ring", Generality.General, "namespace D5.S0.Carrier\nprotected axiom protectedBypass : False\nend D5.S0.Carrier\n")],
+            [D(20, RingPath, "axiom declarations are confined to AxiomDebt.lean: D5.S0.Carrier.protectedBypass")]),
         C(
             "comment-only-sorry",
             [],
-            [L("D5/S0/Carrier/Ring.lean", "D5/S0/Carrier/Ring", Generality.General, "-- sorry is discussion, not a term\ndef commentSafe : String := \"axiom sorry\"\n")],
+            [L(RingPath, "D5/S0/Carrier/Ring", Generality.General, "-- sorry is discussion, not a term\ndef commentSafe : String := \"axiom sorry\"\n")],
             []),
         C(
             "hearts-attributed-comment-decoy",
-            [L("D5/X_Frontier/Hearts.lean", "D5/X_Frontier/Hearts", Generality.Extremal, "theorem heart : True := by sorry\n")],
-            [L("D5/X_Frontier/Hearts.lean", "D5/X_Frontier/Hearts", Generality.Extremal, "/-\ntheorem heart : True := by trivial\n-/\n@[simp] theorem heart : False := by sorry\n")],
-            [D(8, "D5/X_Frontier/Hearts.lean", "semantic declaration identities and types are frozen")]),
+            [L(HeartsPath, "D5/X_Frontier/Hearts", Generality.Extremal, "theorem heart : True := by sorry\n")],
+            [L(HeartsPath, "D5/X_Frontier/Hearts", Generality.Extremal, "/-\ntheorem heart : True := by trivial\n-/\n@[simp] theorem heart : False := by sorry\n")],
+            [D(8, HeartsPath, "semantic declaration identities and types are frozen")]),
         C(
             "future-theory-is-uninstantiated",
             [],

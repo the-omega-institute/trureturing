@@ -174,7 +174,7 @@ public static class CoverageCanonicalWriter
                         members = item.Members.Order(StringComparer.Ordinal),
                         verification = item.Verification,
                     }),
-                manifest_path = "Meta/StrataLint/TOWER.yaml",
+                manifest_path = RepositoryRules.TowerManifestPath,
                 status = "valid",
             },
             ungoverned = new

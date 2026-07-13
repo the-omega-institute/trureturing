@@ -6,8 +6,6 @@ namespace StrataLint.Cli;
 
 internal static class CoverageCommand
 {
-    private const string TowerPath = "Meta/StrataLint/TOWER.yaml";
-
     internal static CommandResult Run(
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
@@ -128,9 +126,10 @@ internal static class CoverageCommand
 
     private static TowerManifestSyntax LoadTower(RepositorySnapshot snapshot)
     {
-        if (!snapshot.TryGetFile(TowerPath, out var file))
+        if (!snapshot.TryGetFile(RepositoryRules.TowerManifestPath, out var file))
         {
-            throw new InvalidOperationException($"tower manifest is missing: {TowerPath}");
+            throw new InvalidOperationException(
+                $"tower manifest is missing: {RepositoryRules.TowerManifestPath}");
         }
 
         return TowerManifestParser.Parse(file.RawBytes.AsSpan()) switch

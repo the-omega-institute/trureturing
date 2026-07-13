@@ -207,7 +207,7 @@ public sealed class Gid : IEquatable<Gid>
             return new Target.Evidence(
                 Theory,
                 CoordinatePath.Create(rest),
-                RepoPath.CreateKnown("Evidence/D5/values.json"),
+                RepoPath.CreateKnown(ValuesProjectionLoader.RelativePath),
                 "result",
                 artifactKind);
         }
@@ -339,7 +339,7 @@ public sealed class Gid : IEquatable<Gid>
             + (formal.Declaration is null ? string.Empty : $".{formal.Declaration}"),
         Target.Blueprint blueprint =>
             $"{blueprint.Theory}/B/{string.Join('/', blueprint.Coordinates.Values)}",
-        Target.Evidence { Path.Value: "Evidence/D5/values.json" } evidence =>
+        Target.Evidence { Path.Value: ValuesProjectionLoader.RelativePath } evidence =>
             $"{evidence.Theory}/E/values{TagSeparator}{evidence.ArtifactKind.Value}",
         Target.Evidence evidence =>
             $"{evidence.Theory}/E/{string.Join('/', evidence.Coordinates.Values)}"

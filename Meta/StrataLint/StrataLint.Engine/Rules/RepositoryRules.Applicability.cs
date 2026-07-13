@@ -22,7 +22,7 @@ internal static partial class RepositoryRules
     private static bool RepositoryScoped(RepositoryFile artifact, RuleApplicabilityContext context) => false;
 
     private static bool HeartsScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
-        artifact.Path.Value == "D5/X_Frontier/Hearts.lean";
+        artifact.Path.Value == HeartsPath;
 
     private static bool GeneralSource(RepositoryFile artifact, RuleApplicabilityContext context) =>
         Formal(artifact, context)

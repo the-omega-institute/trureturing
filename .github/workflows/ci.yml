@@ -74,24 +74,18 @@ jobs:
 
       - name: Restore candidate locked dependencies
         run: |
-          dotnet restore candidate/Meta/StrataLint/StrataLint.sln --locked-mode
           dotnet restore candidate/Meta/StrataLint/CompileFailProof/CompileFailProof.csproj --locked-mode
           dotnet restore candidate/Meta/StrataLint/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj --locked-mode
 
       - name: Build candidate with warnings as errors
-        run: dotnet build candidate/Meta/StrataLint/StrataLint.sln --no-restore --configuration Release --warnaserror
+        run: make -C candidate dotnet
 
       - name: Run candidate golden and integration tests
-        run: dotnet test candidate/Meta/StrataLint/StrataLint.sln --no-build --no-restore --configuration Release --verbosity normal
+        run: make -C candidate test
 
       - name: Run candidate selftest twice and compare bytes
-        working-directory: candidate
         shell: bash
-        run: |
-          set -euo pipefail
-          dotnet Meta/StrataLint/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll selftest > "$RUNNER_TEMP/candidate-selftest-1.txt"
-          dotnet Meta/StrataLint/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll selftest > "$RUNNER_TEMP/candidate-selftest-2.txt"
-          cmp "$RUNNER_TEMP/candidate-selftest-1.txt" "$RUNNER_TEMP/candidate-selftest-2.txt"
+        run: make -C candidate selftest
 
       - name: Prove missing capability does not compile
         shell: bash
