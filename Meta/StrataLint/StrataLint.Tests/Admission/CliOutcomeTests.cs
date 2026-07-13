@@ -34,6 +34,30 @@ public sealed class CliOutcomeTests
         Assert.DoesNotContain(marker, markerOnError ? console.Output : console.Error, StringComparison.Ordinal);
     }
 
+    [Theory]
+    [InlineData(0, "certificate\n", "")]
+    [InlineData(1, "violation\n", "")]
+    [InlineData(2, "", "infrastructure\n")]
+    public void VerifyConservativePreservesItsThreeWayExitContract(
+        int expectedExit,
+        string output,
+        string error)
+    {
+        var console = new BufferedConsole();
+        var environment = new StubCliEnvironment(
+            Admitted(),
+            new ExplicitCommandResult(expectedExit, output, error));
+
+        var exitCode = CliApplication.Run(
+            new[] { "verify-conservative" },
+            environment,
+            console);
+
+        Assert.Equal(expectedExit, exitCode);
+        Assert.Equal(output, console.Output);
+        Assert.Equal(error, console.Error);
+    }
+
     private static AdmissionOutcome Outcome(string fixture) => fixture switch
     {
         "admitted" => Admitted(),
@@ -99,7 +123,9 @@ public sealed class CliOutcomeTests
     }
 }
 
-internal sealed class StubCliEnvironment(AdmissionOutcome outcome) : ICliEnvironment
+internal sealed class StubCliEnvironment(
+    AdmissionOutcome outcome,
+    ExplicitCommandResult? conservative = null) : ICliEnvironment
 {
     public AdmissionOutcome Check(IReadOnlyList<string> arguments) => outcome;
 
@@ -129,6 +155,15 @@ internal sealed class StubCliEnvironment(AdmissionOutcome outcome) : ICliEnviron
 
     public CommandResult Worktree(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "worktree is not configured in this fixture");
+
+    public ExplicitCommandResult VerifyConservative(IReadOnlyList<string> arguments) =>
+        conservative ?? new ExplicitCommandResult(
+            2,
+            string.Empty,
+            "verify-conservative is not configured in this fixture");
+
+    public ExplicitCommandResult EvaluateConservativeCorpus(IReadOnlyList<string> arguments) =>
+        new(2, string.Empty, "evaluate-conservative-corpus is not configured in this fixture");
 }
 
 internal sealed class BufferedConsole : ICliConsole

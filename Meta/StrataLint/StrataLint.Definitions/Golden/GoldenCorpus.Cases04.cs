@@ -139,5 +139,11 @@ internal static partial class GoldenCorpus
             [],
             [W("Evidence/D5/values.result.json", "{\"D5/sample\": {\"status\": \"verified\", \"value\": 123}}\n")],
             [D(18, "Evidence/D5/values.result.json", "canonical values projection must be Evidence/D5/values.json")]),
+        C(
+            "meta-bootstrap-protected-surface",
+            [],
+            [W(SyntheticProtectedPath, "// protected fixture\n")],
+            [D(22, SyntheticProtectedPath, "meta change requires external human review")],
+            [SyntheticProtectedPath]),
     ];
 }

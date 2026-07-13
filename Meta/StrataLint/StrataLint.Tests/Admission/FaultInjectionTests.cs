@@ -36,7 +36,7 @@ public sealed class FaultInjectionTests
     }
 
     [Fact]
-    public void MissingOrMalformedLeanReportIsInfrastructureFailureWhileUnknownAxiomReachesRules()
+    public void MissingLeanReportIsInfrastructureWhileInspectionFailureReachesRules()
     {
         var fixture = new RuleFixture();
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
@@ -61,7 +61,7 @@ public sealed class FaultInjectionTests
         });
 
         Assert.IsType<LeanValidationOutcome.InfrastructureFailure>(LeanClosureValidator.Validate(snapshot, missing));
-        Assert.IsType<LeanValidationOutcome.InfrastructureFailure>(LeanClosureValidator.Validate(snapshot, malformed));
+        Assert.IsType<LeanValidationOutcome.Accepted>(LeanClosureValidator.Validate(snapshot, malformed));
         Assert.IsType<LeanValidationOutcome.Accepted>(LeanClosureValidator.Validate(snapshot, unknownAxiom));
     }
 
@@ -116,6 +116,24 @@ public sealed class FaultInjectionTests
             "/tmp",
             TimeSpan.FromMilliseconds(20),
             1024));
+    }
+
+    [Fact]
+    public void BoundedProcessFeedsExactStandardInputBytes()
+    {
+        var expected = Encoding.UTF8.GetBytes("base-owned replay envelope\n");
+
+        var output = BoundedProcessRunner.Run(
+            "/bin/cat",
+            Array.Empty<string>(),
+            "/tmp",
+            TimeSpan.FromSeconds(2),
+            1024,
+            expected);
+
+        Assert.Equal(0, output.ExitCode);
+        Assert.Equal(expected, output.StandardOutput);
+        Assert.Empty(output.StandardError);
     }
 
     [Fact]

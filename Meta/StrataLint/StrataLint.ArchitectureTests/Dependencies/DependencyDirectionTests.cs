@@ -20,10 +20,10 @@ public sealed class DependencyDirectionTests
     }
 
     [Fact]
-    public void CliReferencesExactlyEngineScribeAndYamlDotNet()
+    public void CliReferencesExactlyDefinitionsEngineScribeAndYamlDotNet()
     {
         Assert.Equal(
-            ["StrataLint.Engine", "StrataLint.Scribe", "YamlDotNet"],
+            ["StrataLint.Definitions", "StrataLint.Engine", "StrataLint.Scribe", "YamlDotNet"],
             AssemblyReferencePolicy.NonPlatformReferences(typeof(StrataLint.Cli.Program).Assembly));
     }
 

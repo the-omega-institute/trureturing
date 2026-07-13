@@ -206,7 +206,7 @@ components:
     kind: phased-gate
     members:
       - phase1-protected-content-admission
-      - phase2-conservative-extension-proof-pending
+      - phase2-dual-harness-conservative-extension
     judged_by:
       - bootstrap-pr-1
     verification: ASSUMED-UNVERIFIED

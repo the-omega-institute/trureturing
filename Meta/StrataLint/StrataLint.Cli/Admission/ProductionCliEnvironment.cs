@@ -92,9 +92,6 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 return new AdmissionOutcome.InfrastructureFailure(bootstrapFailure.Message);
             }
 
-            var sl022Diagnostics = bootstrap is BootstrapOutcome.HumanReviewRequired bootstrapReview
-                ? BootstrapGate.CreateSl022Diagnostics(bootstrapReview.ChangeSet)
-                : ImmutableArray<Diagnostic>.Empty;
             if (options.CandidateLeanReport is null || options.BaselineLeanReport is null)
             {
                 return new AdmissionOutcome.InfrastructureFailure(
@@ -103,75 +100,37 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
 
             var current = Decode(repository.ReadCurrent());
             var baseline = Decode(repository.ReadRevision(prepared.Revision));
-            if (!current.TryGetFile("Meta/registry.yaml", out var registryFile))
-            {
-                return new AdmissionOutcome.InfrastructureFailure("Meta/registry.yaml is missing");
-            }
-
-            if (!current.TryGetFile("Meta/domains.yaml", out var domainsFile))
-            {
-                return new AdmissionOutcome.InfrastructureFailure("Meta/domains.yaml is missing");
-            }
-
-            var registryOutcome = RegistryLoader.Load(
-                registryFile.RawBytes.AsSpan(),
-                domainsFile.RawBytes.AsSpan());
-            if (registryOutcome is RegistryLoadOutcome.InfrastructureFailure registryFailure)
-            {
-                return new AdmissionOutcome.InfrastructureFailure(registryFailure.Message);
-            }
-
-            var registry = (RegistryLoadOutcome.Accepted)registryOutcome;
             var candidateLeanReport = RawLeanReportArtifact.ReadFile(
                 options.CandidateLeanReport,
                 current);
-            var lean = ValidateLean(current, candidateLeanReport);
             var verifiedScribeEmissions = VerifyScribeForAdmission(
                 candidateLeanReport,
                 bootstrap);
-            var dag = AcyclicTruthDag.Build(current, lean);
-            if (dag is DagBuildOutcome.Rejected rejectedDag)
-            {
-                return RejectCycle(rejectedDag.Witness, sl022Diagnostics);
-            }
-
-            var baselineLean = ValidateLean(
+            var evaluation = SnapshotAdmissionCore.Evaluate(
+                current,
                 baseline,
-                RawLeanReportArtifact.ReadFile(options.BaselineLeanReport, baseline));
-            var baselineDag = AcyclicTruthDag.Build(baseline, baselineLean);
-            if (baselineDag is DagBuildOutcome.Rejected baselineRejected)
-            {
-                return new AdmissionOutcome.InfrastructureFailure(
-                    "protected baseline truth DAG is cyclic: "
-                    + string.Join(" -> ", baselineRejected.Witness.Select(static path => path.Value)));
-            }
-
-            var admission = bootstrap switch
-            {
-                BootstrapOutcome.Clear clear => AdmissionPipeline.EvaluateWithScribe(
-                    current,
-                    baseline,
-                    registry.Policy,
-                    lean,
-                    baselineLean,
-                    prepared.Changes,
-                    clear.Capability,
-                    verifiedScribeEmissions),
-                BootstrapOutcome.HumanReviewRequired review => AdmissionPipeline.EvaluateProtectedSurface(
-                    current,
-                    baseline,
-                    registry.Policy,
-                    lean,
-                    baselineLean,
-                    prepared.Changes,
-                    review.ChangeSet,
-                    verifiedScribeEmissions),
-                _ => throw new InvalidOperationException("unknown bootstrap outcome"),
-            };
+                candidateLeanReport,
+                RawLeanReportArtifact.ReadFile(options.BaselineLeanReport, baseline),
+                prepared.Changes,
+                bootstrap,
+                verifiedScribeEmissions);
+            var admission = evaluation.Outcome;
             if (admission is not AdmissionOutcome.Admitted
                 && admission is not AdmissionOutcome.ProtectedSurfaceChange)
             {
-                return PreserveSl022Diagnostics(admission, sl022Diagnostics);
+                return admission;
+            }
+
+            if (evaluation is not
+                {
+                    CurrentLean: { } lean,
+                    BaselineLean: { } baselineLean,
+                    CurrentDag: { } dag,
+                    BaselineDag: { } baselineDag,
+                })
+            {
+                return new AdmissionOutcome.InfrastructureFailure(
+                    "snapshot admission omitted capabilities required by frozen-ledger validation");
             }
 
             var ledgerOutcome = ProductionFrozenLedgerValidator.Validate(
@@ -179,12 +138,17 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 baseline,
                 lean,
                 baselineLean,
-                ((DagBuildOutcome.Accepted)dag).Capability,
-                ((DagBuildOutcome.Accepted)baselineDag).Capability,
+                dag,
+                baselineDag,
                 repository);
+            var sl022Diagnostics = bootstrap is BootstrapOutcome.HumanReviewRequired review
+                ? BootstrapGate.CreateSl022Diagnostics(review.ChangeSet)
+                : ImmutableArray<Diagnostic>.Empty;
             return ledgerOutcome is null
                 ? admission
-                : PreserveSl022Diagnostics(ledgerOutcome, sl022Diagnostics);
+                : SnapshotAdmissionCore.PreserveSl022Diagnostics(
+                    ledgerOutcome,
+                    sl022Diagnostics);
         }
         catch (Exception exception)
         {
@@ -342,6 +306,12 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
     public CommandResult Worktree(IReadOnlyList<string> arguments) =>
         WorktreeCommand.Run(repositoryRoot, arguments);
 
+    public ExplicitCommandResult VerifyConservative(IReadOnlyList<string> arguments) =>
+        ConservativeExtensionCommand.Run(arguments);
+
+    public ExplicitCommandResult EvaluateConservativeCorpus(IReadOnlyList<string> arguments) =>
+        ConservativeCorpusWorker.Run(arguments);
+
     private RegistryLoadOutcome.Accepted LoadRegistry()
     {
         var registryPath = Path.Combine(repositoryRoot, "Meta", "registry.yaml");
@@ -418,63 +388,5 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             SnapshotDecodeOutcome.InfrastructureFailure failure =>
                 throw new InvalidOperationException(failure.Message),
         };
-
-    private static AcceptedLeanClosure ValidateLean(
-        RepositorySnapshot snapshot,
-        LeanAxiomReport report) =>
-        LeanClosureValidator.Validate(snapshot, report) switch
-        {
-            LeanValidationOutcome.Accepted accepted => accepted.Capability,
-            LeanValidationOutcome.InfrastructureFailure failure =>
-                throw new InvalidOperationException(failure.Message),
-        };
-
-    private static AdmissionOutcome RejectCycle(
-        ImmutableArray<RepoPath> witness,
-        ImmutableArray<Diagnostic> sl022Diagnostics)
-    {
-        if (witness.Length < 2 || witness[0] != witness[^1])
-        {
-            throw new InvalidOperationException("Truth DAG cycle rejection did not carry a closed witness.");
-        }
-
-        var descriptor = RuleCatalog.Default.Descriptors[0];
-        var cycle = new Diagnostic(
-            descriptor.Id,
-            descriptor.Title,
-            descriptor.DisplaySeverity,
-            descriptor.AdmissionEffect,
-            witness[0].Value,
-            "managed import cycle: " + string.Join(" -> ", witness.Select(static path => path.Value)));
-        return new AdmissionOutcome.RuleRejected(
-            ImmutableArray.Create(cycle).AddRange(sl022Diagnostics));
-    }
-
-    private static AdmissionOutcome PreserveSl022Diagnostics(
-        AdmissionOutcome outcome,
-        ImmutableArray<Diagnostic> expected)
-    {
-        if (expected.IsDefaultOrEmpty || outcome is not AdmissionOutcome.RuleRejected rejected)
-        {
-            return outcome;
-        }
-
-        var actual = rejected.Diagnostics
-            .Where(static diagnostic => diagnostic.RuleId == RuleId.CreateKnown(22))
-            .OrderBy(static diagnostic => diagnostic.Path, StringComparer.Ordinal)
-            .ToImmutableArray();
-        if (actual.IsEmpty)
-        {
-            return new AdmissionOutcome.RuleRejected(rejected.Diagnostics.AddRange(expected));
-        }
-
-        if (!actual.SequenceEqual(expected))
-        {
-            return new AdmissionOutcome.InfrastructureFailure(
-                "SL-022 rejection evidence disagrees with the bootstrap meta change set");
-        }
-
-        return outcome;
-    }
 
 }

@@ -4,6 +4,8 @@ namespace StrataLint.Cli;
 
 internal sealed record CommandResult(bool Success, string Output, string Error);
 
+internal sealed record ExplicitCommandResult(int ExitCode, string Output, string Error);
+
 internal interface ICliEnvironment
 {
     AdmissionOutcome Check(IReadOnlyList<string> arguments);
@@ -25,6 +27,10 @@ internal interface ICliEnvironment
     CommandResult ReattestLedger(IReadOnlyList<string> arguments);
 
     CommandResult Worktree(IReadOnlyList<string> arguments);
+
+    ExplicitCommandResult VerifyConservative(IReadOnlyList<string> arguments);
+
+    ExplicitCommandResult EvaluateConservativeCorpus(IReadOnlyList<string> arguments);
 }
 
 internal interface ICliConsole
@@ -78,7 +84,7 @@ internal static class CliApplication
         if (arguments.Count == 0)
         {
             console.WriteError(
-                "USAGE: StrataLint check|coverage|digest-status|ledger-genesis|route|selftest|topology|worktree|ledger-append|ledger-reattest\n");
+                "USAGE: StrataLint check|coverage|digest-status|ledger-genesis|route|selftest|topology|worktree|ledger-append|ledger-reattest|verify-conservative|evaluate-conservative-corpus\n");
             return 2;
         }
 
@@ -88,12 +94,15 @@ internal static class CliApplication
             "check" => RenderAdmission(environment.Check(tail), console),
             "coverage" => RenderCommand(environment.Coverage(tail), console),
             "digest-status" => RenderCommand(environment.DigestStatus(tail), console),
+            "evaluate-conservative-corpus" =>
+                RenderExplicit(environment.EvaluateConservativeCorpus(tail), console),
             "ledger-genesis" => RenderCommand(environment.GenerateLedger(tail), console),
             "ledger-append" => RenderCommand(environment.AppendLedger(tail), console),
             "ledger-reattest" => RenderCommand(environment.ReattestLedger(tail), console),
             "route" => RenderCommand(environment.Route(tail), console),
             "selftest" => RenderCommand(environment.SelfTest(tail), console),
             "topology" => RenderTopology(environment.Topology(tail), console),
+            "verify-conservative" => RenderExplicit(environment.VerifyConservative(tail), console),
             "worktree" => RenderCommand(environment.Worktree(tail), console),
             _ => UnknownCommand(arguments[0], console),
         };
@@ -205,6 +214,18 @@ internal static class CliApplication
         if (result.Output.Length > 0) console.WriteOutput(result.Output);
         if (result.Error.Length > 0) console.WriteError(result.Error);
         return result.Success ? 0 : 2;
+    }
+
+    private static int RenderExplicit(ExplicitCommandResult result, ICliConsole console)
+    {
+        if (result.ExitCode is < 0 or > 2)
+        {
+            throw new InvalidOperationException("explicit command returned an invalid exit code");
+        }
+
+        if (result.Output.Length > 0) console.WriteOutput(result.Output);
+        if (result.Error.Length > 0) console.WriteError(result.Error);
+        return result.ExitCode;
     }
 
     private static int UnknownCommand(string command, ICliConsole console)

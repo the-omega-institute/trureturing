@@ -11,7 +11,8 @@ internal static class BoundedProcessRunner
         IEnumerable<string> arguments,
         string workingDirectory,
         TimeSpan timeout,
-        int maximumOutputBytes)
+        int maximumOutputBytes,
+        ReadOnlyMemory<byte> standardInput = default)
     {
         var startInfo = new ProcessStartInfo
         {
@@ -20,6 +21,7 @@ internal static class BoundedProcessRunner
             UseShellExecute = false,
             RedirectStandardOutput = true,
             RedirectStandardError = true,
+            RedirectStandardInput = !standardInput.IsEmpty,
             CreateNoWindow = true,
         };
         foreach (var argument in arguments)
@@ -44,7 +46,14 @@ internal static class BoundedProcessRunner
                 process.StandardError.BaseStream,
                 maximumOutputBytes,
                 cancellation.Token);
+            var stdin = standardInput.IsEmpty
+                ? Task.CompletedTask
+                : WriteInputAsync(
+                    process.StandardInput.BaseStream,
+                    standardInput,
+                    cancellation.Token);
             process.WaitForExitAsync(cancellation.Token).GetAwaiter().GetResult();
+            stdin.GetAwaiter().GetResult();
             return new ProcessOutput(
                 process.ExitCode,
                 stdout.GetAwaiter().GetResult(),
@@ -59,6 +68,22 @@ internal static class BoundedProcessRunner
         {
             TryKill(process);
             throw;
+        }
+    }
+
+    private static async Task WriteInputAsync(
+        Stream stream,
+        ReadOnlyMemory<byte> bytes,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            await stream.WriteAsync(bytes, cancellationToken).ConfigureAwait(false);
+            await stream.FlushAsync(cancellationToken).ConfigureAwait(false);
+        }
+        finally
+        {
+            stream.Close();
         }
     }
 

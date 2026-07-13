@@ -31,7 +31,7 @@ public sealed class GoldenCorpusTests
         fixture.ApplyGoldenMutations(caseName, testCase.Mutations, baseline: false);
 
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(fixture.BuildGoldenContext()));
+            RuleCatalog.Default.Execute(fixture.BuildGoldenContext(testCase.Changes)));
         var actual = completed.Capability.Diagnostics
             .Select(static item => item.Render())
             .Order(StringComparer.Ordinal)

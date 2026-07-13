@@ -94,9 +94,17 @@ SCRIBE_USE_EXISTING_REPORT=1 make -C "$CANDIDATE_ROOT" emit-check
 
 GATE="$JUDGE_ROOT/.github/scripts/harness-gate.sh"
 [[ -x "$GATE" ]] || { echo "local-harness-gate: dev gate is absent" >&2; exit 2; }
+set +e
 "$GATE" \
   --candidate "$CANDIDATE_ROOT" \
   --judge-root "$JUDGE_ROOT" \
   --base "$BASE_SHA" \
   --candidate-lean-report "$CANDIDATE_REPORT" \
   --baseline-lean-report "$REPORTS/baseline-lean-report.json"
+gate_rc=$?
+set -e
+if [[ $gate_rc -eq 3 ]]; then
+  printf '%s\n' "local-harness-gate: certified SL-022 conservative extension" >&2
+  exit 0
+fi
+exit "$gate_rc"

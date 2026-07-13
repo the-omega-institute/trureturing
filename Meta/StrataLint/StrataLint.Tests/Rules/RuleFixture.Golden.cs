@@ -140,7 +140,7 @@ internal sealed partial class RuleFixture
         files["Meta/domains.yaml"] = string.Join('\n', lines);
     }
 
-    internal RuleEvaluationContext BuildGoldenContext()
+    internal RuleEvaluationContext BuildGoldenContext(IReadOnlyList<string> rawChanges)
     {
         var current = Decode(Files);
         var baseline = Decode(Baseline);
@@ -148,16 +148,22 @@ internal sealed partial class RuleFixture
             RegistryLoader.Load(
                 Encoding.UTF8.GetBytes(TestRegistry.Canonical),
                 Encoding.UTF8.GetBytes(Files["Meta/domains.yaml"])));
-        var meta = Assert.IsType<BootstrapOutcome.Clear>(
-            BootstrapGate.Evaluate(RawChangeSet.Create(new[] { BlueprintPath })));
+        var changes = RawChangeSet.Create(rawChanges);
+        var meta = BootstrapGate.Evaluate(changes) switch
+        {
+            BootstrapOutcome.Clear clear => MetaEvaluationProfile.ForClear(clear.Capability),
+            BootstrapOutcome.HumanReviewRequired review =>
+                MetaEvaluationProfile.ForProtectedSurface(review.ChangeSet),
+            _ => throw new InvalidOperationException("golden change set failed bootstrap evaluation"),
+        };
         return RuleEvaluationContext.Create(
             current,
             baseline,
             registry.Policy,
             AcceptedLeanClosure.Create(LeanAxiomReport.Create(Reports)),
             AcceptedLeanClosure.Create(LeanAxiomReport.Create(BaselineReports)),
-            RawChangeSet.Create(new[] { BlueprintPath }),
-            meta.Capability);
+            changes,
+            meta);
     }
 
     internal void NormalizeGoldenBackfillTargets()

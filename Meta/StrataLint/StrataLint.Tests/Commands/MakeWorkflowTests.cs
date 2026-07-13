@@ -78,6 +78,7 @@ public sealed class MakeWorkflowTests
         var root = FindRepositoryRoot();
         var workflow = File.ReadAllText(Path.Combine(root, ".github", "workflows", "ci.yml"));
         var localGate = File.ReadAllText(Path.Combine(root, LocalHarnessGateScriptPath));
+        var sharedGate = File.ReadAllText(Path.Combine(root, ".github", "scripts", "harness-gate.sh"));
 
         Assert.Contains("make -C candidate dotnet", workflow, StringComparison.Ordinal);
         Assert.Contains("make -C candidate test", workflow, StringComparison.Ordinal);
@@ -86,6 +87,14 @@ public sealed class MakeWorkflowTests
         Assert.Contains("$JUDGE_ROOT/.github/scripts/harness-gate.sh", localGate, StringComparison.Ordinal);
         Assert.Contains("--candidate-lean-report", localGate, StringComparison.Ordinal);
         Assert.Contains("--baseline-lean-report", localGate, StringComparison.Ordinal);
+        Assert.Contains("verify-conservative", sharedGate, StringComparison.Ordinal);
+        Assert.Contains("make -C \"$CANDIDATE_ROOT\" dotnet", sharedGate, StringComparison.Ordinal);
+        Assert.Contains("exit 3", sharedGate, StringComparison.Ordinal);
+        Assert.DoesNotContain("Bootstrap scaffold path", sharedGate, StringComparison.Ordinal);
+        Assert.Contains("gate_rc", localGate, StringComparison.Ordinal);
+        Assert.Contains("$gate_rc -eq 3", localGate, StringComparison.Ordinal);
+        Assert.Contains("$rc\" -ne 0 && \"$rc\" -ne 3", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("conservative extension", workflow, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
