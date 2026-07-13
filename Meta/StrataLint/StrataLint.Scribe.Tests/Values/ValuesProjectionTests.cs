@@ -59,6 +59,50 @@ public sealed class ValuesProjectionTests
         Assert.Contains("at least four", exception.Message, StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void ValuesWriterIsByteStableAndCarriesTheCompleteAttestation()
+    {
+        var root = FindRepositoryRoot();
+
+        var first = CanonicalValuesWriter.Write(root);
+        var second = CanonicalValuesWriter.Write(root);
+
+        Assert.True(first.AsSpan().SequenceEqual(second.AsSpan()));
+        Assert.True(first.AsSpan().SequenceEqual(File.ReadAllBytes(
+            Path.Combine(root, CanonicalValuesWriter.RelativePath))));
+        Assert.Equal((byte)'\n', first[^1]);
+        using var document = JsonDocument.Parse(first.ToArray());
+        var attestation = document.RootElement.GetProperty("attestation");
+        Assert.Equal("StrataLint.Scribe.ValuesProducer", attestation.GetProperty("emitter").GetString());
+        Assert.Equal(1, attestation.GetProperty("emitter_version").GetInt32());
+        Assert.Equal("D5/E/values--json", attestation.GetProperty("projection").GetString());
+        Assert.Matches("^[0-9a-f]{64}$", attestation.GetProperty("input_sha256").GetString());
+        var inputPaths = attestation.GetProperty("inputs").EnumerateArray()
+            .Select(static input => input.GetProperty("path").GetString()!)
+            .ToArray();
+        Assert.Equal(
+            [
+                "D5/X_Frontier/ValuesProducer.lean",
+                "Directory.Build.props",
+                "Directory.Packages.props",
+                "Meta/StrataLint/StrataLint.Scribe/packages.lock.json",
+                "global.json",
+            ],
+            inputPaths);
+
+        var constants = document.RootElement.GetProperty("constants").EnumerateArray().ToArray();
+        Assert.Equal(14, constants.Length);
+        Assert.Equal(
+            constants.Select(static item => item.GetProperty("id").GetString()).Order(StringComparer.Ordinal),
+            constants.Select(static item => item.GetProperty("id").GetString()));
+        Assert.All(constants, static item => Assert.Equal(
+            JsonValueKind.Array,
+            item.GetProperty("kernel_receipts").ValueKind));
+        var cphi = Assert.Single(constants, static item =>
+            item.GetProperty("id").GetString() == "D5/Cphi");
+        Assert.Equal("reference-mismatch-open", cphi.GetProperty("comparison").GetString());
+        Assert.Equal(3, cphi.GetProperty("kernel_receipts").GetArrayLength());
+    }
 
     [Fact]
     public void EmitValuesCliWritesAndChecksWithoutOverwritingDrift()
