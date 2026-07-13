@@ -3,7 +3,7 @@ name: admission
 
 on:
   push:
-    branches: [dev, 'integration-**']
+    branches: [dev]
   pull_request_target:
     branches: [dev, 'integration-**']
 
