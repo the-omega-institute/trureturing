@@ -83,8 +83,8 @@ components:
   - id: anchor-reference-rule
     kind: repository-files
     members:
-      - Meta/StrataLint/StrataLint.Engine/Rules/AnchorCatalogLoader.cs
-      - Meta/StrataLint/StrataLint.Engine/Rules/AnchorReferenceRule.cs
+      - Meta/StrataLint/StrataLint.Engine/Rules/Anchors/AnchorCatalogLoader.cs
+      - Meta/StrataLint/StrataLint.Engine/Rules/Anchors/AnchorReferenceRule.cs
       - Meta/StrataLint/StrataLint.Engine/Rules/RepositoryRules.Applicability.cs
       - Meta/StrataLint/StrataLint.Engine/Rules/RepositoryRules.Content.cs
       - Meta/StrataLint/StrataLint.Engine/Rules/RepositoryRules.cs
