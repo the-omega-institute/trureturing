@@ -202,6 +202,16 @@ public sealed class Gid : IEquatable<Gid>
             throw new FormatException("Evidence GID requires an artifact kind.");
         }
 
+        if (rest is ["values"] && string.Equals(artifactKind.Value, "json", StringComparison.Ordinal))
+        {
+            return new Target.Evidence(
+                Theory,
+                CoordinatePath.Create(rest),
+                RepoPath.CreateKnown("Evidence/D5/values.json"),
+                "result",
+                artifactKind);
+        }
+
         var pieces = rest[^1].Split('.');
         if (pieces.Length != 2 || !IsSafeSegment(pieces[0]) || !IsSafeSegment(pieces[1]))
         {
@@ -329,6 +339,8 @@ public sealed class Gid : IEquatable<Gid>
             + (formal.Declaration is null ? string.Empty : $".{formal.Declaration}"),
         Target.Blueprint blueprint =>
             $"{blueprint.Theory}/B/{string.Join('/', blueprint.Coordinates.Values)}",
+        Target.Evidence { Path.Value: "Evidence/D5/values.json" } evidence =>
+            $"{evidence.Theory}/E/values{TagSeparator}{evidence.ArtifactKind.Value}",
         Target.Evidence evidence =>
             $"{evidence.Theory}/E/{string.Join('/', evidence.Coordinates.Values)}"
             + $".{evidence.Selector}{TagSeparator}{evidence.ArtifactKind.Value}",

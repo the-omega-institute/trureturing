@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace StrataLint.Engine;
@@ -220,12 +221,34 @@ internal static partial class RepositoryRules
 
     private static ImmutableArray<RuleFinding> Values(RuleEvaluationContext context)
     {
-        return context.Current.Files.Keys
+        var paths = context.Current.Files.Keys
             .Where(static path => path.Value.StartsWith("Evidence/D5/values.", StringComparison.Ordinal))
             .OrderBy(static path => path.Value, StringComparer.Ordinal)
-            .Select(static path => new RuleFinding(
+            .ToArray();
+        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        foreach (var path in paths.Where(static path => path.Value != ValuesProjectionLoader.RelativePath))
+        {
+            findings.Add(new RuleFinding(
                 path.Value,
-                "values without a machine producer attestation are forbidden"))
-            .ToImmutableArray();
+                "canonical values projection must be Evidence/D5/values.json"));
+        }
+
+        if (!paths.Any(static path => path.Value == ValuesProjectionLoader.RelativePath))
+        {
+            return findings.ToImmutable();
+        }
+
+        try
+        {
+            _ = ValuesProjectionLoader.Load(context.Current);
+        }
+        catch (Exception exception) when (exception is FormatException or JsonException)
+        {
+            findings.Add(new RuleFinding(
+                ValuesProjectionLoader.RelativePath,
+                "values producer attestation is invalid: " + exception.Message));
+        }
+
+        return findings.ToImmutable();
     }
 }
