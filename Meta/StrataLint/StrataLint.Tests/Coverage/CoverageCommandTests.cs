@@ -60,16 +60,16 @@ public sealed class CoverageCommandTests
     {
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
-            [".github/workflows/ci.yml"] = """
+            [RuleFixture.WorkflowPath] = """
                 jobs:
                   baseline-admission:
                     name: Content-addressed dev baseline admission
                 """,
             ["Meta/domains.yaml"] = TestRegistry.Domains,
             ["Meta/registry.yaml"] = TestRegistry.Canonical,
-            ["Meta/StrataLint/Golden/Frozen/events.jsonl"] =
+            [FrozenLedgerChangeClassifier.LedgerPath] =
                 "{\"event_hash\":\"sha256:fc2ee6be0dd3cabb9b6a9118592671c9d5a81f691b7b4ad07674d9c3037ce262\",\"event_type\":\"Genesis\",\"payload\":{}}\n",
-            ["Meta/StrataLint/TOWER.yaml"] = TowerYaml,
+            [RuleFixture.TowerManifestPath] = TowerYaml,
         };
         return RawRepositorySnapshot.Create(
             files.Select(static item => RawRepositoryEntry.FromText(item.Key, item.Value)));

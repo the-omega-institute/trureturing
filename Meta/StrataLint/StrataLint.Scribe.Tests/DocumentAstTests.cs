@@ -16,16 +16,16 @@ public sealed class DocumentAstTests
     {
         var raw = RawRepositorySnapshot.Create(
         [
-            RawRepositoryEntry.FromText("D5/S1/Scale/Embedding.lean", "namespace Test\n"),
+            RawRepositoryEntry.FromText("D5/S1/Scale/SyntheticEmbedding.lean", "namespace Test\n"),
         ]);
         var decoded = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw));
         var validator = new SnapshotGidExistenceValidator(decoded.Snapshot);
 
         var existing = GidRef.Create(
-            "D5/S1/Scale/Embedding.embedding_injective",
+            "D5/S1/Scale/SyntheticEmbedding.embedding_injective",
             validator);
 
-        Assert.Equal("D5/S1/Scale/Embedding.embedding_injective", existing.Value);
+        Assert.Equal("D5/S1/Scale/SyntheticEmbedding.embedding_injective", existing.Value);
         Assert.Throws<ArgumentException>(() =>
             GidRef.Create("D5/S1/Scale/Log.logScale_zero", validator));
     }

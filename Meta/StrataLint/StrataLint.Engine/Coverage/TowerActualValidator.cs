@@ -165,7 +165,7 @@ internal static class TowerActualValidator
         ImmutableArray<TowerFinding>.Builder findings,
         ImmutableArray<TowerCheck>.Builder checks)
     {
-        if (!snapshot.TryGetFile(".github/workflows/ci.yml", out var workflow))
+        if (!snapshot.TryGetFile(RepositoryPathPolicy.WorkflowPath, out var workflow))
         {
             findings.Add(new TowerFinding("TOWER-CI-JOB", component.Id, "ci.yml is missing"));
             return;

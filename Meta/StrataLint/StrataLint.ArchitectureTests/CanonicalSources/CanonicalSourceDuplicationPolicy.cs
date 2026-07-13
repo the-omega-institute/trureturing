@@ -1,4 +1,8 @@
 using System.Text.RegularExpressions;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.ArchitectureTests;
@@ -14,16 +18,13 @@ internal static class CanonicalSourceDuplicationPolicy
             .RequireTickets()
             .Select(static ticket => (ticket.CaseId, ticket.Gid))
             .ToArray();
+        var domains = LoadDomains(repositoryRoot);
         var findings = new List<CanonicalSourceDuplicationFinding>();
-        foreach (var path in Directory.EnumerateFiles(repositoryRoot, "*.cs", SearchOption.AllDirectories))
+        foreach (var (relativePath, path) in CSharpRepositorySources.Enumerate(repositoryRoot))
         {
-            var relativePath = Path.GetRelativePath(repositoryRoot, path).Replace('\\', '/');
-            if (relativePath.Split('/').Any(static segment => segment is ".git" or ".lake" or "bin" or "obj"))
-            {
-                continue;
-            }
-
-            findings.AddRange(InspectSource(relativePath, File.ReadAllText(path), tickets));
+            var source = File.ReadAllText(path);
+            findings.AddRange(InspectSource(relativePath, source, tickets));
+            findings.AddRange(InspectDomainMappings(relativePath, source, domains));
         }
 
         return findings;
@@ -63,5 +64,57 @@ internal static class CanonicalSourceDuplicationPolicy
         }
 
         return findings;
+    }
+
+    internal static IReadOnlyList<CanonicalSourceDuplicationFinding> InspectDomainMappings(
+        string path,
+        string source,
+        IEnumerable<(string Name, string Stratum)> domains)
+    {
+        var registeredNames = domains
+            .Select(static domain => domain.Name)
+            .ToHashSet(StringComparer.Ordinal);
+        var root = CSharpSyntaxTree.ParseText(source).GetRoot();
+        var findings = new List<CanonicalSourceDuplicationFinding>();
+        foreach (var assignment in root.DescendantNodes().OfType<AssignmentExpressionSyntax>())
+        {
+            if (!assignment.IsKind(SyntaxKind.SimpleAssignmentExpression)
+                || assignment.Left is not ImplicitElementAccessSyntax indexer
+                || indexer.ArgumentList.Arguments.Count != 1
+                || indexer.ArgumentList.Arguments[0].Expression is not LiteralExpressionSyntax key
+                || !key.IsKind(SyntaxKind.StringLiteralExpression)
+                || assignment.Right is not LiteralExpressionSyntax value
+                || !value.IsKind(SyntaxKind.StringLiteralExpression)
+                || !registeredNames.Contains(key.Token.ValueText)
+                || !Regex.IsMatch(
+                    value.Token.ValueText,
+                    "^S[0-4]$",
+                    RegexOptions.CultureInvariant,
+                    TimeSpan.FromSeconds(1)))
+            {
+                continue;
+            }
+
+            findings.Add(new CanonicalSourceDuplicationFinding(
+                path,
+                $"C# dictionary literal maps registered domain {key.Token.ValueText} to stratum {value.Token.ValueText}; use Meta/domains.yaml through RegistryLoader"));
+        }
+
+        return findings;
+    }
+
+    private static (string Name, string Stratum)[] LoadDomains(string repositoryRoot)
+    {
+        var outcome = RegistryLoader.Load(
+            File.ReadAllBytes(Path.Combine(repositoryRoot, "Meta", "registry.yaml")),
+            File.ReadAllBytes(Path.Combine(repositoryRoot, "Meta", "domains.yaml")));
+        if (outcome is not RegistryLoadOutcome.Accepted accepted)
+        {
+            throw new InvalidOperationException("Canonical registry and domain vocabulary must load.");
+        }
+
+        return accepted.Policy.Domains
+            .Select(static domain => (domain.Key.Value, domain.Value.ToString()))
+            .ToArray();
     }
 }

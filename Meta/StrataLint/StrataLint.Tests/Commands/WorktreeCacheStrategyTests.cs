@@ -151,9 +151,9 @@ public sealed class WorktreeCacheStrategyTests
         Assert.Contains("dotnet restore failed", result.Error, StringComparison.OrdinalIgnoreCase);
         Assert.Contains(
             runner.Invocations,
-            static call => call.FileName == "dotnet"
+                static call => call.FileName == "dotnet"
                 && call.Arguments.SequenceEqual(
-                    ["restore", "Meta/StrataLint/StrataLint.sln", "--locked-mode"]));
+                    ["restore", WorktreeCommand.SolutionPath, "--locked-mode"]));
         Assert.False(Directory.Exists(target));
         AssertBranchMissing(repository.Path, "harness/failed-restore");
     }

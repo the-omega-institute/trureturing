@@ -6,6 +6,10 @@ internal sealed record RepositoryPathIssue(RuleId RuleId, string Path, string Me
 
 internal static partial class RepositoryPathPolicy
 {
+    internal const string AssumptionRegistryPath = "D5/X_Assumptions/REGISTRY.md";
+    internal const string WorkflowPath = ".github/workflows/ci.yml";
+    internal const string HarnessGatePath = ".github/scripts/harness-gate.sh";
+
     internal static ImmutableArray<Diagnostic> Evaluate(
         RepositorySnapshot snapshot,
         ValidatedPolicy policy,
@@ -49,10 +53,10 @@ internal static partial class RepositoryPathPolicy
         }
 
         if (value is "Meta/domains.yaml" or "Meta/BACKFILL.yaml" or "Meta/registry.yaml"
-            or "Library/queries.yaml" or "D5/X_Assumptions/REGISTRY.md"
+            or "Library/queries.yaml" or AssumptionRegistryPath
             or "Meta/split.py" or "Meta/papergen"
-            or ".github/workflows/ci.yml" or ".github/CODEOWNERS"
-            or ".github/scripts/baseline-admission.sh" or ".github/scripts/harness-gate.sh"
+            or WorkflowPath or ".github/CODEOWNERS"
+            or ".github/scripts/baseline-admission.sh" or HarnessGatePath
             || value.StartsWith("Meta/StrataLint/", StringComparison.Ordinal)
             || value.StartsWith(".fkst/", StringComparison.Ordinal)
             || value.StartsWith(".claude/skills/", StringComparison.Ordinal)

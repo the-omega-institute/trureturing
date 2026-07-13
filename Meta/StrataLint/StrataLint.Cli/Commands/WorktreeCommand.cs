@@ -13,6 +13,7 @@ internal sealed record WorktreeOptions(
 
 internal static class WorktreeCommand
 {
+    internal const string SolutionPath = "Meta/StrataLint/StrataLint.sln";
     internal const string Usage =
         "USAGE: StrataLint worktree --branch NAME --path DIR "
         + "[--base REV] [--source REPO_ROOT] [--skip-restore]. "
@@ -65,7 +66,7 @@ internal static class WorktreeCommand
                 RunRequired(
                     runner,
                     "dotnet",
-                    ["restore", "Meta/StrataLint/StrataLint.sln", "--locked-mode"],
+                    ["restore", SolutionPath, "--locked-mode"],
                     options.Path,
                     TimeSpan.FromSeconds(1800),
                     "dotnet restore failed");

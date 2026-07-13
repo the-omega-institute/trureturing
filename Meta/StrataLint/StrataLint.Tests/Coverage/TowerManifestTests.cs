@@ -13,7 +13,7 @@ public sealed class TowerManifestTests
             Component("rules", "rule-catalog", ["SL-002"], "bootstrap-pr-1"),
             Component("baseline", "ci-jobs", ["baseline-admission"], "bootstrap-pr-1"));
         var snapshot = Snapshot(
-            (".github/workflows/ci.yml", "jobs:\n  other-job:\n    name: Other\n"),
+            (RuleFixture.WorkflowPath, "jobs:\n  other-job:\n    name: Other\n"),
             GenesisFile());
         var catalog = Catalog(RuleId.CreateKnown(1));
 
@@ -31,7 +31,7 @@ public sealed class TowerManifestTests
             Component("rules", "rule-catalog", ["SL-001"], "bootstrap-pr-1"),
             Component("baseline", "ci-jobs", ["baseline-admission"], "bootstrap-pr-1"));
         var snapshot = Snapshot(
-            (".github/workflows/ci.yml", """
+            (RuleFixture.WorkflowPath, """
                 jobs:
                   baseline-admission:
                     name: Content-addressed dev baseline admission
@@ -207,7 +207,7 @@ public sealed class TowerManifestTests
     }
 
     private static (string Path, string Text) GenesisFile() => (
-        "Meta/StrataLint/Golden/Frozen/events.jsonl",
+        FrozenLedgerChangeClassifier.LedgerPath,
         "{\"event_hash\":\"sha256:fc2ee6be0dd3cabb9b6a9118592671c9d5a81f691b7b4ad07674d9c3037ce262\",\"event_type\":\"Genesis\"}\n");
 
     private sealed class TowerRule : IRepositoryRule

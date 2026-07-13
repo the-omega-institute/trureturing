@@ -82,10 +82,10 @@ public sealed class ValuesProjectionTests
             .ToArray();
         Assert.Equal(
             [
-                "D5/X_Frontier/ValuesProducer.lean",
+                CanonicalValuesWriter.InputPath,
                 "Directory.Build.props",
                 "Directory.Packages.props",
-                "Meta/StrataLint/StrataLint.Scribe/packages.lock.json",
+                CanonicalValuesWriter.ScribeLockPath,
                 "global.json",
             ],
             inputPaths);

@@ -6,6 +6,9 @@ namespace StrataLint.Tests;
 
 public sealed class TypeModelTests
 {
+    private const string RawDefinitionSourcePath = "Blueprint/D5/S1/Digit/Raw.scribe.cs";
+    private const string FkstMonitorSkillPath = ".claude/skills/fkst-monitor/SKILL.md";
+
     [Fact]
     public void GidRejectsUnsafeMachineCharacters()
     {
@@ -39,11 +42,11 @@ public sealed class TypeModelTests
     }
 
     [Theory]
-    [InlineData("D5/S0/Carrier/Ring", "D5/S0/Carrier/Ring.lean")]
-    [InlineData("D5/S0/Carrier/Ring.norm_mul", "D5/S0/Carrier/Ring.lean")]
-    [InlineData("D5/B/S0/Carrier/Ring", "Blueprint/D5/S0/Carrier/Ring.md")]
+    [InlineData("D5/S0/Carrier/Ring", RuleFixture.RingPath)]
+    [InlineData("D5/S0/Carrier/Ring.norm_mul", RuleFixture.RingPath)]
+    [InlineData("D5/B/S0/Carrier/Ring", RuleFixture.BlueprintPath)]
     [InlineData("D5/E/S0/Carrier/Ring.result--json", "Evidence/D5/S0/Carrier/Ring.result.json")]
-    [InlineData("D5/E/values--json", "Evidence/D5/values.json")]
+    [InlineData("D5/E/values--json", RuleFixture.ValuesProjectionPath)]
     [InlineData("D5/E/values.result--json", "Evidence/D5/values.result.json")]
     [InlineData("D5/E/experiments/D5-X0001.spec--yaml", "Evidence/D5/experiments/D5-X0001.spec.yaml")]
     [InlineData("D5/C/2026-07-11/r168", "Chronicle/2026/07/11-r168.md")]
@@ -78,7 +81,7 @@ public sealed class TypeModelTests
     [Fact]
     public void BlueprintDefinitionSourceIsContentButNotASecondSemanticTarget()
     {
-        var path = RepoPath.CreateKnown("Blueprint/D5/S1/Digit/Raw.scribe.cs");
+        var path = RepoPath.CreateKnown(RawDefinitionSourcePath);
 
         Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
         Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
@@ -95,7 +98,7 @@ public sealed class TypeModelTests
     [Fact]
     public void HarnessGateScriptIsClosedWorldRegisteredAndBootstrapProtected()
     {
-        const string value = ".github/scripts/harness-gate.sh";
+        const string value = RuleFixture.HarnessGatePath;
         var path = RepoPath.CreateKnown(value);
 
         Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
@@ -128,7 +131,7 @@ public sealed class TypeModelTests
     [Fact]
     public void ClaudeSkillsLayerIsClosedWorldRegistered()
     {
-        var path = RepoPath.CreateKnown(".claude/skills/fkst-monitor/SKILL.md");
+        var path = RepoPath.CreateKnown(FkstMonitorSkillPath);
 
         Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
         Assert.False(RepositoryPathPolicy.TryResolve(path, out _));

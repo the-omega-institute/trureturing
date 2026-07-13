@@ -43,7 +43,7 @@ public sealed class CliOutcomeTests
                 "Generated status",
                 DisplaySeverity.Error,
                 AdmissionEffect.Block,
-                "Blueprint/D5/S0/Carrier/Ring.md",
+                RuleFixture.BlueprintPath,
                 "hand-written status badge is forbidden"))),
         "infrastructure" => new AdmissionOutcome.InfrastructureFailure("fixture tool failure"),
         "human" => new AdmissionOutcome.HumanReviewRequired(ImmutableArray.Create(
@@ -52,7 +52,7 @@ public sealed class CliOutcomeTests
                 "Conflict-of-interest gate",
                 DisplaySeverity.Warning,
                 AdmissionEffect.HumanGate,
-                "Blueprint/D5/S0/Carrier/Ring.md",
+                RuleFixture.BlueprintPath,
                 "legacy structured human-review outcome"))),
         "protected" => ProtectedSurfaceChange(),
         _ => throw new ArgumentOutOfRangeException(nameof(fixture)),
@@ -60,7 +60,7 @@ public sealed class CliOutcomeTests
 
     private static AdmissionOutcome ProtectedSurfaceChange()
     {
-        const string path = "Meta/StrataLint/StrataLint.Engine/Coordinates/Gid.cs";
+        const string path = RuleFixture.SyntheticProtectedPath;
         var admitted = Assert.IsType<AdmissionOutcome.Admitted>(Admitted());
         var bootstrap = Assert.IsType<BootstrapOutcome.HumanReviewRequired>(
             BootstrapGate.Evaluate(RawChangeSet.Create(new[] { path })));

@@ -153,7 +153,7 @@ public sealed class RuleEngineTests
     public void Sl019AcceptsAValidTowerManifestAsAKnownGovernanceSchema()
     {
         var fixture = new RuleFixture();
-        fixture.Files["Meta/StrataLint/TOWER.yaml"] = """
+        fixture.Files[RuleFixture.TowerManifestPath] = """
             schema_version: 1
             components:
               - id: failure-detector
@@ -184,7 +184,7 @@ public sealed class RuleEngineTests
     public void Sl019RejectsMalformedTowerManifestThroughItsSchemaParser()
     {
         var fixture = new RuleFixture();
-        fixture.Files["Meta/StrataLint/TOWER.yaml"] = """
+        fixture.Files[RuleFixture.TowerManifestPath] = """
             schema_version: 1
             components:
               - id: component

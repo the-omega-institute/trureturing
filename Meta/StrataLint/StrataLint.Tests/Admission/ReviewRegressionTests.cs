@@ -92,7 +92,7 @@ public sealed partial class ReviewRegressionTests
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        fixture.Files["D5/X_Frontier/HeartsDraft.lean"] += "\n/-- TASK D5-T0099 -/\n";
+        fixture.Files[RuleFixture.HeartsDraftPath] += "\n/-- TASK D5-T0099 -/\n";
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build());
 
@@ -359,8 +359,7 @@ public sealed partial class ReviewRegressionTests
             Path.Combine(root, "Meta", "StrataLint", "lean-inspector", "inspect.sh"),
             Encoding.UTF8);
         var inspectJob = workflow[
-            workflow.IndexOf("  lean-inspect:", StringComparison.Ordinal)..
-            workflow.IndexOf("  baseline-admission:", StringComparison.Ordinal)];
+            workflow.IndexOf("  lean-inspect:", StringComparison.Ordinal)..workflow.IndexOf("  baseline-admission:", StringComparison.Ordinal)];
         var baselineJob = workflow[workflow.IndexOf("  baseline-admission:", StringComparison.Ordinal)..];
 
         Assert.Contains("exe cache get", producer, StringComparison.Ordinal);
