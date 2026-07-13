@@ -107,8 +107,9 @@ public sealed class RuleEngineTests
         var diagnostic = Assert.Single(
             RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(18), fixture.Build()).Diagnostics);
 
-        Assert.Equal("values without a machine producer attestation are forbidden", diagnostic.Message);
+        Assert.Equal("canonical values projection must be Evidence/D5/values.json", diagnostic.Message);
     }
+
 
     [Theory]
     [InlineData(7, "D5-T0011")]

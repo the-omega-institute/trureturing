@@ -30,12 +30,12 @@ internal static partial class GoldenCorpus
             "unattested-values-are-rejected",
             [],
             [W("Evidence/D5/values.result.json", "{\"D5/sample\": {\"value\": 123}}\n")],
-            [D(18, "Evidence/D5/values.result.json", "values without a machine producer attestation are forbidden")]),
+            [D(18, "Evidence/D5/values.result.json", "canonical values projection must be Evidence/D5/values.json")]),
         C(
             "handwritten-verified-values-are-rejected",
             [],
             [W("Evidence/D5/values.result.json", "{\"D5/sample\": {\"status\": \"verified\", \"value\": 123}}\n")],
-            [D(18, "Evidence/D5/values.result.json", "values without a machine producer attestation are forbidden")]),
+            [D(18, "Evidence/D5/values.result.json", "canonical values projection must be Evidence/D5/values.json")]),
         C(
             "root-protected-axiom",
             [],
@@ -140,6 +140,6 @@ internal static partial class GoldenCorpus
             "values-without-producer-attestation-are-rejected",
             [],
             [W("Evidence/D5/values.result.json", "{\"D5/sample\": {\"status\": \"verified\", \"value\": 123}}\n")],
-            [D(18, "Evidence/D5/values.result.json", "values without a machine producer attestation are forbidden")]),
+            [D(18, "Evidence/D5/values.result.json", "canonical values projection must be Evidence/D5/values.json")]),
     ];
 }
