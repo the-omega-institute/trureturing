@@ -29,6 +29,11 @@ local function read_env(name)
   return result.stdout or ""
 end
 
+function M.format_posture(repo, write)
+  local posture = write == "1" and "live" or "dry-run"
+  return "trureturing-devtask posture repo=" .. repo .. " write=" .. posture
+end
+
 function pipeline(event)
   if type(event) ~= "table" then
     error("dry-run tick must be a table", 2)
@@ -45,11 +50,7 @@ function pipeline(event)
   if repo ~= "the-omega-institute/trureturing" then
     error("unexpected GitHub repository", 2)
   end
-  if read_env("FKST_GITHUB_WRITE") == "1" then
-    error("GitHub write posture is forbidden", 2)
-  end
-
-  print("trureturing-devtask dry-run guard ready repo=" .. repo)
+  print(M.format_posture(repo, read_env("FKST_GITHUB_WRITE")))
 end
 
 return M

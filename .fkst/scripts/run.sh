@@ -2,7 +2,8 @@
 set -euo pipefail
 
 readonly ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd -P)"
-readonly PACKAGE_ROOT="$ROOT/local-packages/harness-probe"
+readonly PROBE_PACKAGE_ROOT="$ROOT/local-packages/harness-probe"
+readonly DEVTASK_PACKAGE_ROOT="$ROOT/local-packages/trureturing-devtask"
 readonly PLATFORM_PACKAGES="github-proxy consensus github-devloop github-devloop-pr github-devloop-intake github-devloop-decompose github-devloop-intake-default"
 temporary=""
 
@@ -233,10 +234,11 @@ run_test() {
   bin="$(resolve_bin)"
   verify_provenance "$bin"
 
-  local report
+  local probe_report devtask_report
   temporary="$(mktemp -d "${TMPDIR:-/tmp}/fkst-m1.XXXXXX")"
   trap cleanup EXIT
-  report="$temporary/test-report.json"
+  probe_report="$temporary/harness-probe-test-report.json"
+  devtask_report="$temporary/trureturing-devtask-test-report.json"
   export FKST_RUNTIME_ROOT="$temporary/runtime"
   mkdir "$temporary/sub"
   export TMPDIR="$temporary/sub"
@@ -244,12 +246,20 @@ run_test() {
   "$bin" --self-test
   "$bin" conformance \
     --project-root "$ROOT" \
-    --package-root "$PACKAGE_ROOT"
+    --package-root "$PROBE_PACKAGE_ROOT"
   "$bin" test \
     --project-root "$ROOT" \
-    --package-root "$PACKAGE_ROOT" \
-    --report-json "$report"
-  python3 "$ROOT/scripts/g5_check.py" "$report" "$PACKAGE_ROOT"
+    --package-root "$PROBE_PACKAGE_ROOT" \
+    --report-json "$probe_report"
+  python3 "$ROOT/scripts/g5_check.py" "$probe_report" "$PROBE_PACKAGE_ROOT"
+  "$bin" conformance \
+    --project-root "$ROOT" \
+    --package-root "$DEVTASK_PACKAGE_ROOT"
+  "$bin" test \
+    --project-root "$ROOT" \
+    --package-root "$DEVTASK_PACKAGE_ROOT" \
+    --report-json "$devtask_report"
+  python3 "$ROOT/scripts/g5_check.py" "$devtask_report" "$DEVTASK_PACKAGE_ROOT"
   printf 'fkst test: ok\n'
 }
 
@@ -278,6 +288,8 @@ run_supervise() {
 
   BIN="$(resolve_bin)"
   export BIN
+  # Check/test workflows are always dry-run. Production supervise is launched
+  # by operate.sh, where host.env supplies the GitHub write posture.
   unset FKST_GITHUB_WRITE
   local args=(
     "$platform_root/scripts/run.sh" supervise

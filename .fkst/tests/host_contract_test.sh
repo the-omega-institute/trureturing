@@ -47,8 +47,8 @@ required=(
   "scripts/operate.sh"
   "local-packages/trureturing-devtask/fkst.toml"
   "local-packages/trureturing-devtask/raisers/dry_run_tick.lua"
-  "local-packages/trureturing-devtask/departments/dry_run_guard/main.lua"
-  "local-packages/trureturing-devtask/tests/dry_run_guard_test.lua"
+  "local-packages/trureturing-devtask/departments/posture_reporter/main.lua"
+  "local-packages/trureturing-devtask/tests/posture_reporter_test.lua"
 )
 for relative in "${required[@]}"; do
   [[ -f "$ROOT/$relative" ]] || fail "missing $relative"
@@ -66,9 +66,9 @@ grep -Fq 'command -v fkst-framework' "$ROOT/scripts/run.sh" \
 grep -Fq -- '--local-packages "$ROOT/local-packages"' "$ROOT/scripts/run.sh" \
   || fail "run.sh does not override the nested .fkst host package base"
 grep -Fq 'FKST_GITHUB_WRITE' "$ROOT/scripts/operate.sh" \
-  || fail "operate.sh does not enforce dry-run posture"
+  || fail "operate.sh does not reference FKST_GITHUB_WRITE posture"
 if grep -Eq '(^|[[:space:]])export[[:space:]]+FKST_GITHUB_WRITE=|FKST_GITHUB_WRITE=1' "$ROOT/scripts/operate.sh"; then
-  fail "operate.sh enables GitHub writes"
+  fail "operate.sh hard-codes live GitHub write posture"
 fi
 grep -Fq 'test -e "$checkout_root/.git"' "$ROOT/scripts/operate.sh" \
   || fail "operate.sh does not require a dedicated git checkout"
