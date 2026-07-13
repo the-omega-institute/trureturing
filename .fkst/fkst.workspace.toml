@@ -1,5 +1,5 @@
 [workspace]
-units = ["local-packages/*"]
+units = []
 
 [[external_sources]]
 id = "fkst-packages-platform"
