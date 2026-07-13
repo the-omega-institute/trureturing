@@ -1,7 +1,6 @@
 using System.Collections.Immutable;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace StrataLint.Engine;
@@ -212,37 +211,12 @@ internal static partial class RepositoryRules
 
     private static ImmutableArray<RuleFinding> Values(RuleEvaluationContext context)
     {
-        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        const string legacy = "Evidence/D5/values.legacy.json";
-        foreach (var path in context.Current.Files.Keys
-            .Where(static path => path.Value.StartsWith("Evidence/D5/values.", StringComparison.Ordinal)
-                && path.Value != legacy))
-        {
-            findings.Add(new RuleFinding(path.Value, "values producer attestation is delayed under D5-T0003"));
-        }
-
-        if (!context.Current.TryGetFile(legacy, out var file))
-        {
-            return findings.ToImmutable();
-        }
-
-        try
-        {
-            using var document = JsonDocument.Parse(file.Text);
-            if (document.RootElement.ValueKind != JsonValueKind.Object
-                || document.RootElement.EnumerateObject().Any(static property =>
-                    property.Value.ValueKind != JsonValueKind.Object
-                    || !property.Value.TryGetProperty("status", out var status)
-                    || status.GetString() != "legacy-import-unverified"))
-            {
-                findings.Add(new RuleFinding(legacy, "legacy values must remain explicitly unverified"));
-            }
-        }
-        catch (JsonException)
-        {
-            findings.Add(new RuleFinding(legacy, "legacy values JSON is malformed"));
-        }
-
-        return findings.ToImmutable();
+        return context.Current.Files.Keys
+            .Where(static path => path.Value.StartsWith("Evidence/D5/values.", StringComparison.Ordinal))
+            .OrderBy(static path => path.Value, StringComparer.Ordinal)
+            .Select(static path => new RuleFinding(
+                path.Value,
+                "values without a machine producer attestation are forbidden"))
+            .ToImmutableArray();
     }
 }

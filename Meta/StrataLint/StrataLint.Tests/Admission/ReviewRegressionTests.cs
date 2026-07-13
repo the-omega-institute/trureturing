@@ -303,7 +303,7 @@ public sealed partial class ReviewRegressionTests
     }
 
     [Fact]
-    public void Cf8ClosedWorldShapeFailuresKeepPythonSl000DiagnosticCode()
+    public void Cf8ClosedWorldShapeFailuresKeepSl000DiagnosticCode()
     {
         Assert.True(RuleId.TryCreate("SL-000", out var sl000));
         var fixture = new RuleFixture();

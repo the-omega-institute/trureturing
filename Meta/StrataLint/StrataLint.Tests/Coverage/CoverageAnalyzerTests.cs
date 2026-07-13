@@ -45,7 +45,7 @@ public sealed class CoverageAnalyzerTests
     [Fact]
     public void MechanismsAreDerivedFromPolicyRuleAndLedgerInputs()
     {
-        const string path = "Evidence/D5/values.legacy.json";
+        const string path = "Evidence/D5/values.result.json";
         var snapshot = Snapshot((path, "{}\n"));
         var report = CoverageAnalyzer.Analyze(
             snapshot,
