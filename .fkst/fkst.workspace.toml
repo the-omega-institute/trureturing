@@ -4,7 +4,7 @@ units = []
 [[external_sources]]
 id = "fkst-packages-platform"
 git = "https://github.com/ChronoAIProject/fkst-packages.git"
-rev = "1371edc33cc06ec1cba2f18f385280278546a858"
+rev = "70f1cf4cf5725867f5bd1f9a9390aecc95d099ab"
 packages = [
   "github-proxy",
   "consensus",
