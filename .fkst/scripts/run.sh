@@ -9,7 +9,7 @@ readonly LOG_DIR="$OPERATE_ROOT/logs"
 readonly PLATFORM_PACKAGES="github-proxy consensus github-devloop github-devloop-pr github-devloop-intake github-devloop-decompose github-devloop-intake-default"
 
 die() {
-  printf 'operate: %s\n' "$*" >&2
+  printf 'fkst: %s\n' "$*" >&2
   exit 1
 }
 
@@ -128,7 +128,7 @@ start() {
     wait "$pid" || true
     die "supervise exited during startup; see $log"
   fi
-  printf 'operate: started pid %s; log %s\n' "$pid" "$log"
+  printf 'fkst: started pid %s; log %s\n' "$pid" "$log"
 }
 
 stop() {
@@ -137,7 +137,7 @@ stop() {
   file="$(pid_file)"
   if ! pid="$(read_live_pid)"; then
     rm -f "$file"
-    printf 'operate: stopped\n'
+    printf 'fkst: stopped\n'
     return
   fi
   kill "$pid" 2>/dev/null || true
@@ -147,9 +147,9 @@ stop() {
   done
   if kill -0 "$pid" 2>/dev/null; then
     kill -9 "$pid" 2>/dev/null || true
-    printf 'operate: forced stop pid %s\n' "$pid"
+    printf 'fkst: forced stop pid %s\n' "$pid"
   else
-    printf 'operate: stopped pid %s\n' "$pid"
+    printf 'fkst: stopped pid %s\n' "$pid"
   fi
   rm -f "$file"
 }
@@ -158,10 +158,10 @@ status() {
   local pid
   ensure_host_env
   if pid="$(read_live_pid)"; then
-    printf 'operate: running pid %s\n' "$pid"
+    printf 'fkst: running pid %s\n' "$pid"
     return 0
   fi
-  printf 'operate: stopped\n'
+  printf 'fkst: stopped\n'
   return 1
 }
 
@@ -171,11 +171,11 @@ logs() {
   tail -n "${LINES:-120}" "$LOG_DIR/latest.log"
 }
 
-[[ $# -eq 1 ]] || die "usage: $0 start|stop|status|logs"
+[[ $# -eq 1 ]] || die "usage: $0 supervise|stop|status|logs"
 case "$1" in
-  start) start ;;
+  supervise) start ;;
   stop) stop ;;
   status) status ;;
   logs) logs ;;
-  *) die "usage: $0 start|stop|status|logs" ;;
+  *) die "usage: $0 supervise|stop|status|logs" ;;
 esac
