@@ -104,7 +104,92 @@ public sealed partial class ReviewRegressionTests
     }
 
     [Fact]
-    public void Sl016AcceptsCurrentRepositoryTicketDeclarations()
+    public void Sl016RequiresVerifiedScribeCapabilityBeforeAdmittingAbsorbedStatus()
+    {
+        var fixture = new RuleFixture();
+        var sourceBytes = Encoding.UTF8.GetBytes(fixture.Files[RuleFixture.GictTheoryPath]);
+        fixture.Files[RuleFixture.SyntheticSchema3GictTheoryPath] = Encoding.UTF8.GetString(sourceBytes);
+        fixture.Baseline[RuleFixture.SyntheticSchema3GictTheoryPath] = Encoding.UTF8.GetString(sourceBytes);
+        var atom = GictAtomizer.Atomize(sourceBytes).ResolveClaim("theorem/7.15");
+        const string gid = "D5/S0/Carrier/Ring";
+        var targetBytes = Encoding.UTF8.GetBytes(fixture.Files[RuleFixture.RingPath]);
+        var definition = Encoding.UTF8.GetBytes("scribe definition\n");
+        var emission = Encoding.UTF8.GetBytes("# canonical emission\n");
+        var definitionHash = DigestionFingerprint.Compute(definition).RawSha256;
+        var emissionHash = DigestionFingerprint.Compute(emission).RawSha256;
+        var record = new ScribeEmissionRecord(
+            gid,
+            ScribeEmissionAttestation.DefinitionPath(gid),
+            definitionHash,
+            ScribeEmissionAttestation.EmissionPath(gid),
+            emissionHash);
+        fixture.Files[record.DefinitionPath] = Encoding.UTF8.GetString(definition);
+        fixture.Files[record.EmissionPath] = Encoding.UTF8.GetString(emission);
+        fixture.Files[ScribeEmissionAttestation.RelativePath] = Encoding.UTF8.GetString(
+            ScribeEmissionAttestation.Write([record]).AsSpan());
+        fixture.Files["Meta/BACKFILL.yaml"] = $$"""
+            schema_version: 3
+            ledger: theory-digestion-v1
+            sources:
+              - source_id: gict-v3.6
+                path: {{RuleFixture.SyntheticSchema3GictTheoryPath}}
+                atomizer: gict-v1
+                entries:
+                  - atom_id: gict-7.15
+                    boundary:
+                      ast_path: {{atom.AstPath}}
+                      start_byte: {{atom.StartByte}}
+                      end_byte: {{atom.EndByte}}
+                    fingerprints:
+                      raw_sha256: {{atom.Fingerprints.RawSha256}}
+                      normalized_sha256: {{atom.Fingerprints.NormalizedSha256}}
+                    coverage_gids:
+                      - {{gid}}
+                    receipts:
+                      coverage:
+                        - gid: {{gid}}
+                          source_sha256: {{atom.Fingerprints.RawSha256}}
+                          target_sha256: {{DigestionFingerprint.Compute(targetBytes).RawSha256}}
+                      scribe:
+                        - gid: {{gid}}
+                          definition_sha256: {{definitionHash}}
+                          emission_sha256: {{emissionHash}}
+                      unresolved_subitems: []
+                      chain_atoms: []
+                      tail_authorization: null
+                    status:
+                      migration: absorbed
+                      truth: closed
+            ticket_index: []
+            """;
+
+        var withoutCapability = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(16),
+            fixture.Build());
+        var withCapability = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(16),
+            fixture.Build(verifiedScribeEmissions: VerifiedScribeEmissions.Create([record])));
+        var publicContext = fixture.Build();
+        var publicOutcome = AdmissionPipeline.Evaluate(
+            publicContext.Current,
+            publicContext.Baseline,
+            publicContext.Policy,
+            publicContext.Lean,
+            publicContext.BaselineLean,
+            publicContext.Changes,
+            publicContext.MetaEvaluation.ClearCapability!);
+
+        Assert.Contains(withoutCapability.Diagnostics, diagnostic =>
+            diagnostic.Message.Contains("handwritten status", StringComparison.Ordinal));
+        Assert.Empty(withCapability.Diagnostics);
+        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(publicOutcome);
+        Assert.Contains(rejected.Diagnostics, diagnostic =>
+            diagnostic.Message.Contains("handwritten status", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    [Trait("pending-contract", "step-3")]
+    public void Sl016AcceptsCurrentSchema2RepositoryTicketDeclarationsPendingContractStep3()
     {
         var repositoryRoot = FindRepositoryRoot();
         var fixture = new RuleFixture();
@@ -121,7 +206,7 @@ public sealed partial class ReviewRegressionTests
         const string normPath = "D5/S0/Carrier/Norm.lean";
         fixture.Files[normPath] = File.ReadAllText(Path.Combine(repositoryRoot, normPath), Encoding.UTF8);
 
-        // This SL-016 probe deliberately has no synthetic Lean report or imported-module closure.
+        // The digestion projection consumes Lean truth, so this synthetic managed file carries its report.
         fixture.Files["D5/X_Frontier/DownwardImportTail.lean"] = """
             /- GID: D5/X_Frontier/DownwardImportTail
                generality: E
@@ -132,12 +217,81 @@ public sealed partial class ReviewRegressionTests
             import D5.S3.Weil.FourierLaplace
             def downwardImportTail : Unit := ()
             """;
+        fixture.Reports["D5/X_Frontier/DownwardImportTail.lean"] = new LeanFileReport(
+            ["D5.S3.Weil.FourierLaplace"],
+            []);
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(16),
             fixture.BuildForRuleCompatibility());
 
         Assert.Empty(evaluation.Diagnostics);
+    }
+
+    [Fact]
+    public void Sl016RejectsHandwrittenDigestionStatusThatDisagreesWithDerivation()
+    {
+        var fixture = new RuleFixture();
+        fixture.UseSyntheticSchema3Backfill();
+        fixture.AddBackfillTargets();
+        const string expected = "          migration: partial\n          truth: closed\n";
+        const string falseProjection = "          migration: absorbed\n          truth: closed\n";
+        fixture.Files["Meta/BACKFILL.yaml"] = fixture.Files["Meta/BACKFILL.yaml"].Replace(
+            expected,
+            falseProjection,
+            StringComparison.Ordinal);
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build());
+
+        Assert.Contains(evaluation.Diagnostics, diagnostic =>
+            diagnostic.Message.Contains("handwritten status", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void Sl016RejectsFormattedFingerprintThatDisagreesWithSourceSpan()
+    {
+        var fixture = new RuleFixture();
+        fixture.UseSyntheticSchema3Backfill();
+        fixture.AddBackfillTargets();
+        var document = BackfillInventoryLoader.Load(fixture.Files["Meta/BACKFILL.yaml"]);
+        var fingerprint = document.RequireDigestionEntries()[0].Fingerprints.RawSha256;
+        var replacement = fingerprint[..^1] + (fingerprint[^1] == '0' ? '1' : '0');
+        fixture.Files["Meta/BACKFILL.yaml"] = fixture.Files["Meta/BACKFILL.yaml"].Replace(
+            fingerprint,
+            replacement,
+            StringComparison.Ordinal);
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build());
+
+        Assert.Contains(evaluation.Diagnostics, diagnostic =>
+            diagnostic.Message.Contains("fingerprint", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public void Sl016RejectsDuplicateSourceIdEvenWhenTheLaterSourceHasNoEntries()
+    {
+        var fixture = new RuleFixture();
+        fixture.UseSyntheticSchema3Backfill();
+        fixture.AddBackfillTargets();
+        const string duplicate =
+            "  - source_id: gict-v3.6\n"
+            + "    path: docs/develop/theory/PZG_BEDC_kernel_formal_170.md\n"
+            + "    atomizer: pzg-v1\n"
+            + "    entries: []\n"
+            + "ticket_index: []\n";
+        var original = fixture.Files["Meta/BACKFILL.yaml"];
+        fixture.Files["Meta/BACKFILL.yaml"] = original.Replace(
+            "ticket_index: []",
+            duplicate,
+            StringComparison.Ordinal);
+        Assert.NotEqual(original, fixture.Files["Meta/BACKFILL.yaml"]);
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build());
+
+        Assert.Contains(evaluation.Diagnostics, diagnostic =>
+            diagnostic.Message.Contains("duplicate source_id", StringComparison.Ordinal));
+        Assert.Contains(evaluation.Diagnostics, diagnostic =>
+            diagnostic.Message.Contains("must contain at least one atomic entry", StringComparison.Ordinal));
     }
 
     [Fact]

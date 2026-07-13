@@ -98,6 +98,18 @@ public sealed class RuleEngineTests
     }
 
     [Fact]
+    public void Sl003DoesNotTreatTheSingleSourceDigestionLedgerAsASplittableModule()
+    {
+        var fixture = new RuleFixture();
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(3),
+            fixture.Build()).Diagnostics;
+
+        Assert.DoesNotContain(diagnostics, diagnostic => diagnostic.Path == "Meta/BACKFILL.yaml");
+    }
+
+    [Fact]
     public void Sl018RejectsValuesWithoutMachineProducerAttestation()
     {
         var fixture = new RuleFixture();

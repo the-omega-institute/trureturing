@@ -19,7 +19,8 @@ public sealed class CanonicalSourceDuplicationTests
             Directory.CreateDirectory(Path.Combine(root, "Meta", "StrataLint"));
             File.WriteAllText(
                 Path.Combine(root, "Meta", "BACKFILL.yaml"),
-                "ticket_index:\n  - case_id: SYNTHETIC-CASE\n    gid: synthetic/gid\n");
+                "schema_version: 3\nledger: theory-digestion-v1\nsources: []\n"
+                + "ticket_index:\n  - case_id: SYNTHETIC-CASE\n    gid: synthetic/gid\n");
             var repositoryRoot = RepositoryLayout.FindRoot();
             File.Copy(
                 Path.Combine(repositoryRoot, "Meta", "registry.yaml"),

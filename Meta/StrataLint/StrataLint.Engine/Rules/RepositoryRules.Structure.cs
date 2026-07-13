@@ -60,7 +60,11 @@ internal static partial class RepositoryRules
         foreach (var (path, file) in context.Current.Files)
         {
             if (path.Value.StartsWith("docs/develop/", StringComparison.Ordinal)
-                || string.Equals(path.Value, "lake-manifest.json", StringComparison.Ordinal))
+                || string.Equals(path.Value, "lake-manifest.json", StringComparison.Ordinal)
+                || string.Equals(
+                    path.Value,
+                    BackfillInventoryLoader.RelativePath,
+                    StringComparison.Ordinal))
             {
                 continue;
             }

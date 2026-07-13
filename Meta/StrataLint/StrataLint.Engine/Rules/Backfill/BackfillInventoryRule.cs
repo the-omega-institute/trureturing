@@ -5,8 +5,8 @@ namespace StrataLint.Engine;
 
 internal static class BackfillInventoryRule
 {
-    private const string BackfillPath = "Meta/BACKFILL.yaml";
-    private const string InventoryVersion = "m0-protected-v1";
+    private const string BackfillPath = BackfillInventoryLoader.RelativePath;
+    private const string PendingContractInventoryVersion = "m0-protected-v1";
 
     private static readonly Regex CasePattern = new(
         "^D5-T[0-9]{4}$",
@@ -14,6 +14,12 @@ internal static class BackfillInventoryRule
 
     private static readonly Regex TaskDeclarationPattern = new(
         "TASK (?<case>D5-T[0-9]{4})",
+        RegexOptions.CultureInvariant);
+    private static readonly Regex SourceIdPattern = new(
+        "^[a-z0-9]+(?:[.-][a-z0-9]+)*$",
+        RegexOptions.CultureInvariant);
+    private static readonly Regex AtomIdPattern = new(
+        "^[A-Za-z0-9]+(?:[.-][A-Za-z0-9]+)*$",
         RegexOptions.CultureInvariant);
 
     internal static ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context)
@@ -35,16 +41,59 @@ internal static class BackfillInventoryRule
 
         var root = document.Root;
 
+        // pending-contract(step 3): schema 2 must keep the origin/dev SL-016 verdict unchanged.
+        if (document.SchemaVersion != BackfillInventoryLoader.SchemaVersion)
+        {
+            return EvaluateSchema2(context, root);
+        }
+
+        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        if (!root.Keys.ToHashSet(StringComparer.Ordinal).SetEquals(
+                ["schema_version", "ledger", "sources", "ticket_index"]))
+        {
+            findings.Add(new RuleFinding(BackfillPath, "BACKFILL top-level keys are not canonical"));
+        }
+
+        ImmutableArray<DigestionLedgerSource> sources;
+        try
+        {
+            sources = document.RequireDigestionSources();
+        }
+        catch (FormatException exception)
+        {
+            findings.Add(new RuleFinding(BackfillPath, exception.Message));
+            sources = default;
+        }
+
+        if (!sources.IsDefault)
+        {
+            ValidateDigestionEntries(
+                context,
+                document,
+                sources,
+                sources.SelectMany(static source => source.Entries).ToImmutableArray(),
+                findings);
+        }
+
+        root.TryGetValue("ticket_index", out var ticketIndex);
+        ValidateTicketIndex(context.Current, ticketIndex, findings);
+        return findings.ToImmutable();
+    }
+
+    private static ImmutableArray<RuleFinding> EvaluateSchema2(
+        RuleEvaluationContext context,
+        IReadOnlyDictionary<string, object?> root)
+    {
         if (!root.TryGetValue("schema_version", out var schema)
             || schema is not int version
-            || version != 2
+            || version != BackfillInventoryLoader.PendingContractSchemaVersion
             || !root.TryGetValue("inventory", out var inventory)
             || inventory is not string inventoryName
-            || !string.Equals(inventoryName, InventoryVersion, StringComparison.Ordinal))
+            || !string.Equals(inventoryName, PendingContractInventoryVersion, StringComparison.Ordinal))
         {
             return [new RuleFinding(
                 BackfillPath,
-                $"BACKFILL must use schema_version 2 and inventory {InventoryVersion}")];
+                $"BACKFILL must use schema_version 2 and inventory {PendingContractInventoryVersion}")];
         }
 
         if (!root.TryGetValue("sources", out var rawSources) || rawSources is not List<object?> sources)
@@ -68,7 +117,7 @@ internal static class BackfillInventoryRule
         var seenPaths = new HashSet<string>(StringComparer.Ordinal);
         foreach (var rawSource in sources)
         {
-            ValidateSource(context.Current, context.Policy, rawSource, seenIds, seenPaths, findings);
+            ValidateSchema2Source(context.Current, context.Policy, rawSource, seenIds, seenPaths, findings);
         }
 
         root.TryGetValue("ticket_index", out var ticketIndex);
@@ -76,7 +125,7 @@ internal static class BackfillInventoryRule
         return findings.ToImmutable();
     }
 
-    private static void ValidateSource(
+    private static void ValidateSchema2Source(
         RepositorySnapshot snapshot,
         ValidatedPolicy policy,
         object? rawSource,
@@ -160,11 +209,11 @@ internal static class BackfillInventoryRule
             }
 
             entry.TryGetValue("disposition", out var disposition);
-            ValidateDisposition(snapshot, disposition, sourcePath, anchor, findings);
+            ValidateSchema2Disposition(snapshot, disposition, sourcePath, anchor, findings);
         }
     }
 
-    private static void ValidateDisposition(
+    private static void ValidateSchema2Disposition(
         RepositorySnapshot snapshot,
         object? disposition,
         string sourcePath,
@@ -184,6 +233,146 @@ internal static class BackfillInventoryRule
             findings.Add(new RuleFinding(
                 BackfillPath,
                 $"dangling disposition {gidText}: canonical target is absent"));
+        }
+    }
+
+    private static void ValidateDigestionEntries(
+        RuleEvaluationContext context,
+        BackfillInventoryDocument document,
+        ImmutableArray<DigestionLedgerSource> sources,
+        ImmutableArray<DigestionLedgerEntry> entries,
+        ImmutableArray<RuleFinding>.Builder findings)
+    {
+        if (sources.Length == 0)
+        {
+            findings.Add(new RuleFinding(BackfillPath, "digestion ledger must contain at least one source"));
+            return;
+        }
+
+        var seenSourceIds = new HashSet<string>(StringComparer.Ordinal);
+        var seenPaths = new Dictionary<string, string>(StringComparer.Ordinal);
+        foreach (var source in sources)
+        {
+            if (!seenSourceIds.Add(source.SourceId))
+            {
+                findings.Add(new RuleFinding(BackfillPath, $"duplicate source_id: {source.SourceId}"));
+            }
+
+            if (!SourceIdPattern.IsMatch(source.SourceId))
+            {
+                findings.Add(new RuleFinding(BackfillPath, $"invalid source_id: {source.SourceId}"));
+            }
+
+            if (source.Entries.Length == 0)
+            {
+                findings.Add(new RuleFinding(
+                    BackfillPath,
+                    $"source {source.SourceId} must contain at least one atomic entry"));
+            }
+
+            if (!RepoPath.TryCreate(source.SourcePath, out var sourcePath)
+                || !context.Policy.GovernanceDocuments.Contains(sourcePath))
+            {
+                findings.Add(new RuleFinding(
+                    BackfillPath,
+                    $"source {source.SourceId} has an invalid governance path"));
+            }
+            else
+            {
+                if (!context.Current.TryGetFile(source.SourcePath, out _))
+                {
+                    findings.Add(new RuleFinding(BackfillPath, $"source path is dangling: {source.SourcePath}"));
+                }
+
+                if (Path.GetFileName(source.SourcePath).Contains(' '))
+                {
+                    findings.Add(new RuleFinding(
+                        BackfillPath,
+                        $"source filename contains spaces: {source.SourcePath}"));
+                }
+            }
+
+            if (source.Atomizer is not ("gict-v1" or "pzg-v1" or "none"))
+            {
+                findings.Add(new RuleFinding(
+                    BackfillPath,
+                    $"source {source.SourceId} has unknown atomizer {source.Atomizer}"));
+            }
+
+            if (seenPaths.TryGetValue(source.SourcePath, out var priorSource))
+            {
+                findings.Add(new RuleFinding(
+                    BackfillPath,
+                    $"duplicate source path: {source.SourcePath} ({priorSource}, {source.SourceId})"));
+            }
+            else
+            {
+                seenPaths.Add(source.SourcePath, source.SourceId);
+            }
+        }
+
+        if (entries.Length == 0)
+        {
+            return;
+        }
+
+        var seenAtomIds = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var entry in entries)
+        {
+            if (!seenAtomIds.Add(entry.AtomId))
+            {
+                findings.Add(new RuleFinding(BackfillPath, $"duplicate atom_id: {entry.AtomId}"));
+            }
+
+            if (!AtomIdPattern.IsMatch(entry.AtomId))
+            {
+                findings.Add(new RuleFinding(BackfillPath, $"invalid atom_id: {entry.AtomId}"));
+            }
+
+            if (entry.CoverageGids.Distinct(StringComparer.Ordinal).Count() != entry.CoverageGids.Length)
+            {
+                findings.Add(new RuleFinding(
+                    BackfillPath,
+                    $"entry {entry.AtomId} has duplicate coverage GIDs"));
+            }
+
+            foreach (var gidText in entry.CoverageGids)
+            {
+                if (!Gid.TryParse(gidText, out var gid))
+                {
+                    findings.Add(new RuleFinding(
+                        BackfillPath,
+                        $"entry {entry.AtomId} has invalid coverage GID {gidText}"));
+                }
+                else if (!context.Current.TryGetFile(gid.Path.Value, out _))
+                {
+                    findings.Add(new RuleFinding(
+                        BackfillPath,
+                        $"entry {entry.AtomId} coverage target is absent: {gidText}"));
+                }
+            }
+        }
+
+        if (findings.Count > 0)
+        {
+            return;
+        }
+
+        try
+        {
+            var evaluation = DigestionStatusEvaluator.Evaluate(
+                document,
+                context.Current,
+                context.Lean,
+                context.VerifiedScribeEmissions);
+            foreach (var finding in evaluation.Findings)
+            {
+                findings.Add(new RuleFinding(BackfillPath, finding));
+            }
+        }
+        catch (FormatException exception)
+        {
+            findings.Add(new RuleFinding(BackfillPath, exception.Message));
         }
     }
 

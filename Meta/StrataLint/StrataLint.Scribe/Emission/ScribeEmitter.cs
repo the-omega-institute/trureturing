@@ -4,12 +4,23 @@ namespace StrataLint.Scribe;
 
 public static class ScribeEmitter
 {
+    private sealed record ScribeEmissionRun(
+        int ExitCode,
+        VerifiedScribeEmissions? Verification);
+
+    internal static string AttestationRelativePath => ScribeEmissionAttestation.RelativePath;
+
     public static int Emit(
         string repositoryRoot,
         bool check,
         TextWriter output,
         TextWriter error)
-        => Emit(repositoryRoot, check, output, error, LeanCompiledArtifactReports.InspectRepository);
+        => Run(
+            repositoryRoot,
+            check,
+            output,
+            error,
+            LeanCompiledArtifactReports.InspectRepository).ExitCode;
 
     internal static int Emit(
         string repositoryRoot,
@@ -19,10 +30,24 @@ public static class ScribeEmitter
         LeanAxiomReport leanReport)
     {
         ArgumentNullException.ThrowIfNull(leanReport);
-        return Emit(repositoryRoot, check, output, error, _ => leanReport);
+        return Run(repositoryRoot, check, output, error, _ => leanReport).ExitCode;
     }
 
-    private static int Emit(
+    internal static VerifiedScribeEmissions? Verify(
+        string repositoryRoot,
+        TextWriter error,
+        LeanAxiomReport leanReport)
+    {
+        ArgumentNullException.ThrowIfNull(leanReport);
+        return Run(
+            repositoryRoot,
+            check: true,
+            TextWriter.Null,
+            error,
+            _ => leanReport).Verification;
+    }
+
+    private static ScribeEmissionRun Run(
         string repositoryRoot,
         bool check,
         TextWriter output,
@@ -50,11 +75,11 @@ public static class ScribeEmitter
                 or ArgumentException)
         {
             error.WriteLine($"emit failed: {exception.Message}");
-            return 1;
+            return new ScribeEmissionRun(1, null);
         }
     }
 
-    private static int EmitVerified(
+    private static ScribeEmissionRun EmitVerified(
         string repositoryRoot,
         bool check,
         TextWriter output,
@@ -62,6 +87,7 @@ public static class ScribeEmitter
         LeanAxiomReport leanReport)
     {
         var rendered = new List<(DocumentDefinition Definition, byte[] Bytes)>();
+        var attestations = new List<ScribeEmissionRecord>();
         foreach (var definition in DocumentDefinitions.All)
         {
             var first = CanonicalMarkdownWriter.Write(definition.Document, leanReport).ToArray();
@@ -73,7 +99,18 @@ public static class ScribeEmitter
             }
 
             rendered.Add((definition, first));
+            var gid = definition.Document.Header.Gid.Value;
+            var definitionPath = ScribeEmissionAttestation.DefinitionPath(gid);
+            var source = File.ReadAllBytes(Path.Combine(repositoryRoot, definitionPath));
+            attestations.Add(new ScribeEmissionRecord(
+                gid,
+                definitionPath,
+                DigestionFingerprint.Compute(source).RawSha256,
+                definition.RelativePath.Value,
+                DigestionFingerprint.Compute(first).RawSha256));
         }
+
+        var attestationBytes = ScribeEmissionAttestation.Write(attestations).ToArray();
 
         var differences = 0;
         var writes = 0;
@@ -101,15 +138,41 @@ public static class ScribeEmitter
             output.WriteLine($"wrote: {definition.RelativePath.Value}");
         }
 
+        var attestationPath = Path.Combine(repositoryRoot, ScribeEmissionAttestation.RelativePath);
+        var currentAttestation = File.Exists(attestationPath)
+            ? File.ReadAllBytes(attestationPath)
+            : [];
+        if (!currentAttestation.AsSpan().SequenceEqual(attestationBytes))
+        {
+            if (check)
+            {
+                differences++;
+                error.WriteLine($"out of date: {ScribeEmissionAttestation.RelativePath}");
+            }
+            else
+            {
+                var parent = Path.GetDirectoryName(attestationPath)
+                    ?? throw new InvalidOperationException("Scribe attestation path has no parent directory.");
+                Directory.CreateDirectory(parent);
+                File.WriteAllBytes(attestationPath, attestationBytes);
+                output.WriteLine($"wrote: {ScribeEmissionAttestation.RelativePath}");
+            }
+        }
+
         if (check && differences == 0)
         {
             output.WriteLine($"checked: {DocumentDefinitions.All.Length} blueprint(s)");
+            output.WriteLine($"checked: {ScribeEmissionAttestation.RelativePath}");
         }
         else if (!check)
         {
             output.WriteLine($"emitted: {writes} changed blueprint(s)");
         }
 
-        return differences == 0 ? 0 : 1;
+        return new ScribeEmissionRun(
+            differences == 0 ? 0 : 1,
+            check && differences == 0
+                ? VerifiedScribeEmissions.Create(attestations)
+                : null);
     }
 }

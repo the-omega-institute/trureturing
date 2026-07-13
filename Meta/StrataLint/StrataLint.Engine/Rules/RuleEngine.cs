@@ -95,7 +95,8 @@ internal sealed class RuleEvaluationContext
         AcceptedLeanClosure lean,
         AcceptedLeanClosure baselineLean,
         RawChangeSet changes,
-        MetaEvaluationProfile metaEvaluation)
+        MetaEvaluationProfile metaEvaluation,
+        VerifiedScribeEmissions? verifiedScribeEmissions)
     {
         Current = current;
         Baseline = baseline;
@@ -104,6 +105,7 @@ internal sealed class RuleEvaluationContext
         BaselineLean = baselineLean;
         Changes = changes;
         MetaEvaluation = metaEvaluation;
+        VerifiedScribeEmissions = verifiedScribeEmissions;
     }
 
     internal RepositorySnapshot Current { get; }
@@ -120,22 +122,7 @@ internal sealed class RuleEvaluationContext
 
     internal MetaEvaluationProfile MetaEvaluation { get; }
 
-    internal static RuleEvaluationContext Create(
-        RepositorySnapshot current,
-        RepositorySnapshot baseline,
-        ValidatedPolicy policy,
-        AcceptedLeanClosure lean,
-        AcceptedLeanClosure baselineLean,
-        RawChangeSet changes,
-        MetaClear metaClear) =>
-        Create(
-            current,
-            baseline,
-            policy,
-            lean,
-            baselineLean,
-            changes,
-            MetaEvaluationProfile.ForClear(metaClear));
+    internal VerifiedScribeEmissions? VerifiedScribeEmissions { get; }
 
     internal static RuleEvaluationContext Create(
         RepositorySnapshot current,
@@ -144,8 +131,36 @@ internal sealed class RuleEvaluationContext
         AcceptedLeanClosure lean,
         AcceptedLeanClosure baselineLean,
         RawChangeSet changes,
-        MetaEvaluationProfile metaEvaluation) =>
-        new(current, baseline, policy, lean, baselineLean, changes, metaEvaluation);
+        MetaClear metaClear,
+        VerifiedScribeEmissions? verifiedScribeEmissions = null) =>
+        Create(
+            current,
+            baseline,
+            policy,
+            lean,
+            baselineLean,
+            changes,
+            MetaEvaluationProfile.ForClear(metaClear),
+            verifiedScribeEmissions);
+
+    internal static RuleEvaluationContext Create(
+        RepositorySnapshot current,
+        RepositorySnapshot baseline,
+        ValidatedPolicy policy,
+        AcceptedLeanClosure lean,
+        AcceptedLeanClosure baselineLean,
+        RawChangeSet changes,
+        MetaEvaluationProfile metaEvaluation,
+        VerifiedScribeEmissions? verifiedScribeEmissions = null) =>
+        new(
+            current,
+            baseline,
+            policy,
+            lean,
+            baselineLean,
+            changes,
+            metaEvaluation,
+            verifiedScribeEmissions);
 }
 
 internal sealed class RepositoryRule(

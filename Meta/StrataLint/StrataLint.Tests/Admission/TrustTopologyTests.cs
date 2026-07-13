@@ -34,6 +34,7 @@ public sealed class TrustTopologyTests
         "Directory.Build.props",
         "Directory.Packages.props",
         EngineLockPath,
+        RawDefinitionSourcePath,
         "lean-toolchain",
         ".github/CODEOWNERS",
         RuleFixture.WorkflowPath,
@@ -80,7 +81,6 @@ public sealed class TrustTopologyTests
 
     [Theory]
     [InlineData(RuleFixture.BlueprintPath)]
-    [InlineData(RawDefinitionSourcePath)]
     public void ContentContributionProducesAnUnforgeableMetaClearCapability(string path)
     {
         var changes = RawChangeSet.Create(new[] { path });

@@ -22,6 +22,7 @@ internal static class TestRegistry
           - "docs/GOVERNANCE.md"
           - "docs/develop/spec/golden-ledger-repo-spec.md"
           - "docs/develop/theory/GICT_complete_development_v3 (3).md"
+          - "docs/develop/theory/GICT_complete_development_v3_3.md"
           - "docs/develop/theory/PZG_BEDC_kernel_formal_170.md"
         agent_files:
           - "CONTEXT.md"

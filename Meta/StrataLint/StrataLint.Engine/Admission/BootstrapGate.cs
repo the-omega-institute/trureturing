@@ -154,6 +154,7 @@ public static class BootstrapGate
             || value.EndsWith(".sln", StringComparison.Ordinal)
             || value.EndsWith(".slnx", StringComparison.Ordinal)
             || value.EndsWith(".csproj", StringComparison.Ordinal)
+            || value.EndsWith(".scribe.cs", StringComparison.Ordinal)
             || Ordinal.Equals(value, "Makefile")
             || Ordinal.Equals(value, "global.json")
             || value.StartsWith("Directory.Build.", StringComparison.Ordinal)
