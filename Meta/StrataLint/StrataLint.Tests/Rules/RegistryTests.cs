@@ -33,7 +33,7 @@ public sealed class RegistryTests
             secondAccepted.Policy.CanonicalRegistryBytes.ToArray());
         Assert.Equal(firstAccepted.Policy.RegistrySha256, secondAccepted.Policy.RegistrySha256);
         Assert.Equal(firstAccepted.Policy.DomainsSha256, secondAccepted.Policy.DomainsSha256);
-        Assert.Equal(2, firstAccepted.Policy.Domains.Count);
+        Assert.Equal(4, firstAccepted.Policy.Domains.Count);
         Assert.Equal(2, firstAccepted.Policy.ArtifactKinds.Count);
     }
 

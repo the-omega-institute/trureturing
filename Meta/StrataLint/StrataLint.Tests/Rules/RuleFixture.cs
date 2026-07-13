@@ -20,7 +20,7 @@ internal sealed partial class RuleFixture
     internal const string WorkflowPath = RepositoryPathPolicy.WorkflowPath;
     internal const string HarnessGatePath = RepositoryPathPolicy.HarnessGatePath;
     internal const string SpecificationPath = BootstrapGate.SpecificationPath;
-    internal const string GictTheoryPath = "docs/develop/theory/GICT_complete_development_v3 (3).md";
+    internal const string GictTheoryPath = "docs/develop/theory/GICT_complete_development_v3_3.md";
     internal const string SyntheticSchema3GictTheoryPath = "docs/develop/theory/GICT_complete_development_v3_3.md";
     internal const string PzgTheoryPath = "docs/develop/theory/PZG_BEDC_kernel_formal_170.md";
     internal const string SyntheticProtectedPath =
@@ -104,7 +104,7 @@ internal sealed partial class RuleFixture
             case "header": Files[RingPath] = "def noHeader : Nat := 0\n"; break;
             case "task": AddMalformedTask(); break;
             case "formula": AddIllegalFormula(); break;
-            case "backfill": Files["Meta/BACKFILL.yaml"] = Files["Meta/BACKFILL.yaml"].Replace("schema_version: 2", "schema_version: 1", StringComparison.Ordinal); break;
+            case "backfill": Files["Meta/BACKFILL.yaml"] = Files["Meta/BACKFILL.yaml"].Replace("schema_version: 3", "schema_version: 2", StringComparison.Ordinal); break;
             case "query": Files["Library/queries.yaml"] = "schema_version: 1\nqueries:\n  - id: D5-Q0099\n    target_gid: D5/S0/Carrier/Ring\n"; break;
             case "values": Files["Evidence/D5/values.result.json"] = "{\"D5/sample\": {\"status\": \"verified\"}}\n"; break;
             case "anomaly": Files["Evidence/D5/S0/Carrier/Result.run.json"] = "{\"anomaly\": \"fixture drift\"}\n"; break;
@@ -425,6 +425,24 @@ internal sealed partial class RuleFixture
         Files[BackfillInventoryLoader.RelativePath] = ledger;
         Baseline[BackfillInventoryLoader.RelativePath] = ledger;
         return atom;
+    }
+
+    internal void UseSyntheticSchema2BackfillPendingContractStep3()
+    {
+        // pending-contract(step 3): keep one executable schema-2 SL-016 fixture until contract.
+        const string ledger = """
+            schema_version: 2
+            inventory: m0-protected-v1
+            sources:
+              - id: GICT-v3.6
+                path: docs/develop/theory/GICT_complete_development_v3_3.md
+                entries:
+                  - anchor: synthetic
+                    disposition: D5/S0/Carrier/Ring
+            ticket_index: []
+            """;
+        Files[BackfillInventoryLoader.RelativePath] = ledger;
+        Baseline[BackfillInventoryLoader.RelativePath] = ledger;
     }
 
     internal void AddNormalizedBackfillTicketTarget()

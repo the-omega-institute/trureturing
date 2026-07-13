@@ -21,7 +21,6 @@ internal static class TestRegistry
           - "docs/CONTRIBUTING.md"
           - "docs/GOVERNANCE.md"
           - "docs/develop/spec/golden-ledger-repo-spec.md"
-          - "docs/develop/theory/GICT_complete_development_v3 (3).md"
           - "docs/develop/theory/GICT_complete_development_v3_3.md"
           - "docs/develop/theory/PZG_BEDC_kernel_formal_170.md"
         agent_files:
@@ -58,5 +57,11 @@ internal static class TestRegistry
           Conventions:
             stratum: S0
             definition: Canonical W-digit conventions.
+          Phase:
+            stratum: S1
+            definition: Additive golden-ratio phases modulo one.
+          Weil:
+            stratum: S3
+            definition: Classical zeta conventions and Weil test functions.
         """ + "\n";
 }

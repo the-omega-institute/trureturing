@@ -1,75 +1,634 @@
-schema_version: 2
-inventory: m0-protected-v1
+schema_version: 3
+ledger: theory-digestion-v1
 sources:
-  - id: GICT-v3.6
-    path: "docs/develop/theory/GICT_complete_development_v3 (3).md"
+  - source_id: gict-v3.6
+    path: docs/develop/theory/GICT_complete_development_v3_3.md
+    atomizer: gict-v1
     entries:
-      - anchor: GICT-heart-O5
-        disposition: D5/X_Frontier/Hearts
-      - anchor: GICT-heart-O6
-        disposition: D5/X_Frontier/HeartsDraft
-      - anchor: constant-kappa
-        disposition: D5/E/values--json
-      - anchor: constant-C0
-        disposition: D5/E/values--json
-      - anchor: constant-cstar
-        disposition: D5/E/values--json
-      - anchor: constant-hbar
-        disposition: D5/E/values--json
-      - anchor: constant-s1
-        disposition: D5/E/values--json
-      - anchor: constant-Ah
-        disposition: D5/E/values--json
-      - anchor: constant-E
-        disposition: D5/E/values--json
-      - anchor: constant-Cphi
-        disposition: D5/E/values--json
-      - anchor: constant-T0
-        disposition: D5/E/values--json
-      - anchor: constant-delta-mean
-        disposition: D5/E/values--json
-      - anchor: constant-T1
-        disposition: D5/E/values--json
-      - anchor: constant-Bh
-        disposition: D5/E/values--json
-      - anchor: constant-c1
-        disposition: D5/E/values--json
-      - anchor: constant-c2
-        disposition: D5/E/values--json
-  - id: PZG-v170
+      - atom_id: gict-7.15
+        boundary:
+          ast_path: theorem/7.15
+          start_byte: 20334
+          end_byte: 20871
+        fingerprints:
+          raw_sha256: sha256:075ce86dce9597cdcdba34a10d6d542496cdacf296f2aeda5bf17d74630ab3ce
+          normalized_sha256: sha256:075ce86dce9597cdcdba34a10d6d542496cdacf296f2aeda5bf17d74630ab3ce
+        coverage_gids:
+          - D5/S1/Phase/ThreeDistance
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: open
+      - atom_id: gict-hearts-o5-o6
+        boundary:
+          ast_path: open/O-5-O-6
+          start_byte: 21775
+          end_byte: 22473
+        fingerprints:
+          raw_sha256: sha256:705dced3bc038c8cc26cd3f01a62ee5ff581ac6181ccbf4eb7439a5d09b8a891
+          normalized_sha256: sha256:705dced3bc038c8cc26cd3f01a62ee5ff581ac6181ccbf4eb7439a5d09b8a891
+        coverage_gids:
+          - D5/X_Frontier/Hearts
+          - D5/X_Frontier/HeartsDraft
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: open
+      - atom_id: gict-constant-kappa
+        boundary:
+          ast_path: constant/kappa
+          start_byte: 24180
+          end_byte: 24263
+        fingerprints:
+          raw_sha256: sha256:8bf05a9c8f1f0c4e89d6c2b07dd217b1e7ced40442df14ba85b1f983302cff53
+          normalized_sha256: sha256:8bf05a9c8f1f0c4e89d6c2b07dd217b1e7ced40442df14ba85b1f983302cff53
+        coverage_gids:
+          - D5/E/values--json
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: open
+      - atom_id: gict-constant-C0
+        boundary:
+          ast_path: constant/C0
+          start_byte: 24263
+          end_byte: 24306
+        fingerprints:
+          raw_sha256: sha256:52a6bfce146c22055aed1985c2ed9d79935cf96558f84a7bbab6bd6c14302dde
+          normalized_sha256: sha256:52a6bfce146c22055aed1985c2ed9d79935cf96558f84a7bbab6bd6c14302dde
+        coverage_gids:
+          - D5/E/values--json
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: open
+      - atom_id: gict-constant-cstar
+        boundary:
+          ast_path: constant/cstar
+          start_byte: 24306
+          end_byte: 24353
+        fingerprints:
+          raw_sha256: sha256:1ef74dbf9311393d801a3875b0d03c46b47ffd72812d53dcef5113de8558aa11
+          normalized_sha256: sha256:1ef74dbf9311393d801a3875b0d03c46b47ffd72812d53dcef5113de8558aa11
+        coverage_gids:
+          - D5/E/values--json
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: open
+      - atom_id: gict-constant-hbar
+        boundary:
+          ast_path: constant/hbar
+          start_byte: 24353
+          end_byte: 24411
+        fingerprints:
+          raw_sha256: sha256:b6068cd957ea5d82535af31287f6ee52ba2c8e232c7f18224db5e1c7504b604c
+          normalized_sha256: sha256:b6068cd957ea5d82535af31287f6ee52ba2c8e232c7f18224db5e1c7504b604c
+        coverage_gids:
+          - D5/E/values--json
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: open
+      - atom_id: gict-constant-s1
+        boundary:
+          ast_path: constant/s1
+          start_byte: 24411
+          end_byte: 24461
+        fingerprints:
+          raw_sha256: sha256:d2b1a4f7727b5187be905416aafae8fa332ab7cb786da18f85c4a5ac0f7a8238
+          normalized_sha256: sha256:d2b1a4f7727b5187be905416aafae8fa332ab7cb786da18f85c4a5ac0f7a8238
+        coverage_gids:
+          - D5/E/values--json
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: open
+      - atom_id: gict-constant-Ah
+        boundary:
+          ast_path: constant/Ah
+          start_byte: 24461
+          end_byte: 24524
+        fingerprints:
+          raw_sha256: sha256:5536d0b171320ffe238f600a0402a5c29621c4f8a5db881fee4b44afd4889ccc
+          normalized_sha256: sha256:5536d0b171320ffe238f600a0402a5c29621c4f8a5db881fee4b44afd4889ccc
+        coverage_gids:
+          - D5/E/values--json
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: open
+      - atom_id: gict-constant-E
+        boundary:
+          ast_path: constant/E
+          start_byte: 24524
+          end_byte: 24587
+        fingerprints:
+          raw_sha256: sha256:128bd1363ca1def11b0dff7f6986e8d0fa740c9e2d0cc30e629960ad8c19345d
+          normalized_sha256: sha256:128bd1363ca1def11b0dff7f6986e8d0fa740c9e2d0cc30e629960ad8c19345d
+        coverage_gids:
+          - D5/E/values--json
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: open
+      - atom_id: gict-constant-Cphi
+        boundary:
+          ast_path: constant/Cphi
+          start_byte: 24587
+          end_byte: 24676
+        fingerprints:
+          raw_sha256: sha256:3b54cc6cd44ddecea50eb2d68e1037c1d1fc520176020dcacce91ae35134e551
+          normalized_sha256: sha256:3b54cc6cd44ddecea50eb2d68e1037c1d1fc520176020dcacce91ae35134e551
+        coverage_gids:
+          - D5/E/values--json
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: open
+      - atom_id: gict-constant-T0
+        boundary:
+          ast_path: constant/T0
+          start_byte: 24676
+          end_byte: 24756
+        fingerprints:
+          raw_sha256: sha256:c8e0d2e19b6bf9158eb39544e3e5e38f24306e71744f22ff65f2c65fe6d30337
+          normalized_sha256: sha256:c8e0d2e19b6bf9158eb39544e3e5e38f24306e71744f22ff65f2c65fe6d30337
+        coverage_gids:
+          - D5/E/values--json
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: open
+      - atom_id: gict-constant-delta-mean
+        boundary:
+          ast_path: constant/delta-mean
+          start_byte: 24756
+          end_byte: 24850
+        fingerprints:
+          raw_sha256: sha256:1af557f45a43b0badf08cd58f93d645311985374247be50c671b915f6efc1a18
+          normalized_sha256: sha256:1af557f45a43b0badf08cd58f93d645311985374247be50c671b915f6efc1a18
+        coverage_gids:
+          - D5/E/values--json
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: open
+      - atom_id: gict-constant-T1
+        boundary:
+          ast_path: constant/T1
+          start_byte: 24850
+          end_byte: 24895
+        fingerprints:
+          raw_sha256: sha256:34c3b42a8445e88358c01c48967af6312889bfe46ce13844ddc6fdf3bce2759f
+          normalized_sha256: sha256:34c3b42a8445e88358c01c48967af6312889bfe46ce13844ddc6fdf3bce2759f
+        coverage_gids:
+          - D5/E/values--json
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: open
+      - atom_id: gict-constant-Bh
+        boundary:
+          ast_path: constant/Bh
+          start_byte: 24895
+          end_byte: 24943
+        fingerprints:
+          raw_sha256: sha256:bb4524178917d778e7e46522f266ca7f514aaa57b74e10df1f9d305519190875
+          normalized_sha256: sha256:bb4524178917d778e7e46522f266ca7f514aaa57b74e10df1f9d305519190875
+        coverage_gids:
+          - D5/E/values--json
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: open
+      - atom_id: gict-constant-c1
+        boundary:
+          ast_path: constant/c1
+          start_byte: 24943
+          end_byte: 25040
+        fingerprints:
+          raw_sha256: sha256:ea5eaca443f31646487fd6ed18714cc33ae4789f08b476e76d441cf8c60b875f
+          normalized_sha256: sha256:ea5eaca443f31646487fd6ed18714cc33ae4789f08b476e76d441cf8c60b875f
+        coverage_gids:
+          - D5/E/values--json
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: open
+      - atom_id: gict-constant-c2
+        boundary:
+          ast_path: constant/c2
+          start_byte: 25040
+          end_byte: 25132
+        fingerprints:
+          raw_sha256: sha256:6abb48a72f98fd04d41b6a4ed36d8d7acf02f4ef7276bc5165cf269db1991214
+          normalized_sha256: sha256:6abb48a72f98fd04d41b6a4ed36d8d7acf02f4ef7276bc5165cf269db1991214
+        coverage_gids:
+          - D5/E/values--json
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: open
+  - source_id: pzg-v170
     path: docs/develop/theory/PZG_BEDC_kernel_formal_170.md
+    atomizer: pzg-v1
     entries:
-      - anchor: PZG-chapter-29-O5
-        disposition: D5/X_Frontier/Hearts
-      - anchor: PZG-chapter-29-O6
-        disposition: D5/X_Frontier/HeartsDraft
-  - id: spec-v7.11-section-10
+      - atom_id: pzg-26.3
+        boundary:
+          ast_path: theorem/26.3
+          start_byte: 324984
+          end_byte: 325820
+        fingerprints:
+          raw_sha256: sha256:272e93e2fcbab0bfc967bcfac89192c05e36972108da3c75ddab83384b717fe7
+          normalized_sha256: sha256:272e93e2fcbab0bfc967bcfac89192c05e36972108da3c75ddab83384b717fe7
+        coverage_gids:
+          - D5/S3/Weil/Convention
+          - D5/S3/Weil/PrimePoleTerms
+          - D5/X_Frontier/HeartsDraft
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: open
+      - atom_id: pzg-26.4
+        boundary:
+          ast_path: ledger/26.4
+          start_byte: 325820
+          end_byte: 326690
+        fingerprints:
+          raw_sha256: sha256:c1660053bf4eed40aa8ee227978d08c73eae4640c67df916fd6d166438d82332
+          normalized_sha256: sha256:c1660053bf4eed40aa8ee227978d08c73eae4640c67df916fd6d166438d82332
+        coverage_gids:
+          - D5/S3/Weil/Convention
+          - D5/S3/Weil/TestFunctions
+          - D5/S3/Weil/FourierLaplace
+          - D5/S3/Weil/FourierLaplaceEntire
+          - D5/S3/Weil/PrimePoleTerms
+          - D5/X_Frontier/HeartsDraft
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: open
+      - atom_id: pzg-o5
+        boundary:
+          ast_path: open/O-5
+          start_byte: 494880
+          end_byte: 498890
+        fingerprints:
+          raw_sha256: sha256:bf0a0ef5fe508a4b82f611d1f6431bacf25b039929015b061664c778c86fb29f
+          normalized_sha256: sha256:bf0a0ef5fe508a4b82f611d1f6431bacf25b039929015b061664c778c86fb29f
+        coverage_gids:
+          - D5/X_Frontier/Hearts
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: open
+      - atom_id: pzg-o6
+        boundary:
+          ast_path: open/O-6
+          start_byte: 498890
+          end_byte: 501371
+        fingerprints:
+          raw_sha256: sha256:84efc878d587793ec813af69649561317fad57fdc1b626eca8a0f2c87fe23147
+          normalized_sha256: sha256:84efc878d587793ec813af69649561317fad57fdc1b626eca8a0f2c87fe23147
+        coverage_gids:
+          - D5/X_Frontier/HeartsDraft
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: open
+  - source_id: golden-ledger-spec-v7.11
     path: docs/develop/spec/golden-ledger-repo-spec.md
+    atomizer: none
     entries:
-      - anchor: acceptance-sample-01
-        disposition: D5/S0/Carrier/Ring
-      - anchor: acceptance-sample-02
-        disposition: D5/S0/Carrier/Norm
-      - anchor: acceptance-sample-03
-        disposition: D5/X_Frontier/FutureInstances
-      - anchor: acceptance-sample-04
-        disposition: D5/X_Frontier/FutureInstances
-      - anchor: acceptance-sample-05
-        disposition: D5/X_Frontier/ValuesProducer
-      - anchor: acceptance-sample-06
-        disposition: D5/X_Frontier/ValuesProducer
-      - anchor: acceptance-sample-07
-        disposition: D5/X_Frontier/ValuesProducer
-      - anchor: acceptance-sample-08
-        disposition: D5/X_Frontier/ValuesProducer
-      - anchor: acceptance-sample-09
-        disposition: D5/X_Frontier/FutureInstances
-      - anchor: acceptance-sample-10
-        disposition: D5/X_Frontier/D5P001
-      - anchor: acceptance-sample-11
-        disposition: D5/X_Frontier/D5P001
-      - anchor: acceptance-sample-12
-        disposition: D5/X_Frontier/FutureInstances
+      - atom_id: spec-acceptance-01
+        boundary:
+          ast_path: sample/01
+          start_byte: 26053
+          end_byte: 26297
+        fingerprints:
+          raw_sha256: sha256:798034b5b9fcb3d19b71c9d9eb7904c1e87eb4dda350368bcf4e4a1aa0c0c2c5
+          normalized_sha256: sha256:798034b5b9fcb3d19b71c9d9eb7904c1e87eb4dda350368bcf4e4a1aa0c0c2c5
+        coverage_gids:
+          - D5/S0/Carrier/Ring
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: closed
+      - atom_id: spec-acceptance-02
+        boundary:
+          ast_path: sample/02
+          start_byte: 26297
+          end_byte: 26521
+        fingerprints:
+          raw_sha256: sha256:e5bc5cd0485b6a4876c6327a0685be5f7575cda0c4d248fd9812b490d59a1c45
+          normalized_sha256: sha256:e5bc5cd0485b6a4876c6327a0685be5f7575cda0c4d248fd9812b490d59a1c45
+        coverage_gids:
+          - D5/S0/Carrier/Norm
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: closed
+      - atom_id: spec-acceptance-03
+        boundary:
+          ast_path: sample/03
+          start_byte: 26521
+          end_byte: 26726
+        fingerprints:
+          raw_sha256: sha256:16aeb5220d79b9ee321a1933fc3a99f881017e2a7bb6701ae1cebe0815c012ab
+          normalized_sha256: sha256:16aeb5220d79b9ee321a1933fc3a99f881017e2a7bb6701ae1cebe0815c012ab
+        coverage_gids:
+          - D5/X_Frontier/FutureInstances
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: open
+      - atom_id: spec-acceptance-04
+        boundary:
+          ast_path: sample/04
+          start_byte: 26726
+          end_byte: 26892
+        fingerprints:
+          raw_sha256: sha256:f687d7504bb441c95a8d659c346bffb3a30d758f3757b0e0a34a58742251a09c
+          normalized_sha256: sha256:f687d7504bb441c95a8d659c346bffb3a30d758f3757b0e0a34a58742251a09c
+        coverage_gids:
+          - D5/X_Frontier/FutureInstances
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: open
+      - atom_id: spec-acceptance-05
+        boundary:
+          ast_path: sample/05
+          start_byte: 26892
+          end_byte: 27565
+        fingerprints:
+          raw_sha256: sha256:aff80c2819f040e9faa1ce5304b705e750917528fc97a5bf820d4ffe2bcdfc09
+          normalized_sha256: sha256:aff80c2819f040e9faa1ce5304b705e750917528fc97a5bf820d4ffe2bcdfc09
+        coverage_gids:
+          - D5/X_Frontier/ValuesProducer
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: open
+      - atom_id: spec-acceptance-06
+        boundary:
+          ast_path: sample/06
+          start_byte: 27565
+          end_byte: 27922
+        fingerprints:
+          raw_sha256: sha256:1cdeffb9c38a12dc186be13302e0236d1cbe64db1443b1218934ed79e0495b5c
+          normalized_sha256: sha256:1cdeffb9c38a12dc186be13302e0236d1cbe64db1443b1218934ed79e0495b5c
+        coverage_gids:
+          - D5/X_Frontier/ValuesProducer
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: open
+      - atom_id: spec-acceptance-07
+        boundary:
+          ast_path: sample/07
+          start_byte: 27922
+          end_byte: 28398
+        fingerprints:
+          raw_sha256: sha256:a9f07f7b0a89f8f78bad0550c383df81587ae3f6b340d81bce2d128595c665b1
+          normalized_sha256: sha256:a9f07f7b0a89f8f78bad0550c383df81587ae3f6b340d81bce2d128595c665b1
+        coverage_gids:
+          - D5/X_Frontier/ValuesProducer
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: open
+      - atom_id: spec-acceptance-08
+        boundary:
+          ast_path: sample/08
+          start_byte: 28398
+          end_byte: 28692
+        fingerprints:
+          raw_sha256: sha256:62a209d5f7f16d269aaf8ee7fde6f8ff427152fe55f57cf0b9420afe6b4c6e24
+          normalized_sha256: sha256:62a209d5f7f16d269aaf8ee7fde6f8ff427152fe55f57cf0b9420afe6b4c6e24
+        coverage_gids:
+          - D5/X_Frontier/ValuesProducer
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: open
+      - atom_id: spec-acceptance-09
+        boundary:
+          ast_path: sample/09
+          start_byte: 28692
+          end_byte: 28937
+        fingerprints:
+          raw_sha256: sha256:97b1ff8b1042994df778555f96b6e4299c6629f3ed873d0f21633a0f8bc5e9a9
+          normalized_sha256: sha256:97b1ff8b1042994df778555f96b6e4299c6629f3ed873d0f21633a0f8bc5e9a9
+        coverage_gids:
+          - D5/X_Frontier/FutureInstances
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: open
+      - atom_id: spec-acceptance-10
+        boundary:
+          ast_path: sample/10
+          start_byte: 28937
+          end_byte: 29172
+        fingerprints:
+          raw_sha256: sha256:d9bf4c5a303161959232a2e57dfe9d34c88754ad3f5cbbf4e4c8e1c6e7a6aac4
+          normalized_sha256: sha256:d9bf4c5a303161959232a2e57dfe9d34c88754ad3f5cbbf4e4c8e1c6e7a6aac4
+        coverage_gids:
+          - D5/X_Frontier/D5P001
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: open
+      - atom_id: spec-acceptance-11
+        boundary:
+          ast_path: sample/11
+          start_byte: 29172
+          end_byte: 29568
+        fingerprints:
+          raw_sha256: sha256:1d5d65810358f0f49e66bd771668df3814ee8da7bcc9adf21bfb5df3e3e48e91
+          normalized_sha256: sha256:1d5d65810358f0f49e66bd771668df3814ee8da7bcc9adf21bfb5df3e3e48e91
+        coverage_gids:
+          - D5/X_Frontier/D5P001
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: open
+      - atom_id: spec-acceptance-12
+        boundary:
+          ast_path: sample/12
+          start_byte: 29568
+          end_byte: 29784
+        fingerprints:
+          raw_sha256: sha256:7025126ce7d3cba2fc1259e5f837f377c121ca266851a9cb2504223c8e18041c
+          normalized_sha256: sha256:7025126ce7d3cba2fc1259e5f837f377c121ca266851a9cb2504223c8e18041c
+        coverage_gids:
+          - D5/X_Frontier/FutureInstances
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: partial
+          truth: open
 ticket_index:
   - case_id: D5-T0001
     gid: D5/X_Frontier/HeartsDraft
