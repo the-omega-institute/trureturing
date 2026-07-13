@@ -134,7 +134,9 @@ internal static class ConservativeExtensionVerifier
         var baselineTree = baseline[input.BaseTreeCaseId];
         if (baselineTree.Disposition is not ConservativeDisposition.Admit)
         {
-            throw new InvalidOperationException("baseline harness no longer admits its own actual tree");
+            throw new InvalidOperationException(
+                "baseline harness no longer admits its own actual tree; blocking_rules="
+                + string.Join(',', baselineTree.BlockingRules));
         }
 
         foreach (var caseId in input.CorpusCaseIds)

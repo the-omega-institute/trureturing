@@ -85,6 +85,31 @@ public sealed class ConservativeExtensionVerifierTests
     }
 
     [Fact]
+    public void BaselineTreeIntegrityFailureNamesTheBlockingRules()
+    {
+        var input = ConservativeTestData.Input() with
+        {
+            BaselineExecution = new ConservativeHarnessExecution.Completed(new ConservativeHarnessRun(
+                "sha256:" + new string('1', 64),
+                ["SL-001", "SL-022"],
+                Assert.IsType<ConservativeHarnessExecution.Completed>(
+                        ConservativeTestData.Input().BaselineExecution)
+                    .Run.Cases
+                    .Select(item => ConservativeTestData.WithDisposition(
+                        item,
+                        ConservativeTestData.BaseTreeCase,
+                        ConservativeDisposition.Block,
+                        "SL-001"))
+                    .ToImmutableArray())),
+        };
+
+        var outcome = ConservativeExtensionVerifier.Verify(input);
+
+        var failure = Assert.IsType<ConservativeExtensionOutcome.InfrastructureFailure>(outcome);
+        Assert.Contains("SL-001", failure.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void CertificateBytesAreStableAcrossRuns()
     {
         var input = ConservativeTestData.Input();
