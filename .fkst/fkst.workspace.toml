@@ -10,8 +10,12 @@ packages = [
   "consensus",
   "github-devloop",
   "github-devloop-pr",
+  "github-devloop-integration",
   "github-devloop-intake",
-  "github-devloop-decompose",
   "github-devloop-intake-default",
+  "github-devloop-workflow",
+  "github-devloop-decompose",
+  "github-devloop-ops",
+  "github-external-pr-intake",
 ]
 libraries = ["contract", "workflow", "testkit", "forge", "devloop"]
