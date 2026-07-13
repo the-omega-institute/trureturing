@@ -25,7 +25,8 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
         return DocumentDefinition.Create(ScribeDocument.Create(
             Header(
                 "D5/S1/Phase/Basic",
-                "Integer golden-ratio phases form an injective additive orbit on the unit circle."),
+                "Integer golden-ratio phases form an injective additive orbit on the unit circle.",
+                AnchorCatalogDefinitions.GictI2Definition1_4),
             H("Golden Phase"),
             Blocks(
                 opening,

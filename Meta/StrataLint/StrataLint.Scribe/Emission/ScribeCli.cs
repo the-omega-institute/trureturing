@@ -25,17 +25,24 @@ public static class ScribeCli
 
         var check = arguments.Count == 2
             && string.Equals(arguments[1], "--check", StringComparison.Ordinal);
+        var command = arguments.Count == 0 ? string.Empty : arguments[0];
         if (arguments.Count is < 1 or > 2
-            || !string.Equals(arguments[0], "emit", StringComparison.Ordinal)
+            || command is not ("emit" or "catalog")
             || (arguments.Count == 2 && !check))
         {
-            error.WriteLine("usage: dotnet run --project Meta/StrataLint/StrataLint.Scribe -- emit [--check]");
+            error.WriteLine(
+                "usage: dotnet run --project Meta/StrataLint/StrataLint.Scribe -- emit|catalog [--check]");
             return 2;
         }
 
         try
         {
             var repositoryRoot = FindRepositoryRoot(workingDirectory);
+            if (command == "catalog")
+            {
+                return AnchorCatalogEmitter.Emit(repositoryRoot, check, output, error);
+            }
+
             return leanReport is null
                 ? ScribeEmitter.Emit(repositoryRoot, check, output, error)
                 : ScribeEmitter.Emit(repositoryRoot, check, output, error, leanReport);

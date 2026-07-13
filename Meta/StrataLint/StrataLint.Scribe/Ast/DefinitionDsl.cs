@@ -4,14 +4,13 @@ namespace StrataLint.Scribe;
 
 public static class DefinitionDsl
 {
-    public static DocumentHeader Header(string gid, string digest, params string[] anchors) =>
+    public static DocumentHeader Header(string gid, string digest, params Anchor[] anchors) =>
         DocumentHeader.Create(
             GidRef.Create(gid),
             Generality.Instance,
             GidRef.Create("D5/B/" + gid["D5/".Length..]),
             new EvidenceMirror.Waiver(WaiverReason.Create("algebraically-proved")),
-            (anchors.Length == 0 ? ["GICT-v3.6-I.1-definition-1.4"] : anchors)
-                .Select(AnchorRef.Create),
+            anchors,
             Digest.Create(digest));
 
     public static Heading H(string value) => Heading.Create(value);

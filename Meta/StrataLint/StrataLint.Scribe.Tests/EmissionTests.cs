@@ -110,7 +110,7 @@ public sealed class EmissionTests
     }
 
     [Fact]
-    public void CliRejectsAnythingOutsideEmitAndOptionalCheck()
+    public void CliRejectsAnythingOutsideClosedCommandsAndOptionalCheck()
     {
         var error = new StringWriter();
 
@@ -121,6 +121,6 @@ public sealed class EmissionTests
             error);
 
         Assert.Equal(2, exit);
-        Assert.Contains("emit [--check]", error.ToString(), StringComparison.Ordinal);
+        Assert.Contains("emit|catalog [--check]", error.ToString(), StringComparison.Ordinal);
     }
 }

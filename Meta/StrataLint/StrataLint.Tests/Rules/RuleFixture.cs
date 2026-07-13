@@ -27,7 +27,13 @@ internal sealed partial class RuleFixture
             ["Meta/domains.yaml"] = TestRegistry.Domains,
             ["Meta/BACKFILL.yaml"] = File.ReadAllText(Path.Combine(repositoryRoot, "Meta", "BACKFILL.yaml"), Encoding.UTF8),
             ["Meta/registry.yaml"] = TestRegistry.Canonical,
+            ["Meta/StrataLint/Generated/anchor-catalog.v1.json"] = File.ReadAllText(
+                Path.Combine(repositoryRoot, "Meta", "StrataLint", "Generated", "anchor-catalog.v1.json"),
+                Encoding.UTF8),
             ["Library/queries.yaml"] = "schema_version: 1\nqueries: []\n",
+            ["lake-manifest.json"] = File.ReadAllText(
+                Path.Combine(repositoryRoot, "lake-manifest.json"),
+                Encoding.UTF8),
             [RingPath] = Header + "def goldenRing : Nat := 0\n",
             [BlueprintPath] = "# Golden ring\n",
         };
@@ -133,6 +139,26 @@ internal sealed partial class RuleFixture
             AcceptedLeanClosure.Create(LeanAxiomReport.Create(BaselineReports)),
             RawChangeSet.Create(Changes),
             meta);
+    }
+
+    internal RuleEvaluationContext BuildForProtectedRuleCompatibility()
+    {
+        var current = Decode(Files);
+        var baseline = Decode(Baseline);
+        var policyOutcome = RegistryLoader.Load(
+            Encoding.UTF8.GetBytes(TestRegistry.Canonical),
+            Encoding.UTF8.GetBytes(TestRegistry.Domains));
+        var policy = Assert.IsType<RegistryLoadOutcome.Accepted>(policyOutcome).Policy;
+        var bootstrap = BootstrapGate.Evaluate(RawChangeSet.Create(Changes));
+        var meta = Assert.IsType<BootstrapOutcome.HumanReviewRequired>(bootstrap).ChangeSet;
+        return RuleEvaluationContext.Create(
+            current,
+            baseline,
+            policy,
+            AcceptedLeanClosure.Create(LeanAxiomReport.Create(Reports)),
+            AcceptedLeanClosure.Create(LeanAxiomReport.Create(BaselineReports)),
+            RawChangeSet.Create(Changes),
+            MetaEvaluationProfile.ForProtectedSurface(meta));
     }
 
     internal void AddUpwardImport()

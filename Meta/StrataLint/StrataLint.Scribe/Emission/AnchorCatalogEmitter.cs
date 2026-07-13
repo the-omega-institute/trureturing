@@ -1,0 +1,56 @@
+namespace StrataLint.Scribe;
+
+public static class AnchorCatalogEmitter
+{
+    public static int Emit(
+        string repositoryRoot,
+        bool check,
+        TextWriter output,
+        TextWriter error)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
+        ArgumentNullException.ThrowIfNull(output);
+        ArgumentNullException.ThrowIfNull(error);
+
+        try
+        {
+            var first = CanonicalAnchorCatalogWriter.Write().ToArray();
+            var second = CanonicalAnchorCatalogWriter.Write().ToArray();
+            if (!first.AsSpan().SequenceEqual(second))
+            {
+                throw new InvalidOperationException(
+                    "Anchor catalog writer is not byte deterministic.");
+            }
+
+            var path = Path.Combine(repositoryRoot, CanonicalAnchorCatalogWriter.RelativePath);
+            var current = File.Exists(path) ? File.ReadAllBytes(path) : [];
+            if (current.AsSpan().SequenceEqual(first))
+            {
+                output.WriteLine("checked: " + CanonicalAnchorCatalogWriter.RelativePath);
+                return 0;
+            }
+
+            if (check)
+            {
+                error.WriteLine("out of date: " + CanonicalAnchorCatalogWriter.RelativePath);
+                return 1;
+            }
+
+            var parent = Path.GetDirectoryName(path)
+                ?? throw new InvalidOperationException("Anchor catalog path has no parent directory.");
+            Directory.CreateDirectory(parent);
+            File.WriteAllBytes(path, first);
+            output.WriteLine("wrote: " + CanonicalAnchorCatalogWriter.RelativePath);
+            return 0;
+        }
+        catch (Exception exception) when (
+            exception is InvalidOperationException
+                or IOException
+                or UnauthorizedAccessException
+                or ArgumentException)
+        {
+            error.WriteLine("catalog emit failed: " + exception.Message);
+            return 1;
+        }
+    }
+}

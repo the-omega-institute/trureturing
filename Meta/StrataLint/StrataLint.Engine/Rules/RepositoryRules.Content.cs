@@ -179,6 +179,9 @@ internal static partial class RepositoryRules
         return findings.ToImmutable();
     }
 
+    private static ImmutableArray<RuleFinding> ResolvableAnchors(RuleEvaluationContext context) =>
+        Literature(context).AddRange(AnchorReferenceRule.Evaluate(context));
+
     private static void ValidateQuerySource(
         RepositorySnapshot snapshot,
         IReadOnlyDictionary<string, object?> root,

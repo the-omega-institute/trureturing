@@ -9,8 +9,8 @@ internal sealed class CarryDocument : IScribeDocumentDefinition
             Header(
                 "D5/S1/Digit/Carry",
                 "Four local Fibonacci carry rules preserve the value of finite raw W digits.",
-                "GICT-v3.6-I.2-definition-1.4",
-                "mathlib-data-nat-fib-zeckendorf"),
+                AnchorCatalogDefinitions.GictI2Definition1_4,
+                AnchorCatalogDefinitions.MathlibZeckendorfModule),
             H("Local Carry Rules"),
             Blocks(
                 Paragraph(

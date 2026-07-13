@@ -16,7 +16,8 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
         return DocumentDefinition.Create(ScribeDocument.Create(
             Header(
                 "D5/S1/Scale/Embedding",
-                "The real embedding of golden integers is an injective ring homomorphism."),
+                "The real embedding of golden integers is an injective ring homomorphism.",
+                AnchorCatalogDefinitions.GictI2Definition1_4),
             H("Golden Real Embedding"),
             Blocks(
                 Paragraph(
