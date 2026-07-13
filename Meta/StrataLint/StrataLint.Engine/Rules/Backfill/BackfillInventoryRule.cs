@@ -6,7 +6,6 @@ namespace StrataLint.Engine;
 internal static class BackfillInventoryRule
 {
     private const string BackfillPath = BackfillInventoryLoader.RelativePath;
-    private const string PendingContractInventoryVersion = "m0-protected-v1";
 
     private static readonly Regex CasePattern = new(
         "^D5-T[0-9]{4}$",
@@ -39,15 +38,8 @@ internal static class BackfillInventoryRule
             return [new RuleFinding(BackfillPath, exception.Message)];
         }
 
-        var root = document.Root;
-
-        // pending-contract(step 3): schema 2 must keep the origin/dev SL-016 verdict unchanged.
-        if (document.SchemaVersion != BackfillInventoryLoader.SchemaVersion)
-        {
-            return EvaluateSchema2(context, root);
-        }
-
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        var root = document.Root;
         if (!root.Keys.ToHashSet(StringComparer.Ordinal).SetEquals(
                 ["schema_version", "ledger", "sources", "ticket_index"]))
         {
@@ -78,162 +70,6 @@ internal static class BackfillInventoryRule
         root.TryGetValue("ticket_index", out var ticketIndex);
         ValidateTicketIndex(context.Current, ticketIndex, findings);
         return findings.ToImmutable();
-    }
-
-    private static ImmutableArray<RuleFinding> EvaluateSchema2(
-        RuleEvaluationContext context,
-        IReadOnlyDictionary<string, object?> root)
-    {
-        if (!root.TryGetValue("schema_version", out var schema)
-            || schema is not int version
-            || version != BackfillInventoryLoader.PendingContractSchemaVersion
-            || !root.TryGetValue("inventory", out var inventory)
-            || inventory is not string inventoryName
-            || !string.Equals(inventoryName, PendingContractInventoryVersion, StringComparison.Ordinal))
-        {
-            return [new RuleFinding(
-                BackfillPath,
-                $"BACKFILL must use schema_version 2 and inventory {PendingContractInventoryVersion}")];
-        }
-
-        if (!root.TryGetValue("sources", out var rawSources) || rawSources is not List<object?> sources)
-        {
-            return [new RuleFinding(BackfillPath, "sources must be a list")];
-        }
-
-        if (sources.Count == 0)
-        {
-            return [new RuleFinding(BackfillPath, "sources must contain at least one source")];
-        }
-
-        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        if (!root.Keys.ToHashSet(StringComparer.Ordinal).SetEquals(
-                ["schema_version", "inventory", "sources", "ticket_index"]))
-        {
-            findings.Add(new RuleFinding(BackfillPath, "BACKFILL top-level keys are not canonical"));
-        }
-
-        var seenIds = new HashSet<string>(StringComparer.Ordinal);
-        var seenPaths = new HashSet<string>(StringComparer.Ordinal);
-        foreach (var rawSource in sources)
-        {
-            ValidateSchema2Source(context.Current, context.Policy, rawSource, seenIds, seenPaths, findings);
-        }
-
-        root.TryGetValue("ticket_index", out var ticketIndex);
-        ValidateTicketIndex(context.Current, ticketIndex, findings);
-        return findings.ToImmutable();
-    }
-
-    private static void ValidateSchema2Source(
-        RepositorySnapshot snapshot,
-        ValidatedPolicy policy,
-        object? rawSource,
-        HashSet<string> seenIds,
-        HashSet<string> seenPaths,
-        ImmutableArray<RuleFinding>.Builder findings)
-    {
-        if (rawSource is not Dictionary<string, object?> source)
-        {
-            findings.Add(new RuleFinding(BackfillPath, "each source must be a mapping"));
-            return;
-        }
-
-        if (!source.Keys.ToHashSet(StringComparer.Ordinal).SetEquals(["id", "path", "entries"]))
-        {
-            findings.Add(new RuleFinding(BackfillPath, "source keys are not canonical"));
-        }
-
-        source.TryGetValue("id", out var rawId);
-        if (rawId is not string sourceId || string.IsNullOrWhiteSpace(sourceId))
-        {
-            findings.Add(new RuleFinding(BackfillPath, "each source needs an id"));
-            sourceId = "<invalid>";
-        }
-        else if (!seenIds.Add(sourceId))
-        {
-            findings.Add(new RuleFinding(BackfillPath, $"duplicate source id: {sourceId}"));
-        }
-
-        source.TryGetValue("path", out var rawPath);
-        if (rawPath is not string sourcePath
-            || !RepoPath.TryCreate(sourcePath, out var sourceRepoPath)
-            || !policy.GovernanceDocuments.Contains(sourceRepoPath))
-        {
-            findings.Add(new RuleFinding(BackfillPath, $"source {sourceId} has an invalid governance path"));
-            return;
-        }
-
-        if (!seenPaths.Add(sourcePath))
-        {
-            findings.Add(new RuleFinding(BackfillPath, $"duplicate source path: {sourcePath}"));
-        }
-
-        if (!snapshot.TryGetFile(sourcePath, out _))
-        {
-            findings.Add(new RuleFinding(BackfillPath, $"source path is dangling: {sourcePath}"));
-        }
-
-        source.TryGetValue("entries", out var rawEntries);
-        if (rawEntries is not List<object?> entries || entries.Count == 0)
-        {
-            findings.Add(new RuleFinding(BackfillPath, $"source {sourcePath} has no entries"));
-            return;
-        }
-
-        var seenAnchors = new HashSet<string>(StringComparer.Ordinal);
-        foreach (var rawEntry in entries)
-        {
-            if (rawEntry is not Dictionary<string, object?> entry)
-            {
-                findings.Add(new RuleFinding(BackfillPath, $"source {sourcePath} has a non-mapping entry"));
-                continue;
-            }
-
-            if (entry.Keys.Any(static key => key is not ("anchor" or "disposition")))
-            {
-                findings.Add(new RuleFinding(BackfillPath, $"source {sourcePath} entry keys are not canonical"));
-            }
-
-            if (!entry.TryGetValue("anchor", out var rawAnchor)
-                || rawAnchor is not string anchor
-                || string.IsNullOrWhiteSpace(anchor))
-            {
-                findings.Add(new RuleFinding(BackfillPath, $"source {sourcePath} entry needs an anchor"));
-                continue;
-            }
-
-            if (!seenAnchors.Add(anchor))
-            {
-                findings.Add(new RuleFinding(BackfillPath, $"duplicate source anchor: {sourcePath}#{anchor}"));
-            }
-
-            entry.TryGetValue("disposition", out var disposition);
-            ValidateSchema2Disposition(snapshot, disposition, sourcePath, anchor, findings);
-        }
-    }
-
-    private static void ValidateSchema2Disposition(
-        RepositorySnapshot snapshot,
-        object? disposition,
-        string sourcePath,
-        string anchor,
-        ImmutableArray<RuleFinding>.Builder findings)
-    {
-        if (disposition is not string gidText)
-        {
-            findings.Add(new RuleFinding(
-                BackfillPath,
-                $"source {sourcePath}#{anchor} needs a disposition"));
-            return;
-        }
-
-        if (!Gid.TryParse(gidText, out var gid) || !snapshot.TryGetFile(gid.Path.Value, out _))
-        {
-            findings.Add(new RuleFinding(
-                BackfillPath,
-                $"dangling disposition {gidText}: canonical target is absent"));
-        }
     }
 
     private static void ValidateDigestionEntries(

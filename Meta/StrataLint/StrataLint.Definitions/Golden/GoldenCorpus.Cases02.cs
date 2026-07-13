@@ -103,7 +103,7 @@ internal static partial class GoldenCorpus
             "invalid-protected-backfill-schema",
             [],
             [Replace("schema_version: 3", "schema_version: 2")],
-            [D(16, "Meta/BACKFILL.yaml", "BACKFILL must use schema_version 2 and inventory m0-protected-v1")]),
+            [D(16, "Meta/BACKFILL.yaml", "BACKFILL must use schema_version 3; legacy schemas are not read")]),
         C(
             "changed-protected-source-path",
             [],

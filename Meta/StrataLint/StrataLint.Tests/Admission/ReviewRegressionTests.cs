@@ -108,8 +108,6 @@ public sealed partial class ReviewRegressionTests
     {
         var fixture = new RuleFixture();
         var sourceBytes = Encoding.UTF8.GetBytes(fixture.Files[RuleFixture.GictTheoryPath]);
-        fixture.Files[RuleFixture.SyntheticSchema3GictTheoryPath] = Encoding.UTF8.GetString(sourceBytes);
-        fixture.Baseline[RuleFixture.SyntheticSchema3GictTheoryPath] = Encoding.UTF8.GetString(sourceBytes);
         var atom = GictAtomizer.Atomize(sourceBytes).ResolveClaim("theorem/7.15");
         const string gid = "D5/S0/Carrier/Ring";
         var targetBytes = Encoding.UTF8.GetBytes(fixture.Files[RuleFixture.RingPath]);
@@ -132,7 +130,7 @@ public sealed partial class ReviewRegressionTests
             ledger: theory-digestion-v1
             sources:
               - source_id: gict-v3.6
-                path: {{RuleFixture.SyntheticSchema3GictTheoryPath}}
+                path: {{RuleFixture.GictTheoryPath}}
                 atomizer: gict-v1
                 entries:
                   - atom_id: gict-7.15
@@ -188,16 +186,41 @@ public sealed partial class ReviewRegressionTests
     }
 
     [Fact]
-    [Trait("pending-contract", "step-3")]
-    public void Sl016AcceptsSchema2FixturePendingContractStep3()
+    public void Sl016AcceptsCurrentRepositoryTicketDeclarations()
     {
+        var repositoryRoot = FindRepositoryRoot();
         var fixture = new RuleFixture();
-        fixture.UseSyntheticSchema2BackfillPendingContractStep3();
         fixture.AddBackfillTargets();
+        foreach (var path in Directory.EnumerateFiles(
+                     Path.Combine(repositoryRoot, "D5", "X_Frontier"),
+                     "*.lean",
+                     SearchOption.TopDirectoryOnly))
+        {
+            var repoPath = Path.GetRelativePath(repositoryRoot, path).Replace('\\', '/');
+            fixture.Files[repoPath] = File.ReadAllText(path, Encoding.UTF8);
+        }
+
+        const string normPath = "D5/S0/Carrier/Norm.lean";
+        fixture.Files[normPath] = File.ReadAllText(Path.Combine(repositoryRoot, normPath), Encoding.UTF8);
+
+        // The digestion projection consumes Lean truth, so this synthetic managed file carries its report.
+        fixture.Files["D5/X_Frontier/DownwardImportTail.lean"] = """
+            /- GID: D5/X_Frontier/DownwardImportTail
+               generality: E
+               mirror-B: none(waiver:test-fixture)
+               mirror-E: none(waiver:test-fixture)
+               anchors: []
+               digest: SL-016 downward-import regression fixture. -/
+            import D5.S3.Weil.FourierLaplace
+            def downwardImportTail : Unit := ()
+            """;
+        fixture.Reports["D5/X_Frontier/DownwardImportTail.lean"] = new LeanFileReport(
+            ["D5.S3.Weil.FourierLaplace"],
+            []);
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(16),
-            fixture.Build());
+            fixture.BuildForRuleCompatibility());
 
         Assert.Empty(evaluation.Diagnostics);
     }
@@ -206,10 +229,9 @@ public sealed partial class ReviewRegressionTests
     public void Sl016RejectsHandwrittenDigestionStatusThatDisagreesWithDerivation()
     {
         var fixture = new RuleFixture();
-        fixture.UseSyntheticSchema3Backfill();
         fixture.AddBackfillTargets();
-        const string expected = "          migration: partial\n          truth: closed\n";
-        const string falseProjection = "          migration: absorbed\n          truth: closed\n";
+        const string expected = "          migration: partial\n          truth: open\n      - atom_id: gict-hearts-o5-o6";
+        const string falseProjection = "          migration: absorbed\n          truth: open\n      - atom_id: gict-hearts-o5-o6";
         fixture.Files["Meta/BACKFILL.yaml"] = fixture.Files["Meta/BACKFILL.yaml"].Replace(
             expected,
             falseProjection,
@@ -225,7 +247,6 @@ public sealed partial class ReviewRegressionTests
     public void Sl016RejectsFormattedFingerprintThatDisagreesWithSourceSpan()
     {
         var fixture = new RuleFixture();
-        fixture.UseSyntheticSchema3Backfill();
         fixture.AddBackfillTargets();
         var document = BackfillInventoryLoader.Load(fixture.Files["Meta/BACKFILL.yaml"]);
         var fingerprint = document.RequireDigestionEntries()[0].Fingerprints.RawSha256;
@@ -245,20 +266,17 @@ public sealed partial class ReviewRegressionTests
     public void Sl016RejectsDuplicateSourceIdEvenWhenTheLaterSourceHasNoEntries()
     {
         var fixture = new RuleFixture();
-        fixture.UseSyntheticSchema3Backfill();
         fixture.AddBackfillTargets();
         const string duplicate =
             "  - source_id: gict-v3.6\n"
             + "    path: docs/develop/theory/PZG_BEDC_kernel_formal_170.md\n"
             + "    atomizer: pzg-v1\n"
             + "    entries: []\n"
-            + "ticket_index: []\n";
-        var original = fixture.Files["Meta/BACKFILL.yaml"];
-        fixture.Files["Meta/BACKFILL.yaml"] = original.Replace(
-            "ticket_index: []",
+            + "ticket_index:\n";
+        fixture.Files["Meta/BACKFILL.yaml"] = fixture.Files["Meta/BACKFILL.yaml"].Replace(
+            "ticket_index:\n",
             duplicate,
             StringComparison.Ordinal);
-        Assert.NotEqual(original, fixture.Files["Meta/BACKFILL.yaml"]);
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build());
 

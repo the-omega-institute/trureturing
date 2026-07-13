@@ -28,8 +28,7 @@ public sealed class DigestionLedgerTests
     }
 
     [Fact]
-    [Trait("pending-contract", "step-3")]
-    public void Schema2ReferencesRemainReadablePendingContractStep3()
+    public void LegacyAnchorDispositionSchemaHasNoCompatibilityReader()
     {
         const string legacy = """
             schema_version: 2
@@ -43,10 +42,9 @@ public sealed class DigestionLedgerTests
             ticket_index: []
             """;
 
-        var document = BackfillInventoryLoader.Load(legacy);
+        var error = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(legacy));
 
-        Assert.Equal(2, document.Root["schema_version"]);
-        Assert.Equal(["D5/X_Frontier/Probe"], document.RequireReferencedGids().ToArray());
+        Assert.Contains("schema_version 3", error.Message, StringComparison.Ordinal);
     }
 
     [Fact]
