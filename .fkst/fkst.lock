@@ -3,11 +3,11 @@ id = "fkst-packages-platform"
 git = "https://github.com/ChronoAIProject/fkst-packages.git"
 
 [external_source.intent]
-rev = "70f1cf4cf5725867f5bd1f9a9390aecc95d099ab"
+rev = "7ce00eaac41d3f7ca6186954042619af185dc505"
 
 [external_source.resolved]
-rev = "70f1cf4cf5725867f5bd1f9a9390aecc95d099ab"
-tree_sha256 = "sha256-85b24b98b2fc8d68eab126a75d3ee2a1908e681b73475dac1172ebf1dc5f1529"
+rev = "7ce00eaac41d3f7ca6186954042619af185dc505"
+tree_sha256 = "sha256-9a13c8d717a16ee7803120c479655caae2f454d5dbc0b19d5191a4fc0a362b1c"
 
 [[external_source.libraries]]
 name = "contract"
@@ -32,4 +32,4 @@ exports_sha256 = "sha256-09b0be9b740598287711a7f317c9e4ae531d0954862578316537efb
 [[external_source.libraries]]
 name = "devloop"
 unit = "libraries/devloop"
-exports_sha256 = "sha256-a7040dde3e9276005a3b122d8b93536eb2d67e9190452309faf1ec2f2f5360a2"
+exports_sha256 = "sha256-1316b00eb85127da6a031568f10d4f4440a6fc3e3004203dfb691b09c58b22b6"
