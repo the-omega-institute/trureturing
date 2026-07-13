@@ -75,7 +75,7 @@ snapshot() {
   local codex_failed=0 recent_issue=""
   if [[ -n "$log" ]]; then
     codex_failed="$(cnt 'error_class=codex-failed' "$log")"
-    recent_issue="$(grep -aoE 'issue/[0-9]+|pr/[0-9]+' "$log" 2>/dev/null | sort -u | tail -3 | tr '\n' ' ')"
+    recent_issue="$( { grep -aoE 'issue/[0-9]+|pr/[0-9]+' "$log" 2>/dev/null || true; } | sort -u | tail -3 | tr '\n' ' ')"
     (( codex_failed > 0 )) && { [[ "$verdict" == HEALTHY ]] && verdict="DEGRADED"; reasons+=("$codex_failed codex-failed"); }
   fi
 
