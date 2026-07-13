@@ -3,9 +3,9 @@ name: admission
 
 on:
   push:
-    branches: [dev]
+    branches: [dev, 'integration-**']
   pull_request_target:
-    branches: [dev]
+    branches: [dev, 'integration-**']
 
 permissions:
   contents: read
