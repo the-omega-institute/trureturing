@@ -6,6 +6,7 @@ readonly REPO_ROOT="$(cd -- "$FKST_ROOT/.." && pwd -P)"
 readonly OPERATE_ROOT="${FKST_OPERATE_ROOT:-$HOME/.fkst/trureturing}"
 readonly ENV_FILE="$OPERATE_ROOT/host.env"
 readonly LOG_DIR="$OPERATE_ROOT/logs"
+readonly PLATFORM_PACKAGES="github-proxy consensus github-devloop github-devloop-pr github-devloop-intake github-devloop-decompose github-devloop-intake-default"
 
 die() {
   printf 'operate: %s\n' "$*" >&2
@@ -53,7 +54,7 @@ ensure_host_env() {
   {
     printf '# Generated host-local configuration. Do not commit.\n'
     printf 'BIN=%s\n' "$(shell_value "$bin")"
-    printf 'FKST_HOST_ROOT=%s\n' "$(shell_value "$REPO_ROOT")"
+    printf 'FKST_HOST_ROOT=%s\n' "$(shell_value "$OPERATE_ROOT/checkout")"
     printf 'FKST_PLATFORM_ROOT=%s\n' "$(shell_value "$platform")"
     printf 'FKST_DURABLE_ROOT=%s\n' "$(shell_value "$OPERATE_ROOT/durable")"
     printf 'FKST_RUNTIME_ROOT=%s\n' "$(shell_value "$OPERATE_ROOT/runtime")"
@@ -75,7 +76,10 @@ load_host_env() {
   # shellcheck disable=SC1090
   source "$ENV_FILE"
   set +a
-  unset FKST_GITHUB_WRITE
+  # GitHub write posture is a host-local operational fact carried by host.env
+  # (gitignored, not committed): unset/anything-but-1 = dry-run; 1 = real writes.
+  # A freshly generated host.env defaults to dry-run (see ensure_host_env); the
+  # operator opts into real writes by editing their own host.env.
   [[ -x "${BIN:-}" ]] || die "host.env BIN is not executable: ${BIN:-<unset>}"
   [[ -x "${FKST_PLATFORM_ROOT:-}/scripts/run.sh" ]] \
     || die "host.env FKST_PLATFORM_ROOT is invalid: ${FKST_PLATFORM_ROOT:-<unset>}"
@@ -98,12 +102,26 @@ read_live_pid() {
 }
 
 start() {
-  local log pid
+  local checkout_root log pid
   load_host_env
+  checkout_root="${FKST_HOST_ROOT:-$OPERATE_ROOT/checkout}"
+  [[ -d "$checkout_root" ]] || die "dedicated checkout does not exist: $checkout_root"
+  test -e "$checkout_root/.git" || die "dedicated checkout is not a git checkout: $checkout_root"
+  checkout_root="$(cd -- "$checkout_root" && pwd -P)"
+  [[ "$checkout_root" != "$REPO_ROOT" ]] \
+    || die "dedicated checkout must not be the source worktree: $checkout_root"
   log="$LOG_DIR/supervise-$(date -u +%Y%m%dT%H%M%SZ).log"
   ln -sfn "$(basename -- "$log")" "$LOG_DIR/latest.log"
-  nohup bash "$FKST_ROOT/scripts/run.sh" supervise \
-    --runtime-root "$FKST_RUNTIME_ROOT" --restart >>"$log" 2>&1 &
+  (
+    cd -- "$checkout_root"
+    exec nohup bash "$FKST_PLATFORM_ROOT/scripts/run.sh" supervise \
+      --project-root "$checkout_root" \
+      --platform-root "$FKST_PLATFORM_ROOT" \
+      --platform-packages "$PLATFORM_PACKAGES" \
+      --durable-root "$FKST_DURABLE_ROOT" \
+      --runtime-root "$FKST_RUNTIME_ROOT" \
+      --restart
+  ) >>"$log" 2>&1 &
   pid=$!
   sleep 2
   if ! kill -0 "$pid" 2>/dev/null; then

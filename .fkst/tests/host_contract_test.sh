@@ -70,5 +70,12 @@ grep -Fq 'FKST_GITHUB_WRITE' "$ROOT/scripts/operate.sh" \
 if grep -Eq '(^|[[:space:]])export[[:space:]]+FKST_GITHUB_WRITE=|FKST_GITHUB_WRITE=1' "$ROOT/scripts/operate.sh"; then
   fail "operate.sh enables GitHub writes"
 fi
+grep -Fq 'test -e "$checkout_root/.git"' "$ROOT/scripts/operate.sh" \
+  || fail "operate.sh does not require a dedicated git checkout"
+grep -Fq -- '--project-root "$checkout_root"' "$ROOT/scripts/operate.sh" \
+  || fail "operate.sh does not supervise from the dedicated checkout root"
+if grep -Fq -- '--host-packages trureturing-devtask' "$ROOT/scripts/operate.sh"; then
+  fail "operate.sh loads a nested-workspace package as a root host package"
+fi
 
 printf 'host contract tests: ok\n'
