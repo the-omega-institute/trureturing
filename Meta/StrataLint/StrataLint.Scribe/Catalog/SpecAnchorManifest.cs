@@ -5,7 +5,7 @@ namespace StrataLint.Scribe;
 public static class SpecAnchorManifest
 {
     private const string SpecPath = "docs/develop/spec/golden-ledger-repo-spec.md";
-    private const string SpecHash = "29ec3cd4e002a9b7b5c0f979499597c4a49ed28dc471480d4ce7064e15518af3";
+    private const string SpecHash = "c1e74218ce9b7c78413b66fb067a3cff0d9ed9c280c4d203812e116355274884";
 
     public static ImmutableArray<AnchorDefinition> All { get; } =
     [
