@@ -238,7 +238,7 @@ recipe(A11)→ `Meta/papergen`(决定论):拉 Blueprint 散文 + **语法生成�
 
 # 第九部:引导与里程碑
 
-**M0(第一日)**:① lakefile+mathlib 钉版;② S0 四文件当日全证;③ Hearts 精确命题草案交人类门控(D5-T0001),核准后另轮立碑;④ Meta:StrataLint + domains.yaml 现役;split 工具随首次真实容量压力生长(D5-T0004,C# StrataLint 子命令形态),papergen 随首份全可解析 recipe 生长(D5-T0005,同为 C# 形态),本轮立永久工单,不建空壳;⑤ agents 全套(CONTEXT≤2K+八宪章+两模板);⑥ queries.yaml 首批;⑦ 十四常数保持 values legacy 隔离态,kernels/producer/晋升产物延后 D5-T0003;⑧ Blueprint 骨架;D5-P001 立永久工单(依赖 S3@M3,成稿@M5);⑨ CI:lint+build 真实作业绿(required-check 配置属人类门控 D5-T0007);⑩ tag E0+旧卷归档(人类门控)。
+**M0(第一日)**:① lakefile+mathlib 钉版;② S0 四文件当日全证;③ Hearts 精确命题草案交人类门控(D5-T0001),核准后另轮立碑;④ Meta:StrataLint + domains.yaml 现役;split 工具随首次真实容量压力生长(D5-T0004,C# StrataLint 子命令形态),papergen 随首份全可解析 recipe 生长(D5-T0005,同为 C# 形态),本轮立永久工单,不建空壳;⑤ agents 全套(CONTEXT≤2K+八宪章+两模板);⑥ queries.yaml 首批;⑦ 十四常数不落手填中间态,仅接受机器 producer attestation;producer/晋升产物延后 D5-T0003;⑧ Blueprint 骨架;D5-P001 立永久工单(依赖 S3@M3,成稿@M5);⑨ CI:lint+build 真实作业绿(required-check 配置属人类门控 D5-T0007);⑩ tag E0+旧卷归档(人类门控)。
 **M1** S1 全证(Zeck 加法闭合为首障)→ **M2** S2+解压定理 → **M3** S3 恰值群+mod5 → **M4** X_A 化数值链(c₁ 条件定理立)→ **M5** blueprint 上线+D5-P001 出稿 → **M∞** Frontier 蚕食;G 层上收 metallic-core。
 
 ---
@@ -396,8 +396,8 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 
 # CHANGELOG(原位演进史;只追加)
 
-- **v7.11 R2 续**(2026-07-11):M0④按 D5-T0004/D5-T0005 勘正为压力到达时再生长 split.py/papergen,不建空壳;Meta admission 改由现役/未实例化案号 schema 治理;CI lint 契约改为所有 active 规则及每个案号延后项。
-- **v7.12 R1**(2026-07-13):Python 引擎已全灭(C#/.NET 10 harness 现役),勘正 spec 遗留的 `split.py` 提法为 C# 工具形态(`StrataLint split` 子命令,D5-T0004);`Golden/python-*.json` 判例语料为**承前证据链**(保守扩展基线,differences.json 案号偏离机制之根)非遗留债,保留原名如实记出处。首次真实容量事件(Engine/Rules 13 文件)已以 git mv+SL-003 执法完成,split 子命令待第二次压力再生长(不建空壳)。
+- **v7.11 R2 续**(2026-07-11):M0④按 D5-T0004/D5-T0005 勘正为压力到达时再生长 C# `StrataLint split`/papergen,不建空壳;Meta admission 改由现役/未实例化案号 schema 治理;CI lint 契约改为所有 active 规则及每个案号延后项。
+- **v7.12 R1**(2026-07-13):C#/.NET 10 harness 现役;golden 判例已内化为 typed C# 单一真源,旧交换语料与双实现偏离账只留 git 档案。首次真实容量事件(Engine/Rules 13 文件)已以 git mv+SL-003 执法完成,split 子命令待第二次压力再生长(不建空壳)。
 - **v7.11 续**(2026-07-11):M0 正文与 CHANGELOG 时序对齐(architecture 席 A5);A2 的 E 目标收紧为带声明选择子与工件类型的唯一单文件并禁空/点路径段,M0 admission 明示只实例化 D5(SL-021);values 晋升按 D5-T0003 延后。
 - **v7.11**(2026-07-11):**六席 sshx 审出、用户门控核准之 M0 harness 勘误**——GID 定为规范虚拟地址并逐平面立 gid↔path 总双射,mirror-B/E 统一全 GID;`formula` 析出为带绑定 refs 的独立 ASCII 算术文法;M0 八宪章勘正;地层改为 `domains.yaml:stratum` 显式语义坐标,H1 同层闭包与疆域一致性成文,`1+max` 降为下界启发;声明状态改由 sorry/axiom 闭包/Assumptions 签名判定,Mathlib 标准三公理不降级。执行时序勘误:D5-P001 依赖 S3,本轮仅立永久工单,成稿仍居 M5;Hearts 先交精确命题草案,经四处人类门控核准后另轮立碑。
 - **v7.10**(2026-07-06):**真理条款成文**(外部审:v2.x"形式化非唯一真理源"与 v3.0"唯一真实源=Lean 库本体"是否矛盾?)——判:不悖,系一词二义之焊接:**载体唯一 ≠ 公证独尊;F=唯一承重层而承重⊊真理**;Lean 双角色(公证/登记)成文;四真理之语法下落表入宪法 1.6;Hearts.lean 判为 Gödel 条款之建筑形态。

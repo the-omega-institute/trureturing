@@ -5,7 +5,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-internal sealed class RuleFixture
+internal sealed partial class RuleFixture
 {
     internal const string RingPath = "D5/S0/Carrier/Ring.lean";
     internal const string BlueprintPath = "Blueprint/D5/S0/Carrier/Ring.md";
@@ -30,7 +30,6 @@ internal sealed class RuleFixture
             ["Library/queries.yaml"] = "schema_version: 1\nqueries: []\n",
             [RingPath] = Header + "def goldenRing : Nat := 0\n",
             [BlueprintPath] = "# Golden ring\n",
-            ["Evidence/D5/values.legacy.json"] = "{\"D5/sample\": {\"status\": \"legacy-import-unverified\"}}\n",
         };
         foreach (var protectedPath in new[]
         {
@@ -82,7 +81,7 @@ internal sealed class RuleFixture
             case "formula": AddIllegalFormula(); break;
             case "backfill": Files["Meta/BACKFILL.yaml"] = Files["Meta/BACKFILL.yaml"].Replace("schema_version: 2", "schema_version: 1", StringComparison.Ordinal); break;
             case "query": Files["Library/queries.yaml"] = "schema_version: 1\nqueries:\n  - id: D5-Q0099\n    target_gid: D5/S0/Carrier/Ring\n"; break;
-            case "values": Files["Evidence/D5/values.legacy.json"] = "{\"D5/sample\": {\"status\": \"verified\"}}\n"; break;
+            case "values": Files["Evidence/D5/values.result.json"] = "{\"D5/sample\": {\"status\": \"verified\"}}\n"; break;
             case "anomaly": Files["Evidence/D5/S0/Carrier/Result.run.json"] = "{\"anomaly\": \"fixture drift\"}\n"; break;
             case "axiom": SetRingDeclaration("invented", "axiom", "invented"); break;
             case "future": AddFutureTheory(); break;

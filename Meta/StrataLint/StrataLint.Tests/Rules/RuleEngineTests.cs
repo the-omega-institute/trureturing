@@ -97,6 +97,19 @@ public sealed class RuleEngineTests
         Assert.Equal("artifact exceeds 800 lines", hardDiag.Message);
     }
 
+    [Fact]
+    public void Sl018RejectsValuesWithoutMachineProducerAttestation()
+    {
+        var fixture = new RuleFixture();
+        fixture.Files["Evidence/D5/values.result.json"] =
+            "{\"D5/sample\": {\"status\": \"verified\", \"value\": 123}}\n";
+
+        var diagnostic = Assert.Single(
+            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(18), fixture.Build()).Diagnostics);
+
+        Assert.Equal("values without a machine producer attestation are forbidden", diagnostic.Message);
+    }
+
     [Theory]
     [InlineData(7, "D5-T0011")]
     [InlineData(9, "D5-T0012")]

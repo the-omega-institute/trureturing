@@ -43,7 +43,7 @@ public sealed class TypeModelTests
     [InlineData("D5/S0/Carrier/Ring.norm_mul", "D5/S0/Carrier/Ring.lean")]
     [InlineData("D5/B/S0/Carrier/Ring", "Blueprint/D5/S0/Carrier/Ring.md")]
     [InlineData("D5/E/S0/Carrier/Ring.result--json", "Evidence/D5/S0/Carrier/Ring.result.json")]
-    [InlineData("D5/E/values.legacy--json", "Evidence/D5/values.legacy.json")]
+    [InlineData("D5/E/values.result--json", "Evidence/D5/values.result.json")]
     [InlineData("D5/E/experiments/D5-X0001.spec--yaml", "Evidence/D5/experiments/D5-X0001.spec.yaml")]
     [InlineData("D5/C/2026-07-11/r168", "Chronicle/2026/07/11-r168.md")]
     [InlineData("D5/L/bellissard1992gap", "Library/notes/bellissard1992gap.md")]

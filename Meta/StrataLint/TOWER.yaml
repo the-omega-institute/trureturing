@@ -46,7 +46,7 @@ components:
     judged_by:
       - rule-catalog-selfcheck
       - rule-fixtures
-      - golden-compatibility
+      - golden-corpus
     verification: verified
   - id: rule-catalog-selfcheck
     kind: repository-files
@@ -64,14 +64,17 @@ components:
     judged_by:
       - engineering-ci
     verification: verified
-  - id: golden-compatibility
+  - id: golden-corpus
     kind: repository-files
     members:
-      - Meta/StrataLint/Golden/differences.json
-      - Meta/StrataLint/Golden/python-cases.json
-      - Meta/StrataLint/Golden/python-diagnostics.json
-      - Meta/StrataLint/StrataLint.Tests/Golden/FullPythonCorpusCompatibilityTests.cs
-      - Meta/StrataLint/StrataLint.Tests/Golden/GoldenCompatibilityTests.cs
+      - Meta/StrataLint/StrataLint.Tests/Golden/GoldenCorpus.Cases01.cs
+      - Meta/StrataLint/StrataLint.Tests/Golden/GoldenCorpus.Cases02.cs
+      - Meta/StrataLint/StrataLint.Tests/Golden/GoldenCorpus.Cases03.cs
+      - Meta/StrataLint/StrataLint.Tests/Golden/GoldenCorpus.Cases04.cs
+      - Meta/StrataLint/StrataLint.Tests/Golden/GoldenCorpus.cs
+      - Meta/StrataLint/StrataLint.Tests/Golden/GoldenCorpusShapeTests.cs
+      - Meta/StrataLint/StrataLint.Tests/Golden/GoldenCorpusTests.cs
+      - Meta/StrataLint/StrataLint.Tests/Rules/RuleFixture.Golden.cs
     judged_by:
       - engineering-ci
     verification: verified
@@ -147,9 +150,10 @@ components:
       - conservative-extension-gate-c
     verification: verified
   - id: conservative-extension-gate-c
-    kind: future-gate
+    kind: phased-gate
     members:
-      - component-c
+      - phase1-protected-content-admission
+      - phase2-conservative-extension-proof-pending
     judged_by:
       - bootstrap-pr-1
     verification: ASSUMED-UNVERIFIED
