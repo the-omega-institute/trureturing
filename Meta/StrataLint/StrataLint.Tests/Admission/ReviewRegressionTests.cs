@@ -189,41 +189,15 @@ public sealed partial class ReviewRegressionTests
 
     [Fact]
     [Trait("pending-contract", "step-3")]
-    public void Sl016AcceptsCurrentSchema2RepositoryTicketDeclarationsPendingContractStep3()
+    public void Sl016AcceptsSchema2FixturePendingContractStep3()
     {
-        var repositoryRoot = FindRepositoryRoot();
         var fixture = new RuleFixture();
+        fixture.UseSyntheticSchema2BackfillPendingContractStep3();
         fixture.AddBackfillTargets();
-        foreach (var path in Directory.EnumerateFiles(
-                     Path.Combine(repositoryRoot, "D5", "X_Frontier"),
-                     "*.lean",
-                     SearchOption.TopDirectoryOnly))
-        {
-            var repoPath = Path.GetRelativePath(repositoryRoot, path).Replace('\\', '/');
-            fixture.Files[repoPath] = File.ReadAllText(path, Encoding.UTF8);
-        }
-
-        const string normPath = "D5/S0/Carrier/Norm.lean";
-        fixture.Files[normPath] = File.ReadAllText(Path.Combine(repositoryRoot, normPath), Encoding.UTF8);
-
-        // The digestion projection consumes Lean truth, so this synthetic managed file carries its report.
-        fixture.Files["D5/X_Frontier/DownwardImportTail.lean"] = """
-            /- GID: D5/X_Frontier/DownwardImportTail
-               generality: E
-               mirror-B: none(waiver:test-fixture)
-               mirror-E: none(waiver:test-fixture)
-               anchors: []
-               digest: SL-016 downward-import regression fixture. -/
-            import D5.S3.Weil.FourierLaplace
-            def downwardImportTail : Unit := ()
-            """;
-        fixture.Reports["D5/X_Frontier/DownwardImportTail.lean"] = new LeanFileReport(
-            ["D5.S3.Weil.FourierLaplace"],
-            []);
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(16),
-            fixture.BuildForRuleCompatibility());
+            fixture.Build());
 
         Assert.Empty(evaluation.Diagnostics);
     }
@@ -487,7 +461,7 @@ public sealed partial class ReviewRegressionTests
         Assert.Contains(
             evaluation.Diagnostics,
             item => item.Message.Contains(
-                "source spec-v7.11-section-10 has an invalid governance path",
+                "source golden-ledger-spec-v7.11 has an invalid governance path",
                 StringComparison.Ordinal));
         var enginePath = Directory.EnumerateFiles(
             Path.Combine(FindRepositoryRoot(), "Meta", "StrataLint", "StrataLint.Engine"),
@@ -495,7 +469,7 @@ public sealed partial class ReviewRegressionTests
             SearchOption.AllDirectories).Single();
         var engineSource = File.ReadAllText(enginePath, Encoding.UTF8);
         Assert.DoesNotContain(sourcePath, engineSource, StringComparison.Ordinal);
-        Assert.DoesNotContain("GICT_complete_development_v3 (3).md", engineSource, StringComparison.Ordinal);
+        Assert.DoesNotContain("GICT_complete_development_v3_3.md", engineSource, StringComparison.Ordinal);
         Assert.DoesNotContain("PZG_BEDC_kernel_formal_170.md", engineSource, StringComparison.Ordinal);
     }
 

@@ -55,15 +55,7 @@ internal sealed partial class RuleFixture
                         append.Count));
                     break;
                 case GoldenMutation.AddDomain domain:
-                    if (!DomainId.TryCreate(domain.Name, out var domainName))
-                    {
-                        throw new InvalidOperationException(
-                            $"golden case {caseName} has an invalid domain name: {domain.Name}");
-                    }
-
-                    files["Meta/domains.yaml"] += $"  {domainName.Value}:\n"
-                        + $"    stratum: {domain.Stratum}\n"
-                        + "    definition: Fixture.\n";
+                    AddGoldenDomain(caseName, files, domain);
                     break;
                 case GoldenMutation.AddTask task:
                     AddGoldenTask(caseName, files, reports, task);
@@ -106,6 +98,48 @@ internal sealed partial class RuleFixture
         }
     }
 
+    private static void AddGoldenDomain(
+        string caseName,
+        IDictionary<string, string> files,
+        GoldenMutation.AddDomain domain)
+    {
+        if (!DomainId.TryCreate(domain.Name, out var domainName))
+        {
+            throw new InvalidOperationException(
+                $"golden case {caseName} has an invalid domain name: {domain.Name}");
+        }
+
+        var lines = files["Meta/domains.yaml"].Split('\n').ToList();
+        var insertion = lines.FindIndex(1, line =>
+        {
+            if (!line.StartsWith("  ", StringComparison.Ordinal)
+                || line.StartsWith("    ", StringComparison.Ordinal)
+                || !line.EndsWith(':'))
+            {
+                return false;
+            }
+
+            var name = line[2..^1];
+            return string.CompareOrdinal(name, domainName.Value) > 0;
+        });
+        if (insertion < 0)
+        {
+            insertion = lines.Count;
+            if (insertion > 0 && lines[^1].Length == 0)
+            {
+                insertion--;
+            }
+        }
+
+        lines.InsertRange(insertion,
+        [
+            $"  {domainName.Value}:",
+            $"    stratum: {domain.Stratum}",
+            "    definition: Fixture.",
+        ]);
+        files["Meta/domains.yaml"] = string.Join('\n', lines);
+    }
+
     internal RuleEvaluationContext BuildGoldenContext()
     {
         var current = Decode(Files);
@@ -129,25 +163,61 @@ internal sealed partial class RuleFixture
     internal void NormalizeGoldenBackfillTargets()
     {
         AddNormalizedBackfillTicketTarget();
+        AddNormalizedBackfillCoverageTarget();
         foreach (var files in new[] { Files, Baseline })
         {
             var lines = files["Meta/BACKFILL.yaml"].Split('\n');
+            var normalized = new List<string>(lines.Length);
             for (var index = 0; index < lines.Length; index++)
             {
                 var trimmed = lines[index].TrimStart();
                 var indentation = lines[index][..(lines[index].Length - trimmed.Length)];
-                if (trimmed.StartsWith("disposition: ", StringComparison.Ordinal))
+                if (trimmed == "coverage_gids:")
                 {
-                    lines[index] = indentation + "disposition: D5/S0/Carrier/Ring";
+                    normalized.Add(lines[index]);
+                    while (index + 1 < lines.Length
+                        && lines[index + 1].StartsWith(indentation + "  - ", StringComparison.Ordinal))
+                    {
+                        index++;
+                    }
+
+                    normalized.Add(indentation + "  - D5/S0/Carrier/BackfillTarget");
                 }
                 else if (trimmed.StartsWith("gid: ", StringComparison.Ordinal))
                 {
-                    lines[index] = indentation + "gid: D5/X_Frontier/BackfillTasks";
+                    normalized.Add(indentation + "gid: D5/X_Frontier/BackfillTasks");
+                }
+                else if (trimmed.StartsWith("truth: ", StringComparison.Ordinal))
+                {
+                    normalized.Add(indentation + "truth: closed");
+                }
+                else
+                {
+                    normalized.Add(lines[index]);
                 }
             }
 
-            files["Meta/BACKFILL.yaml"] = string.Join('\n', lines);
+            files["Meta/BACKFILL.yaml"] = string.Join('\n', normalized);
         }
+    }
+
+    private void AddNormalizedBackfillCoverageTarget()
+    {
+        const string gid = "D5/S0/Carrier/BackfillTarget";
+        var path = gid + ".lean";
+        var text = GoldenHeader(gid, Generality.General)
+            + "def backfillTarget : Unit := ()\n";
+        var report = new LeanFileReport(
+            ImmutableArray<string>.Empty,
+            ImmutableArray.Create(new LeanDeclaration(
+                "backfillTarget",
+                "def",
+                "Unit",
+                ImmutableArray<string>.Empty)));
+        Files[path] = text;
+        Baseline[path] = text;
+        Reports[path] = report;
+        BaselineReports[path] = report;
     }
 
     private static void AddGoldenTask(
@@ -344,15 +414,21 @@ internal sealed partial class RuleFixture
     private static void ReplaceGoldenDisposition(IDictionary<string, string> files, string rawGid)
     {
         var lines = files["Meta/BACKFILL.yaml"].Split('\n').ToList();
-        var index = lines.FindIndex(static line =>
-            line.TrimStart().StartsWith("disposition: ", StringComparison.Ordinal));
-        if (index < 0)
+        var coverage = lines.FindIndex(static line => line.Trim() == "coverage_gids:");
+        var index = coverage + 1;
+        if (coverage < 0 || index >= lines.Count || !lines[index].TrimStart().StartsWith("- ", StringComparison.Ordinal))
         {
-            throw new InvalidOperationException("BACKFILL fixture has no disposition");
+            throw new InvalidOperationException("BACKFILL fixture has no coverage GID");
         }
 
         var indentation = lines[index][..(lines[index].Length - lines[index].TrimStart().Length)];
-        lines[index] = indentation + "disposition: " + rawGid;
+        lines[index] = indentation + "- " + rawGid;
+        var truth = lines.FindIndex(index + 1, line => line.TrimStart().StartsWith("truth: ", StringComparison.Ordinal));
+        if (truth >= 0)
+        {
+            var truthIndentation = lines[truth][..(lines[truth].Length - lines[truth].TrimStart().Length)];
+            lines[truth] = truthIndentation + "truth: open";
+        }
         files["Meta/BACKFILL.yaml"] = string.Join('\n', lines);
     }
 
@@ -363,20 +439,25 @@ internal sealed partial class RuleFixture
     {
         var lines = files["Meta/BACKFILL.yaml"].Split('\n').ToList();
         var index = lines.FindIndex(line =>
-            string.Equals(line.Trim(), $"- anchor: {anchor}", StringComparison.Ordinal));
-        if (index < 0 || index + 2 > lines.Count)
+            string.Equals(line.Trim(), $"- atom_id: {anchor}", StringComparison.Ordinal));
+        if (index < 0)
         {
-            throw new InvalidOperationException("unknown protected anchor");
+            throw new InvalidOperationException("unknown digestion atom");
         }
 
-        var block = lines.GetRange(index, 2);
+        var next = lines.FindIndex(index + 1, line =>
+            line.StartsWith("      - atom_id: ", StringComparison.Ordinal)
+            || line.StartsWith("  - source_id: ", StringComparison.Ordinal)
+            || line == "ticket_index:");
+        if (next < 0) next = lines.Count;
+        var block = lines.GetRange(index, next - index);
         if (duplicate)
         {
-            lines.InsertRange(index + 2, block);
+            lines.InsertRange(next, block);
         }
         else
         {
-            lines.RemoveRange(index, 2);
+            lines.RemoveRange(index, block.Count);
         }
 
         files["Meta/BACKFILL.yaml"] = string.Join('\n', lines);

@@ -82,33 +82,33 @@ internal static partial class GoldenCorpus
         C(
             "empty-protected-backfill-inventory",
             [],
-            [W("Meta/BACKFILL.yaml", "schema_version: 2\ninventory: m0-protected-v1\nsources: []\n")],
-            [D(16, "Meta/BACKFILL.yaml", "sources must contain at least one source")]),
+            [W("Meta/BACKFILL.yaml", "schema_version: 3\nledger: theory-digestion-v1\nsources: []\nticket_index: []\n"), X("D5/X_Frontier/BackfillTasks.lean")],
+            [D(16, "Meta/BACKFILL.yaml", "digestion ledger must contain at least one source")]),
         C(
             "missing-backfill-disposition",
             [],
-            [Replace("        disposition: D5/S0/Carrier/Ring\n", "")],
-            [D(16, "Meta/BACKFILL.yaml", "source docs/develop/theory/GICT_complete_development_v3 (3).md#GICT-heart-O5 needs a disposition")]),
+            [Replace("          - D5/S0/Carrier/BackfillTarget\n", "")],
+            [D(16, "Meta/BACKFILL.yaml", "entry gict-7.15 coverage_gids must be a list")]),
         C(
             "duplicate-protected-backfill-entry",
             [],
-            [Anchor("GICT-heart-O5", true)],
-            [D(16, "Meta/BACKFILL.yaml", "duplicate source anchor: docs/develop/theory/GICT_complete_development_v3 (3).md#GICT-heart-O5")]),
+            [Anchor("gict-7.15", true)],
+            [D(16, "Meta/BACKFILL.yaml", "duplicate atom_id: gict-7.15")]),
         C(
             "dangling-backfill-entry",
             [],
             [Disposition("D5/S0/Carrier/Missing")],
-            [D(16, "Meta/BACKFILL.yaml", "dangling disposition D5/S0/Carrier/Missing: canonical target is absent")]),
+            [D(16, "Meta/BACKFILL.yaml", "entry gict-7.15 coverage target is absent: D5/S0/Carrier/Missing")]),
         C(
             "invalid-protected-backfill-schema",
             [],
-            [Replace("schema_version: 2", "schema_version: 1")],
+            [Replace("schema_version: 3", "schema_version: 2")],
             [D(16, "Meta/BACKFILL.yaml", "BACKFILL must use schema_version 2 and inventory m0-protected-v1")]),
         C(
             "changed-protected-source-path",
             [],
-            [Replace("path: \"docs/develop/theory/GICT_complete_development_v3 (3).md\"", "path: \"Library/queries.yaml\"")],
-            [D(16, "Meta/BACKFILL.yaml", "source GICT-v3.6 has an invalid governance path")]),
+            [Replace("path: docs/develop/theory/GICT_complete_development_v3_3.md", "path: Library/queries.yaml")],
+            [D(16, "Meta/BACKFILL.yaml", "source gict-v3.6 has an invalid governance path")]),
         C(
             "ticket-target-task-mismatch",
             [],

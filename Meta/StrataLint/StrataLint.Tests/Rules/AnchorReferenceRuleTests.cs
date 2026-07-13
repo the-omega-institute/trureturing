@@ -7,7 +7,7 @@ namespace StrataLint.Tests;
 public sealed class AnchorReferenceRuleTests
 {
     private const string CatalogPath = "Meta/StrataLint/Generated/anchor-catalog.v1.json";
-    private const string GictPath = "docs/develop/theory/GICT_complete_development_v3 (3).md";
+    private const string GictPath = "docs/develop/theory/GICT_complete_development_v3_3.md";
 
     [Fact]
     public void CanonicalRegisteredResolvedAnchorPasses()
