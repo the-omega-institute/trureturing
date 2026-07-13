@@ -56,6 +56,29 @@ public sealed class TrustTopologyTests
     }
 
     [Theory]
+    [InlineData(RuleFixture.DefinitionsDataSourcePath)]
+    [InlineData(RuleFixture.DefinitionsProjectPath)]
+    [InlineData(RuleFixture.DefinitionsLockPath)]
+    public void Sl022DoesNotClassifyDefinitionsDataAsMetaProgram(string path)
+    {
+        var changes = RawChangeSet.Create(new[] { path });
+
+        var outcome = BootstrapGate.Evaluate(changes);
+
+        Assert.IsType<BootstrapOutcome.Clear>(outcome);
+    }
+
+    [Fact]
+    public void Sl022StillClassifiesEngineSourceAsMetaProgram()
+    {
+        var changes = RawChangeSet.Create(new[] { EngineGidSourcePath });
+
+        var outcome = BootstrapGate.Evaluate(changes);
+
+        Assert.IsType<BootstrapOutcome.HumanReviewRequired>(outcome);
+    }
+
+    [Theory]
     [InlineData(RuleFixture.BlueprintPath)]
     [InlineData(RawDefinitionSourcePath)]
     public void ContentContributionProducesAnUnforgeableMetaClearCapability(string path)

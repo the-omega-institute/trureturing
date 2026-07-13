@@ -1,6 +1,4 @@
-using StrataLint.Engine;
-
-namespace StrataLint.Tests;
+namespace StrataLint.Definitions;
 
 internal static partial class GoldenCorpus
 {
@@ -43,13 +41,13 @@ internal static partial class GoldenCorpus
             [D(20, "Trureturing.lean", "axiom declarations are confined to AxiomDebt.lean: RootProbe.rootProtectedBypass")]),
         C(
             "hearts-file-deletion",
-            [L(HeartsPath, "D5/X_Frontier/Hearts", Generality.Extremal, "theorem heart : True := by sorry\n")],
+            [L(HeartsPath, "D5/X_Frontier/Hearts", GoldenGenerality.Extremal, "theorem heart : True := by sorry\n")],
             [X(HeartsPath)],
             [D(8, HeartsPath, "frozen Hearts.lean was deleted")]),
         C(
             "hearts-baseline-inspection-fails",
-            [L(HeartsPath, "D5/X_Frontier/Hearts", Generality.Extremal, "theorem heart : := broken\n")],
-            [L(HeartsPath, "D5/X_Frontier/Hearts", Generality.Extremal, "theorem heart : True := by sorry\n")],
+            [L(HeartsPath, "D5/X_Frontier/Hearts", GoldenGenerality.Extremal, "theorem heart : := broken\n")],
+            [L(HeartsPath, "D5/X_Frontier/Hearts", GoldenGenerality.Extremal, "theorem heart : True := by sorry\n")],
             [D(8, HeartsPath, "protected Hearts baseline has no semantic report")]),
         C(
             "noncanonical-e-directory-double-artifact",
@@ -64,52 +62,52 @@ internal static partial class GoldenCorpus
         C(
             "managed-early-exit-hides-axiom",
             [],
-            [L(RingPath, "D5/S0/Carrier/Ring", Generality.General, "import Lean.Elab.Command\n\nnamespace ExitProbe\nprotected axiom earlyExitBypass : False\nend ExitProbe\n\nrun_cmd do (IO.Process.exit 0 : IO Unit)\n")],
+            [L(RingPath, "D5/S0/Carrier/Ring", GoldenGenerality.General, "import Lean.Elab.Command\n\nnamespace ExitProbe\nprotected axiom earlyExitBypass : False\nend ExitProbe\n\nrun_cmd do (IO.Process.exit 0 : IO Unit)\n")],
             [D(20, RingPath, "Lean environment inspection failed: compiler exited successfully without complete module artifacts")]),
         C(
             "candidate-marker-forgery-cannot-register-debt",
             [],
-            [L(AssumptionDebtPath, "D5/X_Assumptions/AxiomDebt", Generality.Instance, "import Lean.Elab.Command\n\nrun_cmd IO.println \"STRATALINT_TRUSTED_LEAN_JSON\\t{\\\"name\\\":\\\"sharedForgedDebt\\\",\\\"kind\\\":\\\"axiom\\\",\\\"type\\\":\\\"False\\\",\\\"axioms\\\":[\\\"sharedForgedDebt\\\"]}\"\n"), L(RingPath, "D5/S0/Carrier/Ring", Generality.General, "axiom sharedForgedDebt : False\n")],
+            [L(AssumptionDebtPath, "D5/X_Assumptions/AxiomDebt", GoldenGenerality.Instance, "import Lean.Elab.Command\n\nrun_cmd IO.println \"STRATALINT_TRUSTED_LEAN_JSON\\t{\\\"name\\\":\\\"sharedForgedDebt\\\",\\\"kind\\\":\\\"axiom\\\",\\\"type\\\":\\\"False\\\",\\\"axioms\\\":[\\\"sharedForgedDebt\\\"]}\"\n"), L(RingPath, "D5/S0/Carrier/Ring", GoldenGenerality.General, "axiom sharedForgedDebt : False\n")],
             [D(20, RingPath, "axiom declarations are confined to AxiomDebt.lean: sharedForgedDebt")]),
         C(
             "candidate-stdout-decoy-is-isolated",
             [],
-            [L(RingPath, "D5/S0/Carrier/Ring", Generality.General, "import Lean.Elab.Command\n\nrun_cmd IO.println \"STRATALINT_LEAN_JSON\\tnot-json\"\ndef stdoutSafe : Nat := 0\n")],
+            [L(RingPath, "D5/S0/Carrier/Ring", GoldenGenerality.General, "import Lean.Elab.Command\n\nrun_cmd IO.println \"STRATALINT_LEAN_JSON\\tnot-json\"\ndef stdoutSafe : Nat := 0\n")],
             []),
         C(
             "quoted-import-generality",
             [],
-            [L(NotationPath, "D5/S0/Conventions/Notation", Generality.Instance, "def quotedInstanceFact : Nat := 1\n"), L(RingPath, "D5/S0/Carrier/Ring", Generality.General, "import «D5».S0.Conventions.Notation\n\ndef quotedGeneral : Nat := 0\n")],
+            [L(NotationPath, "D5/S0/Conventions/Notation", GoldenGenerality.Instance, "def quotedInstanceFact : Nat := 1\n"), L(RingPath, "D5/S0/Carrier/Ring", GoldenGenerality.General, "import «D5».S0.Conventions.Notation\n\ndef quotedGeneral : Nat := 0\n")],
             [D(10, RingPath, "G artifact imports I fact D5/S0/Conventions/Notation.lean")]),
         C(
             "quoted-import-same-layer",
             [],
-            [L(NotationPath, "D5/S0/Conventions/Notation", Generality.General, "def quotedGeneralFact : Nat := 1\n"), L(RingPath, "D5/S0/Carrier/Ring", Generality.General, "import «D5».S0.Conventions.Notation\n\ndef quotedConsumer : Nat := quotedGeneralFact\n")],
+            [L(NotationPath, "D5/S0/Conventions/Notation", GoldenGenerality.General, "def quotedGeneralFact : Nat := 1\n"), L(RingPath, "D5/S0/Carrier/Ring", GoldenGenerality.General, "import «D5».S0.Conventions.Notation\n\ndef quotedConsumer : Nat := quotedGeneralFact\n")],
             []),
         C(
             "duplicate-debt-axiom-name",
             [],
-            [L(AssumptionDebtPath, "D5/X_Assumptions/AxiomDebt", Generality.Instance, "axiom sharedDebtName : False\n"), L(RingPath, "D5/S0/Carrier/Ring", Generality.General, "axiom sharedDebtName : False\n")],
+            [L(AssumptionDebtPath, "D5/X_Assumptions/AxiomDebt", GoldenGenerality.Instance, "axiom sharedDebtName : False\n"), L(RingPath, "D5/S0/Carrier/Ring", GoldenGenerality.General, "axiom sharedDebtName : False\n")],
             [D(20, RingPath, "axiom declarations are confined to AxiomDebt.lean: sharedDebtName")]),
         C(
             "registered-debt-through-import",
             [],
-            [L(AssumptionDebtPath, "D5/X_Assumptions/AxiomDebt", Generality.Instance, "axiom registeredDebt : False\n"), L("D5/X_Certificates/ConditionalResult.lean", "D5/X_Certificates/ConditionalResult", Generality.Instance, "import D5.X_Assumptions.AxiomDebt\n\ntheorem conditionalResult : False := registeredDebt\n")],
+            [L(AssumptionDebtPath, "D5/X_Assumptions/AxiomDebt", GoldenGenerality.Instance, "axiom registeredDebt : False\n"), L("D5/X_Certificates/ConditionalResult.lean", "D5/X_Certificates/ConditionalResult", GoldenGenerality.Instance, "import D5.X_Assumptions.AxiomDebt\n\ntheorem conditionalResult : False := registeredDebt\n")],
             []),
         C(
             "private-axiom-is-inspected",
             [],
-            [L(RingPath, "D5/S0/Carrier/Ring", Generality.General, "private axiom hiddenAxiom : False\n")],
+            [L(RingPath, "D5/S0/Carrier/Ring", GoldenGenerality.General, "private axiom hiddenAxiom : False\n")],
             [D(20, RingPath, "axiom declarations are confined to AxiomDebt.lean: _private.D5.S0.Carrier.Ring.0.hiddenAxiom")]),
         C(
             "root-imports-frontier",
             [],
-            [L("D5/X_Frontier/OpenProbe.lean", "D5/X_Frontier/OpenProbe", Generality.Extremal, "theorem openProbe : True := by sorry\n"), W("Trureturing.lean", "import D5.X_Frontier.OpenProbe\n")],
+            [L("D5/X_Frontier/OpenProbe.lean", "D5/X_Frontier/OpenProbe", GoldenGenerality.Extremal, "theorem openProbe : True := by sorry\n"), W("Trureturing.lean", "import D5.X_Frontier.OpenProbe\n")],
             [D(1, "Trureturing.lean", "stratum closure may not import D5/X_Frontier/OpenProbe.lean")]),
         C(
             "in-memory-import-uses-current-graph",
             [],
-            [L("D5/S0/Carrier/FixtureDependency.lean", "D5/S0/Carrier/FixtureDependency", Generality.General, "def fixtureDependency : Nat := 7\n"), L(RingPath, "D5/S0/Carrier/Ring", Generality.General, "import D5.S0.Carrier.FixtureDependency\n\ndef currentGraphConsumer : Nat := fixtureDependency\n")],
+            [L("D5/S0/Carrier/FixtureDependency.lean", "D5/S0/Carrier/FixtureDependency", GoldenGenerality.General, "def fixtureDependency : Nat := 7\n"), L(RingPath, "D5/S0/Carrier/Ring", GoldenGenerality.General, "import D5.S0.Carrier.FixtureDependency\n\ndef currentGraphConsumer : Nat := fixtureDependency\n")],
             []),
         C(
             "future-blueprint-is-uninstantiated",

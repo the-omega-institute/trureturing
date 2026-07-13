@@ -10,9 +10,9 @@ namespace StrataLint.ArchitectureTests;
 public sealed class AnchorCatalogConsistencyTests
 {
     private const string TheoryManifestPath =
-        "Meta/StrataLint/StrataLint.Scribe/Catalog/TheoryAnchorManifest.cs";
+        "Meta/StrataLint/StrataLint.Definitions/Catalog/TheoryAnchorManifest.cs";
     private const string SpecManifestPath =
-        "Meta/StrataLint/StrataLint.Scribe/Catalog/SpecAnchorManifest.cs";
+        "Meta/StrataLint/StrataLint.Definitions/Catalog/SpecAnchorManifest.cs";
 
     [Fact]
     public void AnchorManifestFactoriesDoNotAcceptHandwrittenLocators()
