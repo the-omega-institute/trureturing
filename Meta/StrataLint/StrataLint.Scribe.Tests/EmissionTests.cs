@@ -24,7 +24,9 @@ public sealed class EmissionTests
                 var relativeSource = definition.RelativePath.Value[..^3] + ".scribe.cs";
                 var destination = Path.Combine(root, relativeSource);
                 Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
-                File.Copy(definition.SourcePath, destination);
+                // Deterministic CI builds map [CallerFilePath] to the /_/ source root,
+                // so fixture copies must resolve through the runtime repository root.
+                File.Copy(Path.Combine(FindRepositoryRoot(), relativeSource), destination);
             }
 
             var emitExit = ScribeEmitter.Emit(root, check: false, output, error, report);
@@ -154,7 +156,9 @@ public sealed class EmissionTests
                 var relativeSource = definition.RelativePath.Value[..^3] + ".scribe.cs";
                 var destination = Path.Combine(root, relativeSource);
                 Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
-                File.Copy(definition.SourcePath, destination);
+                // Deterministic CI builds map [CallerFilePath] to the /_/ source root,
+                // so fixture copies must resolve through the runtime repository root.
+                File.Copy(Path.Combine(FindRepositoryRoot(), relativeSource), destination);
             }
 
             Assert.Equal(0, ScribeEmitter.Emit(
@@ -203,4 +207,20 @@ public sealed class EmissionTests
 
     private static string Sha256(byte[] bytes) =>
         "sha256:" + Convert.ToHexStringLower(SHA256.HashData(bytes));
+
+    private static string FindRepositoryRoot()
+    {
+        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
+             current is not null;
+             current = current.Parent)
+        {
+            if (File.Exists(Path.Combine(current.FullName, "global.json"))
+                && Directory.Exists(Path.Combine(current.FullName, "Blueprint")))
+            {
+                return current.FullName;
+            }
+        }
+
+        throw new InvalidOperationException("repository root was not found above the test base directory");
+    }
 }
