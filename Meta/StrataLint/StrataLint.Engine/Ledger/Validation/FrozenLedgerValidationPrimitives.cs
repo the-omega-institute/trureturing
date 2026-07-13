@@ -24,7 +24,20 @@ public static partial class FrozenLedger
         }
     }
 
-    private static FrozenGenesisPayload ParseGenesis(JsonElement payload, FrozenMaterialCatalog catalog)
+    private static FrozenGenesisPayload ParseGenesis(
+        JsonElement payload,
+        FrozenMaterialCatalog catalog) =>
+        ParseGenesis(payload, catalog, requireCurrentRuleCatalog: true);
+
+    private static FrozenGenesisPayload ParseHistoricalGenesis(
+        JsonElement payload,
+        FrozenMaterialCatalog catalog) =>
+        ParseGenesis(payload, catalog, requireCurrentRuleCatalog: false);
+
+    private static FrozenGenesisPayload ParseGenesis(
+        JsonElement payload,
+        FrozenMaterialCatalog catalog,
+        bool requireCurrentRuleCatalog)
     {
         RequireObjectFields(
             payload,
@@ -37,10 +50,15 @@ public static partial class FrozenLedger
             RequiredNonnegativeInteger(payload, "protocol_version"),
             RequiredString(payload, "rule_catalog_root"));
         if (!FrozenHashSyntax.IsGitOid(result.GeneratorBlobOid)
+            || !FrozenHashSyntax.IsSha256(result.RuleCatalogRoot)
             || result.ProtocolVersion != 1
             || !string.Equals(result.OriginCommitOid, catalog.Environment.OriginCommitOid, StringComparison.Ordinal)
             || !string.Equals(result.OriginTreeOid, catalog.Environment.OriginTreeOid, StringComparison.Ordinal)
-            || !string.Equals(result.RuleCatalogRoot, RuleCatalog.Default.RootSha256, StringComparison.Ordinal))
+            || requireCurrentRuleCatalog
+                && !string.Equals(
+                    result.RuleCatalogRoot,
+                    RuleCatalog.Default.RootSha256,
+                    StringComparison.Ordinal))
         {
             throw new FormatException("Genesis payload does not bind the validated origin/environment/catalog.");
         }
@@ -326,6 +344,19 @@ public static partial class FrozenLedger
         stream.Write(bytes);
     }
 
+    private static bool HasExactObjectFields(JsonElement value, params string[] names)
+    {
+        if (value.ValueKind != JsonValueKind.Object)
+        {
+            return false;
+        }
+
+        var actual = value.EnumerateObject().Select(static property => property.Name).ToArray();
+        return actual.Distinct(StringComparer.Ordinal).Count() == actual.Length
+            && actual.Order(StringComparer.Ordinal)
+                .SequenceEqual(names.Order(StringComparer.Ordinal), StringComparer.Ordinal);
+    }
+
     private static void RequireObjectFields(JsonElement value, string label, params string[] names)
     {
         if (value.ValueKind != JsonValueKind.Object)
@@ -333,9 +364,7 @@ public static partial class FrozenLedger
             throw new FormatException($"{label} must be an object.");
         }
 
-        var actual = value.EnumerateObject().Select(static property => property.Name).ToArray();
-        if (actual.Distinct(StringComparer.Ordinal).Count() != actual.Length
-            || !actual.Order(StringComparer.Ordinal).SequenceEqual(names.Order(StringComparer.Ordinal), StringComparer.Ordinal))
+        if (!HasExactObjectFields(value, names))
         {
             throw new FormatException($"{label} has unknown, missing, or duplicate fields.");
         }

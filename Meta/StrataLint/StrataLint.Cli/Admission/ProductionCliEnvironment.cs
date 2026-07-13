@@ -286,6 +286,9 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
     public CommandResult AppendLedger(IReadOnlyList<string> arguments) =>
         DagLedgerAppendWriter.Append(repositoryRoot, repository, arguments);
 
+    public CommandResult ReattestLedger(IReadOnlyList<string> arguments) =>
+        DagLedgerReattestWriter.Reattest(repositoryRoot, repository, arguments);
+
     public CommandResult Worktree(IReadOnlyList<string> arguments) =>
         WorktreeCommand.Run(repositoryRoot, arguments);
 
