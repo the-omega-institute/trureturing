@@ -180,7 +180,7 @@ public static class FrozenContentAddress
                 .ToImmutableArray();
             if (registrations.Length == 0
                 && node.RepoPath.Value.StartsWith("D5/X_Assumptions/", StringComparison.Ordinal)
-                && snapshot.TryGetFile("D5/X_Assumptions/REGISTRY.md", out var registry))
+                && snapshot.TryGetFile(RepositoryPathPolicy.AssumptionRegistryPath, out var registry))
             {
                 var gid = node.RepoPath.Value.EndsWith(".lean", StringComparison.Ordinal)
                     ? node.RepoPath.Value[..^5]

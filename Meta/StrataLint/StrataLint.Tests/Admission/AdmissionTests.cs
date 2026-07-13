@@ -115,7 +115,7 @@ public sealed class AdmissionTests
         var review = Assert.IsType<BootstrapOutcome.HumanReviewRequired>(
             BootstrapGate.Evaluate(RawChangeSet.Create(new[]
             {
-                "Meta/StrataLint/StrataLint.Engine/Coordinates/Gid.cs",
+                RuleFixture.SyntheticProtectedPath,
             })));
         var humanGate = RuleCatalog.Default.Descriptors[6];
         var sl022 = Assert.Single(BootstrapGate.CreateSl022Diagnostics(review.ChangeSet));
@@ -159,7 +159,7 @@ public sealed class AdmissionTests
         var review = Assert.IsType<BootstrapOutcome.HumanReviewRequired>(
             BootstrapGate.Evaluate(RawChangeSet.Create(new[]
             {
-                "Meta/StrataLint/StrataLint.Engine/Coordinates/Gid.cs",
+                RuleFixture.SyntheticProtectedPath,
             })));
         var completed = CompletedRuleSet.Create(
             ImmutableArray<Diagnostic>.Empty,

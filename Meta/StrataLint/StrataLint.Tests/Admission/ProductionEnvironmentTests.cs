@@ -13,7 +13,7 @@ public sealed partial class ProductionEnvironmentTests
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         AddFrozenLedger(fixture);
-        const string protectedPath = "Meta/StrataLint/StrataLint.Engine/Coordinates/Gid.cs";
+        const string protectedPath = RuleFixture.SyntheticProtectedPath;
         var gateway = new FakeRepositoryGateway(
             RawChangeSet.Create(new[] { protectedPath }),
             Snapshot(fixture.Files),
@@ -42,7 +42,7 @@ public sealed partial class ProductionEnvironmentTests
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         fixture.Apply("upward-import");
-        const string protectedPath = "Meta/StrataLint/StrataLint.Engine/Coordinates/Gid.cs";
+        const string protectedPath = RuleFixture.SyntheticProtectedPath;
         var gateway = new FakeRepositoryGateway(
             RawChangeSet.Create(new[] { protectedPath, RuleFixture.RingPath }),
             Snapshot(fixture.Files),
@@ -116,7 +116,7 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
         fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
         var gateway = new FakeRepositoryGateway(
-            RawChangeSet.Create(new[] { "Meta/StrataLint/StrataLint.Engine/Coordinates/Gid.cs" }),
+            RawChangeSet.Create(new[] { RuleFixture.SyntheticProtectedPath }),
             Snapshot(fixture.Files),
             Snapshot(fixture.Baseline));
         var source = new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports));
@@ -140,7 +140,7 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
         fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
         var gateway = new FakeRepositoryGateway(
-            RawChangeSet.Create(new[] { "Meta/StrataLint/StrataLint.Engine/Coordinates/Gid.cs" }),
+            RawChangeSet.Create(new[] { RuleFixture.SyntheticProtectedPath }),
             Snapshot(fixture.Files),
             Snapshot(fixture.Baseline));
         var source = new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports));
@@ -172,7 +172,7 @@ public sealed partial class ProductionEnvironmentTests
         var gateway = new FakeRepositoryGateway(
             RawChangeSet.Create(new[]
             {
-                "Meta/StrataLint/StrataLint.Engine/Coordinates/Gid.cs",
+                RuleFixture.SyntheticProtectedPath,
                 RuleFixture.BlueprintPath,
             }),
             Snapshot(fixture.Files),
@@ -233,7 +233,7 @@ public sealed partial class ProductionEnvironmentTests
         var gateway = new FakeRepositoryGateway(
             RawChangeSet.Create(new[]
             {
-                "Meta/StrataLint/StrataLint.Engine/Coordinates/Gid.cs",
+                RuleFixture.SyntheticProtectedPath,
                 RuleFixture.BlueprintPath,
             }),
             Snapshot(fixture.Files),
@@ -253,7 +253,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(
             $"managed import cycle: {loopPath} -> {RuleFixture.RingPath} -> {loopPath}",
             cycle.Message);
-        Assert.Equal("Meta/StrataLint/StrataLint.Engine/Coordinates/Gid.cs", meta.Path);
+        Assert.Equal(RuleFixture.SyntheticProtectedPath, meta.Path);
     }
 
     [Fact]

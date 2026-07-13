@@ -4,27 +4,39 @@ namespace StrataLint.Tests;
 
 public sealed class TrustTopologyTests
 {
+    private const string EngineGidSourcePath =
+        "Meta/StrataLint/StrataLint.Engine/Coordinates/Gid.cs";
+    private const string CliProgramSourcePath = "Meta/StrataLint/StrataLint.Cli/Program.cs";
+    private const string ThisTestSourcePath =
+        "Meta/StrataLint/StrataLint.Tests/Admission/TrustTopologyTests.cs";
+    private const string SolutionPath = "Meta/StrataLint/StrataLint.sln";
+    private const string EngineProjectPath =
+        "Meta/StrataLint/StrataLint.Engine/StrataLint.Engine.csproj";
+    private const string EngineLockPath =
+        "Meta/StrataLint/StrataLint.Engine/packages.lock.json";
+    private const string RawDefinitionSourcePath = "Blueprint/D5/S1/Digit/Raw.scribe.cs";
+
     public static TheoryData<string> ProtectedPaths => new()
     {
-        "Meta/StrataLint/StrataLint.Engine/Coordinates/Gid.cs",
-        "Meta/StrataLint/StrataLint.Cli/Program.cs",
-        "Meta/StrataLint/StrataLint.Tests/Admission/TrustTopologyTests.cs",
-        "docs/develop/spec/golden-ledger-repo-spec.md",
+        EngineGidSourcePath,
+        CliProgramSourcePath,
+        ThisTestSourcePath,
+        RuleFixture.SpecificationPath,
         "Meta/registry.yaml",
         "Meta/domains.yaml",
-        "D5/X_Frontier/Hearts.lean",
-        "D5/X_Assumptions/REGISTRY.md",
+        RuleFixture.HeartsPath,
+        RepositoryPathPolicy.AssumptionRegistryPath,
         "Meta/StrataLint/Golden/rules.json",
-        "Meta/StrataLint/StrataLint.sln",
-        "Meta/StrataLint/StrataLint.Engine/StrataLint.Engine.csproj",
+        SolutionPath,
+        EngineProjectPath,
         "global.json",
         "Directory.Build.props",
         "Directory.Packages.props",
-        "Meta/StrataLint/StrataLint.Engine/packages.lock.json",
+        EngineLockPath,
         "lean-toolchain",
         ".github/CODEOWNERS",
-        ".github/workflows/ci.yml",
-        ".github/scripts/harness-gate.sh",
+        RuleFixture.WorkflowPath,
+        RuleFixture.HarnessGatePath,
     };
 
     [Theory]
@@ -43,8 +55,8 @@ public sealed class TrustTopologyTests
     }
 
     [Theory]
-    [InlineData("Blueprint/D5/S0/Carrier/Ring.md")]
-    [InlineData("Blueprint/D5/S1/Digit/Raw.scribe.cs")]
+    [InlineData(RuleFixture.BlueprintPath)]
+    [InlineData(RawDefinitionSourcePath)]
     public void ContentContributionProducesAnUnforgeableMetaClearCapability(string path)
     {
         var changes = RawChangeSet.Create(new[] { path });

@@ -5,6 +5,13 @@ namespace StrataLint.Scribe.Tests;
 
 public sealed class DocumentDiscoveryTests
 {
+    private const string CarryDocumentPath = "Blueprint/D5/S1/Digit/Carry.md";
+    private const string RawDocumentPath = "Blueprint/D5/S1/Digit/Raw.md";
+    private const string PhaseDocumentPath = "Blueprint/D5/S1/Phase/Basic.md";
+    private const string EmbeddingDocumentPath = "Blueprint/D5/S1/Scale/Embedding.md";
+    private const string LogDocumentPath = "Blueprint/D5/S1/Scale/Log.md";
+    private const string PhaseSourcePath = "Blueprint/D5/S1/Phase/Basic.scribe.cs";
+
     [Fact]
     public void DiscoveryFindsEveryDefinitionInCanonicalPathOrder()
     {
@@ -19,11 +26,11 @@ public sealed class DocumentDiscoveryTests
             DocumentDefinitions.All.Select(static item => item.Document.Header.Gid.Value));
         Assert.Equal(
             [
-                "Blueprint/D5/S1/Digit/Carry.md",
-                "Blueprint/D5/S1/Digit/Raw.md",
-                "Blueprint/D5/S1/Phase/Basic.md",
-                "Blueprint/D5/S1/Scale/Embedding.md",
-                "Blueprint/D5/S1/Scale/Log.md",
+                CarryDocumentPath,
+                RawDocumentPath,
+                PhaseDocumentPath,
+                EmbeddingDocumentPath,
+                LogDocumentPath,
             ],
             DocumentDefinitions.All.Select(static item => item.RelativePath.Value));
     }
@@ -49,7 +56,7 @@ public sealed class DocumentDiscoveryTests
 
         Assert.Contains("D5/S1/Phase/Basic", exception.Message, StringComparison.Ordinal);
         Assert.Contains(
-            "Blueprint/D5/S1/Phase/Basic.scribe.cs",
+            PhaseSourcePath,
             exception.Message,
             StringComparison.Ordinal);
     }

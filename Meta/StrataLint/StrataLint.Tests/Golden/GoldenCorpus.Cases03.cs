@@ -135,7 +135,7 @@ internal static partial class GoldenCorpus
             "empty-mirror-waiver",
             [],
             [Waiver()],
-            [D(4, "D5/S0/Carrier/Ring.lean", "mirror-B waiver has no reason")]),
+            [D(4, RingPath, "mirror-B waiver has no reason")]),
         C(
             "exact-evidence-mirror",
             [],

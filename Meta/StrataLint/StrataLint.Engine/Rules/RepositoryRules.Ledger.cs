@@ -8,7 +8,7 @@ namespace StrataLint.Engine;
 
 internal static partial class RepositoryRules
 {
-    private const string TowerManifestPath = "Meta/StrataLint/TOWER.yaml";
+    internal const string TowerManifestPath = "Meta/StrataLint/TOWER.yaml";
 
     private static ImmutableArray<RuleFinding> Ledger(RuleEvaluationContext context)
     {
