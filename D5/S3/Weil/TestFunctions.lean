@@ -1,8 +1,8 @@
 /- GID: D5/S3/Weil/TestFunctions
-   generality: G
+   generality: I
    mirror-B: none(waiver:formal-analysis-foundation-only)
    mirror-E: none(waiver:structural-closure-properties-only)
-   anchors: [PZG-v170-26.4]
+   anchors: [pzg/v170/26.4]
    digest: Bundle even smooth compact tests and close them under involution and convolution. -/
 
 import D5.S3.Weil.Convention

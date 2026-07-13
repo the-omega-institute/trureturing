@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:definition-and-structural-properties-only)
-   anchors: [GICT-v3.6-I.2-definition-1.4]
+   anchors: [gict/v3.6/I.2/definition/1.4]
    digest: Depth combines logarithmic scale, Zeckendorf support, and finite phase resolution. -/
 
 import D5.S1.Digit.Addition

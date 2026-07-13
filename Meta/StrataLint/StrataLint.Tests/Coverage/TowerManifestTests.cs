@@ -125,6 +125,31 @@ public sealed class TowerManifestTests
         Assert.Contains(rejected.Findings, item => item.Code == "TOWER-TOP-OPEN");
     }
 
+    [Fact]
+    public void PhasedGateRecordsImplementedPhaseOneWithoutClaimingFullVerification()
+    {
+        var syntax = Syntax(new TowerComponentSyntax(
+            "conservative-extension-gate-c",
+            "phased-gate",
+            [
+                "phase1-protected-content-admission",
+                "phase2-conservative-extension-proof-pending",
+            ],
+            ["bootstrap-pr-1"],
+            "ASSUMED-UNVERIFIED"));
+
+        var accepted = Assert.IsType<TowerValidationOutcome.Accepted>(
+            TowerManifestValidator.Validate(syntax, Snapshot(GenesisFile()), Catalog()));
+
+        Assert.Contains(
+            accepted.Manifest.Checks,
+            static item => item is
+            {
+                Subject: "conservative-extension-gate-c",
+                Status: "ASSUMED-UNVERIFIED",
+            });
+    }
+
     private static TowerValidationOutcome Validate(params TowerComponentSyntax[] components) =>
         TowerManifestValidator.ValidateStructure(Syntax(components));
 

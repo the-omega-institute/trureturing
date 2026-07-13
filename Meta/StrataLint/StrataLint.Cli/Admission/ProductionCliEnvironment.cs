@@ -75,28 +75,14 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             var options = ParseCheckArguments(arguments);
             var prepared = repository.Prepare(options.ProtectedBase);
             var bootstrap = BootstrapGate.Evaluate(prepared.Changes);
-            if (bootstrap is BootstrapOutcome.HumanReviewRequired review)
-            {
-                var descriptor = RuleCatalog.Default.Descriptors[21];
-                return new AdmissionOutcome.HumanReviewRequired(
-                    review.ChangeSet.Paths
-                        .OrderBy(static item => item.Value, StringComparer.Ordinal)
-                        .Select(path => new Diagnostic(
-                            descriptor.Id,
-                            descriptor.Title,
-                            descriptor.DisplaySeverity,
-                            descriptor.AdmissionEffect,
-                            path.Value,
-                            "meta change requires external human review"))
-                        .ToImmutableArray());
-            }
-
             if (bootstrap is BootstrapOutcome.InfrastructureFailure bootstrapFailure)
             {
                 return new AdmissionOutcome.InfrastructureFailure(bootstrapFailure.Message);
             }
 
-            var metaClear = ((BootstrapOutcome.Clear)bootstrap).Capability;
+            var sl022Diagnostics = bootstrap is BootstrapOutcome.HumanReviewRequired bootstrapReview
+                ? BootstrapGate.CreateSl022Diagnostics(bootstrapReview.ChangeSet)
+                : ImmutableArray<Diagnostic>.Empty;
             if (options.CandidateLeanReport is null || options.BaselineLeanReport is null)
             {
                 return new AdmissionOutcome.InfrastructureFailure(
@@ -130,7 +116,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             var dag = AcyclicTruthDag.Build(current, lean);
             if (dag is DagBuildOutcome.Rejected rejectedDag)
             {
-                return RejectCycle(rejectedDag.Witness);
+                return RejectCycle(rejectedDag.Witness, sl022Diagnostics);
             }
 
             var baselineLean = ValidateLean(
@@ -144,28 +130,43 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                     + string.Join(" -> ", baselineRejected.Witness.Select(static path => path.Value)));
             }
 
-            var admission = AdmissionPipeline.Evaluate(
-                current,
-                baseline,
-                registry.Policy,
-                lean,
-                baselineLean,
-                prepared.Changes,
-                metaClear);
-            if (admission is not AdmissionOutcome.Admitted)
+            var admission = bootstrap switch
             {
-                return admission;
+                BootstrapOutcome.Clear clear => AdmissionPipeline.Evaluate(
+                    current,
+                    baseline,
+                    registry.Policy,
+                    lean,
+                    baselineLean,
+                    prepared.Changes,
+                    clear.Capability),
+                BootstrapOutcome.HumanReviewRequired review => AdmissionPipeline.EvaluateProtectedSurface(
+                    current,
+                    baseline,
+                    registry.Policy,
+                    lean,
+                    baselineLean,
+                    prepared.Changes,
+                    review.ChangeSet),
+                _ => throw new InvalidOperationException("unknown bootstrap outcome"),
+            };
+            if (admission is not AdmissionOutcome.Admitted
+                && admission is not AdmissionOutcome.ProtectedSurfaceChange)
+            {
+                return PreserveSl022Diagnostics(admission, sl022Diagnostics);
             }
 
-            return ProductionFrozenLedgerValidator.Validate(
+            var ledgerOutcome = ProductionFrozenLedgerValidator.Validate(
                 current,
                 baseline,
                 lean,
                 baselineLean,
                 ((DagBuildOutcome.Accepted)dag).Capability,
                 ((DagBuildOutcome.Accepted)baselineDag).Capability,
-                repository)
-                ?? admission;
+                repository);
+            return ledgerOutcome is null
+                ? admission
+                : PreserveSl022Diagnostics(ledgerOutcome, sl022Diagnostics);
         }
         catch (Exception exception)
         {
@@ -285,6 +286,9 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
     public CommandResult AppendLedger(IReadOnlyList<string> arguments) =>
         DagLedgerAppendWriter.Append(repositoryRoot, repository, arguments);
 
+    public CommandResult ReattestLedger(IReadOnlyList<string> arguments) =>
+        DagLedgerReattestWriter.Reattest(repositoryRoot, repository, arguments);
+
     public CommandResult Worktree(IReadOnlyList<string> arguments) =>
         WorktreeCommand.Run(repositoryRoot, arguments);
 
@@ -375,7 +379,9 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 throw new InvalidOperationException(failure.Message),
         };
 
-    private static AdmissionOutcome RejectCycle(ImmutableArray<RepoPath> witness)
+    private static AdmissionOutcome RejectCycle(
+        ImmutableArray<RepoPath> witness,
+        ImmutableArray<Diagnostic> sl022Diagnostics)
     {
         if (witness.Length < 2 || witness[0] != witness[^1])
         {
@@ -383,13 +389,42 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         }
 
         var descriptor = RuleCatalog.Default.Descriptors[0];
-        return new AdmissionOutcome.RuleRejected(ImmutableArray.Create(new Diagnostic(
+        var cycle = new Diagnostic(
             descriptor.Id,
             descriptor.Title,
             descriptor.DisplaySeverity,
             descriptor.AdmissionEffect,
             witness[0].Value,
-            "managed import cycle: " + string.Join(" -> ", witness.Select(static path => path.Value)))));
+            "managed import cycle: " + string.Join(" -> ", witness.Select(static path => path.Value)));
+        return new AdmissionOutcome.RuleRejected(
+            ImmutableArray.Create(cycle).AddRange(sl022Diagnostics));
+    }
+
+    private static AdmissionOutcome PreserveSl022Diagnostics(
+        AdmissionOutcome outcome,
+        ImmutableArray<Diagnostic> expected)
+    {
+        if (expected.IsDefaultOrEmpty || outcome is not AdmissionOutcome.RuleRejected rejected)
+        {
+            return outcome;
+        }
+
+        var actual = rejected.Diagnostics
+            .Where(static diagnostic => diagnostic.RuleId == RuleId.CreateKnown(22))
+            .OrderBy(static diagnostic => diagnostic.Path, StringComparer.Ordinal)
+            .ToImmutableArray();
+        if (actual.IsEmpty)
+        {
+            return new AdmissionOutcome.RuleRejected(rejected.Diagnostics.AddRange(expected));
+        }
+
+        if (!actual.SequenceEqual(expected))
+        {
+            return new AdmissionOutcome.InfrastructureFailure(
+                "SL-022 rejection evidence disagrees with the bootstrap meta change set");
+        }
+
+        return outcome;
     }
 
 }

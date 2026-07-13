@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Carrier/Ring
    mirror-E: none(waiver:pure-definition)
-   anchors: [GICT-v3.6-I.1-definition-1.2]
+   anchors: [gict/v3.6/I.1/definition/1.2]
    digest: Integer coordinates for the golden ring with phi squared equal to phi plus one. -/
 
 import Mathlib.NumberTheory.Zsqrtd.Basic

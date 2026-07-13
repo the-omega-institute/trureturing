@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Carrier/Conj
    mirror-E: none(waiver:pure-definition)
-   anchors: [GICT-v3.6-I.1-theorem-1.3-i]
+   anchors: [gict/v3.6/I.1/theorem/1.3/i]
    digest: The golden Galois conjugation is an involutive ring automorphism. -/
 
 import D5.S0.Carrier.Ring

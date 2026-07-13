@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:formal-analysis-foundation-only)
    mirror-E: none(waiver:definitions-and-mathlib-inventory-only)
-   anchors: [PZG-v170-26.3, PZG-v170-26.4]
+   anchors: [pzg/v170/26.3, pzg/v170/26.4]
    digest: Fix classical zeta and angular-frequency Fourier conventions for the Weil ladder. -/
 
 import Mathlib.Analysis.Distribution.SchwartzSpace.Fourier

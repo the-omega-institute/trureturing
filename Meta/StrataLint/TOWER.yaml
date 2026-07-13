@@ -46,13 +46,66 @@ components:
     judged_by:
       - rule-catalog-selfcheck
       - rule-fixtures
-      - golden-compatibility
+      - golden-corpus
     verification: verified
   - id: rule-catalog-selfcheck
     kind: repository-files
     members:
       - Meta/StrataLint/StrataLint.Engine/Rules/RuleCatalog.cs
       - Meta/StrataLint/StrataLint.Tests/Rules/RuleEngineTests.cs
+    judged_by:
+      - engineering-ci
+    verification: verified
+  - id: anchor-vocabulary
+    kind: repository-files
+    members:
+      - Meta/StrataLint/StrataLint.Scribe/Ast/Anchor.cs
+      - Meta/StrataLint/StrataLint.Scribe/Ast/AnchorSchemes.cs
+      - Meta/StrataLint/StrataLint.Scribe/Ast/AnchorDefinition.cs
+      - Meta/StrataLint/StrataLint.Scribe/Catalog/AnchorCatalogDefinitions.cs
+      - Meta/StrataLint/StrataLint.Scribe/Catalog/ExternalAnchorManifest.cs
+      - Meta/StrataLint/StrataLint.Scribe/Catalog/SpecAnchorManifest.cs
+      - Meta/StrataLint/StrataLint.Scribe/Catalog/TheoryAnchorManifest.cs
+    judged_by:
+      - anchor-catalog-projection
+      - anchor-scribe-tests
+    verification: verified
+  - id: anchor-catalog-projection
+    kind: repository-files
+    members:
+      - Meta/StrataLint/Generated/anchor-catalog.v1.json
+      - Meta/StrataLint/StrataLint.Scribe/Emission/AnchorCatalogEmitter.cs
+      - Meta/StrataLint/StrataLint.Scribe/Writers/CanonicalAnchorCatalogWriter.cs
+    judged_by:
+      - anchor-reference-rule
+      - anchor-scribe-tests
+    verification: verified
+  - id: anchor-reference-rule
+    kind: repository-files
+    members:
+      - Meta/StrataLint/StrataLint.Engine/Rules/Anchors/AnchorCatalogLoader.cs
+      - Meta/StrataLint/StrataLint.Engine/Rules/Anchors/AnchorReferenceRule.cs
+      - Meta/StrataLint/StrataLint.Engine/Rules/RepositoryRules.Applicability.cs
+      - Meta/StrataLint/StrataLint.Engine/Rules/RepositoryRules.Content.cs
+      - Meta/StrataLint/StrataLint.Engine/Rules/RepositoryRules.cs
+      - Meta/StrataLint/StrataLint.Engine/Rules/RuleCatalog.cs
+    judged_by:
+      - anchor-rule-tests
+      - golden-compatibility
+    verification: verified
+  - id: anchor-scribe-tests
+    kind: repository-files
+    members:
+      - Meta/StrataLint/StrataLint.Scribe.Tests/AnchorCatalogTests.cs
+      - Meta/StrataLint/StrataLint.Scribe.Tests/AnchorTests.cs
+    judged_by:
+      - engineering-ci
+    verification: verified
+  - id: anchor-rule-tests
+    kind: repository-files
+    members:
+      - Meta/StrataLint/StrataLint.Tests/Coverage/RuleApplicabilityTests.cs
+      - Meta/StrataLint/StrataLint.Tests/Rules/AnchorReferenceRuleTests.cs
     judged_by:
       - engineering-ci
     verification: verified
@@ -64,14 +117,17 @@ components:
     judged_by:
       - engineering-ci
     verification: verified
-  - id: golden-compatibility
+  - id: golden-corpus
     kind: repository-files
     members:
-      - Meta/StrataLint/Golden/differences.json
-      - Meta/StrataLint/Golden/python-cases.json
-      - Meta/StrataLint/Golden/python-diagnostics.json
-      - Meta/StrataLint/StrataLint.Tests/Golden/FullPythonCorpusCompatibilityTests.cs
-      - Meta/StrataLint/StrataLint.Tests/Golden/GoldenCompatibilityTests.cs
+      - Meta/StrataLint/StrataLint.Tests/Golden/GoldenCorpus.Cases01.cs
+      - Meta/StrataLint/StrataLint.Tests/Golden/GoldenCorpus.Cases02.cs
+      - Meta/StrataLint/StrataLint.Tests/Golden/GoldenCorpus.Cases03.cs
+      - Meta/StrataLint/StrataLint.Tests/Golden/GoldenCorpus.Cases04.cs
+      - Meta/StrataLint/StrataLint.Tests/Golden/GoldenCorpus.cs
+      - Meta/StrataLint/StrataLint.Tests/Golden/GoldenCorpusShapeTests.cs
+      - Meta/StrataLint/StrataLint.Tests/Golden/GoldenCorpusTests.cs
+      - Meta/StrataLint/StrataLint.Tests/Rules/RuleFixture.Golden.cs
     judged_by:
       - engineering-ci
     verification: verified
@@ -147,9 +203,10 @@ components:
       - conservative-extension-gate-c
     verification: verified
   - id: conservative-extension-gate-c
-    kind: future-gate
+    kind: phased-gate
     members:
-      - component-c
+      - phase1-protected-content-admission
+      - phase2-conservative-extension-proof-pending
     judged_by:
       - bootstrap-pr-1
     verification: ASSUMED-UNVERIFIED

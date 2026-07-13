@@ -64,13 +64,15 @@
 
 **6. 地址由算法算出,不开会。**
 GID = 规范地址(F 层即字面路径);地层由 import 偏序算出;桶满则裂、**只裂不迁**;历史只追加。地址是算法的输出,不是协商的结果——所以两个 agent 并行贡献不会撞地址。
-*成熟锚*:单一真源(SSOT)、事件溯源(event sourcing)、内容寻址、mathlib 库治理。
-〔守护:**硬**·机器 lint(GID 地址代数双射、SL-001 地层、SL-011 词表、SL-012 文件头)〕
+**禁历史兼容:现状唯一,历史归 git。** 工作树永远只呈现**当前最优形态**;格式/规则/词表/语料变更**单 PR 一步迁移到位**(全量迁移 + 机器验证),**不留兼容垫层**——无 grandfather、无 legacy alias、无双读旧格式、无"隔离区待晋升"、无 deprecated 存根。历史查证一律走 git(历史即档案,不在工作树维护)。**辨析**:账本类 append-only 工件(Chronicle、冻结账本 events、尸检、spec 修订注)是**现状的审计链构成**,非兼容层,不在此禁——禁的是"为旧状态保留的运行时机制",不是"记录事件的账"。
+*成熟锚*:单一真源(SSOT)、事件溯源(event sourcing)、内容寻址、mathlib 库治理、trunk-based 单版本真源、schema 迁移之 expand–contract(必须收尾 contract,不许永久 expand)、git 即历史数据库。
+〔守护:**硬+软**·GID/地层/词表/文件头机器 lint 如前;「禁兼容垫层」靠评审 + 先例(判例集 grandfather/legacy-values 隔离区均已按此裁决拆除),兼容机制一经识别即拆〕
 
 **7. 骨骼 = 依赖偏序。**
 import 只许向下;**投影不当骨骼**——文档、书、论文都是图的照片,不得反向决定结构。逻辑层严格无环;叙事层可以有环但不承重。**叙事工件的 canonical 源 = 类型化 AST(Scribe):Blueprint/Papers 由 C# 文档定义发射,markdown/PDF 是构建产物;引用是类型(GID 构造期解析),不是位置(行号锚已由机器证伪并废除)。**
-*成熟锚*:有向无环图(DAG)架构、依赖倒置原则、承重结构与装饰的分离。
-〔守护:**硬**·机器 lint(SL-001 向下 import，编译器与 lint 双层强制)〕
+**理论输入仅是参考,形式化才是唯一真源,编号自生成。** 理论卷(GICT/PZG 等 markdown)是**参考输入**(灵感与出处),不是权威结构:其章节/定理编号会漂移、不受机器治理,**不得把形式化工件反向绑定到理论编号上**(theorem-2.9 幻锚即此病)。真源方向:**Lean 形式化(GID/声明)= 唯一权威**;理论引用降为 provenance 注记(参考文献性质,机器只验格式不验其编号);发射文档(Blueprint/Papers)的定义/定理编号由 Scribe **从形式结构自生成**(类型化 AST 的序/依赖位置),不抄理论编号。
+*成熟锚*:有向无环图(DAG)架构、依赖倒置原则、承重结构与装饰的分离、形式化优先(formalization-first)、文献引用 vs 结构绑定之别、自动编号(LaTeX theorem counters 之于手写编号)。
+〔守护:**硬+软**·SL-001 向下 import 机器强制;理论不当真源靠 Scribe 类型化引用(GID 构造期解析)+ 评审;编号自生成随 Scribe 发射机器化〕
 
 **8. 生长自相似,裂由压力。**
 **不预建空壳**;抽象只在第二个实例或已证实的压力出现时才上收(通用证明成立才归 `Metallic/`,跨族定理出现才归 `Moduli/`,桶超限才 split)。目录随首个真实工件出生。
@@ -131,8 +133,9 @@ import 只许向下;**投影不当骨骼**——文档、书、论文都是图�
 
 **16. 实施在独立 worktree,主干保持可发布。**
 代码实施与大改在**独立 git worktree**(各自分支)进行,不在主工作树/主干直接堆——这样多路实施可**并行推进**,各自一个 PR,互不污染;主干任何时刻可发布。并行安全由 harness 保证:地址算出(不撞)+ 分支锁(利益回避)+ CI required-check(对错机器判)+ SL-022 元层门控。合并回主干走 PR + required-check,不自并。
-*成熟锚*:feature branch / worktree 隔离、trunk-based 的可发布主干、并行开发的冲突避免。
-〔守护:**半硬**·并行不撞由 GID 地址代数 + 分支锁 + required-check 机器保证;"在 worktree 做"靠 agent 遵此条 + 本授权〕
+**在 worktree 的工作及时提交并同步远程(push),不留长期未提交改动。** 未提交的工作树改动是脆的、无地址的:`git stash` 跨 worktree 全局共享会误叠外来改动;冻结账本 provenance 要求被冻结模块的 blob 已提交可达(未提交 blob 无法 attest);未提交改动易与 rebase/新提交失配、易丢失。故:一个逻辑单元完成即 commit(而非攒一大堆散改动),推分支到远程留痕(工件化,第9条),让 CI/协作/后续 rebase 有确定的内容寻址锚点。
+*成熟锚*:feature branch / worktree 隔离、trunk-based 的可发布主干、并行开发的冲突避免、频繁提交与推送(small commits, push early)、内容寻址 provenance。
+〔守护:**半硬**·并行不撞由 GID 地址代数 + 分支锁 + required-check 机器保证;"在 worktree 做 + 及时提交推送"靠 agent 遵此条 + 本授权(本轮先例:全局 stash 误叠、冻结账本未提交 blob 不可达,皆因未及时提交)〕
 
 **17. harness 是真值机器,可持续自建,不与前违背;违背由升层判,不可判标 open。**
 **本系统判形式对错的权威机器,就是 harness 自己**——lint、编译、双射、状态、一致性,由它判;它就是这里的逻辑与真值机器,不假手于人。harness 可**持续自我扩建**(新规则、新分类、新流程),唯一硬约束是**不与之前的 harness 相违背**(保守/单调扩展:旧的判为对的,新的不得判为错)。是否违背,**由 harness 自身判**:SL-022 元层门控 + 一致性巡检 + 升层——新 harness 判旧 harness(内化塔,塔无封顶)。**但诚实标边界**:harness 不在同层自证自己的一致性(Gödel,PZG 16.2);它够不着的真值(形式不可判者)诚实标 `open`/`sorry`(Hearts),**不冒充判得了**。判可判的、标不可判的——这才是真值机器的完整、不说谎的形态。
@@ -235,3 +238,4 @@ harness 的本质,就是**给各类事定义"这类该怎么处理"**——先�
 - **完整律法**:`docs/develop/spec/golden-ledger-repo-spec.md`(单一 spec,原位演进)
 - **理论源**(只读):`docs/develop/theory/`(PZG–BEDC 内核卷、GICT 卷)
 - **八官宪章**:`agents/{scout,prover,numericist,librarian,adversary,scribe,theorist,gate}.md`
+- **多模型对抗共识**:`/sshx` skill(`consensus-rnd:sshx`)——派 codex-cli / nyxid-oracle 隔离工作席做设计/实施/评审(第13/14条的落地机制)。**codex 调用务必把 prompt 经文件从 stdin 喂入(`codex exec [flags] < promptfile`),不作位置参数**:巨型 prompt 里的 `$`、反引号、`<>`、引号、换行会被 shell 转义损坏 → codex 收到空 prompt → 回退读 stdin → 后台无输入而挂起(本轮先例)。

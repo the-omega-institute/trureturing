@@ -37,6 +37,9 @@ public sealed class TrustTopologyTests
 
         var required = Assert.IsType<BootstrapOutcome.HumanReviewRequired>(outcome);
         Assert.Contains(required.ChangeSet.Paths, item => item.Value == path);
+        var profile = MetaEvaluationProfile.ForProtectedSurface(required.ChangeSet);
+        Assert.Null(profile.ClearCapability);
+        Assert.Same(required.ChangeSet, profile.ProtectedChangeSet);
     }
 
     [Theory]

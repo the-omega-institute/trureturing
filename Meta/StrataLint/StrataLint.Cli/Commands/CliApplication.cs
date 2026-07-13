@@ -20,6 +20,8 @@ internal interface ICliEnvironment
 
     CommandResult AppendLedger(IReadOnlyList<string> arguments);
 
+    CommandResult ReattestLedger(IReadOnlyList<string> arguments);
+
     CommandResult Worktree(IReadOnlyList<string> arguments);
 }
 
@@ -74,7 +76,7 @@ internal static class CliApplication
         if (arguments.Count == 0)
         {
             console.WriteError(
-                "USAGE: StrataLint check|coverage|ledger-genesis|route|selftest|topology|worktree|ledger-append\n");
+                "USAGE: StrataLint check|coverage|ledger-genesis|route|selftest|topology|worktree|ledger-append|ledger-reattest\n");
             return 2;
         }
 
@@ -85,6 +87,7 @@ internal static class CliApplication
             "coverage" => RenderCommand(environment.Coverage(tail), console),
             "ledger-genesis" => RenderCommand(environment.GenerateLedger(tail), console),
             "ledger-append" => RenderCommand(environment.AppendLedger(tail), console),
+            "ledger-reattest" => RenderCommand(environment.ReattestLedger(tail), console),
             "route" => RenderCommand(environment.Route(tail), console),
             "selftest" => RenderCommand(environment.SelfTest(tail), console),
             "topology" => RenderTopology(environment.Topology(tail), console),
@@ -119,6 +122,8 @@ internal static class CliApplication
         AdmissionOutcome.RuleRejected rejected => RenderRejected(rejected, console),
         AdmissionOutcome.InfrastructureFailure failure => RenderInfrastructureFailure(failure, console),
         AdmissionOutcome.HumanReviewRequired required => RenderHumanReview(required, console),
+        AdmissionOutcome.ProtectedSurfaceChange protectedChange =>
+            RenderProtectedSurfaceChange(protectedChange, console),
     };
 
     private static int RenderAdmitted(AdmissionOutcome.Admitted admitted, ICliConsole console)
@@ -166,6 +171,29 @@ internal static class CliApplication
         }
 
         console.WriteOutput($"HUMAN_REVIEW_REQUIRED count={required.Diagnostics.Length}\n");
+        return 3;
+    }
+
+    private static int RenderProtectedSurfaceChange(
+        AdmissionOutcome.ProtectedSurfaceChange protectedChange,
+        ICliConsole console)
+    {
+        foreach (var diagnostic in protectedChange.Sl022Diagnostics
+            .OrderBy(static item => item.Path, StringComparer.Ordinal))
+        {
+            console.WriteOutput(diagnostic.Render() + "\n");
+        }
+
+        foreach (var deferred in protectedChange.ContentCertificate.DeferredRules)
+        {
+            console.WriteOutput(
+                $"DEFERRED {deferred.RuleId.Value} case={deferred.CaseId.Value} {deferred.Title}\n");
+        }
+
+        console.WriteOutput(
+            $"PROTECTED_SURFACE_CHANGE count={protectedChange.Sl022Diagnostics.Length} "
+            + $"content={protectedChange.ContentCertificate.Fingerprint} "
+            + $"canonical={protectedChange.ContentCertificate.CanonicalSha256}\n");
         return 3;
     }
 

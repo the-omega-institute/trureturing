@@ -54,6 +54,13 @@ internal static partial class RepositoryRules
     private static bool LiteratureScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
         artifact.Path.Value == "Library/queries.yaml";
 
+    private static bool AnchorReferenceScoped(
+        RepositoryFile artifact,
+        RuleApplicabilityContext context) =>
+        Formal(artifact, context)
+        || LiteratureScoped(artifact, context)
+        || artifact.Path.Value == AnchorCatalogLoader.RelativePath;
+
     private static bool ValuesScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
         artifact.Path.Value.StartsWith("Evidence/D5/values.", StringComparison.Ordinal);
 

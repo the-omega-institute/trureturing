@@ -38,14 +38,14 @@ public sealed class DocumentAstTests
             Generality.Instance,
             GidRef.Create("D5/B/S1/Scale/Embedding"),
             new EvidenceMirror.Waiver(WaiverReason.Create("algebraically-proved")),
-            [AnchorRef.Create("GICT-v3.6-I.1-definition-1.4")],
+            [Anchor.ParseCanonical("gict/v3.6/I.2/definition/1.4")],
             Digest.Create("The real embedding is injective."));
 
         Assert.Equal(Generality.Instance, header.Generality);
         Assert.Equal("D5/B/S1/Scale/Embedding", header.MirrorBlueprint.Value);
         Assert.Equal(
-            "GICT-v3.6-I.1-definition-1.4",
-            Assert.Single(header.Anchors).Value);
+            "gict/v3.6/I.2/definition/1.4",
+            Assert.Single(header.Anchors).CanonicalString);
         Assert.Equal("The real embedding is injective.", header.Digest.Value);
     }
 
@@ -57,7 +57,7 @@ public sealed class DocumentAstTests
             Generality.Instance,
             GidRef.Create("D5/B/S1/Scale/Log"),
             new EvidenceMirror.Waiver(WaiverReason.Create("algebraically-proved")),
-            ImmutableArray<AnchorRef>.Empty,
+            ImmutableArray<Anchor>.Empty,
             Digest.Create("Embedding.")));
     }
 

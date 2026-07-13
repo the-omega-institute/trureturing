@@ -51,13 +51,13 @@ internal static partial class RepositoryRules
         new[] { "D5/", "Blueprint/", "Evidence/", "Library/", "Papers/", "Chronicle/" },
         StringComparison.Ordinal);
 
-    private static IEnumerable<(RepoPath Path, RepositoryFile File)> FormalFiles(RepositorySnapshot snapshot) =>
+    internal static IEnumerable<(RepoPath Path, RepositoryFile File)> FormalFiles(RepositorySnapshot snapshot) =>
         snapshot.Files
             .Where(static item => item.Key.Value.StartsWith("D5/", StringComparison.Ordinal)
                 && item.Key.Value.EndsWith(".lean", StringComparison.Ordinal))
             .Select(static item => (item.Key, item.Value));
 
-    private static bool TryHeader(string text, out HeaderData header)
+    internal static bool TryHeader(string text, out HeaderData header)
     {
         var match = HeaderPattern.Match(text);
         if (!match.Success || string.IsNullOrWhiteSpace(match.Groups["digest"].Value))
@@ -174,7 +174,7 @@ internal static partial class RepositoryRules
 
         return result;
     }
-    private sealed record HeaderData(
+    internal sealed record HeaderData(
         string Gid,
         string Generality,
         string MirrorB,

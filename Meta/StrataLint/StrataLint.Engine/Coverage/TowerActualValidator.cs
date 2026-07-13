@@ -9,6 +9,12 @@ internal sealed record TowerActualValidation(
 
 internal static class TowerActualValidator
 {
+    private static readonly string[] PhasedGateMembers =
+    [
+        "phase1-protected-content-admission",
+        "phase2-conservative-extension-proof-pending",
+    ];
+
     private static readonly ImmutableDictionary<string, string> KnownCiNames =
         new Dictionary<string, string>(StringComparer.Ordinal)
         {
@@ -47,6 +53,12 @@ internal static class TowerActualValidator
         ImmutableArray<TowerFinding>.Builder findings,
         ImmutableArray<TowerCheck>.Builder checks)
     {
+        if (component.Kind == "phased-gate")
+        {
+            ValidatePhasedGate(component, findings, checks);
+            return;
+        }
+
         if (component.Kind == "future-gate")
         {
             if (component.Verification != "ASSUMED-UNVERIFIED")
@@ -94,6 +106,36 @@ internal static class TowerActualValidator
                     component.Id,
                     $"unknown component kind {component.Kind}"));
                 break;
+        }
+    }
+
+    private static void ValidatePhasedGate(
+        TowerComponentSyntax component,
+        ImmutableArray<TowerFinding>.Builder findings,
+        ImmutableArray<TowerCheck>.Builder checks)
+    {
+        if (component.Verification != "ASSUMED-UNVERIFIED")
+        {
+            findings.Add(new TowerFinding(
+                "TOWER-ASSUMPTION",
+                component.Id,
+                "phased gate must remain ASSUMED-UNVERIFIED until its proof phase is complete"));
+        }
+
+        if (!component.Members.SequenceEqual(PhasedGateMembers, StringComparer.Ordinal))
+        {
+            findings.Add(new TowerFinding(
+                "TOWER-PHASES",
+                component.Id,
+                "phased gate must name the implemented admission phase and pending proof phase"));
+        }
+
+        if (!findings.Any(item => item.Component == component.Id))
+        {
+            checks.Add(new TowerCheck(
+                component.Id,
+                component.Verification,
+                "Phase1 content admission implemented; Phase2 conservative-extension proof pending"));
         }
     }
 

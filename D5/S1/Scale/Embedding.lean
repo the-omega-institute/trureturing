@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S1/Scale/Embedding
    mirror-E: none(waiver:algebraically-proved)
-   anchors: [GICT-v3.6-I.1-definition-1.4]
+   anchors: [gict/v3.6/I.2/definition/1.4]
    digest: The real embedding of golden integers is an injective ring homomorphism. -/
 
 import D5.S0.Carrier.Norm

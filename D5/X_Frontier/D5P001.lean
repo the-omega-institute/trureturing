@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:paper-timing-ticket)
    mirror-E: none(waiver:S3-evidence-not-yet-born)
-   anchors: [golden-ledger-spec-v7.11-sample-11]
+   anchors: [spec/v7.11/sample-11]
    digest: Defer D5-P001 until its S3 diffraction declarations and evidence exist. -/
 
 /-- TASK D5-T0006 | 难度:4 | 依赖:欠(D5/S3/Diffraction/Avoidance) | 尝试:0

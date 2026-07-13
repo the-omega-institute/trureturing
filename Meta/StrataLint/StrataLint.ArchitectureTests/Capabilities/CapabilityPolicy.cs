@@ -5,7 +5,7 @@ namespace StrataLint.ArchitectureTests;
 internal static class CapabilityPolicy
 {
     private static readonly HashSet<string> CapabilityOutcomeNames =
-        ["Accepted", "Admitted", "Clear", "Completed"];
+        ["Accepted", "Admitted", "Clear", "Completed", "ProtectedSurfaceChange"];
 
     internal static string[] EnumerateNames(Assembly assembly) =>
         assembly.GetExportedTypes()

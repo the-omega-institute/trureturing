@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S0/Carrier/Units
    mirror-E: none(waiver:algebraically-proved)
-   anchors: [GICT-v3.6-I.1-theorem-1.3-iii]
+   anchors: [gict/v3.6/I.1/theorem/1.3/iii]
    digest: Golden units have norm plus or minus one and signed powers of phi are units. -/
 
 import D5.S0.Carrier.Norm
