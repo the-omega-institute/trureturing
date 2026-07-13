@@ -5,8 +5,6 @@ namespace StrataLint.Cli;
 
 internal static class DigestStatusCommand
 {
-    private const string Schema2LedgerStatus = "ledger 未迁移";
-
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
         WriteIndented = true,
@@ -32,16 +30,10 @@ internal static class DigestStatusCommand
                 throw new InvalidOperationException($"{BackfillInventoryLoader.RelativePath} is missing");
             }
 
-            var document = BackfillInventoryLoader.Load(ledgerFile.Text);
-            // pending-contract(step 3): schema 2 has no digestion status to evaluate yet.
-            if (document.SchemaVersion == BackfillInventoryLoader.PendingContractSchemaVersion)
-            {
-                return new CommandResult(true, RenderSchema2(json), string.Empty);
-            }
-
             var leanReport = leanReportSource.Load(snapshot);
             var lean = ValidateLean(snapshot, leanReport);
             var verifiedScribeEmissions = scribeEmissionVerifier.Verify(leanReport);
+            var document = BackfillInventoryLoader.Load(ledgerFile.Text);
             var evaluation = DigestionStatusEvaluator.Evaluate(
                 document,
                 snapshot,
@@ -94,20 +86,6 @@ internal static class DigestStatusCommand
         }
 
         return writer.ToString();
-    }
-
-    private static string RenderSchema2(bool json)
-    {
-        if (!json)
-        {
-            return $"DIGEST_STATUS {Schema2LedgerStatus}\n";
-        }
-
-        return JsonSerializer.Serialize(new
-        {
-            schema = "stratalint-digest-status-v1",
-            status = Schema2LedgerStatus,
-        }, JsonOptions) + "\n";
     }
 
     private static string RenderJson(DigestionLedgerEvaluation evaluation)

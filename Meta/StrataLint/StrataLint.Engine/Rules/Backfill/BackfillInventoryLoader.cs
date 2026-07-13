@@ -71,9 +71,6 @@ internal sealed class BackfillInventoryDocument
 
     internal IReadOnlyDictionary<string, object?> Root => root;
 
-    internal int? SchemaVersion =>
-        root.GetValueOrDefault("schema_version") is int version ? version : null;
-
     internal ImmutableArray<BackfillTicketReference> RequireTickets()
     {
         var ticketIndex = List(root, "ticket_index", "ticket_index must be a list");
@@ -122,12 +119,6 @@ internal sealed class BackfillInventoryDocument
 
     internal ImmutableArray<string> RequireReferencedGids()
     {
-        // pending-contract(step 3): remove the schema-2 projection after BACKFILL migrates.
-        if (SchemaVersion == BackfillInventoryLoader.PendingContractSchemaVersion)
-        {
-            return RequireSchema2ReferencedGids();
-        }
-
         var gids = ImmutableArray.CreateBuilder<string>();
         var seen = new HashSet<string>(StringComparer.Ordinal);
         foreach (var entry in RequireDigestionEntries())
@@ -141,49 +132,6 @@ internal sealed class BackfillInventoryDocument
         foreach (var ticket in RequireTickets())
         {
             if (seen.Add(ticket.Gid)) gids.Add(ticket.Gid);
-        }
-
-        return gids.ToImmutable();
-    }
-
-    private ImmutableArray<string> RequireSchema2ReferencedGids()
-    {
-        if (!root.TryGetValue("sources", out var rawSources) || rawSources is not List<object?> sources)
-        {
-            throw new FormatException("sources must be a list");
-        }
-
-        var gids = ImmutableArray.CreateBuilder<string>();
-        var seen = new HashSet<string>(StringComparer.Ordinal);
-        foreach (var rawSource in sources)
-        {
-            if (rawSource is not Dictionary<string, object?> source
-                || source.GetValueOrDefault("entries") is not List<object?> entries)
-            {
-                throw new FormatException("sources must contain entry lists");
-            }
-
-            foreach (var rawEntry in entries)
-            {
-                if (rawEntry is not Dictionary<string, object?> entry
-                    || entry.GetValueOrDefault("disposition") is not string disposition)
-                {
-                    throw new FormatException("source entries must contain scalar dispositions");
-                }
-
-                if (seen.Add(disposition))
-                {
-                    gids.Add(disposition);
-                }
-            }
-        }
-
-        foreach (var ticket in RequireTickets())
-        {
-            if (seen.Add(ticket.Gid))
-            {
-                gids.Add(ticket.Gid);
-            }
         }
 
         return gids.ToImmutable();
@@ -362,7 +310,6 @@ internal static class BackfillInventoryLoader
 {
     internal const string RelativePath = "Meta/BACKFILL.yaml";
     internal const int SchemaVersion = 3;
-    internal const int PendingContractSchemaVersion = 2;
     internal const string LedgerName = "theory-digestion-v1";
 
     internal static BackfillInventoryDocument Load(string text)
@@ -372,10 +319,9 @@ internal static class BackfillInventoryLoader
             throw new FormatException("BACKFILL top-level YAML value must be a mapping");
         }
 
-        // pending-contract(step 3): non-v3 documents are handed to the dev-compatible SL-016 path.
         if (root.GetValueOrDefault("schema_version") is not int version || version != SchemaVersion)
         {
-            return new BackfillInventoryDocument(root);
+            throw new FormatException($"BACKFILL must use schema_version {SchemaVersion}; legacy schemas are not read");
         }
 
         if (root.GetValueOrDefault("ledger") is not string ledger

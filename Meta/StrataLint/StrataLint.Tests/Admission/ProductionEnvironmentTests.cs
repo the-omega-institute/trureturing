@@ -394,44 +394,9 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    [Trait("pending-contract", "step-3")]
-    public void DigestStatusReportsSchema2LedgerNotMigratedBeforeLoadingCapabilities()
-    {
-        const string legacy = """
-            schema_version: 2
-            inventory: m0-protected-v1
-            sources:
-              - id: GICT-v3.6
-                path: docs/source.md
-                entries:
-                  - anchor: old
-                    disposition: D5/X_Frontier/Probe
-            ticket_index: []
-            """;
-        var environment = new ProductionCliEnvironment(
-            "/repo",
-            new FakeRepositoryGateway(
-                RawChangeSet.Create(Array.Empty<string>()),
-                Snapshot(new Dictionary<string, string>(StringComparer.Ordinal)
-                {
-                    [BackfillInventoryLoader.RelativePath] = legacy,
-                }),
-                null),
-            new FakeLeanReportSource(null),
-            new FakeScribeEmissionVerifier(null));
-
-        var result = environment.DigestStatus(Array.Empty<string>());
-
-        Assert.True(result.Success, result.Error);
-        Assert.Equal("DIGEST_STATUS ledger 未迁移\n", result.Output);
-        Assert.Equal(string.Empty, result.Error);
-    }
-
-    [Fact]
     public void DigestStatusReportsEveryEntryAndZeroCurrentlyDeletable()
     {
         var fixture = new RuleFixture();
-        fixture.UseSyntheticSchema3Backfill();
         fixture.AddBackfillTargets();
         var environment = new ProductionCliEnvironment(
             "/repo",
@@ -445,22 +410,21 @@ public sealed partial class ProductionEnvironmentTests
         var result = environment.DigestStatus(["--json"]);
 
         Assert.True(result.Success, result.Error);
-        Assert.Contains("\"entries_total\": 1", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"entries_total\": 32", result.Output, StringComparison.Ordinal);
         Assert.Contains("\"deletable_now\": 0", result.Output, StringComparison.Ordinal);
         Assert.Contains("\"atom_id\": \"gict-7.15\"", result.Output, StringComparison.Ordinal);
         Assert.Contains("\"code\": \"scribe-definition-missing\"", result.Output, StringComparison.Ordinal);
-        Assert.Contains("\"code\": \"scribe-attestation-missing\"", result.Output, StringComparison.Ordinal);
-        Assert.Contains("\"code\": \"scribe-emission-unverified\"", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"code\": \"scribe-emission-missing\"", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"code\": \"tail-authorization-missing\"", result.Output, StringComparison.Ordinal);
     }
 
     [Fact]
     public void DigestStatusFailsClosedWhenProjectedStatusWasHandwrittenIncorrectly()
     {
         var fixture = new RuleFixture();
-        fixture.UseSyntheticSchema3Backfill();
         fixture.AddBackfillTargets();
-        const string expected = "          migration: partial\n          truth: closed\n";
-        const string falseProjection = "          migration: absorbed\n          truth: closed\n";
+        const string expected = "          migration: partial\n          truth: open\n      - atom_id: gict-hearts-o5-o6";
+        const string falseProjection = "          migration: absorbed\n          truth: open\n      - atom_id: gict-hearts-o5-o6";
         fixture.Files["Meta/BACKFILL.yaml"] = fixture.Files["Meta/BACKFILL.yaml"].Replace(
             expected,
             falseProjection,
@@ -484,7 +448,6 @@ public sealed partial class ProductionEnvironmentTests
     public void DigestStatusFailsClosedWhenScribeVerificationFails()
     {
         var fixture = new RuleFixture();
-        fixture.UseSyntheticSchema3Backfill();
         fixture.AddBackfillTargets();
         var environment = new ProductionCliEnvironment(
             "/repo",

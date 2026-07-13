@@ -21,7 +21,6 @@ internal sealed partial class RuleFixture
     internal const string HarnessGatePath = RepositoryPathPolicy.HarnessGatePath;
     internal const string SpecificationPath = BootstrapGate.SpecificationPath;
     internal const string GictTheoryPath = "docs/develop/theory/GICT_complete_development_v3_3.md";
-    internal const string SyntheticSchema3GictTheoryPath = "docs/develop/theory/GICT_complete_development_v3_3.md";
     internal const string PzgTheoryPath = "docs/develop/theory/PZG_BEDC_kernel_formal_170.md";
     internal const string SyntheticProtectedPath =
         "Meta/StrataLint/StrataLint.Engine/SyntheticProtected.cs";
@@ -385,64 +384,6 @@ internal sealed partial class RuleFixture
                 BaselineReports[path] = Reports[path];
             }
         }
-    }
-
-    internal DigestionAtom UseSyntheticSchema3Backfill()
-    {
-        var source = Encoding.UTF8.GetBytes(Files[GictTheoryPath]);
-        var atom = GictAtomizer.Atomize(source).ResolveClaim("theorem/7.15");
-        Files[SyntheticSchema3GictTheoryPath] = Files[GictTheoryPath];
-        Baseline[SyntheticSchema3GictTheoryPath] = Files[GictTheoryPath];
-        var ledger = $$"""
-            schema_version: 3
-            ledger: theory-digestion-v1
-            sources:
-              - source_id: gict-v3.6
-                path: {{SyntheticSchema3GictTheoryPath}}
-                atomizer: gict-v1
-                entries:
-                  - atom_id: gict-7.15
-                    boundary:
-                      ast_path: {{atom.AstPath}}
-                      start_byte: {{atom.StartByte}}
-                      end_byte: {{atom.EndByte}}
-                    fingerprints:
-                      raw_sha256: {{atom.Fingerprints.RawSha256}}
-                      normalized_sha256: {{atom.Fingerprints.NormalizedSha256}}
-                    coverage_gids:
-                      - D5/S0/Carrier/Ring
-                    receipts:
-                      coverage: []
-                      scribe: []
-                      unresolved_subitems: []
-                      chain_atoms: []
-                      tail_authorization: null
-                    status:
-                      migration: partial
-                      truth: closed
-            ticket_index: []
-            """;
-        Files[BackfillInventoryLoader.RelativePath] = ledger;
-        Baseline[BackfillInventoryLoader.RelativePath] = ledger;
-        return atom;
-    }
-
-    internal void UseSyntheticSchema2BackfillPendingContractStep3()
-    {
-        // pending-contract(step 3): keep one executable schema-2 SL-016 fixture until contract.
-        const string ledger = """
-            schema_version: 2
-            inventory: m0-protected-v1
-            sources:
-              - id: GICT-v3.6
-                path: docs/develop/theory/GICT_complete_development_v3_3.md
-                entries:
-                  - anchor: synthetic
-                    disposition: D5/S0/Carrier/Ring
-            ticket_index: []
-            """;
-        Files[BackfillInventoryLoader.RelativePath] = ledger;
-        Baseline[BackfillInventoryLoader.RelativePath] = ledger;
     }
 
     internal void AddNormalizedBackfillTicketTarget()
