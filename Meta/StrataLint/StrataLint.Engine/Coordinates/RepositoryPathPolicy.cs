@@ -54,6 +54,8 @@ internal static partial class RepositoryPathPolicy
             or ".github/workflows/ci.yml" or ".github/CODEOWNERS"
             or ".github/scripts/baseline-admission.sh" or ".github/scripts/harness-gate.sh"
             || value.StartsWith("Meta/StrataLint/", StringComparison.Ordinal)
+            || value.StartsWith(".fkst/", StringComparison.Ordinal)
+            || value.StartsWith(".claude/skills/", StringComparison.Ordinal)
             || IsCanonicalFutureCoordinate(value))
         {
             return null;

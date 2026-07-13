@@ -5,7 +5,7 @@ on:
   push:
     branches: [dev]
   pull_request_target:
-    branches: [dev]
+    branches: [dev, 'integration-**']
 
 permissions:
   contents: read
