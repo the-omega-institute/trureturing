@@ -7,11 +7,11 @@ namespace StrataLint.Tests;
 
 internal sealed partial class RuleFixture
 {
-    internal const string RingPath = "D5/S0/Carrier/Ring.lean";
-    internal const string BlueprintPath = "Blueprint/D5/S0/Carrier/Ring.md";
-    internal const string NotationPath = "D5/S0/Conventions/Notation.lean";
-    internal const string AssumptionDebtPath = "D5/X_Assumptions/AxiomDebt.lean";
-    internal const string HeartsPath = RepositoryRules.HeartsPath;
+    internal const string RingPath = GoldenCorpus.RingPath;
+    internal const string BlueprintPath = GoldenCorpus.BlueprintPath;
+    internal const string NotationPath = GoldenCorpus.NotationPath;
+    internal const string AssumptionDebtPath = GoldenCorpus.AssumptionDebtPath;
+    internal const string HeartsPath = GoldenCorpus.HeartsPath;
     internal const string HeartsDraftPath = "D5/X_Frontier/HeartsDraft.lean";
     internal const string AnchorCatalogPath = AnchorCatalogLoader.RelativePath;
     internal const string TowerManifestPath = RepositoryRules.TowerManifestPath;
@@ -23,6 +23,12 @@ internal sealed partial class RuleFixture
     internal const string PzgTheoryPath = "docs/develop/theory/PZG_BEDC_kernel_formal_170.md";
     internal const string SyntheticProtectedPath =
         "Meta/StrataLint/StrataLint.Engine/SyntheticProtected.cs";
+    internal const string DefinitionsDataSourcePath =
+        "Meta/StrataLint/StrataLint.Definitions/Golden/GoldenCorpus.Cases01.cs";
+    internal const string DefinitionsProjectPath =
+        "Meta/StrataLint/StrataLint.Definitions/StrataLint.Definitions.csproj";
+    internal const string DefinitionsLockPath =
+        "Meta/StrataLint/StrataLint.Definitions/packages.lock.json";
 
     private const string Header = """
         /- GID: D5/S0/Carrier/Ring

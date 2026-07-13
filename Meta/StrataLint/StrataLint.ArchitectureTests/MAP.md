@@ -4,7 +4,8 @@
 
 - `Capabilities/`: unforgeable capability construction and its executable red fixture.
 - `CanonicalSources/`: source-level checks that C# consumes canonical repository data instead of copying it.
-- `Dependencies/`: compiled assembly dependency direction and whitelist fixtures.
+- `Dependencies/`: compiled assembly dependency direction, the BCL-only Definitions
+  data boundary, and whitelist fixtures.
 - `Namespaces/`: source path to namespace policy, including Blueprint linked-source conventions.
 - `PublicSurface/`: the exact exported Engine type allowlist.
 
@@ -27,12 +28,14 @@ The root contains only shared repository discovery, test metadata, and this map.
 - Public DSL/builders: rejects a literal default parameter value matching the `Gid`,
   `CaseId`, canonical anchor, or historical GICT/PZG anchor syntax on an effectively
   public member of an effectively public type named `*Dsl` or `*Builder`.
-- Theory/spec anchor locators: manifest factories cannot accept a `string` locator;
+- Theory/spec anchor locators in `StrataLint.Definitions`: manifest factories cannot
+  accept a `string` locator;
   each emitted locator must equal the canonical anchor with its scheme and edition
   segments removed and the remaining segments joined by spaces.
 - Spec rule anchors: every `spec/.../SL-nnn` manifest member must be a member of the
-  Engine `RuleCatalog` descriptor set. The architecture test references Scribe and
-  Engine independently; neither product assembly depends on the other for this check.
+  Engine `RuleCatalog` descriptor set. The architecture test references Definitions
+  and Engine independently; neither product assembly depends on the other for this
+  check.
 - Anchor definition names: every public typed anchor property is checked by reflection
   against a fixed scheme-specific transform. GICT uses division/kind/label/subclaim,
   PZG uses its underscored entry number, spec uses Pascal-cased clause tokens, and

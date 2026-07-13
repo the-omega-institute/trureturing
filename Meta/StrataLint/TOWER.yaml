@@ -59,13 +59,13 @@ components:
   - id: anchor-vocabulary
     kind: repository-files
     members:
-      - Meta/StrataLint/StrataLint.Scribe/Ast/Anchor.cs
-      - Meta/StrataLint/StrataLint.Scribe/Ast/AnchorSchemes.cs
-      - Meta/StrataLint/StrataLint.Scribe/Ast/AnchorDefinition.cs
-      - Meta/StrataLint/StrataLint.Scribe/Catalog/AnchorCatalogDefinitions.cs
-      - Meta/StrataLint/StrataLint.Scribe/Catalog/ExternalAnchorManifest.cs
-      - Meta/StrataLint/StrataLint.Scribe/Catalog/SpecAnchorManifest.cs
-      - Meta/StrataLint/StrataLint.Scribe/Catalog/TheoryAnchorManifest.cs
+      - Meta/StrataLint/StrataLint.Definitions/Schema/Anchor.cs
+      - Meta/StrataLint/StrataLint.Definitions/Schema/AnchorSchemes.cs
+      - Meta/StrataLint/StrataLint.Definitions/Schema/AnchorDefinition.cs
+      - Meta/StrataLint/StrataLint.Definitions/Catalog/AnchorCatalogDefinitions.cs
+      - Meta/StrataLint/StrataLint.Definitions/Catalog/ExternalAnchorManifest.cs
+      - Meta/StrataLint/StrataLint.Definitions/Catalog/SpecAnchorManifest.cs
+      - Meta/StrataLint/StrataLint.Definitions/Catalog/TheoryAnchorManifest.cs
     judged_by:
       - anchor-catalog-projection
       - anchor-scribe-tests
@@ -120,11 +120,11 @@ components:
   - id: golden-corpus
     kind: repository-files
     members:
-      - Meta/StrataLint/StrataLint.Tests/Golden/GoldenCorpus.Cases01.cs
-      - Meta/StrataLint/StrataLint.Tests/Golden/GoldenCorpus.Cases02.cs
-      - Meta/StrataLint/StrataLint.Tests/Golden/GoldenCorpus.Cases03.cs
-      - Meta/StrataLint/StrataLint.Tests/Golden/GoldenCorpus.Cases04.cs
-      - Meta/StrataLint/StrataLint.Tests/Golden/GoldenCorpus.cs
+      - Meta/StrataLint/StrataLint.Definitions/Golden/GoldenCorpus.Cases01.cs
+      - Meta/StrataLint/StrataLint.Definitions/Golden/GoldenCorpus.Cases02.cs
+      - Meta/StrataLint/StrataLint.Definitions/Golden/GoldenCorpus.Cases03.cs
+      - Meta/StrataLint/StrataLint.Definitions/Golden/GoldenCorpus.Cases04.cs
+      - Meta/StrataLint/StrataLint.Definitions/Golden/GoldenCorpus.cs
       - Meta/StrataLint/StrataLint.Tests/Golden/GoldenCorpusShapeTests.cs
       - Meta/StrataLint/StrataLint.Tests/Golden/GoldenCorpusTests.cs
       - Meta/StrataLint/StrataLint.Tests/Rules/RuleFixture.Golden.cs

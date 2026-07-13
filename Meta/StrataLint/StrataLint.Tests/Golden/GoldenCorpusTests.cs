@@ -37,7 +37,9 @@ public sealed class GoldenCorpusTests
             .Order(StringComparer.Ordinal)
             .ToArray();
         var expected = testCase.ExpectedDiagnostics
-            .Select(static item => item.Render())
+            .Select(static item =>
+                $"{RuleId.CreateKnown(item.RuleNumber).Value} "
+                + $"{RepoPath.CreateKnown(item.Path).Value}: {item.Message}")
             .Order(StringComparer.Ordinal)
             .ToArray();
         var expectedText = Render(expected);

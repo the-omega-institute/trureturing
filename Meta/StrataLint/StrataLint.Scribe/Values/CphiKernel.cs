@@ -2,19 +2,6 @@ using System.Collections.Immutable;
 
 namespace StrataLint.Scribe;
 
-public sealed record CphiKernelSpec(
-    int TermCount,
-    int FractionalPartDecimalDigits,
-    int FirstFibonacciIndex,
-    int LastFibonacciIndex)
-{
-    public static CphiKernelSpec Canonical { get; } = new(
-        TermCount: 3_524_577,
-        FractionalPartDecimalDigits: 40,
-        FirstFibonacciIndex: 16,
-        LastFibonacciIndex: 31);
-}
-
 public sealed record CphiWindowMean(
     int FibonacciIndex,
     long StartInclusive,

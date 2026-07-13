@@ -1,6 +1,4 @@
-using StrataLint.Engine;
-
-namespace StrataLint.Tests;
+namespace StrataLint.Definitions;
 
 internal static partial class GoldenCorpus
 {
@@ -19,7 +17,7 @@ internal static partial class GoldenCorpus
         C(
             "unregistered-axiom",
             [],
-            [L(RingPath, "D5/S0/Carrier/Ring", Generality.General, "axiom invented : False\n")],
+            [L(RingPath, "D5/S0/Carrier/Ring", GoldenGenerality.General, "axiom invented : False\n")],
             [D(20, RingPath, "axiom declarations are confined to AxiomDebt.lean: invented")]),
         C(
             "unknown-top-level-file",
@@ -39,7 +37,7 @@ internal static partial class GoldenCorpus
         C(
             "lowercase-formal-module",
             [],
-            [L("D5/S0/Carrier/lowercase.lean", "D5/S0/Carrier/lowercase", Generality.General, "def lowercase : Nat := 0\n")],
+            [L("D5/S0/Carrier/lowercase.lean", "D5/S0/Carrier/lowercase", GoldenGenerality.General, "def lowercase : Nat := 0\n")],
             [D(0, "D5/S0/Carrier/lowercase.lean", "noncanonical formal artifact: formal module must be CamelCase")]),
         C(
             "lowercase-evidence-module",
@@ -59,22 +57,22 @@ internal static partial class GoldenCorpus
         C(
             "protected-axiom",
             [],
-            [L(RingPath, "D5/S0/Carrier/Ring", Generality.General, "namespace D5.S0.Carrier\nprotected axiom protectedBypass : False\nend D5.S0.Carrier\n")],
+            [L(RingPath, "D5/S0/Carrier/Ring", GoldenGenerality.General, "namespace D5.S0.Carrier\nprotected axiom protectedBypass : False\nend D5.S0.Carrier\n")],
             [D(20, RingPath, "axiom declarations are confined to AxiomDebt.lean: D5.S0.Carrier.protectedBypass")]),
         C(
             "comment-only-sorry",
             [],
-            [L(RingPath, "D5/S0/Carrier/Ring", Generality.General, "-- sorry is discussion, not a term\ndef commentSafe : String := \"axiom sorry\"\n")],
+            [L(RingPath, "D5/S0/Carrier/Ring", GoldenGenerality.General, "-- sorry is discussion, not a term\ndef commentSafe : String := \"axiom sorry\"\n")],
             []),
         C(
             "hearts-attributed-comment-decoy",
-            [L(HeartsPath, "D5/X_Frontier/Hearts", Generality.Extremal, "theorem heart : True := by sorry\n")],
-            [L(HeartsPath, "D5/X_Frontier/Hearts", Generality.Extremal, "/-\ntheorem heart : True := by trivial\n-/\n@[simp] theorem heart : False := by sorry\n")],
+            [L(HeartsPath, "D5/X_Frontier/Hearts", GoldenGenerality.Extremal, "theorem heart : True := by sorry\n")],
+            [L(HeartsPath, "D5/X_Frontier/Hearts", GoldenGenerality.Extremal, "/-\ntheorem heart : True := by trivial\n-/\n@[simp] theorem heart : False := by sorry\n")],
             [D(8, HeartsPath, "semantic declaration identities and types are frozen")]),
         C(
             "future-theory-is-uninstantiated",
             [],
-            [L("D8/S0/Carrier/Ring.lean", "D8/S0/Carrier/Ring", Generality.General, "def future : Nat := 0\n")],
+            [L("D8/S0/Carrier/Ring.lean", "D8/S0/Carrier/Ring", GoldenGenerality.General, "def future : Nat := 0\n")],
             [D(21, "D8/S0/Carrier/Ring.lean", "D8 未实例化(压力未至,D5-T0009)")]),
         C(
             "valid-protected-backfill-inventory",

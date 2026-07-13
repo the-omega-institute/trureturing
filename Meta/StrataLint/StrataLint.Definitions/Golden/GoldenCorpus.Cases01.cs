@@ -1,6 +1,4 @@
-using StrataLint.Engine;
-
-namespace StrataLint.Tests;
+namespace StrataLint.Definitions;
 
 internal static partial class GoldenCorpus
 {
@@ -24,7 +22,7 @@ internal static partial class GoldenCorpus
         C(
             "same-layer-import-is-legal",
             [],
-            [L(NotationPath, "D5/S0/Conventions/Notation", Generality.General, "import D5.S0.Carrier.Ring\n\ndef note : Nat := 0\n")],
+            [L(NotationPath, "D5/S0/Conventions/Notation", GoldenGenerality.General, "import D5.S0.Carrier.Ring\n\ndef note : Nat := 0\n")],
             []),
         C(
             "root-aggregator-imports-formal-tree",
@@ -34,12 +32,12 @@ internal static partial class GoldenCorpus
         C(
             "wrong-layer-import",
             [],
-            [Domain("Upper", Stratum.S1), L("D5/S1/Upper/High.lean", "D5/S1/Upper/High", Generality.General, "def high : Nat := 1\n"), L(RingPath, "D5/S0/Carrier/Ring", Generality.General, "import D5.S1.Upper.High\n\ndef low : Nat := high\n")],
+            [Domain("Upper", GoldenStratum.S1), L("D5/S1/Upper/High.lean", "D5/S1/Upper/High", GoldenGenerality.General, "def high : Nat := 1\n"), L(RingPath, "D5/S0/Carrier/Ring", GoldenGenerality.General, "import D5.S1.Upper.High\n\ndef low : Nat := high\n")],
             [D(1, RingPath, "stratum closure may not import D5/S1/Upper/High.lean")]),
         C(
             "stray-sorry",
             [],
-            [L(RingPath, "D5/S0/Carrier/Ring", Generality.General, "theorem unfinished : True := by sorry\n")],
+            [L(RingPath, "D5/S0/Carrier/Ring", GoldenGenerality.General, "theorem unfinished : True := by sorry\n")],
             [D(2, RingPath, "sorryAx occurs in declaration closure: unfinished")]),
         C(
             "capacity-over-400-lines",
@@ -73,28 +71,28 @@ internal static partial class GoldenCorpus
             [D(6, BlueprintPath, "hand-written status badge is forbidden")]),
         C(
             "hearts-signature-frozen",
-            [L(HeartsPath, "D5/X_Frontier/Hearts", Generality.Extremal, "theorem heart : True := by sorry\n")],
-            [L(HeartsPath, "D5/X_Frontier/Hearts", Generality.Extremal, "theorem heart : False := by sorry\n")],
+            [L(HeartsPath, "D5/X_Frontier/Hearts", GoldenGenerality.Extremal, "theorem heart : True := by sorry\n")],
+            [L(HeartsPath, "D5/X_Frontier/Hearts", GoldenGenerality.Extremal, "theorem heart : False := by sorry\n")],
             [D(8, HeartsPath, "semantic declaration identities and types are frozen")]),
         C(
             "hearts-multiline-signature-frozen",
-            [L(HeartsPath, "D5/X_Frontier/Hearts", Generality.Extremal, "theorem heart\n    : True := by sorry\n")],
-            [L(HeartsPath, "D5/X_Frontier/Hearts", Generality.Extremal, "theorem heart\n    : False := by sorry\n")],
+            [L(HeartsPath, "D5/X_Frontier/Hearts", GoldenGenerality.Extremal, "theorem heart\n    : True := by sorry\n")],
+            [L(HeartsPath, "D5/X_Frontier/Hearts", GoldenGenerality.Extremal, "theorem heart\n    : False := by sorry\n")],
             [D(8, HeartsPath, "semantic declaration identities and types are frozen")]),
         C(
             "hearts-proof-body-only-is-legal",
-            [L(HeartsPath, "D5/X_Frontier/Hearts", Generality.Extremal, "theorem heart : True := by sorry\n")],
-            [L(HeartsPath, "D5/X_Frontier/Hearts", Generality.Extremal, "theorem heart : True := by exact True.intro\n")],
+            [L(HeartsPath, "D5/X_Frontier/Hearts", GoldenGenerality.Extremal, "theorem heart : True := by sorry\n")],
+            [L(HeartsPath, "D5/X_Frontier/Hearts", GoldenGenerality.Extremal, "theorem heart : True := by exact True.intro\n")],
             []),
         C(
             "general-imports-instance-fact",
             [],
-            [L(NotationPath, "D5/S0/Conventions/Notation", Generality.Instance, "def instanceFact : Nat := 1\n"), L(RingPath, "D5/S0/Carrier/Ring", Generality.General, "import D5.S0.Conventions.Notation\n\ndef badGeneral : Nat := instanceFact\n")],
+            [L(NotationPath, "D5/S0/Conventions/Notation", GoldenGenerality.Instance, "def instanceFact : Nat := 1\n"), L(RingPath, "D5/S0/Carrier/Ring", GoldenGenerality.General, "import D5.S0.Conventions.Notation\n\ndef badGeneral : Nat := instanceFact\n")],
             [D(10, RingPath, "G artifact imports I fact D5/S0/Conventions/Notation.lean")]),
         C(
             "unknown-domain",
             [],
-            [L("D5/S0/Unknown/Bad.lean", "D5/S0/Unknown/Bad", Generality.General, "def bad : Nat := 0\n")],
+            [L("D5/S0/Unknown/Bad.lean", "D5/S0/Unknown/Bad", GoldenGenerality.General, "def bad : Nat := 0\n")],
             [D(11, "D5/S0/Unknown/Bad.lean", "domain 'Unknown' is not controlled")]),
         C(
             "unknown-blueprint-domain",
@@ -114,7 +112,7 @@ internal static partial class GoldenCorpus
         C(
             "wrong-gid-for-path",
             [],
-            [L(RingPath, "D5/S0/Carrier/Conj", Generality.General, "def wrong : Nat := 0\n")],
+            [L(RingPath, "D5/S0/Carrier/Conj", GoldenGenerality.General, "def wrong : Nat := 0\n")],
             [D(12, RingPath, "GID 'D5/S0/Carrier/Conj' does not match 'D5/S0/Carrier/Ring'")]),
         C(
             "task-looking-external-data-is-inert",
@@ -124,7 +122,7 @@ internal static partial class GoldenCorpus
         C(
             "malformed-task-block",
             [],
-            [L("D5/X_Frontier/BadTask.lean", "D5/X_Frontier/BadTask", Generality.Extremal, "/-- TASK D5-T0010 | broken -/\ndef badTask : Unit := ()\n")],
+            [L("D5/X_Frontier/BadTask.lean", "D5/X_Frontier/BadTask", GoldenGenerality.Extremal, "/-- TASK D5-T0010 | broken -/\ndef badTask : Unit := ()\n")],
             [D(13, "D5/X_Frontier/BadTask.lean", "task block does not match the A7 grammar")]),
         C(
             "retired-task-code",
@@ -134,12 +132,12 @@ internal static partial class GoldenCorpus
         C(
             "duplicate-gid",
             [],
-            [L(NotationPath, "D5/S0/Carrier/Ring", Generality.General, "def duplicate : Nat := 0\n")],
+            [L(NotationPath, "D5/S0/Carrier/Ring", GoldenGenerality.General, "def duplicate : Nat := 0\n")],
             [D(15, RingPath, "duplicate GID D5/S0/Carrier/Ring at D5/S0/Carrier/Ring.lean, D5/S0/Conventions/Notation.lean"), D(15, NotationPath, "duplicate GID D5/S0/Carrier/Ring at D5/S0/Carrier/Ring.lean, D5/S0/Conventions/Notation.lean")]),
         C(
             "illegal-machine-character",
             [],
-            [L(RingPath, "D5/S0/Carrier/Ring@bad", Generality.General, "def illegal : Nat := 0\n")],
+            [L(RingPath, "D5/S0/Carrier/Ring@bad", GoldenGenerality.General, "def illegal : Nat := 0\n")],
             [D(15, RingPath, "GID violates the machine-field character set")]),
     ];
 }

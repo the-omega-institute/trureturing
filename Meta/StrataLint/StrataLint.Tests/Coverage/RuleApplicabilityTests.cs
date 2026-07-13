@@ -32,6 +32,9 @@ public sealed class RuleApplicabilityTests
         "SL-003,SL-015,SL-017,SL-019,SL-022")]
     [InlineData(RuleFixture.ValuesProjectionPath, "SL-003,SL-006,SL-015,SL-018,SL-019")]
     [InlineData(RuleFixture.TowerManifestPath, "SL-003,SL-015,SL-019,SL-022")]
+    [InlineData(
+        RuleFixture.DefinitionsDataSourcePath,
+        "SL-003,SL-015")]
     public void DefaultCatalogApplicabilityMatchesTheRulesActualScanSurface(
         string path,
         string expected)

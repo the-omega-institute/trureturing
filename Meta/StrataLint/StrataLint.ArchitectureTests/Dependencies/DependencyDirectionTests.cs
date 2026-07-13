@@ -6,6 +6,12 @@ namespace StrataLint.ArchitectureTests;
 public sealed class DependencyDirectionTests
 {
     [Fact]
+    public void DefinitionsReferencesOnlyPlatformAssemblies()
+    {
+        Assert.Empty(AssemblyReferencePolicy.NonPlatformReferences(typeof(Anchor).Assembly));
+    }
+
+    [Fact]
     public void EngineReferencesExactlyBclDunetAndPidgin()
     {
         Assert.Equal(
@@ -22,27 +28,27 @@ public sealed class DependencyDirectionTests
     }
 
     [Fact]
-    public void ScribeReferencesExactlyEngineAndQuestPdf()
+    public void ScribeReferencesExactlyDefinitionsEngineAndQuestPdf()
     {
         Assert.Equal(
-            ["QuestPDF", "StrataLint.Engine"],
+            ["QuestPDF", "StrataLint.Definitions", "StrataLint.Engine"],
             AssemblyReferencePolicy.NonPlatformReferences(typeof(ScribeEmitter).Assembly));
     }
 
     [Fact]
-    public void FunctionalTestsReferenceOnlyCliAndEngine()
+    public void FunctionalTestsReferenceOnlyCliDefinitionsAndEngine()
     {
         Assert.Equal(
-            ["StrataLint", "StrataLint.Engine"],
+            ["StrataLint", "StrataLint.Definitions", "StrataLint.Engine"],
             AssemblyReferencePolicy.ApplicationReferences(
                 typeof(StrataLint.Tests.AdmissionTests).Assembly));
     }
 
     [Fact]
-    public void ScribeTestsReferenceOnlyEngineAndScribe()
+    public void ScribeTestsReferenceOnlyDefinitionsEngineAndScribe()
     {
         Assert.Equal(
-            ["StrataLint.Engine", "StrataLint.Scribe"],
+            ["StrataLint.Definitions", "StrataLint.Engine", "StrataLint.Scribe"],
             AssemblyReferencePolicy.ApplicationReferences(
                 typeof(StrataLint.Scribe.Tests.DocumentAstTests).Assembly));
     }

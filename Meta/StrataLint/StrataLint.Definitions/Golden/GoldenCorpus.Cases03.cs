@@ -1,6 +1,4 @@
-using StrataLint.Engine;
-
-namespace StrataLint.Tests;
+namespace StrataLint.Definitions;
 
 internal static partial class GoldenCorpus
 {

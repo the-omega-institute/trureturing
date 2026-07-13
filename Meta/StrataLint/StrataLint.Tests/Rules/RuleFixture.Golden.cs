@@ -20,30 +20,48 @@ internal sealed partial class RuleFixture
             switch (mutation)
             {
                 case GoldenMutation.Write write:
-                    WriteGolden(caseName, files, reports, write.Path, write.Content);
+                    WriteGolden(
+                        caseName,
+                        files,
+                        reports,
+                        RepoPath.CreateKnown(write.Path),
+                        write.Content);
                     break;
                 case GoldenMutation.WriteParts write:
-                    WriteGolden(caseName, files, reports, write.Path, string.Concat(write.Parts));
+                    WriteGolden(
+                        caseName,
+                        files,
+                        reports,
+                        RepoPath.CreateKnown(write.Path),
+                        string.Concat(write.Parts));
                     break;
                 case GoldenMutation.Lean lean:
                     WriteGolden(
                         caseName,
                         files,
                         reports,
-                        lean.Path,
-                        GoldenHeader(lean.RawGid, lean.Generality) + lean.Body);
+                        RepoPath.CreateKnown(lean.Path),
+                        GoldenHeader(lean.RawGid, ToEngineGenerality(lean.Generality)) + lean.Body);
                     break;
                 case GoldenMutation.Delete delete:
-                    files.Remove(delete.Path.Value);
-                    reports.Remove(delete.Path.Value);
+                    var deletePath = RepoPath.CreateKnown(delete.Path);
+                    files.Remove(deletePath.Value);
+                    reports.Remove(deletePath.Value);
                     break;
                 case GoldenMutation.AppendLines append:
-                    files[append.Path.Value] += string.Concat(Enumerable.Repeat(
+                    var appendPath = RepoPath.CreateKnown(append.Path);
+                    files[appendPath.Value] += string.Concat(Enumerable.Repeat(
                         append.Line + "\n",
                         append.Count));
                     break;
                 case GoldenMutation.AddDomain domain:
-                    files["Meta/domains.yaml"] += $"  {domain.Name.Value}:\n"
+                    if (!DomainId.TryCreate(domain.Name, out var domainName))
+                    {
+                        throw new InvalidOperationException(
+                            $"golden case {caseName} has an invalid domain name: {domain.Name}");
+                    }
+
+                    files["Meta/domains.yaml"] += $"  {domainName.Value}:\n"
                         + $"    stratum: {domain.Stratum}\n"
                         + "    definition: Fixture.\n";
                     break;
@@ -142,7 +160,7 @@ internal sealed partial class RuleFixture
             caseName,
             files,
             reports,
-            task.Path,
+            RepoPath.CreateKnown(task.Path),
             GoldenHeader(task.RawGid, Generality.Extremal)
             + $"/-- TASK {task.RawCaseId} | 难度:3 | 依赖:就绪 | 尝试:0\n"
             + "    提示:Fixture task.\n"
@@ -158,6 +176,15 @@ internal sealed partial class RuleFixture
                 $"  - case_id: {task.RawCaseId}\n    gid: {task.RawGid}\n";
         }
     }
+
+    private static Generality ToEngineGenerality(GoldenGenerality generality) =>
+        generality switch
+        {
+            GoldenGenerality.General => Generality.General,
+            GoldenGenerality.Instance => Generality.Instance,
+            GoldenGenerality.Extremal => Generality.Extremal,
+            _ => throw new InvalidOperationException("Unknown golden generality."),
+        };
 
     private static void WriteGolden(
         string caseName,
@@ -281,14 +308,14 @@ internal sealed partial class RuleFixture
         string mirrorB = "none(waiver:test-fixture)",
         string mirrorE = "none(waiver:test-fixture)") => $"""
         /- GID: {gid}
-           generality: {GoldenGenerality(generality)}
+           generality: {GoldenGeneralityCode(generality)}
            mirror-B: {mirrorB}
            mirror-E: {mirrorE}
            anchors: []
            digest: StrataLint fixture. -/
         """;
 
-    private static string GoldenGenerality(Generality generality) => generality switch
+    private static string GoldenGeneralityCode(Generality generality) => generality switch
     {
         Generality.General => "G",
         Generality.Instance => "I",
