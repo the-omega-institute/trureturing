@@ -1,3 +1,4 @@
+using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -9,7 +10,7 @@ public sealed class TrustTopologyTests
     private const string CliProgramSourcePath = "Meta/StrataLint/StrataLint.Cli/Program.cs";
     private const string ThisTestSourcePath =
         "Meta/StrataLint/StrataLint.Tests/Admission/TrustTopologyTests.cs";
-    private const string SolutionPath = "Meta/StrataLint/StrataLint.sln";
+    private const string SolutionPath = WorktreeCommand.SolutionPath;
     private const string EngineProjectPath =
         "Meta/StrataLint/StrataLint.Engine/StrataLint.Engine.csproj";
     private const string EngineLockPath =

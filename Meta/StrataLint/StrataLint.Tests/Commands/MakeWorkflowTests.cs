@@ -5,6 +5,13 @@ namespace StrataLint.Tests;
 
 public sealed class MakeWorkflowTests
 {
+    private const string DotnetBuildScriptPath = "Meta/StrataLint/scripts/dotnet-build.sh";
+    private const string ScribeScriptPath = "Meta/StrataLint/scripts/scribe.sh";
+    private const string SelftestScriptPath = "Meta/StrataLint/scripts/stratalint-selftest.sh";
+    private const string LocalHarnessGateScriptPath =
+        "Meta/StrataLint/scripts/local-harness-gate.sh";
+    private const string WorktreeInitScriptPath = "Meta/StrataLint/scripts/worktree-init.sh";
+
     private static readonly string[] Targets =
     [
         "help",
@@ -38,14 +45,14 @@ public sealed class MakeWorkflowTests
 
         Assert.Contains("build: dotnet lean", makefile, StringComparison.Ordinal);
         Assert.Equal(0, RecipeCount(makefile, "build"));
-        Assert.Contains("Meta/StrataLint/scripts/dotnet-build.sh", Recipe(makefile, "dotnet"), StringComparison.Ordinal);
+        Assert.Contains(DotnetBuildScriptPath, Recipe(makefile, "dotnet"), StringComparison.Ordinal);
         Assert.Contains("dotnet test", Recipe(makefile, "test"), StringComparison.Ordinal);
         Assert.Contains("lake build", Recipe(makefile, "lean"), StringComparison.Ordinal);
-        Assert.Contains("Meta/StrataLint/scripts/scribe.sh emit", Recipe(makefile, "emit"), StringComparison.Ordinal);
-        Assert.Contains("Meta/StrataLint/scripts/scribe.sh check", Recipe(makefile, "emit-check"), StringComparison.Ordinal);
-        Assert.Contains("Meta/StrataLint/scripts/stratalint-selftest.sh", Recipe(makefile, "selftest"), StringComparison.Ordinal);
-        Assert.Contains("Meta/StrataLint/scripts/local-harness-gate.sh", Recipe(makefile, "gate"), StringComparison.Ordinal);
-        Assert.Contains("Meta/StrataLint/scripts/worktree-init.sh", Recipe(makefile, "worktree"), StringComparison.Ordinal);
+        Assert.Contains(ScribeScriptPath + " emit", Recipe(makefile, "emit"), StringComparison.Ordinal);
+        Assert.Contains(ScribeScriptPath + " check", Recipe(makefile, "emit-check"), StringComparison.Ordinal);
+        Assert.Contains(SelftestScriptPath, Recipe(makefile, "selftest"), StringComparison.Ordinal);
+        Assert.Contains(LocalHarnessGateScriptPath, Recipe(makefile, "gate"), StringComparison.Ordinal);
+        Assert.Contains(WorktreeInitScriptPath, Recipe(makefile, "worktree"), StringComparison.Ordinal);
     }
 
     [Fact]
@@ -70,7 +77,7 @@ public sealed class MakeWorkflowTests
     {
         var root = FindRepositoryRoot();
         var workflow = File.ReadAllText(Path.Combine(root, ".github", "workflows", "ci.yml"));
-        var localGate = File.ReadAllText(Path.Combine(root, "Meta", "StrataLint", "scripts", "local-harness-gate.sh"));
+        var localGate = File.ReadAllText(Path.Combine(root, LocalHarnessGateScriptPath));
 
         Assert.Contains("make -C candidate dotnet", workflow, StringComparison.Ordinal);
         Assert.Contains("make -C candidate test", workflow, StringComparison.Ordinal);
@@ -85,7 +92,7 @@ public sealed class MakeWorkflowTests
     public void ScribeWrapperProducesCanonicalLeanReportBeforeEmission()
     {
         var root = FindRepositoryRoot();
-        var script = File.ReadAllText(Path.Combine(root, "Meta", "StrataLint", "scripts", "scribe.sh"));
+        var script = File.ReadAllText(Path.Combine(root, ScribeScriptPath));
         var producerIndex = script.IndexOf("lean-inspector/inspect.sh", StringComparison.Ordinal);
         var emissionIndex = script.IndexOf("dotnet run", StringComparison.Ordinal);
 
@@ -103,7 +110,7 @@ public sealed class MakeWorkflowTests
     public void WorktreeAdapterRestoresToolPathBeforeResolvingRepositoryRoot()
     {
         var root = FindRepositoryRoot();
-        var script = File.ReadAllText(Path.Combine(root, "Meta", "StrataLint", "scripts", "worktree-init.sh"));
+        var script = File.ReadAllText(Path.Combine(root, WorktreeInitScriptPath));
         var pathIndex = script.IndexOf("export PATH=", StringComparison.Ordinal);
         var dirnameIndex = script.IndexOf("dirname", StringComparison.Ordinal);
 
