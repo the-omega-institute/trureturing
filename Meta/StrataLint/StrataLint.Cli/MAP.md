@@ -9,7 +9,7 @@
 
 - `Admission/`: repository preparation, topology checks, and production admission.
 - `Commands/`: command dispatch, coverage, registry loading, ledger commands, and worktree provisioning.
-- `Runtime/`: CLI adapters for precomputed Lean reports and Lean cache cloning.
+- `Runtime/`: CLI adapters for precomputed Lean reports and pin-aware Lean cache provisioning.
 
 The root contains the executable entry point, assembly metadata, SDK project metadata,
 and this map.

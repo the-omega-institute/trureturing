@@ -2,6 +2,15 @@ trureturing — the last line of the ledger is always the first line of the next
 
 GitHub required-check configuration is a human gate and has not been verified by this repository.
 
+Developer commands have one top-level entry point:
+
+```text
+make help
+```
+
+Canonical helper scripts live under `Meta/StrataLint/scripts/`, the existing
+baseline-admitted harness prefix; the Makefile contains routing only.
+
 StrataLint commands:
 
 ```text
@@ -12,9 +21,16 @@ Meta/StrataLint ledger-genesis --revision EXACT_COMMIT_OID
 Meta/StrataLint route MANIFEST|-
 Meta/StrataLint selftest
 Meta/StrataLint topology
-Meta/StrataLint worktree --branch NAME --path DIR [--base REV]
+Meta/StrataLint worktree --branch NAME --path DIR [--base REV] [--skip-restore]
 ```
 
 Lean inspection and .NET admission are separate programs. The inspector runs in
 the pinned Lean environment and emits source-bound canonical JSON plus a SHA-256
 sidecar; `check` consumes candidate and baseline reports without invoking Lean.
+
+`worktree` fetches a remote base, compares the exact `lean-toolchain` and
+`lake-manifest.json` bytes, and only then copies `.lake` from a matching worktree.
+On macOS it first uses APFS clonefile (`cp -c -R`), reports and falls back when
+clonefile is unavailable, and uses `lake exe cache get` when no pinned donor
+matches. It never shares `.lake` through a symlink and restores locked .NET
+dependencies unless `--skip-restore` is explicit.

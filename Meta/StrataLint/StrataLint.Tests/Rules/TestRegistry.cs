@@ -10,6 +10,7 @@ internal static class TestRegistry
           - "CLAUDE.md"
           - "Directory.Build.props"
           - "Directory.Packages.props"
+          - "Makefile"
           - "README.md"
           - "Trureturing.lean"
           - "global.json"

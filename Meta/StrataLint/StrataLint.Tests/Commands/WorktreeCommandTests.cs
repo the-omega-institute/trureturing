@@ -30,7 +30,7 @@ public sealed class WorktreeCommandTests
         Assert.Equal(Path.GetFullPath("/tmp/probe"), parsed.Path);
         Assert.Equal("origin/dev", parsed.Base);
         Assert.Equal(Path.GetFullPath("/repo"), parsed.Source);
-        Assert.False(parsed.Warm);
+        Assert.False(parsed.SkipRestore);
     }
 
     [Fact]
@@ -40,7 +40,7 @@ public sealed class WorktreeCommandTests
             "/repo",
             new[]
             {
-                "--warm",
+                "--skip-restore",
                 "--source", "/source",
                 "--base", "HEAD",
                 "--path", "/tmp/probe",
@@ -50,7 +50,15 @@ public sealed class WorktreeCommandTests
         Assert.Equal("agent/prover/D5-T0099", parsed.Branch);
         Assert.Equal("HEAD", parsed.Base);
         Assert.Equal(Path.GetFullPath("/source"), parsed.Source);
-        Assert.True(parsed.Warm);
+        Assert.True(parsed.SkipRestore);
+    }
+
+    [Fact]
+    public void UsageForbidsSharedLakeSymlinks()
+    {
+        Assert.Contains("--skip-restore", WorktreeCommand.Usage, StringComparison.Ordinal);
+        Assert.Contains("symlink", WorktreeCommand.Usage, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains(".lake", WorktreeCommand.Usage, StringComparison.Ordinal);
     }
 
     [Theory]
@@ -82,7 +90,7 @@ public sealed class WorktreeCommandTests
     }
 
     [Fact]
-    public void CommandCreatesRealWorktreeAndClonesLakeCache()
+    public void CommandSelectsMatchingDonorAndClonesIndependentLakeCache()
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
@@ -100,6 +108,7 @@ public sealed class WorktreeCommandTests
                 "--path", target,
                 "--base", "HEAD",
                 "--source", repository.Path,
+                "--skip-restore",
             },
             new ProductionCliEnvironment(repository.Path),
             console);
@@ -107,35 +116,24 @@ public sealed class WorktreeCommandTests
         Assert.Equal(0, exitCode);
         Assert.Equal("harness/integration-probe", ReviewRegressionTests.RunGit(target, "branch", "--show-current").Trim());
         Assert.Equal("warm cache\n", File.ReadAllText(Path.Combine(target, ".lake", "build", "cache.bin")));
-        Assert.Contains($"WORKTREE path={Path.GetFullPath(target)} branch=harness/integration-probe clone=", console.Output);
-        Assert.Contains(" warm=false elapsed_ms=", console.Output);
-        Assert.Equal(string.Empty, console.Error);
-    }
-
-    [Fact]
-    public void CommandSkipsMissingLakeCacheWithActionableNotice()
-    {
-        using var repository = new TemporaryDirectory();
-        InitializeRepository(repository.Path);
-        var target = Path.Combine(repository.Path, "without-cache");
-        var console = new BufferedConsole();
-
-        var exitCode = CliApplication.Run(
-            new[]
-            {
-                "worktree",
-                "--branch", "harness/without-cache",
-                "--path", target,
-                "--base", "HEAD",
-                "--source", repository.Path,
-            },
-            new ProductionCliEnvironment(repository.Path),
-            console);
-
-        Assert.Equal(0, exitCode);
-        Assert.Contains(" clone=skipped ", console.Output, StringComparison.Ordinal);
-        Assert.Contains("lake exe cache get", console.Error, StringComparison.Ordinal);
-        Assert.True(Directory.Exists(target));
+        File.WriteAllText(cacheFile, "donor changed\n");
+        Assert.Equal("warm cache\n", File.ReadAllText(Path.Combine(target, ".lake", "build", "cache.bin")));
+        Assert.Contains("\"event\":\"worktree_init\"", console.Output, StringComparison.Ordinal);
+        Assert.Contains("\"branch\":\"harness/integration-probe\"", console.Output, StringComparison.Ordinal);
+        Assert.Contains($"\"donor\":\"{repository.Path}\"", console.Output, StringComparison.Ordinal);
+        Assert.Contains("\"pin_sha256\":\"", console.Output, StringComparison.Ordinal);
+        Assert.Contains("\"cache_strategy\":\"cloned\"", console.Output, StringComparison.Ordinal);
+        Assert.Contains("\"elapsed_ms\":", console.Output, StringComparison.Ordinal);
+        if (OperatingSystem.IsMacOS())
+        {
+            Assert.Contains("\"cache_method\":\"clonefile\"", console.Output, StringComparison.Ordinal);
+            Assert.Equal(string.Empty, console.Error);
+        }
+        else
+        {
+            Assert.Contains("\"cache_method\":\"copy\"", console.Output, StringComparison.Ordinal);
+            Assert.Contains("clonefile failed", console.Error, StringComparison.Ordinal);
+        }
     }
 
     [Fact]
@@ -197,37 +195,30 @@ public sealed class WorktreeCommandTests
     }
 
     [Fact]
-    public void WarmFailureRemovesWorktreeAndCreatedBranch()
+    public void CommandRejectsExistingBranchBeforeGitMutation()
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
-        var target = Path.Combine(repository.Path, "failed-warm");
-        var branch = "harness/failed-warm";
+        const string branch = "harness/already-present";
+        ReviewRegressionTests.RunGit(repository.Path, "branch", branch, "HEAD");
+        var target = Path.Combine(repository.Path, "branch-conflict");
         var console = new BufferedConsole();
 
         var exitCode = CliApplication.Run(
-            new[]
-            {
+            [
                 "worktree",
                 "--branch", branch,
                 "--path", target,
                 "--base", "HEAD",
                 "--source", repository.Path,
-                "--warm",
-            },
+                "--skip-restore",
+            ],
             new ProductionCliEnvironment(repository.Path),
             console);
 
         Assert.Equal(2, exitCode);
-        Assert.Contains("WORKTREE_FAILED", console.Error, StringComparison.Ordinal);
+        Assert.Contains("branch already exists", console.Error, StringComparison.Ordinal);
         Assert.False(Directory.Exists(target));
-        var branchLookup = BoundedProcessRunner.Run(
-            "git",
-            new[] { "show-ref", "--verify", "--quiet", $"refs/heads/{branch}" },
-            repository.Path,
-            TimeSpan.FromSeconds(30),
-            4096);
-        Assert.Equal(1, branchLookup.ExitCode);
     }
 
     private static void InitializeRepository(string root)
@@ -236,7 +227,9 @@ public sealed class WorktreeCommandTests
         ReviewRegressionTests.RunGit(root, "config", "user.email", "stratalint@example.invalid");
         ReviewRegressionTests.RunGit(root, "config", "user.name", "StrataLint Tests");
         File.WriteAllText(Path.Combine(root, "README.md"), "# worktree fixture\n");
-        ReviewRegressionTests.RunGit(root, "add", "README.md");
+        File.WriteAllText(Path.Combine(root, "lean-toolchain"), "leanprover/lean4:v4.31.0\n");
+        File.WriteAllText(Path.Combine(root, "lake-manifest.json"), "{\"version\": \"1.1.0\"}\n");
+        ReviewRegressionTests.RunGit(root, "add", "README.md", "lean-toolchain", "lake-manifest.json");
         ReviewRegressionTests.RunGit(root, "commit", "-m", "fixture baseline");
     }
 }

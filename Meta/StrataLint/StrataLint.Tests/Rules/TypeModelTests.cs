@@ -105,6 +105,18 @@ public sealed class TypeModelTests
     }
 
     [Fact]
+    public void MakefileIsClosedWorldRegisteredAndBootstrapProtected()
+    {
+        const string value = "Makefile";
+        var path = RepoPath.CreateKnown(value);
+
+        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
+        var outcome = BootstrapGate.Evaluate(RawChangeSet.Create([value]));
+        var required = Assert.IsType<BootstrapOutcome.HumanReviewRequired>(outcome);
+        Assert.Contains(required.ChangeSet.Paths, item => item == path);
+    }
+
+    [Fact]
     public void FkstIntegrationLayerIsClosedWorldRegistered()
     {
         var path = RepoPath.CreateKnown(".fkst/fkst.workspace.toml");
