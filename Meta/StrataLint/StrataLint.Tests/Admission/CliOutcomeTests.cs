@@ -121,6 +121,9 @@ internal sealed class StubCliEnvironment(AdmissionOutcome outcome) : ICliEnviron
     public CommandResult AppendLedger(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "ledger append is not configured in this fixture");
 
+    public CommandResult ReattestLedger(IReadOnlyList<string> arguments) =>
+        new(false, string.Empty, "ledger reattest is not configured in this fixture");
+
     public CommandResult Worktree(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "worktree is not configured in this fixture");
 }

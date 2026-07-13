@@ -9,19 +9,30 @@ public static partial class FrozenLedger
         FrozenLedgerSyntax syntax,
         FrozenMaterialCatalog catalog,
         TrustedFrozenGitReferences trustedReferences) =>
-        ValidateHistory(syntax, catalog, trustedReferences, requireCompleteCatalog: true);
+        ValidateHistory(
+            syntax,
+            catalog,
+            trustedReferences,
+            requireCompleteCatalog: true,
+            allowPendingReattestation: false);
 
     internal static FrozenLedgerValidationOutcome ValidateHistoryPrefix(
         FrozenLedgerSyntax syntax,
         FrozenMaterialCatalog catalog,
         TrustedFrozenGitReferences trustedReferences) =>
-        ValidateHistory(syntax, catalog, trustedReferences, requireCompleteCatalog: false);
+        ValidateHistory(
+            syntax,
+            catalog,
+            trustedReferences,
+            requireCompleteCatalog: false,
+            allowPendingReattestation: true);
 
     private static FrozenLedgerValidationOutcome ValidateHistory(
         FrozenLedgerSyntax syntax,
         FrozenMaterialCatalog catalog,
         TrustedFrozenGitReferences trustedReferences,
-        bool requireCompleteCatalog)
+        bool requireCompleteCatalog,
+        bool allowPendingReattestation)
     {
         ArgumentNullException.ThrowIfNull(syntax);
         ArgumentNullException.ThrowIfNull(catalog);
@@ -74,7 +85,7 @@ public static partial class FrozenLedger
                         sequence,
                         eventHash,
                         previousHash,
-                        ParseGenesis(payload, catalog)));
+                        ParseHistoricalGenesis(payload, catalog)));
                 }
                 else if (eventType == "Freeze")
                 {
@@ -94,16 +105,59 @@ public static partial class FrozenLedger
                 {
                     var reattest = ParseReattest(payload, active, trustedReferences);
                     var entry = active[reattest.CaseId];
-                    active[reattest.CaseId] = entry with
+                    if (reattest.IsLegacyFormat)
                     {
-                        Payload = entry.Payload with
+                        active[reattest.CaseId] = entry with
                         {
-                            Input = reattest.Input,
-                            InputFingerprint = reattest.InputFingerprint,
-                            SemanticReceipt = reattest.SemanticReceipt,
-                        },
-                        LastAttestationEventHash = eventHash,
-                    };
+                            Payload = entry.Payload with
+                            {
+                                Input = reattest.Input,
+                                InputFingerprint = reattest.InputFingerprint,
+                                SemanticReceipt = reattest.SemanticReceipt,
+                            },
+                            LastAttestationEventHash = eventHash,
+                        };
+                    }
+                    else
+                    {
+                        var frozenNodeId = reattest.FrozenNodeId
+                            ?? throw new FormatException("Extended Reattest is missing frozen_node_id.");
+                        var statementId = reattest.StatementId
+                            ?? throw new FormatException("Extended Reattest is missing statement_id.");
+                        var witnessId = reattest.WitnessId
+                            ?? throw new FormatException("Extended Reattest is missing witness_id.");
+                        active[reattest.CaseId] = entry with
+                        {
+                            Material = new FrozenNodeMaterial(
+                                entry.Material.RepoPath,
+                                reattest.DeclarationStatementIds,
+                                statementId,
+                                witnessId,
+                                frozenNodeId,
+                                reattest.PrerequisiteFrozenNodeIds,
+                                entry.Material.AxiomClosure,
+                                new FrozenModuleAttestation(
+                                    entry.Material.RepoPath,
+                                    reattest.Input.DescriptorBlobOid)
+                                {
+                                    BaseCommitOid = reattest.Input.BaseCommitOid,
+                                    BaseTreeOid = reattest.Input.BaseTreeOid,
+                                }),
+                            Payload = entry.Payload with
+                            {
+                                DeclarationStatementIds = reattest.DeclarationStatementIds,
+                                FrozenNodeId = frozenNodeId,
+                                Input = reattest.Input,
+                                InputFingerprint = reattest.InputFingerprint,
+                                PrerequisiteFrozenNodeIds = reattest.PrerequisiteFrozenNodeIds,
+                                SemanticReceipt = reattest.SemanticReceipt,
+                                StatementId = statementId,
+                                WitnessId = witnessId,
+                            },
+                            LastAttestationEventHash = eventHash,
+                        };
+                    }
+
                     events.Add(new FrozenLedgerEvent.Reattest(
                         sequence,
                         eventHash,
@@ -160,8 +214,20 @@ public static partial class FrozenLedger
             foreach (var (caseId, entry) in active.ToArray())
             {
                 var material = expectedByPath[entry.Material.RepoPath];
-                ValidateHistoricalActiveFreeze(entry.Payload, material);
-                active[caseId] = entry with { Material = material };
+                if (HistoricalActiveFreezeMatches(entry.Payload, material))
+                {
+                    active[caseId] = entry with { Material = material };
+                    continue;
+                }
+
+                if (!allowPendingReattestation
+                    || entry.Payload.StatementId != material.StatementId
+                    || !entry.Payload.DeclarationStatementIds.SequenceEqual(
+                        material.DeclarationStatementIds))
+                {
+                    throw new FormatException(
+                        $"Active module {material.RepoPath.Value} statement identity changed or lacks a matching Reattest event.");
+                }
             }
 
             var activeEntries = active.ToImmutableDictionary(StringComparer.Ordinal);
@@ -255,22 +321,16 @@ public static partial class FrozenLedger
         ImmutableArray<string>.Empty,
         new FrozenModuleAttestation(payload.NodePath, payload.Input.DescriptorBlobOid));
 
-    private static void ValidateHistoricalActiveFreeze(
+    private static bool HistoricalActiveFreezeMatches(
         FrozenFreezePayload payload,
-        FrozenNodeMaterial material)
-    {
-        if (!payload.DeclarationStatementIds.SequenceEqual(material.DeclarationStatementIds)
-            || payload.StatementId != material.StatementId
-            || payload.WitnessId != material.WitnessId
-            || payload.FrozenNodeId != material.FrozenNodeId
-            || !payload.PrerequisiteFrozenNodeIds.SequenceEqual(material.PrerequisiteFrozenNodeIds)
-            || payload.Input.DescriptorBlobOid != material.Attestation.SourceBlobOid
-            || payload.Input.DescriptorSelector != material.RepoPath.Value)
-        {
-            throw new FormatException(
-                $"Active historical Freeze does not match recomputed material for {material.RepoPath.Value}.");
-        }
-    }
+        FrozenNodeMaterial material) =>
+        payload.DeclarationStatementIds.SequenceEqual(material.DeclarationStatementIds)
+        && payload.StatementId == material.StatementId
+        && payload.WitnessId == material.WitnessId
+        && payload.FrozenNodeId == material.FrozenNodeId
+        && payload.PrerequisiteFrozenNodeIds.SequenceEqual(material.PrerequisiteFrozenNodeIds)
+        && payload.Input.DescriptorBlobOid == material.Attestation.SourceBlobOid
+        && payload.Input.DescriptorSelector == material.RepoPath.Value;
 
     private static StatementId ParseStatementId(string value, string label) =>
         FrozenHashSyntax.IsSha256(value)

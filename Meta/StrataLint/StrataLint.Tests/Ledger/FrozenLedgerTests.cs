@@ -259,6 +259,21 @@ public sealed partial class FrozenLedgerTests
             baseline.ActiveFrozenNodes.Single().FrozenNodeId,
             accepted.Capability.ActiveFrozenNodes.Single().FrozenNodeId);
         Assert.NotEqual(baseline.HeadHash, accepted.Capability.HeadHash);
+        var reattestPayload = candidateSyntax.Lines[^1].Value.GetProperty("payload");
+        Assert.Equal(
+            new[]
+            {
+                "case_id",
+                "input",
+                "input_fingerprint",
+                "previous_attestation_event_hash",
+                "semantic_receipt",
+            },
+            reattestPayload.EnumerateObject()
+                .Select(static property => property.Name)
+                .Order(StringComparer.Ordinal));
+        Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+            ValidateHistory(candidateSyntax, catalog));
     }
 
     [Fact]

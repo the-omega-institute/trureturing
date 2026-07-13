@@ -100,6 +100,65 @@ public static class FrozenLedgerGenerator
             ImmutableArray.Create(("Reattest", FrozenLedgerCanonicalWriter.ReattestElement(payload))));
     }
 
+    public static ImmutableArray<byte> AppendReattestation(
+        FrozenLedgerConsistent baseline,
+        FrozenMaterialCatalog candidateCatalog)
+    {
+        ArgumentNullException.ThrowIfNull(baseline);
+        ArgumentNullException.ThrowIfNull(candidateCatalog);
+        var activeByPath = baseline.ActiveEntries.Values.ToDictionary(
+            static entry => entry.Material.RepoPath);
+        var payloads = ImmutableArray.CreateBuilder<(string Type, JsonElement Payload)>();
+        foreach (var (path, entry) in activeByPath.OrderBy(
+            static item => item.Key.Value,
+            StringComparer.Ordinal))
+        {
+            if (!candidateCatalog.ByPath.TryGetValue(path, out var candidate))
+            {
+                throw new InvalidOperationException(
+                    $"Active module {path.Value} is no longer Closed; Reattest cannot change truth state.");
+            }
+
+            if (entry.Payload.StatementId != candidate.StatementId
+                || !entry.Payload.DeclarationStatementIds.SequenceEqual(candidate.DeclarationStatementIds))
+            {
+                throw new InvalidOperationException(
+                    $"Active module {path.Value} statement identity changed; Reattest is forbidden.");
+            }
+
+            if (entry.Material.FrozenNodeId == candidate.FrozenNodeId
+                && entry.Payload.Input.DescriptorBlobOid == candidate.Attestation.SourceBlobOid)
+            {
+                continue;
+            }
+
+            var input = FrozenLedgerCanonicalWriter.FreezePayload(
+                candidateCatalog.Environment,
+                candidate).Input;
+            var payload = ExtendedReattestPayload(entry.Payload.CaseId, entry, candidate, input);
+            payloads.Add(("Reattest", FrozenLedgerCanonicalWriter.ReattestElement(payload)));
+        }
+
+        return Append(baseline, payloads.ToImmutable());
+    }
+
+    private static FrozenReattestPayload ExtendedReattestPayload(
+        string caseId,
+        FrozenActiveEntry entry,
+        FrozenNodeMaterial material,
+        FrozenLedgerInput input) =>
+        new(
+            caseId,
+            material.DeclarationStatementIds,
+            material.FrozenNodeId,
+            input,
+            material.WitnessId.Value,
+            material.PrerequisiteFrozenNodeIds,
+            entry.LastAttestationEventHash,
+            material.FrozenNodeId.Value,
+            material.StatementId,
+            material.WitnessId);
+
     public static ImmutableArray<byte> AppendRevocation(
         FrozenLedgerConsistent baseline,
         RevocationPlan plan)
@@ -261,15 +320,51 @@ internal static class FrozenLedgerCanonicalWriter
             supporting_blob_oids = input.SupportingBlobOids,
         });
 
-    internal static JsonElement ReattestElement(FrozenReattestPayload payload) =>
-        JsonSerializer.SerializeToElement(new
+    internal static JsonElement ReattestElement(FrozenReattestPayload payload)
+    {
+        if (payload.IsLegacyFormat)
+        {
+            return JsonSerializer.SerializeToElement(new
+            {
+                case_id = payload.CaseId,
+                input = InputElement(payload.Input),
+                input_fingerprint = payload.InputFingerprint,
+                previous_attestation_event_hash = payload.PreviousAttestationEventHash,
+                semantic_receipt = payload.SemanticReceipt,
+            });
+        }
+
+        if (!payload.IsExtendedFormat)
+        {
+            throw new InvalidOperationException(
+                "Reattest payload must use either the legacy or extended field set.");
+        }
+
+        var frozenNodeId = payload.FrozenNodeId
+            ?? throw new InvalidOperationException("Extended Reattest is missing frozen_node_id.");
+        var statementId = payload.StatementId
+            ?? throw new InvalidOperationException("Extended Reattest is missing statement_id.");
+        var witnessId = payload.WitnessId
+            ?? throw new InvalidOperationException("Extended Reattest is missing witness_id.");
+        return JsonSerializer.SerializeToElement(new
         {
             case_id = payload.CaseId,
+            declaration_statement_ids = payload.DeclarationStatementIds.Select(static declaration => new
+            {
+                declaration_name_key = declaration.DeclarationNameKey,
+                kind = declaration.Kind,
+                statement_id = declaration.StatementId.Value,
+            }),
+            frozen_node_id = frozenNodeId.Value,
             input = InputElement(payload.Input),
             input_fingerprint = payload.InputFingerprint,
+            prerequisite_frozen_node_ids = payload.PrerequisiteFrozenNodeIds.Select(static id => id.Value),
             previous_attestation_event_hash = payload.PreviousAttestationEventHash,
             semantic_receipt = payload.SemanticReceipt,
+            statement_id = statementId.Value,
+            witness_id = witnessId.Value,
         });
+    }
 
     internal static JsonElement RevokeElement(FrozenRevokePayload payload) =>
         JsonSerializer.SerializeToElement(new

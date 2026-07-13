@@ -20,6 +20,8 @@ internal interface ICliEnvironment
 
     CommandResult AppendLedger(IReadOnlyList<string> arguments);
 
+    CommandResult ReattestLedger(IReadOnlyList<string> arguments);
+
     CommandResult Worktree(IReadOnlyList<string> arguments);
 }
 
@@ -74,7 +76,7 @@ internal static class CliApplication
         if (arguments.Count == 0)
         {
             console.WriteError(
-                "USAGE: StrataLint check|coverage|ledger-genesis|route|selftest|topology|worktree|ledger-append\n");
+                "USAGE: StrataLint check|coverage|ledger-genesis|route|selftest|topology|worktree|ledger-append|ledger-reattest\n");
             return 2;
         }
 
@@ -85,6 +87,7 @@ internal static class CliApplication
             "coverage" => RenderCommand(environment.Coverage(tail), console),
             "ledger-genesis" => RenderCommand(environment.GenerateLedger(tail), console),
             "ledger-append" => RenderCommand(environment.AppendLedger(tail), console),
+            "ledger-reattest" => RenderCommand(environment.ReattestLedger(tail), console),
             "route" => RenderCommand(environment.Route(tail), console),
             "selftest" => RenderCommand(environment.SelfTest(tail), console),
             "topology" => RenderTopology(environment.Topology(tail), console),

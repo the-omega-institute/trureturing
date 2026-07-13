@@ -95,16 +95,52 @@ public static partial class FrozenLedger
                 {
                     var reattest = ParseReattest(payload, active, trustedReferences);
                     var entry = active[reattest.CaseId];
-                    active[reattest.CaseId] = entry with
+                    if (reattest.IsLegacyFormat)
                     {
-                        Payload = entry.Payload with
+                        active[reattest.CaseId] = entry with
                         {
-                            Input = reattest.Input,
-                            InputFingerprint = reattest.InputFingerprint,
-                            SemanticReceipt = reattest.SemanticReceipt,
-                        },
-                        LastAttestationEventHash = eventHash,
-                    };
+                            Payload = entry.Payload with
+                            {
+                                Input = reattest.Input,
+                                InputFingerprint = reattest.InputFingerprint,
+                                SemanticReceipt = reattest.SemanticReceipt,
+                            },
+                            LastAttestationEventHash = eventHash,
+                        };
+                    }
+                    else
+                    {
+                        if (!catalog.ByPath.TryGetValue(entry.Material.RepoPath, out var material))
+                        {
+                            throw new FormatException(
+                                $"Reattest target {entry.Material.RepoPath.Value} is no longer Closed.");
+                        }
+
+                        ValidateReattestMaterial(reattest, material);
+                        var frozenNodeId = reattest.FrozenNodeId
+                            ?? throw new FormatException("Extended Reattest is missing frozen_node_id.");
+                        var statementId = reattest.StatementId
+                            ?? throw new FormatException("Extended Reattest is missing statement_id.");
+                        var witnessId = reattest.WitnessId
+                            ?? throw new FormatException("Extended Reattest is missing witness_id.");
+                        active[reattest.CaseId] = entry with
+                        {
+                            Material = material,
+                            Payload = entry.Payload with
+                            {
+                                DeclarationStatementIds = reattest.DeclarationStatementIds,
+                                FrozenNodeId = frozenNodeId,
+                                Input = reattest.Input,
+                                InputFingerprint = reattest.InputFingerprint,
+                                PrerequisiteFrozenNodeIds = reattest.PrerequisiteFrozenNodeIds,
+                                SemanticReceipt = reattest.SemanticReceipt,
+                                StatementId = statementId,
+                                WitnessId = witnessId,
+                            },
+                            LastAttestationEventHash = eventHash,
+                        };
+                    }
+
                     events.Add(new FrozenLedgerEvent.Reattest(
                         sequence,
                         eventHash,
@@ -188,6 +224,21 @@ public static partial class FrozenLedger
         IReadOnlyDictionary<string, FrozenActiveEntry> active,
         TrustedFrozenGitReferences trustedReferences)
     {
+        if (HasExactObjectFields(
+            payload,
+            "case_id", "input", "input_fingerprint", "previous_attestation_event_hash", "semantic_receipt"))
+        {
+            return ParseLegacyReattest(payload, active, trustedReferences);
+        }
+
+        return ParseExtendedReattest(payload, active, trustedReferences);
+    }
+
+    private static FrozenReattestPayload ParseLegacyReattest(
+        JsonElement payload,
+        IReadOnlyDictionary<string, FrozenActiveEntry> active,
+        TrustedFrozenGitReferences trustedReferences)
+    {
         RequireObjectFields(
             payload,
             "Reattest payload",
@@ -221,6 +272,79 @@ public static partial class FrozenLedger
         }
 
         return result;
+    }
+
+    private static FrozenReattestPayload ParseExtendedReattest(
+        JsonElement payload,
+        IReadOnlyDictionary<string, FrozenActiveEntry> active,
+        TrustedFrozenGitReferences trustedReferences)
+    {
+        RequireObjectFields(
+            payload,
+            "Reattest payload",
+            "case_id", "declaration_statement_ids", "frozen_node_id", "input", "input_fingerprint",
+            "prerequisite_frozen_node_ids", "previous_attestation_event_hash", "semantic_receipt",
+            "statement_id", "witness_id");
+        var result = new FrozenReattestPayload(
+            RequiredString(payload, "case_id"),
+            ParseDeclarationStatementIds(payload),
+            ParseFrozenNodeId(RequiredString(payload, "frozen_node_id"), "Reattest node"),
+            ParseInput(payload.GetProperty("input")),
+            RequiredString(payload, "input_fingerprint"),
+            ParseFrozenNodeIds(payload, "prerequisite_frozen_node_ids"),
+            RequiredString(payload, "previous_attestation_event_hash"),
+            RequiredString(payload, "semantic_receipt"),
+            ParseStatementId(RequiredString(payload, "statement_id"), "Reattest statement"),
+            ParseWitnessId(RequiredString(payload, "witness_id"), "Reattest witness"));
+        if (!trustedReferences.Covers(result.Input))
+        {
+            throw new FormatException("Reattest input has no validated Git commit/tree/blob capability.");
+        }
+
+        var statementId = result.StatementId
+            ?? throw new FormatException("Extended Reattest is missing statement_id.");
+        var witnessId = result.WitnessId
+            ?? throw new FormatException("Extended Reattest is missing witness_id.");
+        var frozenNodeId = result.FrozenNodeId
+            ?? throw new FormatException("Extended Reattest is missing frozen_node_id.");
+        if (!active.TryGetValue(result.CaseId, out var entry)
+            || result.PreviousAttestationEventHash != entry.LastAttestationEventHash
+            || statementId != entry.Payload.StatementId
+            || !result.DeclarationStatementIds.SequenceEqual(entry.Payload.DeclarationStatementIds))
+        {
+            throw new FormatException(
+                "Reattest targets an inactive/unknown case or changes statement identity.");
+        }
+
+        if (result.InputFingerprint != witnessId.Value
+            || result.SemanticReceipt != frozenNodeId.Value
+            || result.Input.DescriptorSelector != entry.Payload.Input.DescriptorSelector
+            || result.Input.Materializer != entry.Payload.Input.Materializer
+            || !result.Input.SupportingBlobOids.SequenceEqual(entry.Payload.Input.SupportingBlobOids))
+        {
+            throw new FormatException(
+                "Reattest payload is not a canonical attestation of the same statement.");
+        }
+
+        return result;
+    }
+
+    private static void ValidateReattestMaterial(
+        FrozenReattestPayload payload,
+        FrozenNodeMaterial material)
+    {
+        if (!payload.IsExtendedFormat
+            || !payload.DeclarationStatementIds.SequenceEqual(material.DeclarationStatementIds)
+            || payload.StatementId != material.StatementId
+            || payload.WitnessId != material.WitnessId
+            || payload.FrozenNodeId != material.FrozenNodeId
+            || !payload.PrerequisiteFrozenNodeIds.SequenceEqual(material.PrerequisiteFrozenNodeIds)
+            || payload.Input.DescriptorBlobOid != material.Attestation.SourceBlobOid
+            || payload.Input.DescriptorSelector != material.RepoPath.Value)
+        {
+            throw new FormatException(
+                $"Reattest does not match recomputed material for {material.RepoPath.Value}.");
+        }
     }
 
     private static FrozenRevokePayload ParseRevoke(

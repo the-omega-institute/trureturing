@@ -4,9 +4,9 @@ using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
-internal static class DagLedgerAppendWriter
+internal static class DagLedgerReattestWriter
 {
-    internal static CommandResult Append(
+    internal static CommandResult Reattest(
         string repositoryRoot,
         IRepositoryGateway repository,
         IReadOnlyList<string> arguments)
@@ -16,21 +16,21 @@ internal static class DagLedgerAppendWriter
             if (arguments.Count != 2 || arguments[0] != "--candidate-lean-report")
             {
                 throw new InvalidOperationException(
-                    "USAGE: StrataLint ledger-append --candidate-lean-report FILE");
+                    "USAGE: StrataLint ledger-reattest --candidate-lean-report FILE");
             }
 
             var context = DagLedgerCommandPreparation.Prepare(
                 repositoryRoot,
                 repository,
                 arguments[1]);
-            var candidateBytes = FrozenLedgerGenerator.AppendMissingFreezes(
+            var candidateBytes = FrozenLedgerGenerator.AppendReattestation(
                 context.Baseline,
                 context.Catalog);
             if (candidateBytes.AsSpan().SequenceEqual(context.BaselineBytes))
             {
                 return new CommandResult(
                     true,
-                    $"LEDGER_APPEND no missing freezes events={context.Baseline.Events.Length} head={context.Baseline.HeadHash}\n",
+                    $"LEDGER_REATTEST no changed frozen modules events={context.Baseline.Events.Length} head={context.Baseline.HeadHash}\n",
                     string.Empty);
             }
 
@@ -54,17 +54,19 @@ internal static class DagLedgerAppendWriter
             };
             if (!File.ReadAllBytes(context.LedgerPath).AsSpan().SequenceEqual(context.BaselineBytes))
             {
-                throw new InvalidOperationException("events.jsonl changed while ledger-append was validating it");
+                throw new InvalidOperationException(
+                    "events.jsonl changed while ledger-reattest was validating it");
             }
 
             File.WriteAllBytes(context.LedgerPath, candidateBytes.AsSpan());
             var appended = candidate.Events
                 .Skip(context.Baseline.Events.Length)
-                .OfType<FrozenLedgerEvent.Freeze>()
+                .OfType<FrozenLedgerEvent.Reattest>()
                 .ToImmutableArray();
-            var output = $"LEDGER_APPEND appended_freezes={appended.Length} "
+            var output = $"LEDGER_REATTEST appended_reattests={appended.Length} "
                 + $"events={candidate.Events.Length} head={candidate.HeadHash}\n"
-                + string.Concat(appended.Select(static item => $"FROZEN {item.Payload.NodePath.Value}\n"));
+                + string.Concat(appended.Select(item =>
+                    $"REATTESTED {context.Baseline.ActiveEntries[item.Payload.CaseId].Material.RepoPath.Value}\n"));
             return new CommandResult(true, output, string.Empty);
         }
         catch (Exception exception) when (
@@ -79,8 +81,7 @@ internal static class DagLedgerAppendWriter
             return new CommandResult(
                 false,
                 string.Empty,
-                "LEDGER_APPEND_FAILED " + exception.Message + "\n");
+                "LEDGER_REATTEST_FAILED " + exception.Message + "\n");
         }
     }
-
 }
