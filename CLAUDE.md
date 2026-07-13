@@ -131,8 +131,9 @@ import 只许向下;**投影不当骨骼**——文档、书、论文都是图�
 
 **16. 实施在独立 worktree,主干保持可发布。**
 代码实施与大改在**独立 git worktree**(各自分支)进行,不在主工作树/主干直接堆——这样多路实施可**并行推进**,各自一个 PR,互不污染;主干任何时刻可发布。并行安全由 harness 保证:地址算出(不撞)+ 分支锁(利益回避)+ CI required-check(对错机器判)+ SL-022 元层门控。合并回主干走 PR + required-check,不自并。
-*成熟锚*:feature branch / worktree 隔离、trunk-based 的可发布主干、并行开发的冲突避免。
-〔守护:**半硬**·并行不撞由 GID 地址代数 + 分支锁 + required-check 机器保证;"在 worktree 做"靠 agent 遵此条 + 本授权〕
+**在 worktree 的工作及时提交并同步远程(push),不留长期未提交改动。** 未提交的工作树改动是脆的、无地址的:`git stash` 跨 worktree 全局共享会误叠外来改动;冻结账本 provenance 要求被冻结模块的 blob 已提交可达(未提交 blob 无法 attest);未提交改动易与 rebase/新提交失配、易丢失。故:一个逻辑单元完成即 commit(而非攒一大堆散改动),推分支到远程留痕(工件化,第9条),让 CI/协作/后续 rebase 有确定的内容寻址锚点。
+*成熟锚*:feature branch / worktree 隔离、trunk-based 的可发布主干、并行开发的冲突避免、频繁提交与推送(small commits, push early)、内容寻址 provenance。
+〔守护:**半硬**·并行不撞由 GID 地址代数 + 分支锁 + required-check 机器保证;"在 worktree 做 + 及时提交推送"靠 agent 遵此条 + 本授权(本轮先例:全局 stash 误叠、冻结账本未提交 blob 不可达,皆因未及时提交)〕
 
 **17. harness 是真值机器,可持续自建,不与前违背;违背由升层判,不可判标 open。**
 **本系统判形式对错的权威机器,就是 harness 自己**——lint、编译、双射、状态、一致性,由它判;它就是这里的逻辑与真值机器,不假手于人。harness 可**持续自我扩建**(新规则、新分类、新流程),唯一硬约束是**不与之前的 harness 相违背**(保守/单调扩展:旧的判为对的,新的不得判为错)。是否违背,**由 harness 自身判**:SL-022 元层门控 + 一致性巡检 + 升层——新 harness 判旧 harness(内化塔,塔无封顶)。**但诚实标边界**:harness 不在同层自证自己的一致性(Gödel,PZG 16.2);它够不着的真值(形式不可判者)诚实标 `open`/`sorry`(Hearts),**不冒充判得了**。判可判的、标不可判的——这才是真值机器的完整、不说谎的形态。
@@ -235,3 +236,4 @@ harness 的本质,就是**给各类事定义"这类该怎么处理"**——先�
 - **完整律法**:`docs/develop/spec/golden-ledger-repo-spec.md`(单一 spec,原位演进)
 - **理论源**(只读):`docs/develop/theory/`(PZG–BEDC 内核卷、GICT 卷)
 - **八官宪章**:`agents/{scout,prover,numericist,librarian,adversary,scribe,theorist,gate}.md`
+- **多模型对抗共识**:`/sshx` skill(`consensus-rnd:sshx`)——派 codex-cli / nyxid-oracle 隔离工作席做设计/实施/评审(第13/14条的落地机制)。**codex 调用务必把 prompt 经文件从 stdin 喂入(`codex exec [flags] < promptfile`),不作位置参数**:巨型 prompt 里的 `$`、反引号、`<>`、引号、换行会被 shell 转义损坏 → codex 收到空 prompt → 回退读 stdin → 后台无输入而挂起(本轮先例)。
