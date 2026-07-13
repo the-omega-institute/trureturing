@@ -25,8 +25,11 @@ public sealed class RuleApplicabilityTests
     [Theory]
     [InlineData(
         "D5/S0/Carrier/Ring.lean",
-        "SL-001,SL-002,SL-003,SL-004,SL-006,SL-010,SL-011,SL-012,SL-013,SL-015,SL-020")]
+        "SL-001,SL-002,SL-003,SL-004,SL-006,SL-010,SL-011,SL-012,SL-013,SL-015,SL-017,SL-020")]
     [InlineData("Library/queries.yaml", "SL-003,SL-006,SL-015,SL-017,SL-019")]
+    [InlineData(
+        "Meta/StrataLint/Generated/anchor-catalog.v1.json",
+        "SL-003,SL-015,SL-017,SL-019,SL-022")]
     [InlineData("Meta/StrataLint/TOWER.yaml", "SL-003,SL-015,SL-019,SL-022")]
     public void DefaultCatalogApplicabilityMatchesTheRulesActualScanSurface(
         string path,

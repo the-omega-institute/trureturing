@@ -140,7 +140,8 @@ internal static partial class RepositoryRules
 
             query.TryGetValue("target_gid", out var rawTarget);
             var target = rawTarget as string;
-            if (target is null || !Gid.TryParse(target, out _))
+            Gid? targetGid = null;
+            if (target is null || !Gid.TryParse(target, out targetGid))
             {
                 var reason = target is null
                     ? "target_gid is missing"
@@ -164,6 +165,11 @@ internal static partial class RepositoryRules
                 continue;
             }
 
+            if (targetGid is not null && !context.Current.TryGetFile(targetGid.Path.Value, out _))
+            {
+                findings.Add(new RuleFinding(path, $"query {id} target GID is missing: {targetGid.Value}"));
+            }
+
             var hasIdentifier = query.TryGetValue("doi", out var rawDoi)
                     && rawDoi is string doi
                     && DoiPattern.IsMatch(doi)
@@ -178,6 +184,9 @@ internal static partial class RepositoryRules
 
         return findings.ToImmutable();
     }
+
+    private static ImmutableArray<RuleFinding> ResolvableAnchors(RuleEvaluationContext context) =>
+        Literature(context).AddRange(AnchorReferenceRule.Evaluate(context));
 
     private static void ValidateQuerySource(
         RepositorySnapshot snapshot,

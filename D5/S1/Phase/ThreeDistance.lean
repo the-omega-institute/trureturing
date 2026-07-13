@@ -2,7 +2,7 @@
    generality: G
    mirror-B: none(waiver:classical-result-tail-is-documented-at-the-formal-site)
    mirror-E: none(waiver:classical-theorem-carried-by-registered-axiom-debt)
-   anchors: [GICT-v3.6-I.2-theorem-2.9, sos1957threegap]
+   anchors: [gict/v3.6/VII.7/theorem/7.15]
    digest: Golden rotation points have at most three distinct cyclic adjacent gaps. -/
 
 import D5.X_Assumptions.AxiomDebt

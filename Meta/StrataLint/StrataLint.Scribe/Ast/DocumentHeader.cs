@@ -4,24 +4,6 @@ using StrataLint.Engine;
 
 namespace StrataLint.Scribe;
 
-public sealed record AnchorRef
-{
-    private static readonly Regex Pattern = new(
-        "^[A-Za-z0-9][A-Za-z0-9._-]*$",
-        RegexOptions.CultureInvariant);
-
-    private AnchorRef(string value) => Value = value;
-
-    public string Value { get; }
-
-    public static AnchorRef Create(string value) =>
-        value is not null && Pattern.IsMatch(value)
-            ? new AnchorRef(value)
-            : throw new ArgumentException("Anchor is not canonical.", nameof(value));
-
-    public override string ToString() => Value;
-}
-
 public sealed record WaiverReason
 {
     private static readonly Regex Pattern = new(
@@ -72,7 +54,7 @@ public sealed class DocumentHeader
         Generality generality,
         GidRef mirrorBlueprint,
         EvidenceMirror mirrorEvidence,
-        ImmutableArray<AnchorRef> anchors,
+        ImmutableArray<Anchor> anchors,
         Digest digest)
     {
         Gid = gid;
@@ -91,7 +73,7 @@ public sealed class DocumentHeader
 
     public EvidenceMirror MirrorEvidence { get; }
 
-    public ImmutableArray<AnchorRef> Anchors { get; }
+    public ImmutableArray<Anchor> Anchors { get; }
 
     public Digest Digest { get; }
 
@@ -100,7 +82,7 @@ public sealed class DocumentHeader
         Generality generality,
         GidRef mirrorBlueprint,
         EvidenceMirror mirrorEvidence,
-        IEnumerable<AnchorRef> anchors,
+        IEnumerable<Anchor> anchors,
         Digest digest)
     {
         ArgumentNullException.ThrowIfNull(gid);

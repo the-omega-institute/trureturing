@@ -2,7 +2,7 @@
    generality: E
    mirror-B: none(waiver:frozen-heart-statements)
    mirror-E: none(waiver:open-hearts-are-not-experimental-evidence)
-   anchors: [GICT-v3.6-VIII-hearts, PZG-v170-6.18, PZG-v170-6.19]
+   anchors: [gict/v3.6/VIII/section/hearts, pzg/v170/6.18, pzg/v170/6.19]
    digest: Freeze O-5 zero localization; defer O-6 until D5-T0018 binds the Weil functional. -/
 
 import Mathlib.Algebra.Order.Archimedean.Real.Basic

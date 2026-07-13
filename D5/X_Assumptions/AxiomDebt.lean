@@ -2,7 +2,7 @@
    generality: G
    mirror-B: none(waiver:axiom-debt-registry-is-the-semantic-mirror)
    mirror-E: none(waiver:classical-theorem-without-numerical-evidence-dependency)
-   anchors: [GICT-v3.6-I.2-theorem-2.9, sos1957threegap]
+   anchors: [gict/v3.6/VII.7/theorem/7.15]
    digest: Register classical three-gap and Fourier-Laplace entire-extension debts. -/
 
 import Mathlib.Algebra.Order.Floor.Ring

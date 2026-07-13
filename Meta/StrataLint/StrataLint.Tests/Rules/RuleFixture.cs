@@ -27,22 +27,25 @@ internal sealed partial class RuleFixture
             ["Meta/domains.yaml"] = TestRegistry.Domains,
             ["Meta/BACKFILL.yaml"] = File.ReadAllText(Path.Combine(repositoryRoot, "Meta", "BACKFILL.yaml"), Encoding.UTF8),
             ["Meta/registry.yaml"] = TestRegistry.Canonical,
+            ["Meta/StrataLint/Generated/anchor-catalog.v1.json"] = File.ReadAllText(
+                Path.Combine(repositoryRoot, "Meta", "StrataLint", "Generated", "anchor-catalog.v1.json"),
+                Encoding.UTF8),
             ["Library/queries.yaml"] = "schema_version: 1\nqueries: []\n",
             [RingPath] = Header + "def goldenRing : Nat := 0\n",
             [BlueprintPath] = "# Golden ring\n",
         };
-        foreach (var protectedPath in new[]
+        foreach (var theoryPath in new[]
         {
             "docs/develop/theory/GICT_complete_development_v3 (3).md",
             "docs/develop/theory/PZG_BEDC_kernel_formal_170.md",
-            "docs/develop/spec/golden-ledger-repo-spec.md",
         })
         {
-            var protectedText = File.ReadAllText(Path.Combine(repositoryRoot, protectedPath), Encoding.UTF8);
-            Files[protectedPath] = protectedPath.EndsWith("golden-ledger-repo-spec.md", StringComparison.Ordinal)
-                ? RestoreApprovedCanonicalClaim(protectedText)
-                : protectedText;
+            Files[theoryPath] = File.ReadAllText(Path.Combine(repositoryRoot, theoryPath), Encoding.UTF8);
         }
+
+        const string specPath = "docs/develop/spec/golden-ledger-repo-spec.md";
+        Files[specPath] = RestoreApprovedCanonicalClaim(
+            File.ReadAllText(Path.Combine(repositoryRoot, specPath), Encoding.UTF8));
         Baseline = new Dictionary<string, string>(Files, StringComparer.Ordinal);
         Reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
         {
@@ -133,6 +136,26 @@ internal sealed partial class RuleFixture
             AcceptedLeanClosure.Create(LeanAxiomReport.Create(BaselineReports)),
             RawChangeSet.Create(Changes),
             meta);
+    }
+
+    internal RuleEvaluationContext BuildForProtectedRuleCompatibility()
+    {
+        var current = Decode(Files);
+        var baseline = Decode(Baseline);
+        var policyOutcome = RegistryLoader.Load(
+            Encoding.UTF8.GetBytes(TestRegistry.Canonical),
+            Encoding.UTF8.GetBytes(TestRegistry.Domains));
+        var policy = Assert.IsType<RegistryLoadOutcome.Accepted>(policyOutcome).Policy;
+        var bootstrap = BootstrapGate.Evaluate(RawChangeSet.Create(Changes));
+        var meta = Assert.IsType<BootstrapOutcome.HumanReviewRequired>(bootstrap).ChangeSet;
+        return RuleEvaluationContext.Create(
+            current,
+            baseline,
+            policy,
+            AcceptedLeanClosure.Create(LeanAxiomReport.Create(Reports)),
+            AcceptedLeanClosure.Create(LeanAxiomReport.Create(BaselineReports)),
+            RawChangeSet.Create(Changes),
+            MetaEvaluationProfile.ForProtectedSurface(meta));
     }
 
     internal void AddUpwardImport()

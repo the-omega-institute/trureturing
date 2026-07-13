@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:formal-analysis-foundation-only)
    mirror-E: none(waiver:structural-explicit-formula-terms-only)
-   anchors: [PZG-v170-26.3, PZG-v170-26.4]
+   anchors: [pzg/v170/26.3, pzg/v170/26.4]
    digest: Bind prime, pole, and archimedean terms for the classical zeta Weil formula. -/
 
 import D5.S3.Weil.FourierLaplace

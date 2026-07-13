@@ -88,7 +88,7 @@ internal static partial class RepositoryRules
         new RepositoryRule(ToolchainScoped, NoFindings),
         new RepositoryRule(AllArtifacts, AddressesAndFormulas),
         new RepositoryRule(BackfillScoped, BackfillInventoryRule.Evaluate),
-        new RepositoryRule(LiteratureScoped, Literature),
+        new RepositoryRule(AnchorReferenceScoped, ResolvableAnchors),
         new RepositoryRule(ValuesScoped, Values),
         new RepositoryRule(StructuredOrChronicle, Ledger),
         new RepositoryRule(ManagedLean, Axioms),

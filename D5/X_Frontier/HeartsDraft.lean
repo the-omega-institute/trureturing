@@ -2,7 +2,7 @@
    generality: E
    mirror-B: none(waiver:human-gated-draft-in-result)
    mirror-E: none(waiver:no-experiment-before-statement-approval)
-   anchors: [GICT-v3.6-VIII-hearts, PZG-v170-6.18, PZG-v170-6.19, PZG-v170-26.4]
+   anchors: [gict/v3.6/VIII/section/hearts, pzg/v170/6.18, pzg/v170/6.19, pzg/v170/26.4]
    digest: Track the approved O-5 heart and the staged D5-T0018 tail for O-6. -/
 
 /-- TASK D5-T0001 | 难度:5 | 依赖:就绪✓ | 尝试:3

@@ -2,7 +2,7 @@
    generality: G
    mirror-B: none(waiver:governance-scope-tickets)
    mirror-E: none(waiver:no-experiment-for-governance-scope)
-   anchors: [golden-ledger-spec-v7.11-SL-016, golden-ledger-spec-v7.11-SL-017, golden-ledger-spec-v7.11-SL-019, golden-ledger-spec-v7.11-byte-canonicalization]
+   anchors: [spec/v7.11/SL-016, spec/v7.11/SL-017, spec/v7.11/SL-019, spec/v7.11/byte-canonicalization]
    digest: Keep governance and byte-canonicalization claims narrower than capabilities not present at M0. -/
 
 /-- TASK D5-T0011 | 难度:4 | 依赖:欠(M4-M5-full-volume-inventory) | 尝试:0

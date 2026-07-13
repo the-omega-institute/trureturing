@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:algebraically-proved)
-   anchors: [GICT-v3.6-I.2-definition-1.4, mathlib-data-nat-fib-zeckendorf]
+   anchors: [gict/v3.6/I.2/definition/1.4, mathlib/module/Mathlib.Data.Nat.Fib.Zeckendorf]
    digest: A terminating deterministic local-carry normalizer for raw W digits. -/
 
 import D5.S1.Digit.Carry
