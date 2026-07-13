@@ -3,11 +3,11 @@ id = "fkst-packages-platform"
 git = "https://github.com/ChronoAIProject/fkst-packages.git"
 
 [external_source.intent]
-rev = "9090b5dea4ffad6ff3f0cad4a0cf7b5fcf93d549"
+rev = "1371edc33cc06ec1cba2f18f385280278546a858"
 
 [external_source.resolved]
-rev = "9090b5dea4ffad6ff3f0cad4a0cf7b5fcf93d549"
-tree_sha256 = "sha256-d383ce89b70ea571d10b404ef39ebc4aaf0d149705058e733a07fbd3615eb9bd"
+rev = "1371edc33cc06ec1cba2f18f385280278546a858"
+tree_sha256 = "sha256-7aa763141feebd5edd42c316abb09a3c5f934c3ab434d2dd46befd9914317bdf"
 
 [[external_source.libraries]]
 name = "contract"
