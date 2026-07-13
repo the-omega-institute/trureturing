@@ -126,14 +126,14 @@ public sealed class TowerManifestTests
     }
 
     [Fact]
-    public void PhasedGateRecordsImplementedPhaseOneWithoutClaimingFullVerification()
+    public void PhasedGateRecordsImplementedPhaseTwoWithoutClaimingC0Verification()
     {
         var syntax = Syntax(new TowerComponentSyntax(
             "conservative-extension-gate-c",
             "phased-gate",
             [
                 "phase1-protected-content-admission",
-                "phase2-conservative-extension-proof-pending",
+                "phase2-dual-harness-conservative-extension",
             ],
             ["bootstrap-pr-1"],
             "ASSUMED-UNVERIFIED"));

@@ -312,19 +312,12 @@ jobs:
         run: |
           set -euo pipefail
           gate="$GITHUB_WORKSPACE/baseline/.github/scripts/harness-gate.sh"
-          legacy_args=()
           if [[ ! -x "$gate" ]]; then
-            if git -C candidate log --format=%H "$DEV_BASELINE_SHA" -- .github/scripts/harness-gate.sh | grep -q .; then
-              printf '%s\n' "baseline harness gate disappeared after its recorded introduction" >&2
-              exit 1
-            fi
-            gate="$GITHUB_WORKSPACE/candidate/.github/scripts/harness-gate.sh"
-            legacy_args+=(--legacy-bootstrap)
-            echo "::warning title=harness gate bootstrap::The predecessor predates the shared gate; using canonical dev candidate for its one-time introduction run."
+            printf '%s\n' "content-addressed baseline harness gate is absent" >&2
+            exit 1
           elif ! grep -qF -- '--candidate-lean-report' "$gate"; then
-            gate="$GITHUB_WORKSPACE/candidate/.github/scripts/harness-gate.sh"
-            legacy_args+=(--legacy-bootstrap)
-            echo "::warning title=harness gate bootstrap::The predecessor predates report consumption; using canonical dev candidate for its one-time introduction run."
+            printf '%s\n' "content-addressed baseline gate cannot consume canonical Lean reports" >&2
+            exit 1
           fi
           set +e
           "$gate" \
@@ -333,12 +326,15 @@ jobs:
             --base "$DEV_BASELINE_SHA" \
             --candidate-lean-report "$RUNNER_TEMP/raw-lean-reports/candidate-lean-report.json" \
             --baseline-lean-report "$RUNNER_TEMP/raw-lean-reports/baseline-lean-report.json" \
-            "${legacy_args[@]}" \
             2>&1 | tee "$RUNNER_TEMP/gate.log"
           rc="${PIPESTATUS[0]}"
           set -e
-          if [[ "$rc" -ne 0 ]]; then
+          if [[ "$rc" -ne 0 && "$rc" -ne 3 ]]; then
             echo "::error title=harness gate failed::rc=$rc; complete output was emitted above"
             printf '%s\n' "### harness gate FAILED rc=$rc" >> "$GITHUB_STEP_SUMMARY"
+            exit "$rc"
           fi
-          exit "$rc"
+          if [[ "$rc" -eq 3 ]]; then
+            printf '%s\n' "### harness gate certified an SL-022 conservative extension" >> "$GITHUB_STEP_SUMMARY"
+          fi
+          exit 0

@@ -342,6 +342,12 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
     public CommandResult Worktree(IReadOnlyList<string> arguments) =>
         WorktreeCommand.Run(repositoryRoot, arguments);
 
+    public ExplicitCommandResult VerifyConservative(IReadOnlyList<string> arguments) =>
+        ConservativeExtensionCommand.Run(arguments);
+
+    public ExplicitCommandResult EvaluateConservativeCorpus(IReadOnlyList<string> arguments) =>
+        ConservativeCorpusWorker.Run(arguments);
+
     private RegistryLoadOutcome.Accepted LoadRegistry()
     {
         var registryPath = Path.Combine(repositoryRoot, "Meta", "registry.yaml");

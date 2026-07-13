@@ -12,7 +12,7 @@ internal static class TowerActualValidator
     private static readonly string[] PhasedGateMembers =
     [
         "phase1-protected-content-admission",
-        "phase2-conservative-extension-proof-pending",
+        "phase2-dual-harness-conservative-extension",
     ];
 
     private static readonly ImmutableDictionary<string, string> KnownCiNames =

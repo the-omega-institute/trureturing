@@ -8,7 +8,6 @@ JUDGE_ROOT=""
 BASE_REF=""
 CANDIDATE_LEAN_REPORT=""
 BASELINE_LEAN_REPORT=""
-LEGACY_BOOTSTRAP=0
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -17,7 +16,6 @@ while [[ $# -gt 0 ]]; do
     --base) BASE_REF="$2"; shift 2 ;;
     --candidate-lean-report) CANDIDATE_LEAN_REPORT="$2"; shift 2 ;;
     --baseline-lean-report) BASELINE_LEAN_REPORT="$2"; shift 2 ;;
-    --legacy-bootstrap) LEGACY_BOOTSTRAP=1; shift ;;
     *) echo "harness-gate: unknown arg '$1'" >&2; exit 2 ;;
   esac
 done
@@ -78,32 +76,15 @@ mark selftest
 
 export STRATALINT_TIMING="${STRATALINT_TIMING:-1}"
 set +e
-if [[ "$LEGACY_BOOTSTRAP" == "1" ]]; then
-  (
-    cd "$CANDIDATE_ROOT"
-    dotnet "$JUDGE_ROOT/$DLL_REL" check --protected-base "$BASE_REF"
-  )
-else
-  (
-    cd "$CANDIDATE_ROOT"
-    dotnet "$JUDGE_ROOT/$DLL_REL" check --protected-base "$BASE_REF" \
-      --candidate-lean-report "$CANDIDATE_LEAN_REPORT" \
-      --baseline-lean-report "$BASELINE_LEAN_REPORT"
-  )
-fi
+(
+  cd "$CANDIDATE_ROOT"
+  dotnet "$JUDGE_ROOT/$DLL_REL" check --protected-base "$BASE_REF" \
+    --candidate-lean-report "$CANDIDATE_LEAN_REPORT" \
+    --baseline-lean-report "$BASELINE_LEAN_REPORT"
+)
 rc=$?
 set -e
 mark admission
-
-if [[ "$LEGACY_BOOTSTRAP" == "1" ]]; then
-  if [[ $rc -ne 3 ]]; then
-    echo "harness-gate: legacy baseline judge must return SL-022 exit 3, got $rc" >&2
-    exit 2
-  fi
-
-  summary "### SL-022 report-consumer bootstrap observed by predecessor judge"
-  exit 0
-fi
 
 if [[ $rc -eq 0 ]]; then
   summary "### Admission: content fully validated, no protected-surface change"
@@ -111,9 +92,38 @@ if [[ $rc -eq 0 ]]; then
 fi
 
 if [[ $rc -eq 3 ]]; then
-  echo "::warning title=SL-022 protected-surface change::Bootstrap scaffold path; the predecessor Lean inspection stage supplied the kernel build floor." 2>/dev/null || true
-  summary "### SL-022 protected-surface change (bootstrap scaffold path)"
-  exit 0
+  make -C "$CANDIDATE_ROOT" dotnet
+  mark build-candidate
+  set +e
+  (
+    cd "$JUDGE_ROOT"
+    dotnet "$JUDGE_ROOT/$DLL_REL" verify-conservative \
+      --baseline-root "$JUDGE_ROOT" \
+      --candidate-root "$CANDIDATE_ROOT" \
+      --baseline-lean-report "$BASELINE_LEAN_REPORT" \
+      --candidate-lean-report "$CANDIDATE_LEAN_REPORT"
+  )
+  conservative_rc=$?
+  set -e
+  mark conservative
+  case "$conservative_rc" in
+    0)
+      summary "### SL-022 protected-surface change: conservative-extension certificate emitted"
+      exit 3
+      ;;
+    1)
+      summary "### SL-022 protected-surface change: conservative-extension violation"
+      exit 1
+      ;;
+    2)
+      summary "### SL-022 protected-surface change: conservative-extension infrastructure failure"
+      exit 2
+      ;;
+    *)
+      echo "harness-gate: verify-conservative returned invalid rc=$conservative_rc" >&2
+      exit 2
+      ;;
+  esac
 fi
 
 exit "$rc"

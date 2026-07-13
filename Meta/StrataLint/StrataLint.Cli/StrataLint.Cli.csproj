@@ -5,6 +5,7 @@
     <AssemblyName>StrataLint</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="../StrataLint.Definitions/StrataLint.Definitions.csproj" />
     <ProjectReference Include="../StrataLint.Engine/StrataLint.Engine.csproj" />
     <ProjectReference Include="../StrataLint.Scribe/StrataLint.Scribe.csproj" />
     <PackageReference Include="YamlDotNet" />
