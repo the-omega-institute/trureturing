@@ -282,6 +282,34 @@ internal sealed partial class RuleFixture
             var path = gid.Path.Value;
             if (!path.EndsWith(".lean", StringComparison.Ordinal))
             {
+                if (path == ValuesProjectionLoader.RelativePath)
+                {
+                    var repositoryRoot = FindRepositoryRoot();
+                    Files[path] = File.ReadAllText(Path.Combine(repositoryRoot, path), Encoding.UTF8);
+                    foreach (var inputPath in new[]
+                    {
+                        ValuesProjectionLoader.InputPath,
+                        "Directory.Build.props",
+                        "Directory.Packages.props",
+                        "Meta/StrataLint/StrataLint.Scribe/packages.lock.json",
+                        "global.json",
+                    })
+                    {
+                        Files[inputPath] = File.ReadAllText(
+                            Path.Combine(repositoryRoot, inputPath),
+                            Encoding.UTF8);
+                    }
+
+                    Reports[ValuesProjectionLoader.InputPath] = Report(declarations: new[]
+                    {
+                        new LeanDeclaration(
+                            "valuesProducerTicket",
+                            "def",
+                            "Unit",
+                            ImmutableArray<string>.Empty),
+                    });
+                }
+
                 continue;
             }
 
@@ -295,7 +323,9 @@ internal sealed partial class RuleFixture
 
             if (ticketsByGid.TryGetValue(gidText, out var cases))
             {
-                text += string.Concat(cases.Select(static caseId =>
+                text += string.Concat(cases.Where(caseId =>
+                        !text.Contains($"TASK {caseId} ", StringComparison.Ordinal))
+                    .Select(static caseId =>
                     $"/-- TASK {caseId} | 难度:3 | 依赖:就绪 | 尝试:0\n"
                     + "    提示:Fixture task.\n"
                     + "    尸检:none -/\n"

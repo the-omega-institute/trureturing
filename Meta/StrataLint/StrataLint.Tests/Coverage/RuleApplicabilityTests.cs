@@ -30,6 +30,7 @@ public sealed class RuleApplicabilityTests
     [InlineData(
         "Meta/StrataLint/Generated/anchor-catalog.v1.json",
         "SL-003,SL-015,SL-017,SL-019,SL-022")]
+    [InlineData("Evidence/D5/values.json", "SL-003,SL-006,SL-015,SL-018,SL-019")]
     [InlineData("Meta/StrataLint/TOWER.yaml", "SL-003,SL-015,SL-019,SL-022")]
     public void DefaultCatalogApplicabilityMatchesTheRulesActualScanSurface(
         string path,

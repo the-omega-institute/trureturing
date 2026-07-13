@@ -33,7 +33,11 @@ internal static partial class RepositoryRules
         {
             if (element.TryGetProperty("formula", out var formula))
             {
-                if (formula.ValueKind != JsonValueKind.String
+                if (formula.ValueKind == JsonValueKind.Null)
+                {
+                    // Fixed-shape generated projections use null when a record has no derived formula.
+                }
+                else if (formula.ValueKind != JsonValueKind.String
                     || !element.TryGetProperty("refs", out var refs)
                     || refs.ValueKind != JsonValueKind.Object)
                 {

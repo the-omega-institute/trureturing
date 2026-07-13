@@ -27,11 +27,11 @@ public static class ScribeCli
             && string.Equals(arguments[1], "--check", StringComparison.Ordinal);
         var command = arguments.Count == 0 ? string.Empty : arguments[0];
         if (arguments.Count is < 1 or > 2
-            || command is not ("emit" or "catalog")
+            || command is not ("emit" or "catalog" or "emit-values")
             || (arguments.Count == 2 && !check))
         {
             error.WriteLine(
-                "usage: dotnet run --project Meta/StrataLint/StrataLint.Scribe -- emit|catalog [--check]");
+                "usage: dotnet run --project Meta/StrataLint/StrataLint.Scribe -- emit|catalog|emit-values [--check]");
             return 2;
         }
 
@@ -41,6 +41,11 @@ public static class ScribeCli
             if (command == "catalog")
             {
                 return AnchorCatalogEmitter.Emit(repositoryRoot, check, output, error);
+            }
+
+            if (command == "emit-values")
+            {
+                return ValuesEmitter.Emit(repositoryRoot, check, output, error);
             }
 
             return leanReport is null

@@ -52,6 +52,12 @@ internal static partial class RepositoryPathPolicy
                 return true;
             }
 
+            if (string.Equals(path, "Evidence/D5/values.json", StringComparison.Ordinal))
+            {
+                gid = "D5/E/values--json";
+                return true;
+            }
+
             var relative = path["Evidence/D5/".Length..];
             var slash = relative.LastIndexOf('/');
             var prefix = slash < 0 ? string.Empty : relative[..(slash + 1)];
