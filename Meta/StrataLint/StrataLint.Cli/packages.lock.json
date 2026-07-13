@@ -15,6 +15,13 @@
           "Pidgin": "[3.5.1, )"
         }
       },
+      "stratalint.scribe": {
+        "type": "Project",
+        "dependencies": {
+          "QuestPDF": "[2026.7.1, 2026.7.1]",
+          "StrataLint.Engine": "[1.0.0, )"
+        }
+      },
       "Dunet": {
         "type": "CentralTransitive",
         "requested": "[1.16.2, )",
@@ -26,6 +33,12 @@
         "requested": "[3.5.1, )",
         "resolved": "3.5.1",
         "contentHash": "zU7tkXlF3D6d2GLTjJDomAL3nnl4AwfZvSgSz8D4b+Ry21/clqedYlxBnEAkAU/bkGfEv6uRR7QCdWZUpKrB/g=="
+      },
+      "QuestPDF": {
+        "type": "CentralTransitive",
+        "requested": "[2026.7.1, 2026.7.1]",
+        "resolved": "2026.7.1",
+        "contentHash": "GsBxQb48dFAGmvI1eP3SHyz0Pua4uH6aUHX7f0ywTin6hordAviZRAiTiIQiKMLwq6hN1FmgS+qLjfh2v7vhOg=="
       }
     }
   }

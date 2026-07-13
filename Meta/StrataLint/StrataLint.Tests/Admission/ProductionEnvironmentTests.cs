@@ -23,7 +23,17 @@ public sealed partial class ProductionEnvironmentTests
 
         var outcome = CheckWithReports(environment, fixture);
 
-        var protectedChange = Assert.IsType<AdmissionOutcome.ProtectedSurfaceChange>(outcome);
+        Assert.True(
+            outcome is AdmissionOutcome.ProtectedSurfaceChange,
+            outcome switch
+            {
+                AdmissionOutcome.RuleRejected rejected => string.Join(
+                    '\n',
+                    rejected.Diagnostics.Select(static diagnostic => diagnostic.Render())),
+                AdmissionOutcome.InfrastructureFailure failure => failure.Message,
+                _ => outcome.GetType().FullName,
+            });
+        var protectedChange = (AdmissionOutcome.ProtectedSurfaceChange)outcome;
         Assert.Equal(
             Enumerable.Range(1, 22).Select(RuleId.CreateKnown),
             protectedChange.ContentCertificate.ExecutedRules);
@@ -128,6 +138,89 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains("--candidate-lean-report", failure.Message, StringComparison.Ordinal);
         Assert.Contains("--baseline-lean-report", failure.Message, StringComparison.Ordinal);
         Assert.Equal(0, source.CallCount);
+    }
+
+    [Fact]
+    public void CheckRoutesScribeDefinitionEvolutionToProtectedSurfaceBeforeBaseEmitterMismatch()
+    {
+        using var temporary = new TemporaryDirectory();
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        AddFrozenLedger(fixture);
+        const string scribePath = "Blueprint/D5/S0/Carrier/Ring.scribe.cs";
+        fixture.Files[scribePath] = "// candidate Scribe definition\n";
+        var current = Snapshot(fixture.Files);
+        var baseline = Snapshot(fixture.Baseline);
+        var environment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(
+                RawChangeSet.Create([scribePath]),
+                current,
+                baseline),
+            new FakeLeanReportSource(null),
+            new FakeScribeEmissionVerifier(null));
+
+        var outcome = CheckWithReports(environment, fixture);
+
+        Assert.True(
+            outcome is AdmissionOutcome.ProtectedSurfaceChange,
+            outcome switch
+            {
+                AdmissionOutcome.RuleRejected rejected => string.Join(
+                    '\n',
+                    rejected.Diagnostics.Select(static diagnostic => diagnostic.Render())),
+                AdmissionOutcome.InfrastructureFailure failure => failure.Message,
+                _ => outcome.GetType().FullName,
+            });
+        var protectedChange = (AdmissionOutcome.ProtectedSurfaceChange)outcome;
+        Assert.Contains(protectedChange.ChangeSet.Paths, path => path.Value == scribePath);
+        Assert.Contains(protectedChange.Sl022Diagnostics, diagnostic => diagnostic.Path == scribePath);
+    }
+
+    [Fact]
+    public void CheckRoutesAnyProtectedChangeBeforeBaseEmitterDependencyMismatch()
+    {
+        using var temporary = new TemporaryDirectory();
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        AddFrozenLedger(fixture);
+        var environment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(
+                RawChangeSet.Create([RuleFixture.SyntheticProtectedPath]),
+                Snapshot(fixture.Files),
+                Snapshot(fixture.Baseline)),
+            new FakeLeanReportSource(null),
+            new FakeScribeEmissionVerifier(null));
+
+        var outcome = CheckWithReports(environment, fixture);
+
+        var protectedChange = Assert.IsType<AdmissionOutcome.ProtectedSurfaceChange>(outcome);
+        Assert.Contains(
+            protectedChange.ChangeSet.Paths,
+            path => path.Value == RuleFixture.SyntheticProtectedPath);
+    }
+
+    [Fact]
+    public void CheckKeepsScribeVerifierMismatchHardForClearChanges()
+    {
+        using var temporary = new TemporaryDirectory();
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        AddFrozenLedger(fixture);
+        var environment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(
+                RawChangeSet.Create([RuleFixture.BlueprintPath]),
+                Snapshot(fixture.Files),
+                Snapshot(fixture.Baseline)),
+            new FakeLeanReportSource(null),
+            new FakeScribeEmissionVerifier(null));
+
+        var outcome = CheckWithReports(environment, fixture);
+
+        var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
+        Assert.Contains("Scribe emission verification failed", failure.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -300,6 +393,114 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains("SELFTEST PASS", first.Output, StringComparison.Ordinal);
     }
 
+    [Fact]
+    [Trait("pending-contract", "step-3")]
+    public void DigestStatusReportsSchema2LedgerNotMigratedBeforeLoadingCapabilities()
+    {
+        const string legacy = """
+            schema_version: 2
+            inventory: m0-protected-v1
+            sources:
+              - id: GICT-v3.6
+                path: docs/source.md
+                entries:
+                  - anchor: old
+                    disposition: D5/X_Frontier/Probe
+            ticket_index: []
+            """;
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(Array.Empty<string>()),
+                Snapshot(new Dictionary<string, string>(StringComparer.Ordinal)
+                {
+                    [BackfillInventoryLoader.RelativePath] = legacy,
+                }),
+                null),
+            new FakeLeanReportSource(null),
+            new FakeScribeEmissionVerifier(null));
+
+        var result = environment.DigestStatus(Array.Empty<string>());
+
+        Assert.True(result.Success, result.Error);
+        Assert.Equal("DIGEST_STATUS ledger 未迁移\n", result.Output);
+        Assert.Equal(string.Empty, result.Error);
+    }
+
+    [Fact]
+    public void DigestStatusReportsEveryEntryAndZeroCurrentlyDeletable()
+    {
+        var fixture = new RuleFixture();
+        fixture.UseSyntheticSchema3Backfill();
+        fixture.AddBackfillTargets();
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(Array.Empty<string>()),
+                Snapshot(fixture.Files),
+                null),
+            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+
+        var result = environment.DigestStatus(["--json"]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("\"entries_total\": 1", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"deletable_now\": 0", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"atom_id\": \"gict-7.15\"", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"code\": \"scribe-definition-missing\"", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"code\": \"scribe-attestation-missing\"", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"code\": \"scribe-emission-unverified\"", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DigestStatusFailsClosedWhenProjectedStatusWasHandwrittenIncorrectly()
+    {
+        var fixture = new RuleFixture();
+        fixture.UseSyntheticSchema3Backfill();
+        fixture.AddBackfillTargets();
+        const string expected = "          migration: partial\n          truth: closed\n";
+        const string falseProjection = "          migration: absorbed\n          truth: closed\n";
+        fixture.Files["Meta/BACKFILL.yaml"] = fixture.Files["Meta/BACKFILL.yaml"].Replace(
+            expected,
+            falseProjection,
+            StringComparison.Ordinal);
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(Array.Empty<string>()),
+                Snapshot(fixture.Files),
+                null),
+            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+
+        var result = environment.DigestStatus(Array.Empty<string>());
+
+        Assert.False(result.Success);
+        Assert.Contains("handwritten status", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DigestStatusFailsClosedWhenScribeVerificationFails()
+    {
+        var fixture = new RuleFixture();
+        fixture.UseSyntheticSchema3Backfill();
+        fixture.AddBackfillTargets();
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(Array.Empty<string>()),
+                Snapshot(fixture.Files),
+                null),
+            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
+            new FakeScribeEmissionVerifier(null));
+
+        var result = environment.DigestStatus(Array.Empty<string>());
+
+        Assert.False(result.Success);
+        Assert.Contains("Scribe emission verification failed", result.Error, StringComparison.Ordinal);
+    }
+
     private static RawRepositorySnapshot Snapshot(IReadOnlyDictionary<string, string> files) =>
         RawRepositorySnapshot.Create(files.Select(pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
 
@@ -454,6 +655,13 @@ internal sealed class FakeLeanReportSource(LeanAxiomReport? report) : ILeanRepor
         CallCount++;
         return report ?? throw new InvalidOperationException("Lean report source should not be called");
     }
+}
+
+internal sealed class FakeScribeEmissionVerifier(VerifiedScribeEmissions? verification)
+    : IScribeEmissionVerifier
+{
+    public VerifiedScribeEmissions Verify(LeanAxiomReport report) =>
+        verification ?? throw new InvalidOperationException("Scribe emission verification failed: synthetic");
 }
 
 internal sealed class TemporaryDirectory : IDisposable

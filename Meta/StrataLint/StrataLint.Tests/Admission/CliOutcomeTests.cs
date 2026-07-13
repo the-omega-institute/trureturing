@@ -109,6 +109,9 @@ internal sealed class StubCliEnvironment(AdmissionOutcome outcome) : ICliEnviron
     public CommandResult Coverage(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "coverage is not configured in this fixture");
 
+    public CommandResult DigestStatus(IReadOnlyList<string> arguments) =>
+        new(false, string.Empty, "digest status is not configured in this fixture");
+
     public CommandResult Route(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "route is not configured in this fixture");
 

@@ -13,6 +13,7 @@ internal sealed partial class RuleFixture
     internal const string AssumptionDebtPath = GoldenCorpus.AssumptionDebtPath;
     internal const string HeartsPath = GoldenCorpus.HeartsPath;
     internal const string HeartsDraftPath = "D5/X_Frontier/HeartsDraft.lean";
+    internal const string ThreeDistancePath = "D5/S1/Phase/ThreeDistance.lean";
     internal const string AnchorCatalogPath = AnchorCatalogLoader.RelativePath;
     internal const string TowerManifestPath = RepositoryRules.TowerManifestPath;
     internal const string ValuesProjectionPath = ValuesProjectionLoader.RelativePath;
@@ -20,6 +21,7 @@ internal sealed partial class RuleFixture
     internal const string HarnessGatePath = RepositoryPathPolicy.HarnessGatePath;
     internal const string SpecificationPath = BootstrapGate.SpecificationPath;
     internal const string GictTheoryPath = "docs/develop/theory/GICT_complete_development_v3 (3).md";
+    internal const string SyntheticSchema3GictTheoryPath = "docs/develop/theory/GICT_complete_development_v3_3.md";
     internal const string PzgTheoryPath = "docs/develop/theory/PZG_BEDC_kernel_formal_170.md";
     internal const string SyntheticProtectedPath =
         "Meta/StrataLint/StrataLint.Engine/SyntheticProtected.cs";
@@ -112,7 +114,9 @@ internal sealed partial class RuleFixture
         }
     }
 
-    internal RuleEvaluationContext Build(ValidatedPolicy? suppliedPolicy = null)
+    internal RuleEvaluationContext Build(
+        ValidatedPolicy? suppliedPolicy = null,
+        VerifiedScribeEmissions? verifiedScribeEmissions = null)
     {
         var current = Decode(Files);
         var baseline = Decode(Baseline);
@@ -135,7 +139,8 @@ internal sealed partial class RuleFixture
             lean,
             baselineLean,
             RawChangeSet.Create(Changes),
-            meta);
+            meta,
+            verifiedScribeEmissions);
     }
 
     internal RuleEvaluationContext BuildForRuleCompatibility()
@@ -330,6 +335,36 @@ internal sealed partial class RuleFixture
                     + (path.Contains("/X_Frontier/", StringComparison.Ordinal) ? "-- D5-T9999\n" : string.Empty)
                     + "def protectedTargetFixture : Unit := ()\n";
                 Reports[path] = Report();
+                if (path == ThreeDistancePath)
+                {
+                    const string debtGid = "D5/X_Assumptions/AxiomDebt";
+                    const string debtModule = "D5.X_Assumptions.AxiomDebt";
+                    const string debtAxiom = "D5.X_Assumptions.AxiomDebt.three_gap_classic";
+                    Files[AssumptionDebtPath] = HeaderFor(debtGid, "G")
+                        + "axiom three_gap_classic : True\n";
+                    Reports[AssumptionDebtPath] = Report(declarations:
+                    [
+                        new LeanDeclaration(
+                            debtAxiom,
+                            "axiom",
+                            "True",
+                            [debtAxiom]),
+                    ]);
+                    text = HeaderFor(gidText, "E")
+                        + $"import {debtModule}\n\n"
+                        + $"-- {debtGid}\n"
+                        + "theorem three_gap : True := by trivial\n";
+                    Reports[path] = Report(
+                        imports: [debtModule],
+                        declarations:
+                    [
+                        new LeanDeclaration(
+                            "three_gap",
+                            "theorem",
+                            "True",
+                            [debtAxiom]),
+                    ]);
+                }
             }
 
             if (ticketsByGid.TryGetValue(gidText, out var cases))
@@ -350,6 +385,46 @@ internal sealed partial class RuleFixture
                 BaselineReports[path] = Reports[path];
             }
         }
+    }
+
+    internal DigestionAtom UseSyntheticSchema3Backfill()
+    {
+        var source = Encoding.UTF8.GetBytes(Files[GictTheoryPath]);
+        var atom = GictAtomizer.Atomize(source).ResolveClaim("theorem/7.15");
+        Files[SyntheticSchema3GictTheoryPath] = Files[GictTheoryPath];
+        Baseline[SyntheticSchema3GictTheoryPath] = Files[GictTheoryPath];
+        var ledger = $$"""
+            schema_version: 3
+            ledger: theory-digestion-v1
+            sources:
+              - source_id: gict-v3.6
+                path: {{SyntheticSchema3GictTheoryPath}}
+                atomizer: gict-v1
+                entries:
+                  - atom_id: gict-7.15
+                    boundary:
+                      ast_path: {{atom.AstPath}}
+                      start_byte: {{atom.StartByte}}
+                      end_byte: {{atom.EndByte}}
+                    fingerprints:
+                      raw_sha256: {{atom.Fingerprints.RawSha256}}
+                      normalized_sha256: {{atom.Fingerprints.NormalizedSha256}}
+                    coverage_gids:
+                      - D5/S0/Carrier/Ring
+                    receipts:
+                      coverage: []
+                      scribe: []
+                      unresolved_subitems: []
+                      chain_atoms: []
+                      tail_authorization: null
+                    status:
+                      migration: partial
+                      truth: closed
+            ticket_index: []
+            """;
+        Files[BackfillInventoryLoader.RelativePath] = ledger;
+        Baseline[BackfillInventoryLoader.RelativePath] = ledger;
+        return atom;
     }
 
     internal void AddNormalizedBackfillTicketTarget()

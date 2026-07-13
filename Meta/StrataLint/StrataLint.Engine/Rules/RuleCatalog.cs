@@ -178,7 +178,7 @@ public sealed class RuleCatalog
             "Permanent task ledger",
             "Toolchain upgrade compatibility",
             "Machine field and GID grammar",
-            "Backfill inventory",
+            "Digestion ledger",
             "Typed anchor membership",
             "Machine-produced values",
             "Balanced anomaly ledger",

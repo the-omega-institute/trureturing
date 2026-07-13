@@ -49,12 +49,14 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
     private readonly string repositoryRoot;
     private readonly IRepositoryGateway repository;
     private readonly ILeanReportSource leanReportSource;
+    private readonly IScribeEmissionVerifier? scribeEmissionVerifier;
 
     internal ProductionCliEnvironment(string repositoryRoot)
         : this(
             repositoryRoot,
             new GitRepositoryGateway(repositoryRoot),
-            new PrecomputedLeanReportSource(repositoryRoot))
+            new PrecomputedLeanReportSource(repositoryRoot),
+            new ProductionScribeEmissionVerifier(repositoryRoot))
     {
     }
 
@@ -62,10 +64,20 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         string repositoryRoot,
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource)
+        : this(repositoryRoot, repository, leanReportSource, scribeEmissionVerifier: null)
+    {
+    }
+
+    internal ProductionCliEnvironment(
+        string repositoryRoot,
+        IRepositoryGateway repository,
+        ILeanReportSource leanReportSource,
+        IScribeEmissionVerifier? scribeEmissionVerifier)
     {
         this.repositoryRoot = Path.GetFullPath(repositoryRoot);
         this.repository = repository;
         this.leanReportSource = leanReportSource;
+        this.scribeEmissionVerifier = scribeEmissionVerifier;
     }
 
     public AdmissionOutcome Check(IReadOnlyList<string> arguments)
@@ -110,9 +122,13 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             }
 
             var registry = (RegistryLoadOutcome.Accepted)registryOutcome;
-            var lean = ValidateLean(
-                current,
-                RawLeanReportArtifact.ReadFile(options.CandidateLeanReport, current));
+            var candidateLeanReport = RawLeanReportArtifact.ReadFile(
+                options.CandidateLeanReport,
+                current);
+            var lean = ValidateLean(current, candidateLeanReport);
+            var verifiedScribeEmissions = VerifyScribeForAdmission(
+                candidateLeanReport,
+                bootstrap);
             var dag = AcyclicTruthDag.Build(current, lean);
             if (dag is DagBuildOutcome.Rejected rejectedDag)
             {
@@ -132,14 +148,15 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
 
             var admission = bootstrap switch
             {
-                BootstrapOutcome.Clear clear => AdmissionPipeline.Evaluate(
+                BootstrapOutcome.Clear clear => AdmissionPipeline.EvaluateWithScribe(
                     current,
                     baseline,
                     registry.Policy,
                     lean,
                     baselineLean,
                     prepared.Changes,
-                    clear.Capability),
+                    clear.Capability,
+                    verifiedScribeEmissions),
                 BootstrapOutcome.HumanReviewRequired review => AdmissionPipeline.EvaluateProtectedSurface(
                     current,
                     baseline,
@@ -147,7 +164,8 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                     lean,
                     baselineLean,
                     prepared.Changes,
-                    review.ChangeSet),
+                    review.ChangeSet,
+                    verifiedScribeEmissions),
                 _ => throw new InvalidOperationException("unknown bootstrap outcome"),
             };
             if (admission is not AdmissionOutcome.Admitted
@@ -190,6 +208,18 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
 
     public CommandResult Coverage(IReadOnlyList<string> arguments) =>
         CoverageCommand.Run(repository, leanReportSource, arguments);
+
+    public CommandResult DigestStatus(IReadOnlyList<string> arguments) =>
+        scribeEmissionVerifier is null
+            ? new CommandResult(
+                false,
+                string.Empty,
+                "DIGEST_STATUS_INVALID Scribe emission verifier is unavailable\n")
+            : DigestStatusCommand.Run(
+                repository,
+                leanReportSource,
+                scribeEmissionVerifier,
+                arguments);
 
     public CommandResult Route(IReadOnlyList<string> arguments)
     {
@@ -273,6 +303,26 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         catch (Exception exception)
         {
             return new CommandResult(false, string.Empty, $"SELFTEST FAIL {exception.Message}\n");
+        }
+    }
+
+    private VerifiedScribeEmissions? VerifyScribeForAdmission(
+        LeanAxiomReport report,
+        BootstrapOutcome bootstrap)
+    {
+        if (scribeEmissionVerifier is null)
+        {
+            return null;
+        }
+
+        try
+        {
+            return scribeEmissionVerifier.Verify(report);
+        }
+        catch (InvalidOperationException) when (
+            bootstrap is BootstrapOutcome.HumanReviewRequired)
+        {
+            return null;
         }
     }
 

@@ -107,7 +107,6 @@
         "type": "Project",
         "dependencies": {
           "QuestPDF": "[2026.7.1, 2026.7.1]",
-          "StrataLint.Definitions": "[1.0.0, )",
           "StrataLint.Engine": "[1.0.0, )"
         }
       },

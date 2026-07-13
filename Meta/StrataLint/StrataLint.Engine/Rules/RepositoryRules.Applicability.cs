@@ -7,7 +7,8 @@ internal static partial class RepositoryRules
 
     private static bool CapacityScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
         !artifact.Path.Value.StartsWith("docs/develop/", StringComparison.Ordinal)
-        && artifact.Path.Value != "lake-manifest.json";
+        && artifact.Path.Value != "lake-manifest.json"
+        && artifact.Path.Value != BackfillInventoryLoader.RelativePath;
 
     private static bool Formal(RepositoryFile artifact, RuleApplicabilityContext context) =>
         artifact.Path.Value.StartsWith("D5/", StringComparison.Ordinal)
