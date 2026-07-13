@@ -94,6 +94,7 @@ public sealed class MakeWorkflowTests
         Assert.Contains("gate_rc", localGate, StringComparison.Ordinal);
         Assert.Contains("$gate_rc -eq 3", localGate, StringComparison.Ordinal);
         Assert.Contains("$rc\" -ne 0 && \"$rc\" -ne 3", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("conservative extension", workflow, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
