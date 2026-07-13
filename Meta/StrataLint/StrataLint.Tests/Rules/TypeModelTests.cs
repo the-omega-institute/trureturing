@@ -46,7 +46,7 @@ public sealed class TypeModelTests
     [InlineData("D5/S0/Carrier/Ring.norm_mul", RuleFixture.RingPath)]
     [InlineData("D5/B/S0/Carrier/Ring", RuleFixture.BlueprintPath)]
     [InlineData("D5/E/S0/Carrier/Ring.result--json", "Evidence/D5/S0/Carrier/Ring.result.json")]
-    [InlineData("D5/E/values--json", "Evidence/D5/values.json")]
+    [InlineData("D5/E/values--json", RuleFixture.ValuesProjectionPath)]
     [InlineData("D5/E/values.result--json", "Evidence/D5/values.result.json")]
     [InlineData("D5/E/experiments/D5-X0001.spec--yaml", "Evidence/D5/experiments/D5-X0001.spec.yaml")]
     [InlineData("D5/C/2026-07-11/r168", "Chronicle/2026/07/11-r168.md")]

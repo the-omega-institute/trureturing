@@ -27,6 +27,16 @@ The root contains only shared repository discovery, test metadata, and this map.
 - Public DSL/builders: rejects a literal default parameter value matching the `Gid`,
   `CaseId`, canonical anchor, or historical GICT/PZG anchor syntax on an effectively
   public member of an effectively public type named `*Dsl` or `*Builder`.
+- Theory/spec anchor locators: manifest factories cannot accept a `string` locator;
+  each emitted locator must equal the canonical anchor with its scheme and edition
+  segments removed and the remaining segments joined by spaces.
+- Spec rule anchors: every `spec/.../SL-nnn` manifest member must be a member of the
+  Engine `RuleCatalog` descriptor set. The architecture test references Scribe and
+  Engine independently; neither product assembly depends on the other for this check.
+- Anchor definition names: every public typed anchor property is checked by reflection
+  against a fixed scheme-specific transform. GICT uses division/kind/label/subclaim,
+  PZG uses its underscored entry number, spec uses Pascal-cased clause tokens, and
+  mathlib uses the terminal qualified name followed by target kind.
 
 Each enabled family has a rejecting red fixture, a non-matching green fixture, and a
 repository-wide zero-finding test.
@@ -45,5 +55,6 @@ repository-wide zero-finding test.
   distinguishes those uses from a copied registry.
 - DSL/builder defaults supplied through constant references or other non-literal
   expressions, non-public APIs, or public APIs on types not named `*Dsl`/`*Builder`.
-- Other canonical families, including rule-catalog members, without a separately
-  justified low-false-positive syntax criterion.
+- Rule-catalog duplication outside the typed spec-anchor `SL-nnn` subset, and other
+  canonical families without a separately justified low-false-positive syntax
+  criterion.

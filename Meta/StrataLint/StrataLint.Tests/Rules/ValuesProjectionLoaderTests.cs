@@ -8,16 +8,9 @@ namespace StrataLint.Tests;
 
 public sealed class ValuesProjectionLoaderTests
 {
-    private const string InputPath = "D5/X_Frontier/ValuesProducer.lean";
+    private const string InputPath = ValuesProjectionLoader.InputPath;
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
-    private static readonly ImmutableArray<string> InputPaths =
-    [
-        InputPath,
-        "Directory.Build.props",
-        "Directory.Packages.props",
-        "Meta/StrataLint/StrataLint.Scribe/packages.lock.json",
-        "global.json",
-    ];
+    private static readonly ImmutableArray<string> InputPaths = ValuesProjectionLoader.InputPaths;
 
     [Fact]
     public void CanonicalProjectionValidatesFourteenDefinitionsAndItsInputAttestation()

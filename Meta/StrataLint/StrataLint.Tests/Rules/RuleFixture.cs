@@ -15,7 +15,7 @@ internal sealed partial class RuleFixture
     internal const string HeartsDraftPath = "D5/X_Frontier/HeartsDraft.lean";
     internal const string AnchorCatalogPath = AnchorCatalogLoader.RelativePath;
     internal const string TowerManifestPath = RepositoryRules.TowerManifestPath;
-    internal const string ValuesProjectionPath = "Evidence/D5/values.json";
+    internal const string ValuesProjectionPath = ValuesProjectionLoader.RelativePath;
     internal const string WorkflowPath = RepositoryPathPolicy.WorkflowPath;
     internal const string HarnessGatePath = RepositoryPathPolicy.HarnessGatePath;
     internal const string SpecificationPath = BootstrapGate.SpecificationPath;
@@ -298,14 +298,7 @@ internal sealed partial class RuleFixture
                 {
                     var repositoryRoot = FindRepositoryRoot();
                     Files[path] = File.ReadAllText(Path.Combine(repositoryRoot, path), Encoding.UTF8);
-                    foreach (var inputPath in new[]
-                    {
-                        ValuesProjectionLoader.InputPath,
-                        "Directory.Build.props",
-                        "Directory.Packages.props",
-                        "Meta/StrataLint/StrataLint.Scribe/packages.lock.json",
-                        "global.json",
-                    })
+                    foreach (var inputPath in ValuesProjectionLoader.InputPaths)
                     {
                         Files[inputPath] = File.ReadAllText(
                             Path.Combine(repositoryRoot, inputPath),

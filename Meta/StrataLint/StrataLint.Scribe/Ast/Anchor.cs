@@ -8,6 +8,9 @@ public abstract record Anchor
 
     public abstract string CanonicalString { get; }
 
+    internal string ReferenceLocator =>
+        string.Join(' ', CanonicalString.Split('/').Skip(2));
+
     public static AnchorParseResult TryParseCanonical(string? value)
     {
         if (!TrySplitCanonical(value, out var segments, out var error))
