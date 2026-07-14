@@ -11,11 +11,26 @@ public sealed class TheoryAtomizerTests
     private const string SecondProductionSource =
         "docs/develop/theory/PZG_BEDC_kernel_formal_170.md";
 
-    public static TheoryData<string, bool, int> ProductionTheorySources => new()
+    public static TheoryData<string, string, int> ProductionTheorySources => new()
     {
-        { FirstProductionSource, true, 61 },
-        { SecondProductionSource, false, 526 },
+        { FirstProductionSource, AtomizerRegistry.GictId, 61 },
+        { SecondProductionSource, AtomizerRegistry.PzgId, 526 },
     };
+
+    [Fact]
+    public void RegistryFailsClosedForAnUnknownAtomizerAndListsRegisteredIds()
+    {
+        const string unknown = "unregistered-v1";
+
+        var error = Assert.Throws<FormatException>(() =>
+            AtomizerRegistry.Atomize(unknown, Array.Empty<byte>()));
+
+        Assert.Equal(
+            $"Unknown atomizer id '{unknown}'. Registered atomizers: "
+            + string.Join(", ", AtomizerRegistry.RegisteredIds)
+            + ".",
+            error.Message);
+    }
 
     [Fact]
     public void GictAdapterBuildsClaimWithHeadingScaffoldAndReassemblesExactBytes()
@@ -168,11 +183,14 @@ public sealed class TheoryAtomizerTests
         var oldBytes = Encoding.UTF8.GetBytes(
             "# GICT\r\n\r\n**定理 1.1(Test)**。claim。\r\n\r\n*证明*。done。\r\n");
         var oldAtom = Assert.Single(GictAtomizer.Atomize(oldBytes).Claims);
-        var ledger = new[] { LedgerEntry("gict-old", "gict-v1", oldAtom) };
+        var ledger = new[] { LedgerEntry("gict-old", AtomizerRegistry.GictId, oldAtom) };
         var lineEndingOnly = Encoding.UTF8.GetBytes(
             "# GICT\n\n**定理 1.1(Test)**。claim。\n\n*证明*。done。\n");
 
-        var seen = GictIngestion.AdmitResidual(lineEndingOnly, ledger);
+        var seen = TheoryIngestion.AdmitResidual(
+            AtomizerRegistry.GictId,
+            lineEndingOnly,
+            ledger);
 
         var match = Assert.Single(seen.Seen);
         Assert.Equal("gict-old", match.LedgerAtomId);
@@ -181,7 +199,10 @@ public sealed class TheoryAtomizerTests
 
         var rewritten = Encoding.UTF8.GetBytes(
             "# GICT\n\n**定理 1.1(Test)**。semantically rewritten claim。\n");
-        var admitted = GictIngestion.AdmitResidual(rewritten, ledger);
+        var admitted = TheoryIngestion.AdmitResidual(
+            AtomizerRegistry.GictId,
+            rewritten,
+            ledger);
 
         Assert.Empty(admitted.Seen);
         var residual = Assert.Single(admitted.Residual);
@@ -199,12 +220,12 @@ public sealed class TheoryAtomizerTests
         var oldBytes = Encoding.UTF8.GetBytes(
             "# PZG\n\n**定理 1.1(Test)**〔closed〕。claim。\n");
         var oldAtom = Assert.Single(PzgAtomizer.Atomize(oldBytes).Claims);
-        var ledger = new[] { LedgerEntry("pzg-old", "pzg-v1", oldAtom) };
+        var ledger = new[] { LedgerEntry("pzg-old", AtomizerRegistry.PzgId, oldAtom) };
 
-        var seen = PzgIngestion.AdmitResidual(oldBytes, ledger);
+        var seen = TheoryIngestion.AdmitResidual(AtomizerRegistry.PzgId, oldBytes, ledger);
         var incoming = Encoding.UTF8.GetBytes(
             "# PZG\n\n**定理 1.2(New)**〔open〕。new claim。\n");
-        var admitted = PzgIngestion.AdmitResidual(incoming, ledger);
+        var admitted = TheoryIngestion.AdmitResidual(AtomizerRegistry.PzgId, incoming, ledger);
 
         Assert.Equal(DigestionFingerprintMatch.Raw, Assert.Single(seen.Seen).Match);
         Assert.Empty(seen.Residual);
@@ -219,11 +240,12 @@ public sealed class TheoryAtomizerTests
         var atom = Assert.Single(GictAtomizer.Atomize(bytes).Claims);
         var ledger = new[]
         {
-            LedgerEntry("gict-first", "gict-v1", atom),
-            LedgerEntry("gict-second", "gict-v1", atom),
+            LedgerEntry("gict-first", AtomizerRegistry.GictId, atom),
+            LedgerEntry("gict-second", AtomizerRegistry.GictId, atom),
         };
 
-        var error = Assert.Throws<FormatException>(() => GictIngestion.AdmitResidual(bytes, ledger));
+        var error = Assert.Throws<FormatException>(() =>
+            TheoryIngestion.AdmitResidual(AtomizerRegistry.GictId, bytes, ledger));
 
         Assert.Contains("ambiguous", error.Message, StringComparison.OrdinalIgnoreCase);
     }
@@ -234,9 +256,10 @@ public sealed class TheoryAtomizerTests
         var bytes = Encoding.UTF8.GetBytes(
             "# GICT\n\n| 常数 | 值 |\n|---|---|\n| κ | 1 |\n| κ | 1 |\n");
         var first = GictAtomizer.Atomize(bytes).Claims[0];
-        var ledger = new[] { LedgerEntry("gict-kappa", "gict-v1", first) };
+        var ledger = new[] { LedgerEntry("gict-kappa", AtomizerRegistry.GictId, first) };
 
-        var error = Assert.Throws<FormatException>(() => GictIngestion.AdmitResidual(bytes, ledger));
+        var error = Assert.Throws<FormatException>(() =>
+            TheoryIngestion.AdmitResidual(AtomizerRegistry.GictId, bytes, ledger));
 
         Assert.Contains("matches multiple incoming atoms", error.Message, StringComparison.Ordinal);
     }
@@ -248,7 +271,10 @@ public sealed class TheoryAtomizerTests
             "# GICT\n\n| 常数 | 值 |\n|---|---|\n| κ | 1 |\n| κ | 1 |\n");
 
         var error = Assert.Throws<FormatException>(() =>
-            GictIngestion.AdmitResidual(bytes, Array.Empty<DigestionLedgerEntry>()));
+            TheoryIngestion.AdmitResidual(
+                AtomizerRegistry.GictId,
+                bytes,
+                Array.Empty<DigestionLedgerEntry>()));
 
         Assert.Contains("duplicate raw residual fingerprint", error.Message, StringComparison.Ordinal);
     }
@@ -264,7 +290,10 @@ public sealed class TheoryAtomizerTests
         Assert.Equal(claims[0].Fingerprints.NormalizedSha256, claims[1].Fingerprints.NormalizedSha256);
 
         var error = Assert.Throws<FormatException>(() =>
-            GictIngestion.AdmitResidual(bytes, Array.Empty<DigestionLedgerEntry>()));
+            TheoryIngestion.AdmitResidual(
+                AtomizerRegistry.GictId,
+                bytes,
+                Array.Empty<DigestionLedgerEntry>()));
 
         Assert.Contains("duplicate normalized residual fingerprint", error.Message, StringComparison.Ordinal);
     }
@@ -273,13 +302,13 @@ public sealed class TheoryAtomizerTests
     [MemberData(nameof(ProductionTheorySources))]
     public void ProductionTheoryDocumentReassemblesByteExact(
         string relativePath,
-        bool gict,
+        string atomizerId,
         int expectedClaims)
     {
         var root = FindRepositoryRoot();
         var bytes = File.ReadAllBytes(Path.Combine(root, relativePath));
 
-        var document = gict ? GictAtomizer.Atomize(bytes) : PzgAtomizer.Atomize(bytes);
+        var document = AtomizerRegistry.Atomize(atomizerId, bytes);
 
         Assert.Equal(expectedClaims, document.Claims.Length);
         Assert.Equal(bytes, document.Reassemble().ToArray());

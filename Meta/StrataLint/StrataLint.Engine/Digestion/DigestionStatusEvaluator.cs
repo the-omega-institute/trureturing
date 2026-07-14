@@ -223,13 +223,7 @@ internal static class DigestionStatusEvaluator
         AtomizedTheoryDocument atomized;
         try
         {
-            atomized = entry.Atomizer switch
-            {
-                "gict-v1" => GictAtomizer.Atomize(source.RawBytes.AsSpan()),
-                "pzg-v1" => PzgAtomizer.Atomize(source.RawBytes.AsSpan()),
-                "none" => throw new FormatException("source has no deterministic atomizer"),
-                _ => throw new FormatException($"unknown atomizer {entry.Atomizer}"),
-            };
+            atomized = AtomizerRegistry.Atomize(entry.Atomizer, source.RawBytes.AsSpan());
         }
         catch (FormatException exception)
         {

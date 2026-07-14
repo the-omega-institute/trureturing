@@ -11,12 +11,20 @@ internal sealed record CanonicalSourceDuplicationFinding(string Path, string Mes
 
 internal static class CanonicalSourceDuplicationPolicy
 {
+    internal const string AtomizerRegistryPath =
+        "Meta/StrataLint/StrataLint.Engine/Digestion/AtomizerRegistry.cs";
+
     internal static IReadOnlyList<CanonicalSourceDuplicationFinding> InspectRepository(string repositoryRoot)
     {
         var backfillPath = Path.Combine(repositoryRoot, "Meta", "BACKFILL.yaml");
-        var tickets = BackfillInventoryLoader.Load(File.ReadAllText(backfillPath))
-            .RequireTickets()
+        var backfill = BackfillInventoryLoader.Load(File.ReadAllText(backfillPath));
+        var tickets = backfill.RequireTickets()
             .Select(static ticket => (ticket.CaseId, ticket.Gid))
+            .ToArray();
+        var atomizerIds = backfill.RequireDigestionSources()
+            .Select(static source => source.Atomizer)
+            .Where(static id => id != AtomizerRegistry.NoAtomizerId)
+            .Distinct(StringComparer.Ordinal)
             .ToArray();
         var domains = LoadDomains(repositoryRoot);
         var findings = new List<CanonicalSourceDuplicationFinding>();
@@ -25,9 +33,36 @@ internal static class CanonicalSourceDuplicationPolicy
             var source = File.ReadAllText(path);
             findings.AddRange(InspectSource(relativePath, source, tickets));
             findings.AddRange(InspectDomainMappings(relativePath, source, domains));
+            findings.AddRange(InspectAtomizerIdLiterals(relativePath, source, atomizerIds));
         }
 
         return findings;
+    }
+
+    internal static IReadOnlyList<CanonicalSourceDuplicationFinding> InspectAtomizerIdLiterals(
+        string path,
+        string source,
+        IEnumerable<string> atomizerIds)
+    {
+        if (string.Equals(path, AtomizerRegistryPath, StringComparison.Ordinal))
+        {
+            return [];
+        }
+
+        var ids = atomizerIds.ToHashSet(StringComparer.Ordinal);
+        var root = CSharpSyntaxTree.ParseText(source).GetRoot();
+        return (from literal in root.DescendantNodes().OfType<LiteralExpressionSyntax>()
+                where literal.IsKind(SyntaxKind.StringLiteralExpression)
+                from id in ids
+                where Regex.IsMatch(
+                    literal.Token.ValueText,
+                    $"(?<![A-Za-z0-9.-]){Regex.Escape(id)}(?![A-Za-z0-9.-])",
+                    RegexOptions.CultureInvariant,
+                    TimeSpan.FromSeconds(1))
+                select new CanonicalSourceDuplicationFinding(
+                    path,
+                    $"C# atomizer id literal {id} duplicates Meta/BACKFILL.yaml; dispatch through AtomizerRegistry"))
+            .ToArray();
     }
 
     internal static IReadOnlyList<CanonicalSourceDuplicationFinding> InspectSource(

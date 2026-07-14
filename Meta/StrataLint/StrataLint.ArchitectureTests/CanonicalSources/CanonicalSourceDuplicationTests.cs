@@ -9,6 +9,38 @@ public sealed class CanonicalSourceDuplicationTests
     }
 
     [Fact]
+    public void RepositoryCSharpDoesNotCopyLedgerAtomizerIdsOutsideTheRegistry()
+    {
+        Assert.Empty(CanonicalSourceDuplicationPolicy.InspectRepository(RepositoryLayout.FindRoot()));
+    }
+
+    [Fact]
+    public void LedgerAtomizerIdLiteralIsRejectedByTheRedFixture()
+    {
+        const string id = "synthetic-v1";
+        const string source = "const string copied = \"\"\"\\natomizer: synthetic-v1\\n\"\"\";";
+
+        var finding = Assert.Single(CanonicalSourceDuplicationPolicy.InspectAtomizerIdLiterals(
+            "Meta/StrataLint/Synthetic.cs",
+            source,
+            [id]));
+
+        Assert.Contains("AtomizerRegistry", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RegistryOwnsItsAtomizerIdLiterals()
+    {
+        const string id = "synthetic-v1";
+        const string source = "var registered = \"synthetic-v1\";";
+
+        Assert.Empty(CanonicalSourceDuplicationPolicy.InspectAtomizerIdLiterals(
+            CanonicalSourceDuplicationPolicy.AtomizerRegistryPath,
+            source,
+            [id]));
+    }
+
+    [Fact]
     public void RepositoryScanIncludesCSharpOutsideTheHarnessTree()
     {
         var root = Path.Combine(
