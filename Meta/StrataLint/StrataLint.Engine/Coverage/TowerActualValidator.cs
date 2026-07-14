@@ -136,7 +136,7 @@ internal static class TowerActualValidator
             findings.Add(new TowerFinding(
                 "TOWER-C0-CEREMONY",
                 component.Id,
-                "phased gate must record canonical controller, corpus, gate, certificate, base, and merge addresses"));
+                "phased gate must record canonical controller, corpus, gate, certificate, base, merge, and preimage addresses"));
         }
 
         if (!findings.Any(item => item.Component == component.Id))
@@ -161,6 +161,8 @@ internal static class TowerActualValidator
         var corpusFiles = 0;
         var gateWirings = 0;
         var certificates = 0;
+        var preimageCommits = 0;
+        var preimageTrees = 0;
         var addressedPaths = new HashSet<string>(StringComparer.Ordinal);
         foreach (var record in records)
         {
@@ -168,35 +170,43 @@ internal static class TowerActualValidator
             switch (fields)
             {
                 case ["c0/base-commit", var oid]
-                    when IsTaggedLowerHex(oid, "git-commit:", 40):
+                    when IsTaggedLowerHex(oid, "git-commit/", 40):
                     baseCommits++;
                     break;
-                case ["c0/ceremony-commit", "convention:this-pr-merge-commit"]:
+                case ["c0/ceremony-commit", "convention/this-pr-merge-commit"]:
                     ceremonyCommits++;
                     break;
                 case ["c0/controller", var oid, var path]
-                    when IsTaggedLowerHex(oid, "git-sha1:", 40)
+                    when IsTaggedLowerHex(oid, "git-sha1/", 40)
                          && IsRepositoryPath(path)
                          && addressedPaths.Add("controller " + path):
                     controllers++;
                     break;
                 case ["c0/corpus", var oid, var path]
-                    when IsTaggedLowerHex(oid, "git-sha1:", 40)
+                    when IsTaggedLowerHex(oid, "git-sha1/", 40)
                          && IsRepositoryPath(path)
                          && addressedPaths.Add("corpus " + path):
                     corpusFiles++;
                     break;
                 case ["c0/gate-wiring", var oid, var path]
-                    when IsTaggedLowerHex(oid, "git-sha1:", 40)
+                    when IsTaggedLowerHex(oid, "git-sha1/", 40)
                          && IsRepositoryPath(path)
                          && addressedPaths.Add("gate " + path):
                     gateWirings++;
                     break;
                 case ["c0/inaugural-certificate", var digest, var path]
-                    when IsTaggedLowerHex(digest, "sha256:", 64)
+                    when IsTaggedLowerHex(digest, "sha256/", 64)
                          && IsRepositoryPath(path)
                          && addressedPaths.Add("certificate " + path):
                     certificates++;
+                    break;
+                case ["c0/preimage-commit", var oid]
+                    when IsTaggedLowerHex(oid, "git-commit/", 40):
+                    preimageCommits++;
+                    break;
+                case ["c0/preimage-tree", var oid]
+                    when IsTaggedLowerHex(oid, "git-tree/", 40):
+                    preimageTrees++;
                     break;
                 default:
                     return false;
@@ -208,7 +218,9 @@ internal static class TowerActualValidator
             && controllers > 0
             && corpusFiles > 0
             && gateWirings == 1
-            && certificates == 1;
+            && certificates == 1
+            && preimageCommits == 1
+            && preimageTrees == 1;
     }
 
     private static bool IsTaggedLowerHex(string value, string prefix, int digits) =>

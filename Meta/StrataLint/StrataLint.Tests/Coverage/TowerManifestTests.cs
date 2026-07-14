@@ -213,16 +213,18 @@ public sealed class TowerManifestTests
     [
         "phase1-protected-content-admission",
         "phase2-dual-harness-conservative-extension",
-        "c0/base-commit git-commit:" + new string('a', 40),
-        "c0/ceremony-commit convention:this-pr-merge-commit",
-        "c0/controller git-sha1:" + new string('b', 40)
+        "c0/base-commit git-commit/" + new string('a', 40),
+        "c0/ceremony-commit convention/this-pr-merge-commit",
+        "c0/controller git-sha1/" + new string('b', 40)
             + " Meta/StrataLint/StrataLint.Cli/Conservative/ConservativeExtensionCommand.cs",
-        "c0/corpus git-sha1:" + new string('c', 40)
+        "c0/corpus git-sha1/" + new string('c', 40)
             + " Meta/StrataLint/StrataLint.Definitions/Golden/GoldenCorpus.cs",
-        "c0/gate-wiring git-sha1:" + new string('d', 40)
+        "c0/gate-wiring git-sha1/" + new string('d', 40)
             + " .github/scripts/harness-gate.sh",
-        "c0/inaugural-certificate sha256:" + new string('e', 64)
+        "c0/inaugural-certificate sha256/" + new string('e', 64)
             + " Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json",
+        "c0/preimage-commit git-commit/" + new string('f', 40),
+        "c0/preimage-tree git-tree/" + new string('a', 40),
     ];
 
     private static RuleCatalog Catalog(params RuleId[] ids)

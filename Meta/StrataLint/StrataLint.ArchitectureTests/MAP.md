@@ -40,6 +40,10 @@ The root contains only shared repository discovery, test metadata, and this map.
   against a fixed scheme-specific transform. GICT uses division/kind/label/subclaim,
   PZG uses its underscored entry number, spec uses Pascal-cased clause tokens, and
   mathlib uses the terminal qualified name followed by target kind.
+- ComponentC C0 ceremony: TOWER controller/corpus/gate Git blob OIDs and the inaugural
+  certificate SHA-256 must match the canonical worktree bytes and the certificate's
+  Git preimage; typed source sets are recursively discovered from their owning
+  directories so additions cannot escape the root.
 
 Each enabled family has a rejecting red fixture, a non-matching green fixture, and a
 repository-wide zero-finding test.
