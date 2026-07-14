@@ -11,7 +11,7 @@
 def heartsDraftTicket : Unit := ()
 
 /-- TASK D5-T0018 | 难度:5 | 依赖:欠(canonical-Weil-explicit-formula-tail) | 尝试:1
-    提示:A/B/C/D are bound in D5/S3/Weil; finish E/F/G below in order before editing Hearts.
+    提示:A/B/C/D/E are bound in D5/S3/Weil; finish F/G below in order before editing Hearts.
     尸检:XM-1 rejected O6WeilPositivity with a free functional parameter as vacuous; repository and pinned mathlib inspection found no canonical Weil explicit-formula functional to bind in D5-T0001. -/
 def o6WeilExplicitFormulaTicket : Unit := ()
 
@@ -19,8 +19,8 @@ def o6WeilExplicitFormulaTicket : Unit := ()
 COMPLETED SUBTICKET D5-T0018-D: D5/S3/Weil/PrimePoleTerms binds the concrete
 von Mangoldt prime sum, pole terms, and completed-zeta digamma integral with convergence data.
 
-OPEN SUBTICKET D5-T0018-E: define the multiplicity-aware nontrivial-zero sum
-and its symmetric limiting convention.
+COMPLETED SUBTICKET D5-T0018-E: D5/S3/Weil/ZeroSum binds exact zeta-zero
+multiplicities, classical zero symmetries, and the finite symmetric-cutoff limit.
 
 OPEN SUBTICKET D5-T0018-F: bind the prime, pole, archimedean, and zero terms
 by the classical Weil explicit-formula identity for the frozen convention.
