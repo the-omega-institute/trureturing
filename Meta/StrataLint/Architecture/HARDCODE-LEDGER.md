@@ -97,6 +97,52 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
 | Internal theory references outside managed sources | `docs/develop/theory/` and ingestion/status code intentionally retain the reference inputs and provenance vocabulary. | TheoryIsolation scans Lean, non-ingestion C#, and the generated catalog, not all prose/scripts/config. SL-016 governs ingestion receipts. | Guarded where references could become formal/program authority; intentionally open as reference data. "No theory token anywhere" would delete the source being digested. |
 | Encoded, split, interpolated, or computed duplication | Examples can be manufactured as concatenation, base64, hash lookup, arithmetic, generated code, or runtime I/O. | Current policies deliberately match closed syntax shapes. | `HC-OPEN-009`: deciding arbitrary semantic equivalence or whether a computed value has the wrong authority reduces to program/intent equivalence. Every finite text rule has trivial encoding escapes; broadening it produces both bypasses and false positives. |
 | Values schema epoch transition | Expand admitted attestation v1 or v2; migrate moved the canonical writer and artifact to v2; contract completed in this PR by removing v1 read support and retaining v1 only as an SL-018 negative fixture (expand-migrate-contract, CLAUDE.md section 6). | The conservative verifier observes a finite base-owned corpus plus the actual trees, not every historically admitted snapshot. | `VALUES-SCHEMA-EPOCH` (open): the active schema epoch/domain is not yet machine-defined, so a later v1 contract can be corpus-conservative without proving the literal universal conservative-extension law. |
+| Bootstrap protected-surface representation | `BootstrapGate.cs:138-169` keeps the trust-root path classification in executable code. External data would make review and generation easier, but would also make the policy that decides what is protected depend on another mutable artifact. | SL-022 and `TrustTopologyTests` exercise the current in-process predicate; there is no higher-level signed loader/schema for an external policy. | `HC-OPEN-010`: keep the protection surface embedded until an external representation can be content-addressed and validated by a strictly higher trust layer. Moving the list now would relocate, not remove, the trust root. |
+| Diagnostic language consistency | English route/parser failures coexist with Chinese SL-021 and bootstrap messages (`Routing.cs:80,85`; `RepositoryRules.Admission.cs:77,82`; `CliApplication.cs:120,124`). Atomizer diagnostics added in this unit are English. | No diagnostic locale/style schema exists; golden cases intentionally bind some current bytes. | `HC-OPEN-011`: terminology and locale are user-interface policy, not a correctness literal. Standardize only with a declared diagnostic style plus an atomic golden-corpus migration; do not mix that migration into registry work. |
+
+## MULTI-THEORY-DEBT
+
+Audit scope: every tracked `*.cs` file (including `Blueprint/**/*.scribe.cs`) and every
+`.github` workflow/script was scanned on 2026-07-15. No workflow or GitHub script
+contains a `D5` literal. The governing basis is specification A1/A2/A7/A10/A11:
+`THEORY` is a grammar variable, while M0 admits only D5; SL-021 and `D5-T0009` are the
+recorded pressure gate. Per the no-prebuild rule, this section records debt only.
+
+### 1. Already shaped as a current-theory parameter
+
+| Site | Current shape |
+|---|---|
+| `StrataLint.Engine/Coordinates/Target.cs:35-67` | Every semantic target carries a `Theory` field; printers already project that field rather than a separate lookup. |
+| `StrataLint.Engine/Coordinates/Routing.cs:7-15` and `StrataLint.Cli/Commands/ManifestLoader.cs:12-36` | The manifest schema and loader carry `theory` as data. `RouteEngine` then deliberately applies the M0 D5-only SL-021 gate. |
+| `StrataLint.Engine/Rules/RepositoryRules.Applicability.cs:75-86` and `StrataLint.Engine/Rules/RepositoryRules.Admission.cs:68-78` | Candidate paths are split to obtain a theory token; non-D5 coordinates are classified as uninstantiated rather than unknown. |
+
+### 2. D5-scoped constants that are legitimate today
+
+| Site | Why it is scoped rather than global debt |
+|---|---|
+| `StrataLint.Engine/Rules/ValuesProjectionLoader.cs:25-48,95,277-283` and `StrataLint.Scribe/Writers/CanonicalValuesWriter.cs:45` | These constants bind the D5 values pipeline specifically: D5 Lean truth, D5 kernel data, and the D5 evidence projection. A future theory needs its own admitted source before sharing this path. |
+| `StrataLint.Cli/Conservative/GoldenCorpusMaterializer.cs:272-622`, `StrataLint.Tests/Rules/RuleFixture.cs`, `StrataLint.Definitions/Golden/GoldenCorpus.cs`, and `Meta/StrataLint/Golden/cases/*.toml` | The conservative corpus is an explicit synthetic fixture for the sole instantiated M0 theory. Those D5 examples remain valid fixtures after another theory is admitted. |
+| `Blueprint/D5/**/*.scribe.cs` and `StrataLint.Scribe.Tests/**/*.cs` | These are typed D5 document data and tests of those documents, not a generic theory registry. |
+| `StrataLint.Engine/Rules/RuleCatalog.cs:194-196`, `StrataLint.Cli/Commands/CliApplication.cs:120-124`, and `StrataLint.ArchitectureTests/CanonicalSources/TheoryIsolationPolicy.cs:19` | These literals cite permanent D5 task cases or the current D5 ingestion/autopsy grammar. The case identities must not be generalized or renumbered. |
+
+### 3. Global assumptions that must change when `D5-T0009` opens
+
+Each row is a future migration obligation, not authorization to prebuild the mechanism.
+
+| Site | Assumption to remove at multi-theory admission |
+|---|---|
+| `StrataLint.Engine/Coordinates/Gid.cs:11,42-47,137-304` | Parsing and physical-path construction force a single `Theory = "D5"`, even though `Target` already stores theory. Parse `THEORY` from the surface and preserve it through every plane inverse. |
+| `StrataLint.Engine/Coordinates/Routing.cs:62-80,145-249,282` | Paper/experiment IDs, every routed GID prefix, and the formal mirror skeleton are emitted with D5 literals instead of `ManifestSyntax.Theory`. |
+| `StrataLint.Engine/Coordinates/RepositoryPathPolicy.Paths.cs:19-180` and `StrataLint.Engine/Coordinates/RepositoryPathPolicy.cs:221` | F/B/E/C/L/P physical-path inverses and controlled-domain recognition assume the theory directory is D5. |
+| `StrataLint.Engine/Coordinates/RepositoryPathPolicy.cs:9` and `StrataLint.Engine/Rules/RepositoryRules.Admission.cs:13` | The assumption registry and axiom-debt paths are single global D5 paths rather than theory-scoped addresses. |
+| `StrataLint.Scribe/Ast/GidRef.cs:40-49`, `Ast/DocumentHeader.cs:99`, `Ast/DefinitionDsl.cs:11`, and `Emission/DocumentDefinitions.cs:83` | Plane classification, mirror derivation, and source-path bijection slice or prepend the literal `D5` instead of using the parsed target theory. |
+| `StrataLint.Engine/Rules/RepositoryRules.Applicability.cs:14,36-40`, `Rules/RepositoryRules.Helpers.cs:15,50-57`, and `Admission/LeanModels.cs:113-115` | Managed formal files and domain-scoped artifacts are recognized only under the D5 root. |
+| `StrataLint.Engine/Rules/RepositoryRules.Structure.cs:11,18,108-109,181,216-223` | Hearts, managed imports, mirror prefixes, and domain validation are fixed to D5 rather than the artifact's theory. |
+| `StrataLint.Engine/Rules/RepositoryRules.Content.cs:154` | Generic evidence-GID diagnostics identify the E plane with a `D5/E/` prefix. The D5 values checks at lines 230-238 remain category 2. |
+| `StrataLint.Engine/Rules/RepositoryRules.cs:30,39,43`, `Coordinates/DomainTypes.cs:135`, and `Rules/Backfill/BackfillInventoryRule.cs:11,15,283` | Task, query, case, and frontier discovery implement D5-shaped identifiers instead of the `THEORY-T/Q` grammar. |
+| `StrataLint.Engine/Coverage/CoverageAnalyzer.cs:83`, `Dag/TruthDagConstruction.cs:177-178`, and `Snapshot/CanonicalSnapshot.cs:96` | Artifact classification, managed-module recognition, and structured evidence canonicalization enumerate D5 as the only admitted theory. |
+| `StrataLint.Engine/Ledger/FrozenContentAddress.cs:12,16,175,182` | Frozen task/assumption references and Lean import discovery recognize only D5 case and assumption namespaces. |
+| `StrataLint.Cli/Admission/ProductionCliEnvironment.cs:247-251` | The production self-test proves only a D5 route. It must probe the admitted theory set once that set has more than one member. |
 
 ## Standard action for a new family
 
