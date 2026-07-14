@@ -126,17 +126,14 @@ public sealed class TowerManifestTests
     }
 
     [Fact]
-    public void PhasedGateRecordsImplementedPhaseTwoWithoutClaimingC0Verification()
+    public void PhasedGateIsVerifiedOnlyByAContentAddressedC0Ceremony()
     {
         var syntax = Syntax(new TowerComponentSyntax(
             "conservative-extension-gate-c",
             "phased-gate",
-            [
-                "phase1-protected-content-admission",
-                "phase2-dual-harness-conservative-extension",
-            ],
+            C0Members(),
             ["bootstrap-pr-1"],
-            "ASSUMED-UNVERIFIED"));
+            "verified"));
 
         var accepted = Assert.IsType<TowerValidationOutcome.Accepted>(
             TowerManifestValidator.Validate(syntax, Snapshot(GenesisFile()), Catalog()));
@@ -146,10 +143,35 @@ public sealed class TowerManifestTests
             static item => item is
             {
                 Subject: "conservative-extension-gate-c",
-                Status: "ASSUMED-UNVERIFIED",
+                Status: "verified",
             });
         Assert.Contains("Phase2 dual-harness gate implemented", check.Detail, StringComparison.Ordinal);
-        Assert.Contains("C0", check.Detail, StringComparison.Ordinal);
+        Assert.Contains("content-addressed C0 ceremony", check.Detail, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void PhasedGateRejectsIncompleteC0CeremonyEvidence()
+    {
+        var syntax = Syntax(new TowerComponentSyntax(
+            "conservative-extension-gate-c",
+            "phased-gate",
+            [
+                "phase1-protected-content-admission",
+                "phase2-dual-harness-conservative-extension",
+            ],
+            ["bootstrap-pr-1"],
+            "verified"));
+
+        var rejected = Assert.IsType<TowerValidationOutcome.Rejected>(
+            TowerManifestValidator.Validate(syntax, Snapshot(GenesisFile()), Catalog()));
+
+        Assert.Contains(
+            rejected.Findings,
+            static item => item is
+            {
+                Code: "TOWER-C0-CEREMONY",
+                Component: "conservative-extension-gate-c",
+            });
     }
 
     private static TowerValidationOutcome Validate(params TowerComponentSyntax[] components) =>
@@ -186,6 +208,24 @@ public sealed class TowerManifestTests
         "f3f471846dd81cfcc39ecaa386966fcf0b058464",
         1,
         "ASSUMED-UNVERIFIED");
+
+    private static ImmutableArray<string> C0Members() =>
+    [
+        "phase1-protected-content-admission",
+        "phase2-dual-harness-conservative-extension",
+        "c0/base-commit git-commit/" + new string('a', 40),
+        "c0/ceremony-commit convention/this-pr-merge-commit",
+        "c0/controller git-sha1/" + new string('b', 40)
+            + " Meta/StrataLint/StrataLint.Cli/Conservative/ConservativeExtensionCommand.cs",
+        "c0/corpus git-sha1/" + new string('c', 40)
+            + " Meta/StrataLint/StrataLint.Definitions/Golden/GoldenCorpus.cs",
+        "c0/gate-wiring git-sha1/" + new string('d', 40)
+            + " .github/scripts/harness-gate.sh",
+        "c0/inaugural-certificate sha256/" + new string('e', 64)
+            + " Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json",
+        "c0/preimage-commit git-commit/" + new string('f', 40),
+        "c0/preimage-tree git-tree/" + new string('a', 40),
+    ];
 
     private static RuleCatalog Catalog(params RuleId[] ids)
     {
