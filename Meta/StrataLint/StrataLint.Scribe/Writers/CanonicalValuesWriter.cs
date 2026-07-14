@@ -11,7 +11,7 @@ public static class CanonicalValuesWriter
     public const string RelativePath = ValuesProjectionLoader.RelativePath;
     public const string InputPath = ValuesProjectionLoader.InputPath;
     public const string ScribeLockPath = ValuesProjectionLoader.ScribeLockPath;
-    public static ImmutableArray<string> InputPaths { get; } = ValuesProjectionLoader.InputPaths;
+    public static ImmutableArray<string> InputPaths { get; } = ValuesProjectionLoader.V2InputPaths;
 
     public static ImmutableArray<byte> Write(string repositoryRoot)
     {
@@ -20,7 +20,8 @@ public static class CanonicalValuesWriter
             (Path: path, Sha256: Convert.ToHexStringLower(SHA256.HashData(
                 File.ReadAllBytes(Path.Combine(repositoryRoot, path)))))).ToArray();
         var inputSha256 = CombinedInputSha256(inputs);
-        var constants = ValuesDefinitions.All
+        var definitions = ValuesKernelDataLoader.LoadRepository(repositoryRoot);
+        var constants = definitions
             .OrderBy(static item => item.Id, StringComparer.Ordinal)
             .Select(Project)
             .ToArray();
@@ -28,8 +29,13 @@ public static class CanonicalValuesWriter
         {
             attestation = new
             {
+                consistency = new
+                {
+                    lean_binding = "gid+kind=def+std3+statement-sha256",
+                    numeric_binding = "not-kernel-evaluated:noncomputable-real",
+                },
                 emitter = "StrataLint.Scribe.ValuesProducer",
-                emitter_version = 1,
+                emitter_version = 2,
                 input_sha256 = inputSha256,
                 inputs = inputs.Select(static input => new
                 {
@@ -37,16 +43,17 @@ public static class CanonicalValuesWriter
                     sha256 = input.Sha256,
                 }).ToArray(),
                 projection = "D5/E/values--json",
+                provenance = definitions.Select(static item => item.LeanGid).ToArray(),
             },
             constants,
-            schema_version = 1,
+            schema_version = 2,
         });
         return StructuredCanonicalWriter.WriteJson(document);
     }
 
     internal static string CombinedInputSha256(IEnumerable<(string Path, string Sha256)> inputs)
     {
-        var material = "stratalint-scribe-values-input-v1\0" + string.Concat(
+        var material = "stratalint-scribe-values-input-v2\0" + string.Concat(
             inputs.Select(static input => input.Path + "\0" + input.Sha256 + "\n"));
         return Convert.ToHexStringLower(SHA256.HashData(new UTF8Encoding(false, true).GetBytes(material)));
     }
@@ -69,9 +76,11 @@ public static class CanonicalValuesWriter
                 parameters = receipt.Parameters,
                 results = receipt.Results,
             }).ToArray() ?? [],
+            lean_gid = definition.LeanGid,
+            lean_statement_sha256 = definition.LeanStatementSha256,
             method = definition.Method,
             open_reason = definition.OpenReason,
-            provenance = definition.Provenance,
+            provenance = definition.LeanGid,
             reference_error = definition.ReferenceError,
             reference_value = definition.ReferenceValue,
             refs = definition.References,

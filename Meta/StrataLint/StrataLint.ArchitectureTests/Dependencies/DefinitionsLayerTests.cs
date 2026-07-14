@@ -11,7 +11,6 @@ public sealed class DefinitionsLayerTests
     {
         { "Catalog/AnchorCatalogDefinitions.cs", "StrataLint.Scribe/Catalog/AnchorCatalogDefinitions.cs" },
         { "Catalog/ExternalAnchorManifest.cs", "StrataLint.Scribe/Catalog/ExternalAnchorManifest.cs" },
-        { "Values/ValuesDefinitions.cs", "StrataLint.Scribe/Values/ValuesDefinitions.cs" },
         { "Golden/GoldenCorpus.cs", "StrataLint.Tests/Golden/GoldenCorpus.cs" },
         { "Golden/TomlGoldenLoader.cs", "StrataLint.Tests/Golden/TomlGoldenLoader.cs" },
         { "Golden/TomlGoldenWriter.cs", "StrataLint.Tests/Golden/TomlGoldenWriter.cs" },
@@ -46,6 +45,24 @@ public sealed class DefinitionsLayerTests
 
         Assert.True(File.Exists(Path.Combine(root, DefinitionsRoot, definitionsPath)));
         Assert.False(File.Exists(Path.Combine(root, "Meta/StrataLint", legacyPath)));
+    }
+
+    [Fact]
+    public void ValuesTruthAndComputationDataLiveOutsideDefinitions()
+    {
+        var root = RepositoryLayout.FindRoot();
+
+        Assert.False(File.Exists(Path.Combine(root, DefinitionsRoot, "Values", "ValuesDefinitions.cs")));
+        Assert.False(File.Exists(Path.Combine(root, DefinitionsRoot, "Schema", "ExactRational.cs")));
+        Assert.True(File.Exists(Path.Combine(root, "D5", "S3", "Constants", "Values.lean")));
+        Assert.True(File.Exists(Path.Combine(root, "Meta", "StrataLint", "Golden", "values-kernels.toml")));
+        Assert.True(File.Exists(Path.Combine(
+            root,
+            "Meta",
+            "StrataLint",
+            "StrataLint.Scribe",
+            "Values",
+            "ValuesKernelDataLoader.cs")));
     }
 
     [Theory]

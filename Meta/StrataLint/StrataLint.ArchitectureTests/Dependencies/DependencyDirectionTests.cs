@@ -30,10 +30,10 @@ public sealed class DependencyDirectionTests
     }
 
     [Fact]
-    public void ScribeReferencesExactlyDefinitionsEngineAndQuestPdf()
+    public void ScribeReferencesExactlyDefinitionsEngineQuestPdfAndTomlyn()
     {
         Assert.Equal(
-            ["QuestPDF", "StrataLint.Definitions", "StrataLint.Engine"],
+            ["QuestPDF", "StrataLint.Definitions", "StrataLint.Engine", "Tomlyn"],
             AssemblyReferencePolicy.NonPlatformReferences(typeof(ScribeEmitter).Assembly));
     }
 
