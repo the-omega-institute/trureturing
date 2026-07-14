@@ -67,8 +67,7 @@ internal static class AnchorCatalogLoader
 
             var anchor = RequiredString(element, "anchor");
             var provenance = RequiredString(element, "provenance");
-            if (!ExternalAnchorSyntax.IsCanonical(anchor)
-                || previous is not null
+            if (previous is not null
                 && string.CompareOrdinal(previous, anchor) >= 0
                 || provenance.Contains('\r', StringComparison.Ordinal)
                 || provenance.Contains('\n', StringComparison.Ordinal))

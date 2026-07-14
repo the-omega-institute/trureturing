@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Text;
+using System.Text.Json;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -44,12 +45,33 @@ public sealed class AnchorReferenceRuleTests
     }
 
     [Fact]
-    public void RetiredInternalSchemeBlocksUnderFormatRule()
+    public void CatalogedOpaqueLegacyAnchorIsCompatibilityDataNotAnExternalAnchor()
     {
         var fixture = new RuleFixture();
-        SetCurrentAnchors(
-            fixture,
-            string.Concat("gi", "ct/v9.0/I/theorem/1.0"));
+        const string anchor = "legacy/v1/claim";
+        SetCurrentAnchors(fixture, anchor);
+        fixture.Files[CatalogPath] = Encoding.UTF8.GetString(
+            StructuredCanonicalWriter.WriteJson(JsonSerializer.SerializeToElement(new
+            {
+                definitions = new[]
+                {
+                    new { anchor, provenance = "compatibility fixture" },
+                },
+                schema_version = 1,
+            })).AsSpan());
+
+        var format = EvaluateFormat(fixture);
+        var membership = EvaluateMembership(fixture);
+
+        Assert.Empty(format.Diagnostics);
+        Assert.Empty(membership.Diagnostics);
+    }
+
+    [Fact]
+    public void UncatalogedOpaqueAnchorBlocksUnderFormatRule()
+    {
+        var fixture = new RuleFixture();
+        SetCurrentAnchors(fixture, "legacy/v1/missing");
 
         var diagnostic = Assert.Single(EvaluateFormat(fixture).Diagnostics);
 

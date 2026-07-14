@@ -21,4 +21,8 @@ internal static class ExternalAnchorSyntax
             _ => false,
         };
     }
+
+    internal static bool IsExternalFamily(string value) =>
+        value.StartsWith("lit/", StringComparison.Ordinal)
+        || value.StartsWith("mathlib/", StringComparison.Ordinal);
 }
