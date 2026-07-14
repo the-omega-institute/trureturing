@@ -13,6 +13,10 @@
       <HintPath>../StrataLint.Definitions/bin/$(Configuration)/$(TargetFramework)/StrataLint.Definitions.dll</HintPath>
       <Private>true</Private>
     </Reference>
+    <Reference Include="Tomlyn">
+      <HintPath>../StrataLint.Definitions/bin/$(Configuration)/$(TargetFramework)/Tomlyn.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
     <ProjectReference Include="../StrataLint.Engine/StrataLint.Engine.csproj" />
     <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />
     <PackageReference Include="QuestPDF" />

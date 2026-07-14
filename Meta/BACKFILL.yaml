@@ -54,6 +54,7 @@ sources:
           normalized_sha256: sha256:8bf05a9c8f1f0c4e89d6c2b07dd217b1e7ced40442df14ba85b1f983302cff53
         coverage_gids:
           - D5/E/values--json
+          - D5/S3/Constants/Values.kappa
         receipts:
           coverage: []
           scribe: []
@@ -73,6 +74,7 @@ sources:
           normalized_sha256: sha256:52a6bfce146c22055aed1985c2ed9d79935cf96558f84a7bbab6bd6c14302dde
         coverage_gids:
           - D5/E/values--json
+          - D5/S3/Constants/Values.c0
         receipts:
           coverage: []
           scribe: []
@@ -92,6 +94,7 @@ sources:
           normalized_sha256: sha256:1ef74dbf9311393d801a3875b0d03c46b47ffd72812d53dcef5113de8558aa11
         coverage_gids:
           - D5/E/values--json
+          - D5/S3/Constants/Values.cStar
         receipts:
           coverage: []
           scribe: []
@@ -111,6 +114,7 @@ sources:
           normalized_sha256: sha256:b6068cd957ea5d82535af31287f6ee52ba2c8e232c7f18224db5e1c7504b604c
         coverage_gids:
           - D5/E/values--json
+          - D5/S3/Constants/Values.hBar
         receipts:
           coverage: []
           scribe: []
@@ -130,6 +134,7 @@ sources:
           normalized_sha256: sha256:d2b1a4f7727b5187be905416aafae8fa332ab7cb786da18f85c4a5ac0f7a8238
         coverage_gids:
           - D5/E/values--json
+          - D5/S3/Constants/Values.s1
         receipts:
           coverage: []
           scribe: []
@@ -149,6 +154,7 @@ sources:
           normalized_sha256: sha256:5536d0b171320ffe238f600a0402a5c29621c4f8a5db881fee4b44afd4889ccc
         coverage_gids:
           - D5/E/values--json
+          - D5/S3/Constants/Values.ah
         receipts:
           coverage: []
           scribe: []
@@ -168,6 +174,7 @@ sources:
           normalized_sha256: sha256:128bd1363ca1def11b0dff7f6986e8d0fa740c9e2d0cc30e629960ad8c19345d
         coverage_gids:
           - D5/E/values--json
+          - D5/S3/Constants/Values.e
         receipts:
           coverage: []
           scribe: []
@@ -187,6 +194,7 @@ sources:
           normalized_sha256: sha256:3b54cc6cd44ddecea50eb2d68e1037c1d1fc520176020dcacce91ae35134e551
         coverage_gids:
           - D5/E/values--json
+          - D5/S3/Constants/Values.cPhi
         receipts:
           coverage: []
           scribe: []
@@ -206,6 +214,7 @@ sources:
           normalized_sha256: sha256:c8e0d2e19b6bf9158eb39544e3e5e38f24306e71744f22ff65f2c65fe6d30337
         coverage_gids:
           - D5/E/values--json
+          - D5/S3/Constants/Values.t0
         receipts:
           coverage: []
           scribe: []
@@ -225,6 +234,7 @@ sources:
           normalized_sha256: sha256:1af557f45a43b0badf08cd58f93d645311985374247be50c671b915f6efc1a18
         coverage_gids:
           - D5/E/values--json
+          - D5/S3/Constants/Values.deltaMean
         receipts:
           coverage: []
           scribe: []
@@ -244,6 +254,7 @@ sources:
           normalized_sha256: sha256:34c3b42a8445e88358c01c48967af6312889bfe46ce13844ddc6fdf3bce2759f
         coverage_gids:
           - D5/E/values--json
+          - D5/S3/Constants/Values.t1
         receipts:
           coverage: []
           scribe: []
@@ -263,6 +274,7 @@ sources:
           normalized_sha256: sha256:bb4524178917d778e7e46522f266ca7f514aaa57b74e10df1f9d305519190875
         coverage_gids:
           - D5/E/values--json
+          - D5/S3/Constants/Values.bh
         receipts:
           coverage: []
           scribe: []
@@ -282,6 +294,7 @@ sources:
           normalized_sha256: sha256:ea5eaca443f31646487fd6ed18714cc33ae4789f08b476e76d441cf8c60b875f
         coverage_gids:
           - D5/E/values--json
+          - D5/S3/Constants/Values.c1
         receipts:
           coverage: []
           scribe: []
@@ -301,6 +314,7 @@ sources:
           normalized_sha256: sha256:6abb48a72f98fd04d41b6a4ed36d8d7acf02f4ef7276bc5165cf269db1991214
         coverage_gids:
           - D5/E/values--json
+          - D5/S3/Constants/Values.c2
         receipts:
           coverage: []
           scribe: []
@@ -408,8 +422,8 @@ sources:
       - atom_id: spec-acceptance-01
         boundary:
           ast_path: sample/01
-          start_byte: 26053
-          end_byte: 26297
+          start_byte: 26902
+          end_byte: 27146
         fingerprints:
           raw_sha256: sha256:798034b5b9fcb3d19b71c9d9eb7904c1e87eb4dda350368bcf4e4a1aa0c0c2c5
           normalized_sha256: sha256:798034b5b9fcb3d19b71c9d9eb7904c1e87eb4dda350368bcf4e4a1aa0c0c2c5
@@ -427,8 +441,8 @@ sources:
       - atom_id: spec-acceptance-02
         boundary:
           ast_path: sample/02
-          start_byte: 26297
-          end_byte: 26521
+          start_byte: 27146
+          end_byte: 27370
         fingerprints:
           raw_sha256: sha256:e5bc5cd0485b6a4876c6327a0685be5f7575cda0c4d248fd9812b490d59a1c45
           normalized_sha256: sha256:e5bc5cd0485b6a4876c6327a0685be5f7575cda0c4d248fd9812b490d59a1c45
@@ -446,8 +460,8 @@ sources:
       - atom_id: spec-acceptance-03
         boundary:
           ast_path: sample/03
-          start_byte: 26521
-          end_byte: 26726
+          start_byte: 27370
+          end_byte: 27575
         fingerprints:
           raw_sha256: sha256:16aeb5220d79b9ee321a1933fc3a99f881017e2a7bb6701ae1cebe0815c012ab
           normalized_sha256: sha256:16aeb5220d79b9ee321a1933fc3a99f881017e2a7bb6701ae1cebe0815c012ab
@@ -465,8 +479,8 @@ sources:
       - atom_id: spec-acceptance-04
         boundary:
           ast_path: sample/04
-          start_byte: 26726
-          end_byte: 26892
+          start_byte: 27575
+          end_byte: 27741
         fingerprints:
           raw_sha256: sha256:f687d7504bb441c95a8d659c346bffb3a30d758f3757b0e0a34a58742251a09c
           normalized_sha256: sha256:f687d7504bb441c95a8d659c346bffb3a30d758f3757b0e0a34a58742251a09c
@@ -484,8 +498,8 @@ sources:
       - atom_id: spec-acceptance-05
         boundary:
           ast_path: sample/05
-          start_byte: 26892
-          end_byte: 27565
+          start_byte: 27741
+          end_byte: 28414
         fingerprints:
           raw_sha256: sha256:aff80c2819f040e9faa1ce5304b705e750917528fc97a5bf820d4ffe2bcdfc09
           normalized_sha256: sha256:aff80c2819f040e9faa1ce5304b705e750917528fc97a5bf820d4ffe2bcdfc09
@@ -503,8 +517,8 @@ sources:
       - atom_id: spec-acceptance-06
         boundary:
           ast_path: sample/06
-          start_byte: 27565
-          end_byte: 27922
+          start_byte: 28414
+          end_byte: 28771
         fingerprints:
           raw_sha256: sha256:1cdeffb9c38a12dc186be13302e0236d1cbe64db1443b1218934ed79e0495b5c
           normalized_sha256: sha256:1cdeffb9c38a12dc186be13302e0236d1cbe64db1443b1218934ed79e0495b5c
@@ -522,8 +536,8 @@ sources:
       - atom_id: spec-acceptance-07
         boundary:
           ast_path: sample/07
-          start_byte: 27922
-          end_byte: 28398
+          start_byte: 28771
+          end_byte: 29247
         fingerprints:
           raw_sha256: sha256:a9f07f7b0a89f8f78bad0550c383df81587ae3f6b340d81bce2d128595c665b1
           normalized_sha256: sha256:a9f07f7b0a89f8f78bad0550c383df81587ae3f6b340d81bce2d128595c665b1
@@ -541,8 +555,8 @@ sources:
       - atom_id: spec-acceptance-08
         boundary:
           ast_path: sample/08
-          start_byte: 28398
-          end_byte: 28692
+          start_byte: 29247
+          end_byte: 29541
         fingerprints:
           raw_sha256: sha256:62a209d5f7f16d269aaf8ee7fde6f8ff427152fe55f57cf0b9420afe6b4c6e24
           normalized_sha256: sha256:62a209d5f7f16d269aaf8ee7fde6f8ff427152fe55f57cf0b9420afe6b4c6e24
@@ -560,8 +574,8 @@ sources:
       - atom_id: spec-acceptance-09
         boundary:
           ast_path: sample/09
-          start_byte: 28692
-          end_byte: 28937
+          start_byte: 29541
+          end_byte: 29786
         fingerprints:
           raw_sha256: sha256:97b1ff8b1042994df778555f96b6e4299c6629f3ed873d0f21633a0f8bc5e9a9
           normalized_sha256: sha256:97b1ff8b1042994df778555f96b6e4299c6629f3ed873d0f21633a0f8bc5e9a9
@@ -579,8 +593,8 @@ sources:
       - atom_id: spec-acceptance-10
         boundary:
           ast_path: sample/10
-          start_byte: 28937
-          end_byte: 29172
+          start_byte: 29786
+          end_byte: 30021
         fingerprints:
           raw_sha256: sha256:d9bf4c5a303161959232a2e57dfe9d34c88754ad3f5cbbf4e4c8e1c6e7a6aac4
           normalized_sha256: sha256:d9bf4c5a303161959232a2e57dfe9d34c88754ad3f5cbbf4e4c8e1c6e7a6aac4
@@ -598,8 +612,8 @@ sources:
       - atom_id: spec-acceptance-11
         boundary:
           ast_path: sample/11
-          start_byte: 29172
-          end_byte: 29568
+          start_byte: 30021
+          end_byte: 30417
         fingerprints:
           raw_sha256: sha256:1d5d65810358f0f49e66bd771668df3814ee8da7bcc9adf21bfb5df3e3e48e91
           normalized_sha256: sha256:1d5d65810358f0f49e66bd771668df3814ee8da7bcc9adf21bfb5df3e3e48e91
@@ -617,8 +631,8 @@ sources:
       - atom_id: spec-acceptance-12
         boundary:
           ast_path: sample/12
-          start_byte: 29568
-          end_byte: 29784
+          start_byte: 30417
+          end_byte: 30633
         fingerprints:
           raw_sha256: sha256:7025126ce7d3cba2fc1259e5f837f377c121ca266851a9cb2504223c8e18041c
           normalized_sha256: sha256:7025126ce7d3cba2fc1259e5f837f377c121ca266851a9cb2504223c8e18041c

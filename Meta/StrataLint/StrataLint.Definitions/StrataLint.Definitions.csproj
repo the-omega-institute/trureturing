@@ -2,6 +2,7 @@
   <PropertyGroup>
     <RootNamespace>StrataLint.Definitions</RootNamespace>
     <AssemblyName>StrataLint.Definitions</AssemblyName>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Tomlyn" />
