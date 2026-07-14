@@ -373,6 +373,7 @@ internal sealed partial class RuleFixture
                 Encoding.UTF8);
         }
 
+        Reports[ValuesProjectionLoader.LeanModulePath] = Report();
         Reports[ValuesProjectionLoader.InputPath] = Report(declarations:
         [
             new LeanDeclaration(
