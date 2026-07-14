@@ -1,11 +1,3 @@
-P:System.DateTime.Now;Inject a clock or pass an explicit deterministic timestamp.
-P:System.DateTime.UtcNow;Inject a clock or pass an explicit deterministic timestamp.
-P:System.DateTimeOffset.Now;Inject a clock or pass an explicit deterministic timestamp.
-P:System.DateTimeOffset.UtcNow;Inject a clock or pass an explicit deterministic timestamp.
-T:System.Random;Inject a deterministic entropy source with an explicit seed.
-P:System.Environment.TickCount;Use an injected monotonic clock outside deterministic code.
-P:System.Environment.TickCount64;Use an injected monotonic clock outside deterministic code.
-M:System.Guid.NewGuid;Pass a stable identifier into deterministic code.
 M:System.Byte.Parse(System.String);Use Parse with CultureInfo.InvariantCulture.
 M:System.Byte.Parse(System.String,System.Globalization.NumberStyles);Use Parse with CultureInfo.InvariantCulture.
 M:System.Byte.ToString;Use ToString(CultureInfo.InvariantCulture).

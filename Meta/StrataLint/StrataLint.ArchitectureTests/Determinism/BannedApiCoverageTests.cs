@@ -2,6 +2,17 @@ namespace StrataLint.ArchitectureTests;
 
 public sealed class BannedApiCoverageTests
 {
+    private static readonly string[] AmbientRuntimeMembers =
+    [
+        "P:System.DateTime.Now",
+        "P:System.DateTime.UtcNow",
+        "P:System.DateTimeOffset.Now",
+        "P:System.DateTimeOffset.UtcNow",
+        "T:System.Random",
+        "P:System.Environment.TickCount",
+        "P:System.Environment.TickCount64",
+    ];
+
     private static readonly string[] NumericTypes =
     [
         "System.Byte",
@@ -32,12 +43,50 @@ public sealed class BannedApiCoverageTests
         var actual = File.ReadLines(path)
             .Where(static line => !string.IsNullOrWhiteSpace(line))
             .Select(static line => line.Split(';', 2)[0])
-            .ToHashSet(StringComparer.Ordinal);
+            .ToArray();
         var expected = RequiredCultureSensitiveMembers().ToArray();
-        var missing = expected.Where(member => !actual.Contains(member)).ToArray();
 
         Assert.Equal(143, expected.Length);
-        Assert.True(missing.Length == 0, "Missing banned symbols:\n" + string.Join("\n", missing));
+        Assert.Equal(
+            expected.Order(StringComparer.Ordinal).ToArray(),
+            actual.Order(StringComparer.Ordinal).ToArray());
+    }
+
+    [Fact]
+    public void DeterminismBannedSymbolsAreTheExactAmbientRuntimeMatrix()
+    {
+        var path = Path.Combine(
+            RepositoryLayout.FindRoot(),
+            "Meta",
+            "StrataLint",
+            "Architecture",
+            "BannedSymbols.Determinism.txt");
+        var actual = File.ReadLines(path)
+            .Where(static line => !string.IsNullOrWhiteSpace(line))
+            .Select(static line => line.Split(';', 2)[0])
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+
+        Assert.Equal(
+            AmbientRuntimeMembers.Order(StringComparer.Ordinal).ToArray(),
+            actual);
+    }
+
+    [Fact]
+    public void GuidBannedSymbolsContainOnlyGuidCreation()
+    {
+        var path = Path.Combine(
+            RepositoryLayout.FindRoot(),
+            "Meta",
+            "StrataLint",
+            "Architecture",
+            "BannedSymbols.Guid.txt");
+        var actual = File.ReadLines(path)
+            .Where(static line => !string.IsNullOrWhiteSpace(line))
+            .Select(static line => line.Split(';', 2)[0])
+            .ToArray();
+
+        Assert.Equal(["M:System.Guid.NewGuid"], actual);
     }
 
     [Fact]

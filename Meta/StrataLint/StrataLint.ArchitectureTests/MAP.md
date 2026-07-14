@@ -28,6 +28,10 @@ The root contains only shared repository discovery, test metadata, and this map.
 - Public DSL/builders: rejects a literal default parameter value matching the `Gid`,
   `CaseId`, or canonical external anchor on an effectively public member of an
   effectively public type named `*Dsl` or `*Builder`.
+- Central package versions: rejects any tracked C# string literal exactly equal to a
+  version owned by `Directory.Packages.props`.
+- .NET SDK workflow pin: parsed `actions/setup-dotnet@*` steps must use
+  `global-json-file` and may not copy a `dotnet-version` value.
 - Theory isolation: scans all Lean files, every non-ingestion C# source, and the
   generated anchor catalog; rejects internal theory paths, retired internal theory
   family tokens, and retired catalog schemes. The whitelist is limited to the
@@ -43,13 +47,16 @@ The root contains only shared repository discovery, test metadata, and this map.
   Git preimage; typed source sets are recursively discovered from their owning
   directories so additions cannot escape the root.
 
-Each enabled family has a rejecting red fixture, a non-matching green fixture, and a
-repository-wide zero-finding test.
+Each syntax policy has a rejecting fixture, a non-matching green fixture, and a
+repository-wide zero-finding test. C0 ceremony uses live repository-bound address
+tripwires plus synthetic source-discovery fixtures; it does not currently have an
+isolated byte-mismatch fixture.
 
 ### Open (not covered)
 
 - Arbitrary semantic duplication, including split, encoded, concatenated,
   interpolated, or computed values.
+- Split/interpolated/computed copies of central package or SDK versions.
 - Whether an exempt `const string` is globally unique or semantically the best
   canonical owner; the rule proves only a single machine-visible definition point per
   consumption chain.

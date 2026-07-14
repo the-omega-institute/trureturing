@@ -1,11 +1,17 @@
 # C# Architecture Rule Map
 
-- `BannedSymbols.txt` is the single deterministic-API denylist shared by Engine,
-  Scribe, and the compile-fail proof project.
-- Time, entropy, process-tick, and GUID creation APIs are forbidden outright.
+- `BannedSymbols.txt` is the culture-sensitive API denylist shared by Engine,
+  Scribe, CLI, and the compile-fail proof project.
+- `BannedSymbols.Determinism.txt` is the ambient time, entropy, and process-tick
+  denylist shared by Engine, Scribe, CLI, and the compile-fail proof.
+- `BannedSymbols.Guid.txt` is the GUID-creation denylist shared by deterministic
+  Engine/Scribe code and the compile-fail proof. CLI is excluded because it creates
+  ephemeral workspace names.
 - Culture-sensitive enforcement covers parameterless `ToString`, one-argument
   `Parse`, and provider-less `TryParse` for the listed numeric and temporal types.
   Provider-bearing overloads remain available with `CultureInfo.InvariantCulture`.
+- `HARDCODE-LEDGER.md` is the maintained guard/residual map. Every new hard-code
+  family must update it in the same change.
 
 The official analyzer is dependency-admitted because compiler diagnostics enforce
 source calls before binaries exist. Reflection remains sufficient for assembly and

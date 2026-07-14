@@ -7,6 +7,9 @@ internal static class BannedApiConfigurationPolicy
 {
     private const string PackageName = "Microsoft.CodeAnalysis.BannedApiAnalyzers";
     private const string BannedSymbolsPath = "../Architecture/BannedSymbols.txt";
+    private const string DeterminismBannedSymbolsPath =
+        "../Architecture/BannedSymbols.Determinism.txt";
+    private const string GuidBannedSymbolsPath = "../Architecture/BannedSymbols.Guid.txt";
 
     internal static string[] InspectProject(string xml)
     {
@@ -35,21 +38,41 @@ internal static class BannedApiConfigurationPolicy
         return findings.ToArray();
     }
 
-    internal static string[] InspectCentralVersion(string xml, string expectedVersion)
+    internal static string[] InspectDeterminismProject(string xml)
+    {
+        var document = XDocument.Parse(xml, LoadOptions.None);
+        var count = document.Descendants("AdditionalFiles")
+            .Count(static element =>
+                (string?)element.Attribute("Include") == DeterminismBannedSymbolsPath);
+        return count == 1
+            ? []
+            : [$"expected exactly one AdditionalFiles include for {DeterminismBannedSymbolsPath}"];
+    }
+
+    internal static string[] InspectGuidProject(string xml)
+    {
+        var document = XDocument.Parse(xml, LoadOptions.None);
+        var count = document.Descendants("AdditionalFiles")
+            .Count(static element =>
+                (string?)element.Attribute("Include") == GuidBannedSymbolsPath);
+        return count == 1
+            ? []
+            : [$"expected exactly one AdditionalFiles include for {GuidBannedSymbolsPath}"];
+    }
+
+    internal static string ReadCentralVersion(string xml)
     {
         var document = XDocument.Parse(xml, LoadOptions.None);
         var versions = document.Descendants("PackageVersion")
             .Where(static element => (string?)element.Attribute("Include") == PackageName)
             .ToArray();
-        if (versions.Length != 1)
+        if (versions.Length != 1
+            || (string?)versions[0].Attribute("Version") is not { Length: > 0 } version)
         {
-            return [$"expected exactly one central version for {PackageName}"];
+            throw new FormatException($"expected exactly one central version for {PackageName}");
         }
 
-        var actual = (string?)versions[0].Attribute("Version");
-        return actual == expectedVersion
-            ? []
-            : [$"central {PackageName} version is {actual ?? "missing"}, expected {expectedVersion}"];
+        return version;
     }
 
     internal static string[] InspectLockFile(string json, string expectedVersion)
@@ -57,15 +80,31 @@ internal static class BannedApiConfigurationPolicy
         using var document = JsonDocument.Parse(json);
         var findings = new List<string>();
         if (!document.RootElement.TryGetProperty("dependencies", out var dependencies)
-            || !dependencies.TryGetProperty("net10.0", out var framework)
-            || !framework.TryGetProperty(PackageName, out var package))
+            || dependencies.ValueKind != JsonValueKind.Object)
         {
-            return [$"lock file is missing direct {PackageName} dependency"];
+            return ["lock file is missing framework dependencies"];
         }
 
-        Expect(package, "type", "Direct", findings);
-        Expect(package, "requested", $"[{expectedVersion}, )", findings);
-        Expect(package, "resolved", expectedVersion, findings);
+        var frameworks = dependencies.EnumerateObject().ToArray();
+        if (frameworks.Length == 0)
+        {
+            return ["lock file is missing framework dependencies"];
+        }
+
+        foreach (var framework in frameworks)
+        {
+            if (!framework.Value.TryGetProperty(PackageName, out var package))
+            {
+                findings.Add(
+                    $"lock file framework {framework.Name} is missing direct {PackageName} dependency");
+                continue;
+            }
+
+            Expect(package, "type", "Direct", findings);
+            Expect(package, "requested", $"[{expectedVersion}, )", findings);
+            Expect(package, "resolved", expectedVersion, findings);
+        }
+
         return findings.ToArray();
     }
 
