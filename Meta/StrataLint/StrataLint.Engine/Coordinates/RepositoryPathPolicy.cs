@@ -58,6 +58,7 @@ internal static partial class RepositoryPathPolicy
             or "Golden/values-kernels.toml"
             or "Golden/Ceremony/c0-inaugural-conservative-certificate.json"
             or FrozenLedgerChangeClassifier.LedgerPath
+            or "Generated/FILEMAP.md"
             or "Meta/split.py" or "Meta/papergen"
             or WorkflowPath or ".github/CODEOWNERS"
             or ".github/scripts/baseline-admission.sh" or HarnessGatePath

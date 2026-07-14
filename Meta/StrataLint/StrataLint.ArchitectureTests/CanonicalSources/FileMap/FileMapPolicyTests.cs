@@ -75,6 +75,61 @@ public sealed class FileMapPolicyTests
         Assert.Equal("FILEMAP-DATA-VERIFIER", finding.Code);
     }
 
+    [Fact]
+    public void GeneratedFileWithoutProducerInventoryIsRejectedByTheRedFixture()
+    {
+        var manifest = Parse(Entry(
+            "Generated/output.json",
+            "generated",
+            "JsonEmitter",
+            "reader",
+            "emit-check"));
+
+        var finding = Assert.Single(FileMapPolicy.InspectGeneratedInventory(
+            manifest,
+            ["Generated/output.json"],
+            []));
+
+        Assert.Equal("FILEMAP-GENERATED-INVENTORY", finding.Code);
+    }
+
+    [Fact]
+    public void GeneratedDeclarationWithoutProducerIsRejectedByTheRedFixture()
+    {
+        var source = Entry(
+            "Generated/output.json",
+            "generated",
+            "none",
+            "reader",
+            "emit-check");
+
+        var exception = Assert.Throws<FormatException>(() => Parse(source));
+
+        Assert.Contains("produced_by must name a producer", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void GeneratedProducerMismatchIsRejectedByTheRedFixture()
+    {
+        var manifest = Parse(Entry(
+            "Generated/output.json",
+            "generated",
+            "JsonEmitter",
+            "reader",
+            "emit-check"));
+        var inventory = new GeneratedArtifactIdentity(
+            "Generated/output.json",
+            "OtherEmitter",
+            "emit-check");
+
+        var finding = Assert.Single(FileMapPolicy.InspectGeneratedInventory(
+            manifest,
+            ["Generated/output.json"],
+            [inventory]));
+
+        Assert.Equal("FILEMAP-GENERATED-PRODUCER", finding.Code);
+    }
+
     [Theory]
     [InlineData("Generated/manual.md", "data", "FILEMAP-DIRECTORY-KIND")]
     [InlineData("Meta/StrataLint/cases.toml", "data", "FILEMAP-DATA-RESIDENCE")]

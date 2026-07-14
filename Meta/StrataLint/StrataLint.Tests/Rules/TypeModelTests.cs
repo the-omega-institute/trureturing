@@ -141,6 +141,15 @@ public sealed class TypeModelTests
     }
 
     [Fact]
+    public void GeneratedFileMapProjectionIsClosedWorldRegistered()
+    {
+        var path = RepoPath.CreateKnown("Generated/FILEMAP.md");
+
+        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
+        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
+    }
+
+    [Fact]
     public void ClaudeSkillsLayerIsClosedWorldRegistered()
     {
         var path = RepoPath.CreateKnown(FkstMonitorSkillPath);

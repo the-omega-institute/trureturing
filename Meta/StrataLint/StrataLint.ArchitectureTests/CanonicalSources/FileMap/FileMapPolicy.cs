@@ -47,7 +47,8 @@ internal static class FileMapPolicy
                 path => File.ReadAllText(Absolute(repositoryRoot, path)),
                 StringComparer.Ordinal);
         var availableVerifiers = DataVerifierImplementations
-            .Where(pair => File.Exists(Absolute(repositoryRoot, pair.Value)))
+            .Where(pair => File.Exists(Absolute(repositoryRoot, pair.Value))
+                && manifest.Match(pair.Value) is [{ Kind: FileMapKind.Program }])
             .Select(static pair => pair.Key)
             .ToHashSet(StringComparer.Ordinal);
         var registry = RegistryLoader.Load(
@@ -65,11 +66,71 @@ internal static class FileMapPolicy
         return InspectCoverage(manifest, paths)
             .Concat(registryFindings)
             .Concat(InspectDataVerifiers(manifest, availableVerifiers))
+            .Concat(InspectGeneratedInventory(manifest, paths, GeneratedArtifactInventory.All))
             .Concat(InspectDirectoryKinds(manifest, paths))
             .Concat(InspectDependencies(manifest, files))
             .OrderBy(static finding => finding.Path, StringComparer.Ordinal)
             .ThenBy(static finding => finding.Code, StringComparer.Ordinal)
             .ToArray();
+    }
+
+    internal static IReadOnlyList<FileMapFinding> InspectGeneratedInventory(
+        FileMapManifest manifest,
+        IEnumerable<string> trackedPaths,
+        IReadOnlyList<GeneratedArtifactIdentity> inventory)
+    {
+        ArgumentNullException.ThrowIfNull(manifest);
+        ArgumentNullException.ThrowIfNull(trackedPaths);
+        ArgumentNullException.ThrowIfNull(inventory);
+        var tracked = trackedPaths.ToHashSet(StringComparer.Ordinal);
+        var indexed = inventory.ToDictionary(
+            static artifact => artifact.Path,
+            StringComparer.Ordinal);
+        var findings = new List<FileMapFinding>();
+        foreach (var path in tracked.Order(StringComparer.Ordinal))
+        {
+            var matches = manifest.Match(path);
+            if (matches is not [{ Kind: FileMapKind.Generated } generated])
+            {
+                continue;
+            }
+
+            if (!indexed.TryGetValue(path, out var artifact))
+            {
+                findings.Add(new FileMapFinding(
+                    "FILEMAP-GENERATED-INVENTORY",
+                    path,
+                    "generated file is absent from the canonical producer inventory"));
+                continue;
+            }
+
+            if (!string.Equals(generated.ProducedBy, artifact.Producer, StringComparison.Ordinal))
+            {
+                findings.Add(new FileMapFinding(
+                    "FILEMAP-GENERATED-PRODUCER",
+                    path,
+                    $"FILEMAP producer {generated.ProducedBy} differs from inventory producer {artifact.Producer}"));
+            }
+
+            if (artifact.VerifiedBy != "emit-check"
+                || !generated.VerifiedBy.Contains("emit-check", StringComparer.Ordinal))
+            {
+                findings.Add(new FileMapFinding(
+                    "FILEMAP-GENERATED-VERIFY",
+                    path,
+                    "generated file is outside the emit-check coverage set"));
+            }
+        }
+
+        foreach (var artifact in inventory.Where(artifact => !tracked.Contains(artifact.Path)))
+        {
+            findings.Add(new FileMapFinding(
+                "FILEMAP-GENERATED-STALE-INVENTORY",
+                artifact.Path,
+                "producer inventory output is absent from tracked repository files"));
+        }
+
+        return findings;
     }
 
     internal static IReadOnlyList<FileMapFinding> InspectRegistryRootAlignment(
