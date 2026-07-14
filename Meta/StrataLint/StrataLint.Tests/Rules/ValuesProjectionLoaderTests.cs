@@ -9,8 +9,37 @@ namespace StrataLint.Tests;
 public sealed class ValuesProjectionLoaderTests
 {
     private const string InputPath = ValuesProjectionLoader.InputPath;
+    private const string LeanModulePath = "D5/S3/Constants/Values.lean";
+    private const string KernelDataPath = "Meta/StrataLint/Golden/values-kernels.toml";
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     private static readonly ImmutableArray<string> InputPaths = ValuesProjectionLoader.InputPaths;
+    private static readonly ImmutableArray<string> V2InputPaths = ValuesProjectionLoader.V2InputPaths;
+    private static readonly ImmutableArray<string> ExpectedV2InputPaths =
+    [
+        LeanModulePath,
+        InputPath,
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        KernelDataPath,
+        ValuesProjectionLoader.ScribeLockPath,
+        "global.json",
+    ];
+
+    [Fact]
+    public void V1AndV2InputManifestsRemainIndependent()
+    {
+        Assert.Equal<string>(
+            [
+                InputPath,
+                "Directory.Build.props",
+                "Directory.Packages.props",
+                ValuesProjectionLoader.ScribeLockPath,
+                "global.json",
+            ],
+            InputPaths);
+
+        Assert.Equal<string>(ExpectedV2InputPaths, V2InputPaths);
+    }
 
     [Fact]
     public void CanonicalProjectionValidatesFourteenDefinitionsAndItsInputAttestation()
@@ -24,6 +53,37 @@ public sealed class ValuesProjectionLoaderTests
         Assert.Equal(14, projection.Definitions.Count);
         Assert.Equal(8, projection.Definitions.Values.Count(static item => item.Status == "emitted"));
         Assert.Equal(6, projection.Definitions.Values.Count(static item => item.Status == "registered-open"));
+    }
+
+    [Fact]
+    public void CanonicalV2ProjectionValidatesFourteenDefinitionsAndItsInputAttestation()
+    {
+        var inputs = Inputs(
+            StrictUtf8.GetBytes("formal values producer input\n"),
+            V2InputPaths);
+        var snapshot = Snapshot(inputs, V2Projection(inputs));
+
+        var projection = ValuesProjectionLoader.Load(snapshot);
+
+        Assert.Equal(14, projection.Definitions.Count);
+        Assert.Equal(8, projection.Definitions.Values.Count(static item => item.Status == "emitted"));
+        Assert.Equal(6, projection.Definitions.Values.Count(static item => item.Status == "registered-open"));
+    }
+
+    [Fact]
+    public void V2ProjectionFailsClosedWhenAnAttestedInputIsMissing()
+    {
+        var inputs = Inputs(
+            StrictUtf8.GetBytes("formal values producer input\n"),
+            V2InputPaths);
+        var projection = V2Projection(inputs);
+        var snapshot = Snapshot(
+            inputs.Where(static input => input.Path != LeanModulePath).ToImmutableArray(),
+            projection);
+
+        var exception = Assert.Throws<FormatException>(() => ValuesProjectionLoader.Load(snapshot));
+
+        Assert.Contains("input SHA-256 cannot be verified", exception.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -82,8 +142,10 @@ public sealed class ValuesProjectionLoaderTests
         return Assert.IsType<SnapshotDecodeOutcome.Decoded>(decoded).Snapshot;
     }
 
-    private static ImmutableArray<(string Path, byte[] Bytes)> Inputs(byte[] formalInput) =>
-        InputPaths.Select(path =>
+    private static ImmutableArray<(string Path, byte[] Bytes)> Inputs(
+        byte[] formalInput,
+        ImmutableArray<string>? paths = null) =>
+        (paths ?? InputPaths).Select(path =>
             (Path: path, Bytes: path == InputPath
                 ? formalInput
                 : StrictUtf8.GetBytes("fixture for " + path + "\n"))).ToImmutableArray();
@@ -93,7 +155,7 @@ public sealed class ValuesProjectionLoaderTests
     {
         var inputReceipts = inputs.Select(static input =>
             (input.Path, Sha256: Convert.ToHexStringLower(SHA256.HashData(input.Bytes)))).ToArray();
-        var combinedSha = CombinedInputSha(inputReceipts);
+        var combinedSha = CombinedInputSha(inputReceipts, version: 1);
         var emitted = new HashSet<string>(StringComparer.Ordinal)
         {
             "D5/Ah", "D5/C0", "D5/Cphi", "D5/E", "D5/cstar", "D5/hbar", "D5/kappa", "D5/s1",
@@ -120,6 +182,42 @@ public sealed class ValuesProjectionLoaderTests
             },
             constants,
             schema_version = 1,
+        });
+        return StructuredCanonicalWriter.WriteJson(root);
+    }
+
+    private static ImmutableArray<byte> V2Projection(
+        ImmutableArray<(string Path, byte[] Bytes)> inputs)
+    {
+        var inputReceipts = inputs.Select(static input =>
+            (input.Path, Sha256: Convert.ToHexStringLower(SHA256.HashData(input.Bytes)))).ToArray();
+        var ids = Ids();
+        var emitted = new HashSet<string>(StringComparer.Ordinal)
+        {
+            "D5/Ah", "D5/C0", "D5/Cphi", "D5/E", "D5/cstar", "D5/hbar", "D5/kappa", "D5/s1",
+        };
+        var root = JsonSerializer.SerializeToElement(new
+        {
+            attestation = new
+            {
+                consistency = new
+                {
+                    lean_binding = "gid+kind=def+std3+statement-sha256",
+                    numeric_binding = "not-kernel-evaluated:noncomputable-real",
+                },
+                emitter = "StrataLint.Scribe.ValuesProducer",
+                emitter_version = 2,
+                input_sha256 = CombinedInputSha(inputReceipts, version: 2),
+                inputs = inputReceipts.Select(static input => new
+                {
+                    path = input.Path,
+                    sha256 = input.Sha256,
+                }).ToArray(),
+                projection = "D5/E/values--json",
+                provenance = ids.Select(LeanGid).ToArray(),
+            },
+            constants = ids.Select(id => V2Constant(id, emitted.Contains(id))).ToArray(),
+            schema_version = 2,
         });
         return StructuredCanonicalWriter.WriteJson(root);
     }
@@ -157,6 +255,41 @@ public sealed class ValuesProjectionLoaderTests
         };
     }
 
+    private static object V2Constant(string id, bool emitted)
+    {
+        var kernels = emitted
+            ? id == "D5/Cphi"
+                ? new[]
+                {
+                    Receipt("exact-fractional-parts"),
+                    Receipt("neumaier-summation"),
+                    Receipt("full-period-window-average"),
+                }
+                : new[] { Receipt("exact-quadratic") }
+            : [];
+        return new
+        {
+            comparison = emitted ? id == "D5/Cphi" ? "reference-mismatch-open" : "reference-exact" : "not-computed-open",
+            @decimal = emitted ? "0.1" : null,
+            definition = "typed fixture",
+            error = emitted ? "0" : null,
+            exact_value = id == "D5/Cphi" || !emitted ? null : "fixture-exact",
+            formula = (string?)null,
+            id,
+            kernel_receipts = kernels,
+            lean_gid = LeanGid(id),
+            lean_statement_sha256 = new string('a', 64),
+            method = emitted ? "fixture-emitted" : "registered-open",
+            open_reason = emitted ? null : "fixture parameters are untranslated",
+            provenance = LeanGid(id),
+            reference_error = "0",
+            reference_value = "0.1",
+            refs = ImmutableDictionary<string, string>.Empty,
+            status = emitted ? "emitted" : "registered-open",
+            value = emitted ? "0.1" : null,
+        };
+    }
+
     private static object Receipt(string kernel) => new
     {
         kernel,
@@ -164,10 +297,37 @@ public sealed class ValuesProjectionLoaderTests
         results = new Dictionary<string, string>(StringComparer.Ordinal),
     };
 
-    private static string CombinedInputSha(IEnumerable<(string Path, string Sha256)> inputs)
+    private static string CombinedInputSha(
+        IEnumerable<(string Path, string Sha256)> inputs,
+        int version)
     {
-        var material = "stratalint-scribe-values-input-v1\0" + string.Concat(
+        var material = $"stratalint-scribe-values-input-v{version}\0" + string.Concat(
             inputs.Select(static input => input.Path + "\0" + input.Sha256 + "\n"));
         return Convert.ToHexStringLower(SHA256.HashData(StrictUtf8.GetBytes(material)));
     }
+
+    private static string[] Ids() =>
+    [
+        "D5/Ah", "D5/Bh", "D5/C0", "D5/Cphi", "D5/E", "D5/T0", "D5/T1",
+        "D5/c1", "D5/c2", "D5/cstar", "D5/delta.mean", "D5/hbar", "D5/kappa", "D5/s1",
+    ];
+
+    private static string LeanGid(string id) => "D5/S3/Constants/Values." + id switch
+    {
+        "D5/Ah" => "ah",
+        "D5/Bh" => "bh",
+        "D5/C0" => "c0",
+        "D5/Cphi" => "cPhi",
+        "D5/E" => "e",
+        "D5/T0" => "t0",
+        "D5/T1" => "t1",
+        "D5/c1" => "c1",
+        "D5/c2" => "c2",
+        "D5/cstar" => "cStar",
+        "D5/delta.mean" => "deltaMean",
+        "D5/hbar" => "hBar",
+        "D5/kappa" => "kappa",
+        "D5/s1" => "s1",
+        _ => throw new ArgumentOutOfRangeException(nameof(id)),
+    };
 }
