@@ -26,7 +26,7 @@ internal interface IConservativeExtensionEnvironment
 
     ConservativeRepositoryIdentity IdentifyRepository(string root);
 
-    ConservativeHarnessProgram LoadHarness(string root);
+    ConservativeHarnessProgram LoadHarness(string path);
 
     ConservativeReplayEnvelope Freeze(
         string baselineRoot,
@@ -69,8 +69,8 @@ internal static class ConservativeExtensionCommand
 
             var baselineIdentity = environment.IdentifyRepository(options.BaselineRoot);
             var candidateIdentity = environment.IdentifyRepository(options.CandidateRoot);
-            var baselineProgram = environment.LoadHarness(options.BaselineRoot);
-            var candidateProgram = environment.LoadHarness(options.CandidateRoot);
+            var baselineProgram = environment.LoadHarness(options.BaselineHarness);
+            var candidateProgram = environment.LoadHarness(options.CandidateHarness);
             var baselineLeanReportRoot = environment.FileRoot(options.BaselineLeanReport);
             var candidateLeanReportRoot = environment.FileRoot(options.CandidateLeanReport);
             var replay = environment.Freeze(
@@ -211,8 +211,8 @@ internal static class ConservativeExtensionCommand
             throw new InvalidOperationException("Lean report changed during conservative replay");
         }
 
-        if (environment.LoadHarness(options.BaselineRoot) != baselineProgram
-            || environment.LoadHarness(options.CandidateRoot) != candidateProgram)
+        if (environment.LoadHarness(options.BaselineHarness) != baselineProgram
+            || environment.LoadHarness(options.CandidateHarness) != candidateProgram)
         {
             throw new InvalidOperationException("harness program changed during conservative replay");
         }
@@ -224,6 +224,8 @@ internal static class ConservativeExtensionCommand
         string? candidateRoot = null;
         string? baselineLeanReport = null;
         string? candidateLeanReport = null;
+        string? baselineHarness = null;
+        string? candidateHarness = null;
         for (var index = 0; index < arguments.Count; index += 2)
         {
             if (index + 1 >= arguments.Count) throw Usage();
@@ -242,6 +244,12 @@ internal static class ConservativeExtensionCommand
                 case "--candidate-lean-report" when candidateLeanReport is null:
                     candidateLeanReport = RequireFile(value, "candidate Lean report");
                     break;
+                case "--baseline-harness" when baselineHarness is null:
+                    baselineHarness = RequireFile(value, "baseline harness");
+                    break;
+                case "--candidate-harness" when candidateHarness is null:
+                    candidateHarness = RequireFile(value, "candidate harness");
+                    break;
                 default:
                     throw Usage();
             }
@@ -250,16 +258,40 @@ internal static class ConservativeExtensionCommand
         if (baselineRoot is null
             || candidateRoot is null
             || baselineLeanReport is null
-            || candidateLeanReport is null)
+            || candidateLeanReport is null
+            || baselineHarness is null
+            || candidateHarness is null)
         {
             throw Usage();
         }
+
+        RequireWithinRoot(baselineHarness, baselineRoot, "baseline harness", "baseline root");
+        RequireWithinRoot(candidateHarness, candidateRoot, "candidate harness", "candidate root");
 
         return new ConservativeCommandOptions(
             baselineRoot,
             candidateRoot,
             baselineLeanReport,
-            candidateLeanReport);
+            candidateLeanReport,
+            baselineHarness,
+            candidateHarness);
+    }
+
+    private static void RequireWithinRoot(
+        string path,
+        string root,
+        string pathLabel,
+        string rootLabel)
+    {
+        var relative = Path.GetRelativePath(root, path);
+        if (Path.IsPathRooted(relative)
+            || string.Equals(relative, "..", StringComparison.Ordinal)
+            || relative.StartsWith("../", StringComparison.Ordinal)
+            || relative.StartsWith("..\\", StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException(
+                $"{pathLabel} must be within {rootLabel}: {path}");
+        }
     }
 
     private static string RequireDirectory(string path, string label)
@@ -281,7 +313,8 @@ internal static class ConservativeExtensionCommand
     private static InvalidOperationException Usage() => new(
         "USAGE: StrataLint verify-conservative "
         + "--baseline-root DIR --candidate-root DIR "
-        + "--baseline-lean-report FILE --candidate-lean-report FILE");
+        + "--baseline-lean-report FILE --candidate-lean-report FILE "
+        + "--baseline-harness FILE --candidate-harness FILE");
 
     private static ExplicitCommandResult Infrastructure(string message) => new(
         2,
@@ -295,14 +328,13 @@ internal static class ConservativeExtensionCommand
         string BaselineRoot,
         string CandidateRoot,
         string BaselineLeanReport,
-        string CandidateLeanReport);
+        string CandidateLeanReport,
+        string BaselineHarness,
+        string CandidateHarness);
 }
 
 internal sealed class ProductionConservativeExtensionEnvironment : IConservativeExtensionEnvironment
 {
-    private const string DllRelativePath =
-        "Meta/StrataLint/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll";
-
     public MaterializedConservativeCorpus Materialize(string baselineRoot) =>
         GoldenCorpusMaterializer.Materialize(baselineRoot);
 
@@ -334,11 +366,7 @@ internal sealed class ProductionConservativeExtensionEnvironment : IConservative
             frozen.TreeOid);
     }
 
-    public ConservativeHarnessProgram LoadHarness(string root)
-    {
-        var dll = Path.Combine(root, DllRelativePath);
-        return LoadHarnessAssembly(dll);
-    }
+    public ConservativeHarnessProgram LoadHarness(string path) => LoadHarnessAssembly(path);
 
     internal static ConservativeHarnessProgram LoadHarnessAssembly(string dll)
     {

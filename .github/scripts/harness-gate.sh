@@ -39,7 +39,23 @@ CANDIDATE_ROOT="$(cd "$CANDIDATE_ROOT" && pwd -P)"
 JUDGE_ROOT="$(cd "$JUDGE_ROOT" && pwd -P)"
 CANDIDATE_LEAN_REPORT="$(cd "$(dirname "$CANDIDATE_LEAN_REPORT")" && pwd -P)/$(basename "$CANDIDATE_LEAN_REPORT")"
 BASELINE_LEAN_REPORT="$(cd "$(dirname "$BASELINE_LEAN_REPORT")" && pwd -P)/$(basename "$BASELINE_LEAN_REPORT")"
-DLL_REL="Meta/StrataLint/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll"
+CLI_PROJECT_REL="Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj"
+
+resolve_target_path() {
+  local root="$1"
+  local target
+  target="$(dotnet msbuild "$root/$CLI_PROJECT_REL" \
+    -getProperty:TargetPath \
+    -property:Configuration=Release \
+    -verbosity:quiet)"
+  [[ -n "$target" && "$target" == /* && "$target" != *$'\n'* ]] \
+    || { echo "harness-gate: MSBuild returned an invalid TargetPath for '$root'" >&2; return 2; }
+  [[ "$target" == "$root/"* ]] \
+    || { echo "harness-gate: TargetPath escapes repository '$root': $target" >&2; return 2; }
+  [[ -f "$target" ]] \
+    || { echo "harness-gate: TargetPath is absent: $target" >&2; return 2; }
+  printf '%s\n' "$target"
+}
 
 summary() {
   if [[ -n "${GITHUB_STEP_SUMMARY:-}" ]]; then
@@ -64,12 +80,13 @@ dotnet build \
   --configuration Release \
   --warnaserror
 mark build-judge
+JUDGE_DLL="$(resolve_target_path "$JUDGE_ROOT")"
 
 selftest_dir="$(mktemp -d)"
 (
   cd "$JUDGE_ROOT"
-  dotnet "$DLL_REL" selftest > "$selftest_dir/a"
-  dotnet "$DLL_REL" selftest > "$selftest_dir/b"
+  dotnet "$JUDGE_DLL" selftest > "$selftest_dir/a"
+  dotnet "$JUDGE_DLL" selftest > "$selftest_dir/b"
 )
 cmp "$selftest_dir/a" "$selftest_dir/b"
 mark selftest
@@ -78,7 +95,7 @@ export STRATALINT_TIMING="${STRATALINT_TIMING:-1}"
 set +e
 (
   cd "$CANDIDATE_ROOT"
-  dotnet "$JUDGE_ROOT/$DLL_REL" check --protected-base "$BASE_REF" \
+  dotnet "$JUDGE_DLL" check --protected-base "$BASE_REF" \
     --candidate-lean-report "$CANDIDATE_LEAN_REPORT" \
     --baseline-lean-report "$BASELINE_LEAN_REPORT"
 )
@@ -94,14 +111,17 @@ fi
 if [[ $rc -eq 3 ]]; then
   make -C "$CANDIDATE_ROOT" dotnet
   mark build-candidate
+  CANDIDATE_DLL="$(resolve_target_path "$CANDIDATE_ROOT")"
   set +e
   (
     cd "$JUDGE_ROOT"
-    dotnet "$JUDGE_ROOT/$DLL_REL" verify-conservative \
+    dotnet "$JUDGE_DLL" verify-conservative \
       --baseline-root "$JUDGE_ROOT" \
       --candidate-root "$CANDIDATE_ROOT" \
       --baseline-lean-report "$BASELINE_LEAN_REPORT" \
-      --candidate-lean-report "$CANDIDATE_LEAN_REPORT"
+      --candidate-lean-report "$CANDIDATE_LEAN_REPORT" \
+      --baseline-harness "$JUDGE_DLL" \
+      --candidate-harness "$CANDIDATE_DLL"
   )
   conservative_rc=$?
   set -e
