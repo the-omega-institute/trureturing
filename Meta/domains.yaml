@@ -2,6 +2,9 @@ domains:
   Carrier:
     stratum: S0
     definition: The golden integer carrier, conjugation, norm, and units.
+  Constants:
+    stratum: S3
+    definition: Canonical real constants and registered reference centers used by audited projections.
   Conventions:
     stratum: S0
     definition: Canonical W-digit and notation conventions used by later strata.

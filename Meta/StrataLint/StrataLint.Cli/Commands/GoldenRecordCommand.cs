@@ -1,5 +1,4 @@
 using System.Globalization;
-using StrataLint.Definitions;
 
 namespace StrataLint.Cli;
 

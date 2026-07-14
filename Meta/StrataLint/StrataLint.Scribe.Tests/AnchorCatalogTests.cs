@@ -79,6 +79,11 @@ public sealed class AnchorCatalogTests
         Directory.CreateDirectory(root);
         try
         {
+            var manifestPath = Path.Combine(root, ExternalAnchorManifest.RelativePath);
+            Directory.CreateDirectory(Path.GetDirectoryName(manifestPath)!);
+            File.Copy(
+                Path.Combine(FindRepositoryRoot(), ExternalAnchorManifest.RelativePath),
+                manifestPath);
             using var output = new StringWriter();
             using var error = new StringWriter();
 
@@ -91,6 +96,26 @@ public sealed class AnchorCatalogTests
 
             Assert.Equal(1, AnchorCatalogEmitter.Emit(root, check: true, output, error));
             Assert.Contains("out of date", error.ToString(), StringComparison.Ordinal);
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Fact]
+    public void CatalogEmitterFailsClosedWhenTargetRepositoryHasNoExternalManifest()
+    {
+        var root = Path.Combine(Path.GetTempPath(), "stratalint-catalog-missing-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        try
+        {
+            using var output = new StringWriter();
+            using var error = new StringWriter();
+
+            Assert.Equal(1, AnchorCatalogEmitter.Emit(root, check: false, output, error));
+            Assert.False(File.Exists(Path.Combine(root, CanonicalAnchorCatalogWriter.RelativePath)));
+            Assert.Contains("catalog emit failed", error.ToString(), StringComparison.Ordinal);
         }
         finally
         {

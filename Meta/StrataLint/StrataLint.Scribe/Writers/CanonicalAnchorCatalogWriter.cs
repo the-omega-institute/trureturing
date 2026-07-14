@@ -8,10 +8,12 @@ public static class CanonicalAnchorCatalogWriter
 {
     public const string RelativePath = "Meta/StrataLint/Generated/anchor-catalog.v1.json";
 
-    public static ImmutableArray<byte> Write()
+    public static ImmutableArray<byte> Write() => Write(AnchorCatalogDefinitions.All);
+
+    internal static ImmutableArray<byte> Write(ImmutableArray<AnchorDefinition> definitions)
     {
-        ValidateDefinitions();
-        var definitions = AnchorCatalogDefinitions.All
+        ValidateDefinitions(definitions);
+        var projected = definitions
             .OrderBy(static item => item.Anchor.CanonicalString, StringComparer.Ordinal)
             .Select(static item => new
             {
@@ -21,15 +23,14 @@ public static class CanonicalAnchorCatalogWriter
             .ToArray();
         var document = JsonSerializer.SerializeToElement(new
         {
-            definitions,
+            definitions = projected,
             schema_version = 1,
         });
         return StructuredCanonicalWriter.WriteJson(document);
     }
 
-    private static void ValidateDefinitions()
+    private static void ValidateDefinitions(ImmutableArray<AnchorDefinition> definitions)
     {
-        var definitions = AnchorCatalogDefinitions.All;
         if (definitions.Select(static item => item.Anchor.CanonicalString)
                 .Distinct(StringComparer.Ordinal).Count() != definitions.Length)
         {

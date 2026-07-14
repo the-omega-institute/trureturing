@@ -1,18 +1,18 @@
 using System.Collections.Immutable;
 
-namespace StrataLint.Definitions;
+namespace StrataLint.Scribe;
 
 public static class AnchorCatalogDefinitions
 {
     static AnchorCatalogDefinitions() { }
 
-    public static MathlibAnchor MathlibZeckendorfModule { get; } =
-        Require<MathlibAnchor>("mathlib/module/Mathlib.Data.Nat.Fib.Zeckendorf");
-
     private static readonly Lazy<ImmutableArray<AnchorDefinition>> AllDefinitions = new(() =>
         ExternalAnchorManifest.All
             .OrderBy(static item => item.Anchor.CanonicalString, StringComparer.Ordinal)
             .ToImmutableArray());
+
+    public static MathlibAnchor MathlibZeckendorfModule { get; } =
+        Require<MathlibAnchor>(nameof(MathlibZeckendorfModule));
 
     public static ImmutableArray<AnchorDefinition> All => AllDefinitions.Value;
 
@@ -23,9 +23,10 @@ public static class AnchorCatalogDefinitions
         return definition is not null;
     }
 
-    private static T Require<T>(string value)
+    private static T Require<T>(string name)
         where T : Anchor =>
-        Anchor.ParseCanonical(value) is T anchor
+        All.SingleOrDefault(definition => string.Equals(definition.Name, name, StringComparison.Ordinal))
+            ?.Anchor is T anchor
             ? anchor
-            : throw new InvalidOperationException($"Catalog anchor {value} has the wrong subtype.");
+            : throw new InvalidOperationException($"Catalog anchor {name} is missing or has the wrong subtype.");
 }

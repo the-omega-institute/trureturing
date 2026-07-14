@@ -8,7 +8,8 @@ public sealed class ValuesProjectionTests
     [Fact]
     public void ExactQuadraticEvaluationUsesAControlledDecimalInterval()
     {
-        var definition = ValuesDefinitions.All.Single(static item => item.Id == "D5/kappa");
+        var definition = ValuesKernelDataLoader.LoadRepository(FindRepositoryRoot())
+            .Single(static item => item.Id == "D5/kappa");
 
         var result = ValuesEvaluator.Evaluate(definition);
 
@@ -24,7 +25,8 @@ public sealed class ValuesProjectionTests
     [Fact]
     public void CphiEvaluationQuantizesPlatformDependentFloatingOutput()
     {
-        var definition = ValuesDefinitions.All.Single(static item => item.Id == "D5/Cphi");
+        var definition = ValuesKernelDataLoader.LoadRepository(FindRepositoryRoot())
+            .Single(static item => item.Id == "D5/Cphi");
 
         var result = ValuesEvaluator.Evaluate(definition);
 
@@ -45,7 +47,8 @@ public sealed class ValuesProjectionTests
     [Fact]
     public void CphiProjectionRequiresFourWindowsForItsSpreadEstimate()
     {
-        var definition = ValuesDefinitions.All.Single(static item => item.Id == "D5/Cphi") with
+        var definition = ValuesKernelDataLoader.LoadRepository(FindRepositoryRoot())
+            .Single(static item => item.Id == "D5/Cphi") with
         {
             Computation = new ValueComputation.Cphi(new CphiKernelSpec(
                 TermCount: 12,
@@ -73,18 +76,35 @@ public sealed class ValuesProjectionTests
         Assert.Equal((byte)'\n', first[^1]);
         using var document = JsonDocument.Parse(first.ToArray());
         var attestation = document.RootElement.GetProperty("attestation");
+        var consistency = attestation.GetProperty("consistency");
+        Assert.Equal(
+            "gid+kind=def+std3+statement-sha256",
+            consistency.GetProperty("lean_binding").GetString());
+        Assert.Equal(
+            "not-kernel-evaluated:noncomputable-real",
+            consistency.GetProperty("numeric_binding").GetString());
         Assert.Equal("StrataLint.Scribe.ValuesProducer", attestation.GetProperty("emitter").GetString());
-        Assert.Equal(1, attestation.GetProperty("emitter_version").GetInt32());
+        Assert.Equal(2, attestation.GetProperty("emitter_version").GetInt32());
         Assert.Equal("D5/E/values--json", attestation.GetProperty("projection").GetString());
+        var provenance = attestation.GetProperty("provenance").EnumerateArray()
+            .Select(static item => item.GetString()!)
+            .ToArray();
+        Assert.Equal(14, provenance.Length);
+        Assert.All(provenance, static gid => Assert.StartsWith(
+            "D5/S3/Constants/Values.",
+            gid,
+            StringComparison.Ordinal));
         Assert.Matches("^[0-9a-f]{64}$", attestation.GetProperty("input_sha256").GetString());
         var inputPaths = attestation.GetProperty("inputs").EnumerateArray()
             .Select(static input => input.GetProperty("path").GetString()!)
             .ToArray();
         Assert.Equal(
             [
+                ValuesKernelDataLoader.LeanModulePath,
                 CanonicalValuesWriter.InputPath,
                 "Directory.Build.props",
                 "Directory.Packages.props",
+                ValuesKernelDataLoader.RelativePath,
                 CanonicalValuesWriter.ScribeLockPath,
                 "global.json",
             ],
@@ -98,9 +118,16 @@ public sealed class ValuesProjectionTests
         Assert.All(constants, static item => Assert.Equal(
             JsonValueKind.Array,
             item.GetProperty("kernel_receipts").ValueKind));
-        Assert.All(constants, static item => Assert.Equal(
-            "Lean",
-            item.GetProperty("provenance").GetString()));
+        Assert.All(constants, item =>
+        {
+            var leanGid = item.GetProperty("lean_gid").GetString();
+            Assert.Contains(leanGid, provenance, StringComparer.Ordinal);
+            Assert.Equal(leanGid, item.GetProperty("provenance").GetString());
+            Assert.Matches(
+                "^[0-9a-f]{64}$",
+                item.GetProperty("lean_statement_sha256").GetString());
+        });
+        Assert.Equal(2, document.RootElement.GetProperty("schema_version").GetInt32());
         var cphi = Assert.Single(constants, static item =>
             item.GetProperty("id").GetString() == "D5/Cphi");
         Assert.Equal("reference-mismatch-open", cphi.GetProperty("comparison").GetString());

@@ -42,9 +42,9 @@ failure and the trusted bootstrap path cannot recur.
 
 SL-022 evaluates raw changed paths before candidate-controlled inputs. Git rename and
 copy records contribute both endpoints, so removing or moving a protected old path is
-still a meta change. `Meta/StrataLint/StrataLint.Definitions/` is the typed data layer:
-its files pass normal content admission but do not receive the SL-022 meta-program
-annotation. Engine, rules, emitters, CLI, tests, gate scripts, and workflows retain their
-existing protected status. External review and branch protection remain human
-authorization; neither candidate files nor a successful candidate test job can
-synthesize approval.
+still a meta change. There is no Definitions exception: schema and fail-closed loader
+programs live with Scribe or CLI, while canonical instances live outside assemblies
+under `Meta/StrataLint/Golden/`. Engine, rules, emitters, CLI, tests, data manifests,
+gate scripts, and workflows retain their existing protected status. External review and
+branch protection remain human authorization; neither candidate files nor a successful
+candidate test job can synthesize approval.

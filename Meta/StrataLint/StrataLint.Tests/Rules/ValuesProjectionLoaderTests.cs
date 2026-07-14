@@ -33,7 +33,8 @@ public sealed class ValuesProjectionLoaderTests
         var inputs = Inputs(input);
         var projection = Projection(inputs);
         var drifted = StrictUtf8.GetBytes("formal values producer input drifted\n");
-        var snapshot = Snapshot(inputs.SetItem(0, (InputPath, drifted)), projection);
+        var inputIndex = InputPaths.IndexOf(InputPath);
+        var snapshot = Snapshot(inputs.SetItem(inputIndex, (InputPath, drifted)), projection);
 
         var exception = Assert.Throws<FormatException>(() => ValuesProjectionLoader.Load(snapshot));
 
@@ -108,8 +109,13 @@ public sealed class ValuesProjectionLoaderTests
         {
             attestation = new
             {
+                consistency = new
+                {
+                    lean_binding = "gid+kind=def+std3+statement-sha256",
+                    numeric_binding = "not-kernel-evaluated:noncomputable-real",
+                },
                 emitter = "StrataLint.Scribe.ValuesProducer",
-                emitter_version = 1,
+                emitter_version = 2,
                 input_sha256 = combinedSha,
                 inputs = inputReceipts.Select(static input => new
                 {
@@ -117,9 +123,10 @@ public sealed class ValuesProjectionLoaderTests
                     sha256 = input.Sha256,
                 }).ToArray(),
                 projection = "D5/E/values--json",
+                provenance = ids.Select(LeanGid).ToArray(),
             },
             constants,
-            schema_version = 1,
+            schema_version = 2,
         });
         return StructuredCanonicalWriter.WriteJson(root);
     }
@@ -146,9 +153,11 @@ public sealed class ValuesProjectionLoaderTests
             formula = (string?)null,
             id,
             kernel_receipts = kernels,
+            lean_gid = LeanGid(id),
+            lean_statement_sha256 = new string('a', 64),
             method = emitted ? "fixture-emitted" : "registered-open",
             open_reason = emitted ? null : "fixture parameters are untranslated",
-            provenance = "Lean",
+            provenance = LeanGid(id),
             reference_error = "0",
             reference_value = "0.1",
             refs = ImmutableDictionary<string, string>.Empty,
@@ -166,8 +175,27 @@ public sealed class ValuesProjectionLoaderTests
 
     private static string CombinedInputSha(IEnumerable<(string Path, string Sha256)> inputs)
     {
-        var material = "stratalint-scribe-values-input-v1\0" + string.Concat(
+        var material = "stratalint-scribe-values-input-v2\0" + string.Concat(
             inputs.Select(static input => input.Path + "\0" + input.Sha256 + "\n"));
         return Convert.ToHexStringLower(SHA256.HashData(StrictUtf8.GetBytes(material)));
     }
+
+    private static string LeanGid(string id) => "D5/S3/Constants/Values." + id switch
+    {
+        "D5/Ah" => "ah",
+        "D5/Bh" => "bh",
+        "D5/C0" => "c0",
+        "D5/Cphi" => "cPhi",
+        "D5/E" => "e",
+        "D5/T0" => "t0",
+        "D5/T1" => "t1",
+        "D5/c1" => "c1",
+        "D5/c2" => "c2",
+        "D5/cstar" => "cStar",
+        "D5/delta.mean" => "deltaMean",
+        "D5/hbar" => "hBar",
+        "D5/kappa" => "kappa",
+        "D5/s1" => "s1",
+        _ => throw new ArgumentOutOfRangeException(nameof(id)),
+    };
 }
