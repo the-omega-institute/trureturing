@@ -1,0 +1,7 @@
+P:System.DateTime.Now;Inject a clock or pass an explicit deterministic timestamp.
+P:System.DateTime.UtcNow;Inject a clock or pass an explicit deterministic timestamp.
+P:System.DateTimeOffset.Now;Inject a clock or pass an explicit deterministic timestamp.
+P:System.DateTimeOffset.UtcNow;Inject a clock or pass an explicit deterministic timestamp.
+T:System.Random;Inject a deterministic entropy source with an explicit seed.
+P:System.Environment.TickCount;Use an injected monotonic clock outside deterministic code.
+P:System.Environment.TickCount64;Use an injected monotonic clock outside deterministic code.

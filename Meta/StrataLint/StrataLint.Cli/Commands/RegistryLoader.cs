@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Globalization;
 using System.Text;
 using StrataLint.Engine;
 using YamlDotNet.Core;
@@ -134,7 +135,11 @@ public static class RegistryLoader
         }
 
         var schemaText = Scalar(rootMap["schema_version"], "schema_version");
-        if (!int.TryParse(schemaText, out var schemaVersion))
+        if (!int.TryParse(
+                schemaText,
+                NumberStyles.Integer,
+                CultureInfo.InvariantCulture,
+                out var schemaVersion))
         {
             throw new FormatException("schema_version must be an integer.");
         }

@@ -70,7 +70,7 @@ jobs:
       - name: Install pinned SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 10.0.103
+          global-json-file: candidate/global.json
 
       - name: Restore candidate locked dependencies
         run: |
@@ -291,7 +291,7 @@ jobs:
       - name: Install pinned SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 10.0.103
+          global-json-file: baseline/global.json
 
       - name: Download canonical Lean reports
         uses: actions/download-artifact@v4
