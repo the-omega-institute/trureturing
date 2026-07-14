@@ -43,6 +43,7 @@ public sealed record ValueDefinition(
     string? ExactValue,
     string? Error,
     string Method,
+    string Provenance,
     string? ReferenceValue,
     string? ReferenceError,
     ValueComputation? Computation,
@@ -50,6 +51,8 @@ public sealed record ValueDefinition(
 
 public static class ValuesDefinitions
 {
+    private const string Provenance = "Lean";
+
     public static ImmutableArray<ValueDefinition> All { get; } =
     [
         Exact("D5/Ah", "(5*sqrt(5)-3)/24", -3, 24, 5, 24),
@@ -123,6 +126,7 @@ public static class ValuesDefinitions
             ExactValue: exactValue,
             Error: "0",
             Method: "exact-quadratic",
+            Provenance,
             ReferenceValue: exactValue,
             ReferenceError: "0",
             new ValueComputation.ExactQuadratic(
@@ -140,6 +144,7 @@ public static class ValuesDefinitions
             ExactValue: null,
             Error: "0.000000011",
             Method: "int-exact+Neumaier+full-window",
+            Provenance,
             ReferenceValue: "0.045759332",
             ReferenceError: "0.000000011",
             new ValueComputation.Cphi(CphiKernelSpec.Canonical),
@@ -164,6 +169,7 @@ public static class ValuesDefinitions
             ExactValue: null,
             Error: null,
             Method: "registered-open",
+            Provenance,
             ReferenceValue: referenceValue,
             ReferenceError: referenceError,
             Computation: null,

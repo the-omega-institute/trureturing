@@ -148,6 +148,7 @@ public sealed class ValuesProjectionLoaderTests
             kernel_receipts = kernels,
             method = emitted ? "fixture-emitted" : "registered-open",
             open_reason = emitted ? null : "fixture parameters are untranslated",
+            provenance = "Lean",
             reference_error = "0",
             reference_value = "0.1",
             refs = ImmutableDictionary<string, string>.Empty,

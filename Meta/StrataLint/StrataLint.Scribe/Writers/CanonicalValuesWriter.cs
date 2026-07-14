@@ -71,6 +71,7 @@ public static class CanonicalValuesWriter
             }).ToArray() ?? [],
             method = definition.Method,
             open_reason = definition.OpenReason,
+            provenance = definition.Provenance,
             reference_error = definition.ReferenceError,
             reference_value = definition.ReferenceValue,
             refs = definition.References,

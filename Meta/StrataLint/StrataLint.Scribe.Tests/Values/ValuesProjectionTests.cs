@@ -98,6 +98,9 @@ public sealed class ValuesProjectionTests
         Assert.All(constants, static item => Assert.Equal(
             JsonValueKind.Array,
             item.GetProperty("kernel_receipts").ValueKind));
+        Assert.All(constants, static item => Assert.Equal(
+            "Lean",
+            item.GetProperty("provenance").GetString()));
         var cphi = Assert.Single(constants, static item =>
             item.GetProperty("id").GetString() == "D5/Cphi");
         Assert.Equal("reference-mismatch-open", cphi.GetProperty("comparison").GetString());
