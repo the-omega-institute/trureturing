@@ -9,12 +9,19 @@ namespace StrataLint.Tests;
 public sealed class ValuesProjectionLoaderTests
 {
     private const string InputPath = ValuesProjectionLoader.InputPath;
-    private const string LeanModulePath = "D5/S3/Constants/Values.lean";
-    private const string KernelDataPath = "Meta/StrataLint/Golden/values-kernels.toml";
+    private const string LeanModulePath = ValuesProjectionLoader.LeanModulePath;
+    private const string KernelDataPath = ValuesProjectionLoader.KernelDataPath;
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     private static readonly ImmutableArray<string> InputPaths = ValuesProjectionLoader.InputPaths;
-    private static readonly ImmutableArray<string> V2InputPaths = ValuesProjectionLoader.V2InputPaths;
-    private static readonly ImmutableArray<string> ExpectedV2InputPaths =
+    private static readonly ImmutableArray<string> LegacyInputPaths =
+    [
+        InputPath,
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        ValuesProjectionLoader.ScribeLockPath,
+        "global.json",
+    ];
+    private static readonly ImmutableArray<string> ExpectedInputPaths =
     [
         LeanModulePath,
         InputPath,
@@ -26,26 +33,33 @@ public sealed class ValuesProjectionLoaderTests
     ];
 
     [Fact]
-    public void V1AndV2InputManifestsRemainIndependent()
+    public void InputManifestContainsOnlyV2Inputs()
     {
-        Assert.Equal<string>(
-            [
-                InputPath,
-                "Directory.Build.props",
-                "Directory.Packages.props",
-                ValuesProjectionLoader.ScribeLockPath,
-                "global.json",
-            ],
-            InputPaths);
+        Assert.Equal<string>(ExpectedInputPaths, InputPaths);
+    }
 
-        Assert.Equal<string>(ExpectedV2InputPaths, V2InputPaths);
+    [Fact]
+    public void Sl018RejectsV1Projection()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddValuesProjection();
+        var inputs = LegacyInputPaths.Select(path =>
+            (Path: path, Bytes: StrictUtf8.GetBytes(fixture.Files[path]))).ToImmutableArray();
+        fixture.Files[ValuesProjectionLoader.RelativePath] =
+            StrictUtf8.GetString(LegacyProjection(inputs).AsSpan());
+
+        var diagnostic = Assert.Single(
+            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(18), fixture.Build()).Diagnostics);
+
+        Assert.Equal(RuleId.CreateKnown(18), diagnostic.RuleId);
+        Assert.Equal(ValuesProjectionLoader.RelativePath, diagnostic.Path);
+        Assert.Contains("root schema is invalid", diagnostic.Message, StringComparison.Ordinal);
     }
 
     [Fact]
     public void CanonicalProjectionValidatesFourteenDefinitionsAndItsInputAttestation()
     {
-        var input = StrictUtf8.GetBytes("formal values producer input\n");
-        var inputs = Inputs(input);
+        var inputs = Inputs(StrictUtf8.GetBytes("formal values producer input\n"));
         var snapshot = Snapshot(inputs, Projection(inputs));
 
         var projection = ValuesProjectionLoader.Load(snapshot);
@@ -56,27 +70,10 @@ public sealed class ValuesProjectionLoaderTests
     }
 
     [Fact]
-    public void CanonicalV2ProjectionValidatesFourteenDefinitionsAndItsInputAttestation()
+    public void ProjectionFailsClosedWhenAnAttestedInputIsMissing()
     {
-        var inputs = Inputs(
-            StrictUtf8.GetBytes("formal values producer input\n"),
-            V2InputPaths);
-        var snapshot = Snapshot(inputs, V2Projection(inputs));
-
-        var projection = ValuesProjectionLoader.Load(snapshot);
-
-        Assert.Equal(14, projection.Definitions.Count);
-        Assert.Equal(8, projection.Definitions.Values.Count(static item => item.Status == "emitted"));
-        Assert.Equal(6, projection.Definitions.Values.Count(static item => item.Status == "registered-open"));
-    }
-
-    [Fact]
-    public void V2ProjectionFailsClosedWhenAnAttestedInputIsMissing()
-    {
-        var inputs = Inputs(
-            StrictUtf8.GetBytes("formal values producer input\n"),
-            V2InputPaths);
-        var projection = V2Projection(inputs);
+        var inputs = Inputs(StrictUtf8.GetBytes("formal values producer input\n"));
+        var projection = Projection(inputs);
         var snapshot = Snapshot(
             inputs.Where(static input => input.Path != LeanModulePath).ToImmutableArray(),
             projection);
@@ -93,7 +90,7 @@ public sealed class ValuesProjectionLoaderTests
         var inputs = Inputs(input);
         var projection = Projection(inputs);
         var drifted = StrictUtf8.GetBytes("formal values producer input drifted\n");
-        var snapshot = Snapshot(inputs.SetItem(0, (InputPath, drifted)), projection);
+        var snapshot = Snapshot(inputs.SetItem(InputPaths.IndexOf(InputPath), (InputPath, drifted)), projection);
 
         var exception = Assert.Throws<FormatException>(() => ValuesProjectionLoader.Load(snapshot));
 
@@ -150,7 +147,7 @@ public sealed class ValuesProjectionLoaderTests
                 ? formalInput
                 : StrictUtf8.GetBytes("fixture for " + path + "\n"))).ToImmutableArray();
 
-    private static ImmutableArray<byte> Projection(
+    private static ImmutableArray<byte> LegacyProjection(
         ImmutableArray<(string Path, byte[] Bytes)> inputs)
     {
         var inputReceipts = inputs.Select(static input =>
@@ -165,7 +162,7 @@ public sealed class ValuesProjectionLoaderTests
             "D5/Ah", "D5/Bh", "D5/C0", "D5/Cphi", "D5/E", "D5/T0", "D5/T1",
             "D5/c1", "D5/c2", "D5/cstar", "D5/delta.mean", "D5/hbar", "D5/kappa", "D5/s1",
         };
-        var constants = ids.Select(id => Constant(id, emitted.Contains(id))).ToArray();
+        var constants = ids.Select(id => LegacyConstant(id, emitted.Contains(id))).ToArray();
         var root = JsonSerializer.SerializeToElement(new
         {
             attestation = new
@@ -186,7 +183,7 @@ public sealed class ValuesProjectionLoaderTests
         return StructuredCanonicalWriter.WriteJson(root);
     }
 
-    private static ImmutableArray<byte> V2Projection(
+    private static ImmutableArray<byte> Projection(
         ImmutableArray<(string Path, byte[] Bytes)> inputs)
     {
         var inputReceipts = inputs.Select(static input =>
@@ -216,13 +213,13 @@ public sealed class ValuesProjectionLoaderTests
                 projection = "D5/E/values--json",
                 provenance = ids.Select(LeanGid).ToArray(),
             },
-            constants = ids.Select(id => V2Constant(id, emitted.Contains(id))).ToArray(),
+            constants = ids.Select(id => Constant(id, emitted.Contains(id))).ToArray(),
             schema_version = 2,
         });
         return StructuredCanonicalWriter.WriteJson(root);
     }
 
-    private static object Constant(string id, bool emitted)
+    private static object LegacyConstant(string id, bool emitted)
     {
         var kernels = emitted
             ? id == "D5/Cphi"
@@ -255,7 +252,7 @@ public sealed class ValuesProjectionLoaderTests
         };
     }
 
-    private static object V2Constant(string id, bool emitted)
+    private static object Constant(string id, bool emitted)
     {
         var kernels = emitted
             ? id == "D5/Cphi"

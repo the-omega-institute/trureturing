@@ -11,7 +11,7 @@ public static class CanonicalValuesWriter
     public const string RelativePath = ValuesProjectionLoader.RelativePath;
     public const string InputPath = ValuesProjectionLoader.InputPath;
     public const string ScribeLockPath = ValuesProjectionLoader.ScribeLockPath;
-    public static ImmutableArray<string> InputPaths { get; } = ValuesProjectionLoader.V2InputPaths;
+    public static ImmutableArray<string> InputPaths { get; } = ValuesProjectionLoader.InputPaths;
 
     public static ImmutableArray<byte> Write(string repositoryRoot)
     {
