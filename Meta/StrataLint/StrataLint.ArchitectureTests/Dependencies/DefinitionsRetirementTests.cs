@@ -85,7 +85,7 @@ public sealed class DefinitionsRetirementTests
         var root = RepositoryLayout.FindRoot();
 
         Assert.True(File.Exists(Path.Combine(root, "D5", "S3", "Constants", "Values.lean")));
-        Assert.True(File.Exists(Path.Combine(root, "Meta", "StrataLint", "Golden", "values-kernels.toml")));
+        Assert.True(File.Exists(Path.Combine(root, "Golden", "values-kernels.toml")));
         Assert.True(File.Exists(Path.Combine(
             root,
             "Meta",

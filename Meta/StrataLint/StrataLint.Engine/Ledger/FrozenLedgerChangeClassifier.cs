@@ -17,7 +17,7 @@ public partial record FrozenLedgerChangeOutcome
 
 public static class FrozenLedgerChangeClassifier
 {
-    public const string LedgerPath = "Meta/StrataLint/Golden/Frozen/events.jsonl";
+    public const string LedgerPath = "Golden/Frozen/events.jsonl";
 
     public static FrozenLedgerChangeOutcome Classify(RawChangeSet changes)
     {

@@ -222,7 +222,7 @@ public sealed class TowerManifestTests
         "c0/gate-wiring git-sha1/" + new string('d', 40)
             + " .github/scripts/harness-gate.sh",
         "c0/inaugural-certificate sha256/" + new string('e', 64)
-            + " Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json",
+            + " Golden/Ceremony/c0-inaugural-conservative-certificate.json",
         "c0/preimage-commit git-commit/" + new string('f', 40),
         "c0/preimage-tree git-tree/" + new string('a', 40),
     ];

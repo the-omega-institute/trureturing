@@ -54,12 +54,16 @@ internal static partial class RepositoryPathPolicy
 
         if (value is "Meta/domains.yaml" or "Meta/BACKFILL.yaml" or "Meta/registry.yaml"
             or "Library/queries.yaml" or AssumptionRegistryPath
+            or "Golden/values-kernels.toml"
+            or "Golden/Ceremony/c0-inaugural-conservative-certificate.json"
+            or FrozenLedgerChangeClassifier.LedgerPath
             or "Meta/split.py" or "Meta/papergen"
             or WorkflowPath or ".github/CODEOWNERS"
             or ".github/scripts/baseline-admission.sh" or HarnessGatePath
             || value.StartsWith("Meta/StrataLint/", StringComparison.Ordinal)
             || value.StartsWith(".fkst/", StringComparison.Ordinal)
             || value.StartsWith(".claude/skills/", StringComparison.Ordinal)
+            || IsGoldenCaseData(value)
             || IsCanonicalFutureCoordinate(value))
         {
             return null;
@@ -96,6 +100,22 @@ internal static partial class RepositoryPathPolicy
             "Meta" => Sl000(value, "unknown Meta artifact"),
             _ => Sl000(value, "unknown top-level artifact"),
         };
+    }
+
+    private static bool IsGoldenCaseData(string value)
+    {
+        const string prefix = "Golden/cases/";
+        if (!value.StartsWith(prefix, StringComparison.Ordinal)
+            || !value.EndsWith(".toml", StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        var fileName = value[prefix.Length..];
+        return fileName.Length > ".toml".Length
+            && !fileName.Contains('/', StringComparison.Ordinal)
+            && fileName[..^".toml".Length].All(static character =>
+                char.IsAsciiLetterOrDigit(character) || character is '-' or '_');
     }
 
     internal static bool TryResolve(RepoPath path, ValidatedPolicy policy, out Gid? gid)

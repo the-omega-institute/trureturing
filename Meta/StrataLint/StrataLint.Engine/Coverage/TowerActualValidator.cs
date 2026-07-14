@@ -383,7 +383,7 @@ internal static class TowerActualValidator
         ImmutableArray<TowerFinding>.Builder findings,
         ImmutableArray<TowerCheck>.Builder checks)
     {
-        const string path = "Meta/StrataLint/Golden/Frozen/events.jsonl";
+        const string path = FrozenLedgerChangeClassifier.LedgerPath;
         var found = snapshot.TryGetFile(path, out var file)
             && file.Text.Split('\n', StringSplitOptions.RemoveEmptyEntries).Any(line => IsGenesis(line, bootstrap.GenesisEvent));
         if (!found)
