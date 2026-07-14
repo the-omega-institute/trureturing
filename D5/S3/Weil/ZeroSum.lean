@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:formal-analysis-foundation-only)
    mirror-E: none(waiver:structural-explicit-formula-terms-only)
-   anchors: [pzg/v170/26.3, pzg/v170/26.4]
+   anchors: []
    digest: Bind multiplicity-weighted zeta zeros through finite symmetric spectral cutoffs. -/
 
 import D5.S3.Weil.FourierLaplace

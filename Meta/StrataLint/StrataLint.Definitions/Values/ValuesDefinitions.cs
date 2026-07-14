@@ -51,7 +51,7 @@ public sealed record ValueDefinition(
 
 public static class ValuesDefinitions
 {
-    private const string Provenance = "GICT-v3.6-appendix-A";
+    private const string Provenance = "Lean";
 
     public static ImmutableArray<ValueDefinition> All { get; } =
     [
@@ -59,7 +59,7 @@ public static class ValuesDefinitions
         Open(
             "D5/Bh",
             "h-side epsilon coefficient",
-            "Appendix A and the cited extraction round do not specify the h-sequence, epsilon grid, or fit window.",
+            "The h-sequence, epsilon grid, and fit window are not defined executablely.",
             "-0.14076",
             "0.00007"),
         Exact("D5/C0", "phi/2", 1, 4, 1, 4),
@@ -74,7 +74,7 @@ public static class ValuesDefinitions
         Open(
             "D5/T1",
             "first moment of T",
-            "Appendix A gives the observation and error bar but not the moment sequence or extraction window.",
+            "The moment sequence and extraction window are not defined executablely.",
             "0.03182",
             "0.00002"),
         Open(

@@ -2,7 +2,7 @@
    generality: G
    mirror-B: none(waiver:harness-ticket)
    mirror-E: none(waiver:harness-ticket)
-   anchors: [spec/v7.11/A11]
+   anchors: []
    digest: Implement papergen when the first fully parseable paper recipe exists. -/
 
 /-- TASK D5-T0005 | 难度:4 | 依赖:欠(parseable-recipe) | 尝试:0

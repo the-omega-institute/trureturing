@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:formal-analysis-foundation-only)
    mirror-E: none(waiver:classical-analysis-tail-without-numerical-dependency)
-   anchors: [pzg/v170/26.4]
+   anchors: []
    digest: Extend the concrete Fourier-Laplace transform to an entire function via Paley-Wiener. -/
 
 import D5.S3.Weil.FourierLaplace

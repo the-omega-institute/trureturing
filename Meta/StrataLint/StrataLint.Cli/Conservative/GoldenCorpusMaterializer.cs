@@ -47,8 +47,6 @@ internal static partial class GoldenCorpusMaterializer
     private const string Schema = "stratalint-conservative-corpus-v1";
     private const string AnchorCatalogPath = "Meta/StrataLint/Generated/anchor-catalog.v1.json";
     private const string BackfillPath = "Meta/BACKFILL.yaml";
-    private const string GictTheoryPath = "docs/develop/theory/GICT_complete_development_v3_3.md";
-    private const string PzgTheoryPath = "docs/develop/theory/PZG_BEDC_kernel_formal_170.md";
     private const string SpecificationPath = "docs/develop/spec/golden-ledger-repo-spec.md";
 
     internal static MaterializedConservativeCorpus Materialize(string baselineRoot)
@@ -218,7 +216,7 @@ internal static partial class GoldenCorpusMaterializer
             var files = new Dictionary<string, string>(StringComparer.Ordinal)
             {
                 ["Meta/domains.yaml"] = GoldenCorpus.FixtureDomains,
-                [BackfillPath] = Read(root, BackfillPath),
+                [BackfillPath] = GoldenCorpus.FixtureBackfill,
                 ["Meta/registry.yaml"] = GoldenCorpus.FixtureRegistry,
                 [AnchorCatalogPath] = Read(root, AnchorCatalogPath),
                 ["Library/queries.yaml"] = "schema_version: 1\nqueries: []\n",
@@ -227,8 +225,7 @@ internal static partial class GoldenCorpusMaterializer
                     Generality.General,
                     "D5/B/S0/Carrier/Ring") + "def goldenRing : Nat := 0\n",
                 [GoldenCorpus.BlueprintPath] = "# Golden ring\n",
-                [GictTheoryPath] = Read(root, GictTheoryPath),
-                [PzgTheoryPath] = Read(root, PzgTheoryPath),
+                [GoldenCorpus.FixtureDigestionSourcePath] = GoldenCorpus.FixtureDigestionSource,
                 [SpecificationPath] = RestoreApprovedCanonicalClaim(Read(root, SpecificationPath)),
             };
             var reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)

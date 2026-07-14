@@ -18,7 +18,8 @@ internal static class AnchorReferenceRule
 
             foreach (var anchor in header.Anchors)
             {
-                if (!catalog.Definitions.ContainsKey(anchor))
+                if (ExternalAnchorSyntax.IsCanonical(anchor)
+                    && !catalog.Definitions.ContainsKey(anchor))
                 {
                     findings.Add(new RuleFinding(
                         path.Value,

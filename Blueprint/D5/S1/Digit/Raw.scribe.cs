@@ -16,7 +16,6 @@ internal sealed class RawDocument : IScribeDocumentDefinition
             Header(
                 "D5/S1/Digit/Raw",
                 "Raw W digits bridge finite multiplicities to mathlib Zeckendorf lists.",
-                AnchorCatalogDefinitions.GictI2Definition1_4,
                 AnchorCatalogDefinitions.MathlibZeckendorfModule),
             H("Raw W-Digit Strings"),
             Blocks(

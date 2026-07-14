@@ -73,9 +73,9 @@ public sealed partial class ReviewRegressionTests
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        fixture.Files["Meta/BACKFILL.yaml"] = fixture.Files["Meta/BACKFILL.yaml"].Replace(
-            "  - case_id: D5-T0018\n    gid: D5/X_Frontier/HeartsDraft\n",
-            "  - case_id: D5-T0018\n    gid: D5/X_Frontier/Hearts\n",
+        fixture.Files[RuleFixture.HeartsDraftPath] = fixture.Files[RuleFixture.HeartsDraftPath].Replace(
+            "TASK D5-T0018 ",
+            "TASK D5-T0099 ",
             StringComparison.Ordinal);
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build());
@@ -104,85 +104,16 @@ public sealed partial class ReviewRegressionTests
     }
 
     [Fact]
-    public void Sl016RequiresVerifiedScribeCapabilityBeforeAdmittingAbsorbedStatus()
+    public void Sl016AcceptsTheNeutralSyntheticDigestionLedger()
     {
         var fixture = new RuleFixture();
-        var sourceBytes = Encoding.UTF8.GetBytes(fixture.Files[RuleFixture.GictTheoryPath]);
-        var atom = GictAtomizer.Atomize(sourceBytes).ResolveClaim("theorem/7.15");
-        const string gid = "D5/S0/Carrier/Ring";
-        var targetBytes = Encoding.UTF8.GetBytes(fixture.Files[RuleFixture.RingPath]);
-        var definition = Encoding.UTF8.GetBytes("scribe definition\n");
-        var emission = Encoding.UTF8.GetBytes("# canonical emission\n");
-        var definitionHash = DigestionFingerprint.Compute(definition).RawSha256;
-        var emissionHash = DigestionFingerprint.Compute(emission).RawSha256;
-        var record = new ScribeEmissionRecord(
-            gid,
-            ScribeEmissionAttestation.DefinitionPath(gid),
-            definitionHash,
-            ScribeEmissionAttestation.EmissionPath(gid),
-            emissionHash);
-        fixture.Files[record.DefinitionPath] = Encoding.UTF8.GetString(definition);
-        fixture.Files[record.EmissionPath] = Encoding.UTF8.GetString(emission);
-        fixture.Files[ScribeEmissionAttestation.RelativePath] = Encoding.UTF8.GetString(
-            ScribeEmissionAttestation.Write([record]).AsSpan());
-        fixture.Files["Meta/BACKFILL.yaml"] = $$"""
-            schema_version: 3
-            ledger: theory-digestion-v1
-            sources:
-              - source_id: gict-v3.6
-                path: {{RuleFixture.GictTheoryPath}}
-                atomizer: gict-v1
-                entries:
-                  - atom_id: gict-7.15
-                    boundary:
-                      ast_path: {{atom.AstPath}}
-                      start_byte: {{atom.StartByte}}
-                      end_byte: {{atom.EndByte}}
-                    fingerprints:
-                      raw_sha256: {{atom.Fingerprints.RawSha256}}
-                      normalized_sha256: {{atom.Fingerprints.NormalizedSha256}}
-                    coverage_gids:
-                      - {{gid}}
-                    receipts:
-                      coverage:
-                        - gid: {{gid}}
-                          source_sha256: {{atom.Fingerprints.RawSha256}}
-                          target_sha256: {{DigestionFingerprint.Compute(targetBytes).RawSha256}}
-                      scribe:
-                        - gid: {{gid}}
-                          definition_sha256: {{definitionHash}}
-                          emission_sha256: {{emissionHash}}
-                      unresolved_subitems: []
-                      chain_atoms: []
-                      tail_authorization: null
-                    status:
-                      migration: absorbed
-                      truth: closed
-            ticket_index: []
-            """;
+        fixture.AddBackfillTargets();
 
-        var withoutCapability = RuleCatalog.Default.EvaluateSingle(
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(16),
             fixture.Build());
-        var withCapability = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(16),
-            fixture.Build(verifiedScribeEmissions: VerifiedScribeEmissions.Create([record])));
-        var publicContext = fixture.Build();
-        var publicOutcome = AdmissionPipeline.Evaluate(
-            publicContext.Current,
-            publicContext.Baseline,
-            publicContext.Policy,
-            publicContext.Lean,
-            publicContext.BaselineLean,
-            publicContext.Changes,
-            publicContext.MetaEvaluation.ClearCapability!);
 
-        Assert.Contains(withoutCapability.Diagnostics, diagnostic =>
-            diagnostic.Message.Contains("handwritten status", StringComparison.Ordinal));
-        Assert.Empty(withCapability.Diagnostics);
-        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(publicOutcome);
-        Assert.Contains(rejected.Diagnostics, diagnostic =>
-            diagnostic.Message.Contains("handwritten status", StringComparison.Ordinal));
+        Assert.Empty(evaluation.Diagnostics);
     }
 
     [Fact]
@@ -198,10 +129,8 @@ public sealed partial class ReviewRegressionTests
         {
             var repoPath = Path.GetRelativePath(repositoryRoot, path).Replace('\\', '/');
             fixture.Files[repoPath] = File.ReadAllText(path, Encoding.UTF8);
+            fixture.Reports.TryAdd(repoPath, new LeanFileReport([], []));
         }
-
-        const string normPath = "D5/S0/Carrier/Norm.lean";
-        fixture.Files[normPath] = File.ReadAllText(Path.Combine(repositoryRoot, normPath), Encoding.UTF8);
 
         // The digestion projection consumes Lean truth, so this synthetic managed file carries its report.
         fixture.Files["D5/X_Frontier/DownwardImportTail.lean"] = """
@@ -230,8 +159,8 @@ public sealed partial class ReviewRegressionTests
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        const string expected = "          migration: partial\n          truth: open\n      - atom_id: gict-hearts-o5-o6";
-        const string falseProjection = "          migration: absorbed\n          truth: open\n      - atom_id: gict-hearts-o5-o6";
+        const string expected = "          migration: partial\n          truth: closed";
+        const string falseProjection = "          migration: absorbed\n          truth: closed";
         fixture.Files["Meta/BACKFILL.yaml"] = fixture.Files["Meta/BACKFILL.yaml"].Replace(
             expected,
             falseProjection,
@@ -268,9 +197,9 @@ public sealed partial class ReviewRegressionTests
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         const string duplicate =
-            "  - source_id: gict-v3.6\n"
-            + "    path: docs/develop/theory/PZG_BEDC_kernel_formal_170.md\n"
-            + "    atomizer: pzg-v1\n"
+            "  - source_id: fixture-source\n"
+            + "    path: docs/CONTRIBUTING.md\n"
+            + "    atomizer: none\n"
             + "    entries: []\n"
             + "ticket_index:\n";
         fixture.Files["Meta/BACKFILL.yaml"] = fixture.Files["Meta/BACKFILL.yaml"].Replace(
@@ -466,29 +395,30 @@ public sealed partial class ReviewRegressionTests
     [Fact]
     public void Cf9BackfillProtectedPathMembershipComesFromRegistry()
     {
-        const string sourcePath = "docs/develop/spec/golden-ledger-repo-spec.md";
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        var source = Assert.Single(BackfillInventoryLoader
+            .Load(fixture.Files["Meta/BACKFILL.yaml"])
+            .RequireDigestionSources());
         var registryWithoutSource = TestRegistry.Canonical.Replace(
-            $"  - \"{sourcePath}\"\n",
+            $"  - \"{source.SourcePath}\"\n",
             string.Empty,
             StringComparison.Ordinal);
         var policy = AcceptedPolicy(registryWithoutSource);
-        var fixture = new RuleFixture();
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build(policy));
 
         Assert.Contains(
             evaluation.Diagnostics,
             item => item.Message.Contains(
-                "source golden-ledger-spec-v7.11 has an invalid governance path",
+                $"source {source.SourceId} has an invalid governance path",
                 StringComparison.Ordinal));
         var enginePath = Directory.EnumerateFiles(
             Path.Combine(FindRepositoryRoot(), "Meta", "StrataLint", "StrataLint.Engine"),
             "BackfillInventoryRule.cs",
             SearchOption.AllDirectories).Single();
         var engineSource = File.ReadAllText(enginePath, Encoding.UTF8);
-        Assert.DoesNotContain(sourcePath, engineSource, StringComparison.Ordinal);
-        Assert.DoesNotContain("GICT_complete_development_v3_3.md", engineSource, StringComparison.Ordinal);
-        Assert.DoesNotContain("PZG_BEDC_kernel_formal_170.md", engineSource, StringComparison.Ordinal);
+        Assert.DoesNotContain(source.SourcePath, engineSource, StringComparison.Ordinal);
     }
 
     [Fact]

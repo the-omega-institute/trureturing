@@ -20,8 +20,6 @@ internal sealed partial class RuleFixture
     internal const string WorkflowPath = RepositoryPathPolicy.WorkflowPath;
     internal const string HarnessGatePath = RepositoryPathPolicy.HarnessGatePath;
     internal const string SpecificationPath = BootstrapGate.SpecificationPath;
-    internal const string GictTheoryPath = "docs/develop/theory/GICT_complete_development_v3_3.md";
-    internal const string PzgTheoryPath = "docs/develop/theory/PZG_BEDC_kernel_formal_170.md";
     internal const string SyntheticProtectedPath =
         "Meta/StrataLint/StrataLint.Engine/SyntheticProtected.cs";
     internal const string DefinitionsDataSourcePath =
@@ -46,7 +44,7 @@ internal sealed partial class RuleFixture
         Files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             ["Meta/domains.yaml"] = TestRegistry.Domains,
-            ["Meta/BACKFILL.yaml"] = File.ReadAllText(Path.Combine(repositoryRoot, "Meta", "BACKFILL.yaml"), Encoding.UTF8),
+            ["Meta/BACKFILL.yaml"] = GoldenCorpus.FixtureBackfill,
             ["Meta/registry.yaml"] = TestRegistry.Canonical,
             [AnchorCatalogPath] = File.ReadAllText(
                 Path.Combine(repositoryRoot, "Meta", "StrataLint", "Generated", "anchor-catalog.v1.json"),
@@ -54,16 +52,8 @@ internal sealed partial class RuleFixture
             ["Library/queries.yaml"] = "schema_version: 1\nqueries: []\n",
             [RingPath] = Header + "def goldenRing : Nat := 0\n",
             [BlueprintPath] = "# Golden ring\n",
+            [GoldenCorpus.FixtureDigestionSourcePath] = GoldenCorpus.FixtureDigestionSource,
         };
-        foreach (var theoryPath in new[]
-        {
-            GictTheoryPath,
-            PzgTheoryPath,
-        })
-        {
-            Files[theoryPath] = File.ReadAllText(Path.Combine(repositoryRoot, theoryPath), Encoding.UTF8);
-        }
-
         const string specPath = SpecificationPath;
         Files[specPath] = RestoreApprovedCanonicalClaim(
             File.ReadAllText(Path.Combine(repositoryRoot, specPath), Encoding.UTF8));
@@ -306,23 +296,7 @@ internal sealed partial class RuleFixture
             {
                 if (path == ValuesProjectionLoader.RelativePath)
                 {
-                    var repositoryRoot = FindRepositoryRoot();
-                    Files[path] = File.ReadAllText(Path.Combine(repositoryRoot, path), Encoding.UTF8);
-                    foreach (var inputPath in ValuesProjectionLoader.InputPaths)
-                    {
-                        Files[inputPath] = File.ReadAllText(
-                            Path.Combine(repositoryRoot, inputPath),
-                            Encoding.UTF8);
-                    }
-
-                    Reports[ValuesProjectionLoader.InputPath] = Report(declarations: new[]
-                    {
-                        new LeanDeclaration(
-                            "valuesProducerTicket",
-                            "def",
-                            "Unit",
-                            ImmutableArray<string>.Empty),
-                    });
+                    AddValuesProjection();
                 }
 
                 continue;
@@ -384,6 +358,29 @@ internal sealed partial class RuleFixture
                 BaselineReports[path] = Reports[path];
             }
         }
+    }
+
+    internal void AddValuesProjection()
+    {
+        var repositoryRoot = FindRepositoryRoot();
+        Files[ValuesProjectionLoader.RelativePath] = File.ReadAllText(
+            Path.Combine(repositoryRoot, ValuesProjectionLoader.RelativePath),
+            Encoding.UTF8);
+        foreach (var inputPath in ValuesProjectionLoader.InputPaths)
+        {
+            Files[inputPath] = File.ReadAllText(
+                Path.Combine(repositoryRoot, inputPath),
+                Encoding.UTF8);
+        }
+
+        Reports[ValuesProjectionLoader.InputPath] = Report(declarations:
+        [
+            new LeanDeclaration(
+                "valuesProducerTicket",
+                "def",
+                "Unit",
+                ImmutableArray<string>.Empty),
+        ]);
     }
 
     internal void AddNormalizedBackfillTicketTarget()

@@ -88,17 +88,17 @@ internal static partial class GoldenCorpus
             "missing-backfill-disposition",
             [],
             [Replace("          - D5/S0/Carrier/BackfillTarget\n", "")],
-            [D(16, "Meta/BACKFILL.yaml", "entry gict-7.15 coverage_gids must be a list")]),
+            [D(16, "Meta/BACKFILL.yaml", "entry fixture-atom coverage_gids must be a list")]),
         C(
             "duplicate-protected-backfill-entry",
             [],
-            [Anchor("gict-7.15", true)],
-            [D(16, "Meta/BACKFILL.yaml", "duplicate atom_id: gict-7.15")]),
+            [Anchor("fixture-atom", true)],
+            [D(16, "Meta/BACKFILL.yaml", "duplicate atom_id: fixture-atom")]),
         C(
             "dangling-backfill-entry",
             [],
             [Disposition("D5/S0/Carrier/Missing")],
-            [D(16, "Meta/BACKFILL.yaml", "entry gict-7.15 coverage target is absent: D5/S0/Carrier/Missing")]),
+            [D(16, "Meta/BACKFILL.yaml", "entry fixture-atom coverage target is absent: D5/S0/Carrier/Missing")]),
         C(
             "invalid-protected-backfill-schema",
             [],
@@ -107,8 +107,8 @@ internal static partial class GoldenCorpus
         C(
             "changed-protected-source-path",
             [],
-            [Replace("path: docs/develop/theory/GICT_complete_development_v3_3.md", "path: Library/queries.yaml")],
-            [D(16, "Meta/BACKFILL.yaml", "source gict-v3.6 has an invalid governance path")]),
+            [Replace("path: docs/GOVERNANCE.md", "path: Library/queries.yaml")],
+            [D(16, "Meta/BACKFILL.yaml", "source fixture-source has an invalid governance path")]),
         C(
             "ticket-target-task-mismatch",
             [],

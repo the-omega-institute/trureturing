@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Carrier/Norm
    mirror-E: none(waiver:algebraically-proved)
-   anchors: [gict/v3.6/I.1/theorem/1.3/ii]
+   anchors: []
    digest: The explicit golden norm is conjugate multiplication and is multiplicative. -/
 
 import D5.S0.Carrier.Conj
@@ -31,7 +31,7 @@ theorem norm_eq_mul_conj (x : GoldenInt) : (norm x : GoldenInt) = x * conj x := 
   simp [norm, conj]
   ring
 
-/-- GICT Theorem 1.3(ii). -/
+/-- The coordinate formula for the golden integer norm. -/
 @[simp] theorem norm_mul (x y : GoldenInt) : norm (x * y) = norm x * norm y := by
   rcases x with ⟨a, b⟩
   rcases y with ⟨c, d⟩

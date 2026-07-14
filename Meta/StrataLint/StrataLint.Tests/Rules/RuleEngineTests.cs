@@ -126,7 +126,7 @@ public sealed class RuleEngineTests
     public void Sl018RejectsAttestedValuesWhenTheLeanInputDrifts()
     {
         var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
+        fixture.AddValuesProjection();
         fixture.Files[ValuesProjectionLoader.InputPath] += "-- drift\n";
 
         var diagnostic = Assert.Single(

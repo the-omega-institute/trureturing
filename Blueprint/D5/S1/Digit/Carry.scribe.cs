@@ -9,7 +9,6 @@ internal sealed class CarryDocument : IScribeDocumentDefinition
             Header(
                 "D5/S1/Digit/Carry",
                 "Four local Fibonacci carry rules preserve the value of finite raw W digits.",
-                AnchorCatalogDefinitions.GictI2Definition1_4,
                 AnchorCatalogDefinitions.MathlibZeckendorfModule),
             H("Local Carry Rules"),
             Blocks(

@@ -1,4 +1,3 @@
-using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -11,10 +10,6 @@ internal sealed record DefaultInjectionFinding(string Path, string Message);
 
 internal static class DefaultInjectionPolicy
 {
-    private static readonly Regex LegacyAnchorPattern = new(
-        "^(?:GICT|PZG)-(?:v[0-9]+(?:\\.[0-9]+)?-)?[A-Za-z0-9]+(?:[.-][A-Za-z0-9]+)+$",
-        RegexOptions.CultureInvariant);
-
     internal static IReadOnlyList<DefaultInjectionFinding> InspectRepository(string repositoryRoot) =>
         CSharpRepositorySources.Enumerate(repositoryRoot)
             .SelectMany(source => InspectSource(
@@ -81,6 +76,5 @@ internal static class DefaultInjectionPolicy
     private static bool IsCanonicalValue(string value) =>
         Gid.TryParse(value, out _)
         || CaseId.TryCreate(value, out _)
-        || Anchor.TryParseCanonical(value) is AnchorParseResult.Parsed
-        || LegacyAnchorPattern.IsMatch(value);
+        || Anchor.TryParseCanonical(value) is AnchorParseResult.Parsed;
 }

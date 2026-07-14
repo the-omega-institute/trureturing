@@ -17,8 +17,7 @@ internal sealed class LogDocument : IScribeDocumentDefinition
         return DocumentDefinition.Create(ScribeDocument.Create(
             Header(
                 "D5/S1/Scale/Log",
-                "Nonzero golden integers have an integer logarithmic scale with exact unit shifts.",
-                AnchorCatalogDefinitions.GictI2Definition1_4),
+                "Nonzero golden integers have an integer logarithmic scale with exact unit shifts."),
             H("Golden Logarithmic Scale"),
             Blocks(
                 Paragraph(
