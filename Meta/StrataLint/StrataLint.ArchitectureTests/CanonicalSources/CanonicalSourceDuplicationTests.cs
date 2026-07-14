@@ -1,3 +1,5 @@
+using StrataLint.Engine;
+
 namespace StrataLint.ArchitectureTests;
 
 public sealed class CanonicalSourceDuplicationTests
@@ -40,6 +42,37 @@ public sealed class CanonicalSourceDuplicationTests
             [id]));
     }
 
+    [Theory]
+    [InlineData("Meta/StrataLint/Synthetic.cs")]
+    [InlineData("Meta/StrataLint/Golden/cases/synthetic.toml")]
+    public void LongExactSpecificationPassageIsRejectedByTheRedFixture(string path)
+    {
+        const string passage =
+            "这是一段足够长的合成规范原文，用于证明机器能够识别可变真源被逐字复制到判例装置中的情形，并且不会依赖真实项目规范的任何具体主张或编号。";
+        var specification = "# Synthetic specification\n\n" + passage + "\n";
+        var source = "fixture = \"" + passage + "\"\n";
+
+        var finding = Assert.Single(CanonicalSourceDuplicationPolicy.InspectSpecificationCopies(
+            path,
+            source,
+            specification));
+
+        Assert.Contains("specification", finding.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void ShortOrRewrittenSpecificationTextIsNotRejected()
+    {
+        const string specification =
+            "短语不构成长段复制。这个合成句子足够长，但下游只保留语义等价的重新表述，因此不应被精确匹配守卫拒绝。";
+        const string source = "const string fixture = \"短语不构成长段复制\";";
+
+        Assert.Empty(CanonicalSourceDuplicationPolicy.InspectSpecificationCopies(
+            "Meta/StrataLint/Synthetic.cs",
+            source,
+            specification));
+    }
+
     [Fact]
     public void RepositoryScanIncludesCSharpOutsideTheHarnessTree()
     {
@@ -60,6 +93,9 @@ public sealed class CanonicalSourceDuplicationTests
             File.Copy(
                 Path.Combine(repositoryRoot, "Meta", "domains.yaml"),
                 Path.Combine(root, "Meta", "domains.yaml"));
+            var specificationPath = Path.Combine(root, BootstrapGate.SpecificationPath);
+            Directory.CreateDirectory(Path.GetDirectoryName(specificationPath)!);
+            File.WriteAllText(specificationPath, "# Synthetic specification\n");
             var blueprint = Path.Combine(root, "Blueprint");
             Directory.CreateDirectory(blueprint);
             File.WriteAllText(

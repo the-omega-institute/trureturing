@@ -26,6 +26,9 @@ internal static class CanonicalSourceDuplicationPolicy
             .Where(static id => id != AtomizerRegistry.NoAtomizerId)
             .Distinct(StringComparer.Ordinal)
             .ToArray();
+        var specification = File.ReadAllText(Path.Combine(
+            repositoryRoot,
+            BootstrapGate.SpecificationPath));
         var domains = LoadDomains(repositoryRoot);
         var findings = new List<CanonicalSourceDuplicationFinding>();
         foreach (var (relativePath, path) in CSharpRepositorySources.Enumerate(repositoryRoot))
@@ -34,9 +37,43 @@ internal static class CanonicalSourceDuplicationPolicy
             findings.AddRange(InspectSource(relativePath, source, tickets));
             findings.AddRange(InspectDomainMappings(relativePath, source, domains));
             findings.AddRange(InspectAtomizerIdLiterals(relativePath, source, atomizerIds));
+            findings.AddRange(InspectSpecificationCopies(relativePath, source, specification));
+        }
+
+        foreach (var (relativePath, path) in EnumerateToml(repositoryRoot))
+        {
+            findings.AddRange(InspectSpecificationCopies(
+                relativePath,
+                File.ReadAllText(path),
+                specification));
         }
 
         return findings;
+    }
+
+    internal static IReadOnlyList<CanonicalSourceDuplicationFinding> InspectSpecificationCopies(
+        string path,
+        string source,
+        string specification)
+    {
+        if (string.Equals(path, BootstrapGate.SpecificationPath, StringComparison.Ordinal))
+        {
+            return [];
+        }
+
+        return Regex.Split(
+                specification,
+                "(?<=[。！？])|(?:\\r?\\n){2,}",
+                RegexOptions.CultureInvariant,
+                TimeSpan.FromSeconds(1))
+            .Select(static passage => passage.Trim())
+            .Where(static passage => passage.Length >= 64 && CountCjk(passage) >= 24)
+            .Distinct(StringComparer.Ordinal)
+            .Where(passage => source.Contains(passage, StringComparison.Ordinal))
+            .Select(passage => new CanonicalSourceDuplicationFinding(
+                path,
+                $"fixture copies a {passage.Length}-character passage from the canonical specification; use neutral synthetic text"))
+            .ToArray();
     }
 
     internal static IReadOnlyList<CanonicalSourceDuplicationFinding> InspectAtomizerIdLiterals(
@@ -151,5 +188,28 @@ internal static class CanonicalSourceDuplicationPolicy
         return accepted.Policy.Domains
             .Select(static domain => (domain.Key.Value, domain.Value.ToString()))
             .ToArray();
+    }
+
+    private static int CountCjk(string value) => value.Count(static character =>
+        character is >= '\u3400' and <= '\u4dbf'
+            or >= '\u4e00' and <= '\u9fff');
+
+    private static IEnumerable<(string RelativePath, string FullPath)> EnumerateToml(
+        string repositoryRoot)
+    {
+        foreach (var path in Directory.EnumerateFiles(
+                     repositoryRoot,
+                     "*.toml",
+                     SearchOption.AllDirectories))
+        {
+            var relativePath = Path.GetRelativePath(repositoryRoot, path).Replace('\\', '/');
+            if (relativePath.Split('/').Any(static segment =>
+                    segment is ".git" or ".lake" or "bin" or "obj"))
+            {
+                continue;
+            }
+
+            yield return (relativePath, path);
+        }
     }
 }

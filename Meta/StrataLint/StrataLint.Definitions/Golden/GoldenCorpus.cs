@@ -123,6 +123,11 @@ internal static partial class GoldenCorpus
     internal const string FixtureDigestionSourcePath = "docs/GOVERNANCE.md";
     internal const string FixtureDigestionSource = "x";
     internal const string FixtureAtomId = "fixture-atom";
+    internal const string FixtureSpecification = """
+        # Synthetic harness specification
+
+        This neutral fixture exercises governance-document presence and protected-path routing.
+        """ + "\n";
 
     internal const string FixtureBackfill = """
         schema_version: 3
