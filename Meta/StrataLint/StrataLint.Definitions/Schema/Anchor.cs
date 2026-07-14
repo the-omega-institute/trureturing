@@ -8,9 +8,6 @@ public abstract record Anchor
 
     public abstract string CanonicalString { get; }
 
-    internal string ReferenceLocator =>
-        string.Join(' ', CanonicalString.Split('/').Skip(2));
-
     public static AnchorParseResult TryParseCanonical(string? value)
     {
         if (!TrySplitCanonical(value, out var segments, out var error))
@@ -18,16 +15,13 @@ public abstract record Anchor
             return new AnchorParseResult.Invalid(error);
         }
 
-        if (segments[0] is not ("gict" or "pzg" or "spec" or "lit" or "mathlib"))
+        if (segments[0] is not ("lit" or "mathlib"))
         {
             return new AnchorParseResult.Invalid("Anchor scheme is unknown.");
         }
 
         Anchor? parsed = segments[0] switch
         {
-            "gict" => ParseGict(segments),
-            "pzg" => ParsePzg(segments),
-            "spec" => ParseSpec(segments),
             "lit" => ParseLiterature(segments),
             "mathlib" => ParseMathlib(segments),
             _ => throw new System.Diagnostics.UnreachableException(),
@@ -89,68 +83,6 @@ public abstract record Anchor
             or >= '0' and <= '9'
             or '_' or '/' or '.' or '-';
 
-    private static GictAnchor? ParseGict(string[] segments)
-    {
-        if (segments.Length == 4
-            && segments[2] == "appendix"
-            && GictEdition.TryCreate(segments[1]) is { } appendixEdition
-            && TheoryLabel.TryCreateAppendix(segments[3]) is { } appendixLabel)
-        {
-            return new GictAnchor(
-                appendixEdition,
-                division: null,
-                TheoryNodeKind.Appendix,
-                appendixLabel,
-                subclaim: null);
-        }
-
-        if (segments.Length is not (5 or 6)
-            || GictEdition.TryCreate(segments[1]) is not { } edition
-            || GictDivision.TryCreate(segments[2]) is not { } division
-            || !TryTheoryKind(segments[3], out var kind)
-            || kind == TheoryNodeKind.Appendix)
-        {
-            return null;
-        }
-
-        var label = kind is TheoryNodeKind.Section
-            ? TheoryLabel.TryCreateSlug(segments[4])
-            : TheoryLabel.TryCreateNumber(segments[4]);
-        var subclaim = segments.Length == 6 ? SubclaimId.TryCreate(segments[5]) : null;
-        if (label is null || segments.Length == 6 && subclaim is null)
-        {
-            return null;
-        }
-
-        return new GictAnchor(edition, division, kind, label, subclaim);
-    }
-
-    private static bool TryTheoryKind(string value, out TheoryNodeKind kind)
-    {
-        kind = value switch
-        {
-            "definition" => TheoryNodeKind.Definition,
-            "theorem" => TheoryNodeKind.Theorem,
-            "section" => TheoryNodeKind.Section,
-            _ => default,
-        };
-        return value is "definition" or "theorem" or "section";
-    }
-
-    private static PzgAnchor? ParsePzg(string[] segments) =>
-        segments.Length == 3
-        && PzgEdition.TryCreate(segments[1]) is { } edition
-        && PzgEntryNumber.TryCreate(segments[2]) is { } entry
-            ? new PzgAnchor(edition, entry)
-            : null;
-
-    private static SpecAnchor? ParseSpec(string[] segments) =>
-        segments.Length == 3
-        && SpecEdition.TryCreate(segments[1]) is { } edition
-        && SpecClauseId.TryCreate(segments[2]) is { } clause
-            ? new SpecAnchor(edition, clause)
-            : null;
-
     private static LiteratureAnchor? ParseLiterature(string[] segments) =>
         segments.Length == 2 && BibKey.TryCreate(segments[1]) is { } bibKey
             ? new LiteratureAnchor(bibKey)
@@ -190,94 +122,6 @@ public abstract record AnchorParseResult
 
         public string Message { get; }
     }
-}
-
-public sealed record GictAnchor : Anchor
-{
-    internal GictAnchor(
-        GictEdition edition,
-        GictDivision? division,
-        TheoryNodeKind kind,
-        TheoryLabel label,
-        SubclaimId? subclaim)
-    {
-        Edition = edition ?? throw new ArgumentNullException(nameof(edition));
-        Division = division;
-        Kind = kind;
-        Label = label ?? throw new ArgumentNullException(nameof(label));
-        Subclaim = subclaim;
-        if (kind is TheoryNodeKind.Appendix
-            ? division is not null || subclaim is not null
-            : division is null)
-        {
-            throw new ArgumentException("GICT anchor fields form an invalid state.");
-        }
-    }
-
-    public GictEdition Edition { get; }
-
-    public GictDivision? Division { get; }
-
-    public TheoryNodeKind Kind { get; }
-
-    public TheoryLabel Label { get; }
-
-    public SubclaimId? Subclaim { get; }
-
-    public override AnchorScheme Scheme => AnchorScheme.Gict;
-
-    public override string CanonicalString => Kind is TheoryNodeKind.Appendix
-        ? $"gict/{Edition.Value}/appendix/{Label.Value}"
-        : $"gict/{Edition.Value}/{Division!.Value}/{KindText(Kind)}/{Label.Value}"
-            + (Subclaim is null ? string.Empty : "/" + Subclaim.Value);
-
-    public override string ToString() => CanonicalString;
-
-    private static string KindText(TheoryNodeKind kind) => kind switch
-    {
-        TheoryNodeKind.Definition => "definition",
-        TheoryNodeKind.Theorem => "theorem",
-        TheoryNodeKind.Section => "section",
-        _ => throw new InvalidOperationException("Appendix has a dedicated canonical form."),
-    };
-}
-
-public sealed record PzgAnchor : Anchor
-{
-    internal PzgAnchor(PzgEdition edition, PzgEntryNumber entry)
-    {
-        Edition = edition ?? throw new ArgumentNullException(nameof(edition));
-        Entry = entry ?? throw new ArgumentNullException(nameof(entry));
-    }
-
-    public PzgEdition Edition { get; }
-
-    public PzgEntryNumber Entry { get; }
-
-    public override AnchorScheme Scheme => AnchorScheme.Pzg;
-
-    public override string CanonicalString => $"pzg/{Edition.Value}/{Entry}";
-
-    public override string ToString() => CanonicalString;
-}
-
-public sealed record SpecAnchor : Anchor
-{
-    internal SpecAnchor(SpecEdition edition, SpecClauseId clause)
-    {
-        Edition = edition ?? throw new ArgumentNullException(nameof(edition));
-        Clause = clause ?? throw new ArgumentNullException(nameof(clause));
-    }
-
-    public SpecEdition Edition { get; }
-
-    public SpecClauseId Clause { get; }
-
-    public override AnchorScheme Scheme => AnchorScheme.Spec;
-
-    public override string CanonicalString => $"spec/{Edition.Value}/{Clause.Value}";
-
-    public override string ToString() => CanonicalString;
 }
 
 public sealed record LiteratureAnchor : Anchor

@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S1/Phase/Basic
    mirror-E: none(waiver:algebraically-proved)
-   anchors: [gict/v3.6/I.2/definition/1.4]
+   anchors: []
    digest: Integer golden-ratio phases form an injective additive orbit on the unit circle. -/
 
 import Mathlib.NumberTheory.Real.GoldenRatio

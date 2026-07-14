@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S1/Scale/Log
    mirror-E: none(waiver:algebraically-proved)
-   anchors: [gict/v3.6/I.2/definition/1.4]
+   anchors: []
    digest: Nonzero golden integers have an integer logarithmic scale with exact unit shifts. -/
 
 import D5.S0.Carrier.Units

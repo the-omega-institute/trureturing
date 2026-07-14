@@ -1,20 +1,5 @@
 schema_version: 1
 queries:
-  - id: D5-Q0001
-    query: independent analytic control of golden quasiperiodic zeta and Weil positivity
-    target_gid: D5/X_Frontier/HeartsDraft
-    source_path: "docs/develop/theory/GICT_complete_development_v3_3.md"
-    pending_case: D5-T0001
-  - id: D5-Q0002
-    query: Stark Hecke L derivative closed form for the twisted cotangent constant
-    target_gid: D5/E/S3/Analytic/Cphi.result--json
-    source_path: "docs/develop/theory/GICT_complete_development_v3_3.md"
-    pending_case: D5-T0003
-  - id: D5-Q0003
-    query: Fibonacci Hamiltonian coupling gap width law and Cantor spectrum dimension
-    target_gid: D5/E/S3/Spectral/GapWidth.result--json
-    source_path: "docs/develop/theory/GICT_complete_development_v3_3.md"
-    pending_case: D5-T0006
   - id: D5-Q0004
     query: diffraction avoidance theorem package and reproducible zero scan for D5-P001
     target_gid: D5/P/D5-P001

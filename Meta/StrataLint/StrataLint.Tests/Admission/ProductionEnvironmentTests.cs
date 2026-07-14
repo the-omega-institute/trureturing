@@ -410,12 +410,10 @@ public sealed partial class ProductionEnvironmentTests
         var result = environment.DigestStatus(["--json"]);
 
         Assert.True(result.Success, result.Error);
-        Assert.Contains("\"entries_total\": 32", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"entries_total\": 1", result.Output, StringComparison.Ordinal);
         Assert.Contains("\"deletable_now\": 0", result.Output, StringComparison.Ordinal);
-        Assert.Contains("\"atom_id\": \"gict-7.15\"", result.Output, StringComparison.Ordinal);
-        Assert.Contains("\"code\": \"scribe-definition-missing\"", result.Output, StringComparison.Ordinal);
-        Assert.Contains("\"code\": \"scribe-emission-missing\"", result.Output, StringComparison.Ordinal);
-        Assert.Contains("\"code\": \"tail-authorization-missing\"", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"atom_id\": \"fixture-atom\"", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"code\": \"boundary-not-reproducible\"", result.Output, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -423,8 +421,8 @@ public sealed partial class ProductionEnvironmentTests
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        const string expected = "          migration: partial\n          truth: open\n      - atom_id: gict-hearts-o5-o6";
-        const string falseProjection = "          migration: absorbed\n          truth: open\n      - atom_id: gict-hearts-o5-o6";
+        const string expected = "          migration: partial\n          truth: closed";
+        const string falseProjection = "          migration: absorbed\n          truth: closed";
         fixture.Files["Meta/BACKFILL.yaml"] = fixture.Files["Meta/BACKFILL.yaml"].Replace(
             expected,
             falseProjection,

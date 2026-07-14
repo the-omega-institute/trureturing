@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Carrier/Conj
    mirror-E: none(waiver:pure-definition)
-   anchors: [gict/v3.6/I.1/theorem/1.3/i]
+   anchors: []
    digest: The golden Galois conjugation is an involutive ring automorphism. -/
 
 import D5.S0.Carrier.Ring
@@ -26,7 +26,7 @@ def conj (x : GoldenInt) : GoldenInt := ⟨x.a + x.b, -x.b⟩
 @[simp] theorem conj_involutive (x : GoldenInt) : conj (conj x) = x := by
   ext <;> simp [conj]
 
-/-- Conjugation packaged as the ring automorphism from GICT Theorem 1.3(i). -/
+/-- Conjugation packaged as a ring automorphism of the golden integer carrier. -/
 def conjEquiv : GoldenInt ≃+* GoldenInt where
   toFun := conj
   invFun := conj

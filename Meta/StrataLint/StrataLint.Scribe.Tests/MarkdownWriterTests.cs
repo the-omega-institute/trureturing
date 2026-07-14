@@ -89,6 +89,6 @@ public sealed class MarkdownWriterTests
         Generality.Instance,
         GidRef.Create("D5/B/S1/Scale/Embedding"),
         new EvidenceMirror.Waiver(WaiverReason.Create("algebraically-proved")),
-        [Anchor.ParseCanonical("gict/v3.6/I.2/definition/1.4")],
+        [Anchor.ParseCanonical("mathlib/module/Mathlib.Data.Nat.Fib.Zeckendorf")],
         Digest.Create("The real embedding is injective."));
 }

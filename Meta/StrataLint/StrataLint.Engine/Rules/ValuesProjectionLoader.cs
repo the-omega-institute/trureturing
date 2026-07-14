@@ -162,7 +162,7 @@ internal static class ValuesProjectionLoader
         var expected = new[]
         {
             "comparison", "decimal", "definition", "error", "exact_value", "formula", "id",
-            "kernel_receipts", "method", "open_reason", "provenance", "reference_error",
+            "kernel_receipts", "method", "open_reason", "reference_error",
             "reference_value", "refs", "status", "value",
         };
         if (element.ValueKind != JsonValueKind.Object
@@ -180,7 +180,6 @@ internal static class ValuesProjectionLoader
         _ = RequiredString(element, "comparison");
         _ = RequiredString(element, "definition");
         _ = RequiredString(element, "method");
-        _ = RequiredString(element, "provenance");
         _ = RequiredString(element, "reference_error");
         _ = RequiredString(element, "reference_value");
     }

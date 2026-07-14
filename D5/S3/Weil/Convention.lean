@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:formal-analysis-foundation-only)
    mirror-E: none(waiver:definitions-and-mathlib-inventory-only)
-   anchors: [pzg/v170/26.3, pzg/v170/26.4]
+   anchors: []
    digest: Fix classical zeta and angular-frequency Fourier conventions for the Weil ladder. -/
 
 import Mathlib.Analysis.Distribution.SchwartzSpace.Fourier
@@ -51,7 +51,7 @@ noncomputable def mathlibFrequency (xi : ℝ) : ℝ := xi / (2 * Real.pi)
 /-- The scalar in the inverse angular-frequency Fourier transform. -/
 noncomputable def inverseFourierFactor : ℝ := (2 * Real.pi)⁻¹
 
-/-- The constant term in PZG 26.3's unsmoothed explicit formula. -/
+/-- The constant term in the classical zeta explicit formula (Weil 1952). -/
 noncomputable def logTwoPi : ℝ := Real.log (2 * Real.pi)
 
 /-- The real shift in the completed-zeta digamma argument `1/4 + i*t/2`. -/

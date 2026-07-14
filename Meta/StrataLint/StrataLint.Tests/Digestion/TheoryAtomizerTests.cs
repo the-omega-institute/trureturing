@@ -6,10 +6,15 @@ namespace StrataLint.Tests;
 
 public sealed class TheoryAtomizerTests
 {
+    private const string FirstProductionSource =
+        "docs/develop/theory/GICT_complete_development_v3_3.md";
+    private const string SecondProductionSource =
+        "docs/develop/theory/PZG_BEDC_kernel_formal_170.md";
+
     public static TheoryData<string, bool, int> ProductionTheorySources => new()
     {
-        { RuleFixture.GictTheoryPath, true, 61 },
-        { RuleFixture.PzgTheoryPath, false, 526 },
+        { FirstProductionSource, true, 61 },
+        { SecondProductionSource, false, 526 },
     };
 
     [Fact]

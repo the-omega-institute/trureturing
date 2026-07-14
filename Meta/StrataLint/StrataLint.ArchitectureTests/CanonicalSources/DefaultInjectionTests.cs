@@ -10,8 +10,6 @@ public sealed class DefaultInjectionTests
 
     [Theory]
     [InlineData("public static class SyntheticDsl", "public static void Create", "D5/S1/Phase/Basic")]
-    [InlineData("public sealed class SyntheticBuilder", "public SyntheticBuilder", "gict/v3.6/I.2/definition/1.4")]
-    [InlineData("public static class SyntheticDsl", "public static void Create", "GICT-v3.6-I.1-definition-1.4")]
     [InlineData("public sealed class SyntheticBuilder", "public SyntheticBuilder", "D5-T0017")]
     public void CanonicalLiteralDefaultIsRejectedByTheRedFixture(
         string typeDeclaration,

@@ -10,8 +10,6 @@ public sealed class DefinitionsLayerTests
     public static TheoryData<string, string> CanonicalDataSources => new()
     {
         { "Catalog/AnchorCatalogDefinitions.cs", "StrataLint.Scribe/Catalog/AnchorCatalogDefinitions.cs" },
-        { "Catalog/TheoryAnchorManifest.cs", "StrataLint.Scribe/Catalog/TheoryAnchorManifest.cs" },
-        { "Catalog/SpecAnchorManifest.cs", "StrataLint.Scribe/Catalog/SpecAnchorManifest.cs" },
         { "Catalog/ExternalAnchorManifest.cs", "StrataLint.Scribe/Catalog/ExternalAnchorManifest.cs" },
         { "Values/ValuesDefinitions.cs", "StrataLint.Scribe/Values/ValuesDefinitions.cs" },
         { "Golden/GoldenCorpus.cs", "StrataLint.Tests/Golden/GoldenCorpus.cs" },

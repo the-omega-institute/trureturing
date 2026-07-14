@@ -38,13 +38,13 @@ public sealed class DocumentAstTests
             Generality.Instance,
             GidRef.Create("D5/B/S1/Scale/Embedding"),
             new EvidenceMirror.Waiver(WaiverReason.Create("algebraically-proved")),
-            [Anchor.ParseCanonical("gict/v3.6/I.2/definition/1.4")],
+            [Anchor.ParseCanonical("mathlib/module/Mathlib.Data.Nat.Fib.Zeckendorf")],
             Digest.Create("The real embedding is injective."));
 
         Assert.Equal(Generality.Instance, header.Generality);
         Assert.Equal("D5/B/S1/Scale/Embedding", header.MirrorBlueprint.Value);
         Assert.Equal(
-            "gict/v3.6/I.2/definition/1.4",
+            "mathlib/module/Mathlib.Data.Nat.Fib.Zeckendorf",
             Assert.Single(header.Anchors).CanonicalString);
         Assert.Equal("The real embedding is injective.", header.Digest.Value);
     }

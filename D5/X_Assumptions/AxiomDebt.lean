@@ -2,7 +2,7 @@
    generality: G
    mirror-B: none(waiver:axiom-debt-registry-is-the-semantic-mirror)
    mirror-E: none(waiver:classical-theorem-without-numerical-evidence-dependency)
-   anchors: [gict/v3.6/VII.7/theorem/7.15, pzg/v170/26.3, pzg/v170/26.4]
+   anchors: []
    digest: Register classical three-gap, Fourier-Laplace, and Weil explicit-formula debts. -/
 
 import Mathlib.Algebra.Order.Floor.Ring
@@ -58,8 +58,9 @@ complex Fourier-Laplace extension. The transform below is fixed, not free.
 -/
 
 /--
-Classical compact-support Fourier-Laplace theorem: the angular-frequency
-transform of a smooth compactly supported function is entire.
+The classical Paley-Wiener theorem (Paley and Wiener 1934): the
+angular-frequency transform of a smooth compactly supported function is
+entire.
 
 AxiomDebt case `D5-T0018-C`. This is the level-C Paley-Wiener input only; no
 Weil explicit-formula identity or positivity claim is included.

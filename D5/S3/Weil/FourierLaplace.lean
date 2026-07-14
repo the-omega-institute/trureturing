@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:formal-analysis-foundation-only)
    mirror-E: none(waiver:structural-closure-properties-only)
-   anchors: [pzg/v170/26.4]
+   anchors: []
    digest: Define the complex Fourier-Laplace transform and prove its conjugation symmetries. -/
 
 import D5.S3.Weil.TestFunctions

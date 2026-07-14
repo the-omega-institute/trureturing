@@ -6,14 +6,6 @@ public sealed class AnchorTests
 {
     public static TheoryData<string, Type, AnchorScheme> CanonicalExamples => new()
     {
-        { "gict/v3.6/I.2/definition/1.4", typeof(GictAnchor), AnchorScheme.Gict },
-        { "gict/v3.6/I.1/theorem/1.3/iii", typeof(GictAnchor), AnchorScheme.Gict },
-        { "gict/v3.6/VIII/section/hearts", typeof(GictAnchor), AnchorScheme.Gict },
-        { "gict/v3.6/appendix/A", typeof(GictAnchor), AnchorScheme.Gict },
-        { "pzg/v170/26.4", typeof(PzgAnchor), AnchorScheme.Pzg },
-        { "pzg/v170/0.0", typeof(PzgAnchor), AnchorScheme.Pzg },
-        { "spec/v7.11/SL-017", typeof(SpecAnchor), AnchorScheme.Spec },
-        { "spec/v7.11/sample-11", typeof(SpecAnchor), AnchorScheme.Spec },
         { "lit/sos1957threegap", typeof(LiteratureAnchor), AnchorScheme.Literature },
         { "mathlib/module/Mathlib.Data.Nat.Fib.Zeckendorf", typeof(MathlibAnchor), AnchorScheme.Mathlib },
         { "mathlib/decl/Nat.zeckendorf", typeof(MathlibAnchor), AnchorScheme.Mathlib },
@@ -39,21 +31,10 @@ public sealed class AnchorTests
     public static TheoryData<string> InvalidExamples => new()
     {
         "",
-        "GICT/v3.6/I.2/definition/1.4",
-        "gict//v3.6/I.2/definition/1.4",
-        "gict/v3.6/I.2/definition/1.4/",
-        "gict/v3.6/../definition/1.4",
-        "gict/v3.6/I.2/definitions/1.1-1.2",
-        "gict/v3.6/I.2/theorem/01.3",
-        "pzg/v170/26.04",
-        "pzg/v170/00.0",
-        "spec/v7.11/sl-017",
         "lit/Sos1957threegap",
         "lit/sos-1957-threegap",
         "mathlib/symbol/Nat.zeckendorf",
         "mathlib/module/Mathlib..Zeckendorf",
-        "spec/v7.11/SL-017%20",
-        "spec/v7.11/SL-０１７",
         "unknown/value",
     };
 
@@ -68,21 +49,35 @@ public sealed class AnchorTests
     }
 
     [Fact]
-    public void ParserDistinguishesUnknownSchemeFromMalformedPayload()
+    public void ParserDistinguishesUnknownSchemeFromMalformedExternalPayload()
     {
         var unknown = Assert.IsType<AnchorParseResult.Invalid>(
             Anchor.TryParseCanonical("unknown/value"));
         var malformed = Assert.IsType<AnchorParseResult.Invalid>(
-            Anchor.TryParseCanonical("gict/v3.6/I.2/definitions/1.1-1.2"));
+            Anchor.TryParseCanonical("lit/sos-1957-threegap"));
 
         Assert.NotEqual(unknown.Message, malformed.Message);
     }
 
     [Fact]
+    public void RetiredInternalSchemesAreUnknown()
+    {
+        var retired = new[]
+        {
+            string.Concat("gi", "ct/v9.0/I/theorem/1.0"),
+            string.Concat("pz", "g/v9/1.0"),
+            string.Concat("sp", "ec/v9/SL-001"),
+        };
+
+        Assert.All(retired, value => Assert.IsType<AnchorParseResult.Invalid>(
+            Anchor.TryParseCanonical(value)));
+    }
+
+    [Fact]
     public void ParsedAnchorsUseOrdinalValueEquality()
     {
-        var first = Anchor.ParseCanonical("gict/v3.6/I.2/definition/1.4");
-        var second = Anchor.ParseCanonical("gict/v3.6/I.2/definition/1.4");
+        var first = Anchor.ParseCanonical("lit/sos1957threegap");
+        var second = Anchor.ParseCanonical("lit/sos1957threegap");
 
         Assert.Equal(first, second);
         Assert.Equal(first.GetHashCode(), second.GetHashCode());
@@ -101,9 +96,6 @@ public sealed class AnchorTests
     {
         var subtypes = new[]
         {
-            typeof(GictAnchor),
-            typeof(PzgAnchor),
-            typeof(SpecAnchor),
             typeof(LiteratureAnchor),
             typeof(MathlibAnchor),
         };

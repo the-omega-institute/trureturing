@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:definition-and-structural-properties-only)
-   anchors: [gict/v3.6/I.2/definition/1.4]
+   anchors: []
    digest: Depth combines logarithmic scale, Zeckendorf support, and finite phase resolution. -/
 
 import D5.S1.Digit.Addition
@@ -103,7 +103,7 @@ theorem phaseResolution_pos (q0 : ℤ) (n : ℕ+) :
 abbrev DepthValue (q0 : ℤ) (n : ℕ+) :=
   ℤ × ℕ × Fin (phaseResolution q0 n)
 
-/-- GICT Definition 1.4, restricted to positive natural points and finite W resolution. -/
+/-- Finite W-depth, restricted to positive natural points and finite resolution. -/
 noncomputable def depth (q0 : ℤ) (n : ℕ+) : DepthValue q0 n :=
   (scaleCoordinate n, digitLength n,
     finitePhase (phaseResolution q0 n) (phaseResolution_pos q0 n)
@@ -125,9 +125,9 @@ theorem depth_phase_lt_resolution (q0 : ℤ) (n : ℕ+) :
     (depth q0 n).2.2.val < phaseResolution q0 n :=
   (depth q0 n).2.2.isLt
 
-/-- TASK D5-T0020 | 难度:4 | 依赖:欠(GICT-depth-metric-structure) | 尝试:0
+/-- TASK D5-T0020 | 难度:4 | 依赖:欠(finite-depth-metric-structure) | 尝试:0
     提示:Choose a fiber distance, then prove separation and a triangle variant at Lean L2.
-    尸检:none; GICT v3.6 line 234 explicitly lists separation and triangle variants as open. -/
+    尸检:none; separation and triangle variants remain open for the current finite-depth model. -/
 def depthMetricL2Open : Unit := ()
 
 end D5.S1.Depth

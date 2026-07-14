@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S0/Conventions/Notation
    mirror-E: none(waiver:notation-only)
-   anchors: [gict/v3.6/I.1/definition/1.1, gict/v3.6/I.1/definition/1.2]
+   anchors: []
    digest: Scoped notation names the golden ring, generator, conjugation, and norm. -/
 
 import D5.S0.Carrier.Units

@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:evidence-ticket)
    mirror-E: D5/E/values--json
-   anchors: [gict/v3.6/appendix/A, spec/v7.11/SL-018]
+   anchors: []
    digest: Produce fourteen constants through three audited numeric kernels. -/
 
 /-- TASK D5-T0003 | 难度:4 | 依赖:欠(T0-delta-T1-Bh-executable-parameters) | 尝试:1

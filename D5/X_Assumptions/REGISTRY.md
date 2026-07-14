@@ -12,9 +12,11 @@ Hungar.* 8 (1957), 461-472. The pinned mathlib v4.31.0 tree has no three-gap or
 three-distance theorem; this row carries that classical result as AxiomDebt.
 
 `D5-T0018-C` records the missing pinned-mathlib bridge from smooth compact
-support to an entire complex Fourier-Laplace transform. The registered
+support to an entire complex Fourier-Laplace transform. Source: R. E. A. C.
+Paley and N. Wiener, *Fourier Transforms in the Complex Domain*, American
+Mathematical Society Colloquium Publications 19 (1934). The registered
 statement fixes the angular-frequency kernel `exp(-i*z*x)` and carries only
-that classical Paley-Wiener input; it does not assume a Weil identity or RH.
+that classical input; it does not assume a Weil identity or RH.
 
 `D5-T0018-F` records the classical Weil explicit formula absent from pinned
 mathlib v4.31.0. Source: A. Weil, "Sur les 'formules explicites' de la theorie

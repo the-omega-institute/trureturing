@@ -64,8 +64,6 @@ components:
       - Meta/StrataLint/StrataLint.Definitions/Schema/AnchorDefinition.cs
       - Meta/StrataLint/StrataLint.Definitions/Catalog/AnchorCatalogDefinitions.cs
       - Meta/StrataLint/StrataLint.Definitions/Catalog/ExternalAnchorManifest.cs
-      - Meta/StrataLint/StrataLint.Definitions/Catalog/SpecAnchorManifest.cs
-      - Meta/StrataLint/StrataLint.Definitions/Catalog/TheoryAnchorManifest.cs
     judged_by:
       - anchor-catalog-projection
       - anchor-scribe-tests
@@ -85,6 +83,7 @@ components:
     members:
       - Meta/StrataLint/StrataLint.Engine/Rules/Anchors/AnchorCatalogLoader.cs
       - Meta/StrataLint/StrataLint.Engine/Rules/Anchors/AnchorReferenceRule.cs
+      - Meta/StrataLint/StrataLint.Engine/Rules/Anchors/ExternalAnchorSyntax.cs
       - Meta/StrataLint/StrataLint.Engine/Rules/RepositoryRules.Applicability.cs
       - Meta/StrataLint/StrataLint.Engine/Rules/RepositoryRules.Content.cs
       - Meta/StrataLint/StrataLint.Engine/Rules/RepositoryRules.cs
@@ -163,6 +162,8 @@ components:
       - Meta/StrataLint/StrataLint.ArchitectureTests/Dependencies/DependencyDirectionTests.cs
       - Meta/StrataLint/StrataLint.ArchitectureTests/Namespaces/NamespaceLayoutTests.cs
       - Meta/StrataLint/StrataLint.ArchitectureTests/PublicSurface/EnginePublicSurfaceTests.cs
+      - Meta/StrataLint/StrataLint.ArchitectureTests/CanonicalSources/TheoryIsolationPolicy.cs
+      - Meta/StrataLint/StrataLint.ArchitectureTests/CanonicalSources/TheoryIsolationTests.cs
       - Meta/StrataLint/StrataLint.sln
     judged_by:
       - engineering-ci

@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S1/Digit/Carry
    mirror-E: none(waiver:algebraically-proved)
-   anchors: [gict/v3.6/I.2/definition/1.4, mathlib/module/Mathlib.Data.Nat.Fib.Zeckendorf]
+   anchors: [mathlib/module/Mathlib.Data.Nat.Fib.Zeckendorf]
    digest: Four local Fibonacci carry rules preserve the value of finite raw W digits. -/
 
 import D5.S1.Digit.Raw

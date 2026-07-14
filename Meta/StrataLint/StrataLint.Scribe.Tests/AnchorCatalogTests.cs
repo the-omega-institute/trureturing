@@ -6,19 +6,19 @@ namespace StrataLint.Scribe.Tests;
 public sealed class AnchorCatalogTests
 {
     [Fact]
-    public void TheoryManifestCanBeTheFirstCatalogEntryPoint()
+    public void ExternalManifestIsTheCatalogEntryPoint()
     {
-        var definitions = TheoryAnchorManifest.All;
+        var definition = Assert.Single(ExternalAnchorManifest.All);
 
-        Assert.Equal(14, definitions.Length);
+        Assert.IsType<MathlibAnchor>(definition.Anchor);
     }
 
     [Fact]
-    public void CatalogHasUniqueCanonicalMembers()
+    public void CatalogHasUniqueExternalMembers()
     {
         var definitions = AnchorCatalogDefinitions.All;
 
-        Assert.Equal(27, definitions.Length);
+        Assert.Single(definitions);
         Assert.Equal(
             definitions.Length,
             definitions.Select(static item => item.Anchor.CanonicalString)
@@ -26,6 +26,7 @@ public sealed class AnchorCatalogTests
                 .Count());
         Assert.All(definitions, static definition =>
         {
+            Assert.True(definition.Anchor is LiteratureAnchor or MathlibAnchor);
             var parsed = Assert.IsType<AnchorParseResult.Parsed>(
                 Anchor.TryParseCanonical(definition.Anchor.CanonicalString)).Value;
             Assert.Equal(definition.Anchor, parsed);
@@ -35,8 +36,7 @@ public sealed class AnchorCatalogTests
     [Fact]
     public void CatalogProjectionContainsNoCompatibilityTable()
     {
-        using var document = System.Text.Json.JsonDocument.Parse(
-            CanonicalAnchorCatalogWriter.Write().ToArray());
+        using var document = JsonDocument.Parse(CanonicalAnchorCatalogWriter.Write().ToArray());
 
         Assert.Equal(
             ["definitions", "schema_version"],
@@ -44,19 +44,17 @@ public sealed class AnchorCatalogTests
     }
 
     [Fact]
-    public void TheoryCatalogEntriesExposeProvenanceWithoutStructuralReceipts()
+    public void ExternalCatalogEntryCarriesPinnedProvenance()
     {
         using var document = JsonDocument.Parse(CanonicalAnchorCatalogWriter.Write().ToArray());
         var definition = Assert.Single(
-            document.RootElement.GetProperty("definitions").EnumerateArray(),
-            static item => item.GetProperty("anchor").GetString()
-                == "gict/v3.6/VII.7/theorem/7.15");
+            document.RootElement.GetProperty("definitions").EnumerateArray());
 
         Assert.Equal(
             ["anchor", "provenance"],
             definition.EnumerateObject().Select(static property => property.Name));
         Assert.Equal(
-            "GICT v3.6; reference locator VII.7 theorem 7.15",
+            "mathlib revision fabf563a7c95a166b8d7b6efca11c8b4dc9d911f; reference locator module Mathlib.Data.Nat.Fib.Zeckendorf",
             definition.GetProperty("provenance").GetString());
     }
 

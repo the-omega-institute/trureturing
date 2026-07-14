@@ -65,9 +65,11 @@ internal static partial class RepositoryRules
 
                 foreach (var anchor in header.Anchors)
                 {
-                    if (!SafeFieldPattern.IsMatch(anchor))
+                    if (!ExternalAnchorSyntax.IsCanonical(anchor))
                     {
-                        findings.Add(new RuleFinding(path.Value, $"anchor '{anchor}' is not machine-safe"));
+                        findings.Add(new RuleFinding(
+                            path.Value,
+                            $"anchor '{anchor}' is not a canonical external anchor"));
                     }
                 }
             }

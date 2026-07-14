@@ -2,7 +2,7 @@
    generality: G
    mirror-B: none(waiver:harness-ticket)
    mirror-E: none(waiver:harness-ticket)
-   anchors: [spec/v7.11/SL-002]
+   anchors: []
    digest: Preserve the M0 Lean-environment inspector and its semantic axiom/signature regressions. -/
 
 /-- TASK D5-T0002 | 难度:3 | 依赖:就绪✓ | 尝试:1

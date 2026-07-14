@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S0/Conventions/WDigits
    mirror-E: none(waiver:mathlib-zeckendorf-theorem)
-   anchors: [gict/v3.6/I.2/definition/1.4]
+   anchors: []
    digest: W digits use Fibonacci weights and the unique nonadjacent Zeckendorf representation. -/
 
 import Mathlib.Data.Nat.Fib.Zeckendorf

@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:formal-analysis-foundation-only)
    mirror-E: none(waiver:classical-analysis-tail-without-numerical-dependency)
-   anchors: [pzg/v170/26.3, pzg/v170/26.4]
+   anchors: []
    digest: Bind the classical Weil explicit formula to the frozen zeta terms. -/
 
 import D5.S3.Weil.PrimePoleTerms
