@@ -65,7 +65,8 @@
 **6. 地址由算法算出,不开会。**
 GID = 规范地址(F 层即字面路径);地层由 import 偏序算出;桶满则裂、**只裂不迁**;历史只追加。地址是算法的输出,不是协商的结果——所以两个 agent 并行贡献不会撞地址。
 **禁历史兼容:现状唯一,历史归 git。** 工作树永远只呈现**当前最优形态**;格式/规则/词表/语料变更**单 PR 一步迁移到位**(全量迁移 + 机器验证),**不留兼容垫层**——无 grandfather、无 legacy alias、无双读旧格式、无"隔离区待晋升"、无 deprecated 存根。历史查证一律走 git(历史即档案,不在工作树维护)。**辨析**:账本类 append-only 工件(Chronicle、冻结账本 events、尸检、spec 修订注)是**现状的审计链构成**,非兼容层,不在此禁——禁的是"为旧状态保留的运行时机制",不是"记录事件的账"。
-*成熟锚*:单一真源(SSOT)、事件溯源(event sourcing)、内容寻址、mathlib 库治理、trunk-based 单版本真源、schema 迁移之 expand–contract(必须收尾 contract,不许永久 expand)、git 即历史数据库。
+**数据居所律(程序/数据物理边界)**:程序集目录(`Meta/StrataLint/StrataLint.*/`)内的源码只许**程序**——类型/逻辑/loader/writer/测试代码;**声明性数据实例**(判例案、常数值、目录条目、文档内容)必须住程序目录以外的数据位(`Blueprint/*.scribe.cs`、`Meta/StrataLint/Golden/`、`Evidence/`、`D5/*.lean`),或仅作测试项目内部的合成 fixture(装置非 canonical 数据)。**辨析**:类型/schema 定义=程序,留程序集;实例集合=数据,必须出去;封闭字母表(S0–S4、PLANE)写死于类型=程序合法形,加一处锚定测试即可;数据以数据文件存在时,其 parse 即 harness(fail-closed loader+schema 执法)。
+*成熟锚*:单一真源(SSOT)、事件溯源(event sourcing)、内容寻址、mathlib 库治理、trunk-based 单版本真源、schema 迁移之 expand–contract(必须收尾 contract,不许永久 expand)、git 即历史数据库、代码/配置分离(config outside the binary)、资产管线(assets≠engine)。
 〔守护:**硬+软**·GID/地层/词表/文件头机器 lint 如前;「禁兼容垫层」靠评审 + 先例(判例集 grandfather/legacy-values 隔离区均已按此裁决拆除),兼容机制一经识别即拆〕
 
 **7. 骨骼 = 依赖偏序。**
