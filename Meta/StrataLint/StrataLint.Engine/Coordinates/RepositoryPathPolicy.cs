@@ -52,7 +52,8 @@ internal static partial class RepositoryPathPolicy
                 : Sl000(value, "unknown agent charter artifact");
         }
 
-        if (value is "Meta/domains.yaml" or "Meta/BACKFILL.yaml" or "Meta/registry.yaml"
+        if (value is "Meta/domains.yaml" or "Meta/BACKFILL.yaml" or "Meta/FILEMAP.toml"
+            or "Meta/registry.yaml"
             or "Library/queries.yaml" or AssumptionRegistryPath
             or "Golden/values-kernels.toml"
             or "Golden/Ceremony/c0-inaugural-conservative-certificate.json"

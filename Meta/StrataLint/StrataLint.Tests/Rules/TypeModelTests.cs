@@ -129,6 +129,18 @@ public sealed class TypeModelTests
     }
 
     [Fact]
+    public void FileMapDataIsClosedWorldRegisteredAndBootstrapClear()
+    {
+        const string value = "Meta/FILEMAP.toml";
+        var path = RepoPath.CreateKnown(value);
+
+        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
+        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
+        Assert.IsType<BootstrapOutcome.Clear>(
+            BootstrapGate.Evaluate(RawChangeSet.Create([value])));
+    }
+
+    [Fact]
     public void ClaudeSkillsLayerIsClosedWorldRegistered()
     {
         var path = RepoPath.CreateKnown(FkstMonitorSkillPath);

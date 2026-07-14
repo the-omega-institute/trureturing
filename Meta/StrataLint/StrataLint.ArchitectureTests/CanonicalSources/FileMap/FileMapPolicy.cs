@@ -1,0 +1,287 @@
+using System.Diagnostics;
+using System.Text.RegularExpressions;
+using StrataLint.Cli;
+using StrataLint.Engine;
+using StrataLint.Scribe;
+
+namespace StrataLint.ArchitectureTests;
+
+internal sealed record FileMapFinding(string Code, string Path, string Message);
+
+internal static class FileMapPolicy
+{
+    private static readonly Regex LeanImportPattern = new(
+        "(?m)^\\s*import\\s+(?<module>[A-Za-z0-9_.]+)\\s*$",
+        RegexOptions.CultureInvariant | RegexOptions.NonBacktracking);
+
+    private static readonly IReadOnlyDictionary<string, string> DataVerifierImplementations =
+        new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["BackfillInventoryLoader"] =
+                "Meta/StrataLint/StrataLint.Engine/Rules/Backfill/BackfillInventoryLoader.cs",
+            ["FileMapLoader"] =
+                "Meta/StrataLint/StrataLint.Scribe/FileMap/FileMapManifest.cs",
+            ["RegistryLoader"] =
+                "Meta/StrataLint/StrataLint.Cli/Commands/RegistryLoader.cs",
+            ["ScribeCompiler"] =
+                "Meta/StrataLint/StrataLint.Scribe/StrataLint.Scribe.csproj",
+            ["StrictTextLoader"] =
+                "Meta/StrataLint/StrataLint.ArchitectureTests/CanonicalSources/FileMap/FileMapPolicy.cs",
+            ["TomlGoldenLoader"] =
+                "Meta/StrataLint/StrataLint.Cli/Golden/TomlGoldenLoader.cs",
+            ["ValuesKernelDataLoader"] =
+                "Meta/StrataLint/StrataLint.Scribe/Values/ValuesKernelDataLoader.cs",
+            ["YamlSubsetParser"] =
+                "Meta/StrataLint/StrataLint.Engine/Coordinates/YamlSubsetParser.cs",
+        };
+
+    internal static IReadOnlyList<FileMapFinding> InspectRepository(string repositoryRoot)
+    {
+        var manifest = FileMapLoader.LoadRepository(repositoryRoot);
+        var paths = TrackedPaths(repositoryRoot);
+        var files = paths
+            .Where(path => path.EndsWith(".lean", StringComparison.Ordinal)
+                || IsMachineDataCandidate(path, manifest))
+            .ToDictionary(
+                static path => path,
+                path => File.ReadAllText(Absolute(repositoryRoot, path)),
+                StringComparer.Ordinal);
+        var availableVerifiers = DataVerifierImplementations
+            .Where(pair => File.Exists(Absolute(repositoryRoot, pair.Value)))
+            .Select(static pair => pair.Key)
+            .ToHashSet(StringComparer.Ordinal);
+        var registry = RegistryLoader.Load(
+            File.ReadAllBytes(Absolute(repositoryRoot, "Meta/registry.yaml")),
+            File.ReadAllBytes(Absolute(repositoryRoot, "Meta/domains.yaml")));
+        var registryFindings = registry is RegistryLoadOutcome.Accepted accepted
+            ? InspectRegistryRootAlignment(
+                accepted.Policy.RootFiles.Select(static path => path.Value),
+                paths.Where(static path => !path.Contains('/', StringComparison.Ordinal)))
+            : [new FileMapFinding(
+                "FILEMAP-REGISTRY-ALIGNMENT",
+                "Meta/registry.yaml",
+                "registry failed to load before FILEMAP alignment")];
+
+        return InspectCoverage(manifest, paths)
+            .Concat(registryFindings)
+            .Concat(InspectDataVerifiers(manifest, availableVerifiers))
+            .Concat(InspectDirectoryKinds(manifest, paths))
+            .Concat(InspectDependencies(manifest, files))
+            .OrderBy(static finding => finding.Path, StringComparer.Ordinal)
+            .ThenBy(static finding => finding.Code, StringComparer.Ordinal)
+            .ToArray();
+    }
+
+    internal static IReadOnlyList<FileMapFinding> InspectRegistryRootAlignment(
+        IEnumerable<string> registryRootFiles,
+        IEnumerable<string> trackedRootFiles)
+    {
+        ArgumentNullException.ThrowIfNull(registryRootFiles);
+        ArgumentNullException.ThrowIfNull(trackedRootFiles);
+        var registry = registryRootFiles.ToHashSet(StringComparer.Ordinal);
+        var tracked = trackedRootFiles.ToHashSet(StringComparer.Ordinal);
+        if (registry.SetEquals(tracked))
+        {
+            return [];
+        }
+
+        var registryOnly = registry.Except(tracked, StringComparer.Ordinal).Order(StringComparer.Ordinal);
+        var trackedOnly = tracked.Except(registry, StringComparer.Ordinal).Order(StringComparer.Ordinal);
+        return
+        [
+            new FileMapFinding(
+                "FILEMAP-REGISTRY-ALIGNMENT",
+                "Meta/registry.yaml",
+                $"registry-only [{string.Join(", ", registryOnly)}]; "
+                + $"tracked-only [{string.Join(", ", trackedOnly)}]"),
+        ];
+    }
+
+    internal static IReadOnlyList<FileMapFinding> InspectCoverage(
+        FileMapManifest manifest,
+        IEnumerable<string> paths)
+    {
+        ArgumentNullException.ThrowIfNull(manifest);
+        ArgumentNullException.ThrowIfNull(paths);
+        var findings = new List<FileMapFinding>();
+        foreach (var path in paths.Order(StringComparer.Ordinal))
+        {
+            var matches = manifest.Match(path);
+            if (matches.Length == 0)
+            {
+                findings.Add(new FileMapFinding(
+                    "FILEMAP-UNCLASSIFIED",
+                    path,
+                    "tracked repository file matches no FILEMAP pattern"));
+            }
+            else if (matches.Length > 1)
+            {
+                findings.Add(new FileMapFinding(
+                    "FILEMAP-AMBIGUOUS",
+                    path,
+                    "tracked repository file matches multiple FILEMAP patterns: "
+                    + string.Join(", ", matches.Select(static entry => entry.Pattern))));
+            }
+        }
+
+        return findings;
+    }
+
+    internal static IReadOnlyList<FileMapFinding> InspectDataVerifiers(
+        FileMapManifest manifest,
+        IReadOnlySet<string> availableVerifierNames)
+    {
+        ArgumentNullException.ThrowIfNull(manifest);
+        ArgumentNullException.ThrowIfNull(availableVerifierNames);
+        return manifest.Entries
+            .Where(static entry => entry.Kind is FileMapKind.Data)
+            .Where(entry => !entry.VerifiedBy.Any(availableVerifierNames.Contains))
+            .Select(static entry => new FileMapFinding(
+                "FILEMAP-DATA-VERIFIER",
+                entry.Pattern,
+                "data pattern names no existing loader/schema verifier"))
+            .ToArray();
+    }
+
+    internal static IReadOnlyList<FileMapFinding> InspectDirectoryKinds(
+        FileMapManifest manifest,
+        IEnumerable<string> paths)
+    {
+        ArgumentNullException.ThrowIfNull(manifest);
+        ArgumentNullException.ThrowIfNull(paths);
+        var findings = new List<FileMapFinding>();
+        foreach (var path in paths.Order(StringComparer.Ordinal))
+        {
+            var matches = manifest.Match(path);
+            if (matches.Length != 1)
+            {
+                continue;
+            }
+
+            var kind = matches[0].Kind;
+            if (path.Split('/').Contains("Generated", StringComparer.Ordinal)
+                && kind is not FileMapKind.Generated
+                || path.StartsWith("Golden/cases/", StringComparison.Ordinal)
+                    && kind is not FileMapKind.Data
+                || (path.StartsWith("Golden/Frozen/", StringComparison.Ordinal)
+                        || path.StartsWith("Golden/Ceremony/", StringComparison.Ordinal))
+                    && kind is not FileMapKind.Ledger)
+            {
+                findings.Add(new FileMapFinding(
+                    "FILEMAP-DIRECTORY-KIND",
+                    path,
+                    $"class directory contains {KindName(kind)} content"));
+            }
+
+            if (path.StartsWith("Meta/StrataLint/", StringComparison.Ordinal)
+                && kind is FileMapKind.Data)
+            {
+                findings.Add(new FileMapFinding(
+                    "FILEMAP-DATA-RESIDENCE",
+                    path,
+                    "data must live outside the Meta/StrataLint protected program surface"));
+            }
+        }
+
+        return findings;
+    }
+
+    internal static IReadOnlyList<FileMapFinding> InspectDependencies(
+        FileMapManifest manifest,
+        IReadOnlyDictionary<string, string> files)
+    {
+        ArgumentNullException.ThrowIfNull(manifest);
+        ArgumentNullException.ThrowIfNull(files);
+        var findings = new List<FileMapFinding>();
+        var generatedPaths = files.Keys
+            .Where(path => manifest.Match(path) is [{ Kind: FileMapKind.Generated }])
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+        foreach (var (path, source) in files.OrderBy(static pair => pair.Key, StringComparer.Ordinal))
+        {
+            var matches = manifest.Match(path);
+            if (matches.Length != 1)
+            {
+                continue;
+            }
+
+            if (matches[0].Kind is FileMapKind.Data
+                && path != FileMapLoader.RelativePath
+                && IsMachineDataPath(path))
+            {
+                foreach (var generatedPath in generatedPaths.Where(source.Contains))
+                {
+                    findings.Add(new FileMapFinding(
+                        "FILEMAP-DATA-GENERATED-DEPENDENCY",
+                        path,
+                        $"machine-readable data references generated artifact {generatedPath}"));
+                }
+            }
+
+            if (!path.EndsWith(".lean", StringComparison.Ordinal))
+            {
+                continue;
+            }
+
+            foreach (Match import in LeanImportPattern.Matches(source))
+            {
+                var importedPath = import.Groups["module"].Value.Replace('.', '/') + ".lean";
+                if (manifest.Match(importedPath) is [{ Kind: FileMapKind.Generated }])
+                {
+                    findings.Add(new FileMapFinding(
+                        "FILEMAP-LEAN-GENERATED-IMPORT",
+                        path,
+                        $"Lean imports generated artifact {importedPath}"));
+                }
+            }
+        }
+
+        return findings;
+    }
+
+    private static bool IsMachineDataCandidate(string path, FileMapManifest manifest) =>
+        manifest.Match(path) is [{ Kind: FileMapKind.Data }] && IsMachineDataPath(path);
+
+    private static bool IsMachineDataPath(string path) =>
+        path.EndsWith(".toml", StringComparison.Ordinal)
+        || path.EndsWith(".yaml", StringComparison.Ordinal)
+        || path.EndsWith(".yml", StringComparison.Ordinal)
+        || path.EndsWith(".json", StringComparison.Ordinal)
+        || path.EndsWith(".scribe.cs", StringComparison.Ordinal);
+
+    private static string[] TrackedPaths(string repositoryRoot)
+    {
+        var startInfo = new ProcessStartInfo("git")
+        {
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            UseShellExecute = false,
+        };
+        startInfo.ArgumentList.Add("-C");
+        startInfo.ArgumentList.Add(repositoryRoot);
+        startInfo.ArgumentList.Add("ls-files");
+        startInfo.ArgumentList.Add("--cached");
+        startInfo.ArgumentList.Add("--others");
+        startInfo.ArgumentList.Add("--exclude-standard");
+        startInfo.ArgumentList.Add("-z");
+        using var process = Process.Start(startInfo)
+            ?? throw new InvalidOperationException("could not start git ls-files for FILEMAP");
+        var output = process.StandardOutput.ReadToEnd();
+        var error = process.StandardError.ReadToEnd();
+        process.WaitForExit();
+        if (process.ExitCode != 0)
+        {
+            throw new InvalidOperationException(
+                $"git ls-files failed with exit {process.ExitCode}: {error}");
+        }
+
+        return output.Split('\0', StringSplitOptions.RemoveEmptyEntries)
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+    }
+
+    private static string KindName(FileMapKind kind) => kind.ToString().ToLowerInvariant();
+
+    private static string Absolute(string root, string path) =>
+        Path.Combine(root, path.Replace('/', Path.DirectorySeparatorChar));
+}

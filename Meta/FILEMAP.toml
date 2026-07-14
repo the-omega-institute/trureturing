@@ -1,0 +1,316 @@
+schema_version = 1
+
+[[files]]
+pattern = "*.json"
+kind = "program"
+produced_by = "none"
+consumed_by = ["automation"]
+verified_by = ["make-gate"]
+
+[[files]]
+pattern = "*.lean"
+kind = "truth"
+produced_by = "none"
+consumed_by = ["Lean", "Scribe", "StrataLint"]
+verified_by = ["lean-build", "lean-inspector"]
+
+[[files]]
+pattern = "*.props"
+kind = "program"
+produced_by = "none"
+consumed_by = ["dotnet"]
+verified_by = ["make-gate"]
+
+[[files]]
+pattern = "*.toml"
+kind = "program"
+produced_by = "none"
+consumed_by = ["Lean"]
+verified_by = ["make-gate"]
+
+[[files]]
+pattern = ".claude/**"
+kind = "program"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+
+[[files]]
+pattern = ".fkst/**"
+kind = "program"
+produced_by = "none"
+consumed_by = ["fkst"]
+verified_by = ["repository-policy"]
+
+[[files]]
+pattern = ".github/**"
+kind = "program"
+produced_by = "none"
+consumed_by = ["GitHub-Actions"]
+verified_by = ["make-gate"]
+
+[[files]]
+pattern = ".gitignore"
+kind = "program"
+produced_by = "none"
+consumed_by = ["git"]
+verified_by = ["repository-policy"]
+
+[[files]]
+pattern = "AGENTS.md"
+kind = "program"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+
+[[files]]
+pattern = "Blueprint/**/*.md"
+kind = "generated"
+produced_by = "ScribeEmitter"
+consumed_by = ["reader"]
+verified_by = ["emit-check"]
+
+[[files]]
+pattern = "Blueprint/**/*.scribe.cs"
+kind = "data"
+produced_by = "none"
+consumed_by = ["ScribeEmitter"]
+verified_by = ["ScribeCompiler"]
+
+[[files]]
+pattern = "CLAUDE.md"
+kind = "program"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+
+[[files]]
+pattern = "D5/**/*.lean"
+kind = "truth"
+produced_by = "none"
+consumed_by = ["Lean", "Scribe", "StrataLint"]
+verified_by = ["lean-build", "lean-inspector"]
+
+[[files]]
+pattern = "D5/**/*.md"
+kind = "ledger"
+produced_by = "none"
+consumed_by = ["Admission"]
+verified_by = ["SL-002"]
+
+[[files]]
+pattern = "Evidence/D5/values.json"
+kind = "generated"
+produced_by = "ValuesEmitter"
+consumed_by = ["ValuesProjectionLoader"]
+verified_by = ["emit-check"]
+
+[[files]]
+pattern = "Generated/FILEMAP.md"
+kind = "generated"
+produced_by = "FileMapEmitter"
+consumed_by = ["reader"]
+verified_by = ["emit-check"]
+
+[[files]]
+pattern = "Golden/Ceremony/**/*.json"
+kind = "ledger"
+produced_by = "ConservativeExtensionVerifier"
+consumed_by = ["C0CeremonyTrustRootTests"]
+verified_by = ["C0CeremonyTrustRootTests"]
+
+[[files]]
+pattern = "Golden/Frozen/**/*.jsonl"
+kind = "ledger"
+produced_by = "FrozenLedgerCanonicalWriter"
+consumed_by = ["FrozenLedger"]
+verified_by = ["SL-008"]
+
+[[files]]
+pattern = "Golden/cases/**/*.toml"
+kind = "data"
+produced_by = "none"
+consumed_by = ["TomlGoldenLoader"]
+verified_by = ["TomlGoldenLoader"]
+
+[[files]]
+pattern = "Golden/values-kernels.toml"
+kind = "data"
+produced_by = "none"
+consumed_by = ["ValuesKernelDataLoader"]
+verified_by = ["ValuesKernelDataLoader"]
+
+[[files]]
+pattern = "Library/**/*.yaml"
+kind = "data"
+produced_by = "none"
+consumed_by = ["AnchorReferenceRule"]
+verified_by = ["SL-017", "YamlSubsetParser"]
+
+[[files]]
+pattern = "Makefile"
+kind = "program"
+produced_by = "none"
+consumed_by = ["developer"]
+verified_by = ["make-gate"]
+
+[[files]]
+pattern = "Meta/BACKFILL.yaml"
+kind = "data"
+produced_by = "none"
+consumed_by = ["BackfillInventoryLoader"]
+verified_by = ["BackfillInventoryLoader"]
+
+[[files]]
+pattern = "Meta/FILEMAP.toml"
+kind = "data"
+produced_by = "none"
+consumed_by = ["FileMapEmitter", "FileMapLoader", "FileMapPolicy"]
+verified_by = ["FileMapLoader"]
+
+[[files]]
+pattern = "Meta/StrataLint/ARCHITECTURE.md"
+kind = "program"
+produced_by = "none"
+consumed_by = ["developer"]
+verified_by = ["architecture-tests"]
+
+[[files]]
+pattern = "Meta/StrataLint/Architecture/*.txt"
+kind = "program"
+produced_by = "none"
+consumed_by = ["BannedApiAnalyzers"]
+verified_by = ["architecture-tests"]
+
+[[files]]
+pattern = "Meta/StrataLint/Architecture/HARDCODE-LEDGER.md"
+kind = "ledger"
+produced_by = "none"
+consumed_by = ["ArchitectureTests"]
+verified_by = ["ArchitectureTests"]
+
+[[files]]
+pattern = "Meta/StrataLint/Architecture/MAP.md"
+kind = "program"
+produced_by = "none"
+consumed_by = ["developer"]
+verified_by = ["architecture-tests"]
+
+[[files]]
+pattern = "Meta/StrataLint/BannedApiCompileFailProof/**"
+kind = "program"
+produced_by = "none"
+consumed_by = ["dotnet"]
+verified_by = ["dotnet-build"]
+
+[[files]]
+pattern = "Meta/StrataLint/CompileFailProof/**"
+kind = "program"
+produced_by = "none"
+consumed_by = ["dotnet"]
+verified_by = ["dotnet-build"]
+
+[[files]]
+pattern = "Meta/StrataLint/Generated/anchor-catalog.v1.json"
+kind = "generated"
+produced_by = "AnchorCatalogEmitter"
+consumed_by = ["AnchorCatalogLoader"]
+verified_by = ["emit-check"]
+
+[[files]]
+pattern = "Meta/StrataLint/Generated/scribe-emissions.v1.json"
+kind = "generated"
+produced_by = "ScribeEmitter"
+consumed_by = ["DigestionStatusEvaluator"]
+verified_by = ["emit-check"]
+
+[[files]]
+pattern = "Meta/StrataLint/StrataLint.*/**"
+kind = "program"
+produced_by = "none"
+consumed_by = ["dotnet"]
+verified_by = ["dotnet-test"]
+
+[[files]]
+pattern = "Meta/StrataLint/StrataLint.sln"
+kind = "program"
+produced_by = "none"
+consumed_by = ["dotnet"]
+verified_by = ["dotnet-test"]
+
+[[files]]
+pattern = "Meta/StrataLint/TOWER.yaml"
+kind = "program"
+produced_by = "none"
+consumed_by = ["CoverageAnalyzer"]
+verified_by = ["make-gate"]
+
+[[files]]
+pattern = "Meta/StrataLint/lean-inspector/**"
+kind = "program"
+produced_by = "none"
+consumed_by = ["Lean"]
+verified_by = ["lean-inspector"]
+
+[[files]]
+pattern = "Meta/StrataLint/scripts/**"
+kind = "program"
+produced_by = "none"
+consumed_by = ["automation"]
+verified_by = ["make-gate"]
+
+[[files]]
+pattern = "Meta/domains.yaml"
+kind = "data"
+produced_by = "none"
+consumed_by = ["RegistryLoader"]
+verified_by = ["RegistryLoader"]
+
+[[files]]
+pattern = "Meta/registry.yaml"
+kind = "data"
+produced_by = "none"
+consumed_by = ["RegistryLoader"]
+verified_by = ["RegistryLoader"]
+
+[[files]]
+pattern = "README.md"
+kind = "data"
+produced_by = "none"
+consumed_by = ["reader"]
+verified_by = ["StrictTextLoader"]
+
+[[files]]
+pattern = "agents/**"
+kind = "program"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+
+[[files]]
+pattern = "docs/*.md"
+kind = "program"
+produced_by = "none"
+consumed_by = ["developer"]
+verified_by = ["repository-policy"]
+
+[[files]]
+pattern = "docs/develop/spec/**"
+kind = "program"
+produced_by = "none"
+consumed_by = ["harness"]
+verified_by = ["SL-022"]
+
+[[files]]
+pattern = "docs/develop/theory/**"
+kind = "data"
+produced_by = "none"
+consumed_by = ["TheoryIngestion"]
+verified_by = ["StrictTextLoader"]
+
+[[files]]
+pattern = "lean-toolchain"
+kind = "program"
+produced_by = "none"
+consumed_by = ["Lean"]
+verified_by = ["make-gate"]
