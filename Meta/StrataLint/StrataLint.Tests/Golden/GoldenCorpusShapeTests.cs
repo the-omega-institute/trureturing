@@ -1,4 +1,5 @@
 using System.Text;
+using StrataLint.Cli;
 
 namespace StrataLint.Tests;
 

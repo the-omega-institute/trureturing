@@ -97,9 +97,6 @@ public static class BootstrapGate
 {
     internal const string ProtectedSurfaceMessage = "meta change requires external human review";
     internal const string SpecificationPath = "docs/develop/spec/golden-ledger-repo-spec.md";
-    internal const string DefinitionsPathPrefix =
-        "Meta/StrataLint/StrataLint.Definitions/";
-
     private static readonly StringComparer Ordinal = StringComparer.Ordinal;
 
     public static BootstrapOutcome Evaluate(RawChangeSet changes)
@@ -138,11 +135,6 @@ public static class BootstrapGate
     internal static bool IsProtected(RepoPath path)
     {
         var value = path.Value;
-        if (value.StartsWith(DefinitionsPathPrefix, StringComparison.Ordinal))
-        {
-            return false;
-        }
-
         return value.StartsWith("Meta/StrataLint/", StringComparison.Ordinal)
             || Ordinal.Equals(value, SpecificationPath)
             || Ordinal.Equals(value, "Meta/registry.yaml")

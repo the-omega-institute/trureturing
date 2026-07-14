@@ -6,14 +6,6 @@ namespace StrataLint.ArchitectureTests;
 public sealed class DependencyDirectionTests
 {
     [Fact]
-    public void DefinitionsReferencesOnlyPlatformAssembliesAndTomlyn()
-    {
-        Assert.Equal(
-            ["Tomlyn"],
-            AssemblyReferencePolicy.NonPlatformReferences(typeof(Anchor).Assembly));
-    }
-
-    [Fact]
     public void EngineReferencesExactlyBclDunetAndPidgin()
     {
         Assert.Equal(
@@ -22,35 +14,35 @@ public sealed class DependencyDirectionTests
     }
 
     [Fact]
-    public void CliReferencesExactlyDefinitionsEngineScribeAndYamlDotNet()
+    public void CliReferencesExactlyEngineScribeTomlynAndYamlDotNet()
     {
         Assert.Equal(
-            ["StrataLint.Definitions", "StrataLint.Engine", "StrataLint.Scribe", "YamlDotNet"],
+            ["StrataLint.Engine", "StrataLint.Scribe", "Tomlyn", "YamlDotNet"],
             AssemblyReferencePolicy.NonPlatformReferences(typeof(StrataLint.Cli.Program).Assembly));
     }
 
     [Fact]
-    public void ScribeReferencesExactlyDefinitionsEngineQuestPdfAndTomlyn()
+    public void ScribeReferencesExactlyEngineQuestPdfAndTomlyn()
     {
         Assert.Equal(
-            ["QuestPDF", "StrataLint.Definitions", "StrataLint.Engine", "Tomlyn"],
+            ["QuestPDF", "StrataLint.Engine", "Tomlyn"],
             AssemblyReferencePolicy.NonPlatformReferences(typeof(ScribeEmitter).Assembly));
     }
 
     [Fact]
-    public void FunctionalTestsReferenceOnlyCliDefinitionsAndEngine()
+    public void FunctionalTestsReferenceOnlyCliAndEngine()
     {
         Assert.Equal(
-            ["StrataLint", "StrataLint.Definitions", "StrataLint.Engine"],
+            ["StrataLint", "StrataLint.Engine"],
             AssemblyReferencePolicy.ApplicationReferences(
                 typeof(StrataLint.Tests.AdmissionTests).Assembly));
     }
 
     [Fact]
-    public void ScribeTestsReferenceOnlyDefinitionsEngineAndScribe()
+    public void ScribeTestsReferenceOnlyEngineAndScribe()
     {
         Assert.Equal(
-            ["StrataLint.Definitions", "StrataLint.Engine", "StrataLint.Scribe"],
+            ["StrataLint.Engine", "StrataLint.Scribe"],
             AssemblyReferencePolicy.ApplicationReferences(
                 typeof(StrataLint.Scribe.Tests.DocumentAstTests).Assembly));
     }

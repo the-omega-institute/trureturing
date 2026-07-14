@@ -2,6 +2,11 @@ namespace StrataLint.ArchitectureTests;
 
 public sealed class TargetFrameworkSingleSourceTests
 {
+    private const string EngineLockPath =
+        "Meta/StrataLint/StrataLint.Engine/packages.lock.json";
+    private const string BannedApiConfigurationFixturePath =
+        "Meta/StrataLint/StrataLint.ArchitectureTests/Determinism/BannedApiConfigurationTests.cs";
+
     [Fact]
     public void RepositoryReadsTargetFrameworkFromMsbuild()
     {
@@ -29,8 +34,8 @@ public sealed class TargetFrameworkSingleSourceTests
 
     [Theory]
     [InlineData("Directory.Build.props")]
-    [InlineData("Meta/StrataLint/StrataLint.Engine/packages.lock.json")]
-    [InlineData("Meta/StrataLint/StrataLint.ArchitectureTests/Determinism/BannedApiConfigurationTests.cs")]
+    [InlineData(EngineLockPath)]
+    [InlineData(BannedApiConfigurationFixturePath)]
     public void CanonicalOwnerAndGeneratedOrSyntheticFixturesAreAllowed(string path)
     {
         Assert.Empty(TargetFrameworkSingleSourcePolicy.InspectText(path, "net" + "99.0"));

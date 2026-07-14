@@ -59,11 +59,11 @@ components:
   - id: anchor-vocabulary
     kind: repository-files
     members:
-      - Meta/StrataLint/StrataLint.Definitions/Schema/Anchor.cs
-      - Meta/StrataLint/StrataLint.Definitions/Schema/AnchorSchemes.cs
-      - Meta/StrataLint/StrataLint.Definitions/Schema/AnchorDefinition.cs
-      - Meta/StrataLint/StrataLint.Definitions/Catalog/AnchorCatalogDefinitions.cs
-      - Meta/StrataLint/StrataLint.Definitions/Catalog/ExternalAnchorManifest.cs
+      - Meta/StrataLint/StrataLint.Scribe/Anchors/Anchor.cs
+      - Meta/StrataLint/StrataLint.Scribe/Anchors/AnchorSchemes.cs
+      - Meta/StrataLint/StrataLint.Scribe/Anchors/AnchorDefinition.cs
+      - Meta/StrataLint/StrataLint.Scribe/Catalog/AnchorCatalogDefinitions.cs
+      - Meta/StrataLint/StrataLint.Scribe/Catalog/ExternalAnchorManifest.cs
     judged_by:
       - anchor-catalog-projection
       - anchor-scribe-tests
@@ -123,9 +123,9 @@ components:
       - Meta/StrataLint/Golden/cases/protected-semantics.toml
       - Meta/StrataLint/Golden/cases/structure-and-identities.toml
       - Meta/StrataLint/Golden/cases/structured-ledger.toml
-      - Meta/StrataLint/StrataLint.Definitions/Golden/GoldenCorpus.cs
-      - Meta/StrataLint/StrataLint.Definitions/Golden/TomlGoldenLoader.cs
-      - Meta/StrataLint/StrataLint.Definitions/Golden/TomlGoldenWriter.cs
+      - Meta/StrataLint/StrataLint.Cli/Golden/GoldenCorpus.cs
+      - Meta/StrataLint/StrataLint.Cli/Golden/TomlGoldenLoader.cs
+      - Meta/StrataLint/StrataLint.Cli/Golden/TomlGoldenWriter.cs
       - Meta/StrataLint/StrataLint.Cli/Commands/GoldenRecordCommand.cs
       - Meta/StrataLint/StrataLint.Cli/Conservative/GoldenCorpusMaterializer.cs
       - Meta/StrataLint/StrataLint.Tests/Conservative/GoldenCorpusMaterializerTests.cs
@@ -238,9 +238,9 @@ components:
       - "c0/corpus git-sha1/df1d00c28f760839a4bb949f53b6cc8b83fd6a55 Meta/StrataLint/Golden/cases/protected-semantics.toml"
       - "c0/corpus git-sha1/3fda989e25dc986d94e498f9f3926b90222358f9 Meta/StrataLint/Golden/cases/structure-and-identities.toml"
       - "c0/corpus git-sha1/8b039f099940dfe87b864c9b2da94d437c1a7ef2 Meta/StrataLint/Golden/cases/structured-ledger.toml"
-      - "c0/corpus git-sha1/3c2bbadeb3914b7e8efdd3136faf2d4447621553 Meta/StrataLint/StrataLint.Definitions/Golden/GoldenCorpus.cs"
-      - "c0/corpus git-sha1/7857d0533c532879b27839fe75d05fbc917b55aa Meta/StrataLint/StrataLint.Definitions/Golden/TomlGoldenLoader.cs"
-      - "c0/corpus git-sha1/eb75f512d0fe306d84de3065d70f2026375da24b Meta/StrataLint/StrataLint.Definitions/Golden/TomlGoldenWriter.cs"
+      - "c0/corpus git-sha1/3c2bbadeb3914b7e8efdd3136faf2d4447621553 Meta/StrataLint/StrataLint.Cli/Golden/GoldenCorpus.cs"
+      - "c0/corpus git-sha1/7857d0533c532879b27839fe75d05fbc917b55aa Meta/StrataLint/StrataLint.Cli/Golden/TomlGoldenLoader.cs"
+      - "c0/corpus git-sha1/eb75f512d0fe306d84de3065d70f2026375da24b Meta/StrataLint/StrataLint.Cli/Golden/TomlGoldenWriter.cs"
       - "c0/gate-wiring git-sha1/65e06b428fecef667fb873fc399c9e0dbbbd7793 .github/scripts/harness-gate.sh"
       - "c0/inaugural-certificate sha256/f76d7f7237633f6e7a028dc1d0a674e51738605fc41d2a96a73fc3976b6ab9e0 Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json"
       - "c0/preimage-commit git-commit/25d1100e36910560b0059d2a72fd89d2bf8bc295"

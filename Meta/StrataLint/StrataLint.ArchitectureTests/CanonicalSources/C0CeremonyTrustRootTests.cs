@@ -18,7 +18,7 @@ public sealed class C0CeremonyTrustRootTests
     private const string ProgramPath =
         "Meta/StrataLint/StrataLint.Cli/Program.cs";
     private const string CorpusSchemaDirectory =
-        "Meta/StrataLint/StrataLint.Definitions/Golden";
+        "Meta/StrataLint/StrataLint.Cli/Golden";
     private const string CorpusDataDirectory =
         "Meta/StrataLint/Golden/cases";
     private const string GateWiringPath = ".github/scripts/harness-gate.sh";

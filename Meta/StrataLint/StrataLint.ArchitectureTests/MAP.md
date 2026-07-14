@@ -6,8 +6,8 @@
 - `CanonicalSources/`: source-level checks that C# consumes canonical repository data instead of copying it.
 - `CanonicalSources/Golden/`: golden TOML storage and closed-stratum consistency
   policies, split locally when the parent bucket reached its file limit.
-- `Dependencies/`: compiled assembly dependency direction, the platform-plus-Tomlyn
-  Definitions schema boundary, and whitelist fixtures.
+- `Dependencies/`: compiled assembly dependency direction, retired-assembly absence,
+  final source ownership, and whitelist fixtures.
 - `Namespaces/`: source path to namespace policy, including Blueprint linked-source conventions.
 - `PublicSurface/`: the exact exported Engine type allowlist.
 
@@ -43,7 +43,7 @@ The root contains only shared repository discovery, test metadata, and this map.
   generated anchor catalog; rejects internal theory paths, retired internal theory
   family tokens, and retired catalog schemes. The whitelist is limited to the
   atomizers, digestion status, ledger/schema validation, and their focused tests.
-- External anchor catalog: Definitions and the generated catalog contain only
+- External anchor catalog: Scribe definitions and the generated catalog contain only
   literature bibkeys and mathlib modules or declarations, and the catalog definitions
   must exactly equal the external manifest.
 - Anchor definition names: every public typed anchor property is checked by reflection

@@ -40,6 +40,8 @@ public sealed class TrustTopologyTests
         ".github/CODEOWNERS",
         RuleFixture.WorkflowPath,
         RuleFixture.HarnessGatePath,
+        RuleFixture.DefinitionsProjectPath,
+        RuleFixture.DefinitionsLockPath,
     };
 
     [Theory]
@@ -55,18 +57,6 @@ public sealed class TrustTopologyTests
         var profile = MetaEvaluationProfile.ForProtectedSurface(required.ChangeSet);
         Assert.Null(profile.ClearCapability);
         Assert.Same(required.ChangeSet, profile.ProtectedChangeSet);
-    }
-
-    [Theory]
-    [InlineData(RuleFixture.DefinitionsProjectPath)]
-    [InlineData(RuleFixture.DefinitionsLockPath)]
-    public void Sl022DoesNotClassifyDefinitionsDataAsMetaProgram(string path)
-    {
-        var changes = RawChangeSet.Create(new[] { path });
-
-        var outcome = BootstrapGate.Evaluate(changes);
-
-        Assert.IsType<BootstrapOutcome.Clear>(outcome);
     }
 
     [Fact]

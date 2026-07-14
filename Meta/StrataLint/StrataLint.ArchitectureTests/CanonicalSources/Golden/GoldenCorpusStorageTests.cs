@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Reflection;
-using StrataLint.Definitions;
+using StrataLint.Cli;
 
 namespace StrataLint.ArchitectureTests;
 
@@ -41,8 +41,8 @@ public sealed class GoldenCorpusStorageTests
         var root = RepositoryLayout.FindRoot();
         var directory = Path.Combine(root, "Meta", "StrataLint", "Golden", "cases");
         Assert.Equal(4, Directory.EnumerateFiles(directory, "*.toml").Count());
-        var loader = typeof(Anchor).Assembly.GetType(
-            "StrataLint.Definitions.TomlGoldenLoader",
+        var loader = typeof(Program).Assembly.GetType(
+            "StrataLint.Cli.TomlGoldenLoader",
             throwOnError: true)!;
         var corpus = loader.GetMethod(
             "LoadRepository",
@@ -52,7 +52,7 @@ public sealed class GoldenCorpusStorageTests
             BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(corpus)!;
         Assert.Equal(110, cases.Cast<object>().Count());
         Assert.Empty(Directory.EnumerateFiles(
-            Path.Combine(root, "Meta", "StrataLint", "StrataLint.Definitions", "Golden"),
+            Path.Combine(root, "Meta", "StrataLint", "StrataLint.Cli", "Golden"),
             "GoldenCorpus.Cases*.cs"));
     }
 }

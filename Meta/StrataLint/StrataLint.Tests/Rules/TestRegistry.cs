@@ -1,3 +1,5 @@
+using StrataLint.Cli;
+
 namespace StrataLint.Tests;
 
 internal static class TestRegistry

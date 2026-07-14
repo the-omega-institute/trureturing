@@ -1,6 +1,4 @@
 using System.Globalization;
-using StrataLint.Definitions;
-
 namespace StrataLint.Cli;
 
 internal static class GoldenRecordCommand

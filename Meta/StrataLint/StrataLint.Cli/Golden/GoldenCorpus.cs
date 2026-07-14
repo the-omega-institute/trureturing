@@ -1,4 +1,4 @@
-namespace StrataLint.Definitions;
+namespace StrataLint.Cli;
 
 internal sealed record GoldenCase(
     string Name,

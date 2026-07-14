@@ -87,6 +87,16 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
   gate contract selection: 11/11 cases passed, including the out-of-root rejection.
 - Values authority selection: Engine schema/attestation loader 9/9 and Scribe catalog,
   writer, and byte-exact projection selection 8/8 passed.
+- Definitions retirement migration autopsy: moving the canonical TOML writer into CLI
+  activated the existing BannedApi analyzer on that source; the first Debug build failed
+  with exactly one RS0030 at providerless `int.ToString("X4")`. Supplying
+  `CultureInfo.InvariantCulture` repaired the deterministic writer, after which the Debug
+  solution build passed with zero warnings and errors.
+- Definitions retirement repository-scan autopsy: the first full Architecture run found
+  16 existing-file literals that focused selections had missed (14 in the new retirement
+  ownership test and two in the target-framework fixture). Each contract path was promoted
+  to a named `const string`; the policy stayed unchanged, its failing selection passed 1/1,
+  and the Architecture suite excluding the pending C0 renewal passed 101/101.
 
 ## Residual scan
 
@@ -127,7 +137,7 @@ recorded pressure gate. Per the no-prebuild rule, this section records debt only
 | Site | Why it is scoped rather than global debt |
 |---|---|
 | `StrataLint.Engine/Rules/ValuesProjectionLoader.cs:25-43,89` and `StrataLint.Scribe/Writers/CanonicalValuesWriter.cs:45` | These constants bind the D5 values pipeline specifically: D5 Lean truth, D5 kernel data, and the D5 evidence projection. The constant ID set itself lives only in emitter data. A future theory needs its own admitted source before sharing this path. |
-| `StrataLint.Cli/Conservative/GoldenCorpusMaterializer.cs:272-622`, `StrataLint.Tests/Rules/RuleFixture.cs`, `StrataLint.Definitions/Golden/GoldenCorpus.cs`, and `Meta/StrataLint/Golden/cases/*.toml` | The conservative corpus is an explicit synthetic fixture for the sole instantiated M0 theory. Those D5 examples remain valid fixtures after another theory is admitted. |
+| `StrataLint.Cli/Conservative/GoldenCorpusMaterializer.cs:272-622`, `StrataLint.Tests/Rules/RuleFixture.cs`, `StrataLint.Cli/Golden/GoldenCorpus.cs`, and `Meta/StrataLint/Golden/cases/*.toml` | The conservative corpus is an explicit synthetic fixture for the sole instantiated M0 theory. Those D5 examples remain valid fixtures after another theory is admitted. |
 | `Blueprint/D5/**/*.scribe.cs` and `StrataLint.Scribe.Tests/**/*.cs` | These are typed D5 document data and tests of those documents, not a generic theory registry. |
 | `StrataLint.Engine/Rules/RuleCatalog.cs:194-196`, `StrataLint.Cli/Commands/CliApplication.cs:120-124`, and `StrataLint.ArchitectureTests/CanonicalSources/TheoryIsolationPolicy.cs:19` | These literals cite permanent D5 task cases or the current D5 ingestion/autopsy grammar. The case identities must not be generalized or renumbered. |
 
