@@ -15,6 +15,10 @@ internal static class TheoryIsolationPolicy
     private static readonly Regex TheoryPathPattern = new(
         "docs/develop/" + "theory(?:/|\\\\)",
         RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+    private static readonly Regex LeanTaskPattern = new(
+        "/-- TASK D5-T[0-9]{4} \\| 难度:[1-5] \\| 依赖:[^\\n|]+ \\| 尝试:[0-9]+\\n"
+        + "\\s+提示:[^\\n]+\\n\\s+尸检:(?<autopsy>[^\\n]+) -/",
+        RegexOptions.CultureInvariant);
     private static readonly HashSet<string> RetiredCatalogSchemes = new(
         [FirstRetiredToken, SecondRetiredToken],
         StringComparer.OrdinalIgnoreCase);
@@ -76,15 +80,18 @@ internal static class TheoryIsolationPolicy
             return [];
         }
 
+        var inspectedSource = path.EndsWith(".lean", StringComparison.Ordinal)
+            ? MaskTaskAutopsies(source)
+            : source;
         var findings = new List<TheoryIsolationFinding>();
-        if (TheoryPathPattern.IsMatch(source))
+        if (TheoryPathPattern.IsMatch(inspectedSource))
         {
             findings.Add(new TheoryIsolationFinding(
                 path,
                 "program or formal source contains an internal theory reference path"));
         }
 
-        if (InternalTheoryReferencePattern.IsMatch(source))
+        if (InternalTheoryReferencePattern.IsMatch(inspectedSource))
         {
             findings.Add(new TheoryIsolationFinding(
                 path,
@@ -126,4 +133,14 @@ internal static class TheoryIsolationPolicy
     private static bool IsAllowedCSharp(string path) =>
         AllowedCSharpFiles.Contains(path)
         || AllowedCSharpPrefixes.Any(prefix => path.StartsWith(prefix, StringComparison.Ordinal));
+
+    private static string MaskTaskAutopsies(string source) =>
+        LeanTaskPattern.Replace(source, static match =>
+        {
+            var autopsy = match.Groups["autopsy"];
+            var relativeIndex = autopsy.Index - match.Index;
+            return match.Value[..relativeIndex]
+                + new string(' ', autopsy.Length)
+                + match.Value[(relativeIndex + autopsy.Length)..];
+        });
 }

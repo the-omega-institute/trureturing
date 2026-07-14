@@ -127,7 +127,7 @@ theorem depth_phase_lt_resolution (q0 : ℤ) (n : ℕ+) :
 
 /-- TASK D5-T0020 | 难度:4 | 依赖:欠(finite-depth-metric-structure) | 尝试:0
     提示:Choose a fiber distance, then prove separation and a triangle variant at Lean L2.
-    尸检:none; separation and triangle variants remain open for the current finite-depth model. -/
+    尸检:none; GICT v3.6 line 234 explicitly lists separation and triangle variants as open. -/
 def depthMetricL2Open : Unit := ()
 
 end D5.S1.Depth

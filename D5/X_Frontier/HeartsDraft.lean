@@ -9,7 +9,7 @@ import D5.S3.Weil.WeilIdentity
 
 /-- TASK D5-T0001 | 难度:5 | 依赖:就绪✓ | 尝试:3
     提示:Candidate B is frozen in D5/X_Frontier/Hearts with MeromorphicOn plus AnalyticAt zero localization and no pole-free-band clause.
-    尸检:M0 draft parameterized arbitrary Zqc/Witt data and let a structuralSingularities set absorb every nonanalytic point; rejected as a dictionary statement rather than the independent engine. R2 first candidates also asserted a pole-free band, contradicted by the zeta(phi^3 s) structural pole; that clause was removed. Cross-model adversarial review judged candidate B faithful and it was adopted; O-6 was separated because its draft left the Weil functional free. -/
+    尸检:M0 draft parameterized arbitrary Zqc/Witt data and let a structuralSingularities set absorb every nonanalytic point; rejected as a dictionary statement rather than the independent engine. R2 first candidates also asserted a pole-free band, contradicted by the zeta(phi^3 s) structural pole in 6.19; that clause was removed. Cross-model adversarial review judged candidate B faithful and it was adopted; O-6 was separated because its draft left the Weil functional free. -/
 def heartsDraftTicket : Unit := ()
 
 /-- TASK D5-T0018 | 难度:5 | 依赖:欠(Hearts-gate) | 尝试:2

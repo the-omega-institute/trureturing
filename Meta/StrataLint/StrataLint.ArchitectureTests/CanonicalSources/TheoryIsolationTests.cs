@@ -35,6 +35,40 @@ public sealed class TheoryIsolationTests
     }
 
     [Fact]
+    public void LeanTaskAutopsyTheoryReferenceIsExempt()
+    {
+        var retiredCitation = string.Concat("GI", "CT v3.6");
+        var source = $$"""
+            /-- TASK D5-T0099 | 难度:3 | 依赖:就绪 | 尝试:1
+                提示:Use only formal repository definitions.
+                尸检:Earlier {{retiredCitation}} route failed. -/
+            def syntheticTask : Unit := ()
+            """;
+
+        Assert.Empty(TheoryIsolationPolicy.InspectSource(
+            "D5/X_Frontier/Synthetic.lean",
+            source));
+    }
+
+    [Fact]
+    public void LeanTaskNonAutopsyTheoryReferenceIsRejected()
+    {
+        var retiredCitation = string.Concat("P", "ZG 26.4");
+        var source = $$"""
+            /-- TASK D5-T0099 | 难度:3 | 依赖:就绪 | 尝试:1
+                提示:Retry the {{retiredCitation}} route.
+                尸检:none -/
+            def syntheticTask : Unit := ()
+            """;
+
+        var finding = Assert.Single(TheoryIsolationPolicy.InspectSource(
+            "D5/X_Frontier/Synthetic.lean",
+            source));
+
+        Assert.Contains("internal theory reference", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void CSharpNumberedTheoryCitationIsRejectedByTheRedFixture()
     {
         var retiredCitation = string.Concat("P", "ZG 26");
