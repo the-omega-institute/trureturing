@@ -9,6 +9,21 @@ internal sealed record GoldenCase(
 
 internal sealed record GoldenDiagnostic(int RuleNumber, string Path, string Message);
 
+internal sealed record GoldenCorpusFile(string Path, IReadOnlyList<GoldenCase> Cases);
+
+internal sealed class GoldenCorpusSet
+{
+    internal GoldenCorpusSet(IReadOnlyList<GoldenCorpusFile> files)
+    {
+        Files = files;
+        Cases = files.SelectMany(static file => file.Cases).ToArray();
+    }
+
+    internal IReadOnlyList<GoldenCorpusFile> Files { get; }
+
+    internal IReadOnlyList<GoldenCase> Cases { get; }
+}
+
 internal enum GoldenGenerality
 {
     General,
@@ -199,67 +214,4 @@ internal static partial class GoldenCorpus
     internal const string SyntheticProtectedPath =
         "Meta/StrataLint/StrataLint.Engine/SyntheticProtected.cs";
 
-    internal static IReadOnlyList<GoldenCase> All { get; } =
-    [
-        .. Corpus1,
-        .. Corpus2,
-        .. Corpus3,
-        .. Corpus4,
-    ];
-
-    private static GoldenCase C(
-        string name,
-        GoldenMutation[] baselineMutations,
-        GoldenMutation[] mutations,
-        GoldenDiagnostic[] expectedDiagnostics,
-        string[]? changes = null) =>
-        new(
-            name,
-            baselineMutations,
-            mutations,
-            expectedDiagnostics,
-            changes ?? [BlueprintPath]);
-
-    private static GoldenDiagnostic D(int rule, string path, string message) =>
-        new(rule, path, message);
-
-    private static GoldenMutation W(string path, string content) =>
-        new GoldenMutation.Write(path, content);
-
-    private static GoldenMutation WP(string path, params string[] parts) =>
-        new GoldenMutation.WriteParts(path, parts);
-
-    private static GoldenMutation L(
-        string path,
-        string rawGid,
-        GoldenGenerality generality,
-        string body) =>
-        new GoldenMutation.Lean(path, rawGid, generality, body);
-
-    private static GoldenMutation X(string path) => new GoldenMutation.Delete(path);
-
-    private static GoldenMutation A(string path, int count, string line) =>
-        new GoldenMutation.AppendLines(path, count, line);
-
-    private static GoldenMutation Domain(string name, GoldenStratum stratum) =>
-        new GoldenMutation.AddDomain(name, stratum);
-
-    private static GoldenMutation T(string path, string rawGid, string rawCaseId) =>
-        new GoldenMutation.AddTask(path, rawGid, rawCaseId);
-
-    private static GoldenMutation Dir() => new GoldenMutation.PopulateDirectory();
-
-    private static GoldenMutation Waiver() => new GoldenMutation.EmptyMirrorWaiver();
-
-    private static GoldenMutation Mirror(bool json, bool yaml) =>
-        new GoldenMutation.EvidenceMirror(json, yaml);
-
-    private static GoldenMutation Replace(string oldValue, string newValue) =>
-        new GoldenMutation.ReplaceBackfill(oldValue, newValue);
-
-    private static GoldenMutation Disposition(string rawGid) =>
-        new GoldenMutation.ReplaceFirstBackfillDisposition(rawGid);
-
-    private static GoldenMutation Anchor(string anchor, bool duplicate) =>
-        new GoldenMutation.MutateBackfillAnchor(anchor, duplicate);
 }

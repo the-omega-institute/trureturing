@@ -1,16 +1,20 @@
 using System.Text;
+using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
 public sealed class GoldenCorpusTests
 {
+    private static readonly string RepositoryRoot = FindRepositoryRoot();
+    private static readonly GoldenCorpusSet Corpus = TomlGoldenLoader.LoadRepository(RepositoryRoot);
+
     public static TheoryData<string> Cases
     {
         get
         {
             var data = new TheoryData<string>();
-            foreach (var item in GoldenCorpus.All)
+            foreach (var item in Corpus.Cases)
             {
                 data.Add(item.Name);
             }
@@ -21,18 +25,10 @@ public sealed class GoldenCorpusTests
 
     [Theory]
     [MemberData(nameof(Cases))]
-    public void EveryTypedCaseMatchesCurrentEngineDiagnostics(string caseName)
+    public void EveryTomlCaseMatchesCurrentEngineDiagnostics(string caseName)
     {
-        var testCase = GoldenCorpus.All.Single(item => item.Name == caseName);
-        var fixture = new RuleFixture();
-        fixture.NormalizeGoldenBackfillTargets();
-        fixture.ApplyGoldenMutations(caseName, testCase.BaselineMutations, baseline: true);
-        fixture.ApplyGoldenMutations(caseName, testCase.BaselineMutations, baseline: false);
-        fixture.ApplyGoldenMutations(caseName, testCase.Mutations, baseline: false);
-
-        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(fixture.BuildGoldenContext(testCase.Changes)));
-        var actual = completed.Capability.Diagnostics
+        var testCase = Corpus.Cases.Single(item => item.Name == caseName);
+        var actual = GoldenCorpusMaterializer.Evaluate(RepositoryRoot, testCase)
             .Select(static item => item.Render())
             .Order(StringComparer.Ordinal)
             .ToArray();
@@ -51,4 +47,16 @@ public sealed class GoldenCorpusTests
 
     private static string Render(string[] diagnostics) =>
         string.Join('\n', diagnostics) + (diagnostics.Length == 0 ? string.Empty : "\n");
+
+    private static string FindRepositoryRoot()
+    {
+        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
+             current is not null;
+             current = current.Parent)
+        {
+            if (File.Exists(Path.Combine(current.FullName, "CLAUDE.md"))) return current.FullName;
+        }
+
+        throw new DirectoryNotFoundException("Could not locate repository root.");
+    }
 }

@@ -18,6 +18,8 @@ internal interface ICliEnvironment
 
     CommandResult Route(IReadOnlyList<string> arguments);
 
+    CommandResult RecordGolden(IReadOnlyList<string> arguments);
+
     CommandResult SelfTest(IReadOnlyList<string> arguments);
 
     CommandResult GenerateLedger(IReadOnlyList<string> arguments);
@@ -84,7 +86,7 @@ internal static class CliApplication
         if (arguments.Count == 0)
         {
             console.WriteError(
-                "USAGE: StrataLint check|coverage|digest-status|ledger-genesis|route|selftest|topology|worktree|ledger-append|ledger-reattest|verify-conservative|evaluate-conservative-corpus\n");
+                "USAGE: StrataLint check|coverage|digest-status|golden-record|ledger-genesis|route|selftest|topology|worktree|ledger-append|ledger-reattest|verify-conservative|evaluate-conservative-corpus\n");
             return 2;
         }
 
@@ -96,6 +98,7 @@ internal static class CliApplication
             "digest-status" => RenderCommand(environment.DigestStatus(tail), console),
             "evaluate-conservative-corpus" =>
                 RenderExplicit(environment.EvaluateConservativeCorpus(tail), console),
+            "golden-record" => RenderCommand(environment.RecordGolden(tail), console),
             "ledger-genesis" => RenderCommand(environment.GenerateLedger(tail), console),
             "ledger-append" => RenderCommand(environment.AppendLedger(tail), console),
             "ledger-reattest" => RenderCommand(environment.ReattestLedger(tail), console),

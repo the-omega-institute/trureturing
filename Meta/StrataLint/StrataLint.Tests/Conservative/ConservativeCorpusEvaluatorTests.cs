@@ -6,26 +6,28 @@ namespace StrataLint.Tests;
 public sealed class ConservativeCorpusEvaluatorTests
 {
     [Fact]
-    public void ProductionEvaluatorReplaysEveryBaseTypedGoldenCase()
+    public void ProductionEvaluatorReplaysEveryBaseTomlGoldenCase()
     {
-        var corpus = GoldenCorpusMaterializer.Materialize(FindRepositoryRoot());
+        var root = FindRepositoryRoot();
+        var source = TomlGoldenLoader.LoadRepository(root);
+        var corpus = GoldenCorpusMaterializer.Materialize(root);
 
         var run = ConservativeCorpusEvaluator.Evaluate(
             corpus.CanonicalBytes.AsSpan(),
             "sha256:" + new string('a', 64));
 
-        Assert.Equal(GoldenCorpus.All.Count, run.Cases.Length);
+        Assert.Equal(source.Cases.Count, run.Cases.Length);
         Assert.Equal(corpus.CaseIds, run.Cases.Select(static item => item.CaseId));
-        foreach (var source in GoldenCorpus.All)
+        foreach (var testCase in source.Cases)
         {
-            var actual = Assert.Single(run.Cases, item => item.CaseId == $"golden:{source.Name}");
+            var actual = Assert.Single(run.Cases, item => item.CaseId == $"golden:{testCase.Name}");
             Assert.Equal(
-                source.ExpectedDiagnostics.Count == 0
+                testCase.ExpectedDiagnostics.Count == 0
                     ? ConservativeDisposition.Admit
                     : ConservativeDisposition.Block,
                 actual.Disposition);
             Assert.Equal(
-                source.ExpectedDiagnostics
+                testCase.ExpectedDiagnostics
                     .Select(static item => $"SL-{item.RuleNumber:000}")
                     .Distinct(StringComparer.Ordinal)
                     .Order(StringComparer.Ordinal),

@@ -1,0 +1,197 @@
+# 输入=spec 场景采样(人);期望=Engine 输出快照(机器录制);此文件是行为时间锁
+# canonical: UTF-8 without BOM; LF; case keys=name,changes,baseline_mutations,mutations,expected_diagnostics; nested keys follow schema order.
+[[cases]]
+name = "illegal-formula-character"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Evidence/D5/S0/Carrier/Formula.check.json", content = "{\"formula\": \"sqrt@5\", \"refs\": {}}\n" }]
+expected_diagnostics = [{ rule = 15, path = "Evidence/D5/S0/Carrier/Formula.check.json", message = "illegal formula character '@'" }]
+
+[[cases]]
+name = "unbound-formula-reference"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Evidence/D5/S0/Carrier/Formula.check.json", content = "{\"formula\": \"2*T0\", \"refs\": {}}\n" }]
+expected_diagnostics = [{ rule = 15, path = "Evidence/D5/S0/Carrier/Formula.check.json", message = "unbound formula ref T0" }]
+
+[[cases]]
+name = "unregistered-axiom"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "lean", path = "D5/S0/Carrier/Ring.lean", raw_gid = "D5/S0/Carrier/Ring", generality = "General", body = "axiom invented : False\n" }]
+expected_diagnostics = [{ rule = 20, path = "D5/S0/Carrier/Ring.lean", message = "axiom declarations are confined to AxiomDebt.lean: invented" }]
+
+[[cases]]
+name = "unknown-top-level-file"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "rogue.txt", content = "closed world\n" }]
+expected_diagnostics = [{ rule = 0, path = "rogue.txt", message = "unknown top-level artifact" }]
+
+[[cases]]
+name = "unknown-artifact-extension"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Evidence/D5/blob.exe", content = "closed world\n" }]
+expected_diagnostics = [{ rule = 0, path = "Evidence/D5/blob.exe", message = "noncanonical Evidence artifact: Evidence filename needs module.selector.kind" }]
+
+[[cases]]
+name = "unknown-frozen-paper-extension"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Papers/frozen/D5-P001/blob.exe", content = "closed world\n" }]
+expected_diagnostics = [{ rule = 0, path = "Papers/frozen/D5-P001/blob.exe", message = "noncanonical Papers artifact: path is not a canonical semantic artifact" }]
+
+[[cases]]
+name = "lowercase-formal-module"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "lean", path = "D5/S0/Carrier/lowercase.lean", raw_gid = "D5/S0/Carrier/lowercase", generality = "General", body = "def lowercase : Nat := 0\n" }]
+expected_diagnostics = [{ rule = 0, path = "D5/S0/Carrier/lowercase.lean", message = "noncanonical formal artifact: formal module must be CamelCase" }]
+
+[[cases]]
+name = "lowercase-evidence-module"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Evidence/D5/S0/Carrier/lowercase.result.json", content = "{}\n" }]
+expected_diagnostics = [{ rule = 0, path = "Evidence/D5/S0/Carrier/lowercase.result.json", message = "noncanonical Evidence artifact: formal module must be CamelCase" }]
+
+[[cases]]
+name = "uninstantiated-meta-tools"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Meta/split.py", content = "# pressure-gated fixture\n" }, { op = "write", path = "Meta/papergen", content = "pressure-gated fixture\n" }]
+expected_diagnostics = [{ rule = 21, path = "Meta/papergen", message = "Meta/papergen 未实例化(案号 D5-T0005)" }, { rule = 21, path = "Meta/split.py", message = "Meta/split.py 未实例化(案号 D5-T0004)" }]
+
+[[cases]]
+name = "evidence-selector-extension-collision"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "evidence_mirror", include_json = true, include_yaml = true }]
+expected_diagnostics = [{ rule = 15, path = "Evidence/D5/S0/Carrier/Ring.result.json", message = "evidence selector has multiple artifact kinds: Evidence/D5/S0/Carrier/Ring.result.json, Evidence/D5/S0/Carrier/Ring.result.yaml" }, { rule = 15, path = "Evidence/D5/S0/Carrier/Ring.result.yaml", message = "evidence selector has multiple artifact kinds: Evidence/D5/S0/Carrier/Ring.result.json, Evidence/D5/S0/Carrier/Ring.result.yaml" }]
+
+[[cases]]
+name = "protected-axiom"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "lean", path = "D5/S0/Carrier/Ring.lean", raw_gid = "D5/S0/Carrier/Ring", generality = "General", body = "namespace D5.S0.Carrier\nprotected axiom protectedBypass : False\nend D5.S0.Carrier\n" }]
+expected_diagnostics = [{ rule = 20, path = "D5/S0/Carrier/Ring.lean", message = "axiom declarations are confined to AxiomDebt.lean: D5.S0.Carrier.protectedBypass" }]
+
+[[cases]]
+name = "comment-only-sorry"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "lean", path = "D5/S0/Carrier/Ring.lean", raw_gid = "D5/S0/Carrier/Ring", generality = "General", body = "-- sorry is discussion, not a term\ndef commentSafe : String := \"axiom sorry\"\n" }]
+expected_diagnostics = []
+
+[[cases]]
+name = "hearts-attributed-comment-decoy"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = [{ op = "lean", path = "D5/X_Frontier/Hearts.lean", raw_gid = "D5/X_Frontier/Hearts", generality = "Extremal", body = "theorem heart : True := by sorry\n" }]
+mutations = [{ op = "lean", path = "D5/X_Frontier/Hearts.lean", raw_gid = "D5/X_Frontier/Hearts", generality = "Extremal", body = "/-\ntheorem heart : True := by trivial\n-/\n@[simp] theorem heart : False := by sorry\n" }]
+expected_diagnostics = [{ rule = 8, path = "D5/X_Frontier/Hearts.lean", message = "semantic declaration identities and types are frozen" }]
+
+[[cases]]
+name = "future-theory-is-uninstantiated"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "lean", path = "D8/S0/Carrier/Ring.lean", raw_gid = "D8/S0/Carrier/Ring", generality = "General", body = "def future : Nat := 0\n" }]
+expected_diagnostics = [{ rule = 21, path = "D8/S0/Carrier/Ring.lean", message = "D8 未实例化(压力未至,D5-T0009)" }]
+
+[[cases]]
+name = "valid-protected-backfill-inventory"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = []
+expected_diagnostics = []
+
+[[cases]]
+name = "empty-protected-backfill-inventory"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Meta/BACKFILL.yaml", content = "schema_version: 3\nledger: theory-digestion-v1\nsources: []\nticket_index: []\n" }, { op = "delete", path = "D5/X_Frontier/BackfillTasks.lean" }]
+expected_diagnostics = [{ rule = 16, path = "Meta/BACKFILL.yaml", message = "digestion ledger must contain at least one source" }]
+
+[[cases]]
+name = "missing-backfill-disposition"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "replace_backfill", old_value = "          - D5/S0/Carrier/BackfillTarget\n", new_value = "" }]
+expected_diagnostics = [{ rule = 16, path = "Meta/BACKFILL.yaml", message = "entry fixture-atom coverage_gids must be a list" }]
+
+[[cases]]
+name = "duplicate-protected-backfill-entry"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "mutate_backfill_anchor", anchor = "fixture-atom", duplicate = true }]
+expected_diagnostics = [{ rule = 16, path = "Meta/BACKFILL.yaml", message = "duplicate atom_id: fixture-atom" }]
+
+[[cases]]
+name = "dangling-backfill-entry"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "replace_first_backfill_disposition", raw_gid = "D5/S0/Carrier/Missing" }]
+expected_diagnostics = [{ rule = 16, path = "Meta/BACKFILL.yaml", message = "entry fixture-atom coverage target is absent: D5/S0/Carrier/Missing" }]
+
+[[cases]]
+name = "invalid-protected-backfill-schema"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "replace_backfill", old_value = "schema_version: 3", new_value = "schema_version: 2" }]
+expected_diagnostics = [{ rule = 16, path = "Meta/BACKFILL.yaml", message = "BACKFILL must use schema_version 3; legacy schemas are not read" }]
+
+[[cases]]
+name = "changed-protected-source-path"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "replace_backfill", old_value = "path: docs/GOVERNANCE.md", new_value = "path: Library/queries.yaml" }]
+expected_diagnostics = [{ rule = 16, path = "Meta/BACKFILL.yaml", message = "source fixture-source has an invalid governance path" }]
+
+[[cases]]
+name = "ticket-target-task-mismatch"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "replace_backfill", old_value = "  - case_id: D5-T0018\n    gid: D5/X_Frontier/BackfillTasks\n", new_value = "  - case_id: D5-T0018\n    gid: D5/S0/Carrier/Ring\n" }]
+expected_diagnostics = [{ rule = 16, path = "Meta/BACKFILL.yaml", message = "ticket D5-T0018 target does not declare TASK D5-T0018: D5/S0/Carrier/Ring.lean" }]
+
+[[cases]]
+name = "frontier-task-missing-ticket-index"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "add_task", path = "D5/X_Frontier/UnindexedTask.lean", raw_gid = "D5/X_Frontier/UnindexedTask", raw_case_id = "D5-T0099" }]
+expected_diagnostics = [{ rule = 16, path = "Meta/BACKFILL.yaml", message = "frontier TASK cases are missing from ticket_index: D5-T0099" }]
+
+[[cases]]
+name = "valid-pending-query-anchor"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "add_task", path = "D5/X_Frontier/QueryTask.lean", raw_gid = "D5/X_Frontier/QueryTask", raw_case_id = "D5-T0098" }, { op = "write", path = "Library/queries.yaml", content = "schema_version: 1\nqueries:\n  - id: D5-Q0098\n    query: fixture\n    target_gid: D5/X_Frontier/QueryTask\n    pending_case: D5-T0098\n" }]
+expected_diagnostics = []
+
+[[cases]]
+name = "unresolvable-query-anchor"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Library/queries.yaml", content = "schema_version: 1\nqueries:\n  - id: D5-Q0099\n    query: invented paper\n    target_gid: D5/S0/Carrier/Ring\n    bibkey: invented2026result\n" }]
+expected_diagnostics = [{ rule = 17, path = "Library/queries.yaml", message = "query D5-Q0099 needs DOI/arXiv or a pending case" }]
+
+[[cases]]
+name = "resolved-query-target-gid-must-exist"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Library/queries.yaml", content = "schema_version: 1\nqueries:\n  - id: D5-Q0096\n    query: missing formal target\n    target_gid: D5/S0/Carrier/Missing\n    bibkey: fixture2026missing\n    doi: 10.1000/missing\n" }]
+expected_diagnostics = [{ rule = 17, path = "Library/queries.yaml", message = "query D5-Q0096 target GID is missing: D5/S0/Carrier/Missing" }]
+
+[[cases]]
+name = "valid-ledgered-anomaly"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "add_task", path = "D5/X_Frontier/LedgerTask.lean", raw_gid = "D5/X_Frontier/LedgerTask", raw_case_id = "D5-T0097" }, { op = "write_parts", path = "Evidence/D5/S0/Carrier/Result.run.json", parts = ["{", "\"anomaly\": \"fixture drift\", \"case_id\": \"D5-T0097\"}\n"] }]
+expected_diagnostics = []
+
+[[cases]]
+name = "valid-typed-ledgered-anomaly"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "add_task", path = "D5/X_Frontier/LedgerTask.lean", raw_gid = "D5/X_Frontier/LedgerTask", raw_case_id = "D5-T0097" }, { op = "write", path = "Evidence/D5/S0/Carrier/Result.run.yaml", content = "case_id: D5-T0097\nkind: anomaly\nstate: unresolved\n" }]
+expected_diagnostics = []

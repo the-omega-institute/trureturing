@@ -231,6 +231,9 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         }
     }
 
+    public CommandResult RecordGolden(IReadOnlyList<string> arguments) =>
+        GoldenRecordCommand.Run(repositoryRoot, arguments);
+
     public CommandResult SelfTest(IReadOnlyList<string> arguments)
     {
         try

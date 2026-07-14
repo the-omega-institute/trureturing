@@ -21,6 +21,7 @@ public sealed class MakeWorkflowTests
         "build",
         "emit",
         "emit-check",
+        "record-golden",
         "selftest",
         "gate",
         "worktree",
@@ -50,6 +51,7 @@ public sealed class MakeWorkflowTests
         Assert.Contains("lake build", Recipe(makefile, "lean"), StringComparison.Ordinal);
         Assert.Contains(ScribeScriptPath + " emit", Recipe(makefile, "emit"), StringComparison.Ordinal);
         Assert.Contains(ScribeScriptPath + " check", Recipe(makefile, "emit-check"), StringComparison.Ordinal);
+        Assert.Contains("golden-record", Recipe(makefile, "record-golden"), StringComparison.Ordinal);
         Assert.Contains(SelftestScriptPath, Recipe(makefile, "selftest"), StringComparison.Ordinal);
         Assert.Contains(LocalHarnessGateScriptPath, Recipe(makefile, "gate"), StringComparison.Ordinal);
         Assert.Contains(WorktreeInitScriptPath, Recipe(makefile, "worktree"), StringComparison.Ordinal);
@@ -95,6 +97,7 @@ public sealed class MakeWorkflowTests
         Assert.Contains("$gate_rc -eq 3", localGate, StringComparison.Ordinal);
         Assert.Contains("$rc\" -ne 0 && \"$rc\" -ne 3", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("conservative extension", workflow, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("golden-record", workflow, StringComparison.Ordinal);
     }
 
     [Fact]
