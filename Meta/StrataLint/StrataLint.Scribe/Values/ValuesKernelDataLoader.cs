@@ -79,9 +79,9 @@ internal static class ValuesKernelDataLoader
         RequireKeys(root, fullPath, "constants", "schema_version");
         if (RequiredLong(root, "schema_version", fullPath) != 1
             || root["constants"] is not TomlTableArray constants
-            || constants.Count != 14)
+            || constants.Count == 0)
         {
-            throw Invalid(fullPath, "schema_version must be 1 and constants must contain fourteen rows");
+            throw Invalid(fullPath, "schema_version must be 1 and constants must contain at least one row");
         }
 
         var parsed = constants.Select((table, index) => Parse(table, $"{fullPath}:constants[{index}]")).ToArray();

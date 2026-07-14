@@ -42,12 +42,6 @@ internal static class ValuesProjectionLoader
         ScribeLockPath,
         "global.json",
     ];
-    private static readonly ImmutableArray<string> ExpectedIds =
-    [
-        "D5/Ah", "D5/Bh", "D5/C0", "D5/Cphi", "D5/E", "D5/T0", "D5/T1",
-        "D5/c1", "D5/c2", "D5/cstar", "D5/delta.mean", "D5/hbar", "D5/kappa", "D5/s1",
-    ];
-
     internal static ValuesProjection Load(RepositorySnapshot snapshot)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
@@ -181,20 +175,17 @@ internal static class ValuesProjectionLoader
     {
         var definitions = ImmutableDictionary.CreateBuilder<string, ValuesProjectionDefinition>(
             StringComparer.Ordinal);
-        var elements = constants.EnumerateArray().ToArray();
-        if (elements.Length != ExpectedIds.Length)
-        {
-            throw new FormatException("Values projection must contain exactly fourteen constants.");
-        }
-
-        foreach (var (element, index) in elements.Select((value, index) => (value, index)))
+        string? previousId = null;
+        foreach (var element in constants.EnumerateArray())
         {
             ValidateDefinitionShape(element);
             var id = RequiredString(element, "id");
             var status = RequiredString(element, "status");
             var leanGid = RequiredString(element, "lean_gid");
             var statementSha = RequiredString(element, "lean_statement_sha256");
-            if (!string.Equals(id, ExpectedIds[index], StringComparison.Ordinal)
+            var isStrictlyOrdered = previousId is null
+                || StringComparer.Ordinal.Compare(previousId, id) < 0;
+            if (!isStrictlyOrdered
                 || !Gid.TryParse(leanGid, out var gid)
                 || gid.ToTarget() is not Target.Formal { Declaration: not null }
                 || !Sha256Pattern.IsMatch(statementSha)
@@ -207,6 +198,7 @@ internal static class ValuesProjectionLoader
                     "Values constants need unique sorted ids and concrete Lean declaration provenance.");
             }
 
+            previousId = id;
             ValidateDefinitionState(element, id, status);
         }
 
@@ -269,21 +261,10 @@ internal static class ValuesProjectionLoader
             || OptionalString(element, "decimal") is null
             || OptionalString(element, "error") is null
             || OptionalString(element, "value") is null
-            || !IsNull(element, "open_reason"))
+            || !IsNull(element, "open_reason")
+            || receipts.Length == 0)
         {
             throw new FormatException($"Emitted values constant {id} has an invalid state.");
-        }
-
-        var expectedKernels = id == "D5/Cphi"
-            ? new[] { "exact-fractional-parts", "neumaier-summation", "full-period-window-average" }
-            : new[] { "exact-quadratic" };
-        if (!kernels.SequenceEqual(expectedKernels, StringComparer.Ordinal)
-            || id == "D5/Cphi"
-                && RequiredString(element, "comparison") != "reference-mismatch-open"
-            || id != "D5/Cphi"
-                && RequiredString(element, "comparison") != "reference-exact")
-        {
-            throw new FormatException($"Emitted values constant {id} has invalid kernel receipts.");
         }
     }
 

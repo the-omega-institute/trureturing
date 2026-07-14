@@ -57,16 +57,41 @@ public sealed class ValuesProjectionLoaderTests
     }
 
     [Fact]
-    public void CanonicalProjectionValidatesFourteenDefinitionsAndItsInputAttestation()
+    public void CanonicalProjectionValidatesEmitterDefinitionsAndItsInputAttestation()
     {
         var inputs = Inputs(StrictUtf8.GetBytes("formal values producer input\n"));
         var snapshot = Snapshot(inputs, Projection(inputs));
 
         var projection = ValuesProjectionLoader.Load(snapshot);
 
-        Assert.Equal(14, projection.Definitions.Count);
-        Assert.Equal(8, projection.Definitions.Values.Count(static item => item.Status == "emitted"));
-        Assert.Equal(6, projection.Definitions.Values.Count(static item => item.Status == "registered-open"));
+        Assert.NotEmpty(projection.Definitions);
+        Assert.All(projection.Definitions.Values, static definition =>
+            Assert.Contains(definition.Status, new[] { "emitted", "registered-open" }));
+    }
+
+    [Fact]
+    public void ProjectionAcceptsAnEmitterDefinedSortedSubset()
+    {
+        var inputs = Inputs(StrictUtf8.GetBytes("formal values producer input\n"));
+        string[] ids = ["D5/Ah", "D5/Bh"];
+        var snapshot = Snapshot(inputs, Projection(inputs, ids));
+
+        var projection = ValuesProjectionLoader.Load(snapshot);
+
+        Assert.Equal(ids, projection.Definitions.Keys.Order(StringComparer.Ordinal));
+    }
+
+    [Fact]
+    public void ProjectionAcceptsAnEmitterDefinedKernelName()
+    {
+        var inputs = Inputs(StrictUtf8.GetBytes("formal values producer input\n"));
+        var snapshot = Snapshot(
+            inputs,
+            Projection(inputs, kernelOverride: ("D5/Ah", "synthetic-future-kernel")));
+
+        var projection = ValuesProjectionLoader.Load(snapshot);
+
+        Assert.Contains("D5/Ah", projection.Definitions);
     }
 
     [Fact]
@@ -184,11 +209,13 @@ public sealed class ValuesProjectionLoaderTests
     }
 
     private static ImmutableArray<byte> Projection(
-        ImmutableArray<(string Path, byte[] Bytes)> inputs)
+        ImmutableArray<(string Path, byte[] Bytes)> inputs,
+        string[]? ids = null,
+        (string Id, string Kernel)? kernelOverride = null)
     {
         var inputReceipts = inputs.Select(static input =>
             (input.Path, Sha256: Convert.ToHexStringLower(SHA256.HashData(input.Bytes)))).ToArray();
-        var ids = Ids();
+        ids ??= Ids();
         var emitted = new HashSet<string>(StringComparer.Ordinal)
         {
             "D5/Ah", "D5/C0", "D5/Cphi", "D5/E", "D5/cstar", "D5/hbar", "D5/kappa", "D5/s1",
@@ -213,7 +240,12 @@ public sealed class ValuesProjectionLoaderTests
                 projection = "D5/E/values--json",
                 provenance = ids.Select(LeanGid).ToArray(),
             },
-            constants = ids.Select(id => Constant(id, emitted.Contains(id))).ToArray(),
+            constants = ids.Select(id => Constant(
+                id,
+                emitted.Contains(id),
+                kernelOverride is { } replacement && replacement.Id == id
+                    ? replacement.Kernel
+                    : null)).ToArray(),
             schema_version = 2,
         });
         return StructuredCanonicalWriter.WriteJson(root);
@@ -252,10 +284,12 @@ public sealed class ValuesProjectionLoaderTests
         };
     }
 
-    private static object Constant(string id, bool emitted)
+    private static object Constant(string id, bool emitted, string? kernelOverride)
     {
         var kernels = emitted
-            ? id == "D5/Cphi"
+            ? kernelOverride is not null
+                ? new[] { Receipt(kernelOverride) }
+                : id == "D5/Cphi"
                 ? new[]
                 {
                     Receipt("exact-fractional-parts"),
