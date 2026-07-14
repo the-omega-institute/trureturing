@@ -163,7 +163,7 @@ none --declares--> [Meta/registry.yaml | data]
 
 none --declares--> [README.md | data]
 [README.md | data] --consumed-by--> reader
-[README.md | data] --verified-by--> StrictTextLoader
+[README.md | data] --verified-by--> SnapshotDecoder
 
 none --declares--> [agents/** | program]
 [agents/** | program] --consumed-by--> agent
@@ -179,7 +179,7 @@ none --declares--> [docs/develop/spec/** | program]
 
 none --declares--> [docs/develop/theory/** | data]
 [docs/develop/theory/** | data] --consumed-by--> TheoryIngestion
-[docs/develop/theory/** | data] --verified-by--> StrictTextLoader
+[docs/develop/theory/** | data] --verified-by--> SnapshotDecoder
 
 none --declares--> [lean-toolchain | program]
 [lean-toolchain | program] --consumed-by--> Lean

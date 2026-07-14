@@ -278,7 +278,7 @@ pattern = "README.md"
 kind = "data"
 produced_by = "none"
 consumed_by = ["reader"]
-verified_by = ["StrictTextLoader"]
+verified_by = ["SnapshotDecoder"]
 
 [[files]]
 pattern = "agents/**"
@@ -306,7 +306,7 @@ pattern = "docs/develop/theory/**"
 kind = "data"
 produced_by = "none"
 consumed_by = ["TheoryIngestion"]
-verified_by = ["StrictTextLoader"]
+verified_by = ["SnapshotDecoder"]
 
 [[files]]
 pattern = "lean-toolchain"

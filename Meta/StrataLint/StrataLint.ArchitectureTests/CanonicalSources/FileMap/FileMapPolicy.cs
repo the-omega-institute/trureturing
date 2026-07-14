@@ -25,8 +25,8 @@ internal static class FileMapPolicy
                 "Meta/StrataLint/StrataLint.Cli/Commands/RegistryLoader.cs",
             ["ScribeCompiler"] =
                 "Meta/StrataLint/StrataLint.Scribe/StrataLint.Scribe.csproj",
-            ["StrictTextLoader"] =
-                "Meta/StrataLint/StrataLint.ArchitectureTests/CanonicalSources/FileMap/FileMapPolicy.cs",
+            ["SnapshotDecoder"] =
+                "Meta/StrataLint/StrataLint.Engine/Snapshot/RepositorySnapshot.cs",
             ["TomlGoldenLoader"] =
                 "Meta/StrataLint/StrataLint.Cli/Golden/TomlGoldenLoader.cs",
             ["ValuesKernelDataLoader"] =

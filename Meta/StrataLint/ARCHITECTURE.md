@@ -50,3 +50,18 @@ forbids that directory and assembly from returning. Declarative instances live o
 assemblies in their canonical TOML/Lean locations; shared program schema lives with its
 smallest runtime owner. External review and branch protection remain human authorization;
 neither candidate files nor a successful candidate test job can synthesize approval.
+
+## FILEMAP custody boundary
+
+`Meta/FILEMAP.toml` owns repository file kind and producer/consumer/verifier relations.
+It remains separate from `Meta/registry.yaml`: the registry has a strict semantic-coordinate
+and artifact-kind schema, while FILEMAP has a strict file-custody schema. The architecture
+suite joins them by requiring registry `root_files` to equal tracked root files, without
+copying either schema into the other.
+
+`Meta/StrataLint/` is a program-only protected surface; FILEMAP rejects any `kind=data`
+entry there. Declarative instances instead live in `Golden/`, `Blueprint/**/*.scribe.cs`,
+`Library/`, top-level Meta data manifests, or theory input. Those content-data paths do
+not trigger SL-022. The golden corpus remains a protected admission baseline through its
+strict loader, base-owned conservative replay, TOWER Git blob addresses, and C0 ceremony;
+that protects the corpus identity without misclassifying its content as program.

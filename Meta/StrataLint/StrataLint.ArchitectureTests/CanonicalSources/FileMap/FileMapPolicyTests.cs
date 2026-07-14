@@ -138,7 +138,7 @@ public sealed class FileMapPolicyTests
         string kind,
         string expectedCode)
     {
-        var manifest = Parse(Entry(path, kind, "none", "reader", "StrictTextLoader"));
+        var manifest = Parse(Entry(path, kind, "none", "reader", "SnapshotDecoder"));
 
         var finding = Assert.Single(FileMapPolicy.InspectDirectoryKinds(manifest, [path]));
 
@@ -149,7 +149,7 @@ public sealed class FileMapPolicyTests
     public void DataAndLeanGeneratedDependenciesAreRejectedByTheRedFixture()
     {
         var manifest = Parse(
-            Entry("Data/**/*.toml", "data", "none", "loader", "StrictTextLoader"),
+            Entry("Data/**/*.toml", "data", "none", "loader", "SnapshotDecoder"),
             Entry("Generated/**/*.json", "generated", "JsonEmitter", "program", "emit-check"),
             Entry("Generated/**/*.lean", "generated", "LeanEmitter", "lake", "emit-check"),
             Entry("Main.lean", "truth", "none", "lake", "lean-build"));

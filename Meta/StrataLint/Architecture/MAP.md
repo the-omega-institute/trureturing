@@ -14,6 +14,10 @@
   family must update it in the same change.
 - Golden case data is canonical TOML under `Golden/cases`; the architecture policy
   rejects literal-name case construction in C# while allowing loader/schema code.
+- `Meta/FILEMAP.toml` is the five-kind repository custody manifest. ArchitectureTests
+  enforce exact coverage, real producer/loader ownership, data residence, directory
+  purity, and the declared dependency-direction subset; `Generated/FILEMAP.md` is its
+  emitted projection.
 
 The official analyzer is dependency-admitted because compiler diagnostics enforce
 source calls before binaries exist. Reflection remains sufficient for assembly and

@@ -6,6 +6,8 @@
 - `CanonicalSources/`: source-level checks that C# consumes canonical repository data instead of copying it.
 - `CanonicalSources/Golden/`: golden TOML storage and closed-stratum consistency
   policies, split locally when the parent bucket reached its file limit.
+- `CanonicalSources/FileMap/`: FILEMAP closed-world coverage, producer/loader identity,
+  data residence, class-directory purity, and dependency-direction fixtures.
 - `Dependencies/`: compiled assembly dependency direction, retired-assembly absence,
   final source ownership, and whitelist fixtures.
 - `Namespaces/`: source path to namespace policy, including Blueprint linked-source conventions.
@@ -29,9 +31,17 @@ The root contains only shared repository discovery, test metadata, and this map.
   registered domain and whose literal value is any `S0` through `S4` stratum code.
 - Golden corpus storage: rejects literal-name golden case construction in tracked C#;
   the only case authority is strict canonical TOML under
-  `Meta/StrataLint/Golden/cases`. A separate consistency anchor keeps
+  `Golden/cases`. A separate consistency anchor keeps
   `GoldenStratum`, Engine `Stratum`, and both closed `IsStratum` predicates equal to
   the explicit `S0` through `S4` five-member alphabet.
+- FILEMAP: every tracked or unignored file matches exactly one `Meta/FILEMAP.toml`
+  pattern; registry root membership is equal to tracked root files; generated artifacts
+  match the canonical producer inventory and `emit-check`; every data verifier resolves
+  to an existing program file; `Generated/`, `Golden/cases`, `Golden/Frozen`, and
+  `Golden/Ceremony` remain class-pure; no data may live under `Meta/StrataLint/`.
+- Dependency direction: machine-readable data is rejected when its decoded text names a
+  concrete generated path, and a simple single-module Lean import is rejected when it
+  resolves to a generated `.lean` file.
 - Public DSL/builders: rejects a literal default parameter value matching the `Gid`,
   `CaseId`, or canonical external anchor on an effectively public member of an
   effectively public type named `*Dsl` or `*Builder`.
@@ -76,3 +86,6 @@ isolated byte-mismatch fixture.
   expressions, non-public APIs, or public APIs on types not named `*Dsl`/`*Builder`.
 - External-catalog provenance claims beyond canonical syntax and byte-stable catalog
   membership.
+- Encoded, concatenated, interpolated, or computed generated-path references, structured
+  references outside TOML/YAML/JSON/Scribe inputs, and Lean import syntax beyond the
+  single-module form checked by FILEMAP.

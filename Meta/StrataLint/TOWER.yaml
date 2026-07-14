@@ -119,10 +119,10 @@ components:
   - id: golden-corpus
     kind: repository-files
     members:
-      - Meta/StrataLint/Golden/cases/digestion-and-anchors.toml
-      - Meta/StrataLint/Golden/cases/protected-semantics.toml
-      - Meta/StrataLint/Golden/cases/structure-and-identities.toml
-      - Meta/StrataLint/Golden/cases/structured-ledger.toml
+      - Golden/cases/digestion-and-anchors.toml
+      - Golden/cases/protected-semantics.toml
+      - Golden/cases/structure-and-identities.toml
+      - Golden/cases/structured-ledger.toml
       - Meta/StrataLint/StrataLint.Cli/Golden/GoldenCorpus.cs
       - Meta/StrataLint/StrataLint.Cli/Golden/TomlGoldenLoader.cs
       - Meta/StrataLint/StrataLint.Cli/Golden/TomlGoldenWriter.cs
