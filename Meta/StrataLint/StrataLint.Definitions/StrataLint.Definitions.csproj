@@ -3,4 +3,7 @@
     <RootNamespace>StrataLint.Definitions</RootNamespace>
     <AssemblyName>StrataLint.Definitions</AssemblyName>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Tomlyn" />
+  </ItemGroup>
 </Project>

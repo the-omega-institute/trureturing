@@ -77,8 +77,11 @@ File.WriteAllBytes(outputPath, [.. json, (byte)'\n']);
 
 Run: `dotnet run --project .golden-migration/GoldenMigration.csproj -- <scratch>/typed-baseline.json`
 
-Expected: exit 0; JSON contains 110 unique cases and whole corpus root
-`sha256:ff87ba121233899d9bedf80471e71248523cedeb60c34105de5839b5b4c533e7`.
+Expected: exit 0; JSON contains 110 unique cases and the fresh current typed
+whole-corpus root
+`sha256:6fccf5aadb2e8acccc7666793b6adb21065cb7b48f9449484f7030bb0960dcc4`.
+The older C0 certificate's root predates later `origin/dev` spec/catalog bytes
+consumed by materialization and is not the migration baseline.
 
 - [ ] **Step 3: Preserve the artifact outside git and remove the temporary project**
 
@@ -329,9 +332,10 @@ Expected: all selected tests pass and a second real `make record-golden` makes n
 ### Task 7: Update Architecture Guards And Documentation
 
 **Files:**
-- Create: `Meta/StrataLint/StrataLint.ArchitectureTests/CanonicalSources/GoldenCorpusStoragePolicy.cs`
-- Create: `Meta/StrataLint/StrataLint.ArchitectureTests/CanonicalSources/GoldenCorpusStorageTests.cs`
-- Create: `Meta/StrataLint/StrataLint.ArchitectureTests/CanonicalSources/StratumAlphabetTests.cs`
+- Create: `Meta/StrataLint/StrataLint.ArchitectureTests/CanonicalSources/Golden/GoldenCorpusStoragePolicy.cs`
+- Create: `Meta/StrataLint/StrataLint.ArchitectureTests/CanonicalSources/Golden/GoldenCorpusStorageTests.cs`
+- Create: `Meta/StrataLint/StrataLint.ArchitectureTests/CanonicalSources/Golden/StratumAlphabetPolicy.cs`
+- Create: `Meta/StrataLint/StrataLint.ArchitectureTests/CanonicalSources/Golden/StratumAlphabetTests.cs`
 - Modify: `Meta/StrataLint/StrataLint.ArchitectureTests/Dependencies/DefinitionsLayerTests.cs`
 - Modify: `Meta/StrataLint/StrataLint.ArchitectureTests/Dependencies/DependencyDirectionTests.cs`
 - Modify: `Meta/StrataLint/Architecture/HARDCODE-LEDGER.md`
@@ -381,7 +385,8 @@ Produce `toml-baseline.json` with the same sorted shape as Task 1.
 Run: `cmp <scratch>/typed-baseline.json <scratch>/toml-baseline.json`
 
 Expected: exit 0; 110 diagnostic arrays and 110 case roots are identical, and
-whole corpus root remains `sha256:ff87ba121233899d9bedf80471e71248523cedeb60c34105de5839b5b4c533e7`.
+whole corpus root remains the fresh typed baseline
+`sha256:6fccf5aadb2e8acccc7666793b6adb21065cb7b48f9449484f7030bb0960dcc4`.
 
 - [ ] **Step 3: Verify implementation before the preimage commit**
 

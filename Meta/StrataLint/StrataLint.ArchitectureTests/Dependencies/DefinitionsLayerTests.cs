@@ -13,14 +13,12 @@ public sealed class DefinitionsLayerTests
         { "Catalog/ExternalAnchorManifest.cs", "StrataLint.Scribe/Catalog/ExternalAnchorManifest.cs" },
         { "Values/ValuesDefinitions.cs", "StrataLint.Scribe/Values/ValuesDefinitions.cs" },
         { "Golden/GoldenCorpus.cs", "StrataLint.Tests/Golden/GoldenCorpus.cs" },
-        { "Golden/GoldenCorpus.Cases01.cs", "StrataLint.Tests/Golden/GoldenCorpus.Cases01.cs" },
-        { "Golden/GoldenCorpus.Cases02.cs", "StrataLint.Tests/Golden/GoldenCorpus.Cases02.cs" },
-        { "Golden/GoldenCorpus.Cases03.cs", "StrataLint.Tests/Golden/GoldenCorpus.Cases03.cs" },
-        { "Golden/GoldenCorpus.Cases04.cs", "StrataLint.Tests/Golden/GoldenCorpus.Cases04.cs" },
+        { "Golden/TomlGoldenLoader.cs", "StrataLint.Tests/Golden/TomlGoldenLoader.cs" },
+        { "Golden/TomlGoldenWriter.cs", "StrataLint.Tests/Golden/TomlGoldenWriter.cs" },
     };
 
     [Fact]
-    public void DefinitionsProjectDependsOnlyOnThePlatformSchemaItOwns()
+    public void DefinitionsProjectDependsOnlyOnThePlatformAndTomlyn()
     {
         var projectPath = Path.Combine(
             RepositoryLayout.FindRoot(),
@@ -35,7 +33,7 @@ public sealed class DefinitionsLayerTests
             .Select(static element => element.Attribute("Include")?.Value ?? element.Value)
             .ToArray();
 
-        Assert.Empty(references);
+        Assert.Equal(["Tomlyn"], references);
     }
 
     [Theory]

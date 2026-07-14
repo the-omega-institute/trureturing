@@ -59,7 +59,7 @@ internal static partial class GoldenCorpusMaterializer
         }
 
         var objects = new Dictionary<string, ConservativeCorpusObject>(StringComparer.Ordinal);
-        var cases = GoldenCorpus.All
+        var cases = TomlGoldenLoader.LoadRepository(root).Cases
             .Select(item => MaterializeCase(root, item, objects))
             .OrderBy(static item => item.CaseId, StringComparer.Ordinal)
             .ToImmutableArray();
@@ -82,16 +82,23 @@ internal static partial class GoldenCorpusMaterializer
             cases.Select(static item => item.CaseId).ToImmutableArray());
     }
 
+    internal static ImmutableArray<Diagnostic> Evaluate(string repositoryRoot, GoldenCase source)
+    {
+        var state = Prepare(repositoryRoot, source);
+        return RuleCatalog.Default.Execute(state.BuildContext(source.Changes)) switch
+        {
+            RuleExecutionOutcome.Completed completed => completed.Capability.Diagnostics,
+            RuleExecutionOutcome.InfrastructureFailure failure =>
+                throw new InvalidOperationException(failure.Message),
+        };
+    }
+
     private static ConservativeCorpusCase MaterializeCase(
         string root,
         GoldenCase source,
         IDictionary<string, ConservativeCorpusObject> objects)
     {
-        var state = GoldenFixtureState.Create(root);
-        state.NormalizeBackfillTargets();
-        state.Apply(source.Name, source.BaselineMutations, baseline: true);
-        state.Apply(source.Name, source.BaselineMutations, baseline: false);
-        state.Apply(source.Name, source.Mutations, baseline: false);
+        var state = Prepare(root, source);
         var prototype = new ConservativeCorpusCase(
             $"golden:{source.Name}",
             string.Empty,
@@ -101,6 +108,16 @@ internal static partial class GoldenCorpusMaterializer
             LeanFiles(state.BaselineReports),
             source.Changes.Order(StringComparer.Ordinal).ToImmutableArray());
         return prototype with { CaseRoot = CaseRoot(prototype) };
+    }
+
+    private static GoldenFixtureState Prepare(string repositoryRoot, GoldenCase source)
+    {
+        var state = GoldenFixtureState.Create(Path.GetFullPath(repositoryRoot));
+        state.NormalizeBackfillTargets();
+        state.Apply(source.Name, source.BaselineMutations, baseline: true);
+        state.Apply(source.Name, source.BaselineMutations, baseline: false);
+        state.Apply(source.Name, source.Mutations, baseline: false);
+        return state;
     }
 
     private static ImmutableArray<ConservativeCorpusFile> Files(
@@ -210,6 +227,37 @@ internal static partial class GoldenCorpusMaterializer
         internal Dictionary<string, LeanFileReport> Reports { get; }
 
         internal Dictionary<string, LeanFileReport> BaselineReports { get; }
+
+        internal RuleEvaluationContext BuildContext(IReadOnlyList<string> rawChanges)
+        {
+            var current = Decode(Files);
+            var baseline = Decode(Baseline);
+            var registry = RegistryLoader.Load(
+                Encoding.UTF8.GetBytes(Files["Meta/registry.yaml"]),
+                Encoding.UTF8.GetBytes(Files["Meta/domains.yaml"])) switch
+            {
+                RegistryLoadOutcome.Accepted accepted => accepted,
+                RegistryLoadOutcome.InfrastructureFailure failure =>
+                    throw new InvalidOperationException(failure.Message),
+            };
+            var changes = RawChangeSet.Create(rawChanges);
+            var meta = BootstrapGate.Evaluate(changes) switch
+            {
+                BootstrapOutcome.Clear clear => MetaEvaluationProfile.ForClear(clear.Capability),
+                BootstrapOutcome.HumanReviewRequired review =>
+                    MetaEvaluationProfile.ForProtectedSurface(review.ChangeSet),
+                BootstrapOutcome.InfrastructureFailure failure =>
+                    throw new InvalidOperationException(failure.Message),
+            };
+            return RuleEvaluationContext.Create(
+                current,
+                baseline,
+                registry.Policy,
+                AcceptedLeanClosure.Create(LeanAxiomReport.Create(Reports)),
+                AcceptedLeanClosure.Create(LeanAxiomReport.Create(BaselineReports)),
+                changes,
+                meta);
+        }
 
         internal static GoldenFixtureState Create(string root)
         {
@@ -641,6 +689,18 @@ internal static partial class GoldenCorpusMaterializer
 
         private static string Read(string root, string relativePath) =>
             File.ReadAllText(Path.Combine(root, relativePath), Encoding.UTF8);
+
+        private static RepositorySnapshot Decode(IReadOnlyDictionary<string, string> files)
+        {
+            var raw = RawRepositorySnapshot.Create(files.Select(static item =>
+                RawRepositoryEntry.FromText(item.Key, item.Value)));
+            return SnapshotDecoder.Decode(raw) switch
+            {
+                SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
+                SnapshotDecodeOutcome.InfrastructureFailure failure =>
+                    throw new InvalidOperationException(failure.Message),
+            };
+        }
     }
 
     private static Generality ToGenerality(GoldenGenerality generality) => generality switch

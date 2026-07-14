@@ -58,6 +58,21 @@ public sealed class CliOutcomeTests
         Assert.Equal(error, console.Error);
     }
 
+    [Fact]
+    public void GoldenRecordDelegatesToTheAuthoringEnvironment()
+    {
+        var console = new BufferedConsole();
+        var environment = new StubCliEnvironment(
+            Admitted(),
+            recordGolden: new CommandResult(true, "GOLDEN_RECORDED cases=110 changed_files=0\n", string.Empty));
+
+        var exitCode = CliApplication.Run(["golden-record"], environment, console);
+
+        Assert.Equal(0, exitCode);
+        Assert.Equal("GOLDEN_RECORDED cases=110 changed_files=0\n", console.Output);
+        Assert.Equal(string.Empty, console.Error);
+    }
+
     private static AdmissionOutcome Outcome(string fixture) => fixture switch
     {
         "admitted" => Admitted(),
@@ -125,7 +140,8 @@ public sealed class CliOutcomeTests
 
 internal sealed class StubCliEnvironment(
     AdmissionOutcome outcome,
-    ExplicitCommandResult? conservative = null) : ICliEnvironment
+    ExplicitCommandResult? conservative = null,
+    CommandResult? recordGolden = null) : ICliEnvironment
 {
     public AdmissionOutcome Check(IReadOnlyList<string> arguments) => outcome;
 
@@ -140,6 +156,9 @@ internal sealed class StubCliEnvironment(
 
     public CommandResult Route(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "route is not configured in this fixture");
+
+    public CommandResult RecordGolden(IReadOnlyList<string> arguments) =>
+        recordGolden ?? new(false, string.Empty, "golden record is not configured in this fixture");
 
     public CommandResult SelfTest(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "selftest is not configured in this fixture");

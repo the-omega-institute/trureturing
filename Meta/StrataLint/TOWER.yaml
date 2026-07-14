@@ -119,14 +119,20 @@ components:
   - id: golden-corpus
     kind: repository-files
     members:
-      - Meta/StrataLint/StrataLint.Definitions/Golden/GoldenCorpus.Cases01.cs
-      - Meta/StrataLint/StrataLint.Definitions/Golden/GoldenCorpus.Cases02.cs
-      - Meta/StrataLint/StrataLint.Definitions/Golden/GoldenCorpus.Cases03.cs
-      - Meta/StrataLint/StrataLint.Definitions/Golden/GoldenCorpus.Cases04.cs
+      - Meta/StrataLint/Golden/cases/digestion-and-anchors.toml
+      - Meta/StrataLint/Golden/cases/protected-semantics.toml
+      - Meta/StrataLint/Golden/cases/structure-and-identities.toml
+      - Meta/StrataLint/Golden/cases/structured-ledger.toml
       - Meta/StrataLint/StrataLint.Definitions/Golden/GoldenCorpus.cs
+      - Meta/StrataLint/StrataLint.Definitions/Golden/TomlGoldenLoader.cs
+      - Meta/StrataLint/StrataLint.Definitions/Golden/TomlGoldenWriter.cs
+      - Meta/StrataLint/StrataLint.Cli/Commands/GoldenRecordCommand.cs
+      - Meta/StrataLint/StrataLint.Cli/Conservative/GoldenCorpusMaterializer.cs
+      - Meta/StrataLint/StrataLint.Tests/Conservative/GoldenCorpusMaterializerTests.cs
       - Meta/StrataLint/StrataLint.Tests/Golden/GoldenCorpusShapeTests.cs
       - Meta/StrataLint/StrataLint.Tests/Golden/GoldenCorpusTests.cs
-      - Meta/StrataLint/StrataLint.Tests/Rules/RuleFixture.Golden.cs
+      - Meta/StrataLint/StrataLint.Tests/Golden/GoldenRecordCommandTests.cs
+      - Meta/StrataLint/StrataLint.Tests/Golden/TomlGoldenLoaderTests.cs
     judged_by:
       - engineering-ci
     verification: verified
@@ -158,6 +164,10 @@ components:
     members:
       - Meta/StrataLint/StrataLint.ArchitectureTests/Capabilities/CapabilityConstructionTests.cs
       - Meta/StrataLint/StrataLint.ArchitectureTests/CanonicalSources/C0CeremonyTrustRootTests.cs
+      - Meta/StrataLint/StrataLint.ArchitectureTests/CanonicalSources/Golden/GoldenCorpusStoragePolicy.cs
+      - Meta/StrataLint/StrataLint.ArchitectureTests/CanonicalSources/Golden/GoldenCorpusStorageTests.cs
+      - Meta/StrataLint/StrataLint.ArchitectureTests/CanonicalSources/Golden/StratumAlphabetPolicy.cs
+      - Meta/StrataLint/StrataLint.ArchitectureTests/CanonicalSources/Golden/StratumAlphabetTests.cs
       - Meta/StrataLint/StrataLint.ArchitectureTests/Dependencies/CSharpArchitectureTowerTests.cs
       - Meta/StrataLint/StrataLint.ArchitectureTests/Dependencies/DependencyDirectionTests.cs
       - Meta/StrataLint/StrataLint.ArchitectureTests/Namespaces/NamespaceLayoutTests.cs

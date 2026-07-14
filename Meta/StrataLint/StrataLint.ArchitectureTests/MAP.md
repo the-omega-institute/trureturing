@@ -4,8 +4,10 @@
 
 - `Capabilities/`: unforgeable capability construction and its executable red fixture.
 - `CanonicalSources/`: source-level checks that C# consumes canonical repository data instead of copying it.
-- `Dependencies/`: compiled assembly dependency direction, the BCL-only Definitions
-  data boundary, and whitelist fixtures.
+- `CanonicalSources/Golden/`: golden TOML storage and closed-stratum consistency
+  policies, split locally when the parent bucket reached its file limit.
+- `Dependencies/`: compiled assembly dependency direction, the platform-plus-Tomlyn
+  Definitions schema boundary, and whitelist fixtures.
 - `Namespaces/`: source path to namespace policy, including Blueprint linked-source conventions.
 - `PublicSurface/`: the exact exported Engine type allowlist.
 
@@ -25,6 +27,11 @@ The root contains only shared repository discovery, test metadata, and this map.
   consumers must reference the constant.
 - `Meta/domains.yaml`: rejects a C# dictionary indexer whose literal key is a
   registered domain and whose literal value is any `S0` through `S4` stratum code.
+- Golden corpus storage: rejects literal-name golden case construction in tracked C#;
+  the only case authority is strict canonical TOML under
+  `Meta/StrataLint/Golden/cases`. A separate consistency anchor keeps
+  `GoldenStratum`, Engine `Stratum`, and both closed `IsStratum` predicates equal to
+  the explicit `S0` through `S4` five-member alphabet.
 - Public DSL/builders: rejects a literal default parameter value matching the `Gid`,
   `CaseId`, or canonical external anchor on an effectively public member of an
   effectively public type named `*Dsl` or `*Builder`.
@@ -44,8 +51,8 @@ The root contains only shared repository discovery, test metadata, and this map.
   mathlib uses the Pascal-cased terminal qualified name followed by target kind.
 - ComponentC C0 ceremony: TOWER controller/corpus/gate Git blob OIDs and the inaugural
   certificate SHA-256 must match the canonical worktree bytes and the certificate's
-  Git preimage; typed source sets are recursively discovered from their owning
-  directories so additions cannot escape the root.
+  Git preimage; loader/schema C# and TOML corpus sets are recursively discovered from
+  their owning directories so additions cannot escape the root.
 
 Each syntax policy has a rejecting fixture, a non-matching green fixture, and a
 repository-wide zero-finding test. C0 ceremony uses live repository-bound address

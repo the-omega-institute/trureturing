@@ -28,6 +28,7 @@ public sealed class TrustTopologyTests
         RuleFixture.HeartsPath,
         RepositoryPathPolicy.AssumptionRegistryPath,
         "Meta/StrataLint/Golden/rules.json",
+        RuleFixture.GoldenDataSourcePath,
         SolutionPath,
         EngineProjectPath,
         "global.json",
@@ -57,7 +58,6 @@ public sealed class TrustTopologyTests
     }
 
     [Theory]
-    [InlineData(RuleFixture.DefinitionsDataSourcePath)]
     [InlineData(RuleFixture.DefinitionsProjectPath)]
     [InlineData(RuleFixture.DefinitionsLockPath)]
     public void Sl022DoesNotClassifyDefinitionsDataAsMetaProgram(string path)

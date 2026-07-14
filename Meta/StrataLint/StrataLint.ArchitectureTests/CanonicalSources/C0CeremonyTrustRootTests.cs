@@ -17,9 +17,10 @@ public sealed class C0CeremonyTrustRootTests
         "Meta/StrataLint/StrataLint.Cli/Admission/ProductionCliEnvironment.cs";
     private const string ProgramPath =
         "Meta/StrataLint/StrataLint.Cli/Program.cs";
-    private const string CorpusDirectory =
+    private const string CorpusSchemaDirectory =
         "Meta/StrataLint/StrataLint.Definitions/Golden";
-    private const string CorpusSourcePattern = "*.cs";
+    private const string CorpusDataDirectory =
+        "Meta/StrataLint/Golden/cases";
     private const string GateWiringPath = ".github/scripts/harness-gate.sh";
     private const string CertificatePath =
         "Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json";
@@ -56,7 +57,27 @@ public sealed class C0CeremonyTrustRootTests
 
             Assert.Equal(
                 ["Golden/Sub/Cases05.cs"],
-                EnumerateSourcePaths(root, "Golden", CorpusSourcePattern));
+                EnumerateSourcePaths(root, "Golden", "*.cs"));
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Fact]
+    public void CorpusDataDiscoveryIncludesNestedTomlFiles()
+    {
+        var root = Directory.CreateTempSubdirectory("stratalint-c0-corpus-data-").FullName;
+        try
+        {
+            var nested = Path.Combine(root, "Cases", "Nested");
+            Directory.CreateDirectory(nested);
+            File.WriteAllText(Path.Combine(nested, "structure.toml"), "[[cases]]\n");
+
+            Assert.Equal(
+                ["Cases/Nested/structure.toml"],
+                EnumerateSourcePaths(root, "Cases", "*.toml"));
         }
         finally
         {
@@ -202,7 +223,10 @@ public sealed class C0CeremonyTrustRootTests
             .ToArray();
 
     private static string[] ExpectedCorpusPaths(string root) =>
-        EnumerateSourcePaths(root, CorpusDirectory, CorpusSourcePattern);
+        EnumerateSourcePaths(root, CorpusSchemaDirectory, "*.cs")
+            .Concat(EnumerateSourcePaths(root, CorpusDataDirectory, "*.toml"))
+            .Order(StringComparer.Ordinal)
+            .ToArray();
 
     private static string[] EnumerateSourcePaths(string root, string directory, string pattern) =>
         Directory.EnumerateFiles(

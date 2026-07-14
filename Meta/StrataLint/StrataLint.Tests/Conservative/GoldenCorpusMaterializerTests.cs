@@ -6,16 +6,17 @@ namespace StrataLint.Tests;
 public sealed class GoldenCorpusMaterializerTests
 {
     [Fact]
-    public void MaterializerLoadsEveryCaseFromTheBaseTypedCorpusWithoutExpectedLabels()
+    public void MaterializerLoadsEveryCaseFromTheBaseTomlCorpusWithoutExpectedLabels()
     {
         var root = FindRepositoryRoot();
+        var source = TomlGoldenLoader.LoadRepository(root);
 
         var corpus = GoldenCorpusMaterializer.Materialize(root);
         var canonical = Encoding.UTF8.GetString(corpus.CanonicalBytes.AsSpan());
 
-        Assert.Equal(GoldenCorpus.All.Count, corpus.CaseIds.Length);
+        Assert.Equal(source.Cases.Count, corpus.CaseIds.Length);
         Assert.Equal(
-            GoldenCorpus.All.Select(static item => $"golden:{item.Name}").Order(StringComparer.Ordinal),
+            source.Cases.Select(static item => $"golden:{item.Name}").Order(StringComparer.Ordinal),
             corpus.CaseIds);
         Assert.DoesNotContain("expected", canonical, StringComparison.OrdinalIgnoreCase);
     }

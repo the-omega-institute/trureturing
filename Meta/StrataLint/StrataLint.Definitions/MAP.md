@@ -1,13 +1,14 @@
 # StrataLint.Definitions Map
 
-This assembly is the typed data layer. It depends only on the .NET platform and owns
-the minimal schema needed to express its data without a dependency cycle back through
-Scribe.
+This assembly is the typed data layer. It depends only on the .NET platform plus the
+pinned Tomlyn parser and owns the minimal schema needed to express its data without a
+dependency cycle back through Scribe.
 
 - `Catalog/`: canonical theory, specification, and external anchor definitions.
 - `Values/`: the fourteen canonical value definitions and their computation descriptors.
-- `Golden/`: typed mutations and expected diagnostics for the golden corpus; execution
-  remains in `StrataLint.Tests`.
+- `Golden/`: closed mutation/diagnostic schema plus fail-closed canonical TOML
+  loader/writer. Case data lives only in `Meta/StrataLint/Golden/cases`; execution
+  lives in the CLI so tests, record mode, and Component C share one runner.
 - `Schema/`: anchor and exact-rational construction types shared with Scribe.
 
 Emitters, evaluators, kernels, rule execution, and test runners are program logic and do

@@ -6,9 +6,11 @@ namespace StrataLint.ArchitectureTests;
 public sealed class DependencyDirectionTests
 {
     [Fact]
-    public void DefinitionsReferencesOnlyPlatformAssemblies()
+    public void DefinitionsReferencesOnlyPlatformAssembliesAndTomlyn()
     {
-        Assert.Empty(AssemblyReferencePolicy.NonPlatformReferences(typeof(Anchor).Assembly));
+        Assert.Equal(
+            ["Tomlyn"],
+            AssemblyReferencePolicy.NonPlatformReferences(typeof(Anchor).Assembly));
     }
 
     [Fact]

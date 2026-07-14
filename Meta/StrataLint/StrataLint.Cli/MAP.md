@@ -8,7 +8,10 @@
 ## Buckets
 
 - `Admission/`: repository preparation, topology checks, and production admission.
-- `Commands/`: command dispatch, coverage, registry loading, ledger commands, and worktree provisioning.
+- `Commands/`: command dispatch, coverage, registry loading, golden snapshot recording,
+  ledger commands, and worktree provisioning.
+- `Conservative/`: base-owned replay, TOML golden fixture execution/materialization,
+  and conservative-extension verification.
 - `Runtime/`: CLI adapters for precomputed Lean reports and pin-aware Lean cache provisioning.
 
 The root contains the executable entry point, assembly metadata, SDK project metadata,
