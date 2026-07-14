@@ -1,2 +1,2 @@
-global using StrataLint.Definitions;
+global using StrataLint.Scribe;
 global using Xunit;

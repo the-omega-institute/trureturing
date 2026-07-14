@@ -245,7 +245,8 @@ internal static partial class RepositoryRules
 
         try
         {
-            _ = ValuesProjectionLoader.Load(context.Current);
+            var projection = ValuesProjectionLoader.Load(context.Current);
+            ValuesProjectionLoader.ValidateLeanBindings(projection, context.Lean);
         }
         catch (Exception exception) when (exception is FormatException or JsonException)
         {

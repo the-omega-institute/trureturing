@@ -218,7 +218,7 @@ public sealed class TowerManifestTests
         "c0/controller git-sha1/" + new string('b', 40)
             + " Meta/StrataLint/StrataLint.Cli/Conservative/ConservativeExtensionCommand.cs",
         "c0/corpus git-sha1/" + new string('c', 40)
-            + " Meta/StrataLint/StrataLint.Definitions/Golden/GoldenCorpus.cs",
+            + " Meta/StrataLint/StrataLint.Cli/Golden/GoldenCorpus.cs",
         "c0/gate-wiring git-sha1/" + new string('d', 40)
             + " .github/scripts/harness-gate.sh",
         "c0/inaugural-certificate sha256/" + new string('e', 64)

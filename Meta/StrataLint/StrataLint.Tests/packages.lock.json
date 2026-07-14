@@ -96,16 +96,10 @@
       "StrataLint": {
         "type": "Project",
         "dependencies": {
-          "StrataLint.Definitions": "[1.0.0, )",
           "StrataLint.Engine": "[1.0.0, )",
           "StrataLint.Scribe": "[1.0.0, )",
+          "Tomlyn": "[2.10.1, )",
           "YamlDotNet": "[16.3.0, )"
-        }
-      },
-      "stratalint.definitions": {
-        "type": "Project",
-        "dependencies": {
-          "Tomlyn": "[2.10.1, )"
         }
       },
       "stratalint.engine": {
@@ -119,7 +113,8 @@
         "type": "Project",
         "dependencies": {
           "QuestPDF": "[2026.7.1, 2026.7.1]",
-          "StrataLint.Engine": "[1.0.0, )"
+          "StrataLint.Engine": "[1.0.0, )",
+          "Tomlyn": "[2.10.1, )"
         }
       },
       "Dunet": {

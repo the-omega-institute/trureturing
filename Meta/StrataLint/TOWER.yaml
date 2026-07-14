@@ -59,11 +59,12 @@ components:
   - id: anchor-vocabulary
     kind: repository-files
     members:
-      - Meta/StrataLint/StrataLint.Definitions/Schema/Anchor.cs
-      - Meta/StrataLint/StrataLint.Definitions/Schema/AnchorSchemes.cs
-      - Meta/StrataLint/StrataLint.Definitions/Schema/AnchorDefinition.cs
-      - Meta/StrataLint/StrataLint.Definitions/Catalog/AnchorCatalogDefinitions.cs
-      - Meta/StrataLint/StrataLint.Definitions/Catalog/ExternalAnchorManifest.cs
+      - Meta/StrataLint/Golden/external-anchors.toml
+      - Meta/StrataLint/StrataLint.Scribe/Catalog/Anchor.cs
+      - Meta/StrataLint/StrataLint.Scribe/Catalog/AnchorSchemes.cs
+      - Meta/StrataLint/StrataLint.Scribe/Catalog/AnchorDefinition.cs
+      - Meta/StrataLint/StrataLint.Scribe/Catalog/AnchorCatalogDefinitions.cs
+      - Meta/StrataLint/StrataLint.Scribe/Catalog/ExternalAnchorManifest.cs
     judged_by:
       - anchor-catalog-projection
       - anchor-scribe-tests
@@ -123,9 +124,9 @@ components:
       - Meta/StrataLint/Golden/cases/protected-semantics.toml
       - Meta/StrataLint/Golden/cases/structure-and-identities.toml
       - Meta/StrataLint/Golden/cases/structured-ledger.toml
-      - Meta/StrataLint/StrataLint.Definitions/Golden/GoldenCorpus.cs
-      - Meta/StrataLint/StrataLint.Definitions/Golden/TomlGoldenLoader.cs
-      - Meta/StrataLint/StrataLint.Definitions/Golden/TomlGoldenWriter.cs
+      - Meta/StrataLint/StrataLint.Cli/Golden/GoldenCorpus.cs
+      - Meta/StrataLint/StrataLint.Cli/Golden/TomlGoldenLoader.cs
+      - Meta/StrataLint/StrataLint.Cli/Golden/TomlGoldenWriter.cs
       - Meta/StrataLint/StrataLint.Cli/Commands/GoldenRecordCommand.cs
       - Meta/StrataLint/StrataLint.Cli/Conservative/GoldenCorpusMaterializer.cs
       - Meta/StrataLint/StrataLint.Tests/Conservative/GoldenCorpusMaterializerTests.cs

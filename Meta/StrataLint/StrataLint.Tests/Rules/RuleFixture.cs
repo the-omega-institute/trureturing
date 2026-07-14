@@ -1,5 +1,8 @@
 using System.Collections.Immutable;
+using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
@@ -24,11 +27,6 @@ internal sealed partial class RuleFixture
         "Meta/StrataLint/StrataLint.Engine/SyntheticProtected.cs";
     internal const string GoldenDataSourcePath =
         "Meta/StrataLint/Golden/cases/structure-and-identities.toml";
-    internal const string DefinitionsProjectPath =
-        "Meta/StrataLint/StrataLint.Definitions/StrataLint.Definitions.csproj";
-    internal const string DefinitionsLockPath =
-        "Meta/StrataLint/StrataLint.Definitions/packages.lock.json";
-
     private const string Header = """
         /- GID: D5/S0/Carrier/Ring
            generality: G
@@ -363,15 +361,39 @@ internal sealed partial class RuleFixture
     internal void AddValuesProjection()
     {
         var repositoryRoot = FindRepositoryRoot();
-        Files[ValuesProjectionLoader.RelativePath] = File.ReadAllText(
+        var projection = JsonNode.Parse(File.ReadAllText(
             Path.Combine(repositoryRoot, ValuesProjectionLoader.RelativePath),
-            Encoding.UTF8);
+            Encoding.UTF8))?.AsObject()
+            ?? throw new InvalidOperationException("production values projection is not a JSON object");
         foreach (var inputPath in ValuesProjectionLoader.InputPaths)
         {
             Files[inputPath] = File.ReadAllText(
                 Path.Combine(repositoryRoot, inputPath),
                 Encoding.UTF8);
         }
+
+        var declarations = ImmutableArray.CreateBuilder<LeanDeclaration>();
+        foreach (var item in projection["constants"]?.AsArray()
+                     ?? throw new InvalidOperationException("production values projection has no constants"))
+        {
+            var constant = item?.AsObject()
+                ?? throw new InvalidOperationException("production values projection constant is null");
+            var leanGid = constant["lean_gid"]?.GetValue<string>()
+                ?? throw new InvalidOperationException("production values projection has no lean_gid");
+            var declarationName = leanGid[(leanGid.LastIndexOf('.') + 1)..];
+            var statement = $"statement-v1(fixture={leanGid})";
+            constant["lean_statement_sha256"] = Convert.ToHexStringLower(
+                SHA256.HashData(Encoding.UTF8.GetBytes(statement)));
+            declarations.Add(new LeanDeclaration(
+                declarationName,
+                "def",
+                statement,
+                ["Classical.choice", "Quot.sound", "propext"]));
+        }
+
+        Files[ValuesProjectionLoader.RelativePath] = Encoding.UTF8.GetString(
+            StructuredCanonicalWriter.WriteJson(JsonSerializer.SerializeToElement(projection)).AsSpan());
+        Reports[ValuesProjectionLoader.LeanModulePath] = Report(declarations: declarations);
 
         Reports[ValuesProjectionLoader.InputPath] = Report(declarations:
         [

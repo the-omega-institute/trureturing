@@ -7,7 +7,7 @@
 - `CanonicalSources/Golden/`: golden TOML storage and closed-stratum consistency
   policies, split locally when the parent bucket reached its file limit.
 - `Dependencies/`: compiled assembly dependency direction, the platform-plus-Tomlyn
-  Definitions schema boundary, and whitelist fixtures.
+  Scribe/CLI schema boundaries, and whitelist fixtures.
 - `Namespaces/`: source path to namespace policy, including Blueprint linked-source conventions.
 - `PublicSurface/`: the exact exported Engine type allowlist.
 
@@ -43,9 +43,9 @@ The root contains only shared repository discovery, test metadata, and this map.
   generated anchor catalog; rejects internal theory paths, retired internal theory
   family tokens, and retired catalog schemes. The whitelist is limited to the
   atomizers, digestion status, ledger/schema validation, and their focused tests.
-- External anchor catalog: Definitions and the generated catalog contain only
-  literature bibkeys and mathlib modules or declarations, and the catalog definitions
-  must exactly equal the external manifest.
+- External anchor catalog: the external TOML manifest and generated catalog contain
+  only literature bibkeys and mathlib modules or declarations, and the Scribe typed
+  definitions must exactly equal the external manifest.
 - Anchor definition names: every public typed anchor property is checked by reflection
   against a fixed scheme-specific transform. Literature uses a Pascal-cased bibkey;
   mathlib uses the Pascal-cased terminal qualified name followed by target kind.

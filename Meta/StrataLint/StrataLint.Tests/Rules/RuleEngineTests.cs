@@ -135,6 +135,49 @@ public sealed class RuleEngineTests
         Assert.Contains("input SHA-256", diagnostic.Message, StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void Sl018RejectsValuesWhenTheReferencedLeanDeclarationIsNotADefinition()
+    {
+        const string modulePath = ValuesProjectionLoader.LeanModulePath;
+        var fixture = new RuleFixture();
+        fixture.AddValuesProjection();
+        var report = fixture.Reports[modulePath];
+        fixture.Reports[modulePath] = report with
+        {
+            Declarations = report.Declarations.SetItem(
+                0,
+                report.Declarations[0] with { Kind = "theorem" }),
+        };
+
+        var diagnostic = Assert.Single(
+            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(18), fixture.Build()).Diagnostics);
+
+        Assert.Contains("kind=def", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Sl018RejectsValuesWhenTheLeanDefinitionBodyDrifts()
+    {
+        const string modulePath = ValuesProjectionLoader.LeanModulePath;
+        var fixture = new RuleFixture();
+        fixture.AddValuesProjection();
+        var report = fixture.Reports[modulePath];
+        fixture.Reports[modulePath] = report with
+        {
+            Declarations = report.Declarations.SetItem(
+                0,
+                report.Declarations[0] with
+                {
+                    TypeRepresentation = report.Declarations[0].TypeRepresentation + "-drift",
+                }),
+        };
+
+        var diagnostic = Assert.Single(
+            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(18), fixture.Build()).Diagnostics);
+
+        Assert.Contains("statement SHA-256", diagnostic.Message, StringComparison.Ordinal);
+    }
+
 
     [Theory]
     [InlineData(7, "D5-T0011")]

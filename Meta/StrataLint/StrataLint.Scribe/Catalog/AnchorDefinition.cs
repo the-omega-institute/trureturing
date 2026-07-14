@@ -1,9 +1,15 @@
-namespace StrataLint.Definitions;
+namespace StrataLint.Scribe;
 
 public sealed record AnchorDefinition
 {
-    internal AnchorDefinition(Anchor anchor, string provenance)
+    internal AnchorDefinition(string name, Anchor anchor, string provenance)
     {
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            throw new ArgumentException("Anchor definition name must be non-empty.", nameof(name));
+        }
+
+        Name = name;
         Anchor = anchor ?? throw new ArgumentNullException(nameof(anchor));
         if (string.IsNullOrWhiteSpace(provenance)
             || provenance.Contains('\r', StringComparison.Ordinal)
@@ -16,6 +22,8 @@ public sealed record AnchorDefinition
 
         Provenance = provenance;
     }
+
+    public string Name { get; }
 
     public Anchor Anchor { get; }
 

@@ -1,0 +1,6 @@
+schema_version = 1
+
+[[anchors]]
+name = "MathlibZeckendorfModule"
+anchor = "mathlib/module/Mathlib.Data.Nat.Fib.Zeckendorf"
+provenance = "mathlib revision fabf563a7c95a166b8d7b6efca11c8b4dc9d911f; reference locator module Mathlib.Data.Nat.Fib.Zeckendorf"

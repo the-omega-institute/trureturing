@@ -57,18 +57,6 @@ public sealed class TrustTopologyTests
         Assert.Same(required.ChangeSet, profile.ProtectedChangeSet);
     }
 
-    [Theory]
-    [InlineData(RuleFixture.DefinitionsProjectPath)]
-    [InlineData(RuleFixture.DefinitionsLockPath)]
-    public void Sl022DoesNotClassifyDefinitionsDataAsMetaProgram(string path)
-    {
-        var changes = RawChangeSet.Create(new[] { path });
-
-        var outcome = BootstrapGate.Evaluate(changes);
-
-        Assert.IsType<BootstrapOutcome.Clear>(outcome);
-    }
-
     [Fact]
     public void Sl022StillClassifiesEngineSourceAsMetaProgram()
     {

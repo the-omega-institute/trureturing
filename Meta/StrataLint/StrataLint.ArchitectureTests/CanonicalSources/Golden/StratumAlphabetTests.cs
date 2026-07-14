@@ -1,5 +1,5 @@
 using System.Reflection;
-using StrataLint.Definitions;
+using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.ArchitectureTests;
@@ -11,8 +11,8 @@ public sealed class StratumAlphabetTests
     [Fact]
     public void EveryClosedStratumTouchpointMatchesTheFiveMemberAlphabet()
     {
-        var goldenStratum = typeof(Anchor).Assembly.GetType(
-            "StrataLint.Definitions.GoldenStratum",
+        var goldenStratum = typeof(StrataLint.Cli.Program).Assembly.GetType(
+            "StrataLint.Cli.GoldenStratum",
             throwOnError: true)!;
         var candidates = Expected.Concat(["", "S5", "S10", "s0", "X_Assumptions"]);
         var sets = new Dictionary<string, IEnumerable<string>>(StringComparer.Ordinal)

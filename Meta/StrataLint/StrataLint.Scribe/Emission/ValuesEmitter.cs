@@ -46,7 +46,8 @@ public static class ValuesEmitter
             exception is InvalidOperationException
                 or IOException
                 or UnauthorizedAccessException
-                or ArgumentException)
+                or ArgumentException
+                or FormatException)
         {
             error.WriteLine("values emit failed: " + exception.Message);
             return 1;

@@ -6,16 +6,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="../../../Blueprint/**/*.scribe.cs" LinkBase="Definitions" />
-    <ProjectReference
-      Include="../StrataLint.Definitions/StrataLint.Definitions.csproj"
-      ReferenceOutputAssembly="false" />
-    <Reference Include="StrataLint.Definitions">
-      <HintPath>../StrataLint.Definitions/bin/$(Configuration)/$(TargetFramework)/StrataLint.Definitions.dll</HintPath>
-      <Private>true</Private>
-    </Reference>
     <ProjectReference Include="../StrataLint.Engine/StrataLint.Engine.csproj" />
     <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />
     <PackageReference Include="QuestPDF" />
+    <PackageReference Include="Tomlyn" />
     <AdditionalFiles Include="../Architecture/BannedSymbols.txt" />
     <AdditionalFiles Include="../Architecture/BannedSymbols.Determinism.txt" />
     <AdditionalFiles Include="../Architecture/BannedSymbols.Guid.txt" />

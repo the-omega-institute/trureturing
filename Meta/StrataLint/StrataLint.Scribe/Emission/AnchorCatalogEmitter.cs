@@ -14,8 +14,9 @@ public static class AnchorCatalogEmitter
 
         try
         {
-            var first = CanonicalAnchorCatalogWriter.Write().ToArray();
-            var second = CanonicalAnchorCatalogWriter.Write().ToArray();
+            var definitions = ExternalAnchorManifest.LoadRepository(repositoryRoot);
+            var first = CanonicalAnchorCatalogWriter.Write(definitions).ToArray();
+            var second = CanonicalAnchorCatalogWriter.Write(definitions).ToArray();
             if (!first.AsSpan().SequenceEqual(second))
             {
                 throw new InvalidOperationException(
@@ -47,7 +48,8 @@ public static class AnchorCatalogEmitter
             exception is InvalidOperationException
                 or IOException
                 or UnauthorizedAccessException
-                or ArgumentException)
+                or ArgumentException
+                or FormatException)
         {
             error.WriteLine("catalog emit failed: " + exception.Message);
             return 1;

@@ -6,20 +6,34 @@ using System.Text.RegularExpressions;
 
 namespace StrataLint.Engine;
 
-internal sealed record ValuesProjectionDefinition(string Id, string Status);
+internal sealed record ValuesProjectionDefinition(
+    string Id,
+    string Status,
+    string LeanGid,
+    string LeanStatementSha256);
 
 internal sealed class ValuesProjection
 {
-    internal ValuesProjection(ImmutableDictionary<string, ValuesProjectionDefinition> definitions) =>
+    internal ValuesProjection(
+        ImmutableDictionary<string, ValuesProjectionDefinition> definitions,
+        bool hasLeanBindings)
+    {
         Definitions = definitions;
+        HasLeanBindings = hasLeanBindings;
+    }
 
     internal ImmutableDictionary<string, ValuesProjectionDefinition> Definitions { get; }
+
+    internal bool HasLeanBindings { get; }
 }
 
 internal static class ValuesProjectionLoader
 {
     internal const string RelativePath = "Evidence/D5/values.json";
     internal const string InputPath = "D5/X_Frontier/ValuesProducer.lean";
+    internal const string LeanModulePath = "D5/S3/Constants/Values.lean";
+    internal const string KernelDataPath =
+        "Meta/StrataLint/Golden/values-kernels.toml";
     internal const string ScribeLockPath =
         "Meta/StrataLint/StrataLint.Scribe/packages.lock.json";
 
@@ -27,12 +41,17 @@ internal static class ValuesProjectionLoader
     private static readonly Regex Sha256Pattern = new("^[0-9a-f]{64}$", RegexOptions.CultureInvariant);
     internal static ImmutableArray<string> InputPaths { get; } =
     [
+        LeanModulePath,
         InputPath,
         "Directory.Build.props",
         "Directory.Packages.props",
+        KernelDataPath,
         ScribeLockPath,
         "global.json",
     ];
+    private static readonly ImmutableArray<string> PreBindingInputPaths = InputPaths
+        .Where(static path => path is not LeanModulePath and not KernelDataPath)
+        .ToImmutableArray();
     private static readonly ImmutableArray<string> ExpectedIds =
     [
         "D5/Ah", "D5/Bh", "D5/C0", "D5/Cphi", "D5/E", "D5/T0", "D5/T1",
@@ -60,17 +79,155 @@ internal static class ValuesProjectionLoader
                 ["attestation", "constants", "schema_version"],
                 StringComparer.Ordinal)
             || root.GetProperty("schema_version").ValueKind != JsonValueKind.Number
-            || root.GetProperty("schema_version").GetInt32() != 1
             || root.GetProperty("constants").ValueKind != JsonValueKind.Array)
         {
             throw new FormatException("Values projection root schema is invalid.");
         }
 
-        ValidateAttestation(snapshot, root.GetProperty("attestation"));
-        return new ValuesProjection(ParseDefinitions(root.GetProperty("constants")));
+        var schemaVersion = root.GetProperty("schema_version").GetInt32();
+        if (schemaVersion == 1)
+        {
+            // Component C preserves the admitted pre-binding tree, while the frozen Lean
+            // source prevents a current repository from using this path as a downgrade.
+            if (snapshot.TryGetFile(LeanModulePath, out _)
+                || snapshot.TryGetFile(KernelDataPath, out _))
+            {
+                throw new FormatException(
+                    "Values projection schema 1 is invalid after Lean binding sources exist.");
+            }
+
+            var preBindingDefinitions = ParsePreBindingDefinitions(root.GetProperty("constants"));
+            ValidatePreBindingAttestation(snapshot, root.GetProperty("attestation"));
+            return new ValuesProjection(preBindingDefinitions, hasLeanBindings: false);
+        }
+
+        if (schemaVersion != 2)
+        {
+            throw new FormatException("Values projection root schema is invalid.");
+        }
+
+        var definitions = ParseDefinitions(root.GetProperty("constants"));
+        ValidateAttestation(snapshot, root.GetProperty("attestation"), definitions);
+        return new ValuesProjection(definitions, hasLeanBindings: true);
     }
 
-    private static void ValidateAttestation(RepositorySnapshot snapshot, JsonElement attestation)
+    internal static void ValidateLeanBindings(
+        ValuesProjection projection,
+        AcceptedLeanClosure lean)
+    {
+        ArgumentNullException.ThrowIfNull(projection);
+        ArgumentNullException.ThrowIfNull(lean);
+        if (!projection.HasLeanBindings)
+        {
+            return;
+        }
+
+        foreach (var definition in projection.Definitions.Values.OrderBy(
+                     static item => item.Id,
+                     StringComparer.Ordinal))
+        {
+            if (!Gid.TryParse(definition.LeanGid, out var gid)
+                || gid.ToTarget() is not Target.Formal { Declaration: not null } target
+                || !lean.Report.Files.TryGetValue(target.Path, out var module)
+                || !string.IsNullOrEmpty(module.Error))
+            {
+                throw new FormatException(
+                    $"Values constant {definition.Id} Lean GID is absent from the compiled report.");
+            }
+
+            var matches = module.Declarations.Where(declaration =>
+                    string.Equals(declaration.Name, target.Declaration, StringComparison.Ordinal)
+                    || declaration.Name.EndsWith('.' + target.Declaration, StringComparison.Ordinal))
+                .ToArray();
+            if (matches.Length != 1)
+            {
+                throw new FormatException(
+                    $"Values constant {definition.Id} Lean GID must resolve to exactly one declaration.");
+            }
+
+            var declaration = matches[0];
+            if (!string.Equals(declaration.Kind, "def", StringComparison.Ordinal))
+            {
+                throw new FormatException(
+                    $"Values constant {definition.Id} Lean GID must have kind=def, found {declaration.Kind}.");
+            }
+
+            if (!declaration.IncludeInStatement
+                || declaration.Axioms.Length != 3
+                || declaration.Axioms.Any(static axiom => !LeanAxiomFacts.IsStandard(axiom)))
+            {
+                throw new FormatException(
+                    $"Values constant {definition.Id} Lean definition must have the standard-three axiom closure.");
+            }
+
+            var actualStatementSha = Convert.ToHexStringLower(
+                SHA256.HashData(StrictUtf8.GetBytes(declaration.TypeRepresentation)));
+            if (!string.Equals(
+                    actualStatementSha,
+                    definition.LeanStatementSha256,
+                    StringComparison.Ordinal))
+            {
+                throw new FormatException(
+                    $"Values constant {definition.Id} Lean statement SHA-256 does not match its computation data.");
+            }
+        }
+    }
+
+    private static void ValidateAttestation(
+        RepositorySnapshot snapshot,
+        JsonElement attestation,
+        ImmutableDictionary<string, ValuesProjectionDefinition> definitions)
+    {
+        if (attestation.ValueKind != JsonValueKind.Object
+            || !PropertyNames(attestation).SequenceEqual(
+                ["consistency", "emitter", "emitter_version", "input_sha256", "inputs", "projection", "provenance"],
+                StringComparer.Ordinal)
+            || RequiredString(attestation, "emitter") != "StrataLint.Scribe.ValuesProducer"
+            || attestation.GetProperty("emitter_version").ValueKind != JsonValueKind.Number
+            || attestation.GetProperty("emitter_version").GetInt32() != 2
+            || RequiredString(attestation, "projection") != "D5/E/values--json"
+            || attestation.GetProperty("inputs").ValueKind != JsonValueKind.Array
+            || attestation.GetProperty("provenance").ValueKind != JsonValueKind.Array)
+        {
+            throw new FormatException("Values producer attestation schema is invalid.");
+        }
+
+        var consistency = attestation.GetProperty("consistency");
+        if (consistency.ValueKind != JsonValueKind.Object
+            || !PropertyNames(consistency).SequenceEqual(
+                ["lean_binding", "numeric_binding"],
+                StringComparer.Ordinal)
+            || RequiredString(consistency, "lean_binding")
+                != "gid+kind=def+std3+statement-sha256"
+            || RequiredString(consistency, "numeric_binding")
+                != "not-kernel-evaluated:noncomputable-real")
+        {
+            throw new FormatException("Values consistency boundary is invalid.");
+        }
+
+        var provenance = attestation.GetProperty("provenance").EnumerateArray()
+            .Select(static item => item.ValueKind == JsonValueKind.String ? item.GetString() : null)
+            .ToArray();
+        if (provenance.Any(string.IsNullOrWhiteSpace)
+            || !provenance.SequenceEqual(
+                definitions.Values.OrderBy(static item => item.Id, StringComparer.Ordinal)
+                    .Select(static item => item.LeanGid),
+                StringComparer.Ordinal))
+        {
+            throw new FormatException("Values producer provenance must be the complete Lean GID list.");
+        }
+
+        ValidateInputAttestation(
+            snapshot,
+            attestation,
+            InputPaths,
+            version: 2,
+            label: "Values producer");
+    }
+
+    private static void ValidatePreBindingAttestation(
+        RepositorySnapshot snapshot,
+        JsonElement attestation)
     {
         if (attestation.ValueKind != JsonValueKind.Object
             || !PropertyNames(attestation).SequenceEqual(
@@ -82,38 +239,54 @@ internal static class ValuesProjectionLoader
             || RequiredString(attestation, "projection") != "D5/E/values--json"
             || attestation.GetProperty("inputs").ValueKind != JsonValueKind.Array)
         {
-            throw new FormatException("Values producer attestation schema is invalid.");
+            throw new FormatException("Values pre-binding attestation schema is invalid.");
         }
 
+        ValidateInputAttestation(
+            snapshot,
+            attestation,
+            PreBindingInputPaths,
+            version: 1,
+            label: "Values pre-binding");
+    }
+
+    private static void ValidateInputAttestation(
+        RepositorySnapshot snapshot,
+        JsonElement attestation,
+        ImmutableArray<string> expectedPaths,
+        int version,
+        string label)
+    {
         var inputs = attestation.GetProperty("inputs").EnumerateArray().ToArray();
-        if (inputs.Length != InputPaths.Length)
+        if (inputs.Length != expectedPaths.Length)
         {
-            throw new FormatException("Values producer input manifest is invalid.");
+            throw new FormatException($"{label} input manifest is invalid.");
         }
 
         var verifiedInputs = new (string Path, string Sha256)[inputs.Length];
         for (var index = 0; index < inputs.Length; index++)
         {
             var input = inputs[index];
-            var expectedPath = InputPaths[index];
+            var expectedPath = expectedPaths[index];
             if (input.ValueKind != JsonValueKind.Object
                 || !PropertyNames(input).SequenceEqual(["path", "sha256"], StringComparer.Ordinal)
                 || RequiredString(input, "path") != expectedPath)
             {
-                throw new FormatException("Values producer input manifest is invalid.");
+                throw new FormatException($"{label} input manifest is invalid.");
             }
 
             var declaredSha = RequiredString(input, "sha256");
             if (!Sha256Pattern.IsMatch(declaredSha)
                 || !snapshot.TryGetFile(expectedPath, out var source))
             {
-                throw new FormatException("Values producer input SHA-256 cannot be verified.");
+                throw new FormatException($"{label} input SHA-256 cannot be verified.");
             }
 
             var actualSha = Convert.ToHexStringLower(SHA256.HashData(source.RawBytes.AsSpan()));
             if (!string.Equals(declaredSha, actualSha, StringComparison.Ordinal))
             {
-                throw new FormatException("Values producer input SHA-256 does not match the repository input.");
+                throw new FormatException(
+                    $"{label} input SHA-256 does not match the repository input.");
             }
 
             verifiedInputs[index] = (expectedPath, actualSha);
@@ -123,10 +296,11 @@ internal static class ValuesProjectionLoader
         if (!Sha256Pattern.IsMatch(declaredCombined)
             || !string.Equals(
                 declaredCombined,
-                CombinedInputSha256(verifiedInputs),
+                CombinedInputSha256(verifiedInputs, version),
                 StringComparison.Ordinal))
         {
-            throw new FormatException("Values producer input SHA-256 does not match the repository input.");
+            throw new FormatException(
+                $"{label} input SHA-256 does not match the repository input.");
         }
     }
 
@@ -145,10 +319,48 @@ internal static class ValuesProjectionLoader
             ValidateDefinitionShape(element);
             var id = RequiredString(element, "id");
             var status = RequiredString(element, "status");
+            var leanGid = RequiredString(element, "lean_gid");
+            var statementSha = RequiredString(element, "lean_statement_sha256");
             if (!string.Equals(id, ExpectedIds[index], StringComparison.Ordinal)
-                || !definitions.TryAdd(id, new ValuesProjectionDefinition(id, status)))
+                || !Gid.TryParse(leanGid, out var gid)
+                || gid.ToTarget() is not Target.Formal { Declaration: not null }
+                || !Sha256Pattern.IsMatch(statementSha)
+                || RequiredString(element, "provenance") != leanGid
+                || !definitions.TryAdd(id, new ValuesProjectionDefinition(id, status, leanGid, statementSha)))
             {
-                throw new FormatException("Values constants are duplicated or not in canonical id order.");
+                throw new FormatException(
+                    "Values constants need unique sorted ids and concrete Lean declaration provenance.");
+            }
+
+            ValidateDefinitionState(element, id, status);
+        }
+
+        return definitions.ToImmutable();
+    }
+
+    private static ImmutableDictionary<string, ValuesProjectionDefinition> ParsePreBindingDefinitions(
+        JsonElement constants)
+    {
+        var definitions = ImmutableDictionary.CreateBuilder<string, ValuesProjectionDefinition>(
+            StringComparer.Ordinal);
+        var elements = constants.EnumerateArray().ToArray();
+        if (elements.Length != ExpectedIds.Length)
+        {
+            throw new FormatException("Values projection must contain exactly fourteen constants.");
+        }
+
+        foreach (var (element, index) in elements.Select((value, index) => (value, index)))
+        {
+            ValidatePreBindingDefinitionShape(element);
+            var id = RequiredString(element, "id");
+            var status = RequiredString(element, "status");
+            if (!string.Equals(id, ExpectedIds[index], StringComparison.Ordinal)
+                || !definitions.TryAdd(
+                    id,
+                    new ValuesProjectionDefinition(id, status, string.Empty, string.Empty)))
+            {
+                throw new FormatException(
+                    "Values pre-binding constants are duplicated or not in canonical id order.");
             }
 
             ValidateDefinitionState(element, id, status);
@@ -158,6 +370,34 @@ internal static class ValuesProjectionLoader
     }
 
     private static void ValidateDefinitionShape(JsonElement element)
+    {
+        var expected = new[]
+        {
+            "comparison", "decimal", "definition", "error", "exact_value", "formula", "id",
+            "kernel_receipts", "lean_gid", "lean_statement_sha256", "method", "open_reason",
+            "provenance", "reference_error", "reference_value", "refs", "status", "value",
+        };
+        if (element.ValueKind != JsonValueKind.Object
+            || !PropertyNames(element).SequenceEqual(expected, StringComparer.Ordinal)
+            || element.GetProperty("kernel_receipts").ValueKind != JsonValueKind.Array
+            || element.GetProperty("refs").ValueKind != JsonValueKind.Object
+            || PropertyNames(element.GetProperty("refs")).Any(name =>
+                element.GetProperty("refs").GetProperty(name).ValueKind != JsonValueKind.String)
+            || !IsOptionalString(element.GetProperty("formula"))
+            || !IsOptionalString(element.GetProperty("exact_value")))
+        {
+            throw new FormatException("Values constant schema is invalid.");
+        }
+
+        _ = RequiredString(element, "comparison");
+        _ = RequiredString(element, "definition");
+        _ = RequiredString(element, "method");
+        _ = RequiredString(element, "provenance");
+        _ = RequiredString(element, "reference_error");
+        _ = RequiredString(element, "reference_value");
+    }
+
+    private static void ValidatePreBindingDefinitionShape(JsonElement element)
     {
         var expected = new[]
         {
@@ -174,7 +414,7 @@ internal static class ValuesProjectionLoader
             || !IsOptionalString(element.GetProperty("formula"))
             || !IsOptionalString(element.GetProperty("exact_value")))
         {
-            throw new FormatException("Values constant schema is invalid.");
+            throw new FormatException("Values pre-binding constant schema is invalid.");
         }
 
         _ = RequiredString(element, "comparison");
@@ -255,9 +495,11 @@ internal static class ValuesProjectionLoader
         return RequiredString(receipt, "kernel");
     }
 
-    private static string CombinedInputSha256(IEnumerable<(string Path, string Sha256)> inputs)
+    private static string CombinedInputSha256(
+        IEnumerable<(string Path, string Sha256)> inputs,
+        int version)
     {
-        var material = "stratalint-scribe-values-input-v1\0" + string.Concat(
+        var material = $"stratalint-scribe-values-input-v{version}\0" + string.Concat(
             inputs.Select(static input => input.Path + "\0" + input.Sha256 + "\n"));
         return Convert.ToHexStringLower(SHA256.HashData(StrictUtf8.GetBytes(material)));
     }
