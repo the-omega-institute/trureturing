@@ -138,6 +138,8 @@ public static class BootstrapGate
     internal static bool IsProtected(RepoPath path)
     {
         var value = path.Value;
+        // The v1 predecessor codec cannot decode candidate-only SL-022 paths;
+        // Definitions retirement is enforced by the architecture test instead.
         if (value.StartsWith(DefinitionsPathPrefix, StringComparison.Ordinal))
         {
             return false;

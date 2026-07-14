@@ -1,6 +1,7 @@
+using System.Globalization;
 using System.Text;
 
-namespace StrataLint.Definitions;
+namespace StrataLint.Cli;
 
 internal static class TomlGoldenWriter
 {
@@ -192,7 +193,9 @@ internal static class TomlGoldenWriter
                 default:
                     if (character < ' ' || character == '\u007f')
                     {
-                        builder.Append("\\u").Append(((int)character).ToString("X4"));
+                        builder.Append("\\u").Append(((int)character).ToString(
+                            "X4",
+                            CultureInfo.InvariantCulture));
                     }
                     else
                     {

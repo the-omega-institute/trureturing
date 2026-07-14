@@ -8,17 +8,17 @@
         "resolved": "5.6.0",
         "contentHash": "Kcobt3pnOdO0A+6CKiMHZdTEluJpsfxiV20axtZdmfBQnDmiWTKPJADlgAfdTuKNAnVarrkJa0UEGwuOo91muw=="
       },
+      "Tomlyn": {
+        "type": "Direct",
+        "requested": "[2.10.1, )",
+        "resolved": "2.10.1",
+        "contentHash": "ykjOY3IpYmC4SpPcAZRTl/w2jTmhPMDydHq8xcV7tTBAQ22nKBsOkPqauIrZlMjHm03cmKfV23UOPscKp+J4Og=="
+      },
       "YamlDotNet": {
         "type": "Direct",
         "requested": "[16.3.0, )",
         "resolved": "16.3.0",
         "contentHash": "SgMOdxbz8X65z8hraIs6hOEdnkH6hESTAIUa7viEngHOYaH+6q5XJmwr1+yb9vJpNQ19hCQY69xbFsLtXpobQA=="
-      },
-      "stratalint.definitions": {
-        "type": "Project",
-        "dependencies": {
-          "Tomlyn": "[2.10.1, )"
-        }
       },
       "stratalint.engine": {
         "type": "Project",
@@ -31,7 +31,8 @@
         "type": "Project",
         "dependencies": {
           "QuestPDF": "[2026.7.1, 2026.7.1]",
-          "StrataLint.Engine": "[1.0.0, )"
+          "StrataLint.Engine": "[1.0.0, )",
+          "Tomlyn": "[2.10.1, )"
         }
       },
       "Dunet": {
@@ -51,12 +52,6 @@
         "requested": "[2026.7.1, 2026.7.1]",
         "resolved": "2026.7.1",
         "contentHash": "GsBxQb48dFAGmvI1eP3SHyz0Pua4uH6aUHX7f0ywTin6hordAviZRAiTiIQiKMLwq6hN1FmgS+qLjfh2v7vhOg=="
-      },
-      "Tomlyn": {
-        "type": "CentralTransitive",
-        "requested": "[2.10.1, )",
-        "resolved": "2.10.1",
-        "contentHash": "ykjOY3IpYmC4SpPcAZRTl/w2jTmhPMDydHq8xcV7tTBAQ22nKBsOkPqauIrZlMjHm03cmKfV23UOPscKp+J4Og=="
       }
     }
   }

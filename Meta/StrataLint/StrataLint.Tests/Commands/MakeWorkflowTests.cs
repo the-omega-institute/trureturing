@@ -91,6 +91,9 @@ public sealed class MakeWorkflowTests
         Assert.Contains("--baseline-lean-report", localGate, StringComparison.Ordinal);
         Assert.Contains("verify-conservative", sharedGate, StringComparison.Ordinal);
         Assert.Contains("make -C \"$CANDIDATE_ROOT\" dotnet", sharedGate, StringComparison.Ordinal);
+        Assert.Contains("-getProperty:TargetPath", sharedGate, StringComparison.Ordinal);
+        Assert.Contains("--baseline-harness", sharedGate, StringComparison.Ordinal);
+        Assert.Contains("--candidate-harness", sharedGate, StringComparison.Ordinal);
         Assert.Contains("exit 3", sharedGate, StringComparison.Ordinal);
         Assert.DoesNotContain("Bootstrap scaffold path", sharedGate, StringComparison.Ordinal);
         Assert.Contains("gate_rc", localGate, StringComparison.Ordinal);

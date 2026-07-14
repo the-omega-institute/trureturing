@@ -1,4 +1,4 @@
-namespace StrataLint.Definitions;
+namespace StrataLint.Scribe;
 
 public abstract record Anchor
 {

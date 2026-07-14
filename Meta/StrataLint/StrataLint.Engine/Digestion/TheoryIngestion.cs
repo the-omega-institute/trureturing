@@ -22,28 +22,20 @@ internal sealed record TheoryIngestionResult(
     ImmutableArray<SeenDigestionAtom> Seen,
     ImmutableArray<ResidualDigestionAdmission> Residual);
 
-internal static class GictIngestion
+internal static class TheoryIngestion
 {
     internal static TheoryIngestionResult AdmitResidual(
+        string atomizerId,
         ReadOnlySpan<byte> bytes,
-        IEnumerable<DigestionLedgerEntry> ledger) =>
-        DigestionFingerprintSubtractor.Subtract(
-            GictAtomizer.Atomize(bytes),
+        IEnumerable<DigestionLedgerEntry> ledger)
+    {
+        var registration = AtomizerRegistry.Require(atomizerId);
+        return DigestionFingerprintSubtractor.Subtract(
+            registration.Atomize(bytes),
             ledger,
-            "gict-v1",
-            "gict");
-}
-
-internal static class PzgIngestion
-{
-    internal static TheoryIngestionResult AdmitResidual(
-        ReadOnlySpan<byte> bytes,
-        IEnumerable<DigestionLedgerEntry> ledger) =>
-        DigestionFingerprintSubtractor.Subtract(
-            PzgAtomizer.Atomize(bytes),
-            ledger,
-            "pzg-v1",
-            "pzg");
+            atomizerId,
+            registration.ResidualPrefix);
+    }
 }
 
 internal static class DigestionFingerprintSubtractor

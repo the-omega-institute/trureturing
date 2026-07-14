@@ -3,6 +3,40 @@ namespace StrataLint.Scribe.Tests;
 public sealed class ValuesDefinitionTests
 {
     [Fact]
+    public void CatalogSizeIsDefinedByTomlRows()
+    {
+        var directory = Directory.CreateTempSubdirectory("stratalint-values-catalog-");
+        try
+        {
+            var path = Path.Combine(directory.FullName, "values-kernels.toml");
+            File.WriteAllText(path, """
+                schema_version = 1
+
+                [[constants]]
+                id = "D5/Bh"
+                lean_gid = "D5/S3/Constants/Values.bh"
+                lean_statement_sha256 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                status = "registered-open"
+                definition = "synthetic registered value"
+                method = "registered-open"
+                reference_value = "0"
+                reference_error = "0"
+                open_reason = "synthetic input is intentionally not computed"
+                refs = {}
+                computation = "none"
+                """ + "\n");
+
+            var definition = Assert.Single(ValuesKernelDataLoader.LoadFile(path));
+
+            Assert.Equal("D5/Bh", definition.Id);
+        }
+        finally
+        {
+            directory.Delete(recursive: true);
+        }
+    }
+
+    [Fact]
     public void CatalogDefinesAllFourteenConstantsAndKeepsUntranslatedInputsOpen()
     {
         var definitions = ValuesKernelDataLoader.LoadRepository(FindRepositoryRoot());

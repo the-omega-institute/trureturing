@@ -128,11 +128,15 @@ internal static class BackfillInventoryRule
                 }
             }
 
-            if (source.Atomizer is not ("gict-v1" or "pzg-v1" or "none"))
+            if (source.Atomizer != AtomizerRegistry.NoAtomizerId
+                && !AtomizerRegistry.IsRegistered(source.Atomizer))
             {
                 findings.Add(new RuleFinding(
                     BackfillPath,
-                    $"source {source.SourceId} has unknown atomizer {source.Atomizer}"));
+                    $"source {source.SourceId} has unknown atomizer {source.Atomizer}. "
+                    + "Registered atomizers: "
+                    + string.Join(", ", AtomizerRegistry.RegisteredIds)
+                    + "."));
             }
 
             if (seenPaths.TryGetValue(source.SourcePath, out var priorSource))

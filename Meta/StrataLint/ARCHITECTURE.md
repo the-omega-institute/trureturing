@@ -42,9 +42,11 @@ failure and the trusted bootstrap path cannot recur.
 
 SL-022 evaluates raw changed paths before candidate-controlled inputs. Git rename and
 copy records contribute both endpoints, so removing or moving a protected old path is
-still a meta change. `Meta/StrataLint/StrataLint.Definitions/` is the typed data layer:
-its files pass normal content admission but do not receive the SL-022 meta-program
-annotation. Engine, rules, emitters, CLI, tests, gate scripts, and workflows retain their
-existing protected status. External review and branch protection remain human
-authorization; neither candidate files nor a successful candidate test job can
-synthesize approval.
+still a meta change. Engine, rules, emitters, CLI, tests, gate scripts, and workflows
+retain their protected status. The retired `StrataLint.Definitions/` prefix remains a
+recorded bootstrap exception because the v1 predecessor codec validates candidate
+SL-022 diagnostics with the predecessor predicate; the architecture suite separately
+forbids that directory and assembly from returning. Declarative instances live outside
+assemblies in their canonical TOML/Lean locations; shared program schema lives with its
+smallest runtime owner. External review and branch protection remain human authorization;
+neither candidate files nor a successful candidate test job can synthesize approval.

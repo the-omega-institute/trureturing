@@ -11,13 +11,24 @@ internal sealed record CanonicalSourceDuplicationFinding(string Path, string Mes
 
 internal static class CanonicalSourceDuplicationPolicy
 {
+    internal const string AtomizerRegistryPath =
+        "Meta/StrataLint/StrataLint.Engine/Digestion/AtomizerRegistry.cs";
+
     internal static IReadOnlyList<CanonicalSourceDuplicationFinding> InspectRepository(string repositoryRoot)
     {
         var backfillPath = Path.Combine(repositoryRoot, "Meta", "BACKFILL.yaml");
-        var tickets = BackfillInventoryLoader.Load(File.ReadAllText(backfillPath))
-            .RequireTickets()
+        var backfill = BackfillInventoryLoader.Load(File.ReadAllText(backfillPath));
+        var tickets = backfill.RequireTickets()
             .Select(static ticket => (ticket.CaseId, ticket.Gid))
             .ToArray();
+        var atomizerIds = backfill.RequireDigestionSources()
+            .Select(static source => source.Atomizer)
+            .Where(static id => id != AtomizerRegistry.NoAtomizerId)
+            .Distinct(StringComparer.Ordinal)
+            .ToArray();
+        var specification = File.ReadAllText(Path.Combine(
+            repositoryRoot,
+            BootstrapGate.SpecificationPath));
         var domains = LoadDomains(repositoryRoot);
         var findings = new List<CanonicalSourceDuplicationFinding>();
         foreach (var (relativePath, path) in CSharpRepositorySources.Enumerate(repositoryRoot))
@@ -25,9 +36,70 @@ internal static class CanonicalSourceDuplicationPolicy
             var source = File.ReadAllText(path);
             findings.AddRange(InspectSource(relativePath, source, tickets));
             findings.AddRange(InspectDomainMappings(relativePath, source, domains));
+            findings.AddRange(InspectAtomizerIdLiterals(relativePath, source, atomizerIds));
+            findings.AddRange(InspectSpecificationCopies(relativePath, source, specification));
+        }
+
+        foreach (var (relativePath, path) in EnumerateToml(repositoryRoot))
+        {
+            findings.AddRange(InspectSpecificationCopies(
+                relativePath,
+                File.ReadAllText(path),
+                specification));
         }
 
         return findings;
+    }
+
+    internal static IReadOnlyList<CanonicalSourceDuplicationFinding> InspectSpecificationCopies(
+        string path,
+        string source,
+        string specification)
+    {
+        if (string.Equals(path, BootstrapGate.SpecificationPath, StringComparison.Ordinal))
+        {
+            return [];
+        }
+
+        return Regex.Split(
+                specification,
+                "(?<=[。！？])|(?:\\r?\\n){2,}",
+                RegexOptions.CultureInvariant,
+                TimeSpan.FromSeconds(1))
+            .Select(static passage => passage.Trim())
+            .Where(static passage => passage.Length >= 64 && CountCjk(passage) >= 24)
+            .Distinct(StringComparer.Ordinal)
+            .Where(passage => source.Contains(passage, StringComparison.Ordinal))
+            .Select(passage => new CanonicalSourceDuplicationFinding(
+                path,
+                $"fixture copies a {passage.Length}-character passage from the canonical specification; use neutral synthetic text"))
+            .ToArray();
+    }
+
+    internal static IReadOnlyList<CanonicalSourceDuplicationFinding> InspectAtomizerIdLiterals(
+        string path,
+        string source,
+        IEnumerable<string> atomizerIds)
+    {
+        if (string.Equals(path, AtomizerRegistryPath, StringComparison.Ordinal))
+        {
+            return [];
+        }
+
+        var ids = atomizerIds.ToHashSet(StringComparer.Ordinal);
+        var root = CSharpSyntaxTree.ParseText(source).GetRoot();
+        return (from literal in root.DescendantNodes().OfType<LiteralExpressionSyntax>()
+                where literal.IsKind(SyntaxKind.StringLiteralExpression)
+                from id in ids
+                where Regex.IsMatch(
+                    literal.Token.ValueText,
+                    $"(?<![A-Za-z0-9.-]){Regex.Escape(id)}(?![A-Za-z0-9.-])",
+                    RegexOptions.CultureInvariant,
+                    TimeSpan.FromSeconds(1))
+                select new CanonicalSourceDuplicationFinding(
+                    path,
+                    $"C# atomizer id literal {id} duplicates Meta/BACKFILL.yaml; dispatch through AtomizerRegistry"))
+            .ToArray();
     }
 
     internal static IReadOnlyList<CanonicalSourceDuplicationFinding> InspectSource(
@@ -116,5 +188,28 @@ internal static class CanonicalSourceDuplicationPolicy
         return accepted.Policy.Domains
             .Select(static domain => (domain.Key.Value, domain.Value.ToString()))
             .ToArray();
+    }
+
+    private static int CountCjk(string value) => value.Count(static character =>
+        character is >= '\u3400' and <= '\u4dbf'
+            or >= '\u4e00' and <= '\u9fff');
+
+    private static IEnumerable<(string RelativePath, string FullPath)> EnumerateToml(
+        string repositoryRoot)
+    {
+        foreach (var path in Directory.EnumerateFiles(
+                     repositoryRoot,
+                     "*.toml",
+                     SearchOption.AllDirectories))
+        {
+            var relativePath = Path.GetRelativePath(repositoryRoot, path).Replace('\\', '/');
+            if (relativePath.Split('/').Any(static segment =>
+                    segment is ".git" or ".lake" or "bin" or "obj"))
+            {
+                continue;
+            }
+
+            yield return (relativePath, path);
+        }
     }
 }

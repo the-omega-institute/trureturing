@@ -276,7 +276,10 @@ public sealed class DigestionLedgerTests
                 truth: "open",
                 coverageReceipts: "[]",
                 scribeReceipts: "[]")
-            .Replace("atomizer: gict-v1", "atomizer: none", StringComparison.Ordinal)
+            .Replace(
+                $"atomizer: {AtomizerRegistry.GictId}",
+                $"atomizer: {AtomizerRegistry.NoAtomizerId}",
+                StringComparison.Ordinal)
             .Replace(
                 syntheticAtom.Fingerprints.RawSha256,
                 "sha256:" + new string('0', 64),
@@ -374,9 +377,9 @@ public sealed class DigestionLedgerTests
         schema_version: 3
         ledger: theory-digestion-v1
         sources:
-          - source_id: gict-v1
+          - source_id: {{AtomizerRegistry.GictId}}
             path: docs/source.md
-            atomizer: gict-v1
+            atomizer: {{AtomizerRegistry.GictId}}
             entries:
               - atom_id: gict-1.1
                 boundary:

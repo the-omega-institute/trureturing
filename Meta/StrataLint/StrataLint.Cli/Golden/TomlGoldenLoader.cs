@@ -2,7 +2,7 @@ using System.Text;
 using Tomlyn;
 using Tomlyn.Model;
 
-namespace StrataLint.Definitions;
+namespace StrataLint.Cli;
 
 internal static class TomlGoldenLoader
 {

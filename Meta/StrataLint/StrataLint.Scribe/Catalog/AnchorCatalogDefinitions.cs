@@ -1,6 +1,6 @@
 using System.Collections.Immutable;
 
-namespace StrataLint.Definitions;
+namespace StrataLint.Scribe;
 
 public static class AnchorCatalogDefinitions
 {

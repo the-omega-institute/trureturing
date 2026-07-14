@@ -54,9 +54,7 @@ internal sealed partial class RuleFixture
             [BlueprintPath] = "# Golden ring\n",
             [GoldenCorpus.FixtureDigestionSourcePath] = GoldenCorpus.FixtureDigestionSource,
         };
-        const string specPath = SpecificationPath;
-        Files[specPath] = RestoreApprovedCanonicalClaim(
-            File.ReadAllText(Path.Combine(repositoryRoot, specPath), Encoding.UTF8));
+        Files[SpecificationPath] = GoldenCorpus.FixtureSpecification;
         Baseline = new Dictionary<string, string>(Files, StringComparer.Ordinal);
         Reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
         {
@@ -427,23 +425,6 @@ internal sealed partial class RuleFixture
            anchors: []
            digest: StrataLint fixture. -/
         """;
-
-    private static string RestoreApprovedCanonicalClaim(string text)
-    {
-        const string marker = "**papergen/blueprint 只接受全 GID;跨库引用自带理论坐标。**";
-        const string approved = " **M0 admission 精确主张**:给定一个受支持且经人类门控核准的语义 manifest,至多存在一种规范表示与恰一次 admission;不受支持或未核准的 manifest 按 fail-closed 得零次 admission。受 manifest 路由的 JSON/YAML 结构化语义工件现役强制 UTF-8、禁 BOM、对象键字典序、禁行尾空白且末尾恰一 LF;完整 Unicode NFC、默认值与 tag 顺序规范化延后 D5-T0015,故字节规范不得报 full active。";
-        if (text.Contains(approved, StringComparison.Ordinal))
-        {
-            return text;
-        }
-
-        if (!text.Contains(marker, StringComparison.Ordinal))
-        {
-            throw new InvalidOperationException("protected spec fixture lacks the approved canonical-claim anchor");
-        }
-
-        return text.Replace(marker, marker + approved, StringComparison.Ordinal);
-    }
 
     private static string FindRepositoryRoot()
     {

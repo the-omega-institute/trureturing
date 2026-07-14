@@ -18,6 +18,16 @@ public sealed class ConservativeExtensionCommandTests
         Assert.Empty(result.Error);
         Assert.Equal(1, fixture.Environment.FreezeCount);
         Assert.Equal(2, fixture.Environment.Invocations.Count);
+        Assert.Equal(
+            [
+                fixture.BaselineHarness,
+                fixture.CandidateHarness,
+                fixture.BaselineHarness,
+                fixture.CandidateHarness,
+                fixture.BaselineHarness,
+                fixture.CandidateHarness,
+            ],
+            fixture.Environment.LoadedHarnessPaths);
         Assert.Single(
             fixture.Environment.Invocations.Select(static invocation => invocation.Replay.Root)
                 .Distinct(StringComparer.Ordinal));
@@ -72,6 +82,20 @@ public sealed class ConservativeExtensionCommandTests
 
         Assert.Equal(2, result.ExitCode);
         Assert.Contains("base corpus missing", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void HarnessOutsideItsRepositoryIsInfrastructureFailure()
+    {
+        using var fixture = new CommandFixture();
+        var arguments = fixture.Arguments.ToArray();
+        arguments[Array.IndexOf(arguments, "--candidate-harness") + 1] = fixture.BaselineHarness;
+
+        var result = ConservativeExtensionCommand.Run(arguments, fixture.Environment);
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains("candidate harness", result.Error, StringComparison.Ordinal);
+        Assert.Contains("candidate root", result.Error, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -146,12 +170,18 @@ public sealed class ConservativeExtensionCommandTests
             var candidateReport = Path.Combine(reports, "candidate.json");
             File.WriteAllText(baselineReport, "{}\n", new UTF8Encoding(false));
             File.WriteAllText(candidateReport, "{}\n", new UTF8Encoding(false));
+            BaselineHarness = Path.Combine(BaselineRoot, "baseline-harness.dll");
+            CandidateHarness = Path.Combine(CandidateRoot, "candidate-harness.dll");
+            File.WriteAllText(BaselineHarness, "baseline harness\n", new UTF8Encoding(false));
+            File.WriteAllText(CandidateHarness, "candidate harness\n", new UTF8Encoding(false));
             Arguments =
             [
                 "--baseline-root", BaselineRoot,
                 "--candidate-root", CandidateRoot,
                 "--baseline-lean-report", baselineReport,
                 "--candidate-lean-report", candidateReport,
+                "--baseline-harness", BaselineHarness,
+                "--candidate-harness", CandidateHarness,
             ];
             Environment = new SyntheticCommandEnvironment(mutateCandidate);
         }
@@ -159,6 +189,10 @@ public sealed class ConservativeExtensionCommandTests
         internal string BaselineRoot { get; }
 
         internal string CandidateRoot { get; }
+
+        internal string BaselineHarness { get; }
+
+        internal string CandidateHarness { get; }
 
         internal ImmutableArray<string> Arguments { get; }
 
@@ -191,6 +225,8 @@ public sealed class ConservativeExtensionCommandTests
 
         internal List<ConservativeHarnessInvocation> Invocations { get; } = [];
 
+        internal List<string> LoadedHarnessPaths { get; } = [];
+
         internal int FreezeCount { get; private set; }
 
         internal Exception? MaterializationFailure { get; set; }
@@ -216,10 +252,13 @@ public sealed class ConservativeExtensionCommandTests
                 : new ConservativeRepositoryIdentity(input.CandidateCommitOid, input.CandidateTreeOid);
         }
 
-        public ConservativeHarnessProgram LoadHarness(string root) =>
-            root.EndsWith("baseline", StringComparison.Ordinal)
-                ? new ConservativeHarnessProgram("baseline.dll", input.BaselineHarnessRoot)
-                : new ConservativeHarnessProgram("candidate.dll", input.CandidateHarnessRoot);
+        public ConservativeHarnessProgram LoadHarness(string path)
+        {
+            LoadedHarnessPaths.Add(path);
+            return path.EndsWith("baseline-harness.dll", StringComparison.Ordinal)
+                ? new ConservativeHarnessProgram(path, input.BaselineHarnessRoot)
+                : new ConservativeHarnessProgram(path, input.CandidateHarnessRoot);
+        }
 
         public ConservativeReplayEnvelope Freeze(
             string baselineRoot,

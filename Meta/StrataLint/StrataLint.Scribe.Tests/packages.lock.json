@@ -93,12 +93,6 @@
           "xunit.extensibility.core": "[2.9.3]"
         }
       },
-      "stratalint.definitions": {
-        "type": "Project",
-        "dependencies": {
-          "Tomlyn": "[2.10.1, )"
-        }
-      },
       "stratalint.engine": {
         "type": "Project",
         "dependencies": {
@@ -110,7 +104,8 @@
         "type": "Project",
         "dependencies": {
           "QuestPDF": "[2026.7.1, 2026.7.1]",
-          "StrataLint.Engine": "[1.0.0, )"
+          "StrataLint.Engine": "[1.0.0, )",
+          "Tomlyn": "[2.10.1, )"
         }
       },
       "Dunet": {
