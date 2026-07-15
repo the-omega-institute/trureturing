@@ -91,6 +91,8 @@ internal static partial class GoldenCorpus
           - "lakefile.toml"
           - "lean-toolchain"
         governance_documents:
+          - "Generated/FILEMAP.md"
+          - "Meta/FILEMAP.toml"
           - "docs/CONTRIBUTING.md"
           - "docs/GOVERNANCE.md"
           - "docs/develop/spec/golden-ledger-repo-spec.md"

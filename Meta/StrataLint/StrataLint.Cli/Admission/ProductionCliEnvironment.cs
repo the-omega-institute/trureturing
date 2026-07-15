@@ -104,6 +104,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 options.CandidateLeanReport,
                 current);
             var verifiedScribeEmissions = VerifyScribeForAdmission(
+                scribeEmissionVerifier,
                 candidateLeanReport,
                 bootstrap);
             var evaluation = SnapshotAdmissionCore.Evaluate(
@@ -273,18 +274,19 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         }
     }
 
-    private VerifiedScribeEmissions? VerifyScribeForAdmission(
+    internal static VerifiedScribeEmissions? VerifyScribeForAdmission(
+        IScribeEmissionVerifier? verifier,
         LeanAxiomReport report,
         BootstrapOutcome bootstrap)
     {
-        if (scribeEmissionVerifier is null)
+        if (verifier is null)
         {
             return null;
         }
 
         try
         {
-            return scribeEmissionVerifier.Verify(report);
+            return verifier.Verify(report);
         }
         catch (InvalidOperationException) when (
             bootstrap is BootstrapOutcome.HumanReviewRequired)

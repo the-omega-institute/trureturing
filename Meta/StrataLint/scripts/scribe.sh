@@ -31,3 +31,4 @@ fi
 run_scribe emit
 run_scribe catalog
 run_scribe emit-values
+run_scribe filemap

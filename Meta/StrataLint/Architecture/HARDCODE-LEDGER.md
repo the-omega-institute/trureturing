@@ -38,6 +38,7 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
 | Atomizer identifier duplication policy | Atomizer identifiers loaded from `Meta/BACKFILL.yaml` are rejected in tracked C# string literals outside `AtomizerRegistry.cs`; the registry is the sole dispatch authority. | Yes: `LedgerAtomizerIdLiteralIsRejectedByTheRedFixture`; the registry-owner counterfixture also passed. | Ledger atomizer IDs copied into C# dispatch or fixture text instead of using `AtomizerRegistry`. |
 | Specification passage duplication policy | Tracked C# and repository TOML reject exact copied specification passages of at least 64 characters and 24 CJK characters (`CanonicalSourceDuplicationPolicy.cs`). | Yes: `LongExactSpecificationPassageIsRejectedByTheRedFixture` covers C# and TOML; short and rewritten text is the green counterfixture. | Long Chinese passages copied byte-for-byte from the mutable canonical specification into code or corpus fixtures. Reworded text, non-CJK passages, encodings, and other file formats remain outside this narrow predicate. |
 | Golden corpus storage policy | All tracked C# is parsed with Roslyn; a literal-name `new GoldenCase(...)` or legacy literal-name `C(...)` inside `GoldenCorpus` is rejected (`GoldenCorpusStoragePolicy.cs`). Canonical case bytes are loaded only from `Meta/StrataLint/Golden/cases/*.toml`. | Yes: `CSharpGoldenCaseDeclarationIsRejectedByTheRedFixture` covers both old construction shapes; `SchemaDeclarationIsNotMistakenForCaseData` is the green counterfixture; the repository/TOML authority tests passed. | Golden case names, mutations, changes, and expected diagnostics embedded in C# instead of the TOML authority. The predicate deliberately permits schema construction from parsed variables. |
+| FILEMAP custody and producer policy | `Meta/FILEMAP.toml` is parsed fail-closed; every tracked/unignored path matches exactly one pattern, registry root files equal tracked root files, generated files match the producer inventory plus `emit-check`, data names an existing program verifier, and class directories remain pure. Residence policy states the no-data-under-`Meta/StrataLint/` ideal while marking and counting the current epoch violations. | Yes: unclassified, ambiguous, registry drift, missing loader, missing/mismatched producer, missing generated `produced_by`, directory mixing, unmarked protected-surface data, exact residence inventory drift, data-to-generated reference, and Lean-to-generated import red fixtures. | Hand-maintained or implicit file ownership, generated outputs without an executable producer/check, and unmarked or newly added protected-surface data. The bounded dependency predicate remains recorded under `HC-OPEN-012`; the frozen current violations remain open under `RESIDENCE-EPOCH`. |
 | Repository path literal policy | All tracked C# string literals are checked. A value with at least two `/` characters that exactly names an existing file is rejected unless it directly defines a `const string` (`RepositoryPathLiteralPolicy.cs:22`). | Yes: `ExistingMultisegmentPathLiteralIsRejectedByTheRedFixture`; green const and nonexistent-path counterfixtures also passed. | Consumers copying existing repository file paths. |
 | Default injection policy | Effectively public members on effectively public `*Dsl` or `*Builder` types may not use a literal GID, case ID, or canonical anchor as a parameter default (`DefaultInjectionPolicy.cs:20`). | Yes: `CanonicalLiteralDefaultIsRejectedByTheRedFixture`; GID and case variants passed. | Hidden canonical policy injected through public defaults. |
 | Theory isolation, sources | All Lean and all non-ingestion C# reject internal theory paths and the retired theory-family tokens; Lean task autopsy text and the ingestion whitelist are explicit exceptions (`TheoryIsolationPolicy.cs:46,76`). | Yes: Lean header, non-autopsy task, and C# citation negative fixtures passed. | Formal/program code coupled to internal theory reference sources or numbering families. |
@@ -103,6 +104,88 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
   CLI and failed closed. Obeying the base protocol exposed the substantive v1 codec limit:
   removing the Definitions exemption made candidate-only SL-022 diagnostics malformed to
   the predecessor. The exemption was restored; directory absence remains machine-guarded.
+- FILEMAP standard action: stock data under `Meta/StrataLint/Golden` was moved to top-level
+  `Golden/`; the first verifier audit found that `StrictTextLoader` named no implementation.
+  A focused repository-conformance run failed with exactly two `FILEMAP-DATA-VERIFIER`
+  findings, after which both text-data classes were bound to the real strict-UTF8
+  `SnapshotDecoder`. FILEMAP manifest, architecture, and emitter selections cover the
+  closed-world, red fixtures, and byte-exact dependency projection.
+- Spec-digestion migration autopsy: the first base-controlled replay failed closed in
+  `DigestionFingerprint` because the A8/A18/6.2 edits shifted all twelve spec acceptance
+  slices by 1,035 bytes. The old registered slices were found exactly once in the current
+  spec with unchanged bytes and fingerprints; `Meta/BACKFILL.yaml` moved their contiguous
+  boundaries from `26902..30633` to `27937..31668`. The next base and candidate checks
+  passed that boundary instead of throwing a UTF-8 decoder exception.
+- Ceremony hash-tool autopsy: macOS Perl `shasum` rejected the process `C.UTF-8` locale
+  before reading either report. The system OpenSSL SHA-256 implementation then measured
+  both independently generated Lean reports as
+  `797dae7a5a1177d47acb9e7affc20fc84762dc7f856bcbdfc4296b70ba30e26d`, and `cmp`
+  confirmed byte identity.
+- Frozen-ledger relocation autopsy: the first candidate admission rejected the deliberate
+  `Meta/StrataLint/Golden/Frozen/events.jsonl` to `Golden/Frozen/events.jsonl` move because
+  SL-008 equated frozen identity with one physical path. Both Git entries had the same
+  blob OID `92263724b1738f4852ee964cb822ec140ae09c5c`. Baseline resolution now permits only one
+  byte-exact prior `*/Frozen/events.jsonl` source when the canonical baseline path is
+  absent; changed and ambiguous sources remain rejected by focused fixtures. The next
+  candidate admission reached the expected SL-022 boundary with no SL-008 finding.
+- Historical Scribe replay autopsy: the next conservative run reached the candidate
+  harness but tried to verify the baseline tree with the candidate's expanded
+  `DocumentDefinitions`; six producer sources correctly did not exist in the old tree,
+  so replay failed as infrastructure before comparing dispositions. Baseline-tree replay
+  now derives the frozen candidate change set and applies the same rule as production
+  admission: an emitter mismatch may yield no Scribe capability only when SL-022 already
+  classifies the change as protected. A clear content change still throws, as the paired
+  red/green fixture proves; current-tree `emit-check` remains mandatory and byte-exact.
+- Historical values replay autopsy: after Scribe replay was restored, the candidate
+  harness flipped the admitted baseline tree to SL-018 because its v2 input manifest
+  named the former kernel-data residence. Production still accepts only
+  `Golden/values-kernels.toml`; conservative baseline replay can supply a historical path
+  only after finding exactly one prior `*/values-kernels.toml` whose bytes equal the
+  candidate canonical file. The loader then verifies the old manifest's declared path,
+  individual SHA-256, and combined input SHA-256 without an implicit legacy alias.
+- Historical frozen-ledger replay autopsy: restoring the values attestation exposed the
+  same old-tree/current-path distinction in SL-008. Candidate admission already resolved
+  an old baseline ledger against a new canonical current ledger, but replay evaluates the
+  old tree as both sides. The validator now accepts an explicit replay path selected by
+  the shared canonical-or-unique-byte-exact resolver; production still defaults to
+  `Golden/Frozen/events.jsonl`, and changed or ambiguous historical sources fail closed.
+- Predecessor gate boundary autopsy: after all historical identities were restored, direct
+  base-owned replay preserved 31/31 baseline admits and both harnesses admitted the actual
+  baseline tree. The `origin/dev` verifier still rejected certification because its
+  harness blocks the new top-level `Golden/**` candidate and its protection-monotonicity
+  check requires six newly added `Blueprint/**/*.scribe.cs` data files to remain under
+  SL-022. Satisfying those findings would reverse the approved data-residence rule. This
+  migration therefore needs a staged predecessor protocol update; no green C0 certificate
+  was substituted for the emitted conservative-violation evidence.
+- Full-suite projection autopsy: focused FILEMAP selections missed six stale consumers and
+  one repository-wide guard. The first solution run found the old Golden fixture path and
+  SL-022 expectation, a five-document Scribe discovery list, two ambiguous `Program`
+  reflection anchors, and sixteen existing-file literals outside named constants. The
+  consumers now use canonical loader/constants or enumerate all eleven definitions; the
+  repository-path literal policy was not weakened, and all corresponding focused reruns
+  passed.
+- Residence-epoch split autopsy: the caller meta-judge adopted the prior PARTIAL verdict:
+  making the old judge accept the combined move would require weakening the recorded
+  residence or protection law. The seven Golden artifacts therefore returned by 100%
+  Git rename, the values attestation returned to its prior input identity, and the
+  relocation-only values/frozen replay adapters were reverted. FILEMAP remains active and
+  freezes the five concrete `kind=data` violations instead of claiming zero violations.
+- Residence spec-boundary rebind: A8/A18 residence wording shifted the twelve immutable
+  acceptance samples by 372 bytes. Each prior byte slice matched the revised spec exactly
+  once with unchanged SHA-256; only the contiguous boundaries moved from
+  `27937..31668` to `28309..32040`.
+- FILEMAP predecessor-registration autopsy: the first split-epoch conservative replay
+  preserved all 31/31 corpus admits but the base harness blocked the actual candidate with
+  SL-000 because `Meta/FILEMAP.toml` and `Generated/FILEMAP.md` were known only to
+  candidate C# path exceptions. The predecessor already reads candidate registry
+  `governance_documents` before its closed-world switch, so both artifacts now use that
+  shared declaration and the duplicate candidate-only exceptions were removed.
+- Shared-judge identity-drift autopsy: the first final gate reused the clean `dev`
+  worktree at `36ce721`, then PR #105 advanced both `origin/dev` and that worktree to
+  `77664ec` during conservative replay. The verifier failed closed with repository
+  identity drift. This branch merged the new base without rebase; the renewed ceremony
+  and final gate therefore bind the stable post-merge identity instead of reusing the
+  stale certificate.
 
 ## Residual scan
 
@@ -119,8 +202,10 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
 | Internal theory references outside managed sources | `docs/develop/theory/` and ingestion/status code intentionally retain the reference inputs and provenance vocabulary. | TheoryIsolation scans Lean, non-ingestion C#, and the generated catalog, not all prose/scripts/config. SL-016 governs ingestion receipts. | Guarded where references could become formal/program authority; intentionally open as reference data. "No theory token anywhere" would delete the source being digested. |
 | Encoded, split, interpolated, or computed duplication | Examples can be manufactured as concatenation, base64, hash lookup, arithmetic, generated code, or runtime I/O. | Current policies deliberately match closed syntax shapes. | `HC-OPEN-009`: deciding arbitrary semantic equivalence or whether a computed value has the wrong authority reduces to program/intent equivalence. Every finite text rule has trivial encoding escapes; broadening it produces both bypasses and false positives. |
 | Values schema epoch transition | Expand admitted attestation v1 or v2; migrate moved the canonical writer and artifact to v2; contract completed in this PR by removing v1 read support and retaining v1 only as an SL-018 negative fixture (expand-migrate-contract, CLAUDE.md section 6). | The conservative verifier observes a finite base-owned corpus plus the actual trees, not every historically admitted snapshot. | `VALUES-SCHEMA-EPOCH` (open): the active schema epoch/domain is not yet machine-defined, so a later v1 contract can be corpus-conservative without proving the literal universal conservative-extension law. |
-| Bootstrap protected-surface representation | `BootstrapGate.cs:138-177` keeps the trust-root path classification and the retired Definitions prefix exception in executable code. External data would make review and generation easier, but would also make the policy that decides what is protected depend on another mutable artifact. | SL-022 and `TrustTopologyTests` exercise the in-process predicate; `DefinitionsRetirementTests` forbids the exempt directory from returning. The v1 predecessor codec still validates candidate diagnostics with its own predicate. | `HC-OPEN-010`: keep the protection surface embedded until an external representation can be content-addressed by a higher trust layer. Remove the retired-prefix exception only after a predecessor codec admits candidate-added protection; doing both in one PR currently fails closed before conservative comparison. |
+| Data residence epoch | `Meta/StrataLint/Golden/cases/{digestion-and-anchors,protected-semantics,structure-and-identities,structured-ledger}.toml` and `Meta/StrataLint/Golden/values-kernels.toml` are the five known `kind=data` violations. C0 certificate and frozen events share the future relocation batch but are `kind=ledger`, not residence violations. | FILEMAP marks the two matching entries `residence_violation=true`, records count 5 and case `RESIDENCE-EPOCH`, and the repository test asserts the expanded path set equals the literal known inventory. SL-022 continues to protect Golden and `Blueprint/**/*.scribe.cs`. | `RESIDENCE-EPOCH` (open): first design and independently review via sshx a verifier mechanism that can approve protection-surface contraction; only then migrate in three certificate-bearing units: golden cases, values kernels plus attestation, and C0/frozen ledgers. No unit may silently widen the known-violation set. |
+| Bootstrap protected-surface representation | `BootstrapGate.cs:138-166` keeps the trust-root path classification and the retired Definitions prefix exception in executable code. External data would make review and generation easier, but would also make the policy that decides what is protected depend on another mutable artifact. | SL-022 and `TrustTopologyTests` exercise the in-process predicate; `DefinitionsRetirementTests` forbids the exempt directory from returning. The v1 predecessor codec still validates candidate diagnostics with its own predicate. | `HC-OPEN-010`: keep the protection surface embedded until an external representation can be content-addressed by a higher trust layer. Remove the retired-prefix exception only after a predecessor codec admits candidate-added protection; doing both in one PR currently fails closed before conservative comparison. |
 | Diagnostic language consistency | English route/parser failures coexist with Chinese SL-021 and bootstrap messages (`Routing.cs:80,85`; `RepositoryRules.Admission.cs:77,82`; `CliApplication.cs:120,124`). Atomizer diagnostics added in this unit are English. | No diagnostic locale/style schema exists; golden cases intentionally bind some current bytes. | `HC-OPEN-011`: terminology and locale are user-interface policy, not a correctness literal. Standardize only with a declared diagnostic style plus an atomic golden-corpus migration; do not mix that migration into registry work. |
+| FILEMAP dependency discovery | Machine-readable data can name generated paths through encoding, concatenation, interpolation, aliases, or runtime computation; Lean can express imports outside the current one-module line grammar. | FILEMAP scans decoded TOML/YAML/JSON/Scribe text for concrete generated paths and resolves simple Lean imports. | `HC-OPEN-012`: the active check is an honest low-false-positive subset, not semantic program equivalence. Encoded/computed references and richer Lean import syntax remain detectable only by future structured loaders or compiler-derived dependency edges. |
 
 ## MULTI-THEORY-DEBT
 

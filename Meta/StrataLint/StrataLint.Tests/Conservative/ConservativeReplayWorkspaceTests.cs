@@ -8,6 +8,26 @@ namespace StrataLint.Tests;
 public sealed class ConservativeReplayWorkspaceTests
 {
     [Fact]
+    public void BaselineScribeMismatchIsSoftOnlyForProtectedReplay()
+    {
+        var report = LeanAxiomReport.Create(
+            new Dictionary<string, LeanFileReport>(StringComparer.Ordinal));
+        var verifier = new FailingScribeEmissionVerifier();
+
+        var protectedResult = ConservativeActualTreeEvaluator.VerifyBaselineScribeForReplay(
+            verifier,
+            report,
+            RawChangeSet.Create([RuleFixture.SyntheticProtectedPath]));
+
+        Assert.Null(protectedResult);
+        Assert.Throws<InvalidOperationException>(() =>
+            ConservativeActualTreeEvaluator.VerifyBaselineScribeForReplay(
+                verifier,
+                report,
+                RawChangeSet.Create([RuleFixture.BlueprintPath])));
+    }
+
+    [Fact]
     public void WorkerProtocolExposesNoRepositoryOrReportPathArguments()
     {
         var source = File.ReadAllText(Path.Combine(
@@ -119,5 +139,11 @@ public sealed class ConservativeReplayWorkspaceTests
         }
 
         throw new DirectoryNotFoundException("Could not locate repository root.");
+    }
+
+    private sealed class FailingScribeEmissionVerifier : IScribeEmissionVerifier
+    {
+        public VerifiedScribeEmissions Verify(LeanAxiomReport report) =>
+            throw new InvalidOperationException("synthetic Scribe mismatch");
     }
 }

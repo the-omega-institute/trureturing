@@ -119,6 +119,7 @@ public sealed class MakeWorkflowTests
         Assert.Contains("run_scribe emit", script, StringComparison.Ordinal);
         Assert.Contains("run_scribe catalog", script, StringComparison.Ordinal);
         Assert.Contains("run_scribe emit-values", script, StringComparison.Ordinal);
+        Assert.Contains("run_scribe filemap", script, StringComparison.Ordinal);
     }
 
     [Fact]
