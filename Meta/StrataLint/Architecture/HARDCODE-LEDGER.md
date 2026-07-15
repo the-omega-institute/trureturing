@@ -266,3 +266,58 @@ Each row is a future migration obligation, not authorization to prebuild the mec
 
 The stopping rule is not "search returned zero." It is: every observed instance is
 guarded, repaired, or present in this open ledger with an explicit reason.
+
+## DIGESTION-PHASE2-INGEST (complete, 2026-07-15)
+
+After PR #109 supplied cross-syntax receipt identity and one-step legacy conversion,
+`make ingest` completed the Phase 2 extract→identify→subtract→residual pass for the
+PR #106 theory volumes. It migrated all 20 atomized legacy receipts from `boundary` to
+`ast_path` (GICT 16, PZG 4), while leaving the 12 `atomizer: none` specification
+receipts unchanged. The resulting alignment and ledger write recorded:
+
+- seen: 15
+- stale acknowledged: 5 (`gict-hearts-o5-o6`, `gict-constant-Cphi`,
+  `gict-constant-T0`, `gict-constant-delta-mean`, `gict-constant-c1`)
+- residual-open added: 737 (GICT 55, PZG 682)
+- ledger changed: true
+
+### First-voyage autopsy (REFERENCE-ZERO-ANCHOR migrate, 2026-07-15)
+
+`make ingest` did not reach a ledger write. With the production ledger unchanged, its
+legacy byte boundaries point into the new theory bytes; the first truncated UTF-8 span
+fails during digest-status evaluation. A minimal data-only trial converted only the 20
+GICT/PZG receipts from `boundary` to `ast_path` and left all 12 `atomizer: none` spec
+receipts untouched. That exposed the alignment counts but was also rejected by the
+base-owned judge:
+
+- seen: 15
+- intended stale: 5 (`gict-hearts-o5-o6`, `gict-constant-Cphi`,
+  `gict-constant-T0`, `gict-constant-delta-mean`, `gict-constant-c1`)
+- reported residual-open frontier: 737
+
+The count is 737 rather than the expected version delta of about 165 because the
+aligner subtracts only registered receipt paths, not the 587 claims atomized from the
+baseline theory volumes. More importantly, stale admission requires the candidate
+receipt preimage to be byte-equal to `origin/dev`; a structured `ast_path` receipt
+cannot be byte-equal to its legacy `boundary` preimage. The second `make ingest`
+therefore failed on exactly the five receipts above with `INGEST_INVALID`, and wrote
+nothing. No data-only state can both retain those five as actual acknowledged stale
+receipts and pass the `origin/dev` baseline comparison. The trial ledger edit was
+removed; this item remains open for an expand-side cross-syntax identity/conversion fix.
+
+### Gate-close autopsy (attempt 3, 2026-07-15)
+
+The first successful ledger write exposed a cross-rule false positive at the full gate.
+SL-019 scanned every governed structured scalar for the bare substring `tension`, while
+the atomizer's canonical `extension-table/6.38′` locator contains that substring.
+`make ingest` validates its final ledger through SL-016, so this conflict appeared only
+when the complete rule set ran. The narrow repair excludes only `tension` immediately
+preceded by `ex`; a paired regression proves that the extension locator is accepted
+while an explicit `unresolved tension` signal remains rejected. No receipt identity or
+theory locator was renamed to evade the judge.
+
+Because admission executes the judge from the dev baseline, a candidate-only repair
+could not validate this migrated ledger: the unchanged base judge rejected BACKFILL
+before conservative replay could certify the candidate judge. The two-file repair
+therefore landed independently through PR #110 and its protected-surface gate, after
+which this branch merged the repaired dev judge and reran the complete acceptance chain.
