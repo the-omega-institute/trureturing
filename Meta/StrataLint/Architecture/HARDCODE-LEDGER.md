@@ -157,6 +157,13 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
   SL-022. Satisfying those findings would reverse the approved data-residence rule. This
   migration therefore needs a staged predecessor protocol update; no green C0 certificate
   was substituted for the emitted conservative-violation evidence.
+- Full-suite projection autopsy: focused FILEMAP selections missed six stale consumers and
+  one repository-wide guard. The first solution run found the old Golden fixture path and
+  SL-022 expectation, a five-document Scribe discovery list, two ambiguous `Program`
+  reflection anchors, and sixteen existing-file literals outside named constants. The
+  consumers now use canonical loader/constants or enumerate all eleven definitions; the
+  repository-path literal policy was not weakened, and all corresponding focused reruns
+  passed.
 
 ## Residual scan
 

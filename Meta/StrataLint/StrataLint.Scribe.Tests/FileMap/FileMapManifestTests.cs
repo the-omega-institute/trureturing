@@ -4,6 +4,12 @@ namespace StrataLint.Scribe.Tests;
 
 public sealed class FileMapManifestTests
 {
+    private const string BlueprintPath = "Blueprint/D5/S0/Carrier/Ring.md";
+    private const string FormalPath = "D5/S0/Carrier/Ring.lean";
+    private const string FrozenLedgerPath = "Golden/Frozen/events.jsonl";
+    private const string RuleCatalogPath =
+        "Meta/StrataLint/StrataLint.Engine/Rules/RuleCatalog.cs";
+
     [Fact]
     public void CanonicalManifestLoadsAllFiveKindsAndMatchesRepositoryGlobs()
     {
@@ -48,15 +54,15 @@ public sealed class FileMapManifestTests
 
         Assert.Equal(5, manifest.Entries.Length);
         Assert.Equal(FileMapKind.Generated, Assert.Single(
-            manifest.Match("Blueprint/D5/S0/Carrier/Ring.md")).Kind);
+            manifest.Match(BlueprintPath)).Kind);
         Assert.Equal(FileMapKind.Truth, Assert.Single(
-            manifest.Match("D5/S0/Carrier/Ring.lean")).Kind);
+            manifest.Match(FormalPath)).Kind);
         Assert.Equal(FileMapKind.Ledger, Assert.Single(
-            manifest.Match("Golden/Frozen/events.jsonl")).Kind);
+            manifest.Match(FrozenLedgerPath)).Kind);
         Assert.Equal(FileMapKind.Data, Assert.Single(
             manifest.Match("Golden/cases/structure.toml")).Kind);
         Assert.Equal(FileMapKind.Program, Assert.Single(
-            manifest.Match("Meta/StrataLint/StrataLint.Engine/Rules/RuleCatalog.cs")).Kind);
+            manifest.Match(RuleCatalogPath)).Kind);
         Assert.Empty(manifest.Match("unclassified.bin"));
     }
 

@@ -41,7 +41,7 @@ public sealed class GoldenCorpusStorageTests
         var root = RepositoryLayout.FindRoot();
         var directory = Path.Combine(root, "Golden", "cases");
         Assert.Equal(4, Directory.EnumerateFiles(directory, "*.toml").Count());
-        var loader = typeof(Program).Assembly.GetType(
+        var loader = typeof(StrataLint.Cli.Program).Assembly.GetType(
             "StrataLint.Cli.TomlGoldenLoader",
             throwOnError: true)!;
         var corpus = loader.GetMethod(

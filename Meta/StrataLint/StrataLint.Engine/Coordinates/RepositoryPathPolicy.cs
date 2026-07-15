@@ -9,6 +9,8 @@ internal static partial class RepositoryPathPolicy
     internal const string AssumptionRegistryPath = "D5/X_Assumptions/REGISTRY.md";
     internal const string WorkflowPath = ".github/workflows/ci.yml";
     internal const string HarnessGatePath = ".github/scripts/harness-gate.sh";
+    internal const string CeremonyCertificatePath =
+        "Golden/Ceremony/c0-inaugural-conservative-certificate.json";
 
     internal static ImmutableArray<Diagnostic> Evaluate(
         RepositorySnapshot snapshot,
@@ -56,7 +58,7 @@ internal static partial class RepositoryPathPolicy
             or "Meta/registry.yaml"
             or "Library/queries.yaml" or AssumptionRegistryPath
             or "Golden/values-kernels.toml"
-            or "Golden/Ceremony/c0-inaugural-conservative-certificate.json"
+            or CeremonyCertificatePath
             or FrozenLedgerChangeClassifier.LedgerPath
             or "Generated/FILEMAP.md"
             or "Meta/split.py" or "Meta/papergen"

@@ -10,6 +10,23 @@ internal sealed record FileMapFinding(string Code, string Path, string Message);
 
 internal static class FileMapPolicy
 {
+    private const string BackfillLoaderPath =
+        "Meta/StrataLint/StrataLint.Engine/Rules/Backfill/BackfillInventoryLoader.cs";
+    private const string FileMapLoaderPath =
+        "Meta/StrataLint/StrataLint.Scribe/FileMap/FileMapManifest.cs";
+    private const string RegistryLoaderPath =
+        "Meta/StrataLint/StrataLint.Cli/Commands/RegistryLoader.cs";
+    private const string ScribeProjectPath =
+        "Meta/StrataLint/StrataLint.Scribe/StrataLint.Scribe.csproj";
+    private const string SnapshotDecoderPath =
+        "Meta/StrataLint/StrataLint.Engine/Snapshot/RepositorySnapshot.cs";
+    private const string TomlGoldenLoaderPath =
+        "Meta/StrataLint/StrataLint.Cli/Golden/TomlGoldenLoader.cs";
+    private const string ValuesKernelLoaderPath =
+        "Meta/StrataLint/StrataLint.Scribe/Values/ValuesKernelDataLoader.cs";
+    private const string YamlSubsetParserPath =
+        "Meta/StrataLint/StrataLint.Engine/Coordinates/YamlSubsetParser.cs";
+
     private static readonly Regex LeanImportPattern = new(
         "(?m)^\\s*import\\s+(?<module>[A-Za-z0-9_.]+)\\s*$",
         RegexOptions.CultureInvariant | RegexOptions.NonBacktracking);
@@ -17,22 +34,14 @@ internal static class FileMapPolicy
     private static readonly IReadOnlyDictionary<string, string> DataVerifierImplementations =
         new Dictionary<string, string>(StringComparer.Ordinal)
         {
-            ["BackfillInventoryLoader"] =
-                "Meta/StrataLint/StrataLint.Engine/Rules/Backfill/BackfillInventoryLoader.cs",
-            ["FileMapLoader"] =
-                "Meta/StrataLint/StrataLint.Scribe/FileMap/FileMapManifest.cs",
-            ["RegistryLoader"] =
-                "Meta/StrataLint/StrataLint.Cli/Commands/RegistryLoader.cs",
-            ["ScribeCompiler"] =
-                "Meta/StrataLint/StrataLint.Scribe/StrataLint.Scribe.csproj",
-            ["SnapshotDecoder"] =
-                "Meta/StrataLint/StrataLint.Engine/Snapshot/RepositorySnapshot.cs",
-            ["TomlGoldenLoader"] =
-                "Meta/StrataLint/StrataLint.Cli/Golden/TomlGoldenLoader.cs",
-            ["ValuesKernelDataLoader"] =
-                "Meta/StrataLint/StrataLint.Scribe/Values/ValuesKernelDataLoader.cs",
-            ["YamlSubsetParser"] =
-                "Meta/StrataLint/StrataLint.Engine/Coordinates/YamlSubsetParser.cs",
+            ["BackfillInventoryLoader"] = BackfillLoaderPath,
+            ["FileMapLoader"] = FileMapLoaderPath,
+            ["RegistryLoader"] = RegistryLoaderPath,
+            ["ScribeCompiler"] = ScribeProjectPath,
+            ["SnapshotDecoder"] = SnapshotDecoderPath,
+            ["TomlGoldenLoader"] = TomlGoldenLoaderPath,
+            ["ValuesKernelDataLoader"] = ValuesKernelLoaderPath,
+            ["YamlSubsetParser"] = YamlSubsetParserPath,
         };
 
     internal static IReadOnlyList<FileMapFinding> InspectRepository(string repositoryRoot)

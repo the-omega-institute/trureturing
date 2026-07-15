@@ -18,10 +18,7 @@ public sealed class GoldenRecordCommandTests
         CopyGoldenFixture(temporary.Path);
         var casePath = Path.Combine(
             temporary.Path,
-            "Meta",
-            "StrataLint",
-            "Golden",
-            "cases",
+            TomlGoldenLoader.RelativeDirectory,
             "structure-and-identities.toml");
         var text = File.ReadAllText(casePath, Encoding.UTF8);
         const string expected = "expected_diagnostics = []";
