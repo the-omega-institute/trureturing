@@ -1,0 +1,2 @@
+**前沿引注 6.64(Knuth–Arnoux 圆积与 ℤ[φ] 像:6.44–6.45 之文献圈)**〔semantic·前沿引注;第 13 轮检索;依 25.9 先例标注〕。Knuth(Appl. Math. Lett. 1 (1988) 57–60):Zeckendorf 圆积 m ∘ n = Σ F_{i+j} 结合——「Fibonacci 乘法」;**Arnoux**(Appl. Math. Lett. 2 (1989) 319–320):非组合证明,机制为 ℤ[X]/(X² − X − 1) 中 Zeckendorf 像闭于乘法——此即第六章 φ-解码像之乘法闭包,黄金旋转证法与 6.45 之 Beatty 机制同圈;先驱为 Porta–Stolarsky。识别义务补齐:S(v) = ⌊(v+1)φ⌋ − 1 型位移-Beatty 恒等式属该文献圈之已知机制(6.44 之「数学内容属经典」于此获具体户口)。结构注记(semantic 档):亏空 c = δS 为 Beatty 拟同态 S 之符号有界余环(coboundary),Knuth 结合律之簿记面即 c 之余环恒等式(自动成立,因 c 恰为余边缘)——「c 是黄金旋转的进位余环」(6.45)由此获同调命名法;深度有限,如实标注为命名而非定理。
+

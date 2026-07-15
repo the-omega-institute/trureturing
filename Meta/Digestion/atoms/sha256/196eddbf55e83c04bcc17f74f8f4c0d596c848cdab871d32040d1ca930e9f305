@@ -1,0 +1,6 @@
+**定义 15.1(指令集)**〔定义〕。
+
+**ISA_𝒦 = {Gen, Enc, Norm, Decode, Length, Phase, Read, Ledger, Renorm, Complete, Reflect, Certify}**
+
+事件四元组之 op 取值于此:**程序 = 事件历史,运行 = 转移轨道(第十八章),指令语义 = 内核分量的施用**。程序观由此获得操作语义:𝖦(h, u) 执行一条指令。
+

@@ -1,0 +1,2 @@
+**定义 17.5(层移算子)**〔定义〕。Shift_α : {ℓ ∈ 𝖫_α : status = semantic} → 𝖫_{α+1},(source, detector, semantic, future) ↦ (source′, detector′, open, future′):source′ 保留原源之编码追溯;detector′ 取自 PObj(𝖫_α) 的读数分量——α+1 层读数以 α 层账本为对象;status 重置为 open;future′ 为 α+1 层预算。
+

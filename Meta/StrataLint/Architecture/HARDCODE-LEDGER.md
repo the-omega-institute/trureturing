@@ -277,7 +277,7 @@ for its protection-surface change explicitly.
 | Segment | Status | Machine boundary and close condition |
 |---|---|---|
 | E1 expand | **complete** | Schema 3 accepts optional `cas_ref`; canonical raw bytes live at `Meta/Digestion/atoms/sha256/<64-lower-hex>`. The judge verifies ref/path/blob/raw-fingerprint equality plus missing, corrupt, and orphan blobs. A CAS-backed receipt no longer needs volume reconciliation; a receipt without `cas_ref` follows the unchanged #109 path. Theory and CAS bytes may be opaque, ingest writes CAS refs, and source-format failure produces one reported whole-source coarse atom once that source's existing receipts are CAS-backed. I/O, schema, CAS, hash, and atomizer-integrity failures still block. The CAS object directory is outside SL-003 code-bucket capacity but only for canonical addresses. |
-| E2 migrate | **pending** | Under the expanded judge, backfill every current GICT/PZG receipt with exact raw CAS bytes and `cas_ref`, then prove byte-idempotent ingest and zero orphan/dangling objects. Preserve the 12 `atomizer: none` specification receipts for `SPEC-ZERO-ANCHOR`; do not contract readers here. |
+| E2 migrate | **complete** | All 789 current GICT/PZG receipts (81 GICT, 708 PZG, including 769 residual-open) and all 12 `atomizer: none` specification receipts now bind exact raw CAS bytes through `cas_ref`. The specification receipts retain their 12 byte boundaries and source reconciliation for `SPEC-ZERO-ANCHOR`; no reader is contracted here. The canonical stock test requires every current receipt preimage and the CAS judge proves zero orphan, dangling, or hash-mismatched objects. A repeated `make ingest BASE=origin/dev` wrote zero objects, reported `ledger_changed=false`, and preserved the ledger SHA-256 byte-for-byte. |
 | E-verifier | **pending** | Design and land the independent contract-epoch verifier that can machine-prove a protection/validation-surface contraction against the predecessor. This is shared infrastructure with `RESIDENCE-EPOCH`; E1 contains no substitute or bypass. |
 | E3 contract | **pending** | Only after E2, E-verifier, and the separate specification-receipt case close, remove the boundary/stale/source-content/atomizer admission readers, make theory a non-bearing reference class, and remove transitional schema fields in one certificate-bearing contract change. |
 
@@ -302,6 +302,51 @@ free-form theory volume.
   newly created by that invocation; existing append-only blobs are never deleted. The
   final ledger is flushed to a same-directory temporary file and atomically replaced, so
   an I/O failure before commit cannot expose partial `cas_ref`s.
+
+### E2 migration close (2026-07-16)
+
+`make ingest BASE=origin/dev` captured 782 source-reproducible theory atoms plus all 12
+manual specification spans. Seven acknowledged-stale theory receipts no longer had a
+preimage in the current volumes; their exact raw bytes were replayed through the current
+atomizers from the git audit chain (six from `76cae68`, one from `80a9836`) and accepted
+only after each computed SHA-256 equalled the frozen ledger fingerprint. A canonical
+ingest then removed the seven obsolete stale acknowledgements. The final inventory is:
+
+- GICT: 81/81 CAS-backed, comprising 16 partial-open and 65 residual-open receipts.
+- PZG: 708/708 CAS-backed, comprising 4 partial-open and 704 residual-open receipts.
+- Specification: 12/12 CAS-backed, with all 12 legacy boundaries retained; two remain
+  partial-closed and ten partial-open under the unchanged specification reconciliation.
+- CAS: 801 referenced objects for 801 receipts; `digest-status` reports 801 entries,
+  zero deletable now, and no findings.
+
+The first complete pass reported `cas_objects_written=794 ledger_changed=true`. After
+the seven historical preimages were restored, the canonicalizing pass reported zero new
+objects and removed the stale acknowledgements. The next full pass reported
+`cas_objects_written=0 ledger_changed=false`; `Meta/BACKFILL.yaml` remained byte-identical
+at SHA-256 `ebc129e37e895b934e0f87ab0419cd13d45614674dd9e1958653b842e7ca5483`.
+
+E2 also closes the specification-CAS ambiguity exposed by E1: CAS-backed receipts from a
+registered theory atomizer may remain independent of a mutable theory volume, while an
+`atomizer: none` receipt continues to require and verify its source byte boundary. Paired
+fixtures preserve both sides of that distinction.
+
+One auxiliary `shasum` replay initially failed before reading data because the inherited
+`C.UTF-8` locale is unavailable on this Darwin host. Re-running the same seven-object
+check under `LC_ALL=C LANG=C` succeeded with every filename equal to its content hash;
+the canonical CAS judge remains the platform-independent admission authority.
+
+The first full `make test` stopped at TheoryIsolation because an admission fixture named
+the registered adapter through its theory-specific `GictId` symbol outside the Digestion
+test boundary. The fixture now selects `AtomizerRegistry.RegisteredIds[0]`, which tests
+the same registered-versus-none contract without leaking an internal theory token; the
+original architecture red test and both paired SL-016 fixtures pass together.
+
+The first full `make gate BASE=origin/dev` passed its candidate build, 784 tests,
+selftest, both Lean inspections, and emission check, then stopped before admission with
+an ancestry infrastructure failure: its mandatory fetch advanced `origin/dev` from the
+E1 merge `806494e` to the newly landed describe-node merge `94fcbc4`. E2 integrates that
+new baseline and reruns the same gate; pinning the stale base would have hidden a real
+concurrent predecessor instead of proving a conservative extension over current dev.
 
 ## DIGESTION-PHASE2-INGEST (complete, 2026-07-15)
 

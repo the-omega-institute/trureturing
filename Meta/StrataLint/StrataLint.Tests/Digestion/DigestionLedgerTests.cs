@@ -38,6 +38,45 @@ public sealed class DigestionLedgerTests
     }
 
     [Fact]
+    public void CasBackedNoAtomizerBoundaryStillRequiresItsSpecificationSource()
+    {
+        var source = Encoding.UTF8.GetBytes("manual specification receipt\n");
+        var atom = new DigestionAtom(
+            "manual/receipt",
+            0,
+            source.Length,
+            ImmutableArray.CreateRange(source),
+            DigestionFingerprint.Compute(source),
+            ImmutableArray<DigestionContext>.Empty);
+        var captured = DigestionCasStore.Capture(source);
+        var yaml = LedgerYaml(
+                atom,
+                migration: "partial",
+                truth: "open",
+                coverageReceipts: "[]",
+                scribeReceipts: "[]")
+            .Replace(
+                $"atomizer: {AtomizerRegistry.GictId}",
+                $"atomizer: {AtomizerRegistry.NoAtomizerId}",
+                StringComparison.Ordinal)
+            .Replace(
+                "        coverage_gids:",
+                $"        cas_ref: {captured.Reference}\n        coverage_gids:",
+                StringComparison.Ordinal);
+        var document = BackfillInventoryLoader.Load(yaml);
+        var snapshot = Snapshot((captured.RelativePath, captured.Bytes.ToArray()));
+
+        var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
+            document,
+            snapshot,
+            AcceptedLean(Array.Empty<string>()),
+            baselineDocument: document).Entries);
+
+        Assert.Equal(DigestionReceiptAlignment.LegacyBoundary, status.Alignment);
+        Assert.Contains(status.Gaps, static gap => gap.Code == "source-missing");
+    }
+
+    [Fact]
     public void LoaderReadsOnlySchemaThreeAtomicEntries()
     {
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
