@@ -90,7 +90,7 @@ components:
       - Meta/StrataLint/StrataLint.Engine/Rules/RuleCatalog.cs
     judged_by:
       - anchor-rule-tests
-      - golden-compatibility
+      - golden-corpus
     verification: verified
   - id: anchor-scribe-tests
     kind: repository-files

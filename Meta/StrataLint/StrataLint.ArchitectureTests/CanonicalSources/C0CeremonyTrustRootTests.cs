@@ -86,6 +86,24 @@ public sealed class C0CeremonyTrustRootTests
     }
 
     [Fact]
+    public void CanonicalTowerJudgeGraphIsClosed()
+    {
+        var root = RepositoryLayout.FindRoot();
+        var loaded = Assert.IsType<TowerManifestParseOutcome.Loaded>(
+            TowerManifestParser.Parse(File.ReadAllBytes(Absolute(root, TowerPath))));
+
+        var outcome = TowerManifestValidator.ValidateStructure(loaded.Syntax);
+
+        var rejected = outcome as TowerValidationOutcome.Rejected;
+        Assert.True(
+            outcome is TowerValidationOutcome.Accepted,
+            rejected is null
+                ? "canonical TOWER returned an unknown validation outcome"
+                : string.Join("; ", rejected.Findings.Select(static item =>
+                    $"{item.Code} {item.Component}: {item.Message}")));
+    }
+
+    [Fact]
     public void TowerC0AddressesMatchTheCanonicalWorktreeBytes()
     {
         var root = RepositoryLayout.FindRoot();

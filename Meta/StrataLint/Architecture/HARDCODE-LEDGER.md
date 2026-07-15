@@ -283,6 +283,27 @@ P0 is a pure conservative verifier extension. There is intentionally no
 `Meta/contract-epoch/` data instance in this change; the first such instance belongs to
 P1 and must itself pass the P0 base judge.
 
+### P0 verification and C0 renewal prerequisites
+
+- P0 mechanism commit: `97658851df49cf1ec3fcc72df75a36ee25881a67`.
+- Release build completed with zero warnings and zero errors; the main test assembly
+  passed 631/631, and ArchitectureTests passed 121/121 when excluding only
+  `TowerC0AddressesMatchTheCanonicalWorktreeBytes`, whose expected 36 source addresses
+  still pointed at the predecessor's 26-member ceremony.
+- The first direct ceremony admission then found that A19 had shifted all twelve
+  `atomizer: none` specification receipts. `make ingest` failed closed before writing,
+  as designed for manually delimited receipts with existing CAS refs. Every registered
+  CAS blob occurred exactly once and the contiguous range moved by 2,024 bytes from
+  `30191..33922` to `32215..35946`; fingerprints and CAS refs remain unchanged.
+- The next replay reached the new exact-commit store and exposed a TOWER edge that had
+  been dangling since `67f284d`: `anchor-reference-rule` named the nonexistent judge
+  `golden-compatibility`. A repository-bound test failed with that sole finding before
+  the edge was corrected to the existing `golden-corpus` machine component; the focused
+  test then passed 1/1.
+- Deterministic selftest passed. This prerequisite commit grants no plan and changes no
+  policy atom; a following docs-only successor binds its exact base as the protected
+  preimage for the C0 renewal.
+
 ## DIGESTION-LEDGER-EPOCH (active, 2026-07-15)
 
 This epoch moves digestion preimages from mutable theory volumes into a replayable
