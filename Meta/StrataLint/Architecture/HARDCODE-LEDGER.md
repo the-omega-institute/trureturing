@@ -181,3 +181,13 @@ Each row is a future migration obligation, not authorization to prebuild the mec
 
 The stopping rule is not "search returned zero." It is: every observed instance is
 guarded, repaired, or present in this open ledger with an explicit reason.
+
+## DIGESTION-PHASE2-INGEST (open, 2026-07-15)
+
+New theory volumes landed (PR #106: GICT 61→66 claims, PZG 526→686 claims; atomizers
+reassemble both byte-exact without dialect changes). The +165 new claims are NOT yet
+registered as `residual-open` atoms in `Meta/BACKFILL.yaml` — the extract→identify→
+subtract→residual ingestion for real new versions is Phase 2 (spec §372), whose
+machinery is not yet built. This entry keeps the unregistered frontier honest until a
+Phase 2 ingestion lane lands: build the fingerprint-alignment pass, register new
+residual atoms, re-evaluate digest-status, then close this entry.

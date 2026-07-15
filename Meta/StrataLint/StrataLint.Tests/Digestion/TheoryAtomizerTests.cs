@@ -13,8 +13,8 @@ public sealed class TheoryAtomizerTests
 
     public static TheoryData<string, string, int> ProductionTheorySources => new()
     {
-        { FirstProductionSource, AtomizerRegistry.GictId, 61 },
-        { SecondProductionSource, AtomizerRegistry.PzgId, 526 },
+        { FirstProductionSource, AtomizerRegistry.GictId, 66 },
+        { SecondProductionSource, AtomizerRegistry.PzgId, 686 },
     };
 
     [Fact]
