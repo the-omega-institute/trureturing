@@ -2,7 +2,7 @@ schema_version: 3
 ledger: theory-digestion-v1
 sources:
   - source_id: gict-v3.6
-    path: docs/develop/theory/GICT_complete_development_v3_3.md
+    path: docs/develop/theory/GICT.md
     atomizer: gict-v1
     entries:
       - atom_id: gict-7.15
@@ -325,7 +325,7 @@ sources:
           migration: partial
           truth: open
   - source_id: pzg-v170
-    path: docs/develop/theory/PZG_BEDC_kernel_formal_170.md
+    path: docs/develop/theory/PZG_BEDC.md
     atomizer: pzg-v1
     entries:
       - atom_id: pzg-26.3

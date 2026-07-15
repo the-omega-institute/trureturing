@@ -7,9 +7,9 @@ namespace StrataLint.Tests;
 public sealed class TheoryAtomizerTests
 {
     private const string FirstProductionSource =
-        "docs/develop/theory/GICT_complete_development_v3_3.md";
+        "docs/develop/theory/GICT.md";
     private const string SecondProductionSource =
-        "docs/develop/theory/PZG_BEDC_kernel_formal_170.md";
+        "docs/develop/theory/PZG_BEDC.md";
 
     public static TheoryData<string, string, int> ProductionTheorySources => new()
     {
