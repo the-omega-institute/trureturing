@@ -104,6 +104,24 @@ public sealed class C0CeremonyTrustRootTests
     }
 
     [Fact]
+    public void CanonicalTowerC0EvidenceIsCanonical()
+    {
+        var root = RepositoryLayout.FindRoot();
+        var loaded = Assert.IsType<TowerManifestParseOutcome.Loaded>(
+            TowerManifestParser.Parse(File.ReadAllBytes(Absolute(root, TowerPath))));
+
+        var actual = TowerActualValidator.Validate(
+            loaded.Syntax,
+            EmptyRepository(),
+            RuleCatalog.Default);
+
+        Assert.Empty(actual.Findings.Where(static item => string.Equals(
+            item.Component,
+            "conservative-extension-gate-c",
+            StringComparison.Ordinal)));
+    }
+
+    [Fact]
     public void TowerC0AddressesMatchTheCanonicalWorktreeBytes()
     {
         var root = RepositoryLayout.FindRoot();
@@ -306,6 +324,10 @@ public sealed class C0CeremonyTrustRootTests
 
     private static string Absolute(string root, string path) =>
         Path.Combine(root, path.Replace('/', Path.DirectorySeparatorChar));
+
+    private static RepositorySnapshot EmptyRepository() =>
+        Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(RawRepositorySnapshot.Create([]))).Snapshot;
 
     private static string Relative(string root, string path) =>
         Path.GetRelativePath(root, path).Replace(Path.DirectorySeparatorChar, '/');
