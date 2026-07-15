@@ -245,7 +245,7 @@ internal static partial class RepositoryRules
 
         try
         {
-            _ = ValuesProjectionLoader.Load(context.Current, context.ValuesKernelDataPath);
+            _ = ValuesProjectionLoader.Load(context.Current);
         }
         catch (Exception exception) when (exception is FormatException or JsonException)
         {

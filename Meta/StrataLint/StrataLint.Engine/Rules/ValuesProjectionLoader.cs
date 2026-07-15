@@ -32,23 +32,19 @@ internal static class ValuesProjectionLoader
 
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     private static readonly Regex Sha256Pattern = new("^[0-9a-f]{64}$", RegexOptions.CultureInvariant);
-    internal static ImmutableArray<string> InputPaths { get; } = InputPathsFor(KernelDataPath);
-
-    internal static ValuesProjection Load(RepositorySnapshot snapshot) =>
-        Load(snapshot, KernelDataPath);
-
-    internal static ValuesProjection Load(
-        RepositorySnapshot snapshot,
-        string kernelDataPath)
+    internal static ImmutableArray<string> InputPaths { get; } =
+    [
+        LeanModulePath,
+        InputPath,
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        KernelDataPath,
+        ScribeLockPath,
+        "global.json",
+    ];
+    internal static ValuesProjection Load(RepositorySnapshot snapshot)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
-        ArgumentException.ThrowIfNullOrWhiteSpace(kernelDataPath);
-        if (!RepoPath.TryCreate(kernelDataPath, out _)
-            || !kernelDataPath.EndsWith("/values-kernels.toml", StringComparison.Ordinal))
-        {
-            throw new ArgumentException("Values kernel data path is invalid.", nameof(kernelDataPath));
-        }
-
         if (!snapshot.TryGetFile(RelativePath, out var file))
         {
             throw new FormatException("Canonical values projection is missing.");
@@ -74,19 +70,14 @@ internal static class ValuesProjectionLoader
         }
 
         var definitions = ParseDefinitions(root.GetProperty("constants"));
-        ValidateAttestation(
-            snapshot,
-            root.GetProperty("attestation"),
-            definitions,
-            InputPathsFor(kernelDataPath));
+        ValidateAttestation(snapshot, root.GetProperty("attestation"), definitions);
         return new ValuesProjection(definitions);
     }
 
     private static void ValidateAttestation(
         RepositorySnapshot snapshot,
         JsonElement attestation,
-        ImmutableDictionary<string, ValuesProjectionDefinition> definitions,
-        ImmutableArray<string> inputPaths)
+        ImmutableDictionary<string, ValuesProjectionDefinition> definitions)
     {
         if (attestation.ValueKind != JsonValueKind.Object
             || !PropertyNames(attestation).SequenceEqual(
@@ -127,16 +118,15 @@ internal static class ValuesProjectionLoader
             throw new FormatException("Values producer provenance must be the complete Lean GID list.");
         }
 
-        ValidateInputAttestation(snapshot, attestation, inputPaths);
+        ValidateInputAttestation(snapshot, attestation);
     }
 
     private static void ValidateInputAttestation(
         RepositorySnapshot snapshot,
-        JsonElement attestation,
-        ImmutableArray<string> inputPaths)
+        JsonElement attestation)
     {
         var inputs = attestation.GetProperty("inputs").EnumerateArray().ToArray();
-        if (inputs.Length != inputPaths.Length)
+        if (inputs.Length != InputPaths.Length)
         {
             throw new FormatException("Values producer input manifest is invalid.");
         }
@@ -145,7 +135,7 @@ internal static class ValuesProjectionLoader
         for (var index = 0; index < inputs.Length; index++)
         {
             var input = inputs[index];
-            var expectedPath = inputPaths[index];
+            var expectedPath = InputPaths[index];
             if (input.ValueKind != JsonValueKind.Object
                 || !PropertyNames(input).SequenceEqual(["path", "sha256"], StringComparer.Ordinal)
                 || RequiredString(input, "path") != expectedPath)
@@ -179,17 +169,6 @@ internal static class ValuesProjectionLoader
             throw new FormatException("Values producer input SHA-256 does not match the repository input.");
         }
     }
-
-    private static ImmutableArray<string> InputPathsFor(string kernelDataPath) =>
-    [
-        LeanModulePath,
-        InputPath,
-        "Directory.Build.props",
-        "Directory.Packages.props",
-        kernelDataPath,
-        ScribeLockPath,
-        "global.json",
-    ];
 
     private static ImmutableDictionary<string, ValuesProjectionDefinition> ParseDefinitions(
         JsonElement constants)

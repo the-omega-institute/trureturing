@@ -12,14 +12,9 @@ internal static class ConservativeActualTreeEvaluator
         var repository = new GitRepositoryGateway(invocation.BaselineRoot);
         var snapshot = Decode(repository.ReadRevision(invocation.BaselineIdentity.CommitOid));
         var report = RawLeanReportArtifact.ReadFile(invocation.BaselineLeanReport, snapshot);
-        var candidateRepository = new GitRepositoryGateway(invocation.CandidateRoot);
-        var candidateChanges = candidateRepository
-            .Prepare(invocation.BaselineIdentity.CommitOid).Changes;
-        var candidateSnapshot = Decode(
-            candidateRepository.ReadRevision(invocation.CandidateIdentity.CommitOid));
-        var valuesKernelDataPath = ResolveValuesKernelDataPathForReplay(
-            snapshot,
-            candidateSnapshot);
+        var candidateChanges = new GitRepositoryGateway(invocation.CandidateRoot)
+            .Prepare(invocation.BaselineIdentity.CommitOid)
+            .Changes;
         var verifiedScribe = VerifyBaselineScribeForReplay(
             new ProductionScribeEmissionVerifier(invocation.BaselineRoot),
             report,
@@ -32,8 +27,7 @@ internal static class ConservativeActualTreeEvaluator
             report,
             changes,
             BootstrapGate.Evaluate(changes),
-            verifiedScribe,
-            valuesKernelDataPath);
+            verifiedScribe);
         var admission = evaluation.Outcome;
         if (admission is AdmissionOutcome.Admitted)
         {
@@ -99,33 +93,6 @@ internal static class ConservativeActualTreeEvaluator
             verifier,
             report,
             bootstrap);
-    }
-
-    internal static string ResolveValuesKernelDataPathForReplay(
-        RepositorySnapshot baseline,
-        RepositorySnapshot candidate)
-    {
-        ArgumentNullException.ThrowIfNull(baseline);
-        ArgumentNullException.ThrowIfNull(candidate);
-        if (baseline.TryGetFile(ValuesProjectionLoader.KernelDataPath, out _))
-        {
-            return ValuesProjectionLoader.KernelDataPath;
-        }
-
-        if (!candidate.TryGetFile(ValuesProjectionLoader.KernelDataPath, out var current))
-        {
-            throw new InvalidOperationException("candidate values kernel data is missing");
-        }
-
-        var relocated = baseline.Files.Values
-            .Where(file => file.Path.Value.EndsWith("/values-kernels.toml", StringComparison.Ordinal)
-                && file.RawBytes.AsSpan().SequenceEqual(current.RawBytes.AsSpan()))
-            .Take(2)
-            .ToArray();
-        return relocated.Length == 1
-            ? relocated[0].Path.Value
-            : throw new InvalidOperationException(
-                "baseline values kernel data is missing or ambiguously relocated");
     }
 
     private static ConservativeCaseResult Result(

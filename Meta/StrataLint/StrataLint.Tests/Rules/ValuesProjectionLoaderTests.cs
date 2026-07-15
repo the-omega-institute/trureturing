@@ -70,20 +70,6 @@ public sealed class ValuesProjectionLoaderTests
     }
 
     [Fact]
-    public void HistoricalKernelRelocationRequiresAnExplicitReplayPath()
-    {
-        const string historicalPath = "Archive/values-kernels.toml";
-        var paths = InputPaths.SetItem(InputPaths.IndexOf(KernelDataPath), historicalPath);
-        var inputs = Inputs(StrictUtf8.GetBytes("formal values producer input\n"), paths);
-        var snapshot = Snapshot(inputs, Projection(inputs));
-
-        Assert.Throws<FormatException>(() => ValuesProjectionLoader.Load(snapshot));
-
-        var projection = ValuesProjectionLoader.Load(snapshot, historicalPath);
-        Assert.NotEmpty(projection.Definitions);
-    }
-
-    [Fact]
     public void ProjectionAcceptsAnEmitterDefinedSortedSubset()
     {
         var inputs = Inputs(StrictUtf8.GetBytes("formal values producer input\n"));
