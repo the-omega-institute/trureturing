@@ -50,4 +50,128 @@ public sealed class BackfillInventoryLoaderTests
             ["D5/X_Frontier/SyntheticSourceTarget", "D5/X_Frontier/SyntheticTicketTarget"],
             inventory.RequireReferencedGids().ToArray());
     }
+
+    [Fact]
+    public void ExpandedSourceProjectsStructuralIdentityAndStaleAcknowledgments()
+    {
+        const string yaml = """
+            schema_version: 3
+            ledger: theory-digestion-v1
+            sources:
+              - source_id: synthetic-source
+                path: docs/synthetic.md
+                atomizer: synthetic-v1
+                acknowledged_stale:
+                  - synthetic-stale
+                entries:
+                  - atom_id: synthetic-stale
+                    ast_path: theorem/1.1
+                    fingerprints:
+                      raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
+                      normalized_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
+                    coverage_gids: []
+                    receipts:
+                      coverage: []
+                      scribe: []
+                      unresolved_subitems: []
+                      chain_atoms: []
+                      tail_authorization: null
+                    status:
+                      migration: residual
+                      truth: open
+            ticket_index: []
+            """;
+
+        var inventory = BackfillInventoryLoader.Load(yaml);
+        var source = Assert.Single(inventory.RequireDigestionSources());
+        var entry = Assert.Single(source.Entries);
+
+        Assert.Equal(["synthetic-stale"], source.AcknowledgedStale.ToArray());
+        Assert.Equal("theorem/1.1", entry.AstPath);
+        Assert.Null(entry.Boundary);
+
+        var roundTripped = BackfillInventoryLoader.Load(
+            System.Text.Encoding.UTF8.GetString(BackfillInventoryWriter.Write(inventory).AsSpan()));
+        Assert.Empty(roundTripped.RequireTickets());
+    }
+
+    [Theory]
+    [InlineData("[]")]
+    [InlineData("null")]
+    [InlineData("~")]
+    [InlineData("0")]
+    [InlineData("+1")]
+    [InlineData("01")]
+    [InlineData("|")]
+    [InlineData("|-")]
+    [InlineData("|+")]
+    [InlineData(">")]
+    [InlineData(">-")]
+    [InlineData(">+")]
+    public void CanonicalWriterQuotesStringScalarsThatTheParserWouldCoerce(string atomId)
+    {
+        var yaml = $$"""
+            schema_version: 3
+            ledger: theory-digestion-v1
+            sources:
+              - source_id: synthetic-source
+                path: docs/synthetic.md
+                atomizer: synthetic-v1
+                acknowledged_stale: []
+                entries:
+                  - atom_id: '{{atomId}}'
+                    ast_path: theorem/1.1
+                    fingerprints:
+                      raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
+                      normalized_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
+                    coverage_gids: []
+                    receipts:
+                      coverage: []
+                      scribe: []
+                      unresolved_subitems: []
+                      chain_atoms: []
+                      tail_authorization: null
+                    status:
+                      migration: residual
+                      truth: open
+            ticket_index: []
+            """;
+        var inventory = BackfillInventoryLoader.Load(yaml);
+
+        var written = System.Text.Encoding.UTF8.GetString(
+            BackfillInventoryWriter.Write(inventory).AsSpan());
+        var roundTripped = BackfillInventoryLoader.Load(written);
+        var source = Assert.Single(roundTripped.RequireDigestionSources());
+
+        Assert.Equal(atomId, Assert.Single(source.Entries).AtomId);
+        Assert.Contains($"atom_id: '{atomId}'", written, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void CanonicalWriterRoundTripsTheCurrentLedgerByteExact()
+    {
+        var root = FindRepositoryRoot();
+        var path = Path.Combine(root, BackfillInventoryLoader.RelativePath);
+        var expected = File.ReadAllBytes(path);
+
+        var actual = BackfillInventoryWriter.Write(
+            BackfillInventoryLoader.Load(File.ReadAllText(path)));
+
+        Assert.Equal(expected, actual.ToArray());
+    }
+
+    private static string FindRepositoryRoot()
+    {
+        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
+             current is not null;
+             current = current.Parent)
+        {
+            if (File.Exists(Path.Combine(current.FullName, BackfillInventoryLoader.RelativePath)))
+            {
+                return current.FullName;
+            }
+        }
+
+        throw new DirectoryNotFoundException("Could not locate repository root.");
+    }
 }

@@ -23,7 +23,8 @@ public sealed class DigestionLedgerTests
 
         Assert.Equal(3, document.Root["schema_version"]);
         Assert.Equal("gict-1.1", entry.AtomId);
-        Assert.Equal("theorem/1.1", entry.Boundary.AstPath);
+        Assert.Equal("theorem/1.1", entry.AstPath);
+        Assert.NotNull(entry.Boundary);
         Assert.Equal(["D5/X_Frontier/Probe"], document.RequireReferencedGids().ToArray());
     }
 
@@ -101,6 +102,46 @@ public sealed class DigestionLedgerTests
         Assert.Equal(DigestionMigrationState.Residual, status.DerivedStatus.Migration);
         Assert.Equal(DigestionTruthState.Open, status.DerivedStatus.Truth);
         Assert.Contains(status.Gaps, gap => gap.Code == "coverage-gid-missing");
+    }
+
+    [Fact]
+    public void StructuralRawSeenReplacesTheBoundaryPrerequisite()
+    {
+        var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
+        var atom = Assert.Single(GictAtomizer.Atomize(source).Claims);
+        var yaml = StructuralLedgerYaml(atom);
+        var document = BackfillInventoryLoader.Load(yaml);
+
+        var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
+            document,
+            Snapshot(("docs/source.md", source)),
+            AcceptedLean(Array.Empty<string>()),
+            baselineDocument: document).Entries);
+
+        Assert.Equal(DigestionReceiptAlignment.Seen, status.Alignment);
+        Assert.DoesNotContain(status.Gaps, gap => gap.Code.Contains("boundary", StringComparison.Ordinal));
+        Assert.DoesNotContain(status.Gaps, gap => gap.Code == "normalized-seen-not-deletable");
+    }
+
+    [Fact]
+    public void StructuralNormalizedSeenIsReportedButCannotAuthorizeDeletion()
+    {
+        var ledgerBytes = Encoding.UTF8.GetBytes(
+            "# GICT\r\n\r\n**定理 1.1(Test)**。claim。\r\n");
+        var currentBytes = Encoding.UTF8.GetBytes(
+            "# GICT\n\n**定理 1.1(Test)**。claim。\n");
+        var atom = Assert.Single(GictAtomizer.Atomize(ledgerBytes).Claims);
+        var document = BackfillInventoryLoader.Load(StructuralLedgerYaml(atom));
+
+        var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
+            document,
+            Snapshot(("docs/source.md", currentBytes)),
+            AcceptedLean(Array.Empty<string>()),
+            baselineDocument: document).Entries);
+
+        Assert.Equal(DigestionReceiptAlignment.NormalizedSeen, status.Alignment);
+        Assert.False(status.Deletable);
+        Assert.Contains(status.Gaps, gap => gap.Code == "normalized-seen-not-deletable");
     }
 
     [Fact]
@@ -402,6 +443,29 @@ public sealed class DigestionLedgerTests
                   truth: {{truth}}
         ticket_index: []
         """;
+
+    private static string StructuralLedgerYaml(DigestionAtom atom) =>
+        LedgerYaml(
+                atom,
+                migration: "residual",
+                truth: "open",
+                coverageReceipts: "[]",
+                scribeReceipts: "[]")
+            .Replace(
+                $"    atomizer: {AtomizerRegistry.GictId}\n    entries:",
+                $"    atomizer: {AtomizerRegistry.GictId}\n    acknowledged_stale: []\n    entries:",
+                StringComparison.Ordinal)
+            .Replace(
+                $"        boundary:\n"
+                + $"          ast_path: {atom.AstPath}\n"
+                + $"          start_byte: {atom.StartByte}\n"
+                + $"          end_byte: {atom.EndByte}\n",
+                $"        ast_path: {atom.AstPath}\n",
+                StringComparison.Ordinal)
+            .Replace(
+                "        coverage_gids:\n          - D5/X_Frontier/Probe",
+                "        coverage_gids: []",
+                StringComparison.Ordinal);
 
     private static string ReceiptList(string key, string value, int spaces) => value == "[]"
         ? new string(' ', spaces) + key + ": []"

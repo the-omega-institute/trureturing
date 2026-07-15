@@ -154,6 +154,9 @@ internal sealed class StubCliEnvironment(
     public CommandResult DigestStatus(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "digest status is not configured in this fixture");
 
+    public CommandResult Ingest(IReadOnlyList<string> arguments) =>
+        new(false, string.Empty, "ingest is not configured in this fixture");
+
     public CommandResult Route(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "route is not configured in this fixture");
 

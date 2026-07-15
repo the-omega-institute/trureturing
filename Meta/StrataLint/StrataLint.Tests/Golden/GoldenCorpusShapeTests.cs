@@ -11,7 +11,7 @@ public sealed class GoldenCorpusShapeTests
         var corpus = TomlGoldenLoader.LoadRepository(FindRepositoryRoot());
 
         Assert.Equal(4, corpus.Files.Count);
-        Assert.Equal(110, corpus.Cases.Count);
+        Assert.Equal(111, corpus.Cases.Count);
         Assert.Equal(
             corpus.Cases.Count,
             corpus.Cases.Select(static item => item.Name).Distinct(StringComparer.Ordinal).Count());

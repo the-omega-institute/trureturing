@@ -21,6 +21,7 @@ public sealed class MakeWorkflowTests
         "build",
         "emit",
         "emit-check",
+        "ingest",
         "record-golden",
         "selftest",
         "gate",
@@ -51,6 +52,8 @@ public sealed class MakeWorkflowTests
         Assert.Contains("lake build", Recipe(makefile, "lean"), StringComparison.Ordinal);
         Assert.Contains(ScribeScriptPath + " emit", Recipe(makefile, "emit"), StringComparison.Ordinal);
         Assert.Contains(ScribeScriptPath + " check", Recipe(makefile, "emit-check"), StringComparison.Ordinal);
+        Assert.Contains("ingest: emit-check", makefile, StringComparison.Ordinal);
+        Assert.Contains(" ingest --base \"$(BASE)\"", Recipe(makefile, "ingest"), StringComparison.Ordinal);
         Assert.Contains("golden-record", Recipe(makefile, "record-golden"), StringComparison.Ordinal);
         Assert.Contains(SelftestScriptPath, Recipe(makefile, "selftest"), StringComparison.Ordinal);
         Assert.Contains(LocalHarnessGateScriptPath, Recipe(makefile, "gate"), StringComparison.Ordinal);

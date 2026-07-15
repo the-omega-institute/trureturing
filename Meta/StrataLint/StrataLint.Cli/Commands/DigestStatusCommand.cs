@@ -23,7 +23,7 @@ internal static class DigestStatusCommand
         ArgumentNullException.ThrowIfNull(arguments);
         try
         {
-            var json = ParseArguments(arguments);
+            var options = ParseArguments(arguments);
             var snapshot = Decode(repository.ReadCurrent());
             if (!snapshot.TryGetFile(BackfillInventoryLoader.RelativePath, out var ledgerFile))
             {
@@ -34,11 +34,25 @@ internal static class DigestStatusCommand
             var lean = ValidateLean(snapshot, leanReport);
             var verifiedScribeEmissions = scribeEmissionVerifier.Verify(leanReport);
             var document = BackfillInventoryLoader.Load(ledgerFile.Text);
+            BackfillInventoryDocument? baselineDocument = null;
+            if (options.BaselineRevision is not null)
+            {
+                var baseline = Decode(repository.ReadRevision(options.BaselineRevision));
+                if (!baseline.TryGetFile(BackfillInventoryLoader.RelativePath, out var baselineLedger))
+                {
+                    throw new InvalidOperationException(
+                        $"baseline {BackfillInventoryLoader.RelativePath} is missing");
+                }
+
+                baselineDocument = BackfillInventoryLoader.Load(baselineLedger.Text);
+            }
+
             var evaluation = DigestionStatusEvaluator.Evaluate(
                 document,
                 snapshot,
                 lean,
-                verifiedScribeEmissions);
+                verifiedScribeEmissions,
+                baselineDocument);
             if (evaluation.Findings.Length > 0)
             {
                 var error = "DIGEST_STATUS_INVALID count=" + evaluation.Findings.Length + "\n"
@@ -48,7 +62,7 @@ internal static class DigestStatusCommand
 
             return new CommandResult(
                 true,
-                json ? RenderJson(evaluation) : RenderText(evaluation),
+                options.Json ? RenderJson(evaluation) : RenderText(evaluation),
                 string.Empty);
         }
         catch (Exception exception) when (
@@ -61,14 +75,33 @@ internal static class DigestStatusCommand
         }
     }
 
-    private static bool ParseArguments(IReadOnlyList<string> arguments)
+    private static DigestStatusOptions ParseArguments(IReadOnlyList<string> arguments)
     {
-        if (arguments.Count == 0) return false;
-        if (arguments.Count == 1 && arguments[0] == "--json") return true;
-        throw new InvalidOperationException("USAGE: StrataLint digest-status [--json]");
+        var json = false;
+        string? baselineRevision = null;
+        for (var index = 0; index < arguments.Count; index++)
+        {
+            switch (arguments[index])
+            {
+                case "--json" when !json:
+                    json = true;
+                    break;
+                case "--base" when baselineRevision is null && index + 1 < arguments.Count:
+                    baselineRevision = arguments[++index];
+                    if (string.IsNullOrWhiteSpace(baselineRevision)) throw Usage();
+                    break;
+                default:
+                    throw Usage();
+            }
+        }
+
+        return new DigestStatusOptions(json, baselineRevision);
     }
 
-    private static string RenderText(DigestionLedgerEvaluation evaluation)
+    private static InvalidOperationException Usage() => new(
+        "USAGE: StrataLint digest-status [--json] [--base REV]");
+
+    internal static string RenderText(DigestionLedgerEvaluation evaluation)
     {
         var writer = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
         writer.WriteLine(
@@ -102,7 +135,8 @@ internal static class DigestStatusCommand
                 {
                     source_id = item.Entry.SourceId,
                     atom_id = item.Entry.AtomId,
-                    ast_path = item.Entry.Boundary.AstPath,
+                    ast_path = item.Entry.AstPath,
+                    alignment = DigestionReceiptAlignmentNames.Render(item.Alignment),
                     migration = DigestionStatusNames.Migration(item.DerivedStatus.Migration),
                     truth = DigestionStatusNames.Truth(item.DerivedStatus.Truth),
                     deletable = item.Deletable,
@@ -133,4 +167,6 @@ internal static class DigestStatusCommand
             LeanValidationOutcome.InfrastructureFailure failure =>
                 throw new InvalidOperationException(failure.Message),
         };
+
+    private sealed record DigestStatusOptions(bool Json, string? BaselineRevision);
 }
