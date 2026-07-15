@@ -41,6 +41,8 @@ public sealed class GidRef : IEquatable<GidRef>
 
     internal bool IsEvidence => Value.StartsWith("D5/E/", StringComparison.Ordinal);
 
+    internal bool IsLibrary => Value.StartsWith("D5/L/", StringComparison.Ordinal);
+
     private bool HasExplicitPlane =>
         Value.StartsWith("D5/B/", StringComparison.Ordinal)
         || Value.StartsWith("D5/E/", StringComparison.Ordinal)

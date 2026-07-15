@@ -67,7 +67,7 @@ public sealed class LeanReferenceTests
     }
 
     [Fact]
-    public void RenderedStatementCopiesTypeRepresentationBytesFromCompiledReport()
+    public void DescribeLeanStatementResolvesAgainstTheCompiledReport()
     {
         const string typeRepresentation =
             "statement-v1(uparams=[],type=ep(bd,ec(ns(n0,3:Nat),[]),eb(0)))";
@@ -75,22 +75,26 @@ public sealed class LeanReferenceTests
         var document = ScribeDocument.Create(
             DefinitionDsl.Header("D5/S1/Phase/Basic", "Rendered statement fixture."),
             Heading.Create("Compiled statement fixture"),
-            BlockSequence.Create([new DocumentBlock.RenderedStatement(reference)]));
+            BlockSequence.Create(
+            [
+                new DocumentBlock.Describe(
+                    DescribeId.Create("compiled-theorem"),
+                    DescribeKind.Theorem,
+                    Heading.Create("Compiled theorem"),
+                    DescribeStatement.FromLean(reference),
+                    DescribeProvenance.RepoDerived(),
+                    BlockSequence.Create(
+                    [
+                        DefinitionDsl.Paragraph(DefinitionDsl.Text("Resolved statement.")),
+                    ])),
+            ]));
 
         var markdown = CanonicalMarkdownWriter.Write(
             document,
             Report(Declaration(typeRepresentation: typeRepresentation)));
         var text = Encoding.UTF8.GetString(markdown.AsSpan());
-        var prefix = "```text\n";
-        var start = text.IndexOf(prefix, StringComparison.Ordinal) + prefix.Length;
-        var end = text.IndexOf("\n```", start, StringComparison.Ordinal);
-
-        Assert.True(start >= prefix.Length);
-        Assert.True(end >= start);
-        Assert.Equal(
-            Encoding.UTF8.GetBytes(typeRepresentation),
-            Encoding.UTF8.GetBytes(text[start..end]));
-        Assert.Contains($"Compiled Lean statement: `{Gid}` `✓ std3`", text, StringComparison.Ordinal);
+        Assert.Contains($"Statement: `{Gid}` `✓ std3`", text, StringComparison.Ordinal);
+        Assert.DoesNotContain(typeRepresentation, text, StringComparison.Ordinal);
     }
 
     private static LeanDeclarationRef Reference() =>

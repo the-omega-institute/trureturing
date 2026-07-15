@@ -16,13 +16,21 @@ public sealed class DocumentStructureTests
             new Inline.Text(TextRun.Create(".")),
         ]));
         var display = new DocumentBlock.DisplayFormula(new Formula.Phi());
-        var proposition = new DocumentBlock.Proposition(
+        var proposition = new DocumentBlock.Describe(
+            DescribeId.Create("embedding-formula"),
+            DescribeKind.Proposition,
             Heading.Create("Embedding formula"),
-            LeanDeclarationRef.Create("D5/S1/Scale/Embedding.embedding_apply"),
+            DescribeStatement.FromLean(
+                LeanDeclarationRef.Create("D5/S1/Scale/Embedding.embedding_apply")),
+            DescribeProvenance.RepoDerived(),
             BlockSequence.Create([paragraph]));
-        var theorem = new DocumentBlock.Theorem(
+        var theorem = new DocumentBlock.Describe(
+            DescribeId.Create("embedding-is-injective"),
+            DescribeKind.Theorem,
             Heading.Create("Embedding is injective"),
-            LeanDeclarationRef.Create("D5/S1/Scale/Embedding.embedding_injective"),
+            DescribeStatement.FromLean(
+                LeanDeclarationRef.Create("D5/S1/Scale/Embedding.embedding_injective")),
+            DescribeProvenance.RepoDerived(),
             BlockSequence.Create([paragraph]));
         var section = new DocumentBlock.Section(
             Heading.Create("Consequences"),
@@ -40,8 +48,12 @@ public sealed class DocumentStructureTests
             item => Assert.IsType<DocumentBlock.Section>(item));
         Assert.Collection(
             Assert.IsType<DocumentBlock.Section>(document.Content.Items[2]).Content.Items,
-            item => Assert.IsType<DocumentBlock.Proposition>(item),
-            item => Assert.IsType<DocumentBlock.Theorem>(item));
+            item => Assert.Equal(
+                DescribeKind.Proposition,
+                Assert.IsType<DocumentBlock.Describe>(item).Kind),
+            item => Assert.Equal(
+                DescribeKind.Theorem,
+                Assert.IsType<DocumentBlock.Describe>(item).Kind));
     }
 
     [Fact]

@@ -32,15 +32,20 @@ public sealed class MarkdownWriterTests
                     Heading.Create("Results"),
                     BlockSequence.Create(
                     [
-                        new DocumentBlock.Proposition(
+                        new DocumentBlock.Describe(
+                            DescribeId.Create("formula"),
+                            DescribeKind.Proposition,
                             Heading.Create("Formula"),
-                            LeanDeclarationRef.Create(
-                                "D5/S1/Scale/Embedding.embedding_apply"),
+                            DescribeStatement.FromFormula(identity),
+                            DescribeProvenance.RepoDerived(),
                             BlockSequence.Create([paragraph])),
-                        new DocumentBlock.Theorem(
+                        new DocumentBlock.Describe(
+                            DescribeId.Create("injectivity"),
+                            DescribeKind.Theorem,
                             Heading.Create("Injectivity"),
-                            LeanDeclarationRef.Create(
-                                "D5/S1/Scale/Embedding.embedding_injective"),
+                            DescribeStatement.FromLean(LeanDeclarationRef.Create(
+                                "D5/S1/Scale/Embedding.embedding_injective")),
+                            DescribeProvenance.RepoDerived(),
                             BlockSequence.Create([paragraph])),
                     ])),
             ]));
@@ -54,10 +59,13 @@ public sealed class MarkdownWriterTests
             + "$$\n\\varphi^{2} = \\varphi + 1\n$$\n\n"
             + "## Results\n\n"
             + "### Proposition: Formula\n\n"
-            + "Lean declaration: `D5/S1/Scale/Embedding.embedding_apply` `✓ std3`\n\n"
+            + "Provenance: `repo-derived`\n\n"
+            + "Statement:\n\n"
+            + "$$\n\\varphi^{2} = \\varphi + 1\n$$\n\n"
             + "Map $\\varphi$ mirrors `D5/B/S1/Scale/Embedding`.\n\n"
             + "### Theorem: Injectivity\n\n"
-            + "Lean declaration: `D5/S1/Scale/Embedding.embedding_injective` `✓ std3`\n\n"
+            + "Provenance: `repo-derived`\n\n"
+            + "Statement: `D5/S1/Scale/Embedding.embedding_injective` `✓ std3`\n\n"
             + "Map $\\varphi$ mirrors `D5/B/S1/Scale/Embedding`.\n",
             text);
     }
@@ -79,6 +87,37 @@ public sealed class MarkdownWriterTests
         Assert.DoesNotContain('\r', text);
         Assert.EndsWith("\n", text, StringComparison.Ordinal);
         Assert.False(text.EndsWith("\n\n", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void LiteratureProvenanceEmitsOnlyTypedReferencesNotCopiedMetadata()
+    {
+        var reference = LibraryNoteRef.Create("D5/L/sos1957threegap");
+        var document = ScribeDocument.Create(
+            CreateHeader(),
+            Heading.Create("Literature sample"),
+            BlockSequence.Create(
+            [
+                new DocumentBlock.Describe(
+                    DescribeId.Create("three-gap-context"),
+                    DescribeKind.Remark,
+                    Heading.Create("Three-gap context"),
+                    DescribeStatement.FromFormula(new Formula.Phi()),
+                    DescribeProvenance.LiteratureAttested(reference),
+                    BlockSequence.Create(
+                    [
+                        Paragraph(new Inline.Text(TextRun.Create("Referenced context."))),
+                    ])),
+            ]));
+
+        var text = Encoding.UTF8.GetString(CanonicalMarkdownWriter.Write(document).AsSpan());
+
+        Assert.Contains(
+            "Provenance: `literature-attested` via `D5/L/sos1957threegap` (`lit/sos1957threegap`)",
+            text,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain("On the three gap theorem", text, StringComparison.Ordinal);
+        Assert.DoesNotContain("10.1007", text, StringComparison.Ordinal);
     }
 
     private static DocumentBlock Paragraph(params Inline[] content) =>
