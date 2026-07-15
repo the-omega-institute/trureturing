@@ -15,15 +15,10 @@ internal static class ProductionFrozenLedgerValidator
         IRepositoryGateway repository)
     {
         const string path = FrozenLedgerChangeClassifier.LedgerPath;
-        if (!current.TryGetFile(path, out var currentFile))
+        if (!baseline.TryGetFile(path, out var baselineFile)
+            || !current.TryGetFile(path, out var currentFile))
         {
-            return Reject("frozen ledger is missing from current candidate");
-        }
-
-        var baselineFile = ResolveBaselineLedger(baseline, currentFile);
-        if (baselineFile is null)
-        {
-            return Reject("frozen ledger is missing or ambiguously relocated in protected baseline");
+            return Reject("frozen ledger is missing from current or protected baseline");
         }
 
         var baselineLoad = DagLedgerLoader.Load(baselineFile.RawBytes.AsSpan());
@@ -112,26 +107,6 @@ internal static class ProductionFrozenLedgerValidator
         return validatedCandidate is FrozenLedgerValidationOutcome.Rejected candidateFailure
             ? Reject("candidate ledger is invalid: " + candidateFailure.Message)
             : null;
-    }
-
-    internal static RepositoryFile? ResolveBaselineLedger(
-        RepositorySnapshot baseline,
-        RepositoryFile currentFile)
-    {
-        ArgumentNullException.ThrowIfNull(baseline);
-        ArgumentNullException.ThrowIfNull(currentFile);
-        if (baseline.TryGetFile(FrozenLedgerChangeClassifier.LedgerPath, out var canonical))
-        {
-            return canonical;
-        }
-
-        // A path migration must preserve the frozen ledger bytes and identify one source.
-        var relocated = baseline.Files.Values
-            .Where(file => file.Path.Value.EndsWith("/Frozen/events.jsonl", StringComparison.Ordinal)
-                && file.RawBytes.AsSpan().SequenceEqual(currentFile.RawBytes.AsSpan()))
-            .Take(2)
-            .ToArray();
-        return relocated.Length == 1 ? relocated[0] : null;
     }
 
     private static AdmissionOutcome Reject(string message)
