@@ -314,6 +314,12 @@ P1 and must itself pass the P0 base judge.
 - Canonical C0 comparator base commit: `1834a05f1539e65481d9d510022630bfe13fdbca`.
 - This docs-only successor is the protected preimage for that base-owned renewal. It
   grants no plan and changes no policy atom.
+- The emitted certificate binds preimage `a25b021fefeaced4409e913917993b452503bd01`
+  and tree `e0e0f838a1ae6868689f658915ab5cc08bcb76cb`, with SHA-256
+  `60ec1a84c5baec83164ae040e684327b4e519cd19347be20f8ee5d2543b37f2a`.
+  It records zero findings, 117 golden cases, six contract attacks, 37/37 preserved
+  admits, equal pre/post policy roots, and no retired or uncovered obligations. TOWER
+  now carries the complete 36-record ceremony in canonical ordinal order.
 
 ## DIGESTION-LEDGER-EPOCH (active, 2026-07-15)
 
