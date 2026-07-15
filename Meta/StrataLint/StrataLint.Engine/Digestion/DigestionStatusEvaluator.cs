@@ -6,12 +6,14 @@ internal sealed record DigestionGap(string Code, string Detail);
 
 internal sealed record DigestionEntryEvaluation(
     DigestionLedgerEntry Entry,
+    DigestionReceiptAlignment Alignment,
     DigestionStatus DerivedStatus,
     bool Deletable,
     ImmutableArray<DigestionGap> Gaps)
 {
     internal string Render() =>
         $"{Entry.SourceId}/{Entry.AtomId} "
+        + $"alignment={DigestionReceiptAlignmentNames.Render(Alignment)} "
         + $"{DigestionStatusNames.Migration(DerivedStatus.Migration)}-"
         + $"{DigestionStatusNames.Truth(DerivedStatus.Truth)} "
         + $"deletable={Deletable.ToString().ToLowerInvariant()} "
@@ -50,7 +52,9 @@ internal static class DigestionStatusEvaluator
         BackfillInventoryDocument document,
         RepositorySnapshot snapshot,
         AcceptedLeanClosure lean,
-        VerifiedScribeEmissions? verifiedScribeEmissions = null)
+        VerifiedScribeEmissions? verifiedScribeEmissions = null,
+        BackfillInventoryDocument? baselineDocument = null,
+        bool validateProjectedStatus = true)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
@@ -66,6 +70,13 @@ internal static class DigestionStatusEvaluator
             return new DigestionLedgerEvaluation([], findings.ToImmutable());
         }
 
+        var alignment = DigestionLedgerAligner.Evaluate(
+            document,
+            snapshot,
+            baselineDocument,
+            DigestionAlignmentMode.Admission);
+        findings.AddRange(alignment.Findings);
+
         var dag = AcyclicTruthDag.Build(snapshot, lean) switch
         {
             DagBuildOutcome.Accepted accepted => accepted.Capability,
@@ -77,6 +88,7 @@ internal static class DigestionStatusEvaluator
         var work = entries.Select(entry =>
             Inspect(
                 entry,
+                alignment.AlignmentFor(entry.AtomId),
                 snapshot,
                 nodes,
                 scribeAttestation,
@@ -90,7 +102,7 @@ internal static class DigestionStatusEvaluator
             CompleteChainGaps(item, work);
             var truth = DeriveTruth(item, snapshot);
             var status = new DigestionStatus(item.Migration, truth);
-            if (status != item.Entry.ProjectedStatus)
+            if (validateProjectedStatus && status != item.Entry.ProjectedStatus)
             {
                 findings.Add(
                     $"entry {item.Entry.AtomId} handwritten status "
@@ -106,6 +118,7 @@ internal static class DigestionStatusEvaluator
                 .ToImmutableArray();
             evaluations.Add(new DigestionEntryEvaluation(
                 item.Entry,
+                item.Alignment,
                 status,
                 item.Migration == DigestionMigrationState.Absorbed
                     && truth is DigestionTruthState.Closed or DigestionTruthState.Tail
@@ -120,6 +133,7 @@ internal static class DigestionStatusEvaluator
 
     private static EntryWork Inspect(
         DigestionLedgerEntry entry,
+        DigestionReceiptAlignment alignment,
         RepositorySnapshot snapshot,
         IReadOnlyDictionary<RepoPath, TruthNode> nodes,
         ScribeEmissionAttestation scribeAttestation,
@@ -127,7 +141,9 @@ internal static class DigestionStatusEvaluator
         ImmutableArray<string>.Builder findings)
     {
         var gaps = new List<DigestionGap>();
-        var boundary = VerifyBoundary(entry, snapshot, gaps, findings);
+        var boundary = entry.Boundary is not null
+            ? VerifyBoundary(entry, snapshot, gaps, findings)
+            : VerifyStructuredAlignment(entry, alignment, gaps, findings);
         var targetStates = new List<(string Gid, TruthState State)>();
         var existingTargets = new Dictionary<string, RepositoryFile>(StringComparer.Ordinal);
         foreach (var gidText in entry.CoverageGids.Distinct(StringComparer.Ordinal))
@@ -175,7 +191,37 @@ internal static class DigestionStatusEvaluator
         var hasProgress = existingTargets.Count > 0
             || entry.Receipts.Coverage.Length > 0
             || entry.Receipts.Scribe.Length > 0;
-        return new EntryWork(entry, gaps, targetStates, localComplete, hasProgress);
+        return new EntryWork(entry, alignment, gaps, targetStates, localComplete, hasProgress);
+    }
+
+    private static bool VerifyStructuredAlignment(
+        DigestionLedgerEntry entry,
+        DigestionReceiptAlignment alignment,
+        ICollection<DigestionGap> gaps,
+        ImmutableArray<string>.Builder findings)
+    {
+        if (!DigestionFingerprint.IsCanonicalSha256(entry.Fingerprints.RawSha256)
+            || !DigestionFingerprint.IsCanonicalSha256(entry.Fingerprints.NormalizedSha256))
+        {
+            findings.Add($"entry {entry.AtomId} fingerprints must use canonical sha256:<64 lowercase hex>");
+            gaps.Add(new DigestionGap("fingerprint-invalid", entry.AtomId));
+            return false;
+        }
+
+        switch (alignment)
+        {
+            case DigestionReceiptAlignment.Seen:
+                return true;
+            case DigestionReceiptAlignment.NormalizedSeen:
+                gaps.Add(new DigestionGap("normalized-seen-not-deletable", entry.AstPath));
+                return false;
+            case DigestionReceiptAlignment.Stale:
+                gaps.Add(new DigestionGap("stale-receipt-not-deletable", entry.AstPath));
+                return false;
+            default:
+                gaps.Add(new DigestionGap("structural-alignment-rejected", entry.AstPath));
+                return false;
+        }
     }
 
     private static bool VerifyBoundary(
@@ -184,6 +230,13 @@ internal static class DigestionStatusEvaluator
         ICollection<DigestionGap> gaps,
         ImmutableArray<string>.Builder findings)
     {
+        var boundary = entry.Boundary;
+        if (boundary is null)
+        {
+            gaps.Add(new DigestionGap("boundary-not-reproducible", entry.AstPath));
+            return false;
+        }
+
         if (Path.GetFileName(entry.SourcePath).Contains(' ', StringComparison.Ordinal))
         {
             findings.Add($"source {entry.SourceId} filename contains spaces: {entry.SourcePath}");
@@ -203,20 +256,20 @@ internal static class DigestionStatusEvaluator
             return false;
         }
 
-        if (entry.Boundary.StartByte < 0
-            || entry.Boundary.EndByte <= entry.Boundary.StartByte
-            || entry.Boundary.EndByte > source.RawBytes.Length)
+        if (boundary.StartByte < 0
+            || boundary.EndByte <= boundary.StartByte
+            || boundary.EndByte > source.RawBytes.Length)
         {
             findings.Add($"entry {entry.AtomId} byte span is outside {entry.SourcePath}");
-            gaps.Add(new DigestionGap("boundary-span-invalid", entry.Boundary.AstPath));
+            gaps.Add(new DigestionGap("boundary-span-invalid", boundary.AstPath));
             return false;
         }
 
-        var storedSlice = source.RawBytes.AsSpan()[entry.Boundary.StartByte..entry.Boundary.EndByte];
+        var storedSlice = source.RawBytes.AsSpan()[boundary.StartByte..boundary.EndByte];
         if (DigestionFingerprint.Compute(storedSlice) != entry.Fingerprints)
         {
             findings.Add($"entry {entry.AtomId} fingerprint disagrees with its source byte span");
-            gaps.Add(new DigestionGap("boundary-fingerprint-mismatch", entry.Boundary.AstPath));
+            gaps.Add(new DigestionGap("boundary-fingerprint-mismatch", boundary.AstPath));
             return false;
         }
 
@@ -234,18 +287,18 @@ internal static class DigestionStatusEvaluator
         DigestionAtom atom;
         try
         {
-            atom = atomized.ResolveClaim(entry.Boundary.AstPath);
+            atom = atomized.ResolveClaim(boundary.AstPath);
         }
         catch (FormatException exception)
         {
             gaps.Add(new DigestionGap("boundary-not-reproducible", exception.Message));
             return false;
         }
-        if (atom.StartByte != entry.Boundary.StartByte
-            || atom.EndByte != entry.Boundary.EndByte
+        if (atom.StartByte != boundary.StartByte
+            || atom.EndByte != boundary.EndByte
             || atom.Fingerprints != entry.Fingerprints)
         {
-            gaps.Add(new DigestionGap("boundary-fingerprint-mismatch", entry.Boundary.AstPath));
+            gaps.Add(new DigestionGap("boundary-fingerprint-mismatch", boundary.AstPath));
             return false;
         }
 
@@ -484,12 +537,15 @@ internal static class DigestionStatusEvaluator
 
     private sealed class EntryWork(
         DigestionLedgerEntry entry,
+        DigestionReceiptAlignment alignment,
         List<DigestionGap> gaps,
         List<(string Gid, TruthState State)> targetStates,
         bool localComplete,
         bool hasProgress)
     {
         internal DigestionLedgerEntry Entry { get; } = entry;
+
+        internal DigestionReceiptAlignment Alignment { get; } = alignment;
 
         internal List<DigestionGap> Gaps { get; } = gaps;
 

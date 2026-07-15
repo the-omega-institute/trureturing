@@ -204,7 +204,8 @@ internal static class BackfillInventoryRule
                 document,
                 context.Current,
                 context.Lean,
-                context.VerifiedScribeEmissions);
+                context.VerifiedScribeEmissions,
+                LoadBaselineDocument(context.Baseline));
             foreach (var finding in evaluation.Findings)
             {
                 findings.Add(new RuleFinding(BackfillPath, finding));
@@ -214,6 +215,16 @@ internal static class BackfillInventoryRule
         {
             findings.Add(new RuleFinding(BackfillPath, exception.Message));
         }
+    }
+
+    private static BackfillInventoryDocument LoadBaselineDocument(RepositorySnapshot baseline)
+    {
+        if (!baseline.TryGetFile(BackfillPath, out var baselineFile))
+        {
+            throw new FormatException("baseline digestion ledger is missing");
+        }
+
+        return BackfillInventoryLoader.Load(baselineFile.Text);
     }
 
     private static void ValidateTicketIndex(

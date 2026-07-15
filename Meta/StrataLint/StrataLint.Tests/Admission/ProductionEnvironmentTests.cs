@@ -417,6 +417,97 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void DigestStatusReportsNormalizedSeenWithoutAuthorizingDeletion()
+    {
+        var fixture = new RuleFixture();
+        var atomizerId = AtomizerRegistry.RegisteredIds[0];
+        var ledgerBytes = Encoding.UTF8.GetBytes(
+            "# Synthetic\r\n\r\n**定理 1.1(Test)**。claim。\r\n");
+        var currentBytes = Encoding.UTF8.GetBytes(
+            "# Synthetic\n\n**定理 1.1(Test)**。claim。\n");
+        var atom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, ledgerBytes).Claims);
+        fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
+        fixture.Files["Meta/BACKFILL.yaml"] = $$"""
+            schema_version: 3
+            ledger: theory-digestion-v1
+            sources:
+              - source_id: fixture-source
+                path: {{GoldenCorpus.FixtureDigestionSourcePath}}
+                atomizer: {{atomizerId}}
+                acknowledged_stale: []
+                entries:
+                  - atom_id: normalized-receipt
+                    ast_path: {{atom.AstPath}}
+                    fingerprints:
+                      raw_sha256: {{atom.Fingerprints.RawSha256}}
+                      normalized_sha256: {{atom.Fingerprints.NormalizedSha256}}
+                    coverage_gids: []
+                    receipts:
+                      coverage: []
+                      scribe: []
+                      unresolved_subitems: []
+                      chain_atoms: []
+                      tail_authorization: null
+                    status:
+                      migration: residual
+                      truth: open
+            ticket_index: []
+            """;
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(Array.Empty<string>()),
+                Snapshot(fixture.Files),
+                null),
+            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+
+        var result = environment.DigestStatus(["--json"]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("\"alignment\": \"normalized-seen\"", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"code\": \"normalized-seen-not-deletable\"", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"deletable\": false", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DigestStatusReportsAcknowledgedStaleAgainstExplicitBaseline()
+    {
+        var fixture = new RuleFixture();
+        var atomizerId = AtomizerRegistry.RegisteredIds[0];
+        var oldBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。old。\n");
+        var currentBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。rewritten。\n");
+        var oldAtom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, oldBytes).Claims);
+        var baselineLedger = IngestLedger(atomizerId, oldAtom);
+        var baselineDocument = BackfillInventoryLoader.Load(baselineLedger);
+        var planningSnapshot = Decode(Snapshot(new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            [GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes),
+        }));
+        var candidateLedger = Encoding.UTF8.GetString(BackfillInventoryWriter.Write(
+            DigestionIngestor.Plan(baselineDocument, planningSnapshot, baselineDocument).Document).AsSpan());
+        fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
+        fixture.Baseline[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
+        fixture.Files[BackfillInventoryLoader.RelativePath] = candidateLedger;
+        fixture.Baseline[BackfillInventoryLoader.RelativePath] = baselineLedger;
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(Array.Empty<string>()),
+                Snapshot(fixture.Files),
+                Snapshot(fixture.Baseline)),
+            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+
+        var result = environment.DigestStatus(["--json", "--base", "baseline"]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("\"alignment\": \"stale\"", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"alignment\": \"seen\"", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"code\": \"stale-receipt-not-deletable\"", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void DigestStatusFailsClosedWhenProjectedStatusWasHandwrittenIncorrectly()
     {
         var fixture = new RuleFixture();
@@ -462,8 +553,75 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains("Scribe emission verification failed", result.Error, StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void IngestWritesOneCommitReadyLedgerUpdateAndRecomputesDigestStatus()
+    {
+        var fixture = new RuleFixture();
+        var atomizerId = AtomizerRegistry.RegisteredIds[0];
+        var oldBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。old。\n");
+        var currentBytes = Encoding.UTF8.GetBytes(
+            "# Synthetic\n\n**定理 1.1(A)**。rewritten。\n\n**定理 1.2(B)**。new。\n");
+        var oldAtom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, oldBytes).Claims);
+        var ledger = IngestLedger(atomizerId, oldAtom);
+        fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
+        fixture.Baseline[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
+        fixture.Files[BackfillInventoryLoader.RelativePath] = ledger;
+        fixture.Baseline[BackfillInventoryLoader.RelativePath] = ledger;
+        using var temporary = new TemporaryDirectory();
+        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
+        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+        File.WriteAllText(outputPath, ledger, new UTF8Encoding(false));
+        var environment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(Array.Empty<string>()),
+                Snapshot(fixture.Files),
+                Snapshot(fixture.Baseline)),
+            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+
+        var result = environment.Ingest(["--base", "baseline"]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("stale_acknowledged=1", result.Output, StringComparison.Ordinal);
+        Assert.Contains("residual_open_added=2", result.Output, StringComparison.Ordinal);
+        Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
+        Assert.Contains("DIGEST_STATUS entries=3", result.Output, StringComparison.Ordinal);
+        var written = BackfillInventoryLoader.Load(File.ReadAllText(outputPath));
+        var source = Assert.Single(written.RequireDigestionSources());
+        Assert.Equal(["old-receipt"], source.AcknowledgedStale.ToArray());
+        Assert.Equal(3, source.Entries.Length);
+    }
+
     private static RawRepositorySnapshot Snapshot(IReadOnlyDictionary<string, string> files) =>
         RawRepositorySnapshot.Create(files.Select(pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
+
+    private static string IngestLedger(string atomizerId, DigestionAtom atom) => $$"""
+        schema_version: 3
+        ledger: theory-digestion-v1
+        sources:
+          - source_id: fixture-source
+            path: {{GoldenCorpus.FixtureDigestionSourcePath}}
+            atomizer: {{atomizerId}}
+            acknowledged_stale: []
+            entries:
+              - atom_id: old-receipt
+                ast_path: {{atom.AstPath}}
+                fingerprints:
+                  raw_sha256: {{atom.Fingerprints.RawSha256}}
+                  normalized_sha256: {{atom.Fingerprints.NormalizedSha256}}
+                coverage_gids: []
+                receipts:
+                  coverage: []
+                  scribe: []
+                  unresolved_subitems: []
+                  chain_atoms: []
+                  tail_authorization: null
+                status:
+                  migration: residual
+                  truth: open
+        ticket_index: []
+        """;
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;

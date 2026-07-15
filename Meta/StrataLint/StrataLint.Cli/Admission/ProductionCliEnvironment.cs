@@ -186,6 +186,19 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 scribeEmissionVerifier,
                 arguments);
 
+    public CommandResult Ingest(IReadOnlyList<string> arguments) =>
+        scribeEmissionVerifier is null
+            ? new CommandResult(
+                false,
+                string.Empty,
+                "INGEST_INVALID Scribe emission verifier is unavailable\n")
+            : IngestCommand.Run(
+                repositoryRoot,
+                repository,
+                leanReportSource,
+                scribeEmissionVerifier,
+                arguments);
+
     public CommandResult Route(IReadOnlyList<string> arguments)
     {
         try
