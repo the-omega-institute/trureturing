@@ -43,4 +43,15 @@ public sealed class CanonicalSnapshotTests
         var failure = Assert.IsType<CanonicalizationOutcome.InfrastructureFailure>(outcome);
         Assert.Contains("canonical", failure.Message, StringComparison.OrdinalIgnoreCase);
     }
+
+    [Fact]
+    public void YamlSubsetParserRoundTripsInlineEmptyList()
+    {
+        var parsed = YamlSubsetParser.Parse("sources:\n  - source_id: fresh\n    entries: []\n");
+        var root = Assert.IsType<Dictionary<string, object?>>(parsed);
+        var sources = Assert.IsType<List<object?>>(root["sources"]);
+        var source = Assert.IsType<Dictionary<string, object?>>(sources[0]);
+        var entries = Assert.IsType<List<object?>>(source["entries"]);
+        Assert.Empty(entries);
+    }
 }

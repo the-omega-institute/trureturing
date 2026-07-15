@@ -101,6 +101,10 @@ internal static class YamlSubsetParser
             {
                 (value, index) = ParseBlockScalar(lines, index, indent);
             }
+            else if (rawValue == "[]")
+            {
+                value = new List<object?>();
+            }
             else
             {
                 value = Scalar(rawValue);
