@@ -149,6 +149,14 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
   old tree as both sides. The validator now accepts an explicit replay path selected by
   the shared canonical-or-unique-byte-exact resolver; production still defaults to
   `Golden/Frozen/events.jsonl`, and changed or ambiguous historical sources fail closed.
+- Predecessor gate boundary autopsy: after all historical identities were restored, direct
+  base-owned replay preserved 31/31 baseline admits and both harnesses admitted the actual
+  baseline tree. The `origin/dev` verifier still rejected certification because its
+  harness blocks the new top-level `Golden/**` candidate and its protection-monotonicity
+  check requires six newly added `Blueprint/**/*.scribe.cs` data files to remain under
+  SL-022. Satisfying those findings would reverse the approved data-residence rule. This
+  migration therefore needs a staged predecessor protocol update; no green C0 certificate
+  was substituted for the emitted conservative-violation evidence.
 
 ## Residual scan
 
