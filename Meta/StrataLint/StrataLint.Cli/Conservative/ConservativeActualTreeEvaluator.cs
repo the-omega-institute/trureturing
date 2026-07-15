@@ -20,6 +20,9 @@ internal static class ConservativeActualTreeEvaluator
         var valuesKernelDataPath = ResolveValuesKernelDataPathForReplay(
             snapshot,
             candidateSnapshot);
+        var frozenLedgerPath = ResolveFrozenLedgerPathForReplay(
+            snapshot,
+            candidateSnapshot);
         var verifiedScribe = VerifyBaselineScribeForReplay(
             new ProductionScribeEmissionVerifier(invocation.BaselineRoot),
             report,
@@ -56,7 +59,8 @@ internal static class ConservativeActualTreeEvaluator
                     baselineLean,
                     dag,
                     baselineDag,
-                    repository)
+                    repository,
+                    frozenLedgerPath)
                 ?? admission;
         }
 
@@ -103,29 +107,52 @@ internal static class ConservativeActualTreeEvaluator
 
     internal static string ResolveValuesKernelDataPathForReplay(
         RepositorySnapshot baseline,
-        RepositorySnapshot candidate)
+        RepositorySnapshot candidate) =>
+        ResolveByteExactPathForReplay(
+            baseline,
+            candidate,
+            ValuesProjectionLoader.KernelDataPath,
+            "/values-kernels.toml",
+            "values kernel data");
+
+    internal static string ResolveFrozenLedgerPathForReplay(
+        RepositorySnapshot baseline,
+        RepositorySnapshot candidate) =>
+        ResolveByteExactPathForReplay(
+            baseline,
+            candidate,
+            FrozenLedgerChangeClassifier.LedgerPath,
+            "/Frozen/events.jsonl",
+            "frozen ledger");
+
+    private static string ResolveByteExactPathForReplay(
+        RepositorySnapshot baseline,
+        RepositorySnapshot candidate,
+        string canonicalPath,
+        string historicalSuffix,
+        string label)
     {
         ArgumentNullException.ThrowIfNull(baseline);
         ArgumentNullException.ThrowIfNull(candidate);
-        if (baseline.TryGetFile(ValuesProjectionLoader.KernelDataPath, out _))
+        if (baseline.TryGetFile(canonicalPath, out _))
         {
-            return ValuesProjectionLoader.KernelDataPath;
+            return canonicalPath;
         }
 
-        if (!candidate.TryGetFile(ValuesProjectionLoader.KernelDataPath, out var current))
+        if (!candidate.TryGetFile(canonicalPath, out var current))
         {
-            throw new InvalidOperationException("candidate values kernel data is missing");
+            throw new InvalidOperationException($"candidate {label} is missing");
         }
 
         var relocated = baseline.Files.Values
-            .Where(file => file.Path.Value.EndsWith("/values-kernels.toml", StringComparison.Ordinal)
+            .Where(file => file.Path.Value.EndsWith(historicalSuffix, StringComparison.Ordinal)
                 && file.RawBytes.AsSpan().SequenceEqual(current.RawBytes.AsSpan()))
             .Take(2)
             .ToArray();
         return relocated.Length == 1
             ? relocated[0].Path.Value
             : throw new InvalidOperationException(
-                "baseline values kernel data is missing or ambiguously relocated");
+                $"baseline {label} is missing or ambiguously relocated");
     }
 
     private static ConservativeCaseResult Result(

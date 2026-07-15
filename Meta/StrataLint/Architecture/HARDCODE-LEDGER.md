@@ -143,6 +143,12 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
   only after finding exactly one prior `*/values-kernels.toml` whose bytes equal the
   candidate canonical file. The loader then verifies the old manifest's declared path,
   individual SHA-256, and combined input SHA-256 without an implicit legacy alias.
+- Historical frozen-ledger replay autopsy: restoring the values attestation exposed the
+  same old-tree/current-path distinction in SL-008. Candidate admission already resolved
+  an old baseline ledger against a new canonical current ledger, but replay evaluates the
+  old tree as both sides. The validator now accepts an explicit replay path selected by
+  the shared canonical-or-unique-byte-exact resolver; production still defaults to
+  `Golden/Frozen/events.jsonl`, and changed or ambiguous historical sources fail closed.
 
 ## Residual scan
 

@@ -33,6 +33,27 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void BaselineLedgerResolutionAcceptsAnExplicitHistoricalCurrentPath()
+    {
+        const string historicalPath = "Archive/Frozen/events.jsonl";
+        const string bytes = "{\"schema\":\"fixture\"}\n";
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(Snapshot(new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                [historicalPath] = bytes,
+            }))).Snapshot;
+        Assert.True(snapshot.TryGetFile(historicalPath, out var currentFile));
+
+        var resolved = ProductionFrozenLedgerValidator.ResolveBaselineLedger(
+            snapshot,
+            currentFile,
+            historicalPath);
+
+        Assert.NotNull(resolved);
+        Assert.Equal(historicalPath, resolved.Path.Value);
+    }
+
+    [Fact]
     public void BaselineLedgerResolutionRejectsAChangedRelocation()
     {
         const string previousPath = "Meta/StrataLint/Golden/Frozen/events.jsonl";

@@ -12,15 +12,16 @@ internal static class ProductionFrozenLedgerValidator
         AcceptedLeanClosure baselineLean,
         AcyclicTruthDag dag,
         AcyclicTruthDag baselineDag,
-        IRepositoryGateway repository)
+        IRepositoryGateway repository,
+        string? currentLedgerPath = null)
     {
-        const string path = FrozenLedgerChangeClassifier.LedgerPath;
+        var path = currentLedgerPath ?? FrozenLedgerChangeClassifier.LedgerPath;
         if (!current.TryGetFile(path, out var currentFile))
         {
             return Reject("frozen ledger is missing from current candidate");
         }
 
-        var baselineFile = ResolveBaselineLedger(baseline, currentFile);
+        var baselineFile = ResolveBaselineLedger(baseline, currentFile, path);
         if (baselineFile is null)
         {
             return Reject("frozen ledger is missing or ambiguously relocated in protected baseline");
@@ -116,11 +117,13 @@ internal static class ProductionFrozenLedgerValidator
 
     internal static RepositoryFile? ResolveBaselineLedger(
         RepositorySnapshot baseline,
-        RepositoryFile currentFile)
+        RepositoryFile currentFile,
+        string? currentLedgerPath = null)
     {
         ArgumentNullException.ThrowIfNull(baseline);
         ArgumentNullException.ThrowIfNull(currentFile);
-        if (baseline.TryGetFile(FrozenLedgerChangeClassifier.LedgerPath, out var canonical))
+        var path = currentLedgerPath ?? FrozenLedgerChangeClassifier.LedgerPath;
+        if (baseline.TryGetFile(path, out var canonical))
         {
             return canonical;
         }
