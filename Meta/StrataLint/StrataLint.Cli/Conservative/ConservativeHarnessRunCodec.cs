@@ -22,7 +22,10 @@ internal static class ConservativeHarnessRunCodec
         ArgumentNullException.ThrowIfNull(run);
         var material = JsonSerializer.SerializeToElement(new
         {
-            active_rules = run.ActiveRules.Order(StringComparer.Ordinal),
+            active_rules = run.ActiveRules
+                .Append(run.Policy.Marker)
+                .Concat(run.ContractCases.Select(ContractEpochCorpusMarker.Write))
+                .Order(StringComparer.Ordinal),
             cases = run.Cases.OrderBy(static item => item.CaseId, StringComparer.Ordinal).Select(item => new
             {
                 blocking_rules = item.BlockingRules.Order(StringComparer.Ordinal),
@@ -91,7 +94,31 @@ internal static class ConservativeHarnessRunCodec
             throw new FormatException("harness result required fields are missing");
         }
 
-        RequireSortedUnique(document.ActiveRules, "active rules");
+        RequireSortedUnique(document.ActiveRules, "active rules and policy markers");
+        var policyMarkers = document.ActiveRules
+            .Where(ConservativePolicySnapshot.IsMarker)
+            .ToArray();
+        if (policyMarkers.Length != 1)
+        {
+            throw new FormatException("harness result must carry exactly one contract policy marker");
+        }
+
+        var policy = ConservativePolicySnapshot.FromMarker(policyMarkers[0]);
+        var contractCases = document.ActiveRules
+            .Where(ContractEpochCorpusMarker.IsMarker)
+            .Select(ContractEpochCorpusMarker.Read)
+            .OrderBy(static item => item.CaseId, StringComparer.Ordinal)
+            .ToImmutableArray();
+        RequireSortedUnique(contractCases.Select(static item => item.CaseId), "contract case ids");
+        var activeRules = document.ActiveRules
+            .Where(static item => !ConservativePolicySnapshot.IsMarker(item)
+                && !ContractEpochCorpusMarker.IsMarker(item))
+            .ToImmutableArray();
+        if (activeRules.IsDefaultOrEmpty)
+        {
+            throw new FormatException("harness result active rule set is missing");
+        }
+
         RequireSortedUnique(document.Cases.Select(static item => item.CaseId), "case ids");
         var cases = document.Cases.Select(item =>
         {
@@ -126,7 +153,11 @@ internal static class ConservativeHarnessRunCodec
                     diagnostic.Path,
                     diagnostic.Message)).ToImmutableArray());
         }).ToImmutableArray();
-        return new ConservativeHarnessRun(document.HarnessRoot, document.ActiveRules, cases);
+        return new ConservativeHarnessRun(document.HarnessRoot, activeRules, cases)
+        {
+            ContractCases = contractCases,
+            Policy = policy,
+        };
     }
 
     private static void ValidateSl022Diagnostics(

@@ -1,5 +1,5 @@
 # 输入=spec 场景采样(人);期望=Engine 输出快照(机器录制);此文件是行为时间锁
-# canonical: UTF-8 without BOM; LF; case keys=name,changes,baseline_mutations,mutations,expected_diagnostics; nested keys follow schema order.
+# canonical: UTF-8 without BOM; LF; case keys=name,changes,baseline_mutations,mutations,expected_diagnostics,contract_epoch?; nested keys follow schema order.
 [[cases]]
 name = "missing-exact-evidence-mirror"
 changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
@@ -195,3 +195,51 @@ changes = ["Meta/StrataLint/StrataLint.Engine/SyntheticProtected.cs"]
 baseline_mutations = []
 mutations = [{ op = "write", path = "Meta/StrataLint/StrataLint.Engine/SyntheticProtected.cs", content = "// protected fixture\n" }]
 expected_diagnostics = [{ rule = 22, path = "Meta/StrataLint/StrataLint.Engine/SyntheticProtected.cs", message = "meta change requires external human review" }]
+
+[[cases]]
+name = "contract-same-pr-declaration-and-shrink"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = []
+expected_diagnostics = []
+contract_epoch = { candidate_exact_exclusions = ["Meta/StrataLint/Golden/values-kernels.toml"], candidate_retired_rules = [], candidate_removed_matchers = [], baseline_plans = [], candidate_plans = [{ plan_id = "CONTRACT-CORPUS-001", kind = "discharge_paths", exact_paths = ["Meta/StrataLint/Golden/values-kernels.toml"], rule_obligation = "", custodian_kind = "", custodian_reference = "", evidence_present = true, custodian_present = false }], baseline_consumptions = [], candidate_consumptions = [], expected_finding_codes = ["CONTRACT-EPOCH-UNCOVERED-OBLIGATION"] }
+
+[[cases]]
+name = "contract-candidate-plan-attempt"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = []
+expected_diagnostics = []
+contract_epoch = { candidate_exact_exclusions = ["Meta/StrataLint/Golden/values-kernels.toml"], candidate_retired_rules = [], candidate_removed_matchers = [], baseline_plans = [], candidate_plans = [{ plan_id = "CONTRACT-CORPUS-002", kind = "discharge_paths", exact_paths = ["Meta/StrataLint/Golden/values-kernels.toml"], rule_obligation = "", custodian_kind = "", custodian_reference = "", evidence_present = true, custodian_present = false }], baseline_consumptions = [], candidate_consumptions = ["CONTRACT-CORPUS-002"], expected_finding_codes = ["CONTRACT-EPOCH-CANDIDATE-PLAN-INELIGIBLE", "CONTRACT-EPOCH-UNCOVERED-OBLIGATION"] }
+
+[[cases]]
+name = "contract-glob-scope"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = []
+expected_diagnostics = []
+contract_epoch = { candidate_exact_exclusions = ["Meta/StrataLint/Golden/values-kernels.toml"], candidate_retired_rules = [], candidate_removed_matchers = [], baseline_plans = [], candidate_plans = [{ plan_id = "CONTRACT-CORPUS-003", kind = "discharge_paths", exact_paths = ["Meta/StrataLint/Golden/*.toml"], rule_obligation = "", custodian_kind = "", custodian_reference = "", evidence_present = true, custodian_present = false }], baseline_consumptions = [], candidate_consumptions = [], expected_finding_codes = ["CONTRACT-EPOCH-PLAN-SCHEMA"] }
+
+[[cases]]
+name = "contract-scope-outside-delta"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = []
+expected_diagnostics = []
+contract_epoch = { candidate_exact_exclusions = ["Meta/StrataLint/Golden/values-kernels.toml"], candidate_retired_rules = [], candidate_removed_matchers = [], baseline_plans = [{ plan_id = "CONTRACT-CORPUS-004", kind = "discharge_paths", exact_paths = ["Blueprint/D5/S0/Carrier/Ring.md", "Meta/StrataLint/Golden/values-kernels.toml"], rule_obligation = "", custodian_kind = "", custodian_reference = "", evidence_present = true, custodian_present = false }], candidate_plans = [], baseline_consumptions = [], candidate_consumptions = ["CONTRACT-CORPUS-004"], expected_finding_codes = ["CONTRACT-EPOCH-SCOPE-OUTSIDE-DELTA", "CONTRACT-EPOCH-UNCOVERED-OBLIGATION"] }
+
+[[cases]]
+name = "contract-no-obligation-coverage"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = []
+expected_diagnostics = []
+contract_epoch = { candidate_exact_exclusions = ["Meta/StrataLint/Golden/values-kernels.toml"], candidate_retired_rules = [], candidate_removed_matchers = [], baseline_plans = [], candidate_plans = [], baseline_consumptions = [], candidate_consumptions = [], expected_finding_codes = ["CONTRACT-EPOCH-UNCOVERED-OBLIGATION"] }
+
+[[cases]]
+name = "contract-double-consumption"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = []
+expected_diagnostics = []
+contract_epoch = { candidate_exact_exclusions = ["Meta/StrataLint/Golden/values-kernels.toml"], candidate_retired_rules = [], candidate_removed_matchers = [], baseline_plans = [{ plan_id = "CONTRACT-CORPUS-005", kind = "discharge_paths", exact_paths = ["Meta/StrataLint/Golden/values-kernels.toml"], rule_obligation = "", custodian_kind = "", custodian_reference = "", evidence_present = true, custodian_present = false }], candidate_plans = [], baseline_consumptions = [], candidate_consumptions = ["CONTRACT-CORPUS-005", "CONTRACT-CORPUS-005"], expected_finding_codes = ["CONTRACT-EPOCH-REPLAY"] }

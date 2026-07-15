@@ -51,6 +51,25 @@ assemblies in their canonical TOML/Lean locations; shared program schema lives w
 smallest runtime owner. External review and branch protection remain human authorization;
 neither candidate files nor a successful candidate test job can synthesize approval.
 
+## Contract-epoch obligation accounting
+
+The conservative harness publishes the complete bootstrap protection matcher set and
+active-rule descriptors as canonical bytes with one policy root. The base-owned
+comparator computes contraction from those two full policies; actual changed-path
+diagnostics remain regression evidence and do not define the retirement set.
+
+Transition data is read from the exact baseline and candidate commits, never from the
+mutable working tree. `Meta/contract-epoch/events.jsonl` is an append-only register/consume
+stream, and `Meta/contract-epoch/evidence/sha256/<digest>.json` is a closed content-addressed
+receipt set. A candidate registration is parsed and checked by the base program but has
+no authority in the same comparison. Later consumption is one-shot, trusts only the
+receipt already present in the exact base, and checks the new loader path, canonical C0
+anchor, or active rule against the candidate snapshot. Every retired path/rule atom must
+be covered by a sealed custody transfer or authority discharge; any uncovered atom,
+scope excess, replay, opaque matcher contraction, or authority-ceiling target rejects.
+P0 installs this mechanism with no registered plan. `RESIDENCE-EPOCH` and digestion E3
+own their later registration and consumption commits.
+
 ## FILEMAP custody boundary
 
 `Meta/FILEMAP.toml` owns repository file kind and producer/consumer/verifier relations.
@@ -67,5 +86,6 @@ admit the new artifact class without candidate-only path exceptions.
 `residence_violation=true`, and the architecture suite freezes the exact expanded file
 set so an unmarked or additional violation fails. Blueprint Scribe sources and the
 Golden residence remain under the predecessor SL-022 protection contract in this epoch.
-Moving cases, values, and C0/frozen material to top-level `Golden/` is deferred until an
-sshx-reviewed verifier mechanism can approve protection-surface contraction.
+The sshx-reviewed P0 verifier mechanism is now installed without declarations. Moving
+cases, values, and C0/frozen material to top-level `Golden/` remains deferred to the
+separate P1 registration and P2 consumption commits owned by `RESIDENCE-EPOCH`.

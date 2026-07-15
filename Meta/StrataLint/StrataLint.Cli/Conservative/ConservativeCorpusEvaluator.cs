@@ -26,12 +26,21 @@ internal static class ConservativeCorpusEvaluator
         var cases = corpus.Cases
             .Select(item => Evaluate(item, corpus.Objects))
             .ToImmutableArray();
+        var contractCases = corpus.Cases
+            .Where(static item => item.ContractEpoch is not null)
+            .Select(static item => ContractEpochCorpusEvaluator.Evaluate(
+                item.CaseId,
+                item.ContractEpoch!))
+            .ToImmutableArray();
         var activeRules = RuleCatalog.Default.Descriptors
             .Where(static descriptor => descriptor.Lifecycle is RuleLifecycle.Active)
             .Select(static descriptor => descriptor.Id.Value)
             .Order(StringComparer.Ordinal)
             .ToImmutableArray();
-        return new ConservativeHarnessRun(harnessRoot, activeRules, cases);
+        return new ConservativeHarnessRun(harnessRoot, activeRules, cases)
+        {
+            ContractCases = contractCases,
+        };
     }
 
     private static ParsedCorpus Read(ReadOnlySpan<byte> bytes)
@@ -148,6 +157,8 @@ internal static class ConservativeCorpusEvaluator
         {
             throw new FormatException($"conservative corpus case has invalid changed path: {item.CaseId}");
         }
+
+        ContractEpochCorpusEvaluator.Validate(item.CaseId, item.ContractEpoch);
     }
 
     private static void ValidateFiles(

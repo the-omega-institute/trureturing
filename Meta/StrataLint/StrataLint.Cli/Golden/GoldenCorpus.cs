@@ -5,7 +5,35 @@ internal sealed record GoldenCase(
     IReadOnlyList<GoldenMutation> BaselineMutations,
     IReadOnlyList<GoldenMutation> Mutations,
     IReadOnlyList<GoldenDiagnostic> ExpectedDiagnostics,
-    IReadOnlyList<string> Changes);
+    IReadOnlyList<string> Changes,
+    GoldenContractEpochCase? ContractEpoch);
+
+internal enum GoldenContractPlanKind
+{
+    CustodyTransfer,
+    DischargePaths,
+    DischargeRule,
+}
+
+internal sealed record GoldenContractPlan(
+    string PlanId,
+    GoldenContractPlanKind Kind,
+    IReadOnlyList<string> ExactPaths,
+    string RuleObligation,
+    string CustodianKind,
+    string CustodianReference,
+    bool EvidencePresent,
+    bool CustodianPresent);
+
+internal sealed record GoldenContractEpochCase(
+    IReadOnlyList<string> CandidateExactExclusions,
+    IReadOnlyList<string> CandidateRetiredRules,
+    IReadOnlyList<string> CandidateRemovedMatchers,
+    IReadOnlyList<GoldenContractPlan> BaselinePlans,
+    IReadOnlyList<GoldenContractPlan> CandidatePlans,
+    IReadOnlyList<string> BaselineConsumptions,
+    IReadOnlyList<string> CandidateConsumptions,
+    IReadOnlyList<string> ExpectedFindingCodes);
 
 internal sealed record GoldenDiagnostic(int RuleNumber, string Path, string Message);
 

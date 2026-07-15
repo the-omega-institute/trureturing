@@ -11,7 +11,21 @@ public sealed class GoldenCorpusShapeTests
         var corpus = TomlGoldenLoader.LoadRepository(FindRepositoryRoot());
 
         Assert.Equal(4, corpus.Files.Count);
-        Assert.Equal(111, corpus.Cases.Count);
+        Assert.Equal(117, corpus.Cases.Count);
+        Assert.Equal(6, corpus.Cases.Count(static item => item.ContractEpoch is not null));
+        Assert.Equal(
+            [
+                "contract-candidate-plan-attempt",
+                "contract-double-consumption",
+                "contract-glob-scope",
+                "contract-no-obligation-coverage",
+                "contract-same-pr-declaration-and-shrink",
+                "contract-scope-outside-delta",
+            ],
+            corpus.Cases.Where(static item => item.ContractEpoch is not null)
+                .Select(static item => item.Name)
+                .Order(StringComparer.Ordinal)
+                .ToArray());
         Assert.Equal(
             corpus.Cases.Count,
             corpus.Cases.Select(static item => item.Name).Distinct(StringComparer.Ordinal).Count());
