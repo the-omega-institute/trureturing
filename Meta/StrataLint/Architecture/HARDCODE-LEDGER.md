@@ -324,6 +324,9 @@ the seven historical preimages were restored, the canonicalizing pass reported z
 objects and removed the stale acknowledgements. The next full pass reported
 `cas_objects_written=0 ledger_changed=false`; `Meta/BACKFILL.yaml` remained byte-identical
 at SHA-256 `ebc129e37e895b934e0f87ab0419cd13d45614674dd9e1958653b842e7ca5483`.
+After integrating the legitimate Scribe receipt updates from dev merge `94fcbc4`, another
+full ingest again reported zero objects and `ledger_changed=false`; the merged ledger is
+byte-stable at SHA-256 `5504d4bf780086ec092c85ef4efdff556461b08cc3035e6c466d7e3da307e672`.
 
 E2 also closes the specification-CAS ambiguity exposed by E1: CAS-backed receipts from a
 registered theory atomizer may remain independent of a mutable theory volume, while an
