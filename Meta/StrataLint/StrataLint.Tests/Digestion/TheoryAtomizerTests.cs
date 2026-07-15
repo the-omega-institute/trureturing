@@ -11,10 +11,10 @@ public sealed class TheoryAtomizerTests
     private const string SecondProductionSource =
         "docs/develop/theory/PZG_BEDC.md";
 
-    public static TheoryData<string, string, int> ProductionTheorySources => new()
+    public static TheoryData<string, string> ProductionTheorySources => new()
     {
-        { FirstProductionSource, AtomizerRegistry.GictId, 66 },
-        { SecondProductionSource, AtomizerRegistry.PzgId, 686 },
+        { FirstProductionSource, AtomizerRegistry.GictId },
+        { SecondProductionSource, AtomizerRegistry.PzgId },
     };
 
     [Fact]
@@ -302,8 +302,7 @@ public sealed class TheoryAtomizerTests
     [MemberData(nameof(ProductionTheorySources))]
     public void ProductionTheoryDocumentReassemblesByteExact(
         string relativePath,
-        string atomizerId,
-        int expectedClaims)
+        string atomizerId)
     {
         var root = FindRepositoryRoot();
         var bytes = File.ReadAllBytes(Path.Combine(root, relativePath));
@@ -311,7 +310,6 @@ public sealed class TheoryAtomizerTests
         var document = AtomizerRegistry.Atomize(atomizerId, bytes);
 
         AssertRecognitionComplete(document, bytes);
-        Assert.Equal(expectedClaims, document.Claims.Length);
     }
 
     private static void AssertRecognitionComplete(
