@@ -128,6 +128,14 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
   byte-exact prior `*/Frozen/events.jsonl` source when the canonical baseline path is
   absent; changed and ambiguous sources remain rejected by focused fixtures. The next
   candidate admission reached the expected SL-022 boundary with no SL-008 finding.
+- Historical Scribe replay autopsy: the next conservative run reached the candidate
+  harness but tried to verify the baseline tree with the candidate's expanded
+  `DocumentDefinitions`; six producer sources correctly did not exist in the old tree,
+  so replay failed as infrastructure before comparing dispositions. Baseline-tree replay
+  now derives the frozen candidate change set and applies the same rule as production
+  admission: an emitter mismatch may yield no Scribe capability only when SL-022 already
+  classifies the change as protected. A clear content change still throws, as the paired
+  red/green fixture proves; current-tree `emit-check` remains mandatory and byte-exact.
 
 ## Residual scan
 
