@@ -275,6 +275,24 @@ public sealed partial class ReviewRegressionTests
     }
 
     [Theory]
+    [InlineData("extension-table/6.38\u2032", false)]
+    [InlineData("unresolved tension", true)]
+    public void Sl019DistinguishesExtensionLocatorFromTensionSignal(
+        string value,
+        bool expectsDiagnostic)
+    {
+        var fixture = new RuleFixture();
+        const string path = "Evidence/D5/S0/Carrier/Locator.run.json";
+        fixture.Files[path] = "{\"ast_path\":\"" + value + "\"}\n";
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(19), fixture.Build());
+
+        Assert.Equal(
+            expectsDiagnostic,
+            evaluation.Diagnostics.Any(item => item.Path == path));
+    }
+
+    [Theory]
     [InlineData(
         "Evidence/D5/S0/Carrier/Canonical.run.json",
         "{\"alpha\": 1, \"omega\": 2}\n",

@@ -56,7 +56,7 @@ internal static partial class RepositoryRules
         RegexOptions.CultureInvariant);
 
     private static readonly Regex AnomalyBearingPattern = new(
-        "anomal|exception|failure|tension",
+        "anomal|exception|failure|(?<!ex)tension",
         RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
 
     private static readonly Regex Sha256Pattern = new(
