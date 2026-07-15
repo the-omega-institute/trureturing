@@ -171,7 +171,7 @@ internal static class DigestionLedgerAligner
                 }
 
                 if (baselineSource is not null
-                    && baselineSource.Entries.Any(baseline => EntryBytesEqual(entry, baseline)))
+                    && baselineSource.Entries.Any(baseline => EntryIdentityEqual(entry, baseline)))
                 {
                     alignments[entry.AtomId] = DigestionReceiptAlignment.Stale;
                     sourceStale.Add(entry.AtomId);
@@ -182,7 +182,7 @@ internal static class DigestionLedgerAligner
                 alignments[entry.AtomId] = DigestionReceiptAlignment.Rejected;
                 findings.Add(
                     $"entry {entry.AtomId} fingerprint does not match ast_path {entry.AstPath} "
-                    + "and is not byte-equal in the baseline ledger");
+                    + "and has no matching baseline receipt identity");
             }
 
             var rawResidual = new HashSet<string>(StringComparer.Ordinal);
@@ -302,13 +302,10 @@ internal static class DigestionLedgerAligner
             && atom.Fingerprints == DigestionFingerprint.Compute(atom.RawBytes.AsSpan()));
     }
 
-    private static bool EntryBytesEqual(
+    private static bool EntryIdentityEqual(
         DigestionLedgerEntry candidate,
         DigestionLedgerEntry baseline) =>
         candidate.SourceId == baseline.SourceId
-        && candidate.SourcePath == baseline.SourcePath
-        && candidate.Atomizer == baseline.Atomizer
-        && candidate.ReceiptSyntax is { } candidateSyntax
-        && baseline.ReceiptSyntax is { } baselineSyntax
-        && candidateSyntax.IdentityBytes.AsSpan().SequenceEqual(baselineSyntax.IdentityBytes.AsSpan());
+        && candidate.AtomId == baseline.AtomId
+        && candidate.Fingerprints == baseline.Fingerprints;
 }

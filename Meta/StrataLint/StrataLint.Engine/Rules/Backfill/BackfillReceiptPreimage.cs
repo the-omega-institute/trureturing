@@ -3,9 +3,7 @@ using System.Text;
 
 namespace StrataLint.Engine;
 
-internal sealed record BackfillReceiptSyntax(
-    ImmutableArray<byte> RawBytes,
-    ImmutableArray<byte> IdentityBytes);
+internal sealed record BackfillReceiptSyntax(ImmutableArray<byte> RawBytes);
 
 internal static class BackfillReceiptPreimage
 {
@@ -99,23 +97,15 @@ internal static class BackfillReceiptPreimage
         int end,
         int itemIndent)
     {
-        var statusLines = FindStatusLines(lines, start, end, itemIndent);
+        _ = FindStatusLines(lines, start, end, itemIndent);
         var raw = new StringBuilder();
-        var identity = new StringBuilder();
         for (var index = start; index < end; index++)
         {
             raw.Append(lines[index].Raw);
-            if (index != statusLines.Header
-                && index != statusLines.Migration
-                && index != statusLines.Truth)
-            {
-                identity.Append(lines[index].Raw);
-            }
         }
 
         return new BackfillReceiptSyntax(
-            ImmutableArray.CreateRange(StrictUtf8.GetBytes(raw.ToString())),
-            ImmutableArray.CreateRange(StrictUtf8.GetBytes(identity.ToString())));
+            ImmutableArray.CreateRange(StrictUtf8.GetBytes(raw.ToString())));
     }
 
     private static StatusLines FindStatusLines(
