@@ -136,6 +136,13 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
   admission: an emitter mismatch may yield no Scribe capability only when SL-022 already
   classifies the change as protected. A clear content change still throws, as the paired
   red/green fixture proves; current-tree `emit-check` remains mandatory and byte-exact.
+- Historical values replay autopsy: after Scribe replay was restored, the candidate
+  harness flipped the admitted baseline tree to SL-018 because its v2 input manifest
+  named the former kernel-data residence. Production still accepts only
+  `Golden/values-kernels.toml`; conservative baseline replay can supply a historical path
+  only after finding exactly one prior `*/values-kernels.toml` whose bytes equal the
+  candidate canonical file. The loader then verifies the old manifest's declared path,
+  individual SHA-256, and combined input SHA-256 without an implicit legacy alias.
 
 ## Residual scan
 
