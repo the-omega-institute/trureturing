@@ -82,6 +82,10 @@ none --declares--> [Meta/BACKFILL.yaml | data]
 [Meta/BACKFILL.yaml | data] --consumed-by--> BackfillInventoryLoader
 [Meta/BACKFILL.yaml | data] --verified-by--> BackfillInventoryLoader
 
+IngestCommand --produces--> [Meta/Digestion/atoms/sha256/* | ledger]
+[Meta/Digestion/atoms/sha256/* | ledger] --consumed-by--> DigestionCasStore
+[Meta/Digestion/atoms/sha256/* | ledger] --verified-by--> DigestionCasStore
+
 none --declares--> [Meta/FILEMAP.toml | data]
 [Meta/FILEMAP.toml | data] --consumed-by--> FileMapEmitter, FileMapLoader, FileMapPolicy
 [Meta/FILEMAP.toml | data] --verified-by--> FileMapLoader

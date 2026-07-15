@@ -167,12 +167,12 @@ public sealed class TheoryAtomizerTests
     }
 
     [Fact]
-    public void UnknownNumberedClaimKindFailsClosed()
+    public void UnknownNumberedClaimKindIsClassifiedAsASourceFormatFailure()
     {
         var bytes = Encoding.UTF8.GetBytes(
             "# PZG\n\n**猜想 1.1(Unknown kind)**。claim。\n");
 
-        var error = Assert.Throws<FormatException>(() => PzgAtomizer.Atomize(bytes));
+        var error = Assert.Throws<TheorySourceFormatException>(() => PzgAtomizer.Atomize(bytes));
 
         Assert.Contains("unknown PZG numbered claim kind", error.Message, StringComparison.Ordinal);
     }

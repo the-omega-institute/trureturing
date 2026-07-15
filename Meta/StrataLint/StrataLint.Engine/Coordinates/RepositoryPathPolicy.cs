@@ -58,6 +58,7 @@ internal static partial class RepositoryPathPolicy
             or WorkflowPath or ".github/CODEOWNERS"
             or ".github/scripts/baseline-admission.sh" or HarnessGatePath
             || value.StartsWith("Meta/StrataLint/", StringComparison.Ordinal)
+            || DigestionCasStore.IsCanonicalPath(value)
             || value.StartsWith(".fkst/", StringComparison.Ordinal)
             || value.StartsWith(".claude/skills/", StringComparison.Ordinal)
             || IsCanonicalFutureCoordinate(value))

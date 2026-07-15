@@ -62,6 +62,13 @@ internal static class BackfillInventoryRule
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(document);
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        foreach (var finding in DigestionCasStore.ValidateAppendOnly(
+                     context.Current,
+                     context.Baseline))
+        {
+            findings.Add(new RuleFinding(BackfillPath, finding));
+        }
+
         var root = document.Root;
         if (!root.Keys.ToHashSet(StringComparer.Ordinal).SetEquals(
                 ["schema_version", "ledger", "sources", "ticket_index"]))
@@ -138,7 +145,8 @@ internal static class BackfillInventoryRule
             }
             else
             {
-                if (!context.Current.TryGetFile(source.SourcePath, out _))
+                if (source.Entries.Any(static entry => entry.CasRef is null)
+                    && !context.Current.TryGetFile(source.SourcePath, out _))
                 {
                     findings.Add(new RuleFinding(BackfillPath, $"source path is dangling: {source.SourcePath}"));
                 }

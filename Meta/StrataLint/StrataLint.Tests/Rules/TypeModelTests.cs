@@ -6,6 +6,30 @@ namespace StrataLint.Tests;
 
 public sealed class TypeModelTests
 {
+    [Fact]
+    public void DigestionCasBlobIsClosedWorldRegisteredButNotASemanticTarget()
+    {
+        var path = RepoPath.CreateKnown(
+            DigestionCasStore.RootPath + new string('a', 64));
+
+        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
+        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
+    }
+
+    [Theory]
+    [InlineData("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+    [InlineData("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")]
+    [InlineData("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/extra")]
+    public void DigestionCasPathGrammarRejectsNoncanonicalNeighbors(string relative)
+    {
+        var value = DigestionCasStore.RootPath + relative;
+        var path = RepoPath.CreateKnown(value);
+
+        Assert.False(DigestionCasStore.IsCanonicalPath(value));
+        Assert.NotNull(RepositoryPathPolicy.Validate(path, Policy()));
+        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
+    }
+
     private const string RawDefinitionSourcePath = "Blueprint/D5/S1/Digit/Raw.scribe.cs";
     private const string FkstMonitorSkillPath = ".claude/skills/fkst-monitor/SKILL.md";
 
