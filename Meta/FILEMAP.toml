@@ -140,6 +140,13 @@ consumed_by = ["BackfillInventoryLoader"]
 verified_by = ["BackfillInventoryLoader"]
 
 [[files]]
+pattern = "Meta/Digestion/atoms/sha256/*"
+kind = "ledger"
+produced_by = "IngestCommand"
+consumed_by = ["DigestionCasStore"]
+verified_by = ["DigestionCasStore"]
+
+[[files]]
 pattern = "Meta/FILEMAP.toml"
 kind = "data"
 produced_by = "none"

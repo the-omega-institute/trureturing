@@ -7,6 +7,37 @@ namespace StrataLint.Tests;
 public sealed class DigestionLedgerTests
 {
     [Fact]
+    public void CasBackedLegacyBoundaryDoesNotContributeSourceOrBoundaryGaps()
+    {
+        var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
+        var atom = Assert.Single(GictAtomizer.Atomize(source).Claims);
+        var captured = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
+        var yaml = LedgerYaml(
+                atom,
+                migration: "partial",
+                truth: "open",
+                coverageReceipts: "[]",
+                scribeReceipts: "[]")
+            .Replace(
+                $"        coverage_gids:\n          - D5/X_Frontier/Probe",
+                $"        cas_ref: {captured.Reference}\n"
+                + "        coverage_gids:\n          - D5/X_Frontier/Probe",
+                StringComparison.Ordinal);
+        var document = BackfillInventoryLoader.Load(yaml);
+        var snapshot = Snapshot((captured.RelativePath, captured.Bytes.ToArray()));
+
+        var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
+            document,
+            snapshot,
+            AcceptedLean(Array.Empty<string>()),
+            baselineDocument: document).Entries);
+
+        Assert.Equal(DigestionReceiptAlignment.Seen, status.Alignment);
+        Assert.DoesNotContain(status.Gaps, static gap =>
+            gap.Code == "source-missing" || gap.Code.Contains("boundary", StringComparison.Ordinal));
+    }
+
+    [Fact]
     public void LoaderReadsOnlySchemaThreeAtomicEntries()
     {
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");

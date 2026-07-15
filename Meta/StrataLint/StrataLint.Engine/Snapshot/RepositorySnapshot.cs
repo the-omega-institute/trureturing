@@ -26,11 +26,16 @@ public sealed class RawRepositorySnapshot
 
 public sealed class RepositoryFile
 {
-    internal RepositoryFile(RepoPath path, ImmutableArray<byte> rawBytes, string text)
+    internal RepositoryFile(
+        RepoPath path,
+        ImmutableArray<byte> rawBytes,
+        string text,
+        bool isOpaque = false)
     {
         Path = path;
         RawBytes = rawBytes;
         Text = text;
+        IsOpaque = isOpaque;
         HasBom = text.StartsWith('\uFEFF');
         HasCarriageReturn = text.Contains('\r');
         HasTrailingWhitespace = text
@@ -43,6 +48,8 @@ public sealed class RepositoryFile
     public ImmutableArray<byte> RawBytes { get; }
 
     public string Text { get; }
+
+    public bool IsOpaque { get; }
 
     public bool HasBom { get; }
 
@@ -103,17 +110,23 @@ public static class SnapshotDecoder
                     throw new FormatException($"Repository path is duplicated or case-colliding: {path.Value}.");
                 }
 
-                string text;
-                try
+                var isOpaque = DigestionOpaquePathPolicy.IsOpaque(path);
+                var text = string.Empty;
+                if (!isOpaque)
                 {
-                    text = StrictUtf8.GetString(entry.Bytes.AsSpan());
-                }
-                catch (DecoderFallbackException exception)
-                {
-                    throw new FormatException($"Repository file must be strict UTF-8: {path.Value}.", exception);
+                    try
+                    {
+                        text = StrictUtf8.GetString(entry.Bytes.AsSpan());
+                    }
+                    catch (DecoderFallbackException exception)
+                    {
+                        throw new FormatException(
+                            $"Repository file must be strict UTF-8: {path.Value}.",
+                            exception);
+                    }
                 }
 
-                builder.Add(path, new RepositoryFile(path, entry.Bytes, text));
+                builder.Add(path, new RepositoryFile(path, entry.Bytes, text, isOpaque));
             }
 
             return new SnapshotDecodeOutcome.Decoded(RepositorySnapshot.Create(builder.ToImmutable()));

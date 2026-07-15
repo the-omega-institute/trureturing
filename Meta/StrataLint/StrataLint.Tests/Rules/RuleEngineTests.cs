@@ -110,6 +110,26 @@ public sealed class RuleEngineTests
     }
 
     [Fact]
+    public void Sl003DoesNotTreatTheCasObjectStoreAsASplittableModule()
+    {
+        var fixture = new RuleFixture();
+        for (var index = 0; index < 13; index++)
+        {
+            var text = $"CAS object {index}\n";
+            var captured = DigestionCasStore.Capture(Encoding.UTF8.GetBytes(text));
+            fixture.Files[captured.RelativePath] = text;
+        }
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(3),
+            fixture.Build()).Diagnostics;
+
+        Assert.DoesNotContain(diagnostics, diagnostic =>
+            diagnostic.Path.StartsWith(DigestionCasStore.RootPath, StringComparison.Ordinal)
+            || diagnostic.Path == DigestionCasStore.RootPath.TrimEnd('/'));
+    }
+
+    [Fact]
     public void Sl018RejectsValuesWithoutMachineProducerAttestation()
     {
         var fixture = new RuleFixture();

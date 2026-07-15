@@ -1,9 +1,51 @@
+using System.Text;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
 public sealed class BackfillInventoryLoaderTests
 {
+    [Fact]
+    public void CasRefIsOptionalAndRoundTripsCanonically()
+    {
+        var text = """
+            schema_version: 3
+            ledger: theory-digestion-v1
+            sources:
+              - source_id: synthetic-source
+                path: docs/source.md
+                atomizer: synthetic-v1
+                entries:
+                  - atom_id: synthetic-atom
+                    ast_path: theorem/1.1
+                    fingerprints:
+                      raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
+                      normalized_sha256: sha256:1111111111111111111111111111111111111111111111111111111111111111
+                    cas_ref: sha256:0000000000000000000000000000000000000000000000000000000000000000
+                    coverage_gids: []
+                    receipts:
+                      coverage: []
+                      scribe: []
+                      unresolved_subitems: []
+                      chain_atoms: []
+                      tail_authorization: null
+                    status:
+                      migration: residual
+                      truth: open
+            ticket_index: []
+            """;
+
+        var document = BackfillInventoryLoader.Load(text);
+        var entry = Assert.Single(document.RequireDigestionEntries());
+        var roundTripped = BackfillInventoryLoader.Load(
+            Encoding.UTF8.GetString(BackfillInventoryWriter.Write(document).AsSpan()));
+
+        Assert.Equal(
+            "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+            entry.CasRef);
+        Assert.Equal(entry.CasRef, Assert.Single(roundTripped.RequireDigestionEntries()).CasRef);
+    }
+
     [Fact]
     public void ProjectsReferencesFromSyntheticBackfill()
     {

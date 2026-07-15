@@ -542,12 +542,18 @@ public sealed partial class ProductionEnvironmentTests
         {
             [GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes),
         }));
-        var candidateLedger = Encoding.UTF8.GetString(BackfillInventoryWriter.Write(
-            DigestionIngestor.Plan(baselineDocument, planningSnapshot, baselineDocument).Document).AsSpan());
+        var plan = DigestionIngestor.Plan(baselineDocument, planningSnapshot, baselineDocument);
+        var candidateLedger = Encoding.UTF8.GetString(
+            BackfillInventoryWriter.Write(plan.Document).AsSpan());
         fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
         fixture.Baseline[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
         fixture.Files[BackfillInventoryLoader.RelativePath] = candidateLedger;
         fixture.Baseline[BackfillInventoryLoader.RelativePath] = baselineLedger;
+        foreach (var item in plan.CasObjects)
+        {
+            fixture.Files[item.RelativePath] = Encoding.UTF8.GetString(item.Bytes.AsSpan());
+        }
+
         var environment = new ProductionCliEnvironment(
             "/repo",
             new FakeRepositoryGateway(

@@ -40,6 +40,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.True(result.Success, result.Error);
         Assert.Contains("stale_acknowledged=1", result.Output, StringComparison.Ordinal);
         Assert.Contains("residual_open_added=2", result.Output, StringComparison.Ordinal);
+        Assert.Contains("cas_objects_written=2", result.Output, StringComparison.Ordinal);
         Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
         Assert.Contains("DIGEST_STATUS entries=3", result.Output, StringComparison.Ordinal);
         var writtenText = File.ReadAllText(outputPath);
@@ -50,6 +51,18 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(
             DigestionMigrationState.Residual,
             source.Entries.Single(static entry => entry.AtomId == "123").ProjectedStatus.Migration);
+        var casBacked = source.Entries.Where(static entry => entry.CasRef is not null).ToArray();
+        Assert.Equal(2, casBacked.Length);
+        foreach (var entry in casBacked)
+        {
+            var relativePath = DigestionCasStore.RootPath
+                + entry.CasRef!["sha256:".Length..];
+            var bytes = File.ReadAllBytes(Path.Combine(
+                temporary.Path,
+                relativePath.Replace('/', Path.DirectorySeparatorChar)));
+            Assert.Equal(entry.CasRef, DigestionCasStore.Capture(bytes).Reference);
+        }
+
         Assert.Contains("atom_id: '123'", writtenText, StringComparison.Ordinal);
     }
 
@@ -86,6 +99,175 @@ public sealed partial class ProductionEnvironmentTests
         Assert.False(result.Success);
         Assert.Contains("invalid source_id: INVALID", result.Error, StringComparison.Ordinal);
         Assert.Equal(ledger, File.ReadAllText(outputPath));
+    }
+
+    [Fact]
+    public void IngestRejectsEmptyEntriesListWithoutWriting()
+    {
+        var fixture = new RuleFixture();
+        var atomizerId = AtomizerRegistry.RegisteredIds[0];
+        var sourceText = "# Synthetic\n\n**定理 1.1(A)**。claim。\n";
+        var ledger = $$"""
+            schema_version: 3
+            ledger: theory-digestion-v1
+            sources:
+              - source_id: fixture-source
+                path: {{GoldenCorpus.FixtureDigestionSourcePath}}
+                atomizer: {{atomizerId}}
+                entries: []
+            ticket_index: []
+            """;
+        fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = sourceText;
+        fixture.Baseline[GoldenCorpus.FixtureDigestionSourcePath] = sourceText;
+        fixture.Files[BackfillInventoryLoader.RelativePath] = ledger;
+        fixture.Baseline[BackfillInventoryLoader.RelativePath] = ledger;
+        using var temporary = new TemporaryDirectory();
+        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
+        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+        File.WriteAllText(outputPath, ledger, new UTF8Encoding(false));
+        var environment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(Array.Empty<string>()),
+                Snapshot(fixture.Files),
+                Snapshot(fixture.Baseline)),
+            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+
+        var result = environment.Ingest(["--base", "baseline"]);
+
+        Assert.False(result.Success);
+        Assert.Contains(
+            "source fixture-source entries must be a list",
+            result.Error,
+            StringComparison.Ordinal);
+        Assert.Equal(ledger, File.ReadAllText(outputPath));
+        Assert.False(Directory.Exists(Path.Combine(temporary.Path, "Meta", "Digestion")));
+    }
+
+    [Fact]
+    public void IngestCommitsReportedCoarseFallbackAndCasBlobThroughProductionEnvironment()
+    {
+        var fixture = new RuleFixture();
+        var atomizerId = AtomizerRegistry.RegisteredIds[0];
+        var oldBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。old。\n");
+        var oldAtom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, oldBytes).Claims);
+        var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
+        var malformedBytes = Encoding.UTF8.GetBytes(
+            "# Synthetic\n\n**未知 1.2(B)**。free-form source。\n");
+        var malformedText = Encoding.UTF8.GetString(malformedBytes);
+        var ledger = IngestLedger(atomizerId, oldAtom).Replace(
+            $"normalized_sha256: {oldAtom.Fingerprints.NormalizedSha256}",
+            $"normalized_sha256: {oldAtom.Fingerprints.NormalizedSha256}\n"
+            + $"        cas_ref: {oldCapture.Reference}",
+            StringComparison.Ordinal);
+        fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = malformedText;
+        fixture.Baseline[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
+        fixture.Files[oldCapture.RelativePath] = Encoding.UTF8.GetString(oldCapture.Bytes.AsSpan());
+        fixture.Baseline[oldCapture.RelativePath] = Encoding.UTF8.GetString(oldCapture.Bytes.AsSpan());
+        fixture.Files[BackfillInventoryLoader.RelativePath] = ledger;
+        fixture.Baseline[BackfillInventoryLoader.RelativePath] = ledger;
+        using var temporary = new TemporaryDirectory();
+        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
+        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+        File.WriteAllText(outputPath, ledger, new UTF8Encoding(false));
+        var oldCasPath = Path.Combine(
+            temporary.Path,
+            oldCapture.RelativePath.Replace('/', Path.DirectorySeparatorChar));
+        Directory.CreateDirectory(Path.GetDirectoryName(oldCasPath)!);
+        File.WriteAllBytes(oldCasPath, oldCapture.Bytes.AsSpan());
+        var environment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(Array.Empty<string>()),
+                Snapshot(fixture.Files),
+                Snapshot(fixture.Baseline)),
+            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+
+        var result = environment.Ingest(["--base", "baseline"]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("coarse_fallbacks=1", result.Output, StringComparison.Ordinal);
+        Assert.Contains(
+            "INGEST_FALLBACK source=fixture-source",
+            result.Output,
+            StringComparison.Ordinal);
+        Assert.Contains("cas_objects_written=1", result.Output, StringComparison.Ordinal);
+        var written = BackfillInventoryLoader.Load(File.ReadAllText(outputPath));
+        var coarse = Assert.Single(written.RequireDigestionEntries().Where(static entry =>
+            entry.AstPath == "coarse/source"));
+        Assert.Equal(coarse.Fingerprints.RawSha256, coarse.CasRef);
+        var coarsePath = Path.Combine(
+            temporary.Path,
+            DigestionCasStore.RootPath.Replace('/', Path.DirectorySeparatorChar),
+            coarse.CasRef!["sha256:".Length..]);
+        Assert.Equal(malformedBytes, File.ReadAllBytes(coarsePath));
+    }
+
+    [Fact]
+    public void IngestRollsBackNewCasObjectsWhenTheLedgerWriteFails()
+    {
+        var fixture = new RuleFixture();
+        var atomizerId = AtomizerRegistry.RegisteredIds[0];
+        var oldBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。old。\n");
+        var currentBytes = Encoding.UTF8.GetBytes(
+            "# Synthetic\n\n**定理 1.1(A)**。rewritten。\n\n**定理 1.2(B)**。new。\n");
+        var oldAtom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, oldBytes).Claims);
+        var ledger = IngestLedger(atomizerId, oldAtom);
+        fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
+        fixture.Baseline[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
+        fixture.Files[BackfillInventoryLoader.RelativePath] = ledger;
+        fixture.Baseline[BackfillInventoryLoader.RelativePath] = ledger;
+        using var temporary = new TemporaryDirectory();
+        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
+        Directory.CreateDirectory(outputPath);
+        var environment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(Array.Empty<string>()),
+                Snapshot(fixture.Files),
+                Snapshot(fixture.Baseline)),
+            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+
+        var result = environment.Ingest(["--base", "baseline"]);
+
+        Assert.False(result.Success);
+        Assert.Contains("INGEST_INVALID", result.Error, StringComparison.Ordinal);
+        var casRoot = Path.Combine(
+            temporary.Path,
+            DigestionCasStore.RootPath.Replace('/', Path.DirectorySeparatorChar));
+        Assert.False(Directory.Exists(casRoot) && Directory.EnumerateFiles(casRoot).Any());
+    }
+
+    [Fact]
+    public void AtomicLedgerReplacementPreservesExistingBytesWhenCommitFails()
+    {
+        using var temporary = new TemporaryDirectory();
+        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
+        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+        var original = Encoding.UTF8.GetBytes("original ledger\n");
+        var replacement = Encoding.UTF8.GetBytes("replacement ledger\n");
+        File.WriteAllBytes(outputPath, original);
+        string? pendingPath = null;
+
+        var exception = Assert.Throws<IOException>(() => IngestCommand.ReplaceLedgerAtomically(
+            outputPath,
+            replacement,
+            (pending, target) =>
+            {
+                pendingPath = pending;
+                Assert.Equal(Path.GetDirectoryName(target), Path.GetDirectoryName(pending));
+                Assert.Equal(original, File.ReadAllBytes(target));
+                Assert.Equal(replacement, File.ReadAllBytes(pending));
+                throw new IOException("simulated atomic commit failure");
+            }));
+
+        Assert.Equal("simulated atomic commit failure", exception.Message);
+        Assert.Equal(original, File.ReadAllBytes(outputPath));
+        Assert.NotNull(pendingPath);
+        Assert.False(File.Exists(pendingPath));
     }
 
     [Fact]
@@ -164,6 +346,15 @@ public sealed partial class ProductionEnvironmentTests
         var migrated = BackfillInventoryLoader.Load(migratedText);
         Assert.All(migrated.RequireDigestionEntries(), static entry => Assert.Null(entry.Boundary));
         fixture.Files[BackfillInventoryLoader.RelativePath] = migratedText;
+        foreach (var entry in migrated.RequireDigestionEntries().Where(static entry => entry.CasRef is not null))
+        {
+            var relativePath = DigestionCasStore.RootPath
+                + entry.CasRef!["sha256:".Length..];
+            fixture.Files[relativePath] = File.ReadAllText(Path.Combine(
+                temporary.Path,
+                relativePath.Replace('/', Path.DirectorySeparatorChar)));
+        }
+
         var secondEnvironment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(
@@ -178,6 +369,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.True(second.Success, second.Error);
         Assert.Contains("stale_acknowledged=0", second.Output, StringComparison.Ordinal);
         Assert.Contains("residual_open_added=0", second.Output, StringComparison.Ordinal);
+        Assert.Contains("cas_objects_written=0", second.Output, StringComparison.Ordinal);
         Assert.Contains("ledger_changed=false", second.Output, StringComparison.Ordinal);
         Assert.Equal(migratedText, File.ReadAllText(outputPath));
     }
