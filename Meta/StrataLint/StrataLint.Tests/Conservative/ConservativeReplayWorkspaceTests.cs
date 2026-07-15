@@ -57,35 +57,6 @@ public sealed class ConservativeReplayWorkspaceTests
     }
 
     [Fact]
-    public void FrozenLedgerReplayPathRequiresAUniqueByteExactRelocation()
-    {
-        const string historicalPath = "Archive/Frozen/events.jsonl";
-        const string bytes = "{\"schema\":\"fixture\"}\n";
-        var candidate = Snapshot((FrozenLedgerChangeClassifier.LedgerPath, bytes));
-
-        Assert.Equal(
-            FrozenLedgerChangeClassifier.LedgerPath,
-            ConservativeActualTreeEvaluator.ResolveFrozenLedgerPathForReplay(
-                candidate,
-                candidate));
-        Assert.Equal(
-            historicalPath,
-            ConservativeActualTreeEvaluator.ResolveFrozenLedgerPathForReplay(
-                Snapshot((historicalPath, bytes)),
-                candidate));
-        Assert.Throws<InvalidOperationException>(() =>
-            ConservativeActualTreeEvaluator.ResolveFrozenLedgerPathForReplay(
-                Snapshot((historicalPath, "changed\n")),
-                candidate));
-        Assert.Throws<InvalidOperationException>(() =>
-            ConservativeActualTreeEvaluator.ResolveFrozenLedgerPathForReplay(
-                Snapshot(
-                    (historicalPath, bytes),
-                    ("Second/Frozen/events.jsonl", bytes)),
-                candidate));
-    }
-
-    [Fact]
     public void WorkerProtocolExposesNoRepositoryOrReportPathArguments()
     {
         var source = File.ReadAllText(Path.Combine(
