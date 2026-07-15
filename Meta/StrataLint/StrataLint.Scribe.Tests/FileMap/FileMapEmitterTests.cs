@@ -10,6 +10,12 @@ public sealed class FileMapEmitterTests
         var manifest = FileMapLoader.Parse(Encoding.UTF8.GetBytes("""
             schema_version = 1
 
+            [residence_policy]
+            case_id = "RESIDENCE-EPOCH"
+            desired = "data-must-live-outside-Meta/StrataLint"
+            known_violation_count = 1
+            status = "known-violations-frozen-under-monitoring"
+
             [[files]]
             pattern = "Blueprint/**/*.md"
             kind = "generated"
@@ -23,6 +29,14 @@ public sealed class FileMapEmitterTests
             produced_by = "none"
             consumed_by = ["Lean"]
             verified_by = ["lean-build"]
+
+            [[files]]
+            pattern = "Meta/StrataLint/Golden/cases/**/*.toml"
+            kind = "data"
+            produced_by = "none"
+            consumed_by = ["TomlGoldenLoader"]
+            verified_by = ["TomlGoldenLoader"]
+            residence_violation = true
             """ + "\n"), "fixture.toml");
 
         var first = FileMapProjectionWriter.Write(manifest);
@@ -36,6 +50,14 @@ public sealed class FileMapEmitterTests
             StringComparison.Ordinal);
         Assert.Contains(
             "[D5/**/*.lean | truth] --verified-by--> lean-build",
+            markdown,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "desired=data-must-live-outside-Meta/StrataLint; current=1; status=known-violations-frozen-under-monitoring; case=RESIDENCE-EPOCH",
+            markdown,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "[Meta/StrataLint/Golden/cases/**/*.toml | data | residence_violation=true]",
             markdown,
             StringComparison.Ordinal);
     }

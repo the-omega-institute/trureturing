@@ -15,6 +15,12 @@ internal enum FileMapKind
     Ledger,
 }
 
+internal sealed record FileMapResidencePolicy(
+    string CaseId,
+    string Desired,
+    int KnownViolationCount,
+    string Status);
+
 internal sealed record FileMapEntry
 {
     private readonly FileMapGlob glob;
@@ -24,7 +30,8 @@ internal sealed record FileMapEntry
         FileMapKind kind,
         string producedBy,
         ImmutableArray<string> consumedBy,
-        ImmutableArray<string> verifiedBy)
+        ImmutableArray<string> verifiedBy,
+        bool residenceViolation)
     {
         glob = FileMapGlob.Create(pattern);
         Pattern = pattern;
@@ -32,6 +39,7 @@ internal sealed record FileMapEntry
         ProducedBy = producedBy;
         ConsumedBy = consumedBy;
         VerifiedBy = verifiedBy;
+        ResidenceViolation = residenceViolation;
     }
 
     internal string Pattern { get; }
@@ -44,12 +52,22 @@ internal sealed record FileMapEntry
 
     internal ImmutableArray<string> VerifiedBy { get; }
 
+    internal bool ResidenceViolation { get; }
+
     internal bool Matches(string path) => glob.IsMatch(path);
 }
 
 internal sealed class FileMapManifest
 {
-    internal FileMapManifest(ImmutableArray<FileMapEntry> entries) => Entries = entries;
+    internal FileMapManifest(
+        FileMapResidencePolicy residencePolicy,
+        ImmutableArray<FileMapEntry> entries)
+    {
+        ResidencePolicy = residencePolicy;
+        Entries = entries;
+    }
+
+    internal FileMapResidencePolicy ResidencePolicy { get; }
 
     internal ImmutableArray<FileMapEntry> Entries { get; }
 
@@ -67,6 +85,8 @@ internal static class FileMapLoader
         RegexOptions.CultureInvariant | RegexOptions.NonBacktracking);
     private static readonly string[] EntryKeys =
         ["consumed_by", "kind", "pattern", "produced_by", "verified_by"];
+    private static readonly string[] ResidenceEntryKeys =
+        ["consumed_by", "kind", "pattern", "produced_by", "residence_violation", "verified_by"];
 
     internal static FileMapManifest LoadRepository(string repositoryRoot)
     {
@@ -110,7 +130,7 @@ internal static class FileMapLoader
             throw Invalid(location, $"invalid TOML: {exception.Message}", exception);
         }
 
-        RequireExactKeys(root, location, "files", "schema_version");
+        RequireExactKeys(root, location, "files", "residence_policy", "schema_version");
         if (root["schema_version"] is not long schemaVersion || schemaVersion != 1)
         {
             throw Invalid(location, "schema_version must be 1");
@@ -120,6 +140,15 @@ internal static class FileMapLoader
         {
             throw Invalid(location, "files must contain at least one entry");
         }
+
+        if (root["residence_policy"] is not TomlTable residenceTable)
+        {
+            throw Invalid(location, "residence_policy must be a table");
+        }
+
+        var residencePolicy = ParseResidencePolicy(
+            residenceTable,
+            $"{location}:residence_policy");
 
         var entries = files
             .Select((table, index) => ParseEntry(table, $"{location}:files[{index}]") )
@@ -131,12 +160,36 @@ internal static class FileMapLoader
             throw Invalid(location, "file patterns must be unique and ordinally sorted");
         }
 
-        return new FileMapManifest(entries);
+        return new FileMapManifest(residencePolicy, entries);
+    }
+
+    private static FileMapResidencePolicy ParseResidencePolicy(
+        TomlTable table,
+        string location)
+    {
+        RequireExactKeys(
+            table,
+            location,
+            "case_id",
+            "desired",
+            "known_violation_count",
+            "status");
+        var count = table["known_violation_count"] is long rawCount
+            && rawCount >= 0
+            && rawCount <= int.MaxValue
+                ? (int)rawCount
+                : throw Invalid(location, "known_violation_count must be a non-negative 32-bit integer");
+        return new FileMapResidencePolicy(
+            RequiredName(table, "case_id", location, allowNone: false),
+            RequiredString(table, "desired", location),
+            count,
+            RequiredString(table, "status", location));
     }
 
     private static FileMapEntry ParseEntry(TomlTable table, string location)
     {
-        RequireExactKeys(table, location, EntryKeys);
+        var hasResidenceViolation = table.ContainsKey("residence_violation");
+        RequireExactKeys(table, location, hasResidenceViolation ? ResidenceEntryKeys : EntryKeys);
         var pattern = RequiredString(table, "pattern", location);
         _ = FileMapGlob.Create(pattern);
         var kind = RequiredString(table, "kind", location) switch
@@ -151,6 +204,16 @@ internal static class FileMapLoader
         var producedBy = RequiredName(table, "produced_by", location, allowNone: true);
         var consumedBy = RequiredNames(table, "consumed_by", location);
         var verifiedBy = RequiredNames(table, "verified_by", location);
+        var residenceViolation = !hasResidenceViolation
+            ? false
+            : table["residence_violation"] is true
+                ? true
+                : throw Invalid(location, "residence_violation must be the canonical boolean true");
+        if (residenceViolation && kind is not FileMapKind.Data)
+        {
+            throw Invalid(location, "residence_violation is valid only for data entries");
+        }
+
         if (kind is FileMapKind.Generated
             && (producedBy == "none" || !verifiedBy.Contains("emit-check", StringComparer.Ordinal)))
         {
@@ -161,7 +224,13 @@ internal static class FileMapLoader
                     : "generated verified_by must include emit-check");
         }
 
-        return new FileMapEntry(pattern, kind, producedBy, consumedBy, verifiedBy);
+        return new FileMapEntry(
+            pattern,
+            kind,
+            producedBy,
+            consumedBy,
+            verifiedBy,
+            residenceViolation);
     }
 
     private static ImmutableArray<string> RequiredNames(

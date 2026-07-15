@@ -6,7 +6,7 @@ public sealed class FileMapManifestTests
 {
     private const string BlueprintPath = "Blueprint/D5/S0/Carrier/Ring.md";
     private const string FormalPath = "D5/S0/Carrier/Ring.lean";
-    private const string FrozenLedgerPath = "Golden/Frozen/events.jsonl";
+    private const string FrozenLedgerPath = "Meta/StrataLint/Golden/Frozen/events.jsonl";
     private const string RuleCatalogPath =
         "Meta/StrataLint/StrataLint.Engine/Rules/RuleCatalog.cs";
 
@@ -15,6 +15,12 @@ public sealed class FileMapManifestTests
     {
         var manifest = FileMapLoader.Parse(Encoding.UTF8.GetBytes("""
             schema_version = 1
+
+            [residence_policy]
+            case_id = "RESIDENCE-EPOCH"
+            desired = "data-must-live-outside-Meta/StrataLint"
+            known_violation_count = 1
+            status = "known-violations-frozen-under-monitoring"
 
             [[files]]
             pattern = "Blueprint/**/*.md"
@@ -31,18 +37,19 @@ public sealed class FileMapManifestTests
             verified_by = ["lean-build"]
 
             [[files]]
-            pattern = "Golden/Frozen/**/*.jsonl"
+            pattern = "Meta/StrataLint/Golden/Frozen/**/*.jsonl"
             kind = "ledger"
             produced_by = "FrozenLedgerCanonicalWriter"
             consumed_by = ["FrozenLedger"]
             verified_by = ["SL-008"]
 
             [[files]]
-            pattern = "Golden/cases/**/*.toml"
+            pattern = "Meta/StrataLint/Golden/cases/**/*.toml"
             kind = "data"
             produced_by = "none"
             consumed_by = ["TomlGoldenLoader"]
             verified_by = ["TomlGoldenLoader"]
+            residence_violation = true
 
             [[files]]
             pattern = "Meta/StrataLint/StrataLint.*/**"
@@ -53,6 +60,12 @@ public sealed class FileMapManifestTests
             """ + "\n"), "fixture.toml");
 
         Assert.Equal(5, manifest.Entries.Length);
+        Assert.Equal("RESIDENCE-EPOCH", manifest.ResidencePolicy.CaseId);
+        Assert.Equal("data-must-live-outside-Meta/StrataLint", manifest.ResidencePolicy.Desired);
+        Assert.Equal(1, manifest.ResidencePolicy.KnownViolationCount);
+        Assert.Equal(
+            "known-violations-frozen-under-monitoring",
+            manifest.ResidencePolicy.Status);
         Assert.Equal(FileMapKind.Generated, Assert.Single(
             manifest.Match(BlueprintPath)).Kind);
         Assert.Equal(FileMapKind.Truth, Assert.Single(
@@ -60,7 +73,9 @@ public sealed class FileMapManifestTests
         Assert.Equal(FileMapKind.Ledger, Assert.Single(
             manifest.Match(FrozenLedgerPath)).Kind);
         Assert.Equal(FileMapKind.Data, Assert.Single(
-            manifest.Match("Golden/cases/structure.toml")).Kind);
+            manifest.Match("Meta/StrataLint/Golden/cases/structure.toml")).Kind);
+        Assert.True(Assert.Single(
+            manifest.Match("Meta/StrataLint/Golden/cases/structure.toml")).ResidenceViolation);
         Assert.Equal(FileMapKind.Program, Assert.Single(
             manifest.Match(RuleCatalogPath)).Kind);
         Assert.Empty(manifest.Match("unclassified.bin"));
@@ -77,6 +92,12 @@ public sealed class FileMapManifestTests
         var source = $$"""
             schema_version = 1
             {{extra}}
+            [residence_policy]
+            case_id = "RESIDENCE-EPOCH"
+            desired = "data-must-live-outside-Meta/StrataLint"
+            known_violation_count = 0
+            status = "known-violations-frozen-under-monitoring"
+
             [[files]]
             pattern = "Generated/**/*.md"
             kind = "generated"
@@ -97,6 +118,12 @@ public sealed class FileMapManifestTests
         var source = """
             schema_version = 1
 
+            [residence_policy]
+            case_id = "RESIDENCE-EPOCH"
+            desired = "data-must-live-outside-Meta/StrataLint"
+            known_violation_count = 0
+            status = "known-violations-frozen-under-monitoring"
+
             [[files]]
             pattern = "Generated/**/*.md"
             kind = "generated"
@@ -112,6 +139,38 @@ public sealed class FileMapManifestTests
     }
 
     [Theory]
+    [InlineData("program", "true", "valid only for data entries")]
+    [InlineData("data", "false", "canonical boolean true")]
+    public void InvalidResidenceMarkerIsRejectedByTheRedFixture(
+        string kind,
+        string marker,
+        string expectedMessage)
+    {
+        var source = $$"""
+            schema_version = 1
+
+            [residence_policy]
+            case_id = "RESIDENCE-EPOCH"
+            desired = "data-must-live-outside-Meta/StrataLint"
+            known_violation_count = 0
+            status = "known-violations-frozen-under-monitoring"
+
+            [[files]]
+            pattern = "Meta/StrataLint/fixture.toml"
+            kind = "{{kind}}"
+            residence_violation = {{marker}}
+            produced_by = "none"
+            consumed_by = ["reader"]
+            verified_by = ["SnapshotDecoder"]
+            """ + "\n";
+
+        var exception = Assert.Throws<FormatException>(() =>
+            FileMapLoader.Parse(Encoding.UTF8.GetBytes(source), "fixture.toml"));
+
+        Assert.Contains(expectedMessage, exception.Message, StringComparison.Ordinal);
+    }
+
+    [Theory]
     [InlineData("D5/**/../Ring.lean")]
     [InlineData("/D5/**/*.lean")]
     [InlineData("D5\\**\\*.lean")]
@@ -119,6 +178,12 @@ public sealed class FileMapManifestTests
     {
         var source = $$"""
             schema_version = 1
+
+            [residence_policy]
+            case_id = "RESIDENCE-EPOCH"
+            desired = "data-must-live-outside-Meta/StrataLint"
+            known_violation_count = 0
+            status = "known-violations-frozen-under-monitoring"
 
             [[files]]
             pattern = "{{pattern.Replace("\\", "\\\\", StringComparison.Ordinal)}}"

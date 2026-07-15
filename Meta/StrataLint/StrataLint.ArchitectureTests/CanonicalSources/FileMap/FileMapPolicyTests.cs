@@ -5,6 +5,26 @@ namespace StrataLint.ArchitectureTests;
 
 public sealed class FileMapPolicyTests
 {
+    private const string DigestionAndAnchorsPath =
+        "Meta/StrataLint/Golden/cases/digestion-and-anchors.toml";
+    private const string ProtectedSemanticsPath =
+        "Meta/StrataLint/Golden/cases/protected-semantics.toml";
+    private const string StructureAndIdentitiesPath =
+        "Meta/StrataLint/Golden/cases/structure-and-identities.toml";
+    private const string StructuredLedgerPath =
+        "Meta/StrataLint/Golden/cases/structured-ledger.toml";
+    private const string ValuesKernelsPath =
+        "Meta/StrataLint/Golden/values-kernels.toml";
+
+    private static readonly string[] KnownResidenceViolations =
+    [
+        DigestionAndAnchorsPath,
+        ProtectedSemanticsPath,
+        StructureAndIdentitiesPath,
+        StructuredLedgerPath,
+        ValuesKernelsPath,
+    ];
+
     [Fact]
     public void RepositoryFilesConformToTheCanonicalFileMap()
     {
@@ -16,6 +36,89 @@ public sealed class FileMapPolicyTests
                 Environment.NewLine,
                 findings.Select(static finding =>
                     $"{finding.Code} {finding.Path}: {finding.Message}")));
+    }
+
+    [Fact]
+    public void ResidenceViolationsAreExactlyTheFrozenResidenceEpochInventory()
+    {
+        var root = RepositoryLayout.FindRoot();
+        var manifest = FileMapLoader.LoadRepository(root);
+
+        var actual = FileMapPolicy.ResidenceViolations(root);
+
+        Assert.Equal(KnownResidenceViolations, actual);
+        Assert.Equal("RESIDENCE-EPOCH", manifest.ResidencePolicy.CaseId);
+        Assert.Equal("data-must-live-outside-Meta/StrataLint", manifest.ResidencePolicy.Desired);
+        Assert.Equal(KnownResidenceViolations.Length, manifest.ResidencePolicy.KnownViolationCount);
+        Assert.Equal(
+            "known-violations-frozen-under-monitoring",
+            manifest.ResidencePolicy.Status);
+    }
+
+    [Fact]
+    public void ResidenceMarkerOutsideTheProtectedSurfaceIsRejected()
+    {
+        const string path = "Data/known.toml";
+        var manifest = Parse(ResidenceEntry(path));
+
+        var finding = Assert.Single(FileMapPolicy.InspectDirectoryKinds(manifest, [path]));
+
+        Assert.Equal("FILEMAP-RESIDENCE-MARKER", finding.Code);
+    }
+
+    [Fact]
+    public void ExactProtectedResidenceCountIsAccepted()
+    {
+        const string path = "Meta/StrataLint/Golden/cases/known.toml";
+        var manifest = Parse(1, ResidenceEntry(path));
+
+        Assert.Empty(FileMapPolicy.InspectDirectoryKinds(manifest, [path]));
+    }
+
+    [Fact]
+    public void AdditionalProtectedResidenceViolationIsRejected()
+    {
+        var manifest = Parse(
+            1,
+            ResidenceEntry("Meta/StrataLint/Golden/cases/**/*.toml"));
+
+        var finding = Assert.Single(FileMapPolicy.InspectDirectoryKinds(
+            manifest,
+            [
+                "Meta/StrataLint/Golden/cases/known.toml",
+                "Meta/StrataLint/Golden/cases/new.toml",
+            ]));
+
+        Assert.Equal("FILEMAP-RESIDENCE-DRIFT", finding.Code);
+    }
+
+    [Fact]
+    public void MissingProtectedResidenceViolationIsRejected()
+    {
+        const string path = "Meta/StrataLint/Golden/cases/known.toml";
+        var manifest = Parse(2, ResidenceEntry(path));
+
+        var finding = Assert.Single(FileMapPolicy.InspectDirectoryKinds(manifest, [path]));
+
+        Assert.Equal("FILEMAP-RESIDENCE-DRIFT", finding.Code);
+    }
+
+    [Fact]
+    public void ResidenceInventoryIncludesOnlyMarkedProtectedData()
+    {
+        const string externalPath = "Data/known.toml";
+        const string unmarkedPath = "Meta/StrataLint/Golden/other.toml";
+        const string markedPath = "Meta/StrataLint/Golden/values.toml";
+        var manifest = Parse(
+            ResidenceEntry(externalPath),
+            Entry(unmarkedPath, "data", "none", "reader", "SnapshotDecoder"),
+            ResidenceEntry(markedPath));
+
+        var violations = FileMapPolicy.ResidenceViolations(
+            manifest,
+            [externalPath, markedPath, unmarkedPath]);
+
+        Assert.Equal([markedPath], violations);
     }
 
     [Fact]
@@ -167,10 +270,26 @@ public sealed class FileMapPolicyTests
         Assert.Contains(findings, static finding => finding.Code == "FILEMAP-LEAN-GENERATED-IMPORT");
     }
 
-    private static FileMapManifest Parse(params string[] entries) =>
+    private static FileMapManifest Parse(params string[] entries) => Parse(0, entries);
+
+    private static FileMapManifest Parse(int knownViolationCount, params string[] entries) =>
         FileMapLoader.Parse(
-            Encoding.UTF8.GetBytes("schema_version = 1\n\n" + string.Join("\n", entries)),
+            Encoding.UTF8.GetBytes(
+                $$"""
+                schema_version = 1
+
+                [residence_policy]
+                case_id = "RESIDENCE-EPOCH"
+                desired = "data-must-live-outside-Meta/StrataLint"
+                known_violation_count = {{knownViolationCount}}
+                status = "known-violations-frozen-under-monitoring"
+
+                """ + string.Join("\n", entries)),
             "fixture.toml");
+
+    private static string ResidenceEntry(string pattern) =>
+        Entry(pattern, "data", "none", "reader", "SnapshotDecoder")
+        + "residence_violation = true\n";
 
     private static string Entry(
         string pattern,

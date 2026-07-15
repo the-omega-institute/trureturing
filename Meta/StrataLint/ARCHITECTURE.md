@@ -59,9 +59,11 @@ and artifact-kind schema, while FILEMAP has a strict file-custody schema. The ar
 suite joins them by requiring registry `root_files` to equal tracked root files, without
 copying either schema into the other.
 
-`Meta/StrataLint/` is a program-only protected surface; FILEMAP rejects any `kind=data`
-entry there. Declarative instances instead live in `Golden/`, `Blueprint/**/*.scribe.cs`,
-`Library/`, top-level Meta data manifests, or theory input. Those content-data paths do
-not trigger SL-022. The golden corpus remains a protected admission baseline through its
-strict loader, base-owned conservative replay, TOWER Git blob addresses, and C0 ceremony;
-that protects the corpus identity without misclassifying its content as program.
+`Meta/StrataLint/` is normatively a program-only protected surface. The open
+`RESIDENCE-EPOCH` records five current `kind=data` files under
+`Meta/StrataLint/Golden/`; their two FILEMAP entries carry
+`residence_violation=true`, and the architecture suite freezes the exact expanded file
+set so an unmarked or additional violation fails. Blueprint Scribe sources and the
+Golden residence remain under the predecessor SL-022 protection contract in this epoch.
+Moving cases, values, and C0/frozen material to top-level `Golden/` is deferred until an
+sshx-reviewed verifier mechanism can approve protection-surface contraction.

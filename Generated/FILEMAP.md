@@ -4,6 +4,7 @@
 
 ```text
 FILEMAP: Meta/FILEMAP.toml
+Residence policy: desired=data-must-live-outside-Meta/StrataLint; current=5; status=known-violations-frozen-under-monitoring; case=RESIDENCE-EPOCH
 
 none --declares--> [*.json | program]
 [*.json | program] --consumed-by--> automation
@@ -69,22 +70,6 @@ FileMapEmitter --produces--> [Generated/FILEMAP.md | generated]
 [Generated/FILEMAP.md | generated] --consumed-by--> reader
 [Generated/FILEMAP.md | generated] --verified-by--> emit-check
 
-ConservativeExtensionVerifier --produces--> [Golden/Ceremony/**/*.json | ledger]
-[Golden/Ceremony/**/*.json | ledger] --consumed-by--> C0CeremonyTrustRootTests
-[Golden/Ceremony/**/*.json | ledger] --verified-by--> C0CeremonyTrustRootTests
-
-FrozenLedgerCanonicalWriter --produces--> [Golden/Frozen/**/*.jsonl | ledger]
-[Golden/Frozen/**/*.jsonl | ledger] --consumed-by--> FrozenLedger
-[Golden/Frozen/**/*.jsonl | ledger] --verified-by--> SL-008
-
-none --declares--> [Golden/cases/**/*.toml | data]
-[Golden/cases/**/*.toml | data] --consumed-by--> TomlGoldenLoader
-[Golden/cases/**/*.toml | data] --verified-by--> TomlGoldenLoader
-
-none --declares--> [Golden/values-kernels.toml | data]
-[Golden/values-kernels.toml | data] --consumed-by--> ValuesKernelDataLoader
-[Golden/values-kernels.toml | data] --verified-by--> ValuesKernelDataLoader
-
 none --declares--> [Library/**/*.yaml | data]
 [Library/**/*.yaml | data] --consumed-by--> AnchorReferenceRule
 [Library/**/*.yaml | data] --verified-by--> SL-017, YamlSubsetParser
@@ -132,6 +117,22 @@ AnchorCatalogEmitter --produces--> [Meta/StrataLint/Generated/anchor-catalog.v1.
 ScribeEmitter --produces--> [Meta/StrataLint/Generated/scribe-emissions.v1.json | generated]
 [Meta/StrataLint/Generated/scribe-emissions.v1.json | generated] --consumed-by--> DigestionStatusEvaluator
 [Meta/StrataLint/Generated/scribe-emissions.v1.json | generated] --verified-by--> emit-check
+
+FrozenLedgerCanonicalWriter --produces--> [Meta/StrataLint/Golden/Frozen/**/*.jsonl | ledger]
+[Meta/StrataLint/Golden/Frozen/**/*.jsonl | ledger] --consumed-by--> FrozenLedger
+[Meta/StrataLint/Golden/Frozen/**/*.jsonl | ledger] --verified-by--> SL-008
+
+ConservativeExtensionVerifier --produces--> [Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json | ledger]
+[Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json | ledger] --consumed-by--> C0CeremonyTrustRootTests
+[Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json | ledger] --verified-by--> C0CeremonyTrustRootTests
+
+none --declares--> [Meta/StrataLint/Golden/cases/**/*.toml | data | residence_violation=true]
+[Meta/StrataLint/Golden/cases/**/*.toml | data | residence_violation=true] --consumed-by--> TomlGoldenLoader
+[Meta/StrataLint/Golden/cases/**/*.toml | data | residence_violation=true] --verified-by--> TomlGoldenLoader
+
+none --declares--> [Meta/StrataLint/Golden/values-kernels.toml | data | residence_violation=true]
+[Meta/StrataLint/Golden/values-kernels.toml | data | residence_violation=true] --consumed-by--> ValuesKernelDataLoader
+[Meta/StrataLint/Golden/values-kernels.toml | data | residence_violation=true] --verified-by--> ValuesKernelDataLoader
 
 none --declares--> [Meta/StrataLint/StrataLint.*/** | program]
 [Meta/StrataLint/StrataLint.*/** | program] --consumed-by--> dotnet

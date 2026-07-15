@@ -12,12 +12,12 @@
   Provider-bearing overloads remain available with `CultureInfo.InvariantCulture`.
 - `HARDCODE-LEDGER.md` is the maintained guard/residual map. Every new hard-code
   family must update it in the same change.
-- Golden case data is canonical TOML under `Golden/cases`; the architecture policy
+- Golden case data is canonical TOML under `Meta/StrataLint/Golden/cases`; the architecture policy
   rejects literal-name case construction in C# while allowing loader/schema code.
 - `Meta/FILEMAP.toml` is the five-kind repository custody manifest. ArchitectureTests
-  enforce exact coverage, real producer/loader ownership, data residence, directory
-  purity, and the declared dependency-direction subset; `Generated/FILEMAP.md` is its
-  emitted projection.
+  enforce exact coverage, real producer/loader ownership, residence-epoch drift,
+  directory purity, and the declared dependency-direction subset;
+  `Generated/FILEMAP.md` is its emitted projection.
 
 The official analyzer is dependency-admitted because compiler diagnostics enforce
 source calls before binaries exist. Reflection remains sufficient for assembly and

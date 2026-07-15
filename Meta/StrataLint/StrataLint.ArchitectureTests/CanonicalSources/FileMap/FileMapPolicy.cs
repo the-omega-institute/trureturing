@@ -26,6 +26,8 @@ internal static class FileMapPolicy
         "Meta/StrataLint/StrataLint.Scribe/Values/ValuesKernelDataLoader.cs";
     private const string YamlSubsetParserPath =
         "Meta/StrataLint/StrataLint.Engine/Coordinates/YamlSubsetParser.cs";
+    private const string C0CertificatePath =
+        "Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json";
 
     private static readonly Regex LeanImportPattern = new(
         "(?m)^\\s*import\\s+(?<module>[A-Za-z0-9_.]+)\\s*$",
@@ -219,8 +221,9 @@ internal static class FileMapPolicy
     {
         ArgumentNullException.ThrowIfNull(manifest);
         ArgumentNullException.ThrowIfNull(paths);
+        var trackedPaths = paths.Order(StringComparer.Ordinal).ToArray();
         var findings = new List<FileMapFinding>();
-        foreach (var path in paths.Order(StringComparer.Ordinal))
+        foreach (var path in trackedPaths)
         {
             var matches = manifest.Match(path);
             if (matches.Length != 1)
@@ -228,13 +231,14 @@ internal static class FileMapPolicy
                 continue;
             }
 
-            var kind = matches[0].Kind;
+            var entry = matches[0];
+            var kind = entry.Kind;
             if (path.Split('/').Contains("Generated", StringComparer.Ordinal)
                 && kind is not FileMapKind.Generated
-                || path.StartsWith("Golden/cases/", StringComparison.Ordinal)
+                || path.StartsWith("Meta/StrataLint/Golden/cases/", StringComparison.Ordinal)
                     && kind is not FileMapKind.Data
-                || (path.StartsWith("Golden/Frozen/", StringComparison.Ordinal)
-                        || path.StartsWith("Golden/Ceremony/", StringComparison.Ordinal))
+                || (path.StartsWith("Meta/StrataLint/Golden/Frozen/", StringComparison.Ordinal)
+                        || path == C0CertificatePath)
                     && kind is not FileMapKind.Ledger)
             {
                 findings.Add(new FileMapFinding(
@@ -244,16 +248,57 @@ internal static class FileMapPolicy
             }
 
             if (path.StartsWith("Meta/StrataLint/", StringComparison.Ordinal)
-                && kind is FileMapKind.Data)
+                && kind is FileMapKind.Data
+                && !entry.ResidenceViolation)
             {
                 findings.Add(new FileMapFinding(
                     "FILEMAP-DATA-RESIDENCE",
                     path,
                     "data must live outside the Meta/StrataLint protected program surface"));
             }
+
+            if (entry.ResidenceViolation
+                && !path.StartsWith("Meta/StrataLint/", StringComparison.Ordinal))
+            {
+                findings.Add(new FileMapFinding(
+                    "FILEMAP-RESIDENCE-MARKER",
+                    path,
+                    "residence_violation may mark only data in the protected program surface"));
+            }
+        }
+
+        var violations = ResidenceViolations(manifest, trackedPaths);
+        if (violations.Count != manifest.ResidencePolicy.KnownViolationCount)
+        {
+            findings.Add(new FileMapFinding(
+                "FILEMAP-RESIDENCE-DRIFT",
+                FileMapLoader.RelativePath,
+                $"policy freezes {manifest.ResidencePolicy.KnownViolationCount} violations but repository has {violations.Count}"));
         }
 
         return findings;
+    }
+
+    internal static IReadOnlyList<string> ResidenceViolations(string repositoryRoot)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
+        return ResidenceViolations(
+            FileMapLoader.LoadRepository(repositoryRoot),
+            TrackedPaths(repositoryRoot));
+    }
+
+    internal static IReadOnlyList<string> ResidenceViolations(
+        FileMapManifest manifest,
+        IEnumerable<string> paths)
+    {
+        ArgumentNullException.ThrowIfNull(manifest);
+        ArgumentNullException.ThrowIfNull(paths);
+        return paths
+            .Where(path => path.StartsWith("Meta/StrataLint/", StringComparison.Ordinal))
+            .Where(path => manifest.Match(path) is
+                [{ Kind: FileMapKind.Data, ResidenceViolation: true }])
+            .Order(StringComparer.Ordinal)
+            .ToArray();
     }
 
     internal static IReadOnlyList<FileMapFinding> InspectDependencies(

@@ -13,7 +13,8 @@
 - `Conservative/`: base-owned replay, TOML golden fixture execution/materialization,
   and conservative-extension verification.
 - `Golden/`: shared conservative-corpus schema plus fail-closed canonical TOML
-  loader/writer; case data remains outside the assembly under top-level `Golden/cases`.
+  loader/writer; case data remains outside the assembly under
+  `Meta/StrataLint/Golden/cases` pending `RESIDENCE-EPOCH`.
 - `Runtime/`: CLI adapters for precomputed Lean reports and pin-aware Lean cache provisioning.
 
 The root contains the executable entry point, assembly metadata, SDK project metadata,

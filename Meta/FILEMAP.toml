@@ -1,5 +1,11 @@
 schema_version = 1
 
+[residence_policy]
+case_id = "RESIDENCE-EPOCH"
+desired = "data-must-live-outside-Meta/StrataLint"
+known_violation_count = 5
+status = "known-violations-frozen-under-monitoring"
+
 [[files]]
 pattern = "*.json"
 kind = "program"
@@ -113,34 +119,6 @@ consumed_by = ["reader"]
 verified_by = ["emit-check"]
 
 [[files]]
-pattern = "Golden/Ceremony/**/*.json"
-kind = "ledger"
-produced_by = "ConservativeExtensionVerifier"
-consumed_by = ["C0CeremonyTrustRootTests"]
-verified_by = ["C0CeremonyTrustRootTests"]
-
-[[files]]
-pattern = "Golden/Frozen/**/*.jsonl"
-kind = "ledger"
-produced_by = "FrozenLedgerCanonicalWriter"
-consumed_by = ["FrozenLedger"]
-verified_by = ["SL-008"]
-
-[[files]]
-pattern = "Golden/cases/**/*.toml"
-kind = "data"
-produced_by = "none"
-consumed_by = ["TomlGoldenLoader"]
-verified_by = ["TomlGoldenLoader"]
-
-[[files]]
-pattern = "Golden/values-kernels.toml"
-kind = "data"
-produced_by = "none"
-consumed_by = ["ValuesKernelDataLoader"]
-verified_by = ["ValuesKernelDataLoader"]
-
-[[files]]
 pattern = "Library/**/*.yaml"
 kind = "data"
 produced_by = "none"
@@ -223,6 +201,36 @@ kind = "generated"
 produced_by = "ScribeEmitter"
 consumed_by = ["DigestionStatusEvaluator"]
 verified_by = ["emit-check"]
+
+[[files]]
+pattern = "Meta/StrataLint/Golden/Frozen/**/*.jsonl"
+kind = "ledger"
+produced_by = "FrozenLedgerCanonicalWriter"
+consumed_by = ["FrozenLedger"]
+verified_by = ["SL-008"]
+
+[[files]]
+pattern = "Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json"
+kind = "ledger"
+produced_by = "ConservativeExtensionVerifier"
+consumed_by = ["C0CeremonyTrustRootTests"]
+verified_by = ["C0CeremonyTrustRootTests"]
+
+[[files]]
+pattern = "Meta/StrataLint/Golden/cases/**/*.toml"
+kind = "data"
+residence_violation = true
+produced_by = "none"
+consumed_by = ["TomlGoldenLoader"]
+verified_by = ["TomlGoldenLoader"]
+
+[[files]]
+pattern = "Meta/StrataLint/Golden/values-kernels.toml"
+kind = "data"
+residence_violation = true
+produced_by = "none"
+consumed_by = ["ValuesKernelDataLoader"]
+verified_by = ["ValuesKernelDataLoader"]
 
 [[files]]
 pattern = "Meta/StrataLint/StrataLint.*/**"

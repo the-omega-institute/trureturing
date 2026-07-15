@@ -34,7 +34,7 @@ public sealed class RuleApplicabilityTests
     [InlineData(RuleFixture.TowerManifestPath, "SL-003,SL-015,SL-019,SL-022")]
     [InlineData(
         RuleFixture.GoldenDataSourcePath,
-        "SL-003,SL-015")]
+        "SL-003,SL-015,SL-022")]
     public void DefaultCatalogApplicabilityMatchesTheRulesActualScanSurface(
         string path,
         string expected)
