@@ -303,6 +303,9 @@ P1 and must itself pass the P0 base judge.
 - Deterministic selftest passed. This prerequisite commit grants no plan and changes no
   policy atom; a following docs-only successor binds its exact base as the protected
   preimage for the C0 renewal.
+- C0 comparator base commit: `86acea53c3da0eaebc03c3ef52847cd4396f0602`.
+- This docs-only successor is the protected preimage for that base-owned renewal. It
+  grants no plan and changes no policy atom.
 
 ## DIGESTION-LEDGER-EPOCH (active, 2026-07-15)
 
