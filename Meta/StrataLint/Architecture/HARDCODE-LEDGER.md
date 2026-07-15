@@ -174,6 +174,12 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
   acceptance samples by 372 bytes. Each prior byte slice matched the revised spec exactly
   once with unchanged SHA-256; only the contiguous boundaries moved from
   `27937..31668` to `28309..32040`.
+- FILEMAP predecessor-registration autopsy: the first split-epoch conservative replay
+  preserved all 31/31 corpus admits but the base harness blocked the actual candidate with
+  SL-000 because `Meta/FILEMAP.toml` and `Generated/FILEMAP.md` were known only to
+  candidate C# path exceptions. The predecessor already reads candidate registry
+  `governance_documents` before its closed-world switch, so both artifacts now use that
+  shared declaration and the duplicate candidate-only exceptions were removed.
 
 ## Residual scan
 

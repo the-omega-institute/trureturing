@@ -57,7 +57,9 @@ neither candidate files nor a successful candidate test job can synthesize appro
 It remains separate from `Meta/registry.yaml`: the registry has a strict semantic-coordinate
 and artifact-kind schema, while FILEMAP has a strict file-custody schema. The architecture
 suite joins them by requiring registry `root_files` to equal tracked root files, without
-copying either schema into the other.
+copying either schema into the other. The registry lists the FILEMAP authority and its
+generated projection as governance documents so predecessor closed-world judges can
+admit the new artifact class without candidate-only path exceptions.
 
 `Meta/StrataLint/` is normatively a program-only protected surface. The open
 `RESIDENCE-EPOCH` records five current `kind=data` files under

@@ -52,10 +52,8 @@ internal static partial class RepositoryPathPolicy
                 : Sl000(value, "unknown agent charter artifact");
         }
 
-        if (value is "Meta/domains.yaml" or "Meta/BACKFILL.yaml" or "Meta/FILEMAP.toml"
-            or "Meta/registry.yaml"
+        if (value is "Meta/domains.yaml" or "Meta/BACKFILL.yaml" or "Meta/registry.yaml"
             or "Library/queries.yaml" or AssumptionRegistryPath
-            or "Generated/FILEMAP.md"
             or "Meta/split.py" or "Meta/papergen"
             or WorkflowPath or ".github/CODEOWNERS"
             or ".github/scripts/baseline-admission.sh" or HarnessGatePath

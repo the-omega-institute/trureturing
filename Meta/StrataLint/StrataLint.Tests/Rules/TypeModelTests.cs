@@ -129,23 +129,27 @@ public sealed class TypeModelTests
     }
 
     [Fact]
-    public void FileMapDataIsClosedWorldRegisteredAndBootstrapClear()
+    public void FileMapDataIsGovernanceRegisteredAndBootstrapClear()
     {
         const string value = "Meta/FILEMAP.toml";
         var path = RepoPath.CreateKnown(value);
+        var policy = Policy();
 
-        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
+        Assert.Contains(path, policy.GovernanceDocuments);
+        Assert.Null(RepositoryPathPolicy.Validate(path, policy));
         Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
         Assert.IsType<BootstrapOutcome.Clear>(
             BootstrapGate.Evaluate(RawChangeSet.Create([value])));
     }
 
     [Fact]
-    public void GeneratedFileMapProjectionIsClosedWorldRegistered()
+    public void GeneratedFileMapProjectionIsGovernanceRegistered()
     {
         var path = RepoPath.CreateKnown("Generated/FILEMAP.md");
+        var policy = Policy();
 
-        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
+        Assert.Contains(path, policy.GovernanceDocuments);
+        Assert.Null(RepositoryPathPolicy.Validate(path, policy));
         Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
     }
 
