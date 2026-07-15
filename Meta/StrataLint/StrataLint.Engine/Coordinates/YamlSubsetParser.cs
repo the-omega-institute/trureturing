@@ -28,6 +28,36 @@ internal static class YamlSubsetParser
         return value;
     }
 
+    internal static bool TryParseKeyValue(
+        string content,
+        out string key,
+        out string? value)
+    {
+        ArgumentNullException.ThrowIfNull(content);
+        var separator = content.IndexOf(':');
+        if (separator < 0)
+        {
+            key = string.Empty;
+            value = null;
+            return false;
+        }
+
+        key = content[..separator].Trim();
+        if (key.Length == 0
+            || !(char.IsAsciiLetter(key[0]) || key[0] == '_')
+            || key.Skip(1).Any(static character =>
+                !(char.IsAsciiLetterOrDigit(character) || character is '_' or '.' or '-')))
+        {
+            key = string.Empty;
+            value = null;
+            return false;
+        }
+
+        var rawValue = content[(separator + 1)..].Trim();
+        value = rawValue.Length == 0 ? null : rawValue;
+        return true;
+    }
+
     private static (object Value, int Index) ParseNode(Line[] lines, int index, int indent)
     {
         if (lines[index].Indent != indent)
@@ -176,23 +206,17 @@ internal static class YamlSubsetParser
 
     private static (string Key, string? Value) KeyValue(string content, int number)
     {
-        var separator = content.IndexOf(':');
-        if (separator < 0)
+        if (TryParseKeyValue(content, out var key, out var value))
+        {
+            return (key, value);
+        }
+
+        if (!content.Contains(':', StringComparison.Ordinal))
         {
             throw new FormatException($"expected key:value on line {number}");
         }
 
-        var key = content[..separator].Trim();
-        if (key.Length == 0
-            || !(char.IsAsciiLetter(key[0]) || key[0] == '_')
-            || key.Skip(1).Any(static character =>
-                !(char.IsAsciiLetterOrDigit(character) || character is '_' or '.' or '-')))
-        {
-            throw new FormatException($"invalid key on line {number}");
-        }
-
-        var value = content[(separator + 1)..].Trim();
-        return (key, value.Length == 0 ? null : value);
+        throw new FormatException($"invalid key on line {number}");
     }
 
     private static object? Scalar(string value)

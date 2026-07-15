@@ -2,77 +2,41 @@ using System.Collections.Immutable;
 
 namespace StrataLint.Engine;
 
-internal sealed record BackfillTicketReference(string CaseId, string Gid);
-
-internal sealed record DigestionBoundary(string AstPath, int StartByte, int EndByte);
-
-internal sealed record DigestionCoverageReceipt(
-    string Gid,
-    string SourceSha256,
-    string TargetSha256);
-
-internal sealed record DigestionScribeReceipt(
-    string Gid,
-    string DefinitionSha256,
-    string EmissionSha256);
-
-internal sealed record DigestionExternalReceipt(string Path, string Sha256);
-
-internal sealed record DigestionReceipts(
-    ImmutableArray<DigestionCoverageReceipt> Coverage,
-    ImmutableArray<DigestionScribeReceipt> Scribe,
-    ImmutableArray<string> UnresolvedSubitems,
-    ImmutableArray<string> ChainAtoms,
-    DigestionExternalReceipt? TailAuthorization);
-
-internal enum DigestionMigrationState
-{
-    Residual,
-    Partial,
-    Absorbed,
-}
-
-internal enum DigestionTruthState
-{
-    Closed,
-    Tail,
-    Open,
-}
-
-internal sealed record DigestionStatus(
-    DigestionMigrationState Migration,
-    DigestionTruthState Truth);
-
-internal sealed record DigestionLedgerEntry(
-    string SourceId,
-    string SourcePath,
-    string Atomizer,
-    string AtomId,
-    DigestionBoundary Boundary,
-    DigestionFingerprints Fingerprints,
-    ImmutableArray<string> CoverageGids,
-    DigestionReceipts Receipts,
-    DigestionStatus ProjectedStatus);
-
-internal sealed record DigestionLedgerSource(
-    string SourceId,
-    string SourcePath,
-    string Atomizer,
-    ImmutableArray<DigestionLedgerEntry> Entries);
-
 internal sealed class BackfillInventoryDocument
 {
     private readonly IReadOnlyDictionary<string, object?> root;
+    private readonly ImmutableArray<BackfillTicketReference> projectedTickets;
+    private readonly ImmutableArray<DigestionLedgerSource> projectedSources;
+    private readonly ImmutableArray<BackfillReceiptSyntax> receiptSyntaxes;
 
-    internal BackfillInventoryDocument(IReadOnlyDictionary<string, object?> root)
+    internal BackfillInventoryDocument(
+        IReadOnlyDictionary<string, object?> root,
+        ImmutableArray<BackfillReceiptSyntax> receiptSyntaxes)
+        : this(root, default, default, receiptSyntaxes)
+    {
+    }
+
+    private BackfillInventoryDocument(
+        IReadOnlyDictionary<string, object?> root,
+        ImmutableArray<BackfillTicketReference> projectedTickets,
+        ImmutableArray<DigestionLedgerSource> projectedSources,
+        ImmutableArray<BackfillReceiptSyntax> receiptSyntaxes)
     {
         this.root = root;
+        this.projectedTickets = projectedTickets;
+        this.projectedSources = projectedSources;
+        this.receiptSyntaxes = receiptSyntaxes;
     }
 
     internal IReadOnlyDictionary<string, object?> Root => root;
 
     internal ImmutableArray<BackfillTicketReference> RequireTickets()
     {
+        if (!projectedTickets.IsDefault)
+        {
+            return projectedTickets;
+        }
+
         var ticketIndex = List(root, "ticket_index", "ticket_index must be a list");
         var tickets = ImmutableArray.CreateBuilder<BackfillTicketReference>();
         foreach (var rawTicket in ticketIndex)
@@ -89,26 +53,58 @@ internal sealed class BackfillInventoryDocument
 
     internal ImmutableArray<DigestionLedgerSource> RequireDigestionSources()
     {
+        if (!projectedSources.IsDefault)
+        {
+            return projectedSources;
+        }
+
         var rawSources = List(root, "sources", "sources must be a list");
         var sources = ImmutableArray.CreateBuilder<DigestionLedgerSource>();
+        var receiptIndex = 0;
         foreach (var rawSource in rawSources)
         {
             var source = Mapping(rawSource, "sources must contain mappings");
-            ExactKeys(source, ["source_id", "path", "atomizer", "entries"], "source");
+            ExactKeys(
+                source,
+                source.ContainsKey("acknowledged_stale")
+                    ? ["source_id", "path", "atomizer", "acknowledged_stale", "entries"]
+                    : ["source_id", "path", "atomizer", "entries"],
+                "source");
             var sourceId = Scalar(source, "source_id", "source_id");
             var sourcePath = Scalar(source, "path", $"source {sourceId} path");
             var atomizer = Scalar(source, "atomizer", $"source {sourceId} atomizer");
+            var acknowledgedStale = source.ContainsKey("acknowledged_stale")
+                ? Strings(
+                    List(source, "acknowledged_stale", $"source {sourceId} acknowledged_stale must be a list"),
+                    $"source {sourceId} acknowledged_stale")
+                : ImmutableArray<string>.Empty;
             var entries = ImmutableArray.CreateBuilder<DigestionLedgerEntry>();
             foreach (var rawEntry in List(source, "entries", $"source {sourceId} entries must be a list"))
             {
-                entries.Add(ParseEntry(sourceId, sourcePath, atomizer, rawEntry));
+                if (receiptIndex >= receiptSyntaxes.Length)
+                {
+                    throw new FormatException("BACKFILL receipt preimage count is incomplete");
+                }
+
+                entries.Add(ParseEntry(
+                    sourceId,
+                    sourcePath,
+                    atomizer,
+                    rawEntry,
+                    receiptSyntaxes[receiptIndex++]));
             }
 
             sources.Add(new DigestionLedgerSource(
                 sourceId,
                 sourcePath,
                 atomizer,
+                acknowledgedStale,
                 entries.ToImmutable()));
+        }
+
+        if (receiptIndex != receiptSyntaxes.Length)
+        {
+            throw new FormatException("BACKFILL receipt preimage count exceeds parsed entries");
         }
 
         return sources.ToImmutable();
@@ -116,6 +112,10 @@ internal sealed class BackfillInventoryDocument
 
     internal ImmutableArray<DigestionLedgerEntry> RequireDigestionEntries() =>
         RequireDigestionSources().SelectMany(static source => source.Entries).ToImmutableArray();
+
+    internal BackfillInventoryDocument WithDigestionSources(
+        ImmutableArray<DigestionLedgerSource> sources) =>
+        new(root, RequireTickets(), sources, receiptSyntaxes);
 
     internal ImmutableArray<string> RequireReferencedGids()
     {
@@ -141,21 +141,37 @@ internal sealed class BackfillInventoryDocument
         string sourceId,
         string sourcePath,
         string atomizer,
-        object? rawEntry)
+        object? rawEntry,
+        BackfillReceiptSyntax receiptSyntax)
     {
         var entry = Mapping(rawEntry, $"source {sourceId} entries must be mappings");
+        var hasBoundary = entry.ContainsKey("boundary");
         ExactKeys(
             entry,
-            ["atom_id", "boundary", "fingerprints", "coverage_gids", "receipts", "status"],
+            hasBoundary
+                ? ["atom_id", "boundary", "fingerprints", "coverage_gids", "receipts", "status"]
+                : ["atom_id", "ast_path", "fingerprints", "coverage_gids", "receipts", "status"],
             $"source {sourceId} entry");
         var atomId = Scalar(entry, "atom_id", $"source {sourceId} atom_id");
 
-        var boundary = Mapping(entry.GetValueOrDefault("boundary"), $"entry {atomId} boundary must be a mapping");
-        ExactKeys(boundary, ["ast_path", "start_byte", "end_byte"], $"entry {atomId} boundary");
-        var parsedBoundary = new DigestionBoundary(
-            Scalar(boundary, "ast_path", $"entry {atomId} ast_path"),
-            Integer(boundary, "start_byte", $"entry {atomId} start_byte"),
-            Integer(boundary, "end_byte", $"entry {atomId} end_byte"));
+        DigestionBoundary? parsedBoundary = null;
+        string astPath;
+        if (hasBoundary)
+        {
+            var boundary = Mapping(
+                entry.GetValueOrDefault("boundary"),
+                $"entry {atomId} boundary must be a mapping");
+            ExactKeys(boundary, ["ast_path", "start_byte", "end_byte"], $"entry {atomId} boundary");
+            parsedBoundary = new DigestionBoundary(
+                Scalar(boundary, "ast_path", $"entry {atomId} ast_path"),
+                Integer(boundary, "start_byte", $"entry {atomId} start_byte"),
+                Integer(boundary, "end_byte", $"entry {atomId} end_byte"));
+            astPath = parsedBoundary.AstPath;
+        }
+        else
+        {
+            astPath = Scalar(entry, "ast_path", $"entry {atomId} ast_path");
+        }
 
         var fingerprints = Mapping(
             entry.GetValueOrDefault("fingerprints"),
@@ -177,13 +193,15 @@ internal sealed class BackfillInventoryDocument
             sourcePath,
             atomizer,
             atomId,
+            astPath,
             parsedBoundary,
             parsedFingerprints,
             coverageGids,
             receipts,
             new DigestionStatus(
                 ParseMigration(Scalar(status, "migration", $"entry {atomId} migration")),
-                ParseTruth(Scalar(status, "truth", $"entry {atomId} truth"))));
+                ParseTruth(Scalar(status, "truth", $"entry {atomId} truth"))),
+            receiptSyntax);
     }
 
     private static DigestionReceipts ParseReceipts(string atomId, object? rawReceipts)
@@ -330,6 +348,6 @@ internal static class BackfillInventoryLoader
             throw new FormatException($"BACKFILL ledger must be {LedgerName}");
         }
 
-        return new BackfillInventoryDocument(root);
+        return new BackfillInventoryDocument(root, BackfillReceiptPreimage.Extract(text));
     }
 }

@@ -34,6 +34,7 @@ internal static class TheoryIsolationPolicy
 
     private static readonly HashSet<string> AllowedCSharpFiles = new(
         [
+            DigestionTestsPrefix + "DigestionAlignmentTests.cs",
             DigestionTestsPrefix + "DigestionLedgerTests.cs",
             DigestionTestsPrefix + "TheoryAtomizerTests.cs",
         ],

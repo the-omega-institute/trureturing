@@ -310,8 +310,29 @@ public sealed class TheoryAtomizerTests
 
         var document = AtomizerRegistry.Atomize(atomizerId, bytes);
 
+        AssertRecognitionComplete(document, bytes);
         Assert.Equal(expectedClaims, document.Claims.Length);
-        Assert.Equal(bytes, document.Reassemble().ToArray());
+    }
+
+    private static void AssertRecognitionComplete(
+        AtomizedTheoryDocument document,
+        byte[] sourceBytes)
+    {
+        Assert.True(document.Claims.Length > 0, "production atomization must not pass vacuously");
+        Assert.Equal(document.Claims.Length, document.Slices.Count(static slice => slice.IsClaim));
+        Assert.Equal(sourceBytes, document.Reassemble().ToArray());
+        Assert.All(document.Claims, atom =>
+        {
+            Assert.False(string.IsNullOrWhiteSpace(atom.AstPath));
+            Assert.InRange(atom.StartByte, 0, sourceBytes.Length - 1);
+            Assert.InRange(atom.EndByte, atom.StartByte + 1, sourceBytes.Length);
+            Assert.Equal(
+                sourceBytes[atom.StartByte..atom.EndByte],
+                atom.RawBytes.ToArray());
+            Assert.Equal(
+                DigestionFingerprint.Compute(atom.RawBytes.AsSpan()),
+                atom.Fingerprints);
+        });
     }
 
     private static string FindRepositoryRoot()
