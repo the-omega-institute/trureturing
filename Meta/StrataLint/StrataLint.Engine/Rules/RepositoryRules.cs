@@ -43,10 +43,6 @@ internal static partial class RepositoryRules
         "^D5-Q[0-9]{4}$",
         RegexOptions.CultureInvariant);
 
-    private static readonly Regex DoiPattern = new(
-        "^10\\.[0-9]{4,9}/\\S+$",
-        RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
-
     private static readonly Regex ArxivPattern = new(
         "^(?:arXiv:)?[0-9]{4}\\.[0-9]{4,5}(?:v[0-9]+)?$",
         RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);

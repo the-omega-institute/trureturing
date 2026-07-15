@@ -5,6 +5,32 @@ namespace StrataLint.Scribe.Tests;
 public sealed class PdfWriterTests
 {
     [Fact]
+    public void QuestPdfWriterRendersDescribeNodes()
+    {
+        var document = ScribeDocument.Create(
+            DefinitionDsl.Header("D5/S1/Scale/Embedding", "Describe PDF fixture."),
+            Heading.Create("Describe PDF"),
+            BlockSequence.Create(
+            [
+                new DocumentBlock.Describe(
+                    DescribeId.Create("golden-identity"),
+                    DescribeKind.Lemma,
+                    Heading.Create("Golden identity"),
+                    DescribeStatement.FromFormula(new Formula.Phi()),
+                    DescribeProvenance.RepoDerived(),
+                    BlockSequence.Create(
+                    [
+                        DefinitionDsl.Paragraph(DefinitionDsl.Text("Typed content.")),
+                    ])),
+            ]));
+
+        var pdf = QuestPdfWriter.Write(document);
+
+        Assert.True(pdf.Length > 5);
+        Assert.Equal("%PDF-", Encoding.ASCII.GetString(pdf.AsSpan()[..5]));
+    }
+
+    [Fact]
     public void QuestPdfWriterGeneratesEachPilotWithAPdfHeader()
     {
         var report = LeanReportFixture.ForDocuments(

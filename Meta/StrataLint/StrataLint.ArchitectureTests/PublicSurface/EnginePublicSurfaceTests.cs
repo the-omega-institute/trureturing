@@ -50,6 +50,7 @@ public sealed class EnginePublicSurfaceTests
         "StrataLint.Engine.DeferredRule",
         "StrataLint.Engine.Diagnostic",
         "StrataLint.Engine.DisplaySeverity",
+        "StrataLint.Engine.Doi",
         "StrataLint.Engine.DomainId",
         "StrataLint.Engine.DomainSyntax",
         "StrataLint.Engine.FrozenContentAddress",

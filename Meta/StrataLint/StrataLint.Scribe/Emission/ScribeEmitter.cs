@@ -20,7 +20,8 @@ public static class ScribeEmitter
             check,
             output,
             error,
-            LeanCompiledArtifactReports.InspectRepository).ExitCode;
+            LeanCompiledArtifactReports.InspectRepository,
+            validateRepository: true).ExitCode;
 
     internal static int Emit(
         string repositoryRoot,
@@ -30,7 +31,31 @@ public static class ScribeEmitter
         LeanAxiomReport leanReport)
     {
         ArgumentNullException.ThrowIfNull(leanReport);
-        return Run(repositoryRoot, check, output, error, _ => leanReport).ExitCode;
+        return Run(
+            repositoryRoot,
+            check,
+            output,
+            error,
+            _ => leanReport,
+            validateRepository: false).ExitCode;
+    }
+
+    internal static int Emit(
+        string repositoryRoot,
+        bool check,
+        TextWriter output,
+        TextWriter error,
+        LeanAxiomReport leanReport,
+        bool validateRepository)
+    {
+        ArgumentNullException.ThrowIfNull(leanReport);
+        return Run(
+            repositoryRoot,
+            check,
+            output,
+            error,
+            _ => leanReport,
+            validateRepository).ExitCode;
     }
 
     internal static VerifiedScribeEmissions? Verify(
@@ -44,7 +69,8 @@ public static class ScribeEmitter
             check: true,
             TextWriter.Null,
             error,
-            _ => leanReport).Verification;
+            _ => leanReport,
+            validateRepository: true).Verification;
     }
 
     private static ScribeEmissionRun Run(
@@ -52,7 +78,8 @@ public static class ScribeEmitter
         bool check,
         TextWriter output,
         TextWriter error,
-        Func<string, LeanAxiomReport> loadLeanReport)
+        Func<string, LeanAxiomReport> loadLeanReport,
+        bool validateRepository)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(output);
@@ -61,15 +88,30 @@ public static class ScribeEmitter
 
         try
         {
-            return EmitVerified(
-                repositoryRoot,
-                check,
-                output,
-                error,
-                loadLeanReport(repositoryRoot));
+            var leanReport = loadLeanReport(repositoryRoot);
+            if (validateRepository)
+            {
+                var findings = DescribeRepositoryValidator.Validate(
+                    repositoryRoot,
+                    DocumentDefinitions.All.Select(static definition => definition.Document),
+                    leanReport);
+                if (!findings.IsEmpty)
+                {
+                    foreach (var finding in findings)
+                    {
+                        error.WriteLine(
+                            $"describe red code={finding.Code} path={finding.Path} message={finding.Message}");
+                    }
+
+                    return new ScribeEmissionRun(1, null);
+                }
+            }
+
+            return EmitVerified(repositoryRoot, check, output, error, leanReport);
         }
         catch (Exception exception) when (
             exception is InvalidOperationException
+                or FormatException
                 or IOException
                 or UnauthorizedAccessException
                 or ArgumentException)

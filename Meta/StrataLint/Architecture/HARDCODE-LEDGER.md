@@ -402,3 +402,19 @@ could not validate this migrated ledger: the unchanged base judge rejected BACKF
 before conservative replay could certify the candidate judge. The two-file repair
 therefore landed independently through PR #110 and its protected-surface gate, after
 which this branch merged the repaired dev judge and reran the complete acceptance chain.
+
+### DESCRIBE-NODES gate autopsy (2026-07-15)
+
+The first full gate found two integration debts that the compile and test targets do not
+exercise. Five new Describe and L-plane test files raised the
+`StrataLint.Scribe.Tests` root from 12 to 17 files, so SL-003 rejected the directory.
+They were moved without content changes into the pressure-created `Describe/` bucket,
+leaving both directories within the 12-file bound.
+
+The same gate found all 12 `atomizer: none` specification receipts displaced after the
+A12/A17 additions. `make ingest` failed before a ledger write because that command
+requires these manually delimited receipts to resolve before it plans atomized-source
+updates. Following the established `3faf952` rebind precedent, every unchanged sample
+span was shifted by the measured 1,882-byte offset while its two fingerprints remained
+unchanged. A targeted base-harness admission then returned protected-surface exit 3
+with only SL-022 diagnostics and no blocking content diagnostic.

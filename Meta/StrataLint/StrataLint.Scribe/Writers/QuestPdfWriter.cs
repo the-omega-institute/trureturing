@@ -82,43 +82,12 @@ public static class QuestPdfWriter
                         .FontFamily(MonospaceFonts)
                         .FontSize(9);
                     break;
-                case DocumentBlock.ComputedValue computed:
-                    var value = computed.Computation.EvaluateCanonical();
-                    column.Item().Text(text =>
-                    {
-                        text.Span(computed.Label.Value + ": ").SemiBold();
-                        text.Span(value).FontFamily(MonospaceFonts);
-                        text.Span(" " + DeterministicComputation.ProvenanceMarker);
-                    });
-                    break;
-                case DocumentBlock.RenderedStatement statement:
-                    WriteRenderedStatement(
-                        column,
-                        Resolve(statement.Declaration, leanReport));
-                    break;
                 case DocumentBlock.Section section:
                     WriteHeading(column, section.Title.Value, headingLevel);
                     WriteBlocks(column, section.Content, headingLevel + 1, leanReport);
                     break;
-                case DocumentBlock.Proposition proposition:
-                    WriteStatement(
-                        column,
-                        "Proposition",
-                        proposition.Title,
-                        proposition.Declaration,
-                        proposition.Content,
-                        headingLevel,
-                        leanReport);
-                    break;
-                case DocumentBlock.Theorem theorem:
-                    WriteStatement(
-                        column,
-                        "Theorem",
-                        theorem.Title,
-                        theorem.Declaration,
-                        theorem.Content,
-                        headingLevel,
-                        leanReport);
+                case DocumentBlock.Describe describe:
+                    WriteDescribe(column, describe, headingLevel, leanReport);
                     break;
                 default:
                     throw new UnreachableException("Unknown document block.");
@@ -152,37 +121,42 @@ public static class QuestPdfWriter
         });
     }
 
-    private static void WriteStatement(
+    private static void WriteDescribe(
         ColumnDescriptor column,
-        string kind,
-        Heading title,
-        LeanDeclarationRef declaration,
-        BlockSequence content,
+        DocumentBlock.Describe describe,
         int headingLevel,
         LeanAxiomReport? leanReport)
     {
-        var verified = Resolve(declaration, leanReport);
-        WriteHeading(column, $"{kind}: {title.Value}", headingLevel);
-        column.Item()
-            .Text($"Lean declaration: {declaration.Value} [{verified.AxiomBadge}]")
-            .FontFamily(MonospaceFonts)
-            .FontSize(8);
-        WriteBlocks(column, content, headingLevel + 1, leanReport);
-    }
+        var kind = DescribeVocabulary.HeadingName(describe.Kind);
+        var provenance = DescribeVocabulary.CanonicalName(describe.Provenance.Kind);
+        if (describe.Provenance.LiteratureReference is { } literature)
+        {
+            provenance += $" via {literature.Value} ({literature.Anchor.CanonicalString})";
+        }
+        WriteHeading(column, $"{kind}: {describe.Title.Value}", headingLevel);
+        column.Item().Text($"Provenance: {provenance}").FontSize(8);
+        switch (describe.Statement)
+        {
+            case DescribeStatement.FormulaAst formula:
+                column.Item()
+                    .Padding(6)
+                    .Background(Colors.Grey.Lighten4)
+                    .Text(LatexWriter.Write(formula.Value))
+                    .FontFamily(MonospaceFonts)
+                    .FontSize(9);
+                break;
+            case DescribeStatement.LeanDeclaration lean:
+                var verified = Resolve(lean.Value, leanReport);
+                column.Item()
+                    .Text($"Statement: {lean.Value.Value} [{verified.AxiomBadge}]")
+                    .FontFamily(MonospaceFonts)
+                    .FontSize(8);
+                break;
+            default:
+                throw new UnreachableException("Unknown Describe statement.");
+        }
 
-    private static void WriteRenderedStatement(
-        ColumnDescriptor column,
-        VerifiedLeanDeclaration declaration)
-    {
-        column.Item()
-            .Text($"Compiled Lean statement: {declaration.Reference.Value} [{declaration.AxiomBadge}]")
-            .FontSize(8);
-        column.Item()
-            .Padding(6)
-            .Background(Colors.Grey.Lighten4)
-            .Text(declaration.Declaration.TypeRepresentation)
-            .FontFamily(MonospaceFonts)
-            .FontSize(8);
+        WriteBlocks(column, describe.Content, headingLevel + 1, leanReport);
     }
 
     private static VerifiedLeanDeclaration Resolve(

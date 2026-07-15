@@ -118,7 +118,7 @@ public sealed class DocumentDiscoveryTests
     }
 
     [Fact]
-    public void DigitRawContainsAnHonestlyLabeledComputedZeckendorfExample()
+    public void DigitRawContainsATypedRepoDerivedZeckendorfExample()
     {
         var definition = DocumentDefinitions.All.Single(static item =>
             item.Document.Header.Gid.Value == "D5/S1/Digit/Raw");
@@ -128,29 +128,30 @@ public sealed class DocumentDiscoveryTests
             CanonicalMarkdownWriter.Write(definition.Document, report).AsSpan());
 
         Assert.Contains(
-            "Z(89) + Z(34) = Z(123) = 1010000000_W",
+            "\\operatorname{Z}\\left(89\\right) + \\operatorname{Z}\\left(34\\right) = \\operatorname{Z}\\left(123\\right) = 1010000000_{W}",
             markdown,
             StringComparison.Ordinal);
         Assert.Contains(
-            DeterministicComputation.ProvenanceMarker,
+            "Provenance: `repo-derived`",
             markdown,
             StringComparison.Ordinal);
     }
 
     [Fact]
-    public void PhaseBasicRendersTheCompiledInjectivityStatement()
+    public void PhaseBasicCarriesInjectivityAsItsTypedLeanStatement()
     {
         var definition = DocumentDefinitions.All.Single(static item =>
             item.Document.Header.Gid.Value == "D5/S1/Phase/Basic");
         var statement = Descendants(definition.Document.Content)
-            .OfType<DocumentBlock.RenderedStatement>()
-            .Single();
+            .OfType<DocumentBlock.Describe>()
+            .Single(static describe => describe.Title.Value == "Injectivity");
+        var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(statement.Statement);
 
         Assert.Equal(
             "D5/S1/Phase/Basic.goldenPhase_injective",
-            statement.Declaration.Value);
-        Assert.Equal(LeanDeclarationKind.Theorem, statement.Declaration.ExpectedKind);
-        Assert.True(statement.Declaration.RequireNoSorry);
+            lean.Value.Value);
+        Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
+        Assert.True(lean.Value.RequireNoSorry);
     }
 
     private static string FindRepositoryRoot()
@@ -177,8 +178,7 @@ public sealed class DocumentDiscoveryTests
             var nested = block switch
             {
                 DocumentBlock.Section section => section.Content,
-                DocumentBlock.Proposition proposition => proposition.Content,
-                DocumentBlock.Theorem theorem => theorem.Content,
+                DocumentBlock.Describe describe => describe.Content,
                 _ => null,
             };
             if (nested is null) continue;

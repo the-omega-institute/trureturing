@@ -6,6 +6,76 @@ namespace StrataLint.Scribe.Tests;
 public sealed class EmissionTests
 {
     [Fact]
+    public void RepositoryValidationFailsBeforeWritingDanglingDocuments()
+    {
+        var root = Path.Combine(
+            Path.GetTempPath(),
+            "stratalint-scribe-validation-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        try
+        {
+            var error = new StringWriter();
+            var report = LeanReportFixture.ForDocuments(
+                DocumentDefinitions.All.Select(static definition => definition.Document));
+
+            var exit = ScribeEmitter.Emit(
+                root,
+                check: false,
+                TextWriter.Null,
+                error,
+                report,
+                validateRepository: true);
+
+            Assert.Equal(1, exit);
+            Assert.Contains("dangling-gid", error.ToString(), StringComparison.Ordinal);
+            Assert.False(File.Exists(Path.Combine(
+                root,
+                DocumentDefinitions.All[0].RelativePath.Value)));
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Fact]
+    public void MalformedLibraryMetadataIsAStableEmissionFailure()
+    {
+        var root = Path.Combine(
+            Path.GetTempPath(),
+            "stratalint-scribe-library-" + Guid.NewGuid().ToString("N"));
+        var notes = Path.Combine(root, "Library", "notes");
+        Directory.CreateDirectory(notes);
+        try
+        {
+            File.WriteAllText(
+                Path.Combine(notes, "sos1957threegap.md"),
+                "---\nbibkey: sos1957threegap\ntitle: Invalid\ndoi: not-a-doi\n"
+                + "claim: Invalid fixture.\nstrata_touched: []\nlicense: citation-only\n"
+                + "triage: anchor\n---\n");
+            var error = new StringWriter();
+            var report = LeanReportFixture.ForDocuments(
+                DocumentDefinitions.All.Select(static definition => definition.Document));
+
+            var exit = ScribeEmitter.Emit(
+                root,
+                check: false,
+                TextWriter.Null,
+                error,
+                report,
+                validateRepository: true);
+
+            Assert.Equal(1, exit);
+            Assert.Contains("describe red code=invalid-doi", error.ToString(), StringComparison.Ordinal);
+            Assert.Contains("malformed DOI", error.ToString(), StringComparison.Ordinal);
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Fact]
     public void EmitWritesCanonicalFilesAndCheckDetectsDriftWithoutOverwriting()
     {
         var root = Path.Combine(
@@ -159,6 +229,17 @@ public sealed class EmissionTests
                 // Deterministic CI builds map [CallerFilePath] to the /_/ source root,
                 // so fixture copies must resolve through the runtime repository root.
                 File.Copy(Path.Combine(FindRepositoryRoot(), relativeSource), destination);
+            }
+            var repositoryRoot = FindRepositoryRoot();
+            foreach (var source in Directory.EnumerateFiles(
+                         Path.Combine(repositoryRoot, "D5"),
+                         "*.lean",
+                         SearchOption.AllDirectories))
+            {
+                var relative = Path.GetRelativePath(repositoryRoot, source);
+                var destination = Path.Combine(root, relative);
+                Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+                File.Copy(source, destination);
             }
 
             Assert.Equal(0, ScribeEmitter.Emit(
