@@ -276,3 +276,27 @@ subtract→residual ingestion for real new versions is Phase 2 (spec §372), who
 machinery is not yet built. This entry keeps the unregistered frontier honest until a
 Phase 2 ingestion lane lands: build the fingerprint-alignment pass, register new
 residual atoms, re-evaluate digest-status, then close this entry.
+
+### First-voyage autopsy (REFERENCE-ZERO-ANCHOR migrate, 2026-07-15)
+
+`make ingest` did not reach a ledger write. With the production ledger unchanged, its
+legacy byte boundaries point into the new theory bytes; the first truncated UTF-8 span
+fails during digest-status evaluation. A minimal data-only trial converted only the 20
+GICT/PZG receipts from `boundary` to `ast_path` and left all 12 `atomizer: none` spec
+receipts untouched. That exposed the alignment counts but was also rejected by the
+base-owned judge:
+
+- seen: 15
+- intended stale: 5 (`gict-hearts-o5-o6`, `gict-constant-Cphi`,
+  `gict-constant-T0`, `gict-constant-delta-mean`, `gict-constant-c1`)
+- reported residual-open frontier: 737
+
+The count is 737 rather than the expected version delta of about 165 because the
+aligner subtracts only registered receipt paths, not the 587 claims atomized from the
+baseline theory volumes. More importantly, stale admission requires the candidate
+receipt preimage to be byte-equal to `origin/dev`; a structured `ast_path` receipt
+cannot be byte-equal to its legacy `boundary` preimage. The second `make ingest`
+therefore failed on exactly the five receipts above with `INGEST_INVALID`, and wrote
+nothing. No data-only state can both retain those five as actual acknowledged stale
+receipts and pass the `origin/dev` baseline comparison. The trial ledger edit was
+removed; this item remains open for an expand-side cross-syntax identity/conversion fix.
