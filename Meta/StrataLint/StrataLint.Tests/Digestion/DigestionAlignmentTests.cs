@@ -123,6 +123,145 @@ public sealed class DigestionAlignmentTests
     }
 
     [Fact]
+    public void BaselineStaleRequiresExactReceiptRepresentation()
+    {
+        var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
+        var newBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。rewritten。\n");
+        var oldAtom = Assert.Single(GictAtomizer.Atomize(oldBytes).Claims);
+        var baselineText = Ledger([], Entry("old-receipt", oldAtom));
+        var candidateText = baselineText.Replace(
+            "atom_id: old-receipt",
+            "atom_id: 'old-receipt'",
+            StringComparison.Ordinal);
+
+        var result = DigestionLedgerAligner.Evaluate(
+            BackfillInventoryLoader.Load(candidateText),
+            Snapshot(newBytes),
+            BackfillInventoryLoader.Load(baselineText),
+            DigestionAlignmentMode.Ingest);
+
+        Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor("old-receipt"));
+        Assert.Contains(result.Findings, finding => finding.Contains(
+            "is not byte-equal in the baseline ledger",
+            StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void MachineDerivedStatusIsExcludedFromBaselineReceiptPreimage()
+    {
+        var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
+        var newBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。rewritten。\n");
+        var oldAtom = Assert.Single(GictAtomizer.Atomize(oldBytes).Claims);
+        var entry = Entry("old-receipt", oldAtom);
+        var baseline = BackfillInventoryLoader.Load(Ledger(
+            [],
+            entry.Replace("migration: residual", "migration: absorbed", StringComparison.Ordinal)));
+        var candidate = BackfillInventoryLoader.Load(Ledger(
+            [],
+            entry.Replace("migration: residual", "migration: partial", StringComparison.Ordinal)));
+
+        var result = DigestionLedgerAligner.Evaluate(
+            candidate,
+            Snapshot(newBytes),
+            baseline,
+            DigestionAlignmentMode.Ingest);
+
+        Assert.Empty(result.Findings);
+        Assert.Equal(DigestionReceiptAlignment.Stale, result.AlignmentFor("old-receipt"));
+    }
+
+    [Fact]
+    public void StatusFirstReceiptRetainsBaselineStaleIdentity()
+    {
+        var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
+        var newBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。rewritten。\n");
+        var oldAtom = Assert.Single(GictAtomizer.Atomize(oldBytes).Claims);
+        var ledger = BackfillInventoryLoader.Load(Ledger(
+            [],
+            StatusFirstEntry("old-receipt", oldAtom)));
+
+        var result = DigestionLedgerAligner.Evaluate(
+            ledger,
+            Snapshot(newBytes),
+            ledger,
+            DigestionAlignmentMode.Ingest);
+
+        Assert.Empty(result.Findings);
+        Assert.Equal(DigestionReceiptAlignment.Stale, result.AlignmentFor("old-receipt"));
+    }
+
+    [Fact]
+    public void SpacedMappingKeysRetainBaselineStaleIdentity()
+    {
+        var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
+        var newBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。rewritten。\n");
+        var oldAtom = Assert.Single(GictAtomizer.Atomize(oldBytes).Claims);
+        var ledgerText = Ledger([], Entry("old-receipt", oldAtom))
+            .Replace("entries:", "entries :", StringComparison.Ordinal)
+            .Replace("status:", "status :", StringComparison.Ordinal);
+        var ledger = BackfillInventoryLoader.Load(ledgerText);
+
+        var result = DigestionLedgerAligner.Evaluate(
+            ledger,
+            Snapshot(newBytes),
+            ledger,
+            DigestionAlignmentMode.Ingest);
+
+        Assert.Empty(result.Findings);
+        Assert.Equal(DigestionReceiptAlignment.Stale, result.AlignmentFor("old-receipt"));
+    }
+
+    [Fact]
+    public void SpacedStatusFirstKeyRetainsBaselineStaleIdentity()
+    {
+        var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
+        var newBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。rewritten。\n");
+        var oldAtom = Assert.Single(GictAtomizer.Atomize(oldBytes).Claims);
+        var ledgerText = Ledger([], StatusFirstEntry("old-receipt", oldAtom))
+            .Replace("entries:", "entries :", StringComparison.Ordinal)
+            .Replace("- status:", "- status :", StringComparison.Ordinal);
+        var ledger = BackfillInventoryLoader.Load(ledgerText);
+
+        var result = DigestionLedgerAligner.Evaluate(
+            ledger,
+            Snapshot(newBytes),
+            ledger,
+            DigestionAlignmentMode.Ingest);
+
+        Assert.Empty(result.Findings);
+        Assert.Equal(DigestionReceiptAlignment.Stale, result.AlignmentFor("old-receipt"));
+    }
+
+    [Fact]
+    public void PostStatusCommentMutationDoesNotInheritBaselineStaleIdentity()
+    {
+        var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
+        var newBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。rewritten。\n");
+        var oldAtom = Assert.Single(GictAtomizer.Atomize(oldBytes).Claims);
+        var entry = Entry("old-receipt", oldAtom);
+        var baseline = BackfillInventoryLoader.Load(Ledger(
+            [],
+            entry.Replace(
+                "truth: open",
+                "truth: open\n                # receipt-note: baseline",
+                StringComparison.Ordinal)));
+        var candidate = BackfillInventoryLoader.Load(Ledger(
+            [],
+            entry.Replace(
+                "truth: open",
+                "truth: open\n                # receipt-note: candidate",
+                StringComparison.Ordinal)));
+
+        var result = DigestionLedgerAligner.Evaluate(
+            candidate,
+            Snapshot(newBytes),
+            baseline,
+            DigestionAlignmentMode.Ingest);
+
+        Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor("old-receipt"));
+    }
+
+    [Fact]
     public void NewlyAddedFakeFingerprintIsRejectedEvenWhenAcknowledged()
     {
         var bytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。claim。\n");
@@ -233,6 +372,25 @@ public sealed class DigestionAlignmentTests
         Assert.Empty(admitted.Residual);
     }
 
+    [Fact]
+    public void IngestCountsOnlyNewStaleAcknowledgments()
+    {
+        var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
+        var currentBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。rewritten。\n");
+        var oldAtom = Assert.Single(GictAtomizer.Atomize(oldBytes).Claims);
+        var baseline = BackfillInventoryLoader.Load(Ledger([], Entry("old-receipt", oldAtom)));
+        var acknowledged = BackfillInventoryLoader.Load(Ledger(
+            ["old-receipt"],
+            Entry("old-receipt", oldAtom)));
+
+        var plan = DigestionIngestor.Plan(acknowledged, Snapshot(currentBytes), baseline);
+
+        Assert.Equal(0, plan.StaleAcknowledged);
+        Assert.Equal(
+            ["old-receipt"],
+            Assert.Single(plan.Document.RequireDigestionSources()).AcknowledgedStale.ToArray());
+    }
+
     private static RepositorySnapshot Snapshot(byte[] sourceBytes)
     {
         var raw = RawRepositorySnapshot.Create(
@@ -283,6 +441,24 @@ public sealed class DigestionAlignmentTests
                     status:
                       migration: residual
                       truth: open
+            """;
+
+    private static string StatusFirstEntry(string atomId, DigestionAtom atom) => $$"""
+                  - status:
+                      migration: residual
+                      truth: open
+                    atom_id: {{atomId}}
+                    ast_path: {{atom.AstPath}}
+                    fingerprints:
+                      raw_sha256: {{atom.Fingerprints.RawSha256}}
+                      normalized_sha256: {{atom.Fingerprints.NormalizedSha256}}
+                    coverage_gids: []
+                    receipts:
+                      coverage: []
+                      scribe: []
+                      unresolved_subitems: []
+                      chain_atoms: []
+                      tail_authorization: null
             """;
 
     private static string Entry(

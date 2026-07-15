@@ -53,7 +53,8 @@ internal sealed record DigestionLedgerEntry(
     DigestionFingerprints Fingerprints,
     ImmutableArray<string> CoverageGids,
     DigestionReceipts Receipts,
-    DigestionStatus ProjectedStatus)
+    DigestionStatus ProjectedStatus,
+    BackfillReceiptSyntax? ReceiptSyntax)
 {
     internal DigestionLedgerEntry(
         string sourceId,
@@ -64,7 +65,8 @@ internal sealed record DigestionLedgerEntry(
         DigestionFingerprints fingerprints,
         ImmutableArray<string> coverageGids,
         DigestionReceipts receipts,
-        DigestionStatus projectedStatus)
+        DigestionStatus projectedStatus,
+        BackfillReceiptSyntax? receiptSyntax = null)
         : this(
             sourceId,
             sourcePath,
@@ -75,7 +77,8 @@ internal sealed record DigestionLedgerEntry(
             fingerprints,
             coverageGids,
             receipts,
-            projectedStatus)
+            projectedStatus,
+            receiptSyntax)
     {
     }
 }

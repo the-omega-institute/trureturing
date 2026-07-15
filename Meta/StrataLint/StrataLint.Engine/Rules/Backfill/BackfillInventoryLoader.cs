@@ -7,20 +7,25 @@ internal sealed class BackfillInventoryDocument
     private readonly IReadOnlyDictionary<string, object?> root;
     private readonly ImmutableArray<BackfillTicketReference> projectedTickets;
     private readonly ImmutableArray<DigestionLedgerSource> projectedSources;
+    private readonly ImmutableArray<BackfillReceiptSyntax> receiptSyntaxes;
 
-    internal BackfillInventoryDocument(IReadOnlyDictionary<string, object?> root)
-        : this(root, default, default)
+    internal BackfillInventoryDocument(
+        IReadOnlyDictionary<string, object?> root,
+        ImmutableArray<BackfillReceiptSyntax> receiptSyntaxes)
+        : this(root, default, default, receiptSyntaxes)
     {
     }
 
     private BackfillInventoryDocument(
         IReadOnlyDictionary<string, object?> root,
         ImmutableArray<BackfillTicketReference> projectedTickets,
-        ImmutableArray<DigestionLedgerSource> projectedSources)
+        ImmutableArray<DigestionLedgerSource> projectedSources,
+        ImmutableArray<BackfillReceiptSyntax> receiptSyntaxes)
     {
         this.root = root;
         this.projectedTickets = projectedTickets;
         this.projectedSources = projectedSources;
+        this.receiptSyntaxes = receiptSyntaxes;
     }
 
     internal IReadOnlyDictionary<string, object?> Root => root;
@@ -55,6 +60,7 @@ internal sealed class BackfillInventoryDocument
 
         var rawSources = List(root, "sources", "sources must be a list");
         var sources = ImmutableArray.CreateBuilder<DigestionLedgerSource>();
+        var receiptIndex = 0;
         foreach (var rawSource in rawSources)
         {
             var source = Mapping(rawSource, "sources must contain mappings");
@@ -75,7 +81,17 @@ internal sealed class BackfillInventoryDocument
             var entries = ImmutableArray.CreateBuilder<DigestionLedgerEntry>();
             foreach (var rawEntry in List(source, "entries", $"source {sourceId} entries must be a list"))
             {
-                entries.Add(ParseEntry(sourceId, sourcePath, atomizer, rawEntry));
+                if (receiptIndex >= receiptSyntaxes.Length)
+                {
+                    throw new FormatException("BACKFILL receipt preimage count is incomplete");
+                }
+
+                entries.Add(ParseEntry(
+                    sourceId,
+                    sourcePath,
+                    atomizer,
+                    rawEntry,
+                    receiptSyntaxes[receiptIndex++]));
             }
 
             sources.Add(new DigestionLedgerSource(
@@ -86,6 +102,11 @@ internal sealed class BackfillInventoryDocument
                 entries.ToImmutable()));
         }
 
+        if (receiptIndex != receiptSyntaxes.Length)
+        {
+            throw new FormatException("BACKFILL receipt preimage count exceeds parsed entries");
+        }
+
         return sources.ToImmutable();
     }
 
@@ -94,7 +115,7 @@ internal sealed class BackfillInventoryDocument
 
     internal BackfillInventoryDocument WithDigestionSources(
         ImmutableArray<DigestionLedgerSource> sources) =>
-        new(root, RequireTickets(), sources);
+        new(root, RequireTickets(), sources, receiptSyntaxes);
 
     internal ImmutableArray<string> RequireReferencedGids()
     {
@@ -120,7 +141,8 @@ internal sealed class BackfillInventoryDocument
         string sourceId,
         string sourcePath,
         string atomizer,
-        object? rawEntry)
+        object? rawEntry,
+        BackfillReceiptSyntax receiptSyntax)
     {
         var entry = Mapping(rawEntry, $"source {sourceId} entries must be mappings");
         var hasBoundary = entry.ContainsKey("boundary");
@@ -178,7 +200,8 @@ internal sealed class BackfillInventoryDocument
             receipts,
             new DigestionStatus(
                 ParseMigration(Scalar(status, "migration", $"entry {atomId} migration")),
-                ParseTruth(Scalar(status, "truth", $"entry {atomId} truth"))));
+                ParseTruth(Scalar(status, "truth", $"entry {atomId} truth"))),
+            receiptSyntax);
     }
 
     private static DigestionReceipts ParseReceipts(string atomId, object? rawReceipts)
@@ -325,6 +348,6 @@ internal static class BackfillInventoryLoader
             throw new FormatException($"BACKFILL ledger must be {LedgerName}");
         }
 
-        return new BackfillInventoryDocument(root);
+        return new BackfillInventoryDocument(root, BackfillReceiptPreimage.Extract(text));
     }
 }

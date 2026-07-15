@@ -308,19 +308,7 @@ internal static class DigestionLedgerAligner
         candidate.SourceId == baseline.SourceId
         && candidate.SourcePath == baseline.SourcePath
         && candidate.Atomizer == baseline.Atomizer
-        && candidate.AtomId == baseline.AtomId
-        && candidate.AstPath == baseline.AstPath
-        && candidate.Boundary == baseline.Boundary
-        && candidate.Fingerprints == baseline.Fingerprints
-        && candidate.CoverageGids.SequenceEqual(baseline.CoverageGids, StringComparer.Ordinal)
-        && candidate.Receipts.Coverage.SequenceEqual(baseline.Receipts.Coverage)
-        && candidate.Receipts.Scribe.SequenceEqual(baseline.Receipts.Scribe)
-        && candidate.Receipts.UnresolvedSubitems.SequenceEqual(
-            baseline.Receipts.UnresolvedSubitems,
-            StringComparer.Ordinal)
-        && candidate.Receipts.ChainAtoms.SequenceEqual(
-            baseline.Receipts.ChainAtoms,
-            StringComparer.Ordinal)
-        && candidate.Receipts.TailAuthorization == baseline.Receipts.TailAuthorization
-        && candidate.ProjectedStatus == baseline.ProjectedStatus;
+        && candidate.ReceiptSyntax is { } candidateSyntax
+        && baseline.ReceiptSyntax is { } baselineSyntax
+        && candidateSyntax.IdentityBytes.AsSpan().SequenceEqual(baselineSyntax.IdentityBytes.AsSpan());
 }

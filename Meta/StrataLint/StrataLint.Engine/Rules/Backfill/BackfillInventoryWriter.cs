@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Globalization;
 using System.Text;
 
 namespace StrataLint.Engine;
@@ -7,7 +8,15 @@ internal static class BackfillInventoryWriter
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
-    internal static ImmutableArray<byte> Write(BackfillInventoryDocument document)
+    internal static ImmutableArray<byte> Write(BackfillInventoryDocument document) =>
+        Write(document, preserveReceiptSyntax: false);
+
+    internal static ImmutableArray<byte> WriteForIngest(BackfillInventoryDocument document) =>
+        Write(document, preserveReceiptSyntax: true);
+
+    private static ImmutableArray<byte> Write(
+        BackfillInventoryDocument document,
+        bool preserveReceiptSyntax)
     {
         ArgumentNullException.ThrowIfNull(document);
         var builder = new StringBuilder();
@@ -28,7 +37,17 @@ internal static class BackfillInventoryWriter
             Line(builder, "    entries:");
             foreach (var entry in source.Entries)
             {
-                Entry(builder, entry);
+                if (preserveReceiptSyntax && entry.ReceiptSyntax is { } syntax)
+                {
+                    var receipt = BackfillReceiptPreimage.RewriteStatus(
+                        syntax,
+                        entry.ProjectedStatus);
+                    builder.Append(StrictUtf8.GetString(receipt.AsSpan()));
+                }
+                else
+                {
+                    Entry(builder, entry);
+                }
             }
         }
 
@@ -145,6 +164,11 @@ internal static class BackfillInventoryWriter
 
     private static string Scalar(string value)
     {
+        if (RequiresStringQuotes(value))
+        {
+            return "'" + value + "'";
+        }
+
         if (string.IsNullOrWhiteSpace(value)
             || value[0] is '-' or '?' or ':' or '!' or '&' or '*' or '#' or '{' or '['
             || value.Contains('\r')
@@ -158,6 +182,15 @@ internal static class BackfillInventoryWriter
 
         return value;
     }
+
+    private static bool RequiresStringQuotes(string value) =>
+        value is "[]" or "null" or "~" or "|" or "|-" or "|+" or ">" or ">-" or ">+"
+        || int.TryParse(
+            value,
+            NumberStyles.Integer,
+            CultureInfo.InvariantCulture,
+            out var integer)
+        && integer >= 0;
 
     private static void Line(StringBuilder builder, string value) => builder.Append(value).Append('\n');
 }

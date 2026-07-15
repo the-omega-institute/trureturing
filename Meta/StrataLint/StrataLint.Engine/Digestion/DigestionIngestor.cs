@@ -52,7 +52,9 @@ internal static class DigestionIngestor
                 .Select(static entry => entry.AtomId)
                 .Order(StringComparer.Ordinal)
                 .ToImmutableArray();
-            staleAcknowledged += acknowledgments.Length;
+            var priorAcknowledgments = source.AcknowledgedStale.ToHashSet(StringComparer.Ordinal);
+            staleAcknowledged += acknowledgments.Count(priorAcknowledgment =>
+                !priorAcknowledgments.Contains(priorAcknowledgment));
             var entries = source.Entries.ToBuilder();
             if (residualBySource.TryGetValue(source.SourceId, out var residual))
             {
@@ -74,7 +76,8 @@ internal static class DigestionIngestor
                         item.Atom.Fingerprints,
                         CoverageGids: [],
                         new DigestionReceipts([], [], [], [], null),
-                        item.ProjectedStatus));
+                        item.ProjectedStatus,
+                        ReceiptSyntax: null));
                     residualOpenAdded++;
                 }
             }

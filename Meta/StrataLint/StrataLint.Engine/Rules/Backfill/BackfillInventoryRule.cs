@@ -3,6 +3,13 @@ using System.Text.RegularExpressions;
 
 namespace StrataLint.Engine;
 
+internal sealed record BackfillInventoryValidationContext(
+    RepositorySnapshot Current,
+    RepositorySnapshot Baseline,
+    ValidatedPolicy Policy,
+    AcceptedLeanClosure Lean,
+    VerifiedScribeEmissions? VerifiedScribeEmissions);
+
 internal static class BackfillInventoryRule
 {
     private const string BackfillPath = BackfillInventoryLoader.RelativePath;
@@ -38,6 +45,22 @@ internal static class BackfillInventoryRule
             return [new RuleFinding(BackfillPath, exception.Message)];
         }
 
+        return EvaluateDocument(
+            new BackfillInventoryValidationContext(
+                context.Current,
+                context.Baseline,
+                context.Policy,
+                context.Lean,
+                context.VerifiedScribeEmissions),
+            document);
+    }
+
+    internal static ImmutableArray<RuleFinding> EvaluateDocument(
+        BackfillInventoryValidationContext context,
+        BackfillInventoryDocument document)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(document);
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         var root = document.Root;
         if (!root.Keys.ToHashSet(StringComparer.Ordinal).SetEquals(
@@ -73,7 +96,7 @@ internal static class BackfillInventoryRule
     }
 
     private static void ValidateDigestionEntries(
-        RuleEvaluationContext context,
+        BackfillInventoryValidationContext context,
         BackfillInventoryDocument document,
         ImmutableArray<DigestionLedgerSource> sources,
         ImmutableArray<DigestionLedgerEntry> entries,

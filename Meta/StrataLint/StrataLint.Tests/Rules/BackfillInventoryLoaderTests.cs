@@ -95,6 +95,58 @@ public sealed class BackfillInventoryLoaderTests
         Assert.Empty(roundTripped.RequireTickets());
     }
 
+    [Theory]
+    [InlineData("[]")]
+    [InlineData("null")]
+    [InlineData("~")]
+    [InlineData("0")]
+    [InlineData("+1")]
+    [InlineData("01")]
+    [InlineData("|")]
+    [InlineData("|-")]
+    [InlineData("|+")]
+    [InlineData(">")]
+    [InlineData(">-")]
+    [InlineData(">+")]
+    public void CanonicalWriterQuotesStringScalarsThatTheParserWouldCoerce(string atomId)
+    {
+        var yaml = $$"""
+            schema_version: 3
+            ledger: theory-digestion-v1
+            sources:
+              - source_id: synthetic-source
+                path: docs/synthetic.md
+                atomizer: synthetic-v1
+                acknowledged_stale: []
+                entries:
+                  - atom_id: '{{atomId}}'
+                    ast_path: theorem/1.1
+                    fingerprints:
+                      raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
+                      normalized_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
+                    coverage_gids: []
+                    receipts:
+                      coverage: []
+                      scribe: []
+                      unresolved_subitems: []
+                      chain_atoms: []
+                      tail_authorization: null
+                    status:
+                      migration: residual
+                      truth: open
+            ticket_index: []
+            """;
+        var inventory = BackfillInventoryLoader.Load(yaml);
+
+        var written = System.Text.Encoding.UTF8.GetString(
+            BackfillInventoryWriter.Write(inventory).AsSpan());
+        var roundTripped = BackfillInventoryLoader.Load(written);
+        var source = Assert.Single(roundTripped.RequireDigestionSources());
+
+        Assert.Equal(atomId, Assert.Single(source.Entries).AtomId);
+        Assert.Contains($"atom_id: '{atomId}'", written, StringComparison.Ordinal);
+    }
+
     [Fact]
     public void CanonicalWriterRoundTripsTheCurrentLedgerByteExact()
     {

@@ -27,13 +27,14 @@ internal static class IngestCommand
             var document = LoadDocument(current, "candidate");
             var baselineDocument = LoadDocument(baseline, "baseline");
             var plan = DigestionIngestor.Plan(document, current, baselineDocument);
-            var plannedBytes = BackfillInventoryWriter.Write(plan.Document);
+            var plannedBytes = BackfillInventoryWriter.WriteForIngest(plan.Document);
             var plannedSnapshot = Decode(ReplaceLedger(currentRaw, plannedBytes));
+            var plannedDocument = LoadDocument(plannedSnapshot, "planned");
             var report = leanReportSource.Load(current);
             var lean = ValidateLean(plannedSnapshot, report);
             var verifiedScribeEmissions = scribeEmissionVerifier.Verify(report);
             var derived = DigestionStatusEvaluator.Evaluate(
-                plan.Document,
+                plannedDocument,
                 plannedSnapshot,
                 lean,
                 verifiedScribeEmissions,
@@ -45,8 +46,8 @@ internal static class IngestCommand
                 static item => item.Entry.AtomId,
                 static item => item.DerivedStatus,
                 StringComparer.Ordinal);
-            var refreshed = plan.Document.WithDigestionSources(
-                plan.Document.RequireDigestionSources()
+            var refreshed = plannedDocument.WithDigestionSources(
+                plannedDocument.RequireDigestionSources()
                     .Select(source => source with
                     {
                         Entries = source.Entries
@@ -57,15 +58,23 @@ internal static class IngestCommand
                             .ToImmutableArray(),
                     })
                     .ToImmutableArray());
-            var finalBytes = BackfillInventoryWriter.Write(refreshed);
+            var finalBytes = BackfillInventoryWriter.WriteForIngest(refreshed);
             var finalSnapshot = Decode(ReplaceLedger(currentRaw, finalBytes));
+            var finalDocument = LoadDocument(finalSnapshot, "final");
             var evaluation = DigestionStatusEvaluator.Evaluate(
-                refreshed,
+                finalDocument,
                 finalSnapshot,
                 lean,
                 verifiedScribeEmissions,
                 baselineDocument);
             RequireNoFindings(evaluation);
+            RequireValidBackfill(
+                finalDocument,
+                finalSnapshot,
+                baseline,
+                LoadPolicy(finalSnapshot),
+                lean,
+                verifiedScribeEmissions);
 
             var currentLedger = currentRaw.Entries.Single(static entry =>
                 entry.Path == BackfillInventoryLoader.RelativePath);
@@ -142,6 +151,47 @@ internal static class IngestCommand
             throw new InvalidOperationException(
                 "digest status is invalid: " + string.Join("; ", evaluation.Findings));
         }
+    }
+
+    private static void RequireValidBackfill(
+        BackfillInventoryDocument document,
+        RepositorySnapshot current,
+        RepositorySnapshot baseline,
+        ValidatedPolicy policy,
+        AcceptedLeanClosure lean,
+        VerifiedScribeEmissions verifiedScribeEmissions)
+    {
+        var findings = BackfillInventoryRule.EvaluateDocument(
+            new BackfillInventoryValidationContext(
+                current,
+                baseline,
+                policy,
+                lean,
+                verifiedScribeEmissions),
+            document);
+        if (findings.Length > 0)
+        {
+            throw new InvalidOperationException(
+                "SL-016 final ledger is invalid: "
+                + string.Join("; ", findings.Select(static finding => finding.Message)));
+        }
+    }
+
+    private static ValidatedPolicy LoadPolicy(RepositorySnapshot snapshot)
+    {
+        if (!snapshot.TryGetFile("Meta/registry.yaml", out var registry)
+            || !snapshot.TryGetFile("Meta/domains.yaml", out var domains))
+        {
+            throw new InvalidOperationException(
+                "ingest requires Meta/registry.yaml and Meta/domains.yaml");
+        }
+
+        return RegistryLoader.Load(registry.RawBytes.AsSpan(), domains.RawBytes.AsSpan()) switch
+        {
+            RegistryLoadOutcome.Accepted accepted => accepted.Policy,
+            RegistryLoadOutcome.InfrastructureFailure failure =>
+                throw new InvalidOperationException(failure.Message),
+        };
     }
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
