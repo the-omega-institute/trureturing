@@ -110,6 +110,17 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
   findings, after which both text-data classes were bound to the real strict-UTF8
   `SnapshotDecoder`. FILEMAP manifest, architecture, and emitter selections cover the
   closed-world, red fixtures, and byte-exact dependency projection.
+- Spec-digestion migration autopsy: the first base-controlled replay failed closed in
+  `DigestionFingerprint` because the A8/A18/6.2 edits shifted all twelve spec acceptance
+  slices by 1,035 bytes. The old registered slices were found exactly once in the current
+  spec with unchanged bytes and fingerprints; `Meta/BACKFILL.yaml` moved their contiguous
+  boundaries from `26902..30633` to `27937..31668`. The next base and candidate checks
+  passed that boundary instead of throwing a UTF-8 decoder exception.
+- Ceremony hash-tool autopsy: macOS Perl `shasum` rejected the process `C.UTF-8` locale
+  before reading either report. The system OpenSSL SHA-256 implementation then measured
+  both independently generated Lean reports as
+  `797dae7a5a1177d47acb9e7affc20fc84762dc7f856bcbdfc4296b70ba30e26d`, and `cmp`
+  confirmed byte identity.
 
 ## Residual scan
 
