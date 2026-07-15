@@ -12,7 +12,13 @@ internal static class ConservativeActualTreeEvaluator
         var repository = new GitRepositoryGateway(invocation.BaselineRoot);
         var snapshot = Decode(repository.ReadRevision(invocation.BaselineIdentity.CommitOid));
         var report = RawLeanReportArtifact.ReadFile(invocation.BaselineLeanReport, snapshot);
-        var verifiedScribe = new ProductionScribeEmissionVerifier(invocation.BaselineRoot).Verify(report);
+        var candidateChanges = new GitRepositoryGateway(invocation.CandidateRoot)
+            .Prepare(invocation.BaselineIdentity.CommitOid)
+            .Changes;
+        var verifiedScribe = VerifyBaselineScribeForReplay(
+            new ProductionScribeEmissionVerifier(invocation.BaselineRoot),
+            report,
+            candidateChanges);
         var changes = RawChangeSet.Create(Array.Empty<string>());
         var evaluation = SnapshotAdmissionCore.Evaluate(
             snapshot,
@@ -67,6 +73,26 @@ internal static class ConservativeActualTreeEvaluator
             ConservativeExtensionCommand.CandidateTreeCaseId,
             CandidateTreeCaseRoot(invocation),
             admission);
+    }
+
+    internal static VerifiedScribeEmissions? VerifyBaselineScribeForReplay(
+        IScribeEmissionVerifier verifier,
+        LeanAxiomReport report,
+        RawChangeSet candidateChanges)
+    {
+        ArgumentNullException.ThrowIfNull(verifier);
+        ArgumentNullException.ThrowIfNull(report);
+        ArgumentNullException.ThrowIfNull(candidateChanges);
+        var bootstrap = BootstrapGate.Evaluate(candidateChanges);
+        if (bootstrap is BootstrapOutcome.InfrastructureFailure failure)
+        {
+            throw new InvalidOperationException(failure.Message);
+        }
+
+        return ProductionCliEnvironment.VerifyScribeForAdmission(
+            verifier,
+            report,
+            bootstrap);
     }
 
     private static ConservativeCaseResult Result(

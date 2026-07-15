@@ -16,6 +16,8 @@ public sealed class TrustTopologyTests
     private const string EngineLockPath =
         "Meta/StrataLint/StrataLint.Engine/packages.lock.json";
     private const string RawDefinitionSourcePath = "Blueprint/D5/S1/Digit/Raw.scribe.cs";
+    private const string C0CertificatePath =
+        "Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json";
 
     public static TheoryData<string> ProtectedPaths => new()
     {
@@ -29,6 +31,9 @@ public sealed class TrustTopologyTests
         RepositoryPathPolicy.AssumptionRegistryPath,
         "Meta/StrataLint/Golden/rules.json",
         RuleFixture.GoldenDataSourcePath,
+        ValuesProjectionLoader.KernelDataPath,
+        FrozenLedgerChangeClassifier.LedgerPath,
+        C0CertificatePath,
         SolutionPath,
         EngineProjectPath,
         "global.json",
@@ -40,6 +45,13 @@ public sealed class TrustTopologyTests
         ".github/CODEOWNERS",
         RuleFixture.WorkflowPath,
         RuleFixture.HarnessGatePath,
+    };
+
+    public static TheoryData<string> DataPaths => new()
+    {
+        "Meta/BACKFILL.yaml",
+        "Meta/FILEMAP.toml",
+        "Library/queries.yaml",
     };
 
     [Theory]

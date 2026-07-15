@@ -50,3 +50,22 @@ forbids that directory and assembly from returning. Declarative instances live o
 assemblies in their canonical TOML/Lean locations; shared program schema lives with its
 smallest runtime owner. External review and branch protection remain human authorization;
 neither candidate files nor a successful candidate test job can synthesize approval.
+
+## FILEMAP custody boundary
+
+`Meta/FILEMAP.toml` owns repository file kind and producer/consumer/verifier relations.
+It remains separate from `Meta/registry.yaml`: the registry has a strict semantic-coordinate
+and artifact-kind schema, while FILEMAP has a strict file-custody schema. The architecture
+suite joins them by requiring registry `root_files` to equal tracked root files, without
+copying either schema into the other. The registry lists the FILEMAP authority and its
+generated projection as governance documents so predecessor closed-world judges can
+admit the new artifact class without candidate-only path exceptions.
+
+`Meta/StrataLint/` is normatively a program-only protected surface. The open
+`RESIDENCE-EPOCH` records five current `kind=data` files under
+`Meta/StrataLint/Golden/`; their two FILEMAP entries carry
+`residence_violation=true`, and the architecture suite freezes the exact expanded file
+set so an unmarked or additional violation fails. Blueprint Scribe sources and the
+Golden residence remain under the predecessor SL-022 protection contract in this epoch.
+Moving cases, values, and C0/frozen material to top-level `Golden/` is deferred until an
+sshx-reviewed verifier mechanism can approve protection-surface contraction.

@@ -202,7 +202,27 @@ public sealed class EmissionTests
             error);
 
         Assert.Equal(2, exit);
-        Assert.Contains("emit|catalog|emit-values [--check]", error.ToString(), StringComparison.Ordinal);
+        Assert.Contains("emit|catalog|emit-values|filemap [--check]", error.ToString(), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void EveryBlueprintMarkdownHasExactlyOneDiscoveredScribeDefinition()
+    {
+        var root = FindRepositoryRoot();
+        var markdownPaths = Directory
+            .EnumerateFiles(Path.Combine(root, "Blueprint"), "*.md", SearchOption.AllDirectories)
+            .Select(path => Path.GetRelativePath(root, path).Replace('\\', '/'))
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+        var definitionPaths = DocumentDefinitions.All
+            .Select(static definition => definition.RelativePath.Value)
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+
+        Assert.Equal(markdownPaths, definitionPaths);
+        Assert.All(markdownPaths, path => Assert.True(
+            File.Exists(Path.Combine(root, path[..^".md".Length] + ".scribe.cs")),
+            $"missing Scribe definition for {path}"));
     }
 
     private static string Sha256(byte[] bytes) =>

@@ -5,6 +5,12 @@ namespace StrataLint.Scribe.Tests;
 
 public sealed class DocumentDiscoveryTests
 {
+    private const string ConjDocumentPath = "Blueprint/D5/S0/Carrier/Conj.md";
+    private const string NormDocumentPath = "Blueprint/D5/S0/Carrier/Norm.md";
+    private const string RingDocumentPath = "Blueprint/D5/S0/Carrier/Ring.md";
+    private const string UnitsDocumentPath = "Blueprint/D5/S0/Carrier/Units.md";
+    private const string NotationDocumentPath = "Blueprint/D5/S0/Conventions/Notation.md";
+    private const string WDigitsDocumentPath = "Blueprint/D5/S0/Conventions/WDigits.md";
     private const string CarryDocumentPath = "Blueprint/D5/S1/Digit/Carry.md";
     private const string RawDocumentPath = "Blueprint/D5/S1/Digit/Raw.md";
     private const string PhaseDocumentPath = "Blueprint/D5/S1/Phase/Basic.md";
@@ -17,6 +23,12 @@ public sealed class DocumentDiscoveryTests
     {
         Assert.Equal(
             [
+                "D5/S0/Carrier/Conj",
+                "D5/S0/Carrier/Norm",
+                "D5/S0/Carrier/Ring",
+                "D5/S0/Carrier/Units",
+                "D5/S0/Conventions/Notation",
+                "D5/S0/Conventions/WDigits",
                 "D5/S1/Digit/Carry",
                 "D5/S1/Digit/Raw",
                 "D5/S1/Phase/Basic",
@@ -26,6 +38,12 @@ public sealed class DocumentDiscoveryTests
             DocumentDefinitions.All.Select(static item => item.Document.Header.Gid.Value));
         Assert.Equal(
             [
+                ConjDocumentPath,
+                NormDocumentPath,
+                RingDocumentPath,
+                UnitsDocumentPath,
+                NotationDocumentPath,
+                WDigitsDocumentPath,
                 CarryDocumentPath,
                 RawDocumentPath,
                 PhaseDocumentPath,
