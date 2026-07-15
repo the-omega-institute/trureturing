@@ -131,44 +131,6 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void IngestCapturesNoAtomizerBoundaryBytesAndRemainsByteIdempotent()
-    {
-        var sourceBytes = Encoding.UTF8.GetBytes("manual specification receipt\n");
-        var atom = new DigestionAtom(
-            "manual/receipt",
-            0,
-            sourceBytes.Length,
-            ImmutableArray.CreateRange(sourceBytes),
-            DigestionFingerprint.Compute(sourceBytes),
-            ImmutableArray<DigestionContext>.Empty);
-        var ledgerText = Ledger([], LegacyEntry("spec-receipt", atom))
-            .Replace(
-                $"    atomizer: {AtomizerRegistry.GictId}\n    acknowledged_stale: []\n",
-                $"    atomizer: {AtomizerRegistry.NoAtomizerId}\n",
-                StringComparison.Ordinal);
-        var ledger = BackfillInventoryLoader.Load(ledgerText);
-
-        var first = DigestionIngestor.Plan(ledger, Snapshot(sourceBytes), ledger);
-        var firstBytes = BackfillInventoryWriter.WriteForIngest(first.Document);
-        var migrated = BackfillInventoryLoader.Load(Encoding.UTF8.GetString(firstBytes.AsSpan()));
-
-        var captured = Assert.Single(first.CasObjects);
-        var migratedEntry = Assert.Single(migrated.RequireDigestionEntries());
-        Assert.NotNull(migratedEntry.Boundary);
-        Assert.Equal(atom.Fingerprints.RawSha256, migratedEntry.CasRef);
-        Assert.Equal(sourceBytes, captured.Bytes.ToArray());
-
-        var second = DigestionIngestor.Plan(
-            migrated,
-            Snapshot(sourceBytes, first.CasObjects),
-            ledger);
-        var secondBytes = BackfillInventoryWriter.WriteForIngest(second.Document);
-
-        Assert.Empty(second.CasObjects);
-        Assert.Equal(firstBytes.ToArray(), secondBytes.ToArray());
-    }
-
-    [Fact]
     public void IngestPreservesTheLegacyResidualIdForASingleOccurrence()
     {
         var sourceBytes = Encoding.UTF8.GetBytes(

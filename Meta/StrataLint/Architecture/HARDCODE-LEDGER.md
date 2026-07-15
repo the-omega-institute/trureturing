@@ -351,6 +351,13 @@ E1 merge `806494e` to the newly landed describe-node merge `94fcbc4`. E2 integra
 new baseline and reruns the same gate; pinning the stale base would have hidden a real
 concurrent predecessor instead of proving a conservative extension over current dev.
 
+The next gate reached admission and exposed one content violation before SL-022:
+the new no-atomizer ingest fixture had pushed `DigestionAlignmentTests.cs` from below
+the SL-003 ceiling to 821 lines. The fixture moved intact to the focused ledger suite;
+the alignment suite is now 783 lines, the ledger suite remains below capacity, and the
+direct admission probe returns only the expected protected-surface exit 3. No test or
+capacity rule was weakened to obtain that routing.
+
 ## DIGESTION-PHASE2-INGEST (complete, 2026-07-15)
 
 After PR #109 supplied cross-syntax receipt identity and one-step legacy conversion,
