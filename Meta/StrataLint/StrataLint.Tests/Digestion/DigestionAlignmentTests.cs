@@ -123,27 +123,31 @@ public sealed class DigestionAlignmentTests
     }
 
     [Fact]
-    public void BaselineStaleRequiresExactReceiptRepresentation()
+    public void BaselineIdentityAllowsLegacyBoundaryToStructuredStaleMigration()
     {
         var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
         var newBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。rewritten。\n");
         var oldAtom = Assert.Single(GictAtomizer.Atomize(oldBytes).Claims);
-        var baselineText = Ledger([], Entry("old-receipt", oldAtom));
-        var candidateText = baselineText.Replace(
-            "atom_id: old-receipt",
-            "atom_id: 'old-receipt'",
-            StringComparison.Ordinal);
+        var newAtom = Assert.Single(GictAtomizer.Atomize(newBytes).Claims);
+        var baseline = BackfillInventoryLoader.Load(Ledger(
+            [],
+            LegacyEntry("old-receipt", oldAtom)));
+        var candidate = BackfillInventoryLoader.Load(Ledger(
+            ["old-receipt"],
+            Entry("old-receipt", "promoted/theorem/1.1", oldAtom.Fingerprints),
+            Entry("current-receipt", newAtom)));
 
         var result = DigestionLedgerAligner.Evaluate(
-            BackfillInventoryLoader.Load(candidateText),
+            candidate,
             Snapshot(newBytes),
-            BackfillInventoryLoader.Load(baselineText),
-            DigestionAlignmentMode.Ingest);
+            baseline,
+            DigestionAlignmentMode.Admission);
 
-        Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor("old-receipt"));
-        Assert.Contains(result.Findings, finding => finding.Contains(
-            "is not byte-equal in the baseline ledger",
-            StringComparison.Ordinal));
+        Assert.Empty(result.Findings);
+        Assert.Empty(result.Residual);
+        Assert.Equal(DigestionReceiptAlignment.Stale, result.AlignmentFor("old-receipt"));
+        Assert.Equal(DigestionReceiptAlignment.Seen, result.AlignmentFor("current-receipt"));
+        Assert.Equal(["old-receipt"], result.ActualStale.ToArray());
     }
 
     [Fact]
@@ -233,7 +237,7 @@ public sealed class DigestionAlignmentTests
     }
 
     [Fact]
-    public void PostStatusCommentMutationDoesNotInheritBaselineStaleIdentity()
+    public void NonIdentitySyntaxMutationRetainsBaselineStaleIdentity()
     {
         var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
         var newBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。rewritten。\n");
@@ -258,7 +262,39 @@ public sealed class DigestionAlignmentTests
             baseline,
             DigestionAlignmentMode.Ingest);
 
+        Assert.Empty(result.Findings);
+        Assert.Equal(DigestionReceiptAlignment.Stale, result.AlignmentFor("old-receipt"));
+    }
+
+    [Fact]
+    public void FingerprintTamperingCannotInheritLegacyBaselineIdentity()
+    {
+        var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
+        var currentBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。rewritten。\n");
+        var oldAtom = Assert.Single(GictAtomizer.Atomize(oldBytes).Claims);
+        var currentAtom = Assert.Single(GictAtomizer.Atomize(currentBytes).Claims);
+        var baseline = BackfillInventoryLoader.Load(Ledger(
+            [],
+            LegacyEntry("old-receipt", oldAtom)));
+        var tampered = new DigestionFingerprints(
+            "sha256:" + new string('0', 64),
+            oldAtom.Fingerprints.NormalizedSha256);
+        var candidate = BackfillInventoryLoader.Load(Ledger(
+            ["old-receipt"],
+            Entry("old-receipt", oldAtom.AstPath, tampered),
+            Entry("current-receipt", currentAtom)));
+
+        var result = DigestionLedgerAligner.Evaluate(
+            candidate,
+            Snapshot(currentBytes),
+            baseline,
+            DigestionAlignmentMode.Admission);
+
         Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor("old-receipt"));
+        Assert.Contains(result.Findings, finding => finding.Contains(
+            "entry old-receipt fingerprint does not match ast_path theorem/1.1 "
+            + "and has no matching baseline receipt identity",
+            StringComparison.Ordinal));
     }
 
     [Fact]
@@ -286,7 +322,7 @@ public sealed class DigestionAlignmentTests
 
         Assert.Contains(result.Findings, finding => finding.Contains(
             "entry fake-receipt fingerprint does not match ast_path theorem/1.1 "
-            + "and is not byte-equal in the baseline ledger",
+            + "and has no matching baseline receipt identity",
             StringComparison.Ordinal));
     }
 
@@ -389,6 +425,34 @@ public sealed class DigestionAlignmentTests
         Assert.Equal(
             ["old-receipt"],
             Assert.Single(plan.Document.RequireDigestionSources()).AcknowledgedStale.ToArray());
+    }
+
+    [Fact]
+    public void IngestMigratesLegacyBoundariesAgainstNewVolumeAndIsByteIdempotent()
+    {
+        var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
+        var currentBytes = Encoding.UTF8.GetBytes(
+            "# GICT\n\n**定理 1.1(A)**。rewritten。\n\n**定理 1.2(B)**。new。\n");
+        var oldAtom = Assert.Single(GictAtomizer.Atomize(oldBytes).Claims);
+        var baseline = BackfillInventoryLoader.Load(Ledger(
+            [],
+            LegacyEntry("old-receipt", oldAtom)));
+
+        var first = DigestionIngestor.Plan(baseline, Snapshot(currentBytes), baseline);
+        var firstBytes = BackfillInventoryWriter.WriteForIngest(first.Document);
+        var migrated = BackfillInventoryLoader.Load(Encoding.UTF8.GetString(firstBytes.AsSpan()));
+        var second = DigestionIngestor.Plan(migrated, Snapshot(currentBytes), baseline);
+        var secondBytes = BackfillInventoryWriter.WriteForIngest(second.Document);
+
+        Assert.Equal(1, first.StaleAcknowledged);
+        Assert.Equal(2, first.ResidualOpenAdded);
+        var source = Assert.Single(first.Document.RequireDigestionSources());
+        Assert.Equal(["old-receipt"], source.AcknowledgedStale.ToArray());
+        Assert.All(source.Entries, static entry => Assert.Null(entry.Boundary));
+        Assert.DoesNotContain("boundary:", Encoding.UTF8.GetString(firstBytes.AsSpan()), StringComparison.Ordinal);
+        Assert.Equal(0, second.StaleAcknowledged);
+        Assert.Equal(0, second.ResidualOpenAdded);
+        Assert.Equal(firstBytes.ToArray(), secondBytes.ToArray());
     }
 
     private static RepositorySnapshot Snapshot(byte[] sourceBytes)

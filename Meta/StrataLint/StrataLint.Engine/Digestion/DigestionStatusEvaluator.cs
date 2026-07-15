@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Text;
 
 namespace StrataLint.Engine;
 
@@ -260,15 +261,32 @@ internal static class DigestionStatusEvaluator
             || boundary.EndByte <= boundary.StartByte
             || boundary.EndByte > source.RawBytes.Length)
         {
-            findings.Add($"entry {entry.AtomId} byte span is outside {entry.SourcePath}");
+            findings.Add(
+                $"entry {entry.AtomId} byte span is outside {entry.SourcePath}; run make ingest");
             gaps.Add(new DigestionGap("boundary-span-invalid", boundary.AstPath));
             return false;
         }
 
         var storedSlice = source.RawBytes.AsSpan()[boundary.StartByte..boundary.EndByte];
-        if (DigestionFingerprint.Compute(storedSlice) != entry.Fingerprints)
+        DigestionFingerprints fingerprints;
+        try
         {
-            findings.Add($"entry {entry.AtomId} fingerprint disagrees with its source byte span");
+            fingerprints = DigestionFingerprint.Compute(storedSlice);
+        }
+        catch (DecoderFallbackException)
+        {
+            findings.Add(
+                $"entry {entry.AtomId} boundary cuts invalid UTF-8 in {entry.SourcePath}; "
+                + "run make ingest");
+            gaps.Add(new DigestionGap("boundary-not-reproducible", boundary.AstPath));
+            return false;
+        }
+
+        if (fingerprints != entry.Fingerprints)
+        {
+            findings.Add(
+                $"entry {entry.AtomId} fingerprint disagrees with its source byte span; "
+                + "run make ingest");
             gaps.Add(new DigestionGap("boundary-fingerprint-mismatch", boundary.AstPath));
             return false;
         }

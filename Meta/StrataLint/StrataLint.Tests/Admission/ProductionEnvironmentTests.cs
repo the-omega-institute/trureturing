@@ -117,6 +117,64 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void CheckMapsUndecodableLegacyBoundaryToSl016RuleRejection()
+    {
+        using var temporary = new TemporaryDirectory();
+        var fixture = new RuleFixture();
+        var atomizerId = AtomizerRegistry.RegisteredIds[0];
+        var baselineBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。old。\n");
+        var atom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, baselineBytes).Claims);
+        var inserted = Encoding.UTF8.GetBytes("界");
+        var currentBytes = baselineBytes[..(atom.EndByte - 1)]
+            .Concat(inserted)
+            .Concat(baselineBytes[(atom.EndByte - 1)..])
+            .ToArray();
+        var ledger = LegacyIngestLedger(atomizerId, atom);
+        fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
+        fixture.Baseline[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(baselineBytes);
+        fixture.Files[BackfillInventoryLoader.RelativePath] = ledger;
+        fixture.Baseline[BackfillInventoryLoader.RelativePath] = ledger;
+        var currentRaw = Snapshot(fixture.Files);
+        var baselineRaw = Snapshot(fixture.Baseline);
+        var candidateReport = Path.Combine(temporary.Path, "candidate.json");
+        var baselineReport = Path.Combine(temporary.Path, "baseline.json");
+        File.WriteAllBytes(
+            candidateReport,
+            RawLeanReportArtifact.Write(
+                Decode(currentRaw),
+                LeanAxiomReport.Create(fixture.Reports)).AsSpan());
+        File.WriteAllBytes(
+            baselineReport,
+            RawLeanReportArtifact.Write(
+                Decode(baselineRaw),
+                LeanAxiomReport.Create(fixture.BaselineReports)).AsSpan());
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            new FakeRepositoryGateway(
+                RawChangeSet.Create([GoldenCorpus.FixtureDigestionSourcePath]),
+                currentRaw,
+                baselineRaw),
+            new FakeLeanReportSource(null));
+        var console = new BufferedConsole();
+
+        var exitCode = CliApplication.Run(
+            [
+                "check",
+                "--candidate-lean-report", candidateReport,
+                "--baseline-lean-report", baselineReport,
+            ],
+            environment,
+            console);
+
+        Assert.Equal(1, exitCode);
+        Assert.Contains("SL-016", console.Output, StringComparison.Ordinal);
+        Assert.Contains("run make ingest", console.Output, StringComparison.Ordinal);
+        Assert.Contains("RULE_REJECTED", console.Output, StringComparison.Ordinal);
+        Assert.DoesNotContain("INFRASTRUCTURE_FAILURE", console.Output, StringComparison.Ordinal);
+        Assert.Equal(string.Empty, console.Error);
+    }
+
+    [Fact]
     public void CheckRequiresBothPrecomputedLeanReportsForProtectedChanges()
     {
         var fixture = new RuleFixture();
