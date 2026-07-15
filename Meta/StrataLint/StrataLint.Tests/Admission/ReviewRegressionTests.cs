@@ -130,6 +130,12 @@ public sealed partial class ReviewRegressionTests
                 $"normalized_sha256: {captured.Reference}\n"
                 + $"        cas_ref: {captured.Reference}",
                 StringComparison.Ordinal);
+        fixture.Files[BackfillInventoryLoader.RelativePath] = fixture.Files[
+                BackfillInventoryLoader.RelativePath]
+            .Replace(
+                $"atomizer: {AtomizerRegistry.NoAtomizerId}",
+                $"atomizer: {AtomizerRegistry.RegisteredIds[0]}",
+                StringComparison.Ordinal);
         fixture.Files[captured.RelativePath] = GoldenCorpus.FixtureDigestionSource;
         fixture.Files.Remove(GoldenCorpus.FixtureDigestionSourcePath);
         Assert.Equal(
@@ -142,6 +148,32 @@ public sealed partial class ReviewRegressionTests
             fixture.Build());
 
         Assert.Empty(evaluation.Diagnostics);
+    }
+
+    [Fact]
+    public void Sl016StillRejectsMissingNoAtomizerSourceAfterCasMigration()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        var captured = DigestionCasStore.Capture(Encoding.UTF8.GetBytes(
+            GoldenCorpus.FixtureDigestionSource));
+        fixture.Files[BackfillInventoryLoader.RelativePath] = fixture.Files[
+                BackfillInventoryLoader.RelativePath]
+            .Replace(
+                $"normalized_sha256: {captured.Reference}",
+                $"normalized_sha256: {captured.Reference}\n"
+                + $"        cas_ref: {captured.Reference}",
+                StringComparison.Ordinal);
+        fixture.Files[captured.RelativePath] = GoldenCorpus.FixtureDigestionSource;
+        fixture.Files.Remove(GoldenCorpus.FixtureDigestionSourcePath);
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(16),
+            fixture.Build());
+
+        Assert.Contains(evaluation.Diagnostics, diagnostic => diagnostic.Message.Contains(
+            $"source path is dangling: {GoldenCorpus.FixtureDigestionSourcePath}",
+            StringComparison.Ordinal));
     }
 
     [Fact]

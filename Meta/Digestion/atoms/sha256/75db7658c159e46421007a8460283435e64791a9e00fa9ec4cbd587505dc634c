@@ -1,0 +1,4 @@
+**契约 23.1(保守解析延拓)**〔semantic·规格〕。延拓 AC^cons 须满足:
+
+**C1 保持 PZG 编码;C2 保持账本规则;C3 不新增原 zeta 内核之外的自由缩放寄存器;C4 所有 pole、tail、boundary residual 入账并闭合。**
+

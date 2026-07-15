@@ -1,0 +1,2 @@
+**定理 12.4(tail 可加与围合)**〔closed〕。有限多 tail 证书之和仍为 tail 证书,预算相加;窗口读数 R_W 连同 TailCert 给出严格围合:真值 ∈ [R_W − B(W), R_W + B(W)]。
+

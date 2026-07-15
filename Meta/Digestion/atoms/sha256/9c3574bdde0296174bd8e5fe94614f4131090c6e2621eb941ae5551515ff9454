@@ -1,0 +1,4 @@
+**定义 22.1**〔定义〕。**Z_𝒦(s) = Σ_{z∈𝖹} e^{−sℓ(z)}**;由 PZG 双射 = Σ n^{−s} = ζ(s)(Re s > 1)。
+
+**ζ = Program_𝒦[PZG-Length-HeatTrace]:zeta 是 PZG 全素数长度账本的解析读数。**
+

@@ -1,0 +1,8 @@
+**观察 6.136(Return 之亲验:Vuillon 判据全过与 Fibonacci 返梯)**〔closed·窗口(黄金词前缀 3×10⁴,n = 1–12 共 90 因子逐一);第 86 轮,每轮必算;外部谐音之骨入账所配之算〕。
+
+(一)**亲验:满堂**。每长 n 之因子数恰 n + 1(复杂度逐级恰合);**九十个因子,每个恰有两个 return 词**——Vuillon 刻画定理(Sturmian ⟺ 每因子恰二返)于内核之黄金词全过。
+
+(二)**Fibonacci 返梯**。全部 return 长度 ∈ {1, 2, 3, 5, 8, 13, 21},且随 n 滑升(n = 1: {1,2,3} → n = 12: {8,13,21})——**黄金词之"返"以 Fibonacci 为节拍:回家的路,长度只许是 Fibonacci 数。**
+
+(三)**词典与同源注**。return 词 = 动力系统 Poincaré **首返映射之符号版**(Durand 语境);"每因子恰两条回家路"与本卷屡遇之两族结构(头尾两族 6.123、双层交替之尾类正身 6.124、二字母边界)同源——**那两个 return 词,就是账本反复撞见的那两条路**。〔正典:Vuillon, European J. Combin. 22 (2001) 263–275;Justin–Vuillon, RAIRO Theor. Inform. Appl. 34 (2000) 343–356;Durand, Discrete Math. 179 (1998) 89–101(return 词刻画本原替换序列);Araújo–Bruyère, Theoret. Comput. Sci.(2005)(特征词之两 return 词显式);Balková–Pelantová–Steiner(R_m 推广)。〕
+

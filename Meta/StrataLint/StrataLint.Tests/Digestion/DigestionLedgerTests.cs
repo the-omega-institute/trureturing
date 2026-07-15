@@ -38,6 +38,93 @@ public sealed class DigestionLedgerTests
     }
 
     [Fact]
+    public void CasBackedNoAtomizerBoundaryStillRequiresItsSpecificationSource()
+    {
+        var source = Encoding.UTF8.GetBytes("manual specification receipt\n");
+        var atom = new DigestionAtom(
+            "manual/receipt",
+            0,
+            source.Length,
+            ImmutableArray.CreateRange(source),
+            DigestionFingerprint.Compute(source),
+            ImmutableArray<DigestionContext>.Empty);
+        var captured = DigestionCasStore.Capture(source);
+        var yaml = LedgerYaml(
+                atom,
+                migration: "partial",
+                truth: "open",
+                coverageReceipts: "[]",
+                scribeReceipts: "[]")
+            .Replace(
+                $"atomizer: {AtomizerRegistry.GictId}",
+                $"atomizer: {AtomizerRegistry.NoAtomizerId}",
+                StringComparison.Ordinal)
+            .Replace(
+                "        coverage_gids:",
+                $"        cas_ref: {captured.Reference}\n        coverage_gids:",
+                StringComparison.Ordinal);
+        var document = BackfillInventoryLoader.Load(yaml);
+        var snapshot = Snapshot((captured.RelativePath, captured.Bytes.ToArray()));
+
+        var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
+            document,
+            snapshot,
+            AcceptedLean(Array.Empty<string>()),
+            baselineDocument: document).Entries);
+
+        Assert.Equal(DigestionReceiptAlignment.LegacyBoundary, status.Alignment);
+        Assert.Contains(status.Gaps, static gap => gap.Code == "source-missing");
+    }
+
+    [Fact]
+    public void IngestCapturesNoAtomizerBoundaryBytesAndRemainsByteIdempotent()
+    {
+        var sourceBytes = Encoding.UTF8.GetBytes("manual specification receipt\n");
+        var atom = new DigestionAtom(
+            "manual/receipt",
+            0,
+            sourceBytes.Length,
+            ImmutableArray.CreateRange(sourceBytes),
+            DigestionFingerprint.Compute(sourceBytes),
+            ImmutableArray<DigestionContext>.Empty);
+        var ledgerText = LedgerYaml(
+                atom,
+                migration: "partial",
+                truth: "open",
+                coverageReceipts: "[]",
+                scribeReceipts: "[]")
+            .Replace(
+                $"atomizer: {AtomizerRegistry.GictId}",
+                $"atomizer: {AtomizerRegistry.NoAtomizerId}",
+                StringComparison.Ordinal);
+        var ledger = BackfillInventoryLoader.Load(ledgerText);
+
+        var first = DigestionIngestor.Plan(
+            ledger,
+            Snapshot(("docs/source.md", sourceBytes)),
+            ledger);
+        var firstBytes = BackfillInventoryWriter.WriteForIngest(first.Document);
+        var migrated = BackfillInventoryLoader.Load(Encoding.UTF8.GetString(firstBytes.AsSpan()));
+
+        var captured = Assert.Single(first.CasObjects);
+        var migratedEntry = Assert.Single(migrated.RequireDigestionEntries());
+        Assert.NotNull(migratedEntry.Boundary);
+        Assert.Equal(atom.Fingerprints.RawSha256, migratedEntry.CasRef);
+        Assert.Equal(sourceBytes, captured.Bytes.ToArray());
+
+        var second = DigestionIngestor.Plan(
+            migrated,
+            Snapshot(
+                ("docs/source.md", sourceBytes),
+                (captured.RelativePath, captured.Bytes.ToArray())),
+            ledger);
+        var secondBytes = BackfillInventoryWriter.WriteForIngest(second.Document);
+
+        Assert.Empty(second.CasObjects);
+        Assert.Equal(firstBytes.ToArray(), secondBytes.ToArray());
+    }
+
+    [Fact]
     public void LoaderReadsOnlySchemaThreeAtomicEntries()
     {
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");

@@ -1,0 +1,10 @@
+**观察 6.138(脚注之闭合:ET/Jensen 有限-T 体界)**〔closed·窗口(三 T 亲算 L-泛函与界);第 88 轮,每轮必算;6.128(三) 诚实注之清偿——热流章最后一笔〕。
+
+(一)**界之形(无条件、有限-T、初等)**。L-泛函 L := log(Σ 系数) − ½log(首系数) − ½log(末系数)(Hughes–Nikeghbali 形);Jensen 径向部(Soundararajan 之短证)给:**N_off(t; ρ) ≤ 2L/ρ**——对任意固定 t 之流后多项式成立,无需极限。
+
+(二)**亲算**。t = 0.05T,ρ = 0.02:L = 5.94 / 6.47 / 5.72(T = 144/233/377;O(log T) 级 ✓);界 ≈ 593 / 647 / 572;实测 N_off = **4 / 8 / 4**——**界成立且不吝啬:两个量级之余量,恰是头尾族有限性(实测 O(1) 之真因)未被初等界索取的部分。**
+
+(三)**主定理修订**。6.128 (i) 款换发:**(i)′〔体,无条件〕N_off(εT; ρ) ≤ 2L_T(εT)/ρ = O((log T)/ρ)**(ET/Jensen);JKM 降为极限剖面之释义引用(凹包平顶之直观);观测 O(1) 以头尾族有限性另记为强化观察。**主定理三款自此无未清脚注——热流章(6.118–6.128 + 6.138)全卷闭。**
+
+(四)**正典**。Erdős–Turán, "On the distribution of roots of polynomials", Ann. of Math. (2) 51 (1950) 105–119;Soundararajan, "Equidistribution of zeros of polynomials", Amer. Math. Monthly 126 (2019) 226–236(Fourier 短证;径向部即 Jensen);Hughes–Nikeghbali, Compositio Math. 144 (2008)(L-判据与聚圆);锐化系:Ganelius 1954、Mignotte 1992、Carneiro–Das–Florea–Kumchev–Malik–Milinovich–Turnage-Butterbaugh–Wang(arXiv:2104.00105,Hilbert 变换极值)。
+
