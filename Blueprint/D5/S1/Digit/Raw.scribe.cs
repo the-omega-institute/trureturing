@@ -8,9 +8,25 @@ internal sealed class RawDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create()
     {
-        var example = new DocumentBlock.ComputedValue(
+        var total = new BigInteger(89) + new BigInteger(34);
+        var bits = long.Parse(
+            ZeckendorfBits(total),
+            NumberStyles.None,
+            CultureInfo.InvariantCulture);
+        var example = new DocumentBlock.Describe(
+            DescribeId.Create("illustrative-zeckendorf-normalization"),
+            DescribeKind.Example,
             H("Illustrative Zeckendorf normalization"),
-            DeterministicComputation.Create(ComputeZeckendorfExample));
+            DescribeStatement.FromFormula(new Formula.RelationChain(
+                FormulaRelationOperator.Equal,
+                [
+                    Add(Call("Z", Num(89)), Call("Z", Num(34))),
+                    Call("Z", Num(checked((long)total))),
+                    new Formula.Subscript(Num(bits), Id("W")),
+                ])),
+            DescribeProvenance.RepoDerived(),
+            Blocks(Paragraph(Text(
+                "This illustrative normalization is derived by the repository's deterministic W-digit computation."))));
 
         return DocumentDefinition.Create(ScribeDocument.Create(
             Header(
@@ -25,18 +41,6 @@ internal sealed class RawDocument : IScribeDocumentDefinition
                 Paragraph(
                     Text("Canonical strings are the binary, nonadjacent ones. The file bridges canonical strings to the mathlib Zeckendorf representation in both directions, with the index offset `W_i = Fib (i + 2)` stated once at the bridge.")),
                 example)));
-    }
-
-    // This C# helper is an illustration only; Lean remains the semantic authority for W digits.
-    private static ComputedResult ComputeZeckendorfExample()
-    {
-        var total = new BigInteger(89) + new BigInteger(34);
-        var text = "Z(89) + Z(34) = Z("
-            + total.ToString(CultureInfo.InvariantCulture)
-            + ") = "
-            + ZeckendorfBits(total)
-            + "_W";
-        return new ComputedResult.Text(CanonicalComputedText.Create(text));
     }
 
     private static string ZeckendorfBits(BigInteger value)

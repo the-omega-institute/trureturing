@@ -25,9 +25,16 @@ public sealed record TextRun
     public string Value { get; }
 
     public static TextRun Create(string value) =>
-        value is { Length: > 0 } && value.IndexOfAny(['\r', '\n']) < 0
+        value is { Length: > 0 }
+        && value.IndexOfAny(['\r', '\n', '$']) < 0
+        && !value.Contains("\\(", StringComparison.Ordinal)
+        && !value.Contains("\\)", StringComparison.Ordinal)
+        && !value.Contains("\\[", StringComparison.Ordinal)
+        && !value.Contains("\\]", StringComparison.Ordinal)
             ? new TextRun(value)
-            : throw new ArgumentException("Text run must be non-empty and single-line.", nameof(value));
+            : throw new ArgumentException(
+                "Text run must be non-empty, single-line, and free of raw LaTeX delimiters.",
+                nameof(value));
 
     public override string ToString() => Value;
 }
@@ -93,23 +100,46 @@ public abstract record DocumentBlock
 
     public sealed record DisplayFormula(Formula Value) : DocumentBlock;
 
-    public sealed record ComputedValue(
-        Heading Label,
-        DeterministicComputation Computation) : DocumentBlock;
-
-    public sealed record RenderedStatement(LeanDeclarationRef Declaration) : DocumentBlock;
-
     public sealed record Section(Heading Title, BlockSequence Content) : DocumentBlock;
 
-    public sealed record Proposition(
-        Heading Title,
-        LeanDeclarationRef Declaration,
-        BlockSequence Content) : DocumentBlock;
+    public sealed record Describe : DocumentBlock
+    {
+        public Describe(
+            DescribeId id,
+            DescribeKind kind,
+            Heading title,
+            DescribeStatement statement,
+            DescribeProvenance provenance,
+            BlockSequence content)
+        {
+            Id = id ?? throw new ArgumentNullException(nameof(id));
+            Title = title ?? throw new ArgumentNullException(nameof(title));
+            Statement = statement ?? throw new ArgumentNullException(nameof(statement));
+            Provenance = provenance ?? throw new ArgumentNullException(nameof(provenance));
+            Content = content ?? throw new ArgumentNullException(nameof(content));
+            Kind = kind is DescribeKind.Definition
+                or DescribeKind.Theorem
+                or DescribeKind.Proposition
+                or DescribeKind.Lemma
+                or DescribeKind.Example
+                or DescribeKind.Remark
+                    ? kind
+                    : throw new ArgumentOutOfRangeException(nameof(kind));
+        }
 
-    public sealed record Theorem(
-        Heading Title,
-        LeanDeclarationRef Declaration,
-        BlockSequence Content) : DocumentBlock;
+        public DescribeId Id { get; }
+
+        public DescribeKind Kind { get; }
+
+        public Heading Title { get; }
+
+        public DescribeStatement Statement { get; }
+
+        public DescribeProvenance Provenance { get; }
+
+        public BlockSequence Content { get; }
+    }
+
 }
 
 public sealed class ScribeDocument
@@ -138,6 +168,36 @@ public sealed class ScribeDocument
         ArgumentNullException.ThrowIfNull(header);
         ArgumentNullException.ThrowIfNull(title);
         ArgumentNullException.ThrowIfNull(content);
+        RequireUniqueDescribeIds(content);
         return new ScribeDocument(header, title, content);
+    }
+
+    private static void RequireUniqueDescribeIds(BlockSequence content)
+    {
+        var seen = new HashSet<string>(StringComparer.Ordinal);
+        Visit(content);
+        return;
+
+        void Visit(BlockSequence blocks)
+        {
+            foreach (var block in blocks.Items)
+            {
+                switch (block)
+                {
+                    case DocumentBlock.Section section:
+                        Visit(section.Content);
+                        break;
+                    case DocumentBlock.Describe describe:
+                        if (!seen.Add(describe.Id.Value))
+                        {
+                            throw new ArgumentException(
+                                $"Duplicate Describe ID: {describe.Id.Value}.",
+                                nameof(content));
+                        }
+                        Visit(describe.Content);
+                        break;
+                }
+            }
+        }
     }
 }

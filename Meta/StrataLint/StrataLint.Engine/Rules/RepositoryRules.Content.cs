@@ -178,7 +178,7 @@ internal static partial class RepositoryRules
 
             var hasIdentifier = query.TryGetValue("doi", out var rawDoi)
                     && rawDoi is string doi
-                    && DoiPattern.IsMatch(doi)
+                    && Doi.TryCreate(doi, out _)
                 || query.TryGetValue("arxiv", out var rawArxiv)
                     && rawArxiv is string arxiv
                     && ArxivPattern.IsMatch(arxiv);

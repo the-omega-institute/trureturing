@@ -79,13 +79,23 @@ public static class LatexWriter
                 builder.Append('}');
                 break;
             case Formula.Subscript subscript:
-                WriteFormula(builder, subscript.Base, ScriptPrecedence);
+                WriteFormula(
+                    builder,
+                    subscript.Base,
+                    ProducesScript(subscript.Base)
+                        ? AtomPrecedence + 1
+                        : ScriptPrecedence);
                 builder.Append("_{");
                 WriteFormula(builder, subscript.Index, 0);
                 builder.Append('}');
                 break;
             case Formula.Power power:
-                WriteFormula(builder, power.Base, ScriptPrecedence);
+                WriteFormula(
+                    builder,
+                    power.Base,
+                    ProducesScript(power.Base)
+                        ? AtomPrecedence + 1
+                        : ScriptPrecedence);
                 builder.Append("^{");
                 WriteFormula(builder, power.Exponent, 0);
                 builder.Append('}');
@@ -139,6 +149,9 @@ public static class LatexWriter
             case Formula.Relation relation:
                 WriteRelation(builder, relation);
                 break;
+            case Formula.RelationChain relationChain:
+                WriteRelationChain(builder, relationChain);
+                break;
             default:
                 throw new UnreachableException("Unknown formula node.");
         }
@@ -157,13 +170,17 @@ public static class LatexWriter
         {
             FormulaBinaryOperator.Add => " + ",
             FormulaBinaryOperator.Subtract => " - ",
-            FormulaBinaryOperator.Multiply => " ",
+            FormulaBinaryOperator.Multiply => " \\cdot ",
             _ => throw new UnreachableException("Unknown binary operator."),
         });
-        WriteFormula(
-            builder,
-            binary.Right,
-            binary.Operator is FormulaBinaryOperator.Subtract ? precedence + 1 : precedence);
+        var rightPrecedence = binary.Operator switch
+        {
+            FormulaBinaryOperator.Subtract => precedence + 1,
+            FormulaBinaryOperator.Multiply when StartsWithNegation(binary.Right) =>
+                GetPrecedence(binary.Right) + 1,
+            _ => precedence,
+        };
+        WriteFormula(builder, binary.Right, rightPrecedence);
     }
 
     private static void WriteRelation(StringBuilder builder, Formula.Relation relation)
@@ -176,6 +193,26 @@ public static class LatexWriter
             _ => throw new UnreachableException("Unknown relation operator."),
         });
         WriteFormula(builder, relation.Right, RelationPrecedence + 1);
+    }
+
+    private static void WriteRelationChain(
+        StringBuilder builder,
+        Formula.RelationChain relation)
+    {
+        for (var index = 0; index < relation.Operands.Length; index++)
+        {
+            if (index > 0)
+            {
+                builder.Append(relation.Operator switch
+                {
+                    FormulaRelationOperator.Equal => " = ",
+                    FormulaRelationOperator.NotEqual => " \\ne ",
+                    _ => throw new UnreachableException("Unknown relation operator."),
+                });
+            }
+
+            WriteFormula(builder, relation.Operands[index], RelationPrecedence + 1);
+        }
     }
 
     private static void WriteIdentifier(
@@ -208,7 +245,7 @@ public static class LatexWriter
 
     private static int GetPrecedence(Formula formula) => formula switch
     {
-        Formula.Relation => RelationPrecedence,
+        Formula.Relation or Formula.RelationChain => RelationPrecedence,
         Formula.Binary { Operator: FormulaBinaryOperator.Add or FormulaBinaryOperator.Subtract } =>
             AdditivePrecedence,
         Formula.Binary => MultiplicativePrecedence,
@@ -216,5 +253,17 @@ public static class LatexWriter
         Formula.Negate => PrefixPrecedence,
         Formula.Subscript or Formula.Power => ScriptPrecedence,
         _ => AtomPrecedence,
+    };
+
+    private static bool ProducesScript(Formula formula) =>
+        formula is Formula.Subscript or Formula.Power or Formula.Sequence;
+
+    private static bool StartsWithNegation(Formula formula) => formula switch
+    {
+        Formula.Negate => true,
+        Formula.Binary { Operator: FormulaBinaryOperator.Multiply } binary =>
+            StartsWithNegation(binary.Left),
+        Formula.Modulo modulo => StartsWithNegation(modulo.Value),
+        _ => false,
     };
 }

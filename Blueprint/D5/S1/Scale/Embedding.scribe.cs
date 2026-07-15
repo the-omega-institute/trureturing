@@ -24,9 +24,13 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
                     Text(" sends the golden integer "),
                     Math(coordinates),
                     Text(" to the real number with the same coordinate formula.")),
-                new DocumentBlock.Proposition(
+                new DocumentBlock.Describe(
+                    DescribeId.Create("coordinate-formula"),
+                    DescribeKind.Proposition,
                     H("Coordinate formula"),
-                    LeanTheorem("D5/S1/Scale/Embedding.embedding_apply"),
+                    DescribeStatement.FromLean(
+                        LeanTheorem("D5/S1/Scale/Embedding.embedding_apply")),
+                    DescribeProvenance.RepoDerived(),
                     Blocks(new DocumentBlock.DisplayFormula(
                         Equal(Call("embedding", coordinates), coordinates)))),
                 new DocumentBlock.Section(
@@ -46,9 +50,13 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
                                 Subtract(Num(1), new Formula.Phi()))),
                         new DocumentBlock.DisplayFormula(
                             new Formula.SetLiteral([new Formula.Phi(), new Formula.Psi()])))),
-                new DocumentBlock.Theorem(
+                new DocumentBlock.Describe(
+                    DescribeId.Create("injectivity"),
+                    DescribeKind.Theorem,
                     H("Injectivity"),
-                    LeanTheorem("D5/S1/Scale/Embedding.embedding_injective"),
+                    DescribeStatement.FromLean(
+                        LeanTheorem("D5/S1/Scale/Embedding.embedding_injective")),
+                    DescribeProvenance.RepoDerived(),
                     Blocks(
                         Paragraph(
                             Text("A coordinate collision with "),
@@ -61,18 +69,24 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
                 new DocumentBlock.Section(
                     H("Norm recovery"),
                     Blocks(
-                        new DocumentBlock.Theorem(
+                        new DocumentBlock.Describe(
+                            DescribeId.Create("embedding-times-conjugate"),
+                            DescribeKind.Theorem,
                             H("Embedding times conjugate"),
-                            LeanTheorem(
-                                "D5/S1/Scale/Embedding.embedding_mul_conj"),
+                            DescribeStatement.FromLean(LeanTheorem(
+                                "D5/S1/Scale/Embedding.embedding_mul_conj")),
+                            DescribeProvenance.RepoDerived(),
                             Blocks(new DocumentBlock.DisplayFormula(
                                 Equal(
                                     Multiply(embedded, Call("embedding", conjugate)),
                                     Call("norm", x))))),
-                        new DocumentBlock.Theorem(
+                        new DocumentBlock.Describe(
+                            DescribeId.Create("absolute-norm-relation"),
+                            DescribeKind.Theorem,
                             H("Absolute norm relation"),
-                            LeanTheorem(
-                                "D5/S1/Scale/Embedding.abs_embedding_mul_abs_conj"),
+                            DescribeStatement.FromLean(LeanTheorem(
+                                "D5/S1/Scale/Embedding.abs_embedding_mul_abs_conj")),
+                            DescribeProvenance.RepoDerived(),
                             Blocks(
                                 Paragraph(
                                     Text("Taking absolute values gives the corresponding multiplicative relation.")),

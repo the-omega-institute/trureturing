@@ -34,16 +34,12 @@ internal static class LeanReportFixture
                 case DocumentBlock.Section section:
                     foreach (var reference in References(section.Content)) yield return reference;
                     break;
-                case DocumentBlock.Proposition proposition:
-                    yield return proposition.Declaration;
-                    foreach (var reference in References(proposition.Content)) yield return reference;
-                    break;
-                case DocumentBlock.Theorem theorem:
-                    yield return theorem.Declaration;
-                    foreach (var reference in References(theorem.Content)) yield return reference;
-                    break;
-                case DocumentBlock.RenderedStatement statement:
-                    yield return statement.Declaration;
+                case DocumentBlock.Describe describe:
+                    if (describe.Statement is DescribeStatement.LeanDeclaration lean)
+                    {
+                        yield return lean.Value;
+                    }
+                    foreach (var reference in References(describe.Content)) yield return reference;
                     break;
             }
         }

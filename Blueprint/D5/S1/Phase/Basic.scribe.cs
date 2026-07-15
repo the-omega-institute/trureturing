@@ -33,21 +33,33 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                 new DocumentBlock.Section(
                     H("Additive laws"),
                     Blocks(
-                        new DocumentBlock.Proposition(
+                        new DocumentBlock.Describe(
+                            DescribeId.Create("zero"),
+                            DescribeKind.Proposition,
                             H("Zero"),
-                            LeanTheorem("D5/S1/Phase/Basic.goldenPhase_zero"),
+                            DescribeStatement.FromLean(
+                                LeanTheorem("D5/S1/Phase/Basic.goldenPhase_zero")),
+                            DescribeProvenance.RepoDerived(),
                             Blocks(new DocumentBlock.DisplayFormula(
                                 Equal(Call("goldenPhase", Num(0)), Num(0))))),
-                        new DocumentBlock.Proposition(
+                        new DocumentBlock.Describe(
+                            DescribeId.Create("addition"),
+                            DescribeKind.Proposition,
                             H("Addition"),
-                            LeanTheorem("D5/S1/Phase/Basic.goldenPhase_add"),
+                            DescribeStatement.FromLean(
+                                LeanTheorem("D5/S1/Phase/Basic.goldenPhase_add")),
+                            DescribeProvenance.RepoDerived(),
                             Blocks(new DocumentBlock.DisplayFormula(
                                 Equal(
                                     Call("goldenPhase", Add(n, m)),
                                     Add(phaseN, Call("goldenPhase", m)))))),
-                        new DocumentBlock.Proposition(
+                        new DocumentBlock.Describe(
+                            DescribeId.Create("negation"),
+                            DescribeKind.Proposition,
                             H("Negation"),
-                            LeanTheorem("D5/S1/Phase/Basic.goldenPhase_neg"),
+                            DescribeStatement.FromLean(
+                                LeanTheorem("D5/S1/Phase/Basic.goldenPhase_neg")),
+                            DescribeProvenance.RepoDerived(),
                             Blocks(new DocumentBlock.DisplayFormula(
                                 Equal(
                                     Call("goldenPhase", new Formula.Negate(n)),
@@ -63,11 +75,13 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                             new Formula.Sequence(phaseValue, n, new Formula.Integers())),
                         new DocumentBlock.DisplayFormula(
                             new Formula.SetBuilder(phaseValue, n, new Formula.Integers())))),
-                new DocumentBlock.Theorem(
+                new DocumentBlock.Describe(
+                    DescribeId.Create("injectivity"),
+                    DescribeKind.Theorem,
                     H("Injectivity"),
-                    injectivity,
+                    DescribeStatement.FromLean(injectivity),
+                    DescribeProvenance.RepoDerived(),
                     Blocks(
-                        new DocumentBlock.RenderedStatement(injectivity),
                         Paragraph(
                             Text("Two phases could coincide only if a nonzero integer multiple of "),
                             Math(new Formula.Phi()),

@@ -54,43 +54,13 @@ public static class CanonicalMarkdownWriter
                     .Append(LatexWriter.Write(display.Value))
                     .Append("\n$$");
                 break;
-            case DocumentBlock.ComputedValue computed:
-                builder.Append("**")
-                    .Append(computed.Label.Value)
-                    .Append(":** `")
-                    .Append(computed.Computation.EvaluateCanonical())
-                    .Append("` ")
-                    .Append(DeterministicComputation.ProvenanceMarker);
-                break;
-            case DocumentBlock.RenderedStatement statement:
-                WriteRenderedStatement(
-                    builder,
-                    Resolve(statement.Declaration, leanReport));
-                break;
             case DocumentBlock.Section section:
                 WriteHeading(builder, headingLevel, section.Title.Value);
                 builder.Append("\n\n");
                 WriteBlocks(builder, section.Content, headingLevel + 1, leanReport);
                 break;
-            case DocumentBlock.Proposition proposition:
-                WriteStatement(
-                    builder,
-                    "Proposition",
-                    proposition.Title,
-                    proposition.Declaration,
-                    proposition.Content,
-                    headingLevel,
-                    leanReport);
-                break;
-            case DocumentBlock.Theorem theorem:
-                WriteStatement(
-                    builder,
-                    "Theorem",
-                    theorem.Title,
-                    theorem.Declaration,
-                    theorem.Content,
-                    headingLevel,
-                    leanReport);
+            case DocumentBlock.Describe describe:
+                WriteDescribe(builder, describe, headingLevel, leanReport);
                 break;
             default:
                 throw new UnreachableException("Unknown document block.");
@@ -120,36 +90,50 @@ public static class CanonicalMarkdownWriter
         }
     }
 
-    private static void WriteStatement(
+    private static void WriteDescribe(
         StringBuilder builder,
-        string kind,
-        Heading title,
-        LeanDeclarationRef declaration,
-        BlockSequence content,
+        DocumentBlock.Describe describe,
         int headingLevel,
         LeanAxiomReport? leanReport)
     {
-        var verified = Resolve(declaration, leanReport);
-        WriteHeading(builder, headingLevel, $"{kind}: {title.Value}");
-        builder.Append("\n\nLean declaration: `")
-            .Append(declaration.Value)
-            .Append("` `")
-            .Append(verified.AxiomBadge)
-            .Append("`\n\n");
-        WriteBlocks(builder, content, headingLevel + 1, leanReport);
-    }
+        WriteHeading(
+            builder,
+            headingLevel,
+            $"{DescribeVocabulary.HeadingName(describe.Kind)}: {describe.Title.Value}");
+        builder.Append("\n\nProvenance: `")
+            .Append(DescribeVocabulary.CanonicalName(describe.Provenance.Kind))
+            .Append('`');
+        if (describe.Provenance.LiteratureReference is { } literature)
+        {
+            builder.Append(" via `")
+                .Append(literature.Value)
+                .Append("` (`")
+                .Append(literature.Anchor.CanonicalString)
+                .Append("`)");
+        }
 
-    private static void WriteRenderedStatement(
-        StringBuilder builder,
-        VerifiedLeanDeclaration declaration)
-    {
-        builder.Append("Compiled Lean statement: `")
-            .Append(declaration.Reference.Value)
-            .Append("` `")
-            .Append(declaration.AxiomBadge)
-            .Append("`\n\n```text\n")
-            .Append(declaration.Declaration.TypeRepresentation)
-            .Append("\n```");
+        builder.Append("\n\nStatement:");
+        switch (describe.Statement)
+        {
+            case DescribeStatement.FormulaAst formula:
+                builder.Append("\n\n$$\n")
+                    .Append(LatexWriter.Write(formula.Value))
+                    .Append("\n$$");
+                break;
+            case DescribeStatement.LeanDeclaration lean:
+                var verified = Resolve(lean.Value, leanReport);
+                builder.Append(" `")
+                    .Append(lean.Value.Value)
+                    .Append("` `")
+                    .Append(verified.AxiomBadge)
+                    .Append('`');
+                break;
+            default:
+                throw new UnreachableException("Unknown Describe statement.");
+        }
+
+        builder.Append("\n\n");
+        WriteBlocks(builder, describe.Content, headingLevel + 1, leanReport);
     }
 
     private static VerifiedLeanDeclaration Resolve(
