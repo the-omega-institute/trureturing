@@ -180,6 +180,12 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
   candidate C# path exceptions. The predecessor already reads candidate registry
   `governance_documents` before its closed-world switch, so both artifacts now use that
   shared declaration and the duplicate candidate-only exceptions were removed.
+- Shared-judge identity-drift autopsy: the first final gate reused the clean `dev`
+  worktree at `36ce721`, then PR #105 advanced both `origin/dev` and that worktree to
+  `77664ec` during conservative replay. The verifier failed closed with repository
+  identity drift. This branch merged the new base without rebase; the renewed ceremony
+  and final gate therefore bind the stable post-merge identity instead of reusing the
+  stale certificate.
 
 ## Residual scan
 
