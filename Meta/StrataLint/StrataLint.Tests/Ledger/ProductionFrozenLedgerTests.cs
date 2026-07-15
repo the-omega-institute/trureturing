@@ -8,6 +8,70 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
+    public void BaselineLedgerResolutionAcceptsAUniqueByteExactRelocation()
+    {
+        const string previousPath = "Meta/StrataLint/Golden/Frozen/events.jsonl";
+        const string bytes = "{\"schema\":\"fixture\"}\n";
+        var baseline = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(Snapshot(new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                [previousPath] = bytes,
+            }))).Snapshot;
+        var current = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(Snapshot(new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                [FrozenLedgerChangeClassifier.LedgerPath] = bytes,
+            }))).Snapshot;
+        Assert.True(current.TryGetFile(FrozenLedgerChangeClassifier.LedgerPath, out var currentFile));
+
+        var resolved = ProductionFrozenLedgerValidator.ResolveBaselineLedger(
+            baseline,
+            currentFile);
+
+        Assert.NotNull(resolved);
+        Assert.Equal(previousPath, resolved.Path.Value);
+    }
+
+    [Fact]
+    public void BaselineLedgerResolutionRejectsAChangedRelocation()
+    {
+        const string previousPath = "Meta/StrataLint/Golden/Frozen/events.jsonl";
+        var baseline = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(Snapshot(new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                [previousPath] = "baseline\n",
+            }))).Snapshot;
+        var current = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(Snapshot(new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                [FrozenLedgerChangeClassifier.LedgerPath] = "candidate\n",
+            }))).Snapshot;
+        Assert.True(current.TryGetFile(FrozenLedgerChangeClassifier.LedgerPath, out var currentFile));
+
+        Assert.Null(ProductionFrozenLedgerValidator.ResolveBaselineLedger(baseline, currentFile));
+    }
+
+    [Fact]
+    public void BaselineLedgerResolutionRejectsAmbiguousByteExactRelocations()
+    {
+        const string bytes = "{\"schema\":\"fixture\"}\n";
+        var baseline = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(Snapshot(new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                ["First/Frozen/events.jsonl"] = bytes,
+                ["Second/Frozen/events.jsonl"] = bytes,
+            }))).Snapshot;
+        var current = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(Snapshot(new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                [FrozenLedgerChangeClassifier.LedgerPath] = bytes,
+            }))).Snapshot;
+        Assert.True(current.TryGetFile(FrozenLedgerChangeClassifier.LedgerPath, out var currentFile));
+
+        Assert.Null(ProductionFrozenLedgerValidator.ResolveBaselineLedger(baseline, currentFile));
+    }
+
+    [Fact]
     public void ProductionValidatorAcceptsARevocationBackedByAProtectedTypedReceipt()
     {
         const string path = "D5/S0/Carrier/A.lean";

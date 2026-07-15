@@ -121,6 +121,13 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
   both independently generated Lean reports as
   `797dae7a5a1177d47acb9e7affc20fc84762dc7f856bcbdfc4296b70ba30e26d`, and `cmp`
   confirmed byte identity.
+- Frozen-ledger relocation autopsy: the first candidate admission rejected the deliberate
+  `Meta/StrataLint/Golden/Frozen/events.jsonl` to `Golden/Frozen/events.jsonl` move because
+  SL-008 equated frozen identity with one physical path. Both Git entries had the same
+  blob OID `92263724b1738f4852ee964cb822ec140ae09c5c`. Baseline resolution now permits only one
+  byte-exact prior `*/Frozen/events.jsonl` source when the canonical baseline path is
+  absent; changed and ambiguous sources remain rejected by focused fixtures. The next
+  candidate admission reached the expected SL-022 boundary with no SL-008 finding.
 
 ## Residual scan
 
