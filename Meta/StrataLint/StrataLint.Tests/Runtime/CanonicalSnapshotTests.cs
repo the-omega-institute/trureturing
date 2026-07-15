@@ -54,4 +54,13 @@ public sealed class CanonicalSnapshotTests
         var entries = Assert.IsType<List<object?>>(source["entries"]);
         Assert.Empty(entries);
     }
+
+    [Fact]
+    public void BackfillWriterRoundTripsEmptyEntriesSource()
+    {
+        var text = "schema_version: 3\nledger: theory-digestion-v1\nsources:\n  - source_id: fresh\n    path: docs/develop/theory/FRESH.md\n    atomizer: gict-v1\n    entries: []\nticket_index: []\n";
+        var document = StrataLint.Engine.BackfillInventoryLoader.Load(text);
+        var sources = document.RequireDigestionSources();
+        Assert.Empty(sources[0].Entries);
+    }
 }

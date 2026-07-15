@@ -34,7 +34,7 @@ internal static class BackfillInventoryWriter
                 Strings(builder, "    acknowledged_stale", source.AcknowledgedStale, 6);
             }
 
-            Line(builder, "    entries:");
+            Line(builder, source.Entries.Length == 0 ? "    entries: []" : "    entries:");
             foreach (var entry in source.Entries)
             {
                 if (preserveReceiptSyntax && entry.ReceiptSyntax is { } syntax)
