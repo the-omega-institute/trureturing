@@ -18,8 +18,9 @@ internal static class DigestionIngestor
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(baselineDocument);
 
+        var migrationDocument = PrepareLegacyMigrations(document);
         var alignment = DigestionLedgerAligner.Evaluate(
-            document,
+            migrationDocument,
             snapshot,
             baselineDocument,
             DigestionAlignmentMode.Ingest);
@@ -33,13 +34,13 @@ internal static class DigestionIngestor
         var residualBySource = alignment.Residual
             .GroupBy(static item => item.SourceId, StringComparer.Ordinal)
             .ToDictionary(static group => group.Key, static group => group.ToArray(), StringComparer.Ordinal);
-        var atomIds = document.RequireDigestionEntries()
+        var atomIds = migrationDocument.RequireDigestionEntries()
             .Select(static entry => entry.AtomId)
             .ToHashSet(StringComparer.Ordinal);
         var sources = ImmutableArray.CreateBuilder<DigestionLedgerSource>();
         var staleAcknowledged = 0;
         var residualOpenAdded = 0;
-        foreach (var source in document.RequireDigestionSources())
+        foreach (var source in migrationDocument.RequireDigestionSources())
         {
             if (!source.Entries.Any(static entry => entry.Boundary is null))
             {
@@ -90,8 +91,27 @@ internal static class DigestionIngestor
         }
 
         return new DigestionIngestPlan(
-            document.WithDigestionSources(sources.ToImmutable()),
+            migrationDocument.WithDigestionSources(sources.ToImmutable()),
             staleAcknowledged,
             residualOpenAdded);
     }
+
+    private static BackfillInventoryDocument PrepareLegacyMigrations(
+        BackfillInventoryDocument document) =>
+        document.WithDigestionSources(document.RequireDigestionSources()
+            .Select(source => !AtomizerRegistry.IsRegistered(source.Atomizer)
+                ? source
+                : source with
+                {
+                    Entries = source.Entries
+                        .Select(static entry => entry.Boundary is null
+                            ? entry
+                            : entry with
+                            {
+                                Boundary = null,
+                                ReceiptSyntax = null,
+                            })
+                        .ToImmutableArray(),
+                })
+            .ToImmutableArray());
 }
