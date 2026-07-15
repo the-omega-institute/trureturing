@@ -4,6 +4,20 @@ namespace StrataLint.Scribe.Tests;
 
 public sealed class FileMapManifestTests
 {
+    [Fact]
+    public void RepositoryManifestClassifiesDigestionCasAsAnAppendOnlyLedger()
+    {
+        var manifest = FileMapLoader.LoadRepository(FindRepositoryRoot());
+        var entry = Assert.Single(manifest.Match(
+            "Meta/Digestion/atoms/sha256/" + new string('a', 64)));
+
+        Assert.Equal(FileMapKind.Ledger, entry.Kind);
+        Assert.Equal("IngestCommand", entry.ProducedBy);
+        Assert.Equal(["DigestionCasStore"], entry.ConsumedBy.ToArray());
+        Assert.Equal(["DigestionCasStore"], entry.VerifiedBy.ToArray());
+        Assert.False(entry.ResidenceViolation);
+    }
+
     private const string BlueprintPath = "Blueprint/D5/S0/Carrier/Ring.md";
     private const string FormalPath = "D5/S0/Carrier/Ring.lean";
     private const string FrozenLedgerPath = "Meta/StrataLint/Golden/Frozen/events.jsonl";
@@ -196,5 +210,20 @@ public sealed class FileMapManifestTests
         var exception = Assert.Throws<FormatException>(() =>
             FileMapLoader.Parse(Encoding.UTF8.GetBytes(source), "fixture.toml"));
         Assert.Contains("unsafe FILEMAP pattern", exception.Message, StringComparison.Ordinal);
+    }
+
+    private static string FindRepositoryRoot()
+    {
+        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
+             current is not null;
+             current = current.Parent)
+        {
+            if (File.Exists(Path.Combine(current.FullName, FileMapLoader.RelativePath)))
+            {
+                return current.FullName;
+            }
+        }
+
+        throw new DirectoryNotFoundException("Could not locate repository FILEMAP.");
     }
 }

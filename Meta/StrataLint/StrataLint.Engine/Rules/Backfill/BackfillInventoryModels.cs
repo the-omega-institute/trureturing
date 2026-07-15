@@ -54,7 +54,8 @@ internal sealed record DigestionLedgerEntry(
     ImmutableArray<string> CoverageGids,
     DigestionReceipts Receipts,
     DigestionStatus ProjectedStatus,
-    BackfillReceiptSyntax? ReceiptSyntax)
+    BackfillReceiptSyntax? ReceiptSyntax,
+    string? CasRef = null)
 {
     internal DigestionLedgerEntry(
         string sourceId,
@@ -78,7 +79,8 @@ internal sealed record DigestionLedgerEntry(
             coverageGids,
             receipts,
             projectedStatus,
-            receiptSyntax)
+            receiptSyntax,
+            CasRef: null)
     {
     }
 }

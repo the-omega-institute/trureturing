@@ -64,7 +64,8 @@ internal static partial class RepositoryRules
                 || string.Equals(
                     path.Value,
                     BackfillInventoryLoader.RelativePath,
-                    StringComparison.Ordinal))
+                    StringComparison.Ordinal)
+                || DigestionCasStore.IsCanonicalPath(path.Value))
             {
                 continue;
             }

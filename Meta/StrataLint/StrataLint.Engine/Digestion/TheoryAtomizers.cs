@@ -19,6 +19,8 @@ internal sealed record DigestionAtom(
 
 internal sealed record DigestionSlice(bool IsClaim, ImmutableArray<byte> RawBytes);
 
+internal sealed class TheorySourceFormatException(string message) : FormatException(message);
+
 internal sealed class AtomizedTheoryDocument
 {
     internal AtomizedTheoryDocument(
@@ -89,6 +91,12 @@ internal static class DigestionFingerprint
         && value.StartsWith("sha256:", StringComparison.Ordinal)
         && value.AsSpan(7).IndexOfAnyExcept("0123456789abcdef") < 0;
 
+    internal static DigestionFingerprints ComputeOpaque(ReadOnlySpan<byte> rawBytes)
+    {
+        var raw = Sha256(rawBytes);
+        return new DigestionFingerprints(raw, raw);
+    }
+
     private static string Sha256(ReadOnlySpan<byte> bytes) =>
         "sha256:" + Convert.ToHexStringLower(SHA256.HashData(bytes));
 }
@@ -119,7 +127,8 @@ internal static class GictAtomizer
         var unknown = UnknownNumberedClaimPattern.Match(paragraph);
         if (unknown.Success)
         {
-            throw new FormatException($"unknown GICT numbered claim kind {unknown.Groups["kind"].Value}");
+            throw new TheorySourceFormatException(
+                $"unknown GICT numbered claim kind {unknown.Groups["kind"].Value}");
         }
 
         return HeartsPattern.IsMatch(paragraph) ? "open/O-5-O-6" : null;
@@ -198,7 +207,8 @@ internal static class PzgAtomizer
         var unknown = UnknownNumberedClaimPattern.Match(paragraph);
         if (unknown.Success)
         {
-            throw new FormatException($"unknown PZG numbered claim kind {unknown.Groups["kind"].Value}");
+            throw new TheorySourceFormatException(
+                $"unknown PZG numbered claim kind {unknown.Groups["kind"].Value}");
         }
 
         return null;

@@ -267,6 +267,42 @@ Each row is a future migration obligation, not authorization to prebuild the mec
 The stopping rule is not "search returned zero." It is: every observed instance is
 guarded, repaired, or present in this open ledger with an explicit reason.
 
+## DIGESTION-LEDGER-EPOCH (active, 2026-07-15)
+
+This epoch moves digestion preimages from mutable theory volumes into a replayable
+content-addressed ledger without weakening an already admitted path. Its stages are
+deliberately split so the expand judge remains conservative and the later contract pays
+for its protection-surface change explicitly.
+
+| Segment | Status | Machine boundary and close condition |
+|---|---|---|
+| E1 expand | **complete** | Schema 3 accepts optional `cas_ref`; canonical raw bytes live at `Meta/Digestion/atoms/sha256/<64-lower-hex>`. The judge verifies ref/path/blob/raw-fingerprint equality plus missing, corrupt, and orphan blobs. A CAS-backed receipt no longer needs volume reconciliation; a receipt without `cas_ref` follows the unchanged #109 path. Theory and CAS bytes may be opaque, ingest writes CAS refs, and source-format failure produces one reported whole-source coarse atom once that source's existing receipts are CAS-backed. I/O, schema, CAS, hash, and atomizer-integrity failures still block. The CAS object directory is outside SL-003 code-bucket capacity but only for canonical addresses. |
+| E2 migrate | **pending** | Under the expanded judge, backfill every current GICT/PZG receipt with exact raw CAS bytes and `cas_ref`, then prove byte-idempotent ingest and zero orphan/dangling objects. Preserve the 12 `atomizer: none` specification receipts for `SPEC-ZERO-ANCHOR`; do not contract readers here. |
+| E-verifier | **pending** | Design and land the independent contract-epoch verifier that can machine-prove a protection/validation-surface contraction against the predecessor. This is shared infrastructure with `RESIDENCE-EPOCH`; E1 contains no substitute or bypass. |
+| E3 contract | **pending** | Only after E2, E-verifier, and the separate specification-receipt case close, remove the boundary/stale/source-content/atomizer admission readers, make theory a non-bearing reference class, and remove transitional schema fields in one certificate-bearing contract change. |
+
+E1 changes no canonical `Meta/BACKFILL.yaml` entry and no golden corpus case, so it needs
+no C0 renewal. `SPEC-ZERO-ANCHOR` remains a separate 12-receipt obligation: move those
+normative specification spans to typed conformance cases or another independently
+admitted receipt form before E3; this epoch does not silently recategorize the spec as a
+free-form theory volume.
+
+### E1 implementation autopsies
+
+- The first flat CAS shape inherited SL-003's 12-file code-bucket ceiling and would have
+  blocked E2 at object 13. Canonical CAS paths are now excluded from module line/directory
+  capacity; malformed neighbors retain the old closed-world rejection.
+- One digest-status fixture consumed `DigestionIngestPlan.Document` but discarded the
+  plan's `CasObjects`, creating a ledger that correctly failed as dangling. The fixture
+  now mirrors production's paired document+object snapshot, and the missing-blob guard
+  remains unchanged.
+- The initial writer created CAS files before the final BACKFILL write but did not undo
+  them when that write failed. Because current snapshots include untracked files, the
+  leftovers became unrecoverable orphans on retry. The writer now rolls back only paths
+  newly created by that invocation; existing append-only blobs are never deleted. The
+  final ledger is flushed to a same-directory temporary file and atomically replaced, so
+  an I/O failure before commit cannot expose partial `cas_ref`s.
+
 ## DIGESTION-PHASE2-INGEST (complete, 2026-07-15)
 
 After PR #109 supplied cross-syntax receipt identity and one-step legacy conversion,

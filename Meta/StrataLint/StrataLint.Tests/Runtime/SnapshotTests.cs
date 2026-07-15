@@ -7,6 +7,40 @@ namespace StrataLint.Tests;
 public sealed class SnapshotTests
 {
     [Fact]
+    public void TheoryBytesAreOpaqueAndPreserveInvalidUtf8Exactly()
+    {
+        var path = string.Concat("docs/develop/", "theory/non-utf8.bin");
+        var bytes = ImmutableArray.Create<byte>(0xff, 0x00, 0xfe);
+        var raw = RawRepositorySnapshot.Create(
+        [
+            new RawRepositoryEntry(path, bytes),
+        ]);
+
+        var decoded = SnapshotDecoder.Decode(raw);
+
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(decoded).Snapshot;
+        Assert.True(snapshot.TryGetFile(path, out var file));
+        Assert.True(file.IsOpaque);
+        Assert.Equal(bytes.ToArray(), file.RawBytes.ToArray());
+    }
+
+    [Fact]
+    public void NoncanonicalCasNeighborRemainsStrictUtf8()
+    {
+        var raw = RawRepositorySnapshot.Create(
+        [
+            new RawRepositoryEntry(
+                DigestionCasStore.RootPath + "not-a-hash",
+                ImmutableArray.Create<byte>(0xff)),
+        ]);
+
+        var decoded = SnapshotDecoder.Decode(raw);
+
+        var failure = Assert.IsType<SnapshotDecodeOutcome.InfrastructureFailure>(decoded);
+        Assert.Contains("UTF-8", failure.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void SnapshotStrictlyDecodesUtf8WithoutErasingRawAnomalies()
     {
         var raw = RawRepositorySnapshot.Create(new[]

@@ -1,4 +1,6 @@
 using System.Collections.Immutable;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace StrataLint.Engine;
 
@@ -38,9 +40,13 @@ internal sealed record StructuredResidualAdmission(
     string SuggestedAtomId,
     DigestionStatus ProjectedStatus);
 
+internal sealed record DigestionIngestFallback(string SourceId, string Reason);
+
 internal sealed record DigestionLedgerAlignment(
     ImmutableDictionary<string, DigestionReceiptAlignment> EntryAlignments,
+    ImmutableDictionary<string, DigestionAtom> MatchedAtoms,
     ImmutableArray<StructuredResidualAdmission> Residual,
+    ImmutableArray<DigestionIngestFallback> Fallbacks,
     ImmutableArray<string> ActualStale,
     ImmutableArray<string> Findings)
 {
@@ -65,26 +71,42 @@ internal static class DigestionLedgerAligner
 
         var alignments = ImmutableDictionary.CreateBuilder<string, DigestionReceiptAlignment>(
             StringComparer.Ordinal);
+        var matchedAtoms = ImmutableDictionary.CreateBuilder<string, DigestionAtom>(
+            StringComparer.Ordinal);
         var residual = ImmutableArray.CreateBuilder<StructuredResidualAdmission>();
+        var fallbacks = ImmutableArray.CreateBuilder<DigestionIngestFallback>();
         var actualStale = ImmutableArray.CreateBuilder<string>();
         var findings = ImmutableArray.CreateBuilder<string>();
+        var suggestedAtomIds = new HashSet<string>(StringComparer.Ordinal);
+        var cas = DigestionCasStore.Evaluate(document, snapshot);
+        findings.AddRange(cas.Findings);
         var baselineSources = BaselineSources(baselineDocument, findings);
         foreach (var source in document.RequireDigestionSources())
         {
-            foreach (var entry in source.Entries.Where(static entry => entry.Boundary is not null))
+            foreach (var entry in source.Entries.Where(static entry => entry.CasRef is not null))
+            {
+                alignments[entry.AtomId] = cas.ValidAtomIds.Contains(entry.AtomId)
+                    ? DigestionReceiptAlignment.Seen
+                    : DigestionReceiptAlignment.Rejected;
+            }
+
+            foreach (var entry in source.Entries.Where(static entry =>
+                         entry.CasRef is null && entry.Boundary is not null))
             {
                 alignments[entry.AtomId] = DigestionReceiptAlignment.LegacyBoundary;
             }
 
             var structuredEntries = source.Entries
-                .Where(static entry => entry.Boundary is null)
+                .Where(static entry => entry.CasRef is null && entry.Boundary is null)
                 .ToArray();
-            if (structuredEntries.Length == 0)
+            var registeredAtomizer = AtomizerRegistry.IsRegistered(source.Atomizer);
+            if (structuredEntries.Length == 0
+                && (mode == DigestionAlignmentMode.Admission || !registeredAtomizer))
             {
                 continue;
             }
 
-            if (!AtomizerRegistry.IsRegistered(source.Atomizer))
+            if (!registeredAtomizer)
             {
                 findings.Add(
                     $"source {source.SourceId} boundaryless receipts require a registered atomizer");
@@ -105,15 +127,53 @@ internal static class DigestionLedgerAligner
                 var atomize = atomizerResolver(source.Atomizer);
                 atomized = atomize(sourceFile.RawBytes.AsSpan());
             }
-            catch (FormatException exception)
+            catch (Exception exception) when (
+                exception is TheorySourceFormatException or DecoderFallbackException)
             {
+                if (mode == DigestionAlignmentMode.Ingest && structuredEntries.Length == 0)
+                {
+                    AddCoarseFallback(
+                        source,
+                        sourceFile.RawBytes,
+                        exception.Message,
+                        cas.ValidAtomIds,
+                        suggestedAtomIds,
+                        residual,
+                        fallbacks);
+                    continue;
+                }
+
                 findings.Add($"source {source.SourceId} atomization failed: {exception.Message}");
                 MarkRejected(structuredEntries, alignments);
                 continue;
             }
 
-            if (!RecognitionIsComplete(atomized, sourceFile.RawBytes.AsSpan()))
+            var integrityFailure = AtomizerIntegrityFailure(
+                atomized,
+                sourceFile.RawBytes.AsSpan());
+            if (integrityFailure is not null)
             {
+                findings.Add(
+                    $"source {source.SourceId} atomizer integrity failed: {integrityFailure}");
+                MarkRejected(structuredEntries, alignments);
+                continue;
+            }
+
+            if (atomized.Claims.Length == 0)
+            {
+                if (mode == DigestionAlignmentMode.Ingest && structuredEntries.Length == 0)
+                {
+                    AddCoarseFallback(
+                        source,
+                        sourceFile.RawBytes,
+                        "atomizer recognition is incomplete or empty",
+                        cas.ValidAtomIds,
+                        suggestedAtomIds,
+                        residual,
+                        fallbacks);
+                    continue;
+                }
+
                 findings.Add($"source {source.SourceId} atomizer recognition is incomplete or empty");
                 MarkRejected(structuredEntries, alignments);
                 continue;
@@ -158,6 +218,7 @@ internal static class DigestionLedgerAligner
                     && atom.Fingerprints.RawSha256 == entry.Fingerprints.RawSha256)
                 {
                     alignments[entry.AtomId] = DigestionReceiptAlignment.Seen;
+                    matchedAtoms[entry.AtomId] = atom;
                     matchedAstPaths.Add(atom.AstPath);
                     continue;
                 }
@@ -166,6 +227,7 @@ internal static class DigestionLedgerAligner
                     && atom.Fingerprints.NormalizedSha256 == entry.Fingerprints.NormalizedSha256)
                 {
                     alignments[entry.AtomId] = DigestionReceiptAlignment.NormalizedSeen;
+                    matchedAtoms[entry.AtomId] = atom;
                     matchedAstPaths.Add(atom.AstPath);
                     continue;
                 }
@@ -185,33 +247,31 @@ internal static class DigestionLedgerAligner
                     + "and has no matching baseline receipt identity");
             }
 
-            var rawResidual = new HashSet<string>(StringComparer.Ordinal);
-            var normalizedResidual = new HashSet<string>(StringComparer.Ordinal);
+            var casOccurrences = source.Entries
+                .Where(entry => entry.CasRef is not null
+                    && cas.ValidAtomIds.Contains(entry.AtomId))
+                .Select(static entry => (entry.AstPath, RawSha256: entry.CasRef!))
+                .ToHashSet();
+            foreach (var atom in atomized.Claims.Where(atom =>
+                         casOccurrences.Contains((atom.AstPath, atom.Fingerprints.RawSha256))))
+            {
+                matchedAstPaths.Add(atom.AstPath);
+            }
+
             var registration = AtomizerRegistry.Require(source.Atomizer);
             foreach (var atom in atomized.Claims.Where(atom => !matchedAstPaths.Contains(atom.AstPath)))
             {
-                if (!rawResidual.Add(atom.Fingerprints.RawSha256))
-                {
-                    findings.Add(
-                        $"source {source.SourceId} duplicate raw residual fingerprint: {atom.AstPath}");
-                    continue;
-                }
-
-                if (!normalizedResidual.Add(atom.Fingerprints.NormalizedSha256))
-                {
-                    findings.Add(
-                        $"source {source.SourceId} duplicate normalized residual fingerprint: {atom.AstPath}");
-                    continue;
-                }
-
                 residual.Add(new StructuredResidualAdmission(
                     source.SourceId,
                     source.SourcePath,
                     source.Atomizer,
                     atom,
-                    registration.ResidualPrefix
-                    + "-residual-"
-                    + atom.Fingerprints.RawSha256["sha256:".Length..],
+                    SuggestedAtomId(
+                        source,
+                        registration,
+                        atom,
+                        "residual",
+                        suggestedAtomIds),
                     new DigestionStatus(
                         DigestionMigrationState.Residual,
                         DigestionTruthState.Open)));
@@ -244,9 +304,69 @@ internal static class DigestionLedgerAligner
 
         return new DigestionLedgerAlignment(
             alignments.ToImmutable(),
+            matchedAtoms.ToImmutable(),
             residual.ToImmutable(),
+            fallbacks.ToImmutable(),
             actualStale.Order(StringComparer.Ordinal).ToImmutableArray(),
             findings.Order(StringComparer.Ordinal).ToImmutableArray());
+    }
+
+    private static void AddCoarseFallback(
+        DigestionLedgerSource source,
+        ImmutableArray<byte> sourceBytes,
+        string reason,
+        IReadOnlySet<string> validAtomIds,
+        ISet<string> suggestedAtomIds,
+        ImmutableArray<StructuredResidualAdmission>.Builder residual,
+        ImmutableArray<DigestionIngestFallback>.Builder fallbacks)
+    {
+        var fingerprints = DigestionFingerprint.ComputeOpaque(sourceBytes.AsSpan());
+        fallbacks.Add(new DigestionIngestFallback(source.SourceId, reason));
+        if (source.Entries.Any(entry =>
+                validAtomIds.Contains(entry.AtomId)
+                && entry.AstPath == "coarse/source"
+                && entry.CasRef == fingerprints.RawSha256))
+        {
+            return;
+        }
+
+        var atom = new DigestionAtom(
+            "coarse/source",
+            0,
+            sourceBytes.Length,
+            sourceBytes,
+            fingerprints,
+            []);
+        var registration = AtomizerRegistry.Require(source.Atomizer);
+        residual.Add(new StructuredResidualAdmission(
+            source.SourceId,
+            source.SourcePath,
+            source.Atomizer,
+            atom,
+            SuggestedAtomId(source, registration, atom, "coarse", suggestedAtomIds),
+            new DigestionStatus(DigestionMigrationState.Residual, DigestionTruthState.Open)));
+    }
+
+    private static string SuggestedAtomId(
+        DigestionLedgerSource source,
+        AtomizerRegistration registration,
+        DigestionAtom atom,
+        string kind,
+        ISet<string> suggestedAtomIds)
+    {
+        var stem = registration.ResidualPrefix
+            + $"-{kind}-"
+            + atom.Fingerprints.RawSha256["sha256:".Length..];
+        if (suggestedAtomIds.Add(stem))
+        {
+            return stem;
+        }
+
+        var occurrenceBytes = Encoding.UTF8.GetBytes(source.SourceId + "\0" + atom.AstPath);
+        var occurrence = Convert.ToHexStringLower(SHA256.HashData(occurrenceBytes));
+        var qualified = stem + "-" + occurrence;
+        suggestedAtomIds.Add(qualified);
+        return qualified;
     }
 
     private static Dictionary<string, DigestionLedgerSource> BaselineSources(
@@ -280,26 +400,66 @@ internal static class DigestionLedgerAligner
         }
     }
 
-    private static bool RecognitionIsComplete(
+    private static string? AtomizerIntegrityFailure(
         AtomizedTheoryDocument document,
         ReadOnlySpan<byte> sourceBytes)
     {
         var sourceLength = sourceBytes.Length;
-        if (document.Claims.Length == 0
-            || document.Slices.Count(static slice => slice.IsClaim) != document.Claims.Length
-            || !document.Reassemble().AsSpan().SequenceEqual(sourceBytes))
+        if (document.Slices.Count(static slice => slice.IsClaim) != document.Claims.Length)
         {
-            return false;
+            return "claim slice count does not match claim count";
         }
 
-        return document.Claims.All(atom =>
-            !string.IsNullOrWhiteSpace(atom.AstPath)
-            && atom.RawBytes.Length > 0
-            && atom.StartByte >= 0
-            && atom.EndByte > atom.StartByte
-            && atom.EndByte <= sourceLength
-            && atom.EndByte - atom.StartByte == atom.RawBytes.Length
-            && atom.Fingerprints == DigestionFingerprint.Compute(atom.RawBytes.AsSpan()));
+        if (!document.Reassemble().AsSpan().SequenceEqual(sourceBytes))
+        {
+            return "slices do not reassemble the source bytes";
+        }
+
+        var claimIndex = 0;
+        var cursor = 0;
+        foreach (var slice in document.Slices)
+        {
+            var end = cursor + slice.RawBytes.Length;
+            if (slice.IsClaim)
+            {
+                var atom = document.Claims[claimIndex++];
+                if (atom.StartByte != cursor || atom.EndByte != end)
+                {
+                    return $"claim {atom.AstPath} boundaries do not match its source slice";
+                }
+
+                if (!atom.RawBytes.AsSpan().SequenceEqual(slice.RawBytes.AsSpan()))
+                {
+                    return $"claim {atom.AstPath} raw bytes do not match its source span";
+                }
+            }
+
+            cursor = end;
+        }
+
+        foreach (var atom in document.Claims)
+        {
+            if (string.IsNullOrWhiteSpace(atom.AstPath))
+            {
+                return "claim ast_path is empty";
+            }
+
+            if (atom.RawBytes.Length == 0
+                || atom.StartByte < 0
+                || atom.EndByte <= atom.StartByte
+                || atom.EndByte > sourceLength
+                || atom.EndByte - atom.StartByte != atom.RawBytes.Length)
+            {
+                return $"claim {atom.AstPath} has invalid byte boundaries";
+            }
+
+            if (atom.Fingerprints != DigestionFingerprint.Compute(atom.RawBytes.AsSpan()))
+            {
+                return $"claim {atom.AstPath} fingerprint does not match its raw bytes";
+            }
+        }
+
+        return null;
     }
 
     private static bool EntryIdentityEqual(

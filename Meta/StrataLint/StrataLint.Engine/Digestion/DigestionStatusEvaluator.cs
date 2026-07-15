@@ -142,9 +142,11 @@ internal static class DigestionStatusEvaluator
         ImmutableArray<string>.Builder findings)
     {
         var gaps = new List<DigestionGap>();
-        var boundary = entry.Boundary is not null
-            ? VerifyBoundary(entry, snapshot, gaps, findings)
-            : VerifyStructuredAlignment(entry, alignment, gaps, findings);
+        var boundary = entry.CasRef is not null
+            ? VerifyStructuredAlignment(entry, alignment, gaps, findings)
+            : entry.Boundary is not null
+                ? VerifyBoundary(entry, snapshot, gaps, findings)
+                : VerifyStructuredAlignment(entry, alignment, gaps, findings);
         var targetStates = new List<(string Gid, TruthState State)>();
         var existingTargets = new Dictionary<string, RepositoryFile>(StringComparer.Ordinal);
         foreach (var gidText in entry.CoverageGids.Distinct(StringComparer.Ordinal))
