@@ -21,7 +21,7 @@ public sealed class GoldenCorpusStorageTests
             "Meta/StrataLint/Synthetic.cs",
             source));
 
-        Assert.Contains("Golden/cases", finding.Message, StringComparison.Ordinal);
+        Assert.Contains("Meta/StrataLint/Golden/cases", finding.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -39,7 +39,7 @@ public sealed class GoldenCorpusStorageTests
     public void CanonicalTomlDirectoryIsTheOnlyCaseAuthority()
     {
         var root = RepositoryLayout.FindRoot();
-        var directory = Path.Combine(root, "Golden", "cases");
+        var directory = Path.Combine(root, "Meta", "StrataLint", "Golden", "cases");
         Assert.Equal(4, Directory.EnumerateFiles(directory, "*.toml").Count());
         var loader = typeof(StrataLint.Cli.Program).Assembly.GetType(
             "StrataLint.Cli.TomlGoldenLoader",

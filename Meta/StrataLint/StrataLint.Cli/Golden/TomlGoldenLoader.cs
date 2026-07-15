@@ -6,7 +6,7 @@ namespace StrataLint.Cli;
 
 internal static class TomlGoldenLoader
 {
-    internal const string RelativeDirectory = "Golden/cases";
+    internal const string RelativeDirectory = "Meta/StrataLint/Golden/cases";
 
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 

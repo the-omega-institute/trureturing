@@ -23,7 +23,7 @@ internal sealed partial class RuleFixture
     internal const string SyntheticProtectedPath =
         "Meta/StrataLint/StrataLint.Engine/SyntheticProtected.cs";
     internal const string GoldenDataSourcePath =
-        "Golden/cases/structure-and-identities.toml";
+        "Meta/StrataLint/Golden/cases/structure-and-identities.toml";
     internal const string DefinitionsProjectPath =
         "Meta/StrataLint/StrataLint.Definitions/StrataLint.Definitions.csproj";
     internal const string DefinitionsLockPath =

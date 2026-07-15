@@ -44,7 +44,7 @@ public sealed class CanonicalSourceDuplicationTests
 
     [Theory]
     [InlineData("Meta/StrataLint/Synthetic.cs")]
-    [InlineData("Golden/cases/synthetic.toml")]
+    [InlineData("Meta/StrataLint/Golden/cases/synthetic.toml")]
     public void LongExactSpecificationPassageIsRejectedByTheRedFixture(string path)
     {
         const string passage =

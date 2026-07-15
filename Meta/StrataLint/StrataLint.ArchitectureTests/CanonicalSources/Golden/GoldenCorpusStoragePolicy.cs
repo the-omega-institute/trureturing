@@ -59,7 +59,7 @@ internal static class GoldenCorpusStoragePolicy
 
     private static GoldenCorpusStorageFinding Finding(string path) => new(
         path,
-        "C# golden case data is forbidden; declare cases under Golden/cases");
+        "C# golden case data is forbidden; declare cases under Meta/StrataLint/Golden/cases");
 
     private static string RightmostIdentifier(TypeSyntax type) => type switch
     {

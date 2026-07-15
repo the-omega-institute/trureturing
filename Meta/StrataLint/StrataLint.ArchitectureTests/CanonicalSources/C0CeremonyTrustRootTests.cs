@@ -20,10 +20,10 @@ public sealed class C0CeremonyTrustRootTests
     private const string CorpusSchemaDirectory =
         "Meta/StrataLint/StrataLint.Cli/Golden";
     private const string CorpusDataDirectory =
-        "Golden/cases";
+        "Meta/StrataLint/Golden/cases";
     private const string GateWiringPath = ".github/scripts/harness-gate.sh";
     private const string CertificatePath =
-        "Golden/Ceremony/c0-inaugural-conservative-certificate.json";
+        "Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json";
 
     [Fact]
     public void CanonicalSourceDiscoveryIncludesNestedFiles()

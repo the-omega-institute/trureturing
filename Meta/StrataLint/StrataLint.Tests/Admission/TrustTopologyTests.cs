@@ -22,14 +22,22 @@ public sealed class TrustTopologyTests
         CliProgramSourcePath,
         ThisTestSourcePath,
         RuleFixture.SpecificationPath,
+        "Meta/registry.yaml",
+        "Meta/domains.yaml",
         RuleFixture.HeartsPath,
         RepositoryPathPolicy.AssumptionRegistryPath,
+        "Meta/StrataLint/Golden/rules.json",
+        RuleFixture.GoldenDataSourcePath,
+        "Meta/StrataLint/Golden/values-kernels.toml",
+        FrozenLedgerChangeClassifier.LedgerPath,
+        "Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json",
         SolutionPath,
         EngineProjectPath,
         "global.json",
         "Directory.Build.props",
         "Directory.Packages.props",
         EngineLockPath,
+        RawDefinitionSourcePath,
         "lean-toolchain",
         ".github/CODEOWNERS",
         RuleFixture.WorkflowPath,
@@ -38,14 +46,8 @@ public sealed class TrustTopologyTests
 
     public static TheoryData<string> DataPaths => new()
     {
-        "Meta/registry.yaml",
-        "Meta/domains.yaml",
         "Meta/BACKFILL.yaml",
         "Meta/FILEMAP.toml",
-        RuleFixture.GoldenDataSourcePath,
-        "Golden/values-kernels.toml",
-        FrozenLedgerChangeClassifier.LedgerPath,
-        RawDefinitionSourcePath,
         "Library/queries.yaml",
     };
 
@@ -72,15 +74,6 @@ public sealed class TrustTopologyTests
         var outcome = BootstrapGate.Evaluate(changes);
 
         Assert.IsType<BootstrapOutcome.HumanReviewRequired>(outcome);
-    }
-
-    [Theory]
-    [MemberData(nameof(DataPaths))]
-    public void DataChangesUseContentValidationRatherThanSl022(string path)
-    {
-        var outcome = BootstrapGate.Evaluate(RawChangeSet.Create([path]));
-
-        Assert.IsType<BootstrapOutcome.Clear>(outcome);
     }
 
     [Theory]

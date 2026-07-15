@@ -141,7 +141,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void CheckFailsClosedOnScribeDefinitionEmitterMismatch()
+    public void CheckRoutesScribeDefinitionEvolutionToProtectedSurfaceBeforeBaseEmitterMismatch()
     {
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
@@ -162,8 +162,19 @@ public sealed partial class ProductionEnvironmentTests
 
         var outcome = CheckWithReports(environment, fixture);
 
-        var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
-        Assert.Contains("Scribe emission verification failed", failure.Message, StringComparison.Ordinal);
+        Assert.True(
+            outcome is AdmissionOutcome.ProtectedSurfaceChange,
+            outcome switch
+            {
+                AdmissionOutcome.RuleRejected rejected => string.Join(
+                    '\n',
+                    rejected.Diagnostics.Select(static diagnostic => diagnostic.Render())),
+                AdmissionOutcome.InfrastructureFailure failure => failure.Message,
+                _ => outcome.GetType().FullName,
+            });
+        var protectedChange = (AdmissionOutcome.ProtectedSurfaceChange)outcome;
+        Assert.Contains(protectedChange.ChangeSet.Paths, path => path.Value == scribePath);
+        Assert.Contains(protectedChange.Sl022Diagnostics, diagnostic => diagnostic.Path == scribePath);
     }
 
     [Fact]
