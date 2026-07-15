@@ -16,8 +16,8 @@ governance_documents:
   - "docs/CONTRIBUTING.md"
   - "docs/GOVERNANCE.md"
   - "docs/develop/spec/golden-ledger-repo-spec.md"
-  - "docs/develop/theory/GICT_complete_development_v3_3.md"
-  - "docs/develop/theory/PZG_BEDC_kernel_formal_170.md"
+  - "docs/develop/theory/GICT.md"
+  - "docs/develop/theory/PZG_BEDC.md"
 agent_files:
   - "CONTEXT.md"
   - "adversary.md"
