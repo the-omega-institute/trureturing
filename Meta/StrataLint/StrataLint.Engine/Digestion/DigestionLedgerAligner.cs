@@ -85,9 +85,12 @@ internal static class DigestionLedgerAligner
         {
             foreach (var entry in source.Entries.Where(static entry => entry.CasRef is not null))
             {
-                alignments[entry.AtomId] = cas.ValidAtomIds.Contains(entry.AtomId)
-                    ? DigestionReceiptAlignment.Seen
-                    : DigestionReceiptAlignment.Rejected;
+                alignments[entry.AtomId] = source.Atomizer == AtomizerRegistry.NoAtomizerId
+                    && entry.Boundary is not null
+                        ? DigestionReceiptAlignment.LegacyBoundary
+                        : cas.ValidAtomIds.Contains(entry.AtomId)
+                            ? DigestionReceiptAlignment.Seen
+                            : DigestionReceiptAlignment.Rejected;
             }
 
             foreach (var entry in source.Entries.Where(static entry =>

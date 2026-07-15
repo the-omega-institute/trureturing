@@ -1,0 +1,2 @@
+**定理 5.6(归约定理:扭曲消解)**〔closed·恒等式;v3.7 新增〕。对一切 k:**cos(4πkφ)·cot(πkφ) = cot(πkφ) − 2sin(2πkφ) − sin(4πkφ)**(Chebyshev 核)⟹ **C_φ = 13/4 − 2φ − W(φ)/(2π),T₀ = 3/2 − φ − W(φ)/(2π)**——带扭孤本并入 Wilton 纯余切正典(Hardy–Littlewood 一门;Bettin–Conrey 倒数律 = 量子模形式原型;经 Vasyunin 联于 Nyman–Beurling 之 RH 判据街区)。〔轮 176〕
+

@@ -45,6 +45,17 @@ internal static class DigestionIngestor
         var residualOpenAdded = 0;
         foreach (var source in migrationDocument.RequireDigestionSources())
         {
+            if (!AtomizerRegistry.IsRegistered(source.Atomizer))
+            {
+                if (source.Atomizer != AtomizerRegistry.NoAtomizerId)
+                {
+                    throw new FormatException($"ingest source {source.SourceId} has unknown atomizer {source.Atomizer}");
+                }
+
+                sources.Add(CaptureBoundarySource(source, snapshot, casObjects));
+                continue;
+            }
+
             if (!source.Entries.Any(static entry => entry.Boundary is null))
             {
                 sources.Add(source);
@@ -106,6 +117,57 @@ internal static class DigestionIngestor
                 .OrderBy(static item => item.RelativePath, StringComparer.Ordinal)
                 .ToImmutableArray(),
             alignment.Fallbacks);
+    }
+
+    private static DigestionLedgerSource CaptureBoundarySource(
+        DigestionLedgerSource source,
+        RepositorySnapshot snapshot,
+        IDictionary<string, DigestionCasObject> casObjects)
+    {
+        if (!snapshot.TryGetFile(source.SourcePath, out var sourceFile))
+        {
+            throw new FormatException($"ingest source path is dangling: {source.SourcePath}");
+        }
+
+        return source with
+        {
+            Entries = source.Entries
+                .Select(entry => CaptureBoundaryEntry(entry, sourceFile.RawBytes, casObjects))
+                .ToImmutableArray(),
+        };
+    }
+
+    private static DigestionLedgerEntry CaptureBoundaryEntry(
+        DigestionLedgerEntry entry,
+        ImmutableArray<byte> sourceBytes,
+        IDictionary<string, DigestionCasObject> casObjects)
+    {
+        if (entry.CasRef is not null)
+        {
+            return entry;
+        }
+
+        var boundary = entry.Boundary
+            ?? throw new FormatException($"ingest no-atomizer entry {entry.AtomId} has no boundary");
+        if (boundary.StartByte < 0
+            || boundary.EndByte <= boundary.StartByte
+            || boundary.EndByte > sourceBytes.Length)
+        {
+            throw new FormatException($"ingest entry {entry.AtomId} boundary is outside {entry.SourcePath}");
+        }
+
+        var bytes = sourceBytes.AsSpan()[boundary.StartByte..boundary.EndByte];
+        if (DigestionFingerprint.Compute(bytes) != entry.Fingerprints)
+        {
+            throw new FormatException($"ingest entry {entry.AtomId} boundary fingerprint mismatch");
+        }
+
+        var captured = AddCasObject(bytes, casObjects);
+        return entry with
+        {
+            CasRef = captured.Reference,
+            ReceiptSyntax = null,
+        };
     }
 
     private static DigestionLedgerEntry CaptureMatchedAtom(

@@ -202,6 +202,44 @@ public sealed class BackfillInventoryLoaderTests
         Assert.Equal(expected, actual.ToArray());
     }
 
+    [Fact]
+    public void CanonicalLedgerE2StoresEveryReceiptPreimageInCas()
+    {
+        var root = FindRepositoryRoot();
+        var ledgerPath = Path.Combine(root, BackfillInventoryLoader.RelativePath);
+        var document = BackfillInventoryLoader.Load(File.ReadAllText(ledgerPath));
+        var entries = document.RequireDigestionEntries();
+
+        Assert.NotEmpty(entries);
+        Assert.Contains(document.RequireDigestionSources(), static source =>
+            AtomizerRegistry.IsRegistered(source.Atomizer));
+        Assert.Contains(document.RequireDigestionSources(), static source =>
+            source.Atomizer == AtomizerRegistry.NoAtomizerId);
+        Assert.Empty(entries
+            .Where(static entry => entry.CasRef is null)
+            .Select(static entry => $"{entry.SourceId}/{entry.AtomId}"));
+        Assert.Empty(entries
+            .Select(entry => (
+                Entry: entry,
+                Path: Path.Combine(
+                    root,
+                    (DigestionCasStore.RootPath + entry.CasRef!["sha256:".Length..])
+                    .Replace('/', Path.DirectorySeparatorChar))))
+            .Where(static item => !File.Exists(item.Path))
+            .Select(static item => $"{item.Entry.SourceId}/{item.Entry.AtomId}"));
+        Assert.Empty(entries
+            .Select(entry => (
+                Entry: entry,
+                Path: Path.Combine(
+                    root,
+                    (DigestionCasStore.RootPath + entry.CasRef!["sha256:".Length..])
+                    .Replace('/', Path.DirectorySeparatorChar))))
+            .Where(static item => File.Exists(item.Path)
+                && DigestionCasStore.Capture(File.ReadAllBytes(item.Path)).Reference
+                != item.Entry.CasRef)
+            .Select(static item => $"{item.Entry.SourceId}/{item.Entry.AtomId}"));
+    }
+
     private static string FindRepositoryRoot()
     {
         for (var current = new DirectoryInfo(AppContext.BaseDirectory);

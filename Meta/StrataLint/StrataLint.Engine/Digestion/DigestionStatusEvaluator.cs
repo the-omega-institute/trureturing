@@ -142,7 +142,10 @@ internal static class DigestionStatusEvaluator
         ImmutableArray<string>.Builder findings)
     {
         var gaps = new List<DigestionGap>();
-        var boundary = entry.CasRef is not null
+        var boundary = entry.Atomizer == AtomizerRegistry.NoAtomizerId
+            && entry.Boundary is not null
+                ? VerifyBoundary(entry, snapshot, gaps, findings)
+            : entry.CasRef is not null
             ? VerifyStructuredAlignment(entry, alignment, gaps, findings)
             : entry.Boundary is not null
                 ? VerifyBoundary(entry, snapshot, gaps, findings)

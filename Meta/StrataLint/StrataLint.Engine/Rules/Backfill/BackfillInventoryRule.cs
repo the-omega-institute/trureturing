@@ -145,7 +145,8 @@ internal static class BackfillInventoryRule
             }
             else
             {
-                if (source.Entries.Any(static entry => entry.CasRef is null)
+                if ((source.Atomizer == AtomizerRegistry.NoAtomizerId
+                        || source.Entries.Any(static entry => entry.CasRef is null))
                     && !context.Current.TryGetFile(source.SourcePath, out _))
                 {
                     findings.Add(new RuleFinding(BackfillPath, $"source path is dangling: {source.SourcePath}"));
