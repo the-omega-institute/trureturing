@@ -382,9 +382,10 @@ internal static class DigestionStatusEvaluator
                 complete = false;
             }
 
-            var definitionPath = ScribeEmissionAttestation.DefinitionPath(gid);
-            var emissionPath = ScribeEmissionAttestation.EmissionPath(gid);
-            var hasAttestation = attestation.TryGet(gid, out var emitted);
+            var documentGid = ScribeEmissionAttestation.DocumentGid(gid);
+            var definitionPath = ScribeEmissionAttestation.DefinitionPath(documentGid);
+            var emissionPath = ScribeEmissionAttestation.EmissionPath(documentGid);
+            var hasAttestation = attestation.TryGet(documentGid, out var emitted);
             if (!hasAttestation)
             {
                 gaps.Add(new DigestionGap("scribe-attestation-missing", gid));
@@ -393,7 +394,7 @@ internal static class DigestionStatusEvaluator
 
             ScribeEmissionRecord? verified = null;
             if (verifiedEmissions is not null
-                && verifiedEmissions.TryGet(gid, out var verifiedRecord))
+                && verifiedEmissions.TryGet(documentGid, out var verifiedRecord))
             {
                 verified = verifiedRecord;
             }

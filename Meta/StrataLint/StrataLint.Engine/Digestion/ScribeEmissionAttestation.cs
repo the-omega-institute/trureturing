@@ -200,4 +200,16 @@ internal sealed class ScribeEmissionAttestation
     internal static string DefinitionPath(string gid) => $"Blueprint/{gid}.scribe.cs";
 
     internal static string EmissionPath(string gid) => $"Blueprint/{gid}.md";
+
+    internal static string DocumentGid(string coverageGid)
+    {
+        if (!Gid.TryParse(coverageGid, out var gid))
+        {
+            throw new FormatException($"invalid coverage GID {coverageGid}");
+        }
+
+        return gid.ToTarget() is Target.Formal formal
+            ? Gid.FromTarget(formal with { Declaration = null }).Value
+            : coverageGid;
+    }
 }

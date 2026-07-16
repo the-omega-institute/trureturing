@@ -444,6 +444,62 @@ public sealed class DigestionLedgerTests
     }
 
     [Fact]
+    public void DeclarationCoverageUsesItsContainingModuleScribeAttestation()
+    {
+        var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
+        var atom = Assert.Single(GictAtomizer.Atomize(source).Claims);
+        const string moduleGid = "D5/S0/Carrier/Probe";
+        const string declarationGid = moduleGid + ".probe";
+        const string targetPath = "D5/S0/Carrier/Probe.lean";
+        var target = Encoding.UTF8.GetBytes(Lean(moduleGid));
+        var definition = Encoding.UTF8.GetBytes("scribe definition\n");
+        var emission = Encoding.UTF8.GetBytes("# emitted narrative\n");
+        var definitionHash = DigestionFingerprint.Compute(definition).RawSha256;
+        var emissionHash = DigestionFingerprint.Compute(emission).RawSha256;
+        var record = new ScribeEmissionRecord(
+            moduleGid,
+            ScribeEmissionAttestation.DefinitionPath(moduleGid),
+            definitionHash,
+            ScribeEmissionAttestation.EmissionPath(moduleGid),
+            emissionHash);
+        var coverage = $$"""
+            - gid: {{declarationGid}}
+              source_sha256: {{atom.Fingerprints.RawSha256}}
+              target_sha256: {{DigestionFingerprint.Compute(target).RawSha256}}
+            """;
+        var scribe = $$"""
+            - gid: {{declarationGid}}
+              definition_sha256: {{definitionHash}}
+              emission_sha256: {{emissionHash}}
+            """;
+        var yaml = LedgerYaml(
+            atom,
+            migration: "absorbed",
+            truth: "closed",
+            coverageReceipts: coverage,
+            scribeReceipts: scribe,
+            coverageGid: declarationGid);
+        var snapshot = Snapshot(
+            ("docs/source.md", source),
+            (targetPath, target),
+            (ScribeEmissionAttestation.DefinitionPath(moduleGid), definition),
+            (ScribeEmissionAttestation.EmissionPath(moduleGid), emission),
+            (ScribeEmissionAttestation.RelativePath,
+                ScribeEmissionAttestation.Write([record]).ToArray()));
+
+        var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
+            BackfillInventoryLoader.Load(yaml),
+            snapshot,
+            AcceptedLean(targetPath),
+            VerifiedScribeEmissions.Create([record])).Entries);
+
+        Assert.Equal(DigestionMigrationState.Absorbed, status.DerivedStatus.Migration);
+        Assert.Equal(DigestionTruthState.Closed, status.DerivedStatus.Truth);
+        Assert.True(status.Deletable);
+        Assert.Empty(status.Gaps);
+    }
+
+    [Fact]
     public void TailCannotAppearBeforeAbsorptionAndExternalAuthorizationReceipt()
     {
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
