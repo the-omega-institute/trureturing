@@ -43,4 +43,24 @@ public sealed class CanonicalSnapshotTests
         var failure = Assert.IsType<CanonicalizationOutcome.InfrastructureFailure>(outcome);
         Assert.Contains("canonical", failure.Message, StringComparison.OrdinalIgnoreCase);
     }
+
+    [Fact]
+    public void YamlSubsetParserRoundTripsInlineEmptyList()
+    {
+        var parsed = YamlSubsetParser.Parse("sources:\n  - source_id: fresh\n    entries: []\n");
+        var root = Assert.IsType<Dictionary<string, object?>>(parsed);
+        var sources = Assert.IsType<List<object?>>(root["sources"]);
+        var source = Assert.IsType<Dictionary<string, object?>>(sources[0]);
+        var entries = Assert.IsType<List<object?>>(source["entries"]);
+        Assert.Empty(entries);
+    }
+
+    [Fact]
+    public void BackfillWriterRoundTripsEmptyEntriesSource()
+    {
+        var text = "schema_version: 3\nledger: theory-digestion-v1\nsources:\n  - source_id: fresh\n    path: docs/source.md\n    atomizer: none\n    entries: []\nticket_index: []\n";
+        var document = StrataLint.Engine.BackfillInventoryLoader.Load(text);
+        var sources = document.RequireDigestionSources();
+        Assert.Empty(sources[0].Entries);
+    }
 }
