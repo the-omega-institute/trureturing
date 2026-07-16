@@ -295,6 +295,59 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
   replay remains 117/118/6 and 37/37 with zero findings, the exact five retirements,
   and empty retired-rule and uncovered-obligation sets. Both harnesses admit the actual
   baseline and provisionally admit the actual candidate with only SL-022.
+- Growth-1 began from an explicit evidence gap: the requested growth-audit
+  `seat1-result.json`, `seat2-result.json`, and both seat logs were absent after searches
+  across the accessible home tree, `/tmp`, Darwin temporary roots, Git history, agent
+  traces, Spotlight, and mounted volumes. The user-supplied observations remain the
+  honest evidence boundary: 11 obsolete worktrees represented 108 GiB of logical data,
+  and each duplicate Lean inspection cost about 192 seconds. No replacement log or
+  synthetic seat result was invented.
+- The real `make clean-lanes BASE=origin/dev` dry-run classified 98 records and marked 71
+  removable while changing neither the worktree inventory nor local-ref hashes. Force
+  mutation ran only inside disposable Git fixtures; 9/9 focused cleanup tests covered
+  merged, dirty, unmerged, current, orphan, detached, broken-pointer, gitless, symlink,
+  and foreign cases. The shared repository was never subjected to an unreviewed force run.
+- The first ceremony gate fetched newly merged PR #139 and correctly failed infrastructure
+  admission because base `204538aac6dcb45302148dc4b59a53034dab3648` was not yet an
+  ancestor of the candidate. Its pair stage still proved one 187-second inspection, a
+  byte-reused baseline report, and a final failed timing summary. The branch merged that
+  exact base without rebase rather than pinning the obsolete predecessor.
+- The next gate reached content admission and exposed two unregistered temporary planning
+  documents plus all twelve A20-shifted `atomizer: none` specification receipts. The plan
+  and design remain in Git history while the sole normative contract stays in A20. The
+  canonical ingest moved every unchanged sample boundary by exactly 2,080 bytes and
+  changed no fingerprint, CAS ref, atom identity, or status; its repeat reported
+  `ledger_changed=false`, `cas_objects_written=0`, and stable BACKFILL SHA-256
+  `d2c5c909bee2656173bc3601a49519b927bd0a1b9f4ff0334afb59253a7febcf`.
+- Extracting the emitted certificate first reproduced the known Darwin locale failure:
+  Perl panicked before reading bytes under inherited `C.UTF-8`. Repeating the same
+  byte extraction with `LC_ALL=C LANG=C` and `sed`/`jq` validated the unique certificate;
+  neither gate output nor certificate bytes were changed by the failed auxiliary probe.
+- The first focused C0 run passed 5/6 checks and rejected only the ceremony record shape.
+  Address replacement had left the new `0e16...` and `671d...` controller blobs in their
+  predecessors' positions, violating complete-record ordinal order. Moving those two
+  unchanged records to their canonical positions restored the declared C0 grammar; no
+  address, controller membership, corpus byte, certificate, or verification rule changed.
+- The renewed Growth-1 C0 binds base
+  `204538aac6dcb45302148dc4b59a53034dab3648`, clean preimage
+  `5f6333ec00a95b9f78412605df6ee8e386cff97d`, tree
+  `32446c45cfd7e5af296d4df1bf8334c9c9541179`, and certificate SHA-256
+  `ced699912ac9872c24e7ad53d50d071756bcb30e707b4941455b387725e756ba`.
+  Candidate and baseline input address `5a142073fb2a792096e57f81e4d03b90e2e459b2a89459f8c2385b71ba12c27f`
+  ran the producer once and attested baseline reuse at report SHA-256
+  `59bfd4fd14f72b05aaaa910022e1f9388891886e90eb1f3fb3ffd16aade5c545`.
+  Replay reports 117/118/6 cases, 37/37 preserved admits, zero findings, no retired paths
+  or rules, and no uncovered obligations. Both harnesses admit the actual baseline and
+  provisionally admit the actual candidate with only SL-022. Machine timings were 181s
+  Lean reports, 19s emission, 394s admission, and 595s total; this ceremony-only run
+  explicitly recorded engineering as skipped, while final `make preflight` remains the
+  acceptance owner that executes engineering once before passing that explicit skip.
+- The first full preflight stopped before gate after the main test assembly passed 675/676.
+  `CoverageCommandTests.TopLevelUsageNamesCoverage` still coupled coverage to the former
+  immediately preceding `check` token, so inserting the registered `clean-lanes` command
+  made that stale adjacency fail while the complete root-usage contract test passed. The
+  focused assertion now checks the delimited `|coverage|` token it names; production
+  routing, command order, exit behavior, and every validation stage remain unchanged.
 
 ## Residual scan
 

@@ -65,11 +65,22 @@ summary() {
   fi
 }
 
+if [[ -n "${STRATALINT_TIMING:-}" && "$STRATALINT_TIMING" != /* ]]; then
+  echo "harness-gate: STRATALINT_TIMING must be an absolute JSONL path" >&2
+  exit 2
+fi
+
 _t0=$(date +%s)
 mark() {
+  local stage="$1"
+  local status="${2:-passed}"
   local now
   now=$(date +%s)
-  printf '[gate] %-16s %ss\n' "$1" "$((now-_t0))" >&2
+  printf '[gate] %-16s %ss\n' "$stage" "$((now-_t0))" >&2
+  if [[ -n "${STRATALINT_TIMING:-}" ]]; then
+    printf '{"event":"gate_stage_timing","scope":"admission","stage":"%s","status":"%s","elapsed_seconds":%s}\n' \
+      "$stage" "$status" "$((now-_t0))" >> "$STRATALINT_TIMING"
+  fi
   _t0=$now
 }
 
@@ -91,7 +102,6 @@ selftest_dir="$(mktemp -d)"
 cmp "$selftest_dir/a" "$selftest_dir/b"
 mark selftest
 
-export STRATALINT_TIMING="${STRATALINT_TIMING:-1}"
 set +e
 (
   cd "$CANDIDATE_ROOT"
@@ -101,7 +111,9 @@ set +e
 )
 rc=$?
 set -e
-mark admission
+admission_status="passed"
+if [[ "$rc" -ne 0 && "$rc" -ne 3 ]]; then admission_status="failed"; fi
+mark admission "$admission_status"
 
 if [[ $rc -eq 0 ]]; then
   summary "### Admission: content fully validated, no protected-surface change"
@@ -125,7 +137,9 @@ if [[ $rc -eq 3 ]]; then
   )
   conservative_rc=$?
   set -e
-  mark conservative
+  conservative_status="passed"
+  if [[ "$conservative_rc" -ne 0 ]]; then conservative_status="failed"; fi
+  mark conservative "$conservative_status"
   case "$conservative_rc" in
     0)
       summary "### SL-022 protected-surface change: conservative-extension certificate emitted"
