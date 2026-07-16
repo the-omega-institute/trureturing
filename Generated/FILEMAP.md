@@ -70,6 +70,14 @@ FileMapEmitter --produces--> [Generated/FILEMAP.md | generated]
 [Generated/FILEMAP.md | generated] --consumed-by--> reader
 [Generated/FILEMAP.md | generated] --verified-by--> emit-check
 
+none --declares--> [Golden/cases/**/*.toml | data]
+[Golden/cases/**/*.toml | data] --consumed-by--> TomlGoldenLoader
+[Golden/cases/**/*.toml | data] --verified-by--> TomlGoldenLoader
+
+none --declares--> [Golden/values-kernels.toml | data]
+[Golden/values-kernels.toml | data] --consumed-by--> ValuesKernelDataLoader
+[Golden/values-kernels.toml | data] --verified-by--> ValuesKernelDataLoader
+
 none --declares--> [Library/**/*.yaml | data]
 [Library/**/*.yaml | data] --consumed-by--> AnchorReferenceRule
 [Library/**/*.yaml | data] --verified-by--> SL-017, YamlSubsetParser
@@ -157,6 +165,14 @@ none --declares--> [Meta/StrataLint/lean-inspector/** | program]
 none --declares--> [Meta/StrataLint/scripts/** | program]
 [Meta/StrataLint/scripts/** | program] --consumed-by--> automation
 [Meta/StrataLint/scripts/** | program] --verified-by--> make-gate
+
+ContractEpochLedgerCodec --produces--> [Meta/contract-epoch/events.jsonl | ledger]
+[Meta/contract-epoch/events.jsonl | ledger] --consumed-by--> ContractEpochStore
+[Meta/contract-epoch/events.jsonl | ledger] --verified-by--> ContractEpochStore
+
+ContractEpochEvidenceReceipt --produces--> [Meta/contract-epoch/evidence/sha256/*.json | ledger]
+[Meta/contract-epoch/evidence/sha256/*.json | ledger] --consumed-by--> ContractEpochStore
+[Meta/contract-epoch/evidence/sha256/*.json | ledger] --verified-by--> ContractEpochStore
 
 none --declares--> [Meta/domains.yaml | data]
 [Meta/domains.yaml | data] --consumed-by--> RegistryLoader

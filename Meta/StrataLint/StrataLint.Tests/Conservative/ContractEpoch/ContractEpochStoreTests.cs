@@ -4,9 +4,13 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
+internal static class ContractEpochTestData
+{
+    internal const string LedgerPath = "Meta/contract-epoch/events.jsonl";
+}
+
 public sealed class ContractEpochStoreTests
 {
-    private const string LedgerPath = "Meta/contract-epoch/events.jsonl";
     private const string RetiredPath = "Meta/StrataLint/Golden/values-kernels.toml";
     private static readonly string TreeOid = "git-sha1:" + new string('a', 40);
 
@@ -26,7 +30,7 @@ public sealed class ContractEpochStoreTests
         var (ledger, receipt) = Registration();
         var evidencePath = EvidencePath(receipt.Reference);
         var store = ContractEpochStore.Load(Snapshot(
-            new RawRepositoryEntry(LedgerPath, ledger),
+            new RawRepositoryEntry(ContractEpochTestData.LedgerPath, ledger),
             new RawRepositoryEntry(evidencePath, receipt.CanonicalBytes),
             RawRepositoryEntry.FromText("Meta/ReplacementLoader.cs", "sealed class Loader {}\n")));
 
@@ -44,7 +48,7 @@ public sealed class ContractEpochStoreTests
         var wrongPath = "Meta/contract-epoch/evidence/sha256/" + new string('b', 64) + ".json";
 
         var exception = Assert.Throws<FormatException>(() => ContractEpochStore.Load(Snapshot(
-            new RawRepositoryEntry(LedgerPath, ledger),
+            new RawRepositoryEntry(ContractEpochTestData.LedgerPath, ledger),
             new RawRepositoryEntry(wrongPath, receipt.CanonicalBytes))));
 
         Assert.Contains("content root", exception.Message, StringComparison.OrdinalIgnoreCase);
@@ -56,7 +60,7 @@ public sealed class ContractEpochStoreTests
         var (_, receipt) = Registration();
 
         var exception = Assert.Throws<FormatException>(() => ContractEpochStore.Load(Snapshot(
-            new RawRepositoryEntry(LedgerPath, ImmutableArray<byte>.Empty),
+            new RawRepositoryEntry(ContractEpochTestData.LedgerPath, ImmutableArray<byte>.Empty),
             new RawRepositoryEntry(EvidencePath(receipt.Reference), receipt.CanonicalBytes))));
 
         Assert.Contains("evidence set", exception.Message, StringComparison.OrdinalIgnoreCase);
@@ -66,7 +70,7 @@ public sealed class ContractEpochStoreTests
     public void ContractEpochNamespaceIsClosedToUnknownFiles()
     {
         var exception = Assert.Throws<FormatException>(() => ContractEpochStore.Load(Snapshot(
-            new RawRepositoryEntry(LedgerPath, ImmutableArray<byte>.Empty),
+            new RawRepositoryEntry(ContractEpochTestData.LedgerPath, ImmutableArray<byte>.Empty),
             RawRepositoryEntry.FromText("Meta/contract-epoch/free-pass.json", "{}\n"))));
 
         Assert.Contains("unknown", exception.Message, StringComparison.OrdinalIgnoreCase);

@@ -14,7 +14,7 @@ public sealed class ConservativePolicySnapshotTests
 
     [Theory]
     [InlineData(BootstrapGatePath, true)]
-    [InlineData("Meta/contract-epoch/events.jsonl", true)]
+    [InlineData(ContractEpochTestData.LedgerPath, true)]
     [InlineData(SpecificationPath, true)]
     [InlineData(BlueprintSourcePath, true)]
     [InlineData("Meta/StrataLint/StrataLint.Definitions/Retired.cs", false)]

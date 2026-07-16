@@ -67,8 +67,10 @@ receipt already present in the exact base, and checks the new loader path, canon
 anchor, or active rule against the candidate snapshot. Every retired path/rule atom must
 be covered by a sealed custody transfer or authority discharge; any uncovered atom,
 scope excess, replay, opaque matcher contraction, or authority-ceiling target rejects.
-P0 installs this mechanism with no registered plan. `RESIDENCE-EPOCH` and digestion E3
-own their later registration and consumption commits.
+P0 installs this mechanism with no registered plan. `RESIDENCE-EPOCH` now owns two
+candidate-validated, authority-none registrations for its exact five-path transfer;
+consumption remains a later base-owned commit. Digestion E3 owns its separate later
+registration and consumption commits.
 
 ## FILEMAP custody boundary
 
@@ -86,6 +88,7 @@ admit the new artifact class without candidate-only path exceptions.
 `residence_violation=true`, and the architecture suite freezes the exact expanded file
 set so an unmarked or additional violation fails. Blueprint Scribe sources and the
 Golden residence remain under the predecessor SL-022 protection contract in this epoch.
-The sshx-reviewed P0 verifier mechanism is now installed without declarations. Moving
-cases, values, and C0/frozen material to top-level `Golden/` remains deferred to the
-separate P1 registration and P2 consumption commits owned by `RESIDENCE-EPOCH`.
+The sshx-reviewed P0 verifier mechanism is installed. P1 registers exact loader custody
+for the four case files and the values-kernels file with authority `none`; moving cases,
+values, and C0/frozen material to top-level `Golden/` remains deferred to the separate
+P2 consumption commit owned by `RESIDENCE-EPOCH`.
