@@ -86,6 +86,10 @@ none --declares--> [Library/**/*.yaml | data]
 [Library/**/*.yaml | data] --consumed-by--> AnchorReferenceRule
 [Library/**/*.yaml | data] --verified-by--> SL-017, YamlSubsetParser
 
+none --declares--> [Library/notes/*.md | data]
+[Library/notes/*.md | data] --consumed-by--> DescribeRepositoryValidator, ScribeEmitter
+[Library/notes/*.md | data] --verified-by--> LibraryNoteCatalog, emit-check
+
 none --declares--> [Makefile | program]
 [Makefile | program] --consumed-by--> developer
 [Makefile | program] --verified-by--> make-gate

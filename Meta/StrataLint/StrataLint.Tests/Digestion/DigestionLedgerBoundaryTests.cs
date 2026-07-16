@@ -1,5 +1,6 @@
 using System.Text;
 using StrataLint.Engine;
+using static StrataLint.Tests.DigestionTestSupport;
 
 namespace StrataLint.Tests;
 

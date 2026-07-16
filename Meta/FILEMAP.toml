@@ -147,6 +147,13 @@ consumed_by = ["AnchorReferenceRule"]
 verified_by = ["SL-017", "YamlSubsetParser"]
 
 [[files]]
+pattern = "Library/notes/*.md"
+kind = "data"
+produced_by = "none"
+consumed_by = ["DescribeRepositoryValidator", "ScribeEmitter"]
+verified_by = ["LibraryNoteCatalog", "emit-check"]
+
+[[files]]
 pattern = "Makefile"
 kind = "program"
 produced_by = "none"
