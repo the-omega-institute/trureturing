@@ -259,6 +259,20 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
   same time; the identical review-fixed C0 had already completed without that CPU
   contention. No timeout or rule was weakened: this lane waited for the external gate to
   finish before rerunning the same command from a clean tree.
+- During the final replay, `origin/dev` advanced again through PR #132. The branch merged
+  exact base `f91ec8379d049c4d74bf584bef5e0533a3d1f4cb` without rebase. FILEMAP's
+  conflict retained both independently added loader identities; the digestion conflict
+  kept the P2-only CAS boundary helper while using dev's extracted shared test support.
+  The first targeted compile then exposed that a `using static` directive is file-scoped,
+  not inherited by a partial-class sibling. Adding the same support import to that sibling
+  changed the exact red compile into 24/24 digestion and 17/17 FILEMAP tests.
+- The renewed C0 now binds preimage `797f0f94e6c55a615d4d550e9951a874a73a23b5`,
+  tree `a71d478795f91eafdab5abb8c87a3bbb83394fcf`, and certificate SHA-256
+  `7d0525e55269fee993e6a3fa174a770acdacffa09b896148043dc2d0f639c6c2`.
+  Both base-owned Lean reports converge at `59bfd4fd14f72b05aaaa910022e1f9388891886e90eb1f3fb3ffd16aade5c545`;
+  replay again reports 117/118/6 cases, 37/37 preserved admits, zero findings, the exact
+  five retirements, and empty retired-rule and uncovered-obligation sets. Both harnesses
+  admit the actual baseline and provisionally admit the actual candidate with only SL-022.
 
 ## Residual scan
 
