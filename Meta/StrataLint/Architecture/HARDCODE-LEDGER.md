@@ -231,6 +231,27 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
   epoch, `ReadRevision` expands that scan into a `git show` per repository file. The
   resolver now reads only the exact-commit, exact-path regular blob while actual-candidate
   admission retains its complete snapshot. The timeout was not raised or bypassed.
+- The repaired replay against base `df14b4c43e001308e2991d8096f8500b8f167856`
+  and preimage `a2c5f008d3169dc771c7a8ff30657ec9c1c5df42` then completed within
+  the unchanged budget: zero findings, 117 golden cases, 118 total corpus cases, six
+  contract attacks, 37/37 preserved admits, the exact five retirements, and no retired
+  rule or uncovered obligation. Before that certificate could be installed, `origin/dev`
+  advanced through PR #131; the branch merged it without rebase and discarded the stale
+  certificate as a final authority rather than pinning an obsolete judge.
+- Independent code-quality review then found that the exact-path Git helper checked only
+  the OID's hexadecimal shape: `git ls-tree` also accepts tree and annotated-tag OIDs, so
+  those object types could violate the helper's exact-commit contract. A regression first
+  reproduced both false accepts; the helper now requires `git cat-file -t` to return
+  `commit`, while valid commits still read one exact regular blob and missing paths remain
+  closed. The review-fixed commit became a new clean ceremony preimage.
+- The final C0 renewal binds exact base `88de8b8666bf3292c11f62d662c7e9e46c68385a`,
+  preimage `b929bff94caead1267329d429865fa3695262156`, and tree
+  `9ab505b1d0f1c2b5291ae1ee79c0de7098381d58`, with certificate SHA-256
+  `b7952b9296cb240685142b60540f8bbc1b85f30ffc41cdf2801a97fc88548dbf`.
+  It repeats the complete 117/118/6 and 37/37 evidence, admits the actual baseline under
+  both harnesses, admits the actual candidate provisionally with only SL-022 diagnostics,
+  consumes both RESIDENCE plans exactly once, retires exactly the five registered paths,
+  and reports `retired_rule_obligations=[]` and `uncovered_obligations=[]`.
 
 ## Residual scan
 
