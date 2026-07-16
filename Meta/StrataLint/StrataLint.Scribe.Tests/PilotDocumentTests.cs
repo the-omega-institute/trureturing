@@ -202,7 +202,7 @@ public sealed class DocumentDiscoveryTests
     }
 
     [Fact]
-    public void GictBatchTwoDocumentsCarryExactStatementsAndDiligentProvenance()
+    public void SelectedResidualDocumentsCarryExactStatementsAndDiligentProvenance()
     {
         (string Document, DescribeKind Kind, string Declaration,
             DescribeProvenanceKind Provenance, string? Reference)[] expected =
