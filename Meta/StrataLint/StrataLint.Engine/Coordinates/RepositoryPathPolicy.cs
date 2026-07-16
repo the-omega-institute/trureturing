@@ -55,12 +55,14 @@ internal static partial class RepositoryPathPolicy
         if (value is "Meta/domains.yaml" or "Meta/BACKFILL.yaml" or "Meta/registry.yaml"
             or "Library/queries.yaml" or AssumptionRegistryPath
             or "Meta/split.py" or "Meta/papergen"
+            or "Golden/fixture-registry.yaml" or "Golden/values-kernels.toml"
             or WorkflowPath or ".github/CODEOWNERS"
             or ".github/scripts/baseline-admission.sh" or HarnessGatePath
             || value.StartsWith("Meta/StrataLint/", StringComparison.Ordinal)
             || DigestionCasStore.IsCanonicalPath(value)
             || value.StartsWith(".fkst/", StringComparison.Ordinal)
             || value.StartsWith(".claude/skills/", StringComparison.Ordinal)
+            || IsGoldenCaseData(value)
             || IsCanonicalFutureCoordinate(value))
         {
             return null;
@@ -227,6 +229,21 @@ internal static partial class RepositoryPathPolicy
         }
 
         return policy.Domains.TryGetValue(domain, out var registered) && registered == stratum;
+    }
+
+    private static bool IsGoldenCaseData(string path)
+    {
+        const string prefix = "Golden/cases/";
+        const string suffix = ".toml";
+        if (!path.StartsWith(prefix, StringComparison.Ordinal)
+            || !path.EndsWith(suffix, StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        var stem = path[prefix.Length..^suffix.Length];
+        return stem.Length > 0 && stem.All(static character =>
+            char.IsAsciiLetterOrDigit(character) || character is '_' or '-');
     }
 
     private static RepositoryPathIssue Sl000(string path, string message) =>
