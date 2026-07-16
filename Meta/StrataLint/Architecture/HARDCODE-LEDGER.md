@@ -252,6 +252,13 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
   both harnesses, admits the actual candidate provisionally with only SL-022 diagnostics,
   consumes both RESIDENCE plans exactly once, retires exactly the five registered paths,
   and reports `retired_rule_obligations=[]` and `uncovered_obligations=[]`.
+- The first final `make gate BASE=origin/dev` attempt completed its build, 911 tests,
+  selftest, both Lean reports, emission check, and content admission, then its baseline
+  corpus worker exceeded the unchanged 180-second budget. Process evidence showed an
+  unrelated formalization worktree running another conservative corpus worker at the
+  same time; the identical review-fixed C0 had already completed without that CPU
+  contention. No timeout or rule was weakened: this lane waited for the external gate to
+  finish before rerunning the same command from a clean tree.
 
 ## Residual scan
 
