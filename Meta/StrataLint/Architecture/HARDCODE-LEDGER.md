@@ -273,6 +273,14 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
   replay again reports 117/118/6 cases, 37/37 preserved admits, zero findings, the exact
   five retirements, and empty retired-rule and uncovered-obligation sets. Both harnesses
   admit the actual baseline and provisionally admit the actual candidate with only SL-022.
+- The first post-ceremony `make test` then read the repository's canonical raw Lean report
+  left by the pre-merge gate, while the renewed report existed only in the retained C0
+  dossier. Scribe discovery rejected the three PR #132 modules missing from that stale
+  input, yielding the sole failure out of 916 tests. The same base-owned producer emitted
+  the canonical path at the already certified
+  `59bfd4fd14f72b05aaaa910022e1f9388891886e90eb1f3fb3ffd16aade5c545`
+  address; the unchanged test command then passed 916/916. No source rule or test
+  expectation changed.
 
 ## Residual scan
 
