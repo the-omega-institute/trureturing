@@ -15,6 +15,9 @@ root_files:
 governance_documents:
   - "Generated/FILEMAP.md"
   - "Meta/FILEMAP.toml"
+  - "Meta/contract-epoch/events.jsonl"
+  - "Meta/contract-epoch/evidence/sha256/79f0af01c5706aca310302fea7c6bc1b3b87077158b18654393ced99ff1736d1.json"
+  - "Meta/contract-epoch/evidence/sha256/f5ab1ee9631f04e559342594c484212362c3609e115231178e64d27591db0e3b.json"
   - "docs/CONTRIBUTING.md"
   - "docs/GOVERNANCE.md"
   - "docs/develop/spec/golden-ledger-repo-spec.md"

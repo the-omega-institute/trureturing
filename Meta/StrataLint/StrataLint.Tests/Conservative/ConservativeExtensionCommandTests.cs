@@ -384,7 +384,7 @@ public sealed class ConservativeExtensionCommandTests
         var snapshot = SnapshotDecoder.Decode(RawRepositorySnapshot.Create(
         [
             new RawRepositoryEntry(
-                "Meta/contract-epoch/events.jsonl",
+                ContractEpochTestData.LedgerPath,
                 ContractEpochLedgerCodec.Write([registration])),
             new RawRepositoryEntry(evidencePath, receipt.CanonicalBytes),
         ])) switch
