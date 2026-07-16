@@ -5,22 +5,23 @@ namespace StrataLint.Scribe.Tests;
 public sealed class DescribeMigrationTests
 {
     [Fact]
-    public void RepositoryMigrationHasSixteenTypedNodesAndPreservesTwentyFourFormulaSlots()
+    public void RepositoryMigrationHasTwentyTypedNodesAndPreservesTwentyFourFormulaSlots()
     {
         var root = FindRepositoryRoot();
         var report = DescribeReport.Build(
             root,
             DocumentDefinitions.All.Select(static definition => definition.Document));
 
-        Assert.Equal(16, report.NodeStats.Total);
+        Assert.Equal(20, report.NodeStats.Total);
         Assert.Equal(24, report.NodeStats.FormulaContentSlots);
         Assert.Equal(1, report.NodeStats.FormulaStatements);
-        Assert.Equal(15, report.NodeStats.LeanStatements);
+        Assert.Equal(19, report.NodeStats.LeanStatements);
+        Assert.Equal(3, report.NodeStats.ByKind["definition"]);
         Assert.Equal(7, report.NodeStats.ByKind["proposition"]);
-        Assert.Equal(8, report.NodeStats.ByKind["theorem"]);
+        Assert.Equal(9, report.NodeStats.ByKind["theorem"]);
         Assert.Equal(1, report.NodeStats.ByKind["example"]);
-        Assert.Equal(14, report.NodeStats.ByProvenance["repo-derived"]);
-        Assert.Equal(2, report.NodeStats.ByProvenance["literature-attested"]);
+        Assert.Equal(16, report.NodeStats.ByProvenance["repo-derived"]);
+        Assert.Equal(4, report.NodeStats.ByProvenance["literature-attested"]);
         Assert.Equal(0, report.OpenCount);
         Assert.Empty(report.SuspectedNovel);
         Assert.Empty(report.RedFindings);
@@ -33,10 +34,20 @@ public sealed class DescribeMigrationTests
         {
             (
                 Document: "D5/S0/Carrier/GoldenRatio",
-                Declaration: "D5/S0/Carrier/GoldenRatio.golden_ratio_spec"),
+                Declaration: "D5/S0/Carrier/GoldenRatio.golden_ratio_spec",
+                Reference: "D5/L/koshy2001fibonacci"),
             (
                 Document: "D5/S1/Scale/FibonacciEigen",
-                Declaration: "D5/S1/Scale/FibonacciEigen.fibonacci_substitution_spec"),
+                Declaration: "D5/S1/Scale/FibonacciEigen.fibonacci_substitution_spec",
+                Reference: "D5/L/koshy2001fibonacci"),
+            (
+                Document: "D5/S0/Carrier/AlgebraicModel",
+                Declaration: "D5/S0/Carrier/AlgebraicModel.golden_algebraic_model_spec",
+                Reference: "D5/L/stewarttall2025algebraic"),
+            (
+                Document: "D5/S1/Scale/MinkowskiModelSet",
+                Declaration: "D5/S1/Scale/MinkowskiModelSet.minkowski_model_set_spec",
+                Reference: "D5/L/baakefrankgrimm2021three"),
         };
 
         foreach (var item in expected)
@@ -49,7 +60,7 @@ public sealed class DescribeMigrationTests
 
             Assert.Equal(item.Declaration, statement.Value.Value);
             Assert.Equal(DescribeProvenanceKind.LiteratureAttested, describe.Provenance.Kind);
-            Assert.Equal("D5/L/koshy2001fibonacci", describe.Provenance.LiteratureReference?.Value);
+            Assert.Equal(item.Reference, describe.Provenance.LiteratureReference?.Value);
         }
     }
 
@@ -84,7 +95,7 @@ public sealed class DescribeMigrationTests
         Assert.Equal(string.Empty, error.ToString());
         using var document = JsonDocument.Parse(output.ToString());
         Assert.Equal("DESCRIBE-NODES", document.RootElement.GetProperty("case_id").GetString());
-        Assert.Equal(16, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
+        Assert.Equal(20, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
         Assert.Equal(0, document.RootElement.GetProperty("open_count").GetInt32());
     }
 

@@ -5,6 +5,7 @@ namespace StrataLint.Scribe.Tests;
 
 public sealed class DocumentDiscoveryTests
 {
+    private const string AlgebraicModelDocumentPath = "Blueprint/D5/S0/Carrier/AlgebraicModel.md";
     private const string ConjDocumentPath = "Blueprint/D5/S0/Carrier/Conj.md";
     private const string GoldenRatioDocumentPath = "Blueprint/D5/S0/Carrier/GoldenRatio.md";
     private const string NormDocumentPath = "Blueprint/D5/S0/Carrier/Norm.md";
@@ -12,13 +13,16 @@ public sealed class DocumentDiscoveryTests
     private const string UnitsDocumentPath = "Blueprint/D5/S0/Carrier/Units.md";
     private const string NotationDocumentPath = "Blueprint/D5/S0/Conventions/Notation.md";
     private const string WDigitsDocumentPath = "Blueprint/D5/S0/Conventions/WDigits.md";
+    private const string JointCoordinatesDocumentPath = "Blueprint/D5/S1/Depth/JointCoordinates.md";
     private const string CarryDocumentPath = "Blueprint/D5/S1/Digit/Carry.md";
+    private const string PrimeAxisEncodingDocumentPath = "Blueprint/D5/S1/Digit/PrimeAxisEncoding.md";
     private const string PrimeAxisTableDocumentPath = "Blueprint/D5/S1/Digit/PrimeAxisTable.md";
     private const string RawDocumentPath = "Blueprint/D5/S1/Digit/Raw.md";
     private const string PhaseDocumentPath = "Blueprint/D5/S1/Phase/Basic.md";
     private const string EmbeddingDocumentPath = "Blueprint/D5/S1/Scale/Embedding.md";
     private const string FibonacciEigenDocumentPath = "Blueprint/D5/S1/Scale/FibonacciEigen.md";
     private const string LogDocumentPath = "Blueprint/D5/S1/Scale/Log.md";
+    private const string MinkowskiModelSetDocumentPath = "Blueprint/D5/S1/Scale/MinkowskiModelSet.md";
     private const string PhaseSourcePath = "Blueprint/D5/S1/Phase/Basic.scribe.cs";
 
     [Fact]
@@ -26,6 +30,7 @@ public sealed class DocumentDiscoveryTests
     {
         Assert.Equal(
             [
+                "D5/S0/Carrier/AlgebraicModel",
                 "D5/S0/Carrier/Conj",
                 "D5/S0/Carrier/GoldenRatio",
                 "D5/S0/Carrier/Norm",
@@ -33,17 +38,21 @@ public sealed class DocumentDiscoveryTests
                 "D5/S0/Carrier/Units",
                 "D5/S0/Conventions/Notation",
                 "D5/S0/Conventions/WDigits",
+                "D5/S1/Depth/JointCoordinates",
                 "D5/S1/Digit/Carry",
+                "D5/S1/Digit/PrimeAxisEncoding",
                 "D5/S1/Digit/PrimeAxisTable",
                 "D5/S1/Digit/Raw",
                 "D5/S1/Phase/Basic",
                 "D5/S1/Scale/Embedding",
                 "D5/S1/Scale/FibonacciEigen",
                 "D5/S1/Scale/Log",
+                "D5/S1/Scale/MinkowskiModelSet",
             ],
             DocumentDefinitions.All.Select(static item => item.Document.Header.Gid.Value));
         Assert.Equal(
             [
+                AlgebraicModelDocumentPath,
                 ConjDocumentPath,
                 GoldenRatioDocumentPath,
                 NormDocumentPath,
@@ -51,13 +60,16 @@ public sealed class DocumentDiscoveryTests
                 UnitsDocumentPath,
                 NotationDocumentPath,
                 WDigitsDocumentPath,
+                JointCoordinatesDocumentPath,
                 CarryDocumentPath,
+                PrimeAxisEncodingDocumentPath,
                 PrimeAxisTableDocumentPath,
                 RawDocumentPath,
                 PhaseDocumentPath,
                 EmbeddingDocumentPath,
                 FibonacciEigenDocumentPath,
                 LogDocumentPath,
+                MinkowskiModelSetDocumentPath,
             ],
             DocumentDefinitions.All.Select(static item => item.RelativePath.Value));
     }
@@ -181,6 +193,46 @@ public sealed class DocumentDiscoveryTests
             lean.Value.Value);
         Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
         Assert.True(lean.Value.RequireNoSorry);
+    }
+
+    [Fact]
+    public void GictBatchTwoDocumentsCarryExactStatementsAndDiligentProvenance()
+    {
+        (string Document, DescribeKind Kind, string Declaration,
+            DescribeProvenanceKind Provenance, string? Reference)[] expected =
+        [
+            ("D5/S0/Carrier/AlgebraicModel", DescribeKind.Definition,
+                "D5/S0/Carrier/AlgebraicModel.golden_algebraic_model_spec",
+                DescribeProvenanceKind.LiteratureAttested,
+                "D5/L/stewarttall2025algebraic"),
+            ("D5/S1/Depth/JointCoordinates", DescribeKind.Definition,
+                "D5/S1/Depth/JointCoordinates.joint_coordinates_spec",
+                DescribeProvenanceKind.RepoDerived, null),
+            ("D5/S1/Digit/PrimeAxisEncoding", DescribeKind.Theorem,
+                "D5/S1/Digit/PrimeAxisEncoding.prime_axis_encoding_spec",
+                DescribeProvenanceKind.RepoDerived, null),
+            ("D5/S1/Scale/MinkowskiModelSet", DescribeKind.Definition,
+                "D5/S1/Scale/MinkowskiModelSet.minkowski_model_set_spec",
+                DescribeProvenanceKind.LiteratureAttested,
+                "D5/L/baakefrankgrimm2021three"),
+        ];
+
+        foreach (var item in expected)
+        {
+            var definition = DocumentDefinitions.All.Single(definition =>
+                definition.Document.Header.Gid.Value == item.Document);
+            var describe = Descendants(definition.Document.Content)
+                .OfType<DocumentBlock.Describe>()
+                .Single();
+            var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
+
+            Assert.Equal(item.Kind, describe.Kind);
+            Assert.Equal(item.Provenance, describe.Provenance.Kind);
+            Assert.Equal(item.Reference, describe.Provenance.LiteratureReference?.Value);
+            Assert.Equal(item.Declaration, lean.Value.Value);
+            Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
+            Assert.True(lean.Value.RequireNoSorry);
+        }
     }
 
     private static string FindRepositoryRoot()
