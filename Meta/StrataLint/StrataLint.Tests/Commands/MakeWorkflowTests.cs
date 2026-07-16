@@ -10,6 +10,7 @@ public sealed class MakeWorkflowTests
     private const string SelftestScriptPath = "Meta/StrataLint/scripts/stratalint-selftest.sh";
     private const string LocalHarnessGateScriptPath =
         "Meta/StrataLint/scripts/local-harness-gate.sh";
+    private const string CleanLanesScriptPath = "Meta/StrataLint/scripts/clean-lanes.sh";
     private const string WorktreeInitScriptPath = "Meta/StrataLint/scripts/worktree-init.sh";
 
     private static readonly string[] Targets =
@@ -19,6 +20,7 @@ public sealed class MakeWorkflowTests
         "test",
         "lean",
         "build",
+        "clean-lanes",
         "emit",
         "emit-check",
         "ingest",
@@ -47,6 +49,7 @@ public sealed class MakeWorkflowTests
 
         Assert.Contains("build: dotnet lean", makefile, StringComparison.Ordinal);
         Assert.Equal(0, RecipeCount(makefile, "build"));
+        Assert.Contains(CleanLanesScriptPath, Recipe(makefile, "clean-lanes"), StringComparison.Ordinal);
         Assert.Contains(DotnetBuildScriptPath, Recipe(makefile, "dotnet"), StringComparison.Ordinal);
         Assert.Contains("dotnet test", Recipe(makefile, "test"), StringComparison.Ordinal);
         Assert.Contains("lake build", Recipe(makefile, "lean"), StringComparison.Ordinal);
@@ -74,6 +77,8 @@ public sealed class MakeWorkflowTests
         Assert.Equal(0, result.ExitCode);
         var output = System.Text.Encoding.UTF8.GetString(result.StandardOutput);
         Assert.All(Targets, target => Assert.Contains($"make {target}", output, StringComparison.Ordinal));
+        Assert.Contains("dry-run", output, StringComparison.Ordinal);
+        Assert.Contains("FORCE=1", output, StringComparison.Ordinal);
         Assert.Contains("values", output, StringComparison.OrdinalIgnoreCase);
     }
 
