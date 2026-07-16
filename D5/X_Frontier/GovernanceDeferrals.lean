@@ -34,3 +34,8 @@ def fullByteCanonicalizationTicket : Unit := ()
     提示:For SL-016 and SL-019 case references, verify open state, matching category, and not-closed status in addition to case existence.
     尸检:none -/
 def ticketLifecycleValidationTicket : Unit := ()
+
+/-- TASK D5-T0002 | 难度:3 | 依赖:就绪✓ | 尝试:1
+    提示:Keep collectAxioms, sorryAx, protected-axiom, comment/string, and semantic Hearts-signature fixtures green.
+    尸检:M0 bootstrap regex recognized only bare/private axiom and treated comment text as sorry; replaced by Lean ConstantInfo types and transitive collectAxioms reports. -/
+def strataLintLeanEnvironmentTicket : Unit := ()
