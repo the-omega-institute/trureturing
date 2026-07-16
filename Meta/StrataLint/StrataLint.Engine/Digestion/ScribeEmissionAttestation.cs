@@ -13,24 +13,49 @@ internal sealed record ScribeEmissionRecord(
 internal sealed class VerifiedScribeEmissions
 {
     private readonly ImmutableDictionary<string, ScribeEmissionRecord> records;
+    private readonly ImmutableHashSet<string> declarationReferences;
 
-    private VerifiedScribeEmissions(ImmutableDictionary<string, ScribeEmissionRecord> records) =>
+    private VerifiedScribeEmissions(
+        ImmutableDictionary<string, ScribeEmissionRecord> records,
+        ImmutableHashSet<string> declarationReferences)
+    {
         this.records = records;
+        this.declarationReferences = declarationReferences;
+    }
 
-    internal static VerifiedScribeEmissions Empty { get; } = Create([]);
+    internal static VerifiedScribeEmissions Empty { get; } = Create([], []);
 
-    internal static VerifiedScribeEmissions Create(IEnumerable<ScribeEmissionRecord> values)
+    internal static VerifiedScribeEmissions Create(IEnumerable<ScribeEmissionRecord> values) =>
+        Create(values, []);
+
+    internal static VerifiedScribeEmissions Create(
+        IEnumerable<ScribeEmissionRecord> values,
+        IEnumerable<string> declarationReferences)
     {
         ArgumentNullException.ThrowIfNull(values);
+        ArgumentNullException.ThrowIfNull(declarationReferences);
         var records = values.ToArray();
         ScribeEmissionAttestation.ValidateRecords(records);
-        return new VerifiedScribeEmissions(records.ToImmutableDictionary(
-            static item => item.Gid,
-            StringComparer.Ordinal));
+        var references = declarationReferences.ToImmutableHashSet(StringComparer.Ordinal);
+        foreach (var reference in references)
+        {
+            if (!Gid.TryParse(reference, out var gid)
+                || gid.ToTarget() is not Target.Formal { Declaration: not null })
+            {
+                throw new FormatException(
+                    $"verified Scribe declaration reference is not canonical: {reference}");
+            }
+        }
+
+        return new VerifiedScribeEmissions(
+            records.ToImmutableDictionary(static item => item.Gid, StringComparer.Ordinal),
+            references);
     }
 
     internal bool TryGet(string gid, out ScribeEmissionRecord record) =>
         records.TryGetValue(gid, out record!);
+
+    internal bool ReferencesDeclaration(string gid) => declarationReferences.Contains(gid);
 }
 
 internal sealed class ScribeEmissionAttestation
@@ -200,4 +225,16 @@ internal sealed class ScribeEmissionAttestation
     internal static string DefinitionPath(string gid) => $"Blueprint/{gid}.scribe.cs";
 
     internal static string EmissionPath(string gid) => $"Blueprint/{gid}.md";
+
+    internal static string DocumentGid(string coverageGid)
+    {
+        if (!Gid.TryParse(coverageGid, out var gid))
+        {
+            throw new FormatException($"invalid coverage GID {coverageGid}");
+        }
+
+        return gid.ToTarget() is Target.Formal formal
+            ? Gid.FromTarget(formal with { Declaration = null }).Value
+            : coverageGid;
+    }
 }

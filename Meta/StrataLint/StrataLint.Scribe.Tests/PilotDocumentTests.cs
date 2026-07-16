@@ -6,15 +6,18 @@ namespace StrataLint.Scribe.Tests;
 public sealed class DocumentDiscoveryTests
 {
     private const string ConjDocumentPath = "Blueprint/D5/S0/Carrier/Conj.md";
+    private const string GoldenRatioDocumentPath = "Blueprint/D5/S0/Carrier/GoldenRatio.md";
     private const string NormDocumentPath = "Blueprint/D5/S0/Carrier/Norm.md";
     private const string RingDocumentPath = "Blueprint/D5/S0/Carrier/Ring.md";
     private const string UnitsDocumentPath = "Blueprint/D5/S0/Carrier/Units.md";
     private const string NotationDocumentPath = "Blueprint/D5/S0/Conventions/Notation.md";
     private const string WDigitsDocumentPath = "Blueprint/D5/S0/Conventions/WDigits.md";
     private const string CarryDocumentPath = "Blueprint/D5/S1/Digit/Carry.md";
+    private const string PrimeAxisTableDocumentPath = "Blueprint/D5/S1/Digit/PrimeAxisTable.md";
     private const string RawDocumentPath = "Blueprint/D5/S1/Digit/Raw.md";
     private const string PhaseDocumentPath = "Blueprint/D5/S1/Phase/Basic.md";
     private const string EmbeddingDocumentPath = "Blueprint/D5/S1/Scale/Embedding.md";
+    private const string FibonacciEigenDocumentPath = "Blueprint/D5/S1/Scale/FibonacciEigen.md";
     private const string LogDocumentPath = "Blueprint/D5/S1/Scale/Log.md";
     private const string PhaseSourcePath = "Blueprint/D5/S1/Phase/Basic.scribe.cs";
 
@@ -24,30 +27,36 @@ public sealed class DocumentDiscoveryTests
         Assert.Equal(
             [
                 "D5/S0/Carrier/Conj",
+                "D5/S0/Carrier/GoldenRatio",
                 "D5/S0/Carrier/Norm",
                 "D5/S0/Carrier/Ring",
                 "D5/S0/Carrier/Units",
                 "D5/S0/Conventions/Notation",
                 "D5/S0/Conventions/WDigits",
                 "D5/S1/Digit/Carry",
+                "D5/S1/Digit/PrimeAxisTable",
                 "D5/S1/Digit/Raw",
                 "D5/S1/Phase/Basic",
                 "D5/S1/Scale/Embedding",
+                "D5/S1/Scale/FibonacciEigen",
                 "D5/S1/Scale/Log",
             ],
             DocumentDefinitions.All.Select(static item => item.Document.Header.Gid.Value));
         Assert.Equal(
             [
                 ConjDocumentPath,
+                GoldenRatioDocumentPath,
                 NormDocumentPath,
                 RingDocumentPath,
                 UnitsDocumentPath,
                 NotationDocumentPath,
                 WDigitsDocumentPath,
                 CarryDocumentPath,
+                PrimeAxisTableDocumentPath,
                 RawDocumentPath,
                 PhaseDocumentPath,
                 EmbeddingDocumentPath,
+                FibonacciEigenDocumentPath,
                 LogDocumentPath,
             ],
             DocumentDefinitions.All.Select(static item => item.RelativePath.Value));
@@ -149,6 +158,26 @@ public sealed class DocumentDiscoveryTests
 
         Assert.Equal(
             "D5/S1/Phase/Basic.goldenPhase_injective",
+            lean.Value.Value);
+        Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
+        Assert.True(lean.Value.RequireNoSorry);
+    }
+
+    [Fact]
+    public void PrimeAxisTableCarriesItsExactRepoDerivedLeanStatement()
+    {
+        var definition = DocumentDefinitions.All.Single(static item =>
+            item.Document.Header.Gid.Value == "D5/S1/Digit/PrimeAxisTable");
+        var describe = Descendants(definition.Document.Content)
+            .OfType<DocumentBlock.Describe>()
+            .Single();
+        var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
+
+        Assert.Equal(DescribeKind.Theorem, describe.Kind);
+        Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.Provenance.Kind);
+        Assert.Null(describe.Provenance.LiteratureReference);
+        Assert.Equal(
+            "D5/S1/Digit/PrimeAxisTable.prime_axis_table_spec",
             lean.Value.Value);
         Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
         Assert.True(lean.Value.RequireNoSorry);

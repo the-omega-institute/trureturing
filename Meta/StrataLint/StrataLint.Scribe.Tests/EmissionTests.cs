@@ -241,6 +241,16 @@ public sealed class EmissionTests
                 Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
                 File.Copy(source, destination);
             }
+            foreach (var source in Directory.EnumerateFiles(
+                         Path.Combine(repositoryRoot, "Library"),
+                         "*.md",
+                         SearchOption.AllDirectories))
+            {
+                var relative = Path.GetRelativePath(repositoryRoot, source);
+                var destination = Path.Combine(root, relative);
+                Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+                File.Copy(source, destination);
+            }
 
             Assert.Equal(0, ScribeEmitter.Emit(
                 root,
@@ -248,7 +258,12 @@ public sealed class EmissionTests
                 TextWriter.Null,
                 TextWriter.Null,
                 report));
-            Assert.NotNull(ScribeEmitter.Verify(root, TextWriter.Null, report));
+            var initialVerification = ScribeEmitter.Verify(root, TextWriter.Null, report);
+            Assert.NotNull(initialVerification);
+            Assert.True(initialVerification.ReferencesDeclaration(
+                "D5/S0/Carrier/GoldenRatio.golden_ratio_spec"));
+            Assert.True(initialVerification.ReferencesDeclaration(
+                "D5/S1/Scale/FibonacciEigen.fibonacci_substitution_spec"));
 
             var emissionPath = Path.Combine(root, DocumentDefinitions.All[0].RelativePath.Value);
             var originalEmission = File.ReadAllBytes(emissionPath);
