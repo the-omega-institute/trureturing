@@ -340,16 +340,23 @@ sources:
           raw_sha256: sha256:1590a11d4ee912f01a495981767fe3c7c40f89d650cde5e57021aeb18743360b
           normalized_sha256: sha256:1590a11d4ee912f01a495981767fe3c7c40f89d650cde5e57021aeb18743360b
         cas_ref: sha256:1590a11d4ee912f01a495981767fe3c7c40f89d650cde5e57021aeb18743360b
-        coverage_gids: []
+        coverage_gids:
+          - D5/S0/Carrier/AlgebraicModel.golden_algebraic_model_spec
         receipts:
-          coverage: []
-          scribe: []
+          coverage:
+            - gid: D5/S0/Carrier/AlgebraicModel.golden_algebraic_model_spec
+              source_sha256: sha256:1590a11d4ee912f01a495981767fe3c7c40f89d650cde5e57021aeb18743360b
+              target_sha256: sha256:7fb489a1140934f9aae18903fd316321504018f40616777a7ca249793910b6f1
+          scribe:
+            - gid: D5/S0/Carrier/AlgebraicModel.golden_algebraic_model_spec
+              definition_sha256: sha256:2b8de0a0591bccb849e847cb9539d4af709f5aca78419e41de4ece503ceeef13
+              emission_sha256: sha256:5993d2943e5b37dbeca5765744cc400de9e2c1282925df98cb138aca1aad3309
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: absorbed
+          truth: closed
       - atom_id: gict-residual-58e8f015eea7218ab85a93414db29b65667b79f34b18b8f9ab343676c454adf2
         ast_path: theorem/1.3
         fingerprints:
@@ -372,16 +379,23 @@ sources:
           raw_sha256: sha256:e38742ca0c18ff6ec5b2e9bdcdf99bc700c0ff2c38031b60a79dd17f4a617766
           normalized_sha256: sha256:e38742ca0c18ff6ec5b2e9bdcdf99bc700c0ff2c38031b60a79dd17f4a617766
         cas_ref: sha256:e38742ca0c18ff6ec5b2e9bdcdf99bc700c0ff2c38031b60a79dd17f4a617766
-        coverage_gids: []
+        coverage_gids:
+          - D5/S1/Depth/JointCoordinates.joint_coordinates_spec
         receipts:
-          coverage: []
-          scribe: []
+          coverage:
+            - gid: D5/S1/Depth/JointCoordinates.joint_coordinates_spec
+              source_sha256: sha256:e38742ca0c18ff6ec5b2e9bdcdf99bc700c0ff2c38031b60a79dd17f4a617766
+              target_sha256: sha256:b0d337d6fe4e334215b223de17c051793310f8e059ba5aa2cd7a37d6f36fa806
+          scribe:
+            - gid: D5/S1/Depth/JointCoordinates.joint_coordinates_spec
+              definition_sha256: sha256:7968d27bb3c8eea2a67c1499dbc5e50ae2d2a4812224d2601a0594ba07836c00
+              emission_sha256: sha256:d4bd6d77dc31cb26a61a2def62a4edf9206673fbc0a27aea7f52058974feb3c9
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: absorbed
+          truth: closed
       - atom_id: gict-residual-6706f5aca56b416822592bfdf174870340ad95de2896373968b828ba4a49f0c4
         ast_path: theorem/1.5
         fingerprints:
@@ -440,16 +454,23 @@ sources:
           raw_sha256: sha256:6ade320007ff03163fd22af955a6a0ca8d4b371ef23def697929153f626d621e
           normalized_sha256: sha256:6ade320007ff03163fd22af955a6a0ca8d4b371ef23def697929153f626d621e
         cas_ref: sha256:6ade320007ff03163fd22af955a6a0ca8d4b371ef23def697929153f626d621e
-        coverage_gids: []
+        coverage_gids:
+          - D5/S1/Digit/PrimeAxisEncoding.prime_axis_encoding_spec
         receipts:
-          coverage: []
-          scribe: []
+          coverage:
+            - gid: D5/S1/Digit/PrimeAxisEncoding.prime_axis_encoding_spec
+              source_sha256: sha256:6ade320007ff03163fd22af955a6a0ca8d4b371ef23def697929153f626d621e
+              target_sha256: sha256:1203f917c55e518e1a5d27029c3d6294bf1da340f558018aca7a9d3a9a6a4223
+          scribe:
+            - gid: D5/S1/Digit/PrimeAxisEncoding.prime_axis_encoding_spec
+              definition_sha256: sha256:da1a068facf0f46cdd1ee8101fc6d75b6d0b16c587bd5208493155d191f91adc
+              emission_sha256: sha256:75ffe5c7620e79a288c4d40644add2045bf19246a5d8b93a3d3fe347f6757596
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: absorbed
+          truth: closed
       - atom_id: gict-residual-20222ff4347444c72a9e1cb7410216308cb2797ea34df99e677dd85375e09782
         ast_path: corollary/1.9
         fingerprints:
@@ -552,16 +573,23 @@ sources:
           raw_sha256: sha256:76a92f1db92bf5498d66ded284de6162f8873704336551d1a40881e70f8b0c7e
           normalized_sha256: sha256:76a92f1db92bf5498d66ded284de6162f8873704336551d1a40881e70f8b0c7e
         cas_ref: sha256:76a92f1db92bf5498d66ded284de6162f8873704336551d1a40881e70f8b0c7e
-        coverage_gids: []
+        coverage_gids:
+          - D5/S1/Scale/MinkowskiModelSet.minkowski_model_set_spec
         receipts:
-          coverage: []
-          scribe: []
+          coverage:
+            - gid: D5/S1/Scale/MinkowskiModelSet.minkowski_model_set_spec
+              source_sha256: sha256:76a92f1db92bf5498d66ded284de6162f8873704336551d1a40881e70f8b0c7e
+              target_sha256: sha256:17c9cf3ca266daee964ca1511d0c12fb2c6889f4e6d57bebb38719cbecf0840a
+          scribe:
+            - gid: D5/S1/Scale/MinkowskiModelSet.minkowski_model_set_spec
+              definition_sha256: sha256:e72ef62ea32d1b1232047fc502a27a5d33efe911ab8810bd233a4ee62f704211
+              emission_sha256: sha256:438de7888f384408f30fada0d60d7afcd410a690b0689c817440692853e0b8fd
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: absorbed
+          truth: closed
       - atom_id: gict-residual-5f3e88e5a40744456453f818ba643446c3194ccb3934f7500726f6103b91887b
         ast_path: theorem/3.2
         fingerprints:
