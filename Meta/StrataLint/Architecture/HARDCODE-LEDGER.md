@@ -221,6 +221,10 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
   at `Golden/values-kernels.toml`; only conservative baseline replay can pass an explicit
   historical suffix path selected by a unique byte-exact relocation, with missing, drift,
   and ambiguity all failing closed.
+- The next C0 replay restored the baseline tree and all 37/37 admits, then rejected the
+  actual candidate only because the four new ingest regressions pushed
+  `DigestionLedgerTests.cs` to 821 lines. The tests moved intact to a partial-class sibling;
+  both files are below the SL-003 ceiling and no capacity rule was weakened.
 
 ## Residual scan
 
