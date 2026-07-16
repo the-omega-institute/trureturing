@@ -27,7 +27,7 @@ public sealed class DescribeMigrationTests
     }
 
     [Fact]
-    public void PzgSpectralResidualNodesUseExactTypedStatementsAndDiligentProvenance()
+    public void SpectralResidualNodesUseExactTypedStatementsAndDiligentProvenance()
     {
         var documents = DocumentDefinitions.All
             .ToDictionary(static item => item.Document.Header.Gid.Value, StringComparer.Ordinal);
