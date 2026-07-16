@@ -6,6 +6,7 @@ namespace StrataLint.Scribe.Tests;
 public sealed class DocumentDiscoveryTests
 {
     private const string ConjDocumentPath = "Blueprint/D5/S0/Carrier/Conj.md";
+    private const string GoldenRatioDocumentPath = "Blueprint/D5/S0/Carrier/GoldenRatio.md";
     private const string NormDocumentPath = "Blueprint/D5/S0/Carrier/Norm.md";
     private const string RingDocumentPath = "Blueprint/D5/S0/Carrier/Ring.md";
     private const string UnitsDocumentPath = "Blueprint/D5/S0/Carrier/Units.md";
@@ -15,6 +16,7 @@ public sealed class DocumentDiscoveryTests
     private const string RawDocumentPath = "Blueprint/D5/S1/Digit/Raw.md";
     private const string PhaseDocumentPath = "Blueprint/D5/S1/Phase/Basic.md";
     private const string EmbeddingDocumentPath = "Blueprint/D5/S1/Scale/Embedding.md";
+    private const string FibonacciEigenDocumentPath = "Blueprint/D5/S1/Scale/FibonacciEigen.md";
     private const string LogDocumentPath = "Blueprint/D5/S1/Scale/Log.md";
     private const string PhaseSourcePath = "Blueprint/D5/S1/Phase/Basic.scribe.cs";
 
@@ -24,6 +26,7 @@ public sealed class DocumentDiscoveryTests
         Assert.Equal(
             [
                 "D5/S0/Carrier/Conj",
+                "D5/S0/Carrier/GoldenRatio",
                 "D5/S0/Carrier/Norm",
                 "D5/S0/Carrier/Ring",
                 "D5/S0/Carrier/Units",
@@ -33,12 +36,14 @@ public sealed class DocumentDiscoveryTests
                 "D5/S1/Digit/Raw",
                 "D5/S1/Phase/Basic",
                 "D5/S1/Scale/Embedding",
+                "D5/S1/Scale/FibonacciEigen",
                 "D5/S1/Scale/Log",
             ],
             DocumentDefinitions.All.Select(static item => item.Document.Header.Gid.Value));
         Assert.Equal(
             [
                 ConjDocumentPath,
+                GoldenRatioDocumentPath,
                 NormDocumentPath,
                 RingDocumentPath,
                 UnitsDocumentPath,
@@ -48,6 +53,7 @@ public sealed class DocumentDiscoveryTests
                 RawDocumentPath,
                 PhaseDocumentPath,
                 EmbeddingDocumentPath,
+                FibonacciEigenDocumentPath,
                 LogDocumentPath,
             ],
             DocumentDefinitions.All.Select(static item => item.RelativePath.Value));
