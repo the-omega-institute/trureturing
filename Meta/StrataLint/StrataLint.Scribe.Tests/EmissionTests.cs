@@ -258,7 +258,12 @@ public sealed class EmissionTests
                 TextWriter.Null,
                 TextWriter.Null,
                 report));
-            Assert.NotNull(ScribeEmitter.Verify(root, TextWriter.Null, report));
+            var initialVerification = ScribeEmitter.Verify(root, TextWriter.Null, report);
+            Assert.NotNull(initialVerification);
+            Assert.True(initialVerification.ReferencesDeclaration(
+                "D5/S0/Carrier/GoldenRatio.golden_ratio_spec"));
+            Assert.True(initialVerification.ReferencesDeclaration(
+                "D5/S1/Scale/FibonacciEigen.fibonacci_substitution_spec"));
 
             var emissionPath = Path.Combine(root, DocumentDefinitions.All[0].RelativePath.Value);
             var originalEmission = File.ReadAllBytes(emissionPath);
