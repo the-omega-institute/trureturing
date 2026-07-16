@@ -342,6 +342,12 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
   Lean reports, 19s emission, 394s admission, and 595s total; this ceremony-only run
   explicitly recorded engineering as skipped, while final `make preflight` remains the
   acceptance owner that executes engineering once before passing that explicit skip.
+- The first full preflight stopped before gate after the main test assembly passed 675/676.
+  `CoverageCommandTests.TopLevelUsageNamesCoverage` still coupled coverage to the former
+  immediately preceding `check` token, so inserting the registered `clean-lanes` command
+  made that stale adjacency fail while the complete root-usage contract test passed. The
+  focused assertion now checks the delimited `|coverage|` token it names; production
+  routing, command order, exit behavior, and every validation stage remain unchanged.
 
 ## Residual scan
 
