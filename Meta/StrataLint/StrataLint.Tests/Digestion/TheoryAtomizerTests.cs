@@ -239,6 +239,19 @@ public sealed class TheoryAtomizerTests
     }
 
     [Fact]
+    public void ObserverAdapterRejectsAnIndentedUnknownBoldClaimLead()
+    {
+        var bytes = Encoding.UTF8.GetBytes(
+            "# Observer\n\n   **新判词。** claim。\n\n"
+            + "**定理(观察者代数的唯一形态)。** known。\n");
+
+        var error = Assert.Throws<TheorySourceFormatException>(() =>
+            AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes));
+
+        Assert.Contains("unknown observer claim lead", error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void GictIngestionSubtractsNormalizedMatchAndAdmitsSemanticRewriteAsResidual()
     {
         var oldBytes = Encoding.UTF8.GetBytes(

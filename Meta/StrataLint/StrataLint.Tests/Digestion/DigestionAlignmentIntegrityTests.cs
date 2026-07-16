@@ -284,4 +284,106 @@ public sealed partial class DigestionAlignmentTests
             "stale receipts are not acknowledged: coarse-receipt",
             StringComparison.Ordinal));
     }
+
+    [Theory]
+    [InlineData("ast-path")]
+    [InlineData("atom-id")]
+    [InlineData("fingerprints")]
+    public void AdmissionRejectsMutatingASettledCoarseReplacementIdentity(string mutation)
+    {
+        var (sourceBytes, captured, plan, settled) = SettledCoarseReplacement();
+        var source = Assert.Single(settled.RequireDigestionSources());
+        var coarse = source.Entries.Single(static entry => entry.AtomId == "coarse-receipt");
+        var fine = source.Entries.Single(static entry => entry.AtomId != "coarse-receipt");
+        var mutated = mutation switch
+        {
+            "ast-path" => coarse with { AstPath = "coarse/renamed" },
+            "atom-id" => coarse with { AtomId = "renamed-coarse" },
+            "fingerprints" => coarse with
+            {
+                Fingerprints = coarse.Fingerprints with
+                {
+                    NormalizedSha256 = fine.Fingerprints.NormalizedSha256,
+                },
+            },
+            _ => throw new ArgumentOutOfRangeException(nameof(mutation)),
+        };
+        var candidate = settled.WithDigestionSources(
+            [source with
+            {
+                Entries = source.Entries
+                    .Select(entry => entry.AtomId == "coarse-receipt" ? mutated : entry)
+                    .ToImmutableArray(),
+            }]);
+
+        var result = DigestionLedgerAligner.Evaluate(
+            candidate,
+            Snapshot(sourceBytes, new[] { captured }.Concat(plan.CasObjects)),
+            settled,
+            DigestionAlignmentMode.Admission);
+
+        Assert.Contains(result.Findings, finding => finding.Contains(
+            "coarse replacement receipt identity changed or disappeared: coarse-receipt",
+            StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void AdmissionRejectsCloningASettledCoarseReplacementReceipt()
+    {
+        var (sourceBytes, captured, plan, settled) = SettledCoarseReplacement();
+        var source = Assert.Single(settled.RequireDigestionSources());
+        var coarse = source.Entries.Single(static entry => entry.AtomId == "coarse-receipt");
+        var candidate = settled.WithDigestionSources(
+            [source with { Entries = source.Entries.Add(coarse with { AtomId = "coarse-clone" }) }]);
+
+        var result = DigestionLedgerAligner.Evaluate(
+            candidate,
+            Snapshot(sourceBytes, new[] { captured }.Concat(plan.CasObjects)),
+            settled,
+            DigestionAlignmentMode.Admission);
+
+        Assert.Equal(
+            DigestionReceiptAlignment.Rejected,
+            result.AlignmentFor("coarse-clone"));
+        Assert.Contains(result.Findings, finding => finding.Contains(
+            "new coarse receipt after fine atomization: coarse-clone",
+            StringComparison.Ordinal));
+    }
+
+    private static (
+        byte[] SourceBytes,
+        DigestionCasObject Captured,
+        DigestionIngestPlan Plan,
+        BackfillInventoryDocument Settled) SettledCoarseReplacement()
+    {
+        var sourceBytes = Encoding.UTF8.GetBytes(
+            "# Observer\n\n**定理(观察者代数的唯一形态)。** claim。\n");
+        var coarseBytes = ImmutableArray.CreateRange(sourceBytes);
+        var coarse = new DigestionAtom(
+            "coarse/source",
+            0,
+            sourceBytes.Length,
+            coarseBytes,
+            DigestionFingerprint.ComputeOpaque(coarseBytes.AsSpan()),
+            []);
+        var captured = DigestionCasStore.Capture(coarseBytes.AsSpan());
+        var priorAtomizer = AtomizerRegistry.RegisteredIds.First(id =>
+            id != AtomizerRegistry.ObserverId);
+        var original = BackfillInventoryLoader.Load(Ledger(
+            [],
+            CasEntry("coarse-receipt", coarse, captured.Reference)));
+        var adapterCandidate = BackfillInventoryLoader.Load(
+            Ledger([], CasEntry("coarse-receipt", coarse, captured.Reference))
+                .Replace(
+                    $"atomizer: {priorAtomizer}",
+                    $"atomizer: {AtomizerRegistry.ObserverId}",
+                    StringComparison.Ordinal));
+        var plan = DigestionIngestor.Plan(
+            adapterCandidate,
+            Snapshot(sourceBytes, [captured]),
+            original);
+        var settled = BackfillInventoryLoader.Load(Encoding.UTF8.GetString(
+            BackfillInventoryWriter.WriteForIngest(plan.Document).AsSpan()));
+        return (sourceBytes, captured, plan, settled);
+    }
 }

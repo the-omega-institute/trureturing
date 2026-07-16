@@ -208,7 +208,7 @@ internal static class ObserverAtomizer
             _ when Starts(paragraph, "**总判词:**") => "verdict/final",
             _ => null,
         };
-        if (locator is null && paragraph.StartsWith("**", StringComparison.Ordinal))
+        if (locator is null && HasBoldClaimLead(paragraph))
         {
             throw new TheorySourceFormatException("unknown observer claim lead");
         }
@@ -218,6 +218,17 @@ internal static class ObserverAtomizer
 
     private static bool Starts(string paragraph, string prefix) =>
         paragraph.StartsWith(prefix, StringComparison.Ordinal);
+
+    private static bool HasBoldClaimLead(string paragraph)
+    {
+        var index = 0;
+        while (index < paragraph.Length && paragraph[index] is ' ' or '\t')
+        {
+            index++;
+        }
+
+        return paragraph.AsSpan(index).StartsWith("**", StringComparison.Ordinal);
+    }
 }
 
 internal static class PzgAtomizer
