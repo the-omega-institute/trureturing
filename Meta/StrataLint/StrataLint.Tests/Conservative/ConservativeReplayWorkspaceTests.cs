@@ -108,7 +108,7 @@ public sealed class ConservativeReplayWorkspaceTests
     }
 
     [Fact]
-    public void RevisionFileReadReturnsOneExactCommittedBlob()
+    public void RevisionFileReadRequiresOneExactCommitAndCommittedBlob()
     {
         using var repository = new TemporaryDirectory();
         Git(repository.Path, "init", "-b", "dev");
@@ -128,6 +128,13 @@ public sealed class ConservativeReplayWorkspaceTests
         Git(repository.Path, "commit", "-m", "candidate");
         var gateway = new GitRepositoryGateway(repository.Path);
         var candidate = gateway.ResolveCurrentRevision();
+        var tree = GitText(repository.Path, "rev-parse", "HEAD^{tree}");
+        var blob = GitText(
+            repository.Path,
+            "rev-parse",
+            $"HEAD:{ValuesProjectionLoader.KernelDataPath}");
+        Git(repository.Path, "tag", "-a", "candidate-tag", "-m", "candidate tag");
+        var tag = GitText(repository.Path, "rev-parse", "candidate-tag^{tag}");
 
         var entry = gateway.ReadRevisionFile(
             candidate.Revision,
@@ -135,6 +142,10 @@ public sealed class ConservativeReplayWorkspaceTests
 
         Assert.Equal(ValuesProjectionLoader.KernelDataPath, entry.Path);
         Assert.Equal("kernel data\n", Encoding.UTF8.GetString(entry.Bytes.AsSpan()));
+        Assert.All(
+            new[] { tree, blob, tag },
+            nonCommit => Assert.Throws<InvalidOperationException>(() =>
+                gateway.ReadRevisionFile(nonCommit, ValuesProjectionLoader.KernelDataPath)));
         Assert.Throws<InvalidOperationException>(() =>
             gateway.ReadRevisionFile(candidate.Revision, "Golden/missing.toml"));
     }

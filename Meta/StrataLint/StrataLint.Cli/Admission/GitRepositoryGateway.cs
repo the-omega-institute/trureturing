@@ -112,6 +112,7 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
         {
             throw new InvalidOperationException("revision file read requires an exact commit OID");
         }
+        RequireObjectType(revision, "commit");
 
         if (!RepoPath.TryCreate(path, out _))
         {
