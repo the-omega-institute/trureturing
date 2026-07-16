@@ -26,9 +26,8 @@ records the open claim without asserting that the claim has been proved.
 O-6 is the classical positivity heart associated with Weil's 1952 criterion.
 D5-T0018 binds its test class, involution, convolution square,
 multiplicity-aware zero sum, and symmetric convergence convention to concrete
-definitions. The proposition is declared below, while its unresolved proof
-body remains an intentional `sorry`: the statement is in place, but the proof
-remains open.
+definitions. The closed proposition is declared below without a proof: the
+statement is in place, while its truth remains open.
 -/
 
 /-- The expanding golden eigenvalue. -/
@@ -43,6 +42,8 @@ noncomputable def beatty (v : ℕ) : ℤ := ⌊((v : ℝ) + 1) * phi⌋ - 1
 /-- The concrete expanding exponent `beta(v) = S(v) - v * psi`. -/
 noncomputable def beta (v : ℕ) : ℝ := (beatty v : ℝ) - (v : ℝ) * psi
 
+-- Preserve the frozen O-5 instance path after importing the O-6 analytic stack.
+attribute [-instance] instCommCStarAlgebraComplex in
 /-- The concrete Euler germ for `Z_qc` and its Witt cascade. -/
 noncomputable def eulerGerm (s : ℂ) : ℂ :=
   ∏' p : ℕ, if p.Prime then
@@ -55,6 +56,7 @@ noncomputable def structuralPole : ℝ := 1 / phi ^ 3
 /-- The structural zero and pulled-back critical line. -/
 noncomputable def structuralZero : ℝ := 1 / (2 * phi ^ 2)
 
+attribute [-instance] instCommCStarAlgebraComplex Complex.instRCLike in
 /--
 O-5 (independence): the canonical Euler germ has a meromorphic continuation
 whose analytic zeros in the declared open band lie on the structural line.
@@ -88,24 +90,17 @@ The system owner's prior is recorded without entering the proposition: on
 2026-07-16 the owner expected zeros off the `1 / 2` line to exist. The motive
 for authorizing this monument was the truth produced by the process, not an
 expectation of reaching the summit. Exact authorization:
-"虽然我认为1/2离线零点存在,但我们去证明黎曼猜想没问题,因为这个过程会产生大量truth。"
+"虽然我认为1/2离线零点存在,但我们去证明黎曼猜想没问题,因为这个过程会产生大量truth"
 
 Audit and authorization provenance: the three-seat audit accepted the literal
 draft definition after faithfulness, non-vacuity, and no-RH-theft checks; the
 owner's 2026-07-16 authorization above admits that audited statement into the
-protected Hearts module. This definition states a `Prop`; the separate theorem
-below keeps its proof boundary explicitly open.
+protected Hearts module. This definition names the `Prop` to be proved; it
+does not assert a proof, theorem, or axiom.
 -/
 def o6WeilPositivityStatement : Prop :=
   ∀ (Z : ZeroData) (g : WeilTestFunction)
       (hZero : SymmetricConvergent Z (convolutionSquare g)),
     0 ≤ (zeroSum Z (convolutionSquare g) hZero).re
-
-/--
-O-6 remains open. The intentional `sorry` records the unproved boundary and
-must not be read as a proof of `o6WeilPositivityStatement`.
--/
-theorem o6_weil_positivity : o6WeilPositivityStatement := by
-  sorry
 
 end D5.X_Frontier.Hearts
