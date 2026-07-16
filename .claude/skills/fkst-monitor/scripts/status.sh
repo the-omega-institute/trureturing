@@ -65,7 +65,7 @@ snapshot() {
     if obs="$("$bin" observe --durable-root "$DURABLE_ROOT" 2>/dev/null)"; then
       observe_ok=1
       dlq="$(awk '/^dead_letters/{f=1;next}/^[a-z]/{f=0}f&&/^  id=/{n++}END{print n+0}' <<<"$obs")"
-      retrying="$(grep -oE 'retrying=[0-9]+' <<<"$obs" | awk -F= '{s+=$2}END{print s+0}')"
+      retrying="$( { grep -oE 'retrying=[0-9]+' <<<"$obs" || true; } | awk -F= '{s+=$2}END{print s+0}')"
       absent="$(cnt_s 'subscriber_status=absent' "$obs")"
       (( absent > 0 )) && { [[ "$verdict" == HEALTHY ]] && verdict="DEGRADED"; reasons+=("$absent absent subscriber(s)"); }
     fi
