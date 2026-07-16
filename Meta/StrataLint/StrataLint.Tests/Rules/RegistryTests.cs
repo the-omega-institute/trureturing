@@ -6,7 +6,7 @@ namespace StrataLint.Tests;
 
 public sealed class RegistryTests
 {
-    private const string CanonicalRegistry = TestRegistry.Canonical;
+    private static readonly string CanonicalRegistry = TestRegistry.Canonical;
 
     [Fact]
     public void CanonicalRegistryProducesPrivatePolicyAndStableTwoPassBytes()

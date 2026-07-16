@@ -15,6 +15,25 @@ public sealed class ContractEpochStoreTests
     private static readonly string TreeOid = "git-sha1:" + new string('a', 40);
 
     [Fact]
+    public void RepositoryConsumesEachResidenceEpochPlanExactlyOnce()
+    {
+        var ledger = ContractEpochLedgerCodec.Read(File.ReadAllBytes(Path.Combine(
+            FindRepositoryRoot(),
+            "Meta",
+            "contract-epoch",
+            "events.jsonl")));
+
+        Assert.Equal(
+            [
+                "RESIDENCE-EPOCH-GOLDEN-CASES-V1",
+                "RESIDENCE-EPOCH-VALUES-KERNELS-V1",
+            ],
+            ledger.Events.OfType<ContractEpochEvent.Consume>()
+                .Select(static item => item.PlanId)
+                .ToArray());
+    }
+
+    [Fact]
     public void SnapshotWithoutContractEpochDataLoadsAnEmptyStore()
     {
         var store = ContractEpochStore.Load(Snapshot(
@@ -102,7 +121,7 @@ public sealed class ContractEpochStoreTests
 
     private static (ImmutableArray<byte> Ledger, ContractEpochEvidenceReceipt Receipt) Registration()
     {
-        var baseline = ConservativePolicySnapshot.Current();
+        var baseline = ConservativePolicySnapshot.Current().WithExactExclusions([]);
         var candidate = baseline.WithExactExclusions([RetiredPath]);
         var receipt = ContractEpochEvidenceReceipt.UnreachabilityForPaths(
             candidate.Root,
@@ -169,4 +188,16 @@ public sealed class ContractEpochStoreTests
             SnapshotDecodeOutcome.InfrastructureFailure failure =>
                 throw new InvalidOperationException(failure.Message),
         };
+
+    private static string FindRepositoryRoot()
+    {
+        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
+             current is not null;
+             current = current.Parent)
+        {
+            if (File.Exists(Path.Combine(current.FullName, "CLAUDE.md"))) return current.FullName;
+        }
+
+        throw new DirectoryNotFoundException("Could not locate repository root.");
+    }
 }

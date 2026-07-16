@@ -4,7 +4,7 @@
 
 ```text
 FILEMAP: Meta/FILEMAP.toml
-Residence policy: desired=data-must-live-outside-Meta/StrataLint; current=5; status=known-violations-frozen-under-monitoring; case=RESIDENCE-EPOCH
+Residence policy: desired=data-must-live-outside-Meta/StrataLint; current=0; status=closed; case=RESIDENCE-EPOCH
 
 none --declares--> [*.json | program]
 [*.json | program] --consumed-by--> automation
@@ -74,6 +74,10 @@ none --declares--> [Golden/cases/**/*.toml | data]
 [Golden/cases/**/*.toml | data] --consumed-by--> TomlGoldenLoader
 [Golden/cases/**/*.toml | data] --verified-by--> TomlGoldenLoader
 
+none --declares--> [Golden/fixture-registry.yaml | data]
+[Golden/fixture-registry.yaml | data] --consumed-by--> GoldenFixtureRegistryLoader
+[Golden/fixture-registry.yaml | data] --verified-by--> GoldenFixtureRegistryLoader
+
 none --declares--> [Golden/values-kernels.toml | data]
 [Golden/values-kernels.toml | data] --consumed-by--> ValuesKernelDataLoader
 [Golden/values-kernels.toml | data] --verified-by--> ValuesKernelDataLoader
@@ -137,14 +141,6 @@ FrozenLedgerCanonicalWriter --produces--> [Meta/StrataLint/Golden/Frozen/**/*.js
 ConservativeExtensionVerifier --produces--> [Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json | ledger]
 [Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json | ledger] --consumed-by--> C0CeremonyTrustRootTests
 [Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json | ledger] --verified-by--> C0CeremonyTrustRootTests
-
-none --declares--> [Meta/StrataLint/Golden/cases/**/*.toml | data | residence_violation=true]
-[Meta/StrataLint/Golden/cases/**/*.toml | data | residence_violation=true] --consumed-by--> TomlGoldenLoader
-[Meta/StrataLint/Golden/cases/**/*.toml | data | residence_violation=true] --verified-by--> TomlGoldenLoader
-
-none --declares--> [Meta/StrataLint/Golden/values-kernels.toml | data | residence_violation=true]
-[Meta/StrataLint/Golden/values-kernels.toml | data | residence_violation=true] --consumed-by--> ValuesKernelDataLoader
-[Meta/StrataLint/Golden/values-kernels.toml | data | residence_violation=true] --verified-by--> ValuesKernelDataLoader
 
 none --declares--> [Meta/StrataLint/StrataLint.*/** | program]
 [Meta/StrataLint/StrataLint.*/** | program] --consumed-by--> dotnet

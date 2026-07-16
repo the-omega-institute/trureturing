@@ -30,8 +30,6 @@ public sealed class TrustTopologyTests
         RuleFixture.HeartsPath,
         RepositoryPathPolicy.AssumptionRegistryPath,
         "Meta/StrataLint/Golden/rules.json",
-        RuleFixture.GoldenDataSourcePath,
-        ValuesProjectionLoader.KernelDataPath,
         FrozenLedgerChangeClassifier.LedgerPath,
         C0CertificatePath,
         SolutionPath,
@@ -51,6 +49,9 @@ public sealed class TrustTopologyTests
     {
         "Meta/BACKFILL.yaml",
         "Meta/FILEMAP.toml",
+        RuleFixture.GoldenDataSourcePath,
+        ValuesProjectionLoader.KernelDataPath,
+        GoldenFixtureRegistryLoader.RelativePath,
         "Library/queries.yaml",
     };
 

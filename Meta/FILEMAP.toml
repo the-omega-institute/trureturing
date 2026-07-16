@@ -3,8 +3,8 @@ schema_version = 1
 [residence_policy]
 case_id = "RESIDENCE-EPOCH"
 desired = "data-must-live-outside-Meta/StrataLint"
-known_violation_count = 5
-status = "known-violations-frozen-under-monitoring"
+known_violation_count = 0
+status = "closed"
 
 [[files]]
 pattern = "*.json"
@@ -126,6 +126,13 @@ consumed_by = ["TomlGoldenLoader"]
 verified_by = ["TomlGoldenLoader"]
 
 [[files]]
+pattern = "Golden/fixture-registry.yaml"
+kind = "data"
+produced_by = "none"
+consumed_by = ["GoldenFixtureRegistryLoader"]
+verified_by = ["GoldenFixtureRegistryLoader"]
+
+[[files]]
 pattern = "Golden/values-kernels.toml"
 kind = "data"
 produced_by = "none"
@@ -236,22 +243,6 @@ kind = "ledger"
 produced_by = "ConservativeExtensionVerifier"
 consumed_by = ["C0CeremonyTrustRootTests"]
 verified_by = ["C0CeremonyTrustRootTests"]
-
-[[files]]
-pattern = "Meta/StrataLint/Golden/cases/**/*.toml"
-kind = "data"
-residence_violation = true
-produced_by = "none"
-consumed_by = ["TomlGoldenLoader"]
-verified_by = ["TomlGoldenLoader"]
-
-[[files]]
-pattern = "Meta/StrataLint/Golden/values-kernels.toml"
-kind = "data"
-residence_violation = true
-produced_by = "none"
-consumed_by = ["ValuesKernelDataLoader"]
-verified_by = ["ValuesKernelDataLoader"]
 
 [[files]]
 pattern = "Meta/StrataLint/StrataLint.*/**"

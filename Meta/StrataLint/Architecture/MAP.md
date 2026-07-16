@@ -12,7 +12,7 @@
   Provider-bearing overloads remain available with `CultureInfo.InvariantCulture`.
 - `HARDCODE-LEDGER.md` is the maintained guard/residual map. Every new hard-code
   family must update it in the same change.
-- Golden case data is canonical TOML under `Meta/StrataLint/Golden/cases`; the architecture policy
+- Golden case data is canonical TOML under `Golden/cases`; the architecture policy
   rejects literal-name case construction in C# while allowing loader/schema code.
 - Contract-epoch obligation accounting keeps its parser/comparator in the base-owned
   conservative harness; exact-commit event/evidence data is closed and content-addressed,

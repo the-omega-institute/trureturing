@@ -22,6 +22,8 @@ internal static class FileMapPolicy
         "Meta/StrataLint/StrataLint.Engine/Snapshot/RepositorySnapshot.cs";
     private const string TomlGoldenLoaderPath =
         "Meta/StrataLint/StrataLint.Cli/Golden/TomlGoldenLoader.cs";
+    private const string GoldenFixtureRegistryLoaderPath =
+        "Meta/StrataLint/StrataLint.Cli/Golden/GoldenFixtureRegistryLoader.cs";
     private const string ValuesKernelLoaderPath =
         "Meta/StrataLint/StrataLint.Scribe/Values/ValuesKernelDataLoader.cs";
     private const string YamlSubsetParserPath =
@@ -38,6 +40,7 @@ internal static class FileMapPolicy
         {
             ["BackfillInventoryLoader"] = BackfillLoaderPath,
             ["FileMapLoader"] = FileMapLoaderPath,
+            ["GoldenFixtureRegistryLoader"] = GoldenFixtureRegistryLoaderPath,
             ["RegistryLoader"] = RegistryLoaderPath,
             ["ScribeCompiler"] = ScribeProjectPath,
             ["SnapshotDecoder"] = SnapshotDecoderPath,
@@ -235,7 +238,7 @@ internal static class FileMapPolicy
             var kind = entry.Kind;
             if (path.Split('/').Contains("Generated", StringComparer.Ordinal)
                 && kind is not FileMapKind.Generated
-                || path.StartsWith("Meta/StrataLint/Golden/cases/", StringComparison.Ordinal)
+                || path.StartsWith("Golden/cases/", StringComparison.Ordinal)
                     && kind is not FileMapKind.Data
                 || (path.StartsWith("Meta/StrataLint/Golden/Frozen/", StringComparison.Ordinal)
                         || path == C0CertificatePath)

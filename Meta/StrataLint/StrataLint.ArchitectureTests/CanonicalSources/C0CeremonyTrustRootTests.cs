@@ -20,7 +20,9 @@ public sealed class C0CeremonyTrustRootTests
     private const string CorpusSchemaDirectory =
         "Meta/StrataLint/StrataLint.Cli/Golden";
     private const string CorpusDataDirectory =
-        "Meta/StrataLint/Golden/cases";
+        "Golden/cases";
+    private const string FixtureRegistryPath = "Golden/fixture-registry.yaml";
+    private const string ValuesKernelDataPath = "Golden/values-kernels.toml";
     private const string GateWiringPath = ".github/scripts/harness-gate.sh";
     private const string CertificatePath =
         "Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json";
@@ -261,6 +263,7 @@ public sealed class C0CeremonyTrustRootTests
     private static string[] ExpectedCorpusPaths(string root) =>
         EnumerateSourcePaths(root, CorpusSchemaDirectory, "*.cs")
             .Concat(EnumerateSourcePaths(root, CorpusDataDirectory, "*.toml"))
+            .Concat([FixtureRegistryPath, ValuesKernelDataPath])
             .Order(StringComparer.Ordinal)
             .ToArray();
 

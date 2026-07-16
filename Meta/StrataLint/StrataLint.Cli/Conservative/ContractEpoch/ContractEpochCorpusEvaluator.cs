@@ -72,7 +72,7 @@ internal static class ContractEpochCorpusEvaluator
         var caseId = "contract:" + goldenCaseId["golden:".Length..];
         try
         {
-            var baselinePolicy = ConservativePolicySnapshot.Current();
+            var baselinePolicy = ConservativePolicySnapshot.Current().WithExactExclusions([]);
             var candidatePolicy = baselinePolicy.WithExactExclusions(
                 source.CandidateExactExclusions);
             foreach (var matcher in source.CandidateRemovedMatchers)

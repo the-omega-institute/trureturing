@@ -81,7 +81,14 @@ internal static class BootstrapProtectionPolicy
         Atom("github-scripts", ProtectionMatchKind.Prefix, ".github/scripts/"),
     ];
 
-    internal static ImmutableArray<string> ExactExclusions { get; } = [];
+    internal static ImmutableArray<string> ExactExclusions { get; } =
+    [
+        "Meta/StrataLint/Golden/cases/digestion-and-anchors.toml",
+        "Meta/StrataLint/Golden/cases/protected-semantics.toml",
+        "Meta/StrataLint/Golden/cases/structure-and-identities.toml",
+        "Meta/StrataLint/Golden/cases/structured-ledger.toml",
+        "Meta/StrataLint/Golden/values-kernels.toml",
+    ];
 
     internal static ImmutableArray<string> LegacyPrefixExclusions { get; } =
     [

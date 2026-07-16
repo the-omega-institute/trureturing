@@ -11,6 +11,12 @@ public sealed class ValuesProjectionLoaderTests
     private const string InputPath = ValuesProjectionLoader.InputPath;
     private const string LeanModulePath = ValuesProjectionLoader.LeanModulePath;
     private const string KernelDataPath = ValuesProjectionLoader.KernelDataPath;
+
+    [Fact]
+    public void ProjectionAttestationUsesTheTopLevelGoldenDataHome()
+    {
+        Assert.Equal("Golden/values-kernels.toml", KernelDataPath);
+    }
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     private static readonly ImmutableArray<string> InputPaths = ValuesProjectionLoader.InputPaths;
     private static readonly ImmutableArray<string> LegacyInputPaths =

@@ -25,8 +25,7 @@ internal static class ValuesProjectionLoader
     internal const string RelativePath = "Evidence/D5/values.json";
     internal const string InputPath = "D5/X_Frontier/ValuesProducer.lean";
     internal const string LeanModulePath = "D5/S3/Constants/Values.lean";
-    internal const string KernelDataPath =
-        "Meta/StrataLint/Golden/values-kernels.toml";
+    internal const string KernelDataPath = "Golden/values-kernels.toml";
     internal const string ScribeLockPath =
         "Meta/StrataLint/StrataLint.Scribe/packages.lock.json";
 
