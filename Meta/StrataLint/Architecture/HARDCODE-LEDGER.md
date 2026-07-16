@@ -208,6 +208,19 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
   input; the exact 26-test failing selection passed before ceremony work resumed. The
   next architecture scan then caught three real paths inline in the new missing-registry
   fixture; each was promoted to a named test constant without weakening the path policy.
+- Residence P2 C0 replay autopsy: base `3119316` evaluated preimage `5fae3a2`; the actual
+  candidate was blocked by SL-016 and SL-022, the actual baseline flipped to SL-018, and
+  the finite replay preserved 37 base admits but only 36 candidate admits. Contract
+  accounting still recorded all five retired exact paths with `uncovered_obligations=[]`.
+  The roots were twelve stale spec-acceptance boundaries after the P2 spec edit and the
+  baseline values attestation naming its former kernel-data residence. The first canonical
+  `make ingest BASE=origin/dev` also failed closed because CAS-backed `atomizer:none`
+  boundaries were returned unchanged; ingest now requires each trusted CAS blob to have
+  one byte-exact source match and rejects missing, changed, or ambiguous matches. Its
+  successful rerun changed only the twelve start/end pairs. Production remains single-home
+  at `Golden/values-kernels.toml`; only conservative baseline replay can pass an explicit
+  historical suffix path selected by a unique byte-exact relocation, with missing, drift,
+  and ambiguity all failing closed.
 
 ## Residual scan
 

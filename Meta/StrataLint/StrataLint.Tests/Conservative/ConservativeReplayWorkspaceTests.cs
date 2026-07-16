@@ -28,6 +28,35 @@ public sealed class ConservativeReplayWorkspaceTests
     }
 
     [Fact]
+    public void ValuesKernelReplayPathRequiresAUniqueByteExactRelocation()
+    {
+        const string historicalPath = "Archive/values-kernels.toml";
+        const string bytes = "[[kernels]]\nname = \"fixture\"\n";
+        var candidate = Snapshot((ValuesProjectionLoader.KernelDataPath, bytes));
+
+        Assert.Equal(
+            ValuesProjectionLoader.KernelDataPath,
+            ConservativeActualTreeEvaluator.ResolveValuesKernelDataPathForReplay(
+                candidate,
+                candidate));
+        Assert.Equal(
+            historicalPath,
+            ConservativeActualTreeEvaluator.ResolveValuesKernelDataPathForReplay(
+                Snapshot((historicalPath, bytes)),
+                candidate));
+        Assert.Throws<InvalidOperationException>(() =>
+            ConservativeActualTreeEvaluator.ResolveValuesKernelDataPathForReplay(
+                Snapshot((historicalPath, "changed\n")),
+                candidate));
+        Assert.Throws<InvalidOperationException>(() =>
+            ConservativeActualTreeEvaluator.ResolveValuesKernelDataPathForReplay(
+                Snapshot(
+                    (historicalPath, bytes),
+                    ("Second/values-kernels.toml", bytes)),
+                candidate));
+    }
+
+    [Fact]
     public void WorkerProtocolExposesNoRepositoryOrReportPathArguments()
     {
         var source = File.ReadAllText(Path.Combine(
@@ -113,6 +142,11 @@ public sealed class ConservativeReplayWorkspaceTests
 
     private static string GitText(string root, params string[] arguments) =>
         Encoding.UTF8.GetString(Git(root, (IEnumerable<string>)arguments).StandardOutput).Trim();
+
+    private static RepositorySnapshot Snapshot(params (string Path, string Text)[] files) =>
+        Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            RawRepositorySnapshot.Create(files.Select(file =>
+                RawRepositoryEntry.FromText(file.Path, file.Text))))).Snapshot;
 
     private static void Git(string root, params string[] arguments)
     {
