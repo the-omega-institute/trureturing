@@ -380,16 +380,16 @@ sources:
           normalized_sha256: sha256:e38742ca0c18ff6ec5b2e9bdcdf99bc700c0ff2c38031b60a79dd17f4a617766
         cas_ref: sha256:e38742ca0c18ff6ec5b2e9bdcdf99bc700c0ff2c38031b60a79dd17f4a617766
         coverage_gids:
-          - D5/S1/Depth/JointCoordinates.joint_coordinates_spec
+          - D5/S1/Depth/JointDepth.joint_depth_spec
         receipts:
           coverage:
-            - gid: D5/S1/Depth/JointCoordinates.joint_coordinates_spec
+            - gid: D5/S1/Depth/JointDepth.joint_depth_spec
               source_sha256: sha256:e38742ca0c18ff6ec5b2e9bdcdf99bc700c0ff2c38031b60a79dd17f4a617766
-              target_sha256: sha256:b0d337d6fe4e334215b223de17c051793310f8e059ba5aa2cd7a37d6f36fa806
+              target_sha256: sha256:dd55302931fdf88b002a2625b9b2a12b7e26a0dac991abd0a5e56f5ead4474ce
           scribe:
-            - gid: D5/S1/Depth/JointCoordinates.joint_coordinates_spec
-              definition_sha256: sha256:7968d27bb3c8eea2a67c1499dbc5e50ae2d2a4812224d2601a0594ba07836c00
-              emission_sha256: sha256:d4bd6d77dc31cb26a61a2def62a4edf9206673fbc0a27aea7f52058974feb3c9
+            - gid: D5/S1/Depth/JointDepth.joint_depth_spec
+              definition_sha256: sha256:a49d797a685e8477aa0c5a399a804386836fd37cb0c3be1c8dd3ac961903c08c
+              emission_sha256: sha256:9d5145e73e6820e5bbb2d8398f24abc41ca261e16c00b39bd4323328180b3b7b
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
@@ -455,16 +455,16 @@ sources:
           normalized_sha256: sha256:6ade320007ff03163fd22af955a6a0ca8d4b371ef23def697929153f626d621e
         cas_ref: sha256:6ade320007ff03163fd22af955a6a0ca8d4b371ef23def697929153f626d621e
         coverage_gids:
-          - D5/S1/Digit/PrimeAxisEncoding.prime_axis_encoding_spec
+          - D5/S1/Digit/PrimeAxisAddition.prime_axis_addition_spec
         receipts:
           coverage:
-            - gid: D5/S1/Digit/PrimeAxisEncoding.prime_axis_encoding_spec
+            - gid: D5/S1/Digit/PrimeAxisAddition.prime_axis_addition_spec
               source_sha256: sha256:6ade320007ff03163fd22af955a6a0ca8d4b371ef23def697929153f626d621e
-              target_sha256: sha256:1203f917c55e518e1a5d27029c3d6294bf1da340f558018aca7a9d3a9a6a4223
+              target_sha256: sha256:00557dc5c6b8352bc93b89b3e0932c7316483cd7b3e11f2d2561d761206b6d8e
           scribe:
-            - gid: D5/S1/Digit/PrimeAxisEncoding.prime_axis_encoding_spec
-              definition_sha256: sha256:da1a068facf0f46cdd1ee8101fc6d75b6d0b16c587bd5208493155d191f91adc
-              emission_sha256: sha256:75ffe5c7620e79a288c4d40644add2045bf19246a5d8b93a3d3fe347f6757596
+            - gid: D5/S1/Digit/PrimeAxisAddition.prime_axis_addition_spec
+              definition_sha256: sha256:b089a3935f5bd42891a444ceea411527e8e119edc2d83d5cd272e68f5c5525cf
+              emission_sha256: sha256:58d827c4c277f837bb1c914057d836cd93adee2af7c479d665b6edfa0f84a65b
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
