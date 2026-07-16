@@ -281,6 +281,20 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
   `59bfd4fd14f72b05aaaa910022e1f9388891886e90eb1f3fb3ffd16aade5c545`
   address; the unchanged test command then passed 916/916. No source rule or test
   expectation changed.
+- After that full replay passed, `origin/dev` advanced through PR #136 with one
+  `CLAUDE.md` governance anchor. The branch merged exact base
+  `015d6d06d394aea2267fcd02c8a0b70a0a8c2f28` without rebase or conflict. Because C0
+  binds exact repository identities, neither the preceding certificate nor its completed
+  verification was reused for the final push.
+- The final renewed C0 binds clean merge preimage
+  `4d569d54170467094332e7cd9483dcc5bdc63e92`, tree
+  `1da2c54ce459e56d21c4de3b375165f8a5bec72a`, and certificate SHA-256
+  `1654c7f348da4a3a54ba35bcf7001e8dd9c0438a1cd1ceefe4bade2f086047e2`.
+  Fresh reports from the base-owned producer again converge at
+  `59bfd4fd14f72b05aaaa910022e1f9388891886e90eb1f3fb3ffd16aade5c545`;
+  replay remains 117/118/6 and 37/37 with zero findings, the exact five retirements,
+  and empty retired-rule and uncovered-obligation sets. Both harnesses admit the actual
+  baseline and provisionally admit the actual candidate with only SL-022.
 
 ## Residual scan
 
