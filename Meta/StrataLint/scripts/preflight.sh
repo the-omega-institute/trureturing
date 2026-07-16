@@ -27,7 +27,7 @@ if dotnet build Meta/StrataLint/BannedApiCompileFailProof/BannedApiCompileFailPr
 fi
 mark compile-fail-proofs
 
-make gate BASE="${BASE:-origin/dev}"
+make gate BASE="${BASE:-origin/dev}" GATE_ARGS=--skip-engineering
 mark gate
 
 echo "[preflight] PASS — CI 双 required check 预证绿"

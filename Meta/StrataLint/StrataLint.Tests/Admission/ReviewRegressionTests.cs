@@ -553,6 +553,9 @@ public sealed partial class ReviewRegressionTests
         var producer = File.ReadAllText(
             Path.Combine(root, "Meta", "StrataLint", "lean-inspector", "inspect.sh"),
             Encoding.UTF8);
+        var pairProducer = File.ReadAllText(
+            Path.Combine(root, "Meta", "StrataLint", "scripts", "lean-report-pair.sh"),
+            Encoding.UTF8);
         var inspectJob = workflow[
             workflow.IndexOf("  lean-inspect:", StringComparison.Ordinal)..workflow.IndexOf("  baseline-admission:", StringComparison.Ordinal)];
         var baselineJob = workflow[workflow.IndexOf("  baseline-admission:", StringComparison.Ordinal)..];
@@ -567,8 +570,15 @@ public sealed partial class ReviewRegressionTests
         Assert.Contains("cat", producer, StringComparison.Ordinal);
         Assert.DoesNotContain("tail -", producer, StringComparison.OrdinalIgnoreCase);
         Assert.Contains("actions/upload-artifact", inspectJob, StringComparison.Ordinal);
+        Assert.Contains("lean-report-pair.sh", inspectJob, StringComparison.Ordinal);
+        Assert.Contains("--producer", inspectJob, StringComparison.Ordinal);
+        Assert.Contains("--candidate-root", inspectJob, StringComparison.Ordinal);
+        Assert.Contains("--baseline-root", inspectJob, StringComparison.Ordinal);
         Assert.Contains("candidate-lean-report.json", inspectJob, StringComparison.Ordinal);
         Assert.Contains("baseline-lean-report.json", inspectJob, StringComparison.Ordinal);
+        Assert.Contains("stratalint-lean-report-input-v1", pairProducer, StringComparison.Ordinal);
+        Assert.Contains("stratalint-lean-report-provenance-v1", pairProducer, StringComparison.Ordinal);
+        Assert.Contains("repository_inspector_sha256", pairProducer, StringComparison.Ordinal);
 
         Assert.Contains("needs: lean-inspect", baselineJob, StringComparison.Ordinal);
         Assert.Contains("actions/download-artifact", baselineJob, StringComparison.Ordinal);

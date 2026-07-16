@@ -59,6 +59,22 @@ snapshot() {
     (( fatal > 0 )) && { verdict="DOWN"; reasons+=("$fatal fatal log lines"); }
   fi
 
+  # Progress/stall detection: engine reports "running" (PID alive) but the supervise log
+  # has gone silent past the threshold => a department likely hung inside a live process.
+  # KeepAlive only restarts on process EXIT, so this class needs a kickstart, not a restart.
+  # (Real incident 2026-07-16: pr_freshness_scan hung ~22min; log went quiet while PID alive.)
+  local progress_age=-1 stall_threshold="${FKST_STALL_THRESHOLD:-600}"
+  if (( running )) && [[ -n "$log" ]]; then
+    local now_e log_e
+    now_e="$(date +%s)"
+    log_e="$(stat -f %m "$log" 2>/dev/null || stat -c %Y "$log" 2>/dev/null || echo "$now_e")"
+    progress_age=$(( now_e - log_e ))
+    if (( progress_age > stall_threshold )); then
+      [[ "$verdict" == HEALTHY ]] && verdict="DEGRADED"
+      reasons+=("no log progress ${progress_age}s (>${stall_threshold}s; likely stall — kickstart -k)")
+    fi
+  fi
+
   # Durable / DLQ via observe
   local dlq=0 retrying=0 absent=0 observe_ok=0 obs=""
   if [[ -n "$bin" && -d "$DURABLE_ROOT" ]]; then
@@ -80,8 +96,8 @@ snapshot() {
   fi
 
   if [[ "${1:-}" == "--json" ]]; then
-    printf '{"verdict":"%s","running":%d,"pid":"%s","uptime":"%s","fatal":%d,"warn_error":%d,"acks":%d,"dlq":%d,"retrying":%d,"absent_subscribers":%d,"codex_failed":%d}\n' \
-      "$verdict" "$running" "${pid:-}" "${uptime:-}" "$fatal" "$warns" "$acks" "$dlq" "$retrying" "$absent" "$codex_failed"
+    printf '{"verdict":"%s","running":%d,"pid":"%s","uptime":"%s","fatal":%d,"warn_error":%d,"acks":%d,"dlq":%d,"retrying":%d,"absent_subscribers":%d,"codex_failed":%d,"progress_age_s":%d}\n' \
+      "$verdict" "$running" "${pid:-}" "${uptime:-}" "$fatal" "$warns" "$acks" "$dlq" "$retrying" "$absent" "$codex_failed" "$progress_age"
     [[ "$verdict" == HEALTHY ]]; return
   fi
 
@@ -91,6 +107,7 @@ snapshot() {
   printf '  log         : %s\n' "$([[ -n "$log" ]] && basename "$log" || echo none)"
   printf '  errors      : fatal=%s  warn/error=%s (test-probe produced-only warns are benign)\n' "$fatal" "$warns"
   printf '  throughput  : %s delivery acks in current log\n' "$acks"
+  printf '  progress    : %s\n' "$([[ $progress_age -lt 0 ]] && echo 'n/a' || echo "last log write ${progress_age}s ago (stall if >${stall_threshold}s)")"
   if (( observe_ok )); then
     printf '  durable     : dead_letters=%s  retrying=%s  absent_subscribers=%s\n' "$dlq" "$retrying" "$absent"
   else
