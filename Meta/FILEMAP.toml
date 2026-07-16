@@ -119,6 +119,20 @@ consumed_by = ["reader"]
 verified_by = ["emit-check"]
 
 [[files]]
+pattern = "Golden/cases/**/*.toml"
+kind = "data"
+produced_by = "none"
+consumed_by = ["TomlGoldenLoader"]
+verified_by = ["TomlGoldenLoader"]
+
+[[files]]
+pattern = "Golden/values-kernels.toml"
+kind = "data"
+produced_by = "none"
+consumed_by = ["ValuesKernelDataLoader"]
+verified_by = ["ValuesKernelDataLoader"]
+
+[[files]]
 pattern = "Library/**/*.yaml"
 kind = "data"
 produced_by = "none"
@@ -273,6 +287,20 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["automation"]
 verified_by = ["make-gate"]
+
+[[files]]
+pattern = "Meta/contract-epoch/events.jsonl"
+kind = "ledger"
+produced_by = "ContractEpochLedgerCodec"
+consumed_by = ["ContractEpochStore"]
+verified_by = ["ContractEpochStore"]
+
+[[files]]
+pattern = "Meta/contract-epoch/evidence/sha256/*.json"
+kind = "ledger"
+produced_by = "ContractEpochEvidenceReceipt"
+consumed_by = ["ContractEpochStore"]
+verified_by = ["ContractEpochStore"]
 
 [[files]]
 pattern = "Meta/domains.yaml"
