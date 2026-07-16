@@ -25,9 +25,7 @@ internal static class ValuesProjectionLoader
     internal const string RelativePath = "Evidence/D5/values.json";
     internal const string InputPath = "D5/X_Frontier/ValuesProducer.lean";
     internal const string LeanModulePath = "D5/S3/Constants/Values.lean";
-    internal const string KernelDataPath =
-        "Meta/StrataLint/Golden/values-kernels.toml";
-    internal const string FutureKernelDataPath = "Golden/values-kernels.toml";
+    internal const string KernelDataPath = "Golden/values-kernels.toml";
     internal const string ScribeLockPath =
         "Meta/StrataLint/StrataLint.Scribe/packages.lock.json";
 
@@ -35,9 +33,21 @@ internal static class ValuesProjectionLoader
     private static readonly Regex Sha256Pattern = new("^[0-9a-f]{64}$", RegexOptions.CultureInvariant);
     internal static ImmutableArray<string> InputPaths { get; } = InputPathsFor(KernelDataPath);
 
-    internal static ValuesProjection Load(RepositorySnapshot snapshot)
+    internal static ValuesProjection Load(RepositorySnapshot snapshot) =>
+        Load(snapshot, KernelDataPath);
+
+    internal static ValuesProjection Load(
+        RepositorySnapshot snapshot,
+        string kernelDataPath)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
+        ArgumentException.ThrowIfNullOrWhiteSpace(kernelDataPath);
+        if (!RepoPath.TryCreate(kernelDataPath, out _)
+            || !kernelDataPath.EndsWith("/values-kernels.toml", StringComparison.Ordinal))
+        {
+            throw new ArgumentException("Values kernel data path is invalid.", nameof(kernelDataPath));
+        }
+
         if (!snapshot.TryGetFile(RelativePath, out var file))
         {
             throw new FormatException("Canonical values projection is missing.");
@@ -63,8 +73,11 @@ internal static class ValuesProjectionLoader
         }
 
         var definitions = ParseDefinitions(root.GetProperty("constants"));
-        var inputPaths = InputPathsFor(ResolveKernelDataPath(snapshot));
-        ValidateAttestation(snapshot, root.GetProperty("attestation"), definitions, inputPaths);
+        ValidateAttestation(
+            snapshot,
+            root.GetProperty("attestation"),
+            definitions,
+            InputPathsFor(kernelDataPath));
         return new ValuesProjection(definitions);
     }
 
@@ -164,18 +177,6 @@ internal static class ValuesProjectionLoader
         {
             throw new FormatException("Values producer input SHA-256 does not match the repository input.");
         }
-    }
-
-    private static string ResolveKernelDataPath(RepositorySnapshot snapshot)
-    {
-        var currentPresent = snapshot.TryGetFile(KernelDataPath, out _);
-        var futurePresent = snapshot.TryGetFile(FutureKernelDataPath, out _);
-        if (currentPresent == futurePresent)
-        {
-            throw new FormatException("Values kernel data must have exactly one canonical residence.");
-        }
-
-        return currentPresent ? KernelDataPath : FutureKernelDataPath;
     }
 
     private static ImmutableArray<string> InputPathsFor(string kernelDataPath) =>

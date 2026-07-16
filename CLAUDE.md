@@ -77,7 +77,7 @@ docs/theory(参考输入)──摄入机器──► Lean(唯一真源)◄──
 **6. 地址由算法算出,不开会。**
 GID = 规范地址(F 层即字面路径);地层由 import 偏序算出;桶满则裂、**只裂不迁**;历史只追加。地址是算法的输出,不是协商的结果——所以两个 agent 并行贡献不会撞地址。
 **禁历史兼容:现状唯一,历史归 git。** 工作树永远只呈现**当前最优形态**;格式/规则/词表/语料变更**单 PR 一步迁移到位**(全量迁移 + 机器验证),**不留兼容垫层**——无 grandfather、无 legacy alias、无双读旧格式、无"隔离区待晋升"、无 deprecated 存根。历史查证一律走 git(历史即档案,不在工作树维护)。**辨析**:账本类 append-only 工件(Chronicle、冻结账本 events、尸检、spec 修订注)是**现状的审计链构成**,非兼容层,不在此禁——禁的是"为旧状态保留的运行时机制",不是"记录事件的账"。
-**数据居所律(程序/数据物理边界)**:程序集目录(`Meta/StrataLint/StrataLint.*/`)内的源码只许**程序**——类型/逻辑/loader/writer/测试代码;整个 `Meta/StrataLint/` 保护面不得住 `kind=data`。**声明性数据实例**(判例案、常数值、目录条目、文档内容)必须住程序目录以外的数据位(`Blueprint/**/*.scribe.cs`、顶层 `Golden/`、`Meta/{BACKFILL.yaml,FILEMAP.toml,domains.yaml,registry.yaml}`、`Library/`、`docs/develop/theory/`、`Evidence/`、`D5/*.lean`),或仅作测试项目内部的合成 fixture(装置非 canonical 数据)。**辨析**:类型/schema 定义=程序,留程序集;实例集合=数据,必须出去;封闭字母表(S0–S4、PLANE)写死于类型=程序合法形,加一处锚定测试即可;数据以数据文件存在时,其 parse 即 harness(fail-closed loader+schema 执法)。内容数据不因“重要”而进入 SL-022 保护面;作为准入基准的 golden corpus 由 strict loader、base-owned conservative replay、TOWER blob 地址与 C0 ceremony 保护,这是保护基准身份,不是把内容数据升格成程序。**现状账**:`RESIDENCE-EPOCH` 将仍住 `Meta/StrataLint/Golden/` 的五个 `kind=data` 文件逐项标记并冻结监视;这不是豁免或合法化,保护面在 sshx 核准收缩机制与三段迁移完成前保持不变。
+**数据居所律(程序/数据物理边界)**:程序集目录(`Meta/StrataLint/StrataLint.*/`)内的源码只许**程序**——类型/逻辑/loader/writer/测试代码;整个 `Meta/StrataLint/` 保护面不得住 `kind=data`。**声明性数据实例**(判例案、常数值、目录条目、文档内容)必须住程序目录以外的数据位(`Blueprint/**/*.scribe.cs`、顶层 `Golden/`、`Meta/{BACKFILL.yaml,FILEMAP.toml,domains.yaml,registry.yaml}`、`Library/`、`docs/develop/theory/`、`Evidence/`、`D5/*.lean`),或仅作测试项目内部的合成 fixture(装置非 canonical 数据)。**辨析**:类型/schema 定义=程序,留程序集;实例集合=数据,必须出去;封闭字母表(S0–S4、PLANE)写死于类型=程序合法形,加一处锚定测试即可;数据以数据文件存在时,其 parse 即 harness(fail-closed loader+schema 执法)。内容数据不因“重要”而进入 SL-022 保护面;作为准入基准的 golden corpus 由 strict loader、base-owned conservative replay、TOWER blob 地址与 C0 ceremony 保护,这是保护基准身份,不是把内容数据升格成程序。**现状账**:`RESIDENCE-EPOCH` 已以两个 base-owned one-shot consume 事件结清五个精确旧路径;四个判例文件、计算参数及合成 registry 数据现住顶层 `Golden/`,FILEMAP 居所违规集为空,C0 certificate 与 Frozen ledger 仍按其 `kind=ledger` 职责留在原保护位。
 *成熟锚*:单一真源(SSOT)、事件溯源(event sourcing)、内容寻址、mathlib 库治理、trunk-based 单版本真源、schema 迁移之 expand–contract(必须收尾 contract,不许永久 expand)、git 即历史数据库、代码/配置分离(config outside the binary)、资产管线(assets≠engine)。
 〔守护:**硬+软**·GID/地层/词表/文件头机器 lint 如前;「禁兼容垫层」靠评审 + 先例(判例集 grandfather/legacy-values 隔离区均已按此裁决拆除),兼容机制一经识别即拆〕
 
@@ -246,6 +246,13 @@ harness 的本质,就是**给各类事定义"这类该怎么处理"**——先�
 > **发现尽可能多的真相,把真相连接成网;逻辑只有对错;账,必须平;而美,是幸存下来的形状。**
 >
 > 仓库可以无人值守,诚实不能。账,平——每次构建平一次。
+
+**两句本体注(用户 2026-07-16)**:
+> **我们不过是在寻找 truth 中的素数,固定为节点**——每个冻结节点作为陈述是素的(不可约真值原子,后续真理由其组合生成;素数无穷=frontier 永不枯竭,Euclid 与 Gödel 同形);寻找而非发明——素数在变换下不变,故可为坐标(GICT 7.3)。
+>
+> **我们是在寻找因陀罗网的珍珠**——每个节点作为证明是珠的(互摄):内容寻址哈希由全部前置哈希构成,**Merkle DAG 即因陀罗网的可执行形式**——每颗珠含整网映像,动一颗则重重映像全变(C0/冻结账本/保守扩展所守护的"一即一切"之可判版);重重无尽=内化塔层层判前层,网无外缘,顶上 Gödel 标 open;证明只是让本已在网上的珠显影。
+>
+> 素数是筛的方法论,因陀罗网是网的本体论;一动一静,同一张图。〔守护:**软**·本体注是罗盘不是证明(第 3 条);其中结构同构部分(Merkle/冻结/保守扩展)由既有硬门守护〕
 
 ---
 

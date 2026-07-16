@@ -11,12 +11,21 @@ public sealed class ConservativePolicySnapshotTests
     private const string BlueprintSourcePath = "Blueprint/D5/S0/Carrier/Ring.scribe.cs";
     private const string BlueprintProjectionPath = "Blueprint/D5/S0/Carrier/Ring.md";
     private const string ValuesKernelPath = "Meta/StrataLint/Golden/values-kernels.toml";
+    private static readonly string[] ResidenceEpochRetiredPaths =
+    [
+        "Meta/StrataLint/Golden/cases/digestion-and-anchors.toml",
+        "Meta/StrataLint/Golden/cases/protected-semantics.toml",
+        "Meta/StrataLint/Golden/cases/structure-and-identities.toml",
+        "Meta/StrataLint/Golden/cases/structured-ledger.toml",
+        ValuesKernelPath,
+    ];
 
     [Theory]
     [InlineData(BootstrapGatePath, true)]
     [InlineData(ContractEpochTestData.LedgerPath, true)]
     [InlineData(SpecificationPath, true)]
     [InlineData(BlueprintSourcePath, true)]
+    [InlineData(ValuesKernelPath, false)]
     [InlineData("Meta/StrataLint/StrataLint.Definitions/Retired.cs", false)]
     [InlineData(BlueprintProjectionPath, false)]
     public void DeclarativeProtectionPolicyPreservesTheExistingPredicate(
@@ -44,9 +53,21 @@ public sealed class ConservativePolicySnapshotTests
     }
 
     [Fact]
+    public void ResidenceEpochRetiresExactlyTheFiveRegisteredPaths()
+    {
+        var current = ConservativePolicySnapshot.Current();
+
+        Assert.Equal(ResidenceEpochRetiredPaths, current.ExactExclusions);
+        Assert.Equal(
+            "sha256:0daa1a195c3ff86a2da019f267933c40e4402fe54bde1203b9123adbb6e957ec",
+            current.Root);
+        Assert.All(ResidenceEpochRetiredPaths, path => Assert.False(current.IsProtected(path)));
+    }
+
+    [Fact]
     public void ExactExclusionCreatesADeclaredPathRetirementWithoutActualPathInference()
     {
-        var baseline = ConservativePolicySnapshot.Current();
+        var baseline = ConservativePolicySnapshot.Current().WithExactExclusions([]);
         var candidate = baseline.WithExactExclusions([ValuesKernelPath]);
 
         var delta = ContractEpochVerifier.ComputePolicyDelta(baseline, candidate);

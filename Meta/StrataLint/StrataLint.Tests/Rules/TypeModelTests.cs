@@ -124,7 +124,7 @@ public sealed class TypeModelTests
     [InlineData("Golden/cases/A0_case-name.toml")]
     [InlineData("Golden/fixture-registry.yaml")]
     [InlineData("Golden/values-kernels.toml")]
-    public void FutureGoldenDataResidencesAreClosedWorldRegistered(string value)
+    public void CanonicalGoldenDataResidencesAreClosedWorldRegistered(string value)
     {
         var path = RepoPath.CreateKnown(value);
 
@@ -140,7 +140,7 @@ public sealed class TypeModelTests
     [InlineData("Golden/cases/bad.name.toml")]
     [InlineData("Golden/cases/bad+name.toml")]
     [InlineData("Golden/cases/caf\u00e9.toml")]
-    public void FutureGoldenDataResidencesRejectNoncanonicalNeighbors(string value)
+    public void CanonicalGoldenDataResidencesRejectNoncanonicalNeighbors(string value)
     {
         var path = RepoPath.CreateKnown(value);
 

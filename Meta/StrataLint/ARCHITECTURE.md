@@ -67,10 +67,10 @@ receipt already present in the exact base, and checks the new loader path, canon
 anchor, or active rule against the candidate snapshot. Every retired path/rule atom must
 be covered by a sealed custody transfer or authority discharge; any uncovered atom,
 scope excess, replay, opaque matcher contraction, or authority-ceiling target rejects.
-P0 installs this mechanism with no registered plan. `RESIDENCE-EPOCH` now owns two
-candidate-validated, authority-none registrations for its exact five-path transfer;
-consumption remains a later base-owned commit. Digestion E3 owns its separate later
-registration and consumption commits.
+P0 installed this mechanism with no registered plan. `RESIDENCE-EPOCH` registered two
+authority-none exact-path transfers in P1 and consumed each once from the base-owned
+ledger in P2; the comparator settles all five retired atoms with no uncovered obligation.
+Digestion E3 owns its separate later registration and consumption commits.
 
 ## FILEMAP custody boundary
 
@@ -82,13 +82,11 @@ copying either schema into the other. The registry lists the FILEMAP authority a
 generated projection as governance documents so predecessor closed-world judges can
 admit the new artifact class without candidate-only path exceptions.
 
-`Meta/StrataLint/` is normatively a program-only protected surface. The open
-`RESIDENCE-EPOCH` records five current `kind=data` files under
-`Meta/StrataLint/Golden/`; their two FILEMAP entries carry
-`residence_violation=true`, and the architecture suite freezes the exact expanded file
-set so an unmarked or additional violation fails. Blueprint Scribe sources and the
-Golden residence remain under the predecessor SL-022 protection contract in this epoch.
-The sshx-reviewed P0 verifier mechanism is installed. P1 registers exact loader custody
-for the four case files and the values-kernels file with authority `none`; moving cases,
-values, and C0/frozen material to top-level `Golden/` remains deferred to the separate
-P2 consumption commit owned by `RESIDENCE-EPOCH`.
+`Meta/StrataLint/` is normatively a program-only protected surface. `RESIDENCE-EPOCH`
+is closed: its five exact data paths moved to `Golden/cases/` and
+`Golden/values-kernels.toml`, while the synthetic registry instance moved out of
+`GoldenCorpus.cs` to strict-loaded `Golden/fixture-registry.yaml`. FILEMAP records zero
+residence violations. The five old paths alone are exact bootstrap exclusions; no
+protection matcher changed. The C0 certificate and Frozen event ledger remain under
+`Meta/StrataLint/Golden/` as protected `kind=ledger` artifacts, and Blueprint Scribe
+sources retain their existing protection.
