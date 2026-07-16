@@ -423,16 +423,23 @@ sources:
           raw_sha256: sha256:28a2415fbe4936c1c56a1471d7f72cb1af759747b9f985e4112a0cd5ce3e08a3
           normalized_sha256: sha256:28a2415fbe4936c1c56a1471d7f72cb1af759747b9f985e4112a0cd5ce3e08a3
         cas_ref: sha256:28a2415fbe4936c1c56a1471d7f72cb1af759747b9f985e4112a0cd5ce3e08a3
-        coverage_gids: []
+        coverage_gids:
+          - D5/S1/Digit/PrimeAxisTable.prime_axis_table_spec
         receipts:
-          coverage: []
-          scribe: []
+          coverage:
+            - gid: D5/S1/Digit/PrimeAxisTable.prime_axis_table_spec
+              source_sha256: sha256:28a2415fbe4936c1c56a1471d7f72cb1af759747b9f985e4112a0cd5ce3e08a3
+              target_sha256: sha256:a2d6ad89bad13070c0a7b89109f5e059124c149a445162c95be046c21b8971e2
+          scribe:
+            - gid: D5/S1/Digit/PrimeAxisTable.prime_axis_table_spec
+              definition_sha256: sha256:eaba2e69f603340e5c25a83e0db7945454f8d0da79cf6ed3b9afbdad93c591aa
+              emission_sha256: sha256:792c924095c69322ffdef2eb57f2d68fdaaf269bad6c9cf63f94a7daca045df6
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: absorbed
+          truth: closed
       - atom_id: gict-residual-6ade320007ff03163fd22af955a6a0ca8d4b371ef23def697929153f626d621e
         ast_path: theorem/1.8
         fingerprints:
