@@ -7,7 +7,7 @@ WORKTREE_PATH = $(if $(filter command line,$(origin PATH)),$(PATH),$(abspath ../
 .PHONY: help dotnet test lean build emit emit-check ingest record-golden selftest gate worktree
 
 help:
-	@printf '%s\n' 'make help                         Show this target list' 'make dotnet                       Restore and build .NET with warnings as errors' 'make test                         Run the .NET test suite' 'make lean                         Build the pinned Lean project' 'make build                        Run make dotnet and make lean' 'make emit                         Emit canonical Scribe documents, catalog, and values' 'make emit-check                   Check canonical Scribe documents, catalog, and values' 'make ingest [BASE=origin/dev]     Align theory receipts and update the digestion ledger' 'make record-golden                Record Engine diagnostics into golden TOML' 'make selftest                     Run deterministic StrataLint selftest' 'make gate [BASE=origin/dev]       Run the local CI-equivalent admission flow' 'make worktree NAME=x [BASE=origin/dev] [PATH=DIR]  Initialize an isolated worktree; .lake is copied, never symlinked'
+	@printf '%s\n' 'make help                         Show this target list' 'make dotnet                       Restore and build .NET with warnings as errors' 'make test                         Run the .NET test suite' 'make lean                         Build the pinned Lean project' 'make build                        Run make dotnet and make lean' 'make emit                         Emit canonical Scribe documents, catalog, and values' 'make emit-check                   Check canonical Scribe documents, catalog, and values' 'make ingest [BASE=origin/dev]     Align theory receipts and update the digestion ledger' 'make record-golden                Record Engine diagnostics into golden TOML' 'make selftest                     Run deterministic StrataLint selftest' 'make gate [BASE=origin/dev]       Run the local CI-equivalent admission flow' 'make preflight [BASE=origin/dev]  Pre-verify BOTH required CI checks locally before pushing' 'make worktree NAME=x [BASE=origin/dev] [PATH=DIR]  Initialize an isolated worktree; .lake is copied, never symlinked'
 
 dotnet:
 	@/bin/bash Meta/StrataLint/scripts/dotnet-build.sh
@@ -37,6 +37,9 @@ selftest:
 
 gate:
 	@/bin/bash Meta/StrataLint/scripts/local-harness-gate.sh --base "$(BASE)"
+
+preflight:
+	@/bin/bash Meta/StrataLint/scripts/preflight.sh
 
 worktree:
 	@/bin/bash Meta/StrataLint/scripts/worktree-init.sh "$(NAME)" "$(WORKTREE_PATH)" "$(BASE)"
