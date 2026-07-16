@@ -320,16 +320,23 @@ sources:
           raw_sha256: sha256:02138663fc4949940459013eabfd32eab9f0200bcaf9bbd660556c55960b9d3b
           normalized_sha256: sha256:02138663fc4949940459013eabfd32eab9f0200bcaf9bbd660556c55960b9d3b
         cas_ref: sha256:02138663fc4949940459013eabfd32eab9f0200bcaf9bbd660556c55960b9d3b
-        coverage_gids: []
+        coverage_gids:
+          - D5/S0/Carrier/GoldenRatio.golden_ratio_spec
         receipts:
-          coverage: []
-          scribe: []
+          coverage:
+            - gid: D5/S0/Carrier/GoldenRatio.golden_ratio_spec
+              source_sha256: sha256:02138663fc4949940459013eabfd32eab9f0200bcaf9bbd660556c55960b9d3b
+              target_sha256: sha256:6a1e8f61c298ff08e01a8540734892a24663d6c7cd7424ef2d90b153bc36bb92
+          scribe:
+            - gid: D5/S0/Carrier/GoldenRatio.golden_ratio_spec
+              definition_sha256: sha256:426a97a2d16eceac0af46fc5f384f0f926cf1da5717cf0e59beeffb0cb328543
+              emission_sha256: sha256:0dfb593fd2f14653c500aafc86d8480ba3603600dd02bc4aefdebfe9dc0c7529
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: absorbed
+          truth: closed
       - atom_id: gict-residual-1590a11d4ee912f01a495981767fe3c7c40f89d650cde5e57021aeb18743360b
         ast_path: definition/1.2
         fingerprints:
@@ -640,16 +647,23 @@ sources:
           raw_sha256: sha256:f275041c200ac16d357515d4669dd0a5c558d789e926d5b5f258e934e8ecac28
           normalized_sha256: sha256:f275041c200ac16d357515d4669dd0a5c558d789e926d5b5f258e934e8ecac28
         cas_ref: sha256:f275041c200ac16d357515d4669dd0a5c558d789e926d5b5f258e934e8ecac28
-        coverage_gids: []
+        coverage_gids:
+          - D5/S1/Scale/FibonacciEigen.fibonacci_substitution_spec
         receipts:
-          coverage: []
-          scribe: []
+          coverage:
+            - gid: D5/S1/Scale/FibonacciEigen.fibonacci_substitution_spec
+              source_sha256: sha256:f275041c200ac16d357515d4669dd0a5c558d789e926d5b5f258e934e8ecac28
+              target_sha256: sha256:eafed4784601bcc1d9358af0a441539fa1e63154aeeb3b92bc85f3b5e7a9b351
+          scribe:
+            - gid: D5/S1/Scale/FibonacciEigen.fibonacci_substitution_spec
+              definition_sha256: sha256:a159be47162321280a12e86be2f2b270c1511bb7da9dd9b7ead22fb7529e34a8
+              emission_sha256: sha256:7e84626842446406bea0b1abb498f1c1ba4100ce536f027801dbc26f99e2a9ce
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: absorbed
+          truth: closed
       - atom_id: gict-residual-e0150174c20cf2f7fc5513526a567f57a03f0a6f2ec08e827d7528b7739d68f7
         ast_path: theorem/5.1
         fingerprints:
