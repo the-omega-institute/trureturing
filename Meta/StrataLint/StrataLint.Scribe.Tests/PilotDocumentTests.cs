@@ -14,7 +14,9 @@ public sealed class DocumentDiscoveryTests
     private const string NotationDocumentPath = "Blueprint/D5/S0/Conventions/Notation.md";
     private const string WDigitsDocumentPath = "Blueprint/D5/S0/Conventions/WDigits.md";
     private const string JointCoordinatesDocumentPath = "Blueprint/D5/S1/Depth/JointCoordinates.md";
+    private const string JointDepthDocumentPath = "Blueprint/D5/S1/Depth/JointDepth.md";
     private const string CarryDocumentPath = "Blueprint/D5/S1/Digit/Carry.md";
+    private const string PrimeAxisAdditionDocumentPath = "Blueprint/D5/S1/Digit/PrimeAxisAddition.md";
     private const string PrimeAxisEncodingDocumentPath = "Blueprint/D5/S1/Digit/PrimeAxisEncoding.md";
     private const string PrimeAxisTableDocumentPath = "Blueprint/D5/S1/Digit/PrimeAxisTable.md";
     private const string RawDocumentPath = "Blueprint/D5/S1/Digit/Raw.md";
@@ -39,7 +41,9 @@ public sealed class DocumentDiscoveryTests
                 "D5/S0/Conventions/Notation",
                 "D5/S0/Conventions/WDigits",
                 "D5/S1/Depth/JointCoordinates",
+                "D5/S1/Depth/JointDepth",
                 "D5/S1/Digit/Carry",
+                "D5/S1/Digit/PrimeAxisAddition",
                 "D5/S1/Digit/PrimeAxisEncoding",
                 "D5/S1/Digit/PrimeAxisTable",
                 "D5/S1/Digit/Raw",
@@ -61,7 +65,9 @@ public sealed class DocumentDiscoveryTests
                 NotationDocumentPath,
                 WDigitsDocumentPath,
                 JointCoordinatesDocumentPath,
+                JointDepthDocumentPath,
                 CarryDocumentPath,
+                PrimeAxisAdditionDocumentPath,
                 PrimeAxisEncodingDocumentPath,
                 PrimeAxisTableDocumentPath,
                 RawDocumentPath,
@@ -205,11 +211,11 @@ public sealed class DocumentDiscoveryTests
                 "D5/S0/Carrier/AlgebraicModel.golden_algebraic_model_spec",
                 DescribeProvenanceKind.LiteratureAttested,
                 "D5/L/stewarttall2025algebraic"),
-            ("D5/S1/Depth/JointCoordinates", DescribeKind.Definition,
-                "D5/S1/Depth/JointCoordinates.joint_coordinates_spec",
+            ("D5/S1/Depth/JointDepth", DescribeKind.Definition,
+                "D5/S1/Depth/JointDepth.joint_depth_spec",
                 DescribeProvenanceKind.RepoDerived, null),
-            ("D5/S1/Digit/PrimeAxisEncoding", DescribeKind.Theorem,
-                "D5/S1/Digit/PrimeAxisEncoding.prime_axis_encoding_spec",
+            ("D5/S1/Digit/PrimeAxisAddition", DescribeKind.Theorem,
+                "D5/S1/Digit/PrimeAxisAddition.prime_axis_addition_spec",
                 DescribeProvenanceKind.RepoDerived, null),
             ("D5/S1/Scale/MinkowskiModelSet", DescribeKind.Definition,
                 "D5/S1/Scale/MinkowskiModelSet.minkowski_model_set_spec",

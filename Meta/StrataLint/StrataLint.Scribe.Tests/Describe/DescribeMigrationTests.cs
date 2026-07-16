@@ -5,22 +5,22 @@ namespace StrataLint.Scribe.Tests;
 public sealed class DescribeMigrationTests
 {
     [Fact]
-    public void RepositoryMigrationHasTwentyTypedNodesAndPreservesTwentyFourFormulaSlots()
+    public void RepositoryMigrationHasTwentyTwoTypedNodesAndPreservesTwentyFourFormulaSlots()
     {
         var root = FindRepositoryRoot();
         var report = DescribeReport.Build(
             root,
             DocumentDefinitions.All.Select(static definition => definition.Document));
 
-        Assert.Equal(20, report.NodeStats.Total);
+        Assert.Equal(22, report.NodeStats.Total);
         Assert.Equal(24, report.NodeStats.FormulaContentSlots);
         Assert.Equal(1, report.NodeStats.FormulaStatements);
-        Assert.Equal(19, report.NodeStats.LeanStatements);
-        Assert.Equal(3, report.NodeStats.ByKind["definition"]);
+        Assert.Equal(21, report.NodeStats.LeanStatements);
+        Assert.Equal(4, report.NodeStats.ByKind["definition"]);
         Assert.Equal(7, report.NodeStats.ByKind["proposition"]);
-        Assert.Equal(9, report.NodeStats.ByKind["theorem"]);
+        Assert.Equal(10, report.NodeStats.ByKind["theorem"]);
         Assert.Equal(1, report.NodeStats.ByKind["example"]);
-        Assert.Equal(16, report.NodeStats.ByProvenance["repo-derived"]);
+        Assert.Equal(18, report.NodeStats.ByProvenance["repo-derived"]);
         Assert.Equal(4, report.NodeStats.ByProvenance["literature-attested"]);
         Assert.Equal(0, report.OpenCount);
         Assert.Empty(report.SuspectedNovel);
@@ -95,7 +95,7 @@ public sealed class DescribeMigrationTests
         Assert.Equal(string.Empty, error.ToString());
         using var document = JsonDocument.Parse(output.ToString());
         Assert.Equal("DESCRIBE-NODES", document.RootElement.GetProperty("case_id").GetString());
-        Assert.Equal(20, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
+        Assert.Equal(22, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
         Assert.Equal(0, document.RootElement.GetProperty("open_count").GetInt32());
     }
 
