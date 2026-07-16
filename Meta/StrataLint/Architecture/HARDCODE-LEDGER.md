@@ -348,6 +348,31 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
   made that stale adjacency fail while the complete root-usage contract test passed. The
   focused assertion now checks the delimited `|coverage|` token it names; production
   routing, command order, exit behavior, and every validation stage remain unchanged.
+- OBSERVER atomizer predecessor autopsy: the combined meta-plus-ingestion candidate reached
+  the base-owned judge before conservative replay and failed SL-016 because base
+  `3b93946b856f362f8714803477ac84e2fef4621c` knew only `gict-v1` and `pzg-v1` while the
+  candidate ledger already consumed `observer-v1`. Letting candidate code authorize that
+  candidate datum would invert the judge boundary. The work therefore split at the
+  class-before-instance boundary: this P0 registers the narrow adapter and coarse-replacement
+  identity rules with zero OBSERVER ledger consumption; the later theory lane consumes it
+  only after this program is a predecessor.
+- P0 canonical ingest exited zero with `ledger_changed=false`, `cas_objects_written=0`, and
+  the unchanged OBSERVER `gict-v1` coarse fallback. The focused atomizer and alignment suites
+  passed 29/29, and the warnings-as-errors solution build completed with zero warnings and
+  errors. No BACKFILL, theory source, CAS object, Hearts file, or formalization changed.
+- The first P0 ceremony replay reached conservative evaluation but one corpus worker exceeded
+  its unchanged 180-second budget while an unrelated `trureturing-fm4` conservative worker
+  was simultaneously CPU-active. No timeout or rule changed. After that worker exited, the
+  identical clean preimage replay completed: Lean reports 178s, emission 15s, admission 63s,
+  and conservative replay 441s; the base-owned actual-tree check contained only the six
+  expected SL-022 diagnostics.
+- The renewed OBSERVER P0 C0 binds base
+  `3b93946b856f362f8714803477ac84e2fef4621c`, clean preimage
+  `8f4d98f568182e4747e24c5ad565303f7605784a`, tree
+  `f7cec0e9e6b6bee4efa99acb192fc25d60d3f63c`, and certificate SHA-256
+  `507a2184a2806bfb8329d7a6b7e7c0009dec54ab30f3e09a0880ef0467d2fe3b`.
+  Replay reports 117 golden, 118 total, and six contract cases, preserves 37/37 admits,
+  has zero findings, retires no path or rule, and leaves `uncovered_obligations=[]`.
 
 ## Residual scan
 
