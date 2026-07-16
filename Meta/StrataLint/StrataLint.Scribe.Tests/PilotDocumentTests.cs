@@ -25,6 +25,8 @@ public sealed class DocumentDiscoveryTests
     private const string FibonacciEigenDocumentPath = "Blueprint/D5/S1/Scale/FibonacciEigen.md";
     private const string LogDocumentPath = "Blueprint/D5/S1/Scale/Log.md";
     private const string MinkowskiModelSetDocumentPath = "Blueprint/D5/S1/Scale/MinkowskiModelSet.md";
+    private const string CriticalLineDocumentPath = "Blueprint/D5/S3/Weil/CriticalLine.md";
+    private const string EulerProductDocumentPath = "Blueprint/D5/S3/Weil/EulerProduct.md";
     private const string LabeledZetaDocumentPath = "Blueprint/D5/S3/Weil/LabeledZeta.md";
     private const string ReflectionLedgerDocumentPath = "Blueprint/D5/S3/Weil/ReflectionLedger.md";
     private const string PhaseSourcePath = "Blueprint/D5/S1/Phase/Basic.scribe.cs";
@@ -54,6 +56,8 @@ public sealed class DocumentDiscoveryTests
                 "D5/S1/Scale/FibonacciEigen",
                 "D5/S1/Scale/Log",
                 "D5/S1/Scale/MinkowskiModelSet",
+                "D5/S3/Weil/CriticalLine",
+                "D5/S3/Weil/EulerProduct",
                 "D5/S3/Weil/LabeledZeta",
                 "D5/S3/Weil/ReflectionLedger",
             ],
@@ -80,6 +84,8 @@ public sealed class DocumentDiscoveryTests
                 FibonacciEigenDocumentPath,
                 LogDocumentPath,
                 MinkowskiModelSetDocumentPath,
+                CriticalLineDocumentPath,
+                EulerProductDocumentPath,
                 LabeledZetaDocumentPath,
                 ReflectionLedgerDocumentPath,
             ],
@@ -236,6 +242,49 @@ public sealed class DocumentDiscoveryTests
             var describe = Descendants(definition.Document.Content)
                 .OfType<DocumentBlock.Describe>()
                 .Single();
+            var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
+
+            Assert.Equal(item.Kind, describe.Kind);
+            Assert.Equal(item.Provenance, describe.Provenance.Kind);
+            Assert.Equal(item.Reference, describe.Provenance.LiteratureReference?.Value);
+            Assert.Equal(item.Declaration, lean.Value.Value);
+            Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
+            Assert.True(lean.Value.RequireNoSorry);
+        }
+    }
+
+    [Fact]
+    public void O6LoadBearingDocumentsCarryExactStatementsAndDiligentProvenance()
+    {
+        (string Document, DescribeKind Kind, string Declaration,
+            DescribeProvenanceKind Provenance, string? Reference)[] expected =
+        [
+            ("D5/S3/Weil/CriticalLine", DescribeKind.Theorem,
+                "D5/S3/Weil/CriticalLine.unitarity_line_iff",
+                DescribeProvenanceKind.RepoDerived, null),
+            ("D5/S3/Weil/EulerProduct", DescribeKind.Theorem,
+                "D5/S3/Weil/EulerProduct.finite_euler_zero_free_and_pole_locus",
+                DescribeProvenanceKind.LiteratureAttested,
+                "D5/L/apostol1976introduction"),
+            ("D5/S3/Weil/EulerProduct", DescribeKind.Definition,
+                "D5/S3/Weil/EulerProduct.single_address_reading_spec",
+                DescribeProvenanceKind.LiteratureAttested,
+                "D5/L/apostol1976introduction"),
+            ("D5/S3/Weil/EulerProduct", DescribeKind.Proposition,
+                "D5/S3/Weil/EulerProduct.single_address_heat_trace_eq_log_derivative",
+                DescribeProvenanceKind.LiteratureAttested,
+                "D5/L/apostol1976introduction"),
+        ];
+
+        foreach (var item in expected)
+        {
+            var definition = DocumentDefinitions.All.Single(definition =>
+                definition.Document.Header.Gid.Value == item.Document);
+            var describe = Descendants(definition.Document.Content)
+                .OfType<DocumentBlock.Describe>()
+                .Single(node =>
+                    node.Statement is DescribeStatement.LeanDeclaration lean
+                    && lean.Value.Value == item.Declaration);
             var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
 
             Assert.Equal(item.Kind, describe.Kind);
