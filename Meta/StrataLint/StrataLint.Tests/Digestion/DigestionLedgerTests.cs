@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Engine;
+using static StrataLint.Tests.DigestionTestSupport;
 
 namespace StrataLint.Tests;
 
@@ -444,6 +445,37 @@ public sealed class DigestionLedgerTests
     }
 
     [Fact]
+    public void DeclarationCoverageUsesItsContainingModuleScribeAttestation()
+    {
+        const string declarationGid = "D5/S0/Carrier/Probe.probe";
+        var status = EvaluateDeclarationCoverage(declarationGid, [declarationGid]);
+
+        Assert.Equal(DigestionMigrationState.Absorbed, status.DerivedStatus.Migration);
+        Assert.Equal(DigestionTruthState.Closed, status.DerivedStatus.Truth);
+        Assert.True(status.Deletable);
+        Assert.Empty(status.Gaps);
+    }
+
+    [Fact]
+    public void DeclarationCoverageRejectsSelectorMissingFromLeanReport()
+    {
+        const string declarationGid = "D5/S0/Carrier/Probe.missing";
+        var status = EvaluateDeclarationCoverage(declarationGid, [declarationGid]);
+
+        Assert.False(status.Deletable);
+        Assert.Contains(status.Gaps, gap => gap.Code == "target-declaration-missing");
+    }
+
+    [Fact]
+    public void DeclarationCoverageRejectsRealDeclarationAbsentFromScribeDocument()
+    {
+        var status = EvaluateDeclarationCoverage("D5/S0/Carrier/Probe.probe", []);
+
+        Assert.False(status.Deletable);
+        Assert.Contains(status.Gaps, gap => gap.Code == "scribe-declaration-reference-missing");
+    }
+
+    [Fact]
     public void TailCannotAppearBeforeAbsorptionAndExternalAuthorizationReceipt()
     {
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
@@ -537,6 +569,57 @@ public sealed class DigestionLedgerTests
 
         Assert.Contains(evaluation.Findings, finding =>
             finding.Contains("fingerprint", StringComparison.OrdinalIgnoreCase));
+    }
+
+    private static DigestionEntryEvaluation EvaluateDeclarationCoverage(
+        string declarationGid,
+        IEnumerable<string> describedDeclarations)
+    {
+        var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
+        var atom = Assert.Single(GictAtomizer.Atomize(source).Claims);
+        const string moduleGid = "D5/S0/Carrier/Probe";
+        const string targetPath = "D5/S0/Carrier/Probe.lean";
+        var target = Encoding.UTF8.GetBytes(Lean(moduleGid));
+        var definition = Encoding.UTF8.GetBytes("scribe definition\n");
+        var emission = Encoding.UTF8.GetBytes("# emitted narrative\n");
+        var definitionHash = DigestionFingerprint.Compute(definition).RawSha256;
+        var emissionHash = DigestionFingerprint.Compute(emission).RawSha256;
+        var record = new ScribeEmissionRecord(
+            moduleGid,
+            ScribeEmissionAttestation.DefinitionPath(moduleGid),
+            definitionHash,
+            ScribeEmissionAttestation.EmissionPath(moduleGid),
+            emissionHash);
+        var coverage = $$"""
+            - gid: {{declarationGid}}
+              source_sha256: {{atom.Fingerprints.RawSha256}}
+              target_sha256: {{DigestionFingerprint.Compute(target).RawSha256}}
+            """;
+        var scribe = $$"""
+            - gid: {{declarationGid}}
+              definition_sha256: {{definitionHash}}
+              emission_sha256: {{emissionHash}}
+            """;
+        var yaml = LedgerYaml(
+            atom,
+            migration: "absorbed",
+            truth: "closed",
+            coverageReceipts: coverage,
+            scribeReceipts: scribe,
+            coverageGid: declarationGid);
+        var snapshot = Snapshot(
+            ("docs/source.md", source),
+            (targetPath, target),
+            (ScribeEmissionAttestation.DefinitionPath(moduleGid), definition),
+            (ScribeEmissionAttestation.EmissionPath(moduleGid), emission),
+            (ScribeEmissionAttestation.RelativePath,
+                ScribeEmissionAttestation.Write([record]).ToArray()));
+
+        return Assert.Single(DigestionStatusEvaluator.Evaluate(
+            BackfillInventoryLoader.Load(yaml),
+            snapshot,
+            AcceptedLean(targetPath),
+            VerifiedScribeEmissions.Create([record], describedDeclarations)).Entries);
     }
 
     private static DigestionEntryEvaluation EvaluateCompleteTail(
@@ -668,59 +751,4 @@ public sealed class DigestionLedgerTests
                 "        coverage_gids: []",
                 StringComparison.Ordinal);
 
-    private static string EmptyLedger(string atomizerId) => $$"""
-        schema_version: 3
-        ledger: theory-digestion-v1
-        sources:
-          - source_id: source
-            path: docs/source.md
-            atomizer: {{atomizerId}}
-            entries: []
-        ticket_index: []
-        """;
-
-    private static string ReceiptList(string key, string value, int spaces) => value == "[]"
-        ? new string(' ', spaces) + key + ": []"
-        : new string(' ', spaces) + key + ":\n" + Indent(value, spaces + 2);
-
-    private static string Indent(string value, int spaces) => string.Join(
-        '\n',
-        value.Split('\n').Select(line => new string(' ', spaces) + line));
-
-    private static RepositorySnapshot Snapshot(params (string Path, byte[] Bytes)[] files)
-    {
-        var raw = RawRepositorySnapshot.Create(files.Select(file => new RawRepositoryEntry(
-            file.Path,
-            ImmutableArray.CreateRange(file.Bytes))));
-        return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
-    }
-
-    private static RepositorySnapshot Snapshot(
-        byte[] sourceBytes,
-        IEnumerable<DigestionCasObject> casObjects) => Snapshot(
-            casObjects
-                .Select(static item => (item.RelativePath, item.Bytes.ToArray()))
-                .Prepend(("docs/source.md", sourceBytes))
-                .ToArray());
-
-    private static AcceptedLeanClosure AcceptedLean(params string[] paths) => AcceptedLean(
-        paths.Select(path => (path, new LeanFileReport(
-            ImmutableArray<string>.Empty,
-            [new LeanDeclaration("probe", "theorem", "True", ImmutableArray<string>.Empty)]))).ToArray());
-
-    private static AcceptedLeanClosure AcceptedLean(params (string Path, LeanFileReport Report)[] reports) =>
-        AcceptedLeanClosure.Create(LeanAxiomReport.Create(reports.ToDictionary(
-            static item => item.Path,
-            static item => item.Report,
-            StringComparer.Ordinal)));
-
-    private static string Lean(string gid) => $$"""
-        /- GID: {{gid}}
-           generality: G
-           mirror-B: none(waiver:test)
-           mirror-E: none(waiver:test)
-           anchors: []
-           digest: Digestion test fixture. -/
-        theorem probe : True := by trivial
-        """;
 }

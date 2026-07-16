@@ -91,6 +91,7 @@ internal static class DigestionStatusEvaluator
                 entry,
                 alignment.AlignmentFor(entry.AtomId),
                 snapshot,
+                lean.Report,
                 nodes,
                 scribeAttestation,
                 verifiedScribeEmissions,
@@ -136,6 +137,7 @@ internal static class DigestionStatusEvaluator
         DigestionLedgerEntry entry,
         DigestionReceiptAlignment alignment,
         RepositorySnapshot snapshot,
+        LeanAxiomReport leanReport,
         IReadOnlyDictionary<RepoPath, TruthNode> nodes,
         ScribeEmissionAttestation scribeAttestation,
         VerifiedScribeEmissions? verifiedScribeEmissions,
@@ -158,6 +160,11 @@ internal static class DigestionStatusEvaluator
                 || !snapshot.TryGetFile(gid.Path.Value, out var target))
             {
                 gaps.Add(new DigestionGap("target-gid-missing", gidText));
+                continue;
+            }
+
+            if (!DeclarationExists(gid, leanReport, gaps))
+            {
                 continue;
             }
 
@@ -198,6 +205,38 @@ internal static class DigestionStatusEvaluator
             || entry.Receipts.Coverage.Length > 0
             || entry.Receipts.Scribe.Length > 0;
         return new EntryWork(entry, alignment, gaps, targetStates, localComplete, hasProgress);
+    }
+
+    private static bool DeclarationExists(
+        Gid gid,
+        LeanAxiomReport leanReport,
+        ICollection<DigestionGap> gaps)
+    {
+        if (gid.ToTarget() is not Target.Formal { Declaration: { } declaration } formal)
+        {
+            return true;
+        }
+
+        if (!leanReport.Files.TryGetValue(formal.Path, out var module)
+            || !string.IsNullOrEmpty(module.Error))
+        {
+            gaps.Add(new DigestionGap("target-declaration-missing", gid.Value));
+            return false;
+        }
+
+        var suffix = "." + declaration;
+        var matches = module.Declarations.Count(candidate =>
+            string.Equals(candidate.Name, declaration, StringComparison.Ordinal)
+            || candidate.Name.EndsWith(suffix, StringComparison.Ordinal));
+        if (matches == 1)
+        {
+            return true;
+        }
+
+        gaps.Add(new DigestionGap(
+            matches == 0 ? "target-declaration-missing" : "target-declaration-ambiguous",
+            gid.Value));
+        return false;
     }
 
     private static bool VerifyStructuredAlignment(
@@ -382,9 +421,12 @@ internal static class DigestionStatusEvaluator
                 complete = false;
             }
 
-            var definitionPath = ScribeEmissionAttestation.DefinitionPath(gid);
-            var emissionPath = ScribeEmissionAttestation.EmissionPath(gid);
-            var hasAttestation = attestation.TryGet(gid, out var emitted);
+            var documentGid = ScribeEmissionAttestation.DocumentGid(gid);
+            var definitionPath = ScribeEmissionAttestation.DefinitionPath(documentGid);
+            var emissionPath = ScribeEmissionAttestation.EmissionPath(documentGid);
+            var selectsDeclaration = Gid.TryParse(gid, out var parsedGid)
+                && parsedGid.ToTarget() is Target.Formal { Declaration: not null };
+            var hasAttestation = attestation.TryGet(documentGid, out var emitted);
             if (!hasAttestation)
             {
                 gaps.Add(new DigestionGap("scribe-attestation-missing", gid));
@@ -393,13 +435,21 @@ internal static class DigestionStatusEvaluator
 
             ScribeEmissionRecord? verified = null;
             if (verifiedEmissions is not null
-                && verifiedEmissions.TryGet(gid, out var verifiedRecord))
+                && verifiedEmissions.TryGet(documentGid, out var verifiedRecord))
             {
                 verified = verifiedRecord;
             }
             else
             {
                 gaps.Add(new DigestionGap("scribe-emission-unverified", gid));
+                complete = false;
+            }
+
+            if (selectsDeclaration
+                && verifiedEmissions is not null
+                && !verifiedEmissions.ReferencesDeclaration(gid))
+            {
+                gaps.Add(new DigestionGap("scribe-declaration-reference-missing", gid));
                 complete = false;
             }
 
