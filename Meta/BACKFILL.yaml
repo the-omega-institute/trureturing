@@ -658,11 +658,14 @@ sources:
             - gid: D5/S1/Scale/FibonacciEigen.fibonacci_substitution_spec
               definition_sha256: sha256:a159be47162321280a12e86be2f2b270c1511bb7da9dd9b7ead22fb7529e34a8
               emission_sha256: sha256:7e84626842446406bea0b1abb498f1c1ba4100ce536f027801dbc26f99e2a9ce
-          unresolved_subitems: []
+          unresolved_subitems:
+            - scaling-phenomena-assignment-to-expanding-axis
+            - sign-reversal-phenomena-assignment-to-contracting-axis
+            - global-logarithmic-spiral-projection-verdict
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: gict-residual-e0150174c20cf2f7fc5513526a567f57a03f0a6f2ec08e827d7528b7739d68f7
         ast_path: theorem/5.1
