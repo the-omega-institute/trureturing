@@ -19,6 +19,8 @@ public sealed class DocumentDiscoveryTests
     private const string EmbeddingDocumentPath = "Blueprint/D5/S1/Scale/Embedding.md";
     private const string FibonacciEigenDocumentPath = "Blueprint/D5/S1/Scale/FibonacciEigen.md";
     private const string LogDocumentPath = "Blueprint/D5/S1/Scale/Log.md";
+    private const string LabeledZetaDocumentPath = "Blueprint/D5/S3/Weil/LabeledZeta.md";
+    private const string ReflectionLedgerDocumentPath = "Blueprint/D5/S3/Weil/ReflectionLedger.md";
     private const string PhaseSourcePath = "Blueprint/D5/S1/Phase/Basic.scribe.cs";
 
     [Fact]
@@ -40,6 +42,8 @@ public sealed class DocumentDiscoveryTests
                 "D5/S1/Scale/Embedding",
                 "D5/S1/Scale/FibonacciEigen",
                 "D5/S1/Scale/Log",
+                "D5/S3/Weil/LabeledZeta",
+                "D5/S3/Weil/ReflectionLedger",
             ],
             DocumentDefinitions.All.Select(static item => item.Document.Header.Gid.Value));
         Assert.Equal(
@@ -58,6 +62,8 @@ public sealed class DocumentDiscoveryTests
                 EmbeddingDocumentPath,
                 FibonacciEigenDocumentPath,
                 LogDocumentPath,
+                LabeledZetaDocumentPath,
+                ReflectionLedgerDocumentPath,
             ],
             DocumentDefinitions.All.Select(static item => item.RelativePath.Value));
     }
