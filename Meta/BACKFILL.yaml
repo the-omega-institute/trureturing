@@ -13565,7 +13565,7 @@ ticket_index:
   - case_id: D5-T0001
     gid: D5/X_Frontier/HeartsDraft
   - case_id: D5-T0002
-    gid: D5/X_Frontier/StrataLintLeanEnvironment
+    gid: D5/X_Frontier/GovernanceDeferrals
   - case_id: D5-T0003
     gid: D5/X_Frontier/ValuesProducer
   - case_id: D5-T0004
