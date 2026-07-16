@@ -125,6 +125,89 @@ public sealed class DigestionLedgerTests
     }
 
     [Fact]
+    public void IngestOnboardsRegisteredEmptySourceAndRemainsByteIdempotent()
+    {
+        var atomizerId = AtomizerRegistry.RegisteredIds[0];
+        var sourceBytes = Encoding.UTF8.GetBytes(
+            "# Synthetic\n\n**定理 1.1(A)**。first。\n\n**定理 1.2(B)**。second。\n");
+        var atoms = AtomizerRegistry.Atomize(atomizerId, sourceBytes).Claims;
+        var ledger = BackfillInventoryLoader.Load(EmptyLedger(atomizerId));
+
+        var first = DigestionIngestor.Plan(
+            ledger,
+            Snapshot(("docs/source.md", sourceBytes)),
+            ledger);
+        var firstBytes = BackfillInventoryWriter.WriteForIngest(first.Document);
+        var migrated = BackfillInventoryLoader.Load(Encoding.UTF8.GetString(firstBytes.AsSpan()));
+        var entries = Assert.Single(first.Document.RequireDigestionSources()).Entries;
+
+        Assert.Equal(atoms.Length, first.ResidualOpenAdded);
+        Assert.Equal(atoms.Length, entries.Length);
+        Assert.Equal(atoms.Length, first.CasObjects.Length);
+        Assert.Empty(first.Fallbacks);
+        Assert.All(entries, static entry =>
+        {
+            Assert.Null(entry.Boundary);
+            Assert.Equal(entry.Fingerprints.RawSha256, entry.CasRef);
+            Assert.Empty(entry.CoverageGids);
+            Assert.Empty(entry.Receipts.Coverage);
+            Assert.Equal(DigestionMigrationState.Residual, entry.ProjectedStatus.Migration);
+            Assert.Equal(DigestionTruthState.Open, entry.ProjectedStatus.Truth);
+        });
+        Assert.All(first.CasObjects, item => Assert.Contains(
+            atoms,
+            atom => atom.Fingerprints.RawSha256 == item.Reference
+                && atom.RawBytes.AsSpan().SequenceEqual(item.Bytes.AsSpan())));
+
+        var second = DigestionIngestor.Plan(
+            migrated,
+            Snapshot(sourceBytes, first.CasObjects),
+            ledger);
+        var secondBytes = BackfillInventoryWriter.WriteForIngest(second.Document);
+
+        Assert.Equal(0, second.ResidualOpenAdded);
+        Assert.Empty(second.CasObjects);
+        Assert.Equal(firstBytes.ToArray(), secondBytes.ToArray());
+    }
+
+    [Fact]
+    public void IngestOnboardsRegisteredEmptySourceWithCoarseFallback()
+    {
+        var atomizerId = AtomizerRegistry.RegisteredIds[0];
+        var sourceBytes = Encoding.UTF8.GetBytes(
+            "# Synthetic\n\n**未知 1.1(A)**。free-form source。\n");
+        var ledger = BackfillInventoryLoader.Load(EmptyLedger(atomizerId));
+
+        var first = DigestionIngestor.Plan(
+            ledger,
+            Snapshot(("docs/source.md", sourceBytes)),
+            ledger);
+        var firstBytes = BackfillInventoryWriter.WriteForIngest(first.Document);
+        var migrated = BackfillInventoryLoader.Load(Encoding.UTF8.GetString(firstBytes.AsSpan()));
+
+        var fallback = Assert.Single(first.Fallbacks);
+        Assert.Equal("source", fallback.SourceId);
+        Assert.Equal(1, first.ResidualOpenAdded);
+        var coarse = Assert.Single(first.Document.RequireDigestionEntries());
+        Assert.Equal("coarse/source", coarse.AstPath);
+        Assert.Equal(DigestionMigrationState.Residual, coarse.ProjectedStatus.Migration);
+        Assert.Equal(DigestionTruthState.Open, coarse.ProjectedStatus.Truth);
+        var captured = Assert.Single(first.CasObjects);
+        Assert.Equal(coarse.Fingerprints.RawSha256, coarse.CasRef);
+        Assert.Equal(sourceBytes, captured.Bytes.ToArray());
+
+        var second = DigestionIngestor.Plan(
+            migrated,
+            Snapshot(sourceBytes, first.CasObjects),
+            ledger);
+        var secondBytes = BackfillInventoryWriter.WriteForIngest(second.Document);
+
+        Assert.Equal(0, second.ResidualOpenAdded);
+        Assert.Empty(second.CasObjects);
+        Assert.Equal(firstBytes.ToArray(), secondBytes.ToArray());
+    }
+
+    [Fact]
     public void LoaderReadsOnlySchemaThreeAtomicEntries()
     {
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
@@ -585,6 +668,17 @@ public sealed class DigestionLedgerTests
                 "        coverage_gids: []",
                 StringComparison.Ordinal);
 
+    private static string EmptyLedger(string atomizerId) => $$"""
+        schema_version: 3
+        ledger: theory-digestion-v1
+        sources:
+          - source_id: source
+            path: docs/source.md
+            atomizer: {{atomizerId}}
+            entries: []
+        ticket_index: []
+        """;
+
     private static string ReceiptList(string key, string value, int spaces) => value == "[]"
         ? new string(' ', spaces) + key + ": []"
         : new string(' ', spaces) + key + ":\n" + Indent(value, spaces + 2);
@@ -600,6 +694,14 @@ public sealed class DigestionLedgerTests
             ImmutableArray.CreateRange(file.Bytes))));
         return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
     }
+
+    private static RepositorySnapshot Snapshot(
+        byte[] sourceBytes,
+        IEnumerable<DigestionCasObject> casObjects) => Snapshot(
+            casObjects
+                .Select(static item => (item.RelativePath, item.Bytes.ToArray()))
+                .Prepend(("docs/source.md", sourceBytes))
+                .ToArray());
 
     private static AcceptedLeanClosure AcceptedLean(params string[] paths) => AcceptedLean(
         paths.Select(path => (path, new LeanFileReport(

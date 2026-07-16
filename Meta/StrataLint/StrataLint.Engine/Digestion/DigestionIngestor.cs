@@ -56,7 +56,8 @@ internal static class DigestionIngestor
                 continue;
             }
 
-            if (!source.Entries.Any(static entry => entry.Boundary is null))
+            if (source.Entries.Length > 0
+                && !source.Entries.Any(static entry => entry.Boundary is null))
             {
                 sources.Add(source);
                 continue;
