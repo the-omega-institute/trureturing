@@ -28,6 +28,10 @@ internal interface IConservativeExtensionEnvironment
 
     ConservativeHarnessProgram LoadHarness(string path);
 
+    ContractEpochStore LoadContractEpoch(
+        string root,
+        ConservativeRepositoryIdentity identity);
+
     ConservativeReplayEnvelope Freeze(
         string baselineRoot,
         string candidateRoot,
@@ -69,6 +73,12 @@ internal static class ConservativeExtensionCommand
 
             var baselineIdentity = environment.IdentifyRepository(options.BaselineRoot);
             var candidateIdentity = environment.IdentifyRepository(options.CandidateRoot);
+            var baselineContract = environment.LoadContractEpoch(
+                options.BaselineRoot,
+                baselineIdentity);
+            var candidateContract = environment.LoadContractEpoch(
+                options.CandidateRoot,
+                candidateIdentity);
             var baselineProgram = environment.LoadHarness(options.BaselineHarness);
             var candidateProgram = environment.LoadHarness(options.CandidateHarness);
             var baselineLeanReportRoot = environment.FileRoot(options.BaselineLeanReport);
@@ -134,7 +144,16 @@ internal static class ConservativeExtensionCommand
                 BaseTreeCaseId,
                 CandidateTreeCaseId,
                 baselineExecution,
-                candidateExecution);
+                candidateExecution)
+            {
+                BaselineContractLedger = baselineContract.Ledger,
+                CandidateContractLedger = candidateContract.Ledger,
+                BaselineContractEvidence = baselineContract.EvidenceWithCustodiansFrom(
+                    candidateContract),
+                CandidateContractEvidence = candidateContract.EvidenceWithCustodiansFrom(
+                    candidateContract),
+                ContractExpectations = corpus.ContractExpectations,
+            };
             return ConservativeExtensionVerifier.Verify(input) switch
             {
                 ConservativeExtensionOutcome.Accepted accepted => new ExplicitCommandResult(
@@ -168,6 +187,9 @@ internal static class ConservativeExtensionCommand
             || replay.CandidateIdentity != candidateIdentity
             || !string.Equals(replay.Corpus.Root, corpus.Root, StringComparison.Ordinal)
             || !replay.Corpus.CaseIds.SequenceEqual(corpus.CaseIds, StringComparer.Ordinal)
+            || !SameContractExpectations(
+                replay.Corpus.ContractExpectations,
+                corpus.ContractExpectations)
             || !string.Equals(
                 GoldenCorpusMaterializer.ContentRoot(replay.BaselineLeanReport.AsSpan()),
                 baselineLeanReportRoot,
@@ -181,6 +203,13 @@ internal static class ConservativeExtensionCommand
                 "base-owned replay envelope does not match the frozen inputs");
         }
     }
+
+    private static bool SameContractExpectations(
+        IReadOnlyDictionary<string, ImmutableArray<string>> left,
+        IReadOnlyDictionary<string, ImmutableArray<string>> right) =>
+        left.Count == right.Count
+        && left.All(item => right.TryGetValue(item.Key, out var expected)
+            && item.Value.SequenceEqual(expected, StringComparer.Ordinal));
 
     private static void RequireFrozenInputs(
         IConservativeExtensionEnvironment environment,
@@ -367,6 +396,29 @@ internal sealed class ProductionConservativeExtensionEnvironment : IConservative
     }
 
     public ConservativeHarnessProgram LoadHarness(string path) => LoadHarnessAssembly(path);
+
+    public ContractEpochStore LoadContractEpoch(
+        string root,
+        ConservativeRepositoryIdentity identity)
+    {
+        ArgumentNullException.ThrowIfNull(identity);
+        var repository = new GitRepositoryGateway(root);
+        var frozen = repository.ResolveFrozenRevision(identity.CommitOid);
+        if (!string.Equals(frozen.Revision, identity.CommitOid, StringComparison.Ordinal)
+            || !string.Equals(frozen.TreeOid, identity.TreeOid, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException(
+                "contract epoch store identity does not match its exact repository commit");
+        }
+
+        var snapshot = SnapshotDecoder.Decode(repository.ReadRevision(identity.CommitOid)) switch
+        {
+            SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
+            SnapshotDecodeOutcome.InfrastructureFailure failure =>
+                throw new InvalidOperationException(failure.Message),
+        };
+        return ContractEpochStore.Load(snapshot);
+    }
 
     internal static ConservativeHarnessProgram LoadHarnessAssembly(string dll)
     {

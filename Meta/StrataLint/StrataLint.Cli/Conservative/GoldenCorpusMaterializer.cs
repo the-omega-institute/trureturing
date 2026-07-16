@@ -34,12 +34,17 @@ internal sealed record ConservativeCorpusCase(
     ImmutableArray<ConservativeCorpusFile> BaselineFiles,
     ImmutableArray<ConservativeCorpusLeanFile> CurrentLean,
     ImmutableArray<ConservativeCorpusLeanFile> BaselineLean,
-    ImmutableArray<string> Changes);
+    ImmutableArray<string> Changes,
+    ConservativeContractEpochCase? ContractEpoch);
 
 internal sealed record MaterializedConservativeCorpus(
     ImmutableArray<byte> CanonicalBytes,
     string Root,
-    ImmutableArray<string> CaseIds);
+    ImmutableArray<string> CaseIds)
+{
+    internal ImmutableDictionary<string, ImmutableArray<string>> ContractExpectations { get; init; } =
+        ImmutableDictionary<string, ImmutableArray<string>>.Empty.WithComparers(StringComparer.Ordinal);
+}
 
 internal static partial class GoldenCorpusMaterializer
 {
@@ -58,7 +63,8 @@ internal static partial class GoldenCorpusMaterializer
         }
 
         var objects = new Dictionary<string, ConservativeCorpusObject>(StringComparer.Ordinal);
-        var cases = TomlGoldenLoader.LoadRepository(root).Cases
+        var source = TomlGoldenLoader.LoadRepository(root);
+        var cases = source.Cases
             .Select(item => MaterializeCase(root, item, objects))
             .OrderBy(static item => item.CaseId, StringComparer.Ordinal)
             .ToImmutableArray();
@@ -78,7 +84,15 @@ internal static partial class GoldenCorpusMaterializer
         return new MaterializedConservativeCorpus(
             bytes,
             ContentRoot(bytes.AsSpan()),
-            cases.Select(static item => item.CaseId).ToImmutableArray());
+            cases.Select(static item => item.CaseId).ToImmutableArray())
+        {
+            ContractExpectations = source.Cases
+                .Where(static item => item.ContractEpoch is not null)
+                .ToImmutableDictionary(
+                    static item => "contract:" + item.Name,
+                    static item => item.ContractEpoch!.ExpectedFindingCodes.ToImmutableArray(),
+                    StringComparer.Ordinal),
+        };
     }
 
     internal static ImmutableArray<Diagnostic> Evaluate(string repositoryRoot, GoldenCase source)
@@ -105,7 +119,8 @@ internal static partial class GoldenCorpusMaterializer
             Files(state.Baseline, objects),
             LeanFiles(state.Reports),
             LeanFiles(state.BaselineReports),
-            source.Changes.Order(StringComparer.Ordinal).ToImmutableArray());
+            source.Changes.Order(StringComparer.Ordinal).ToImmutableArray(),
+            ContractEpochCorpusEvaluator.Materialize(source.ContractEpoch));
         return prototype with { CaseRoot = CaseRoot(prototype) };
     }
 
@@ -156,24 +171,41 @@ internal static partial class GoldenCorpusMaterializer
                 item.Value.Error))
             .ToImmutableArray();
 
-    private static object CanonicalCase(ConservativeCorpusCase item, bool includeRoot = true) => new
+    private static object CanonicalCase(ConservativeCorpusCase item, bool includeRoot = true)
     {
-        baseline_files = item.BaselineFiles.Select(static file => new
+        var baselineFiles = item.BaselineFiles.Select(static file => new
         {
             object_root = file.ObjectRoot,
             path = file.Path,
-        }),
-        baseline_lean = item.BaselineLean.Select(CanonicalLean),
-        case_id = item.CaseId,
-        case_root = includeRoot ? item.CaseRoot : null,
-        changes = item.Changes,
-        current_files = item.CurrentFiles.Select(static file => new
+        });
+        var currentFiles = item.CurrentFiles.Select(static file => new
         {
             object_root = file.ObjectRoot,
             path = file.Path,
-        }),
-        current_lean = item.CurrentLean.Select(CanonicalLean),
-    };
+        });
+        return item.ContractEpoch is null
+            ? new
+            {
+                baseline_files = baselineFiles,
+                baseline_lean = item.BaselineLean.Select(CanonicalLean),
+                case_id = item.CaseId,
+                case_root = includeRoot ? item.CaseRoot : null,
+                changes = item.Changes,
+                current_files = currentFiles,
+                current_lean = item.CurrentLean.Select(CanonicalLean),
+            }
+            : (object)new
+            {
+                baseline_files = baselineFiles,
+                baseline_lean = item.BaselineLean.Select(CanonicalLean),
+                case_id = item.CaseId,
+                case_root = includeRoot ? item.CaseRoot : null,
+                changes = item.Changes,
+                contract_epoch = ContractEpochCorpusEvaluator.Canonical(item.ContractEpoch),
+                current_files = currentFiles,
+                current_lean = item.CurrentLean.Select(CanonicalLean),
+            };
+    }
 
     private static object CanonicalLean(ConservativeCorpusLeanFile item) => new
     {

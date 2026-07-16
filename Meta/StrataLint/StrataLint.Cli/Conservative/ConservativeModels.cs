@@ -20,7 +20,17 @@ internal sealed record ConservativeCaseResult(
 internal sealed record ConservativeHarnessRun(
     string HarnessRoot,
     ImmutableArray<string> ActiveRules,
-    ImmutableArray<ConservativeCaseResult> Cases);
+    ImmutableArray<ConservativeCaseResult> Cases)
+{
+    internal ConservativePolicySnapshot Policy { get; init; } =
+        ConservativePolicySnapshot.Current().WithRuleObligations(ActiveRules);
+
+    internal ImmutableArray<ConservativeContractCaseResult> ContractCases { get; init; } = [];
+}
+
+internal sealed record ConservativeContractCaseResult(
+    string CaseId,
+    ImmutableArray<string> FindingCodes);
 
 internal abstract record ConservativeHarnessExecution
 {
@@ -47,13 +57,30 @@ internal sealed record ConservativeVerificationInput(
     string BaseTreeCaseId,
     string CandidateTreeCaseId,
     ConservativeHarnessExecution BaselineExecution,
-    ConservativeHarnessExecution CandidateExecution);
+    ConservativeHarnessExecution CandidateExecution)
+{
+    internal ContractEpochLedger BaselineContractLedger { get; init; } = ContractEpochLedger.Empty;
+
+    internal ContractEpochLedger CandidateContractLedger { get; init; } = ContractEpochLedger.Empty;
+
+    internal ContractEpochEvidenceIndex BaselineContractEvidence { get; init; } =
+        ContractEpochEvidenceIndex.Empty;
+
+    internal ContractEpochEvidenceIndex CandidateContractEvidence { get; init; } =
+        ContractEpochEvidenceIndex.Empty;
+
+    internal ImmutableDictionary<string, ImmutableArray<string>> ContractExpectations { get; init; } =
+        ImmutableDictionary<string, ImmutableArray<string>>.Empty.WithComparers(StringComparer.Ordinal);
+}
 
 internal sealed record ConservativeFinding(
     string Code,
     string? CaseId,
     string? RuleId,
-    string Message);
+    string Message)
+{
+    internal string? Obligation { get; init; }
+}
 
 internal abstract record ConservativeExtensionOutcome
 {

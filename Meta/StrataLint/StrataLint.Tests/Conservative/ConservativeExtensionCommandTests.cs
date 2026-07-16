@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Cli;
+using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
@@ -152,6 +153,44 @@ public sealed class ConservativeExtensionCommandTests
         Assert.Equal(first.Output, second.Output);
     }
 
+    [Fact]
+    public void CommandLoadsBothContractStoresFromFrozenRepositoryIdentities()
+    {
+        using var fixture = new CommandFixture();
+
+        var result = ConservativeExtensionCommand.Run(fixture.Arguments, fixture.Environment);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Collection(
+            fixture.Environment.ContractStoreLoads,
+            item => Assert.Equal(fixture.BaselineRoot, item.Root),
+            item => Assert.Equal(fixture.CandidateRoot, item.Root));
+    }
+
+    [Fact]
+    public void NonAppendOnlyContractStoreIsAnInfrastructureFailure()
+    {
+        using var fixture = new CommandFixture();
+        fixture.Environment.BaselineContractStore = RegisteredContractStore();
+
+        var result = ConservativeExtensionCommand.Run(fixture.Arguments, fixture.Environment);
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains("append-only", result.Error, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void ContractExpectationsCannotDriftInsideTheFrozenReplay()
+    {
+        using var fixture = new CommandFixture();
+        fixture.Environment.MutateContractExpectationsDuringFreeze = true;
+
+        var result = ConservativeExtensionCommand.Run(fixture.Arguments, fixture.Environment);
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains("replay envelope", result.Error, StringComparison.OrdinalIgnoreCase);
+    }
+
     private sealed class CommandFixture : IDisposable
     {
         private readonly TemporaryDirectory temporary = new();
@@ -227,6 +266,15 @@ public sealed class ConservativeExtensionCommandTests
 
         internal List<string> LoadedHarnessPaths { get; } = [];
 
+        internal List<(string Root, ConservativeRepositoryIdentity Identity)> ContractStoreLoads
+        {
+            get;
+        } = [];
+
+        internal ContractEpochStore BaselineContractStore { get; set; } = ContractEpochStore.Empty;
+
+        internal ContractEpochStore CandidateContractStore { get; set; } = ContractEpochStore.Empty;
+
         internal int FreezeCount { get; private set; }
 
         internal Exception? MaterializationFailure { get; set; }
@@ -236,6 +284,8 @@ public sealed class ConservativeExtensionCommandTests
         internal bool MutateCandidateReportDuringFirstExecution { get; set; }
 
         internal bool ChangeCandidateIdentityAfterFirstExecution { get; set; }
+
+        internal bool MutateContractExpectationsDuringFreeze { get; set; }
 
         public MaterializedConservativeCorpus Materialize(string baselineRoot) =>
             MaterializationFailure is null ? Corpus : throw MaterializationFailure;
@@ -260,6 +310,16 @@ public sealed class ConservativeExtensionCommandTests
                 : new ConservativeHarnessProgram(path, input.CandidateHarnessRoot);
         }
 
+        public ContractEpochStore LoadContractEpoch(
+            string root,
+            ConservativeRepositoryIdentity identity)
+        {
+            ContractStoreLoads.Add((root, identity));
+            return root.EndsWith("baseline", StringComparison.Ordinal)
+                ? BaselineContractStore
+                : CandidateContractStore;
+        }
+
         public ConservativeReplayEnvelope Freeze(
             string baselineRoot,
             string candidateRoot,
@@ -270,6 +330,16 @@ public sealed class ConservativeExtensionCommandTests
             MaterializedConservativeCorpus corpus)
         {
             FreezeCount++;
+            if (MutateContractExpectationsDuringFreeze)
+            {
+                corpus = corpus with
+                {
+                    ContractExpectations = ImmutableDictionary
+                        .Create<string, ImmutableArray<string>>(StringComparer.Ordinal)
+                        .Add("contract:forged", ["CONTRACT-EPOCH-UNCOVERED-OBLIGATION"]),
+                };
+            }
+
             return ConservativeReplayEnvelopeCodec.Create(
                 corpus,
                 baselineIdentity,
@@ -295,5 +365,34 @@ public sealed class ConservativeExtensionCommandTests
                 ? input.BaselineExecution
                 : input.CandidateExecution;
         }
+    }
+
+    private static ContractEpochStore RegisteredContractStore()
+    {
+        const string path = "Meta/StrataLint/Golden/values-kernels.toml";
+        var policy = ConservativePolicySnapshot.Current();
+        var receipt = ContractEpochEvidenceReceipt.UnreachabilityForPaths(policy.Root, [path]);
+        var registration = new ContractEpochEvent.Register(
+            "CONTRACT-COMMAND-001",
+            "git-sha1:" + new string('a', 40),
+            policy.Root,
+            policy.Root,
+            new TransitionPlan.AuthorityDischargeV1([path], null, receipt.Reference));
+        var evidencePath = "Meta/contract-epoch/evidence/sha256/"
+            + receipt.Reference["sha256:".Length..]
+            + ".json";
+        var snapshot = SnapshotDecoder.Decode(RawRepositorySnapshot.Create(
+        [
+            new RawRepositoryEntry(
+                "Meta/contract-epoch/events.jsonl",
+                ContractEpochLedgerCodec.Write([registration])),
+            new RawRepositoryEntry(evidencePath, receipt.CanonicalBytes),
+        ])) switch
+        {
+            SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
+            SnapshotDecodeOutcome.InfrastructureFailure failure =>
+                throw new InvalidOperationException(failure.Message),
+        };
+        return ContractEpochStore.Load(snapshot);
     }
 }

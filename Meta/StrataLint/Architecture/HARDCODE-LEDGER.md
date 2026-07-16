@@ -45,6 +45,7 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
 | Theory isolation, generated catalog | Parsed generated anchor definitions reject retired internal theory schemes (`TheoryIsolationPolicy.cs:104`). | Yes: `CatalogTheorySchemeIsRejectedByTheRedFixture` passed. | Generated catalog reintroducing internal theory schemes. |
 | External anchor catalog consistency | Typed catalog entries must be external literature/mathlib anchors, exactly equal the external manifest, with property names derived from the anchor (`AnchorCatalogConsistencyTests.cs:8`). | Yes for name transform: `MismatchedExternalAnchorPropertyNameIsRejectedByTheRedFixture`; repository equality checks are live tripwires. | Hand-copied anchor identity and drift between manifest and typed catalog. |
 | C0 ceremony trust root | Recursive controller/corpus/gate source sets, Git blob OIDs, certificate SHA-256, preimage commit/tree, and implication counts must match live bytes (`C0CeremonyTrustRootTests.cs:68`). | Partial: recursive-discovery synthetic fixtures exist; byte/address mismatch has no isolated synthetic fixture. The repository-bound tripwire passed. | Unattested changes to the conservative-extension controller, corpus, gate wiring, or inaugural certificate. |
+| Contract-epoch obligation accounting | Bootstrap protection matchers and active-rule descriptors emit one canonical policy root; the base-owned comparator reads exact-commit append-only events and content-addressed receipts, computes the complete retirement delta, and rejects nonempty `uncovered_obligations`. Candidate registrations have no same-comparison authority; base plans are one-shot and cannot target the authority ceiling. | Yes: exact-path/schema, store closed-world/hash/C0, base-versus-candidate evidence, same-PR declaration, candidate-plan consumption, glob, out-of-delta, missing coverage, double-consumption, opaque shrink, and unshrinkable-root tests plus six canonical corpus cases. | Implicit or changed-path-only protection policy, reusable exception lists, candidate-authored subtraction authority, and retirement of verifier/gate/frozen trust roots. P0 carries zero registered declarations. |
 | Central package version literal policy | Every tracked C# string literal exactly equal to a `Directory.Packages.props` version is rejected; an empty/malformed central version set fails closed (`CentralPackageVersionLiteralPolicy.cs:15,28,43`). | Yes: copied-version and empty-catalog red fixtures; the real `5.6.0` copy failed before stock repair. | Exact C# copies of central NuGet versions. |
 | .NET SDK single-source policy | Every parsed `.github/workflows/*.{yml,yaml}` `actions/setup-dotnet@*` step (case-insensitive action identity) must use `global-json-file` and must not contain `dotnet-version`; the canonical CI workflow must contain both candidate/baseline global-json references (`DotnetSdkSingleSourcePolicy.cs:9`). | Yes: mixed-case copied-version, additional-workflow copied-version, and missing-baseline red fixtures; both real workflow copies failed before repair. | Workflow copies or ambient omission of the SDK version pinned by `global.json`. |
 | .NET target-framework single-source policy | C#, project/build files, scripts, workflows, and structured config reject any `netN.N` literal outside `Directory.Build.props`, generated lock files, and the dedicated synthetic lock-key fixture (`TargetFrameworkSingleSourcePolicy.cs`). The base-owned gate resolves each CLI `TargetPath` through MSBuild and passes both absolute harness paths to the verifier. | Yes: `CopiedTargetFrameworkIsRejectedByTheRedFixture`; the owner/generated/synthetic whitelist counterfixtures and repository scan passed. | TFM copies in runtime path discovery. It does not prohibit prose or generated lock projections and does not replace the broader deferred SL-014 toolchain policy. |
@@ -202,7 +203,7 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
 | Internal theory references outside managed sources | `docs/develop/theory/` and ingestion/status code intentionally retain the reference inputs and provenance vocabulary. | TheoryIsolation scans Lean, non-ingestion C#, and the generated catalog, not all prose/scripts/config. SL-016 governs ingestion receipts. | Guarded where references could become formal/program authority; intentionally open as reference data. "No theory token anywhere" would delete the source being digested. |
 | Encoded, split, interpolated, or computed duplication | Examples can be manufactured as concatenation, base64, hash lookup, arithmetic, generated code, or runtime I/O. | Current policies deliberately match closed syntax shapes. | `HC-OPEN-009`: deciding arbitrary semantic equivalence or whether a computed value has the wrong authority reduces to program/intent equivalence. Every finite text rule has trivial encoding escapes; broadening it produces both bypasses and false positives. |
 | Values schema epoch transition | Expand admitted attestation v1 or v2; migrate moved the canonical writer and artifact to v2; contract completed in this PR by removing v1 read support and retaining v1 only as an SL-018 negative fixture (expand-migrate-contract, CLAUDE.md section 6). | The conservative verifier observes a finite base-owned corpus plus the actual trees, not every historically admitted snapshot. | `VALUES-SCHEMA-EPOCH` (open): the active schema epoch/domain is not yet machine-defined, so a later v1 contract can be corpus-conservative without proving the literal universal conservative-extension law. |
-| Data residence epoch | `Meta/StrataLint/Golden/cases/{digestion-and-anchors,protected-semantics,structure-and-identities,structured-ledger}.toml` and `Meta/StrataLint/Golden/values-kernels.toml` are the five known `kind=data` violations. C0 certificate and frozen events share the future relocation batch but are `kind=ledger`, not residence violations. | FILEMAP marks the two matching entries `residence_violation=true`, records count 5 and case `RESIDENCE-EPOCH`, and the repository test asserts the expanded path set equals the literal known inventory. SL-022 continues to protect Golden and `Blueprint/**/*.scribe.cs`. | `RESIDENCE-EPOCH` (open): first design and independently review via sshx a verifier mechanism that can approve protection-surface contraction; only then migrate in three certificate-bearing units: golden cases, values kernels plus attestation, and C0/frozen ledgers. No unit may silently widen the known-violation set. |
+| Data residence epoch | `Meta/StrataLint/Golden/cases/{digestion-and-anchors,protected-semantics,structure-and-identities,structured-ledger}.toml` and `Meta/StrataLint/Golden/values-kernels.toml` are the five known `kind=data` violations. C0 certificate and frozen events share the future relocation batch but are `kind=ledger`, not residence violations. | FILEMAP marks the two matching entries `residence_violation=true`, records count 5 and case `RESIDENCE-EPOCH`, and the repository test asserts the expanded path set equals the literal known inventory. SL-022 continues to protect Golden and `Blueprint/**/*.scribe.cs`; `CONTRACT-EPOCH` P0 now supplies the predecessor-owned obligation comparator. | `RESIDENCE-EPOCH` (P0 prerequisite complete; P1/P2 open): register exact transfer plans in a later PR, then migrate in three certificate-bearing consumption units: golden cases, values kernels plus attestation, and C0/frozen ledgers. No unit may silently widen the known-violation set or consume a same-PR plan. |
 | Bootstrap protected-surface representation | `BootstrapGate.cs:138-166` keeps the trust-root path classification and the retired Definitions prefix exception in executable code. External data would make review and generation easier, but would also make the policy that decides what is protected depend on another mutable artifact. | SL-022 and `TrustTopologyTests` exercise the in-process predicate; `DefinitionsRetirementTests` forbids the exempt directory from returning. The v1 predecessor codec still validates candidate diagnostics with its own predicate. | `HC-OPEN-010`: keep the protection surface embedded until an external representation can be content-addressed by a higher trust layer. Remove the retired-prefix exception only after a predecessor codec admits candidate-added protection; doing both in one PR currently fails closed before conservative comparison. |
 | Diagnostic language consistency | English route/parser failures coexist with Chinese SL-021 and bootstrap messages (`Routing.cs:80,85`; `RepositoryRules.Admission.cs:77,82`; `CliApplication.cs:120,124`). Atomizer diagnostics added in this unit are English. | No diagnostic locale/style schema exists; golden cases intentionally bind some current bytes. | `HC-OPEN-011`: terminology and locale are user-interface policy, not a correctness literal. Standardize only with a declared diagnostic style plus an atomic golden-corpus migration; do not mix that migration into registry work. |
 | FILEMAP dependency discovery | Machine-readable data can name generated paths through encoding, concatenation, interpolation, aliases, or runtime computation; Lean can express imports outside the current one-module line grammar. | FILEMAP scans decoded TOML/YAML/JSON/Scribe text for concrete generated paths and resolves simple Lean imports. | `HC-OPEN-012`: the active check is an honest low-false-positive subset, not semantic program equivalence. Encoded/computed references and richer Lean import syntax remain detectable only by future structured loaders or compiler-derived dependency edges. |
@@ -267,6 +268,59 @@ Each row is a future migration obligation, not authorization to prebuild the mec
 The stopping rule is not "search returned zero." It is: every observed instance is
 guarded, repaired, or present in this open ledger with an explicit reason.
 
+## CONTRACT-EPOCH (P0 complete, 2026-07-16)
+
+This case installs obligation accounting without granting a contraction capability.
+The three phases are deliberately separated across commits and consumers.
+
+| Phase | Status | Machine boundary and close condition |
+|---|---|---|
+| P0 mechanism | **complete** | Protection matchers plus active-rule descriptors have a canonical policy root. The exact-base comparator loads the closed `events.jsonl`/content-addressed evidence store from both frozen commits, accepts only the sealed transfer/discharge union, computes complete retirement atoms and `uncovered_obligations`, separates candidate registration evidence from base consumption evidence, enforces one-shot append-only consumption, and rejects authority-ceiling targets. Six base-owned attack cases renew the C0 corpus. No plan is registered in this phase. |
+| P1 registration | **not part of P0** | `RESIDENCE-EPOCH` and `DIGESTION-LEDGER-EPOCH` E3 must each register their own exact, root-bound plans in a later commit. Registration validates against candidate receipts but has authority `none` in that comparison. |
+| P2 consumption | **not part of P0** | Each consumer may append one consume event only after its plan is present and pending in the exact base. Coverage trusts only base receipts, validates candidate custodians, requires exact delta scope and an empty uncovered set, and leaves no reusable exception. See the RESIDENCE row above and E3 below. |
+
+P0 is a pure conservative verifier extension. There is intentionally no
+`Meta/contract-epoch/` data instance in this change; the first such instance belongs to
+P1 and must itself pass the P0 base judge.
+
+### P0 verification and C0 renewal prerequisites
+
+- P0 mechanism commit: `97658851df49cf1ec3fcc72df75a36ee25881a67`.
+- Release build completed with zero warnings and zero errors; the main test assembly
+  passed 631/631, and ArchitectureTests passed 121/121 when excluding only
+  `TowerC0AddressesMatchTheCanonicalWorktreeBytes`, whose expected 36 source addresses
+  still pointed at the predecessor's 26-member ceremony.
+- The first direct ceremony admission then found that A19 had shifted all twelve
+  `atomizer: none` specification receipts. `make ingest` failed closed before writing,
+  as designed for manually delimited receipts with existing CAS refs. Every registered
+  CAS blob occurred exactly once and the contiguous range moved by 2,024 bytes from
+  `30191..33922` to `32215..35946`; fingerprints and CAS refs remain unchanged.
+- The next replay reached the new exact-commit store and exposed a TOWER edge that had
+  been dangling since `67f284d`: `anchor-reference-rule` named the nonexistent judge
+  `golden-compatibility`. A repository-bound test failed with that sole finding before
+  the edge was corrected to the existing `golden-corpus` machine component; the focused
+  test then passed 1/1.
+- Deterministic selftest passed. This prerequisite commit grants no plan and changes no
+  policy atom; a following docs-only successor binds its exact base as the protected
+  preimage for the C0 renewal.
+- The first closed-graph comparator attempt used base
+  `86acea53c3da0eaebc03c3ef52847cd4396f0602` and docs-only preimage
+  `3d95fee18a7eebd7399ee6627353ac708da4ea3f`. It reached C0 actual validation and found
+  that later renewals had path-sorted the 26 evidence records, while the original
+  `0034d82` ceremony and `HasCanonicalC0Ceremony` require complete-record ordinal order.
+  A repository-bound test failed with the sole `TOWER-C0-CEREMONY` finding; byte-exact
+  reordering made both `sort -c` and the focused test pass. This correction commit will
+  be the next comparator base, with a separate docs-only protected preimage.
+- Canonical C0 comparator base commit: `1834a05f1539e65481d9d510022630bfe13fdbca`.
+- This docs-only successor is the protected preimage for that base-owned renewal. It
+  grants no plan and changes no policy atom.
+- The emitted certificate binds preimage `a25b021fefeaced4409e913917993b452503bd01`
+  and tree `e0e0f838a1ae6868689f658915ab5cc08bcb76cb`, with SHA-256
+  `60ec1a84c5baec83164ae040e684327b4e519cd19347be20f8ee5d2543b37f2a`.
+  It records zero findings, 117 golden cases, six contract attacks, 37/37 preserved
+  admits, equal pre/post policy roots, and no retired or uncovered obligations. TOWER
+  now carries the complete 36-record ceremony in canonical ordinal order.
+
 ## DIGESTION-LEDGER-EPOCH (active, 2026-07-15)
 
 This epoch moves digestion preimages from mutable theory volumes into a replayable
@@ -278,8 +332,8 @@ for its protection-surface change explicitly.
 |---|---|---|
 | E1 expand | **complete** | Schema 3 accepts optional `cas_ref`; canonical raw bytes live at `Meta/Digestion/atoms/sha256/<64-lower-hex>`. The judge verifies ref/path/blob/raw-fingerprint equality plus missing, corrupt, and orphan blobs. A CAS-backed receipt no longer needs volume reconciliation; a receipt without `cas_ref` follows the unchanged #109 path. Theory and CAS bytes may be opaque, ingest writes CAS refs, and source-format failure produces one reported whole-source coarse atom once that source's existing receipts are CAS-backed. I/O, schema, CAS, hash, and atomizer-integrity failures still block. The CAS object directory is outside SL-003 code-bucket capacity but only for canonical addresses. |
 | E2 migrate | **complete** | All 789 current GICT/PZG receipts (81 GICT, 708 PZG, including 769 residual-open) and all 12 `atomizer: none` specification receipts now bind exact raw CAS bytes through `cas_ref`. The specification receipts retain their 12 byte boundaries and source reconciliation for `SPEC-ZERO-ANCHOR`; no reader is contracted here. The canonical stock test requires every current receipt preimage and the CAS judge proves zero orphan, dangling, or hash-mismatched objects. A repeated `make ingest BASE=origin/dev` wrote zero objects, reported `ledger_changed=false`, and preserved the ledger SHA-256 byte-for-byte. |
-| E-verifier | **pending** | Design and land the independent contract-epoch verifier that can machine-prove a protection/validation-surface contraction against the predecessor. This is shared infrastructure with `RESIDENCE-EPOCH`; E1 contains no substitute or bypass. |
-| E3 contract | **pending** | Only after E2, E-verifier, and the separate specification-receipt case close, remove the boundary/stale/source-content/atomizer admission readers, make theory a non-bearing reference class, and remove transitional schema fields in one certificate-bearing contract change. |
+| E-verifier | **P0 complete** | `CONTRACT-EPOCH` now provides the exact-base policy delta, sealed plan, one-shot ledger, content-addressed receipt, authority ceiling, and uncovered-obligation comparator. It grants no declaration by itself; E3 still owes its own P1 registration and P2 consumption. |
+| E3 contract | **pending** | Only after E2, the E3-specific P1 plan, and the separate specification-receipt case close, consume that plan once to remove the boundary/stale/source-content/atomizer admission readers, make theory a non-bearing reference class, and remove transitional schema fields in one certificate-bearing contract change. |
 
 E1 changes no canonical `Meta/BACKFILL.yaml` entry and no golden corpus case, so it needs
 no C0 renewal. `SPEC-ZERO-ANCHOR` remains a separate 12-receipt obligation: move those

@@ -11,7 +11,8 @@
 - `Commands/`: command dispatch, coverage, registry loading, golden snapshot recording,
   ledger commands, and worktree provisioning.
 - `Conservative/`: base-owned replay, TOML golden fixture execution/materialization,
-  and conservative-extension verification.
+  conservative-extension verification, and contract-epoch policy/plan/ledger/evidence
+  obligation accounting from exact commit snapshots.
 - `Golden/`: shared conservative-corpus schema plus fail-closed canonical TOML
   loader/writer; case data remains outside the assembly under
   `Meta/StrataLint/Golden/cases` pending `RESIDENCE-EPOCH`.
