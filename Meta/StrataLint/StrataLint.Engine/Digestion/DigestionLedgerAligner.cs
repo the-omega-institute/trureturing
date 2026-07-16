@@ -83,6 +83,7 @@ internal static class DigestionLedgerAligner
         var baselineSources = BaselineSources(baselineDocument, findings);
         foreach (var source in document.RequireDigestionSources())
         {
+            baselineSources.TryGetValue(source.SourceId, out var baselineSource);
             foreach (var entry in source.Entries.Where(static entry => entry.CasRef is not null))
             {
                 alignments[entry.AtomId] = source.Atomizer == AtomizerRegistry.NoAtomizerId
@@ -103,8 +104,17 @@ internal static class DigestionLedgerAligner
                 .Where(static entry => entry.CasRef is null && entry.Boundary is null)
                 .ToArray();
             var registeredAtomizer = AtomizerRegistry.IsRegistered(source.Atomizer);
+            var hasAcknowledgedCoarseReplacement = registeredAtomizer
+                && source.Entries.Any(entry =>
+                    entry.AstPath == "coarse/source"
+                    && entry.CasRef is not null
+                    && (source.AcknowledgedStale.Contains(entry.AtomId, StringComparer.Ordinal)
+                        || baselineSource?.AcknowledgedStale.Contains(
+                            entry.AtomId,
+                            StringComparer.Ordinal) == true));
             if (structuredEntries.Length == 0
-                && (mode == DigestionAlignmentMode.Admission || !registeredAtomizer))
+                && (mode == DigestionAlignmentMode.Admission || !registeredAtomizer)
+                && !hasAcknowledgedCoarseReplacement)
             {
                 continue;
             }
@@ -201,8 +211,29 @@ internal static class DigestionLedgerAligner
                 continue;
             }
 
-            baselineSources.TryGetValue(source.SourceId, out var baselineSource);
             var matchedAstPaths = new HashSet<string>(StringComparer.Ordinal);
+            var sourceStale = new List<string>();
+            if (baselineSource is not null && !claims.ContainsKey("coarse/source"))
+            {
+                foreach (var entry in source.Entries.Where(entry =>
+                             entry.AstPath == "coarse/source"
+                             && entry.CasRef is not null
+                             && cas.ValidAtomIds.Contains(entry.AtomId)
+                             && baselineSource.Entries.Any(baseline => EntryIdentityEqual(entry, baseline))
+                             && (baselineSource.Atomizer != source.Atomizer
+                                 || source.AcknowledgedStale.Contains(
+                                     entry.AtomId,
+                                     StringComparer.Ordinal)
+                                 || baselineSource.AcknowledgedStale.Contains(
+                                     entry.AtomId,
+                                     StringComparer.Ordinal))))
+                {
+                    alignments[entry.AtomId] = DigestionReceiptAlignment.Stale;
+                    sourceStale.Add(entry.AtomId);
+                    actualStale.Add(entry.AtomId);
+                }
+            }
+
             foreach (var legacy in source.Entries.Where(static entry => entry.Boundary is not null))
             {
                 if (claims.TryGetValue(legacy.AstPath, out var atom)
@@ -214,7 +245,6 @@ internal static class DigestionLedgerAligner
                 }
             }
 
-            var sourceStale = new List<string>();
             foreach (var entry in structuredEntries)
             {
                 if (claims.TryGetValue(entry.AstPath, out var atom)

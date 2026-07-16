@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Text;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -164,5 +165,123 @@ public sealed partial class DigestionAlignmentTests
 
         Assert.Empty(result.Findings);
         Assert.Equal("theorem/1.2", Assert.Single(result.Residual).Atom.AstPath);
+    }
+
+    [Fact]
+    public void IngestRetiresCoarseCasReceiptWhenARegisteredAdapterReplacesTheFallback()
+    {
+        var sourceBytes = Encoding.UTF8.GetBytes(
+            "# Observer\n\n**定理(观察者代数的唯一形态)。** claim。\n");
+        var coarseBytes = ImmutableArray.CreateRange(sourceBytes);
+        var coarse = new DigestionAtom(
+            "coarse/source",
+            0,
+            sourceBytes.Length,
+            coarseBytes,
+            DigestionFingerprint.ComputeOpaque(coarseBytes.AsSpan()),
+            []);
+        var captured = DigestionCasStore.Capture(coarseBytes.AsSpan());
+        var priorAtomizer = AtomizerRegistry.RegisteredIds.First(id =>
+            id != AtomizerRegistry.ObserverId);
+        var baseline = BackfillInventoryLoader.Load(Ledger(
+            [],
+            CasEntry("coarse-receipt", coarse, captured.Reference)));
+        var candidate = BackfillInventoryLoader.Load(
+            Ledger([], CasEntry("coarse-receipt", coarse, captured.Reference))
+                .Replace(
+                    $"atomizer: {priorAtomizer}",
+                    $"atomizer: {AtomizerRegistry.ObserverId}",
+                    StringComparison.Ordinal));
+
+        var plan = DigestionIngestor.Plan(
+            candidate,
+            Snapshot(sourceBytes, [captured]),
+            baseline);
+        var source = Assert.Single(plan.Document.RequireDigestionSources());
+
+        Assert.Equal(1, plan.StaleAcknowledged);
+        Assert.Equal(["coarse-receipt"], source.AcknowledgedStale.ToArray());
+        Assert.Equal(
+            captured.Reference,
+            source.Entries.Single(static entry => entry.AtomId == "coarse-receipt").CasRef);
+        Assert.Equal(
+            "theorem/observer-algebra",
+            source.Entries.Single(static entry => entry.AtomId != "coarse-receipt").AstPath);
+
+        var admitted = DigestionLedgerAligner.Evaluate(
+            plan.Document,
+            Snapshot(sourceBytes, new[] { captured }.Concat(plan.CasObjects)),
+            baseline,
+            DigestionAlignmentMode.Admission);
+
+        Assert.Empty(admitted.Findings);
+        Assert.Empty(admitted.Residual);
+        Assert.Equal(
+            DigestionReceiptAlignment.Stale,
+            admitted.AlignmentFor("coarse-receipt"));
+
+        var migrated = BackfillInventoryLoader.Load(Encoding.UTF8.GetString(
+            BackfillInventoryWriter.WriteForIngest(plan.Document).AsSpan()));
+        var settled = DigestionIngestor.Plan(
+            migrated,
+            Snapshot(sourceBytes, new[] { captured }.Concat(plan.CasObjects)),
+            migrated);
+
+        Assert.Equal(0, settled.StaleAcknowledged);
+        Assert.Equal(0, settled.ResidualOpenAdded);
+        Assert.Equal(
+            ["coarse-receipt"],
+            Assert.Single(settled.Document.RequireDigestionSources()).AcknowledgedStale.ToArray());
+    }
+
+    [Fact]
+    public void AdmissionRejectsRemovingASettledCoarseReplacementAcknowledgment()
+    {
+        var sourceBytes = Encoding.UTF8.GetBytes(
+            "# Observer\n\n**定理(观察者代数的唯一形态)。** claim。\n");
+        var coarseBytes = ImmutableArray.CreateRange(sourceBytes);
+        var coarse = new DigestionAtom(
+            "coarse/source",
+            0,
+            sourceBytes.Length,
+            coarseBytes,
+            DigestionFingerprint.ComputeOpaque(coarseBytes.AsSpan()),
+            []);
+        var captured = DigestionCasStore.Capture(coarseBytes.AsSpan());
+        var priorAtomizer = AtomizerRegistry.RegisteredIds.First(id =>
+            id != AtomizerRegistry.ObserverId);
+        var original = BackfillInventoryLoader.Load(Ledger(
+            [],
+            CasEntry("coarse-receipt", coarse, captured.Reference)));
+        var adapterCandidate = BackfillInventoryLoader.Load(
+            Ledger([], CasEntry("coarse-receipt", coarse, captured.Reference))
+                .Replace(
+                    $"atomizer: {priorAtomizer}",
+                    $"atomizer: {AtomizerRegistry.ObserverId}",
+                    StringComparison.Ordinal));
+        var plan = DigestionIngestor.Plan(
+            adapterCandidate,
+            Snapshot(sourceBytes, [captured]),
+            original);
+        var settledBytes = Encoding.UTF8.GetString(
+            BackfillInventoryWriter.WriteForIngest(plan.Document).AsSpan());
+        var settled = BackfillInventoryLoader.Load(settledBytes);
+        var revived = BackfillInventoryLoader.Load(settledBytes.Replace(
+            "    acknowledged_stale:\n      - coarse-receipt\n",
+            "    acknowledged_stale: []\n",
+            StringComparison.Ordinal));
+
+        var result = DigestionLedgerAligner.Evaluate(
+            revived,
+            Snapshot(sourceBytes, new[] { captured }.Concat(plan.CasObjects)),
+            settled,
+            DigestionAlignmentMode.Admission);
+
+        Assert.Equal(
+            DigestionReceiptAlignment.Stale,
+            result.AlignmentFor("coarse-receipt"));
+        Assert.Contains(result.Findings, finding => finding.Contains(
+            "stale receipts are not acknowledged: coarse-receipt",
+            StringComparison.Ordinal));
     }
 }
