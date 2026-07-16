@@ -78,7 +78,7 @@ each side it computes a canonical input preimage containing:
 - SHA-256 of the invoked `inspect.sh` and its `Inspector.lean`;
 - SHA-256 of the relative-path-and-content manifest for `Trureturing.lean` and
   every `D5/**/*.lean` source;
-- SHA-256 of `lean-toolchain`, `lakefile.lean`, and `lake-manifest.json`; and
+- SHA-256 of `lean-toolchain`, `lakefile.toml`, and `lake-manifest.json`; and
 - a versioned input-address schema.
 
 Only byte-equal input addresses permit reuse. On equality the candidate report

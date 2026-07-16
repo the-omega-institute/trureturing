@@ -10,6 +10,7 @@ public sealed class MakeWorkflowTests
     private const string SelftestScriptPath = "Meta/StrataLint/scripts/stratalint-selftest.sh";
     private const string LocalHarnessGateScriptPath =
         "Meta/StrataLint/scripts/local-harness-gate.sh";
+    private const string PreflightScriptPath = "Meta/StrataLint/scripts/preflight.sh";
     private const string CleanLanesScriptPath = "Meta/StrataLint/scripts/clean-lanes.sh";
     private const string WorktreeInitScriptPath = "Meta/StrataLint/scripts/worktree-init.sh";
 
@@ -88,12 +89,21 @@ public sealed class MakeWorkflowTests
         var root = FindRepositoryRoot();
         var workflow = File.ReadAllText(Path.Combine(root, ".github", "workflows", "ci.yml"));
         var localGate = File.ReadAllText(Path.Combine(root, LocalHarnessGateScriptPath));
+        var preflight = File.ReadAllText(Path.Combine(root, PreflightScriptPath));
         var sharedGate = File.ReadAllText(Path.Combine(root, ".github", "scripts", "harness-gate.sh"));
 
         Assert.Contains("make -C candidate dotnet", workflow, StringComparison.Ordinal);
         Assert.Contains("make -C candidate test", workflow, StringComparison.Ordinal);
         Assert.Contains("make -C candidate selftest", workflow, StringComparison.Ordinal);
         Assert.Contains("make -C \"$CANDIDATE_ROOT\" emit-check", localGate, StringComparison.Ordinal);
+        Assert.Contains("lean-report-pair.sh", localGate, StringComparison.Ordinal);
+        Assert.Contains("--skip-engineering", localGate, StringComparison.Ordinal);
+        Assert.Contains("GATE_ARGS=--skip-engineering", preflight, StringComparison.Ordinal);
+        Assert.Contains("gate_stage_timing", localGate, StringComparison.Ordinal);
+        Assert.Contains("gate_timing_summary", localGate, StringComparison.Ordinal);
+        Assert.Contains("STRATALINT_TIMING", sharedGate, StringComparison.Ordinal);
+        Assert.Contains("gate_stage_timing", sharedGate, StringComparison.Ordinal);
+        Assert.DoesNotContain("STRATALINT_TIMING:-1", sharedGate, StringComparison.Ordinal);
         Assert.Contains("$JUDGE_ROOT/.github/scripts/harness-gate.sh", localGate, StringComparison.Ordinal);
         Assert.Contains("--candidate-lean-report", localGate, StringComparison.Ordinal);
         Assert.Contains("--baseline-lean-report", localGate, StringComparison.Ordinal);

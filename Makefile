@@ -39,7 +39,7 @@ selftest:
 	@/bin/bash Meta/StrataLint/scripts/stratalint-selftest.sh
 
 gate:
-	@/bin/bash Meta/StrataLint/scripts/local-harness-gate.sh --base "$(BASE)"
+	@/bin/bash Meta/StrataLint/scripts/local-harness-gate.sh --base "$(BASE)" $(GATE_ARGS)
 
 preflight:
 	@/bin/bash Meta/StrataLint/scripts/preflight.sh

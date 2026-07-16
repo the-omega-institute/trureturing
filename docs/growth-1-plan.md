@@ -179,7 +179,7 @@ git commit -m "feat(harness): add fail-closed lane cleanup"
 - [ ] **Step 1: Write fake-producer red tests**
 
 Build two minimal roots containing `Trureturing.lean`, `D5/*.lean`,
-`lean-toolchain`, `lakefile.lean`, and `lake-manifest.json`. A fake producer
+`lean-toolchain`, `lakefile.toml`, and `lake-manifest.json`. A fake producer
 increments a counter and writes report plus SHA sidecar:
 
 ```csharp
@@ -213,7 +213,7 @@ schema=stratalint-lean-report-input-v1
 inspector_sha256=<inspect.sh + Inspector.lean manifest hash>
 sources_sha256=<Trureturing.lean + sorted D5/**/*.lean manifest hash>
 lean_toolchain_sha256=<hash>
-lakefile_sha256=<hash>
+lakefile_toml_sha256=<hash>
 lake_manifest_sha256=<hash>
 ```
 
