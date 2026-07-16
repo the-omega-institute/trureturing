@@ -102,7 +102,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void IngestRejectsEmptyEntriesListWithoutWriting()
+    public void IngestPerformsFirstExtractionForRegisteredEmptySource()
     {
         var fixture = new RuleFixture();
         var atomizerId = AtomizerRegistry.RegisteredIds[0];
@@ -136,13 +136,11 @@ public sealed partial class ProductionEnvironmentTests
 
         var result = environment.Ingest(["--base", "baseline"]);
 
-        Assert.False(result.Success);
-        Assert.Contains(
-            "source fixture-source entries must be a list",
-            result.Error,
-            StringComparison.Ordinal);
-        Assert.Equal(ledger, File.ReadAllText(outputPath));
-        Assert.False(Directory.Exists(Path.Combine(temporary.Path, "Meta", "Digestion")));
+        Assert.True(result.Success, result.Error);
+        var written = File.ReadAllText(outputPath);
+        Assert.NotEqual(ledger, written);
+        Assert.Contains("atom_id:", written, StringComparison.Ordinal);
+        Assert.True(Directory.Exists(Path.Combine(temporary.Path, "Meta", "Digestion")));
     }
 
     [Fact]
