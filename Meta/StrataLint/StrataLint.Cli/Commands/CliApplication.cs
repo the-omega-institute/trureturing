@@ -30,6 +30,8 @@ internal interface ICliEnvironment
 
     CommandResult ReattestLedger(IReadOnlyList<string> arguments);
 
+    CommandResult CleanLanes(IReadOnlyList<string> arguments);
+
     CommandResult Worktree(IReadOnlyList<string> arguments);
 
     ExplicitCommandResult VerifyConservative(IReadOnlyList<string> arguments);
@@ -88,7 +90,7 @@ internal static class CliApplication
         if (arguments.Count == 0)
         {
             console.WriteError(
-                "USAGE: StrataLint check|coverage|digest-status|ingest|golden-record|ledger-genesis|route|selftest|topology|worktree|ledger-append|ledger-reattest|verify-conservative|evaluate-conservative-corpus\n");
+                "USAGE: StrataLint check|clean-lanes|coverage|digest-status|ingest|golden-record|ledger-genesis|route|selftest|topology|worktree|ledger-append|ledger-reattest|verify-conservative|evaluate-conservative-corpus\n");
             return 2;
         }
 
@@ -96,6 +98,7 @@ internal static class CliApplication
         return arguments[0] switch
         {
             "check" => RenderAdmission(environment.Check(tail), console),
+            "clean-lanes" => RenderCommand(environment.CleanLanes(tail), console),
             "coverage" => RenderCommand(environment.Coverage(tail), console),
             "digest-status" => RenderCommand(environment.DigestStatus(tail), console),
             "ingest" => RenderCommand(environment.Ingest(tail), console),
