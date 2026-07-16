@@ -446,3 +446,7 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 - v3.0:mathlib 式裁决(import 图即 DAG、PR 即并发、git 即史官、状态即语法)。
 - v2.x:证据等级 E0–E4、SSOT 两层账、证书拆分、Gödel 条款(并入 v3+)。
 - v1:初版雏形。
+
+**Hearts 授权条款:**SL-008 仅在 `D5/X_Frontier/HeartsAuthorizations.md` 中存在与实际唯一新增声明的全名及 canonical statement SHA-256 精确匹配的条目,且 baseline 声明全不变、无额外新增时放行;该账只增不删,无匹配照拒。
+
+- **v7.13 R2**(2026-07-17):`HEARTS-AUTH-P0` 将 SL-008 最小松动为 append-only git 授权账上的声明全名+canonical statement SHA-256 精确单增,保留既有声明冻结与防夹带;密码学身份、签名及 nonce 消费机依用户裁决不进入系统,伪造风险归公开史检测、判词可诉勘正与追责。
