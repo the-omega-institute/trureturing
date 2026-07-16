@@ -52,7 +52,6 @@ sources:
         cas_ref: sha256:705dced3bc038c8cc26cd3f01a62ee5ff581ac6181ccbf4eb7439a5d09b8a891
         coverage_gids:
           - D5/X_Frontier/Hearts
-          - D5/X_Frontier/HeartsDraft
         receipts:
           coverage: []
           scribe: []
@@ -1676,7 +1675,7 @@ sources:
           - D5/S3/Weil/PrimePoleTerms
           - D5/S3/Weil/ZeroSum
           - D5/S3/Weil/WeilIdentity
-          - D5/X_Frontier/HeartsDraft
+          - D5/X_Frontier/Hearts
         receipts:
           coverage: []
           scribe: []
@@ -1700,7 +1699,7 @@ sources:
           - D5/S3/Weil/PrimePoleTerms
           - D5/S3/Weil/ZeroSum
           - D5/S3/Weil/WeilIdentity
-          - D5/X_Frontier/HeartsDraft
+          - D5/X_Frontier/Hearts
         receipts:
           coverage: []
           scribe: []
@@ -1734,7 +1733,7 @@ sources:
           normalized_sha256: sha256:84efc878d587793ec813af69649561317fad57fdc1b626eca8a0f2c87fe23147
         cas_ref: sha256:84efc878d587793ec813af69649561317fad57fdc1b626eca8a0f2c87fe23147
         coverage_gids:
-          - D5/X_Frontier/HeartsDraft
+          - D5/X_Frontier/Hearts
         receipts:
           coverage: []
           scribe: []
