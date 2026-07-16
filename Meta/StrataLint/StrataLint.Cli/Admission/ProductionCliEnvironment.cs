@@ -321,6 +321,9 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
     public CommandResult ReattestLedger(IReadOnlyList<string> arguments) =>
         DagLedgerReattestWriter.Reattest(repositoryRoot, repository, arguments);
 
+    public CommandResult CleanLanes(IReadOnlyList<string> arguments) =>
+        CleanLanesCommand.Run(repositoryRoot, arguments);
+
     public CommandResult Worktree(IReadOnlyList<string> arguments) =>
         WorktreeCommand.Run(repositoryRoot, arguments);
 

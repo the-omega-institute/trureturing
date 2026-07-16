@@ -220,14 +220,24 @@ jobs:
             producer="$GITHUB_WORKSPACE/candidate/Meta/StrataLint/lean-inspector/inspect.sh"
             echo "::warning title=Lean producer bootstrap::The predecessor predates the producer; using canonical dev candidate for its one-time introduction run."
           fi
+          pair_producer="$GITHUB_WORKSPACE/baseline/Meta/StrataLint/scripts/lean-report-pair.sh"
+          if [[ ! -x "$pair_producer" ]]; then
+            if git -C candidate log --format=%H "${{ steps.baseline.outputs.sha }}" -- Meta/StrataLint/scripts/lean-report-pair.sh | grep -q .; then
+              printf '%s\n' "baseline Lean report pair helper disappeared after its recorded introduction" >&2
+              exit 1
+            fi
+            pair_producer="$GITHUB_WORKSPACE/candidate/Meta/StrataLint/scripts/lean-report-pair.sh"
+            echo "::warning title=Lean report pair bootstrap::The predecessor predates input-address reuse; using the newly admitted helper for its one-time introduction run."
+          fi
           reports="$RUNNER_TEMP/raw-lean-reports"
           mkdir -p "$reports"
-          LAKE_BIN="$HOME/.elan/bin/lake" "$producer" \
-            --repository "$GITHUB_WORKSPACE/candidate" \
-            --output "$reports/candidate-lean-report.json"
-          LAKE_BIN="$HOME/.elan/bin/lake" "$producer" \
-            --repository "$GITHUB_WORKSPACE/baseline" \
-            --output "$reports/baseline-lean-report.json"
+          "$pair_producer" \
+            --producer "$producer" \
+            --lake-bin "$HOME/.elan/bin/lake" \
+            --candidate-root "$GITHUB_WORKSPACE/candidate" \
+            --candidate-output "$reports/candidate-lean-report.json" \
+            --baseline-root "$GITHUB_WORKSPACE/baseline" \
+            --baseline-output "$reports/baseline-lean-report.json"
 
       - name: Upload raw Lean reports and producer logs
         if: always()
