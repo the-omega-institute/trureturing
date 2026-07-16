@@ -5,21 +5,21 @@ namespace StrataLint.Scribe.Tests;
 public sealed class DescribeMigrationTests
 {
     [Fact]
-    public void RepositoryMigrationHasFifteenTypedNodesAndPreservesTwentyFourFormulaSlots()
+    public void RepositoryMigrationHasSixteenTypedNodesAndPreservesTwentyFourFormulaSlots()
     {
         var root = FindRepositoryRoot();
         var report = DescribeReport.Build(
             root,
             DocumentDefinitions.All.Select(static definition => definition.Document));
 
-        Assert.Equal(15, report.NodeStats.Total);
+        Assert.Equal(16, report.NodeStats.Total);
         Assert.Equal(24, report.NodeStats.FormulaContentSlots);
         Assert.Equal(1, report.NodeStats.FormulaStatements);
-        Assert.Equal(14, report.NodeStats.LeanStatements);
+        Assert.Equal(15, report.NodeStats.LeanStatements);
         Assert.Equal(7, report.NodeStats.ByKind["proposition"]);
-        Assert.Equal(7, report.NodeStats.ByKind["theorem"]);
+        Assert.Equal(8, report.NodeStats.ByKind["theorem"]);
         Assert.Equal(1, report.NodeStats.ByKind["example"]);
-        Assert.Equal(13, report.NodeStats.ByProvenance["repo-derived"]);
+        Assert.Equal(14, report.NodeStats.ByProvenance["repo-derived"]);
         Assert.Equal(2, report.NodeStats.ByProvenance["literature-attested"]);
         Assert.Equal(0, report.OpenCount);
         Assert.Empty(report.SuspectedNovel);
@@ -84,7 +84,7 @@ public sealed class DescribeMigrationTests
         Assert.Equal(string.Empty, error.ToString());
         using var document = JsonDocument.Parse(output.ToString());
         Assert.Equal("DESCRIBE-NODES", document.RootElement.GetProperty("case_id").GetString());
-        Assert.Equal(15, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
+        Assert.Equal(16, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
         Assert.Equal(0, document.RootElement.GetProperty("open_count").GetInt32());
     }
 

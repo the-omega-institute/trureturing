@@ -13,6 +13,7 @@ public sealed class DocumentDiscoveryTests
     private const string NotationDocumentPath = "Blueprint/D5/S0/Conventions/Notation.md";
     private const string WDigitsDocumentPath = "Blueprint/D5/S0/Conventions/WDigits.md";
     private const string CarryDocumentPath = "Blueprint/D5/S1/Digit/Carry.md";
+    private const string PrimeAxisTableDocumentPath = "Blueprint/D5/S1/Digit/PrimeAxisTable.md";
     private const string RawDocumentPath = "Blueprint/D5/S1/Digit/Raw.md";
     private const string PhaseDocumentPath = "Blueprint/D5/S1/Phase/Basic.md";
     private const string EmbeddingDocumentPath = "Blueprint/D5/S1/Scale/Embedding.md";
@@ -33,6 +34,7 @@ public sealed class DocumentDiscoveryTests
                 "D5/S0/Conventions/Notation",
                 "D5/S0/Conventions/WDigits",
                 "D5/S1/Digit/Carry",
+                "D5/S1/Digit/PrimeAxisTable",
                 "D5/S1/Digit/Raw",
                 "D5/S1/Phase/Basic",
                 "D5/S1/Scale/Embedding",
@@ -50,6 +52,7 @@ public sealed class DocumentDiscoveryTests
                 NotationDocumentPath,
                 WDigitsDocumentPath,
                 CarryDocumentPath,
+                PrimeAxisTableDocumentPath,
                 RawDocumentPath,
                 PhaseDocumentPath,
                 EmbeddingDocumentPath,
@@ -155,6 +158,26 @@ public sealed class DocumentDiscoveryTests
 
         Assert.Equal(
             "D5/S1/Phase/Basic.goldenPhase_injective",
+            lean.Value.Value);
+        Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
+        Assert.True(lean.Value.RequireNoSorry);
+    }
+
+    [Fact]
+    public void PrimeAxisTableCarriesItsExactRepoDerivedLeanStatement()
+    {
+        var definition = DocumentDefinitions.All.Single(static item =>
+            item.Document.Header.Gid.Value == "D5/S1/Digit/PrimeAxisTable");
+        var describe = Descendants(definition.Document.Content)
+            .OfType<DocumentBlock.Describe>()
+            .Single();
+        var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
+
+        Assert.Equal(DescribeKind.Theorem, describe.Kind);
+        Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.Provenance.Kind);
+        Assert.Null(describe.Provenance.LiteratureReference);
+        Assert.Equal(
+            "D5/S1/Digit/PrimeAxisTable.prime_axis_table_spec",
             lean.Value.Value);
         Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
         Assert.True(lean.Value.RequireNoSorry);
