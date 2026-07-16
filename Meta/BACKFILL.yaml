@@ -347,15 +347,12 @@ sources:
             - gid: D5/S0/Carrier/AlgebraicModel.golden_algebraic_model_spec
               source_sha256: sha256:1590a11d4ee912f01a495981767fe3c7c40f89d650cde5e57021aeb18743360b
               target_sha256: sha256:7fb489a1140934f9aae18903fd316321504018f40616777a7ca249793910b6f1
-          scribe:
-            - gid: D5/S0/Carrier/AlgebraicModel.golden_algebraic_model_spec
-              definition_sha256: sha256:2b8de0a0591bccb849e847cb9539d4af709f5aca78419e41de4ece503ceeef13
-              emission_sha256: sha256:5993d2943e5b37dbeca5765744cc400de9e2c1282925df98cb138aca1aad3309
+          scribe: []
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: gict-residual-58e8f015eea7218ab85a93414db29b65667b79f34b18b8f9ab343676c454adf2
         ast_path: theorem/1.3
@@ -386,15 +383,12 @@ sources:
             - gid: D5/S1/Depth/JointDepth.joint_depth_spec
               source_sha256: sha256:e38742ca0c18ff6ec5b2e9bdcdf99bc700c0ff2c38031b60a79dd17f4a617766
               target_sha256: sha256:dd55302931fdf88b002a2625b9b2a12b7e26a0dac991abd0a5e56f5ead4474ce
-          scribe:
-            - gid: D5/S1/Depth/JointDepth.joint_depth_spec
-              definition_sha256: sha256:a49d797a685e8477aa0c5a399a804386836fd37cb0c3be1c8dd3ac961903c08c
-              emission_sha256: sha256:9d5145e73e6820e5bbb2d8398f24abc41ca261e16c00b39bd4323328180b3b7b
+          scribe: []
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: gict-residual-6706f5aca56b416822592bfdf174870340ad95de2896373968b828ba4a49f0c4
         ast_path: theorem/1.5
@@ -461,15 +455,12 @@ sources:
             - gid: D5/S1/Digit/PrimeAxisAddition.prime_axis_addition_spec
               source_sha256: sha256:6ade320007ff03163fd22af955a6a0ca8d4b371ef23def697929153f626d621e
               target_sha256: sha256:00557dc5c6b8352bc93b89b3e0932c7316483cd7b3e11f2d2561d761206b6d8e
-          scribe:
-            - gid: D5/S1/Digit/PrimeAxisAddition.prime_axis_addition_spec
-              definition_sha256: sha256:b089a3935f5bd42891a444ceea411527e8e119edc2d83d5cd272e68f5c5525cf
-              emission_sha256: sha256:58d827c4c277f837bb1c914057d836cd93adee2af7c479d665b6edfa0f84a65b
+          scribe: []
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: gict-residual-20222ff4347444c72a9e1cb7410216308cb2797ea34df99e677dd85375e09782
         ast_path: corollary/1.9
@@ -580,15 +571,12 @@ sources:
             - gid: D5/S1/Scale/MinkowskiModelSet.minkowski_model_set_spec
               source_sha256: sha256:76a92f1db92bf5498d66ded284de6162f8873704336551d1a40881e70f8b0c7e
               target_sha256: sha256:17c9cf3ca266daee964ca1511d0c12fb2c6889f4e6d57bebb38719cbecf0840a
-          scribe:
-            - gid: D5/S1/Scale/MinkowskiModelSet.minkowski_model_set_spec
-              definition_sha256: sha256:e72ef62ea32d1b1232047fc502a27a5d33efe911ab8810bd233a4ee62f704211
-              emission_sha256: sha256:438de7888f384408f30fada0d60d7afcd410a690b0689c817440692853e0b8fd
+          scribe: []
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: gict-residual-5f3e88e5a40744456453f818ba643446c3194ccb3934f7500726f6103b91887b
         ast_path: theorem/3.2
