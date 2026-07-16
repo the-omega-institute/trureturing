@@ -187,6 +187,19 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
   identity drift. This branch merged the new base without rebase; the renewed ceremony
   and final gate therefore bind the stable post-merge identity instead of reusing the
   stale certificate.
+- RESIDENCE-EPOCH predecessor-bridge autopsy: exact base
+  `ed50b8859574a461f67412c138e1fc4080cf162d` rejected the future P2 tree even though
+  contract-plan comparison ran and accepted the exact five-path contraction: the
+  certificate recorded all five `retired_exact_paths`, `uncovered_obligations=[]`, and
+  eligible base-owned plans for that delta. `CustodyTransferV1` suppresses only those
+  mapped SL-022 protection retirements; it cannot waive the independent actual-tree
+  SL-000 from the closed `RepositoryPathPolicy`, SL-018's required
+  `Meta/StrataLint/Golden/values-kernels.toml`, or the offset SL-016 block. This bridge is
+  pure expansion: it moves no data, consumes no plan, changes no protection policy,
+  exclusion, or C0 ceremony, and admits only the exact future files plus flat canonical
+  case data. The values loader keeps the old writer input but accepts exactly one of the
+  old and future residences, with the same ordered manifest and hashes; both or neither
+  fail closed. P2 performs the move and contracts this temporary dual-residence domain.
 - Residence P2 fixture-state autopsy: the first full non-C0 run failed 12/639 because
   synthetic contract comparisons derived their pre-P2 baseline from the now post-P2
   `Current()` policy, erasing the intended retirement delta, while GoldenRecord's
