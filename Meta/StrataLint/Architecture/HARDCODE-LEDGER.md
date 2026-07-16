@@ -643,3 +643,11 @@ updates. Following the established `3faf952` rebind precedent, every unchanged s
 span was shifted by the measured 1,882-byte offset while its two fingerprints remained
 unchanged. A targeted base-harness admission then returned protected-surface exit 3
 with only SL-022 diagnostics and no blocking content diagnostic.
+
+## HEARTS-AUTH-P0 (complete, 2026-07-17)
+
+- The superseded cryptographic review returned `CRITICAL`: without a signature or authenticated issuer, a committer can append a false authorization row; that finding is technically correct.
+- The 2026-07-17 user ruling overturned it under CLAUDE.md rule 20 and public-Git-history economics: prevention cost exceeds the value of preventing a visible forgery.
+- Distributed clones make history tampering observable, so false judgments go through detection, appeal, correction, and accountability rather than prior cryptographic gilding.
+- The admitted table records only date, quoted authorization, fully qualified declaration name, and canonical statement SHA-256; SL-008 requires every baseline declaration unchanged and exactly one matching addition.
+- Missing authorization, hash drift, piggybacking, malformed rows, and historical deletion/rewrite remain hard failures; signature, issuer attestation, identity check, nonce, replay state, and authorization consumption do not exist.
