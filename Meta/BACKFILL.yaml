@@ -327,15 +327,12 @@ sources:
             - gid: D5/S0/Carrier/GoldenRatio.golden_ratio_spec
               source_sha256: sha256:02138663fc4949940459013eabfd32eab9f0200bcaf9bbd660556c55960b9d3b
               target_sha256: sha256:6a1e8f61c298ff08e01a8540734892a24663d6c7cd7424ef2d90b153bc36bb92
-          scribe:
-            - gid: D5/S0/Carrier/GoldenRatio.golden_ratio_spec
-              definition_sha256: sha256:426a97a2d16eceac0af46fc5f384f0f926cf1da5717cf0e59beeffb0cb328543
-              emission_sha256: sha256:0dfb593fd2f14653c500aafc86d8480ba3603600dd02bc4aefdebfe9dc0c7529
+          scribe: []
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: gict-residual-1590a11d4ee912f01a495981767fe3c7c40f89d650cde5e57021aeb18743360b
         ast_path: definition/1.2
@@ -430,15 +427,12 @@ sources:
             - gid: D5/S1/Digit/PrimeAxisTable.prime_axis_table_spec
               source_sha256: sha256:28a2415fbe4936c1c56a1471d7f72cb1af759747b9f985e4112a0cd5ce3e08a3
               target_sha256: sha256:a2d6ad89bad13070c0a7b89109f5e059124c149a445162c95be046c21b8971e2
-          scribe:
-            - gid: D5/S1/Digit/PrimeAxisTable.prime_axis_table_spec
-              definition_sha256: sha256:eaba2e69f603340e5c25a83e0db7945454f8d0da79cf6ed3b9afbdad93c591aa
-              emission_sha256: sha256:792c924095c69322ffdef2eb57f2d68fdaaf269bad6c9cf63f94a7daca045df6
+          scribe: []
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: gict-residual-6ade320007ff03163fd22af955a6a0ca8d4b371ef23def697929153f626d621e
         ast_path: theorem/1.8
