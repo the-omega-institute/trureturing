@@ -15,8 +15,12 @@ internal static class ConservativeActualTreeEvaluator
         var candidateRepository = new GitRepositoryGateway(invocation.CandidateRoot);
         var candidateChanges = candidateRepository
             .Prepare(invocation.BaselineIdentity.CommitOid).Changes;
-        var candidateSnapshot = Decode(
-            candidateRepository.ReadRevision(invocation.CandidateIdentity.CommitOid));
+        var candidateSnapshot = Decode(RawRepositorySnapshot.Create(
+        [
+            candidateRepository.ReadRevisionFile(
+                invocation.CandidateIdentity.CommitOid,
+                ValuesProjectionLoader.KernelDataPath),
+        ]));
         var valuesKernelDataPath = ResolveValuesKernelDataPathForReplay(
             snapshot,
             candidateSnapshot);

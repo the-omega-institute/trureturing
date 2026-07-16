@@ -225,6 +225,12 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
   actual candidate only because the four new ingest regressions pushed
   `DigestionLedgerTests.cs` to 821 lines. The tests moved intact to a partial-class sibling;
   both files are below the SL-003 ceiling and no capacity rule was weakened.
+- After that split, three exact-base replays emitted no certificate because the candidate
+  worker exhausted its unchanged 180-second budget. The replay-only values resolver had
+  loaded the entire candidate revision to obtain one canonical TOML blob; after the CAS
+  epoch, `ReadRevision` expands that scan into a `git show` per repository file. The
+  resolver now reads only the exact-commit, exact-path regular blob while actual-candidate
+  admission retains its complete snapshot. The timeout was not raised or bypassed.
 
 ## Residual scan
 

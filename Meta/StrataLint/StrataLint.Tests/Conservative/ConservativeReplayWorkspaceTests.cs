@@ -82,6 +82,11 @@ public sealed class ConservativeReplayWorkspaceTests
             "Conservative",
             "ConservativeActualTreeEvaluator.cs"));
         Assert.DoesNotContain("File.ReadAllBytes", actualEvaluator, StringComparison.Ordinal);
+        Assert.Contains("ReadRevisionFile", actualEvaluator, StringComparison.Ordinal);
+        Assert.DoesNotContain(
+            "candidateRepository.ReadRevision(",
+            actualEvaluator,
+            StringComparison.Ordinal);
 
         var corpusEvaluator = File.ReadAllText(Path.Combine(
             FindRepositoryRoot(),
@@ -100,6 +105,38 @@ public sealed class ConservativeReplayWorkspaceTests
         Assert.Contains("SnapshotAdmissionCore.Evaluate", corpusEvaluator, StringComparison.Ordinal);
         Assert.DoesNotContain("RuleCatalog.Default.Execute", corpusEvaluator, StringComparison.Ordinal);
         Assert.Contains("SnapshotAdmissionCore.Evaluate", productionCheck, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RevisionFileReadReturnsOneExactCommittedBlob()
+    {
+        using var repository = new TemporaryDirectory();
+        Git(repository.Path, "init", "-b", "dev");
+        Git(repository.Path, "config", "user.name", "StrataLint Fixture");
+        Git(repository.Path, "config", "user.email", "fixture@example.invalid");
+        var golden = Path.Combine(repository.Path, "Golden");
+        Directory.CreateDirectory(golden);
+        File.WriteAllText(
+            Path.Combine(golden, "values-kernels.toml"),
+            "kernel data\n",
+            new UTF8Encoding(false));
+        File.WriteAllText(
+            Path.Combine(repository.Path, "unrelated.txt"),
+            "unrelated\n",
+            new UTF8Encoding(false));
+        Git(repository.Path, "add", ".");
+        Git(repository.Path, "commit", "-m", "candidate");
+        var gateway = new GitRepositoryGateway(repository.Path);
+        var candidate = gateway.ResolveCurrentRevision();
+
+        var entry = gateway.ReadRevisionFile(
+            candidate.Revision,
+            ValuesProjectionLoader.KernelDataPath);
+
+        Assert.Equal(ValuesProjectionLoader.KernelDataPath, entry.Path);
+        Assert.Equal("kernel data\n", Encoding.UTF8.GetString(entry.Bytes.AsSpan()));
+        Assert.Throws<InvalidOperationException>(() =>
+            gateway.ReadRevisionFile(candidate.Revision, "Golden/missing.toml"));
     }
 
     [Fact]
