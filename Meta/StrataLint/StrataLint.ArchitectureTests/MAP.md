@@ -31,15 +31,15 @@ The root contains only shared repository discovery, test metadata, and this map.
   registered domain and whose literal value is any `S0` through `S4` stratum code.
 - Golden corpus storage: rejects literal-name golden case construction in tracked C#;
   the only case authority is strict canonical TOML under
-  `Meta/StrataLint/Golden/cases`. A separate consistency anchor keeps
+  `Golden/cases`. A separate consistency anchor keeps
   `GoldenStratum`, Engine `Stratum`, and both closed `IsStratum` predicates equal to
   the explicit `S0` through `S4` five-member alphabet.
 - FILEMAP: every tracked or unignored file matches exactly one `Meta/FILEMAP.toml`
   pattern; registry root membership is equal to tracked root files; generated artifacts
   match the canonical producer inventory and `emit-check`; every data verifier resolves
   to an existing program file; generated and Golden class directories remain pure.
-  The `RESIDENCE-EPOCH` sentinel expands marked FILEMAP entries and requires the current
-  five protected-surface data paths to equal the frozen known-violation inventory.
+  The closed `RESIDENCE-EPOCH` sentinel requires the protected-surface residence
+  violation inventory to remain empty.
 - Dependency direction: machine-readable data is rejected when its decoded text names a
   concrete generated path, and a simple single-module Lean import is rejected when it
   resolves to a generated `.lean` file.

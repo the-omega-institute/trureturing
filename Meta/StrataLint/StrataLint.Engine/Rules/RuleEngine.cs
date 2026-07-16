@@ -96,7 +96,8 @@ internal sealed class RuleEvaluationContext
         AcceptedLeanClosure baselineLean,
         RawChangeSet changes,
         MetaEvaluationProfile metaEvaluation,
-        VerifiedScribeEmissions? verifiedScribeEmissions)
+        VerifiedScribeEmissions? verifiedScribeEmissions,
+        string valuesKernelDataPath)
     {
         Current = current;
         Baseline = baseline;
@@ -106,6 +107,7 @@ internal sealed class RuleEvaluationContext
         Changes = changes;
         MetaEvaluation = metaEvaluation;
         VerifiedScribeEmissions = verifiedScribeEmissions;
+        ValuesKernelDataPath = valuesKernelDataPath;
     }
 
     internal RepositorySnapshot Current { get; }
@@ -124,6 +126,8 @@ internal sealed class RuleEvaluationContext
 
     internal VerifiedScribeEmissions? VerifiedScribeEmissions { get; }
 
+    internal string ValuesKernelDataPath { get; }
+
     internal static RuleEvaluationContext Create(
         RepositorySnapshot current,
         RepositorySnapshot baseline,
@@ -132,7 +136,8 @@ internal sealed class RuleEvaluationContext
         AcceptedLeanClosure baselineLean,
         RawChangeSet changes,
         MetaClear metaClear,
-        VerifiedScribeEmissions? verifiedScribeEmissions = null) =>
+        VerifiedScribeEmissions? verifiedScribeEmissions = null,
+        string? valuesKernelDataPath = null) =>
         Create(
             current,
             baseline,
@@ -141,7 +146,8 @@ internal sealed class RuleEvaluationContext
             baselineLean,
             changes,
             MetaEvaluationProfile.ForClear(metaClear),
-            verifiedScribeEmissions);
+            verifiedScribeEmissions,
+            valuesKernelDataPath);
 
     internal static RuleEvaluationContext Create(
         RepositorySnapshot current,
@@ -151,7 +157,8 @@ internal sealed class RuleEvaluationContext
         AcceptedLeanClosure baselineLean,
         RawChangeSet changes,
         MetaEvaluationProfile metaEvaluation,
-        VerifiedScribeEmissions? verifiedScribeEmissions = null) =>
+        VerifiedScribeEmissions? verifiedScribeEmissions = null,
+        string? valuesKernelDataPath = null) =>
         new(
             current,
             baseline,
@@ -160,7 +167,8 @@ internal sealed class RuleEvaluationContext
             baselineLean,
             changes,
             metaEvaluation,
-            verifiedScribeEmissions);
+            verifiedScribeEmissions,
+            valuesKernelDataPath ?? ValuesProjectionLoader.KernelDataPath);
 }
 
 internal sealed class RepositoryRule(

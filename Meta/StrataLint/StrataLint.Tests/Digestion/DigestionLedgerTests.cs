@@ -5,7 +5,7 @@ using static StrataLint.Tests.DigestionTestSupport;
 
 namespace StrataLint.Tests;
 
-public sealed class DigestionLedgerTests
+public sealed partial class DigestionLedgerTests
 {
     [Fact]
     public void CasBackedLegacyBoundaryDoesNotContributeSourceOrBoundaryGaps()
@@ -751,4 +751,31 @@ public sealed class DigestionLedgerTests
                 "        coverage_gids: []",
                 StringComparison.Ordinal);
 
+    private static (BackfillInventoryDocument Ledger, DigestionCasObject Captured)
+        CasBackedNoAtomizerLedger(byte[] receiptBytes)
+    {
+        var atom = new DigestionAtom(
+            "manual/receipt",
+            0,
+            receiptBytes.Length,
+            ImmutableArray.CreateRange(receiptBytes),
+            DigestionFingerprint.Compute(receiptBytes),
+            ImmutableArray<DigestionContext>.Empty);
+        var captured = DigestionCasStore.Capture(receiptBytes);
+        var yaml = LedgerYaml(
+                atom,
+                migration: "partial",
+                truth: "open",
+                coverageReceipts: "[]",
+                scribeReceipts: "[]")
+            .Replace(
+                $"atomizer: {AtomizerRegistry.GictId}",
+                $"atomizer: {AtomizerRegistry.NoAtomizerId}",
+                StringComparison.Ordinal)
+            .Replace(
+                "        coverage_gids:",
+                $"        cas_ref: {captured.Reference}\n        coverage_gids:",
+                StringComparison.Ordinal);
+        return (BackfillInventoryLoader.Load(yaml), captured);
+    }
 }

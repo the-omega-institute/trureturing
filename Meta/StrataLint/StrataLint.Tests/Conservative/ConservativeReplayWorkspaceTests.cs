@@ -28,6 +28,35 @@ public sealed class ConservativeReplayWorkspaceTests
     }
 
     [Fact]
+    public void ValuesKernelReplayPathRequiresAUniqueByteExactRelocation()
+    {
+        const string historicalPath = "Archive/values-kernels.toml";
+        const string bytes = "[[kernels]]\nname = \"fixture\"\n";
+        var candidate = Snapshot((ValuesProjectionLoader.KernelDataPath, bytes));
+
+        Assert.Equal(
+            ValuesProjectionLoader.KernelDataPath,
+            ConservativeActualTreeEvaluator.ResolveValuesKernelDataPathForReplay(
+                candidate,
+                candidate));
+        Assert.Equal(
+            historicalPath,
+            ConservativeActualTreeEvaluator.ResolveValuesKernelDataPathForReplay(
+                Snapshot((historicalPath, bytes)),
+                candidate));
+        Assert.Throws<InvalidOperationException>(() =>
+            ConservativeActualTreeEvaluator.ResolveValuesKernelDataPathForReplay(
+                Snapshot((historicalPath, "changed\n")),
+                candidate));
+        Assert.Throws<InvalidOperationException>(() =>
+            ConservativeActualTreeEvaluator.ResolveValuesKernelDataPathForReplay(
+                Snapshot(
+                    (historicalPath, bytes),
+                    ("Second/values-kernels.toml", bytes)),
+                candidate));
+    }
+
+    [Fact]
     public void WorkerProtocolExposesNoRepositoryOrReportPathArguments()
     {
         var source = File.ReadAllText(Path.Combine(
@@ -53,6 +82,11 @@ public sealed class ConservativeReplayWorkspaceTests
             "Conservative",
             "ConservativeActualTreeEvaluator.cs"));
         Assert.DoesNotContain("File.ReadAllBytes", actualEvaluator, StringComparison.Ordinal);
+        Assert.Contains("ReadRevisionFile", actualEvaluator, StringComparison.Ordinal);
+        Assert.DoesNotContain(
+            "candidateRepository.ReadRevision(",
+            actualEvaluator,
+            StringComparison.Ordinal);
 
         var corpusEvaluator = File.ReadAllText(Path.Combine(
             FindRepositoryRoot(),
@@ -71,6 +105,49 @@ public sealed class ConservativeReplayWorkspaceTests
         Assert.Contains("SnapshotAdmissionCore.Evaluate", corpusEvaluator, StringComparison.Ordinal);
         Assert.DoesNotContain("RuleCatalog.Default.Execute", corpusEvaluator, StringComparison.Ordinal);
         Assert.Contains("SnapshotAdmissionCore.Evaluate", productionCheck, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RevisionFileReadRequiresOneExactCommitAndCommittedBlob()
+    {
+        using var repository = new TemporaryDirectory();
+        Git(repository.Path, "init", "-b", "dev");
+        Git(repository.Path, "config", "user.name", "StrataLint Fixture");
+        Git(repository.Path, "config", "user.email", "fixture@example.invalid");
+        var golden = Path.Combine(repository.Path, "Golden");
+        Directory.CreateDirectory(golden);
+        File.WriteAllText(
+            Path.Combine(golden, "values-kernels.toml"),
+            "kernel data\n",
+            new UTF8Encoding(false));
+        File.WriteAllText(
+            Path.Combine(repository.Path, "unrelated.txt"),
+            "unrelated\n",
+            new UTF8Encoding(false));
+        Git(repository.Path, "add", ".");
+        Git(repository.Path, "commit", "-m", "candidate");
+        var gateway = new GitRepositoryGateway(repository.Path);
+        var candidate = gateway.ResolveCurrentRevision();
+        var tree = GitText(repository.Path, "rev-parse", "HEAD^{tree}");
+        var blob = GitText(
+            repository.Path,
+            "rev-parse",
+            $"HEAD:{ValuesProjectionLoader.KernelDataPath}");
+        Git(repository.Path, "tag", "-a", "candidate-tag", "-m", "candidate tag");
+        var tag = GitText(repository.Path, "rev-parse", "candidate-tag^{tag}");
+
+        var entry = gateway.ReadRevisionFile(
+            candidate.Revision,
+            ValuesProjectionLoader.KernelDataPath);
+
+        Assert.Equal(ValuesProjectionLoader.KernelDataPath, entry.Path);
+        Assert.Equal("kernel data\n", Encoding.UTF8.GetString(entry.Bytes.AsSpan()));
+        Assert.All(
+            new[] { tree, blob, tag },
+            nonCommit => Assert.Throws<InvalidOperationException>(() =>
+                gateway.ReadRevisionFile(nonCommit, ValuesProjectionLoader.KernelDataPath)));
+        Assert.Throws<InvalidOperationException>(() =>
+            gateway.ReadRevisionFile(candidate.Revision, "Golden/missing.toml"));
     }
 
     [Fact]
@@ -113,6 +190,11 @@ public sealed class ConservativeReplayWorkspaceTests
 
     private static string GitText(string root, params string[] arguments) =>
         Encoding.UTF8.GetString(Git(root, (IEnumerable<string>)arguments).StandardOutput).Trim();
+
+    private static RepositorySnapshot Snapshot(params (string Path, string Text)[] files) =>
+        Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            RawRepositorySnapshot.Create(files.Select(file =>
+                RawRepositoryEntry.FromText(file.Path, file.Text))))).Snapshot;
 
     private static void Git(string root, params string[] arguments)
     {

@@ -13,7 +13,7 @@ public sealed class ContractEpochVerifierTests
     [Fact]
     public void CustodyTransferCoversAnExactRetiredPath()
     {
-        var baseline = ConservativePolicySnapshot.Current();
+        var baseline = BeforeResidenceEpoch();
         var candidate = baseline.WithExactExclusions([RetiredPath]);
         var custodian = new MachineCustodian(MachineCustodianKind.Loader, LoaderPath);
         var receipt = ContractEpochEvidenceReceipt.Custody(
@@ -40,7 +40,7 @@ public sealed class ContractEpochVerifierTests
     [Fact]
     public void AuthorityDischargeCoversAnExactRetiredRule()
     {
-        var baseline = ConservativePolicySnapshot.Current();
+        var baseline = BeforeResidenceEpoch();
         var candidate = baseline.WithoutRuleObligation("SL-016");
         var proof = ContractEpochEvidenceReceipt.UnreachabilityForRule(
             candidate.Root,
@@ -64,7 +64,7 @@ public sealed class ContractEpochVerifierTests
     [Fact]
     public void ShrinkWithoutTransferOrDischargeLeavesAnUncoveredObligation()
     {
-        var baseline = ConservativePolicySnapshot.Current();
+        var baseline = BeforeResidenceEpoch();
         var candidate = baseline.WithExactExclusions([RetiredPath]);
 
         var result = Verify(baseline, candidate, [], [], ContractEpochEvidenceIndex.Empty);
@@ -76,7 +76,7 @@ public sealed class ContractEpochVerifierTests
     [Fact]
     public void PlanScopeOutsideTheComputedDeltaIsRejected()
     {
-        var baseline = ConservativePolicySnapshot.Current();
+        var baseline = BeforeResidenceEpoch();
         var candidate = baseline.WithExactExclusions([RetiredPath]);
         var custodian = new MachineCustodian(MachineCustodianKind.Loader, LoaderPath);
         var receipt = ContractEpochEvidenceReceipt.Custody(
@@ -106,7 +106,7 @@ public sealed class ContractEpochVerifierTests
     [Fact]
     public void MissingMachineCustodianInvalidatesTheTransfer()
     {
-        var baseline = ConservativePolicySnapshot.Current();
+        var baseline = BeforeResidenceEpoch();
         var candidate = baseline.WithExactExclusions([RetiredPath]);
         var custodian = new MachineCustodian(MachineCustodianKind.Loader, LoaderPath);
         var receipt = ContractEpochEvidenceReceipt.Custody(
@@ -135,7 +135,7 @@ public sealed class ContractEpochVerifierTests
     {
         const string unshrinkable =
             "Meta/StrataLint/StrataLint.Cli/Conservative/ContractEpoch/TransitionPlan.cs";
-        var baseline = ConservativePolicySnapshot.Current();
+        var baseline = BeforeResidenceEpoch();
         var candidate = baseline.WithExactExclusions([unshrinkable]);
         var proof = ContractEpochEvidenceReceipt.UnreachabilityForPaths(
             candidate.Root,
@@ -160,7 +160,7 @@ public sealed class ContractEpochVerifierTests
     [Fact]
     public void CandidateAddedPlanCannotAuthorizeItsOwnShrink()
     {
-        var baseline = ConservativePolicySnapshot.Current();
+        var baseline = BeforeResidenceEpoch();
         var candidate = baseline.WithExactExclusions([RetiredPath]);
         var proof = ContractEpochEvidenceReceipt.UnreachabilityForPaths(
             candidate.Root,
@@ -211,7 +211,7 @@ public sealed class ContractEpochVerifierTests
     [Fact]
     public void CandidateEvidenceCannotAuthorizeConsumptionOfABasePlan()
     {
-        var baseline = ConservativePolicySnapshot.Current();
+        var baseline = BeforeResidenceEpoch();
         var candidate = baseline.WithExactExclusions([RetiredPath]);
         var proof = ContractEpochEvidenceReceipt.UnreachabilityForPaths(
             candidate.Root,
@@ -237,7 +237,7 @@ public sealed class ContractEpochVerifierTests
     [Fact]
     public void ConsumptionTrustsAPlanValidatedInAnEarlierBaseTree()
     {
-        var baseline = ConservativePolicySnapshot.Current();
+        var baseline = BeforeResidenceEpoch();
         var candidate = baseline.WithExactExclusions([RetiredPath]);
         var proof = ContractEpochEvidenceReceipt.UnreachabilityForPaths(
             candidate.Root,
@@ -302,4 +302,7 @@ public sealed class ContractEpochVerifierTests
         ContractEpochLedgerCodec.Read(ContractEpochLedgerCodec.Write(candidateEvents).AsSpan()),
         baselineEvidence,
         candidateEvidence));
+
+    private static ConservativePolicySnapshot BeforeResidenceEpoch() =>
+        ConservativePolicySnapshot.Current().WithExactExclusions([]);
 }

@@ -5,6 +5,12 @@ namespace StrataLint.Tests;
 
 public sealed class GoldenCorpusMaterializerTests
 {
+    private const string ValidGoldenFixturePath =
+        "Meta/StrataLint/StrataLint.Tests/Golden/Fixtures/valid.toml";
+    private const string AnchorCatalogPath =
+        "Meta/StrataLint/Generated/anchor-catalog.v1.json";
+    private const string SpecificationPath = "docs/develop/spec/golden-ledger-repo-spec.md";
+
     [Fact]
     public void MaterializerLoadsEveryCaseFromTheBaseTomlCorpusWithoutExpectedLabels()
     {
@@ -33,6 +39,31 @@ public sealed class GoldenCorpusMaterializerTests
         Assert.True(first.CanonicalBytes.AsSpan().SequenceEqual(second.CanonicalBytes.AsSpan()));
     }
 
+    [Fact]
+    public void MaterializerFailsClosedWhenTheExternalFixtureRegistryIsAbsent()
+    {
+        var repositoryRoot = FindRepositoryRoot();
+        using var temporary = new TemporaryDirectory();
+        Copy(
+            repositoryRoot,
+            temporary.Path,
+            ValidGoldenFixturePath,
+            "Golden/cases/valid.toml");
+        Copy(
+            repositoryRoot,
+            temporary.Path,
+            AnchorCatalogPath);
+        Copy(
+            repositoryRoot,
+            temporary.Path,
+            SpecificationPath);
+
+        var exception = Assert.Throws<FileNotFoundException>(
+            () => GoldenCorpusMaterializer.Materialize(temporary.Path));
+
+        Assert.Contains("Golden/fixture-registry.yaml", exception.Message, StringComparison.Ordinal);
+    }
+
     private static string FindRepositoryRoot()
     {
         for (var current = new DirectoryInfo(AppContext.BaseDirectory);
@@ -43,5 +74,27 @@ public sealed class GoldenCorpusMaterializerTests
         }
 
         throw new DirectoryNotFoundException("Could not locate repository root.");
+    }
+
+    private static void Copy(
+        string sourceRoot,
+        string destinationRoot,
+        string sourceRelativePath,
+        string? destinationRelativePath = null)
+    {
+        var relativePath = destinationRelativePath ?? sourceRelativePath;
+        var destination = Path.Combine(destinationRoot, relativePath);
+        Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+        File.Copy(Path.Combine(sourceRoot, sourceRelativePath), destination);
+    }
+
+    private sealed class TemporaryDirectory : IDisposable
+    {
+        internal TemporaryDirectory() => Path = Directory.CreateTempSubdirectory(
+            "stratalint-golden-fixture-").FullName;
+
+        internal string Path { get; }
+
+        public void Dispose() => Directory.Delete(Path, recursive: true);
     }
 }

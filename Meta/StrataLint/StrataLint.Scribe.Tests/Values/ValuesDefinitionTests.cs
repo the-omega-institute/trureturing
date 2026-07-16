@@ -3,6 +3,12 @@ namespace StrataLint.Scribe.Tests;
 public sealed class ValuesDefinitionTests
 {
     [Fact]
+    public void RepositoryCatalogUsesTheTopLevelGoldenDataHome()
+    {
+        Assert.Equal("Golden/values-kernels.toml", ValuesKernelDataLoader.RelativePath);
+    }
+
+    [Fact]
     public void CatalogSizeIsDefinedByTomlRows()
     {
         var directory = Directory.CreateTempSubdirectory("stratalint-values-catalog-");

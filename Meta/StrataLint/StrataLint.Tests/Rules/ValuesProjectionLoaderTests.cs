@@ -11,8 +11,12 @@ public sealed class ValuesProjectionLoaderTests
     private const string InputPath = ValuesProjectionLoader.InputPath;
     private const string LeanModulePath = ValuesProjectionLoader.LeanModulePath;
     private const string KernelDataPath = ValuesProjectionLoader.KernelDataPath;
-    private const string FutureKernelDataPath = ValuesProjectionLoader.FutureKernelDataPath;
-    private const string ArbitraryKernelDataPath = "Archive/values-kernels.toml";
+
+    [Fact]
+    public void ProjectionAttestationUsesTheTopLevelGoldenDataHome()
+    {
+        Assert.Equal("Golden/values-kernels.toml", KernelDataPath);
+    }
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     private static readonly ImmutableArray<string> InputPaths = ValuesProjectionLoader.InputPaths;
     private static readonly ImmutableArray<string> LegacyInputPaths =
@@ -59,7 +63,7 @@ public sealed class ValuesProjectionLoaderTests
     }
 
     [Fact]
-    public void ProjectionAcceptsCurrentKernelDataResidenceAndValidatesDefinitions()
+    public void CanonicalProjectionValidatesEmitterDefinitionsAndItsInputAttestation()
     {
         var inputs = Inputs(StrictUtf8.GetBytes("formal values producer input\n"));
         var snapshot = Snapshot(inputs, Projection(inputs));
@@ -72,36 +76,17 @@ public sealed class ValuesProjectionLoaderTests
     }
 
     [Fact]
-    public void ProjectionAcceptsFutureKernelDataResidence()
+    public void HistoricalKernelRelocationRequiresAnExplicitReplayPath()
     {
-        var paths = InputPathsFor(FutureKernelDataPath);
+        const string historicalPath = "Archive/values-kernels.toml";
+        var paths = InputPaths.SetItem(InputPaths.IndexOf(KernelDataPath), historicalPath);
         var inputs = Inputs(StrictUtf8.GetBytes("formal values producer input\n"), paths);
         var snapshot = Snapshot(inputs, Projection(inputs));
 
-        var projection = ValuesProjectionLoader.Load(snapshot);
+        Assert.Throws<FormatException>(() => ValuesProjectionLoader.Load(snapshot));
 
+        var projection = ValuesProjectionLoader.Load(snapshot, historicalPath);
         Assert.NotEmpty(projection.Definitions);
-    }
-
-    [Fact]
-    public void ProjectionRejectsBothKernelDataResidences()
-    {
-        var inputs = Inputs(StrictUtf8.GetBytes("formal values producer input\n"));
-        var snapshot = Snapshot(
-            inputs.Add((FutureKernelDataPath, StrictUtf8.GetBytes("future kernel data\n"))),
-            Projection(inputs));
-
-        Assert.Throws<FormatException>(() => ValuesProjectionLoader.Load(snapshot));
-    }
-
-    [Fact]
-    public void ProjectionRejectsArbitraryAttestedKernelDataResidence()
-    {
-        var paths = InputPathsFor(ArbitraryKernelDataPath);
-        var inputs = Inputs(StrictUtf8.GetBytes("formal values producer input\n"), paths);
-        var snapshot = Snapshot(inputs, Projection(inputs));
-
-        Assert.Throws<FormatException>(() => ValuesProjectionLoader.Load(snapshot));
     }
 
     [Fact]
@@ -206,11 +191,6 @@ public sealed class ValuesProjectionLoaderTests
             (Path: path, Bytes: path == InputPath
                 ? formalInput
                 : StrictUtf8.GetBytes("fixture for " + path + "\n"))).ToImmutableArray();
-
-    private static ImmutableArray<string> InputPathsFor(string kernelDataPath) =>
-        InputPaths.Select(path => string.Equals(path, KernelDataPath, StringComparison.Ordinal)
-            ? kernelDataPath
-            : path).ToImmutableArray();
 
     private static ImmutableArray<byte> LegacyProjection(
         ImmutableArray<(string Path, byte[] Bytes)> inputs)

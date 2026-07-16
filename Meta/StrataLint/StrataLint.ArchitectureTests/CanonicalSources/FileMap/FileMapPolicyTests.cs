@@ -5,26 +5,6 @@ namespace StrataLint.ArchitectureTests;
 
 public sealed class FileMapPolicyTests
 {
-    private const string DigestionAndAnchorsPath =
-        "Meta/StrataLint/Golden/cases/digestion-and-anchors.toml";
-    private const string ProtectedSemanticsPath =
-        "Meta/StrataLint/Golden/cases/protected-semantics.toml";
-    private const string StructureAndIdentitiesPath =
-        "Meta/StrataLint/Golden/cases/structure-and-identities.toml";
-    private const string StructuredLedgerPath =
-        "Meta/StrataLint/Golden/cases/structured-ledger.toml";
-    private const string ValuesKernelsPath =
-        "Meta/StrataLint/Golden/values-kernels.toml";
-
-    private static readonly string[] KnownResidenceViolations =
-    [
-        DigestionAndAnchorsPath,
-        ProtectedSemanticsPath,
-        StructureAndIdentitiesPath,
-        StructuredLedgerPath,
-        ValuesKernelsPath,
-    ];
-
     [Fact]
     public void RepositoryFilesConformToTheCanonicalFileMap()
     {
@@ -39,20 +19,19 @@ public sealed class FileMapPolicyTests
     }
 
     [Fact]
-    public void ResidenceViolationsAreExactlyTheFrozenResidenceEpochInventory()
+    public void ResidenceEpochIsClosedWithNoProtectedSurfaceData()
     {
         var root = RepositoryLayout.FindRoot();
         var manifest = FileMapLoader.LoadRepository(root);
 
         var actual = FileMapPolicy.ResidenceViolations(root);
 
-        Assert.Equal(KnownResidenceViolations, actual);
+        Assert.Empty(actual);
         Assert.Equal("RESIDENCE-EPOCH", manifest.ResidencePolicy.CaseId);
         Assert.Equal("data-must-live-outside-Meta/StrataLint", manifest.ResidencePolicy.Desired);
-        Assert.Equal(KnownResidenceViolations.Length, manifest.ResidencePolicy.KnownViolationCount);
-        Assert.Equal(
-            "known-violations-frozen-under-monitoring",
-            manifest.ResidencePolicy.Status);
+        Assert.Equal(0, manifest.ResidencePolicy.KnownViolationCount);
+        Assert.Equal("closed", manifest.ResidencePolicy.Status);
+        Assert.Equal(FileMapKind.Data, Assert.Single(manifest.Match("Golden/fixture-registry.yaml")).Kind);
     }
 
     [Fact]

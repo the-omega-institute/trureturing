@@ -37,8 +37,8 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
 | Domain/stratum duplication policy | All tracked C# is parsed with Roslyn; a dictionary indexer mapping a registered domain literal to `S0` through `S4` is rejected (`CanonicalSourceDuplicationPolicy.cs:69`). | Yes: `RegisteredDomainDictionaryEntryIsRejectedByTheRedFixture`; `S0` and `S4` passed. | Copied `Meta/domains.yaml` mappings in one syntax shape. |
 | Atomizer identifier duplication policy | Atomizer identifiers loaded from `Meta/BACKFILL.yaml` are rejected in tracked C# string literals outside `AtomizerRegistry.cs`; the registry is the sole dispatch authority. | Yes: `LedgerAtomizerIdLiteralIsRejectedByTheRedFixture`; the registry-owner counterfixture also passed. | Ledger atomizer IDs copied into C# dispatch or fixture text instead of using `AtomizerRegistry`. |
 | Specification passage duplication policy | Tracked C# and repository TOML reject exact copied specification passages of at least 64 characters and 24 CJK characters (`CanonicalSourceDuplicationPolicy.cs`). | Yes: `LongExactSpecificationPassageIsRejectedByTheRedFixture` covers C# and TOML; short and rewritten text is the green counterfixture. | Long Chinese passages copied byte-for-byte from the mutable canonical specification into code or corpus fixtures. Reworded text, non-CJK passages, encodings, and other file formats remain outside this narrow predicate. |
-| Golden corpus storage policy | All tracked C# is parsed with Roslyn; a literal-name `new GoldenCase(...)` or legacy literal-name `C(...)` inside `GoldenCorpus` is rejected (`GoldenCorpusStoragePolicy.cs`). Canonical case bytes are loaded only from `Meta/StrataLint/Golden/cases/*.toml`. | Yes: `CSharpGoldenCaseDeclarationIsRejectedByTheRedFixture` covers both old construction shapes; `SchemaDeclarationIsNotMistakenForCaseData` is the green counterfixture; the repository/TOML authority tests passed. | Golden case names, mutations, changes, and expected diagnostics embedded in C# instead of the TOML authority. The predicate deliberately permits schema construction from parsed variables. |
-| FILEMAP custody and producer policy | `Meta/FILEMAP.toml` is parsed fail-closed; every tracked/unignored path matches exactly one pattern, registry root files equal tracked root files, generated files match the producer inventory plus `emit-check`, data names an existing program verifier, and class directories remain pure. Residence policy states the no-data-under-`Meta/StrataLint/` ideal while marking and counting the current epoch violations. | Yes: unclassified, ambiguous, registry drift, missing loader, missing/mismatched producer, missing generated `produced_by`, directory mixing, unmarked protected-surface data, exact residence inventory drift, data-to-generated reference, and Lean-to-generated import red fixtures. | Hand-maintained or implicit file ownership, generated outputs without an executable producer/check, and unmarked or newly added protected-surface data. The bounded dependency predicate remains recorded under `HC-OPEN-012`; the frozen current violations remain open under `RESIDENCE-EPOCH`. |
+| Golden corpus storage policy | All tracked C# is parsed with Roslyn; a literal-name `new GoldenCase(...)` or legacy literal-name `C(...)` inside `GoldenCorpus` is rejected (`GoldenCorpusStoragePolicy.cs`). Canonical case bytes are loaded only from `Golden/cases/*.toml`; the synthetic registry instance is strict-loaded from `Golden/fixture-registry.yaml`. | Yes: `CSharpGoldenCaseDeclarationIsRejectedByTheRedFixture` covers both old construction shapes; `SchemaDeclarationIsNotMistakenForCaseData` is the green counterfixture; missing external registry and repository/TOML authority tests passed. | Golden case names, mutations, changes, expected diagnostics, or registry instances embedded in C# instead of the top-level Golden data authority. The predicate deliberately permits schema construction from parsed variables. |
+| FILEMAP custody and producer policy | `Meta/FILEMAP.toml` is parsed fail-closed; every tracked/unignored path matches exactly one pattern, registry root files equal tracked root files, generated files match the producer inventory plus `emit-check`, data names an existing program verifier, and class directories remain pure. Residence policy states the no-data-under-`Meta/StrataLint/` ideal and now freezes the closed zero-violation state. | Yes: unclassified, ambiguous, registry drift, missing loader, missing/mismatched producer, missing generated `produced_by`, directory mixing, unmarked protected-surface data, exact residence inventory drift, data-to-generated reference, and Lean-to-generated import red fixtures. | Hand-maintained or implicit file ownership, generated outputs without an executable producer/check, and unmarked or newly added protected-surface data. The bounded dependency predicate remains recorded under `HC-OPEN-012`; `RESIDENCE-EPOCH` is closed. |
 | Repository path literal policy | All tracked C# string literals are checked. A value with at least two `/` characters that exactly names an existing file is rejected unless it directly defines a `const string` (`RepositoryPathLiteralPolicy.cs:22`). | Yes: `ExistingMultisegmentPathLiteralIsRejectedByTheRedFixture`; green const and nonexistent-path counterfixtures also passed. | Consumers copying existing repository file paths. |
 | Default injection policy | Effectively public members on effectively public `*Dsl` or `*Builder` types may not use a literal GID, case ID, or canonical anchor as a parameter default (`DefaultInjectionPolicy.cs:20`). | Yes: `CanonicalLiteralDefaultIsRejectedByTheRedFixture`; GID and case variants passed. | Hidden canonical policy injected through public defaults. |
 | Theory isolation, sources | All Lean and all non-ingestion C# reject internal theory paths and the retired theory-family tokens; Lean task autopsy text and the ingestion whitelist are explicit exceptions (`TheoryIsolationPolicy.cs:46,76`). | Yes: Lean header, non-autopsy task, and C# citation negative fixtures passed. | Formal/program code coupled to internal theory reference sources or numbering families. |
@@ -200,6 +200,101 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
   case data. The values loader keeps the old writer input but accepts exactly one of the
   old and future residences, with the same ordered manifest and hashes; both or neither
   fail closed. P2 performs the move and contracts this temporary dual-residence domain.
+- Residence P2 fixture-state autopsy: the first full non-C0 run failed 12/639 because
+  synthetic contract comparisons derived their pre-P2 baseline from the now post-P2
+  `Current()` policy, erasing the intended retirement delta, while GoldenRecord's
+  temporary repository omitted the newly external fixture registry. The fixture origins
+  now declare an empty-exclusion predecessor explicitly and copy every required external
+  input; the exact 26-test failing selection passed before ceremony work resumed. The
+  next architecture scan then caught three real paths inline in the new missing-registry
+  fixture; each was promoted to a named test constant without weakening the path policy.
+- Residence P2 C0 replay autopsy: base `3119316` evaluated preimage `5fae3a2`; the actual
+  candidate was blocked by SL-016 and SL-022, the actual baseline flipped to SL-018, and
+  the finite replay preserved 37 base admits but only 36 candidate admits. Contract
+  accounting still recorded all five retired exact paths with `uncovered_obligations=[]`.
+  The roots were twelve stale spec-acceptance boundaries after the P2 spec edit and the
+  baseline values attestation naming its former kernel-data residence. The first canonical
+  `make ingest BASE=origin/dev` also failed closed because CAS-backed `atomizer:none`
+  boundaries were returned unchanged; ingest now requires each trusted CAS blob to have
+  one byte-exact source match and rejects missing, changed, or ambiguous matches. Its
+  successful rerun changed only the twelve start/end pairs. Production remains single-home
+  at `Golden/values-kernels.toml`; only conservative baseline replay can pass an explicit
+  historical suffix path selected by a unique byte-exact relocation, with missing, drift,
+  and ambiguity all failing closed.
+- The next C0 replay restored the baseline tree and all 37/37 admits, then rejected the
+  actual candidate only because the four new ingest regressions pushed
+  `DigestionLedgerTests.cs` to 821 lines. The tests moved intact to a partial-class sibling;
+  both files are below the SL-003 ceiling and no capacity rule was weakened.
+- After that split, three exact-base replays emitted no certificate because the candidate
+  worker exhausted its unchanged 180-second budget. The replay-only values resolver had
+  loaded the entire candidate revision to obtain one canonical TOML blob; after the CAS
+  epoch, `ReadRevision` expands that scan into a `git show` per repository file. The
+  resolver now reads only the exact-commit, exact-path regular blob while actual-candidate
+  admission retains its complete snapshot. The timeout was not raised or bypassed.
+- The repaired replay against base `df14b4c43e001308e2991d8096f8500b8f167856`
+  and preimage `a2c5f008d3169dc771c7a8ff30657ec9c1c5df42` then completed within
+  the unchanged budget: zero findings, 117 golden cases, 118 total corpus cases, six
+  contract attacks, 37/37 preserved admits, the exact five retirements, and no retired
+  rule or uncovered obligation. Before that certificate could be installed, `origin/dev`
+  advanced through PR #131; the branch merged it without rebase and discarded the stale
+  certificate as a final authority rather than pinning an obsolete judge.
+- Independent code-quality review then found that the exact-path Git helper checked only
+  the OID's hexadecimal shape: `git ls-tree` also accepts tree and annotated-tag OIDs, so
+  those object types could violate the helper's exact-commit contract. A regression first
+  reproduced both false accepts; the helper now requires `git cat-file -t` to return
+  `commit`, while valid commits still read one exact regular blob and missing paths remain
+  closed. The review-fixed commit became a new clean ceremony preimage.
+- The final C0 renewal binds exact base `88de8b8666bf3292c11f62d662c7e9e46c68385a`,
+  preimage `b929bff94caead1267329d429865fa3695262156`, and tree
+  `9ab505b1d0f1c2b5291ae1ee79c0de7098381d58`, with certificate SHA-256
+  `b7952b9296cb240685142b60540f8bbc1b85f30ffc41cdf2801a97fc88548dbf`.
+  It repeats the complete 117/118/6 and 37/37 evidence, admits the actual baseline under
+  both harnesses, admits the actual candidate provisionally with only SL-022 diagnostics,
+  consumes both RESIDENCE plans exactly once, retires exactly the five registered paths,
+  and reports `retired_rule_obligations=[]` and `uncovered_obligations=[]`.
+- The first final `make gate BASE=origin/dev` attempt completed its build, 911 tests,
+  selftest, both Lean reports, emission check, and content admission, then its baseline
+  corpus worker exceeded the unchanged 180-second budget. Process evidence showed an
+  unrelated formalization worktree running another conservative corpus worker at the
+  same time; the identical review-fixed C0 had already completed without that CPU
+  contention. No timeout or rule was weakened: this lane waited for the external gate to
+  finish before rerunning the same command from a clean tree.
+- During the final replay, `origin/dev` advanced again through PR #132. The branch merged
+  exact base `f91ec8379d049c4d74bf584bef5e0533a3d1f4cb` without rebase. FILEMAP's
+  conflict retained both independently added loader identities; the digestion conflict
+  kept the P2-only CAS boundary helper while using dev's extracted shared test support.
+  The first targeted compile then exposed that a `using static` directive is file-scoped,
+  not inherited by a partial-class sibling. Adding the same support import to that sibling
+  changed the exact red compile into 24/24 digestion and 17/17 FILEMAP tests.
+- The renewed C0 now binds preimage `797f0f94e6c55a615d4d550e9951a874a73a23b5`,
+  tree `a71d478795f91eafdab5abb8c87a3bbb83394fcf`, and certificate SHA-256
+  `7d0525e55269fee993e6a3fa174a770acdacffa09b896148043dc2d0f639c6c2`.
+  Both base-owned Lean reports converge at `59bfd4fd14f72b05aaaa910022e1f9388891886e90eb1f3fb3ffd16aade5c545`;
+  replay again reports 117/118/6 cases, 37/37 preserved admits, zero findings, the exact
+  five retirements, and empty retired-rule and uncovered-obligation sets. Both harnesses
+  admit the actual baseline and provisionally admit the actual candidate with only SL-022.
+- The first post-ceremony `make test` then read the repository's canonical raw Lean report
+  left by the pre-merge gate, while the renewed report existed only in the retained C0
+  dossier. Scribe discovery rejected the three PR #132 modules missing from that stale
+  input, yielding the sole failure out of 916 tests. The same base-owned producer emitted
+  the canonical path at the already certified
+  `59bfd4fd14f72b05aaaa910022e1f9388891886e90eb1f3fb3ffd16aade5c545`
+  address; the unchanged test command then passed 916/916. No source rule or test
+  expectation changed.
+- After that full replay passed, `origin/dev` advanced through PR #136 with one
+  `CLAUDE.md` governance anchor. The branch merged exact base
+  `015d6d06d394aea2267fcd02c8a0b70a0a8c2f28` without rebase or conflict. Because C0
+  binds exact repository identities, neither the preceding certificate nor its completed
+  verification was reused for the final push.
+- The final renewed C0 binds clean merge preimage
+  `4d569d54170467094332e7cd9483dcc5bdc63e92`, tree
+  `1da2c54ce459e56d21c4de3b375165f8a5bec72a`, and certificate SHA-256
+  `1654c7f348da4a3a54ba35bcf7001e8dd9c0438a1cd1ceefe4bade2f086047e2`.
+  Fresh reports from the base-owned producer again converge at
+  `59bfd4fd14f72b05aaaa910022e1f9388891886e90eb1f3fb3ffd16aade5c545`;
+  replay remains 117/118/6 and 37/37 with zero findings, the exact five retirements,
+  and empty retired-rule and uncovered-obligation sets. Both harnesses admit the actual
+  baseline and provisionally admit the actual candidate with only SL-022.
 
 ## Residual scan
 
@@ -216,7 +311,7 @@ theories, and bootstrap admission are outside this anti-hard-code inventory.
 | Internal theory references outside managed sources | `docs/develop/theory/` and ingestion/status code intentionally retain the reference inputs and provenance vocabulary. | TheoryIsolation scans Lean, non-ingestion C#, and the generated catalog, not all prose/scripts/config. SL-016 governs ingestion receipts. | Guarded where references could become formal/program authority; intentionally open as reference data. "No theory token anywhere" would delete the source being digested. |
 | Encoded, split, interpolated, or computed duplication | Examples can be manufactured as concatenation, base64, hash lookup, arithmetic, generated code, or runtime I/O. | Current policies deliberately match closed syntax shapes. | `HC-OPEN-009`: deciding arbitrary semantic equivalence or whether a computed value has the wrong authority reduces to program/intent equivalence. Every finite text rule has trivial encoding escapes; broadening it produces both bypasses and false positives. |
 | Values schema epoch transition | Expand admitted attestation v1 or v2; migrate moved the canonical writer and artifact to v2; contract completed in this PR by removing v1 read support and retaining v1 only as an SL-018 negative fixture (expand-migrate-contract, CLAUDE.md section 6). | The conservative verifier observes a finite base-owned corpus plus the actual trees, not every historically admitted snapshot. | `VALUES-SCHEMA-EPOCH` (open): the active schema epoch/domain is not yet machine-defined, so a later v1 contract can be corpus-conservative without proving the literal universal conservative-extension law. |
-| Data residence epoch | `Meta/StrataLint/Golden/cases/{digestion-and-anchors,protected-semantics,structure-and-identities,structured-ledger}.toml` and `Meta/StrataLint/Golden/values-kernels.toml` are the five known `kind=data` violations. C0 certificate and frozen events share the future relocation batch but are `kind=ledger`, not residence violations. | FILEMAP marks the two matching entries `residence_violation=true`, records count 5 and case `RESIDENCE-EPOCH`, and the repository test asserts the expanded path set equals the literal known inventory. SL-022 continues to protect Golden and `Blueprint/**/*.scribe.cs`; `CONTRACT-EPOCH` P0 now supplies the predecessor-owned obligation comparator. | `RESIDENCE-EPOCH` (P1 registered; P2 open): `RESIDENCE-EPOCH-GOLDEN-CASES-V1` and `RESIDENCE-EPOCH-VALUES-KERNELS-V1` bind the exact five paths, loader custodians, base tree, and target policy root with authority `none`. A later base-owned consumption migrates the files and renews their FILEMAP/C0 custody without widening scope or replaying either plan. |
+| Data residence epoch | The four canonical case files and `values-kernels.toml` live under top-level `Golden/`; `Golden/fixture-registry.yaml` owns the formerly embedded synthetic registry instance. The C0 certificate and frozen events remain `kind=ledger` in `Meta/StrataLint/Golden/`. | FILEMAP records count 0 and status `closed`; the repository test requires an empty protected-surface data inventory. TOWER/C0 content-addresses the strict loaders, external fixture registry, and canonical case bytes. | `RESIDENCE-EPOCH` closed in P2: the base-owned ledger consumes `RESIDENCE-EPOCH-GOLDEN-CASES-V1` and `RESIDENCE-EPOCH-VALUES-KERNELS-V1` exactly once; the exact five old paths are excluded without matcher drift, replay, same-PR authority, or uncovered obligations. |
 | Bootstrap protected-surface representation | `BootstrapGate.cs:138-166` keeps the trust-root path classification and the retired Definitions prefix exception in executable code. External data would make review and generation easier, but would also make the policy that decides what is protected depend on another mutable artifact. | SL-022 and `TrustTopologyTests` exercise the in-process predicate; `DefinitionsRetirementTests` forbids the exempt directory from returning. The v1 predecessor codec still validates candidate diagnostics with its own predicate. | `HC-OPEN-010`: keep the protection surface embedded until an external representation can be content-addressed by a higher trust layer. Remove the retired-prefix exception only after a predecessor codec admits candidate-added protection; doing both in one PR currently fails closed before conservative comparison. |
 | Diagnostic language consistency | English route/parser failures coexist with Chinese SL-021 and bootstrap messages (`Routing.cs:80,85`; `RepositoryRules.Admission.cs:77,82`; `CliApplication.cs:120,124`). Atomizer diagnostics added in this unit are English. | No diagnostic locale/style schema exists; golden cases intentionally bind some current bytes. | `HC-OPEN-011`: terminology and locale are user-interface policy, not a correctness literal. Standardize only with a declared diagnostic style plus an atomic golden-corpus migration; do not mix that migration into registry work. |
 | FILEMAP dependency discovery | Machine-readable data can name generated paths through encoding, concatenation, interpolation, aliases, or runtime computation; Lean can express imports outside the current one-module line grammar. | FILEMAP scans decoded TOML/YAML/JSON/Scribe text for concrete generated paths and resolves simple Lean imports. | `HC-OPEN-012`: the active check is an honest low-false-positive subset, not semantic program equivalence. Encoded/computed references and richer Lean import syntax remain detectable only by future structured loaders or compiler-derived dependency edges. |
@@ -242,7 +337,7 @@ recorded pressure gate. Per the no-prebuild rule, this section records debt only
 | Site | Why it is scoped rather than global debt |
 |---|---|
 | `StrataLint.Engine/Rules/ValuesProjectionLoader.cs:25-43,89` and `StrataLint.Scribe/Writers/CanonicalValuesWriter.cs:45` | These constants bind the D5 values pipeline specifically: D5 Lean truth, D5 kernel data, and the D5 evidence projection. The constant ID set itself lives only in emitter data. A future theory needs its own admitted source before sharing this path. |
-| `StrataLint.Cli/Conservative/GoldenCorpusMaterializer.cs:272-622`, `StrataLint.Tests/Rules/RuleFixture.cs`, `StrataLint.Cli/Golden/GoldenCorpus.cs`, and `Meta/StrataLint/Golden/cases/*.toml` | The conservative corpus is an explicit synthetic fixture for the sole instantiated M0 theory. Those D5 examples remain valid fixtures after another theory is admitted. |
+| `StrataLint.Cli/Conservative/GoldenCorpusMaterializer.cs:272-622`, `StrataLint.Tests/Rules/RuleFixture.cs`, `StrataLint.Cli/Golden/GoldenCorpus.cs`, and `Golden/{cases/*.toml,fixture-registry.yaml}` | The conservative corpus is an explicit synthetic fixture for the sole instantiated M0 theory. Those D5 examples remain valid fixtures after another theory is admitted. |
 | `Blueprint/D5/**/*.scribe.cs` and `StrataLint.Scribe.Tests/**/*.cs` | These are typed D5 document data and tests of those documents, not a generic theory registry. |
 | `StrataLint.Engine/Rules/RuleCatalog.cs:194-196`, `StrataLint.Cli/Commands/CliApplication.cs:120-124`, and `StrataLint.ArchitectureTests/CanonicalSources/TheoryIsolationPolicy.cs:19` | These literals cite permanent D5 task cases or the current D5 ingestion/autopsy grammar. The case identities must not be generalized or renumbered. |
 
@@ -290,7 +385,7 @@ The three phases are deliberately separated across commits and consumers.
 |---|---|---|
 | P0 mechanism | **complete** | Protection matchers plus active-rule descriptors have a canonical policy root. The exact-base comparator loads the closed `events.jsonl`/content-addressed evidence store from both frozen commits, accepts only the sealed transfer/discharge union, computes complete retirement atoms and `uncovered_obligations`, separates candidate registration evidence from base consumption evidence, enforces one-shot append-only consumption, and rejects authority-ceiling targets. Six base-owned attack cases renew the C0 corpus. No plan is registered in this phase. |
 | P1 registration | **RESIDENCE registered; E3 open** | `RESIDENCE-EPOCH` registers two exact, root-bound loader-custody plans for its five paths; candidate receipts validate but have authority `none` in this comparison. Its first real store instance exposed two P0 bootstrap gaps: inline test-path copies were centralized under one test-fixture const, and the three exact ledger/evidence artifacts were registered in the candidate registry so the base path-policy closed world remains intact. `DIGESTION-LEDGER-EPOCH` E3 still owes its separate registration. |
-| P2 consumption | **not part of P0** | Each consumer may append one consume event only after its plan is present and pending in the exact base. Coverage trusts only base receipts, validates candidate custodians, requires exact delta scope and an empty uncovered set, and leaves no reusable exception. See the RESIDENCE row above and E3 below. |
+| P2 consumption | **RESIDENCE complete; E3 open** | `RESIDENCE-EPOCH` appends one consume event for each exact-base plan; coverage trusts only base receipts, validates both loader custodians, settles exactly five retired paths with an empty uncovered set, and leaves no reusable exception. E3 remains independent and open below. |
 
 P0 is a pure conservative verifier extension. There is intentionally no
 `Meta/contract-epoch/` data instance in this change; the first such instance belongs to

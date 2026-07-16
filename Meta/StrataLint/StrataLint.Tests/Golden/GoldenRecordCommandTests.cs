@@ -9,6 +9,7 @@ public sealed class GoldenRecordCommandTests
     [
         RuleFixture.AnchorCatalogPath,
         RuleFixture.SpecificationPath,
+        GoldenFixtureRegistryLoader.RelativePath,
     ];
 
     [Fact]
