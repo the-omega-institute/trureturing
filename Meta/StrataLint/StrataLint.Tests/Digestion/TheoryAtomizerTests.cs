@@ -251,6 +251,39 @@ public sealed class TheoryAtomizerTests
         Assert.Contains("unknown observer claim lead", error.Message, StringComparison.Ordinal);
     }
 
+    [Theory]
+    [InlineData("**Q1(伪造标签):推出。** claim。")]
+    [InlineData("**Q2(伪造标签):条件推出。** claim。")]
+    [InlineData("**Q3(伪造标签):搬家。** claim。")]
+    [InlineData("**Q4(伪造标签)。** claim。")]
+    [InlineData("**已结案(伪造标签):** claim。")]
+    [InlineData("**遗留(伪造标签):** claim。")]
+    public void ObserverAdapterRejectsMalformedKnownPrefixBoldLead(string malformedLead)
+    {
+        var bytes = Encoding.UTF8.GetBytes(
+            $"# Observer\n\n{malformedLead}\n\n"
+            + "**定理(观察者代数的唯一形态)。** known。\n");
+
+        var error = Assert.Throws<TheorySourceFormatException>(() =>
+            AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes));
+
+        Assert.Contains("unknown observer claim lead", error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ObserverAdapterRejectsADuplicateClaimLocator()
+    {
+        var bytes = Encoding.UTF8.GetBytes(
+            "# Observer\n\n"
+            + "**定理(观察者代数的唯一形态)。** first。\n\n"
+            + "**定理(观察者代数的唯一形态)。** second。\n");
+
+        var error = Assert.Throws<TheorySourceFormatException>(() =>
+            AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes));
+
+        Assert.Contains("duplicate observer claim locator", error.Message, StringComparison.Ordinal);
+    }
+
     [Fact]
     public void GictIngestionSubtractsNormalizedMatchAndAdmitsSemanticRewriteAsResidual()
     {

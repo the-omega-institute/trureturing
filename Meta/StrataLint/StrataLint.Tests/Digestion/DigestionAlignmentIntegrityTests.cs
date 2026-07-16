@@ -327,14 +327,23 @@ public sealed partial class DigestionAlignmentTests
             StringComparison.Ordinal));
     }
 
-    [Fact]
-    public void AdmissionRejectsCloningASettledCoarseReplacementReceipt()
+    [Theory]
+    [InlineData("coarse/source")]
+    [InlineData("coarse/renamed")]
+    public void AdmissionRejectsCloningASettledCoarseReplacementReceipt(string astPath)
     {
         var (sourceBytes, captured, plan, settled) = SettledCoarseReplacement();
         var source = Assert.Single(settled.RequireDigestionSources());
         var coarse = source.Entries.Single(static entry => entry.AtomId == "coarse-receipt");
         var candidate = settled.WithDigestionSources(
-            [source with { Entries = source.Entries.Add(coarse with { AtomId = "coarse-clone" }) }]);
+            [source with
+            {
+                Entries = source.Entries.Add(coarse with
+                {
+                    AtomId = "coarse-clone",
+                    AstPath = astPath,
+                }),
+            }]);
 
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
@@ -347,6 +356,105 @@ public sealed partial class DigestionAlignmentTests
             result.AlignmentFor("coarse-clone"));
         Assert.Contains(result.Findings, finding => finding.Contains(
             "new coarse receipt after fine atomization: coarse-clone",
+            StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void AdmissionRejectsRenamingASettledCoarseReplacementSource()
+    {
+        var (sourceBytes, captured, plan, settled) = SettledCoarseReplacement();
+        var source = Assert.Single(settled.RequireDigestionSources());
+        const string renamedSourceId = "renamed-source";
+        var candidate = settled.WithDigestionSources(
+            [source with
+            {
+                SourceId = renamedSourceId,
+                Entries = source.Entries
+                    .Select(entry => entry with { SourceId = renamedSourceId })
+                    .ToImmutableArray(),
+            }]);
+
+        var result = DigestionLedgerAligner.Evaluate(
+            candidate,
+            Snapshot(sourceBytes, new[] { captured }.Concat(plan.CasObjects)),
+            settled,
+            DigestionAlignmentMode.Admission);
+
+        Assert.Contains(result.Findings, finding => finding.Contains(
+            "coarse replacement source changed or disappeared: source",
+            StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void AdmissionRejectsDisablingASettledCoarseReplacementAtomizer()
+    {
+        var (sourceBytes, captured, plan, settled) = SettledCoarseReplacement();
+        var source = Assert.Single(settled.RequireDigestionSources());
+        var candidate = settled.WithDigestionSources(
+            [source with
+            {
+                Atomizer = AtomizerRegistry.NoAtomizerId,
+                AcknowledgedStale = [],
+                Entries = source.Entries
+                    .Select(entry => entry with { Atomizer = AtomizerRegistry.NoAtomizerId })
+                    .ToImmutableArray(),
+            }]);
+
+        var result = DigestionLedgerAligner.Evaluate(
+            candidate,
+            Snapshot(sourceBytes, new[] { captured }.Concat(plan.CasObjects)),
+            settled,
+            DigestionAlignmentMode.Admission);
+
+        Assert.Contains(result.Findings, finding => finding.Contains(
+            "settled coarse replacement requires a registered atomizer: source",
+            StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void AdmissionRejectsRenamingTheSourceDuringInitialCoarseReplacement()
+    {
+        var sourceBytes = Encoding.UTF8.GetBytes(
+            "# Observer\n\n**定理(观察者代数的唯一形态)。** claim。\n");
+        var coarseBytes = ImmutableArray.CreateRange(sourceBytes);
+        var coarse = new DigestionAtom(
+            "coarse/source",
+            0,
+            sourceBytes.Length,
+            coarseBytes,
+            DigestionFingerprint.ComputeOpaque(coarseBytes.AsSpan()),
+            []);
+        var captured = DigestionCasStore.Capture(coarseBytes.AsSpan());
+        var baseline = BackfillInventoryLoader.Load(Ledger(
+            [],
+            CasEntry("coarse-receipt", coarse, captured.Reference)));
+        var source = Assert.Single(baseline.RequireDigestionSources());
+        const string renamedSourceId = "renamed-source";
+        var candidate = baseline.WithDigestionSources(
+            [source with
+            {
+                SourceId = renamedSourceId,
+                Atomizer = AtomizerRegistry.ObserverId,
+                Entries = source.Entries
+                    .Select(entry => entry with
+                    {
+                        SourceId = renamedSourceId,
+                        Atomizer = AtomizerRegistry.ObserverId,
+                    })
+                    .ToImmutableArray(),
+            }]);
+
+        var result = DigestionLedgerAligner.Evaluate(
+            candidate,
+            Snapshot(sourceBytes, [captured]),
+            baseline,
+            DigestionAlignmentMode.Admission);
+
+        Assert.Equal(
+            DigestionReceiptAlignment.Rejected,
+            result.AlignmentFor("coarse-receipt"));
+        Assert.Contains(result.Findings, finding => finding.Contains(
+            "coarse replacement source changed or disappeared: source",
             StringComparison.Ordinal));
     }
 
