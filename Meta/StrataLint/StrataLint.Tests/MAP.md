@@ -10,6 +10,7 @@
 ## Buckets
 
 - `Admission/`: CLI outcomes, production admission, topology, and review regressions.
+- `Authorization/`: Hearts ledger format, append-only history, and exact SL-008 delta behavior.
 - `Commands/`: command parsing and end-to-end command behavior.
 - `Conservative/`: base-owned replay, policy roots, contract-epoch schemas/stores,
   obligation comparison, and conservative certificate behavior;

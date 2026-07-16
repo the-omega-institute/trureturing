@@ -130,6 +130,19 @@ internal static partial class RepositoryRules
     private static ImmutableArray<RuleFinding> Hearts(RuleEvaluationContext context)
     {
         const string path = HeartsPath;
+        ImmutableArray<HeartsAuthorizationEntry> authorizations;
+        try
+        {
+            authorizations = HeartsAuthorizationLedger.ReadAppendOnly(
+                context.Current,
+                context.Baseline);
+        }
+        catch (FormatException exception)
+        {
+            return ImmutableArray.Create(
+                new RuleFinding(HeartsAuthorizationLedger.Path, exception.Message));
+        }
+
         var hadBaseline = context.Baseline.TryGetFile(path, out _);
         var hasCurrent = context.Current.TryGetFile(path, out _);
         if (hadBaseline && !hasCurrent)
@@ -164,10 +177,40 @@ internal static partial class RepositoryRules
             return ImmutableArray.Create(new RuleFinding(path, $"Hearts semantic report failed: {current.Error}"));
         }
 
-        return CanonicalStatementWriter.WriteModule(repoPath, baseline).AsSpan()
-            .SequenceEqual(CanonicalStatementWriter.WriteModule(repoPath, current).AsSpan())
-                ? ImmutableArray<RuleFinding>.Empty
-                : ImmutableArray.Create(new RuleFinding(path, "semantic declaration identities and types are frozen"));
+        if (CanonicalStatementWriter.WriteModule(repoPath, baseline).AsSpan()
+            .SequenceEqual(CanonicalStatementWriter.WriteModule(repoPath, current).AsSpan()))
+        {
+            return ImmutableArray<RuleFinding>.Empty;
+        }
+
+        var baselineStatements = CanonicalStatementWriter.DeclarationStatementIds(repoPath, baseline);
+        var currentStatements = CanonicalStatementWriter.DeclarationStatementIds(repoPath, current);
+        var addedStatements = currentStatements.Except(baselineStatements).ToImmutableArray();
+        var isExactSingleAppend = currentStatements.Length == baselineStatements.Length + 1
+            && addedStatements.Length == 1
+            && baselineStatements.All(currentStatements.Contains);
+        if (isExactSingleAppend)
+        {
+            var addedStatement = addedStatements[0];
+            var declarations = current.Declarations
+                .Where(declaration => declaration.IncludeInStatement
+                    && declaration.NameKey == addedStatement.DeclarationNameKey
+                    && declaration.Kind == addedStatement.Kind)
+                .ToImmutableArray();
+            if (declarations.Length == 1)
+            {
+                if (authorizations.Any(entry =>
+                    entry.StatementName == declarations[0].Name
+                    && entry.StatementSha256
+                        == addedStatement.StatementId.Value["sha256:".Length..]))
+                {
+                    return ImmutableArray<RuleFinding>.Empty;
+                }
+            }
+        }
+
+        return ImmutableArray.Create(
+            new RuleFinding(path, "semantic declaration identities and types are frozen"));
     }
 
     private static ImmutableArray<RuleFinding> Generality(RuleEvaluationContext context)
