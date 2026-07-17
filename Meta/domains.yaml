@@ -17,6 +17,9 @@ domains:
   Phase:
     stratum: S1
     definition: Additive golden-ratio phases modulo one.
+  Quantum:
+    stratum: S3
+    definition: Finite-dimensional complex operator-algebra and probability structures.
   Scale:
     stratum: S1
     definition: Real embeddings and logarithmic scales of golden integers.
