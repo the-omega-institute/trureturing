@@ -51,6 +51,27 @@ assemblies in their canonical TOML/Lean locations; shared program schema lives w
 smallest runtime owner. External review and branch protection remain human authorization;
 neither candidate files nor a successful candidate test job can synthesize approval.
 
+## Contract-epoch obligation accounting
+
+The conservative harness publishes the complete bootstrap protection matcher set and
+active-rule descriptors as canonical bytes with one policy root. The base-owned
+comparator computes contraction from those two full policies; actual changed-path
+diagnostics remain regression evidence and do not define the retirement set.
+
+Transition data is read from the exact baseline and candidate commits, never from the
+mutable working tree. `Meta/contract-epoch/events.jsonl` is an append-only register/consume
+stream, and `Meta/contract-epoch/evidence/sha256/<digest>.json` is a closed content-addressed
+receipt set. A candidate registration is parsed and checked by the base program but has
+no authority in the same comparison. Later consumption is one-shot, trusts only the
+receipt already present in the exact base, and checks the new loader path, canonical C0
+anchor, or active rule against the candidate snapshot. Every retired path/rule atom must
+be covered by a sealed custody transfer or authority discharge; any uncovered atom,
+scope excess, replay, opaque matcher contraction, or authority-ceiling target rejects.
+P0 installed this mechanism with no registered plan. `RESIDENCE-EPOCH` registered two
+authority-none exact-path transfers in P1 and consumed each once from the base-owned
+ledger in P2; the comparator settles all five retired atoms with no uncovered obligation.
+Digestion E3 owns its separate later registration and consumption commits.
+
 ## FILEMAP custody boundary
 
 `Meta/FILEMAP.toml` owns repository file kind and producer/consumer/verifier relations.
@@ -61,11 +82,11 @@ copying either schema into the other. The registry lists the FILEMAP authority a
 generated projection as governance documents so predecessor closed-world judges can
 admit the new artifact class without candidate-only path exceptions.
 
-`Meta/StrataLint/` is normatively a program-only protected surface. The open
-`RESIDENCE-EPOCH` records five current `kind=data` files under
-`Meta/StrataLint/Golden/`; their two FILEMAP entries carry
-`residence_violation=true`, and the architecture suite freezes the exact expanded file
-set so an unmarked or additional violation fails. Blueprint Scribe sources and the
-Golden residence remain under the predecessor SL-022 protection contract in this epoch.
-Moving cases, values, and C0/frozen material to top-level `Golden/` is deferred until an
-sshx-reviewed verifier mechanism can approve protection-surface contraction.
+`Meta/StrataLint/` is normatively a program-only protected surface. `RESIDENCE-EPOCH`
+is closed: its five exact data paths moved to `Golden/cases/` and
+`Golden/values-kernels.toml`, while the synthetic registry instance moved out of
+`GoldenCorpus.cs` to strict-loaded `Golden/fixture-registry.yaml`. FILEMAP records zero
+residence violations. The five old paths alone are exact bootstrap exclusions; no
+protection matcher changed. The C0 certificate and Frozen event ledger remain under
+`Meta/StrataLint/Golden/` as protected `kind=ledger` artifacts, and Blueprint Scribe
+sources retain their existing protection.

@@ -133,7 +133,11 @@ internal static class DigestionIngestor
         return source with
         {
             Entries = source.Entries
-                .Select(entry => CaptureBoundaryEntry(entry, sourceFile.RawBytes, casObjects))
+                .Select(entry => CaptureBoundaryEntry(
+                    entry,
+                    sourceFile.RawBytes,
+                    snapshot,
+                    casObjects))
                 .ToImmutableArray(),
         };
     }
@@ -141,11 +145,53 @@ internal static class DigestionIngestor
     private static DigestionLedgerEntry CaptureBoundaryEntry(
         DigestionLedgerEntry entry,
         ImmutableArray<byte> sourceBytes,
+        RepositorySnapshot snapshot,
         IDictionary<string, DigestionCasObject> casObjects)
     {
         if (entry.CasRef is not null)
         {
-            return entry;
+            var existingBoundary = entry.Boundary
+                ?? throw new FormatException(
+                    $"ingest no-atomizer entry {entry.AtomId} has no boundary");
+            var casPath = DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..];
+            if (!snapshot.TryGetFile(casPath, out var blob))
+            {
+                throw new FormatException(
+                    $"ingest entry {entry.AtomId} CAS blob is missing: {casPath}");
+            }
+
+            var casObject = DigestionCasStore.Capture(blob.RawBytes.AsSpan());
+            if (casObject.Reference != entry.CasRef)
+            {
+                throw new FormatException(
+                    $"ingest entry {entry.AtomId} CAS blob hash mismatch: {casPath}");
+            }
+
+            var receiptBytes = blob.RawBytes.AsSpan();
+            var start = receiptBytes.IsEmpty ? -1 : sourceBytes.AsSpan().IndexOf(receiptBytes);
+            if (start < 0)
+            {
+                throw new FormatException(
+                    $"ingest entry {entry.AtomId} has no byte-exact match in {entry.SourcePath}");
+            }
+
+            if (sourceBytes.AsSpan()[(start + 1)..].IndexOf(receiptBytes) >= 0)
+            {
+                throw new FormatException(
+                    $"ingest entry {entry.AtomId} has multiple byte-exact matches in {entry.SourcePath}");
+            }
+
+            var rebound = new DigestionBoundary(
+                existingBoundary.AstPath,
+                start,
+                start + receiptBytes.Length);
+            return rebound == existingBoundary
+                ? entry
+                : entry with
+                {
+                    Boundary = rebound,
+                    ReceiptSyntax = null,
+                };
         }
 
         var boundary = entry.Boundary

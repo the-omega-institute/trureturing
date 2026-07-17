@@ -4,7 +4,7 @@
 
 ```text
 FILEMAP: Meta/FILEMAP.toml
-Residence policy: desired=data-must-live-outside-Meta/StrataLint; current=5; status=known-violations-frozen-under-monitoring; case=RESIDENCE-EPOCH
+Residence policy: desired=data-must-live-outside-Meta/StrataLint; current=0; status=closed; case=RESIDENCE-EPOCH
 
 none --declares--> [*.json | program]
 [*.json | program] --consumed-by--> automation
@@ -70,9 +70,25 @@ FileMapEmitter --produces--> [Generated/FILEMAP.md | generated]
 [Generated/FILEMAP.md | generated] --consumed-by--> reader
 [Generated/FILEMAP.md | generated] --verified-by--> emit-check
 
+none --declares--> [Golden/cases/**/*.toml | data]
+[Golden/cases/**/*.toml | data] --consumed-by--> TomlGoldenLoader
+[Golden/cases/**/*.toml | data] --verified-by--> TomlGoldenLoader
+
+none --declares--> [Golden/fixture-registry.yaml | data]
+[Golden/fixture-registry.yaml | data] --consumed-by--> GoldenFixtureRegistryLoader
+[Golden/fixture-registry.yaml | data] --verified-by--> GoldenFixtureRegistryLoader
+
+none --declares--> [Golden/values-kernels.toml | data]
+[Golden/values-kernels.toml | data] --consumed-by--> ValuesKernelDataLoader
+[Golden/values-kernels.toml | data] --verified-by--> ValuesKernelDataLoader
+
 none --declares--> [Library/**/*.yaml | data]
 [Library/**/*.yaml | data] --consumed-by--> AnchorReferenceRule
 [Library/**/*.yaml | data] --verified-by--> SL-017, YamlSubsetParser
+
+none --declares--> [Library/notes/*.md | data]
+[Library/notes/*.md | data] --consumed-by--> DescribeRepositoryValidator, ScribeEmitter
+[Library/notes/*.md | data] --verified-by--> LibraryNoteCatalog, emit-check
 
 none --declares--> [Makefile | program]
 [Makefile | program] --consumed-by--> developer
@@ -130,14 +146,6 @@ ConservativeExtensionVerifier --produces--> [Meta/StrataLint/Golden/c0-inaugural
 [Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json | ledger] --consumed-by--> C0CeremonyTrustRootTests
 [Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json | ledger] --verified-by--> C0CeremonyTrustRootTests
 
-none --declares--> [Meta/StrataLint/Golden/cases/**/*.toml | data | residence_violation=true]
-[Meta/StrataLint/Golden/cases/**/*.toml | data | residence_violation=true] --consumed-by--> TomlGoldenLoader
-[Meta/StrataLint/Golden/cases/**/*.toml | data | residence_violation=true] --verified-by--> TomlGoldenLoader
-
-none --declares--> [Meta/StrataLint/Golden/values-kernels.toml | data | residence_violation=true]
-[Meta/StrataLint/Golden/values-kernels.toml | data | residence_violation=true] --consumed-by--> ValuesKernelDataLoader
-[Meta/StrataLint/Golden/values-kernels.toml | data | residence_violation=true] --verified-by--> ValuesKernelDataLoader
-
 none --declares--> [Meta/StrataLint/StrataLint.*/** | program]
 [Meta/StrataLint/StrataLint.*/** | program] --consumed-by--> dotnet
 [Meta/StrataLint/StrataLint.*/** | program] --verified-by--> dotnet-test
@@ -157,6 +165,14 @@ none --declares--> [Meta/StrataLint/lean-inspector/** | program]
 none --declares--> [Meta/StrataLint/scripts/** | program]
 [Meta/StrataLint/scripts/** | program] --consumed-by--> automation
 [Meta/StrataLint/scripts/** | program] --verified-by--> make-gate
+
+ContractEpochLedgerCodec --produces--> [Meta/contract-epoch/events.jsonl | ledger]
+[Meta/contract-epoch/events.jsonl | ledger] --consumed-by--> ContractEpochStore
+[Meta/contract-epoch/events.jsonl | ledger] --verified-by--> ContractEpochStore
+
+ContractEpochEvidenceReceipt --produces--> [Meta/contract-epoch/evidence/sha256/*.json | ledger]
+[Meta/contract-epoch/evidence/sha256/*.json | ledger] --consumed-by--> ContractEpochStore
+[Meta/contract-epoch/evidence/sha256/*.json | ledger] --verified-by--> ContractEpochStore
 
 none --declares--> [Meta/domains.yaml | data]
 [Meta/domains.yaml | data] --consumed-by--> RegistryLoader

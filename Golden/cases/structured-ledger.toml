@@ -1,0 +1,190 @@
+# 输入=spec 场景采样(人);期望=Engine 输出快照(机器录制);此文件是行为时间锁
+# canonical: UTF-8 without BOM; LF; case keys=name,changes,baseline_mutations,mutations,expected_diagnostics,contract_epoch?; nested keys follow schema order.
+[[cases]]
+name = "valid-typed-numeric-anomaly-with-case"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "add_task", path = "D5/X_Frontier/LedgerTask.lean", raw_gid = "D5/X_Frontier/LedgerTask", raw_case_id = "D5-T0097" }, { op = "write_parts", path = "Evidence/D5/S0/Carrier/Result.run.json", parts = ["{", "\"case_id\": \"D5-T0097\", \"kind\": \"numeric-anomaly\", \"state\": \"unresolved\"}\n"] }]
+expected_diagnostics = []
+
+[[cases]]
+name = "typed-numeric-anomaly-without-case"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write_parts", path = "Evidence/D5/S0/Carrier/Result.run.json", parts = ["{", "\"kind\": \"numeric-anomaly\", \"state\": \"unresolved\"}\n"] }]
+expected_diagnostics = [{ rule = 19, path = "Evidence/D5/S0/Carrier/Result.run.json", message = "unledgered anomaly at $" }]
+
+[[cases]]
+name = "unknown-anomaly-discriminator-with-case"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "add_task", path = "D5/X_Frontier/LedgerTask.lean", raw_gid = "D5/X_Frontier/LedgerTask", raw_case_id = "D5-T0097" }, { op = "write_parts", path = "Evidence/D5/S0/Carrier/Result.run.json", parts = ["{", "\"case_id\": \"D5-T0097\", \"kind\": \"anomalyish\", \"state\": \"unresolved\"}\n"] }]
+expected_diagnostics = [{ rule = 19, path = "Evidence/D5/S0/Carrier/Result.run.json", message = "unknown anomaly-bearing schema at $" }]
+
+[[cases]]
+name = "opaque-serialized-looking-string"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Evidence/D5/S0/Carrier/Result.run.json", content = "{\"payload\": \"{opaque machine note}\"}\n" }]
+expected_diagnostics = []
+
+[[cases]]
+name = "valid-serialized-anomaly-with-case"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "add_task", path = "D5/X_Frontier/LedgerTask.lean", raw_gid = "D5/X_Frontier/LedgerTask", raw_case_id = "D5-T0097" }, { op = "write_parts", path = "Evidence/D5/S0/Carrier/Result.run.json", parts = ["{", "\"payload\": \"prefix {\\\"case_id\\\":\\\"D5-T0097\\\",\\\"kind\\\":\\\"anomaly\\\",\\\"state\\\":\\\"unresolved\\\"} suffix\"}\n"] }]
+expected_diagnostics = []
+
+[[cases]]
+name = "encoded-unresolved-anomaly-without-case"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write_parts", path = "Evidence/D5/S0/Carrier/Result.run.json", parts = ["{", "\"payload\": \"{\\\"kind\\\":\\\"anomaly\\\",\\\"state\\\":\\\"unresolved\\\"}\"}\n"] }]
+expected_diagnostics = [{ rule = 19, path = "Evidence/D5/S0/Carrier/Result.run.json", message = "unledgered anomaly at $.payload" }]
+
+[[cases]]
+name = "prefixed-serialized-anomaly-without-case"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write_parts", path = "Evidence/D5/S0/Carrier/Result.run.json", parts = ["{", "\"payload\": \"prefix: {\\\"kind\\\":\\\"anomaly\\\",\\\"state\\\":\\\"unresolved\\\"}\"}\n"] }]
+expected_diagnostics = [{ rule = 19, path = "Evidence/D5/S0/Carrier/Result.run.json", message = "unledgered anomaly at $.payload" }]
+
+[[cases]]
+name = "bom-prefixed-serialized-anomaly-without-case"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write_parts", path = "Evidence/D5/S0/Carrier/Result.run.json", parts = ["{", "\"payload\": \"﻿{\\\"kind\\\":\\\"anomaly\\\",\\\"state\\\":\\\"unresolved\\\"}\"}\n"] }]
+expected_diagnostics = [{ rule = 19, path = "Evidence/D5/S0/Carrier/Result.run.json", message = "unledgered anomaly at $.payload" }]
+
+[[cases]]
+name = "mid-string-serialized-anomaly-without-case"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write_parts", path = "Evidence/D5/S0/Carrier/Result.run.json", parts = ["{", "\"payload\": \"before {\\\"kind\\\":\\\"anomaly\\\",\\\"state\\\":\\\"unresolved\\\"} after\"}\n"] }]
+expected_diagnostics = [{ rule = 19, path = "Evidence/D5/S0/Carrier/Result.run.json", message = "unledgered anomaly at $.payload" }]
+
+[[cases]]
+name = "malformed-anomaly-bearing-encoding"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write_parts", path = "Evidence/D5/S0/Carrier/Result.run.json", parts = ["{", "\"payload\": \"{\\\"kind\\\":\\\"anomaly\\\",\\\"state\\\":\"}\n"] }]
+expected_diagnostics = [{ rule = 19, path = "Evidence/D5/S0/Carrier/Result.run.json", message = "unknown anomaly-bearing schema at $.payload" }]
+
+[[cases]]
+name = "unicode-escaped-malformed-anomaly-encoding"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write_parts", path = "Evidence/D5/S0/Carrier/Result.run.json", parts = ["{", "\"payload\": \"{\\\"kind\\\":\\\"\\\\u0061nomaly\\\",\\\"state\\\":\"}\n"] }]
+expected_diagnostics = [{ rule = 19, path = "Evidence/D5/S0/Carrier/Result.run.json", message = "unknown anomaly-bearing schema at $.payload" }]
+
+[[cases]]
+name = "canonical-json-object-key-order"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Evidence/D5/S0/Carrier/Result.run.json", content = "{\"alpha\": 1, \"omega\": 2}\n" }]
+expected_diagnostics = []
+
+[[cases]]
+name = "noncanonical-json-object-key-order"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Evidence/D5/S0/Carrier/Result.run.json", content = "{\"omega\": 2, \"alpha\": 1}\n" }]
+expected_diagnostics = [{ rule = 19, path = "Evidence/D5/S0/Carrier/Result.run.json", message = "object keys are not sorted at $" }]
+
+[[cases]]
+name = "canonical-yaml-object-key-order"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Evidence/D5/S0/Carrier/Result.run.yaml", content = "alpha: 1\nomega: 2\n" }]
+expected_diagnostics = []
+
+[[cases]]
+name = "noncanonical-yaml-object-key-order"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Evidence/D5/S0/Carrier/Result.run.yaml", content = "omega: 2\nalpha: 1\n" }]
+expected_diagnostics = [{ rule = 19, path = "Evidence/D5/S0/Carrier/Result.run.yaml", message = "object keys are not sorted at $" }]
+
+[[cases]]
+name = "structured-artifact-file-bom"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Evidence/D5/S0/Carrier/Result.run.json", content = "﻿{\"alpha\": 1}\n" }]
+expected_diagnostics = [{ rule = 19, path = "Evidence/D5/S0/Carrier/Result.run.json", message = "structured artifact must not start with a BOM" }]
+
+[[cases]]
+name = "structured-artifact-trailing-whitespace"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Evidence/D5/S0/Carrier/Result.run.json", content = "{\"alpha\": 1} \n" }]
+expected_diagnostics = [{ rule = 19, path = "Evidence/D5/S0/Carrier/Result.run.json", message = "structured artifact has trailing whitespace on line 1" }]
+
+[[cases]]
+name = "valid-structured-prose-ledger"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "add_task", path = "D5/X_Frontier/LedgerTask.lean", raw_gid = "D5/X_Frontier/LedgerTask", raw_case_id = "D5-T0097" }, { op = "write", path = "Chronicle/2026/07/11-ledger.md", content = "# Round ledger\n\n<!-- STRATALINT-LEDGER\n{\"kind\":\"anomaly\",\"state\":\"unresolved\",\"case_id\":\"D5-T0097\"}\n-->\n" }]
+expected_diagnostics = []
+
+[[cases]]
+name = "floating-anomaly"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write_parts", path = "Evidence/D5/S0/Carrier/Result.run.json", parts = ["{", "\"anomaly\": \"fixture drift\"}\n"] }]
+expected_diagnostics = [{ rule = 19, path = "Evidence/D5/S0/Carrier/Result.run.json", message = "unledgered anomaly at $" }]
+
+[[cases]]
+name = "typed-record-anomaly-without-case"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write_parts", path = "Evidence/D5/S0/Carrier/Result.run.json", parts = ["{", "\"kind\": \"anomaly\", \"state\": \"unresolved\"}\n"] }]
+expected_diagnostics = [{ rule = 19, path = "Evidence/D5/S0/Carrier/Result.run.json", message = "unledgered anomaly at $" }]
+
+[[cases]]
+name = "yaml-block-scalar-cannot-hide-typed-anomaly"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Evidence/D5/S0/Carrier/Result.run.yaml", content = "records:\n  - kind: anomaly\n    note: |\n      harmless prose\n    state: unresolved\n" }]
+expected_diagnostics = [{ rule = 19, path = "Evidence/D5/S0/Carrier/Result.run.yaml", message = "unledgered anomaly at $.records[0]" }]
+
+[[cases]]
+name = "unknown-anomaly-bearing-schema"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Evidence/D5/S0/Carrier/Result.run.yaml", content = "resolution: pending\ntype: anomaly\n" }]
+expected_diagnostics = [{ rule = 19, path = "Evidence/D5/S0/Carrier/Result.run.yaml", message = "unknown anomaly-bearing schema at $" }]
+
+[[cases]]
+name = "structured-prose-ledger-anomaly-without-case"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Chronicle/2026/07/11-ledger.md", content = "# Round ledger\n\n<!-- STRATALINT-LEDGER\n{\"kind\":\"anomaly\",\"state\":\"unresolved\"}\n-->\n" }]
+expected_diagnostics = [{ rule = 19, path = "Chronicle/2026/07/11-ledger.md", message = "unledgered anomaly at ledger block 1:$" }]
+
+[[cases]]
+name = "directory-at-capacity"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "populate_directory" }, { op = "delete", path = "Blueprint/D5/S0/Carrier/Extra11.md" }]
+expected_diagnostics = []
+
+[[cases]]
+name = "directory-over-capacity"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "populate_directory" }]
+expected_diagnostics = [{ rule = 3, path = "Blueprint/D5/S0/Carrier", message = "directory contains 13 files (maximum 12)" }]
+
+[[cases]]
+name = "empty-mirror-waiver"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "empty_mirror_waiver" }]
+expected_diagnostics = [{ rule = 4, path = "D5/S0/Carrier/Ring.lean", message = "mirror-B waiver has no reason" }]
+
+[[cases]]
+name = "exact-evidence-mirror"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "evidence_mirror", include_json = true, include_yaml = false }]
+expected_diagnostics = []

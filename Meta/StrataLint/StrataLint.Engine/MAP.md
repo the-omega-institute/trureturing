@@ -9,7 +9,9 @@
 
 ## Buckets
 
-- `Admission/`: admission capabilities, bootstrap gating, Lean validation, and profiles.
+- `Admission/`: admission capabilities, declarative bootstrap protection policy and
+  gating, Lean validation, and profiles.
+- `Authorization/`: the canonical Hearts authorization ledger parser and append-only reader.
 - `Coordinates/`: repository coordinates, registry policy, routing, and target syntax.
 - `Coverage/`: harness coverage models, tower validation, ledger indexing, and canonical reports.
 - `Dag/`: truth DAG models and construction.

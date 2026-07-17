@@ -5,17 +5,33 @@ namespace StrataLint.Scribe.Tests;
 
 public sealed class DocumentDiscoveryTests
 {
+    private const string AlgebraicModelDocumentPath = "Blueprint/D5/S0/Carrier/AlgebraicModel.md";
     private const string ConjDocumentPath = "Blueprint/D5/S0/Carrier/Conj.md";
+    private const string GoldenRatioDocumentPath = "Blueprint/D5/S0/Carrier/GoldenRatio.md";
     private const string NormDocumentPath = "Blueprint/D5/S0/Carrier/Norm.md";
     private const string RingDocumentPath = "Blueprint/D5/S0/Carrier/Ring.md";
     private const string UnitsDocumentPath = "Blueprint/D5/S0/Carrier/Units.md";
     private const string NotationDocumentPath = "Blueprint/D5/S0/Conventions/Notation.md";
     private const string WDigitsDocumentPath = "Blueprint/D5/S0/Conventions/WDigits.md";
+    private const string JointCoordinatesDocumentPath = "Blueprint/D5/S1/Depth/JointCoordinates.md";
+    private const string JointDepthDocumentPath = "Blueprint/D5/S1/Depth/JointDepth.md";
     private const string CarryDocumentPath = "Blueprint/D5/S1/Digit/Carry.md";
+    private const string PrimeAxisAdditionDocumentPath = "Blueprint/D5/S1/Digit/PrimeAxisAddition.md";
+    private const string PrimeAxisEncodingDocumentPath = "Blueprint/D5/S1/Digit/PrimeAxisEncoding.md";
+    private const string PrimeAxisTableDocumentPath = "Blueprint/D5/S1/Digit/PrimeAxisTable.md";
     private const string RawDocumentPath = "Blueprint/D5/S1/Digit/Raw.md";
     private const string PhaseDocumentPath = "Blueprint/D5/S1/Phase/Basic.md";
     private const string EmbeddingDocumentPath = "Blueprint/D5/S1/Scale/Embedding.md";
+    private const string FibonacciEigenDocumentPath = "Blueprint/D5/S1/Scale/FibonacciEigen.md";
     private const string LogDocumentPath = "Blueprint/D5/S1/Scale/Log.md";
+    private const string MinkowskiModelSetDocumentPath = "Blueprint/D5/S1/Scale/MinkowskiModelSet.md";
+    private const string FiniteDimensionalDocumentPath = "Blueprint/D5/S3/Quantum/FiniteDimensional.md";
+    private const string CriticalLineDocumentPath = "Blueprint/D5/S3/Weil/CriticalLine.md";
+    private const string EulerProductDocumentPath = "Blueprint/D5/S3/Weil/EulerProduct.md";
+    private const string LabeledZetaDocumentPath = "Blueprint/D5/S3/Weil/LabeledZeta.md";
+    private const string ReflectionLedgerDocumentPath = "Blueprint/D5/S3/Weil/ReflectionLedger.md";
+    private const string SpectralDynamicsDocumentPath = "Blueprint/D5/S3/Weil/SpectralDynamics.md";
+    private const string SpectralHilbertDocumentPath = "Blueprint/D5/S3/Weil/SpectralHilbert.md";
     private const string PhaseSourcePath = "Blueprint/D5/S1/Phase/Basic.scribe.cs";
 
     [Fact]
@@ -23,32 +39,64 @@ public sealed class DocumentDiscoveryTests
     {
         Assert.Equal(
             [
+                "D5/S0/Carrier/AlgebraicModel",
                 "D5/S0/Carrier/Conj",
+                "D5/S0/Carrier/GoldenRatio",
                 "D5/S0/Carrier/Norm",
                 "D5/S0/Carrier/Ring",
                 "D5/S0/Carrier/Units",
                 "D5/S0/Conventions/Notation",
                 "D5/S0/Conventions/WDigits",
+                "D5/S1/Depth/JointCoordinates",
+                "D5/S1/Depth/JointDepth",
                 "D5/S1/Digit/Carry",
+                "D5/S1/Digit/PrimeAxisAddition",
+                "D5/S1/Digit/PrimeAxisEncoding",
+                "D5/S1/Digit/PrimeAxisTable",
                 "D5/S1/Digit/Raw",
                 "D5/S1/Phase/Basic",
                 "D5/S1/Scale/Embedding",
+                "D5/S1/Scale/FibonacciEigen",
                 "D5/S1/Scale/Log",
+                "D5/S1/Scale/MinkowskiModelSet",
+                "D5/S3/Quantum/FiniteDimensional",
+                "D5/S3/Weil/CriticalLine",
+                "D5/S3/Weil/EulerProduct",
+                "D5/S3/Weil/LabeledZeta",
+                "D5/S3/Weil/ReflectionLedger",
+                "D5/S3/Weil/SpectralDynamics",
+                "D5/S3/Weil/SpectralHilbert",
             ],
             DocumentDefinitions.All.Select(static item => item.Document.Header.Gid.Value));
         Assert.Equal(
             [
+                AlgebraicModelDocumentPath,
                 ConjDocumentPath,
+                GoldenRatioDocumentPath,
                 NormDocumentPath,
                 RingDocumentPath,
                 UnitsDocumentPath,
                 NotationDocumentPath,
                 WDigitsDocumentPath,
+                JointCoordinatesDocumentPath,
+                JointDepthDocumentPath,
                 CarryDocumentPath,
+                PrimeAxisAdditionDocumentPath,
+                PrimeAxisEncodingDocumentPath,
+                PrimeAxisTableDocumentPath,
                 RawDocumentPath,
                 PhaseDocumentPath,
                 EmbeddingDocumentPath,
+                FibonacciEigenDocumentPath,
                 LogDocumentPath,
+                MinkowskiModelSetDocumentPath,
+                FiniteDimensionalDocumentPath,
+                CriticalLineDocumentPath,
+                EulerProductDocumentPath,
+                LabeledZetaDocumentPath,
+                ReflectionLedgerDocumentPath,
+                SpectralDynamicsDocumentPath,
+                SpectralHilbertDocumentPath,
             ],
             DocumentDefinitions.All.Select(static item => item.RelativePath.Value));
     }
@@ -152,6 +200,164 @@ public sealed class DocumentDiscoveryTests
             lean.Value.Value);
         Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
         Assert.True(lean.Value.RequireNoSorry);
+    }
+
+    [Fact]
+    public void PrimeAxisTableCarriesItsExactRepoDerivedLeanStatement()
+    {
+        var definition = DocumentDefinitions.All.Single(static item =>
+            item.Document.Header.Gid.Value == "D5/S1/Digit/PrimeAxisTable");
+        var describe = Descendants(definition.Document.Content)
+            .OfType<DocumentBlock.Describe>()
+            .Single();
+        var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
+
+        Assert.Equal(DescribeKind.Theorem, describe.Kind);
+        Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.Provenance.Kind);
+        Assert.Null(describe.Provenance.LiteratureReference);
+        Assert.Equal(
+            "D5/S1/Digit/PrimeAxisTable.prime_axis_table_spec",
+            lean.Value.Value);
+        Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
+        Assert.True(lean.Value.RequireNoSorry);
+    }
+
+    [Fact]
+    public void SelectedResidualDocumentsCarryExactStatementsAndDiligentProvenance()
+    {
+        (string Document, DescribeKind Kind, string Declaration,
+            DescribeProvenanceKind Provenance, string? Reference)[] expected =
+        [
+            ("D5/S0/Carrier/AlgebraicModel", DescribeKind.Definition,
+                "D5/S0/Carrier/AlgebraicModel.golden_algebraic_model_spec",
+                DescribeProvenanceKind.LiteratureAttested,
+                "D5/L/stewarttall2025algebraic"),
+            ("D5/S1/Depth/JointDepth", DescribeKind.Definition,
+                "D5/S1/Depth/JointDepth.joint_depth_spec",
+                DescribeProvenanceKind.RepoDerived, null),
+            ("D5/S1/Digit/PrimeAxisAddition", DescribeKind.Theorem,
+                "D5/S1/Digit/PrimeAxisAddition.prime_axis_addition_spec",
+                DescribeProvenanceKind.RepoDerived, null),
+            ("D5/S1/Scale/MinkowskiModelSet", DescribeKind.Definition,
+                "D5/S1/Scale/MinkowskiModelSet.minkowski_model_set_spec",
+                DescribeProvenanceKind.LiteratureAttested,
+                "D5/L/baakefrankgrimm2021three"),
+        ];
+
+        foreach (var item in expected)
+        {
+            var definition = DocumentDefinitions.All.Single(definition =>
+                definition.Document.Header.Gid.Value == item.Document);
+            var describe = Descendants(definition.Document.Content)
+                .OfType<DocumentBlock.Describe>()
+                .Single();
+            var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
+
+            Assert.Equal(item.Kind, describe.Kind);
+            Assert.Equal(item.Provenance, describe.Provenance.Kind);
+            Assert.Equal(item.Reference, describe.Provenance.LiteratureReference?.Value);
+            Assert.Equal(item.Declaration, lean.Value.Value);
+            Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
+            Assert.True(lean.Value.RequireNoSorry);
+        }
+    }
+
+    [Fact]
+    public void O6LoadBearingDocumentsCarryExactStatementsAndDiligentProvenance()
+    {
+        (string Document, DescribeKind Kind, string Declaration,
+            DescribeProvenanceKind Provenance, string? Reference)[] expected =
+        [
+            ("D5/S3/Weil/CriticalLine", DescribeKind.Theorem,
+                "D5/S3/Weil/CriticalLine.unitarity_line_iff",
+                DescribeProvenanceKind.RepoDerived, null),
+            ("D5/S3/Weil/EulerProduct", DescribeKind.Theorem,
+                "D5/S3/Weil/EulerProduct.finite_euler_zero_free_and_pole_locus",
+                DescribeProvenanceKind.LiteratureAttested,
+                "D5/L/apostol1976introduction"),
+            ("D5/S3/Weil/EulerProduct", DescribeKind.Definition,
+                "D5/S3/Weil/EulerProduct.single_address_reading_spec",
+                DescribeProvenanceKind.LiteratureAttested,
+                "D5/L/apostol1976introduction"),
+            ("D5/S3/Weil/EulerProduct", DescribeKind.Proposition,
+                "D5/S3/Weil/EulerProduct.single_address_heat_trace_eq_log_derivative",
+                DescribeProvenanceKind.LiteratureAttested,
+                "D5/L/apostol1976introduction"),
+        ];
+
+        foreach (var item in expected)
+        {
+            var definition = DocumentDefinitions.All.Single(definition =>
+                definition.Document.Header.Gid.Value == item.Document);
+            var describe = Descendants(definition.Document.Content)
+                .OfType<DocumentBlock.Describe>()
+                .Single(node =>
+                    node.Statement is DescribeStatement.LeanDeclaration lean
+                    && lean.Value.Value == item.Declaration);
+            var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
+
+            Assert.Equal(item.Kind, describe.Kind);
+            Assert.Equal(item.Provenance, describe.Provenance.Kind);
+            Assert.Equal(item.Reference, describe.Provenance.LiteratureReference?.Value);
+            Assert.Equal(item.Declaration, lean.Value.Value);
+            Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
+            Assert.True(lean.Value.RequireNoSorry);
+        }
+    }
+
+    [Fact]
+    public void QuantumSkeletonDocumentCarriesExactStatementsAndDiligentProvenance()
+    {
+        (string Declaration, string Reference)[] expected =
+        [
+            ("D5/S3/Quantum/FiniteDimensional.qubit_weyl_star",
+                "D5/L/schwinger1960unitary"),
+            ("D5/S3/Quantum/FiniteDimensional.qubit_matrix_algebra_has_no_character",
+                "D5/L/murphy1990calgebras"),
+            ("D5/S3/Quantum/FiniteDimensional.born_probability_skeleton",
+                "D5/L/gleason1957measures"),
+        ];
+        var definition = DocumentDefinitions.All.Single(static item =>
+            item.Document.Header.Gid.Value == "D5/S3/Quantum/FiniteDimensional");
+        var nodes = Descendants(definition.Document.Content)
+            .OfType<DocumentBlock.Describe>()
+            .ToDictionary(
+                static node => Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement)
+                    .Value.Value,
+                StringComparer.Ordinal);
+
+        Assert.Equal(3, nodes.Count);
+        foreach (var item in expected)
+        {
+            var node = nodes[item.Declaration];
+            var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement);
+
+            Assert.Equal(DescribeKind.Theorem, node.Kind);
+            Assert.Equal(DescribeProvenanceKind.LiteratureAttested, node.Provenance.Kind);
+            Assert.Equal(item.Reference, node.Provenance.LiteratureReference?.Value);
+            Assert.Equal(item.Declaration, lean.Value.Value);
+            Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
+            Assert.True(lean.Value.RequireNoSorry);
+        }
+    }
+
+    [Fact]
+    public void QuantumSkeletonDocumentExplicitlyDisclosesUnformalizedNumericalCertificates()
+    {
+        var definition = DocumentDefinitions.All.Single(static item =>
+            item.Document.Header.Gid.Value == "D5/S3/Quantum/FiniteDimensional");
+        var report = LeanReportFixture.ForDocuments([definition.Document]);
+        var markdown = System.Text.Encoding.UTF8.GetString(
+            CanonicalMarkdownWriter.Write(definition.Document, report).AsSpan());
+
+        Assert.Contains(
+            "Original numerical-certificate claim not formalized: the source atom's matrix-unit relations with exact zero certificate error.",
+            markdown,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "Original numerical-certificate claim not formalized: the source atom's separate Born control group balance to 10^-16.",
+            markdown,
+            StringComparison.Ordinal);
     }
 
     private static string FindRepositoryRoot()

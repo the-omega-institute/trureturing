@@ -1,0 +1,245 @@
+# 输入=spec 场景采样(人);期望=Engine 输出快照(机器录制);此文件是行为时间锁
+# canonical: UTF-8 without BOM; LF; case keys=name,changes,baseline_mutations,mutations,expected_diagnostics,contract_epoch?; nested keys follow schema order.
+[[cases]]
+name = "missing-exact-evidence-mirror"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "evidence_mirror", include_json = false, include_yaml = false }]
+expected_diagnostics = [{ rule = 4, path = "D5/S0/Carrier/Ring.lean", message = "missing evidence mirror Evidence/D5/S0/Carrier/Ring.result.json" }]
+
+[[cases]]
+name = "duplicate-task-code"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "add_task", path = "D5/X_Frontier/TaskOne.lean", raw_gid = "D5/X_Frontier/TaskOne", raw_case_id = "D5-T0095" }, { op = "add_task", path = "D5/X_Frontier/TaskTwo.lean", raw_gid = "D5/X_Frontier/TaskTwo", raw_case_id = "D5-T0095" }]
+expected_diagnostics = [{ rule = 13, path = "D5/X_Frontier/TaskOne.lean", message = "task code D5-T0095 is duplicated" }]
+
+[[cases]]
+name = "format-only-fabricated-doi-under-D5-T0012"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Library/queries.yaml", content = "schema_version: 1\nqueries:\n  - id: D5-Q0094\n    query: format-only fixture under explicit existence deferral\n    target_gid: D5/S0/Carrier/Ring\n    bibkey: fixture2026paper\n    doi: 10.9999/definitely-fabricated-r2\n" }]
+expected_diagnostics = []
+
+[[cases]]
+name = "malformed-doi-format"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Library/queries.yaml", content = "schema_version: 1\nqueries:\n  - id: D5-Q0089\n    query: malformed identifier fixture\n    target_gid: D5/S0/Carrier/Ring\n    bibkey: malformed2026paper\n    doi: definitely-not-a-doi\n" }]
+expected_diagnostics = [{ rule = 17, path = "Library/queries.yaml", message = "query D5-Q0089 needs DOI/arXiv or a pending case" }]
+
+[[cases]]
+name = "unattested-values-are-rejected"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Evidence/D5/values.result.json", content = "{\"D5/sample\": {\"value\": 123}}\n" }]
+expected_diagnostics = [{ rule = 18, path = "Evidence/D5/values.result.json", message = "canonical values projection must be Evidence/D5/values.json" }]
+
+[[cases]]
+name = "handwritten-verified-values-are-rejected"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Evidence/D5/values.result.json", content = "{\"D5/sample\": {\"status\": \"verified\", \"value\": 123}}\n" }]
+expected_diagnostics = [{ rule = 18, path = "Evidence/D5/values.result.json", message = "canonical values projection must be Evidence/D5/values.json" }]
+
+[[cases]]
+name = "root-protected-axiom"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Trureturing.lean", content = "namespace RootProbe\nprotected axiom rootProtectedBypass : False\nend RootProbe\n" }]
+expected_diagnostics = [{ rule = 20, path = "Trureturing.lean", message = "axiom declarations are confined to AxiomDebt.lean: RootProbe.rootProtectedBypass" }]
+
+[[cases]]
+name = "hearts-file-deletion"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = [{ op = "lean", path = "D5/X_Frontier/Hearts.lean", raw_gid = "D5/X_Frontier/Hearts", generality = "Extremal", body = "theorem heart : True := by sorry\n" }]
+mutations = [{ op = "delete", path = "D5/X_Frontier/Hearts.lean" }]
+expected_diagnostics = [{ rule = 8, path = "D5/X_Frontier/Hearts.lean", message = "frozen Hearts.lean was deleted" }]
+
+[[cases]]
+name = "hearts-baseline-inspection-fails"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = [{ op = "lean", path = "D5/X_Frontier/Hearts.lean", raw_gid = "D5/X_Frontier/Hearts", generality = "Extremal", body = "theorem heart : := broken\n" }]
+mutations = [{ op = "lean", path = "D5/X_Frontier/Hearts.lean", raw_gid = "D5/X_Frontier/Hearts", generality = "Extremal", body = "theorem heart : True := by sorry\n" }]
+expected_diagnostics = [{ rule = 8, path = "D5/X_Frontier/Hearts.lean", message = "protected Hearts baseline has no semantic report" }]
+
+[[cases]]
+name = "noncanonical-e-directory-double-artifact"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Evidence/D5/S0/Carrier/Ring/result.json", content = "{}\n" }, { op = "write", path = "Evidence/D5/S0/Carrier/Ring/alternate.json", content = "{}\n" }]
+expected_diagnostics = [{ rule = 0, path = "Evidence/D5/S0/Carrier/Ring/alternate.json", message = "noncanonical Evidence artifact: Evidence filename needs module.selector.kind" }, { rule = 0, path = "Evidence/D5/S0/Carrier/Ring/result.json", message = "noncanonical Evidence artifact: Evidence filename needs module.selector.kind" }]
+
+[[cases]]
+name = "noncanonical-query-target"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "add_task", path = "D5/X_Frontier/QueryTargetTask.lean", raw_gid = "D5/X_Frontier/QueryTargetTask", raw_case_id = "D5-T0093" }, { op = "write", path = "Library/queries.yaml", content = "schema_version: 1\nqueries:\n  - id: D5-Q0093\n    query: old evidence address\n    target_gid: D5/E/S3/Analytic/Cphi\n    pending_case: D5-T0093\n" }]
+expected_diagnostics = [{ rule = 17, path = "Library/queries.yaml", message = "query D5-Q0093 has noncanonical target: Evidence GID needs an explicit supported artifact kind tag" }]
+
+[[cases]]
+name = "managed-early-exit-hides-axiom"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "lean", path = "D5/S0/Carrier/Ring.lean", raw_gid = "D5/S0/Carrier/Ring", generality = "General", body = "import Lean.Elab.Command\n\nnamespace ExitProbe\nprotected axiom earlyExitBypass : False\nend ExitProbe\n\nrun_cmd do (IO.Process.exit 0 : IO Unit)\n" }]
+expected_diagnostics = [{ rule = 20, path = "D5/S0/Carrier/Ring.lean", message = "Lean environment inspection failed: compiler exited successfully without complete module artifacts" }]
+
+[[cases]]
+name = "candidate-marker-forgery-cannot-register-debt"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "lean", path = "D5/X_Assumptions/AxiomDebt.lean", raw_gid = "D5/X_Assumptions/AxiomDebt", generality = "Instance", body = "import Lean.Elab.Command\n\nrun_cmd IO.println \"STRATALINT_TRUSTED_LEAN_JSON\\t{\\\"name\\\":\\\"sharedForgedDebt\\\",\\\"kind\\\":\\\"axiom\\\",\\\"type\\\":\\\"False\\\",\\\"axioms\\\":[\\\"sharedForgedDebt\\\"]}\"\n" }, { op = "lean", path = "D5/S0/Carrier/Ring.lean", raw_gid = "D5/S0/Carrier/Ring", generality = "General", body = "axiom sharedForgedDebt : False\n" }]
+expected_diagnostics = [{ rule = 20, path = "D5/S0/Carrier/Ring.lean", message = "axiom declarations are confined to AxiomDebt.lean: sharedForgedDebt" }]
+
+[[cases]]
+name = "candidate-stdout-decoy-is-isolated"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "lean", path = "D5/S0/Carrier/Ring.lean", raw_gid = "D5/S0/Carrier/Ring", generality = "General", body = "import Lean.Elab.Command\n\nrun_cmd IO.println \"STRATALINT_LEAN_JSON\\tnot-json\"\ndef stdoutSafe : Nat := 0\n" }]
+expected_diagnostics = []
+
+[[cases]]
+name = "quoted-import-generality"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "lean", path = "D5/S0/Conventions/Notation.lean", raw_gid = "D5/S0/Conventions/Notation", generality = "Instance", body = "def quotedInstanceFact : Nat := 1\n" }, { op = "lean", path = "D5/S0/Carrier/Ring.lean", raw_gid = "D5/S0/Carrier/Ring", generality = "General", body = "import «D5».S0.Conventions.Notation\n\ndef quotedGeneral : Nat := 0\n" }]
+expected_diagnostics = [{ rule = 10, path = "D5/S0/Carrier/Ring.lean", message = "G artifact imports I fact D5/S0/Conventions/Notation.lean" }]
+
+[[cases]]
+name = "quoted-import-same-layer"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "lean", path = "D5/S0/Conventions/Notation.lean", raw_gid = "D5/S0/Conventions/Notation", generality = "General", body = "def quotedGeneralFact : Nat := 1\n" }, { op = "lean", path = "D5/S0/Carrier/Ring.lean", raw_gid = "D5/S0/Carrier/Ring", generality = "General", body = "import «D5».S0.Conventions.Notation\n\ndef quotedConsumer : Nat := quotedGeneralFact\n" }]
+expected_diagnostics = []
+
+[[cases]]
+name = "duplicate-debt-axiom-name"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "lean", path = "D5/X_Assumptions/AxiomDebt.lean", raw_gid = "D5/X_Assumptions/AxiomDebt", generality = "Instance", body = "axiom sharedDebtName : False\n" }, { op = "lean", path = "D5/S0/Carrier/Ring.lean", raw_gid = "D5/S0/Carrier/Ring", generality = "General", body = "axiom sharedDebtName : False\n" }]
+expected_diagnostics = [{ rule = 20, path = "D5/S0/Carrier/Ring.lean", message = "axiom declarations are confined to AxiomDebt.lean: sharedDebtName" }]
+
+[[cases]]
+name = "registered-debt-through-import"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "lean", path = "D5/X_Assumptions/AxiomDebt.lean", raw_gid = "D5/X_Assumptions/AxiomDebt", generality = "Instance", body = "axiom registeredDebt : False\n" }, { op = "lean", path = "D5/X_Certificates/ConditionalResult.lean", raw_gid = "D5/X_Certificates/ConditionalResult", generality = "Instance", body = "import D5.X_Assumptions.AxiomDebt\n\ntheorem conditionalResult : False := registeredDebt\n" }]
+expected_diagnostics = []
+
+[[cases]]
+name = "private-axiom-is-inspected"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "lean", path = "D5/S0/Carrier/Ring.lean", raw_gid = "D5/S0/Carrier/Ring", generality = "General", body = "private axiom hiddenAxiom : False\n" }]
+expected_diagnostics = [{ rule = 20, path = "D5/S0/Carrier/Ring.lean", message = "axiom declarations are confined to AxiomDebt.lean: _private.D5.S0.Carrier.Ring.0.hiddenAxiom" }]
+
+[[cases]]
+name = "root-imports-frontier"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "lean", path = "D5/X_Frontier/OpenProbe.lean", raw_gid = "D5/X_Frontier/OpenProbe", generality = "Extremal", body = "theorem openProbe : True := by sorry\n" }, { op = "write", path = "Trureturing.lean", content = "import D5.X_Frontier.OpenProbe\n" }]
+expected_diagnostics = [{ rule = 1, path = "Trureturing.lean", message = "stratum closure may not import D5/X_Frontier/OpenProbe.lean" }]
+
+[[cases]]
+name = "in-memory-import-uses-current-graph"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "lean", path = "D5/S0/Carrier/FixtureDependency.lean", raw_gid = "D5/S0/Carrier/FixtureDependency", generality = "General", body = "def fixtureDependency : Nat := 7\n" }, { op = "lean", path = "D5/S0/Carrier/Ring.lean", raw_gid = "D5/S0/Carrier/Ring", generality = "General", body = "import D5.S0.Carrier.FixtureDependency\n\ndef currentGraphConsumer : Nat := fixtureDependency\n" }]
+expected_diagnostics = []
+
+[[cases]]
+name = "future-blueprint-is-uninstantiated"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Blueprint/D8/S0/Carrier/Ring.md", content = "future blueprint\n" }]
+expected_diagnostics = [{ rule = 21, path = "Blueprint/D8/S0/Carrier/Ring.md", message = "D8 未实例化(压力未至,D5-T0009)" }]
+
+[[cases]]
+name = "future-evidence-is-uninstantiated"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Evidence/D8/S0/Carrier/Ring.result.json", content = "{}\n" }]
+expected_diagnostics = [{ rule = 21, path = "Evidence/D8/S0/Carrier/Ring.result.json", message = "D8 未实例化(压力未至,D5-T0009)" }]
+
+[[cases]]
+name = "foreign-theory-task-code"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "add_task", path = "D5/X_Frontier/ForeignTask.lean", raw_gid = "D5/X_Frontier/ForeignTask", raw_case_id = "D8-T0092" }]
+expected_diagnostics = [{ rule = 13, path = "D5/X_Frontier/ForeignTask.lean", message = "task block does not match the A7 grammar" }]
+
+[[cases]]
+name = "valid-query-source-fragment"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Library/notes/provenance.md", content = "heading\nanchor line\n" }, { op = "write", path = "Library/queries.yaml", content = "schema_version: 1\nhash_contract: sha256-of-exact-utf8-source-line-including-lf\nqueries:\n  - id: D5-Q0091\n    query: exact source anchor\n    target_gid: D5/S0/Carrier/Ring\n    bibkey: fixture2026source\n    doi: 10.1000/source\n    source_path: Library/notes/provenance.md\n    source_line: 2\n    fragment_sha256: b5c686f3f769df23314c0caa3daa49bb9512452f3094e1799c0b7f2ae83c6500\n" }]
+expected_diagnostics = []
+
+[[cases]]
+name = "query-source-fragment-hash-mismatch"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Library/notes/provenance.md", content = "heading\nanchor line\n" }, { op = "write", path = "Library/queries.yaml", content = "schema_version: 1\nhash_contract: sha256-of-exact-utf8-source-line-including-lf\nqueries:\n  - id: D5-Q0090\n    query: stale source anchor\n    target_gid: D5/S0/Carrier/Ring\n    bibkey: fixture2026stale\n    doi: 10.1000/stale\n    source_path: Library/notes/provenance.md\n    source_line: 2\n    fragment_sha256: b5c686f3f769df23314c0caa3daa49bb9512452f3094e1799c0b7f2ae83c6501\n" }]
+expected_diagnostics = []
+
+[[cases]]
+name = "values-without-producer-attestation-are-rejected"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Evidence/D5/values.result.json", content = "{\"D5/sample\": {\"status\": \"verified\", \"value\": 123}}\n" }]
+expected_diagnostics = [{ rule = 18, path = "Evidence/D5/values.result.json", message = "canonical values projection must be Evidence/D5/values.json" }]
+
+[[cases]]
+name = "meta-bootstrap-protected-surface"
+changes = ["Meta/StrataLint/StrataLint.Engine/SyntheticProtected.cs"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Meta/StrataLint/StrataLint.Engine/SyntheticProtected.cs", content = "// protected fixture\n" }]
+expected_diagnostics = [{ rule = 22, path = "Meta/StrataLint/StrataLint.Engine/SyntheticProtected.cs", message = "meta change requires external human review" }]
+
+[[cases]]
+name = "contract-same-pr-declaration-and-shrink"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = []
+expected_diagnostics = []
+contract_epoch = { candidate_exact_exclusions = ["Meta/StrataLint/Golden/values-kernels.toml"], candidate_retired_rules = [], candidate_removed_matchers = [], baseline_plans = [], candidate_plans = [{ plan_id = "CONTRACT-CORPUS-001", kind = "discharge_paths", exact_paths = ["Meta/StrataLint/Golden/values-kernels.toml"], rule_obligation = "", custodian_kind = "", custodian_reference = "", evidence_present = true, custodian_present = false }], baseline_consumptions = [], candidate_consumptions = [], expected_finding_codes = ["CONTRACT-EPOCH-UNCOVERED-OBLIGATION"] }
+
+[[cases]]
+name = "contract-candidate-plan-attempt"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = []
+expected_diagnostics = []
+contract_epoch = { candidate_exact_exclusions = ["Meta/StrataLint/Golden/values-kernels.toml"], candidate_retired_rules = [], candidate_removed_matchers = [], baseline_plans = [], candidate_plans = [{ plan_id = "CONTRACT-CORPUS-002", kind = "discharge_paths", exact_paths = ["Meta/StrataLint/Golden/values-kernels.toml"], rule_obligation = "", custodian_kind = "", custodian_reference = "", evidence_present = true, custodian_present = false }], baseline_consumptions = [], candidate_consumptions = ["CONTRACT-CORPUS-002"], expected_finding_codes = ["CONTRACT-EPOCH-CANDIDATE-PLAN-INELIGIBLE", "CONTRACT-EPOCH-UNCOVERED-OBLIGATION"] }
+
+[[cases]]
+name = "contract-glob-scope"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = []
+expected_diagnostics = []
+contract_epoch = { candidate_exact_exclusions = ["Meta/StrataLint/Golden/values-kernels.toml"], candidate_retired_rules = [], candidate_removed_matchers = [], baseline_plans = [], candidate_plans = [{ plan_id = "CONTRACT-CORPUS-003", kind = "discharge_paths", exact_paths = ["Meta/StrataLint/Golden/*.toml"], rule_obligation = "", custodian_kind = "", custodian_reference = "", evidence_present = true, custodian_present = false }], baseline_consumptions = [], candidate_consumptions = [], expected_finding_codes = ["CONTRACT-EPOCH-PLAN-SCHEMA"] }
+
+[[cases]]
+name = "contract-scope-outside-delta"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = []
+expected_diagnostics = []
+contract_epoch = { candidate_exact_exclusions = ["Meta/StrataLint/Golden/values-kernels.toml"], candidate_retired_rules = [], candidate_removed_matchers = [], baseline_plans = [{ plan_id = "CONTRACT-CORPUS-004", kind = "discharge_paths", exact_paths = ["Blueprint/D5/S0/Carrier/Ring.md", "Meta/StrataLint/Golden/values-kernels.toml"], rule_obligation = "", custodian_kind = "", custodian_reference = "", evidence_present = true, custodian_present = false }], candidate_plans = [], baseline_consumptions = [], candidate_consumptions = ["CONTRACT-CORPUS-004"], expected_finding_codes = ["CONTRACT-EPOCH-SCOPE-OUTSIDE-DELTA", "CONTRACT-EPOCH-UNCOVERED-OBLIGATION"] }
+
+[[cases]]
+name = "contract-no-obligation-coverage"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = []
+expected_diagnostics = []
+contract_epoch = { candidate_exact_exclusions = ["Meta/StrataLint/Golden/values-kernels.toml"], candidate_retired_rules = [], candidate_removed_matchers = [], baseline_plans = [], candidate_plans = [], baseline_consumptions = [], candidate_consumptions = [], expected_finding_codes = ["CONTRACT-EPOCH-UNCOVERED-OBLIGATION"] }
+
+[[cases]]
+name = "contract-double-consumption"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = []
+expected_diagnostics = []
+contract_epoch = { candidate_exact_exclusions = ["Meta/StrataLint/Golden/values-kernels.toml"], candidate_retired_rules = [], candidate_removed_matchers = [], baseline_plans = [{ plan_id = "CONTRACT-CORPUS-005", kind = "discharge_paths", exact_paths = ["Meta/StrataLint/Golden/values-kernels.toml"], rule_obligation = "", custodian_kind = "", custodian_reference = "", evidence_present = true, custodian_present = false }], candidate_plans = [], baseline_consumptions = [], candidate_consumptions = ["CONTRACT-CORPUS-005", "CONTRACT-CORPUS-005"], expected_finding_codes = ["CONTRACT-EPOCH-REPLAY"] }

@@ -175,6 +175,9 @@ internal sealed class StubCliEnvironment(
     public CommandResult ReattestLedger(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "ledger reattest is not configured in this fixture");
 
+    public CommandResult CleanLanes(IReadOnlyList<string> arguments) =>
+        new(false, string.Empty, "clean lanes is not configured in this fixture");
+
     public CommandResult Worktree(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "worktree is not configured in this fixture");
 

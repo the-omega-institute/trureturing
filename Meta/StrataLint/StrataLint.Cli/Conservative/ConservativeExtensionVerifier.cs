@@ -1,11 +1,9 @@
 using System.Collections.Immutable;
-using System.Security.Cryptography;
-using System.Text.Json;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
-internal static class ConservativeExtensionVerifier
+internal static partial class ConservativeExtensionVerifier
 {
     private const string CertificateSchema = "stratalint-conservative-certificate-v1";
 
@@ -45,12 +43,40 @@ internal static class ConservativeExtensionVerifier
                 }
             }
 
-            var activeRules = ValidateActiveRules(baseline.ActiveRules);
+            var baselineActiveRules = ValidateActiveRules("baseline", baseline);
+            _ = ValidateActiveRules("candidate", candidate);
+            var contract = ContractEpochVerifier.Verify(new ContractEpochComparisonInput(
+                input.BaselineTreeOid,
+                baseline.Policy,
+                candidate.Policy,
+                input.BaselineContractLedger,
+                input.CandidateContractLedger,
+                input.BaselineContractEvidence,
+                input.CandidateContractEvidence));
+            var retiredPaths = contract.Accepted
+                ? contract.PolicyDelta.RetiredExactPaths.ToImmutableHashSet(StringComparer.Ordinal)
+                : ImmutableHashSet<string>.Empty.WithComparer(StringComparer.Ordinal);
+            var activeRules = contract.Accepted
+                ? baselineActiveRules.Where(rule => !contract.PolicyDelta.RetiredRuleObligations
+                        .Contains(rule, StringComparer.Ordinal))
+                    .ToImmutableArray()
+                : baselineActiveRules;
             var findings = Compare(
                 input,
                 activeRules,
+                retiredPaths,
                 baselineById,
-                candidateById);
+                candidateById).ToBuilder();
+            ValidateContractCorpus(input, baseline, candidate, findings);
+            findings.AddRange(contract.Findings.Select(static item => new ConservativeFinding(
+                item.Code,
+                null,
+                null,
+                item.Message)
+            {
+                Obligation = item.Subject,
+            }));
+            var orderedFindings = OrderFindings(findings);
             var certificate = WriteCertificate(
                 input,
                 baseline,
@@ -58,10 +84,11 @@ internal static class ConservativeExtensionVerifier
                 activeRules,
                 baselineById,
                 candidateById,
-                findings);
-            return findings.IsEmpty
+                contract,
+                orderedFindings);
+            return orderedFindings.IsEmpty
                 ? new ConservativeExtensionOutcome.Accepted(certificate)
-                : new ConservativeExtensionOutcome.Violated(certificate, findings);
+                : new ConservativeExtensionOutcome.Violated(certificate, orderedFindings);
         }
         catch (InvalidOperationException exception)
         {
@@ -112,21 +139,36 @@ internal static class ConservativeExtensionVerifier
         return cases.ToImmutableDictionary(static item => item.CaseId, StringComparer.Ordinal);
     }
 
-    private static ImmutableArray<string> ValidateActiveRules(ImmutableArray<string> rules)
+    private static ImmutableArray<string> ValidateActiveRules(
+        string side,
+        ConservativeHarnessRun run)
     {
+        var rules = run.ActiveRules;
         if (rules.IsDefaultOrEmpty
             || rules.Any(static rule => string.IsNullOrWhiteSpace(rule))
             || rules.Distinct(StringComparer.Ordinal).Count() != rules.Length)
         {
-            throw new InvalidOperationException("baseline active rule set is missing or malformed");
+            throw new InvalidOperationException($"{side} active rule set is missing or malformed");
         }
 
-        return rules.Order(StringComparer.Ordinal).ToImmutableArray();
+        var ordered = rules.Order(StringComparer.Ordinal).ToImmutableArray();
+        var policyRules = run.Policy.RuleObligations
+            .Select(static item => item.RuleId)
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+        if (!ordered.SequenceEqual(policyRules, StringComparer.Ordinal))
+        {
+            throw new InvalidOperationException(
+                $"{side} active rules do not equal the canonical policy obligations");
+        }
+
+        return ordered;
     }
 
     private static ImmutableArray<ConservativeFinding> Compare(
         ConservativeVerificationInput input,
         ImmutableArray<string> activeRules,
+        ImmutableHashSet<string> retiredExactPaths,
         ImmutableDictionary<string, ConservativeCaseResult> baseline,
         ImmutableDictionary<string, ConservativeCaseResult> candidate)
     {
@@ -202,15 +244,11 @@ internal static class ConservativeExtensionVerifier
             .Distinct(StringComparer.Ordinal)
             .Order(StringComparer.Ordinal)
             .ToArray();
-        if (baselineProtectedPaths.Length == 0)
-        {
-            throw new InvalidOperationException("actual meta case has no baseline SL-022 diagnostics");
-        }
-
         var candidateProtectedPaths = candidate[input.CandidateTreeCaseId].Sl022Diagnostics
             .Select(static item => item.Path)
             .ToHashSet(StringComparer.Ordinal);
-        foreach (var path in baselineProtectedPaths.Where(path => !candidateProtectedPaths.Contains(path)))
+        foreach (var path in baselineProtectedPaths.Where(path =>
+            !candidateProtectedPaths.Contains(path) && !retiredExactPaths.Contains(path)))
         {
             findings.Add(new ConservativeFinding(
                 "CONSERVATIVE-SL022-PROTECTION-LOST",
@@ -219,125 +257,69 @@ internal static class ConservativeExtensionVerifier
                 $"candidate harness no longer classifies protected path {path}"));
         }
 
-        return findings
+        return OrderFindings(findings);
+    }
+
+    private static void ValidateContractCorpus(
+        ConservativeVerificationInput input,
+        ConservativeHarnessRun baseline,
+        ConservativeHarnessRun candidate,
+        ImmutableArray<ConservativeFinding>.Builder findings)
+    {
+        var expectedIds = input.ContractExpectations.Keys.Order(StringComparer.Ordinal).ToArray();
+        var baselineIds = baseline.ContractCases.Select(static item => item.CaseId)
+            .Order(StringComparer.Ordinal).ToArray();
+        if (!baselineIds.SequenceEqual(expectedIds, StringComparer.Ordinal)
+            || baselineIds.Distinct(StringComparer.Ordinal).Count() != baselineIds.Length)
+        {
+            throw new InvalidOperationException(
+                "baseline contract corpus result set does not equal the base-owned expectations");
+        }
+
+        foreach (var result in baseline.ContractCases)
+        {
+            if (!result.FindingCodes.SequenceEqual(
+                input.ContractExpectations[result.CaseId],
+                StringComparer.Ordinal))
+            {
+                throw new InvalidOperationException(
+                    $"baseline contract corpus result disagrees with expectation: {result.CaseId}");
+            }
+        }
+
+        var candidateById = candidate.ContractCases
+            .ToDictionary(static item => item.CaseId, StringComparer.Ordinal);
+        foreach (var (caseId, expected) in input.ContractExpectations)
+        {
+            if (!candidateById.TryGetValue(caseId, out var actual)
+                || !actual.FindingCodes.SequenceEqual(expected, StringComparer.Ordinal))
+            {
+                findings.Add(new ConservativeFinding(
+                    "CONTRACT-EPOCH-CORPUS-REGRESSION",
+                    caseId,
+                    null,
+                    "candidate harness no longer rejects the base-owned contract epoch attack case"));
+            }
+        }
+
+        foreach (var extra in candidateById.Keys.Where(id => !input.ContractExpectations.ContainsKey(id)))
+        {
+            findings.Add(new ConservativeFinding(
+                "CONTRACT-EPOCH-CORPUS-REGRESSION",
+                extra,
+                null,
+                "candidate harness emitted a contract corpus result outside the base-owned case set"));
+        }
+    }
+
+    private static ImmutableArray<ConservativeFinding> OrderFindings(
+        IEnumerable<ConservativeFinding> findings) => findings
             .OrderBy(static item => item.Code, StringComparer.Ordinal)
             .ThenBy(static item => item.CaseId, StringComparer.Ordinal)
             .ThenBy(static item => item.RuleId, StringComparer.Ordinal)
+            .ThenBy(static item => item.Obligation, StringComparer.Ordinal)
             .ThenBy(static item => item.Message, StringComparer.Ordinal)
             .ToImmutableArray();
-    }
-
-    private static ImmutableArray<byte> WriteCertificate(
-        ConservativeVerificationInput input,
-        ConservativeHarnessRun baselineRun,
-        ConservativeHarnessRun candidateRun,
-        ImmutableArray<string> activeRules,
-        ImmutableDictionary<string, ConservativeCaseResult> baseline,
-        ImmutableDictionary<string, ConservativeCaseResult> candidate,
-        ImmutableArray<ConservativeFinding> findings)
-    {
-        var baselineAdmits = input.CorpusCaseIds.Count(caseId =>
-            baseline[caseId].Disposition is ConservativeDisposition.Admit);
-        var preservedAdmits = input.CorpusCaseIds.Count(caseId =>
-            baseline[caseId].Disposition is ConservativeDisposition.Admit
-            && candidate[caseId].Disposition is ConservativeDisposition.Admit);
-        var material = JsonSerializer.SerializeToElement(new
-        {
-            actual_candidate_case = new
-            {
-                baseline = Disposition(baseline[input.CandidateTreeCaseId]),
-                candidate = Disposition(candidate[input.CandidateTreeCaseId]),
-                case_id = input.CandidateTreeCaseId,
-            },
-            actual_tree_case = new
-            {
-                baseline = Disposition(baseline[input.BaseTreeCaseId]),
-                candidate = Disposition(candidate[input.BaseTreeCaseId]),
-                case_id = input.BaseTreeCaseId,
-            },
-            baseline = new
-            {
-                commit_oid = input.BaselineCommitOid,
-                harness_root = input.BaselineHarnessRoot,
-                lean_report_root = input.BaselineLeanReportRoot,
-                result_root = HarnessResultRoot(baselineRun),
-                tree_oid = input.BaselineTreeOid,
-            },
-            candidate = new
-            {
-                commit_oid = input.CandidateCommitOid,
-                harness_root = input.CandidateHarnessRoot,
-                lean_report_root = input.CandidateLeanReportRoot,
-                result_root = HarnessResultRoot(candidateRun),
-                tree_oid = input.CandidateTreeOid,
-            },
-            corpus_case_count = input.CorpusCaseIds.Length,
-            corpus_root = input.CorpusRoot,
-            findings = findings.Select(static item => new
-            {
-                case_id = item.CaseId,
-                code = item.Code,
-                message = item.Message,
-                rule_id = item.RuleId,
-            }),
-            golden_case_count = input.GoldenCaseCount,
-            negative_floor = new
-            {
-                active_rule_count = activeRules.Length,
-                rules = activeRules,
-            },
-            positive_implication = new
-            {
-                baseline_admit_count = baselineAdmits,
-                preserved_admit_count = preservedAdmits,
-            },
-            replay_root = input.ReplayRoot,
-            schema = CertificateSchema,
-            sl022_diagnostics = new
-            {
-                baseline = Diagnostics(baseline[input.CandidateTreeCaseId]),
-                candidate = Diagnostics(candidate[input.CandidateTreeCaseId]),
-            },
-            status = findings.IsEmpty ? "CORPUS_CONSERVATIVE" : "CONSERVATIVE_VIOLATION",
-        });
-        return StructuredCanonicalWriter.WriteJson(material);
-    }
-
-    private static object Disposition(ConservativeCaseResult result) => new
-    {
-        blocking_rules = result.BlockingRules.Order(StringComparer.Ordinal),
-        disposition = result.Disposition.ToString().ToLowerInvariant(),
-    };
-
-    private static IEnumerable<object> Diagnostics(ConservativeCaseResult result) =>
-        result.Sl022Diagnostics
-            .OrderBy(static item => item.Path, StringComparer.Ordinal)
-            .ThenBy(static item => item.Message, StringComparer.Ordinal)
-            .Select(static item => (object)new
-            {
-                message = item.Message,
-                path = item.Path,
-                rule_id = item.RuleId,
-            });
-
-    private static string HarnessResultRoot(ConservativeHarnessRun run)
-    {
-        var material = JsonSerializer.SerializeToElement(new
-        {
-            active_rules = run.ActiveRules.Order(StringComparer.Ordinal),
-            cases = run.Cases.OrderBy(static item => item.CaseId, StringComparer.Ordinal).Select(item => new
-            {
-                blocking_rules = item.BlockingRules.Order(StringComparer.Ordinal),
-                case_id = item.CaseId,
-                case_root = item.CaseRoot,
-                disposition = item.Disposition.ToString().ToLowerInvariant(),
-                sl022_diagnostics = Diagnostics(item),
-            }),
-            harness_root = run.HarnessRoot,
-        });
-        var bytes = StructuredCanonicalWriter.WriteJson(material);
-        return "sha256:" + Convert.ToHexStringLower(SHA256.HashData(bytes.AsSpan()));
-    }
 
     private static void ValidateRoot(string side, string expected, string actual)
     {

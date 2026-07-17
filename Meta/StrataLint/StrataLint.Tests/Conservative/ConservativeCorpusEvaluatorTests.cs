@@ -18,6 +18,7 @@ public sealed class ConservativeCorpusEvaluatorTests
 
         Assert.Equal(source.Cases.Count, run.Cases.Length);
         Assert.Equal(corpus.CaseIds, run.Cases.Select(static item => item.CaseId));
+        Assert.Equal(6, run.ContractCases.Length);
         foreach (var testCase in source.Cases)
         {
             var actual = Assert.Single(run.Cases, item => item.CaseId == $"golden:{testCase.Name}");
@@ -32,6 +33,16 @@ public sealed class ConservativeCorpusEvaluatorTests
                     .Distinct(StringComparer.Ordinal)
                     .Order(StringComparer.Ordinal),
                 actual.BlockingRules);
+        }
+
+        foreach (var testCase in source.Cases.Where(static item => item.ContractEpoch is not null))
+        {
+            var actual = Assert.Single(
+                run.ContractCases,
+                item => item.CaseId == $"contract:{testCase.Name}");
+            Assert.Equal(
+                testCase.ContractEpoch!.ExpectedFindingCodes,
+                actual.FindingCodes.ToArray());
         }
     }
 

@@ -106,6 +106,37 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
         return RawRepositorySnapshot.Create(entries);
     }
 
+    internal RawRepositoryEntry ReadRevisionFile(string revision, string path)
+    {
+        if (!IsObjectId(revision))
+        {
+            throw new InvalidOperationException("revision file read requires an exact commit OID");
+        }
+        RequireObjectType(revision, "commit");
+
+        if (!RepoPath.TryCreate(path, out _))
+        {
+            throw new ArgumentException("revision file path is invalid", nameof(path));
+        }
+
+        var matches = ParseTree(GitBytes("ls-tree", "-z", revision, "--", path)).ToArray();
+        if (matches.Length != 1 || !string.Equals(matches[0].Path, path, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException($"revision file is missing: {path}");
+        }
+
+        var entry = matches[0];
+        if (entry.Mode is not ("100644" or "100755") || entry.ObjectType != "blob")
+        {
+            throw new InvalidOperationException(
+                $"revision file is not regular: {path} ({entry.Mode} {entry.ObjectType})");
+        }
+
+        return new RawRepositoryEntry(
+            path,
+            ImmutableArray.CreateRange(GitBytes("show", $"{revision}:{path}")));
+    }
+
     private IEnumerable<TreeEntry> ParseTree(byte[] bytes)
     {
         foreach (var entry in SplitNul(bytes))

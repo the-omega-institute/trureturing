@@ -81,16 +81,65 @@ internal static class DigestionLedgerAligner
         var cas = DigestionCasStore.Evaluate(document, snapshot);
         findings.AddRange(cas.Findings);
         var baselineSources = BaselineSources(baselineDocument, findings);
-        foreach (var source in document.RequireDigestionSources())
+        var sources = document.RequireDigestionSources();
+        var candidateSources = sources.ToDictionary(
+            static source => source.SourceId,
+            StringComparer.Ordinal);
+        var coarseReplacementObligationsBySource =
+            new Dictionary<string, DigestionLedgerEntry[]>(StringComparer.Ordinal);
+        var rejectedCoarseClones = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var baselineSource in baselineSources.Values)
         {
+            candidateSources.TryGetValue(baselineSource.SourceId, out var candidateSource);
+            var obligations = CoarseReplacementObligations(baselineSource, candidateSource);
+            if (obligations.Length == 0)
+            {
+                continue;
+            }
+
+            coarseReplacementObligationsBySource.Add(baselineSource.SourceId, obligations);
+            if (candidateSource is null)
+            {
+                findings.Add(
+                    "coarse replacement source changed or disappeared: "
+                    + baselineSource.SourceId);
+            }
+
+            foreach (var baselineEntry in obligations)
+            {
+                foreach (var (candidateSourceId, candidateEntry) in sources.SelectMany(source =>
+                             source.Entries.Select(entry => (source.SourceId, Entry: entry))))
+                {
+                    if (candidateEntry.CasRef != baselineEntry.CasRef
+                        || (candidateSourceId == baselineSource.SourceId
+                            && CoarseReplacementIdentityEqual(candidateEntry, baselineEntry)))
+                    {
+                        continue;
+                    }
+
+                    if (rejectedCoarseClones.Add(candidateEntry.AtomId))
+                    {
+                        findings.Add(
+                            $"source {baselineSource.SourceId} new coarse receipt after fine atomization: "
+                            + candidateEntry.AtomId);
+                    }
+                }
+            }
+        }
+
+        foreach (var source in sources)
+        {
+            baselineSources.TryGetValue(source.SourceId, out var baselineSource);
             foreach (var entry in source.Entries.Where(static entry => entry.CasRef is not null))
             {
-                alignments[entry.AtomId] = source.Atomizer == AtomizerRegistry.NoAtomizerId
-                    && entry.Boundary is not null
-                        ? DigestionReceiptAlignment.LegacyBoundary
-                        : cas.ValidAtomIds.Contains(entry.AtomId)
-                            ? DigestionReceiptAlignment.Seen
-                            : DigestionReceiptAlignment.Rejected;
+                alignments[entry.AtomId] = rejectedCoarseClones.Contains(entry.AtomId)
+                    ? DigestionReceiptAlignment.Rejected
+                    : source.Atomizer == AtomizerRegistry.NoAtomizerId
+                        && entry.Boundary is not null
+                            ? DigestionReceiptAlignment.LegacyBoundary
+                            : cas.ValidAtomIds.Contains(entry.AtomId)
+                                ? DigestionReceiptAlignment.Seen
+                                : DigestionReceiptAlignment.Rejected;
             }
 
             foreach (var entry in source.Entries.Where(static entry =>
@@ -103,14 +152,27 @@ internal static class DigestionLedgerAligner
                 .Where(static entry => entry.CasRef is null && entry.Boundary is null)
                 .ToArray();
             var registeredAtomizer = AtomizerRegistry.IsRegistered(source.Atomizer);
+            var coarseReplacementObligations =
+                coarseReplacementObligationsBySource.GetValueOrDefault(source.SourceId, []);
             if (structuredEntries.Length == 0
-                && (mode == DigestionAlignmentMode.Admission || !registeredAtomizer))
+                && (mode == DigestionAlignmentMode.Admission || !registeredAtomizer)
+                && coarseReplacementObligations.Length == 0)
             {
                 continue;
             }
 
             if (!registeredAtomizer)
             {
+                if (coarseReplacementObligations.Any(entry =>
+                        baselineSource?.AcknowledgedStale.Contains(
+                            entry.AtomId,
+                            StringComparer.Ordinal) == true))
+                {
+                    findings.Add(
+                        "settled coarse replacement requires a registered atomizer: "
+                        + source.SourceId);
+                }
+
                 findings.Add(
                     $"source {source.SourceId} boundaryless receipts require a registered atomizer");
                 MarkRejected(structuredEntries, alignments);
@@ -201,8 +263,35 @@ internal static class DigestionLedgerAligner
                 continue;
             }
 
-            baselineSources.TryGetValue(source.SourceId, out var baselineSource);
             var matchedAstPaths = new HashSet<string>(StringComparer.Ordinal);
+            var sourceStale = new List<string>();
+            if (coarseReplacementObligations.Length > 0 && !claims.ContainsKey("coarse/source"))
+            {
+                foreach (var baselineEntry in coarseReplacementObligations)
+                {
+                    var exact = source.Entries
+                        .Where(entry => CoarseReplacementIdentityEqual(entry, baselineEntry))
+                        .ToArray();
+                    if (exact.Length != 1)
+                    {
+                        findings.Add(
+                            $"source {source.SourceId} coarse replacement receipt identity changed "
+                            + $"or disappeared: {baselineEntry.AtomId}");
+                        continue;
+                    }
+
+                    var entry = exact[0];
+                    if (!cas.ValidAtomIds.Contains(entry.AtomId))
+                    {
+                        continue;
+                    }
+
+                    alignments[entry.AtomId] = DigestionReceiptAlignment.Stale;
+                    sourceStale.Add(entry.AtomId);
+                    actualStale.Add(entry.AtomId);
+                }
+            }
+
             foreach (var legacy in source.Entries.Where(static entry => entry.Boundary is not null))
             {
                 if (claims.TryGetValue(legacy.AstPath, out var atom)
@@ -214,7 +303,6 @@ internal static class DigestionLedgerAligner
                 }
             }
 
-            var sourceStale = new List<string>();
             foreach (var entry in structuredEntries)
             {
                 if (claims.TryGetValue(entry.AstPath, out var atom)
@@ -471,4 +559,29 @@ internal static class DigestionLedgerAligner
         candidate.SourceId == baseline.SourceId
         && candidate.AtomId == baseline.AtomId
         && candidate.Fingerprints == baseline.Fingerprints;
+
+    private static bool CoarseReplacementIdentityEqual(
+        DigestionLedgerEntry candidate,
+        DigestionLedgerEntry baseline) =>
+        candidate.AstPath == "coarse/source"
+        && baseline.AstPath == "coarse/source"
+        && candidate.Boundary == baseline.Boundary
+        && candidate.CasRef == baseline.CasRef
+        && EntryIdentityEqual(candidate, baseline);
+
+    private static DigestionLedgerEntry[] CoarseReplacementObligations(
+        DigestionLedgerSource baseline,
+        DigestionLedgerSource? candidate) =>
+        baseline.Entries.Where(entry =>
+            entry.AstPath == "coarse/source"
+            && entry.CasRef is not null
+            && (candidate is null
+                || !candidate.Entries.Any(candidateEntry =>
+                    CoarseReplacementIdentityEqual(candidateEntry, entry))
+                || baseline.AcknowledgedStale.Contains(entry.AtomId, StringComparer.Ordinal)
+                || baseline.Atomizer != candidate.Atomizer
+                || candidate.AcknowledgedStale.Contains(
+                    entry.AtomId,
+                    StringComparer.Ordinal)))
+            .ToArray();
 }

@@ -21,7 +21,7 @@ public sealed class GoldenCorpusStorageTests
             "Meta/StrataLint/Synthetic.cs",
             source));
 
-        Assert.Contains("Meta/StrataLint/Golden/cases", finding.Message, StringComparison.Ordinal);
+        Assert.Contains("Golden/cases", finding.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -39,7 +39,7 @@ public sealed class GoldenCorpusStorageTests
     public void CanonicalTomlDirectoryIsTheOnlyCaseAuthority()
     {
         var root = RepositoryLayout.FindRoot();
-        var directory = Path.Combine(root, "Meta", "StrataLint", "Golden", "cases");
+        var directory = Path.Combine(root, "Golden", "cases");
         Assert.Equal(4, Directory.EnumerateFiles(directory, "*.toml").Count());
         var loader = typeof(StrataLint.Cli.Program).Assembly.GetType(
             "StrataLint.Cli.TomlGoldenLoader",
@@ -50,9 +50,25 @@ public sealed class GoldenCorpusStorageTests
         var cases = (IEnumerable)corpus.GetType().GetProperty(
             "Cases",
             BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(corpus)!;
-        Assert.Equal(111, cases.Cast<object>().Count());
+        Assert.Equal(117, cases.Cast<object>().Count());
         Assert.Empty(Directory.EnumerateFiles(
             Path.Combine(root, "Meta", "StrataLint", "StrataLint.Cli", "Golden"),
             "GoldenCorpus.Cases*.cs"));
+    }
+
+    [Fact]
+    public void SyntheticRegistryDataIsExternalToGoldenCorpusSource()
+    {
+        var root = RepositoryLayout.FindRoot();
+        var source = File.ReadAllText(Path.Combine(
+            root,
+            "Meta",
+            "StrataLint",
+            "StrataLint.Cli",
+            "Golden",
+            "GoldenCorpus.cs"));
+
+        Assert.True(File.Exists(Path.Combine(root, "Golden", "fixture-registry.yaml")));
+        Assert.DoesNotContain("FixtureRegistry", source, StringComparison.Ordinal);
     }
 }

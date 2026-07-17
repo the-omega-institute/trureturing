@@ -6,7 +6,7 @@ namespace StrataLint.Cli;
 
 internal static class TomlGoldenLoader
 {
-    internal const string RelativeDirectory = "Meta/StrataLint/Golden/cases";
+    internal const string RelativeDirectory = "Golden/cases";
 
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
@@ -128,14 +128,7 @@ internal static class TomlGoldenLoader
 
     private static GoldenCase ParseCase(TomlTable table, string location)
     {
-        RequireKeys(
-            table,
-            location,
-            "name",
-            "changes",
-            "baseline_mutations",
-            "mutations",
-            "expected_diagnostics");
+        RequireCaseKeys(table, location);
         var name = RequiredString(table, "name", location);
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -147,7 +140,75 @@ internal static class TomlGoldenLoader
             ParseMutations(RequiredArray(table, "baseline_mutations", location), location, "baseline_mutations"),
             ParseMutations(RequiredArray(table, "mutations", location), location, "mutations"),
             ParseDiagnostics(RequiredArray(table, "expected_diagnostics", location), location),
-            RequiredStringArray(table, "changes", location));
+            RequiredStringArray(table, "changes", location),
+            ParseContractEpoch(table, location));
+    }
+
+    private static GoldenContractEpochCase? ParseContractEpoch(TomlTable table, string location)
+    {
+        if (!table.TryGetValue("contract_epoch", out var raw)) return null;
+        if (raw is not TomlTable contract)
+        {
+            throw Invalid(location, "key 'contract_epoch' must be an inline table");
+        }
+
+        var contractLocation = location + ".contract_epoch";
+        RequireKeys(
+            contract,
+            contractLocation,
+            "candidate_exact_exclusions",
+            "candidate_retired_rules",
+            "candidate_removed_matchers",
+            "baseline_plans",
+            "candidate_plans",
+            "baseline_consumptions",
+            "candidate_consumptions",
+            "expected_finding_codes");
+        return new GoldenContractEpochCase(
+            RequiredStringArray(contract, "candidate_exact_exclusions", contractLocation),
+            RequiredStringArray(contract, "candidate_retired_rules", contractLocation),
+            RequiredStringArray(contract, "candidate_removed_matchers", contractLocation),
+            ParseContractPlans(RequiredArray(contract, "baseline_plans", contractLocation), contractLocation),
+            ParseContractPlans(RequiredArray(contract, "candidate_plans", contractLocation), contractLocation),
+            RequiredStringArray(contract, "baseline_consumptions", contractLocation),
+            RequiredStringArray(contract, "candidate_consumptions", contractLocation),
+            RequiredStringArray(contract, "expected_finding_codes", contractLocation));
+    }
+
+    private static GoldenContractPlan[] ParseContractPlans(TomlArray values, string location)
+    {
+        var plans = new GoldenContractPlan[values.Count];
+        for (var index = 0; index < values.Count; index++)
+        {
+            if (values[index] is not TomlTable plan)
+            {
+                throw Invalid(location, $"contract plan[{index}] must be an inline table");
+            }
+
+            var planLocation = $"{location}.plans[{index}]";
+            RequireKeys(
+                plan,
+                planLocation,
+                "plan_id",
+                "kind",
+                "exact_paths",
+                "rule_obligation",
+                "custodian_kind",
+                "custodian_reference",
+                "evidence_present",
+                "custodian_present");
+            plans[index] = new GoldenContractPlan(
+                RequiredString(plan, "plan_id", planLocation),
+                RequiredContractPlanKind(plan, "kind", planLocation),
+                RequiredStringArray(plan, "exact_paths", planLocation),
+                RequiredString(plan, "rule_obligation", planLocation, allowEmpty: true),
+                RequiredString(plan, "custodian_kind", planLocation, allowEmpty: true),
+                RequiredString(plan, "custodian_reference", planLocation, allowEmpty: true),
+                RequiredBoolean(plan, "evidence_present", planLocation),
+                RequiredBoolean(plan, "custodian_present", planLocation));
+        }
+
+        return plans;
     }
 
     private static GoldenMutation[] ParseMutations(
@@ -282,15 +343,53 @@ internal static class TomlGoldenLoader
         }
     }
 
+    private static void RequireCaseKeys(TomlTable table, string location)
+    {
+        var required = new[]
+        {
+            "name",
+            "changes",
+            "baseline_mutations",
+            "mutations",
+            "expected_diagnostics",
+        };
+        var allowed = required.Append("contract_epoch").ToHashSet(StringComparer.Ordinal);
+        foreach (var key in table.Keys)
+        {
+            if (!allowed.Contains(key)) throw Invalid(location, $"unknown key '{key}'");
+        }
+
+        foreach (var key in required)
+        {
+            if (!table.ContainsKey(key)) throw Invalid(location, $"missing required key '{key}'");
+        }
+    }
+
     private static TomlArray RequiredArray(TomlTable table, string key, string location) =>
         table.TryGetValue(key, out var value) && value is TomlArray array
             ? array
             : throw Invalid(location, $"key '{key}' must be an array");
 
-    private static string RequiredString(TomlTable table, string key, string location) =>
+    private static string RequiredString(
+        TomlTable table,
+        string key,
+        string location,
+        bool allowEmpty = true) =>
         table.TryGetValue(key, out var value) && value is string text
+            && (allowEmpty || text.Length > 0)
             ? text
             : throw Invalid(location, $"key '{key}' must be a string");
+
+    private static GoldenContractPlanKind RequiredContractPlanKind(
+        TomlTable table,
+        string key,
+        string location) => RequiredString(table, key, location) switch
+    {
+        "custody_transfer" => GoldenContractPlanKind.CustodyTransfer,
+        "discharge_paths" => GoldenContractPlanKind.DischargePaths,
+        "discharge_rule" => GoldenContractPlanKind.DischargeRule,
+        var value => throw Invalid(location, $"key '{key}' has unknown contract plan kind '{value}'"),
+    };
 
     private static string[] RequiredStringArray(TomlTable table, string key, string location)
     {

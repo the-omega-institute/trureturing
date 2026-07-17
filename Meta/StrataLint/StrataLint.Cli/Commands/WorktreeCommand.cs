@@ -164,25 +164,26 @@ internal static class WorktreeCommand
         return arguments[index];
     }
 
-    private static void ValidateBranchGrammar(string branch)
+    internal static bool IsManagedBranch(string branch)
     {
         if (branch.StartsWith("harness/", StringComparison.Ordinal)
             && branch.Length > "harness/".Length)
         {
-            return;
+            return true;
         }
 
         var fields = branch.Split('/');
-        if (fields.Length == 3
+        return fields.Length == 3
             && fields[0] == "agent"
             && OfficialRoles.Contains(fields[1])
-            && fields[2].Length > 0)
-        {
-            return;
-        }
+            && fields[2].Length > 0;
+    }
 
-        throw new InvalidOperationException(
-            "branch must match harness/* or agent/<official>/<task-code>");
+    private static void ValidateBranchGrammar(string branch)
+    {
+        if (!IsManagedBranch(branch))
+            throw new InvalidOperationException(
+                "branch must match harness/* or agent/<official>/<task-code>");
     }
 
     private static void ValidatePreflight(WorktreeOptions options, IWorktreeProcessRunner runner)

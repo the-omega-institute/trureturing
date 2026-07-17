@@ -11,6 +11,12 @@ public sealed class ValuesProjectionLoaderTests
     private const string InputPath = ValuesProjectionLoader.InputPath;
     private const string LeanModulePath = ValuesProjectionLoader.LeanModulePath;
     private const string KernelDataPath = ValuesProjectionLoader.KernelDataPath;
+
+    [Fact]
+    public void ProjectionAttestationUsesTheTopLevelGoldenDataHome()
+    {
+        Assert.Equal("Golden/values-kernels.toml", KernelDataPath);
+    }
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     private static readonly ImmutableArray<string> InputPaths = ValuesProjectionLoader.InputPaths;
     private static readonly ImmutableArray<string> LegacyInputPaths =
@@ -67,6 +73,20 @@ public sealed class ValuesProjectionLoaderTests
         Assert.NotEmpty(projection.Definitions);
         Assert.All(projection.Definitions.Values, static definition =>
             Assert.Contains(definition.Status, new[] { "emitted", "registered-open" }));
+    }
+
+    [Fact]
+    public void HistoricalKernelRelocationRequiresAnExplicitReplayPath()
+    {
+        const string historicalPath = "Archive/values-kernels.toml";
+        var paths = InputPaths.SetItem(InputPaths.IndexOf(KernelDataPath), historicalPath);
+        var inputs = Inputs(StrictUtf8.GetBytes("formal values producer input\n"), paths);
+        var snapshot = Snapshot(inputs, Projection(inputs));
+
+        Assert.Throws<FormatException>(() => ValuesProjectionLoader.Load(snapshot));
+
+        var projection = ValuesProjectionLoader.Load(snapshot, historicalPath);
+        Assert.NotEmpty(projection.Definitions);
     }
 
     [Fact]
