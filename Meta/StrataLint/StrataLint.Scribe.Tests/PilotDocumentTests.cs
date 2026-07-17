@@ -369,7 +369,6 @@ public sealed class DocumentDiscoveryTests
             "No analytic projection operator is defined, and no projection identity outside the Dirichlet convergence half-plane is claimed.",
             "The source's coefficient factorization, unbounded-ray clause, and rotation-invariance clause are not formalized here.",
             "The governance claim excluding an address-dependent inverse register is not part of this theorem.",
-            "The repository does not prove that ZeroData is inhabited.",
             "Cross-position cancellation does not imply local balance at either position.",
             "The closure condition is carried as the arbitrary predicate closedAt; no inhabitant is asserted.",
             "The missing implication from every projected zero to local balance is exactly the open O-6 bridge.",
@@ -379,6 +378,19 @@ public sealed class DocumentDiscoveryTests
         {
             Assert.Contains(disclosure, markdown, StringComparison.Ordinal);
         }
+
+        var zeroQuartetScaling = Descendants(definition.Document.Content)
+            .OfType<DocumentBlock.Describe>()
+            .Single(static node =>
+                Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement).Value.Value ==
+                "D5/S3/Weil/ZeroGeometry.zero_quartet_scaling_spec");
+        var zeroDataDisclosure = Assert.IsType<Inline.Text>(
+            Assert.IsType<DocumentBlock.Paragraph>(
+                Assert.Single(zeroQuartetScaling.Content.Items)).Content.Items.Single()).Run.Value;
+
+        Assert.Contains("ZeroData", zeroDataDisclosure, StringComparison.Ordinal);
+        Assert.Contains("does not prove", zeroDataDisclosure, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("inhabit", zeroDataDisclosure, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
