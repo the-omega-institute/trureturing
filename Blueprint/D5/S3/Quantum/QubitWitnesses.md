@@ -10,11 +10,11 @@ The standard Pauli X and Z observables have no nonzero common eigenvector on C^2
 
 ## Theorem: The Bell coefficient matrix is not a simple tensor
 
-Provenance: `literature-attested` via `D5/L/bell1964epr` (`lit/bell1964epr`)
+Provenance: `repo-derived`
 
 Statement: `D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product` `✓ std3`
 
-The coefficient matrix of the unnormalized Bell vector |00> + |11> cannot be factored as an outer product. A nonzero normalization scalar does not change this obstruction. This declaration proves neither a CHSH expectation nor Tsirelson optimality, a local-hidden-variable bound, Kochen-Specker contextuality, hidden-address interpretations, or that probability is not ignorance. Original numerical-certificate claims not formalized: the source atom's CHSH values 2*sqrt(2) = 2.8284 and the classical local-fiber bound 2.0.
+The coefficient matrix of the unnormalized Bell vector |00> + |11> cannot be factored as an outer product. A nonzero normalization scalar does not change this obstruction. This elementary algebraic witness is proved directly in the repository; Bell's 1964 paper treats the spin singlet and locality, not this exact vector or factorization argument. This declaration proves neither a CHSH expectation nor Tsirelson optimality, a local-hidden-variable bound, Kochen-Specker contextuality, hidden-address interpretations, or that probability is not ignorance. Original numerical-certificate claims not formalized: the source atom's CHSH values 2*sqrt(2) = 2.8284 and the classical local-fiber bound 2.0.
 
 ## Theorem: Iterated phase damping has the exact qubit certificate
 

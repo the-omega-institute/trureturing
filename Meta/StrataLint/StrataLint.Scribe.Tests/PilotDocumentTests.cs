@@ -366,13 +366,15 @@ public sealed class DocumentDiscoveryTests
     [Fact]
     public void QubitWitnessDocumentCarriesExactStatementsAndDiligentProvenance()
     {
-        (string Declaration, string Reference)[] expected =
+        (string Declaration, DescribeProvenanceKind Provenance, string? Reference)[] expected =
         [
             ("D5/S3/Quantum/QubitWitnesses.pauli_observables_have_no_common_eigenvector",
+                DescribeProvenanceKind.LiteratureAttested,
                 "D5/L/schwinger1960unitary"),
             ("D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product",
-                "D5/L/bell1964epr"),
+                DescribeProvenanceKind.RepoDerived, null),
             ("D5/S3/Quantum/QubitWitnesses.equal_superposition_phase_damping_certificate",
+                DescribeProvenanceKind.LiteratureAttested,
                 "D5/L/zurek2003decoherence"),
         ];
         var definition = DocumentDefinitions.All.Single(static item =>
@@ -391,7 +393,7 @@ public sealed class DocumentDiscoveryTests
             var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement);
 
             Assert.Equal(DescribeKind.Theorem, node.Kind);
-            Assert.Equal(DescribeProvenanceKind.LiteratureAttested, node.Provenance.Kind);
+            Assert.Equal(item.Provenance, node.Provenance.Kind);
             Assert.Equal(item.Reference, node.Provenance.LiteratureReference?.Value);
             Assert.Equal(item.Declaration, lean.Value.Value);
             Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);

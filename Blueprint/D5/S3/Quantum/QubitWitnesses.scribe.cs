@@ -6,8 +6,6 @@ internal sealed class QubitWitnessesDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Schwinger =
         LibraryNoteRef.Create("D5/L/schwinger1960unitary");
-    private static readonly LibraryNoteRef Bell =
-        LibraryNoteRef.Create("D5/L/bell1964epr");
     private static readonly LibraryNoteRef Zurek =
         LibraryNoteRef.Create("D5/L/zurek2003decoherence");
 
@@ -32,9 +30,9 @@ internal sealed class QubitWitnessesDocument : IScribeDocumentDefinition
                 H("The Bell coefficient matrix is not a simple tensor"),
                 DescribeStatement.FromLean(LeanTheorem(
                     "D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product")),
-                DescribeProvenance.LiteratureAttested(Bell),
+                DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
-                    "The coefficient matrix of the unnormalized Bell vector |00> + |11> cannot be factored as an outer product. A nonzero normalization scalar does not change this obstruction. This declaration proves neither a CHSH expectation nor Tsirelson optimality, a local-hidden-variable bound, Kochen-Specker contextuality, hidden-address interpretations, or that probability is not ignorance. Original numerical-certificate claims not formalized: the source atom's CHSH values 2*sqrt(2) = 2.8284 and the classical local-fiber bound 2.0.")))),
+                    "The coefficient matrix of the unnormalized Bell vector |00> + |11> cannot be factored as an outer product. A nonzero normalization scalar does not change this obstruction. This elementary algebraic witness is proved directly in the repository; Bell's 1964 paper treats the spin singlet and locality, not this exact vector or factorization argument. This declaration proves neither a CHSH expectation nor Tsirelson optimality, a local-hidden-variable bound, Kochen-Specker contextuality, hidden-address interpretations, or that probability is not ignorance. Original numerical-certificate claims not formalized: the source atom's CHSH values 2*sqrt(2) = 2.8284 and the classical local-fiber bound 2.0.")))),
             new DocumentBlock.Describe(
                 DescribeId.Create("iterated-phase-damping-has-the-exact-qubit-certificate"),
                 DescribeKind.Theorem,

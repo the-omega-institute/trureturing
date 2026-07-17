@@ -20,8 +20,8 @@ public sealed class DescribeMigrationTests
         Assert.Equal(9, report.NodeStats.ByKind["proposition"]);
         Assert.Equal(30, report.NodeStats.ByKind["theorem"]);
         Assert.Equal(1, report.NodeStats.ByKind["example"]);
-        Assert.Equal(24, report.NodeStats.ByProvenance["repo-derived"]);
-        Assert.Equal(22, report.NodeStats.ByProvenance["literature-attested"]);
+        Assert.Equal(25, report.NodeStats.ByProvenance["repo-derived"]);
+        Assert.Equal(21, report.NodeStats.ByProvenance["literature-attested"]);
         Assert.Equal(0, report.OpenCount);
         Assert.Empty(report.SuspectedNovel);
         Assert.Empty(report.RedFindings);
@@ -114,11 +114,10 @@ public sealed class DescribeMigrationTests
             DescribeKind.Theorem,
             "D5/S3/Quantum/QubitWitnesses.pauli_observables_have_no_common_eigenvector",
             "D5/L/schwinger1960unitary");
-        AssertLiteratureAttestedLeanNode(
+        AssertRepoDerivedLeanNode(
             nodes["D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product"],
             DescribeKind.Theorem,
-            "D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product",
-            "D5/L/bell1964epr");
+            "D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product");
         AssertLiteratureAttestedLeanNode(
             nodes["D5/S3/Quantum/QubitWitnesses.equal_superposition_phase_damping_certificate"],
             DescribeKind.Theorem,
