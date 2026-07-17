@@ -1,0 +1,2 @@
+**距离-相位定律三代(v2 全谱)。** v1(纯态):可调容量 = 半谱宽 = dist(A, 中心)(证书 $2.1844$)。v2(谱配对,勘误 E12 替换条文):$C_\rho(A)=\tfrac12\sum r_i(a_i-a_{n+1-i})$;qubit 解耦因子为 Bloch 半径 $\sqrt{2\mathrm{Tr}\rho^2-1}$ 而非纯度,解耦仅居 qubit;优超单调——越无知越调不动。v3(变分完形,锐度定理):$\sup_A C_\rho(A)/\mathrm{dist}(A,Z)=\mu^*(\rho)=\mathrm{TV}$(谱, 反序谱),由**中位切分之 ±1 是非题**达成——最能兑现自由的问题是一刀两断的是非题(Bell 的 ±1 观测量 = 锐度极值);**满格判据 $\mu^*=1\iff\mathrm{rank}\le\lfloor n/2\rfloor$**(自由满格不需纯态,只需支撑不过半);$\mu^*=0\iff$ 极大混态。
+

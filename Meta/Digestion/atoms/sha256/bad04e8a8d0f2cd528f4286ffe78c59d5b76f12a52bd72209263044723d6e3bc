@@ -1,0 +1,4 @@
+**互补预算定理(v2 新增,自含四行证)。** 引理:$S(\mathcal P_Z\rho)=S(\rho)+D(\rho\|\mathcal P_Z\rho)$;$\mathcal P_X\mathcal P_Z=\mathrm{Tr}(\cdot)I/M$。经 DPI:$S_Z+S_X\ge\ln M+S(\rho)$,即 $\kappa_Z+\kappa_X\le\kappa_{\rm spec}$——**地址账与绕行账从同一份谱余维预算支取:写满一本,共轭一本自动清零**;两端恰饱和。Rényi 网 $D_\alpha^Z+D_\beta^X\ge1$($\tfrac1\alpha+\tfrac1\beta=2$)沿共轭双曲线逐对成立;锐度勾股 $\mu^*(p_Z)^2+\mu^*(p_X)^2\le2\ln M\cdot\kappa_{\rm spec}$。**互补性 = 余维记账守恒**。三区图 v2:太近(中心型无穷远)/ 适中(离心,自由住此,按谱配对定价)/ 流线(纵向无穷远——索引)。
+
+---
+

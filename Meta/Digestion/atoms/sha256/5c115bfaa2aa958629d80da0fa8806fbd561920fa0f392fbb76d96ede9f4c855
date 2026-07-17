@@ -1,0 +1,2 @@
+**定理 6.34(遗忘链两账同向)**〔定理·证 + 证书〕。典范条件期望链 $\mathfrak O\xrightarrow{E_{\rm diag}}C(\Sigma)\xrightarrow{E_{\rm pub}}C(\mathbb T)$(6.15 三级塔之期望实现):Schrödinger 侧熵单调增(Schur–Horn 捏合),Heisenberg 侧容量单调减(递减权 Abel 引理)。**遗忘 = 熵账加、容量账减之同一次过账**;6.26 三层经典性获双向单调骨架。〔证书:M=6 熵 1.3284→1.7125,容量 2.9289→1.2750→0〕(27.310)
+

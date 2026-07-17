@@ -1,0 +1,2 @@
+**定理(有限窗口 = 素数量子寄存器,绕行限定版)。** 有限循环窗口的闭合观察者代数为 $C(\mathbb Z/M\mathbb Z)\rtimes\mathbb Z\cong M_M(C(\mathbb T))$:$U^M=z$ 为记录绕行相位的**中心酉元**;固定或忘却绕行账后,方得全矩阵代数 $M_{M_W}(\mathbb C)=\bigotimes_p M_{p^{r_p}}$——qubit、qutrit 与一般素数 qudit 不是被造出来的,是被窗口结构生成的。头版句:**可见圆是经典参数空间,隐藏地址读写形成其上的量子矩阵纤维**——$\mathfrak O$ 是 $\mathbb T$ 上的非交换代数丛,绕行酉 $U^M=z$ 即其最小 holonomy 样品(局域同型、全局扭结)。窗口内 Weyl 关系 $VU=\omega UV$ 给出测不准;矩阵单位关系全程精确(证书误差恰 $0$)。
+
