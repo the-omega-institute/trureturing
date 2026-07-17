@@ -628,7 +628,7 @@ zero deletable now. The OBSERVER source contributes 32 entries: 31 are
 `stale/residual/open/deletable=false`. A repeated full ingest after predecessor integration
 reported `stale_acknowledged=0 residual_open_added=0 coarse_fallbacks=0`,
 `cas_objects_written=0`, and `ledger_changed=false`; the stable BACKFILL SHA-256 is
-`5b8a1e84f53821182d9f98b5291f764835557f9e8b754b48a674b62045fde9dd`.
+`1ef44db94ad4122f96c4ee617e0ff844edfb983e1d09c69294b3842c5be440da`.
 
 Fail-closed review hardened both dialect recognition and stale history. Unknown or indented
 bold leads, malformed Q1-Q4/settled/open labels, and duplicate locators are rejected. The
@@ -650,6 +650,13 @@ required checks, and auto-merged as predecessor `198d3140`. The final C0 then bo
 Replay reports 117 golden, 118 total, and six contract cases, preserves 37/37 admits, has
 zero findings, retires no path or rule, and leaves `uncovered_obligations=[]`. Its measured
 stages were 193s Lean reports, 17s emission, 85s admission, and 405s conservative replay.
+
+The first post-ceremony preflight's mandatory fetch advanced `origin/dev` through PR #149
+from `198d3140` to `f231f7f4`; that new base was not an ancestor of the candidate, so the
+already-doomed Lean pair was stopped rather than misreported as an acceptance run. The
+branch merged that exact predecessor without rebase. Its O-6 source receipts occupied a
+different BACKFILL region: the next full ingest again wrote zero CAS objects, reported
+`ledger_changed=false`, and preserved the 31 seen plus one stale OBSERVER alignments.
 
 Two auxiliary-probe failures changed no canonical bytes. Darwin rejected inherited
 `C.UTF-8` before a hash probe read its input; the replay used `LC_ALL=C LANG=C`. A manual
