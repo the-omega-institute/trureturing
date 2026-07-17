@@ -4,6 +4,8 @@ name: admission
 on:
   push:
     branches: [dev]
+  merge_group:
+    branches: [dev]
   pull_request_target:
     branches: [dev, 'integration-**']
 
