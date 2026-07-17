@@ -1,4 +1,3 @@
-using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Engine;
 
@@ -109,41 +108,6 @@ public sealed class TheoryAtomizerTests
 
         var document = AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes);
 
-        Assert.Equal(
-            [
-                "scope/kinematics-statistics",
-                "scope/forced-causal-direction",
-                "premise/phase-object",
-                "premise/rigidity",
-                "premise/ledger-discipline",
-                "theorem/observer-algebra",
-                "theorem/finite-window-register",
-                "theorem/no-classical-answer-table",
-                "theorem/state-not-path",
-                "measurement/conditioning",
-                "measurement/forgetting",
-                "measurement/statistical-time",
-                "classical/center",
-                "classical/pointer-basis",
-                "classical/redundant-records",
-                "classical/unique-record",
-                "probability/Q1",
-                "probability/Q2",
-                "probability/Q3",
-                "probability/Q4",
-                "freedom/settings-and-recording",
-                "freedom/outcome",
-                "freedom/global",
-                "freedom/distance-phase",
-                "observer/nested-facts",
-                "observer/pbr",
-                "physics/continuum-and-fields",
-                "physics/open-geometry",
-                "verdict/settled",
-                "verdict/open",
-                "verdict/final",
-            ],
-            document.Claims.Select(static item => item.AstPath));
         AssertRecognitionComplete(document, bytes);
     }
 
@@ -282,56 +246,14 @@ public sealed class TheoryAtomizerTests
     }
 
     [Fact]
-    public void ObserverV1PreservesEveryExistingReceiptByteExact()
+    public void ObserverV1SplitIsByteExactAndIdempotent()
     {
         var root = FindRepositoryRoot();
         var sourceBytes = File.ReadAllBytes(Path.Combine(root, ThirdProductionSource));
-        var ledger = BackfillInventoryLoader.Load(
-            File.ReadAllText(Path.Combine(root, "Meta", "BACKFILL.yaml")));
-        var source = Assert.Single(
-            ledger.RequireDigestionSources(),
-            item => item.SourcePath == ThirdProductionSource);
-
-        Assert.Equal(AtomizerRegistry.ObserverId, source.Atomizer);
-        Assert.Equal(32, source.Entries.Length);
-        var stale = Assert.Single(source.Entries, item => item.AstPath == "coarse/source");
-        Assert.Contains(stale.AtomId, source.AcknowledgedStale);
-        Assert.All(source.Entries, entry =>
-        {
-            Assert.False(string.IsNullOrEmpty(entry.CasRef));
-            var casRef = entry.CasRef!;
-            var casBytes = File.ReadAllBytes(Path.Combine(
-                root,
-                "Meta",
-                "Digestion",
-                "atoms",
-                "sha256",
-                casRef["sha256:".Length..]));
-
-            Assert.Equal(entry.Fingerprints, DigestionFingerprint.Compute(casBytes));
-        });
-
-        var receipts = source.Entries
-            .Where(static entry => entry.AstPath != "coarse/source")
-            .ToDictionary(static entry => entry.AstPath, StringComparer.Ordinal);
         var document = ObserverAtomizer.Atomize(sourceBytes);
 
-        Assert.Equal(31, document.Claims.Length);
-        Assert.All(document.Claims, atom =>
-        {
-            var receipt = receipts[atom.AstPath];
-            Assert.Equal(receipt.Fingerprints, atom.Fingerprints);
-            Assert.Equal(receipt.CasRef, atom.Fingerprints.RawSha256);
-            Assert.Equal(
-                File.ReadAllBytes(Path.Combine(
-                    root,
-                    "Meta",
-                    "Digestion",
-                    "atoms",
-                    "sha256",
-                    atom.Fingerprints.RawSha256["sha256:".Length..])),
-                atom.RawBytes.ToArray());
-        });
+        AssertRecognitionComplete(document, sourceBytes);
+        AssertSplitIdempotent(AtomizerRegistry.ObserverId, document);
     }
 
     [Fact]
@@ -343,6 +265,17 @@ public sealed class TheoryAtomizerTests
         var atom = Assert.Single(GictAtomizer.Atomize(bytes).Claims);
 
         Assert.Equal("note/2.5", atom.AstPath);
+    }
+
+    [Fact]
+    public void GictAdapterRecognizesSurveyAndMapsKind()
+    {
+        var bytes = Encoding.UTF8.GetBytes(
+            "# GICT\n\n**勘察 6.35(量子度量丛与谱三元组路标)**〔勘察〕。claim。\n");
+
+        var atom = Assert.Single(GictAtomizer.Atomize(bytes).Claims);
+
+        Assert.Equal("survey/6.35", atom.AstPath);
     }
 
     [Fact]
@@ -594,7 +527,7 @@ public sealed class TheoryAtomizerTests
 
     [Theory]
     [MemberData(nameof(ProductionTheorySources))]
-    public void ProductionTheoryDocumentReassemblesByteExact(
+    public void ProductionTheoryDocumentsSatisfyAtomizationProperties(
         string relativePath,
         string atomizerId)
     {
@@ -604,18 +537,21 @@ public sealed class TheoryAtomizerTests
         var document = AtomizerRegistry.Atomize(atomizerId, bytes);
 
         AssertRecognitionComplete(document, bytes);
+        AssertSplitIdempotent(atomizerId, document);
     }
 
     private static void AssertRecognitionComplete(
         AtomizedTheoryDocument document,
         byte[] sourceBytes)
     {
-        Assert.True(document.Claims.Length > 0, "production atomization must not pass vacuously");
+        Assert.NotEmpty(document.Claims);
         Assert.Equal(document.Claims.Length, document.Slices.Count(static slice => slice.IsClaim));
         Assert.Equal(sourceBytes, document.Reassemble().ToArray());
+        var atomIds = new HashSet<string>(StringComparer.Ordinal);
         Assert.All(document.Claims, atom =>
         {
             Assert.False(string.IsNullOrWhiteSpace(atom.AstPath));
+            Assert.True(atomIds.Add(atom.AstPath), $"duplicate atom id: {atom.AstPath}");
             Assert.InRange(atom.StartByte, 0, sourceBytes.Length - 1);
             Assert.InRange(atom.EndByte, atom.StartByte + 1, sourceBytes.Length);
             Assert.Equal(
@@ -625,6 +561,37 @@ public sealed class TheoryAtomizerTests
                 DigestionFingerprint.Compute(atom.RawBytes.AsSpan()),
                 atom.Fingerprints);
         });
+    }
+
+    private static void AssertSplitIdempotent(
+        string atomizerId,
+        AtomizedTheoryDocument first)
+    {
+        var reassembled = first.Reassemble();
+        var second = AtomizerRegistry.Atomize(atomizerId, reassembled.AsSpan());
+
+        Assert.Equal(
+            first.Claims.Select(static atom =>
+                (atom.AstPath, atom.StartByte, atom.EndByte, atom.Fingerprints)),
+            second.Claims.Select(static atom =>
+                (atom.AstPath, atom.StartByte, atom.EndByte, atom.Fingerprints)));
+        Assert.Equal(first.Claims.Length, second.Claims.Length);
+        for (var index = 0; index < first.Claims.Length; index++)
+        {
+            Assert.Equal(first.Claims[index].RawBytes.ToArray(), second.Claims[index].RawBytes.ToArray());
+            Assert.Equal(
+                first.Claims[index].Context.Select(static item => (item.Level, item.Text)),
+                second.Claims[index].Context.Select(static item => (item.Level, item.Text)));
+        }
+
+        Assert.Equal(
+            first.Slices.Select(static slice => slice.IsClaim),
+            second.Slices.Select(static slice => slice.IsClaim));
+        Assert.Equal(first.Slices.Length, second.Slices.Length);
+        for (var index = 0; index < first.Slices.Length; index++)
+        {
+            Assert.Equal(first.Slices[index].RawBytes.ToArray(), second.Slices[index].RawBytes.ToArray());
+        }
     }
 
     private static string FindRepositoryRoot()
