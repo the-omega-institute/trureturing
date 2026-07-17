@@ -10,11 +10,14 @@ public sealed class TheoryAtomizerTests
         "docs/develop/theory/GICT.md";
     private const string SecondProductionSource =
         "docs/develop/theory/PZG_BEDC.md";
+    private const string ThirdProductionSource =
+        "docs/develop/theory/OBSERVER-QUANTUM.md";
 
     public static TheoryData<string, string> ProductionTheorySources => new()
     {
         { FirstProductionSource, AtomizerRegistry.GictId },
         { SecondProductionSource, AtomizerRegistry.PzgId },
+        { ThirdProductionSource, AtomizerRegistry.ObserverId },
     };
 
     [Fact]
@@ -99,6 +102,52 @@ public sealed class TheoryAtomizerTests
     }
 
     [Fact]
+    public void ObserverAdapterRecognizesEveryProductionClaim()
+    {
+        var root = FindRepositoryRoot();
+        var bytes = File.ReadAllBytes(Path.Combine(root, ThirdProductionSource));
+
+        var document = AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes);
+
+        Assert.Equal(
+            [
+                "scope/kinematics-statistics",
+                "scope/forced-causal-direction",
+                "premise/phase-object",
+                "premise/rigidity",
+                "premise/ledger-discipline",
+                "theorem/observer-algebra",
+                "theorem/finite-window-register",
+                "theorem/no-classical-answer-table",
+                "theorem/state-not-path",
+                "measurement/conditioning",
+                "measurement/forgetting",
+                "measurement/statistical-time",
+                "classical/center",
+                "classical/pointer-basis",
+                "classical/redundant-records",
+                "classical/unique-record",
+                "probability/Q1",
+                "probability/Q2",
+                "probability/Q3",
+                "probability/Q4",
+                "freedom/settings-and-recording",
+                "freedom/outcome",
+                "freedom/global",
+                "freedom/distance-phase",
+                "observer/nested-facts",
+                "observer/pbr",
+                "physics/continuum-and-fields",
+                "physics/open-geometry",
+                "verdict/settled",
+                "verdict/open",
+                "verdict/final",
+            ],
+            document.Claims.Select(static item => item.AstPath));
+        AssertRecognitionComplete(document, bytes);
+    }
+
+    [Fact]
     public void GictAdapterIdentifiesNumberedNotesAsClaims()
     {
         var bytes = Encoding.UTF8.GetBytes(
@@ -175,6 +224,64 @@ public sealed class TheoryAtomizerTests
         var error = Assert.Throws<TheorySourceFormatException>(() => PzgAtomizer.Atomize(bytes));
 
         Assert.Contains("unknown PZG numbered claim kind", error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ObserverAdapterRejectsAnUnknownBoldClaimLead()
+    {
+        var bytes = Encoding.UTF8.GetBytes(
+            "# Observer\n\n## 11. New section\n\n**新判词。** claim。\n");
+
+        var error = Assert.Throws<TheorySourceFormatException>(() =>
+            AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes));
+
+        Assert.Contains("unknown observer claim lead", error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ObserverAdapterRejectsAnIndentedUnknownBoldClaimLead()
+    {
+        var bytes = Encoding.UTF8.GetBytes(
+            "# Observer\n\n   **新判词。** claim。\n\n"
+            + "**定理(观察者代数的唯一形态)。** known。\n");
+
+        var error = Assert.Throws<TheorySourceFormatException>(() =>
+            AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes));
+
+        Assert.Contains("unknown observer claim lead", error.Message, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("**Q1(伪造标签):推出。** claim。")]
+    [InlineData("**Q2(伪造标签):条件推出。** claim。")]
+    [InlineData("**Q3(伪造标签):搬家。** claim。")]
+    [InlineData("**Q4(伪造标签)。** claim。")]
+    [InlineData("**已结案(伪造标签):** claim。")]
+    [InlineData("**遗留(伪造标签):** claim。")]
+    public void ObserverAdapterRejectsMalformedKnownPrefixBoldLead(string malformedLead)
+    {
+        var bytes = Encoding.UTF8.GetBytes(
+            $"# Observer\n\n{malformedLead}\n\n"
+            + "**定理(观察者代数的唯一形态)。** known。\n");
+
+        var error = Assert.Throws<TheorySourceFormatException>(() =>
+            AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes));
+
+        Assert.Contains("unknown observer claim lead", error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ObserverAdapterRejectsADuplicateClaimLocator()
+    {
+        var bytes = Encoding.UTF8.GetBytes(
+            "# Observer\n\n"
+            + "**定理(观察者代数的唯一形态)。** first。\n\n"
+            + "**定理(观察者代数的唯一形态)。** second。\n");
+
+        var error = Assert.Throws<TheorySourceFormatException>(() =>
+            AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes));
+
+        Assert.Contains("duplicate observer claim locator", error.Message, StringComparison.Ordinal);
     }
 
     [Fact]

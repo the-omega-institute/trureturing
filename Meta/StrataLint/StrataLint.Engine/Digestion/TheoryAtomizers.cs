@@ -166,6 +166,80 @@ internal static class GictAtomizer
     };
 }
 
+internal static class ObserverAtomizer
+{
+    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes)
+    {
+        var document = MarkdownAstAtomizer.Atomize(bytes, Identify);
+        if (document.Claims.Any(atom =>
+                atom.AstPath.Contains("/occurrence/", StringComparison.Ordinal)))
+        {
+            throw new TheorySourceFormatException("duplicate observer claim locator");
+        }
+
+        return document;
+    }
+
+    private static string? Identify(string paragraph)
+    {
+        var locator = paragraph switch
+        {
+            _ when Starts(paragraph, "本文主张的是:") => "scope/kinematics-statistics",
+            _ when Starts(paragraph, "因果方向是本文的第一主张:") => "scope/forced-causal-direction",
+            _ when Starts(paragraph, "**(i) 相位对象。**") => "premise/phase-object",
+            _ when Starts(paragraph, "**(ii) 刚性定律。**") => "premise/rigidity",
+            _ when Starts(paragraph, "**(iii) 账本纪律。**") => "premise/ledger-discipline",
+            _ when Starts(paragraph, "**定理(观察者代数的唯一形态)。**") => "theorem/observer-algebra",
+            _ when Starts(paragraph, "**定理(有限窗口 = 素数量子寄存器)。**") => "theorem/finite-window-register",
+            _ when Starts(paragraph, "**定理(无经典答案表)。**") => "theorem/no-classical-answer-table",
+            _ when Starts(paragraph, "**定理(叠加不违反经典刚性)。**") => "theorem/state-not-path",
+            _ when Starts(paragraph, "**测量的完整理论只有两个动词。**") => "measurement/conditioning",
+            _ when Starts(paragraph, "**遗忘是可审计的数学关系。**") => "measurement/forgetting",
+            _ when Starts(paragraph, "**时间的连续性是统计的产物。**") => "measurement/statistical-time",
+            _ when Starts(paragraph, "**中心层(强制,无选择)。**") => "classical/center",
+            _ when Starts(paragraph, "**指针基层(由记账规则选定)。**") => "classical/pointer-basis",
+            _ when Starts(paragraph, "**冗余层(集体记忆)。**") => "classical/redundant-records",
+            _ when Starts(paragraph, "且单配定理锁死了") => "classical/unique-record",
+            _ when Starts(paragraph, "**Q1(为何有概率):推出。**") => "probability/Q1",
+            _ when Starts(paragraph, "**Q2(为何恰是 $|\\psi|^2$):条件推出。**") => "probability/Q2",
+            _ when Starts(paragraph, "**Q3(为何单一结果):动力学谜化解,索引谜搬家。**") => "probability/Q3",
+            _ when Starts(paragraph, "**Q4(概率何义)。**") => "probability/Q4",
+            _ when Starts(paragraph, "**设置格(选问题)与记账格(选经典):判真。**") => "freedom/settings-and-recording",
+            _ when Starts(paragraph, "**结果格(选答案):三重封死。**") => "freedom/outcome",
+            _ when Starts(paragraph, "**整体格(全局单选):被隔离而非被否证。**") => "freedom/global",
+            _ when Starts(paragraph, "**距离-相位定律。**") => "freedom/distance-phase",
+            _ when Starts(paragraph, "Wigner 之友、") => "observer/nested-facts",
+            _ when Starts(paragraph, "附带一行:PBR 定理") => "observer/pbr",
+            _ when Starts(paragraph, "\"连续本不存在,连续是统计\"") => "physics/continuum-and-fields",
+            _ when Starts(paragraph, "未具备者如实列出:") => "physics/open-geometry",
+            _ when Starts(paragraph, "**已结案(八件,皆附证书):**") => "verdict/settled",
+            _ when Starts(paragraph, "**遗留(三类,性质各异):**") => "verdict/open",
+            _ when Starts(paragraph, "**总判词:**") => "verdict/final",
+            _ => null,
+        };
+        if (locator is null && HasBoldClaimLead(paragraph))
+        {
+            throw new TheorySourceFormatException("unknown observer claim lead");
+        }
+
+        return locator;
+    }
+
+    private static bool Starts(string paragraph, string prefix) =>
+        paragraph.StartsWith(prefix, StringComparison.Ordinal);
+
+    private static bool HasBoldClaimLead(string paragraph)
+    {
+        var index = 0;
+        while (index < paragraph.Length && paragraph[index] is ' ' or '\t')
+        {
+            index++;
+        }
+
+        return paragraph.AsSpan(index).StartsWith("**", StringComparison.Ordinal);
+    }
+}
+
 internal static class PzgAtomizer
 {
     private static readonly Regex ClaimPattern = new(
