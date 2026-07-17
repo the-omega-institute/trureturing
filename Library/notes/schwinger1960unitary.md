@@ -5,6 +5,7 @@ doi: 10.1073/pnas.46.4.570
 claim: Finite-dimensional unitary operator bases and their Weyl commutation structure.
 strata_touched:
   - D5/S3/Quantum/FiniteDimensional
+  - D5/S3/Quantum/QubitWitnesses
 license: citation-only
 triage: anchor
 ---
@@ -14,8 +15,9 @@ triage: anchor
 Julian Schwinger constructs finite-dimensional unitary operator bases from a
 pair of cyclic generators with the Weyl commutation relation. At dimension two,
 the standard generators specialize to the Pauli `X` and `Z` matrices used by
-`D5/S3/Quantum/FiniteDimensional.qubit_weyl_star`; their involution and square
-identities follow directly from that specialization.
+`D5/S3/Quantum/FiniteDimensional.qubit_weyl_star`; their involution, square
+identities, and lack of a nonzero common eigenvector follow directly from that
+specialization.
 
 The paper does not identify the observer volume's finite register with a full
 matrix algebra, supply its prime-power factorization, or claim that a classical
