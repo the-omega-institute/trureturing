@@ -5,26 +5,65 @@ namespace StrataLint.Scribe.Tests;
 public sealed class DescribeMigrationTests
 {
     [Fact]
-    public void RepositoryMigrationHasTwentyFiveTypedNodesAndPreservesTwentyFourFormulaSlots()
+    public void RepositoryMigrationHasTwentyNineTypedNodesAndPreservesTwentyFourFormulaSlots()
     {
         var root = FindRepositoryRoot();
         var report = DescribeReport.Build(
             root,
             DocumentDefinitions.All.Select(static definition => definition.Document));
 
-        Assert.Equal(25, report.NodeStats.Total);
+        Assert.Equal(29, report.NodeStats.Total);
         Assert.Equal(24, report.NodeStats.FormulaContentSlots);
         Assert.Equal(1, report.NodeStats.FormulaStatements);
-        Assert.Equal(24, report.NodeStats.LeanStatements);
-        Assert.Equal(4, report.NodeStats.ByKind["definition"]);
-        Assert.Equal(8, report.NodeStats.ByKind["proposition"]);
-        Assert.Equal(12, report.NodeStats.ByKind["theorem"]);
+        Assert.Equal(28, report.NodeStats.LeanStatements);
+        Assert.Equal(5, report.NodeStats.ByKind["definition"]);
+        Assert.Equal(9, report.NodeStats.ByKind["proposition"]);
+        Assert.Equal(14, report.NodeStats.ByKind["theorem"]);
         Assert.Equal(1, report.NodeStats.ByKind["example"]);
-        Assert.Equal(20, report.NodeStats.ByProvenance["repo-derived"]);
-        Assert.Equal(5, report.NodeStats.ByProvenance["literature-attested"]);
+        Assert.Equal(21, report.NodeStats.ByProvenance["repo-derived"]);
+        Assert.Equal(8, report.NodeStats.ByProvenance["literature-attested"]);
         Assert.Equal(0, report.OpenCount);
         Assert.Empty(report.SuspectedNovel);
         Assert.Empty(report.RedFindings);
+    }
+
+    [Fact]
+    public void O6LoadBearingResidualNodesUseExactTypedStatementsAndDiligentProvenance()
+    {
+        var documents = DocumentDefinitions.All
+            .ToDictionary(static item => item.Document.Header.Gid.Value, StringComparer.Ordinal);
+
+        var criticalLine = Assert.Single(
+            documents["D5/S3/Weil/CriticalLine"].Document.Content.Items
+                .OfType<DocumentBlock.Describe>());
+        AssertRepoDerivedLeanNode(
+            criticalLine,
+            DescribeKind.Theorem,
+            "D5/S3/Weil/CriticalLine.unitarity_line_iff");
+
+        var eulerProduct = documents["D5/S3/Weil/EulerProduct"].Document.Content.Items
+            .OfType<DocumentBlock.Describe>()
+            .ToDictionary(
+                static node => Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement)
+                    .Value.Value,
+                StringComparer.Ordinal);
+
+        Assert.Equal(3, eulerProduct.Count);
+        AssertLiteratureAttestedLeanNode(
+            eulerProduct["D5/S3/Weil/EulerProduct.finite_euler_zero_free_and_pole_locus"],
+            DescribeKind.Theorem,
+            "D5/S3/Weil/EulerProduct.finite_euler_zero_free_and_pole_locus",
+            "D5/L/apostol1976introduction");
+        AssertLiteratureAttestedLeanNode(
+            eulerProduct["D5/S3/Weil/EulerProduct.single_address_reading_spec"],
+            DescribeKind.Definition,
+            "D5/S3/Weil/EulerProduct.single_address_reading_spec",
+            "D5/L/apostol1976introduction");
+        AssertLiteratureAttestedLeanNode(
+            eulerProduct["D5/S3/Weil/EulerProduct.single_address_heat_trace_eq_log_derivative"],
+            DescribeKind.Proposition,
+            "D5/S3/Weil/EulerProduct.single_address_heat_trace_eq_log_derivative",
+            "D5/L/apostol1976introduction");
     }
 
     [Fact]
@@ -129,7 +168,7 @@ public sealed class DescribeMigrationTests
         Assert.Equal(string.Empty, error.ToString());
         using var document = JsonDocument.Parse(output.ToString());
         Assert.Equal("DESCRIBE-NODES", document.RootElement.GetProperty("case_id").GetString());
-        Assert.Equal(25, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
+        Assert.Equal(29, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
         Assert.Equal(0, document.RootElement.GetProperty("open_count").GetInt32());
     }
 
@@ -144,6 +183,20 @@ public sealed class DescribeMigrationTests
         Assert.Equal(declaration, statement.Value.Value);
         Assert.Equal(DescribeProvenanceKind.RepoDerived, node.Provenance.Kind);
         Assert.Null(node.Provenance.LiteratureReference);
+    }
+
+    private static void AssertLiteratureAttestedLeanNode(
+        DocumentBlock.Describe node,
+        DescribeKind kind,
+        string declaration,
+        string reference)
+    {
+        var statement = Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement);
+
+        Assert.Equal(kind, node.Kind);
+        Assert.Equal(declaration, statement.Value.Value);
+        Assert.Equal(DescribeProvenanceKind.LiteratureAttested, node.Provenance.Kind);
+        Assert.Equal(reference, node.Provenance.LiteratureReference?.Value);
     }
 
     private static string FindRepositoryRoot()
