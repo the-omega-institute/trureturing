@@ -5,23 +5,23 @@ namespace StrataLint.Scribe.Tests;
 public sealed class DescribeMigrationTests
 {
     [Fact]
-    public void RepositoryMigrationHasFortyOneTypedNodesAndPreservesTwentyFourFormulaSlots()
+    public void RepositoryMigrationHasFortySixTypedNodesAndPreservesTwentyFourFormulaSlots()
     {
         var root = FindRepositoryRoot();
         var report = DescribeReport.Build(
             root,
             DocumentDefinitions.All.Select(static definition => definition.Document));
 
-        Assert.Equal(41, report.NodeStats.Total);
+        Assert.Equal(46, report.NodeStats.Total);
         Assert.Equal(24, report.NodeStats.FormulaContentSlots);
         Assert.Equal(1, report.NodeStats.FormulaStatements);
-        Assert.Equal(40, report.NodeStats.LeanStatements);
+        Assert.Equal(45, report.NodeStats.LeanStatements);
         Assert.Equal(6, report.NodeStats.ByKind["definition"]);
         Assert.Equal(9, report.NodeStats.ByKind["proposition"]);
-        Assert.Equal(25, report.NodeStats.ByKind["theorem"]);
+        Assert.Equal(30, report.NodeStats.ByKind["theorem"]);
         Assert.Equal(1, report.NodeStats.ByKind["example"]);
-        Assert.Equal(22, report.NodeStats.ByProvenance["repo-derived"]);
-        Assert.Equal(19, report.NodeStats.ByProvenance["literature-attested"]);
+        Assert.Equal(24, report.NodeStats.ByProvenance["repo-derived"]);
+        Assert.Equal(22, report.NodeStats.ByProvenance["literature-attested"]);
         Assert.Equal(0, report.OpenCount);
         Assert.Empty(report.SuspectedNovel);
         Assert.Empty(report.RedFindings);
@@ -159,6 +159,51 @@ public sealed class DescribeMigrationTests
                 DescribeKind.Theorem,
                 "D5/S3/Weil/ReflectionLedger.mirror_reversal_spec"));
 
+        var spectralDynamics = documents["D5/S3/Weil/SpectralDynamics"].Document.Content.Items
+            .OfType<DocumentBlock.Describe>()
+            .ToDictionary(
+                static node => Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement)
+                    .Value.Value,
+                StringComparer.Ordinal);
+
+        Assert.Equal(5, spectralDynamics.Count);
+        AssertLiteratureAttestedLeanNode(
+            spectralDynamics["D5/S3/Weil/SpectralDynamics.vertical_evolution_unitary_group"],
+            DescribeKind.Theorem,
+            "D5/S3/Weil/SpectralDynamics.vertical_evolution_unitary_group",
+            "D5/L/hedenmalm1997hilbert");
+        AssertLiteratureAttestedLeanNode(
+            spectralDynamics["D5/S3/Weil/SpectralDynamics.horizontal_evolution_contraction_semigroup"],
+            DescribeKind.Theorem,
+            "D5/S3/Weil/SpectralDynamics.horizontal_evolution_contraction_semigroup",
+            "D5/L/hedenmalm1997hilbert");
+        AssertLiteratureAttestedLeanNode(
+            spectralDynamics["D5/S3/Weil/SpectralDynamics.labeled_zeta_evolution_spec"],
+            DescribeKind.Theorem,
+            "D5/S3/Weil/SpectralDynamics.labeled_zeta_evolution_spec",
+            "D5/L/hedenmalm1997hilbert");
+        var zeroQuartetResonance =
+            spectralDynamics["D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec"];
+        AssertRepoDerivedLeanNode(
+            zeroQuartetResonance,
+            DescribeKind.Theorem,
+            "D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec");
+        var zeroQuartetDisclosure = Assert.IsType<Inline.Text>(
+            Assert.IsType<DocumentBlock.Paragraph>(
+                Assert.Single(zeroQuartetResonance.Content.Items)).Content.Items.Single()).Run.Value;
+        Assert.Contains(
+            "conditional on a supplied ZeroData value",
+            zeroQuartetDisclosure,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "does not prove that ZeroData is inhabited",
+            zeroQuartetDisclosure,
+            StringComparison.Ordinal);
+        AssertRepoDerivedLeanNode(
+            spectralDynamics["D5/S3/Weil/SpectralDynamics.critical_line_characterizations"],
+            DescribeKind.Theorem,
+            "D5/S3/Weil/SpectralDynamics.critical_line_characterizations");
+
         var spectralHilbert = documents["D5/S3/Weil/SpectralHilbert"].Document.Content.Items
             .OfType<DocumentBlock.Describe>()
             .ToDictionary(
@@ -266,7 +311,7 @@ public sealed class DescribeMigrationTests
         Assert.Equal(string.Empty, error.ToString());
         using var document = JsonDocument.Parse(output.ToString());
         Assert.Equal("DESCRIBE-NODES", document.RootElement.GetProperty("case_id").GetString());
-        Assert.Equal(41, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
+        Assert.Equal(46, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
         Assert.Equal(0, document.RootElement.GetProperty("open_count").GetInt32());
     }
 

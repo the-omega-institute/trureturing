@@ -31,6 +31,7 @@ public sealed class DocumentDiscoveryTests
     private const string EulerProductDocumentPath = "Blueprint/D5/S3/Weil/EulerProduct.md";
     private const string LabeledZetaDocumentPath = "Blueprint/D5/S3/Weil/LabeledZeta.md";
     private const string ReflectionLedgerDocumentPath = "Blueprint/D5/S3/Weil/ReflectionLedger.md";
+    private const string SpectralDynamicsDocumentPath = "Blueprint/D5/S3/Weil/SpectralDynamics.md";
     private const string SpectralHilbertDocumentPath = "Blueprint/D5/S3/Weil/SpectralHilbert.md";
     private const string PhaseSourcePath = "Blueprint/D5/S1/Phase/Basic.scribe.cs";
 
@@ -65,6 +66,7 @@ public sealed class DocumentDiscoveryTests
                 "D5/S3/Weil/EulerProduct",
                 "D5/S3/Weil/LabeledZeta",
                 "D5/S3/Weil/ReflectionLedger",
+                "D5/S3/Weil/SpectralDynamics",
                 "D5/S3/Weil/SpectralHilbert",
             ],
             DocumentDefinitions.All.Select(static item => item.Document.Header.Gid.Value));
@@ -96,6 +98,7 @@ public sealed class DocumentDiscoveryTests
                 EulerProductDocumentPath,
                 LabeledZetaDocumentPath,
                 ReflectionLedgerDocumentPath,
+                SpectralDynamicsDocumentPath,
                 SpectralHilbertDocumentPath,
             ],
             DocumentDefinitions.All.Select(static item => item.RelativePath.Value));

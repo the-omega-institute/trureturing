@@ -2,10 +2,11 @@
 bibkey: hedenmalm1997hilbert
 title: A Hilbert space of Dirichlet series and systems of dilated functions in L2(0,1)
 doi: 10.1215/S0012-7094-97-08601-4
-claim: Square-summable Dirichlet-series Hilbert spaces, their half-plane, and zeta reproducing kernel.
+claim: Square-summable Dirichlet-series Hilbert spaces, their half-plane, zeta kernel, and coefficient translations.
 strata_touched:
   - D5/S3/Weil/LabeledZeta
   - D5/S3/Weil/SpectralHilbert
+  - D5/S3/Weil/SpectralDynamics
 license: citation-only
 triage: anchor
 ---
@@ -22,6 +23,14 @@ The same model anchors the coefficient Hilbert space, the sharp
 `D5/S3/Weil/SpectralHilbert`.  The repository's mirror-resonance algebra is
 an internal consequence of that kernel formula, not a claim attributed to
 the paper.
+
+It also anchors the coefficient mechanics used by
+`D5/S3/Weil/SpectralDynamics`: vertical translation multiplies the `n`th
+coefficient by `n^(-it)`, while a positive real translation multiplies it by
+`n^(-delta)`.  Unit modulus in the first case and modulus at most one in the
+second give the formal norm laws.  The paper is not cited for the repository's
+unbounded-generator language, zero-resonance terminology, or unified
+critical-line declaration.
 
 The paper does not use the repository's ledger vocabulary or state the Lean
 declaration verbatim. The formal nonvanishing result is the immediate
@@ -62,6 +71,28 @@ coordinate consequence that the identity coefficient is one.
   one half`.  Independent survey and research sources explicitly attributed
   the square-summable coefficient definition and the analytic half-plane
   `Re s > 1/2` to Hedenmalm, Lindqvist, and Seip.
+- 2026-07-17: Queried `"Hilbert space of Dirichlet series" translation
+  semigroup imaginary translations unitary group`.  The Hedenmalm paper and a
+  Dirichlet-series Hilbert-space survey were returned; the survey explicitly
+  writes a vertical translate with coefficients `a_n exp(-it log n)` and
+  records the coefficient norm through vertical translates.
+- 2026-07-17: Queried `Dirichlet series Hilbert H2 translation operator
+  f(s+sigma) contraction semigroup coefficient multiplier n power`.  The
+  results again described the Hedenmalm coefficient space and vertical
+  translates, together with an operator-theory abstract on isometric shift
+  semigroups.  They support the coordinate multipliers, but not the source's
+  stronger unbounded self-adjoint generator and reverse-domain prose.
+- 2026-07-17: Queried `Riemann zeta zeros reflection conjugation quartet
+  resonance reproducing kernel` and `"critical line" reflection fixed line
+  unitarity self resonance l2 boundary half-density Riemann zeta`.  Results
+  restated the standard reflection and conjugation symmetries, but none used
+  the repository's kernel-resonance quartet terminology or combined its four
+  critical-line predicates.  Those two Describe nodes are therefore
+  `repo-derived`.
+- 2026-07-17: Six initial NyxID/Tavily calls double-encoded the JSON request
+  body and received HTTP 422.  Reissuing raw JSON on stdin with
+  `Content-Type: application/json` produced the search results above; no
+  bibliographic conclusion was drawn from the failed requests.
 
 ## Verified locator
 
