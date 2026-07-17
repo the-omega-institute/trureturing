@@ -4227,11 +4227,17 @@ sources:
             - gid: D5/S3/Weil/ReflectionLedger.mirror_fixed_re_eq
               definition_sha256: sha256:80cdb9d300cb0c8a51f812e7305e6f75aeb518be2cd32158418c5cfb6130ec84
               emission_sha256: sha256:9cbc6b8141567041a46f7132ad38aa730194e2235dab0b0bd9ddd2b5897e8c57
-          unresolved_subitems: []
+          unresolved_subitems:
+            - quasicrystal-midline-as-structural-zero-locus
+            - quasicrystal-midline-as-critical-zero-transport-line
+            - quasicrystal-midline-as-denominator-safety-line
+            - one-over-two-phi-squared-factorization
+            - conjugation-and-galois-two-factor-interpretation
+            - multiplicity-two-structural-station-interpretation
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-58522d0a15dfb88c0e37db6ee93760d210205fa75b9623932a199d1e2f36bf79
         ast_path: proposition/6.34
@@ -7943,11 +7949,13 @@ sources:
             - gid: D5/S3/Weil/SpectralDynamics.vertical_evolution_unitary_group
               definition_sha256: sha256:23ce081a4e8741064b7e402ab76bf8da4a1c05835941e481408c9679505042ed
               emission_sha256: sha256:d92fa76a30b2f6e3c7738084f77a8f9f3526174b73794aa87a8b7dbcf3e2fc04
-          unresolved_subitems: []
+          unresolved_subitems:
+            - diagonal-length-operator-spectrum-equals-log-natural-numbers
+            - known-channel-from-length-spectrum-to-zero-spectrum
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-a6f74e6a8e4132f20ee2a8095395e4f53295446e0f6868b77c5a4aee689b72d5
         ast_path: frontier-note/25.9
@@ -7966,11 +7974,14 @@ sources:
             - gid: D5/S3/Weil/SpectralHilbert.labeled_zeta_inner
               definition_sha256: sha256:d0f4e1107d3dc7934583627b3168495bd41f8e0433d5e8bf151af262111da46c
               emission_sha256: sha256:b97a484c8dd80dd3bc6d5751d978eb3dc8a17853b851a87053891c74dc16c6a1
-          unresolved_subitems: []
+          unresolved_subitems:
+            - hls-natural-domain-is-real-part-greater-than-one-half
+            - source-theorems-25-2-through-25-5-as-all-one-vector-restatements
+            - source-threefold-characterization-unification-claim
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-695c575d32e9c5efb152ace6fc5c61672243e025c76144a3cfadcf0082bc1db2
         ast_path: theorem/25.10
@@ -8053,11 +8064,16 @@ sources:
             - gid: D5/S1/Scale/MinkowskiModelSet.minkowski_model_set_spec
               definition_sha256: sha256:697cb033c24e343b3b2f3bc03e1aa0d55de1bd4934d0b9a163599ff2c26433ae
               emission_sha256: sha256:859e0d4eb95756d1beaea84dbb69bb0c7e9a018b31c3a793c34b77cc86e8b9f2
-          unresolved_subitems: []
+          unresolved_subitems:
+            - value-layer-free-lattice-bloch-wave-and-brillouin-torus
+            - value-layer-dense-zeta-line
+            - lambda-embeddings-as-physical-and-internal-spaces
+            - noncongruence-equivalent-to-bloch-failure
+            - no-periodic-character-classifies-code-observables
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-3b69fd6cf9e5642b0a48ccc5db94927da59f7b291f8f44cbea0cda9dc105fcb1
         ast_path: remark/25.15
@@ -8076,11 +8092,18 @@ sources:
             - gid: D5/S3/Weil/SpectralDynamics.critical_line_characterizations
               definition_sha256: sha256:23ce081a4e8741064b7e402ab76bf8da4a1c05835941e481408c9679505042ed
               emission_sha256: sha256:d92fa76a30b2f6e3c7738084f77a8f9f3526174b73794aa87a8b7dbcf3e2fc04
-          unresolved_subitems: []
+          unresolved_subitems:
+            - labeled-zeta-normalization-and-horizontal-dissipative-compression
+            - left-half-plane-mirror-phase-with-continuation-only
+            - xi-functional-equation-intertranslates-the-two-phases
+            - critical-line-as-phase-transition-via-lee-yang-and-t-duality
+            - irreversible-ledger-time-from-strictly-monotone-cost
+            - zeros-as-phase-time-cancellation-events
+            - rh-as-all-cancellations-on-one-unitary-time-line
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-4d6c44ab1179531d0f188a655560699ed478606f524dbd754495059276ee2de8
         ast_path: definition/26.1
@@ -8155,11 +8178,16 @@ sources:
             - gid: D5/S3/Weil/SpectralDynamics.vertical_evolution_unitary_group
               definition_sha256: sha256:23ce081a4e8741064b7e402ab76bf8da4a1c05835941e481408c9679505042ed
               emission_sha256: sha256:d92fa76a30b2f6e3c7738084f77a8f9f3526174b73794aa87a8b7dbcf3e2fc04
-          unresolved_subitems: []
+          unresolved_subitems:
+            - address-delay-as-crt-step-count
+            - phase-delay-as-wigner-phase-accumulation
+            - crt-delay-log-prime-spectral-bridge
+            - single-time-generator-shared-by-parallel-flows
+            - delay-localizes-to-resonance-and-address-walk
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-e127c4a0a4f7cb6e9fc9b4b4d0ba6f28af7b6c7afc5069bd5572c9aefdc40cf7
         ast_path: proposition/26.7
@@ -8194,11 +8222,16 @@ sources:
             - gid: D5/S3/Weil/ReflectionLedger.mirror_fixed_re_eq
               definition_sha256: sha256:80cdb9d300cb0c8a51f812e7305e6f75aeb518be2cd32158418c5cfb6130ec84
               emission_sha256: sha256:9cbc6b8141567041a46f7132ad38aa730194e2235dab0b0bd9ddd2b5897e8c57
-          unresolved_subitems: []
+          unresolved_subitems:
+            - rh-implies-quasicrystalline-zero-set-not-converse
+            - quasicrystal-diffraction-and-positivity-as-rh-equivalent-readings
+            - equivalent-formulation-cannot-serve-as-mechanism
+            - lee-yang-body-to-boundary-localization-requires-positivity
+            - explicit-formula-as-diffraction-duality-channel
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-fa2bb6013970a3b9fba2a5a81913a9ad9e95b5477471db0c05deb364e0bd3a60
         ast_path: entry/26.9
@@ -8553,11 +8586,19 @@ sources:
             - gid: D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
               definition_sha256: sha256:80cdb9d300cb0c8a51f812e7305e6f75aeb518be2cd32158418c5cfb6130ec84
               emission_sha256: sha256:9cbc6b8141567041a46f7132ad38aa730194e2235dab0b0bd9ddd2b5897e8c57
-          unresolved_subitems: []
+          unresolved_subitems:
+            - single-omega-state-and-self-action-group
+            - unitary-forgetting-reconstruction-and-frobenius-as-self-actions
+            - half-line-uniqueness-from-four-structural-characterizations
+            - off-line-abscissa-as-external-parameter-with-no-rigidity-anchor
+            - hilbert-polya-skeleton-from-self-duality
+            - off-line-toy-spectrum-functional-equation-certificate
+            - rh-as-real-part-classification-collapse
+            - classification-collapse-difficulty-depends-on-supporting-structure
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-4d6c29465b81dfa610ece292c2ddb30c70849145b24ba71440ef790ee0a6e0ed
         ast_path: remark/27.19
@@ -8576,11 +8617,21 @@ sources:
             - gid: D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
               definition_sha256: sha256:80cdb9d300cb0c8a51f812e7305e6f75aeb518be2cd32158418c5cfb6130ec84
               emission_sha256: sha256:9cbc6b8141567041a46f7132ad38aa730194e2235dab0b0bd9ddd2b5897e8c57
-          unresolved_subitems: []
+          unresolved_subitems:
+            - half-density-cut-as-universal-measurement-midline
+            - zero-set-invariance-under-conjugate-reflection
+            - zero-orbit-length-one-versus-two-classification
+            - omega-flow-length-weight-trace-transformation-chain
+            - zeta-as-trace-of-exp-minus-s-times-length
+            - zeta-trace-numerical-certificate-at-two-point-five
+            - theta-mellin-archimedean-completion-to-lambda
+            - controlled-forgetting-of-identity-order-and-eigenbasis
+            - zeros-as-interference-nodes-of-the-forgotten-shadow
+            - rh-as-pointwise-self-conjugacy-surviving-three-forgettings
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-291ca76328c63069c2958f1a411c23fc9bc197f2d90facb7bd1fff2eb7db34ad
         ast_path: remark/27.20
@@ -8617,11 +8668,23 @@ sources:
             - gid: D5/S3/Weil/EulerProduct.single_address_reading_spec
               definition_sha256: sha256:c0d06a1a85eb0303aebfaea8eebc5ed830a6998e18e2c267d7a013f89e43ae0e
               emission_sha256: sha256:9f91089c537afea562c267e119f9b83ee4f5fcf8d5289e2f68837e13bad8e867
-          unresolved_subitems: []
+          unresolved_subitems:
+            - dirichlet-series-time-foliation-versus-euler-product-space-foliation
+            - euler-product-as-journal-ledger-trial-balance
+            - theta-as-heat-kernel-trace
+            - theta-small-time-and-large-time-asymptotics
+            - theta-asymptotic-numerical-certificates
+            - theta-modular-inversion-identity
+            - theta-time-inversion-genesis-heat-death-reading
+            - theta-fixed-time-one-corresponds-to-critical-half-line
+            - completed-zeta-parameter-as-history-sampling-bias
+            - folded-slit-mass-ratio-values-and-half-weight-certificate
+            - zeta-pole-at-one-as-genesis-divergence
+            - pole-subtraction-required-before-functional-symmetry
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-753ac2d140850a4014121c76d1b52a8f2d1e1f6259cc4262f55da8ab548f0dc7
         ast_path: remark/27.22
@@ -8640,11 +8703,23 @@ sources:
             - gid: D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
               definition_sha256: sha256:80cdb9d300cb0c8a51f812e7305e6f75aeb518be2cd32158418c5cfb6130ec84
               emission_sha256: sha256:9cbc6b8141567041a46f7132ad38aa730194e2235dab0b0bd9ddd2b5897e8c57
-          unresolved_subitems: []
+          unresolved_subitems:
+            - theta-forward-reverse-termwise-equality-up-to-sqrt-t-jacobian
+            - modular-weight-half-absorbed-by-s-to-one-minus-s
+            - four-way-forward-reverse-combination-classification
+            - even-sum-real-on-critical-line-and-numerical-certificate
+            - zeta-selects-unsigned-even-combination
+            - odd-difference-imaginary-on-critical-line
+            - chi4-realizes-odd-signed-combination
+            - conjugate-product-as-positive-norm-functional
+            - modular-identity-excludes-asymmetric-combination
+            - root-number-phase-does-not-change-critical-line
+            - theta-lambda-zero-set-three-level-invariant-chain
+            - completed-lambda-functional-equation-exact-certificate
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-012811fd740bf0a4e98722a766eafc5d0b8ef7688d435d29ff9c55125cb796ec
         ast_path: remark/27.23
@@ -8663,11 +8738,21 @@ sources:
             - gid: D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
               definition_sha256: sha256:80cdb9d300cb0c8a51f812e7305e6f75aeb518be2cd32158418c5cfb6130ec84
               emission_sha256: sha256:9cbc6b8141567041a46f7132ad38aa730194e2235dab0b0bd9ddd2b5897e8c57
-          unresolved_subitems: []
+          unresolved_subitems:
+            - pointwise-genesis-terminal-information-increments-plus-minus-one
+            - genesis-plus-terminal-information-equals-total-knowledge
+            - numeric-symmetry-and-information-antisymmetry-coexist
+            - wigner-unitary-or-antiunitary-dichotomy
+            - information-flow-reversal-forces-antiunitary-time-reversal
+            - real-zeta-coefficients-imply-conjugation-covariance
+            - completed-lambda-antiunitary-covariance
+            - lambda-antiunitary-covariance-numerical-certificate
+            - critical-line-existence-from-information-reversal
+            - rh-as-zero-set-subset-of-antilinear-fixed-line
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-5759adf2885bfe7b84af3f1d4fb3611057d1beca4802e1062d334f2ba86dec52
         ast_path: remark/27.24
@@ -8686,11 +8771,18 @@ sources:
             - gid: D5/S3/Weil/ReflectionLedger.mirror_fixed_re_eq
               definition_sha256: sha256:80cdb9d300cb0c8a51f812e7305e6f75aeb518be2cd32158418c5cfb6130ec84
               emission_sha256: sha256:9cbc6b8141567041a46f7132ad38aa730194e2235dab0b0bd9ddd2b5897e8c57
-          unresolved_subitems: []
+          unresolved_subitems:
+            - explicit-off-line-j-invariant-four-point-counterexample
+            - toy-spectrum-satisfies-five-symmetries-certificate
+            - symmetry-chain-cannot-distinguish-rh-worlds
+            - li-positivity-distinguishes-the-off-line-toy-spectrum
+            - antiunitary-symmetry-present-selfadjoint-hamiltonian-absent
+            - wigner-classification-does-not-produce-hamiltonian
+            - rh-fixed-locus-formulation-as-conceptual-not-mathematical-advance
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-62d1597aaf5576fe27e793a4e7a200b5c32d680149f8f842a37066d686f6b37e
         ast_path: remark/27.25
@@ -8725,11 +8817,22 @@ sources:
             - gid: D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec
               definition_sha256: sha256:23ce081a4e8741064b7e402ab76bf8da4a1c05835941e481408c9679505042ed
               emission_sha256: sha256:d92fa76a30b2f6e3c7738084f77a8f9f3526174b73794aa87a8b7dbcf3e2fc04
-          unresolved_subitems: []
+          unresolved_subitems:
+            - off-line-zero-as-two-element-antilinear-orbit
+            - off-line-exp-beta-minus-half-clock-envelope
+            - off-line-clock-as-probability-leak
+            - off-line-zero-as-complex-eigenvalue-gamow-resonance
+            - online-eternal-versus-offline-finite-lifetime
+            - off-line-zero-as-diffraction-cosh-fog
+            - off-line-zero-as-unbalanced-ledger-entry
+            - mirror-pair-envelope-two-cosh-formula
+            - mirror-pair-envelope-monotonicity-and-numerical-certificate
+            - pairing-preserves-symmetry-but-not-pointwise-conservation
+            - off-line-zeros-allowed-by-symmetry-excluded-by-conservation
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-df5fb8e33f6d6d19b72635ef1038798cf41031f12ddd4430d39e987c561cef98
         ast_path: remark/27.27
@@ -8748,11 +8851,23 @@ sources:
             - gid: D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec
               definition_sha256: sha256:23ce081a4e8741064b7e402ab76bf8da4a1c05835941e481408c9679505042ed
               emission_sha256: sha256:d92fa76a30b2f6e3c7738084f77a8f9f3526174b73794aa87a8b7dbcf3e2fc04
-          unresolved_subitems: []
+          unresolved_subitems:
+            - argument-principle-zero-count-is-horizontal-coordinate-blind
+            - online-offline-toy-spectra-have-equal-contour-count-certificate
+            - gamma-factor-supplies-smooth-zero-count-main-term
+            - zero-count-at-height-one-hundred-numerical-certificate
+            - prime-interference-s-of-t-supplies-height-correction
+            - positivity-or-selfadjointness-required-for-real-coordinate
+            - de-bruijn-newman-heat-flow-conserves-moving-zero-count
+            - online-zero-collision-produces-off-line-conjugate-pair
+            - quadratic-collision-model-certificate
+            - off-line-zeros-born-in-pairs-not-created
+            - rh-as-no-zero-collision-in-heat-flow
+            - de-bruijn-newman-constant-zero-criticality-claim
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-29ff3df7feabfa6f75b61c55406bbd8d1d7ad211c14f1d881f9bf01d5b439dcb
         ast_path: remark/27.28
@@ -8787,11 +8902,25 @@ sources:
             - gid: D5/S3/Weil/SpectralDynamics.critical_line_characterizations
               definition_sha256: sha256:23ce081a4e8741064b7e402ab76bf8da4a1c05835941e481408c9679505042ed
               emission_sha256: sha256:d92fa76a30b2f6e3c7738084f77a8f9f3526174b73794aa87a8b7dbcf3e2fc04
-          unresolved_subitems: []
+          unresolved_subitems:
+            - off-line-zeros-preserve-listed-functional-identities
+            - off-line-zeros-violate-li-weil-qn-and-fluctuation-inequalities
+            - bohr-landau-measure-zero-interpretation
+            - integral-equalities-versus-pointwise-inequalities-dichotomy
+            - off-line-zero-as-virtual-vacuum-excitation
+            - rh-as-zero-vacuum-with-no-real-excitations
+            - bridge-conditional-variance-t-times-one-minus-t
+            - bridge-variance-five-point-numerical-certificate
+            - time-motion-as-product-of-distances-from-knowledge-endpoints
+            - xi-factor-s-times-s-minus-one-as-endpoint-debt-cancellation
+            - xi-zero-and-one-endpoint-values-equal-one-half
+            - completed-xi-as-pure-mid-interval-fluctuation-ledger
+            - phase-time-versus-irreversible-ledger-time
+            - finite-observer-motion-as-source-of-time-flow
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-0568a4c0d5dc7153daa2cc47e129eadcb3b5fcc5120fa4940048c651e519aefa
         ast_path: remark/27.30
@@ -8906,11 +9035,22 @@ sources:
             - gid: D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec
               definition_sha256: sha256:23ce081a4e8741064b7e402ab76bf8da4a1c05835941e481408c9679505042ed
               emission_sha256: sha256:d92fa76a30b2f6e3c7738084f77a8f9f3526174b73794aa87a8b7dbcf3e2fc04
-          unresolved_subitems: []
+          unresolved_subitems:
+            - off-line-zero-existence-as-omniscient-truth-versus-priced-uncertainty
+            - detection-radius-logarithmic-law
+            - detection-radius-ten-to-the-1200-certificate
+            - off-line-zero-causes-prime-counting-fluctuations
+            - off-line-zero-exists-only-at-heat-time-zero
+            - any-positive-heat-flow-immediately-restores-line
+            - thermal-lifetime-versus-resonance-width
+            - moving-one-zero-changes-prime-counting-at-all-scales
+            - all-scale-holographic-locking-numerical-certificate
+            - off-line-zero-as-collective-prime-encoded-structure
+            - pointwise-conservation-failure-with-window-leakage
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-9a2ec71c54412cf18c72dc9ce556ccafcc3037e2f8c2c0ff84a7b16aeb8bcfb5
         ast_path: remark/27.37
@@ -11377,11 +11517,24 @@ sources:
             - gid: D5/S3/Weil/EulerProduct.finite_euler_zero_free_and_pole_locus
               definition_sha256: sha256:c0d06a1a85eb0303aebfaea8eebc5ed830a6998e18e2c267d7a013f89e43ae0e
               emission_sha256: sha256:9f91089c537afea562c267e119f9b83ee4f5fcf8d5289e2f68837e13bad8e867
-          unresolved_subitems: []
+          unresolved_subitems:
+            - finite-euler-window-at-first-zero-numerical-certificate
+            - prime-seven-deletion-preserves-nontrivial-zeta-zeros
+            - prime-deletion-numerical-invariance-certificate
+            - finite-prime-modification-preserves-global-zero-set
+            - log-prime-rational-independence-from-unique-factorization
+            - weyl-dense-winding-of-zero-prime-phases
+            - zero-as-infinite-dimensional-kronecker-torus-orbit
+            - zero-contribution-amplitude-x-beta-cos-gamma-log-x
+            - rh-equal-loudness-square-root-x-bound
+            - functional-equation-pairs-off-line-loudness-quartets
+            - dirichlet-l-functions-silence-ramified-primes
+            - zeta-has-no-silent-prime-address
+            - bragg-peaks-invariant-under-finite-modification
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-ced96192adc4f0341aee2ee32f8d0ad14007c9d29ec7ef4f56539fefce359206
         ast_path: remark/27.120
@@ -11400,11 +11553,20 @@ sources:
             - gid: D5/S3/Weil/CriticalLine.unitarity_line_iff
               definition_sha256: sha256:c67188c4be4cea8e6e40a043ed45dbbac43380b027f024b3dc671016182ae082
               emission_sha256: sha256:f5c089fafeed0affed7f2149089645c890e6e349731cb0a369a4878f3e5613bc
-          unresolved_subitems: []
+          unresolved_subitems:
+            - mellin-transform-as-fourier-on-dilation-flow
+            - every-zeta-value-as-compressed-history
+            - zeros-as-global-cancellation-at-frequency-and-weight
+            - eta-cesaro-cancellation-and-nearby-endpoint-certificates
+            - rh-as-cancellation-only-at-unitary-half-density-weight
+            - connes-zeros-as-absorption-spectrum
+            - berry-keating-xp-as-dilation-generator
+            - abel-window-block-as-three-flattening-protocols
+            - golden-protocol-discrepancy-certificate-to-ten-minus-ten
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-b9c6e3a12f78804fef77bcd35d3af8240df713ffb2c01b0327c794a256d6d780
         ast_path: remark/27.121
