@@ -642,7 +642,7 @@ pass 29/29.
 The first combined meta-plus-data gate failed before conservative replay because base
 `3b93946b` did not know candidate-only `observer-v1`. This was not bypassed. PR #150 installed
 `OBSERVER-ATOMIZER-P0` with zero OBSERVER ledger consumption, renewed C0, passed all three
-required checks, and auto-merged as predecessor `198d3140`. The final C0 then bound base
+required checks, and auto-merged as predecessor `198d3140`. The first content C0 bound base
 `198d314016495bc41d68323f495c1cfee0ed1e98`, clean preimage
 `721eef3a7055e18f4726bd93f7275c6aa970e460`, tree
 `db77899485138ece2d546b058e1dd22ddb078183`, and certificate SHA-256
@@ -657,6 +657,15 @@ already-doomed Lean pair was stopped rather than misreported as an acceptance ru
 branch merged that exact predecessor without rebase. Its O-6 source receipts occupied a
 different BACKFILL region: the next full ingest again wrote zero CAS objects, reported
 `ledger_changed=false`, and preserved the 31 seen plus one stale OBSERVER alignments.
+
+The final renewed C0 binds base `f231f7f40497cee3e06b0f7db95355fbeae52e2a`,
+clean preimage `f495bee4ee6937fe6bd552f966d92621d84493f0`, tree
+`5efd4743a113b7bfc99faaee0050e52bbc1ceb20`, and certificate SHA-256
+`777b3f3e18c98c641315acaa9e3330be5087fd40879e27e06a00791985dab3e7`.
+Replay again reports 117 golden, 118 total, and six contract cases, preserves 37/37 admits,
+has zero findings, retires no path or rule, and leaves `uncovered_obligations=[]`. The
+renewal measured 190s Lean reports, 18s emission, 84s admission, and 395s conservative
+replay.
 
 Two auxiliary-probe failures changed no canonical bytes. Darwin rejected inherited
 `C.UTF-8` before a hash probe read its input; the replay used `LC_ALL=C LANG=C`. A manual
