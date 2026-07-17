@@ -1,0 +1,75 @@
+# 理论卷自动摄入:PR 触碰 docs/develop/theory/** 时,以 base 侧法官跑 make ingest,
+# 产生的账本对齐(仅 Meta/BACKFILL.yaml + Meta/Digestion/atoms/**)bot-commit 回 PR 分支。
+# 信任拓扑:代码=base 侧(pull_request_target),PR 侧仅理论卷数据输入;写路径白名单硬校验。
+name: theory-ingest
+
+on:
+  pull_request_target:
+    branches: [dev]
+    paths:
+      - 'docs/develop/theory/**'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: theory-ingest-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  auto-ingest:
+    name: Auto-ingest theory volumes
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out base (judge code)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.ref }}
+          path: judge
+          persist-credentials: false
+
+      - name: Check out PR head (data + commit target)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          path: candidate
+          fetch-depth: 0
+
+      - name: Install pinned SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: judge/global.json
+
+      - name: Overlay judge harness onto candidate data
+        shell: bash
+        run: |
+          set -euo pipefail
+          rsync -a --delete judge/Meta/StrataLint/ candidate/Meta/StrataLint/
+          cp judge/Makefile judge/global.json candidate/
+
+      - name: Run ingest with base judge
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd candidate
+          make ingest BASE=HEAD
+
+      - name: Enforce write-path whitelist and commit back
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd candidate
+          git restore --source=HEAD -- Meta/StrataLint Makefile global.json || true
+          changed="$(git status --porcelain)"
+          if [ -z "$changed" ]; then echo "ingest no-op"; exit 0; fi
+          bad="$(git status --porcelain | grep -vE '^.. (Meta/BACKFILL\.yaml|Meta/Digestion/atoms/)' || true)"
+          if [ -n "$bad" ]; then
+            echo "::error::ingest touched paths outside whitelist:"; echo "$bad"; exit 1
+          fi
+          git config user.name "theory-ingest-bot"
+          git config user.email "theory-ingest-bot@users.noreply.github.com"
+          git add Meta/BACKFILL.yaml Meta/Digestion/atoms
+          git commit -m "chore(digestion): auto-ingest theory update [theory-ingest-bot]"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
