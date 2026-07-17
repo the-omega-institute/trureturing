@@ -450,4 +450,5 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 **Hearts 授权条款:**SL-008 仅在 `D5/X_Frontier/HeartsAuthorizations.md` 中存在与实际唯一新增声明的全名及 canonical statement SHA-256 精确匹配的条目,且 baseline 声明全不变、无额外新增时放行;该账只增不删,无匹配照拒。
 
 - **v7.13 R2**(2026-07-17):`HEARTS-AUTH-P0` 将 SL-008 最小松动为 append-only git 授权账上的声明全名+canonical statement SHA-256 精确单增,保留既有声明冻结与防夹带;密码学身份、签名及 nonce 消费机依用户裁决不进入系统,伪造风险归公开史检测、判词可诉勘正与追责。
-- **v7.13 R3**(2026-07-17):`OBSERVER-QUANTUM` 从误配 `gict-v1` 的 whole-source fallback 迁至窄域 `observer-v1`:31 个语义段落 byte-exact 切分并全入 residual;原粗 atom 经 adapter-replacement stale 流程退役而 CAS 原文不删。`gict-v1`/`pzg-v1` 保持逐字语义,registry 未平台化。
+- **v7.13 R3**(2026-07-17):`OBSERVER-ATOMIZER-P0` 以零 OBSERVER 账本消费注册窄域 `observer-v1`,并安装 whole-source coarse 退役的身份保全规则;本 epoch 只定义类与红绿 fixture,`gict-v1`/`pzg-v1` 语义与 OBSERVER 账本实例均不变。
+- **v7.13 R4**(2026-07-17):`OBSERVER-QUANTUM` 从误配 `gict-v1` 的 whole-source fallback 迁至窄域 `observer-v1`:31 个语义段落 byte-exact 切分并全入 residual;原粗 atom 经 adapter-replacement stale 流程退役而 CAS 原文不删。`gict-v1`/`pzg-v1` 保持逐字语义,registry 未平台化。
