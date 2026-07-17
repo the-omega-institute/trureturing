@@ -6846,20 +6846,17 @@ sources:
           raw_sha256: sha256:c9894668cf88d4abc3aa26d7f32a1824b0c69ef97743b281617496d869bf4c3c
           normalized_sha256: sha256:c9894668cf88d4abc3aa26d7f32a1824b0c69ef97743b281617496d869bf4c3c
         cas_ref: sha256:c9894668cf88d4abc3aa26d7f32a1824b0c69ef97743b281617496d869bf4c3c
-        coverage_gids:
-          - D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec
+        coverage_gids: []
         receipts:
-          coverage:
-            - gid: D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec
-              source_sha256: sha256:c9894668cf88d4abc3aa26d7f32a1824b0c69ef97743b281617496d869bf4c3c
-              target_sha256: sha256:a8edfa970f6658782b937e625f012faa0c0f890994cdb2ce249fe10a499ded1c
+          coverage: []
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - zero-data-inhabitance-not-proved
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: partial
-          truth: closed
+          migration: residual
+          truth: open
       - atom_id: pzg-residual-b5bbe6b7ceddf7be93410bce25b8f852636f448966a7bdeb3318bded013926b6
         ast_path: theorem/25.7
         fingerprints:

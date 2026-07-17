@@ -152,10 +152,23 @@ public sealed class DescribeMigrationTests
             DescribeKind.Theorem,
             "D5/S3/Weil/SpectralDynamics.labeled_zeta_evolution_spec",
             "D5/L/hedenmalm1997hilbert");
+        var zeroQuartetResonance =
+            spectralDynamics["D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec"];
         AssertRepoDerivedLeanNode(
-            spectralDynamics["D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec"],
+            zeroQuartetResonance,
             DescribeKind.Theorem,
             "D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec");
+        var zeroQuartetDisclosure = Assert.IsType<Inline.Text>(
+            Assert.IsType<DocumentBlock.Paragraph>(
+                Assert.Single(zeroQuartetResonance.Content.Items)).Content.Items.Single()).Run.Value;
+        Assert.Contains(
+            "conditional on a supplied ZeroData value",
+            zeroQuartetDisclosure,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "does not prove that ZeroData is inhabited",
+            zeroQuartetDisclosure,
+            StringComparison.Ordinal);
         AssertRepoDerivedLeanNode(
             spectralDynamics["D5/S3/Weil/SpectralDynamics.critical_line_characterizations"],
             DescribeKind.Theorem,

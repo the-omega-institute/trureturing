@@ -30,7 +30,7 @@ Provenance: `repo-derived`
 
 Statement: `D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec` `✓ std3`
 
-The existing reflection and conjugation permutations send every enumerated nontrivial zero to its unique partner for the equation s plus conjugate w equals one, and the two cross-pairs satisfy that equation. This strengthens the source from off-line zeros to all enumerated zeros, so it permits degenerate critical-line configurations and asserts no pairwise distinct quartet. Resonance here is only the kernel equation, not a new analytic pole or continuation theorem.
+The existing reflection and conjugation permutations send every enumerated nontrivial zero to its unique partner for the equation s plus conjugate w equals one, and the two cross-pairs satisfy that equation. The declaration is conditional on a supplied ZeroData value. The repository does not prove that ZeroData is inhabited: no instance or example exists. Accordingly this conditional theorem does not close the source corollary unconditionally; that source obligation remains open. This strengthens the conditional conclusion from off-line zeros to all enumerated zeros, so it permits degenerate critical-line configurations and asserts no pairwise distinct quartet. Resonance here is only the kernel equation, not a new analytic pole or continuation theorem.
 
 ## Theorem: Critical-line predicates use one abscissa
 
