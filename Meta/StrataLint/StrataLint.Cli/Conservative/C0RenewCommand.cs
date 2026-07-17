@@ -334,8 +334,10 @@ internal sealed class ProductionC0RenewEnvironment : IC0RenewEnvironment
             TimeSpan.FromMinutes(30),
             "base-owned Lean report production failed");
         var result = BoundedProcessRunner.Run(
-            "/bin/bash",
+            "/usr/bin/env",
             [
+                "CI=true",
+                "/bin/bash",
                 Absolute(@base.Root, C0CeremonyProjection.GateWiringPath),
                 "--candidate",
                 candidate.Root,

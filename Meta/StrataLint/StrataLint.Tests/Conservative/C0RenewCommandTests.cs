@@ -121,7 +121,7 @@ public sealed class C0RenewCommandTests
     }
 
     [Fact]
-    public void ProductionRenewRunsReportAndGateProgramsFromTheExactBase()
+    public void ProductionRenewRunsReportAndGateProgramsFromTheExactBaseInCiMode()
     {
         using var repository = new TemporaryDirectory();
         ReviewRegressionTests.RunGit(repository.Path, "init", "--initial-branch=dev");
@@ -157,7 +157,10 @@ public sealed class C0RenewCommandTests
         Write(
             repository.Path,
             C0CeremonyProjection.GateWiringPath,
-            "#!/usr/bin/env bash\nprintf 'BASE_GATE\\n'\nexit 3\n");
+            "#!/usr/bin/env bash\n"
+            + "[[ \"${CI:-}\" == \"true\" ]] || { printf 'CI_MISSING\\n' >&2; exit 2; }\n"
+            + "printf 'BASE_GATE\\n'\n"
+            + "exit 3\n");
         ReviewRegressionTests.RunGit(repository.Path, "add", ".");
         ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "base gate");
         var @base = ReviewRegressionTests.RunGit(
