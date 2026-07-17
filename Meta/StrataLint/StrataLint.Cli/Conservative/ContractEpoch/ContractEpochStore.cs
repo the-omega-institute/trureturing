@@ -151,18 +151,15 @@ internal sealed class ContractEpochStore
                 "phased-gate",
                 StringComparison.Ordinal))
             .ToArray();
-        var actual = TowerActualValidator.Validate(syntax, snapshot, RuleCatalog.Default);
-        var invalidComponents = actual.Findings
-            .Where(item => phased.Any(component => string.Equals(
-                component.Id,
-                item.Component,
-                StringComparison.Ordinal)))
+        var invalidComponents = phased
+            .Where(static component => component.Verification != "verified"
+                || !C0CeremonyProjection.HasCanonicalShape(component.Members))
             .ToArray();
         if (invalidComponents.Length != 0)
         {
             throw new FormatException(
                 "contract epoch TOWER C0 anchors are invalid: "
-                + string.Join("; ", invalidComponents.Select(static item => item.Message)));
+                + string.Join("; ", invalidComponents.Select(static item => item.Id)));
         }
 
         return phased.SelectMany(static component => component.Members)
