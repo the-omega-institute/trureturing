@@ -7656,15 +7656,14 @@ sources:
           raw_sha256: sha256:7de29f3405ccdbc2c1589a2c5c920f082cb315e5a04d741b93ff716018191994
           normalized_sha256: sha256:7de29f3405ccdbc2c1589a2c5c920f082cb315e5a04d741b93ff716018191994
         cas_ref: sha256:7de29f3405ccdbc2c1589a2c5c920f082cb315e5a04d741b93ff716018191994
-        coverage_gids:
-          - D5/S3/Weil/ZeroGeometry.zero_quartet_scaling_spec
+        coverage_gids: []
         receipts:
-          coverage:
-            - gid: D5/S3/Weil/ZeroGeometry.zero_quartet_scaling_spec
-              source_sha256: sha256:7de29f3405ccdbc2c1589a2c5c920f082cb315e5a04d741b93ff716018191994
-              target_sha256: sha256:52c5ac8b368cc1ae4085c4a229cbaf2b8dfc37012532f19ebcd855b4f428d7b7
+          coverage: []
           scribe: []
           unresolved_subitems:
+            - zero-data-symmetry-fields-assume-source-conclusion
+            - arbitrary-completed-reading-to-zero-data-domain-bridge
+            - zero-data-inhabitance-not-proved
             - real-coefficient-conjugation-symmetry-via-analytic-continuation
             - reflection-functional-equation-symmetry-derivation
             - pairwise-distinct-off-line-zero-quartet
@@ -7674,8 +7673,8 @@ sources:
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: partial
-          truth: closed
+          migration: residual
+          truth: open
       - atom_id: pzg-residual-d24cf7f7f004c0825d84fdf2c16530a5c59579cd5e550142be49dad0a5e1dc4e
         ast_path: corollary/24.6
         fingerprints:

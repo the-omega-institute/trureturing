@@ -203,6 +203,38 @@ public sealed class DescribeMigrationTests
             DescribeKind.Theorem,
             "D5/S3/Weil/SpectralDynamics.critical_line_characterizations");
 
+        var zeroGeometry = documents["D5/S3/Weil/ZeroGeometry"].Document.Content.Items
+            .OfType<DocumentBlock.Describe>()
+            .ToDictionary(
+                static node => Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement)
+                    .Value.Value,
+                StringComparer.Ordinal);
+        var zeroQuartetScaling =
+            zeroGeometry["D5/S3/Weil/ZeroGeometry.zero_quartet_scaling_spec"];
+        AssertRepoDerivedLeanNode(
+            zeroQuartetScaling,
+            DescribeKind.Theorem,
+            "D5/S3/Weil/ZeroGeometry.zero_quartet_scaling_spec");
+        var zeroQuartetScalingDisclosure = Assert.IsType<Inline.Text>(
+            Assert.IsType<DocumentBlock.Paragraph>(
+                Assert.Single(zeroQuartetScaling.Content.Items)).Content.Items.Single()).Run.Value;
+        Assert.Contains(
+            "zero_conjugation and zero_reflection fields are premises",
+            zeroQuartetScalingDisclosure,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "does not prove that ZeroData is inhabited: no instance or example exists",
+            zeroQuartetScalingDisclosure,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "their multiplicity-preservation laws",
+            zeroQuartetScalingDisclosure,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "does not close the source theorem",
+            zeroQuartetScalingDisclosure,
+            StringComparison.Ordinal);
+
         var spectralHilbert = documents["D5/S3/Weil/SpectralHilbert"].Document.Content.Items
             .OfType<DocumentBlock.Describe>()
             .ToDictionary(

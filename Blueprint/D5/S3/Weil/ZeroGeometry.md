@@ -30,7 +30,7 @@ Provenance: `repo-derived`
 
 Statement: `D5/S3/Weil/ZeroGeometry.zero_quartet_scaling_spec` `✓ std3`
 
-A supplied ZeroData value sends each enumerated zero to its conjugate, reflected, and conjugate-reflected partners, and the last mirror partner reverses every scaling entry. The repository does not prove that ZeroData is inhabited. The statement therefore packages existing symmetry fields conditionally; it proves neither pairwise distinctness nor an analytic continuation or functional equation, and it omits the source's nonmultiplicative numerical instrument. These are the symmetries available to the symmetric cutoffs in O-6, while their cancellation alone supplies no positivity.
+The declaration is conditional on a supplied ZeroData value. Its zero_conjugation and zero_reflection fields are premises carrying the first two displayed equalities, rather than conclusions derived from real coefficients, analytic continuation, or a functional equation. ZeroData also requires a duplicate-free exhaustive enumeration of all classical nontrivial zeta zeros, exact multiplicities, reflection and conjugation permutations, their multiplicity-preservation laws, and local finiteness. The repository does not prove that ZeroData is inhabited: no instance or example exists. Accordingly this conditional declaration does not close the source theorem; that source obligation remains open. From the supplied fields Lean derives only the composed mirror equality and its algebraic reversal of every scaling entry. It proves neither pairwise distinctness nor the source's nonmultiplicative numerical instrument, and the conditional cancellation alone supplies no positivity.
 
 ## Theorem: Mirror partners cancel across distinct positions
 
