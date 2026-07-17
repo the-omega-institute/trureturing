@@ -1,4 +1,4 @@
-/- GID: D5/S3/Weil/FourierLaplaceEntire
+/- GID: D5/S3/Fourier/FourierLaplaceEntire
    generality: I
    mirror-B: none(waiver:formal-analysis-foundation-only)
    mirror-E: none(waiver:classical-analysis-tail-without-numerical-dependency)

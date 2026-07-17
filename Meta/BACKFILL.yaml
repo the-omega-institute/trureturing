@@ -2240,7 +2240,7 @@ sources:
           - D5/S3/Weil/Convention
           - D5/S3/Weil/TestFunctions
           - D5/S3/Weil/FourierLaplace
-          - D5/S3/Weil/FourierLaplaceEntire
+          - D5/S3/Fourier/FourierLaplaceEntire
           - D5/S3/Weil/PrimePoleTerms
           - D5/S3/Weil/ZeroSum
           - D5/S3/Weil/WeilIdentity
@@ -6790,16 +6790,28 @@ sources:
           raw_sha256: sha256:996e0cc8c3a73c3d02fa5c8ca5b8a68d65c55c3a4d235a42b5d940db42ab4bd2
           normalized_sha256: sha256:996e0cc8c3a73c3d02fa5c8ca5b8a68d65c55c3a4d235a42b5d940db42ab4bd2
         cas_ref: sha256:996e0cc8c3a73c3d02fa5c8ca5b8a68d65c55c3a4d235a42b5d940db42ab4bd2
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Weil/SpectralDynamics.vertical_evolution_unitary_group
+          - D5/S3/Weil/SpectralDynamics.horizontal_evolution_contraction_semigroup
+          - D5/S3/Weil/SpectralDynamics.labeled_zeta_evolution_spec
         receipts:
-          coverage: []
+          coverage:
+            - gid: D5/S3/Weil/SpectralDynamics.vertical_evolution_unitary_group
+              source_sha256: sha256:996e0cc8c3a73c3d02fa5c8ca5b8a68d65c55c3a4d235a42b5d940db42ab4bd2
+              target_sha256: sha256:a8edfa970f6658782b937e625f012faa0c0f890994cdb2ce249fe10a499ded1c
+            - gid: D5/S3/Weil/SpectralDynamics.horizontal_evolution_contraction_semigroup
+              source_sha256: sha256:996e0cc8c3a73c3d02fa5c8ca5b8a68d65c55c3a4d235a42b5d940db42ab4bd2
+              target_sha256: sha256:a8edfa970f6658782b937e625f012faa0c0f890994cdb2ce249fe10a499ded1c
+            - gid: D5/S3/Weil/SpectralDynamics.labeled_zeta_evolution_spec
+              source_sha256: sha256:996e0cc8c3a73c3d02fa5c8ca5b8a68d65c55c3a4d235a42b5d940db42ab4bd2
+              target_sha256: sha256:a8edfa970f6658782b937e625f012faa0c0f890994cdb2ce249fe10a499ded1c
           scribe: []
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: pzg-residual-dcb9ba8bb5cd880ae0a4e3dbc4a6a670ea856346358090aa83c818393cd0fba3
         ast_path: theorem/25.5
         fingerprints:
@@ -6838,7 +6850,8 @@ sources:
         receipts:
           coverage: []
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - zero-data-inhabitance-not-proved
           chain_atoms: []
           tail_authorization: null
         status:
@@ -6850,16 +6863,20 @@ sources:
           raw_sha256: sha256:b5bbe6b7ceddf7be93410bce25b8f852636f448966a7bdeb3318bded013926b6
           normalized_sha256: sha256:b5bbe6b7ceddf7be93410bce25b8f852636f448966a7bdeb3318bded013926b6
         cas_ref: sha256:b5bbe6b7ceddf7be93410bce25b8f852636f448966a7bdeb3318bded013926b6
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Weil/SpectralDynamics.critical_line_characterizations
         receipts:
-          coverage: []
+          coverage:
+            - gid: D5/S3/Weil/SpectralDynamics.critical_line_characterizations
+              source_sha256: sha256:b5bbe6b7ceddf7be93410bce25b8f852636f448966a7bdeb3318bded013926b6
+              target_sha256: sha256:a8edfa970f6658782b937e625f012faa0c0f890994cdb2ce249fe10a499ded1c
           scribe: []
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: pzg-residual-0e4c1864295a8fa2d7347817f3fa806a80a7669ce7a406684aa5cc3ccdaf1e8a
         ast_path: remark/25.8
         fingerprints:
