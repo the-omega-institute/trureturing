@@ -1,0 +1,25 @@
+# Qubit Witness Skeletons
+
+## Theorem: Pauli X and Z have no nonzero common eigenvector
+
+Provenance: `literature-attested` via `D5/L/robertson1929uncertainty` (`lit/robertson1929uncertainty`)
+
+Statement: `D5/S3/Quantum/QubitWitnesses.pauli_observables_have_no_common_eigenvector` `✓ std3`
+
+The standard Pauli X and Z observables have no nonzero common eigenvector on C^2. This is an explicit incompatibility witness only: it does not prove the Robertson variance inequality, arbitrary-window full-matrix generation, prime-power tensor factorization, general qudit Weyl relations, or any classical ontology forcing the structure. Original numerical-certificate claim not formalized: the source atom's full matrix-unit relations with exact zero certificate error.
+
+## Theorem: The Bell coefficient matrix is not a simple tensor
+
+Provenance: `literature-attested` via `D5/L/bell1964epr` (`lit/bell1964epr`)
+
+Statement: `D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product` `✓ std3`
+
+The coefficient matrix of the unnormalized Bell vector |00> + |11> cannot be factored as an outer product. A nonzero normalization scalar does not change this obstruction. `D5/L/clauser1969chsh` and `D5/L/cirelson1980bell` delimit the wider Bell-inequality clauses: this declaration proves neither a CHSH expectation nor Tsirelson optimality, a local-hidden-variable bound, Kochen-Specker contextuality, hidden-address interpretations, or that probability is not ignorance. Original numerical-certificate claims not formalized: the source atom's CHSH values 2*sqrt(2) = 2.8284 and the classical local-fiber bound 2.0.
+
+## Theorem: Iterated phase damping has the exact qubit certificate
+
+Provenance: `literature-attested` via `D5/L/zurek2003decoherence` (`lit/zurek2003decoherence`)
+
+Statement: `D5/S3/Quantum/QubitWitnesses.equal_superposition_phase_damping_certificate` `✓ std3`
+
+For the standard real phase-damping map with retention coefficient c in [0,1], N repetitions leave both equal-superposition populations at one half and multiply both coherence entries by c^N. The map is assumed, not derived from a system-environment Hamiltonian. The declaration does not identify this repository's ledger with an environment, bookkeeping with decoherence, or address selection with einselection. Original certificate coverage: the source atom's symbolic (1/2) * c0^N coherence law and fixed one-half populations are formalized exactly; the atom supplies no fixed numeric c0 or N.
