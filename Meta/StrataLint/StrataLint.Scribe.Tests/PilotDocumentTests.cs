@@ -231,20 +231,24 @@ public sealed class DocumentDiscoveryTests
     [Fact]
     public void SelectedResidualDocumentsCarryExactStatementsAndDiligentProvenance()
     {
-        (string Document, DescribeKind Kind, string Declaration,
+        (string Document, string Id, DescribeKind Kind, string Declaration,
             DescribeProvenanceKind Provenance, string? Reference)[] expected =
         [
-            ("D5/S0/Carrier/AlgebraicModel", DescribeKind.Definition,
+            ("D5/S0/Carrier/AlgebraicModel", "quadratic-quotient-conjugation-trace-and-norm",
+                DescribeKind.Definition,
                 "D5/S0/Carrier/AlgebraicModel.golden_algebraic_model_spec",
                 DescribeProvenanceKind.LiteratureAttested,
                 "D5/L/stewarttall2025algebraic"),
-            ("D5/S1/Depth/JointDepth", DescribeKind.Definition,
+            ("D5/S1/Depth/JointDepth", "admissible-joint-scale-digit-phase-depth",
+                DescribeKind.Definition,
                 "D5/S1/Depth/JointDepth.joint_depth_spec",
                 DescribeProvenanceKind.RepoDerived, null),
-            ("D5/S1/Digit/PrimeAxisAddition", DescribeKind.Theorem,
+            ("D5/S1/Digit/PrimeAxisAddition", "prime-axis-rowwise-normalization-product",
+                DescribeKind.Theorem,
                 "D5/S1/Digit/PrimeAxisAddition.prime_axis_addition_spec",
                 DescribeProvenanceKind.RepoDerived, null),
-            ("D5/S1/Scale/MinkowskiModelSet", DescribeKind.Definition,
+            ("D5/S1/Scale/MinkowskiModelSet", "minkowski-lattice-window-and-labeled-model-set",
+                DescribeKind.Definition,
                 "D5/S1/Scale/MinkowskiModelSet.minkowski_model_set_spec",
                 DescribeProvenanceKind.LiteratureAttested,
                 "D5/L/baakefrankgrimm2021three"),
@@ -256,7 +260,7 @@ public sealed class DocumentDiscoveryTests
                 definition.Document.Header.Gid.Value == item.Document);
             var describe = Descendants(definition.Document.Content)
                 .OfType<DocumentBlock.Describe>()
-                .Single();
+                .Single(node => node.Id.Value == item.Id);
             var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
 
             Assert.Equal(item.Kind, describe.Kind);
@@ -271,21 +275,25 @@ public sealed class DocumentDiscoveryTests
     [Fact]
     public void O6LoadBearingDocumentsCarryExactStatementsAndDiligentProvenance()
     {
-        (string Document, DescribeKind Kind, string Declaration,
+        (string Document, string Id, DescribeKind Kind, string Declaration,
             DescribeProvenanceKind Provenance, string? Reference)[] expected =
         [
-            ("D5/S3/Weil/CriticalLine", DescribeKind.Theorem,
+            ("D5/S3/Weil/CriticalLine", "half-density-unitarity-characterizes-the-critical-line",
+                DescribeKind.Theorem,
                 "D5/S3/Weil/CriticalLine.unitarity_line_iff",
                 DescribeProvenanceKind.RepoDerived, null),
-            ("D5/S3/Weil/EulerProduct", DescribeKind.Theorem,
+            ("D5/S3/Weil/EulerProduct", "finite-euler-windows-have-only-the-local-lattice",
+                DescribeKind.Theorem,
                 "D5/S3/Weil/EulerProduct.finite_euler_zero_free_and_pole_locus",
                 DescribeProvenanceKind.LiteratureAttested,
                 "D5/L/apostol1976introduction"),
-            ("D5/S3/Weil/EulerProduct", DescribeKind.Definition,
+            ("D5/S3/Weil/EulerProduct", "single-address-reading-is-the-von-mangoldt-weight",
+                DescribeKind.Definition,
                 "D5/S3/Weil/EulerProduct.single_address_reading_spec",
                 DescribeProvenanceKind.LiteratureAttested,
                 "D5/L/apostol1976introduction"),
-            ("D5/S3/Weil/EulerProduct", DescribeKind.Proposition,
+            ("D5/S3/Weil/EulerProduct", "the-logarithmic-derivative-is-the-single-address-heat-trace",
+                DescribeKind.Proposition,
                 "D5/S3/Weil/EulerProduct.single_address_heat_trace_eq_log_derivative",
                 DescribeProvenanceKind.LiteratureAttested,
                 "D5/L/apostol1976introduction"),
@@ -297,9 +305,7 @@ public sealed class DocumentDiscoveryTests
                 definition.Document.Header.Gid.Value == item.Document);
             var describe = Descendants(definition.Document.Content)
                 .OfType<DocumentBlock.Describe>()
-                .Single(node =>
-                    node.Statement is DescribeStatement.LeanDeclaration lean
-                    && lean.Value.Value == item.Declaration);
+                .Single(node => node.Id.Value == item.Id);
             var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
 
             Assert.Equal(item.Kind, describe.Kind);
