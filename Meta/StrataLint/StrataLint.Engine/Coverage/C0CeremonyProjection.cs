@@ -78,10 +78,11 @@ internal static class C0CeremonyProjection
         new(C0AnchorKind.Corpus, FixtureRegistryPath),
         new(C0AnchorKind.Corpus, ValuesKernelDataPath),
         new(C0AnchorKind.GateWiring, GateWiringPath),
-        new(C0AnchorKind.GateWiring, LocalGateWiringPath),
-        new(C0AnchorKind.GateWiring, LeanReportPairPath),
-        new(C0AnchorKind.GateWiring, LeanInspectorScriptPath),
-        new(C0AnchorKind.GateWiring, LeanInspectorSourcePath),
+        // The base-owned conservative grammar permits exactly one gate-wiring record.
+        new(C0AnchorKind.Controller, LocalGateWiringPath),
+        new(C0AnchorKind.Controller, LeanReportPairPath),
+        new(C0AnchorKind.Controller, LeanInspectorScriptPath),
+        new(C0AnchorKind.Controller, LeanInspectorSourcePath),
     ];
 
     internal static ImmutableArray<C0Anchor> DiscoverAnchors(RepositorySnapshot snapshot)

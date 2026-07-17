@@ -46,28 +46,32 @@ public sealed class C0CeremonyProjectionTests
             StringComparison.Ordinal));
         Assert.Contains(anchors, static item => item is
         {
-            Kind: C0AnchorKind.GateWiring,
+            Kind: C0AnchorKind.Controller,
         } && item.Path.EndsWith(
             "/local-harness-gate.sh",
             StringComparison.Ordinal));
         Assert.Contains(anchors, static item => item is
         {
-            Kind: C0AnchorKind.GateWiring,
+            Kind: C0AnchorKind.Controller,
         } && item.Path.EndsWith(
             "/lean-report-pair.sh",
             StringComparison.Ordinal));
         Assert.Contains(anchors, static item => item is
         {
-            Kind: C0AnchorKind.GateWiring,
+            Kind: C0AnchorKind.Controller,
         } && item.Path.EndsWith(
             "/lean-inspector/inspect.sh",
             StringComparison.Ordinal));
         Assert.Contains(anchors, static item => item is
         {
-            Kind: C0AnchorKind.GateWiring,
+            Kind: C0AnchorKind.Controller,
         } && item.Path.EndsWith(
             "/lean-inspector/Inspector.lean",
             StringComparison.Ordinal));
+        var gate = Assert.Single(
+            anchors,
+            static item => item.Kind == C0AnchorKind.GateWiring);
+        Assert.Equal(C0CeremonyProjection.GateWiringPath, gate.Path);
     }
 
     [Fact]
