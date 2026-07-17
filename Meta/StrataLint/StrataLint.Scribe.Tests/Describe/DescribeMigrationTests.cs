@@ -5,23 +5,23 @@ namespace StrataLint.Scribe.Tests;
 public sealed class DescribeMigrationTests
 {
     [Fact]
-    public void RepositoryMigrationHasThirtyFiveTypedNodesAndPreservesTwentyFourFormulaSlots()
+    public void RepositoryMigrationHasThirtySixTypedNodesAndPreservesTwentyFourFormulaSlots()
     {
         var root = FindRepositoryRoot();
         var report = DescribeReport.Build(
             root,
             DocumentDefinitions.All.Select(static definition => definition.Document));
 
-        Assert.Equal(35, report.NodeStats.Total);
+        Assert.Equal(36, report.NodeStats.Total);
         Assert.Equal(24, report.NodeStats.FormulaContentSlots);
         Assert.Equal(1, report.NodeStats.FormulaStatements);
-        Assert.Equal(34, report.NodeStats.LeanStatements);
+        Assert.Equal(35, report.NodeStats.LeanStatements);
         Assert.Equal(6, report.NodeStats.ByKind["definition"]);
         Assert.Equal(9, report.NodeStats.ByKind["proposition"]);
-        Assert.Equal(19, report.NodeStats.ByKind["theorem"]);
+        Assert.Equal(20, report.NodeStats.ByKind["theorem"]);
         Assert.Equal(1, report.NodeStats.ByKind["example"]);
         Assert.Equal(22, report.NodeStats.ByProvenance["repo-derived"]);
-        Assert.Equal(13, report.NodeStats.ByProvenance["literature-attested"]);
+        Assert.Equal(14, report.NodeStats.ByProvenance["literature-attested"]);
         Assert.Equal(0, report.OpenCount);
         Assert.Empty(report.SuspectedNovel);
         Assert.Empty(report.RedFindings);
@@ -156,6 +156,10 @@ public sealed class DescribeMigrationTests
                 Declaration: "D5/S0/Carrier/AlgebraicModel.golden_algebraic_model_spec",
                 Reference: "D5/L/stewarttall2025algebraic"),
             (
+                Document: "D5/S0/Carrier/Euclidean",
+                Declaration: "D5/S0/Carrier/Euclidean.golden_division",
+                Reference: "D5/L/chatland1949euclidean"),
+            (
                 Document: "D5/S1/Scale/MinkowskiModelSet",
                 Declaration: "D5/S1/Scale/MinkowskiModelSet.minkowski_model_set_spec",
                 Reference: "D5/L/baakefrankgrimm2021three"),
@@ -206,7 +210,7 @@ public sealed class DescribeMigrationTests
         Assert.Equal(string.Empty, error.ToString());
         using var document = JsonDocument.Parse(output.ToString());
         Assert.Equal("DESCRIBE-NODES", document.RootElement.GetProperty("case_id").GetString());
-        Assert.Equal(35, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
+        Assert.Equal(36, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
         Assert.Equal(0, document.RootElement.GetProperty("open_count").GetInt32());
     }
 
