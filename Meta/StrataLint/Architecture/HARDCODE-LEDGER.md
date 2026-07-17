@@ -598,6 +598,102 @@ the alignment suite is now 783 lines, the ledger suite remains below capacity, a
 direct admission probe returns only the expected protected-surface exit 3. No test or
 capacity rule was weakened to obtain that routing.
 
+### OBSERVER-QUANTUM split close (2026-07-17)
+
+Reconnaissance chose the explicit-adapter branch, not a GICT dialect extension. The source
+has one title, a subtitle, an abstract, ten numbered sections, and an appendix. Its semantic
+locators are 24 exact bold leads plus seven prose paragraph leads; it has no GICT-style
+numbered Definition/Theorem/Comment claim grammar. Reinterpreting those labels as new GICT
+claim kinds would couple unrelated dialects. `observer-v1` is therefore a narrow adapter for
+this production volume only; `gict-v1` and `pzg-v1` retain byte-identical semantics, and no
+generic atomizer platform was introduced.
+
+The 31 claim locators are complete and ordered by source bytes. Their families are:
+
+- scope 2, premise 3, theorem 4, measurement 3, classical 4;
+- probability 4, freedom 4, observer 2, physics 2, verdict 3.
+
+The first canonical ingest reported
+`stale_acknowledged=1 residual_open_added=31 coarse_fallbacks=0`,
+`cas_objects_written=31`, and `ledger_changed=true`. It retained the original whole-source
+receipt as stale with `cas_ref`
+`sha256:c74925a3c3098b691503837f567abdaf6ff527a9a36934061c90a00fa7732a91`;
+that CAS object's SHA-256 still equals the untouched source's SHA-256. The 31 fine claims
+each have a new content-addressed CAS object. No theory source, Hearts file, or formal Lean
+artifact changed.
+
+The final `digest-status --json --base origin/dev` reports 869 entries repository-wide and
+zero deletable now. The OBSERVER source contributes 32 entries: 31 are
+`seen/residual/open/deletable=false`; the retained coarse receipt is
+`stale/residual/open/deletable=false`. A repeated full ingest after predecessor integration
+reported `stale_acknowledged=0 residual_open_added=0 coarse_fallbacks=0`,
+`cas_objects_written=0`, and `ledger_changed=false`; the stable BACKFILL SHA-256 is
+`1ef44db94ad4122f96c4ee617e0ff844edfb983e1d09c69294b3842c5be440da`.
+
+Fail-closed review hardened both dialect recognition and stale history. Unknown or indented
+bold leads, malformed Q1-Q4/settled/open labels, and duplicate locators are rejected. The
+coarse replacement obligation is owned by the baseline source identity: source rename or
+relocation, `observer-v1` to `none`, stale-acknowledgement removal, atom/path/fingerprint/CAS
+identity mutation, and a coarse CAS clone under any source or AST path are rejected. The
+last independent review found the pre-settlement source-id escape; binding obligations from
+the complete baseline source set closed it. The current focused atomizer/alignment suites
+pass 29/29.
+
+The first combined meta-plus-data gate failed before conservative replay because base
+`3b93946b` did not know candidate-only `observer-v1`. This was not bypassed. PR #150 installed
+`OBSERVER-ATOMIZER-P0` with zero OBSERVER ledger consumption, renewed C0, passed all three
+required checks, and auto-merged as predecessor `198d3140`. The first content C0 bound base
+`198d314016495bc41d68323f495c1cfee0ed1e98`, clean preimage
+`721eef3a7055e18f4726bd93f7275c6aa970e460`, tree
+`db77899485138ece2d546b058e1dd22ddb078183`, and certificate SHA-256
+`22f15c36c091bcd8b83ecfe32ced23a60881d485685b9e8e8a8c74f7ad55f3cf`.
+Replay reports 117 golden, 118 total, and six contract cases, preserves 37/37 admits, has
+zero findings, retires no path or rule, and leaves `uncovered_obligations=[]`. Its measured
+stages were 193s Lean reports, 17s emission, 85s admission, and 405s conservative replay.
+
+The first post-ceremony preflight's mandatory fetch advanced `origin/dev` through PR #149
+from `198d3140` to `f231f7f4`; that new base was not an ancestor of the candidate, so the
+already-doomed Lean pair was stopped rather than misreported as an acceptance run. The
+branch merged that exact predecessor without rebase. Its O-6 source receipts occupied a
+different BACKFILL region: the next full ingest again wrote zero CAS objects, reported
+`ledger_changed=false`, and preserved the 31 seen plus one stale OBSERVER alignments.
+
+The final renewed C0 binds base `f231f7f40497cee3e06b0f7db95355fbeae52e2a`,
+clean preimage `f495bee4ee6937fe6bd552f966d92621d84493f0`, tree
+`5efd4743a113b7bfc99faaee0050e52bbc1ceb20`, and certificate SHA-256
+`777b3f3e18c98c641315acaa9e3330be5087fd40879e27e06a00791985dab3e7`.
+Replay again reports 117 golden, 118 total, and six contract cases, preserves 37/37 admits,
+has zero findings, retires no path or rule, and leaves `uncovered_obligations=[]`. The
+renewal measured 190s Lean reports, 18s emission, 84s admission, and 395s conservative
+replay.
+
+The first full preflight after that renewal passed all three .NET test assemblies (706/706,
+135/135, and 125/125), the warnings-as-errors build, selftest, compile-fail proofs, paired
+Lean reports, emission checks, base admission, and candidate build. It then failed only at
+`verify-conservative`: one corpus worker exceeded the unchanged 180-second process budget;
+the conservative stage took 263s and the full preflight 548s. Contemporaneous process
+evidence showed macOS `mds_stores` using about 97-147% CPU and an unrelated github-devloop
+fkst testhost using about 92-94% CPU, with no second conservative worker. No rule or timeout
+changed; the identical canonical preflight must be retried after the competing testhost exits.
+
+Two auxiliary-probe failures changed no canonical bytes. Darwin rejected inherited
+`C.UTF-8` before a hash probe read its input; the replay used `LC_ALL=C LANG=C`. A manual
+CAS-payload concatenation probe also exposed blank-line gaps because non-claim headings and
+inter-claim whitespace belong to the atomizer's ordered scaffold slices, not claim CAS
+payloads. The production `Reassemble()` path joins all slices and passes byte-exact source
+reconstruction; no blank line was added to or removed from the source or CAS.
+
+Literature leads are candidate-only, unattested, and metadata-unverified. They create no
+coverage or literature receipt, and no DOI is asserted in this batch:
+
+- `gleason1957-measures`, `born1926-quantenmechanik`, `bell1964-epr`;
+- `clauser-horne-shimony-holt1969`, `kochen-specker1967`,
+  `zurek1981-pointer-basis`, `zurek2003-decoherence-einselection`;
+- `ollivier-poulin-zurek2004-quantum-darwinism`,
+  `connes-rovelli1994-thermal-time`, `pusey-barrett-rudolph2012`;
+- `frauchiger-renner2018`, `bong-et-al2020-local-friendliness`,
+  `conway-kochen2006-free-will`, `bost-connes1995-hecke`.
+
 ## DIGESTION-PHASE2-INGEST (complete, 2026-07-15)
 
 After PR #109 supplied cross-syntax receipt identity and one-step legacy conversion,
