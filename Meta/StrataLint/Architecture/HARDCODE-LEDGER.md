@@ -667,6 +667,15 @@ has zero findings, retires no path or rule, and leaves `uncovered_obligations=[]
 renewal measured 190s Lean reports, 18s emission, 84s admission, and 395s conservative
 replay.
 
+The first full preflight after that renewal passed all three .NET test assemblies (706/706,
+135/135, and 125/125), the warnings-as-errors build, selftest, compile-fail proofs, paired
+Lean reports, emission checks, base admission, and candidate build. It then failed only at
+`verify-conservative`: one corpus worker exceeded the unchanged 180-second process budget;
+the conservative stage took 263s and the full preflight 548s. Contemporaneous process
+evidence showed macOS `mds_stores` using about 97-147% CPU and an unrelated github-devloop
+fkst testhost using about 92-94% CPU, with no second conservative worker. No rule or timeout
+changed; the identical canonical preflight must be retried after the competing testhost exits.
+
 Two auxiliary-probe failures changed no canonical bytes. Darwin rejected inherited
 `C.UTF-8` before a hash probe read its input; the replay used `LC_ALL=C LANG=C`. A manual
 CAS-payload concatenation probe also exposed blank-line gaps because non-claim headings and
