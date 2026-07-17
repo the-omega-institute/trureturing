@@ -29,6 +29,7 @@ public sealed class DocumentDiscoveryTests
     private const string EulerProductDocumentPath = "Blueprint/D5/S3/Weil/EulerProduct.md";
     private const string LabeledZetaDocumentPath = "Blueprint/D5/S3/Weil/LabeledZeta.md";
     private const string ReflectionLedgerDocumentPath = "Blueprint/D5/S3/Weil/ReflectionLedger.md";
+    private const string SpectralHilbertDocumentPath = "Blueprint/D5/S3/Weil/SpectralHilbert.md";
     private const string PhaseSourcePath = "Blueprint/D5/S1/Phase/Basic.scribe.cs";
 
     [Fact]
@@ -60,6 +61,7 @@ public sealed class DocumentDiscoveryTests
                 "D5/S3/Weil/EulerProduct",
                 "D5/S3/Weil/LabeledZeta",
                 "D5/S3/Weil/ReflectionLedger",
+                "D5/S3/Weil/SpectralHilbert",
             ],
             DocumentDefinitions.All.Select(static item => item.Document.Header.Gid.Value));
         Assert.Equal(
@@ -88,6 +90,7 @@ public sealed class DocumentDiscoveryTests
                 EulerProductDocumentPath,
                 LabeledZetaDocumentPath,
                 ReflectionLedgerDocumentPath,
+                SpectralHilbertDocumentPath,
             ],
             DocumentDefinitions.All.Select(static item => item.RelativePath.Value));
     }
