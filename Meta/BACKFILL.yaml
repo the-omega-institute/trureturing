@@ -8068,7 +8068,7 @@ sources:
             - value-layer-free-lattice-bloch-wave-and-brillouin-torus
             - value-layer-dense-zeta-line
             - lambda-embeddings-as-physical-and-internal-spaces
-            - noncongruence-equivalent-to-bloch-failure
+            - D5-T0011--noncongruence-equivalent-to-bloch-breakdown
             - no-periodic-character-classifies-code-observables
           chain_atoms: []
           tail_authorization: null
@@ -9046,7 +9046,7 @@ sources:
             - moving-one-zero-changes-prime-counting-at-all-scales
             - all-scale-holographic-locking-numerical-certificate
             - off-line-zero-as-collective-prime-encoded-structure
-            - pointwise-conservation-failure-with-window-leakage
+            - D5-T0011--pointwise-conservation-breakdown-with-window-leakage
           chain_atoms: []
           tail_authorization: null
         status:
