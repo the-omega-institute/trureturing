@@ -104,7 +104,7 @@ internal static class DigestionFingerprint
 internal static class GictAtomizer
 {
     private static readonly Regex ClaimPattern = new(
-        "^\\*\\*(?<kind>定理|定义|命题|引理|推论|观察|注)\\s*(?<number>[0-9]+\\.[0-9]+)",
+        "^\\*\\*(?<kind>定理|定义|命题|引理|推论|观察|勘察|注)\\s*(?<number>[0-9]+\\.[0-9]+)",
         RegexOptions.CultureInvariant);
     private static readonly Regex UnknownNumberedClaimPattern = new(
         "^\\*\\*(?<kind>\\p{L}+)\\s*[0-9]+\\.[0-9]+",
@@ -142,6 +142,7 @@ internal static class GictAtomizer
         "引理" => "lemma",
         "推论" => "corollary",
         "观察" => "observation",
+        "勘察" => "survey",
         "注" => "note",
         _ => throw new InvalidOperationException($"unknown GICT claim kind {value}"),
     };
