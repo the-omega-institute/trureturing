@@ -5,23 +5,23 @@ namespace StrataLint.Scribe.Tests;
 public sealed class DescribeMigrationTests
 {
     [Fact]
-    public void RepositoryMigrationHasThirtyFiveTypedNodesAndPreservesTwentyFourFormulaSlots()
+    public void RepositoryMigrationHasThirtyEightTypedNodesAndPreservesTwentyFourFormulaSlots()
     {
         var root = FindRepositoryRoot();
         var report = DescribeReport.Build(
             root,
             DocumentDefinitions.All.Select(static definition => definition.Document));
 
-        Assert.Equal(35, report.NodeStats.Total);
+        Assert.Equal(38, report.NodeStats.Total);
         Assert.Equal(24, report.NodeStats.FormulaContentSlots);
         Assert.Equal(1, report.NodeStats.FormulaStatements);
-        Assert.Equal(34, report.NodeStats.LeanStatements);
+        Assert.Equal(37, report.NodeStats.LeanStatements);
         Assert.Equal(6, report.NodeStats.ByKind["definition"]);
         Assert.Equal(9, report.NodeStats.ByKind["proposition"]);
-        Assert.Equal(19, report.NodeStats.ByKind["theorem"]);
+        Assert.Equal(22, report.NodeStats.ByKind["theorem"]);
         Assert.Equal(1, report.NodeStats.ByKind["example"]);
         Assert.Equal(22, report.NodeStats.ByProvenance["repo-derived"]);
-        Assert.Equal(13, report.NodeStats.ByProvenance["literature-attested"]);
+        Assert.Equal(16, report.NodeStats.ByProvenance["literature-attested"]);
         Assert.Equal(0, report.OpenCount);
         Assert.Empty(report.SuspectedNovel);
         Assert.Empty(report.RedFindings);
@@ -64,6 +64,36 @@ public sealed class DescribeMigrationTests
             DescribeKind.Proposition,
             "D5/S3/Weil/EulerProduct.single_address_heat_trace_eq_log_derivative",
             "D5/L/apostol1976introduction");
+    }
+
+    [Fact]
+    public void QuantumSkeletonNodesUseExactTypedStatementsAndDiligentProvenance()
+    {
+        var documents = DocumentDefinitions.All
+            .ToDictionary(static item => item.Document.Header.Gid.Value, StringComparer.Ordinal);
+        var nodes = documents["D5/S3/Quantum/FiniteDimensional"].Document.Content.Items
+            .OfType<DocumentBlock.Describe>()
+            .ToDictionary(
+                static node => Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement)
+                    .Value.Value,
+                StringComparer.Ordinal);
+
+        Assert.Equal(3, nodes.Count);
+        AssertLiteratureAttestedLeanNode(
+            nodes["D5/S3/Quantum/FiniteDimensional.qubit_weyl_star"],
+            DescribeKind.Theorem,
+            "D5/S3/Quantum/FiniteDimensional.qubit_weyl_star",
+            "D5/L/schwinger1960unitary");
+        AssertLiteratureAttestedLeanNode(
+            nodes["D5/S3/Quantum/FiniteDimensional.qubit_matrix_algebra_has_no_character"],
+            DescribeKind.Theorem,
+            "D5/S3/Quantum/FiniteDimensional.qubit_matrix_algebra_has_no_character",
+            "D5/L/murphy1990calgebras");
+        AssertLiteratureAttestedLeanNode(
+            nodes["D5/S3/Quantum/FiniteDimensional.born_probability_skeleton"],
+            DescribeKind.Theorem,
+            "D5/S3/Quantum/FiniteDimensional.born_probability_skeleton",
+            "D5/L/gleason1957measures");
     }
 
     [Fact]
@@ -206,7 +236,7 @@ public sealed class DescribeMigrationTests
         Assert.Equal(string.Empty, error.ToString());
         using var document = JsonDocument.Parse(output.ToString());
         Assert.Equal("DESCRIBE-NODES", document.RootElement.GetProperty("case_id").GetString());
-        Assert.Equal(35, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
+        Assert.Equal(38, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
         Assert.Equal(0, document.RootElement.GetProperty("open_count").GetInt32());
     }
 

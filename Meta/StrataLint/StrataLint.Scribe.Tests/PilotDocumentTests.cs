@@ -25,6 +25,7 @@ public sealed class DocumentDiscoveryTests
     private const string FibonacciEigenDocumentPath = "Blueprint/D5/S1/Scale/FibonacciEigen.md";
     private const string LogDocumentPath = "Blueprint/D5/S1/Scale/Log.md";
     private const string MinkowskiModelSetDocumentPath = "Blueprint/D5/S1/Scale/MinkowskiModelSet.md";
+    private const string FiniteDimensionalDocumentPath = "Blueprint/D5/S3/Quantum/FiniteDimensional.md";
     private const string CriticalLineDocumentPath = "Blueprint/D5/S3/Weil/CriticalLine.md";
     private const string EulerProductDocumentPath = "Blueprint/D5/S3/Weil/EulerProduct.md";
     private const string LabeledZetaDocumentPath = "Blueprint/D5/S3/Weil/LabeledZeta.md";
@@ -57,6 +58,7 @@ public sealed class DocumentDiscoveryTests
                 "D5/S1/Scale/FibonacciEigen",
                 "D5/S1/Scale/Log",
                 "D5/S1/Scale/MinkowskiModelSet",
+                "D5/S3/Quantum/FiniteDimensional",
                 "D5/S3/Weil/CriticalLine",
                 "D5/S3/Weil/EulerProduct",
                 "D5/S3/Weil/LabeledZeta",
@@ -86,6 +88,7 @@ public sealed class DocumentDiscoveryTests
                 FibonacciEigenDocumentPath,
                 LogDocumentPath,
                 MinkowskiModelSetDocumentPath,
+                FiniteDimensionalDocumentPath,
                 CriticalLineDocumentPath,
                 EulerProductDocumentPath,
                 LabeledZetaDocumentPath,
@@ -297,6 +300,61 @@ public sealed class DocumentDiscoveryTests
             Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
             Assert.True(lean.Value.RequireNoSorry);
         }
+    }
+
+    [Fact]
+    public void QuantumSkeletonDocumentCarriesExactStatementsAndDiligentProvenance()
+    {
+        (string Declaration, string Reference)[] expected =
+        [
+            ("D5/S3/Quantum/FiniteDimensional.qubit_weyl_star",
+                "D5/L/schwinger1960unitary"),
+            ("D5/S3/Quantum/FiniteDimensional.qubit_matrix_algebra_has_no_character",
+                "D5/L/murphy1990calgebras"),
+            ("D5/S3/Quantum/FiniteDimensional.born_probability_skeleton",
+                "D5/L/gleason1957measures"),
+        ];
+        var definition = DocumentDefinitions.All.Single(static item =>
+            item.Document.Header.Gid.Value == "D5/S3/Quantum/FiniteDimensional");
+        var nodes = Descendants(definition.Document.Content)
+            .OfType<DocumentBlock.Describe>()
+            .ToDictionary(
+                static node => Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement)
+                    .Value.Value,
+                StringComparer.Ordinal);
+
+        Assert.Equal(3, nodes.Count);
+        foreach (var item in expected)
+        {
+            var node = nodes[item.Declaration];
+            var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement);
+
+            Assert.Equal(DescribeKind.Theorem, node.Kind);
+            Assert.Equal(DescribeProvenanceKind.LiteratureAttested, node.Provenance.Kind);
+            Assert.Equal(item.Reference, node.Provenance.LiteratureReference?.Value);
+            Assert.Equal(item.Declaration, lean.Value.Value);
+            Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
+            Assert.True(lean.Value.RequireNoSorry);
+        }
+    }
+
+    [Fact]
+    public void QuantumSkeletonDocumentExplicitlyDisclosesUnformalizedNumericalCertificates()
+    {
+        var definition = DocumentDefinitions.All.Single(static item =>
+            item.Document.Header.Gid.Value == "D5/S3/Quantum/FiniteDimensional");
+        var report = LeanReportFixture.ForDocuments([definition.Document]);
+        var markdown = System.Text.Encoding.UTF8.GetString(
+            CanonicalMarkdownWriter.Write(definition.Document, report).AsSpan());
+
+        Assert.Contains(
+            "Original numerical-certificate claim not formalized: the source atom's matrix-unit relations with exact zero certificate error.",
+            markdown,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "Original numerical-certificate claim not formalized: the source atom's separate Born control group balance to 10^-16.",
+            markdown,
+            StringComparison.Ordinal);
     }
 
     private static string FindRepositoryRoot()
