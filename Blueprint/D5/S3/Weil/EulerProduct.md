@@ -23,3 +23,19 @@ Provenance: `literature-attested` via `D5/L/apostol1976introduction` (`lit/apost
 Statement: `D5/S3/Weil/EulerProduct.single_address_heat_trace_eq_log_derivative` `✓ std3`
 
 In the convergence half-plane with real part greater than one, the L-series of the single-address reading equals minus the derivative of the classical zeta function divided by the zeta function. The statement adds no continuation beyond that half-plane.
+
+## Remark: Journal and ledger readings
+
+Provenance: `repo-derived`
+
+Statement: `D5/S3/Weil/EulerProduct.single_address_reading_spec` `✓ std3`
+
+Ordering terms by generated value resembles a chronological journal, while grouping powers by prime address resembles a classified ledger. The single-address theorem supplies the local weight behind that analogy; it does not formalize heat-time cosmology or a theta functional equation.
+
+## Remark: Finite Euler windows do not create global zeros
+
+Provenance: `repo-derived`
+
+Statement: `D5/S3/Weil/EulerProduct.finite_euler_zero_free_and_pole_locus` `✓ std3`
+
+Every regular finite Euler window is nonzero, so no finite set of local factors realizes a nontrivial global zero. This supports only a finite-versus-tail boundary; collective-mode, prime-deletion, dense-phase, and equal-loudness interpretations are not proved here.

@@ -57,5 +57,68 @@ internal sealed class SpectralDynamicsDocument : IScribeDocumentDefinition
                     "D5/S3/Weil/SpectralDynamics.critical_line_characterizations")),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
-                    "For any additive ledger with a nonzero length, mirror fixed points, unit-modulus half-density readings, and self-resonance all select real part one half. The labeled zeta coefficient is square-summable exactly on the strict right half-plane, exposing one half as its boundary without asserting endpoint membership. The combined statement locates no zeta zero and adds no Riemann-hypothesis conclusion.")))))));
+                    "For any additive ledger with a nonzero length, mirror fixed points, unit-modulus half-density readings, and self-resonance all select real part one half. The labeled zeta coefficient is square-summable exactly on the strict right half-plane, exposing one half as its boundary without asserting endpoint membership. The combined statement locates no zeta zero and adds no Riemann-hypothesis conclusion.")))),
+            new DocumentBlock.Describe(
+                DescribeId.Create("diagonal-flow-and-generator-boundary"),
+                DescribeKind.Remark,
+                H("Diagonal flow and the generator boundary"),
+                DescribeStatement.FromLean(LeanTheorem(
+                    "D5/S3/Weil/SpectralDynamics.vertical_evolution_unitary_group")),
+                DescribeProvenance.RepoDerived(),
+                Blocks(Paragraph(Text(
+                    "The coordinate multiplier has logarithmic frequencies, but the checked declaration supplies only its group and norm laws. It does not construct a self-adjoint operator whose spectrum is the zeta zeros; that Hilbert-Polya step remains outside this module.")))),
+            new DocumentBlock.Describe(
+                DescribeId.Create("two-regimes-and-two-directions"),
+                DescribeKind.Remark,
+                H("Two regimes and two directions"),
+                DescribeStatement.FromLean(LeanTheorem(
+                    "D5/S3/Weil/SpectralDynamics.critical_line_characterizations")),
+                DescribeProvenance.RepoDerived(),
+                Blocks(Paragraph(Text(
+                    "The square-summable side is the strict half-plane to the right of one half. Vertical evolution is reversible and norm-preserving, while the formal horizontal evolution is only a forward contraction. Reading these as two phases or two times is a narrative synthesis, not a functional equation or a zero-location theorem.")))),
+            new DocumentBlock.Describe(
+                DescribeId.Create("phase-delay-is-not-address-delay"),
+                DescribeKind.Remark,
+                H("Phase delay is not address delay"),
+                DescribeStatement.FromLean(LeanTheorem(
+                    "D5/S3/Weil/SpectralDynamics.vertical_evolution_unitary_group")),
+                DescribeProvenance.RepoDerived(),
+                Blocks(Paragraph(Text(
+                    "The vertical multiplier records reversible phase accumulation. A discrete walk needed to reach an address is a different notion of delay, and this declaration neither identifies the two nor assigns an intrinsic time offset between parallel coefficient flows.")))),
+            new DocumentBlock.Describe(
+                DescribeId.Create("off-line-pairs-remain-conditional"),
+                DescribeKind.Remark,
+                H("Off-line pairs remain conditional"),
+                DescribeStatement.FromLean(LeanTheorem(
+                    "D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec")),
+                DescribeProvenance.RepoDerived(),
+                Blocks(Paragraph(Text(
+                    "For supplied zero data, mirror and conjugation organize entries into the checked cross-pairs. The declaration does not establish that such data exists, that an off-line entry occurs, or that a paired entry has decay, lifetime, or probabilistic meaning.")))),
+            new DocumentBlock.Describe(
+                DescribeId.Create("counting-does-not-locate-real-parts"),
+                DescribeKind.Remark,
+                H("Counting does not locate real parts"),
+                DescribeStatement.FromLean(LeanTheorem(
+                    "D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec")),
+                DescribeProvenance.RepoDerived(),
+                Blocks(Paragraph(Text(
+                    "The conditional partner equations preserve the supplied inventory but do not determine the real coordinate of any entry. Argument-principle counts, collision dynamics, and the existence of zero data are separate obligations not discharged here.")))),
+            new DocumentBlock.Describe(
+                DescribeId.Create("equalities-do-not-supply-positivity"),
+                DescribeKind.Remark,
+                H("Equalities do not supply positivity"),
+                DescribeStatement.FromLean(LeanTheorem(
+                    "D5/S3/Weil/SpectralDynamics.critical_line_characterizations")),
+                DescribeProvenance.RepoDerived(),
+                Blocks(Paragraph(Text(
+                    "Symmetry equations and the shared half-density coordinate do not imply Li or Weil positivity and therefore do not locate zeros. Metaphors that separate reversible phase time from irreversible ledger time remain explanatory readings rather than additional formal conclusions.")))),
+            new DocumentBlock.Describe(
+                DescribeId.Create("speculative-off-line-effects-are-not-formalized"),
+                DescribeKind.Remark,
+                H("Speculative off-line effects are not formalized"),
+                DescribeStatement.FromLean(LeanTheorem(
+                    "D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec")),
+                DescribeProvenance.RepoDerived(),
+                Blocks(Paragraph(Text(
+                    "The checked zero-data result records only permutations and resonance equations. Detection scales, thermal lifetimes, causal effects on prime counting, and physical interpretations of hypothetical off-line entries are not claims of this module.")))))));
 }
