@@ -39,3 +39,59 @@ Provenance: `repo-derived`
 Statement: `D5/S3/Weil/SpectralDynamics.critical_line_characterizations` `✓ std3`
 
 For any additive ledger with a nonzero length, mirror fixed points, unit-modulus half-density readings, and self-resonance all select real part one half. The labeled zeta coefficient is square-summable exactly on the strict right half-plane, exposing one half as its boundary without asserting endpoint membership. The combined statement locates no zeta zero and adds no Riemann-hypothesis conclusion.
+
+## Remark: Diagonal flow and the generator boundary
+
+Provenance: `repo-derived`
+
+Statement: `D5/S3/Weil/SpectralDynamics.vertical_evolution_unitary_group` `✓ std3`
+
+The coordinate multiplier has logarithmic frequencies, but the checked declaration supplies only its group and norm laws. It does not construct a self-adjoint operator whose spectrum is the zeta zeros; that Hilbert-Polya step remains outside this module.
+
+## Remark: Two regimes and two directions
+
+Provenance: `repo-derived`
+
+Statement: `D5/S3/Weil/SpectralDynamics.critical_line_characterizations` `✓ std3`
+
+The square-summable side is the strict half-plane to the right of one half. Vertical evolution is reversible and norm-preserving, while the formal horizontal evolution is only a forward contraction. Reading these as two phases or two times is a narrative synthesis, not a functional equation or a zero-location theorem.
+
+## Remark: Phase delay is not address delay
+
+Provenance: `repo-derived`
+
+Statement: `D5/S3/Weil/SpectralDynamics.vertical_evolution_unitary_group` `✓ std3`
+
+The vertical multiplier records reversible phase accumulation. A discrete walk needed to reach an address is a different notion of delay, and this declaration neither identifies the two nor assigns an intrinsic time offset between parallel coefficient flows.
+
+## Remark: Off-line pairs remain conditional
+
+Provenance: `repo-derived`
+
+Statement: `D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec` `✓ std3`
+
+For supplied zero data, mirror and conjugation organize entries into the checked cross-pairs. The declaration does not establish that such data exists, that an off-line entry occurs, or that a paired entry has decay, lifetime, or probabilistic meaning.
+
+## Remark: Counting does not locate real parts
+
+Provenance: `repo-derived`
+
+Statement: `D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec` `✓ std3`
+
+The conditional partner equations preserve the supplied inventory but do not determine the real coordinate of any entry. Argument-principle counts, collision dynamics, and the existence of zero data are separate obligations not discharged here.
+
+## Remark: Equalities do not supply positivity
+
+Provenance: `repo-derived`
+
+Statement: `D5/S3/Weil/SpectralDynamics.critical_line_characterizations` `✓ std3`
+
+Symmetry equations and the shared half-density coordinate do not imply Li or Weil positivity and therefore do not locate zeros. Metaphors that separate reversible phase time from irreversible ledger time remain explanatory readings rather than additional formal conclusions.
+
+## Remark: Speculative off-line effects are not formalized
+
+Provenance: `repo-derived`
+
+Statement: `D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec` `✓ std3`
+
+The checked zero-data result records only permutations and resonance equations. Detection scales, thermal lifetimes, causal effects on prime counting, and physical interpretations of hypothetical off-line entries are not claims of this module.
