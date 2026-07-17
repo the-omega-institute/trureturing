@@ -4,8 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum;
 
 internal sealed class QubitWitnessesDocument : IScribeDocumentDefinition
 {
-    private static readonly LibraryNoteRef Robertson =
-        LibraryNoteRef.Create("D5/L/robertson1929uncertainty");
+    private static readonly LibraryNoteRef Schwinger =
+        LibraryNoteRef.Create("D5/L/schwinger1960unitary");
     private static readonly LibraryNoteRef Bell =
         LibraryNoteRef.Create("D5/L/bell1964epr");
     private static readonly LibraryNoteRef Zurek =
@@ -23,7 +23,7 @@ internal sealed class QubitWitnessesDocument : IScribeDocumentDefinition
                 H("Pauli X and Z have no nonzero common eigenvector"),
                 DescribeStatement.FromLean(LeanTheorem(
                     "D5/S3/Quantum/QubitWitnesses.pauli_observables_have_no_common_eigenvector")),
-                DescribeProvenance.LiteratureAttested(Robertson),
+                DescribeProvenance.LiteratureAttested(Schwinger),
                 Blocks(Paragraph(Text(
                     "The standard Pauli X and Z observables have no nonzero common eigenvector on C^2. This is an explicit incompatibility witness only: it does not prove the Robertson variance inequality, arbitrary-window full-matrix generation, prime-power tensor factorization, general qudit Weyl relations, or any classical ontology forcing the structure. Original numerical-certificate claim not formalized: the source atom's full matrix-unit relations with exact zero certificate error.")))),
             new DocumentBlock.Describe(
@@ -33,12 +33,8 @@ internal sealed class QubitWitnessesDocument : IScribeDocumentDefinition
                 DescribeStatement.FromLean(LeanTheorem(
                     "D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product")),
                 DescribeProvenance.LiteratureAttested(Bell),
-                Blocks(Paragraph(
-                    Text("The coefficient matrix of the unnormalized Bell vector |00> + |11> cannot be factored as an outer product. A nonzero normalization scalar does not change this obstruction. "),
-                    Ref("D5/L/clauser1969chsh"),
-                    Text(" and "),
-                    Ref("D5/L/cirelson1980bell"),
-                    Text(" delimit the wider Bell-inequality clauses: this declaration proves neither a CHSH expectation nor Tsirelson optimality, a local-hidden-variable bound, Kochen-Specker contextuality, hidden-address interpretations, or that probability is not ignorance. Original numerical-certificate claims not formalized: the source atom's CHSH values 2*sqrt(2) = 2.8284 and the classical local-fiber bound 2.0.")))),
+                Blocks(Paragraph(Text(
+                    "The coefficient matrix of the unnormalized Bell vector |00> + |11> cannot be factored as an outer product. A nonzero normalization scalar does not change this obstruction. This declaration proves neither a CHSH expectation nor Tsirelson optimality, a local-hidden-variable bound, Kochen-Specker contextuality, hidden-address interpretations, or that probability is not ignorance. Original numerical-certificate claims not formalized: the source atom's CHSH values 2*sqrt(2) = 2.8284 and the classical local-fiber bound 2.0.")))),
             new DocumentBlock.Describe(
                 DescribeId.Create("iterated-phase-damping-has-the-exact-qubit-certificate"),
                 DescribeKind.Theorem,

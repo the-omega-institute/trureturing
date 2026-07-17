@@ -113,7 +113,7 @@ public sealed class DescribeMigrationTests
             nodes["D5/S3/Quantum/QubitWitnesses.pauli_observables_have_no_common_eigenvector"],
             DescribeKind.Theorem,
             "D5/S3/Quantum/QubitWitnesses.pauli_observables_have_no_common_eigenvector",
-            "D5/L/robertson1929uncertainty");
+            "D5/L/schwinger1960unitary");
         AssertLiteratureAttestedLeanNode(
             nodes["D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product"],
             DescribeKind.Theorem,

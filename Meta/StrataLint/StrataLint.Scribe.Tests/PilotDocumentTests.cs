@@ -366,7 +366,7 @@ public sealed class DocumentDiscoveryTests
         (string Declaration, string Reference)[] expected =
         [
             ("D5/S3/Quantum/QubitWitnesses.pauli_observables_have_no_common_eigenvector",
-                "D5/L/robertson1929uncertainty"),
+                "D5/L/schwinger1960unitary"),
             ("D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product",
                 "D5/L/bell1964epr"),
             ("D5/S3/Quantum/QubitWitnesses.equal_superposition_phase_damping_certificate",
