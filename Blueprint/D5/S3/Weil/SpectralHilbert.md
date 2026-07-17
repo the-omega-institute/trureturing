@@ -47,3 +47,11 @@ Provenance: `repo-derived`
 Statement: `D5/S3/Weil/SpectralHilbert.resonance_partner_spec` `✓ std3`
 
 The equation s plus conjugate w equals one holds exactly for the mirror partner w = 1 - conjugate s. Self-resonance is exactly the critical line, and a parameter on the square-summable side has its mirror strictly outside that side. This is algebra of the kernel's pole-locus equation; it asserts neither meromorphic continuation nor any location of zeta zeros.
+
+## Remark: Hardy-space identification
+
+Provenance: `literature-attested` via `D5/L/hedenmalm1997hilbert` (`lit/hedenmalm1997hilbert`)
+
+Statement: `D5/S3/Weil/SpectralHilbert.labeled_zeta_inner` `✓ std3`
+
+The coefficient Hilbert space and its zeta reproducing kernel are the classical Hardy-space geometry of Dirichlet series. The repository supplies a typed translation and combined presentation of that known mathematics, not a novelty claim.
