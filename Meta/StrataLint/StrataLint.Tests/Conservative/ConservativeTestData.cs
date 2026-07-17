@@ -20,6 +20,9 @@ internal static class ConservativeTestData
         var candidateCases = mutateCandidate is null
             ? baselineCases
             : mutateCandidate(baselineCases);
+        var policy = ConservativePolicySnapshot.Current()
+            .WithExactExclusions([])
+            .WithRuleObligations(["SL-001", "SL-022"]);
         return new ConservativeVerificationInput(
             BaselineCommitOid: GitOid('a'),
             BaselineTreeOid: "git-sha1:" + GitOid('b'),
@@ -38,12 +41,18 @@ internal static class ConservativeTestData
             BaselineExecution: new ConservativeHarnessExecution.Completed(new ConservativeHarnessRun(
                 Sha256('1'),
                 ["SL-001", "SL-022"],
-                baselineCases)),
+                baselineCases)
+            {
+                Policy = policy,
+            }),
             CandidateExecution: candidateExecution
                 ?? new ConservativeHarnessExecution.Completed(new ConservativeHarnessRun(
                     Sha256('2'),
                     ["SL-001", "SL-022"],
-                    candidateCases)));
+                    candidateCases)
+                {
+                    Policy = policy,
+                }));
     }
 
     internal static ConservativeCaseResult WithDisposition(

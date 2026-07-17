@@ -8,7 +8,7 @@ internal static class TomlGoldenWriter
     internal const string OntologyHeader =
         "# 输入=spec 场景采样(人);期望=Engine 输出快照(机器录制);此文件是行为时间锁\n";
     internal const string CanonicalHeader =
-        "# canonical: UTF-8 without BOM; LF; case keys=name,changes,baseline_mutations,mutations,expected_diagnostics; nested keys follow schema order.\n";
+        "# canonical: UTF-8 without BOM; LF; case keys=name,changes,baseline_mutations,mutations,expected_diagnostics,contract_epoch?; nested keys follow schema order.\n";
 
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
@@ -42,7 +42,65 @@ internal static class TomlGoldenWriter
         WriteMutationArray(builder, testCase.Mutations);
         builder.Append("\nexpected_diagnostics = ");
         WriteDiagnosticArray(builder, testCase.ExpectedDiagnostics);
+        if (testCase.ContractEpoch is { } contract)
+        {
+            builder.Append("\ncontract_epoch = ");
+            WriteContractEpoch(builder, contract);
+        }
+
         builder.Append('\n');
+    }
+
+    private static void WriteContractEpoch(StringBuilder builder, GoldenContractEpochCase contract)
+    {
+        builder.Append("{ candidate_exact_exclusions = ");
+        WriteStringArray(builder, contract.CandidateExactExclusions);
+        builder.Append(", candidate_retired_rules = ");
+        WriteStringArray(builder, contract.CandidateRetiredRules);
+        builder.Append(", candidate_removed_matchers = ");
+        WriteStringArray(builder, contract.CandidateRemovedMatchers);
+        builder.Append(", baseline_plans = ");
+        WriteContractPlans(builder, contract.BaselinePlans);
+        builder.Append(", candidate_plans = ");
+        WriteContractPlans(builder, contract.CandidatePlans);
+        builder.Append(", baseline_consumptions = ");
+        WriteStringArray(builder, contract.BaselineConsumptions);
+        builder.Append(", candidate_consumptions = ");
+        WriteStringArray(builder, contract.CandidateConsumptions);
+        builder.Append(", expected_finding_codes = ");
+        WriteStringArray(builder, contract.ExpectedFindingCodes);
+        builder.Append(" }");
+    }
+
+    private static void WriteContractPlans(
+        StringBuilder builder,
+        IReadOnlyList<GoldenContractPlan> plans)
+    {
+        builder.Append('[');
+        for (var index = 0; index < plans.Count; index++)
+        {
+            if (index > 0) builder.Append(", ");
+            var plan = plans[index];
+            builder.Append("{ plan_id = ");
+            WriteString(builder, plan.PlanId);
+            WriteField(builder, "kind", plan.Kind switch
+            {
+                GoldenContractPlanKind.CustodyTransfer => "custody_transfer",
+                GoldenContractPlanKind.DischargePaths => "discharge_paths",
+                GoldenContractPlanKind.DischargeRule => "discharge_rule",
+                _ => throw new InvalidOperationException("unknown golden contract plan kind"),
+            });
+            builder.Append(", exact_paths = ");
+            WriteStringArray(builder, plan.ExactPaths);
+            WriteField(builder, "rule_obligation", plan.RuleObligation);
+            WriteField(builder, "custodian_kind", plan.CustodianKind);
+            WriteField(builder, "custodian_reference", plan.CustodianReference);
+            WriteBooleanField(builder, "evidence_present", plan.EvidencePresent);
+            WriteBooleanField(builder, "custodian_present", plan.CustodianPresent);
+            builder.Append(" }");
+        }
+
+        builder.Append(']');
     }
 
     private static void WriteStringArray(StringBuilder builder, IReadOnlyList<string> values)

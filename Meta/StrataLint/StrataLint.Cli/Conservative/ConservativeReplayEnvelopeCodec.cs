@@ -54,6 +54,13 @@ internal static class ConservativeReplayEnvelopeCodec
             },
             corpus_base64 = Convert.ToBase64String(corpus.CanonicalBytes.AsSpan()),
             corpus_case_ids = corpus.CaseIds,
+            contract_expectations = corpus.ContractExpectations
+                .OrderBy(static item => item.Key, StringComparer.Ordinal)
+                .Select(static item => new
+                {
+                    case_id = item.Key,
+                    finding_codes = item.Value,
+                }),
             corpus_root = corpus.Root,
             repository_bundle_base64 = Convert.ToBase64String(repositoryBundle),
             schema = Schema,
@@ -106,6 +113,7 @@ internal static class ConservativeReplayEnvelopeCodec
         }
 
         RequireSortedUnique(document.CorpusCaseIds);
+        var contractExpectations = ReadContractExpectations(document.ContractExpectations);
         var corpusBytes = Decode(document.CorpusBase64, "corpus");
         var baselineReport = Decode(document.Baseline.LeanReportBase64, "baseline Lean report");
         var candidateReport = Decode(document.Candidate.LeanReportBase64, "candidate Lean report");
@@ -140,6 +148,13 @@ internal static class ConservativeReplayEnvelopeCodec
                 tree_oid = candidateIdentity.TreeOid,
             },
             corpus_case_ids = document.CorpusCaseIds,
+            contract_expectations = contractExpectations
+                .OrderBy(static item => item.Key, StringComparer.Ordinal)
+                .Select(static item => new
+                {
+                    case_id = item.Key,
+                    finding_codes = item.Value,
+                }),
             corpus_root = actualCorpusRoot,
             schema = "stratalint-conservative-replay-root-v1",
         });
@@ -150,7 +165,10 @@ internal static class ConservativeReplayEnvelopeCodec
             new MaterializedConservativeCorpus(
                 corpusBytes,
                 actualCorpusRoot,
-                document.CorpusCaseIds),
+                document.CorpusCaseIds)
+            {
+                ContractExpectations = contractExpectations,
+            },
             baselineIdentity,
             candidateIdentity,
             baselineReport,
@@ -207,6 +225,33 @@ internal static class ConservativeReplayEnvelopeCodec
         }
     }
 
+    private static ImmutableDictionary<string, ImmutableArray<string>> ReadContractExpectations(
+        ImmutableArray<ReplayContractExpectation> values)
+    {
+        if (values.IsDefault)
+        {
+            return ImmutableDictionary<string, ImmutableArray<string>>.Empty.WithComparers(
+                StringComparer.Ordinal);
+        }
+
+        RequireSortedUnique(values.Select(static item => item.CaseId).ToImmutableArray());
+        var builder = ImmutableDictionary.CreateBuilder<string, ImmutableArray<string>>(
+            StringComparer.Ordinal);
+        foreach (var item in values)
+        {
+            if (!item.CaseId.StartsWith("contract:", StringComparison.Ordinal)
+                || item.FindingCodes.IsDefaultOrEmpty)
+            {
+                throw new FormatException("conservative replay contract expectation is malformed");
+            }
+
+            RequireSortedUnique(item.FindingCodes);
+            builder.Add(item.CaseId, item.FindingCodes);
+        }
+
+        return builder.ToImmutable();
+    }
+
     private sealed record ReplayDocument(
         string Schema,
         ReplaySide Baseline,
@@ -214,7 +259,12 @@ internal static class ConservativeReplayEnvelopeCodec
         string CorpusBase64,
         string CorpusRoot,
         ImmutableArray<string> CorpusCaseIds,
+        ImmutableArray<ReplayContractExpectation> ContractExpectations,
         string RepositoryBundleBase64);
+
+    private sealed record ReplayContractExpectation(
+        string CaseId,
+        ImmutableArray<string> FindingCodes);
 
     private sealed record ReplaySide(
         string CommitOid,

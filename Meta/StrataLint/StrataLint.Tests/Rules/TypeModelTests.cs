@@ -119,6 +119,35 @@ public sealed class TypeModelTests
         Assert.NotNull(RepositoryPathPolicy.Validate(path, Policy()));
     }
 
+    [Theory]
+    [InlineData("Golden/cases/a.toml")]
+    [InlineData("Golden/cases/A0_case-name.toml")]
+    [InlineData("Golden/fixture-registry.yaml")]
+    [InlineData("Golden/values-kernels.toml")]
+    public void CanonicalGoldenDataResidencesAreClosedWorldRegistered(string value)
+    {
+        var path = RepoPath.CreateKnown(value);
+
+        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
+        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
+    }
+
+    [Theory]
+    [InlineData("Golden/other.toml")]
+    [InlineData("Golden/cases/nested/case.toml")]
+    [InlineData("Golden/cases/case.yaml")]
+    [InlineData("Golden/cases/.toml")]
+    [InlineData("Golden/cases/bad.name.toml")]
+    [InlineData("Golden/cases/bad+name.toml")]
+    [InlineData("Golden/cases/caf\u00e9.toml")]
+    public void CanonicalGoldenDataResidencesRejectNoncanonicalNeighbors(string value)
+    {
+        var path = RepoPath.CreateKnown(value);
+
+        Assert.NotNull(RepositoryPathPolicy.Validate(path, Policy()));
+        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
+    }
+
     [Fact]
     public void HarnessGateScriptIsClosedWorldRegisteredAndBootstrapProtected()
     {

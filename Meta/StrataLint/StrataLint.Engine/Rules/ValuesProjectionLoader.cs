@@ -25,26 +25,29 @@ internal static class ValuesProjectionLoader
     internal const string RelativePath = "Evidence/D5/values.json";
     internal const string InputPath = "D5/X_Frontier/ValuesProducer.lean";
     internal const string LeanModulePath = "D5/S3/Constants/Values.lean";
-    internal const string KernelDataPath =
-        "Meta/StrataLint/Golden/values-kernels.toml";
+    internal const string KernelDataPath = "Golden/values-kernels.toml";
     internal const string ScribeLockPath =
         "Meta/StrataLint/StrataLint.Scribe/packages.lock.json";
 
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     private static readonly Regex Sha256Pattern = new("^[0-9a-f]{64}$", RegexOptions.CultureInvariant);
-    internal static ImmutableArray<string> InputPaths { get; } =
-    [
-        LeanModulePath,
-        InputPath,
-        "Directory.Build.props",
-        "Directory.Packages.props",
-        KernelDataPath,
-        ScribeLockPath,
-        "global.json",
-    ];
-    internal static ValuesProjection Load(RepositorySnapshot snapshot)
+    internal static ImmutableArray<string> InputPaths { get; } = InputPathsFor(KernelDataPath);
+
+    internal static ValuesProjection Load(RepositorySnapshot snapshot) =>
+        Load(snapshot, KernelDataPath);
+
+    internal static ValuesProjection Load(
+        RepositorySnapshot snapshot,
+        string kernelDataPath)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
+        ArgumentException.ThrowIfNullOrWhiteSpace(kernelDataPath);
+        if (!RepoPath.TryCreate(kernelDataPath, out _)
+            || !kernelDataPath.EndsWith("/values-kernels.toml", StringComparison.Ordinal))
+        {
+            throw new ArgumentException("Values kernel data path is invalid.", nameof(kernelDataPath));
+        }
+
         if (!snapshot.TryGetFile(RelativePath, out var file))
         {
             throw new FormatException("Canonical values projection is missing.");
@@ -70,14 +73,19 @@ internal static class ValuesProjectionLoader
         }
 
         var definitions = ParseDefinitions(root.GetProperty("constants"));
-        ValidateAttestation(snapshot, root.GetProperty("attestation"), definitions);
+        ValidateAttestation(
+            snapshot,
+            root.GetProperty("attestation"),
+            definitions,
+            InputPathsFor(kernelDataPath));
         return new ValuesProjection(definitions);
     }
 
     private static void ValidateAttestation(
         RepositorySnapshot snapshot,
         JsonElement attestation,
-        ImmutableDictionary<string, ValuesProjectionDefinition> definitions)
+        ImmutableDictionary<string, ValuesProjectionDefinition> definitions,
+        ImmutableArray<string> inputPaths)
     {
         if (attestation.ValueKind != JsonValueKind.Object
             || !PropertyNames(attestation).SequenceEqual(
@@ -118,15 +126,16 @@ internal static class ValuesProjectionLoader
             throw new FormatException("Values producer provenance must be the complete Lean GID list.");
         }
 
-        ValidateInputAttestation(snapshot, attestation);
+        ValidateInputAttestation(snapshot, attestation, inputPaths);
     }
 
     private static void ValidateInputAttestation(
         RepositorySnapshot snapshot,
-        JsonElement attestation)
+        JsonElement attestation,
+        ImmutableArray<string> inputPaths)
     {
         var inputs = attestation.GetProperty("inputs").EnumerateArray().ToArray();
-        if (inputs.Length != InputPaths.Length)
+        if (inputs.Length != inputPaths.Length)
         {
             throw new FormatException("Values producer input manifest is invalid.");
         }
@@ -135,7 +144,7 @@ internal static class ValuesProjectionLoader
         for (var index = 0; index < inputs.Length; index++)
         {
             var input = inputs[index];
-            var expectedPath = InputPaths[index];
+            var expectedPath = inputPaths[index];
             if (input.ValueKind != JsonValueKind.Object
                 || !PropertyNames(input).SequenceEqual(["path", "sha256"], StringComparer.Ordinal)
                 || RequiredString(input, "path") != expectedPath)
@@ -169,6 +178,17 @@ internal static class ValuesProjectionLoader
             throw new FormatException("Values producer input SHA-256 does not match the repository input.");
         }
     }
+
+    private static ImmutableArray<string> InputPathsFor(string kernelDataPath) =>
+    [
+        LeanModulePath,
+        InputPath,
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        kernelDataPath,
+        ScribeLockPath,
+        "global.json",
+    ];
 
     private static ImmutableDictionary<string, ValuesProjectionDefinition> ParseDefinitions(
         JsonElement constants)

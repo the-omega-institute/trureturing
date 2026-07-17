@@ -20,7 +20,9 @@ public sealed class C0CeremonyTrustRootTests
     private const string CorpusSchemaDirectory =
         "Meta/StrataLint/StrataLint.Cli/Golden";
     private const string CorpusDataDirectory =
-        "Meta/StrataLint/Golden/cases";
+        "Golden/cases";
+    private const string FixtureRegistryPath = "Golden/fixture-registry.yaml";
+    private const string ValuesKernelDataPath = "Golden/values-kernels.toml";
     private const string GateWiringPath = ".github/scripts/harness-gate.sh";
     private const string CertificatePath =
         "Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json";
@@ -83,6 +85,42 @@ public sealed class C0CeremonyTrustRootTests
         {
             Directory.Delete(root, recursive: true);
         }
+    }
+
+    [Fact]
+    public void CanonicalTowerJudgeGraphIsClosed()
+    {
+        var root = RepositoryLayout.FindRoot();
+        var loaded = Assert.IsType<TowerManifestParseOutcome.Loaded>(
+            TowerManifestParser.Parse(File.ReadAllBytes(Absolute(root, TowerPath))));
+
+        var outcome = TowerManifestValidator.ValidateStructure(loaded.Syntax);
+
+        var rejected = outcome as TowerValidationOutcome.Rejected;
+        Assert.True(
+            outcome is TowerValidationOutcome.Accepted,
+            rejected is null
+                ? "canonical TOWER returned an unknown validation outcome"
+                : string.Join("; ", rejected.Findings.Select(static item =>
+                    $"{item.Code} {item.Component}: {item.Message}")));
+    }
+
+    [Fact]
+    public void CanonicalTowerC0EvidenceIsCanonical()
+    {
+        var root = RepositoryLayout.FindRoot();
+        var loaded = Assert.IsType<TowerManifestParseOutcome.Loaded>(
+            TowerManifestParser.Parse(File.ReadAllBytes(Absolute(root, TowerPath))));
+
+        var actual = TowerActualValidator.Validate(
+            loaded.Syntax,
+            EmptyRepository(),
+            RuleCatalog.Default);
+
+        Assert.Empty(actual.Findings.Where(static item => string.Equals(
+            item.Component,
+            "conservative-extension-gate-c",
+            StringComparison.Ordinal)));
     }
 
     [Fact]
@@ -150,7 +188,7 @@ public sealed class C0CeremonyTrustRootTests
             certificateRoot.GetProperty("schema").GetString());
         Assert.Equal("CORPUS_CONSERVATIVE", certificateRoot.GetProperty("status").GetString());
         Assert.Empty(certificateRoot.GetProperty("findings").EnumerateArray());
-        Assert.Equal(111, certificateRoot.GetProperty("golden_case_count").GetInt32());
+        Assert.Equal(117, certificateRoot.GetProperty("golden_case_count").GetInt32());
         var implication = certificateRoot.GetProperty("positive_implication");
         Assert.Equal(
             implication.GetProperty("baseline_admit_count").GetInt32(),
@@ -225,6 +263,7 @@ public sealed class C0CeremonyTrustRootTests
     private static string[] ExpectedCorpusPaths(string root) =>
         EnumerateSourcePaths(root, CorpusSchemaDirectory, "*.cs")
             .Concat(EnumerateSourcePaths(root, CorpusDataDirectory, "*.toml"))
+            .Concat([FixtureRegistryPath, ValuesKernelDataPath])
             .Order(StringComparer.Ordinal)
             .ToArray();
 
@@ -288,6 +327,10 @@ public sealed class C0CeremonyTrustRootTests
 
     private static string Absolute(string root, string path) =>
         Path.Combine(root, path.Replace('/', Path.DirectorySeparatorChar));
+
+    private static RepositorySnapshot EmptyRepository() =>
+        Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(RawRepositorySnapshot.Create([]))).Snapshot;
 
     private static string Relative(string root, string path) =>
         Path.GetRelativePath(root, path).Replace(Path.DirectorySeparatorChar, '/');

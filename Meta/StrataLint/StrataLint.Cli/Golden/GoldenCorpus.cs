@@ -5,7 +5,35 @@ internal sealed record GoldenCase(
     IReadOnlyList<GoldenMutation> BaselineMutations,
     IReadOnlyList<GoldenMutation> Mutations,
     IReadOnlyList<GoldenDiagnostic> ExpectedDiagnostics,
-    IReadOnlyList<string> Changes);
+    IReadOnlyList<string> Changes,
+    GoldenContractEpochCase? ContractEpoch);
+
+internal enum GoldenContractPlanKind
+{
+    CustodyTransfer,
+    DischargePaths,
+    DischargeRule,
+}
+
+internal sealed record GoldenContractPlan(
+    string PlanId,
+    GoldenContractPlanKind Kind,
+    IReadOnlyList<string> ExactPaths,
+    string RuleObligation,
+    string CustodianKind,
+    string CustodianReference,
+    bool EvidencePresent,
+    bool CustodianPresent);
+
+internal sealed record GoldenContractEpochCase(
+    IReadOnlyList<string> CandidateExactExclusions,
+    IReadOnlyList<string> CandidateRetiredRules,
+    IReadOnlyList<string> CandidateRemovedMatchers,
+    IReadOnlyList<GoldenContractPlan> BaselinePlans,
+    IReadOnlyList<GoldenContractPlan> CandidatePlans,
+    IReadOnlyList<string> BaselineConsumptions,
+    IReadOnlyList<string> CandidateConsumptions,
+    IReadOnlyList<string> ExpectedFindingCodes);
 
 internal sealed record GoldenDiagnostic(int RuleNumber, string Path, string Message);
 
@@ -75,53 +103,6 @@ internal abstract record GoldenMutation
 
 internal static partial class GoldenCorpus
 {
-    internal const string FixtureRegistry = """
-        schema_version: 1
-        root_files:
-          - ".gitignore"
-          - "AGENTS.md"
-          - "CLAUDE.md"
-          - "Directory.Build.props"
-          - "Directory.Packages.props"
-          - "Makefile"
-          - "README.md"
-          - "Trureturing.lean"
-          - "global.json"
-          - "lake-manifest.json"
-          - "lakefile.toml"
-          - "lean-toolchain"
-        governance_documents:
-          - "Generated/FILEMAP.md"
-          - "Meta/FILEMAP.toml"
-          - "docs/CONTRIBUTING.md"
-          - "docs/GOVERNANCE.md"
-          - "docs/develop/spec/golden-ledger-repo-spec.md"
-        agent_files:
-          - "CONTEXT.md"
-          - "adversary.md"
-        artifact_kinds:
-          json:
-            profile: structured-json
-            selectors:
-              - "check"
-              - "legacy"
-              - "quote"
-              - "result"
-              - "run"
-            path_selectors:
-              - "formal"
-              - "values"
-          yaml:
-            profile: structured-yaml
-            selectors:
-              - "result"
-              - "run"
-              - "spec"
-            path_selectors:
-              - "experiments"
-              - "formal"
-        """ + "\n";
-
     internal const string FixtureDigestionSourcePath = "docs/GOVERNANCE.md";
     internal const string FixtureDigestionSource = "x";
     internal const string FixtureAtomId = "fixture-atom";

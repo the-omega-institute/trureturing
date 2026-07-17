@@ -100,8 +100,6 @@ public static class BootstrapGate
     internal const string DefinitionsPathPrefix =
         "Meta/StrataLint/StrataLint.Definitions/";
 
-    private static readonly StringComparer Ordinal = StringComparer.Ordinal;
-
     public static BootstrapOutcome Evaluate(RawChangeSet changes)
     {
         ArgumentNullException.ThrowIfNull(changes);
@@ -135,39 +133,5 @@ public static class BootstrapGate
             .ToImmutableArray();
     }
 
-    internal static bool IsProtected(RepoPath path)
-    {
-        var value = path.Value;
-        // The v1 predecessor codec cannot decode candidate-only SL-022 paths;
-        // Definitions retirement is enforced by the architecture test instead.
-        if (value.StartsWith(DefinitionsPathPrefix, StringComparison.Ordinal))
-        {
-            return false;
-        }
-
-        return value.StartsWith("Meta/StrataLint/", StringComparison.Ordinal)
-            || Ordinal.Equals(value, SpecificationPath)
-            || Ordinal.Equals(value, "Meta/registry.yaml")
-            || Ordinal.Equals(value, "Meta/domains.yaml")
-            || value.EndsWith("/Hearts.lean", StringComparison.Ordinal)
-            || value.Contains("/X_Assumptions/", StringComparison.Ordinal)
-            || value.StartsWith("Meta/golden/", StringComparison.OrdinalIgnoreCase)
-            || value.Contains("/Golden/", StringComparison.OrdinalIgnoreCase)
-            || value.EndsWith(".sln", StringComparison.Ordinal)
-            || value.EndsWith(".slnx", StringComparison.Ordinal)
-            || value.EndsWith(".csproj", StringComparison.Ordinal)
-            || value.EndsWith(".scribe.cs", StringComparison.Ordinal)
-            || Ordinal.Equals(value, "Makefile")
-            || Ordinal.Equals(value, "global.json")
-            || value.StartsWith("Directory.Build.", StringComparison.Ordinal)
-            || value.StartsWith("Directory.Packages.", StringComparison.Ordinal)
-            || value.EndsWith("packages.lock.json", StringComparison.Ordinal)
-            || value.EndsWith("NuGet.Config", StringComparison.OrdinalIgnoreCase)
-            || Ordinal.Equals(value, "lean-toolchain")
-            || Ordinal.Equals(value, "lakefile.toml")
-            || Ordinal.Equals(value, "lake-manifest.json")
-            || Ordinal.Equals(value, ".github/CODEOWNERS")
-            || value.StartsWith(".github/workflows/", StringComparison.Ordinal)
-            || value.StartsWith(".github/scripts/", StringComparison.Ordinal);
-    }
+    internal static bool IsProtected(RepoPath path) => BootstrapProtectionPolicy.IsProtected(path);
 }

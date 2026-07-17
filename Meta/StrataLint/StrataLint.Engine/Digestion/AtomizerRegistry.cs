@@ -11,6 +11,7 @@ internal sealed record AtomizerRegistration(
 internal static class AtomizerRegistry
 {
     internal const string GictId = "gict-v1";
+    internal const string ObserverId = "observer-v1";
     internal const string PzgId = "pzg-v1";
     internal const string NoAtomizerId = "none";
 
@@ -18,6 +19,7 @@ internal static class AtomizerRegistry
         ImmutableDictionary<string, AtomizerRegistration>.Empty
             .WithComparers(StringComparer.Ordinal)
             .Add(GictId, new AtomizerRegistration(GictAtomizer.Atomize, "gict"))
+            .Add(ObserverId, new AtomizerRegistration(ObserverAtomizer.Atomize, "observer"))
             .Add(PzgId, new AtomizerRegistration(PzgAtomizer.Atomize, "pzg"));
 
     internal static ImmutableArray<string> RegisteredIds { get; } =
