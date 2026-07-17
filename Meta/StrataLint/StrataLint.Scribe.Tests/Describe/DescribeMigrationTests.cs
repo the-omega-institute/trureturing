@@ -5,23 +5,23 @@ namespace StrataLint.Scribe.Tests;
 public sealed class DescribeMigrationTests
 {
     [Fact]
-    public void RepositoryMigrationHasTwentyNineTypedNodesAndPreservesTwentyFourFormulaSlots()
+    public void RepositoryMigrationHasThirtyFiveTypedNodesAndPreservesTwentyFourFormulaSlots()
     {
         var root = FindRepositoryRoot();
         var report = DescribeReport.Build(
             root,
             DocumentDefinitions.All.Select(static definition => definition.Document));
 
-        Assert.Equal(29, report.NodeStats.Total);
+        Assert.Equal(35, report.NodeStats.Total);
         Assert.Equal(24, report.NodeStats.FormulaContentSlots);
         Assert.Equal(1, report.NodeStats.FormulaStatements);
-        Assert.Equal(28, report.NodeStats.LeanStatements);
-        Assert.Equal(5, report.NodeStats.ByKind["definition"]);
+        Assert.Equal(34, report.NodeStats.LeanStatements);
+        Assert.Equal(6, report.NodeStats.ByKind["definition"]);
         Assert.Equal(9, report.NodeStats.ByKind["proposition"]);
-        Assert.Equal(14, report.NodeStats.ByKind["theorem"]);
+        Assert.Equal(19, report.NodeStats.ByKind["theorem"]);
         Assert.Equal(1, report.NodeStats.ByKind["example"]);
-        Assert.Equal(21, report.NodeStats.ByProvenance["repo-derived"]);
-        Assert.Equal(8, report.NodeStats.ByProvenance["literature-attested"]);
+        Assert.Equal(22, report.NodeStats.ByProvenance["repo-derived"]);
+        Assert.Equal(13, report.NodeStats.ByProvenance["literature-attested"]);
         Assert.Equal(0, report.OpenCount);
         Assert.Empty(report.SuspectedNovel);
         Assert.Empty(report.RedFindings);
@@ -98,6 +98,44 @@ public sealed class DescribeMigrationTests
                 node,
                 DescribeKind.Theorem,
                 "D5/S3/Weil/ReflectionLedger.mirror_reversal_spec"));
+
+        var spectralHilbert = documents["D5/S3/Weil/SpectralHilbert"].Document.Content.Items
+            .OfType<DocumentBlock.Describe>()
+            .ToDictionary(
+                static node => Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement)
+                    .Value.Value,
+                StringComparer.Ordinal);
+
+        Assert.Equal(6, spectralHilbert.Count);
+        AssertLiteratureAttestedLeanNode(
+            spectralHilbert["D5/S3/Weil/SpectralHilbert.source_pairing_eq_tsum"],
+            DescribeKind.Definition,
+            "D5/S3/Weil/SpectralHilbert.source_pairing_eq_tsum",
+            "D5/L/hedenmalm1997hilbert");
+        AssertLiteratureAttestedLeanNode(
+            spectralHilbert["D5/S3/Weil/SpectralHilbert.labeled_zeta_norm_sq"],
+            DescribeKind.Theorem,
+            "D5/S3/Weil/SpectralHilbert.labeled_zeta_norm_sq",
+            "D5/L/hedenmalm1997hilbert");
+        AssertLiteratureAttestedLeanNode(
+            spectralHilbert["D5/S3/Weil/SpectralHilbert.labeled_zeta_mem_iff"],
+            DescribeKind.Theorem,
+            "D5/S3/Weil/SpectralHilbert.labeled_zeta_mem_iff",
+            "D5/L/hedenmalm1997hilbert");
+        AssertLiteratureAttestedLeanNode(
+            spectralHilbert["D5/S3/Weil/SpectralHilbert.labeled_zeta_kernel"],
+            DescribeKind.Theorem,
+            "D5/S3/Weil/SpectralHilbert.labeled_zeta_kernel",
+            "D5/L/hedenmalm1997hilbert");
+        AssertLiteratureAttestedLeanNode(
+            spectralHilbert["D5/S3/Weil/SpectralHilbert.labeled_zeta_inner"],
+            DescribeKind.Theorem,
+            "D5/S3/Weil/SpectralHilbert.labeled_zeta_inner",
+            "D5/L/hedenmalm1997hilbert");
+        AssertRepoDerivedLeanNode(
+            spectralHilbert["D5/S3/Weil/SpectralHilbert.resonance_partner_spec"],
+            DescribeKind.Theorem,
+            "D5/S3/Weil/SpectralHilbert.resonance_partner_spec");
     }
 
     [Fact]
@@ -168,7 +206,7 @@ public sealed class DescribeMigrationTests
         Assert.Equal(string.Empty, error.ToString());
         using var document = JsonDocument.Parse(output.ToString());
         Assert.Equal("DESCRIBE-NODES", document.RootElement.GetProperty("case_id").GetString());
-        Assert.Equal(29, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
+        Assert.Equal(35, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
         Assert.Equal(0, document.RootElement.GetProperty("open_count").GetInt32());
     }
 
