@@ -26,6 +26,7 @@ public sealed class DocumentDiscoveryTests
     private const string LogDocumentPath = "Blueprint/D5/S1/Scale/Log.md";
     private const string MinkowskiModelSetDocumentPath = "Blueprint/D5/S1/Scale/MinkowskiModelSet.md";
     private const string FiniteDimensionalDocumentPath = "Blueprint/D5/S3/Quantum/FiniteDimensional.md";
+    private const string QubitWitnessesDocumentPath = "Blueprint/D5/S3/Quantum/QubitWitnesses.md";
     private const string CriticalLineDocumentPath = "Blueprint/D5/S3/Weil/CriticalLine.md";
     private const string EulerProductDocumentPath = "Blueprint/D5/S3/Weil/EulerProduct.md";
     private const string LabeledZetaDocumentPath = "Blueprint/D5/S3/Weil/LabeledZeta.md";
@@ -60,6 +61,7 @@ public sealed class DocumentDiscoveryTests
                 "D5/S1/Scale/Log",
                 "D5/S1/Scale/MinkowskiModelSet",
                 "D5/S3/Quantum/FiniteDimensional",
+                "D5/S3/Quantum/QubitWitnesses",
                 "D5/S3/Weil/CriticalLine",
                 "D5/S3/Weil/EulerProduct",
                 "D5/S3/Weil/LabeledZeta",
@@ -91,6 +93,7 @@ public sealed class DocumentDiscoveryTests
                 LogDocumentPath,
                 MinkowskiModelSetDocumentPath,
                 FiniteDimensionalDocumentPath,
+                QubitWitnessesDocumentPath,
                 CriticalLineDocumentPath,
                 EulerProductDocumentPath,
                 LabeledZetaDocumentPath,
@@ -356,6 +359,67 @@ public sealed class DocumentDiscoveryTests
             StringComparison.Ordinal);
         Assert.Contains(
             "Original numerical-certificate claim not formalized: the source atom's separate Born control group balance to 10^-16.",
+            markdown,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void QubitWitnessDocumentCarriesExactStatementsAndDiligentProvenance()
+    {
+        (string Declaration, DescribeProvenanceKind Provenance, string? Reference)[] expected =
+        [
+            ("D5/S3/Quantum/QubitWitnesses.pauli_observables_have_no_common_eigenvector",
+                DescribeProvenanceKind.LiteratureAttested,
+                "D5/L/schwinger1960unitary"),
+            ("D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product",
+                DescribeProvenanceKind.RepoDerived, null),
+            ("D5/S3/Quantum/QubitWitnesses.equal_superposition_phase_damping_certificate",
+                DescribeProvenanceKind.LiteratureAttested,
+                "D5/L/zurek2003decoherence"),
+        ];
+        var definition = DocumentDefinitions.All.Single(static item =>
+            item.Document.Header.Gid.Value == "D5/S3/Quantum/QubitWitnesses");
+        var nodes = Descendants(definition.Document.Content)
+            .OfType<DocumentBlock.Describe>()
+            .ToDictionary(
+                static node => Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement)
+                    .Value.Value,
+                StringComparer.Ordinal);
+
+        Assert.Equal(3, nodes.Count);
+        foreach (var item in expected)
+        {
+            var node = nodes[item.Declaration];
+            var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement);
+
+            Assert.Equal(DescribeKind.Theorem, node.Kind);
+            Assert.Equal(item.Provenance, node.Provenance.Kind);
+            Assert.Equal(item.Reference, node.Provenance.LiteratureReference?.Value);
+            Assert.Equal(item.Declaration, lean.Value.Value);
+            Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
+            Assert.True(lean.Value.RequireNoSorry);
+        }
+    }
+
+    [Fact]
+    public void QubitWitnessDocumentAccountsForEverySourceCertificate()
+    {
+        var definition = DocumentDefinitions.All.Single(static item =>
+            item.Document.Header.Gid.Value == "D5/S3/Quantum/QubitWitnesses");
+        var report = LeanReportFixture.ForDocuments([definition.Document]);
+        var markdown = System.Text.Encoding.UTF8.GetString(
+            CanonicalMarkdownWriter.Write(definition.Document, report).AsSpan());
+
+        Assert.Contains(
+            "Original numerical-certificate claim not formalized: the source atom's full matrix-unit relations with exact zero certificate error.",
+            markdown,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "Original numerical-certificate claims not formalized: the source atom's CHSH values 2*sqrt(2) = 2.8284 and the classical local-fiber bound 2.0.",
+            markdown,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "Original certificate coverage: the source atom's symbolic (1/2) * c0^N coherence law and fixed one-half populations are formalized exactly; the atom supplies no fixed numeric c0 or N.",
             markdown,
             StringComparison.Ordinal);
     }

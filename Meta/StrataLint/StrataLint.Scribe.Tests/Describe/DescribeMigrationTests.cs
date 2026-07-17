@@ -5,23 +5,23 @@ namespace StrataLint.Scribe.Tests;
 public sealed class DescribeMigrationTests
 {
     [Fact]
-    public void RepositoryMigrationHasFortyThreeTypedNodesAndPreservesTwentyFourFormulaSlots()
+    public void RepositoryMigrationHasFortySixTypedNodesAndPreservesTwentyFourFormulaSlots()
     {
         var root = FindRepositoryRoot();
         var report = DescribeReport.Build(
             root,
             DocumentDefinitions.All.Select(static definition => definition.Document));
 
-        Assert.Equal(43, report.NodeStats.Total);
+        Assert.Equal(46, report.NodeStats.Total);
         Assert.Equal(24, report.NodeStats.FormulaContentSlots);
         Assert.Equal(1, report.NodeStats.FormulaStatements);
-        Assert.Equal(42, report.NodeStats.LeanStatements);
+        Assert.Equal(45, report.NodeStats.LeanStatements);
         Assert.Equal(6, report.NodeStats.ByKind["definition"]);
         Assert.Equal(9, report.NodeStats.ByKind["proposition"]);
-        Assert.Equal(27, report.NodeStats.ByKind["theorem"]);
+        Assert.Equal(30, report.NodeStats.ByKind["theorem"]);
         Assert.Equal(1, report.NodeStats.ByKind["example"]);
-        Assert.Equal(24, report.NodeStats.ByProvenance["repo-derived"]);
-        Assert.Equal(19, report.NodeStats.ByProvenance["literature-attested"]);
+        Assert.Equal(25, report.NodeStats.ByProvenance["repo-derived"]);
+        Assert.Equal(21, report.NodeStats.ByProvenance["literature-attested"]);
         Assert.Equal(0, report.OpenCount);
         Assert.Empty(report.SuspectedNovel);
         Assert.Empty(report.RedFindings);
@@ -94,6 +94,35 @@ public sealed class DescribeMigrationTests
             DescribeKind.Theorem,
             "D5/S3/Quantum/FiniteDimensional.born_probability_skeleton",
             "D5/L/gleason1957measures");
+    }
+
+    [Fact]
+    public void QubitWitnessNodesUseExactTypedStatementsAndDiligentProvenance()
+    {
+        var documents = DocumentDefinitions.All
+            .ToDictionary(static item => item.Document.Header.Gid.Value, StringComparer.Ordinal);
+        var nodes = documents["D5/S3/Quantum/QubitWitnesses"].Document.Content.Items
+            .OfType<DocumentBlock.Describe>()
+            .ToDictionary(
+                static node => Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement)
+                    .Value.Value,
+                StringComparer.Ordinal);
+
+        Assert.Equal(3, nodes.Count);
+        AssertLiteratureAttestedLeanNode(
+            nodes["D5/S3/Quantum/QubitWitnesses.pauli_observables_have_no_common_eigenvector"],
+            DescribeKind.Theorem,
+            "D5/S3/Quantum/QubitWitnesses.pauli_observables_have_no_common_eigenvector",
+            "D5/L/schwinger1960unitary");
+        AssertRepoDerivedLeanNode(
+            nodes["D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product"],
+            DescribeKind.Theorem,
+            "D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product");
+        AssertLiteratureAttestedLeanNode(
+            nodes["D5/S3/Quantum/QubitWitnesses.equal_superposition_phase_damping_certificate"],
+            DescribeKind.Theorem,
+            "D5/S3/Quantum/QubitWitnesses.equal_superposition_phase_damping_certificate",
+            "D5/L/zurek2003decoherence");
     }
 
     [Fact]
@@ -281,7 +310,7 @@ public sealed class DescribeMigrationTests
         Assert.Equal(string.Empty, error.ToString());
         using var document = JsonDocument.Parse(output.ToString());
         Assert.Equal("DESCRIBE-NODES", document.RootElement.GetProperty("case_id").GetString());
-        Assert.Equal(43, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
+        Assert.Equal(46, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
         Assert.Equal(0, document.RootElement.GetProperty("open_count").GetInt32());
     }
 
