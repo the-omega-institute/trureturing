@@ -25,7 +25,7 @@ internal sealed class FiniteDimensionalDocument : IScribeDocumentDefinition
                     "D5/S3/Quantum/FiniteDimensional.qubit_weyl_star")),
                 DescribeProvenance.LiteratureAttested(Schwinger),
                 Blocks(Paragraph(Text(
-                    "The standard two-dimensional Pauli X and Z matrices anticommute, are self-adjoint, and square to the identity. This is only the d = 2 Weyl specialization: it does not identify an arbitrary observer window with a full matrix algebra, prove prime-power tensor factorization or a general qudit relation, or derive the structure from a classical ontology.")))),
+                    "The standard two-dimensional Pauli X and Z matrices anticommute, are self-adjoint, and square to the identity. This is only the d = 2 Weyl specialization: it does not identify an arbitrary observer window with a full matrix algebra, prove prime-power tensor factorization or a general qudit relation, or derive the structure from a classical ontology. Original numerical-certificate claim not formalized: the source atom's matrix-unit relations with exact zero certificate error.")))),
             new DocumentBlock.Describe(
                 DescribeId.Create("the-qubit-matrix-algebra-has-no-complex-algebra-character"),
                 DescribeKind.Theorem,
@@ -47,5 +47,5 @@ internal sealed class FiniteDimensionalDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(
                     Text("For a positive semidefinite finite complex matrix rho with trace one, P maps to trace(rho P), is normalized at the identity, is additive, and is nonnegative for every self-adjoint idempotent P. Positivity follows from the compression P rho P* and does not assume that rho commutes with P. "),
                     Ref("D5/L/born1926zur"),
-                    Text(" records the historical Born context only. The declaration proves no Gleason representation or uniqueness theorem, no rank-one pure-state modulus-square reduction, no ledger-derived noncontextuality, no harmonic or quartic numerical certificate, and no forced classical-to-quantum origin.")))))));
+                    Text(" records the historical Born context only. The declaration proves no Gleason representation or uniqueness theorem, no rank-one pure-state modulus-square reduction, no ledger-derived noncontextuality, no harmonic or quartic numerical certificate, and no forced classical-to-quantum origin. Original numerical-certificate claim not formalized: the source atom's separate Born control group balance to 10^-16.")))))));
 }

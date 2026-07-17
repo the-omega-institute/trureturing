@@ -335,6 +335,25 @@ public sealed class DocumentDiscoveryTests
         }
     }
 
+    [Fact]
+    public void QuantumSkeletonDocumentExplicitlyDisclosesUnformalizedNumericalCertificates()
+    {
+        var definition = DocumentDefinitions.All.Single(static item =>
+            item.Document.Header.Gid.Value == "D5/S3/Quantum/FiniteDimensional");
+        var report = LeanReportFixture.ForDocuments([definition.Document]);
+        var markdown = System.Text.Encoding.UTF8.GetString(
+            CanonicalMarkdownWriter.Write(definition.Document, report).AsSpan());
+
+        Assert.Contains(
+            "Original numerical-certificate claim not formalized: the source atom's matrix-unit relations with exact zero certificate error.",
+            markdown,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "Original numerical-certificate claim not formalized: the source atom's separate Born control group balance to 10^-16.",
+            markdown,
+            StringComparison.Ordinal);
+    }
+
     private static string FindRepositoryRoot()
     {
         for (var current = new DirectoryInfo(AppContext.BaseDirectory);
