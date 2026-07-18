@@ -35,6 +35,9 @@ public sealed class DocumentDiscoveryTests
     private const string ReflectionLedgerDocumentPath = "Blueprint/D5/S3/Weil/ReflectionLedger.md";
     private const string SpectralDynamicsDocumentPath = "Blueprint/D5/S3/Weil/SpectralDynamics.md";
     private const string SpectralHilbertDocumentPath = "Blueprint/D5/S3/Weil/SpectralHilbert.md";
+    private const string CompletedZetaDocumentPath = "Blueprint/D5/S3/Zeros/CompletedZeta.md";
+    private const string EulerWindowsDocumentPath = "Blueprint/D5/S3/Zeros/EulerWindows.md";
+    private const string SpectralShiftDocumentPath = "Blueprint/D5/S3/Zeros/SpectralShift.md";
     private const string ZeroGeometryDocumentPath = "Blueprint/D5/S3/Zeros/ZeroGeometry.md";
     private const string PhaseSourcePath = "Blueprint/D5/S1/Phase/Basic.scribe.cs";
 
@@ -73,6 +76,9 @@ public sealed class DocumentDiscoveryTests
                 "D5/S3/Weil/ReflectionLedger",
                 "D5/S3/Weil/SpectralDynamics",
                 "D5/S3/Weil/SpectralHilbert",
+                "D5/S3/Zeros/CompletedZeta",
+                "D5/S3/Zeros/EulerWindows",
+                "D5/S3/Zeros/SpectralShift",
                 "D5/S3/Zeros/ZeroGeometry",
             ],
             DocumentDefinitions.All.Select(static item => item.Document.Header.Gid.Value));
@@ -108,6 +114,9 @@ public sealed class DocumentDiscoveryTests
                 ReflectionLedgerDocumentPath,
                 SpectralDynamicsDocumentPath,
                 SpectralHilbertDocumentPath,
+                CompletedZetaDocumentPath,
+                EulerWindowsDocumentPath,
+                SpectralShiftDocumentPath,
                 ZeroGeometryDocumentPath,
             ],
             DocumentDefinitions.All.Select(static item => item.RelativePath.Value));
