@@ -2,7 +2,7 @@
 
 ## Theorem: Analytic continuations of one local germ are unique
 
-Provenance: `literature-attested` via `D5/L/jaiswar2021identity` (`lit/jaiswar2021identity`)
+Provenance: `literature-attested` via `D5/L/Zeros/jaiswar2021identity` (`lit/jaiswar2021identity`)
 
 Statement: `D5/S3/Zeros/CompletedZeta.analytic_continuation_unique` `✓ std3`
 
@@ -10,7 +10,7 @@ Two functions analytic on neighborhoods of a supplied preconnected set agree thr
 
 ## Definition: The completed reading is mathlib's classical completed zeta
 
-Provenance: `literature-attested` via `D5/L/coffey2007theta` (`lit/coffey2007theta`)
+Provenance: `literature-attested` via `D5/L/Zeros/coffey2007theta` (`lit/coffey2007theta`)
 
 Statement: `D5/S3/Zeros/CompletedZeta.completedZetaReading` `✓ std3`
 
@@ -18,7 +18,7 @@ The definition is an alias for mathlib's completed Riemann zeta. It does not def
 
 ## Definition: The xi reading totalizes the pole-removed completion
 
-Provenance: `literature-attested` via `D5/L/coffey2007theta` (`lit/coffey2007theta`)
+Provenance: `literature-attested` via `D5/L/Zeros/coffey2007theta` (`lit/coffey2007theta`)
 
 Statement: `D5/S3/Zeros/CompletedZeta.xiReading` `✓ std3`
 
@@ -26,7 +26,7 @@ The entire reading is defined through mathlib's pole-removed completed zeta, inc
 
 ## Theorem: Away from the endpoints xi has the classical product form
 
-Provenance: `literature-attested` via `D5/L/coffey2007theta` (`lit/coffey2007theta`)
+Provenance: `literature-attested` via `D5/L/Zeros/coffey2007theta` (`lit/coffey2007theta`)
 
 Statement: `D5/S3/Zeros/CompletedZeta.xi_reading_eq_completed_zeta` `✓ std3`
 
@@ -34,7 +34,7 @@ When s is neither zero nor one, the totalized xi reading equals one half times s
 
 ## Theorem: The xi reading is entire
 
-Provenance: `literature-attested` via `D5/L/coffey2007theta` (`lit/coffey2007theta`)
+Provenance: `literature-attested` via `D5/L/Zeros/coffey2007theta` (`lit/coffey2007theta`)
 
 Statement: `D5/S3/Zeros/CompletedZeta.xi_reading_differentiable` `✓ std3`
 
@@ -42,7 +42,7 @@ The totalized xi reading is complex differentiable at every complex input. The p
 
 ## Theorem: The xi reading is reflection invariant
 
-Provenance: `literature-attested` via `D5/L/coffey2007theta` (`lit/coffey2007theta`)
+Provenance: `literature-attested` via `D5/L/Zeros/coffey2007theta` (`lit/coffey2007theta`)
 
 Statement: `D5/S3/Zeros/CompletedZeta.xi_reading_reflection` `✓ std3`
 

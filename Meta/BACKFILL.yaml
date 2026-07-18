@@ -7320,7 +7320,7 @@ sources:
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-c9dcf7410fb570f5a8db051d1daf12f18b74c22762cb1ead7000789ad8f30739
         ast_path: theorem/22.2
@@ -7459,13 +7459,13 @@ sources:
               target_sha256: sha256:51e9ac062d8281e341170f2059134974fa4f755b4e88e8ff9bb56f7bc5b6d2cc
           scribe:
             - gid: D5/S3/Zeros/CompletedZeta.analytic_continuation_unique
-              definition_sha256: sha256:50c1f7d60d949d2532ffc60383a5ea61c5fdd1acd5ddb26d4b38b3323a3e61b0
-              emission_sha256: sha256:7e1f2cf2c3cf87bc5fb019cc78fd0660350b7474cb42b9a54ec5f2197def6a42
+              definition_sha256: sha256:1688cdd731024a44ec7f1de1ba8649793245068fbbe3b9d193db6df3ad38a19c
+              emission_sha256: sha256:c6ff28543fb9c6816806c4b55a03ceafb0de4262a547912cbb86dd529d6d9fff
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-61364dcfb96879a529a59450892412c60c668fa0cb3dc0438a59318cbc29ca71
         ast_path: theorem/23.4
@@ -7506,14 +7506,14 @@ sources:
               target_sha256: sha256:51e9ac062d8281e341170f2059134974fa4f755b4e88e8ff9bb56f7bc5b6d2cc
           scribe:
             - gid: D5/S3/Zeros/CompletedZeta.completedZetaReading
-              definition_sha256: sha256:50c1f7d60d949d2532ffc60383a5ea61c5fdd1acd5ddb26d4b38b3323a3e61b0
-              emission_sha256: sha256:7e1f2cf2c3cf87bc5fb019cc78fd0660350b7474cb42b9a54ec5f2197def6a42
+              definition_sha256: sha256:1688cdd731024a44ec7f1de1ba8649793245068fbbe3b9d193db6df3ad38a19c
+              emission_sha256: sha256:c6ff28543fb9c6816806c4b55a03ceafb0de4262a547912cbb86dd529d6d9fff
             - gid: D5/S3/Zeros/CompletedZeta.xiReading
-              definition_sha256: sha256:50c1f7d60d949d2532ffc60383a5ea61c5fdd1acd5ddb26d4b38b3323a3e61b0
-              emission_sha256: sha256:7e1f2cf2c3cf87bc5fb019cc78fd0660350b7474cb42b9a54ec5f2197def6a42
+              definition_sha256: sha256:1688cdd731024a44ec7f1de1ba8649793245068fbbe3b9d193db6df3ad38a19c
+              emission_sha256: sha256:c6ff28543fb9c6816806c4b55a03ceafb0de4262a547912cbb86dd529d6d9fff
             - gid: D5/S3/Zeros/CompletedZeta.xi_reading_eq_completed_zeta
-              definition_sha256: sha256:50c1f7d60d949d2532ffc60383a5ea61c5fdd1acd5ddb26d4b38b3323a3e61b0
-              emission_sha256: sha256:7e1f2cf2c3cf87bc5fb019cc78fd0660350b7474cb42b9a54ec5f2197def6a42
+              definition_sha256: sha256:1688cdd731024a44ec7f1de1ba8649793245068fbbe3b9d193db6df3ad38a19c
+              emission_sha256: sha256:c6ff28543fb9c6816806c4b55a03ceafb0de4262a547912cbb86dd529d6d9fff
           unresolved_subitems:
             - pzg-heat-trace-to-completed-zeta-analytic-continuation
             - displayed-xi-product-form-at-zero-and-one
@@ -7541,11 +7541,11 @@ sources:
               target_sha256: sha256:51e9ac062d8281e341170f2059134974fa4f755b4e88e8ff9bb56f7bc5b6d2cc
           scribe:
             - gid: D5/S3/Zeros/CompletedZeta.xi_reading_differentiable
-              definition_sha256: sha256:50c1f7d60d949d2532ffc60383a5ea61c5fdd1acd5ddb26d4b38b3323a3e61b0
-              emission_sha256: sha256:7e1f2cf2c3cf87bc5fb019cc78fd0660350b7474cb42b9a54ec5f2197def6a42
+              definition_sha256: sha256:1688cdd731024a44ec7f1de1ba8649793245068fbbe3b9d193db6df3ad38a19c
+              emission_sha256: sha256:c6ff28543fb9c6816806c4b55a03ceafb0de4262a547912cbb86dd529d6d9fff
             - gid: D5/S3/Zeros/CompletedZeta.xi_reading_reflection
-              definition_sha256: sha256:50c1f7d60d949d2532ffc60383a5ea61c5fdd1acd5ddb26d4b38b3323a3e61b0
-              emission_sha256: sha256:7e1f2cf2c3cf87bc5fb019cc78fd0660350b7474cb42b9a54ec5f2197def6a42
+              definition_sha256: sha256:1688cdd731024a44ec7f1de1ba8649793245068fbbe3b9d193db6df3ad38a19c
+              emission_sha256: sha256:c6ff28543fb9c6816806c4b55a03ceafb0de4262a547912cbb86dd529d6d9fff
           unresolved_subitems:
             - pzg-completed-reading-identification
             - jacobi-theta-poisson-mellin-derivation
@@ -7734,8 +7734,8 @@ sources:
               target_sha256: sha256:51e9ac062d8281e341170f2059134974fa4f755b4e88e8ff9bb56f7bc5b6d2cc
           scribe:
             - gid: D5/S3/Zeros/CompletedZeta.zero_quartet_scaling_spec
-              definition_sha256: sha256:50c1f7d60d949d2532ffc60383a5ea61c5fdd1acd5ddb26d4b38b3323a3e61b0
-              emission_sha256: sha256:7e1f2cf2c3cf87bc5fb019cc78fd0660350b7474cb42b9a54ec5f2197def6a42
+              definition_sha256: sha256:1688cdd731024a44ec7f1de1ba8649793245068fbbe3b9d193db6df3ad38a19c
+              emission_sha256: sha256:c6ff28543fb9c6816806c4b55a03ceafb0de4262a547912cbb86dd529d6d9fff
           unresolved_subitems:
             - zero-data-symmetry-fields-assume-source-conclusion
             - arbitrary-completed-reading-to-zero-data-domain-bridge

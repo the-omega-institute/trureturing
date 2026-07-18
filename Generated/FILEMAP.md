@@ -86,6 +86,14 @@ none --declares--> [Library/**/*.yaml | data]
 [Library/**/*.yaml | data] --consumed-by--> AnchorReferenceRule
 [Library/**/*.yaml | data] --verified-by--> SL-017, YamlSubsetParser
 
+none --declares--> [Library/MAP.md | ledger]
+[Library/MAP.md | ledger] --consumed-by--> developer
+[Library/MAP.md | ledger] --verified-by--> SL-003
+
+none --declares--> [Library/Zeros/*.md | data]
+[Library/Zeros/*.md | data] --consumed-by--> DescribeRepositoryValidator, ScribeEmitter
+[Library/Zeros/*.md | data] --verified-by--> LibraryNoteCatalog, emit-check
+
 none --declares--> [Library/notes/*.md | data]
 [Library/notes/*.md | data] --consumed-by--> DescribeRepositoryValidator, ScribeEmitter
 [Library/notes/*.md | data] --verified-by--> LibraryNoteCatalog, emit-check

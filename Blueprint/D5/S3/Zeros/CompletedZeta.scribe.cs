@@ -5,9 +5,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Zeros;
 internal sealed class CompletedZetaDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef IdentityTheorem =
-        LibraryNoteRef.Create("D5/L/jaiswar2021identity");
+        LibraryNoteRef.Create("D5/L/Zeros/jaiswar2021identity");
     private static readonly LibraryNoteRef CoffeyXi =
-        LibraryNoteRef.Create("D5/L/coffey2007theta");
+        LibraryNoteRef.Create("D5/L/Zeros/coffey2007theta");
 
     private static LeanDeclarationRef LeanDefinition(string value) =>
         LeanDeclarationRef.Create(

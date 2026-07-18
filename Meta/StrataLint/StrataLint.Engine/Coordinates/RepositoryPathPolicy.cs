@@ -171,6 +171,15 @@ internal static partial class RepositoryPathPolicy
 
     private static bool AllowsTarget(Target target, ValidatedPolicy policy)
     {
+        if (target is Target.Library library)
+        {
+            var libraryCoordinates = library.Coordinates.Values;
+            return libraryCoordinates.Length == 1
+                || libraryCoordinates is [var bucket, _]
+                && DomainId.TryCreate(bucket, out var domain)
+                && policy.Domains.ContainsKey(domain);
+        }
+
         if (target is not Target.Evidence evidence)
         {
             return true;
