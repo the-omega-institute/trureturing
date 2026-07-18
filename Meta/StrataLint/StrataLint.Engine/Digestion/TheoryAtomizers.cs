@@ -109,6 +109,12 @@ internal static class GictAtomizer
     private static readonly Regex UnknownNumberedClaimPattern = new(
         "^\\*\\*(?<kind>\\p{L}+)\\s*[0-9]+\\.[0-9]+",
         RegexOptions.CultureInvariant);
+    private static readonly Regex AppendixClaimPattern = new(
+        "^\\*\\*(?<number>E\\.[0-9]+)\\s+[^\\r\\n*]+\\*\\*",
+        RegexOptions.CultureInvariant);
+    private static readonly Regex LineagePattern = new(
+        "^>\\s*\\*\\*谱系\\*\\*:",
+        RegexOptions.CultureInvariant);
     private static readonly Regex HeartsPattern = new(
         "^\\*\\*心脏 O-5.*O-6",
         RegexOptions.CultureInvariant);
@@ -124,6 +130,12 @@ internal static class GictAtomizer
             return Kind(match.Groups["kind"].Value) + "/" + match.Groups["number"].Value;
         }
 
+        var appendix = AppendixClaimPattern.Match(paragraph);
+        if (appendix.Success)
+        {
+            return "appendix/" + appendix.Groups["number"].Value;
+        }
+
         var unknown = UnknownNumberedClaimPattern.Match(paragraph);
         if (unknown.Success)
         {
@@ -131,7 +143,12 @@ internal static class GictAtomizer
                 $"unknown GICT numbered claim kind {unknown.Groups["kind"].Value}");
         }
 
-        return HeartsPattern.IsMatch(paragraph) ? "open/O-5-O-6" : null;
+        if (HeartsPattern.IsMatch(paragraph))
+        {
+            return "open/O-5-O-6";
+        }
+
+        return LineagePattern.IsMatch(paragraph) ? "metadata/lineage" : null;
     }
 
     private static string Kind(string value) => value switch
@@ -276,9 +293,15 @@ internal static class PzgAtomizer
     private static readonly Regex OpenPattern = new(
         "^\\*\\*(?<id>O-[0-9]+)\\*\\*",
         RegexOptions.CultureInvariant);
+    private static readonly Regex SupplementHeadingPattern = new(
+        "^PZG_BEDC 增补册:第\\s*(?<version>[0-9]+)\\s*版",
+        RegexOptions.CultureInvariant);
+    private static readonly Regex RemarkHeadingPattern = new(
+        "^评注\\s+(?<range>[0-9]+\\.[0-9]+(?:[–—-][0-9]+\\.[0-9]+)?)",
+        RegexOptions.CultureInvariant);
 
     internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes) =>
-        MarkdownAstAtomizer.Atomize(bytes, Identify);
+        MarkdownAstAtomizer.Atomize(bytes, Identify, identifyHeading: IdentifyHeading);
 
     private static string? Identify(string paragraph)
     {
@@ -308,6 +331,37 @@ internal static class PzgAtomizer
         }
 
         return null;
+    }
+
+    private static string? IdentifyHeading(string heading)
+    {
+        var supplement = SupplementHeadingPattern.Match(heading);
+        if (supplement.Success)
+        {
+            return "metadata/supplement/" + supplement.Groups["version"].Value;
+        }
+
+        var remark = RemarkHeadingPattern.Match(heading);
+        if (remark.Success)
+        {
+            return "remark/" + remark.Groups["range"].Value
+                .Replace('–', '-')
+                .Replace('—', '-');
+        }
+
+        if (heading.StartsWith("判负册", StringComparison.Ordinal))
+        {
+            return "negative-register/batch";
+        }
+
+        if (heading.StartsWith("候查清单", StringComparison.Ordinal))
+        {
+            return "research-queue/batch";
+        }
+
+        return heading.StartsWith("本批收束", StringComparison.Ordinal)
+            ? "verdict/batch"
+            : null;
     }
 
     private static string Kind(string value) => value switch
@@ -343,7 +397,8 @@ internal static class MarkdownAstAtomizer
     internal static AtomizedTheoryDocument Atomize(
         ReadOnlySpan<byte> bytes,
         Func<string, string?> identify,
-        Func<string, string?>? identifyFirstTableCell = null)
+        Func<string, string?>? identifyFirstTableCell = null,
+        Func<string, string?>? identifyHeading = null)
     {
         var raw = bytes.ToArray();
         var text = StrictUtf8.GetString(raw);
@@ -355,6 +410,17 @@ internal static class MarkdownAstAtomizer
         {
             if (block is MarkdownHeading heading)
             {
+                var headingAstPath = identifyHeading?.Invoke(heading.Text);
+                if (headingAstPath is not null)
+                {
+                    candidates.Add(new Candidate(
+                        headingAstPath,
+                        heading.Start,
+                        text.Length,
+                        headings.ToImmutableArray(),
+                        Extend: true));
+                }
+
                 while (headings.Count > 0 && headings[^1].Level >= heading.Level)
                 {
                     headings.RemoveAt(headings.Count - 1);
