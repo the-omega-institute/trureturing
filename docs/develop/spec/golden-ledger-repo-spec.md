@@ -398,19 +398,19 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 **继任预案**:`docs/SUCCESSION.md`——维护权移交规则、密钥托管、"若本库十年无人维护"之自动开放遗嘱(归档触发条件)——**理论要活得比我们久,就把这句话写进制度。**
 
 ## 11.27 理论勘误事件类(TheoryErratum)
-**触发与边界**:机器发现一条**已摄入**且有 `cas_ref` 收据的 claim 存在数学错误、内部矛盾、空洞命题或与已冻结 Lean 真值冲突之一,始得归本类。四项排除各归既有路径:风格措辞不是理论错;普通未证猜想照常以 `open` 消化;外部文献勘误走 L 平面路径;harness/Lean 自身证明洞走既有后代撤销路径。
+**触发与边界**:发现一条**已摄入**且有 `cas_ref` 收据的 claim 存在数学错误、内部矛盾、空洞性问题或与已冻结 Lean 真值冲突之一,始得归本类;此处“发现”不冒充现役自动分类器。四项排除各归既有路径:风格措辞不是理论错;普通未证猜想照常以 `open` 消化;外部文献勘误走 L 平面路径;harness/Lean 自身证明洞走既有后代撤销路径。须分清两层状态:全局 truth DAG 为 `closed/open/tail/semantic` 四态;`BACKFILL.status.truth` 仅为 `closed/tail/open` 三态投影,全局 `semantic` 在 BACKFILL 投影为 `open`,不得把 `semantic` 写成 BACKFILL 第四值。〔守护:**硬+评审**·`cas_ref` 的 CAS 寻址与 `atom_id` 语法由 SL-016 机器判;四类触发、排除项及忠实分类由评审守护〕
 
-**立案**:以 `cas_ref + atom_id` 唯一定址,案号进既有尸检/工单块,依第 1 条绝不静默。本类只定义既有载体的处置规范:零新状态、零新 schema、零新 workflow、零新服务。
+**立案**:以 `cas_ref + atom_id` 唯一定址 claim;规范性案号必须经 `BACKFILL.ticket_index` 的 `{case_id, gid}` 映射落到 `D5/X_Frontier/*` 中同 `case_id` 的现役 `TASK`,依第 1 条绝不静默。重复发现同一 `cas_ref + atom_id` 时复用这一个案件,只追加证据、尸检或处置记录,不得另立平行案。本类只定义既有载体的处置规范:零新状态、零新 schema、零新 workflow、零新服务。〔守护:**硬+评审**·`atom_id` 唯一性、`ticket_index` 结构及其对 X_Frontier TASK 的覆盖由 SL-016 机器判;“同 claim 复用唯一案件”由评审守护〕
 
-**证据门**:宣称"claim 被反驳"的必要条件是三环闭合:**CAS 原句 → 独立忠实 echo(复核席逐字对照原文)→ 可重放反证**。可重放证书仅限三类:(a) Lean 在无新增私公理下证明 `¬claim` 或证明其与冻结声明冲突;(b) 精确算术、区间或有限反例经独立 checker 复核;(c) 空洞性证明——该命题由弱前提平凡成立。三环未闭合者不定错:证据不足则为带可证伪条件的 `open` 异常;语义不能消歧则归 `semantic`。叙事、多模型共识或浮点异常均不足以称理论错;O5 先例仅证重做者之错,不证理论之错。
+**证据门**:宣称“原 claim 被反驳”或“其非平凡性主张被反驳”的必要条件是三环闭合:**CAS 原句 → 独立忠实 echo(复核席逐字对照原文)→ 可重放反证**。可重放证书仅限三类:(a) Lean 证明 `¬claim` 或证明其与冻结声明冲突,且 axiom 闭包必须满足仓库绝对白名单 `axiom closure ⊆ {propext, Classical.choice, Quot.sound}`;(b) 精确算术、区间或有限反例经独立 checker 复核;(c) 空洞性证明——claim 为真但由弱前提平凡成立,故证书反驳的是其**非平凡性主张**,绝不得冒充 `¬claim`。每个 Lean witness 的陈述必须自描述所反驳的对象:是原 claim、与冻结声明的相容性,还是指定的非平凡性主张。三环未闭合者不定错:证据不足则对应案件 TASK 保持 `open`;语义不能消歧则全局节点归 `semantic`、BACKFILL 仍投影为 `status.truth: open`。叙事、多模型共识或浮点异常均不足以称理论错;O5 先例仅证重做者之错,不证理论之错。〔守护:**硬+评审**·Lean witness 的 axiom 闭包由 Lean inspector/SL-020 依标准三公理白名单机器判;触发分类、忠实 echo、三类证书判别及空洞性所反驳对象的忠实性由评审守护〕
 
-**结算**:反证工件以 Lean 冻结为**正真值节点**,内容须明示为"claim X 之否定/反例/空洞性",使负知识单调入 DAG。`BACKFILL` 中原 claim 以 `coverage(refutes, witness GID)` 语义指向该反证工件;`closed` 只表示**处置闭合**,不表示原 claim 为真,不得增第五态。
+**结算**:证书最终以 Lean witness 冻结为**正真值节点**;其声明按证据门自描述“claim X 之否定/反例”或“claim X 所附非平凡性主张之反驳”,使负知识单调入 DAG。`BACKFILL` 中原 claim 只用现役 coverage 语法指向该 Lean witness GID:`coverage_gids` 列出 GID,且 `receipts.coverage[].gid` 以同一 GID 留覆盖收据;现役 schema 没有 `refutes` 字段,反驳语义只由 witness 的 Lean 陈述内容表达。`BACKFILL.status.truth: closed` 只表示覆盖与处置投影闭合,不表示原 claim 为真;**判真唯 Lean**,harness 只判收据存在性与路由合规。若反证链接误配,依 11.14 判词可诉追加勘正并重开原 claim 的案件 TASK,不改写旧 CAS。〔守护:**硬+评审**·`coverage_gids`、`receipts.coverage[].gid`、收据哈希及投影状态由 SL-016 机器判,Lean 声明真值由 kernel 判;链接是否确实反驳目标及 11.14 勘正归评审守护〕
 
-**反馈闭环**:自动 issue 必携 `cas_ref`、`atom_id` 与证据 GID 通知理论作者;**送达收据即结清通知义务**,送达失败则保持 `open` 并重试。作者回应绝非结案前置;作者修订投卷仍走既有 `theory-ingest`,新 CAS 原子 supersedes 旧引用,本库不等待。
+**反馈闭环**:立 issue、携 `cas_ref`、`atom_id` 与证据 GID 通知理论作者、取得送达收据及失败重试,均为本类的**规范性动作**;**当前未机器执法,由评审守护,机器化待升提律**。送达收据结清的只是通知义务,作者回应绝非结案前置;送达失败时 X_Frontier 工单挂 `open` 并重试。作者修订投卷仍走既有 `theory-ingest`:新 atom 按现役 ingest 入账,旧 CAS 与旧案均保留,修订历史归 git;现役 ingest 不投影 `supersedes` 边,故不得冒领该关系。〔守护:**评审**·issue 创建、通知内容、送达收据、重试、作者修订路由及“不声称 supersedes”当前全由评审守护,专用机器执法待升提〕
 
-**权属与裁决**:agent 禁改理论卷正文,修文唯作者;记错义务归发现者/消化层,判真唯 Lean。理论与冻结真值冲突由 Lean/harness 裁决;若反查证实**库内**节点证明有洞,则走既有"勘误 ≠ 解冻"之后代撤销路径。
+**权属与裁决**:agent 禁改理论卷正文,修文唯作者;记错义务归发现者/消化层。**判真唯 Lean**;harness 不裁决数学真假,只裁决收据存在性与路由合规。若 Lean witness 证明理论 claim 与冻结真值冲突,按本类结算;若反查证实**库内**节点证明有洞,则走既有“勘误 ≠ 解冻”之后代撤销路径。〔守护:**硬+评审**·Lean kernel 与现役 harness 各守其机器可判边界;agent 禁改理论卷、作者修文权及处置归类由评审守护〕
 
-**升提律**:TheoryErratum 专用 schema/lint 规则仅在第二个同构实例出现,或已有路由被证实失效时再立;依第 8 条不预建空壳。
+**升提律**:TheoryErratum 专用 schema/lint 规则仅在第二个同构实例出现,或已有路由被证实失效时再立;届时再机器化触发分类、唯一案件复用、issue/送达/重试等尚由评审守护的规范性动作,依第 8 条不预建空壳。〔守护:**元准则+评审**·第二同构实例或路由失效是升提前提;当前不冒领专用 schema/lint〕
 
 # 总纲
 
@@ -469,3 +469,4 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 - **v7.13 R3**(2026-07-17):`OBSERVER-ATOMIZER-P0` 以零 OBSERVER 账本消费注册窄域 `observer-v1`,并安装 whole-source coarse 退役的身份保全规则;本 epoch 只定义类与红绿 fixture,`gict-v1`/`pzg-v1` 语义与 OBSERVER 账本实例均不变。
 - **v7.13 R4**(2026-07-17):`OBSERVER-QUANTUM` 从误配 `gict-v1` 的 whole-source fallback 迁至窄域 `observer-v1`:31 个语义段落 byte-exact 切分并全入 residual;原粗 atom 经 adapter-replacement stale 流程退役而 CAS 原文不删。`gict-v1`/`pzg-v1` 保持逐字语义,registry 未平台化。
 - **v7.13 R5**(2026-07-18):`THEORY-ERRATUM` 以六席收敛定义理论勘误事件类:仅触发于已摄入且有 CAS 收据的四类 claim 问题;以原句—独立 echo—可重放反证三环为定错必要门,将否定/反例/空洞性作为 Lean 正真值节点冻结,`closed` 仅表处置闭合;通知以送达收据结清,作者回应非前置,修卷唯作者并走既有 ingest。本轮只立 spec,零新状态/schema/workflow/服务;专用 schema/lint 依第 8 条延至第二个同构实例或路由失效。
+- **v7.13 R6**(2026-07-18):PR #204 architecture/quality/tests 三席一致 reject→fix:重写 `THEORY-ERRATUM` 为 BACKFILL.ticket_index→X_Frontier TASK、现役 coverage→Lean witness、标准三公理绝对白名单与四态/三态诚实分栏,勘正空洞性、重复案、误配重开、修卷入账及裁决权,并将 issue/送达/重试和专用规则如实留在评审守护与升提律。
