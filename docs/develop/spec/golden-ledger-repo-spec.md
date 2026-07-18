@@ -67,7 +67,7 @@ golden-ledger/
 │       └── S3/ S4/ …                                # 各前沿镜像其地层
 ├── Blueprint/ (镜像 S*/X_*)   Evidence/ (镜像 + kernels/ + experiments/ + values.json)
 ├── Chronicle/<YYYY>/<MM>/<DD>-<slug>.md  (+ INDEX.md 由 CI 生成, LEGACY.md 旧评注映射)
-├── Library/{queries.yaml, anchors.bib, notes/<bibkey>.md, <Domain>/<bibkey>.md}
+├── Library/{queries.yaml, anchors.bib, MAP.md, notes/<bibkey>.md, <Domain>/<bibkey>.md}
 ├── Papers/{recipes/, frozen/<paper-id>/}(build/ 不入库)
 ├── Meta/{StrataLint(含 split/papergen 等子命令位), domains.yaml, registry.yaml, BACKFILL.yaml}
 ├── agents/{CONTEXT.md, scout.md…gate.md, theorist.md, echo-template.md, verdict-template.md}
@@ -429,6 +429,7 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 
 # CHANGELOG(原位演进史;只追加)
 
+- **v7.13 R3**(2026-07-18):L 平面首次容量压力按 2.3 只裂不迁:根桶达到 12 后新增的两篇 Zeros 文献进入已登记的 `Library/Zeros/` 兄弟桶,旧 `D5/L/<bibkey>` 地址全数保留;L 双射扩展为受控 `<Domain>` 两段路径,route、typed ref、跨桶 catalog(bibkey 全局唯一)、FILEMAP 与 `Library/MAP.md` 同步执法。
 - **v7.13 R2**(2026-07-18):L 平面容量裂桶 P0 先利器、零实例:双射与 route 扩展为已登记 `<Domain>` 的两段路径,typed ref、跨桶 catalog 与 bibkey 全局唯一性同步执法;FILEMAP 以 `Library/*/*.md` 覆盖根桶及受控疆域桶 note,并将分裂史 `Library/MAP.md` 独立归为 ledger;本轮不新增、不迁移任何 Library note,实际裂桶留后续数据 PR 由升级后的 base judge 判定。
 - **v7.13 R1**(2026-07-16):月度承载力器落地:`clean-lanes` 以 dev 祖先+全 status 净+执行前身份重验清理 merged worktree,以 exact old-OID 清 orphan `harness/*`,并分类同仓 detached/断链/gitless judge snapshot,默认全程 dry-run;Lean pair producer 以 inspector+源树+钉版配置内容地址判等,等价只产一次并留双侧 provenance,不等即双产;preflight 显式去重已跑 engineering,shared/local gate 以 JSONL 消费并汇总分段 timing。admission、exit、SL-022 与 C0 ceremony 未减未改。
 - **v7.12 R10**(2026-07-16):`RESIDENCE-EPOCH` P2 由 base-owned comparator 消费两项 P1 custody plan 各一次,五个精确旧路径加入 bootstrap exclusion 而 matcher 零漂移;四份 canonical case 与 values kernel 参数以 100% rename 迁至顶层 `Golden/`,FILEMAP 居所账闭合为零。`GoldenCorpus.cs` 的合成 registry 实例同时外置为 strict-loaded `Golden/fixture-registry.yaml`;TOWER/C0 corpus、values attestation、generated FILEMAP 与全部实引用重发射,certificate/Frozen ledger 仍留原 `kind=ledger` 保护位。

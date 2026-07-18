@@ -91,7 +91,7 @@ public sealed class LibraryNoteTests
             {
                 var error = Assert.Throws<FormatException>(() => LibraryNoteCatalog.Load(root));
                 Assert.Contains("duplicate DOI", error.Message, StringComparison.Ordinal);
-            });
+        });
     }
 
     [Fact]
