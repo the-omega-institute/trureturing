@@ -5,23 +5,23 @@ namespace StrataLint.Scribe.Tests;
 public sealed class DescribeMigrationTests
 {
     [Fact]
-    public void RepositoryMigrationHasSeventyTwoTypedNodesAndPreservesTwentyFourFormulaSlots()
+    public void RepositoryMigrationHasEightyThreeTypedNodesAndPreservesTwentyFourFormulaSlots()
     {
         var root = FindRepositoryRoot();
         var report = DescribeReport.Build(
             root,
             DocumentDefinitions.All.Select(static definition => definition.Document));
 
-        Assert.Equal(72, report.NodeStats.Total);
+        Assert.Equal(83, report.NodeStats.Total);
         Assert.Equal(24, report.NodeStats.FormulaContentSlots);
-        Assert.Equal(1, report.NodeStats.FormulaStatements);
+        Assert.Equal(12, report.NodeStats.FormulaStatements);
         Assert.Equal(71, report.NodeStats.LeanStatements);
         Assert.Equal(7, report.NodeStats.ByKind["definition"]);
         Assert.Equal(9, report.NodeStats.ByKind["proposition"]);
         Assert.Equal(36, report.NodeStats.ByKind["theorem"]);
         Assert.Equal(1, report.NodeStats.ByKind["example"]);
-        Assert.Equal(19, report.NodeStats.ByKind["remark"]);
-        Assert.Equal(49, report.NodeStats.ByProvenance["repo-derived"]);
+        Assert.Equal(30, report.NodeStats.ByKind["remark"]);
+        Assert.Equal(60, report.NodeStats.ByProvenance["repo-derived"]);
         Assert.Equal(23, report.NodeStats.ByProvenance["literature-attested"]);
         Assert.Equal(0, report.OpenCount);
         Assert.Empty(report.SuspectedNovel);
@@ -95,6 +95,21 @@ public sealed class DescribeMigrationTests
                 "D5/L/hedenmalm1997hilbert"),
         ];
 
+        (string Document, string Id)[] formulaExpected =
+        [
+            ("D5/S0/Carrier/Norm", "two-square-norm-as-a-shared-interpretive-core"),
+            ("D5/S1/Phase/Basic", "visible-phase-and-hidden-prime-fiber"),
+            ("D5/S1/Phase/Basic", "congruence-readings-close-under-dual-completion"),
+            ("D5/S1/Phase/Basic", "the-two-phase-duality-loops"),
+            ("D5/S1/Phase/Basic", "dense-phase-leaves-and-discrete-switching"),
+            ("D5/S1/Scale/MinkowskiModelSet", "off-diagonal-load-and-diagonal-blindness"),
+            ("D5/S1/Scale/MinkowskiModelSet", "scaled-zero-images-need-an-independent-engine"),
+            ("D5/S1/Scale/MinkowskiModelSet", "the-continuation-wall-is-a-transported-boundary"),
+            ("D5/S3/Weil/ReflectionLedger", "three-order-two-mechanisms-have-different-sources"),
+            ("D5/S3/Weil/SpectralDynamics", "thermal-time-is-a-meta-time-not-a-physical-history"),
+            ("D5/S3/Weil/SpectralDynamics", "causal-direction-requires-irreversible-bookkeeping"),
+        ];
+
         var actual = DocumentDefinitions.All
             .SelectMany(static definition => definition.Document.Content.Items
                 .OfType<DocumentBlock.Describe>()
@@ -108,7 +123,7 @@ public sealed class DescribeMigrationTests
                 static item => $"{item.Document}#{item.Node.Id.Value}",
                 StringComparer.Ordinal);
 
-        Assert.Equal(expected.Length, actual.Count);
+        Assert.Equal(expected.Length + formulaExpected.Length, actual.Count);
         foreach (var item in expected)
         {
             var node = actual[$"{item.Document}#{item.Id}"].Node;
@@ -119,6 +134,15 @@ public sealed class DescribeMigrationTests
             Assert.True(statement.Value.RequireNoSorry);
             Assert.Equal(item.Provenance, node.Provenance.Kind);
             Assert.Equal(item.Reference, node.Provenance.LiteratureReference?.Value);
+        }
+
+        foreach (var item in formulaExpected)
+        {
+            var node = actual[$"{item.Document}#{item.Id}"].Node;
+
+            Assert.IsType<DescribeStatement.FormulaAst>(node.Statement);
+            Assert.Equal(DescribeProvenanceKind.RepoDerived, node.Provenance.Kind);
+            Assert.Null(node.Provenance.LiteratureReference);
         }
     }
 
@@ -240,7 +264,7 @@ public sealed class DescribeMigrationTests
         var reflection = documents["D5/S3/Weil/ReflectionLedger"].Document.Content.Items
             .OfType<DocumentBlock.Describe>()
             .ToDictionary(static node => node.Id.Value, StringComparer.Ordinal);
-        Assert.Equal(9, reflection.Count);
+        Assert.Equal(10, reflection.Count);
         AssertRepoDerivedLeanNode(
             reflection["mirror-fixed-points-lie-on-the-critical-line"],
             DescribeKind.Proposition,
@@ -254,7 +278,7 @@ public sealed class DescribeMigrationTests
             .OfType<DocumentBlock.Describe>()
             .ToDictionary(static node => node.Id.Value, StringComparer.Ordinal);
 
-        Assert.Equal(12, spectralDynamics.Count);
+        Assert.Equal(14, spectralDynamics.Count);
         AssertLiteratureAttestedLeanNode(
             spectralDynamics["vertical-evolution-is-a-norm-preserving-group"],
             DescribeKind.Theorem,
@@ -434,8 +458,32 @@ public sealed class DescribeMigrationTests
         Assert.Equal(string.Empty, error.ToString());
         using var document = JsonDocument.Parse(output.ToString());
         Assert.Equal("DESCRIBE-NODES", document.RootElement.GetProperty("case_id").GetString());
-        Assert.Equal(72, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
+        Assert.Equal(83, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
         Assert.Equal(0, document.RootElement.GetProperty("open_count").GetInt32());
+    }
+
+    [Fact]
+    public void QuantitativeAndIdentityUpgradeCandidatesAreNotDescribeRemarks()
+    {
+        var forbidden = new HashSet<string>(StringComparer.Ordinal)
+        {
+            "D5/S1/Scale/MinkowskiModelSet#trace-map-program-and-missing-hyperbolicity-engine",
+            "D5/S1/Scale/MinkowskiModelSet#window-parity-becomes-a-congruence-pattern",
+            "D5/S1/Phase/Basic#poisson-summation-is-the-cofinal-analytic-limit",
+            "D5/S1/Phase/Basic#quasiperiodic-return-is-not-exact-recurrence",
+            "D5/S3/Weil/EulerProduct#sum-and-product-are-two-views-of-zeta",
+            "D5/S3/Weil/EulerProduct#the-pole-is-not-an-off-line-zero",
+            "D5/S3/Weil/SpectralHilbert#bridge-distributions-do-not-settle-pointwise-zeros",
+            "D5/S3/Weil/SpectralDynamics#inequalities-carry-the-narrative-arrow-of-time",
+            "D5/S3/Weil/SpectralDynamics#riemann-hypothesis-shaped-real-zero-properties-form-a-family",
+        };
+        var actual = DocumentDefinitions.All
+            .SelectMany(static definition => definition.Document.Content.Items
+                .OfType<DocumentBlock.Describe>()
+                .Select(node => $"{definition.Document.Header.Gid.Value}#{node.Id.Value}"))
+            .ToHashSet(StringComparer.Ordinal);
+
+        Assert.Empty(forbidden.Intersect(actual));
     }
 
     private static void AssertRepoDerivedLeanNode(
