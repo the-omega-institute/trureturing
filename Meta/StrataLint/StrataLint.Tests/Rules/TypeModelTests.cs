@@ -97,6 +97,8 @@ public sealed class TypeModelTests
     [InlineData("D5/E/foo//Ring.result--json")]
     [InlineData("D5/E/S0/Carrier/Ring--json")]
     [InlineData("D5/B/S0/Carrier/Ring.declaration")]
+    [InlineData("D5/L/NOTES/sample2026paper")]
+    [InlineData("D5/L/Notes/sample2026paper")]
     [InlineData("D5/L/zeros/sample2026paper")]
     [InlineData("D5/L/Weil/sample2026paper/extra")]
     [InlineData("D8/S0/Carrier/Ring")]

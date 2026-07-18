@@ -283,6 +283,7 @@ public sealed class Gid : IEquatable<Gid>
         var rootBucket = rest.Length == 1 && IsSafeSegment(rest[0]);
         var splitBucket = rest.Length == 2
             && CamelPattern.IsMatch(rest[0])
+            && !string.Equals(rest[0], "Notes", StringComparison.OrdinalIgnoreCase)
             && IsSafeSegment(rest[1]);
         if (tag is not null || (!rootBucket && !splitBucket))
         {
