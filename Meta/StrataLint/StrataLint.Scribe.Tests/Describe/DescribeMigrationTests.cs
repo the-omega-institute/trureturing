@@ -5,24 +5,24 @@ namespace StrataLint.Scribe.Tests;
 public sealed class DescribeMigrationTests
 {
     [Fact]
-    public void RepositoryMigrationHasNinetySixTypedNodesAndPreservesTwentyFourFormulaSlots()
+    public void RepositoryMigrationHasOneHundredTypedNodesAndPreservesTwentyFourFormulaSlots()
     {
         var root = FindRepositoryRoot();
         var report = DescribeReport.Build(
             root,
             DocumentDefinitions.All.Select(static definition => definition.Document));
 
-        Assert.Equal(96, report.NodeStats.Total);
+        Assert.Equal(100, report.NodeStats.Total);
         Assert.Equal(24, report.NodeStats.FormulaContentSlots);
         Assert.Equal(12, report.NodeStats.FormulaStatements);
-        Assert.Equal(84, report.NodeStats.LeanStatements);
+        Assert.Equal(88, report.NodeStats.LeanStatements);
         Assert.Equal(11, report.NodeStats.ByKind["definition"]);
         Assert.Equal(9, report.NodeStats.ByKind["proposition"]);
-        Assert.Equal(45, report.NodeStats.ByKind["theorem"]);
+        Assert.Equal(49, report.NodeStats.ByKind["theorem"]);
         Assert.Equal(1, report.NodeStats.ByKind["example"]);
         Assert.Equal(30, report.NodeStats.ByKind["remark"]);
         Assert.Equal(65, report.NodeStats.ByProvenance["repo-derived"]);
-        Assert.Equal(31, report.NodeStats.ByProvenance["literature-attested"]);
+        Assert.Equal(35, report.NodeStats.ByProvenance["literature-attested"]);
         Assert.Equal(0, report.OpenCount);
         Assert.Empty(report.SuspectedNovel);
         Assert.Empty(report.RedFindings);
@@ -243,6 +243,49 @@ public sealed class DescribeMigrationTests
     }
 
     [Fact]
+    public void QuantumContinuationNodesUseExactTypedStatementsAndDiligentProvenance()
+    {
+        var documents = DocumentDefinitions.All
+            .ToDictionary(static item => item.Document.Header.Gid.Value, StringComparer.Ordinal);
+        var observer = documents["D5/S3/Quantum/ObserverAlgebra"].Document.Content.Items
+            .OfType<DocumentBlock.Describe>()
+            .ToDictionary(
+                static node => Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement)
+                    .Value.Value,
+                StringComparer.Ordinal);
+        var decoherence = documents["D5/S3/Quantum/Decoherence"].Document.Content.Items
+            .OfType<DocumentBlock.Describe>()
+            .ToDictionary(
+                static node => Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement)
+                    .Value.Value,
+                StringComparer.Ordinal);
+
+        Assert.Equal(2, observer.Count);
+        AssertLiteratureAttestedLeanNode(
+            observer["D5/S3/Quantum/ObserverAlgebra.observer_update_covariant_group_skeleton"],
+            DescribeKind.Theorem,
+            "D5/S3/Quantum/ObserverAlgebra.observer_update_covariant_group_skeleton",
+            "D5/L/schwinger1960unitary");
+        AssertLiteratureAttestedLeanNode(
+            observer["D5/S3/Quantum/ObserverAlgebra.observer_read_update_noncommutative"],
+            DescribeKind.Theorem,
+            "D5/S3/Quantum/ObserverAlgebra.observer_read_update_noncommutative",
+            "D5/L/schwinger1960unitary");
+
+        Assert.Equal(2, decoherence.Count);
+        AssertLiteratureAttestedLeanNode(
+            decoherence["D5/S3/Quantum/Decoherence.phase_damping_composition"],
+            DescribeKind.Theorem,
+            "D5/S3/Quantum/Decoherence.phase_damping_composition",
+            "D5/L/zurek2003decoherence");
+        AssertLiteratureAttestedLeanNode(
+            decoherence["D5/S3/Quantum/Decoherence.phase_damping_fixed_iff_diagonal"],
+            DescribeKind.Theorem,
+            "D5/S3/Quantum/Decoherence.phase_damping_fixed_iff_diagonal",
+            "D5/L/zurek2003decoherence");
+    }
+
+    [Fact]
     public void SpectralResidualNodesUseExactTypedStatementsAndDiligentProvenance()
     {
         var documents = DocumentDefinitions.All
@@ -458,7 +501,7 @@ public sealed class DescribeMigrationTests
         Assert.Equal(string.Empty, error.ToString());
         using var document = JsonDocument.Parse(output.ToString());
         Assert.Equal("DESCRIBE-NODES", document.RootElement.GetProperty("case_id").GetString());
-        Assert.Equal(96, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
+        Assert.Equal(100, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
         Assert.Equal(0, document.RootElement.GetProperty("open_count").GetInt32());
     }
 
