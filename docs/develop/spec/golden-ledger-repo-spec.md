@@ -67,7 +67,7 @@ golden-ledger/
 │       └── S3/ S4/ …                                # 各前沿镜像其地层
 ├── Blueprint/ (镜像 S*/X_*)   Evidence/ (镜像 + kernels/ + experiments/ + values.json)
 ├── Chronicle/<YYYY>/<MM>/<DD>-<slug>.md  (+ INDEX.md 由 CI 生成, LEGACY.md 旧评注映射)
-├── Library/{queries.yaml, anchors.bib, notes/<bibkey>.md, <Domain>/<bibkey>.md}
+├── Library/{queries.yaml, anchors.bib, MAP.md, notes/<bibkey>.md, <Domain>/<bibkey>.md}
 ├── Papers/{recipes/, frozen/<paper-id>/}(build/ 不入库)
 ├── Meta/{StrataLint(含 split/papergen 等子命令位), domains.yaml, registry.yaml, BACKFILL.yaml}
 ├── agents/{CONTEXT.md, scout.md…gate.md, theorist.md, echo-template.md, verdict-template.md}
@@ -303,7 +303,7 @@ recipe(A11)→ `Meta/papergen`(决定论):拉 Blueprint 散文 + **语法生成�
 
 # 第十一部:研究复现层(发现引擎——补齐"发现半场")
 
-> 复现性自审判词:v6.2 复现验证半场(证/审/刊),缺发现半场。本部诸机制(11.1–11.26)补齐——
+> 复现性自审判词:v6.2 复现验证半场(证/审/刊),缺发现半场。本部诸机制(11.1–11.27)补齐——
 > **目标:按本卷建仓,机器能重走一百六十八轮之路,而非只会收割它的果实。**
 
 ## 11.1 第八官:演绎官 Theorist(探索轮之主官)
@@ -369,7 +369,7 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 `docs/MISSION.md`:北极星 = 两颗心脏(可仰望不可硬攻);价值序 = **理解 > 数量,诚实 > 速度,负知识与正结果等价记账**;探索靶评分 = 新颖性 × 依赖就绪度 × 结构变现潜力(可开支票否)× 收据潜力;禁令 = 刷 sorry 数、堆平凡引理、追引用。**PLAYBOOK 答"怎么找",MISSION 答"什么值得找"——无此文件,飞轮高速空转。**
 
 ## 11.21 回填溯源清单(消化完整性)
-`Meta/BACKFILL.yaml` 是 **Digestion Ledger** 唯一真源,现役且仅现役 schema 为 `schema_version: 3` / `ledger: theory-digestion-v1`;旧 anchor/disposition 格式经一次迁移只存于 git 历史,运行时无兼容读者、无双读。每个 source 恰含 `{source_id,path,atomizer,entries}`,其中 `source_id` 全局唯一、文件正名且文件名禁空格;每个原子 entry 恰含 `{atom_id,boundary:{ast_path,start_byte,end_byte},fingerprints:{raw_sha256,normalized_sha256},coverage_gids,receipts,status}`。raw 指纹绑定原始字节,normalized 指纹只容许 UTF-8 BOM、CRLF/CR→LF 与 Unicode NFC 的受限规范化;二者均为 `sha256:<64 lowercase hex>`。
+`Meta/BACKFILL.yaml` 是 **Digestion Ledger** 唯一真源,现役且仅现役 schema 为 `schema_version: 3` / `ledger: theory-digestion-v1`;旧 anchor/disposition 格式经一次迁移只存于 git 历史,运行时无兼容读者、无双读。每个 source 恰含 `{source_id,path,atomizer,entries}`,其中 `source_id` 全局唯一、文件正名且文件名禁空格;每个原子 entry 的共同必选字段为 `{atom_id,fingerprints:{raw_sha256,normalized_sha256},coverage_gids,receipts,status}`,边界字段互斥二选一:嵌套 `boundary:{ast_path,start_byte,end_byte}` 或顶层 `ast_path`;另可选含 `cas_ref`。canonical 账本现状另述:933 条 entry 中 921 条采用顶层 `ast_path`、12 条采用嵌套 `boundary`,且 933/933 均携 `cas_ref`;THEORY-ERRATUM(11.27)的案件主键 `(cas_ref, atom_id)` 只对携 `cas_ref` 的理论收据成立,无 `cas_ref` 收据不在该事件类内。raw 指纹绑定原始字节,normalized 指纹只容许 UTF-8 BOM、CRLF/CR→LF 与 Unicode NFC 的受限规范化;二者均为 `sha256:<64 lowercase hex>`。
 
 **双轴状态由机器派生,status 只是受检投影,禁手写冒领。**迁移轴为 `{residual,partial,absorbed}`:仅完成 extract/identify 而无语义目标或收据进展者为 residual;已识别目标 GID 或已有迁移收据但合取未齐者为 partial;原子本地收据与全部 `chain_atoms` 均闭合者才为 absorbed。真值轴为 `{closed,tail,open}`:Lean 闭包 Closed 才是 closed;Tail 只有在 migration 已 absorbed 且 `Meta/StrataLint/Authorizations/digestion-tail/<atom_id>.json` 之 canonical 工件逐字绑定 atom 与全部 Tail GID 时才投影为 **absorbed-tail**,否则一律 open;Tail 不计已证。SL-016 对 source 结构、边界可重现、指纹、目标 GID、收据、双轴重算一致性逐项 fail-closed,任一 stored status 与派生不同即红。
 
@@ -397,6 +397,27 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 **大件数据律**:大于阈值之产物(零点表/谱表)入 LFS 或声明"可再生"(脚本+预算);二者皆无 = CI 红;断链即红——git 内只存哈希与再生方式。
 **继任预案**:`docs/SUCCESSION.md`——维护权移交规则、密钥托管、"若本库十年无人维护"之自动开放遗嘱(归档触发条件)——**理论要活得比我们久,就把这句话写进制度。**
 
+## 11.27 理论勘误事件类(TheoryErratum)
+**触发与边界**:机器发现一条**已摄入**且有 `cas_ref` 收据的 claim **涉嫌**数学错误、内部矛盾、空洞性问题或与已冻结 Lean 真值冲突之一,始得归本类;证据门裁决前只称“涉嫌”,不得断言问题存在。四项排除各归既有路径:风格措辞不是理论错;普通未证猜想照常以 `open` 消化;外部文献勘误走 L 平面路径;harness/Lean 自身证明洞走既有后代撤销路径。须分清两层状态:全局 truth DAG 为 `closed/open/tail/semantic` 四态;`BACKFILL.status.truth` 仅为 `closed/tail/open` 三态投影,全局 `semantic` 在 BACKFILL 投影为 `open`,不得把 `semantic` 写成 BACKFILL 第四值。〔守护:**硬+评审**·机器仅保证 claim 已摄入及 `cas_ref`/`atom_id` 合规;四类涉嫌触发、排除项及忠实分类当前由评审守护〕
+
+**立案**:以 `(cas_ref, atom_id)` 二元组唯一定址 claim;重复发现必须先按该二元组检索并复用唯一案件,只追加证据、尸检或处置记录,不得另立平行案。`D5/X_Frontier/*` 中的永久 `TASK` 正文与反馈 issue 必须双向持久记录同一组 `case_id`、`cas_ref`、`atom_id`,issue 引用 TASK GID,TASK 引用 issue;`BACKFILL.ticket_index` 仅承担 `{case_id, gid}` 的 `case_id`→TASK GID 映射,不得冒充 claim 身份或案件双向绑定。本类只定义既有载体的处置规范:零新状态、零新 schema、零新 workflow、零新服务。〔守护:**硬+评审**·`atom_id` 唯一性、`ticket_index` 结构及其对 X_Frontier TASK 的覆盖由 SL-016 机器判;二元组检索复用及 TASK↔issue 三字段双向绑定当前由评审守护,机器化待升提〕
+
+**证据门**:宣称“原 claim 被反驳”或“其非平凡性主张被反驳”的必要条件是三环闭合:**CAS 原句 → 独立忠实 echo(复核席逐字对照原文)→ 可重放反证**。可重放证书仅限三类:(a) Lean 证明 `¬claim` 或证明其与冻结声明冲突,且 axiom 闭包必须满足仓库绝对白名单 `axiom closure ⊆ {propext, Classical.choice, Quot.sound}`;(b) 精确算术、区间或有限反例经独立 checker 复核;(c) 空洞性证明——claim 为真但由弱前提平凡成立,故证书反驳的是其**非平凡性主张**,绝不得冒充 `¬claim`。每个 Lean witness 的陈述必须自描述所反驳的对象:是原 claim、与冻结声明的相容性,还是指定的非平凡性主张。三环未闭合者不定错:证据不足则案件记录保持 `open`;语义不能消歧则全局节点归 `semantic`、BACKFILL 仍投影为 `status.truth: open`。叙事、多模型共识或浮点异常均不足以称理论错;O5 先例仅证重做者之错,不证理论之错。〔守护:**硬+评审**·Lean inspector/SL-020 校验 witness 公理已登记;truth DAG 将含非标准公理的节点判为 `tail`,SL-016 据此禁止 `closed` 投影。勘误 witness 的上述三公理**绝对白名单**判别当前属评审守护,升提专用 lint 后才成为硬门;触发分类、忠实 echo、三类证书判别及空洞性所反驳对象的忠实性亦由评审守护〕
+
+**双轴结算**:证书最终以 Lean witness 冻结为**正真值节点**;其声明按证据门自描述“claim X 之否定/反例”或“claim X 所附非平凡性主张之反驳”,使负知识单调入 DAG。`BACKFILL` 中原 claim 只用现役 coverage 语法指向该 Lean witness GID:`coverage_gids` 列出 GID,且 `receipts.coverage[].gid` 以同一 GID 留覆盖收据;现役 schema 没有 `refutes` 字段,反驳语义只由 witness 的 Lean 陈述内容表达。判真轴上,`BACKFILL.status.truth: closed` **仅**表示 coverage 目标在 truth DAG 中为 Lean `Closed`,不表示原 claim 为真,也不表示案件处置完毕。案件闭合当且仅当下列清单三项显式合取全真,即 `case_closed ⇔ (a) ∧ (b) ∧ (c)`:
+- [ ] **(a) 三环证据链闭合**:`CAS 原句 → 独立忠实 echo → 可重放反证 witness GID` 逐环在案;
+- [ ] **(b) witness 判真闭合**:该 witness GID 同时由 `coverage_gids` 与 `receipts.coverage[].gid` 指向,且 truth DAG 将其判为 Lean `Closed`;
+- [ ] **(c) 送达工件在案**:送达工件逐字绑定本案 `case_id`、claim 主键 `(cas_ref, atom_id)` 与该 witness GID。
+无 witness GID 的路径——无论证据不足而保持 `open`,还是语义不能消歧而归 `semantic`——均令 (a)、(b) 为假,故案件永不闭合,不受该 claim 既有 `status.migration` 影响。`status.migration: absorbed` 可由立案前的普通消化预先成立,只陈述迁移轴事实;它既不得单独、也不得与送达工件合取作为结案凭据。二轴不得混写:**判真唯 Lean**,harness 只判现役收据与投影合规;送达工件及其与案件的对应当前由评审守护。〔守护:**硬+评审**·`coverage_gids`、`receipts.coverage[].gid`、收据哈希、`status.truth` 与 `status.migration` 由 SL-016 机器派生;Lean 声明真值由 kernel 判;三环忠实性、送达工件及链接是否确实反驳目标当前由评审守护〕
+
+**案件生命周期**:永久 X_Frontier `TASK` 定性为**历史账**,不是处置轴上的永久活义务:SL-013 禁删且 truth DAG 因其路径/`TASK` 标记恒判 `open`,该 `open` 是载体结构态,不得用来冒充案件处置状态。四种归宿逐案追加留痕:(1)送达成功——记录送达工件引用;仅当双轴结算清单 (a)–(c) 同时满足时案件闭合,TASK 作为历史账保留,任何既有 `status.migration: absorbed` 均不替代 (a) 或 (b);(2)送达失败——记录失败收据,issue 标 `open` 并重试,不得称闭合;(3)反证链接误配——依 11.14 追加勘正工件并重开案件,旧 CAS、TASK 与错误链接均不改写;(4)反证本身被勘误——走既有后代撤销路径,追加勘误工件并重开案件,其后只接受新证据重新结算。现役载体尚不能机器区分这四种案件归宿,**暂由评审守护,机器化待升提**,不得以 TASK 的结构性 `open` 或永久存在冒充专用生命周期 schema。
+
+**反馈闭环**:立 issue、携 `case_id`、`cas_ref`、`atom_id` 与证据 GID 通知理论作者、取得送达收据及失败重试,均为本类的**规范性动作**;**当前未机器执法,由评审守护,机器化待升提律**。证据不足而只有 `open` 异常、尚无 witness GID 时,仍须在 TASK 记录该异常,反馈 issue 引用 `case_id` 并携 `cas_ref`、`atom_id`,明确“证据不足”;此路由不改 `coverage_gids`、不增 coverage 收据、无任何 coverage 状态变更。送达收据结清的只是通知义务,作者回应绝非结案前置;送达失败时 issue 保持 `open` 并重试。作者修订投卷仍走既有 `theory-ingest`:新 atom 按现役 ingest 入账,旧 CAS 与旧案均保留,修订历史归 git;现役 ingest 不投影 `supersedes` 边,故不得冒领该关系。〔守护:**评审**·issue 创建、双向绑定、通知内容、无 GID 路由、送达收据、重试、作者修订路由及“不声称 supersedes”当前全由评审守护,专用机器执法待升提〕
+
+**权属与裁决**:agent 禁改理论卷正文,修文唯作者;记错义务归发现者/消化层。**判真唯 Lean**;harness 不裁决数学真假,只裁决收据存在性与路由合规。若 Lean witness 证明理论 claim 与冻结真值冲突,按本类结算;若反查证实**库内**节点证明有洞,则走既有“勘误 ≠ 解冻”之后代撤销路径。〔守护:**硬+评审**·Lean kernel 与现役 harness 各守其机器可判边界;agent 禁改理论卷、作者修文权及处置归类由评审守护〕
+
+**升提律**:TheoryErratum 专用 schema/lint 规则仅在第二个同构实例出现,或已有路由被证实失效时再立;届时再机器化触发分类、唯一案件复用、issue/送达/重试等尚由评审守护的规范性动作,依第 8 条不预建空壳。〔守护:**元准则+评审**·第二同构实例或路由失效是升提前提;当前不冒领专用 schema/lint〕
+
 # 总纲
 
 **一名一址(GID),一律一码(H1–H12);地址算出,历史追加,状态即语法,台账即 git;**
@@ -408,6 +429,7 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 
 # CHANGELOG(原位演进史;只追加)
 
+- **v7.13 R3**(2026-07-18):L 平面首次容量压力按 2.3 只裂不迁:根桶达到 12 后新增的两篇 Zeros 文献进入已登记的 `Library/Zeros/` 兄弟桶,旧 `D5/L/<bibkey>` 地址全数保留;L 双射扩展为受控 `<Domain>` 两段路径,route、typed ref、跨桶 catalog(bibkey 全局唯一)、FILEMAP 与 `Library/MAP.md` 同步执法。
 - **v7.13 R2**(2026-07-18):L 平面容量裂桶 P0 先利器、零实例:双射与 route 扩展为已登记 `<Domain>` 的两段路径,typed ref、跨桶 catalog 与 bibkey 全局唯一性同步执法;FILEMAP 以 `Library/*/*.md` 覆盖根桶及受控疆域桶 note,并将分裂史 `Library/MAP.md` 独立归为 ledger;本轮不新增、不迁移任何 Library note,实际裂桶留后续数据 PR 由升级后的 base judge 判定。
 - **v7.13 R1**(2026-07-16):月度承载力器落地:`clean-lanes` 以 dev 祖先+全 status 净+执行前身份重验清理 merged worktree,以 exact old-OID 清 orphan `harness/*`,并分类同仓 detached/断链/gitless judge snapshot,默认全程 dry-run;Lean pair producer 以 inspector+源树+钉版配置内容地址判等,等价只产一次并留双侧 provenance,不等即双产;preflight 显式去重已跑 engineering,shared/local gate 以 JSONL 消费并汇总分段 timing。admission、exit、SL-022 与 C0 ceremony 未减未改。
 - **v7.12 R10**(2026-07-16):`RESIDENCE-EPOCH` P2 由 base-owned comparator 消费两项 P1 custody plan 各一次,五个精确旧路径加入 bootstrap exclusion 而 matcher 零漂移;四份 canonical case 与 values kernel 参数以 100% rename 迁至顶层 `Golden/`,FILEMAP 居所账闭合为零。`GoldenCorpus.cs` 的合成 registry 实例同时外置为 strict-loaded `Golden/fixture-registry.yaml`;TOWER/C0 corpus、values attestation、generated FILEMAP 与全部实引用重发射,certificate/Frozen ledger 仍留原 `kind=ledger` 保护位。
@@ -453,3 +475,7 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 - **v7.13 R2**(2026-07-17):`HEARTS-AUTH-P0` 将 SL-008 最小松动为 append-only git 授权账上的声明全名+canonical statement SHA-256 精确单增,保留既有声明冻结与防夹带;密码学身份、签名及 nonce 消费机依用户裁决不进入系统,伪造风险归公开史检测、判词可诉勘正与追责。
 - **v7.13 R3**(2026-07-17):`OBSERVER-ATOMIZER-P0` 以零 OBSERVER 账本消费注册窄域 `observer-v1`,并安装 whole-source coarse 退役的身份保全规则;本 epoch 只定义类与红绿 fixture,`gict-v1`/`pzg-v1` 语义与 OBSERVER 账本实例均不变。
 - **v7.13 R4**(2026-07-17):`OBSERVER-QUANTUM` 从误配 `gict-v1` 的 whole-source fallback 迁至窄域 `observer-v1`:31 个语义段落 byte-exact 切分并全入 residual;原粗 atom 经 adapter-replacement stale 流程退役而 CAS 原文不删。`gict-v1`/`pzg-v1` 保持逐字语义,registry 未平台化。
+- **v7.13 R5**(2026-07-18):`THEORY-ERRATUM` 以六席收敛定义理论勘误事件类:仅触发于已摄入且有 CAS 收据的四类 claim 问题;以原句—独立 echo—可重放反证三环为定错必要门,将否定/反例/空洞性作为 Lean 正真值节点冻结,`closed` 仅表处置闭合;通知以送达收据结清,作者回应非前置,修卷唯作者并走既有 ingest。本轮只立 spec,零新状态/schema/workflow/服务;专用 schema/lint 依第 8 条延至第二个同构实例或路由失效。
+- **v7.13 R6**(2026-07-18):PR #204 architecture/quality/tests 三席一致 reject→fix:重写 `THEORY-ERRATUM` 为 BACKFILL.ticket_index→X_Frontier TASK、现役 coverage→Lean witness、标准三公理绝对白名单与四态/三态诚实分栏,勘正空洞性、重复案、误配重开、修卷入账及裁决权,并将 issue/送达/重试和专用规则如实留在评审守护与升提律。
+- **v7.13 R7**(2026-07-18):PR #204 pass2 三席复审勘正 11.27 的涉嫌触发、案件双向绑定、BACKFILL 判真/处置双轴、永久 TASK 历史账与四路归宿、SL-020 实际守护边界及无 witness GID 反馈路由。
+- **v7.13 R8**(2026-07-18):PR #204 pass3 终修将 TheoryErratum 结案收紧为“三环证据链闭合 ∧ coverage 所指 witness 经 truth DAG 判 `Closed` ∧ 送达工件在案”的显式清单,并规定无 witness 路径不因既有 `migration: absorbed` 闭合;同时将 11.21 entry 接受域按 `ParseEntry` 全形列出(含边界二选一),`cas_ref` 标为可选,canonical 数据现状另述。
