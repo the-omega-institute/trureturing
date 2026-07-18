@@ -1,0 +1,34 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum;
+
+internal sealed class ObserverAlgebraDocument : IScribeDocumentDefinition
+{
+    private static readonly LibraryNoteRef Schwinger =
+        LibraryNoteRef.Create("D5/L/schwinger1960unitary");
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
+        Header(
+            "D5/S3/Quantum/ObserverAlgebra",
+            "Finite-register read and reversible-update operators form a covariant noncommutative skeleton."),
+        H("Finite Observer Read-Update Skeleton"),
+        Blocks(
+            new DocumentBlock.Describe(
+                DescribeId.Create("specified-permutation-updates-form-a-covariant-group-action"),
+                DescribeKind.Theorem,
+                H("Specified permutation updates form a covariant group action"),
+                DescribeStatement.FromLean(LeanTheorem(
+                    "D5/S3/Quantum/ObserverAlgebra.observer_update_covariant_group_skeleton")),
+                DescribeProvenance.LiteratureAttested(Schwinger),
+                Blocks(Paragraph(Text(
+                    "The register index type may be arbitrary, including an empty type. Explicitly supplied permutations act by pullback on complex amplitude functions; identity, composition, inverse, and covariance with pointwise multiplication reads are proved together. This is a represented finite-register skeleton. It does not construct or identify the universal C*-crossed product, prove its universal property, exclude continuous hidden flows, derive discreteness or an integer action, or force quantum structure from a classical ontology. Original numerical-certificate disposition: neither observer-algebra CAS atom contains a numerical certificate.")))),
+            new DocumentBlock.Describe(
+                DescribeId.Create("changed-read-values-witness-noncommutativity"),
+                DescribeKind.Theorem,
+                H("Changed read values witness noncommutativity"),
+                DescribeStatement.FromLean(LeanTheorem(
+                    "D5/S3/Quantum/ObserverAlgebra.observer_read_update_noncommutative")),
+                DescribeProvenance.LiteratureAttested(Schwinger),
+                Blocks(Paragraph(Text(
+                    "Noncommutativity requires an explicit address i where the pulled-back read value differs from the current read value and a state whose predecessor amplitude is nonzero. That address is also the explicit inhabitability witness; there is no hidden Nonempty premise. The theorem does not say that every read function, reversible update, or state fails to commute, and it does not assert an abstract C*-algebra commutator identity. Original numerical-certificate disposition: neither observer-algebra CAS atom contains a numerical certificate.")))))));
+}
