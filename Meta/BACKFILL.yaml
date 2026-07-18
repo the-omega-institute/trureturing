@@ -7389,16 +7389,22 @@ sources:
           raw_sha256: sha256:fbf333e31ba3ef6cbdebe75252c56a88b06d91143c6323da299fa228f87976e3
           normalized_sha256: sha256:fbf333e31ba3ef6cbdebe75252c56a88b06d91143c6323da299fa228f87976e3
         cas_ref: sha256:fbf333e31ba3ef6cbdebe75252c56a88b06d91143c6323da299fa228f87976e3
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Zeros/ZeroGeometry.projection_zero_labeled_vector_spec
         receipts:
-          coverage: []
+          coverage:
+            - gid: D5/S3/Zeros/ZeroGeometry.projection_zero_labeled_vector_spec
+              source_sha256: sha256:fbf333e31ba3ef6cbdebe75252c56a88b06d91143c6323da299fa228f87976e3
+              target_sha256: sha256:f5fa23f5e88014c485cf5f1fd4dac3bd2998ca1d5c31bb1af635abf0c3602cb9
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - analytic-projection-map-and-continued-projection-identity
+            - precise-carrier-interpretation
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: pzg-residual-75db7658c159e46421007a8460283435e64791a9e00fa9ec4cbd587505dc634c
         ast_path: contract/23.1
         fingerprints:
@@ -7601,32 +7607,44 @@ sources:
           raw_sha256: sha256:e9e17b18bdca262cf243b1193d7d9b23baf205d584164462084d102de82e796c
           normalized_sha256: sha256:e9e17b18bdca262cf243b1193d7d9b23baf205d584164462084d102de82e796c
         cas_ref: sha256:e9e17b18bdca262cf243b1193d7d9b23baf205d584164462084d102de82e796c
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Zeros/ZeroGeometry.off_line_scaling_entry_spec
         receipts:
-          coverage: []
+          coverage:
+            - gid: D5/S3/Zeros/ZeroGeometry.off_line_scaling_entry_spec
+              source_sha256: sha256:e9e17b18bdca262cf243b1193d7d9b23baf205d584164462084d102de82e796c
+              target_sha256: sha256:f5fa23f5e88014c485cf5f1fd4dac3bd2998ca1d5c31bb1af635abf0c3602cb9
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - coefficient-half-density-phase-scaling-factorization
+            - scaling-unbounded-along-me2
+            - unit-rotation-preserves-coefficient-norm
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: pzg-residual-4807ade3f72a896bc214fbbe14fdc8e0ea18611f00fce4a8d7be197b4b809d79
         ast_path: theorem/24.3
         fingerprints:
           raw_sha256: sha256:4807ade3f72a896bc214fbbe14fdc8e0ea18611f00fce4a8d7be197b4b809d79
           normalized_sha256: sha256:4807ade3f72a896bc214fbbe14fdc8e0ea18611f00fce4a8d7be197b4b809d79
         cas_ref: sha256:4807ade3f72a896bc214fbbe14fdc8e0ea18611f00fce4a8d7be197b4b809d79
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Zeros/ZeroGeometry.global_factor_clearing_forces_critical_line
         receipts:
-          coverage: []
+          coverage:
+            - gid: D5/S3/Zeros/ZeroGeometry.global_factor_clearing_forces_critical_line
+              source_sha256: sha256:4807ade3f72a896bc214fbbe14fdc8e0ea18611f00fce4a8d7be197b4b809d79
+              target_sha256: sha256:f5fa23f5e88014c485cf5f1fd4dac3bd2998ca1d5c31bb1af635abf0c3602cb9
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - address-dependent-inverse-scaling-register-governance-exclusion
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: pzg-residual-f6122cc86d33364ef5f1a80a105ea78c34dc9e76ef960b380ad94bb3180de939
         ast_path: theorem/24.4
         fingerprints:
@@ -7657,7 +7675,16 @@ sources:
         receipts:
           coverage: []
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - zero-data-symmetry-fields-assume-source-conclusion
+            - arbitrary-completed-reading-to-zero-data-domain-bridge
+            - zero-data-inhabitance-not-proved
+            - real-coefficient-conjugation-symmetry-via-analytic-continuation
+            - reflection-functional-equation-symmetry-derivation
+            - pairwise-distinct-off-line-zero-quartet
+            - scaling-ledger-alone-does-not-exclude-off-line-zeros
+            - nonmultiplicative-periodic-dirichlet-reading-instrument
+            - off-line-zero-window-values-and-residual-certificate
           chain_atoms: []
           tail_authorization: null
         status:
@@ -7669,48 +7696,65 @@ sources:
           raw_sha256: sha256:d24cf7f7f004c0825d84fdf2c16530a5c59579cd5e550142be49dad0a5e1dc4e
           normalized_sha256: sha256:d24cf7f7f004c0825d84fdf2c16530a5c59579cd5e550142be49dad0a5e1dc4e
         cas_ref: sha256:d24cf7f7f004c0825d84fdf2c16530a5c59579cd5e550142be49dad0a5e1dc4e
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Zeros/ZeroGeometry.mirror_pair_distinct_iff_off_line_and_cancels
         receipts:
-          coverage: []
+          coverage:
+            - gid: D5/S3/Zeros/ZeroGeometry.mirror_pair_distinct_iff_off_line_and_cancels
+              source_sha256: sha256:d24cf7f7f004c0825d84fdf2c16530a5c59579cd5e550142be49dad0a5e1dc4e
+              target_sha256: sha256:f5fa23f5e88014c485cf5f1fd4dac3bd2998ca1d5c31bb1af635abf0c3602cb9
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - off-line-cross-position-pairing-numerical-instrument
+            - theorem-24-3-and-24-5-meta-level-compatibility
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: pzg-residual-7bdd334cfdf8f997177ce19cd2edfbc1fce39b2342b7777dc17bcbedffac94f6
         ast_path: definition/24.7
         fingerprints:
           raw_sha256: sha256:7bdd334cfdf8f997177ce19cd2edfbc1fce39b2342b7777dc17bcbedffac94f6
           normalized_sha256: sha256:7bdd334cfdf8f997177ce19cd2edfbc1fce39b2342b7777dc17bcbedffac94f6
         cas_ref: sha256:7bdd334cfdf8f997177ce19cd2edfbc1fce39b2342b7777dc17bcbedffac94f6
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Zeros/ZeroGeometry.IsOntologicalZero
         receipts:
-          coverage: []
+          coverage:
+            - gid: D5/S3/Zeros/ZeroGeometry.IsOntologicalZero
+              source_sha256: sha256:7bdd334cfdf8f997177ce19cd2edfbc1fce39b2342b7777dc17bcbedffac94f6
+              target_sha256: sha256:f5fa23f5e88014c485cf5f1fd4dac3bd2998ca1d5c31bb1af635abf0c3602cb9
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - analytic-projection-map-and-completed-reading-cancellation
+            - closed-alpha-hierarchy-and-lifted-semantics
+            - completed-pzg-ledger-cancellation-node-interpretation
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: pzg-residual-87c55470652b1345ccab17e277a2c8ee8b896ac753b18c995ea31417a813ee29
         ast_path: theorem/24.8
         fingerprints:
           raw_sha256: sha256:87c55470652b1345ccab17e277a2c8ee8b896ac753b18c995ea31417a813ee29
           normalized_sha256: sha256:87c55470652b1345ccab17e277a2c8ee8b896ac753b18c995ea31417a813ee29
         cas_ref: sha256:87c55470652b1345ccab17e277a2c8ee8b896ac753b18c995ea31417a813ee29
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Zeros/ZeroGeometry.ontological_zero_re_eq_critical
         receipts:
-          coverage: []
+          coverage:
+            - gid: D5/S3/Zeros/ZeroGeometry.ontological_zero_re_eq_critical
+              source_sha256: sha256:87c55470652b1345ccab17e277a2c8ee8b896ac753b18c995ea31417a813ee29
+              target_sha256: sha256:f5fa23f5e88014c485cf5f1fd4dac3bd2998ca1d5c31bb1af635abf0c3602cb9
           scribe: []
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: pzg-residual-88dc228e9411220d3275ac74696213aa65a8b8cc1e9e143a651896ff519839bd
         ast_path: theorem/24.9
         fingerprints:

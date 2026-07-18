@@ -33,6 +33,7 @@ public sealed class DocumentDiscoveryTests
     private const string ReflectionLedgerDocumentPath = "Blueprint/D5/S3/Weil/ReflectionLedger.md";
     private const string SpectralDynamicsDocumentPath = "Blueprint/D5/S3/Weil/SpectralDynamics.md";
     private const string SpectralHilbertDocumentPath = "Blueprint/D5/S3/Weil/SpectralHilbert.md";
+    private const string ZeroGeometryDocumentPath = "Blueprint/D5/S3/Zeros/ZeroGeometry.md";
     private const string PhaseSourcePath = "Blueprint/D5/S1/Phase/Basic.scribe.cs";
 
     [Fact]
@@ -68,6 +69,7 @@ public sealed class DocumentDiscoveryTests
                 "D5/S3/Weil/ReflectionLedger",
                 "D5/S3/Weil/SpectralDynamics",
                 "D5/S3/Weil/SpectralHilbert",
+                "D5/S3/Zeros/ZeroGeometry",
             ],
             DocumentDefinitions.All.Select(static item => item.Document.Header.Gid.Value));
         Assert.Equal(
@@ -100,6 +102,7 @@ public sealed class DocumentDiscoveryTests
                 ReflectionLedgerDocumentPath,
                 SpectralDynamicsDocumentPath,
                 SpectralHilbertDocumentPath,
+                ZeroGeometryDocumentPath,
             ],
             DocumentDefinitions.All.Select(static item => item.RelativePath.Value));
     }
@@ -312,6 +315,88 @@ public sealed class DocumentDiscoveryTests
             Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
             Assert.True(lean.Value.RequireNoSorry);
         }
+    }
+
+    [Fact]
+    public void ZeroGeometryDocumentCarriesExactStatementsAndDiligentProvenance()
+    {
+        (string Declaration, DescribeKind Kind, LeanDeclarationKind LeanKind)[] expected =
+        [
+            ("D5/S3/Zeros/ZeroGeometry.projection_zero_labeled_vector_spec",
+                DescribeKind.Theorem, LeanDeclarationKind.Theorem),
+            ("D5/S3/Zeros/ZeroGeometry.off_line_scaling_entry_spec",
+                DescribeKind.Theorem, LeanDeclarationKind.Theorem),
+            ("D5/S3/Zeros/ZeroGeometry.global_factor_clearing_forces_critical_line",
+                DescribeKind.Theorem, LeanDeclarationKind.Theorem),
+            ("D5/S3/Zeros/ZeroGeometry.zero_quartet_scaling_spec",
+                DescribeKind.Theorem, LeanDeclarationKind.Theorem),
+            ("D5/S3/Zeros/ZeroGeometry.mirror_pair_distinct_iff_off_line_and_cancels",
+                DescribeKind.Theorem, LeanDeclarationKind.Theorem),
+            ("D5/S3/Zeros/ZeroGeometry.IsOntologicalZero",
+                DescribeKind.Definition, LeanDeclarationKind.Definition),
+            ("D5/S3/Zeros/ZeroGeometry.ontological_zero_re_eq_critical",
+                DescribeKind.Theorem, LeanDeclarationKind.Theorem),
+        ];
+        var definition = DocumentDefinitions.All.Single(static item =>
+            item.Document.Header.Gid.Value == "D5/S3/Zeros/ZeroGeometry");
+        var nodes = Descendants(definition.Document.Content)
+            .OfType<DocumentBlock.Describe>()
+            .ToDictionary(
+                static node => Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement)
+                    .Value.Value,
+                StringComparer.Ordinal);
+
+        Assert.Equal(7, nodes.Count);
+        foreach (var item in expected)
+        {
+            var node = nodes[item.Declaration];
+            var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement);
+
+            Assert.Equal(item.Kind, node.Kind);
+            Assert.Equal(DescribeProvenanceKind.RepoDerived, node.Provenance.Kind);
+            Assert.Null(node.Provenance.LiteratureReference);
+            Assert.Equal(item.Declaration, lean.Value.Value);
+            Assert.Equal(item.LeanKind, lean.Value.ExpectedKind);
+            Assert.True(lean.Value.RequireNoSorry);
+        }
+    }
+
+    [Fact]
+    public void ZeroGeometryDocumentDisclosesSourceOmissionsAndTheOpenO6Bridge()
+    {
+        var definition = DocumentDefinitions.All.Single(static item =>
+            item.Document.Header.Gid.Value == "D5/S3/Zeros/ZeroGeometry");
+        var report = LeanReportFixture.ForDocuments([definition.Document]);
+        var markdown = System.Text.Encoding.UTF8.GetString(
+            CanonicalMarkdownWriter.Write(definition.Document, report).AsSpan());
+
+        string[] requiredDisclosures =
+        [
+            "No analytic projection operator is defined, and no projection identity outside the Dirichlet convergence half-plane is claimed.",
+            "The source's coefficient factorization, unbounded-ray clause, and rotation-invariance clause are not formalized here.",
+            "The governance claim excluding an address-dependent inverse register is not part of this theorem.",
+            "Cross-position cancellation does not imply local balance at either position.",
+            "The closure condition is carried as the arbitrary predicate closedAt; no inhabitant is asserted.",
+            "The missing implication from every projected zero to local balance is exactly the open O-6 bridge.",
+        ];
+
+        foreach (var disclosure in requiredDisclosures)
+        {
+            Assert.Contains(disclosure, markdown, StringComparison.Ordinal);
+        }
+
+        var zeroQuartetScaling = Descendants(definition.Document.Content)
+            .OfType<DocumentBlock.Describe>()
+            .Single(static node =>
+                Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement).Value.Value ==
+                "D5/S3/Zeros/ZeroGeometry.zero_quartet_scaling_spec");
+        var zeroDataDisclosure = Assert.IsType<Inline.Text>(
+            Assert.IsType<DocumentBlock.Paragraph>(
+                Assert.Single(zeroQuartetScaling.Content.Items)).Content.Items.Single()).Run.Value;
+
+        Assert.Contains("ZeroData", zeroDataDisclosure, StringComparison.Ordinal);
+        Assert.Contains("does not prove", zeroDataDisclosure, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("inhabit", zeroDataDisclosure, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]

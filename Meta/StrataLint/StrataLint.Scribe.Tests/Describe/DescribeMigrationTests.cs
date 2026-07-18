@@ -5,23 +5,23 @@ namespace StrataLint.Scribe.Tests;
 public sealed class DescribeMigrationTests
 {
     [Fact]
-    public void RepositoryMigrationHasSixtyFiveTypedNodesAndPreservesTwentyFourFormulaSlots()
+    public void RepositoryMigrationHasSeventyTwoTypedNodesAndPreservesTwentyFourFormulaSlots()
     {
         var root = FindRepositoryRoot();
         var report = DescribeReport.Build(
             root,
             DocumentDefinitions.All.Select(static definition => definition.Document));
 
-        Assert.Equal(65, report.NodeStats.Total);
+        Assert.Equal(72, report.NodeStats.Total);
         Assert.Equal(24, report.NodeStats.FormulaContentSlots);
         Assert.Equal(1, report.NodeStats.FormulaStatements);
-        Assert.Equal(64, report.NodeStats.LeanStatements);
-        Assert.Equal(6, report.NodeStats.ByKind["definition"]);
+        Assert.Equal(71, report.NodeStats.LeanStatements);
+        Assert.Equal(7, report.NodeStats.ByKind["definition"]);
         Assert.Equal(9, report.NodeStats.ByKind["proposition"]);
-        Assert.Equal(30, report.NodeStats.ByKind["theorem"]);
+        Assert.Equal(36, report.NodeStats.ByKind["theorem"]);
         Assert.Equal(1, report.NodeStats.ByKind["example"]);
         Assert.Equal(19, report.NodeStats.ByKind["remark"]);
-        Assert.Equal(42, report.NodeStats.ByProvenance["repo-derived"]);
+        Assert.Equal(49, report.NodeStats.ByProvenance["repo-derived"]);
         Assert.Equal(23, report.NodeStats.ByProvenance["literature-attested"]);
         Assert.Equal(0, report.OpenCount);
         Assert.Empty(report.SuspectedNovel);
@@ -292,6 +292,38 @@ public sealed class DescribeMigrationTests
             DescribeKind.Theorem,
             "D5/S3/Weil/SpectralDynamics.critical_line_characterizations");
 
+        var zeroGeometry = documents["D5/S3/Zeros/ZeroGeometry"].Document.Content.Items
+            .OfType<DocumentBlock.Describe>()
+            .ToDictionary(
+                static node => Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement)
+                    .Value.Value,
+                StringComparer.Ordinal);
+        var zeroQuartetScaling =
+            zeroGeometry["D5/S3/Zeros/ZeroGeometry.zero_quartet_scaling_spec"];
+        AssertRepoDerivedLeanNode(
+            zeroQuartetScaling,
+            DescribeKind.Theorem,
+            "D5/S3/Zeros/ZeroGeometry.zero_quartet_scaling_spec");
+        var zeroQuartetScalingDisclosure = Assert.IsType<Inline.Text>(
+            Assert.IsType<DocumentBlock.Paragraph>(
+                Assert.Single(zeroQuartetScaling.Content.Items)).Content.Items.Single()).Run.Value;
+        Assert.Contains(
+            "zero_conjugation and zero_reflection fields are premises",
+            zeroQuartetScalingDisclosure,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "does not prove that ZeroData is inhabited: no instance or example exists",
+            zeroQuartetScalingDisclosure,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "their multiplicity-preservation laws",
+            zeroQuartetScalingDisclosure,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "does not close the source theorem",
+            zeroQuartetScalingDisclosure,
+            StringComparison.Ordinal);
+
         var spectralHilbert = documents["D5/S3/Weil/SpectralHilbert"].Document.Content.Items
             .OfType<DocumentBlock.Describe>()
             .ToDictionary(static node => node.Id.Value, StringComparer.Ordinal);
@@ -402,7 +434,7 @@ public sealed class DescribeMigrationTests
         Assert.Equal(string.Empty, error.ToString());
         using var document = JsonDocument.Parse(output.ToString());
         Assert.Equal("DESCRIBE-NODES", document.RootElement.GetProperty("case_id").GetString());
-        Assert.Equal(65, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
+        Assert.Equal(72, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
         Assert.Equal(0, document.RootElement.GetProperty("open_count").GetInt32());
     }
 
