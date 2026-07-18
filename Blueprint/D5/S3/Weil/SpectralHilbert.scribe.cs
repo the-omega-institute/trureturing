@@ -75,13 +75,5 @@ internal sealed class SpectralHilbertDocument : IScribeDocumentDefinition
                     "D5/S3/Weil/SpectralHilbert.labeled_zeta_inner")),
                 DescribeProvenance.LiteratureAttested(HedenmalmHilbert),
                 Blocks(Paragraph(Text(
-                    "The coefficient Hilbert space and its zeta reproducing kernel are the classical Hardy-space geometry of Dirichlet series. The repository supplies a typed translation and combined presentation of that known mathematics, not a novelty claim.")))),
-            new DocumentBlock.Describe(
-                DescribeId.Create("bridge-distributions-do-not-settle-pointwise-zeros"),
-                DescribeKind.Remark,
-                H("Bridge distributions do not settle pointwise zeros"),
-                DescribeStatement.FromFormula(Equal(Id("bridgeStart"), Id("bridgeEnd"))),
-                DescribeProvenance.RepoDerived(),
-                Blocks(Paragraph(Text(
-                    "The source identifies a process conditioned at both endpoints as a bridge and interprets it as maximum-entropy interpolation under two boundary readings; checking both endpoint expansions is its probabilistic version of dual completion. It cites the Biane-Pitman-Yor connection between the zeta functional equation and moments shared by the range of a Brownian bridge and the maximum of a Brownian excursion. In that dictionary, the logarithmic distribution of the bridge functional is symmetric about one half, so the critical line is the bridge ledger's symmetry axis. The Kolmogorov-Smirnov bridge-maximum law has a large-x exponential expansion and a small-x theta-transformed expansion. The source records equality of the two at sampled x from 0.5 through 1.4 and reports twenty thousand simulated bridges within about 1e-2, attributing the discrepancy to finite-step discretization. This is retained as a distributional theorem and an executable two-ended checking method; its beauty is expressly not promoted to a pointwise zero-location result.")))))));
+                    "The coefficient Hilbert space and its zeta reproducing kernel are the classical Hardy-space geometry of Dirichlet series. The repository supplies a typed translation and combined presentation of that known mathematics, not a novelty claim.")))))));
 }

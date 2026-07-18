@@ -111,16 +111,6 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                     Blocks(Paragraph(Text(
                         "The source records both dual loops as closed: the pure congruence layer has K_infinity dual to Q/Z, and the mixed layer has Sigma_infinity dual to Q. Conversely, the dual of Q is the constructional origin assigned to Sigma_infinity. On this interpretation the complete phase object's measurable content is precisely the rational numbers, with readings and completion serving as each other's character groups.")))),
                 new DocumentBlock.Describe(
-                    DescribeId.Create("poisson-summation-is-the-cofinal-analytic-limit"),
-                    DescribeKind.Remark,
-                    H("Poisson summation is the cofinal analytic limit"),
-                    DescribeStatement.FromFormula(Equal(
-                        Call("theta", new Formula.Fraction(Num(1), Id("t"))),
-                        Multiply(Call("sqrt", Id("t")), Call("theta", Id("t"))))),
-                    DescribeProvenance.RepoDerived(),
-                    Blocks(Paragraph(Text(
-                        "The source identifies classical Poisson summation and the theta functional equation as the analytic-layer limit of its finite statement along cofinal windows paired with the Archimedean place. It therefore narrows O-9 from reconstructing Poisson summation in general to internalizing that limiting passage. The finite layers are recorded as closed; the transition to the analytic limit remains the residual obligation.")))),
-                new DocumentBlock.Describe(
                     DescribeId.Create("dense-phase-leaves-and-discrete-switching"),
                     DescribeKind.Remark,
                     H("Dense phase leaves and discrete switching"),
@@ -129,16 +119,6 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                         Call("timeline", Id("b")))),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
-                        "The source's strict replacement for switchable parallel timelines is an uncountable family K_infinity/Z of leaves with one generator and different hidden offsets. Distinct leaves never intersect, while every leaf is dense, so they remain disjoint yet arbitrarily close everywhere. Continuous switching is ruled out; a genuine switch must be a discrete jump obeying a cocycle composition law, and every finite observation is said to be unable to distinguish such a jump from ordinary motion. The continuous phase leaf and discrete address leaf are then read as wave and particle. Finally, every switch must pass through an address reading and enter the ledger, giving the slogan that observation is bookkeeping.")))),
-                new DocumentBlock.Describe(
-                    DescribeId.Create("quasiperiodic-return-is-not-exact-recurrence"),
-                    DescribeKind.Remark,
-                    H("Quasiperiodic return is not exact recurrence"),
-                    DescribeStatement.FromFormula(NotEqual(
-                        new Formula.Modulo(Multiply(Id("k"), new Formula.Phi()), Num(1)),
-                        Num(0))),
-                    DescribeProvenance.RepoDerived(),
-                    Blocks(Paragraph(Text(
-                        "The cosmological reading of eternal recurrence is rejected. Poincare recurrence supplies arbitrarily close return in finite phase space, but exact periodic repetition would require a nonzero k with k*phi equal to zero modulo one, which irrationality forbids. The source reports a smallest sampled distance of 2.3e-6 without equality and, at tolerance 1e-4, a first return at Fibonacci index 6765. Thus the golden rotation permits Fibonacci-scale approximate returns while the minimally complex golden word remains aperiodic: quasiperiodicity is not periodicity, and the three-distance theorem is offered as a counterexample to exact recurrence rather than a proof of it. The weaker mathematical metaphor of approximate return and self-similar reappearance is retained. Nietzsche's ethical imperative is classified outside truth-valued mathematics, because it is a prescription rather than a claim about the world.")))))));
+                        "The source's strict replacement for switchable parallel timelines is an uncountable family K_infinity/Z of leaves with one generator and different hidden offsets. Distinct leaves never intersect, while every leaf is dense, so they remain disjoint yet arbitrarily close everywhere. Continuous switching is ruled out; a genuine switch must be a discrete jump obeying a cocycle composition law, and every finite observation is said to be unable to distinguish such a jump from ordinary motion. The continuous phase leaf and discrete address leaf are then read as wave and particle. Finally, every switch must pass through an address reading and enter the ledger, giving the slogan that observation is bookkeeping.")))))));
     }
 }

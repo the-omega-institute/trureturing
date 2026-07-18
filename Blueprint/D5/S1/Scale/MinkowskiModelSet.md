@@ -28,18 +28,6 @@ $$
 
 The source assigns the two-sided code genuine load only away from the diagonal: its cited off-diagonal results are reported to fail under replacement encodings. The classical zeta diagonal is instead code-blind whenever it is reached only through diagonal decomposition. Whether an off-diagonal invariant can return analytic information to that diagonal remains explicitly open as O-5.
 
-## Remark: Trace-map program and the missing hyperbolicity engine
-
-Provenance: `repo-derived`
-
-Statement:
-
-$$
-x_{k + 1} = 2 \cdot x_{k} \cdot x_{k - 1} - x_{k - 2}
-$$
-
-The proposed O-5 route matches four pieces with the Fibonacci Hamiltonian trace map: a three-term recurrence with x(k+1) = 2*x(k)*x(k-1) - x(k-2), multiplicative closure with the SL2 trace identity, the involution J with the Fricke invariant surface, and convergence of W_K orbits with bounded-orbit spectral classification. On that reading, each Zqc axis component is encoded by an explicit finite-dimensional polynomial dynamical system carrying a conserved quantity. Transferring hyperbolicity far enough to read continuation and zero information from orbit asymptotics is the remaining open part, not a conclusion of this remark.
-
 ## Remark: Scaled zero images need an independent engine
 
 Provenance: `repo-derived`
@@ -51,18 +39,6 @@ $$
 $$
 
 In the source cascade, every zeta zero rho produces the image lattice rho/(a*phi^2 + b*phi^3) whenever the corresponding exponent is nonzero. The leading scale ratio is phi, and the band endpoints interlace pole and critical images, with 1/(2*phi^3) as the stated left endpoint. This self-similar overlay is only a rearrangement of identities built from zeta, so without new input it gives no compressed zero argument. Its positive use is conditional: genuinely independent control of one quasiperiodic band, for example trace-map hyperbolicity, would constrain an entire family of phi-scaled zeta segments. The recursive skeleton is present; the independent engine is still O-5.
-
-## Remark: Window parity becomes a congruence pattern
-
-Provenance: `repo-derived`
-
-Statement:
-
-$$
-\left\lfloor\varphi^{3}\right\rfloor = 4
-$$
-
-The four source words {1}, {3}, {4}, and {2,4} classify complete internal-window coverage on the a = 1 fiber: b = 0,1,2,3 occurs once and then stops, so this is a finite window pattern rather than a cyclic congruence. The number four is the capacity floor(phi^3), not modulus four, while parity is genuine. Dividing by a Witt factor of the form 1-v^2 makes an even window length terminate, as for length four, and makes an odd length alternate forever, as for length three with the nontrivial Z/2 character (-1)^k. Thus Witt inversion translates window data into a congruence pattern, and the reported cascade chirality is traced to even-versus-odd window length.
 
 ## Remark: The continuation wall is a transported boundary
 
