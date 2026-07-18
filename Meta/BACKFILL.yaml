@@ -7357,10 +7357,7 @@ sources:
             - gid: D5/S3/Zeros/EulerWindows.prime_axis_heat_trace_eq_zeta
               source_sha256: sha256:9c3574bdde0296174bd8e5fe94614f4131090c6e2621eb941ae5551515ff9454
               target_sha256: sha256:b93cbfd5915a7afb81096c609720e034fa22e7e5e7bbf23e6d9a51cb640fa4cf
-          scribe:
-            - gid: D5/S3/Zeros/EulerWindows.prime_axis_heat_trace_eq_zeta
-              definition_sha256: sha256:8ce6edc63cba3536f6e6774106d5f8f2362a5e75b2f483936685c6a25fae9fec
-              emission_sha256: sha256:a8d154ff16d73834f09d87b37875bdbe79608898b6d274abd044d928d2b7aebc
+          scribe: []
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
@@ -7502,10 +7499,7 @@ sources:
             - gid: D5/S3/Zeros/CompletedZeta.analytic_continuation_unique
               source_sha256: sha256:75cc0a67e5c379ce5cf902aa60560f9b9606f9db97dda541b4b798155db46b56
               target_sha256: sha256:51e9ac062d8281e341170f2059134974fa4f755b4e88e8ff9bb56f7bc5b6d2cc
-          scribe:
-            - gid: D5/S3/Zeros/CompletedZeta.analytic_continuation_unique
-              definition_sha256: sha256:1688cdd731024a44ec7f1de1ba8649793245068fbbe3b9d193db6df3ad38a19c
-              emission_sha256: sha256:c6ff28543fb9c6816806c4b55a03ceafb0de4262a547912cbb86dd529d6d9fff
+          scribe: []
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
