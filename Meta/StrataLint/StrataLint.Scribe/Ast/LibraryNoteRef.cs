@@ -25,7 +25,7 @@ public sealed record LibraryNoteRef
             throw new ArgumentException("Value must be a Library-plane GID.", nameof(value));
         }
 
-        var rawBibKey = value["D5/L/".Length..];
+        var rawBibKey = value[(value.LastIndexOf('/') + 1)..];
         var bibKey = BibKey.TryCreate(rawBibKey)
             ?? throw new ArgumentException("Library GID needs a canonical bibkey.", nameof(value));
         return new LibraryNoteRef(reference, bibKey);

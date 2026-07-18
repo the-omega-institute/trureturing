@@ -91,7 +91,7 @@ public static class RouteEngine
                 "B" => Formal(policy, syntax, blueprint: true),
                 "E" => Evidence(policy, syntax),
                 "C" => Chronicle(syntax),
-                "L" => Library(syntax),
+                "L" => Library(policy, syntax),
                 "P" => Paper(syntax),
                 _ => throw new FormatException("unknown manifest plane"),
             };
@@ -222,10 +222,11 @@ public static class RouteEngine
         return ($"D5/C/{syntax.Domain}/{syntax.Module}", null);
     }
 
-    private static (string Gid, Stratum? Stratum) Library(ManifestSyntax syntax)
+    private static (string Gid, Stratum? Stratum) Library(
+        ValidatedPolicy policy,
+        ManifestSyntax syntax)
     {
-        if (syntax.Domain != "Notes"
-            || !SafeSegment(syntax.Module)
+        if (!SafeSegment(syntax.Module)
             || syntax.Artifact != "markdown"
             || syntax.Selector.Length != 0
             || syntax.Tag.Length != 0)
@@ -233,7 +234,18 @@ public static class RouteEngine
             throw new FormatException("L manifest is not canonical");
         }
 
-        return ($"D5/L/{syntax.Module}", null);
+        if (syntax.Domain == "Notes")
+        {
+            return ($"D5/L/{syntax.Module}", null);
+        }
+
+        if (!DomainId.TryCreate(syntax.Domain, out var domain)
+            || !policy.Domains.ContainsKey(domain))
+        {
+            throw new FormatException("L split bucket requires a controlled domain");
+        }
+
+        return ($"D5/L/{syntax.Domain}/{syntax.Module}", null);
     }
 
     private static (string Gid, Stratum? Stratum) Paper(ManifestSyntax syntax)

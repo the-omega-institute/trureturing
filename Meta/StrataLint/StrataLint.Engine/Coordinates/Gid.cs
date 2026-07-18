@@ -280,12 +280,19 @@ public sealed class Gid : IEquatable<Gid>
 
     private static Target ParseLibrary(string[] rest, string? tag)
     {
-        if (tag is not null || rest.Length != 1 || !IsSafeSegment(rest[0]))
+        var rootBucket = rest.Length == 1 && IsSafeSegment(rest[0]);
+        var splitBucket = rest.Length == 2
+            && CamelPattern.IsMatch(rest[0])
+            && IsSafeSegment(rest[1]);
+        if (tag is not null || (!rootBucket && !splitBucket))
         {
             throw new FormatException("Library GID is not canonical.");
         }
 
-        var path = RepoPath.CreateKnown($"Library/notes/{rest[0]}.md");
+        var path = RepoPath.CreateKnown(
+            rest.Length == 1
+                ? $"Library/notes/{rest[0]}.md"
+                : $"Library/{rest[0]}/{rest[1]}.md");
         return new Target.Library(Theory, CoordinatePath.Create(rest), path);
     }
 
