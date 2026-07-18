@@ -7,6 +7,7 @@ public sealed class DocumentDiscoveryTests
 {
     private const string AlgebraicModelDocumentPath = "Blueprint/D5/S0/Carrier/AlgebraicModel.md";
     private const string ConjDocumentPath = "Blueprint/D5/S0/Carrier/Conj.md";
+    private const string EuclideanDocumentPath = "Blueprint/D5/S0/Carrier/Euclidean.md";
     private const string GoldenRatioDocumentPath = "Blueprint/D5/S0/Carrier/GoldenRatio.md";
     private const string NormDocumentPath = "Blueprint/D5/S0/Carrier/Norm.md";
     private const string RingDocumentPath = "Blueprint/D5/S0/Carrier/Ring.md";
@@ -59,6 +60,7 @@ public sealed class DocumentDiscoveryTests
             [
                 "D5/S0/Carrier/AlgebraicModel",
                 "D5/S0/Carrier/Conj",
+                "D5/S0/Carrier/Euclidean",
                 "D5/S0/Carrier/GoldenRatio",
                 "D5/S0/Carrier/Norm",
                 "D5/S0/Carrier/Ring",
@@ -103,6 +105,7 @@ public sealed class DocumentDiscoveryTests
             [
                 AlgebraicModelDocumentPath,
                 ConjDocumentPath,
+                EuclideanDocumentPath,
                 GoldenRatioDocumentPath,
                 NormDocumentPath,
                 RingDocumentPath,
@@ -401,6 +404,11 @@ public sealed class DocumentDiscoveryTests
                 "D5/S0/Carrier/AlgebraicModel.golden_algebraic_model_spec",
                 DescribeProvenanceKind.LiteratureAttested,
                 "D5/L/stewarttall2025algebraic"),
+            ("D5/S0/Carrier/Euclidean", "norm-euclidean-division",
+                DescribeKind.Theorem,
+                "D5/S0/Carrier/Euclidean.golden_division",
+                DescribeProvenanceKind.LiteratureAttested,
+                "D5/L/Carrier/chatland1949euclidean"),
             ("D5/S1/Depth/JointDepth", "admissible-joint-scale-digit-phase-depth",
                 DescribeKind.Definition,
                 "D5/S1/Depth/JointDepth.joint_depth_spec",
