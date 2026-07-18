@@ -7,6 +7,8 @@ strata_touched:
   - D5/S3/Weil/LabeledZeta
   - D5/S3/Weil/SpectralHilbert
   - D5/S3/Weil/SpectralDynamics
+  - D5/S3/Zeros/EulerWindows
+  - D5/S3/Zeros/SpectralShift
 license: citation-only
 triage: anchor
 ---
@@ -35,6 +37,11 @@ critical-line declaration.
 The paper does not use the repository's ledger vocabulary or state the Lean
 declaration verbatim. The formal nonvanishing result is the immediate
 coordinate consequence that the identity coefficient is one.
+
+The same coefficient model is contextual background for the PZG coordinate
+sum and multiplicative address pullback in the two Zeros modules listed above.
+The exact `PrimeAxisTable` encoding and its pointwise backward-shift identity
+are repository translations, not claims attributed verbatim to the paper.
 
 ## Search log
 
@@ -93,6 +100,16 @@ coordinate consequence that the identity coefficient is one.
   body and received HTTP 422.  Reissuing raw JSON on stdin with
   `Content-Type: application/json` produced the search results above; no
   bibliographic conclusion was drawn from the failed requests.
+- 2026-07-18: Queried NyxID/Tavily for `Hardy space Dirichlet series
+  reproducing kernel eigenvector adjoint multiplication operator prime shifts
+  DOI`, `Hilbert space Dirichlet series coefficient backward shift eigenvector
+  n to minus s reproducing kernel`, and the Hedenmalm-Lindqvist-Seip title with
+  shift and eigenvector terms. Results confirmed the square-summable
+  coefficient model, zeta reproducing kernel, multiplier setting, and the
+  general adjoint-multiplier kernel-eigenvector principle. No result matched
+  the repository's exact multi-axis `PrimeAxisTable` pullback or its claimed
+  bundled divisibility operator, so `SpectralShift` is marked repo-derived and
+  cites this note only as context.
 
 ## Verified locator
 
