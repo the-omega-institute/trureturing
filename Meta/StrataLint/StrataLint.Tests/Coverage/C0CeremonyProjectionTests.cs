@@ -99,6 +99,25 @@ public sealed class C0CeremonyProjectionTests
     }
 
     [Fact]
+    public void CanonicalShapeRequiresExactlyOneGateWiringRecord()
+    {
+        var members = ImmutableArray.Create(
+            "phase1-protected-content-admission",
+            "phase2-dual-harness-conservative-extension",
+            "c0/base-commit git-commit/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "c0/ceremony-commit convention/this-pr-merge-commit",
+            "c0/controller git-sha1/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb controller.cs",
+            "c0/corpus git-sha1/cccccccccccccccccccccccccccccccccccccccc corpus.toml",
+            "c0/gate-wiring git-sha1/dddddddddddddddddddddddddddddddddddddddd gate-a.sh",
+            "c0/gate-wiring git-sha1/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee gate-b.sh",
+            "c0/inaugural-certificate sha256/ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff certificate.json",
+            "c0/preimage-commit git-commit/1111111111111111111111111111111111111111",
+            "c0/preimage-tree git-tree/2222222222222222222222222222222222222222");
+
+        Assert.False(C0CeremonyProjection.HasCanonicalShape(members));
+    }
+
+    [Fact]
     public void TowerProjectionPreservesNonC0BytesAndSecondPassIsByteExact()
     {
         var original = ImmutableArray.CreateRange(Encoding.UTF8.GetBytes("""

@@ -170,7 +170,7 @@ internal static class C0CeremonyProjection
             && Count(counts, "c0/ceremony-commit") == 1
             && Count(counts, "c0/controller") > 0
             && Count(counts, "c0/corpus") > 0
-            && Count(counts, "c0/gate-wiring") > 0
+            && Count(counts, "c0/gate-wiring") == 1
             && Count(counts, "c0/inaugural-certificate") == 1
             && Count(counts, "c0/preimage-commit") == 1
             && Count(counts, "c0/preimage-tree") == 1;
@@ -222,12 +222,32 @@ internal static class C0CeremonyProjection
         RepositorySnapshot snapshot,
         ReadOnlySpan<byte> certificateBytes)
     {
-        var records = ImmutableArray.CreateBuilder<string>();
+        if (!TryCreateAnchorAddressRecords(snapshot, out var anchorRecords))
+        {
+            var missing = DiscoverAnchors(snapshot).First(anchor =>
+                !snapshot.TryGetFile(anchor.Path, out _));
+            throw new InvalidOperationException($"C0 anchor is missing: {missing.Path}");
+        }
+
+        var records = anchorRecords.ToBuilder();
+        var certificateAddress = "sha256/"
+            + Convert.ToHexStringLower(SHA256.HashData(certificateBytes));
+        records.Add($"c0/inaugural-certificate {certificateAddress} {CertificatePath}");
+        return records.Order(StringComparer.Ordinal).ToImmutableArray();
+    }
+
+    internal static bool TryCreateAnchorAddressRecords(
+        RepositorySnapshot snapshot,
+        out ImmutableArray<string> records)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        var builder = ImmutableArray.CreateBuilder<string>();
         foreach (var anchor in DiscoverAnchors(snapshot))
         {
             if (!snapshot.TryGetFile(anchor.Path, out var file))
             {
-                throw new InvalidOperationException($"C0 anchor is missing: {anchor.Path}");
+                records = ImmutableArray<string>.Empty;
+                return false;
             }
 
             var kind = anchor.Kind switch
@@ -240,13 +260,11 @@ internal static class C0CeremonyProjection
             var address = FrozenContentAddress.ComputeGitBlobOid(
                 file.RawBytes.AsSpan(),
                 HashAlgorithmName.SHA1).Replace(':', '/');
-            records.Add($"{kind} {address} {anchor.Path}");
+            builder.Add($"{kind} {address} {anchor.Path}");
         }
 
-        var certificateAddress = "sha256/"
-            + Convert.ToHexStringLower(SHA256.HashData(certificateBytes));
-        records.Add($"c0/inaugural-certificate {certificateAddress} {CertificatePath}");
-        return records.Order(StringComparer.Ordinal).ToImmutableArray();
+        records = builder.Order(StringComparer.Ordinal).ToImmutableArray();
+        return true;
     }
 
     private static IEnumerable<C0Anchor> Discover(
