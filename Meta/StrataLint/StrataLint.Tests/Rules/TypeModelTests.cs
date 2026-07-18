@@ -115,6 +115,15 @@ public sealed class TypeModelTests
     }
 
     [Fact]
+    public void LibrarySplitLedgerIsClosedWorldRegisteredButNotASemanticTarget()
+    {
+        var path = RepoPath.CreateKnown("Library/MAP.md");
+
+        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
+        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
+    }
+
+    [Fact]
     public void BlueprintDefinitionSourceIsContentButNotASecondSemanticTarget()
     {
         var path = RepoPath.CreateKnown(RawDefinitionSourcePath);
