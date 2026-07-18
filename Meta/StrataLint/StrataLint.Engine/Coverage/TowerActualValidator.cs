@@ -9,12 +9,6 @@ internal sealed record TowerActualValidation(
 
 internal static class TowerActualValidator
 {
-    private static readonly string[] PhasedGatePhases =
-    [
-        "phase1-protected-content-admission",
-        "phase2-dual-harness-conservative-extension",
-    ];
-
     private static readonly ImmutableDictionary<string, string> KnownCiNames =
         new Dictionary<string, string>(StringComparer.Ordinal)
         {
@@ -55,7 +49,7 @@ internal static class TowerActualValidator
     {
         if (component.Kind == "phased-gate")
         {
-            ValidatePhasedGate(component, findings, checks);
+            ValidatePhasedGate(component, snapshot, findings, checks);
             return;
         }
 
@@ -111,6 +105,7 @@ internal static class TowerActualValidator
 
     private static void ValidatePhasedGate(
         TowerComponentSyntax component,
+        RepositorySnapshot snapshot,
         ImmutableArray<TowerFinding>.Builder findings,
         ImmutableArray<TowerCheck>.Builder checks)
     {
@@ -122,8 +117,7 @@ internal static class TowerActualValidator
                 "phased gate must be verified by its content-addressed C0 ceremony"));
         }
 
-        if (!component.Members.Take(PhasedGatePhases.Length)
-            .SequenceEqual(PhasedGatePhases, StringComparer.Ordinal))
+        if (!C0CeremonyProjection.HasCanonicalPhases(component.Members))
         {
             findings.Add(new TowerFinding(
                 "TOWER-PHASES",
@@ -131,12 +125,23 @@ internal static class TowerActualValidator
                 "phased gate must begin with both implemented phases"));
         }
 
-        if (!HasCanonicalC0Ceremony(component.Members.Skip(PhasedGatePhases.Length).ToArray()))
+        if (!C0CeremonyProjection.HasCanonicalShape(component.Members))
         {
             findings.Add(new TowerFinding(
                 "TOWER-C0-CEREMONY",
                 component.Id,
                 "phased gate must record canonical controller, corpus, gate, certificate, base, merge, and preimage addresses"));
+        }
+
+        if (!C0CeremonyProjection.AddressesMatchSnapshot(
+                component.Members,
+                snapshot,
+                out var addressReason))
+        {
+            findings.Add(new TowerFinding(
+                "TOWER-C0-ADDRESS",
+                component.Id,
+                addressReason));
         }
 
         if (!findings.Any(item => item.Component == component.Id))
@@ -147,93 +152,6 @@ internal static class TowerActualValidator
                 "Phase1 content admission implemented; Phase2 dual-harness gate implemented; verified by content-addressed C0 ceremony"));
         }
     }
-
-    private static bool HasCanonicalC0Ceremony(IReadOnlyList<string> records)
-    {
-        if (!records.SequenceEqual(records.Order(StringComparer.Ordinal), StringComparer.Ordinal))
-        {
-            return false;
-        }
-
-        var baseCommits = 0;
-        var ceremonyCommits = 0;
-        var controllers = 0;
-        var corpusFiles = 0;
-        var gateWirings = 0;
-        var certificates = 0;
-        var preimageCommits = 0;
-        var preimageTrees = 0;
-        var addressedPaths = new HashSet<string>(StringComparer.Ordinal);
-        foreach (var record in records)
-        {
-            var fields = record.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            switch (fields)
-            {
-                case ["c0/base-commit", var oid]
-                    when IsTaggedLowerHex(oid, "git-commit/", 40):
-                    baseCommits++;
-                    break;
-                case ["c0/ceremony-commit", "convention/this-pr-merge-commit"]:
-                    ceremonyCommits++;
-                    break;
-                case ["c0/controller", var oid, var path]
-                    when IsTaggedLowerHex(oid, "git-sha1/", 40)
-                         && IsRepositoryPath(path)
-                         && addressedPaths.Add("controller " + path):
-                    controllers++;
-                    break;
-                case ["c0/corpus", var oid, var path]
-                    when IsTaggedLowerHex(oid, "git-sha1/", 40)
-                         && IsRepositoryPath(path)
-                         && addressedPaths.Add("corpus " + path):
-                    corpusFiles++;
-                    break;
-                case ["c0/gate-wiring", var oid, var path]
-                    when IsTaggedLowerHex(oid, "git-sha1/", 40)
-                         && IsRepositoryPath(path)
-                         && addressedPaths.Add("gate " + path):
-                    gateWirings++;
-                    break;
-                case ["c0/inaugural-certificate", var digest, var path]
-                    when IsTaggedLowerHex(digest, "sha256/", 64)
-                         && IsRepositoryPath(path)
-                         && addressedPaths.Add("certificate " + path):
-                    certificates++;
-                    break;
-                case ["c0/preimage-commit", var oid]
-                    when IsTaggedLowerHex(oid, "git-commit/", 40):
-                    preimageCommits++;
-                    break;
-                case ["c0/preimage-tree", var oid]
-                    when IsTaggedLowerHex(oid, "git-tree/", 40):
-                    preimageTrees++;
-                    break;
-                default:
-                    return false;
-            }
-        }
-
-        return baseCommits == 1
-            && ceremonyCommits == 1
-            && controllers > 0
-            && corpusFiles > 0
-            && gateWirings == 1
-            && certificates == 1
-            && preimageCommits == 1
-            && preimageTrees == 1;
-    }
-
-    private static bool IsTaggedLowerHex(string value, string prefix, int digits) =>
-        value.Length == prefix.Length + digits
-        && value.StartsWith(prefix, StringComparison.Ordinal)
-        && value[prefix.Length..].All(static character =>
-            character is >= '0' and <= '9' or >= 'a' and <= 'f');
-
-    private static bool IsRepositoryPath(string value) =>
-        value.Length > 0
-        && !value.StartsWith('/')
-        && !value.Contains('\\')
-        && value.Split('/').All(static segment => segment is not ("" or "." or ".."));
 
     private static void ValidateRuleCatalog(
         TowerComponentSyntax component,
