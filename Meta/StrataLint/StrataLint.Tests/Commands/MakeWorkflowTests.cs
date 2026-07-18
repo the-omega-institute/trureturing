@@ -127,6 +127,18 @@ public sealed class MakeWorkflowTests
     }
 
     [Fact]
+    public void LocalGateHonorsExplicitTemporaryDirectory()
+    {
+        var root = FindRepositoryRoot();
+        var localGate = File.ReadAllText(Path.Combine(root, LocalHarnessGateScriptPath));
+
+        Assert.Contains(
+            "mktemp -d \"${TMPDIR:-/tmp}/stratalint-local-gate.XXXXXXXX\"",
+            localGate,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void ScribeWrapperProducesCanonicalLeanReportBeforeEmission()
     {
         var root = FindRepositoryRoot();
