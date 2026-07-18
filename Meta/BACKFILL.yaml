@@ -109,16 +109,29 @@ sources:
           raw_sha256: sha256:a9e4073c36dcdc04163974b80a47d7884f470463b0b0bdd112c4c552bc29a607
           normalized_sha256: sha256:a9e4073c36dcdc04163974b80a47d7884f470463b0b0bdd112c4c552bc29a607
         cas_ref: sha256:a9e4073c36dcdc04163974b80a47d7884f470463b0b0bdd112c4c552bc29a607
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Quantum/ObserverAlgebra.observer_read_update_noncommutative
+          - D5/S3/Quantum/ObserverAlgebra.observer_update_covariant_group_skeleton
         receipts:
-          coverage: []
+          coverage:
+            - gid: D5/S3/Quantum/ObserverAlgebra.observer_read_update_noncommutative
+              source_sha256: sha256:a9e4073c36dcdc04163974b80a47d7884f470463b0b0bdd112c4c552bc29a607
+              target_sha256: sha256:95f2bcbc8550ac25b6ae6a4ebf3c417dd714226946db591b4c98c1be03fafc06
+            - gid: D5/S3/Quantum/ObserverAlgebra.observer_update_covariant_group_skeleton
+              source_sha256: sha256:a9e4073c36dcdc04163974b80a47d7884f470463b0b0bdd112c4c552bc29a607
+              target_sha256: sha256:95f2bcbc8550ac25b6ae6a4ebf3c417dd714226946db591b4c98c1be03fafc06
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - full-crossed-product-identification
+            - discrete-crossed-product-uniqueness
+            - continuous-hidden-flow-rigidity-exclusion
+            - observer-read-write-forces-structure
+            - abstract-crossed-product-commutator-formula
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: observer-residual-8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490
         ast_path: theorem/finite-window-register
         fingerprints:
@@ -267,9 +280,17 @@ sources:
           normalized_sha256: sha256:5867fe5155d445a54dc3abe86aaecf7829c9f60988ea7e0d76bdf18e0ed085d6
         cas_ref: sha256:5867fe5155d445a54dc3abe86aaecf7829c9f60988ea7e0d76bdf18e0ed085d6
         coverage_gids:
+          - D5/S3/Quantum/Decoherence.phase_damping_composition
+          - D5/S3/Quantum/Decoherence.phase_damping_fixed_iff_diagonal
           - D5/S3/Quantum/QubitWitnesses.equal_superposition_phase_damping_certificate
         receipts:
           coverage:
+            - gid: D5/S3/Quantum/Decoherence.phase_damping_composition
+              source_sha256: sha256:5867fe5155d445a54dc3abe86aaecf7829c9f60988ea7e0d76bdf18e0ed085d6
+              target_sha256: sha256:b8f188e3e53e0ca825a4d035a59fe18039015498f5a456e9cf56d6b372cfcf02
+            - gid: D5/S3/Quantum/Decoherence.phase_damping_fixed_iff_diagonal
+              source_sha256: sha256:5867fe5155d445a54dc3abe86aaecf7829c9f60988ea7e0d76bdf18e0ed085d6
+              target_sha256: sha256:b8f188e3e53e0ca825a4d035a59fe18039015498f5a456e9cf56d6b372cfcf02
             - gid: D5/S3/Quantum/QubitWitnesses.equal_superposition_phase_damping_certificate
               source_sha256: sha256:5867fe5155d445a54dc3abe86aaecf7829c9f60988ea7e0d76bdf18e0ed085d6
               target_sha256: sha256:89457799a8e0362f3113889e39ef6eeadabe40f2c9e3228af2bffe7d66acda31
@@ -653,16 +674,30 @@ sources:
           raw_sha256: sha256:7c9486a5ed7ca3264cd32d9aaaa07bb8af9e81a547a163dd202042efa51b920c
           normalized_sha256: sha256:7c9486a5ed7ca3264cd32d9aaaa07bb8af9e81a547a163dd202042efa51b920c
         cas_ref: sha256:7c9486a5ed7ca3264cd32d9aaaa07bb8af9e81a547a163dd202042efa51b920c
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Quantum/ObserverAlgebra.observer_read_update_noncommutative
+          - D5/S3/Quantum/ObserverAlgebra.observer_update_covariant_group_skeleton
         receipts:
-          coverage: []
+          coverage:
+            - gid: D5/S3/Quantum/ObserverAlgebra.observer_read_update_noncommutative
+              source_sha256: sha256:7c9486a5ed7ca3264cd32d9aaaa07bb8af9e81a547a163dd202042efa51b920c
+              target_sha256: sha256:95f2bcbc8550ac25b6ae6a4ebf3c417dd714226946db591b4c98c1be03fafc06
+            - gid: D5/S3/Quantum/ObserverAlgebra.observer_update_covariant_group_skeleton
+              source_sha256: sha256:7c9486a5ed7ca3264cd32d9aaaa07bb8af9e81a547a163dd202042efa51b920c
+              target_sha256: sha256:95f2bcbc8550ac25b6ae6a4ebf3c417dd714226946db591b4c98c1be03fafc06
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - universal-c-star-crossed-product-identification
+            - continuous-hidden-flow-rigidity-exclusion
+            - discreteness-forced-by-rigidity
+            - integer-action-selected-by-observer-premise
+            - observer-read-write-forces-structure
+            - abstract-crossed-product-commutator-formula
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: observer-residual-92312c5c0791ca42042265d47e65559acb1efa5a59e9e7db7f6e9fa6786b1a38
         ast_path: theorem/finite-window-register
         fingerprints:
@@ -813,16 +848,33 @@ sources:
           raw_sha256: sha256:39801f81b23d4fe1d4823f4470f961be3f2fc21445bfec13de1574cb9fd368bc
           normalized_sha256: sha256:39801f81b23d4fe1d4823f4470f961be3f2fc21445bfec13de1574cb9fd368bc
         cas_ref: sha256:39801f81b23d4fe1d4823f4470f961be3f2fc21445bfec13de1574cb9fd368bc
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Quantum/Decoherence.phase_damping_composition
+          - D5/S3/Quantum/Decoherence.phase_damping_fixed_iff_diagonal
+          - D5/S3/Quantum/QubitWitnesses.equal_superposition_phase_damping_certificate
         receipts:
-          coverage: []
+          coverage:
+            - gid: D5/S3/Quantum/Decoherence.phase_damping_composition
+              source_sha256: sha256:39801f81b23d4fe1d4823f4470f961be3f2fc21445bfec13de1574cb9fd368bc
+              target_sha256: sha256:b8f188e3e53e0ca825a4d035a59fe18039015498f5a456e9cf56d6b372cfcf02
+            - gid: D5/S3/Quantum/Decoherence.phase_damping_fixed_iff_diagonal
+              source_sha256: sha256:39801f81b23d4fe1d4823f4470f961be3f2fc21445bfec13de1574cb9fd368bc
+              target_sha256: sha256:b8f188e3e53e0ca825a4d035a59fe18039015498f5a456e9cf56d6b372cfcf02
+            - gid: D5/S3/Quantum/QubitWitnesses.equal_superposition_phase_damping_certificate
+              source_sha256: sha256:39801f81b23d4fe1d4823f4470f961be3f2fc21445bfec13de1574cb9fd368bc
+              target_sha256: sha256:89457799a8e0362f3113889e39ef6eeadabe40f2c9e3228af2bffe7d66acda31
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - system-environment-phase-damping-derivation
+            - ledger-is-environment-identification
+            - bookkeeping-is-decoherence-identification
+            - record-rule-selects-address-pointer-basis
+            - fourier-record-rule-selects-fourier-pointer-basis
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: observer-residual-689888066c1e8add22f57b5836b07aa99dbf721d3a79a3e0f1bd94b6369e7bc2
         ast_path: classical/redundant-records
         fingerprints:
