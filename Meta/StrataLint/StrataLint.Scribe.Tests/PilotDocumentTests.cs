@@ -25,7 +25,9 @@ public sealed class DocumentDiscoveryTests
     private const string FibonacciEigenDocumentPath = "Blueprint/D5/S1/Scale/FibonacciEigen.md";
     private const string LogDocumentPath = "Blueprint/D5/S1/Scale/Log.md";
     private const string MinkowskiModelSetDocumentPath = "Blueprint/D5/S1/Scale/MinkowskiModelSet.md";
+    private const string DecoherenceDocumentPath = "Blueprint/D5/S3/Quantum/Decoherence.md";
     private const string FiniteDimensionalDocumentPath = "Blueprint/D5/S3/Quantum/FiniteDimensional.md";
+    private const string ObserverAlgebraDocumentPath = "Blueprint/D5/S3/Quantum/ObserverAlgebra.md";
     private const string QubitWitnessesDocumentPath = "Blueprint/D5/S3/Quantum/QubitWitnesses.md";
     private const string CriticalLineDocumentPath = "Blueprint/D5/S3/Weil/CriticalLine.md";
     private const string EulerProductDocumentPath = "Blueprint/D5/S3/Weil/EulerProduct.md";
@@ -61,7 +63,9 @@ public sealed class DocumentDiscoveryTests
                 "D5/S1/Scale/FibonacciEigen",
                 "D5/S1/Scale/Log",
                 "D5/S1/Scale/MinkowskiModelSet",
+                "D5/S3/Quantum/Decoherence",
                 "D5/S3/Quantum/FiniteDimensional",
+                "D5/S3/Quantum/ObserverAlgebra",
                 "D5/S3/Quantum/QubitWitnesses",
                 "D5/S3/Weil/CriticalLine",
                 "D5/S3/Weil/EulerProduct",
@@ -94,7 +98,9 @@ public sealed class DocumentDiscoveryTests
                 FibonacciEigenDocumentPath,
                 LogDocumentPath,
                 MinkowskiModelSetDocumentPath,
+                DecoherenceDocumentPath,
                 FiniteDimensionalDocumentPath,
+                ObserverAlgebraDocumentPath,
                 QubitWitnessesDocumentPath,
                 CriticalLineDocumentPath,
                 EulerProductDocumentPath,
@@ -512,6 +518,49 @@ public sealed class DocumentDiscoveryTests
         Assert.Contains(
             "Original certificate coverage: the source atom's symbolic (1/2) * c0^N coherence law and fixed one-half populations are formalized exactly; the atom supplies no fixed numeric c0 or N.",
             markdown,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void QuantumContinuationDocumentsDiscloseStructuresScopeAndCertificates()
+    {
+        var documents = DocumentDefinitions.All
+            .ToDictionary(static item => item.Document.Header.Gid.Value, StringComparer.Ordinal);
+        var observerDefinition = documents["D5/S3/Quantum/ObserverAlgebra"];
+        var decoherenceDefinition = documents["D5/S3/Quantum/Decoherence"];
+        var report = LeanReportFixture.ForDocuments(
+            [observerDefinition.Document, decoherenceDefinition.Document]);
+        var observerMarkdown = System.Text.Encoding.UTF8.GetString(
+            CanonicalMarkdownWriter.Write(observerDefinition.Document, report).AsSpan());
+        var decoherenceMarkdown = System.Text.Encoding.UTF8.GetString(
+            CanonicalMarkdownWriter.Write(decoherenceDefinition.Document, report).AsSpan());
+
+        Assert.Contains("including an empty type", observerMarkdown, StringComparison.Ordinal);
+        Assert.Contains("explicit address i", observerMarkdown, StringComparison.Ordinal);
+        Assert.Contains(
+            "does not construct or identify the universal C*-crossed product",
+            observerMarkdown,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "neither observer-algebra CAS atom contains a numerical certificate",
+            observerMarkdown,
+            StringComparison.Ordinal);
+
+        Assert.Contains(
+            "inhabited real interval [0,1], with zero as an explicit witness",
+            decoherenceMarkdown,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "arbitrary complex two-by-two matrix, no positivity, trace-one, or Hermiticity premise",
+            decoherenceMarkdown,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "Original certificate disposition: the source atoms' symbolic (1/2) * c0^N coherence law and fixed one-half populations are already formalized exactly",
+            decoherenceMarkdown,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "no fixed numeric c0 or N",
+            decoherenceMarkdown,
             StringComparison.Ordinal);
     }
 
