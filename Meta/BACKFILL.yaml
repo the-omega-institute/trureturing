@@ -7365,7 +7365,7 @@ sources:
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-c9dcf7410fb570f5a8db051d1daf12f18b74c22762cb1ead7000789ad8f30739
         ast_path: theorem/22.2
@@ -7510,7 +7510,7 @@ sources:
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-61364dcfb96879a529a59450892412c60c668fa0cb3dc0438a59318cbc29ca71
         ast_path: theorem/23.4
