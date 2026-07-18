@@ -292,18 +292,18 @@ public sealed class DescribeMigrationTests
             DescribeKind.Theorem,
             "D5/S3/Weil/SpectralDynamics.critical_line_characterizations");
 
-        var zeroGeometry = documents["D5/S3/Weil/ZeroGeometry"].Document.Content.Items
+        var zeroGeometry = documents["D5/S3/Zeros/ZeroGeometry"].Document.Content.Items
             .OfType<DocumentBlock.Describe>()
             .ToDictionary(
                 static node => Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement)
                     .Value.Value,
                 StringComparer.Ordinal);
         var zeroQuartetScaling =
-            zeroGeometry["D5/S3/Weil/ZeroGeometry.zero_quartet_scaling_spec"];
+            zeroGeometry["D5/S3/Zeros/ZeroGeometry.zero_quartet_scaling_spec"];
         AssertRepoDerivedLeanNode(
             zeroQuartetScaling,
             DescribeKind.Theorem,
-            "D5/S3/Weil/ZeroGeometry.zero_quartet_scaling_spec");
+            "D5/S3/Zeros/ZeroGeometry.zero_quartet_scaling_spec");
         var zeroQuartetScalingDisclosure = Assert.IsType<Inline.Text>(
             Assert.IsType<DocumentBlock.Paragraph>(
                 Assert.Single(zeroQuartetScaling.Content.Items)).Content.Items.Single()).Run.Value;

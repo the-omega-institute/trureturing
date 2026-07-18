@@ -1,6 +1,6 @@
-/- GID: D5/S3/Weil/ZeroGeometry
+/- GID: D5/S3/Zeros/ZeroGeometry
    generality: I
-   mirror-B: D5/B/S3/Weil/ZeroGeometry
+   mirror-B: D5/B/S3/Zeros/ZeroGeometry
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Separate projected zeta cancellation from local and mirror-paired scaling balance. -/
@@ -8,7 +8,7 @@
 import D5.S3.Weil.CriticalLine
 import D5.S3.Weil.ZeroSum
 
-namespace D5.S3.Weil.ZeroGeometry
+namespace D5.S3.Zeros.ZeroGeometry
 
 open D5.S3.Weil.Convention
 open D5.S3.Weil.CriticalLine
@@ -115,4 +115,4 @@ theorem ontological_zero_re_eq_critical {A : Type*} [AddMonoid A]
   · exact sub_eq_zero.mp hLine
   · exact (ha hLength).elim
 
-end D5.S3.Weil.ZeroGeometry
+end D5.S3.Zeros.ZeroGeometry

@@ -7390,12 +7390,12 @@ sources:
           normalized_sha256: sha256:fbf333e31ba3ef6cbdebe75252c56a88b06d91143c6323da299fa228f87976e3
         cas_ref: sha256:fbf333e31ba3ef6cbdebe75252c56a88b06d91143c6323da299fa228f87976e3
         coverage_gids:
-          - D5/S3/Weil/ZeroGeometry.projection_zero_labeled_vector_spec
+          - D5/S3/Zeros/ZeroGeometry.projection_zero_labeled_vector_spec
         receipts:
           coverage:
-            - gid: D5/S3/Weil/ZeroGeometry.projection_zero_labeled_vector_spec
+            - gid: D5/S3/Zeros/ZeroGeometry.projection_zero_labeled_vector_spec
               source_sha256: sha256:fbf333e31ba3ef6cbdebe75252c56a88b06d91143c6323da299fa228f87976e3
-              target_sha256: sha256:52c5ac8b368cc1ae4085c4a229cbaf2b8dfc37012532f19ebcd855b4f428d7b7
+              target_sha256: sha256:f5fa23f5e88014c485cf5f1fd4dac3bd2998ca1d5c31bb1af635abf0c3602cb9
           scribe: []
           unresolved_subitems:
             - analytic-projection-map-and-continued-projection-identity
@@ -7608,12 +7608,12 @@ sources:
           normalized_sha256: sha256:e9e17b18bdca262cf243b1193d7d9b23baf205d584164462084d102de82e796c
         cas_ref: sha256:e9e17b18bdca262cf243b1193d7d9b23baf205d584164462084d102de82e796c
         coverage_gids:
-          - D5/S3/Weil/ZeroGeometry.off_line_scaling_entry_spec
+          - D5/S3/Zeros/ZeroGeometry.off_line_scaling_entry_spec
         receipts:
           coverage:
-            - gid: D5/S3/Weil/ZeroGeometry.off_line_scaling_entry_spec
+            - gid: D5/S3/Zeros/ZeroGeometry.off_line_scaling_entry_spec
               source_sha256: sha256:e9e17b18bdca262cf243b1193d7d9b23baf205d584164462084d102de82e796c
-              target_sha256: sha256:52c5ac8b368cc1ae4085c4a229cbaf2b8dfc37012532f19ebcd855b4f428d7b7
+              target_sha256: sha256:f5fa23f5e88014c485cf5f1fd4dac3bd2998ca1d5c31bb1af635abf0c3602cb9
           scribe: []
           unresolved_subitems:
             - coefficient-half-density-phase-scaling-factorization
@@ -7631,12 +7631,12 @@ sources:
           normalized_sha256: sha256:4807ade3f72a896bc214fbbe14fdc8e0ea18611f00fce4a8d7be197b4b809d79
         cas_ref: sha256:4807ade3f72a896bc214fbbe14fdc8e0ea18611f00fce4a8d7be197b4b809d79
         coverage_gids:
-          - D5/S3/Weil/ZeroGeometry.global_factor_clearing_forces_critical_line
+          - D5/S3/Zeros/ZeroGeometry.global_factor_clearing_forces_critical_line
         receipts:
           coverage:
-            - gid: D5/S3/Weil/ZeroGeometry.global_factor_clearing_forces_critical_line
+            - gid: D5/S3/Zeros/ZeroGeometry.global_factor_clearing_forces_critical_line
               source_sha256: sha256:4807ade3f72a896bc214fbbe14fdc8e0ea18611f00fce4a8d7be197b4b809d79
-              target_sha256: sha256:52c5ac8b368cc1ae4085c4a229cbaf2b8dfc37012532f19ebcd855b4f428d7b7
+              target_sha256: sha256:f5fa23f5e88014c485cf5f1fd4dac3bd2998ca1d5c31bb1af635abf0c3602cb9
           scribe: []
           unresolved_subitems:
             - address-dependent-inverse-scaling-register-governance-exclusion
@@ -7697,12 +7697,12 @@ sources:
           normalized_sha256: sha256:d24cf7f7f004c0825d84fdf2c16530a5c59579cd5e550142be49dad0a5e1dc4e
         cas_ref: sha256:d24cf7f7f004c0825d84fdf2c16530a5c59579cd5e550142be49dad0a5e1dc4e
         coverage_gids:
-          - D5/S3/Weil/ZeroGeometry.mirror_pair_distinct_iff_off_line_and_cancels
+          - D5/S3/Zeros/ZeroGeometry.mirror_pair_distinct_iff_off_line_and_cancels
         receipts:
           coverage:
-            - gid: D5/S3/Weil/ZeroGeometry.mirror_pair_distinct_iff_off_line_and_cancels
+            - gid: D5/S3/Zeros/ZeroGeometry.mirror_pair_distinct_iff_off_line_and_cancels
               source_sha256: sha256:d24cf7f7f004c0825d84fdf2c16530a5c59579cd5e550142be49dad0a5e1dc4e
-              target_sha256: sha256:52c5ac8b368cc1ae4085c4a229cbaf2b8dfc37012532f19ebcd855b4f428d7b7
+              target_sha256: sha256:f5fa23f5e88014c485cf5f1fd4dac3bd2998ca1d5c31bb1af635abf0c3602cb9
           scribe: []
           unresolved_subitems:
             - off-line-cross-position-pairing-numerical-instrument
@@ -7719,12 +7719,12 @@ sources:
           normalized_sha256: sha256:7bdd334cfdf8f997177ce19cd2edfbc1fce39b2342b7777dc17bcbedffac94f6
         cas_ref: sha256:7bdd334cfdf8f997177ce19cd2edfbc1fce39b2342b7777dc17bcbedffac94f6
         coverage_gids:
-          - D5/S3/Weil/ZeroGeometry.IsOntologicalZero
+          - D5/S3/Zeros/ZeroGeometry.IsOntologicalZero
         receipts:
           coverage:
-            - gid: D5/S3/Weil/ZeroGeometry.IsOntologicalZero
+            - gid: D5/S3/Zeros/ZeroGeometry.IsOntologicalZero
               source_sha256: sha256:7bdd334cfdf8f997177ce19cd2edfbc1fce39b2342b7777dc17bcbedffac94f6
-              target_sha256: sha256:52c5ac8b368cc1ae4085c4a229cbaf2b8dfc37012532f19ebcd855b4f428d7b7
+              target_sha256: sha256:f5fa23f5e88014c485cf5f1fd4dac3bd2998ca1d5c31bb1af635abf0c3602cb9
           scribe: []
           unresolved_subitems:
             - analytic-projection-map-and-completed-reading-cancellation
@@ -7742,12 +7742,12 @@ sources:
           normalized_sha256: sha256:87c55470652b1345ccab17e277a2c8ee8b896ac753b18c995ea31417a813ee29
         cas_ref: sha256:87c55470652b1345ccab17e277a2c8ee8b896ac753b18c995ea31417a813ee29
         coverage_gids:
-          - D5/S3/Weil/ZeroGeometry.ontological_zero_re_eq_critical
+          - D5/S3/Zeros/ZeroGeometry.ontological_zero_re_eq_critical
         receipts:
           coverage:
-            - gid: D5/S3/Weil/ZeroGeometry.ontological_zero_re_eq_critical
+            - gid: D5/S3/Zeros/ZeroGeometry.ontological_zero_re_eq_critical
               source_sha256: sha256:87c55470652b1345ccab17e277a2c8ee8b896ac753b18c995ea31417a813ee29
-              target_sha256: sha256:52c5ac8b368cc1ae4085c4a229cbaf2b8dfc37012532f19ebcd855b4f428d7b7
+              target_sha256: sha256:f5fa23f5e88014c485cf5f1fd4dac3bd2998ca1d5c31bb1af635abf0c3602cb9
           scribe: []
           unresolved_subitems: []
           chain_atoms: []
