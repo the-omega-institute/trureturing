@@ -240,6 +240,53 @@ public sealed class BackfillInventoryLoaderTests
             .Select(static item => $"{item.Entry.SourceId}/{item.Entry.AtomId}"));
     }
 
+    [Fact]
+    public void RemarkBatchUpgradeCandidatesRemainResidualWithNamedUnresolvedClaims()
+    {
+        var root = FindRepositoryRoot();
+        var ledgerPath = Path.Combine(root, BackfillInventoryLoader.RelativePath);
+        var entries = BackfillInventoryLoader.Load(File.ReadAllText(ledgerPath))
+            .RequireDigestionEntries();
+        string[] expectedPaths =
+        [
+            "remark/6.37",
+            "remark/6.43",
+            "remark/10.11",
+            "remark/27.20",
+            "remark/27.25",
+            "remark/27.30",
+            "remark/27.35",
+            "remark/27.41",
+            "remark/27.95",
+        ];
+
+        foreach (var path in expectedPaths)
+        {
+            var entry = Assert.Single(entries, entry => entry.AstPath == path);
+
+            Assert.Empty(entry.CoverageGids);
+            Assert.Empty(entry.Receipts.Coverage);
+            Assert.Empty(entry.Receipts.Scribe);
+            Assert.NotEmpty(entry.Receipts.UnresolvedSubitems);
+            Assert.Equal(DigestionMigrationState.Residual, entry.ProjectedStatus.Migration);
+            Assert.Equal(DigestionTruthState.Open, entry.ProjectedStatus.Truth);
+        }
+    }
+
+    [Fact]
+    public void StatementEchoForbidsRemarkClosureOfCertificatesAndTestableIdentities()
+    {
+        var root = FindRepositoryRoot();
+        var echo = File.ReadAllText(Path.Combine(root, "agents", "echo-template.md"));
+
+        Assert.Contains("Remark-closure guard", echo, StringComparison.Ordinal);
+        Assert.Contains("numerical certificate", echo, StringComparison.Ordinal);
+        Assert.Contains("independently testable identity", echo, StringComparison.Ordinal);
+        Assert.Contains("upgrade-candidate", echo, StringComparison.Ordinal);
+        Assert.Contains("retained_residual", echo, StringComparison.Ordinal);
+        Assert.Contains("unresolved_subitems", echo, StringComparison.Ordinal);
+    }
+
     private static string FindRepositoryRoot()
     {
         for (var current = new DirectoryInfo(AppContext.BaseDirectory);
