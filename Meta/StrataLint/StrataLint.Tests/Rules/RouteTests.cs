@@ -13,6 +13,7 @@ public sealed class RouteTests
     [InlineData("E", "values", "values", "result", "json", "", "D5/E/values--json", RuleFixture.ValuesProjectionPath)]
     [InlineData("C", "2026-07-11", "round-168", "", "markdown", "", "D5/C/2026-07-11/round-168", "Chronicle/2026/07/11-round-168.md")]
     [InlineData("L", "Notes", "sample2026paper", "", "markdown", "", "D5/L/sample2026paper", "Library/notes/sample2026paper.md")]
+    [InlineData("L", "Weil", "sample2026paper", "", "markdown", "", "D5/L/Weil/sample2026paper", "Library/Weil/sample2026paper.md")]
     [InlineData("P", "Papers", "D5-P001", "", "frozen", "frozen", "D5/P/D5-P001--frozen", "Papers/frozen/D5-P001/manifest.sha256")]
     public void RouteCoversAllPlanesThroughCanonicalGidCodec(
         string plane,
@@ -49,6 +50,24 @@ public sealed class RouteTests
 
         Assert.Equal(RuleId.CreateKnown(21), Assert.IsType<RouteOutcome.Rejected>(future).RuleId);
         Assert.Equal(RuleId.CreateKnown(15), Assert.IsType<RouteOutcome.Rejected>(unknownArtifact).RuleId);
+    }
+
+    [Fact]
+    public void RouteRejectsLibrarySplitBucketOutsideControlledDomains()
+    {
+        var outcome = RouteEngine.Route(
+            Policy(),
+            new ManifestSyntax(
+                "D5",
+                "L",
+                "Unknown",
+                "sample2026paper",
+                "G",
+                "",
+                "markdown",
+                ""));
+
+        Assert.Equal(RuleId.CreateKnown(15), Assert.IsType<RouteOutcome.Rejected>(outcome).RuleId);
     }
 
     [Fact]

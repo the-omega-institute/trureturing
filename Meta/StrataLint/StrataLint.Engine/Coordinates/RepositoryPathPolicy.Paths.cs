@@ -93,14 +93,27 @@ internal static partial class RepositoryPathPolicy
         if (path.StartsWith("Library/", StringComparison.Ordinal))
         {
             label = "Library";
-            if (!path.StartsWith("Library/notes/", StringComparison.Ordinal)
-                || !path.EndsWith(".md", StringComparison.Ordinal))
+            var rootNote = Regex.Match(
+                path,
+                "^Library/notes/([A-Za-z0-9_.-]+)\\.md$",
+                RegexOptions.CultureInvariant);
+            if (rootNote.Success)
+            {
+                gid = "D5/L/" + rootNote.Groups[1].Value;
+                return true;
+            }
+
+            var splitNote = Regex.Match(
+                path,
+                "^Library/([A-Z][A-Za-z0-9]*)/([A-Za-z0-9_.-]+)\\.md$",
+                RegexOptions.CultureInvariant);
+            if (!splitNote.Success)
             {
                 reason = "path is not a canonical semantic artifact";
                 return true;
             }
 
-            gid = "D5/L/" + path["Library/notes/".Length..^3];
+            gid = $"D5/L/{splitNote.Groups[1].Value}/{splitNote.Groups[2].Value}";
             return true;
         }
 

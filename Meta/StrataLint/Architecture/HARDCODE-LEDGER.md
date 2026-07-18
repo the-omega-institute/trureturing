@@ -676,6 +676,15 @@ evidence showed macOS `mds_stores` using about 97-147% CPU and an unrelated gith
 fkst testhost using about 92-94% CPU, with no second conservative worker. No rule or timeout
 changed; the identical canonical preflight must be retried after the competing testhost exits.
 
+A later no-contention replay reproduced the same 180-second worker failure and falsified
+contention as the complete explanation. Darwin's bare `mktemp -d` ignored an exported
+`TMPDIR=/private/tmp` and still placed the outer judge and baseline harness under the indexed
+`/var/folders` tree; an explicit template placed it under `/private/tmp`, where the identical
+pinned-base verifier emitted `CORPUS_CONSERVATIVE`, preserved 37/37 baseline admits, and
+reported `findings=[]`. The local gate now passes `${TMPDIR:-/tmp}` to an explicit mktemp
+template, preserving its default while making the documented non-indexed replay selectable;
+the conservative worker budget and every admission rule remain unchanged.
+
 Two auxiliary-probe failures changed no canonical bytes. Darwin rejected inherited
 `C.UTF-8` before a hash probe read its input; the replay used `LC_ALL=C LANG=C`. A manual
 CAS-payload concatenation probe also exposed blank-line gaps because non-claim headings and
