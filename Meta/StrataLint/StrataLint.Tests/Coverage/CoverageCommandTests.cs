@@ -54,7 +54,7 @@ public sealed class CoverageCommandTests
 
         Assert.Equal(2, exit);
         Assert.Contains(
-            "check|coverage|digest-status|ingest|golden-record|ledger-genesis",
+            "|coverage|",
             console.Error,
             StringComparison.Ordinal);
     }

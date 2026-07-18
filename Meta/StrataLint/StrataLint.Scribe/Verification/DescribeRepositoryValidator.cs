@@ -20,9 +20,12 @@ internal static class DescribeRepositoryValidator
             .Select(static document => document.Header.MirrorBlueprint.Path.Value)
             .ToHashSet(StringComparer.Ordinal);
         var inspectedLibrary = libraryInspection ?? LibraryNoteCatalog.Inspect(repositoryRoot);
-        var notes = inspectedLibrary.Notes.ToDictionary(
-            static note => note.BibKey.Value,
-            StringComparer.Ordinal);
+        var notes = inspectedLibrary.Notes
+            .GroupBy(static note => note.BibKey.Value, StringComparer.Ordinal)
+            .ToDictionary(
+                static group => group.Key,
+                static group => group.First(),
+                StringComparer.Ordinal);
         var findings = ImmutableArray.CreateBuilder<DescribeRedFinding>();
         findings.AddRange(inspectedLibrary.Findings.Select(static finding =>
             new DescribeRedFinding(finding.Code, finding.Path, finding.Message)));
@@ -51,9 +54,9 @@ internal static class DescribeRepositoryValidator
 
             foreach (var anchor in document.Header.Anchors.OfType<LiteratureAnchor>())
             {
-                ValidateLiterature(
+                ValidateLiteratureAnchor(
                     document.Header.Gid.Value,
-                    LibraryNoteRef.Create("D5/L/" + anchor.BibKey.Value),
+                    anchor,
                     notes,
                     findings);
             }
@@ -210,12 +213,31 @@ internal static class DescribeRepositoryValidator
         IReadOnlyDictionary<string, LibraryNote> notes,
         ImmutableArray<DescribeRedFinding>.Builder findings)
     {
-        if (!notes.ContainsKey(reference.BibKey.Value))
+        if (!notes.TryGetValue(reference.BibKey.Value, out var note)
+            || !string.Equals(
+                note.RelativePath,
+                reference.Reference.Path.Value,
+                StringComparison.Ordinal))
         {
             findings.Add(new DescribeRedFinding(
                 "dangling-literature-reference",
                 source,
                 $"Literature reference does not resolve: {reference.Value}"));
+        }
+    }
+
+    private static void ValidateLiteratureAnchor(
+        string source,
+        LiteratureAnchor anchor,
+        IReadOnlyDictionary<string, LibraryNote> notes,
+        ImmutableArray<DescribeRedFinding>.Builder findings)
+    {
+        if (!notes.ContainsKey(anchor.BibKey.Value))
+        {
+            findings.Add(new DescribeRedFinding(
+                "dangling-literature-reference",
+                source,
+                $"Literature reference does not resolve: {anchor.CanonicalString}"));
         }
     }
 

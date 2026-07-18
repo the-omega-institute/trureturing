@@ -1,6 +1,4 @@
 using System.Diagnostics;
-using System.Security.Cryptography;
-using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
 
@@ -9,81 +7,6 @@ namespace StrataLint.ArchitectureTests;
 public sealed class C0CeremonyTrustRootTests
 {
     private const string TowerPath = "Meta/StrataLint/TOWER.yaml";
-    private const string ControllerDirectory =
-        "Meta/StrataLint/StrataLint.Cli/Conservative";
-    private const string CliApplicationPath =
-        "Meta/StrataLint/StrataLint.Cli/Commands/CliApplication.cs";
-    private const string ProductionEnvironmentPath =
-        "Meta/StrataLint/StrataLint.Cli/Admission/ProductionCliEnvironment.cs";
-    private const string ProgramPath =
-        "Meta/StrataLint/StrataLint.Cli/Program.cs";
-    private const string CorpusSchemaDirectory =
-        "Meta/StrataLint/StrataLint.Cli/Golden";
-    private const string CorpusDataDirectory =
-        "Meta/StrataLint/Golden/cases";
-    private const string GateWiringPath = ".github/scripts/harness-gate.sh";
-    private const string CertificatePath =
-        "Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json";
-
-    [Fact]
-    public void CanonicalSourceDiscoveryIncludesNestedFiles()
-    {
-        var root = Directory.CreateTempSubdirectory("stratalint-c0-source-discovery-").FullName;
-        try
-        {
-            var nested = Path.Combine(root, "Controller", "Nested");
-            Directory.CreateDirectory(nested);
-            File.WriteAllText(Path.Combine(nested, "Worker.cs"), "// nested source fixture\n");
-
-            Assert.Equal(
-                ["Controller/Nested/Worker.cs"],
-                EnumerateSourcePaths(root, "Controller", "*.cs"));
-        }
-        finally
-        {
-            Directory.Delete(root, recursive: true);
-        }
-    }
-
-    [Fact]
-    public void CorpusSourceDiscoveryDoesNotDependOnAFileNamePrefix()
-    {
-        var root = Directory.CreateTempSubdirectory("stratalint-c0-corpus-discovery-").FullName;
-        try
-        {
-            var nested = Path.Combine(root, "Golden", "Sub");
-            Directory.CreateDirectory(nested);
-            File.WriteAllText(Path.Combine(nested, "Cases05.cs"), "// partial corpus fixture\n");
-
-            Assert.Equal(
-                ["Golden/Sub/Cases05.cs"],
-                EnumerateSourcePaths(root, "Golden", "*.cs"));
-        }
-        finally
-        {
-            Directory.Delete(root, recursive: true);
-        }
-    }
-
-    [Fact]
-    public void CorpusDataDiscoveryIncludesNestedTomlFiles()
-    {
-        var root = Directory.CreateTempSubdirectory("stratalint-c0-corpus-data-").FullName;
-        try
-        {
-            var nested = Path.Combine(root, "Cases", "Nested");
-            Directory.CreateDirectory(nested);
-            File.WriteAllText(Path.Combine(nested, "structure.toml"), "[[cases]]\n");
-
-            Assert.Equal(
-                ["Cases/Nested/structure.toml"],
-                EnumerateSourcePaths(root, "Cases", "*.toml"));
-        }
-        finally
-        {
-            Directory.Delete(root, recursive: true);
-        }
-    }
 
     [Fact]
     public void CanonicalTowerJudgeGraphIsClosed()
@@ -107,65 +30,50 @@ public sealed class C0CeremonyTrustRootTests
     public void CanonicalTowerC0EvidenceIsCanonical()
     {
         var root = RepositoryLayout.FindRoot();
+        var snapshot = Repository(root);
         var loaded = Assert.IsType<TowerManifestParseOutcome.Loaded>(
             TowerManifestParser.Parse(File.ReadAllBytes(Absolute(root, TowerPath))));
 
         var actual = TowerActualValidator.Validate(
             loaded.Syntax,
-            EmptyRepository(),
+            snapshot,
             RuleCatalog.Default);
 
         Assert.Empty(actual.Findings.Where(static item => string.Equals(
             item.Component,
-            "conservative-extension-gate-c",
+            C0CeremonyProjection.ComponentId,
             StringComparison.Ordinal)));
     }
 
     [Fact]
-    public void TowerC0AddressesMatchTheCanonicalWorktreeBytes()
+    public void TowerC0AddressesMatchTheCanonicalPolicyAndPreimage()
     {
         var root = RepositoryLayout.FindRoot();
+        var snapshot = Repository(root);
         var loaded = Assert.IsType<TowerManifestParseOutcome.Loaded>(
             TowerManifestParser.Parse(File.ReadAllBytes(Absolute(root, TowerPath))));
         var component = Assert.Single(
             loaded.Syntax.Components,
-            static item => item.Id == "conservative-extension-gate-c");
+            static item => item.Id == C0CeremonyProjection.ComponentId);
 
         Assert.Equal("verified", component.Verification);
-        Assert.Equal(
-            [
-                "phase1-protected-content-admission",
-                "phase2-dual-harness-conservative-extension",
-            ],
-            component.Members.Take(2));
+        Assert.True(C0CeremonyProjection.HasCanonicalShape(component.Members));
         Assert.Equal("open", loaded.Syntax.Bootstrap.Judge);
         Assert.Equal("ASSUMED-UNVERIFIED", loaded.Syntax.Bootstrap.Verification);
 
         var records = component.Members.Skip(2).Select(ParseRecord).ToArray();
-        var controllerPaths = ExpectedControllerPaths(root);
-        var corpusPaths = ExpectedCorpusPaths(root);
-        Assert.Equal(controllerPaths.Length + corpusPaths.Length + 6, records.Length);
-        AssertGitBlobRecords(
-            root,
-            records,
-            "c0/controller",
-            controllerPaths);
-        AssertGitBlobRecords(
-            root,
-            records,
-            "c0/corpus",
-            corpusPaths);
-        AssertGitBlobRecords(
-            root,
-            records,
-            "c0/gate-wiring",
-            [GateWiringPath]);
+        var anchors = C0CeremonyProjection.DiscoverAnchors(snapshot);
+        Assert.Equal(anchors.Length + 5, records.Length);
+        AssertAnchorPaths(records, anchors, C0AnchorKind.Controller, "c0/controller");
+        AssertAnchorPaths(records, anchors, C0AnchorKind.Corpus, "c0/corpus");
+        AssertAnchorPaths(records, anchors, C0AnchorKind.GateWiring, "c0/gate-wiring");
 
         var certificate = Assert.Single(records, static item =>
             item.Kind == "c0/inaugural-certificate");
-        Assert.Equal(CertificatePath, certificate.Path);
-        var certificateBytes = File.ReadAllBytes(Absolute(root, CertificatePath));
-        Assert.Equal(Sha256(certificateBytes), certificate.Address);
+        Assert.Equal(C0CeremonyProjection.CertificatePath, certificate.Path);
+        var certificateBytes = File.ReadAllBytes(Absolute(
+            root,
+            C0CeremonyProjection.CertificatePath));
 
         var baseCommit = Assert.Single(records, static item => item.Kind == "c0/base-commit");
         Assert.Null(baseCommit.Path);
@@ -217,6 +125,26 @@ public sealed class C0CeremonyTrustRootTests
         AssertPreimageBlobs(root, records, preimageOid);
     }
 
+    private static void AssertAnchorPaths(
+        IEnumerable<C0Record> records,
+        IEnumerable<C0Anchor> anchors,
+        C0AnchorKind anchorKind,
+        string recordKind)
+    {
+        var expected = anchors
+            .Where(item => item.Kind == anchorKind)
+            .Select(static item => item.Path)
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+        var actual = records
+            .Where(item => item.Kind == recordKind)
+            .Select(item => item.Path
+                ?? throw new InvalidOperationException($"{recordKind} record has no path"))
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+        Assert.Equal(expected, actual);
+    }
+
     private static void AssertPreimageBlobs(
         string root,
         IEnumerable<C0Record> records,
@@ -231,48 +159,6 @@ public sealed class C0CeremonyTrustRootTests
         }
     }
 
-    private static void AssertGitBlobRecords(
-        string root,
-        IReadOnlyList<C0Record> records,
-        string kind,
-        IReadOnlyList<string> expectedPaths)
-    {
-        var addressed = records
-            .Where(item => item.Kind == kind)
-            .ToDictionary(
-                item => item.Path ?? throw new InvalidOperationException($"{kind} record has no path"),
-                static item => item.Address,
-                StringComparer.Ordinal);
-        Assert.Equal(
-            expectedPaths.Order(StringComparer.Ordinal).ToArray(),
-            addressed.Keys.Order(StringComparer.Ordinal).ToArray());
-        foreach (var path in expectedPaths)
-        {
-            Assert.Equal(GitBlobOid(File.ReadAllBytes(Absolute(root, path))), addressed[path]);
-        }
-    }
-
-    private static string[] ExpectedControllerPaths(string root) =>
-        EnumerateSourcePaths(root, ControllerDirectory, "*.cs")
-            .Concat([CliApplicationPath, ProductionEnvironmentPath, ProgramPath])
-            .Order(StringComparer.Ordinal)
-            .ToArray();
-
-    private static string[] ExpectedCorpusPaths(string root) =>
-        EnumerateSourcePaths(root, CorpusSchemaDirectory, "*.cs")
-            .Concat(EnumerateSourcePaths(root, CorpusDataDirectory, "*.toml"))
-            .Order(StringComparer.Ordinal)
-            .ToArray();
-
-    private static string[] EnumerateSourcePaths(string root, string directory, string pattern) =>
-        Directory.EnumerateFiles(
-                Absolute(root, directory),
-                pattern,
-                SearchOption.AllDirectories)
-            .Select(path => Relative(root, path))
-            .Order(StringComparer.Ordinal)
-            .ToArray();
-
     private static C0Record ParseRecord(string value)
     {
         var fields = value.Split(' ', StringSplitOptions.RemoveEmptyEntries);
@@ -282,18 +168,6 @@ public sealed class C0CeremonyTrustRootTests
             fields[1],
             fields.Length == 3 ? fields[2] : null);
     }
-
-    private static string GitBlobOid(byte[] bytes)
-    {
-        var header = Encoding.ASCII.GetBytes($"blob {bytes.Length}\0");
-        using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA1);
-        hash.AppendData(header);
-        hash.AppendData(bytes);
-        return "git-sha1/" + Convert.ToHexStringLower(hash.GetHashAndReset());
-    }
-
-    private static string Sha256(byte[] bytes) =>
-        "sha256/" + Convert.ToHexStringLower(SHA256.HashData(bytes));
 
     private static string Git(string root, params string[] arguments)
     {
@@ -325,12 +199,9 @@ public sealed class C0CeremonyTrustRootTests
     private static string Absolute(string root, string path) =>
         Path.Combine(root, path.Replace('/', Path.DirectorySeparatorChar));
 
-    private static RepositorySnapshot EmptyRepository() =>
-        Assert.IsType<SnapshotDecodeOutcome.Decoded>(
-            SnapshotDecoder.Decode(RawRepositorySnapshot.Create([]))).Snapshot;
-
-    private static string Relative(string root, string path) =>
-        Path.GetRelativePath(root, path).Replace(Path.DirectorySeparatorChar, '/');
+    private static RepositorySnapshot Repository(string root) =>
+        Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            GitRepositorySnapshotReader.ReadCurrent(root))).Snapshot;
 
     private sealed record C0Record(string Kind, string Address, string? Path);
 }

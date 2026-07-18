@@ -19,7 +19,8 @@ internal static class SnapshotAdmissionCore
         LeanAxiomReport baselineReport,
         RawChangeSet changes,
         BootstrapOutcome bootstrap,
-        VerifiedScribeEmissions? verifiedScribeEmissions)
+        VerifiedScribeEmissions? verifiedScribeEmissions,
+        string? valuesKernelDataPath = null)
     {
         try
         {
@@ -76,7 +77,8 @@ internal static class SnapshotAdmissionCore
                     baselineLean,
                     changes,
                     clear.Capability,
-                    verifiedScribeEmissions),
+                    verifiedScribeEmissions,
+                    valuesKernelDataPath),
                 BootstrapOutcome.HumanReviewRequired protectedReview =>
                     AdmissionPipeline.EvaluateProtectedSurface(
                         current,
@@ -86,7 +88,8 @@ internal static class SnapshotAdmissionCore
                         baselineLean,
                         changes,
                         protectedReview.ChangeSet,
-                        verifiedScribeEmissions),
+                        verifiedScribeEmissions,
+                        valuesKernelDataPath),
                 _ => throw new InvalidOperationException("unknown bootstrap outcome"),
             };
             if (admission is not AdmissionOutcome.Admitted

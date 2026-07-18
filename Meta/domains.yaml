@@ -14,12 +14,21 @@ domains:
   Digit:
     stratum: S1
     definition: Raw and canonical W-digit representations and local value-preserving carry rules.
+  Fourier:
+    stratum: S3
+    definition: Entire analytic extensions of the Weil Fourier-Laplace transform.
   Phase:
     stratum: S1
     definition: Additive golden-ratio phases modulo one.
+  Quantum:
+    stratum: S3
+    definition: Finite-dimensional complex operator-algebra and probability structures.
   Scale:
     stratum: S1
     definition: Real embeddings and logarithmic scales of golden integers.
   Weil:
     stratum: S3
     definition: Classical zeta conventions, Weil test functions, and Fourier-Laplace analysis.
+  Zeros:
+    stratum: S3
+    definition: Geometry, symmetry, and local balance of classical zeta zeros.

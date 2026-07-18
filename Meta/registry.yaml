@@ -13,6 +13,8 @@ root_files:
   - "lakefile.toml"
   - "lean-toolchain"
 governance_documents:
+  - "D5/S3/MAP.md"
+  - "D5/X_Frontier/HeartsAuthorizations.md"
   - "Generated/FILEMAP.md"
   - "Meta/FILEMAP.toml"
   - "Meta/contract-epoch/events.jsonl"

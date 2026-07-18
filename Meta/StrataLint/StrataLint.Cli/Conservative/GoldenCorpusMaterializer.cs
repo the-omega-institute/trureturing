@@ -296,7 +296,7 @@ internal static partial class GoldenCorpusMaterializer
             {
                 ["Meta/domains.yaml"] = GoldenCorpus.FixtureDomains,
                 [BackfillPath] = GoldenCorpus.FixtureBackfill,
-                ["Meta/registry.yaml"] = GoldenCorpus.FixtureRegistry,
+                ["Meta/registry.yaml"] = GoldenFixtureRegistryLoader.LoadRepository(root),
                 [AnchorCatalogPath] = Read(root, AnchorCatalogPath),
                 ["Library/queries.yaml"] = "schema_version: 1\nqueries: []\n",
                 [GoldenCorpus.RingPath] = GoldenHeader(

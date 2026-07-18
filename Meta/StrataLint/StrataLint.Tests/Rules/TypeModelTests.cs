@@ -75,6 +75,7 @@ public sealed class TypeModelTests
     [InlineData("D5/E/experiments/D5-X0001.spec--yaml", "Evidence/D5/experiments/D5-X0001.spec.yaml")]
     [InlineData("D5/C/2026-07-11/r168", "Chronicle/2026/07/11-r168.md")]
     [InlineData("D5/L/bellissard1992gap", "Library/notes/bellissard1992gap.md")]
+    [InlineData("D5/L/Weil/sample2026paper", "Library/Weil/sample2026paper.md")]
     [InlineData("D5/P/D5-P001", "Papers/recipes/D5-P001.yaml")]
     [InlineData("D5/P/D5-P001--frozen", "Papers/frozen/D5-P001/manifest.sha256")]
     public void GidAndTargetAreCanonicalTwoWayMappings(string text, string path)
@@ -96,10 +97,32 @@ public sealed class TypeModelTests
     [InlineData("D5/E/foo//Ring.result--json")]
     [InlineData("D5/E/S0/Carrier/Ring--json")]
     [InlineData("D5/B/S0/Carrier/Ring.declaration")]
+    [InlineData("D5/L/NOTES/sample2026paper")]
+    [InlineData("D5/L/Notes/sample2026paper")]
+    [InlineData("D5/L/zeros/sample2026paper")]
+    [InlineData("D5/L/Weil/sample2026paper/extra")]
     [InlineData("D8/S0/Carrier/Ring")]
     public void GidRejectsUnsafeOrNoncanonicalNeighbors(string text)
     {
         Assert.False(Gid.TryParse(text, out _));
+    }
+
+    [Fact]
+    public void RepositoryPathPolicyRejectsUncontrolledLibrarySplitBucket()
+    {
+        var path = RepoPath.CreateKnown("Library/Unknown/sample2026paper.md");
+
+        Assert.NotNull(RepositoryPathPolicy.Validate(path, Policy()));
+        Assert.False(RepositoryPathPolicy.TryResolve(path, Policy(), out _));
+    }
+
+    [Fact]
+    public void LibrarySplitLedgerIsClosedWorldRegisteredButNotASemanticTarget()
+    {
+        var path = RepoPath.CreateKnown("Library/MAP.md");
+
+        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
+        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
     }
 
     [Fact]
@@ -124,7 +147,7 @@ public sealed class TypeModelTests
     [InlineData("Golden/cases/A0_case-name.toml")]
     [InlineData("Golden/fixture-registry.yaml")]
     [InlineData("Golden/values-kernels.toml")]
-    public void FutureGoldenDataResidencesAreClosedWorldRegistered(string value)
+    public void CanonicalGoldenDataResidencesAreClosedWorldRegistered(string value)
     {
         var path = RepoPath.CreateKnown(value);
 
@@ -140,7 +163,7 @@ public sealed class TypeModelTests
     [InlineData("Golden/cases/bad.name.toml")]
     [InlineData("Golden/cases/bad+name.toml")]
     [InlineData("Golden/cases/caf\u00e9.toml")]
-    public void FutureGoldenDataResidencesRejectNoncanonicalNeighbors(string value)
+    public void CanonicalGoldenDataResidencesRejectNoncanonicalNeighbors(string value)
     {
         var path = RepoPath.CreateKnown(value);
 

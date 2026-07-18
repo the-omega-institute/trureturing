@@ -5,6 +5,12 @@ namespace StrataLint.Tests;
 public sealed class TomlGoldenLoaderTests
 {
     [Fact]
+    public void RepositoryCorpusUsesTheTopLevelGoldenDataHome()
+    {
+        Assert.Equal("Golden/cases", TomlGoldenLoader.RelativeDirectory);
+    }
+
+    [Fact]
     public void CanonicalFixtureLoads()
     {
         var source = TomlGoldenLoader.LoadFile(Fixture("valid.toml"));
