@@ -37,6 +37,42 @@ jobs:
           path: candidate
           fetch-depth: 0
 
+      - name: Resolve pinned Lean toolchain
+        id: lean
+        shell: bash
+        env:
+          LEAN_TOOLCHAIN_FILE: candidate/lean-toolchain
+        run: |
+          set -euo pipefail
+          test -s "$LEAN_TOOLCHAIN_FILE"
+          echo "file=$LEAN_TOOLCHAIN_FILE" >> "$GITHUB_OUTPUT"
+          echo "hash=$(sha256sum "$LEAN_TOOLCHAIN_FILE" | cut -d ' ' -f 1)" >> "$GITHUB_OUTPUT"
+
+      - name: Restore elan and pinned Lean toolchain
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.elan
+          key: ${{ runner.os }}-${{ runner.arch }}-elan-${{ steps.lean.outputs.hash }}
+
+      - name: Install pinned Lean toolchain for ingest
+        shell: bash
+        env:
+          LEAN_TOOLCHAIN_FILE: ${{ steps.lean.outputs.file }}
+        run: |
+          set -euo pipefail
+          toolchain="$(tr -d '\r\n' < "$LEAN_TOOLCHAIN_FILE")"
+          test -n "$toolchain"
+          if [[ ! -x "$HOME/.elan/bin/elan" ]]; then
+            curl --proto '=https' --tlsv1.2 -sSf https://elan.lean-lang.org/elan-init.sh \
+              | sh -s -- -y --default-toolchain none
+          fi
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          if ! "$HOME/.elan/bin/elan" toolchain list 2>/dev/null | grep -qF "$toolchain"; then
+            "$HOME/.elan/bin/elan" toolchain install "$toolchain"
+          fi
+          "$HOME/.elan/bin/elan" default "$toolchain"
+          "$HOME/.elan/bin/lake" --version
+
       - name: Install pinned SDK
         uses: actions/setup-dotnet@v4
         with:
