@@ -35,8 +35,10 @@ public sealed class ReportSupervisorScriptTests
     {
         using var fixture = new ReportSupervisorFixture();
 
-        Assert.Equal(0, fixture.Run("scribe-consumer", leanSlot: false, fixture.ScratchWriter).ExitCode);
-        Assert.Equal(0, fixture.Run("ingest-consumer", leanSlot: false, fixture.ScratchWriter).ExitCode);
+        Assert.Equal(0, fixture.RunWithEnvironment(
+            "scribe-consumer", leanSlot: false, fixture.ScratchWriter, "CI=false").ExitCode);
+        Assert.Equal(0, fixture.RunWithEnvironment(
+            "ingest-consumer", leanSlot: false, fixture.ScratchWriter, "CI=false").ExitCode);
 
         var scratchPaths = File.ReadAllLines(fixture.ScratchRecord);
         Assert.Equal(2, scratchPaths.Length);
