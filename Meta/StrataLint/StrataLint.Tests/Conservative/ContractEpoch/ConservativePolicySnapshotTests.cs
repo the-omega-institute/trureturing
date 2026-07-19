@@ -59,7 +59,7 @@ public sealed class ConservativePolicySnapshotTests
 
         Assert.Equal(ResidenceEpochRetiredPaths, current.ExactExclusions);
         Assert.Equal(
-            "sha256:0daa1a195c3ff86a2da019f267933c40e4402fe54bde1203b9123adbb6e957ec",
+            "sha256:3cf6dbb7d64c99791db2145cc072c914a63bbe2e0c7acf9c9bc7aca5b0ad95ee",
             current.Root);
         Assert.All(ResidenceEpochRetiredPaths, path => Assert.False(current.IsProtected(path)));
     }

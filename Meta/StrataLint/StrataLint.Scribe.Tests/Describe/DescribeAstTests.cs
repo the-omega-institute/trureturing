@@ -23,13 +23,15 @@ public sealed class DescribeAstTests
             Heading.Create("Golden generator"),
             statement,
             provenance,
-            content);
+            content,
+            LatexStatement.Create("$\\varphi^{2} = \\varphi + 1$"));
 
         Assert.Equal("golden-generator", describe.Id.Value);
         Assert.Equal(DescribeKind.Definition, describe.Kind);
         Assert.IsType<DescribeStatement.FormulaAst>(describe.Statement);
         Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.Provenance.Kind);
         Assert.Same(content, describe.Content);
+        Assert.Equal("$\\varphi^{2} = \\varphi + 1$", describe.StatementLatex?.Value);
     }
 
     [Fact]

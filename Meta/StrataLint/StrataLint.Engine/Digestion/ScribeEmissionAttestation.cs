@@ -10,30 +10,46 @@ internal sealed record ScribeEmissionRecord(
     string EmissionPath,
     string EmissionSha256);
 
+internal sealed record ScribeDescribeLatexRecord(
+    string NodeId,
+    string DefinitionPath,
+    bool RequiresLatex,
+    bool HasValidLatex);
+
 internal sealed class VerifiedScribeEmissions
 {
     private readonly ImmutableDictionary<string, ScribeEmissionRecord> records;
     private readonly ImmutableHashSet<string> declarationReferences;
+    private readonly ImmutableArray<ScribeDescribeLatexRecord> describeLatexRecords;
 
     private VerifiedScribeEmissions(
         ImmutableDictionary<string, ScribeEmissionRecord> records,
-        ImmutableHashSet<string> declarationReferences)
+        ImmutableHashSet<string> declarationReferences,
+        ImmutableArray<ScribeDescribeLatexRecord> describeLatexRecords)
     {
         this.records = records;
         this.declarationReferences = declarationReferences;
+        this.describeLatexRecords = describeLatexRecords;
     }
 
-    internal static VerifiedScribeEmissions Empty { get; } = Create([], []);
+    internal static VerifiedScribeEmissions Empty { get; } = Create([], [], []);
 
     internal static VerifiedScribeEmissions Create(IEnumerable<ScribeEmissionRecord> values) =>
-        Create(values, []);
+        Create(values, [], []);
 
     internal static VerifiedScribeEmissions Create(
         IEnumerable<ScribeEmissionRecord> values,
-        IEnumerable<string> declarationReferences)
+        IEnumerable<string> declarationReferences) =>
+        Create(values, declarationReferences, []);
+
+    internal static VerifiedScribeEmissions Create(
+        IEnumerable<ScribeEmissionRecord> values,
+        IEnumerable<string> declarationReferences,
+        IEnumerable<ScribeDescribeLatexRecord> describeLatexRecords)
     {
         ArgumentNullException.ThrowIfNull(values);
         ArgumentNullException.ThrowIfNull(declarationReferences);
+        ArgumentNullException.ThrowIfNull(describeLatexRecords);
         var records = values.ToArray();
         ScribeEmissionAttestation.ValidateRecords(records);
         var references = declarationReferences.ToImmutableHashSet(StringComparer.Ordinal);
@@ -47,15 +63,41 @@ internal sealed class VerifiedScribeEmissions
             }
         }
 
+        var latexRecords = describeLatexRecords
+            .OrderBy(static item => item.NodeId, StringComparer.Ordinal)
+            .ToImmutableArray();
+        var duplicateNode = latexRecords
+            .GroupBy(static item => item.NodeId, StringComparer.Ordinal)
+            .FirstOrDefault(static group => group.Count() > 1);
+        if (duplicateNode is not null)
+        {
+            throw new FormatException($"duplicate Scribe Describe node {duplicateNode.Key}");
+        }
+        foreach (var record in latexRecords)
+        {
+            var separator = record.NodeId.IndexOf("#describe/", StringComparison.Ordinal);
+            var documentGid = separator > 0 ? record.NodeId[..separator] : string.Empty;
+            if (!Gid.TryParse(documentGid, out _)
+                || separator + "#describe/".Length == record.NodeId.Length
+                || record.DefinitionPath != ScribeEmissionAttestation.DefinitionPath(documentGid))
+            {
+                throw new FormatException(
+                    $"invalid Scribe Describe LaTeX coverage record {record.NodeId}");
+            }
+        }
+
         return new VerifiedScribeEmissions(
             records.ToImmutableDictionary(static item => item.Gid, StringComparer.Ordinal),
-            references);
+            references,
+            latexRecords);
     }
 
     internal bool TryGet(string gid, out ScribeEmissionRecord record) =>
         records.TryGetValue(gid, out record!);
 
     internal bool ReferencesDeclaration(string gid) => declarationReferences.Contains(gid);
+
+    internal ImmutableArray<ScribeDescribeLatexRecord> DescribeLatexRecords => describeLatexRecords;
 }
 
 internal sealed class ScribeEmissionAttestation

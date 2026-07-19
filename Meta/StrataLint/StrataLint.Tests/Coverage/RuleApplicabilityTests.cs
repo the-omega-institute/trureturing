@@ -35,6 +35,9 @@ public sealed class RuleApplicabilityTests
     [InlineData(
         RuleFixture.GoldenDataSourcePath,
         "SL-003,SL-015")]
+    [InlineData(
+        "Blueprint/D5/S1/Digit/LatexFixture.scribe.cs",
+        "SL-003,SL-006,SL-011,SL-015,SL-022,SL-023")]
     public void DefaultCatalogApplicabilityMatchesTheRulesActualScanSurface(
         string path,
         string expected)

@@ -110,13 +110,15 @@ public abstract record DocumentBlock
             Heading title,
             DescribeStatement statement,
             DescribeProvenance provenance,
-            BlockSequence content)
+            BlockSequence content,
+            LatexStatement? statementLatex = null)
         {
             Id = id ?? throw new ArgumentNullException(nameof(id));
             Title = title ?? throw new ArgumentNullException(nameof(title));
             Statement = statement ?? throw new ArgumentNullException(nameof(statement));
             Provenance = provenance ?? throw new ArgumentNullException(nameof(provenance));
             Content = content ?? throw new ArgumentNullException(nameof(content));
+            StatementLatex = statementLatex;
             Kind = kind is DescribeKind.Definition
                 or DescribeKind.Theorem
                 or DescribeKind.Proposition
@@ -138,6 +140,8 @@ public abstract record DocumentBlock
         public DescribeProvenance Provenance { get; }
 
         public BlockSequence Content { get; }
+
+        public LatexStatement? StatementLatex { get; }
     }
 
 }

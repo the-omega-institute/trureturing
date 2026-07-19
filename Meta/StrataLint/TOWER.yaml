@@ -43,6 +43,7 @@ components:
       - SL-020
       - SL-021
       - SL-022
+      - SL-023
     judged_by:
       - rule-catalog-selfcheck
       - rule-fixtures

@@ -12,7 +12,7 @@ public sealed class FaultInjectionTests
     {
         var catalog = RuleCatalog.CreateForTesting(
             RuleCatalog.Default.Descriptors[..^1],
-            Enumerable.Range(1, 21).Select(static _ => (IRepositoryRule)new NoOpRule()).ToImmutableArray());
+            Enumerable.Range(1, 22).Select(static _ => (IRepositoryRule)new NoOpRule()).ToImmutableArray());
 
         var outcome = catalog.Execute(new RuleFixture().Build());
 
@@ -22,7 +22,7 @@ public sealed class FaultInjectionTests
     [Fact]
     public void ThrowingRuleCannotProduceCompletedRuleSet()
     {
-        var rules = Enumerable.Range(1, 22)
+        var rules = Enumerable.Range(1, 23)
             .Select(number => number == 6
                 ? (IRepositoryRule)new ThrowingRule()
                 : new NoOpRule())
