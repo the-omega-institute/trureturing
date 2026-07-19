@@ -21,6 +21,8 @@ public sealed class DocumentDiscoveryTests
     private const string PrimeAxisTableDocumentPath = "Blueprint/D5/S1/Digit/PrimeAxisTable.md";
     private const string RawDocumentPath = "Blueprint/D5/S1/Digit/Raw.md";
     private const string PhaseDocumentPath = "Blueprint/D5/S1/Phase/Basic.md";
+    private const string ZeroOrbitCongruenceDocumentPath =
+        "Blueprint/D5/S1/Phase/ZeroOrbitCongruence.md";
     private const string EmbeddingDocumentPath = "Blueprint/D5/S1/Scale/Embedding.md";
     private const string FibonacciEigenDocumentPath = "Blueprint/D5/S1/Scale/FibonacciEigen.md";
     private const string LogDocumentPath = "Blueprint/D5/S1/Scale/Log.md";
@@ -62,6 +64,7 @@ public sealed class DocumentDiscoveryTests
                 "D5/S1/Digit/PrimeAxisTable",
                 "D5/S1/Digit/Raw",
                 "D5/S1/Phase/Basic",
+                "D5/S1/Phase/ZeroOrbitCongruence",
                 "D5/S1/Scale/Embedding",
                 "D5/S1/Scale/FibonacciEigen",
                 "D5/S1/Scale/Log",
@@ -100,6 +103,7 @@ public sealed class DocumentDiscoveryTests
                 PrimeAxisTableDocumentPath,
                 RawDocumentPath,
                 PhaseDocumentPath,
+                ZeroOrbitCongruenceDocumentPath,
                 EmbeddingDocumentPath,
                 FibonacciEigenDocumentPath,
                 LogDocumentPath,
@@ -221,6 +225,44 @@ public sealed class DocumentDiscoveryTests
             lean.Value.Value);
         Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
         Assert.True(lean.Value.RequireNoSorry);
+    }
+
+    [Fact]
+    public void ZeroOrbitCongruenceCarriesTwoTheoremsAndDisclosesTheLocalPremise()
+    {
+        var definition = DocumentDefinitions.All.Single(static item =>
+            item.Document.Header.Gid.Value == "D5/S1/Phase/ZeroOrbitCongruence");
+        var describes = Descendants(definition.Document.Content)
+            .OfType<DocumentBlock.Describe>()
+            .ToArray();
+
+        Assert.Equal(2, describes.Length);
+        Assert.All(describes, static describe =>
+        {
+            Assert.Equal(DescribeKind.Theorem, describe.Kind);
+            Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.Provenance.Kind);
+            var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
+            Assert.True(lean.Value.RequireNoSorry);
+        });
+        Assert.Equal(
+            [
+                "D5/S1/Phase/ZeroOrbitCongruence.eisenstein_norm_mod_three",
+                "D5/S1/Phase/ZeroOrbitCongruence.thirty_six_dvd_of_local_candidates_and_eisenstein_norm",
+            ],
+            describes.Select(static describe =>
+                Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement).Value.Value));
+
+        var report = LeanReportFixture.ForDocuments([definition.Document]);
+        var markdown = System.Text.Encoding.UTF8.GetString(
+            CanonicalMarkdownWriter.Write(definition.Document, report).AsSpan());
+        Assert.Contains(
+            "local candidate disjunction modulo 36 remains an explicit premise",
+            markdown,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "does not prove the local 432-case computation",
+            markdown,
+            StringComparison.Ordinal);
     }
 
     [Fact]
