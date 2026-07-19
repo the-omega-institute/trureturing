@@ -13,6 +13,8 @@ public sealed class MakeWorkflowTests
     private const string PreflightScriptPath = "Meta/StrataLint/scripts/preflight.sh";
     private const string CleanLanesScriptPath = "Meta/StrataLint/scripts/clean-lanes.sh";
     private const string WorktreeInitScriptPath = "Meta/StrataLint/scripts/worktree-init.sh";
+    private const string PerfReportScriptPath = "Meta/StrataLint/scripts/perf-report.sh";
+    private const string PerfEventScriptPath = "Meta/StrataLint/scripts/perf-event-lib.sh";
 
     private static readonly string[] Targets =
     [
@@ -29,6 +31,7 @@ public sealed class MakeWorkflowTests
         "record-golden",
         "selftest",
         "gate",
+        "perf-report",
         "worktree",
     ];
 
@@ -66,6 +69,7 @@ public sealed class MakeWorkflowTests
         Assert.Contains("golden-record", Recipe(makefile, "record-golden"), StringComparison.Ordinal);
         Assert.Contains(SelftestScriptPath, Recipe(makefile, "selftest"), StringComparison.Ordinal);
         Assert.Contains(LocalHarnessGateScriptPath, Recipe(makefile, "gate"), StringComparison.Ordinal);
+        Assert.Contains(PerfReportScriptPath, Recipe(makefile, "perf-report"), StringComparison.Ordinal);
         Assert.Contains(WorktreeInitScriptPath, Recipe(makefile, "worktree"), StringComparison.Ordinal);
     }
 
@@ -96,6 +100,7 @@ public sealed class MakeWorkflowTests
         var localGate = File.ReadAllText(Path.Combine(root, LocalHarnessGateScriptPath));
         var preflight = File.ReadAllText(Path.Combine(root, PreflightScriptPath));
         var sharedGate = File.ReadAllText(Path.Combine(root, ".github", "scripts", "harness-gate.sh"));
+        var perfEvents = File.ReadAllText(Path.Combine(root, PerfEventScriptPath));
 
         Assert.Contains("make -C candidate dotnet", workflow, StringComparison.Ordinal);
         Assert.Contains("make -C candidate test", workflow, StringComparison.Ordinal);
@@ -124,6 +129,18 @@ public sealed class MakeWorkflowTests
         Assert.Contains("$rc\" -ne 0 && \"$rc\" -ne 3", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("conservative extension", workflow, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain("golden-record", workflow, StringComparison.Ordinal);
+        Assert.Contains("stratalint-perf-event-v1", perfEvents, StringComparison.Ordinal);
+        Assert.Contains("loadavg_per_cpu", perfEvents, StringComparison.Ordinal);
+        Assert.Contains("host_concurrency", perfEvents, StringComparison.Ordinal);
+        Assert.Contains("disk_free_gb", perfEvents, StringComparison.Ordinal);
+        Assert.Contains("perf_capture_event", localGate, StringComparison.Ordinal);
+        Assert.Contains("perf_flush_events", localGate, StringComparison.Ordinal);
+        Assert.Contains("perf_capture_event", preflight, StringComparison.Ordinal);
+        Assert.Contains("perf_flush_events", preflight, StringComparison.Ordinal);
+        Assert.Contains("perf_capture_event", localGate + preflight, StringComparison.Ordinal);
+        Assert.Contains("|| true", localGate, StringComparison.Ordinal);
+        Assert.Contains("|| true", preflight, StringComparison.Ordinal);
+        Assert.Contains(">> \"$LOCAL_TIMING_FILE\" || true", localGate, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -167,6 +184,63 @@ public sealed class MakeWorkflowTests
 
         Assert.True(pathIndex >= 0, "worktree adapter must restore the process tool path");
         Assert.True(pathIndex < dirnameIndex, "tool PATH must be restored before dirname is invoked");
+    }
+
+    [Fact]
+    public void PerformanceJsonQuoteRemovesUnsupportedControlBytes()
+    {
+        var root = FindRepositoryRoot();
+        var script = Path.Combine(root, PerfEventScriptPath);
+        var result = BoundedProcessRunner.Run(
+            "/bin/bash",
+            [
+                "-c",
+                "source \"$1\"; perf_json_quote \"$2\"",
+                "perf-json-quote",
+                script,
+                "run\u0001id",
+            ],
+            root,
+            TimeSpan.FromSeconds(10),
+            4 * 1024);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal("\"runid\"", System.Text.Encoding.UTF8.GetString(result.StandardOutput));
+    }
+
+    [Fact]
+    public void PerformanceSpoolIgnoresATmpdirInsideTheRepository()
+    {
+        var root = FindRepositoryRoot();
+        var script = Path.Combine(root, PerfEventScriptPath);
+        using var repository = new TemporaryDirectory();
+        var result = BoundedProcessRunner.Run(
+            "/bin/bash",
+            [
+                "-c",
+                "source \"$1\"; TMPDIR=\"$2\" perf_make_spool_dir \"$2\" stratalint-test-perf",
+                "perf-spool",
+                script,
+                repository.Path,
+            ],
+            root,
+            TimeSpan.FromSeconds(10),
+            4 * 1024);
+        var spool = System.Text.Encoding.UTF8.GetString(result.StandardOutput).Trim();
+
+        try
+        {
+            Assert.Equal(0, result.ExitCode);
+            Assert.True(Path.IsPathRooted(spool));
+            Assert.False(
+                Path.GetFullPath(spool).StartsWith(
+                    Path.GetFullPath(repository.Path) + Path.DirectorySeparatorChar,
+                    StringComparison.Ordinal));
+        }
+        finally
+        {
+            if (Directory.Exists(spool)) Directory.Delete(spool, recursive: true);
+        }
     }
 
     private static int RecipeCount(string makefile, string target) =>
