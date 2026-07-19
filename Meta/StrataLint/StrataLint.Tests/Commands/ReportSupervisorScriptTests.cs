@@ -101,12 +101,14 @@ public sealed class ReportSupervisorScriptTests
         using var fixture = new ReportSupervisorFixture();
         using var caller = new PhysicalTemporaryDirectory();
         var metrics = Path.Combine(caller.Path, "metrics.jsonl");
+        var diagnostics = Path.Combine(caller.Path, "metrics-error.log");
         var state = Path.Combine(caller.Path, "state");
 
         var result = BoundedProcessRunner.Run(
             "env",
             [
                 $"STRATALINT_REPORT_METRICS_LOG={metrics}",
+                $"STRATALINT_REPORT_METRICS_DIAGNOSTICS={diagnostics}",
                 $"STRATALINT_SUPERVISOR_ROOT={state}",
                 fixture.Supervisor,
                 "--role", "scribe-consumer",
@@ -117,6 +119,11 @@ public sealed class ReportSupervisorScriptTests
             1024 * 1024);
 
         Assert.Equal(0, result.ExitCode);
+        Assert.True(
+            File.Exists(metrics),
+            File.Exists(diagnostics)
+                ? File.ReadAllText(diagnostics)
+                : "metrics writer failed without diagnostics");
         Assert.Single(File.ReadAllLines(metrics));
     }
 

@@ -430,8 +430,14 @@ append_metrics() {
   performance_event "$rc" "$elapsed_ms" > "$event_tmp" \
     || { rm -f -- "$event_tmp"; return 2; }
   ( trap '' XFSZ
-    STRATALINT_PERF_LEDGER="$METRICS_LOG" \
-      perf_flush_events "$REPOSITORY_ROOT" "$event_tmp" >/dev/null 2>&1
+    if [[ -n "${STRATALINT_REPORT_METRICS_DIAGNOSTICS:-}" ]]; then
+      STRATALINT_PERF_LEDGER="$METRICS_LOG" \
+        perf_flush_events "$REPOSITORY_ROOT" "$event_tmp" \
+          >"$STRATALINT_REPORT_METRICS_DIAGNOSTICS" 2>&1
+    else
+      STRATALINT_PERF_LEDGER="$METRICS_LOG" \
+        perf_flush_events "$REPOSITORY_ROOT" "$event_tmp" >/dev/null 2>&1
+    fi
   ) \
     || { rm -f -- "$event_tmp"; return 2; }
   rm -f -- "$event_tmp"
