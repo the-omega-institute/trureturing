@@ -10,6 +10,7 @@ internal static partial class RepositoryPathPolicy
     internal const string LibraryMapPath = "Library/MAP.md";
     internal const string WorkflowPath = ".github/workflows/ci.yml";
     internal const string TheoryIngestWorkflowPath = ".github/workflows/theory-ingest.yml";
+    // 已撤役 workflow(GITHUB_TOKEN 防递归判负,PR #241);常量保留以维持保守扩展(旧树 admit 不翻),移除须走义务会计。
     internal const string AutoUpdateBranchWorkflowPath = ".github/workflows/auto-update-branch.yml";
     internal const string HarnessGatePath = ".github/scripts/harness-gate.sh";
 
