@@ -110,23 +110,27 @@ sources:
           normalized_sha256: sha256:a9e4073c36dcdc04163974b80a47d7884f470463b0b0bdd112c4c552bc29a607
         cas_ref: sha256:a9e4073c36dcdc04163974b80a47d7884f470463b0b0bdd112c4c552bc29a607
         coverage_gids:
+          - D5/S3/Quantum/ObserverAlgebra.observer_read_update_commutator_formula
           - D5/S3/Quantum/ObserverAlgebra.observer_read_update_noncommutative
           - D5/S3/Quantum/ObserverAlgebra.observer_update_covariant_group_skeleton
         receipts:
           coverage:
+            - gid: D5/S3/Quantum/ObserverAlgebra.observer_read_update_commutator_formula
+              source_sha256: sha256:a9e4073c36dcdc04163974b80a47d7884f470463b0b0bdd112c4c552bc29a607
+              target_sha256: sha256:70903d4257257188baffcf83bbde2c395ea6979c1b9756eb676671769a11b91b
             - gid: D5/S3/Quantum/ObserverAlgebra.observer_read_update_noncommutative
               source_sha256: sha256:a9e4073c36dcdc04163974b80a47d7884f470463b0b0bdd112c4c552bc29a607
-              target_sha256: sha256:95f2bcbc8550ac25b6ae6a4ebf3c417dd714226946db591b4c98c1be03fafc06
+              target_sha256: sha256:70903d4257257188baffcf83bbde2c395ea6979c1b9756eb676671769a11b91b
             - gid: D5/S3/Quantum/ObserverAlgebra.observer_update_covariant_group_skeleton
               source_sha256: sha256:a9e4073c36dcdc04163974b80a47d7884f470463b0b0bdd112c4c552bc29a607
-              target_sha256: sha256:95f2bcbc8550ac25b6ae6a4ebf3c417dd714226946db591b4c98c1be03fafc06
+              target_sha256: sha256:70903d4257257188baffcf83bbde2c395ea6979c1b9756eb676671769a11b91b
           scribe: []
           unresolved_subitems:
             - full-crossed-product-identification
             - discrete-crossed-product-uniqueness
             - continuous-hidden-flow-rigidity-exclusion
             - observer-read-write-forces-structure
-            - abstract-crossed-product-commutator-formula
+            - abstract-crossed-product-commutator-formula-beyond-register-representation
           chain_atoms: []
           tail_authorization: null
         status:
@@ -675,16 +679,20 @@ sources:
           normalized_sha256: sha256:7c9486a5ed7ca3264cd32d9aaaa07bb8af9e81a547a163dd202042efa51b920c
         cas_ref: sha256:7c9486a5ed7ca3264cd32d9aaaa07bb8af9e81a547a163dd202042efa51b920c
         coverage_gids:
+          - D5/S3/Quantum/ObserverAlgebra.observer_read_update_commutator_formula
           - D5/S3/Quantum/ObserverAlgebra.observer_read_update_noncommutative
           - D5/S3/Quantum/ObserverAlgebra.observer_update_covariant_group_skeleton
         receipts:
           coverage:
+            - gid: D5/S3/Quantum/ObserverAlgebra.observer_read_update_commutator_formula
+              source_sha256: sha256:7c9486a5ed7ca3264cd32d9aaaa07bb8af9e81a547a163dd202042efa51b920c
+              target_sha256: sha256:70903d4257257188baffcf83bbde2c395ea6979c1b9756eb676671769a11b91b
             - gid: D5/S3/Quantum/ObserverAlgebra.observer_read_update_noncommutative
               source_sha256: sha256:7c9486a5ed7ca3264cd32d9aaaa07bb8af9e81a547a163dd202042efa51b920c
-              target_sha256: sha256:95f2bcbc8550ac25b6ae6a4ebf3c417dd714226946db591b4c98c1be03fafc06
+              target_sha256: sha256:70903d4257257188baffcf83bbde2c395ea6979c1b9756eb676671769a11b91b
             - gid: D5/S3/Quantum/ObserverAlgebra.observer_update_covariant_group_skeleton
               source_sha256: sha256:7c9486a5ed7ca3264cd32d9aaaa07bb8af9e81a547a163dd202042efa51b920c
-              target_sha256: sha256:95f2bcbc8550ac25b6ae6a4ebf3c417dd714226946db591b4c98c1be03fafc06
+              target_sha256: sha256:70903d4257257188baffcf83bbde2c395ea6979c1b9756eb676671769a11b91b
           scribe: []
           unresolved_subitems:
             - universal-c-star-crossed-product-identification
@@ -692,7 +700,7 @@ sources:
             - discreteness-forced-by-rigidity
             - integer-action-selected-by-observer-premise
             - observer-read-write-forces-structure
-            - abstract-crossed-product-commutator-formula
+            - abstract-crossed-product-commutator-formula-beyond-register-representation
           chain_atoms: []
           tail_authorization: null
         status:
