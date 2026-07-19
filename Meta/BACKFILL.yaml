@@ -17148,6 +17148,38 @@ sources:
         status:
           migration: residual
           truth: open
+      - atom_id: pzg-residual-2d00e482d06a3ea0c4080b24211e5e87ecb53ec1a8bd8599e6b253290d11ced4
+        ast_path: remark/10.9
+        fingerprints:
+          raw_sha256: sha256:2d00e482d06a3ea0c4080b24211e5e87ecb53ec1a8bd8599e6b253290d11ced4
+          normalized_sha256: sha256:2d00e482d06a3ea0c4080b24211e5e87ecb53ec1a8bd8599e6b253290d11ced4
+        cas_ref: sha256:2d00e482d06a3ea0c4080b24211e5e87ecb53ec1a8bd8599e6b253290d11ced4
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-b6ae2f2d935ab0e6fe04b7ba099ad87ecaddd9d02badb258ec3983f3ae7c067e
+        ast_path: theorem/28.1
+        fingerprints:
+          raw_sha256: sha256:b6ae2f2d935ab0e6fe04b7ba099ad87ecaddd9d02badb258ec3983f3ae7c067e
+          normalized_sha256: sha256:b6ae2f2d935ab0e6fe04b7ba099ad87ecaddd9d02badb258ec3983f3ae7c067e
+        cas_ref: sha256:b6ae2f2d935ab0e6fe04b7ba099ad87ecaddd9d02badb258ec3983f3ae7c067e
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
   - source_id: golden-ledger-spec-v7.11
     path: docs/develop/spec/golden-ledger-repo-spec.md
     atomizer: none

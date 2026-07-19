@@ -147,6 +147,25 @@ public sealed class DescribeMigrationTests
     }
 
     [Fact]
+    public void PhaseDualityNarrativeClassifiesContinuousCharactersOnly()
+    {
+        var document = Assert.Single(
+            DocumentDefinitions.All.Select(static definition => definition.Document),
+            document => document.Header.Gid.Value == "D5/S1/Phase/Basic");
+        var node = Assert.Single(
+            document.Content.Items.OfType<DocumentBlock.Describe>(),
+            node => node.Id.Value == "the-two-phase-duality-loops");
+        var paragraph = Assert.IsType<DocumentBlock.Paragraph>(Assert.Single(node.Content.Items));
+        var narrative = Assert.IsType<Inline.Text>(Assert.Single(paragraph.Content.Items)).Run.Value;
+
+        Assert.Contains(
+            "The continuous character group of K_infinity is exactly Q/Z, and the continuous character group of Sigma_infinity is exactly Q.",
+            narrative,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain("measurable content", narrative, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void O6LoadBearingResidualNodesUseExactTypedStatementsAndDiligentProvenance()
     {
         var documents = DocumentDefinitions.All

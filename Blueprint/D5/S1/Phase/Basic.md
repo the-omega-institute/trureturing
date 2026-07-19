@@ -96,7 +96,7 @@ $$
 \mathit{dualSigma} = Q
 $$
 
-The source records both dual loops as closed: the pure congruence layer has K_infinity dual to Q/Z, and the mixed layer has Sigma_infinity dual to Q. Conversely, the dual of Q is the constructional origin assigned to Sigma_infinity. On this interpretation the complete phase object's measurable content is precisely the rational numbers, with readings and completion serving as each other's character groups.
+The source records both dual loops as closed. The continuous character group of K_infinity is exactly Q/Z, and the continuous character group of Sigma_infinity is exactly Q. Conversely, the dual of Q is the constructional origin assigned to Sigma_infinity. In this statement, readings mean continuous characters; it does not classify all measurable observables. Reading and completion serve as each other's character groups.
 
 ## Remark: Dense phase leaves and discrete switching
 
