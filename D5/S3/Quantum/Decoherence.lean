@@ -51,4 +51,19 @@ theorem phase_damping_fixed_iff_diagonal (c : DampingCoefficient)
     · simp [phaseDamping, hOffDiagonal]
     · simp [phaseDamping, hOffDiagonal, hDiagonal i j hOffDiagonal]
 
+/-- Phase damping transported through a coordinate equivalence records in that basis. -/
+def phaseDampingInBasis (coordinates : QubitMatrix ≃ QubitMatrix)
+    (c : DampingCoefficient) (rho : QubitMatrix) : QubitMatrix :=
+  coordinates.symm (phaseDamping c (coordinates rho))
+
+/-- A nontrivial transported damping channel fixes exactly the matrices diagonal in
+the coordinates selected by its record rule. -/
+theorem phase_damping_in_basis_fixed_iff (coordinates : QubitMatrix ≃ QubitMatrix)
+    (c : DampingCoefficient) (hCoefficient : (c : Real) ≠ 1) (rho : QubitMatrix) :
+    phaseDampingInBasis coordinates c rho = rho ↔
+      ∀ i j, i ≠ j -> coordinates rho i j = 0 := by
+  unfold phaseDampingInBasis
+  rw [coordinates.symm_apply_eq]
+  exact phase_damping_fixed_iff_diagonal c hCoefficient (coordinates rho)
+
 end D5.S3.Quantum.Decoherence
