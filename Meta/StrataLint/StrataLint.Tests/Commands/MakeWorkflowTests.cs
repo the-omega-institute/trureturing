@@ -13,6 +13,11 @@ public sealed class MakeWorkflowTests
     private const string PreflightScriptPath = "Meta/StrataLint/scripts/preflight.sh";
     private const string CleanLanesScriptPath = "Meta/StrataLint/scripts/clean-lanes.sh";
     private const string WorktreeInitScriptPath = "Meta/StrataLint/scripts/worktree-init.sh";
+    private const string LeanReportScriptPath = "Meta/StrataLint/scripts/lean-report.sh";
+    private const string IngestScriptPath = "Meta/StrataLint/scripts/ingest.sh";
+    private const string ReportConsumerScriptPath = "Meta/StrataLint/scripts/report-consumer.sh";
+    private const string ReportSupervisorScriptPath = "Meta/StrataLint/scripts/report-supervisor.sh";
+    private const string LeanReportPairScriptPath = "Meta/StrataLint/scripts/lean-report-pair.sh";
 
     private static readonly string[] Targets =
     [
@@ -20,6 +25,7 @@ public sealed class MakeWorkflowTests
         "dotnet",
         "test",
         "lean",
+        "lean-report",
         "build",
         "c0-renew",
         "clean-lanes",
@@ -59,10 +65,11 @@ public sealed class MakeWorkflowTests
         Assert.Contains(DotnetBuildScriptPath, Recipe(makefile, "dotnet"), StringComparison.Ordinal);
         Assert.Contains("dotnet test", Recipe(makefile, "test"), StringComparison.Ordinal);
         Assert.Contains("lake build", Recipe(makefile, "lean"), StringComparison.Ordinal);
+        Assert.Contains(LeanReportScriptPath, Recipe(makefile, "lean-report"), StringComparison.Ordinal);
         Assert.Contains(ScribeScriptPath + " emit", Recipe(makefile, "emit"), StringComparison.Ordinal);
         Assert.Contains(ScribeScriptPath + " check", Recipe(makefile, "emit-check"), StringComparison.Ordinal);
-        Assert.Contains("ingest: emit-check", makefile, StringComparison.Ordinal);
-        Assert.Contains(" ingest --base \"$(BASE)\"", Recipe(makefile, "ingest"), StringComparison.Ordinal);
+        Assert.DoesNotContain("ingest: emit-check", makefile, StringComparison.Ordinal);
+        Assert.Contains(IngestScriptPath, Recipe(makefile, "ingest"), StringComparison.Ordinal);
         Assert.Contains("golden-record", Recipe(makefile, "record-golden"), StringComparison.Ordinal);
         Assert.Contains(SelftestScriptPath, Recipe(makefile, "selftest"), StringComparison.Ordinal);
         Assert.Contains(LocalHarnessGateScriptPath, Recipe(makefile, "gate"), StringComparison.Ordinal);
@@ -139,17 +146,34 @@ public sealed class MakeWorkflowTests
     }
 
     [Fact]
-    public void ScribeWrapperProducesCanonicalLeanReportBeforeEmission()
+    public void ReportEntrypointsDelegateToTheSingleHostSupervisor()
+    {
+        var root = FindRepositoryRoot();
+        var supervisorName = Path.GetFileName(ReportSupervisorScriptPath);
+        var producer = File.ReadAllText(Path.Combine(root, LeanReportScriptPath));
+        var pair = File.ReadAllText(Path.Combine(root, LeanReportPairScriptPath));
+        var consumer = File.ReadAllText(Path.Combine(root, ReportConsumerScriptPath));
+
+        Assert.Contains(supervisorName, producer, StringComparison.Ordinal);
+        Assert.Contains("--lean-slot", producer, StringComparison.Ordinal);
+        Assert.Contains(supervisorName, pair, StringComparison.Ordinal);
+        Assert.Contains("--lean-slot", pair, StringComparison.Ordinal);
+        Assert.Contains(supervisorName, consumer, StringComparison.Ordinal);
+        Assert.DoesNotContain("mktemp", producer, StringComparison.Ordinal);
+        Assert.DoesNotContain("mktemp", consumer, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ScribeWrapperConsumesOnlyAPrecomputedLeanReport()
     {
         var root = FindRepositoryRoot();
         var script = File.ReadAllText(Path.Combine(root, ScribeScriptPath));
-        var producerIndex = script.IndexOf("lean-inspector/inspect.sh", StringComparison.Ordinal);
-        var emissionIndex = script.IndexOf("dotnet run", StringComparison.Ordinal);
 
-        Assert.True(producerIndex >= 0, "scribe wrapper must name the canonical Lean producer");
-        Assert.True(emissionIndex > producerIndex, "Lean report production must precede Scribe emission");
+        Assert.DoesNotContain("lean-inspector/inspect.sh", script, StringComparison.Ordinal);
+        Assert.DoesNotContain("SCRIBE_USE_EXISTING_REPORT", script, StringComparison.Ordinal);
+        Assert.Contains(ReportConsumerScriptPath, script, StringComparison.Ordinal);
+        Assert.Contains("scribe-consumer", script, StringComparison.Ordinal);
         Assert.Contains(".lake/build/stratalint/raw-lean-report.json", script, StringComparison.Ordinal);
-        Assert.Contains("SCRIBE_USE_EXISTING_REPORT", script, StringComparison.Ordinal);
         Assert.DoesNotContain("CHECK_ARGS=()", script, StringComparison.Ordinal);
         Assert.Contains("run_scribe emit", script, StringComparison.Ordinal);
         Assert.Contains("run_scribe catalog", script, StringComparison.Ordinal);

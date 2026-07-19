@@ -9,6 +9,8 @@ CANDIDATE_ROOT=""
 CANDIDATE_OUTPUT=""
 BASELINE_ROOT=""
 BASELINE_OUTPUT=""
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+SUPERVISOR="$SCRIPT_DIR/report-supervisor.sh"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -34,6 +36,8 @@ done
   || { echo "lean-report-pair: candidate output must be absolute" >&2; exit 2; }
 [[ -n "$BASELINE_OUTPUT" && "$BASELINE_OUTPUT" == /* ]] \
   || { echo "lean-report-pair: baseline output must be absolute" >&2; exit 2; }
+[[ -x "$SUPERVISOR" ]] \
+  || { echo "lean-report-pair: report supervisor is absent" >&2; exit 2; }
 
 PRODUCER="$(cd "$(dirname "$PRODUCER")" && pwd -P)/$(basename "$PRODUCER")"
 CANDIDATE_ROOT="$(cd "$CANDIDATE_ROOT" && pwd -P)"
@@ -160,11 +164,13 @@ verify_report() {
 }
 
 produce_report() {
-  local root="$1"
-  local output="$2"
+  local side="$1"
+  local root="$2"
+  local output="$3"
   rm -f -- "$output" "${output}.sha256" "${output}.provenance.json"
   mkdir -p "$(dirname "$output")"
-  LAKE_BIN="$LAKE_BIN" "$PRODUCER" --repository "$root" --output "$output"
+  "$SUPERVISOR" --role "lean-producer-$side" --lean-slot -- \
+    env LAKE_BIN="$LAKE_BIN" "$PRODUCER" --repository "$root" --output "$output"
   verify_report "$output"
 }
 
@@ -204,7 +210,7 @@ printf 'LEAN_REPORT_INPUT side=candidate content_address=sha256:%s producer_sha2
 printf 'LEAN_REPORT_INPUT side=baseline content_address=sha256:%s producer_sha256=%s repository_inspector_sha256=%s lean_sources_sha256=%s lean_config_sha256=%s\n' \
   "$baseline_address" "$baseline_producer" "$baseline_resident" "$baseline_sources" "$baseline_config"
 
-produce_report "$CANDIDATE_ROOT" "$CANDIDATE_OUTPUT"
+produce_report candidate "$CANDIDATE_ROOT" "$CANDIDATE_OUTPUT"
 candidate_report_sha256="$LAST_REPORT_SHA256"
 write_provenance \
   candidate "$CANDIDATE_OUTPUT" produced candidate \
@@ -225,7 +231,7 @@ if [[ "$candidate_address" == "$baseline_address" ]]; then
     "$baseline_address" "$baseline_producer" "$baseline_resident" \
     "$baseline_sources" "$baseline_config" "$verify_report_copy_sha256"
 else
-  produce_report "$BASELINE_ROOT" "$BASELINE_OUTPUT"
+  produce_report baseline "$BASELINE_ROOT" "$BASELINE_OUTPUT"
   baseline_report_sha256="$LAST_REPORT_SHA256"
   write_provenance \
     baseline "$BASELINE_OUTPUT" produced baseline \
