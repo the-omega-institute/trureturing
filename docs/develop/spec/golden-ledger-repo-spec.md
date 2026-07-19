@@ -470,6 +470,7 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 
 # CHANGELOG(原位演进史;只追加)
 
+- **v7.14 R2**(2026-07-20):按 `VALUES-SCHEMA-EPOCH` 的 expand→migrate→contract 判例补判官进化前驱形:conservative policy 将“已知规则 descriptor atom”与“当前 active obligation”分栏,base 可预注册未来规则而不把它加入 RuleCatalog、执行集、negative floor 或 canonical active-policy bytes。首例只预注册 #246 的 `SL-023` Observe descriptor,dev 仍执行 SL-001..022 且 policy root 不变;candidate 后续以完全相同 descriptor 激活时可被旧判官识别,descriptor 漂移与未注册 `SL-024` 继续 fail-closed。词表先行属 expand,#246 激活属 migrate,规则生命周期后续 contract 不得遗留双义兼容层。
 - **v7.14 R1**(2026-07-19):性能账 P0 建类并落地:`stratalint-perf-event-v1` 以 run/cohort/workload/负载/并发身份包住 gate 与 preflight timing,缺 commit/load/concurrency 强制 observation;唯一 writer 只向 `$HOME/.stratalint-perf/events.jsonl` 追加且采集失败不改变门 rc。`make perf-report` 严格按 cohort×workload×kind×stage 分栏发射 nearest-rank p50/p95、样本数、最近 N 与 observation 数。CI 回流、canonical snapshot、预算 warn→独立 check→required 义务会计及同 cohort 内容寻址优化收据均诚实标 P1/P2 待升提,本轮零预算、零新红门、admission 零变化。
 - **v7.13 R3**(2026-07-18):L 平面首次容量压力按 2.3 只裂不迁:根桶达到 12 后新增的两篇 Zeros 文献进入已登记的 `Library/Zeros/` 兄弟桶,旧 `D5/L/<bibkey>` 地址全数保留;L 双射扩展为受控 `<Domain>` 两段路径,route、typed ref、跨桶 catalog(bibkey 全局唯一)、FILEMAP 与 `Library/MAP.md` 同步执法。
 - **v7.13 R2**(2026-07-18):L 平面容量裂桶 P0 先利器、零实例:双射与 route 扩展为已登记 `<Domain>` 的两段路径,typed ref、跨桶 catalog 与 bibkey 全局唯一性同步执法;FILEMAP 以 `Library/*/*.md` 覆盖根桶及受控疆域桶 note,并将分裂史 `Library/MAP.md` 独立归为 ledger;本轮不新增、不迁移任何 Library note,实际裂桶留后续数据 PR 由升级后的 base judge 判定。
