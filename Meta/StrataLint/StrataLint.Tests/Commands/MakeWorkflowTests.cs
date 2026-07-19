@@ -17,6 +17,7 @@ public sealed class MakeWorkflowTests
     private const string IngestScriptPath = "Meta/StrataLint/scripts/ingest.sh";
     private const string ReportConsumerScriptPath = "Meta/StrataLint/scripts/report-consumer.sh";
     private const string ReportSupervisorScriptPath = "Meta/StrataLint/scripts/report-supervisor.sh";
+    private const string LeanReportInputScriptPath = "Meta/StrataLint/scripts/lean-report-input.sh";
     private const string LeanReportPairScriptPath = "Meta/StrataLint/scripts/lean-report-pair.sh";
 
     private static readonly string[] Targets =
@@ -150,15 +151,16 @@ public sealed class MakeWorkflowTests
     {
         var root = FindRepositoryRoot();
         var supervisorName = Path.GetFileName(ReportSupervisorScriptPath);
+        var pairName = Path.GetFileName(LeanReportPairScriptPath);
         var producer = File.ReadAllText(Path.Combine(root, LeanReportScriptPath));
         var pair = File.ReadAllText(Path.Combine(root, LeanReportPairScriptPath));
         var consumer = File.ReadAllText(Path.Combine(root, ReportConsumerScriptPath));
 
-        Assert.Contains(supervisorName, producer, StringComparison.Ordinal);
-        Assert.Contains("--lean-slot", producer, StringComparison.Ordinal);
+        Assert.Contains(pairName, producer, StringComparison.Ordinal);
         Assert.Contains(supervisorName, pair, StringComparison.Ordinal);
         Assert.Contains("--lean-slot", pair, StringComparison.Ordinal);
         Assert.Contains(supervisorName, consumer, StringComparison.Ordinal);
+        Assert.Contains(LeanReportInputScriptPath, consumer, StringComparison.Ordinal);
         Assert.DoesNotContain("mktemp", producer, StringComparison.Ordinal);
         Assert.DoesNotContain("mktemp", consumer, StringComparison.Ordinal);
     }

@@ -1,0 +1,114 @@
+using System.Security.Cryptography;
+using System.Text;
+using StrataLint.Engine;
+
+namespace StrataLint.Tests;
+
+public sealed class LeanReportInputScriptTests
+{
+    [Theory]
+    [InlineData("source")]
+    [InlineData("toolchain")]
+    [InlineData("lakefile")]
+    [InlineData("manifest")]
+    [InlineData("inspector")]
+    public void RepositoryInputDriftMakesAnExistingReportStale(string mutation)
+    {
+        using var fixture = new LeanReportInputFixture();
+        Assert.Equal(0, fixture.WriteSidecar().ExitCode);
+        Assert.Equal(0, fixture.Verify().ExitCode);
+
+        fixture.Mutate(mutation);
+
+        var result = fixture.Verify();
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains(
+            "stale",
+            Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.OrdinalIgnoreCase);
+    }
+
+    private sealed class LeanReportInputFixture : IDisposable
+    {
+        private readonly TemporaryDirectory temporary = new();
+        private readonly string repository;
+        private readonly string report;
+        private readonly string script;
+
+        internal LeanReportInputFixture()
+        {
+            repository = Path.Combine(temporary.Path, "repository");
+            report = Path.Combine(temporary.Path, "raw-lean-report.json");
+            script = Path.Combine(
+                FindRepositoryRoot(),
+                "Meta", "StrataLint", "scripts", "lean-report-input.sh");
+            Directory.CreateDirectory(Path.Combine(repository, "D5"));
+            Directory.CreateDirectory(Path.Combine(
+                repository, "Meta", "StrataLint", "lean-inspector"));
+            Write("Trureturing.lean", "import D5.Probe\n");
+            Write("D5/Probe.lean", "theorem probe : True := by trivial\n");
+            Write("lean-toolchain", "leanprover/lean4:v4.31.0\n");
+            Write("lakefile.toml", "name = \"Fixture\"\n");
+            Write("lake-manifest.json", "{\"version\":\"1.1.0\"}\n");
+            Write("Meta/StrataLint/lean-inspector/inspect.sh", "#!/usr/bin/env bash\n");
+            Write("Meta/StrataLint/lean-inspector/Inspector.lean", "def fixture : True := by trivial\n");
+            File.WriteAllText(report, "{}\n", new UTF8Encoding(false));
+            var digest = Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(report)));
+            File.WriteAllText(
+                report + ".sha256",
+                $"{digest}  {Path.GetFileName(report)}\n",
+                new UTF8Encoding(false));
+            File.WriteAllText(
+                report + ".provenance.json",
+                "{}\n",
+                new UTF8Encoding(false));
+        }
+
+        internal ProcessOutput WriteSidecar() => Run("write-sidecar");
+
+        internal ProcessOutput Verify() => Run("verify");
+
+        internal void Mutate(string mutation)
+        {
+            var path = mutation switch
+            {
+                "source" => "D5/Probe.lean",
+                "toolchain" => "lean-toolchain",
+                "lakefile" => "lakefile.toml",
+                "manifest" => "lake-manifest.json",
+                "inspector" => "Meta/StrataLint/lean-inspector/Inspector.lean",
+                _ => throw new InvalidOperationException($"unknown mutation {mutation}"),
+            };
+            File.AppendAllText(
+                Path.Combine(repository, path),
+                "mutation\n",
+                new UTF8Encoding(false));
+        }
+
+        private ProcessOutput Run(string command) => BoundedProcessRunner.Run(
+            "bash",
+            [script, command, "--repository", repository, "--report", report],
+            temporary.Path,
+            TimeSpan.FromSeconds(30),
+            1024 * 1024);
+
+        private void Write(string relativePath, string contents) => File.WriteAllText(
+            Path.Combine(repository, relativePath.Replace('/', Path.DirectorySeparatorChar)),
+            contents,
+            new UTF8Encoding(false));
+
+        public void Dispose() => temporary.Dispose();
+
+        private static string FindRepositoryRoot()
+        {
+            for (var current = new DirectoryInfo(AppContext.BaseDirectory);
+                 current is not null;
+                 current = current.Parent)
+            {
+                if (File.Exists(Path.Combine(current.FullName, "CLAUDE.md"))) return current.FullName;
+            }
+
+            throw new DirectoryNotFoundException("Could not locate repository root.");
+        }
+    }
+}

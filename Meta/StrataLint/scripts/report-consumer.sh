@@ -21,6 +21,8 @@ done
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
 SUPERVISOR="$ROOT/Meta/StrataLint/scripts/report-supervisor.sh"
+INPUT_VERIFIER="$ROOT/Meta/StrataLint/scripts/lean-report-input.sh"
+"$INPUT_VERIFIER" verify --repository "$ROOT" --report "$REPORT"
 set +e
 "$SUPERVISOR" --role "$ROLE" -- "$@"
 rc=$?

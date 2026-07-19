@@ -50,8 +50,11 @@ public sealed class ReportSupervisorScriptTests
         Assert.Equal("ingest-consumer", metrics[1].GetProperty("role").GetString());
         Assert.All(metrics, metric =>
         {
-            Assert.Equal(9, metric.EnumerateObject().Count());
+            Assert.Equal("stratalint-perf-event-v1", metric.GetProperty("schema").GetString());
+            Assert.False(string.IsNullOrWhiteSpace(metric.GetProperty("run_id").GetString()));
             Assert.Equal("resource", metric.GetProperty("kind").GetString());
+            Assert.Equal(metric.GetProperty("role").GetString(), metric.GetProperty("stage").GetString());
+            Assert.Equal("passed", metric.GetProperty("status").GetString());
             Assert.Matches(
                 "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$",
                 metric.GetProperty("ts").GetString());
@@ -61,6 +64,14 @@ public sealed class ReportSupervisorScriptTests
             Assert.True(metric.GetProperty("fd_peak").GetInt32() >= 0);
             Assert.True(metric.GetProperty("rss_peak_kb").GetInt64() >= 0);
             Assert.True(metric.GetProperty("concurrency_count").GetInt32() >= 0);
+            Assert.Equal("local", metric.GetProperty("cohort").GetProperty("venue").GetString());
+            Assert.Equal("report", metric.GetProperty("context").GetProperty("workload_id").GetString());
+            Assert.Equal(
+                metric.GetProperty("concurrency_count").GetInt32(),
+                metric.GetProperty("context").GetProperty("host_concurrency").GetInt32());
+            Assert.Equal(
+                metric.GetProperty("fd_peak").GetInt32(),
+                metric.GetProperty("resources").GetProperty("fd_peak").GetInt32());
         });
     }
 
@@ -75,6 +86,7 @@ public sealed class ReportSupervisorScriptTests
 
         Assert.Equal(0, result.ExitCode);
         var metric = Assert.Single(fixture.ReadDefaultMetrics());
+        Assert.Equal("stratalint-perf-event-v1", metric.GetProperty("schema").GetString());
         Assert.Equal("resource", metric.GetProperty("kind").GetString());
         Assert.Equal("scribe-consumer", metric.GetProperty("role").GetString());
     }
@@ -90,6 +102,62 @@ public sealed class ReportSupervisorScriptTests
         var metric = Assert.Single(fixture.ReadMetrics());
         Assert.Equal("ingest-consumer", metric.GetProperty("role").GetString());
         Assert.Equal(1, metric.GetProperty("rc").GetInt32());
+        Assert.Equal("failed", metric.GetProperty("status").GetString());
+    }
+
+    [Fact]
+    public void StaleOwnerlessSlotIsReclaimed()
+    {
+        using var fixture = new ReportSupervisorFixture();
+        var staleLock = Path.Combine(fixture.StateRoot, "slots", "slot-1.lock");
+        Directory.CreateDirectory(staleLock);
+        Directory.SetLastWriteTimeUtc(staleLock, DateTime.UtcNow.AddMinutes(-1));
+
+        var result = fixture.Run("lean-producer", leanSlot: true, fixture.ScratchWriter);
+
+        Assert.Equal(0, result.ExitCode);
+    }
+
+    [Fact]
+    public void LiveSlotWaitIsBounded()
+    {
+        using var fixture = new ReportSupervisorFixture();
+        var liveLock = Path.Combine(fixture.StateRoot, "slots", "slot-1.lock");
+        Directory.CreateDirectory(liveLock);
+        File.WriteAllText(
+            Path.Combine(liveLock, "owner"),
+            Environment.ProcessId.ToString(System.Globalization.CultureInfo.InvariantCulture) + "\n",
+            new UTF8Encoding(false));
+
+        var result = fixture.RunWithEnvironment(
+            "lean-producer",
+            leanSlot: true,
+            fixture.ScratchWriter,
+            "STRATALINT_LOCK_TIMEOUT_SECONDS=1");
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains(
+            "timed out",
+            Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void MetricsCommitFailureIsNotSilent()
+    {
+        using var fixture = new ReportSupervisorFixture();
+
+        var result = fixture.RunWithEnvironment(
+            "scribe-consumer",
+            leanSlot: false,
+            fixture.ScratchWriter,
+            $"STRATALINT_REPORT_METRICS_LOG={fixture.Root}");
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains(
+            "performance event",
+            Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
@@ -179,6 +247,33 @@ public sealed class ReportSupervisorScriptTests
         }
     }
 
+    [Fact]
+    public void TerminationReapsADescendantThatCreatesANewSession()
+    {
+        using var fixture = new ReportSupervisorFixture();
+        using var process = fixture.StartDetachedProducer();
+        Assert.True(SpinWait.SpinUntil(
+            () => File.Exists(fixture.DetachedPid),
+            TimeSpan.FromSeconds(10)));
+        var detached = int.Parse(
+            File.ReadAllText(fixture.DetachedPid).Trim(),
+            System.Globalization.CultureInfo.InvariantCulture);
+
+        var signal = BoundedProcessRunner.Run(
+            "/bin/kill",
+            ["-TERM", process.Id.ToString(System.Globalization.CultureInfo.InvariantCulture)],
+            fixture.Root,
+            TimeSpan.FromSeconds(10),
+            4096);
+        Assert.Equal(0, signal.ExitCode);
+        Assert.True(process.WaitForExit(10_000));
+
+        Assert.True(SpinWait.SpinUntil(
+            () => !ProcessExists(detached),
+            TimeSpan.FromSeconds(10)));
+        Assert.False(ProcessExists(detached));
+    }
+
     private static bool ProcessExists(int pid)
     {
         var result = BoundedProcessRunner.Run(
@@ -239,6 +334,13 @@ public sealed class ReportSupervisorScriptTests
                 sleep 60 &
                 printf '%s\n' "$!" > "$1"
                 """);
+            DetachedWorker = WriteExecutable("detached-worker.sh", """
+                #!/usr/bin/env bash
+                set -euo pipefail
+                perl -MPOSIX -e 'POSIX::setsid(); exec "sleep", "60"' &
+                printf '%s\n' "$!" > "$1"
+                wait
+                """);
         }
 
         internal string Root => temporary.Path;
@@ -252,21 +354,32 @@ public sealed class ReportSupervisorScriptTests
         internal string OverlapMarker => Path.Combine(Root, "overlap");
         internal string GrandchildPid => Path.Combine(Root, "grandchild.pid");
         internal string ExitedGrandchildPid => ScratchRecord;
+        internal string DetachedPid => Path.Combine(Root, "detached.pid");
         internal string ScratchWriter { get; }
         internal string ProducerWorker { get; }
         internal string ConcurrentDriver { get; }
         internal string LongRunningWorker { get; }
         internal string ExitingWorker { get; }
+        internal string DetachedWorker { get; }
 
         internal ProcessOutput Run(string role, bool leanSlot, string command)
+            => RunWithEnvironment(role, leanSlot, command);
+
+        internal ProcessOutput RunWithEnvironment(
+            string role,
+            bool leanSlot,
+            string command,
+            params string[] environment)
         {
             var arguments = new List<string>
             {
                 $"STRATALINT_REPORT_METRICS_LOG={MetricsLog}",
                 $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
-                Supervisor,
-                "--role", role,
             };
+            arguments.AddRange(environment);
+            arguments.Add(Supervisor);
+            arguments.Add("--role");
+            arguments.Add(role);
             if (leanSlot) arguments.Add("--lean-slot");
             arguments.Add("--");
             arguments.Add(command);
@@ -306,6 +419,29 @@ public sealed class ReportSupervisorScriptTests
                 Supervisor,
                 "--role", "lean-producer", "--lean-slot", "--",
                 LongRunningWorker, GrandchildPid,
+            }) info.ArgumentList.Add(argument);
+            var process = new Process { StartInfo = info };
+            Assert.True(process.Start());
+            return process;
+        }
+
+        internal Process StartDetachedProducer()
+        {
+            var info = new ProcessStartInfo
+            {
+                FileName = "env",
+                WorkingDirectory = Root,
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+            };
+            foreach (var argument in new[]
+            {
+                $"STRATALINT_REPORT_METRICS_LOG={MetricsLog}",
+                $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
+                Supervisor,
+                "--role", "lean-producer", "--lean-slot", "--",
+                DetachedWorker, DetachedPid,
             }) info.ArgumentList.Add(argument);
             var process = new Process { StartInfo = info };
             Assert.True(process.Start());
