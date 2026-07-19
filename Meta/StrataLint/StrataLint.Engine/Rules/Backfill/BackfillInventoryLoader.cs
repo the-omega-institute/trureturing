@@ -4,6 +4,18 @@ namespace StrataLint.Engine;
 
 internal sealed class BackfillInventoryDocument
 {
+    internal static IReadOnlyList<string> EntryFieldUniverse { get; } =
+    [
+        "atom_id",
+        "ast_path",
+        "boundary",
+        "fingerprints",
+        "cas_ref",
+        "coverage_gids",
+        "receipts",
+        "status",
+    ];
+
     private readonly IReadOnlyDictionary<string, object?> root;
     private readonly ImmutableArray<BackfillTicketReference> projectedTickets;
     private readonly ImmutableArray<DigestionLedgerSource> projectedSources;
@@ -146,11 +158,10 @@ internal sealed class BackfillInventoryDocument
     {
         var entry = Mapping(rawEntry, $"source {sourceId} entries must be mappings");
         var hasBoundary = entry.ContainsKey("boundary");
-        var expectedKeys = hasBoundary
-            ? new List<string> { "atom_id", "boundary", "fingerprints", "cas_ref" }
-            : ["atom_id", "ast_path", "fingerprints", "cas_ref"];
-
-        expectedKeys.AddRange(["coverage_gids", "receipts", "status"]);
+        var excludedBoundaryField = hasBoundary ? "ast_path" : "boundary";
+        var expectedKeys = EntryFieldUniverse
+            .Where(field => !string.Equals(field, excludedBoundaryField, StringComparison.Ordinal))
+            .ToArray();
         ExactKeys(
             entry,
             expectedKeys,

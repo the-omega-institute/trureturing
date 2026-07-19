@@ -6,22 +6,10 @@ namespace StrataLint.Tests;
 
 public sealed class BackfillInventoryLoaderTests
 {
-    private static readonly string[] EntryFields =
-    [
-        "atom_id",
-        "ast_path",
-        "boundary",
-        "fingerprints",
-        "cas_ref",
-        "coverage_gids",
-        "receipts",
-        "status",
-    ];
-
     [Fact]
     public void MissingCasRefIsRejected()
     {
-        var fields = EntryFields.ToHashSet(StringComparer.Ordinal);
+        var fields = LoaderEntryFields().ToHashSet(StringComparer.Ordinal);
         fields.Remove("cas_ref");
         fields.Remove("boundary");
 
@@ -34,20 +22,21 @@ public sealed class BackfillInventoryLoaderTests
     [Fact]
     public void EntryAcceptanceDomainMatchesSpecificationAnchor()
     {
-        var accepted = Enumerable.Range(0, 1 << EntryFields.Length)
-            .Select(mask => EntryFields
+        var entryFields = LoaderEntryFields();
+        var accepted = Enumerable.Range(0, 1 << entryFields.Length)
+            .Select(mask => entryFields
                 .Where((_, index) => (mask & (1 << index)) != 0)
                 .ToHashSet(StringComparer.Ordinal))
             .Where(fields => TryLoadEntry(EntryFixture(fields)))
             .ToArray();
         Assert.NotEmpty(accepted);
 
-        var required = EntryFields
+        var required = entryFields
             .Where(field => accepted.All(fields => fields.Contains(field)))
             .Order(StringComparer.Ordinal)
             .ToArray();
         var exclusivePair = Assert.Single(
-            EntryFields.SelectMany((left, index) => EntryFields[(index + 1)..]
+            entryFields.SelectMany((left, index) => entryFields[(index + 1)..]
                 .Select(right => (Left: left, Right: right))),
             pair =>
                 accepted.All(fields => fields.Contains(pair.Left) ^ fields.Contains(pair.Right))
@@ -56,7 +45,7 @@ public sealed class BackfillInventoryLoaderTests
         var exclusive = new[] { exclusivePair.Left, exclusivePair.Right }
             .Order(StringComparer.Ordinal)
             .ToArray();
-        var optional = EntryFields
+        var optional = entryFields
             .Except(required, StringComparer.Ordinal)
             .Except(exclusive, StringComparer.Ordinal)
             .Order(StringComparer.Ordinal)
@@ -386,6 +375,9 @@ public sealed class BackfillInventoryLoaderTests
             return false;
         }
     }
+
+    private static string[] LoaderEntryFields() =>
+        BackfillInventoryDocument.EntryFieldUniverse.ToArray();
 
     private static string EntryFixture(IReadOnlySet<string> fields)
     {
