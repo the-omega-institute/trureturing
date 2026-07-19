@@ -269,9 +269,9 @@ components:
       - "c0/corpus git-sha1/8de815b5666536b20274ddec06ae94ed3b512fd8 Meta/StrataLint/StrataLint.Cli/Golden/GoldenCorpus.cs"
       - "c0/corpus git-sha1/fdcb38587e9d5895073f230bdcb2d03735b66a2e Golden/fixture-registry.yaml"
       - "c0/gate-wiring git-sha1/c65a53092c25945388214097ed54a0efcd758c2c .github/scripts/harness-gate.sh"
-      - "c0/inaugural-certificate sha256/a2d90a276fb54acdb1f97b51319612629b6eecb47c9f69cc027a863b3aa6ae7e Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json"
-      - "c0/preimage-commit git-commit/726e9b19784dcd92f0fb71b4cfec594a9593880b"
-      - "c0/preimage-tree git-tree/ba8b8eb5843fd6becfe58bd2b432b3b44abbb44a"
+      - "c0/inaugural-certificate sha256/7a66f6cd68b36b94cba824672760b19da456ae87d8655092f739dac6b16611ed Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json"
+      - "c0/preimage-commit git-commit/e9d961b2f35f18995058364b872992605c849c09"
+      - "c0/preimage-tree git-tree/29fbdcd00f2e353511e25eb6519fdcf6fc551970"
     judged_by:
       - bootstrap-pr-1
     verification: verified
