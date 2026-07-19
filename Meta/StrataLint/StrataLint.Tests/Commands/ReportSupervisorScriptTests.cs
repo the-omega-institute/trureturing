@@ -5,6 +5,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
+[Collection("Report supervision")]
 public sealed class ReportSupervisorScriptTests
 {
     [Fact]
@@ -681,3 +682,6 @@ public sealed class ReportSupervisorScriptTests
         }
     }
 }
+
+[CollectionDefinition("Report supervision", DisableParallelization = true)]
+public sealed class ReportSupervisionCollection;
