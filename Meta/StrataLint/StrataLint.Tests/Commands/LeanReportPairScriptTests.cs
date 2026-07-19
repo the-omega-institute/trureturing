@@ -87,6 +87,7 @@ public sealed class LeanReportPairScriptTests
         Assert.Equal(0, result.ExitCode);
         var metrics = fixture.ReadMetrics();
         var metric = Assert.Single(metrics);
+        Assert.Equal("resource", metric.GetProperty("kind").GetString());
         Assert.Equal("lean-producer-candidate", metric.GetProperty("role").GetString());
     }
 

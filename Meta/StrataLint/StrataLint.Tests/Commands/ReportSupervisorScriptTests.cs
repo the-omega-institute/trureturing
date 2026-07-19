@@ -50,7 +50,8 @@ public sealed class ReportSupervisorScriptTests
         Assert.Equal("ingest-consumer", metrics[1].GetProperty("role").GetString());
         Assert.All(metrics, metric =>
         {
-            Assert.Equal(8, metric.EnumerateObject().Count());
+            Assert.Equal(9, metric.EnumerateObject().Count());
+            Assert.Equal("resource", metric.GetProperty("kind").GetString());
             Assert.Matches(
                 "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$",
                 metric.GetProperty("ts").GetString());
@@ -61,6 +62,21 @@ public sealed class ReportSupervisorScriptTests
             Assert.True(metric.GetProperty("rss_peak_kb").GetInt64() >= 0);
             Assert.True(metric.GetProperty("concurrency_count").GetInt32() >= 0);
         });
+    }
+
+    [Fact]
+    public void DefaultMetricsUseTheSharedPerformanceResourceLedger()
+    {
+        using var fixture = new ReportSupervisorFixture();
+
+        var result = fixture.RunWithDefaultMetrics(
+            "scribe-consumer",
+            fixture.ScratchWriter);
+
+        Assert.Equal(0, result.ExitCode);
+        var metric = Assert.Single(fixture.ReadDefaultMetrics());
+        Assert.Equal("resource", metric.GetProperty("kind").GetString());
+        Assert.Equal("scribe-consumer", metric.GetProperty("role").GetString());
     }
 
     [Fact]
@@ -229,6 +245,7 @@ public sealed class ReportSupervisorScriptTests
         internal string RepositoryRoot => FindRepositoryRoot();
         internal string Supervisor => Path.Combine(RepositoryRoot, "Meta", "StrataLint", "scripts", "report-supervisor.sh");
         internal string MetricsLog => Path.Combine(Root, "metrics.jsonl");
+        internal string DefaultMetricsLog => Path.Combine(Root, ".stratalint-perf", "events.jsonl");
         internal string StateRoot => Path.Combine(Root, "state");
         internal string ScratchRecord => Path.Combine(Root, "scratch.txt");
         internal string ActiveMarker => Path.Combine(Root, "active");
@@ -258,6 +275,20 @@ public sealed class ReportSupervisorScriptTests
                 "env", arguments, Root, TimeSpan.FromSeconds(30), 1024 * 1024);
         }
 
+        internal ProcessOutput RunWithDefaultMetrics(string role, string command) =>
+            BoundedProcessRunner.Run(
+                "env",
+                [
+                    $"HOME={Root}",
+                    $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
+                    Supervisor,
+                    "--role", role,
+                    "--", command, ScratchRecord,
+                ],
+                Root,
+                TimeSpan.FromSeconds(30),
+                1024 * 1024);
+
         internal Process StartLongRunningProducer()
         {
             var info = new ProcessStartInfo
@@ -282,6 +313,10 @@ public sealed class ReportSupervisorScriptTests
         }
 
         internal IReadOnlyList<JsonElement> ReadMetrics() => File.ReadAllLines(MetricsLog)
+            .Select(line => JsonDocument.Parse(line).RootElement.Clone())
+            .ToArray();
+
+        internal IReadOnlyList<JsonElement> ReadDefaultMetrics() => File.ReadAllLines(DefaultMetricsLog)
             .Select(line => JsonDocument.Parse(line).RootElement.Clone())
             .ToArray();
 

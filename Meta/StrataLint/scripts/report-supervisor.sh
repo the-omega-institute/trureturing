@@ -26,7 +26,13 @@ if [[ -d /private/tmp ]]; then DEFAULT_HOST_TMP=/private/tmp; else DEFAULT_HOST_
 STATE_ROOT="${STRATALINT_SUPERVISOR_ROOT:-$DEFAULT_HOST_TMP/stratalint-report-supervisor-${UID:-$(id -u)}}"
 RUN_ROOT="$STATE_ROOT/runs"
 SLOT_ROOT="$STATE_ROOT/slots"
-METRICS_LOG="${STRATALINT_REPORT_METRICS_LOG:-$STATE_ROOT/measurements.jsonl}"
+if [[ -n "${STRATALINT_REPORT_METRICS_LOG:-}" ]]; then
+  METRICS_LOG="$STRATALINT_REPORT_METRICS_LOG"
+else
+  [[ -n "${HOME:-}" && "$HOME" == /* ]] \
+    || { echo "report-supervisor: HOME must be absolute for the performance ledger" >&2; exit 2; }
+  METRICS_LOG="$HOME/.stratalint-perf/events.jsonl"
+fi
 MAX_CONCURRENCY="${STRATALINT_LEAN_MAX_CONCURRENCY:-1}"
 [[ "$MAX_CONCURRENCY" =~ ^[1-9][0-9]*$ && "$MAX_CONCURRENCY" -le 64 ]] \
   || { echo "report-supervisor: STRATALINT_LEAN_MAX_CONCURRENCY must be 1..64" >&2; exit 2; }
@@ -144,7 +150,7 @@ append_metrics() {
     sleep 0.05
   done
   printf '%s\n' "$$" > "$metrics_lock/owner"
-  printf '{"ts":"%s","role":"%s","pid":%s,"elapsed_ms":%s,"rc":%s,"fd_peak":%s,"rss_peak_kb":%s,"concurrency_count":%s}\n' \
+  printf '{"kind":"resource","ts":"%s","role":"%s","pid":%s,"elapsed_ms":%s,"rc":%s,"fd_peak":%s,"rss_peak_kb":%s,"concurrency_count":%s}\n' \
     "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" "$ROLE" "$CHILD_PID" "$elapsed_ms" "$rc" \
     "$FD_PEAK" "$RSS_PEAK_KB" "$CONCURRENCY_COUNT" >> "$METRICS_LOG"
   rm -rf -- "$metrics_lock"
