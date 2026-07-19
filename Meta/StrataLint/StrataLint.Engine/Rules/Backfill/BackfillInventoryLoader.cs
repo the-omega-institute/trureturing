@@ -146,14 +146,9 @@ internal sealed class BackfillInventoryDocument
     {
         var entry = Mapping(rawEntry, $"source {sourceId} entries must be mappings");
         var hasBoundary = entry.ContainsKey("boundary");
-        var hasCasRef = entry.ContainsKey("cas_ref");
         var expectedKeys = hasBoundary
-            ? new List<string> { "atom_id", "boundary", "fingerprints" }
-            : ["atom_id", "ast_path", "fingerprints"];
-        if (hasCasRef)
-        {
-            expectedKeys.Add("cas_ref");
-        }
+            ? new List<string> { "atom_id", "boundary", "fingerprints", "cas_ref" }
+            : ["atom_id", "ast_path", "fingerprints", "cas_ref"];
 
         expectedKeys.AddRange(["coverage_gids", "receipts", "status"]);
         ExactKeys(
@@ -210,7 +205,7 @@ internal sealed class BackfillInventoryDocument
                 ParseMigration(Scalar(status, "migration", $"entry {atomId} migration")),
                 ParseTruth(Scalar(status, "truth", $"entry {atomId} truth"))),
             receiptSyntax,
-            hasCasRef ? Scalar(entry, "cas_ref", $"entry {atomId} cas_ref") : null);
+            Scalar(entry, "cas_ref", $"entry {atomId} cas_ref"));
     }
 
     private static DigestionReceipts ParseReceipts(string atomId, object? rawReceipts)

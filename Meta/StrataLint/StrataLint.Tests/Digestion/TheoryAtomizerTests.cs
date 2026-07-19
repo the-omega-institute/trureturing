@@ -676,9 +676,12 @@ public sealed class TheoryAtomizerTests
         "docs/source.md",
         atomizer,
         atomId,
+        atom.AstPath,
         new DigestionBoundary(atom.AstPath, atom.StartByte, atom.EndByte),
         atom.Fingerprints,
         [],
         new DigestionReceipts([], [], [], [], null),
-        new DigestionStatus(DigestionMigrationState.Residual, DigestionTruthState.Open));
+        new DigestionStatus(DigestionMigrationState.Residual, DigestionTruthState.Open),
+        ReceiptSyntax: null,
+        CasRef: atom.Fingerprints.RawSha256);
 }

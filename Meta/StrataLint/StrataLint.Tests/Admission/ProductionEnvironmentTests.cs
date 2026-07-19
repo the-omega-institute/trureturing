@@ -129,11 +129,19 @@ public sealed partial class ProductionEnvironmentTests
             .Concat(inserted)
             .Concat(baselineBytes[(atom.EndByte - 1)..])
             .ToArray();
-        var ledger = LegacyIngestLedger(atomizerId, atom);
+        var ledger = LegacyIngestLedger(atomizerId, atom).Replace(
+            $"atomizer: {atomizerId}",
+            $"atomizer: {AtomizerRegistry.NoAtomizerId}",
+            StringComparison.Ordinal);
+        var captured = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
         fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
         fixture.Baseline[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(baselineBytes);
         fixture.Files[BackfillInventoryLoader.RelativePath] = ledger;
         fixture.Baseline[BackfillInventoryLoader.RelativePath] = ledger;
+        fixture.Files.Remove(GoldenCorpus.FixtureCasPath);
+        fixture.Baseline.Remove(GoldenCorpus.FixtureCasPath);
+        fixture.Files[captured.RelativePath] = Encoding.UTF8.GetString(captured.Bytes.AsSpan());
+        fixture.Baseline[captured.RelativePath] = Encoding.UTF8.GetString(captured.Bytes.AsSpan());
         var currentRaw = Snapshot(fixture.Files);
         var baselineRaw = Snapshot(fixture.Baseline);
         var candidateReport = Path.Combine(temporary.Path, "candidate.json");
@@ -475,7 +483,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void DigestStatusReportsNormalizedSeenWithoutAuthorizingDeletion()
+    public void DigestStatusReportsCasSeenAcrossNormalizedSourceRewrite()
     {
         var fixture = new RuleFixture();
         var atomizerId = AtomizerRegistry.RegisteredIds[0];
@@ -484,7 +492,10 @@ public sealed partial class ProductionEnvironmentTests
         var currentBytes = Encoding.UTF8.GetBytes(
             "# Synthetic\n\n**定理 1.1(Test)**。claim。\n");
         var atom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, ledgerBytes).Claims);
+        var captured = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
         fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
+        fixture.Files.Remove(GoldenCorpus.FixtureCasPath);
+        fixture.Files[captured.RelativePath] = Encoding.UTF8.GetString(captured.Bytes.AsSpan());
         fixture.Files["Meta/BACKFILL.yaml"] = $$"""
             schema_version: 3
             ledger: theory-digestion-v1
@@ -499,6 +510,7 @@ public sealed partial class ProductionEnvironmentTests
                     fingerprints:
                       raw_sha256: {{atom.Fingerprints.RawSha256}}
                       normalized_sha256: {{atom.Fingerprints.NormalizedSha256}}
+                    cas_ref: {{captured.Reference}}
                     coverage_gids: []
                     receipts:
                       coverage: []
@@ -523,13 +535,13 @@ public sealed partial class ProductionEnvironmentTests
         var result = environment.DigestStatus(["--json"]);
 
         Assert.True(result.Success, result.Error);
-        Assert.Contains("\"alignment\": \"normalized-seen\"", result.Output, StringComparison.Ordinal);
-        Assert.Contains("\"code\": \"normalized-seen-not-deletable\"", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"alignment\": \"seen\"", result.Output, StringComparison.Ordinal);
+        Assert.DoesNotContain("normalized-seen-not-deletable", result.Output, StringComparison.Ordinal);
         Assert.Contains("\"deletable\": false", result.Output, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void DigestStatusReportsAcknowledgedStaleAgainstExplicitBaseline()
+    public void DigestStatusReportsHistoricalAndCurrentCasReceiptsAsSeen()
     {
         var fixture = new RuleFixture();
         var atomizerId = AtomizerRegistry.RegisteredIds[0];
@@ -538,9 +550,11 @@ public sealed partial class ProductionEnvironmentTests
         var oldAtom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, oldBytes).Claims);
         var baselineLedger = IngestLedger(atomizerId, oldAtom);
         var baselineDocument = BackfillInventoryLoader.Load(baselineLedger);
+        var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
         var planningSnapshot = Decode(Snapshot(new Dictionary<string, string>(StringComparer.Ordinal)
         {
             [GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes),
+            [oldCapture.RelativePath] = Encoding.UTF8.GetString(oldCapture.Bytes.AsSpan()),
         }));
         var plan = DigestionIngestor.Plan(baselineDocument, planningSnapshot, baselineDocument);
         var candidateLedger = Encoding.UTF8.GetString(
@@ -549,6 +563,10 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Baseline[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
         fixture.Files[BackfillInventoryLoader.RelativePath] = candidateLedger;
         fixture.Baseline[BackfillInventoryLoader.RelativePath] = baselineLedger;
+        fixture.Files.Remove(GoldenCorpus.FixtureCasPath);
+        fixture.Baseline.Remove(GoldenCorpus.FixtureCasPath);
+        fixture.Files[oldCapture.RelativePath] = Encoding.UTF8.GetString(oldCapture.Bytes.AsSpan());
+        fixture.Baseline[oldCapture.RelativePath] = Encoding.UTF8.GetString(oldCapture.Bytes.AsSpan());
         foreach (var item in plan.CasObjects)
         {
             fixture.Files[item.RelativePath] = Encoding.UTF8.GetString(item.Bytes.AsSpan());
@@ -566,9 +584,8 @@ public sealed partial class ProductionEnvironmentTests
         var result = environment.DigestStatus(["--json", "--base", "baseline"]);
 
         Assert.True(result.Success, result.Error);
-        Assert.Contains("\"alignment\": \"stale\"", result.Output, StringComparison.Ordinal);
         Assert.Contains("\"alignment\": \"seen\"", result.Output, StringComparison.Ordinal);
-        Assert.Contains("\"code\": \"stale-receipt-not-deletable\"", result.Output, StringComparison.Ordinal);
+        Assert.DoesNotContain("stale-receipt-not-deletable", result.Output, StringComparison.Ordinal);
     }
 
     [Fact]
