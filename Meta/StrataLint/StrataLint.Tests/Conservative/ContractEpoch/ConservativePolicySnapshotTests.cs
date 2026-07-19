@@ -53,6 +53,33 @@ public sealed class ConservativePolicySnapshotTests
     }
 
     [Fact]
+    public void Sl023IsKnownWithoutChangingTheCurrentActiveObligations()
+    {
+        var current = ConservativePolicySnapshot.Current();
+
+        Assert.DoesNotContain(current.RuleObligations, item => item.RuleId == "SL-023");
+        var candidate = current.WithRuleObligations(
+            current.RuleObligations.Select(static item => item.RuleId).Append("SL-023"));
+        var sl023 = Assert.Single(candidate.RuleObligations, item => item.RuleId == "SL-023");
+        Assert.Equal(AdmissionEffect.Observe.ToString(), sl023.AdmissionEffect);
+        Assert.StartsWith("sha256:", sl023.DescriptorRoot, StringComparison.Ordinal);
+        Assert.Equal(71, sl023.DescriptorRoot.Length);
+        Assert.Equal(
+            "sha256:3cf6dbb7d64c99791db2145cc072c914a63bbe2e0c7acf9c9bc7aca5b0ad95ee",
+            candidate.Root);
+    }
+
+    [Fact]
+    public void UnregisteredFutureRuleStillFailsClosed()
+    {
+        var current = ConservativePolicySnapshot.Current();
+
+        var exception = Assert.Throws<ArgumentException>(() =>
+            current.WithRuleObligations(["SL-024"]));
+        Assert.Contains("unknown active rules: SL-024", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void ResidenceEpochRetiresExactlyTheFiveRegisteredPaths()
     {
         var current = ConservativePolicySnapshot.Current();

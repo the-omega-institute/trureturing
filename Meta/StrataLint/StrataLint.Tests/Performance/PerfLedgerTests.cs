@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using StrataLint.Cli;
 
 namespace StrataLint.Tests;
@@ -84,6 +85,28 @@ public sealed class PerfLedgerTests
         var inside = Path.Combine(repository.Path, "events.jsonl");
         Assert.Throws<InvalidOperationException>(() =>
             PerfLedgerWriter.Append(repository.Path, input, inside));
+    }
+
+    [Fact]
+    public void WriterPreservesResourceProcessFields()
+    {
+        using var repository = new TemporaryDirectory();
+        using var external = new TemporaryDirectory();
+        var input = Path.Combine(repository.Path, "events-spool.jsonl");
+        var ledger = Path.Combine(external.Path, "events.jsonl");
+        File.WriteAllText(input, ResourceEventJson() + "\n", new UTF8Encoding(false));
+
+        Assert.Equal(1, PerfLedgerWriter.Append(repository.Path, input, ledger));
+
+        using var document = JsonDocument.Parse(Assert.Single(File.ReadAllLines(ledger)));
+        var resource = document.RootElement;
+        Assert.Equal("lean-producer", resource.GetProperty("role").GetString());
+        Assert.Equal(1234, resource.GetProperty("pid").GetInt32());
+        Assert.Equal(5678, resource.GetProperty("elapsed_ms").GetInt64());
+        Assert.Equal(17, resource.GetProperty("rc").GetInt32());
+        Assert.Equal(91, resource.GetProperty("fd_peak").GetInt32());
+        Assert.Equal(65_432, resource.GetProperty("rss_peak_kb").GetInt64());
+        Assert.Equal(2, resource.GetProperty("concurrency_count").GetInt32());
     }
 
     [Fact]
@@ -214,4 +237,22 @@ public sealed class PerfLedgerTests
                 rss_peak_mb = (double?)null,
             },
         });
+
+    private static string ResourceEventJson()
+    {
+        var item = JsonNode.Parse(EventJson())!.AsObject();
+        item["kind"] = "resource";
+        item["stage"] = "lean-producer";
+        item["status"] = "observation";
+        item["role"] = "lean-producer";
+        item["pid"] = 1234;
+        item["elapsed_ms"] = 5678;
+        item["rc"] = 17;
+        item["fd_peak"] = 91;
+        item["rss_peak_kb"] = 65_432;
+        item["concurrency_count"] = 2;
+        item["resources"]!["fd_peak"] = 91;
+        item["resources"]!["rss_peak_mb"] = 63.898;
+        return item.ToJsonString();
+    }
 }

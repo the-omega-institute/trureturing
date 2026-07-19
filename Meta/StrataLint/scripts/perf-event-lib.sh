@@ -11,6 +11,15 @@ perf_json_quote() {
   printf '"%s"' "$value"
 }
 
+perf_json_nonnegative_number_or_null() {
+  local value="${1:-}"
+  if [[ "$value" =~ ^[0-9]+([.][0-9]+)?$ ]]; then
+    printf '%s' "$value"
+  else
+    printf 'null'
+  fi
+}
+
 perf_make_spool_dir() {
   local root="$1"
   local prefix="$2"
@@ -143,5 +152,5 @@ perf_flush_events() {
     -verbosity:quiet 2>/dev/null)" || return 1
   [[ -n "$target" && "$target" == /* && -f "$target" ]] || return 1
   local ledger="${STRATALINT_PERF_LEDGER:-$HOME/.stratalint-perf/events.jsonl}"
-  dotnet "$target" perf-append --input "$spool" --ledger "$ledger"
+  (cd "$root" && dotnet "$target" perf-append --input "$spool" --ledger "$ledger")
 }

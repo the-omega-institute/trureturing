@@ -35,7 +35,14 @@ internal sealed record PerfEvent(
     string Stage,
     string Status,
     double? ElapsedSeconds,
-    PerfResources Resources);
+    PerfResources Resources,
+    string? Role,
+    int? Pid,
+    long? ElapsedMs,
+    int? Rc,
+    int? FdPeak,
+    long? RssPeakKb,
+    int? ConcurrencyCount);
 
 internal static class PerfEventCodec
 {
@@ -117,6 +124,22 @@ internal static class PerfEventCodec
             throw new InvalidOperationException("resource measurements cannot be negative");
         }
 
+        var role = OptionalString(root, "role", "role");
+        var pid = OptionalInt(root, "pid", "pid");
+        var elapsedMs = OptionalLong(root, "elapsed_ms", "elapsed_ms");
+        var rc = OptionalInt(root, "rc", "rc");
+        var fdPeak = OptionalInt(root, "fd_peak", "fd_peak");
+        var rssPeakKb = OptionalLong(root, "rss_peak_kb", "rss_peak_kb");
+        var concurrencyCount = OptionalInt(root, "concurrency_count", "concurrency_count");
+        if (pid is <= 0)
+        {
+            throw new InvalidOperationException("pid must be positive when present");
+        }
+        if (elapsedMs < 0 || rc < 0 || fdPeak < 0 || rssPeakKb < 0 || concurrencyCount < 0)
+        {
+            throw new InvalidOperationException("process measurements cannot be negative");
+        }
+
         if (CriticalContextInvalid(context)
             || (string.Equals(kind, "timing", StringComparison.Ordinal) && elapsed is null))
         {
@@ -132,7 +155,14 @@ internal static class PerfEventCodec
             stage,
             status,
             elapsed,
-            resources);
+            resources,
+            role,
+            pid,
+            elapsedMs,
+            rc,
+            fdPeak,
+            rssPeakKb,
+            concurrencyCount);
     }
 
     internal static string WriteLine(PerfEvent item)
@@ -172,6 +202,13 @@ internal static class PerfEventCodec
             WriteOptionalNumber(writer, "fd_peak", item.Resources.FdPeak);
             WriteOptionalNumber(writer, "rss_peak_mb", item.Resources.RssPeakMb);
             writer.WriteEndObject();
+            WriteOptionalRootString(writer, "role", item.Role);
+            WriteOptionalRootNumber(writer, "pid", item.Pid);
+            WriteOptionalRootNumber(writer, "elapsed_ms", item.ElapsedMs);
+            WriteOptionalRootNumber(writer, "rc", item.Rc);
+            WriteOptionalRootNumber(writer, "fd_peak", item.FdPeak);
+            WriteOptionalRootNumber(writer, "rss_peak_kb", item.RssPeakKb);
+            WriteOptionalRootNumber(writer, "concurrency_count", item.ConcurrencyCount);
             writer.WriteEndObject();
         }
 
@@ -260,6 +297,21 @@ internal static class PerfEventCodec
         return number;
     }
 
+    private static long? OptionalLong(JsonElement parent, string name, string path)
+    {
+        if (!parent.TryGetProperty(name, out var value) || value.ValueKind == JsonValueKind.Null)
+        {
+            return null;
+        }
+
+        if (value.ValueKind != JsonValueKind.Number || !value.TryGetInt64(out var number))
+        {
+            throw new InvalidOperationException($"{path} must be null or an integer");
+        }
+
+        return number;
+    }
+
     private static string RequireMember(
         ImmutableHashSet<string> members,
         string value,
@@ -289,5 +341,20 @@ internal static class PerfEventCodec
     {
         if (value is null) writer.WriteNull(name);
         else writer.WriteNumber(name, value.Value);
+    }
+
+    private static void WriteOptionalRootString(Utf8JsonWriter writer, string name, string? value)
+    {
+        if (value is not null) writer.WriteString(name, value);
+    }
+
+    private static void WriteOptionalRootNumber(Utf8JsonWriter writer, string name, int? value)
+    {
+        if (value is not null) writer.WriteNumber(name, value.Value);
+    }
+
+    private static void WriteOptionalRootNumber(Utf8JsonWriter writer, string name, long? value)
+    {
+        if (value is not null) writer.WriteNumber(name, value.Value);
     }
 }
