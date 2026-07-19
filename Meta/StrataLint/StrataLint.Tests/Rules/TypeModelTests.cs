@@ -172,6 +172,15 @@ public sealed class TypeModelTests
     }
 
     [Fact]
+    public void AutoUpdateBranchWorkflowPathIsClosedWorldRegisteredAtItsCanonicalAddress()
+    {
+        var path = RepoPath.CreateKnown(RepositoryPathPolicy.AutoUpdateBranchWorkflowPath);
+
+        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
+        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
+    }
+
+    [Fact]
     public void HarnessGateScriptIsClosedWorldRegisteredAndBootstrapProtected()
     {
         const string value = RuleFixture.HarnessGatePath;
