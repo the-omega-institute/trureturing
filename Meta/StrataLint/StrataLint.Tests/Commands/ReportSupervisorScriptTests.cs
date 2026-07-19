@@ -5,7 +5,6 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-[Collection("Report supervision")]
 public sealed class ReportSupervisorScriptTests
 {
     [Fact]
@@ -94,6 +93,31 @@ public sealed class ReportSupervisorScriptTests
         Assert.Equal("stratalint-perf-event-v1", metric.GetProperty("schema").GetString());
         Assert.Equal("resource", metric.GetProperty("kind").GetString());
         Assert.Equal("scribe-consumer", metric.GetProperty("role").GetString());
+    }
+
+    [Fact]
+    public void MetricsWriterUsesRepositoryRootInsteadOfTheCallerWorkingDirectory()
+    {
+        using var fixture = new ReportSupervisorFixture();
+        using var caller = new PhysicalTemporaryDirectory();
+        var metrics = Path.Combine(caller.Path, "metrics.jsonl");
+        var state = Path.Combine(caller.Path, "state");
+
+        var result = BoundedProcessRunner.Run(
+            "env",
+            [
+                $"STRATALINT_REPORT_METRICS_LOG={metrics}",
+                $"STRATALINT_SUPERVISOR_ROOT={state}",
+                fixture.Supervisor,
+                "--role", "scribe-consumer",
+                "--", "/usr/bin/true",
+            ],
+            caller.Path,
+            TimeSpan.FromSeconds(30),
+            1024 * 1024);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Single(File.ReadAllLines(metrics));
     }
 
     [Fact]
@@ -681,7 +705,20 @@ public sealed class ReportSupervisorScriptTests
             throw new DirectoryNotFoundException("Could not locate repository root.");
         }
     }
-}
 
-[CollectionDefinition("Report supervision", DisableParallelization = true)]
-public sealed class ReportSupervisionCollection;
+    private sealed class PhysicalTemporaryDirectory : IDisposable
+    {
+        internal PhysicalTemporaryDirectory()
+        {
+            var root = Directory.Exists("/private/tmp") ? "/private/tmp" : "/tmp";
+            Path = System.IO.Path.Combine(
+                root,
+                "stratalint-report-caller-" + Guid.NewGuid().ToString("N"));
+            Directory.CreateDirectory(Path);
+        }
+
+        internal string Path { get; }
+
+        public void Dispose() => Directory.Delete(Path, recursive: true);
+    }
+}

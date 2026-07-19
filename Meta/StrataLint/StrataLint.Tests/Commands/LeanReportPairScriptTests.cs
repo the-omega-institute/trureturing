@@ -4,7 +4,6 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-[Collection("Report supervision")]
 public sealed class LeanReportPairScriptTests
 {
     [Fact]

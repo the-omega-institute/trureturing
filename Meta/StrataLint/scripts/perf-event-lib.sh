@@ -143,5 +143,5 @@ perf_flush_events() {
     -verbosity:quiet 2>/dev/null)" || return 1
   [[ -n "$target" && "$target" == /* && -f "$target" ]] || return 1
   local ledger="${STRATALINT_PERF_LEDGER:-$HOME/.stratalint-perf/events.jsonl}"
-  dotnet "$target" perf-append --input "$spool" --ledger "$ledger"
+  (cd "$root" && dotnet "$target" perf-append --input "$spool" --ledger "$ledger")
 }
