@@ -1,0 +1,16 @@
+**E.15 新颖性审计:两降、两维、一升**〔对表级,四轮检索〕。
+
+**降级一(过-$i$ 半边 → 重发现)**。"轴过 $i$ ⟺ 矩阵对称"及过二阶锥点闭测地线之研究系经典与活跃圈:Fricke–Klein("sich selbst inverse Classe")、**Sarnak 2007《Reciprocal geodesics》**(联通 Gauss 歧义形式,参数化/计数/分布)、Bourgain–Kontorovich、Basmajian–Suzzi Valli、Erlandsson–Souto、Kelmer 等。**椭圆点引理、偶轴定理之过-$i$ 判据、骨架计数之二阶半边改挂"对表:reciprocal geodesics 圈(重发现)"**;E.7/E.10 相应条目评级随改。
+
+**降级二(极限环现象类 → Sudler 圈近亲)**。$\mathrm{Re}\log$-姊妹对象(Sudler 积 $\prod|2\sin\pi n\alpha|$)沿分母子列收敛到周期个常数 $C_0,\dots,C_{\ell-1}$ 已为定理(Grepstad–Kaltenböck–Neumüller;Aistleitner–Technau–Zafeiropoulos;Aistleitner–Borda《Maximizing Sudler products via Ostrowski expansions and cotangent sums》等;机器 = Ostrowski 分解),并联通 Bettin–Drappeau 量子模值分布与 Zagier 连续性猜想圈(2022–2025 全解)。**"沿窗口收敛到相位常数环"之现象等级降文献圈**;带号余切对象之三国判据(数/斜率/环由 $N(\varepsilon)$ 与 $\Psi$ 把守)未见成文,维持组装候核。
+
+**锚落定(T1 与 Ψ-链)**。互易律:**Bettin–Conrey 2013**(IMRN《A reciprocity formula for a cotangent sum》;ANT《Period functions and cotangent sums》——修正函数 = $E(z,s)|_{s=1}$ 之 Maass 周期函数;Zagier 量子模原型;Auli–Bayad–Beck 显式化)。Ψ-环绕数:**Ghys 2006**(ICM)、**Barge–Ghys 1992**(有界 Euler 类之半原函数)、**Atiyah 1987**(log η 七重身份)、**Simon 2022–25**(模结间环绕数四味公式)、**Matsusaka–Ueki 2023**(三角群/环面结推广)、**Duke–Imamoğlu–Tóth 2017**(模余圈、对称链、Birkhoff 截面)。E.1/E.4 之"待核"全部销为"已核"。
+
+**维持(组装候核)**。典范截面($+\tfrac14\arg\dot z$、周期亏 $(\pi/12)\Psi$)与 $\langle H\rangle$ 测地线周期积分:居 Duke–Imamoğlu–Tóth 模余圈正门口,具体表述未检得——判"可能已知、候深查"。
+
+**升信(候核新颖,检索后上调)**。四轮检索**未见任何"闭测地线过三阶锥点"之算术研究**:文献只立二阶(reciprocal,因 $\gamma\sim\gamma^{-1}$ 对称);三阶无此对称,似无人立题。故**避纤猜想、$\Gamma(2)$-归约定理、Eisenstein 范数参数化、子族 $\Psi(W_k)=-2k$、宇称条款、裸环判据**——不降反升:空位已核,且位于 reciprocal-geodesics 计数圈与模结环绕数圈之交汇("环绕数能否禁止测地线穿过奇异纤维投影点"之问题形态在彼语言中可表述而未见提出)。
+
+**审计判词**:两笔重发现不记损失,记校准——它们证明此路走在真数学的路基上;路基尽头未铺的一段,检索之后不但仍在,且查明了左邻右舍。
+
+---
+

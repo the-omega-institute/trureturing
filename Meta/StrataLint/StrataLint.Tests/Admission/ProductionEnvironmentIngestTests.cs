@@ -144,6 +144,42 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void IngestWarnsWhenChangedTheorySourceProducesNoNewAtoms()
+    {
+        var fixture = new RuleFixture();
+        var atomizerId = AtomizerRegistry.RegisteredIds[0];
+        var oldText = "# Synthetic\n\n**定理 1.1(A)**。claim。\n\n## Existing\n\nold prose。\n";
+        var currentText = oldText + "\n## Added dialect\n\nnew unrecognized prose。\n";
+        var oldBytes = Encoding.UTF8.GetBytes(oldText);
+        var oldAtom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, oldBytes).Claims);
+        var ledger = IngestLedger(atomizerId, oldAtom);
+        fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = currentText;
+        fixture.Baseline[GoldenCorpus.FixtureDigestionSourcePath] = oldText;
+        fixture.Files[BackfillInventoryLoader.RelativePath] = ledger;
+        fixture.Baseline[BackfillInventoryLoader.RelativePath] = ledger;
+        using var temporary = new TemporaryDirectory();
+        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
+        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+        File.WriteAllText(outputPath, ledger, new UTF8Encoding(false));
+        var environment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(Array.Empty<string>()),
+                Snapshot(fixture.Files),
+                Snapshot(fixture.Baseline)),
+            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+
+        var result = environment.Ingest(["--base", "baseline"]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains(
+            "WARNING silent-zero-extraction source=fixture-source",
+            result.Output,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void IngestCommitsReportedCoarseFallbackAndCasBlobThroughProductionEnvironment()
     {
         var fixture = new RuleFixture();
