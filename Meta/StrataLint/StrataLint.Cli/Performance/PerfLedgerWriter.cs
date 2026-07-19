@@ -8,9 +8,10 @@ internal static class PerfLedgerWriter
     {
         var repository = ResolvePath(repositoryRoot);
         var ledger = ResolvePath(ledgerPath);
-        if (IsWithin(repository, ledger))
+        if (RegisteredWorktreeRoots(repository).Any(root => IsWithin(root, ledger)))
         {
-            throw new InvalidOperationException("performance ledger must remain outside the repository");
+            throw new InvalidOperationException(
+                "performance ledger must remain outside every registered worktree");
         }
 
         var events = File.ReadLines(inputPath)
@@ -31,11 +32,84 @@ internal static class PerfLedgerWriter
 
     private static bool IsWithin(string root, string path)
     {
-        var relative = Path.GetRelativePath(root, path);
-        return !Path.IsPathRooted(relative)
-            && !string.Equals(relative, "..", StringComparison.Ordinal)
-            && !relative.StartsWith(".." + Path.DirectorySeparatorChar, StringComparison.Ordinal);
+        var comparison = OperatingSystem.IsLinux()
+            ? StringComparison.Ordinal
+            : StringComparison.OrdinalIgnoreCase;
+        var normalizedRoot = Path.TrimEndingDirectorySeparator(ResolvePath(root));
+        var normalizedPath = ResolvePath(path);
+        return string.Equals(normalizedRoot, normalizedPath, comparison)
+            || normalizedPath.StartsWith(
+                normalizedRoot + Path.DirectorySeparatorChar,
+                comparison);
     }
+
+    private static IEnumerable<string> RegisteredWorktreeRoots(string repository)
+    {
+        yield return repository;
+
+        var gitEntry = Path.Combine(repository, ".git");
+        if (!Directory.Exists(gitEntry) && !File.Exists(gitEntry)) yield break;
+        var gitDirectory = Directory.Exists(gitEntry)
+            ? gitEntry
+            : ReadGitDirectory(gitEntry, repository);
+        var commonDirectory = ResolveCommonGitDirectory(gitDirectory);
+        var mainRoot = Directory.GetParent(commonDirectory)?.FullName;
+        if (mainRoot is not null) yield return mainRoot;
+
+        var worktreesDirectory = Path.Combine(commonDirectory, "worktrees");
+        if (!Directory.Exists(worktreesDirectory)) yield break;
+        foreach (var metadataDirectory in Directory.EnumerateDirectories(worktreesDirectory))
+        {
+            var linkedGitEntry = ReadPathFile(
+                Path.Combine(metadataDirectory, "gitdir"),
+                metadataDirectory);
+            var linkedRoot = Directory.GetParent(linkedGitEntry)?.FullName
+                ?? throw new InvalidOperationException("registered worktree gitdir has no parent");
+            yield return linkedRoot;
+        }
+    }
+
+    private static string ResolveCommonGitDirectory(string gitDirectory)
+    {
+        var commonPath = Path.Combine(gitDirectory, "commondir");
+        if (File.Exists(commonPath)) return ReadPathFile(commonPath, gitDirectory);
+
+        var parent = Directory.GetParent(gitDirectory);
+        if (parent is not null
+            && string.Equals(parent.Name, "worktrees", StringComparison.Ordinal))
+        {
+            return parent.Parent?.FullName
+                ?? throw new InvalidOperationException("linked worktree has no common git directory");
+        }
+
+        return gitDirectory;
+    }
+
+    private static string ReadGitDirectory(string gitFile, string repository)
+    {
+        var value = File.ReadAllText(gitFile).Trim();
+        const string Prefix = "gitdir:";
+        if (!value.StartsWith(Prefix, StringComparison.OrdinalIgnoreCase))
+        {
+            throw new InvalidOperationException("worktree .git file has an invalid format");
+        }
+
+        return ResolveReferencedPath(value[Prefix.Length..].Trim(), repository);
+    }
+
+    private static string ReadPathFile(string pathFile, string relativeTo)
+    {
+        var value = File.ReadAllText(pathFile).Trim();
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            throw new InvalidOperationException($"path file is empty: {pathFile}");
+        }
+
+        return ResolveReferencedPath(value, relativeTo);
+    }
+
+    private static string ResolveReferencedPath(string path, string relativeTo) =>
+        ResolvePath(Path.IsPathRooted(path) ? path : Path.Combine(relativeTo, path));
 
     private static string ResolvePath(string path)
     {
@@ -43,6 +117,10 @@ internal static class PerfLedgerWriter
         if (File.Exists(full))
         {
             return new FileInfo(full).ResolveLinkTarget(returnFinalTarget: true)?.FullName ?? full;
+        }
+        if (Directory.Exists(full))
+        {
+            return new DirectoryInfo(full).ResolveLinkTarget(returnFinalTarget: true)?.FullName ?? full;
         }
 
         var tail = new Stack<string>();

@@ -41,12 +41,16 @@ GATE_STARTED="$(date +%s)"
 TMP_ROOT="$(mktemp -d "${TMPDIR:-/tmp}/stratalint-local-gate.XXXXXXXX")"
 LOCAL_TIMING_FILE="$TMP_ROOT/local-gate-timing.jsonl"
 SHARED_TIMING_FILE="$TMP_ROOT/shared-gate-timing.jsonl"
-PERF_EVENT_SPOOL="$TMP_ROOT/perf-events.jsonl"
+PERF_TMP="$(perf_make_spool_dir "$CANDIDATE_ROOT" stratalint-local-gate-perf 2>/dev/null || true)"
+PERF_EVENT_SPOOL=""
 JUDGE_ROOT=""
 BASE_SHA=""
 CREATED_JUDGE=0
 : > "$LOCAL_TIMING_FILE"
-: > "$PERF_EVENT_SPOOL"
+if [[ -n "$PERF_TMP" ]]; then
+  PERF_EVENT_SPOOL="$PERF_TMP/events.jsonl"
+  : > "$PERF_EVENT_SPOOL" || PERF_EVENT_SPOOL=""
+fi
 PERF_COMMIT="$(git -C "$CANDIDATE_ROOT" rev-parse --verify HEAD 2>/dev/null || printf unknown)"
 PERF_BASE="$(git -C "$CANDIDATE_ROOT" rev-parse --verify "${BASE_REF}^{commit}" 2>/dev/null || printf unknown)"
 PERF_RUN_ID="${STRATALINT_PERF_RUN_ID:-local-${GATE_STARTED}-$$-${PERF_COMMIT:0:12}}"
@@ -93,6 +97,7 @@ cleanup() {
     git -C "$CANDIDATE_ROOT" worktree remove --force "$JUDGE_ROOT" >/dev/null 2>&1 || true
   fi
   rm -rf -- "$TMP_ROOT"
+  if [[ -n "$PERF_TMP" ]]; then rm -rf -- "$PERF_TMP"; fi
 }
 
 finish() {

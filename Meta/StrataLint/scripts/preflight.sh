@@ -6,7 +6,7 @@ ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
 source "$ROOT/Meta/StrataLint/scripts/perf-event-lib.sh"
 PREFLIGHT_STARTED="$(date +%s)"
-PERF_TMP="$(mktemp -d "${TMPDIR:-/tmp}/stratalint-preflight-perf.XXXXXXXX" 2>/dev/null || true)"
+PERF_TMP="$(perf_make_spool_dir "$ROOT" stratalint-preflight-perf 2>/dev/null || true)"
 PERF_EVENT_SPOOL=""
 if [[ -n "$PERF_TMP" ]]; then
   PERF_EVENT_SPOOL="$PERF_TMP/events.jsonl"

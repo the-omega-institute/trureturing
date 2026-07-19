@@ -90,7 +90,7 @@ internal static class PerfEventCodec
 
         var contextElement = RequireObject(RequireProperty(root, "context", "context"), "context");
         var context = new PerfContext(
-            RequireString(contextElement, "commit", "context.commit"),
+            OptionalString(contextElement, "commit", "context.commit") ?? "unknown",
             RequireString(contextElement, "base", "context.base"),
             RequireString(contextElement, "workload_id", "context.workload_id"),
             OptionalString(contextElement, "cache_state", "context.cache_state"),
@@ -117,7 +117,11 @@ internal static class PerfEventCodec
             throw new InvalidOperationException("resource measurements cannot be negative");
         }
 
-        if (CriticalContextMissing(context)) status = "observation";
+        if (CriticalContextInvalid(context)
+            || (string.Equals(kind, "timing", StringComparison.Ordinal) && elapsed is null))
+        {
+            status = "observation";
+        }
         return new PerfEvent(
             schema,
             runId,
@@ -174,10 +178,10 @@ internal static class PerfEventCodec
         return Encoding.UTF8.GetString(stream.ToArray());
     }
 
-    private static bool CriticalContextMissing(PerfContext context) =>
+    private static bool CriticalContextInvalid(PerfContext context) =>
         string.Equals(context.Commit, "unknown", StringComparison.OrdinalIgnoreCase)
-        || context.LoadavgPerCpu is null
-        || context.HostConcurrency is null;
+        || context.LoadavgPerCpu is null or < 0
+        || context.HostConcurrency is null or < 1;
 
     private static JsonElement RequireProperty(JsonElement parent, string name, string path)
     {

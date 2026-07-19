@@ -7,7 +7,31 @@ perf_json_quote() {
   value="${value//$'\n'/\\n}"
   value="${value//$'\r'/\\r}"
   value="${value//$'\t'/\\t}"
+  value="$(printf '%s' "$value" | LC_ALL=C tr -d '\001-\010\013\014\016-\037')"
   printf '"%s"' "$value"
+}
+
+perf_make_spool_dir() {
+  local root="$1"
+  local prefix="$2"
+  local resolved_root=""
+  local system_tmp=""
+  local spool=""
+  resolved_root="$(cd "$root" 2>/dev/null && pwd -P)" || return 1
+  system_tmp="$(cd /tmp 2>/dev/null && pwd -P)" || return 1
+  case "$system_tmp" in
+    "$resolved_root"|"$resolved_root"/*) return 1 ;;
+  esac
+  spool="$(TMPDIR="$system_tmp" mktemp -d "$system_tmp/${prefix}.XXXXXXXX" 2>/dev/null)" \
+    || return 1
+  spool="$(cd "$spool" 2>/dev/null && pwd -P)" || return 1
+  case "$spool" in
+    "$resolved_root"|"$resolved_root"/*)
+      rm -rf -- "$spool"
+      return 1
+      ;;
+  esac
+  printf '%s' "$spool"
 }
 
 perf_cpu_count() {

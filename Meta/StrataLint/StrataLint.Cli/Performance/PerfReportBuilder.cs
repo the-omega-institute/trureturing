@@ -50,15 +50,13 @@ internal static class PerfReportBuilder
     {
         var items = source.OrderBy(static item => item.Timestamp).ToArray();
         var comparable = items
-            .Where(static item => item.Status == "passed")
+            .Where(static item => item.Status == "passed" && item.ElapsedSeconds is not null)
             .ToArray();
         var timings = comparable
-            .Where(static item => item.ElapsedSeconds is not null)
             .Select(static item => item.ElapsedSeconds!.Value)
             .Order()
             .ToArray();
         var recent = comparable
-            .Where(static item => item.ElapsedSeconds is not null)
             .TakeLast(recentCount)
             .Select(static item => item.ElapsedSeconds!.Value)
             .ToArray();

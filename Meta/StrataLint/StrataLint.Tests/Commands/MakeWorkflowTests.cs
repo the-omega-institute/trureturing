@@ -186,6 +186,63 @@ public sealed class MakeWorkflowTests
         Assert.True(pathIndex < dirnameIndex, "tool PATH must be restored before dirname is invoked");
     }
 
+    [Fact]
+    public void PerformanceJsonQuoteRemovesUnsupportedControlBytes()
+    {
+        var root = FindRepositoryRoot();
+        var script = Path.Combine(root, PerfEventScriptPath);
+        var result = BoundedProcessRunner.Run(
+            "/bin/bash",
+            [
+                "-c",
+                "source \"$1\"; perf_json_quote \"$2\"",
+                "perf-json-quote",
+                script,
+                "run\u0001id",
+            ],
+            root,
+            TimeSpan.FromSeconds(10),
+            4 * 1024);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal("\"runid\"", System.Text.Encoding.UTF8.GetString(result.StandardOutput));
+    }
+
+    [Fact]
+    public void PerformanceSpoolIgnoresATmpdirInsideTheRepository()
+    {
+        var root = FindRepositoryRoot();
+        var script = Path.Combine(root, PerfEventScriptPath);
+        using var repository = new TemporaryDirectory();
+        var result = BoundedProcessRunner.Run(
+            "/bin/bash",
+            [
+                "-c",
+                "source \"$1\"; TMPDIR=\"$2\" perf_make_spool_dir \"$2\" stratalint-test-perf",
+                "perf-spool",
+                script,
+                repository.Path,
+            ],
+            root,
+            TimeSpan.FromSeconds(10),
+            4 * 1024);
+        var spool = System.Text.Encoding.UTF8.GetString(result.StandardOutput).Trim();
+
+        try
+        {
+            Assert.Equal(0, result.ExitCode);
+            Assert.True(Path.IsPathRooted(spool));
+            Assert.False(
+                Path.GetFullPath(spool).StartsWith(
+                    Path.GetFullPath(repository.Path) + Path.DirectorySeparatorChar,
+                    StringComparison.Ordinal));
+        }
+        finally
+        {
+            if (Directory.Exists(spool)) Directory.Delete(spool, recursive: true);
+        }
+    }
+
     private static int RecipeCount(string makefile, string target) =>
         RecipeLines(makefile, target).Count;
 

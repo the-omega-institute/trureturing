@@ -17,6 +17,36 @@ public sealed class PerfLedgerTests
         Assert.Equal("observation", parsed.Status);
     }
 
+    [Theory]
+    [InlineData("")]
+    [InlineData("\"commit\":null,")]
+    public void MissingCommitIsCanonicalizedAsAnObservation(string replacement)
+    {
+        var json = EventJson().Replace(
+            "\"commit\":\"0123456789abcdef0123456789abcdef01234567\",",
+            replacement,
+            StringComparison.Ordinal);
+
+        var parsed = PerfEventCodec.ParseLine(json);
+
+        Assert.Equal("unknown", parsed.Context.Commit);
+        Assert.Equal("observation", parsed.Status);
+    }
+
+    [Theory]
+    [InlineData(-0.01, 1)]
+    [InlineData(0.25, 0)]
+    public void InvalidCriticalContextForcesObservation(
+        double loadavgPerCpu,
+        int hostConcurrency)
+    {
+        var parsed = PerfEventCodec.ParseLine(EventJson(
+            loadavgPerCpu: loadavgPerCpu,
+            hostConcurrency: hostConcurrency));
+
+        Assert.Equal("observation", parsed.Status);
+    }
+
     [Fact]
     public void RequiredEnvelopeFieldCannotBeOmitted()
     {
@@ -54,6 +84,30 @@ public sealed class PerfLedgerTests
         var inside = Path.Combine(repository.Path, "events.jsonl");
         Assert.Throws<InvalidOperationException>(() =>
             PerfLedgerWriter.Append(repository.Path, input, inside));
+    }
+
+    [Fact]
+    public void WriterRejectsEveryRegisteredWorktree()
+    {
+        using var repository = new TemporaryDirectory();
+        using var linkedWorktree = new TemporaryDirectory();
+        var worktreeMetadata = Path.Combine(repository.Path, ".git", "worktrees", "linked");
+        Directory.CreateDirectory(worktreeMetadata);
+        File.WriteAllText(
+            Path.Combine(worktreeMetadata, "gitdir"),
+            Path.Combine(linkedWorktree.Path, ".git") + "\n",
+            new UTF8Encoding(false));
+        File.WriteAllText(
+            Path.Combine(linkedWorktree.Path, ".git"),
+            "gitdir: " + worktreeMetadata + "\n",
+            new UTF8Encoding(false));
+        var input = Path.Combine(repository.Path, "events-spool.jsonl");
+        File.WriteAllText(input, EventJson() + "\n", new UTF8Encoding(false));
+        var ledger = Path.Combine(linkedWorktree.Path, "events.jsonl");
+
+        Assert.Throws<InvalidOperationException>(() =>
+            PerfLedgerWriter.Append(repository.Path, input, ledger));
+        Assert.False(File.Exists(ledger));
     }
 
     [Fact]
@@ -105,6 +159,21 @@ public sealed class PerfLedgerTests
         Assert.Equal(50, ci.P95Seconds);
     }
 
+    [Fact]
+    public void TimingWithoutElapsedIsAnObservationOutsideTheSamplePopulation()
+    {
+        var item = PerfEventCodec.ParseLine(EventJson(elapsed: null));
+
+        var summary = Assert.Single(PerfReportBuilder.Build([item], recentCount: 3));
+
+        Assert.Equal("observation", item.Status);
+        Assert.Equal(0, summary.ComparableSampleCount);
+        Assert.Equal(1, summary.ObservationCount);
+        Assert.Null(summary.P50Seconds);
+        Assert.Null(summary.P95Seconds);
+        Assert.Empty(summary.RecentSeconds);
+    }
+
     private static string EventJson(
         string runId = "run-local",
         string status = "passed",
@@ -112,7 +181,7 @@ public sealed class PerfLedgerTests
         string? runnerClass = null,
         double? loadavgPerCpu = 0.25,
         int? hostConcurrency = 1,
-        double elapsed = 12) => JsonSerializer.Serialize(new
+        double? elapsed = 12) => JsonSerializer.Serialize(new
         {
             schema = "stratalint-perf-event-v1",
             run_id = runId,
