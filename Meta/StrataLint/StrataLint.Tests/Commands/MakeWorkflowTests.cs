@@ -21,6 +21,7 @@ public sealed class MakeWorkflowTests
         "test",
         "lean",
         "build",
+        "c0-renew",
         "clean-lanes",
         "emit",
         "emit-check",
@@ -50,6 +51,10 @@ public sealed class MakeWorkflowTests
 
         Assert.Contains("build: dotnet lean", makefile, StringComparison.Ordinal);
         Assert.Equal(0, RecipeCount(makefile, "build"));
+        Assert.Contains(
+            " c0-renew --base \"$(BASE)\"",
+            Recipe(makefile, "c0-renew"),
+            StringComparison.Ordinal);
         Assert.Contains(CleanLanesScriptPath, Recipe(makefile, "clean-lanes"), StringComparison.Ordinal);
         Assert.Contains(DotnetBuildScriptPath, Recipe(makefile, "dotnet"), StringComparison.Ordinal);
         Assert.Contains("dotnet test", Recipe(makefile, "test"), StringComparison.Ordinal);
@@ -119,6 +124,18 @@ public sealed class MakeWorkflowTests
         Assert.Contains("$rc\" -ne 0 && \"$rc\" -ne 3", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("conservative extension", workflow, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain("golden-record", workflow, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void LocalGateHonorsExplicitTemporaryDirectory()
+    {
+        var root = FindRepositoryRoot();
+        var localGate = File.ReadAllText(Path.Combine(root, LocalHarnessGateScriptPath));
+
+        Assert.Contains(
+            "mktemp -d \"${TMPDIR:-/tmp}/stratalint-local-gate.XXXXXXXX\"",
+            localGate,
+            StringComparison.Ordinal);
     }
 
     [Fact]

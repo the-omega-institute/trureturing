@@ -68,7 +68,7 @@ internal sealed class LibraryNoteCatalog
     internal static LibraryNoteCatalogInspection Inspect(string repositoryRoot)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
-        var directory = Path.Combine(repositoryRoot, "Library", "notes");
+        var directory = Path.Combine(repositoryRoot, "Library");
         if (!Directory.Exists(directory))
         {
             return new LibraryNoteCatalogInspection([], []);
@@ -76,7 +76,9 @@ internal sealed class LibraryNoteCatalog
 
         var notes = ImmutableArray.CreateBuilder<LibraryNote>();
         var findings = ImmutableArray.CreateBuilder<LibraryNoteCatalogFinding>();
-        foreach (var path in Directory.EnumerateFiles(directory, "*.md", SearchOption.TopDirectoryOnly)
+        foreach (var path in Directory.EnumerateDirectories(directory)
+                     .SelectMany(static bucket =>
+                         Directory.EnumerateFiles(bucket, "*.md", SearchOption.TopDirectoryOnly))
                      .Order(StringComparer.Ordinal))
         {
             try
@@ -95,10 +97,20 @@ internal sealed class LibraryNoteCatalog
             }
         }
 
+        var bibkeys = new Dictionary<string, string>(StringComparer.Ordinal);
         var dois = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-        foreach (var note in notes.Where(static note => note.Doi is not null))
+        foreach (var note in notes)
         {
-            if (!dois.TryAdd(note.Doi!.Value, note.RelativePath))
+            if (!bibkeys.TryAdd(note.BibKey.Value, note.RelativePath))
+            {
+                findings.Add(new LibraryNoteCatalogFinding(
+                    "duplicate-bibkey",
+                    note.RelativePath,
+                    $"duplicate bibkey {note.BibKey.Value} in "
+                    + $"{bibkeys[note.BibKey.Value]} and {note.RelativePath}"));
+            }
+
+            if (note.Doi is not null && !dois.TryAdd(note.Doi.Value, note.RelativePath))
             {
                 findings.Add(new LibraryNoteCatalogFinding(
                     "duplicate-doi",

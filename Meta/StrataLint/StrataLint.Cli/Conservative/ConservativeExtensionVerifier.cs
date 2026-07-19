@@ -5,7 +5,7 @@ namespace StrataLint.Cli;
 
 internal static partial class ConservativeExtensionVerifier
 {
-    private const string CertificateSchema = "stratalint-conservative-certificate-v1";
+    internal const string CertificateSchema = "stratalint-conservative-certificate-v1";
 
     internal static ConservativeExtensionOutcome Verify(ConservativeVerificationInput input)
     {
