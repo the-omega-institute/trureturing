@@ -94,7 +94,7 @@ public sealed class C0CeremonyTrustRootTests
             certificateRoot.GetProperty("schema").GetString());
         Assert.Equal("CORPUS_CONSERVATIVE", certificateRoot.GetProperty("status").GetString());
         Assert.Empty(certificateRoot.GetProperty("findings").EnumerateArray());
-        Assert.Equal(117, certificateRoot.GetProperty("golden_case_count").GetInt32());
+        Assert.Equal(119, certificateRoot.GetProperty("golden_case_count").GetInt32());
         var implication = certificateRoot.GetProperty("positive_implication");
         Assert.Equal(
             implication.GetProperty("baseline_admit_count").GetInt32(),
