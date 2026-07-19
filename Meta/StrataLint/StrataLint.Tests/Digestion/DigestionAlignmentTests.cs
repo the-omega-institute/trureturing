@@ -226,7 +226,6 @@ public sealed partial class DigestionAlignmentTests
             calls++;
             return GictAtomizer.Atomize(bytes);
         };
-
         var first = DigestionLedgerAligner.Evaluate(
             ledger,
             snapshot,
