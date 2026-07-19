@@ -10,8 +10,9 @@ import Mathlib.NumberTheory.LSeries.Dirichlet
 
 namespace D5.S3.Weil.EulerProduct
 
+open Filter
 open D5.S3.Weil.Convention
-open scoped BigOperators
+open scoped BigOperators Topology
 
 /-- The single-address ledger reading, indexed by its decoded natural value. -/
 noncomputable def singleAddressReading (n : ℕ) : ℝ :=
@@ -104,5 +105,10 @@ theorem finite_euler_zero_free_and_pole_locus
     · rintro ⟨p, hpS, k, hk⟩ hRegular
       exact hRegular p hpS
         ((finite_euler_denominator_eq_zero_iff (hPrime p hpS) s).mpr ⟨k, hk⟩)
+
+/-- The residue of the repository's classical zeta reading at one is exactly one. -/
+theorem riemann_zeta_residue_one :
+    Tendsto (fun s : ℂ => (s - 1) * classicalZeta s) (𝓝[≠] 1) (𝓝 1) := by
+  simpa [classicalZeta] using riemannZeta_residue_one
 
 end D5.S3.Weil.EulerProduct
