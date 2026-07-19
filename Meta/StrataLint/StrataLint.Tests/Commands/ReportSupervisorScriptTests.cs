@@ -96,7 +96,7 @@ public sealed class ReportSupervisorScriptTests
     }
 
     [Fact]
-    public void EarlyDependencyFailureRemovesPrivateRunDirectory()
+    public void DependencyProbeRemovesPrivateRunDirectoryOnEverySupportedHost()
     {
         using var fixture = new ReportSupervisorFixture();
 
@@ -106,7 +106,7 @@ public sealed class ReportSupervisorScriptTests
             fixture.ScratchWriter,
             "PATH=/bin:/usr/bin");
 
-        Assert.Equal(2, result.ExitCode);
+        Assert.Equal(Directory.Exists("/proc") ? 0 : 2, result.ExitCode);
         Assert.Empty(Directory.GetDirectories(Path.Combine(fixture.StateRoot, "runs")));
     }
 
@@ -423,7 +423,16 @@ public sealed class ReportSupervisorScriptTests
             Directory.GetCurrentDirectory(),
             TimeSpan.FromSeconds(5),
             4096);
-        return result.ExitCode == 0;
+        if (result.ExitCode != 0) return false;
+        var state = BoundedProcessRunner.Run(
+            "/bin/ps",
+            ["-o", "stat=", "-p", pid.ToString(System.Globalization.CultureInfo.InvariantCulture)],
+            Directory.GetCurrentDirectory(),
+            TimeSpan.FromSeconds(5),
+            4096);
+        return state.ExitCode == 0
+            && !Encoding.UTF8.GetString(state.StandardOutput).TrimStart()
+                .StartsWith('Z');
     }
 
     private sealed class ReportSupervisorFixture : IDisposable

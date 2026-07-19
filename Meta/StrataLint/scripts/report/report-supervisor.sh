@@ -244,7 +244,8 @@ marker_processes() {
     for process_dir in /proc/[1-9]*; do
       [[ -d "$process_dir/fd" ]] || continue
       pid="${process_dir##*/}"
-      for fd in "$process_dir"/fd/*; do
+      # Workers inherit the two relay pipes and the dedicated marker on fd 9.
+      for fd in "$process_dir"/fd/1 "$process_dir"/fd/2 "$process_dir"/fd/9; do
         [[ -e "$fd" || -L "$fd" ]] || continue
         target="$(readlink "$fd" 2>/dev/null || true)"
         if [[ "$target" == "$RUN_STDOUT" \
