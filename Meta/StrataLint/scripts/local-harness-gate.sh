@@ -2,6 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
+source "$ROOT/Meta/StrataLint/scripts/perf-event-lib.sh"
 CANDIDATE_ROOT="$ROOT"
 BASE_REF="origin/dev"
 SKIP_ENGINEERING=0
@@ -40,10 +41,15 @@ GATE_STARTED="$(date +%s)"
 TMP_ROOT="$(mktemp -d "${TMPDIR:-/tmp}/stratalint-local-gate.XXXXXXXX")"
 LOCAL_TIMING_FILE="$TMP_ROOT/local-gate-timing.jsonl"
 SHARED_TIMING_FILE="$TMP_ROOT/shared-gate-timing.jsonl"
+PERF_EVENT_SPOOL="$TMP_ROOT/perf-events.jsonl"
 JUDGE_ROOT=""
 BASE_SHA=""
 CREATED_JUDGE=0
 : > "$LOCAL_TIMING_FILE"
+: > "$PERF_EVENT_SPOOL"
+PERF_COMMIT="$(git -C "$CANDIDATE_ROOT" rev-parse --verify HEAD 2>/dev/null || printf unknown)"
+PERF_BASE="$(git -C "$CANDIDATE_ROOT" rev-parse --verify "${BASE_REF}^{commit}" 2>/dev/null || printf unknown)"
+PERF_RUN_ID="${STRATALINT_PERF_RUN_ID:-local-${GATE_STARTED}-$$-${PERF_COMMIT:0:12}}"
 
 record_timing() {
   local scope="$1"
@@ -51,7 +57,16 @@ record_timing() {
   local status="$3"
   local elapsed="$4"
   printf '{"event":"gate_stage_timing","scope":"%s","stage":"%s","status":"%s","elapsed_seconds":%s}\n' \
-    "$scope" "$stage" "$status" "$elapsed" >> "$LOCAL_TIMING_FILE"
+    "$scope" "$stage" "$status" "$elapsed" >> "$LOCAL_TIMING_FILE" || true
+  perf_capture_event \
+    "$PERF_EVENT_SPOOL" \
+    "$CANDIDATE_ROOT" \
+    "$PERF_RUN_ID" \
+    "local-harness-gate" \
+    "${BASE_SHA:-$PERF_BASE}" \
+    "$stage" \
+    "$status" \
+    "$elapsed" || true
 }
 
 run_stage() {
@@ -90,11 +105,13 @@ finish() {
   if [[ -s "$SHARED_TIMING_FILE" ]]; then
     cat "$SHARED_TIMING_FILE" >> "$LOCAL_TIMING_FILE"
   fi
+  finished="$(date +%s)"
+  if [[ "$rc" -eq 0 ]]; then status="passed"; fi
+  record_timing local total "$status" "$((finished-GATE_STARTED))"
   if [[ -f "$LOCAL_TIMING_FILE" ]]; then
     timing_payload="$(cat "$LOCAL_TIMING_FILE")"
   fi
-  finished="$(date +%s)"
-  if [[ "$rc" -eq 0 ]]; then status="passed"; fi
+  perf_flush_events "$CANDIDATE_ROOT" "$PERF_EVENT_SPOOL" >/dev/null 2>&1 || true
   cleanup
   printf '[local-gate] timing-summary status=%s exit=%s\n' "$status" "$rc" >&2
   if [[ -n "$timing_payload" ]]; then printf '%s\n' "$timing_payload" >&2; fi
