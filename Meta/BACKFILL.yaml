@@ -3730,16 +3730,30 @@ sources:
           raw_sha256: sha256:447122eca84f80ed4adff91aa43cb176bac30244d3ed913efd17ebf8dc1726ef
           normalized_sha256: sha256:447122eca84f80ed4adff91aa43cb176bac30244d3ed913efd17ebf8dc1726ef
         cas_ref: sha256:447122eca84f80ed4adff91aa43cb176bac30244d3ed913efd17ebf8dc1726ef
-        coverage_gids: []
+        coverage_gids:
+          - D5/S1/Phase/ZeroOrbitCongruence.eisenstein_norm_mod_three
+          - D5/S1/Phase/ZeroOrbitCongruence.thirty_six_dvd_of_local_candidates_and_eisenstein_norm
         receipts:
-          coverage: []
+          coverage:
+            - gid: D5/S1/Phase/ZeroOrbitCongruence.eisenstein_norm_mod_three
+              source_sha256: sha256:447122eca84f80ed4adff91aa43cb176bac30244d3ed913efd17ebf8dc1726ef
+              target_sha256: sha256:6b00638f950465c622f2834e59e2007dd3ca4ba88c7035050646851e72f7e656
+            - gid: D5/S1/Phase/ZeroOrbitCongruence.thirty_six_dvd_of_local_candidates_and_eisenstein_norm
+              source_sha256: sha256:447122eca84f80ed4adff91aa43cb176bac30244d3ed913efd17ebf8dc1726ef
+              target_sha256: sha256:6b00638f950465c622f2834e59e2007dd3ca4ba88c7035050646851e72f7e656
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - local-432-norm-congruence-residue-enumeration
+            - mirror-even-word-odd-offset-rotation
+            - mirror-conjugate-determinant-minus-one
+            - mirror-pgl-not-reciprocal
+            - mirror-second-order-nonintersection-certificate
+            - even-offset-skeleton-counting-clause
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
         ast_path: appendix/E.23
         fingerprints:
@@ -17003,16 +17017,30 @@ sources:
           raw_sha256: sha256:c8caab1a8a70c1bd12480928c34120830dc7a88334d6ab45350d98bed6ce4278
           normalized_sha256: sha256:c8caab1a8a70c1bd12480928c34120830dc7a88334d6ab45350d98bed6ce4278
         cas_ref: sha256:c8caab1a8a70c1bd12480928c34120830dc7a88334d6ab45350d98bed6ce4278
-        coverage_gids: []
+        coverage_gids:
+          - D5/S1/Phase/ZeroOrbitCongruence.eisenstein_norm_mod_three
+          - D5/S1/Phase/ZeroOrbitCongruence.thirty_six_dvd_of_local_candidates_and_eisenstein_norm
         receipts:
-          coverage: []
+          coverage:
+            - gid: D5/S1/Phase/ZeroOrbitCongruence.eisenstein_norm_mod_three
+              source_sha256: sha256:c8caab1a8a70c1bd12480928c34120830dc7a88334d6ab45350d98bed6ce4278
+              target_sha256: sha256:6b00638f950465c622f2834e59e2007dd3ca4ba88c7035050646851e72f7e656
+            - gid: D5/S1/Phase/ZeroOrbitCongruence.thirty_six_dvd_of_local_candidates_and_eisenstein_norm
+              source_sha256: sha256:c8caab1a8a70c1bd12480928c34120830dc7a88334d6ab45350d98bed6ce4278
+              target_sha256: sha256:6b00638f950465c622f2834e59e2007dd3ca4ba88c7035050646851e72f7e656
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - seven-of-seven-observation-certificate
+            - local-432-residue-enumeration-certificate
+            - mirror-odd-offset-reversal-rotation-identity
+            - mirror-pgl-classification
+            - second-order-criterion-zero-hit-certificate
+            - even-offset-skeleton-counting-clause
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b
         ast_path: remark/27.366-27.371
         fingerprints:
