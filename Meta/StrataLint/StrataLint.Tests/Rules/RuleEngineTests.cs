@@ -174,11 +174,11 @@ public sealed class RuleEngineTests
     public void CoverageManifestNamesEveryRuleWithARealRedOrDeferredBranch()
     {
         var exercised = BlockingCases.Select(item => (int)item[0])
-            .Concat(new[] { 7, 9, 14, 22 })
+            .Concat(new[] { 7, 9, 14, 22, 23 })
             .Order()
             .ToArray();
 
-        Assert.Equal(Enumerable.Range(1, 22), exercised);
+        Assert.Equal(Enumerable.Range(1, 23), exercised);
     }
 
     [Fact]

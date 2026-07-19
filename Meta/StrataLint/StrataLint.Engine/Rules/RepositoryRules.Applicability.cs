@@ -88,4 +88,10 @@ internal static partial class RepositoryRules
 
     private static bool BootstrapScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
         BootstrapGate.IsProtected(artifact.Path);
+
+    private static bool ScribeDefinitionScoped(
+        RepositoryFile artifact,
+        RuleApplicabilityContext context) =>
+        artifact.Path.Value.StartsWith("Blueprint/", StringComparison.Ordinal)
+        && artifact.Path.Value.EndsWith(".scribe.cs", StringComparison.Ordinal);
 }

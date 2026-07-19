@@ -90,7 +90,19 @@ internal static partial class RepositoryRules
         new RepositoryRule(ManagedLean, Axioms),
         new RepositoryRule(InstantiationScoped, Instantiation),
         new RepositoryRule(BootstrapScoped, Bootstrap),
+        new RepositoryRule(ScribeDefinitionScoped, DescribeLatex),
     ];
+
+    private static ImmutableArray<RuleFinding> DescribeLatex(RuleEvaluationContext context) =>
+        context.VerifiedScribeEmissions is null
+            ? []
+            : context.VerifiedScribeEmissions.DescribeLatexRecords
+                .Where(static item => item.RequiresLatex && !item.HasValidLatex)
+                .Select(static item => new RuleFinding(
+                    item.DefinitionPath,
+                    $"SCRIBE-LATEX-EPOCH expand: theorem-class Describe {item.NodeId} lacks a valid LaTeX statement; migrate before contract",
+                    AdmissionEffect.Observe))
+                .ToImmutableArray();
 
     private static ImmutableArray<RuleFinding> NoFindings(RuleEvaluationContext context) =>
         ImmutableArray<RuleFinding>.Empty;

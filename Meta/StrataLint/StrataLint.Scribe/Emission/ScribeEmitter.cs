@@ -131,6 +131,7 @@ public static class ScribeEmitter
         var rendered = new List<(DocumentDefinition Definition, byte[] Bytes)>();
         var attestations = new List<ScribeEmissionRecord>();
         var declarationReferences = new HashSet<string>(StringComparer.Ordinal);
+        var describeLatexRecords = new List<ScribeDescribeLatexRecord>();
         foreach (var definition in DocumentDefinitions.All)
         {
             var first = CanonicalMarkdownWriter.Write(definition.Document, leanReport).ToArray();
@@ -151,7 +152,12 @@ public static class ScribeEmitter
                 DigestionFingerprint.Compute(source).RawSha256,
                 definition.RelativePath.Value,
                 DigestionFingerprint.Compute(first).RawSha256));
-            CollectDeclarationReferences(definition.Document.Content, declarationReferences);
+            CollectDescribeCapabilities(
+                gid,
+                definitionPath,
+                definition.Document.Content,
+                declarationReferences,
+                describeLatexRecords);
         }
 
         var attestationBytes = ScribeEmissionAttestation.Write(attestations).ToArray();
@@ -216,27 +222,52 @@ public static class ScribeEmitter
         return new ScribeEmissionRun(
             differences == 0 ? 0 : 1,
             check && differences == 0
-                ? VerifiedScribeEmissions.Create(attestations, declarationReferences)
+                ? VerifiedScribeEmissions.Create(
+                    attestations,
+                    declarationReferences,
+                    describeLatexRecords)
                 : null);
     }
 
-    private static void CollectDeclarationReferences(
+    private static void CollectDescribeCapabilities(
+        string documentGid,
+        string definitionPath,
         BlockSequence blocks,
-        ISet<string> references)
+        ISet<string> references,
+        ICollection<ScribeDescribeLatexRecord> latexRecords)
     {
         foreach (var block in blocks.Items)
         {
             switch (block)
             {
                 case DocumentBlock.Section section:
-                    CollectDeclarationReferences(section.Content, references);
+                    CollectDescribeCapabilities(
+                        documentGid,
+                        definitionPath,
+                        section.Content,
+                        references,
+                        latexRecords);
                     break;
                 case DocumentBlock.Describe describe:
                     if (describe.Statement is DescribeStatement.LeanDeclaration declaration)
                     {
                         references.Add(declaration.Value.Value);
                     }
-                    CollectDeclarationReferences(describe.Content, references);
+                    var requiresLatex = describe.Kind is DescribeKind.Theorem
+                        or DescribeKind.Proposition
+                        or DescribeKind.Lemma;
+                    latexRecords.Add(new ScribeDescribeLatexRecord(
+                        $"{documentGid}#describe/{describe.Id.Value}",
+                        definitionPath,
+                        requiresLatex,
+                        describe.Statement is DescribeStatement.FormulaAst
+                            || describe.StatementLatex is not null));
+                    CollectDescribeCapabilities(
+                        documentGid,
+                        definitionPath,
+                        describe.Content,
+                        references,
+                        latexRecords);
                     break;
             }
         }
