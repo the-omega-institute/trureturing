@@ -39,5 +39,23 @@ internal sealed class EulerProductDocument : IScribeDocumentDefinition
                     "D5/S3/Weil/EulerProduct.single_address_heat_trace_eq_log_derivative")),
                 DescribeProvenance.LiteratureAttested(Apostol),
                 Blocks(Paragraph(Text(
-                    "In the convergence half-plane with real part greater than one, the L-series of the single-address reading equals minus the derivative of the classical zeta function divided by the zeta function. The statement adds no continuation beyond that half-plane.")))))));
+                    "In the convergence half-plane with real part greater than one, the L-series of the single-address reading equals minus the derivative of the classical zeta function divided by the zeta function. The statement adds no continuation beyond that half-plane.")))),
+            new DocumentBlock.Describe(
+                DescribeId.Create("journal-and-ledger-readings"),
+                DescribeKind.Remark,
+                H("Journal and ledger readings"),
+                DescribeStatement.FromLean(LeanTheorem(
+                    "D5/S3/Weil/EulerProduct.single_address_reading_spec")),
+                DescribeProvenance.RepoDerived(),
+                Blocks(Paragraph(Text(
+                    "Ordering terms by generated value resembles a chronological journal, while grouping powers by prime address resembles a classified ledger. The single-address theorem supplies the local weight behind that analogy; it does not formalize heat-time cosmology or a theta functional equation.")))),
+            new DocumentBlock.Describe(
+                DescribeId.Create("finite-euler-windows-do-not-create-global-zeros"),
+                DescribeKind.Remark,
+                H("Finite Euler windows do not create global zeros"),
+                DescribeStatement.FromLean(LeanTheorem(
+                    "D5/S3/Weil/EulerProduct.finite_euler_zero_free_and_pole_locus")),
+                DescribeProvenance.RepoDerived(),
+                Blocks(Paragraph(Text(
+                    "Every regular finite Euler window is nonzero, so no finite set of local factors realizes a nontrivial global zero. This supports only a finite-versus-tail boundary; collective-mode, prime-deletion, dense-phase, and equal-loudness interpretations are not proved here.")))))));
 }

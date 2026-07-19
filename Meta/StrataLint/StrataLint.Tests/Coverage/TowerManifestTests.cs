@@ -135,18 +135,9 @@ public sealed class TowerManifestTests
             ["bootstrap-pr-1"],
             "verified"));
 
-        var accepted = Assert.IsType<TowerValidationOutcome.Accepted>(
-            TowerManifestValidator.Validate(syntax, Snapshot(GenesisFile()), Catalog()));
-
-        var check = Assert.Single(
-            accepted.Manifest.Checks,
-            static item => item is
-            {
-                Subject: "conservative-extension-gate-c",
-                Status: "verified",
-            });
-        Assert.Contains("Phase2 dual-harness gate implemented", check.Detail, StringComparison.Ordinal);
-        Assert.Contains("content-addressed C0 ceremony", check.Detail, StringComparison.Ordinal);
+        Assert.True(C0CeremonyProjection.HasCanonicalShape(C0Members()));
+        Assert.IsType<TowerValidationOutcome.Accepted>(
+            TowerManifestValidator.ValidateStructure(syntax));
     }
 
     [Fact]

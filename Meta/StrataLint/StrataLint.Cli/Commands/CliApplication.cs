@@ -34,6 +34,8 @@ internal interface ICliEnvironment
 
     CommandResult Worktree(IReadOnlyList<string> arguments);
 
+    CommandResult RenewC0(IReadOnlyList<string> arguments);
+
     ExplicitCommandResult VerifyConservative(IReadOnlyList<string> arguments);
 
     ExplicitCommandResult EvaluateConservativeCorpus(IReadOnlyList<string> arguments);
@@ -90,13 +92,14 @@ internal static class CliApplication
         if (arguments.Count == 0)
         {
             console.WriteError(
-                "USAGE: StrataLint check|clean-lanes|coverage|digest-status|ingest|golden-record|ledger-genesis|route|selftest|topology|worktree|ledger-append|ledger-reattest|verify-conservative|evaluate-conservative-corpus\n");
+                "USAGE: StrataLint c0-renew|check|clean-lanes|coverage|digest-status|ingest|golden-record|ledger-genesis|route|selftest|topology|worktree|ledger-append|ledger-reattest|verify-conservative|evaluate-conservative-corpus\n");
             return 2;
         }
 
         var tail = arguments.Skip(1).ToArray();
         return arguments[0] switch
         {
+            "c0-renew" => RenderCommand(environment.RenewC0(tail), console),
             "check" => RenderAdmission(environment.Check(tail), console),
             "clean-lanes" => RenderCommand(environment.CleanLanes(tail), console),
             "coverage" => RenderCommand(environment.Coverage(tail), console),

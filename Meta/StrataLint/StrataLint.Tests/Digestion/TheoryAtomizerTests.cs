@@ -279,6 +279,65 @@ public sealed class TheoryAtomizerTests
     }
 
     [Fact]
+    public void GictV330AppendixDialectProducesMetadataAndCoarseAtoms()
+    {
+        var bytes = Encoding.UTF8.GetBytes(
+            "# GICT\n\n"
+            + "> **谱系**:v3.29 → **v3.30:附录 E 增订五**\n\n"
+            + "## 附录 E 增订五(v3.30)\n\n"
+            + "**E.22 零轨道弧一:36-定理与镜像条款**〔定理·两层证 + 修正条款〕。claim。\n\n"
+            + "**E.23 站队塔**〔定理群 + 判负 + 预言制度〕。claim。\n\n"
+            + "**E.24 BHK–W3 与三走一体**〔锚 + 恒等 + 条款〕。claim。\n\n"
+            + "**E.25 钉-辐角与余割恒等**〔定理 + 册卷〕。claim。\n\n"
+            + "**E.26 统计弧终局**〔判负册重案〕。claim。\n\n"
+            + "**E.27 城同余定理**〔本卷压轴,自足证明〕。claim。\n\n"
+            + "**E.28 开放问题定位与仪器铁款**。claim。\n");
+
+        var document = GictAtomizer.Atomize(bytes);
+
+        Assert.Equal(
+            [
+                "metadata/lineage",
+                "appendix/E.22",
+                "appendix/E.23",
+                "appendix/E.24",
+                "appendix/E.25",
+                "appendix/E.26",
+                "appendix/E.27",
+                "appendix/E.28",
+            ],
+            document.Claims.Select(static item => item.AstPath));
+        Assert.Equal(bytes, document.Reassemble().ToArray());
+    }
+
+    [Fact]
+    public void PzgV330SupplementHeadingsProduceSectionAtoms()
+    {
+        var bytes = Encoding.UTF8.GetBytes(
+            "# PZG_BEDC 增补册:第 330 版记事(轮 471–527;2026-07-18)\n"
+            + "本批主题。\n\n"
+            + "## 评注 27.363–27.365(36-定理与镜像条款)\n内容。\n\n"
+            + "## 评注 27.366–27.371(站队塔)\n内容。\n\n"
+            + "## 判负册本批\n内容。\n\n"
+            + "## 候查清单变动\n内容。\n\n"
+            + "## 本批收束五判\n内容。\n");
+
+        var document = PzgAtomizer.Atomize(bytes);
+
+        Assert.Equal(
+            [
+                "metadata/supplement/330",
+                "remark/27.363-27.365",
+                "remark/27.366-27.371",
+                "negative-register/batch",
+                "research-queue/batch",
+                "verdict/batch",
+            ],
+            document.Claims.Select(static item => item.AstPath));
+        Assert.Equal(bytes, document.Reassemble().ToArray());
+    }
+
+    [Fact]
     public void PzgAdapterIdentifiesEveryProductionNumberedClaimKind()
     {
         var bytes = Encoding.UTF8.GetBytes(

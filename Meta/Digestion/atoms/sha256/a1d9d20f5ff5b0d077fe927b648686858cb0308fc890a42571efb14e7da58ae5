@@ -1,0 +1,2 @@
+**E.11 η-实轨迹钉网定理(V2:裸环改判)**〔定理·两行证 + 证书〕。$\mathrm{Re}\,z\in\tfrac12\mathbb Z$ 竖线上 $q$ 实 ⟹ $\arg\eta$ 恒定($\mathrm{Re}=m$:$\pi m/12$;$\mathrm{Re}=m{+}\tfrac12$:$\pi(2m{+}1)/24$;由此两行得 $\arg\eta(\rho)=\pi/24$ 恰等)⟹ **环与竖线网之每个交点皆闭式钉**。曾判"裸"之类 2 当场三钉:$H(\mathrm{Re}{=}0)=\tfrac14\arctan\tfrac{33}{2\sqrt{377}}$、$H(\mathrm{Re}{=}\tfrac12)=\tfrac\pi{24}+\tfrac14\arctan\tfrac4{\sqrt{2581}}$、$H(\mathrm{Re}{=}1)=\tfrac\pi{12}-\tfrac14\arctan\tfrac{25}{2\sqrt{493}}$($10^{-17}$ 级;第三钉常数当场勘正 $\sqrt{577}\to\sqrt{493}$)。**改判**:"裸" = 无锥点钉(arctan-有理型);轨迹钉(arctan-代数型)人人皆有。(27.340)
+

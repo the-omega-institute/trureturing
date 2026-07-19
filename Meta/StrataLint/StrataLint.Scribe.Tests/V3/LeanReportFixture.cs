@@ -15,9 +15,9 @@ internal static class LeanReportFixture
                 static group => group.Key,
                 static group => new LeanFileReport(
                     [],
-                    group.Select(static reference => new LeanDeclaration(
+                        group.Select(static reference => new LeanDeclaration(
                             Selector(reference),
-                            "theorem",
+                            ReportKind(reference.ExpectedKind),
                             $"statement-v1(source={reference.Value})",
                             ImmutableArray.Create("propext", "Classical.choice", "Quot.sound")))
                         .ToImmutableArray()),
@@ -47,4 +47,18 @@ internal static class LeanReportFixture
 
     private static string Selector(LeanDeclarationRef reference) =>
         reference.Value[(reference.Value.LastIndexOf('.') + 1)..];
+
+    private static string ReportKind(LeanDeclarationKind? kind) => kind switch
+    {
+        null => "theorem",
+        LeanDeclarationKind.Axiom => "axiom",
+        LeanDeclarationKind.Definition => "def",
+        LeanDeclarationKind.Theorem => "theorem",
+        LeanDeclarationKind.Opaque => "opaque",
+        LeanDeclarationKind.Quotient => "quotient",
+        LeanDeclarationKind.Constructor => "constructor",
+        LeanDeclarationKind.Recursor => "recursor",
+        LeanDeclarationKind.Inductive => "inductive",
+        _ => throw new ArgumentOutOfRangeException(nameof(kind)),
+    };
 }

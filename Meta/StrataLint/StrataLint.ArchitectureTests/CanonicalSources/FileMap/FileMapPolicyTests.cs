@@ -35,6 +35,26 @@ public sealed class FileMapPolicyTests
     }
 
     [Fact]
+    public void LibrarySplitBucketsAreClassifiedAsData()
+    {
+        var manifest = FileMapLoader.LoadRepository(RepositoryLayout.FindRoot());
+
+        Assert.Equal(
+            FileMapKind.Data,
+            Assert.Single(manifest.Match("Library/Weil/sample2026paper.md")).Kind);
+    }
+
+    [Fact]
+    public void LibrarySplitLedgerIsClassifiedAsLedger()
+    {
+        var manifest = FileMapLoader.LoadRepository(RepositoryLayout.FindRoot());
+
+        Assert.Equal(
+            FileMapKind.Ledger,
+            Assert.Single(manifest.Match("Library/MAP.md")).Kind);
+    }
+
+    [Fact]
     public void ResidenceMarkerOutsideTheProtectedSurfaceIsRejected()
     {
         const string path = "Data/known.toml";
