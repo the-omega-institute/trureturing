@@ -10,6 +10,7 @@ internal static partial class RepositoryPathPolicy
     internal const string LibraryMapPath = "Library/MAP.md";
     internal const string WorkflowPath = ".github/workflows/ci.yml";
     internal const string TheoryIngestWorkflowPath = ".github/workflows/theory-ingest.yml";
+    internal const string C0CeremonyWorkflowPath = ".github/workflows/c0-ceremony.yml";
     // 已撤役 workflow(GITHUB_TOKEN 防递归判负,PR #241);常量保留以维持保守扩展(旧树 admit 不翻),移除须走义务会计。
     internal const string AutoUpdateBranchWorkflowPath = ".github/workflows/auto-update-branch.yml";
     internal const string HarnessGatePath = ".github/scripts/harness-gate.sh";
@@ -60,7 +61,8 @@ internal static partial class RepositoryPathPolicy
             or LibraryMapPath or "Library/queries.yaml" or AssumptionRegistryPath
             or "Meta/split.py" or "Meta/papergen"
             or "Golden/fixture-registry.yaml" or "Golden/values-kernels.toml"
-            or WorkflowPath or TheoryIngestWorkflowPath or AutoUpdateBranchWorkflowPath
+            or WorkflowPath or TheoryIngestWorkflowPath or C0CeremonyWorkflowPath
+            or AutoUpdateBranchWorkflowPath
             or ".github/CODEOWNERS"
             or ".github/scripts/baseline-admission.sh" or HarnessGatePath
             || value.StartsWith("Meta/StrataLint/", StringComparison.Ordinal)
