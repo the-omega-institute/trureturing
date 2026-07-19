@@ -4,6 +4,7 @@ title: Decoherence, einselection, and the quantum origins of the classical
 doi: 10.1103/RevModPhys.75.715
 claim: Environmental monitoring suppresses coherence between selected pointer states.
 strata_touched:
+  - D5/S3/Quantum/Decoherence
   - D5/S3/Quantum/QubitWitnesses
 license: citation-only
 triage: anchor
@@ -14,6 +15,8 @@ triage: anchor
 Wojciech H. Zurek reviews environment-induced decoherence and pointer-state
 selection. It anchors the standard phase-damping skeleton formalized here:
 diagonal populations are preserved while off-diagonal coherence is attenuated.
+The composition and fixed-point declarations in `D5/S3/Quantum/Decoherence`
+record two algebraic consequences of that stipulated map.
 
 The Lean module assumes a real phase-damping map and proves its finite iterate
 algebraically. It does not derive that map from a Hamiltonian, identify the
@@ -34,6 +37,18 @@ decoherence, or make the address principle an einselection law.
   coherence between pointer states.
 - 2026-07-17: No search result was used to attribute the observer source's
   ledger-specific causal claims to Zurek. Those clauses remain unresolved.
+- 2026-07-18: Crossref returned Wojciech H. Zurek, the exact review title,
+  publication date 22 May 2003, and DOI `10.1103/RevModPhys.75.715`.
+  The arXiv record `quant-ph/0105127v3` independently matched the title, author,
+  journal reference, and DOI.
+- 2026-07-18: Checked the arXiv PDF directly. The review states that
+  einselected pointer states are stable, that monitored open-system states
+  diagonalize in the pointer basis, and that off-diagonal terms are controlled
+  by an environment-overlap decoherence factor. This supports the stipulated
+  channel skeleton, not the observer atom's ledger/environment identification.
+- 2026-07-18: The APS DOI target returned HTTP 403 to automated retrieval. No
+  content conclusion was drawn from that failed route; the matching arXiv
+  version supplied the successful original-text check.
 
 ## Verified locator
 

@@ -27,6 +27,11 @@ internal static class IngestCommand
             var document = LoadDocument(current, "candidate");
             var baselineDocument = LoadDocument(baseline, "baseline");
             var plan = DigestionIngestor.Plan(document, current, baselineDocument);
+            var silentZeroWarnings = SilentZeroExtractionWarnings(
+                document,
+                plan.Document,
+                current,
+                baseline);
             var plannedBytes = BackfillInventoryWriter.WriteForIngest(plan.Document);
             var plannedRaw = AddCasObjects(
                 ReplaceLedger(currentRaw, plannedBytes),
@@ -111,6 +116,9 @@ internal static class IngestCommand
                 + $"ledger_changed={changed.ToString().ToLowerInvariant()}\n"
                 + string.Concat(plan.Fallbacks.Select(static fallback =>
                     $"INGEST_FALLBACK source={fallback.SourceId} reason={fallback.Reason}\n"))
+                + string.Concat(silentZeroWarnings.Select(static warning =>
+                    $"WARNING silent-zero-extraction source={warning.SourceId} "
+                    + $"path={warning.SourcePath}\n"))
                 + DigestStatusCommand.RenderText(evaluation),
                 string.Empty);
         }
@@ -118,6 +126,24 @@ internal static class IngestCommand
         {
             return new CommandResult(false, string.Empty, $"INGEST_INVALID {exception.Message}\n");
         }
+    }
+
+    private static ImmutableArray<DigestionLedgerSource> SilentZeroExtractionWarnings(
+        BackfillInventoryDocument currentDocument,
+        BackfillInventoryDocument plannedDocument,
+        RepositorySnapshot current,
+        RepositorySnapshot baseline)
+    {
+        var plannedSources = plannedDocument.RequireDigestionSources()
+            .ToDictionary(static source => source.SourceId, StringComparer.Ordinal);
+        return currentDocument.RequireDigestionSources()
+            .Where(source => AtomizerRegistry.IsRegistered(source.Atomizer))
+            .Where(source => current.TryGetFile(source.SourcePath, out var currentFile)
+                && baseline.TryGetFile(source.SourcePath, out var baselineFile)
+                && !currentFile.RawBytes.AsSpan().SequenceEqual(baselineFile.RawBytes.AsSpan()))
+            .Where(source => plannedSources[source.SourceId].Entries.Length == source.Entries.Length)
+            .OrderBy(static source => source.SourceId, StringComparer.Ordinal)
+            .ToImmutableArray();
     }
 
     private static string ParseArguments(IReadOnlyList<string> arguments)

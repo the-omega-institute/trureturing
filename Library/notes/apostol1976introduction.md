@@ -5,6 +5,7 @@ doi: 10.1007/978-1-4757-5579-4
 claim: Euler products, von Mangoldt weights, and the logarithmic derivative of the zeta function.
 strata_touched:
   - D5/S3/Weil/EulerProduct
+  - D5/S3/Zeros/EulerWindows
 license: citation-only
 triage: anchor
 ---
@@ -16,6 +17,12 @@ function, and the logarithmic derivative of the Riemann zeta function in the
 classical convergence half-plane. These results anchor the prime-power
 coefficient and logarithmic-derivative declarations in
 `D5/S3/Weil/EulerProduct`.
+
+The same finite-product facts support `D5/S3/Zeros/EulerWindows`: when the
+real part is positive, none of a finite prime window's local denominators can
+vanish, so the total finite product is nonzero. The stronger PZG claim about
+tail participation and continuation in the critical strip is not attributed
+to Apostol and remains outside that declaration.
 
 The book does not state the repository declarations verbatim. In particular,
 Lean's field inverse is a total function with `0^-1 = 0`, so the formal finite

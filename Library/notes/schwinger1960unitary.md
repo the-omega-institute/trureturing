@@ -5,6 +5,7 @@ doi: 10.1073/pnas.46.4.570
 claim: Finite-dimensional unitary operator bases and their Weyl commutation structure.
 strata_touched:
   - D5/S3/Quantum/FiniteDimensional
+  - D5/S3/Quantum/ObserverAlgebra
   - D5/S3/Quantum/QubitWitnesses
 license: citation-only
 triage: anchor
@@ -17,7 +18,8 @@ pair of cyclic generators with the Weyl commutation relation. At dimension two,
 the standard generators specialize to the Pauli `X` and `Z` matrices used by
 `D5/S3/Quantum/FiniteDimensional.qubit_weyl_star`; their involution, square
 identities, and lack of a nonzero common eigenvector follow directly from that
-specialization.
+specialization. The same cyclic-permutation and composition laws anchor the
+finite represented read-update skeleton in `D5/S3/Quantum/ObserverAlgebra`.
 
 The paper does not identify the observer volume's finite register with a full
 matrix algebra, supply its prime-power factorization, or claim that a classical
@@ -36,6 +38,19 @@ ontology forces the Weyl structure. Those source conjuncts remain unresolved.
   dimension Pauli`. Results located the cyclic-generator construction and its
   finite-dimensional Weyl relation. The qubit theorem is explicitly treated as
   the `d = 2` specialization, not as the paper's full generality.
+- 2026-07-18: Crossref returned Julian Schwinger, the exact title, PNAS,
+  April 1960, and DOI `10.1073/pnas.46.4.570`. Europe PMC independently
+  returned PMID `16590645` and PMCID `PMC222876`.
+- 2026-07-18: Checked the original PMC scan page by page. Page 570 states
+  inverse/unitarity and composition for coordinate changes; page 573 constructs
+  cyclic-permutation unitaries; page 575 gives the generated operator basis and
+  commutation argument; page 579 records the anticommuting involutive two-state
+  specialization. The formal observer theorem is still only a concrete finite
+  representation, not the source atom's universal crossed-product assertion.
+- 2026-07-18: The publisher DOI target returned HTTP 403 to automated
+  retrieval, and the PMC PDF endpoint returned a proof-of-work HTML page. No
+  content conclusion was drawn from those failed routes; the public PMC page
+  images supplied the successful original-text check.
 
 ## Verified locator
 
