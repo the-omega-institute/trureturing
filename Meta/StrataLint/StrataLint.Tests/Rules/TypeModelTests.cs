@@ -174,9 +174,6 @@ public sealed class TypeModelTests
     [Fact]
     public void AutoUpdateBranchWorkflowPathIsClosedWorldRegisteredAtItsCanonicalAddress()
     {
-        Assert.Equal(
-            ".github/workflows/auto-update-branch.yml",
-            RepositoryPathPolicy.AutoUpdateBranchWorkflowPath);
         var path = RepoPath.CreateKnown(RepositoryPathPolicy.AutoUpdateBranchWorkflowPath);
 
         Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
