@@ -54,15 +54,4 @@ theorem observer_read_update_noncommutative {index : Type*}
   apply mul_right_cancel₀ hState
   simpa [observerUpdate, readObservable] using congrFun hCommute i
 
-/-- In the register representation, the read-update commutator is the translated
-observable difference multiplied by the updated register. -/
-theorem observer_read_update_commutator_formula {index : Type*}
-    (tau : Equiv.Perm index) (f : index -> Complex) (psi : Register index) :
-    observerUpdate tau (readObservable f psi) -
-        readObservable f (observerUpdate tau psi) =
-      fun i => (f (tau.symm i) - f i) * psi (tau.symm i) := by
-  funext i
-  simp [observerUpdate, readObservable]
-  ring
-
 end D5.S3.Quantum.ObserverAlgebra

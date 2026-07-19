@@ -6,13 +6,12 @@
    digest: Connect finite Euler windows and single-address weights to classical zeta. -/
 
 import D5.S3.Weil.PrimePoleTerms
-import Mathlib.NumberTheory.EulerProduct.DirichletLSeries
+import Mathlib.NumberTheory.LSeries.Dirichlet
 
 namespace D5.S3.Weil.EulerProduct
 
-open Filter
 open D5.S3.Weil.Convention
-open scoped BigOperators Topology
+open scoped BigOperators
 
 /-- The single-address ledger reading, indexed by its decoded natural value. -/
 noncomputable def singleAddressReading (n : ℕ) : ℝ :=
@@ -105,22 +104,5 @@ theorem finite_euler_zero_free_and_pole_locus
     · rintro ⟨p, hpS, k, hk⟩ hRegular
       exact hRegular p hpS
         ((finite_euler_denominator_eq_zero_iff (hPrime p hpS) s).mpr ⟨k, hk⟩)
-
-/-- The residue of the repository's classical zeta reading at one is exactly one. -/
-theorem riemann_zeta_residue_one :
-    Tendsto (fun s : ℂ => (s - 1) * classicalZeta s) (𝓝[≠] 1) (𝓝 1) := by
-  simpa [classicalZeta] using riemannZeta_residue_one
-
-/-- The natural-number Dirichlet series equals the repository's zeta reading in its
-absolute-convergence half-plane. -/
-theorem riemann_zeta_dirichlet_sum (s : ℂ) (hs : 1 < s.re) :
-    (∑' n : ℕ, (n : ℂ) ^ (-s)) = classicalZeta s := by
-  simpa [riemannZetaSummandHom, classicalZeta] using tsum_riemannZetaSummand hs
-
-/-- The prime-indexed Euler product equals the same zeta reading in the
-absolute-convergence half-plane. -/
-theorem riemann_zeta_euler_product (s : ℂ) (hs : 1 < s.re) :
-    (∏' p : Nat.Primes, (1 - (p : ℂ) ^ (-s))⁻¹) = classicalZeta s := by
-  simpa [classicalZeta] using riemannZeta_eulerProduct_tprod hs
 
 end D5.S3.Weil.EulerProduct
