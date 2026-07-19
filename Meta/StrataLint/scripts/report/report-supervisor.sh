@@ -397,7 +397,7 @@ performance_event() {
   [[ "$commit" =~ ^[0-9a-f]{40,64}$ ]] || commit=unknown
   base="$(git -C "$REPOSITORY_ROOT" rev-parse --verify "${STRATALINT_PERF_BASE:-origin/dev}^{commit}" 2>/dev/null || printf unknown)"
   [[ "$base" =~ ^[0-9a-f]{40,64}$ ]] || base=unknown
-  load="$(loadavg_per_cpu)"
+  load="$(perf_json_nonnegative_number_or_null "$(loadavg_per_cpu)")"
   elapsed_seconds="$(awk -v value="$elapsed_ms" 'BEGIN {printf "%.3f", value / 1000}')"
   rss_peak_mb="$(awk -v value="$RSS_PEAK_KB" 'BEGIN {printf "%.3f", value / 1024}')"
   printf '{"schema":"stratalint-perf-event-v1","run_id":"report-%s-%s","ts":"%s","cohort":{"venue":"%s","os":"%s","arch":"%s","cpu_class":"%s","runner_class":null},"context":{"commit":"%s","base":"%s","workload_id":"report","cache_state":null,"loadavg_per_cpu":%s,"host_concurrency":null},"kind":"resource","stage":"%s","status":"%s","elapsed_seconds":%s,"resources":{"disk_free_gb":null,"fd_peak":%s,"rss_peak_mb":%s},"role":"%s","pid":%s,"elapsed_ms":%s,"rc":%s,"fd_peak":%s,"rss_peak_kb":%s,"concurrency_count":%s}\n' \
@@ -430,14 +430,8 @@ append_metrics() {
   performance_event "$rc" "$elapsed_ms" > "$event_tmp" \
     || { rm -f -- "$event_tmp"; return 2; }
   ( trap '' XFSZ
-    if [[ -n "${STRATALINT_REPORT_METRICS_DIAGNOSTICS:-}" ]]; then
-      STRATALINT_PERF_LEDGER="$METRICS_LOG" \
-        perf_flush_events "$REPOSITORY_ROOT" "$event_tmp" \
-          >"$STRATALINT_REPORT_METRICS_DIAGNOSTICS" 2>&1
-    else
-      STRATALINT_PERF_LEDGER="$METRICS_LOG" \
-        perf_flush_events "$REPOSITORY_ROOT" "$event_tmp" >/dev/null 2>&1
-    fi
+    STRATALINT_PERF_LEDGER="$METRICS_LOG" \
+      perf_flush_events "$REPOSITORY_ROOT" "$event_tmp" >/dev/null 2>&1
   ) \
     || { rm -f -- "$event_tmp"; return 2; }
   rm -f -- "$event_tmp"
