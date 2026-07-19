@@ -1,4 +1,4 @@
-/- GID: D5/X_Frontier/ReportCasTrigger
+/- GID: D5/X_Frontier/Infrastructure/ReportCasTrigger
    generality: G
    mirror-B: none(waiver:harness-trigger-ticket)
    mirror-E: none(waiver:measurement-trigger-not-experimental-content)

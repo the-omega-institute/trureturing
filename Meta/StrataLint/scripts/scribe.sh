@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
 PROJECT="$ROOT/Meta/StrataLint/StrataLint.Scribe/StrataLint.Scribe.csproj"
 LEAN_REPORT="$ROOT/.lake/build/stratalint/raw-lean-report.json"
-CONSUMER="$ROOT/Meta/StrataLint/scripts/report-consumer.sh"
+CONSUMER="$ROOT/Meta/StrataLint/scripts/report/report-consumer.sh"
 MODE="${1:-}"
 
 case "$MODE" in

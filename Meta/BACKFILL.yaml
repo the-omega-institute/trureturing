@@ -17430,4 +17430,4 @@ ticket_index:
   - case_id: D5-T0018
     gid: D5/X_Frontier/HeartsDraft
   - case_id: D5-T0021
-    gid: D5/X_Frontier/ReportCasTrigger
+    gid: D5/X_Frontier/Infrastructure/ReportCasTrigger

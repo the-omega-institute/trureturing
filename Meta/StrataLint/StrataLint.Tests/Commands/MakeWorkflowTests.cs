@@ -15,8 +15,10 @@ public sealed class MakeWorkflowTests
     private const string WorktreeInitScriptPath = "Meta/StrataLint/scripts/worktree-init.sh";
     private const string LeanReportScriptPath = "Meta/StrataLint/scripts/lean-report.sh";
     private const string IngestScriptPath = "Meta/StrataLint/scripts/ingest.sh";
-    private const string ReportConsumerScriptPath = "Meta/StrataLint/scripts/report-consumer.sh";
-    private const string ReportSupervisorScriptPath = "Meta/StrataLint/scripts/report-supervisor.sh";
+    private const string ReportConsumerScriptPath =
+        "Meta/StrataLint/scripts/report/report-consumer.sh";
+    private const string ReportSupervisorScriptPath =
+        "Meta/StrataLint/scripts/report/report-supervisor.sh";
     private const string LeanReportInputScriptPath = "Meta/StrataLint/scripts/lean-report-input.sh";
     private const string LeanReportPairScriptPath = "Meta/StrataLint/scripts/lean-report-pair.sh";
 

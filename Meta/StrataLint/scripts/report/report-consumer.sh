@@ -19,8 +19,8 @@ done
 }
 [[ $# -gt 0 ]] || { echo "report-consumer: command is required after --" >&2; exit 2; }
 
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
-SUPERVISOR="$ROOT/Meta/StrataLint/scripts/report-supervisor.sh"
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../../.." && pwd -P)"
+SUPERVISOR="$ROOT/Meta/StrataLint/scripts/report/report-supervisor.sh"
 INPUT_VERIFIER="$ROOT/Meta/StrataLint/scripts/lean-report-input.sh"
 SNAPSHOT_ROOT="$(mktemp -d "${TMPDIR:-/tmp}/stratalint-report-consumer.XXXXXXXX")"
 cleanup() { rm -rf -- "$SNAPSHOT_ROOT"; }

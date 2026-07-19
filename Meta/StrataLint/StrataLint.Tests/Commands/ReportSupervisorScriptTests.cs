@@ -13,7 +13,7 @@ public sealed class ReportSupervisorScriptTests
         using var fixture = new ReportSupervisorFixture();
         var consumer = Path.Combine(
             fixture.RepositoryRoot,
-            "Meta", "StrataLint", "scripts", "report-consumer.sh");
+            "Meta", "StrataLint", "scripts", "report", "report-consumer.sh");
 
         var result = BoundedProcessRunner.Run(
             "bash",
@@ -505,7 +505,8 @@ public sealed class ReportSupervisorScriptTests
 
         internal string Root => temporary.Path;
         internal string RepositoryRoot => FindRepositoryRoot();
-        internal string Supervisor => Path.Combine(RepositoryRoot, "Meta", "StrataLint", "scripts", "report-supervisor.sh");
+        internal string Supervisor => Path.Combine(
+            RepositoryRoot, "Meta", "StrataLint", "scripts", "report", "report-supervisor.sh");
         internal string MetricsLog => Path.Combine(Root, "metrics.jsonl");
         internal string DefaultMetricsLog => Path.Combine(Root, ".stratalint-perf", "events.jsonl");
         internal string StateRoot => Path.Combine(Root, "state");
