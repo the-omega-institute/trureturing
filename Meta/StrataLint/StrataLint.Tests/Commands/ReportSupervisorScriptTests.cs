@@ -54,7 +54,7 @@ public sealed class ReportSupervisorScriptTests
             Assert.False(string.IsNullOrWhiteSpace(metric.GetProperty("run_id").GetString()));
             Assert.Equal("resource", metric.GetProperty("kind").GetString());
             Assert.Equal(metric.GetProperty("role").GetString(), metric.GetProperty("stage").GetString());
-            Assert.Equal("passed", metric.GetProperty("status").GetString());
+            Assert.Equal("observation", metric.GetProperty("status").GetString());
             Assert.Matches(
                 "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$",
                 metric.GetProperty("ts").GetString());
@@ -65,10 +65,12 @@ public sealed class ReportSupervisorScriptTests
             Assert.True(metric.GetProperty("rss_peak_kb").GetInt64() >= 0);
             Assert.True(metric.GetProperty("concurrency_count").GetInt32() >= 0);
             Assert.Equal("local", metric.GetProperty("cohort").GetProperty("venue").GetString());
+            Assert.False(string.IsNullOrWhiteSpace(
+                metric.GetProperty("cohort").GetProperty("cpu_class").GetString()));
             Assert.Equal("report", metric.GetProperty("context").GetProperty("workload_id").GetString());
             Assert.Equal(
-                metric.GetProperty("concurrency_count").GetInt32(),
-                metric.GetProperty("context").GetProperty("host_concurrency").GetInt32());
+                JsonValueKind.Null,
+                metric.GetProperty("context").GetProperty("host_concurrency").ValueKind);
             Assert.Equal(
                 metric.GetProperty("fd_peak").GetInt32(),
                 metric.GetProperty("resources").GetProperty("fd_peak").GetInt32());
@@ -92,6 +94,21 @@ public sealed class ReportSupervisorScriptTests
     }
 
     [Fact]
+    public void EarlyDependencyFailureRemovesPrivateRunDirectory()
+    {
+        using var fixture = new ReportSupervisorFixture();
+
+        var result = fixture.RunWithEnvironment(
+            "scribe-consumer",
+            leanSlot: false,
+            fixture.ScratchWriter,
+            "PATH=/bin:/usr/bin");
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Empty(Directory.GetDirectories(Path.Combine(fixture.StateRoot, "runs")));
+    }
+
+    [Fact]
     public void WorkerFailureIsRecordedWithItsExitCode()
     {
         using var fixture = new ReportSupervisorFixture();
@@ -102,16 +119,65 @@ public sealed class ReportSupervisorScriptTests
         var metric = Assert.Single(fixture.ReadMetrics());
         Assert.Equal("ingest-consumer", metric.GetProperty("role").GetString());
         Assert.Equal(1, metric.GetProperty("rc").GetInt32());
-        Assert.Equal("failed", metric.GetProperty("status").GetString());
+        Assert.Equal("observation", metric.GetProperty("status").GetString());
     }
 
     [Fact]
-    public void StaleOwnerlessSlotIsReclaimed()
+    public void OwnerlessSlotIsNeverGuessedStale()
     {
         using var fixture = new ReportSupervisorFixture();
-        var staleLock = Path.Combine(fixture.StateRoot, "slots", "slot-1.lock");
-        Directory.CreateDirectory(staleLock);
-        Directory.SetLastWriteTimeUtc(staleLock, DateTime.UtcNow.AddMinutes(-1));
+        var ownerlessLock = Path.Combine(fixture.StateRoot, "slots", "slot-1.lock");
+        Directory.CreateDirectory(ownerlessLock);
+
+        var result = fixture.RunWithEnvironment(
+            "lean-producer",
+            leanSlot: true,
+            fixture.ScratchWriter,
+            "STRATALINT_LOCK_TIMEOUT_SECONDS=1");
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.True(Directory.Exists(ownerlessLock));
+    }
+
+    [Fact]
+    public void LockOwnedByADeadProcessIsReclaimed()
+    {
+        using var fixture = new ReportSupervisorFixture();
+        var deadLock = Path.Combine(fixture.StateRoot, "slots", "slot-1.lock");
+        Directory.CreateDirectory(deadLock);
+        File.WriteAllText(
+            Path.Combine(deadLock, "owner"),
+            "99999999\n",
+            new UTF8Encoding(false));
+
+        var result = fixture.Run("lean-producer", leanSlot: true, fixture.ScratchWriter);
+
+        Assert.Equal(0, result.ExitCode);
+    }
+
+    [Fact]
+    public void LockWhosePidWasReusedIsReclaimed()
+    {
+        using var fixture = new ReportSupervisorFixture();
+        var reusedLock = Path.Combine(fixture.StateRoot, "slots", "slot-1.lock");
+        Directory.CreateDirectory(reusedLock);
+        File.WriteAllText(
+            Path.Combine(reusedLock, "owner"),
+            $"{Environment.ProcessId}|not-the-current-process-start\n",
+            new UTF8Encoding(false));
+
+        var result = fixture.Run("lean-producer", leanSlot: true, fixture.ScratchWriter);
+
+        Assert.Equal(0, result.ExitCode);
+    }
+
+    [Fact]
+    public void AbandonedOwnerlessSlotIsReclaimedAfterInitializationGrace()
+    {
+        using var fixture = new ReportSupervisorFixture();
+        var abandonedLock = Path.Combine(fixture.StateRoot, "slots", "slot-1.lock");
+        Directory.CreateDirectory(abandonedLock);
+        Directory.SetLastWriteTimeUtc(abandonedLock, DateTime.UtcNow.AddMinutes(-1));
 
         var result = fixture.Run("lean-producer", leanSlot: true, fixture.ScratchWriter);
 
@@ -158,6 +224,48 @@ public sealed class ReportSupervisorScriptTests
             "performance event",
             Encoding.UTF8.GetString(result.StandardError),
             StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void MetricsShortWriteRollsBackIncompleteEvent()
+    {
+        using var fixture = new ReportSupervisorFixture();
+        var original = Encoding.UTF8.GetBytes(
+            "{\"seed\":\"" + new string('x', 380) + "\"}\n");
+        File.WriteAllBytes(fixture.MetricsLog, original);
+
+        var result = fixture.RunWithFileSizeLimit(
+            "scribe-consumer",
+            fixture.ScratchWriter);
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.True(File.Exists(fixture.MetricsLog));
+        Assert.Equal(original, File.ReadAllBytes(fixture.MetricsLog));
+        Assert.Contains(
+            "performance event",
+            Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void MetricsTimeoutDoesNotRemoveAnotherWritersLock()
+    {
+        using var fixture = new ReportSupervisorFixture();
+        var liveLock = fixture.MetricsLog + ".lock";
+        Directory.CreateDirectory(liveLock);
+        File.WriteAllText(
+            Path.Combine(liveLock, "owner"),
+            Environment.ProcessId.ToString(System.Globalization.CultureInfo.InvariantCulture) + "\n",
+            new UTF8Encoding(false));
+
+        var result = fixture.RunWithEnvironment(
+            "scribe-consumer",
+            leanSlot: false,
+            fixture.ScratchWriter,
+            "STRATALINT_LOCK_TIMEOUT_SECONDS=1");
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.True(Directory.Exists(liveLock));
     }
 
     [Fact]
@@ -253,7 +361,8 @@ public sealed class ReportSupervisorScriptTests
         using var fixture = new ReportSupervisorFixture();
         using var process = fixture.StartDetachedProducer();
         Assert.True(SpinWait.SpinUntil(
-            () => File.Exists(fixture.DetachedPid),
+            () => File.Exists(fixture.DetachedPid)
+                && new FileInfo(fixture.DetachedPid).Length > 0,
             TimeSpan.FromSeconds(10)));
         var detached = int.Parse(
             File.ReadAllText(fixture.DetachedPid).Trim(),
@@ -267,6 +376,26 @@ public sealed class ReportSupervisorScriptTests
             4096);
         Assert.Equal(0, signal.ExitCode);
         Assert.True(process.WaitForExit(10_000));
+
+        Assert.True(SpinWait.SpinUntil(
+            () => !ProcessExists(detached),
+            TimeSpan.FromSeconds(10)));
+        Assert.False(ProcessExists(detached));
+    }
+
+    [Fact]
+    public void WorkerExitReapsAFastDoubleForkedSession()
+    {
+        using var fixture = new ReportSupervisorFixture();
+
+        var result = fixture.Run(
+            "lean-producer",
+            leanSlot: true,
+            fixture.DoubleForkWorker);
+        Assert.Equal(0, result.ExitCode);
+        var detached = int.Parse(
+            File.ReadAllText(fixture.DoubleForkPid).Trim(),
+            System.Globalization.CultureInfo.InvariantCulture);
 
         Assert.True(SpinWait.SpinUntil(
             () => !ProcessExists(detached),
@@ -341,6 +470,37 @@ public sealed class ReportSupervisorScriptTests
                 printf '%s\n' "$!" > "$1"
                 wait
                 """);
+            DoubleForkWorker = WriteExecutable("double-fork-worker.sh", """
+                #!/usr/bin/env bash
+                set -euo pipefail
+                perl -MPOSIX -e '
+                  my $path = shift;
+                  my $first = fork();
+                  die "first fork failed" unless defined $first;
+                  if ($first == 0) {
+                    POSIX::setsid();
+                    my $second = fork();
+                    die "second fork failed" unless defined $second;
+                    if ($second == 0) {
+                      $^F = 9;
+                      open STDOUT, ">", "/dev/null" or die $!;
+                      open STDERR, ">", "/dev/null" or die $!;
+                      exec "sleep", "60";
+                    }
+                    open my $out, ">", $path or die $!;
+                    print {$out} "$second\n";
+                    close $out or die $!;
+                    exit 0;
+                  }
+                  waitpid($first, 0);
+                ' "$1"
+                """);
+            FileSizeLimitedDriver = WriteExecutable("file-size-limited-driver.sh", """
+                #!/usr/bin/env bash
+                set -euo pipefail
+                ulimit -f 1
+                exec "$@"
+                """);
         }
 
         internal string Root => temporary.Path;
@@ -355,12 +515,15 @@ public sealed class ReportSupervisorScriptTests
         internal string GrandchildPid => Path.Combine(Root, "grandchild.pid");
         internal string ExitedGrandchildPid => ScratchRecord;
         internal string DetachedPid => Path.Combine(Root, "detached.pid");
+        internal string DoubleForkPid => ScratchRecord;
         internal string ScratchWriter { get; }
         internal string ProducerWorker { get; }
         internal string ConcurrentDriver { get; }
         internal string LongRunningWorker { get; }
         internal string ExitingWorker { get; }
         internal string DetachedWorker { get; }
+        internal string DoubleForkWorker { get; }
+        internal string FileSizeLimitedDriver { get; }
 
         internal ProcessOutput Run(string role, bool leanSlot, string command)
             => RunWithEnvironment(role, leanSlot, command);
@@ -393,6 +556,21 @@ public sealed class ReportSupervisorScriptTests
                 "env",
                 [
                     $"HOME={Root}",
+                    $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
+                    Supervisor,
+                    "--role", role,
+                    "--", command, ScratchRecord,
+                ],
+                Root,
+                TimeSpan.FromSeconds(30),
+                1024 * 1024);
+
+        internal ProcessOutput RunWithFileSizeLimit(string role, string command) =>
+            BoundedProcessRunner.Run(
+                FileSizeLimitedDriver,
+                [
+                    "env",
+                    $"STRATALINT_REPORT_METRICS_LOG={MetricsLog}",
                     $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
                     Supervisor,
                     "--role", role,

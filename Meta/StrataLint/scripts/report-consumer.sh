@@ -22,9 +22,24 @@ done
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
 SUPERVISOR="$ROOT/Meta/StrataLint/scripts/report-supervisor.sh"
 INPUT_VERIFIER="$ROOT/Meta/StrataLint/scripts/lean-report-input.sh"
-"$INPUT_VERIFIER" verify --repository "$ROOT" --report "$REPORT"
+SNAPSHOT_ROOT="$(mktemp -d "${TMPDIR:-/tmp}/stratalint-report-consumer.XXXXXXXX")"
+cleanup() { rm -rf -- "$SNAPSHOT_ROOT"; }
+trap cleanup EXIT
+trap 'exit 129' HUP
+trap 'exit 130' INT
+trap 'exit 143' TERM
+
+SNAPSHOT_REPORT="$SNAPSHOT_ROOT/$(basename "$REPORT")"
+for suffix in '' .sha256 .input.attestation .provenance.json; do
+  [[ -f "${REPORT}${suffix}" ]] || {
+    echo "report-consumer: raw Lean report bundle is incomplete at ${REPORT}${suffix}; run make lean-report first" >&2
+    exit 2
+  }
+  cp "${REPORT}${suffix}" "${SNAPSHOT_REPORT}${suffix}"
+done
+"$INPUT_VERIFIER" verify --repository "$ROOT" --report "$SNAPSHOT_REPORT"
 set +e
-"$SUPERVISOR" --role "$ROLE" -- "$@"
+"$SUPERVISOR" --role "$ROLE" -- env STRATALINT_LEAN_REPORT="$SNAPSHOT_REPORT" "$@"
 rc=$?
 set -e
 if [[ "$rc" -ne 0 ]]; then

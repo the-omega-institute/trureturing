@@ -40,25 +40,42 @@ MAX_CONCURRENCY="${STRATALINT_LEAN_MAX_CONCURRENCY:-1}"
 LOCK_TIMEOUT_SECONDS="${STRATALINT_LOCK_TIMEOUT_SECONDS:-900}"
 [[ "$LOCK_TIMEOUT_SECONDS" =~ ^[1-9][0-9]*$ && "$LOCK_TIMEOUT_SECONDS" -le 86400 ]] \
   || { echo "report-supervisor: STRATALINT_LOCK_TIMEOUT_SECONDS must be 1..86400" >&2; exit 2; }
-LOCK_STALE_SECONDS="${STRATALINT_LOCK_STALE_SECONDS:-5}"
-[[ "$LOCK_STALE_SECONDS" =~ ^[0-9]+$ && "$LOCK_STALE_SECONDS" -le 60 ]] \
-  || { echo "report-supervisor: STRATALINT_LOCK_STALE_SECONDS must be 0..60" >&2; exit 2; }
+LOCK_INITIALIZATION_GRACE_SECONDS=5
 
-mkdir -p "$RUN_ROOT" "$SLOT_ROOT" "$(dirname "$METRICS_LOG")"
-TMP_ROOT="$(mktemp -d "$RUN_ROOT/run.XXXXXXXX")"
-SCRATCH="$TMP_ROOT/scratch"
-mkdir -p "$SCRATCH"
-DESCENDANT_PIDS="$TMP_ROOT/descendant-pids"
-: > "$DESCENDANT_PIDS"
-
+TMP_ROOT=""
 CHILD_PID=""
 PROCESS_GROUP_ID=""
+STDOUT_RELAY_PID=""
+STDERR_RELAY_PID=""
 SLOT_DIR=""
 METRICS_LOCK_DIR=""
 CONCURRENCY_COUNT=0
 FD_PEAK=0
 RSS_PEAK_KB=0
 STARTED_MS=0
+
+early_cleanup() {
+  if [[ -n "$TMP_ROOT" ]]; then rm -rf -- "$TMP_ROOT"; fi
+}
+trap early_cleanup EXIT
+trap 'exit 129' HUP
+trap 'exit 130' INT
+trap 'exit 143' TERM
+
+mkdir -p "$RUN_ROOT" "$SLOT_ROOT" "$(dirname "$METRICS_LOG")"
+TMP_ROOT="$(mktemp -d "$RUN_ROOT/run.XXXXXXXX")"
+TMP_ROOT="$(cd "$TMP_ROOT" && pwd -P)"
+SCRATCH="$TMP_ROOT/scratch"
+mkdir -p "$SCRATCH"
+RUN_STDOUT="$TMP_ROOT/stdout.pipe"
+RUN_STDERR="$TMP_ROOT/stderr.pipe"
+RUN_MARKER="$TMP_ROOT/process.marker"
+mkfifo "$RUN_STDOUT" "$RUN_STDERR"
+: > "$RUN_MARKER"
+if [[ ! -d /proc ]] && ! command -v lsof >/dev/null 2>&1; then
+  echo "report-supervisor: lsof is required for process supervision on this host" >&2
+  exit 2
+fi
 
 now_ms() {
   if command -v perl >/dev/null 2>&1; then
@@ -78,26 +95,102 @@ lock_mtime() {
   fi
 }
 
-reclaim_stale_lock() {
+process_start_identity() {
+  ps -o lstart= -p "$1" 2>/dev/null | awk '{$1=$1; print; exit}'
+}
+
+owner_identity() {
+  local start
+  start="$(process_start_identity "$$")"
+  [[ -n "$start" ]] || return 1
+  printf '%s|%s\n' "$$" "$start"
+}
+
+lock_is_stale() {
   local lock="$1"
   local owner=""
+  local pid=""
+  local expected_start=""
+  local actual_start=""
   local mtime=""
   if [[ -f "$lock/owner" ]]; then
     read -r owner < "$lock/owner" || owner=""
   fi
-  if [[ "$owner" =~ ^[1-9][0-9]*$ ]]; then
-    if process_exists "$owner"; then return 1; fi
-  else
-    mtime="$(lock_mtime "$lock" || true)"
-    [[ "$mtime" =~ ^[0-9]+$ ]] || return 1
-    if (( $(date +%s) - mtime < LOCK_STALE_SECONDS )); then return 1; fi
+  if [[ "$owner" =~ ^([1-9][0-9]*)\|(.*)$ ]]; then
+    pid="${BASH_REMATCH[1]}"
+    expected_start="${BASH_REMATCH[2]}"
+    process_exists "$pid" || return 0
+    actual_start="$(process_start_identity "$pid")"
+    [[ -n "$actual_start" && "$actual_start" == "$expected_start" ]] && return 1
+    return 0
   fi
+  if [[ "$owner" =~ ^[1-9][0-9]*$ ]]; then
+    process_exists "$owner" && return 1
+    return 0
+  fi
+  mtime="$(lock_mtime "$lock" || true)"
+  [[ "$mtime" =~ ^[0-9]+$ ]] || return 1
+  (( $(date +%s) - mtime >= LOCK_INITIALIZATION_GRACE_SECONDS ))
+}
+
+reclaim_lock_without_guard() {
+  local lock="$1"
+  lock_is_stale "$lock" || return 1
   local stale="${lock}.stale.$$.$RANDOM"
   if mv "$lock" "$stale" 2>/dev/null; then
     rm -rf -- "$stale"
     return 0
   fi
   return 1
+}
+
+acquire_lock_guard() {
+  local lock="$1"
+  local guard="${lock}.reclaim-guard"
+  local deadline=$(( $(date +%s) + LOCK_TIMEOUT_SECONDS ))
+  local identity
+  identity="$(owner_identity)" \
+    || { echo "report-supervisor: could not identify lock owner process" >&2; return 2; }
+  while ! mkdir "$guard" 2>/dev/null; do
+    reclaim_lock_without_guard "$guard" || true
+    if (( $(date +%s) >= deadline )); then return 2; fi
+    sleep 0.05
+  done
+  if ! printf '%s\n' "$identity" > "$guard/owner"; then
+    rm -rf -- "$guard"
+    return 2
+  fi
+}
+
+release_lock_guard() {
+  rm -rf -- "${1}.reclaim-guard"
+}
+
+reclaim_stale_lock() {
+  local lock="$1"
+  acquire_lock_guard "$lock" || return 1
+  reclaim_lock_without_guard "$lock"
+  local rc=$?
+  release_lock_guard "$lock"
+  return "$rc"
+}
+
+claim_lock() {
+  local lock="$1"
+  local identity
+  identity="$(owner_identity)" \
+    || { echo "report-supervisor: could not identify lock owner process" >&2; return 2; }
+  acquire_lock_guard "$lock" || return 1
+  if ! mkdir "$lock" 2>/dev/null; then
+    release_lock_guard "$lock"
+    return 1
+  fi
+  if ! printf '%s\n' "$identity" > "$lock/owner"; then
+    rm -rf -- "$lock"
+    release_lock_guard "$lock"
+    return 2
+  fi
+  release_lock_guard "$lock"
 }
 
 active_slot_count() {
@@ -112,10 +205,8 @@ acquire_lean_slot() {
   while true; do
     for ((index = 1; index <= MAX_CONCURRENCY; index++)); do
       candidate="$SLOT_ROOT/slot-$index.lock"
-      if mkdir "$candidate" 2>/dev/null; then
+      if claim_lock "$candidate"; then
         SLOT_DIR="$candidate"
-        printf '%s\n' "$$" > "$candidate/owner" \
-          || { echo "report-supervisor: could not record Lean slot owner" >&2; return 2; }
         CONCURRENCY_COUNT="$(active_slot_count)"
         return 0
       fi
@@ -144,13 +235,74 @@ collect_process_tree() {
   done
 }
 
+marker_processes() {
+  local process_dir fd target pid candidates elapsed_window
+  if [[ -d /proc ]]; then
+    for process_dir in /proc/[1-9]*; do
+      [[ -d "$process_dir/fd" ]] || continue
+      pid="${process_dir##*/}"
+      for fd in "$process_dir"/fd/*; do
+        [[ -e "$fd" || -L "$fd" ]] || continue
+        target="$(readlink "$fd" 2>/dev/null || true)"
+        if [[ "$target" == "$RUN_STDOUT" \
+          || "$target" == "$RUN_STDERR" \
+          || "$target" == "$RUN_MARKER" ]]; then
+          printf '%s\n' "$pid"
+          break
+        fi
+      done
+    done
+  else
+    elapsed_window=$(( ($(now_ms) - STARTED_MS) / 1000 + 5 ))
+    candidates="$(ps -axo pid=,ppid=,etime= 2>/dev/null \
+      | awk -v window="$elapsed_window" '
+          function elapsed(value, fields, count, hour) {
+            count = split(value, fields, ":")
+            seconds = fields[count] + 0
+            if (count >= 2) seconds += 60 * fields[count - 1]
+            if (count >= 3) {
+              hour = fields[count - 2]
+              if (hour ~ /-/) {
+                split(hour, day_hour, "-")
+                seconds += 86400 * day_hour[1] + 3600 * day_hour[2]
+              } else {
+                seconds += 3600 * hour
+              }
+            }
+            return seconds
+          }
+          $2 == 1 && elapsed($3) <= window {print $1}
+        ' | paste -sd, -)"
+    [[ -n "$candidates" ]] || return 0
+    lsof -a -p "$candidates" -d 1,2,9 2>/dev/null \
+      | awk -v stdout="$RUN_STDOUT" -v stderr="$RUN_STDERR" -v marker="$RUN_MARKER" \
+          '$NF == stdout || $NF == stderr || $NF == marker {print $2}'
+  fi
+}
+
+signal_marker_processes() {
+  local signal="$1"
+  local pid
+  {
+    if [[ -n "$CHILD_PID" ]]; then collect_process_tree "$CHILD_PID"; fi
+    marker_processes
+  } | sort -run | while IFS= read -r pid; do
+    [[ "$pid" =~ ^[1-9][0-9]*$ \
+      && "$pid" != "$$" \
+      && "$pid" != "$STDOUT_RELAY_PID" \
+      && "$pid" != "$STDERR_RELAY_PID" ]] || continue
+    kill "-$signal" "$pid" >/dev/null 2>&1 || true
+  done
+}
+
 sample_process_tree() {
   local pid rss fd
   local rss_total=0
   local fd_total=0
   while IFS= read -r pid; do
-    [[ -n "$pid" ]] || continue
-    printf '%s\n' "$pid" >> "$DESCENDANT_PIDS"
+    [[ -n "$pid" \
+      && "$pid" != "$STDOUT_RELAY_PID" \
+      && "$pid" != "$STDERR_RELAY_PID" ]] || continue
     rss="$( { ps -o rss= -p "$pid" 2>/dev/null || true; } | awk '{sum += $1} END {print sum + 0}')"
     rss_total=$((rss_total + rss))
     if [[ -d "/proc/$pid/fd" ]]; then
@@ -161,27 +313,39 @@ sample_process_tree() {
       fd=0
     fi
     fd_total=$((fd_total + fd))
-  done < <(collect_process_tree "$CHILD_PID")
+  done < <({
+    if [[ -n "$CHILD_PID" ]]; then collect_process_tree "$CHILD_PID"; fi
+    marker_processes
+  } | sort -un)
   if [[ "$rss_total" -gt "$RSS_PEAK_KB" ]]; then RSS_PEAK_KB="$rss_total"; fi
   if [[ "$fd_total" -gt "$FD_PEAK" ]]; then FD_PEAK="$fd_total"; fi
 }
 
-signal_recorded_tree() {
-  local signal="$1"
-  local pid
-  sort -run "$DESCENDANT_PIDS" 2>/dev/null | while IFS= read -r pid; do
-    [[ "$pid" =~ ^[1-9][0-9]*$ && "$pid" != "$$" ]] || continue
-    kill "-$signal" "$pid" >/dev/null 2>&1 || true
-  done
-}
-
 terminate_process_group() {
   local group_id="$1"
-  signal_recorded_tree TERM
+  signal_marker_processes TERM
   kill -TERM -- "-$group_id" >/dev/null 2>&1 || true
   sleep 0.2
-  signal_recorded_tree KILL
+  signal_marker_processes KILL
   kill -KILL -- "-$group_id" >/dev/null 2>&1 || true
+}
+
+wait_for_relay() {
+  local pid="$1"
+  local deadline=$(( $(date +%s) + 2 ))
+  local state=""
+  while process_exists "$pid"; do
+    state="$(ps -o stat= -p "$pid" 2>/dev/null | awk '{$1=$1; print; exit}')"
+    if [[ -z "$state" || "$state" == Z* ]]; then break; fi
+    if (( $(date +%s) >= deadline )); then
+      kill -TERM "$pid" >/dev/null 2>&1 || true
+      sleep 0.1
+      kill -KILL "$pid" >/dev/null 2>&1 || true
+      break
+    fi
+    sleep 0.05
+  done
+  wait "$pid" >/dev/null 2>&1 || true
 }
 
 loadavg_per_cpu() {
@@ -209,60 +373,91 @@ loadavg_per_cpu() {
 performance_event() {
   local rc="$1"
   local elapsed_ms="$2"
-  local timestamp status venue os arch commit base load elapsed_seconds rss_peak_mb
+  local timestamp status venue os arch cpu_class commit base load elapsed_seconds rss_peak_mb
   timestamp="$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
-  status=passed
-  if [[ "$rc" -ne 0 ]]; then status=failed; fi
+  status=observation
   venue=local
   if [[ "${CI:-}" == "true" || "${CI:-}" == "1" ]]; then venue=ci; fi
   os="$(uname -s 2>/dev/null || printf unknown)"
   arch="$(uname -m 2>/dev/null || printf unknown)"
+  cpu_class=""
+  if command -v sysctl >/dev/null 2>&1; then
+    cpu_class="$(sysctl -n machdep.cpu.brand_string 2>/dev/null || true)"
+  fi
+  if [[ -z "$cpu_class" && -r /proc/cpuinfo ]]; then
+    cpu_class="$(awk -F ': *' '/^model name/ {print $2; exit}' /proc/cpuinfo)"
+  fi
+  if [[ -z "$cpu_class" ]]; then cpu_class="$arch"; fi
+  cpu_class="$(printf '%s' "$cpu_class" | sed 's/["\\]/_/g')"
   commit="$(git -C "$REPOSITORY_ROOT" rev-parse --verify 'HEAD^{commit}' 2>/dev/null || printf unknown)"
   [[ "$commit" =~ ^[0-9a-f]{40,64}$ ]] || commit=unknown
   base="$(git -C "$REPOSITORY_ROOT" rev-parse --verify "${STRATALINT_PERF_BASE:-origin/dev}^{commit}" 2>/dev/null || printf unknown)"
   [[ "$base" =~ ^[0-9a-f]{40,64}$ ]] || base=unknown
   load="$(loadavg_per_cpu)"
-  if [[ "$commit" == "unknown" || "$load" == "null" ]]; then status=observation; fi
   elapsed_seconds="$(awk -v value="$elapsed_ms" 'BEGIN {printf "%.3f", value / 1000}')"
   rss_peak_mb="$(awk -v value="$RSS_PEAK_KB" 'BEGIN {printf "%.3f", value / 1024}')"
-  printf '{"schema":"stratalint-perf-event-v1","run_id":"report-%s-%s","ts":"%s","cohort":{"venue":"%s","os":"%s","arch":"%s","cpu_class":"%s","runner_class":null},"context":{"commit":"%s","base":"%s","workload_id":"report","cache_state":null,"loadavg_per_cpu":%s,"host_concurrency":%s},"kind":"resource","stage":"%s","status":"%s","elapsed_seconds":%s,"resources":{"disk_free_gb":null,"fd_peak":%s,"rss_peak_mb":%s},"role":"%s","pid":%s,"elapsed_ms":%s,"rc":%s,"fd_peak":%s,"rss_peak_kb":%s,"concurrency_count":%s}\n' \
-    "$STARTED_MS" "$CHILD_PID" "$timestamp" "$venue" "$os" "$arch" "$arch" \
-    "$commit" "$base" "$load" "$CONCURRENCY_COUNT" "$ROLE" "$status" \
+  printf '{"schema":"stratalint-perf-event-v1","run_id":"report-%s-%s","ts":"%s","cohort":{"venue":"%s","os":"%s","arch":"%s","cpu_class":"%s","runner_class":null},"context":{"commit":"%s","base":"%s","workload_id":"report","cache_state":null,"loadavg_per_cpu":%s,"host_concurrency":null},"kind":"resource","stage":"%s","status":"%s","elapsed_seconds":%s,"resources":{"disk_free_gb":null,"fd_peak":%s,"rss_peak_mb":%s},"role":"%s","pid":%s,"elapsed_ms":%s,"rc":%s,"fd_peak":%s,"rss_peak_kb":%s,"concurrency_count":%s}\n' \
+    "$STARTED_MS" "$CHILD_PID" "$timestamp" "$venue" "$os" "$arch" "$cpu_class" \
+    "$commit" "$base" "$load" "$ROLE" "$status" \
     "$elapsed_seconds" "$FD_PEAK" "$rss_peak_mb" "$ROLE" "$CHILD_PID" \
     "$elapsed_ms" "$rc" "$FD_PEAK" "$RSS_PEAK_KB" "$CONCURRENCY_COUNT"
 }
 
 acquire_metrics_lock() {
   local deadline=$(( $(date +%s) + LOCK_TIMEOUT_SECONDS ))
-  METRICS_LOCK_DIR="${METRICS_LOG}.lock"
-  while ! mkdir "$METRICS_LOCK_DIR" 2>/dev/null; do
-    reclaim_stale_lock "$METRICS_LOCK_DIR" || true
+  local candidate="${METRICS_LOG}.lock"
+  while ! claim_lock "$candidate"; do
+    reclaim_stale_lock "$candidate" || true
     if (( $(date +%s) >= deadline )); then
       echo "report-supervisor: timed out waiting for the performance ledger" >&2
       return 2
     fi
     sleep 0.05
   done
-  printf '%s\n' "$$" > "$METRICS_LOCK_DIR/owner" \
-    || { echo "report-supervisor: could not record performance ledger owner" >&2; return 2; }
+  METRICS_LOCK_DIR="$candidate"
 }
 
 append_metrics() {
   local rc="$1"
   local elapsed_ms="$2"
-  local ledger_tmp=""
+  local event_tmp=""
   acquire_metrics_lock || return 2
-  ledger_tmp="$(mktemp "$(dirname "$METRICS_LOG")/.events.XXXXXXXX")" || return 2
-  if [[ -e "$METRICS_LOG" && ! -f "$METRICS_LOG" ]]; then
-    rm -f -- "$ledger_tmp"
-    return 2
-  fi
-  if [[ -f "$METRICS_LOG" ]]; then
-    cat "$METRICS_LOG" > "$ledger_tmp" || { rm -f -- "$ledger_tmp"; return 2; }
-  fi
-  performance_event "$rc" "$elapsed_ms" >> "$ledger_tmp" \
-    || { rm -f -- "$ledger_tmp"; return 2; }
-  mv -f -- "$ledger_tmp" "$METRICS_LOG" || { rm -f -- "$ledger_tmp"; return 2; }
+  event_tmp="$(mktemp "$TMP_ROOT/event.XXXXXXXX")" || return 2
+  performance_event "$rc" "$elapsed_ms" > "$event_tmp" \
+    || { rm -f -- "$event_tmp"; return 2; }
+  perl -MFcntl=:DEFAULT -MIO::Handle -e '
+      my ($path) = @ARGV;
+      local $/;
+      my $event = <STDIN>;
+      sysopen(my $out, $path, O_WRONLY | O_CREAT | O_APPEND, 0600) or die $!;
+      my $start = (stat($out))[7];
+      my $offset = 0;
+      local $SIG{XFSZ} = "IGNORE";
+      eval {
+        while ($offset < length($event)) {
+          my $written = syswrite(
+            $out,
+            $event,
+            length($event) - $offset,
+            $offset);
+          die "performance event write failed: $!" unless defined $written;
+          die "performance event write made no progress" if $written == 0;
+          $offset += $written;
+        }
+        $out->sync or die "performance event sync failed";
+        1;
+      } or do {
+        my $failure = $@ || "performance event write failed";
+        my $current = (stat($out))[7];
+        if (defined $current && $current == $start + $offset) {
+          truncate($out, $start) or die "$failure; rollback failed: $!";
+          $out->sync or die "$failure; rollback sync failed: $!";
+        }
+        die $failure;
+      };
+    ' "$METRICS_LOG" < "$event_tmp" \
+    || { rm -f -- "$event_tmp"; return 2; }
+  rm -f -- "$event_tmp"
   rm -rf -- "$METRICS_LOCK_DIR"
   METRICS_LOCK_DIR=""
 }
@@ -280,6 +475,8 @@ finish() {
   if [[ -n "$CHILD_PID" ]]; then
     wait "$CHILD_PID" >/dev/null 2>&1 || true
   fi
+  if [[ -n "$STDOUT_RELAY_PID" ]]; then wait_for_relay "$STDOUT_RELAY_PID"; fi
+  if [[ -n "$STDERR_RELAY_PID" ]]; then wait_for_relay "$STDERR_RELAY_PID"; fi
   finished_ms="$(now_ms)"
   if [[ -n "$CHILD_PID" && "$STARTED_MS" -gt 0 ]]; then
     append_metrics "$rc" "$((finished_ms - STARTED_MS))" || metrics_rc=$?
@@ -306,8 +503,12 @@ else
 fi
 
 STARTED_MS="$(now_ms)"
+cat "$RUN_STDOUT" &
+STDOUT_RELAY_PID=$!
+cat "$RUN_STDERR" >&2 &
+STDERR_RELAY_PID=$!
 set -m
-TMPDIR="$SCRATCH" "$@" &
+TMPDIR="$SCRATCH" "$@" 9< "$RUN_MARKER" > "$RUN_STDOUT" 2> "$RUN_STDERR" &
 CHILD_PID=$!
 PROCESS_GROUP_ID="$CHILD_PID"
 set +m

@@ -162,7 +162,8 @@ public sealed class MakeWorkflowTests
         Assert.Contains(supervisorName, consumer, StringComparison.Ordinal);
         Assert.Contains(LeanReportInputScriptPath, consumer, StringComparison.Ordinal);
         Assert.DoesNotContain("mktemp", producer, StringComparison.Ordinal);
-        Assert.DoesNotContain("mktemp", consumer, StringComparison.Ordinal);
+        Assert.Contains("mktemp", consumer, StringComparison.Ordinal);
+        Assert.Contains("STRATALINT_LEAN_REPORT", consumer, StringComparison.Ordinal);
     }
 
     [Fact]

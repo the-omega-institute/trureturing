@@ -94,12 +94,13 @@ fingerprint() {
     printf 'lean_sources_sha256=%s\n' "$sources_sha256"
     printf 'lean_config_sha256=%s\n' "$config_sha256"
   } > "$preimage"
-  printf '%s %s %s %s %s\n' \
+  printf '%s %s %s %s %s %s\n' \
     "$(hash_file "$preimage")" \
     "$producer_sha256" \
     "$resident_sha256" \
     "$sources_sha256" \
-    "$config_sha256"
+    "$config_sha256" \
+    "$repository_address"
 }
 
 verify_report() {
@@ -126,7 +127,7 @@ produce_report() {
   local root="$2"
   local output="$3"
   rm -f -- "$output" "${output}.sha256" "${output}.provenance.json" \
-    "${output}.repository.sha256"
+    "${output}.input.attestation"
   mkdir -p "$(dirname "$output")"
   "$SUPERVISOR" --role "lean-producer-$side" --lean-slot -- \
     env LAKE_BIN="$LAKE_BIN" "$PRODUCER" --repository "$root" --output "$output"
@@ -159,7 +160,20 @@ write_provenance() {
     "${output}.provenance.json"
 }
 
-read -r candidate_address candidate_producer candidate_resident candidate_sources candidate_config \
+write_input_attestation() {
+  local output="$1"
+  local repository_sha256="$2"
+  local producer_sha256="$3"
+  local report_sha256="$4"
+  {
+    printf '%s\n' "schema=stratalint-lean-report-input-attestation-v1"
+    printf 'repository_input_sha256=%s\n' "$repository_sha256"
+    printf 'producer_sha256=%s\n' "$producer_sha256"
+    printf 'report_sha256=%s\n' "$report_sha256"
+  } > "${output}.input.attestation"
+}
+
+read -r candidate_address candidate_producer candidate_resident candidate_sources candidate_config candidate_repository \
   <<< "$(fingerprint "$CANDIDATE_ROOT" candidate)"
 printf 'LEAN_REPORT_INPUT side=candidate content_address=sha256:%s producer_sha256=%s repository_inspector_sha256=%s lean_sources_sha256=%s lean_config_sha256=%s\n' \
   "$candidate_address" "$candidate_producer" "$candidate_resident" "$candidate_sources" "$candidate_config"
@@ -170,18 +184,19 @@ write_provenance \
   candidate "$CANDIDATE_OUTPUT" produced candidate \
   "$candidate_address" "$candidate_producer" "$candidate_resident" \
   "$candidate_sources" "$candidate_config" "$candidate_report_sha256"
-"$INPUT_HELPER" write-sidecar --repository "$CANDIDATE_ROOT" --report "$CANDIDATE_OUTPUT"
+write_input_attestation \
+  "$CANDIDATE_OUTPUT" "$candidate_repository" "$candidate_producer" "$candidate_report_sha256"
 
 if [[ "$SINGLE" == "1" ]]; then exit 0; fi
 
-read -r baseline_address baseline_producer baseline_resident baseline_sources baseline_config \
+read -r baseline_address baseline_producer baseline_resident baseline_sources baseline_config baseline_repository \
   <<< "$(fingerprint "$BASELINE_ROOT" baseline)"
 printf 'LEAN_REPORT_INPUT side=baseline content_address=sha256:%s producer_sha256=%s repository_inspector_sha256=%s lean_sources_sha256=%s lean_config_sha256=%s\n' \
   "$baseline_address" "$baseline_producer" "$baseline_resident" "$baseline_sources" "$baseline_config"
 
 if [[ "$candidate_address" == "$baseline_address" ]]; then
   rm -f -- "$BASELINE_OUTPUT" "${BASELINE_OUTPUT}.sha256" \
-    "${BASELINE_OUTPUT}.provenance.json" "${BASELINE_OUTPUT}.repository.sha256"
+    "${BASELINE_OUTPUT}.provenance.json" "${BASELINE_OUTPUT}.input.attestation"
   rm -rf -- "${BASELINE_OUTPUT}.logs"
   mkdir -p "$(dirname "$BASELINE_OUTPUT")"
   cp "$CANDIDATE_OUTPUT" "$BASELINE_OUTPUT"
@@ -193,7 +208,8 @@ if [[ "$candidate_address" == "$baseline_address" ]]; then
     baseline "$BASELINE_OUTPUT" reused candidate \
     "$baseline_address" "$baseline_producer" "$baseline_resident" \
     "$baseline_sources" "$baseline_config" "$verify_report_copy_sha256"
-  "$INPUT_HELPER" write-sidecar --repository "$BASELINE_ROOT" --report "$BASELINE_OUTPUT"
+  write_input_attestation \
+    "$BASELINE_OUTPUT" "$baseline_repository" "$baseline_producer" "$verify_report_copy_sha256"
 else
   produce_report baseline "$BASELINE_ROOT" "$BASELINE_OUTPUT"
   baseline_report_sha256="$LAST_REPORT_SHA256"
@@ -201,5 +217,6 @@ else
     baseline "$BASELINE_OUTPUT" produced baseline \
     "$baseline_address" "$baseline_producer" "$baseline_resident" \
     "$baseline_sources" "$baseline_config" "$baseline_report_sha256"
-  "$INPUT_HELPER" write-sidecar --repository "$BASELINE_ROOT" --report "$BASELINE_OUTPUT"
+  write_input_attestation \
+    "$BASELINE_OUTPUT" "$baseline_repository" "$baseline_producer" "$baseline_report_sha256"
 fi

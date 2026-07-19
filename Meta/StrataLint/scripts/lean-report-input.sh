@@ -15,8 +15,8 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-[[ "$COMMAND" == "address" || "$COMMAND" == "write-sidecar" || "$COMMAND" == "verify" ]] \
-  || { echo "usage: lean-report-input.sh address|write-sidecar|verify --repository DIR [--report FILE]" >&2; exit 2; }
+[[ "$COMMAND" == "address" || "$COMMAND" == "verify" ]] \
+  || { echo "usage: lean-report-input.sh address|verify --repository DIR [--report FILE]" >&2; exit 2; }
 [[ -n "$REPOSITORY" && "$REPOSITORY" == /* && -d "$REPOSITORY" ]] \
   || { echo "lean-report-input: --repository requires an absolute directory" >&2; exit 2; }
 REPOSITORY="$(cd "$REPOSITORY" && pwd -P)"
@@ -106,31 +106,39 @@ verify_report_sha() {
     && "$declared_name" == "$(basename "$REPORT")" \
     && "$(awk 'END {print NR}' "${REPORT}.sha256")" == "1" ]] \
     || { echo "lean-report-input: raw Lean report SHA is stale; run make lean-report first" >&2; return 2; }
+  REPORT_SHA256="$actual"
 }
 
 case "$COMMAND" in
   address)
     repository_address
     ;;
-  write-sidecar)
-    verify_report_sha
-    read -r address _ <<< "$(repository_address)"
-    printf 'sha256:%s  %s.repository-input\n' "$address" "$(basename "$REPORT")" \
-      > "${REPORT}.repository.sha256"
-    ;;
   verify)
     verify_report_sha
-    [[ -s "${REPORT}.provenance.json" ]] \
-      || { echo "lean-report-input: report provenance is missing; run make lean-report first" >&2; exit 2; }
-    [[ -f "${REPORT}.repository.sha256" ]] \
-      || { echo "lean-report-input: repository input address is missing; run make lean-report first" >&2; exit 2; }
+    [[ -f "${REPORT}.input.attestation" ]] \
+      || { echo "lean-report-input: production input attestation is missing; run make lean-report first" >&2; exit 2; }
+    schema=""
     declared=""
-    declared_name=""
-    read -r declared declared_name < "${REPORT}.repository.sha256" || true
+    producer=""
+    attested_report=""
+    extra=""
+    {
+      IFS= read -r schema || true
+      IFS= read -r declared || true
+      IFS= read -r producer || true
+      IFS= read -r attested_report || true
+      IFS= read -r extra || true
+    } < "${REPORT}.input.attestation"
+    [[ "$schema" == "schema=stratalint-lean-report-input-attestation-v1" ]] \
+      || { echo "lean-report-input: production input attestation is malformed or stale; run make lean-report first" >&2; exit 2; }
+    [[ "$declared" =~ ^repository_input_sha256=[0-9a-f]{64}$ \
+      && "$producer" =~ ^producer_sha256=[0-9a-f]{64}$ \
+      && "$attested_report" == "report_sha256=$REPORT_SHA256" \
+      && -z "$extra" ]] \
+      || { echo "lean-report-input: production input attestation is malformed or stale; run make lean-report first" >&2; exit 2; }
+    declared="${declared#repository_input_sha256=}"
     read -r address _ <<< "$(repository_address)"
-    [[ "$declared" == "sha256:$address" \
-      && "$declared_name" == "$(basename "$REPORT").repository-input" \
-      && "$(awk 'END {print NR}' "${REPORT}.repository.sha256")" == "1" ]] \
+    [[ "$declared" == "$address" ]] \
       || { echo "lean-report-input: raw Lean report is stale for current repository inputs; run make lean-report first" >&2; exit 2; }
     ;;
 esac
