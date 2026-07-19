@@ -3760,64 +3760,127 @@ sources:
           raw_sha256: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
           normalized_sha256: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
         cas_ref: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
-        coverage_gids: []
+        coverage_gids:
+          - D5/S1/Phase/SeatTowerArithmetic.mod_twenty_four_eq_zero_or_twelve
+          - D5/S1/Phase/SeatTowerArithmetic.twenty_four_dvd_iff_even_quotient
         receipts:
-          coverage: []
+          coverage:
+            - gid: D5/S1/Phase/SeatTowerArithmetic.mod_twenty_four_eq_zero_or_twelve
+              source_sha256: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
+              target_sha256: sha256:90dfce608e61ee4b6d61b442ed9e5fd1b894f916fd1678e62954a517c32898e6
+            - gid: D5/S1/Phase/SeatTowerArithmetic.twenty_four_dvd_iff_even_quotient
+              source_sha256: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
+              target_sha256: sha256:90dfce608e61ee4b6d61b442ed9e5fd1b894f916fd1678e62954a517c32898e6
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - jacobi-selector-identification
+            - mod-24-joint-locality-certificate
+            - mod-48-boundary-counterexample
+            - mod-96-conflict-resolution
+            - m468-twenty-four-member-table
+            - m-side-prime-observer-clause
+            - zero-only-prime-equivalence
+            - three-prime-three-orbit-count
+            - m4788-second-floor-classification
+            - twenty-two-city-separation-certificate
+            - direction-law-counterexamples
+            - full-exponent-encoding-clause
+            - prediction-trial-postmortem
+            - zolotarev-jacobi-factorization
+            - fixed-ray-character-counterexample
+            - nonlocal-reciprocity-walk
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: gict-residual-78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26
         ast_path: appendix/E.24
         fingerprints:
           raw_sha256: sha256:78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26
           normalized_sha256: sha256:78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26
         cas_ref: sha256:78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26
-        coverage_gids: []
+        coverage_gids:
+          - D5/S1/Phase/SeatTowerArithmetic.bhk_implies_w3_walk
         receipts:
-          coverage: []
+          coverage:
+            - gid: D5/S1/Phase/SeatTowerArithmetic.bhk_implies_w3_walk
+              source_sha256: sha256:78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26
+              target_sha256: sha256:90dfce608e61ee4b6d61b442ed9e5fd1b894f916fd1678e62954a517c32898e6
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - bhk-continued-fraction-theorem
+            - bhk-1755-enumeration-certificate
+            - w3-440-enumeration-certificate
+            - three-walk-identification
+            - endpoint-translation-integrality
+            - orientation-branch-clause
+            - translation-asymptotic
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: gict-residual-4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f
         ast_path: appendix/E.25
         fingerprints:
           raw_sha256: sha256:4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f
           normalized_sha256: sha256:4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f
         cas_ref: sha256:4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f
-        coverage_gids: []
+        coverage_gids:
+          - D5/S1/Phase/SeatTowerArithmetic.pythagorean_gate_iff_eisenstein_norm
         receipts:
-          coverage: []
+          coverage:
+            - gid: D5/S1/Phase/SeatTowerArithmetic.pythagorean_gate_iff_eisenstein_norm
+              source_sha256: sha256:4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f
+              target_sha256: sha256:90dfce608e61ee4b6d61b442ed9e5fd1b894f916fd1678e62954a517c32898e6
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - pin-angle-formula
+            - numerical-double-check-certificate
+            - fabricated-input-rejection-certificate
+            - cosecant-peak-identity
+            - zero-family-pin-ledger
+            - station-flip-angle-jump
+            - hecke-angle-literature-program
+            - dominant-partial-quotient-gap-lemma
+            - sixty-six-case-certificate
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3
         ast_path: appendix/E.26
         fingerprints:
           raw_sha256: sha256:db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3
           normalized_sha256: sha256:db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3
         cas_ref: sha256:db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3
-        coverage_gids: []
+        coverage_gids:
+          - D5/S1/Phase/SeatTowerArithmetic.twelve_le_abs_of_dvd_of_ne_zero
         receipts:
-          coverage: []
+          coverage:
+            - gid: D5/S1/Phase/SeatTowerArithmetic.twelve_le_abs_of_dvd_of_ne_zero
+              source_sha256: sha256:db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3
+              target_sha256: sha256:90dfce608e61ee4b6d61b442ed9e5fd1b894f916fd1678e62954a517c32898e6
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - six-negative-statistical-cases
+            - slow-closure-fit
+            - cubic-repulsion-fit
+            - gap-edge-envelope
+            - small-angle-2958-congruence-enumeration
+            - sampling-grid-leak-postmortem
+            - sampling-grid-declaration-rule
+            - zero-statistics-kappa-three
+            - zero-statistics-quarter-power
+            - seat-tower-combination-counting-conjecture
+            - continuous-statistics-congruence-meta-law
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: gict-residual-687a4b99dafc426d7d9c05a18e745f55787ac2e8061eac44632323ea6ac5c263
         ast_path: appendix/E.27
         fingerprints:
@@ -17047,64 +17110,127 @@ sources:
           raw_sha256: sha256:5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b
           normalized_sha256: sha256:5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b
         cas_ref: sha256:5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b
-        coverage_gids: []
+        coverage_gids:
+          - D5/S1/Phase/SeatTowerArithmetic.mod_twenty_four_eq_zero_or_twelve
+          - D5/S1/Phase/SeatTowerArithmetic.twenty_four_dvd_iff_even_quotient
         receipts:
-          coverage: []
+          coverage:
+            - gid: D5/S1/Phase/SeatTowerArithmetic.mod_twenty_four_eq_zero_or_twelve
+              source_sha256: sha256:5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b
+              target_sha256: sha256:90dfce608e61ee4b6d61b442ed9e5fd1b894f916fd1678e62954a517c32898e6
+            - gid: D5/S1/Phase/SeatTowerArithmetic.twenty_four_dvd_iff_even_quotient
+              source_sha256: sha256:5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b
+              target_sha256: sha256:90dfce608e61ee4b6d61b442ed9e5fd1b894f916fd1678e62954a517c32898e6
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - jacobi-selector-identification
+            - mod-24-joint-locality-certificate
+            - mod-48-boundary-counterexample
+            - mod-96-conflict-resolution
+            - m468-twenty-four-member-table
+            - m-side-prime-observer-clause
+            - zero-only-prime-equivalence
+            - three-prime-three-orbit-count
+            - m4788-second-floor-classification
+            - twenty-two-city-separation-certificate
+            - direction-law-counterexamples
+            - full-exponent-encoding-clause
+            - prediction-trial-postmortem
+            - zolotarev-jacobi-factorization
+            - fixed-ray-character-counterexample
+            - nonlocal-reciprocity-walk
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: pzg-residual-04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb
         ast_path: remark/27.372-27.373
         fingerprints:
           raw_sha256: sha256:04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb
           normalized_sha256: sha256:04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb
         cas_ref: sha256:04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb
-        coverage_gids: []
+        coverage_gids:
+          - D5/S1/Phase/SeatTowerArithmetic.bhk_implies_w3_walk
         receipts:
-          coverage: []
+          coverage:
+            - gid: D5/S1/Phase/SeatTowerArithmetic.bhk_implies_w3_walk
+              source_sha256: sha256:04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb
+              target_sha256: sha256:90dfce608e61ee4b6d61b442ed9e5fd1b894f916fd1678e62954a517c32898e6
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - bhk-continued-fraction-theorem
+            - bhk-1755-enumeration-certificate
+            - w3-440-enumeration-certificate
+            - three-walk-identification
+            - endpoint-translation-integrality
+            - orientation-branch-clause
+            - translation-asymptotic
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: pzg-residual-96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb
         ast_path: remark/27.374-27.375
         fingerprints:
           raw_sha256: sha256:96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb
           normalized_sha256: sha256:96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb
         cas_ref: sha256:96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb
-        coverage_gids: []
+        coverage_gids:
+          - D5/S1/Phase/SeatTowerArithmetic.pythagorean_gate_iff_eisenstein_norm
         receipts:
-          coverage: []
+          coverage:
+            - gid: D5/S1/Phase/SeatTowerArithmetic.pythagorean_gate_iff_eisenstein_norm
+              source_sha256: sha256:96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb
+              target_sha256: sha256:90dfce608e61ee4b6d61b442ed9e5fd1b894f916fd1678e62954a517c32898e6
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - pin-angle-formula
+            - numerical-double-check-certificate
+            - fabricated-input-rejection-certificate
+            - cosecant-peak-identity
+            - zero-family-pin-ledger
+            - station-flip-angle-jump
+            - hecke-angle-literature-program
+            - dominant-partial-quotient-gap-lemma
+            - sixty-six-case-certificate
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
         ast_path: remark/27.376-27.378
         fingerprints:
           raw_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
           normalized_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
         cas_ref: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
-        coverage_gids: []
+        coverage_gids:
+          - D5/S1/Phase/SeatTowerArithmetic.twelve_le_abs_of_dvd_of_ne_zero
         receipts:
-          coverage: []
+          coverage:
+            - gid: D5/S1/Phase/SeatTowerArithmetic.twelve_le_abs_of_dvd_of_ne_zero
+              source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+              target_sha256: sha256:90dfce608e61ee4b6d61b442ed9e5fd1b894f916fd1678e62954a517c32898e6
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - six-negative-statistical-cases
+            - slow-closure-fit
+            - cubic-repulsion-fit
+            - gap-edge-envelope
+            - small-angle-2958-congruence-enumeration
+            - sampling-grid-leak-postmortem
+            - sampling-grid-declaration-rule
+            - zero-statistics-kappa-three
+            - zero-statistics-quarter-power
+            - seat-tower-combination-counting-conjecture
+            - continuous-statistics-congruence-meta-law
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: pzg-residual-e43c454d2c301e848339a1a9269e0362b4d4a62e6a998e24e15397d1905472a9
         ast_path: remark/27.379-27.380
         fingerprints:
