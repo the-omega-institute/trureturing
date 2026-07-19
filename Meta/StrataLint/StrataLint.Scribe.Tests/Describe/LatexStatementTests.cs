@@ -22,6 +22,8 @@ public sealed class LatexStatementTests
     [InlineData("$x { y$")]
     [InlineData("$x } y$")]
     [InlineData("$\\begin{aligned}x = 1\\end{cases}$")]
+    [InlineData("$\\begin{foo-bar}x = 1\\end{foo-bar}$")]
+    [InlineData("$\\begin aligned$")]
     [InlineData("$\\unknownmacro{x}$")]
     [InlineData("$x$ trailing")]
     [InlineData("$x\r\n= 1$")]

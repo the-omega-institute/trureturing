@@ -1,13 +1,7 @@
-using System.Text.RegularExpressions;
-
 namespace StrataLint.Scribe;
 
 public sealed record LatexStatement
 {
-    private static readonly Regex EnvironmentPattern = new(
-        "\\\\(?<operation>begin|end)\\{(?<name>[A-Za-z]+\\*?)\\}",
-        RegexOptions.CultureInvariant);
-
     private static readonly HashSet<string> AllowedMacros = new(StringComparer.Ordinal)
     {
         "Alpha", "Beta", "Chi", "Delta", "Epsilon", "Eta", "Gamma", "Iota",
@@ -150,15 +144,44 @@ public sealed record LatexStatement
     private static void ValidateEnvironments(string body)
     {
         var environments = new Stack<string>();
-        foreach (Match match in EnvironmentPattern.Matches(body))
+        for (var index = 0; index < body.Length; index++)
         {
-            var name = match.Groups["name"].Value;
+            if (body[index] != '\\' || IsEscaped(body, index))
+            {
+                continue;
+            }
+
+            var commandStart = index + 1;
+            var commandEnd = commandStart;
+            while (commandEnd < body.Length && char.IsAsciiLetter(body[commandEnd]))
+            {
+                commandEnd++;
+            }
+
+            var operation = body[commandStart..commandEnd];
+            if (operation is not ("begin" or "end"))
+            {
+                continue;
+            }
+
+            if (commandEnd >= body.Length || body[commandEnd] != '{')
+            {
+                throw Invalid();
+            }
+
+            var nameEnd = body.IndexOf('}', commandEnd + 1);
+            if (nameEnd < 0)
+            {
+                throw Invalid();
+            }
+
+            var name = body[(commandEnd + 1)..nameEnd];
             if (!AllowedEnvironments.Contains(name))
             {
                 throw new ArgumentException($"LaTeX statement uses unsupported environment {name}.");
             }
 
-            if (match.Groups["operation"].Value == "begin")
+            if (operation == "begin")
             {
                 environments.Push(name);
             }
@@ -166,6 +189,8 @@ public sealed record LatexStatement
             {
                 throw Invalid();
             }
+
+            index = nameEnd;
         }
 
         if (environments.Count != 0)

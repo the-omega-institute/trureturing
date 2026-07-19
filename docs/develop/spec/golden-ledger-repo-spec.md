@@ -141,7 +141,7 @@ golden-ledger/
 **A17.1 Describe LaTeX 陈述位(v7.13 expand)** 定理类 `{theorem,proposition,lemma}` 在既有 `statement: Formula|LeanDeclarationRef` 之外增独立 `statement_latex: LatexStatement`;它与 Lean 引用并存,不得把二者降为二选一。`LatexStatement` 仅接受非空、canonical `$...$`/`$$...$$` 定界值,拒 CR、内嵌 `$`、未配平花括号/环境、未知环境及白名单外宏。Markdown 逐字保留原定界内容;QuestPDF 将同一字节串排入可编译 PDF。人类可读 content 是注释性伴随,不得替代公式承担数学陈述。SL-023 只消费本轮 `VerifiedScribeEmissions` typed capability,不正则猜 C# 源;`SCRIBE-LATEX-EPOCH` expand 期对旧定理类缺位发 `Observe` warning、不阻断既有 admit,contract 后同一谓词升为 Block;显式非法值在所有 epoch 均由构造器 fail-closed。
 
 **SCRIBE-LATEX-EPOCH 工单块(expand→migrate→contract;初裁 #113,2026-07-19 重申)**:
-- **PR-1 expand(本段)**:提交 `a9a3769` 的初裁基线有 28 个 Blueprint Markdown、仅 3 个含 LaTeX 定界符(`Phase/Basic`,`Scale/Embedding`,`Scale/Log`);安装可选 typed `LatexStatement`、轻量校验、MD/PDF 发射与 SL-023 双接受规则,旧缺位只 warn。rebase 到 2026-07-19 `dev` 后仓库为 34/3,新增 6 个定义同受 capability 枚举,不得用初裁清单绕过。
+- **PR-1 expand(本段)**:提交 `a9a3769` 的初裁基线有 28 个 Blueprint Markdown、仅 3 个定理类文档含 LaTeX 定界符(`Phase/Basic`,`Scale/Embedding`,`Scale/Log`);安装可选 typed `LatexStatement`、轻量校验、MD/PDF 发射与 SL-023 双接受规则,旧缺位只 warn。后续新增定义同受 capability 动态枚举,不得用初裁清单绕过。
 - **PR-2 migrate(后续,内容工作)**:逐一回填所有定理类 Describe 的 `statement_latex`,由复核席签发内容收据;**复核席须逐节点比较 LaTeX 公式与 `LeanDeclarationRef` 的 kernel statement,任何 stronger/weaker mismatch 均不得签收。** 初裁 28 文件对应源审计清单如下;无定理类节点者也须留下 no-op 审计收据,且 PR-2 须同时纳入初裁后新增源:
   - [ ] `Blueprint/D5/S0/Carrier/AlgebraicModel.scribe.cs`
   - [ ] `Blueprint/D5/S0/Carrier/Conj.scribe.cs`
