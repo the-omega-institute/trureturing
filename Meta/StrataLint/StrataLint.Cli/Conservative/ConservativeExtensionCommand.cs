@@ -565,7 +565,7 @@ internal sealed class ProductionConservativeExtensionEnvironment : IConservative
         get
         {
             var raw = Environment.GetEnvironmentVariable("STRATALINT_CONSERVATIVE_TIMEOUT_SECONDS");
-            if (int.TryParse(raw, out var seconds))
+            if (int.TryParse(raw, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out var seconds))
             {
                 return TimeSpan.FromSeconds(Math.Clamp(seconds, 180, 3600));
             }
