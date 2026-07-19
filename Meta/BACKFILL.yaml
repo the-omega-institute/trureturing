@@ -9248,26 +9248,19 @@ sources:
           raw_sha256: sha256:291ca76328c63069c2958f1a411c23fc9bc197f2d90facb7bd1fff2eb7db34ad
           normalized_sha256: sha256:291ca76328c63069c2958f1a411c23fc9bc197f2d90facb7bd1fff2eb7db34ad
         cas_ref: sha256:291ca76328c63069c2958f1a411c23fc9bc197f2d90facb7bd1fff2eb7db34ad
-        coverage_gids:
-          - D5/S3/Weil/EulerProduct.riemann_zeta_dirichlet_sum
-          - D5/S3/Weil/EulerProduct.riemann_zeta_euler_product
+        coverage_gids: []
         receipts:
-          coverage:
-            - gid: D5/S3/Weil/EulerProduct.riemann_zeta_dirichlet_sum
-              source_sha256: sha256:291ca76328c63069c2958f1a411c23fc9bc197f2d90facb7bd1fff2eb7db34ad
-              target_sha256: sha256:15cd001d32d1ff035dbe72f8066304f2aaf08d6f4eb95c8366c71635f022ba21
-            - gid: D5/S3/Weil/EulerProduct.riemann_zeta_euler_product
-              source_sha256: sha256:291ca76328c63069c2958f1a411c23fc9bc197f2d90facb7bd1fff2eb7db34ad
-              target_sha256: sha256:15cd001d32d1ff035dbe72f8066304f2aaf08d6f4eb95c8366c71635f022ba21
+          coverage: []
           scribe: []
           unresolved_subitems:
+            - global-dirichlet-series-euler-product-identity
             - theta-modular-identity-1e-12-certificate
             - critical-half-line-balance-point-interpretation
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: partial
-          truth: closed
+          migration: residual
+          truth: open
       - atom_id: pzg-residual-376b418a41fdff9bfee58298b6ba89a101f8ea94bf6fc3ae504e9170daad3bc0
         ast_path: remark/27.21
         fingerprints:
@@ -9632,24 +9625,20 @@ sources:
           raw_sha256: sha256:9f92118027a9f11747053931ee56ac8badd298ce7b7171bed1d76d4c80f19322
           normalized_sha256: sha256:9f92118027a9f11747053931ee56ac8badd298ce7b7171bed1d76d4c80f19322
         cas_ref: sha256:9f92118027a9f11747053931ee56ac8badd298ce7b7171bed1d76d4c80f19322
-        coverage_gids:
-          - D5/S3/Weil/EulerProduct.riemann_zeta_residue_one
+        coverage_gids: []
         receipts:
-          coverage:
-            - gid: D5/S3/Weil/EulerProduct.riemann_zeta_residue_one
-              source_sha256: sha256:9f92118027a9f11747053931ee56ac8badd298ce7b7171bed1d76d4c80f19322
-              target_sha256: sha256:15cd001d32d1ff035dbe72f8066304f2aaf08d6f4eb95c8366c71635f022ba21
+          coverage: []
           scribe: []
           unresolved_subitems:
-            - zeta-simple-pole-order-and-uniqueness
+            - zeta-simple-pole-and-residue-one-identity
             - mertens-three-scale-product-growth-certificate
             - residue-one-1e-9-certificate
             - noncompactness-versus-off-line-zero-causal-claim
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: partial
-          truth: closed
+          migration: residual
+          truth: open
       - atom_id: pzg-residual-8b4ec2189a8c6772eb3aae47e8c078cf4ff32b28b5b72df589dd5b31afb1535d
         ast_path: remark/27.36
         fingerprints:
