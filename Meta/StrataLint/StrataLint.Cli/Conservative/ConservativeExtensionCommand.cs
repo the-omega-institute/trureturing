@@ -557,6 +557,23 @@ internal sealed class ProductionConservativeExtensionEnvironment : IConservative
         }
     }
 
+    // 预算默认 180s(历史行为);本机在与其它工作负载共存时 corpus 评估可超 180s
+    // (2026-07-19 九次 ceremony 实证,load 6–40 均超时),允许经
+    // STRATALINT_CONSERVATIVE_TIMEOUT_SECONDS 显式上调,夹在 [180, 3600] 内。
+    private static TimeSpan EvaluationBudget
+    {
+        get
+        {
+            var raw = Environment.GetEnvironmentVariable("STRATALINT_CONSERVATIVE_TIMEOUT_SECONDS");
+            if (int.TryParse(raw, out var seconds))
+            {
+                return TimeSpan.FromSeconds(Math.Clamp(seconds, 180, 3600));
+            }
+
+            return TimeSpan.FromMinutes(3);
+        }
+    }
+
     public ConservativeHarnessExecution Execute(ConservativeHarnessInvocation invocation)
     {
         var temporary = Path.Combine(
@@ -574,7 +591,7 @@ internal sealed class ProductionConservativeExtensionEnvironment : IConservative
                 "dotnet",
                 arguments,
                 temporary,
-                TimeSpan.FromMinutes(3),
+                EvaluationBudget,
                 32 * 1024 * 1024,
                 invocation.Replay.CanonicalBytes.AsMemory());
             var after = ConservativeReplayEnvelopeCodec.Read(
