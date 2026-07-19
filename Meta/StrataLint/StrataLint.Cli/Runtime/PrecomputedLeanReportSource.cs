@@ -4,7 +4,7 @@ namespace StrataLint.Cli;
 
 internal sealed class PrecomputedLeanReportSource(string repositoryRoot) : ILeanReportSource
 {
-    private readonly string reportPath = RawLeanReportArtifact.DefaultPath(repositoryRoot);
+    private readonly string reportPath = LeanCompiledArtifactReports.ResolveReportPath(repositoryRoot);
 
     public LeanAxiomReport Load(RepositorySnapshot snapshot) =>
         RawLeanReportArtifact.ReadFile(reportPath, snapshot);
