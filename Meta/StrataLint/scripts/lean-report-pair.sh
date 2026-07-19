@@ -9,6 +9,10 @@ CANDIDATE_ROOT=""
 CANDIDATE_OUTPUT=""
 BASELINE_ROOT=""
 BASELINE_OUTPUT=""
+SINGLE=0
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+SUPERVISOR="$SCRIPT_DIR/report/report-supervisor.sh"
+INPUT_HELPER="$SCRIPT_DIR/report/lean-report-input.sh"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -18,6 +22,7 @@ while [[ $# -gt 0 ]]; do
     --candidate-output) CANDIDATE_OUTPUT="$2"; shift 2 ;;
     --baseline-root) BASELINE_ROOT="$2"; shift 2 ;;
     --baseline-output) BASELINE_OUTPUT="$2"; shift 2 ;;
+    --single) SINGLE=1; shift ;;
     *) echo "lean-report-pair: unknown argument '$1'" >&2; exit 2 ;;
   esac
 done
@@ -28,16 +33,22 @@ done
   || { echo "lean-report-pair: --lake-bin requires an absolute executable" >&2; exit 2; }
 [[ -d "$CANDIDATE_ROOT" ]] \
   || { echo "lean-report-pair: candidate root is absent" >&2; exit 2; }
-[[ -d "$BASELINE_ROOT" ]] \
-  || { echo "lean-report-pair: baseline root is absent" >&2; exit 2; }
 [[ -n "$CANDIDATE_OUTPUT" && "$CANDIDATE_OUTPUT" == /* ]] \
   || { echo "lean-report-pair: candidate output must be absolute" >&2; exit 2; }
-[[ -n "$BASELINE_OUTPUT" && "$BASELINE_OUTPUT" == /* ]] \
-  || { echo "lean-report-pair: baseline output must be absolute" >&2; exit 2; }
+if [[ "$SINGLE" == "0" ]]; then
+  [[ -d "$BASELINE_ROOT" ]] \
+    || { echo "lean-report-pair: baseline root is absent" >&2; exit 2; }
+  [[ -n "$BASELINE_OUTPUT" && "$BASELINE_OUTPUT" == /* ]] \
+    || { echo "lean-report-pair: baseline output must be absolute" >&2; exit 2; }
+fi
+[[ -x "$SUPERVISOR" ]] \
+  || { echo "lean-report-pair: report supervisor is absent" >&2; exit 2; }
+[[ -x "$INPUT_HELPER" ]] \
+  || { echo "lean-report-pair: report input helper is absent" >&2; exit 2; }
 
 PRODUCER="$(cd "$(dirname "$PRODUCER")" && pwd -P)/$(basename "$PRODUCER")"
 CANDIDATE_ROOT="$(cd "$CANDIDATE_ROOT" && pwd -P)"
-BASELINE_ROOT="$(cd "$BASELINE_ROOT" && pwd -P)"
+if [[ "$SINGLE" == "0" ]]; then BASELINE_ROOT="$(cd "$BASELINE_ROOT" && pwd -P)"; fi
 INSPECTOR="$(dirname "$PRODUCER")/Inspector.lean"
 [[ -f "$INSPECTOR" ]] \
   || { echo "lean-report-pair: producer Inspector.lean is absent" >&2; exit 2; }
@@ -60,26 +71,11 @@ hash_file() {
   fi
 }
 
-append_manifest_entry() {
-  local manifest="$1"
-  local root="$2"
-  local relative="$3"
-  local path="$root/$relative"
-  [[ -f "$path" ]] \
-    || { echo "lean-report-pair: input is absent: $path" >&2; return 2; }
-  printf '%s  %s\n' "$(hash_file "$path")" "$relative" >> "$manifest"
-}
-
 fingerprint() {
   local root="$1"
   local side="$2"
   local producer_manifest="$TMP_ROOT/$side-producer.manifest"
-  local resident_manifest="$TMP_ROOT/$side-resident-inspector.manifest"
-  local sources_manifest="$TMP_ROOT/$side-sources.manifest"
-  local sources_list="$TMP_ROOT/$side-sources.list"
-  local config_manifest="$TMP_ROOT/$side-config.manifest"
   local preimage="$TMP_ROOT/$side-input.preimage"
-  local resident_root="Meta/StrataLint/lean-inspector"
 
   : > "$producer_manifest"
   printf '%s  inspect.sh\n' "$(hash_file "$PRODUCER")" >> "$producer_manifest"
@@ -87,43 +83,9 @@ fingerprint() {
   local producer_sha256
   producer_sha256="$(hash_file "$producer_manifest")"
 
-  : > "$resident_manifest"
-  if [[ -f "$root/$resident_root/inspect.sh" \
-    && -f "$root/$resident_root/Inspector.lean" ]]; then
-    append_manifest_entry "$resident_manifest" "$root" "$resident_root/inspect.sh"
-    append_manifest_entry "$resident_manifest" "$root" "$resident_root/Inspector.lean"
-  else
-    printf '%s\n' "resident-inspector-absent" > "$resident_manifest"
-  fi
-  local resident_sha256
-  resident_sha256="$(hash_file "$resident_manifest")"
-
-  : > "$sources_manifest"
-  append_manifest_entry "$sources_manifest" "$root" "Trureturing.lean"
-  [[ -d "$root/D5" ]] \
-    || { echo "lean-report-pair: managed Lean root is absent: $root/D5" >&2; return 2; }
-  find "$root/D5" -type f -name '*.lean' -print | sort > "$sources_list"
-  while IFS= read -r path; do
-    append_manifest_entry "$sources_manifest" "$root" "${path#"$root/"}"
-  done < "$sources_list"
-  local sources_sha256
-  sources_sha256="$(hash_file "$sources_manifest")"
-
-  : > "$config_manifest"
-  append_manifest_entry "$config_manifest" "$root" "lean-toolchain"
-  append_manifest_entry "$config_manifest" "$root" "lake-manifest.json"
-  local lakefile_count=0
-  local lakefile
-  for lakefile in lakefile.toml lakefile.lean; do
-    if [[ -f "$root/$lakefile" ]]; then
-      append_manifest_entry "$config_manifest" "$root" "$lakefile"
-      lakefile_count=$((lakefile_count + 1))
-    fi
-  done
-  [[ "$lakefile_count" -gt 0 ]] \
-    || { echo "lean-report-pair: repository has no lakefile: $root" >&2; return 2; }
-  local config_sha256
-  config_sha256="$(hash_file "$config_manifest")"
+  local repository_address resident_sha256 sources_sha256 config_sha256
+  read -r repository_address resident_sha256 sources_sha256 config_sha256 \
+    <<< "$("$INPUT_HELPER" address --repository "$root")"
 
   {
     printf '%s\n' "schema=stratalint-lean-report-input-v1"
@@ -132,12 +94,13 @@ fingerprint() {
     printf 'lean_sources_sha256=%s\n' "$sources_sha256"
     printf 'lean_config_sha256=%s\n' "$config_sha256"
   } > "$preimage"
-  printf '%s %s %s %s %s\n' \
+  printf '%s %s %s %s %s %s\n' \
     "$(hash_file "$preimage")" \
     "$producer_sha256" \
     "$resident_sha256" \
     "$sources_sha256" \
-    "$config_sha256"
+    "$config_sha256" \
+    "$repository_address"
 }
 
 verify_report() {
@@ -160,11 +123,14 @@ verify_report() {
 }
 
 produce_report() {
-  local root="$1"
-  local output="$2"
-  rm -f -- "$output" "${output}.sha256" "${output}.provenance.json"
+  local side="$1"
+  local root="$2"
+  local output="$3"
+  rm -f -- "$output" "${output}.sha256" "${output}.provenance.json" \
+    "${output}.input.attestation"
   mkdir -p "$(dirname "$output")"
-  LAKE_BIN="$LAKE_BIN" "$PRODUCER" --repository "$root" --output "$output"
+  "$SUPERVISOR" --role "lean-producer-$side" --lean-slot -- \
+    env LAKE_BIN="$LAKE_BIN" "$PRODUCER" --repository "$root" --output "$output"
   verify_report "$output"
 }
 
@@ -194,25 +160,43 @@ write_provenance() {
     "${output}.provenance.json"
 }
 
-read -r candidate_address candidate_producer candidate_resident candidate_sources candidate_config \
-  <<< "$(fingerprint "$CANDIDATE_ROOT" candidate)"
-read -r baseline_address baseline_producer baseline_resident baseline_sources baseline_config \
-  <<< "$(fingerprint "$BASELINE_ROOT" baseline)"
+write_input_attestation() {
+  local output="$1"
+  local repository_sha256="$2"
+  local producer_sha256="$3"
+  local report_sha256="$4"
+  {
+    printf '%s\n' "schema=stratalint-lean-report-input-attestation-v1"
+    printf 'repository_input_sha256=%s\n' "$repository_sha256"
+    printf 'producer_sha256=%s\n' "$producer_sha256"
+    printf 'report_sha256=%s\n' "$report_sha256"
+  } > "${output}.input.attestation"
+}
 
+read -r candidate_address candidate_producer candidate_resident candidate_sources candidate_config candidate_repository \
+  <<< "$(fingerprint "$CANDIDATE_ROOT" candidate)"
 printf 'LEAN_REPORT_INPUT side=candidate content_address=sha256:%s producer_sha256=%s repository_inspector_sha256=%s lean_sources_sha256=%s lean_config_sha256=%s\n' \
   "$candidate_address" "$candidate_producer" "$candidate_resident" "$candidate_sources" "$candidate_config"
-printf 'LEAN_REPORT_INPUT side=baseline content_address=sha256:%s producer_sha256=%s repository_inspector_sha256=%s lean_sources_sha256=%s lean_config_sha256=%s\n' \
-  "$baseline_address" "$baseline_producer" "$baseline_resident" "$baseline_sources" "$baseline_config"
 
-produce_report "$CANDIDATE_ROOT" "$CANDIDATE_OUTPUT"
+produce_report candidate "$CANDIDATE_ROOT" "$CANDIDATE_OUTPUT"
 candidate_report_sha256="$LAST_REPORT_SHA256"
 write_provenance \
   candidate "$CANDIDATE_OUTPUT" produced candidate \
   "$candidate_address" "$candidate_producer" "$candidate_resident" \
   "$candidate_sources" "$candidate_config" "$candidate_report_sha256"
+write_input_attestation \
+  "$CANDIDATE_OUTPUT" "$candidate_repository" "$candidate_producer" "$candidate_report_sha256"
+
+if [[ "$SINGLE" == "1" ]]; then exit 0; fi
+
+read -r baseline_address baseline_producer baseline_resident baseline_sources baseline_config baseline_repository \
+  <<< "$(fingerprint "$BASELINE_ROOT" baseline)"
+printf 'LEAN_REPORT_INPUT side=baseline content_address=sha256:%s producer_sha256=%s repository_inspector_sha256=%s lean_sources_sha256=%s lean_config_sha256=%s\n' \
+  "$baseline_address" "$baseline_producer" "$baseline_resident" "$baseline_sources" "$baseline_config"
 
 if [[ "$candidate_address" == "$baseline_address" ]]; then
-  rm -f -- "$BASELINE_OUTPUT" "${BASELINE_OUTPUT}.sha256" "${BASELINE_OUTPUT}.provenance.json"
+  rm -f -- "$BASELINE_OUTPUT" "${BASELINE_OUTPUT}.sha256" \
+    "${BASELINE_OUTPUT}.provenance.json" "${BASELINE_OUTPUT}.input.attestation"
   rm -rf -- "${BASELINE_OUTPUT}.logs"
   mkdir -p "$(dirname "$BASELINE_OUTPUT")"
   cp "$CANDIDATE_OUTPUT" "$BASELINE_OUTPUT"
@@ -224,11 +208,15 @@ if [[ "$candidate_address" == "$baseline_address" ]]; then
     baseline "$BASELINE_OUTPUT" reused candidate \
     "$baseline_address" "$baseline_producer" "$baseline_resident" \
     "$baseline_sources" "$baseline_config" "$verify_report_copy_sha256"
+  write_input_attestation \
+    "$BASELINE_OUTPUT" "$baseline_repository" "$baseline_producer" "$verify_report_copy_sha256"
 else
-  produce_report "$BASELINE_ROOT" "$BASELINE_OUTPUT"
+  produce_report baseline "$BASELINE_ROOT" "$BASELINE_OUTPUT"
   baseline_report_sha256="$LAST_REPORT_SHA256"
   write_provenance \
     baseline "$BASELINE_OUTPUT" produced baseline \
     "$baseline_address" "$baseline_producer" "$baseline_resident" \
     "$baseline_sources" "$baseline_config" "$baseline_report_sha256"
+  write_input_attestation \
+    "$BASELINE_OUTPUT" "$baseline_repository" "$baseline_producer" "$baseline_report_sha256"
 fi

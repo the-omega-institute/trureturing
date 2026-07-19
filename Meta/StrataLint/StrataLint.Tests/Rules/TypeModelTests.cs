@@ -50,7 +50,8 @@ public sealed class TypeModelTests
     public void RuleAndCaseIdsAreClosedByGrammar()
     {
         Assert.True(RuleId.TryCreate("SL-022", out _));
-        Assert.False(RuleId.TryCreate("SL-023", out _));
+        Assert.True(RuleId.TryCreate("SL-023", out _));
+        Assert.False(RuleId.TryCreate("SL-024", out _));
         Assert.True(CaseId.TryCreate("D5-T0016", out _));
     }
 
@@ -175,6 +176,15 @@ public sealed class TypeModelTests
     public void AutoUpdateBranchWorkflowPathIsClosedWorldRegisteredAtItsCanonicalAddress()
     {
         var path = RepoPath.CreateKnown(RepositoryPathPolicy.AutoUpdateBranchWorkflowPath);
+
+        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
+        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
+    }
+
+    [Fact]
+    public void C0CeremonyWorkflowPathIsClosedWorldRegisteredAtItsCanonicalAddress()
+    {
+        var path = RepoPath.CreateKnown(RepositoryPathPolicy.C0CeremonyWorkflowPath);
 
         Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
         Assert.False(RepositoryPathPolicy.TryResolve(path, out _));

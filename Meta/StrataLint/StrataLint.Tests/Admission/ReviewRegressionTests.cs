@@ -196,6 +196,14 @@ public sealed partial class ReviewRegressionTests
     {
         var repositoryRoot = FindRepositoryRoot();
         var fixture = new RuleFixture();
+        var fixtureInventory = BackfillInventoryLoader.Load(
+            fixture.Files[BackfillInventoryLoader.RelativePath]);
+        var repositoryInventory = BackfillInventoryLoader.Load(File.ReadAllText(
+            Path.Combine(repositoryRoot, BackfillInventoryLoader.RelativePath),
+            Encoding.UTF8));
+        fixture.Files[BackfillInventoryLoader.RelativePath] = Encoding.UTF8.GetString(
+            BackfillInventoryWriter.Write(fixtureInventory.WithTickets(
+                repositoryInventory.RequireTickets())).AsSpan());
         fixture.AddBackfillTargets();
         foreach (var path in Directory.EnumerateFiles(
                      Path.Combine(repositoryRoot, "D5", "X_Frontier"),

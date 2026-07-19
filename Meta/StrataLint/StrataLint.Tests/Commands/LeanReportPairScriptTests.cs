@@ -77,6 +77,20 @@ public sealed class LeanReportPairScriptTests
         Assert.NotEqual(firstAddress, second.RootElement.GetProperty("input_address").GetString());
     }
 
+    [Fact]
+    public void PairProductionWritesMeasurementsToCallerHeldLog()
+    {
+        using var fixture = new LeanReportPairFixture();
+
+        var result = fixture.Run();
+
+        Assert.Equal(0, result.ExitCode);
+        var metrics = fixture.ReadMetrics();
+        var metric = Assert.Single(metrics);
+        Assert.Equal("resource", metric.GetProperty("kind").GetString());
+        Assert.Equal("lean-producer-candidate", metric.GetProperty("role").GetString());
+    }
+
     private sealed class LeanReportPairFixture : IDisposable
     {
         private readonly TemporaryDirectory temporary = new();
@@ -88,6 +102,7 @@ public sealed class LeanReportPairScriptTests
         private readonly string invocationCount;
         private readonly string candidateReport;
         private readonly string baselineReport;
+        private readonly string metricsLog;
 
         internal LeanReportPairFixture()
         {
@@ -99,6 +114,7 @@ public sealed class LeanReportPairScriptTests
             invocationCount = Path.Combine(producerDirectory, "invocations.txt");
             candidateReport = Path.Combine(artifacts, "candidate.json");
             baselineReport = Path.Combine(artifacts, "baseline.json");
+            metricsLog = Path.Combine(temporary.Path, "measurements.jsonl");
             InitializeRepository(candidateRoot);
             InitializeRepository(baselineRoot);
             Directory.CreateDirectory(artifacts);
@@ -130,8 +146,11 @@ public sealed class LeanReportPairScriptTests
         {
             var script = Path.Combine(FindRepositoryRoot(), "Meta", "StrataLint", "scripts", "lean-report-pair.sh");
             return BoundedProcessRunner.Run(
-                "bash",
+                "env",
                 [
+                    $"STRATALINT_REPORT_METRICS_LOG={metricsLog}",
+                    $"STRATALINT_SUPERVISOR_ROOT={Path.Combine(temporary.Path, "supervisor")}",
+                    "bash",
                     script,
                     "--producer", producer,
                     "--lake-bin", "/usr/bin/true",
@@ -170,6 +189,10 @@ public sealed class LeanReportPairScriptTests
 
         internal JsonDocument ReadBaselineProvenance() =>
             JsonDocument.Parse(File.ReadAllBytes(baselineReport + ".provenance.json"));
+
+        internal IReadOnlyList<JsonElement> ReadMetrics() => File.ReadAllLines(metricsLog)
+            .Select(line => JsonDocument.Parse(line).RootElement.Clone())
+            .ToArray();
 
         public void Dispose() => temporary.Dispose();
 

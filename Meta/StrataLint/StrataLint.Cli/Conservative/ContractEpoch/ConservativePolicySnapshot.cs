@@ -14,6 +14,17 @@ internal sealed record RuleObligationAtom(
 internal sealed class ConservativePolicySnapshot
 {
     private const string MarkerPrefix = "CONTRACT-POLICY-V1/";
+    private static readonly ImmutableArray<RuleObligationAtom> PreRegisteredRuleVocabulary =
+    [
+        RuleObligation(new RuleDescriptor(
+            RuleId.CreateKnown(23),
+            "Describe LaTeX statement",
+            DisplaySeverity.Warning,
+            "repository",
+            AdmissionEffect.Observe,
+            RuleLifecycle.Active,
+            null)),
+    ];
 
     private ConservativePolicySnapshot(
         ImmutableArray<ProtectionMatcher> protectionMatchers,
@@ -205,7 +216,20 @@ internal sealed class ConservativePolicySnapshot
     {
         ArgumentNullException.ThrowIfNull(ruleIds);
         var requested = ruleIds.ToHashSet(StringComparer.Ordinal);
-        var obligations = RuleObligations.Where(item => requested.Remove(item.RuleId))
+        var known = RuleObligations.ToDictionary(static item => item.RuleId, StringComparer.Ordinal);
+        foreach (var registered in PreRegisteredRuleVocabulary)
+        {
+            if (known.TryGetValue(registered.RuleId, out var active)
+                && active != registered)
+            {
+                throw new InvalidOperationException(
+                    $"active rule descriptor differs from pre-registered vocabulary: {registered.RuleId}");
+            }
+
+            known[registered.RuleId] = registered;
+        }
+
+        var obligations = known.Values.Where(item => requested.Remove(item.RuleId))
             .ToImmutableArray();
         if (requested.Count != 0)
         {
@@ -266,6 +290,12 @@ internal sealed class ConservativePolicySnapshot
         var bytes = StructuredCanonicalWriter.WriteJson(material);
         return "sha256:" + Convert.ToHexStringLower(SHA256.HashData(bytes.AsSpan()));
     }
+
+    private static RuleObligationAtom RuleObligation(RuleDescriptor descriptor) =>
+        new(
+            descriptor.Id.Value,
+            descriptor.AdmissionEffect.ToString(),
+            DescriptorRoot(descriptor));
 
     private static string RequireExactPath(string raw)
     {

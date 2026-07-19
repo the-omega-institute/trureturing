@@ -9,6 +9,9 @@ import D5.S1.Digit.Carry
 import D5.S1.Scale.Embedding
 import D5.S1.Scale.Log
 import D5.S1.Phase.Basic
+import D5.S1.Phase.ZeroOrbitCongruence
+import D5.S3.Quantum.EnvironmentRecords
 import D5.S3.Quantum.ObserverCommutator
 import D5.S3.Quantum.PointerBasis
 import D5.S3.Zeros.ZetaIdentities
+import D5.S3.Zeros.ZetaUpgrade
