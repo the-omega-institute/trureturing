@@ -324,6 +324,12 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
     public CommandResult CleanLanes(IReadOnlyList<string> arguments) =>
         CleanLanesCommand.Run(repositoryRoot, arguments);
 
+    public CommandResult AppendPerf(IReadOnlyList<string> arguments) =>
+        PerfAppendCommand.Run(repositoryRoot, arguments);
+
+    public CommandResult PerfReport(IReadOnlyList<string> arguments) =>
+        PerfReportCommand.Run(arguments);
+
     public CommandResult Worktree(IReadOnlyList<string> arguments) =>
         WorktreeCommand.Run(repositoryRoot, arguments);
 
