@@ -209,7 +209,7 @@ public sealed class ReportSupervisorScriptTests
     }
 
     [Fact]
-    public void MetricsCommitFailureIsNotSilent()
+    public void MetricsCommitFailureDoesNotChangeWorkerOutcome()
     {
         using var fixture = new ReportSupervisorFixture();
 
@@ -219,8 +219,8 @@ public sealed class ReportSupervisorScriptTests
             fixture.ScratchWriter,
             $"STRATALINT_REPORT_METRICS_LOG={fixture.Root}");
 
-        Assert.Equal(2, result.ExitCode);
-        Assert.Contains(
+        Assert.Equal(0, result.ExitCode);
+        Assert.DoesNotContain(
             "performance event",
             Encoding.UTF8.GetString(result.StandardError),
             StringComparison.OrdinalIgnoreCase);
@@ -238,10 +238,10 @@ public sealed class ReportSupervisorScriptTests
             "scribe-consumer",
             fixture.ScratchWriter);
 
-        Assert.Equal(2, result.ExitCode);
+        Assert.Equal(0, result.ExitCode);
         Assert.True(File.Exists(fixture.MetricsLog));
         Assert.Equal(original, File.ReadAllBytes(fixture.MetricsLog));
-        Assert.Contains(
+        Assert.DoesNotContain(
             "performance event",
             Encoding.UTF8.GetString(result.StandardError),
             StringComparison.OrdinalIgnoreCase);
@@ -264,8 +264,18 @@ public sealed class ReportSupervisorScriptTests
             fixture.ScratchWriter,
             "STRATALINT_LOCK_TIMEOUT_SECONDS=1");
 
-        Assert.Equal(2, result.ExitCode);
+        Assert.Equal(0, result.ExitCode);
         Assert.True(Directory.Exists(liveLock));
+    }
+
+    [Fact]
+    public void MetricsAppendDelegatesToTheCanonicalPerformanceWriter()
+    {
+        using var fixture = new ReportSupervisorFixture();
+        var source = File.ReadAllText(fixture.Supervisor);
+
+        Assert.Contains("perf_flush_events", source, StringComparison.Ordinal);
+        Assert.DoesNotContain("syswrite", source, StringComparison.Ordinal);
     }
 
     [Fact]

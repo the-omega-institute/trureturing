@@ -35,6 +35,11 @@ def fullByteCanonicalizationTicket : Unit := ()
     尸检:none -/
 def ticketLifecycleValidationTicket : Unit := ()
 
+/-- TASK D5-T0021 | 难度:3 | 依赖:欠(phase-0-seven-day-measurement-window) | 尝试:1
+    提示:For seven days after Phase-0 lands, count measurement-log-attributable report races, file-descriptor exhaustion, and replay timeouts; if the combined count is at least two, automatically start A-full with content-addressed ReportRef plus CAS, otherwise retain Phase-0 as sufficient.
+    尸检:2026-07-19:Darwin hides inherited environment after some exec paths and rejects kqueue NOTE_TRACK with ENOTSUP; FIFO-holder identity works, but /var/folders must be canonicalized to /private/var/folders before lsof matching. -/
+def reportCasTriggerTicket : Unit := ()
+
 /- VI.4 moment-spectroscopy audit report.
     Source CAS: sha256:2c35b352f01e417c6428f8119ea9060126b717e632634f894e8582ed98c1b1.
     findings: none claimed under the TheoryErratum evidence gate; no Lean witness, coverage GID, or refutation receipt exists.

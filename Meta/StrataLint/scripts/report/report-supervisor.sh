@@ -23,6 +23,9 @@ done
 [[ $# -gt 0 ]] || { echo "report-supervisor: command is required after --" >&2; exit 2; }
 
 REPOSITORY_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../../.." && pwd -P)"
+PERF_EVENT_LIB="$REPOSITORY_ROOT/Meta/StrataLint/scripts/perf-event-lib.sh"
+[[ -r "$PERF_EVENT_LIB" ]] || exit 2
+source "$PERF_EVENT_LIB"
 if [[ -d /private/tmp ]]; then DEFAULT_HOST_TMP=/private/tmp; else DEFAULT_HOST_TMP=/tmp; fi
 STATE_ROOT="${STRATALINT_SUPERVISOR_ROOT:-$DEFAULT_HOST_TMP/stratalint-report-supervisor-${UID:-$(id -u)}}"
 RUN_ROOT="$STATE_ROOT/runs"
@@ -425,37 +428,10 @@ append_metrics() {
   event_tmp="$(mktemp "$TMP_ROOT/event.XXXXXXXX")" || return 2
   performance_event "$rc" "$elapsed_ms" > "$event_tmp" \
     || { rm -f -- "$event_tmp"; return 2; }
-  perl -MFcntl=:DEFAULT -MIO::Handle -e '
-      my ($path) = @ARGV;
-      local $/;
-      my $event = <STDIN>;
-      sysopen(my $out, $path, O_WRONLY | O_CREAT | O_APPEND, 0600) or die $!;
-      my $start = (stat($out))[7];
-      my $offset = 0;
-      local $SIG{XFSZ} = "IGNORE";
-      eval {
-        while ($offset < length($event)) {
-          my $written = syswrite(
-            $out,
-            $event,
-            length($event) - $offset,
-            $offset);
-          die "performance event write failed: $!" unless defined $written;
-          die "performance event write made no progress" if $written == 0;
-          $offset += $written;
-        }
-        $out->sync or die "performance event sync failed";
-        1;
-      } or do {
-        my $failure = $@ || "performance event write failed";
-        my $current = (stat($out))[7];
-        if (defined $current && $current == $start + $offset) {
-          truncate($out, $start) or die "$failure; rollback failed: $!";
-          $out->sync or die "$failure; rollback sync failed: $!";
-        }
-        die $failure;
-      };
-    ' "$METRICS_LOG" < "$event_tmp" \
+  ( trap '' XFSZ
+    STRATALINT_PERF_LEDGER="$METRICS_LOG" \
+      perf_flush_events "$REPOSITORY_ROOT" "$event_tmp" >/dev/null 2>&1
+  ) \
     || { rm -f -- "$event_tmp"; return 2; }
   rm -f -- "$event_tmp"
   rm -rf -- "$METRICS_LOCK_DIR"
@@ -465,7 +441,6 @@ append_metrics() {
 finish() {
   local rc=$?
   local finished_ms
-  local metrics_rc=0
   trap - EXIT HUP INT TERM
   set +e
   if [[ -n "$PROCESS_GROUP_ID" ]]; then
@@ -479,11 +454,7 @@ finish() {
   if [[ -n "$STDERR_RELAY_PID" ]]; then wait_for_relay "$STDERR_RELAY_PID"; fi
   finished_ms="$(now_ms)"
   if [[ -n "$CHILD_PID" && "$STARTED_MS" -gt 0 ]]; then
-    append_metrics "$rc" "$((finished_ms - STARTED_MS))" || metrics_rc=$?
-    if [[ "$metrics_rc" -ne 0 ]]; then
-      echo "report-supervisor: performance event commit failed" >&2
-      if [[ "$rc" -eq 0 ]]; then rc=2; fi
-    fi
+    append_metrics "$rc" "$((finished_ms - STARTED_MS))" >/dev/null 2>&1 || true
   fi
   if [[ -n "$METRICS_LOCK_DIR" ]]; then rm -rf -- "$METRICS_LOCK_DIR"; fi
   if [[ -n "$SLOT_DIR" ]]; then rm -rf -- "$SLOT_DIR"; fi

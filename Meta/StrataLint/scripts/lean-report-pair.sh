@@ -12,7 +12,7 @@ BASELINE_OUTPUT=""
 SINGLE=0
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 SUPERVISOR="$SCRIPT_DIR/report/report-supervisor.sh"
-INPUT_HELPER="$SCRIPT_DIR/lean-report-input.sh"
+INPUT_HELPER="$SCRIPT_DIR/report/lean-report-input.sh"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in

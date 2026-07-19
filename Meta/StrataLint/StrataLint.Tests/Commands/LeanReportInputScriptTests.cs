@@ -45,7 +45,7 @@ public sealed class LeanReportInputScriptTests
             report = Path.Combine(temporary.Path, "raw-lean-report.json");
             script = Path.Combine(
                 FindRepositoryRoot(),
-                "Meta", "StrataLint", "scripts", "lean-report-input.sh");
+                "Meta", "StrataLint", "scripts", "report", "lean-report-input.sh");
             Directory.CreateDirectory(Path.Combine(repository, "D5"));
             Directory.CreateDirectory(Path.Combine(
                 repository, "Meta", "StrataLint", "lean-inspector"));

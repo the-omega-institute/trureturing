@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../../.." && pwd -P)"
 INSPECTOR="$ROOT/Meta/StrataLint/lean-inspector/inspect.sh"
 PAIR="$ROOT/Meta/StrataLint/scripts/lean-report-pair.sh"
 REPORT="$ROOT/.lake/build/stratalint/raw-lean-report.json"

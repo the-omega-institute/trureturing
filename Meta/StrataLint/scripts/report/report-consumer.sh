@@ -21,7 +21,7 @@ done
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../../.." && pwd -P)"
 SUPERVISOR="$ROOT/Meta/StrataLint/scripts/report/report-supervisor.sh"
-INPUT_VERIFIER="$ROOT/Meta/StrataLint/scripts/lean-report-input.sh"
+INPUT_VERIFIER="$ROOT/Meta/StrataLint/scripts/report/lean-report-input.sh"
 SNAPSHOT_ROOT="$(mktemp -d "${TMPDIR:-/tmp}/stratalint-report-consumer.XXXXXXXX")"
 cleanup() { rm -rf -- "$SNAPSHOT_ROOT"; }
 trap cleanup EXIT
