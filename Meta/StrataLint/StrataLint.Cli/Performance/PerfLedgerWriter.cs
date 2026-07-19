@@ -24,9 +24,37 @@ internal static class PerfLedgerWriter
             string.Concat(events.Select(static item => PerfEventCodec.WriteLine(item) + "\n")));
         Directory.CreateDirectory(Path.GetDirectoryName(ledger)
             ?? throw new InvalidOperationException("performance ledger requires a parent directory"));
-        using var output = new FileStream(ledger, FileMode.Append, FileAccess.Write, FileShare.Read);
-        output.Write(bytes);
-        output.Flush(flushToDisk: true);
+        using var output = new FileStream(
+            ledger,
+            FileMode.OpenOrCreate,
+            FileAccess.Write,
+            FileShare.Read,
+            bufferSize: 1);
+        var initialLength = output.Length;
+        output.Position = initialLength;
+        try
+        {
+            output.Write(bytes);
+            output.Flush(flushToDisk: true);
+        }
+        catch (Exception writeFailure) when (
+            writeFailure is ArgumentException or IOException or UnauthorizedAccessException)
+        {
+            try
+            {
+                output.SetLength(initialLength);
+                output.Flush(flushToDisk: true);
+            }
+            catch (Exception rollbackFailure) when (
+                rollbackFailure is ArgumentException or IOException or UnauthorizedAccessException)
+            {
+                throw new IOException(
+                    "performance ledger append and rollback both failed",
+                    new AggregateException(writeFailure, rollbackFailure));
+            }
+
+            throw;
+        }
         return events.Length;
     }
 

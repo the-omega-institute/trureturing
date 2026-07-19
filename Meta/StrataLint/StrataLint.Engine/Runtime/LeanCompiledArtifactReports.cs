@@ -3,7 +3,17 @@ namespace StrataLint.Engine;
 public static class LeanCompiledArtifactReports
 {
     public static LeanAxiomReport InspectRepository(string repositoryRoot) =>
-        ReadRepository(repositoryRoot, reportPath: null);
+        ReadRepository(repositoryRoot, ResolveReportPath(repositoryRoot));
+
+    internal static string ResolveReportPath(string repositoryRoot)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
+        var root = Path.GetFullPath(repositoryRoot);
+        var configured = Environment.GetEnvironmentVariable("STRATALINT_LEAN_REPORT");
+        return string.IsNullOrWhiteSpace(configured)
+            ? RawLeanReportArtifact.DefaultPath(root)
+            : Path.GetFullPath(configured, root);
+    }
 
     public static LeanAxiomReport ReadRepository(string repositoryRoot, string? reportPath)
     {
