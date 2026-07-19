@@ -23,6 +23,33 @@ public sealed class ConservativeExtensionVerifierTests
     }
 
     [Fact]
+    public void CandidateCanActivateThePreRegisteredSl023Obligation()
+    {
+        var input = ConservativeTestData.Input();
+        var candidateExecution = Assert.IsType<ConservativeHarnessExecution.Completed>(
+            input.CandidateExecution);
+        var candidateRules = candidateExecution.Run.ActiveRules.Add("SL-023");
+        input = input with
+        {
+            CandidateExecution = new ConservativeHarnessExecution.Completed(
+                candidateExecution.Run with
+                {
+                    ActiveRules = candidateRules,
+                    Policy = candidateExecution.Run.Policy.WithRuleObligations(candidateRules),
+                }),
+        };
+
+        var outcome = ConservativeExtensionVerifier.Verify(input);
+
+        var candidate = Assert.IsType<ConservativeHarnessExecution.Completed>(
+            input.CandidateExecution);
+        Assert.Contains(
+            candidate.Run.Policy.RuleObligations,
+            static item => item.RuleId == "SL-023");
+        Assert.IsType<ConservativeExtensionOutcome.Accepted>(outcome);
+    }
+
+    [Fact]
     public void PolicyShrinkIsRejectedWithoutActualChangedPathInference()
     {
         const string retired = "Meta/StrataLint/Golden/values-kernels.toml";

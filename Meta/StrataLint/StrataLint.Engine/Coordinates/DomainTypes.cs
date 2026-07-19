@@ -102,7 +102,7 @@ public sealed record RuleId
                 NumberStyles.None,
                 CultureInfo.InvariantCulture,
                 out var number)
-            && number is >= 0 and <= 22)
+            && number is >= 0 and <= 23)
         {
             ruleId = new RuleId(value);
             return true;
