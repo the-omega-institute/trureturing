@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.RegularExpressions;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -6,7 +7,67 @@ namespace StrataLint.Tests;
 public sealed class BackfillInventoryLoaderTests
 {
     [Fact]
-    public void CasRefIsOptionalAndRoundTripsCanonically()
+    public void MissingCasRefIsRejected()
+    {
+        var fields = LoaderEntryFields().ToHashSet(StringComparer.Ordinal);
+        fields.Remove("cas_ref");
+        fields.Remove("boundary");
+
+        var exception = Assert.Throws<FormatException>(() =>
+            BackfillInventoryLoader.Load(EntryFixture(fields)).RequireDigestionEntries());
+
+        Assert.Equal("source synthetic-source entry keys are not canonical", exception.Message);
+    }
+
+    [Fact]
+    public void EntryAcceptanceDomainMatchesSpecificationAnchor()
+    {
+        var entryFields = LoaderEntryFields();
+        var accepted = Enumerable.Range(0, 1 << entryFields.Length)
+            .Select(mask => entryFields
+                .Where((_, index) => (mask & (1 << index)) != 0)
+                .ToHashSet(StringComparer.Ordinal))
+            .Where(fields => TryLoadEntry(EntryFixture(fields)))
+            .ToArray();
+        Assert.NotEmpty(accepted);
+
+        var required = entryFields
+            .Where(field => accepted.All(fields => fields.Contains(field)))
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+        var exclusivePair = Assert.Single(
+            entryFields.SelectMany((left, index) => entryFields[(index + 1)..]
+                .Select(right => (Left: left, Right: right))),
+            pair =>
+                accepted.All(fields => fields.Contains(pair.Left) ^ fields.Contains(pair.Right))
+                && accepted.Any(fields => fields.Contains(pair.Left))
+                && accepted.Any(fields => fields.Contains(pair.Right)));
+        var exclusive = new[] { exclusivePair.Left, exclusivePair.Right }
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+        var optional = entryFields
+            .Except(required, StringComparer.Ordinal)
+            .Except(exclusive, StringComparer.Ordinal)
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+        var actual = $"required={string.Join(',', required)};"
+            + $"exactly_one={string.Join('|', exclusive)};"
+            + $"optional={(optional.Length == 0 ? "-" : string.Join(',', optional))}";
+
+        var root = FindRepositoryRoot();
+        var specification = File.ReadAllText(
+            Path.Combine(root, "docs", "develop", "spec", "golden-ledger-repo-spec.md"));
+        var anchors = Regex.Matches(
+            specification,
+            "<!-- BACKFILL_ENTRY_ACCEPTANCE: (?<domain>[^\\r\\n]+) -->",
+            RegexOptions.CultureInvariant);
+        var anchor = Assert.Single(anchors.Cast<Match>());
+
+        Assert.Equal(anchor.Groups["domain"].Value, actual);
+    }
+
+    [Fact]
+    public void CasRefRoundTripsCanonically()
     {
         var text = """
             schema_version: 3
@@ -65,6 +126,7 @@ public sealed class BackfillInventoryLoaderTests
                     fingerprints:
                       raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
                       normalized_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
+                    cas_ref: sha256:0000000000000000000000000000000000000000000000000000000000000000
                     coverage_gids:
                       - D5/X_Frontier/SyntheticSourceTarget
                     receipts:
@@ -111,6 +173,7 @@ public sealed class BackfillInventoryLoaderTests
                     fingerprints:
                       raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
                       normalized_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
+                    cas_ref: sha256:0000000000000000000000000000000000000000000000000000000000000000
                     coverage_gids: []
                     receipts:
                       coverage: []
@@ -166,6 +229,7 @@ public sealed class BackfillInventoryLoaderTests
                     fingerprints:
                       raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
                       normalized_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
+                    cas_ref: sha256:0000000000000000000000000000000000000000000000000000000000000000
                     coverage_gids: []
                     receipts:
                       coverage: []
@@ -216,14 +280,11 @@ public sealed class BackfillInventoryLoaderTests
         Assert.Contains(document.RequireDigestionSources(), static source =>
             source.Atomizer == AtomizerRegistry.NoAtomizerId);
         Assert.Empty(entries
-            .Where(static entry => entry.CasRef is null)
-            .Select(static entry => $"{entry.SourceId}/{entry.AtomId}"));
-        Assert.Empty(entries
             .Select(entry => (
                 Entry: entry,
                 Path: Path.Combine(
                     root,
-                    (DigestionCasStore.RootPath + entry.CasRef!["sha256:".Length..])
+                    (DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..])
                     .Replace('/', Path.DirectorySeparatorChar))))
             .Where(static item => !File.Exists(item.Path))
             .Select(static item => $"{item.Entry.SourceId}/{item.Entry.AtomId}"));
@@ -232,7 +293,7 @@ public sealed class BackfillInventoryLoaderTests
                 Entry: entry,
                 Path: Path.Combine(
                     root,
-                    (DigestionCasStore.RootPath + entry.CasRef!["sha256:".Length..])
+                    (DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..])
                     .Replace('/', Path.DirectorySeparatorChar))))
             .Where(static item => File.Exists(item.Path)
                 && DigestionCasStore.Capture(File.ReadAllBytes(item.Path)).Reference
@@ -300,5 +361,91 @@ public sealed class BackfillInventoryLoaderTests
         }
 
         throw new DirectoryNotFoundException("Could not locate repository root.");
+    }
+
+    private static bool TryLoadEntry(string yaml)
+    {
+        try
+        {
+            BackfillInventoryLoader.Load(yaml).RequireDigestionEntries();
+            return true;
+        }
+        catch (FormatException)
+        {
+            return false;
+        }
+    }
+
+    private static string[] LoaderEntryFields() =>
+        BackfillInventoryDocument.EntryFieldUniverse.ToArray();
+
+    private static string EntryFixture(IReadOnlySet<string> fields)
+    {
+        var entry = new StringBuilder();
+        if (fields.Contains("atom_id"))
+        {
+            entry.AppendLine("      - atom_id: synthetic-atom");
+        }
+        else
+        {
+            entry.AppendLine("      - synthetic_placeholder: value");
+        }
+
+        if (fields.Contains("ast_path"))
+        {
+            entry.AppendLine("        ast_path: theorem/1.1");
+        }
+
+        if (fields.Contains("boundary"))
+        {
+            entry.AppendLine("        boundary:");
+            entry.AppendLine("          ast_path: theorem/1.1");
+            entry.AppendLine("          start_byte: 0");
+            entry.AppendLine("          end_byte: 1");
+        }
+
+        if (fields.Contains("fingerprints"))
+        {
+            entry.AppendLine("        fingerprints:");
+            entry.AppendLine("          raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000");
+            entry.AppendLine("          normalized_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000");
+        }
+
+        if (fields.Contains("cas_ref"))
+        {
+            entry.AppendLine("        cas_ref: sha256:0000000000000000000000000000000000000000000000000000000000000000");
+        }
+
+        if (fields.Contains("coverage_gids"))
+        {
+            entry.AppendLine("        coverage_gids: []");
+        }
+
+        if (fields.Contains("receipts"))
+        {
+            entry.AppendLine("        receipts:");
+            entry.AppendLine("          coverage: []");
+            entry.AppendLine("          scribe: []");
+            entry.AppendLine("          unresolved_subitems: []");
+            entry.AppendLine("          chain_atoms: []");
+            entry.AppendLine("          tail_authorization: null");
+        }
+
+        if (fields.Contains("status"))
+        {
+            entry.AppendLine("        status:");
+            entry.AppendLine("          migration: residual");
+            entry.AppendLine("          truth: open");
+        }
+
+        return """
+            schema_version: 3
+            ledger: theory-digestion-v1
+            sources:
+              - source_id: synthetic-source
+                path: docs/source.md
+                atomizer: synthetic-v1
+                entries:
+            """ + "\n" + entry + "ticket_index: []\n";
     }
 }

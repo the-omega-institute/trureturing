@@ -40,6 +40,10 @@ internal static class DigestionTestSupport
                 .Prepend(("docs/source.md", sourceBytes))
                 .ToArray());
 
+    internal static (string Path, byte[] Bytes) CasFile(DigestionAtom atom) =>
+        (DigestionCasStore.RootPath + atom.Fingerprints.RawSha256["sha256:".Length..],
+            atom.RawBytes.ToArray());
+
     internal static AcceptedLeanClosure AcceptedLean(params string[] paths) => AcceptedLean(
         paths.Select(path => (path, new LeanFileReport(
             ImmutableArray<string>.Empty,
