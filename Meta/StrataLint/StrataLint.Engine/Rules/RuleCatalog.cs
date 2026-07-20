@@ -92,9 +92,9 @@ public sealed class RuleCatalog
     {
         try
         {
-            var expected = Enumerable.Range(1, 22).Select(RuleId.CreateKnown).ToImmutableArray();
-            if (Descriptors.Length != 22
-                || rules.Length != 22
+            var expected = Enumerable.Range(1, 23).Select(RuleId.CreateKnown).ToImmutableArray();
+            if (Descriptors.Length != 23
+                || rules.Length != 23
                 || !Descriptors.Select(item => item.Id).SequenceEqual(expected))
             {
                 throw new InvalidOperationException("Rule catalog is incomplete, duplicated, or out of order.");
@@ -185,9 +185,10 @@ public sealed class RuleCatalog
             "Lean axiom closure",
             "Instantiated coordinate gate",
             "Meta bootstrap gate",
+            "Describe LaTeX statement",
         };
-        var builder = ImmutableArray.CreateBuilder<RuleDescriptor>(22);
-        for (var number = 1; number <= 22; number++)
+        var builder = ImmutableArray.CreateBuilder<RuleDescriptor>(23);
+        for (var number = 1; number <= 23; number++)
         {
             var deferredCase = number switch
             {
@@ -200,6 +201,7 @@ public sealed class RuleCatalog
             var effect = number switch
             {
                 7 or 9 or 22 => AdmissionEffect.HumanGate,
+                23 => AdmissionEffect.Observe,
                 _ => AdmissionEffect.Block,
             };
             builder.Add(new RuleDescriptor(

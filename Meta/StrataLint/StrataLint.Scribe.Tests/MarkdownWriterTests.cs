@@ -120,6 +120,36 @@ public sealed class MarkdownWriterTests
         Assert.DoesNotContain("10.1007", text, StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void LeanDescribeStatementPreservesExplicitLatexVerbatim()
+    {
+        const string latex = "$\\operatorname{Re}(s) = \\frac{1}{2}$";
+        var document = ScribeDocument.Create(
+            CreateHeader(),
+            Heading.Create("Critical line"),
+            BlockSequence.Create(
+            [
+                new DocumentBlock.Describe(
+                    DescribeId.Create("critical-line"),
+                    DescribeKind.Theorem,
+                    Heading.Create("Critical line"),
+                    DescribeStatement.FromLean(LeanDeclarationRef.Create(
+                        "D5/S1/Scale/Embedding.embedding_injective")),
+                    DescribeProvenance.RepoDerived(),
+                    BlockSequence.Create([Paragraph(new Inline.Text(TextRun.Create("Commentary.")))]),
+                    LatexStatement.Create(latex)),
+            ]));
+
+        var report = LeanReportFixture.ForDocuments([document]);
+        var text = Encoding.UTF8.GetString(CanonicalMarkdownWriter.Write(document, report).AsSpan());
+
+        Assert.Contains("Statement:\n\n" + latex + "\n\n", text, StringComparison.Ordinal);
+        Assert.Contains(
+            "Lean: `D5/S1/Scale/Embedding.embedding_injective` `✓ std3`",
+            text,
+            StringComparison.Ordinal);
+    }
+
     private static DocumentBlock Paragraph(params Inline[] content) =>
         new DocumentBlock.Paragraph(InlineSequence.Create(content));
 

@@ -138,6 +138,41 @@ golden-ledger/
 
 **A17 Scribe:文档即代码(v7.12)** 叙事层(Blueprint/Papers,渐及 spec)的 canonical 源=C# 类型化文档 AST(`Meta/StrataLint/StrataLint.Scribe`):文件头/章节/段落/公式(自建封闭 Formula AST→total `LatexWriter`,逐节点构造式确定性发射,不解析 LaTeX 文本)/GID 引用(经 Engine Gid 构造期解析,悬空即失败——取代已废的行号/片段哈希位置锚)。正式陈述统一为 `DocumentBlock.Describe`:文档内唯一的 typed local `DescribeId` 与 kind/statement/provenance 均构造期必填,kind 封闭为 `{definition,theorem,proposition,lemma,example,remark}`,statement 必为 `Formula` 或 `LeanDeclarationRef`,provenance 必为 `{literature-attested,repo-derived,suspected-novel,unassessed}`;旧 `Proposition/Theorem/ComputedValue/RenderedStatement` 类型一次迁移后从程序集删除,不得留兼容读者。`literature-attested` 以类型强制携 A12 的 L 引用;其余三态不携文献元数据。红项=缺 kind/statement/provenance、公式字段非 Formula、TextRun 裸 `$`/`\\(`/`\\[` LaTeX 定界符、L/GID 悬空、DOI 语法或唯一性坏、发射漂移及旧节点残留;Observe=纯文本/Unicode 疑似公式、代码跨度、Lean docstring 公式、DOI 在线解析与标题一致性,Observe 永不使离线硬门出网。`scribe describe-report [--json]` 离线读取预计算 Lean material 验 selector,以案号 `DESCRIBE-NODES` 发射机器账:逐节点 `GID#describe/DescribeId` 稳定 ID、kind/provenance 统计、`suspected_novel` Papers 候选清单及 `open_count=unassessed` 存量;人工/文献勘正只需改 typed provenance,报告自动消化 open。`DocumentHeader.Anchors` 为 `Anchor` 封闭联合类型,Lean 六行头仍以 `anchors: [string, ...]` 作序列化边界;canonical MD/catalog writer 确定性字节,发射输出==提交字节由测试自洽;PDF 经 QuestPDF(钉版,社区条款,许可年检入账);依赖闸门判词:Markdig/CSharpMath/MathNet.Symbolics/AngouriMath 未准入(证据闸门),iText7 永拒(AGPL)。markdown/PDF 与 anchor catalog 自此为构建投影(1.1 三定律与 CLAUDE.md 第 7 条之工程兑现)。理论锚统一外壳为 `anchor := scheme "/" payload`,`scheme ∈ {gict,pzg,spec,lit,mathlib}`;各 scheme 保持自身 sealed payload 语法,共同要求 ASCII、ordinal、严格 round-trip,禁宽松归一。Scribe 的 typed manifests 是唯一权威;`Meta/StrataLint/Generated/anchor-catalog.v1.json` 为 byte-exact 受保护投影,Engine 只消费该数据,不得反向引用或复制 scheme parser。
 
+**A17.1 Describe LaTeX 陈述位(v7.13 expand)** 定理类 `{theorem,proposition,lemma}` 在既有 `statement: Formula|LeanDeclarationRef` 之外增独立 `statement_latex: LatexStatement`;它与 Lean 引用并存,不得把二者降为二选一。`LatexStatement` 仅接受非空、canonical `$...$`/`$$...$$` 定界值,拒 CR、内嵌 `$`、未配平花括号/环境、未知环境及白名单外宏。Markdown 逐字保留原定界内容;QuestPDF 将同一字节串排入可编译 PDF。人类可读 content 是注释性伴随,不得替代公式承担数学陈述。SL-023 只消费本轮 `VerifiedScribeEmissions` typed capability,不正则猜 C# 源;`SCRIBE-LATEX-EPOCH` expand 期对旧定理类缺位发 `Observe` warning、不阻断既有 admit,contract 后同一谓词升为 Block;显式非法值在所有 epoch 均由构造器 fail-closed。
+
+**SCRIBE-LATEX-EPOCH 工单块(expand→migrate→contract;初裁 #113,2026-07-19 重申)**:
+- **PR-1 expand(本段)**:提交 `a9a3769` 的初裁基线有 28 个 Blueprint Markdown、仅 3 个定理类文档含 LaTeX 定界符(`Phase/Basic`,`Scale/Embedding`,`Scale/Log`);安装可选 typed `LatexStatement`、轻量校验、MD/PDF 发射与 SL-023 双接受规则,旧缺位只 warn。后续新增定义同受 capability 动态枚举,不得用初裁清单绕过。
+- **PR-2 migrate(后续,内容工作)**:逐一回填所有定理类 Describe 的 `statement_latex`,由复核席签发内容收据;**复核席须逐节点比较 LaTeX 公式与 `LeanDeclarationRef` 的 kernel statement,任何 stronger/weaker mismatch 均不得签收。** 初裁 28 文件对应源审计清单如下;无定理类节点者也须留下 no-op 审计收据,且 PR-2 须同时纳入初裁后新增源:
+  - [ ] `Blueprint/D5/S0/Carrier/AlgebraicModel.scribe.cs`
+  - [ ] `Blueprint/D5/S0/Carrier/Conj.scribe.cs`
+  - [ ] `Blueprint/D5/S0/Carrier/GoldenRatio.scribe.cs`
+  - [ ] `Blueprint/D5/S0/Carrier/Norm.scribe.cs`
+  - [ ] `Blueprint/D5/S0/Carrier/Ring.scribe.cs`
+  - [ ] `Blueprint/D5/S0/Carrier/Units.scribe.cs`
+  - [ ] `Blueprint/D5/S0/Conventions/Notation.scribe.cs`
+  - [ ] `Blueprint/D5/S0/Conventions/WDigits.scribe.cs`
+  - [ ] `Blueprint/D5/S1/Depth/JointCoordinates.scribe.cs`
+  - [ ] `Blueprint/D5/S1/Depth/JointDepth.scribe.cs`
+  - [ ] `Blueprint/D5/S1/Digit/Carry.scribe.cs`
+  - [ ] `Blueprint/D5/S1/Digit/PrimeAxisAddition.scribe.cs`
+  - [ ] `Blueprint/D5/S1/Digit/PrimeAxisEncoding.scribe.cs`
+  - [ ] `Blueprint/D5/S1/Digit/PrimeAxisTable.scribe.cs`
+  - [ ] `Blueprint/D5/S1/Digit/Raw.scribe.cs`
+  - [ ] `Blueprint/D5/S1/Phase/Basic.scribe.cs`
+  - [ ] `Blueprint/D5/S1/Scale/Embedding.scribe.cs`
+  - [ ] `Blueprint/D5/S1/Scale/FibonacciEigen.scribe.cs`
+  - [ ] `Blueprint/D5/S1/Scale/Log.scribe.cs`
+  - [ ] `Blueprint/D5/S1/Scale/MinkowskiModelSet.scribe.cs`
+  - [ ] `Blueprint/D5/S3/Quantum/FiniteDimensional.scribe.cs`
+  - [ ] `Blueprint/D5/S3/Quantum/QubitWitnesses.scribe.cs`
+  - [ ] `Blueprint/D5/S3/Weil/CriticalLine.scribe.cs`
+  - [ ] `Blueprint/D5/S3/Weil/EulerProduct.scribe.cs`
+  - [ ] `Blueprint/D5/S3/Weil/LabeledZeta.scribe.cs`
+  - [ ] `Blueprint/D5/S3/Weil/ReflectionLedger.scribe.cs`
+  - [ ] `Blueprint/D5/S3/Weil/SpectralDynamics.scribe.cs`
+  - [ ] `Blueprint/D5/S3/Weil/SpectralHilbert.scribe.cs`
+- **PR-3 contract(后续,零内容回填)**:仅在 SL-023 缺位 warning=0、PR-2 复核收据与当前 `DocumentDefinitions` 节点集合逐字闭合后,删除构造器可选缺位并把同一规则 effect 从 `HumanGate` 升为 `Block`;不得在 migrate PR 同时 contract。
+
 **A16 零信任合并门(v7.12,CLAUDE.md 第 19 条之 spec 形)** 提交者身份(维护者/agent/fork)与准入无关,一切 PR 过同一道纯机器门:dev 分支 `enforce_admins` + **双 required check(strict)**——① engineering(build --warnaserror + 全测试 + selftest 字节比对 + 能力链编译证明);② baseline admission(内容寻址 dev-baseline harness 判 candidate;`pull_request_target` 保证法官取 **base 侧** workflow 与 harness,提交者不可改判自己的法官)。绿=auto-merge;红=无人可合。**exit 语义**:0=内容全验;1=违规;2=基础设施(含快照拒非常规 git 条目,如 mode 120000 symlink——AGENTS.md 由此裁定为常规指针文件);3=SL-022 保护面变更 → 标注入账 + candidate `lake build` 阻断地板(**bootstrap 脚手架,有案在录**:组件 C 保守扩展门现役后,harness 变更由机器判保守性与成本,此路径关闭)。人审与 AI 审=质量增益,非准入权威;削弱门=元层自改,须付 τ=0 成本(CLAUDE.md 第 21 条)。
 
 **A18 FILEMAP 文件分类账(v7.12)** `Meta/FILEMAP.toml` 是全仓文件职责的机器真源,51 条路径模式各恰映射到五类之一 `{truth,program,data,generated,ledger}` 并声明 `{produced_by,consumed_by,verified_by}`。它不并入 `Meta/registry.yaml`:registry 的 strict schema 回答“语义坐标怎样路由”,FILEMAP 回答“仓库文件由谁生产、消费、验证”;强塞同表会把两种坐标系耦合并复制闭世界成员。二者以机器约束相接:registry `root_files` 必须恰等于 tracked root files,全体 tracked/unignored 文件必须恰命中一条 FILEMAP pattern。ArchitectureTests 另强制 generated 有 canonical producer inventory 且属于 `emit-check`,data 的 verifier 必须是现存且归类为 program 的 loader/schema,类别目录纯净,并检查机器数据对具体生成路径的词法引用及 Lean 单行 import 指向生成 `.lean` 的可判子集。居所政策字段固定应然为 data 不住 `Meta/StrataLint/` 保护面;`RESIDENCE-EPOCH` 已闭合为 count=0/status=closed,具体违规集必须为空,未标记或新增违规即红。四份 canonical case、values kernel 参数及合成 registry 实例住顶层 `Golden/`,分别由 strict loader 验证;C0 certificate 与 Frozen events 仍按 ledger 职责住原保护位。`Generated/FILEMAP.md` 是由同一清单 byte-exact 发射并纳入 `emit-check` 的依赖流投影,不得手维。
@@ -172,7 +207,7 @@ P0 运行账唯一位为 `$HOME/.stratalint-perf/events.jsonl`,由 gate/prefligh
 | H11 | 词表律(目录名∈domains.yaml) | SL-011 |
 | H12 | 任务码永久、尸检只增 | SL-013 |
 
-注:SL-007/009 保留空号(H7/H9 为门官策略非 lint);现役至 SL-021:SL-020 为 Lean 环境公理/状态律,SL-021 为未实例化坐标律。
+注:SL-007/009 保留空号(H7/H9 为门官策略非 lint);现役至 SL-023:SL-020 为 Lean 环境公理/状态律,SL-021 为未实例化坐标律,SL-022 为元层门,SL-023 为 Describe LaTeX epoch 规则。
 
 ## 4.2 生命周期状态机(四台;状态机无台账,git 历史即台账)
 ```
@@ -489,4 +524,5 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 - **v7.13 R6**(2026-07-18):PR #204 architecture/quality/tests 三席一致 reject→fix:重写 `THEORY-ERRATUM` 为 BACKFILL.ticket_index→X_Frontier TASK、现役 coverage→Lean witness、标准三公理绝对白名单与四态/三态诚实分栏,勘正空洞性、重复案、误配重开、修卷入账及裁决权,并将 issue/送达/重试和专用规则如实留在评审守护与升提律。
 - **v7.13 R7**(2026-07-18):PR #204 pass2 三席复审勘正 11.27 的涉嫌触发、案件双向绑定、BACKFILL 判真/处置双轴、永久 TASK 历史账与四路归宿、SL-020 实际守护边界及无 witness GID 反馈路由。
 - **v7.13 R8**(2026-07-18):PR #204 pass3 终修将 TheoryErratum 结案收紧为“三环证据链闭合 ∧ coverage 所指 witness 经 truth DAG 判 `Closed` ∧ 送达工件在案”的显式清单,并规定无 witness 路径不因既有 `migration: absorbed` 闭合;同时将 11.21 entry 接受域按 `ParseEntry` 全形列出(含边界二选一),`cas_ref` 标为可选,canonical 数据现状另述。
-- **v7.13 R9**(2026-07-19):#228 对抗评审 pass4/5 升提将 `cas_ref` 从 canonical 数据现状收紧为每条 entry 的 loader 必选不变量,并以 engineering 测试黑盒派生 `ParseEntry` 接受域与 11.21 机读锚逐次比对;11.27 的无 `cas_ref` 排除集随之空集化。
+- **v7.13 R9**(2026-07-19):`SCRIBE-LATEX-EPOCH` PR-1 expand 安装独立 `LatexStatement`、定界/配平/宏白名单校验、Markdown 原样发射、QuestPDF 编译路径与 SL-023 typed capability;初裁 28/3 迁移队列及复核席忠实性义务入账,旧定理类缺位在本段仅 Observe,内容回填与 Block contract 分属后续 PR。
+- **v7.13 R10**(2026-07-20):#228 对抗评审 pass4/5 升提将 `cas_ref` 从 canonical 数据现状收紧为每条 entry 的 loader 必选不变量,并以 engineering 测试黑盒派生 `ParseEntry` 接受域与 11.21 机读锚逐次比对;11.27 的无 `cas_ref` 排除集随之空集化。

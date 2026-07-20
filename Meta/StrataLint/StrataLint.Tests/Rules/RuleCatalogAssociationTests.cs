@@ -52,7 +52,7 @@ public sealed class RuleCatalogAssociationTests
     [Fact]
     public void ExecuteStampsAUniqueFindingWithItsPairedDescriptorAcrossACompleteCatalog()
     {
-        var descriptors = Enumerable.Range(1, 22)
+        var descriptors = Enumerable.Range(1, 23)
             .Select(number => Descriptor(
                 number,
                 $"descriptor {number}",
@@ -60,7 +60,7 @@ public sealed class RuleCatalogAssociationTests
                 number == 17 ? AdmissionEffect.Observe : AdmissionEffect.Block))
             .ToImmutableArray();
         var uniqueFinding = new RuleFinding("unique/path.txt", "finding from rule seventeen");
-        var rules = Enumerable.Range(1, 22)
+        var rules = Enumerable.Range(1, 23)
             .Select(number => (IRepositoryRule)new FakeRule(
                 static _ => false,
                 number == 17
@@ -174,7 +174,7 @@ public sealed class RuleCatalogAssociationTests
     public void DefaultCatalogRootMatchesCharacterizedRegressionValue()
     {
         Assert.Equal(
-            "sha256:12bde70fdf4c359aa29abcff4a9a3a34d1a285ba6116416f2746fdecd193182d",
+            "sha256:adea02100c041313382577a157e53432ca2e76576c44bbb2e133517ce8370010",
             RuleCatalog.Default.RootSha256);
     }
 
