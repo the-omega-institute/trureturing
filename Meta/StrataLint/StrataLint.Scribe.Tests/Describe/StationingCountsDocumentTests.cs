@@ -6,7 +6,7 @@ public sealed class StationingCountsDocumentTests
     public void StationingCountsCarriesFiveTheoremsAndDisclosesItsModelBoundary()
     {
         var definition = DocumentDefinitions.All.Single(static item =>
-            item.Document.Header.Gid.Value == "D5/S1/Phase/StationingCounts");
+            item.Document.Header.Gid.Value == "D5/S1/Depth/StationingCombinatorics");
         var describes = Descendants(definition.Document.Content)
             .OfType<DocumentBlock.Describe>()
             .ToArray();
@@ -21,11 +21,11 @@ public sealed class StationingCountsDocumentTests
         });
         Assert.Equal(
             [
-                "D5/S1/Phase/StationingCounts.stationing_count",
-                "D5/S1/Phase/StationingCounts.occupied_stations_mirror",
-                "D5/S1/Phase/StationingCounts.mirror_occupied_count",
-                "D5/S1/Phase/StationingCounts.mirror_stationing_ne_self",
-                "D5/S1/Phase/StationingCounts.occupied_count_stationing_count",
+                "D5/S1/Depth/StationingCombinatorics.stationing_count",
+                "D5/S1/Depth/StationingCombinatorics.occupied_stations_mirror",
+                "D5/S1/Depth/StationingCombinatorics.mirror_occupied_count",
+                "D5/S1/Depth/StationingCombinatorics.mirror_stationing_ne_self",
+                "D5/S1/Depth/StationingCombinatorics.occupied_count_stationing_count",
             ],
             describes.Select(static describe =>
                 Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement).Value.Value));

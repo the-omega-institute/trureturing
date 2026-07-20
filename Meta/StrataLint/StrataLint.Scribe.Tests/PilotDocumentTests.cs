@@ -15,6 +15,8 @@ public sealed class DocumentDiscoveryTests
     private const string WDigitsDocumentPath = "Blueprint/D5/S0/Conventions/WDigits.md";
     private const string JointCoordinatesDocumentPath = "Blueprint/D5/S1/Depth/JointCoordinates.md";
     private const string JointDepthDocumentPath = "Blueprint/D5/S1/Depth/JointDepth.md";
+    private const string StationingCombinatoricsDocumentPath =
+        "Blueprint/D5/S1/Depth/StationingCombinatorics.md";
     private const string CarryDocumentPath = "Blueprint/D5/S1/Digit/Carry.md";
     private const string PrimeAxisAdditionDocumentPath = "Blueprint/D5/S1/Digit/PrimeAxisAddition.md";
     private const string PrimeAxisEncodingDocumentPath = "Blueprint/D5/S1/Digit/PrimeAxisEncoding.md";
@@ -27,8 +29,6 @@ public sealed class DocumentDiscoveryTests
         "Blueprint/D5/S1/Phase/SeatTowerCombinatorics.md";
     private const string SeatTowerConsequencesDocumentPath =
         "Blueprint/D5/S1/Phase/SeatTowerConsequences.md";
-    private const string StationingCountsDocumentPath =
-        "Blueprint/D5/S1/Phase/StationingCounts.md";
     private const string WalkFormulaDocumentPath = "Blueprint/D5/S1/Phase/WalkFormula.md";
     private const string ZeroOrbitCongruenceDocumentPath =
         "Blueprint/D5/S1/Phase/ZeroOrbitCongruence.md";
@@ -67,6 +67,7 @@ public sealed class DocumentDiscoveryTests
                 "D5/S0/Conventions/WDigits",
                 "D5/S1/Depth/JointCoordinates",
                 "D5/S1/Depth/JointDepth",
+                "D5/S1/Depth/StationingCombinatorics",
                 "D5/S1/Digit/Carry",
                 "D5/S1/Digit/PrimeAxisAddition",
                 "D5/S1/Digit/PrimeAxisEncoding",
@@ -76,7 +77,6 @@ public sealed class DocumentDiscoveryTests
                 "D5/S1/Phase/SeatTowerArithmetic",
                 "D5/S1/Phase/SeatTowerCombinatorics",
                 "D5/S1/Phase/SeatTowerConsequences",
-                "D5/S1/Phase/StationingCounts",
                 "D5/S1/Phase/WalkFormula",
                 "D5/S1/Phase/ZeroOrbitCongruence",
                 "D5/S1/Scale/Embedding",
@@ -111,6 +111,7 @@ public sealed class DocumentDiscoveryTests
                 WDigitsDocumentPath,
                 JointCoordinatesDocumentPath,
                 JointDepthDocumentPath,
+                StationingCombinatoricsDocumentPath,
                 CarryDocumentPath,
                 PrimeAxisAdditionDocumentPath,
                 PrimeAxisEncodingDocumentPath,
@@ -120,7 +121,6 @@ public sealed class DocumentDiscoveryTests
                 SeatTowerArithmeticDocumentPath,
                 SeatTowerCombinatoricsDocumentPath,
                 SeatTowerConsequencesDocumentPath,
-                StationingCountsDocumentPath,
                 WalkFormulaDocumentPath,
                 ZeroOrbitCongruenceDocumentPath,
                 EmbeddingDocumentPath,

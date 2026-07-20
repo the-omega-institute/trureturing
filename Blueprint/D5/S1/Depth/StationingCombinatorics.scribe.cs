@@ -1,13 +1,13 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S1.Phase;
+namespace StrataLint.Scribe.Blueprint.D5.S1.Depth;
 
-internal sealed class StationingCountsDocument : IScribeDocumentDefinition
+internal sealed class StationingCombinatoricsDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() =>
         DocumentDefinition.Create(ScribeDocument.Create(
             Header(
-                "D5/S1/Phase/StationingCounts",
+                "D5/S1/Depth/StationingCombinatorics",
                 "Record exact support and occupancy counts for labeled Boolean stationings."),
             H("Stationing Counts"),
             Blocks(
@@ -18,7 +18,7 @@ internal sealed class StationingCountsDocument : IScribeDocumentDefinition
                     DescribeKind.Theorem,
                     H("All labeled stationings have power-of-two cardinality"),
                     DescribeStatement.FromLean(LeanTheorem(
-                        "D5/S1/Phase/StationingCounts.stationing_count")),
+                        "D5/S1/Depth/StationingCombinatorics.stationing_count")),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "Each labeled station independently chooses one of two Boolean sides, so the full configuration type has cardinality two to the station count. This ambient count does not provide an orbit encoding."))),
@@ -28,7 +28,7 @@ internal sealed class StationingCountsDocument : IScribeDocumentDefinition
                     DescribeKind.Theorem,
                     H("Mirroring complements the occupied support"),
                     DescribeStatement.FromLean(LeanTheorem(
-                        "D5/S1/Phase/StationingCounts.occupied_stations_mirror")),
+                        "D5/S1/Depth/StationingCombinatorics.occupied_stations_mirror")),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "Occupancy is the finite support of true Boolean coordinates. Pointwise negation sends that support to its complement inside the labeled station set; no sampled zero set is identified with this support."))),
@@ -38,7 +38,7 @@ internal sealed class StationingCountsDocument : IScribeDocumentDefinition
                     DescribeKind.Theorem,
                     H("Mirror occupancy is the complementary count"),
                     DescribeStatement.FromLean(LeanTheorem(
-                        "D5/S1/Phase/StationingCounts.mirror_occupied_count")),
+                        "D5/S1/Depth/StationingCombinatorics.mirror_occupied_count")),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "Taking cardinalities in the support-complement identity gives the total station count minus the original occupancy. The finite identity supplies neither a density limit nor a repulsion exponent."))),
@@ -48,7 +48,7 @@ internal sealed class StationingCountsDocument : IScribeDocumentDefinition
                     DescribeKind.Theorem,
                     H("Boolean mirroring has no fixed nonempty stationing"),
                     DescribeStatement.FromLean(LeanTheorem(
-                        "D5/S1/Phase/StationingCounts.mirror_stationing_ne_self")),
+                        "D5/S1/Depth/StationingCombinatorics.mirror_stationing_ne_self")),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "On a nonempty labeled station set, the value at index zero differs from its Boolean negation, so no stationing is fixed. Applying this action to arithmetic orbits still requires the unresolved orbit-to-stationing bridge."))),
@@ -58,7 +58,7 @@ internal sealed class StationingCountsDocument : IScribeDocumentDefinition
                     DescribeKind.Theorem,
                     H("A prescribed occupancy has binomial cardinality"),
                     DescribeStatement.FromLean(LeanTheorem(
-                        "D5/S1/Phase/StationingCounts.occupied_count_stationing_count")),
+                        "D5/S1/Depth/StationingCombinatorics.occupied_count_stationing_count")),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "The support equivalence identifies stationings with exactly k true coordinates and k-element subsets of the n labeled stations. Their exact count is the binomial coefficient; this does not prove either empirical zero-statistics law."))),

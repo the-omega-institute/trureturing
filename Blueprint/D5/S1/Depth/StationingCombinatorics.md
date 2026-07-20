@@ -10,7 +10,7 @@ This module counts labeled Boolean stationings and their occupied supports. It d
 
 $\forall n\in\mathbb{N},\ \operatorname{card}(\operatorname{Stationing}(n))=2^n$
 
-*Proof.* Machine-checked in Lean as `D5/S1/Phase/StationingCounts.stationing_count` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S1/Depth/StationingCombinatorics.stationing_count` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,7 +22,7 @@ Each labeled station independently chooses one of two Boolean sides, so the full
 
 $\forall s\in\operatorname{Stationing}(n),\ \operatorname{Occ}(M(s))=\operatorname{Fin}(n)\setminus\operatorname{Occ}(s)$
 
-*Proof.* Machine-checked in Lean as `D5/S1/Phase/StationingCounts.occupied_stations_mirror` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S1/Depth/StationingCombinatorics.occupied_stations_mirror` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -34,7 +34,7 @@ Occupancy is the finite support of true Boolean coordinates. Pointwise negation 
 
 $\forall s\in\operatorname{Stationing}(n),\ |\operatorname{Occ}(M(s))|=n-|\operatorname{Occ}(s)|$
 
-*Proof.* Machine-checked in Lean as `D5/S1/Phase/StationingCounts.mirror_occupied_count` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S1/Depth/StationingCombinatorics.mirror_occupied_count` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -46,7 +46,7 @@ Taking cardinalities in the support-complement identity gives the total station 
 
 $\forall n>0,\ \forall s\in\operatorname{Stationing}(n),\ M(s)\neq s$
 
-*Proof.* Machine-checked in Lean as `D5/S1/Phase/StationingCounts.mirror_stationing_ne_self` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S1/Depth/StationingCombinatorics.mirror_stationing_ne_self` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -58,7 +58,7 @@ On a nonempty labeled station set, the value at index zero differs from its Bool
 
 $\forall n,k\in\mathbb{N},\ \operatorname{card}\{s\in\operatorname{Stationing}(n):|\operatorname{Occ}(s)|=k\}=\operatorname{choose}(n,k)$
 
-*Proof.* Machine-checked in Lean as `D5/S1/Phase/StationingCounts.occupied_count_stationing_count` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S1/Depth/StationingCombinatorics.occupied_count_stationing_count` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
