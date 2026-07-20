@@ -16,6 +16,8 @@ public sealed class MakeWorkflowTests
     private const string LeanReportScriptPath =
         "Meta/StrataLint/scripts/report/lean-report.sh";
     private const string IngestScriptPath = "Meta/StrataLint/scripts/ingest.sh";
+    private const string EchoResidualSummaryScriptPath =
+        "Meta/StrataLint/scripts/report/echo-residual-summary.sh";
     private const string ReportConsumerScriptPath =
         "Meta/StrataLint/scripts/report/report-consumer.sh";
     private const string ReportSupervisorScriptPath =
@@ -39,6 +41,7 @@ public sealed class MakeWorkflowTests
         "emit",
         "emit-check",
         "ingest",
+        "echo-residual-summary",
         "record-golden",
         "selftest",
         "gate",
@@ -78,6 +81,10 @@ public sealed class MakeWorkflowTests
         Assert.Contains(ScribeScriptPath + " check", Recipe(makefile, "emit-check"), StringComparison.Ordinal);
         Assert.DoesNotContain("ingest: emit-check", makefile, StringComparison.Ordinal);
         Assert.Contains(IngestScriptPath, Recipe(makefile, "ingest"), StringComparison.Ordinal);
+        Assert.Contains(
+            EchoResidualSummaryScriptPath,
+            Recipe(makefile, "echo-residual-summary"),
+            StringComparison.Ordinal);
         Assert.Contains("golden-record", Recipe(makefile, "record-golden"), StringComparison.Ordinal);
         Assert.Contains(SelftestScriptPath, Recipe(makefile, "selftest"), StringComparison.Ordinal);
         Assert.Contains(LocalHarnessGateScriptPath, Recipe(makefile, "gate"), StringComparison.Ordinal);
@@ -102,6 +109,20 @@ public sealed class MakeWorkflowTests
         Assert.Contains("dry-run", output, StringComparison.Ordinal);
         Assert.Contains("FORCE=1", output, StringComparison.Ordinal);
         Assert.Contains("values", output, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void EchoResidualSummaryKeepsLeanReportDiagnosticsOutOfThePasteableBlock()
+    {
+        var root = FindRepositoryRoot();
+        var script = File.ReadAllText(Path.Combine(root, EchoResidualSummaryScriptPath));
+
+        Assert.Contains(LeanReportScriptPath, script, StringComparison.Ordinal);
+        Assert.Contains("\"$REPORT_SCRIPT\" >&2", script, StringComparison.Ordinal);
+        Assert.Contains(
+            "digest-status --residual-summary --base \"$BASE\"",
+            script,
+            StringComparison.Ordinal);
     }
 
     [Fact]
