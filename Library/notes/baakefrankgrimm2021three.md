@@ -1,5 +1,7 @@
 ---
 bibkey: baakefrankgrimm2021three
+authors: Michael Baake, Natalie Priebe Frank, and Uwe Grimm
+year: 2021
 title: Three variations on a theme by Fibonacci
 doi: 10.1142/S0219493721400013
 claim: The Fibonacci-chain golden lattice, Minkowski embedding, star map, windows, and model sets.

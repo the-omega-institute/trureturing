@@ -56,6 +56,8 @@ public sealed class LibraryNoteTests
                 var catalog = LibraryNoteCatalog.Load(root);
                 var note = Assert.Single(catalog.Notes);
                 Assert.Equal("sos1957threegap", note.BibKey.Value);
+                Assert.Equal("Vera T. Sos", note.Authors);
+                Assert.Equal(1957, note.Year);
                 Assert.Equal("On the three gap theorem", note.Title);
                 Assert.Equal("10.1007/BF01389053", note.Doi!.Value);
                 Assert.Equal("D5/S1/Phase/Basic", Assert.Single(note.StrataTouched).Value);
@@ -176,6 +178,8 @@ public sealed class LibraryNoteTests
         string triage = "anchor") =>
         "---\n"
         + $"bibkey: {bibkey}\n"
+        + "authors: Vera T. Sos\n"
+        + "year: 1957\n"
         + $"title: {title}\n"
         + $"doi: {doi}\n"
         + "claim: Gap lengths for irrational rotations.\n"

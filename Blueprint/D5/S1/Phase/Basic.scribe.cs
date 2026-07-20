@@ -41,7 +41,8 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                                 LeanTheorem("D5/S1/Phase/Basic.goldenPhase_zero")),
                             DescribeProvenance.RepoDerived(),
                             Blocks(new DocumentBlock.DisplayFormula(
-                                Equal(Call("goldenPhase", Num(0)), Num(0))))),
+                                Equal(Call("goldenPhase", Num(0)), Num(0)))),
+                            LatexStatement.Create(@"$\operatorname{goldenPhase}(0)=0$")),
                         new DocumentBlock.Describe(
                             DescribeId.Create("addition"),
                             DescribeKind.Proposition,
@@ -52,7 +53,8 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                             Blocks(new DocumentBlock.DisplayFormula(
                                 Equal(
                                     Call("goldenPhase", Add(n, m)),
-                                    Add(phaseN, Call("goldenPhase", m)))))),
+                                    Add(phaseN, Call("goldenPhase", m))))),
+                            LatexStatement.Create(@"$\forall n,m \in \mathbb{Z},\ \operatorname{goldenPhase}(n+m)=\operatorname{goldenPhase}(n)+\operatorname{goldenPhase}(m)$")),
                         new DocumentBlock.Describe(
                             DescribeId.Create("negation"),
                             DescribeKind.Proposition,
@@ -63,7 +65,8 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                             Blocks(new DocumentBlock.DisplayFormula(
                                 Equal(
                                     Call("goldenPhase", new Formula.Negate(n)),
-                                    new Formula.Negate(phaseN))))))),
+                                    new Formula.Negate(phaseN)))),
+                            LatexStatement.Create(@"$\forall n \in \mathbb{Z},\ \operatorname{goldenPhase}(-n)=-\operatorname{goldenPhase}(n)$")))),
                 new DocumentBlock.Section(
                     H("Orbit notation"),
                     Blocks(
@@ -85,7 +88,8 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                         Paragraph(
                             Text("Two phases could coincide only if a nonzero integer multiple of "),
                             Math(new Formula.Phi()),
-                            Text(" were an integer. Irrationality excludes this. No three-distance theorem is asserted here.")))),
+                            Text(" were an integer. Irrationality excludes this. No three-distance theorem is asserted here."))),
+                    LatexStatement.Create(@"$\forall n,m \in \mathbb{Z},\ \operatorname{goldenPhase}(n)=\operatorname{goldenPhase}(m) \Rightarrow n=m$")),
                 new DocumentBlock.Describe(
                     DescribeId.Create("visible-phase-and-hidden-prime-fiber"),
                     DescribeKind.Remark,

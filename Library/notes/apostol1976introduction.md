@@ -1,5 +1,7 @@
 ---
 bibkey: apostol1976introduction
+authors: Tom M. Apostol
+year: 1976
 title: Introduction to Analytic Number Theory
 doi: 10.1007/978-1-4757-5579-4
 claim: Euler products, von Mangoldt weights, and the logarithmic derivative of the zeta function.

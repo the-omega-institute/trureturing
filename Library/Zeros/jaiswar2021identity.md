@@ -1,5 +1,7 @@
 ---
 bibkey: jaiswar2021identity
+authors: Pintoo R. Jaiswar
+year: 2021
 title: Identity Theorem in Complex Analysis
 doi: 10.37398/JSR.2021.650210
 claim: Analytic functions agreeing locally on a connected complex domain agree throughout the domain.

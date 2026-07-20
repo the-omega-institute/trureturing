@@ -32,7 +32,8 @@ internal sealed class LogDocument : IScribeDocumentDefinition
                     DescribeStatement.FromLean(
                         LeanTheorem("D5/S1/Scale/Log.logScale_zero")),
                     DescribeProvenance.RepoDerived(),
-                    Blocks(Paragraph(Text("The option-valued definition returns `none` at zero.")))),
+                    Blocks(Paragraph(Text("The option-valued definition returns `none` at zero."))),
+                    LatexStatement.Create(@"$\operatorname{logScale}(0)=\operatorname{none}$")),
                 new DocumentBlock.Describe(
                     DescribeId.Create("nonzero-scale"),
                     DescribeKind.Proposition,
@@ -45,7 +46,8 @@ internal sealed class LogDocument : IScribeDocumentDefinition
                         new DocumentBlock.DisplayFormula(
                             Equal(
                                 Call("logScale", x),
-                                Call("some", scaleValue))))),
+                                Call("some", scaleValue)))),
+                    LatexStatement.Create(@"$\forall x \in \operatorname{GoldenInt},\ x\neq 0 \Rightarrow \operatorname{logScale}(x)=\operatorname{some}(\lfloor\log_{\varphi}\lvert\operatorname{embedding}(x)\rvert\rfloor)$")),
                 new DocumentBlock.Section(
                     H("Integral unit shifts"),
                     Blocks(
@@ -61,7 +63,8 @@ internal sealed class LogDocument : IScribeDocumentDefinition
                                     Call("embedding", shifted),
                                     Multiply(
                                         new Formula.Power(new Formula.Phi(), n),
-                                        Call("embedding", x)))))),
+                                        Call("embedding", x))))),
+                            LatexStatement.Create(@"$\forall n \in \mathbb{Z},\ \forall x \in \operatorname{GoldenInt},\ \operatorname{embedding}(\operatorname{phiUnitZPowMul}(n,x))=\varphi^{n}\operatorname{embedding}(x)$")),
                         new DocumentBlock.Describe(
                             DescribeId.Create("exact-scale-translation"),
                             DescribeKind.Theorem,
@@ -78,6 +81,7 @@ internal sealed class LogDocument : IScribeDocumentDefinition
                                         Call(
                                             "map",
                                             Add(n, new Formula.Placeholder()),
-                                            Call("logScale", x)))))))))));
+                                            Call("logScale", x))))),
+                            LatexStatement.Create(@"$\forall n \in \mathbb{Z},\ \forall x \in \operatorname{GoldenInt},\ x\neq 0 \Rightarrow \operatorname{logScale}(\operatorname{phiUnitZPowMul}(n,x))=\operatorname{map}(n+\cdot,\operatorname{logScale}(x))$")))))));
     }
 }

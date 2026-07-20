@@ -21,7 +21,8 @@ internal sealed class EulerProductDocument : IScribeDocumentDefinition
                     "D5/S3/Weil/EulerProduct.finite_euler_zero_free_and_pole_locus")),
                 DescribeProvenance.LiteratureAttested(Apostol),
                 Blocks(Paragraph(Text(
-                    "A finite Euler product is nonzero exactly on the locus where every local denominator is nonzero, and the complementary denominator-zero locus is the union of the imaginary lattices indexed by its primes. Lean totalizes inversion with zero inverse equal to zero, so the zero-free clause is deliberately restricted to the regular locus; no pole order or numerical window certificate is asserted.")))),
+                    "A finite Euler product is nonzero exactly on the locus where every local denominator is nonzero, and the complementary denominator-zero locus is the union of the imaginary lattices indexed by its primes. Lean totalizes inversion with zero inverse equal to zero, so the zero-free clause is deliberately restricted to the regular locus; no pole order or numerical window certificate is asserted."))),
+                LatexStatement.Create(@"$$\forall S\subset_{\operatorname{fin}}\mathbb{N},\ (\forall p\in S,\operatorname{Prime}(p)) \Rightarrow \forall s\in\mathbb{C},\ (\operatorname{finiteEulerProduct}(S,s)\neq 0 \Leftrightarrow \operatorname{FiniteEulerRegular}(S,s)) \land (\neg\operatorname{FiniteEulerRegular}(S,s) \Leftrightarrow \exists p\in S,\exists k\in\mathbb{Z},\ s=\frac{2\pi i k}{\log p})$$")),
             new DocumentBlock.Describe(
                 DescribeId.Create("single-address-reading-is-the-von-mangoldt-weight"),
                 DescribeKind.Definition,
@@ -39,7 +40,8 @@ internal sealed class EulerProductDocument : IScribeDocumentDefinition
                     "D5/S3/Weil/EulerProduct.single_address_heat_trace_eq_log_derivative")),
                 DescribeProvenance.LiteratureAttested(Apostol),
                 Blocks(Paragraph(Text(
-                    "In the convergence half-plane with real part greater than one, the L-series of the single-address reading equals minus the derivative of the classical zeta function divided by the zeta function. The statement adds no continuation beyond that half-plane.")))),
+                    "In the convergence half-plane with real part greater than one, the L-series of the single-address reading equals minus the derivative of the classical zeta function divided by the zeta function. The statement adds no continuation beyond that half-plane."))),
+                LatexStatement.Create(@"$\forall s\in\mathbb{C},\ 1<\Re(s) \Rightarrow \operatorname{singleAddressHeatTrace}(s)=-\frac{\operatorname{deriv}(\operatorname{classicalZeta})(s)}{\operatorname{classicalZeta}(s)}$")),
             new DocumentBlock.Describe(
                 DescribeId.Create("journal-and-ledger-readings"),
                 DescribeKind.Remark,

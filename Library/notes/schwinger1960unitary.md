@@ -1,5 +1,7 @@
 ---
 bibkey: schwinger1960unitary
+authors: Julian Schwinger
+year: 1960
 title: Unitary Operator Bases
 doi: 10.1073/pnas.46.4.570
 claim: Finite-dimensional unitary operator bases and their Weyl commutation structure.

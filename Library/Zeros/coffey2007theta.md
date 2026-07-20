@@ -1,5 +1,7 @@
 ---
 bibkey: coffey2007theta
+authors: Mark W. Coffey
+year: 2007
 title: Theta and Riemann xi function representations from harmonic oscillator eigensolutions
 doi: 10.1016/j.physleta.2006.10.055
 claim: The completed classical zeta, its xi function, and theta-Mellin representations of the functional equation.

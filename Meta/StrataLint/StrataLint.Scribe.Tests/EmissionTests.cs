@@ -50,7 +50,8 @@ public sealed class EmissionTests
         {
             File.WriteAllText(
                 Path.Combine(notes, "sos1957threegap.md"),
-                "---\nbibkey: sos1957threegap\ntitle: Invalid\ndoi: not-a-doi\n"
+                "---\nbibkey: sos1957threegap\nauthors: Vera T. Sos\nyear: 1957\n"
+                + "title: Invalid\ndoi: not-a-doi\n"
                 + "claim: Invalid fixture.\nstrata_touched: []\nlicense: citation-only\n"
                 + "triage: anchor\n---\n");
             var error = new StringWriter();
@@ -98,6 +99,7 @@ public sealed class EmissionTests
                 // so fixture copies must resolve through the runtime repository root.
                 File.Copy(Path.Combine(FindRepositoryRoot(), relativeSource), destination);
             }
+            CopyRepositoryLibrary(root);
 
             var emitExit = ScribeEmitter.Emit(root, check: false, output, error, report);
 
@@ -107,12 +109,16 @@ public sealed class EmissionTests
                 root,
                 ScribeEmitter.AttestationRelativePath)));
             var firstEmission = new Dictionary<string, byte[]>(StringComparer.Ordinal);
+            var citations = LibraryNoteCatalog.Load(root).Citations;
             foreach (var definition in DocumentDefinitions.All)
             {
                 var path = Path.Combine(root, definition.RelativePath.Value);
                 firstEmission.Add(definition.RelativePath.Value, File.ReadAllBytes(path));
                 Assert.Equal(
-                    CanonicalMarkdownWriter.Write(definition.Document, report).ToArray(),
+                    CanonicalMarkdownWriter.Write(
+                        definition.Document,
+                        report,
+                        citations).ToArray(),
                     File.ReadAllBytes(path));
             }
 
@@ -241,16 +247,7 @@ public sealed class EmissionTests
                 Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
                 File.Copy(source, destination);
             }
-            foreach (var source in Directory.EnumerateFiles(
-                         Path.Combine(repositoryRoot, "Library"),
-                         "*.md",
-                         SearchOption.AllDirectories))
-            {
-                var relative = Path.GetRelativePath(repositoryRoot, source);
-                var destination = Path.Combine(root, relative);
-                Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
-                File.Copy(source, destination);
-            }
+            CopyRepositoryLibrary(root);
 
             Assert.Equal(0, ScribeEmitter.Emit(
                 root,
@@ -323,6 +320,21 @@ public sealed class EmissionTests
 
     private static string Sha256(byte[] bytes) =>
         "sha256:" + Convert.ToHexStringLower(SHA256.HashData(bytes));
+
+    private static void CopyRepositoryLibrary(string destinationRoot)
+    {
+        var repositoryRoot = FindRepositoryRoot();
+        foreach (var source in Directory.EnumerateFiles(
+                     Path.Combine(repositoryRoot, "Library"),
+                     "*.md",
+                     SearchOption.AllDirectories))
+        {
+            var relative = Path.GetRelativePath(repositoryRoot, source);
+            var destination = Path.Combine(destinationRoot, relative);
+            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+            File.Copy(source, destination);
+        }
+    }
 
     private static string FindRepositoryRoot()
     {
