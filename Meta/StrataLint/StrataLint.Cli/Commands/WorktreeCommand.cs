@@ -19,6 +19,13 @@ internal static class WorktreeCommand
         + "[--base REV] [--source REPO_ROOT] [--skip-restore]. "
         + ".lake caches are copied for isolation; symlink sharing is forbidden.";
 
+    private static readonly string[] ReviewScaffoldIgnorePatterns =
+    [
+        ".caller-review-prompt.md",
+        ".echo-review.md",
+        ".sshx-*",
+    ];
+
     private static readonly HashSet<string> OfficialRoles = new(StringComparer.Ordinal)
     {
         "adversary",
@@ -60,6 +67,7 @@ internal static class WorktreeCommand
                 TimeSpan.FromSeconds(120),
                 "git worktree add failed");
             worktreeCreated = true;
+            EnsureReviewScaffoldIgnores(options.Path);
             var cache = LeanCacheProvisioner.Provision(donor, options.Path, runner);
             if (!options.SkipRestore)
             {
@@ -102,6 +110,44 @@ internal static class WorktreeCommand
                 string.Empty,
                 $"WORKTREE_FAILED {exception.Message}{cleanup}\n");
         }
+    }
+
+    private static void EnsureReviewScaffoldIgnores(string worktreeRoot)
+    {
+        var ignorePath = System.IO.Path.Combine(worktreeRoot, ".gitignore");
+        var content = File.Exists(ignorePath) ? File.ReadAllText(ignorePath) : string.Empty;
+        var normalizedLines = content
+            .Replace("\r\n", "\n", StringComparison.Ordinal)
+            .Replace('\r', '\n')
+            .Split('\n');
+        var existing = normalizedLines.ToHashSet(StringComparer.Ordinal);
+        var missing = ReviewScaffoldIgnorePatterns
+            .Where(pattern => !existing.Contains(pattern))
+            .ToArray();
+        if (missing.Length == 0) return;
+
+        var newline = DetectNewline(content);
+        var separator = content.Length > 0 && content[^1] is not ('\r' or '\n')
+            ? newline
+            : string.Empty;
+        File.AppendAllText(
+            ignorePath,
+            separator + string.Join(newline, missing) + newline,
+            new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
+    }
+
+    private static string DetectNewline(string content)
+    {
+        var carriageReturn = content.IndexOf('\r');
+        var lineFeed = content.IndexOf('\n');
+        if (carriageReturn >= 0 && (lineFeed < 0 || carriageReturn < lineFeed))
+        {
+            return carriageReturn + 1 < content.Length && content[carriageReturn + 1] == '\n'
+                ? "\r\n"
+                : "\r";
+        }
+
+        return "\n";
     }
 
     internal static WorktreeOptions ParseArguments(
