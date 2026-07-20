@@ -27,6 +27,8 @@ public sealed class DocumentDiscoveryTests
         "Blueprint/D5/S1/Phase/SeatTowerCombinatorics.md";
     private const string SeatTowerConsequencesDocumentPath =
         "Blueprint/D5/S1/Phase/SeatTowerConsequences.md";
+    private const string StationingCountsDocumentPath =
+        "Blueprint/D5/S1/Phase/StationingCounts.md";
     private const string WalkFormulaDocumentPath = "Blueprint/D5/S1/Phase/WalkFormula.md";
     private const string ZeroOrbitCongruenceDocumentPath =
         "Blueprint/D5/S1/Phase/ZeroOrbitCongruence.md";
@@ -74,6 +76,7 @@ public sealed class DocumentDiscoveryTests
                 "D5/S1/Phase/SeatTowerArithmetic",
                 "D5/S1/Phase/SeatTowerCombinatorics",
                 "D5/S1/Phase/SeatTowerConsequences",
+                "D5/S1/Phase/StationingCounts",
                 "D5/S1/Phase/WalkFormula",
                 "D5/S1/Phase/ZeroOrbitCongruence",
                 "D5/S1/Scale/Embedding",
@@ -117,6 +120,7 @@ public sealed class DocumentDiscoveryTests
                 SeatTowerArithmeticDocumentPath,
                 SeatTowerCombinatoricsDocumentPath,
                 SeatTowerConsequencesDocumentPath,
+                StationingCountsDocumentPath,
                 WalkFormulaDocumentPath,
                 ZeroOrbitCongruenceDocumentPath,
                 EmbeddingDocumentPath,
