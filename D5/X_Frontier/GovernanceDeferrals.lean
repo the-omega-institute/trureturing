@@ -40,6 +40,11 @@ def ticketLifecycleValidationTicket : Unit := ()
     尸检:2026-07-19:Darwin hides inherited environment after some exec paths and rejects kqueue NOTE_TRACK with ENOTSUP; FIFO-holder identity works, but /var/folders must be canonicalized to /private/var/folders before lsof matching. 2026-07-19:c0-renew candidate inspection completed, then the baseline inspector exited 1 with empty stderr while an older lane ran a concurrent inspector; this pre-land failure is recorded but excluded from the seven-day post-land trigger window. 2026-07-19:Linux CI exposed perf_flush_events invoking the canonical writer from the caller fixture cwd, so its external ledger was rejected as residing inside that false repository root; Darwin's /var to /private/var alias masked the bug locally. The writer invocation now starts from the actual repository root. 2026-07-19:The Linux host returned an empty load-average sample, which produced an invalid bare JSON value; nonnumeric samples now become explicit null observations. Both pre-land failures are excluded from the seven-day post-land trigger window. -/
 def reportCasTriggerTicket : Unit := ()
 
+/-- TASK D5-T0022 | 难度:4 | 依赖:欠(replayable-crossed-product-witness) | 尝试:0
+    提示:Record the suspected finite crossed-product holonomy erratum and wait for a replayable witness before any coverage or truth-status closure.
+    尸检:Issue 293 records the suspected GICT theorem/6.15 global-algebra versus holonomy-fiber collapse for cas_ref sha256:4665b7a964aa68bb352d723c91fc1f78f8403934ee5fdd6ff3d4defe2d8b2655 and atom_id gict-residual-4665b7a964aa68bb352d723c91fc1f78f8403934ee5fdd6ff3d4defe2d8b2655; no Lean witness, coverage GID, refutation receipt, or author revision is claimed here, so BACKFILL coverage and truth status remain open. -/
+def finiteCrossedProductHolonomyErratumTicket : Unit := ()
+
 /- VI.4 moment-spectroscopy audit report.
     Source CAS: sha256:2c35b352f01e417c6428f8119ea9060126b717e632634f894e8582ed98c1b1.
     findings: none claimed under the TheoryErratum evidence gate; no Lean witness, coverage GID, or refutation receipt exists.

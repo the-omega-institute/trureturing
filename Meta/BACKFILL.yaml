@@ -17899,3 +17899,5 @@ ticket_index:
     gid: D5/X_Frontier/HeartsDraft
   - case_id: D5-T0021
     gid: D5/X_Frontier/GovernanceDeferrals
+  - case_id: D5-T0022
+    gid: D5/X_Frontier/GovernanceDeferrals
