@@ -10,6 +10,7 @@ import D5.S1.Scale.Embedding
 import D5.S1.Scale.Log
 import D5.S1.Phase.Basic
 import D5.S1.Phase.SeatTowerArithmetic
+import D5.S1.Phase.SeatTowerCombinatorics
 import D5.S1.Phase.SeatTowerConsequences
 import D5.S1.Phase.ZeroOrbitCongruence
 import D5.S3.Quantum.EnvironmentRecords
