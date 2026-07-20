@@ -1,6 +1,6 @@
 /- GID: D5/S1/Depth/StationingCounts
    generality: G
-   mirror-B: D5/B/S1/Depth/StationingCounts
+   mirror-B: none(waiver:superseded-by-stationing-combinatorics)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Blueprint index for exact finite stationing counts implemented in the Phase model. -/
