@@ -1,5 +1,5 @@
 [workspace]
-units = ["packages/theory-selfgrowth"]
+units = [".fkst/local-packages/theory-selfgrowth"]
 
 [[external_sources]]
 id = "fkst-packages-platform"
