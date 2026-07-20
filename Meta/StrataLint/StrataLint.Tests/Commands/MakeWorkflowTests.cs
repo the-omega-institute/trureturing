@@ -17,7 +17,7 @@ public sealed class MakeWorkflowTests
         "Meta/StrataLint/scripts/report/lean-report.sh";
     private const string IngestScriptPath = "Meta/StrataLint/scripts/ingest.sh";
     private const string EchoResidualSummaryScriptPath =
-        "Meta/StrataLint/scripts/echo-residual-summary.sh";
+        "Meta/StrataLint/scripts/report/echo-residual-summary.sh";
     private const string ReportConsumerScriptPath =
         "Meta/StrataLint/scripts/report/report-consumer.sh";
     private const string ReportSupervisorScriptPath =

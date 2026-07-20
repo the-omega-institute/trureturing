@@ -39,7 +39,7 @@ ingest:
 	@/bin/bash Meta/StrataLint/scripts/ingest.sh "$(BASE)"
 
 echo-residual-summary:
-	@/bin/bash Meta/StrataLint/scripts/echo-residual-summary.sh "$(BASE)"
+	@/bin/bash Meta/StrataLint/scripts/report/echo-residual-summary.sh "$(BASE)"
 
 record-golden:
 	@dotnet run --project Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- golden-record
