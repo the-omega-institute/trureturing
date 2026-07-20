@@ -1,0 +1,213 @@
+using System.Collections.Immutable;
+using StrataLint.Engine;
+
+namespace StrataLint.Tests;
+
+public sealed class RuleCatalogAssociationTests
+{
+    [Fact]
+    public void EvaluateSingleStampsFindingsWithTheDescriptorPairedToTheSelectedRule()
+    {
+        var firstDescriptor = Descriptor(
+            1,
+            "first descriptor",
+            DisplaySeverity.Warning,
+            AdmissionEffect.Observe);
+        var secondDescriptor = Descriptor(
+            2,
+            "second descriptor",
+            DisplaySeverity.Error,
+            AdmissionEffect.Block);
+        var catalog = RuleCatalog.CreateForTesting(
+            [firstDescriptor, secondDescriptor],
+            [
+                FindingRule("first/path.txt", "finding from first rule"),
+                FindingRule("second/path.txt", "finding from second rule"),
+            ]);
+        var context = new RuleFixture().Build();
+
+        var first = Assert.Single(catalog.EvaluateSingle(firstDescriptor.Id, context).Diagnostics);
+        var second = Assert.Single(catalog.EvaluateSingle(secondDescriptor.Id, context).Diagnostics);
+
+        Assert.Equal(
+            new Diagnostic(
+                firstDescriptor.Id,
+                firstDescriptor.Title,
+                firstDescriptor.DisplaySeverity,
+                firstDescriptor.AdmissionEffect,
+                "first/path.txt",
+                "finding from first rule"),
+            first);
+        Assert.Equal(
+            new Diagnostic(
+                secondDescriptor.Id,
+                secondDescriptor.Title,
+                secondDescriptor.DisplaySeverity,
+                secondDescriptor.AdmissionEffect,
+                "second/path.txt",
+                "finding from second rule"),
+            second);
+    }
+
+    [Fact]
+    public void ExecuteStampsAUniqueFindingWithItsPairedDescriptorAcrossACompleteCatalog()
+    {
+        var descriptors = Enumerable.Range(1, 23)
+            .Select(number => Descriptor(
+                number,
+                $"descriptor {number}",
+                number == 17 ? DisplaySeverity.Warning : DisplaySeverity.Error,
+                number == 17 ? AdmissionEffect.Observe : AdmissionEffect.Block))
+            .ToImmutableArray();
+        var uniqueFinding = new RuleFinding("unique/path.txt", "finding from rule seventeen");
+        var rules = Enumerable.Range(1, 23)
+            .Select(number => (IRepositoryRule)new FakeRule(
+                static _ => false,
+                number == 17
+                    ? ImmutableArray.Create(uniqueFinding)
+                    : ImmutableArray<RuleFinding>.Empty))
+            .ToImmutableArray();
+        var catalog = RuleCatalog.CreateForTesting(descriptors, rules);
+
+        var outcome = catalog.Execute(new RuleFixture().Build());
+
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(outcome).Capability;
+        Assert.Equal(descriptors.Select(static descriptor => descriptor.Id), completed.ExecutedRules);
+        Assert.Empty(completed.DeferredRules);
+        Assert.Equal(
+            new Diagnostic(
+                RuleId.CreateKnown(17),
+                "descriptor 17",
+                DisplaySeverity.Warning,
+                AdmissionEffect.Observe,
+                uniqueFinding.Path,
+                uniqueFinding.Message),
+            Assert.Single(completed.Diagnostics));
+    }
+
+    [Fact]
+    public void ApplicableToPreservesPairAssociationsAndCatalogOrder()
+    {
+        const string firstPath = "association/first.txt";
+        const string secondPath = "association/second.txt";
+        const string sharedPath = "association/shared.txt";
+        var fixture = new RuleFixture();
+        fixture.Files[firstPath] = "first\n";
+        fixture.Files[secondPath] = "second\n";
+        fixture.Files[sharedPath] = "shared\n";
+        var evaluationContext = fixture.Build();
+        var applicabilityContext = RuleApplicabilityContext.Create(
+            evaluationContext.Current,
+            evaluationContext.Policy);
+        var firstDescriptor = Descriptor(
+            1,
+            "first descriptor",
+            DisplaySeverity.Warning,
+            AdmissionEffect.Observe);
+        var secondDescriptor = Descriptor(
+            2,
+            "second descriptor",
+            DisplaySeverity.Error,
+            AdmissionEffect.Block);
+        var firstRule = PredicateRule(path => path is firstPath or sharedPath);
+        var secondRule = PredicateRule(path => path is secondPath or sharedPath);
+        var forward = RuleCatalog.CreateForTesting(
+            [firstDescriptor, secondDescriptor],
+            [firstRule, secondRule]);
+        var reordered = RuleCatalog.CreateForTesting(
+            [secondDescriptor, firstDescriptor],
+            [secondRule, firstRule]);
+
+        Assert.Equal(
+            new[] { firstDescriptor },
+            forward.ApplicableTo(Artifact(evaluationContext, firstPath), applicabilityContext));
+        Assert.Equal(
+            new[] { secondDescriptor },
+            forward.ApplicableTo(Artifact(evaluationContext, secondPath), applicabilityContext));
+        Assert.Equal(
+            new[] { firstDescriptor, secondDescriptor },
+            forward.ApplicableTo(Artifact(evaluationContext, sharedPath), applicabilityContext));
+
+        Assert.Equal(
+            new[] { firstDescriptor },
+            reordered.ApplicableTo(Artifact(evaluationContext, firstPath), applicabilityContext));
+        Assert.Equal(
+            new[] { secondDescriptor },
+            reordered.ApplicableTo(Artifact(evaluationContext, secondPath), applicabilityContext));
+        Assert.Equal(
+            new[] { secondDescriptor, firstDescriptor },
+            reordered.ApplicableTo(Artifact(evaluationContext, sharedPath), applicabilityContext));
+    }
+
+    [Fact]
+    public void DescriptorProjectionAndCatalogRootDependOnlyOnOrderedDescriptors()
+    {
+        var firstDescriptor = Descriptor(
+            1,
+            "first descriptor",
+            DisplaySeverity.Warning,
+            AdmissionEffect.Observe);
+        var secondDescriptor = Descriptor(
+            2,
+            "second descriptor",
+            DisplaySeverity.Error,
+            AdmissionEffect.Block);
+        var descriptors = ImmutableArray.Create(firstDescriptor, secondDescriptor);
+        var first = RuleCatalog.CreateForTesting(
+            descriptors,
+            [PredicateRule(static _ => true), PredicateRule(static _ => false)]);
+        var differentRules = RuleCatalog.CreateForTesting(
+            descriptors,
+            [FindingRule("different/first.txt", "different first finding"),
+                FindingRule("different/second.txt", "different second finding")]);
+        var reordered = RuleCatalog.CreateForTesting(
+            [secondDescriptor, firstDescriptor],
+            [PredicateRule(static _ => false), PredicateRule(static _ => true)]);
+
+        Assert.Equal(new[] { firstDescriptor, secondDescriptor }, first.Descriptors);
+        Assert.Equal(first.RootSha256, differentRules.RootSha256);
+        Assert.Equal(new[] { secondDescriptor, firstDescriptor }, reordered.Descriptors);
+        Assert.NotEqual(first.RootSha256, reordered.RootSha256);
+    }
+
+    [Fact]
+    public void DefaultCatalogRootMatchesCharacterizedRegressionValue()
+    {
+        Assert.Equal(
+            "sha256:adea02100c041313382577a157e53432ca2e76576c44bbb2e133517ce8370010",
+            RuleCatalog.Default.RootSha256);
+    }
+
+    private static RuleDescriptor Descriptor(
+        int number,
+        string title,
+        DisplaySeverity displaySeverity,
+        AdmissionEffect admissionEffect) =>
+        new(
+            RuleId.CreateKnown(number),
+            title,
+            displaySeverity,
+            $"category-{number}",
+            admissionEffect,
+            RuleLifecycle.Active,
+            null);
+
+    private static IRepositoryRule FindingRule(string path, string message) =>
+        new FakeRule(static _ => false, [new RuleFinding(path, message)]);
+
+    private static IRepositoryRule PredicateRule(Func<string, bool> predicate) =>
+        new FakeRule(file => predicate(file.Path.Value), ImmutableArray<RuleFinding>.Empty);
+
+    private static RepositoryFile Artifact(RuleEvaluationContext context, string path) =>
+        context.Current.Files.Single(pair => pair.Key.Value == path).Value;
+
+    private sealed class FakeRule(
+        Func<RepositoryFile, bool> appliesTo,
+        ImmutableArray<RuleFinding> findings) : IRepositoryRule
+    {
+        public bool AppliesTo(RepositoryFile artifact, RuleApplicabilityContext context) =>
+            appliesTo(artifact);
+
+        public ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context) => findings;
+    }
+}

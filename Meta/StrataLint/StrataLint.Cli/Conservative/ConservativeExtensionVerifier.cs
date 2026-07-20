@@ -5,7 +5,7 @@ namespace StrataLint.Cli;
 
 internal static partial class ConservativeExtensionVerifier
 {
-    private const string CertificateSchema = "stratalint-conservative-certificate-v1";
+    internal const string CertificateSchema = "stratalint-conservative-certificate-v1";
 
     internal static ConservativeExtensionOutcome Verify(ConservativeVerificationInput input)
     {
@@ -56,14 +56,15 @@ internal static partial class ConservativeExtensionVerifier
             var retiredPaths = contract.Accepted
                 ? contract.PolicyDelta.RetiredExactPaths.ToImmutableHashSet(StringComparer.Ordinal)
                 : ImmutableHashSet<string>.Empty.WithComparer(StringComparer.Ordinal);
-            var activeRules = contract.Accepted
-                ? baselineActiveRules.Where(rule => !contract.PolicyDelta.RetiredRuleObligations
+            var negativeFloorRules = NegativeFloorRules(baseline, baselineActiveRules);
+            negativeFloorRules = contract.Accepted
+                ? negativeFloorRules.Where(rule => !contract.PolicyDelta.RetiredRuleObligations
                         .Contains(rule, StringComparer.Ordinal))
                     .ToImmutableArray()
-                : baselineActiveRules;
+                : negativeFloorRules;
             var findings = Compare(
                 input,
-                activeRules,
+                negativeFloorRules,
                 retiredPaths,
                 baselineById,
                 candidateById).ToBuilder();
@@ -81,7 +82,7 @@ internal static partial class ConservativeExtensionVerifier
                 input,
                 baseline,
                 candidate,
-                activeRules,
+                negativeFloorRules,
                 baselineById,
                 candidateById,
                 contract,
@@ -163,6 +164,24 @@ internal static partial class ConservativeExtensionVerifier
         }
 
         return ordered;
+    }
+
+    private static ImmutableArray<string> NegativeFloorRules(
+        ConservativeHarnessRun run,
+        ImmutableArray<string> activeRules)
+    {
+        var effects = run.Policy.RuleObligations.ToDictionary(
+            static item => item.RuleId,
+            static item => item.AdmissionEffect,
+            StringComparer.Ordinal);
+        return activeRules.Where(ruleId => effects[ruleId] switch
+            {
+                nameof(AdmissionEffect.Block) or nameof(AdmissionEffect.HumanGate) => true,
+                nameof(AdmissionEffect.Observe) => false,
+                var effect => throw new InvalidOperationException(
+                    $"active rule {ruleId} has unknown admission effect {effect}"),
+            })
+            .ToImmutableArray();
     }
 
     private static ImmutableArray<ConservativeFinding> Compare(

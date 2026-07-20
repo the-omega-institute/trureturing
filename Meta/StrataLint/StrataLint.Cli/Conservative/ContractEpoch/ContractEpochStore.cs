@@ -127,47 +127,9 @@ internal sealed class ContractEpochStore
 
     private static ImmutableHashSet<string> LoadC0Anchors(RepositorySnapshot snapshot)
     {
-        if (!snapshot.TryGetFile(RepositoryRules.TowerManifestPath, out var towerFile))
-        {
-            return ImmutableHashSet<string>.Empty.WithComparer(StringComparer.Ordinal);
-        }
-
-        var syntax = TowerManifestParser.Parse(towerFile.RawBytes.AsSpan()) switch
-        {
-            TowerManifestParseOutcome.Loaded loaded => loaded.Syntax,
-            TowerManifestParseOutcome.Invalid invalid =>
-                throw new FormatException($"contract epoch TOWER anchor source is invalid: {invalid.Message}"),
-        };
-        if (TowerManifestValidator.ValidateStructure(syntax) is TowerValidationOutcome.Rejected rejected)
-        {
-            throw new FormatException(
-                "contract epoch TOWER anchor source is invalid: "
-                + string.Join("; ", rejected.Findings.Select(static item => item.Message)));
-        }
-
-        var phased = syntax.Components
-            .Where(static component => string.Equals(
-                component.Kind,
-                "phased-gate",
-                StringComparison.Ordinal))
-            .ToArray();
-        var actual = TowerActualValidator.Validate(syntax, snapshot, RuleCatalog.Default);
-        var invalidComponents = actual.Findings
-            .Where(item => phased.Any(component => string.Equals(
-                component.Id,
-                item.Component,
-                StringComparison.Ordinal)))
-            .ToArray();
-        if (invalidComponents.Length != 0)
-        {
-            throw new FormatException(
-                "contract epoch TOWER C0 anchors are invalid: "
-                + string.Join("; ", invalidComponents.Select(static item => item.Message)));
-        }
-
-        return phased.SelectMany(static component => component.Members)
-            .Where(static member => member.StartsWith("c0/", StringComparison.Ordinal))
-            .ToImmutableHashSet(StringComparer.Ordinal);
+        return C0CeremonyProjection.TryCreateAnchorAddressRecords(snapshot, out var records)
+            ? records.ToImmutableHashSet(StringComparer.Ordinal)
+            : ImmutableHashSet<string>.Empty.WithComparer(StringComparer.Ordinal);
     }
 
 }

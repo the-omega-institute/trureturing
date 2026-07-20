@@ -21,11 +21,15 @@ public sealed class DocumentDiscoveryTests
     private const string PrimeAxisTableDocumentPath = "Blueprint/D5/S1/Digit/PrimeAxisTable.md";
     private const string RawDocumentPath = "Blueprint/D5/S1/Digit/Raw.md";
     private const string PhaseDocumentPath = "Blueprint/D5/S1/Phase/Basic.md";
+    private const string ZeroOrbitCongruenceDocumentPath =
+        "Blueprint/D5/S1/Phase/ZeroOrbitCongruence.md";
     private const string EmbeddingDocumentPath = "Blueprint/D5/S1/Scale/Embedding.md";
     private const string FibonacciEigenDocumentPath = "Blueprint/D5/S1/Scale/FibonacciEigen.md";
     private const string LogDocumentPath = "Blueprint/D5/S1/Scale/Log.md";
     private const string MinkowskiModelSetDocumentPath = "Blueprint/D5/S1/Scale/MinkowskiModelSet.md";
+    private const string DecoherenceDocumentPath = "Blueprint/D5/S3/Quantum/Decoherence.md";
     private const string FiniteDimensionalDocumentPath = "Blueprint/D5/S3/Quantum/FiniteDimensional.md";
+    private const string ObserverAlgebraDocumentPath = "Blueprint/D5/S3/Quantum/ObserverAlgebra.md";
     private const string QubitWitnessesDocumentPath = "Blueprint/D5/S3/Quantum/QubitWitnesses.md";
     private const string CriticalLineDocumentPath = "Blueprint/D5/S3/Weil/CriticalLine.md";
     private const string EulerProductDocumentPath = "Blueprint/D5/S3/Weil/EulerProduct.md";
@@ -33,6 +37,10 @@ public sealed class DocumentDiscoveryTests
     private const string ReflectionLedgerDocumentPath = "Blueprint/D5/S3/Weil/ReflectionLedger.md";
     private const string SpectralDynamicsDocumentPath = "Blueprint/D5/S3/Weil/SpectralDynamics.md";
     private const string SpectralHilbertDocumentPath = "Blueprint/D5/S3/Weil/SpectralHilbert.md";
+    private const string CompletedZetaDocumentPath = "Blueprint/D5/S3/Zeros/CompletedZeta.md";
+    private const string EulerWindowsDocumentPath = "Blueprint/D5/S3/Zeros/EulerWindows.md";
+    private const string SpectralShiftDocumentPath = "Blueprint/D5/S3/Zeros/SpectralShift.md";
+    private const string ZeroGeometryDocumentPath = "Blueprint/D5/S3/Zeros/ZeroGeometry.md";
     private const string PhaseSourcePath = "Blueprint/D5/S1/Phase/Basic.scribe.cs";
 
     [Fact]
@@ -56,11 +64,14 @@ public sealed class DocumentDiscoveryTests
                 "D5/S1/Digit/PrimeAxisTable",
                 "D5/S1/Digit/Raw",
                 "D5/S1/Phase/Basic",
+                "D5/S1/Phase/ZeroOrbitCongruence",
                 "D5/S1/Scale/Embedding",
                 "D5/S1/Scale/FibonacciEigen",
                 "D5/S1/Scale/Log",
                 "D5/S1/Scale/MinkowskiModelSet",
+                "D5/S3/Quantum/Decoherence",
                 "D5/S3/Quantum/FiniteDimensional",
+                "D5/S3/Quantum/ObserverAlgebra",
                 "D5/S3/Quantum/QubitWitnesses",
                 "D5/S3/Weil/CriticalLine",
                 "D5/S3/Weil/EulerProduct",
@@ -68,6 +79,10 @@ public sealed class DocumentDiscoveryTests
                 "D5/S3/Weil/ReflectionLedger",
                 "D5/S3/Weil/SpectralDynamics",
                 "D5/S3/Weil/SpectralHilbert",
+                "D5/S3/Zeros/CompletedZeta",
+                "D5/S3/Zeros/EulerWindows",
+                "D5/S3/Zeros/SpectralShift",
+                "D5/S3/Zeros/ZeroGeometry",
             ],
             DocumentDefinitions.All.Select(static item => item.Document.Header.Gid.Value));
         Assert.Equal(
@@ -88,11 +103,14 @@ public sealed class DocumentDiscoveryTests
                 PrimeAxisTableDocumentPath,
                 RawDocumentPath,
                 PhaseDocumentPath,
+                ZeroOrbitCongruenceDocumentPath,
                 EmbeddingDocumentPath,
                 FibonacciEigenDocumentPath,
                 LogDocumentPath,
                 MinkowskiModelSetDocumentPath,
+                DecoherenceDocumentPath,
                 FiniteDimensionalDocumentPath,
+                ObserverAlgebraDocumentPath,
                 QubitWitnessesDocumentPath,
                 CriticalLineDocumentPath,
                 EulerProductDocumentPath,
@@ -100,6 +118,10 @@ public sealed class DocumentDiscoveryTests
                 ReflectionLedgerDocumentPath,
                 SpectralDynamicsDocumentPath,
                 SpectralHilbertDocumentPath,
+                CompletedZetaDocumentPath,
+                EulerWindowsDocumentPath,
+                SpectralShiftDocumentPath,
+                ZeroGeometryDocumentPath,
             ],
             DocumentDefinitions.All.Select(static item => item.RelativePath.Value));
     }
@@ -206,6 +228,44 @@ public sealed class DocumentDiscoveryTests
     }
 
     [Fact]
+    public void ZeroOrbitCongruenceCarriesTwoTheoremsAndDisclosesTheLocalPremise()
+    {
+        var definition = DocumentDefinitions.All.Single(static item =>
+            item.Document.Header.Gid.Value == "D5/S1/Phase/ZeroOrbitCongruence");
+        var describes = Descendants(definition.Document.Content)
+            .OfType<DocumentBlock.Describe>()
+            .ToArray();
+
+        Assert.Equal(2, describes.Length);
+        Assert.All(describes, static describe =>
+        {
+            Assert.Equal(DescribeKind.Theorem, describe.Kind);
+            Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.Provenance.Kind);
+            var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
+            Assert.True(lean.Value.RequireNoSorry);
+        });
+        Assert.Equal(
+            [
+                "D5/S1/Phase/ZeroOrbitCongruence.eisenstein_norm_mod_three",
+                "D5/S1/Phase/ZeroOrbitCongruence.thirty_six_dvd_of_local_candidates_and_eisenstein_norm",
+            ],
+            describes.Select(static describe =>
+                Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement).Value.Value));
+
+        var report = LeanReportFixture.ForDocuments([definition.Document]);
+        var markdown = System.Text.Encoding.UTF8.GetString(
+            CanonicalMarkdownWriter.Write(definition.Document, report).AsSpan());
+        Assert.Contains(
+            "local candidate disjunction modulo 36 remains an explicit premise",
+            markdown,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "does not prove the local 432-case computation",
+            markdown,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void PrimeAxisTableCarriesItsExactRepoDerivedLeanStatement()
     {
         var definition = DocumentDefinitions.All.Single(static item =>
@@ -228,20 +288,24 @@ public sealed class DocumentDiscoveryTests
     [Fact]
     public void SelectedResidualDocumentsCarryExactStatementsAndDiligentProvenance()
     {
-        (string Document, DescribeKind Kind, string Declaration,
+        (string Document, string Id, DescribeKind Kind, string Declaration,
             DescribeProvenanceKind Provenance, string? Reference)[] expected =
         [
-            ("D5/S0/Carrier/AlgebraicModel", DescribeKind.Definition,
+            ("D5/S0/Carrier/AlgebraicModel", "quadratic-quotient-conjugation-trace-and-norm",
+                DescribeKind.Definition,
                 "D5/S0/Carrier/AlgebraicModel.golden_algebraic_model_spec",
                 DescribeProvenanceKind.LiteratureAttested,
                 "D5/L/stewarttall2025algebraic"),
-            ("D5/S1/Depth/JointDepth", DescribeKind.Definition,
+            ("D5/S1/Depth/JointDepth", "admissible-joint-scale-digit-phase-depth",
+                DescribeKind.Definition,
                 "D5/S1/Depth/JointDepth.joint_depth_spec",
                 DescribeProvenanceKind.RepoDerived, null),
-            ("D5/S1/Digit/PrimeAxisAddition", DescribeKind.Theorem,
+            ("D5/S1/Digit/PrimeAxisAddition", "prime-axis-rowwise-normalization-product",
+                DescribeKind.Theorem,
                 "D5/S1/Digit/PrimeAxisAddition.prime_axis_addition_spec",
                 DescribeProvenanceKind.RepoDerived, null),
-            ("D5/S1/Scale/MinkowskiModelSet", DescribeKind.Definition,
+            ("D5/S1/Scale/MinkowskiModelSet", "minkowski-lattice-window-and-labeled-model-set",
+                DescribeKind.Definition,
                 "D5/S1/Scale/MinkowskiModelSet.minkowski_model_set_spec",
                 DescribeProvenanceKind.LiteratureAttested,
                 "D5/L/baakefrankgrimm2021three"),
@@ -253,7 +317,7 @@ public sealed class DocumentDiscoveryTests
                 definition.Document.Header.Gid.Value == item.Document);
             var describe = Descendants(definition.Document.Content)
                 .OfType<DocumentBlock.Describe>()
-                .Single();
+                .Single(node => node.Id.Value == item.Id);
             var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
 
             Assert.Equal(item.Kind, describe.Kind);
@@ -268,21 +332,25 @@ public sealed class DocumentDiscoveryTests
     [Fact]
     public void O6LoadBearingDocumentsCarryExactStatementsAndDiligentProvenance()
     {
-        (string Document, DescribeKind Kind, string Declaration,
+        (string Document, string Id, DescribeKind Kind, string Declaration,
             DescribeProvenanceKind Provenance, string? Reference)[] expected =
         [
-            ("D5/S3/Weil/CriticalLine", DescribeKind.Theorem,
+            ("D5/S3/Weil/CriticalLine", "half-density-unitarity-characterizes-the-critical-line",
+                DescribeKind.Theorem,
                 "D5/S3/Weil/CriticalLine.unitarity_line_iff",
                 DescribeProvenanceKind.RepoDerived, null),
-            ("D5/S3/Weil/EulerProduct", DescribeKind.Theorem,
+            ("D5/S3/Weil/EulerProduct", "finite-euler-windows-have-only-the-local-lattice",
+                DescribeKind.Theorem,
                 "D5/S3/Weil/EulerProduct.finite_euler_zero_free_and_pole_locus",
                 DescribeProvenanceKind.LiteratureAttested,
                 "D5/L/apostol1976introduction"),
-            ("D5/S3/Weil/EulerProduct", DescribeKind.Definition,
+            ("D5/S3/Weil/EulerProduct", "single-address-reading-is-the-von-mangoldt-weight",
+                DescribeKind.Definition,
                 "D5/S3/Weil/EulerProduct.single_address_reading_spec",
                 DescribeProvenanceKind.LiteratureAttested,
                 "D5/L/apostol1976introduction"),
-            ("D5/S3/Weil/EulerProduct", DescribeKind.Proposition,
+            ("D5/S3/Weil/EulerProduct", "the-logarithmic-derivative-is-the-single-address-heat-trace",
+                DescribeKind.Proposition,
                 "D5/S3/Weil/EulerProduct.single_address_heat_trace_eq_log_derivative",
                 DescribeProvenanceKind.LiteratureAttested,
                 "D5/L/apostol1976introduction"),
@@ -294,9 +362,7 @@ public sealed class DocumentDiscoveryTests
                 definition.Document.Header.Gid.Value == item.Document);
             var describe = Descendants(definition.Document.Content)
                 .OfType<DocumentBlock.Describe>()
-                .Single(node =>
-                    node.Statement is DescribeStatement.LeanDeclaration lean
-                    && lean.Value.Value == item.Declaration);
+                .Single(node => node.Id.Value == item.Id);
             var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
 
             Assert.Equal(item.Kind, describe.Kind);
@@ -306,6 +372,88 @@ public sealed class DocumentDiscoveryTests
             Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
             Assert.True(lean.Value.RequireNoSorry);
         }
+    }
+
+    [Fact]
+    public void ZeroGeometryDocumentCarriesExactStatementsAndDiligentProvenance()
+    {
+        (string Declaration, DescribeKind Kind, LeanDeclarationKind LeanKind)[] expected =
+        [
+            ("D5/S3/Zeros/ZeroGeometry.projection_zero_labeled_vector_spec",
+                DescribeKind.Theorem, LeanDeclarationKind.Theorem),
+            ("D5/S3/Zeros/ZeroGeometry.off_line_scaling_entry_spec",
+                DescribeKind.Theorem, LeanDeclarationKind.Theorem),
+            ("D5/S3/Zeros/ZeroGeometry.global_factor_clearing_forces_critical_line",
+                DescribeKind.Theorem, LeanDeclarationKind.Theorem),
+            ("D5/S3/Zeros/ZeroGeometry.zero_quartet_scaling_spec",
+                DescribeKind.Theorem, LeanDeclarationKind.Theorem),
+            ("D5/S3/Zeros/ZeroGeometry.mirror_pair_distinct_iff_off_line_and_cancels",
+                DescribeKind.Theorem, LeanDeclarationKind.Theorem),
+            ("D5/S3/Zeros/ZeroGeometry.IsOntologicalZero",
+                DescribeKind.Definition, LeanDeclarationKind.Definition),
+            ("D5/S3/Zeros/ZeroGeometry.ontological_zero_re_eq_critical",
+                DescribeKind.Theorem, LeanDeclarationKind.Theorem),
+        ];
+        var definition = DocumentDefinitions.All.Single(static item =>
+            item.Document.Header.Gid.Value == "D5/S3/Zeros/ZeroGeometry");
+        var nodes = Descendants(definition.Document.Content)
+            .OfType<DocumentBlock.Describe>()
+            .ToDictionary(
+                static node => Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement)
+                    .Value.Value,
+                StringComparer.Ordinal);
+
+        Assert.Equal(7, nodes.Count);
+        foreach (var item in expected)
+        {
+            var node = nodes[item.Declaration];
+            var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement);
+
+            Assert.Equal(item.Kind, node.Kind);
+            Assert.Equal(DescribeProvenanceKind.RepoDerived, node.Provenance.Kind);
+            Assert.Null(node.Provenance.LiteratureReference);
+            Assert.Equal(item.Declaration, lean.Value.Value);
+            Assert.Equal(item.LeanKind, lean.Value.ExpectedKind);
+            Assert.True(lean.Value.RequireNoSorry);
+        }
+    }
+
+    [Fact]
+    public void ZeroGeometryDocumentDisclosesSourceOmissionsAndTheOpenO6Bridge()
+    {
+        var definition = DocumentDefinitions.All.Single(static item =>
+            item.Document.Header.Gid.Value == "D5/S3/Zeros/ZeroGeometry");
+        var report = LeanReportFixture.ForDocuments([definition.Document]);
+        var markdown = System.Text.Encoding.UTF8.GetString(
+            CanonicalMarkdownWriter.Write(definition.Document, report).AsSpan());
+
+        string[] requiredDisclosures =
+        [
+            "No analytic projection operator is defined, and no projection identity outside the Dirichlet convergence half-plane is claimed.",
+            "The source's coefficient factorization, unbounded-ray clause, and rotation-invariance clause are not formalized here.",
+            "The governance claim excluding an address-dependent inverse register is not part of this theorem.",
+            "Cross-position cancellation does not imply local balance at either position.",
+            "The closure condition is carried as the arbitrary predicate closedAt; no inhabitant is asserted.",
+            "The missing implication from every projected zero to local balance is exactly the open O-6 bridge.",
+        ];
+
+        foreach (var disclosure in requiredDisclosures)
+        {
+            Assert.Contains(disclosure, markdown, StringComparison.Ordinal);
+        }
+
+        var zeroQuartetScaling = Descendants(definition.Document.Content)
+            .OfType<DocumentBlock.Describe>()
+            .Single(static node =>
+                Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement).Value.Value ==
+                "D5/S3/Zeros/ZeroGeometry.zero_quartet_scaling_spec");
+        var zeroDataDisclosure = Assert.IsType<Inline.Text>(
+            Assert.IsType<DocumentBlock.Paragraph>(
+                Assert.Single(zeroQuartetScaling.Content.Items)).Content.Items.Single()).Run.Value;
+
+        Assert.Contains("ZeroData", zeroDataDisclosure, StringComparison.Ordinal);
+        Assert.Contains("does not prove", zeroDataDisclosure, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("inhabit", zeroDataDisclosure, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
@@ -421,6 +569,49 @@ public sealed class DocumentDiscoveryTests
         Assert.Contains(
             "Original certificate coverage: the source atom's symbolic (1/2) * c0^N coherence law and fixed one-half populations are formalized exactly; the atom supplies no fixed numeric c0 or N.",
             markdown,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void QuantumContinuationDocumentsDiscloseStructuresScopeAndCertificates()
+    {
+        var documents = DocumentDefinitions.All
+            .ToDictionary(static item => item.Document.Header.Gid.Value, StringComparer.Ordinal);
+        var observerDefinition = documents["D5/S3/Quantum/ObserverAlgebra"];
+        var decoherenceDefinition = documents["D5/S3/Quantum/Decoherence"];
+        var report = LeanReportFixture.ForDocuments(
+            [observerDefinition.Document, decoherenceDefinition.Document]);
+        var observerMarkdown = System.Text.Encoding.UTF8.GetString(
+            CanonicalMarkdownWriter.Write(observerDefinition.Document, report).AsSpan());
+        var decoherenceMarkdown = System.Text.Encoding.UTF8.GetString(
+            CanonicalMarkdownWriter.Write(decoherenceDefinition.Document, report).AsSpan());
+
+        Assert.Contains("including an empty type", observerMarkdown, StringComparison.Ordinal);
+        Assert.Contains("explicit address i", observerMarkdown, StringComparison.Ordinal);
+        Assert.Contains(
+            "does not construct or identify the universal C*-crossed product",
+            observerMarkdown,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "neither observer-algebra CAS atom contains a numerical certificate",
+            observerMarkdown,
+            StringComparison.Ordinal);
+
+        Assert.Contains(
+            "inhabited real interval [0,1], with zero as an explicit witness",
+            decoherenceMarkdown,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "arbitrary complex two-by-two matrix, no positivity, trace-one, or Hermiticity premise",
+            decoherenceMarkdown,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "Original certificate disposition: the source atoms' symbolic (1/2) * c0^N coherence law and fixed one-half populations are already formalized exactly",
+            decoherenceMarkdown,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "no fixed numeric c0 or N",
+            decoherenceMarkdown,
             StringComparison.Ordinal);
     }
 

@@ -96,27 +96,28 @@ public sealed class ContractEpochStoreTests
     }
 
     [Fact]
-    public void StoreExportsC0AnchorsOnlyFromACanonicalPhasedGate()
+    public void TowerProjectionCannotCreateMachineCustodians()
     {
-        var records = C0Records();
         var store = ContractEpochStore.Load(Snapshot(
-            RawRepositoryEntry.FromText(RepositoryRules.TowerManifestPath, Tower(records))));
+            RawRepositoryEntry.FromText(
+                RepositoryRules.TowerManifestPath,
+                Tower(C0Records()))));
 
-        Assert.Equal(records, store.C0Anchors.Order(StringComparer.Ordinal).ToArray());
-        Assert.DoesNotContain("phase1-protected-content-admission", store.C0Anchors);
+        Assert.Empty(store.C0Anchors);
     }
 
     [Fact]
-    public void IncompleteC0CeremonyCannotCreateMachineCustodians()
+    public void CanonicalProgramExportsC0CustodiansWithoutReadingTower()
     {
-        var records = C0Records()
-            .Where(static item => !item.StartsWith("c0/gate-wiring", StringComparison.Ordinal))
-            .ToArray();
+        var snapshot = Snapshot(CanonicalAnchorEntries());
 
-        var exception = Assert.Throws<FormatException>(() => ContractEpochStore.Load(Snapshot(
-            RawRepositoryEntry.FromText(RepositoryRules.TowerManifestPath, Tower(records)))));
+        var store = ContractEpochStore.Load(snapshot);
+        var anchors = C0CeremonyProjection.DiscoverAnchors(snapshot);
 
-        Assert.Contains("C0", exception.Message, StringComparison.Ordinal);
+        Assert.Equal(anchors.Length, store.C0Anchors.Count);
+        Assert.All(anchors, anchor => Assert.Contains(
+            store.C0Anchors,
+            record => record.EndsWith(" " + anchor.Path, StringComparison.Ordinal)));
     }
 
     private static (ImmutableArray<byte> Ledger, ContractEpochEvidenceReceipt Receipt) Registration()
@@ -152,6 +153,29 @@ public sealed class ContractEpochStoreTests
         "c0/preimage-commit git-commit/" + new string('f', 40),
         "c0/preimage-tree git-tree/" + new string('a', 40),
     ];
+
+    private static RawRepositoryEntry[] CanonicalAnchorEntries() =>
+    [
+        Anchor(C0CeremonyProjection.CliApplicationPath),
+        Anchor(C0CeremonyProjection.ProductionEnvironmentPath),
+        Anchor(C0CeremonyProjection.GitRepositoryGatewaySourcePath),
+        Anchor(C0CeremonyProjection.GitRepositoryGatewayFrozenLedgerSourcePath),
+        Anchor(C0CeremonyProjection.ProgramPath),
+        Anchor(C0CeremonyProjection.ProjectionSourcePath),
+        Anchor(C0CeremonyProjection.ActualValidatorPath),
+        Anchor(C0CeremonyProjection.TowerManifestSourcePath),
+        Anchor(C0CeremonyProjection.TowerParserSourcePath),
+        Anchor(C0CeremonyProjection.FixtureRegistryPath),
+        Anchor(C0CeremonyProjection.ValuesKernelDataPath),
+        Anchor(C0CeremonyProjection.GateWiringPath),
+        Anchor(C0CeremonyProjection.LocalGateWiringPath),
+        Anchor(C0CeremonyProjection.LeanReportPairPath),
+        Anchor(C0CeremonyProjection.LeanInspectorScriptPath),
+        Anchor(C0CeremonyProjection.LeanInspectorSourcePath),
+    ];
+
+    private static RawRepositoryEntry Anchor(string path) =>
+        RawRepositoryEntry.FromText(path, $"canonical bytes for {path}\n");
 
     private static string Tower(IEnumerable<string> records) => string.Join("\n",
         new[]

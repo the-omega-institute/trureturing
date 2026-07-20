@@ -32,7 +32,13 @@ internal interface ICliEnvironment
 
     CommandResult CleanLanes(IReadOnlyList<string> arguments);
 
+    CommandResult AppendPerf(IReadOnlyList<string> arguments);
+
+    CommandResult PerfReport(IReadOnlyList<string> arguments);
+
     CommandResult Worktree(IReadOnlyList<string> arguments);
+
+    CommandResult RenewC0(IReadOnlyList<string> arguments);
 
     ExplicitCommandResult VerifyConservative(IReadOnlyList<string> arguments);
 
@@ -90,13 +96,14 @@ internal static class CliApplication
         if (arguments.Count == 0)
         {
             console.WriteError(
-                "USAGE: StrataLint check|clean-lanes|coverage|digest-status|ingest|golden-record|ledger-genesis|route|selftest|topology|worktree|ledger-append|ledger-reattest|verify-conservative|evaluate-conservative-corpus\n");
+                "USAGE: StrataLint c0-renew|check|clean-lanes|coverage|digest-status|ingest|golden-record|ledger-genesis|route|selftest|topology|worktree|ledger-append|ledger-reattest|perf-append|perf-report|verify-conservative|evaluate-conservative-corpus\n");
             return 2;
         }
 
         var tail = arguments.Skip(1).ToArray();
         return arguments[0] switch
         {
+            "c0-renew" => RenderCommand(environment.RenewC0(tail), console),
             "check" => RenderAdmission(environment.Check(tail), console),
             "clean-lanes" => RenderCommand(environment.CleanLanes(tail), console),
             "coverage" => RenderCommand(environment.Coverage(tail), console),
@@ -108,6 +115,8 @@ internal static class CliApplication
             "ledger-genesis" => RenderCommand(environment.GenerateLedger(tail), console),
             "ledger-append" => RenderCommand(environment.AppendLedger(tail), console),
             "ledger-reattest" => RenderCommand(environment.ReattestLedger(tail), console),
+            "perf-append" => RenderCommand(environment.AppendPerf(tail), console),
+            "perf-report" => RenderCommand(environment.PerfReport(tail), console),
             "route" => RenderCommand(environment.Route(tail), console),
             "selftest" => RenderCommand(environment.SelfTest(tail), console),
             "topology" => RenderTopology(environment.Topology(tail), console),

@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Text;
+using System.Text.Json;
 using StrataLint.Cli;
 
 namespace StrataLint.Tests;
@@ -20,6 +21,93 @@ public sealed class ConservativeExtensionVerifierTests
         Assert.Contains("\"SL-022\"", certificate, StringComparison.Ordinal);
         Assert.Contains("\"policy_root\": \"sha256:", certificate, StringComparison.Ordinal);
         Assert.Contains("\"uncovered_obligations\": []", certificate, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void CandidateCanActivateThePreRegisteredSl023Obligation()
+    {
+        var input = ConservativeTestData.Input();
+        var candidateExecution = Assert.IsType<ConservativeHarnessExecution.Completed>(
+            input.CandidateExecution);
+        var candidateRules = candidateExecution.Run.ActiveRules.Add("SL-023");
+        input = input with
+        {
+            CandidateExecution = new ConservativeHarnessExecution.Completed(
+                candidateExecution.Run with
+                {
+                    ActiveRules = candidateRules,
+                    Policy = candidateExecution.Run.Policy.WithRuleObligations(candidateRules),
+                }),
+        };
+
+        var outcome = ConservativeExtensionVerifier.Verify(input);
+
+        var candidate = Assert.IsType<ConservativeHarnessExecution.Completed>(
+            input.CandidateExecution);
+        Assert.Contains(
+            candidate.Run.Policy.RuleObligations,
+            static item => item.RuleId == "SL-023");
+        Assert.IsType<ConservativeExtensionOutcome.Accepted>(outcome);
+    }
+
+    [Fact]
+    public void ObserveOnlyActiveRuleIsDeferredFromNegativeFloorUntilItCanBlock()
+    {
+        var input = ConservativeTestData.Input();
+        var baseline = Assert.IsType<ConservativeHarnessExecution.Completed>(input.BaselineExecution);
+        var candidate = Assert.IsType<ConservativeHarnessExecution.Completed>(input.CandidateExecution);
+        var activeRules = baseline.Run.ActiveRules.Add("SL-023");
+        input = input with
+        {
+            BaselineExecution = new ConservativeHarnessExecution.Completed(baseline.Run with
+            {
+                ActiveRules = activeRules,
+                Policy = baseline.Run.Policy.WithRuleObligations(activeRules),
+            }),
+            CandidateExecution = new ConservativeHarnessExecution.Completed(candidate.Run with
+            {
+                ActiveRules = activeRules,
+                Policy = candidate.Run.Policy.WithRuleObligations(activeRules),
+            }),
+        };
+
+        var accepted = Assert.IsType<ConservativeExtensionOutcome.Accepted>(
+            ConservativeExtensionVerifier.Verify(input));
+        using var certificate = JsonDocument.Parse(accepted.Certificate.ToArray());
+        var negativeFloor = certificate.RootElement.GetProperty("negative_floor");
+
+        Assert.Equal(2, negativeFloor.GetProperty("active_rule_count").GetInt32());
+        Assert.Equal(
+            ["SL-001", "SL-022"],
+            negativeFloor.GetProperty("rules").EnumerateArray()
+                .Select(static item => item.GetString()!)
+                .ToArray());
+    }
+
+    [Fact]
+    public void BlockingActiveRuleWithoutABaseOwnedWitnessStillFailsClosed()
+    {
+        var input = ConservativeTestData.Input();
+        var baseline = Assert.IsType<ConservativeHarnessExecution.Completed>(input.BaselineExecution);
+        var candidate = Assert.IsType<ConservativeHarnessExecution.Completed>(input.CandidateExecution);
+        var casesWithoutSl001Witness = baseline.Run.Cases
+            .Select(item => ConservativeTestData.WithDisposition(
+                item,
+                ConservativeTestData.RejectCase,
+                ConservativeDisposition.Admit))
+            .ToImmutableArray();
+        input = input with
+        {
+            BaselineExecution = new ConservativeHarnessExecution.Completed(
+                baseline.Run with { Cases = casesWithoutSl001Witness }),
+            CandidateExecution = new ConservativeHarnessExecution.Completed(
+                candidate.Run with { Cases = casesWithoutSl001Witness }),
+        };
+
+        var failure = Assert.IsType<ConservativeExtensionOutcome.InfrastructureFailure>(
+            ConservativeExtensionVerifier.Verify(input));
+
+        Assert.Contains("no blocking witness for active rule SL-001", failure.Message, StringComparison.Ordinal);
     }
 
     [Fact]

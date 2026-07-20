@@ -7,8 +7,12 @@ internal sealed record RepositoryPathIssue(RuleId RuleId, string Path, string Me
 internal static partial class RepositoryPathPolicy
 {
     internal const string AssumptionRegistryPath = "D5/X_Assumptions/REGISTRY.md";
+    internal const string LibraryMapPath = "Library/MAP.md";
     internal const string WorkflowPath = ".github/workflows/ci.yml";
     internal const string TheoryIngestWorkflowPath = ".github/workflows/theory-ingest.yml";
+    internal const string C0CeremonyWorkflowPath = ".github/workflows/c0-ceremony.yml";
+    // 已撤役 workflow(GITHUB_TOKEN 防递归判负,PR #241);常量保留以维持保守扩展(旧树 admit 不翻),移除须走义务会计。
+    internal const string AutoUpdateBranchWorkflowPath = ".github/workflows/auto-update-branch.yml";
     internal const string HarnessGatePath = ".github/scripts/harness-gate.sh";
 
     internal static ImmutableArray<Diagnostic> Evaluate(
@@ -54,10 +58,12 @@ internal static partial class RepositoryPathPolicy
         }
 
         if (value is "Meta/domains.yaml" or "Meta/BACKFILL.yaml" or "Meta/registry.yaml"
-            or "Library/queries.yaml" or AssumptionRegistryPath
+            or LibraryMapPath or "Library/queries.yaml" or AssumptionRegistryPath
             or "Meta/split.py" or "Meta/papergen"
             or "Golden/fixture-registry.yaml" or "Golden/values-kernels.toml"
-            or WorkflowPath or TheoryIngestWorkflowPath or ".github/CODEOWNERS"
+            or WorkflowPath or TheoryIngestWorkflowPath or C0CeremonyWorkflowPath
+            or AutoUpdateBranchWorkflowPath
+            or ".github/CODEOWNERS"
             or ".github/scripts/baseline-admission.sh" or HarnessGatePath
             || value.StartsWith("Meta/StrataLint/", StringComparison.Ordinal)
             || DigestionCasStore.IsCanonicalPath(value)
@@ -171,6 +177,15 @@ internal static partial class RepositoryPathPolicy
 
     private static bool AllowsTarget(Target target, ValidatedPolicy policy)
     {
+        if (target is Target.Library library)
+        {
+            var libraryCoordinates = library.Coordinates.Values;
+            return libraryCoordinates.Length == 1
+                || libraryCoordinates is [var bucket, _]
+                && DomainId.TryCreate(bucket, out var domain)
+                && policy.Domains.ContainsKey(domain);
+        }
+
         if (target is not Target.Evidence evidence)
         {
             return true;

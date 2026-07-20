@@ -1,0 +1,2 @@
+**E.17 Herglotz 定位与系综重述**〔对表+判负〕。$\langle H\rangle$ 案改名 **Herglotz 虚姊妹案**:Herglotz 1923/Zagier 1975(实二次 Kronecker 极限公式)/Radchenko–Zagier(Crelle 2023:$F(x)=\sum(\psi(nx)-\log nx)/n$,二次无理特值 = 双对数+对数乘积有理组合,Hecke 泛函方程,$PSL_2(\mathbb Z)$ 1-余圈,积分核 $=\log(q^{1/24}/\eta)$)。双层楼:$E(z,s)|_{s=1}$ 值层(Bettin–Conrey ↔ T1/V)与 Kronecker 极限层(Herglotz ↔ $\langle H\rangle$)。$\langle H\rangle$ 十五位:类1 $+0.308169643696022$、类2 $+0.227556588770828$;初等基 PSLQ 判负(与 RZ 结构预期一致:配料在域点)。配料猜想:Clausen/Bloch–Wigner 类;攻略 = 仿 RZ 建虚侧泛函方程。系综重述:单环频率 $2\pi n/L$ 运动学;Maass 频率之家 = 环系综涨落(Duke 等分布),立案封条。(27.352–27.353)
+

@@ -147,8 +147,17 @@ public static class QuestPdfWriter
                 break;
             case DescribeStatement.LeanDeclaration lean:
                 var verified = Resolve(lean.Value, leanReport);
+                if (describe.StatementLatex is { } latex)
+                {
+                    column.Item()
+                        .Padding(6)
+                        .Background(Colors.Grey.Lighten4)
+                        .Text(latex.Value)
+                        .FontFamily(MonospaceFonts)
+                        .FontSize(9);
+                }
                 column.Item()
-                    .Text($"Statement: {lean.Value.Value} [{verified.AxiomBadge}]")
+                    .Text($"Lean: {lean.Value.Value} [{verified.AxiomBadge}]")
                     .FontFamily(MonospaceFonts)
                     .FontSize(8);
                 break;

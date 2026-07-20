@@ -50,7 +50,8 @@ public sealed class TypeModelTests
     public void RuleAndCaseIdsAreClosedByGrammar()
     {
         Assert.True(RuleId.TryCreate("SL-022", out _));
-        Assert.False(RuleId.TryCreate("SL-023", out _));
+        Assert.True(RuleId.TryCreate("SL-023", out _));
+        Assert.False(RuleId.TryCreate("SL-024", out _));
         Assert.True(CaseId.TryCreate("D5-T0016", out _));
     }
 
@@ -75,6 +76,7 @@ public sealed class TypeModelTests
     [InlineData("D5/E/experiments/D5-X0001.spec--yaml", "Evidence/D5/experiments/D5-X0001.spec.yaml")]
     [InlineData("D5/C/2026-07-11/r168", "Chronicle/2026/07/11-r168.md")]
     [InlineData("D5/L/bellissard1992gap", "Library/notes/bellissard1992gap.md")]
+    [InlineData("D5/L/Weil/sample2026paper", "Library/Weil/sample2026paper.md")]
     [InlineData("D5/P/D5-P001", "Papers/recipes/D5-P001.yaml")]
     [InlineData("D5/P/D5-P001--frozen", "Papers/frozen/D5-P001/manifest.sha256")]
     public void GidAndTargetAreCanonicalTwoWayMappings(string text, string path)
@@ -96,10 +98,32 @@ public sealed class TypeModelTests
     [InlineData("D5/E/foo//Ring.result--json")]
     [InlineData("D5/E/S0/Carrier/Ring--json")]
     [InlineData("D5/B/S0/Carrier/Ring.declaration")]
+    [InlineData("D5/L/NOTES/sample2026paper")]
+    [InlineData("D5/L/Notes/sample2026paper")]
+    [InlineData("D5/L/zeros/sample2026paper")]
+    [InlineData("D5/L/Weil/sample2026paper/extra")]
     [InlineData("D8/S0/Carrier/Ring")]
     public void GidRejectsUnsafeOrNoncanonicalNeighbors(string text)
     {
         Assert.False(Gid.TryParse(text, out _));
+    }
+
+    [Fact]
+    public void RepositoryPathPolicyRejectsUncontrolledLibrarySplitBucket()
+    {
+        var path = RepoPath.CreateKnown("Library/Unknown/sample2026paper.md");
+
+        Assert.NotNull(RepositoryPathPolicy.Validate(path, Policy()));
+        Assert.False(RepositoryPathPolicy.TryResolve(path, Policy(), out _));
+    }
+
+    [Fact]
+    public void LibrarySplitLedgerIsClosedWorldRegisteredButNotASemanticTarget()
+    {
+        var path = RepoPath.CreateKnown("Library/MAP.md");
+
+        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
+        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
     }
 
     [Fact]
@@ -145,6 +169,24 @@ public sealed class TypeModelTests
         var path = RepoPath.CreateKnown(value);
 
         Assert.NotNull(RepositoryPathPolicy.Validate(path, Policy()));
+        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
+    }
+
+    [Fact]
+    public void AutoUpdateBranchWorkflowPathIsClosedWorldRegisteredAtItsCanonicalAddress()
+    {
+        var path = RepoPath.CreateKnown(RepositoryPathPolicy.AutoUpdateBranchWorkflowPath);
+
+        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
+        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
+    }
+
+    [Fact]
+    public void C0CeremonyWorkflowPathIsClosedWorldRegisteredAtItsCanonicalAddress()
+    {
+        var path = RepoPath.CreateKnown(RepositoryPathPolicy.C0CeremonyWorkflowPath);
+
+        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
         Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
     }
 

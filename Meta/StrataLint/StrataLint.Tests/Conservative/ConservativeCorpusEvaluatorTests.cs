@@ -1,5 +1,6 @@
 using System.Text;
 using StrataLint.Cli;
+using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
@@ -57,7 +58,11 @@ public sealed class ConservativeCorpusEvaluatorTests
         var witnessed = run.Cases
             .SelectMany(static item => item.BlockingRules)
             .ToHashSet(StringComparer.Ordinal);
-        Assert.All(run.ActiveRules, rule => Assert.Contains(rule, witnessed));
+        var blockingRules = RuleCatalog.Default.Descriptors
+            .Where(static descriptor => descriptor.Lifecycle is RuleLifecycle.Active
+                && descriptor.AdmissionEffect is AdmissionEffect.Block or AdmissionEffect.HumanGate)
+            .Select(static descriptor => descriptor.Id.Value);
+        Assert.All(blockingRules, rule => Assert.Contains(rule, witnessed));
     }
 
     [Fact]

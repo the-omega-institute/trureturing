@@ -64,6 +64,62 @@ public sealed class DescribeValidationTests
     }
 
     [Fact]
+    public void ValidatorRejectsLiteratureReferenceToTheWrongSplitBucket()
+    {
+        WithRepository(root =>
+        {
+            WriteNote(root, "D5/S1/Phase/Basic", bucket: "Zeros");
+            var document = CreateDocument(
+                GidRef.Create("D5/S1/Phase/Basic"),
+                DescribeProvenance.LiteratureAttested(
+                    LibraryNoteRef.Create("D5/L/Weil/sos1957threegap")));
+
+            var finding = Assert.Single(DescribeRepositoryValidator.Validate(root, [document]));
+
+            Assert.Equal("dangling-literature-reference", finding.Code);
+            Assert.Contains("D5/L/Weil/sos1957threegap", finding.Message, StringComparison.Ordinal);
+        });
+    }
+
+    [Fact]
+    public void ValidatorAcceptsLiteratureHeaderAnchorFromASplitBucket()
+    {
+        WithRepository(root =>
+        {
+            WriteNote(root, "D5/S1/Phase/Basic", bucket: "Zeros");
+            var header = DefinitionDsl.Header(
+                "D5/S1/Phase/Basic",
+                "Split-bucket anchor fixture.",
+                Anchor.ParseCanonical("lit/sos1957threegap"));
+            var document = CreateDocument(
+                header,
+                GidRef.Create("D5/S1/Phase/Basic"),
+                DescribeProvenance.RepoDerived());
+
+            var findings = DescribeRepositoryValidator.Validate(root, [document]);
+
+            Assert.Empty(findings);
+        });
+    }
+
+    [Fact]
+    public void ValidatorReportsDuplicateBibkeysAcrossBucketsWithoutThrowing()
+    {
+        WithRepository(root =>
+        {
+            WriteNote(root, "D5/S1/Phase/Basic");
+            WriteNote(root, "D5/S1/Phase/Basic", bucket: "Zeros");
+            var document = CreateDocument(
+                GidRef.Create("D5/S1/Phase/Basic"),
+                DescribeProvenance.RepoDerived());
+
+            var findings = DescribeRepositoryValidator.Validate(root, [document]);
+
+            Assert.Contains(findings, finding => finding.Code == "duplicate-bibkey");
+        });
+    }
+
+    [Fact]
     public void ValidatorRejectsMissingFormalDeclarationSelectorWhenLeanReportIsAvailable()
     {
         WithRepository(root =>
@@ -172,9 +228,10 @@ public sealed class DescribeValidationTests
     private static void WriteNote(
         string root,
         string touchedGid,
-        string triage = "anchor")
+        string triage = "anchor",
+        string bucket = "notes")
     {
-        var directory = Path.Combine(root, "Library", "notes");
+        var directory = Path.Combine(root, "Library", bucket);
         Directory.CreateDirectory(directory);
         File.WriteAllText(
             Path.Combine(directory, "sos1957threegap.md"),
