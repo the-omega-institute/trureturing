@@ -119,6 +119,13 @@ consumed_by = ["reader"]
 verified_by = ["emit-check"]
 
 [[files]]
+pattern = "Generated/echo-residual-summary.md"
+kind = "generated"
+produced_by = "EchoVerifyCommand"
+consumed_by = ["harness-gate"]
+verified_by = ["echo-verify"]
+
+[[files]]
 pattern = "Golden/cases/**/*.toml"
 kind = "data"
 produced_by = "none"

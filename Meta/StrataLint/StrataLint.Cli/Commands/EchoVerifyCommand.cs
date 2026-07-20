@@ -43,16 +43,16 @@ internal static class EchoVerifyCommand
             var baseline = repository.ResolveFrozenRevision(prepared.Revision);
             var expected = EchoResidualBlock.Render(
                 summary.Output,
-                candidate.CommitOid,
                 baseline.CommitOid);
             if (options.Emit)
             {
                 return new ExplicitCommandResult(0, expected, string.Empty);
             }
 
-            var candidatePath = Path.IsPathRooted(options.FilePath!)
-                ? options.FilePath
-                : Path.Combine(repositoryRoot, options.FilePath!);
+            var filePath = options.FilePath ?? EchoResidualBlock.RelativePath;
+            var candidatePath = Path.IsPathRooted(filePath)
+                ? filePath
+                : Path.Combine(repositoryRoot, filePath);
             byte[] candidateBytes;
             try
             {
@@ -95,7 +95,8 @@ internal static class EchoVerifyCommand
             || (path.Value.StartsWith("Blueprint/", StringComparison.Ordinal)
                 && path.Value.EndsWith(".scribe.cs", StringComparison.Ordinal))
             || path.Value == BackfillInventoryLoader.RelativePath
-            || path.Value.StartsWith("Meta/Digestion/atoms/", StringComparison.Ordinal));
+            || path.Value == EchoResidualBlock.RelativePath
+            || DigestionOpaquePathPolicy.IsOpaque(path));
     }
 
     private static EchoVerifyOptions Parse(IReadOnlyList<string> arguments)
@@ -127,12 +128,12 @@ internal static class EchoVerifyCommand
             }
         }
 
-        if (baseRevision is null || emit == (filePath is not null) || (emit && ifAffected)) throw Usage();
+        if (baseRevision is null || (emit && (filePath is not null || ifAffected))) throw Usage();
         return new EchoVerifyOptions(emit, filePath, baseRevision, ifAffected);
     }
 
     private static InvalidOperationException Usage() => new(
-        "USAGE: StrataLint echo-verify (--emit|--file FILE [--if-affected]) --base REV");
+        "USAGE: StrataLint echo-verify (--emit|[--file FILE] [--if-affected]) --base REV");
 
     private sealed record EchoVerifyOptions(
         bool Emit,
@@ -143,25 +144,23 @@ internal static class EchoVerifyCommand
 
 internal static class EchoResidualBlock
 {
-    private const string StartPrefix = "<!-- echo-residual-summary:v1 ";
-    private const string EndMarker = "<!-- /echo-residual-summary:v1 -->";
+    internal const string RelativePath = "Generated/echo-residual-summary.md";
+    private const string StartPrefix = "<!-- echo-residual-summary:v2 ";
+    private const string EndMarker = "<!-- /echo-residual-summary:v2 -->";
     private static readonly byte[] StartPrefixBytes = Encoding.ASCII.GetBytes(StartPrefix);
-    private static readonly byte[] EndMarkerBytes = Encoding.ASCII.GetBytes(EndMarker);
 
     internal static string Render(
         string residualSummary,
-        string candidateCommitOid,
         string baseCommitOid)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(residualSummary);
-        ArgumentException.ThrowIfNullOrWhiteSpace(candidateCommitOid);
         ArgumentException.ThrowIfNullOrWhiteSpace(baseCommitOid);
         if (!residualSummary.EndsWith('\n'))
         {
             throw new ArgumentException("residual summary must end with LF", nameof(residualSummary));
         }
 
-        return $"{StartPrefix}candidate={candidateCommitOid} base={baseCommitOid} -->\n"
+        return $"{StartPrefix}base={baseCommitOid} -->\n"
             + residualSummary
             + EndMarker
             + "\n";
@@ -169,30 +168,22 @@ internal static class EchoResidualBlock
 
     internal static string? Verify(ReadOnlySpan<byte> candidate, ReadOnlySpan<byte> expected)
     {
-        var startCount = Count(candidate, StartPrefixBytes);
-        var endCount = Count(candidate, EndMarkerBytes);
-        if (startCount == 0 || endCount == 0)
+        if (candidate.SequenceEqual(expected))
         {
-            return "candidate contains no echo residual summary block";
+            return null;
         }
 
-        if (startCount != 1 || endCount != 1)
+        if (Count(candidate, expected) > 1)
         {
             return "candidate contains multiple echo residual summary blocks";
         }
 
-        var start = candidate.IndexOf(StartPrefixBytes);
-        var relativeEnd = candidate[start..].IndexOf(EndMarkerBytes);
-        if (relativeEnd < 0)
+        if (candidate.IndexOf(StartPrefixBytes) < 0)
         {
             return "candidate contains no echo residual summary block";
         }
 
-        var end = start + relativeEnd + EndMarkerBytes.Length;
-        if (end < candidate.Length && candidate[end] == (byte)'\n') end++;
-        return candidate[start..end].SequenceEqual(expected)
-            ? null
-            : "candidate block does not byte-match the derived residual summary";
+        return "candidate block does not byte-match the derived residual summary";
     }
 
     private static int Count(ReadOnlySpan<byte> source, ReadOnlySpan<byte> value)

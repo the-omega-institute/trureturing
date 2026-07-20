@@ -8,7 +8,6 @@ JUDGE_ROOT=""
 BASE_REF=""
 CANDIDATE_LEAN_REPORT=""
 BASELINE_LEAN_REPORT=""
-ECHO_REVIEW=""
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -17,7 +16,6 @@ while [[ $# -gt 0 ]]; do
     --base) BASE_REF="$2"; shift 2 ;;
     --candidate-lean-report) CANDIDATE_LEAN_REPORT="$2"; shift 2 ;;
     --baseline-lean-report) BASELINE_LEAN_REPORT="$2"; shift 2 ;;
-    --echo-review) ECHO_REVIEW="$2"; shift 2 ;;
     *) echo "harness-gate: unknown arg '$1'" >&2; exit 2 ;;
   esac
 done
@@ -41,10 +39,6 @@ CANDIDATE_ROOT="$(cd "$CANDIDATE_ROOT" && pwd -P)"
 JUDGE_ROOT="$(cd "$JUDGE_ROOT" && pwd -P)"
 CANDIDATE_LEAN_REPORT="$(cd "$(dirname "$CANDIDATE_LEAN_REPORT")" && pwd -P)/$(basename "$CANDIDATE_LEAN_REPORT")"
 BASELINE_LEAN_REPORT="$(cd "$(dirname "$BASELINE_LEAN_REPORT")" && pwd -P)/$(basename "$BASELINE_LEAN_REPORT")"
-if [[ -n "$ECHO_REVIEW" ]]; then
-  [[ -f "$ECHO_REVIEW" ]] || { echo "harness-gate: echo review '$ECHO_REVIEW' is absent" >&2; exit 2; }
-  ECHO_REVIEW="$(cd "$(dirname "$ECHO_REVIEW")" && pwd -P)/$(basename "$ECHO_REVIEW")"
-fi
 CLI_PROJECT_REL="Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj"
 
 resolve_target_path() {
@@ -121,12 +115,12 @@ admission_status="passed"
 if [[ "$rc" -ne 0 && "$rc" -ne 3 ]]; then admission_status="failed"; fi
 mark admission "$admission_status"
 
-if [[ -n "$ECHO_REVIEW" ]]; then
+if [[ $rc -eq 0 || $rc -eq 3 ]]; then
   (
     cd "$CANDIDATE_ROOT"
     STRATALINT_LEAN_REPORT="$CANDIDATE_LEAN_REPORT" \
       dotnet "$JUDGE_DLL" echo-verify \
-        --file "$ECHO_REVIEW" --base "$BASE_REF" --if-affected
+        --base "$BASE_REF" --if-affected
   )
   mark echo-verify
 fi

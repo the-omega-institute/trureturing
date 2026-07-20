@@ -12,7 +12,7 @@
 
 ## Residual Accounting (Required)
 
-- Immediately before publishing a theory batch, run `make echo-residual-summary BASE=origin/dev` from its worktree and paste the complete output block into `.echo-review.md` verbatim.
-- Run `make echo-verify FILE=.echo-review.md BASE=origin/dev`; the base-owned required admission check verifies the PR-body copy and fails closed on a missing, stale, or byte-modified block.
+- Immediately before publishing a theory batch, run `make echo-residual-summary BASE=origin/dev` from its worktree and replace `Generated/echo-residual-summary.md` with the complete output bytes.
+- Run `make echo-verify BASE=origin/dev`; the base-owned required admission check verifies the committed projection and fails closed on a missing, stale, or byte-modified block.
 - Residual counts, mother residual `atom_id` lists, and `unresolved-subitem` lists must never be counted, written, edited, or reordered by hand. They are projections of `digest-status --residual-summary`, which uses the same evaluation as `digest-status --json`.
-- After any Lean, Scribe, or `Meta/BACKFILL.yaml` change, discard the earlier block and rerun the target. A stale or manually reconciled block is not publication evidence.
+- After any Lean, Scribe, theory-source, or `Meta/BACKFILL.yaml` change, discard the earlier projection and rerun the target. A stale or manually reconciled block is not publication evidence.

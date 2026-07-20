@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -141,7 +142,7 @@ public sealed class MakeWorkflowTests
             """
             #!/usr/bin/env bash
             [[ "$*" == *"echo-verify --emit --base synthetic-base"* ]] || exit 19
-            printf '%s\n' '<!-- echo-residual-summary:v1 candidate=git-sha1:1111111111111111111111111111111111111111 base=git-sha1:2222222222222222222222222222222222222222 -->' '# Echo Residual Summary' '<!-- /echo-residual-summary:v1 -->'
+            printf '%s\n' '<!-- echo-residual-summary:v2 base=git-sha1:2222222222222222222222222222222222222222 -->' '# Echo Residual Summary' '<!-- /echo-residual-summary:v2 -->'
             """);
         File.SetUnixFileMode(
             Path.Combine(fixture.Path, LeanReportScriptPath),
@@ -160,12 +161,53 @@ public sealed class MakeWorkflowTests
         Assert.Equal(0, result.ExitCode);
         Assert.Equal(
             """
-            <!-- echo-residual-summary:v1 candidate=git-sha1:1111111111111111111111111111111111111111 base=git-sha1:2222222222222222222222222222222222222222 -->
+            <!-- echo-residual-summary:v2 base=git-sha1:2222222222222222222222222222222222222222 -->
             # Echo Residual Summary
-            <!-- /echo-residual-summary:v1 -->
+            <!-- /echo-residual-summary:v2 -->
             """ + "\n",
             System.Text.Encoding.UTF8.GetString(result.StandardOutput));
         Assert.Equal("lean provenance\n", System.Text.Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    [Fact]
+    public void EchoVerifyMakeDefaultsToTheCommittedProjection()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var root = FindRepositoryRoot();
+        using var fixture = new TemporaryDirectory();
+        var reportDirectory = Path.Combine(fixture.Path, "Meta", "StrataLint", "scripts", "report");
+        var cliDirectory = Path.Combine(fixture.Path, "Meta", "StrataLint", "StrataLint.Cli");
+        var binDirectory = Path.Combine(fixture.Path, "bin");
+        Directory.CreateDirectory(reportDirectory);
+        Directory.CreateDirectory(cliDirectory);
+        Directory.CreateDirectory(binDirectory);
+        File.Copy(Path.Combine(root, "Makefile"), Path.Combine(fixture.Path, "Makefile"));
+        File.Copy(
+            Path.Combine(root, EchoVerifyScriptPath),
+            Path.Combine(fixture.Path, EchoVerifyScriptPath));
+        File.WriteAllText(
+            Path.Combine(binDirectory, "dotnet"),
+            """
+            #!/usr/bin/env bash
+            [[ "$*" == *"echo-verify --base synthetic-base --if-affected"* ]] || exit 19
+            [[ "$*" != *"--file"* ]] || exit 20
+            printf 'ECHO_VERIFY_OK\n'
+            """);
+        File.SetUnixFileMode(
+            Path.Combine(binDirectory, "dotnet"),
+            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+
+        var result = BoundedProcessRunner.Run(
+            "/bin/bash",
+            ["-c", "PATH=\"$1:$PATH\" exec make echo-verify BASE=synthetic-base", "echo-make", binDirectory],
+            fixture.Path,
+            TimeSpan.FromSeconds(30),
+            64 * 1024);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal("ECHO_VERIFY_OK\n", System.Text.Encoding.UTF8.GetString(result.StandardOutput));
+        Assert.Empty(result.StandardError);
     }
 
     [Fact]
@@ -173,16 +215,33 @@ public sealed class MakeWorkflowTests
     {
         var root = FindRepositoryRoot();
         var workflow = File.ReadAllText(Path.Combine(root, ".github", "workflows", "ci.yml"));
+        var localGate = File.ReadAllText(Path.Combine(root, LocalHarnessGateScriptPath));
         var sharedGate = File.ReadAllText(Path.Combine(root, ".github", "scripts", "harness-gate.sh"));
         var preflight = File.ReadAllText(Path.Combine(root, PreflightScriptPath));
 
-        Assert.Contains("types: [opened, synchronize, reopened, edited]", workflow, StringComparison.Ordinal);
-        Assert.Contains("github.event.pull_request.body", workflow, StringComparison.Ordinal);
-        Assert.Contains("--echo-review", workflow, StringComparison.Ordinal);
-        Assert.Contains("--echo-review", sharedGate, StringComparison.Ordinal);
+        Assert.Contains("types: [opened, synchronize, reopened]", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("github.event.pull_request.body", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("--echo-review", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("--echo-review", sharedGate, StringComparison.Ordinal);
         Assert.Contains("dotnet \"$JUDGE_DLL\" echo-verify", sharedGate, StringComparison.Ordinal);
         Assert.Contains("--if-affected", sharedGate, StringComparison.Ordinal);
-        Assert.Contains("make echo-verify", preflight, StringComparison.Ordinal);
+        Assert.Contains("echo-verify-bootstrap", localGate, StringComparison.Ordinal);
+        Assert.Contains("make -C \"$CANDIDATE_ROOT\" echo-verify", localGate, StringComparison.Ordinal);
+        Assert.DoesNotContain("make echo-verify", preflight, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void EchoProjectionIsARegisteredGeneratedArtifactNotFlightScaffolding()
+    {
+        var root = FindRepositoryRoot();
+        var registry = File.ReadAllText(Path.Combine(root, "Meta", "registry.yaml"));
+        var fileMap = File.ReadAllText(Path.Combine(root, "Meta", "FILEMAP.toml"));
+        var gitignore = File.ReadAllText(Path.Combine(root, ".gitignore"));
+
+        Assert.Contains($"  - \"{EchoResidualBlock.RelativePath}\"", registry, StringComparison.Ordinal);
+        Assert.Contains($"pattern = \"{EchoResidualBlock.RelativePath}\"", fileMap, StringComparison.Ordinal);
+        Assert.Contains(".echo-review.md", gitignore, StringComparison.Ordinal);
+        Assert.Contains(".sshx-*", gitignore, StringComparison.Ordinal);
     }
 
     [Fact]
