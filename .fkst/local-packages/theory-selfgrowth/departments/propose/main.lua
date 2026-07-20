@@ -1,7 +1,7 @@
 -- theory-selfgrowth / propose department.
--- On the platform idle broadcast, emit ONE frontier-generation request. github-proxy
--- dedups on the request's stable `dedup_key`, so at most one open request exists at a
--- time (no flood) — this department needs no github search of its own.
+-- On a fresh platform idle broadcast, emit ONE frontier-generation request. The
+-- request `dedup_key` is scoped to the validated idle generation so a closed prior
+-- generation cannot suppress a later one.
 --
 -- HOST-package form: publishable `contract` only, plus framework-injected globals
 -- (`exec_sync` to read FKST_GITHUB_REPO, `raise` to produce). No forge/devloop/
@@ -29,13 +29,25 @@ local function read_repo()
   return tostring(out.stdout or "")
 end
 
-function pipeline(_event)
+local function current_now_seconds()
+  if type(now) ~= "function" then
+    error("theory-selfgrowth: now-unavailable: now primitive is required", 0)
+  end
+  local seconds = tonumber(now())
+  if seconds == nil then
+    error("theory-selfgrowth: now-unavailable: now primitive returned non-numeric value", 0)
+  end
+  return seconds
+end
+
+function pipeline(event)
+  local idle_payload = core.validate_system_idle_event(event, current_now_seconds())
   local repo = read_repo()
   if not core.validate_repo(repo) then
     error("theory-selfgrowth: malformed FKST_GITHUB_REPO: " .. tostring(repo), 0)
   end
   -- Produce the issue-create event; github-proxy performs the gh call + dedup.
-  raise("github-proxy.github_issue_create_request", core.build_frontier_request(repo))
+  raise("github-proxy.github_issue_create_request", core.build_frontier_request(repo, idle_payload))
 end
 
 return M
