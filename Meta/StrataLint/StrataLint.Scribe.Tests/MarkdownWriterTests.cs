@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Tests;
 public sealed class MarkdownWriterTests
 {
     [Fact]
-    public void WriterEmitsTheCanonicalMarkdownLayout()
+    public void WriterEmitsAcademicMarkdownWithAstNumberingAndLeanProofs()
     {
         var paragraph = Paragraph(
             new Inline.Text(TextRun.Create("Map ")),
@@ -34,7 +34,7 @@ public sealed class MarkdownWriterTests
                     [
                         new DocumentBlock.Describe(
                             DescribeId.Create("formula"),
-                            DescribeKind.Proposition,
+                            DescribeKind.Definition,
                             Heading.Create("Formula"),
                             DescribeStatement.FromFormula(identity),
                             DescribeProvenance.RepoDerived(),
@@ -46,7 +46,8 @@ public sealed class MarkdownWriterTests
                             DescribeStatement.FromLean(LeanDeclarationRef.Create(
                                 "D5/S1/Scale/Embedding.embedding_injective")),
                             DescribeProvenance.RepoDerived(),
-                            BlockSequence.Create([paragraph])),
+                            BlockSequence.Create([paragraph]),
+                            LatexStatement.Create("$\\operatorname{embed}(x) = 0 \\Rightarrow x = 0$")),
                     ])),
             ]));
 
@@ -55,17 +56,22 @@ public sealed class MarkdownWriterTests
 
         Assert.Equal(
             "# Sample\n\n"
+            + "## Abstract\n\n"
+            + "The real embedding is injective.\n\n"
             + "Map $\\varphi$ mirrors `D5/B/S1/Scale/Embedding`.\n\n"
             + "$$\n\\varphi^{2} = \\varphi + 1\n$$\n\n"
             + "## Results\n\n"
-            + "### Proposition: Formula\n\n"
-            + "Provenance: `repo-derived`\n\n"
-            + "Statement:\n\n"
+            + "**Definition 1.1 (Formula).**\n\n"
             + "$$\n\\varphi^{2} = \\varphi + 1\n$$\n\n"
+            + "*Source.* Repository-derived.\n\n"
+            + "*Commentary.*\n\n"
             + "Map $\\varphi$ mirrors `D5/B/S1/Scale/Embedding`.\n\n"
-            + "### Theorem: Injectivity\n\n"
-            + "Provenance: `repo-derived`\n\n"
-            + "Statement: `D5/S1/Scale/Embedding.embedding_injective` `✓ std3`\n\n"
+            + "**Theorem 1.2 (Injectivity).**\n\n"
+            + "$\\operatorname{embed}(x) = 0 \\Rightarrow x = 0$\n\n"
+            + "*Proof.* Machine-checked in Lean as "
+            + "`D5/S1/Scale/Embedding.embedding_injective` (`✓ std3`). ∎\n\n"
+            + "*Source.* Repository-derived.\n\n"
+            + "*Commentary.*\n\n"
             + "Map $\\varphi$ mirrors `D5/B/S1/Scale/Embedding`.\n",
             text);
     }
@@ -90,7 +96,7 @@ public sealed class MarkdownWriterTests
     }
 
     [Fact]
-    public void LiteratureProvenanceEmitsOnlyTypedReferencesNotCopiedMetadata()
+    public void LiteratureProvenanceEmitsAnAuthorYearDoiCitationFromTypedMetadata()
     {
         var reference = LibraryNoteRef.Create("D5/L/sos1957threegap");
         var document = ScribeDocument.Create(
@@ -110,14 +116,24 @@ public sealed class MarkdownWriterTests
                     ])),
             ]));
 
-        var text = Encoding.UTF8.GetString(CanonicalMarkdownWriter.Write(document).AsSpan());
+        var citations = new Dictionary<string, LiteratureCitation>(StringComparer.Ordinal)
+        {
+            ["sos1957threegap"] = LiteratureCitation.Create(
+                "Vera T. Sos",
+                1957,
+                "On the three gap theorem",
+                "10.1007/BF01389053"),
+        };
+        var text = Encoding.UTF8.GetString(
+            CanonicalMarkdownWriter.Write(document, citations: citations).AsSpan());
 
         Assert.Contains(
-            "Provenance: `literature-attested` via `D5/L/sos1957threegap` (`lit/sos1957threegap`)",
+            "*Citation.* Vera T. Sos (1957). *On the three gap theorem*. "
+            + "DOI: [10.1007/BF01389053](https://doi.org/10.1007/BF01389053).",
             text,
             StringComparison.Ordinal);
-        Assert.DoesNotContain("On the three gap theorem", text, StringComparison.Ordinal);
-        Assert.DoesNotContain("10.1007", text, StringComparison.Ordinal);
+        Assert.DoesNotContain("D5/L/sos1957threegap", text, StringComparison.Ordinal);
+        Assert.DoesNotContain("lit/sos1957threegap", text, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -143,9 +159,10 @@ public sealed class MarkdownWriterTests
         var report = LeanReportFixture.ForDocuments([document]);
         var text = Encoding.UTF8.GetString(CanonicalMarkdownWriter.Write(document, report).AsSpan());
 
-        Assert.Contains("Statement:\n\n" + latex + "\n\n", text, StringComparison.Ordinal);
+        Assert.Contains("**Theorem 1.1 (Critical line).**\n\n" + latex + "\n\n", text, StringComparison.Ordinal);
         Assert.Contains(
-            "Lean: `D5/S1/Scale/Embedding.embedding_injective` `✓ std3`",
+            "*Proof.* Machine-checked in Lean as "
+            + "`D5/S1/Scale/Embedding.embedding_injective` (`✓ std3`). ∎",
             text,
             StringComparison.Ordinal);
     }

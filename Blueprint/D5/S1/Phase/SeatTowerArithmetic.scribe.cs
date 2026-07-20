@@ -21,7 +21,8 @@ internal sealed class SeatTowerArithmeticDocument : IScribeDocumentDefinition
                         "D5/S1/Phase/SeatTowerArithmetic.mod_twenty_four_eq_zero_or_twelve")),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
-                        "If an integer is explicitly written as twelve times a quotient, its residue modulo twenty-four is zero or twelve. No orbit divisibility premise is inferred.")))),
+                        "If an integer is explicitly written as twelve times a quotient, its residue modulo twenty-four is zero or twelve. No orbit divisibility premise is inferred."))),
+                    LatexStatement.Create(@"$\forall \psi,q\in\mathbb{Z},\ \psi=12q \Rightarrow (\psi\operatorname{mod}24=0 \lor \psi\operatorname{mod}24=12)$")),
                 new DocumentBlock.Describe(
                     DescribeId.Create("quotient-parity-selector"),
                     DescribeKind.Theorem,
@@ -30,7 +31,8 @@ internal sealed class SeatTowerArithmeticDocument : IScribeDocumentDefinition
                         "D5/S1/Phase/SeatTowerArithmetic.twenty_four_dvd_iff_even_quotient")),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
-                        "Under the same explicit factorization by twelve, divisibility by twenty-four is equivalent to evenness of the quotient. The theorem does not identify that parity with a Jacobi symbol.")))),
+                        "Under the same explicit factorization by twelve, divisibility by twenty-four is equivalent to evenness of the quotient. The theorem does not identify that parity with a Jacobi symbol."))),
+                    LatexStatement.Create(@"$\forall \psi,q\in\mathbb{Z},\ \psi=12q \Rightarrow (24\mid\psi \Leftrightarrow 2\mid q)$")),
                 new DocumentBlock.Describe(
                     DescribeId.Create("bhk-algebraic-rearrangement"),
                     DescribeKind.Theorem,
@@ -39,7 +41,8 @@ internal sealed class SeatTowerArithmeticDocument : IScribeDocumentDefinition
                         "D5/S1/Phase/SeatTowerArithmetic.bhk_implies_w3_walk")),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
-                        "For rational variables and a nonzero denominator, the displayed conclusion follows algebraically from explicit BHK and Rademacher equations. This is not a typed identification theorem for canonical W3 data.")))),
+                        "For rational variables and a nonzero denominator, the displayed conclusion follows algebraically from explicit BHK and Rademacher equations. This is not a typed identification theorem for canonical W3 data."))),
+                    LatexStatement.Create(@"$$\forall s,a,l,r,l',r',c,\phi\in\mathbb{Q},\ c\neq 0 \land 12s=-3+\frac{l'+r'}{c}-a \land \phi=\frac{l+r}{c}-12s \Rightarrow \phi=3+a+\frac{(l+r)-(l'+r')}{c}$$")),
                 new DocumentBlock.Describe(
                     DescribeId.Create("pythagorean-gate-normalization"),
                     DescribeKind.Theorem,
@@ -48,7 +51,8 @@ internal sealed class SeatTowerArithmeticDocument : IScribeDocumentDefinition
                         "D5/S1/Phase/SeatTowerArithmetic.pythagorean_gate_iff_eisenstein_norm")),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
-                        "The two integer polynomial equations are equivalent by normalization. The theorem does not prove that actual orbit parameters satisfy either equation and does not validate narrative input data.")))),
+                        "The two integer polynomial equations are equivalent by normalization. The theorem does not prove that actual orbit parameters satisfy either equation and does not validate narrative input data."))),
+                    LatexStatement.Create(@"$$\forall \beta,\gamma_{0},m\in\mathbb{Z},\ (\gamma_{0}-2\beta)^{2}+3\gamma_{0}^{2}=4m(m+1) \Leftrightarrow \beta^{2}-\beta\gamma_{0}+\gamma_{0}^{2}=m(m+1)$$")),
                 new DocumentBlock.Describe(
                     DescribeId.Create("nonzero-divisibility-floor"),
                     DescribeKind.Theorem,
@@ -57,5 +61,6 @@ internal sealed class SeatTowerArithmeticDocument : IScribeDocumentDefinition
                         "D5/S1/Phase/SeatTowerArithmetic.twelve_le_abs_of_dvd_of_ne_zero")),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
-                        "Explicit divisibility by twelve and nonzeroness imply the absolute-value floor. No sampled congruence, asymptotic law, or measurable statement is closed.")))))));
+                        "Explicit divisibility by twelve and nonzeroness imply the absolute-value floor. No sampled congruence, asymptotic law, or measurable statement is closed."))),
+                    LatexStatement.Create(@"$\forall \psi\in\mathbb{Z},\ 12\mid\psi \land \psi\neq 0 \Rightarrow 12\leq |\psi|$")))));
 }

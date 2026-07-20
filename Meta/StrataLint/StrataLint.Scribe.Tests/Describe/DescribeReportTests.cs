@@ -267,6 +267,8 @@ public sealed class DescribeReportTests
             Path.Combine(notes, bibkey + ".md"),
             "---\n"
             + $"bibkey: {bibkey}\n"
+            + "authors: Vera T. Sos\n"
+            + "year: 1957\n"
             + $"title: {title}\n"
             + $"doi: {doi}\n"
             + "claim: Gap lengths for irrational rotations.\n"

@@ -6,6 +6,8 @@ namespace StrataLint.Scribe;
 
 internal sealed record LibraryNote(
     BibKey BibKey,
+    string Authors,
+    int Year,
     string Title,
     Doi? Doi,
     string Claim,
@@ -40,6 +42,8 @@ internal sealed class LibraryNoteCatalog
     private static readonly HashSet<string> RequiredKeys =
     [
         "bibkey",
+        "authors",
+        "year",
         "title",
         "doi",
         "claim",
@@ -51,6 +55,18 @@ internal sealed class LibraryNoteCatalog
     private LibraryNoteCatalog(ImmutableArray<LibraryNote> notes) => Notes = notes;
 
     internal ImmutableArray<LibraryNote> Notes { get; }
+
+    internal IReadOnlyDictionary<string, LiteratureCitation> Citations =>
+        Notes.ToDictionary(
+            static note => note.BibKey.Value,
+            static note => LiteratureCitation.Create(
+                note.Authors,
+                note.Year,
+                note.Title,
+                note.Doi?.Value
+                    ?? throw new FormatException(
+                        $"{note.RelativePath} requires a DOI for academic citation")),
+            StringComparer.Ordinal);
 
     internal static LibraryNoteCatalog Load(string repositoryRoot)
     {
@@ -176,6 +192,10 @@ internal sealed class LibraryNoteCatalog
         }
 
         var title = RequiredLine(metadata, "title", relativePath);
+        var authors = RequiredLine(metadata, "authors", relativePath);
+        var year = metadata["year"] is int rawYear && rawYear is >= 1000 and <= 9999
+            ? rawYear
+            : throw new FormatException($"{relativePath} field year must be a four-digit integer");
         var claim = RequiredLine(metadata, "claim", relativePath);
         var license = RequiredLine(metadata, "license", relativePath);
         var triage = ParseTriage(RequiredLine(metadata, "triage", relativePath), relativePath);
@@ -198,6 +218,8 @@ internal sealed class LibraryNoteCatalog
             .ToImmutableArray();
         return new LibraryNote(
             bibKey,
+            authors,
+            year,
             title,
             doi,
             claim,

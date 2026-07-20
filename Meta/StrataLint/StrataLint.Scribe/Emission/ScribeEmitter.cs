@@ -132,10 +132,17 @@ public static class ScribeEmitter
         var attestations = new List<ScribeEmissionRecord>();
         var declarationReferences = new HashSet<string>(StringComparer.Ordinal);
         var describeLatexRecords = new List<ScribeDescribeLatexRecord>();
+        var citations = LibraryNoteCatalog.Load(repositoryRoot).Citations;
         foreach (var definition in DocumentDefinitions.All)
         {
-            var first = CanonicalMarkdownWriter.Write(definition.Document, leanReport).ToArray();
-            var second = CanonicalMarkdownWriter.Write(definition.Document, leanReport).ToArray();
+            var first = CanonicalMarkdownWriter.Write(
+                definition.Document,
+                leanReport,
+                citations).ToArray();
+            var second = CanonicalMarkdownWriter.Write(
+                definition.Document,
+                leanReport,
+                citations).ToArray();
             if (!first.AsSpan().SequenceEqual(second))
             {
                 throw new InvalidOperationException(

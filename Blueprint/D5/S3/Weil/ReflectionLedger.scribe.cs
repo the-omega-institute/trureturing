@@ -18,7 +18,8 @@ internal sealed class ReflectionLedgerDocument : IScribeDocumentDefinition
                     "D5/S3/Weil/ReflectionLedger.mirror_fixed_re_eq")),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
-                    "Conjugate reflection sends a spectral parameter to one minus its conjugate. Every fixed point therefore has real part one half; no zero-location claim is made.")))),
+                    "Conjugate reflection sends a spectral parameter to one minus its conjugate. Every fixed point therefore has real part one half; no zero-location claim is made."))),
+                LatexStatement.Create(@"$\forall s\in\mathbb{C},\ \operatorname{mirror}(s)=s \Rightarrow \Re(s)=\frac{1}{2}$")),
             new DocumentBlock.Describe(
                 DescribeId.Create("mirror-reverses-every-scaling-entry"),
                 DescribeKind.Theorem,
@@ -27,7 +28,8 @@ internal sealed class ReflectionLedgerDocument : IScribeDocumentDefinition
                     "D5/S3/Weil/ReflectionLedger.mirror_reversal_spec")),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
-                    "For the entry given by displacement from one half times ledger length, mirroring negates every coordinate. The same theorem identifies the full fixed locus.")))),
+                    "For the entry given by displacement from one half times ledger length, mirroring negates every coordinate. The same theorem identifies the full fixed locus."))),
+                LatexStatement.Create(@"$$\forall A\ [\operatorname{AddMonoid}(A)],\ \forall \ell:A\to_{+}\mathbb{R},\ \forall s\in\mathbb{C},\ (\forall a,\operatorname{scalingLedger}(\ell,\operatorname{mirror}(s),a)=-\operatorname{scalingLedger}(\ell,s,a)) \land (s=\operatorname{mirror}(s) \Leftrightarrow \Re(s)=\frac{1}{2})$$")),
             new DocumentBlock.Describe(
                 DescribeId.Create("symmetry-channel-is-not-location-force"),
                 DescribeKind.Remark,

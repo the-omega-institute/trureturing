@@ -1,5 +1,7 @@
 ---
 bibkey: hedenmalm1997hilbert
+authors: Hakan Hedenmalm, Peter Lindqvist, and Kristian Seip
+year: 1997
 title: A Hilbert space of Dirichlet series and systems of dilated functions in L2(0,1)
 doi: 10.1215/S0012-7094-97-08601-4
 claim: Square-summable Dirichlet-series Hilbert spaces, their half-plane, zeta kernel, and coefficient translations.

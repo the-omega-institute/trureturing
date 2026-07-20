@@ -189,11 +189,12 @@ public sealed class DocumentDiscoveryTests
         }
 
         var report = LeanCompiledArtifactReports.InspectRepository(repositoryRoot);
+        var citations = LibraryNoteCatalog.Load(repositoryRoot).Citations;
 
         foreach (var definition in DocumentDefinitions.All)
         {
-            var first = CanonicalMarkdownWriter.Write(definition.Document, report);
-            var second = CanonicalMarkdownWriter.Write(definition.Document, report);
+            var first = CanonicalMarkdownWriter.Write(definition.Document, report, citations);
+            var second = CanonicalMarkdownWriter.Write(definition.Document, report, citations);
             var committed = File.ReadAllBytes(
                 Path.Combine(repositoryRoot, definition.RelativePath.Value));
 
@@ -210,14 +211,17 @@ public sealed class DocumentDiscoveryTests
         var report = LeanReportFixture.ForDocuments([definition.Document]);
 
         var markdown = System.Text.Encoding.UTF8.GetString(
-            CanonicalMarkdownWriter.Write(definition.Document, report).AsSpan());
+            CanonicalMarkdownWriter.Write(
+                definition.Document,
+                report,
+                RepositoryCitations()).AsSpan());
 
         Assert.Contains(
             "\\operatorname{Z}\\left(89\\right) + \\operatorname{Z}\\left(34\\right) = \\operatorname{Z}\\left(123\\right) = 1010000000_{W}",
             markdown,
             StringComparison.Ordinal);
         Assert.Contains(
-            "Provenance: `repo-derived`",
+            "*Source.* Repository-derived.",
             markdown,
             StringComparison.Ordinal);
     }
@@ -266,7 +270,10 @@ public sealed class DocumentDiscoveryTests
 
         var report = LeanReportFixture.ForDocuments([definition.Document]);
         var markdown = System.Text.Encoding.UTF8.GetString(
-            CanonicalMarkdownWriter.Write(definition.Document, report).AsSpan());
+            CanonicalMarkdownWriter.Write(
+                definition.Document,
+                report,
+                RepositoryCitations()).AsSpan());
         Assert.Contains(
             "local candidate disjunction modulo 36 remains an explicit premise",
             markdown,
@@ -516,7 +523,10 @@ public sealed class DocumentDiscoveryTests
             item.Document.Header.Gid.Value == "D5/S3/Zeros/ZeroGeometry");
         var report = LeanReportFixture.ForDocuments([definition.Document]);
         var markdown = System.Text.Encoding.UTF8.GetString(
-            CanonicalMarkdownWriter.Write(definition.Document, report).AsSpan());
+            CanonicalMarkdownWriter.Write(
+                definition.Document,
+                report,
+                RepositoryCitations()).AsSpan());
 
         string[] requiredDisclosures =
         [
@@ -590,7 +600,10 @@ public sealed class DocumentDiscoveryTests
             item.Document.Header.Gid.Value == "D5/S3/Quantum/FiniteDimensional");
         var report = LeanReportFixture.ForDocuments([definition.Document]);
         var markdown = System.Text.Encoding.UTF8.GetString(
-            CanonicalMarkdownWriter.Write(definition.Document, report).AsSpan());
+            CanonicalMarkdownWriter.Write(
+                definition.Document,
+                report,
+                RepositoryCitations()).AsSpan());
 
         Assert.Contains(
             "Original numerical-certificate claim not formalized: the source atom's matrix-unit relations with exact zero certificate error.",
@@ -647,7 +660,10 @@ public sealed class DocumentDiscoveryTests
             item.Document.Header.Gid.Value == "D5/S3/Quantum/QubitWitnesses");
         var report = LeanReportFixture.ForDocuments([definition.Document]);
         var markdown = System.Text.Encoding.UTF8.GetString(
-            CanonicalMarkdownWriter.Write(definition.Document, report).AsSpan());
+            CanonicalMarkdownWriter.Write(
+                definition.Document,
+                report,
+                RepositoryCitations()).AsSpan());
 
         Assert.Contains(
             "Original numerical-certificate claim not formalized: the source atom's full matrix-unit relations with exact zero certificate error.",
@@ -673,9 +689,15 @@ public sealed class DocumentDiscoveryTests
         var report = LeanReportFixture.ForDocuments(
             [observerDefinition.Document, decoherenceDefinition.Document]);
         var observerMarkdown = System.Text.Encoding.UTF8.GetString(
-            CanonicalMarkdownWriter.Write(observerDefinition.Document, report).AsSpan());
+            CanonicalMarkdownWriter.Write(
+                observerDefinition.Document,
+                report,
+                RepositoryCitations()).AsSpan());
         var decoherenceMarkdown = System.Text.Encoding.UTF8.GetString(
-            CanonicalMarkdownWriter.Write(decoherenceDefinition.Document, report).AsSpan());
+            CanonicalMarkdownWriter.Write(
+                decoherenceDefinition.Document,
+                report,
+                RepositoryCitations()).AsSpan());
 
         Assert.Contains("including an empty type", observerMarkdown, StringComparison.Ordinal);
         Assert.Contains("explicit address i", observerMarkdown, StringComparison.Ordinal);
@@ -721,6 +743,9 @@ public sealed class DocumentDiscoveryTests
 
         throw new DirectoryNotFoundException("Could not locate the repository root.");
     }
+
+    private static IReadOnlyDictionary<string, LiteratureCitation> RepositoryCitations() =>
+        LibraryNoteCatalog.Load(FindRepositoryRoot()).Citations;
 
     private static IEnumerable<DocumentBlock> Descendants(BlockSequence content)
     {

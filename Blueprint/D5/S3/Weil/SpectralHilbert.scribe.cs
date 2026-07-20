@@ -30,7 +30,8 @@ internal sealed class SpectralHilbertDocument : IScribeDocumentDefinition
                     "D5/S3/Weil/SpectralHilbert.labeled_zeta_norm_sq")),
                 DescribeProvenance.LiteratureAttested(HedenmalmHilbert),
                 Blocks(Paragraph(Text(
-                    "When the real part of the parameter is greater than one half, the squared lp norm of the labeled zeta vector is the classical zeta function evaluated at twice that real part. The right side is independent of the imaginary part. No numerical window certificate is promoted into this exact identity.")))),
+                    "When the real part of the parameter is greater than one half, the squared lp norm of the labeled zeta vector is the classical zeta function evaluated at twice that real part. The right side is independent of the imaginary part. No numerical window certificate is promoted into this exact identity."))),
+                LatexStatement.Create(@"$\forall s\in\mathbb{C},\ \frac{1}{2}<\Re(s) \Rightarrow \operatorname{ofReal}(\Vert\operatorname{labeledZetaVector}(s)\Vert^{2})=\operatorname{classicalZeta}(2\Re(s))$")),
             new DocumentBlock.Describe(
                 DescribeId.Create("labeled-zeta-membership-has-the-half-density-boundary"),
                 DescribeKind.Theorem,
@@ -39,7 +40,8 @@ internal sealed class SpectralHilbertDocument : IScribeDocumentDefinition
                     "D5/S3/Weil/SpectralHilbert.labeled_zeta_mem_iff")),
                 DescribeProvenance.LiteratureAttested(HedenmalmHilbert),
                 Blocks(Paragraph(Text(
-                    "The raw labeled coefficient function is square-summable exactly when the spectral parameter has real part greater than one half. Thus the reverse implication includes every parameter on or to the left of the boundary; the statement does not replace that exact p-series criterion by a separate pole or Euler-product claim.")))),
+                    "The raw labeled coefficient function is square-summable exactly when the spectral parameter has real part greater than one half. Thus the reverse implication includes every parameter on or to the left of the boundary; the statement does not replace that exact p-series criterion by a separate pole or Euler-product claim."))),
+                LatexStatement.Create(@"$\forall s\in\mathbb{C},\ \operatorname{MemLp}(\operatorname{labeledZetaCoefficient}(s),2) \Leftrightarrow \frac{1}{2}<\Re(s)$")),
             new DocumentBlock.Describe(
                 DescribeId.Create("coefficient-pairing-is-the-zeta-kernel"),
                 DescribeKind.Theorem,
@@ -48,7 +50,8 @@ internal sealed class SpectralHilbertDocument : IScribeDocumentDefinition
                     "D5/S3/Weil/SpectralHilbert.labeled_zeta_kernel")),
                 DescribeProvenance.LiteratureAttested(HedenmalmHilbert),
                 Blocks(Paragraph(Text(
-                    "If the real part of s plus the conjugate of w is greater than one, the raw coefficient pairing sums to the classical zeta function at that parameter. This series theorem keeps only the joint convergence hypothesis and does not add individual square-summability assumptions.")))),
+                    "If the real part of s plus the conjugate of w is greater than one, the raw coefficient pairing sums to the classical zeta function at that parameter. This series theorem keeps only the joint convergence hypothesis and does not add individual square-summability assumptions."))),
+                LatexStatement.Create(@"$$\forall s,w\in\mathbb{C},\ 1<\Re(s+\overline{w}) \Rightarrow \sum_{a\in\operatorname{PrimeAxisTable}}\operatorname{labeledZetaCoefficient}(s,a)\overline{\operatorname{labeledZetaCoefficient}(w,a)}=\operatorname{classicalZeta}(s+\overline{w})$$")),
             new DocumentBlock.Describe(
                 DescribeId.Create("hilbert-pairing-is-the-zeta-kernel"),
                 DescribeKind.Theorem,
@@ -57,7 +60,8 @@ internal sealed class SpectralHilbertDocument : IScribeDocumentDefinition
                     "D5/S3/Weil/SpectralHilbert.labeled_zeta_inner")),
                 DescribeProvenance.LiteratureAttested(HedenmalmHilbert),
                 Blocks(Paragraph(Text(
-                    "For two actual labeled vectors in the square-summable half-plane, the source-ordered Hilbert pairing is the same zeta kernel. The two individual half-plane hypotheses are typing conditions for the vectors; they imply the raw kernel's joint convergence condition.")))),
+                    "For two actual labeled vectors in the square-summable half-plane, the source-ordered Hilbert pairing is the same zeta kernel. The two individual half-plane hypotheses are typing conditions for the vectors; they imply the raw kernel's joint convergence condition."))),
+                LatexStatement.Create(@"$$\forall s,w\in\mathbb{C},\ \frac{1}{2}<\Re(s) \land \frac{1}{2}<\Re(w) \Rightarrow \operatorname{sourcePairing}(\operatorname{labeledZetaVector}(s),\operatorname{labeledZetaVector}(w))=\operatorname{classicalZeta}(s+\overline{w})$$")),
             new DocumentBlock.Describe(
                 DescribeId.Create("mirror-is-the-unique-resonance-partner"),
                 DescribeKind.Theorem,
@@ -66,7 +70,8 @@ internal sealed class SpectralHilbertDocument : IScribeDocumentDefinition
                     "D5/S3/Weil/SpectralHilbert.resonance_partner_spec")),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
-                    "The equation s plus conjugate w equals one holds exactly for the mirror partner w = 1 - conjugate s. Self-resonance is exactly the critical line, and a parameter on the square-summable side has its mirror strictly outside that side. This is algebra of the kernel's pole-locus equation; it asserts neither meromorphic continuation nor any location of zeta zeros.")))),
+                    "The equation s plus conjugate w equals one holds exactly for the mirror partner w = 1 - conjugate s. Self-resonance is exactly the critical line, and a parameter on the square-summable side has its mirror strictly outside that side. This is algebra of the kernel's pole-locus equation; it asserts neither meromorphic continuation nor any location of zeta zeros."))),
+                LatexStatement.Create(@"$$\forall s,w\in\mathbb{C},\ (s+\overline{w}=1 \Leftrightarrow w=1-\overline{s}) \land (s+\overline{s}=1 \Leftrightarrow \Re(s)=\frac{1}{2}) \land (\frac{1}{2}<\Re(s) \Rightarrow \Re(1-\overline{s})<\frac{1}{2})$$")),
             new DocumentBlock.Describe(
                 DescribeId.Create("hardy-space-identification"),
                 DescribeKind.Remark,

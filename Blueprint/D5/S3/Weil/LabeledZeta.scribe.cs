@@ -19,5 +19,6 @@ internal sealed class LabeledZetaDocument : IScribeDocumentDefinition
                 DescribeProvenance.LiteratureAttested(
                     LibraryNoteRef.Create("D5/L/hedenmalm1997hilbert")),
                 Blocks(Paragraph(Text(
-                    "The coordinate product needs no summability claim. Its empty-ledger coordinate is one, so the kernel-checked function cannot equal the zero vector.")))))));
+                    "The coordinate product needs no summability claim. Its empty-ledger coordinate is one, so the kernel-checked function cannot equal the zero vector."))),
+                LatexStatement.Create(@"$\forall A\ [\operatorname{AddMonoid}(A)],\ \forall \ell:A\to_{+}\mathbb{R},\ \forall s\in\mathbb{C},\ \operatorname{labeledZeta}(\ell,s)\neq 0$")))));
 }
