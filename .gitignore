@@ -11,3 +11,4 @@ __pycache__/
 .fkst/env
 .fkst/run/
 .claude/
+.echo-review.md
