@@ -122,6 +122,12 @@ public static class CanonicalMarkdownWriter
                 break;
             case DescribeStatement.LeanDeclaration lean:
                 var verified = Resolve(lean.Value, leanReport);
+                if (describe.StatementLatex is { } latex)
+                {
+                    builder.Append("\n\n")
+                        .Append(latex.Value)
+                        .Append("\n\nLean:");
+                }
                 builder.Append(" `")
                     .Append(lean.Value.Value)
                     .Append("` `")
