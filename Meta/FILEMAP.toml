@@ -362,3 +362,10 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["Lean"]
 verified_by = ["make-gate"]
+
+[[files]]
+pattern = "packages/**"
+kind = "program"
+produced_by = "none"
+consumed_by = ["fkst"]
+verified_by = ["repository-policy"]
