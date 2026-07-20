@@ -133,6 +133,13 @@ consumed_by = ["GoldenFixtureRegistryLoader"]
 verified_by = ["GoldenFixtureRegistryLoader"]
 
 [[files]]
+pattern = "Golden/perf-budgets.toml"
+kind = "data"
+produced_by = "none"
+consumed_by = ["PerfBudgetLoader"]
+verified_by = ["PerfBudgetLoader"]
+
+[[files]]
 pattern = "Golden/values-kernels.toml"
 kind = "data"
 produced_by = "none"
