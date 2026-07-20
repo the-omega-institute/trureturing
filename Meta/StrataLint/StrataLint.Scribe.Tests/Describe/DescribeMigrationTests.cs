@@ -484,6 +484,11 @@ public sealed class DescribeMigrationTests
                 Declaration: "D5/S0/Carrier/AlgebraicModel.golden_algebraic_model_spec",
                 Reference: "D5/L/stewarttall2025algebraic"),
             (
+                Document: "D5/S0/Carrier/Norm",
+                Id: "norm-euclidean-division",
+                Declaration: "D5/S0/Carrier/Euclidean.golden_division",
+                Reference: "D5/L/Carrier/chatland1949euclidean"),
+            (
                 Document: "D5/S1/Scale/MinkowskiModelSet",
                 Id: "minkowski-lattice-window-and-labeled-model-set",
                 Declaration: "D5/S1/Scale/MinkowskiModelSet.minkowski_model_set_spec",

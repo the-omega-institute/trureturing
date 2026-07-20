@@ -1,6 +1,6 @@
 /- GID: D5/S0/Carrier/Euclidean
    generality: G
-   mirror-B: D5/B/S0/Carrier/Euclidean
+   mirror-B: D5/B/S0/Carrier/Norm
    mirror-E: none(waiver:algebraically-proved)
    anchors: []
    digest: Nearest-coordinate division makes the golden integers norm-Euclidean. -/
