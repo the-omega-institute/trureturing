@@ -1,5 +1,5 @@
 [workspace]
-units = []
+units = [".fkst/local-packages/theory-selfgrowth"]
 
 [[external_sources]]
 id = "fkst-packages-platform"
@@ -17,5 +17,6 @@ packages = [
   "github-devloop-decompose",
   "github-devloop-ops",
   "github-external-pr-intake",
+  "idle-detector",
 ]
 libraries = ["contract", "workflow", "testkit", "forge", "devloop"]
