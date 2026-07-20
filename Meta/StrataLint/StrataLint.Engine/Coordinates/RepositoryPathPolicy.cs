@@ -68,6 +68,7 @@ internal static partial class RepositoryPathPolicy
             || value.StartsWith("Meta/StrataLint/", StringComparison.Ordinal)
             || DigestionCasStore.IsCanonicalPath(value)
             || value.StartsWith(".fkst/", StringComparison.Ordinal)
+            || value.StartsWith("packages/", StringComparison.Ordinal)
             || value.StartsWith(".claude/skills/", StringComparison.Ordinal)
             || IsGoldenCaseData(value)
             || IsCanonicalFutureCoordinate(value))
