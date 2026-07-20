@@ -54,6 +54,56 @@ internal sealed class SeatTowerCombinatoricsDocument : IScribeDocumentDefinition
                         "For labeled factors with independent exponent bounds, the number of bounded allocations is the product of the local capacities. No orbit-to-allocation map or bijection is supplied."))),
                     LatexStatement.Create(@"$$\forall p\in\mathbb{N},\ \forall e:\operatorname{Fin}(p)\to\mathbb{N},\ \operatorname{card}\!\left(\prod_{i\in\operatorname{Fin}(p)}\operatorname{Fin}(e(i)+1)\right)=\prod_{i\in\operatorname{Fin}(p)}(e(i)+1)$$")),
                 new DocumentBlock.Describe(
+                    DescribeId.Create("stationing-count"),
+                    DescribeKind.Theorem,
+                    H("All labeled stationings have power-of-two cardinality"),
+                    DescribeStatement.FromLean(LeanTheorem(
+                        "D5/S1/Phase/SeatTowerCombinatorics.stationing_count")),
+                    DescribeProvenance.RepoDerived(),
+                    Blocks(Paragraph(Text(
+                        "Each labeled station independently chooses one of two Boolean sides, so the full configuration type has cardinality two to the station count. This ambient count does not assert that arithmetic orbits exhaust the Boolean model."))),
+                    LatexStatement.Create(@"$\forall n\in\mathbb{N},\ \operatorname{card}(\operatorname{Stationing}(n))=2^n$")),
+                new DocumentBlock.Describe(
+                    DescribeId.Create("occupied-stations-mirror"),
+                    DescribeKind.Theorem,
+                    H("Mirroring complements the occupied support"),
+                    DescribeStatement.FromLean(LeanTheorem(
+                        "D5/S1/Phase/SeatTowerCombinatorics.occupied_stations_mirror")),
+                    DescribeProvenance.RepoDerived(),
+                    Blocks(Paragraph(Text(
+                        "Occupancy is defined as the finite support of true Boolean coordinates. Pointwise negation therefore sends that support to its complement inside the labeled station set; no sampled zero set is identified with this support."))),
+                    LatexStatement.Create(@"$\forall s\in\operatorname{Stationing}(n),\ \operatorname{Occ}(M(s))=\operatorname{Fin}(n)\setminus\operatorname{Occ}(s)$")),
+                new DocumentBlock.Describe(
+                    DescribeId.Create("mirror-occupied-count"),
+                    DescribeKind.Theorem,
+                    H("Mirror occupancy is the complementary count"),
+                    DescribeStatement.FromLean(LeanTheorem(
+                        "D5/S1/Phase/SeatTowerCombinatorics.mirror_occupied_count")),
+                    DescribeProvenance.RepoDerived(),
+                    Blocks(Paragraph(Text(
+                        "Taking cardinalities in the support-complement identity gives the total station count minus the original occupancy. The finite identity supplies neither a density limit nor a repulsion exponent."))),
+                    LatexStatement.Create(@"$\forall s\in\operatorname{Stationing}(n),\ |\operatorname{Occ}(M(s))|=n-|\operatorname{Occ}(s)|$")),
+                new DocumentBlock.Describe(
+                    DescribeId.Create("mirror-stationing-ne-self"),
+                    DescribeKind.Theorem,
+                    H("Boolean mirroring has no fixed nonempty stationing"),
+                    DescribeStatement.FromLean(LeanTheorem(
+                        "D5/S1/Phase/SeatTowerCombinatorics.mirror_stationing_ne_self")),
+                    DescribeProvenance.RepoDerived(),
+                    Blocks(Paragraph(Text(
+                        "On a nonempty labeled station set, the value at index zero differs from its Boolean negation, so no stationing is fixed. Applying this fixed-point-free action to arithmetic orbits still requires the unresolved orbit-to-stationing bridge."))),
+                    LatexStatement.Create(@"$\forall n>0,\ \forall s\in\operatorname{Stationing}(n),\ M(s)\neq s$")),
+                new DocumentBlock.Describe(
+                    DescribeId.Create("occupied-count-stationing-count"),
+                    DescribeKind.Theorem,
+                    H("A prescribed occupancy has binomial cardinality"),
+                    DescribeStatement.FromLean(LeanTheorem(
+                        "D5/S1/Phase/SeatTowerCombinatorics.occupied_count_stationing_count")),
+                    DescribeProvenance.RepoDerived(),
+                    Blocks(Paragraph(Text(
+                        "The support equivalence identifies stationings with exactly k true coordinates and k-element subsets of the n labeled stations. Their exact count is the binomial coefficient; this does not prove either empirical zero-statistics law."))),
+                    LatexStatement.Create(@"$\forall n,k\in\mathbb{N},\ \operatorname{card}\{s\in\operatorname{Stationing}(n):|\operatorname{Occ}(s)|=k\}=\operatorname{choose}(n,k)$")),
+                new DocumentBlock.Describe(
                     DescribeId.Create("mirror-normalization-is-unique"),
                     DescribeKind.Theorem,
                     H("Each Boolean mirror pair has a unique normalized member"),

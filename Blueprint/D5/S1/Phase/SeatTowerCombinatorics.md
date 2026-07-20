@@ -54,7 +54,67 @@ $$\forall p\in\mathbb{N},\ \forall e:\operatorname{Fin}(p)\to\mathbb{N},\ \opera
 
 For labeled factors with independent exponent bounds, the number of bounded allocations is the product of the local capacities. No orbit-to-allocation map or bijection is supplied.
 
-**Theorem 1.5 (Each Boolean mirror pair has a unique normalized member).**
+**Theorem 1.5 (All labeled stationings have power-of-two cardinality).**
+
+$\forall n\in\mathbb{N},\ \operatorname{card}(\operatorname{Stationing}(n))=2^n$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Phase/SeatTowerCombinatorics.stationing_count` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Each labeled station independently chooses one of two Boolean sides, so the full configuration type has cardinality two to the station count. This ambient count does not assert that arithmetic orbits exhaust the Boolean model.
+
+**Theorem 1.6 (Mirroring complements the occupied support).**
+
+$\forall s\in\operatorname{Stationing}(n),\ \operatorname{Occ}(M(s))=\operatorname{Fin}(n)\setminus\operatorname{Occ}(s)$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Phase/SeatTowerCombinatorics.occupied_stations_mirror` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Occupancy is defined as the finite support of true Boolean coordinates. Pointwise negation therefore sends that support to its complement inside the labeled station set; no sampled zero set is identified with this support.
+
+**Theorem 1.7 (Mirror occupancy is the complementary count).**
+
+$\forall s\in\operatorname{Stationing}(n),\ |\operatorname{Occ}(M(s))|=n-|\operatorname{Occ}(s)|$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Phase/SeatTowerCombinatorics.mirror_occupied_count` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Taking cardinalities in the support-complement identity gives the total station count minus the original occupancy. The finite identity supplies neither a density limit nor a repulsion exponent.
+
+**Theorem 1.8 (Boolean mirroring has no fixed nonempty stationing).**
+
+$\forall n>0,\ \forall s\in\operatorname{Stationing}(n),\ M(s)\neq s$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Phase/SeatTowerCombinatorics.mirror_stationing_ne_self` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+On a nonempty labeled station set, the value at index zero differs from its Boolean negation, so no stationing is fixed. Applying this fixed-point-free action to arithmetic orbits still requires the unresolved orbit-to-stationing bridge.
+
+**Theorem 1.9 (A prescribed occupancy has binomial cardinality).**
+
+$\forall n,k\in\mathbb{N},\ \operatorname{card}\{s\in\operatorname{Stationing}(n):|\operatorname{Occ}(s)|=k\}=\operatorname{choose}(n,k)$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Phase/SeatTowerCombinatorics.occupied_count_stationing_count` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The support equivalence identifies stationings with exactly k true coordinates and k-element subsets of the n labeled stations. Their exact count is the binomial coefficient; this does not prove either empirical zero-statistics law.
+
+**Theorem 1.10 (Each Boolean mirror pair has a unique normalized member).**
 
 $$\forall f\in\mathbb{N},\ \forall s\in\operatorname{Stationing}(f+1),\ \operatorname{Rep}(N(s)) \land (N(s)=s \lor N(s)=M(s)) \land \forall r,\ \operatorname{Rep}(r) \land (r=s \lor r=M(s)) \Rightarrow r=N(s)$$
 
@@ -66,7 +126,7 @@ $$\forall f\in\mathbb{N},\ \forall s\in\operatorname{Stationing}(f+1),\ \operato
 
 Pointwise Boolean complement exchanges the two labeled sides. Choosing the member whose distinguished coordinate is false gives a unique representative among a stationing and its mirror.
 
-**Theorem 1.6 (Mirror representatives have power-of-two cardinality).**
+**Theorem 1.11 (Mirror representatives have power-of-two cardinality).**
 
 $$\forall f\in\mathbb{N},\ \operatorname{card}\{s\in\operatorname{Stationing}(f+1)\mid\operatorname{Rep}(s)\}=2^{f}$$
 

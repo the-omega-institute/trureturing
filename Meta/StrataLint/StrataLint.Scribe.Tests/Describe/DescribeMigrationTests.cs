@@ -13,7 +13,7 @@ public sealed class DescribeMigrationTests
                 DescribeKind.Theorem or DescribeKind.Proposition or DescribeKind.Lemma)
             .ToArray();
 
-        Assert.Equal(81, nodes.Length);
+        Assert.Equal(86, nodes.Length);
         Assert.All(nodes, static node => Assert.NotNull(node.StatementLatex));
     }
 
@@ -25,16 +25,16 @@ public sealed class DescribeMigrationTests
             root,
             DocumentDefinitions.All.Select(static definition => definition.Document));
 
-        Assert.Equal(123, report.NodeStats.Total);
+        Assert.Equal(128, report.NodeStats.Total);
         Assert.Equal(24, report.NodeStats.FormulaContentSlots);
         Assert.Equal(12, report.NodeStats.FormulaStatements);
-        Assert.Equal(111, report.NodeStats.LeanStatements);
+        Assert.Equal(116, report.NodeStats.LeanStatements);
         Assert.Equal(11, report.NodeStats.ByKind["definition"]);
         Assert.Equal(9, report.NodeStats.ByKind["proposition"]);
-        Assert.Equal(72, report.NodeStats.ByKind["theorem"]);
+        Assert.Equal(77, report.NodeStats.ByKind["theorem"]);
         Assert.Equal(1, report.NodeStats.ByKind["example"]);
         Assert.Equal(30, report.NodeStats.ByKind["remark"]);
-        Assert.Equal(88, report.NodeStats.ByProvenance["repo-derived"]);
+        Assert.Equal(93, report.NodeStats.ByProvenance["repo-derived"]);
         Assert.Equal(35, report.NodeStats.ByProvenance["literature-attested"]);
         Assert.Equal(0, report.OpenCount);
         Assert.Empty(report.SuspectedNovel);
