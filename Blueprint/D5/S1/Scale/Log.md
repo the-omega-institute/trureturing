@@ -1,20 +1,32 @@
 # Golden Logarithmic Scale
 
+## Abstract
+
+Nonzero golden integers have an integer logarithmic scale with exact unit shifts.
+
 `D5/S1/Scale/Log` assigns a scale only when $x \ne 0$. Zero is represented by `none`, never by a fabricated integer.
 
-## Proposition: Zero has no scale
+**Proposition 1.1 (Zero has no scale).**
 
-Provenance: `repo-derived`
+$\operatorname{logScale}(0)=\operatorname{none}$
 
-Statement: `D5/S1/Scale/Log.logScale_zero` `✓ std3`
+*Proof.* Machine-checked in Lean as `D5/S1/Scale/Log.logScale_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
 
 The option-valued definition returns `none` at zero.
 
-## Proposition: Nonzero scale
+**Proposition 1.2 (Nonzero scale).**
 
-Provenance: `repo-derived`
+$\forall x \in \operatorname{GoldenInt},\ x\neq 0 \Rightarrow \operatorname{logScale}(x)=\operatorname{some}(\lfloor\log_{\varphi}\lvert\operatorname{embedding}(x)\rvert\rfloor)$
 
-Statement: `D5/S1/Scale/Log.logScale_ne_zero` `✓ std3`
+*Proof.* Machine-checked in Lean as `D5/S1/Scale/Log.logScale_ne_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
 
 For nonzero input the following integer is wrapped in `some`:
 
@@ -24,21 +36,29 @@ $$
 
 ## Integral unit shifts
 
-### Proposition: Embedding of a unit power
+**Proposition 1.3 (Embedding of a unit power).**
 
-Provenance: `repo-derived`
+$\forall n \in \mathbb{Z},\ \forall x \in \operatorname{GoldenInt},\ \operatorname{embedding}(\operatorname{phiUnitZPowMul}(n,x))=\varphi^{n}\operatorname{embedding}(x)$
 
-Statement: `D5/S1/Scale/Log.embedding_phiUnitZPowMul` `✓ std3`
+*Proof.* Machine-checked in Lean as `D5/S1/Scale/Log.embedding_phiUnitZPowMul` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
 
 $$
 \operatorname{embedding}\left(\operatorname{phiUnitZPowMul}\left(n, x\right)\right) = \varphi^{n} \cdot \operatorname{embedding}\left(x\right)
 $$
 
-### Theorem: Exact scale translation
+**Theorem 1.4 (Exact scale translation).**
 
-Provenance: `repo-derived`
+$\forall n \in \mathbb{Z},\ \forall x \in \operatorname{GoldenInt},\ x\neq 0 \Rightarrow \operatorname{logScale}(\operatorname{phiUnitZPowMul}(n,x))=\operatorname{map}(n+\cdot,\operatorname{logScale}(x))$
 
-Statement: `D5/S1/Scale/Log.logScale_phiUnit_zpow_mul` `✓ std3`
+*Proof.* Machine-checked in Lean as `D5/S1/Scale/Log.logScale_phiUnit_zpow_mul` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
 
 At the option level, every integer exponent, including negative powers, translates the scale through `map` exactly:
 

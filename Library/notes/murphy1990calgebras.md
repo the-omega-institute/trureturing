@@ -1,5 +1,7 @@
 ---
 bibkey: murphy1990calgebras
+authors: Gerard J. Murphy
+year: 1990
 title: C*-Algebras and Operator Theory
 doi: 10.1016/C2009-0-22289-6
 claim: Full complex matrix algebras are simple noncommutative C*-algebras and have no characters above dimension one.

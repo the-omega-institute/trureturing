@@ -1,5 +1,7 @@
 ---
 bibkey: stewarttall2025algebraic
+authors: Ian Stewart and David Tall
+year: 2025
 title: Algebraic Number Theory and Fermat's Last Theorem
 doi: 10.1201/9781003462002
 claim: The golden integer ring, its quadratic conjugation, and integral trace and norm.

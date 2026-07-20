@@ -237,6 +237,8 @@ public sealed class DescribeValidationTests
             Path.Combine(directory, "sos1957threegap.md"),
             "---\n"
             + "bibkey: sos1957threegap\n"
+            + "authors: Vera T. Sos\n"
+            + "year: 1957\n"
             + "title: On the three gap theorem\n"
             + "doi: 10.1007/BF01389053\n"
             + "claim: Gap lengths for irrational rotations.\n"

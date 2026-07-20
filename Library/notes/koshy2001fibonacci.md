@@ -1,5 +1,7 @@
 ---
 bibkey: koshy2001fibonacci
+authors: Thomas Koshy
+year: 2001
 title: Fibonacci and Lucas Numbers with Applications
 doi: 10.1002/9781118033067
 claim: Golden-ratio identities, Fibonacci matrices, and exact Fibonacci formulas.
