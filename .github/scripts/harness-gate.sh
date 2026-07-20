@@ -126,8 +126,8 @@ if [[ $rc -eq 3 ]]; then
   CANDIDATE_DLL="$(resolve_target_path "$CANDIDATE_ROOT")"
   set +e
   (
-    cd "$JUDGE_ROOT"
-    dotnet "$JUDGE_DLL" verify-conservative \
+    cd "$CANDIDATE_ROOT"
+    dotnet "$CANDIDATE_DLL" verify-conservative \
       --baseline-root "$JUDGE_ROOT" \
       --candidate-root "$CANDIDATE_ROOT" \
       --baseline-lean-report "$BASELINE_LEAN_REPORT" \

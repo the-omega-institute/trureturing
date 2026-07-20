@@ -132,6 +132,18 @@ public sealed class MakeWorkflowTests
         Assert.Contains("verify-conservative", sharedGate, StringComparison.Ordinal);
         Assert.Contains("make -C \"$CANDIDATE_ROOT\" dotnet", sharedGate, StringComparison.Ordinal);
         Assert.Contains("-getProperty:TargetPath", sharedGate, StringComparison.Ordinal);
+        Assert.Contains(
+            "dotnet \"$JUDGE_DLL\" check --protected-base",
+            sharedGate,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "dotnet \"$CANDIDATE_DLL\" verify-conservative",
+            sharedGate,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain(
+            "dotnet \"$JUDGE_DLL\" verify-conservative",
+            sharedGate,
+            StringComparison.Ordinal);
         Assert.Contains("--baseline-harness", sharedGate, StringComparison.Ordinal);
         Assert.Contains("--candidate-harness", sharedGate, StringComparison.Ordinal);
         Assert.Contains("exit 3", sharedGate, StringComparison.Ordinal);
