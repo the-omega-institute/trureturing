@@ -6,9 +6,10 @@ export PATH="$HOME/.elan/bin:/usr/local/share/dotnet:/opt/homebrew/bin:/usr/loca
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
 RECENT="${1:-10}"
 LEDGER="${STRATALINT_PERF_LEDGER:-$HOME/.stratalint-perf/events.jsonl}"
+BUDGETS="${2:-$ROOT/Golden/perf-budgets.toml}"
 
 exec dotnet run \
   --project "$ROOT/Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj" \
   --configuration Release \
   -- \
-  perf-report --ledger "$LEDGER" --recent "$RECENT"
+  perf-report --ledger "$LEDGER" --recent "$RECENT" --budgets "$BUDGETS"
