@@ -21,6 +21,17 @@ public sealed class FileMapPolicyTests
     }
 
     [Fact]
+    public void ReviewScaffoldPatternsRemainInTheRepositoryGitignore()
+    {
+        var root = RepositoryLayout.FindRoot();
+        var lines = File.ReadAllLines(Path.Combine(root, ".gitignore"));
+
+        Assert.Contains(".caller-review-prompt.md", lines, StringComparer.Ordinal);
+        Assert.Contains(".echo-review.md", lines, StringComparer.Ordinal);
+        Assert.Contains(".sshx-*", lines, StringComparer.Ordinal);
+    }
+
+    [Fact]
     public void ResidenceEpochIsClosedWithNoProtectedSurfaceData()
     {
         var root = RepositoryLayout.FindRoot();

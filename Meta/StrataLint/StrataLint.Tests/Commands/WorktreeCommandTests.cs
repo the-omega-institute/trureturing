@@ -120,6 +120,7 @@ public sealed class WorktreeCommandTests
         Assert.Equal("warm cache\n", File.ReadAllText(Path.Combine(target, ".lake", "build", "cache.bin")));
         File.WriteAllText(cacheFile, "donor changed\n");
         Assert.Equal("warm cache\n", File.ReadAllText(Path.Combine(target, ".lake", "build", "cache.bin")));
+        AssertReviewScaffoldsAreIgnored(target);
         Assert.Contains("\"event\":\"worktree_init\"", console.Output, StringComparison.Ordinal);
         Assert.Contains("\"branch\":\"harness/integration-probe\"", console.Output, StringComparison.Ordinal);
         Assert.Contains($"\"donor\":\"{repository.Path}\"", console.Output, StringComparison.Ordinal);
@@ -136,6 +137,112 @@ public sealed class WorktreeCommandTests
             Assert.Contains("\"cache_method\":\"copy\"", console.Output, StringComparison.Ordinal);
             Assert.Contains("clonefile failed", console.Error, StringComparison.Ordinal);
         }
+    }
+
+    [Fact]
+    public void CommandAppendsOnlyMissingReviewScaffoldIgnores()
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        File.WriteAllText(
+            Path.Combine(repository.Path, ".gitignore"),
+            "existing-output/\r\n.echo-review.md");
+        ReviewRegressionTests.RunGit(repository.Path, "add", ".gitignore");
+        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "fixture ignore policy");
+        var cacheFile = Path.Combine(repository.Path, ".lake", "build", "cache.bin");
+        Directory.CreateDirectory(Path.GetDirectoryName(cacheFile)!);
+        File.WriteAllText(cacheFile, "warm cache\n");
+        var target = Path.Combine(repository.Path, "provisioned-with-ignore");
+        var console = new BufferedConsole();
+
+        var exitCode = CliApplication.Run(
+            [
+                "worktree",
+                "--branch", "harness/ignore-probe",
+                "--path", target,
+                "--base", "HEAD",
+                "--source", repository.Path,
+                "--skip-restore",
+            ],
+            new ProductionCliEnvironment(repository.Path),
+            console);
+
+        Assert.Equal(0, exitCode);
+        Assert.Equal(
+            "existing-output/\r\n.echo-review.md\r\n.caller-review-prompt.md\r\n.sshx-*\r\n",
+            File.ReadAllText(Path.Combine(target, ".gitignore")));
+        AssertReviewScaffoldsAreIgnored(target);
+    }
+
+    [Fact]
+    public void CommandLeavesCompleteReviewScaffoldIgnoresByteExactAndClean()
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        const string expected =
+            "/.lake/\n.caller-review-prompt.md\n.echo-review.md\n.sshx-*\n";
+        File.WriteAllText(Path.Combine(repository.Path, ".gitignore"), expected);
+        ReviewRegressionTests.RunGit(repository.Path, "add", ".gitignore");
+        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "fixture complete ignore policy");
+        var cacheFile = Path.Combine(repository.Path, ".lake", "build", "cache.bin");
+        Directory.CreateDirectory(Path.GetDirectoryName(cacheFile)!);
+        File.WriteAllText(cacheFile, "warm cache\n");
+        var target = Path.Combine(repository.Path, "provisioned-clean");
+        var console = new BufferedConsole();
+
+        var exitCode = CliApplication.Run(
+            [
+                "worktree",
+                "--branch", "harness/clean-ignore-probe",
+                "--path", target,
+                "--base", "HEAD",
+                "--source", repository.Path,
+                "--skip-restore",
+            ],
+            new ProductionCliEnvironment(repository.Path),
+            console);
+
+        Assert.Equal(0, exitCode);
+        Assert.Equal(expected, File.ReadAllText(Path.Combine(target, ".gitignore")));
+        Assert.Equal(string.Empty, ReviewRegressionTests.RunGit(target, "status", "--porcelain"));
+    }
+
+    [Fact]
+    public void IgnoreWriteFailureRollsBackWorktreeAndBranch()
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        var ignoreDirectory = Path.Combine(repository.Path, ".gitignore");
+        Directory.CreateDirectory(ignoreDirectory);
+        File.WriteAllText(Path.Combine(ignoreDirectory, "marker"), "fixture\n");
+        ReviewRegressionTests.RunGit(repository.Path, "add", ".gitignore/marker");
+        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "fixture invalid ignore path");
+        const string branch = "harness/ignore-write-failure";
+        var target = Path.Combine(repository.Path, "ignore-write-failure");
+        var console = new BufferedConsole();
+
+        var exitCode = CliApplication.Run(
+            [
+                "worktree",
+                "--branch", branch,
+                "--path", target,
+                "--base", "HEAD",
+                "--source", repository.Path,
+                "--skip-restore",
+            ],
+            new ProductionCliEnvironment(repository.Path),
+            console);
+
+        Assert.Equal(2, exitCode);
+        Assert.Contains("WORKTREE_FAILED", console.Error, StringComparison.Ordinal);
+        Assert.False(Directory.Exists(target));
+        var branchLookup = BoundedProcessRunner.Run(
+            "git",
+            ["show-ref", "--verify", "--quiet", $"refs/heads/{branch}"],
+            repository.Path,
+            TimeSpan.FromSeconds(30),
+            4096);
+        Assert.Equal(1, branchLookup.ExitCode);
     }
 
     [Fact]
@@ -233,5 +340,19 @@ public sealed class WorktreeCommandTests
         File.WriteAllText(Path.Combine(root, "lake-manifest.json"), "{\"version\": \"1.1.0\"}\n");
         ReviewRegressionTests.RunGit(root, "add", "README.md", "lean-toolchain", "lake-manifest.json");
         ReviewRegressionTests.RunGit(root, "commit", "-m", "fixture baseline");
+    }
+
+    private static void AssertReviewScaffoldsAreIgnored(string root)
+    {
+        foreach (var path in new[] { ".caller-review-prompt.md", ".echo-review.md", ".sshx-review" })
+        {
+            var result = BoundedProcessRunner.Run(
+                "git",
+                ["check-ignore", "--quiet", "--no-index", path],
+                root,
+                TimeSpan.FromSeconds(30),
+                4096);
+            Assert.Equal(0, result.ExitCode);
+        }
     }
 }
