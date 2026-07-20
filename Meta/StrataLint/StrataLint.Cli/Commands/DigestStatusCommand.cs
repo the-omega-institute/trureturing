@@ -62,7 +62,11 @@ internal static class DigestStatusCommand
 
             return new CommandResult(
                 true,
-                options.Json ? RenderJson(evaluation) : RenderText(evaluation),
+                options.ResidualSummary
+                    ? DigestResidualSummary.Render(evaluation)
+                    : options.Json
+                        ? RenderJson(evaluation)
+                        : RenderText(evaluation),
                 string.Empty);
         }
         catch (Exception exception) when (
@@ -78,6 +82,7 @@ internal static class DigestStatusCommand
     private static DigestStatusOptions ParseArguments(IReadOnlyList<string> arguments)
     {
         var json = false;
+        var residualSummary = false;
         string? baselineRevision = null;
         for (var index = 0; index < arguments.Count; index++)
         {
@@ -85,6 +90,9 @@ internal static class DigestStatusCommand
             {
                 case "--json" when !json:
                     json = true;
+                    break;
+                case "--residual-summary" when !residualSummary:
+                    residualSummary = true;
                     break;
                 case "--base" when baselineRevision is null && index + 1 < arguments.Count:
                     baselineRevision = arguments[++index];
@@ -95,11 +103,12 @@ internal static class DigestStatusCommand
             }
         }
 
-        return new DigestStatusOptions(json, baselineRevision);
+        if (json && residualSummary) throw Usage();
+        return new DigestStatusOptions(json, residualSummary, baselineRevision);
     }
 
     private static InvalidOperationException Usage() => new(
-        "USAGE: StrataLint digest-status [--json] [--base REV]");
+        "USAGE: StrataLint digest-status [--json|--residual-summary] [--base REV]");
 
     internal static string RenderText(DigestionLedgerEvaluation evaluation)
     {
@@ -168,5 +177,8 @@ internal static class DigestStatusCommand
                 throw new InvalidOperationException(failure.Message),
         };
 
-    private sealed record DigestStatusOptions(bool Json, string? BaselineRevision);
+    private sealed record DigestStatusOptions(
+        bool Json,
+        bool ResidualSummary,
+        string? BaselineRevision);
 }
