@@ -21,6 +21,8 @@ public sealed class DocumentDiscoveryTests
     private const string PrimeAxisTableDocumentPath = "Blueprint/D5/S1/Digit/PrimeAxisTable.md";
     private const string RawDocumentPath = "Blueprint/D5/S1/Digit/Raw.md";
     private const string PhaseDocumentPath = "Blueprint/D5/S1/Phase/Basic.md";
+    private const string SeatTowerArithmeticDocumentPath =
+        "Blueprint/D5/S1/Phase/SeatTowerArithmetic.md";
     private const string ZeroOrbitCongruenceDocumentPath =
         "Blueprint/D5/S1/Phase/ZeroOrbitCongruence.md";
     private const string EmbeddingDocumentPath = "Blueprint/D5/S1/Scale/Embedding.md";
@@ -64,6 +66,7 @@ public sealed class DocumentDiscoveryTests
                 "D5/S1/Digit/PrimeAxisTable",
                 "D5/S1/Digit/Raw",
                 "D5/S1/Phase/Basic",
+                "D5/S1/Phase/SeatTowerArithmetic",
                 "D5/S1/Phase/ZeroOrbitCongruence",
                 "D5/S1/Scale/Embedding",
                 "D5/S1/Scale/FibonacciEigen",
@@ -103,6 +106,7 @@ public sealed class DocumentDiscoveryTests
                 PrimeAxisTableDocumentPath,
                 RawDocumentPath,
                 PhaseDocumentPath,
+                SeatTowerArithmeticDocumentPath,
                 ZeroOrbitCongruenceDocumentPath,
                 EmbeddingDocumentPath,
                 FibonacciEigenDocumentPath,
