@@ -53,6 +53,7 @@ internal sealed partial class RuleFixture
             [RingPath] = Header + "def goldenRing : Nat := 0\n",
             [BlueprintPath] = "# Golden ring\n",
             [GoldenCorpus.FixtureDigestionSourcePath] = GoldenCorpus.FixtureDigestionSource,
+            [GoldenCorpus.FixtureCasPath] = GoldenCorpus.FixtureDigestionSource,
         };
         Files[SpecificationPath] = GoldenCorpus.FixtureSpecification;
         Baseline = new Dictionary<string, string>(Files, StringComparer.Ordinal);

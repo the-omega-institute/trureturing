@@ -126,13 +126,6 @@ public sealed partial class ReviewRegressionTests
         fixture.Files[BackfillInventoryLoader.RelativePath] = fixture.Files[
                 BackfillInventoryLoader.RelativePath]
             .Replace(
-                $"normalized_sha256: {captured.Reference}",
-                $"normalized_sha256: {captured.Reference}\n"
-                + $"        cas_ref: {captured.Reference}",
-                StringComparison.Ordinal);
-        fixture.Files[BackfillInventoryLoader.RelativePath] = fixture.Files[
-                BackfillInventoryLoader.RelativePath]
-            .Replace(
                 $"atomizer: {AtomizerRegistry.NoAtomizerId}",
                 $"atomizer: {AtomizerRegistry.RegisteredIds[0]}",
                 StringComparison.Ordinal);
@@ -155,16 +148,6 @@ public sealed partial class ReviewRegressionTests
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        var captured = DigestionCasStore.Capture(Encoding.UTF8.GetBytes(
-            GoldenCorpus.FixtureDigestionSource));
-        fixture.Files[BackfillInventoryLoader.RelativePath] = fixture.Files[
-                BackfillInventoryLoader.RelativePath]
-            .Replace(
-                $"normalized_sha256: {captured.Reference}",
-                $"normalized_sha256: {captured.Reference}\n"
-                + $"        cas_ref: {captured.Reference}",
-                StringComparison.Ordinal);
-        fixture.Files[captured.RelativePath] = GoldenCorpus.FixtureDigestionSource;
         fixture.Files.Remove(GoldenCorpus.FixtureDigestionSourcePath);
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
@@ -197,23 +180,14 @@ public sealed partial class ReviewRegressionTests
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        var captured = DigestionCasStore.Capture(Encoding.UTF8.GetBytes(
-            GoldenCorpus.FixtureDigestionSource));
-        fixture.Baseline[BackfillInventoryLoader.RelativePath] = fixture.Baseline[
-                BackfillInventoryLoader.RelativePath]
-            .Replace(
-                $"normalized_sha256: {captured.Reference}",
-                $"normalized_sha256: {captured.Reference}\n"
-                + $"        cas_ref: {captured.Reference}",
-                StringComparison.Ordinal);
-        fixture.Baseline[captured.RelativePath] = GoldenCorpus.FixtureDigestionSource;
+        fixture.Files.Remove(GoldenCorpus.FixtureCasPath);
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(16),
             fixture.Build());
 
         Assert.Contains(evaluation.Diagnostics, diagnostic => diagnostic.Message.Contains(
-            $"baseline CAS blob was deleted: {captured.RelativePath}",
+            $"baseline CAS blob was deleted: {GoldenCorpus.FixtureCasPath}",
             StringComparison.Ordinal));
     }
 

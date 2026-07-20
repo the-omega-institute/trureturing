@@ -3761,12 +3761,20 @@ sources:
           normalized_sha256: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
         cas_ref: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
         coverage_gids:
+          - D5/S1/Phase/SeatTowerArithmetic.mod_twenty_four_eq_zero_or_twelve
+          - D5/S1/Phase/SeatTowerArithmetic.twenty_four_dvd_iff_even_quotient
           - D5/S1/Phase/SeatTowerConsequences.mod_ninety_six_refines_twenty_four_and_forty_eight
           - D5/S1/Phase/SeatTowerConsequences.jacobi_factorization_of_selector_numerator
           - D5/S1/Phase/SeatTowerConsequences.singleton_stationing_choice_count
           - D5/S1/Phase/SeatTowerConsequences.three_split_primes_have_three_singleton_choices
         receipts:
           coverage:
+            - gid: D5/S1/Phase/SeatTowerArithmetic.mod_twenty_four_eq_zero_or_twelve
+              source_sha256: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
+              target_sha256: sha256:90dfce608e61ee4b6d61b442ed9e5fd1b894f916fd1678e62954a517c32898e6
+            - gid: D5/S1/Phase/SeatTowerArithmetic.twenty_four_dvd_iff_even_quotient
+              source_sha256: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
+              target_sha256: sha256:90dfce608e61ee4b6d61b442ed9e5fd1b894f916fd1678e62954a517c32898e6
             - gid: D5/S1/Phase/SeatTowerConsequences.mod_ninety_six_refines_twenty_four_and_forty_eight
               source_sha256: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
               target_sha256: sha256:520db05df3f4606150d67b80c6b51ac763a71c485b93b0acff8561afa686d853
@@ -3785,12 +3793,14 @@ sources:
             - mod-24-joint-locality-certificate
             - mod-48-boundary-counterexample
             - mod-96-conflict-enumeration
+            - mod-96-conflict-resolution
             - m1728-minus-forty-eight-countershot
             - m468-twenty-four-member-table
             - m468-split-prime-side-selector-equivalence
             - m-side-prime-observer-clause
             - zero-only-prime-equivalence
             - three-prime-orbit-singleton-bijection
+            - three-prime-three-orbit-count
             - m4788-second-floor-classification
             - m4788-opposite-direction-clause
             - twenty-two-city-separation-certificate
@@ -3799,6 +3809,7 @@ sources:
             - prediction-trial-postmortem
             - prediction-three-trial-certificate
             - zolotarev-congruence-to-selector-numerator
+            - zolotarev-jacobi-factorization
             - zolotarev-144-case-certificate
             - fixed-ray-character-counterexample
             - fixed-ray-nineteen-witness-certificate
@@ -3815,16 +3826,31 @@ sources:
           raw_sha256: sha256:78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26
           normalized_sha256: sha256:78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26
         cas_ref: sha256:78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26
-        coverage_gids: []
+        coverage_gids:
+          - D5/S1/Phase/SeatTowerArithmetic.bhk_implies_w3_walk
         receipts:
-          coverage: []
+          coverage:
+            - gid: D5/S1/Phase/SeatTowerArithmetic.bhk_implies_w3_walk
+              source_sha256: sha256:78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26
+              target_sha256: sha256:90dfce608e61ee4b6d61b442ed9e5fd1b894f916fd1678e62954a517c32898e6
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - bhk-continued-fraction-theorem
+            - bhk-1755-enumeration-certificate
+            - w3-440-enumeration-certificate
+            - w3-sign-reversal-postmortem
+            - full-vote-enforcement-clause
+            - three-walk-identification
+            - dedekind-family-split-identity
+            - endpoint-translation-integrality
+            - orientation-branch-clause
+            - dedekind-orientation-canonical-ledger-clause
+            - translation-asymptotic
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: gict-residual-4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f
         ast_path: appendix/E.25
         fingerprints:
@@ -3832,10 +3858,14 @@ sources:
           normalized_sha256: sha256:4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f
         cas_ref: sha256:4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f
         coverage_gids:
+          - D5/S1/Phase/SeatTowerArithmetic.pythagorean_gate_iff_eisenstein_norm
           - D5/S1/Phase/SeatTowerConsequences.cosecant_peak_identity
           - D5/S1/Phase/SeatTowerConsequences.dominant_term_gap_bound
         receipts:
           coverage:
+            - gid: D5/S1/Phase/SeatTowerArithmetic.pythagorean_gate_iff_eisenstein_norm
+              source_sha256: sha256:4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f
+              target_sha256: sha256:90dfce608e61ee4b6d61b442ed9e5fd1b894f916fd1678e62954a517c32898e6
             - gid: D5/S1/Phase/SeatTowerConsequences.cosecant_peak_identity
               source_sha256: sha256:4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f
               target_sha256: sha256:520db05df3f4606150d67b80c6b51ac763a71c485b93b0acff8561afa686d853
@@ -3850,9 +3880,11 @@ sources:
             - numerical-double-check-certificate
             - fabricated-input-rejection-certificate
             - cosecant-peak-equation-from-pin-data
+            - cosecant-peak-identity
             - zero-family-pin-ledger
             - station-flip-angle-jump
             - hecke-angle-literature-program
+            - dominant-partial-quotient-gap-lemma
             - dominant-partial-quotient-identification
             - sixty-six-case-certificate
           chain_atoms: []
@@ -3867,9 +3899,13 @@ sources:
           normalized_sha256: sha256:db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3
         cas_ref: sha256:db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3
         coverage_gids:
+          - D5/S1/Phase/SeatTowerArithmetic.twelve_le_abs_of_dvd_of_ne_zero
           - D5/S1/Phase/SeatTowerConsequences.singleton_stationing_choice_count
         receipts:
           coverage:
+            - gid: D5/S1/Phase/SeatTowerArithmetic.twelve_le_abs_of_dvd_of_ne_zero
+              source_sha256: sha256:db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3
+              target_sha256: sha256:90dfce608e61ee4b6d61b442ed9e5fd1b894f916fd1678e62954a517c32898e6
             - gid: D5/S1/Phase/SeatTowerConsequences.singleton_stationing_choice_count
               source_sha256: sha256:db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3
               target_sha256: sha256:520db05df3f4606150d67b80c6b51ac763a71c485b93b0acff8561afa686d853
@@ -17130,11 +17166,19 @@ sources:
           normalized_sha256: sha256:5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b
         cas_ref: sha256:5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b
         coverage_gids:
+          - D5/S1/Phase/SeatTowerArithmetic.mod_twenty_four_eq_zero_or_twelve
+          - D5/S1/Phase/SeatTowerArithmetic.twenty_four_dvd_iff_even_quotient
           - D5/S1/Phase/SeatTowerConsequences.jacobi_factorization_of_selector_numerator
           - D5/S1/Phase/SeatTowerConsequences.singleton_stationing_choice_count
           - D5/S1/Phase/SeatTowerConsequences.three_split_primes_have_three_singleton_choices
         receipts:
           coverage:
+            - gid: D5/S1/Phase/SeatTowerArithmetic.mod_twenty_four_eq_zero_or_twelve
+              source_sha256: sha256:5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b
+              target_sha256: sha256:90dfce608e61ee4b6d61b442ed9e5fd1b894f916fd1678e62954a517c32898e6
+            - gid: D5/S1/Phase/SeatTowerArithmetic.twenty_four_dvd_iff_even_quotient
+              source_sha256: sha256:5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b
+              target_sha256: sha256:90dfce608e61ee4b6d61b442ed9e5fd1b894f916fd1678e62954a517c32898e6
             - gid: D5/S1/Phase/SeatTowerConsequences.jacobi_factorization_of_selector_numerator
               source_sha256: sha256:5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b
               target_sha256: sha256:520db05df3f4606150d67b80c6b51ac763a71c485b93b0acff8561afa686d853
@@ -17154,6 +17198,7 @@ sources:
             - m-side-prime-observer-clause
             - zero-only-prime-equivalence
             - three-prime-orbit-singleton-bijection
+            - three-prime-three-orbit-count
             - m4788-second-floor-classification
             - m4788-opposite-direction-clause
             - twenty-two-city-separation-certificate
@@ -17162,6 +17207,7 @@ sources:
             - prediction-trial-postmortem
             - prediction-three-trial-certificate
             - zolotarev-congruence-to-selector-numerator
+            - zolotarev-jacobi-factorization
             - zolotarev-144-case-certificate
             - fixed-ray-character-counterexample
             - fixed-ray-nineteen-witness-certificate
@@ -17178,16 +17224,29 @@ sources:
           raw_sha256: sha256:04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb
           normalized_sha256: sha256:04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb
         cas_ref: sha256:04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb
-        coverage_gids: []
+        coverage_gids:
+          - D5/S1/Phase/SeatTowerArithmetic.bhk_implies_w3_walk
         receipts:
-          coverage: []
+          coverage:
+            - gid: D5/S1/Phase/SeatTowerArithmetic.bhk_implies_w3_walk
+              source_sha256: sha256:04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb
+              target_sha256: sha256:90dfce608e61ee4b6d61b442ed9e5fd1b894f916fd1678e62954a517c32898e6
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - bhk-continued-fraction-theorem
+            - bhk-1755-enumeration-certificate
+            - w3-440-enumeration-certificate
+            - w3-sign-reversal-postmortem
+            - full-vote-enforcement-clause
+            - three-walk-identification
+            - endpoint-translation-integrality
+            - orientation-branch-clause
+            - dedekind-orientation-canonical-ledger-clause
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: pzg-residual-96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb
         ast_path: remark/27.374-27.375
         fingerprints:
@@ -17212,9 +17271,11 @@ sources:
             - numerical-double-check-certificate
             - fabricated-input-rejection-certificate
             - cosecant-peak-equation-from-pin-data
+            - cosecant-peak-identity
             - zero-family-pin-ledger
             - station-flip-angle-jump
             - hecke-angle-literature-program
+            - dominant-partial-quotient-gap-lemma
             - dominant-partial-quotient-identification
             - sixty-six-case-certificate
           chain_atoms: []
@@ -17229,9 +17290,13 @@ sources:
           normalized_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
         cas_ref: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
         coverage_gids:
+          - D5/S1/Phase/SeatTowerArithmetic.twelve_le_abs_of_dvd_of_ne_zero
           - D5/S1/Phase/SeatTowerConsequences.singleton_stationing_choice_count
         receipts:
           coverage:
+            - gid: D5/S1/Phase/SeatTowerArithmetic.twelve_le_abs_of_dvd_of_ne_zero
+              source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+              target_sha256: sha256:90dfce608e61ee4b6d61b442ed9e5fd1b894f916fd1678e62954a517c32898e6
             - gid: D5/S1/Phase/SeatTowerConsequences.singleton_stationing_choice_count
               source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
               target_sha256: sha256:520db05df3f4606150d67b80c6b51ac763a71c485b93b0acff8561afa686d853
