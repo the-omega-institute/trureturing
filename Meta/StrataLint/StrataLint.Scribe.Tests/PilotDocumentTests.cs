@@ -21,6 +21,8 @@ public sealed class DocumentDiscoveryTests
     private const string PrimeAxisTableDocumentPath = "Blueprint/D5/S1/Digit/PrimeAxisTable.md";
     private const string RawDocumentPath = "Blueprint/D5/S1/Digit/Raw.md";
     private const string PhaseDocumentPath = "Blueprint/D5/S1/Phase/Basic.md";
+    private const string SeatTowerCombinatoricsDocumentPath =
+        "Blueprint/D5/S1/Phase/SeatTowerCombinatorics.md";
     private const string ZeroOrbitCongruenceDocumentPath =
         "Blueprint/D5/S1/Phase/ZeroOrbitCongruence.md";
     private const string EmbeddingDocumentPath = "Blueprint/D5/S1/Scale/Embedding.md";
@@ -64,6 +66,7 @@ public sealed class DocumentDiscoveryTests
                 "D5/S1/Digit/PrimeAxisTable",
                 "D5/S1/Digit/Raw",
                 "D5/S1/Phase/Basic",
+                "D5/S1/Phase/SeatTowerCombinatorics",
                 "D5/S1/Phase/ZeroOrbitCongruence",
                 "D5/S1/Scale/Embedding",
                 "D5/S1/Scale/FibonacciEigen",
@@ -103,6 +106,7 @@ public sealed class DocumentDiscoveryTests
                 PrimeAxisTableDocumentPath,
                 RawDocumentPath,
                 PhaseDocumentPath,
+                SeatTowerCombinatoricsDocumentPath,
                 ZeroOrbitCongruenceDocumentPath,
                 EmbeddingDocumentPath,
                 FibonacciEigenDocumentPath,
@@ -261,6 +265,48 @@ public sealed class DocumentDiscoveryTests
             StringComparison.Ordinal);
         Assert.Contains(
             "does not prove the local 432-case computation",
+            markdown,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void SeatTowerCombinatoricsCarriesSixTheoremsAndDisclosesItsModelBoundary()
+    {
+        var definition = DocumentDefinitions.All.Single(static item =>
+            item.Document.Header.Gid.Value == "D5/S1/Phase/SeatTowerCombinatorics");
+        var describes = Descendants(definition.Document.Content)
+            .OfType<DocumentBlock.Describe>()
+            .ToArray();
+
+        Assert.Equal(6, describes.Length);
+        Assert.All(describes, static describe =>
+        {
+            Assert.Equal(DescribeKind.Theorem, describe.Kind);
+            Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.Provenance.Kind);
+            var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
+            Assert.True(lean.Value.RequireNoSorry);
+        });
+        Assert.Equal(
+            [
+                "D5/S1/Phase/SeatTowerCombinatorics.reversal_swaps_parity",
+                "D5/S1/Phase/SeatTowerCombinatorics.matching_rotation_offset_is_odd",
+                "D5/S1/Phase/SeatTowerCombinatorics.even_offset_skeleton_count",
+                "D5/S1/Phase/SeatTowerCombinatorics.full_exponent_stationing_count",
+                "D5/S1/Phase/SeatTowerCombinatorics.mirror_normalization_is_unique",
+                "D5/S1/Phase/SeatTowerCombinatorics.mirror_representative_count",
+            ],
+            describes.Select(static describe =>
+                Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement).Value.Value));
+
+        var report = LeanReportFixture.ForDocuments([definition.Document]);
+        var markdown = System.Text.Encoding.UTF8.GetString(
+            CanonicalMarkdownWriter.Write(definition.Document, report).AsSpan());
+        Assert.Contains(
+            "does not identify arithmetic orbits with stationings",
+            markdown,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "No finite observation, measured exponent, density, or asymptotic law is closed",
             markdown,
             StringComparison.Ordinal);
     }
