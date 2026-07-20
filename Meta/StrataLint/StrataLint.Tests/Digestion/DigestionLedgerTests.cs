@@ -14,16 +14,11 @@ public sealed partial class DigestionLedgerTests
         var atom = Assert.Single(GictAtomizer.Atomize(source).Claims);
         var captured = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
         var yaml = LedgerYaml(
-                atom,
-                migration: "partial",
-                truth: "open",
-                coverageReceipts: "[]",
-                scribeReceipts: "[]")
-            .Replace(
-                $"        coverage_gids:\n          - D5/X_Frontier/Probe",
-                $"        cas_ref: {captured.Reference}\n"
-                + "        coverage_gids:\n          - D5/X_Frontier/Probe",
-                StringComparison.Ordinal);
+            atom,
+            migration: "partial",
+            truth: "open",
+            coverageReceipts: "[]",
+            scribeReceipts: "[]");
         var document = BackfillInventoryLoader.Load(yaml);
         var snapshot = Snapshot((captured.RelativePath, captured.Bytes.ToArray()));
 
@@ -59,10 +54,6 @@ public sealed partial class DigestionLedgerTests
             .Replace(
                 $"atomizer: {AtomizerRegistry.GictId}",
                 $"atomizer: {AtomizerRegistry.NoAtomizerId}",
-                StringComparison.Ordinal)
-            .Replace(
-                "        coverage_gids:",
-                $"        cas_ref: {captured.Reference}\n        coverage_gids:",
                 StringComparison.Ordinal);
         var document = BackfillInventoryLoader.Load(yaml);
         var snapshot = Snapshot((captured.RelativePath, captured.Bytes.ToArray()));
@@ -78,7 +69,7 @@ public sealed partial class DigestionLedgerTests
     }
 
     [Fact]
-    public void IngestCapturesNoAtomizerBoundaryBytesAndRemainsByteIdempotent()
+    public void IngestRebindsCasBackedNoAtomizerBoundaryAndRemainsByteIdempotent()
     {
         var sourceBytes = Encoding.UTF8.GetBytes("manual specification receipt\n");
         var atom = new DigestionAtom(
@@ -102,22 +93,21 @@ public sealed partial class DigestionLedgerTests
 
         var first = DigestionIngestor.Plan(
             ledger,
-            Snapshot(("docs/source.md", sourceBytes)),
+            Snapshot(("docs/source.md", sourceBytes), CasFile(atom)),
             ledger);
         var firstBytes = BackfillInventoryWriter.WriteForIngest(first.Document);
         var migrated = BackfillInventoryLoader.Load(Encoding.UTF8.GetString(firstBytes.AsSpan()));
 
-        var captured = Assert.Single(first.CasObjects);
         var migratedEntry = Assert.Single(migrated.RequireDigestionEntries());
         Assert.NotNull(migratedEntry.Boundary);
         Assert.Equal(atom.Fingerprints.RawSha256, migratedEntry.CasRef);
-        Assert.Equal(sourceBytes, captured.Bytes.ToArray());
+        Assert.Empty(first.CasObjects);
 
         var second = DigestionIngestor.Plan(
             migrated,
             Snapshot(
                 ("docs/source.md", sourceBytes),
-                (captured.RelativePath, captured.Bytes.ToArray())),
+                CasFile(atom)),
             ledger);
         var secondBytes = BackfillInventoryWriter.WriteForIngest(second.Document);
 
@@ -257,6 +247,7 @@ public sealed partial class DigestionLedgerTests
         var atom = Assert.Single(GictAtomizer.Atomize(source).Claims);
         var snapshot = Snapshot(
             ("docs/source.md", source),
+            CasFile(atom),
             ("D5/X_Frontier/Probe.lean", Encoding.UTF8.GetBytes(Lean("D5/X_Frontier/Probe"))));
         var lean = AcceptedLean("D5/X_Frontier/Probe.lean");
         var yaml = LedgerYaml(
@@ -298,7 +289,7 @@ public sealed partial class DigestionLedgerTests
 
         var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
             BackfillInventoryLoader.Load(yaml),
-            Snapshot(("docs/source.md", source)),
+            Snapshot(("docs/source.md", source), CasFile(atom)),
             AcceptedLean(Array.Empty<string>())).Entries);
 
         Assert.Equal(DigestionMigrationState.Residual, status.DerivedStatus.Migration);
@@ -316,7 +307,7 @@ public sealed partial class DigestionLedgerTests
 
         var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
             document,
-            Snapshot(("docs/source.md", source)),
+            Snapshot(("docs/source.md", source), CasFile(atom)),
             AcceptedLean(Array.Empty<string>()),
             baselineDocument: document).Entries);
 
@@ -326,7 +317,7 @@ public sealed partial class DigestionLedgerTests
     }
 
     [Fact]
-    public void StructuralNormalizedSeenIsReportedButCannotAuthorizeDeletion()
+    public void CasReceiptRemainsSeenAcrossNormalizedSourceRewrite()
     {
         var ledgerBytes = Encoding.UTF8.GetBytes(
             "# GICT\r\n\r\n**定理 1.1(Test)**。claim。\r\n");
@@ -337,13 +328,13 @@ public sealed partial class DigestionLedgerTests
 
         var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
             document,
-            Snapshot(("docs/source.md", currentBytes)),
+            Snapshot(("docs/source.md", currentBytes), CasFile(atom)),
             AcceptedLean(Array.Empty<string>()),
             baselineDocument: document).Entries);
 
-        Assert.Equal(DigestionReceiptAlignment.NormalizedSeen, status.Alignment);
+        Assert.Equal(DigestionReceiptAlignment.Seen, status.Alignment);
         Assert.False(status.Deletable);
-        Assert.Contains(status.Gaps, gap => gap.Code == "normalized-seen-not-deletable");
+        Assert.DoesNotContain(status.Gaps, gap => gap.Code == "normalized-seen-not-deletable");
     }
 
     [Fact]
@@ -385,6 +376,7 @@ public sealed partial class DigestionLedgerTests
             coverageGid: "D5/S0/Carrier/Probe");
         var snapshot = Snapshot(
             ("docs/source.md", source),
+            CasFile(atom),
             ("D5/S0/Carrier/Probe.lean", target),
             ("Blueprint/D5/S0/Carrier/Probe.scribe.cs", definition),
             ("Blueprint/D5/S0/Carrier/Probe.md", emission),
@@ -431,6 +423,7 @@ public sealed partial class DigestionLedgerTests
             coverageGid: "D5/S0/Carrier/Probe");
         var snapshot = Snapshot(
             ("docs/source.md", source),
+            CasFile(atom),
             ("D5/S0/Carrier/Probe.lean", target),
             ("Blueprint/D5/S0/Carrier/Probe.scribe.cs", definition),
             ("Blueprint/D5/S0/Carrier/Probe.md", emission));
@@ -482,7 +475,7 @@ public sealed partial class DigestionLedgerTests
         var atom = Assert.Single(GictAtomizer.Atomize(source).Claims);
         var targetPath = "D5/X_Assumptions/Probe.lean";
         var target = Encoding.UTF8.GetBytes(Lean("D5/X_Assumptions/Probe"));
-        var snapshot = Snapshot(("docs/source.md", source), (targetPath, target));
+        var snapshot = Snapshot(("docs/source.md", source), CasFile(atom), (targetPath, target));
         var report = new LeanFileReport(
             ImmutableArray<string>.Empty,
             [new LeanDeclaration("tailProbe", "axiom", "True", ["tailProbe"])]);
@@ -560,6 +553,7 @@ public sealed partial class DigestionLedgerTests
                 StringComparison.Ordinal);
         var snapshot = Snapshot(
             ("docs/source.md", source),
+            CasFile(syntheticAtom),
             ("D5/X_Frontier/Probe.lean", Encoding.UTF8.GetBytes(Lean("D5/X_Frontier/Probe"))));
 
         var evaluation = DigestionStatusEvaluator.Evaluate(
@@ -609,6 +603,7 @@ public sealed partial class DigestionLedgerTests
             coverageGid: declarationGid);
         var snapshot = Snapshot(
             ("docs/source.md", source),
+            CasFile(atom),
             (targetPath, target),
             (ScribeEmissionAttestation.DefinitionPath(moduleGid), definition),
             (ScribeEmissionAttestation.EmissionPath(moduleGid), emission),
@@ -670,6 +665,7 @@ public sealed partial class DigestionLedgerTests
             [new LeanDeclaration("tailProbe", "axiom", "True", ["tailProbe"])]);
         var snapshot = Snapshot(
             ("docs/source.md", source),
+            CasFile(atom),
             (targetPath, target),
             (ScribeEmissionAttestation.DefinitionPath(gid), definition),
             (ScribeEmissionAttestation.EmissionPath(gid), emission),
@@ -714,6 +710,7 @@ public sealed partial class DigestionLedgerTests
                 fingerprints:
                   raw_sha256: {{atom.Fingerprints.RawSha256}}
                   normalized_sha256: {{atom.Fingerprints.NormalizedSha256}}
+                cas_ref: {{atom.Fingerprints.RawSha256}}
                 coverage_gids:
                   - {{coverageGid}}
                 receipts:
@@ -761,7 +758,6 @@ public sealed partial class DigestionLedgerTests
             ImmutableArray.CreateRange(receiptBytes),
             DigestionFingerprint.Compute(receiptBytes),
             ImmutableArray<DigestionContext>.Empty);
-        var captured = DigestionCasStore.Capture(receiptBytes);
         var yaml = LedgerYaml(
                 atom,
                 migration: "partial",
@@ -771,11 +767,7 @@ public sealed partial class DigestionLedgerTests
             .Replace(
                 $"atomizer: {AtomizerRegistry.GictId}",
                 $"atomizer: {AtomizerRegistry.NoAtomizerId}",
-                StringComparison.Ordinal)
-            .Replace(
-                "        coverage_gids:",
-                $"        cas_ref: {captured.Reference}\n        coverage_gids:",
                 StringComparison.Ordinal);
-        return (BackfillInventoryLoader.Load(yaml), captured);
+        return (BackfillInventoryLoader.Load(yaml), DigestionCasStore.Capture(receiptBytes));
     }
 }

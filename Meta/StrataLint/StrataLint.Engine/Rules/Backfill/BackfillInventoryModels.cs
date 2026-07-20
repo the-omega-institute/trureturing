@@ -55,35 +55,7 @@ internal sealed record DigestionLedgerEntry(
     DigestionReceipts Receipts,
     DigestionStatus ProjectedStatus,
     BackfillReceiptSyntax? ReceiptSyntax,
-    string? CasRef = null)
-{
-    internal DigestionLedgerEntry(
-        string sourceId,
-        string sourcePath,
-        string atomizer,
-        string atomId,
-        DigestionBoundary boundary,
-        DigestionFingerprints fingerprints,
-        ImmutableArray<string> coverageGids,
-        DigestionReceipts receipts,
-        DigestionStatus projectedStatus,
-        BackfillReceiptSyntax? receiptSyntax = null)
-        : this(
-            sourceId,
-            sourcePath,
-            atomizer,
-            atomId,
-            boundary?.AstPath ?? throw new ArgumentNullException(nameof(boundary)),
-            boundary,
-            fingerprints,
-            coverageGids,
-            receipts,
-            projectedStatus,
-            receiptSyntax,
-            CasRef: null)
-    {
-    }
-}
+    string CasRef);
 
 internal sealed record DigestionLedgerSource(
     string SourceId,

@@ -93,7 +93,11 @@ public sealed class LeanReferenceTests
             document,
             Report(Declaration(typeRepresentation: typeRepresentation)));
         var text = Encoding.UTF8.GetString(markdown.AsSpan());
-        Assert.Contains($"Statement: `{Gid}` `✓ std3`", text, StringComparison.Ordinal);
+        Assert.Contains($"Lean statement: `{Gid}`", text, StringComparison.Ordinal);
+        Assert.Contains(
+            $"*Proof.* Machine-checked in Lean as `{Gid}` (`✓ std3`). ∎",
+            text,
+            StringComparison.Ordinal);
         Assert.DoesNotContain(typeRepresentation, text, StringComparison.Ordinal);
     }
 

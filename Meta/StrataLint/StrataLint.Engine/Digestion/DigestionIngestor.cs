@@ -71,10 +71,7 @@ internal static class DigestionIngestor
             var priorAcknowledgments = source.AcknowledgedStale.ToHashSet(StringComparer.Ordinal);
             staleAcknowledged += acknowledgments.Count(priorAcknowledgment =>
                 !priorAcknowledgments.Contains(priorAcknowledgment));
-            var entries = source.Entries
-                .Select(entry => CaptureMatchedAtom(entry, alignment, casObjects))
-                .ToImmutableArray()
-                .ToBuilder();
+            var entries = source.Entries.ToBuilder();
             if (residualBySource.TryGetValue(source.SourceId, out var residual))
             {
                 foreach (var item in residual)
@@ -148,99 +145,48 @@ internal static class DigestionIngestor
         RepositorySnapshot snapshot,
         IDictionary<string, DigestionCasObject> casObjects)
     {
-        if (entry.CasRef is not null)
-        {
-            var existingBoundary = entry.Boundary
-                ?? throw new FormatException(
-                    $"ingest no-atomizer entry {entry.AtomId} has no boundary");
-            var casPath = DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..];
-            if (!snapshot.TryGetFile(casPath, out var blob))
-            {
-                throw new FormatException(
-                    $"ingest entry {entry.AtomId} CAS blob is missing: {casPath}");
-            }
-
-            var casObject = DigestionCasStore.Capture(blob.RawBytes.AsSpan());
-            if (casObject.Reference != entry.CasRef)
-            {
-                throw new FormatException(
-                    $"ingest entry {entry.AtomId} CAS blob hash mismatch: {casPath}");
-            }
-
-            var receiptBytes = blob.RawBytes.AsSpan();
-            var start = receiptBytes.IsEmpty ? -1 : sourceBytes.AsSpan().IndexOf(receiptBytes);
-            if (start < 0)
-            {
-                throw new FormatException(
-                    $"ingest entry {entry.AtomId} has no byte-exact match in {entry.SourcePath}");
-            }
-
-            if (sourceBytes.AsSpan()[(start + 1)..].IndexOf(receiptBytes) >= 0)
-            {
-                throw new FormatException(
-                    $"ingest entry {entry.AtomId} has multiple byte-exact matches in {entry.SourcePath}");
-            }
-
-            var rebound = new DigestionBoundary(
-                existingBoundary.AstPath,
-                start,
-                start + receiptBytes.Length);
-            return rebound == existingBoundary
-                ? entry
-                : entry with
-                {
-                    Boundary = rebound,
-                    ReceiptSyntax = null,
-                };
-        }
-
-        var boundary = entry.Boundary
-            ?? throw new FormatException($"ingest no-atomizer entry {entry.AtomId} has no boundary");
-        if (boundary.StartByte < 0
-            || boundary.EndByte <= boundary.StartByte
-            || boundary.EndByte > sourceBytes.Length)
-        {
-            throw new FormatException($"ingest entry {entry.AtomId} boundary is outside {entry.SourcePath}");
-        }
-
-        var bytes = sourceBytes.AsSpan()[boundary.StartByte..boundary.EndByte];
-        if (DigestionFingerprint.Compute(bytes) != entry.Fingerprints)
-        {
-            throw new FormatException($"ingest entry {entry.AtomId} boundary fingerprint mismatch");
-        }
-
-        var captured = AddCasObject(bytes, casObjects);
-        return entry with
-        {
-            CasRef = captured.Reference,
-            ReceiptSyntax = null,
-        };
-    }
-
-    private static DigestionLedgerEntry CaptureMatchedAtom(
-        DigestionLedgerEntry entry,
-        DigestionLedgerAlignment alignment,
-        IDictionary<string, DigestionCasObject> casObjects)
-    {
-        if (entry.CasRef is not null
-            || !alignment.MatchedAtoms.TryGetValue(entry.AtomId, out var atom)
-            || atom.Fingerprints.RawSha256 != entry.Fingerprints.RawSha256)
-        {
-            return entry;
-        }
-
-        var captured = AddCasObject(atom.RawBytes.AsSpan(), casObjects);
-        if (captured.Reference != entry.Fingerprints.RawSha256)
+        var existingBoundary = entry.Boundary
+            ?? throw new FormatException(
+                $"ingest no-atomizer entry {entry.AtomId} has no boundary");
+        var casPath = DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..];
+        if (!snapshot.TryGetFile(casPath, out var blob))
         {
             throw new FormatException(
-                $"ingest CAS hash disagrees with entry {entry.AtomId} raw fingerprint");
+                $"ingest entry {entry.AtomId} CAS blob is missing: {casPath}");
         }
 
-        return entry with
+        var casObject = DigestionCasStore.Capture(blob.RawBytes.AsSpan());
+        if (casObject.Reference != entry.CasRef)
         {
-            CasRef = captured.Reference,
-            ReceiptSyntax = null,
-        };
+            throw new FormatException(
+                $"ingest entry {entry.AtomId} CAS blob hash mismatch: {casPath}");
+        }
+
+        var receiptBytes = blob.RawBytes.AsSpan();
+        var start = receiptBytes.IsEmpty ? -1 : sourceBytes.AsSpan().IndexOf(receiptBytes);
+        if (start < 0)
+        {
+            throw new FormatException(
+                $"ingest entry {entry.AtomId} has no byte-exact match in {entry.SourcePath}");
+        }
+
+        if (sourceBytes.AsSpan()[(start + 1)..].IndexOf(receiptBytes) >= 0)
+        {
+            throw new FormatException(
+                $"ingest entry {entry.AtomId} has multiple byte-exact matches in {entry.SourcePath}");
+        }
+
+        var rebound = new DigestionBoundary(
+            existingBoundary.AstPath,
+            start,
+            start + receiptBytes.Length);
+        return rebound == existingBoundary
+            ? entry
+            : entry with
+            {
+                Boundary = rebound,
+                ReceiptSyntax = null,
+            };
     }
 
     private static DigestionCasObject AddCasObject(

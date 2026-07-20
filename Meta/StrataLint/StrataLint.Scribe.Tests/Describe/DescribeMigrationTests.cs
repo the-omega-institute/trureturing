@@ -5,27 +5,63 @@ namespace StrataLint.Scribe.Tests;
 public sealed class DescribeMigrationTests
 {
     [Fact]
-    public void RepositoryMigrationHasOneHundredAndTwoTypedNodesAndPreservesTwentyFourFormulaSlots()
+    public void EveryCurrentTheoremClassNodeHasAnExplicitLatexStatement()
+    {
+        var nodes = DocumentDefinitions.All
+            .SelectMany(static definition => EnumerateDescribe(definition.Document.Content))
+            .Where(static node => node.Kind is
+                DescribeKind.Theorem or DescribeKind.Proposition or DescribeKind.Lemma)
+            .ToArray();
+
+        Assert.Equal(81, nodes.Length);
+        Assert.All(nodes, static node => Assert.NotNull(node.StatementLatex));
+    }
+
+    [Fact]
+    public void RepositoryMigrationHasOneHundredAndTwentyThreeTypedNodesAndPreservesTwentyFourFormulaSlots()
     {
         var root = FindRepositoryRoot();
         var report = DescribeReport.Build(
             root,
             DocumentDefinitions.All.Select(static definition => definition.Document));
 
-        Assert.Equal(102, report.NodeStats.Total);
+        Assert.Equal(123, report.NodeStats.Total);
         Assert.Equal(24, report.NodeStats.FormulaContentSlots);
         Assert.Equal(12, report.NodeStats.FormulaStatements);
-        Assert.Equal(90, report.NodeStats.LeanStatements);
+        Assert.Equal(111, report.NodeStats.LeanStatements);
         Assert.Equal(11, report.NodeStats.ByKind["definition"]);
         Assert.Equal(9, report.NodeStats.ByKind["proposition"]);
-        Assert.Equal(51, report.NodeStats.ByKind["theorem"]);
+        Assert.Equal(72, report.NodeStats.ByKind["theorem"]);
         Assert.Equal(1, report.NodeStats.ByKind["example"]);
         Assert.Equal(30, report.NodeStats.ByKind["remark"]);
-        Assert.Equal(67, report.NodeStats.ByProvenance["repo-derived"]);
+        Assert.Equal(88, report.NodeStats.ByProvenance["repo-derived"]);
         Assert.Equal(35, report.NodeStats.ByProvenance["literature-attested"]);
         Assert.Equal(0, report.OpenCount);
         Assert.Empty(report.SuspectedNovel);
         Assert.Empty(report.RedFindings);
+    }
+
+    private static IEnumerable<DocumentBlock.Describe> EnumerateDescribe(BlockSequence blocks)
+    {
+        foreach (var block in blocks.Items)
+        {
+            switch (block)
+            {
+                case DocumentBlock.Section section:
+                    foreach (var nested in EnumerateDescribe(section.Content))
+                    {
+                        yield return nested;
+                    }
+                    break;
+                case DocumentBlock.Describe describe:
+                    yield return describe;
+                    foreach (var nested in EnumerateDescribe(describe.Content))
+                    {
+                        yield return nested;
+                    }
+                    break;
+            }
+        }
     }
 
     [Fact]
@@ -501,7 +537,7 @@ public sealed class DescribeMigrationTests
         Assert.Equal(string.Empty, error.ToString());
         using var document = JsonDocument.Parse(output.ToString());
         Assert.Equal("DESCRIBE-NODES", document.RootElement.GetProperty("case_id").GetString());
-        Assert.Equal(102, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
+        Assert.Equal(123, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
         Assert.Equal(0, document.RootElement.GetProperty("open_count").GetInt32());
     }
 

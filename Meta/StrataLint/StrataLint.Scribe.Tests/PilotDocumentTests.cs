@@ -21,6 +21,13 @@ public sealed class DocumentDiscoveryTests
     private const string PrimeAxisTableDocumentPath = "Blueprint/D5/S1/Digit/PrimeAxisTable.md";
     private const string RawDocumentPath = "Blueprint/D5/S1/Digit/Raw.md";
     private const string PhaseDocumentPath = "Blueprint/D5/S1/Phase/Basic.md";
+    private const string SeatTowerArithmeticDocumentPath =
+        "Blueprint/D5/S1/Phase/SeatTowerArithmetic.md";
+    private const string SeatTowerCombinatoricsDocumentPath =
+        "Blueprint/D5/S1/Phase/SeatTowerCombinatorics.md";
+    private const string SeatTowerConsequencesDocumentPath =
+        "Blueprint/D5/S1/Phase/SeatTowerConsequences.md";
+    private const string WalkFormulaDocumentPath = "Blueprint/D5/S1/Phase/WalkFormula.md";
     private const string ZeroOrbitCongruenceDocumentPath =
         "Blueprint/D5/S1/Phase/ZeroOrbitCongruence.md";
     private const string EmbeddingDocumentPath = "Blueprint/D5/S1/Scale/Embedding.md";
@@ -64,6 +71,10 @@ public sealed class DocumentDiscoveryTests
                 "D5/S1/Digit/PrimeAxisTable",
                 "D5/S1/Digit/Raw",
                 "D5/S1/Phase/Basic",
+                "D5/S1/Phase/SeatTowerArithmetic",
+                "D5/S1/Phase/SeatTowerCombinatorics",
+                "D5/S1/Phase/SeatTowerConsequences",
+                "D5/S1/Phase/WalkFormula",
                 "D5/S1/Phase/ZeroOrbitCongruence",
                 "D5/S1/Scale/Embedding",
                 "D5/S1/Scale/FibonacciEigen",
@@ -103,6 +114,10 @@ public sealed class DocumentDiscoveryTests
                 PrimeAxisTableDocumentPath,
                 RawDocumentPath,
                 PhaseDocumentPath,
+                SeatTowerArithmeticDocumentPath,
+                SeatTowerCombinatoricsDocumentPath,
+                SeatTowerConsequencesDocumentPath,
+                WalkFormulaDocumentPath,
                 ZeroOrbitCongruenceDocumentPath,
                 EmbeddingDocumentPath,
                 FibonacciEigenDocumentPath,
@@ -177,11 +192,12 @@ public sealed class DocumentDiscoveryTests
         }
 
         var report = LeanCompiledArtifactReports.InspectRepository(repositoryRoot);
+        var citations = LibraryNoteCatalog.Load(repositoryRoot).Citations;
 
         foreach (var definition in DocumentDefinitions.All)
         {
-            var first = CanonicalMarkdownWriter.Write(definition.Document, report);
-            var second = CanonicalMarkdownWriter.Write(definition.Document, report);
+            var first = CanonicalMarkdownWriter.Write(definition.Document, report, citations);
+            var second = CanonicalMarkdownWriter.Write(definition.Document, report, citations);
             var committed = File.ReadAllBytes(
                 Path.Combine(repositoryRoot, definition.RelativePath.Value));
 
@@ -198,14 +214,17 @@ public sealed class DocumentDiscoveryTests
         var report = LeanReportFixture.ForDocuments([definition.Document]);
 
         var markdown = System.Text.Encoding.UTF8.GetString(
-            CanonicalMarkdownWriter.Write(definition.Document, report).AsSpan());
+            CanonicalMarkdownWriter.Write(
+                definition.Document,
+                report,
+                RepositoryCitations()).AsSpan());
 
         Assert.Contains(
             "\\operatorname{Z}\\left(89\\right) + \\operatorname{Z}\\left(34\\right) = \\operatorname{Z}\\left(123\\right) = 1010000000_{W}",
             markdown,
             StringComparison.Ordinal);
         Assert.Contains(
-            "Provenance: `repo-derived`",
+            "*Source.* Repository-derived.",
             markdown,
             StringComparison.Ordinal);
     }
@@ -254,7 +273,10 @@ public sealed class DocumentDiscoveryTests
 
         var report = LeanReportFixture.ForDocuments([definition.Document]);
         var markdown = System.Text.Encoding.UTF8.GetString(
-            CanonicalMarkdownWriter.Write(definition.Document, report).AsSpan());
+            CanonicalMarkdownWriter.Write(
+                definition.Document,
+                report,
+                RepositoryCitations()).AsSpan());
         Assert.Contains(
             "local candidate disjunction modulo 36 remains an explicit premise",
             markdown,
@@ -263,6 +285,85 @@ public sealed class DocumentDiscoveryTests
             "does not prove the local 432-case computation",
             markdown,
             StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void SeatTowerCombinatoricsCarriesSixTheoremsAndDisclosesItsModelBoundary()
+    {
+        var definition = DocumentDefinitions.All.Single(static item =>
+            item.Document.Header.Gid.Value == "D5/S1/Phase/SeatTowerCombinatorics");
+        var describes = Descendants(definition.Document.Content)
+            .OfType<DocumentBlock.Describe>()
+            .ToArray();
+
+        Assert.Equal(6, describes.Length);
+        Assert.All(describes, static describe =>
+        {
+            Assert.Equal(DescribeKind.Theorem, describe.Kind);
+            Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.Provenance.Kind);
+            var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
+            Assert.True(lean.Value.RequireNoSorry);
+        });
+        Assert.Equal(
+            [
+                "D5/S1/Phase/SeatTowerCombinatorics.reversal_swaps_parity",
+                "D5/S1/Phase/SeatTowerCombinatorics.matching_rotation_offset_is_odd",
+                "D5/S1/Phase/SeatTowerCombinatorics.even_offset_skeleton_count",
+                "D5/S1/Phase/SeatTowerCombinatorics.full_exponent_stationing_count",
+                "D5/S1/Phase/SeatTowerCombinatorics.mirror_normalization_is_unique",
+                "D5/S1/Phase/SeatTowerCombinatorics.mirror_representative_count",
+            ],
+            describes.Select(static describe =>
+                Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement).Value.Value));
+
+        var report = LeanReportFixture.ForDocuments([definition.Document]);
+        var markdown = System.Text.Encoding.UTF8.GetString(
+            CanonicalMarkdownWriter.Write(definition.Document, report).AsSpan());
+        Assert.Contains(
+            "does not identify arithmetic orbits with stationings",
+            markdown,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "No finite observation, measured exponent, density, or asymptotic law is closed",
+            markdown,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void SeatTowerConsequencesCarriesSixTheoremsAndDisclosesReductionBoundaries()
+    {
+        var definition = DocumentDefinitions.All.Single(static item =>
+            item.Document.Header.Gid.Value == "D5/S1/Phase/SeatTowerConsequences");
+        var describes = Descendants(definition.Document.Content)
+            .OfType<DocumentBlock.Describe>()
+            .ToArray();
+
+        Assert.Equal(6, describes.Length);
+        Assert.All(describes, static describe =>
+        {
+            Assert.Equal(DescribeKind.Theorem, describe.Kind);
+            Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.Provenance.Kind);
+            var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
+            Assert.True(lean.Value.RequireNoSorry);
+        });
+        Assert.Equal(
+            [
+                "D5/S1/Phase/SeatTowerConsequences.mod_ninety_six_refines_twenty_four_and_forty_eight",
+                "D5/S1/Phase/SeatTowerConsequences.jacobi_factorization_of_selector_numerator",
+                "D5/S1/Phase/SeatTowerConsequences.cosecant_peak_identity",
+                "D5/S1/Phase/SeatTowerConsequences.dominant_term_gap_bound",
+                "D5/S1/Phase/SeatTowerConsequences.singleton_stationing_choice_count",
+                "D5/S1/Phase/SeatTowerConsequences.three_split_primes_have_three_singleton_choices",
+            ],
+            describes.Select(static describe =>
+                Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement).Value.Value));
+
+        var report = LeanReportFixture.ForDocuments([definition.Document]);
+        var markdown = System.Text.Encoding.UTF8.GetString(
+            CanonicalMarkdownWriter.Write(definition.Document, report).AsSpan());
+        Assert.Contains("does not supply the finite conflict table", markdown, StringComparison.Ordinal);
+        Assert.Contains("does not identify actual orbits", markdown, StringComparison.Ordinal);
+        Assert.Contains("No finite observation or measurable claim is closed", markdown, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -425,7 +526,10 @@ public sealed class DocumentDiscoveryTests
             item.Document.Header.Gid.Value == "D5/S3/Zeros/ZeroGeometry");
         var report = LeanReportFixture.ForDocuments([definition.Document]);
         var markdown = System.Text.Encoding.UTF8.GetString(
-            CanonicalMarkdownWriter.Write(definition.Document, report).AsSpan());
+            CanonicalMarkdownWriter.Write(
+                definition.Document,
+                report,
+                RepositoryCitations()).AsSpan());
 
         string[] requiredDisclosures =
         [
@@ -499,7 +603,10 @@ public sealed class DocumentDiscoveryTests
             item.Document.Header.Gid.Value == "D5/S3/Quantum/FiniteDimensional");
         var report = LeanReportFixture.ForDocuments([definition.Document]);
         var markdown = System.Text.Encoding.UTF8.GetString(
-            CanonicalMarkdownWriter.Write(definition.Document, report).AsSpan());
+            CanonicalMarkdownWriter.Write(
+                definition.Document,
+                report,
+                RepositoryCitations()).AsSpan());
 
         Assert.Contains(
             "Original numerical-certificate claim not formalized: the source atom's matrix-unit relations with exact zero certificate error.",
@@ -556,7 +663,10 @@ public sealed class DocumentDiscoveryTests
             item.Document.Header.Gid.Value == "D5/S3/Quantum/QubitWitnesses");
         var report = LeanReportFixture.ForDocuments([definition.Document]);
         var markdown = System.Text.Encoding.UTF8.GetString(
-            CanonicalMarkdownWriter.Write(definition.Document, report).AsSpan());
+            CanonicalMarkdownWriter.Write(
+                definition.Document,
+                report,
+                RepositoryCitations()).AsSpan());
 
         Assert.Contains(
             "Original numerical-certificate claim not formalized: the source atom's full matrix-unit relations with exact zero certificate error.",
@@ -582,9 +692,15 @@ public sealed class DocumentDiscoveryTests
         var report = LeanReportFixture.ForDocuments(
             [observerDefinition.Document, decoherenceDefinition.Document]);
         var observerMarkdown = System.Text.Encoding.UTF8.GetString(
-            CanonicalMarkdownWriter.Write(observerDefinition.Document, report).AsSpan());
+            CanonicalMarkdownWriter.Write(
+                observerDefinition.Document,
+                report,
+                RepositoryCitations()).AsSpan());
         var decoherenceMarkdown = System.Text.Encoding.UTF8.GetString(
-            CanonicalMarkdownWriter.Write(decoherenceDefinition.Document, report).AsSpan());
+            CanonicalMarkdownWriter.Write(
+                decoherenceDefinition.Document,
+                report,
+                RepositoryCitations()).AsSpan());
 
         Assert.Contains("including an empty type", observerMarkdown, StringComparison.Ordinal);
         Assert.Contains("explicit address i", observerMarkdown, StringComparison.Ordinal);
@@ -630,6 +746,9 @@ public sealed class DocumentDiscoveryTests
 
         throw new DirectoryNotFoundException("Could not locate the repository root.");
     }
+
+    private static IReadOnlyDictionary<string, LiteratureCitation> RepositoryCitations() =>
+        LibraryNoteCatalog.Load(FindRepositoryRoot()).Citations;
 
     private static IEnumerable<DocumentBlock> Descendants(BlockSequence content)
     {

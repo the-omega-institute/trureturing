@@ -77,9 +77,9 @@ internal static class DigestionCasStore
         var findings = ImmutableArray.CreateBuilder<string>();
         var referencedPaths = new HashSet<string>(StringComparer.Ordinal);
         var validAtomIds = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
-        foreach (var entry in document.RequireDigestionEntries().Where(static entry => entry.CasRef is not null))
+        foreach (var entry in document.RequireDigestionEntries())
         {
-            var reference = entry.CasRef!;
+            var reference = entry.CasRef;
             if (!DigestionFingerprint.IsCanonicalSha256(reference))
             {
                 findings.Add($"entry {entry.AtomId} cas_ref must use canonical sha256:<64 lowercase hex>");

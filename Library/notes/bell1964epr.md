@@ -1,5 +1,7 @@
 ---
 bibkey: bell1964epr
+authors: John S. Bell
+year: 1964
 title: On the Einstein Podolsky Rosen paradox
 doi: 10.1103/PhysicsPhysiqueFizika.1.195
 claim: Bell proves that local hidden-variable correlations cannot reproduce the spin-singlet prediction P(a,b) = -a dot b.
