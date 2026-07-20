@@ -17616,6 +17616,10 @@ sources:
         status:
           migration: residual
           truth: open
+  - source_id: periodic-tree-v1
+    path: docs/develop/theory/PERIODIC_TREE.md
+    atomizer: periodic-tree-v1
+    entries: []
   - source_id: golden-ledger-spec-v7.11
     path: docs/develop/spec/golden-ledger-repo-spec.md
     atomizer: none
