@@ -6,6 +6,7 @@ on:
     branches: [dev]
   pull_request_target:
     branches: [dev, 'integration-**']
+    types: [opened, synchronize, reopened, edited]
 
 permissions:
   contents: read
@@ -317,6 +318,13 @@ jobs:
           sha256sum -c candidate-lean-report.json.sha256
           sha256sum -c baseline-lean-report.json.sha256
 
+      - name: Materialize PR echo review evidence
+        if: github.event_name == 'pull_request_target'
+        shell: bash
+        env:
+          ECHO_REVIEW_BODY: ${{ github.event.pull_request.body }}
+        run: printf '%s' "$ECHO_REVIEW_BODY" > "$RUNNER_TEMP/echo-review.md"
+
       - name: Run the shared baseline harness gate
         shell: bash
         run: |
@@ -329,6 +337,10 @@ jobs:
             printf '%s\n' "content-addressed baseline gate cannot consume canonical Lean reports" >&2
             exit 1
           fi
+          echo_args=()
+          if [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
+            echo_args=(--echo-review "$RUNNER_TEMP/echo-review.md")
+          fi
           set +e
           "$gate" \
             --candidate "$GITHUB_WORKSPACE/candidate" \
@@ -336,6 +348,7 @@ jobs:
             --base "$DEV_BASELINE_SHA" \
             --candidate-lean-report "$RUNNER_TEMP/raw-lean-reports/candidate-lean-report.json" \
             --baseline-lean-report "$RUNNER_TEMP/raw-lean-reports/baseline-lean-report.json" \
+            "${echo_args[@]}" \
             2>&1 | tee "$RUNNER_TEMP/gate.log"
           rc="${PIPESTATUS[0]}"
           set -e

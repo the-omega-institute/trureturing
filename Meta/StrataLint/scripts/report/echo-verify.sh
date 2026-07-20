@@ -2,11 +2,11 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../../.." && pwd -P)"
-BASE="${1:-origin/dev}"
-REPORT_SCRIPT="$ROOT/Meta/StrataLint/scripts/report/lean-report.sh"
+FILE="${1:-}"
+BASE="${2:-origin/dev}"
 PROJECT="$ROOT/Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj"
 
-"$REPORT_SCRIPT" >&2
+[[ -n "$FILE" ]] || { echo "echo-verify: FILE is required" >&2; exit 2; }
 cd "$ROOT"
 exec dotnet run --project "$PROJECT" --configuration Release -- \
-  echo-verify --emit --base "$BASE"
+  echo-verify --file "$FILE" --base "$BASE" --if-affected

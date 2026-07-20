@@ -67,4 +67,9 @@ record_timing compile-fail-proofs
 make gate BASE="${BASE:-origin/dev}" GATE_ARGS=--skip-engineering
 record_timing gate
 
+make echo-verify \
+  FILE="${ECHO_REVIEW_FILE:-$ROOT/.echo-review.md}" \
+  BASE="${BASE:-origin/dev}"
+record_timing echo-verify
+
 echo "[preflight] PASS — CI 双 required check 预证绿"

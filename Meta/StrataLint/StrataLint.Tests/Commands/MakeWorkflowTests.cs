@@ -18,6 +18,8 @@ public sealed class MakeWorkflowTests
     private const string IngestScriptPath = "Meta/StrataLint/scripts/ingest.sh";
     private const string EchoResidualSummaryScriptPath =
         "Meta/StrataLint/scripts/report/echo-residual-summary.sh";
+    private const string EchoVerifyScriptPath =
+        "Meta/StrataLint/scripts/report/echo-verify.sh";
     private const string ReportConsumerScriptPath =
         "Meta/StrataLint/scripts/report/report-consumer.sh";
     private const string ReportSupervisorScriptPath =
@@ -42,6 +44,7 @@ public sealed class MakeWorkflowTests
         "emit-check",
         "ingest",
         "echo-residual-summary",
+        "echo-verify",
         "record-golden",
         "selftest",
         "gate",
@@ -85,6 +88,7 @@ public sealed class MakeWorkflowTests
             EchoResidualSummaryScriptPath,
             Recipe(makefile, "echo-residual-summary"),
             StringComparison.Ordinal);
+        Assert.Contains(EchoVerifyScriptPath, Recipe(makefile, "echo-verify"), StringComparison.Ordinal);
         Assert.Contains("golden-record", Recipe(makefile, "record-golden"), StringComparison.Ordinal);
         Assert.Contains(SelftestScriptPath, Recipe(makefile, "selftest"), StringComparison.Ordinal);
         Assert.Contains(LocalHarnessGateScriptPath, Recipe(makefile, "gate"), StringComparison.Ordinal);
@@ -113,17 +117,72 @@ public sealed class MakeWorkflowTests
     }
 
     [Fact]
-    public void EchoResidualSummaryKeepsLeanReportDiagnosticsOutOfThePasteableBlock()
+    public void EchoResidualSummaryRunsMakeAndKeepsDiagnosticsOutOfThePasteableBlock()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var root = FindRepositoryRoot();
+        using var fixture = new TemporaryDirectory();
+        var reportDirectory = Path.Combine(fixture.Path, "Meta", "StrataLint", "scripts", "report");
+        var cliDirectory = Path.Combine(fixture.Path, "Meta", "StrataLint", "StrataLint.Cli");
+        var binDirectory = Path.Combine(fixture.Path, "bin");
+        Directory.CreateDirectory(reportDirectory);
+        Directory.CreateDirectory(cliDirectory);
+        Directory.CreateDirectory(binDirectory);
+        File.Copy(Path.Combine(root, "Makefile"), Path.Combine(fixture.Path, "Makefile"));
+        File.Copy(
+            Path.Combine(root, EchoResidualSummaryScriptPath),
+            Path.Combine(fixture.Path, EchoResidualSummaryScriptPath));
+        File.WriteAllText(
+            Path.Combine(fixture.Path, LeanReportScriptPath),
+            "#!/usr/bin/env bash\nprintf 'lean provenance\\n' >&2\n");
+        File.WriteAllText(
+            Path.Combine(binDirectory, "dotnet"),
+            """
+            #!/usr/bin/env bash
+            [[ "$*" == *"echo-verify --emit --base synthetic-base"* ]] || exit 19
+            printf '%s\n' '<!-- echo-residual-summary:v1 candidate=git-sha1:1111111111111111111111111111111111111111 base=git-sha1:2222222222222222222222222222222222222222 -->' '# Echo Residual Summary' '<!-- /echo-residual-summary:v1 -->'
+            """);
+        File.SetUnixFileMode(
+            Path.Combine(fixture.Path, LeanReportScriptPath),
+            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        File.SetUnixFileMode(
+            Path.Combine(binDirectory, "dotnet"),
+            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+
+        var result = BoundedProcessRunner.Run(
+            "/bin/bash",
+            ["-c", "PATH=\"$1:$PATH\" exec make echo-residual-summary BASE=synthetic-base", "echo-make", binDirectory],
+            fixture.Path,
+            TimeSpan.FromSeconds(30),
+            64 * 1024);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(
+            """
+            <!-- echo-residual-summary:v1 candidate=git-sha1:1111111111111111111111111111111111111111 base=git-sha1:2222222222222222222222222222222222222222 -->
+            # Echo Residual Summary
+            <!-- /echo-residual-summary:v1 -->
+            """ + "\n",
+            System.Text.Encoding.UTF8.GetString(result.StandardOutput));
+        Assert.Equal("lean provenance\n", System.Text.Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    [Fact]
+    public void PreflightAndRequiredBaselineGateDelegateToEchoVerify()
     {
         var root = FindRepositoryRoot();
-        var script = File.ReadAllText(Path.Combine(root, EchoResidualSummaryScriptPath));
+        var workflow = File.ReadAllText(Path.Combine(root, ".github", "workflows", "ci.yml"));
+        var sharedGate = File.ReadAllText(Path.Combine(root, ".github", "scripts", "harness-gate.sh"));
+        var preflight = File.ReadAllText(Path.Combine(root, PreflightScriptPath));
 
-        Assert.Contains(LeanReportScriptPath, script, StringComparison.Ordinal);
-        Assert.Contains("\"$REPORT_SCRIPT\" >&2", script, StringComparison.Ordinal);
-        Assert.Contains(
-            "digest-status --residual-summary --base \"$BASE\"",
-            script,
-            StringComparison.Ordinal);
+        Assert.Contains("types: [opened, synchronize, reopened, edited]", workflow, StringComparison.Ordinal);
+        Assert.Contains("github.event.pull_request.body", workflow, StringComparison.Ordinal);
+        Assert.Contains("--echo-review", workflow, StringComparison.Ordinal);
+        Assert.Contains("--echo-review", sharedGate, StringComparison.Ordinal);
+        Assert.Contains("dotnet \"$JUDGE_DLL\" echo-verify", sharedGate, StringComparison.Ordinal);
+        Assert.Contains("--if-affected", sharedGate, StringComparison.Ordinal);
+        Assert.Contains("make echo-verify", preflight, StringComparison.Ordinal);
     }
 
     [Fact]
