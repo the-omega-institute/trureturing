@@ -55,7 +55,7 @@ public sealed partial class ProductionEnvironmentTests
         foreach (var entry in casBacked)
         {
             var relativePath = DigestionCasStore.RootPath
-                + entry.CasRef!["sha256:".Length..];
+                + entry.CasRef["sha256:".Length..];
             var bytes = File.ReadAllBytes(Path.Combine(
                 temporary.Path,
                 relativePath.Replace('/', Path.DirectorySeparatorChar)));
@@ -226,7 +226,7 @@ public sealed partial class ProductionEnvironmentTests
         var coarsePath = Path.Combine(
             temporary.Path,
             DigestionCasStore.RootPath.Replace('/', Path.DirectorySeparatorChar),
-            coarse.CasRef!["sha256:".Length..]);
+            coarse.CasRef["sha256:".Length..]);
         Assert.Equal(malformedBytes, File.ReadAllBytes(coarsePath));
     }
 
@@ -372,7 +372,7 @@ public sealed partial class ProductionEnvironmentTests
                      entry.AtomId != "old-receipt"))
         {
             var relativePath = DigestionCasStore.RootPath
-                + entry.CasRef!["sha256:".Length..];
+                + entry.CasRef["sha256:".Length..];
             fixture.Files[relativePath] = File.ReadAllText(Path.Combine(
                 temporary.Path,
                 relativePath.Replace('/', Path.DirectorySeparatorChar)));

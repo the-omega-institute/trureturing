@@ -160,23 +160,28 @@ public sealed partial class ReviewRegressionTests
     }
 
     [Fact]
-    public void Sl016StillRejectsMissingSourceVolumeForReceiptWithoutCasRef()
+    public void Sl016RejectsReceiptWithoutCasRefAtLoaderBoundary()
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        fixture.Files.Remove(GoldenCorpus.FixtureDigestionSourcePath);
+        fixture.Files[BackfillInventoryLoader.RelativePath] = fixture.Files[
+                BackfillInventoryLoader.RelativePath]
+            .Replace(
+                $"        cas_ref: {GoldenCorpus.FixtureCasReference}\n",
+                string.Empty,
+                StringComparison.Ordinal);
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(16),
             fixture.Build());
 
         Assert.Contains(evaluation.Diagnostics, diagnostic => diagnostic.Message.Contains(
-            $"source path is dangling: {GoldenCorpus.FixtureDigestionSourcePath}",
+            "source fixture-source entry keys are not canonical",
             StringComparison.Ordinal));
     }
 
     [Fact]
-    public void Sl016RejectsDeletingABaselineCasBlobAfterDroppingItsReference()
+    public void Sl016RejectsDeletingABaselineCasBlob()
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();

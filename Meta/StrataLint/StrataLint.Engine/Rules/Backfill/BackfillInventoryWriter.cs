@@ -80,10 +80,7 @@ internal static class BackfillInventoryWriter
         Line(builder, "        fingerprints:");
         Line(builder, $"          raw_sha256: {Scalar(entry.Fingerprints.RawSha256)}");
         Line(builder, $"          normalized_sha256: {Scalar(entry.Fingerprints.NormalizedSha256)}");
-        if (entry.CasRef is not null)
-        {
-            Line(builder, $"        cas_ref: {Scalar(entry.CasRef)}");
-        }
+        Line(builder, $"        cas_ref: {Scalar(entry.CasRef)}");
 
         Strings(builder, "        coverage_gids", entry.CoverageGids, 10);
         Line(builder, "        receipts:");

@@ -147,10 +147,6 @@ internal static class DigestionStatusEvaluator
         var boundary = entry.Atomizer == AtomizerRegistry.NoAtomizerId
             && entry.Boundary is not null
                 ? VerifyBoundary(entry, snapshot, gaps, findings)
-            : entry.CasRef is not null
-            ? VerifyStructuredAlignment(entry, alignment, gaps, findings)
-            : entry.Boundary is not null
-                ? VerifyBoundary(entry, snapshot, gaps, findings)
                 : VerifyStructuredAlignment(entry, alignment, gaps, findings);
         var targetStates = new List<(string Gid, TruthState State)>();
         var existingTargets = new Dictionary<string, RepositoryFile>(StringComparer.Ordinal);
@@ -257,9 +253,6 @@ internal static class DigestionStatusEvaluator
         {
             case DigestionReceiptAlignment.Seen:
                 return true;
-            case DigestionReceiptAlignment.NormalizedSeen:
-                gaps.Add(new DigestionGap("normalized-seen-not-deletable", entry.AstPath));
-                return false;
             case DigestionReceiptAlignment.Stale:
                 gaps.Add(new DigestionGap("stale-receipt-not-deletable", entry.AstPath));
                 return false;
