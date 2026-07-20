@@ -3835,17 +3835,17 @@ sources:
               definition_sha256: sha256:1ed5f9f1f1a5ddc19d31e927623ea677bd744943ef2e0d96e0ab998758937def
               emission_sha256: sha256:abaae7b76dc9d766f706f042726e625b1f8da7945afa858b39a0b1dd9935c144
             - gid: D5/S1/Phase/WalkFormula.alternating_walk_append
-              definition_sha256: sha256:192029b6759bfe432fb1611b3bc9bd9aa66cc84471422f5f76e9e213e97098a2
-              emission_sha256: sha256:45c924cd5aad4e5913e506045106241a5bc34ea838aac0dcde5999ca3b0d13a3
+              definition_sha256: sha256:2fa79de15345cb7d1214959bd38d110dec5d2a18c7847753da93b53519d4e062
+              emission_sha256: sha256:2c7aa004809b49b7c1258c22a144caca5efab14d7e3ef9f8be924099a2d75f9b
             - gid: D5/S1/Phase/WalkFormula.alternating_walk_reverse
-              definition_sha256: sha256:192029b6759bfe432fb1611b3bc9bd9aa66cc84471422f5f76e9e213e97098a2
-              emission_sha256: sha256:45c924cd5aad4e5913e506045106241a5bc34ea838aac0dcde5999ca3b0d13a3
+              definition_sha256: sha256:2fa79de15345cb7d1214959bd38d110dec5d2a18c7847753da93b53519d4e062
+              emission_sha256: sha256:2c7aa004809b49b7c1258c22a144caca5efab14d7e3ef9f8be924099a2d75f9b
             - gid: D5/S1/Phase/WalkFormula.endpoint_correction_is_integer
-              definition_sha256: sha256:192029b6759bfe432fb1611b3bc9bd9aa66cc84471422f5f76e9e213e97098a2
-              emission_sha256: sha256:45c924cd5aad4e5913e506045106241a5bc34ea838aac0dcde5999ca3b0d13a3
+              definition_sha256: sha256:2fa79de15345cb7d1214959bd38d110dec5d2a18c7847753da93b53519d4e062
+              emission_sha256: sha256:2c7aa004809b49b7c1258c22a144caca5efab14d7e3ef9f8be924099a2d75f9b
             - gid: D5/S1/Phase/WalkFormula.w3_walk_endpoint_translation
-              definition_sha256: sha256:192029b6759bfe432fb1611b3bc9bd9aa66cc84471422f5f76e9e213e97098a2
-              emission_sha256: sha256:45c924cd5aad4e5913e506045106241a5bc34ea838aac0dcde5999ca3b0d13a3
+              definition_sha256: sha256:2fa79de15345cb7d1214959bd38d110dec5d2a18c7847753da93b53519d4e062
+              emission_sha256: sha256:2c7aa004809b49b7c1258c22a144caca5efab14d7e3ef9f8be924099a2d75f9b
           unresolved_subitems:
             - bhk-continued-fraction-theorem
             - bhk-1755-enumeration-certificate
@@ -3854,6 +3854,7 @@ sources:
             - full-vote-enforcement-clause
             - three-walk-identification
             - dedekind-family-split-identity
+            - endpoint-translation-integrality
             - orientation-branch-clause
             - dedekind-orientation-canonical-ledger-clause
             - translation-asymptotic
@@ -17235,17 +17236,17 @@ sources:
               definition_sha256: sha256:1ed5f9f1f1a5ddc19d31e927623ea677bd744943ef2e0d96e0ab998758937def
               emission_sha256: sha256:abaae7b76dc9d766f706f042726e625b1f8da7945afa858b39a0b1dd9935c144
             - gid: D5/S1/Phase/WalkFormula.alternating_walk_append
-              definition_sha256: sha256:192029b6759bfe432fb1611b3bc9bd9aa66cc84471422f5f76e9e213e97098a2
-              emission_sha256: sha256:45c924cd5aad4e5913e506045106241a5bc34ea838aac0dcde5999ca3b0d13a3
+              definition_sha256: sha256:2fa79de15345cb7d1214959bd38d110dec5d2a18c7847753da93b53519d4e062
+              emission_sha256: sha256:2c7aa004809b49b7c1258c22a144caca5efab14d7e3ef9f8be924099a2d75f9b
             - gid: D5/S1/Phase/WalkFormula.alternating_walk_reverse
-              definition_sha256: sha256:192029b6759bfe432fb1611b3bc9bd9aa66cc84471422f5f76e9e213e97098a2
-              emission_sha256: sha256:45c924cd5aad4e5913e506045106241a5bc34ea838aac0dcde5999ca3b0d13a3
+              definition_sha256: sha256:2fa79de15345cb7d1214959bd38d110dec5d2a18c7847753da93b53519d4e062
+              emission_sha256: sha256:2c7aa004809b49b7c1258c22a144caca5efab14d7e3ef9f8be924099a2d75f9b
             - gid: D5/S1/Phase/WalkFormula.endpoint_correction_is_integer
-              definition_sha256: sha256:192029b6759bfe432fb1611b3bc9bd9aa66cc84471422f5f76e9e213e97098a2
-              emission_sha256: sha256:45c924cd5aad4e5913e506045106241a5bc34ea838aac0dcde5999ca3b0d13a3
+              definition_sha256: sha256:2fa79de15345cb7d1214959bd38d110dec5d2a18c7847753da93b53519d4e062
+              emission_sha256: sha256:2c7aa004809b49b7c1258c22a144caca5efab14d7e3ef9f8be924099a2d75f9b
             - gid: D5/S1/Phase/WalkFormula.w3_walk_endpoint_translation
-              definition_sha256: sha256:192029b6759bfe432fb1611b3bc9bd9aa66cc84471422f5f76e9e213e97098a2
-              emission_sha256: sha256:45c924cd5aad4e5913e506045106241a5bc34ea838aac0dcde5999ca3b0d13a3
+              definition_sha256: sha256:2fa79de15345cb7d1214959bd38d110dec5d2a18c7847753da93b53519d4e062
+              emission_sha256: sha256:2c7aa004809b49b7c1258c22a144caca5efab14d7e3ef9f8be924099a2d75f9b
           unresolved_subitems:
             - bhk-continued-fraction-theorem
             - bhk-1755-enumeration-certificate
@@ -17253,6 +17254,7 @@ sources:
             - w3-sign-reversal-postmortem
             - full-vote-enforcement-clause
             - three-walk-identification
+            - endpoint-translation-integrality
             - orientation-branch-clause
             - dedekind-orientation-canonical-ledger-clause
           chain_atoms: []

@@ -305,6 +305,11 @@ public sealed class DocumentDiscoveryTests
         Assert.Contains("does not prove the BHK theorem", markdown, StringComparison.Ordinal);
         Assert.Contains("does not identify any word, column, or Dedekind walk", markdown,
             StringComparison.Ordinal);
+        Assert.Contains("is only a conditional corollary", markdown, StringComparison.Ordinal);
+        Assert.Contains(
+            "does not discharge the endpoint-translation-integrality residual",
+            markdown,
+            StringComparison.Ordinal);
     }
 
     [Fact]
