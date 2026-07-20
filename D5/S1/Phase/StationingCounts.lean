@@ -1,6 +1,6 @@
 /- GID: D5/S1/Phase/StationingCounts
    generality: G
-   mirror-B: D5/B/S1/Phase/StationingCounts
+   mirror-B: none(waiver:blueprint-moved-to-depth-capacity-bucket)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Exact support and occupancy counts for labeled Boolean stationings. -/
