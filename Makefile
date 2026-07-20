@@ -48,7 +48,7 @@ gate:
 	@/bin/bash Meta/StrataLint/scripts/local-harness-gate.sh --base "$(BASE)" $(GATE_ARGS)
 
 perf-report:
-	@/bin/bash Meta/StrataLint/scripts/perf-report.sh "$(RECENT)"
+	@/bin/bash Meta/StrataLint/scripts/perf-report.sh "$(RECENT)" "$(abspath Golden/perf-budgets.toml)"
 
 preflight:
 	@/bin/bash Meta/StrataLint/scripts/preflight.sh

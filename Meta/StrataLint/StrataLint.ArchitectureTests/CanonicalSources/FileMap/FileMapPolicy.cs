@@ -26,6 +26,8 @@ internal static class FileMapPolicy
         "Meta/StrataLint/StrataLint.Cli/Golden/TomlGoldenLoader.cs";
     private const string GoldenFixtureRegistryLoaderPath =
         "Meta/StrataLint/StrataLint.Cli/Golden/GoldenFixtureRegistryLoader.cs";
+    private const string PerfBudgetLoaderPath =
+        "Meta/StrataLint/StrataLint.Cli/Performance/PerfBudgetLoader.cs";
     private const string ValuesKernelLoaderPath =
         "Meta/StrataLint/StrataLint.Scribe/Values/ValuesKernelDataLoader.cs";
     private const string YamlSubsetParserPath =
@@ -44,6 +46,7 @@ internal static class FileMapPolicy
             ["FileMapLoader"] = FileMapLoaderPath,
             ["GoldenFixtureRegistryLoader"] = GoldenFixtureRegistryLoaderPath,
             ["LibraryNoteCatalog"] = LibraryNoteCatalogPath,
+            ["PerfBudgetLoader"] = PerfBudgetLoaderPath,
             ["RegistryLoader"] = RegistryLoaderPath,
             ["ScribeCompiler"] = ScribeProjectPath,
             ["SnapshotDecoder"] = SnapshotDecoderPath,
