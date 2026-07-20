@@ -13,28 +13,28 @@ public sealed class DescribeMigrationTests
                 DescribeKind.Theorem or DescribeKind.Proposition or DescribeKind.Lemma)
             .ToArray();
 
-        Assert.Equal(77, nodes.Length);
+        Assert.Equal(81, nodes.Length);
         Assert.All(nodes, static node => Assert.NotNull(node.StatementLatex));
     }
 
     [Fact]
-    public void RepositoryMigrationHasOneHundredAndNineteenTypedNodesAndPreservesTwentyFourFormulaSlots()
+    public void RepositoryMigrationHasOneHundredAndTwentyThreeTypedNodesAndPreservesTwentyFourFormulaSlots()
     {
         var root = FindRepositoryRoot();
         var report = DescribeReport.Build(
             root,
             DocumentDefinitions.All.Select(static definition => definition.Document));
 
-        Assert.Equal(119, report.NodeStats.Total);
+        Assert.Equal(123, report.NodeStats.Total);
         Assert.Equal(24, report.NodeStats.FormulaContentSlots);
         Assert.Equal(12, report.NodeStats.FormulaStatements);
-        Assert.Equal(107, report.NodeStats.LeanStatements);
+        Assert.Equal(111, report.NodeStats.LeanStatements);
         Assert.Equal(11, report.NodeStats.ByKind["definition"]);
         Assert.Equal(9, report.NodeStats.ByKind["proposition"]);
-        Assert.Equal(68, report.NodeStats.ByKind["theorem"]);
+        Assert.Equal(72, report.NodeStats.ByKind["theorem"]);
         Assert.Equal(1, report.NodeStats.ByKind["example"]);
         Assert.Equal(30, report.NodeStats.ByKind["remark"]);
-        Assert.Equal(84, report.NodeStats.ByProvenance["repo-derived"]);
+        Assert.Equal(88, report.NodeStats.ByProvenance["repo-derived"]);
         Assert.Equal(35, report.NodeStats.ByProvenance["literature-attested"]);
         Assert.Equal(0, report.OpenCount);
         Assert.Empty(report.SuspectedNovel);
@@ -537,7 +537,7 @@ public sealed class DescribeMigrationTests
         Assert.Equal(string.Empty, error.ToString());
         using var document = JsonDocument.Parse(output.ToString());
         Assert.Equal("DESCRIBE-NODES", document.RootElement.GetProperty("case_id").GetString());
-        Assert.Equal(119, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
+        Assert.Equal(123, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
         Assert.Equal(0, document.RootElement.GetProperty("open_count").GetInt32());
     }
 
