@@ -305,6 +305,7 @@ internal static partial class GoldenCorpusMaterializer
                     "D5/B/S0/Carrier/Ring") + "def goldenRing : Nat := 0\n",
                 [GoldenCorpus.BlueprintPath] = "# Golden ring\n",
                 [GoldenCorpus.FixtureDigestionSourcePath] = GoldenCorpus.FixtureDigestionSource,
+                [GoldenCorpus.FixtureCasPath] = GoldenCorpus.FixtureDigestionSource,
                 [SpecificationPath] = GoldenCorpus.FixtureSpecification,
             };
             var reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
