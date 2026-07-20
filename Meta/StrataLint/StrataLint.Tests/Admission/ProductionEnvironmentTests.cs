@@ -483,6 +483,37 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void DigestStatusResidualSummaryUsesMachineDerivedUnresolvedSubitemGaps()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.Files[BackfillInventoryLoader.RelativePath] = fixture.Files[BackfillInventoryLoader.RelativePath]
+            .Replace(
+                "          unresolved_subitems: []",
+                "          unresolved_subitems:\n            - zeta-residual\n            - alpha-residual",
+                StringComparison.Ordinal);
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(Array.Empty<string>()),
+                Snapshot(fixture.Files),
+                null),
+            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+
+        var result = environment.DigestStatus(["--residual-summary"]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("- unresolved_subitems: 2", result.Output, StringComparison.Ordinal);
+        Assert.Contains("- mother_residual_atom_ids: 1", result.Output, StringComparison.Ordinal);
+        Assert.Contains("- `fixture-atom` (2)", result.Output, StringComparison.Ordinal);
+        Assert.True(
+            result.Output.IndexOf("`alpha-residual`", StringComparison.Ordinal)
+                < result.Output.IndexOf("`zeta-residual`", StringComparison.Ordinal));
+        Assert.DoesNotContain("boundary-not-reproducible", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void DigestStatusReportsHistoricalAndCurrentCasReceiptsAsSeen()
     {
         var fixture = new RuleFixture();

@@ -62,7 +62,11 @@ internal static class DigestStatusCommand
 
             return new CommandResult(
                 true,
-                options.Json ? RenderJson(evaluation) : RenderText(evaluation),
+                options.ResidualSummary
+                    ? DigestResidualSummary.Render(evaluation)
+                    : options.Json
+                        ? RenderJson(evaluation)
+                        : RenderText(evaluation),
                 string.Empty);
         }
         catch (Exception exception) when (
@@ -78,6 +82,7 @@ internal static class DigestStatusCommand
     private static DigestStatusOptions ParseArguments(IReadOnlyList<string> arguments)
     {
         var json = false;
+        var residualSummary = false;
         string? baselineRevision = null;
         for (var index = 0; index < arguments.Count; index++)
         {
@@ -85,6 +90,9 @@ internal static class DigestStatusCommand
             {
                 case "--json" when !json:
                     json = true;
+                    break;
+                case "--residual-summary" when !residualSummary:
+                    residualSummary = true;
                     break;
                 case "--base" when baselineRevision is null && index + 1 < arguments.Count:
                     baselineRevision = arguments[++index];
@@ -95,11 +103,12 @@ internal static class DigestStatusCommand
             }
         }
 
-        return new DigestStatusOptions(json, baselineRevision);
+        if (json && residualSummary) throw Usage();
+        return new DigestStatusOptions(json, residualSummary, baselineRevision);
     }
 
     private static InvalidOperationException Usage() => new(
-        "USAGE: StrataLint digest-status [--json] [--base REV]");
+        "USAGE: StrataLint digest-status [--json|--residual-summary] [--base REV]");
 
     internal static string RenderText(DigestionLedgerEvaluation evaluation)
     {
@@ -168,5 +177,75 @@ internal static class DigestStatusCommand
                 throw new InvalidOperationException(failure.Message),
         };
 
-    private sealed record DigestStatusOptions(bool Json, string? BaselineRevision);
+    private sealed record DigestStatusOptions(
+        bool Json,
+        bool ResidualSummary,
+        string? BaselineRevision);
+}
+
+internal static class DigestResidualSummary
+{
+    private const string ResidualGapCode = "unresolved-subitem";
+
+    internal static string Render(DigestionLedgerEvaluation evaluation)
+    {
+        ArgumentNullException.ThrowIfNull(evaluation);
+        var sources = evaluation.Entries
+            .GroupBy(static item => item.Entry.SourceId, StringComparer.Ordinal)
+            .OrderBy(static group => group.Key, StringComparer.Ordinal)
+            .Select(static group => new SourceResiduals(
+                group.Key,
+                group
+                    .Select(static item => new AtomResiduals(
+                        item.Entry.AtomId,
+                        item.Gaps
+                            .Where(static gap => gap.Code == ResidualGapCode)
+                            .Select(static gap => gap.Detail)
+                            .OrderBy(static detail => detail, StringComparer.Ordinal)
+                            .ToArray()))
+                    .Where(static item => item.Subitems.Length > 0)
+                    .OrderBy(static item => item.AtomId, StringComparer.Ordinal)
+                    .ToArray()))
+            .ToArray();
+        var writer = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
+        writer.WriteLine("# Echo Residual Summary");
+        writer.WriteLine();
+        writer.WriteLine($"- unresolved_subitems: {sources.Sum(static source => source.SubitemCount)}");
+        writer.WriteLine($"- mother_residual_atom_ids: {sources.Sum(static source => source.Atoms.Length)}");
+
+        foreach (var source in sources)
+        {
+            writer.WriteLine();
+            writer.WriteLine($"## `{source.SourceId}`");
+            writer.WriteLine();
+            writer.WriteLine($"- unresolved_subitems: {source.SubitemCount}");
+            writer.WriteLine($"- mother_residual_atom_ids: {source.Atoms.Length}");
+            writer.WriteLine();
+            if (source.Atoms.Length == 0)
+            {
+                writer.WriteLine("Mother residual atoms: none.");
+                continue;
+            }
+
+            writer.WriteLine("Mother residual atoms:");
+            writer.WriteLine();
+            foreach (var atom in source.Atoms)
+            {
+                writer.WriteLine($"- `{atom.AtomId}` ({atom.Subitems.Length})");
+                foreach (var subitem in atom.Subitems)
+                {
+                    writer.WriteLine($"  - `{subitem}`");
+                }
+            }
+        }
+
+        return writer.ToString();
+    }
+
+    private sealed record AtomResiduals(string AtomId, string[] Subitems);
+
+    private sealed record SourceResiduals(string SourceId, AtomResiduals[] Atoms)
+    {
+        internal int SubitemCount => Atoms.Sum(static atom => atom.Subitems.Length);
+    }
 }
