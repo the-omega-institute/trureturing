@@ -27,6 +27,7 @@ public sealed class MakeWorkflowTests
     private const string LeanReportPairScriptPath = "Meta/StrataLint/scripts/lean-report-pair.sh";
     private const string PerfReportScriptPath = "Meta/StrataLint/scripts/perf-report.sh";
     private const string PerfEventScriptPath = "Meta/StrataLint/scripts/perf-event-lib.sh";
+    private const string TheoryIngestWorkflowPath = ".github/workflows/theory-ingest.yml";
 
     private static readonly string[] Targets =
     [
@@ -175,6 +176,33 @@ public sealed class MakeWorkflowTests
         Assert.Contains("|| true", localGate, StringComparison.Ordinal);
         Assert.Contains("|| true", preflight, StringComparison.Ordinal);
         Assert.Contains(">> \"$LOCAL_TIMING_FILE\" || true", localGate, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void TheoryIngestProducesCanonicalLeanReportBeforeConsumption()
+    {
+        var root = FindRepositoryRoot();
+        var workflow = File.ReadAllText(Path.Combine(root, TheoryIngestWorkflowPath));
+        var overlayIndex = workflow.IndexOf(
+            "- name: Overlay judge harness onto candidate data",
+            StringComparison.Ordinal);
+        var leanIndex = workflow.IndexOf("          make lean\n", StringComparison.Ordinal);
+        var reportIndex = workflow.IndexOf("          make lean-report\n", StringComparison.Ordinal);
+        var ingestIndex = workflow.IndexOf("          make ingest BASE=HEAD\n", StringComparison.Ordinal);
+
+        Assert.True(overlayIndex >= 0, "theory ingest must overlay the base judge");
+        Assert.True(leanIndex > overlayIndex, "Lean build must use the overlaid base judge");
+        Assert.True(reportIndex > leanIndex, "canonical report production must follow the Lean build");
+        Assert.True(ingestIndex > reportIndex, "ingest must only consume a precomputed Lean report");
+
+        Assert.Contains("uses: actions/cache@v4", workflow, StringComparison.Ordinal);
+        Assert.Contains("candidate/.lake", workflow, StringComparison.Ordinal);
+        var cacheKey = Assert.Single(
+            workflow.Split('\n'),
+            static line => line.TrimStart().StartsWith("key: theory-ingest-lake-", StringComparison.Ordinal));
+        Assert.Contains("hashFiles('candidate/lean-toolchain')", cacheKey, StringComparison.Ordinal);
+        Assert.Contains("hashFiles('candidate/lake-manifest.json')", cacheKey, StringComparison.Ordinal);
+        Assert.Contains("hashFiles('candidate/**/*.lean')", cacheKey, StringComparison.Ordinal);
     }
 
     [Fact]

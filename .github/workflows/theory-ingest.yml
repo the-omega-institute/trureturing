@@ -85,6 +85,24 @@ jobs:
           rsync -a --delete judge/Meta/StrataLint/ candidate/Meta/StrataLint/
           cp judge/Makefile judge/global.json candidate/
 
+      - name: Restore candidate Lean build artifacts
+        uses: actions/cache@v4
+        with:
+          path: |
+            candidate/.lake
+            ~/.cache/mathlib
+          key: theory-ingest-lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('candidate/lean-toolchain') }}-${{ hashFiles('candidate/lake-manifest.json') }}-${{ hashFiles('candidate/**/*.lean') }}
+          restore-keys: |
+            theory-ingest-lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('candidate/lean-toolchain') }}-${{ hashFiles('candidate/lake-manifest.json') }}-
+
+      - name: Produce canonical Lean report
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd candidate
+          make lean
+          make lean-report
+
       - name: Run ingest with base judge
         shell: bash
         run: |
