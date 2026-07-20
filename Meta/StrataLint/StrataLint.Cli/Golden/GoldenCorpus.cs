@@ -106,6 +106,10 @@ internal static partial class GoldenCorpus
     internal const string FixtureDigestionSourcePath = "docs/GOVERNANCE.md";
     internal const string FixtureDigestionSource = "x";
     internal const string FixtureAtomId = "fixture-atom";
+    internal const string FixtureCasReference =
+        "sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881";
+    internal const string FixtureCasPath =
+        "Meta/Digestion/atoms/sha256/2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881";
     internal const string FixtureSpecification = """
         # Synthetic harness specification
 
@@ -128,6 +132,7 @@ internal static partial class GoldenCorpus
                 fingerprints:
                   raw_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
                   normalized_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
+                cas_ref: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
                 coverage_gids:
                   - D5/S0/Carrier/BackfillTarget
                 receipts:
