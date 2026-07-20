@@ -15,7 +15,7 @@ persistence_class = "stateless_adapter"
 root = "."
 
 [lib_deps]
-libraries = ["contract", "workflow", "workflow_internal", "forge", "devloop"]
+libraries = ["contract", "workflow", "forge", "devloop"]
 
 [event_deps]
 packages = ["idle-detector", "github-proxy"]
