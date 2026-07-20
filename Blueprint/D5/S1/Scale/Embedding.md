@@ -1,12 +1,20 @@
 # Golden Real Embedding
 
+## Abstract
+
+The real embedding of golden integers is an injective ring homomorphism.
+
 `D5/S1/Scale/Embedding` sends the golden integer $a + b \cdot \varphi$ to the real number with the same coordinate formula.
 
-## Proposition: Coordinate formula
+**Proposition 1.1 (Coordinate formula).**
 
-Provenance: `repo-derived`
+$\forall x \in \operatorname{GoldenInt},\ \operatorname{embedding}(x)=x.a+x.b\varphi$
 
-Statement: `D5/S1/Scale/Embedding.embedding_apply` `✓ std3`
+*Proof.* Machine-checked in Lean as `D5/S1/Scale/Embedding.embedding_apply` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
 
 $$
 \operatorname{embedding}\left(a + b \cdot \varphi\right) = a + b \cdot \varphi
@@ -28,11 +36,15 @@ $$
 \left\{\varphi, \psi\right\}
 $$
 
-## Theorem: Injectivity
+**Theorem 1.2 (Injectivity).**
 
-Provenance: `repo-derived`
+$\forall x,y \in \operatorname{GoldenInt},\ \operatorname{embedding}(x)=\operatorname{embedding}(y) \Rightarrow x=y$
 
-Statement: `D5/S1/Scale/Embedding.embedding_injective` `✓ std3`
+*Proof.* Machine-checked in Lean as `D5/S1/Scale/Embedding.embedding_injective` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
 
 A coordinate collision with $b \ne 0$ would force the forbidden rational identity
 
@@ -42,21 +54,29 @@ $$
 
 ## Norm recovery
 
-### Theorem: Embedding times conjugate
+**Theorem 1.3 (Embedding times conjugate).**
 
-Provenance: `repo-derived`
+$\forall x \in \operatorname{GoldenInt},\ \operatorname{embedding}(x)\operatorname{embedding}(\operatorname{conj}(x))=\operatorname{norm}(x)$
 
-Statement: `D5/S1/Scale/Embedding.embedding_mul_conj` `✓ std3`
+*Proof.* Machine-checked in Lean as `D5/S1/Scale/Embedding.embedding_mul_conj` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
 
 $$
 \operatorname{embedding}\left(x\right) \cdot \operatorname{embedding}\left(\operatorname{conj}\left(x\right)\right) = \operatorname{norm}\left(x\right)
 $$
 
-### Theorem: Absolute norm relation
+**Theorem 1.4 (Absolute norm relation).**
 
-Provenance: `repo-derived`
+$\forall x \in \operatorname{GoldenInt},\ \lvert\operatorname{embedding}(x)\rvert\,\lvert\operatorname{embedding}(\operatorname{conj}(x))\rvert=\lvert\operatorname{norm}(x)\rvert$
 
-Statement: `D5/S1/Scale/Embedding.abs_embedding_mul_abs_conj` `✓ std3`
+*Proof.* Machine-checked in Lean as `D5/S1/Scale/Embedding.abs_embedding_mul_abs_conj` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
 
 Taking absolute values gives the corresponding multiplicative relation.
 

@@ -1,5 +1,7 @@
 ---
 bibkey: kochen1968problem
+authors: Simon Kochen and Ernst P. Specker
+year: 1968
 title: The Problem of Hidden Variables in Quantum Mechanics
 doi: 10.1512/iumj.1968.17.17004
 claim: Contextual obstruction to dispersion-free valuation assignments in Hilbert spaces of dimension at least three.

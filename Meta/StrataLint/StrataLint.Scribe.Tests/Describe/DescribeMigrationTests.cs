@@ -5,6 +5,19 @@ namespace StrataLint.Scribe.Tests;
 public sealed class DescribeMigrationTests
 {
     [Fact]
+    public void EveryCurrentTheoremClassNodeHasAnExplicitLatexStatement()
+    {
+        var nodes = DocumentDefinitions.All
+            .SelectMany(static definition => EnumerateDescribe(definition.Document.Content))
+            .Where(static node => node.Kind is
+                DescribeKind.Theorem or DescribeKind.Proposition or DescribeKind.Lemma)
+            .ToArray();
+
+        Assert.Equal(81, nodes.Length);
+        Assert.All(nodes, static node => Assert.NotNull(node.StatementLatex));
+    }
+
+    [Fact]
     public void RepositoryMigrationHasOneHundredAndTwentyThreeTypedNodesAndPreservesTwentyFourFormulaSlots()
     {
         var root = FindRepositoryRoot();
@@ -26,6 +39,29 @@ public sealed class DescribeMigrationTests
         Assert.Equal(0, report.OpenCount);
         Assert.Empty(report.SuspectedNovel);
         Assert.Empty(report.RedFindings);
+    }
+
+    private static IEnumerable<DocumentBlock.Describe> EnumerateDescribe(BlockSequence blocks)
+    {
+        foreach (var block in blocks.Items)
+        {
+            switch (block)
+            {
+                case DocumentBlock.Section section:
+                    foreach (var nested in EnumerateDescribe(section.Content))
+                    {
+                        yield return nested;
+                    }
+                    break;
+                case DocumentBlock.Describe describe:
+                    yield return describe;
+                    foreach (var nested in EnumerateDescribe(describe.Content))
+                    {
+                        yield return nested;
+                    }
+                    break;
+            }
+        }
     }
 
     [Fact]

@@ -18,7 +18,8 @@ public static class QuestPdfWriter
 
     public static ImmutableArray<byte> Write(
         ScribeDocument document,
-        LeanAxiomReport? leanReport = null)
+        LeanAxiomReport? leanReport = null,
+        IReadOnlyDictionary<string, LiteratureCitation>? citations = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         QuestPDF.Settings.License = LicenseType.Community;
@@ -44,7 +45,16 @@ public static class QuestPdfWriter
                 page.Content().PaddingVertical(18).Column(column =>
                 {
                     column.Spacing(8);
-                    WriteBlocks(column, document.Content, 2, leanReport);
+                    WriteHeading(column, "Abstract", 2);
+                    column.Item().Text(document.Header.Digest.Value);
+                    var describeNumber = 0;
+                    WriteBlocks(
+                        column,
+                        document.Content,
+                        2,
+                        leanReport,
+                        citations,
+                        ref describeNumber);
                 });
 
                 page.Footer()
@@ -65,7 +75,9 @@ public static class QuestPdfWriter
         ColumnDescriptor column,
         BlockSequence content,
         int headingLevel,
-        LeanAxiomReport? leanReport)
+        LeanAxiomReport? leanReport,
+        IReadOnlyDictionary<string, LiteratureCitation>? citations,
+        ref int describeNumber)
     {
         foreach (var block in content.Items)
         {
@@ -84,10 +96,22 @@ public static class QuestPdfWriter
                     break;
                 case DocumentBlock.Section section:
                     WriteHeading(column, section.Title.Value, headingLevel);
-                    WriteBlocks(column, section.Content, headingLevel + 1, leanReport);
+                    WriteBlocks(
+                        column,
+                        section.Content,
+                        headingLevel + 1,
+                        leanReport,
+                        citations,
+                        ref describeNumber);
                     break;
                 case DocumentBlock.Describe describe:
-                    WriteDescribe(column, describe, headingLevel, leanReport);
+                    WriteDescribe(
+                        column,
+                        describe,
+                        headingLevel,
+                        leanReport,
+                        citations,
+                        ref describeNumber);
                     break;
                 default:
                     throw new UnreachableException("Unknown document block.");
@@ -125,16 +149,16 @@ public static class QuestPdfWriter
         ColumnDescriptor column,
         DocumentBlock.Describe describe,
         int headingLevel,
-        LeanAxiomReport? leanReport)
+        LeanAxiomReport? leanReport,
+        IReadOnlyDictionary<string, LiteratureCitation>? citations,
+        ref int describeNumber)
     {
         var kind = DescribeVocabulary.HeadingName(describe.Kind);
-        var provenance = DescribeVocabulary.CanonicalName(describe.Provenance.Kind);
-        if (describe.Provenance.LiteratureReference is { } literature)
-        {
-            provenance += $" via {literature.Value} ({literature.Anchor.CanonicalString})";
-        }
-        WriteHeading(column, $"{kind}: {describe.Title.Value}", headingLevel);
-        column.Item().Text($"Provenance: {provenance}").FontSize(8);
+        describeNumber++;
+        WriteHeading(
+            column,
+            $"{kind} 1.{describeNumber} ({describe.Title.Value}).",
+            headingLevel);
         switch (describe.Statement)
         {
             case DescribeStatement.FormulaAst formula:
@@ -156,17 +180,72 @@ public static class QuestPdfWriter
                         .FontFamily(MonospaceFonts)
                         .FontSize(9);
                 }
-                column.Item()
-                    .Text($"Lean: {lean.Value.Value} [{verified.AxiomBadge}]")
-                    .FontFamily(MonospaceFonts)
-                    .FontSize(8);
+                else
+                {
+                    column.Item()
+                        .Text($"Lean statement: {lean.Value.Value}")
+                        .FontFamily(MonospaceFonts)
+                        .FontSize(8);
+                }
+
+                if (IsTheoremClass(describe.Kind))
+                {
+                    column.Item().Text(text =>
+                    {
+                        text.Span("Proof. ").Italic();
+                        text.Span(
+                            $"Machine-checked in Lean as {lean.Value.Value} "
+                            + $"[{verified.AxiomBadge}]. ∎");
+                    });
+                }
+                else
+                {
+                    column.Item()
+                        .Text($"Formalization. {lean.Value.Value} [{verified.AxiomBadge}]")
+                        .FontSize(8);
+                }
                 break;
             default:
                 throw new UnreachableException("Unknown Describe statement.");
         }
 
-        WriteBlocks(column, describe.Content, headingLevel + 1, leanReport);
+        if (describe.Provenance.LiteratureReference is { } literature)
+        {
+            if (citations is null
+                || !citations.TryGetValue(literature.BibKey.Value, out var citation))
+            {
+                throw new InvalidOperationException(
+                    $"Academic citation is unavailable for {literature.Value}.");
+            }
+
+            column.Item().Text(
+                $"Citation. {citation.Authors} ({citation.Year}). {citation.Title}. "
+                + $"DOI: https://doi.org/{citation.Doi.Value}.").FontSize(8);
+        }
+        else
+        {
+            column.Item().Text(
+                DescribeVocabulary.CanonicalName(describe.Provenance.Kind) switch
+                {
+                    "repo-derived" => "Source. Repository-derived.",
+                    "suspected-novel" => "Source. Suspected novel.",
+                    "unassessed" => "Source. Unassessed.",
+                    var provenance => $"Source. {provenance}.",
+                }).FontSize(8);
+        }
+
+        column.Item().Text("Commentary.").Italic();
+        WriteBlocks(
+            column,
+            describe.Content,
+            headingLevel + 1,
+            leanReport,
+            citations,
+            ref describeNumber);
     }
+
+    private static bool IsTheoremClass(DescribeKind kind) =>
+        kind is DescribeKind.Theorem or DescribeKind.Proposition or DescribeKind.Lemma;
 
     private static VerifiedLeanDeclaration Resolve(
         LeanDeclarationRef declaration,

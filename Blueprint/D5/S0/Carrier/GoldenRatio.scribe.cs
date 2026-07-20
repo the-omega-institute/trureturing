@@ -19,5 +19,6 @@ internal sealed class GoldenRatioDocument : IScribeDocumentDefinition
                 DescribeProvenance.LiteratureAttested(
                     LibraryNoteRef.Create("D5/L/koshy2001fibonacci")),
                 Blocks(Paragraph(Text(
-                    "One kernel-checked conjunction records the radical definition, the quadratic fixed point, and the negative-reciprocal conjugate identity.")))))));
+                    "One kernel-checked conjunction records the radical definition, the quadratic fixed point, and the negative-reciprocal conjugate identity."))),
+                LatexStatement.Create(@"$$\varphi = \frac{1 + \sqrt{5}}{2} \land \varphi^{2} = \varphi + 1 \land 1 - \varphi = -\frac{1}{\varphi}$$")))));
 }

@@ -21,7 +21,8 @@ internal sealed class SpectralDynamicsDocument : IScribeDocumentDefinition
                     "D5/S3/Weil/SpectralDynamics.vertical_evolution_unitary_group")),
                 DescribeProvenance.LiteratureAttested(HedenmalmHilbert),
                 Blocks(Paragraph(Text(
-                    "Multiplication of each coefficient by n to the power -it gives the identity, composition, inverse, and norm-preservation laws on the square-summable coefficient space. The declaration proves those laws directly for the coordinate multiplier; it does not introduce an unbounded self-adjoint length operator, bundle a continuous linear unitary equivalence, or prove strong continuity or a generator theorem.")))),
+                    "Multiplication of each coefficient by n to the power -it gives the identity, composition, inverse, and norm-preservation laws on the square-summable coefficient space. The declaration proves those laws directly for the coordinate multiplier; it does not introduce an unbounded self-adjoint length operator, bundle a continuous linear unitary equivalence, or prove strong continuity or a generator theorem."))),
+                LatexStatement.Create(@"$$\forall t,u\in\mathbb{R},\ \forall x\in\operatorname{ZetaHilbertSpace},\ V_{0}x=x \land V_{t+u}x=V_{t}(V_{u}x) \land V_{-t}(V_{t}x)=x \land \Vert V_{t}x\Vert=\Vert x\Vert$$")),
             new DocumentBlock.Describe(
                 DescribeId.Create("forward-horizontal-evolution-is-a-contraction-semigroup"),
                 DescribeKind.Theorem,
@@ -30,7 +31,8 @@ internal sealed class SpectralDynamicsDocument : IScribeDocumentDefinition
                     "D5/S3/Weil/SpectralDynamics.horizontal_evolution_contraction_semigroup")),
                 DescribeProvenance.LiteratureAttested(HedenmalmHilbert),
                 Blocks(Paragraph(Text(
-                    "For nonnegative real increments, multiplication of the nth coefficient by n to the power -delta gives identity and composition laws and cannot increase the square-summable norm. Only this bounded forward direction is bundled. The declaration does not define the reverse unbounded operator or characterize the domain of a multiplier by n to the power delta.")))),
+                    "For nonnegative real increments, multiplication of the nth coefficient by n to the power -delta gives identity and composition laws and cannot increase the square-summable norm. Only this bounded forward direction is bundled. The declaration does not define the reverse unbounded operator or characterize the domain of a multiplier by n to the power delta."))),
+                LatexStatement.Create(@"$$\forall \delta,\varepsilon\in\mathbb{R},\ \delta\geq 0 \land \varepsilon\geq 0 \Rightarrow \forall x\in\operatorname{ZetaHilbertSpace},\ H_{0}x=x \land H_{\delta+\varepsilon}x=H_{\delta}(H_{\varepsilon}x) \land \Vert H_{\delta}x\Vert\leq\Vert x\Vert$$")),
             new DocumentBlock.Describe(
                 DescribeId.Create("labeled-zeta-vectors-follow-the-coordinate-evolutions"),
                 DescribeKind.Theorem,
@@ -39,7 +41,8 @@ internal sealed class SpectralDynamicsDocument : IScribeDocumentDefinition
                     "D5/S3/Weil/SpectralDynamics.labeled_zeta_evolution_spec")),
                 DescribeProvenance.LiteratureAttested(HedenmalmHilbert),
                 Blocks(Paragraph(Text(
-                    "A labeled zeta vector to the right of the half-density boundary is carried from sigma to sigma + it by the vertical multiplier. If sigma is at most sigma prime, the bounded horizontal multiplier then carries it to sigma prime + it. The ordering hypothesis makes the source's forward dissipative direction explicit; no reverse-domain identity is asserted.")))),
+                    "A labeled zeta vector to the right of the half-density boundary is carried from sigma to sigma + it by the vertical multiplier. If sigma is at most sigma prime, the bounded horizontal multiplier then carries it to sigma prime + it. The ordering hypothesis makes the source's forward dissipative direction explicit; no reverse-domain identity is asserted."))),
+                LatexStatement.Create(@"$$\forall \sigma,\sigma',t\in\mathbb{R},\ \frac{1}{2}<\sigma \land \sigma\leq\sigma' \Rightarrow V_{t}\operatorname{labeledZetaVector}(\sigma)=\operatorname{labeledZetaVector}(\sigma+it) \land H_{\sigma'-\sigma}\operatorname{labeledZetaVector}(\sigma+it)=\operatorname{labeledZetaVector}(\sigma'+it)$$")),
             new DocumentBlock.Describe(
                 DescribeId.Create("zero-symmetries-form-the-kernel-resonant-cross-pairs"),
                 DescribeKind.Theorem,
@@ -48,7 +51,8 @@ internal sealed class SpectralDynamicsDocument : IScribeDocumentDefinition
                     "D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec")),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
-                    "The existing reflection and conjugation permutations send every enumerated nontrivial zero to its unique partner for the equation s plus conjugate w equals one, and the two cross-pairs satisfy that equation. The declaration is conditional on a supplied ZeroData value. The repository does not prove that ZeroData is inhabited: no instance or example exists. Accordingly this conditional theorem does not close the source corollary unconditionally; that source obligation remains open. This strengthens the conditional conclusion from off-line zeros to all enumerated zeros, so it permits degenerate critical-line configurations and asserts no pairwise distinct quartet. Resonance here is only the kernel equation, not a new analytic pole or continuation theorem.")))),
+                    "The existing reflection and conjugation permutations send every enumerated nontrivial zero to its unique partner for the equation s plus conjugate w equals one, and the two cross-pairs satisfy that equation. The declaration is conditional on a supplied ZeroData value. The repository does not prove that ZeroData is inhabited: no instance or example exists. Accordingly this conditional theorem does not close the source corollary unconditionally; that source obligation remains open. This strengthens the conditional conclusion from off-line zeros to all enumerated zeros, so it permits degenerate critical-line configurations and asserts no pairwise distinct quartet. Resonance here is only the kernel equation, not a new analytic pole or continuation theorem."))),
+                LatexStatement.Create(@"$$\forall Z:\operatorname{ZeroData},\ \forall n\in\mathbb{N},\ Z_{C(R(n))}=1-\overline{Z_{n}} \land \operatorname{KernelResonant}(Z_{n},Z_{C(R(n))}) \land \operatorname{KernelResonant}(Z_{C(n)},Z_{R(n)}) \land (\forall w,\ \operatorname{KernelResonant}(Z_{n},w) \Leftrightarrow w=Z_{C(R(n))})$$")),
             new DocumentBlock.Describe(
                 DescribeId.Create("critical-line-predicates-use-one-abscissa"),
                 DescribeKind.Theorem,
@@ -57,7 +61,8 @@ internal sealed class SpectralDynamicsDocument : IScribeDocumentDefinition
                     "D5/S3/Weil/SpectralDynamics.critical_line_characterizations")),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
-                    "For any additive ledger with a nonzero length, mirror fixed points, unit-modulus half-density readings, and self-resonance all select real part one half. The labeled zeta coefficient is square-summable exactly on the strict right half-plane, exposing one half as its boundary without asserting endpoint membership. The combined statement locates no zeta zero and adds no Riemann-hypothesis conclusion.")))),
+                    "For any additive ledger with a nonzero length, mirror fixed points, unit-modulus half-density readings, and self-resonance all select real part one half. The labeled zeta coefficient is square-summable exactly on the strict right half-plane, exposing one half as its boundary without asserting endpoint membership. The combined statement locates no zeta zero and adds no Riemann-hypothesis conclusion."))),
+                LatexStatement.Create(@"$$\forall A\ [\operatorname{AddMonoid}(A)],\ \forall \ell:A\to_{+}\mathbb{R},\ (\exists a,\ell(a)\neq 0) \Rightarrow \forall s\in\mathbb{C},\ (s=\operatorname{mirror}(s)\Leftrightarrow\Re(s)=\frac{1}{2}) \land ((\forall a,\Vert\operatorname{halfDensityReading}(\ell,s,a)\Vert=1)\Leftrightarrow\Re(s)=\frac{1}{2}) \land (s+\overline{s}=1\Leftrightarrow\Re(s)=\frac{1}{2}) \land (\operatorname{MemLp}(\operatorname{labeledZetaCoefficient}(s),2)\Leftrightarrow\frac{1}{2}<\Re(s))$$")),
             new DocumentBlock.Describe(
                 DescribeId.Create("diagonal-flow-and-generator-boundary"),
                 DescribeKind.Remark,

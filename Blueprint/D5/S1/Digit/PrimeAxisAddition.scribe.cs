@@ -18,5 +18,6 @@ internal sealed class PrimeAxisAdditionDocument : IScribeDocumentDefinition
                     "D5/S1/Digit/PrimeAxisAddition.prime_axis_addition_spec")),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
-                    "Prime-indexed canonical W rows are equivalent to positive naturals. Adding raw rows and applying the existing local W normalizer preserves exponent sums, so the finite prime-power decoder turns the normalized table sum into multiplication.")))))));
+                    "Prime-indexed canonical W rows are equivalent to positive naturals. Adding raw rows and applying the existing local W normalizer preserves exponent sums, so the finite prime-power decoder turns the normalized table sum into multiplication."))),
+                LatexStatement.Create(@"$$\forall z,w \in \operatorname{PrimeAxisTable},\ \operatorname{Bijective}(\operatorname{primeAxisEncoding}) \land \operatorname{decodePrimeAxisTable}(\operatorname{normalizedPrimeAxisAdd}(z,w)) = \operatorname{decodePrimeAxisTable}(z)\operatorname{decodePrimeAxisTable}(w)$$")))));
 }

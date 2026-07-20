@@ -37,7 +37,8 @@ internal sealed class SpectralShiftDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(
                     Text("At every supplied complex parameter and pair of prime addresses, pulling the labeled coefficient family backward by u multiplies the value at a by the labeled coefficient at u. The theorem is an exact consequence of normalized address multiplication and complex powers, with no summability hypothesis. It does not bundle simultaneous eigenvectors for operators or prove boundedness, adjointness, commutation, or completeness. "),
                     Ref("D5/L/hedenmalm1997hilbert"),
-                    Text(" gives the established Dirichlet-series setting, while this address-level identity is the repository's algebraic translation. It strengthens the coefficient mechanics under the O-6 spectral foundation but supplies no zero-location conclusion.")))),
+                    Text(" gives the established Dirichlet-series setting, while this address-level identity is the repository's algebraic translation. It strengthens the coefficient mechanics under the O-6 spectral foundation but supplies no zero-location conclusion."))),
+                LatexStatement.Create(@"$$\forall s\in\mathbb{C},\ \forall u,a\in\operatorname{PrimeAxisTable},\ \operatorname{backwardShift}(u,\operatorname{labeledZetaCoefficient}(s),a)=\operatorname{labeledZetaCoefficient}(s,u)\operatorname{labeledZetaCoefficient}(s,a)$$")),
             new DocumentBlock.Describe(
                 DescribeId.Create("the-square-summable-labeled-vector-has-the-same-pointwise-eigen-action"),
                 DescribeKind.Theorem,
@@ -48,5 +49,6 @@ internal sealed class SpectralShiftDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(
                     Text("When the real part lies strictly to the right of the existing critical abscissa, the actual square-summable labeled-zeta vector satisfies the same equality at each supplied address. The half-plane premise is a typing witness for that vector; the result remains pointwise because backwardShift is not a bundled continuous operator. Compared with the CAS theorem, this omits the joint bounded-operator assertion, basis subtraction rule, Bloch-wave and Bost-Connes identifications, and numerical certificate. "),
                     Ref("D5/L/hedenmalm1997hilbert"),
-                    Text(" is contextual rather than a verbatim source for this multi-axis claim. The theorem provides a concrete spectral action compatible with the O-6 Hilbert-space route, but neither constructs the positivity form nor connects eigenvalues to zeta zeros.")))))));
+                    Text(" is contextual rather than a verbatim source for this multi-axis claim. The theorem provides a concrete spectral action compatible with the O-6 Hilbert-space route, but neither constructs the positivity form nor connects eigenvalues to zeta zeros."))),
+                LatexStatement.Create(@"$$\forall s\in\mathbb{C},\ \operatorname{criticalAbscissa}<\Re(s) \Rightarrow \forall u,a\in\operatorname{PrimeAxisTable},\ \operatorname{backwardShift}(u,\operatorname{labeledZetaVector}(s),a)=\operatorname{labeledZetaCoefficient}(s,u)\operatorname{labeledZetaVector}(s,a)$$")))));
 }

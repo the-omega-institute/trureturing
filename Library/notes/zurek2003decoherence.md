@@ -1,5 +1,7 @@
 ---
 bibkey: zurek2003decoherence
+authors: Wojciech H. Zurek
+year: 2003
 title: Decoherence, einselection, and the quantum origins of the classical
 doi: 10.1103/RevModPhys.75.715
 claim: Environmental monitoring suppresses coherence between selected pointer states.

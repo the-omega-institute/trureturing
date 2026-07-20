@@ -1,5 +1,7 @@
 ---
 bibkey: born1926zur
+authors: Max Born
+year: 1926
 title: Zur Quantenmechanik der Stoßvorgänge
 doi: 10.1007/BF01397477
 claim: The historical probability interpretation of quantum transition amplitudes in scattering.

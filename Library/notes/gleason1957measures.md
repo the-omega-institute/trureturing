@@ -1,5 +1,7 @@
 ---
 bibkey: gleason1957measures
+authors: Andrew M. Gleason
+year: 1957
 title: Measures on the Closed Subspaces of a Hilbert Space
 doi: 10.1512/iumj.1957.6.56050
 claim: Measures on Hilbert-space projections and their positive trace-operator representation in dimension at least three.

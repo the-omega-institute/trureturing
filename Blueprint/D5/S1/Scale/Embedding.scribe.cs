@@ -32,7 +32,8 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
                         LeanTheorem("D5/S1/Scale/Embedding.embedding_apply")),
                     DescribeProvenance.RepoDerived(),
                     Blocks(new DocumentBlock.DisplayFormula(
-                        Equal(Call("embedding", coordinates), coordinates)))),
+                        Equal(Call("embedding", coordinates), coordinates))),
+                    LatexStatement.Create(@"$\forall x \in \operatorname{GoldenInt},\ \operatorname{embedding}(x)=x.a+x.b\varphi$")),
                 new DocumentBlock.Section(
                     H("Quadratic relation"),
                     Blocks(
@@ -65,7 +66,8 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
                         new DocumentBlock.DisplayFormula(
                             Equal(
                                 new Formula.Phi(),
-                                new Formula.Fraction(new Formula.Negate(a), b))))),
+                                new Formula.Fraction(new Formula.Negate(a), b)))),
+                    LatexStatement.Create(@"$\forall x,y \in \operatorname{GoldenInt},\ \operatorname{embedding}(x)=\operatorname{embedding}(y) \Rightarrow x=y$")),
                 new DocumentBlock.Section(
                     H("Norm recovery"),
                     Blocks(
@@ -79,7 +81,8 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
                             Blocks(new DocumentBlock.DisplayFormula(
                                 Equal(
                                     Multiply(embedded, Call("embedding", conjugate)),
-                                    Call("norm", x))))),
+                                    Call("norm", x)))),
+                            LatexStatement.Create(@"$\forall x \in \operatorname{GoldenInt},\ \operatorname{embedding}(x)\operatorname{embedding}(\operatorname{conj}(x))=\operatorname{norm}(x)$")),
                         new DocumentBlock.Describe(
                             DescribeId.Create("absolute-norm-relation"),
                             DescribeKind.Theorem,
@@ -95,6 +98,7 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
                                         Multiply(
                                             new Formula.Absolute(embedded),
                                             new Formula.Absolute(Call("embedding", conjugate))),
-                                        new Formula.Absolute(Call("norm", x)))))))))));
+                                        new Formula.Absolute(Call("norm", x))))),
+                            LatexStatement.Create(@"$\forall x \in \operatorname{GoldenInt},\ \lvert\operatorname{embedding}(x)\rvert\,\lvert\operatorname{embedding}(\operatorname{conj}(x))\rvert=\lvert\operatorname{norm}(x)\rvert$")))))));
     }
 }
