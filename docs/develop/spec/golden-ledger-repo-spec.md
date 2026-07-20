@@ -171,7 +171,7 @@ golden-ledger/
   - [ ] `Blueprint/D5/S3/Weil/ReflectionLedger.scribe.cs`
   - [ ] `Blueprint/D5/S3/Weil/SpectralDynamics.scribe.cs`
   - [ ] `Blueprint/D5/S3/Weil/SpectralHilbert.scribe.cs`
-- **PR-3 contract(后续,零内容回填)**:仅在 SL-023 缺位 warning=0、PR-2 复核收据与当前 `DocumentDefinitions` 节点集合逐字闭合后,删除构造器可选缺位并把同一规则 effect 从 `HumanGate` 升为 `Block`;不得在 migrate PR 同时 contract。
+- **PR-3 contract(后续,零内容回填)**:仅在 SL-023 缺位 warning=0、PR-2 复核收据与当前 `DocumentDefinitions` 节点集合逐字闭合后,删除构造器可选缺位并把同一规则 effect 从 `Observe` 升为 `Block`;不得在 migrate PR 同时 contract。
 
 **A16 零信任合并门(v7.12,CLAUDE.md 第 19 条之 spec 形)** 提交者身份(维护者/agent/fork)与准入无关,一切 PR 过同一道纯机器门:dev 分支 `enforce_admins` + **双 required check(strict)**——① engineering(build --warnaserror + 全测试 + selftest 字节比对 + 能力链编译证明);② baseline admission(内容寻址 dev-baseline harness 判 candidate;`pull_request_target` 保证法官取 **base 侧** workflow 与 harness,提交者不可改判自己的法官)。绿=auto-merge;红=无人可合。**exit 语义**:0=内容全验;1=违规;2=基础设施(含快照拒非常规 git 条目,如 mode 120000 symlink——AGENTS.md 由此裁定为常规指针文件);3=SL-022 保护面变更 → 标注入账 + candidate `lake build` 阻断地板(**bootstrap 脚手架,有案在录**:组件 C 保守扩展门现役后,harness 变更由机器判保守性与成本,此路径关闭)。人审与 AI 审=质量增益,非准入权威;削弱门=元层自改,须付 τ=0 成本(CLAUDE.md 第 21 条)。
 
