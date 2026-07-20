@@ -3,19 +3,23 @@ name = "theory-selfgrowth"
 persistence_class = "stateless_adapter"
 
 # Theory self-growth producer (CLAUDE.md 第22条 open-driven flywheel).
-# Subscribes to the platform idle broadcast (idle-detector.system_idle) and, when
-# the D5 frontier has no open generation request, emits exactly ONE deduped issue
-# routing to the existing `frontier-generation` workflow ("decide WHAT to prove next").
-# The codex reasoning over the frozen truth-DAG + literature happens DOWNSTREAM in
-# that workflow; this producer only fires the idle->generate transaction. Modeled on
-# the `archaudit` package (idle-subscribed issue producer), minus the codex judgment
-# pipeline (deterministic dedup + emit only).
+# Subscribes to the platform idle broadcast (idle-detector.system_idle) and emits ONE
+# deduped issue routing to the existing `frontier-generation` workflow ("decide WHAT to
+# prove next"). The codex reasoning over the frozen truth-DAG + literature happens
+# DOWNSTREAM in that workflow; this producer only fires the idle->generate transaction
+# and never touches a frozen node (conservative extension).
+#
+# HOST-package constraint: uses ONLY publishable libraries (contract) + framework-injected
+# globals (exec_sync to read FKST_GITHUB_REPO, raise to produce the event). It does NOT
+# use forge/devloop/workflow_internal (platform-internal, not published to host packages)
+# — egress stays with the platform: github-proxy performs the actual `gh issue create` and
+# dedups on `dedup_key`.
 
 [code]
 root = "."
 
 [lib_deps]
-libraries = ["contract", "workflow", "forge", "devloop"]
+libraries = ["contract"]
 
 [event_deps]
 packages = ["idle-detector", "github-proxy"]
