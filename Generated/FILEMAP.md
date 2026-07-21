@@ -78,6 +78,10 @@ none --declares--> [Golden/fixture-registry.yaml | data]
 [Golden/fixture-registry.yaml | data] --consumed-by--> GoldenFixtureRegistryLoader
 [Golden/fixture-registry.yaml | data] --verified-by--> GoldenFixtureRegistryLoader
 
+none --declares--> [Golden/perf-budgets.toml | data]
+[Golden/perf-budgets.toml | data] --consumed-by--> PerfBudgetLoader
+[Golden/perf-budgets.toml | data] --verified-by--> PerfBudgetLoader
+
 none --declares--> [Golden/values-kernels.toml | data]
 [Golden/values-kernels.toml | data] --consumed-by--> ValuesKernelDataLoader
 [Golden/values-kernels.toml | data] --verified-by--> ValuesKernelDataLoader
@@ -209,5 +213,9 @@ none --declares--> [docs/develop/theory/** | data]
 none --declares--> [lean-toolchain | program]
 [lean-toolchain | program] --consumed-by--> Lean
 [lean-toolchain | program] --verified-by--> make-gate
+
+none --declares--> [packages/** | program]
+[packages/** | program] --consumed-by--> fkst
+[packages/** | program] --verified-by--> repository-policy
 
 ```

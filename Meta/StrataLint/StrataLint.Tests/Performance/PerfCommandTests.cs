@@ -43,6 +43,51 @@ public sealed class PerfCommandTests
         Assert.DoesNotContain("200", result.Output, StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void ReportEmitsWarnOnlyBudgetRowsWithoutFailing()
+    {
+        using var ledgerHome = new TemporaryDirectory();
+        var ledger = Path.Combine(ledgerHome.Path, "events.jsonl");
+        var budgets = Path.Combine(ledgerHome.Path, "perf-budgets.toml");
+        File.WriteAllText(ledger, EventJson("run-1", "passed", 120) + "\n", new UTF8Encoding(false));
+        File.WriteAllText(
+            budgets,
+            """
+            schema = "stratalint-perf-budget-v1"
+
+            [[budgets]]
+            id = "test-budget"
+            mode = "warn-only"
+            venue = "local"
+            os = "Darwin"
+            arch = "arm64"
+            cpu_class = "Apple-M4"
+            workload_id = "gate"
+            kind = "timing"
+            stage = "test"
+            metric = "p95_seconds"
+            limit_seconds = 100
+            owner = "harness/performance"
+            review_due = "2026-08-20"
+            remediation = "Profile the test stage."
+            false_positive_window_days = 14
+            false_positive_rate_percent = "unmeasured"
+            rollback_criteria = "Revert to warn-only if false positives reach 5 percent."
+            source = "synthetic deterministic test"
+            """ + "\n",
+            new UTF8Encoding(false));
+
+        var result = PerfReportCommand.Run(
+            ["--ledger", ledger, "--recent", "5", "--budgets", budgets]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("\"schema\":\"stratalint-perf-budget-result-v1\"", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"level\":\"WARN\"", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"status\":\"over-budget\"", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"actual_seconds\":120", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"limit_seconds\":100", result.Output, StringComparison.Ordinal);
+    }
+
     private static string EventJson(string runId, string status, double elapsed) =>
         JsonSerializer.Serialize(new
         {

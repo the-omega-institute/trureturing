@@ -1,4 +1,6 @@
 using System.Text;
+using StrataLint.Cli;
+using StrataLint.Engine;
 using StrataLint.Scribe;
 
 namespace StrataLint.ArchitectureTests;
@@ -43,6 +45,28 @@ public sealed class FileMapPolicyTests
         Assert.Equal(0, manifest.ResidencePolicy.KnownViolationCount);
         Assert.Equal("closed", manifest.ResidencePolicy.Status);
         Assert.Equal(FileMapKind.Data, Assert.Single(manifest.Match("Golden/fixture-registry.yaml")).Kind);
+    }
+
+    [Fact]
+    public void PerformanceBudgetsHaveARegisteredGoldenDataResidence()
+    {
+        const string value = "Golden/perf-budgets.toml";
+        var root = RepositoryLayout.FindRoot();
+        var manifest = FileMapLoader.LoadRepository(root);
+        var registry = Assert.IsType<RegistryLoadOutcome.Accepted>(
+            RegistryLoader.Load(
+                File.ReadAllBytes(Path.Combine(root, "Meta", "registry.yaml")),
+                File.ReadAllBytes(Path.Combine(root, "Meta", "domains.yaml"))));
+        var path = RepoPath.CreateKnown(value);
+
+        var entry = Assert.Single(manifest.Match(value));
+        Assert.Equal(FileMapKind.Data, entry.Kind);
+        Assert.Equal("PerfBudgetLoader", Assert.Single(entry.ConsumedBy));
+        Assert.Equal("PerfBudgetLoader", Assert.Single(entry.VerifiedBy));
+        Assert.Contains(path, registry.Policy.GovernanceDocuments);
+        Assert.Null(RepositoryPathPolicy.Validate(path, registry.Policy));
+        Assert.IsType<BootstrapOutcome.Clear>(
+            BootstrapGate.Evaluate(RawChangeSet.Create([value])));
     }
 
     [Fact]

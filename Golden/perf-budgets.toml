@@ -1,0 +1,61 @@
+schema = "stratalint-perf-budget-v1"
+
+[[budgets]]
+id = "local-m4-gate-total"
+mode = "warn-only"
+venue = "local"
+os = "Darwin"
+arch = "arm64"
+cpu_class = "Apple M4 Pro"
+workload_id = "local-harness-gate"
+kind = "timing"
+stage = "total"
+metric = "p95_seconds"
+limit_seconds = 1380
+owner = "harness/performance"
+review_due = "2026-08-20"
+remediation = "Profile the slowest gate stages and attach same-cohort event receipts before changing the budget."
+false_positive_window_days = 14
+false_positive_rate_percent = "unmeasured"
+rollback_criteria = "Keep or restore warn-only when the rolling false-positive rate is unmeasured or at least 5 percent."
+source = "2026-07-20 session: complete gate measured 1138s; rounded up by about 20 percent."
+
+[[budgets]]
+id = "local-m4-admission"
+mode = "warn-only"
+venue = "local"
+os = "Darwin"
+arch = "arm64"
+cpu_class = "Apple M4 Pro"
+workload_id = "local-harness-gate"
+kind = "timing"
+stage = "admission"
+metric = "p95_seconds"
+limit_seconds = 120
+owner = "harness/performance"
+review_due = "2026-08-20"
+remediation = "Profile base-owned admission and attach same-cohort event receipts before changing the budget."
+false_positive_window_days = 14
+false_positive_rate_percent = "unmeasured"
+rollback_criteria = "Keep or restore warn-only when the rolling false-positive rate is unmeasured or at least 5 percent."
+source = "2026-07-20 session: admission measured about 90s; rounded up by one third. Conservative workers stayed within the 180s process ceiling, but P0 exposes no separate conservative ledger series."
+
+[[budgets]]
+id = "local-m4-preflight-total"
+mode = "warn-only"
+venue = "local"
+os = "Darwin"
+arch = "arm64"
+cpu_class = "Apple M4 Pro"
+workload_id = "preflight"
+kind = "timing"
+stage = "total"
+metric = "p95_seconds"
+limit_seconds = 1560
+owner = "harness/performance"
+review_due = "2026-08-20"
+remediation = "Separate engineering and gate contributions, then attach same-cohort preflight receipts before changing the budget."
+false_positive_window_days = 14
+false_positive_rate_percent = "unmeasured"
+rollback_criteria = "Keep or restore warn-only when the rolling false-positive rate is unmeasured or at least 5 percent."
+source = "2026-07-20 session: gate measured 1138s and engineering about 70s; rounded the combined preflight up to 1560s."
