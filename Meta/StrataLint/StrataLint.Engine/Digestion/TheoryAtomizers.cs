@@ -279,6 +279,22 @@ internal static class ObserverAtomizer
     }
 }
 
+internal static class PeriodicTreeAtomizer
+{
+    private static readonly Regex SectionHeadingPattern = new(
+        "^(?<number>[0-9]+)\\.\\s+",
+        RegexOptions.CultureInvariant);
+
+    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes) =>
+        MarkdownAstAtomizer.Atomize(bytes, static _ => null, identifyHeading: IdentifyHeading);
+
+    private static string? IdentifyHeading(string heading)
+    {
+        var match = SectionHeadingPattern.Match(heading);
+        return match.Success ? "section/" + match.Groups["number"].Value : null;
+    }
+}
+
 internal static class PzgAtomizer
 {
     private static readonly Regex ClaimPattern = new(
@@ -410,6 +426,11 @@ internal static class MarkdownAstAtomizer
         {
             if (block is MarkdownHeading heading)
             {
+                while (headings.Count > 0 && headings[^1].Level >= heading.Level)
+                {
+                    headings.RemoveAt(headings.Count - 1);
+                }
+
                 var headingAstPath = identifyHeading?.Invoke(heading.Text);
                 if (headingAstPath is not null)
                 {
@@ -419,11 +440,6 @@ internal static class MarkdownAstAtomizer
                         text.Length,
                         headings.ToImmutableArray(),
                         Extend: true));
-                }
-
-                while (headings.Count > 0 && headings[^1].Level >= heading.Level)
-                {
-                    headings.RemoveAt(headings.Count - 1);
                 }
 
                 headings.Add(new DigestionContext(heading.Level, heading.Text));

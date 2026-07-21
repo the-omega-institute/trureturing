@@ -69,6 +69,25 @@ public sealed class TheoryAtomizerTests
     }
 
     [Fact]
+    public void PeriodicTreeV1TreatsNumberedSectionsAsAtomicClaims()
+    {
+        var bytes = Encoding.UTF8.GetBytes(
+            "# Periodic Tree\n\nProject preface.\n\n"
+            + "## 0. Name and deed\n\nRoot protocol.\n\n"
+            + "## 1. Mount protocol\n\nFour labels.\n\n"
+            + "## 7. Construction log\n\nFirst registry.\n");
+
+        var document = AtomizerRegistry.Atomize("periodic-tree-v1", bytes);
+
+        Assert.Equal(
+            ["section/0", "section/1", "section/7"],
+            document.Claims.Select(static item => item.AstPath));
+        Assert.All(document.Claims, atom =>
+            Assert.Equal(["Periodic Tree"], atom.Context.Select(static item => item.Text)));
+        Assert.Equal(bytes, document.Reassemble().ToArray());
+    }
+
+    [Fact]
     public void GictAdapterTreatsEachAppendixConstantRowAsAnAtomicClaim()
     {
         var bytes = Encoding.UTF8.GetBytes(
