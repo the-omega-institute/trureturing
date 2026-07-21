@@ -660,10 +660,13 @@ public sealed partial class ProductionEnvironmentTests
     {
         using var temporary = new TemporaryDirectory();
         WritePolicyFiles(temporary.Path, TestRegistry.Canonical, TestRegistry.Domains);
+        var executable = Path.Combine(
+            Path.GetDirectoryName(typeof(Program).Assembly.Location)!,
+            OperatingSystem.IsWindows() ? "StrataLint.exe" : "StrataLint");
 
         var result = BoundedProcessRunner.Run(
-            "dotnet",
-            new[] { typeof(Program).Assembly.Location, "route", "-" },
+            executable,
+            new[] { "route", "-" },
             temporary.Path,
             TimeSpan.FromSeconds(60),
             16 * 1024,
