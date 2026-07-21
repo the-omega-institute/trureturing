@@ -13,7 +13,7 @@ public sealed class DescribeMigrationTests
                 DescribeKind.Theorem or DescribeKind.Proposition or DescribeKind.Lemma)
             .ToArray();
 
-        Assert.Equal(91, nodes.Length);
+        Assert.Equal(97, nodes.Length);
         Assert.All(nodes, static node => Assert.NotNull(node.StatementLatex));
     }
 
@@ -25,17 +25,17 @@ public sealed class DescribeMigrationTests
             root,
             DocumentDefinitions.All.Select(static definition => definition.Document));
 
-        Assert.Equal(133, report.NodeStats.Total);
+        Assert.Equal(139, report.NodeStats.Total);
         Assert.Equal(24, report.NodeStats.FormulaContentSlots);
         Assert.Equal(12, report.NodeStats.FormulaStatements);
-        Assert.Equal(121, report.NodeStats.LeanStatements);
+        Assert.Equal(127, report.NodeStats.LeanStatements);
         Assert.Equal(11, report.NodeStats.ByKind["definition"]);
         Assert.Equal(9, report.NodeStats.ByKind["proposition"]);
-        Assert.Equal(82, report.NodeStats.ByKind["theorem"]);
+        Assert.Equal(88, report.NodeStats.ByKind["theorem"]);
         Assert.Equal(1, report.NodeStats.ByKind["example"]);
         Assert.Equal(30, report.NodeStats.ByKind["remark"]);
         Assert.Equal(97, report.NodeStats.ByProvenance["repo-derived"]);
-        Assert.Equal(36, report.NodeStats.ByProvenance["literature-attested"]);
+        Assert.Equal(42, report.NodeStats.ByProvenance["literature-attested"]);
         Assert.Equal(0, report.OpenCount);
         Assert.Empty(report.SuspectedNovel);
         Assert.Empty(report.RedFindings);
@@ -542,7 +542,7 @@ public sealed class DescribeMigrationTests
         Assert.Equal(string.Empty, error.ToString());
         using var document = JsonDocument.Parse(output.ToString());
         Assert.Equal("DESCRIBE-NODES", document.RootElement.GetProperty("case_id").GetString());
-        Assert.Equal(133, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
+        Assert.Equal(139, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
         Assert.Equal(0, document.RootElement.GetProperty("open_count").GetInt32());
     }
 
