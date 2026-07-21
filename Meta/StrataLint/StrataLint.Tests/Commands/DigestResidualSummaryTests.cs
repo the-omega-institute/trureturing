@@ -19,6 +19,10 @@ public sealed class DigestResidualSummaryTests
         var expected = """
             # Echo Residual Summary
 
+            - candidate_snapshot_sha256: sha256:candidate
+            - base_revision: origin/dev
+            - baseline_snapshot_sha256: sha256:baseline
+
             - unresolved_subitems: 4
             - mother_residual_atom_ids: 3
 
@@ -53,8 +57,12 @@ public sealed class DigestResidualSummaryTests
             Mother residual atoms: none.
             """ + "\n";
 
-        var forward = DigestResidualSummary.Render(new DigestionLedgerEvaluation([.. entries], []));
-        var reverse = DigestResidualSummary.Render(new DigestionLedgerEvaluation([.. entries.Reverse()], []));
+        var binding = new EchoReviewSnapshotBinding(
+            "sha256:candidate",
+            "origin/dev",
+            "sha256:baseline");
+        var forward = DigestResidualSummary.Render(new DigestionLedgerEvaluation([.. entries], []), binding);
+        var reverse = DigestResidualSummary.Render(new DigestionLedgerEvaluation([.. entries.Reverse()], []), binding);
 
         Assert.Equal(expected, forward);
         Assert.Equal(expected, reverse);

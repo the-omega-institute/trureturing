@@ -178,6 +178,9 @@ internal sealed class StubCliEnvironment(
     public CommandResult DigestStatus(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "digest status is not configured in this fixture");
 
+    public CommandResult EchoReviewVerify(IReadOnlyList<string> arguments) =>
+        new(false, string.Empty, "echo review verify is not configured in this fixture");
+
     public CommandResult Ingest(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "ingest is not configured in this fixture");
 

@@ -186,6 +186,19 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 scribeEmissionVerifier,
                 arguments);
 
+    public CommandResult EchoReviewVerify(IReadOnlyList<string> arguments) =>
+        scribeEmissionVerifier is null
+            ? new CommandResult(
+                false,
+                string.Empty,
+                "ECHO_REVIEW_INVALID Scribe emission verifier is unavailable\n")
+            : EchoReviewVerifyCommand.Run(
+                repositoryRoot,
+                repository,
+                leanReportSource,
+                scribeEmissionVerifier,
+                arguments);
+
     public CommandResult Ingest(IReadOnlyList<string> arguments) =>
         scribeEmissionVerifier is null
             ? new CommandResult(

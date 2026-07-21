@@ -18,6 +18,8 @@ public sealed class MakeWorkflowTests
     private const string IngestScriptPath = "Meta/StrataLint/scripts/ingest.sh";
     private const string EchoResidualSummaryScriptPath =
         "Meta/StrataLint/scripts/report/echo-residual-summary.sh";
+    private const string EchoReviewVerifyScriptPath =
+        "Meta/StrataLint/scripts/report/echo-review-verify.sh";
     private const string ReportConsumerScriptPath =
         "Meta/StrataLint/scripts/report/report-consumer.sh";
     private const string ReportSupervisorScriptPath =
@@ -42,6 +44,7 @@ public sealed class MakeWorkflowTests
         "emit-check",
         "ingest",
         "echo-residual-summary",
+        "echo-review-verify",
         "record-golden",
         "selftest",
         "gate",
@@ -85,6 +88,10 @@ public sealed class MakeWorkflowTests
             EchoResidualSummaryScriptPath,
             Recipe(makefile, "echo-residual-summary"),
             StringComparison.Ordinal);
+        Assert.Contains(
+            EchoReviewVerifyScriptPath,
+            Recipe(makefile, "echo-review-verify"),
+            StringComparison.Ordinal);
         Assert.Contains("golden-record", Recipe(makefile, "record-golden"), StringComparison.Ordinal);
         Assert.Contains(SelftestScriptPath, Recipe(makefile, "selftest"), StringComparison.Ordinal);
         Assert.Contains(LocalHarnessGateScriptPath, Recipe(makefile, "gate"), StringComparison.Ordinal);
@@ -124,6 +131,17 @@ public sealed class MakeWorkflowTests
             "digest-status --residual-summary --base \"$BASE\"",
             script,
             StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void EchoReviewVerifyRunsTheSameProducerAndByteVerifier()
+    {
+        var root = FindRepositoryRoot();
+        var script = File.ReadAllText(Path.Combine(root, EchoReviewVerifyScriptPath));
+
+        Assert.Contains(LeanReportScriptPath, script, StringComparison.Ordinal);
+        Assert.Contains("\"$REPORT_SCRIPT\" >&2", script, StringComparison.Ordinal);
+        Assert.Contains("echo-review-verify --base \"$BASE\" \"$ECHO_REVIEW\"", script, StringComparison.Ordinal);
     }
 
     [Fact]

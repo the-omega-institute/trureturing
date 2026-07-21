@@ -504,6 +504,9 @@ public sealed partial class ProductionEnvironmentTests
         var result = environment.DigestStatus(["--residual-summary"]);
 
         Assert.True(result.Success, result.Error);
+        Assert.Contains("- candidate_snapshot_sha256: sha256:", result.Output, StringComparison.Ordinal);
+        Assert.Contains("- base_revision: none", result.Output, StringComparison.Ordinal);
+        Assert.Contains("- baseline_snapshot_sha256: none", result.Output, StringComparison.Ordinal);
         Assert.Contains("- unresolved_subitems: 2", result.Output, StringComparison.Ordinal);
         Assert.Contains("- mother_residual_atom_ids: 1", result.Output, StringComparison.Ordinal);
         Assert.Contains("- `fixture-atom` (2)", result.Output, StringComparison.Ordinal);
@@ -511,6 +514,61 @@ public sealed partial class ProductionEnvironmentTests
             result.Output.IndexOf("`alpha-residual`", StringComparison.Ordinal)
                 < result.Output.IndexOf("`zeta-residual`", StringComparison.Ordinal));
         Assert.DoesNotContain("boundary-not-reproducible", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void EchoReviewVerifyAcceptsOnlyExactSnapshotBoundResidualBlock()
+    {
+        using var temporary = new TemporaryDirectory();
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.Files[BackfillInventoryLoader.RelativePath] = fixture.Files[BackfillInventoryLoader.RelativePath]
+            .Replace(
+                "          unresolved_subitems: []",
+                "          unresolved_subitems:\n            - zeta-residual\n            - alpha-residual",
+                StringComparison.Ordinal);
+        var gateway = new FakeRepositoryGateway(
+            RawChangeSet.Create(Array.Empty<string>()),
+            Snapshot(fixture.Files),
+            Snapshot(fixture.Baseline));
+        var environment = new ProductionCliEnvironment(
+            temporary.Path,
+            gateway,
+            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+        var expected = environment.DigestStatus(["--residual-summary", "--base", "origin/dev"]);
+        Assert.True(expected.Success, expected.Error);
+        var reviewPath = Path.Combine(temporary.Path, ".echo-review.md");
+        File.WriteAllBytes(reviewPath, Encoding.UTF8.GetBytes(expected.Output));
+
+        var accepted = environment.EchoReviewVerify(["--base", "origin/dev"]);
+        File.WriteAllBytes(
+            reviewPath,
+            Encoding.UTF8.GetBytes(
+                expected.Output.Replace("alpha-residual", "edited-residual", StringComparison.Ordinal)));
+        var edited = environment.EchoReviewVerify(["--base", "origin/dev"]);
+        fixture.Files[RuleFixture.BlueprintPath] += "\nchanged without regenerating echo review\n";
+        File.WriteAllBytes(reviewPath, Encoding.UTF8.GetBytes(expected.Output));
+        var staleEnvironment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(Array.Empty<string>()),
+                Snapshot(fixture.Files),
+                Snapshot(fixture.Baseline)),
+            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+        var stale = staleEnvironment.EchoReviewVerify(["--base", "origin/dev"]);
+        File.Delete(reviewPath);
+        var missing = environment.EchoReviewVerify(["--base", "origin/dev"]);
+
+        Assert.True(accepted.Success, accepted.Error);
+        Assert.Contains("ECHO_REVIEW_VERIFIED", accepted.Output, StringComparison.Ordinal);
+        Assert.False(edited.Success);
+        Assert.Contains("mismatch", edited.Error, StringComparison.Ordinal);
+        Assert.False(stale.Success);
+        Assert.Contains("mismatch", stale.Error, StringComparison.Ordinal);
+        Assert.False(missing.Success);
+        Assert.Contains("missing path=.echo-review.md", missing.Error, StringComparison.Ordinal);
     }
 
     [Fact]
