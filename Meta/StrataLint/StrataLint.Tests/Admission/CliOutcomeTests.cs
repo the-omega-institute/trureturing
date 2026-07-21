@@ -96,6 +96,27 @@ public sealed class CliOutcomeTests
         Assert.Equal(string.Empty, console.Error);
     }
 
+    [Theory]
+    [InlineData(0, "ECHO_VERIFY_OK\n", "")]
+    [InlineData(1, "", "ECHO_VERIFY_INVALID byte mismatch\n")]
+    [InlineData(2, "", "ECHO_VERIFY_INFRASTRUCTURE report unavailable\n")]
+    public void EchoVerifyPreservesValidInvalidAndInfrastructureExitCodes(
+        int expectedExit,
+        string output,
+        string error)
+    {
+        var console = new BufferedConsole();
+        var environment = new StubCliEnvironment(
+            Admitted(),
+            echoVerify: new ExplicitCommandResult(expectedExit, output, error));
+
+        var exitCode = CliApplication.Run(["echo-verify", "--file", "review.md"], environment, console);
+
+        Assert.Equal(expectedExit, exitCode);
+        Assert.Equal(output, console.Output);
+        Assert.Equal(error, console.Error);
+    }
+
     private static AdmissionOutcome Outcome(string fixture) => fixture switch
     {
         "admitted" => Admitted(),
@@ -165,7 +186,8 @@ internal sealed class StubCliEnvironment(
     AdmissionOutcome outcome,
     ExplicitCommandResult? conservative = null,
     CommandResult? recordGolden = null,
-    CommandResult? renewC0 = null) : ICliEnvironment
+    CommandResult? renewC0 = null,
+    ExplicitCommandResult? echoVerify = null) : ICliEnvironment
 {
     public AdmissionOutcome Check(IReadOnlyList<string> arguments) => outcome;
 
@@ -177,6 +199,9 @@ internal sealed class StubCliEnvironment(
 
     public CommandResult DigestStatus(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "digest status is not configured in this fixture");
+
+    public ExplicitCommandResult EchoVerify(IReadOnlyList<string> arguments) =>
+        echoVerify ?? new(2, string.Empty, "echo verify is not configured in this fixture");
 
     public CommandResult Ingest(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "ingest is not configured in this fixture");
