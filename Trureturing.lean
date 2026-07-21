@@ -13,6 +13,7 @@ import D5.S1.Phase.SeatTowerArithmetic
 import D5.S1.Phase.SeatTowerCombinatorics
 import D5.S1.Phase.SeatTowerConsequences
 import D5.S1.Depth.StationingCombinatorics
+import D5.S1.Depth.TwelveScaleReduction
 import D5.S1.Phase.WalkFormula
 import D5.S1.Phase.ZeroOrbitCongruence
 import D5.S3.Quantum.EnvironmentRecords
