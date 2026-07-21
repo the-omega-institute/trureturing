@@ -264,6 +264,22 @@ public sealed class TheoryAtomizerTests
         AssertRecognitionComplete(document, bytes);
     }
 
+    [Theory]
+    [InlineData("**§11.1 章程(三定义,ZFC 内,零新公理)**。claim。", "periodic-table/charter")]
+    [InlineData("**§11.2 四问模板(逐层机械生成)**。claim。", "periodic-table/four-question-template")]
+    [InlineData("**§11.3 三科目终表(公理之辩四连案终审)**。claim。", "periodic-table/axiom-hypothesis-definition")]
+    [InlineData("**§11.4 首件产品指针**。claim。", "periodic-table/first-product")]
+    public void ObserverV1RecognizesTheV335PeriodicTableClaimLeads(
+        string claim,
+        string expectedAstPath)
+    {
+        var bytes = Encoding.UTF8.GetBytes($"# Observer\n\n{claim}\n");
+
+        var atom = Assert.Single(AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes).Claims);
+
+        Assert.Equal(expectedAstPath, atom.AstPath);
+    }
+
     [Fact]
     public void ObserverV1SplitIsByteExactAndIdempotent()
     {
@@ -424,16 +440,45 @@ public sealed class TheoryAtomizerTests
         Assert.Contains("unknown PZG numbered claim kind", error.Message, StringComparison.Ordinal);
     }
 
-    [Fact]
-    public void ObserverAdapterRejectsAnUnknownBoldClaimLead()
+    [Theory]
+    [InlineData("\n")]
+    [InlineData("\r\n")]
+    [InlineData("\r")]
+    public void ObserverAdapterRejectsAnUnknownBoldClaimLead(string newLine)
     {
         var bytes = Encoding.UTF8.GetBytes(
-            "# Observer\n\n## 11. New section\n\n**新判词。** claim。\n");
+            $"# Observer{newLine}{newLine}## 11. New section{newLine}{newLine}"
+            + $"**新判词。** claim。{newLine}");
 
         var error = Assert.Throws<TheorySourceFormatException>(() =>
             AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes));
 
         Assert.Contains("unknown observer claim lead", error.Message, StringComparison.Ordinal);
+        Assert.Contains("**新判词。**", error.Message, StringComparison.Ordinal);
+        Assert.Contains("line 5", error.Message, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData(true, "\n")]
+    [InlineData(false, "\n")]
+    [InlineData(true, "\r\n")]
+    [InlineData(false, "\r\n")]
+    public void ObserverAdapterRejectsAnUnknownBoldTableClaimLead(
+        bool leadingPipe,
+        string newLine)
+    {
+        var header = leadingPipe ? "| Lead | Claim |" : "Lead | Claim";
+        var delimiter = leadingPipe ? "| --- | --- |" : "--- | ---";
+        var claim = leadingPipe ? "| **新判词。** | claim。 |" : "**新判词。** | claim。";
+        var bytes = Encoding.UTF8.GetBytes(
+            $"# Observer{newLine}{newLine}{header}{newLine}{delimiter}{newLine}{claim}{newLine}");
+
+        var error = Assert.Throws<TheorySourceFormatException>(() =>
+            AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes));
+
+        Assert.Contains("unknown observer claim lead", error.Message, StringComparison.Ordinal);
+        Assert.Contains("**新判词。**", error.Message, StringComparison.Ordinal);
+        Assert.Contains("line 5", error.Message, StringComparison.Ordinal);
     }
 
     [Fact]
