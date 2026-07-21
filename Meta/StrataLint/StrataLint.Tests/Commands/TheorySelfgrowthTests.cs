@@ -116,9 +116,17 @@ public sealed class TheorySelfgrowthTests
             """
             local core = require("core")
             local raised = {}
+            local exec_requests = {}
 
-            _G.exec_sync = function(_request)
-              return { exit_code = 0, stdout = "owner/repo" }
+            _G.exec_sync = function(request)
+              table.insert(exec_requests, request)
+              if request.cmd:find("FKST_GITHUB_REPO", 1, true) then
+                return { exit_code = 0, stdout = "owner/repo" }
+              end
+              if request.cmd:find("gh issue list", 1, true) then
+                return { exit_code = 0, stdout = "0" }
+              end
+              return { exit_code = 1, stdout = "" }
             end
             _G.raise = function(queue, payload)
               table.insert(raised, { queue = queue, payload = payload })
@@ -142,6 +150,53 @@ public sealed class TheorySelfgrowthTests
             assert(raised[1].queue == "github-proxy.github_issue_create_request")
             assert(raised[1].payload.dedup_key:find("2026-07-20T01:00:00Z", 1, true), "dedup_key must include the idle generation")
             assert(raised[1].payload.body:find("open-request-marker: theory-selfgrowth:frontier-request:v1", 1, true))
+            assert(#exec_requests == 2, "fresh idle event should read repo and check open requests")
+            assert(exec_requests[2].cmd:find("state:open", 1, true), "open-request exclusion must use an open-only query")
+            assert(exec_requests[2].cmd:find("theory-selfgrowth:frontier-request:v1", 1, true), "open-request exclusion must search for the stable marker")
+            """);
+    }
+
+    [Fact]
+    public void ProposeSkipsWhenFrontierRequestIsAlreadyOpen()
+    {
+        RunLua(
+            """
+            local core = require("core")
+            local raised = {}
+            local exec_requests = {}
+
+            _G.exec_sync = function(request)
+              table.insert(exec_requests, request)
+              if request.cmd:find("FKST_GITHUB_REPO", 1, true) then
+                return { exit_code = 0, stdout = "owner/repo" }
+              end
+              if request.cmd:find("gh issue list", 1, true) then
+                return { exit_code = 0, stdout = "1" }
+              end
+              return { exit_code = 1, stdout = "" }
+            end
+            _G.raise = function(queue, payload)
+              table.insert(raised, { queue = queue, payload = payload })
+            end
+            _G.now = function()
+              return core.iso_timestamp_epoch_seconds("2026-07-20T01:05:00Z")
+            end
+
+            require("departments.propose.main")
+            pipeline({
+              queue = "idle-detector.system_idle",
+              payload = {
+                schema = "idle-detector.system-idle.v1",
+                detected_at = "2026-07-20T01:00:00Z",
+                expires_at = "2026-07-20T01:10:00Z",
+                source_ref = { kind = "host-observe", ref = "idle_tick/2026-07-20T01:00:00Z" },
+              },
+            })
+
+            assert(#raised == 0, "existing open frontier request must suppress a new request")
+            assert(#exec_requests == 2, "open-request exclusion must run before deciding to skip")
+            assert(exec_requests[2].cmd:find("state:open", 1, true), "open-request exclusion must use an open-only query")
+            assert(exec_requests[2].cmd:find("theory-selfgrowth:frontier-request:v1", 1, true), "open-request exclusion must search for the stable marker")
             """);
     }
 

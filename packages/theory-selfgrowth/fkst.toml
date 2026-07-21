@@ -10,10 +10,10 @@ persistence_class = "stateless_adapter"
 # and never touches a frozen node (conservative extension).
 #
 # HOST-package constraint: uses ONLY publishable libraries (contract) + framework-injected
-# globals (exec_sync to read FKST_GITHUB_REPO, raise to produce the event). It does NOT
-# use forge/devloop/workflow_internal (platform-internal, not published to host packages)
-# — egress stays with the platform: github-proxy performs the actual `gh issue create` and
-# dedups on `dedup_key`.
+# globals (exec_sync to read FKST_GITHUB_REPO and check open requests, raise to produce
+# the event). It does NOT use forge/devloop/workflow_internal (platform-internal, not
+# published to host packages) — github-proxy performs the actual `gh issue create` and
+# generation-scoped `dedup_key` replay handling.
 
 [code]
 root = "."
