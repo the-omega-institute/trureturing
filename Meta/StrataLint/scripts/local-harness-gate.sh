@@ -205,7 +205,7 @@ run_stage lean-reports \
   --candidate-output "$CANDIDATE_REPORT" \
   --baseline-root "$JUDGE_ROOT" \
   --baseline-output "$REPORTS/baseline-lean-report.json"
-run_stage emit-check make -C "$CANDIDATE_ROOT" emit-check
+run_stage emit-check make -C "$CANDIDATE_ROOT" emit-check BASE="$BASE_SHA"
 
 GATE="$JUDGE_ROOT/.github/scripts/harness-gate.sh"
 [[ -x "$GATE" ]] || { echo "local-harness-gate: dev gate is absent" >&2; exit 2; }
@@ -226,6 +226,14 @@ fi
 admission_status="passed"
 if [[ "$gate_rc" -ne 0 && "$gate_rc" -ne 3 ]]; then admission_status="failed"; fi
 record_timing local admission "$admission_status" "$(( $(date +%s) - admission_started ))"
+
+# Bootstrap only while the frozen base predates #297. Once dev owns echo-verify,
+# the shared base gate above is the sole local and CI verdict.
+if [[ "$gate_rc" -eq 0 || "$gate_rc" -eq 3 ]] \
+  && ! grep -qF 'dotnet "$JUDGE_DLL" echo-verify' "$GATE"; then
+  run_stage echo-verify-bootstrap \
+    make -C "$CANDIDATE_ROOT" echo-verify BASE="$BASE_SHA"
+fi
 
 if [[ $gate_rc -eq 3 ]]; then
   printf '%s\n' "local-harness-gate: certified SL-022 conservative extension" >&2
