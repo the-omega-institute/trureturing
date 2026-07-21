@@ -77,7 +77,7 @@ public sealed class TheoryAtomizerTests
             + "## 1. Mount protocol\n\nFour labels.\n\n"
             + "## 7. Construction log\n\nFirst registry.\n");
 
-        var document = AtomizerRegistry.Atomize("periodic-tree-v1", bytes);
+        var document = AtomizerRegistry.Atomize(AtomizerRegistry.PeriodicTreeId, bytes);
 
         Assert.Equal(
             ["section/0", "section/1", "section/7"],
