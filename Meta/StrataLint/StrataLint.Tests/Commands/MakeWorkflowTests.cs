@@ -30,6 +30,7 @@ public sealed class MakeWorkflowTests
     private const string LeanReportPairScriptPath = "Meta/StrataLint/scripts/lean-report-pair.sh";
     private const string PerfReportScriptPath = "Meta/StrataLint/scripts/perf-report.sh";
     private const string PerfEventScriptPath = "Meta/StrataLint/scripts/perf-event-lib.sh";
+    private const string TheoryIngestWorkflowPath = ".github/workflows/theory-ingest.yml";
 
     private static readonly string[] Targets =
     [
@@ -327,6 +328,83 @@ public sealed class MakeWorkflowTests
         Assert.Contains("|| true", localGate, StringComparison.Ordinal);
         Assert.Contains("|| true", preflight, StringComparison.Ordinal);
         Assert.Contains(">> \"$LOCAL_TIMING_FILE\" || true", localGate, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void TheoryIngestProducesCanonicalLeanReportBeforeConsumption()
+    {
+        var root = FindRepositoryRoot();
+        var workflow = File.ReadAllText(Path.Combine(root, TheoryIngestWorkflowPath));
+        var overlayIndex = workflow.IndexOf(
+            "- name: Overlay judge harness onto candidate data",
+            StringComparison.Ordinal);
+        var leanIndex = workflow.IndexOf("          make lean\n", StringComparison.Ordinal);
+        var reportIndex = workflow.IndexOf("          make lean-report\n", StringComparison.Ordinal);
+        var ingestIndex = workflow.IndexOf("          make ingest BASE=HEAD\n", StringComparison.Ordinal);
+
+        Assert.True(overlayIndex >= 0, "theory ingest must overlay the base judge");
+        Assert.True(leanIndex > overlayIndex, "Lean build must use the overlaid base judge");
+        Assert.True(reportIndex > leanIndex, "canonical report production must follow the Lean build");
+        Assert.True(ingestIndex > reportIndex, "ingest must only consume a precomputed Lean report");
+
+        Assert.Contains("uses: actions/cache@v4", workflow, StringComparison.Ordinal);
+        Assert.Contains("candidate/.lake", workflow, StringComparison.Ordinal);
+        var cacheKey = Assert.Single(
+            workflow.Split('\n'),
+            static line => line.TrimStart().StartsWith("key: theory-ingest-lake-", StringComparison.Ordinal));
+        Assert.Contains("hashFiles('candidate/lean-toolchain')", cacheKey, StringComparison.Ordinal);
+        Assert.Contains("hashFiles('candidate/lake-manifest.json')", cacheKey, StringComparison.Ordinal);
+        Assert.Contains("hashFiles('candidate/**/*.lean')", cacheKey, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void TheoryIngestKeepsCandidateExecutionCredentiallessAndDataOnly()
+    {
+        var root = FindRepositoryRoot();
+        var workflow = File.ReadAllText(Path.Combine(root, TheoryIngestWorkflowPath));
+        var candidateCheckoutIndex = workflow.IndexOf(
+            "- name: Check out PR head (data + commit target)",
+            StringComparison.Ordinal);
+        var boundaryIndex = workflow.IndexOf(
+            "- name: Enforce candidate data-only boundary",
+            StringComparison.Ordinal);
+        var leanIndex = workflow.IndexOf("          make lean\n", StringComparison.Ordinal);
+        var commitIndex = workflow.IndexOf(
+            "- name: Enforce write-path whitelist and commit back",
+            StringComparison.Ordinal);
+
+        Assert.True(candidateCheckoutIndex >= 0, "candidate checkout must be explicit");
+        Assert.True(boundaryIndex > candidateCheckoutIndex, "the data boundary must follow checkout");
+        Assert.True(leanIndex > boundaryIndex, "candidate inputs must be classified before Lean runs");
+        Assert.True(commitIndex > leanIndex, "write credentials must only appear after candidate execution");
+
+        var candidateCheckout = workflow[candidateCheckoutIndex..boundaryIndex];
+        Assert.Contains(
+            "ref: ${{ github.event.pull_request.head.sha }}",
+            candidateCheckout,
+            StringComparison.Ordinal);
+        Assert.Contains("persist-credentials: false", candidateCheckout, StringComparison.Ordinal);
+
+        var boundary = workflow[boundaryIndex..leanIndex];
+        var theoryDataPattern = string.Concat("docs/develop/", "theory/*");
+        Assert.Contains("BASE_SHA: ${{ github.event.pull_request.base.sha }}", boundary, StringComparison.Ordinal);
+        Assert.Contains("HEAD_SHA: ${{ github.event.pull_request.head.sha }}", boundary, StringComparison.Ordinal);
+        Assert.Contains(
+            theoryDataPattern + "|Meta/BACKFILL.yaml|Meta/Digestion/atoms/*",
+            boundary,
+            StringComparison.Ordinal);
+        Assert.Contains("diff --name-only --no-renames -z", boundary, StringComparison.Ordinal);
+
+        var cacheIndex = workflow.IndexOf(
+            "- name: Restore candidate Lean build artifacts",
+            StringComparison.Ordinal);
+        var reportIndex = workflow.IndexOf("- name: Produce canonical Lean report", StringComparison.Ordinal);
+        var cache = workflow[cacheIndex..reportIndex];
+        Assert.DoesNotContain("restore-keys:", cache, StringComparison.Ordinal);
+
+        var commit = workflow[commitIndex..];
+        Assert.Contains("GH_TOKEN: ${{ github.token }}", commit, StringComparison.Ordinal);
+        Assert.Contains("gh auth setup-git", commit, StringComparison.Ordinal);
     }
 
     [Fact]
