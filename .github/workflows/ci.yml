@@ -6,6 +6,7 @@ on:
     branches: [dev]
   pull_request_target:
     branches: [dev, 'integration-**']
+    types: [opened, synchronize, reopened]
 
 permissions:
   contents: read

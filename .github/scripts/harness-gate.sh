@@ -115,6 +115,16 @@ admission_status="passed"
 if [[ "$rc" -ne 0 && "$rc" -ne 3 ]]; then admission_status="failed"; fi
 mark admission "$admission_status"
 
+if [[ $rc -eq 0 || $rc -eq 3 ]]; then
+  (
+    cd "$CANDIDATE_ROOT"
+    STRATALINT_LEAN_REPORT="$CANDIDATE_LEAN_REPORT" \
+      dotnet "$JUDGE_DLL" echo-verify \
+        --base "$BASE_REF" --if-affected
+  )
+  mark echo-verify
+fi
+
 if [[ $rc -eq 0 ]]; then
   summary "### Admission: content fully validated, no protected-surface change"
   exit 0

@@ -16,6 +16,7 @@ governance_documents:
   - "D5/S3/MAP.md"
   - "D5/X_Frontier/HeartsAuthorizations.md"
   - "Generated/FILEMAP.md"
+  - "Generated/echo-residual-summary.md"
   - "Golden/perf-budgets.toml"
   - "Library/MAP.md"
   - "Meta/FILEMAP.toml"
