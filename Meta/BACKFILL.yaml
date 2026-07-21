@@ -3988,6 +3988,9 @@ sources:
           - D5/S1/Depth/TwelveScaleReduction.normalized_magnitude_eq_twelve_scale_iff
           - D5/S1/Depth/TwelveScaleReduction.twelve_scale_is_normalized_sample_minimum
           - D5/S1/Depth/TwelveScaleReduction.normalized_sample_minimum_unique
+          - D5/S1/Depth/TwelveScaleReduction.canonical_partial_quotients_empty_or_odd
+          - D5/S1/Depth/TwelveScaleReduction.canonical_continued_fraction_value
+          - D5/S1/Depth/TwelveScaleReduction.normalized_sample_floor_eq_twelve_over_maximum_partial_quotient
         receipts:
           coverage:
             - gid: D5/S1/Phase/SeatTowerArithmetic.twelve_le_abs_of_dvd_of_ne_zero
@@ -4019,29 +4022,47 @@ sources:
               target_sha256: sha256:520db05df3f4606150d67b80c6b51ac763a71c485b93b0acff8561afa686d853
             - gid: D5/S1/Depth/TwelveScaleReduction.twelve_scale_le_normalized_magnitude
               source_sha256: sha256:db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3
-              target_sha256: sha256:1e0b3901146974128383d7eee95ffb8711b5302478fbacc6a54cd5060e466b05
+              target_sha256: sha256:6aef7d0dda23d2a5593a0206c0a84acd07548f5051d3fd122f0639155f7b478d
             - gid: D5/S1/Depth/TwelveScaleReduction.normalized_magnitude_eq_twelve_scale_iff
               source_sha256: sha256:db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3
-              target_sha256: sha256:1e0b3901146974128383d7eee95ffb8711b5302478fbacc6a54cd5060e466b05
+              target_sha256: sha256:6aef7d0dda23d2a5593a0206c0a84acd07548f5051d3fd122f0639155f7b478d
             - gid: D5/S1/Depth/TwelveScaleReduction.twelve_scale_is_normalized_sample_minimum
               source_sha256: sha256:db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3
-              target_sha256: sha256:1e0b3901146974128383d7eee95ffb8711b5302478fbacc6a54cd5060e466b05
+              target_sha256: sha256:6aef7d0dda23d2a5593a0206c0a84acd07548f5051d3fd122f0639155f7b478d
             - gid: D5/S1/Depth/TwelveScaleReduction.normalized_sample_minimum_unique
               source_sha256: sha256:db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3
-              target_sha256: sha256:1e0b3901146974128383d7eee95ffb8711b5302478fbacc6a54cd5060e466b05
+              target_sha256: sha256:6aef7d0dda23d2a5593a0206c0a84acd07548f5051d3fd122f0639155f7b478d
+            - gid: D5/S1/Depth/TwelveScaleReduction.canonical_partial_quotients_empty_or_odd
+              source_sha256: sha256:db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3
+              target_sha256: sha256:6aef7d0dda23d2a5593a0206c0a84acd07548f5051d3fd122f0639155f7b478d
+            - gid: D5/S1/Depth/TwelveScaleReduction.canonical_continued_fraction_value
+              source_sha256: sha256:db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3
+              target_sha256: sha256:6aef7d0dda23d2a5593a0206c0a84acd07548f5051d3fd122f0639155f7b478d
+            - gid: D5/S1/Depth/TwelveScaleReduction.normalized_sample_floor_eq_twelve_over_maximum_partial_quotient
+              source_sha256: sha256:db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3
+              target_sha256: sha256:6aef7d0dda23d2a5593a0206c0a84acd07548f5051d3fd122f0639155f7b478d
           scribe:
             - gid: D5/S1/Depth/TwelveScaleReduction.twelve_scale_le_normalized_magnitude
-              definition_sha256: sha256:750bbdf8cbb71bcc652d271f1655d8a2826a79647b6c92fa14746377717b6cfe
-              emission_sha256: sha256:a23e9b1509e9616d98630841c0710970534f91747145aa30780a02ed42e5960c
+              definition_sha256: sha256:452485e2cfd03974daa20b0fb4158302a5069709a03665613ddaafa4dd3f3347
+              emission_sha256: sha256:977671a33bdb24c55c1dffaff6f377d8adb9afd9d1e65c1428696db4fb536f42
             - gid: D5/S1/Depth/TwelveScaleReduction.normalized_magnitude_eq_twelve_scale_iff
-              definition_sha256: sha256:750bbdf8cbb71bcc652d271f1655d8a2826a79647b6c92fa14746377717b6cfe
-              emission_sha256: sha256:a23e9b1509e9616d98630841c0710970534f91747145aa30780a02ed42e5960c
+              definition_sha256: sha256:452485e2cfd03974daa20b0fb4158302a5069709a03665613ddaafa4dd3f3347
+              emission_sha256: sha256:977671a33bdb24c55c1dffaff6f377d8adb9afd9d1e65c1428696db4fb536f42
             - gid: D5/S1/Depth/TwelveScaleReduction.twelve_scale_is_normalized_sample_minimum
-              definition_sha256: sha256:750bbdf8cbb71bcc652d271f1655d8a2826a79647b6c92fa14746377717b6cfe
-              emission_sha256: sha256:a23e9b1509e9616d98630841c0710970534f91747145aa30780a02ed42e5960c
+              definition_sha256: sha256:452485e2cfd03974daa20b0fb4158302a5069709a03665613ddaafa4dd3f3347
+              emission_sha256: sha256:977671a33bdb24c55c1dffaff6f377d8adb9afd9d1e65c1428696db4fb536f42
             - gid: D5/S1/Depth/TwelveScaleReduction.normalized_sample_minimum_unique
-              definition_sha256: sha256:750bbdf8cbb71bcc652d271f1655d8a2826a79647b6c92fa14746377717b6cfe
-              emission_sha256: sha256:a23e9b1509e9616d98630841c0710970534f91747145aa30780a02ed42e5960c
+              definition_sha256: sha256:452485e2cfd03974daa20b0fb4158302a5069709a03665613ddaafa4dd3f3347
+              emission_sha256: sha256:977671a33bdb24c55c1dffaff6f377d8adb9afd9d1e65c1428696db4fb536f42
+            - gid: D5/S1/Depth/TwelveScaleReduction.canonical_partial_quotients_empty_or_odd
+              definition_sha256: sha256:452485e2cfd03974daa20b0fb4158302a5069709a03665613ddaafa4dd3f3347
+              emission_sha256: sha256:977671a33bdb24c55c1dffaff6f377d8adb9afd9d1e65c1428696db4fb536f42
+            - gid: D5/S1/Depth/TwelveScaleReduction.canonical_continued_fraction_value
+              definition_sha256: sha256:452485e2cfd03974daa20b0fb4158302a5069709a03665613ddaafa4dd3f3347
+              emission_sha256: sha256:977671a33bdb24c55c1dffaff6f377d8adb9afd9d1e65c1428696db4fb536f42
+            - gid: D5/S1/Depth/TwelveScaleReduction.normalized_sample_floor_eq_twelve_over_maximum_partial_quotient
+              definition_sha256: sha256:452485e2cfd03974daa20b0fb4158302a5069709a03665613ddaafa4dd3f3347
+              emission_sha256: sha256:977671a33bdb24c55c1dffaff6f377d8adb9afd9d1e65c1428696db4fb536f42
             - gid: D5/S1/Phase/SeatTowerArithmetic.twelve_le_abs_of_dvd_of_ne_zero
               definition_sha256: sha256:525faccde64a4f96a69b0aabbf95115b1b27bd61ae677aaac93c6c95c1250b39
               emission_sha256: sha256:f6b2cc020d9663fa6579ad32eebd9345b310ceac44333db64ea6f7167923c0ab
@@ -4095,7 +4116,6 @@ sources:
             - m-independent-gap-envelope-measurement
             - small-angle-2958-congruence-certificate
             - minimum-nonzero-psi-twelve-certificate
-            - floor-twelve-over-amax-reduction
             - moat-twelve-over-amax-reduction
             - envelope-twelve-over-amax-reduction
             - diffusion-twelve-over-amax-reduction
@@ -17554,6 +17574,9 @@ sources:
           - D5/S1/Depth/TwelveScaleReduction.normalized_magnitude_eq_twelve_scale_iff
           - D5/S1/Depth/TwelveScaleReduction.twelve_scale_is_normalized_sample_minimum
           - D5/S1/Depth/TwelveScaleReduction.normalized_sample_minimum_unique
+          - D5/S1/Depth/TwelveScaleReduction.canonical_partial_quotients_empty_or_odd
+          - D5/S1/Depth/TwelveScaleReduction.canonical_continued_fraction_value
+          - D5/S1/Depth/TwelveScaleReduction.normalized_sample_floor_eq_twelve_over_maximum_partial_quotient
         receipts:
           coverage:
             - gid: D5/S1/Phase/SeatTowerArithmetic.twelve_le_abs_of_dvd_of_ne_zero
@@ -17585,29 +17608,47 @@ sources:
               target_sha256: sha256:520db05df3f4606150d67b80c6b51ac763a71c485b93b0acff8561afa686d853
             - gid: D5/S1/Depth/TwelveScaleReduction.twelve_scale_le_normalized_magnitude
               source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
-              target_sha256: sha256:1e0b3901146974128383d7eee95ffb8711b5302478fbacc6a54cd5060e466b05
+              target_sha256: sha256:6aef7d0dda23d2a5593a0206c0a84acd07548f5051d3fd122f0639155f7b478d
             - gid: D5/S1/Depth/TwelveScaleReduction.normalized_magnitude_eq_twelve_scale_iff
               source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
-              target_sha256: sha256:1e0b3901146974128383d7eee95ffb8711b5302478fbacc6a54cd5060e466b05
+              target_sha256: sha256:6aef7d0dda23d2a5593a0206c0a84acd07548f5051d3fd122f0639155f7b478d
             - gid: D5/S1/Depth/TwelveScaleReduction.twelve_scale_is_normalized_sample_minimum
               source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
-              target_sha256: sha256:1e0b3901146974128383d7eee95ffb8711b5302478fbacc6a54cd5060e466b05
+              target_sha256: sha256:6aef7d0dda23d2a5593a0206c0a84acd07548f5051d3fd122f0639155f7b478d
             - gid: D5/S1/Depth/TwelveScaleReduction.normalized_sample_minimum_unique
               source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
-              target_sha256: sha256:1e0b3901146974128383d7eee95ffb8711b5302478fbacc6a54cd5060e466b05
+              target_sha256: sha256:6aef7d0dda23d2a5593a0206c0a84acd07548f5051d3fd122f0639155f7b478d
+            - gid: D5/S1/Depth/TwelveScaleReduction.canonical_partial_quotients_empty_or_odd
+              source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+              target_sha256: sha256:6aef7d0dda23d2a5593a0206c0a84acd07548f5051d3fd122f0639155f7b478d
+            - gid: D5/S1/Depth/TwelveScaleReduction.canonical_continued_fraction_value
+              source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+              target_sha256: sha256:6aef7d0dda23d2a5593a0206c0a84acd07548f5051d3fd122f0639155f7b478d
+            - gid: D5/S1/Depth/TwelveScaleReduction.normalized_sample_floor_eq_twelve_over_maximum_partial_quotient
+              source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+              target_sha256: sha256:6aef7d0dda23d2a5593a0206c0a84acd07548f5051d3fd122f0639155f7b478d
           scribe:
             - gid: D5/S1/Depth/TwelveScaleReduction.twelve_scale_le_normalized_magnitude
-              definition_sha256: sha256:750bbdf8cbb71bcc652d271f1655d8a2826a79647b6c92fa14746377717b6cfe
-              emission_sha256: sha256:a23e9b1509e9616d98630841c0710970534f91747145aa30780a02ed42e5960c
+              definition_sha256: sha256:452485e2cfd03974daa20b0fb4158302a5069709a03665613ddaafa4dd3f3347
+              emission_sha256: sha256:977671a33bdb24c55c1dffaff6f377d8adb9afd9d1e65c1428696db4fb536f42
             - gid: D5/S1/Depth/TwelveScaleReduction.normalized_magnitude_eq_twelve_scale_iff
-              definition_sha256: sha256:750bbdf8cbb71bcc652d271f1655d8a2826a79647b6c92fa14746377717b6cfe
-              emission_sha256: sha256:a23e9b1509e9616d98630841c0710970534f91747145aa30780a02ed42e5960c
+              definition_sha256: sha256:452485e2cfd03974daa20b0fb4158302a5069709a03665613ddaafa4dd3f3347
+              emission_sha256: sha256:977671a33bdb24c55c1dffaff6f377d8adb9afd9d1e65c1428696db4fb536f42
             - gid: D5/S1/Depth/TwelveScaleReduction.twelve_scale_is_normalized_sample_minimum
-              definition_sha256: sha256:750bbdf8cbb71bcc652d271f1655d8a2826a79647b6c92fa14746377717b6cfe
-              emission_sha256: sha256:a23e9b1509e9616d98630841c0710970534f91747145aa30780a02ed42e5960c
+              definition_sha256: sha256:452485e2cfd03974daa20b0fb4158302a5069709a03665613ddaafa4dd3f3347
+              emission_sha256: sha256:977671a33bdb24c55c1dffaff6f377d8adb9afd9d1e65c1428696db4fb536f42
             - gid: D5/S1/Depth/TwelveScaleReduction.normalized_sample_minimum_unique
-              definition_sha256: sha256:750bbdf8cbb71bcc652d271f1655d8a2826a79647b6c92fa14746377717b6cfe
-              emission_sha256: sha256:a23e9b1509e9616d98630841c0710970534f91747145aa30780a02ed42e5960c
+              definition_sha256: sha256:452485e2cfd03974daa20b0fb4158302a5069709a03665613ddaafa4dd3f3347
+              emission_sha256: sha256:977671a33bdb24c55c1dffaff6f377d8adb9afd9d1e65c1428696db4fb536f42
+            - gid: D5/S1/Depth/TwelveScaleReduction.canonical_partial_quotients_empty_or_odd
+              definition_sha256: sha256:452485e2cfd03974daa20b0fb4158302a5069709a03665613ddaafa4dd3f3347
+              emission_sha256: sha256:977671a33bdb24c55c1dffaff6f377d8adb9afd9d1e65c1428696db4fb536f42
+            - gid: D5/S1/Depth/TwelveScaleReduction.canonical_continued_fraction_value
+              definition_sha256: sha256:452485e2cfd03974daa20b0fb4158302a5069709a03665613ddaafa4dd3f3347
+              emission_sha256: sha256:977671a33bdb24c55c1dffaff6f377d8adb9afd9d1e65c1428696db4fb536f42
+            - gid: D5/S1/Depth/TwelveScaleReduction.normalized_sample_floor_eq_twelve_over_maximum_partial_quotient
+              definition_sha256: sha256:452485e2cfd03974daa20b0fb4158302a5069709a03665613ddaafa4dd3f3347
+              emission_sha256: sha256:977671a33bdb24c55c1dffaff6f377d8adb9afd9d1e65c1428696db4fb536f42
             - gid: D5/S1/Phase/SeatTowerArithmetic.twelve_le_abs_of_dvd_of_ne_zero
               definition_sha256: sha256:525faccde64a4f96a69b0aabbf95115b1b27bd61ae677aaac93c6c95c1250b39
               emission_sha256: sha256:f6b2cc020d9663fa6579ad32eebd9345b310ceac44333db64ea6f7167923c0ab
@@ -17658,7 +17699,6 @@ sources:
             - m-independent-gap-envelope-measurement
             - small-angle-2958-congruence-certificate
             - minimum-nonzero-psi-twelve-certificate
-            - floor-twelve-over-amax-reduction
             - moat-twelve-over-amax-reduction
             - envelope-twelve-over-amax-reduction
             - diffusion-twelve-over-amax-reduction
