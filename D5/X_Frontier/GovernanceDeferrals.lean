@@ -77,6 +77,53 @@ def finiteCrossedProductHolonomyErratumTicket : Unit := ()
     certification is therefore unavailable and remains open. -/
 def vi4MomentAuditReport : Unit := ()
 
+/- VI.5 observer-algebra and PT-spectroscopy audit report.
+   Source CAS atoms:
+   theorem/6.15 = sha256:4665b7a964aa68bb352d723c91fc1f78f8403934ee5fdd6ff3d4defe2d8b2655;
+   theorem/6.16 = sha256:2ffce60a012ce99a41eb5b32dd3cba3651e491cc18bab490155831d90d9bee6e;
+   theorem/6.17 = sha256:26e809126888168bff9b6cf4be4a67f3205d1dad608a318426bf648b9ced08bf;
+   theorem/6.18 = sha256:38470526c6d35c410540531c3056bbc4115ee6c60a83af4f05f5010956093873;
+   theorem/6.19 = sha256:07f7a0d5263dc851204ecd45d20f86f0e3b57876759fb7895581e3f7b40abac3.
+   findings: The theorem/6.15 atom identifies the finite cyclic crossed product with M_M(C),
+   but its central holonomy U^M has spectrum T, so the unfixed algebra is
+   M_M(C(T)); only a fixed-holonomy fiber is M_M(C). The corresponding later
+   observer account independently supplies this missing qualification. The
+   theorem/6.19 atom also states
+   E[(1-c^2)^-1 | lambda] = 1/(4 lambda^2) as an equality. For
+   t = (1-c^2)^-1 >= 1 with density proportional to
+   t^-1/2 exp(-2 lambda^2 t) on [1, infinity), the exact expectation is
+   1/(4 lambda^2) + exp(-2 lambda^2) /
+   (sqrt(2) lambda Gamma(1/2, 2 lambda^2)); the correction is positive and
+   asymptotic to 1/(sqrt(2 pi) lambda). At lambda = 1 the expectation is
+   1.43660776641142043, not 0.25; at lambda = 0.1 it is
+   29.6470792404282145, not 25. The corresponding ledger account correctly
+   weakens the exact equality but its O(1) remainder is still too small. No
+   dedicated existing case was found for either defect. The required feedback
+   issues were not created because this delivery forbids GitHub-state changes;
+   both findings therefore remain open and have no witness GID or coverage receipt.
+   deduplicated: The theorem/6.16 zero-by-forgetting sentence inherits the
+   undefined critical-strip projection already recorded by issue #168. The
+   theorem/6.18 zeta/PT/EP identifications and theorem/6.19 Krein/CPT and GUE
+   interpretation require the missing zeta operator, state space, and metric
+   already recorded by issue #253 (reissued from #173); no parallel case is due.
+   clean: Within the stated crossed-product model, covariance, the BD and UHF
+   K-groups, the global matrix units, U^M = z, and the normalized L^p defect
+   norms are standard operator-algebra facts. Under their explicit definitions,
+   Blackwell garbling gives nonnegative information loss by DPI and does not
+   physically reverse a measurement. For the 4 by 4 toy block, direct
+   diagonalization gives the three EP phases and overlap
+   min(delta/kappa, kappa/delta). arccosh(2) independently evaluates to
+   1.31695789692481671. These facts do not validate the attached dictionaries.
+   classification: theorem/6.15 and theorem/6.17 have an operator-algebra core;
+   theorem/6.16 is a conditional textbook reconstruction plus a dictionary;
+   theorem/6.18 and theorem/6.19 mix toy-model calculations with interpretive
+   PT and GUE verdicts. A shared theorem-and-certificate label overstates the
+   latter dictionary layer.
+   needs_deep: The six-state finite certificate, the pseudo-Hermitian ensemble
+   beta fits, and a zeta-realizing PT/Krein/CPT operator have no replay inputs or
+   formal witness in the local sources. They remain unverified rather than clean. -/
+def vi5ObserverPtAuditReport : Unit := ()
+
 /-- TASK D5-T0002 | 难度:3 | 依赖:就绪✓ | 尝试:1
     提示:Keep collectAxioms, sorryAx, protected-axiom, comment/string, and semantic Hearts-signature fixtures green.
     尸检:M0 bootstrap regex recognized only bare/private axiom and treated comment text as sorry; replaced by Lean ConstantInfo types and transitive collectAxioms reports. -/
