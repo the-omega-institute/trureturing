@@ -497,11 +497,11 @@ public sealed partial class ProductionEnvironmentTests
             new FakeRepositoryGateway(
                 RawChangeSet.Create(Array.Empty<string>()),
                 Snapshot(fixture.Files),
-                null),
+                Snapshot(fixture.Baseline)),
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
-        var result = environment.DigestStatus(["--residual-summary"]);
+        var result = environment.DigestStatus(["--residual-summary", "--base", "baseline"]);
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("- unresolved_subitems: 2", result.Output, StringComparison.Ordinal);

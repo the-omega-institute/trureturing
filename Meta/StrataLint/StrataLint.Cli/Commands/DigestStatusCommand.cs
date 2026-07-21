@@ -1,3 +1,4 @@
+using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
 
@@ -34,11 +35,12 @@ internal static class DigestStatusCommand
             var lean = ValidateLean(snapshot, leanReport);
             var verifiedScribeEmissions = scribeEmissionVerifier.Verify(leanReport);
             var document = BackfillInventoryLoader.Load(ledgerFile.Text);
+            RepositorySnapshot? baselineSnapshot = null;
             BackfillInventoryDocument? baselineDocument = null;
             if (options.BaselineRevision is not null)
             {
-                var baseline = Decode(repository.ReadRevision(options.BaselineRevision));
-                if (!baseline.TryGetFile(BackfillInventoryLoader.RelativePath, out var baselineLedger))
+                baselineSnapshot = Decode(repository.ReadRevision(options.BaselineRevision));
+                if (!baselineSnapshot.TryGetFile(BackfillInventoryLoader.RelativePath, out var baselineLedger))
                 {
                     throw new InvalidOperationException(
                         $"baseline {BackfillInventoryLoader.RelativePath} is missing");
@@ -60,14 +62,37 @@ internal static class DigestStatusCommand
                 return new CommandResult(false, string.Empty, error);
             }
 
-            return new CommandResult(
-                true,
-                options.ResidualSummary
-                    ? DigestResidualSummary.Render(evaluation)
-                    : options.Json
-                        ? RenderJson(evaluation)
-                        : RenderText(evaluation),
-                string.Empty);
+            if (!options.ResidualSummary)
+            {
+                return new CommandResult(
+                    true,
+                    options.Json ? RenderJson(evaluation) : RenderText(evaluation),
+                    string.Empty);
+            }
+
+            var candidateSnapshotSha256 = CanonicalSnapshotSha256(snapshot);
+            var baselineSnapshotSha256 = CanonicalSnapshotSha256(
+                baselineSnapshot ?? throw new InvalidOperationException("residual summary requires --base REV"));
+            var residualBlock = DigestResidualSummary.Render(
+                evaluation,
+                candidateSnapshotSha256,
+                baselineSnapshotSha256);
+            if (options.VerifyReviewPath is null)
+            {
+                return new CommandResult(true, residualBlock, string.Empty);
+            }
+
+            var reviewBytes = File.ReadAllBytes(options.VerifyReviewPath);
+            return DigestResidualSummary.ContainsExactlyOneVerbatimBlock(reviewBytes, residualBlock)
+                ? new CommandResult(
+                    true,
+                    $"ECHO_REVIEW_VALID candidate_snapshot_sha256={candidateSnapshotSha256} "
+                        + $"baseline_snapshot_sha256={baselineSnapshotSha256}\n",
+                    string.Empty)
+                : new CommandResult(
+                    false,
+                    string.Empty,
+                    "ECHO_REVIEW_INVALID residual summary block is missing, duplicated, stale, reordered, or modified\n");
         }
         catch (Exception exception) when (
             exception is FormatException
@@ -84,6 +109,7 @@ internal static class DigestStatusCommand
         var json = false;
         var residualSummary = false;
         string? baselineRevision = null;
+        string? verifyReviewPath = null;
         for (var index = 0; index < arguments.Count; index++)
         {
             switch (arguments[index])
@@ -98,17 +124,48 @@ internal static class DigestStatusCommand
                     baselineRevision = arguments[++index];
                     if (string.IsNullOrWhiteSpace(baselineRevision)) throw Usage();
                     break;
+                case "--verify-review" when verifyReviewPath is null && index + 1 < arguments.Count:
+                    verifyReviewPath = arguments[++index];
+                    if (string.IsNullOrWhiteSpace(verifyReviewPath)) throw Usage();
+                    break;
                 default:
                     throw Usage();
             }
         }
 
-        if (json && residualSummary) throw Usage();
-        return new DigestStatusOptions(json, residualSummary, baselineRevision);
+        if (json && residualSummary
+            || residualSummary && baselineRevision is null
+            || verifyReviewPath is not null && !residualSummary)
+        {
+            throw Usage();
+        }
+
+        return new DigestStatusOptions(json, residualSummary, baselineRevision, verifyReviewPath);
     }
 
     private static InvalidOperationException Usage() => new(
-        "USAGE: StrataLint digest-status [--json|--residual-summary] [--base REV]");
+        "USAGE: StrataLint digest-status [--json] [--base REV] | "
+            + "--residual-summary --base REV [--verify-review FILE]");
+
+    private static string CanonicalSnapshotSha256(RepositorySnapshot snapshot)
+    {
+        if (!snapshot.TryGetFile("Meta/registry.yaml", out var registry)
+            || !snapshot.TryGetFile("Meta/domains.yaml", out var domains))
+        {
+            throw new InvalidOperationException("snapshot policy inputs are missing");
+        }
+
+        var registryOutcome = RegistryLoader.Load(registry.RawBytes.AsSpan(), domains.RawBytes.AsSpan());
+        var policy = registryOutcome is RegistryLoadOutcome.Accepted accepted
+            ? accepted.Policy
+            : throw new InvalidOperationException(
+                ((RegistryLoadOutcome.InfrastructureFailure)registryOutcome).Message);
+        var canonicalization = RepositoryCanonicalizer.Validate(snapshot, policy);
+        return canonicalization is CanonicalizationOutcome.Accepted canonical
+            ? "sha256:" + canonical.Capability.Sha256
+            : throw new InvalidOperationException(
+                ((CanonicalizationOutcome.InfrastructureFailure)canonicalization).Message);
+    }
 
     internal static string RenderText(DigestionLedgerEvaluation evaluation)
     {
@@ -180,16 +237,24 @@ internal static class DigestStatusCommand
     private sealed record DigestStatusOptions(
         bool Json,
         bool ResidualSummary,
-        string? BaselineRevision);
+        string? BaselineRevision,
+        string? VerifyReviewPath);
 }
 
 internal static class DigestResidualSummary
 {
+    internal const string StartMarker = "<!-- stratalint:echo-residual-summary:start -->";
+    internal const string EndMarker = "<!-- stratalint:echo-residual-summary:end -->";
     private const string ResidualGapCode = "unresolved-subitem";
 
-    internal static string Render(DigestionLedgerEvaluation evaluation)
+    internal static string Render(
+        DigestionLedgerEvaluation evaluation,
+        string candidateSnapshotSha256,
+        string baselineSnapshotSha256)
     {
         ArgumentNullException.ThrowIfNull(evaluation);
+        ArgumentException.ThrowIfNullOrWhiteSpace(candidateSnapshotSha256);
+        ArgumentException.ThrowIfNullOrWhiteSpace(baselineSnapshotSha256);
         var sources = evaluation.Entries
             .GroupBy(static item => item.Entry.SourceId, StringComparer.Ordinal)
             .OrderBy(static group => group.Key, StringComparer.Ordinal)
@@ -208,8 +273,11 @@ internal static class DigestResidualSummary
                     .ToArray()))
             .ToArray();
         var writer = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
+        writer.WriteLine(StartMarker);
         writer.WriteLine("# Echo Residual Summary");
         writer.WriteLine();
+        writer.WriteLine($"- candidate_snapshot_sha256: `{candidateSnapshotSha256}`");
+        writer.WriteLine($"- baseline_snapshot_sha256: `{baselineSnapshotSha256}`");
         writer.WriteLine($"- unresolved_subitems: {sources.Sum(static source => source.SubitemCount)}");
         writer.WriteLine($"- mother_residual_atom_ids: {sources.Sum(static source => source.Atoms.Length)}");
 
@@ -239,7 +307,42 @@ internal static class DigestResidualSummary
             }
         }
 
+        writer.WriteLine();
+        writer.WriteLine(EndMarker);
+
         return writer.ToString();
+    }
+
+    internal static bool ContainsExactlyOneVerbatimBlock(
+        ReadOnlySpan<byte> reviewBytes,
+        string expectedBlock)
+    {
+        ArgumentNullException.ThrowIfNull(expectedBlock);
+        var startMarker = Encoding.UTF8.GetBytes(StartMarker);
+        var endMarker = Encoding.UTF8.GetBytes(EndMarker);
+        if (CountOccurrences(reviewBytes, startMarker) != 1
+            || CountOccurrences(reviewBytes, endMarker) != 1)
+        {
+            return false;
+        }
+
+        var expectedBytes = Encoding.UTF8.GetBytes(expectedBlock);
+        var start = reviewBytes.IndexOf(startMarker);
+        return start >= 0
+            && reviewBytes.Length - start >= expectedBytes.Length
+            && reviewBytes.Slice(start, expectedBytes.Length).SequenceEqual(expectedBytes);
+    }
+
+    private static int CountOccurrences(ReadOnlySpan<byte> input, ReadOnlySpan<byte> value)
+    {
+        var count = 0;
+        while (input.IndexOf(value) is var index && index >= 0)
+        {
+            count++;
+            input = input[(index + value.Length)..];
+        }
+
+        return count;
     }
 
     private sealed record AtomResiduals(string AtomId, string[] Subitems);

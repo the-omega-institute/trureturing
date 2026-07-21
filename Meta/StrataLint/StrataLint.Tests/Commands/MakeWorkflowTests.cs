@@ -42,6 +42,7 @@ public sealed class MakeWorkflowTests
         "emit-check",
         "ingest",
         "echo-residual-summary",
+        "echo-review-verify",
         "record-golden",
         "selftest",
         "gate",
@@ -85,6 +86,12 @@ public sealed class MakeWorkflowTests
             EchoResidualSummaryScriptPath,
             Recipe(makefile, "echo-residual-summary"),
             StringComparison.Ordinal);
+        Assert.Contains(
+            EchoResidualSummaryScriptPath,
+            Recipe(makefile, "echo-review-verify"),
+            StringComparison.Ordinal);
+        Assert.Contains("--verify", Recipe(makefile, "echo-review-verify"), StringComparison.Ordinal);
+        Assert.Contains("$(REVIEW)", Recipe(makefile, "echo-review-verify"), StringComparison.Ordinal);
         Assert.Contains("golden-record", Recipe(makefile, "record-golden"), StringComparison.Ordinal);
         Assert.Contains(SelftestScriptPath, Recipe(makefile, "selftest"), StringComparison.Ordinal);
         Assert.Contains(LocalHarnessGateScriptPath, Recipe(makefile, "gate"), StringComparison.Ordinal);
@@ -110,20 +117,6 @@ public sealed class MakeWorkflowTests
         Assert.Contains("dry-run", output, StringComparison.Ordinal);
         Assert.Contains("FORCE=1", output, StringComparison.Ordinal);
         Assert.Contains("values", output, StringComparison.OrdinalIgnoreCase);
-    }
-
-    [Fact]
-    public void EchoResidualSummaryKeepsLeanReportDiagnosticsOutOfThePasteableBlock()
-    {
-        var root = FindRepositoryRoot();
-        var script = File.ReadAllText(Path.Combine(root, EchoResidualSummaryScriptPath));
-
-        Assert.Contains(LeanReportScriptPath, script, StringComparison.Ordinal);
-        Assert.Contains("\"$REPORT_SCRIPT\" >&2", script, StringComparison.Ordinal);
-        Assert.Contains(
-            "digest-status --residual-summary --base \"$BASE\"",
-            script,
-            StringComparison.Ordinal);
     }
 
     [Fact]

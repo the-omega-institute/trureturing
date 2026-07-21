@@ -17,8 +17,11 @@ public sealed class DigestResidualSummaryTests
             Entry("source-b", "atom-a", ("unresolved-subitem", "alpha")),
         };
         var expected = """
+            <!-- stratalint:echo-residual-summary:start -->
             # Echo Residual Summary
 
+            - candidate_snapshot_sha256: `sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`
+            - baseline_snapshot_sha256: `sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb`
             - unresolved_subitems: 4
             - mother_residual_atom_ids: 3
 
@@ -51,10 +54,18 @@ public sealed class DigestResidualSummaryTests
             - mother_residual_atom_ids: 0
 
             Mother residual atoms: none.
+
+            <!-- stratalint:echo-residual-summary:end -->
             """ + "\n";
 
-        var forward = DigestResidualSummary.Render(new DigestionLedgerEvaluation([.. entries], []));
-        var reverse = DigestResidualSummary.Render(new DigestionLedgerEvaluation([.. entries.Reverse()], []));
+        var forward = DigestResidualSummary.Render(
+            new DigestionLedgerEvaluation([.. entries], []),
+            "sha256:" + new string('a', 64),
+            "sha256:" + new string('b', 64));
+        var reverse = DigestResidualSummary.Render(
+            new DigestionLedgerEvaluation([.. entries.Reverse()], []),
+            "sha256:" + new string('a', 64),
+            "sha256:" + new string('b', 64));
 
         Assert.Equal(expected, forward);
         Assert.Equal(expected, reverse);

@@ -12,6 +12,7 @@
 
 ## Residual Accounting (Required)
 
-- Immediately before publishing a theory batch, run `make echo-residual-summary BASE=origin/dev` from its worktree and paste the complete output block into `.echo-review.md` verbatim.
+- After the final candidate commit, run `make echo-residual-summary BASE=origin/dev` from its worktree and paste the complete marker-delimited output block into `.echo-review.md` verbatim.
 - Residual counts, mother residual `atom_id` lists, and `unresolved-subitem` lists must never be counted, written, edited, or reordered by hand. They are projections of `digest-status --residual-summary`, which uses the same evaluation as `digest-status --json`.
-- After any Lean, Scribe, or `Meta/BACKFILL.yaml` change, discard the earlier block and rerun the target. A stale or manually reconciled block is not publication evidence.
+- Immediately before publication, run `make echo-review-verify BASE=origin/dev REVIEW=.echo-review.md`. Publication accepts the residual block only when this byte-level, candidate-and-baseline-snapshot-bound verifier exits zero.
+- After any repository or baseline change, discard the earlier block and rerun both targets. Missing, duplicated, stale, reordered, or manually edited blocks are invalid publication evidence.
