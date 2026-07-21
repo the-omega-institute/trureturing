@@ -7,6 +7,50 @@ namespace StrataLint.Tests;
 
 public sealed partial class ProductionEnvironmentTests
 {
+    private const string ValidManifestJson =
+        "{\"artifact\":\"lean\",\"domain\":\"Carrier\",\"generality\":\"G\","
+        + "\"module\":\"Probe\",\"plane\":\"F\",\"selector\":\"\",\"tag\":\"\","
+        + "\"theory\":\"D5\"}\n";
+
+    private const string ExpectedRouteJson = "{\n"
+        + "  \"gid\": \"D5/S0/Carrier/Probe\",\n"
+        + "  \"path\": \"D5/S0/Carrier/Probe.lean\",\n"
+        + "  \"stratum\": \"S0\",\n"
+        + "  \"skeleton\": [\n"
+        + "    \"/- GID: D5/S0/Carrier/Probe\",\n"
+        + "    \"   generality: G\",\n"
+        + "    \"   mirror-B: D5/B/S0/Carrier/Probe\",\n"
+        + "    \"   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)\",\n"
+        + "    \"   anchors: []\",\n"
+        + "    \"   digest: EDIT-ME -/\"\n"
+        + "  ]\n"
+        + "}\n";
+
+    // This snapshots current facade output; it does not define the supported theory or rule set.
+    private const string ExpectedSelfTestOutput = "SELFTEST PASS\n"
+        + "CANONICAL_REGISTRY 2aa5aee45027f9beac3772293f67ae93f57d8bb8f7d0b55682c6687a65267d0d\n"
+        + "CANONICAL_DOMAINS ec31bb885b0178ef527ba95a5984ede06e77b6178e6b2bfd57f3b2176e6419e4\n"
+        + "RULES SL-001,SL-002,SL-003,SL-004,SL-005,SL-006,SL-007,SL-008,SL-009,SL-010,SL-011,SL-012,SL-013,SL-014,SL-015,SL-016,SL-017,SL-018,SL-019,SL-020,SL-021,SL-022,SL-023\n"
+        + "DEFERRED SL-007:D5-T0011,SL-009:D5-T0012,SL-014:D5-T0010\n";
+
+    private const string DomainsWithoutCarrier = "domains:\n"
+        + "  Conventions:\n"
+        + "    stratum: S0\n"
+        + "    definition: Fixture.\n";
+
+    public static TheoryData<string[]> MalformedCheckArgumentSequences => new()
+    {
+        new[] { "--candidate-lean-report" },
+        new[] { "--unknown", "value" },
+        new[] { "--protected-base", "first", "--merge-base", "second" },
+    };
+
+    public static TheoryData<string[]> InvalidRouteArgumentSequences => new()
+    {
+        Array.Empty<string>(),
+        new[] { "first.json", "second.json" },
+    };
+
     [Fact]
     public void CheckEvaluatesProtectedChangeContentAndReturnsStructuredMetaSignal()
     {
@@ -201,9 +245,85 @@ public sealed partial class ProductionEnvironmentTests
         var outcome = environment.Check(Array.Empty<string>());
 
         var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
-        Assert.Contains("--candidate-lean-report", failure.Message, StringComparison.Ordinal);
-        Assert.Contains("--baseline-lean-report", failure.Message, StringComparison.Ordinal);
+        Assert.Equal(
+            "check requires --candidate-lean-report FILE and --baseline-lean-report FILE",
+            failure.Message);
+        Assert.Equal(new string?[] { null }, gateway.PreparedBases);
+        Assert.Equal(0, gateway.ReadCount);
         Assert.Equal(0, source.CallCount);
+    }
+
+    [Theory]
+    [MemberData(nameof(MalformedCheckArgumentSequences))]
+    public void CheckReturnsExactUsageForMalformedOptionSequences(string[] arguments)
+    {
+        var gateway = new FakeRepositoryGateway(
+            RawChangeSet.Create(Array.Empty<string>()),
+            null,
+            null);
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            gateway,
+            new FakeLeanReportSource(null));
+
+        var outcome = environment.Check(arguments);
+
+        var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
+        Assert.Equal(
+            "USAGE: StrataLint check [--protected-base REV] "
+            + "--candidate-lean-report FILE --baseline-lean-report FILE",
+            failure.Message);
+        Assert.Empty(gateway.PreparedBases);
+        Assert.Equal(0, gateway.ReadCount);
+    }
+
+    [Theory]
+    [InlineData("--protected-base", "protected/revision")]
+    [InlineData("--merge-base", "merge/revision")]
+    public void CheckForwardsProtectedBaseOptionsToRepositoryPreparation(
+        string option,
+        string revision)
+    {
+        var gateway = new FakeRepositoryGateway(
+            RawChangeSet.Create(Array.Empty<string>()),
+            null,
+            null);
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            gateway,
+            new FakeLeanReportSource(null));
+
+        var outcome = environment.Check(new[] { option, revision });
+
+        var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
+        Assert.Equal(
+            "check requires --candidate-lean-report FILE and --baseline-lean-report FILE",
+            failure.Message);
+        Assert.Equal(new[] { revision }, gateway.PreparedBases);
+        Assert.Equal(0, gateway.ReadCount);
+    }
+
+    [Fact]
+    public void CheckTranslatesRepositoryPreparationExceptionToInfrastructureFailure()
+    {
+        var gateway = new FakeRepositoryGateway(
+            RawChangeSet.Create(Array.Empty<string>()),
+            null,
+            null)
+        {
+            PrepareException = new InvalidOperationException("synthetic repository failure"),
+        };
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            gateway,
+            new FakeLeanReportSource(null));
+
+        var outcome = environment.Check(Array.Empty<string>());
+
+        var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
+        Assert.Equal("synthetic repository failure", failure.Message);
+        Assert.Equal(new string?[] { null }, gateway.PreparedBases);
+        Assert.Equal(0, gateway.ReadCount);
     }
 
     [Fact]
@@ -419,13 +539,8 @@ public sealed partial class ProductionEnvironmentTests
     public void RouteUsesTheRepositoryRegistryAndEmitsStableJson()
     {
         using var temporary = new TemporaryDirectory();
-        Directory.CreateDirectory(Path.Combine(temporary.Path, "Meta"));
-        File.WriteAllText(Path.Combine(temporary.Path, "Meta", "registry.yaml"), TestRegistry.Canonical, new UTF8Encoding(false));
-        File.WriteAllText(Path.Combine(temporary.Path, "Meta", "domains.yaml"), TestRegistry.Domains, new UTF8Encoding(false));
-        File.WriteAllText(
-            Path.Combine(temporary.Path, "manifest.json"),
-            "{\"artifact\":\"lean\",\"domain\":\"Carrier\",\"generality\":\"G\",\"module\":\"Probe\",\"plane\":\"F\",\"selector\":\"\",\"tag\":\"\",\"theory\":\"D5\"}\n",
-            new UTF8Encoding(false));
+        WritePolicyFiles(temporary.Path, TestRegistry.Canonical, TestRegistry.Domains);
+        WriteManifest(temporary.Path, ValidManifestJson);
         var environment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(RawChangeSet.Create(Array.Empty<string>()), null, null),
@@ -433,18 +548,152 @@ public sealed partial class ProductionEnvironmentTests
 
         var result = environment.Route(new[] { "manifest.json" });
 
-        Assert.True(result.Success, result.Error);
-        Assert.Contains("\"gid\": \"D5/S0/Carrier/Probe\"", result.Output, StringComparison.Ordinal);
-        Assert.EndsWith("\n", result.Output, StringComparison.Ordinal);
+        Assert.Equal(new CommandResult(true, ExpectedRouteJson, string.Empty), result);
+    }
+
+    [Theory]
+    [MemberData(nameof(InvalidRouteArgumentSequences))]
+    public void RouteReturnsExactUsageForInvalidArgumentCounts(string[] arguments)
+    {
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            new FakeRepositoryGateway(RawChangeSet.Create(Array.Empty<string>()), null, null),
+            new FakeLeanReportSource(null));
+
+        var result = environment.Route(arguments);
+
+        Assert.Equal(
+            new CommandResult(false, string.Empty, "USAGE: StrataLint route MANIFEST|-\n"),
+            result);
+    }
+
+    [Fact]
+    public void RouteReturnsExactManifestLoadFailure()
+    {
+        using var temporary = new TemporaryDirectory();
+        WritePolicyFiles(temporary.Path, TestRegistry.Canonical, TestRegistry.Domains);
+        WriteManifest(temporary.Path, "{}\n");
+        var environment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(RawChangeSet.Create(Array.Empty<string>()), null, null),
+            new FakeLeanReportSource(null));
+
+        var result = environment.Route(new[] { "manifest.json" });
+
+        Assert.Equal(
+            new CommandResult(
+                false,
+                string.Empty,
+                "INFRASTRUCTURE_FAILURE manifest keys must be exactly: "
+                + "artifact, domain, generality, module, plane, selector, tag, theory\n"),
+            result);
+    }
+
+    [Fact]
+    public void RouteReturnsExactPolicyRejection()
+    {
+        using var temporary = new TemporaryDirectory();
+        WritePolicyFiles(temporary.Path, TestRegistry.Canonical, DomainsWithoutCarrier);
+        WriteManifest(temporary.Path, ValidManifestJson);
+        var environment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(RawChangeSet.Create(Array.Empty<string>()), null, null),
+            new FakeLeanReportSource(null));
+
+        var result = environment.Route(new[] { "manifest.json" });
+
+        Assert.Equal(
+            new CommandResult(
+                false,
+                string.Empty,
+                "SL-015 route: formal route requires a controlled domain\n"),
+            result);
+    }
+
+    [Fact]
+    public void RouteRejectsNonRepositoryRelativeManifestPathAsInfrastructureFailure()
+    {
+        using var temporary = new TemporaryDirectory();
+        WritePolicyFiles(temporary.Path, TestRegistry.Canonical, TestRegistry.Domains);
+        var environment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(RawChangeSet.Create(Array.Empty<string>()), null, null),
+            new FakeLeanReportSource(null));
+
+        var result = environment.Route(new[] { "../manifest.json" });
+
+        Assert.Equal(
+            new CommandResult(
+                false,
+                string.Empty,
+                "INFRASTRUCTURE_FAILURE manifest path must be repository-relative\n"),
+            result);
+    }
+
+    [Fact]
+    public void RouteTranslatesRegistryFailureToExactInfrastructureResult()
+    {
+        using var temporary = new TemporaryDirectory();
+        var invalidRegistry = TestRegistry.Canonical.Replace(
+            "schema_version: 1",
+            "schema_version: 2",
+            StringComparison.Ordinal);
+        WritePolicyFiles(temporary.Path, invalidRegistry, TestRegistry.Domains);
+        WriteManifest(temporary.Path, ValidManifestJson);
+        var environment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(RawChangeSet.Create(Array.Empty<string>()), null, null),
+            new FakeLeanReportSource(null));
+
+        var result = environment.Route(new[] { "manifest.json" });
+
+        Assert.Equal(
+            new CommandResult(
+                false,
+                string.Empty,
+                "INFRASTRUCTURE_FAILURE Unknown registry schema_version; expected 1.\n"),
+            result);
+    }
+
+    [Fact]
+    public void RouteReadsManifestFromStandardInputInAnIsolatedProcess()
+    {
+        using var temporary = new TemporaryDirectory();
+        WritePolicyFiles(temporary.Path, TestRegistry.Canonical, TestRegistry.Domains);
+
+        var result = BoundedProcessRunner.Run(
+            "dotnet",
+            new[] { typeof(Program).Assembly.Location, "route", "-" },
+            temporary.Path,
+            TimeSpan.FromSeconds(60),
+            16 * 1024,
+            Encoding.UTF8.GetBytes(ValidManifestJson));
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(Encoding.UTF8.GetBytes(ExpectedRouteJson), result.StandardOutput);
+        Assert.Empty(result.StandardError);
+    }
+
+    [Fact]
+    public void SelfTestReturnsExactUsageWhenArgumentsAreSupplied()
+    {
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            new FakeRepositoryGateway(RawChangeSet.Create(Array.Empty<string>()), null, null),
+            new FakeLeanReportSource(null));
+
+        var result = environment.SelfTest(new[] { "unexpected" });
+
+        Assert.Equal(
+            new CommandResult(false, string.Empty, "USAGE: StrataLint selftest\n"),
+            result);
     }
 
     [Fact]
     public void SelfTestIsByteStableAcrossTwoPasses()
     {
         using var temporary = new TemporaryDirectory();
-        Directory.CreateDirectory(Path.Combine(temporary.Path, "Meta"));
-        File.WriteAllText(Path.Combine(temporary.Path, "Meta", "registry.yaml"), TestRegistry.Canonical, new UTF8Encoding(false));
-        File.WriteAllText(Path.Combine(temporary.Path, "Meta", "domains.yaml"), TestRegistry.Domains, new UTF8Encoding(false));
+        WritePolicyFiles(temporary.Path, TestRegistry.Canonical, TestRegistry.Domains);
         var environment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(RawChangeSet.Create(Array.Empty<string>()), null, null),
@@ -453,10 +702,50 @@ public sealed partial class ProductionEnvironmentTests
         var first = environment.SelfTest(Array.Empty<string>());
         var second = environment.SelfTest(Array.Empty<string>());
 
-        Assert.True(first.Success, first.Error);
-        Assert.True(second.Success, second.Error);
-        Assert.Equal(first.Output, second.Output);
-        Assert.Contains("SELFTEST PASS", first.Output, StringComparison.Ordinal);
+        var expected = new CommandResult(true, ExpectedSelfTestOutput, string.Empty);
+        Assert.Equal(expected, first);
+        Assert.Equal(expected, second);
+    }
+
+    [Fact]
+    public void SelfTestReturnsExactInvariantMismatchWhenProbeCannotRoute()
+    {
+        using var temporary = new TemporaryDirectory();
+        WritePolicyFiles(temporary.Path, TestRegistry.Canonical, DomainsWithoutCarrier);
+        var environment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(RawChangeSet.Create(Array.Empty<string>()), null, null),
+            new FakeLeanReportSource(null));
+
+        var result = environment.SelfTest(Array.Empty<string>());
+
+        Assert.Equal(
+            new CommandResult(false, string.Empty, "SELFTEST FAIL invariant mismatch\n"),
+            result);
+    }
+
+    [Fact]
+    public void SelfTestTranslatesRegistryFailureToExactFailureResult()
+    {
+        using var temporary = new TemporaryDirectory();
+        var invalidRegistry = TestRegistry.Canonical.Replace(
+            "schema_version: 1",
+            "schema_version: 2",
+            StringComparison.Ordinal);
+        WritePolicyFiles(temporary.Path, invalidRegistry, TestRegistry.Domains);
+        var environment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(RawChangeSet.Create(Array.Empty<string>()), null, null),
+            new FakeLeanReportSource(null));
+
+        var result = environment.SelfTest(Array.Empty<string>());
+
+        Assert.Equal(
+            new CommandResult(
+                false,
+                string.Empty,
+                "SELFTEST FAIL Unknown registry schema_version; expected 1.\n"),
+            result);
     }
 
     [Fact]
@@ -610,6 +899,25 @@ public sealed partial class ProductionEnvironmentTests
     private static RawRepositorySnapshot Snapshot(IReadOnlyDictionary<string, string> files) =>
         RawRepositorySnapshot.Create(files.Select(pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
 
+    private static void WritePolicyFiles(string root, string registry, string domains)
+    {
+        Directory.CreateDirectory(Path.Combine(root, "Meta"));
+        File.WriteAllText(
+            Path.Combine(root, "Meta", "registry.yaml"),
+            registry,
+            new UTF8Encoding(false));
+        File.WriteAllText(
+            Path.Combine(root, "Meta", "domains.yaml"),
+            domains,
+            new UTF8Encoding(false));
+    }
+
+    private static void WriteManifest(string root, string content) =>
+        File.WriteAllText(
+            Path.Combine(root, "manifest.json"),
+            content,
+            new UTF8Encoding(false));
+
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
 
@@ -706,6 +1014,10 @@ internal sealed class FakeRepositoryGateway(
     RawRepositorySnapshot? current,
     RawRepositorySnapshot? baseline) : IRepositoryGateway
 {
+    internal List<string?> PreparedBases { get; } = new();
+
+    internal Exception? PrepareException { get; init; }
+
     internal int ReadCount { get; private set; }
 
     internal int FrozenReferenceValidationCount { get; private set; }
@@ -713,7 +1025,16 @@ internal sealed class FakeRepositoryGateway(
     public AdmissionTopologyOutcome InspectAdmissionTopology() =>
         throw new InvalidOperationException("topology should not be inspected");
 
-    public PreparedRepository Prepare(string? protectedBase) => new("baseline", changes);
+    public PreparedRepository Prepare(string? protectedBase)
+    {
+        PreparedBases.Add(protectedBase);
+        if (PrepareException is not null)
+        {
+            throw PrepareException;
+        }
+
+        return new PreparedRepository("baseline", changes);
+    }
 
     public FrozenRevisionIdentity ResolveFrozenRevision(string revision)
     {
