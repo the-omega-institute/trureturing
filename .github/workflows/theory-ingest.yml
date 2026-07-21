@@ -25,17 +25,42 @@ jobs:
       - name: Check out base (judge code)
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.base.ref }}
+          ref: ${{ github.event.pull_request.base.sha }}
           path: judge
           persist-credentials: false
 
       - name: Check out PR head (data + commit target)
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.ref }}
+          ref: ${{ github.event.pull_request.head.sha }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           path: candidate
           fetch-depth: 0
+          persist-credentials: false
+
+      - name: Enforce candidate data-only boundary
+        shell: bash
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          actual="$(git -C candidate rev-parse HEAD)"
+          test "$actual" = "$HEAD_SHA"
+          if ! git -C candidate cat-file -e "$BASE_SHA^{commit}" 2>/dev/null; then
+            git -C candidate fetch --no-tags "$GITHUB_WORKSPACE/judge" "$BASE_SHA"
+          fi
+          bad=()
+          while IFS= read -r -d '' path; do
+            case "$path" in
+              docs/develop/theory/*|Meta/BACKFILL.yaml|Meta/Digestion/atoms/*) ;;
+              *) bad+=("$path") ;;
+            esac
+          done < <(git -C candidate diff --name-only --no-renames -z "$BASE_SHA...$HEAD_SHA")
+          if [[ "${#bad[@]}" -ne 0 ]]; then
+            printf '::error::theory ingest refuses non-data candidate path: %s\n' "${bad[@]}"
+            exit 1
+          fi
 
       - name: Resolve pinned Lean toolchain
         id: lean
@@ -92,8 +117,6 @@ jobs:
             candidate/.lake
             ~/.cache/mathlib
           key: theory-ingest-lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('candidate/lean-toolchain') }}-${{ hashFiles('candidate/lake-manifest.json') }}-${{ hashFiles('candidate/**/*.lean') }}
-          restore-keys: |
-            theory-ingest-lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('candidate/lean-toolchain') }}-${{ hashFiles('candidate/lake-manifest.json') }}-
 
       - name: Produce canonical Lean report
         shell: bash
@@ -112,6 +135,8 @@ jobs:
 
       - name: Enforce write-path whitelist and commit back
         shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           cd candidate
@@ -126,4 +151,5 @@ jobs:
           git config user.email "theory-ingest-bot@users.noreply.github.com"
           git add Meta/BACKFILL.yaml Meta/Digestion/atoms
           git commit -m "chore(digestion): auto-ingest theory update [theory-ingest-bot]"
+          gh auth setup-git
           git push origin HEAD:${{ github.event.pull_request.head.ref }}

@@ -206,6 +206,56 @@ public sealed class MakeWorkflowTests
     }
 
     [Fact]
+    public void TheoryIngestKeepsCandidateExecutionCredentiallessAndDataOnly()
+    {
+        var root = FindRepositoryRoot();
+        var workflow = File.ReadAllText(Path.Combine(root, TheoryIngestWorkflowPath));
+        var candidateCheckoutIndex = workflow.IndexOf(
+            "- name: Check out PR head (data + commit target)",
+            StringComparison.Ordinal);
+        var boundaryIndex = workflow.IndexOf(
+            "- name: Enforce candidate data-only boundary",
+            StringComparison.Ordinal);
+        var leanIndex = workflow.IndexOf("          make lean\n", StringComparison.Ordinal);
+        var commitIndex = workflow.IndexOf(
+            "- name: Enforce write-path whitelist and commit back",
+            StringComparison.Ordinal);
+
+        Assert.True(candidateCheckoutIndex >= 0, "candidate checkout must be explicit");
+        Assert.True(boundaryIndex > candidateCheckoutIndex, "the data boundary must follow checkout");
+        Assert.True(leanIndex > boundaryIndex, "candidate inputs must be classified before Lean runs");
+        Assert.True(commitIndex > leanIndex, "write credentials must only appear after candidate execution");
+
+        var candidateCheckout = workflow[candidateCheckoutIndex..boundaryIndex];
+        Assert.Contains(
+            "ref: ${{ github.event.pull_request.head.sha }}",
+            candidateCheckout,
+            StringComparison.Ordinal);
+        Assert.Contains("persist-credentials: false", candidateCheckout, StringComparison.Ordinal);
+
+        var boundary = workflow[boundaryIndex..leanIndex];
+        var theoryDataPattern = string.Concat("docs/develop/", "theory/*");
+        Assert.Contains("BASE_SHA: ${{ github.event.pull_request.base.sha }}", boundary, StringComparison.Ordinal);
+        Assert.Contains("HEAD_SHA: ${{ github.event.pull_request.head.sha }}", boundary, StringComparison.Ordinal);
+        Assert.Contains(
+            theoryDataPattern + "|Meta/BACKFILL.yaml|Meta/Digestion/atoms/*",
+            boundary,
+            StringComparison.Ordinal);
+        Assert.Contains("diff --name-only --no-renames -z", boundary, StringComparison.Ordinal);
+
+        var cacheIndex = workflow.IndexOf(
+            "- name: Restore candidate Lean build artifacts",
+            StringComparison.Ordinal);
+        var reportIndex = workflow.IndexOf("- name: Produce canonical Lean report", StringComparison.Ordinal);
+        var cache = workflow[cacheIndex..reportIndex];
+        Assert.DoesNotContain("restore-keys:", cache, StringComparison.Ordinal);
+
+        var commit = workflow[commitIndex..];
+        Assert.Contains("GH_TOKEN: ${{ github.token }}", commit, StringComparison.Ordinal);
+        Assert.Contains("gh auth setup-git", commit, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void LocalGateHonorsExplicitTemporaryDirectory()
     {
         var root = FindRepositoryRoot();
