@@ -145,6 +145,11 @@ sources:
         coverage_gids:
           - D5/S3/Quantum/FiniteDimensional.qubit_weyl_star
           - D5/S3/Quantum/QubitWitnesses.pauli_observables_have_no_common_eigenvector
+          - D5/S3/Quantum/MatrixUnits.qudit_weyl_relation
+          - D5/S3/Quantum/MatrixUnits.qudit_phase_order
+          - D5/S3/Quantum/MatrixUnits.qudit_shift_order
+          - D5/S3/Quantum/MatrixUnits.matrix_unit_certificate_error_zero
+          - D5/S3/Quantum/MatrixUnits.matrix_units_generate_full_algebra
         receipts:
           coverage:
             - gid: D5/S3/Quantum/FiniteDimensional.qubit_weyl_star
@@ -153,14 +158,42 @@ sources:
             - gid: D5/S3/Quantum/QubitWitnesses.pauli_observables_have_no_common_eigenvector
               source_sha256: sha256:8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490
               target_sha256: sha256:89457799a8e0362f3113889e39ef6eeadabe40f2c9e3228af2bffe7d66acda31
-          scribe: []
+            - gid: D5/S3/Quantum/MatrixUnits.qudit_weyl_relation
+              source_sha256: sha256:8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490
+              target_sha256: sha256:8233f01caf85515a4d871cccdfdfcea839193faa2e140ff7c0f9c684b6871068
+            - gid: D5/S3/Quantum/MatrixUnits.qudit_phase_order
+              source_sha256: sha256:8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490
+              target_sha256: sha256:8233f01caf85515a4d871cccdfdfcea839193faa2e140ff7c0f9c684b6871068
+            - gid: D5/S3/Quantum/MatrixUnits.qudit_shift_order
+              source_sha256: sha256:8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490
+              target_sha256: sha256:8233f01caf85515a4d871cccdfdfcea839193faa2e140ff7c0f9c684b6871068
+            - gid: D5/S3/Quantum/MatrixUnits.matrix_unit_certificate_error_zero
+              source_sha256: sha256:8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490
+              target_sha256: sha256:8233f01caf85515a4d871cccdfdfcea839193faa2e140ff7c0f9c684b6871068
+            - gid: D5/S3/Quantum/MatrixUnits.matrix_units_generate_full_algebra
+              source_sha256: sha256:8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490
+              target_sha256: sha256:8233f01caf85515a4d871cccdfdfcea839193faa2e140ff7c0f9c684b6871068
+          scribe:
+            - gid: D5/S3/Quantum/MatrixUnits.qudit_weyl_relation
+              definition_sha256: sha256:0f41e6e31a5a19320c7cd0f2ac3fc2db39b7fcbe2eab83148750ac22cae9cad8
+              emission_sha256: sha256:1e969319ce023a7eb3c6377c3799d415ff8112e05987ef889873e6f662a5818c
+            - gid: D5/S3/Quantum/MatrixUnits.qudit_phase_order
+              definition_sha256: sha256:0f41e6e31a5a19320c7cd0f2ac3fc2db39b7fcbe2eab83148750ac22cae9cad8
+              emission_sha256: sha256:1e969319ce023a7eb3c6377c3799d415ff8112e05987ef889873e6f662a5818c
+            - gid: D5/S3/Quantum/MatrixUnits.qudit_shift_order
+              definition_sha256: sha256:0f41e6e31a5a19320c7cd0f2ac3fc2db39b7fcbe2eab83148750ac22cae9cad8
+              emission_sha256: sha256:1e969319ce023a7eb3c6377c3799d415ff8112e05987ef889873e6f662a5818c
+            - gid: D5/S3/Quantum/MatrixUnits.matrix_unit_certificate_error_zero
+              definition_sha256: sha256:0f41e6e31a5a19320c7cd0f2ac3fc2db39b7fcbe2eab83148750ac22cae9cad8
+              emission_sha256: sha256:1e969319ce023a7eb3c6377c3799d415ff8112e05987ef889873e6f662a5818c
+            - gid: D5/S3/Quantum/MatrixUnits.matrix_units_generate_full_algebra
+              definition_sha256: sha256:0f41e6e31a5a19320c7cd0f2ac3fc2db39b7fcbe2eab83148750ac22cae9cad8
+              emission_sha256: sha256:1e969319ce023a7eb3c6377c3799d415ff8112e05987ef889873e6f662a5818c
           unresolved_subitems:
             - arbitrary-observer-window-full-matrix-identification
             - prime-power-tensor-factor-decomposition
-            - general-prime-qudit-weyl-relations
             - observer-window-generated-structure-claim
             - general-robertson-variance-uncertainty
-            - exact-matrix-unit-zero-error-certificate
           chain_atoms: []
           tail_authorization: null
         status:
@@ -175,6 +208,7 @@ sources:
         coverage_gids:
           - D5/S3/Quantum/FiniteDimensional.qubit_matrix_algebra_has_no_character
           - D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product
+          - D5/S3/Quantum/MatrixUnits.matrix_algebra_has_no_character
         receipts:
           coverage:
             - gid: D5/S3/Quantum/FiniteDimensional.qubit_matrix_algebra_has_no_character
@@ -183,9 +217,14 @@ sources:
             - gid: D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product
               source_sha256: sha256:101df483e71f9e23ee1ec13626abf3037d9a32e6f992d6b5b9485bf6c7976c77
               target_sha256: sha256:89457799a8e0362f3113889e39ef6eeadabe40f2c9e3228af2bffe7d66acda31
-          scribe: []
+            - gid: D5/S3/Quantum/MatrixUnits.matrix_algebra_has_no_character
+              source_sha256: sha256:101df483e71f9e23ee1ec13626abf3037d9a32e6f992d6b5b9485bf6c7976c77
+              target_sha256: sha256:8233f01caf85515a4d871cccdfdfcea839193faa2e140ff7c0f9c684b6871068
+          scribe:
+            - gid: D5/S3/Quantum/MatrixUnits.matrix_algebra_has_no_character
+              definition_sha256: sha256:0f41e6e31a5a19320c7cd0f2ac3fc2db39b7fcbe2eab83148750ac22cae9cad8
+              emission_sha256: sha256:1e969319ce023a7eb3c6377c3799d415ff8112e05987ef889873e6f662a5818c
           unresolved_subitems:
-            - no-character-for-all-matrix-sizes-greater-than-one
             - kochen-specker-projection-valuation-obstruction
             - chsh-quantum-maximum-certificate
             - classical-local-fiber-bound-certificate
