@@ -1,7 +1,7 @@
-<!-- echo-residual-summary:v2 base=git-sha1:49dd214be0cdcb528251fdef21b5c76cb399ca5c -->
+<!-- echo-residual-summary:v2 base=git-sha1:dfb237f685decd74f4c20c19ef8f678982675e46 -->
 # Echo Residual Summary
 
-- unresolved_subitems: 468
+- unresolved_subitems: 465
 - mother_residual_atom_ids: 58
 
 ## `gict-v3.6`
@@ -133,18 +133,17 @@ Mother residual atoms: none.
 
 ## `observer-quantum-v1`
 
-- unresolved_subitems: 36
+- unresolved_subitems: 33
 - mother_residual_atom_ids: 7
 
 Mother residual atoms:
 
-- `observer-residual-101df483e71f9e23ee1ec13626abf3037d9a32e6f992d6b5b9485bf6c7976c77` (7)
+- `observer-residual-101df483e71f9e23ee1ec13626abf3037d9a32e6f992d6b5b9485bf6c7976c77` (6)
   - `chsh-quantum-maximum-certificate`
   - `classical-address-realism-exclusion`
   - `classical-local-fiber-bound-certificate`
   - `hidden-address-local-variable-interpretation`
   - `kochen-specker-projection-valuation-obstruction`
-  - `no-character-for-all-matrix-sizes-greater-than-one`
   - `probability-not-ignorance-conclusion`
 - `observer-residual-39801f81b23d4fe1d4823f4470f961be3f2fc21445bfec13de1574cb9fd368bc` (2)
   - `bookkeeping-is-decoherence-identification`
@@ -160,10 +159,8 @@ Mother residual atoms:
   - `integer-action-selected-by-observer-premise`
   - `observer-read-write-forces-structure`
   - `universal-c-star-crossed-product-identification`
-- `observer-residual-8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490` (6)
+- `observer-residual-8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490` (4)
   - `arbitrary-observer-window-full-matrix-identification`
-  - `exact-matrix-unit-zero-error-certificate`
-  - `general-prime-qudit-weyl-relations`
   - `general-robertson-variance-uncertainty`
   - `observer-window-generated-structure-claim`
   - `prime-power-tensor-factor-decomposition`
