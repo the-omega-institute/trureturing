@@ -6,7 +6,7 @@ readonly REPO_ROOT="$(cd -- "$FKST_ROOT/.." && pwd -P)"
 readonly OPERATE_ROOT="${FKST_OPERATE_ROOT:-$HOME/.fkst/trureturing}"
 readonly ENV_FILE="$OPERATE_ROOT/host.env"
 readonly LOG_DIR="$OPERATE_ROOT/logs"
-readonly PLATFORM_PACKAGES="github-proxy consensus github-devloop github-devloop-pr github-devloop-integration github-devloop-intake github-devloop-intake-default github-devloop-workflow github-devloop-decompose github-devloop-ops github-external-pr-intake idle-detector"
+readonly PLATFORM_PACKAGES="github-proxy consensus github-devloop github-devloop-pr github-devloop-integration github-devloop-intake github-devloop-intake-default github-devloop-workflow github-devloop-decompose github-devloop-ops github-external-pr-intake idle-detector archaudit"
 readonly HOST_PACKAGES="theory-selfgrowth"
 
 die() {
@@ -120,6 +120,7 @@ start() {
       --platform-root "$FKST_PLATFORM_ROOT" \
       --platform-packages "$PLATFORM_PACKAGES" \
       --host-packages "$HOST_PACKAGES" \
+      --local-packages "$checkout_root/packages" \
       --durable-root "$FKST_DURABLE_ROOT" \
       --runtime-root "$FKST_RUNTIME_ROOT" \
       --restart
