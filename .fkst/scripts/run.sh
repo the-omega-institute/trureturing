@@ -120,6 +120,7 @@ start() {
       --platform-root "$FKST_PLATFORM_ROOT" \
       --platform-packages "$PLATFORM_PACKAGES" \
       --host-packages "$HOST_PACKAGES" \
+      --local-packages "$checkout_root/packages" \
       --durable-root "$FKST_DURABLE_ROOT" \
       --runtime-root "$FKST_RUNTIME_ROOT" \
       --restart
