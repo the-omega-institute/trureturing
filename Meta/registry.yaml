@@ -27,8 +27,6 @@ governance_documents:
   - "docs/GOVERNANCE.md"
   - "docs/develop/spec/golden-ledger-repo-spec.md"
   - "docs/develop/theory/GICT.md"
-  - "docs/develop/theory/PERIODIC_TREE.md"
-  - "docs/develop/theory/PERIODIC_TREE_registry.jsonl"
   - "docs/develop/theory/OBSERVER-QUANTUM.md"
   - "docs/develop/theory/PZG_BEDC.md"
 agent_files:
