@@ -214,4 +214,8 @@ none --declares--> [lean-toolchain | program]
 [lean-toolchain | program] --consumed-by--> Lean
 [lean-toolchain | program] --verified-by--> make-gate
 
+none --declares--> [packages/** | program]
+[packages/** | program] --consumed-by--> fkst
+[packages/** | program] --verified-by--> repository-policy
+
 ```
