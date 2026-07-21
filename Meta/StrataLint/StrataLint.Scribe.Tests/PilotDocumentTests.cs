@@ -40,6 +40,7 @@ public sealed class DocumentDiscoveryTests
     private const string MinkowskiModelSetDocumentPath = "Blueprint/D5/S1/Scale/MinkowskiModelSet.md";
     private const string DecoherenceDocumentPath = "Blueprint/D5/S3/Quantum/Decoherence.md";
     private const string FiniteDimensionalDocumentPath = "Blueprint/D5/S3/Quantum/FiniteDimensional.md";
+    private const string MatrixUnitsDocumentPath = "Blueprint/D5/S3/Quantum/MatrixUnits.md";
     private const string ObserverAlgebraDocumentPath = "Blueprint/D5/S3/Quantum/ObserverAlgebra.md";
     private const string QubitWitnessesDocumentPath = "Blueprint/D5/S3/Quantum/QubitWitnesses.md";
     private const string CriticalLineDocumentPath = "Blueprint/D5/S3/Weil/CriticalLine.md";
@@ -88,6 +89,7 @@ public sealed class DocumentDiscoveryTests
                 "D5/S1/Scale/MinkowskiModelSet",
                 "D5/S3/Quantum/Decoherence",
                 "D5/S3/Quantum/FiniteDimensional",
+                "D5/S3/Quantum/MatrixUnits",
                 "D5/S3/Quantum/ObserverAlgebra",
                 "D5/S3/Quantum/QubitWitnesses",
                 "D5/S3/Weil/CriticalLine",
@@ -133,6 +135,7 @@ public sealed class DocumentDiscoveryTests
                 MinkowskiModelSetDocumentPath,
                 DecoherenceDocumentPath,
                 FiniteDimensionalDocumentPath,
+                MatrixUnitsDocumentPath,
                 ObserverAlgebraDocumentPath,
                 QubitWitnessesDocumentPath,
                 CriticalLineDocumentPath,
