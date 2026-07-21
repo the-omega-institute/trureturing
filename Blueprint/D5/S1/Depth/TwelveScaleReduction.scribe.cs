@@ -82,5 +82,5 @@ internal sealed class TwelveScaleReductionDocument : IScribeDocumentDefinition
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "Under the explicit divisibility, nonzero, attainment, and derived-maximum positivity premises, the actual Finset minimum of the normalized sample equals twelve divided by the largest partial quotient extracted from the rational sample. No independent scale parameter remains."))),
-                    LatexStatement.Create(@"$$\min\left\{\frac{|\psi|}{A(q)}:\psi\in S\right\}=\frac{12}{A(q)},\qquad A(q)=\max C(q)$$")))));
+                    LatexStatement.Create(@"$$\forall q\in\mathbb{Q},\ \forall S\subset_{\mathrm{fin}}\mathbb{Z},\ A(q)>0\land(\forall\psi\in S,\ 12\mid\psi\land\psi\neq0)\land(\exists\psi_0\in S,\ |\psi_0|=12)\Rightarrow\min\left\{\frac{|\psi|}{A(q)}:\psi\in S\right\}=\frac{12}{A(q)},\qquad A(q)=\max C(q)$$")))));
 }

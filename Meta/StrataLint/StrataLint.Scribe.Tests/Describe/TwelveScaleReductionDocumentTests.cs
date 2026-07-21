@@ -3,7 +3,7 @@ namespace StrataLint.Scribe.Tests;
 public sealed class TwelveScaleReductionDocumentTests
 {
     [Fact]
-    public void TwelveScaleReductionCarriesFourPartialTheoremsAndRetainsSourceResiduals()
+    public void TwelveScaleReductionCarriesCanonicalExtractionAndTheConditionalFloorTheorem()
     {
         var definition = DocumentDefinitions.All.Single(static item =>
             item.Document.Header.Gid.Value == "D5/S1/Depth/TwelveScaleReduction");
@@ -11,7 +11,7 @@ public sealed class TwelveScaleReductionDocumentTests
             .OfType<DocumentBlock.Describe>()
             .ToArray();
 
-        Assert.Equal(4, describes.Length);
+        Assert.Equal(7, describes.Length);
         Assert.All(describes, static describe =>
         {
             Assert.Equal(DescribeKind.Theorem, describe.Kind);
@@ -21,13 +21,31 @@ public sealed class TwelveScaleReductionDocumentTests
         });
         Assert.Equal(
             [
+                "D5/S1/Depth/TwelveScaleReduction.canonical_partial_quotients_empty_or_odd",
+                "D5/S1/Depth/TwelveScaleReduction.canonical_continued_fraction_value",
                 "D5/S1/Depth/TwelveScaleReduction.twelve_scale_le_normalized_magnitude",
                 "D5/S1/Depth/TwelveScaleReduction.normalized_magnitude_eq_twelve_scale_iff",
                 "D5/S1/Depth/TwelveScaleReduction.twelve_scale_is_normalized_sample_minimum",
                 "D5/S1/Depth/TwelveScaleReduction.normalized_sample_minimum_unique",
+                "D5/S1/Depth/TwelveScaleReduction.normalized_sample_floor_eq_twelve_over_maximum_partial_quotient",
             ],
             describes.Select(static describe =>
                 Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement).Value.Value));
+        var floor = Assert.Single(describes, static describe =>
+            describe.Id.Value == "continued-fraction-twelve-floor");
+        Assert.NotNull(floor.StatementLatex);
+        Assert.Contains(
+            @"A(q)>0\land(\forall\psi\in S,\ 12\mid\psi\land\psi\neq0)",
+            floor.StatementLatex.Value,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            @"\land(\exists\psi_0\in S,\ |\psi_0|=12)\Rightarrow\min",
+            floor.StatementLatex.Value,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            @"A(q)=\max C(q)",
+            floor.StatementLatex.Value,
+            StringComparison.Ordinal);
         Assert.DoesNotContain(
             describes,
             static describe =>
@@ -50,11 +68,11 @@ public sealed class TwelveScaleReductionDocumentTests
             markdown,
             StringComparison.Ordinal);
         Assert.Contains(
-            "partial arithmetic progress toward the unresolved source floor reduction",
+            "derives the normalization denominator as the largest extracted partial quotient",
             markdown,
             StringComparison.Ordinal);
         Assert.Contains(
-            "does not identify the rational parameter with the largest partial quotient",
+            "No independent scale parameter remains.",
             markdown,
             StringComparison.Ordinal);
     }

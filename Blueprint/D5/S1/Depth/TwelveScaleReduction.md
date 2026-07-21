@@ -80,7 +80,7 @@ Two normalized sample members that are each no greater than every member are equ
 
 **Theorem 1.7 (The normalized sample floor uses the extracted maximum partial quotient).**
 
-$$\min\left\{\frac{|\psi|}{A(q)}:\psi\in S\right\}=\frac{12}{A(q)},\qquad A(q)=\max C(q)$$
+$$\forall q\in\mathbb{Q},\ \forall S\subset_{\mathrm{fin}}\mathbb{Z},\ A(q)>0\land(\forall\psi\in S,\ 12\mid\psi\land\psi\neq0)\land(\exists\psi_0\in S,\ |\psi_0|=12)\Rightarrow\min\left\{\frac{|\psi|}{A(q)}:\psi\in S\right\}=\frac{12}{A(q)},\qquad A(q)=\max C(q)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Depth/TwelveScaleReduction.normalized_sample_floor_eq_twelve_over_maximum_partial_quotient` (`✓ std3`). ∎
 
