@@ -4020,19 +4020,19 @@ sources:
               target_sha256: sha256:520db05df3f4606150d67b80c6b51ac763a71c485b93b0acff8561afa686d853
             - gid: D5/S1/Depth/TwelveScaleReduction.twelve_scale_le_normalized_magnitude
               source_sha256: sha256:db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3
-              target_sha256: sha256:dbe604d87d43ce680a6cc0e868d053e1735a406a346c3417d02386930b603891
+              target_sha256: sha256:1e0b3901146974128383d7eee95ffb8711b5302478fbacc6a54cd5060e466b05
             - gid: D5/S1/Depth/TwelveScaleReduction.normalized_magnitude_eq_twelve_scale_iff
               source_sha256: sha256:db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3
-              target_sha256: sha256:dbe604d87d43ce680a6cc0e868d053e1735a406a346c3417d02386930b603891
+              target_sha256: sha256:1e0b3901146974128383d7eee95ffb8711b5302478fbacc6a54cd5060e466b05
             - gid: D5/S1/Depth/TwelveScaleReduction.twelve_scale_is_normalized_sample_minimum
               source_sha256: sha256:db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3
-              target_sha256: sha256:dbe604d87d43ce680a6cc0e868d053e1735a406a346c3417d02386930b603891
+              target_sha256: sha256:1e0b3901146974128383d7eee95ffb8711b5302478fbacc6a54cd5060e466b05
             - gid: D5/S1/Depth/TwelveScaleReduction.normalized_sample_minimum_unique
               source_sha256: sha256:db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3
-              target_sha256: sha256:dbe604d87d43ce680a6cc0e868d053e1735a406a346c3417d02386930b603891
+              target_sha256: sha256:1e0b3901146974128383d7eee95ffb8711b5302478fbacc6a54cd5060e466b05
             - gid: D5/S1/Depth/TwelveScaleReduction.zero_family_lies_on_thirty_six_grid
               source_sha256: sha256:db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3
-              target_sha256: sha256:dbe604d87d43ce680a6cc0e868d053e1735a406a346c3417d02386930b603891
+              target_sha256: sha256:1e0b3901146974128383d7eee95ffb8711b5302478fbacc6a54cd5060e466b05
           scribe:
             - gid: D5/S1/Depth/TwelveScaleReduction.twelve_scale_le_normalized_magnitude
               definition_sha256: sha256:33f6ed6099a27b621907575cf99d3c1b33aa7de4fce12c3749aace35f43dc787
@@ -17591,19 +17591,19 @@ sources:
               target_sha256: sha256:520db05df3f4606150d67b80c6b51ac763a71c485b93b0acff8561afa686d853
             - gid: D5/S1/Depth/TwelveScaleReduction.twelve_scale_le_normalized_magnitude
               source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
-              target_sha256: sha256:dbe604d87d43ce680a6cc0e868d053e1735a406a346c3417d02386930b603891
+              target_sha256: sha256:1e0b3901146974128383d7eee95ffb8711b5302478fbacc6a54cd5060e466b05
             - gid: D5/S1/Depth/TwelveScaleReduction.normalized_magnitude_eq_twelve_scale_iff
               source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
-              target_sha256: sha256:dbe604d87d43ce680a6cc0e868d053e1735a406a346c3417d02386930b603891
+              target_sha256: sha256:1e0b3901146974128383d7eee95ffb8711b5302478fbacc6a54cd5060e466b05
             - gid: D5/S1/Depth/TwelveScaleReduction.twelve_scale_is_normalized_sample_minimum
               source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
-              target_sha256: sha256:dbe604d87d43ce680a6cc0e868d053e1735a406a346c3417d02386930b603891
+              target_sha256: sha256:1e0b3901146974128383d7eee95ffb8711b5302478fbacc6a54cd5060e466b05
             - gid: D5/S1/Depth/TwelveScaleReduction.normalized_sample_minimum_unique
               source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
-              target_sha256: sha256:dbe604d87d43ce680a6cc0e868d053e1735a406a346c3417d02386930b603891
+              target_sha256: sha256:1e0b3901146974128383d7eee95ffb8711b5302478fbacc6a54cd5060e466b05
             - gid: D5/S1/Depth/TwelveScaleReduction.zero_family_lies_on_thirty_six_grid
               source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
-              target_sha256: sha256:dbe604d87d43ce680a6cc0e868d053e1735a406a346c3417d02386930b603891
+              target_sha256: sha256:1e0b3901146974128383d7eee95ffb8711b5302478fbacc6a54cd5060e466b05
           scribe:
             - gid: D5/S1/Depth/TwelveScaleReduction.twelve_scale_le_normalized_magnitude
               definition_sha256: sha256:33f6ed6099a27b621907575cf99d3c1b33aa7de4fce12c3749aace35f43dc787
