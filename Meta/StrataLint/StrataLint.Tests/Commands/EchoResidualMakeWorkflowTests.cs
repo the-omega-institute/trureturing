@@ -3,8 +3,13 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-public sealed class EchoResidualMakeWorkflowTests
+public sealed partial class MakeWorkflowTests
 {
+    private const string InspectorSourcePath =
+        "Meta/StrataLint/lean-inspector/Inspector.lean";
+    private const string InspectorScriptPath =
+        "Meta/StrataLint/lean-inspector/inspect.sh";
+
     [Fact]
     public void PublicMakeTargetEmitsOnlyTheBoundedSnapshotBlock()
     {
@@ -37,11 +42,11 @@ public sealed class EchoResidualMakeWorkflowTests
         {
             fakeLake,
             fakeDotnet,
-            Path.Combine(repository, "Meta/StrataLint/lean-inspector/inspect.sh"),
-            Path.Combine(repository, "Meta/StrataLint/scripts/lean-report-pair.sh"),
-            Path.Combine(repository, "Meta/StrataLint/scripts/report/lean-report.sh"),
-            Path.Combine(repository, "Meta/StrataLint/scripts/report/report-supervisor.sh"),
-            Path.Combine(repository, "Meta/StrataLint/scripts/report/lean-report-input.sh"),
+            Path.Combine(repository, InspectorScriptPath),
+            Path.Combine(repository, LeanReportPairScriptPath),
+            Path.Combine(repository, LeanReportScriptPath),
+            Path.Combine(repository, ReportSupervisorScriptPath),
+            Path.Combine(repository, LeanReportInputScriptPath),
         };
         var chmod = BoundedProcessRunner.Run(
             "/bin/chmod",
@@ -94,14 +99,14 @@ public sealed class EchoResidualMakeWorkflowTests
             "lake-manifest.json",
             "lakefile.toml",
             "lean-toolchain",
-            "Meta/StrataLint/lean-inspector/Inspector.lean",
-            "Meta/StrataLint/lean-inspector/inspect.sh",
-            "Meta/StrataLint/scripts/lean-report-pair.sh",
-            "Meta/StrataLint/scripts/perf-event-lib.sh",
-            "Meta/StrataLint/scripts/report/echo-residual-summary.sh",
-            "Meta/StrataLint/scripts/report/lean-report-input.sh",
-            "Meta/StrataLint/scripts/report/lean-report.sh",
-            "Meta/StrataLint/scripts/report/report-supervisor.sh",
+            InspectorSourcePath,
+            InspectorScriptPath,
+            LeanReportPairScriptPath,
+            PerfEventScriptPath,
+            EchoResidualSummaryScriptPath,
+            LeanReportInputScriptPath,
+            LeanReportScriptPath,
+            ReportSupervisorScriptPath,
         }.Concat(Directory.GetFiles(
             Path.Combine(sourceRoot, "D5"),
             "*.lean",
@@ -114,15 +119,4 @@ public sealed class EchoResidualMakeWorkflowTests
         }
     }
 
-    private static string FindRepositoryRoot()
-    {
-        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
-             current is not null;
-             current = current.Parent)
-        {
-            if (File.Exists(Path.Combine(current.FullName, "CLAUDE.md"))) return current.FullName;
-        }
-
-        throw new DirectoryNotFoundException("Could not locate repository root.");
-    }
 }

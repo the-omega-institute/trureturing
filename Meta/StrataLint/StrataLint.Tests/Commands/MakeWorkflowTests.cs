@@ -3,7 +3,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-public sealed class MakeWorkflowTests
+public sealed partial class MakeWorkflowTests
 {
     private const string DotnetBuildScriptPath = "Meta/StrataLint/scripts/dotnet-build.sh";
     private const string ScribeScriptPath = "Meta/StrataLint/scripts/scribe.sh";
