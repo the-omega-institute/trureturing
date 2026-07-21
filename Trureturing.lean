@@ -17,6 +17,7 @@ import D5.S1.Depth.TwelveScaleReduction
 import D5.S1.Phase.WalkFormula
 import D5.S1.Phase.ZeroOrbitCongruence
 import D5.S3.Quantum.EnvironmentRecords
+import D5.S3.Quantum.MatrixUnits
 import D5.S3.Quantum.ObserverCommutator
 import D5.S3.Quantum.PointerBasis
 import D5.S3.Zeros.ZetaIdentities
