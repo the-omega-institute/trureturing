@@ -205,7 +205,7 @@ run_stage lean-reports \
   --candidate-output "$CANDIDATE_REPORT" \
   --baseline-root "$JUDGE_ROOT" \
   --baseline-output "$REPORTS/baseline-lean-report.json"
-run_stage emit-check make -C "$CANDIDATE_ROOT" emit-check
+run_stage emit-check make -C "$CANDIDATE_ROOT" emit-check BASE="$BASE_SHA"
 
 GATE="$JUDGE_ROOT/.github/scripts/harness-gate.sh"
 [[ -x "$GATE" ]] || { echo "local-harness-gate: dev gate is absent" >&2; exit 2; }

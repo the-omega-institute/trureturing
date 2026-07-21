@@ -82,6 +82,7 @@ public sealed class MakeWorkflowTests
         Assert.Contains("lake build", Recipe(makefile, "lean"), StringComparison.Ordinal);
         Assert.Contains(LeanReportScriptPath, Recipe(makefile, "lean-report"), StringComparison.Ordinal);
         Assert.Contains(ScribeScriptPath + " emit", Recipe(makefile, "emit"), StringComparison.Ordinal);
+        Assert.Contains("emit-check: echo-verify", makefile, StringComparison.Ordinal);
         Assert.Contains(ScribeScriptPath + " check", Recipe(makefile, "emit-check"), StringComparison.Ordinal);
         Assert.DoesNotContain("ingest: emit-check", makefile, StringComparison.Ordinal);
         Assert.Contains(IngestScriptPath, Recipe(makefile, "ingest"), StringComparison.Ordinal);
@@ -211,6 +212,38 @@ public sealed class MakeWorkflowTests
     }
 
     [Fact]
+    public void EmitCheckRunsEchoVerifierAndScribeCheckAgainstTheSameBase()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var root = FindRepositoryRoot();
+        using var fixture = new TemporaryDirectory();
+        var scriptsDirectory = Path.Combine(fixture.Path, "Meta", "StrataLint", "scripts");
+        var reportDirectory = Path.Combine(scriptsDirectory, "report");
+        Directory.CreateDirectory(reportDirectory);
+        File.Copy(Path.Combine(root, "Makefile"), Path.Combine(fixture.Path, "Makefile"));
+        File.WriteAllText(
+            Path.Combine(fixture.Path, ScribeScriptPath),
+            "#!/usr/bin/env bash\n[[ \"$1\" == check ]] || exit 18\nprintf 'SCRIBE_CHECK\\n'\n");
+        File.WriteAllText(
+            Path.Combine(fixture.Path, EchoVerifyScriptPath),
+            "#!/usr/bin/env bash\n[[ \"$1\" == \"\" ]] || exit 19\n[[ \"$2\" == synthetic-base ]] || exit 20\nprintf 'ECHO_VERIFY\\n'\n");
+
+        var result = BoundedProcessRunner.Run(
+            "make",
+            ["emit-check", "BASE=synthetic-base"],
+            fixture.Path,
+            TimeSpan.FromSeconds(30),
+            64 * 1024);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(
+            "ECHO_VERIFY\nSCRIBE_CHECK\n",
+            System.Text.Encoding.UTF8.GetString(result.StandardOutput));
+        Assert.Empty(result.StandardError);
+    }
+
+    [Fact]
     public void PreflightAndRequiredBaselineGateDelegateToEchoVerify()
     {
         var root = FindRepositoryRoot();
@@ -258,6 +291,7 @@ public sealed class MakeWorkflowTests
         Assert.Contains("make -C candidate test", workflow, StringComparison.Ordinal);
         Assert.Contains("make -C candidate selftest", workflow, StringComparison.Ordinal);
         Assert.Contains("make -C \"$CANDIDATE_ROOT\" emit-check", localGate, StringComparison.Ordinal);
+        Assert.Contains("emit-check BASE=\"$BASE_SHA\"", localGate, StringComparison.Ordinal);
         Assert.Contains("lean-report-pair.sh", localGate, StringComparison.Ordinal);
         Assert.Contains("--skip-engineering", localGate, StringComparison.Ordinal);
         Assert.Contains("GATE_ARGS=--skip-engineering", preflight, StringComparison.Ordinal);

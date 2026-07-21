@@ -1,5 +1,6 @@
 using System.Text;
 using StrataLint.Engine;
+using StrataLint.Scribe;
 
 namespace StrataLint.Cli;
 
@@ -144,7 +145,7 @@ internal static class EchoVerifyCommand
 
 internal static class EchoResidualBlock
 {
-    internal const string RelativePath = "Generated/echo-residual-summary.md";
+    internal const string RelativePath = GeneratedArtifactInventory.EchoResidualSummaryPath;
     private const string StartPrefix = "<!-- echo-residual-summary:v2 ";
     private const string EndMarker = "<!-- /echo-residual-summary:v2 -->";
     private static readonly byte[] StartPrefixBytes = Encoding.ASCII.GetBytes(StartPrefix);

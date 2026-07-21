@@ -32,7 +32,7 @@ clean-lanes:
 emit:
 	@/bin/bash Meta/StrataLint/scripts/scribe.sh emit
 
-emit-check:
+emit-check: echo-verify
 	@/bin/bash Meta/StrataLint/scripts/scribe.sh check
 
 ingest:

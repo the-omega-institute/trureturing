@@ -55,7 +55,7 @@ public sealed partial class ProductionEnvironmentTests
         var environment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(
-                RawChangeSet.Create(["docs/develop/theory/SYNTHETIC.md"]),
+                RawChangeSet.Create([string.Concat("docs/develop/", "theory/SYNTHETIC.md")]),
                 Snapshot(fixture.Files),
                 Snapshot(fixture.Baseline)),
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),

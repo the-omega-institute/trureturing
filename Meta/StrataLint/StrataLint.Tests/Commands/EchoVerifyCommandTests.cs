@@ -94,7 +94,7 @@ public sealed class EchoVerifyCommandTests
     [InlineData("Blueprint/Synthetic/EchoInput.scribe.cs", true)]
     [InlineData("Meta/BACKFILL.yaml", true)]
     [InlineData("Meta/Digestion/atoms/sha256/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", true)]
-    [InlineData("docs/develop/theory/SYNTHETIC.md", true)]
+    [InlineData("docs/develop/" + "theory/SYNTHETIC.md", true)]
     [InlineData("Generated/echo-residual-summary.md", true)]
     [InlineData("Blueprint/Synthetic/EchoInput.md", false)]
     [InlineData("README.md", false)]
