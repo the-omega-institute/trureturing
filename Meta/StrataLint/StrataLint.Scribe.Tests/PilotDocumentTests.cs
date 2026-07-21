@@ -15,6 +15,8 @@ public sealed class DocumentDiscoveryTests
     private const string WDigitsDocumentPath = "Blueprint/D5/S0/Conventions/WDigits.md";
     private const string JointCoordinatesDocumentPath = "Blueprint/D5/S1/Depth/JointCoordinates.md";
     private const string JointDepthDocumentPath = "Blueprint/D5/S1/Depth/JointDepth.md";
+    private const string StationingCombinatoricsDocumentPath =
+        "Blueprint/D5/S1/Depth/StationingCombinatorics.md";
     private const string CarryDocumentPath = "Blueprint/D5/S1/Digit/Carry.md";
     private const string PrimeAxisAdditionDocumentPath = "Blueprint/D5/S1/Digit/PrimeAxisAddition.md";
     private const string PrimeAxisEncodingDocumentPath = "Blueprint/D5/S1/Digit/PrimeAxisEncoding.md";
@@ -65,6 +67,7 @@ public sealed class DocumentDiscoveryTests
                 "D5/S0/Conventions/WDigits",
                 "D5/S1/Depth/JointCoordinates",
                 "D5/S1/Depth/JointDepth",
+                "D5/S1/Depth/StationingCombinatorics",
                 "D5/S1/Digit/Carry",
                 "D5/S1/Digit/PrimeAxisAddition",
                 "D5/S1/Digit/PrimeAxisEncoding",
@@ -108,6 +111,7 @@ public sealed class DocumentDiscoveryTests
                 WDigitsDocumentPath,
                 JointCoordinatesDocumentPath,
                 JointDepthDocumentPath,
+                StationingCombinatoricsDocumentPath,
                 CarryDocumentPath,
                 PrimeAxisAdditionDocumentPath,
                 PrimeAxisEncodingDocumentPath,
