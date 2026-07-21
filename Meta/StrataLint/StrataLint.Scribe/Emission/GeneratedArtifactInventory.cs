@@ -9,6 +9,8 @@ internal sealed record GeneratedArtifactIdentity(
 
 internal static class GeneratedArtifactInventory
 {
+    internal const string EchoResidualSummaryPath = "Generated/echo-residual-summary.md";
+
     internal static ImmutableArray<GeneratedArtifactIdentity> All { get; } = Build();
 
     private static ImmutableArray<GeneratedArtifactIdentity> Build()
@@ -27,6 +29,10 @@ internal static class GeneratedArtifactInventory
                 new GeneratedArtifactIdentity(
                     CanonicalValuesWriter.RelativePath,
                     nameof(ValuesEmitter),
+                    "emit-check"),
+                new GeneratedArtifactIdentity(
+                    EchoResidualSummaryPath,
+                    "EchoVerifyCommand",
                     "emit-check"),
                 new GeneratedArtifactIdentity(
                     FileMapEmitter.RelativePath,

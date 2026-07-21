@@ -70,6 +70,10 @@ FileMapEmitter --produces--> [Generated/FILEMAP.md | generated]
 [Generated/FILEMAP.md | generated] --consumed-by--> reader
 [Generated/FILEMAP.md | generated] --verified-by--> emit-check
 
+EchoVerifyCommand --produces--> [Generated/echo-residual-summary.md | generated]
+[Generated/echo-residual-summary.md | generated] --consumed-by--> harness-gate
+[Generated/echo-residual-summary.md | generated] --verified-by--> echo-verify, emit-check
+
 none --declares--> [Golden/cases/**/*.toml | data]
 [Golden/cases/**/*.toml | data] --consumed-by--> TomlGoldenLoader
 [Golden/cases/**/*.toml | data] --verified-by--> TomlGoldenLoader
@@ -213,5 +217,9 @@ none --declares--> [docs/develop/theory/** | data]
 none --declares--> [lean-toolchain | program]
 [lean-toolchain | program] --consumed-by--> Lean
 [lean-toolchain | program] --verified-by--> make-gate
+
+none --declares--> [packages/** | program]
+[packages/** | program] --consumed-by--> fkst
+[packages/** | program] --verified-by--> repository-policy
 
 ```

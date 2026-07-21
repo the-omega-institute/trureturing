@@ -19,8 +19,6 @@ internal sealed record DigestionAtom(
 
 internal sealed record DigestionSlice(bool IsClaim, ImmutableArray<byte> RawBytes);
 
-internal sealed class TheorySourceFormatException(string message) : FormatException(message);
-
 internal sealed class AtomizedTheoryDocument
 {
     internal AtomizedTheoryDocument(
@@ -188,7 +186,8 @@ internal static class ObserverAtomizer
 {
     internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes)
     {
-        var document = MarkdownAstAtomizer.Atomize(bytes, Identify);
+        var document = MarkdownAstAtomizer.Atomize(
+            bytes, Identify, identifyFirstTableCellSource: Identify);
         if (document.Claims.Any(atom =>
                 atom.AstPath.Contains("/occurrence/", StringComparison.Ordinal)))
         {
@@ -254,11 +253,16 @@ internal static class ObserverAtomizer
             _ when Starts(paragraph, "**§10.2 对数钟与通道谱(指针)**") => "memory/log-clock-channel-spectrum",
             _ when Starts(paragraph, "**§10.3 商余本体语义庭**") => "ontology/quotient-remainder",
             _ when Starts(paragraph, "**边界**") => "ontology/boundary",
+            _ when Starts(paragraph, "**§11.1 章程(三定义,ZFC 内,零新公理)**") => "periodic-table/charter",
+            _ when Starts(paragraph, "**§11.2 四问模板(逐层机械生成)**") => "periodic-table/four-question-template",
+            _ when Starts(paragraph, "**§11.3 三科目终表(公理之辩四连案终审)**") => "periodic-table/axiom-hypothesis-definition",
+            _ when Starts(paragraph, "**§11.4 首件产品指针**") => "periodic-table/first-product",
             _ => null,
         };
         if (locator is null && HasBoldClaimLead(paragraph))
         {
-            throw new TheorySourceFormatException("unknown observer claim lead");
+            throw new TheorySourceFormatException(
+                $"unknown observer claim lead '{TheorySourceFormatException.ClaimLead(paragraph)}'");
         }
 
         return locator;
@@ -276,6 +280,22 @@ internal static class ObserverAtomizer
         }
 
         return paragraph.AsSpan(index).StartsWith("**", StringComparison.Ordinal);
+    }
+}
+
+internal static class PeriodicTreeAtomizer
+{
+    private static readonly Regex SectionHeadingPattern = new(
+        "^(?<number>[0-9]+)\\.\\s+",
+        RegexOptions.CultureInvariant);
+
+    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes) =>
+        MarkdownAstAtomizer.Atomize(bytes, static _ => null, identifyHeading: IdentifyHeading);
+
+    private static string? IdentifyHeading(string heading)
+    {
+        var match = SectionHeadingPattern.Match(heading);
+        return match.Success ? "section/" + match.Groups["number"].Value : null;
     }
 }
 
@@ -398,7 +418,8 @@ internal static class MarkdownAstAtomizer
         ReadOnlySpan<byte> bytes,
         Func<string, string?> identify,
         Func<string, string?>? identifyFirstTableCell = null,
-        Func<string, string?>? identifyHeading = null)
+        Func<string, string?>? identifyHeading = null,
+        Func<string, string?>? identifyFirstTableCellSource = null)
     {
         var raw = bytes.ToArray();
         var text = StrictUtf8.GetString(raw);
@@ -410,6 +431,11 @@ internal static class MarkdownAstAtomizer
         {
             if (block is MarkdownHeading heading)
             {
+                while (headings.Count > 0 && headings[^1].Level >= heading.Level)
+                {
+                    headings.RemoveAt(headings.Count - 1);
+                }
+
                 var headingAstPath = identifyHeading?.Invoke(heading.Text);
                 if (headingAstPath is not null)
                 {
@@ -421,11 +447,6 @@ internal static class MarkdownAstAtomizer
                         Extend: true));
                 }
 
-                while (headings.Count > 0 && headings[^1].Level >= heading.Level)
-                {
-                    headings.RemoveAt(headings.Count - 1);
-                }
-
                 headings.Add(new DigestionContext(heading.Level, heading.Text));
                 headingStarts.Add(heading.Start);
                 continue;
@@ -433,9 +454,13 @@ internal static class MarkdownAstAtomizer
 
             if (block is MarkdownTableRow row)
             {
-                var tableAstPath = identifyFirstTableCell is not null
-                    ? identifyFirstTableCell(row.FirstCellText)
-                    : identify(row.Text);
+                var tableAstPath = identifyFirstTableCellSource is not null
+                    ? TheorySourceFormatException.IdentifyAt(
+                        identifyFirstTableCellSource, row.FirstCellSourceText, row.Start, text)
+                    : identifyFirstTableCell is not null
+                    ? TheorySourceFormatException.IdentifyAt(
+                        identifyFirstTableCell, row.FirstCellText, row.Start, text)
+                    : TheorySourceFormatException.IdentifyAt(identify, row.Text, row.Start, text);
                 if (tableAstPath is not null)
                 {
                     candidates.Add(new Candidate(
@@ -455,7 +480,8 @@ internal static class MarkdownAstAtomizer
             }
 
             var lineClaims = SourceLines(paragraph.Text, paragraph.Start)
-                .Select(line => (Line: line, AstPath: identify(line.Text)))
+                .Select(line => (Line: line, AstPath: TheorySourceFormatException.IdentifyAt(
+                    identify, line.Text, line.Start, text)))
                 .Where(static item => item.AstPath is not null)
                 .ToArray();
             if (lineClaims.Length > 1)
@@ -473,7 +499,8 @@ internal static class MarkdownAstAtomizer
                 continue;
             }
 
-            var astPath = identify(paragraph.Text);
+            var astPath = TheorySourceFormatException.IdentifyAt(
+                identify, paragraph.Text, paragraph.Start, text);
             if (astPath is null)
             {
                 continue;
@@ -595,7 +622,8 @@ internal sealed record MarkdownHeading(int Start, int End, int Level, string Tex
 internal sealed record MarkdownParagraph(int Start, int End, string Text)
     : MarkdownBlock(Start, End);
 
-internal sealed record MarkdownTableRow(int Start, int End, string Text, string FirstCellText)
+internal sealed record MarkdownTableRow(
+    int Start, int End, string Text, string FirstCellText, string FirstCellSourceText)
     : MarkdownBlock(Start, End);
 
 internal static class MarkdownBlockAst
@@ -678,19 +706,23 @@ internal static class MarkdownBlockAst
         return blocks.ToImmutable();
     }
 
-    private static MarkdownTableRow TableRow(MarkdownSourceLine line) => new(
-        line.Start,
-        line.End,
-        line.Text,
-        FirstCellPlainText(line.Text));
+    private static MarkdownTableRow TableRow(MarkdownSourceLine line)
+    {
+        var firstCellSourceText = FirstCellSourceText(line.Text);
+        return new(line.Start, line.End, line.Text, FirstCellPlainText(firstCellSourceText), firstCellSourceText);
+    }
 
-    private static string FirstCellPlainText(string row)
+    private static string FirstCellSourceText(string row)
     {
         var value = row.Trim();
         if (value.StartsWith('|')) value = value[1..];
         var separator = value.IndexOf('|');
         if (separator >= 0) value = value[..separator];
-        value = value.Trim();
+        return value.Trim();
+    }
+
+    private static string FirstCellPlainText(string value)
+    {
         while (value.Length >= 4
             && (value.StartsWith("**", StringComparison.Ordinal)
                 && value.EndsWith("**", StringComparison.Ordinal)
