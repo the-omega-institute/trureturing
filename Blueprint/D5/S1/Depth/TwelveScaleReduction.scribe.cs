@@ -8,11 +8,11 @@ internal sealed class TwelveScaleReductionDocument : IScribeDocumentDefinition
         DocumentDefinition.Create(ScribeDocument.Create(
             Header(
                 "D5/S1/Depth/TwelveScaleReduction",
-                "Reduce a finite sample of nonzero multiples of twelve to its exact normalized floor."),
+                "Record partial arithmetic progress toward the unresolved source floor reduction."),
             H("Twelve-Scale Reduction"),
             Blocks(
                 Paragraph(Text(
-                    "This module isolates exact arithmetic and finite-set consequences. It does not supply the 2958-case or minimum-attainment certificates, does not identify the moat, envelope, or diffusion readings with the normalized finite-sample minimum, and does not reconstruct the historical sampling configuration or its leakage.")),
+                    "This module records four partial arithmetic lemmas toward the unresolved source floor reduction. It does not identify the rational parameter with the largest partial quotient, does not supply the 2958-case or minimum-attainment certificates, does not identify the moat, envelope, or diffusion readings with the normalized finite-sample minimum, and does not reconstruct the historical sampling configuration or its leakage.")),
                 new DocumentBlock.Describe(
                     DescribeId.Create("normalized-twelve-lower-bound"),
                     DescribeKind.Theorem,
@@ -52,15 +52,5 @@ internal sealed class TwelveScaleReductionDocument : IScribeDocumentDefinition
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "Two normalized sample members that are each no greater than every member are equal by antisymmetry. This order-theoretic uniqueness does not identify any other statistical reading with the sample minimum."))),
-                    LatexStatement.Create(@"$$\forall x,y\in N_A(S),\ ((\forall z\in N_A(S),\ x\leq z)\land(\forall z\in N_A(S),\ y\leq z))\Rightarrow x=y$$")),
-                new DocumentBlock.Describe(
-                    DescribeId.Create("zero-family-thirty-six-grid"),
-                    DescribeKind.Theorem,
-                    H("The surviving zero-family candidates lie on the thirty-six grid"),
-                    DescribeStatement.FromLean(LeanTheorem(
-                        "D5/S1/Depth/TwelveScaleReduction.zero_family_lies_on_thirty_six_grid")),
-                    DescribeProvenance.RepoDerived(),
-                    Blocks(Paragraph(Text(
-                        "The existing local-to-global congruence theorem is restated as membership in the explicit grid of natural multiples of thirty-six. The converse is not claimed, and no scan configuration or leakage diagnosis follows."))),
-                    LatexStatement.Create(@"$$\forall m\in\mathbb{N},\ \forall x,y\in\mathbb{Z}/3\mathbb{Z},\ ((m\operatorname{mod}36\in\{0,8\})\land[m]_3=x^2-xy+y^2)\Rightarrow\exists k\in\mathbb{N},\ m=36k$$")))));
+                    LatexStatement.Create(@"$$\forall x,y\in N_A(S),\ ((\forall z\in N_A(S),\ x\leq z)\land(\forall z\in N_A(S),\ y\leq z))\Rightarrow x=y$$")))));
 }

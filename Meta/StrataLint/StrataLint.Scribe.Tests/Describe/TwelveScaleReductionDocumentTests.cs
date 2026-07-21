@@ -3,7 +3,7 @@ namespace StrataLint.Scribe.Tests;
 public sealed class TwelveScaleReductionDocumentTests
 {
     [Fact]
-    public void TwelveScaleReductionCarriesFiveTheoremsAndRetainsMeasuredResiduals()
+    public void TwelveScaleReductionCarriesFourPartialTheoremsAndRetainsSourceResiduals()
     {
         var definition = DocumentDefinitions.All.Single(static item =>
             item.Document.Header.Gid.Value == "D5/S1/Depth/TwelveScaleReduction");
@@ -11,7 +11,7 @@ public sealed class TwelveScaleReductionDocumentTests
             .OfType<DocumentBlock.Describe>()
             .ToArray();
 
-        Assert.Equal(5, describes.Length);
+        Assert.Equal(4, describes.Length);
         Assert.All(describes, static describe =>
         {
             Assert.Equal(DescribeKind.Theorem, describe.Kind);
@@ -25,10 +25,14 @@ public sealed class TwelveScaleReductionDocumentTests
                 "D5/S1/Depth/TwelveScaleReduction.normalized_magnitude_eq_twelve_scale_iff",
                 "D5/S1/Depth/TwelveScaleReduction.twelve_scale_is_normalized_sample_minimum",
                 "D5/S1/Depth/TwelveScaleReduction.normalized_sample_minimum_unique",
-                "D5/S1/Depth/TwelveScaleReduction.zero_family_lies_on_thirty_six_grid",
             ],
             describes.Select(static describe =>
                 Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement).Value.Value));
+        Assert.DoesNotContain(
+            describes,
+            static describe =>
+                Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement).Value.Value ==
+                "D5/S1/Depth/TwelveScaleReduction.zero_family_lies_on_thirty_six_grid");
 
         var report = LeanReportFixture.ForDocuments([definition.Document]);
         var markdown = System.Text.Encoding.UTF8.GetString(
@@ -43,6 +47,14 @@ public sealed class TwelveScaleReductionDocumentTests
             StringComparison.Ordinal);
         Assert.Contains(
             "does not reconstruct the historical sampling configuration or its leakage",
+            markdown,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "partial arithmetic progress toward the unresolved source floor reduction",
+            markdown,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "does not identify the rational parameter with the largest partial quotient",
             markdown,
             StringComparison.Ordinal);
     }
