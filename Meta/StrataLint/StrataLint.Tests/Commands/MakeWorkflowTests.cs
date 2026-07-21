@@ -155,7 +155,7 @@ public sealed class MakeWorkflowTests
 
         var result = BoundedProcessRunner.Run(
             "/bin/bash",
-            ["-c", "PATH=\"$1:$PATH\" exec make echo-residual-summary BASE=synthetic-base", "echo-make", binDirectory],
+            ["-c", "PATH=\"$1:$PATH\" exec make --no-print-directory echo-residual-summary BASE=synthetic-base", "echo-make", binDirectory],
             fixture.Path,
             TimeSpan.FromSeconds(30),
             64 * 1024);
@@ -202,7 +202,7 @@ public sealed class MakeWorkflowTests
 
         var result = BoundedProcessRunner.Run(
             "/bin/bash",
-            ["-c", "PATH=\"$1:$PATH\" exec make echo-verify BASE=synthetic-base", "echo-make", binDirectory],
+            ["-c", "PATH=\"$1:$PATH\" exec make --no-print-directory echo-verify BASE=synthetic-base", "echo-make", binDirectory],
             fixture.Path,
             TimeSpan.FromSeconds(30),
             64 * 1024);
@@ -232,7 +232,7 @@ public sealed class MakeWorkflowTests
 
         var result = BoundedProcessRunner.Run(
             "make",
-            ["emit-check", "BASE=synthetic-base"],
+            ["--no-print-directory", "emit-check", "BASE=synthetic-base"],
             fixture.Path,
             TimeSpan.FromSeconds(30),
             64 * 1024);
