@@ -171,6 +171,17 @@ jobs:
           test "$actual" = "${{ steps.baseline.outputs.sha }}"
           printf '%s\n' "Lean producer base content address: $actual" >> "$GITHUB_STEP_SUMMARY"
 
+      - name: Resolve candidate canonical Lean report address
+        id: lean-report-input
+        shell: bash
+        run: |
+          set -euo pipefail
+          helper="$GITHUB_WORKSPACE/baseline/Meta/StrataLint/scripts/report/lean-report-input.sh"
+          test -x "$helper"
+          read -r address _ <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/candidate")"
+          [[ "$address" =~ ^[0-9a-f]{64}$ ]]
+          echo "address=$address" >> "$GITHUB_OUTPUT"
+
       - name: Restore elan and pinned Lean toolchains
         uses: actions/cache/restore@v4
         with:
@@ -239,6 +250,32 @@ jobs:
             --candidate-output "$reports/candidate-lean-report.json" \
             --baseline-root "$GITHUB_WORKSPACE/baseline" \
             --baseline-output "$reports/baseline-lean-report.json"
+
+      - name: Stage candidate canonical Lean report cache
+        shell: bash
+        run: |
+          set -euo pipefail
+          source="$RUNNER_TEMP/raw-lean-reports/candidate-lean-report.json"
+          target="$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json"
+          mkdir -p "$(dirname "$target")"
+          for suffix in '' .input.attestation .provenance.json; do
+            test -s "${source}${suffix}"
+            cp "${source}${suffix}" "${target}${suffix}"
+          done
+          read -r declaredSha256 declaredName < "${source}.sha256"
+          reportSha256="$(sha256sum "$target" | cut -d ' ' -f 1)"
+          test "$declaredSha256" = "$reportSha256"
+          test "$declaredName" = "$(basename "$source")"
+          printf '%s  %s\n' "$reportSha256" "$(basename "$target")" > "${target}.sha256"
+          "$GITHUB_WORKSPACE/baseline/Meta/StrataLint/scripts/report/lean-report-input.sh" verify \
+            --repository "$GITHUB_WORKSPACE/candidate" \
+            --report "$target"
+
+      - name: Save candidate canonical Lean report
+        uses: actions/cache/save@v4
+        with:
+          path: .canonical-lean-report-cache
+          key: stratalint-canonical-lean-report-v1-${{ steps.lean-report-input.outputs.address }}
 
       - name: Upload raw Lean reports and producer logs
         if: always()

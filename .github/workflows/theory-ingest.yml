@@ -10,6 +10,7 @@ on:
       - 'docs/develop/theory/**'
 
 permissions:
+  actions: read
   contents: write
 
 concurrency:
@@ -20,7 +21,7 @@ jobs:
   auto-ingest:
     name: Auto-ingest theory volumes
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 30
     steps:
       - name: Check out base (judge code)
         uses: actions/checkout@v4
@@ -62,42 +63,6 @@ jobs:
             exit 1
           fi
 
-      - name: Resolve pinned Lean toolchain
-        id: lean
-        shell: bash
-        env:
-          LEAN_TOOLCHAIN_FILE: candidate/lean-toolchain
-        run: |
-          set -euo pipefail
-          test -s "$LEAN_TOOLCHAIN_FILE"
-          echo "file=$LEAN_TOOLCHAIN_FILE" >> "$GITHUB_OUTPUT"
-          echo "hash=$(sha256sum "$LEAN_TOOLCHAIN_FILE" | cut -d ' ' -f 1)" >> "$GITHUB_OUTPUT"
-
-      - name: Restore elan and pinned Lean toolchain
-        uses: actions/cache/restore@v4
-        with:
-          path: ~/.elan
-          key: ${{ runner.os }}-${{ runner.arch }}-elan-${{ steps.lean.outputs.hash }}
-
-      - name: Install pinned Lean toolchain for ingest
-        shell: bash
-        env:
-          LEAN_TOOLCHAIN_FILE: ${{ steps.lean.outputs.file }}
-        run: |
-          set -euo pipefail
-          toolchain="$(tr -d '\r\n' < "$LEAN_TOOLCHAIN_FILE")"
-          test -n "$toolchain"
-          if [[ ! -x "$HOME/.elan/bin/elan" ]]; then
-            curl --proto '=https' --tlsv1.2 -sSf https://elan.lean-lang.org/elan-init.sh \
-              | sh -s -- -y --default-toolchain none
-          fi
-          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-          if ! "$HOME/.elan/bin/elan" toolchain list 2>/dev/null | grep -qF "$toolchain"; then
-            "$HOME/.elan/bin/elan" toolchain install "$toolchain"
-          fi
-          "$HOME/.elan/bin/elan" default "$toolchain"
-          "$HOME/.elan/bin/lake" --version
-
       - name: Install pinned SDK
         uses: actions/setup-dotnet@v4
         with:
@@ -110,21 +75,43 @@ jobs:
           rsync -a --delete judge/Meta/StrataLint/ candidate/Meta/StrataLint/
           cp judge/Makefile judge/global.json candidate/
 
-      - name: Restore candidate Lean build artifacts
-        uses: actions/cache@v4
-        with:
-          path: |
-            candidate/.lake
-            ~/.cache/mathlib
-          key: theory-ingest-lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('candidate/lean-toolchain') }}-${{ hashFiles('candidate/lake-manifest.json') }}-${{ hashFiles('candidate/**/*.lean') }}
-
-      - name: Produce canonical Lean report
+      - name: Resolve base canonical Lean report address
+        id: lean-report-input
         shell: bash
         run: |
           set -euo pipefail
-          cd candidate
-          make lean
-          make lean-report
+          helper="$GITHUB_WORKSPACE/candidate/Meta/StrataLint/scripts/report/lean-report-input.sh"
+          test -x "$helper"
+          read -r address _ <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/candidate")"
+          [[ "$address" =~ ^[0-9a-f]{64}$ ]]
+          echo "address=$address" >> "$GITHUB_OUTPUT"
+
+      - name: Restore base canonical Lean report
+        id: lean-report-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .canonical-lean-report-cache
+          key: stratalint-canonical-lean-report-v1-${{ steps.lean-report-input.outputs.address }}
+          fail-on-cache-miss: true
+
+      - name: Install and verify base canonical Lean report
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "${{ steps.lean-report-cache.outputs.cache-hit }}" = "true"
+          source="$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json"
+          report="$GITHUB_WORKSPACE/candidate/.lake/build/stratalint/raw-lean-report.json"
+          mkdir -p "$(dirname "$report")"
+          for suffix in '' .sha256 .input.attestation .provenance.json; do
+            test -s "${source}${suffix}"
+            cp "${source}${suffix}" "${report}${suffix}"
+          done
+          "$GITHUB_WORKSPACE/candidate/Meta/StrataLint/scripts/report/lean-report-input.sh" verify \
+            --repository "$GITHUB_WORKSPACE/candidate" \
+            --report "$report"
+          printf '%s\n' \
+            "Lean report input address: sha256:${{ steps.lean-report-input.outputs.address }}" \
+            >> "$GITHUB_STEP_SUMMARY"
 
       - name: Run ingest with base judge
         shell: bash
@@ -141,6 +128,7 @@ jobs:
           set -euo pipefail
           cd candidate
           git restore --source=HEAD -- Meta/StrataLint Makefile global.json || true
+          git clean -fd -- Meta/StrataLint
           changed="$(git status --porcelain)"
           if [ -z "$changed" ]; then echo "ingest no-op"; exit 0; fi
           bad="$(git status --porcelain | grep -vE '^.. (Meta/BACKFILL\.yaml|Meta/Digestion/atoms/)' || true)"
