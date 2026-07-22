@@ -21,7 +21,7 @@ jobs:
   auto-ingest:
     name: Auto-ingest theory volumes
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - name: Check out base (judge code)
         uses: actions/checkout@v4
@@ -85,6 +85,27 @@ jobs:
           read -r address _ <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/candidate")"
           [[ "$address" =~ ^[0-9a-f]{64}$ ]]
           echo "address=$address" >> "$GITHUB_OUTPUT"
+
+      # 缓存由 required-checks 的 Canonical Lean report production 生产(约 10 分钟);
+      # 本 workflow 与其并行触发,直接 restore 必竞态 miss。故先只读轮询等缓存出现,
+      # 超时仍 fail-closed——等待不降级检测。
+      - name: Wait for base canonical Lean report cache
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CACHE_KEY: stratalint-canonical-lean-report-v1-${{ steps.lean-report-input.outputs.address }}
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 40); do
+            count="$(gh api "repos/${GITHUB_REPOSITORY}/actions/caches?key=${CACHE_KEY}" --jq '.total_count')"
+            if [[ "$count" -gt 0 ]]; then
+              exit 0
+            fi
+            echo "canonical Lean report cache not yet produced (attempt ${attempt}/40): ${CACHE_KEY}"
+            sleep 30
+          done
+          echo "::error::canonical Lean report cache never appeared: ${CACHE_KEY}"
+          exit 1
 
       - name: Restore base canonical Lean report
         id: lean-report-cache
