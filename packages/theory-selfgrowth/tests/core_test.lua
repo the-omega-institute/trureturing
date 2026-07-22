@@ -61,6 +61,10 @@ return {
     t.is_true(b:find("worth argmax") == nil)
     t.is_true(b:find("argmax") == nil)
     t.is_true(b:find("novelty × ") == nil)
+    -- must NOT over-specify placement/generality (the #368 consensus-drop cause): let the prover
+    -- derive classification per repo rules, not force a base node's `generality: G`.
+    t.is_true(b:find("generality: I", 1, true) ~= nil)
+    t.is_true(b:find("mirroring the Carrier conventions", 1, true) == nil)
   end,
 
   -- ---- Major 1: decide_generation (counter + open exclusion) ----
