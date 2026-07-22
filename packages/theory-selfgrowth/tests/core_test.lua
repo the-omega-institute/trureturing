@@ -8,28 +8,30 @@ local time = require("contract.time")
 local t = fkst.test
 
 local MARKER = "theory-selfgrowth:frontier-request:v1"
+local BOT_LOGIN = "loning"
 
 -- A frontier-request issue as returned by `gh issue list --json state,body`. Its body
 -- carries the generation-scoped dedup_key, which contains MARKER as a prefix.
-local function request_issue(repo, generation, state)
-  return { state = state, body = "dedup-marker: " .. core.dedup_key(repo, generation) }
+local function request_issue(repo, generation, state, bot_login)
+  return { state = state, body = "dedup-marker: " .. core.dedup_key(repo, generation, bot_login or BOT_LOGIN) }
 end
 
 return {
   -- ---- Major 1: generation-scoped dedup key ----
   test_dedup_key_is_generation_scoped = function()
-    t.eq(core.dedup_key("owner/repo", 0), MARKER .. ":owner/repo:gen0")
-    t.eq(core.dedup_key("owner/repo", 1), MARKER .. ":owner/repo:gen1")
+    t.eq(core.dedup_key("owner/repo", 0, BOT_LOGIN), MARKER .. ":" .. BOT_LOGIN .. ":owner/repo:gen0")
+    t.eq(core.dedup_key("owner/repo", 1, BOT_LOGIN), MARKER .. ":" .. BOT_LOGIN .. ":owner/repo:gen1")
     -- Distinct generations MUST produce distinct keys, else `--state all` dedup re-suppresses.
-    t.is_true(core.dedup_key("owner/repo", 0) ~= core.dedup_key("owner/repo", 1))
+    t.is_true(core.dedup_key("owner/repo", 0, BOT_LOGIN) ~= core.dedup_key("owner/repo", 1, BOT_LOGIN))
   end,
 
   test_build_frontier_request_embeds_generation_key = function()
-    local r = core.build_frontier_request("owner/repo", 2)
+    local r = core.build_frontier_request("owner/repo", 2, BOT_LOGIN)
     t.eq(r.schema, "github-proxy.issue-create.v1")
     t.eq(r.title, core.request_title())
-    t.eq(r.dedup_key, MARKER .. ":owner/repo:gen2")
-    t.is_true(r.body:find(MARKER, 1, true) ~= nil)
+    t.eq(r.dedup_key, MARKER .. ":" .. BOT_LOGIN .. ":owner/repo:gen2")
+    t.is_true(r.body:find(core.producer_marker(BOT_LOGIN), 1, true) ~= nil)
+    t.eq(r.producer, BOT_LOGIN)
   end,
 
   -- ---- GENERATE-NEW (2026-07-22): emit a propose-and-prove deliver request, NOT the declined
@@ -46,7 +48,7 @@ return {
   end,
 
   test_body_is_generate_new_with_honesty_guards_and_no_fabricated_worth = function()
-    local r = core.build_frontier_request("owner/repo", 0)
+    local r = core.build_frontier_request("owner/repo", 0, BOT_LOGIN)
     local b = r.body
     -- generate-new: propose a new theorem by judgment
     t.is_true(b:find("Propose ONE", 1, true) ~= nil)
@@ -69,33 +71,33 @@ return {
 
   -- ---- Major 1: decide_generation (counter + open exclusion) ----
   test_decide_generation_empty_starts_at_zero = function()
-    local d = core.decide_generation({})
+    local d = core.decide_generation({}, BOT_LOGIN)
     t.eq(d.generation, 0)
     t.is_true(not d.open_exists)
   end,
 
   test_decide_generation_open_request_excludes_firing = function()
-    local d = core.decide_generation({ request_issue("owner/repo", 0, "open") })
+    local d = core.decide_generation({ request_issue("owner/repo", 0, "open") }, BOT_LOGIN)
     t.eq(d.generation, 1)
     t.is_true(d.open_exists)
   end,
 
   -- THE #296 REGRESSION: one request created then CLOSED -> next generation is producible.
   test_closed_then_next_generation = function()
-    local d = core.decide_generation({ request_issue("owner/repo", 0, "closed") })
+    local d = core.decide_generation({ request_issue("owner/repo", 0, "closed") }, BOT_LOGIN)
     t.eq(d.generation, 1)          -- next request is gen1, a DISTINCT dedup_key from gen0
     t.is_true(not d.open_exists)   -- nothing open -> producer may fire again
     -- The new key differs from the closed generation's, so github-proxy's --state all
     -- marker search no longer matches the closed issue.
-    t.is_true(core.dedup_key("owner/repo", d.generation)
-      ~= core.dedup_key("owner/repo", 0))
+    t.is_true(core.dedup_key("owner/repo", d.generation, BOT_LOGIN)
+      ~= core.dedup_key("owner/repo", 0, BOT_LOGIN))
   end,
 
   test_decide_generation_ignores_unrelated_issues = function()
     local d = core.decide_generation({
       { state = "open", body = "some unrelated issue" },
       request_issue("owner/repo", 0, "closed"),
-    })
+    }, BOT_LOGIN)
     t.eq(d.generation, 1)          -- only the marker-bearing issue counts
     t.is_true(not d.open_exists)   -- the unrelated open issue does not gate us
   end,
@@ -104,9 +106,31 @@ return {
     local d = core.decide_generation({
       request_issue("owner/repo", 0, "closed"),
       request_issue("owner/repo", 1, "closed"),
-    })
+    }, BOT_LOGIN)
     t.eq(d.generation, 2)
     t.is_true(not d.open_exists)
+  end,
+
+  test_producer_scoping_isolates_open_requests = function()
+    local repo = "owner/repo"
+    local loning_marker = core.producer_marker("loning")
+    local elonsg_marker = core.producer_marker("elonsg")
+    t.eq(loning_marker, MARKER .. ":loning")
+    t.eq(elonsg_marker, MARKER .. ":elonsg")
+    t.is_true(loning_marker ~= elonsg_marker)
+    t.is_true(core.dedup_key(repo, 0, "loning") ~= core.dedup_key(repo, 0, "elonsg"))
+
+    local loning_sees_only_elonsg_open = core.decide_generation({
+      request_issue(repo, 0, "OPEN", "elonsg"),
+    }, "loning")
+    t.eq(loning_sees_only_elonsg_open.generation, 0)
+    t.is_true(not loning_sees_only_elonsg_open.open_exists)
+
+    local elonsg_sees_only_loning_open = core.decide_generation({
+      request_issue(repo, 0, "OPEN", "loning"),
+    }, "elonsg")
+    t.eq(elonsg_sees_only_loning_open.generation, 0)
+    t.is_true(not elonsg_sees_only_loning_open.open_exists)
   end,
 
   -- ---- Major 2: idle-hint freshness ----
@@ -149,12 +173,23 @@ return {
     t.is_true(not core.validate_repo(nil))
   end,
 
+  test_validate_bot_login = function()
+    t.is_true(core.validate_bot_login("loning"))
+    t.is_true(core.validate_bot_login("ElonSG"))
+    t.is_true(core.validate_bot_login("AlyciaBHZ.bot_1"))
+    t.is_true(not core.validate_bot_login(""))
+    t.is_true(not core.validate_bot_login("bad/login"))
+    t.is_true(not core.validate_bot_login(nil))
+  end,
+
   -- ---- #346: self-tick raiser gives the frontier producer a real trigger ----
-  test_poll_interval_is_a_positive_integer = function()
-    local n = core.poll_interval()
-    t.eq(type(n), "number")
-    t.is_true(n > 0)
-    t.eq(math.floor(n), n)
+  test_poll_interval_is_a_duration_string = function()
+    -- The raiser `interval` must be a duration STRING (the framework's parser rejects a bare
+    -- integer). Guards the runtime regression where poll_interval returned 1800 (a number),
+    -- which crashed raiser parsing at engine startup.
+    local v = core.poll_interval()
+    t.eq(type(v), "string")
+    t.is_true(v:match("^%d+[smhd]$") ~= nil)
   end,
 
   test_frontier_raiser_is_a_cron_producing_the_tick = function()
