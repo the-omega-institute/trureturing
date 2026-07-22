@@ -53,7 +53,12 @@ snapshot() {
   log="$(newest_log || true)"
   fatal=0; warns=0; acks=0
   if [[ -n "$log" ]]; then
-    fatal="$(cnt 'panic|FATAL|startup error|thread .main. panicked|SIGSEGV' "$log")"
+    # Match STRUCTURED fatal markers only, and skip giant lines: the supervise log embeds
+    # whole issue bodies / diffs / dedup keys (e.g. "child-fatal-characterization-tests",
+    # a run.sh diff mentioning "panic"/"startup error"), which a bare substring match counts
+    # as fatals and falsely reports DOWN. Real fatals are short structured lines.
+    fatal="$(awk 'length<1000' "$log" 2>/dev/null | grep -acE 'LEVEL=FATAL|thread .main. panicked|panicked at |\[framework\] startup error|SIGSEGV|SIGABRT' 2>/dev/null | tr -dc '0-9' | head -c 12 || true)"
+    [[ -n "$fatal" ]] || fatal=0
     warns="$(cnt 'LEVEL=(WARN|ERROR)' "$log")"
     acks="$(cnt 'MSG=delivery acked' "$log")"
     (( fatal > 0 )) && { verdict="DOWN"; reasons+=("$fatal fatal log lines"); }
