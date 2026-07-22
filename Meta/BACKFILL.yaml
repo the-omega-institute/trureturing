@@ -1303,12 +1303,60 @@ sources:
         status:
           migration: residual
           truth: open
-      - atom_id: observer-residual-8516ea1a00d78d3b764ed9d07f4dfe3f3856dcc4bbe110fde818e00a25d2725e
+      - atom_id: observer-residual-76930ca34c8a3031ec187195149b1deeace99958f5910f4f1c0f62bde2765976
         ast_path: periodic-table/first-product
         fingerprints:
-          raw_sha256: sha256:8516ea1a00d78d3b764ed9d07f4dfe3f3856dcc4bbe110fde818e00a25d2725e
-          normalized_sha256: sha256:8516ea1a00d78d3b764ed9d07f4dfe3f3856dcc4bbe110fde818e00a25d2725e
-        cas_ref: sha256:8516ea1a00d78d3b764ed9d07f4dfe3f3856dcc4bbe110fde818e00a25d2725e
+          raw_sha256: sha256:76930ca34c8a3031ec187195149b1deeace99958f5910f4f1c0f62bde2765976
+          normalized_sha256: sha256:76930ca34c8a3031ec187195149b1deeace99958f5910f4f1c0f62bde2765976
+        cas_ref: sha256:76930ca34c8a3031ec187195149b1deeace99958f5910f4f1c0f62bde2765976
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: observer-residual-2135fec4a225eff0063c37194d63798b6a466c4d839868619cc33ae6c1233569
+        ast_path: semantic-court/reciprocity-interference
+        fingerprints:
+          raw_sha256: sha256:2135fec4a225eff0063c37194d63798b6a466c4d839868619cc33ae6c1233569
+          normalized_sha256: sha256:2135fec4a225eff0063c37194d63798b6a466c4d839868619cc33ae6c1233569
+        cas_ref: sha256:2135fec4a225eff0063c37194d63798b6a466c4d839868619cc33ae6c1233569
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: observer-residual-b9fc9cd553fdb10a3704f35ba4ab964f9a0d3fe9b33aca83878e08a4d3e0fd7e
+        ast_path: semantic-court/projection-interference
+        fingerprints:
+          raw_sha256: sha256:b9fc9cd553fdb10a3704f35ba4ab964f9a0d3fe9b33aca83878e08a4d3e0fd7e
+          normalized_sha256: sha256:b9fc9cd553fdb10a3704f35ba4ab964f9a0d3fe9b33aca83878e08a4d3e0fd7e
+        cas_ref: sha256:b9fc9cd553fdb10a3704f35ba4ab964f9a0d3fe9b33aca83878e08a4d3e0fd7e
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: observer-residual-534eaf5ab2108838705b32241607ac5787b12cdfade42cc7b6b834e00bac35e4
+        ast_path: semantic-court/filters-and-horizons
+        fingerprints:
+          raw_sha256: sha256:534eaf5ab2108838705b32241607ac5787b12cdfade42cc7b6b834e00bac35e4
+          normalized_sha256: sha256:534eaf5ab2108838705b32241607ac5787b12cdfade42cc7b6b834e00bac35e4
+        cas_ref: sha256:534eaf5ab2108838705b32241607ac5787b12cdfade42cc7b6b834e00bac35e4
         coverage_gids: []
         receipts:
           coverage: []
@@ -18986,12 +19034,12 @@ sources:
         status:
           migration: residual
           truth: open
-      - atom_id: pzg-residual-7fe19509ff11e0f5164714e914646db85f83accc14d97065efb5081550f5e891
+      - atom_id: pzg-residual-7be9689015d77a7b8ecb6b87ea89a2f8b15ab109304693eacbc9d029520f84c7
         ast_path: verdict/batch/occurrence/11
         fingerprints:
-          raw_sha256: sha256:7fe19509ff11e0f5164714e914646db85f83accc14d97065efb5081550f5e891
-          normalized_sha256: sha256:7fe19509ff11e0f5164714e914646db85f83accc14d97065efb5081550f5e891
-        cas_ref: sha256:7fe19509ff11e0f5164714e914646db85f83accc14d97065efb5081550f5e891
+          raw_sha256: sha256:7be9689015d77a7b8ecb6b87ea89a2f8b15ab109304693eacbc9d029520f84c7
+          normalized_sha256: sha256:7be9689015d77a7b8ecb6b87ea89a2f8b15ab109304693eacbc9d029520f84c7
+        cas_ref: sha256:7be9689015d77a7b8ecb6b87ea89a2f8b15ab109304693eacbc9d029520f84c7
         coverage_gids: []
         receipts:
           coverage: []
@@ -19002,17 +19050,12 @@ sources:
         status:
           migration: residual
           truth: open
-  - source_id: periodic-tree-v1
-    path: docs/develop/theory/PERIODIC_TREE.md
-    atomizer: periodic-tree-v1
-    acknowledged_stale: []
-    entries:
-      - atom_id: periodic-tree-residual-ac6af35e84cfc9441fc3e4f9c1468def96f68baf1e423c851bf45953a4a6406c
-        ast_path: section/0
+      - atom_id: pzg-residual-6028adbc757b974c0941027ffe560bd26840b2e3d23cc8e5caa12d395ce1e584
+        ast_path: metadata/supplement/336
         fingerprints:
-          raw_sha256: sha256:ac6af35e84cfc9441fc3e4f9c1468def96f68baf1e423c851bf45953a4a6406c
-          normalized_sha256: sha256:ac6af35e84cfc9441fc3e4f9c1468def96f68baf1e423c851bf45953a4a6406c
-        cas_ref: sha256:ac6af35e84cfc9441fc3e4f9c1468def96f68baf1e423c851bf45953a4a6406c
+          raw_sha256: sha256:6028adbc757b974c0941027ffe560bd26840b2e3d23cc8e5caa12d395ce1e584
+          normalized_sha256: sha256:6028adbc757b974c0941027ffe560bd26840b2e3d23cc8e5caa12d395ce1e584
+        cas_ref: sha256:6028adbc757b974c0941027ffe560bd26840b2e3d23cc8e5caa12d395ce1e584
         coverage_gids: []
         receipts:
           coverage: []
@@ -19023,12 +19066,12 @@ sources:
         status:
           migration: residual
           truth: open
-      - atom_id: periodic-tree-residual-2f0e6fde221aa27c4e9d08af5e362f1f87c3cffa52848fd3a877a6522ac8e2fc
-        ast_path: section/1
+      - atom_id: pzg-residual-b992aef5dea008c3569021dfb3c2257e2fe87530122e41940e7eaa3ab4c12f23
+        ast_path: remark/27.435
         fingerprints:
-          raw_sha256: sha256:2f0e6fde221aa27c4e9d08af5e362f1f87c3cffa52848fd3a877a6522ac8e2fc
-          normalized_sha256: sha256:2f0e6fde221aa27c4e9d08af5e362f1f87c3cffa52848fd3a877a6522ac8e2fc
-        cas_ref: sha256:2f0e6fde221aa27c4e9d08af5e362f1f87c3cffa52848fd3a877a6522ac8e2fc
+          raw_sha256: sha256:b992aef5dea008c3569021dfb3c2257e2fe87530122e41940e7eaa3ab4c12f23
+          normalized_sha256: sha256:b992aef5dea008c3569021dfb3c2257e2fe87530122e41940e7eaa3ab4c12f23
+        cas_ref: sha256:b992aef5dea008c3569021dfb3c2257e2fe87530122e41940e7eaa3ab4c12f23
         coverage_gids: []
         receipts:
           coverage: []
@@ -19039,12 +19082,12 @@ sources:
         status:
           migration: residual
           truth: open
-      - atom_id: periodic-tree-residual-15f65beeff5d7356b43cc2c0d95c7be6d23d0af701b0af8dec5e6630795cf1b2
-        ast_path: section/2
+      - atom_id: pzg-residual-a2d16984bc0a91247a160356986e95e8b2329a2452df9075cba0c95cca4c0496
+        ast_path: remark/27.436
         fingerprints:
-          raw_sha256: sha256:15f65beeff5d7356b43cc2c0d95c7be6d23d0af701b0af8dec5e6630795cf1b2
-          normalized_sha256: sha256:15f65beeff5d7356b43cc2c0d95c7be6d23d0af701b0af8dec5e6630795cf1b2
-        cas_ref: sha256:15f65beeff5d7356b43cc2c0d95c7be6d23d0af701b0af8dec5e6630795cf1b2
+          raw_sha256: sha256:a2d16984bc0a91247a160356986e95e8b2329a2452df9075cba0c95cca4c0496
+          normalized_sha256: sha256:a2d16984bc0a91247a160356986e95e8b2329a2452df9075cba0c95cca4c0496
+        cas_ref: sha256:a2d16984bc0a91247a160356986e95e8b2329a2452df9075cba0c95cca4c0496
         coverage_gids: []
         receipts:
           coverage: []
@@ -19055,12 +19098,12 @@ sources:
         status:
           migration: residual
           truth: open
-      - atom_id: periodic-tree-residual-af96ce622efca7a9c99c72e8a5137c78f91196dbad0bea7fe68c095874cd93e1
-        ast_path: section/3
+      - atom_id: pzg-residual-c7bcbf7adb6b277e15f17f33294998f11311f3e2643fd7a2791c51c0338048e0
+        ast_path: remark/27.437
         fingerprints:
-          raw_sha256: sha256:af96ce622efca7a9c99c72e8a5137c78f91196dbad0bea7fe68c095874cd93e1
-          normalized_sha256: sha256:af96ce622efca7a9c99c72e8a5137c78f91196dbad0bea7fe68c095874cd93e1
-        cas_ref: sha256:af96ce622efca7a9c99c72e8a5137c78f91196dbad0bea7fe68c095874cd93e1
+          raw_sha256: sha256:c7bcbf7adb6b277e15f17f33294998f11311f3e2643fd7a2791c51c0338048e0
+          normalized_sha256: sha256:c7bcbf7adb6b277e15f17f33294998f11311f3e2643fd7a2791c51c0338048e0
+        cas_ref: sha256:c7bcbf7adb6b277e15f17f33294998f11311f3e2643fd7a2791c51c0338048e0
         coverage_gids: []
         receipts:
           coverage: []
@@ -19071,12 +19114,12 @@ sources:
         status:
           migration: residual
           truth: open
-      - atom_id: periodic-tree-residual-287d07161a692f0c4cd7fc377f1144681aa24d4e42c6791215646c07ed551537
-        ast_path: section/4
+      - atom_id: pzg-residual-87f17a5540e417974c09cc57d574eaaca6f148ab0a445163c78fcd7990c0fd97
+        ast_path: negative-register/batch/occurrence/9
         fingerprints:
-          raw_sha256: sha256:287d07161a692f0c4cd7fc377f1144681aa24d4e42c6791215646c07ed551537
-          normalized_sha256: sha256:287d07161a692f0c4cd7fc377f1144681aa24d4e42c6791215646c07ed551537
-        cas_ref: sha256:287d07161a692f0c4cd7fc377f1144681aa24d4e42c6791215646c07ed551537
+          raw_sha256: sha256:87f17a5540e417974c09cc57d574eaaca6f148ab0a445163c78fcd7990c0fd97
+          normalized_sha256: sha256:87f17a5540e417974c09cc57d574eaaca6f148ab0a445163c78fcd7990c0fd97
+        cas_ref: sha256:87f17a5540e417974c09cc57d574eaaca6f148ab0a445163c78fcd7990c0fd97
         coverage_gids: []
         receipts:
           coverage: []
@@ -19087,12 +19130,12 @@ sources:
         status:
           migration: residual
           truth: open
-      - atom_id: periodic-tree-residual-772957b12e9a67ec8b99284a189b9602fa7cfeedc93778b6ce9991a98cad8b65
-        ast_path: section/5
+      - atom_id: pzg-residual-3c5ee2fd105ddb77b9fed8d491b33e40d4fc8603d7f261727fbe8bcbdd31cc85
+        ast_path: research-queue/batch/occurrence/12
         fingerprints:
-          raw_sha256: sha256:772957b12e9a67ec8b99284a189b9602fa7cfeedc93778b6ce9991a98cad8b65
-          normalized_sha256: sha256:772957b12e9a67ec8b99284a189b9602fa7cfeedc93778b6ce9991a98cad8b65
-        cas_ref: sha256:772957b12e9a67ec8b99284a189b9602fa7cfeedc93778b6ce9991a98cad8b65
+          raw_sha256: sha256:3c5ee2fd105ddb77b9fed8d491b33e40d4fc8603d7f261727fbe8bcbdd31cc85
+          normalized_sha256: sha256:3c5ee2fd105ddb77b9fed8d491b33e40d4fc8603d7f261727fbe8bcbdd31cc85
+        cas_ref: sha256:3c5ee2fd105ddb77b9fed8d491b33e40d4fc8603d7f261727fbe8bcbdd31cc85
         coverage_gids: []
         receipts:
           coverage: []
@@ -19103,28 +19146,12 @@ sources:
         status:
           migration: residual
           truth: open
-      - atom_id: periodic-tree-residual-9f8757a42a20123261876aa7cdad86e7c981ec5d1ca55de9bca50c9466e8c55b
-        ast_path: section/6
+      - atom_id: pzg-residual-48ea37ddb0d7bb3da3035deb7e845ec3c2819b7e136f8f769cfa34f5442b41ea
+        ast_path: verdict/batch/occurrence/12
         fingerprints:
-          raw_sha256: sha256:9f8757a42a20123261876aa7cdad86e7c981ec5d1ca55de9bca50c9466e8c55b
-          normalized_sha256: sha256:9f8757a42a20123261876aa7cdad86e7c981ec5d1ca55de9bca50c9466e8c55b
-        cas_ref: sha256:9f8757a42a20123261876aa7cdad86e7c981ec5d1ca55de9bca50c9466e8c55b
-        coverage_gids: []
-        receipts:
-          coverage: []
-          scribe: []
-          unresolved_subitems: []
-          chain_atoms: []
-          tail_authorization: null
-        status:
-          migration: residual
-          truth: open
-      - atom_id: periodic-tree-residual-e0e4c976a8c2c0fb379e99b1a8a3f1b5c814d2add32c7bc1be39681a230e11fc
-        ast_path: section/7
-        fingerprints:
-          raw_sha256: sha256:e0e4c976a8c2c0fb379e99b1a8a3f1b5c814d2add32c7bc1be39681a230e11fc
-          normalized_sha256: sha256:e0e4c976a8c2c0fb379e99b1a8a3f1b5c814d2add32c7bc1be39681a230e11fc
-        cas_ref: sha256:e0e4c976a8c2c0fb379e99b1a8a3f1b5c814d2add32c7bc1be39681a230e11fc
+          raw_sha256: sha256:48ea37ddb0d7bb3da3035deb7e845ec3c2819b7e136f8f769cfa34f5442b41ea
+          normalized_sha256: sha256:48ea37ddb0d7bb3da3035deb7e845ec3c2819b7e136f8f769cfa34f5442b41ea
+        cas_ref: sha256:48ea37ddb0d7bb3da3035deb7e845ec3c2819b7e136f8f769cfa34f5442b41ea
         coverage_gids: []
         receipts:
           coverage: []
