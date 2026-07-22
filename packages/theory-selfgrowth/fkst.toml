@@ -9,17 +9,21 @@ persistence_class = "stateless_adapter"
 # DOWNSTREAM in that workflow; this producer only fires the idle->generate transaction
 # and never touches a frozen node (conservative extension).
 #
-# HOST-package constraint: uses ONLY publishable libraries (contract) + framework-injected
-# globals (exec_sync to read FKST_GITHUB_REPO, raise to produce the event). It does NOT
-# use forge/devloop/workflow_internal (platform-internal, not published to host packages)
-# — egress stays with the platform: github-proxy performs the actual `gh issue create` and
-# dedups on `dedup_key`.
+# HOST-package constraint: uses ONLY publishable libraries (contract + workflow.saga /
+# workflow.dead_letter + testkit.graph, all public since fkst-packages made them exportable)
+# + framework-injected globals (exec_sync, raise, json, log, t.fire_raiser). It does NOT use
+# forge/devloop/workflow_internal (platform-internal, unpublishable to host packages). The one
+# platform-owned gap is the raw `gh` read in departments/propose (self-dedup search) — a host
+# package cannot reach forge.github, so that single site is registered as accepted migration
+# debt in .fkst/conformance/allowlists/gh-git-adapter.allowlist, with a north-star to petition
+# a narrow github-proxy read/search-by-marker event pair upstream. Issue-create egress still
+# stays with github-proxy (github-proxy performs the actual `gh issue create`).
 
 [code]
 root = "."
 
 [lib_deps]
-libraries = ["contract"]
+libraries = ["contract", "workflow", "testkit"]
 
 [event_deps]
-packages = ["idle-detector", "github-proxy"]
+packages = ["github-proxy"]
