@@ -397,6 +397,12 @@ public sealed class MakeWorkflowTests
         var waitRegion = workflow[probeIndex..finalRestoreIndex];
         Assert.Contains("outputs.cache-hit != 'true'", waitRegion, StringComparison.Ordinal);
         Assert.DoesNotContain("outputs.cache-hit == 'true'", waitRegion, StringComparison.Ordinal);
+
+        // 等待实体契约(对抗评审实证:sleep 拔成 0 曾不亮红):两次等待必须真实存在
+        // 且量级足以盖住约 10 分钟的生产窗口——锁"芯"而不只锁"壳"。
+        Assert.Equal(
+            2,
+            Regex.Matches(waitRegion, Regex.Escape("run: sleep 360")).Count);
         Assert.Contains("steps.lean-report-input.outputs.address", admissionCacheKey, StringComparison.Ordinal);
         Assert.Contains(
             "$(basename \"$target\")\" > \"${target}.sha256\"",

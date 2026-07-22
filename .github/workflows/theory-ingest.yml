@@ -90,6 +90,9 @@ jobs:
       # workflow 并行触发;缓存被 LRU 逐出后的首个 theory PR 会竞态 miss(先例:
       # PR #290/#320,ingest 11:12 失败,缓存 12:58 才产出)。故以 lookup-only 探测
       # + 条件等待重试,全程无凭据;最终 restore 仍 fail-closed——等待不降级检测。
+      # 诚实边界(对抗评审注):12 分钟重试只盖"生产者正在跑"的窗口;生产者自身
+      # 失败/被取消(如上述先例的 106 分钟空窗)不在此列,届时仍诚实红,由重跑
+      # 或 shepherd 唤醒兜底——缩窗而非闭窗。
       - name: Probe base canonical Lean report cache
         id: lean-report-probe-1
         uses: actions/cache/restore@v4
