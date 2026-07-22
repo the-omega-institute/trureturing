@@ -1,11 +1,13 @@
 -- theory-selfgrowth / propose department.
--- On the platform idle broadcast, emit ONE frontier-generation request. github-proxy
--- dedups on the request's stable `dedup_key`, so at most one open request exists at a
--- time (no flood) — this department needs no github search of its own.
+-- On the platform idle broadcast, emit ONE frontier-generation request, GENERATION-SCOPED
+-- and gated by open-request exclusion so the self-growth flywheel keeps turning past its
+-- first cycle (#296 Major 1) and never acts on a stale idle hint (#296 Major 2).
 --
 -- HOST-package form: publishable `contract` only, plus framework-injected globals
--- (`exec_sync` to read FKST_GITHUB_REPO, `raise` to produce). No forge/devloop/
--- workflow_internal (platform-internal). Egress stays with github-proxy.
+-- (`exec_sync` for shell reads, `json.decode` to parse, `raise` to produce, `log` to trace).
+-- No forge/devloop/workflow_internal (platform-internal, unavailable to host packages).
+-- The gh calls here are READS for the dedup decision; issue-create egress stays with
+-- github-proxy, which still performs the actual create.
 
 local core = require("core")
 
@@ -19,8 +21,7 @@ M.spec = {
   retry = false,
 }
 
--- Read FKST_GITHUB_REPO via the injected `exec_sync` global (same mechanism the
--- platform's workflow_internal.env wraps: a `printf` of the env var, then read stdout).
+-- Read FKST_GITHUB_REPO via the injected `exec_sync` global (a `printf` of the env var).
 local function read_repo()
   local out = exec_sync({ cmd = 'printf %s "$FKST_GITHUB_REPO"', timeout = 30 })
   if type(out) ~= "table" or out.exit_code ~= 0 then
@@ -29,13 +30,63 @@ local function read_repo()
   return tostring(out.stdout or "")
 end
 
-function pipeline(_event)
+-- Current wall clock (UTC epoch seconds) for freshness assessment.
+local function now_seconds()
+  local out = exec_sync({ cmd = "date -u +%s", timeout = 30 })
+  if type(out) ~= "table" or out.exit_code ~= 0 then
+    error("theory-selfgrowth: clock-read-failed", 0)
+  end
+  local n = tonumber(tostring(out.stdout or ""):match("%d+"))
+  if n == nil then
+    error("theory-selfgrowth: clock-parse-failed", 0)
+  end
+  return n
+end
+
+-- Read the producer's OWN prior frontier-request issues (any state) so decide_generation
+-- can compute the next generation and detect an open one. Host-legal: exec_sync + json.decode
+-- (forge is platform-internal). The search marker contains no shell-special characters.
+local function existing_requests(repo)
+  local cmd = "gh issue list --repo '" .. repo
+    .. "' --state all --search '" .. core.marker_search_query()
+    .. "' --json number,state,body --limit 100"
+  local out = exec_sync({ cmd = cmd, timeout = 30 })
+  if type(out) ~= "table" or out.exit_code ~= 0 then
+    error("theory-selfgrowth: request-search-failed", 0)
+  end
+  local ok, decoded = pcall(json.decode, tostring(out.stdout or "[]"))
+  if not ok or type(decoded) ~= "table" then
+    error("theory-selfgrowth: request-search-malformed-json", 0)
+  end
+  return decoded
+end
+
+function pipeline(event)
+  -- #296 Major 2: never act on a stale/expired durable idle hint.
+  local verdict = core.assess_idle_payload(event and event.payload, now_seconds())
+  if verdict == "malformed" then
+    error("theory-selfgrowth: malformed system_idle payload", 0)
+  end
+  if verdict ~= "fresh" then
+    log.warn("theory-selfgrowth: skipping " .. tostring(verdict) .. " system_idle hint")
+    return
+  end
+
   local repo = read_repo()
   if not core.validate_repo(repo) then
     error("theory-selfgrowth: malformed FKST_GITHUB_REPO: " .. tostring(repo), 0)
   end
+
+  -- #296 Major 1: generation-scoped dedup + open-request exclusion (one open at a time).
+  local decision = core.decide_generation(existing_requests(repo))
+  if decision.open_exists then
+    log.warn("theory-selfgrowth: an open frontier-request already exists; skipping (one at a time)")
+    return
+  end
+
   -- Produce the issue-create event; github-proxy performs the gh call + dedup.
-  raise("github-proxy.github_issue_create_request", core.build_frontier_request(repo))
+  raise("github-proxy.github_issue_create_request",
+    core.build_frontier_request(repo, decision.generation))
 end
 
 return M
