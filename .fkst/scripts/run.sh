@@ -268,8 +268,26 @@ passed = summary.get("passed")
 failed = summary.get("failed")
 if type(passed) is not int or type(failed) is not int or passed < 0 or failed < 0:
     raise SystemExit(f"fkst: package {package_name}: invalid test report counts")
-if passed + failed != len(tests):
-    raise SystemExit(f"fkst: package {package_name}: inconsistent test report counts")
+entry_passed = 0
+entry_failed = 0
+for index, test in enumerate(tests):
+    if not isinstance(test, dict):
+        raise SystemExit(f"fkst: package {package_name}: invalid test report entry {index}")
+    for field in ("owner_namespace", "file", "name"):
+        value = test.get(field)
+        if not isinstance(value, str) or not value:
+            raise SystemExit(
+                f"fkst: package {package_name}: invalid test report entry {index} field {field}"
+            )
+    status = test.get("status")
+    if status == "pass":
+        entry_passed += 1
+    elif status == "fail" and isinstance(test.get("error"), str):
+        entry_failed += 1
+    else:
+        raise SystemExit(f"fkst: package {package_name}: invalid test report entry {index} status")
+if passed != entry_passed or failed != entry_failed:
+    raise SystemExit(f"fkst: package {package_name}: invalid test report counts")
 if failed != 0:
     raise SystemExit(f"fkst: package {package_name}: report contains failed tests")
 if passed == 0:

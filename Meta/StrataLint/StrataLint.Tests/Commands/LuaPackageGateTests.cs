@@ -56,6 +56,23 @@ public sealed class LuaPackageGateTests
         Assert.Equal(17, result.ExitCode);
     }
 
+    [Theory]
+    [InlineData("malformed")]
+    [InlineData("mismatch")]
+    public void GateRejectsNonconformingTestReportEntries(string mode)
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        using var fixture = new LuaGateFixture("packages/alpha");
+        fixture.AddPackage("alpha");
+
+        var result = fixture.Run(mode);
+        var error = Encoding.UTF8.GetString(result.StandardError);
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Contains("invalid test report", error, StringComparison.OrdinalIgnoreCase);
+    }
+
     private sealed class LuaGateFixture : IDisposable
     {
         private readonly TemporaryDirectory temporary = new();
@@ -99,8 +116,12 @@ public sealed class LuaPackageGateTests
                 [[ -n "$report" ]]
                 if [[ "$FAKE_FRAMEWORK_MODE" == empty ]]; then
                   printf '%s\n' '{"schema":"fkst.test.report.v1","summary":{"passed":0,"failed":0},"tests":[]}' > "$report"
-                else
+                elif [[ "$FAKE_FRAMEWORK_MODE" == malformed ]]; then
                   printf '%s\n' '{"schema":"fkst.test.report.v1","summary":{"passed":1,"failed":0},"tests":[{"status":"pass"}]}' > "$report"
+                elif [[ "$FAKE_FRAMEWORK_MODE" == mismatch ]]; then
+                  printf '%s\n' '{"schema":"fkst.test.report.v1","summary":{"passed":1,"failed":0},"tests":[{"owner_namespace":"alpha","file":"tests/smoke_test.lua","name":"test_smoke","status":"fail","error":"synthetic"}]}' > "$report"
+                else
+                  printf '%s\n' '{"schema":"fkst.test.report.v1","summary":{"passed":1,"failed":0},"tests":[{"owner_namespace":"alpha","file":"tests/smoke_test.lua","name":"test_smoke","status":"pass"}]}' > "$report"
                 fi
                 """ + "\n",
                 new UTF8Encoding(false));
