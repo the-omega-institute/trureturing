@@ -178,23 +178,17 @@ public sealed class ScratchWorkspaceTests
     }
 
     [Fact]
-    public void MakeSweepBridgeScriptPinsCanonicalPrefixesAndTtl()
+    public void MakeSweepBridgeRecipePinsCanonicalPrefixes()
     {
-        var script = File.ReadAllText(Path.Combine(
-            FindRepositoryRoot(),
-            "Meta",
-            "StrataLint",
-            "scripts",
-            "scratch-sweep.sh"));
+        // The phase-1 `make scratch-sweep` bridge is an inline TTL `find` over the legacy
+        // flat leak dirs. Its prefixes must track the canonical ScratchWorkspace set so a
+        // new ceremony prefix is swept there too, and it must use an age (`-mtime`) floor.
+        var makefile = File.ReadAllText(Path.Combine(FindRepositoryRoot(), "Makefile"));
 
-        Assert.Contains(
-            "TTL_HOURS=" + ((int)ScratchWorkspace.DefaultStaleAfter.TotalHours)
-                .ToString(CultureInfo.InvariantCulture),
-            script,
-            StringComparison.Ordinal);
+        Assert.Contains("-mtime", makefile, StringComparison.Ordinal);
         foreach (var prefix in ScratchWorkspace.LegacyPrefixes)
         {
-            Assert.Contains("\"" + prefix + "\"", script, StringComparison.Ordinal);
+            Assert.Contains(prefix, makefile, StringComparison.Ordinal);
         }
     }
 

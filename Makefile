@@ -51,7 +51,7 @@ selftest:
 	@/bin/bash Meta/StrataLint/scripts/stratalint-selftest.sh
 
 scratch-sweep:
-	@/bin/bash Meta/StrataLint/scripts/scratch-sweep.sh
+	@find "$${TMPDIR:-/tmp}" /tmp -maxdepth 1 -type d \( -name 'stratalint-c0-renew-*' -o -name 'stratalint-conservative-*' \) -mtime +0 -exec rm -rf {} + 2>/dev/null || true
 
 gate: scratch-sweep
 	@/bin/bash Meta/StrataLint/scripts/local-harness-gate.sh --base "$(BASE)" $(GATE_ARGS)
