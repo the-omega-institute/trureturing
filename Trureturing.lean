@@ -14,10 +14,12 @@ import D5.S1.Phase.SeatTowerCombinatorics
 import D5.S1.Phase.SeatTowerConsequences
 import D5.S1.Depth.StationingCombinatorics
 import D5.S1.Depth.TwelveScaleReduction
+import D5.S1.Depth.WindowParity
 import D5.S1.Phase.WalkFormula
 import D5.S1.Phase.ZeroOrbitCongruence
 import D5.S3.Quantum.EnvironmentRecords
 import D5.S3.Quantum.ObserverCommutator
 import D5.S3.Quantum.PointerBasis
+import D5.S3.Zeros.ScalingLedgerConsequences
 import D5.S3.Zeros.ZetaIdentities
 import D5.S3.Zeros.ZetaUpgrade
