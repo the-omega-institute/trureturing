@@ -26,6 +26,7 @@ governance_documents:
   - "docs/CONTRIBUTING.md"
   - "docs/GOVERNANCE.md"
   - "docs/develop/spec/golden-ledger-repo-spec.md"
+  - "docs/develop/theory/BEDC-WM.md"
   - "docs/develop/theory/GICT.md"
   - "docs/develop/theory/OBSERVER-QUANTUM.md"
   - "docs/develop/theory/PERIODIC_TREE.md"
