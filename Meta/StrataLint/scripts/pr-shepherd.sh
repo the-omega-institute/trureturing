@@ -17,6 +17,7 @@ set -euo pipefail
 REPO="the-omega-institute/trureturing"
 LOG="${PR_SHEPHERD_LOG:-$HOME/.pr-shepherd.log}"
 PIDFILE="${PR_SHEPHERD_PID:-$HOME/.pr-shepherd.pid}"
+STATE_DIR="${PR_SHEPHERD_STATE:-$HOME/.pr-shepherd-state}"
 
 GH() { LEAN4_GUARDRAILS_BYPASS=1 gh "$@"; }
 
@@ -34,11 +35,29 @@ open_pr() {
   printf '%s\n' "$num"
 }
 
+# 唤醒:armed 但 head 上无任何 check 的 PR(bot 以 GITHUB_TOKEN push 不触发
+# workflow 的防递归缺口,见 retire-auto-update 尸检)。本地身份 close→reopen
+# 重铸触发事件;close 会撤 auto-merge,故唤醒后必须重挂。
+wake_pr() {
+  local num="$1"
+  GH pr close "$num" --repo "$REPO" || { log "WAKE #$num close 失败"; return 1; }
+  sleep 3
+  if ! GH pr reopen "$num" --repo "$REPO"; then
+    sleep 5
+    GH pr reopen "$num" --repo "$REPO" \
+      || { log "ALERT #$num reopen 两次失败,PR 留在 closed,须立即恢复"; return 1; }
+  fi
+  GH pr merge "$num" --repo "$REPO" --auto --merge \
+    || log "WAKE #$num re-arm auto-merge 失败(需会话补挂)"
+  log "WAKE #$num close/reopen 完成,auto-merge 重挂"
+}
+
 sweep() {
+  mkdir -p "$STATE_DIR"
   GH pr list --repo "$REPO" --state open \
-    --json number,mergeable,mergeStateStatus,autoMergeRequest,headRefName \
-    --jq '.[] | select(.autoMergeRequest != null) | "\(.number) \(.mergeable) \(.mergeStateStatus) \(.headRefName)"' |
-  while read -r num mergeable mstate head; do
+    --json number,mergeable,mergeStateStatus,autoMergeRequest,headRefName,headRefOid,statusCheckRollup \
+    --jq '.[] | select(.autoMergeRequest != null) | "\(.number) \(.mergeable) \(.mergeStateStatus) \(.headRefName) \(.headRefOid) \(.statusCheckRollup|length)"' |
+  while read -r num mergeable mstate head head_oid checks; do
     case "$mergeable:$mstate" in
       MERGEABLE:BEHIND)
         if out="$(GH api -X PUT "repos/$REPO/pulls/$num/update-branch" 2>&1)"; then
@@ -50,7 +69,21 @@ sweep() {
       CONFLICTING:*)
         log "ALERT #$num CONFLICTING head=$head 需语义合并(派 shepherd lane,本器不代解)"
         ;;
-      *) : ;;  # BLOCKED=checks 在跑/待绿,CLEAN=即将自动合,UNKNOWN=GitHub 未算完:均不动
+      *)
+        # BLOCKED/UNKNOWN 且 head 无任何 check:多为 bot push 死锁。
+        # 同一 head 连续两轮观察为空才唤醒,防 checks 挂载延迟误触。
+        marker="$STATE_DIR/nochecks-$num"
+        if [[ "$checks" == "0" && ( "$mstate" == "BLOCKED" || "$mstate" == "UNKNOWN" ) ]]; then
+          if [[ -f "$marker" && "$(cat "$marker")" == "$head_oid" ]]; then
+            wake_pr "$num" && rm -f "$marker"
+          else
+            printf '%s' "$head_oid" > "$marker"
+            log "SWEEP #$num head=$head_oid 无 checks,标记观察(下轮仍空即唤醒)"
+          fi
+        else
+          rm -f "$marker" 2>/dev/null || true
+        fi
+        ;;
     esac
   done
 }
