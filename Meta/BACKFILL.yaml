@@ -5319,19 +5319,31 @@ sources:
           raw_sha256: sha256:49aad85920afca41580bd9b0a2bac6309cd6930d3f167f277a1f8cdba8835130
           normalized_sha256: sha256:49aad85920afca41580bd9b0a2bac6309cd6930d3f167f277a1f8cdba8835130
         cas_ref: sha256:49aad85920afca41580bd9b0a2bac6309cd6930d3f167f277a1f8cdba8835130
-        coverage_gids: []
+        coverage_gids:
+          - D5/S1/Depth/WindowParity.full_window_and_golden_capacity
+          - D5/S1/Depth/WindowParity.witt_window_sum_parity
         receipts:
-          coverage: []
-          scribe: []
+          coverage:
+            - gid: D5/S1/Depth/WindowParity.full_window_and_golden_capacity
+              source_sha256: sha256:49aad85920afca41580bd9b0a2bac6309cd6930d3f167f277a1f8cdba8835130
+              target_sha256: sha256:bf6c623fff5d06ebb34cdd133aed7617b93e719c0ab927e387eaff9a304a3bc6
+            - gid: D5/S1/Depth/WindowParity.witt_window_sum_parity
+              source_sha256: sha256:49aad85920afca41580bd9b0a2bac6309cd6930d3f167f277a1f8cdba8835130
+              target_sha256: sha256:bf6c623fff5d06ebb34cdd133aed7617b93e719c0ab927e387eaff9a304a3bc6
+          scribe:
+            - gid: D5/S1/Depth/WindowParity.full_window_and_golden_capacity
+              definition_sha256: sha256:d534f407ef14900b98a36522a0eb5c69cb2ee9bc6d35c087a682965dcef91dd8
+              emission_sha256: sha256:eb3b71d524062cc2932fc585fc643d8a1aaedff40945f06e320452136debd15e
+            - gid: D5/S1/Depth/WindowParity.witt_window_sum_parity
+              definition_sha256: sha256:d534f407ef14900b98a36522a0eb5c69cb2ee9bc6d35c087a682965dcef91dd8
+              emission_sha256: sha256:eb3b71d524062cc2932fc585fc643d8a1aaedff40945f06e320452136debd15e
           unresolved_subitems:
-            - full-window-coverage-and-floor-phi-cubed-capacity
-            - witt-even-termination-and-odd-alternation-identity
             - cascade-chirality-from-window-parity
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: pzg-residual-6974792f9db331ff71554fe1c532d1314538708fbe1d4d6462fbb0c05cead846
         ast_path: theorem/6.44
         fingerprints:
@@ -8601,20 +8613,41 @@ sources:
         cas_ref: sha256:e9e17b18bdca262cf243b1193d7d9b23baf205d584164462084d102de82e796c
         coverage_gids:
           - D5/S3/Zeros/ZeroGeometry.off_line_scaling_entry_spec
+          - D5/S3/Zeros/ScalingLedgerConsequences.half_density_phase_scaling_factorization
+          - D5/S3/Zeros/ScalingLedgerConsequences.scaling_ledger_unbounded_on_multiples
+          - D5/S3/Zeros/ScalingLedgerConsequences.unit_rotation_preserves_coefficient_norm
         receipts:
           coverage:
             - gid: D5/S3/Zeros/ZeroGeometry.off_line_scaling_entry_spec
               source_sha256: sha256:e9e17b18bdca262cf243b1193d7d9b23baf205d584164462084d102de82e796c
               target_sha256: sha256:f5fa23f5e88014c485cf5f1fd4dac3bd2998ca1d5c31bb1af635abf0c3602cb9
-          scribe: []
-          unresolved_subitems:
-            - coefficient-half-density-phase-scaling-factorization
-            - scaling-unbounded-along-me2
-            - unit-rotation-preserves-coefficient-norm
+            - gid: D5/S3/Zeros/ScalingLedgerConsequences.half_density_phase_scaling_factorization
+              source_sha256: sha256:e9e17b18bdca262cf243b1193d7d9b23baf205d584164462084d102de82e796c
+              target_sha256: sha256:de82dbe8d5992a4da958b89c63b5ba7894a7bb599f475d68bafe7e7ab4d2861a
+            - gid: D5/S3/Zeros/ScalingLedgerConsequences.scaling_ledger_unbounded_on_multiples
+              source_sha256: sha256:e9e17b18bdca262cf243b1193d7d9b23baf205d584164462084d102de82e796c
+              target_sha256: sha256:de82dbe8d5992a4da958b89c63b5ba7894a7bb599f475d68bafe7e7ab4d2861a
+            - gid: D5/S3/Zeros/ScalingLedgerConsequences.unit_rotation_preserves_coefficient_norm
+              source_sha256: sha256:e9e17b18bdca262cf243b1193d7d9b23baf205d584164462084d102de82e796c
+              target_sha256: sha256:de82dbe8d5992a4da958b89c63b5ba7894a7bb599f475d68bafe7e7ab4d2861a
+          scribe:
+            - gid: D5/S3/Zeros/ZeroGeometry.off_line_scaling_entry_spec
+              definition_sha256: sha256:19473e1570f522c194ee022b630fd7d4f26963a57c1ec678b6f2571394e5d610
+              emission_sha256: sha256:6ed374dc6cc267289025419f3a4386b53edb04fa5d4b742d43cec444b1c06aff
+            - gid: D5/S3/Zeros/ScalingLedgerConsequences.half_density_phase_scaling_factorization
+              definition_sha256: sha256:c4d11108b9a54a622618a46ffd38bf63a50586b9c0aab6262194df332ba0426d
+              emission_sha256: sha256:5ff5a01a006fe801f1a5fcf867f4486910680cf5b782e0185c329ec3d1490674
+            - gid: D5/S3/Zeros/ScalingLedgerConsequences.scaling_ledger_unbounded_on_multiples
+              definition_sha256: sha256:c4d11108b9a54a622618a46ffd38bf63a50586b9c0aab6262194df332ba0426d
+              emission_sha256: sha256:5ff5a01a006fe801f1a5fcf867f4486910680cf5b782e0185c329ec3d1490674
+            - gid: D5/S3/Zeros/ScalingLedgerConsequences.unit_rotation_preserves_coefficient_norm
+              definition_sha256: sha256:c4d11108b9a54a622618a46ffd38bf63a50586b9c0aab6262194df332ba0426d
+              emission_sha256: sha256:5ff5a01a006fe801f1a5fcf867f4486910680cf5b782e0185c329ec3d1490674
+          unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: partial
+          migration: absorbed
           truth: closed
       - atom_id: pzg-residual-4807ade3f72a896bc214fbbe14fdc8e0ea18611f00fce4a8d7be197b4b809d79
         ast_path: theorem/24.3
