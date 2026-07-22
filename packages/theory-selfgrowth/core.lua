@@ -28,12 +28,21 @@ local FRESHNESS_BUDGET_SECONDS = 10 * 60
 -- idle and architecture-audit probes. decide_generation independently bounds output to one
 -- open frontier request, so the cadence controls detection latency rather than issue volume.
 local POLL_INTERVAL_SECONDS = 30 * 60
+<<<<<<< HEAD
+=======
+-- The cron raiser's `interval` field must be a duration STRING (e.g. "30m"), not an integer —
+-- the framework's raiser parser rejects a bare number ("invalid type: integer, expected a
+-- string"). Mirror archaudit's audit_poll_interval, which is `tostring(minutes) .. "m"`.
+>>>>>>> a16d94fb027b341e166e9602fdfb7c1f5676edce
 local POLL_INTERVAL = tostring(math.floor(POLL_INTERVAL_SECONDS / 60)) .. "m"
 
 function M.request_marker() return REQUEST_MARKER end
 function M.request_title() return REQUEST_TITLE end
 function M.freshness_budget_seconds() return FRESHNESS_BUDGET_SECONDS end
+<<<<<<< HEAD
 function M.poll_interval_seconds() return POLL_INTERVAL_SECONDS end
+=======
+>>>>>>> a16d94fb027b341e166e9602fdfb7c1f5676edce
 function M.poll_interval() return POLL_INTERVAL end
 
 -- Idempotency key handed to github-proxy — GENERATION-SCOPED (#296 Major 1).
