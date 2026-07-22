@@ -280,6 +280,21 @@ public sealed class TheoryAtomizerTests
         Assert.Equal(expectedAstPath, atom.AstPath);
     }
 
+    [Theory]
+    [InlineData("**§12.1 互反-干涉庭(\"真理一半看不见\")**。claim。", "semantic-court/reciprocity-interference")]
+    [InlineData("**§12.2 投影-干涉庭与署名**。claim。", "semantic-court/projection-interference")]
+    [InlineData("**§12.3 滤镜与视界庭(Fable/Mythos)**。claim。", "semantic-court/filters-and-horizons")]
+    public void ObserverV1RecognizesTheV6SemanticCourtClaimLeads(
+        string claim,
+        string expectedAstPath)
+    {
+        var bytes = Encoding.UTF8.GetBytes($"# Observer\n\n{claim}\n");
+
+        var atom = Assert.Single(AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes).Claims);
+
+        Assert.Equal(expectedAstPath, atom.AstPath);
+    }
+
     [Fact]
     public void ObserverV1SplitIsByteExactAndIdempotent()
     {

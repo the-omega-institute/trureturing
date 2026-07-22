@@ -6,6 +6,8 @@
   This was a local subdivision only; all C# namespaces remain `StrataLint.Engine`.
 - 2026-07-12 (SL-003): split semantic path parsing from `RepositoryPathPolicy.cs`
   into a same-namespace partial source after the file crossed 400 lines.
+- 2026-07-22 (SL-003): split the Observer theory dialect adapter from
+  `TheoryAtomizers.cs` after the shared atomizer source reached the file ceiling.
 
 ## Buckets
 

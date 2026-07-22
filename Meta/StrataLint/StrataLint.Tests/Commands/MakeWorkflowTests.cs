@@ -30,6 +30,7 @@ public sealed class MakeWorkflowTests
     private const string LeanReportPairScriptPath = "Meta/StrataLint/scripts/lean-report-pair.sh";
     private const string PerfReportScriptPath = "Meta/StrataLint/scripts/perf-report.sh";
     private const string PerfEventScriptPath = "Meta/StrataLint/scripts/perf-event-lib.sh";
+    private const string AdmissionWorkflowPath = ".github/workflows/ci.yml";
     private const string TheoryIngestWorkflowPath = ".github/workflows/theory-ingest.yml";
 
     private static readonly string[] Targets =
@@ -331,30 +332,60 @@ public sealed class MakeWorkflowTests
     }
 
     [Fact]
-    public void TheoryIngestProducesCanonicalLeanReportBeforeConsumption()
+    public void TheoryIngestRestoresBaseCanonicalReportWithoutCandidateLeanBuild()
     {
         var root = FindRepositoryRoot();
+        var admission = File.ReadAllText(Path.Combine(root, AdmissionWorkflowPath));
         var workflow = File.ReadAllText(Path.Combine(root, TheoryIngestWorkflowPath));
         var overlayIndex = workflow.IndexOf(
             "- name: Overlay judge harness onto candidate data",
             StringComparison.Ordinal);
-        var leanIndex = workflow.IndexOf("          make lean\n", StringComparison.Ordinal);
-        var reportIndex = workflow.IndexOf("          make lean-report\n", StringComparison.Ordinal);
+        var addressIndex = workflow.IndexOf(
+            "- name: Resolve base canonical Lean report address",
+            StringComparison.Ordinal);
+        var restoreIndex = workflow.IndexOf(
+            "- name: Restore base canonical Lean report",
+            StringComparison.Ordinal);
+        var verifyIndex = workflow.IndexOf(
+            "- name: Install and verify base canonical Lean report",
+            StringComparison.Ordinal);
         var ingestIndex = workflow.IndexOf("          make ingest BASE=HEAD\n", StringComparison.Ordinal);
 
         Assert.True(overlayIndex >= 0, "theory ingest must overlay the base judge");
-        Assert.True(leanIndex > overlayIndex, "Lean build must use the overlaid base judge");
-        Assert.True(reportIndex > leanIndex, "canonical report production must follow the Lean build");
-        Assert.True(ingestIndex > reportIndex, "ingest must only consume a precomputed Lean report");
+        Assert.True(addressIndex > overlayIndex, "report address must use the overlaid base judge");
+        Assert.True(restoreIndex > addressIndex, "report restore must use the resolved address");
+        Assert.True(verifyIndex > restoreIndex, "restored report must be verified before consumption");
+        Assert.True(ingestIndex > verifyIndex, "ingest must only consume a verified canonical report");
 
-        Assert.Contains("uses: actions/cache@v4", workflow, StringComparison.Ordinal);
-        Assert.Contains("candidate/.lake", workflow, StringComparison.Ordinal);
-        var cacheKey = Assert.Single(
+        Assert.Contains("uses: actions/cache/save@v4", admission, StringComparison.Ordinal);
+        Assert.Contains("uses: actions/cache/restore@v4", workflow, StringComparison.Ordinal);
+        var admissionCacheKey = Assert.Single(
+            admission.Split('\n'),
+            static line => line.TrimStart().StartsWith(
+                "key: stratalint-canonical-lean-report-v1-",
+                StringComparison.Ordinal));
+        var ingestCacheKey = Assert.Single(
             workflow.Split('\n'),
-            static line => line.TrimStart().StartsWith("key: theory-ingest-lake-", StringComparison.Ordinal));
-        Assert.Contains("hashFiles('candidate/lean-toolchain')", cacheKey, StringComparison.Ordinal);
-        Assert.Contains("hashFiles('candidate/lake-manifest.json')", cacheKey, StringComparison.Ordinal);
-        Assert.Contains("hashFiles('candidate/**/*.lean')", cacheKey, StringComparison.Ordinal);
+            static line => line.TrimStart().StartsWith(
+                "key: stratalint-canonical-lean-report-v1-",
+                StringComparison.Ordinal));
+        Assert.Equal(admissionCacheKey.Trim(), ingestCacheKey.Trim());
+        Assert.Contains("steps.lean-report-input.outputs.address", admissionCacheKey, StringComparison.Ordinal);
+        Assert.Contains(
+            "$(basename \"$target\")\" > \"${target}.sha256\"",
+            admission,
+            StringComparison.Ordinal);
+        Assert.Contains("steps.lean-report-cache.outputs.cache-hit", workflow, StringComparison.Ordinal);
+        Assert.Contains(LeanReportInputScriptPath, workflow, StringComparison.Ordinal);
+        Assert.Contains("\" verify \\", workflow, StringComparison.Ordinal);
+        Assert.Contains(".lake/build/stratalint/raw-lean-report.json", workflow, StringComparison.Ordinal);
+        Assert.Contains("timeout-minutes: 30", workflow, StringComparison.Ordinal);
+        Assert.Contains("actions: read", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("          make lean\n", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("          make lean-report\n", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("Install pinned Lean toolchain", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("Restore candidate Lean build artifacts", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("uses: actions/cache@v4", workflow, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -368,15 +399,21 @@ public sealed class MakeWorkflowTests
         var boundaryIndex = workflow.IndexOf(
             "- name: Enforce candidate data-only boundary",
             StringComparison.Ordinal);
-        var leanIndex = workflow.IndexOf("          make lean\n", StringComparison.Ordinal);
+        var reportRestoreIndex = workflow.IndexOf(
+            "- name: Restore base canonical Lean report",
+            StringComparison.Ordinal);
         var commitIndex = workflow.IndexOf(
             "- name: Enforce write-path whitelist and commit back",
             StringComparison.Ordinal);
 
         Assert.True(candidateCheckoutIndex >= 0, "candidate checkout must be explicit");
         Assert.True(boundaryIndex > candidateCheckoutIndex, "the data boundary must follow checkout");
-        Assert.True(leanIndex > boundaryIndex, "candidate inputs must be classified before Lean runs");
-        Assert.True(commitIndex > leanIndex, "write credentials must only appear after candidate execution");
+        Assert.True(
+            reportRestoreIndex > boundaryIndex,
+            "candidate inputs must be classified before the report is restored");
+        Assert.True(
+            commitIndex > reportRestoreIndex,
+            "write credentials must only appear after candidate report consumption");
 
         var candidateCheckout = workflow[candidateCheckoutIndex..boundaryIndex];
         Assert.Contains(
@@ -385,7 +422,7 @@ public sealed class MakeWorkflowTests
             StringComparison.Ordinal);
         Assert.Contains("persist-credentials: false", candidateCheckout, StringComparison.Ordinal);
 
-        var boundary = workflow[boundaryIndex..leanIndex];
+        var boundary = workflow[boundaryIndex..reportRestoreIndex];
         var theoryDataPattern = string.Concat("docs/develop/", "theory/*");
         Assert.Contains("BASE_SHA: ${{ github.event.pull_request.base.sha }}", boundary, StringComparison.Ordinal);
         Assert.Contains("HEAD_SHA: ${{ github.event.pull_request.head.sha }}", boundary, StringComparison.Ordinal);
@@ -395,16 +432,28 @@ public sealed class MakeWorkflowTests
             StringComparison.Ordinal);
         Assert.Contains("diff --name-only --no-renames -z", boundary, StringComparison.Ordinal);
 
-        var cacheIndex = workflow.IndexOf(
-            "- name: Restore candidate Lean build artifacts",
+        var reportInstallIndex = workflow.IndexOf(
+            "- name: Install and verify base canonical Lean report",
             StringComparison.Ordinal);
-        var reportIndex = workflow.IndexOf("- name: Produce canonical Lean report", StringComparison.Ordinal);
-        var cache = workflow[cacheIndex..reportIndex];
+        var cache = workflow[reportRestoreIndex..reportInstallIndex];
         Assert.DoesNotContain("restore-keys:", cache, StringComparison.Ordinal);
+        Assert.DoesNotContain("GH_TOKEN:", workflow[..commitIndex], StringComparison.Ordinal);
 
         var commit = workflow[commitIndex..];
         Assert.Contains("GH_TOKEN: ${{ github.token }}", commit, StringComparison.Ordinal);
         Assert.Contains("gh auth setup-git", commit, StringComparison.Ordinal);
+        var restoreOverlayIndex = commit.IndexOf(
+            "git restore --source=HEAD -- Meta/StrataLint Makefile global.json",
+            StringComparison.Ordinal);
+        var cleanOverlayIndex = commit.IndexOf(
+            "git clean -fd -- Meta/StrataLint",
+            StringComparison.Ordinal);
+        var inspectChangesIndex = commit.IndexOf(
+            "changed=\"$(git status --porcelain)\"",
+            StringComparison.Ordinal);
+        Assert.True(restoreOverlayIndex >= 0, "tracked judge overlay files must be restored");
+        Assert.True(cleanOverlayIndex > restoreOverlayIndex, "untracked judge overlay files must be removed");
+        Assert.True(inspectChangesIndex > cleanOverlayIndex, "the whitelist must inspect the cleaned candidate");
     }
 
     [Fact]
