@@ -1,8 +1,8 @@
-<!-- echo-residual-summary:v2 base=git-sha1:49dd214be0cdcb528251fdef21b5c76cb399ca5c -->
+<!-- echo-residual-summary:v2 base=git-sha1:d632a8308791c366178f0f9fe68c4ddd5c5c434f -->
 # Echo Residual Summary
 
-- unresolved_subitems: 468
-- mother_residual_atom_ids: 58
+- unresolved_subitems: 463
+- mother_residual_atom_ids: 57
 
 ## `gict-v3.6`
 
@@ -184,8 +184,8 @@ Mother residual atoms:
 
 ## `pzg-v170`
 
-- unresolved_subitems: 326
-- mother_residual_atom_ids: 45
+- unresolved_subitems: 321
+- mother_residual_atom_ids: 44
 
 Mother residual atoms:
 
@@ -260,10 +260,8 @@ Mother residual atoms:
   - `numerical-window-certificate`
 - `pzg-residual-4807ade3f72a896bc214fbbe14fdc8e0ea18611f00fce4a8d7be197b4b809d79` (1)
   - `address-dependent-inverse-scaling-register-governance-exclusion`
-- `pzg-residual-49aad85920afca41580bd9b0a2bac6309cd6930d3f167f277a1f8cdba8835130` (3)
+- `pzg-residual-49aad85920afca41580bd9b0a2bac6309cd6930d3f167f277a1f8cdba8835130` (1)
   - `cascade-chirality-from-window-parity`
-  - `full-window-coverage-and-floor-phi-cubed-capacity`
-  - `witt-even-termination-and-odd-alternation-identity`
 - `pzg-residual-4d6c29465b81dfa610ece292c2ddb30c70849145b24ba71440ef790ee0a6e0ed` (10)
   - `controlled-forgetting-of-identity-order-and-eigenbasis`
   - `half-density-cut-as-universal-measurement-midline`
@@ -543,10 +541,6 @@ Mother residual atoms:
   - `rh-as-real-part-classification-collapse`
   - `single-omega-state-and-self-action-group`
   - `unitary-forgetting-reconstruction-and-frobenius-as-self-actions`
-- `pzg-residual-e9e17b18bdca262cf243b1193d7d9b23baf205d584164462084d102de82e796c` (3)
-  - `coefficient-half-density-phase-scaling-factorization`
-  - `scaling-unbounded-along-me2`
-  - `unit-rotation-preserves-coefficient-norm`
 - `pzg-residual-f04b7ca6e3e11fec6cdaa643b2dc387cb994e81e344da3da06db0660d7aa27e0` (5)
   - `equivalent-formulation-cannot-serve-as-mechanism`
   - `explicit-formula-as-diffraction-duality-channel`
