@@ -1,4 +1,4 @@
-<!-- echo-residual-summary:v2 base=git-sha1:671378ec0848defc6780131c5a7d975c7ccf4a76 -->
+<!-- echo-residual-summary:v2 base=git-sha1:4b833ed742c799b8680555bb6aff9f231df80d5a -->
 # Echo Residual Summary
 
 - unresolved_subitems: 468
@@ -181,13 +181,6 @@ Mother residual atoms:
   - `discrete-crossed-product-uniqueness`
   - `full-crossed-product-identification`
   - `observer-read-write-forces-structure`
-
-## `periodic-tree-v1`
-
-- unresolved_subitems: 0
-- mother_residual_atom_ids: 0
-
-Mother residual atoms: none.
 
 ## `pzg-v170`
 
