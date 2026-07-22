@@ -34,6 +34,7 @@ public sealed class MakeWorkflowTests
     private const string AdmissionWorkflowPath = ".github/workflows/ci.yml";
     private const string TheoryIngestWorkflowPath = ".github/workflows/theory-ingest.yml";
     private const string EchoResidualSummaryPath = "Generated/echo-residual-summary.md";
+    private const string PrShepherdScriptPath = "Meta/StrataLint/scripts/pr-shepherd.sh";
 
     private static readonly string[] Targets =
     [
@@ -381,11 +382,43 @@ public sealed class MakeWorkflowTests
                 "key: stratalint-canonical-lean-report-v1-",
                 StringComparison.Ordinal));
         var ingestCacheKey = Assert.Single(
-            workflow.Split('\n'),
-            static line => line.TrimStart().StartsWith(
-                "key: stratalint-canonical-lean-report-v1-",
-                StringComparison.Ordinal));
-        Assert.Equal(admissionCacheKey.Trim(), ingestCacheKey.Trim());
+            workflow.Split('\n')
+                .Where(static line => line.TrimStart().StartsWith(
+                    "key: stratalint-canonical-lean-report-v1-",
+                    StringComparison.Ordinal))
+                .Select(static line => line.Trim())
+                .Distinct());
+        Assert.Equal(admissionCacheKey.Trim(), ingestCacheKey);
+
+        // 竞态防护契约:缓存由 ci.yml 并行生产,ingest 须以 lookup-only 探测 + 无凭据
+        // 等待重试盖住生产窗口;最终 restore 保持 fail-closed,等待不降级检测。
+        var probeIndex = workflow.IndexOf(
+            "- name: Probe base canonical Lean report cache",
+            StringComparison.Ordinal);
+        var reprobeIndex = workflow.IndexOf(
+            "- name: Re-probe base canonical Lean report cache",
+            StringComparison.Ordinal);
+        var finalRestoreIndex = workflow.IndexOf(
+            "- name: Restore base canonical Lean report",
+            StringComparison.Ordinal);
+        Assert.True(probeIndex >= 0, "cache production race must be probed before restore");
+        Assert.True(reprobeIndex > probeIndex, "the probe must retry across the production window");
+        Assert.True(finalRestoreIndex > reprobeIndex, "the fail-closed restore must come after all probes");
+        Assert.Contains("lookup-only: true", workflow[probeIndex..finalRestoreIndex], StringComparison.Ordinal);
+        Assert.Contains("fail-on-cache-miss: true", workflow[finalRestoreIndex..], StringComparison.Ordinal);
+
+        // 等待方向契约:等待/重探必须挂在"未命中"上(cache-hit 在 miss 时为空串,
+        // 故唯一正确谓词是 != 'true');挂反(== 'true')会使正常路径空等、竞态路径
+        // 直接失败——修复整体失效。
+        var waitRegion = workflow[probeIndex..finalRestoreIndex];
+        Assert.Contains("outputs.cache-hit != 'true'", waitRegion, StringComparison.Ordinal);
+        Assert.DoesNotContain("outputs.cache-hit == 'true'", waitRegion, StringComparison.Ordinal);
+
+        // 等待实体契约(对抗评审实证:sleep 拔成 0 曾不亮红):两次等待必须真实存在
+        // 且量级足以盖住约 10 分钟的生产窗口——锁"芯"而不只锁"壳"。
+        Assert.Equal(
+            2,
+            Regex.Matches(waitRegion, Regex.Escape("run: sleep 360")).Count);
         Assert.Contains("steps.lean-report-input.outputs.address", admissionCacheKey, StringComparison.Ordinal);
         Assert.Contains(
             "$(basename \"$target\")\" > \"${target}.sha256\"",
@@ -624,6 +657,33 @@ public sealed class MakeWorkflowTests
         {
             if (Directory.Exists(spool)) Directory.Delete(spool, recursive: true);
         }
+    }
+
+    [Fact]
+    public void PrShepherdWakesArmedPrsWhoseHeadHasNoChecks()
+    {
+        var root = FindRepositoryRoot();
+        var shepherd = File.ReadAllText(Path.Combine(root, PrShepherdScriptPath));
+
+        // 采集面:sweep 必须读到 head 与 checks 数,否则判不出"armed 但 head 无 checks"
+        // 的死锁类(bot 以 GITHUB_TOKEN push 不触发 workflow 的防递归缺口)。
+        Assert.Contains("statusCheckRollup", shepherd, StringComparison.Ordinal);
+        Assert.Contains("headRefOid", shepherd, StringComparison.Ordinal);
+
+        // 防误触:同一 head 连续两轮观察无 checks 才唤醒(checks 挂载有延迟)。
+        Assert.Contains("nochecks-", shepherd, StringComparison.Ordinal);
+
+        // 唤醒动作:本地身份 close→reopen 重铸触发事件;close 会撤 auto-merge,
+        // 唤醒后必须重挂,否则绿灯也不合。
+        var wakeIndex = shepherd.IndexOf("wake_pr()", StringComparison.Ordinal);
+        Assert.True(wakeIndex >= 0, "the shepherd must define a wake action for checkless armed PRs");
+        var wake = shepherd[wakeIndex..];
+        var closeIndex = wake.IndexOf("pr close", StringComparison.Ordinal);
+        var reopenIndex = wake.IndexOf("pr reopen", StringComparison.Ordinal);
+        var rearmIndex = wake.IndexOf("--auto --merge", StringComparison.Ordinal);
+        Assert.True(closeIndex >= 0, "wake must close the PR to mint a fresh trigger event");
+        Assert.True(reopenIndex > closeIndex, "wake must reopen after close");
+        Assert.True(rearmIndex > reopenIndex, "close disarms auto-merge; wake must re-arm it");
     }
 
     private static int RecipeCount(string makefile, string target) =>
