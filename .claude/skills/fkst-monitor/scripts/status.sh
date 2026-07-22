@@ -26,6 +26,27 @@ resolve_bin() {
 
 newest_log() { ls -t "$LOG_DIR"/supervise-*.log 2>/dev/null | head -1; }
 
+# The launchd supervise log is append-only ACROSS engine restarts, so counting over the whole
+# file mixes in prior (since-restarted, often since-fixed) instances — e.g. a `[framework]
+# startup error` from a bug fixed three restarts ago would mark the LIVE engine DOWN forever.
+# Slice from the current instance's boot: the framework emits `LEVEL=INFO package_roots=[...]`
+# once per boot as its first structured line; the run.sh `exec: ... supervise` wrapper is a
+# fallback marker. Echoes a path to a current-instance slice (a temp file recorded in
+# INSTANCE_SLICE for cleanup), or the full log unchanged if no boot marker is found.
+INSTANCE_SLICE=""
+scope_log() { # $1 = full log path
+  local full="$1" start
+  [[ -f "$full" ]] || { printf '%s\n' "$full"; return; }
+  start="$(grep -anE 'LEVEL=INFO package_roots=\[|exec: [^ ]*fkst-framework supervise' "$full" 2>/dev/null | tail -1 | cut -d: -f1)"
+  if [[ -n "$start" ]]; then
+    INSTANCE_SLICE="$(mktemp -t fkst-monitor-slice.XXXXXX)"
+    tail -n +"$start" "$full" > "$INSTANCE_SLICE" 2>/dev/null || true
+    printf '%s\n' "$INSTANCE_SLICE"
+  else
+    printf '%s\n' "$full"
+  fi
+}
+
 # count matching lines in a file, always a single integer (0 if none/missing)
 cnt() { # $1 pattern  $2 file
   [[ -f "$2" ]] || { echo 0; return; }
@@ -51,16 +72,20 @@ snapshot() {
   fi
 
   log="$(newest_log || true)"
+  # Scope all log counts to the CURRENT engine instance (see scope_log): counts over the whole
+  # accumulated log would resurrect fatals from prior, since-restarted instances.
+  local ilog=""
+  [[ -n "$log" ]] && ilog="$(scope_log "$log")"
   fatal=0; warns=0; acks=0
-  if [[ -n "$log" ]]; then
+  if [[ -n "$ilog" ]]; then
     # Match STRUCTURED fatal markers only, and skip giant lines: the supervise log embeds
     # whole issue bodies / diffs / dedup keys (e.g. "child-fatal-characterization-tests",
     # a run.sh diff mentioning "panic"/"startup error"), which a bare substring match counts
     # as fatals and falsely reports DOWN. Real fatals are short structured lines.
-    fatal="$(awk 'length<1000' "$log" 2>/dev/null | grep -acE 'LEVEL=FATAL|thread .main. panicked|panicked at |\[framework\] startup error|SIGSEGV|SIGABRT' 2>/dev/null | tr -dc '0-9' | head -c 12 || true)"
+    fatal="$(awk 'length<1000' "$ilog" 2>/dev/null | grep -acE 'LEVEL=FATAL|thread .main. panicked|panicked at |\[framework\] startup error|SIGSEGV|SIGABRT' 2>/dev/null | tr -dc '0-9' | head -c 12 || true)"
     [[ -n "$fatal" ]] || fatal=0
-    warns="$(cnt 'LEVEL=(WARN|ERROR)' "$log")"
-    acks="$(cnt 'MSG=delivery acked' "$log")"
+    warns="$(cnt 'LEVEL=(WARN|ERROR)' "$ilog")"
+    acks="$(cnt 'MSG=delivery acked' "$ilog")"
     (( fatal > 0 )) && { verdict="DOWN"; reasons+=("$fatal fatal log lines"); }
   fi
 
@@ -92,13 +117,16 @@ snapshot() {
     fi
   fi
 
-  # Recent devloop activity
+  # Recent devloop activity (current instance only)
   local codex_failed=0 recent_issue=""
-  if [[ -n "$log" ]]; then
-    codex_failed="$(cnt 'error_class=codex-failed' "$log")"
-    recent_issue="$( { grep -aoE 'issue/[0-9]+|pr/[0-9]+' "$log" 2>/dev/null || true; } | sort -u | tail -3 | tr '\n' ' ')"
+  if [[ -n "$ilog" ]]; then
+    codex_failed="$(cnt 'error_class=codex-failed' "$ilog")"
+    recent_issue="$( { grep -aoE 'issue/[0-9]+|pr/[0-9]+' "$ilog" 2>/dev/null || true; } | sort -u | tail -3 | tr '\n' ' ')"
     (( codex_failed > 0 )) && { [[ "$verdict" == HEALTHY ]] && verdict="DEGRADED"; reasons+=("$codex_failed codex-failed"); }
   fi
+
+  # Drop the current-instance slice temp file (if scope_log created one).
+  [[ -n "${INSTANCE_SLICE:-}" && -f "${INSTANCE_SLICE:-}" ]] && rm -f "$INSTANCE_SLICE"; INSTANCE_SLICE=""
 
   if [[ "${1:-}" == "--json" ]]; then
     printf '{"verdict":"%s","running":%d,"pid":"%s","uptime":"%s","fatal":%d,"warn_error":%d,"acks":%d,"dlq":%d,"retrying":%d,"absent_subscribers":%d,"codex_failed":%d,"progress_age_s":%d}\n' \
@@ -111,7 +139,7 @@ snapshot() {
   printf '  liveness    : %s  pid=%s  uptime=%s\n' "$([[ $running -eq 1 ]] && echo running || echo DOWN)" "${pid:-none}" "${uptime:-}"
   printf '  log         : %s\n' "$([[ -n "$log" ]] && basename "$log" || echo none)"
   printf '  errors      : fatal=%s  warn/error=%s (test-probe produced-only warns are benign)\n' "$fatal" "$warns"
-  printf '  throughput  : %s delivery acks in current log\n' "$acks"
+  printf '  throughput  : %s delivery acks (current instance)\n' "$acks"
   printf '  progress    : %s\n' "$([[ $progress_age -lt 0 ]] && echo 'n/a' || echo "last log write ${progress_age}s ago (stall if >${stall_threshold}s)")"
   if (( observe_ok )); then
     printf '  durable     : dead_letters=%s  retrying=%s  absent_subscribers=%s\n' "$dlq" "$retrying" "$absent"
@@ -123,13 +151,16 @@ snapshot() {
   [[ "$verdict" == HEALTHY ]]
 }
 
-case "${1:-}" in
-  --watch)
-    while true; do
-      out="$(snapshot 2>&1)" && : || echo "$out"
-      sleep 60
-    done ;;
-  --json) snapshot --json ;;
-  ""|--report) snapshot ;;
-  *) echo "usage: status.sh [--watch] [--json]" >&2; exit 2 ;;
-esac
+# Dispatch only when executed, not when sourced (tests source this file for its helpers).
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+  case "${1:-}" in
+    --watch)
+      while true; do
+        out="$(snapshot 2>&1)" && : || echo "$out"
+        sleep 60
+      done ;;
+    --json) snapshot --json ;;
+    ""|--report) snapshot ;;
+    *) echo "usage: status.sh [--watch] [--json]" >&2; exit 2 ;;
+  esac
+fi
