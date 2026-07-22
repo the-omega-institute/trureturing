@@ -1,0 +1,2 @@
+**E.48 奇核密度定理(阶)**。**坏素引理(两行全证)**:$(6j)^2+1$ 之坏素必 $\equiv5\ (12)$($p\mid k^2{+}1\Rightarrow p\equiv1(4)$ 合 $p\equiv2(3)$;$j\le2000$ 残类集恰 $\{5\}$)。筛维一行:$\sum_{p\equiv5(12)}2/p\sim\tfrac12\log\log$——$\kappa=\tfrac12$;**Iwaniec 半维筛(Acta Arith. 29 (1976) 69–95)**给 $c_1J/\sqrt{\log J}\le\#\{j\le J\ \text{实现}\}\le c_2J/\sqrt{\log J}$;偶次幂例外由 $\sum2/p^2$ 吸收。常数拟合五探针稳于 $C\approx1.16$(闭式经查属 LSD-沿二次序列研究级,列开放注记)。系:奇核零 $\asymp\sqrt x/\sqrt{\log x}$;若偶陆低阶则零世界渐近由奇核垄断。(27.420–27.421)
+

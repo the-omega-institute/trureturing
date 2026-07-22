@@ -1,0 +1,2 @@
+**E.50 全群定理**。$\langle g,\mathrm{rot},\mathrm{conj},\mathrm{negT},\mathrm{negz}\rangle=O_Q(\mathbb Z)$。证:稳定子引理($h$ 固定尖点 ⟹ 保 $e_3^\perp$ ⟹ $A\oplus1$,$A\in O(Q_2,\mathbb Z)=D_6$ 阶 12,穷举恰 12,$\langle\mathrm{rot},\mathrm{negz},\mathrm{conj}\rangle$ 计数即等)+ 陪集一段(传递性定理送 $h(e_3)$ 回尖点)。对称清单关闭:一 Pell + $D_6$ + 两反号,再无隐藏对称。判负:conj 转置虫与漏 negz(BFS 爆炸/阶 6)双双被精确断言拦截;铁款:生成元逐一过正交断言、阶数对表先于结论。(27.424–27.425)
+
