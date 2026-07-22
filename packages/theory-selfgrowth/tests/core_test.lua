@@ -32,6 +32,37 @@ return {
     t.is_true(r.body:find(MARKER, 1, true) ~= nil)
   end,
 
+  -- ---- GENERATE-NEW (2026-07-22): emit a propose-and-prove deliver request, NOT the declined
+  -- worth-argmax "Generate the next worthy obligation". The title must route on the
+  -- "Deliver ONE NEW D5 result:" prefix (blueprint-then-formalize, accepted by #366), and the
+  -- body must drop the uncomputable worth-argmax and carry the honesty guards. ----
+  test_request_title_routes_to_deliver_not_worth_argmax = function()
+    local title = core.request_title()
+    -- routes to blueprint-then-formalize (propose+prove), not frontier-generation
+    t.is_true(title:find("^Deliver ONE NEW D5 result:") ~= nil)
+    -- must NOT resurrect the substrate-uncomputable "worthy" generate-obligation phrasing
+    t.is_true(title:find("worthy") == nil)
+    t.is_true(title:find("Generate the next") == nil)
+  end,
+
+  test_body_is_generate_new_with_honesty_guards_and_no_fabricated_worth = function()
+    local r = core.build_frontier_request("owner/repo", 0)
+    local b = r.body
+    -- generate-new: propose a new theorem by judgment
+    t.is_true(b:find("Propose ONE", 1, true) ~= nil)
+    t.is_true(b:find("golden integers", 1, true) ~= nil)
+    -- honesty guards present
+    t.is_true(b:find("NON%-VACUITY") ~= nil)
+    t.is_true(b:find("NOVELTY") ~= nil)
+    t.is_true(b:find("CONSERVATIVE EXTENSION") ~= nil)
+    -- kernel-verification demanded
+    t.is_true(b:find("print axioms", 1, true) ~= nil)
+    -- must NOT demand a fabricated worth/argmax score (the #359 decline cause)
+    t.is_true(b:find("worth argmax") == nil)
+    t.is_true(b:find("argmax") == nil)
+    t.is_true(b:find("novelty × ") == nil)
+  end,
+
   -- ---- Major 1: decide_generation (counter + open exclusion) ----
   test_decide_generation_empty_starts_at_zero = function()
     local d = core.decide_generation({})

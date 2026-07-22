@@ -17,7 +17,14 @@ local limits = {
 -- title to `.fkst/workflows/frontier-generation.json`; the producer also searches its own
 -- prior requests by this marker (see M.marker_search_query / M.decide_generation).
 local REQUEST_MARKER = "theory-selfgrowth:frontier-request:v1"
-local REQUEST_TITLE = "Generate the next worthy D5 frontier obligation from the current truth-DAG"
+-- GENERATE-NEW (2026-07-22): the prior title "Generate the next worthy D5 frontier obligation"
+-- demanded a worth-argmax the substrate cannot compute (TruthNode has no worth/proposition/dep
+-- fields), so the 5-judge intake correctly declined it (#359). This title instead asks the
+-- consumer to PROPOSE-AND-PROVE a new theorem by mathematical judgment and routes on the
+-- "Deliver ONE NEW D5 result:" prefix to blueprint-then-formalize (verified accepted + routed by
+-- #366). Each self-tick's generation-scoped dedup key yields a distinct request; the consumer
+-- picks a fresh (novelty-guarded) theorem each generation, so the library grows unbounded.
+local REQUEST_TITLE = "Deliver ONE NEW D5 result: a new golden-integer theorem (proposer's choice)"
 
 -- Reject idle hints older than this (mirror archaudit's 10-minute freshness budget): a
 -- durable idle prompt must not create work once the system is no longer idle (#296 Major 2).
@@ -138,30 +145,36 @@ end
 
 local function body_text(dedup_key)
   return table.concat({
-    "Idle-triggered theory self-growth (CLAUDE.md 第22条 open-driven flywheel).",
+    "Theory self-growth (CLAUDE.md 第22条 open-driven flywheel): the system PROPOSES a new",
+    "mathematical truth AND proves it, growing the library. Deliver as ONE conservative increment.",
     "",
-    "Generate exactly ONE new dependency-ready D5 frontier obligation from the CURRENT",
-    "frozen truth-DAG (machine Open-state via TruthDagConstruction.DeriveState; do NOT",
-    "grep for `sorry`). Conservative extension only: append ONE X_Frontier task block",
-    "(formal open statement + permanent D5-T#### + difficulty/deps/hint) and post exactly",
-    "one downstream `Deliver ONE NEW D5 result` issue. Novelty dedup via live literature",
-    "search stays in the Observe layer (receipts only); the admission gate is offline.",
+    "Propose ONE genuinely-new, non-trivial, worthwhile theorem about the golden integers ℤ[φ]",
+    "(`GoldenInt`), building ONLY on the already-CLOSED `D5/S0/Carrier/` library (Norm, Conj, Units,",
+    "Euclidean/`EuclideanDomain GoldenInt`, GoldenRatio, Ring, AlgebraicModel — all proved sorry-free).",
+    "Choose by mathematical judgment what is worthwhile and NOT already proven (美是罗盘, CLAUDE.md 第3条);",
+    "do NOT compute or fabricate any novelty/worth number (the substrate cannot, and must not fake it).",
     "",
-    "This is the flywheel upstream (decide WHAT to prove next); it never touches a frozen node.",
+    "Deliver: a real Lean F-layer theorem (NOT a `Unit` placeholder) at a proper D5 address with a GID",
+    "header mirroring the Carrier conventions, PROVED (`lake build` green; `#print axioms` shows NO",
+    "`sorryAx` and NO custom/non-mathlib axiom), plus its mirroring Blueprint (B) narrative.",
+    "",
+    "Honesty guards: NON-VACUITY — reject trivial/vacuous statements (e.g. `P ∨ True`, `Nonempty`-of-",
+    "trivial); pick a substantive claim. NOVELTY — search first; it must not already exist. CONSERVATIVE",
+    "EXTENSION — append a new node only; never touch a frozen node.",
     "",
     "dedup-marker: " .. tostring(dedup_key),
   }, "\n")
 end
 
--- Build the github-proxy.issue-create.v1 request that routes to frontier-generation.
--- `generation` is the index from M.decide_generation; it scopes the idempotency key so a
--- fulfilled (closed) prior request no longer suppresses this one.
+-- Build the github-proxy.issue-create.v1 request that routes to blueprint-then-formalize
+-- (propose-and-prove a new theorem). `generation` is the index from M.decide_generation; it
+-- scopes the idempotency key so a fulfilled (closed) prior request no longer suppresses this one.
 function M.build_frontier_request(repo, generation)
   assert_field(M.validate_repo(repo), "repo")
   local dedup_key = M.dedup_key(repo, generation)
   local title = REQUEST_TITLE
   local body = body_text(dedup_key)
-  local source_ref_ref = tostring(repo) .. "#theory-selfgrowth#frontier-generation-intent"
+  local source_ref_ref = tostring(repo) .. "#theory-selfgrowth#selfgrowth-deliver-intent"
   assert_field(strings.is_bounded_string(title, limits.title), "title")
   assert_field(strings.is_bounded_string(body, limits.body), "body")
   assert_field(strings.is_bounded_string(dedup_key, limits.dedup_key), "dedup_key")
