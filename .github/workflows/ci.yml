@@ -73,6 +73,35 @@ jobs:
         with:
           global-json-file: candidate/global.json
 
+      - name: Resolve pinned fkst-framework source
+        id: substrate
+        shell: bash
+        run: |
+          set -euo pipefail
+          ref="$(tr -d '\r\n' < candidate/.fkst/substrate-ref)"
+          [[ "$ref" =~ ^[0-9a-f]{40}$ ]]
+          echo "ref=$ref" >> "$GITHUB_OUTPUT"
+
+      - name: Check out pinned fkst-framework source
+        uses: actions/checkout@v4
+        with:
+          repository: ChronoAIProject/fkst-substrate
+          ref: ${{ steps.substrate.outputs.ref }}
+          path: fkst-substrate
+          persist-credentials: false
+
+      - name: Install stable Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Restore fkst-framework build cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: fkst-substrate
+
+      - name: Build pinned fkst-framework
+        working-directory: fkst-substrate
+        run: cargo build -p fkst-framework
+
       - name: Restore candidate locked dependencies
         run: |
           dotnet restore candidate/Meta/StrataLint/CompileFailProof/CompileFailProof.csproj --locked-mode
@@ -82,6 +111,8 @@ jobs:
         run: make -C candidate dotnet
 
       - name: Run candidate golden and integration tests
+        env:
+          BIN: ${{ github.workspace }}/fkst-substrate/target/debug/fkst-framework
         run: make -C candidate test
 
       - name: Run candidate selftest twice and compare bytes

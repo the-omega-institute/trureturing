@@ -7,6 +7,7 @@ namespace StrataLint.Tests;
 public sealed class MakeWorkflowTests
 {
     private const string DotnetBuildScriptPath = "Meta/StrataLint/scripts/dotnet-build.sh";
+    private const string TestScriptPath = "Meta/StrataLint/scripts/test.sh";
     private const string ScribeScriptPath = "Meta/StrataLint/scripts/scribe.sh";
     private const string SelftestScriptPath = "Meta/StrataLint/scripts/stratalint-selftest.sh";
     private const string LocalHarnessGateScriptPath =
@@ -81,7 +82,7 @@ public sealed class MakeWorkflowTests
             StringComparison.Ordinal);
         Assert.Contains(CleanLanesScriptPath, Recipe(makefile, "clean-lanes"), StringComparison.Ordinal);
         Assert.Contains(DotnetBuildScriptPath, Recipe(makefile, "dotnet"), StringComparison.Ordinal);
-        Assert.Contains("dotnet test", Recipe(makefile, "test"), StringComparison.Ordinal);
+        Assert.Contains(TestScriptPath, Recipe(makefile, "test"), StringComparison.Ordinal);
         Assert.Contains("lake build", Recipe(makefile, "lean"), StringComparison.Ordinal);
         Assert.Contains(LeanReportScriptPath, Recipe(makefile, "lean-report"), StringComparison.Ordinal);
         Assert.Contains(ScribeScriptPath + " emit", Recipe(makefile, "emit"), StringComparison.Ordinal);
@@ -293,6 +294,10 @@ public sealed class MakeWorkflowTests
         Assert.Contains("make -C candidate dotnet", workflow, StringComparison.Ordinal);
         Assert.Contains("make -C candidate test", workflow, StringComparison.Ordinal);
         Assert.Contains("make -C candidate selftest", workflow, StringComparison.Ordinal);
+        Assert.Contains("candidate/.fkst/substrate-ref", workflow, StringComparison.Ordinal);
+        Assert.Contains("repository: ChronoAIProject/fkst-substrate", workflow, StringComparison.Ordinal);
+        Assert.Contains("cargo build -p fkst-framework", workflow, StringComparison.Ordinal);
+        Assert.Contains("BIN: ${{ github.workspace }}/fkst-substrate/target/debug/fkst-framework", workflow, StringComparison.Ordinal);
         Assert.Contains("make -C \"$CANDIDATE_ROOT\" emit-check", localGate, StringComparison.Ordinal);
         Assert.Contains("emit-check BASE=\"$BASE_SHA\"", localGate, StringComparison.Ordinal);
         Assert.Contains("lean-report-pair.sh", localGate, StringComparison.Ordinal);
@@ -330,6 +335,16 @@ public sealed class MakeWorkflowTests
         Assert.Contains("|| true", localGate, StringComparison.Ordinal);
         Assert.Contains("|| true", preflight, StringComparison.Ordinal);
         Assert.Contains(">> \"$LOCAL_TIMING_FILE\" || true", localGate, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void CanonicalTestEntrypointRunsDotnetAndWorkspaceLuaPackages()
+    {
+        var root = FindRepositoryRoot();
+        var script = File.ReadAllText(Path.Combine(root, TestScriptPath));
+
+        Assert.Contains("dotnet test", script, StringComparison.Ordinal);
+        Assert.Contains(".fkst/scripts/run.sh\" test", script, StringComparison.Ordinal);
     }
 
     [Fact]
