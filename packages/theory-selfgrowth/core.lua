@@ -23,9 +23,21 @@ local REQUEST_TITLE = "Generate the next worthy D5 frontier obligation from the 
 -- durable idle prompt must not create work once the system is no longer idle (#296 Major 2).
 local FRESHNESS_BUDGET_SECONDS = 10 * 60
 
+-- Self-tick poll interval (#346). theory-selfgrowth's ONLY trigger was `idle-detector.
+-- system_idle`, which idle-detector broadcasts only when the bot has ZERO self-assigned open
+-- issues (`idle_gate` self_assigned_open_issues==0) — effectively never, while any backlog is
+-- open — so it has never fired once. (By contrast archaudit is also idle-gated, but on a
+-- LOOSER signal — `is_idle_observe`, i.e. the durable observe is not truncated / queues are
+-- not overflowing — AND it carries its own cron tick, so it fires on ordinary load; a host
+-- package cannot reach that observe signal.) A periodic self-tick gives the frontier producer
+-- a trigger it actually receives; the open-request exclusion (decide_generation) bounds output
+-- to at most one open frontier-request at a time regardless of this interval, so it cannot flood.
+local POLL_INTERVAL_SECONDS = 30 * 60
+
 function M.request_marker() return REQUEST_MARKER end
 function M.request_title() return REQUEST_TITLE end
 function M.freshness_budget_seconds() return FRESHNESS_BUDGET_SECONDS end
+function M.poll_interval() return POLL_INTERVAL_SECONDS end
 
 -- Idempotency key handed to github-proxy — GENERATION-SCOPED (#296 Major 1).
 -- github-proxy dedups by searching issues with `--state all` for the create-marker derived
