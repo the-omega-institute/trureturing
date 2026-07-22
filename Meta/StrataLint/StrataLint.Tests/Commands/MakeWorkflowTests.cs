@@ -442,6 +442,18 @@ public sealed class MakeWorkflowTests
         var commit = workflow[commitIndex..];
         Assert.Contains("GH_TOKEN: ${{ github.token }}", commit, StringComparison.Ordinal);
         Assert.Contains("gh auth setup-git", commit, StringComparison.Ordinal);
+        var restoreOverlayIndex = commit.IndexOf(
+            "git restore --source=HEAD -- Meta/StrataLint Makefile global.json",
+            StringComparison.Ordinal);
+        var cleanOverlayIndex = commit.IndexOf(
+            "git clean -fd -- Meta/StrataLint",
+            StringComparison.Ordinal);
+        var inspectChangesIndex = commit.IndexOf(
+            "changed=\"$(git status --porcelain)\"",
+            StringComparison.Ordinal);
+        Assert.True(restoreOverlayIndex >= 0, "tracked judge overlay files must be restored");
+        Assert.True(cleanOverlayIndex > restoreOverlayIndex, "untracked judge overlay files must be removed");
+        Assert.True(inspectChangesIndex > cleanOverlayIndex, "the whitelist must inspect the cleaned candidate");
     }
 
     [Fact]
