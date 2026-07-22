@@ -113,4 +113,19 @@ return {
     t.is_true(not core.validate_repo("owner"))
     t.is_true(not core.validate_repo(nil))
   end,
+
+  -- ---- #346: self-tick raiser gives the frontier producer a real trigger ----
+  test_poll_interval_is_a_positive_integer = function()
+    local n = core.poll_interval()
+    t.eq(type(n), "number")
+    t.is_true(n > 0)
+    t.eq(math.floor(n), n)
+  end,
+
+  test_frontier_raiser_is_a_cron_producing_the_tick = function()
+    local raiser = require("raisers.frontier_poll")
+    t.eq(raiser.type, "cron")
+    t.eq(raiser.produces, "theory_selfgrowth_tick")
+    t.eq(raiser.interval, core.poll_interval())
+  end,
 }
