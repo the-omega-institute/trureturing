@@ -704,11 +704,15 @@ public sealed partial class ProductionEnvironmentTests
 internal sealed class FakeRepositoryGateway(
     RawChangeSet changes,
     RawRepositorySnapshot? current,
-    RawRepositorySnapshot? baseline) : IRepositoryGateway
+    RawRepositorySnapshot? baseline,
+    Func<FrozenLedgerReferenceSet, TrustedFrozenGitReferences>? frozenReferenceValidator = null)
+    : IRepositoryGateway
 {
     internal int ReadCount { get; private set; }
 
-    internal int FrozenReferenceValidationCount { get; private set; }
+    internal List<FrozenLedgerReferenceSet> FrozenReferenceValidations { get; } = [];
+
+    internal int FrozenReferenceValidationCount => FrozenReferenceValidations.Count;
 
     public AdmissionTopologyOutcome InspectAdmissionTopology() =>
         throw new InvalidOperationException("topology should not be inspected");
@@ -747,8 +751,9 @@ internal sealed class FakeRepositoryGateway(
 
     public TrustedFrozenGitReferences ValidateFrozenReferences(FrozenLedgerReferenceSet references)
     {
-        FrozenReferenceValidationCount++;
-        return TrustedFrozenGitReferences.CreateForTrustedAdapter(references.Inputs);
+        FrozenReferenceValidations.Add(references);
+        return frozenReferenceValidator?.Invoke(references)
+            ?? TrustedFrozenGitReferences.CreateForTrustedAdapter(references.Inputs);
     }
 }
 
