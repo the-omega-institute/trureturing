@@ -309,7 +309,7 @@ internal static class PzgAtomizer
     };
 }
 
-internal static class WmAtomizer
+internal static partial class WmAtomizer
 {
     private const string Title = "世界模型账本卷:公理纲要(BEDC-WM)";
     private const string AppendixHeading = "§7-附 尸检账(只增不删)";
@@ -321,8 +321,18 @@ internal static class WmAtomizer
     private static readonly Regex VersionLeadPattern = new(
         "^-\\s+\\*\\*v[^*]+\\*\\*",
         RegexOptions.CultureInvariant);
-    private static readonly Regex V02AuditPattern = new(
+    private static readonly Regex V02AuditLeadPattern = new(
         "^\\*\\*v0\\.2 校核\\*\\*",
+        RegexOptions.CultureInvariant);
+    private static readonly Regex V02AuditClosurePattern = new(
+        "^\\*\\*v0\\.2 校核\\*\\*\\([^\\r\\n]+\\):[^\\r\\n]*旧块不改。\\z",
+        RegexOptions.CultureInvariant);
+    private static readonly Regex CurrentTodoClosurePattern = new(
+        "^\\*\\*当前待办\\*\\*\\(随版滚动\\):[^\\r\\n]*"
+        + "\\*\\*v0\\.2\\*\\*\\(新行追加于版本账,本节追加 v0\\.2 校核块\\)。\\z",
+        RegexOptions.CultureInvariant);
+    private static readonly Regex DisciplinePattern = new(
+        "^> 一句话:[^\\r\\n]+(?:\\r\\n|\\r|\\n)> 纪律:[^\\r\\n]+\\z",
         RegexOptions.CultureInvariant);
     private static readonly Regex SectionHeadingPattern = new(
         "^(?<number>0|[1-9][0-9]*)\\.\\s+",
@@ -382,7 +392,7 @@ internal static class WmAtomizer
             return "version/" + version.Groups["version"].Value;
         }
 
-        return V02AuditPattern.IsMatch(paragraph) ? "audit/v0.2" : null;
+        return V02AuditLeadPattern.IsMatch(paragraph) ? "audit/v0.2" : null;
     }
 
     private static string? IdentifyHeading(string heading)
@@ -474,6 +484,8 @@ internal static class WmAtomizer
                 "WM version ledger must contain v0 and v0.1, followed only by optional v0.2");
         }
 
+        ValidateDiscipline(text, blocks, headings, versionLeads[^1]);
+
         var hasV02Audit = scaffold.Claims.Any(static atom => atom.AstPath == "audit/v0.2");
         if (hasV02Audit != versions.Contains("v0.2", StringComparer.Ordinal))
         {
@@ -496,8 +508,9 @@ internal static class WmAtomizer
 
         var finalParagraph = blocks.OfType<MarkdownParagraph>().LastOrDefault()?.Text;
         if (finalParagraph is null
-            || !(finalParagraph.StartsWith("**当前待办**", StringComparison.Ordinal)
-                || V02AuditPattern.IsMatch(finalParagraph)))
+            || !(hasV02Audit
+                ? V02AuditClosurePattern.IsMatch(finalParagraph)
+                : CurrentTodoClosurePattern.IsMatch(finalParagraph)))
         {
             throw new TheorySourceFormatException("WM source has missing audit closure or trailing conversation residue");
         }
@@ -518,6 +531,8 @@ internal static class WmAtomizer
                 ? boundary - 2
                 : boundary >= 2 && raw[boundary - 1] == (byte)'\n' && raw[boundary - 2] == (byte)'\n'
                     ? boundary - 1
+                    : boundary >= 2 && raw[boundary - 1] == (byte)'\r' && raw[boundary - 2] == (byte)'\r'
+                        ? boundary - 1
                     : throw new TheorySourceFormatException(
                         "WM v0.2 audit block must be separated by exactly one blank line");
         claims[oldAuditIndex] = ReSpan(raw, claims[oldAuditIndex], claims[oldAuditIndex].StartByte, shiftedBoundary);

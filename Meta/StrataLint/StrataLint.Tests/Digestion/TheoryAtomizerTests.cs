@@ -19,24 +19,6 @@ public sealed partial class TheoryAtomizerTests
         { ThirdProductionSource, AtomizerRegistry.ObserverId },
     };
 
-    public static TheoryData<string, byte[]> InvalidWmSources
-    {
-        get
-        {
-            var canonical = CanonicalWmFixture();
-            return new TheoryData<string, byte[]>
-            {
-                { "missing H1", Encoding.UTF8.GetBytes(canonical.Replace(WmTitle + "\n", "BEDC-WM\n", StringComparison.Ordinal)) },
-                { "missing section 7 appendix", Encoding.UTF8.GetBytes(canonical.Replace(WmAppendix, string.Empty, StringComparison.Ordinal)) },
-                { "missing audit", Encoding.UTF8.GetBytes(canonical[..canonical.IndexOf("## 校核记录", StringComparison.Ordinal)]) },
-                { "duplicate or out-of-order section", Encoding.UTF8.GetBytes(canonical.Replace("## 5. Section 5", "## 4. Section 5", StringComparison.Ordinal)) },
-                { "unknown heading", Encoding.UTF8.GetBytes(canonical.Replace("## 6. Section 6", "## Unknown", StringComparison.Ordinal)) },
-                { "leading conversation residue", Encoding.UTF8.GetBytes("可以。\n" + canonical) },
-                { "non-UTF-8", [0xff, 0xfe, 0xfd] },
-            };
-        }
-    }
-
     [Fact]
     public void RegistryFailsClosedForAnUnknownAtomizerAndListsRegisteredIds()
     {
@@ -714,6 +696,14 @@ public sealed partial class TheoryAtomizerTests
     private const string WmAppendix =
         "### §7-附 尸检账(只增不删)\n\n**尸检 P-1**。判据自身必须受检。\n\n";
 
+    private const string WmDiscipline =
+        "> 一句话:数学卷问何以为真。\n"
+        + "> 纪律:每条断言携带状态标签。\n";
+
+    private const string WmCurrentTodoClosure =
+        "**当前待办**(随版滚动):依判决出 **v0.2**"
+        + "(新行追加于版本账,本节追加 v0.2 校核块)。";
+
     private static string CanonicalWmFixture() =>
         string.Concat(CanonicalWmFixtureSegments().Select(static item => item.Text));
 
@@ -741,8 +731,7 @@ public sealed partial class TheoryAtomizerTests
             ("version/v0.1", "- **v0.1**(2026-07-18)首轮结账。\n"),
             (
                 "metadata/discipline",
-                "\n> 一句话:数学卷问何以为真。\n"
-                + "> 纪律:每条断言携带状态标签。\n\n---\n\n"),
+                "\n" + WmDiscipline + "\n---\n\n"),
         };
 
         for (var section = 0; section <= 11; section++)
@@ -759,7 +748,7 @@ public sealed partial class TheoryAtomizerTests
             "## 校核记录(append-only,按版分块)\n\n"
             + "**v0 校核**(2026-07-18):立卷校核。\n\n"
             + "**v0.1 校核**(2026-07-18):首轮校核。\n\n"
-            + "**当前待办**(随版滚动):依判决出 v0.2。\n"));
+            + WmCurrentTodoClosure + "\n"));
         return segments;
     }
 
