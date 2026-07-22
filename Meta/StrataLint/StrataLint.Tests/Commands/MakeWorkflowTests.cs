@@ -390,6 +390,13 @@ public sealed class MakeWorkflowTests
         Assert.True(finalRestoreIndex > reprobeIndex, "the fail-closed restore must come after all probes");
         Assert.Contains("lookup-only: true", workflow[probeIndex..finalRestoreIndex], StringComparison.Ordinal);
         Assert.Contains("fail-on-cache-miss: true", workflow[finalRestoreIndex..], StringComparison.Ordinal);
+
+        // 等待方向契约:等待/重探必须挂在"未命中"上(cache-hit 在 miss 时为空串,
+        // 故唯一正确谓词是 != 'true');挂反(== 'true')会使正常路径空等、竞态路径
+        // 直接失败——修复整体失效。
+        var waitRegion = workflow[probeIndex..finalRestoreIndex];
+        Assert.Contains("outputs.cache-hit != 'true'", waitRegion, StringComparison.Ordinal);
+        Assert.DoesNotContain("outputs.cache-hit == 'true'", waitRegion, StringComparison.Ordinal);
         Assert.Contains("steps.lean-report-input.outputs.address", admissionCacheKey, StringComparison.Ordinal);
         Assert.Contains(
             "$(basename \"$target\")\" > \"${target}.sha256\"",
