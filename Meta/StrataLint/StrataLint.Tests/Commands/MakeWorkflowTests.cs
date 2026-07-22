@@ -366,11 +366,30 @@ public sealed class MakeWorkflowTests
                 "key: stratalint-canonical-lean-report-v1-",
                 StringComparison.Ordinal));
         var ingestCacheKey = Assert.Single(
-            workflow.Split('\n'),
-            static line => line.TrimStart().StartsWith(
-                "key: stratalint-canonical-lean-report-v1-",
-                StringComparison.Ordinal));
-        Assert.Equal(admissionCacheKey.Trim(), ingestCacheKey.Trim());
+            workflow.Split('\n')
+                .Where(static line => line.TrimStart().StartsWith(
+                    "key: stratalint-canonical-lean-report-v1-",
+                    StringComparison.Ordinal))
+                .Select(static line => line.Trim())
+                .Distinct());
+        Assert.Equal(admissionCacheKey.Trim(), ingestCacheKey);
+
+        // 竞态防护契约:缓存由 ci.yml 并行生产,ingest 须以 lookup-only 探测 + 无凭据
+        // 等待重试盖住生产窗口;最终 restore 保持 fail-closed,等待不降级检测。
+        var probeIndex = workflow.IndexOf(
+            "- name: Probe base canonical Lean report cache",
+            StringComparison.Ordinal);
+        var reprobeIndex = workflow.IndexOf(
+            "- name: Re-probe base canonical Lean report cache",
+            StringComparison.Ordinal);
+        var finalRestoreIndex = workflow.IndexOf(
+            "- name: Restore base canonical Lean report",
+            StringComparison.Ordinal);
+        Assert.True(probeIndex >= 0, "cache production race must be probed before restore");
+        Assert.True(reprobeIndex > probeIndex, "the probe must retry across the production window");
+        Assert.True(finalRestoreIndex > reprobeIndex, "the fail-closed restore must come after all probes");
+        Assert.Contains("lookup-only: true", workflow[probeIndex..finalRestoreIndex], StringComparison.Ordinal);
+        Assert.Contains("fail-on-cache-miss: true", workflow[finalRestoreIndex..], StringComparison.Ordinal);
         Assert.Contains("steps.lean-report-input.outputs.address", admissionCacheKey, StringComparison.Ordinal);
         Assert.Contains(
             "$(basename \"$target\")\" > \"${target}.sha256\"",
