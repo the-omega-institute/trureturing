@@ -1,0 +1,4 @@
+**E.34 常数定理与 Euler 防错案终审**〔本卷压轴〕。**常数定理**:$C(x)=\sum_{T\le x}\#\{\mathfrak a:N\mathfrak a=T^2-1\}\sim x/3$。证:局部密度闭式全算(奇 $p\ge5$:$\sigma_p=1+\chi_3(p)/p$ 有理恰等 $\tfrac45,\tfrac87,\tfrac{10}{11},\dots$;$\sigma_3=\tfrac23$ 各阶恒稳;$\sigma_2=1$ 于 $2^3,2^4$ 稳定)+ 望远镜乘积 $\prod\sigma_p=\tfrac23\cdot\tfrac{3\sqrt3}{2\pi}=\tfrac{\sqrt3}\pi$(经 $\zeta(2)$ 与 $L(1,\chi_{-3})=\pi/(3\sqrt3)$)+ 阿基米德 $\sigma_\infty=\tfrac{4\pi}{\sqrt3}x$(椭圆面积 $\tfrac{2\pi u}{\sqrt3}$)+ 一步引用(迷向三元形自旋群 $SL_2$-型强逼近 ⟹ Siegel 乘积无亏格修正);$4x/12=x/3$。实测 $C(16000)/16000=0.33281$ 背书。**Euler 防错案终审**:朴素除数交换在每个奇素恰对,唯 $p=2$ 以 $\tfrac23$ 冒充真密度 $1$——比值 $\tfrac32$ 即 $0.500/0.333$ 全部来源;单点作案,全网归案。漂移判别:$C/x$ 稳摆 $0.329$–$0.337$ 而 $C/(x/\sqrt{\log x})$ 单调上漂 ⟹ 线性律确证。系理:$\zeta_\rho$ 于 $s=\tfrac12$ 极点型,层之 Q2 栏全档齐备。(27.390–27.392)
+
+---
+
