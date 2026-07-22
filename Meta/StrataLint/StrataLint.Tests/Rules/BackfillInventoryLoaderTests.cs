@@ -302,7 +302,7 @@ public sealed class BackfillInventoryLoaderTests
     }
 
     [Fact]
-    public void RemarkBatchUpgradeCandidatesRemainResidualWithNamedUnresolvedClaims()
+    public void RemarkBatchUpgradeCandidatesRetainNamedUnresolvedClaims()
     {
         var root = FindRepositoryRoot();
         var ledgerPath = Path.Combine(root, BackfillInventoryLoader.RelativePath);
@@ -311,7 +311,6 @@ public sealed class BackfillInventoryLoaderTests
         string[] expectedPaths =
         [
             "remark/6.37",
-            "remark/6.43",
             "remark/10.11",
             "remark/27.20",
             "remark/27.25",
@@ -332,6 +331,21 @@ public sealed class BackfillInventoryLoaderTests
             Assert.Equal(DigestionMigrationState.Residual, entry.ProjectedStatus.Migration);
             Assert.Equal(DigestionTruthState.Open, entry.ProjectedStatus.Truth);
         }
+
+        var windowParity = Assert.Single(entries, entry => entry.AstPath == "remark/6.43");
+        string[] expectedCoverage =
+        [
+            "D5/S1/Depth/WindowParity.full_window_and_golden_capacity",
+            "D5/S1/Depth/WindowParity.witt_window_sum_parity",
+        ];
+        Assert.Equal(expectedCoverage, windowParity.CoverageGids);
+        Assert.Equal(expectedCoverage, windowParity.Receipts.Coverage.Select(static receipt => receipt.Gid));
+        Assert.Equal(expectedCoverage, windowParity.Receipts.Scribe.Select(static receipt => receipt.Gid));
+        Assert.Collection(
+            windowParity.Receipts.UnresolvedSubitems,
+            static item => Assert.Equal("cascade-chirality-from-window-parity", item));
+        Assert.Equal(DigestionMigrationState.Partial, windowParity.ProjectedStatus.Migration);
+        Assert.Equal(DigestionTruthState.Closed, windowParity.ProjectedStatus.Truth);
     }
 
     [Fact]
