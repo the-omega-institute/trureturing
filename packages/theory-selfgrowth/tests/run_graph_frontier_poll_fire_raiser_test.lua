@@ -15,16 +15,19 @@ local graph = require("testkit.graph")
 local t = fkst.test
 
 local MARKER = "theory-selfgrowth:frontier-request:v1"
+local BOT_LOGIN = "loning"
+local PRODUCER_MARKER = MARKER .. ":" .. BOT_LOGIN
 
 local function mock_env()
   t.mock_command('printf %s "$FKST_GITHUB_REPO"', { stdout = "owner/repo", stderr = "", exit_code = 0 })
+  t.mock_command('printf %s "$FKST_GITHUB_BOT_LOGIN"', { stdout = BOT_LOGIN, stderr = "", exit_code = 0 })
 end
 
 return {
   test_fire_raiser_frontier_poll_produces_one_frontier_request = function()
     mock_env()
     t.mock_command(
-      "gh issue list --repo 'owner/repo' --state all --search 'in:body " .. MARKER
+      "gh issue list --repo 'owner/repo' --state all --search 'in:body " .. PRODUCER_MARKER
         .. "' --json number,state,body --limit 100",
       { stdout = "[]", stderr = "", exit_code = 0 }
     )
@@ -41,7 +44,8 @@ return {
     t.eq(trace.raised[1].queue, "github-proxy.github_issue_create_request")
     t.eq(trace.raised[1].payload.schema, "github-proxy.issue-create.v1")
     t.eq(trace.raised[1].payload.repo, "owner/repo")
-    t.eq(trace.raised[1].payload.dedup_key, MARKER .. ":owner/repo:gen0")
+    t.eq(trace.raised[1].payload.dedup_key, PRODUCER_MARKER .. ":owner/repo:gen0")
+    t.eq(trace.raised[1].payload.producer, BOT_LOGIN)
     graph.assert_covers(trace, {
       "github-proxy.github_issue_create_request -> github-proxy.github_issue_create",
     })
@@ -50,10 +54,10 @@ return {
   test_fire_raiser_frontier_poll_skips_when_open_request_exists = function()
     mock_env()
     t.mock_command(
-      "gh issue list --repo 'owner/repo' --state all --search 'in:body " .. MARKER
+      "gh issue list --repo 'owner/repo' --state all --search 'in:body " .. PRODUCER_MARKER
         .. "' --json number,state,body --limit 100",
       {
-        stdout = '[{"number":9,"state":"OPEN","body":"dedup-marker: ' .. MARKER .. ':owner/repo:gen0"}]',
+        stdout = '[{"number":9,"state":"OPEN","body":"dedup-marker: ' .. PRODUCER_MARKER .. ':owner/repo:gen0"}]',
         stderr = "",
         exit_code = 0,
       }
