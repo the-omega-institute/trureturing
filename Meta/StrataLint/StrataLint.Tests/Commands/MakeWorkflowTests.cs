@@ -32,6 +32,7 @@ public sealed class MakeWorkflowTests
     private const string PerfEventScriptPath = "Meta/StrataLint/scripts/perf-event-lib.sh";
     private const string AdmissionWorkflowPath = ".github/workflows/ci.yml";
     private const string TheoryIngestWorkflowPath = ".github/workflows/theory-ingest.yml";
+    private const string EchoResidualSummaryPath = "Generated/echo-residual-summary.md";
 
     private static readonly string[] Targets =
     [
@@ -427,7 +428,9 @@ public sealed class MakeWorkflowTests
         Assert.Contains("BASE_SHA: ${{ github.event.pull_request.base.sha }}", boundary, StringComparison.Ordinal);
         Assert.Contains("HEAD_SHA: ${{ github.event.pull_request.head.sha }}", boundary, StringComparison.Ordinal);
         Assert.Contains(
-            theoryDataPattern + "|Meta/BACKFILL.yaml|Meta/Digestion/atoms/*",
+            theoryDataPattern
+                + "|Meta/BACKFILL.yaml|Meta/Digestion/atoms/*|"
+                + EchoResidualSummaryPath,
             boundary,
             StringComparison.Ordinal);
         Assert.Contains("diff --name-only --no-renames -z", boundary, StringComparison.Ordinal);
@@ -454,6 +457,39 @@ public sealed class MakeWorkflowTests
         Assert.True(restoreOverlayIndex >= 0, "tracked judge overlay files must be restored");
         Assert.True(cleanOverlayIndex > restoreOverlayIndex, "untracked judge overlay files must be removed");
         Assert.True(inspectChangesIndex > cleanOverlayIndex, "the whitelist must inspect the cleaned candidate");
+    }
+
+    [Fact]
+    public void TheoryIngestReemitsBaseBoundEchoProjectionBeforeWriteback()
+    {
+        var root = FindRepositoryRoot();
+        var workflow = File.ReadAllText(Path.Combine(root, TheoryIngestWorkflowPath));
+        var ingestIndex = workflow.IndexOf("          make ingest BASE=HEAD\n", StringComparison.Ordinal);
+        var emitIndex = workflow.IndexOf(
+            "- name: Re-emit base-bound echo projection",
+            StringComparison.Ordinal);
+        var commitIndex = workflow.IndexOf(
+            "- name: Enforce write-path whitelist and commit back",
+            StringComparison.Ordinal);
+
+        Assert.True(ingestIndex >= 0, "theory ingest must update the digestion ledger first");
+        Assert.True(emitIndex > ingestIndex, "echo projection must be derived from the updated ledger");
+        Assert.True(commitIndex > emitIndex, "echo projection must be emitted before writeback");
+
+        var emission = workflow[emitIndex..commitIndex];
+        Assert.Contains(
+            "BASE_SHA: ${{ github.event.pull_request.base.sha }}",
+            emission,
+            StringComparison.Ordinal);
+        Assert.Contains("echo-verify --emit --base \"$BASE_SHA\"", emission, StringComparison.Ordinal);
+        Assert.Contains("> \"$projection\"", emission, StringComparison.Ordinal);
+        Assert.Contains($"mv \"$projection\" {EchoResidualSummaryPath}", emission, StringComparison.Ordinal);
+        Assert.DoesNotContain("make echo-residual-summary", emission, StringComparison.Ordinal);
+        Assert.DoesNotContain("echo-verify --emit --base HEAD", emission, StringComparison.Ordinal);
+
+        var commit = workflow[commitIndex..];
+        Assert.Contains(EchoResidualSummaryPath, commit, StringComparison.Ordinal);
+        Assert.Contains($"git add Meta/BACKFILL.yaml Meta/Digestion/atoms {EchoResidualSummaryPath}", commit, StringComparison.Ordinal);
     }
 
     [Fact]
