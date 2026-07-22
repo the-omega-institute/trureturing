@@ -86,6 +86,42 @@ jobs:
           [[ "$address" =~ ^[0-9a-f]{64}$ ]]
           echo "address=$address" >> "$GITHUB_OUTPUT"
 
+      # 缓存由 ci.yml 的 Canonical Lean report production 生产(约 10 分钟),与本
+      # workflow 并行触发;缓存被 LRU 逐出后的首个 theory PR 会竞态 miss(先例:
+      # PR #290/#320,ingest 11:12 失败,缓存 12:58 才产出)。故以 lookup-only 探测
+      # + 条件等待重试,全程无凭据;最终 restore 仍 fail-closed——等待不降级检测。
+      # 诚实边界(对抗评审注):12 分钟重试只盖"生产者正在跑"的窗口;生产者自身
+      # 失败/被取消(如上述先例的 106 分钟空窗)不在此列,届时仍诚实红,由重跑
+      # 或 shepherd 唤醒兜底——缩窗而非闭窗。
+      - name: Probe base canonical Lean report cache
+        id: lean-report-probe-1
+        uses: actions/cache/restore@v4
+        with:
+          path: .canonical-lean-report-cache
+          key: stratalint-canonical-lean-report-v1-${{ steps.lean-report-input.outputs.address }}
+          lookup-only: true
+
+      - name: Wait for cache production (first retry)
+        if: steps.lean-report-probe-1.outputs.cache-hit != 'true'
+        shell: bash
+        run: sleep 360
+
+      - name: Re-probe base canonical Lean report cache
+        id: lean-report-probe-2
+        if: steps.lean-report-probe-1.outputs.cache-hit != 'true'
+        uses: actions/cache/restore@v4
+        with:
+          path: .canonical-lean-report-cache
+          key: stratalint-canonical-lean-report-v1-${{ steps.lean-report-input.outputs.address }}
+          lookup-only: true
+
+      - name: Wait for cache production (final retry)
+        if: |
+          steps.lean-report-probe-1.outputs.cache-hit != 'true'
+            && steps.lean-report-probe-2.outputs.cache-hit != 'true'
+        shell: bash
+        run: sleep 360
+
       - name: Restore base canonical Lean report
         id: lean-report-cache
         uses: actions/cache/restore@v4
