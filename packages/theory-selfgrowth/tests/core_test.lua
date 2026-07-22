@@ -115,11 +115,13 @@ return {
   end,
 
   -- ---- #346: self-tick raiser gives the frontier producer a real trigger ----
-  test_poll_interval_is_a_positive_integer = function()
-    local n = core.poll_interval()
-    t.eq(type(n), "number")
-    t.is_true(n > 0)
-    t.eq(math.floor(n), n)
+  test_poll_interval_is_a_duration_string = function()
+    -- The raiser `interval` must be a duration STRING (the framework's parser rejects a bare
+    -- integer). Guards the runtime regression where poll_interval returned 1800 (a number),
+    -- which crashed raiser parsing at engine startup.
+    local v = core.poll_interval()
+    t.eq(type(v), "string")
+    t.is_true(v:match("^%d+[smhd]$") ~= nil)
   end,
 
   test_frontier_raiser_is_a_cron_producing_the_tick = function()

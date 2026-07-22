@@ -33,11 +33,15 @@ local FRESHNESS_BUDGET_SECONDS = 10 * 60
 -- a trigger it actually receives; the open-request exclusion (decide_generation) bounds output
 -- to at most one open frontier-request at a time regardless of this interval, so it cannot flood.
 local POLL_INTERVAL_SECONDS = 30 * 60
+-- The cron raiser's `interval` field must be a duration STRING (e.g. "30m"), not an integer —
+-- the framework's raiser parser rejects a bare number ("invalid type: integer, expected a
+-- string"). Mirror archaudit's audit_poll_interval, which is `tostring(minutes) .. "m"`.
+local POLL_INTERVAL = tostring(math.floor(POLL_INTERVAL_SECONDS / 60)) .. "m"
 
 function M.request_marker() return REQUEST_MARKER end
 function M.request_title() return REQUEST_TITLE end
 function M.freshness_budget_seconds() return FRESHNESS_BUDGET_SECONDS end
-function M.poll_interval() return POLL_INTERVAL_SECONDS end
+function M.poll_interval() return POLL_INTERVAL end
 
 -- Idempotency key handed to github-proxy — GENERATION-SCOPED (#296 Major 1).
 -- github-proxy dedups by searching issues with `--state all` for the create-marker derived
