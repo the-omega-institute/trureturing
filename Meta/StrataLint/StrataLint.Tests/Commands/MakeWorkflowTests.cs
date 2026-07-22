@@ -13,6 +13,7 @@ public sealed class MakeWorkflowTests
         "Meta/StrataLint/scripts/local-harness-gate.sh";
     private const string PreflightScriptPath = "Meta/StrataLint/scripts/preflight.sh";
     private const string CleanLanesScriptPath = "Meta/StrataLint/scripts/clean-lanes.sh";
+    private const string ScratchSweepScriptPath = "Meta/StrataLint/scripts/scratch-sweep.sh";
     private const string WorktreeInitScriptPath = "Meta/StrataLint/scripts/worktree-init.sh";
     private const string LeanReportScriptPath =
         "Meta/StrataLint/scripts/report/lean-report.sh";
@@ -52,6 +53,7 @@ public sealed class MakeWorkflowTests
         "echo-verify",
         "record-golden",
         "selftest",
+        "scratch-sweep",
         "gate",
         "perf-report",
         "worktree",
@@ -97,6 +99,7 @@ public sealed class MakeWorkflowTests
         Assert.Contains(EchoVerifyScriptPath, Recipe(makefile, "echo-verify"), StringComparison.Ordinal);
         Assert.Contains("golden-record", Recipe(makefile, "record-golden"), StringComparison.Ordinal);
         Assert.Contains(SelftestScriptPath, Recipe(makefile, "selftest"), StringComparison.Ordinal);
+        Assert.Contains(ScratchSweepScriptPath, Recipe(makefile, "scratch-sweep"), StringComparison.Ordinal);
         Assert.Contains(LocalHarnessGateScriptPath, Recipe(makefile, "gate"), StringComparison.Ordinal);
         Assert.Contains(PerfReportScriptPath, Recipe(makefile, "perf-report"), StringComparison.Ordinal);
         Assert.Contains("Golden/perf-budgets.toml", Recipe(makefile, "perf-report"), StringComparison.Ordinal);
