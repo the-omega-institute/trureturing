@@ -23,21 +23,18 @@ local REQUEST_TITLE = "Generate the next worthy D5 frontier obligation from the 
 -- durable idle prompt must not create work once the system is no longer idle (#296 Major 2).
 local FRESHNESS_BUDGET_SECONDS = 10 * 60
 
--- Self-tick poll interval (#346). theory-selfgrowth's ONLY trigger was `idle-detector.
--- system_idle`, which idle-detector broadcasts only when the bot has ZERO self-assigned open
--- issues (`idle_gate` self_assigned_open_issues==0) — effectively never, while any backlog is
--- open — so it has never fired once. (By contrast archaudit is also idle-gated, but on a
--- LOOSER signal — `is_idle_observe`, i.e. the durable observe is not truncated / queues are
--- not overflowing — AND it carries its own cron tick, so it fires on ordinary load; a host
--- package cannot reach that observe signal.) A periodic self-tick gives the frontier producer
--- a trigger it actually receives; the open-request exclusion (decide_generation) bounds output
--- to at most one open frontier-request at a time regardless of this interval, so it cannot flood.
+-- Required reconciliation cannot depend on global quiescence: system_idle is unavailable
+-- while self-assigned work remains open. Poll at the same 30-minute cadence as the platform's
+-- idle and architecture-audit probes. decide_generation independently bounds output to one
+-- open frontier request, so the cadence controls detection latency rather than issue volume.
 local POLL_INTERVAL_SECONDS = 30 * 60
+local POLL_INTERVAL = tostring(math.floor(POLL_INTERVAL_SECONDS / 60)) .. "m"
 
 function M.request_marker() return REQUEST_MARKER end
 function M.request_title() return REQUEST_TITLE end
 function M.freshness_budget_seconds() return FRESHNESS_BUDGET_SECONDS end
-function M.poll_interval() return POLL_INTERVAL_SECONDS end
+function M.poll_interval_seconds() return POLL_INTERVAL_SECONDS end
+function M.poll_interval() return POLL_INTERVAL end
 
 -- Idempotency key handed to github-proxy — GENERATION-SCOPED (#296 Major 1).
 -- github-proxy dedups by searching issues with `--state all` for the create-marker derived
@@ -138,7 +135,7 @@ end
 
 local function body_text(dedup_key)
   return table.concat({
-    "Idle-triggered theory self-growth (CLAUDE.md 第22条 open-driven flywheel).",
+    "Periodic theory self-growth reconciliation (CLAUDE.md rule 22 open-driven flywheel).",
     "",
     "Generate exactly ONE new dependency-ready D5 frontier obligation from the CURRENT",
     "frozen truth-DAG (machine Open-state via TruthDagConstruction.DeriveState; do NOT",

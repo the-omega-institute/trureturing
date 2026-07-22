@@ -1,7 +1,7 @@
 -- theory-selfgrowth / propose department.
--- On the platform idle broadcast, emit ONE frontier-generation request, GENERATION-SCOPED
--- and gated by open-request exclusion so the self-growth flywheel keeps turning past its
--- first cycle (#296 Major 1) and never acts on a stale idle hint (#296 Major 2).
+-- On a package tick or a platform idle broadcast, emit one generation-scoped frontier request.
+-- Open-request exclusion keeps the flywheel bounded across repeated wakeups (#296), while the
+-- independent tick guarantees reconciliation does not depend on global quiescence (#346).
 --
 -- HOST-package form: publishable `contract` only, plus framework-injected globals
 -- (`exec_sync` for shell reads, `json.decode` to parse, `raise` to produce, `log` to trace).
@@ -14,11 +14,8 @@ local core = require("core")
 local M = {}
 
 M.spec = {
-  -- Two triggers (#346): this package's OWN cron self-tick (theory_selfgrowth_tick, from
-  -- raisers/frontier_poll.lua) is what actually keeps the flywheel turning; the platform idle
-  -- broadcast (idle-detector.system_idle) is kept as a secondary trigger. system_idle alone
-  -- never fires (idle_gate requires zero self-assigned open issues), so an idle-only producer
-  -- is structurally starved — see core.poll_interval.
+  -- The package-owned tick guarantees weakly fair progress under sustained backlog. The
+  -- platform idle broadcast remains a secondary, freshness-checked wakeup.
   consumes = { "idle-detector.system_idle", "theory_selfgrowth_tick" },
   produces = { "github-proxy.github_issue_create_request" },
   stall_window = "30s",

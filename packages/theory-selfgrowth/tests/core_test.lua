@@ -115,11 +115,9 @@ return {
   end,
 
   -- ---- #346: self-tick raiser gives the frontier producer a real trigger ----
-  test_poll_interval_is_a_positive_integer = function()
-    local n = core.poll_interval()
-    t.eq(type(n), "number")
-    t.is_true(n > 0)
-    t.eq(math.floor(n), n)
+  test_poll_interval_matches_the_framework_cron_contract = function()
+    t.eq(core.poll_interval_seconds(), 30 * 60)
+    t.eq(core.poll_interval(), "30m")
   end,
 
   test_frontier_raiser_is_a_cron_producing_the_tick = function()

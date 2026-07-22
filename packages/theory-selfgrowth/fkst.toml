@@ -2,12 +2,10 @@ kind = "package"
 name = "theory-selfgrowth"
 persistence_class = "stateless_adapter"
 
-# Theory self-growth producer (CLAUDE.md 第22条 open-driven flywheel).
-# Subscribes to the platform idle broadcast (idle-detector.system_idle) and emits ONE
-# deduped issue routing to the existing `frontier-generation` workflow ("decide WHAT to
-# prove next"). The codex reasoning over the frozen truth-DAG + literature happens
-# DOWNSTREAM in that workflow; this producer only fires the idle->generate transaction
-# and never touches a frozen node (conservative extension).
+# Theory self-growth producer (CLAUDE.md rule 22 open-driven flywheel).
+# Reconciles from a package-owned periodic tick, with idle-detector.system_idle retained as
+# a secondary wakeup, and emits at most one open request for the frontier-generation workflow.
+# Authoritative truth-DAG eligibility remains downstream; this adapter never edits truth nodes.
 #
 # HOST-package constraint: uses ONLY publishable libraries (contract) + framework-injected
 # globals (exec_sync to read FKST_GITHUB_REPO, raise to produce the event). It does NOT
