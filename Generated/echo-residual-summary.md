@@ -1,7 +1,7 @@
-<!-- echo-residual-summary:v2 base=git-sha1:91bc1fd97aaa0edc90b23e82c3d6982245235f3f -->
+<!-- echo-residual-summary:v2 base=git-sha1:8106ca3abb72d5a5ecd8f43497ecad84ed755553 -->
 # Echo Residual Summary
 
-- unresolved_subitems: 468
+- unresolved_subitems: 466
 - mother_residual_atom_ids: 58
 
 ## `bedc-wm-v0.1`
@@ -13,7 +13,7 @@ Mother residual atoms: none.
 
 ## `gict-v3.6`
 
-- unresolved_subitems: 106
+- unresolved_subitems: 105
 - mother_residual_atom_ids: 6
 
 Mother residual atoms:
@@ -89,7 +89,7 @@ Mother residual atoms:
   - `translation-asymptotic`
   - `w3-440-enumeration-certificate`
   - `w3-sign-reversal-postmortem`
-- `gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3` (36)
+- `gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3` (35)
   - `absolute-angle-gap-rejection`
   - `continuous-statistics-congruence-meta-law`
   - `cubic-repulsion-exponent-measurement`
@@ -97,7 +97,6 @@ Mother residual atoms:
   - `diffusion-twelve-over-amax-reduction`
   - `empty-bin-fingerprint-rejection`
   - `envelope-twelve-over-amax-reduction`
-  - `floor-twelve-over-amax-reduction`
   - `freiman-edge-rejection`
   - `gap-edge-envelope`
   - `grid-leakage-causal-diagnosis`
@@ -191,7 +190,7 @@ Mother residual atoms:
 
 ## `pzg-v170`
 
-- unresolved_subitems: 326
+- unresolved_subitems: 325
 - mother_residual_atom_ids: 45
 
 Mother residual atoms:
@@ -450,7 +449,7 @@ Mother residual atoms:
 - `pzg-residual-b9b6b0a69c0a65c6d437b2c9f3983495cd0d52ffbef6fe6a2c4a7f06e1865ba0` (2)
   - `cubic-field-conjugate-trace-explanation`
   - `tribonacci-deficit-nonintegrality-and-scan-certificate`
-- `pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b` (33)
+- `pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b` (32)
   - `absolute-angle-gap-rejection`
   - `continuous-statistics-congruence-meta-law`
   - `cubic-repulsion-exponent-measurement`
@@ -458,7 +457,6 @@ Mother residual atoms:
   - `diffusion-twelve-over-amax-reduction`
   - `empty-bin-fingerprint-rejection`
   - `envelope-twelve-over-amax-reduction`
-  - `floor-twelve-over-amax-reduction`
   - `freiman-edge-rejection`
   - `gap-edge-envelope`
   - `grid-leakage-causal-diagnosis`
