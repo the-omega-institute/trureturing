@@ -191,29 +191,39 @@ verify_source_checkout() {
   printf '%s\n' "$root"
 }
 
-resolve_pinned_source() {
-  local label="$1" url="$2" pin="$3" override="$4" cache_root dest
+materialize_pinned_source() {
+  local label="$1" url="$2" pin="$3" override="$4" destination="$5"
+  local cache_root object_source
   if [[ -n "$override" ]]; then
-    verify_source_checkout "$label" "$override" "$pin"
-    return
+    object_source="$(verify_source_checkout "$label" "$override" "$pin")"
+  else
+    cache_root="${FKST_CACHE_ROOT:-${XDG_CACHE_HOME:-$HOME/.cache}/fkst-lua-gate}"
+    mkdir -p "$cache_root" || die "cannot create fkst cache root: $cache_root"
+    object_source="$cache_root/$label-$pin"
+    if [[ ! -e "$object_source" ]]; then
+      printf 'fkst: cloning %s at %s\n' "$label" "$pin" >&2
+      git clone --no-checkout "$url" "$object_source" \
+        || die "failed to clone pinned $label source"
+      git -C "$object_source" checkout --detach "$pin" \
+        || die "failed to checkout $label pin $pin"
+    fi
+    object_source="$(verify_source_checkout "$label" "$object_source" "$pin")"
   fi
 
-  cache_root="${FKST_CACHE_ROOT:-${XDG_CACHE_HOME:-$HOME/.cache}/fkst-lua-gate}"
-  mkdir -p "$cache_root" || die "cannot create fkst cache root: $cache_root"
-  dest="$cache_root/$label-$pin"
-  if [[ ! -e "$dest" ]]; then
-    printf 'fkst: cloning %s at %s\n' "$label" "$pin" >&2
-    git clone --no-checkout "$url" "$dest" \
-      || die "failed to clone pinned $label source"
-    git -C "$dest" checkout --detach "$pin" \
-      || die "failed to checkout $label pin $pin"
-  fi
-  verify_source_checkout "$label" "$dest" "$pin"
+  [[ ! -e "$destination" ]] || die "$label archive destination already exists: $destination"
+  mkdir -p "$destination" || die "cannot create $label archive destination: $destination"
+  git -C "$object_source" cat-file -e "$pin^{commit}" 2>/dev/null \
+    || die "$label source does not contain pinned commit: $pin"
+  LC_ALL=C git -C "$object_source" archive --format=tar "$pin" \
+    | LC_ALL=C tar -xf - -C "$destination" \
+    || die "failed to materialize $label from pinned commit $pin"
+  printf '%s\n' "$destination"
 }
 
 load_lua_test_contract() {
-  local substrate_file="$FKST_ROOT/substrate-ref" lock_file="$FKST_ROOT/fkst.lock"
-  local workspace_file="$FKST_ROOT/fkst.workspace.toml" data
+  local contract_root="${1:-$FKST_ROOT}"
+  local substrate_file="$contract_root/substrate-ref" lock_file="$contract_root/fkst.lock"
+  local workspace_file="$contract_root/fkst.workspace.toml" data
   [[ -s "$substrate_file" ]] || die "missing substrate pin: $substrate_file"
   [[ -s "$lock_file" ]] || die "missing platform lock: $lock_file"
   [[ -s "$workspace_file" ]] || die "missing workspace manifest: $workspace_file"
@@ -401,8 +411,8 @@ package_root_args() {
 }
 
 validate_test_reports() {
-  local normal_report="$1" graph_report="$2"
-  python3 - "$REPO_ROOT" "$normal_report" "$graph_report" <<'PY'
+  local normal_report="$1" graph_report="$2" repository_root="${3:-$REPO_ROOT}"
+  python3 - "$repository_root" "$normal_report" "$graph_report" <<'PY'
 import json
 import sys
 from pathlib import Path
@@ -458,30 +468,130 @@ print(f"fkst: reports valid; {len(observed)} declared test file(s) contributed p
 PY
 }
 
+require_framework_artifact() {
+  local artifact="$1"
+  [[ -x "$artifact" ]] || die "fkst-framework build did not produce an executable: $artifact"
+}
+
+expect_selftest_rejection() {
+  local name="$1" expected="$2" output status
+  shift 2
+  set +e
+  output="$("$@" 2>&1)"
+  status=$?
+  set -e
+  [[ "$status" -ne 0 ]] || die "selftest $name unexpectedly passed"
+  grep -F "$expected" <<<"$output" >/dev/null \
+    || die "selftest $name rejected for the wrong reason: $output"
+  printf 'PASS lua-gate-selftest %s exit=%s\n' "$name" "$status"
+}
+
+lua_gate_selftest() {
+  local work fixture_root fixture_fk source pin normal_report graph_report archive_root
+  command -v git >/dev/null 2>&1 || die "git is required for Lua gate selftest"
+  command -v python3 >/dev/null 2>&1 || die "python3 is required for Lua gate selftest"
+  command -v tar >/dev/null 2>&1 || die "tar is required for Lua gate selftest"
+
+  work="$(mktemp -d "${TMPDIR:-/tmp}/trureturing-lua-selftest.XXXXXX")" \
+    || die "cannot create Lua gate selftest directory"
+  trap 'rm -rf -- "$work"' EXIT
+  fixture_root="$work/repository"
+  fixture_fk="$fixture_root/.fkst"
+  mkdir -p "$fixture_fk" "$fixture_root/packages/fixture/tests"
+  cp "$FKST_ROOT/substrate-ref" "$fixture_fk/substrate-ref"
+  cp "$FKST_ROOT/fkst.lock" "$fixture_fk/fkst.lock"
+  cp "$FKST_ROOT/fkst.workspace.toml" "$fixture_fk/fkst.workspace.toml"
+  : >"$fixture_root/packages/fixture/tests/dummy_test.lua"
+
+  rm "$fixture_fk/substrate-ref"
+  expect_selftest_rejection missing-pin "missing substrate pin" \
+    load_lua_test_contract "$fixture_fk"
+  cp "$FKST_ROOT/substrate-ref" "$fixture_fk/substrate-ref"
+
+  rm "$fixture_fk/fkst.lock"
+  expect_selftest_rejection missing-lock "missing platform lock" \
+    load_lua_test_contract "$fixture_fk"
+  printf '%s\n' 'not valid toml = [' >"$fixture_fk/fkst.lock"
+  expect_selftest_rejection bad-lock "invalid fkst platform lock contract" \
+    load_lua_test_contract "$fixture_fk"
+  cp "$FKST_ROOT/fkst.lock" "$fixture_fk/fkst.lock"
+
+  source="$work/source"
+  git init -q "$source"
+  git -C "$source" config user.name fkst-selftest
+  git -C "$source" config user.email fkst-selftest@example.invalid
+  printf '%s\n' committed >"$source/tracked.txt"
+  git -C "$source" add tracked.txt
+  git -C "$source" commit -qm first
+  pin="$(git -C "$source" rev-parse HEAD)"
+  printf '%s\n' next >"$source/tracked.txt"
+  git -C "$source" commit -qam second
+  expect_selftest_rejection head-mismatch "checkout HEAD mismatch" \
+    materialize_pinned_source fixture unused "$pin" "$source" "$work/head-mismatch"
+
+  git -C "$source" checkout -q --detach "$pin"
+  printf '%s\n' tampered >"$source/tracked.txt"
+  git -C "$source" update-index --assume-unchanged tracked.txt
+  archive_root="$(materialize_pinned_source fixture unused "$pin" "$source" "$work/archive")"
+  [[ "$(<"$archive_root/tracked.txt")" == committed ]] \
+    || die "selftest pinned-archive used tampered worktree bytes"
+  printf '%s\n' 'PASS lua-gate-selftest pinned-archive-ignores-worktree'
+
+  normal_report="$work/normal-report.json"
+  graph_report="$work/graph-report.json"
+  printf '%s\n' '{"schema":"wrong","summary":{"passed":1,"failed":0},"tests":[{"owner_namespace":"fixture","file":"tests/dummy_test.lua","name":"passes","status":"pass"}]}' >"$normal_report"
+  printf '%s\n' '{"schema":"fkst.test.report.v1","summary":{"passed":1,"failed":0},"tests":[{"owner_namespace":"fixture","file":"tests/dummy_test.lua","name":"passes","status":"pass"}]}' >"$graph_report"
+  expect_selftest_rejection bad-report-schema "bad test report schema" \
+    validate_test_reports "$normal_report" "$graph_report" "$fixture_root"
+
+  printf '%s\n' '{"schema":"fkst.test.report.v1","summary":{"passed":0,"failed":0},"tests":[]}' >"$normal_report"
+  expect_selftest_rejection zero-tests "test report must have passed > 0" \
+    validate_test_reports "$normal_report" "$graph_report" "$fixture_root"
+
+  printf '%s\n' '{"schema":"fkst.test.report.v1","summary":{"passed":1,"failed":1},"tests":[{"owner_namespace":"fixture","file":"tests/dummy_test.lua","name":"passes","status":"pass"},{"owner_namespace":"fixture","file":"tests/dummy_test.lua","name":"fails","status":"fail","error":"boom"}]}' >"$normal_report"
+  expect_selftest_rejection failed-tests "test report must have failed = 0" \
+    validate_test_reports "$normal_report" "$graph_report" "$fixture_root"
+
+  printf '%s\n' '{"schema":"fkst.test.report.v1","summary":{"passed":2,"failed":0},"tests":[{"owner_namespace":"fixture","file":"tests/dummy_test.lua","name":"passes","status":"pass"}]}' >"$normal_report"
+  expect_selftest_rejection summary-mismatch "summary/test row mismatch" \
+    validate_test_reports "$normal_report" "$graph_report" "$fixture_root"
+
+  printf '%s\n' '{"schema":"fkst.test.report.v1","summary":{"passed":1,"failed":0},"tests":[{"owner_namespace":"fixture","file":"tests/dummy_test.lua","name":"passes","status":"pass"}]}' >"$normal_report"
+  : >"$fixture_root/packages/fixture/tests/unreported_test.lua"
+  expect_selftest_rejection missing-file-contribution "declared Lua test files produced no passing report row" \
+    validate_test_reports "$normal_report" "$graph_report" "$fixture_root"
+
+  expect_selftest_rejection missing-artifact "did not produce an executable" \
+    require_framework_artifact "$work/missing-fkst-framework"
+
+  rm -rf -- "$work"
+  trap - EXIT
+  printf '%s\n' 'fkst: Lua gate selftest passed'
+}
+
 lua_test() {
-  local substrate_root platform_root cache_root target_dir bin work conformance_root normal_root graph_root
+  local substrate_root platform_root target_dir bin work conformance_root normal_root graph_root
   local normal_report graph_report
   command -v git >/dev/null 2>&1 || die "git is required for Lua tests"
   command -v cargo >/dev/null 2>&1 || die "cargo is required for Lua tests"
   command -v python3 >/dev/null 2>&1 || die "python3 is required for Lua tests"
   command -v tar >/dev/null 2>&1 || die "tar is required for Lua tests"
+  lua_gate_selftest
   load_lua_test_contract
   load_target_packages
-  substrate_root="$(resolve_pinned_source substrate "$SUBSTRATE_URL" "$SUBSTRATE_PIN" "${FKST_SUBSTRATE:-}")"
-  platform_root="$(resolve_pinned_source platform "$PLATFORM_URL" "$PLATFORM_PIN" "${FKST_PLATFORM:-}")"
-
-  cache_root="${FKST_CACHE_ROOT:-${XDG_CACHE_HOME:-$HOME/.cache}/fkst-lua-gate}"
-  target_dir="$cache_root/cargo-target-$SUBSTRATE_PIN"
-  mkdir -p "$target_dir" || die "cannot create cargo target cache: $target_dir"
-  printf 'fkst: building framework at substrate pin %s\n' "$SUBSTRATE_PIN"
-  cargo build --locked --manifest-path "$substrate_root/Cargo.toml" \
-    --target-dir "$target_dir" -p fkst-framework
-  bin="$target_dir/debug/fkst-framework"
-  [[ -x "$bin" ]] || die "fkst-framework build did not produce an executable: $bin"
 
   work="$(mktemp -d "${TMPDIR:-/tmp}/trureturing-lua-test.XXXXXX")" \
     || die "cannot create Lua test work directory"
   trap 'rm -rf -- "$work"' EXIT
+  substrate_root="$(materialize_pinned_source substrate "$SUBSTRATE_URL" "$SUBSTRATE_PIN" "${FKST_SUBSTRATE:-}" "$work/substrate")"
+  platform_root="$(materialize_pinned_source platform "$PLATFORM_URL" "$PLATFORM_PIN" "${FKST_PLATFORM:-}" "$work/platform")"
+  target_dir="$work/cargo-target"
+  printf 'fkst: building framework at substrate pin %s\n' "$SUBSTRATE_PIN"
+  cargo build --locked --manifest-path "$substrate_root/Cargo.toml" \
+    --target-dir "$target_dir" -p fkst-framework
+  bin="$target_dir/debug/fkst-framework"
+  require_framework_artifact "$bin"
+
   conformance_root="$work/conformance"
   normal_root="$work/normal"
   graph_root="$work/graph"
@@ -515,12 +625,13 @@ lua_test() {
   printf '%s\n' 'fkst: Lua package gate passed'
 }
 
-[[ $# -eq 1 ]] || die "usage: $0 supervise|stop|status|logs|test"
+[[ $# -eq 1 ]] || die "usage: $0 supervise|stop|status|logs|test|selftest"
 case "$1" in
   supervise) start ;;
   stop) stop ;;
   status) status ;;
   logs) logs ;;
   test) lua_test ;;
-  *) die "usage: $0 supervise|stop|status|logs|test" ;;
+  selftest) lua_gate_selftest ;;
+  *) die "usage: $0 supervise|stop|status|logs|test|selftest" ;;
 esac
