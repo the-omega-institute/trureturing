@@ -47,7 +47,7 @@ end
 local function existing_requests(repo, bot_login)
   local cmd = "gh issue list --repo '" .. repo
     .. "' --state all --search '" .. core.marker_search_query(bot_login)
-    .. "' --json number,state,body --limit 100"
+    .. "' --json number,state,body,labels --limit 100"
   local out = exec_sync({ cmd = cmd, timeout = 30 })
   if type(out) ~= "table" or out.exit_code ~= 0 then
     error("theory-selfgrowth: request-search-failed: gh issue list", 0)

@@ -94,12 +94,34 @@ function M.validate_repo(repo)
   return repo:match("^[%w._-]+/[%w._-]+$") ~= nil
 end
 
+-- A frontier-request the devloop has TERMINALLY given up on carries the `fkst-dev:blocked`
+-- label (dropped after state-output-obligation-timeout, then decomposed into a sub-issue).
+-- It is still OPEN on GitHub but is NOT an active "one at a time" request. Counting it as
+-- open freezes THIS producer's generation indefinitely: observed in production, a blocked
+-- #373 starved loning's propose department ("skipping one at a time") for ~5h until it was
+-- manually closed, so the whole self-growth flywheel stalled at the generation stage. The
+-- producer must self-recover, so a terminal-blocked request is excluded from open_exists.
+local TERMINAL_BLOCKED_LABEL = "fkst-dev:blocked"
+
+function M.is_terminal_blocked(issue)
+  if type(issue) ~= "table" or type(issue.labels) ~= "table" then
+    return false
+  end
+  for _, label in ipairs(issue.labels) do
+    if type(label) == "table" and label.name == TERMINAL_BLOCKED_LABEL then
+      return true
+    end
+  end
+  return false
+end
+
 -- Decide the next generation index and whether an open request already exists, from the
--- producer's own frontier-request issues (each { state = ..., body = ... }). Issues are
--- filtered to those actually carrying the producer-scoped marker in the body so an
+-- producer's own frontier-request issues (each { state = ..., body = ..., labels = ... }).
+-- Issues are filtered to those actually carrying the producer-scoped marker in the body so an
 -- over-matching search never inflates the counter or lets another bot suppress this one.
 --   generation  = count of prior requests (any state) -> index for the NEXT request
---   open_exists = any prior request still open        -> exclude firing (one at a time)
+--   open_exists = any prior request still open AND NOT terminal-blocked -> exclude firing
+--                 (one ACTIVE at a time; a terminal-blocked request must not freeze generation)
 function M.decide_generation(issues, bot_login)
   local producer_marker = M.producer_marker(bot_login)
   local generation = 0
@@ -111,7 +133,7 @@ function M.decide_generation(issues, bot_login)
         and issue.body:find(producer_marker, 1, true) ~= nil then
         generation = generation + 1
         local state = issue.state
-        if state == "open" or state == "OPEN" then
+        if (state == "open" or state == "OPEN") and not M.is_terminal_blocked(issue) then
           open_exists = true
         end
       end
