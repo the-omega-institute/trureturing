@@ -371,6 +371,13 @@ consumed_by = ["TheoryIngestion"]
 verified_by = ["SnapshotDecoder"]
 
 [[files]]
+pattern = "docs/devloop/**"
+kind = "program"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+
+[[files]]
 pattern = "lean-toolchain"
 kind = "program"
 produced_by = "none"

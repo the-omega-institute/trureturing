@@ -214,6 +214,10 @@ none --declares--> [docs/develop/theory/** | data]
 [docs/develop/theory/** | data] --consumed-by--> TheoryIngestion
 [docs/develop/theory/** | data] --verified-by--> SnapshotDecoder
 
+none --declares--> [docs/devloop/** | program]
+[docs/devloop/** | program] --consumed-by--> agent
+[docs/devloop/** | program] --verified-by--> repository-policy
+
 none --declares--> [lean-toolchain | program]
 [lean-toolchain | program] --consumed-by--> Lean
 [lean-toolchain | program] --verified-by--> make-gate
