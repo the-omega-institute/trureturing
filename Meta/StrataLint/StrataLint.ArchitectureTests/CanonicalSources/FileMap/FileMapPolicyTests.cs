@@ -70,6 +70,26 @@ public sealed class FileMapPolicyTests
     }
 
     [Fact]
+    public void DevloopPlanDocumentsAreAdmittedByRepositoryPathPolicy()
+    {
+        // Self-driving devloop plan documents are emitted under docs/devloop/plans/
+        // with dynamically generated names (one per prove-task), so they cannot be
+        // enumerated individually in registry.yaml governance_documents. The
+        // RepositoryPathPolicy admits the whole docs/devloop/ prefix (mirroring
+        // packages/, .fkst/, .claude/skills/); SL-000 must not reject them as an
+        // unknown top-level artifact.
+        const string value = "docs/devloop/plans/synthetic-prove-task-plan.md";
+        var root = RepositoryLayout.FindRoot();
+        var registry = Assert.IsType<RegistryLoadOutcome.Accepted>(
+            RegistryLoader.Load(
+                File.ReadAllBytes(Path.Combine(root, "Meta", "registry.yaml")),
+                File.ReadAllBytes(Path.Combine(root, "Meta", "domains.yaml"))));
+        var path = RepoPath.CreateKnown(value);
+
+        Assert.Null(RepositoryPathPolicy.Validate(path, registry.Policy));
+    }
+
+    [Fact]
     public void LibrarySplitBucketsAreClassifiedAsData()
     {
         var manifest = FileMapLoader.LoadRepository(RepositoryLayout.FindRoot());
