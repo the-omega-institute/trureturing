@@ -19162,6 +19162,10 @@ sources:
         status:
           migration: residual
           truth: open
+  - source_id: bedc-wm-v0.1
+    path: docs/develop/theory/BEDC-WM.md
+    atomizer: wm-v1
+    entries: []
   - source_id: golden-ledger-spec-v7.11
     path: docs/develop/spec/golden-ledger-repo-spec.md
     atomizer: none
