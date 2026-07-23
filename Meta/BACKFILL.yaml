@@ -4116,6 +4116,11 @@ sources:
           - D5/S1/Depth/TwelveScaleReduction.normalized_magnitude_eq_twelve_scale_iff
           - D5/S1/Depth/TwelveScaleReduction.twelve_scale_is_normalized_sample_minimum
           - D5/S1/Depth/TwelveScaleReduction.normalized_sample_minimum_unique
+          - D5/S1/Depth/PartialQuotientExtraction.partialQuotients
+          - D5/S1/Depth/PartialQuotientExtraction.aMax
+          - D5/S1/Depth/PartialQuotientExtraction.partialQuotients_nonempty
+          - D5/S1/Depth/PartialQuotientExtraction.aMax_pos
+          - D5/S1/Depth/PartialQuotientExtraction.twelve_scale_is_extracted_normalized_sample_minimum
         receipts:
           coverage:
             - gid: D5/S1/Phase/SeatTowerArithmetic.twelve_le_abs_of_dvd_of_ne_zero
@@ -4157,6 +4162,21 @@ sources:
             - gid: D5/S1/Depth/TwelveScaleReduction.normalized_sample_minimum_unique
               source_sha256: sha256:db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3
               target_sha256: sha256:1e0b3901146974128383d7eee95ffb8711b5302478fbacc6a54cd5060e466b05
+            - gid: D5/S1/Depth/PartialQuotientExtraction.partialQuotients
+              source_sha256: sha256:db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3
+              target_sha256: sha256:e061d1c0158f1e01909e5f408f69dd07b829c2d1ec87842fbfa79b818251be31
+            - gid: D5/S1/Depth/PartialQuotientExtraction.aMax
+              source_sha256: sha256:db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3
+              target_sha256: sha256:e061d1c0158f1e01909e5f408f69dd07b829c2d1ec87842fbfa79b818251be31
+            - gid: D5/S1/Depth/PartialQuotientExtraction.partialQuotients_nonempty
+              source_sha256: sha256:db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3
+              target_sha256: sha256:e061d1c0158f1e01909e5f408f69dd07b829c2d1ec87842fbfa79b818251be31
+            - gid: D5/S1/Depth/PartialQuotientExtraction.aMax_pos
+              source_sha256: sha256:db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3
+              target_sha256: sha256:e061d1c0158f1e01909e5f408f69dd07b829c2d1ec87842fbfa79b818251be31
+            - gid: D5/S1/Depth/PartialQuotientExtraction.twelve_scale_is_extracted_normalized_sample_minimum
+              source_sha256: sha256:db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3
+              target_sha256: sha256:e061d1c0158f1e01909e5f408f69dd07b829c2d1ec87842fbfa79b818251be31
           scribe:
             - gid: D5/S1/Depth/TwelveScaleReduction.twelve_scale_le_normalized_magnitude
               definition_sha256: sha256:750bbdf8cbb71bcc652d271f1655d8a2826a79647b6c92fa14746377717b6cfe
@@ -4170,6 +4190,21 @@ sources:
             - gid: D5/S1/Depth/TwelveScaleReduction.normalized_sample_minimum_unique
               definition_sha256: sha256:750bbdf8cbb71bcc652d271f1655d8a2826a79647b6c92fa14746377717b6cfe
               emission_sha256: sha256:a23e9b1509e9616d98630841c0710970534f91747145aa30780a02ed42e5960c
+            - gid: D5/S1/Depth/PartialQuotientExtraction.partialQuotients
+              definition_sha256: sha256:91588c7b9b5a9681eceb80b77dce655b911041a967f3b60147c52d822a6e82e5
+              emission_sha256: sha256:fa3cc63a3a25c67d90caac4cb732b29669e0147f34d85a3222f0a17459554bf2
+            - gid: D5/S1/Depth/PartialQuotientExtraction.aMax
+              definition_sha256: sha256:91588c7b9b5a9681eceb80b77dce655b911041a967f3b60147c52d822a6e82e5
+              emission_sha256: sha256:fa3cc63a3a25c67d90caac4cb732b29669e0147f34d85a3222f0a17459554bf2
+            - gid: D5/S1/Depth/PartialQuotientExtraction.partialQuotients_nonempty
+              definition_sha256: sha256:91588c7b9b5a9681eceb80b77dce655b911041a967f3b60147c52d822a6e82e5
+              emission_sha256: sha256:fa3cc63a3a25c67d90caac4cb732b29669e0147f34d85a3222f0a17459554bf2
+            - gid: D5/S1/Depth/PartialQuotientExtraction.aMax_pos
+              definition_sha256: sha256:91588c7b9b5a9681eceb80b77dce655b911041a967f3b60147c52d822a6e82e5
+              emission_sha256: sha256:fa3cc63a3a25c67d90caac4cb732b29669e0147f34d85a3222f0a17459554bf2
+            - gid: D5/S1/Depth/PartialQuotientExtraction.twelve_scale_is_extracted_normalized_sample_minimum
+              definition_sha256: sha256:91588c7b9b5a9681eceb80b77dce655b911041a967f3b60147c52d822a6e82e5
+              emission_sha256: sha256:fa3cc63a3a25c67d90caac4cb732b29669e0147f34d85a3222f0a17459554bf2
             - gid: D5/S1/Phase/SeatTowerArithmetic.twelve_le_abs_of_dvd_of_ne_zero
               definition_sha256: sha256:525faccde64a4f96a69b0aabbf95115b1b27bd61ae677aaac93c6c95c1250b39
               emission_sha256: sha256:f6b2cc020d9663fa6579ad32eebd9345b310ceac44333db64ea6f7167923c0ab
@@ -4223,7 +4258,6 @@ sources:
             - m-independent-gap-envelope-measurement
             - small-angle-2958-congruence-certificate
             - minimum-nonzero-psi-twelve-certificate
-            - floor-twelve-over-amax-reduction
             - moat-twelve-over-amax-reduction
             - envelope-twelve-over-amax-reduction
             - diffusion-twelve-over-amax-reduction
@@ -18098,6 +18132,11 @@ sources:
           - D5/S1/Depth/TwelveScaleReduction.normalized_magnitude_eq_twelve_scale_iff
           - D5/S1/Depth/TwelveScaleReduction.twelve_scale_is_normalized_sample_minimum
           - D5/S1/Depth/TwelveScaleReduction.normalized_sample_minimum_unique
+          - D5/S1/Depth/PartialQuotientExtraction.partialQuotients
+          - D5/S1/Depth/PartialQuotientExtraction.aMax
+          - D5/S1/Depth/PartialQuotientExtraction.partialQuotients_nonempty
+          - D5/S1/Depth/PartialQuotientExtraction.aMax_pos
+          - D5/S1/Depth/PartialQuotientExtraction.twelve_scale_is_extracted_normalized_sample_minimum
         receipts:
           coverage:
             - gid: D5/S1/Phase/SeatTowerArithmetic.twelve_le_abs_of_dvd_of_ne_zero
@@ -18139,6 +18178,21 @@ sources:
             - gid: D5/S1/Depth/TwelveScaleReduction.normalized_sample_minimum_unique
               source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
               target_sha256: sha256:1e0b3901146974128383d7eee95ffb8711b5302478fbacc6a54cd5060e466b05
+            - gid: D5/S1/Depth/PartialQuotientExtraction.partialQuotients
+              source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+              target_sha256: sha256:e061d1c0158f1e01909e5f408f69dd07b829c2d1ec87842fbfa79b818251be31
+            - gid: D5/S1/Depth/PartialQuotientExtraction.aMax
+              source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+              target_sha256: sha256:e061d1c0158f1e01909e5f408f69dd07b829c2d1ec87842fbfa79b818251be31
+            - gid: D5/S1/Depth/PartialQuotientExtraction.partialQuotients_nonempty
+              source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+              target_sha256: sha256:e061d1c0158f1e01909e5f408f69dd07b829c2d1ec87842fbfa79b818251be31
+            - gid: D5/S1/Depth/PartialQuotientExtraction.aMax_pos
+              source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+              target_sha256: sha256:e061d1c0158f1e01909e5f408f69dd07b829c2d1ec87842fbfa79b818251be31
+            - gid: D5/S1/Depth/PartialQuotientExtraction.twelve_scale_is_extracted_normalized_sample_minimum
+              source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+              target_sha256: sha256:e061d1c0158f1e01909e5f408f69dd07b829c2d1ec87842fbfa79b818251be31
           scribe:
             - gid: D5/S1/Depth/TwelveScaleReduction.twelve_scale_le_normalized_magnitude
               definition_sha256: sha256:750bbdf8cbb71bcc652d271f1655d8a2826a79647b6c92fa14746377717b6cfe
@@ -18152,6 +18206,21 @@ sources:
             - gid: D5/S1/Depth/TwelveScaleReduction.normalized_sample_minimum_unique
               definition_sha256: sha256:750bbdf8cbb71bcc652d271f1655d8a2826a79647b6c92fa14746377717b6cfe
               emission_sha256: sha256:a23e9b1509e9616d98630841c0710970534f91747145aa30780a02ed42e5960c
+            - gid: D5/S1/Depth/PartialQuotientExtraction.partialQuotients
+              definition_sha256: sha256:91588c7b9b5a9681eceb80b77dce655b911041a967f3b60147c52d822a6e82e5
+              emission_sha256: sha256:fa3cc63a3a25c67d90caac4cb732b29669e0147f34d85a3222f0a17459554bf2
+            - gid: D5/S1/Depth/PartialQuotientExtraction.aMax
+              definition_sha256: sha256:91588c7b9b5a9681eceb80b77dce655b911041a967f3b60147c52d822a6e82e5
+              emission_sha256: sha256:fa3cc63a3a25c67d90caac4cb732b29669e0147f34d85a3222f0a17459554bf2
+            - gid: D5/S1/Depth/PartialQuotientExtraction.partialQuotients_nonempty
+              definition_sha256: sha256:91588c7b9b5a9681eceb80b77dce655b911041a967f3b60147c52d822a6e82e5
+              emission_sha256: sha256:fa3cc63a3a25c67d90caac4cb732b29669e0147f34d85a3222f0a17459554bf2
+            - gid: D5/S1/Depth/PartialQuotientExtraction.aMax_pos
+              definition_sha256: sha256:91588c7b9b5a9681eceb80b77dce655b911041a967f3b60147c52d822a6e82e5
+              emission_sha256: sha256:fa3cc63a3a25c67d90caac4cb732b29669e0147f34d85a3222f0a17459554bf2
+            - gid: D5/S1/Depth/PartialQuotientExtraction.twelve_scale_is_extracted_normalized_sample_minimum
+              definition_sha256: sha256:91588c7b9b5a9681eceb80b77dce655b911041a967f3b60147c52d822a6e82e5
+              emission_sha256: sha256:fa3cc63a3a25c67d90caac4cb732b29669e0147f34d85a3222f0a17459554bf2
             - gid: D5/S1/Phase/SeatTowerArithmetic.twelve_le_abs_of_dvd_of_ne_zero
               definition_sha256: sha256:525faccde64a4f96a69b0aabbf95115b1b27bd61ae677aaac93c6c95c1250b39
               emission_sha256: sha256:f6b2cc020d9663fa6579ad32eebd9345b310ceac44333db64ea6f7167923c0ab
@@ -18202,7 +18271,6 @@ sources:
             - m-independent-gap-envelope-measurement
             - small-angle-2958-congruence-certificate
             - minimum-nonzero-psi-twelve-certificate
-            - floor-twelve-over-amax-reduction
             - moat-twelve-over-amax-reduction
             - envelope-twelve-over-amax-reduction
             - diffusion-twelve-over-amax-reduction
