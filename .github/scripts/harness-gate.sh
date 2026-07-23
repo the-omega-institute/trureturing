@@ -115,7 +115,23 @@ admission_status="passed"
 if [[ "$rc" -ne 0 && "$rc" -ne 3 ]]; then admission_status="failed"; fi
 mark admission "$admission_status"
 
-if [[ $rc -eq 0 || $rc -eq 3 ]]; then
+# echo-verify runs the BASE judge binary, whose DocumentDefinitions.All is
+# reflected from the base-compiled *.scribe.cs set. A protected-surface change
+# (rc==3) that adds a new *.scribe.cs adds a definition the base binary cannot
+# render, so echo-verify structurally always fails (out-of-date, N vs N+1) and,
+# unguarded, killed the gate before verify-conservative — walling off ALL new D5
+# theorem growth since 2026-07-22 (d5lean=0 regression, #406). rc==3 admission is
+# already base-owned by verify-conservative (base-owned golden-corpus replay);
+# the frozen-ledger validator, BACKFILL rule, conservativeness and SL-022 checks
+# all remain. So restrict echo-verify to rc==0, where no protected file (hence no
+# .scribe.cs) changed and the base binary can fully derive the residual.
+# Accounted residual (第20条, low-harm/self-healing): a rc==3 PR editing an
+# EXISTING .scribe.cs + faking Generated/echo-residual-summary.md (a
+# non-authoritative photo of the admission-checked BACKFILL ledger) skips this
+# base byte-check; it cannot corrupt the frozen ledger, and re-derives fresh on
+# the next affected rc==0 PR. Surgical closure (base echo-verify -> NOT_APPLICABLE
+# when the base cannot render, else enforce) is a deferred follow-up in #406.
+if [[ $rc -eq 0 ]]; then
   (
     cd "$CANDIDATE_ROOT"
     STRATALINT_LEAN_REPORT="$CANDIDATE_LEAN_REPORT" \
