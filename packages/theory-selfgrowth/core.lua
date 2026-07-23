@@ -210,8 +210,8 @@ local function body_text(dedup_key, bot_login)
     "is typically `generality: I`); do NOT force a fixed path or mirror a base node's `generality: G`.",
     "",
     "Honesty guards: NON-VACUITY — reject trivial/vacuous statements (e.g. `P ∨ True`, `Nonempty`-of-",
-    "trivial); pick a substantive claim. NOVELTY — search first; it must not already exist. CONSERVATIVE",
-    "EXTENSION — append a new node only; never touch a frozen node.",
+    "trivial); pick a substantive claim. NOVELTY — search first; it must not already exist.",
+    "CONSERVATIVE EXTENSION — append a new node only; never touch a frozen node.",
     "",
     "dedup-marker: " .. tostring(dedup_key),
   }, "\n")
