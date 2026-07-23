@@ -9,7 +9,6 @@ public sealed class DocumentDiscoveryTests
     private const string ConjDocumentPath = "Blueprint/D5/S0/Carrier/Conj.md";
     private const string GoldenRatioDocumentPath = "Blueprint/D5/S0/Carrier/GoldenRatio.md";
     private const string NormDocumentPath = "Blueprint/D5/S0/Carrier/Norm.md";
-    private const string NormPowersDocumentPath = "Blueprint/D5/S0/Carrier/NormPowers.md";
     private const string RingDocumentPath = "Blueprint/D5/S0/Carrier/Ring.md";
     private const string UnitsDocumentPath = "Blueprint/D5/S0/Carrier/Units.md";
     private const string NotationDocumentPath = "Blueprint/D5/S0/Conventions/Notation.md";
@@ -64,7 +63,6 @@ public sealed class DocumentDiscoveryTests
                 "D5/S0/Carrier/Conj",
                 "D5/S0/Carrier/GoldenRatio",
                 "D5/S0/Carrier/Norm",
-                "D5/S0/Carrier/NormPowers",
                 "D5/S0/Carrier/Ring",
                 "D5/S0/Carrier/Units",
                 "D5/S0/Conventions/Notation",
@@ -110,7 +108,6 @@ public sealed class DocumentDiscoveryTests
                 ConjDocumentPath,
                 GoldenRatioDocumentPath,
                 NormDocumentPath,
-                NormPowersDocumentPath,
                 RingDocumentPath,
                 UnitsDocumentPath,
                 NotationDocumentPath,

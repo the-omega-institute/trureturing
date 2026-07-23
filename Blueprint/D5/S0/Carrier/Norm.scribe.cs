@@ -16,6 +16,16 @@ internal sealed class NormDocument : IScribeDocumentDefinition
             Paragraph(
                 Text("Under the doubled `Zsqrtd 5` coordinates from the carrier module, the mathlib norm is exactly four times the golden norm. This factor is the expected square of the coordinate scaling.")),
             new DocumentBlock.Describe(
+                DescribeId.Create("norm-powers"),
+                DescribeKind.Theorem,
+                H("Norm of a natural power"),
+                DescribeStatement.FromLean(LeanTheorem(
+                    "D5/S0/Carrier/NormPowers.norm_pow")),
+                DescribeProvenance.RepoDerived(),
+                Blocks(Paragraph(Text(
+                    "The existing norm is packaged as a monoid homomorphism from `GoldenInt` to `Int`. Applying its standard power law gives the exact identity for every golden integer and every natural exponent, with no extra algebraic assumptions."))),
+                LatexStatement.Create(@"$$\forall x\in\mathbb{Z}[\varphi],\ \forall n\in\mathbb{N},\ N(x^n)=N(x)^n$$")),
+            new DocumentBlock.Describe(
                 DescribeId.Create("two-square-norm-as-a-shared-interpretive-core"),
                 DescribeKind.Remark,
                 H("The two-square norm as a shared interpretive core"),

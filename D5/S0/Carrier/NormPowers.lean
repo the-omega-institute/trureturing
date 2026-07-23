@@ -1,6 +1,6 @@
 /- GID: D5/S0/Carrier/NormPowers
    generality: I
-   mirror-B: D5/B/S0/Carrier/NormPowers
+   mirror-B: D5/B/S0/Carrier/Norm
    mirror-E: none(waiver:algebraically-proved)
    anchors: []
    digest: The golden norm sends every natural power to the corresponding integer power. -/
