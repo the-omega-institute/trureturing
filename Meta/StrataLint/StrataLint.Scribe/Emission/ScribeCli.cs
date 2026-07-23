@@ -24,6 +24,24 @@ public static class ScribeCli
         ArgumentNullException.ThrowIfNull(error);
 
         var command = arguments.Count == 0 ? string.Empty : arguments[0];
+        if (command == "artifact-inventory")
+        {
+            if (arguments.Count != 2
+                || !string.Equals(arguments[1], "--null", StringComparison.Ordinal))
+            {
+                error.WriteLine(Usage);
+                return 2;
+            }
+
+            foreach (var artifact in GeneratedArtifactInventory.All)
+            {
+                output.Write(artifact.Path);
+                output.Write('\0');
+            }
+
+            return 0;
+        }
+
         if (command == "describe-report")
         {
             var json = arguments.Count == 2
@@ -102,7 +120,8 @@ public static class ScribeCli
 
     private const string Usage =
         "usage: dotnet run --project Meta/StrataLint/StrataLint.Scribe -- "
-        + "emit|catalog|emit-values|filemap [--check] | describe-report [--json]";
+        + "emit|catalog|emit-values|filemap [--check] | artifact-inventory --null "
+        + "| describe-report [--json]";
 
     private static string FindRepositoryRoot(string workingDirectory)
     {

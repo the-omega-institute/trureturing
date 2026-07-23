@@ -299,6 +299,25 @@ public sealed class EmissionTests
     }
 
     [Fact]
+    public void CliEmitsTheCanonicalGeneratedArtifactInventoryAsNullDelimitedPaths()
+    {
+        var output = new StringWriter();
+        var error = new StringWriter();
+
+        var exit = ScribeCli.Run(
+            ["artifact-inventory", "--null"],
+            Directory.GetCurrentDirectory(),
+            output,
+            error);
+
+        Assert.Equal(0, exit);
+        Assert.Empty(error.ToString());
+        Assert.Equal(
+            string.Concat(GeneratedArtifactInventory.All.Select(static artifact => artifact.Path + '\0')),
+            output.ToString());
+    }
+
+    [Fact]
     public void EveryBlueprintMarkdownHasExactlyOneDiscoveredScribeDefinition()
     {
         var root = FindRepositoryRoot();

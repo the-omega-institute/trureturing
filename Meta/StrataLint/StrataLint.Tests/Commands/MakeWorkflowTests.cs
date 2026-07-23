@@ -35,6 +35,7 @@ public sealed class MakeWorkflowTests
     private const string TheoryIngestWorkflowPath = ".github/workflows/theory-ingest.yml";
     private const string EchoResidualSummaryPath = "Generated/echo-residual-summary.md";
     private const string PrShepherdScriptPath = "Meta/StrataLint/scripts/pr-shepherd.sh";
+    private const string PrReconcileScriptPath = "Meta/StrataLint/scripts/pr-reconcile.sh";
 
     private static readonly string[] Targets =
     [
@@ -676,6 +677,20 @@ public sealed class MakeWorkflowTests
         Assert.True(closeIndex >= 0, "wake must close the PR to mint a fresh trigger event");
         Assert.True(reopenIndex > closeIndex, "wake must reopen after close");
         Assert.True(rearmIndex > reopenIndex, "close disarms auto-merge; wake must re-arm it");
+    }
+
+    [Fact]
+    public void PrShepherdDelegatesBehindContentReconciliationAndRetainsTextMergeFallback()
+    {
+        var root = FindRepositoryRoot();
+        var shepherd = File.ReadAllText(Path.Combine(root, PrShepherdScriptPath));
+
+        Assert.Contains("baseRefOid", shepherd, StringComparison.Ordinal);
+        Assert.Contains(PrReconcileScriptPath, shepherd, StringComparison.Ordinal);
+        Assert.Contains("reconcile_rc", shepherd, StringComparison.Ordinal);
+        Assert.Contains("$reconcile_rc -eq 3", shepherd, StringComparison.Ordinal);
+        Assert.Contains("update-branch", shepherd, StringComparison.Ordinal);
+        Assert.DoesNotContain("Generated/**", shepherd, StringComparison.Ordinal);
     }
 
     private static int RecipeCount(string makefile, string target) =>
