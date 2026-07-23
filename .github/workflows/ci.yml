@@ -80,11 +80,10 @@ jobs:
           rustup default stable
           rustc --version
 
-      - name: Restore pinned fkst source and Cargo caches
+      - name: Restore Cargo dependency caches
         uses: actions/cache@v4
         with:
           path: |
-            ~/.cache/fkst-lua-gate
             ~/.cargo/registry
             ~/.cargo/git
           key: ${{ runner.os }}-${{ runner.arch }}-fkst-lua-${{ hashFiles('candidate/.fkst/substrate-ref', 'candidate/.fkst/fkst.lock') }}
