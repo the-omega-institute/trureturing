@@ -3,7 +3,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-public sealed class TheoryAtomizerTests
+public sealed partial class TheoryAtomizerTests
 {
     private const string FirstProductionSource =
         "docs/develop/theory/GICT.md";
@@ -88,6 +88,110 @@ public sealed class TheoryAtomizerTests
     }
 
     [Fact]
+    public void WmV1SplitsTheCanonicalDialectIntoExactUniqueByteAtoms()
+    {
+        var fixture = CanonicalWmFixtureSegments();
+        var bytes = Encoding.UTF8.GetBytes(string.Concat(fixture.Select(static item => item.Text)));
+
+        var document = AtomizerRegistry.Atomize(AtomizerRegistry.WmId, bytes);
+
+        Assert.Equal(fixture.Select(static item => item.AstPath), document.Claims.Select(static item => item.AstPath));
+        Assert.Equal(document.Claims.Length, document.Claims.Select(static item => item.AstPath).Distinct(StringComparer.Ordinal).Count());
+        Assert.Equal(fixture.Count, document.Claims.Length);
+        for (var index = 0; index < fixture.Count; index++)
+        {
+            Assert.Equal(Encoding.UTF8.GetBytes(fixture[index].Text), document.Claims[index].RawBytes.ToArray());
+        }
+
+        Assert.Equal(bytes, document.Reassemble().ToArray());
+    }
+
+    [Fact]
+    public void WmV1SplitIsIdempotentAndV02OnlyAddsNewVersionAndAuditAtoms()
+    {
+        var original = AtomizerRegistry.Atomize(
+            AtomizerRegistry.WmId,
+            Encoding.UTF8.GetBytes(CanonicalWmFixture()));
+        AssertSplitIdempotent(AtomizerRegistry.WmId, original);
+
+        var evolved = AtomizerRegistry.Atomize(
+            AtomizerRegistry.WmId,
+            Encoding.UTF8.GetBytes(CanonicalWmV02Fixture()));
+
+        Assert.Equal(
+            original.Claims.Select(static atom => atom.AstPath)
+                .Append("version/v0.2")
+                .Append("audit/v0.2")
+                .Order(StringComparer.Ordinal),
+            evolved.Claims.Select(static atom => atom.AstPath).Order(StringComparer.Ordinal));
+        foreach (var atom in original.Claims)
+        {
+            var unchanged = Assert.Single(evolved.Claims, candidate => candidate.AstPath == atom.AstPath);
+            Assert.Equal(atom.Fingerprints, unchanged.Fingerprints);
+            Assert.Equal(atom.RawBytes.ToArray(), unchanged.RawBytes.ToArray());
+        }
+
+        AssertSplitIdempotent(AtomizerRegistry.WmId, evolved);
+    }
+
+    [Theory]
+    [MemberData(nameof(InvalidWmSources))]
+    public void WmV1FailsClosedForStructuralDrift(string _, byte[] bytes)
+    {
+        var error = Record.Exception(() => AtomizerRegistry.Atomize(AtomizerRegistry.WmId, bytes));
+
+        Assert.True(error is FormatException or DecoderFallbackException, error?.ToString());
+    }
+
+    [Fact]
+    public void WmV1AssignsEverySourceByteToAPrimaryAtom()
+    {
+        var bytes = Encoding.UTF8.GetBytes(CanonicalWmFixture());
+
+        var document = AtomizerRegistry.Atomize(AtomizerRegistry.WmId, bytes);
+
+        Assert.All(document.Slices, static slice => Assert.True(slice.IsClaim));
+        Assert.Equal(bytes.Length, document.Slices.Sum(static slice => slice.RawBytes.Length));
+        Assert.Equal(bytes, document.Reassemble().ToArray());
+    }
+
+    [Fact]
+    public void WmV1SeparatesSection7AndItsAutopsyAppendixWithNestedContext()
+    {
+        var document = AtomizerRegistry.Atomize(
+            AtomizerRegistry.WmId,
+            Encoding.UTF8.GetBytes(CanonicalWmFixture()));
+
+        var section = document.ResolveClaim("section/7");
+        var appendix = document.ResolveClaim("section/7-appendix");
+
+        Assert.DoesNotContain("§7-附", Encoding.UTF8.GetString(section.RawBytes.AsSpan()), StringComparison.Ordinal);
+        Assert.StartsWith("### §7-附", Encoding.UTF8.GetString(appendix.RawBytes.AsSpan()), StringComparison.Ordinal);
+        Assert.Equal(
+            [WmTitle[2..], "7. Section 7"],
+            appendix.Context.Select(static item => item.Text));
+        Assert.Equal([1, 2], appendix.Context.Select(static item => item.Level));
+    }
+
+    [Fact]
+    public void WmV1RegistryUsesOrdinalIdsAndTheWmResidualPrefix()
+    {
+        Assert.Equal(
+            [
+                AtomizerRegistry.GictId,
+                AtomizerRegistry.ObserverId,
+                AtomizerRegistry.PeriodicTreeId,
+                AtomizerRegistry.PzgId,
+                AtomizerRegistry.WmId,
+            ],
+            AtomizerRegistry.RegisteredIds.ToArray());
+        Assert.Equal(
+            AtomizerRegistry.RegisteredIds.Order(StringComparer.Ordinal).ToArray(),
+            AtomizerRegistry.RegisteredIds.ToArray());
+        Assert.Equal("wm", AtomizerRegistry.Require(AtomizerRegistry.WmId).ResidualPrefix);
+    }
+
+    [Fact]
     public void GictAdapterTreatsEachAppendixConstantRowAsAnAtomicClaim()
     {
         var bytes = Encoding.UTF8.GetBytes(
@@ -117,151 +221,6 @@ public sealed class TheoryAtomizerTests
 
         Assert.Equal(["open/O-5", "open/O-6"], document.Claims.Select(static item => item.AstPath));
         Assert.Equal(bytes, document.Reassemble().ToArray());
-    }
-
-    [Fact]
-    public void ObserverAdapterRecognizesEveryProductionClaim()
-    {
-        var root = FindRepositoryRoot();
-        var bytes = File.ReadAllBytes(Path.Combine(root, ThirdProductionSource));
-
-        var document = AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes);
-
-        AssertRecognitionComplete(document, bytes);
-    }
-
-    [Fact]
-    public void ObserverV1RecognizesTheObserverQuantumRefreshDialect()
-    {
-        var bytes = Encoding.UTF8.GetBytes(
-            """
-            # Observer refresh
-
-            本文主张的是:claim。
-
-            **簿记条款(v2)**:claim。
-
-            因果方向:claim。
-
-            **(i) 相位对象。** claim。
-
-            **(ii) 刚性定律。** claim。
-
-            **(iii) 账本纪律。** claim。
-
-            **语义地基(v2 一层重写)**:claim。
-
-            **定理(观察者代数的典范形态)。** claim。
-
-            **定理(有限窗口 = 素数量子寄存器,绕行限定版)。** claim。
-
-            **定理(无经典答案表,收窄版)。** claim。
-
-            **定理(叠加不违反经典刚性)。** claim。
-
-            **定理(观察者度量与二型无穷远,v2 新增)。** claim。
-
-            **定理(两族窗口二分法与黄金支,v3 新增)。** claim。
-
-            **测量的完整理论只有两个动词。** claim。
-
-            **遗忘是可审计的数学关系。** claim。
-
-            **时间的连续性是统计的产物(热时间假设,诠释级)。** claim。
-
-            **中心层(强制,无选择)。** claim。
-
-            **指针基层(由记账规则选定)。** claim。
-
-            **冗余层(集体记忆)。** claim。
-
-            单配定理锁死 claim。
-
-            **v4 补全:经典性的账本签名与两种命运。** claim。
-
-            **Q1(为何有概率):推出。** claim。
-
-            **Q2(为何恰是 $|\psi|^2$):条件推出(路线 B)。** claim。
-
-            **Q3(为何单一结果):动力学谜化解,索引谜搬家。** claim。
-
-            **Q4(概率何义)。** claim。
-
-            **设置格(选问题)与记账格(选经典):判真。** claim。
-
-            **距离-相位定律三代(v2 全谱)。** claim。
-
-            **自由价目全表**:claim。
-
-            **互补预算定理(v2 新增,自含四行证)。** claim。
-
-            Wigner 之友、claim。
-
-            "连续本不存在,连续是统计" claim。
-
-            未具备者如实列出:claim。
-
-            **已结案(附证书):** claim。
-
-            **遗留(三类):** claim。
-
-            **总判词:** claim。
-
-            **§10.1 分层公共记忆中和原则**。claim。
-
-            **§10.2 对数钟与通道谱(指针)**。claim。
-
-            **§10.3 商余本体语义庭**。claim。
-
-            **边界**。claim。
-            """);
-
-        var document = AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes);
-
-        Assert.Equal(
-            [
-                "scope/kinematics-statistics",
-                "scope/bookkeeping",
-                "scope/forced-causal-direction",
-                "premise/phase-object",
-                "premise/rigidity",
-                "premise/ledger-discipline",
-                "premise/semantic-foundation",
-                "theorem/observer-algebra",
-                "theorem/finite-window-register",
-                "theorem/no-classical-answer-table",
-                "theorem/state-not-path",
-                "theorem/observer-metric",
-                "theorem/window-dichotomy",
-                "measurement/conditioning",
-                "measurement/forgetting",
-                "measurement/statistical-time",
-                "classical/center",
-                "classical/pointer-basis",
-                "classical/redundant-records",
-                "classical/unique-record",
-                "classical/ledger-signature",
-                "probability/Q1",
-                "probability/Q2",
-                "probability/Q3",
-                "probability/Q4",
-                "freedom/settings-and-recording",
-                "freedom/distance-phase",
-                "freedom/price-list",
-                "freedom/complementarity-budget",
-                "observer/nested-facts",
-                "physics/continuum-and-fields",
-                "physics/open-geometry",
-                "verdict/settled",
-                "verdict/open",
-                "verdict/final",
-                "memory/public-neutralization",
-                "memory/log-clock-channel-spectrum",
-                "ontology/quotient-remainder",
-                "ontology/boundary",
-            ],
-            document.Claims.Select(static item => item.AstPath));
-        AssertRecognitionComplete(document, bytes);
     }
 
     [Theory]
@@ -419,42 +378,6 @@ public sealed class TheoryAtomizerTests
             document.Claims.Select(static item => item.AstPath));
     }
 
-    [Fact]
-    public void RestrictedNormalizationChangesOnlyBomLineEndingsAndUnicodeNormalization()
-    {
-        var decomposed = "\uFEFFCafe\u0301  \r\nnext\rline\n";
-        var composed = "Caf\u00e9  \nnext\nline\n";
-        var first = DigestionFingerprint.Compute(Encoding.UTF8.GetBytes(decomposed));
-        var second = DigestionFingerprint.Compute(Encoding.UTF8.GetBytes(composed));
-
-        Assert.NotEqual(first.RawSha256, second.RawSha256);
-        Assert.Equal(first.NormalizedSha256, second.NormalizedSha256);
-    }
-
-    [Fact]
-    public void DuplicateClaimLocatorIsAmbiguousAndFailsClosed()
-    {
-        var bytes = Encoding.UTF8.GetBytes(
-            "# GICT\n\n**定理 7.15(A)**。一。\n\n**定理 7.15(B)**。二。\n");
-
-        var document = GictAtomizer.Atomize(bytes);
-        var error = Assert.Throws<FormatException>(() => document.ResolveClaim("theorem/7.15"));
-
-        Assert.Contains("ambiguous", error.Message, StringComparison.OrdinalIgnoreCase);
-        Assert.Equal(bytes, document.Reassemble().ToArray());
-    }
-
-    [Fact]
-    public void UnknownNumberedClaimKindIsClassifiedAsASourceFormatFailure()
-    {
-        var bytes = Encoding.UTF8.GetBytes(
-            "# PZG\n\n**猜想 1.1(Unknown kind)**。claim。\n");
-
-        var error = Assert.Throws<TheorySourceFormatException>(() => PzgAtomizer.Atomize(bytes));
-
-        Assert.Contains("unknown PZG numbered claim kind", error.Message, StringComparison.Ordinal);
-    }
-
     [Theory]
     [InlineData("\n")]
     [InlineData("\r\n")]
@@ -540,6 +463,42 @@ public sealed class TheoryAtomizerTests
             AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes));
 
         Assert.Contains("duplicate observer claim locator", error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RestrictedNormalizationChangesOnlyBomLineEndingsAndUnicodeNormalization()
+    {
+        var decomposed = "\uFEFFCafe\u0301  \r\nnext\rline\n";
+        var composed = "Caf\u00e9  \nnext\nline\n";
+        var first = DigestionFingerprint.Compute(Encoding.UTF8.GetBytes(decomposed));
+        var second = DigestionFingerprint.Compute(Encoding.UTF8.GetBytes(composed));
+
+        Assert.NotEqual(first.RawSha256, second.RawSha256);
+        Assert.Equal(first.NormalizedSha256, second.NormalizedSha256);
+    }
+
+    [Fact]
+    public void DuplicateClaimLocatorIsAmbiguousAndFailsClosed()
+    {
+        var bytes = Encoding.UTF8.GetBytes(
+            "# GICT\n\n**定理 7.15(A)**。一。\n\n**定理 7.15(B)**。二。\n");
+
+        var document = GictAtomizer.Atomize(bytes);
+        var error = Assert.Throws<FormatException>(() => document.ResolveClaim("theorem/7.15"));
+
+        Assert.Contains("ambiguous", error.Message, StringComparison.OrdinalIgnoreCase);
+        Assert.Equal(bytes, document.Reassemble().ToArray());
+    }
+
+    [Fact]
+    public void UnknownNumberedClaimKindIsClassifiedAsASourceFormatFailure()
+    {
+        var bytes = Encoding.UTF8.GetBytes(
+            "# PZG\n\n**猜想 1.1(Unknown kind)**。claim。\n");
+
+        var error = Assert.Throws<TheorySourceFormatException>(() => PzgAtomizer.Atomize(bytes));
+
+        Assert.Contains("unknown PZG numbered claim kind", error.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -730,6 +689,67 @@ public sealed class TheoryAtomizerTests
         {
             Assert.Equal(first.Slices[index].RawBytes.ToArray(), second.Slices[index].RawBytes.ToArray());
         }
+    }
+
+    private const string WmTitle = "# 世界模型账本卷:公理纲要(BEDC-WM)";
+
+    private const string WmAppendix =
+        "### §7-附 尸检账(只增不删)\n\n**尸检 P-1**。判据自身必须受检。\n\n";
+
+    private const string WmDiscipline =
+        "> 一句话:数学卷问何以为真。\n"
+        + "> 纪律:每条断言携带状态标签。\n";
+
+    private const string WmCurrentTodoClosure =
+        "**当前待办**(随版滚动):依判决出 **v0.2**"
+        + "(新行追加于版本账,本节追加 v0.2 校核块)。";
+
+    private static string CanonicalWmFixture() =>
+        string.Concat(CanonicalWmFixtureSegments().Select(static item => item.Text));
+
+    private static string CanonicalWmV02Fixture()
+    {
+        var source = CanonicalWmFixture();
+        source = source.Replace(
+            "- **v0.1**(2026-07-18)首轮结账。\n",
+            "- **v0.1**(2026-07-18)首轮结账。\n- **v0.2**(2026-07-23)勘误轮结账。\n",
+            StringComparison.Ordinal);
+        return source + "\n**v0.2 校核**(2026-07-23):追加校核,旧块不改。\n";
+    }
+
+    private static IReadOnlyList<(string AstPath, string Text)> CanonicalWmFixtureSegments()
+    {
+        var segments = new List<(string AstPath, string Text)>
+        {
+            (
+                "metadata/preamble",
+                WmTitle + "\n\n"
+                + "**别名**:账本世界模型纲要\n"
+                + "**定位**:经验姊妹卷\n\n"
+                + "**版本账**(append-only):\n"),
+            ("version/v0", "- **v0**(2026-07-18)立卷。\n"),
+            ("version/v0.1", "- **v0.1**(2026-07-18)首轮结账。\n"),
+            (
+                "metadata/discipline",
+                "\n" + WmDiscipline + "\n---\n\n"),
+        };
+
+        for (var section = 0; section <= 11; section++)
+        {
+            segments.Add(($"section/{section}", $"## {section}. Section {section}\n\nSection {section} claim.\n\n"));
+            if (section == 7)
+            {
+                segments.Add(("section/7-appendix", WmAppendix));
+            }
+        }
+
+        segments.Add((
+            "audit",
+            "## 校核记录(append-only,按版分块)\n\n"
+            + "**v0 校核**(2026-07-18):立卷校核。\n\n"
+            + "**v0.1 校核**(2026-07-18):首轮校核。\n\n"
+            + WmCurrentTodoClosure + "\n"));
+        return segments;
     }
 
     private static string FindRepositoryRoot()

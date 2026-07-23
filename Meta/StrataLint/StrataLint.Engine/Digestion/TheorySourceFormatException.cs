@@ -1,3 +1,6 @@
+using System.Collections.Immutable;
+using System.Text.RegularExpressions;
+
 namespace StrataLint.Engine;
 
 internal sealed class TheorySourceFormatException(string message) : FormatException(message)
@@ -43,4 +46,187 @@ internal sealed class TheorySourceFormatException(string message) : FormatExcept
 
         return line;
     }
+}
+
+internal abstract record MarkdownBlock(int Start, int End);
+
+internal sealed record MarkdownHeading(int Start, int End, int Level, string Text)
+    : MarkdownBlock(Start, End);
+
+internal sealed record MarkdownParagraph(int Start, int End, string Text)
+    : MarkdownBlock(Start, End);
+
+internal sealed record MarkdownTableRow(
+    int Start, int End, string Text, string FirstCellText, string FirstCellSourceText)
+    : MarkdownBlock(Start, End);
+
+internal static class MarkdownBlockAst
+{
+    private static readonly Regex HeadingPattern = new(
+        "^(?<marks>#{1,6})[ \\t]+(?<text>.*?)[ \\t]*#*[ \\t]*$",
+        RegexOptions.CultureInvariant);
+    private static readonly Regex TableDelimiterPattern = new(
+        "^[ \\t]*\\|?[ \\t]*:?-{3,}:?[ \\t]*(?:\\|[ \\t]*:?-{3,}:?[ \\t]*)+\\|?[ \\t]*$",
+        RegexOptions.CultureInvariant);
+
+    internal static ImmutableArray<MarkdownBlock> Parse(string source)
+    {
+        var lines = ReadLines(source);
+        var blocks = ImmutableArray.CreateBuilder<MarkdownBlock>();
+        for (var index = 0; index < lines.Length;)
+        {
+            var line = lines[index];
+            if (string.IsNullOrWhiteSpace(line.Text))
+            {
+                index++;
+                continue;
+            }
+
+            var heading = HeadingPattern.Match(line.Text);
+            if (heading.Success)
+            {
+                blocks.Add(new MarkdownHeading(
+                    line.Start,
+                    line.End,
+                    heading.Groups["marks"].Length,
+                    heading.Groups["text"].Value.Trim()));
+                index++;
+                continue;
+            }
+
+            if (IsFence(line.Text))
+            {
+                index = SkipFence(lines, index);
+                continue;
+            }
+
+            if (index + 1 < lines.Length
+                && line.Text.Contains('|')
+                && TableDelimiterPattern.IsMatch(lines[index + 1].Text))
+            {
+                blocks.Add(TableRow(line));
+                index += 2;
+                while (index < lines.Length
+                    && !string.IsNullOrWhiteSpace(lines[index].Text)
+                    && lines[index].Text.Contains('|'))
+                {
+                    blocks.Add(TableRow(lines[index]));
+                    index++;
+                }
+
+                continue;
+            }
+
+            var start = line.Start;
+            var contentEnd = line.ContentEnd;
+            var end = line.End;
+            index++;
+            while (index < lines.Length
+                && !string.IsNullOrWhiteSpace(lines[index].Text)
+                && !HeadingPattern.IsMatch(lines[index].Text)
+                && !IsFence(lines[index].Text)
+                && !(index + 1 < lines.Length
+                    && lines[index].Text.Contains('|')
+                    && TableDelimiterPattern.IsMatch(lines[index + 1].Text)))
+            {
+                contentEnd = lines[index].ContentEnd;
+                end = lines[index].End;
+                index++;
+            }
+
+            blocks.Add(new MarkdownParagraph(start, end, source[start..contentEnd]));
+        }
+
+        return blocks.ToImmutable();
+    }
+
+    private static MarkdownTableRow TableRow(MarkdownSourceLine line)
+    {
+        var firstCellSourceText = FirstCellSourceText(line.Text);
+        return new(line.Start, line.End, line.Text, FirstCellPlainText(firstCellSourceText), firstCellSourceText);
+    }
+
+    private static string FirstCellSourceText(string row)
+    {
+        var value = row.Trim();
+        if (value.StartsWith('|')) value = value[1..];
+        var separator = value.IndexOf('|');
+        if (separator >= 0) value = value[..separator];
+        return value.Trim();
+    }
+
+    private static string FirstCellPlainText(string value)
+    {
+        while (value.Length >= 4
+            && (value.StartsWith("**", StringComparison.Ordinal)
+                && value.EndsWith("**", StringComparison.Ordinal)
+                || value.StartsWith("__", StringComparison.Ordinal)
+                && value.EndsWith("__", StringComparison.Ordinal)))
+        {
+            value = value[2..^2].Trim();
+        }
+
+        if (value.Length >= 2
+            && value.StartsWith('`')
+            && value.EndsWith('`'))
+        {
+            value = value[1..^1].Trim();
+        }
+
+        return value;
+    }
+
+    private static bool IsFence(string line)
+    {
+        var trimmed = line.TrimStart();
+        return trimmed.StartsWith("```", StringComparison.Ordinal)
+            || trimmed.StartsWith("~~~", StringComparison.Ordinal);
+    }
+
+    private static int SkipFence(ImmutableArray<MarkdownSourceLine> lines, int start)
+    {
+        var opening = lines[start].Text.TrimStart();
+        var marker = opening.StartsWith("```", StringComparison.Ordinal) ? "```" : "~~~";
+        for (var index = start + 1; index < lines.Length; index++)
+        {
+            if (lines[index].Text.TrimStart().StartsWith(marker, StringComparison.Ordinal))
+            {
+                return index + 1;
+            }
+        }
+
+        return lines.Length;
+    }
+
+    private static ImmutableArray<MarkdownSourceLine> ReadLines(string source)
+    {
+        var lines = ImmutableArray.CreateBuilder<MarkdownSourceLine>();
+        for (var start = 0; start < source.Length;)
+        {
+            var contentEnd = start;
+            while (contentEnd < source.Length && source[contentEnd] is not ('\r' or '\n'))
+            {
+                contentEnd++;
+            }
+
+            var end = contentEnd;
+            if (end < source.Length && source[end] == '\r') end++;
+            if (end < source.Length && source[end] == '\n') end++;
+            lines.Add(new MarkdownSourceLine(
+                start,
+                contentEnd,
+                end,
+                source[start..contentEnd]));
+            start = end;
+        }
+
+        if (source.Length == 0)
+        {
+            return [];
+        }
+
+        return lines.ToImmutable();
+    }
+
+    private sealed record MarkdownSourceLine(int Start, int ContentEnd, int End, string Text);
 }

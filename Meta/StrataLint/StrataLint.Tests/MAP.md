@@ -6,6 +6,8 @@
   This was a local subdivision only; all C# namespaces remain `StrataLint.Tests`.
 - 2026-07-16 (SL-003): split contract-epoch policy/schema/store/comparator tests from
   `Conservative/` when that bucket reached 13 files; namespaces remain unchanged.
+- 2026-07-23 (SL-003): split the WM structural-drift matrix from
+  `TheoryAtomizerTests.cs` after the fail-closed regression suite reached the file ceiling.
 
 ## Buckets
 

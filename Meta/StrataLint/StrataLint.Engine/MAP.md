@@ -8,6 +8,8 @@
   into a same-namespace partial source after the file crossed 400 lines.
 - 2026-07-22 (SL-003): split the Observer theory dialect adapter from
   `TheoryAtomizers.cs` after the shared atomizer source reached the file ceiling.
+- 2026-07-23 (SL-003): split WM structural validation into `Digestion/Wm/`
+  after its fail-closed regression fix brought `TheoryAtomizers.cs` to the file ceiling.
 
 ## Buckets
 
