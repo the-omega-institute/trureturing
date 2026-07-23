@@ -58,5 +58,5 @@ internal sealed class NormDocument : IScribeDocumentDefinition
                         "Mathlib's generic principal-ideal-domain instance then supplies `UniqueFactorizationMonoid GoldenInt`; the formal node records this consequence as `golden_int_is_ufd` without declaring redundant specialized instances.")),
                     Paragraph(Text(
                         "This result does not classify the units of `GoldenInt`. The converse assertion that every norm-unit is a signed integral power of `phi` remains open in `D5-T0008`."))),
-                LatexStatement.Create(@"$\mathbb{Z}[\varphi]\text{ is a principal ideal domain.}$"))));
+                LatexStatement.Create(@"$\mathbb{Z}[\varphi]\text{ is a principal ideal domain.}$")))));
 }
