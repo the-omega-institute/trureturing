@@ -47,6 +47,28 @@ scope_log() { # $1 = full log path
   fi
 }
 
+# diag-count: scope-aware pattern counting — the mechanical guard against the append-only-log
+# misread. Raw `grep -ac` over a supervise log counts ALL history across restarts, NOT the current
+# instance; reading that as "happening now" fooled this session repeatedly (version-mismatch churn
+# "resolved" while the current instance still had it). For each ERE pattern print: current-instance
+# count (scoped to last boot), full-history count (contrast), and the last in-instance TIMESTAMP
+# (freshness). Use THIS, never bare `grep -ac`, to answer "is X happening now / still recurring".
+diag_count() {
+  local log ilog
+  log="$(newest_log || true)"
+  [[ -n "$log" ]] || { echo "diag: no supervise log found" >&2; return 2; }
+  ilog="$(scope_log "$log")"
+  printf 'diag over %s  (current = since last boot; full = all history across restarts)\n' "$(basename "$log")"
+  local pat now hist last
+  for pat in "$@"; do
+    now="$(grep -acE "$pat" "$ilog" 2>/dev/null | tr -dc '0-9')"; now="${now:-0}"
+    hist="$(grep -acE "$pat" "$log" 2>/dev/null | tr -dc '0-9')"; hist="${hist:-0}"
+    last="$(grep -aE "$pat" "$ilog" 2>/dev/null | grep -aoE 'TIMESTAMP=[0-9T:-]+Z' | tail -1)"
+    printf '  %-44s current=%-6s full=%-7s last=%s\n' "$pat" "$now" "$hist" "${last:-none-in-instance}"
+  done
+  [[ -n "${INSTANCE_SLICE:-}" && -f "${INSTANCE_SLICE:-}" ]] && rm -f "$INSTANCE_SLICE"; INSTANCE_SLICE=""
+}
+
 # count matching lines in a file, always a single integer (0 if none/missing)
 cnt() { # $1 pattern  $2 file
   [[ -f "$2" ]] || { echo 0; return; }
@@ -182,7 +204,8 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
         sleep 60
       done ;;
     --json) snapshot --json ;;
+    diag|--diag) shift; diag_count "$@" ;;
     ""|--report) snapshot ;;
-    *) echo "usage: status.sh [--watch] [--json]" >&2; exit 2 ;;
+    *) echo "usage: status.sh [--watch] [--json] | diag <ERE-pattern>...  (diag = scope-aware count, never raw grep -ac an append-only log)" >&2; exit 2 ;;
   esac
 fi

@@ -5,152 +5,45 @@ namespace StrataLint.Scribe.Tests;
 
 public sealed class DocumentDiscoveryTests
 {
-    private const string AlgebraicModelDocumentPath = "Blueprint/D5/S0/Carrier/AlgebraicModel.md";
-    private const string ConjDocumentPath = "Blueprint/D5/S0/Carrier/Conj.md";
-    private const string GoldenRatioDocumentPath = "Blueprint/D5/S0/Carrier/GoldenRatio.md";
-    private const string NormDocumentPath = "Blueprint/D5/S0/Carrier/Norm.md";
-    private const string RingDocumentPath = "Blueprint/D5/S0/Carrier/Ring.md";
-    private const string UnitsDocumentPath = "Blueprint/D5/S0/Carrier/Units.md";
-    private const string NotationDocumentPath = "Blueprint/D5/S0/Conventions/Notation.md";
-    private const string WDigitsDocumentPath = "Blueprint/D5/S0/Conventions/WDigits.md";
-    private const string JointCoordinatesDocumentPath = "Blueprint/D5/S1/Depth/JointCoordinates.md";
-    private const string JointDepthDocumentPath = "Blueprint/D5/S1/Depth/JointDepth.md";
-    private const string PartialQuotientExtractionDocumentPath =
-        "Blueprint/D5/S1/Depth/PartialQuotientExtraction.md";
-    private const string StationingCombinatoricsDocumentPath =
-        "Blueprint/D5/S1/Depth/StationingCombinatorics.md";
-    private const string TwelveScaleReductionDocumentPath =
-        "Blueprint/D5/S1/Depth/TwelveScaleReduction.md";
-    private const string CarryDocumentPath = "Blueprint/D5/S1/Digit/Carry.md";
-    private const string PrimeAxisAdditionDocumentPath = "Blueprint/D5/S1/Digit/PrimeAxisAddition.md";
-    private const string PrimeAxisEncodingDocumentPath = "Blueprint/D5/S1/Digit/PrimeAxisEncoding.md";
-    private const string PrimeAxisTableDocumentPath = "Blueprint/D5/S1/Digit/PrimeAxisTable.md";
-    private const string RawDocumentPath = "Blueprint/D5/S1/Digit/Raw.md";
-    private const string PhaseDocumentPath = "Blueprint/D5/S1/Phase/Basic.md";
-    private const string SeatTowerArithmeticDocumentPath =
-        "Blueprint/D5/S1/Phase/SeatTowerArithmetic.md";
-    private const string SeatTowerCombinatoricsDocumentPath =
-        "Blueprint/D5/S1/Phase/SeatTowerCombinatorics.md";
-    private const string SeatTowerConsequencesDocumentPath =
-        "Blueprint/D5/S1/Phase/SeatTowerConsequences.md";
-    private const string WalkFormulaDocumentPath = "Blueprint/D5/S1/Phase/WalkFormula.md";
-    private const string ZeroOrbitCongruenceDocumentPath =
-        "Blueprint/D5/S1/Phase/ZeroOrbitCongruence.md";
-    private const string EmbeddingDocumentPath = "Blueprint/D5/S1/Scale/Embedding.md";
-    private const string FibonacciEigenDocumentPath = "Blueprint/D5/S1/Scale/FibonacciEigen.md";
-    private const string LogDocumentPath = "Blueprint/D5/S1/Scale/Log.md";
-    private const string MinkowskiModelSetDocumentPath = "Blueprint/D5/S1/Scale/MinkowskiModelSet.md";
-    private const string DecoherenceDocumentPath = "Blueprint/D5/S3/Quantum/Decoherence.md";
-    private const string FiniteDimensionalDocumentPath = "Blueprint/D5/S3/Quantum/FiniteDimensional.md";
-    private const string ObserverAlgebraDocumentPath = "Blueprint/D5/S3/Quantum/ObserverAlgebra.md";
-    private const string QubitWitnessesDocumentPath = "Blueprint/D5/S3/Quantum/QubitWitnesses.md";
-    private const string CriticalLineDocumentPath = "Blueprint/D5/S3/Weil/CriticalLine.md";
-    private const string EulerProductDocumentPath = "Blueprint/D5/S3/Weil/EulerProduct.md";
-    private const string LabeledZetaDocumentPath = "Blueprint/D5/S3/Weil/LabeledZeta.md";
-    private const string ReflectionLedgerDocumentPath = "Blueprint/D5/S3/Weil/ReflectionLedger.md";
-    private const string SpectralDynamicsDocumentPath = "Blueprint/D5/S3/Weil/SpectralDynamics.md";
-    private const string SpectralHilbertDocumentPath = "Blueprint/D5/S3/Weil/SpectralHilbert.md";
-    private const string CompletedZetaDocumentPath = "Blueprint/D5/S3/Zeros/CompletedZeta.md";
-    private const string EulerWindowsDocumentPath = "Blueprint/D5/S3/Zeros/EulerWindows.md";
-    private const string SpectralShiftDocumentPath = "Blueprint/D5/S3/Zeros/SpectralShift.md";
-    private const string ZeroGeometryDocumentPath = "Blueprint/D5/S3/Zeros/ZeroGeometry.md";
     private const string PhaseSourcePath = "Blueprint/D5/S1/Phase/Basic.scribe.cs";
 
     [Fact]
-    public void DiscoveryFindsEveryDefinitionInCanonicalPathOrder()
+    public void FilesystemAndRegisteredDefinitionsFormACanonicalBijection()
     {
+        var repositoryRoot = FindRepositoryRoot();
+        var filesystemSources = Directory
+            .EnumerateFiles(
+                Path.Combine(repositoryRoot, "Blueprint"),
+                "*.scribe.cs",
+                SearchOption.AllDirectories)
+            .Select(path => Path.GetRelativePath(repositoryRoot, path).Replace('\\', '/'))
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+        var registrations = DocumentDefinitions.All
+            .Select(static definition => new
+            {
+                Definition = definition,
+                Source = CanonicalSourcePath(definition.SourcePath),
+            })
+            .ToArray();
+        var registeredSources = registrations.Select(static item => item.Source).ToArray();
+
+        Assert.Equal(filesystemSources.Length, filesystemSources.Distinct(StringComparer.Ordinal).Count());
+        Assert.Equal(registeredSources.Length, registeredSources.Distinct(StringComparer.Ordinal).Count());
+        Assert.Equal(filesystemSources, registeredSources);
         Assert.Equal(
-            [
-                "D5/S0/Carrier/AlgebraicModel",
-                "D5/S0/Carrier/Conj",
-                "D5/S0/Carrier/GoldenRatio",
-                "D5/S0/Carrier/Norm",
-                "D5/S0/Carrier/Ring",
-                "D5/S0/Carrier/Units",
-                "D5/S0/Conventions/Notation",
-                "D5/S0/Conventions/WDigits",
-                "D5/S1/Depth/JointCoordinates",
-                "D5/S1/Depth/JointDepth",
-                "D5/S1/Depth/PartialQuotientExtraction",
-                "D5/S1/Depth/StationingCombinatorics",
-                "D5/S1/Depth/TwelveScaleReduction",
-                "D5/S1/Digit/Carry",
-                "D5/S1/Digit/PrimeAxisAddition",
-                "D5/S1/Digit/PrimeAxisEncoding",
-                "D5/S1/Digit/PrimeAxisTable",
-                "D5/S1/Digit/Raw",
-                "D5/S1/Phase/Basic",
-                "D5/S1/Phase/SeatTowerArithmetic",
-                "D5/S1/Phase/SeatTowerCombinatorics",
-                "D5/S1/Phase/SeatTowerConsequences",
-                "D5/S1/Phase/WalkFormula",
-                "D5/S1/Phase/ZeroOrbitCongruence",
-                "D5/S1/Scale/Embedding",
-                "D5/S1/Scale/FibonacciEigen",
-                "D5/S1/Scale/Log",
-                "D5/S1/Scale/MinkowskiModelSet",
-                "D5/S3/Quantum/Decoherence",
-                "D5/S3/Quantum/FiniteDimensional",
-                "D5/S3/Quantum/ObserverAlgebra",
-                "D5/S3/Quantum/QubitWitnesses",
-                "D5/S3/Weil/CriticalLine",
-                "D5/S3/Weil/EulerProduct",
-                "D5/S3/Weil/LabeledZeta",
-                "D5/S3/Weil/ReflectionLedger",
-                "D5/S3/Weil/SpectralDynamics",
-                "D5/S3/Weil/SpectralHilbert",
-                "D5/S3/Zeros/CompletedZeta",
-                "D5/S3/Zeros/EulerWindows",
-                "D5/S3/Zeros/SpectralShift",
-                "D5/S3/Zeros/ZeroGeometry",
-            ],
-            DocumentDefinitions.All.Select(static item => item.Document.Header.Gid.Value));
-        Assert.Equal(
-            [
-                AlgebraicModelDocumentPath,
-                ConjDocumentPath,
-                GoldenRatioDocumentPath,
-                NormDocumentPath,
-                RingDocumentPath,
-                UnitsDocumentPath,
-                NotationDocumentPath,
-                WDigitsDocumentPath,
-                JointCoordinatesDocumentPath,
-                JointDepthDocumentPath,
-                PartialQuotientExtractionDocumentPath,
-                StationingCombinatoricsDocumentPath,
-                TwelveScaleReductionDocumentPath,
-                CarryDocumentPath,
-                PrimeAxisAdditionDocumentPath,
-                PrimeAxisEncodingDocumentPath,
-                PrimeAxisTableDocumentPath,
-                RawDocumentPath,
-                PhaseDocumentPath,
-                SeatTowerArithmeticDocumentPath,
-                SeatTowerCombinatoricsDocumentPath,
-                SeatTowerConsequencesDocumentPath,
-                WalkFormulaDocumentPath,
-                ZeroOrbitCongruenceDocumentPath,
-                EmbeddingDocumentPath,
-                FibonacciEigenDocumentPath,
-                LogDocumentPath,
-                MinkowskiModelSetDocumentPath,
-                DecoherenceDocumentPath,
-                FiniteDimensionalDocumentPath,
-                ObserverAlgebraDocumentPath,
-                QubitWitnessesDocumentPath,
-                CriticalLineDocumentPath,
-                EulerProductDocumentPath,
-                LabeledZetaDocumentPath,
-                ReflectionLedgerDocumentPath,
-                SpectralDynamicsDocumentPath,
-                SpectralHilbertDocumentPath,
-                CompletedZetaDocumentPath,
-                EulerWindowsDocumentPath,
-                SpectralShiftDocumentPath,
-                ZeroGeometryDocumentPath,
-            ],
-            DocumentDefinitions.All.Select(static item => item.RelativePath.Value));
+            registeredSources.Order(StringComparer.Ordinal),
+            registeredSources);
+
+        foreach (var registration in registrations)
+        {
+            var source = registration.Source;
+            var gid = source["Blueprint/".Length..^".scribe.cs".Length];
+            var markdown = source[..^".scribe.cs".Length] + ".md";
+
+            Assert.Equal(gid, registration.Definition.Document.Header.Gid.Value);
+            Assert.Equal(markdown, registration.Definition.RelativePath.Value);
+        }
     }
 
     [Fact]
@@ -766,6 +659,14 @@ public sealed class DocumentDiscoveryTests
 
     private static IReadOnlyDictionary<string, LiteratureCitation> RepositoryCitations() =>
         LibraryNoteCatalog.Load(FindRepositoryRoot()).Citations;
+
+    private static string CanonicalSourcePath(string sourcePath)
+    {
+        var normalized = sourcePath.Replace('\\', '/');
+        var blueprint = normalized.LastIndexOf("Blueprint/", StringComparison.Ordinal);
+        Assert.True(blueprint >= 0, $"Scribe source path is outside Blueprint/: {sourcePath}");
+        return normalized[blueprint..];
+    }
 
     private static IEnumerable<DocumentBlock> Descendants(BlockSequence content)
     {

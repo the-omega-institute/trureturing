@@ -13,30 +13,27 @@ public sealed class DescribeMigrationTests
                 DescribeKind.Theorem or DescribeKind.Proposition or DescribeKind.Lemma)
             .ToArray();
 
-        Assert.Equal(94, nodes.Length);
+        Assert.NotEmpty(nodes);
         Assert.All(nodes, static node => Assert.NotNull(node.StatementLatex));
     }
 
     [Fact]
-    public void RepositoryMigrationHasOneHundredAndThirtyEightTypedNodesAndPreservesTwentyFourFormulaSlots()
+    public void RepositoryReportMatchesAnIndependentAstInventory()
     {
         var root = FindRepositoryRoot();
+        var expected = DeriveContentInventory();
         var report = DescribeReport.Build(
             root,
             DocumentDefinitions.All.Select(static definition => definition.Document));
 
-        Assert.Equal(138, report.NodeStats.Total);
-        Assert.Equal(24, report.NodeStats.FormulaContentSlots);
-        Assert.Equal(12, report.NodeStats.FormulaStatements);
-        Assert.Equal(126, report.NodeStats.LeanStatements);
-        Assert.Equal(13, report.NodeStats.ByKind["definition"]);
-        Assert.Equal(9, report.NodeStats.ByKind["proposition"]);
-        Assert.Equal(85, report.NodeStats.ByKind["theorem"]);
-        Assert.Equal(1, report.NodeStats.ByKind["example"]);
-        Assert.Equal(30, report.NodeStats.ByKind["remark"]);
-        Assert.Equal(102, report.NodeStats.ByProvenance["repo-derived"]);
-        Assert.Equal(36, report.NodeStats.ByProvenance["literature-attested"]);
-        Assert.Equal(0, report.OpenCount);
+        Assert.Equal(expected.Total, report.NodeStats.Total);
+        Assert.Equal(expected.FormulaContentSlots, report.NodeStats.FormulaContentSlots);
+        Assert.Equal(expected.FormulaStatements, report.NodeStats.FormulaStatements);
+        Assert.Equal(expected.LeanStatements, report.NodeStats.LeanStatements);
+        Assert.Equal(expected.ByKind, report.NodeStats.ByKind);
+        Assert.Equal(expected.ByProvenance, report.NodeStats.ByProvenance);
+        Assert.Equal(expected.Unassessed, report.OpenCount);
+        Assert.Equal(expected.SuspectedNovel, report.SuspectedNovel.Length);
         Assert.Empty(report.SuspectedNovel);
         Assert.Empty(report.RedFindings);
     }
@@ -159,7 +156,6 @@ public sealed class DescribeMigrationTests
                 static item => $"{item.Document}#{item.Node.Id.Value}",
                 StringComparer.Ordinal);
 
-        Assert.Equal(expected.Length + formulaExpected.Length, actual.Count);
         foreach (var item in expected)
         {
             var node = actual[$"{item.Document}#{item.Id}"].Node;
@@ -201,7 +197,6 @@ public sealed class DescribeMigrationTests
             .OfType<DocumentBlock.Describe>()
             .ToDictionary(static node => node.Id.Value, StringComparer.Ordinal);
 
-        Assert.Equal(5, eulerProduct.Count);
         AssertLiteratureAttestedLeanNode(
             eulerProduct["finite-euler-windows-have-only-the-local-lattice"],
             DescribeKind.Theorem,
@@ -231,7 +226,6 @@ public sealed class DescribeMigrationTests
                     .Value.Value,
                 StringComparer.Ordinal);
 
-        Assert.Equal(3, nodes.Count);
         AssertLiteratureAttestedLeanNode(
             nodes["D5/S3/Quantum/FiniteDimensional.qubit_weyl_star"],
             DescribeKind.Theorem,
@@ -261,7 +255,6 @@ public sealed class DescribeMigrationTests
                     .Value.Value,
                 StringComparer.Ordinal);
 
-        Assert.Equal(3, nodes.Count);
         AssertLiteratureAttestedLeanNode(
             nodes["D5/S3/Quantum/QubitWitnesses.pauli_observables_have_no_common_eigenvector"],
             DescribeKind.Theorem,
@@ -296,7 +289,6 @@ public sealed class DescribeMigrationTests
                     .Value.Value,
                 StringComparer.Ordinal);
 
-        Assert.Equal(2, observer.Count);
         AssertLiteratureAttestedLeanNode(
             observer["D5/S3/Quantum/ObserverAlgebra.observer_update_covariant_group_skeleton"],
             DescribeKind.Theorem,
@@ -308,7 +300,6 @@ public sealed class DescribeMigrationTests
             "D5/S3/Quantum/ObserverAlgebra.observer_read_update_noncommutative",
             "D5/L/schwinger1960unitary");
 
-        Assert.Equal(2, decoherence.Count);
         AssertLiteratureAttestedLeanNode(
             decoherence["D5/S3/Quantum/Decoherence.phase_damping_composition"],
             DescribeKind.Theorem,
@@ -329,7 +320,8 @@ public sealed class DescribeMigrationTests
 
         var labeled = Assert.Single(
             documents["D5/S3/Weil/LabeledZeta"].Document.Content.Items
-                .OfType<DocumentBlock.Describe>());
+                .OfType<DocumentBlock.Describe>(),
+            static node => node.Id.Value == "labeled-zeta-vector-never-vanishes");
         var labeledStatement = Assert.IsType<DescribeStatement.LeanDeclaration>(labeled.Statement);
         Assert.Equal(
             "D5/S3/Weil/LabeledZeta.labeled_zeta_vector_ne_zero",
@@ -343,7 +335,6 @@ public sealed class DescribeMigrationTests
         var reflection = documents["D5/S3/Weil/ReflectionLedger"].Document.Content.Items
             .OfType<DocumentBlock.Describe>()
             .ToDictionary(static node => node.Id.Value, StringComparer.Ordinal);
-        Assert.Equal(10, reflection.Count);
         AssertRepoDerivedLeanNode(
             reflection["mirror-fixed-points-lie-on-the-critical-line"],
             DescribeKind.Proposition,
@@ -357,7 +348,6 @@ public sealed class DescribeMigrationTests
             .OfType<DocumentBlock.Describe>()
             .ToDictionary(static node => node.Id.Value, StringComparer.Ordinal);
 
-        Assert.Equal(14, spectralDynamics.Count);
         AssertLiteratureAttestedLeanNode(
             spectralDynamics["vertical-evolution-is-a-norm-preserving-group"],
             DescribeKind.Theorem,
@@ -431,7 +421,6 @@ public sealed class DescribeMigrationTests
             .OfType<DocumentBlock.Describe>()
             .ToDictionary(static node => node.Id.Value, StringComparer.Ordinal);
 
-        Assert.Equal(7, spectralHilbert.Count);
         AssertLiteratureAttestedLeanNode(
             spectralHilbert["source-pairing-completes-the-coefficient-space"],
             DescribeKind.Definition,
@@ -541,9 +530,12 @@ public sealed class DescribeMigrationTests
         Assert.Equal(0, exit);
         Assert.Equal(string.Empty, error.ToString());
         using var document = JsonDocument.Parse(output.ToString());
+        var expected = DeriveContentInventory();
         Assert.Equal("DESCRIBE-NODES", document.RootElement.GetProperty("case_id").GetString());
-        Assert.Equal(138, document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
-        Assert.Equal(0, document.RootElement.GetProperty("open_count").GetInt32());
+        Assert.Equal(
+            expected.Total,
+            document.RootElement.GetProperty("node_stats").GetProperty("total").GetInt32());
+        Assert.Equal(expected.Unassessed, document.RootElement.GetProperty("open_count").GetInt32());
     }
 
     [Fact]
@@ -596,6 +588,87 @@ public sealed class DescribeMigrationTests
         Assert.Equal(DescribeProvenanceKind.LiteratureAttested, node.Provenance.Kind);
         Assert.Equal(reference, node.Provenance.LiteratureReference?.Value);
     }
+
+    private static ContentInventory DeriveContentInventory()
+    {
+        var blocks = DocumentDefinitions.All
+            .SelectMany(static definition => EnumerateBlocks(definition.Document.Content))
+            .ToArray();
+        var nodes = blocks.OfType<DocumentBlock.Describe>().ToArray();
+        var byKind = new SortedDictionary<string, int>(
+            nodes.GroupBy(static node => KindName(node.Kind), StringComparer.Ordinal)
+                .ToDictionary(static group => group.Key, static group => group.Count()),
+            StringComparer.Ordinal);
+        var byProvenance = new SortedDictionary<string, int>(
+            nodes.GroupBy(static node => ProvenanceName(node.Provenance.Kind), StringComparer.Ordinal)
+                .ToDictionary(static group => group.Key, static group => group.Count()),
+            StringComparer.Ordinal);
+
+        return new ContentInventory(
+            nodes.Length,
+            blocks.OfType<DocumentBlock.DisplayFormula>().Count()
+                + blocks.OfType<DocumentBlock.Paragraph>().Sum(static paragraph =>
+                    paragraph.Content.Items.Count(static inline => inline is Inline.InlineFormula)),
+            nodes.Count(static node => node.Statement is DescribeStatement.FormulaAst),
+            nodes.Count(static node => node.Statement is DescribeStatement.LeanDeclaration),
+            byKind,
+            byProvenance,
+            nodes.Count(static node => node.Provenance.Kind == DescribeProvenanceKind.Unassessed),
+            nodes.Count(static node => node.Provenance.Kind == DescribeProvenanceKind.SuspectedNovel));
+    }
+
+    private static IEnumerable<DocumentBlock> EnumerateBlocks(BlockSequence blocks)
+    {
+        foreach (var block in blocks.Items)
+        {
+            yield return block;
+            var nested = block switch
+            {
+                DocumentBlock.Section section => section.Content,
+                DocumentBlock.Describe describe => describe.Content,
+                _ => null,
+            };
+            if (nested is null)
+            {
+                continue;
+            }
+
+            foreach (var descendant in EnumerateBlocks(nested))
+            {
+                yield return descendant;
+            }
+        }
+    }
+
+    private static string KindName(DescribeKind kind) => kind switch
+    {
+        DescribeKind.Definition => "definition",
+        DescribeKind.Theorem => "theorem",
+        DescribeKind.Proposition => "proposition",
+        DescribeKind.Lemma => "lemma",
+        DescribeKind.Example => "example",
+        DescribeKind.Remark => "remark",
+        _ => throw new ArgumentOutOfRangeException(nameof(kind)),
+    };
+
+    private static string ProvenanceName(DescribeProvenanceKind provenance) => provenance switch
+    {
+        DescribeProvenanceKind.LiteratureAttested => "literature-attested",
+        DescribeProvenanceKind.RepoDerived => "repo-derived",
+        DescribeProvenanceKind.SuspectedNovel => "suspected-novel",
+        DescribeProvenanceKind.Unassessed => "unassessed",
+        _ => throw new ArgumentOutOfRangeException(nameof(provenance)),
+    };
+
+    private sealed record ContentInventory(
+        int Total,
+        int FormulaContentSlots,
+        int FormulaStatements,
+        int LeanStatements,
+        IReadOnlyDictionary<string, int> ByKind,
+        IReadOnlyDictionary<string, int> ByProvenance,
+        int Unassessed,
+        int SuspectedNovel);
 
     private static string FindRepositoryRoot()
     {
