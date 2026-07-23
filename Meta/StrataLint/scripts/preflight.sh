@@ -53,6 +53,9 @@ record_timing dotnet
 CI=true make test
 record_timing test
 
+make lua-test
+record_timing lua-test
+
 make selftest
 record_timing selftest
 

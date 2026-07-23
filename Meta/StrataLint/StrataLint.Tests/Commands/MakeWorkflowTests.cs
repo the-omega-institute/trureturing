@@ -7,6 +7,7 @@ namespace StrataLint.Tests;
 public sealed class MakeWorkflowTests
 {
     private const string DotnetBuildScriptPath = "Meta/StrataLint/scripts/dotnet-build.sh";
+    private const string FkstRunScriptPath = ".fkst/scripts/run.sh";
     private const string ScribeScriptPath = "Meta/StrataLint/scripts/scribe.sh";
     private const string SelftestScriptPath = "Meta/StrataLint/scripts/stratalint-selftest.sh";
     private const string LocalHarnessGateScriptPath =
@@ -40,6 +41,7 @@ public sealed class MakeWorkflowTests
         "help",
         "dotnet",
         "test",
+        "lua-test",
         "lean",
         "lean-report",
         "build",
@@ -84,6 +86,7 @@ public sealed class MakeWorkflowTests
         Assert.Contains(CleanLanesScriptPath, Recipe(makefile, "clean-lanes"), StringComparison.Ordinal);
         Assert.Contains(DotnetBuildScriptPath, Recipe(makefile, "dotnet"), StringComparison.Ordinal);
         Assert.Contains("dotnet test", Recipe(makefile, "test"), StringComparison.Ordinal);
+        Assert.Contains(FkstRunScriptPath + " test", Recipe(makefile, "lua-test"), StringComparison.Ordinal);
         Assert.Contains("lake build", Recipe(makefile, "lean"), StringComparison.Ordinal);
         Assert.Contains(LeanReportScriptPath, Recipe(makefile, "lean-report"), StringComparison.Ordinal);
         Assert.Contains(ScribeScriptPath + " emit", Recipe(makefile, "emit"), StringComparison.Ordinal);
@@ -295,7 +298,9 @@ public sealed class MakeWorkflowTests
 
         Assert.Contains("make -C candidate dotnet", workflow, StringComparison.Ordinal);
         Assert.Contains("make -C candidate test", workflow, StringComparison.Ordinal);
+        Assert.Contains("make -C candidate lua-test", workflow, StringComparison.Ordinal);
         Assert.Contains("make -C candidate selftest", workflow, StringComparison.Ordinal);
+        Assert.Contains("make lua-test", preflight, StringComparison.Ordinal);
         Assert.Contains("make -C \"$CANDIDATE_ROOT\" emit-check", localGate, StringComparison.Ordinal);
         Assert.Contains("emit-check BASE=\"$BASE_SHA\"", localGate, StringComparison.Ordinal);
         Assert.Contains("lean-report-pair.sh", localGate, StringComparison.Ordinal);
