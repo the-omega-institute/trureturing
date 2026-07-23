@@ -262,7 +262,7 @@ public sealed class ConservativeExtensionVerifierTests
             [new ConservativeDiagnostic(
                 "SL-022",
                 retired,
-                "meta change requires external human review")]);
+                "protected-surface change requires base-owned conservative-extension verification")]);
         var candidateCases = WithCandidateTreeDiagnostics(candidateExecution.Run.Cases, []);
         var evidence = ContractEpochEvidenceIndex.Create([proof], [], []);
         input = input with

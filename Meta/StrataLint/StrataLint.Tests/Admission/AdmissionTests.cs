@@ -119,6 +119,9 @@ public sealed class AdmissionTests
             })));
         var humanGate = RuleCatalog.Default.Descriptors[6];
         var sl022 = Assert.Single(BootstrapGate.CreateSl022Diagnostics(review.ChangeSet));
+        Assert.Equal(
+            "protected-surface change requires base-owned conservative-extension verification",
+            sl022.Message);
         var completed = CompletedRuleSet.Create(
             ImmutableArray.Create(
                 new Diagnostic(
