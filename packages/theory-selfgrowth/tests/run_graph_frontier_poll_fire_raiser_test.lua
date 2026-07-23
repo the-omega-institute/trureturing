@@ -25,6 +25,30 @@ local function mock_env()
 end
 
 return {
+  test_fire_raiser_frontier_poll_produces_one_frontier_request = function()
+    mock_env()
+    t.mock_command(
+      "gh issue list --repo 'owner/repo' --state all --search 'in:body " .. PRODUCER_MARKER
+        .. "' --json number,state,body,labels --limit 100",
+      { stdout = "[]", stderr = "", exit_code = 0 }
+    )
+
+    local trace = t.fire_raiser("frontier_poll")
+    t.eq(trace.source_ref.kind, "cron")
+    t.eq(trace.source_payload.raiser, "theory-selfgrowth.frontier_poll")
+    t.eq(trace.routed_to[1], "theory-selfgrowth.propose")
+    if trace.consumer_result.status ~= "accepted" then
+      error(trace.consumer_result.message or "fire_raiser consumer failed")
+    end
+    t.eq(trace.consumer_result.status, "accepted")
+    t.eq(#trace.raised, 1)
+    t.eq(trace.raised[1].queue, "github-proxy.github_issue_create_request")
+    t.eq(trace.raised[1].payload.schema, "github-proxy.issue-create.v1")
+    t.eq(trace.raised[1].payload.repo, "owner/repo")
+    t.eq(trace.raised[1].payload.dedup_key, PRODUCER_MARKER .. ":owner/repo:gen0")
+    t.eq(trace.raised[1].payload.producer, BOT_LOGIN)
+  end,
+
   test_run_graph_frontier_poll_produces_and_delivers_one_frontier_request = function()
     mock_env()
     t.mock_command(
