@@ -19448,4 +19448,4 @@ ticket_index:
   - case_id: D5-T0022
     gid: D5/X_Frontier/FiniteDepthMetric
   - case_id: D5-T0023
-    gid: D5/X_Frontier/PrimeNormIrreducibility
+    gid: D5/X_Frontier/GoldenUnitsUFD
