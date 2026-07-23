@@ -13,7 +13,7 @@ public sealed class DescribeMigrationTests
                 DescribeKind.Theorem or DescribeKind.Proposition or DescribeKind.Lemma)
             .ToArray();
 
-        Assert.Equal(91, nodes.Length);
+        Assert.Equal(92, nodes.Length);
         Assert.All(nodes, static node => Assert.NotNull(node.StatementLatex));
     }
 
@@ -25,17 +25,17 @@ public sealed class DescribeMigrationTests
             root,
             DocumentDefinitions.All.Select(static definition => definition.Document));
 
-        Assert.Equal(133, report.NodeStats.Total);
+        Assert.Equal(134, report.NodeStats.Total);
         Assert.Equal(24, report.NodeStats.FormulaContentSlots);
         Assert.Equal(12, report.NodeStats.FormulaStatements);
-        Assert.Equal(121, report.NodeStats.LeanStatements);
+        Assert.Equal(122, report.NodeStats.LeanStatements);
         Assert.Equal(11, report.NodeStats.ByKind["definition"]);
         Assert.Equal(9, report.NodeStats.ByKind["proposition"]);
-        Assert.Equal(82, report.NodeStats.ByKind["theorem"]);
+        Assert.Equal(83, report.NodeStats.ByKind["theorem"]);
         Assert.Equal(1, report.NodeStats.ByKind["example"]);
         Assert.Equal(30, report.NodeStats.ByKind["remark"]);
         Assert.Equal(97, report.NodeStats.ByProvenance["repo-derived"]);
-        Assert.Equal(36, report.NodeStats.ByProvenance["literature-attested"]);
+        Assert.Equal(37, report.NodeStats.ByProvenance["literature-attested"]);
         Assert.Equal(0, report.OpenCount);
         Assert.Empty(report.SuspectedNovel);
         Assert.Empty(report.RedFindings);
@@ -487,6 +487,11 @@ public sealed class DescribeMigrationTests
                 Document: "D5/S0/Carrier/Norm",
                 Id: "norm-euclidean-division",
                 Declaration: "D5/S0/Carrier/Euclidean.golden_division",
+                Reference: "D5/L/Carrier/chatland1949euclidean"),
+            (
+                Document: "D5/S0/Carrier/Norm",
+                Id: "principal-ideal-domain",
+                Declaration: "D5/S0/Carrier/PrincipalIdeal.golden_int_is_pid",
                 Reference: "D5/L/Carrier/chatland1949euclidean"),
             (
                 Document: "D5/S1/Scale/MinkowskiModelSet",
