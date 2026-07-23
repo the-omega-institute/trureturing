@@ -79,6 +79,19 @@ cnt_s() { # count fixed substring in a string
   local n; n="$(grep -c "$1" <<<"$2" 2>/dev/null || true)"; echo "${n:-0}"
 }
 
+# REAL load, not the load average. On macOS `uptime` load average counts BLOCKED/waiting threads
+# (I/O, locks, mutual waits), so with many fkst/lean/codex processes it reads e.g. 76 while the CPU
+# is actually 55% IDLE on a 14-core Mac — it does NOT indicate saturation and must not be used to
+# judge overload (2026-07-23: a load-avg misread led to a wrong "machine overloaded, restart" call).
+# Judge saturation by CPU idle% + core count + memory free%. Echoes "cpu_idle|cores|mem_free_pct".
+real_load() {
+  local idle cores memfree
+  idle="$(top -l 1 -n 0 2>/dev/null | grep -m1 'CPU usage' | grep -oE '[0-9.]+% idle' | grep -oE '[0-9.]+' | head -1)"
+  cores="$(sysctl -n hw.logicalcpu 2>/dev/null || echo '?')"
+  memfree="$(memory_pressure 2>/dev/null | grep -i 'free percentage' | grep -oE '[0-9]+%' | head -1 | tr -d '%')"
+  printf '%s|%s|%s\n' "${idle:-?}" "${cores:-?}" "${memfree:-?}"
+}
+
 snapshot() {
   local verdict="HEALTHY" reasons=() bin log pid uptime acks fatal warns
   bin="$(resolve_bin || true)"
@@ -150,9 +163,17 @@ snapshot() {
   # Drop the current-instance slice temp file (if scope_log created one).
   [[ -n "${INSTANCE_SLICE:-}" && -f "${INSTANCE_SLICE:-}" ]] && rm -f "$INSTANCE_SLICE"; INSTANCE_SLICE=""
 
+  # REAL load (CPU idle% + cores + mem free%), NOT the misleading load average.
+  local rl cpu_idle cores memfree
+  rl="$(real_load)"; cpu_idle="${rl%%|*}"; rl="${rl#*|}"; cores="${rl%%|*}"; memfree="${rl##*|}"
+  # Real saturation = sustained low CPU idle (not a high load average). Only flag when genuinely low.
+  if [[ "$cpu_idle" =~ ^[0-9.]+$ ]] && (( $(printf '%.0f' "$cpu_idle") < 8 )); then
+    [[ "$verdict" == HEALTHY ]] && verdict="DEGRADED"; reasons+=("CPU saturated (${cpu_idle}% idle)")
+  fi
+
   if [[ "${1:-}" == "--json" ]]; then
-    printf '{"verdict":"%s","running":%d,"pid":"%s","uptime":"%s","fatal":%d,"warn_error":%d,"acks":%d,"dlq":%d,"retrying":%d,"absent_subscribers":%d,"codex_failed":%d,"progress_age_s":%d}\n' \
-      "$verdict" "$running" "${pid:-}" "${uptime:-}" "$fatal" "$warns" "$acks" "$dlq" "$retrying" "$absent" "$codex_failed" "$progress_age"
+    printf '{"verdict":"%s","running":%d,"pid":"%s","uptime":"%s","fatal":%d,"warn_error":%d,"acks":%d,"dlq":%d,"retrying":%d,"absent_subscribers":%d,"codex_failed":%d,"progress_age_s":%d,"cpu_idle_pct":"%s","cores":"%s","mem_free_pct":"%s"}\n' \
+      "$verdict" "$running" "${pid:-}" "${uptime:-}" "$fatal" "$warns" "$acks" "$dlq" "$retrying" "$absent" "$codex_failed" "$progress_age" "$cpu_idle" "$cores" "$memfree"
     [[ "$verdict" == HEALTHY ]]; return
   fi
 
@@ -163,6 +184,7 @@ snapshot() {
   printf '  errors      : fatal=%s  warn/error=%s (test-probe produced-only warns are benign)\n' "$fatal" "$warns"
   printf '  throughput  : %s delivery acks (current instance)\n' "$acks"
   printf '  progress    : %s\n' "$([[ $progress_age -lt 0 ]] && echo 'n/a' || echo "last log write ${progress_age}s ago (stall if >${stall_threshold}s)")"
+  printf '  resources   : CPU %s%% idle / %s cores · mem %s%% free  (real load — macOS load-avg overstates, ignore it)\n' "${cpu_idle:-?}" "${cores:-?}" "${memfree:-?}"
   if (( observe_ok )); then
     printf '  durable     : dead_letters=%s  retrying=%s  absent_subscribers=%s\n' "$dlq" "$retrying" "$absent"
   else
