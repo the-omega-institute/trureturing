@@ -157,7 +157,7 @@ public sealed class CliOutcomeTests
                 descriptor.DisplaySeverity,
                 descriptor.AdmissionEffect,
                 path,
-                "meta change requires external human review")));
+                "protected-surface change requires base-owned conservative-extension verification")));
     }
 
     private static AdmissionOutcome Admitted()
