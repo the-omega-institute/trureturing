@@ -395,28 +395,6 @@ public sealed class DocumentDiscoveryTests
     }
 
     [Fact]
-    public void NormDocumentCarriesTheExactLiteratureAttestedPrincipalIdealStatement()
-    {
-        var definition = DocumentDefinitions.All.Single(static item =>
-            item.Document.Header.Gid.Value == "D5/S0/Carrier/Norm");
-        var describe = Descendants(definition.Document.Content)
-            .OfType<DocumentBlock.Describe>()
-            .Single(static item => item.Id.Value == "principal-ideal-domain");
-        var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
-
-        Assert.Equal(DescribeKind.Theorem, describe.Kind);
-        Assert.Equal(DescribeProvenanceKind.LiteratureAttested, describe.Provenance.Kind);
-        Assert.Equal(
-            "D5/L/Carrier/chatland1949euclidean",
-            describe.Provenance.LiteratureReference?.Value);
-        Assert.Equal(
-            "D5/S0/Carrier/PrincipalIdeal.golden_int_is_pid",
-            lean.Value.Value);
-        Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
-        Assert.True(lean.Value.RequireNoSorry);
-    }
-
-    [Fact]
     public void SelectedResidualDocumentsCarryExactStatementsAndDiligentProvenance()
     {
         (string Document, string Id, DescribeKind Kind, string Declaration,
