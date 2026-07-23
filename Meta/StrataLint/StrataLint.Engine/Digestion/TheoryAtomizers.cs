@@ -309,6 +309,279 @@ internal static class PzgAtomizer
     };
 }
 
+internal static partial class WmAtomizer
+{
+    private const string Title = "世界模型账本卷:公理纲要(BEDC-WM)";
+    private const string AppendixHeading = "§7-附 尸检账(只增不删)";
+    private const string AuditHeading = "校核记录(append-only,按版分块)";
+    private static readonly UTF8Encoding StrictUtf8 = new(false, true);
+    private static readonly Regex VersionPattern = new(
+        "^-\\s+\\*\\*(?<version>v0(?:\\.1|\\.2)?)\\*\\*",
+        RegexOptions.CultureInvariant);
+    private static readonly Regex VersionLeadPattern = new(
+        "^-\\s+\\*\\*v[^*]+\\*\\*",
+        RegexOptions.CultureInvariant);
+    private static readonly Regex V02AuditLeadPattern = new(
+        "^\\*\\*v0\\.2 校核\\*\\*",
+        RegexOptions.CultureInvariant);
+    private static readonly Regex V02AuditClosurePattern = new(
+        "^\\*\\*v0\\.2 校核\\*\\*\\([^\\r\\n]+\\):[^\\r\\n]*旧块不改。\\z",
+        RegexOptions.CultureInvariant);
+    private static readonly Regex CurrentTodoClosurePattern = new(
+        "^\\*\\*当前待办\\*\\*\\(随版滚动\\):[^\\r\\n]*"
+        + "\\*\\*v0\\.2\\*\\*\\(新行追加于版本账,本节追加 v0\\.2 校核块\\)。\\z",
+        RegexOptions.CultureInvariant);
+    private static readonly Regex DisciplinePattern = new(
+        "^> 一句话:[^\\r\\n]+(?:\\r\\n|\\r|\\n)> 纪律:[^\\r\\n]+\\z",
+        RegexOptions.CultureInvariant);
+    private static readonly Regex SectionHeadingPattern = new(
+        "^(?<number>0|[1-9][0-9]*)\\.\\s+",
+        RegexOptions.CultureInvariant);
+
+    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes)
+    {
+        var scaffold = MarkdownAstAtomizer.Atomize(
+            bytes,
+            Identify,
+            identifyHeading: IdentifyHeading);
+        var raw = bytes.ToArray();
+        var text = StrictUtf8.GetString(raw);
+        ValidateStructure(text, scaffold);
+
+        var claims = scaffold.Claims.ToList();
+        ExtendLastVersionLineEnding(raw, claims);
+        ShiftV02AuditSeparator(raw, claims);
+        var lastVersion = claims.Last(static atom => atom.AstPath.StartsWith("version/", StringComparison.Ordinal));
+        var sectionZero = claims.Single(static atom => atom.AstPath == "section/0");
+        claims.Add(CreateAtom(
+            raw,
+            "metadata/discipline",
+            lastVersion.EndByte,
+            sectionZero.StartByte,
+            [new DigestionContext(1, Title)]));
+        claims.Sort(static (left, right) => left.StartByte.CompareTo(right.StartByte));
+
+        var slices = ImmutableArray.CreateBuilder<DigestionSlice>(claims.Count);
+        var cursor = 0;
+        foreach (var claim in claims)
+        {
+            if (claim.StartByte != cursor)
+            {
+                throw new TheorySourceFormatException(
+                    $"WM atom spans do not assign byte {cursor} to exactly one primary atom");
+            }
+
+            slices.Add(new DigestionSlice(true, claim.RawBytes));
+            cursor = claim.EndByte;
+        }
+
+        if (cursor != raw.Length)
+        {
+            throw new TheorySourceFormatException(
+                $"WM atom spans stop at byte {cursor} before source byte {raw.Length}");
+        }
+
+        return new AtomizedTheoryDocument(claims.ToImmutableArray(), slices.MoveToImmutable());
+    }
+
+    private static string? Identify(string paragraph)
+    {
+        var version = VersionPattern.Match(paragraph);
+        if (version.Success)
+        {
+            return "version/" + version.Groups["version"].Value;
+        }
+
+        return V02AuditLeadPattern.IsMatch(paragraph) ? "audit/v0.2" : null;
+    }
+
+    private static string? IdentifyHeading(string heading)
+    {
+        if (heading == Title)
+        {
+            return "metadata/preamble";
+        }
+
+        var section = SectionHeadingPattern.Match(heading);
+        if (section.Success)
+        {
+            return "section/" + section.Groups["number"].Value;
+        }
+
+        if (heading == AppendixHeading)
+        {
+            return "section/7-appendix";
+        }
+
+        return heading == AuditHeading ? "audit" : null;
+    }
+
+    private static void ValidateStructure(string text, AtomizedTheoryDocument scaffold)
+    {
+        var blocks = MarkdownBlockAst.Parse(text);
+        var headings = blocks.OfType<MarkdownHeading>().ToArray();
+        if (headings.Length == 0
+            || headings[0].Start != 0
+            || headings[0].Level != 1
+            || headings[0].Text != Title)
+        {
+            throw new TheorySourceFormatException("WM source must begin with its exact H1 title");
+        }
+
+        var structuralOrder = new List<string> { "metadata/preamble" };
+        foreach (var heading in headings.Skip(1))
+        {
+            var locator = IdentifyHeading(heading.Text);
+            if (locator is null
+                || locator == "metadata/preamble"
+                || locator.StartsWith("section/", StringComparison.Ordinal) && heading.Level is not (2 or 3)
+                || locator == "section/7-appendix" && heading.Level != 3
+                || locator != "section/7-appendix"
+                    && locator.StartsWith("section/", StringComparison.Ordinal)
+                    && heading.Level != 2
+                || locator == "audit" && heading.Level != 2)
+            {
+                throw new TheorySourceFormatException($"unknown or misplaced WM heading: {heading.Text}");
+            }
+
+            structuralOrder.Add(locator);
+        }
+
+        var expectedStructure = new List<string> { "metadata/preamble" };
+        for (var section = 0; section <= 11; section++)
+        {
+            expectedStructure.Add($"section/{section}");
+            if (section == 7)
+            {
+                expectedStructure.Add("section/7-appendix");
+            }
+        }
+
+        expectedStructure.Add("audit");
+        if (!structuralOrder.SequenceEqual(expectedStructure, StringComparer.Ordinal))
+        {
+            throw new TheorySourceFormatException(
+                "WM sections must be unique and ordered as 0..11 with §7-附 and audit in canonical positions");
+        }
+
+        var versionLeads = text.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries)
+            .Where(static line => VersionLeadPattern.IsMatch(line))
+            .ToArray();
+        if (versionLeads.Any(static line => !VersionPattern.IsMatch(line)))
+        {
+            throw new TheorySourceFormatException("unknown WM version ledger line");
+        }
+
+        var versions = versionLeads
+            .Select(static line => VersionPattern.Match(line).Groups["version"].Value)
+            .ToArray();
+        var expectedVersions = versions.Contains("v0.2", StringComparer.Ordinal)
+            ? new[] { "v0", "v0.1", "v0.2" }
+            : new[] { "v0", "v0.1" };
+        if (!versions.SequenceEqual(expectedVersions, StringComparer.Ordinal))
+        {
+            throw new TheorySourceFormatException(
+                "WM version ledger must contain v0 and v0.1, followed only by optional v0.2");
+        }
+
+        ValidateDiscipline(text, blocks, headings, versionLeads[^1]);
+
+        var hasV02Audit = scaffold.Claims.Any(static atom => atom.AstPath == "audit/v0.2");
+        if (hasV02Audit != versions.Contains("v0.2", StringComparer.Ordinal))
+        {
+            throw new TheorySourceFormatException("WM v0.2 version and audit atoms must be appended together");
+        }
+
+        var expectedClaims = new List<string> { "metadata/preamble" };
+        expectedClaims.AddRange(expectedVersions.Select(static version => "version/" + version));
+        expectedClaims.AddRange(expectedStructure.Skip(1));
+        if (hasV02Audit)
+        {
+            expectedClaims.Add("audit/v0.2");
+        }
+
+        if (!scaffold.Claims.Select(static atom => atom.AstPath)
+            .SequenceEqual(expectedClaims, StringComparer.Ordinal))
+        {
+            throw new TheorySourceFormatException("WM locator set does not match the canonical dialect");
+        }
+
+        ValidateClosure(text, blocks, hasV02Audit);
+    }
+
+    private static void ShiftV02AuditSeparator(byte[] raw, List<DigestionAtom> claims)
+    {
+        var newAuditIndex = claims.FindIndex(static atom => atom.AstPath == "audit/v0.2");
+        if (newAuditIndex < 0)
+        {
+            return;
+        }
+
+        var oldAuditIndex = claims.FindIndex(static atom => atom.AstPath == "audit");
+        var boundary = claims[newAuditIndex].StartByte;
+        var shiftedBoundary = boundary >= 4
+            && raw.AsSpan(boundary - 4, 4).SequenceEqual("\r\n\r\n"u8)
+                ? boundary - 2
+                : boundary >= 2 && raw[boundary - 1] == (byte)'\n' && raw[boundary - 2] == (byte)'\n'
+                    ? boundary - 1
+                    : boundary >= 2 && raw[boundary - 1] == (byte)'\r' && raw[boundary - 2] == (byte)'\r'
+                        ? boundary - 1
+                    : throw new TheorySourceFormatException(
+                        "WM v0.2 audit block must be separated by exactly one blank line");
+        claims[oldAuditIndex] = ReSpan(raw, claims[oldAuditIndex], claims[oldAuditIndex].StartByte, shiftedBoundary);
+        claims[newAuditIndex] = ReSpan(raw, claims[newAuditIndex], shiftedBoundary, claims[newAuditIndex].EndByte);
+    }
+
+    private static void ExtendLastVersionLineEnding(byte[] raw, List<DigestionAtom> claims)
+    {
+        var index = claims.FindLastIndex(static atom =>
+            atom.AstPath.StartsWith("version/", StringComparison.Ordinal));
+        var atom = claims[index];
+        var end = atom.EndByte;
+        if (end < raw.Length && raw[end] == (byte)'\r')
+        {
+            end++;
+        }
+
+        if (end < raw.Length && raw[end] == (byte)'\n')
+        {
+            end++;
+        }
+
+        if (end == atom.EndByte)
+        {
+            throw new TheorySourceFormatException("WM version ledger lines must have line terminators");
+        }
+
+        claims[index] = ReSpan(raw, atom, atom.StartByte, end);
+    }
+
+    private static DigestionAtom ReSpan(byte[] raw, DigestionAtom atom, int start, int end) =>
+        CreateAtom(raw, atom.AstPath, start, end, atom.Context);
+
+    private static DigestionAtom CreateAtom(
+        byte[] raw,
+        string astPath,
+        int start,
+        int end,
+        ImmutableArray<DigestionContext> context)
+    {
+        if (start < 0 || end <= start || end > raw.Length)
+        {
+            throw new TheorySourceFormatException($"invalid WM atom span for {astPath}");
+        }
+
+        var atomBytes = ImmutableArray.CreateRange(raw[start..end]);
+        return new DigestionAtom(
+            astPath,
+            start,
+            end,
+            atomBytes,
+            DigestionFingerprint.Compute(atomBytes.AsSpan()),
+            context);
+    }
+}
+
 internal static class MarkdownAstAtomizer
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
@@ -511,187 +784,4 @@ internal static class MarkdownAstAtomizer
         bool Extend);
 
     private sealed record SourceLine(string Text, int Start, int End);
-}
-
-internal abstract record MarkdownBlock(int Start, int End);
-
-internal sealed record MarkdownHeading(int Start, int End, int Level, string Text)
-    : MarkdownBlock(Start, End);
-
-internal sealed record MarkdownParagraph(int Start, int End, string Text)
-    : MarkdownBlock(Start, End);
-
-internal sealed record MarkdownTableRow(
-    int Start, int End, string Text, string FirstCellText, string FirstCellSourceText)
-    : MarkdownBlock(Start, End);
-
-internal static class MarkdownBlockAst
-{
-    private static readonly Regex HeadingPattern = new(
-        "^(?<marks>#{1,6})[ \\t]+(?<text>.*?)[ \\t]*#*[ \\t]*$",
-        RegexOptions.CultureInvariant);
-    private static readonly Regex TableDelimiterPattern = new(
-        "^[ \\t]*\\|?[ \\t]*:?-{3,}:?[ \\t]*(?:\\|[ \\t]*:?-{3,}:?[ \\t]*)+\\|?[ \\t]*$",
-        RegexOptions.CultureInvariant);
-
-    internal static ImmutableArray<MarkdownBlock> Parse(string source)
-    {
-        var lines = ReadLines(source);
-        var blocks = ImmutableArray.CreateBuilder<MarkdownBlock>();
-        for (var index = 0; index < lines.Length;)
-        {
-            var line = lines[index];
-            if (string.IsNullOrWhiteSpace(line.Text))
-            {
-                index++;
-                continue;
-            }
-
-            var heading = HeadingPattern.Match(line.Text);
-            if (heading.Success)
-            {
-                blocks.Add(new MarkdownHeading(
-                    line.Start,
-                    line.End,
-                    heading.Groups["marks"].Length,
-                    heading.Groups["text"].Value.Trim()));
-                index++;
-                continue;
-            }
-
-            if (IsFence(line.Text))
-            {
-                index = SkipFence(lines, index);
-                continue;
-            }
-
-            if (index + 1 < lines.Length
-                && line.Text.Contains('|')
-                && TableDelimiterPattern.IsMatch(lines[index + 1].Text))
-            {
-                blocks.Add(TableRow(line));
-                index += 2;
-                while (index < lines.Length
-                    && !string.IsNullOrWhiteSpace(lines[index].Text)
-                    && lines[index].Text.Contains('|'))
-                {
-                    blocks.Add(TableRow(lines[index]));
-                    index++;
-                }
-
-                continue;
-            }
-
-            var start = line.Start;
-            var contentEnd = line.ContentEnd;
-            var end = line.End;
-            index++;
-            while (index < lines.Length
-                && !string.IsNullOrWhiteSpace(lines[index].Text)
-                && !HeadingPattern.IsMatch(lines[index].Text)
-                && !IsFence(lines[index].Text)
-                && !(index + 1 < lines.Length
-                    && lines[index].Text.Contains('|')
-                    && TableDelimiterPattern.IsMatch(lines[index + 1].Text)))
-            {
-                contentEnd = lines[index].ContentEnd;
-                end = lines[index].End;
-                index++;
-            }
-
-            blocks.Add(new MarkdownParagraph(start, end, source[start..contentEnd]));
-        }
-
-        return blocks.ToImmutable();
-    }
-
-    private static MarkdownTableRow TableRow(MarkdownSourceLine line)
-    {
-        var firstCellSourceText = FirstCellSourceText(line.Text);
-        return new(line.Start, line.End, line.Text, FirstCellPlainText(firstCellSourceText), firstCellSourceText);
-    }
-
-    private static string FirstCellSourceText(string row)
-    {
-        var value = row.Trim();
-        if (value.StartsWith('|')) value = value[1..];
-        var separator = value.IndexOf('|');
-        if (separator >= 0) value = value[..separator];
-        return value.Trim();
-    }
-
-    private static string FirstCellPlainText(string value)
-    {
-        while (value.Length >= 4
-            && (value.StartsWith("**", StringComparison.Ordinal)
-                && value.EndsWith("**", StringComparison.Ordinal)
-                || value.StartsWith("__", StringComparison.Ordinal)
-                && value.EndsWith("__", StringComparison.Ordinal)))
-        {
-            value = value[2..^2].Trim();
-        }
-
-        if (value.Length >= 2
-            && value.StartsWith('`')
-            && value.EndsWith('`'))
-        {
-            value = value[1..^1].Trim();
-        }
-
-        return value;
-    }
-
-    private static bool IsFence(string line)
-    {
-        var trimmed = line.TrimStart();
-        return trimmed.StartsWith("```", StringComparison.Ordinal)
-            || trimmed.StartsWith("~~~", StringComparison.Ordinal);
-    }
-
-    private static int SkipFence(ImmutableArray<MarkdownSourceLine> lines, int start)
-    {
-        var opening = lines[start].Text.TrimStart();
-        var marker = opening.StartsWith("```", StringComparison.Ordinal) ? "```" : "~~~";
-        for (var index = start + 1; index < lines.Length; index++)
-        {
-            if (lines[index].Text.TrimStart().StartsWith(marker, StringComparison.Ordinal))
-            {
-                return index + 1;
-            }
-        }
-
-        return lines.Length;
-    }
-
-    private static ImmutableArray<MarkdownSourceLine> ReadLines(string source)
-    {
-        var lines = ImmutableArray.CreateBuilder<MarkdownSourceLine>();
-        for (var start = 0; start < source.Length;)
-        {
-            var contentEnd = start;
-            while (contentEnd < source.Length && source[contentEnd] is not ('\r' or '\n'))
-            {
-                contentEnd++;
-            }
-
-            var end = contentEnd;
-            if (end < source.Length && source[end] == '\r') end++;
-            if (end < source.Length && source[end] == '\n') end++;
-            lines.Add(new MarkdownSourceLine(
-                start,
-                contentEnd,
-                end,
-                source[start..contentEnd]));
-            start = end;
-        }
-
-        if (source.Length == 0)
-        {
-            return [];
-        }
-
-        return lines.ToImmutable();
-    }
-
-    private sealed record MarkdownSourceLine(int Start, int ContentEnd, int End, string Text);
 }

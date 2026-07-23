@@ -1,8 +1,15 @@
-<!-- echo-residual-summary:v2 base=git-sha1:5deaeafef0b6c1dada6e9e4f4ed0606430a2b341 -->
+<!-- echo-residual-summary:v2 base=git-sha1:628898d197a5d2b7c9c1f2722f25a74841fd4925 -->
 # Echo Residual Summary
 
 - unresolved_subitems: 466
 - mother_residual_atom_ids: 58
+
+## `bedc-wm-v0.1`
+
+- unresolved_subitems: 0
+- mother_residual_atom_ids: 0
+
+Mother residual atoms: none.
 
 ## `gict-v3.6`
 

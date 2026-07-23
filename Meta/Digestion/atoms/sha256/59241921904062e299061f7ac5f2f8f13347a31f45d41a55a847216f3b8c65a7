@@ -1,0 +1,18 @@
+## 8. 悬赏(open 队列,各带判真机与判据)
+
+**悬赏 B1(gap-as-goal)**。高 gap 触发**消歧动作**而非回避;判据:risk 降 ∧ success 不降;对照:vanilla 与 avoid-only。赏格:tradeoff 翻转为 win;monitor→agent 之跳。〔runner可关〕
+
+**悬赏 B2(密度基线)——判真机已注册,待真实载体首跑**。合同 `B2_density_baseline_contract.md`,runner `b2_density_baseline.py`,参数已冻结(K=20,boot=500,seed=20260718,层 q=0.5,证人邻域 q=0.25)。判决类:PASS(层内 AUROC>0.65 且 CI 下端>0.5,证人对 ≥30 且 pair-acc>0.6、CI 下端>0.5)/ DEGRADE(E1 降级 OOD 检测)/ FAIL_CLOSED。合成双世界自检机器绿(dynamics→PASS 0.98 [0.94,1.00];density→DEGRADE 零证人)。四载体逐跑,判决回写 E1 措辞。〔runner可关,第一优先〕
+
+**悬赏 B3(conformal 化 gap head)**。g_t 为 nonconformity score,trained ledger 继承 α 界;预期 coverage debt 收窄;进阶 ConfTr 式可微项入 L_gap。〔runner可关〕
+
+**悬赏 B4(债务定价市场)**。每条债务携带关账边际价值 MV(t,b);账本自日记升为复式。compute-value 标签机现成,改指向数据/动作获取。〔runner可关,远期〕
+
+**候查 B5′(复合气体之解析残部)**。符号面已入 E6;余:复合气体之 Dirichlet 级数、与 ζ 之关系、"任意子配分"之解析身份——既有 open leaf(goldGenAF 解析支)之延伸。〔解析,open〕
+
+**候查 B6(晋升协议原型)**。最小"信→知"通道:学得规律经 D2 检验 + conformal 认证后写入 append-only 账本;判据:账本内规律于灾难性遗忘攻击下留存率 vs 纯权重基线。〔runner可关〕
+
+**候查 B7(纯 Perron 数系,E6 所孵)**。F1 族 c ≥ 3 之纯 Perron 移位(非 Pisot 非 Salem)有无自然算术模型——何种"数系"以其为基,其无准晶户籍在数论侧对应何种失灵。〔数学,open〕
+
+---
+

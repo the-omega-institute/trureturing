@@ -14,6 +14,7 @@ internal static class AtomizerRegistry
     internal const string ObserverId = "observer-v1";
     internal const string PeriodicTreeId = "periodic-tree-v1";
     internal const string PzgId = "pzg-v1";
+    internal const string WmId = "wm-v1";
     internal const string NoAtomizerId = "none";
 
     private static readonly ImmutableDictionary<string, AtomizerRegistration> Atomizers =
@@ -24,7 +25,8 @@ internal static class AtomizerRegistry
             .Add(
                 PeriodicTreeId,
                 new AtomizerRegistration(PeriodicTreeAtomizer.Atomize, "periodic-tree"))
-            .Add(PzgId, new AtomizerRegistration(PzgAtomizer.Atomize, "pzg"));
+            .Add(PzgId, new AtomizerRegistration(PzgAtomizer.Atomize, "pzg"))
+            .Add(WmId, new AtomizerRegistration(WmAtomizer.Atomize, "wm"));
 
     internal static ImmutableArray<string> RegisteredIds { get; } =
         Atomizers.Keys.Order(StringComparer.Ordinal).ToImmutableArray();

@@ -52,6 +52,7 @@ public sealed class MakeWorkflowTests
         "echo-verify",
         "record-golden",
         "selftest",
+        "scratch-sweep",
         "gate",
         "perf-report",
         "worktree",
@@ -97,6 +98,7 @@ public sealed class MakeWorkflowTests
         Assert.Contains(EchoVerifyScriptPath, Recipe(makefile, "echo-verify"), StringComparison.Ordinal);
         Assert.Contains("golden-record", Recipe(makefile, "record-golden"), StringComparison.Ordinal);
         Assert.Contains(SelftestScriptPath, Recipe(makefile, "selftest"), StringComparison.Ordinal);
+        Assert.Contains("stratalint-c0-renew-", Recipe(makefile, "scratch-sweep"), StringComparison.Ordinal);
         Assert.Contains(LocalHarnessGateScriptPath, Recipe(makefile, "gate"), StringComparison.Ordinal);
         Assert.Contains(PerfReportScriptPath, Recipe(makefile, "perf-report"), StringComparison.Ordinal);
         Assert.Contains("Golden/perf-budgets.toml", Recipe(makefile, "perf-report"), StringComparison.Ordinal);

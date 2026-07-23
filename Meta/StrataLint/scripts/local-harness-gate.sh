@@ -166,6 +166,21 @@ prepare_judge() {
     JUDGE_ROOT="$TMP_ROOT/dev-judge"
     git -C "$CANDIDATE_ROOT" worktree add --detach "$JUDGE_ROOT" "$BASE_SHA"
     CREATED_JUDGE=1
+    # Warm the freshly-created judge worktree's Lean build cache from the candidate so
+    # the baseline report build is INCREMENTAL (rebuild only the base-vs-candidate diffs)
+    # instead of a COLD full compile of the whole D5 project. Measured on this repo: a
+    # cold baseline build takes ~2h and starves the devloop implement codex (it burns its
+    # whole timeout at the `make preflight` finish gate with "no baseline output"), while a
+    # warm build is ~8s. lake is content-addressed, so a warmed `.lake` yields byte-identical
+    # oleans for unchanged sources and rebuilds exactly the changed ones — the baseline report
+    # is the same, only fast. Prefer an APFS clone (near-instant, space-shared) and fall back
+    # to a plain copy; never fail the gate on a copy error (that just falls back to the cold
+    # build). Only the newly-created judge is warmed; a reused existing worktree is untouched.
+    if [[ -d "$CANDIDATE_ROOT/.lake" && ! -e "$JUDGE_ROOT/.lake" ]]; then
+      cp -cR "$CANDIDATE_ROOT/.lake" "$JUDGE_ROOT/.lake" 2>/dev/null \
+        || cp -R "$CANDIDATE_ROOT/.lake" "$JUDGE_ROOT/.lake" 2>/dev/null \
+        || true
+    fi
   fi
 
   printf '[local-gate] candidate=%s judge=%s base=%s\n' \
