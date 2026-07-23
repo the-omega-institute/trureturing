@@ -194,7 +194,7 @@ name = "meta-bootstrap-protected-surface"
 changes = ["Meta/StrataLint/StrataLint.Engine/SyntheticProtected.cs"]
 baseline_mutations = []
 mutations = [{ op = "write", path = "Meta/StrataLint/StrataLint.Engine/SyntheticProtected.cs", content = "// protected fixture\n" }]
-expected_diagnostics = [{ rule = 22, path = "Meta/StrataLint/StrataLint.Engine/SyntheticProtected.cs", message = "meta change requires external human review" }]
+expected_diagnostics = [{ rule = 22, path = "Meta/StrataLint/StrataLint.Engine/SyntheticProtected.cs", message = "protected-surface change requires base-owned conservative-extension verification" }]
 
 [[cases]]
 name = "contract-same-pr-declaration-and-shrink"

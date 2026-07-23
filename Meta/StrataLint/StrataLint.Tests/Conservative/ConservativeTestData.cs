@@ -81,7 +81,7 @@ internal static class ConservativeTestData
             [new ConservativeDiagnostic(
                 "SL-022",
                 "Meta/StrataLint/SyntheticProtected.cs",
-                "meta change requires external human review")]),
+                "protected-surface change requires base-owned conservative-extension verification")]),
     ];
 
     private static ConservativeCaseResult Case(
