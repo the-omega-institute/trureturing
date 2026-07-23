@@ -483,7 +483,8 @@ expect_selftest_rejection() {
   [[ "$status" -ne 0 ]] || die "selftest $name unexpectedly passed"
   grep -F "$expected" <<<"$output" >/dev/null \
     || die "selftest $name rejected for the wrong reason: $output"
-  printf 'PASS lua-gate-selftest %s exit=%s\n' "$name" "$status"
+  printf 'PASS lua-gate-selftest %s exit=%s fingerprint=%s\n' \
+    "$name" "$status" "$expected"
 }
 
 lua_gate_selftest() {
@@ -548,8 +549,12 @@ lua_gate_selftest() {
   expect_selftest_rejection zero-tests "test report must have passed > 0" \
     validate_test_reports "$normal_report" "$graph_report" "$fixture_root"
 
-  printf '%s\n' '{"schema":"fkst.test.report.v1","summary":{"passed":1,"failed":1},"tests":[{"owner_namespace":"fixture","file":"tests/dummy_test.lua","name":"passes","status":"pass"},{"owner_namespace":"fixture","file":"tests/dummy_test.lua","name":"fails","status":"fail","error":"boom"}]}' >"$normal_report"
-  expect_selftest_rejection failed-tests "test report must have failed = 0" \
+  printf '%s\n' '{"schema":"fkst.test.report.v1","summary":{"passed":1,"failed":1},"tests":[{"owner_namespace":"fixture","file":"tests/dummy_test.lua","name":"passes","status":"pass"}]}' >"$normal_report"
+  expect_selftest_rejection nonzero-failed-summary "test report must have failed = 0" \
+    validate_test_reports "$normal_report" "$graph_report" "$fixture_root"
+
+  printf '%s\n' '{"schema":"fkst.test.report.v1","summary":{"passed":2,"failed":0},"tests":[{"owner_namespace":"fixture","file":"tests/dummy_test.lua","name":"passes","status":"pass"},{"owner_namespace":"fixture","file":"tests/dummy_test.lua","name":"fails","status":"fail","error":"boom"}]}' >"$normal_report"
+  expect_selftest_rejection non-passing-row "non-passing test row" \
     validate_test_reports "$normal_report" "$graph_report" "$fixture_root"
 
   printf '%s\n' '{"schema":"fkst.test.report.v1","summary":{"passed":2,"failed":0},"tests":[{"owner_namespace":"fixture","file":"tests/dummy_test.lua","name":"passes","status":"pass"}]}' >"$normal_report"
