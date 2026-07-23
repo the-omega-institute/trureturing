@@ -36,6 +36,22 @@ public sealed class PrShepherdRecalculationTests
     }
 
     [Fact]
+    public void DryRunOpenPrintsPlanWithoutCreatingOrArmingPullRequest()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ShepherdFixture();
+
+        var result = fixture.RunOpenDryRun();
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Empty(fixture.MutationCalls());
+        Assert.Contains(
+            "DRYRUN OPEN head=feature title=fixture title -> create PR + arm auto-merge",
+            result.Log,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void BehindWithoutExpiryFingerprintRetainsExactUpdateBranchBehavior()
     {
         if (OperatingSystem.IsWindows()) return;
@@ -51,6 +67,21 @@ public sealed class PrShepherdRecalculationTests
             "SWEEP #1 BEHIND -> update-branch(本地身份,checks 会触发)\n",
             result.Log,
             StringComparison.Ordinal);
+        Assert.False(Directory.Exists(fixture.CacheWorktree));
+    }
+
+    [Fact]
+    public void FingerprintsSplitAcrossWorkflowJobsRetainUpdateBranchBehavior()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ShepherdFixture();
+
+        var result = fixture.Run(splitFingerprintAcrossJobs: true);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(
+            ["gh-api:-X PUT repos/the-omega-institute/trureturing/pulls/1/update-branch"],
+            fixture.MutationCalls());
         Assert.False(Directory.Exists(fixture.CacheWorktree));
     }
 
@@ -184,6 +215,7 @@ public sealed class PrShepherdRecalculationTests
 
         Assert.Contains("Content-addressed dev baseline admission", script, StringComparison.Ordinal);
         Assert.Contains("completedAt", script, StringComparison.Ordinal);
+        Assert.Contains("startedAt // .completedAt", script, StringComparison.Ordinal);
         Assert.Contains("conclusion", script, StringComparison.Ordinal);
         Assert.Contains("detailsUrl", script, StringComparison.Ordinal);
         Assert.Contains("DIGEST_STATUS_INVALID", script, StringComparison.Ordinal);
@@ -191,6 +223,85 @@ public sealed class PrShepherdRecalculationTests
         Assert.Contains("ECHO_VERIFY_INFRASTRUCTURE", script, StringComparison.Ordinal);
         Assert.Contains("residual", script, StringComparison.Ordinal);
         Assert.Contains("SHEPHERD_DRYRUN", script, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DryRunNeverWritesNoCheckStateOrWakesPullRequest()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ShepherdFixture();
+
+        var result = fixture.RunWatch(noChecks: true);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Empty(fixture.MutationCalls());
+        Assert.False(Directory.Exists(fixture.StateDirectory));
+        Assert.Equal(
+            2,
+            result.Log.Split("DRYRUN #1 head=", StringSplitOptions.None).Length - 1);
+    }
+
+    [Fact]
+    public void ActiveBranchLockPreventsConcurrentWorktreeMutation()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ShepherdFixture();
+        var plan = fixture.Run(dryRun: true);
+        fixture.HoldBranchLock(DryRunWorktreeName(plan.Log));
+
+        var result = fixture.Run();
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(fixture.OriginalHead, fixture.RemoteHead());
+        Assert.Empty(fixture.MutationCalls());
+        Assert.Contains("已有重算实例,跳过本轮", result.Log, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void SanitizedBranchSlugsRemainCollisionResistant()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var slash = new ShepherdFixture(headBranch: "topic/a");
+        var slashResult = slash.Run(dryRun: true);
+        var slashWorktree = DryRunWorktreeName(slashResult.Log);
+        using var literal = new ShepherdFixture(headBranch: slashWorktree[3..]);
+        var literalResult = literal.Run(dryRun: true);
+
+        Assert.Equal(0, slashResult.ExitCode);
+        Assert.Equal(0, literalResult.ExitCode);
+        Assert.NotEqual(slashWorktree, DryRunWorktreeName(literalResult.Log));
+    }
+
+    [Fact]
+    public async Task ConcurrentStaleLockReclamationAllowsOnlyOneRecalculation()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ShepherdFixture(
+            pauseWorktreeCreation: true,
+            delayFirstLockOwnerRead: true);
+        var plan = fixture.Run(dryRun: true);
+        fixture.CreateStaleBranchLock(DryRunWorktreeName(plan.Log));
+
+        var results = await Task.WhenAll(
+            Task.Run(() => fixture.Run()),
+            Task.Run(() => fixture.Run()));
+
+        Assert.All(results, result => Assert.Equal(0, result.ExitCode));
+        Assert.Equal(1, fixture.MutationCalls().Count(call => call == "push"));
+        Assert.Equal(1, fixture.CountCommitsWithSubject(CommitSubject));
+    }
+
+    [Fact]
+    public void StaleLockReclamationUsesAtomicRenameOwnership()
+    {
+        var root = FindRepositoryRoot();
+        var script = File.ReadAllText(Path.Combine(root, ShepherdScriptPath));
+
+        AssertInOrder(
+            script,
+            "mkdir \"$reap\"",
+            "owner=\"$(cat \"$lock/pid\"",
+            "mv \"$lock\" \"$stale\"");
     }
 
     [Fact]
@@ -228,6 +339,15 @@ public sealed class PrShepherdRecalculationTests
         }
     }
 
+    private static string DryRunWorktreeName(string log)
+    {
+        const string marker = "ensure worktree path=";
+        var start = log.IndexOf(marker, StringComparison.Ordinal);
+        Assert.True(start >= 0, log);
+        var path = log[(start + marker.Length)..].Split('\n', 2)[0];
+        return Path.GetFileName(path);
+    }
+
     private static string FindRepositoryRoot()
     {
         for (var current = new DirectoryInfo(AppContext.BaseDirectory);
@@ -252,6 +372,9 @@ public sealed class PrShepherdRecalculationTests
         private readonly string failingTarget;
         private readonly bool moveHeadBeforePush;
         private readonly bool failMergeWithoutConflict;
+        private readonly string headBranch;
+        private readonly bool pauseWorktreeCreation;
+        private readonly bool delayFirstLockOwnerRead;
         private int devAdvance;
 
         internal ShepherdFixture(
@@ -259,18 +382,25 @@ public sealed class PrShepherdRecalculationTests
             string failingTarget = "",
             bool moveHeadBeforePush = false,
             bool failMergeWithoutConflict = false,
-            bool devDeletesDerived = false)
+            bool devDeletesDerived = false,
+            string headBranch = "feature",
+            bool pauseWorktreeCreation = false,
+            bool delayFirstLockOwnerRead = false)
         {
             this.failingTarget = failingTarget;
             this.moveHeadBeforePush = moveHeadBeforePush;
             this.failMergeWithoutConflict = failMergeWithoutConflict;
+            this.headBranch = headBranch;
+            this.pauseWorktreeCreation = pauseWorktreeCreation;
+            this.delayFirstLockOwnerRead = delayFirstLockOwnerRead;
             origin = Path.Combine(temporary.Path, "origin.git");
             repository = Path.Combine(temporary.Path, "repository");
             seed = Path.Combine(temporary.Path, "seed");
             bin = Path.Combine(temporary.Path, "bin");
             log = Path.Combine(temporary.Path, "shepherd.log");
             calls = Path.Combine(temporary.Path, "mutation-calls");
-            CacheWorktree = Path.Combine(temporary.Path, "cache", "wt-feature");
+            CacheRoot = Path.Combine(temporary.Path, "cache");
+            StateDirectory = Path.Combine(temporary.Path, "state");
             Directory.CreateDirectory(bin);
 
             Git(temporary.Path, "init", "--bare", origin);
@@ -289,7 +419,7 @@ public sealed class PrShepherdRecalculationTests
             Git(seed, "push", "-u", "origin", "dev");
             Git(temporary.Path, "--git-dir", origin, "symbolic-ref", "HEAD", "refs/heads/dev");
 
-            Git(seed, "checkout", "-b", "feature");
+            Git(seed, "checkout", "-b", headBranch);
             Write(seed, "Blueprint/input.scribe.cs", "feature input\n");
             Write(seed, "Generated/artifact.md", "feature artifact\n");
             Write(seed, "Generated/dev-choice.md", "feature choice\n");
@@ -297,7 +427,7 @@ public sealed class PrShepherdRecalculationTests
             Git(seed, "add", ".");
             Git(seed, "commit", "-m", "feature content");
             OriginalHead = GitOutput(seed, "rev-parse", "HEAD");
-            Git(seed, "push", "-u", "origin", "feature");
+            Git(seed, "push", "-u", "origin", headBranch);
 
             Git(seed, "checkout", "-b", "attacker");
             Write(seed, "attacker.txt", "concurrent head\n");
@@ -328,12 +458,21 @@ public sealed class PrShepherdRecalculationTests
 
         internal string BaseHead { get; private set; }
 
-        internal string CacheWorktree { get; }
+        internal string CacheWorktree =>
+            Directory.Exists(CacheRoot)
+                ? Directory.GetDirectories(CacheRoot, "wt-*").SingleOrDefault()
+                    ?? Path.Combine(CacheRoot, "wt-missing")
+                : Path.Combine(CacheRoot, "wt-missing");
+
+        internal string CacheRoot { get; }
+
+        internal string StateDirectory { get; }
 
         internal ShepherdResult Run(
             bool dryRun = false,
             bool expiryFingerprint = true,
-            bool duplicatePrRow = false)
+            bool duplicatePrRow = false,
+            bool splitFingerprintAcrossJobs = false)
         {
             var script = Path.Combine(FindRepositoryRoot(), ShepherdScriptPath);
             var home = Path.Combine(temporary.Path, "home");
@@ -346,15 +485,20 @@ public sealed class PrShepherdRecalculationTests
                 "PR_SHEPHERD_REMOTE=origin",
                 "PR_SHEPHERD_REPO=the-omega-institute/trureturing",
                 $"PR_SHEPHERD_LOG={log}",
-                $"PR_SHEPHERD_STATE={Path.Combine(temporary.Path, "state")}",
-                $"PR_SHEPHERD_CACHE={Path.Combine(temporary.Path, "cache")}",
+                $"PR_SHEPHERD_STATE={StateDirectory}",
+                $"PR_SHEPHERD_CACHE={CacheRoot}",
                 $"PR_TEST_ORIGIN={origin}",
+                $"PR_TEST_HEAD={headBranch}",
                 $"PR_TEST_CALLS={calls}",
                 $"PR_TEST_EXPIRY={(expiryFingerprint ? "1" : "0")}",
+                $"PR_TEST_SPLIT={(splitFingerprintAcrossJobs ? "1" : "0")}",
                 $"PR_TEST_DUPLICATE={(duplicatePrRow ? "1" : "0")}",
                 $"PR_TEST_FAIL_TARGET={failingTarget}",
                 $"PR_TEST_MOVE_HEAD={(moveHeadBeforePush ? "1" : "0")}",
                 $"PR_TEST_FAIL_MERGE={(failMergeWithoutConflict ? "1" : "0")}",
+                $"PR_TEST_PAUSE_WORKTREE={(pauseWorktreeCreation ? "1" : "0")}",
+                $"PR_TEST_DELAY_LOCK_READ={(delayFirstLockOwnerRead ? "1" : "0")}",
+                $"PR_TEST_LOCK_READ_MARKER={Path.Combine(temporary.Path, "lock-read-marker")}",
                 $"SHEPHERD_DRYRUN={(dryRun ? "1" : "0")}",
                 "GH_TOKEN=must-not-reach-candidate-producers",
                 "/bin/bash",
@@ -374,7 +518,7 @@ public sealed class PrShepherdRecalculationTests
                 File.Exists(log) ? File.ReadAllText(log) : string.Empty);
         }
 
-        internal ShepherdResult RunWatch()
+        internal ShepherdResult RunWatch(bool noChecks = false)
         {
             var script = Path.Combine(FindRepositoryRoot(), ShepherdScriptPath);
             var home = Path.Combine(temporary.Path, "home");
@@ -388,17 +532,23 @@ public sealed class PrShepherdRecalculationTests
                 "PR_SHEPHERD_REPO=the-omega-institute/trureturing",
                 $"PR_SHEPHERD_LOG={log}",
                 $"PR_SHEPHERD_PID={Path.Combine(temporary.Path, "shepherd.pid")}",
-                $"PR_SHEPHERD_STATE={Path.Combine(temporary.Path, "state")}",
-                $"PR_SHEPHERD_CACHE={Path.Combine(temporary.Path, "cache")}",
+                $"PR_SHEPHERD_STATE={StateDirectory}",
+                $"PR_SHEPHERD_CACHE={CacheRoot}",
                 $"PR_TEST_ORIGIN={origin}",
+                $"PR_TEST_HEAD={headBranch}",
                 $"PR_TEST_CALLS={calls}",
                 $"PR_TEST_WATCH_STATE={Path.Combine(temporary.Path, "watch-state")}",
                 "PR_TEST_EXPIRY=1",
+                "PR_TEST_SPLIT=0",
                 "PR_TEST_DUPLICATE=0",
                 "PR_TEST_FAIL_TARGET=",
                 "PR_TEST_MOVE_HEAD=0",
                 "PR_TEST_FAIL_MERGE=0",
+                "PR_TEST_PAUSE_WORKTREE=0",
+                "PR_TEST_DELAY_LOCK_READ=0",
+                $"PR_TEST_LOCK_READ_MARKER={Path.Combine(temporary.Path, "lock-read-marker")}",
                 "PR_TEST_WATCH=1",
+                $"PR_TEST_NO_CHECKS={(noChecks ? "1" : "0")}",
                 "SHEPHERD_DRYRUN=1",
                 "/bin/bash",
                 script,
@@ -409,6 +559,36 @@ public sealed class PrShepherdRecalculationTests
             var result = BoundedProcessRunner.Run(
                 "/usr/bin/env",
                 arguments,
+                repository,
+                TimeSpan.FromSeconds(30),
+                256 * 1024);
+            return new ShepherdResult(
+                result.ExitCode,
+                Encoding.UTF8.GetString(result.StandardOutput),
+                Encoding.UTF8.GetString(result.StandardError),
+                File.Exists(log) ? File.ReadAllText(log) : string.Empty);
+        }
+
+        internal ShepherdResult RunOpenDryRun()
+        {
+            var script = Path.Combine(FindRepositoryRoot(), ShepherdScriptPath);
+            var home = Path.Combine(temporary.Path, "home");
+            Directory.CreateDirectory(home);
+            var result = BoundedProcessRunner.Run(
+                "/usr/bin/env",
+                [
+                    $"PATH={bin}:{Environment.GetEnvironmentVariable("PATH")}",
+                    $"HOME={home}",
+                    "PR_SHEPHERD_REPO=the-omega-institute/trureturing",
+                    $"PR_SHEPHERD_LOG={log}",
+                    $"PR_TEST_CALLS={calls}",
+                    "SHEPHERD_DRYRUN=1",
+                    "/bin/bash",
+                    script,
+                    "open",
+                    headBranch,
+                    "fixture title",
+                ],
                 repository,
                 TimeSpan.FromSeconds(30),
                 256 * 1024);
@@ -430,19 +610,39 @@ public sealed class PrShepherdRecalculationTests
             Git(seed, "push", "origin", "dev");
         }
 
+        internal void HoldBranchLock(string worktreeName) =>
+            WriteBranchLock(worktreeName, Environment.ProcessId);
+
+        internal void CreateStaleBranchLock(string worktreeName) =>
+            WriteBranchLock(worktreeName, 999_999_999);
+
+        private void WriteBranchLock(string worktreeName, int owner)
+        {
+            var lockDirectory = Path.Combine(CacheRoot, $"lock-{worktreeName[3..]}");
+            Directory.CreateDirectory(lockDirectory);
+            File.WriteAllText(
+                Path.Combine(lockDirectory, "pid"),
+                owner.ToString(System.Globalization.CultureInfo.InvariantCulture));
+        }
+
         internal string[] MutationCalls() =>
             File.Exists(calls) ? File.ReadAllLines(calls) : [];
 
         internal void ClearMutationCalls() => File.Delete(calls);
 
         internal string RemoteHead() =>
-            GitOutput(temporary.Path, "--git-dir", origin, "rev-parse", "refs/heads/feature");
+            GitOutput(temporary.Path, "--git-dir", origin, "rev-parse", $"refs/heads/{headBranch}");
 
         internal bool IsAncestor(string ancestor, string descendant) =>
             GitResult(repository, "merge-base", "--is-ancestor", ancestor, descendant).ExitCode == 0;
 
         internal string ShowRemote(string path) =>
-            GitResult(temporary.Path, "--git-dir", origin, "show", $"refs/heads/feature:{path}").Output;
+            GitResult(
+                temporary.Path,
+                "--git-dir",
+                origin,
+                "show",
+                $"refs/heads/{headBranch}:{path}").Output;
 
         internal bool RemoteContains(string path) =>
             GitResult(
@@ -451,10 +651,16 @@ public sealed class PrShepherdRecalculationTests
                 origin,
                 "cat-file",
                 "-e",
-                $"refs/heads/feature:{path}").ExitCode == 0;
+                $"refs/heads/{headBranch}:{path}").ExitCode == 0;
 
-        internal int CountCommitsWithSubject(string subject, string revision = "refs/heads/feature") =>
-            GitOutput(temporary.Path, "--git-dir", origin, "log", "--format=%s", revision)
+        internal int CountCommitsWithSubject(string subject, string? revision = null) =>
+            GitOutput(
+                    temporary.Path,
+                    "--git-dir",
+                    origin,
+                    "log",
+                    "--format=%s",
+                    revision ?? $"refs/heads/{headBranch}")
                 .Split('\n', StringSplitOptions.RemoveEmptyEntries)
                 .Count(line => string.Equals(line, subject, StringComparison.Ordinal));
 
@@ -477,14 +683,29 @@ public sealed class PrShepherdRecalculationTests
                     if [[ "$count" == 1 ]]; then printf '1\n'; else printf '0\n'; fi
                     exit 0
                   fi
-                  head="$(git --git-dir "$PR_TEST_ORIGIN" rev-parse refs/heads/feature)"
+                  head="$(git --git-dir "$PR_TEST_ORIGIN" rev-parse "refs/heads/$PR_TEST_HEAD")"
                   base="$(git --git-dir "$PR_TEST_ORIGIN" rev-parse refs/heads/dev)"
-                  row="1	MERGEABLE	BEHIND	feature	${head}	${base}	1	FAILURE	https://github.com/fixture/repository/actions/runs/123/jobs/456"
+                  if [[ "${PR_TEST_NO_CHECKS:-0}" == 1 ]]; then
+                    row="1	MERGEABLE	BLOCKED	${PR_TEST_HEAD}	${head}	${base}	0	-	-"
+                  else
+                    row="1	MERGEABLE	BEHIND	${PR_TEST_HEAD}	${head}	${base}	1	FAILURE	https://github.com/fixture/repository/actions/runs/123/job/456"
+                  fi
                   printf '%b\n' "$row"
                   [[ "$PR_TEST_DUPLICATE" != 1 ]] || printf '%b\n' "$row"
                   exit 0
                 fi
                 if [[ "${1:-}" == run && "${2:-}" == view ]]; then
+                  if [[ "$PR_TEST_SPLIT" == 1 && " $* " != *" --job 456 "* ]]; then
+                    printf '%s\n' \
+                      'DIGEST_STATUS_INVALID stale Meta/StrataLint/Generated/scribe-emissions.v1.json' \
+                      'ECHO_VERIFY_INFRASTRUCTURE residual derivation failed'
+                    exit 0
+                  fi
+                  [[ " $* " == *" --job 456 "* ]] || exit 98
+                  if [[ "$PR_TEST_SPLIT" == 1 ]]; then
+                    printf '%s\n' 'DIGEST_STATUS_INVALID stale Meta/StrataLint/Generated/scribe-emissions.v1.json'
+                    exit 0
+                  fi
                   if [[ "$PR_TEST_EXPIRY" == 1 ]]; then
                     printf '%s\n' \
                       'DIGEST_STATUS_INVALID stale Meta/StrataLint/Generated/scribe-emissions.v1.json' \
@@ -498,6 +719,7 @@ public sealed class PrShepherdRecalculationTests
                   printf 'gh-api:%s\n' "${*:2}" >> "$PR_TEST_CALLS"
                   exit 0
                 fi
+                printf 'gh:%s\n' "$*" >> "$PR_TEST_CALLS"
                 exit 95
                 """);
             WriteExecutable(
@@ -514,6 +736,7 @@ public sealed class PrShepherdRecalculationTests
                 [[ "${1:-}" != --no-print-directory ]] || shift
                 target="${1:-}"
                 if [[ "$target" == worktree ]]; then
+                  [[ "$PR_TEST_PAUSE_WORKTREE" != 1 ]] || sleep 2
                   name=''; path=''; base=''
                   for argument in "$@"; do
                     case "$argument" in
@@ -565,6 +788,19 @@ public sealed class PrShepherdRecalculationTests
                 fi
                 if [[ " $* " == *" push "* ]]; then printf 'push\n' >> "$PR_TEST_CALLS"; fi
                 exec /usr/bin/git "$@"
+                """);
+            WriteExecutable(
+                "cat",
+                """
+                #!/usr/bin/env bash
+                set -euo pipefail
+                if [[ "${PR_TEST_DELAY_LOCK_READ:-0}" == 1 && "${1:-}" == */lock-*/pid ]]; then
+                  value="$(/bin/cat "$1")"
+                  if mkdir "$PR_TEST_LOCK_READ_MARKER" 2>/dev/null; then sleep 1; fi
+                  printf '%s' "$value"
+                  exit 0
+                fi
+                exec /bin/cat "$@"
                 """);
         }
 

@@ -53,18 +53,23 @@ credentialless() {
 }
 
 has_expiry_fingerprint() {
-  local conclusion="$1" details_url="$2" run_id out
+  local conclusion="$1" details_url="$2" run_id job_id tail out
   [[ "$conclusion" == "FAILURE" ]] || return 1
   case "$details_url" in
-    */actions/runs/*)
-      run_id="${details_url#*/actions/runs/}"
-      run_id="${run_id%%/*}"
+    */actions/runs/*/job/*)
+      tail="${details_url#*/actions/runs/}"
+      run_id="${tail%%/*}"
+      job_id="${tail#*/job/}"
+      job_id="${job_id%%\?*}"
+      job_id="${job_id%%\#*}"
       ;;
     *) return 1 ;;
   esac
   [[ "$run_id" =~ ^[1-9][0-9]*$ ]] || return 1
-  if ! out="$(GH run view "$run_id" --repo "$REPO" --log-failed 2>&1)"; then
-    log "SWEEP admission run=$run_id 失败日志不可读,按普通 BEHIND 处理"
+  [[ "$job_id" =~ ^[1-9][0-9]*$ ]] || return 1
+  if ! out="$(GH run view "$run_id" --repo "$REPO" \
+    --job "$job_id" --log-failed 2>&1)"; then
+    log "SWEEP admission run=$run_id job=$job_id 失败日志不可读,按普通 BEHIND 处理"
     return 1
   fi
   [[ "$out" == *"DIGEST_STATUS_INVALID"* \
@@ -81,7 +86,10 @@ is_derived_conflict() {
 }
 
 branch_slug() {
-  printf '%s' "$1" | sed 's#[^A-Za-z0-9._-]#-#g'
+  local branch="$1" slug digest
+  slug="$(printf '%s' "$branch" | sed 's#[^A-Za-z0-9._-]#-#g')"
+  digest="$(printf '%s' "$branch" | git hash-object --stdin | cut -c 1-12)"
+  printf '%s-%s' "${slug:0:80}" "$digest"
 }
 
 dryrun_recalculation() {
@@ -225,18 +233,63 @@ run_derivation_chain() {
   rm -rf "$isolated_home"
 }
 
-recalculate_pr() {
-  local num="$1" head="$2" expected_head="$3" expected_base="$4" slug workspace
-  git check-ref-format --branch "$head" >/dev/null \
-    || { log "SWEEP #$num 非法 head branch=$head,放弃本轮"; return 1; }
-  slug="$(branch_slug "$head")"
-  [[ -n "$slug" ]] || { log "SWEEP #$num head slug 为空,放弃本轮"; return 1; }
-  workspace="$CACHE_ROOT/wt-$slug"
-
-  if [[ "$DRYRUN" == "1" ]]; then
-    dryrun_recalculation "$num" "$head" "$workspace"
+acquire_branch_lock() {
+  local num="$1" lock="$2" owner="" reap="$2.reap" stale="$2.stale.$$"
+  if mkdir "$lock" 2>/dev/null; then
+    printf '%s' "$$" > "$lock/pid"
     return 0
   fi
+  if [[ -f "$lock/pid" ]]; then owner="$(cat "$lock/pid" 2>/dev/null || true)"; fi
+  if [[ "$owner" =~ ^[1-9][0-9]*$ ]] && kill -0 "$owner" 2>/dev/null; then
+    log "SWEEP #$num 已有重算实例,跳过本轮 pid=$owner"
+    return 1
+  fi
+  if [[ -z "$owner" ]]; then
+    log "SWEEP #$num 重算锁无有效 owner,跳过本轮 lock=$lock"
+    return 1
+  fi
+  if ! mkdir "$reap" 2>/dev/null; then
+    log "SWEEP #$num stale 重算锁已有回收实例,跳过本轮 lock=$lock"
+    return 1
+  fi
+  printf '%s' "$$" > "$reap/pid"
+
+  owner=""
+  if [[ -f "$lock/pid" ]]; then owner="$(cat "$lock/pid" 2>/dev/null || true)"; fi
+  if [[ "$owner" =~ ^[1-9][0-9]*$ ]] && kill -0 "$owner" 2>/dev/null; then
+    rm -f "$reap/pid"
+    rmdir "$reap" 2>/dev/null || true
+    log "SWEEP #$num 重算锁已被活跃实例接管,跳过本轮 pid=$owner"
+    return 1
+  fi
+  if [[ -z "$owner" ]] || ! mv "$lock" "$stale" 2>/dev/null; then
+    rm -f "$reap/pid"
+    rmdir "$reap" 2>/dev/null || true
+    log "SWEEP #$num stale 重算锁状态已变,跳过本轮 lock=$lock"
+    return 1
+  fi
+  if ! mkdir "$lock" 2>/dev/null; then
+    rm -f "$stale/pid" "$reap/pid"
+    rmdir "$stale" "$reap" 2>/dev/null || true
+    log "SWEEP #$num 重算锁已被另一实例接管,跳过本轮 lock=$lock"
+    return 1
+  fi
+  printf '%s' "$$" > "$lock/pid"
+  rm -f "$stale/pid" "$reap/pid"
+  rmdir "$stale" "$reap" 2>/dev/null \
+    || log "SWEEP #$num stale 重算锁留痕清理失败 stale=$stale reap=$reap"
+}
+
+release_branch_lock() {
+  local lock="$1" owner=""
+  if [[ -f "$lock/pid" ]]; then owner="$(cat "$lock/pid" 2>/dev/null || true)"; fi
+  [[ "$owner" == "$$" ]] || return 0
+  rm -f "$lock/pid"
+  rmdir "$lock" 2>/dev/null || true
+}
+
+recalculate_pr_locked() {
+  local num="$1" head="$2" expected_head="$3" expected_base="$4" workspace="$5" slug="$6"
   prepare_worktree "$num" "$head" "$expected_head" "$expected_base" "$workspace" "$slug" \
     || return 1
   merge_dev "$num" "$head" "$workspace" || return 1
@@ -259,8 +312,34 @@ recalculate_pr() {
   log "SWEEP #$num BEHIND -> 本地 merge+regen+push 完成 head=$head"
 }
 
+recalculate_pr() {
+  local num="$1" head="$2" expected_head="$3" expected_base="$4" slug workspace lock rc=0
+  git check-ref-format --branch "$head" >/dev/null \
+    || { log "SWEEP #$num 非法 head branch=$head,放弃本轮"; return 1; }
+  slug="$(branch_slug "$head")"
+  [[ -n "$slug" ]] || { log "SWEEP #$num head slug 为空,放弃本轮"; return 1; }
+  workspace="$CACHE_ROOT/wt-$slug"
+
+  if [[ "$DRYRUN" == "1" ]]; then
+    dryrun_recalculation "$num" "$head" "$workspace"
+    return 0
+  fi
+  mkdir -p "$CACHE_ROOT"
+  lock="$CACHE_ROOT/lock-$slug"
+  acquire_branch_lock "$num" "$lock" || return 1
+  recalculate_pr_locked \
+    "$num" "$head" "$expected_head" "$expected_base" "$workspace" "$slug" || rc=$?
+  release_branch_lock "$lock"
+  return "$rc"
+}
+
 open_pr() {
   local head="$1" title="$2" body_file="${3:-}"
+  if [[ "$DRYRUN" == "1" ]]; then
+    log "DRYRUN OPEN head=$head title=$title -> create PR + arm auto-merge"
+    printf '%s\n' "dry-run"
+    return 0
+  fi
   local args=(--repo "$REPO" --base dev --head "$head" --title "$title")
   if [[ -n "$body_file" ]]; then args+=(--body-file "$body_file"); else args+=(--fill-first); fi
   local url num
@@ -289,11 +368,11 @@ wake_pr() {
 }
 
 sweep() {
-  mkdir -p "$STATE_DIR"
+  [[ "$DRYRUN" == "1" ]] || mkdir -p "$STATE_DIR"
   local recalculated=" "
   GH pr list --repo "$REPO" --state open --limit 1000 \
     --json number,mergeable,mergeStateStatus,autoMergeRequest,headRefName,headRefOid,baseRefOid,statusCheckRollup \
-    --jq '.[] | select(.autoMergeRequest != null) | ((.statusCheckRollup | map(select(.__typename == "CheckRun" and .name == "Content-addressed dev baseline admission")) | sort_by(.completedAt) | last) // {}) as $admission | [.number,.mergeable,.mergeStateStatus,.headRefName,.headRefOid,.baseRefOid,(.statusCheckRollup|length),($admission.conclusion // "-"),($admission.detailsUrl // "-")] | @tsv' |
+    --jq '.[] | select(.autoMergeRequest != null) | ((.statusCheckRollup | map(select(.__typename == "CheckRun" and .name == "Content-addressed dev baseline admission")) | sort_by(.startedAt // .completedAt // "") | last) // {}) as $admission | [.number,.mergeable,.mergeStateStatus,.headRefName,.headRefOid,.baseRefOid,(.statusCheckRollup|length),($admission.conclusion // "-"),($admission.detailsUrl // "-")] | @tsv' |
   while IFS=$'\t' read -r num mergeable mstate head head_oid base_oid checks admission_conclusion admission_url; do
     case "$mergeable:$mstate" in
       MERGEABLE:BEHIND)
@@ -320,6 +399,12 @@ sweep() {
       *)
         # BLOCKED/UNKNOWN 且 head 无任何 check:多为 bot push 死锁。
         # 同一 head 连续两轮观察为空才唤醒,防 checks 挂载延迟误触。
+        if [[ "$DRYRUN" == "1" ]]; then
+          if [[ "$checks" == "0" && ( "$mstate" == "BLOCKED" || "$mstate" == "UNKNOWN" ) ]]; then
+            log "DRYRUN #$num head=$head_oid 无 checks -> 观察/唤醒均抑制"
+          fi
+          continue
+        fi
         marker="$STATE_DIR/nochecks-$num"
         if [[ "$checks" == "0" && ( "$mstate" == "BLOCKED" || "$mstate" == "UNKNOWN" ) ]]; then
           if [[ -f "$marker" && "$(cat "$marker")" == "$head_oid" ]]; then
@@ -353,11 +438,13 @@ armed_pr_count() {
 
 watch() {
   local interval="${1:-60}" max="${2:-360}"
-  if [[ -f "$PIDFILE" ]] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
-    log "WATCH 已有实例在跑(pid=$(cat "$PIDFILE")),退出"; exit 1
+  if [[ "$DRYRUN" != "1" ]]; then
+    if [[ -f "$PIDFILE" ]] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
+      log "WATCH 已有实例在跑(pid=$(cat "$PIDFILE")),退出"; exit 1
+    fi
+    printf '%s' "$$" > "$PIDFILE"
+    trap 'rm -f "$PIDFILE"' EXIT
   fi
-  printf '%s' "$$" > "$PIDFILE"
-  trap 'rm -f "$PIDFILE"' EXIT
   log "WATCH start interval=${interval}s max_cycles=${max} pid=$$"
   local i armed
   while true; do
