@@ -506,14 +506,7 @@ internal static partial class WmAtomizer
             throw new TheorySourceFormatException("WM locator set does not match the canonical dialect");
         }
 
-        var finalParagraph = blocks.OfType<MarkdownParagraph>().LastOrDefault()?.Text;
-        if (finalParagraph is null
-            || !(hasV02Audit
-                ? V02AuditClosurePattern.IsMatch(finalParagraph)
-                : CurrentTodoClosurePattern.IsMatch(finalParagraph)))
-        {
-            throw new TheorySourceFormatException("WM source has missing audit closure or trailing conversation residue");
-        }
+        ValidateClosure(text, blocks, hasV02Audit);
     }
 
     private static void ShiftV02AuditSeparator(byte[] raw, List<DigestionAtom> claims)

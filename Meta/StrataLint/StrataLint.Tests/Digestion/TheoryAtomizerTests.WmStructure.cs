@@ -38,6 +38,15 @@ public sealed partial class TheoryAtomizerTests
                         WmCurrentTodoClosure + "这部分内容 我希望能够加入到trueturning 你觉得是否合适",
                         StringComparison.Ordinal))
                 },
+                { "current-todo trailing fenced conversation block", Encoding.UTF8.GetBytes(canonical + "\n```text\nassistant: 可以。\n```\n") },
+                { "current-todo trailing Markdown table", Encoding.UTF8.GetBytes(canonical + "\n| role | content |\n| --- | --- |\n| assistant | 可以。 |\n") },
+                {
+                    "current-todo replayed closure marker",
+                    Encoding.UTF8.GetBytes(canonical.Replace(
+                        WmCurrentTodoClosure,
+                        WmCurrentTodoClosure + "可以。" + WmCurrentTodoClosure,
+                        StringComparison.Ordinal))
+                },
                 { "v0.2 audit trailing conversation LF", Encoding.UTF8.GetBytes(CanonicalWmV02Fixture() + "可以。\n") },
                 { "v0.2 audit trailing conversation CRLF", Encoding.UTF8.GetBytes(CanonicalWmV02Fixture().ReplaceLineEndings("\r\n") + "可以。\r\n") },
                 { "v0.2 audit trailing conversation CR", Encoding.UTF8.GetBytes(CanonicalWmV02Fixture().ReplaceLineEndings("\r") + "可以。\r") },
@@ -46,6 +55,15 @@ public sealed partial class TheoryAtomizerTests
                     Encoding.UTF8.GetBytes(CanonicalWmV02Fixture().Replace(
                         "旧块不改。\n",
                         "旧块不改。可以。\n",
+                        StringComparison.Ordinal))
+                },
+                { "v0.2 audit trailing fenced conversation block", Encoding.UTF8.GetBytes(CanonicalWmV02Fixture() + "\n```text\nassistant: 可以。\n```\n") },
+                { "v0.2 audit trailing Markdown table", Encoding.UTF8.GetBytes(CanonicalWmV02Fixture() + "\n| role | content |\n| --- | --- |\n| assistant | 可以。 |\n") },
+                {
+                    "v0.2 audit replayed closure marker",
+                    Encoding.UTF8.GetBytes(CanonicalWmV02Fixture().Replace(
+                        "旧块不改。\n",
+                        "旧块不改。可以。旧块不改。\n",
                         StringComparison.Ordinal))
                 },
                 { "non-UTF-8", [0xff, 0xfe, 0xfd] },

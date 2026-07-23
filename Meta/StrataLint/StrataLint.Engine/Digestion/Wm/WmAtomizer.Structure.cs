@@ -1,9 +1,39 @@
 using System.Collections.Immutable;
+using System.Text.RegularExpressions;
 
 namespace StrataLint.Engine;
 
 internal static partial class WmAtomizer
 {
+    private const string V02AuditClosureMarker = "旧块不改。";
+    private const string CurrentTodoClosureMarker =
+        "**v0.2**(新行追加于版本账,本节追加 v0.2 校核块)。";
+
+    private static void ValidateClosure(
+        string text,
+        ImmutableArray<MarkdownBlock> blocks,
+        bool hasV02Audit)
+    {
+        var pattern = hasV02Audit ? V02AuditClosurePattern : CurrentTodoClosurePattern;
+        var marker = hasV02Audit ? V02AuditClosureMarker : CurrentTodoClosureMarker;
+        var closures = blocks.OfType<MarkdownParagraph>()
+            .Where(paragraph => IsUniqueTailClosure(paragraph.Text, pattern, marker))
+            .ToArray();
+        if (closures.Length != 1 || closures[0].End != text.Length)
+        {
+            throw new TheorySourceFormatException(
+                "WM source has missing audit closure or trailing conversation residue");
+        }
+    }
+
+    private static bool IsUniqueTailClosure(string paragraph, Regex pattern, string marker)
+    {
+        var firstMarker = paragraph.IndexOf(marker, StringComparison.Ordinal);
+        return pattern.IsMatch(paragraph)
+            && firstMarker >= 0
+            && firstMarker == paragraph.Length - marker.Length;
+    }
+
     private static void ValidateDiscipline(
         string text,
         ImmutableArray<MarkdownBlock> blocks,
