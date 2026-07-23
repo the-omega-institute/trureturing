@@ -82,6 +82,34 @@ return {
     t.is_true(d.open_exists)
   end,
 
+  -- THE #373 REGRESSION: a terminal-blocked (fkst-dev:blocked) OPEN request must NOT freeze
+  -- generation. A dropped/decomposed frontier-request is OPEN on GitHub until the ops cleanup
+  -- closes it; counting it as "open" starved loning's producer for ~5h. The producer must
+  -- self-recover and generate its next request while the terminal one is being cleaned up.
+  test_terminal_blocked_open_request_does_not_freeze_generation = function()
+    local blocked = request_issue("owner/repo", 0, "OPEN")
+    blocked.labels = { { name = "fkst-dev:enabled" }, { name = "fkst-dev:blocked" } }
+    local d = core.decide_generation({ blocked }, BOT_LOGIN)
+    t.eq(d.generation, 1)          -- still counted toward the generation index (monotonic)
+    t.is_true(not d.open_exists)   -- but does NOT gate: producer self-recovers and fires gen1
+  end,
+
+  test_is_terminal_blocked = function()
+    t.is_true(core.is_terminal_blocked({ labels = { { name = "fkst-dev:blocked" } } }))
+    t.is_true(not core.is_terminal_blocked({ labels = { { name = "fkst-dev:implementing" } } }))
+    t.is_true(not core.is_terminal_blocked({ labels = {} }))
+    t.is_true(not core.is_terminal_blocked({}))            -- no labels field at all
+    t.is_true(not core.is_terminal_blocked({ labels = "not-a-table" }))
+  end,
+
+  -- Conservative: an ACTIVE (non-blocked) open request still gates, even with labels present.
+  test_active_open_request_with_labels_still_freezes = function()
+    local active = request_issue("owner/repo", 0, "OPEN")
+    active.labels = { { name = "fkst-dev:enabled" }, { name = "fkst-dev:implementing" } }
+    local d = core.decide_generation({ active }, BOT_LOGIN)
+    t.is_true(d.open_exists)       -- an actively-in-progress request still means "one at a time"
+  end,
+
   -- THE #296 REGRESSION: one request created then CLOSED -> next generation is producible.
   test_closed_then_next_generation = function()
     local d = core.decide_generation({ request_issue("owner/repo", 0, "closed") }, BOT_LOGIN)
