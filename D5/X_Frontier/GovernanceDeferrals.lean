@@ -5,6 +5,11 @@
    anchors: []
    digest: Keep governance and byte-canonicalization claims narrower than capabilities not present at M0. -/
 
+/-- TASK D5-T0004 | 难度:3 | 依赖:欠(first-capacity-event) | 尝试:0
+    提示:Grow the C# `StrataLint split` subcommand only when a second real SL-003 capacity event arrives; the first Engine/Rules event was resolved by moving the oversized rule into its own source file.
+    尸检:none -/
+def splitToolTicket : Unit := ()
+
 /-- TASK D5-T0011 | 难度:4 | 依赖:欠(M4-M5-full-volume-inventory) | 尝试:0
     提示:Expand the protected M0 source list into a per-item inventory for every numbered entry in both theory volumes.
     尸检:none -/

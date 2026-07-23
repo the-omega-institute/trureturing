@@ -19414,7 +19414,7 @@ ticket_index:
   - case_id: D5-T0003
     gid: D5/X_Frontier/ValuesProducer
   - case_id: D5-T0004
-    gid: D5/X_Frontier/SplitTool
+    gid: D5/X_Frontier/GovernanceDeferrals
   - case_id: D5-T0005
     gid: D5/X_Frontier/PaperGenerator
   - case_id: D5-T0006
