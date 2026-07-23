@@ -4,6 +4,13 @@
 - unresolved_subitems: 468
 - mother_residual_atom_ids: 58
 
+## `bedc-wm-v0.1`
+
+- unresolved_subitems: 0
+- mother_residual_atom_ids: 0
+
+Mother residual atoms: none.
+
 ## `gict-v3.6`
 
 - unresolved_subitems: 106
