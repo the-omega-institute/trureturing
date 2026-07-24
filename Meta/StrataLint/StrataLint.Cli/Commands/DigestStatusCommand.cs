@@ -1,3 +1,4 @@
+using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
 
@@ -5,6 +6,8 @@ namespace StrataLint.Cli;
 
 internal static class DigestStatusCommand
 {
+    private static readonly UTF8Encoding StrictUtf8 = new(false, true);
+
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
         WriteIndented = true,
@@ -28,6 +31,37 @@ internal static class DigestStatusCommand
             if (!snapshot.TryGetFile(BackfillInventoryLoader.RelativePath, out var ledgerFile))
             {
                 throw new InvalidOperationException($"{BackfillInventoryLoader.RelativePath} is missing");
+            }
+
+            if (options.FormalizeCandidates)
+            {
+                var formalizeDocument = BackfillInventoryLoader.Load(ledgerFile.Text);
+                BackfillInventoryDocument? formalizeBaselineDocument = null;
+                if (options.BaselineRevision is not null)
+                {
+                    var baseline = Decode(repository.ReadRevision(options.BaselineRevision));
+                    if (!baseline.TryGetFile(BackfillInventoryLoader.RelativePath, out var baselineLedger))
+                    {
+                        throw new InvalidOperationException(
+                            $"baseline {BackfillInventoryLoader.RelativePath} is missing");
+                    }
+
+                    formalizeBaselineDocument = BackfillInventoryLoader.Load(baselineLedger.Text);
+                }
+
+                var formalizeEvaluation = DigestionStatusEvaluator.EvaluateUncovered(
+                    formalizeDocument,
+                    snapshot,
+                    formalizeBaselineDocument);
+                if (formalizeEvaluation.Findings.Length > 0)
+                {
+                    return InvalidEvaluation(formalizeEvaluation);
+                }
+
+                return new CommandResult(
+                    true,
+                    RenderFormalizeCandidates(formalizeEvaluation, snapshot, ledgerFile),
+                    string.Empty);
             }
 
             var leanReport = leanReportSource.Load(snapshot);
@@ -55,9 +89,7 @@ internal static class DigestStatusCommand
                 baselineDocument);
             if (evaluation.Findings.Length > 0)
             {
-                var error = "DIGEST_STATUS_INVALID count=" + evaluation.Findings.Length + "\n"
-                    + string.Concat(evaluation.Findings.Select(static finding => $"FINDING {finding}\n"));
-                return new CommandResult(false, string.Empty, error);
+                return InvalidEvaluation(evaluation);
             }
 
             return new CommandResult(
@@ -83,6 +115,7 @@ internal static class DigestStatusCommand
     {
         var json = false;
         var residualSummary = false;
+        var formalizeCandidates = false;
         string? baselineRevision = null;
         for (var index = 0; index < arguments.Count; index++)
         {
@@ -94,6 +127,9 @@ internal static class DigestStatusCommand
                 case "--residual-summary" when !residualSummary:
                     residualSummary = true;
                     break;
+                case "--formalize-candidates" when !formalizeCandidates:
+                    formalizeCandidates = true;
+                    break;
                 case "--base" when baselineRevision is null && index + 1 < arguments.Count:
                     baselineRevision = arguments[++index];
                     if (string.IsNullOrWhiteSpace(baselineRevision)) throw Usage();
@@ -103,12 +139,16 @@ internal static class DigestStatusCommand
             }
         }
 
-        if (json && residualSummary) throw Usage();
-        return new DigestStatusOptions(json, residualSummary, baselineRevision);
+        if ((json ? 1 : 0) + (residualSummary ? 1 : 0) + (formalizeCandidates ? 1 : 0) > 1)
+        {
+            throw Usage();
+        }
+
+        return new DigestStatusOptions(json, residualSummary, formalizeCandidates, baselineRevision);
     }
 
     private static InvalidOperationException Usage() => new(
-        "USAGE: StrataLint digest-status [--json|--residual-summary] [--base REV]");
+        "USAGE: StrataLint digest-status [--json|--residual-summary|--formalize-candidates] [--base REV]");
 
     internal static string RenderText(DigestionLedgerEvaluation evaluation)
     {
@@ -159,6 +199,83 @@ internal static class DigestStatusCommand
         return JsonSerializer.Serialize(material, JsonOptions) + "\n";
     }
 
+    private static string RenderFormalizeCandidates(
+        DigestionLedgerEvaluation evaluation,
+        RepositorySnapshot snapshot,
+        RepositoryFile ledgerFile)
+    {
+        var candidates = evaluation.Entries
+            .Where(static item =>
+                item.Alignment == DigestionReceiptAlignment.Seen
+                && item.DerivedStatus.Migration == DigestionMigrationState.Residual
+                && item.DerivedStatus.Truth == DigestionTruthState.Open
+                && item.Entry.CoverageGids.Length == 0)
+            .Select(item => Candidate(item.Entry, snapshot))
+            .Where(static item => item is not null)
+            .OrderBy(static item => item!.SourceId, StringComparer.Ordinal)
+            .ThenBy(static item => item!.AtomId, StringComparer.Ordinal)
+            .Select(static item => item!)
+            .ToArray();
+        var material = new
+        {
+            schema = "stratalint-formalize-candidates-v1",
+            ledger_sha256 = DigestionFingerprint.ComputeOpaque(ledgerFile.RawBytes.AsSpan()).RawSha256,
+            candidates,
+        };
+        return JsonSerializer.Serialize(material, JsonOptions) + "\n";
+    }
+
+    private static FormalizeCandidate? Candidate(
+        DigestionLedgerEntry entry,
+        RepositorySnapshot snapshot)
+    {
+        var separator = entry.AstPath.IndexOf('/', StringComparison.Ordinal);
+        if (separator <= 0)
+        {
+            return null;
+        }
+
+        var kind = entry.AstPath[..separator];
+        if (kind is not ("theorem" or "proposition" or "lemma" or "corollary"))
+        {
+            return null;
+        }
+
+        var casPath = DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..];
+        if (!snapshot.TryGetFile(casPath, out var atom))
+        {
+            throw new InvalidOperationException($"entry {entry.AtomId} CAS blob is missing: {casPath}");
+        }
+
+        string atomText;
+        try
+        {
+            atomText = StrictUtf8.GetString(atom.RawBytes.AsSpan());
+        }
+        catch (DecoderFallbackException exception)
+        {
+            throw new FormatException(
+                $"entry {entry.AtomId} CAS blob must contain strict UTF-8: {casPath}",
+                exception);
+        }
+
+        return new FormalizeCandidate(
+            entry.SourceId,
+            entry.AtomId,
+            entry.AstPath,
+            kind,
+            entry.CasRef,
+            entry.Fingerprints.RawSha256,
+            atomText);
+    }
+
+    private static CommandResult InvalidEvaluation(DigestionLedgerEvaluation evaluation)
+    {
+        var error = "DIGEST_STATUS_INVALID count=" + evaluation.Findings.Length + "\n"
+            + string.Concat(evaluation.Findings.Select(static finding => $"FINDING {finding}\n"));
+        return new CommandResult(false, string.Empty, error);
+    }
+
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         SnapshotDecoder.Decode(raw) switch
         {
@@ -180,7 +297,17 @@ internal static class DigestStatusCommand
     private sealed record DigestStatusOptions(
         bool Json,
         bool ResidualSummary,
+        bool FormalizeCandidates,
         string? BaselineRevision);
+
+    private sealed record FormalizeCandidate(
+        string SourceId,
+        string AtomId,
+        string AstPath,
+        string Kind,
+        string CasRef,
+        string RawSha256,
+        string AtomText);
 }
 
 internal static class DigestResidualSummary
