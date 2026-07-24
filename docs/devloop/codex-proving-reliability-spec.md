@@ -3,6 +3,19 @@
 > 由 sshx 对抗共识产出(31 轮,6 哲学席 + 多轮 re-challenge + review triplet;每轮亲核源码)。
 > 每个前提对 `/Users/auric/trureturing`、`/Users/auric/fkst-packages`、`~/newmath` 源码核实;方法论移植自 `~/newmath`(BEDC)已验证的可靠证明管线。
 
+---
+
+## 更正(2026-07-24,亲核 #401 实际失败日志后)—— 杠杆 B 的定性被推翻
+
+> **账必须平**:本 SPEC 下方 §1.1 / §2 对杠杆 B 的定性(`local-iteration-failed` = "瞬态 preflight/构建失败,retry 即可")在后续深查中**被亲核证伪**。保留原文以存对抗轨迹,但结论以本节为准。
+
+- **实证(#401 GitHub 评论日志)**:两次 attempt 都**不是瞬态**——attempt-1 撞 `CanonicalSourceDuplicationTests`(`InspectRepository(FindRoot())` **全仓扫描**的架构测试,base-state 缺陷,Lean 任务不可能造成);attempt-2 撞陈旧 base 缺 `preflight` target(`No rule to make target`)。二者皆 **base 自带红**,非候选、非瞬态。retry/bump max/self-verify 皆治不了(bump max 够不着:`local-iteration-failed` 不在 allowlist;self-verify 已在 `prompts/implement.lua`)。
+- **真 executor 根因**:`github-devloop` 的 **implement 部门缺 base-red vs candidate-red 归因边界**——`harvest.lua:after_codex_success` 把候选 worktree `make preflight` 的**任何**红压成终态 `local-iteration-failed`,从不建绑定 `base_sha` 的反事实基线;`impl_failure.lua` 又正确拒绝重试该 reason → base 一红,所有候选被误杀死锁。`github-devloop-pr` 早有 `ci_verdict.OWN_CI_RED` 区分,implement 没有。
+- **修复(已上游 PR)**:`ChronoAIProject/fkst-packages#2742` —— 候选红时才在 exact `base_sha` 的干净 detached worktree 跑同一命令,四态 fail-closed 分类(`GREEN`/`OWN_LOCAL_RED`/`BASE_RED`/`INDETERMINATE`),只认 harness 观测无候选自述;保守扩展(`impl_failure` allowlist/max、prompt 逐字不变)。由 4 思考席 + review triplet 对抗收敛,`scripts/run.sh test` 全绿(21 packages)。
+- **杠杆 A 不受影响**:§2 的 A(frontier dependency-ready 选题替换 proposer's-choice + X_Frontier 真声明)是**独立的 producer 侧**改进,仍有效,不因 B 的更正而变。
+
+---
+
 ## 0. 摘要
 
 飞轮 deposit rate 的限制**不是"codex 证不出"(证明前沿)**——这是被对抗过程亲核推翻的误诊。真限制是**两个已存在机制没接线 + 一个执行断点无重试**:
