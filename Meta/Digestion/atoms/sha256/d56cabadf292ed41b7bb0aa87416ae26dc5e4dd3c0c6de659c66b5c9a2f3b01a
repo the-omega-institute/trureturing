@@ -1,0 +1,2 @@
+
+**v0.2 校核**(2026-07-24):E6 判真机标签仅于递推层升格:〔数值+初等代数已关〕→〔Lean-closed(递推层)〕;Lean 冻结声明为 `D5.S1.Digit.e6_gas_equiv`、`D5.S1.Digit.e6_count_recurrence`(PR#417,axioms={propext,Classical.choice,Quot.sound})。勘误性补账:A3 起点 a₀=1、a₁=c+1 与 c=0 入域系形式化对散文之增补,原卷未书;A1/A2 读法由作者裁定冻结为位封顶、c=每位最大值。E6 余层(闭式 β(c)/Pisot 单位双刚性/pronic 整点)保持〔Lean L1 级升格候选〕不动;本次不得以递推层闭包冒领 E6 整段或 B5′ 解析残部;旧块不改。
