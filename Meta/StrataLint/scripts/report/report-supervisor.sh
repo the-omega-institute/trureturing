@@ -64,6 +64,8 @@ LOCK_INITIALIZATION_GRACE_SECONDS=5
 LEASE_DURATION_MS=$((LEAN_SLOT_LEASE_SECONDS * 1000))
 LEASE_RENEW_INTERVAL_MS=$((LEASE_DURATION_MS / 3))
 if [[ "$LEASE_RENEW_INTERVAL_MS" -lt 100 ]]; then LEASE_RENEW_INTERVAL_MS=100; fi
+LEASE_SELF_FENCE_MARGIN_MS=$((LEASE_DURATION_MS / 5))
+if [[ "$LEASE_SELF_FENCE_MARGIN_MS" -gt 1000 ]]; then LEASE_SELF_FENCE_MARGIN_MS=1000; fi
 
 TMP_ROOT=""
 CHILD_PID=""
@@ -84,6 +86,9 @@ LAST_PROGRESS_SNAPSHOT=""
 WATCHDOG_DISABLED=0
 WATCHDOG_FAILURE=0
 CLAIMED_OWNER_BASE=""
+ACTIVE_GUARD_PATH=""
+ACTIVE_GUARD_TOKEN=""
+RENEWAL_WARNING_EMITTED=0
 
 early_cleanup() {
   if [[ -n "$TMP_ROOT" ]]; then rm -rf -- "$TMP_ROOT"; fi
@@ -182,21 +187,27 @@ lock_is_stale() {
   local lease_timestamp=""
   local mtime=""
   if [[ -f "$lock/owner" ]]; then
-    read -r owner < "$lock/owner" || owner=""
+    read -r owner < "$lock/owner" || return 1
   fi
   if [[ "$owner" =~ ^([1-9][0-9]*)\|([^|]+)\|([0-9]+)$ ]]; then
     pid="${BASH_REMATCH[1]}"
     expected_start="${BASH_REMATCH[2]}"
     lease_timestamp="${BASH_REMATCH[3]}"
-    process_exists "$pid" || return 0
+    if ! process_exists "$pid"; then
+      fence_stale_slot "$lock" || return 1
+      return 0
+    fi
     if [[ "$expected_start" == "unknown" ]]; then
-      lease_is_expired "$lease_timestamp"
-      return
+      return 1
     fi
     actual_start="$(process_start_identity "$pid")"
     [[ -n "$actual_start" ]] || return 1
-    [[ "$actual_start" == "$expected_start" ]] || return 0
-    lease_is_expired "$lease_timestamp"
+    if [[ "$actual_start" != "$expected_start" ]]; then
+      fence_stale_slot "$lock" || return 1
+      return 0
+    fi
+    lease_is_expired "$lease_timestamp" || return 1
+    fence_stale_slot "$lock"
     return
   fi
   if [[ "$owner" =~ ^([1-9][0-9]*)\|([^|]+)$ ]]; then
@@ -206,18 +217,13 @@ lock_is_stale() {
     actual_start="$(process_start_identity "$pid")"
     [[ -n "$actual_start" ]] || return 1
     [[ "$actual_start" == "$expected_start" ]] || return 0
-    mtime="$(lock_mtime "$lock/owner" || true)"
-    if [[ "$mtime" =~ ^[0-9]+$ ]]; then mtime=$((mtime * 1000)); fi
-    lease_is_expired "$mtime"
-    return
+    return 1
   fi
   if [[ "$owner" =~ ^[1-9][0-9]*$ ]]; then
     process_exists "$owner" || return 0
-    mtime="$(lock_mtime "$lock/owner" || true)"
-    if [[ "$mtime" =~ ^[0-9]+$ ]]; then mtime=$((mtime * 1000)); fi
-    lease_is_expired "$mtime"
-    return
+    return 1
   fi
+  [[ ! -e "$lock/owner" ]] || return 1
   mtime="$(lock_mtime "$lock" || true)"
   [[ "$mtime" =~ ^[0-9]+$ ]] || return 1
   (( $(date +%s) - mtime >= LOCK_INITIALIZATION_GRACE_SECONDS ))
@@ -236,12 +242,14 @@ reclaim_lock_without_guard() {
 
 acquire_lock_guard() {
   local lock="$1"
+  local wait_for_guard="${2:-1}"
   local guard="${lock}.reclaim-guard"
   local deadline=$(( $(date +%s) + LOCK_TIMEOUT_SECONDS ))
   local identity
   identity="$(owner_base_identity)" \
     || { echo "report-supervisor: could not identify lock owner process" >&2; return 2; }
   while ! mkdir "$guard" 2>/dev/null; do
+    [[ "$wait_for_guard" == "1" ]] || return 1
     reclaim_lock_without_guard "$guard" || true
     if (( $(date +%s) >= deadline )); then return 2; fi
     sleep 0.05
@@ -250,10 +258,27 @@ acquire_lock_guard() {
     rm -rf -- "$guard"
     return 2
   fi
+  ACTIVE_GUARD_PATH="$guard"
+  ACTIVE_GUARD_TOKEN="$$.$RANDOM.$(now_ms)"
+  if ! printf '%s\n' "$ACTIVE_GUARD_TOKEN" > "$guard/token"; then
+    rm -rf -- "$guard"
+    ACTIVE_GUARD_PATH=""
+    ACTIVE_GUARD_TOKEN=""
+    return 2
+  fi
 }
 
 release_lock_guard() {
-  rm -rf -- "${1}.reclaim-guard"
+  local guard="${1}.reclaim-guard"
+  local token=""
+  if [[ "$ACTIVE_GUARD_PATH" == "$guard" && -f "$guard/token" ]]; then
+    read -r token < "$guard/token" || token=""
+    if [[ -n "$token" && "$token" == "$ACTIVE_GUARD_TOKEN" ]]; then
+      rm -rf -- "$guard"
+    fi
+  fi
+  ACTIVE_GUARD_PATH=""
+  ACTIVE_GUARD_TOKEN=""
 }
 
 reclaim_stale_lock() {
@@ -314,37 +339,46 @@ acquire_lean_slot() {
 }
 
 renew_lean_slot() {
-  local guard="${SLOT_DIR}.reclaim-guard"
-  local identity=""
   [[ -n "$SLOT_DIR" && -n "$SLOT_OWNER_BASE" ]] || return 2
-  mkdir "$guard" 2>/dev/null || return 0
-  identity="$(owner_base_identity)" || { rm -rf -- "$guard"; return 2; }
-  if ! write_lock_owner "$guard" "$identity"; then
-    rm -rf -- "$guard"
-    return 2
-  fi
+  acquire_lock_guard "$SLOT_DIR" 0 || return 1
   if ! lock_is_owned_by "$SLOT_DIR" "$SLOT_OWNER_BASE"; then
-    rm -rf -- "$guard"
+    release_lock_guard "$SLOT_DIR"
     return 2
   fi
   if ! write_lock_owner "$SLOT_DIR" "$SLOT_OWNER_BASE"; then
-    rm -rf -- "$guard"
-    return 2
+    release_lock_guard "$SLOT_DIR"
+    return 1
   fi
-  rm -rf -- "$guard"
+  release_lock_guard "$SLOT_DIR"
   LAST_LEASE_RENEWED_MS="$(now_ms)"
+  RENEWAL_WARNING_EMITTED=0
 }
 
 release_lean_slot() {
-  local guard="${SLOT_DIR}.reclaim-guard"
-  local identity=""
   [[ -n "$SLOT_DIR" && -n "$SLOT_OWNER_BASE" ]] || return 0
-  mkdir "$guard" 2>/dev/null || return 0
-  identity="$(owner_base_identity)" || { rm -rf -- "$guard"; return 0; }
-  write_lock_owner "$guard" "$identity" >/dev/null 2>&1 || { rm -rf -- "$guard"; return 0; }
+  acquire_lock_guard "$SLOT_DIR" >/dev/null 2>&1 || return 0
   if lock_is_owned_by "$SLOT_DIR" "$SLOT_OWNER_BASE"; then rm -rf -- "$SLOT_DIR"; fi
-  rm -rf -- "$guard"
+  release_lock_guard "$SLOT_DIR"
   SLOT_DIR=""
+}
+
+write_slot_metadata() {
+  local name="$1"
+  local value="$2"
+  local temporary=""
+  [[ -n "$SLOT_DIR" && -n "$SLOT_OWNER_BASE" ]] || return 2
+  acquire_lock_guard "$SLOT_DIR" || return 2
+  if ! lock_is_owned_by "$SLOT_DIR" "$SLOT_OWNER_BASE"; then
+    release_lock_guard "$SLOT_DIR"
+    return 2
+  fi
+  temporary="$SLOT_DIR/.${name}.$$.$RANDOM"
+  if ! printf '%s\n' "$value" > "$temporary" || ! mv -f -- "$temporary" "$SLOT_DIR/$name"; then
+    rm -f -- "$temporary"
+    release_lock_guard "$SLOT_DIR"
+    return 2
+  fi
+  release_lock_guard "$SLOT_DIR"
 }
 
 olean_snapshot() {
@@ -387,13 +421,64 @@ producer_log_snapshot() {
   printf '%s:%s:%s\n' "$count" "$newest" "$bytes"
 }
 
+supervised_processes() {
+  {
+    if [[ -n "$CHILD_PID" ]]; then collect_process_tree "$CHILD_PID"; fi
+    marker_processes
+  } | sort -un
+}
+
+process_tree_members() {
+  if [[ -n "$CHILD_PID" ]]; then collect_process_tree "$CHILD_PID" | sort -un; fi
+}
+
+cpu_time_centiseconds() {
+  local raw=""
+  raw="$(ps -o time= -p "$1" 2>/dev/null | awk '{$1=$1; print; exit}')"
+  [[ -n "$raw" ]] || return 1
+  awk -v value="$raw" '
+    BEGIN {
+      days = 0
+      if (index(value, "-") > 0) {
+        split(value, day_parts, "-")
+        days = day_parts[1] + 0
+        value = day_parts[2]
+      }
+      count = split(value, fields, ":")
+      seconds = fields[count] + 0
+      if (count >= 2) seconds += 60 * (fields[count - 1] + 0)
+      if (count >= 3) seconds += 3600 * (fields[count - 2] + 0)
+      printf "%.0f\n", 100 * (86400 * days + seconds)
+    }
+  '
+}
+
+cpu_progress_snapshot() {
+  local pid ticks
+  local total=0
+  while IFS= read -r pid; do
+    [[ -n "$pid" \
+      && "$pid" != "$STDOUT_RELAY_PID" \
+      && "$pid" != "$STDERR_RELAY_PID" ]] || continue
+    if ! ticks="$(cpu_time_centiseconds "$pid")"; then
+      process_exists "$pid" || continue
+      return 1
+    fi
+    [[ "$ticks" =~ ^[0-9]+$ ]] || return 1
+    total=$((total + ticks))
+  done < <(process_tree_members)
+  printf '%s\n' "$total"
+}
+
 progress_snapshot() {
-  local oleans producer_logs stdout_size stderr_size
+  local oleans producer_logs stdout_size stderr_size cpu_time
   oleans="$(olean_snapshot)" || return 1
   producer_logs="$(producer_log_snapshot)" || return 1
   stdout_size="$(file_size "$RUN_STDOUT_CAPTURE")" || return 1
   stderr_size="$(file_size "$RUN_STDERR_CAPTURE")" || return 1
-  printf '%s|%s|%s|%s\n' "$oleans" "$producer_logs" "$stdout_size" "$stderr_size"
+  cpu_time="$(cpu_progress_snapshot)" || return 1
+  printf '%s|%s|%s|%s|%s\n' \
+    "$cpu_time" "$oleans" "$producer_logs" "$stdout_size" "$stderr_size"
 }
 
 initialize_watchdog() {
@@ -437,13 +522,35 @@ collect_process_tree() {
   done
 }
 
+marker_processes_for_path() {
+  local marker="$1"
+  local process_dir fd target pid
+  if [[ -d /proc ]]; then
+    for process_dir in /proc/[1-9]*; do
+      [[ -d "$process_dir/fd" ]] || continue
+      pid="${process_dir##*/}"
+      # Workers inherit the two relay pipes and the dedicated marker on fd 9.
+      for fd in "$process_dir"/fd/1 "$process_dir"/fd/2 "$process_dir"/fd/9; do
+        [[ -e "$fd" || -L "$fd" ]] || continue
+        target="$(readlink "$fd" 2>/dev/null || true)"
+        if [[ "$target" == "$marker" ]]; then
+          printf '%s\n' "$pid"
+          break
+        fi
+      done
+    done
+  else
+    { lsof -F p "$marker" 2>/dev/null || true; } \
+      | awk '/^p[1-9][0-9]*$/ {print substr($0, 2)}'
+  fi
+}
+
 marker_processes() {
   local process_dir fd target pid candidates elapsed_window
   if [[ -d /proc ]]; then
     for process_dir in /proc/[1-9]*; do
       [[ -d "$process_dir/fd" ]] || continue
       pid="${process_dir##*/}"
-      # Workers inherit the two relay pipes and the dedicated marker on fd 9.
       for fd in "$process_dir"/fd/1 "$process_dir"/fd/2 "$process_dir"/fd/9; do
         [[ -e "$fd" || -L "$fd" ]] || continue
         target="$(readlink "$fd" 2>/dev/null || true)"
@@ -483,19 +590,81 @@ marker_processes() {
   fi
 }
 
+slot_lock_requires_fence() {
+  [[ "$1" == "$SLOT_ROOT"/slot-*.lock ]]
+}
+
+fence_stale_slot() {
+  local lock="$1"
+  local marker=""
+  local pids=""
+  local pid
+  local group_record=""
+  local group_id=""
+  local leader_pid=""
+  local expected_start=""
+  local actual_start=""
+  local trusted_group=0
+  slot_lock_requires_fence "$lock" || return 0
+  [[ -f "$lock/marker" ]] || return 1
+  read -r marker < "$lock/marker" || return 1
+  [[ "$marker" == /* && -e "$marker" ]] || return 1
+  pids="$(marker_processes_for_path "$marker" | sort -un)" || return 1
+  if [[ -f "$lock/group" ]]; then
+    read -r group_record < "$lock/group" || return 1
+    if [[ "$group_record" =~ ^([1-9][0-9]*)\|([1-9][0-9]*)\|(.+)$ ]]; then
+      group_id="${BASH_REMATCH[1]}"
+      leader_pid="${BASH_REMATCH[2]}"
+      expected_start="${BASH_REMATCH[3]}"
+      if [[ "$expected_start" != "unknown" ]] && process_exists "$leader_pid"; then
+        actual_start="$(process_start_identity "$leader_pid")"
+        [[ -n "$actual_start" ]] || return 1
+        [[ "$actual_start" == "$expected_start" ]] || return 1
+        trusted_group=1
+      fi
+    else
+      return 1
+    fi
+  fi
+  while IFS= read -r pid; do
+    [[ "$pid" =~ ^[1-9][0-9]*$ && "$pid" != "$$" ]] || continue
+    kill -TERM "$pid" >/dev/null 2>&1 || true
+  done <<< "$pids"
+  if [[ "$trusted_group" == "1" ]]; then
+    kill -TERM -- "-$group_id" >/dev/null 2>&1 || true
+  fi
+  sleep 0.2 || true
+  while IFS= read -r pid; do
+    [[ "$pid" =~ ^[1-9][0-9]*$ && "$pid" != "$$" ]] || continue
+    kill -KILL "$pid" >/dev/null 2>&1 || true
+  done <<< "$pids"
+  if [[ "$trusted_group" == "1" ]]; then
+    kill -KILL -- "-$group_id" >/dev/null 2>&1 || true
+  fi
+  sleep 0.1 || true
+  while IFS= read -r pid; do
+    [[ "$pid" =~ ^[1-9][0-9]*$ ]] || continue
+    process_exists "$pid" && return 1
+  done <<< "$pids"
+  pids="$(marker_processes_for_path "$marker" | sort -un)" || return 1
+  [[ -z "$pids" ]] || return 1
+  if [[ "$trusted_group" == "1" ]] && kill -0 -- "-$group_id" >/dev/null 2>&1; then
+    return 1
+  fi
+  return 0
+}
+
 signal_marker_processes() {
   local signal="$1"
   local pid
-  {
-    if [[ -n "$CHILD_PID" ]]; then collect_process_tree "$CHILD_PID"; fi
-    marker_processes
-  } | sort -run | while IFS= read -r pid; do
+  supervised_processes | sort -run | while IFS= read -r pid; do
     [[ "$pid" =~ ^[1-9][0-9]*$ \
       && "$pid" != "$$" \
       && "$pid" != "$STDOUT_RELAY_PID" \
       && "$pid" != "$STDERR_RELAY_PID" ]] || continue
     kill "-$signal" "$pid" >/dev/null 2>&1 || true
   done
+  return 0
 }
 
 sample_process_tree() {
@@ -516,21 +685,19 @@ sample_process_tree() {
       fd=0
     fi
     fd_total=$((fd_total + fd))
-  done < <({
-    if [[ -n "$CHILD_PID" ]]; then collect_process_tree "$CHILD_PID"; fi
-    marker_processes
-  } | sort -un)
+  done < <(process_tree_members)
   if [[ "$rss_total" -gt "$RSS_PEAK_KB" ]]; then RSS_PEAK_KB="$rss_total"; fi
   if [[ "$fd_total" -gt "$FD_PEAK" ]]; then FD_PEAK="$fd_total"; fi
 }
 
 terminate_process_group() {
   local group_id="$1"
-  signal_marker_processes TERM
+  signal_marker_processes TERM || true
   kill -TERM -- "-$group_id" >/dev/null 2>&1 || true
-  sleep 0.2
-  signal_marker_processes KILL
+  sleep 0.2 || true
+  signal_marker_processes KILL || true
   kill -KILL -- "-$group_id" >/dev/null 2>&1 || true
+  return 0
 }
 
 wait_for_relay() {
@@ -669,6 +836,8 @@ trap 'exit 143' TERM
 
 if [[ "$LEAN_SLOT" == "1" ]]; then
   acquire_lean_slot
+  write_slot_metadata marker "$RUN_MARKER" \
+    || { echo "report-supervisor: could not install the Lean producer fence" >&2; exit 2; }
 else
   CONCURRENCY_COUNT="$(active_slot_count)"
 fi
@@ -687,15 +856,37 @@ TMPDIR="$SCRATCH" "$@" 9< "$RUN_MARKER" > "$RUN_STDOUT" 2> "$RUN_STDERR" &
 CHILD_PID=$!
 PROCESS_GROUP_ID="$CHILD_PID"
 set +m
+if [[ "$LEAN_SLOT" == "1" ]]; then
+  child_start="$(process_start_identity "$CHILD_PID" || true)"
+  if [[ -z "$child_start" ]]; then child_start=unknown; fi
+  if ! write_slot_metadata group "$PROCESS_GROUP_ID|$CHILD_PID|$child_start"; then
+    echo "report-supervisor: infrastructure failure: could not record the Lean producer process group" >&2
+    WATCHDOG_FAILURE=1
+    terminate_process_group "$PROCESS_GROUP_ID" || true
+  fi
+fi
 if [[ "$LEAN_SLOT" == "1" ]]; then initialize_watchdog; fi
 while process_exists "$CHILD_PID"; do
   now_milliseconds="$(now_ms)"
   if [[ "$LEAN_SLOT" == "1" && "$now_milliseconds" -ge $((LAST_LEASE_RENEWED_MS + LEASE_RENEW_INTERVAL_MS)) ]]; then
-    if ! renew_lean_slot; then
+    renewal_rc=0
+    renew_lean_slot || renewal_rc=$?
+    if [[ "$renewal_rc" == "2" ]]; then
       echo "report-supervisor: infrastructure failure: Lean slot ownership was lost while the producer was running" >&2
       WATCHDOG_FAILURE=1
-      terminate_process_group "$PROCESS_GROUP_ID"
+      terminate_process_group "$PROCESS_GROUP_ID" || true
       break
+    elif [[ "$renewal_rc" != "0" ]]; then
+      if [[ "$RENEWAL_WARNING_EMITTED" == "0" ]]; then
+        echo "report-supervisor: transient Lean slot renewal failure; retrying inside the current lease window" >&2
+        RENEWAL_WARNING_EMITTED=1
+      fi
+      if [[ "$now_milliseconds" -ge $((LAST_LEASE_RENEWED_MS + LEASE_DURATION_MS - LEASE_SELF_FENCE_MARGIN_MS)) ]]; then
+        echo "report-supervisor: infrastructure failure: Lean slot could not be renewed before its safety margin" >&2
+        WATCHDOG_FAILURE=1
+        terminate_process_group "$PROCESS_GROUP_ID" || true
+        break
+      fi
     fi
   fi
   sample_process_tree
@@ -705,7 +896,7 @@ while process_exists "$CHILD_PID"; do
     if watchdog_has_stalled "$now_seconds"; then
       echo "report-supervisor: infrastructure failure: no Lean progress for ${STALL_TIMEOUT_SECONDS}s; terminating producer process group ${PROCESS_GROUP_ID}" >&2
       WATCHDOG_FAILURE=1
-      terminate_process_group "$PROCESS_GROUP_ID"
+      terminate_process_group "$PROCESS_GROUP_ID" || true
       break
     fi
   fi
