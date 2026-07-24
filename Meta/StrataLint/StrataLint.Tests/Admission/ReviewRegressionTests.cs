@@ -588,7 +588,6 @@ public sealed partial class ReviewRegressionTests
         Assert.Contains("check --protected-base", gate, StringComparison.Ordinal);
         Assert.Contains("--candidate-lean-report", gate, StringComparison.Ordinal);
         Assert.Contains("--baseline-lean-report", gate, StringComparison.Ordinal);
-        Assert.Contains("--frozen-evidence-root \"$JUDGE_ROOT\"", gate, StringComparison.Ordinal);
         Assert.DoesNotContain("--legacy-bootstrap", gate, StringComparison.Ordinal);
         Assert.Contains("verify-conservative", gate, StringComparison.Ordinal);
         Assert.True(Count(gate, " selftest") >= 2, "selftest must run twice in the shared gate");

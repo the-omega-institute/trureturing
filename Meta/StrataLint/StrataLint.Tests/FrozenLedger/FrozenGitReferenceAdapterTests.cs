@@ -50,6 +50,50 @@ public sealed class FrozenGitReferenceAdapterTests
     }
 
     [Fact]
+    public void FrozenEvidenceResolverValidatesClosedProjectionObjectsOutsideInputs()
+    {
+        using var baseline = new TemporaryDirectory();
+        using var candidate = new TemporaryDirectory();
+        var input = CreateFrozenInput(baseline.Path, "baseline evidence");
+        _ = CreateFrozenInput(candidate.Path, "candidate evidence");
+        var missingGenerator = "git-sha1:" + new string('f', 40);
+        var references = FrozenLedgerReferenceSet.Create(
+            ImmutableArray.Create(input),
+            ImmutableArray<string>.Empty,
+            [input.BaseCommitOid],
+            [input.BaseTreeOid],
+            input.SupportingBlobOids
+                .Append(input.DescriptorBlobOid)
+                .Append(missingGenerator));
+
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+            FrozenEvidenceResolver.Validate(
+                references,
+                new GitRepositoryGateway(baseline.Path),
+                new GitRepositoryGateway(candidate.Path)));
+
+        Assert.Contains(missingGenerator, exception.Message, StringComparison.Ordinal);
+        Assert.Contains("blob", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void FrozenGitReferenceAdapterAcceptsSha256RepositoryObjects()
+    {
+        using var repository = new TemporaryDirectory();
+        var input = CreateFrozenInput(repository.Path, "sha256 evidence", "sha256");
+        var gateway = new GitRepositoryGateway(repository.Path);
+
+        var capability = gateway.ValidateFrozenReferences(FrozenLedgerReferenceSet.Create(
+            ImmutableArray.Create(input),
+            ImmutableArray<string>.Empty));
+
+        Assert.NotNull(capability);
+        Assert.StartsWith("git-sha256:", input.BaseCommitOid, StringComparison.Ordinal);
+        Assert.StartsWith("git-sha256:", input.BaseTreeOid, StringComparison.Ordinal);
+        Assert.StartsWith("git-sha256:", input.DescriptorBlobOid, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void FrozenGitReferenceAdapterValidatesTreeMembershipAndDescriptorSelector()
     {
         using var repository = new TemporaryDirectory();
@@ -96,9 +140,12 @@ public sealed class FrozenGitReferenceAdapterTests
                 ImmutableArray<string>.Empty)));
     }
 
-    private static FrozenLedgerInput CreateFrozenInput(string root, string message)
+    private static FrozenLedgerInput CreateFrozenInput(
+        string root,
+        string message,
+        string objectFormat = "sha1")
     {
-        ReviewRegressionTests.RunGit(root, "init");
+        ReviewRegressionTests.RunGit(root, "init", $"--object-format={objectFormat}");
         ReviewRegressionTests.RunGit(root, "config", "user.email", "stratalint@example.invalid");
         ReviewRegressionTests.RunGit(root, "config", "user.name", "StrataLint Tests");
         var sourcePath = Path.Combine(root, "D5", "S0", "Carrier", "A.lean");
@@ -116,13 +163,14 @@ public sealed class FrozenGitReferenceAdapterTests
         var source = ReviewRegressionTests.RunGit(root, "rev-parse", "HEAD:D5/S0/Carrier/A.lean").Trim();
         var toolchain = ReviewRegressionTests.RunGit(root, "rev-parse", "HEAD:lean-toolchain").Trim();
         var manifest = ReviewRegressionTests.RunGit(root, "rev-parse", "HEAD:lake-manifest.json").Trim();
+        var prefix = commit.Length == 40 ? "git-sha1:" : "git-sha256:";
         return new FrozenLedgerInput(
-            "git-sha1:" + commit,
-            "git-sha1:" + tree,
-            "git-sha1:" + source,
+            prefix + commit,
+            prefix + tree,
+            prefix + source,
             "D5/S0/Carrier/A.lean",
             "repository-snapshot-v1",
-            new[] { "git-sha1:" + manifest, "git-sha1:" + toolchain }
+            new[] { prefix + manifest, prefix + toolchain }
                 .Order(StringComparer.Ordinal)
                 .ToImmutableArray());
     }

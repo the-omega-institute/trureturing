@@ -80,6 +80,28 @@ internal sealed partial class GitRepositoryGateway
     public TrustedFrozenGitReferences ValidateFrozenReferences(FrozenLedgerReferenceSet references)
     {
         ArgumentNullException.ThrowIfNull(references);
+        var objectFormat = GitText("rev-parse", "--show-object-format").Trim();
+        var prefix = objectFormat switch
+        {
+            "sha1" => "git-sha1:",
+            "sha256" => "git-sha256:",
+            _ => throw new InvalidOperationException($"unsupported Git object format {objectFormat}"),
+        };
+        foreach (var oid in references.CommitOids)
+        {
+            RequireTaggedObjectType(oid, prefix, "commit");
+        }
+
+        foreach (var oid in references.TreeOids)
+        {
+            RequireTaggedObjectType(oid, prefix, "tree");
+        }
+
+        foreach (var oid in references.BlobOids)
+        {
+            RequireTaggedObjectType(oid, prefix, "blob");
+        }
+
         var trees = new Dictionary<string, ImmutableArray<TreeEntry>>(StringComparer.Ordinal);
         foreach (var input in references.Inputs)
         {
@@ -89,7 +111,7 @@ internal sealed partial class GitRepositoryGateway
                 throw new InvalidOperationException("unsupported frozen Git materializer or descriptor selector");
             }
 
-            var prefix = input.BaseCommitOid.StartsWith("git-sha1:", StringComparison.Ordinal)
+            var inputPrefix = input.BaseCommitOid.StartsWith("git-sha1:", StringComparison.Ordinal)
                 ? "git-sha1:"
                 : "git-sha256:";
             var allOids = new[]
@@ -98,21 +120,13 @@ internal sealed partial class GitRepositoryGateway
                 input.BaseTreeOid,
                 input.DescriptorBlobOid,
             }.Concat(input.SupportingBlobOids).ToArray();
-            if (allOids.Any(oid => !oid.StartsWith(prefix, StringComparison.Ordinal)))
+            if (allOids.Any(oid => !oid.StartsWith(inputPrefix, StringComparison.Ordinal)))
             {
                 throw new InvalidOperationException("frozen Git references mix object hash algorithms");
             }
 
             var commit = Untag(input.BaseCommitOid);
             var tree = Untag(input.BaseTreeOid);
-            RequireObjectType(commit, "commit");
-            RequireObjectType(tree, "tree");
-            RequireObjectType(Untag(input.DescriptorBlobOid), "blob");
-            foreach (var supporting in input.SupportingBlobOids)
-            {
-                RequireObjectType(Untag(supporting), "blob");
-            }
-
             var commitTree = GitText("rev-parse", "--verify", $"{commit}^{{tree}}").Trim();
             if (commitTree != tree)
             {
@@ -148,7 +162,18 @@ internal sealed partial class GitRepositoryGateway
         return TrustedFrozenGitReferences.CreateForTrustedAdapter(references.Inputs);
     }
 
-    private void RequireObjectType(string objectId, string expected)
+    private void RequireTaggedObjectType(string oid, string repositoryPrefix, string expected)
+    {
+        if (!oid.StartsWith(repositoryPrefix, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException(
+                $"frozen Git object {oid} does not use repository object format {repositoryPrefix[..^1]}");
+        }
+
+        RequireObjectType(Untag(oid), expected, oid);
+    }
+
+    private void RequireObjectType(string objectId, string expected, string? display = null)
     {
         var result = GitRaw(new[] { "cat-file", "-t", objectId }, allowNonzero: true);
         var actual = result.ExitCode == 0
@@ -156,7 +181,8 @@ internal sealed partial class GitRepositoryGateway
             : string.Empty;
         if (actual != expected)
         {
-            throw new InvalidOperationException($"frozen Git object {objectId} is not a reachable {expected}");
+            throw new InvalidOperationException(
+                $"frozen Git object {display ?? objectId} is not a reachable {expected}");
         }
     }
 

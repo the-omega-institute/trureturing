@@ -24,6 +24,16 @@ internal static class ConservativeRepositoryBundle
         RequireExactCommitOid(baselineIdentity.CommitOid);
         RequireExactCommitOid(candidateIdentity.CommitOid);
         foreach (var oid in evidence) RequireExactCommitOid(oid);
+        var oidLengths = evidence
+            .Append(baselineIdentity.CommitOid)
+            .Append(candidateIdentity.CommitOid)
+            .Select(static oid => oid.Length)
+            .Distinct()
+            .ToArray();
+        if (oidLengths.Length != 1)
+        {
+            throw new InvalidOperationException("conservative bundle cannot mix Git object formats");
+        }
 
         var temporary = Path.Combine(
             Path.GetTempPath(),
@@ -33,7 +43,10 @@ internal static class ConservativeRepositoryBundle
         Directory.CreateDirectory(temporary);
         try
         {
-            RequireSuccess(Git(temporary, ["init", "--bare", "--quiet", repository]), "git init failed");
+            var init = oidLengths[0] == 64
+                ? new[] { "init", "--bare", "--quiet", "--object-format=sha256", repository }
+                : ["init", "--bare", "--quiet", repository];
+            RequireSuccess(Git(temporary, init), "git init failed");
             ImportExactCommit(repository, candidateIdentity.CommitOid, candidateRoot);
             ImportExactCommit(repository, baselineIdentity.CommitOid, baselineRoot, candidateRoot);
             for (var index = 0; index < evidence.Length; index++)

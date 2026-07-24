@@ -21,34 +21,72 @@ internal static class FrozenEvidenceResolver
             return repositories[0].ValidateFrozenReferences(references);
         }
 
+        foreach (var oid in references.CommitOids)
+        {
+            Resolve(
+                FrozenLedgerReferenceSet.Create(
+                    ImmutableArray<FrozenLedgerInput>.Empty,
+                    ImmutableArray<string>.Empty,
+                    [oid],
+                    Array.Empty<string>(),
+                    Array.Empty<string>()),
+                repositories);
+        }
+
+        foreach (var oid in references.TreeOids)
+        {
+            Resolve(
+                FrozenLedgerReferenceSet.Create(
+                    ImmutableArray<FrozenLedgerInput>.Empty,
+                    ImmutableArray<string>.Empty,
+                    Array.Empty<string>(),
+                    [oid],
+                    Array.Empty<string>()),
+                repositories);
+        }
+
+        foreach (var oid in references.BlobOids)
+        {
+            Resolve(
+                FrozenLedgerReferenceSet.Create(
+                    ImmutableArray<FrozenLedgerInput>.Empty,
+                    ImmutableArray<string>.Empty,
+                    Array.Empty<string>(),
+                    Array.Empty<string>(),
+                    [oid]),
+                repositories);
+        }
+
         foreach (var input in references.Inputs)
         {
-            InvalidOperationException? lastFailure = null;
-            var resolved = false;
             var single = FrozenLedgerReferenceSet.Create(
                 ImmutableArray.Create(input),
                 ImmutableArray<string>.Empty);
-            foreach (var repository in repositories)
-            {
-                try
-                {
-                    _ = repository.ValidateFrozenReferences(single);
-                    resolved = true;
-                    break;
-                }
-                catch (InvalidOperationException exception)
-                {
-                    lastFailure = exception;
-                }
-            }
-
-            if (!resolved)
-            {
-                throw new InvalidOperationException(
-                    lastFailure?.Message ?? "frozen Git input is unavailable from every evidence repository");
-            }
+            Resolve(single, repositories);
         }
 
         return TrustedFrozenGitReferences.CreateForTrustedAdapter(references.Inputs);
+    }
+
+    private static void Resolve(
+        FrozenLedgerReferenceSet references,
+        IEnumerable<IRepositoryGateway> repositories)
+    {
+        InvalidOperationException? lastFailure = null;
+        foreach (var repository in repositories)
+        {
+            try
+            {
+                _ = repository.ValidateFrozenReferences(references);
+                return;
+            }
+            catch (InvalidOperationException exception)
+            {
+                lastFailure = exception;
+            }
+        }
+
+        throw new InvalidOperationException(
+            lastFailure?.Message ?? "frozen Git object is unavailable from every evidence repository");
     }
 }

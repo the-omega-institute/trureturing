@@ -521,8 +521,8 @@ internal sealed class ProductionConservativeExtensionEnvironment : IConservative
                 "candidate frozen ledger references are invalid: " + rejected.Message),
             _ => throw new InvalidOperationException("unknown frozen ledger reference outcome"),
         };
-        var evidenceCommits = references.Inputs.Select(static input =>
-            input.BaseCommitOid[(input.BaseCommitOid.IndexOf(':') + 1)..]);
+        var evidenceCommits = references.CommitOids.Select(static oid =>
+            oid[(oid.IndexOf(':') + 1)..]);
         var bundle = ConservativeRepositoryBundle.Create(
             baselineRoot,
             candidateRoot,
