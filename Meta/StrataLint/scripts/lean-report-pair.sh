@@ -129,7 +129,9 @@ produce_report() {
   rm -f -- "$output" "${output}.sha256" "${output}.provenance.json" \
     "${output}.input.attestation"
   mkdir -p "$(dirname "$output")"
-  "$SUPERVISOR" --role "lean-producer-$side" --lean-slot -- \
+  STRATALINT_LEAN_PROGRESS_ROOT="$root" \
+    STRATALINT_LEAN_PROGRESS_LOG_ROOT="${output}.logs" \
+    "$SUPERVISOR" --role "lean-producer-$side" --lean-slot -- \
     env LAKE_BIN="$LAKE_BIN" "$PRODUCER" --repository "$root" --output "$output"
   verify_report "$output"
 }
