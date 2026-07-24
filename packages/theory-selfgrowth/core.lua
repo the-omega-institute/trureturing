@@ -142,6 +142,99 @@ function M.decide_generation(issues, bot_login)
   return { generation = generation, open_exists = open_exists }
 end
 
+-- Atom-scoped dedup marker for a digestion formalize-candidate. Stable provenance keyed to the
+-- immutable atom identity (atom_id + cas_ref), NOT generation: a per-atom request is deduped by
+-- which atom it targets. The ledger (not GitHub history) decides residual membership; this marker
+-- only prevents re-firing the same atom while a prior attempt is still around.
+function M.atom_marker(candidate)
+  return "digestion-atom:" .. tostring(candidate.atom_id) .. ":" .. tostring(candidate.cas_ref)
+end
+
+-- Select one candidate from the (already ordinal-sorted) digestion formalize-candidates
+-- projection. Candidates whose atom_marker already appears in a prior request body are excluded
+-- (per-atom attempt dedup). Among the remaining, a generation-indexed round-robin picks one
+-- deterministically -- fair coverage, NOT easy-first (no fabricated difficulty/worth). Returns
+-- nil on an empty eligible set (honest no-op).
+-- `is_admissible` (optional) is an extra per-candidate eligibility predicate (e.g. "its request
+-- body fits the issue limit"); a candidate failing it is skipped this round exactly like an
+-- already-attempted one, so the round-robin lands on the next admissible candidate rather than
+-- no-op'ing on an oversize pick.
+function M.select_candidate(candidates, generation, prior_issues, is_admissible)
+  if type(candidates) ~= "table" then
+    return nil
+  end
+  local eligible = {}
+  for _, candidate in ipairs(candidates) do
+    local marker = M.atom_marker(candidate)
+    local attempted = false
+    if type(prior_issues) == "table" then
+      for _, issue in ipairs(prior_issues) do
+        if type(issue) == "table"
+          and type(issue.body) == "string"
+          and issue.body:find(marker, 1, true) ~= nil then
+          attempted = true
+          break
+        end
+      end
+    end
+    if not attempted and (is_admissible == nil or is_admissible(candidate)) then
+      eligible[#eligible + 1] = candidate
+    end
+  end
+  local n = #eligible
+  if n == 0 then
+    return nil
+  end
+  return eligible[((tonumber(generation) or 0) % n) + 1]
+end
+
+-- Build the github-proxy issue-create request for a digestion formalize target. The routing title
+-- keeps the "Deliver ONE NEW D5 result:" prefix (github-proxy routes it to blueprint-then-
+-- formalize) and names the atom; the body carries a versioned envelope with the byte-exact theory
+-- statement + derivation and both markers (producer-scoped for generation counting, atom-scoped
+-- for per-atom dedup). dedup_key is atom-scoped (never :gen). Returns nil when the rendered body
+-- would exceed the github-proxy body limit -- the candidate is skipped this round, never truncated.
+function M.build_frontier_request(repo, candidate, bot_login)
+  local producer_marker = M.producer_marker(bot_login)
+  local atom_marker = M.atom_marker(candidate)
+  local title = "Deliver ONE NEW D5 result: formalize "
+    .. tostring(candidate.atom_id) .. " (" .. tostring(candidate.cas_ref) .. ")"
+  local body = table.concat({
+    "schema: theory-selfgrowth.formalize-request.v1",
+    "frontier-request-marker: " .. producer_marker,
+    "dedup-marker: " .. atom_marker,
+    "atom_id: " .. tostring(candidate.atom_id),
+    "source_id: " .. tostring(candidate.source_id),
+    "ast_path: " .. tostring(candidate.ast_path),
+    "kind: " .. tostring(candidate.kind),
+    "cas_ref: " .. tostring(candidate.cas_ref),
+    "raw_sha256: " .. tostring(candidate.raw_sha256),
+    "",
+    "Formalize exactly ONE new declaration-level Lean GID faithful to the full theory claim "
+      .. "below, with its Blueprint mirror; use the derivation as the proof sketch. Do not "
+      .. "weaken the statement or take only a convenient sub-clause.",
+    "",
+    "----- theory atom (byte-exact statement + derivation) -----",
+    tostring(candidate.atom_text),
+  }, "\n")
+  if #body > limits.body then
+    return nil
+  end
+  return {
+    schema = "github-proxy.issue-create.v1",
+    repo = tostring(repo),
+    title = title,
+    body = body,
+    labels = {},
+    dedup_key = atom_marker,
+    producer = bot_login,
+    source_ref = {
+      kind = "repo-site",
+      ref = tostring(repo) .. "#theory-selfgrowth#digestion-atom#" .. tostring(candidate.atom_id),
+    },
+  }
+end
+
 -- Freshness verdict for a system_idle hint: "fresh" | "stale" | "expired" | "malformed".
 -- Mirrors archaudit.core.idle_hint_freshness. "stale" when the hint's detected_at is older
 -- than the budget; "expired" when its expires_at has already passed.
@@ -215,35 +308,6 @@ local function body_text(dedup_key, bot_login)
     "",
     "dedup-marker: " .. tostring(dedup_key),
   }, "\n")
-end
-
--- Build the github-proxy.issue-create.v1 request that routes to blueprint-then-formalize
--- (propose-and-prove a new theorem). `generation` is the index from M.decide_generation; it
--- scopes the idempotency key so a fulfilled (closed) prior request no longer suppresses this one.
-function M.build_frontier_request(repo, generation, bot_login)
-  assert_field(M.validate_repo(repo), "repo")
-  assert_bot_login(bot_login)
-  local dedup_key = M.dedup_key(repo, generation, bot_login)
-  local title = REQUEST_TITLE
-  local body = body_text(dedup_key, bot_login)
-  local source_ref_ref = tostring(repo) .. "#theory-selfgrowth#selfgrowth-deliver-intent"
-  assert_field(strings.is_bounded_string(title, limits.title), "title")
-  assert_field(strings.is_bounded_string(body, limits.body), "body")
-  assert_field(strings.is_bounded_string(dedup_key, limits.dedup_key), "dedup_key")
-  assert_field(strings.is_bounded_string(source_ref_ref, limits.source_ref_ref), "source_ref.ref")
-  return {
-    schema = "github-proxy.issue-create.v1",
-    repo = tostring(repo),
-    title = title,
-    body = body,
-    labels = {},
-    dedup_key = dedup_key,
-    producer = tostring(bot_login),
-    source_ref = {
-      kind = "repo-site",
-      ref = source_ref_ref,
-    },
-  }
 end
 
 return M
