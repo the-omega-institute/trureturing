@@ -60,6 +60,17 @@ public static class RegistryLoader
         }
     }
 
+    internal static RegistryLoadOutcome.Accepted LoadRepository(string repositoryRoot)
+    {
+        var outcome = Load(
+            File.ReadAllBytes(Path.Combine(repositoryRoot, "Meta", "registry.yaml")),
+            File.ReadAllBytes(Path.Combine(repositoryRoot, "Meta", "domains.yaml")));
+        return outcome is RegistryLoadOutcome.Accepted accepted
+            ? accepted
+            : throw new InvalidOperationException(
+                ((RegistryLoadOutcome.InfrastructureFailure)outcome).Message);
+    }
+
     private static RegistrySyntax ParseRegistrySyntax(ReadOnlySpan<byte> bytes) =>
         ProjectRegistrySyntax(ParseMappingDocument(bytes, "registry"));
 

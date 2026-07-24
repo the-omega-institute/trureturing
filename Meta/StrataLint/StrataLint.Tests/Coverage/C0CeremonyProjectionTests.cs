@@ -6,6 +6,8 @@ namespace StrataLint.Tests;
 
 public sealed class C0CeremonyProjectionTests
 {
+    private const string CheckCommandPath =
+        "Meta/StrataLint/StrataLint.Cli/Admission/CheckCommand.cs";
     private const string NestedControllerPath =
         "Meta/StrataLint/StrataLint.Cli/Conservative/Nested/Worker.cs";
     private const string NestedCorpusSourcePath =
@@ -38,6 +40,11 @@ public sealed class C0CeremonyProjectionTests
         Assert.DoesNotContain(
             anchors,
             static item => item.Path == RepositoryRules.TowerManifestPath);
+        Assert.Contains(anchors, static item => item is
+        {
+            Kind: C0AnchorKind.Controller,
+            Path: CheckCommandPath,
+        });
         Assert.Contains(anchors, static item => item is
         {
             Kind: C0AnchorKind.Controller,
@@ -214,6 +221,7 @@ public sealed class C0CeremonyProjectionTests
             [C0CeremonyProjection.CliApplicationPath] = "// cli\n",
             [C0CeremonyProjection.ProductionEnvironmentPath] =
                 "// environment\n",
+            [C0CeremonyProjection.CheckCommandPath] = "// check command\n",
             [C0CeremonyProjection.GitRepositoryGatewaySourcePath] =
                 "// git gateway\n",
             [C0CeremonyProjection.GitRepositoryGatewayFrozenLedgerSourcePath] =

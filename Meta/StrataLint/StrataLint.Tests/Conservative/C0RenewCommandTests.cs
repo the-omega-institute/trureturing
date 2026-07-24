@@ -409,6 +409,7 @@ public sealed class C0RenewCommandTests
                 [C0CeremonyProjection.CliApplicationPath] = Bytes("// cli\n"),
                 [C0CeremonyProjection.ProductionEnvironmentPath] =
                     Bytes("// environment\n"),
+                [C0CeremonyProjection.CheckCommandPath] = Bytes("// check command\n"),
                 [C0CeremonyProjection.GitRepositoryGatewaySourcePath] =
                     Bytes("// git gateway\n"),
                 [C0CeremonyProjection.GitRepositoryGatewayFrozenLedgerSourcePath] =

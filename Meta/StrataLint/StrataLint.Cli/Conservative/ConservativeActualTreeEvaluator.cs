@@ -99,7 +99,7 @@ internal static class ConservativeActualTreeEvaluator
             throw new InvalidOperationException(failure.Message);
         }
 
-        return ProductionCliEnvironment.VerifyScribeForAdmission(
+        return CheckCommand.VerifyScribeForAdmission(
             verifier,
             report,
             bootstrap);

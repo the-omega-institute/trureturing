@@ -1,6 +1,3 @@
-using System.Collections.Immutable;
-using System.Text;
-using System.Text.Json;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -8,11 +5,6 @@ namespace StrataLint.Cli;
 internal sealed record PreparedRepository(string Revision, RawChangeSet Changes);
 
 internal sealed record FrozenRevisionIdentity(string Revision, string CommitOid, string TreeOid);
-
-internal sealed record CheckArguments(
-    string? ProtectedBase,
-    string? CandidateLeanReport,
-    string? BaselineLeanReport);
 
 internal interface IRepositoryGateway
 {
@@ -40,12 +32,6 @@ internal interface ILeanReportSource
 
 internal sealed class ProductionCliEnvironment : ICliEnvironment
 {
-    private static readonly JsonSerializerOptions RouteJsonOptions = new()
-    {
-        WriteIndented = true,
-        PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
-    };
-
     private readonly string repositoryRoot;
     private readonly IRepositoryGateway repository;
     private readonly ILeanReportSource leanReportSource;
@@ -80,82 +66,8 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         this.scribeEmissionVerifier = scribeEmissionVerifier;
     }
 
-    public AdmissionOutcome Check(IReadOnlyList<string> arguments)
-    {
-        try
-        {
-            var options = ParseCheckArguments(arguments);
-            var prepared = repository.Prepare(options.ProtectedBase);
-            var bootstrap = BootstrapGate.Evaluate(prepared.Changes);
-            if (bootstrap is BootstrapOutcome.InfrastructureFailure bootstrapFailure)
-            {
-                return new AdmissionOutcome.InfrastructureFailure(bootstrapFailure.Message);
-            }
-
-            if (options.CandidateLeanReport is null || options.BaselineLeanReport is null)
-            {
-                return new AdmissionOutcome.InfrastructureFailure(
-                    "check requires --candidate-lean-report FILE and --baseline-lean-report FILE");
-            }
-
-            var current = Decode(repository.ReadCurrent());
-            var baseline = Decode(repository.ReadRevision(prepared.Revision));
-            var candidateLeanReport = RawLeanReportArtifact.ReadFile(
-                options.CandidateLeanReport,
-                current);
-            var verifiedScribeEmissions = VerifyScribeForAdmission(
-                scribeEmissionVerifier,
-                candidateLeanReport,
-                bootstrap);
-            var evaluation = SnapshotAdmissionCore.Evaluate(
-                current,
-                baseline,
-                candidateLeanReport,
-                RawLeanReportArtifact.ReadFile(options.BaselineLeanReport, baseline),
-                prepared.Changes,
-                bootstrap,
-                verifiedScribeEmissions);
-            var admission = evaluation.Outcome;
-            if (admission is not AdmissionOutcome.Admitted
-                && admission is not AdmissionOutcome.ProtectedSurfaceChange)
-            {
-                return admission;
-            }
-
-            if (evaluation is not
-                {
-                    CurrentLean: { } lean,
-                    BaselineLean: { } baselineLean,
-                    CurrentDag: { } dag,
-                    BaselineDag: { } baselineDag,
-                })
-            {
-                return new AdmissionOutcome.InfrastructureFailure(
-                    "snapshot admission omitted capabilities required by frozen-ledger validation");
-            }
-
-            var ledgerOutcome = ProductionFrozenLedgerValidator.Validate(
-                current,
-                baseline,
-                lean,
-                baselineLean,
-                dag,
-                baselineDag,
-                repository);
-            var sl022Diagnostics = bootstrap is BootstrapOutcome.HumanReviewRequired review
-                ? BootstrapGate.CreateSl022Diagnostics(review.ChangeSet)
-                : ImmutableArray<Diagnostic>.Empty;
-            return ledgerOutcome is null
-                ? admission
-                : SnapshotAdmissionCore.PreserveSl022Diagnostics(
-                    ledgerOutcome,
-                    sl022Diagnostics);
-        }
-        catch (Exception exception)
-        {
-            return new AdmissionOutcome.InfrastructureFailure(exception.Message);
-        }
-    }
+    public AdmissionOutcome Check(IReadOnlyList<string> arguments) =>
+        CheckCommand.Run(repository, scribeEmissionVerifier, arguments);
 
     public AdmissionTopologyOutcome Topology(IReadOnlyList<string> arguments)
     {
@@ -212,114 +124,14 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 scribeEmissionVerifier,
                 arguments);
 
-    public CommandResult Route(IReadOnlyList<string> arguments)
-    {
-        try
-        {
-            if (arguments.Count != 1)
-            {
-                return new CommandResult(false, string.Empty, "USAGE: StrataLint route MANIFEST|-\n");
-            }
-
-            var registry = LoadRegistry();
-            var manifestBytes = arguments[0] == "-"
-                ? ReadStandardInput()
-                : ReadRepositoryFile(arguments[0]);
-            var manifestOutcome = ManifestLoader.Load(manifestBytes);
-            if (manifestOutcome is ManifestLoadOutcome.InfrastructureFailure manifestFailure)
-            {
-                return new CommandResult(false, string.Empty, $"INFRASTRUCTURE_FAILURE {manifestFailure.Message}\n");
-            }
-
-            var manifest = ((ManifestLoadOutcome.Loaded)manifestOutcome).Syntax;
-            return RouteEngine.Route(registry.Policy, manifest) switch
-            {
-                RouteOutcome.Routed routed => new CommandResult(
-                    true,
-                    JsonSerializer.Serialize(
-                        new
-                        {
-                            gid = routed.Result.Gid.Value,
-                            path = routed.Result.Path.Value,
-                            stratum = routed.Result.Stratum?.ToString(),
-                            skeleton = routed.Result.Skeleton,
-                        },
-                        RouteJsonOptions) + "\n",
-                    string.Empty),
-                RouteOutcome.Rejected rejected => new CommandResult(
-                    false,
-                    string.Empty,
-                    $"{rejected.RuleId.Value} route: {rejected.Message}\n"),
-            };
-        }
-        catch (Exception exception)
-        {
-            return new CommandResult(false, string.Empty, $"INFRASTRUCTURE_FAILURE {exception.Message}\n");
-        }
-    }
+    public CommandResult Route(IReadOnlyList<string> arguments) =>
+        RouteCommand.Run(repositoryRoot, arguments);
 
     public CommandResult RecordGolden(IReadOnlyList<string> arguments) =>
         GoldenRecordCommand.Run(repositoryRoot, arguments);
 
-    public CommandResult SelfTest(IReadOnlyList<string> arguments)
-    {
-        try
-        {
-            if (arguments.Count != 0)
-            {
-                return new CommandResult(false, string.Empty, "USAGE: StrataLint selftest\n");
-            }
-
-            var registry = LoadRegistry();
-            var probe = new ManifestSyntax("D5", "F", "Carrier", "Probe", "G", string.Empty, "lean", string.Empty);
-            var route = RouteEngine.Route(registry.Policy, probe);
-            if (route is not RouteOutcome.Routed routed
-                || routed.Result.Gid.Value != "D5/S0/Carrier/Probe"
-                || routed.Result.Path.Value != "D5/S0/Carrier/Probe.lean"
-                || RuleCatalog.Default.Descriptors.Length != 23)
-            {
-                return new CommandResult(false, string.Empty, "SELFTEST FAIL invariant mismatch\n");
-            }
-
-            var rules = string.Join(",", RuleCatalog.Default.Descriptors.Select(static item => item.Id.Value));
-            var deferred = string.Join(
-                ",",
-                RuleCatalog.Default.Descriptors
-                    .Where(static item => item.Lifecycle is RuleLifecycle.Deferred)
-                    .Select(static item => $"{item.Id.Value}:{item.DeferredCase?.Value}"));
-            var output = "SELFTEST PASS\n"
-                + $"CANONICAL_REGISTRY {registry.Policy.RegistrySha256}\n"
-                + $"CANONICAL_DOMAINS {registry.Policy.DomainsSha256}\n"
-                + $"RULES {rules}\n"
-                + $"DEFERRED {deferred}\n";
-            return new CommandResult(true, output, string.Empty);
-        }
-        catch (Exception exception)
-        {
-            return new CommandResult(false, string.Empty, $"SELFTEST FAIL {exception.Message}\n");
-        }
-    }
-
-    internal static VerifiedScribeEmissions? VerifyScribeForAdmission(
-        IScribeEmissionVerifier? verifier,
-        LeanAxiomReport report,
-        BootstrapOutcome bootstrap)
-    {
-        if (verifier is null)
-        {
-            return null;
-        }
-
-        try
-        {
-            return verifier.Verify(report);
-        }
-        catch (InvalidOperationException) when (
-            bootstrap is BootstrapOutcome.HumanReviewRequired)
-        {
-            return null;
-        }
-    }
+    public CommandResult SelfTest(IReadOnlyList<string> arguments) =>
+        SelfTestCommand.Run(repositoryRoot, arguments);
 
     public CommandResult GenerateLedger(IReadOnlyList<string> arguments) =>
         DagLedgerGenesisWriter.Generate(
@@ -354,82 +166,4 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
 
     public ExplicitCommandResult EvaluateConservativeCorpus(IReadOnlyList<string> arguments) =>
         ConservativeCorpusWorker.Run(arguments);
-
-    private RegistryLoadOutcome.Accepted LoadRegistry()
-    {
-        var registryPath = Path.Combine(repositoryRoot, "Meta", "registry.yaml");
-        var domainsPath = Path.Combine(repositoryRoot, "Meta", "domains.yaml");
-        var outcome = RegistryLoader.Load(
-            File.ReadAllBytes(registryPath),
-            File.ReadAllBytes(domainsPath));
-        return outcome is RegistryLoadOutcome.Accepted accepted
-            ? accepted
-            : throw new InvalidOperationException(((RegistryLoadOutcome.InfrastructureFailure)outcome).Message);
-    }
-
-    private byte[] ReadRepositoryFile(string relativePath)
-    {
-        if (!RepoPath.TryCreate(relativePath, out var path))
-        {
-            throw new InvalidOperationException("manifest path must be repository-relative");
-        }
-
-        return File.ReadAllBytes(Path.Combine(repositoryRoot, path.Value));
-    }
-
-    private static byte[] ReadStandardInput()
-    {
-        using var memory = new MemoryStream();
-        Console.OpenStandardInput().CopyTo(memory);
-        return memory.ToArray();
-    }
-
-    private static CheckArguments ParseCheckArguments(IReadOnlyList<string> arguments)
-    {
-        string? protectedBase = null;
-        string? candidateLeanReport = null;
-        string? baselineLeanReport = null;
-        for (var index = 0; index < arguments.Count; index += 2)
-        {
-            if (index + 1 >= arguments.Count)
-            {
-                throw CheckUsage();
-            }
-
-            var target = arguments[index] switch
-            {
-                "--protected-base" or "--merge-base" when protectedBase is null => 0,
-                "--candidate-lean-report" when candidateLeanReport is null => 1,
-                "--baseline-lean-report" when baselineLeanReport is null => 2,
-                _ => throw CheckUsage(),
-            };
-            switch (target)
-            {
-                case 0:
-                    protectedBase = arguments[index + 1];
-                    break;
-                case 1:
-                    candidateLeanReport = arguments[index + 1];
-                    break;
-                case 2:
-                    baselineLeanReport = arguments[index + 1];
-                    break;
-            }
-        }
-
-        return new CheckArguments(protectedBase, candidateLeanReport, baselineLeanReport);
-    }
-
-    private static InvalidOperationException CheckUsage() => new(
-        "USAGE: StrataLint check [--protected-base REV] "
-        + "--candidate-lean-report FILE --baseline-lean-report FILE");
-
-    private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
-        SnapshotDecoder.Decode(raw) switch
-        {
-            SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
-            SnapshotDecodeOutcome.InfrastructureFailure failure =>
-                throw new InvalidOperationException(failure.Message),
-        };
-
 }

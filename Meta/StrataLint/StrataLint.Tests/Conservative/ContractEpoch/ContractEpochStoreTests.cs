@@ -158,6 +158,7 @@ public sealed class ContractEpochStoreTests
     [
         Anchor(C0CeremonyProjection.CliApplicationPath),
         Anchor(C0CeremonyProjection.ProductionEnvironmentPath),
+        Anchor(C0CeremonyProjection.CheckCommandPath),
         Anchor(C0CeremonyProjection.GitRepositoryGatewaySourcePath),
         Anchor(C0CeremonyProjection.GitRepositoryGatewayFrozenLedgerSourcePath),
         Anchor(C0CeremonyProjection.ProgramPath),
