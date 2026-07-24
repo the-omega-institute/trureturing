@@ -33,8 +33,9 @@ internal static partial class WmAtomizer
                 "WM current-todo closure must occur once after v0.1 audit and before appended audits");
         }
 
-        foreach (var audit in appendedAudits)
+        for (var index = 0; index < appendedAudits.Length; index++)
         {
+            var audit = appendedAudits[index];
             var closure = AppendedAuditClosurePattern.Match(audit.Paragraph.Text);
             if (!closure.Success
                 || ParseRevision(closure, "WM appended audit closure") != audit.Revision
@@ -42,6 +43,14 @@ internal static partial class WmAtomizer
             {
                 throw new TheorySourceFormatException(
                     $"WM v0.{audit.Revision} audit block must end with exactly one closure marker");
+            }
+
+            if (index < appendedAudits.Length - 1
+                && text[audit.Paragraph.End..appendedAudits[index + 1].Paragraph.Start]
+                    is not ("\n" or "\r\n" or "\r"))
+            {
+                throw new TheorySourceFormatException(
+                    $"WM appended audit v0.{audit.Revision} must end at its closure paragraph");
             }
         }
 

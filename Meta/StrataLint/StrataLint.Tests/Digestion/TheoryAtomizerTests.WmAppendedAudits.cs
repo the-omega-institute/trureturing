@@ -155,6 +155,27 @@ public sealed partial class TheoryAtomizerTests
                     "closure marker followed by text",
                     v03.Replace(v02Audit, v02Audit + "夹字", StringComparison.Ordinal)
                 },
+                {
+                    "nonterminal block trailing prose",
+                    v03.Replace(
+                        v02Audit + "\n\n" + v03Audit,
+                        v02Audit + "\n\n可以。\n\n" + v03Audit,
+                        StringComparison.Ordinal)
+                },
+                {
+                    "nonterminal block trailing fence",
+                    v03.Replace(
+                        v02Audit + "\n\n" + v03Audit,
+                        v02Audit + "\n\n```text\nresidue\n```\n\n" + v03Audit,
+                        StringComparison.Ordinal)
+                },
+                {
+                    "nonterminal block trailing table",
+                    v03.Replace(
+                        v02Audit + "\n\n" + v03Audit,
+                        v02Audit + "\n\n| a |\n| --- |\n| b |\n\n" + v03Audit,
+                        StringComparison.Ordinal)
+                },
                 { "last block trailing prose", v03 + "可以。\n" },
                 { "last block trailing fence", v03 + "\n```text\nresidue\n```\n" },
                 { "last block trailing table", v03 + "\n| a |\n| - |\n| b |\n" },
