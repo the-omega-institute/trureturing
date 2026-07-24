@@ -78,6 +78,7 @@ internal static class ConservativeActualTreeEvaluator
             "--protected-base", invocation.BaselineIdentity.CommitOid,
             "--candidate-lean-report", invocation.CandidateLeanReport,
             "--baseline-lean-report", invocation.BaselineLeanReport,
+            "--frozen-evidence-root", invocation.BaselineRoot,
         ]);
         return Result(
             ConservativeExtensionCommand.CandidateTreeCaseId,

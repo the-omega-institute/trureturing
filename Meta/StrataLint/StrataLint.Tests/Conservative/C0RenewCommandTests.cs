@@ -413,6 +413,8 @@ public sealed class C0RenewCommandTests
                     Bytes("// git gateway\n"),
                 [C0CeremonyProjection.GitRepositoryGatewayFrozenLedgerSourcePath] =
                     Bytes("// frozen git gateway\n"),
+                [C0CeremonyProjection.FrozenEvidenceResolverSourcePath] =
+                    Bytes("// frozen evidence resolver\n"),
                 [C0CeremonyProjection.ProgramPath] = Bytes("// program\n"),
                 ["Meta/StrataLint/StrataLint.Cli/Conservative/Worker.cs"] =
                     Bytes("// controller\n"),

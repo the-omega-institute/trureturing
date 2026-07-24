@@ -504,57 +504,38 @@ internal sealed class ProductionConservativeExtensionEnvironment : IConservative
                 "candidate object database does not contain the frozen baseline identity");
         }
 
-        var temporary = Path.Combine(
-            Path.GetTempPath(),
-            "stratalint-conservative-bundle-" + Guid.NewGuid().ToString("N"));
-        Directory.CreateDirectory(temporary);
-        var bundlePath = Path.Combine(temporary, "repository.bundle");
-        try
+        var ledger = candidateRepository.ReadRevisionFile(
+            candidateIdentity.CommitOid,
+            FrozenLedgerChangeClassifier.LedgerPath);
+        var loaded = DagLedgerLoader.Load(ledger.Bytes.AsSpan()) switch
         {
-            var created = BoundedProcessRunner.Run(
-                "git",
-                ["bundle", "create", bundlePath, "HEAD"],
-                candidateRoot,
-                TimeSpan.FromMinutes(2),
-                4 * 1024 * 1024);
-            if (created.ExitCode != 0 || created.StandardError.Length != 0)
-            {
-                throw new InvalidOperationException(
-                    Encoding.UTF8.GetString(created.StandardError).Trim() is { Length: > 0 } error
-                        ? error
-                        : "git bundle creation failed");
-            }
-
-            var heads = BoundedProcessRunner.Run(
-                "git",
-                ["bundle", "list-heads", bundlePath],
-                candidateRoot,
-                TimeSpan.FromSeconds(30),
-                1024 * 1024);
-            var expectedHead = candidateIdentity.CommitOid + " HEAD\n";
-            if (heads.ExitCode != 0
-                || !string.Equals(
-                    Encoding.UTF8.GetString(heads.StandardOutput),
-                    expectedHead,
-                    StringComparison.Ordinal)
-                || heads.StandardError.Length != 0)
-            {
-                throw new InvalidOperationException(
-                    "base-owned repository bundle did not bind the candidate HEAD");
-            }
-
-            return ConservativeReplayEnvelopeCodec.Create(
-                corpus,
-                baselineIdentity,
-                candidateIdentity,
-                File.ReadAllBytes(baselineLeanReport),
-                File.ReadAllBytes(candidateLeanReport),
-                File.ReadAllBytes(bundlePath));
-        }
-        finally
+            DagLedgerLoadOutcome.Loaded accepted => accepted.Syntax,
+            DagLedgerLoadOutcome.Invalid invalid => throw new InvalidOperationException(
+                "candidate frozen ledger syntax is invalid: " + invalid.Message),
+            _ => throw new InvalidOperationException("unknown frozen ledger load outcome"),
+        };
+        var references = FrozenLedger.ScanReferences(loaded) switch
         {
-            Directory.Delete(temporary, recursive: true);
-        }
+            FrozenLedgerReferenceScanOutcome.Accepted accepted => accepted.References,
+            FrozenLedgerReferenceScanOutcome.Rejected rejected => throw new InvalidOperationException(
+                "candidate frozen ledger references are invalid: " + rejected.Message),
+            _ => throw new InvalidOperationException("unknown frozen ledger reference outcome"),
+        };
+        var evidenceCommits = references.Inputs.Select(static input =>
+            input.BaseCommitOid[(input.BaseCommitOid.IndexOf(':') + 1)..]);
+        var bundle = ConservativeRepositoryBundle.Create(
+            baselineRoot,
+            candidateRoot,
+            baselineIdentity,
+            candidateIdentity,
+            evidenceCommits);
+        return ConservativeReplayEnvelopeCodec.Create(
+            corpus,
+            baselineIdentity,
+            candidateIdentity,
+            File.ReadAllBytes(baselineLeanReport),
+            File.ReadAllBytes(candidateLeanReport),
+            bundle);
     }
 
     // 预算默认 180s(历史行为);本机在与其它工作负载共存时 corpus 评估可超 180s
