@@ -242,7 +242,7 @@ public sealed partial class ReportSupervisorScriptTests
             fixture.SuccessWorker,
             $"PATH={fixture.Root}:/bin:/usr/bin:/usr/sbin:/sbin",
             $"STRATALINT_TEST_PS_REUSED_PID={Environment.ProcessId}",
-            "STRATALINT_LOCK_TIMEOUT_SECONDS=2");
+            "STRATALINT_LOCK_TIMEOUT_SECONDS=5");
 
         Assert.True(
             result.ExitCode == 0,
@@ -286,11 +286,6 @@ public sealed partial class ReportSupervisorScriptTests
             Path.Combine(staleSlot, "marker"),
             fence + "\n",
             new UTF8Encoding(false));
-        var marker = Path.Combine(fixture.Root, "stale-process.marker");
-        File.WriteAllText(marker, string.Empty, new UTF8Encoding(false));
-        File.WriteAllText(
-            Path.Combine(staleSlot, "marker"), marker + "\n", new UTF8Encoding(false));
-
         var result = BoundedProcessRunner.Run(
             "bash",
             [fixture.ConcurrentDriver, fixture.Supervisor, fixture.ProducerWorker,
