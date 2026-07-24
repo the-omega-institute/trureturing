@@ -558,6 +558,17 @@ internal sealed class C0RenewCandidateWorkspace : IDisposable
                     "materialized C0 gate candidate is not clean");
             }
 
+            var pins = LeanPinSet.TryReadWorktree(candidate, out _);
+            if (pins is not null)
+            {
+                var runner = new ProductionWorktreeProcessRunner();
+                var donor = GitWorktreeInventory.SelectDonor(source, pins, runner);
+                if (donor.Donor is not null)
+                {
+                    _ = LeanCacheProvisioner.Provision(donor, candidate, runner);
+                }
+            }
+
             return new C0RenewCandidateWorkspace(temporary, candidate);
         }
         catch
