@@ -75,7 +75,7 @@ end
 -- forge-less: exec_sync + json.decode (mirrors the gh read above). Returns the candidates array,
 -- or nil when the command fails / output is malformed (fail-closed -> honest no-op, never guess).
 local function formalize_candidates()
-  local out = exec_sync({ cmd = "StrataLint digest-status --formalize-candidates", timeout = 120 })
+  local out = exec_sync({ cmd = core.formalize_candidates_command(), timeout = 300 })
   if type(out) ~= "table" or out.exit_code ~= 0 then
     return nil
   end

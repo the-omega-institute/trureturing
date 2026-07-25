@@ -12,6 +12,7 @@
 -- external source). The conformance ratchets scan these assertions statically. The missing
 -- host-package full-composition test fixture is filed upstream as an infrastructure gap.
 local graph = require("testkit.graph")
+local core = require("core")
 local t = fkst.test
 
 local MARKER = "theory-selfgrowth:frontier-request:v1"
@@ -19,7 +20,7 @@ local BOT_LOGIN = "loning"
 local PRODUCER_MARKER = MARKER .. ":" .. BOT_LOGIN
 local GH_COMMAND = "gh issue list --repo 'owner/repo' --state all --search 'in:body " .. PRODUCER_MARKER
   .. "' --json number,state,body,labels --limit 1000"
-local DIGEST_COMMAND = "StrataLint digest-status --formalize-candidates"
+local DIGEST_COMMAND = core.formalize_candidates_command()
 local CANDIDATES = [[{"schema":"stratalint-formalize-candidates-v1","ledger_sha256":"sha256:ledger","candidates":[{"source_id":"GICT","atom_id":"GICT-T0001","ast_path":"theorem/one","kind":"theorem","cas_ref":"sha256:cas1","raw_sha256":"sha256:raw1","atom_text":"Theorem one\nDerivation one"},{"source_id":"GICT","atom_id":"GICT-T0002","ast_path":"theorem/two","kind":"theorem","cas_ref":"sha256:cas2","raw_sha256":"sha256:raw2","atom_text":"Theorem two\nDerivation two"}]}]]
 local EMPTY_CANDIDATES = [[{"schema":"stratalint-formalize-candidates-v1","ledger_sha256":"sha256:ledger","candidates":[]}]]
 

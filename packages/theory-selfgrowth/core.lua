@@ -150,6 +150,19 @@ function M.atom_marker(candidate)
   return "digestion-atom:" .. tostring(candidate.atom_id) .. ":" .. tostring(candidate.cas_ref)
 end
 
+-- Shell command that invokes slice 1's read-only candidate projection. Single source of truth
+-- so the producer and its graph test never drift. Runs the canonical StrataLint CLI from the
+-- deployment checkout root ($FKST_HOST_ROOT) -- `StrataLint` is not a bare command on PATH, so
+-- mirror the Makefile invocation (`dotnet run --project ...`); `--verbosity quiet` keeps build
+-- chatter off stdout so the JSON parses, and cd $FKST_HOST_ROOT lets RepositoryLayout.FindRoot
+-- locate BACKFILL.yaml + the CAS atoms. On a cold build this can take ~1-2 min, so the caller
+-- allows a generous timeout; a failed/absent command fails closed to a no-op.
+function M.formalize_candidates_command()
+  return 'cd "$FKST_HOST_ROOT" && dotnet run --project '
+    .. 'Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release '
+    .. '--verbosity quiet -- digest-status --formalize-candidates'
+end
+
 -- Select one candidate from the (already ordinal-sorted) digestion formalize-candidates
 -- projection. Candidates whose atom_marker already appears in a prior request body are excluded
 -- (per-atom attempt dedup). Among the remaining, a generation-indexed round-robin picks one
