@@ -49,6 +49,46 @@ internal static class DigestionStatusNames
 
 internal static class DigestionStatusEvaluator
 {
+    internal static DigestionLedgerEvaluation EvaluateUncovered(
+        BackfillInventoryDocument document,
+        RepositorySnapshot snapshot,
+        BackfillInventoryDocument? baselineDocument = null)
+    {
+        ArgumentNullException.ThrowIfNull(document);
+        ArgumentNullException.ThrowIfNull(snapshot);
+        var entries = document.RequireDigestionEntries();
+        var findings = ImmutableArray.CreateBuilder<string>();
+        if (FindDuplicateAtomId(entries) is { } duplicateAtomId)
+        {
+            findings.Add($"duplicate atom_id: {duplicateAtomId}");
+            return new DigestionLedgerEvaluation([], findings.ToImmutable());
+        }
+
+        var alignment = DigestionLedgerAligner.Evaluate(
+            document,
+            snapshot,
+            baselineDocument,
+            DigestionAlignmentMode.Admission);
+        findings.AddRange(alignment.Findings);
+        var emptyLeanReport = LeanAxiomReport.Create(
+            new Dictionary<string, LeanFileReport>(StringComparer.Ordinal));
+        var emptyTruthNodes = new Dictionary<RepoPath, TruthNode>();
+        var work = entries
+            .Where(static entry => entry.CoverageGids.Length == 0)
+            .Select(entry => Inspect(
+                entry,
+                alignment.AlignmentFor(entry.AtomId),
+                snapshot,
+                emptyLeanReport,
+                emptyTruthNodes,
+                ScribeEmissionAttestation.Empty,
+                verifiedScribeEmissions: null,
+                findings))
+            .ToArray();
+        DeriveMigration(work);
+        return CompleteEvaluation(work, snapshot, findings, validateProjectedStatus: true);
+    }
+
     internal static DigestionLedgerEvaluation Evaluate(
         BackfillInventoryDocument document,
         RepositorySnapshot snapshot,
@@ -62,12 +102,9 @@ internal static class DigestionStatusEvaluator
         ArgumentNullException.ThrowIfNull(lean);
         var entries = document.RequireDigestionEntries();
         var findings = ImmutableArray.CreateBuilder<string>();
-        var duplicate = entries
-            .GroupBy(static entry => entry.AtomId, StringComparer.Ordinal)
-            .FirstOrDefault(static group => group.Count() > 1);
-        if (duplicate is not null)
+        if (FindDuplicateAtomId(entries) is { } duplicateAtomId)
         {
-            findings.Add($"duplicate atom_id: {duplicate.Key}");
+            findings.Add($"duplicate atom_id: {duplicateAtomId}");
             return new DigestionLedgerEvaluation([], findings.ToImmutable());
         }
 
@@ -98,7 +135,22 @@ internal static class DigestionStatusEvaluator
                 findings)).ToArray();
         DeriveMigration(work);
 
-        var evaluations = ImmutableArray.CreateBuilder<DigestionEntryEvaluation>(work.Length);
+        return CompleteEvaluation(work, snapshot, findings, validateProjectedStatus);
+    }
+
+    private static string? FindDuplicateAtomId(IEnumerable<DigestionLedgerEntry> entries) =>
+        entries
+            .GroupBy(static entry => entry.AtomId, StringComparer.Ordinal)
+            .FirstOrDefault(static group => group.Count() > 1)
+            ?.Key;
+
+    private static DigestionLedgerEvaluation CompleteEvaluation(
+        IReadOnlyList<EntryWork> work,
+        RepositorySnapshot snapshot,
+        ImmutableArray<string>.Builder findings,
+        bool validateProjectedStatus)
+    {
+        var evaluations = ImmutableArray.CreateBuilder<DigestionEntryEvaluation>(work.Count);
         foreach (var item in work)
         {
             CompleteChainGaps(item, work);
