@@ -31,6 +31,8 @@ internal static class C0CeremonyProjection
         "Meta/StrataLint/StrataLint.Cli/Admission/GitRepositoryGateway.cs";
     internal const string GitRepositoryGatewayFrozenLedgerSourcePath =
         "Meta/StrataLint/StrataLint.Cli/Admission/GitRepositoryGateway.FrozenLedger.cs";
+    internal const string FrozenEvidenceResolverSourcePath =
+        "Meta/StrataLint/StrataLint.Cli/Admission/FrozenEvidenceResolver.cs";
     internal const string ProgramPath = "Meta/StrataLint/StrataLint.Cli/Program.cs";
     internal const string ProjectionSourcePath =
         "Meta/StrataLint/StrataLint.Engine/Coverage/C0CeremonyProjection.cs";
@@ -70,6 +72,7 @@ internal static class C0CeremonyProjection
         new(C0AnchorKind.Controller, ProductionEnvironmentPath),
         new(C0AnchorKind.Controller, GitRepositoryGatewaySourcePath),
         new(C0AnchorKind.Controller, GitRepositoryGatewayFrozenLedgerSourcePath),
+        new(C0AnchorKind.Controller, FrozenEvidenceResolverSourcePath),
         new(C0AnchorKind.Controller, ProgramPath),
         new(C0AnchorKind.Controller, ProjectionSourcePath),
         new(C0AnchorKind.Controller, ActualValidatorPath),

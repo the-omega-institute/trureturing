@@ -188,8 +188,137 @@ public sealed class ConservativeReplayWorkspaceTests
         Assert.Equal("candidate-report\n", File.ReadAllText(workspace.CandidateLeanReport));
     }
 
+    [Fact]
+    public void RepositoryBundleIncludesExactEvidenceCommitClosureFromBaseline()
+    {
+        using var baseline = new TemporaryDirectory();
+        Git(baseline.Path, "init", "-b", "dev");
+        Git(baseline.Path, "config", "user.name", "StrataLint Fixture");
+        Git(baseline.Path, "config", "user.email", "fixture@example.invalid");
+        File.WriteAllText(
+            Path.Combine(baseline.Path, "evidence.txt"),
+            "baseline-only evidence\n",
+            new UTF8Encoding(false));
+        Git(baseline.Path, "add", "evidence.txt");
+        Git(baseline.Path, "commit", "-m", "baseline-only evidence");
+        var evidenceCommit = GitText(baseline.Path, "rev-parse", "HEAD");
+        var evidenceTree = GitText(baseline.Path, "rev-parse", "HEAD^{tree}");
+        var evidenceBlob = GitText(baseline.Path, "rev-parse", "HEAD:evidence.txt");
+
+        using var candidate = new TemporaryDirectory();
+        Git(candidate.Path, "init", "-b", "dev");
+        Git(candidate.Path, "config", "user.name", "StrataLint Fixture");
+        Git(candidate.Path, "config", "user.email", "fixture@example.invalid");
+        File.WriteAllText(Path.Combine(candidate.Path, "tracked.txt"), "baseline\n", new UTF8Encoding(false));
+        Git(candidate.Path, "add", "tracked.txt");
+        Git(candidate.Path, "commit", "-m", "candidate baseline");
+        var baselineIdentity = new GitRepositoryGateway(candidate.Path).ResolveCurrentRevision();
+        File.WriteAllText(Path.Combine(candidate.Path, "tracked.txt"), "candidate\n", new UTF8Encoding(false));
+        Git(candidate.Path, "commit", "-am", "candidate head");
+        var candidateIdentity = new GitRepositoryGateway(candidate.Path).ResolveCurrentRevision();
+
+        var bundle = ConservativeRepositoryBundle.Create(
+            baseline.Path,
+            candidate.Path,
+            new ConservativeRepositoryIdentity(baselineIdentity.Revision, baselineIdentity.TreeOid),
+            new ConservativeRepositoryIdentity(candidateIdentity.Revision, candidateIdentity.TreeOid),
+            [evidenceCommit]);
+        var corpusBytes = ImmutableArray.CreateRange(Encoding.UTF8.GetBytes("{}\n"));
+        var envelope = ConservativeReplayEnvelopeCodec.Create(
+            new MaterializedConservativeCorpus(
+                corpusBytes,
+                GoldenCorpusMaterializer.ContentRoot(corpusBytes.AsSpan()),
+                ["golden:fixture"]),
+            new ConservativeRepositoryIdentity(baselineIdentity.Revision, baselineIdentity.TreeOid),
+            new ConservativeRepositoryIdentity(candidateIdentity.Revision, candidateIdentity.TreeOid),
+            Encoding.UTF8.GetBytes("baseline-report\n"),
+            Encoding.UTF8.GetBytes("candidate-report\n"),
+            bundle);
+
+        using var workspace = ConservativeReplayWorkspace.Materialize(envelope);
+
+        foreach (var root in new[] { workspace.BaselineRoot, workspace.CandidateRoot })
+        {
+            Assert.Equal("commit", GitText(root, "cat-file", "-t", evidenceCommit));
+            Assert.Equal("tree", GitText(root, "cat-file", "-t", evidenceTree));
+            Assert.Equal("blob", GitText(root, "cat-file", "-t", evidenceBlob));
+        }
+    }
+
+    [Fact]
+    public void RepositoryBundlePreservesSha256ObjectFormat()
+    {
+        using var repository = new TemporaryDirectory();
+        Git(repository.Path, "init", "--object-format=sha256", "-b", "dev");
+        Git(repository.Path, "config", "user.name", "StrataLint Fixture");
+        Git(repository.Path, "config", "user.email", "fixture@example.invalid");
+        File.WriteAllText(Path.Combine(repository.Path, "tracked.txt"), "baseline\n", new UTF8Encoding(false));
+        Git(repository.Path, "add", "tracked.txt");
+        Git(repository.Path, "commit", "-m", "baseline");
+        var baseline = new GitRepositoryGateway(repository.Path).ResolveCurrentRevision();
+        File.WriteAllText(Path.Combine(repository.Path, "tracked.txt"), "candidate\n", new UTF8Encoding(false));
+        Git(repository.Path, "commit", "-am", "candidate");
+        var candidate = new GitRepositoryGateway(repository.Path).ResolveCurrentRevision();
+
+        var bundle = ConservativeRepositoryBundle.Create(
+            repository.Path,
+            repository.Path,
+            new ConservativeRepositoryIdentity(baseline.Revision, baseline.TreeOid),
+            new ConservativeRepositoryIdentity(candidate.Revision, candidate.TreeOid),
+            Array.Empty<string>());
+        var corpusBytes = ImmutableArray.CreateRange(Encoding.UTF8.GetBytes("{}\n"));
+        var envelope = ConservativeReplayEnvelopeCodec.Create(
+            new MaterializedConservativeCorpus(
+                corpusBytes,
+                GoldenCorpusMaterializer.ContentRoot(corpusBytes.AsSpan()),
+                ["golden:fixture"]),
+            new ConservativeRepositoryIdentity(baseline.Revision, baseline.TreeOid),
+            new ConservativeRepositoryIdentity(candidate.Revision, candidate.TreeOid),
+            Encoding.UTF8.GetBytes("baseline-report\n"),
+            Encoding.UTF8.GetBytes("candidate-report\n"),
+            bundle);
+
+        using var workspace = ConservativeReplayWorkspace.Materialize(envelope);
+
+        Assert.Equal("sha256", GitText(workspace.BaselineRoot, "rev-parse", "--show-object-format"));
+        Assert.Equal("sha256", GitText(workspace.CandidateRoot, "rev-parse", "--show-object-format"));
+        Assert.Equal(baseline.Revision, GitText(workspace.BaselineRoot, "rev-parse", "HEAD"));
+        Assert.Equal(candidate.Revision, GitText(workspace.CandidateRoot, "rev-parse", "HEAD"));
+    }
+
+    [Fact]
+    public void RepositoryBundleRejectsMixedObjectFormatsBeforeImport()
+    {
+        using var sha1 = CreateRepository("sha1", "sha1");
+        using var sha256 = CreateRepository("sha256", "sha256");
+        var baseline = new GitRepositoryGateway(sha1.Path).ResolveCurrentRevision();
+        var candidate = new GitRepositoryGateway(sha256.Path).ResolveCurrentRevision();
+
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+            ConservativeRepositoryBundle.Create(
+                sha1.Path,
+                sha256.Path,
+                new ConservativeRepositoryIdentity(baseline.Revision, baseline.TreeOid),
+                new ConservativeRepositoryIdentity(candidate.Revision, candidate.TreeOid),
+                Array.Empty<string>()));
+
+        Assert.Equal("conservative bundle cannot mix Git object formats", exception.Message);
+    }
+
     private static string GitText(string root, params string[] arguments) =>
         Encoding.UTF8.GetString(Git(root, (IEnumerable<string>)arguments).StandardOutput).Trim();
+
+    private static TemporaryDirectory CreateRepository(string objectFormat, string text)
+    {
+        var repository = new TemporaryDirectory();
+        Git(repository.Path, "init", $"--object-format={objectFormat}", "-b", "dev");
+        Git(repository.Path, "config", "user.name", "StrataLint Fixture");
+        Git(repository.Path, "config", "user.email", "fixture@example.invalid");
+        File.WriteAllText(Path.Combine(repository.Path, "tracked.txt"), text + "\n", new UTF8Encoding(false));
+        Git(repository.Path, "add", "tracked.txt");
+        Git(repository.Path, "commit", "-m", text);
+        return repository;
+    }
 
     private static RepositorySnapshot Snapshot(params (string Path, string Text)[] files) =>
         Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(

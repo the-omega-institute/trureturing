@@ -48,6 +48,12 @@ public sealed class C0CeremonyProjectionTests
         {
             Kind: C0AnchorKind.Controller,
         } && item.Path.EndsWith(
+            "/FrozenEvidenceResolver.cs",
+            StringComparison.Ordinal));
+        Assert.Contains(anchors, static item => item is
+        {
+            Kind: C0AnchorKind.Controller,
+        } && item.Path.EndsWith(
             "/local-harness-gate.sh",
             StringComparison.Ordinal));
         Assert.Contains(anchors, static item => item is
@@ -218,6 +224,8 @@ public sealed class C0CeremonyProjectionTests
                 "// git gateway\n",
             [C0CeremonyProjection.GitRepositoryGatewayFrozenLedgerSourcePath] =
                 "// frozen git gateway\n",
+            [C0CeremonyProjection.FrozenEvidenceResolverSourcePath] =
+                "// frozen evidence resolver\n",
             [C0CeremonyProjection.ProgramPath] = "// program\n",
             [C0CeremonyProjection.ProjectionSourcePath] =
                 "// projection\n",
