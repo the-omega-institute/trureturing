@@ -2,12 +2,15 @@
 
 ## Split history
 
+- 2026-07-26 (SL-003): the Li causal trichotomy opened the `Analytic/` bucket;
+  the 12 existing `Weil/` paths remain in place.
 - 2026-07-18 (SL-003): `Weil/` reached 13 Lean files when batch-9 added
   `ZeroGeometry.lean`. The branch-new module opened the `Zeros/` bucket; all 12
   paths already present in `origin/dev` remain in place.
 
 ## Buckets
 
+- `Analytic/`: principal-branch symbols, causal Fourier realizations, and distributional inverses.
 - `Constants/`: canonical real constants and registered reference centers.
 - `Fourier/`: entire extensions of the Weil Fourier-Laplace transform.
 - `Quantum/`: finite-dimensional operator-algebra and probability structures.

@@ -1,4 +1,7 @@
 domains:
+  Analytic:
+    stratum: S3
+    definition: Principal-branch symbols, causal Fourier realizations, and distributional inverses.
   Carrier:
     stratum: S0
     definition: The golden integer carrier, conjugation, norm, and units.
