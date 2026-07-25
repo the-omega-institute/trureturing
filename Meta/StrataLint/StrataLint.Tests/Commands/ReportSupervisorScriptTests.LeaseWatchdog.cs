@@ -829,6 +829,7 @@ public sealed partial class ReportSupervisorScriptTests
                 $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
                 $"STRATALINT_LEAN_PROGRESS_ROOT={Root}",
                 $"STRATALINT_LEAN_PROGRESS_LOG_ROOT={ProgressLogRoot}",
+                "STRATALINT_BUILD_TIMEOUT_SECONDS=0",
                 "STRATALINT_REPORT_WATCHDOG_POLL_SECONDS=1",
             };
             arguments.AddRange(environment);

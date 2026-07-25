@@ -69,6 +69,14 @@ PROGRESS_ROOT="${STRATALINT_LEAN_PROGRESS_ROOT:-$PWD}"
 PROGRESS_LOG_ROOT="${STRATALINT_LEAN_PROGRESS_LOG_ROOT:-}"
 [[ "$LEAN_SLOT" == "0" || -z "$PROGRESS_LOG_ROOT" || "$PROGRESS_LOG_ROOT" == /* ]] \
   || { echo "report-supervisor: STRATALINT_LEAN_PROGRESS_LOG_ROOT must be absolute when set" >&2; exit 2; }
+# Wall-clock budget for the worker build itself (#403): a build that hangs while
+# holding the lean slot would otherwise loop the monitor below forever, never
+# reaching finish() (which releases the slot), starving every subsequent lean
+# build. 0 disables the bound (legacy unbounded behavior). Default is generous
+# enough for any legitimate lean-report build yet finite so a hang self-releases.
+BUILD_TIMEOUT_SECONDS="${STRATALINT_BUILD_TIMEOUT_SECONDS:-7200}"
+[[ "$BUILD_TIMEOUT_SECONDS" =~ ^[0-9]+$ && "$BUILD_TIMEOUT_SECONDS" -le 86400 ]] \
+  || { echo "report-supervisor: STRATALINT_BUILD_TIMEOUT_SECONDS must be 0..86400" >&2; exit 2; }
 LOCK_INITIALIZATION_GRACE_SECONDS=5
 LEASE_DURATION_MS=$((LEAN_SLOT_LEASE_SECONDS * 1000))
 LEASE_RENEW_INTERVAL_MS=$((LEASE_DURATION_MS / 3))
@@ -717,6 +725,11 @@ if [[ "$LEAN_SLOT" == "1" ]]; then
   fi
 fi
 if [[ "$LEAN_SLOT" == "1" ]]; then initialize_watchdog; fi
+BUILD_DEADLINE=0
+if (( BUILD_TIMEOUT_SECONDS > 0 )); then
+  BUILD_DEADLINE=$(( $(date +%s) + BUILD_TIMEOUT_SECONDS ))
+fi
+BUILD_TIMED_OUT=0
 while process_exists "$CHILD_PID"; do
   now_milliseconds="$(now_ms)"
   if [[ "$LEAN_SLOT" == "1" && "$now_milliseconds" -ge $((LAST_LEASE_RENEWED_MS + LEASE_RENEW_INTERVAL_MS)) ]]; then
@@ -742,6 +755,13 @@ while process_exists "$CHILD_PID"; do
   fi
   sample_process_tree
   now_seconds="$(date +%s)"
+  if (( BUILD_DEADLINE > 0 )) && (( now_seconds >= BUILD_DEADLINE )); then
+    echo "report-supervisor: build exceeded ${BUILD_TIMEOUT_SECONDS}s wall-clock budget;" \
+      "terminating to release the lean slot (#403)" >&2
+    BUILD_TIMED_OUT=1
+    terminate_process_group "$PROCESS_GROUP_ID" || true
+    break
+  fi
   if [[ "$LEAN_SLOT" == "1" && "$now_seconds" -ge $((LAST_WATCHDOG_CHECK + WATCHDOG_POLL_SECONDS)) ]]; then
     LAST_WATCHDOG_CHECK="$now_seconds"
     if watchdog_has_stalled "$now_seconds"; then
@@ -757,5 +777,9 @@ set +e
 wait "$CHILD_PID"
 rc=$?
 set -e
-if [[ "$WATCHDOG_FAILURE" == "1" ]]; then rc=2; fi
+if [[ "$BUILD_TIMED_OUT" == "1" ]]; then
+  rc=124
+elif [[ "$WATCHDOG_FAILURE" == "1" ]]; then
+  rc=2
+fi
 exit "$rc"
