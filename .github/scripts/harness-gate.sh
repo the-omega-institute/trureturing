@@ -107,7 +107,8 @@ set +e
   cd "$CANDIDATE_ROOT"
   dotnet "$JUDGE_DLL" check --protected-base "$BASE_REF" \
     --candidate-lean-report "$CANDIDATE_LEAN_REPORT" \
-    --baseline-lean-report "$BASELINE_LEAN_REPORT"
+    --baseline-lean-report "$BASELINE_LEAN_REPORT" \
+    --frozen-evidence-root "$JUDGE_ROOT"
 )
 rc=$?
 set -e

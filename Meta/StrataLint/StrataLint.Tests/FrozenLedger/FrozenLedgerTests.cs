@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
 using static StrataLint.Tests.FrozenLedgerTestData;
@@ -9,6 +10,68 @@ namespace StrataLint.Tests;
 
 public sealed partial class FrozenLedgerTests
 {
+    [Fact]
+    public void ReferenceProjectionOidFieldsEqualTheClosedEventSchema()
+    {
+        var inputFields = OidProperties(typeof(FrozenLedgerInput), "input");
+        var schema = new Dictionary<string, string[]>(StringComparer.Ordinal)
+        {
+            ["Genesis"] = OidProperties(typeof(FrozenGenesisPayload)),
+            ["Freeze"] = inputFields,
+            ["Reattest"] = inputFields,
+            ["Revoke"] = typeof(RevocationEvidence).GetNestedTypes()
+                .SelectMany(static type => OidProperties(type, "evidence[]"))
+                .Distinct(StringComparer.Ordinal)
+                .Order(StringComparer.Ordinal)
+                .ToArray(),
+        };
+
+        Assert.Equal(
+            schema.Keys.Order(StringComparer.Ordinal),
+            FrozenLedgerReferenceProjection.OidFields.Keys.Order(StringComparer.Ordinal));
+        foreach (var (eventType, fields) in schema)
+        {
+            Assert.Equal(fields, FrozenLedgerReferenceProjection.OidFields[eventType]);
+        }
+    }
+
+    [Fact]
+    public void ReferenceProjectionRejectsUnknownFieldsForEveryEventPayloadSchema()
+    {
+        var catalog = BuildCatalog(Module("A"));
+        var genesis = FrozenLedgerGenerator.GenerateGenesis(
+            catalog,
+            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
+        var genesisSyntax = Loaded(genesis.AsSpan());
+        var history = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+            ValidateGenesis(genesisSyntax, catalog)).Capability;
+        var reattest = FrozenLedgerGenerator.AppendReattestation(
+            history,
+            Assert.Single(history.ActiveEntries).Key,
+            Assert.Single(Assert.IsType<FrozenLedgerReferenceScanOutcome.Accepted>(
+                FrozenLedger.ScanReferences(genesisSyntax)).References.Inputs));
+        var revokePayload = JsonSerializer.SerializeToElement(new
+        {
+            affected_case_ids = Array.Empty<string>(),
+            affected_frozen_node_ids = Array.Empty<string>(),
+            closure_hash = FrozenLedgerCanonicalWriter.ZeroHash,
+            evidence = Array.Empty<object>(),
+            graph_root = FrozenLedgerCanonicalWriter.ZeroHash,
+            root_case_ids = Array.Empty<string>(),
+            root_frozen_node_ids = Array.Empty<string>(),
+        });
+        var revokeLine = FrozenLedgerCanonicalWriter.WriteEvent(
+            "Revoke",
+            revokePayload,
+            genesisSyntax.Lines[0].Value.GetProperty("event_hash").GetString()!,
+            1).Bytes;
+
+        AssertUnknownPayloadFieldRejected(genesisSyntax.RawBytes, 0);
+        AssertUnknownPayloadFieldRejected(genesisSyntax.RawBytes, 1);
+        AssertUnknownPayloadFieldRejected(reattest, 2);
+        AssertUnknownPayloadFieldRejected(genesisSyntax.Lines[0].RawBytes.AddRange(revokeLine), 1);
+    }
+
     [Fact]
     public void LedgerCapabilityAndContentAddressIdentifiersHaveNoPublicConstructors()
     {
@@ -312,5 +375,41 @@ public sealed partial class FrozenLedgerTests
 
         Assert.Contains("Git", rejected.Message, StringComparison.OrdinalIgnoreCase);
     }
+
+    private static FrozenLedgerSyntax Loaded(ReadOnlySpan<byte> bytes) =>
+        Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(bytes)).Syntax;
+
+    private static void AssertUnknownPayloadFieldRejected(
+        ImmutableArray<byte> ledger,
+        int eventIndex)
+    {
+        var syntax = Loaded(ledger.AsSpan());
+        var prefix = syntax.Lines.Take(eventIndex).SelectMany(static line => line.RawBytes).ToArray();
+        var target = syntax.Lines[eventIndex].Value;
+        var payload = target.GetProperty("payload").EnumerateObject()
+            .ToDictionary(
+                static property => property.Name,
+                static property => property.Value.Clone(),
+                StringComparer.Ordinal);
+        payload.Add("unknown_oid", JsonSerializer.SerializeToElement(GitOid('f')));
+        var rewritten = FrozenLedgerCanonicalWriter.WriteEvent(
+            target.GetProperty("event_type").GetString()!,
+            JsonSerializer.SerializeToElement(payload),
+            target.GetProperty("previous_hash").GetString()!,
+            eventIndex).Bytes;
+        var rejected = Assert.IsType<FrozenLedgerReferenceScanOutcome.Rejected>(
+            FrozenLedger.ScanReferences(Loaded(prefix.Concat(rewritten).ToArray())));
+
+        Assert.Contains("unknown, missing, or duplicate fields", rejected.Message, StringComparison.Ordinal);
+    }
+
+    private static string[] OidProperties(Type type, string? prefix = null) =>
+        type.GetProperties()
+            .Where(static property => property.Name.EndsWith("Oid", StringComparison.Ordinal)
+                || property.Name.EndsWith("Oids", StringComparison.Ordinal))
+            .Select(property => (prefix is null ? string.Empty : prefix + ".")
+                + JsonNamingPolicy.SnakeCaseLower.ConvertName(property.Name))
+            .Order(StringComparer.Ordinal)
+            .ToArray();
 
 }

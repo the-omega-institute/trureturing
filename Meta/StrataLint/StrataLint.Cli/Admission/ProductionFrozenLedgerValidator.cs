@@ -12,7 +12,8 @@ internal static class ProductionFrozenLedgerValidator
         AcceptedLeanClosure baselineLean,
         AcyclicTruthDag dag,
         AcyclicTruthDag baselineDag,
-        IRepositoryGateway repository)
+        IRepositoryGateway repository,
+        IRepositoryGateway? frozenEvidenceRepository = null)
     {
         const string path = FrozenLedgerChangeClassifier.LedgerPath;
         if (!baseline.TryGetFile(path, out var baselineFile)
@@ -52,10 +53,15 @@ internal static class ProductionFrozenLedgerValidator
         TrustedFrozenGitReferences trustedCurrentReferences;
         try
         {
-            trustedBaselineReferences = repository.ValidateFrozenReferences(
-                ((FrozenLedgerReferenceScanOutcome.Accepted)baselineReferences).References);
-            trustedCurrentReferences = repository.ValidateFrozenReferences(
-                ((FrozenLedgerReferenceScanOutcome.Accepted)currentReferences).References);
+            var evidenceRepositories = frozenEvidenceRepository is null
+                ? new[] { repository }
+                : new[] { frozenEvidenceRepository, repository };
+            trustedBaselineReferences = FrozenEvidenceResolver.Validate(
+                ((FrozenLedgerReferenceScanOutcome.Accepted)baselineReferences).References,
+                evidenceRepositories);
+            trustedCurrentReferences = FrozenEvidenceResolver.Validate(
+                ((FrozenLedgerReferenceScanOutcome.Accepted)currentReferences).References,
+                evidenceRepositories);
         }
         catch (InvalidOperationException exception)
         {
