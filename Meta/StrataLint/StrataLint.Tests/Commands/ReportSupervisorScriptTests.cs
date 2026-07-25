@@ -324,6 +324,61 @@ public sealed class ReportSupervisorScriptTests
     }
 
     [Fact]
+    public void HangingBuildIsTerminatedAtTheBuildTimeoutReleasingTheLeanSlot()
+    {
+        using var fixture = new ReportSupervisorFixture();
+        var stopwatch = Stopwatch.StartNew();
+
+        // The worker hangs far beyond the build budget while holding the lean slot.
+        // Without a wall-clock build bound the supervisor loops on the live child
+        // forever, never reaching finish() (which releases the slot) — this is #403,
+        // where lean-report builds hung for hours starving all subsequent builds.
+        var result = fixture.RunWithEnvironment(
+            "lean-producer",
+            leanSlot: true,
+            fixture.LongRunningWorker,
+            "STRATALINT_BUILD_TIMEOUT_SECONDS=2");
+        stopwatch.Stop();
+
+        // The supervisor must abort the hung build near its 2s budget, well inside
+        // the fixture's 30s process bound, and surface the timeout exit code.
+        Assert.True(
+            stopwatch.Elapsed < TimeSpan.FromSeconds(20),
+            $"supervisor ignored the build timeout (elapsed {stopwatch.Elapsed})");
+        Assert.Equal(124, result.ExitCode);
+        Assert.Contains(
+            "exceeded",
+            Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.OrdinalIgnoreCase);
+
+        // The lean slot lock must be released so subsequent builds are not starved.
+        var slots = Path.Combine(fixture.StateRoot, "slots");
+        Assert.False(
+            Directory.Exists(slots) && Directory.GetDirectories(slots).Length > 0,
+            "lean slot lock was not released after the build timeout");
+    }
+
+    [Fact]
+    public void BuildTimeoutOfZeroKeepsTheLegacyUnboundedBehaviorForFastBuilds()
+    {
+        using var fixture = new ReportSupervisorFixture();
+
+        // 0 opts out of the wall-clock bound (legacy behavior); a fast worker still
+        // completes cleanly and the slot is released via finish() as before.
+        var result = fixture.RunWithEnvironment(
+            "lean-producer",
+            leanSlot: true,
+            fixture.ScratchWriter,
+            "STRATALINT_BUILD_TIMEOUT_SECONDS=0");
+
+        Assert.Equal(0, result.ExitCode);
+        var slots = Path.Combine(fixture.StateRoot, "slots");
+        Assert.False(
+            Directory.Exists(slots) && Directory.GetDirectories(slots).Length > 0,
+            "lean slot lock was not released after a clean build");
+    }
+
+    [Fact]
     public void MetricsAppendDelegatesToTheCanonicalPerformanceWriter()
     {
         using var fixture = new ReportSupervisorFixture();
