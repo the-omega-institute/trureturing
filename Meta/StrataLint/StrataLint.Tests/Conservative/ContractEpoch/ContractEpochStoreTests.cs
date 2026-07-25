@@ -160,6 +160,7 @@ public sealed class ContractEpochStoreTests
         Anchor(C0CeremonyProjection.ProductionEnvironmentPath),
         Anchor(C0CeremonyProjection.GitRepositoryGatewaySourcePath),
         Anchor(C0CeremonyProjection.GitRepositoryGatewayFrozenLedgerSourcePath),
+        Anchor(C0CeremonyProjection.FrozenEvidenceResolverSourcePath),
         Anchor(C0CeremonyProjection.ProgramPath),
         Anchor(C0CeremonyProjection.ProjectionSourcePath),
         Anchor(C0CeremonyProjection.ActualValidatorPath),
