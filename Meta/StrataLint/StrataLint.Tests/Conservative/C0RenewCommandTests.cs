@@ -75,7 +75,7 @@ public sealed class C0RenewCommandTests
     }
 
     [Fact]
-    public void GateCandidateWorkspaceMaterializesTheCleanCommittedPreimage()
+    public void GateCandidateWorkspaceMaterializesTheCleanCommittedPreimageWithoutDonorCache()
     {
         using var repository = new TemporaryDirectory();
         ReviewRegressionTests.RunGit(repository.Path, "init", "--initial-branch=dev");
@@ -122,11 +122,7 @@ public sealed class C0RenewCommandTests
         Assert.Equal(
             "committed certificate\n",
             File.ReadAllText(Path.Combine(candidate.Root, C0CeremonyProjection.CertificatePath)));
-        Assert.Equal(
-            "private cache\n",
-            File.ReadAllText(Path.Combine(candidate.Root, ".lake", "build", "cache-marker")));
-        Assert.False(File.GetAttributes(Path.Combine(candidate.Root, ".lake"))
-            .HasFlag(FileAttributes.ReparsePoint));
+        Assert.False(Directory.Exists(Path.Combine(candidate.Root, ".lake")));
     }
 
     [Fact]
