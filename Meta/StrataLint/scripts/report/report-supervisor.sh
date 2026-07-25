@@ -50,9 +50,16 @@ LEAN_SLOT_LEASE_SECONDS="${STRATALINT_LEAN_SLOT_LEASE_SECONDS:-1800}"
   && "$LEAN_SLOT_LEASE_SECONDS" -ge 5 \
   && "$LEAN_SLOT_LEASE_SECONDS" -le 86400 ]] \
   || { echo "report-supervisor: STRATALINT_LEAN_SLOT_LEASE_SECONDS must be 5..86400" >&2; exit 2; }
-STALL_TIMEOUT_SECONDS="${STRATALINT_REPORT_STALL_TIMEOUT_SECONDS:-1200}"
-[[ "$STALL_TIMEOUT_SECONDS" =~ ^[1-9][0-9]*$ && "$STALL_TIMEOUT_SECONDS" -le 86400 ]] \
-  || { echo "report-supervisor: STRATALINT_REPORT_STALL_TIMEOUT_SECONDS must be 1..86400" >&2; exit 2; }
+STALL_WINDOW_SECONDS="${STRATALINT_REPORT_STALL_WINDOW_SECONDS:-60}"
+[[ "$STALL_WINDOW_SECONDS" =~ ^[1-9][0-9]*$ \
+  && "$STALL_WINDOW_SECONDS" -ge 60 \
+  && "$STALL_WINDOW_SECONDS" -le 86400 ]] \
+  || { echo "report-supervisor: STRATALINT_REPORT_STALL_WINDOW_SECONDS must be 60..86400" >&2; exit 2; }
+STALL_WINDOW_COUNT="${STRATALINT_REPORT_STALL_WINDOW_COUNT:-3}"
+[[ "$STALL_WINDOW_COUNT" =~ ^[1-9][0-9]*$ \
+  && "$STALL_WINDOW_COUNT" -ge 3 \
+  && "$STALL_WINDOW_COUNT" -le 100 ]] \
+  || { echo "report-supervisor: STRATALINT_REPORT_STALL_WINDOW_COUNT must be 3..100" >&2; exit 2; }
 WATCHDOG_POLL_SECONDS="${STRATALINT_REPORT_WATCHDOG_POLL_SECONDS:-5}"
 [[ "$WATCHDOG_POLL_SECONDS" =~ ^[1-9][0-9]*$ && "$WATCHDOG_POLL_SECONDS" -le 300 ]] \
   || { echo "report-supervisor: STRATALINT_REPORT_WATCHDOG_POLL_SECONDS must be 1..300" >&2; exit 2; }
@@ -82,9 +89,13 @@ FD_PEAK=0
 RSS_PEAK_KB=0
 STARTED_MS=0
 LAST_LEASE_RENEWED_MS=0
-LAST_PROGRESS_SECONDS=0
 LAST_WATCHDOG_CHECK=0
-LAST_PROGRESS_SNAPSHOT=""
+WATCHDOG_WINDOW_STARTED_SECONDS=0
+LAST_CPU_SNAPSHOT=0
+LAST_SIGNAL_SNAPSHOT=""
+WATCHDOG_WINDOW_CPU_CHANGED=0
+WATCHDOG_WINDOW_SIGNAL_CHANGED=0
+CONSECUTIVE_STALLED_WINDOWS=0
 WATCHDOG_DISABLED=0
 WATCHDOG_FAILURE=0
 CLAIMED_OWNER_BASE=""
@@ -456,8 +467,9 @@ cpu_time_centiseconds() {
 }
 
 cpu_progress_snapshot() {
-  local pid ticks
+  local pid ticks members
   local total=0
+  members="$(process_group_members_for_id "$PROCESS_GROUP_ID")" || return 1
   while IFS= read -r pid; do
     [[ -n "$pid" \
       && "$pid" != "$STDOUT_RELAY_PID" \
@@ -468,7 +480,7 @@ cpu_progress_snapshot() {
     fi
     [[ "$ticks" =~ ^[0-9]+$ ]] || return 1
     total=$((total + ticks))
-  done < <(process_tree_members)
+  done <<< "$members"
   printf '%s\n' "$total"
 }
 
@@ -484,29 +496,57 @@ progress_snapshot() {
 }
 
 initialize_watchdog() {
-  LAST_PROGRESS_SECONDS="$(date +%s)"
-  LAST_WATCHDOG_CHECK="$LAST_PROGRESS_SECONDS"
-  if ! LAST_PROGRESS_SNAPSHOT="$(progress_snapshot)"; then
+  local snapshot=""
+  WATCHDOG_WINDOW_STARTED_SECONDS="$(date +%s)"
+  LAST_WATCHDOG_CHECK="$WATCHDOG_WINDOW_STARTED_SECONDS"
+  if ! snapshot="$(progress_snapshot)"; then
     WATCHDOG_DISABLED=1
     echo "report-supervisor: watchdog disabled because progress state is unavailable; refusing to guess that a live build is stalled" >&2
+    return
   fi
+  LAST_CPU_SNAPSHOT="${snapshot%%|*}"
+  LAST_SIGNAL_SNAPSHOT="${snapshot#*|}"
 }
 
 watchdog_has_stalled() {
   local now="$1"
   local current=""
+  local current_cpu=""
+  local current_signals=""
   [[ "$WATCHDOG_DISABLED" == "0" ]] || return 1
   if ! current="$(progress_snapshot)"; then
     WATCHDOG_DISABLED=1
     echo "report-supervisor: watchdog disabled because progress state became unavailable; refusing to guess that a live build is stalled" >&2
     return 1
   fi
-  if [[ "$current" != "$LAST_PROGRESS_SNAPSHOT" ]]; then
-    LAST_PROGRESS_SNAPSHOT="$current"
-    LAST_PROGRESS_SECONDS="$now"
+  current_cpu="${current%%|*}"
+  current_signals="${current#*|}"
+  [[ "$current_cpu" =~ ^[0-9]+$ && "$LAST_CPU_SNAPSHOT" =~ ^[0-9]+$ ]] || {
+    WATCHDOG_DISABLED=1
+    echo "report-supervisor: watchdog disabled because CPU progress state is invalid; refusing to guess that a live build is stalled" >&2
+    return 1
+  }
+  if [[ "$current_cpu" != "$LAST_CPU_SNAPSHOT" ]]; then
+    WATCHDOG_WINDOW_CPU_CHANGED=1
+  fi
+  if [[ "$current_signals" != "$LAST_SIGNAL_SNAPSHOT" ]]; then
+    WATCHDOG_WINDOW_SIGNAL_CHANGED=1
+  fi
+  LAST_CPU_SNAPSHOT="$current_cpu"
+  LAST_SIGNAL_SNAPSHOT="$current_signals"
+  if (( now - WATCHDOG_WINDOW_STARTED_SECONDS < STALL_WINDOW_SECONDS )); then
     return 1
   fi
-  (( now - LAST_PROGRESS_SECONDS >= STALL_TIMEOUT_SECONDS ))
+  if [[ "$WATCHDOG_WINDOW_CPU_CHANGED" == "0" \
+    && "$WATCHDOG_WINDOW_SIGNAL_CHANGED" == "0" ]]; then
+    CONSECUTIVE_STALLED_WINDOWS=$((CONSECUTIVE_STALLED_WINDOWS + 1))
+  else
+    CONSECUTIVE_STALLED_WINDOWS=0
+  fi
+  WATCHDOG_WINDOW_STARTED_SECONDS="$now"
+  WATCHDOG_WINDOW_CPU_CHANGED=0
+  WATCHDOG_WINDOW_SIGNAL_CHANGED=0
+  (( CONSECUTIVE_STALLED_WINDOWS >= STALL_WINDOW_COUNT ))
 }
 
 wait_for_relay() {
@@ -703,7 +743,7 @@ while process_exists "$CHILD_PID"; do
   if [[ "$LEAN_SLOT" == "1" && "$now_seconds" -ge $((LAST_WATCHDOG_CHECK + WATCHDOG_POLL_SECONDS)) ]]; then
     LAST_WATCHDOG_CHECK="$now_seconds"
     if watchdog_has_stalled "$now_seconds"; then
-      echo "report-supervisor: infrastructure failure: no Lean progress for ${STALL_TIMEOUT_SECONDS}s; terminating producer process group ${PROCESS_GROUP_ID}" >&2
+      echo "report-supervisor: infrastructure failure: no Lean progress across ${STALL_WINDOW_COUNT} consecutive ${STALL_WINDOW_SECONDS}s windows; terminating producer process group ${PROCESS_GROUP_ID}" >&2
       WATCHDOG_FAILURE=1
       terminate_process_group "$PROCESS_GROUP_ID" || true
       break

@@ -17,6 +17,16 @@ collect_process_tree() {
   done
 }
 
+process_group_members_for_id() {
+  local group_id="$1"
+  local table=""
+  [[ "$group_id" =~ ^[1-9][0-9]*$ ]] || return 1
+  table="$(ps -axo pid=,pgid=,stat= 2>/dev/null)" || return 1
+  awk -v group="$group_id" '
+    $2 == group && $3 !~ /^Z/ {print $1}
+  ' <<< "$table"
+}
+
 marker_processes_for_path() {
   local marker="$1"
   local process_dir fd target pid
@@ -92,59 +102,55 @@ slot_lock_requires_fence() {
 fence_stale_slot() {
   local lock="$1"
   local marker=""
-  local pids=""
+  local marker_pids=""
+  local group_members=""
   local pid
   local group_record=""
   local group_id=""
   local leader_pid=""
   local expected_start=""
   local actual_start=""
-  local trusted_group=0
   slot_lock_requires_fence "$lock" || return 0
-  [[ -f "$lock/marker" ]] || return 1
-  read -r marker < "$lock/marker" || return 1
-  [[ "$marker" == /* && -e "$marker" ]] || return 1
-  pids="$(marker_processes_for_path "$marker" | sort -un)" || return 1
-  if [[ -f "$lock/group" ]]; then
-    read -r group_record < "$lock/group" || return 1
-    if [[ "$group_record" =~ ^([1-9][0-9]*)\|([1-9][0-9]*)\|(.+)$ ]]; then
-      group_id="${BASH_REMATCH[1]}"
-      leader_pid="${BASH_REMATCH[2]}"
-      expected_start="${BASH_REMATCH[3]}"
-      if [[ "$expected_start" != "unknown" ]] && process_exists "$leader_pid"; then
-        actual_start="$(process_start_identity "$leader_pid")"
-        [[ -n "$actual_start" ]] || return 1
-        [[ "$actual_start" == "$expected_start" ]] || return 1
-        trusted_group=1
-      fi
-    else
-      return 1
-    fi
+  [[ -f "$lock/group" ]] || return 1
+  read -r group_record < "$lock/group" || return 1
+  [[ "$group_record" =~ ^([1-9][0-9]*)\|([1-9][0-9]*)\|(.+)$ ]] || return 1
+  group_id="${BASH_REMATCH[1]}"
+  leader_pid="${BASH_REMATCH[2]}"
+  expected_start="${BASH_REMATCH[3]}"
+  [[ "$group_id" == "$leader_pid" ]] || return 1
+  if process_exists "$leader_pid"; then
+    [[ "$expected_start" != "unknown" ]] || return 1
+    actual_start="$(process_start_identity "$leader_pid")"
+    [[ -n "$actual_start" && "$actual_start" == "$expected_start" ]] || return 1
+  fi
+  group_members="$(process_group_members_for_id "$group_id")" || return 1
+  if [[ -f "$lock/marker" ]]; then
+    read -r marker < "$lock/marker" || return 1
+    [[ "$marker" == /* && -e "$marker" ]] || return 1
+    marker_pids="$(marker_processes_for_path "$marker" | sort -un)" || return 1
   fi
   while IFS= read -r pid; do
     [[ "$pid" =~ ^[1-9][0-9]*$ && "$pid" != "$$" ]] || continue
     kill -TERM "$pid" >/dev/null 2>&1 || true
-  done <<< "$pids"
-  if [[ "$trusted_group" == "1" ]]; then
+  done <<< "$marker_pids"
+  if [[ -n "$group_members" ]]; then
     kill -TERM -- "-$group_id" >/dev/null 2>&1 || true
   fi
-  sleep 0.2 || true
+  sleep 0.5 || true
+  group_members="$(process_group_members_for_id "$group_id")" || return 1
   while IFS= read -r pid; do
     [[ "$pid" =~ ^[1-9][0-9]*$ && "$pid" != "$$" ]] || continue
     kill -KILL "$pid" >/dev/null 2>&1 || true
-  done <<< "$pids"
-  if [[ "$trusted_group" == "1" ]]; then
+  done <<< "$marker_pids"
+  if [[ -n "$group_members" ]]; then
     kill -KILL -- "-$group_id" >/dev/null 2>&1 || true
   fi
   sleep 0.1 || true
-  while IFS= read -r pid; do
-    [[ "$pid" =~ ^[1-9][0-9]*$ ]] || continue
-    process_exists "$pid" && return 1
-  done <<< "$pids"
-  pids="$(marker_processes_for_path "$marker" | sort -un)" || return 1
-  [[ -z "$pids" ]] || return 1
-  if [[ "$trusted_group" == "1" ]] && kill -0 -- "-$group_id" >/dev/null 2>&1; then
-    return 1
+  group_members="$(process_group_members_for_id "$group_id")" || return 1
+  [[ -z "$group_members" ]] || return 1
+  if [[ -n "$marker" ]]; then
+    marker_pids="$(marker_processes_for_path "$marker" | sort -un)" || return 1
+    [[ -z "$marker_pids" ]] || return 1
   fi
   return 0
 }
