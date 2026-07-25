@@ -1,0 +1,2 @@
+
+**v0.3 校核**(2026-07-24):按正典 v0.2 校核事实复核,E6 递推层已冻结(正典 v0.2,PR#417),冻结声明逐字为 `D5.S1.Digit.e6_gas_equiv`、`D5.S1.Digit.e6_count_recurrence`,公理闭包 {propext,Classical.choice,Quot.sound};WM-R1 三项陈述钉死与 e6_count_zero/one 基例对榫,余层不冒领。#423/A4 与 #424/A6 作者定稿逐字入 v0.3 勘误账;T4/T5/B8/B9、L5 注/B4 注/B1 注/WM-R1 注/WmAtomizer 注逐项归流;B10 未见于 v0.4 底本,仅挂「B10 待作者补件或勘正」,未发明正文。WmAtomizer 注依 T4/T5 实证链条归流,其 trureturing 侧事件边界与 build 判决限定保留。分叉根因=append-only 双写者缺版本号锁,登记「候补,勘误轮认定后追认 P-编号」;防再发建议版本号分配走先占声明(版本行先占后填,占而不填过期作废)。本版无新数值实验;单模型产出,如实声明。〔账目,免分型〕旧块不改。
