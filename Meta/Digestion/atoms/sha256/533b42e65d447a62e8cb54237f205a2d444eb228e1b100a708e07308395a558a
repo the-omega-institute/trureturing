@@ -1,0 +1,22 @@
+## 8. 悬赏(open 队列,各带判真机与判据)
+
+**悬赏 B1(gap-as-goal)**。高 gap 触发**消歧动作**而非回避;判据:risk 降 ∧ success 不降;对照:vanilla 与 avoid-only。赏格:tradeoff 翻转为 win;monitor→agent 之跳。成熟形态参照(v0.2):E6 之 Lean 路径被管线自动分解为带"欠"标之依赖 DAG(GoldenInt 供应链)——**计划非轨迹,乃债标依赖图**;B1 判据可依此升级:消歧动作 = 关一笔标"欠"之债。〔runner可关〕
+
+**悬赏 B2(密度基线)——判真机已注册,待真实载体首跑**。合同 `B2_density_baseline_contract.md`,runner `b2_density_baseline.py`,参数已冻结(K=20,boot=500,seed=20260718,层 q=0.5,证人邻域 q=0.25)。判决类:PASS(层内 AUROC>0.65 且 CI 下端>0.5,证人对 ≥30 且 pair-acc>0.6、CI 下端>0.5)/ DEGRADE(E1 降级 OOD 检测)/ FAIL_CLOSED。合成双世界自检机器绿(dynamics→PASS 0.98 [0.94,1.00];density→DEGRADE 零证人)。四载体逐跑,判决回写 E1 措辞。〔runner可关,第一优先〕
+
+**悬赏 B3(conformal 化 gap head)**。g_t 为 nonconformity score,trained ledger 继承 α 界;预期 coverage debt 收窄;进阶 ConfTr 式可微项入 L_gap。〔runner可关〕
+
+**悬赏 B4(债务定价市场)**。每条债务携带关账边际价值 MV(t,b);账本自日记升为复式。compute-value 标签机现成,改指向数据/动作获取。补注(v0.3,**邻债折扣**):债共享子结构者互为折扣——Euclidean.lean 偿"欠(golden-euclidean-division)"即解锁 UFD,MinkowskiModelSet.lean 为他节点而建却预付了 E6 余层(Pisot/Meyer)之大半机器;故 MV 须计**期权项**:关此债对邻债成本之折减。〔runner可关,远期〕
+
+**候查 B5′(复合气体之解析残部)**。符号面已入 E6;余:复合气体之 Dirichlet 级数、与 ζ 之关系、"任意子配分"之解析身份——既有 open leaf(goldGenAF 解析支)之延伸。〔解析,open〕
+
+**候查 B6(晋升协议原型)**。最小"信→知"通道:学得规律经 D2 检验 + conformal 认证后写入 append-only 账本;判据:账本内规律于灾难性遗忘攻击下留存率 vs 纯权重基线。〔runner可关〕
+
+**候查 B7(纯 Perron 数系,E6 所孵)**。F1 族 c ≥ 3 之纯 Perron 移位(非 Pisot 非 Salem)有无自然算术模型——何种"数系"以其为基,其无准晶户籍在数论侧对应何种失灵。〔数学,open〕
+
+**候查 B8(两相晋升:类先例后,#406 所孵,v0.2)**。学习系统长出新谓词**类型**时,类 schema 须先经判真机认证,该类之实例方可认证——源:trureturing #406 自举悖论(base 侧法官无法校验 PR 自身引入之新文档类定义),零信任下保守扩展之结构推论。判据:晋升协议(B6)原型须含类/例两相提交;违者判 FAIL_CLOSED 而非强判。〔设计,open;实例runner可关〕
+
+**候查 B9(切投影词典:双速架构 ↔ cut-and-project,v0.4)**。词条:快系统↔物理空间(展嵌入)、慢库/harness↔内部空间之窗(接纳域)、τ↔内部空间距离、晋升↔投影登记、虚构(T5)↔无提升点(phason 缺陷)、灾难性遗忘↔影子发散(非 Pisot,共轭出盘,E6 刚性之病灶像)、WmAtomizer 局部文法↔Penrose 匹配规则(局部约束强制全局序)。按名界(S2),名须绑检验面:**形式面**——于 MinkowskiModelSet 之窗上构造"harness 接纳 ⟺ 窗内"之显式对应〔Lean可关〕;**经验面**——B6 晋升原型中,祖先门拒收项与"无提升"判据之重合率〔runner可关〕。状态:唱名后首次登记,残差未测,**禁作同构宣称**;组件 literature-attested(de Bruijn 1981 切投影、Shechtman 1982 准晶、phason 文献;Zurek 量子达尔文另属唱名,不随本条入账)。〔候查;双检验面各自可关〕
+
+---
+
