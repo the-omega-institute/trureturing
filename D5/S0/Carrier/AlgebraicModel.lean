@@ -86,6 +86,19 @@ theorem golden_algebraic_model_spec (a b : ℤ) :
   simp [goldenAdjoinRootEquiv, goldenAdjoinRootToInt, conj, trace, norm,
     pow_two]
 
+/-- The trace discriminant of a golden integer is five times its second coordinate squared. -/
+theorem trace_sq_sub_four_norm_eq_five_mul_b_sq (x : GoldenInt) :
+    trace x ^ 2 - 4 * norm x = 5 * x.b ^ 2 := by
+  rcases x with ⟨a, b⟩
+  simp [trace, norm]
+  ring
+
+example : trace phi ^ 2 - 4 * norm phi = 5 := by
+  simpa [phi] using trace_sq_sub_four_norm_eq_five_mul_b_sq phi
+
+example (z : ℤ) : trace (z : GoldenInt) ^ 2 - 4 * norm (z : GoldenInt) = 0 := by
+  simpa using trace_sq_sub_four_norm_eq_five_mul_b_sq (z : GoldenInt)
+
 end
 
 end D5.S0.Carrier
