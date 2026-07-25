@@ -47,7 +47,7 @@ end
 local function existing_requests(repo, bot_login)
   local cmd = "gh issue list --repo '" .. repo
     .. "' --state all --search '" .. core.marker_search_query(bot_login)
-    .. "' --json number,state,body,labels --limit 100"
+    .. "' --json number,state,body,labels --limit 1000"
   local out = exec_sync({ cmd = cmd, timeout = 30 })
   if type(out) ~= "table" or out.exit_code ~= 0 then
     error("theory-selfgrowth: request-search-failed: gh issue list", 0)
@@ -70,7 +70,26 @@ local function done(event)
   return false
 end
 
--- saga act(event): re-derive current GitHub state, then emit one frontier-request if none open.
+-- Read the digestion formalize-candidates projection (spec slice 1: the flywheel's formalize
+-- target source is the digestion-ledger residual, not proposer's-choice). Host-legal but
+-- forge-less: exec_sync + json.decode (mirrors the gh read above). Returns the candidates array,
+-- or nil when the command fails / output is malformed (fail-closed -> honest no-op, never guess).
+local function formalize_candidates()
+  local out = exec_sync({ cmd = core.formalize_candidates_command(), timeout = 300 })
+  if type(out) ~= "table" or out.exit_code ~= 0 then
+    return nil
+  end
+  local ok, decoded = pcall(json.decode, tostring(out.stdout or "{}"))
+  if not ok or type(decoded) ~= "table" or type(decoded.candidates) ~= "table" then
+    return nil
+  end
+  return decoded.candidates
+end
+
+-- saga act(event): re-derive current GitHub state, then emit one digestion formalize-request if
+-- none open. Selection is FIFO + generation round-robin over the ledger-derived candidate set
+-- (fair coverage, not easy-first); the ledger decides residual membership, GitHub history only
+-- provides per-atom attempt dedup. Empty/unavailable candidates or an oversize body => no-op.
 local function act(_event)
   local repo = read_repo()
   if not core.validate_repo(repo) then
@@ -82,16 +101,33 @@ local function act(_event)
       .. tostring(bot_login), 0)
   end
 
-  -- #296 Major 1: producer+generation-scoped dedup + per-producer open-request exclusion.
-  local decision = core.decide_generation(existing_requests(repo, bot_login), bot_login)
+  -- #296 Major 1: producer-scoped generation counter + per-producer open-request exclusion.
+  local prior = existing_requests(repo, bot_login)
+  local decision = core.decide_generation(prior, bot_login)
   if decision.open_exists then
     log.warn("theory-selfgrowth: an open frontier-request already exists for producer "
       .. bot_login .. "; skipping (one at a time)")
     return
   end
 
+  local candidates = formalize_candidates()
+  if candidates == nil then
+    log.warn("theory-selfgrowth: formalize-candidates projection unavailable; skipping (no-op)")
+    return
+  end
+  -- Round-robin over eligible candidates whose request body also fits the issue limit; an
+  -- oversize candidate is skipped this round (never truncated), and the next admissible one is
+  -- picked instead of no-op'ing.
+  local candidate = core.select_candidate(candidates, decision.generation, prior, function(c)
+    return core.build_frontier_request(repo, c, bot_login) ~= nil
+  end)
+  if candidate == nil then
+    log.warn("theory-selfgrowth: no eligible digestion formalize candidate this round; no-op")
+    return
+  end
+
   raise("github-proxy.github_issue_create_request",
-    core.build_frontier_request(repo, decision.generation, bot_login))
+    core.build_frontier_request(repo, candidate, bot_login))
 end
 
 return saga.department(spec, {
