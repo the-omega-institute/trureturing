@@ -1,6 +1,4 @@
--- Regression tests for #296 (theory-selfgrowth self-growth flywheel).
--- Major 1: lifetime dedup -> generation-scoped dedup + open-request exclusion.
--- Major 2: idle-payload freshness (reject stale / expired durable idle hints).
+-- Regression tests for the theory-selfgrowth digestion formalization producer.
 -- Pure core-logic tests; the department's gh/exec IO is covered separately.
 
 local core = require("core")
@@ -10,63 +8,75 @@ local t = fkst.test
 local MARKER = "theory-selfgrowth:frontier-request:v1"
 local BOT_LOGIN = "loning"
 
--- A frontier-request issue as returned by `gh issue list --json state,body`. Its body
--- carries the generation-scoped dedup_key, which contains MARKER as a prefix.
-local function request_issue(repo, generation, state, bot_login)
-  return { state = state, body = "dedup-marker: " .. core.dedup_key(repo, generation, bot_login or BOT_LOGIN) }
+-- A frontier-request issue as returned by `gh issue list --json state,body`.
+local function candidate(atom_id, atom_text, cas_ref)
+  return {
+    source_id = "GICT",
+    atom_id = atom_id,
+    ast_path = "theorem/example",
+    kind = "theorem",
+    cas_ref = cas_ref or ("sha256:cas-" .. atom_id),
+    raw_sha256 = "sha256:raw-" .. atom_id,
+    atom_text = atom_text or ("Theorem " .. atom_id .. "\nDerivation " .. atom_id),
+  }
+end
+
+local function request_issue(_repo, generation, state, bot_login)
+  local c = candidate("atom-" .. tostring(generation))
+  return {
+    state = state,
+    body = table.concat({
+      "frontier-request-marker: " .. core.producer_marker(bot_login or BOT_LOGIN),
+      "dedup-marker: " .. core.atom_marker(c),
+    }, "\n"),
+  }
 end
 
 return {
-  -- ---- Major 1: generation-scoped dedup key ----
-  test_dedup_key_is_generation_scoped = function()
-    t.eq(core.dedup_key("owner/repo", 0, BOT_LOGIN), MARKER .. ":" .. BOT_LOGIN .. ":owner/repo:gen0")
-    t.eq(core.dedup_key("owner/repo", 1, BOT_LOGIN), MARKER .. ":" .. BOT_LOGIN .. ":owner/repo:gen1")
-    -- Distinct generations MUST produce distinct keys, else `--state all` dedup re-suppresses.
-    t.is_true(core.dedup_key("owner/repo", 0, BOT_LOGIN) ~= core.dedup_key("owner/repo", 1, BOT_LOGIN))
+  test_candidate_selection_is_fifo_with_generation_round_robin = function()
+    local candidates = { candidate("a"), candidate("b"), candidate("c") }
+    t.eq(core.select_candidate(candidates, 0, {}).atom_id, "a")
+    t.eq(core.select_candidate(candidates, 1, {}).atom_id, "b")
+    t.eq(core.select_candidate(candidates, 4, {}).atom_id, "b")
   end,
 
-  test_build_frontier_request_embeds_generation_key = function()
-    local r = core.build_frontier_request("owner/repo", 2, BOT_LOGIN)
+  test_candidate_selection_excludes_prior_atom_attempt_markers = function()
+    local candidates = { candidate("a"), candidate("b"), candidate("c") }
+    local prior = { { body = "dedup-marker: " .. core.atom_marker(candidates[2]) } }
+    t.eq(core.select_candidate(candidates, 1, prior).atom_id, "c")
+    t.eq(core.select_candidate({ candidates[2] }, 0, prior), nil)
+  end,
+
+  test_atom_marker_and_request_dedup_are_atom_scoped = function()
+    local c = candidate("GICT-T0042", nil, "sha256:abc123")
+    local r = core.build_frontier_request("owner/repo", c, BOT_LOGIN)
+    t.eq(core.atom_marker(c), "digestion-atom:GICT-T0042:sha256:abc123")
+    t.eq(r.dedup_key, core.atom_marker(c))
+    t.is_true(r.dedup_key:find(":gen", 1, true) == nil)
+  end,
+
+  test_build_frontier_request_embeds_atom_envelope_byte_exact = function()
+    local text = "Theorem exact bytes\n  derivation: α + β\n"
+    local c = candidate("GICT-T0042", text, "sha256:abc123")
+    local r = core.build_frontier_request("owner/repo", c, BOT_LOGIN)
     t.eq(r.schema, "github-proxy.issue-create.v1")
-    t.eq(r.title, core.request_title())
-    t.eq(r.dedup_key, MARKER .. ":" .. BOT_LOGIN .. ":owner/repo:gen2")
+    t.is_true(r.title:find("^Deliver ONE NEW D5 result:") ~= nil)
+    t.is_true(r.title:find(c.atom_id, 1, true) ~= nil)
+    t.is_true(r.title:find(c.cas_ref, 1, true) ~= nil)
+    t.is_true(r.body:find("schema: theory%-selfgrowth%.formalize%-request%.v1") ~= nil)
+    t.is_true(r.body:find("atom_id: " .. c.atom_id, 1, true) ~= nil)
+    t.is_true(r.body:find("cas_ref: " .. c.cas_ref, 1, true) ~= nil)
+    t.is_true(r.body:find("raw_sha256: " .. c.raw_sha256, 1, true) ~= nil)
+    t.is_true(r.body:find(text, 1, true) ~= nil)
+    t.is_true(r.body:find("exactly ONE new declaration-level Lean GID", 1, true) ~= nil)
+    t.is_true(r.body:find("Blueprint mirror", 1, true) ~= nil)
     t.is_true(r.body:find(core.producer_marker(BOT_LOGIN), 1, true) ~= nil)
     t.eq(r.producer, BOT_LOGIN)
   end,
 
-  -- ---- GENERATE-NEW (2026-07-22): emit a propose-and-prove deliver request, NOT the declined
-  -- worth-argmax "Generate the next worthy obligation". The title must route on the
-  -- "Deliver ONE NEW D5 result:" prefix (blueprint-then-formalize, accepted by #366), and the
-  -- body must drop the uncomputable worth-argmax and carry the honesty guards. ----
-  test_request_title_routes_to_deliver_not_worth_argmax = function()
-    local title = core.request_title()
-    -- routes to blueprint-then-formalize (propose+prove), not frontier-generation
-    t.is_true(title:find("^Deliver ONE NEW D5 result:") ~= nil)
-    -- must NOT resurrect the substrate-uncomputable "worthy" generate-obligation phrasing
-    t.is_true(title:find("worthy") == nil)
-    t.is_true(title:find("Generate the next") == nil)
-  end,
-
-  test_body_is_generate_new_with_honesty_guards_and_no_fabricated_worth = function()
-    local r = core.build_frontier_request("owner/repo", 0, BOT_LOGIN)
-    local b = r.body
-    -- generate-new: propose a new theorem by judgment
-    t.is_true(b:find("Propose ONE", 1, true) ~= nil)
-    t.is_true(b:find("golden integers", 1, true) ~= nil)
-    -- honesty guards present
-    t.is_true(b:find("NON%-VACUITY") ~= nil)
-    t.is_true(b:find("NOVELTY") ~= nil)
-    t.is_true(b:find("CONSERVATIVE EXTENSION") ~= nil)
-    -- kernel-verification demanded
-    t.is_true(b:find("print axioms", 1, true) ~= nil)
-    -- must NOT demand a fabricated worth/argmax score (the #359 decline cause)
-    t.is_true(b:find("worth argmax") == nil)
-    t.is_true(b:find("argmax") == nil)
-    t.is_true(b:find("novelty × ") == nil)
-    -- must NOT over-specify placement/generality (the #368 consensus-drop cause): let the prover
-    -- derive classification per repo rules, not force a base node's `generality: G`.
-    t.is_true(b:find("generality: I", 1, true) ~= nil)
-    t.is_true(b:find("mirroring the Carrier conventions", 1, true) == nil)
+  test_oversize_request_body_is_skipped_without_truncation = function()
+    local c = candidate("large", string.rep("x", 12000))
+    t.eq(core.build_frontier_request("owner/repo", c, BOT_LOGIN), nil)
   end,
 
   -- ---- Major 1: decide_generation (counter + open exclusion) ----
@@ -113,12 +123,8 @@ return {
   -- THE #296 REGRESSION: one request created then CLOSED -> next generation is producible.
   test_closed_then_next_generation = function()
     local d = core.decide_generation({ request_issue("owner/repo", 0, "closed") }, BOT_LOGIN)
-    t.eq(d.generation, 1)          -- next request is gen1, a DISTINCT dedup_key from gen0
+    t.eq(d.generation, 1)
     t.is_true(not d.open_exists)   -- nothing open -> producer may fire again
-    -- The new key differs from the closed generation's, so github-proxy's --state all
-    -- marker search no longer matches the closed issue.
-    t.is_true(core.dedup_key("owner/repo", d.generation, BOT_LOGIN)
-      ~= core.dedup_key("owner/repo", 0, BOT_LOGIN))
   end,
 
   test_decide_generation_ignores_unrelated_issues = function()
@@ -146,8 +152,6 @@ return {
     t.eq(loning_marker, MARKER .. ":loning")
     t.eq(elonsg_marker, MARKER .. ":elonsg")
     t.is_true(loning_marker ~= elonsg_marker)
-    t.is_true(core.dedup_key(repo, 0, "loning") ~= core.dedup_key(repo, 0, "elonsg"))
-
     local loning_sees_only_elonsg_open = core.decide_generation({
       request_issue(repo, 0, "OPEN", "elonsg"),
     }, "loning")
