@@ -341,6 +341,33 @@ public sealed class MakeWorkflowTests
     }
 
     [Fact]
+    public void AdmissionBaselineCheckoutsRetainFrozenLedgerHistory()
+    {
+        var root = FindRepositoryRoot();
+        var workflow = File.ReadAllText(Path.Combine(root, AdmissionWorkflowPath));
+        const string baselineCheckout =
+            "      - name: Check out content-addressed dev baseline\n";
+        const string candidateCheckout = "      - name: Check out candidate with history\n";
+
+        var baselineRegions = workflow.Split(baselineCheckout, StringSplitOptions.None);
+        Assert.Equal(3, baselineRegions.Length);
+        foreach (var region in baselineRegions.Skip(1))
+        {
+            var checkout = region[..region.IndexOf("      - name: ", StringComparison.Ordinal)];
+            Assert.Contains("          fetch-depth: 0\n", checkout, StringComparison.Ordinal);
+            Assert.DoesNotContain("          fetch-depth: 1\n", checkout, StringComparison.Ordinal);
+        }
+
+        var candidateRegions = workflow.Split(candidateCheckout, StringSplitOptions.None);
+        Assert.Equal(3, candidateRegions.Length);
+        foreach (var region in candidateRegions.Skip(1))
+        {
+            var checkout = region[..region.IndexOf("      - name: ", StringComparison.Ordinal)];
+            Assert.Contains("          fetch-depth: 0\n", checkout, StringComparison.Ordinal);
+        }
+    }
+
+    [Fact]
     public void TheoryIngestRestoresBaseCanonicalReportWithoutCandidateLeanBuild()
     {
         var root = FindRepositoryRoot();
