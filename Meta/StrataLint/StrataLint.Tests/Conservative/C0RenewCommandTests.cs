@@ -75,7 +75,7 @@ public sealed class C0RenewCommandTests
     }
 
     [Fact]
-    public void GateCandidateWorkspaceMaterializesTheCleanCommittedPreimage()
+    public void GateCandidateWorkspaceMaterializesTheCleanCommittedPreimageWithoutDonorCache()
     {
         using var repository = new TemporaryDirectory();
         ReviewRegressionTests.RunGit(repository.Path, "init", "--initial-branch=dev");
@@ -91,12 +91,16 @@ public sealed class C0RenewCommandTests
             "StrataLint Tests");
         Write(repository.Path, RepositoryRules.TowerManifestPath, "committed tower\n");
         Write(repository.Path, C0CeremonyProjection.CertificatePath, "committed certificate\n");
+        Write(repository.Path, "lean-toolchain", "leanprover/lean4:v4.24.0\n");
+        Write(repository.Path, "lake-manifest.json", "{}\n");
+        Write(repository.Path, ".gitignore", "/.lake/\n");
         ReviewRegressionTests.RunGit(repository.Path, "add", ".");
         ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "preimage");
         var preimage = ReviewRegressionTests.RunGit(
             repository.Path,
             "rev-parse",
             "HEAD").Trim();
+        Write(repository.Path, ".lake/build/cache-marker", "private cache\n");
         Write(repository.Path, RepositoryRules.TowerManifestPath, "dirty tower\n");
         Write(repository.Path, C0CeremonyProjection.CertificatePath, "dirty certificate\n");
 
@@ -118,6 +122,7 @@ public sealed class C0RenewCommandTests
         Assert.Equal(
             "committed certificate\n",
             File.ReadAllText(Path.Combine(candidate.Root, C0CeremonyProjection.CertificatePath)));
+        Assert.False(Directory.Exists(Path.Combine(candidate.Root, ".lake")));
     }
 
     [Fact]
@@ -413,6 +418,8 @@ public sealed class C0RenewCommandTests
                     Bytes("// git gateway\n"),
                 [C0CeremonyProjection.GitRepositoryGatewayFrozenLedgerSourcePath] =
                     Bytes("// frozen git gateway\n"),
+                [C0CeremonyProjection.FrozenEvidenceResolverSourcePath] =
+                    Bytes("// frozen evidence resolver\n"),
                 [C0CeremonyProjection.ProgramPath] = Bytes("// program\n"),
                 ["Meta/StrataLint/StrataLint.Cli/Conservative/Worker.cs"] =
                     Bytes("// controller\n"),
