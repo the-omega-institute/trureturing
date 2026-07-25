@@ -341,7 +341,9 @@ acquire_lean_slot() {
         CONCURRENCY_COUNT="$(active_slot_count)"
         return 0
       fi
-      reclaim_stale_lock "$candidate" || true
+      if reclaim_stale_lock "$candidate"; then
+        continue 2
+      fi
     done
     if (( $(date +%s) >= deadline )); then
       echo "report-supervisor: timed out waiting for a Lean slot" >&2

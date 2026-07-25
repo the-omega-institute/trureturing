@@ -167,7 +167,11 @@ public sealed partial class ReportSupervisorScriptTests
             fixture.SuccessWorker,
             "STRATALINT_LOCK_TIMEOUT_SECONDS=3");
 
-        Assert.Equal(0, contender.ExitCode);
+        Assert.True(
+            contender.ExitCode == 0,
+            $"exit: {contender.ExitCode}\n"
+            + $"stdout: {Encoding.UTF8.GetString(contender.StandardOutput)}\n"
+            + $"stderr: {Encoding.UTF8.GetString(contender.StandardError)}");
         Assert.True(SpinWait.SpinUntil(
             () => !ProcessExists(descendantPid),
             TimeSpan.FromSeconds(5)));
