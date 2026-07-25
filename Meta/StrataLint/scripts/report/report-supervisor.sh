@@ -43,6 +43,14 @@ MAX_CONCURRENCY="${STRATALINT_LEAN_MAX_CONCURRENCY:-1}"
 LOCK_TIMEOUT_SECONDS="${STRATALINT_LOCK_TIMEOUT_SECONDS:-900}"
 [[ "$LOCK_TIMEOUT_SECONDS" =~ ^[1-9][0-9]*$ && "$LOCK_TIMEOUT_SECONDS" -le 86400 ]] \
   || { echo "report-supervisor: STRATALINT_LOCK_TIMEOUT_SECONDS must be 1..86400" >&2; exit 2; }
+# Wall-clock budget for the worker build itself (#403): a build that hangs while
+# holding the lean slot would otherwise loop the monitor below forever, never
+# reaching finish() (which releases the slot), starving every subsequent lean
+# build. 0 disables the bound (legacy unbounded behavior). Default is generous
+# enough for any legitimate lean-report build yet finite so a hang self-releases.
+BUILD_TIMEOUT_SECONDS="${STRATALINT_BUILD_TIMEOUT_SECONDS:-7200}"
+[[ "$BUILD_TIMEOUT_SECONDS" =~ ^[0-9]+$ && "$BUILD_TIMEOUT_SECONDS" -le 86400 ]] \
+  || { echo "report-supervisor: STRATALINT_BUILD_TIMEOUT_SECONDS must be 0..86400" >&2; exit 2; }
 LOCK_INITIALIZATION_GRACE_SECONDS=5
 
 TMP_ROOT=""
@@ -484,12 +492,25 @@ TMPDIR="$SCRATCH" "$@" 9< "$RUN_MARKER" > "$RUN_STDOUT" 2> "$RUN_STDERR" &
 CHILD_PID=$!
 PROCESS_GROUP_ID="$CHILD_PID"
 set +m
+BUILD_DEADLINE=0
+if (( BUILD_TIMEOUT_SECONDS > 0 )); then
+  BUILD_DEADLINE=$(( $(date +%s) + BUILD_TIMEOUT_SECONDS ))
+fi
+BUILD_TIMED_OUT=0
 while process_exists "$CHILD_PID"; do
   sample_process_tree
+  if (( BUILD_DEADLINE > 0 )) && (( $(date +%s) >= BUILD_DEADLINE )); then
+    echo "report-supervisor: build exceeded ${BUILD_TIMEOUT_SECONDS}s wall-clock budget;" \
+      "terminating to release the lean slot (#403)" >&2
+    terminate_process_group "$PROCESS_GROUP_ID"
+    BUILD_TIMED_OUT=1
+    break
+  fi
   sleep 0.1
 done
 set +e
 wait "$CHILD_PID"
 rc=$?
 set -e
+if [[ "$BUILD_TIMED_OUT" == "1" ]]; then rc=124; fi
 exit "$rc"
