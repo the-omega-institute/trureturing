@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Text;
 using StrataLint.Engine;
+using BoundedProcessRunner = StrataLint.Tests.ReportSupervisorTestProcessRunner;
 
 namespace StrataLint.Tests;
 
@@ -73,7 +74,12 @@ public sealed partial class ReportSupervisorScriptTests
                 (
                   trap '' TERM
                   exec 9<&- >/dev/null 2>&1
-                  while [[ -e "$1/closed-fd-descendant.hold" ]]; do sleep 0.05; done
+                  released=0
+                  for _ in {1..400}; do
+                    if [[ ! -e "$1/closed-fd-descendant.hold" ]]; then released=1; break; fi
+                    sleep 0.05
+                  done
+                  [[ "$released" == "1" ]] || exit 2
                 ) &
                 descendant_pid=$!
                 printf '%s\n' "$descendant_pid" > "$1/closed-fd-descendant.pid"
@@ -441,16 +447,32 @@ public sealed partial class ReportSupervisorScriptTests
                 TimeSpan.FromSeconds(5),
                 4096);
 
-        internal ProcessOutput RunLinuxProcessTree(int rootPid) =>
+        internal ProcessOutput RunLinuxProcessTree(int rootPid, int? scanLimit = null) =>
             BoundedProcessRunner.Run(
-                "/bin/bash",
+                "/usr/bin/env",
                 [
+                    $"PROCESS_SCAN_LIMIT={scanLimit?.ToString(System.Globalization.CultureInfo.InvariantCulture) ?? "65536"}",
+                    "/bin/bash",
                     "-c",
                     "set -euo pipefail; PROCESS_FS_ROOT=\"$1\"; source \"$2\"; linux_process_tree \"$3\"",
                     "linux-process-tree",
                     ProcessFsRoot,
                     ProcessControl,
                     rootPid.ToString(System.Globalization.CultureInfo.InvariantCulture),
+                ],
+                Root,
+                TimeSpan.FromSeconds(5),
+                4096);
+
+        internal ProcessOutput RunBoundedChildWait(int processStateExit) =>
+            BoundedProcessRunner.Run(
+                "/bin/bash",
+                [
+                    "-c",
+                    "set -euo pipefail; source \"$1\"; PROCESS_STATE_EXIT=\"$2\"; process_exists() { return \"$PROCESS_STATE_EXIT\"; }; TERMINATION_TIMEOUT_SECONDS=1; bounded_wait_for_child 99999999",
+                    "bounded-child-wait",
+                    ProcessControl,
+                    processStateExit.ToString(System.Globalization.CultureInfo.InvariantCulture),
                 ],
                 Root,
                 TimeSpan.FromSeconds(5),
@@ -502,6 +524,7 @@ public sealed partial class ReportSupervisorScriptTests
             foreach (var argument in Arguments(worker, environment)) info.ArgumentList.Add(argument);
             var process = new Process { StartInfo = info };
             Assert.True(process.Start());
+            ReportSupervisorTestWatchdog.Current?.Track(process);
             return process;
         }
 
@@ -548,7 +571,7 @@ public sealed partial class ReportSupervisorScriptTests
                 $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
                 $"STRATALINT_LEAN_PROGRESS_ROOT={Root}",
                 $"STRATALINT_LEAN_PROGRESS_LOG_ROOT={ProgressLogRoot}",
-                "STRATALINT_BUILD_TIMEOUT_SECONDS=0",
+                "STRATALINT_BUILD_TIMEOUT_SECONDS=86400",
                 "STRATALINT_REPORT_OBSERVATION_POLL_SECONDS=1",
             };
             arguments.AddRange(environment);

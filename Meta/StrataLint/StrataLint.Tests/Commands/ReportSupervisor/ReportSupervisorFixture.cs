@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
+using BoundedProcessRunner = StrataLint.Tests.ReportSupervisorTestProcessRunner;
 
 namespace StrataLint.Tests;
 
@@ -20,7 +21,12 @@ internal sealed class ReportSupervisorFixture : IDisposable
             #!/usr/bin/env bash
             set -euo pipefail
             if ! mkdir "$1" 2>/dev/null; then touch "$2"; fi
-            while [[ ! -e "$3" ]]; do sleep 0.02; done
+            released=0
+            for _ in {1..1000}; do
+              if [[ -e "$3" ]]; then released=1; break; fi
+              sleep 0.02
+            done
+            [[ "$released" == "1" ]] || exit 2
             rmdir "$1" 2>/dev/null || true
             """);
         ConcurrentDriver = WriteExecutable("concurrent-driver.sh", """
@@ -99,6 +105,21 @@ internal sealed class ReportSupervisorFixture : IDisposable
               exit 1
             fi
             """);
+        _ = WriteExecutable("pgrep", """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            [[ "$#" == "2" && "$1" == "-P" && "$2" =~ ^[1-9][0-9]*$ ]] || exit 2
+            parent="$2"
+            for pid_file in "$PWD/grandchild.pid" "$PWD/detached-parent.pid" \
+              "$PWD/detached.pid" "$PWD/scratch.txt"; do
+              [[ -s "$pid_file" ]] || continue
+              read -r pid < "$pid_file"
+              if [[ "$pid" =~ ^[1-9][0-9]*$ && "$pid" != "$parent" ]] \
+                && kill -0 "$pid" 2>/dev/null; then
+                printf '%s\n' "$pid"
+              fi
+            done
+            """);
         LongRunningWorker = WriteExecutable("long-running-worker.sh", """
             #!/usr/bin/env bash
             set -euo pipefail
@@ -117,6 +138,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
             set -euo pipefail
             perl -MPOSIX -e '
               my ($pid_path, $parent_path, $release) = @ARGV;
+              my $deadline = time() + 20;
               my $child = fork();
               die "fork failed" unless defined $child;
               if ($child == 0) {
@@ -127,13 +149,19 @@ internal sealed class ReportSupervisorFixture : IDisposable
                 close STDOUT;
                 close STDERR;
                 POSIX::close(9);
-                select undef, undef, undef, 0.02 until -e $release;
+                while (!-e $release && time() < $deadline) {
+                  select undef, undef, undef, 0.02;
+                }
+                exit 2 unless -e $release;
                 exec "sleep", "60";
               }
               open my $parent, ">", $parent_path or die $!;
               print {$parent} "$$\n";
               close $parent or die $!;
-              select undef, undef, undef, 0.02 until -e $release;
+              while (!-e $release && time() < $deadline) {
+                select undef, undef, undef, 0.02;
+              }
+              exit 2 unless -e $release;
             ' "$1" "$2" "$3" &
             wait "$!"
             sleep 60
@@ -277,6 +305,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
         }) info.ArgumentList.Add(argument);
         var process = new Process { StartInfo = info };
         Assert.True(process.Start());
+        ReportSupervisorTestWatchdog.Current?.Track(process);
         return process;
     }
 
@@ -301,6 +330,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
         }) info.ArgumentList.Add(argument);
         var process = new Process { StartInfo = info };
         Assert.True(process.Start());
+        ReportSupervisorTestWatchdog.Current?.Track(process);
         return process;
     }
 

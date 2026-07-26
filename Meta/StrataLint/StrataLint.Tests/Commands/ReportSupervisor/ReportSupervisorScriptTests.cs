@@ -2,12 +2,24 @@ using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
+using Xunit.Abstractions;
+using BoundedProcessRunner = StrataLint.Tests.ReportSupervisorTestProcessRunner;
 
 namespace StrataLint.Tests;
 
-public sealed partial class ReportSupervisorScriptTests
+[Collection(ReportSupervisorScriptCollection.Name)]
+public sealed partial class ReportSupervisorScriptTests : IDisposable
 {
-    [Fact]
+    private readonly ReportSupervisorTestWatchdog watchdog;
+
+    public ReportSupervisorScriptTests(ITestOutputHelper output)
+    {
+        watchdog = new ReportSupervisorTestWatchdog(output);
+    }
+
+    public void Dispose() => watchdog.Dispose();
+
+    [ReportFact]
     public void MissingReportConsumptionFailsClosedWithProducerInstruction()
     {
         using var fixture = new ReportSupervisorFixture();
@@ -30,7 +42,7 @@ public sealed partial class ReportSupervisorScriptTests
             StringComparison.Ordinal);
     }
 
-    [Fact]
+    [ReportFact]
     public void EachRunUsesIndependentScratchAndWritesStructuredMetrics()
     {
         using var fixture = new ReportSupervisorFixture();
@@ -79,7 +91,7 @@ public sealed partial class ReportSupervisorScriptTests
         });
     }
 
-    [Fact]
+    [ReportFact]
     public void DefaultMetricsUseTheSharedPerformanceResourceLedger()
     {
         using var fixture = new ReportSupervisorFixture();
@@ -95,7 +107,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.Equal("scribe-consumer", metric.GetProperty("role").GetString());
     }
 
-    [Fact]
+    [ReportFact]
     public void MetricsWriterUsesRepositoryRootInsteadOfTheCallerWorkingDirectory()
     {
         using var fixture = new ReportSupervisorFixture();
@@ -120,7 +132,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.Single(File.ReadAllLines(metrics));
     }
 
-    [Theory]
+    [ReportTheory]
     [InlineData("", "null")]
     [InlineData("unavailable", "null")]
     [InlineData("0.125000", "0.125000")]
@@ -148,7 +160,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.Equal(expected, Encoding.UTF8.GetString(result.StandardOutput));
     }
 
-    [Fact]
+    [ReportFact]
     public void DependencyProbeRemovesPrivateRunDirectoryOnEverySupportedHost()
     {
         using var fixture = new ReportSupervisorFixture();
@@ -163,7 +175,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.Empty(Directory.GetDirectories(Path.Combine(fixture.StateRoot, "runs")));
     }
 
-    [Fact]
+    [ReportFact]
     public void WorkerFailureIsRecordedWithItsExitCode()
     {
         using var fixture = new ReportSupervisorFixture();
@@ -177,7 +189,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.Equal("observation", metric.GetProperty("status").GetString());
     }
 
-    [Fact]
+    [ReportFact]
     public void OwnerlessSlotIsNeverGuessedStale()
     {
         using var fixture = new ReportSupervisorFixture();
@@ -194,7 +206,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.True(Directory.Exists(ownerlessLock));
     }
 
-    [Fact]
+    [ReportFact]
     public void EmptyPublishedReclaimGuardOwnerFailsImmediately()
     {
         using var fixture = new ReportSupervisorFixture();
@@ -217,7 +229,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.True(Directory.Exists(guard));
     }
 
-    [Fact]
+    [ReportFact]
     public void LockOwnedByADeadProcessIsReclaimed()
     {
         using var fixture = new ReportSupervisorFixture();
@@ -234,7 +246,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.Equal(0, result.ExitCode);
     }
 
-    [Fact]
+    [ReportFact]
     public void LockWhosePidWasReusedIsReclaimed()
     {
         using var fixture = new ReportSupervisorFixture();
@@ -251,7 +263,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.Equal(0, result.ExitCode);
     }
 
-    [Fact]
+    [ReportFact]
     public void AbandonedOwnerlessSlotIsNotGuessedDeadAfterInitializationGrace()
     {
         using var fixture = new ReportSupervisorFixture();
@@ -269,7 +281,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.True(Directory.Exists(abandonedLock));
     }
 
-    [Fact]
+    [ReportFact]
     public void LiveSlotWaitIsBounded()
     {
         using var fixture = new ReportSupervisorFixture();
@@ -293,7 +305,7 @@ public sealed partial class ReportSupervisorScriptTests
             StringComparison.OrdinalIgnoreCase);
     }
 
-    [Fact]
+    [ReportFact]
     public void MetricsCommitFailureDoesNotChangeWorkerOutcome()
     {
         using var fixture = new ReportSupervisorFixture();
@@ -311,7 +323,7 @@ public sealed partial class ReportSupervisorScriptTests
             StringComparison.OrdinalIgnoreCase);
     }
 
-    [Fact]
+    [ReportFact]
     public void MetricsShortWriteRollsBackIncompleteEvent()
     {
         using var fixture = new ReportSupervisorFixture();
@@ -332,7 +344,7 @@ public sealed partial class ReportSupervisorScriptTests
             StringComparison.OrdinalIgnoreCase);
     }
 
-    [Fact]
+    [ReportFact]
     public void MetricsTimeoutDoesNotRemoveAnotherWritersLock()
     {
         using var fixture = new ReportSupervisorFixture();
@@ -353,7 +365,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.True(Directory.Exists(liveLock));
     }
 
-    [Fact]
+    [ReportFact]
     public void HangingBuildIsTerminatedAtTheBuildTimeoutReleasingTheLeanSlot()
     {
         using var fixture = new ReportSupervisorFixture();
@@ -388,27 +400,25 @@ public sealed partial class ReportSupervisorScriptTests
             "lean slot lock was not released after the build timeout");
     }
 
-    [Fact]
-    public void BuildTimeoutOfZeroKeepsTheLegacyUnboundedBehaviorForFastBuilds()
+    [ReportFact]
+    public void BuildTimeoutOfZeroIsRejectedInsteadOfDisablingTheHardLimit()
     {
         using var fixture = new ReportSupervisorFixture();
 
-        // 0 opts out of the wall-clock bound (legacy behavior); a fast worker still
-        // completes cleanly and the slot is released via finish() as before.
         var result = fixture.RunWithEnvironment(
             "lean-producer",
             leanSlot: true,
             fixture.ScratchWriter,
             "STRATALINT_BUILD_TIMEOUT_SECONDS=0");
 
-        Assert.Equal(0, result.ExitCode);
-        var slots = Path.Combine(fixture.StateRoot, "slots");
-        Assert.False(
-            Directory.Exists(slots) && Directory.GetDirectories(slots).Length > 0,
-            "lean slot lock was not released after a clean build");
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains(
+            "must be 1..86400",
+            Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.Ordinal);
     }
 
-    [Fact]
+    [ReportFact]
     public void MetricsAppendDelegatesToTheCanonicalPerformanceWriter()
     {
         using var fixture = new ReportSupervisorFixture();
@@ -418,7 +428,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.DoesNotContain("syswrite", source, StringComparison.Ordinal);
     }
 
-    [Fact]
+    [ReportFact]
     public void DefaultLeanSlotSerializesConcurrentProducers()
     {
         using var fixture = new ReportSupervisorFixture();
@@ -447,7 +457,7 @@ public sealed partial class ReportSupervisorScriptTests
         });
     }
 
-    [Fact]
+    [ReportFact]
     public void TerminationReapsTheWorkerProcessTree()
     {
         using var fixture = new ReportSupervisorFixture();
@@ -476,7 +486,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.Equal(143, metric.GetProperty("rc").GetInt32());
     }
 
-    [Fact]
+    [ReportFact]
     public void WorkerExitReapsBackgroundDescendants()
     {
         using var fixture = new ReportSupervisorFixture();
@@ -510,7 +520,7 @@ public sealed partial class ReportSupervisorScriptTests
         }
     }
 
-    [Fact]
+    [ReportFact]
     public void TerminationReapsADescendantThatCreatesANewSession()
     {
         using var fixture = new ReportSupervisorFixture();
@@ -571,7 +581,7 @@ public sealed partial class ReportSupervisorScriptTests
         }
     }
 
-    [Fact]
+    [ReportFact]
     public void WorkerExitReapsAFastDoubleForkedSession()
     {
         using var fixture = new ReportSupervisorFixture();

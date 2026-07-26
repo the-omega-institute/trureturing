@@ -1,12 +1,13 @@
 using System.Diagnostics;
 using System.Text;
 using StrataLint.Engine;
+using BoundedProcessRunner = StrataLint.Tests.ReportSupervisorTestProcessRunner;
 
 namespace StrataLint.Tests;
 
 public sealed partial class ReportSupervisorScriptTests
 {
-    [Theory]
+    [ReportTheory]
     [InlineData("4242 (worker) S 1 4242", true)]
     [InlineData("4242 (worker with ) paren) Z 1 4242", false)]
     [InlineData("4242 (dead) X 1 4242", false)]
@@ -15,7 +16,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.Equal(expected, ProcStatRepresentsRunning(stat));
     }
 
-    [Theory]
+    [ReportTheory]
     [InlineData('S', 0)]
     [InlineData('Z', 1)]
     [InlineData('X', 1)]
@@ -29,7 +30,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.Equal(expectedExit, result.ExitCode);
     }
 
-    [Fact]
+    [ReportFact]
     public void UnreadableLinuxProcStateIsUnknown()
     {
         using var fixture = new DeadOwnerObservationFixture();
@@ -40,7 +41,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.Equal(2, result.ExitCode);
     }
 
-    [Fact]
+    [ReportFact]
     public void LinuxProcessStartIdentityComesFromProcStatStarttime()
     {
         using var fixture = new DeadOwnerObservationFixture();
@@ -57,7 +58,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.Equal("987654321", Encoding.UTF8.GetString(result.StandardOutput).Trim());
     }
 
-    [Fact]
+    [ReportFact]
     public void LinuxProcessGroupMembersComeFromProcStatWithoutPs()
     {
         using var fixture = new DeadOwnerObservationFixture();
@@ -72,7 +73,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.Equal("4242", Encoding.UTF8.GetString(result.StandardOutput).Trim());
     }
 
-    [Fact]
+    [ReportFact]
     public void LinuxMarkerCandidatesAreBoundedByRecordedGroupAndLeaderStarttime()
     {
         using var fixture = new DeadOwnerObservationFixture();
@@ -88,7 +89,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.Equal("4242\n4243", Encoding.UTF8.GetString(result.StandardOutput).Trim());
     }
 
-    [Fact]
+    [ReportFact]
     public void MalformedLinuxProcStatMakesStartIdentityUnknown()
     {
         using var fixture = new DeadOwnerObservationFixture();
@@ -99,7 +100,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.Equal(1, result.ExitCode);
     }
 
-    [Fact]
+    [ReportFact]
     public void ZeroLinuxProcStarttimeMakesStartIdentityUnknown()
     {
         using var fixture = new DeadOwnerObservationFixture();
@@ -110,7 +111,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.Equal(1, result.ExitCode);
     }
 
-    [Fact]
+    [ReportFact]
     public void OldEpochOnLiveCanonicalOwnerDoesNotPermitReclaim()
     {
         using var fixture = new DeadOwnerObservationFixture();
@@ -125,7 +126,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.True(fixture.SlotExists());
     }
 
-    [Fact]
+    [ReportFact]
     public void ExtantLinuxProcDirectoryWithUnreadableStatIsUnknown()
     {
         using var fixture = new DeadOwnerObservationFixture();
@@ -136,7 +137,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.Equal(2, result.ExitCode);
     }
 
-    [Fact]
+    [ReportFact]
     public void FallbackClaimantRecordsUnknownStartWhenPsIdentityIsUnreadable()
     {
         if (Directory.Exists("/proc")) return;
@@ -151,7 +152,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.Equal(0, result.ExitCode);
     }
 
-    [Fact]
+    [ReportFact]
     public void OwnerRecordContainsPidStartAndEpoch()
     {
         using var fixture = new DeadOwnerObservationFixture();
@@ -171,7 +172,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.True(long.Parse(owner[2], System.Globalization.CultureInfo.InvariantCulture) > 1_000_000_000_000);
     }
 
-    [Fact]
+    [ReportFact]
     public void DeadOwnerFromMetadataCrashWindowIsReclaimed()
     {
         using var fixture = new DeadOwnerObservationFixture();
@@ -190,7 +191,7 @@ public sealed partial class ReportSupervisorScriptTests
             + $"stderr: {Encoding.UTF8.GetString(result.StandardError)}");
     }
 
-    [Fact]
+    [ReportFact]
     public void SigkillOrphanKeepsSlotUntilTheWholeProcessGroupIsDead()
     {
         using var fixture = new DeadOwnerObservationFixture();
@@ -233,7 +234,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.Equal(0, reclaimed.ExitCode);
     }
 
-    [Fact]
+    [ReportFact]
     public void LiveClosedFdDescendantPreventsReclaimWithoutBeingKilled()
     {
         using var fixture = new DeadOwnerObservationFixture();
@@ -278,7 +279,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.Equal(0, reclaimed.ExitCode);
     }
 
-    [Fact]
+    [ReportFact]
     public void MalformedNonemptyOwnerFailsClosed()
     {
         using var fixture = new DeadOwnerObservationFixture();
@@ -293,7 +294,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.True(Directory.Exists(slot));
     }
 
-    [Fact]
+    [ReportFact]
     public void UnknownCanonicalLiveOwnerCannotBeReclaimedOnTimeout()
     {
         using var fixture = new DeadOwnerObservationFixture();
@@ -308,7 +309,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.True(fixture.SlotExists());
     }
 
-    [Fact]
+    [ReportFact]
     public void ThreeFieldOwnerWhosePidWasReusedIsReclaimed()
     {
         using var fixture = new DeadOwnerObservationFixture();
@@ -328,7 +329,7 @@ public sealed partial class ReportSupervisorScriptTests
             + $"stderr: {Encoding.UTF8.GetString(result.StandardError)}");
     }
 
-    [Fact]
+    [ReportFact]
     public void MalformedSuccessfulFallbackProcessTableFailsClosed()
     {
         using var fixture = new DeadOwnerObservationFixture();
@@ -338,7 +339,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.NotEqual(0, result.ExitCode);
     }
 
-    [Fact]
+    [ReportFact]
     public void ProcMarkerScanConsidersEveryOpenDescriptorOfRecordedCandidate()
     {
         using var fixture = new DeadOwnerObservationFixture();
@@ -354,7 +355,7 @@ public sealed partial class ReportSupervisorScriptTests
             Encoding.UTF8.GetString(result.StandardOutput).Trim());
     }
 
-    [Fact]
+    [ReportFact]
     public void ProcMarkerScanDoesNotInspectUnrecordedPid()
     {
         using var fixture = new DeadOwnerObservationFixture();
@@ -369,7 +370,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.Equal("4242", Encoding.UTF8.GetString(result.StandardOutput).Trim());
     }
 
-    [Fact]
+    [ReportFact]
     public void ProcProcessTreeFollowsParentPidAcrossNewProcessGroups()
     {
         using var fixture = new DeadOwnerObservationFixture();
@@ -385,6 +386,42 @@ public sealed partial class ReportSupervisorScriptTests
             ["4100", "4101", "4102"],
             Encoding.UTF8.GetString(result.StandardOutput)
                 .Split('\n', StringSplitOptions.RemoveEmptyEntries));
+    }
+
+    [ReportFact]
+    public void ProcProcessTreeFailsClosedWhenTheScanBudgetIsExceeded()
+    {
+        using var fixture = new DeadOwnerObservationFixture();
+        fixture.AttachSyntheticProcStat(4100, 'S', parentPid: 1, processGroupId: 4100);
+        fixture.AttachSyntheticProcStat(4101, 'S', parentPid: 4100, processGroupId: 4101);
+        fixture.AttachSyntheticProcStat(4102, 'S', parentPid: 4101, processGroupId: 4102);
+
+        var result = fixture.RunLinuxProcessTree(4100, scanLimit: 2);
+
+        Assert.NotEqual(0, result.ExitCode);
+    }
+
+    [ReportFact]
+    public void ChildWaitReturnsTimeoutInsteadOfBlockingOnALiveProcess()
+    {
+        using var fixture = new DeadOwnerObservationFixture();
+        var stopwatch = Stopwatch.StartNew();
+
+        var result = fixture.RunBoundedChildWait(processStateExit: 0);
+        stopwatch.Stop();
+
+        Assert.Equal(124, result.ExitCode);
+        Assert.True(stopwatch.Elapsed < TimeSpan.FromSeconds(4), stopwatch.Elapsed.ToString());
+    }
+
+    [ReportFact]
+    public void ChildWaitFailsClosedImmediatelyWhenProcessStateIsUnknown()
+    {
+        using var fixture = new DeadOwnerObservationFixture();
+
+        var result = fixture.RunBoundedChildWait(processStateExit: 2);
+
+        Assert.Equal(2, result.ExitCode);
     }
 
 }

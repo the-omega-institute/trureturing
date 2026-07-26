@@ -5,7 +5,7 @@ namespace StrataLint.Tests;
 
 public sealed partial class ReportSupervisorScriptTests
 {
-    [Fact]
+    [ReportFact]
     public void CpuActiveMathlibScalePhaseOutlivingTheStallThresholdIsNeverKilled()
     {
         using var fixture = new DeadOwnerObservationFixture();
@@ -21,7 +21,7 @@ public sealed partial class ReportSupervisorScriptTests
             StringComparison.Ordinal);
     }
 
-    [Fact]
+    [ReportFact]
     public void WholeSecondCpuSamplingDoesNotKillALowDutyCycleProducer()
     {
         using var fixture = new DeadOwnerObservationFixture();
@@ -42,7 +42,7 @@ public sealed partial class ReportSupervisorScriptTests
             StringComparison.Ordinal);
     }
 
-    [Fact]
+    [ReportFact]
     public void StalledProducerIsObservedWithoutBeingKilled()
     {
         using var fixture = new DeadOwnerObservationFixture();
@@ -60,7 +60,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.Equal(0, fixture.Run(fixture.SuccessWorker).ExitCode);
     }
 
-    [Fact]
+    [ReportFact]
     public void NewOleanFilesKeepAQuietProducerAlive()
     {
         using var fixture = new DeadOwnerObservationFixture();
@@ -72,7 +72,7 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.Equal(0, result.ExitCode);
     }
 
-    [Fact]
+    [ReportFact]
     public void PipeOutputKeepsAProducerAliveWithoutOleanChanges()
     {
         using var fixture = new DeadOwnerObservationFixture();
@@ -88,7 +88,7 @@ public sealed partial class ReportSupervisorScriptTests
             StringComparison.Ordinal);
     }
 
-    [Fact]
+    [ReportFact]
     public void ProducerLogOutputKeepsAQuietUncompiledPhaseAlive()
     {
         using var fixture = new DeadOwnerObservationFixture();

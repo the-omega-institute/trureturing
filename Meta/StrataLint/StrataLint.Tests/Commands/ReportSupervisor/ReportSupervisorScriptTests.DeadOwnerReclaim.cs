@@ -1,11 +1,12 @@
 using System.Text;
 using StrataLint.Engine;
+using BoundedProcessRunner = StrataLint.Tests.ReportSupervisorTestProcessRunner;
 
 namespace StrataLint.Tests;
 
 public sealed partial class ReportSupervisorScriptTests
 {
-    [Theory]
+    [ReportTheory]
     [InlineData("Z+")]
     [InlineData("X")]
     public void DeadOnlyLinuxProcessGroupAllowsReclaim(string state)
@@ -36,7 +37,7 @@ public sealed partial class ReportSupervisorScriptTests
             + $"stderr: {Encoding.UTF8.GetString(result.StandardError)}");
     }
 
-    [Fact]
+    [ReportFact]
     public void ConcurrentAcquirersSerializeWhenReclaimingTheSameStaleSlot()
     {
         using var fixture = new ReportSupervisorFixture();

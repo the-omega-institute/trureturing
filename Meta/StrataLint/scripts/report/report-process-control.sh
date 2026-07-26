@@ -11,12 +11,23 @@ collect_process_tree() {
   local index=0
   local pid
   local child
+  local deadline=$(( SECONDS + ${PROCESS_SCAN_TIMEOUT_SECONDS:-5} ))
+  local scan_limit="${PROCESS_SCAN_LIMIT:-65536}"
+  local scanned=0
+  local seen=" $1 "
+  [[ "$scan_limit" =~ ^[1-9][0-9]*$ ]] || return 1
   while [[ "$index" -lt "${#queue[@]}" ]]; do
+    scanned=$((scanned + 1))
+    (( scanned <= scan_limit && SECONDS < deadline )) || return 1
     pid="${queue[$index]}"
     index=$((index + 1))
     printf '%s\n' "$pid"
     while IFS= read -r child; do
-      [[ -n "$child" ]] && queue+=("$child")
+      [[ "$child" =~ ^[1-9][0-9]*$ ]] || continue
+      case "$seen" in
+        *" $child "*) ;;
+        *) seen+="$child "; queue+=("$child") ;;
+      esac
     done < <(pgrep -P "$pid" 2>/dev/null || true)
   done
 }
@@ -25,10 +36,19 @@ linux_process_tree() {
   local root="$1"
   local process_dir pid snapshot state remainder parent_pid row child
   local index=0
+  local scanned=0
+  local comparisons=0
+  local scan_limit="${PROCESS_SCAN_LIMIT:-65536}"
+  local walk_limit="${PROCESS_WALK_LIMIT:-1048576}"
+  local deadline=$(( SECONDS + ${PROCESS_SCAN_TIMEOUT_SECONDS:-5} ))
   local seen=" $root "
   local -a rows=()
   local -a queue=("$root")
+  [[ "$scan_limit" =~ ^[1-9][0-9]*$ \
+    && "$walk_limit" =~ ^[1-9][0-9]*$ ]] || return 1
   for process_dir in "$PROCESS_FS_ROOT"/[1-9]*; do
+    scanned=$((scanned + 1))
+    (( scanned <= scan_limit && SECONDS < deadline )) || return 1
     [[ -d "$process_dir" ]] || continue
     pid="${process_dir##*/}"
     snapshot="$(linux_proc_stat_snapshot "$pid")" || continue
@@ -43,6 +63,8 @@ linux_process_tree() {
     index=$((index + 1))
     printf '%s\n' "$pid"
     for row in "${rows[@]}"; do
+      comparisons=$((comparisons + 1))
+      (( comparisons <= walk_limit && SECONDS < deadline )) || return 1
       parent_pid="${row#*|}"
       [[ "$parent_pid" == "$pid" ]] || continue
       child="${row%%|*}"
@@ -176,9 +198,15 @@ process_group_members_for_id() {
   local remainder=""
   local process_group=""
   local table=""
+  local scanned=0
+  local scan_limit="${PROCESS_SCAN_LIMIT:-65536}"
+  local deadline=$(( SECONDS + ${PROCESS_SCAN_TIMEOUT_SECONDS:-5} ))
   [[ "$group_id" =~ ^[1-9][0-9]*$ ]] || return 1
+  [[ "$scan_limit" =~ ^[1-9][0-9]*$ ]] || return 1
   if [[ -d "$PROCESS_FS_ROOT" ]]; then
     for process_dir in "$PROCESS_FS_ROOT"/[1-9]*; do
+      scanned=$((scanned + 1))
+      (( scanned <= scan_limit && SECONDS < deadline )) || return 1
       [[ -d "$process_dir" ]] || continue
       pid="${process_dir##*/}"
       if ! snapshot="$(linux_proc_stat_snapshot "$pid")"; then
@@ -223,9 +251,15 @@ linux_process_candidates() {
   local parent_pid=""
   local process_group=""
   local starttime=""
+  local scanned=0
+  local scan_limit="${PROCESS_SCAN_LIMIT:-65536}"
+  local deadline=$(( SECONDS + ${PROCESS_SCAN_TIMEOUT_SECONDS:-5} ))
   [[ "$group_id" =~ ^[1-9][0-9]*$ \
-    && "$leader_start" =~ ^[1-9][0-9]*$ ]] || return 1
+    && "$leader_start" =~ ^[1-9][0-9]*$ \
+    && "$scan_limit" =~ ^[1-9][0-9]*$ ]] || return 1
   for process_dir in "$PROCESS_FS_ROOT"/[1-9]*; do
+    scanned=$((scanned + 1))
+    (( scanned <= scan_limit && SECONDS < deadline )) || return 1
     [[ -d "$process_dir" ]] || continue
     pid="${process_dir##*/}"
     if ! snapshot="$(linux_proc_stat_snapshot "$pid")"; then
@@ -250,8 +284,14 @@ marker_processes_for_path() {
   local marker="$1"
   local candidates="${2:-}"
   local process_dir fd target pid
+  local scanned=0
+  local scan_limit="${PROCESS_SCAN_LIMIT:-65536}"
+  local deadline=$(( SECONDS + ${PROCESS_SCAN_TIMEOUT_SECONDS:-5} ))
+  [[ "$scan_limit" =~ ^[1-9][0-9]*$ ]] || return 1
   if [[ -d "$PROCESS_FS_ROOT" ]]; then
     for pid in $candidates; do
+      scanned=$((scanned + 1))
+      (( scanned <= scan_limit && SECONDS < deadline )) || return 1
       [[ "$pid" =~ ^[1-9][0-9]*$ ]] || return 1
       process_dir="$PROCESS_FS_ROOT/$pid"
       [[ -d "$process_dir" ]] || continue
@@ -260,6 +300,8 @@ marker_processes_for_path() {
         continue
       fi
       for fd in "$process_dir"/fd/*; do
+        scanned=$((scanned + 1))
+        (( scanned <= scan_limit && SECONDS < deadline )) || return 1
         [[ -e "$fd" || -L "$fd" ]] || continue
         if ! target="$(readlink "$fd" 2>/dev/null)"; then
           [[ -e "$fd" || -L "$fd" ]] && return 1
@@ -465,4 +507,23 @@ terminate_process_group() {
   signal_marker_processes KILL || true
   kill -KILL -- "-$group_id" >/dev/null 2>&1 || true
   return 0
+}
+
+bounded_wait_for_child() {
+  local pid="$1"
+  local deadline=$(( SECONDS + ${TERMINATION_TIMEOUT_SECONDS:-5} ))
+  local exists_rc=0
+  local wait_rc=0
+  while true; do
+    if process_exists "$pid"; then
+      if (( SECONDS >= deadline )); then return 124; fi
+      sleep 0.05
+      continue
+    else
+      exists_rc=$?
+    fi
+    [[ "$exists_rc" == "1" ]] || return 2
+    wait "$pid" || wait_rc=$?
+    return "$wait_rc"
+  done
 }

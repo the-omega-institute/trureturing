@@ -66,11 +66,25 @@ PROGRESS_LOG_ROOT="${STRATALINT_LEAN_PROGRESS_LOG_ROOT:-}"
 # Wall-clock budget for the worker build itself (#403): a build that hangs while
 # holding the lean slot would otherwise loop the monitor below forever, never
 # reaching finish() (which releases the slot), starving every subsequent lean
-# build. 0 disables the bound (legacy unbounded behavior). Default is generous
-# enough for any legitimate lean-report build yet finite so a hang self-releases.
+# build. The default is generous enough for any legitimate lean-report build
+# yet finite so a hang self-releases; the bound cannot be disabled.
 BUILD_TIMEOUT_SECONDS="${STRATALINT_BUILD_TIMEOUT_SECONDS:-7200}"
-[[ "$BUILD_TIMEOUT_SECONDS" =~ ^[0-9]+$ && "$BUILD_TIMEOUT_SECONDS" -le 86400 ]] \
-  || { echo "report-supervisor: STRATALINT_BUILD_TIMEOUT_SECONDS must be 0..86400" >&2; exit 2; }
+[[ "$BUILD_TIMEOUT_SECONDS" =~ ^[1-9][0-9]*$ && "$BUILD_TIMEOUT_SECONDS" -le 86400 ]] \
+  || { echo "report-supervisor: STRATALINT_BUILD_TIMEOUT_SECONDS must be 1..86400" >&2; exit 2; }
+TERMINATION_TIMEOUT_SECONDS="${STRATALINT_TERMINATION_TIMEOUT_SECONDS:-5}"
+[[ "$TERMINATION_TIMEOUT_SECONDS" =~ ^[1-9][0-9]*$ \
+  && "$TERMINATION_TIMEOUT_SECONDS" -le 60 ]] \
+  || { echo "report-supervisor: STRATALINT_TERMINATION_TIMEOUT_SECONDS must be 1..60" >&2; exit 2; }
+PROCESS_SCAN_TIMEOUT_SECONDS="${STRATALINT_PROCESS_SCAN_TIMEOUT_SECONDS:-5}"
+[[ "$PROCESS_SCAN_TIMEOUT_SECONDS" =~ ^[1-9][0-9]*$ \
+  && "$PROCESS_SCAN_TIMEOUT_SECONDS" -le 60 ]] \
+  || { echo "report-supervisor: STRATALINT_PROCESS_SCAN_TIMEOUT_SECONDS must be 1..60" >&2; exit 2; }
+PROCESS_SCAN_LIMIT="${STRATALINT_PROCESS_SCAN_LIMIT:-65536}"
+[[ "$PROCESS_SCAN_LIMIT" =~ ^[1-9][0-9]*$ && "$PROCESS_SCAN_LIMIT" -le 1000000 ]] \
+  || { echo "report-supervisor: STRATALINT_PROCESS_SCAN_LIMIT must be 1..1000000" >&2; exit 2; }
+PROCESS_WALK_LIMIT="${STRATALINT_PROCESS_WALK_LIMIT:-1048576}"
+[[ "$PROCESS_WALK_LIMIT" =~ ^[1-9][0-9]*$ && "$PROCESS_WALK_LIMIT" -le 10000000 ]] \
+  || { echo "report-supervisor: STRATALINT_PROCESS_WALK_LIMIT must be 1..10000000" >&2; exit 2; }
 
 TMP_ROOT=""
 CHILD_PID=""
@@ -265,7 +279,7 @@ reclaim_lock_without_guard() {
 acquire_lock_guard() {
   local lock="$1"
   local guard="${lock}.reclaim-guard"
-  local deadline=$(( $(date +%s) + LOCK_TIMEOUT_SECONDS ))
+  local deadline=$(( SECONDS + LOCK_TIMEOUT_SECONDS ))
   local identity
   local reclaim_rc=0
   identity="$(owner_base_identity)" \
@@ -277,7 +291,7 @@ acquire_lock_guard() {
       reclaim_rc=$?
       [[ "$reclaim_rc" == "2" ]] && return 2
     fi
-    if (( $(date +%s) >= deadline )); then return 2; fi
+    if (( SECONDS >= deadline )); then return 2; fi
     sleep 0.05
   done
   if ! write_lock_owner "$guard" "$identity"; then
@@ -357,7 +371,7 @@ acquire_lean_slot() {
   local candidate
   local claim_rc
   local reclaim_rc
-  local deadline=$(( $(date +%s) + LOCK_TIMEOUT_SECONDS ))
+  local deadline=$(( SECONDS + LOCK_TIMEOUT_SECONDS ))
   while true; do
     for ((index = 1; index <= MAX_CONCURRENCY; index++)); do
       candidate="$SLOT_ROOT/slot-$index.lock"
@@ -383,7 +397,7 @@ acquire_lean_slot() {
         fi
       fi
     done
-    if (( $(date +%s) >= deadline )); then
+    if (( SECONDS >= deadline )); then
       echo "report-supervisor: timed out waiting for a Lean slot" >&2
       return 2
     fi
@@ -529,7 +543,7 @@ stall_was_observed() {
 
 wait_for_relay() {
   local pid="$1"
-  local deadline=$(( $(date +%s) + 2 ))
+  local deadline=$(( SECONDS + 2 ))
   local process_rc=0
   while true; do
     if process_exists "$pid"; then
@@ -542,7 +556,7 @@ wait_for_relay() {
       kill -KILL "$pid" >/dev/null 2>&1 || true
       break
     fi
-    if (( $(date +%s) >= deadline )); then
+    if (( SECONDS >= deadline )); then
       kill -TERM "$pid" >/dev/null 2>&1 || true
       sleep 0.1
       kill -KILL "$pid" >/dev/null 2>&1 || true
@@ -550,7 +564,7 @@ wait_for_relay() {
     fi
     sleep 0.05
   done
-  wait "$pid" >/dev/null 2>&1 || true
+  bounded_wait_for_child "$pid" >/dev/null 2>&1 || true
 }
 
 loadavg_per_cpu() {
@@ -609,7 +623,7 @@ performance_event() {
 }
 
 acquire_metrics_lock() {
-  local deadline=$(( $(date +%s) + LOCK_TIMEOUT_SECONDS ))
+  local deadline=$(( SECONDS + LOCK_TIMEOUT_SECONDS ))
   local candidate="${METRICS_LOG}.lock"
   local claim_rc=0
   local reclaim_rc=0
@@ -626,7 +640,7 @@ acquire_metrics_lock() {
       reclaim_rc=$?
       [[ "$reclaim_rc" == "2" ]] && return 2
     fi
-    if (( $(date +%s) >= deadline )); then
+    if (( SECONDS >= deadline )); then
       echo "report-supervisor: timed out waiting for the performance ledger" >&2
       return 2
     fi
@@ -663,7 +677,7 @@ finish() {
     terminate_process_group "$PROCESS_GROUP_ID"
   fi
   if [[ -n "$CHILD_PID" ]]; then
-    wait "$CHILD_PID" >/dev/null 2>&1 || true
+    bounded_wait_for_child "$CHILD_PID" >/dev/null 2>&1 || true
   fi
   if [[ -n "$STDOUT_RELAY_PID" ]]; then wait_for_relay "$STDOUT_RELAY_PID"; fi
   if [[ -n "$STDERR_RELAY_PID" ]]; then wait_for_relay "$STDERR_RELAY_PID"; fi
@@ -714,10 +728,7 @@ if [[ "$LEAN_SLOT" == "1" ]]; then
   fi
 fi
 if [[ "$LEAN_SLOT" == "1" ]]; then initialize_stall_observation; fi
-BUILD_DEADLINE=0
-if (( BUILD_TIMEOUT_SECONDS > 0 )); then
-  BUILD_DEADLINE=$(( $(date +%s) + BUILD_TIMEOUT_SECONDS ))
-fi
+BUILD_DEADLINE=$(( SECONDS + BUILD_TIMEOUT_SECONDS ))
 BUILD_TIMED_OUT=0
 while true; do
   if process_exists "$CHILD_PID"; then
@@ -732,7 +743,7 @@ while true; do
   fi
   sample_process_tree
   now_seconds="$(date +%s)"
-  if (( BUILD_DEADLINE > 0 )) && (( now_seconds >= BUILD_DEADLINE )); then
+  if (( SECONDS >= BUILD_DEADLINE )); then
     echo "report-supervisor: build exceeded ${BUILD_TIMEOUT_SECONDS}s wall-clock budget;" \
       "terminating to release the lean slot (#403)" >&2
     BUILD_TIMED_OUT=1
@@ -748,7 +759,7 @@ while true; do
   sleep 0.1
 done
 set +e
-wait "$CHILD_PID"
+bounded_wait_for_child "$CHILD_PID"
 rc=$?
 set -e
 if [[ "$BUILD_TIMED_OUT" == "1" ]]; then
