@@ -8,10 +8,16 @@ public sealed partial class ReportSupervisorScriptTests
     [Theory]
     [InlineData("Z+")]
     [InlineData("X")]
-    public void DeadOnlyProcessGroupAllowsReclaim(string state)
+    public void DeadOnlyLinuxProcessGroupAllowsReclaim(string state)
     {
         using var fixture = new DeadOwnerObservationFixture();
-        var members = fixture.RunProcessGroupMembers(99999999, state);
+        fixture.AttachSyntheticProcStat(
+            424242,
+            state[0],
+            parentPid: 1,
+            processGroupId: 99999999,
+            starttime: 12345);
+        var members = fixture.RunProcessGroupMembersFromProc(99999999);
         Assert.Equal(0, members.ExitCode);
         Assert.Empty(members.StandardOutput);
         fixture.CreateSlotWithOwner("99999999|definitely-dead|0\n");
@@ -23,7 +29,11 @@ public sealed partial class ReportSupervisorScriptTests
             $"STRATALINT_TEST_PS_DEAD_GROUP_STATE={state}",
             "STRATALINT_LOCK_TIMEOUT_SECONDS=3");
 
-        Assert.Equal(0, result.ExitCode);
+        Assert.True(
+            result.ExitCode == 0,
+            $"exit: {result.ExitCode}\n"
+            + $"stdout: {Encoding.UTF8.GetString(result.StandardOutput)}\n"
+            + $"stderr: {Encoding.UTF8.GetString(result.StandardError)}");
     }
 
     [Fact]
@@ -44,17 +54,22 @@ public sealed partial class ReportSupervisorScriptTests
             new UTF8Encoding(false));
         File.WriteAllText(
             Path.Combine(staleSlot, "group"),
-            "99999999|99999999|definitely-dead\n",
+            $"99999999|99999999|{EmptyGroupLeaderStartIdentity()}\n",
             new UTF8Encoding(false));
         var result = BoundedProcessRunner.Run(
             "bash",
             [fixture.ConcurrentDriver, fixture.Supervisor, fixture.ProducerWorker,
-             fixture.MetricsLog, fixture.StateRoot, fixture.ActiveMarker, fixture.OverlapMarker],
+             fixture.MetricsLog, fixture.StateRoot, fixture.ActiveMarker, fixture.OverlapMarker,
+             fixture.ConcurrentRelease, $"{fixture.Root}:{fixture.HostPath}"],
             fixture.Root,
             TimeSpan.FromSeconds(30),
             1024 * 1024);
 
-        Assert.Equal(0, result.ExitCode);
+        Assert.True(
+            result.ExitCode == 0,
+            $"exit: {result.ExitCode}\n"
+            + $"stdout: {Encoding.UTF8.GetString(result.StandardOutput)}\n"
+            + $"stderr: {Encoding.UTF8.GetString(result.StandardError)}");
         Assert.False(File.Exists(fixture.OverlapMarker));
         Assert.Equal(2, fixture.ReadMetrics().Count);
     }

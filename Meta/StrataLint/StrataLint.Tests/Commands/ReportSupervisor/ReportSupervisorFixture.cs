@@ -20,7 +20,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
             #!/usr/bin/env bash
             set -euo pipefail
             if ! mkdir "$1" 2>/dev/null; then touch "$2"; fi
-            sleep 1
+            while [[ ! -e "$3" ]]; do sleep 0.02; done
             rmdir "$1" 2>/dev/null || true
             """);
         ConcurrentDriver = WriteExecutable("concurrent-driver.sh", """
@@ -32,14 +32,72 @@ internal sealed class ReportSupervisorFixture : IDisposable
             state="$4"
             active="$5"
             overlap="$6"
-            env STRATALINT_REPORT_METRICS_LOG="$metrics" STRATALINT_SUPERVISOR_ROOT="$state" \
-              "$supervisor" --role lean-producer --lean-slot -- "$worker" "$active" "$overlap" &
+            release="$7"
+            host_path="$8"
+            env PATH="$host_path" STRATALINT_REPORT_METRICS_LOG="$metrics" \
+              STRATALINT_SUPERVISOR_ROOT="$state" \
+              "$supervisor" --role lean-producer --lean-slot -- \
+              "$worker" "$active" "$overlap" "$release" &
             first=$!
-            env STRATALINT_REPORT_METRICS_LOG="$metrics" STRATALINT_SUPERVISOR_ROOT="$state" \
-              "$supervisor" --role lean-producer --lean-slot -- "$worker" "$active" "$overlap" &
+            ready=0
+            for _ in {1..500}; do
+              if [[ -d "$active" ]]; then ready=1; break; fi
+              kill -0 "$first" 2>/dev/null || exit 2
+              sleep 0.02
+            done
+            [[ "$ready" == "1" ]] || exit 2
+            env PATH="$host_path" STRATALINT_REPORT_METRICS_LOG="$metrics" \
+              STRATALINT_SUPERVISOR_ROOT="$state" \
+              "$supervisor" --role lean-producer --lean-slot -- \
+              "$worker" "$active" "$overlap" "$release" &
             second=$!
+            ready=0
+            for _ in {1..500}; do
+              run_count="$(find "$state/runs" -mindepth 1 -maxdepth 1 -type d 2>/dev/null \
+                | awk 'END {print NR + 0}')"
+              if [[ "$run_count" -ge 2 && -d "$active" ]]; then ready=1; break; fi
+              kill -0 "$second" 2>/dev/null || exit 2
+              sleep 0.02
+            done
+            [[ "$ready" == "1" ]] || exit 2
+            touch "$release"
             wait "$first"
             wait "$second"
+            """);
+        _ = WriteExecutable("ps", """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            if [[ "$*" == *"pid=,pgid=,stat="* ]]; then
+              printf '1 1 S\n'
+              exit 0
+            fi
+            if [[ "$*" == *"pid=,ppid=,etime="* ]]; then
+              for pid_file in "$PWD/detached.pid" "$PWD/scratch.txt"; do
+                [[ -s "$pid_file" ]] || continue
+                read -r pid < "$pid_file"
+                if [[ "$pid" =~ ^[1-9][0-9]*$ ]] && kill -0 "$pid" 2>/dev/null; then
+                  printf '%s 1 00:00\n' "$pid"
+                fi
+              done
+              exit 0
+            fi
+            previous=""
+            requested_pid=""
+            for argument in "$@"; do
+              if [[ "$previous" == "-p" ]]; then requested_pid="$argument"; fi
+              previous="$argument"
+            done
+            if [[ "$*" == *"lstart="* ]]; then
+              printf 'synthetic-start-%s\n' "$requested_pid"
+            elif [[ "$*" == *"stat="* ]]; then
+              printf 'S\n'
+            elif [[ "$*" == *"time="* ]]; then
+              printf '00:00:00\n'
+            elif [[ "$*" == *"rss="* ]]; then
+              printf '0\n'
+            else
+              exit 1
+            fi
             """);
         LongRunningWorker = WriteExecutable("long-running-worker.sh", """
             #!/usr/bin/env bash
@@ -104,6 +162,8 @@ internal sealed class ReportSupervisorFixture : IDisposable
     internal string ScratchRecord => Path.Combine(Root, "scratch.txt");
     internal string ActiveMarker => Path.Combine(Root, "active");
     internal string OverlapMarker => Path.Combine(Root, "overlap");
+    internal string ConcurrentRelease => Path.Combine(Root, "release");
+    internal string HostPath => Environment.GetEnvironmentVariable("PATH") ?? "/bin:/usr/bin";
     internal string GrandchildPid => Path.Combine(Root, "grandchild.pid");
     internal string ExitedGrandchildPid => ScratchRecord;
     internal string DetachedPid => Path.Combine(Root, "detached.pid");
@@ -128,6 +188,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
     {
         var arguments = new List<string>
         {
+            $"PATH={Root}:{HostPath}",
             $"STRATALINT_REPORT_METRICS_LOG={MetricsLog}",
             $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
         };
@@ -147,6 +208,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
         BoundedProcessRunner.Run(
             "env",
             [
+                $"PATH={Root}:{HostPath}",
                 $"HOME={Root}",
                 $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
                 Supervisor,
@@ -162,6 +224,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
             FileSizeLimitedDriver,
             [
                 "env",
+                $"PATH={Root}:{HostPath}",
                 $"STRATALINT_REPORT_METRICS_LOG={MetricsLog}",
                 $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
                 Supervisor,
@@ -184,6 +247,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
         };
         foreach (var argument in new[]
         {
+            $"PATH={Root}:{HostPath}",
             $"STRATALINT_REPORT_METRICS_LOG={MetricsLog}",
             $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
             Supervisor,
@@ -207,6 +271,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
         };
         foreach (var argument in new[]
         {
+            $"PATH={Root}:{HostPath}",
             $"STRATALINT_REPORT_METRICS_LOG={MetricsLog}",
             $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
             Supervisor,

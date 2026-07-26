@@ -195,6 +195,29 @@ public sealed partial class ReportSupervisorScriptTests
     }
 
     [Fact]
+    public void EmptyPublishedReclaimGuardOwnerFailsImmediately()
+    {
+        using var fixture = new ReportSupervisorFixture();
+        var guard = Path.Combine(fixture.StateRoot, "slots", "slot-1.lock.reclaim-guard");
+        Directory.CreateDirectory(guard);
+        File.WriteAllText(Path.Combine(guard, "owner"), "\n", new UTF8Encoding(false));
+        var stopwatch = Stopwatch.StartNew();
+
+        var result = fixture.RunWithEnvironment(
+            "lean-producer",
+            leanSlot: true,
+            fixture.ScratchWriter,
+            "STRATALINT_LOCK_TIMEOUT_SECONDS=5");
+        stopwatch.Stop();
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.True(
+            stopwatch.Elapsed < TimeSpan.FromSeconds(2),
+            $"malformed reclaim guard was polled for {stopwatch.Elapsed}");
+        Assert.True(Directory.Exists(guard));
+    }
+
+    [Fact]
     public void LockOwnedByADeadProcessIsReclaimed()
     {
         using var fixture = new ReportSupervisorFixture();
@@ -403,12 +426,17 @@ public sealed partial class ReportSupervisorScriptTests
         var result = BoundedProcessRunner.Run(
             "bash",
             [fixture.ConcurrentDriver, fixture.Supervisor, fixture.ProducerWorker,
-             fixture.MetricsLog, fixture.StateRoot, fixture.ActiveMarker, fixture.OverlapMarker],
+             fixture.MetricsLog, fixture.StateRoot, fixture.ActiveMarker, fixture.OverlapMarker,
+             fixture.ConcurrentRelease, $"{fixture.Root}:{fixture.HostPath}"],
             fixture.Root,
             TimeSpan.FromSeconds(30),
             1024 * 1024);
 
-        Assert.Equal(0, result.ExitCode);
+        Assert.True(
+            result.ExitCode == 0,
+            $"exit: {result.ExitCode}\n"
+            + $"stdout: {Encoding.UTF8.GetString(result.StandardOutput)}\n"
+            + $"stderr: {Encoding.UTF8.GetString(result.StandardError)}");
         Assert.False(File.Exists(fixture.OverlapMarker));
         var metrics = fixture.ReadMetrics();
         Assert.Equal(2, metrics.Count);
@@ -540,8 +568,24 @@ public sealed partial class ReportSupervisorScriptTests
             new UTF8Encoding(false));
         File.WriteAllText(
             Path.Combine(slot, "group"),
-            "99999999|99999999|definitely-dead\n",
+            $"99999999|99999999|{EmptyGroupLeaderStartIdentity()}\n",
             new UTF8Encoding(false));
+    }
+
+    private static string EmptyGroupLeaderStartIdentity()
+    {
+        if (!Directory.Exists("/proc")) return "synthetic-dead";
+        var stat = File.ReadAllText(Path.Combine(
+            "/proc",
+            Environment.ProcessId.ToString(System.Globalization.CultureInfo.InvariantCulture),
+            "stat"));
+        var commandEnd = stat.LastIndexOf(')');
+        Assert.True(commandEnd >= 0 && commandEnd + 2 < stat.Length);
+        var fields = stat[(commandEnd + 2)..].Split(
+            ' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        Assert.True(fields.Length >= 20);
+        Assert.Matches("^[1-9][0-9]*$", fields[19]);
+        return fields[19];
     }
 
     private static bool ProcessExists(int pid)

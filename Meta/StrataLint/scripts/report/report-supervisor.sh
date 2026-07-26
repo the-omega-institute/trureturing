@@ -75,6 +75,7 @@ BUILD_TIMEOUT_SECONDS="${STRATALINT_BUILD_TIMEOUT_SECONDS:-7200}"
 TMP_ROOT=""
 CHILD_PID=""
 PROCESS_GROUP_ID=""
+PROCESS_GROUP_START_IDENTITY=""
 STDOUT_RELAY_PID=""
 STDERR_RELAY_PID=""
 SLOT_DIR=""
@@ -145,13 +146,9 @@ file_size() {
   printf '%s\n' "$value"
 }
 
-process_start_identity() {
-  ps -o lstart= -p "$1" 2>/dev/null | awk '{$1=$1; print; exit}'
-}
-
 owner_base_identity() {
   local start
-  start="$(process_start_identity "$$")"
+  start="$(process_start_identity "$$" || true)"
   if [[ -z "$start" ]]; then start=unknown; fi
   printf '%s|%s\n' "$$" "$start"
 }
@@ -175,59 +172,85 @@ lock_is_owned_by() {
 
 lock_is_stale() {
   local lock="$1"
+  local owner_path="$lock/owner"
   local owner=""
   local pid=""
   local expected_start=""
   local actual_start=""
-  if [[ -f "$lock/owner" ]]; then
-    read -r owner < "$lock/owner" || return 1
+  local exists_rc=0
+  if [[ ! -e "$owner_path" && ! -L "$owner_path" ]]; then
+    # mkdir publishes a reclaim guard before its owner record is atomically
+    # renamed into place. Only that absent path is a pollable publication gap.
+    [[ "$lock" == *.reclaim-guard ]] && return 1
+    return 2
   fi
+  [[ -f "$owner_path" ]] || return 2
+  read -r owner < "$owner_path" || return 2
+  [[ -n "$owner" ]] || return 2
   if [[ "$owner" =~ ^([1-9][0-9]*)\|([^|]+)\|([0-9]+)$ ]]; then
     pid="${BASH_REMATCH[1]}"
     expected_start="${BASH_REMATCH[2]}"
-    if ! process_exists "$pid"; then
-      stale_slot_is_quiescent "$lock" || return 1
-      return 0
+    if process_exists "$pid"; then
+      :
+    else
+      exists_rc=$?
+      [[ "$exists_rc" == "2" ]] && return 2
+      stale_slot_is_quiescent "$lock"
+      return $?
     fi
     if [[ "$expected_start" == "unknown" ]]; then
-      return 1
+      return 2
     fi
-    actual_start="$(process_start_identity "$pid")"
-    [[ -n "$actual_start" ]] || return 1
+    actual_start="$(process_start_identity "$pid")" || return 2
+    [[ -n "$actual_start" ]] || return 2
     if [[ "$actual_start" != "$expected_start" ]]; then
-      stale_slot_is_quiescent "$lock" || return 1
-      return 0
+      stale_slot_is_quiescent "$lock"
+      return $?
     fi
     return 1
   fi
   if [[ "$owner" =~ ^([1-9][0-9]*)\|([^|]+)$ ]]; then
     pid="${BASH_REMATCH[1]}"
     expected_start="${BASH_REMATCH[2]}"
-    if ! process_exists "$pid"; then
-      stale_slot_is_quiescent "$lock" || return 1
-      return 0
+    if process_exists "$pid"; then
+      :
+    else
+      exists_rc=$?
+      [[ "$exists_rc" == "2" ]] && return 2
+      stale_slot_is_quiescent "$lock"
+      return $?
     fi
-    actual_start="$(process_start_identity "$pid")"
-    [[ -n "$actual_start" ]] || return 1
+    actual_start="$(process_start_identity "$pid")" || return 2
+    [[ -n "$actual_start" ]] || return 2
     if [[ "$actual_start" != "$expected_start" ]]; then
-      stale_slot_is_quiescent "$lock" || return 1
-      return 0
+      stale_slot_is_quiescent "$lock"
+      return $?
     fi
     return 1
   fi
   if [[ "$owner" =~ ^[1-9][0-9]*$ ]]; then
-    if ! process_exists "$owner"; then
-      stale_slot_is_quiescent "$lock" || return 1
-      return 0
+    if process_exists "$owner"; then
+      :
+    else
+      exists_rc=$?
+      [[ "$exists_rc" == "2" ]] && return 2
+      stale_slot_is_quiescent "$lock"
+      return $?
     fi
     return 1
   fi
-  return 1
+  return 2
 }
 
 reclaim_lock_without_guard() {
   local lock="$1"
-  lock_is_stale "$lock" || return 1
+  local stale_rc=0
+  if lock_is_stale "$lock"; then
+    :
+  else
+    stale_rc=$?
+    return "$stale_rc"
+  fi
   local stale="${lock}.stale.$$.$RANDOM"
   if mv "$lock" "$stale" 2>/dev/null; then
     rm -rf -- "$stale"
@@ -241,10 +264,16 @@ acquire_lock_guard() {
   local guard="${lock}.reclaim-guard"
   local deadline=$(( $(date +%s) + LOCK_TIMEOUT_SECONDS ))
   local identity
+  local reclaim_rc=0
   identity="$(owner_base_identity)" \
     || { echo "report-supervisor: could not identify lock owner process" >&2; return 2; }
   while ! mkdir "$guard" 2>/dev/null; do
-    reclaim_lock_without_guard "$guard" || true
+    if reclaim_lock_without_guard "$guard"; then
+      :
+    else
+      reclaim_rc=$?
+      [[ "$reclaim_rc" == "2" ]] && return 2
+    fi
     if (( $(date +%s) >= deadline )); then return 2; fi
     sleep 0.05
   done
@@ -277,7 +306,13 @@ release_lock_guard() {
 
 reclaim_stale_lock() {
   local lock="$1"
-  acquire_lock_guard "$lock" || return 1
+  local guard_rc=0
+  if acquire_lock_guard "$lock"; then
+    :
+  else
+    guard_rc=$?
+    return "$guard_rc"
+  fi
   reclaim_lock_without_guard "$lock"
   local rc=$?
   release_lock_guard "$lock"
@@ -287,9 +322,15 @@ reclaim_stale_lock() {
 claim_lock() {
   local lock="$1"
   local identity
+  local guard_rc=0
   identity="$(owner_base_identity)" \
     || { echo "report-supervisor: could not identify lock owner process" >&2; return 2; }
-  acquire_lock_guard "$lock" || return 1
+  if acquire_lock_guard "$lock"; then
+    :
+  else
+    guard_rc=$?
+    return "$guard_rc"
+  fi
   if ! mkdir "$lock" 2>/dev/null; then
     release_lock_guard "$lock"
     return 1
@@ -311,6 +352,8 @@ active_slot_count() {
 acquire_lean_slot() {
   local index
   local candidate
+  local claim_rc
+  local reclaim_rc
   local deadline=$(( $(date +%s) + LOCK_TIMEOUT_SECONDS ))
   while true; do
     for ((index = 1; index <= MAX_CONCURRENCY; index++)); do
@@ -320,9 +363,21 @@ acquire_lean_slot() {
         SLOT_OWNER_BASE="$CLAIMED_OWNER_BASE"
         CONCURRENCY_COUNT="$(active_slot_count)"
         return 0
+      else
+        claim_rc=$?
+        if [[ "$claim_rc" == "2" ]]; then
+          echo "report-supervisor: Lean slot state is unreadable" >&2
+          return 2
+        fi
       fi
       if reclaim_stale_lock "$candidate"; then
         continue 2
+      else
+        reclaim_rc=$?
+        if [[ "$reclaim_rc" == "2" ]]; then
+          echo "report-supervisor: Lean slot state is unreadable" >&2
+          return 2
+        fi
       fi
     done
     if (( $(date +%s) >= deadline )); then
@@ -433,7 +488,7 @@ cpu_time_centiseconds() {
 }
 
 cpu_progress_snapshot() {
-  local pid ticks members
+  local pid ticks members exists_rc
   local total=0
   members="$(process_group_members_for_id "$PROCESS_GROUP_ID")" || return 1
   while IFS= read -r pid; do
@@ -441,8 +496,13 @@ cpu_progress_snapshot() {
       && "$pid" != "$STDOUT_RELAY_PID" \
       && "$pid" != "$STDERR_RELAY_PID" ]] || continue
     if ! ticks="$(cpu_time_centiseconds "$pid")"; then
-      process_exists "$pid" || continue
-      return 1
+      if process_exists "$pid"; then
+        return 1
+      else
+        exists_rc=$?
+        [[ "$exists_rc" == "1" ]] && continue
+        return 1
+      fi
     fi
     [[ "$ticks" =~ ^[0-9]+$ ]] || return 1
     total=$((total + ticks))
@@ -522,10 +582,18 @@ stall_was_observed() {
 wait_for_relay() {
   local pid="$1"
   local deadline=$(( $(date +%s) + 2 ))
-  local state=""
-  while process_exists "$pid"; do
-    state="$(ps -o stat= -p "$pid" 2>/dev/null | awk '{$1=$1; print; exit}')"
-    if [[ -z "$state" || "$state" == Z* ]]; then break; fi
+  local process_rc=0
+  while true; do
+    if process_exists "$pid"; then
+      :
+    else
+      process_rc=$?
+      [[ "$process_rc" == "1" ]] && break
+      kill -TERM "$pid" >/dev/null 2>&1 || true
+      sleep 0.1
+      kill -KILL "$pid" >/dev/null 2>&1 || true
+      break
+    fi
     if (( $(date +%s) >= deadline )); then
       kill -TERM "$pid" >/dev/null 2>&1 || true
       sleep 0.1
@@ -595,8 +663,21 @@ performance_event() {
 acquire_metrics_lock() {
   local deadline=$(( $(date +%s) + LOCK_TIMEOUT_SECONDS ))
   local candidate="${METRICS_LOG}.lock"
-  while ! claim_lock "$candidate"; do
-    reclaim_stale_lock "$candidate" || true
+  local claim_rc=0
+  local reclaim_rc=0
+  while true; do
+    if claim_lock "$candidate"; then
+      break
+    else
+      claim_rc=$?
+      [[ "$claim_rc" == "2" ]] && return 2
+    fi
+    if reclaim_stale_lock "$candidate"; then
+      :
+    else
+      reclaim_rc=$?
+      [[ "$reclaim_rc" == "2" ]] && return 2
+    fi
     if (( $(date +%s) >= deadline )); then
       echo "report-supervisor: timed out waiting for the performance ledger" >&2
       return 2
@@ -675,9 +756,10 @@ TMPDIR="$SCRATCH" "$@" 9< "$RUN_MARKER" > "$RUN_STDOUT" 2> "$RUN_STDERR" &
 CHILD_PID=$!
 PROCESS_GROUP_ID="$CHILD_PID"
 set +m
+child_start="$(process_start_identity "$CHILD_PID" || true)"
+if [[ -z "$child_start" ]]; then child_start=unknown; fi
+PROCESS_GROUP_START_IDENTITY="$child_start"
 if [[ "$LEAN_SLOT" == "1" ]]; then
-  child_start="$(process_start_identity "$CHILD_PID" || true)"
-  if [[ -z "$child_start" ]]; then child_start=unknown; fi
   if ! write_slot_metadata group "$PROCESS_GROUP_ID|$CHILD_PID|$child_start"; then
     echo "report-supervisor: infrastructure failure: could not record the Lean producer process group" >&2
     exit 2
@@ -689,7 +771,17 @@ if (( BUILD_TIMEOUT_SECONDS > 0 )); then
   BUILD_DEADLINE=$(( $(date +%s) + BUILD_TIMEOUT_SECONDS ))
 fi
 BUILD_TIMED_OUT=0
-while process_exists "$CHILD_PID"; do
+while true; do
+  if process_exists "$CHILD_PID"; then
+    :
+  else
+    process_rc=$?
+    if [[ "$process_rc" == "2" ]]; then
+      echo "report-supervisor: infrastructure failure: worker process state is unavailable" >&2
+      exit 2
+    fi
+    break
+  fi
   sample_process_tree
   now_seconds="$(date +%s)"
   if (( BUILD_DEADLINE > 0 )) && (( now_seconds >= BUILD_DEADLINE )); then

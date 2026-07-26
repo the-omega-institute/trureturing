@@ -52,10 +52,10 @@ public sealed partial class ReportSupervisorScriptTests
             fixture.AcceleratedObservationEnvironment(stepSeconds: 60));
 
         Assert.Equal(0, observed.ExitCode);
-        Assert.Contains(
-            "stall observed",
-            Encoding.UTF8.GetString(observed.StandardError),
-            StringComparison.OrdinalIgnoreCase);
+        var standardError = Encoding.UTF8.GetString(observed.StandardError);
+        Assert.True(
+            standardError.Contains("stall observed", StringComparison.OrdinalIgnoreCase),
+            standardError);
         Assert.False(fixture.SlotExists());
         Assert.Equal(0, fixture.Run(fixture.SuccessWorker).ExitCode);
     }
