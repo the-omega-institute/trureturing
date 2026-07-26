@@ -209,7 +209,23 @@ function M.select_candidate(candidates, generation, prior_issues, is_admissible)
   if n == 0 then
     return nil
   end
-  return eligible[((tonumber(generation) or 0) % n) + 1]
+  -- Foundation-first (良基归纳; CLAUDE.md 第〇节 well-founded induction + 第22条 frontier):
+  -- the PZG/BEDC kernel volumes (内核卷) underpin the GICT/observer-quantum higher volumes, so
+  -- formalize kernel atoms before higher-volume ones. This is DEPENDENCY order, not fabricated
+  -- easy-first: a deep higher-volume theorem whose kernel prerequisites are not yet formalized
+  -- deadlocks on undefined prerequisites (observed: GICT theorems 6.14/6.17 stall at consensus
+  -- round 0, never terminalizing and freezing this one-at-a-time producer). Round-robin still
+  -- gives fair coverage WITHIN the kernel stratum; higher volumes are reached once the kernel
+  -- eligible set is exhausted (attempted atoms drop out per the per-atom dedup above).
+  local kernel = {}
+  for _, candidate in ipairs(eligible) do
+    local source = tostring(candidate.source_id)
+    if source:sub(1, 4) == "pzg-" or source:sub(1, 5) == "bedc-" then
+      kernel[#kernel + 1] = candidate
+    end
+  end
+  local pool = (#kernel > 0) and kernel or eligible
+  return pool[((tonumber(generation) or 0) % #pool) + 1]
 end
 
 -- Build the github-proxy issue-create request for a digestion formalize target. The routing title
