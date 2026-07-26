@@ -70,6 +70,25 @@ public sealed partial class ReportSupervisorScriptTests
     }
 
     [Fact]
+    public void DeadOwnerFromMetadataCrashWindowIsReclaimed()
+    {
+        using var fixture = new DeadOwnerObservationFixture();
+        fixture.CreateSlotWithOwner("99999999|definitely-dead|0\n");
+
+        Assert.False(File.Exists(Path.Combine(fixture.Slot, "marker")));
+        Assert.False(File.Exists(Path.Combine(fixture.Slot, "group")));
+
+        var result = fixture.Run(
+            fixture.SuccessWorker,
+            "STRATALINT_LOCK_TIMEOUT_SECONDS=3");
+
+        Assert.True(
+            result.ExitCode == 0,
+            $"stdout: {Encoding.UTF8.GetString(result.StandardOutput)}\n"
+            + $"stderr: {Encoding.UTF8.GetString(result.StandardError)}");
+    }
+
+    [Fact]
     public void SigkillOrphanKeepsSlotUntilTheWholeProcessGroupIsDead()
     {
         using var fixture = new DeadOwnerObservationFixture();
@@ -116,6 +135,8 @@ public sealed partial class ReportSupervisorScriptTests
             TimeSpan.FromSeconds(10)));
         var leaderPid = fixture.ReadPid(fixture.ClosedFdLeaderPidFile);
         var descendantPid = fixture.ReadPid(fixture.ClosedFdDescendantPidFile);
+        Assert.True(File.Exists(Path.Combine(fixture.Slot, "marker")));
+        Assert.True(File.Exists(Path.Combine(fixture.Slot, "group")));
 
         fixture.KillProcess(holder.Id);
         fixture.KillProcess(leaderPid);

@@ -109,6 +109,11 @@ stale_slot_is_quiescent() {
   local group_id=""
   local leader_pid=""
   slot_lock_requires_group_proof "$lock" || return 0
+  # The owner is already confirmed dead before this helper is called. A crash
+  # between claiming the dev-compatible lock and publishing both producer
+  # views leaves no complete proof to inspect, so retain dev's direct reclaim.
+  # Once both views exist, require the stronger group + marker quiescence proof.
+  [[ -e "$lock/group" && -e "$lock/marker" ]] || return 0
   [[ -f "$lock/group" ]] || return 1
   read -r group_record < "$lock/group" || return 1
   [[ "$group_record" =~ ^([1-9][0-9]*)\|([1-9][0-9]*)\|(.+)$ ]] || return 1
