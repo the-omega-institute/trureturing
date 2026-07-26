@@ -272,9 +272,9 @@ components:
       - "c0/corpus git-sha1/a12fb72cb7a3717e936a2b14fb3d89f8906a540e Golden/cases/protected-semantics.toml"
       - "c0/corpus git-sha1/fdcb38587e9d5895073f230bdcb2d03735b66a2e Golden/fixture-registry.yaml"
       - "c0/gate-wiring git-sha1/ed802e8827117d1b4621044cbd32933c7d580923 .github/scripts/harness-gate.sh"
-      - "c0/inaugural-certificate sha256/f11e57d929c7c11d0126bda26cc7eb743b6904f324b880f22a6e5acc22d0606b Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json"
-      - "c0/preimage-commit git-commit/d0813a046df2b183fe05348800b0fdad776bde3a"
-      - "c0/preimage-tree git-tree/c95e8920161de1894276bea463b2227ecef52bb3"
+      - "c0/inaugural-certificate sha256/88b78097d7b6148d65b8f57c549d6214a12457107f257288f25a258bf687638c Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json"
+      - "c0/preimage-commit git-commit/d734467cfb8277cc2a6ff381b84eb8e0081f5cc0"
+      - "c0/preimage-tree git-tree/9ca7269eddf9a4270f0edf5b5b830b4349630213"
     judged_by:
       - bootstrap-pr-1
     verification: verified
