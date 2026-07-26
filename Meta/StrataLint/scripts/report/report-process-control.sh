@@ -17,27 +17,84 @@ collect_process_tree() {
   done
 }
 
+process_exists() {
+  local pid="$1"
+  local stat=""
+  local state=""
+  local suffix=""
+  kill -0 "$pid" >/dev/null 2>&1 || return 1
+  if [[ -d "$PROCESS_FS_ROOT" ]]; then
+    if [[ ! -r "$PROCESS_FS_ROOT/$pid/stat" ]]; then
+      kill -0 "$pid" >/dev/null 2>&1 || return 1
+      return 0
+    fi
+    stat="$(< "$PROCESS_FS_ROOT/$pid/stat")"
+    suffix="${stat##*) }"
+    state="${suffix%% *}"
+    [[ "$state" =~ ^[A-Za-z]$ ]] || return 0
+  else
+    state="$(ps -o stat= -p "$pid" 2>/dev/null | awk '{$1=$1; print; exit}')" \
+      || return 0
+    [[ -n "$state" ]] || return 0
+    state="${state:0:1}"
+  fi
+  [[ "$state" != "Z" && "$state" != "X" ]]
+}
+
 process_group_members_for_id() {
   local group_id="$1"
   local table=""
   [[ "$group_id" =~ ^[1-9][0-9]*$ ]] || return 1
   table="$(ps -axo pid=,pgid=,stat= 2>/dev/null)" || return 1
   awk -v group="$group_id" '
-    $2 == group && $3 !~ /^Z/ {print $1}
+    NF == 0 {next}
+    {
+      rows++
+      if (NF != 3 || $1 !~ /^[1-9][0-9]*$/ || $2 !~ /^[1-9][0-9]*$/ || $3 !~ /^[A-Za-z]/) {
+        malformed = 1
+        next
+      }
+      if ($2 == group && $3 !~ /^Z/) print $1
+    }
+    END {if (rows == 0 || malformed) exit 1}
   ' <<< "$table"
+}
+
+proc_process_has_supervisor_uid() {
+  local process_dir="$1"
+  local process_uid=""
+  if [[ ! -r "$process_dir/status" ]]; then
+    [[ -d "$process_dir" ]] && return 2
+    return 1
+  fi
+  process_uid="$(awk '/^Uid:/ {print $2; found=1; exit} END {if (!found) exit 1}' \
+    "$process_dir/status" 2>/dev/null)" || return 2
+  [[ "$process_uid" =~ ^[0-9]+$ ]] || return 2
+  [[ "$process_uid" == "${UID:-$(id -u)}" ]]
 }
 
 marker_processes_for_path() {
   local marker="$1"
-  local process_dir fd target pid
-  if [[ -d /proc ]]; then
-    for process_dir in /proc/[1-9]*; do
-      [[ -d "$process_dir/fd" ]] || continue
+  local process_dir fd target pid uid_result
+  if [[ -d "$PROCESS_FS_ROOT" ]]; then
+    for process_dir in "$PROCESS_FS_ROOT"/[1-9]*; do
+      [[ -d "$process_dir" ]] || continue
+      proc_process_has_supervisor_uid "$process_dir" || {
+        uid_result=$?
+        [[ "$uid_result" == "1" ]] && continue
+        return 1
+      }
+      if [[ ! -r "$process_dir/fd" || ! -x "$process_dir/fd" ]]; then
+        [[ -d "$process_dir" ]] && return 1
+        continue
+      fi
       pid="${process_dir##*/}"
-      # Workers inherit the two relay pipes and the dedicated marker on fd 9.
-      for fd in "$process_dir"/fd/1 "$process_dir"/fd/2 "$process_dir"/fd/9; do
+      for fd in "$process_dir"/fd/*; do
         [[ -e "$fd" || -L "$fd" ]] || continue
-        target="$(readlink "$fd" 2>/dev/null || true)"
+        if ! target="$(readlink "$fd" 2>/dev/null)"; then
+          [[ -e "$fd" || -L "$fd" ]] && return 1
+          continue
+        fi
         if [[ "$target" == "$marker" ]]; then
           printf '%s\n' "$pid"
           break
@@ -51,14 +108,26 @@ marker_processes_for_path() {
 }
 
 marker_processes() {
-  local process_dir fd target pid candidates elapsed_window
-  if [[ -d /proc ]]; then
-    for process_dir in /proc/[1-9]*; do
-      [[ -d "$process_dir/fd" ]] || continue
+  local process_dir fd target pid candidates elapsed_window uid_result
+  if [[ -d "$PROCESS_FS_ROOT" ]]; then
+    for process_dir in "$PROCESS_FS_ROOT"/[1-9]*; do
+      [[ -d "$process_dir" ]] || continue
+      proc_process_has_supervisor_uid "$process_dir" || {
+        uid_result=$?
+        [[ "$uid_result" == "1" ]] && continue
+        return 1
+      }
+      if [[ ! -r "$process_dir/fd" || ! -x "$process_dir/fd" ]]; then
+        [[ -d "$process_dir" ]] && return 1
+        continue
+      fi
       pid="${process_dir##*/}"
-      for fd in "$process_dir"/fd/1 "$process_dir"/fd/2 "$process_dir"/fd/9; do
+      for fd in "$process_dir"/fd/*; do
         [[ -e "$fd" || -L "$fd" ]] || continue
-        target="$(readlink "$fd" 2>/dev/null || true)"
+        if ! target="$(readlink "$fd" 2>/dev/null)"; then
+          [[ -e "$fd" || -L "$fd" ]] && return 1
+          continue
+        fi
         if [[ "$target" == "$RUN_STDOUT" \
           || "$target" == "$RUN_STDERR" \
           || "$target" == "$RUN_MARKER" ]]; then
@@ -161,8 +230,8 @@ sample_process_tree() {
       && "$pid" != "$STDERR_RELAY_PID" ]] || continue
     rss="$( { ps -o rss= -p "$pid" 2>/dev/null || true; } | awk '{sum += $1} END {print sum + 0}')"
     rss_total=$((rss_total + rss))
-    if [[ -d "/proc/$pid/fd" ]]; then
-      fd="$( { find "/proc/$pid/fd" -mindepth 1 -maxdepth 1 -print 2>/dev/null || true; } | awk 'END {print NR + 0}')"
+    if [[ -d "$PROCESS_FS_ROOT/$pid/fd" ]]; then
+      fd="$( { find "$PROCESS_FS_ROOT/$pid/fd" -mindepth 1 -maxdepth 1 -print 2>/dev/null || true; } | awk 'END {print NR + 0}')"
     elif command -v lsof >/dev/null 2>&1; then
       fd="$( { lsof -a -p "$pid" -d 0-999999 2>/dev/null || true; } | awk 'NR > 1 {count++} END {print count + 0}')"
     else

@@ -6,6 +6,29 @@ namespace StrataLint.Tests;
 
 public sealed partial class ReportSupervisorScriptTests
 {
+    [Theory]
+    [InlineData("4242 (worker) S 1 4242", true)]
+    [InlineData("4242 (worker with ) paren) Z 1 4242", false)]
+    [InlineData("4242 (dead) X 1 4242", false)]
+    public void LinuxProcStatDistinguishesRunningAndDeadStates(string stat, bool expected)
+    {
+        Assert.Equal(expected, ProcStatRepresentsRunning(stat));
+    }
+
+    [Theory]
+    [InlineData('S', 0)]
+    [InlineData('Z', 1)]
+    [InlineData('X', 1)]
+    public void KillZeroIsQualifiedByLinuxProcState(char state, int expectedExit)
+    {
+        using var fixture = new DeadOwnerObservationFixture();
+        fixture.AttachSyntheticProcStat(Environment.ProcessId, state);
+
+        var result = fixture.RunProcessExists(Environment.ProcessId);
+
+        Assert.Equal(expectedExit, result.ExitCode);
+    }
+
     [Fact]
     public void OldEpochOnLiveCanonicalOwnerDoesNotPermitReclaim()
     {
@@ -55,7 +78,9 @@ public sealed partial class ReportSupervisorScriptTests
     public void OwnerRecordContainsPidStartAndEpoch()
     {
         using var fixture = new DeadOwnerObservationFixture();
-        using var holder = fixture.Start(fixture.SleepWorker);
+        using var holder = fixture.Start(
+            fixture.SleepWorker,
+            fixture.SyntheticProcessEnvironment(fixture.SleepWorkerPidFile, 3));
         Assert.True(SpinWait.SpinUntil(
             () => fixture.SlotExists() && File.Exists(fixture.SleepWorkerPidFile),
             TimeSpan.FromSeconds(10)));
@@ -94,9 +119,13 @@ public sealed partial class ReportSupervisorScriptTests
         using var fixture = new DeadOwnerObservationFixture();
         using var holder = fixture.Start(fixture.SleepWorker);
         Assert.True(SpinWait.SpinUntil(
-            () => fixture.SlotExists() && File.Exists(fixture.SleepWorkerPidFile),
+            () => fixture.SlotMetadataIsPublished()
+                && File.Exists(fixture.SleepWorkerPidFile),
             TimeSpan.FromSeconds(10)));
         var orphanPid = fixture.ReadSleepWorkerPid();
+        var group = fixture.ReadProcessGroup();
+        Assert.Equal(orphanPid, group.GroupId);
+        Assert.Equal(orphanPid, group.LeaderPid);
 
         var signal = BoundedProcessRunner.Run(
             "/bin/kill",
@@ -108,7 +137,9 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.True(holder.WaitForExit(5_000));
         Assert.True(ProcessExists(orphanPid));
 
-        var blocked = fixture.Run(fixture.SuccessWorker, "STRATALINT_LOCK_TIMEOUT_SECONDS=1");
+        var blocked = fixture.Run(
+            fixture.SuccessWorker,
+            fixture.SyntheticProcessEnvironment(fixture.SleepWorkerPidFile, 1));
 
         Assert.Equal(2, blocked.ExitCode);
         Assert.True(fixture.SlotExists());
@@ -118,7 +149,9 @@ public sealed partial class ReportSupervisorScriptTests
             () => !ProcessExists(orphanPid),
             TimeSpan.FromSeconds(5)));
 
-        var reclaimed = fixture.Run(fixture.SuccessWorker, "STRATALINT_LOCK_TIMEOUT_SECONDS=3");
+        var reclaimed = fixture.Run(
+            fixture.SuccessWorker,
+            fixture.SyntheticProcessEnvironment(fixture.SleepWorkerPidFile, 3));
 
         Assert.Equal(0, reclaimed.ExitCode);
     }
@@ -127,14 +160,20 @@ public sealed partial class ReportSupervisorScriptTests
     public void LiveClosedFdDescendantPreventsReclaimWithoutBeingKilled()
     {
         using var fixture = new DeadOwnerObservationFixture();
-        using var holder = fixture.Start(fixture.ClosedFdDescendantWorker);
+        using var holder = fixture.Start(
+            fixture.ClosedFdDescendantWorker,
+            fixture.SyntheticProcessEnvironment(fixture.ClosedFdDescendantPidFile, 3));
         Assert.True(SpinWait.SpinUntil(
             () => fixture.SlotExists()
+                && fixture.SlotMetadataIsPublished()
                 && File.Exists(fixture.ClosedFdLeaderPidFile)
                 && File.Exists(fixture.ClosedFdDescendantPidFile),
             TimeSpan.FromSeconds(10)));
         var leaderPid = fixture.ReadPid(fixture.ClosedFdLeaderPidFile);
         var descendantPid = fixture.ReadPid(fixture.ClosedFdDescendantPidFile);
+        var group = fixture.ReadProcessGroup();
+        Assert.Equal(leaderPid, group.GroupId);
+        Assert.Equal(leaderPid, group.LeaderPid);
         Assert.True(File.Exists(Path.Combine(fixture.Slot, "marker")));
         Assert.True(File.Exists(Path.Combine(fixture.Slot, "group")));
 
@@ -145,18 +184,19 @@ public sealed partial class ReportSupervisorScriptTests
 
         var blocked = fixture.Run(
             fixture.SuccessWorker,
-            "STRATALINT_LOCK_TIMEOUT_SECONDS=1");
+            fixture.SyntheticProcessEnvironment(fixture.ClosedFdDescendantPidFile, 1));
 
         Assert.Equal(2, blocked.ExitCode);
         Assert.True(fixture.SlotExists());
         Assert.True(ProcessExists(descendantPid));
+        File.Delete(fixture.ClosedFdDescendantHoldFile);
         Assert.True(SpinWait.SpinUntil(
             () => !ProcessExists(descendantPid),
             TimeSpan.FromSeconds(10)));
 
         var reclaimed = fixture.Run(
             fixture.SuccessWorker,
-            "STRATALINT_LOCK_TIMEOUT_SECONDS=3");
+            fixture.SyntheticProcessEnvironment(fixture.ClosedFdDescendantPidFile, 3));
 
         Assert.Equal(0, reclaimed.ExitCode);
     }
@@ -209,6 +249,69 @@ public sealed partial class ReportSupervisorScriptTests
             result.ExitCode == 0,
             $"stdout: {Encoding.UTF8.GetString(result.StandardOutput)}\n"
             + $"stderr: {Encoding.UTF8.GetString(result.StandardError)}");
+    }
+
+    [Fact]
+    public void MalformedSuccessfulProcessTableFailsClosed()
+    {
+        using var fixture = new DeadOwnerObservationFixture();
+        fixture.CreateSlotWithOwner("99999999|definitely-dead|0\n");
+        _ = fixture.AttachEmptyProcessGroup();
+
+        var result = fixture.Run(
+            fixture.SuccessWorker,
+            $"PATH={fixture.Root}:{fixture.HostPath}",
+            "STRATALINT_TEST_PS_MALFORMED_TABLE=1",
+            "STRATALINT_LOCK_TIMEOUT_SECONDS=1");
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.True(fixture.SlotExists());
+    }
+
+    [Fact]
+    public void ProcMarkerScanConsidersEveryOpenDescriptor()
+    {
+        using var fixture = new DeadOwnerObservationFixture();
+        var marker = Path.Combine(fixture.Root, "synthetic-process.marker");
+        File.WriteAllText(marker, string.Empty, new UTF8Encoding(false));
+        fixture.AttachSyntheticMarkerDescriptor(Environment.ProcessId, 37, marker);
+
+        var result = fixture.RunMarkerScan(marker);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(
+            Environment.ProcessId.ToString(System.Globalization.CultureInfo.InvariantCulture),
+            Encoding.UTF8.GetString(result.StandardOutput).Trim());
+    }
+
+    [Fact]
+    public void ForeignUidProcEntryDoesNotObscureQuiescence()
+    {
+        using var fixture = new DeadOwnerObservationFixture();
+        fixture.AttachSyntheticForeignProcess();
+        var marker = Path.Combine(fixture.Root, "synthetic-process.marker");
+        File.WriteAllText(marker, string.Empty, new UTF8Encoding(false));
+
+        var result = fixture.RunMarkerScan(marker);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Empty(result.StandardOutput);
+    }
+
+    [Fact]
+    public void ZombieOnlyProcessGroupAllowsReclaim()
+    {
+        using var fixture = new DeadOwnerObservationFixture();
+        fixture.CreateSlotWithOwner("99999999|definitely-dead|0\n");
+        _ = fixture.AttachEmptyProcessGroup();
+
+        var result = fixture.Run(
+            fixture.SuccessWorker,
+            $"PATH={fixture.Root}:{fixture.HostPath}",
+            "STRATALINT_TEST_PS_ZOMBIE_GROUP=99999999",
+            "STRATALINT_LOCK_TIMEOUT_SECONDS=3");
+
+        Assert.Equal(0, result.ExitCode);
     }
 
     [Fact]
@@ -303,6 +406,7 @@ public sealed partial class ReportSupervisorScriptTests
                 sleep 5
                 "$1/restore-clock.sh" "$1/clock-bin/date"
                 """);
+            File.WriteAllText(ClosedFdDescendantHoldFile, string.Empty, new UTF8Encoding(false));
             ClosedFdDescendantWorker = WriteExecutable("closed-fd-descendant.sh", """
                 #!/usr/bin/env bash
                 set -euo pipefail
@@ -310,14 +414,23 @@ public sealed partial class ReportSupervisorScriptTests
                 (
                   trap '' TERM
                   exec 9<&- >/dev/null 2>&1
-                  sleep 5
+                  while [[ -e "$1/closed-fd-descendant.hold" ]]; do sleep 0.05; done
                 ) &
-                printf '%s\n' "$!" > "$1/closed-fd-descendant.pid"
-                sleep 5
+                descendant_pid=$!
+                printf '%s\n' "$descendant_pid" > "$1/closed-fd-descendant.pid"
+                wait "$descendant_pid"
                 """);
             _ = WriteExecutable("ps", """
                 #!/usr/bin/env bash
                 if [[ "${STRATALINT_TEST_PS_FAIL_ALL:-}" == "1" ]]; then exit 1; fi
+                if [[ "${STRATALINT_TEST_PS_MALFORMED_TABLE:-}" == "1" && "$*" == *"pid=,pgid=,stat="* ]]; then
+                  printf 'malformed-successful-row\n'
+                  exit 0
+                fi
+                if [[ -n "${STRATALINT_TEST_PS_ZOMBIE_GROUP:-}" && "$*" == *"pid=,pgid=,stat="* ]]; then
+                  printf '424242 %s Z+\n' "$STRATALINT_TEST_PS_ZOMBIE_GROUP"
+                  exit 0
+                fi
                 if [[ "${STRATALINT_TEST_QUANTIZED_CPU:-}" == "1" && "$*" == *"time="* ]]; then
                   value=0
                   if [[ -f "$STRATALINT_TEST_CLOCK_FILE" ]]; then read -r value < "$STRATALINT_TEST_CLOCK_FILE"; fi
@@ -326,7 +439,9 @@ public sealed partial class ReportSupervisorScriptTests
                   exit 0
                 fi
                 previous=""
+                requested_pid=""
                 for argument in "$@"; do
+                  if [[ "$previous" == "-p" ]]; then requested_pid="$argument"; fi
                   if [[ "$previous" == "-p" && "$argument" == "${STRATALINT_TEST_PS_REUSED_PID:-}" ]]; then
                     printf 'synthetic-current-start\n'
                     exit 0
@@ -336,6 +451,37 @@ public sealed partial class ReportSupervisorScriptTests
                   fi
                   previous="$argument"
                 done
+                if [[ "${STRATALINT_TEST_SYNTHETIC_PROCESS_VIEW:-}" == "1" && "$*" == *"lstart="* ]]; then
+                  printf 'synthetic-start-%s\n' "$requested_pid"
+                  exit 0
+                fi
+                if [[ "${STRATALINT_TEST_SYNTHETIC_PROCESS_VIEW:-}" == "1" && "$*" == *"pid=,pgid=,stat="* ]]; then
+                  pid=""
+                  group=""
+                  if [[ -s "$STRATALINT_TEST_GROUP_MEMBER_PID_FILE" ]]; then
+                    read -r pid < "$STRATALINT_TEST_GROUP_MEMBER_PID_FILE"
+                  fi
+                  if [[ -s "$STRATALINT_TEST_GROUP_RECORD" ]]; then
+                    IFS='|' read -r group _ < "$STRATALINT_TEST_GROUP_RECORD"
+                  fi
+                  running=0
+                  if [[ "$pid" =~ ^[1-9][0-9]*$ && "$group" =~ ^[1-9][0-9]*$ ]] \
+                    && kill -0 "$pid" 2>/dev/null; then
+                    running=1
+                    if [[ -r "/proc/$pid/stat" ]]; then
+                      stat="$(< "/proc/$pid/stat")"
+                      suffix="${stat##*) }"
+                      state="${suffix%% *}"
+                      [[ "$state" == "Z" || "$state" == "X" ]] && running=0
+                    fi
+                  fi
+                  if [[ "$running" == "1" ]]; then
+                    printf '%s %s S\n' "$pid" "$group"
+                  else
+                    printf '1 1 S\n'
+                  fi
+                  exit 0
+                fi
                 exec /bin/ps "$@"
                 """);
             _ = WriteExecutable(Path.Combine("clock-bin", "date"), """
@@ -360,7 +506,9 @@ public sealed partial class ReportSupervisorScriptTests
         internal string SleepWorkerPidFile => Path.Combine(Root, "sleep-worker.pid");
         internal string ClosedFdLeaderPidFile => Path.Combine(Root, "closed-fd-leader.pid");
         internal string ClosedFdDescendantPidFile => Path.Combine(Root, "closed-fd-descendant.pid");
+        internal string ClosedFdDescendantHoldFile => Path.Combine(Root, "closed-fd-descendant.hold");
         internal string ObservationClockFile => Path.Combine(Root, "observation.clock");
+        internal string ProcessFsRoot => Path.Combine(Root, "proc");
         internal string ClockBin => Path.Combine(Root, "clock-bin");
         internal string HostPath => Environment.GetEnvironmentVariable("PATH") ?? "/bin:/usr/bin";
         internal string SuccessWorker { get; }
@@ -374,6 +522,10 @@ public sealed partial class ReportSupervisorScriptTests
 
         internal bool SlotExists() => Directory.Exists(Slot);
 
+        internal bool SlotMetadataIsPublished() =>
+            File.Exists(Path.Combine(Slot, "marker"))
+            && File.Exists(Path.Combine(Slot, "group"));
+
         internal int ReadSleepWorkerPid() => int.Parse(
             File.ReadAllText(SleepWorkerPidFile).Trim(),
             System.Globalization.CultureInfo.InvariantCulture);
@@ -381,6 +533,15 @@ public sealed partial class ReportSupervisorScriptTests
         internal int ReadPid(string path) => int.Parse(
             File.ReadAllText(path).Trim(),
             System.Globalization.CultureInfo.InvariantCulture);
+
+        internal (int GroupId, int LeaderPid) ReadProcessGroup()
+        {
+            var fields = File.ReadAllText(Path.Combine(Slot, "group")).Trim().Split('|');
+            Assert.Equal(3, fields.Length);
+            return (
+                int.Parse(fields[0], System.Globalization.CultureInfo.InvariantCulture),
+                int.Parse(fields[1], System.Globalization.CultureInfo.InvariantCulture));
+        }
 
         internal void KillProcess(int pid)
         {
@@ -429,7 +590,7 @@ public sealed partial class ReportSupervisorScriptTests
             return Slot;
         }
 
-        internal void AttachEmptyProcessGroup()
+        internal string AttachEmptyProcessGroup()
         {
             var marker = Path.Combine(Root, "synthetic-process.marker");
             File.WriteAllText(marker, string.Empty, new UTF8Encoding(false));
@@ -441,6 +602,59 @@ public sealed partial class ReportSupervisorScriptTests
                 Path.Combine(Slot, "group"),
                 "99999999|99999999|definitely-dead\n",
                 new UTF8Encoding(false));
+            return marker;
+        }
+
+        internal void AttachSyntheticMarkerDescriptor(int pid, int descriptor, string marker)
+        {
+            var userId = ReadUserId();
+            AttachSyntheticForeignProcess();
+            var fdRoot = Path.Combine(
+                ProcessFsRoot,
+                pid.ToString(System.Globalization.CultureInfo.InvariantCulture),
+                "fd");
+            Directory.CreateDirectory(fdRoot);
+            File.WriteAllText(
+                Path.Combine(Directory.GetParent(fdRoot)!.FullName, "status"),
+                $"Name:\ttest\nUid:\t{userId}\t{userId}\t{userId}\t{userId}\n",
+                new UTF8Encoding(false));
+            File.CreateSymbolicLink(
+                Path.Combine(fdRoot, descriptor.ToString(
+                    System.Globalization.CultureInfo.InvariantCulture)),
+                marker);
+        }
+
+        internal void AttachSyntheticForeignProcess()
+        {
+            if (ReadUserId() == 0) return;
+            var foreignRoot = Path.Combine(ProcessFsRoot, "1");
+            Directory.CreateDirectory(foreignRoot);
+            File.WriteAllText(
+                Path.Combine(foreignRoot, "status"),
+                "Name:\tinit\nUid:\t0\t0\t0\t0\n",
+                new UTF8Encoding(false));
+        }
+
+        internal void AttachSyntheticProcStat(int pid, char state)
+        {
+            var processRoot = Path.Combine(
+                ProcessFsRoot,
+                pid.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            Directory.CreateDirectory(processRoot);
+            File.WriteAllText(
+                Path.Combine(processRoot, "stat"),
+                $"{pid} (worker with ) paren) {state} 1 {pid} 0 0\n",
+                new UTF8Encoding(false));
+        }
+
+        private int ReadUserId()
+        {
+            var result = BoundedProcessRunner.Run(
+                "/usr/bin/id", ["-u"], Root, TimeSpan.FromSeconds(5), 4096);
+            Assert.Equal(0, result.ExitCode);
+            return int.Parse(
+                Encoding.UTF8.GetString(result.StandardOutput).Trim(),
+                System.Globalization.CultureInfo.InvariantCulture);
         }
 
         internal string[] AcceleratedObservationEnvironment(int stepSeconds) =>
@@ -452,6 +666,15 @@ public sealed partial class ReportSupervisorScriptTests
             "STRATALINT_REPORT_STALL_WINDOW_COUNT=3",
         ];
 
+        internal string[] SyntheticProcessEnvironment(string pidFile, int lockTimeoutSeconds) =>
+        [
+            $"PATH={Root}:{HostPath}",
+            "STRATALINT_TEST_SYNTHETIC_PROCESS_VIEW=1",
+            $"STRATALINT_TEST_GROUP_MEMBER_PID_FILE={pidFile}",
+            $"STRATALINT_TEST_GROUP_RECORD={Path.Combine(Slot, "group")}",
+            $"STRATALINT_LOCK_TIMEOUT_SECONDS={lockTimeoutSeconds}",
+        ];
+
         internal ProcessOutput Run(string worker, params string[] environment) =>
             BoundedProcessRunner.Run(
                 "env",
@@ -459,6 +682,36 @@ public sealed partial class ReportSupervisorScriptTests
                 Root,
                 TimeSpan.FromSeconds(12),
                 1024 * 1024);
+
+        internal ProcessOutput RunMarkerScan(string marker) =>
+            BoundedProcessRunner.Run(
+                "/bin/bash",
+                [
+                    "-c",
+                    "set -euo pipefail; PROCESS_FS_ROOT=\"$1\"; source \"$2\"; marker_processes_for_path \"$3\"",
+                    "marker-scan",
+                    ProcessFsRoot,
+                    ProcessControl,
+                    marker,
+                ],
+                Root,
+                TimeSpan.FromSeconds(5),
+                4096);
+
+        internal ProcessOutput RunProcessExists(int pid) =>
+            BoundedProcessRunner.Run(
+                "/bin/bash",
+                [
+                    "-c",
+                    "set -euo pipefail; PROCESS_FS_ROOT=\"$1\"; source \"$2\"; process_exists \"$3\"",
+                    "process-exists",
+                    ProcessFsRoot,
+                    ProcessControl,
+                    pid.ToString(System.Globalization.CultureInfo.InvariantCulture),
+                ],
+                Root,
+                TimeSpan.FromSeconds(5),
+                4096);
 
         internal Process Start(string worker, params string[] environment)
         {
@@ -534,6 +787,9 @@ public sealed partial class ReportSupervisorScriptTests
 
         private static string Supervisor => Path.Combine(
             FindRepositoryRoot(), "Meta", "StrataLint", "scripts", "report", "report-supervisor.sh");
+
+        private static string ProcessControl => Path.Combine(
+            FindRepositoryRoot(), "Meta", "StrataLint", "scripts", "report", "report-process-control.sh");
 
         private string WriteExecutable(string name, string contents)
         {

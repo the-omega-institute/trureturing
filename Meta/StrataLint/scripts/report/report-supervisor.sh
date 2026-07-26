@@ -28,6 +28,7 @@ PROCESS_CONTROL_LIB="$REPOSITORY_ROOT/Meta/StrataLint/scripts/report/report-proc
 [[ -r "$PERF_EVENT_LIB" && -r "$PROCESS_CONTROL_LIB" ]] || exit 2
 source "$PERF_EVENT_LIB"
 source "$PROCESS_CONTROL_LIB"
+PROCESS_FS_ROOT=/proc
 if [[ -d /private/tmp ]]; then DEFAULT_HOST_TMP=/private/tmp; else DEFAULT_HOST_TMP=/tmp; fi
 STATE_ROOT="${STRATALINT_SUPERVISOR_ROOT:-$DEFAULT_HOST_TMP/stratalint-report-supervisor-${UID:-$(id -u)}}"
 RUN_ROOT="$STATE_ROOT/runs"
@@ -113,7 +114,7 @@ RUN_STDERR="$TMP_ROOT/stderr.pipe"
 RUN_MARKER="$TMP_ROOT/process.marker"
 mkfifo "$RUN_STDOUT" "$RUN_STDERR"
 : > "$RUN_MARKER"
-if [[ ! -d /proc ]] && ! command -v lsof >/dev/null 2>&1; then
+if [[ ! -d "$PROCESS_FS_ROOT" ]] && ! command -v lsof >/dev/null 2>&1; then
   echo "report-supervisor: lsof is required for process supervision on this host" >&2
   exit 2
 fi
@@ -125,8 +126,6 @@ now_ms() {
     printf '%s000\n' "$(date +%s)"
   fi
 }
-
-process_exists() { kill -0 "$1" >/dev/null 2>&1; }
 
 lock_mtime() {
   local value=""

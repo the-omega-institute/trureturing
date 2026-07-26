@@ -553,14 +553,45 @@ public sealed partial class ReportSupervisorScriptTests
             TimeSpan.FromSeconds(5),
             4096);
         if (result.ExitCode != 0) return false;
-        var state = BoundedProcessRunner.Run(
-            "/bin/ps",
-            ["-o", "stat=", "-p", pid.ToString(System.Globalization.CultureInfo.InvariantCulture)],
-            Directory.GetCurrentDirectory(),
-            TimeSpan.FromSeconds(5),
-            4096);
-        return state.ExitCode == 0
-            && !Encoding.UTF8.GetString(state.StandardOutput).TrimStart()
-                .StartsWith('Z');
+        if (Directory.Exists("/proc"))
+        {
+            try
+            {
+                var statPath = Path.Combine(
+                    "/proc",
+                    pid.ToString(System.Globalization.CultureInfo.InvariantCulture),
+                    "stat");
+                return File.Exists(statPath)
+                    && ProcStatRepresentsRunning(File.ReadAllText(statPath));
+            }
+            catch (IOException)
+            {
+                return true;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return true;
+            }
+        }
+        try
+        {
+            using var process = Process.GetProcessById(pid);
+            return !process.HasExited;
+        }
+        catch (ArgumentException)
+        {
+            return false;
+        }
+        catch (InvalidOperationException)
+        {
+            return true;
+        }
+    }
+
+    private static bool ProcStatRepresentsRunning(string stat)
+    {
+        var commandEnd = stat.LastIndexOf(')');
+        if (commandEnd < 0 || commandEnd + 2 >= stat.Length) return true;
+        return stat[commandEnd + 2] is not ('Z' or 'X');
     }
 }
