@@ -517,25 +517,58 @@ public sealed partial class ReportSupervisorScriptTests
         using var process = fixture.StartDetachedProducer();
         Assert.True(SpinWait.SpinUntil(
             () => File.Exists(fixture.DetachedPid)
-                && new FileInfo(fixture.DetachedPid).Length > 0,
+                && new FileInfo(fixture.DetachedPid).Length > 0
+                && File.Exists(fixture.DetachedParentPid)
+                && new FileInfo(fixture.DetachedParentPid).Length > 0
+                && File.Exists(Path.Combine(
+                    fixture.StateRoot, "slots", "slot-1.lock", "group"))
+                && File.Exists(Path.Combine(
+                    fixture.StateRoot, "slots", "slot-1.lock", "marker")),
             TimeSpan.FromSeconds(10)));
         var detached = int.Parse(
             File.ReadAllText(fixture.DetachedPid).Trim(),
             System.Globalization.CultureInfo.InvariantCulture);
-
-        var signal = BoundedProcessRunner.Run(
-            "/bin/kill",
-            ["-TERM", process.Id.ToString(System.Globalization.CultureInfo.InvariantCulture)],
-            fixture.Root,
-            TimeSpan.FromSeconds(10),
-            4096);
-        Assert.Equal(0, signal.ExitCode);
-        Assert.True(process.WaitForExit(10_000));
-
+        var detachedParent = int.Parse(
+            File.ReadAllText(fixture.DetachedParentPid).Trim(),
+            System.Globalization.CultureInfo.InvariantCulture);
         Assert.True(SpinWait.SpinUntil(
-            () => !ProcessExists(detached),
+            () => fixture.HasRecordedProcessCandidate(detached),
             TimeSpan.FromSeconds(10)));
-        Assert.False(ProcessExists(detached));
+
+        try
+        {
+            File.WriteAllText(fixture.DetachedRelease, string.Empty, new UTF8Encoding(false));
+            Assert.True(SpinWait.SpinUntil(
+                () => !ProcessExists(detachedParent) && ProcessExists(detached),
+                TimeSpan.FromSeconds(10)));
+
+            var signal = BoundedProcessRunner.Run(
+                "/bin/kill",
+                ["-TERM", process.Id.ToString(System.Globalization.CultureInfo.InvariantCulture)],
+                fixture.Root,
+                TimeSpan.FromSeconds(10),
+                4096);
+            Assert.Equal(0, signal.ExitCode);
+            Assert.True(SpinWait.SpinUntil(
+                () => process.HasExited,
+                TimeSpan.FromSeconds(10)));
+            Assert.True(SpinWait.SpinUntil(
+                () => !ProcessExists(detached),
+                TimeSpan.FromSeconds(10)));
+            Assert.False(ProcessExists(detached));
+        }
+        finally
+        {
+            if (ProcessExists(detached))
+            {
+                _ = BoundedProcessRunner.Run(
+                    "/bin/kill",
+                    ["-KILL", detached.ToString(System.Globalization.CultureInfo.InvariantCulture)],
+                    fixture.Root,
+                    TimeSpan.FromSeconds(5),
+                    4096);
+            }
+        }
     }
 
     [Fact]

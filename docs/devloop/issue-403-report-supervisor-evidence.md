@@ -36,7 +36,11 @@ this change.
 The independent #450 worker wall-clock budget is unchanged. A supervisor still
 terminates its own worker group when that configured build budget is exceeded
 (7200 seconds by default), records `124`, and releases its slot through the
-normal `finish()` path.
+normal `finish()` path. During normal supervision it also records each observed
+worker-tree PID with its process-start identity. Termination signals only
+records whose current identity still matches, before signalling the process
+group and again before the final `SIGKILL`. This reaches a recorded descendant
+after `setsid` changes its PGID without risking a reused PID.
 
 ## Cross-platform process semantics
 
@@ -44,6 +48,9 @@ Linux reads `/proc/<pid>/stat` directly. Following `proc_pid_stat(5)`, the
 parser takes state from field 3, parent PID from field 4, process group from
 field 5, and starttime (clock ticks after boot) from field 22. It locates fields
 after the final `)` so spaces and parentheses in `comm` do not shift them.
+The live worker tree is the field-4 transitive closure from the worker PID;
+therefore changing session and field-5 process group membership does not remove
+a descendant from the recorded termination candidates.
 Linux owner and group-leader identities use that same field-22 coordinate;
 they never compare it with the wall-clock string emitted by `ps lstart`.
 Hosts without procfs retain the common BSD/GNU

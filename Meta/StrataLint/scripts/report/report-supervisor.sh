@@ -76,6 +76,7 @@ TMP_ROOT=""
 CHILD_PID=""
 PROCESS_GROUP_ID=""
 PROCESS_GROUP_START_IDENTITY=""
+PROCESS_CANDIDATES_FILE=""
 STDOUT_RELAY_PID=""
 STDERR_RELAY_PID=""
 SLOT_DIR=""
@@ -113,8 +114,10 @@ mkdir -p "$SCRATCH"
 RUN_STDOUT="$TMP_ROOT/stdout.pipe"
 RUN_STDERR="$TMP_ROOT/stderr.pipe"
 RUN_MARKER="$TMP_ROOT/process.marker"
+PROCESS_CANDIDATES_FILE="$TMP_ROOT/process-candidates"
 mkfifo "$RUN_STDOUT" "$RUN_STDERR"
 : > "$RUN_MARKER"
+: > "$PROCESS_CANDIDATES_FILE"
 if [[ ! -d "$PROCESS_FS_ROOT" ]] && ! command -v lsof >/dev/null 2>&1; then
   echo "report-supervisor: lsof is required for process supervision on this host" >&2
   exit 2

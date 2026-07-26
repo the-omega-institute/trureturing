@@ -3,6 +3,10 @@
 # Process discovery and fencing helpers sourced by report-supervisor.sh.
 
 collect_process_tree() {
+  if [[ -d "$PROCESS_FS_ROOT" ]]; then
+    linux_process_tree "$1"
+    return
+  fi
   local queue=("$1")
   local index=0
   local pid
@@ -14,6 +18,42 @@ collect_process_tree() {
     while IFS= read -r child; do
       [[ -n "$child" ]] && queue+=("$child")
     done < <(pgrep -P "$pid" 2>/dev/null || true)
+  done
+}
+
+linux_process_tree() {
+  local root="$1"
+  local process_dir pid snapshot state remainder parent_pid row child
+  local index=0
+  local seen=" $root "
+  local -a rows=()
+  local -a queue=("$root")
+  for process_dir in "$PROCESS_FS_ROOT"/[1-9]*; do
+    [[ -d "$process_dir" ]] || continue
+    pid="${process_dir##*/}"
+    snapshot="$(linux_proc_stat_snapshot "$pid")" || continue
+    state="${snapshot%%|*}"
+    [[ "$state" != "Z" && "$state" != "X" ]] || continue
+    remainder="${snapshot#*|}"
+    parent_pid="${remainder%%|*}"
+    rows+=("$pid|$parent_pid")
+  done
+  while [[ "$index" -lt "${#queue[@]}" ]]; do
+    pid="${queue[$index]}"
+    index=$((index + 1))
+    printf '%s\n' "$pid"
+    for row in "${rows[@]}"; do
+      parent_pid="${row#*|}"
+      [[ "$parent_pid" == "$pid" ]] || continue
+      child="${row%%|*}"
+      case "$seen" in
+        *" $child "*) ;;
+        *)
+          seen+="$child "
+          queue+=("$child")
+          ;;
+      esac
+    done
   done
 }
 
@@ -350,10 +390,50 @@ signal_marker_processes() {
   return 0
 }
 
+remember_process_candidate() {
+  local pid="$1"
+  local identity=""
+  [[ "$pid" =~ ^[1-9][0-9]*$ && -n "$PROCESS_CANDIDATES_FILE" ]] || return 0
+  identity="$(process_start_identity "$pid")" || return 0
+  [[ -n "$identity" ]] || return 0
+  grep -Fqx -- "$pid|$identity" "$PROCESS_CANDIDATES_FILE" 2>/dev/null \
+    || printf '%s|%s\n' "$pid" "$identity" >> "$PROCESS_CANDIDATES_FILE"
+}
+
+record_process_candidates() {
+  local pid
+  while IFS= read -r pid; do
+    remember_process_candidate "$pid"
+  done
+}
+
+record_supervised_processes() {
+  record_process_candidates < <(supervised_processes || true)
+}
+
+signal_recorded_processes() {
+  local signal="$1"
+  local pid identity current_identity
+  [[ -f "$PROCESS_CANDIDATES_FILE" ]] || return 0
+  while IFS='|' read -r pid identity; do
+    [[ "$pid" =~ ^[1-9][0-9]*$ \
+      && -n "$identity" \
+      && "$pid" != "$$" \
+      && "$pid" != "$STDOUT_RELAY_PID" \
+      && "$pid" != "$STDERR_RELAY_PID" ]] || continue
+    current_identity="$(process_start_identity "$pid")" || continue
+    [[ "$current_identity" == "$identity" ]] || continue
+    kill "-$signal" "$pid" >/dev/null 2>&1 || true
+  done < <(sort -t '|' -k1,1nr "$PROCESS_CANDIDATES_FILE")
+  return 0
+}
+
 sample_process_tree() {
-  local pid rss fd
+  local pid rss fd members
   local rss_total=0
   local fd_total=0
+  members="$(process_tree_members || true)"
+  record_process_candidates <<< "$members"
   while IFS= read -r pid; do
     [[ -n "$pid" \
       && "$pid" != "$STDOUT_RELAY_PID" \
@@ -368,16 +448,20 @@ sample_process_tree() {
       fd=0
     fi
     fd_total=$((fd_total + fd))
-  done < <(process_tree_members)
+  done <<< "$members"
   if [[ "$rss_total" -gt "$RSS_PEAK_KB" ]]; then RSS_PEAK_KB="$rss_total"; fi
   if [[ "$fd_total" -gt "$FD_PEAK" ]]; then FD_PEAK="$fd_total"; fi
 }
 
 terminate_process_group() {
   local group_id="$1"
+  record_supervised_processes
+  signal_recorded_processes TERM || true
   signal_marker_processes TERM || true
   kill -TERM -- "-$group_id" >/dev/null 2>&1 || true
   sleep 0.2 || true
+  record_supervised_processes
+  signal_recorded_processes KILL || true
   signal_marker_processes KILL || true
   kill -KILL -- "-$group_id" >/dev/null 2>&1 || true
   return 0

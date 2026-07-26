@@ -115,9 +115,28 @@ internal sealed class ReportSupervisorFixture : IDisposable
         DetachedWorker = WriteExecutable("detached-worker.sh", """
             #!/usr/bin/env bash
             set -euo pipefail
-            perl -MPOSIX -e 'POSIX::setsid(); exec "sleep", "60"' &
-            printf '%s\n' "$!" > "$1"
-            wait
+            perl -MPOSIX -e '
+              my ($pid_path, $parent_path, $release) = @ARGV;
+              my $child = fork();
+              die "fork failed" unless defined $child;
+              if ($child == 0) {
+                POSIX::setsid();
+                open my $out, ">", $pid_path or die $!;
+                print {$out} "$$\n";
+                close $out or die $!;
+                close STDOUT;
+                close STDERR;
+                POSIX::close(9);
+                select undef, undef, undef, 0.02 until -e $release;
+                exec "sleep", "60";
+              }
+              open my $parent, ">", $parent_path or die $!;
+              print {$parent} "$$\n";
+              close $parent or die $!;
+              select undef, undef, undef, 0.02 until -e $release;
+            ' "$1" "$2" "$3" &
+            wait "$!"
+            sleep 60
             """);
         DoubleForkWorker = WriteExecutable("double-fork-worker.sh", """
             #!/usr/bin/env bash
@@ -167,6 +186,8 @@ internal sealed class ReportSupervisorFixture : IDisposable
     internal string GrandchildPid => Path.Combine(Root, "grandchild.pid");
     internal string ExitedGrandchildPid => ScratchRecord;
     internal string DetachedPid => Path.Combine(Root, "detached.pid");
+    internal string DetachedParentPid => Path.Combine(Root, "detached-parent.pid");
+    internal string DetachedRelease => Path.Combine(Root, "detached.release");
     internal string DoubleForkPid => ScratchRecord;
     internal string ScratchWriter { get; }
     internal string ProducerWorker { get; }
@@ -276,11 +297,24 @@ internal sealed class ReportSupervisorFixture : IDisposable
             $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
             Supervisor,
             "--role", "lean-producer", "--lean-slot", "--",
-            DetachedWorker, DetachedPid,
+            DetachedWorker, DetachedPid, DetachedParentPid, DetachedRelease,
         }) info.ArgumentList.Add(argument);
         var process = new Process { StartInfo = info };
         Assert.True(process.Start());
         return process;
+    }
+
+    internal bool HasRecordedProcessCandidate(int pid)
+    {
+        var runs = Path.Combine(StateRoot, "runs");
+        if (!Directory.Exists(runs)) return false;
+        var prefix = pid.ToString(System.Globalization.CultureInfo.InvariantCulture) + "|";
+        return Directory.EnumerateFiles(
+                runs,
+                "process-candidates",
+                SearchOption.AllDirectories)
+            .Any(path => File.ReadLines(path)
+                .Any(line => line.StartsWith(prefix, StringComparison.Ordinal)));
     }
 
     internal IReadOnlyList<JsonElement> ReadMetrics() => File.ReadAllLines(MetricsLog)

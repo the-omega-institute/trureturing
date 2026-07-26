@@ -369,4 +369,22 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.Equal("4242", Encoding.UTF8.GetString(result.StandardOutput).Trim());
     }
 
+    [Fact]
+    public void ProcProcessTreeFollowsParentPidAcrossNewProcessGroups()
+    {
+        using var fixture = new DeadOwnerObservationFixture();
+        fixture.AttachSyntheticProcStat(4100, 'S', parentPid: 1, processGroupId: 4100);
+        fixture.AttachSyntheticProcStat(4101, 'S', parentPid: 4100, processGroupId: 4101);
+        fixture.AttachSyntheticProcStat(4102, 'S', parentPid: 4101, processGroupId: 4102);
+        fixture.AttachSyntheticProcStat(4200, 'S', parentPid: 1, processGroupId: 4200);
+
+        var result = fixture.RunLinuxProcessTree(4100);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(
+            ["4100", "4101", "4102"],
+            Encoding.UTF8.GetString(result.StandardOutput)
+                .Split('\n', StringSplitOptions.RemoveEmptyEntries));
+    }
+
 }

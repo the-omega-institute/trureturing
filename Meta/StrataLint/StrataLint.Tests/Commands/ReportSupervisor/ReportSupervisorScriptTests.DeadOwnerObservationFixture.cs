@@ -441,6 +441,21 @@ public sealed partial class ReportSupervisorScriptTests
                 TimeSpan.FromSeconds(5),
                 4096);
 
+        internal ProcessOutput RunLinuxProcessTree(int rootPid) =>
+            BoundedProcessRunner.Run(
+                "/bin/bash",
+                [
+                    "-c",
+                    "set -euo pipefail; PROCESS_FS_ROOT=\"$1\"; source \"$2\"; linux_process_tree \"$3\"",
+                    "linux-process-tree",
+                    ProcessFsRoot,
+                    ProcessControl,
+                    rootPid.ToString(System.Globalization.CultureInfo.InvariantCulture),
+                ],
+                Root,
+                TimeSpan.FromSeconds(5),
+                4096);
+
         internal ProcessOutput RunFallbackProcessGroupMembers(int groupId) =>
             BoundedProcessRunner.Run(
                 "/usr/bin/env",
