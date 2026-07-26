@@ -45,24 +45,17 @@ MAX_CONCURRENCY="${STRATALINT_LEAN_MAX_CONCURRENCY:-1}"
 LOCK_TIMEOUT_SECONDS="${STRATALINT_LOCK_TIMEOUT_SECONDS:-900}"
 [[ "$LOCK_TIMEOUT_SECONDS" =~ ^[1-9][0-9]*$ && "$LOCK_TIMEOUT_SECONDS" -le 86400 ]] \
   || { echo "report-supervisor: STRATALINT_LOCK_TIMEOUT_SECONDS must be 1..86400" >&2; exit 2; }
-LEAN_SLOT_LEASE_SECONDS="${STRATALINT_LEAN_SLOT_LEASE_SECONDS:-1800}"
-[[ "$LEAN_SLOT_LEASE_SECONDS" =~ ^[1-9][0-9]*$ \
-  && "$LEAN_SLOT_LEASE_SECONDS" -ge 5 \
-  && "$LEAN_SLOT_LEASE_SECONDS" -le 86400 ]] \
-  || { echo "report-supervisor: STRATALINT_LEAN_SLOT_LEASE_SECONDS must be 5..86400" >&2; exit 2; }
 STALL_WINDOW_SECONDS="${STRATALINT_REPORT_STALL_WINDOW_SECONDS:-60}"
 [[ "$STALL_WINDOW_SECONDS" =~ ^[1-9][0-9]*$ \
-  && "$STALL_WINDOW_SECONDS" -ge 60 \
   && "$STALL_WINDOW_SECONDS" -le 86400 ]] \
-  || { echo "report-supervisor: STRATALINT_REPORT_STALL_WINDOW_SECONDS must be 60..86400" >&2; exit 2; }
+  || { echo "report-supervisor: STRATALINT_REPORT_STALL_WINDOW_SECONDS must be 1..86400" >&2; exit 2; }
 STALL_WINDOW_COUNT="${STRATALINT_REPORT_STALL_WINDOW_COUNT:-3}"
 [[ "$STALL_WINDOW_COUNT" =~ ^[1-9][0-9]*$ \
-  && "$STALL_WINDOW_COUNT" -ge 3 \
   && "$STALL_WINDOW_COUNT" -le 100 ]] \
-  || { echo "report-supervisor: STRATALINT_REPORT_STALL_WINDOW_COUNT must be 3..100" >&2; exit 2; }
-WATCHDOG_POLL_SECONDS="${STRATALINT_REPORT_WATCHDOG_POLL_SECONDS:-5}"
-[[ "$WATCHDOG_POLL_SECONDS" =~ ^[1-9][0-9]*$ && "$WATCHDOG_POLL_SECONDS" -le 300 ]] \
-  || { echo "report-supervisor: STRATALINT_REPORT_WATCHDOG_POLL_SECONDS must be 1..300" >&2; exit 2; }
+  || { echo "report-supervisor: STRATALINT_REPORT_STALL_WINDOW_COUNT must be 1..100" >&2; exit 2; }
+OBSERVATION_POLL_SECONDS="${STRATALINT_REPORT_OBSERVATION_POLL_SECONDS:-5}"
+[[ "$OBSERVATION_POLL_SECONDS" =~ ^[1-9][0-9]*$ && "$OBSERVATION_POLL_SECONDS" -le 300 ]] \
+  || { echo "report-supervisor: STRATALINT_REPORT_OBSERVATION_POLL_SECONDS must be 1..300" >&2; exit 2; }
 PROGRESS_ROOT="${STRATALINT_LEAN_PROGRESS_ROOT:-$PWD}"
 [[ "$LEAN_SLOT" == "0" || ( "$PROGRESS_ROOT" == /* && -d "$PROGRESS_ROOT" ) ]] \
   || { echo "report-supervisor: STRATALINT_LEAN_PROGRESS_ROOT must be an absolute directory" >&2; exit 2; }
@@ -77,12 +70,6 @@ PROGRESS_LOG_ROOT="${STRATALINT_LEAN_PROGRESS_LOG_ROOT:-}"
 BUILD_TIMEOUT_SECONDS="${STRATALINT_BUILD_TIMEOUT_SECONDS:-7200}"
 [[ "$BUILD_TIMEOUT_SECONDS" =~ ^[0-9]+$ && "$BUILD_TIMEOUT_SECONDS" -le 86400 ]] \
   || { echo "report-supervisor: STRATALINT_BUILD_TIMEOUT_SECONDS must be 0..86400" >&2; exit 2; }
-LOCK_INITIALIZATION_GRACE_SECONDS=5
-LEASE_DURATION_MS=$((LEAN_SLOT_LEASE_SECONDS * 1000))
-LEASE_RENEW_INTERVAL_MS=$((LEASE_DURATION_MS / 3))
-if [[ "$LEASE_RENEW_INTERVAL_MS" -lt 100 ]]; then LEASE_RENEW_INTERVAL_MS=100; fi
-LEASE_SELF_FENCE_MARGIN_MS=$((LEASE_DURATION_MS / 5))
-if [[ "$LEASE_SELF_FENCE_MARGIN_MS" -gt 1000 ]]; then LEASE_SELF_FENCE_MARGIN_MS=1000; fi
 
 TMP_ROOT=""
 CHILD_PID=""
@@ -96,20 +83,17 @@ CONCURRENCY_COUNT=0
 FD_PEAK=0
 RSS_PEAK_KB=0
 STARTED_MS=0
-LAST_LEASE_RENEWED_MS=0
-LAST_WATCHDOG_CHECK=0
-WATCHDOG_WINDOW_STARTED_SECONDS=0
+LAST_OBSERVATION_CHECK=0
+OBSERVATION_WINDOW_STARTED_SECONDS=0
 LAST_CPU_SNAPSHOT=0
 LAST_SIGNAL_SNAPSHOT=""
-WATCHDOG_WINDOW_CPU_CHANGED=0
-WATCHDOG_WINDOW_SIGNAL_CHANGED=0
+OBSERVATION_WINDOW_CPU_CHANGED=0
+OBSERVATION_WINDOW_SIGNAL_CHANGED=0
 CONSECUTIVE_STALLED_WINDOWS=0
-WATCHDOG_DISABLED=0
-WATCHDOG_FAILURE=0
+OBSERVATION_DISABLED=0
 CLAIMED_OWNER_BASE=""
 ACTIVE_GUARD_PATH=""
 ACTIVE_GUARD_TOKEN=""
-RENEWAL_WARNING_EMITTED=0
 
 early_cleanup() {
   if [[ -n "$TMP_ROOT" ]]; then rm -rf -- "$TMP_ROOT"; fi
@@ -190,32 +174,20 @@ lock_is_owned_by() {
   [[ "$owner" =~ ^(.*)\|([0-9]+)$ && "${BASH_REMATCH[1]}" == "$expected" ]]
 }
 
-lease_is_expired() {
-  local timestamp="$1"
-  local now
-  now="$(now_ms)"
-  [[ "$timestamp" =~ ^[0-9]+$ && "$now" =~ ^[0-9]+$ ]] || return 1
-  if [[ "$timestamp" -lt 1000000000000 ]]; then timestamp=$((timestamp * 1000)); fi
-  (( timestamp <= now && now - timestamp >= LEASE_DURATION_MS ))
-}
-
 lock_is_stale() {
   local lock="$1"
   local owner=""
   local pid=""
   local expected_start=""
   local actual_start=""
-  local lease_timestamp=""
-  local mtime=""
   if [[ -f "$lock/owner" ]]; then
     read -r owner < "$lock/owner" || return 1
   fi
   if [[ "$owner" =~ ^([1-9][0-9]*)\|([^|]+)\|([0-9]+)$ ]]; then
     pid="${BASH_REMATCH[1]}"
     expected_start="${BASH_REMATCH[2]}"
-    lease_timestamp="${BASH_REMATCH[3]}"
     if ! process_exists "$pid"; then
-      fence_stale_slot "$lock" || return 1
+      stale_slot_is_quiescent "$lock" || return 1
       return 0
     fi
     if [[ "$expected_start" == "unknown" ]]; then
@@ -224,30 +196,34 @@ lock_is_stale() {
     actual_start="$(process_start_identity "$pid")"
     [[ -n "$actual_start" ]] || return 1
     if [[ "$actual_start" != "$expected_start" ]]; then
-      fence_stale_slot "$lock" || return 1
+      stale_slot_is_quiescent "$lock" || return 1
       return 0
     fi
-    lease_is_expired "$lease_timestamp" || return 1
-    fence_stale_slot "$lock"
-    return
+    return 1
   fi
   if [[ "$owner" =~ ^([1-9][0-9]*)\|([^|]+)$ ]]; then
     pid="${BASH_REMATCH[1]}"
     expected_start="${BASH_REMATCH[2]}"
-    process_exists "$pid" || return 0
+    if ! process_exists "$pid"; then
+      stale_slot_is_quiescent "$lock" || return 1
+      return 0
+    fi
     actual_start="$(process_start_identity "$pid")"
     [[ -n "$actual_start" ]] || return 1
-    [[ "$actual_start" == "$expected_start" ]] || return 0
+    if [[ "$actual_start" != "$expected_start" ]]; then
+      stale_slot_is_quiescent "$lock" || return 1
+      return 0
+    fi
     return 1
   fi
   if [[ "$owner" =~ ^[1-9][0-9]*$ ]]; then
-    process_exists "$owner" || return 0
+    if ! process_exists "$owner"; then
+      stale_slot_is_quiescent "$lock" || return 1
+      return 0
+    fi
     return 1
   fi
-  [[ ! -e "$lock/owner" ]] || return 1
-  mtime="$(lock_mtime "$lock" || true)"
-  [[ "$mtime" =~ ^[0-9]+$ ]] || return 1
-  (( $(date +%s) - mtime >= LOCK_INITIALIZATION_GRACE_SECONDS ))
+  return 1
 }
 
 reclaim_lock_without_guard() {
@@ -263,14 +239,12 @@ reclaim_lock_without_guard() {
 
 acquire_lock_guard() {
   local lock="$1"
-  local wait_for_guard="${2:-1}"
   local guard="${lock}.reclaim-guard"
   local deadline=$(( $(date +%s) + LOCK_TIMEOUT_SECONDS ))
   local identity
   identity="$(owner_base_identity)" \
     || { echo "report-supervisor: could not identify lock owner process" >&2; return 2; }
   while ! mkdir "$guard" 2>/dev/null; do
-    [[ "$wait_for_guard" == "1" ]] || return 1
     reclaim_lock_without_guard "$guard" || true
     if (( $(date +%s) >= deadline )); then return 2; fi
     sleep 0.05
@@ -345,7 +319,6 @@ acquire_lean_slot() {
       if claim_lock "$candidate"; then
         SLOT_DIR="$candidate"
         SLOT_OWNER_BASE="$CLAIMED_OWNER_BASE"
-        LAST_LEASE_RENEWED_MS="$(now_ms)"
         CONCURRENCY_COUNT="$(active_slot_count)"
         return 0
       fi
@@ -359,22 +332,6 @@ acquire_lean_slot() {
     fi
     sleep 0.1
   done
-}
-
-renew_lean_slot() {
-  [[ -n "$SLOT_DIR" && -n "$SLOT_OWNER_BASE" ]] || return 2
-  acquire_lock_guard "$SLOT_DIR" 0 || return 1
-  if ! lock_is_owned_by "$SLOT_DIR" "$SLOT_OWNER_BASE"; then
-    release_lock_guard "$SLOT_DIR"
-    return 2
-  fi
-  if ! write_lock_owner "$SLOT_DIR" "$SLOT_OWNER_BASE"; then
-    release_lock_guard "$SLOT_DIR"
-    return 1
-  fi
-  release_lock_guard "$SLOT_DIR"
-  LAST_LEASE_RENEWED_MS="$(now_ms)"
-  RENEWAL_WARNING_EMITTED=0
 }
 
 release_lean_slot() {
@@ -505,58 +462,62 @@ progress_snapshot() {
     "$cpu_time" "$oleans" "$producer_logs" "$stdout_size" "$stderr_size"
 }
 
-initialize_watchdog() {
+initialize_stall_observation() {
   local snapshot=""
-  WATCHDOG_WINDOW_STARTED_SECONDS="$(date +%s)"
-  LAST_WATCHDOG_CHECK="$WATCHDOG_WINDOW_STARTED_SECONDS"
+  OBSERVATION_WINDOW_STARTED_SECONDS="$(date +%s)"
+  LAST_OBSERVATION_CHECK="$OBSERVATION_WINDOW_STARTED_SECONDS"
   if ! snapshot="$(progress_snapshot)"; then
-    WATCHDOG_DISABLED=1
-    echo "report-supervisor: watchdog disabled because progress state is unavailable; refusing to guess that a live build is stalled" >&2
+    OBSERVATION_DISABLED=1
+    echo "report-supervisor: stall observation disabled because progress state is unavailable" >&2
     return
   fi
   LAST_CPU_SNAPSHOT="${snapshot%%|*}"
   LAST_SIGNAL_SNAPSHOT="${snapshot#*|}"
 }
 
-watchdog_has_stalled() {
+stall_was_observed() {
   local now="$1"
   local current=""
   local current_cpu=""
   local current_signals=""
-  [[ "$WATCHDOG_DISABLED" == "0" ]] || return 1
+  [[ "$OBSERVATION_DISABLED" == "0" ]] || return 1
   if ! current="$(progress_snapshot)"; then
-    WATCHDOG_DISABLED=1
-    echo "report-supervisor: watchdog disabled because progress state became unavailable; refusing to guess that a live build is stalled" >&2
+    OBSERVATION_DISABLED=1
+    echo "report-supervisor: stall observation disabled because progress state became unavailable" >&2
     return 1
   fi
   current_cpu="${current%%|*}"
   current_signals="${current#*|}"
   [[ "$current_cpu" =~ ^[0-9]+$ && "$LAST_CPU_SNAPSHOT" =~ ^[0-9]+$ ]] || {
-    WATCHDOG_DISABLED=1
-    echo "report-supervisor: watchdog disabled because CPU progress state is invalid; refusing to guess that a live build is stalled" >&2
+    OBSERVATION_DISABLED=1
+    echo "report-supervisor: stall observation disabled because CPU progress state is invalid" >&2
     return 1
   }
   if [[ "$current_cpu" != "$LAST_CPU_SNAPSHOT" ]]; then
-    WATCHDOG_WINDOW_CPU_CHANGED=1
+    OBSERVATION_WINDOW_CPU_CHANGED=1
   fi
   if [[ "$current_signals" != "$LAST_SIGNAL_SNAPSHOT" ]]; then
-    WATCHDOG_WINDOW_SIGNAL_CHANGED=1
+    OBSERVATION_WINDOW_SIGNAL_CHANGED=1
   fi
   LAST_CPU_SNAPSHOT="$current_cpu"
   LAST_SIGNAL_SNAPSHOT="$current_signals"
-  if (( now - WATCHDOG_WINDOW_STARTED_SECONDS < STALL_WINDOW_SECONDS )); then
+  if (( now - OBSERVATION_WINDOW_STARTED_SECONDS < STALL_WINDOW_SECONDS )); then
     return 1
   fi
-  if [[ "$WATCHDOG_WINDOW_CPU_CHANGED" == "0" \
-    && "$WATCHDOG_WINDOW_SIGNAL_CHANGED" == "0" ]]; then
+  if [[ "$OBSERVATION_WINDOW_CPU_CHANGED" == "0" \
+    && "$OBSERVATION_WINDOW_SIGNAL_CHANGED" == "0" ]]; then
     CONSECUTIVE_STALLED_WINDOWS=$((CONSECUTIVE_STALLED_WINDOWS + 1))
   else
     CONSECUTIVE_STALLED_WINDOWS=0
   fi
-  WATCHDOG_WINDOW_STARTED_SECONDS="$now"
-  WATCHDOG_WINDOW_CPU_CHANGED=0
-  WATCHDOG_WINDOW_SIGNAL_CHANGED=0
-  (( CONSECUTIVE_STALLED_WINDOWS >= STALL_WINDOW_COUNT ))
+  OBSERVATION_WINDOW_STARTED_SECONDS="$now"
+  OBSERVATION_WINDOW_CPU_CHANGED=0
+  OBSERVATION_WINDOW_SIGNAL_CHANGED=0
+  if (( CONSECUTIVE_STALLED_WINDOWS >= STALL_WINDOW_COUNT )); then
+    CONSECUTIVE_STALLED_WINDOWS=0
+    return 0
+  fi
+  return 1
 }
 
 wait_for_relay() {
@@ -720,39 +681,16 @@ if [[ "$LEAN_SLOT" == "1" ]]; then
   if [[ -z "$child_start" ]]; then child_start=unknown; fi
   if ! write_slot_metadata group "$PROCESS_GROUP_ID|$CHILD_PID|$child_start"; then
     echo "report-supervisor: infrastructure failure: could not record the Lean producer process group" >&2
-    WATCHDOG_FAILURE=1
-    terminate_process_group "$PROCESS_GROUP_ID" || true
+    exit 2
   fi
 fi
-if [[ "$LEAN_SLOT" == "1" ]]; then initialize_watchdog; fi
+if [[ "$LEAN_SLOT" == "1" ]]; then initialize_stall_observation; fi
 BUILD_DEADLINE=0
 if (( BUILD_TIMEOUT_SECONDS > 0 )); then
   BUILD_DEADLINE=$(( $(date +%s) + BUILD_TIMEOUT_SECONDS ))
 fi
 BUILD_TIMED_OUT=0
 while process_exists "$CHILD_PID"; do
-  now_milliseconds="$(now_ms)"
-  if [[ "$LEAN_SLOT" == "1" && "$now_milliseconds" -ge $((LAST_LEASE_RENEWED_MS + LEASE_RENEW_INTERVAL_MS)) ]]; then
-    renewal_rc=0
-    renew_lean_slot || renewal_rc=$?
-    if [[ "$renewal_rc" == "2" ]]; then
-      echo "report-supervisor: infrastructure failure: Lean slot ownership was lost while the producer was running" >&2
-      WATCHDOG_FAILURE=1
-      terminate_process_group "$PROCESS_GROUP_ID" || true
-      break
-    elif [[ "$renewal_rc" != "0" ]]; then
-      if [[ "$RENEWAL_WARNING_EMITTED" == "0" ]]; then
-        echo "report-supervisor: transient Lean slot renewal failure; retrying inside the current lease window" >&2
-        RENEWAL_WARNING_EMITTED=1
-      fi
-      if [[ "$now_milliseconds" -ge $((LAST_LEASE_RENEWED_MS + LEASE_DURATION_MS - LEASE_SELF_FENCE_MARGIN_MS)) ]]; then
-        echo "report-supervisor: infrastructure failure: Lean slot could not be renewed before its safety margin" >&2
-        WATCHDOG_FAILURE=1
-        terminate_process_group "$PROCESS_GROUP_ID" || true
-        break
-      fi
-    fi
-  fi
   sample_process_tree
   now_seconds="$(date +%s)"
   if (( BUILD_DEADLINE > 0 )) && (( now_seconds >= BUILD_DEADLINE )); then
@@ -762,13 +700,10 @@ while process_exists "$CHILD_PID"; do
     terminate_process_group "$PROCESS_GROUP_ID" || true
     break
   fi
-  if [[ "$LEAN_SLOT" == "1" && "$now_seconds" -ge $((LAST_WATCHDOG_CHECK + WATCHDOG_POLL_SECONDS)) ]]; then
-    LAST_WATCHDOG_CHECK="$now_seconds"
-    if watchdog_has_stalled "$now_seconds"; then
-      echo "report-supervisor: infrastructure failure: no Lean progress across ${STALL_WINDOW_COUNT} consecutive ${STALL_WINDOW_SECONDS}s windows; terminating producer process group ${PROCESS_GROUP_ID}" >&2
-      WATCHDOG_FAILURE=1
-      terminate_process_group "$PROCESS_GROUP_ID" || true
-      break
+  if [[ "$LEAN_SLOT" == "1" && "$now_seconds" -ge $((LAST_OBSERVATION_CHECK + OBSERVATION_POLL_SECONDS)) ]]; then
+    LAST_OBSERVATION_CHECK="$now_seconds"
+    if stall_was_observed "$now_seconds"; then
+      echo "report-supervisor: stall observed: no CPU, .olean, producer-log, stdout, or stderr progress across ${STALL_WINDOW_COUNT} consecutive ${STALL_WINDOW_SECONDS}s windows; producer left running" >&2
     fi
   fi
   sleep 0.1
@@ -779,7 +714,5 @@ rc=$?
 set -e
 if [[ "$BUILD_TIMED_OUT" == "1" ]]; then
   rc=124
-elif [[ "$WATCHDOG_FAILURE" == "1" ]]; then
-  rc=2
 fi
 exit "$rc"

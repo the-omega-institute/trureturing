@@ -202,8 +202,9 @@ public sealed partial class ReportSupervisorScriptTests
         Directory.CreateDirectory(deadLock);
         File.WriteAllText(
             Path.Combine(deadLock, "owner"),
-            "99999999\n",
+            "99999999|definitely-dead|0\n",
             new UTF8Encoding(false));
+        AttachEmptyProcessGroup(fixture.Root, deadLock);
 
         var result = fixture.Run("lean-producer", leanSlot: true, fixture.ScratchWriter);
 
@@ -218,8 +219,9 @@ public sealed partial class ReportSupervisorScriptTests
         Directory.CreateDirectory(reusedLock);
         File.WriteAllText(
             Path.Combine(reusedLock, "owner"),
-            $"{Environment.ProcessId}|not-the-current-process-start\n",
+            $"{Environment.ProcessId}|not-the-current-process-start|0\n",
             new UTF8Encoding(false));
+        AttachEmptyProcessGroup(fixture.Root, reusedLock);
 
         var result = fixture.Run("lean-producer", leanSlot: true, fixture.ScratchWriter);
 
@@ -227,16 +229,21 @@ public sealed partial class ReportSupervisorScriptTests
     }
 
     [Fact]
-    public void AbandonedOwnerlessSlotIsReclaimedAfterInitializationGrace()
+    public void AbandonedOwnerlessSlotIsNotGuessedDeadAfterInitializationGrace()
     {
         using var fixture = new ReportSupervisorFixture();
         var abandonedLock = Path.Combine(fixture.StateRoot, "slots", "slot-1.lock");
         Directory.CreateDirectory(abandonedLock);
         Directory.SetLastWriteTimeUtc(abandonedLock, DateTime.UtcNow.AddMinutes(-1));
 
-        var result = fixture.Run("lean-producer", leanSlot: true, fixture.ScratchWriter);
+        var result = fixture.RunWithEnvironment(
+            "lean-producer",
+            leanSlot: true,
+            fixture.ScratchWriter,
+            "STRATALINT_LOCK_TIMEOUT_SECONDS=1");
 
-        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(2, result.ExitCode);
+        Assert.True(Directory.Exists(abandonedLock));
     }
 
     [Fact]
@@ -521,6 +528,20 @@ public sealed partial class ReportSupervisorScriptTests
             () => !ProcessExists(detached),
             TimeSpan.FromSeconds(10)));
         Assert.False(ProcessExists(detached));
+    }
+
+    private static void AttachEmptyProcessGroup(string root, string slot)
+    {
+        var marker = Path.Combine(root, "synthetic-process.marker");
+        File.WriteAllText(marker, string.Empty, new UTF8Encoding(false));
+        File.WriteAllText(
+            Path.Combine(slot, "marker"),
+            marker + "\n",
+            new UTF8Encoding(false));
+        File.WriteAllText(
+            Path.Combine(slot, "group"),
+            "99999999|99999999|definitely-dead\n",
+            new UTF8Encoding(false));
     }
 
     private static bool ProcessExists(int pid)

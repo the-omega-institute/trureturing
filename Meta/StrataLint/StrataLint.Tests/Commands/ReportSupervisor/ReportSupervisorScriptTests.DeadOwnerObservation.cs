@@ -7,15 +7,14 @@ namespace StrataLint.Tests;
 public sealed partial class ReportSupervisorScriptTests
 {
     [Fact]
-    public void ExpiredCanonicalLeaseWithoutProducerFenceIsNotReclaimed()
+    public void OldEpochOnLiveCanonicalOwnerDoesNotPermitReclaim()
     {
-        using var fixture = new LeaseWatchdogFixture();
+        using var fixture = new DeadOwnerObservationFixture();
         fixture.CreateTimestampedSlotOwnedByCurrentProcess(
             DateTimeOffset.UtcNow.AddMinutes(-1).ToUnixTimeMilliseconds());
 
         var result = fixture.Run(
             fixture.SuccessWorker,
-            "STRATALINT_LEAN_SLOT_LEASE_SECONDS=5",
             "STRATALINT_LOCK_TIMEOUT_SECONDS=3");
 
         Assert.Equal(2, result.ExitCode);
@@ -25,7 +24,7 @@ public sealed partial class ReportSupervisorScriptTests
     [Fact]
     public void UnreadableLiveOwnerIdentityIsNotGuessedStale()
     {
-        using var fixture = new LeaseWatchdogFixture();
+        using var fixture = new DeadOwnerObservationFixture();
         var slot = fixture.CreateSlotOwnedByCurrentProcess();
 
         var result = fixture.Run(
@@ -39,9 +38,9 @@ public sealed partial class ReportSupervisorScriptTests
     }
 
     [Fact]
-    public void ClaimantFallsBackToTimestampedLeaseWhenItsStartIdentityIsUnreadable()
+    public void ClaimantRecordsUnknownStartWithEpochWhenStartIdentityIsUnreadable()
     {
-        using var fixture = new LeaseWatchdogFixture();
+        using var fixture = new DeadOwnerObservationFixture();
 
         var result = fixture.Run(
             fixture.SuccessWorker,
@@ -53,73 +52,27 @@ public sealed partial class ReportSupervisorScriptTests
     }
 
     [Fact]
-    public void OneSecondLeaseIsRejectedAsTooShortForSafeRenewal()
+    public void OwnerRecordContainsPidStartAndEpoch()
     {
-        using var fixture = new LeaseWatchdogFixture();
-
-        var result = fixture.Run(
-            fixture.SuccessWorker,
-            "STRATALINT_LEAN_SLOT_LEASE_SECONDS=1");
-
-        Assert.Equal(2, result.ExitCode);
-        Assert.Contains(
-            "must be 5..86400",
-            Encoding.UTF8.GetString(result.StandardError),
-            StringComparison.Ordinal);
-    }
-
-    [Theory]
-    [InlineData("STRATALINT_REPORT_STALL_WINDOW_SECONDS=59", "must be 60..86400")]
-    [InlineData("STRATALINT_REPORT_STALL_WINDOW_COUNT=2", "must be 3..100")]
-    public void UnsafeWatchdogWindowConfigurationIsRejected(string setting, string expected)
-    {
-        using var fixture = new LeaseWatchdogFixture();
-
-        var result = fixture.Run(fixture.SuccessWorker, setting);
-
-        Assert.Equal(2, result.ExitCode);
-        Assert.Contains(
-            expected,
-            Encoding.UTF8.GetString(result.StandardError),
-            StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void FiveSecondLeaseRenewsBeforeAConcurrentAcquirerCanReclaimIt()
-    {
-        using var fixture = new LeaseWatchdogFixture();
-        using var holder = fixture.Start(
-            fixture.SleepWorker,
-            "STRATALINT_LEAN_SLOT_LEASE_SECONDS=5");
+        using var fixture = new DeadOwnerObservationFixture();
+        using var holder = fixture.Start(fixture.SleepWorker);
         Assert.True(SpinWait.SpinUntil(
             () => fixture.SlotExists() && File.Exists(fixture.SleepWorkerPidFile),
             TimeSpan.FromSeconds(10)));
         var owner = File.ReadAllText(Path.Combine(fixture.Slot, "owner")).Trim().Split('|');
+
         Assert.Equal(3, owner.Length);
+        Assert.Equal(
+            holder.Id.ToString(System.Globalization.CultureInfo.InvariantCulture),
+            owner[0]);
+        Assert.False(string.IsNullOrWhiteSpace(owner[1]));
         Assert.True(long.Parse(owner[2], System.Globalization.CultureInfo.InvariantCulture) > 1_000_000_000_000);
-        Thread.Sleep(6_500);
-
-        var contender = fixture.Run(
-            fixture.SuccessWorker,
-            "STRATALINT_LEAN_SLOT_LEASE_SECONDS=5",
-            "STRATALINT_LOCK_TIMEOUT_SECONDS=2");
-
-        Assert.Equal(2, contender.ExitCode);
-        Assert.False(holder.HasExited);
-        var signal = BoundedProcessRunner.Run(
-            "/bin/kill",
-            ["-TERM", holder.Id.ToString(System.Globalization.CultureInfo.InvariantCulture)],
-            fixture.Root,
-            TimeSpan.FromSeconds(5),
-            4096);
-        Assert.Equal(0, signal.ExitCode);
-        Assert.True(holder.WaitForExit(5_000));
     }
 
     [Fact]
-    public void SigkillOrphanedHolderReleasesItsLeaseToTheNextAcquirer()
+    public void SigkillOrphanKeepsSlotUntilTheWholeProcessGroupIsDead()
     {
-        using var fixture = new LeaseWatchdogFixture();
+        using var fixture = new DeadOwnerObservationFixture();
         using var holder = fixture.Start(fixture.SleepWorker);
         Assert.True(SpinWait.SpinUntil(
             () => fixture.SlotExists() && File.Exists(fixture.SleepWorkerPidFile),
@@ -136,19 +89,25 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.True(holder.WaitForExit(5_000));
         Assert.True(ProcessExists(orphanPid));
 
-        var result = fixture.Run(fixture.SuccessWorker, "STRATALINT_LOCK_TIMEOUT_SECONDS=3");
+        var blocked = fixture.Run(fixture.SuccessWorker, "STRATALINT_LOCK_TIMEOUT_SECONDS=1");
 
-        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(2, blocked.ExitCode);
+        Assert.True(fixture.SlotExists());
+        Assert.True(ProcessExists(orphanPid));
+        fixture.KillProcess(orphanPid);
         Assert.True(SpinWait.SpinUntil(
             () => !ProcessExists(orphanPid),
             TimeSpan.FromSeconds(5)));
-        Assert.False(ProcessExists(orphanPid));
+
+        var reclaimed = fixture.Run(fixture.SuccessWorker, "STRATALINT_LOCK_TIMEOUT_SECONDS=3");
+
+        Assert.Equal(0, reclaimed.ExitCode);
     }
 
     [Fact]
-    public void ClosedFdDescendantIsGoneBeforeTheStaleSlotCanBeReclaimed()
+    public void LiveClosedFdDescendantPreventsReclaimWithoutBeingKilled()
     {
-        using var fixture = new LeaseWatchdogFixture();
+        using var fixture = new DeadOwnerObservationFixture();
         using var holder = fixture.Start(fixture.ClosedFdDescendantWorker);
         Assert.True(SpinWait.SpinUntil(
             () => fixture.SlotExists()
@@ -163,57 +122,28 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.True(holder.WaitForExit(5_000));
         Assert.True(ProcessExists(descendantPid));
 
-        var contender = fixture.Run(
+        var blocked = fixture.Run(
+            fixture.SuccessWorker,
+            "STRATALINT_LOCK_TIMEOUT_SECONDS=1");
+
+        Assert.Equal(2, blocked.ExitCode);
+        Assert.True(fixture.SlotExists());
+        Assert.True(ProcessExists(descendantPid));
+        Assert.True(SpinWait.SpinUntil(
+            () => !ProcessExists(descendantPid),
+            TimeSpan.FromSeconds(10)));
+
+        var reclaimed = fixture.Run(
             fixture.SuccessWorker,
             "STRATALINT_LOCK_TIMEOUT_SECONDS=3");
 
-        Assert.True(
-            contender.ExitCode == 0,
-            $"exit: {contender.ExitCode}\n"
-            + $"stdout: {Encoding.UTF8.GetString(contender.StandardOutput)}\n"
-            + $"stderr: {Encoding.UTF8.GetString(contender.StandardError)}");
-        Assert.True(SpinWait.SpinUntil(
-            () => !ProcessExists(descendantPid),
-            TimeSpan.FromSeconds(5)));
-        Assert.False(ProcessExists(descendantPid));
-    }
-
-    [Fact]
-    public void LiveLegacyPidAndStartOwnerIsNeverExpired()
-    {
-        using var fixture = new LeaseWatchdogFixture();
-        var slot = fixture.CreateSlotOwnedByCurrentProcess();
-        File.SetLastWriteTimeUtc(Path.Combine(slot, "owner"), DateTime.UtcNow.AddMinutes(-1));
-
-        var result = fixture.Run(
-            fixture.SuccessWorker,
-            "STRATALINT_LEAN_SLOT_LEASE_SECONDS=5",
-            "STRATALINT_LOCK_TIMEOUT_SECONDS=1");
-
-        Assert.Equal(2, result.ExitCode);
-        Assert.True(Directory.Exists(slot));
-    }
-
-    [Fact]
-    public void LiveLegacyPidOwnerIsNeverExpired()
-    {
-        using var fixture = new LeaseWatchdogFixture();
-        var slot = fixture.CreateSlotWithOwner($"{Environment.ProcessId}\n");
-        File.SetLastWriteTimeUtc(Path.Combine(slot, "owner"), DateTime.UtcNow.AddMinutes(-1));
-
-        var result = fixture.Run(
-            fixture.SuccessWorker,
-            "STRATALINT_LEAN_SLOT_LEASE_SECONDS=5",
-            "STRATALINT_LOCK_TIMEOUT_SECONDS=1");
-
-        Assert.Equal(2, result.ExitCode);
-        Assert.True(Directory.Exists(slot));
+        Assert.Equal(0, reclaimed.ExitCode);
     }
 
     [Fact]
     public void MalformedNonemptyOwnerFailsClosed()
     {
-        using var fixture = new LeaseWatchdogFixture();
+        using var fixture = new DeadOwnerObservationFixture();
         var slot = fixture.CreateSlotWithOwner("not-an-owner\n");
         Directory.SetLastWriteTimeUtc(slot, DateTime.UtcNow.AddMinutes(-1));
 
@@ -228,13 +158,12 @@ public sealed partial class ReportSupervisorScriptTests
     [Fact]
     public void UnknownCanonicalLiveOwnerCannotBeReclaimedOnTimeout()
     {
-        using var fixture = new LeaseWatchdogFixture();
+        using var fixture = new DeadOwnerObservationFixture();
         fixture.CreateSlotWithOwner(
             $"{Environment.ProcessId}|unknown|{DateTimeOffset.UtcNow.AddMinutes(-1).ToUnixTimeMilliseconds()}\n");
 
         var result = fixture.Run(
             fixture.SuccessWorker,
-            "STRATALINT_LEAN_SLOT_LEASE_SECONDS=5",
             "STRATALINT_LOCK_TIMEOUT_SECONDS=1");
 
         Assert.Equal(2, result.ExitCode);
@@ -244,10 +173,10 @@ public sealed partial class ReportSupervisorScriptTests
     [Fact]
     public void ThreeFieldOwnerWhosePidWasReusedIsReclaimed()
     {
-        using var fixture = new LeaseWatchdogFixture();
+        using var fixture = new DeadOwnerObservationFixture();
         fixture.CreateSlotWithOwner(
             $"{Environment.ProcessId}|not-the-current-start|{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()}\n");
-        fixture.AttachEmptyFenceMarker();
+        fixture.AttachEmptyProcessGroup();
 
         var result = fixture.Run(
             fixture.SuccessWorker,
@@ -259,26 +188,6 @@ public sealed partial class ReportSupervisorScriptTests
             result.ExitCode == 0,
             $"stdout: {Encoding.UTF8.GetString(result.StandardOutput)}\n"
             + $"stderr: {Encoding.UTF8.GetString(result.StandardError)}");
-    }
-
-    [Fact]
-    public void OneFailedRenewalWriteIsRetriedInsideTheRemainingLeaseWindow()
-    {
-        using var fixture = new LeaseWatchdogFixture();
-        using var holder = fixture.Start(
-            fixture.CpuOnlyWorker,
-            $"PATH={fixture.Root}:{fixture.HostPath}",
-            $"STRATALINT_TEST_FAIL_SLOT_OWNER_RENAME={fixture.RenewalFailureTrigger}",
-            "STRATALINT_LEAN_SLOT_LEASE_SECONDS=5");
-        Assert.True(SpinWait.SpinUntil(
-            () => fixture.SlotExists() && File.Exists(fixture.CpuWorkerPidFile),
-            TimeSpan.FromSeconds(10)));
-        Thread.Sleep(300);
-        File.WriteAllText(fixture.RenewalFailureTrigger, "fail once\n", new UTF8Encoding(false));
-
-        Assert.True(holder.WaitForExit(10_000));
-        Assert.Equal(0, holder.ExitCode);
-        Assert.False(File.Exists(fixture.RenewalFailureTrigger));
     }
 
     [Fact]
@@ -314,13 +223,13 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.Equal(2, fixture.ReadMetrics().Count);
     }
 
-    private sealed class LeaseWatchdogFixture : IDisposable
+    private sealed class DeadOwnerObservationFixture : IDisposable
     {
         private readonly TemporaryDirectory temporary = new();
 
-        internal LeaseWatchdogFixture()
+        internal DeadOwnerObservationFixture()
         {
-            RestoreClock = WriteExecutable("restore-clock.sh", """
+            _ = WriteExecutable("restore-clock.sh", """
                 #!/usr/bin/env bash
                 set -euo pipefail
                 /bin/ln -sf /bin/date "$1.next"
@@ -330,8 +239,7 @@ public sealed partial class ReportSupervisorScriptTests
             SleepWorker = WriteExecutable("sleep.sh", """
                 #!/usr/bin/env bash
                 printf '%s\n' "$$" > "$1/sleep-worker.pid"
-                trap '"$1/restore-clock.sh" "$1/clock-bin/date"; exit 143' TERM
-                sleep 60
+                exec sleep 60
                 """);
             OleanProgressWorker = WriteExecutable("olean-progress.sh", """
                 #!/usr/bin/env bash
@@ -365,7 +273,6 @@ public sealed partial class ReportSupervisorScriptTests
             CpuOnlyWorker = WriteExecutable("cpu-only.sh", """
                 #!/usr/bin/env bash
                 set -euo pipefail
-                printf '%s\n' "$$" > "$1/cpu-worker.pid"
                 perl -MTime::HiRes=time -e '$end = time() + 5; 1 while time() < $end'
                 "$1/restore-clock.sh" "$1/clock-bin/date"
                 """);
@@ -375,10 +282,6 @@ public sealed partial class ReportSupervisorScriptTests
                 sleep 5
                 "$1/restore-clock.sh" "$1/clock-bin/date"
                 """);
-            SingleProcessStallWorker = WriteExecutable("single-process-stall.sh", """
-                #!/usr/bin/env bash
-                exec perl -e '$SIG{TERM} = sub { system $ARGV[0], $ARGV[1]; exit 143 }; sleep 300' "$1/restore-clock.sh" "$1/clock-bin/date"
-                """);
             ClosedFdDescendantWorker = WriteExecutable("closed-fd-descendant.sh", """
                 #!/usr/bin/env bash
                 set -euo pipefail
@@ -386,18 +289,10 @@ public sealed partial class ReportSupervisorScriptTests
                 (
                   trap '' TERM
                   exec 9<&- >/dev/null 2>&1
-                  sleep 60
+                  sleep 5
                 ) &
                 printf '%s\n' "$!" > "$1/closed-fd-descendant.pid"
-                sleep 60
-                """);
-            PartialLakeArtifactWorker = WriteExecutable("partial-lake-artifact.sh", """
-                #!/usr/bin/env bash
-                set -euo pipefail
-                mkdir -p "$1/.lake/build/lib/lean"
-                printf partial > "$1/.lake/build/lib/lean/Recovery.olean"
-                trap '"$1/restore-clock.sh" "$1/clock-bin/date"; exit 143' TERM
-                sleep 60
+                sleep 5
                 """);
             _ = WriteExecutable("ps", """
                 #!/usr/bin/env bash
@@ -434,26 +329,6 @@ public sealed partial class ReportSupervisorScriptTests
                 printf '%s\n' "$value" > "$STRATALINT_TEST_CLOCK_FILE"
                 printf '%s\n' "$value"
                 """);
-            _ = WriteExecutable("mv", """
-                #!/usr/bin/env bash
-                set -euo pipefail
-                destination="${!#}"
-                trigger="${STRATALINT_TEST_FAIL_SLOT_OWNER_RENAME:-}"
-                if [[ -n "$trigger" && -f "$trigger" && "$destination" == */slot-1.lock/owner ]]; then
-                  /bin/rm -f -- "$trigger"
-                  exit 1
-                fi
-                exec /bin/mv "$@"
-                """);
-            ManualDriver = WriteExecutable("manual-driver.sh", """
-                #!/usr/bin/env bash
-                set +e
-                stdout="$1"
-                stderr="$2"
-                shift 2
-                "$@" > "$stdout" 2> "$stderr"
-                exit "$?"
-                """);
         }
 
         internal string Root => temporary.Path;
@@ -462,20 +337,12 @@ public sealed partial class ReportSupervisorScriptTests
         internal string Slot => Path.Combine(StateRoot, "slots", "slot-1.lock");
         internal string ProgressLogRoot => Path.Combine(Root, "producer.logs");
         internal string SleepWorkerPidFile => Path.Combine(Root, "sleep-worker.pid");
-        internal string CpuWorkerPidFile => Path.Combine(Root, "cpu-worker.pid");
         internal string ClosedFdLeaderPidFile => Path.Combine(Root, "closed-fd-leader.pid");
         internal string ClosedFdDescendantPidFile => Path.Combine(Root, "closed-fd-descendant.pid");
-        internal string WatchdogClockFile => Path.Combine(Root, "watchdog.clock");
+        internal string ObservationClockFile => Path.Combine(Root, "observation.clock");
         internal string ClockBin => Path.Combine(Root, "clock-bin");
-        internal string ClockDate => Path.Combine(ClockBin, "date");
         internal string HostPath => Environment.GetEnvironmentVariable("PATH") ?? "/bin:/usr/bin";
-        internal string RenewalFailureTrigger => Path.Combine(Root, "fail-renewal-once");
-        internal string RecoveryOlean => Path.Combine(
-            Root, ".lake", "build", "lib", "lean", "Recovery.olean");
-        internal string ManualStdout => Path.Combine(Root, "manual.stdout");
-        internal string ManualStderr => Path.Combine(Root, "manual.stderr");
         internal string SuccessWorker { get; }
-        internal string RestoreClock { get; }
         internal string SleepWorker { get; }
         internal string OleanProgressWorker { get; }
         internal string PipeProgressWorker { get; }
@@ -483,9 +350,6 @@ public sealed partial class ReportSupervisorScriptTests
         internal string CpuOnlyWorker { get; }
         internal string QuantizedLowDutyWorker { get; }
         internal string ClosedFdDescendantWorker { get; }
-        internal string SingleProcessStallWorker { get; }
-        internal string PartialLakeArtifactWorker { get; }
-        internal string ManualDriver { get; }
 
         internal bool SlotExists() => Directory.Exists(Slot);
 
@@ -544,7 +408,7 @@ public sealed partial class ReportSupervisorScriptTests
             return Slot;
         }
 
-        internal void AttachEmptyFenceMarker()
+        internal void AttachEmptyProcessGroup()
         {
             var marker = Path.Combine(Root, "synthetic-process.marker");
             File.WriteAllText(marker, string.Empty, new UTF8Encoding(false));
@@ -558,52 +422,14 @@ public sealed partial class ReportSupervisorScriptTests
                 new UTF8Encoding(false));
         }
 
-        internal string[] AcceleratedWatchdogEnvironment(int stepSeconds) =>
+        internal string[] AcceleratedObservationEnvironment(int stepSeconds) =>
         [
             $"PATH={ClockBin}:{HostPath}",
-            $"STRATALINT_TEST_CLOCK_FILE={WatchdogClockFile}",
+            $"STRATALINT_TEST_CLOCK_FILE={ObservationClockFile}",
             $"STRATALINT_TEST_CLOCK_STEP_SECONDS={stepSeconds}",
             "STRATALINT_REPORT_STALL_WINDOW_SECONDS=60",
             "STRATALINT_REPORT_STALL_WINDOW_COUNT=3",
         ];
-
-        internal ProcessOutput RunDirectSingleProcess() => RunSingleProcess(viaBash: false);
-
-        internal ProcessOutput RunManualSingleProcess() => RunSingleProcess(viaBash: true);
-
-        internal int ReadSingleMetricExitCode()
-        {
-            var line = Assert.Single(File.ReadAllLines(MetricsLog));
-            using var document = System.Text.Json.JsonDocument.Parse(line);
-            return document.RootElement.GetProperty("rc").GetInt32();
-        }
-
-        internal void WriteRecoveryLakeProject()
-        {
-            File.WriteAllText(
-                Path.Combine(Root, "lean-toolchain"),
-                "leanprover/lean4:v4.31.0\n",
-                new UTF8Encoding(false));
-            File.WriteAllText(
-                Path.Combine(Root, "lakefile.toml"),
-                """
-                name = "RecoveryFixture"
-                version = "0.1.0"
-                defaultTargets = ["Recovery"]
-
-                [[lean_lib]]
-                name = "Recovery"
-                """ + "\n",
-                new UTF8Encoding(false));
-            File.WriteAllText(
-                Path.Combine(Root, "Recovery.lean"),
-                "theorem recovered : True := by trivial\n",
-                new UTF8Encoding(false));
-            File.WriteAllText(
-                Path.Combine(Root, "Verify.lean"),
-                "import Recovery\n#check recovered\n",
-                new UTF8Encoding(false));
-        }
 
         internal ProcessOutput Run(string worker, params string[] environment) =>
             BoundedProcessRunner.Run(
@@ -672,7 +498,7 @@ public sealed partial class ReportSupervisorScriptTests
                 $"STRATALINT_LEAN_PROGRESS_ROOT={Root}",
                 $"STRATALINT_LEAN_PROGRESS_LOG_ROOT={ProgressLogRoot}",
                 "STRATALINT_BUILD_TIMEOUT_SECONDS=0",
-                "STRATALINT_REPORT_WATCHDOG_POLL_SECONDS=1",
+                "STRATALINT_REPORT_OBSERVATION_POLL_SECONDS=1",
             };
             arguments.AddRange(environment);
             arguments.Add(Supervisor);
@@ -683,41 +509,6 @@ public sealed partial class ReportSupervisorScriptTests
             arguments.Add(worker);
             arguments.Add(Root);
             return arguments;
-        }
-
-        private ProcessOutput RunSingleProcess(bool viaBash)
-        {
-            var arguments = new List<string>
-            {
-                $"STRATALINT_REPORT_METRICS_LOG={MetricsLog}",
-                $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
-                $"STRATALINT_LEAN_PROGRESS_ROOT={Root}",
-                $"PATH={ClockBin}:{HostPath}",
-                $"STRATALINT_TEST_CLOCK_FILE={WatchdogClockFile}",
-                "STRATALINT_TEST_CLOCK_STEP_SECONDS=60",
-                "STRATALINT_REPORT_WATCHDOG_POLL_SECONDS=1",
-                "STRATALINT_REPORT_STALL_WINDOW_SECONDS=60",
-                "STRATALINT_REPORT_STALL_WINDOW_COUNT=3",
-            };
-            if (viaBash) arguments.Add("bash");
-            arguments.Add(Supervisor);
-            arguments.Add("--role");
-            arguments.Add("lean-producer");
-            arguments.Add("--lean-slot");
-            arguments.Add("--");
-            arguments.Add(SingleProcessStallWorker);
-            arguments.Add(Root);
-            if (!viaBash)
-            {
-                return BoundedProcessRunner.Run(
-                    "env", arguments, Root, TimeSpan.FromSeconds(12), 1024 * 1024);
-            }
-            arguments.Remove("bash");
-            arguments.Insert(0, "env");
-            arguments.Insert(0, ManualStderr);
-            arguments.Insert(0, ManualStdout);
-            return BoundedProcessRunner.Run(
-                ManualDriver, arguments, Root, TimeSpan.FromSeconds(12), 1024 * 1024);
         }
 
         private static string Supervisor => Path.Combine(

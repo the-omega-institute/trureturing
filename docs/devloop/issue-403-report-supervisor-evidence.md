@@ -1,105 +1,54 @@
 # Issue 403 report supervisor evidence
 
-This file preserves the safety argument and the RED evidence used to change the
-Lean-slot lease and watchdog. It is review evidence, not executable policy.
+This file preserves the safety contract and RED evidence for the Lean-slot
+controller after the #452 scope reduction. It is review evidence, not
+executable policy.
 
-## Process-group reclaim contract
+## Dead-owner reclaim contract
 
-Each canonical slot records `PGID|leader-pid|leader-start`. Before a stale slot
-is detached, the reclaimer reads the process table with
-`ps -axo pid=,pgid=,stat=` and selects every non-zombie member of that exact
-PGID. A live leader must still have the recorded start identity; a mismatch or
-an unreadable table fails closed so a reused group is not signalled.
+Each lock records `owner=PID|process-start|epoch`. The epoch identifies the
+claim event; it is not an expiry time and is never renewed. A live owner is
+never displaced because of elapsed wall-clock time.
 
-If the recorded group is nonempty, reclaim sends SIGTERM to the group, waits a
-grace period, enumerates the group again, sends SIGKILL when members remain,
-and performs a final enumeration. Reclaim proceeds only when that final PID
-table is empty. Inherited marker and pipe FDs are retained as an auxiliary way
-to find escaped sessions, but an empty marker scan is never evidence that the
-recorded process group is empty.
+A slot whose owner process is gone, or whose PID has a different start
+identity, is only reclaimable when both recorded producer views are confirmed
+empty:
 
-## Watchdog sampling contract
+- `ps -axo pid=,pgid=,stat=` has no non-zombie member of the exact recorded
+  process group; and
+- the inherited marker has no process holding its dedicated descriptor.
 
-The portable CPU source is `ps -o time=`, which can expose cumulative CPU only
-in whole seconds. A stall window is therefore at least 60 seconds. A low-duty
-build that accumulates at least one CPU second per minute must cross one whole
-second display quantum inside such a window. The watchdog requires at least
-three consecutive windows to reduce boundary races.
+Unreadable or malformed owner, process-group, process-table, or marker state
+fails closed. Any live group or marker member keeps the slot. Stale reclaim
+never sends SIGTERM or SIGKILL.
 
-A window counts as stalled only when both conditions hold throughout it:
+The independent #450 worker wall-clock budget is unchanged. A supervisor still
+terminates its own worker group when that configured build budget is exceeded
+(7200 seconds by default), records `124`, and releases its slot through the
+normal `finish()` path.
 
-- aggregate supervised-process CPU has no observed change; and
-- all `.olean`, producer-log, relayed stdout, and relayed stderr snapshots have
-  no observed change.
+## Stall observation contract
 
-Any CPU change, including a decrease caused by process membership churn, is
-treated conservatively as activity. Any other signal change resets the
-consecutive-stall count. Unavailable sampling disables destructive watchdog
-action rather than guessing.
+The supervisor samples aggregate process-group CPU plus `.olean`, producer-log,
+relayed stdout, and relayed stderr progress. Consecutive windows with no change
+emit a `stall observed` diagnostic. Sampling failure disables only the
+observation and emits a diagnostic. Neither outcome changes the worker exit
+code or signals the worker tree.
 
-## Durable RED transcript summary
+## RED transcript
 
-The old implementation was exact commit
-`e791c71d082eb610bc628103a6043a71906267ba`. Its archived tree was overlaid
-only with the focused regression source later committed with blob
-`5284fb559ef105b78118509ba04453abf38979e7`, then the following 12-test filter
-was run. The observed result was `12 total, 4 passed, 8 failed` in 37.4875
-seconds.
-
-Failed cases and decisive output:
+Before the scope reduction, the focused command selected these three cases:
 
 ```text
-OneFailedRenewalWriteIsRetriedInsideTheRemainingLeaseWindow
-  Expected: 0; Actual: 2
-ExpiredCanonicalLeaseWithoutProducerFenceIsNotReclaimed
-  Expected: 2; Actual: 0
-LiveLegacyPidAndStartOwnerIsNeverExpired
-  Expected: 2; Actual: 0
-MalformedNonemptyOwnerFailsClosed
-  Expected: 2; Actual: 0
-LiveLegacyPidOwnerIsNeverExpired
-  Expected: 2; Actual: 0
-SigkillOrphanedHolderReleasesItsLeaseToTheNextAcquirer
-  Assert.True failure: Expected True; Actual False
-UnknownCanonicalLiveOwnerCannotBeReclaimedOnTimeout
-  Assert.True failure: Expected True; Actual False
-CpuActiveMathlibScalePhaseOutlivingTheStallThresholdIsNeverKilled
-  Expected: 0; Actual: 2
+SigkillOrphanKeepsSlotUntilTheWholeProcessGroupIsDead
+LiveClosedFdDescendantPreventsReclaimWithoutBeingKilled
+StalledProducerIsObservedWithoutBeingKilled
 ```
 
-Passed cases in the same old-tree run:
+The old implementation produced `3 total, 0 passed, 3 failed`. Both dead-owner
+cases expected the contender to time out with `2`, but stale reclaim killed the
+remaining live process and returned `0`. The stall case expected the worker to
+complete with `0`, but the destructive watchdog killed it and returned `2`.
 
-```text
-ManualBashInvocationWatchdogFailureReturnsAndRecordsExactlyTwo
-ThreeFieldOwnerWhosePidWasReusedIsReclaimed
-DirectSingleProcessWatchdogFailureReturnsAndRecordsExactlyTwo
-FaultInjectedPartialLakeArtifactIsRebuiltAndImportableOnTheNextBuild
-```
-
-The old implementation was also invoked directly outside VSTest with a
-single sleeping producer. The trace reached the watchdog diagnostic and then
-escaped from termination under `set -e`; both externally observed and recorded
-results were wrong:
-
-```text
-report-supervisor: infrastructure failure: no Lean progress for 2s
-rc=126
-metric_rc=126
-```
-
-The focused command selected these names explicitly:
-
-```text
-ExpiredCanonicalLeaseWithoutProducerFenceIsNotReclaimed
-SigkillOrphanedHolderReleasesItsLeaseToTheNextAcquirer
-CpuActiveMathlibScalePhaseOutlivingTheStallThresholdIsNeverKilled
-DirectSingleProcessWatchdogFailureReturnsAndRecordsExactlyTwo
-ManualBashInvocationWatchdogFailureReturnsAndRecordsExactlyTwo
-LiveLegacyPidAndStartOwnerIsNeverExpired
-LiveLegacyPidOwnerIsNeverExpired
-MalformedNonemptyOwnerFailsClosed
-UnknownCanonicalLiveOwnerCannotBeReclaimedOnTimeout
-ThreeFieldOwnerWhosePidWasReusedIsReclaimed
-OneFailedRenewalWriteIsRetriedInsideTheRemainingLeaseWindow
-FaultInjectedPartialLakeArtifactIsRebuiltAndImportableOnTheNextBuild
-```
+The final tests use condition polling for process and slot state. They do not
+use fixed sleeps to guess when orphan cleanup has completed.
