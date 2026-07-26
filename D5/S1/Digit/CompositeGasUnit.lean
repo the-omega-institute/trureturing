@@ -23,7 +23,8 @@ theorem e6_beta_char_norm (c : ℕ) :
   rw [e6BetaConjChar]
   nlinarith [e6_beta_sq c]
 
-/-- The sum of the two characteristic roots is the linear coefficient `1`. -/
+/-- The sum of the two characteristic roots of `X^2 - X - c` equals `1`,
+the negation of the linear coefficient. -/
 theorem e6_beta_char_trace (c : ℕ) :
     e6Beta c + e6BetaConjChar c = 1 := by
   simp [e6BetaConjChar]
@@ -36,12 +37,14 @@ A full `IsUnit` statement in the integral ring `ℤ[β]` is deferred to L3b',
 which must first supply the parameterized integral-ring carrier. This theorem
 is the closed characteristic-norm core and does not reuse the fixed
 `GoldenInt` carrier for `X^2 - X - 1`.
+
+The hypothesis `hc` records the active parameter-domain discipline (WM-R2:
+the degenerate `c = 0` sits outside the gas domain); the equivalence itself
+is not sensitive to it.
 -/
 theorem e6_beta_char_norm_unit_iff (c : ℕ) (hc : 1 ≤ c) :
     (|e6Beta c * e6BetaConjChar c| = 1) ↔ c = 1 := by
-  have hc_real : (1 : ℝ) ≤ (c : ℝ) := by
-    exact_mod_cast hc
-  rw [e6_beta_char_norm, abs_neg, abs_of_nonneg (by linarith : 0 ≤ (c : ℝ))]
+  rw [e6_beta_char_norm, abs_neg, abs_of_nonneg (Nat.cast_nonneg c)]
   norm_cast
 
 end D5.S1.Digit
