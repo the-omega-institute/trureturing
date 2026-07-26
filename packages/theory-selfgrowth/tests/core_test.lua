@@ -47,6 +47,33 @@ return {
     t.eq(core.select_candidate({ candidates[2] }, 0, prior), nil)
   end,
 
+  test_candidate_selection_prefers_kernel_volumes_foundation_first = function()
+    local mk = function(id, source)
+      return { source_id = source, atom_id = id, cas_ref = "sha256:cas-" .. id }
+    end
+    -- gict/observer higher-volume atoms are listed first, but the pzg/bedc kernel (内核卷)
+    -- must be selected first: foundation-first (良基归纳), so a deep higher-volume theorem
+    -- never stalls this one-at-a-time producer before its kernel prerequisites exist.
+    local candidates = {
+      mk("g1", "gict-v3.6"), mk("g2", "gict-v3.6"), mk("o1", "observer-quantum-v1"),
+      mk("p1", "pzg-v170"), mk("b1", "bedc-wm-v0.1"),
+    }
+    for g = 0, 7 do
+      local source = core.select_candidate(candidates, g, {}).source_id
+      t.eq(source == "pzg-v170" or source == "bedc-wm-v0.1", true)
+    end
+  end,
+
+  test_candidate_selection_falls_to_higher_volumes_when_kernel_exhausted = function()
+    local mk = function(id, source)
+      return { source_id = source, atom_id = id, cas_ref = "sha256:cas-" .. id }
+    end
+    -- No kernel atoms eligible -> higher-volume atoms become selectable (round-robin among them).
+    local candidates = { mk("g1", "gict-v3.6"), mk("g2", "gict-v3.6") }
+    t.eq(core.select_candidate(candidates, 0, {}).atom_id, "g1")
+    t.eq(core.select_candidate(candidates, 1, {}).atom_id, "g2")
+  end,
+
   test_atom_marker_and_request_dedup_are_atom_scoped = function()
     local c = candidate("GICT-T0042", nil, "sha256:abc123")
     local r = core.build_frontier_request("owner/repo", c, BOT_LOGIN)
