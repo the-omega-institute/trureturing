@@ -558,7 +558,7 @@ public sealed partial class ReportSupervisorScriptTests
         {
             Directory.CreateDirectory(Slot);
             var start = BoundedProcessRunner.Run(
-                "/bin/ps",
+                "ps",
                 ["-o", "lstart=", "-p", Environment.ProcessId.ToString(
                     System.Globalization.CultureInfo.InvariantCulture)],
                 Root,
