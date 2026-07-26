@@ -17,6 +17,61 @@ collect_process_tree() {
   done
 }
 
+supervised_processes() {
+  {
+    if [[ -n "$CHILD_PID" ]]; then collect_process_tree "$CHILD_PID"; fi
+    marker_processes
+  } | sort -un
+}
+
+process_tree_members() {
+  if [[ -n "$CHILD_PID" ]]; then collect_process_tree "$CHILD_PID" | sort -un; fi
+}
+
+cpu_time_centiseconds() {
+  local raw=""
+  raw="$(ps -o time= -p "$1" 2>/dev/null | awk '{$1=$1; print; exit}')"
+  [[ -n "$raw" ]] || return 1
+  awk -v value="$raw" '
+    BEGIN {
+      days = 0
+      if (index(value, "-") > 0) {
+        split(value, day_parts, "-")
+        days = day_parts[1] + 0
+        value = day_parts[2]
+      }
+      count = split(value, fields, ":")
+      seconds = fields[count] + 0
+      if (count >= 2) seconds += 60 * (fields[count - 1] + 0)
+      if (count >= 3) seconds += 3600 * (fields[count - 2] + 0)
+      printf "%.0f\n", 100 * (86400 * days + seconds)
+    }
+  '
+}
+
+cpu_progress_snapshot() {
+  local pid ticks members exists_rc
+  local total=0
+  members="$(process_group_members_for_id "$PROCESS_GROUP_ID")" || return 1
+  while IFS= read -r pid; do
+    [[ -n "$pid" \
+      && "$pid" != "$STDOUT_RELAY_PID" \
+      && "$pid" != "$STDERR_RELAY_PID" ]] || continue
+    if ! ticks="$(cpu_time_centiseconds "$pid")"; then
+      if process_exists "$pid"; then
+        return 1
+      else
+        exists_rc=$?
+        [[ "$exists_rc" == "1" ]] && continue
+        return 1
+      fi
+    fi
+    [[ "$ticks" =~ ^[0-9]+$ ]] || return 1
+    total=$((total + ticks))
+  done <<< "$members"
+  printf '%s\n' "$total"
+}
+
 linux_proc_stat_snapshot() {
   local pid="$1"
   local path="$PROCESS_FS_ROOT/$pid/stat"
