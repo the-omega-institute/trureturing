@@ -223,7 +223,7 @@ components:
     members:
       - phase1-protected-content-admission
       - phase2-dual-harness-conservative-extension
-      - "c0/base-commit git-commit/15f51c808f69b5ba0462b4eb2c20514fccc87c97"
+      - "c0/base-commit git-commit/47b4a88e52331608c3140fea7c32382bd57cbe96"
       - "c0/ceremony-commit convention/this-pr-merge-commit"
       - "c0/controller git-sha1/10c0bdf8b5667e7cb2e4d472fb40364ac2daeec2 Meta/StrataLint/StrataLint.Cli/Admission/FrozenEvidenceResolver.cs"
       - "c0/controller git-sha1/1444b0196cd537b34ebdc32c858cb52fe7694bb2 Meta/StrataLint/StrataLint.Cli/Conservative/ContractEpoch/ContractEpochLedger.cs"
@@ -272,9 +272,9 @@ components:
       - "c0/corpus git-sha1/a12fb72cb7a3717e936a2b14fb3d89f8906a540e Golden/cases/protected-semantics.toml"
       - "c0/corpus git-sha1/fdcb38587e9d5895073f230bdcb2d03735b66a2e Golden/fixture-registry.yaml"
       - "c0/gate-wiring git-sha1/ed802e8827117d1b4621044cbd32933c7d580923 .github/scripts/harness-gate.sh"
-      - "c0/inaugural-certificate sha256/b5e93c4872e1fe6c3f4f509cd5385a9ecd9a606622b0fe80d96a18a73c2cf760 Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json"
-      - "c0/preimage-commit git-commit/29ff0878e4c4356c14540a5b052dcfc37ebfd004"
-      - "c0/preimage-tree git-tree/c6a7f27d66c1aaa66378b0f2097ad945bfc4f1c5"
+      - "c0/inaugural-certificate sha256/37d572cf7b85ac3bd64b2e49aaa1f4079479e2d072111c4c0a6c2c4b97f2be31 Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json"
+      - "c0/preimage-commit git-commit/b8f54f53628acdb1aff860307f670b0c20bf1b78"
+      - "c0/preimage-tree git-tree/d734353c251e61fd590cffaebae8bb2ff78d4bce"
     judged_by:
       - bootstrap-pr-1
     verification: verified
