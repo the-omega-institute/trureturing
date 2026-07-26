@@ -8,18 +8,14 @@ namespace StrataLint.Tests;
 public sealed class ReportSupervisorTestWatchdogTests
 {
     [Fact]
-    public void WatchdogDefaultsToNinetySecondsAndAcceptsAPositiveOverride()
+    public void WatchdogDefaultsToNinetySecondsAndOwnsTheOnlyTestTimeout()
     {
         Assert.Equal(90, ReportSupervisorTestWatchdog.ParseTimeoutSeconds(null));
         Assert.Equal(17, ReportSupervisorTestWatchdog.ParseTimeoutSeconds("17"));
         Assert.Equal(90, ReportSupervisorTestWatchdog.ParseTimeoutSeconds("0"));
         Assert.Equal(90, ReportSupervisorTestWatchdog.ParseTimeoutSeconds("invalid"));
-        Assert.Equal(
-            ReportSupervisorTestWatchdog.ConfiguredTimeoutMilliseconds,
-            new ReportFactAttribute().Timeout);
-        Assert.Equal(
-            ReportSupervisorTestWatchdog.ConfiguredTimeoutMilliseconds,
-            new ReportTheoryAttribute().Timeout);
+        Assert.Equal(0, new ReportFactAttribute().Timeout);
+        Assert.Equal(0, new ReportTheoryAttribute().Timeout);
     }
 
     [Fact]

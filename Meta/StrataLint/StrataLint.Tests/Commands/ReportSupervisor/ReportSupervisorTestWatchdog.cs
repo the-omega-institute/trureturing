@@ -7,21 +7,9 @@ using Xunit.Sdk;
 
 namespace StrataLint.Tests;
 
-public sealed class ReportFactAttribute : FactAttribute
-{
-    public ReportFactAttribute()
-    {
-        Timeout = ReportSupervisorTestWatchdog.ConfiguredTimeoutMilliseconds;
-    }
-}
+public sealed class ReportFactAttribute : FactAttribute;
 
-public sealed class ReportTheoryAttribute : TheoryAttribute
-{
-    public ReportTheoryAttribute()
-    {
-        Timeout = ReportSupervisorTestWatchdog.ConfiguredTimeoutMilliseconds;
-    }
-}
+public sealed class ReportTheoryAttribute : TheoryAttribute;
 
 [CollectionDefinition(Name, DisableParallelization = true)]
 public sealed class ReportSupervisorScriptCollection
@@ -66,8 +54,6 @@ internal sealed class ReportSupervisorTestWatchdog : IDisposable
 
     internal static int ConfiguredTimeoutSeconds => ParseTimeoutSeconds(
         Environment.GetEnvironmentVariable(TimeoutEnvironment));
-
-    internal static int ConfiguredTimeoutMilliseconds => checked(ConfiguredTimeoutSeconds * 1_000);
 
     internal static int ParseTimeoutSeconds(string? value) =>
         int.TryParse(value, out var seconds) && seconds is >= 1 and <= 3_600
@@ -168,7 +154,7 @@ internal sealed class ReportSupervisorTestWatchdog : IDisposable
         }
         catch (System.ComponentModel.Win32Exception)
         {
-            // The xUnit timeout remains the final hard stop if the OS refuses the kill.
+            // Timeout diagnostics were captured before this best-effort termination.
         }
     }
 }
