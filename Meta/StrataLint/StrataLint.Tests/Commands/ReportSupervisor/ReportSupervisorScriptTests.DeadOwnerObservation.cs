@@ -298,17 +298,22 @@ public sealed partial class ReportSupervisorScriptTests
         Assert.Empty(result.StandardOutput);
     }
 
-    [Fact]
-    public void ZombieOnlyProcessGroupAllowsReclaim()
+    [Theory]
+    [InlineData("Z+")]
+    [InlineData("X")]
+    public void DeadOnlyProcessGroupAllowsReclaim(string state)
     {
         using var fixture = new DeadOwnerObservationFixture();
+        var members = fixture.RunProcessGroupMembers(99999999, state);
+        Assert.Equal(0, members.ExitCode);
+        Assert.Empty(members.StandardOutput);
         fixture.CreateSlotWithOwner("99999999|definitely-dead|0\n");
         _ = fixture.AttachEmptyProcessGroup();
 
         var result = fixture.Run(
             fixture.SuccessWorker,
             $"PATH={fixture.Root}:{fixture.HostPath}",
-            "STRATALINT_TEST_PS_ZOMBIE_GROUP=99999999",
+            $"STRATALINT_TEST_PS_DEAD_GROUP_STATE={state}",
             "STRATALINT_LOCK_TIMEOUT_SECONDS=3");
 
         Assert.Equal(0, result.ExitCode);
@@ -427,8 +432,8 @@ public sealed partial class ReportSupervisorScriptTests
                   printf 'malformed-successful-row\n'
                   exit 0
                 fi
-                if [[ -n "${STRATALINT_TEST_PS_ZOMBIE_GROUP:-}" && "$*" == *"pid=,pgid=,stat="* ]]; then
-                  printf '424242 %s Z+\n' "$STRATALINT_TEST_PS_ZOMBIE_GROUP"
+                if [[ -n "${STRATALINT_TEST_PS_DEAD_GROUP_STATE:-}" && "$*" == *"pid=,pgid=,stat="* ]]; then
+                  printf '424242 99999999 %s\n' "$STRATALINT_TEST_PS_DEAD_GROUP_STATE"
                   exit 0
                 fi
                 if [[ "${STRATALINT_TEST_QUANTIZED_CPU:-}" == "1" && "$*" == *"time="* ]]; then
@@ -693,6 +698,23 @@ public sealed partial class ReportSupervisorScriptTests
                     ProcessFsRoot,
                     ProcessControl,
                     marker,
+                ],
+                Root,
+                TimeSpan.FromSeconds(5),
+                4096);
+
+        internal ProcessOutput RunProcessGroupMembers(int groupId, string state) =>
+            BoundedProcessRunner.Run(
+                "/usr/bin/env",
+                [
+                    $"PATH={Root}:{HostPath}",
+                    $"STRATALINT_TEST_PS_DEAD_GROUP_STATE={state}",
+                    "/bin/bash",
+                    "-c",
+                    "set -euo pipefail; PROCESS_FS_ROOT=/proc; source \"$1\"; process_group_members_for_id \"$2\"",
+                    "process-group-members",
+                    ProcessControl,
+                    groupId.ToString(System.Globalization.CultureInfo.InvariantCulture),
                 ],
                 Root,
                 TimeSpan.FromSeconds(5),

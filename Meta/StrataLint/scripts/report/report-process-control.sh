@@ -54,7 +54,7 @@ process_group_members_for_id() {
         malformed = 1
         next
       }
-      if ($2 == group && $3 !~ /^Z/) print $1
+      if ($2 == group && $3 !~ /^(Z|X)/) print $1
     }
     END {if (rows == 0 || malformed) exit 1}
   ' <<< "$table"
