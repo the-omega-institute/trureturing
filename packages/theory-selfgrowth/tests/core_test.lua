@@ -106,10 +106,26 @@ return {
 
   test_is_terminal_blocked = function()
     t.is_true(core.is_terminal_blocked({ labels = { { name = "fkst-dev:blocked" } } }))
+    -- impl-failed is a devloop TERMINAL_STATE (retries exhausted); it must gate exactly like
+    -- blocked so a request whose codex timed out does not freeze the producer forever (#446).
+    t.is_true(core.is_terminal_blocked({ labels = { { name = "fkst-dev:impl-failed" } } }))
+    t.is_true(core.is_terminal_blocked({
+      labels = { { name = "fkst-dev:enabled" }, { name = "fkst-dev:impl-failed" } } }))
     t.is_true(not core.is_terminal_blocked({ labels = { { name = "fkst-dev:implementing" } } }))
     t.is_true(not core.is_terminal_blocked({ labels = {} }))
     t.is_true(not core.is_terminal_blocked({}))            -- no labels field at all
     t.is_true(not core.is_terminal_blocked({ labels = "not-a-table" }))
+  end,
+
+  -- THE #446 REGRESSION: a terminal impl-failed (codex-timed-out, retry-exhausted) OPEN request
+  -- must NOT freeze generation. A deep atom whose 3h codex budget is exceeded reaches impl-failed
+  -- and its churn stops, but it stays OPEN on GitHub; counting it as open deadlocked the flywheel.
+  test_impl_failed_open_request_does_not_freeze_generation = function()
+    local failed = request_issue("owner/repo", 0, "OPEN")
+    failed.labels = { { name = "fkst-dev:enabled" }, { name = "fkst-dev:impl-failed" } }
+    local d = core.decide_generation({ failed }, BOT_LOGIN)
+    t.eq(d.generation, 1)          -- still counted toward the generation index (monotonic)
+    t.is_true(not d.open_exists)   -- but does NOT gate: producer self-recovers and fires gen1
   end,
 
   -- Conservative: an ACTIVE (non-blocked) open request still gates, even with labels present.
