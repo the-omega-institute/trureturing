@@ -94,21 +94,32 @@ function M.validate_repo(repo)
   return repo:match("^[%w._-]+/[%w._-]+$") ~= nil
 end
 
--- A frontier-request the devloop has TERMINALLY given up on carries the `fkst-dev:blocked`
--- label (dropped after state-output-obligation-timeout, then decomposed into a sub-issue).
--- It is still OPEN on GitHub but is NOT an active "one at a time" request. Counting it as
--- open freezes THIS producer's generation indefinitely: observed in production, a blocked
--- #373 starved loning's propose department ("skipping one at a time") for ~5h until it was
--- manually closed, so the whole self-growth flywheel stalled at the generation stage. The
--- producer must self-recover, so a terminal-blocked request is excluded from open_exists.
-local TERMINAL_BLOCKED_LABEL = "fkst-dev:blocked"
+-- A frontier-request the devloop has TERMINALLY given up on is still OPEN on GitHub but is NOT
+-- an active "one at a time" request. Counting it as open freezes THIS producer's generation
+-- indefinitely, deadlocking the flywheel at the generation stage. Two devloop terminal states
+-- reach this:
+--   * `fkst-dev:blocked`     -- state-output-obligation-timeout, then decomposed into a sub-issue
+--                               (observed: a blocked #373 starved the producer ~5h).
+--   * `fkst-dev:impl-failed` -- implementation retries exhausted (observed: #446, a deep atom
+--                               whose codex times out at the 3h budget, reached impl-failed /
+--                               "retry-exhausted after 2 attempts" and its churn stopped, yet
+--                               the producer kept counting it as open and never emitted the next
+--                               atom -- the flywheel deadlocked).
+-- Both are TERMINAL per the devloop's own lifecycle (TERMINAL_STATES = blocked, impl-failed,
+-- merged, declined; merged/declined are closed so never reach open_exists). Excluding a request
+-- in either terminal state lets the producer self-recover and advance to the next candidate --
+-- feedback-based deferral of a DEMONSTRABLY stuck atom, NOT fabricated easy-first difficulty.
+local TERMINAL_LABELS = {
+  ["fkst-dev:blocked"] = true,
+  ["fkst-dev:impl-failed"] = true,
+}
 
 function M.is_terminal_blocked(issue)
   if type(issue) ~= "table" or type(issue.labels) ~= "table" then
     return false
   end
   for _, label in ipairs(issue.labels) do
-    if type(label) == "table" and label.name == TERMINAL_BLOCKED_LABEL then
+    if type(label) == "table" and TERMINAL_LABELS[label.name] then
       return true
     end
   end
