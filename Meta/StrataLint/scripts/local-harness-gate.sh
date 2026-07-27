@@ -205,11 +205,23 @@ LAKE_BIN="${LAKE_BIN:-$(command -v lake || true)}"
 REPORTS="$TMP_ROOT/reports"
 mkdir -p "$REPORTS"
 PRODUCER="$JUDGE_ROOT/Meta/StrataLint/lean-inspector/inspect.sh"
-[[ -x "$PRODUCER" ]] \
-  || { echo "local-harness-gate: dev Lean producer is absent" >&2; exit 2; }
+# A base that predates the Lean producer can still be served from the content-
+# addressed report cache; defer the hard requirement to the pair helper, which
+# fail-closes on a genuine cache miss (it needs the producer to build the report).
+# Never let an absent producer pass silently.
+if [[ ! -x "$PRODUCER" ]]; then
+  printf '[local-gate] warning: dev Lean producer absent at %s; relying on the report cache\n' \
+    "$PRODUCER" >&2
+fi
 PAIR_PRODUCER="$CANDIDATE_ROOT/Meta/StrataLint/scripts/lean-report-pair.sh"
 [[ -x "$PAIR_PRODUCER" ]] \
   || { echo "local-harness-gate: candidate Lean report pair helper is absent" >&2; exit 2; }
+
+# Host/UID-scoped content-addressed report cache. Turns the unchanging base-tree
+# (redrive) report into a cache hit so it skips the serialized global Lean slot.
+# Local-only: CI never runs this gate, and the candidate pair helper ignores this
+# env when unset, so CI behaviour is unchanged.
+export STRATALINT_REPORT_CACHE_ROOT="${STRATALINT_REPORT_CACHE_ROOT:-${TMPDIR:-/tmp}/stratalint-lean-report-cache-$(id -u)}"
 
 CANDIDATE_REPORT="$CANDIDATE_ROOT/.lake/build/stratalint/raw-lean-report.json"
 run_stage lean-reports \
