@@ -116,6 +116,87 @@ public sealed class LeanReportCacheTests
         Assert.False(Directory.Exists(world.CacheRoot));
     }
 
+    [Fact]
+    public void TamperedAttestationFailsClosedAndIsReproduced()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var world = new CacheWorld();
+
+        var first = world.RunPair();
+        Assert.Equal(0, first.ExitCode);
+        Assert.Equal(1, world.ProducerRunCount);
+        var address = world.AddressFrom(first);
+        var attestation = Path.Combine(
+            world.CacheRoot, address, "raw-lean-report.json.input.attestation");
+        Assert.True(File.Exists(attestation));
+
+        // Point the attestation at a repository address that no longer matches the
+        // live tree. The report bytes and .sha256 stay valid, so ONLY the
+        // lean-report-input.sh verify (address re-derivation against the current
+        // tree) can catch this — the core stale/forgery defence that the earlier
+        // "change a tree file -> address changes -> miss" tests never exercise.
+        var tampered = Regex.Replace(
+            File.ReadAllText(attestation),
+            "repository_input_sha256=[0-9a-f]{64}",
+            "repository_input_sha256=" + new string('a', 64));
+        File.WriteAllText(attestation, tampered);
+
+        var second = world.RunPair();
+        Assert.Equal(0, second.ExitCode);
+        // verify rejects the tampered attestation -> evict -> reproduce.
+        Assert.Equal(2, world.ProducerRunCount);
+        Assert.Contains(
+            "\"mode\":\"produced\"",
+            File.ReadAllText(world.Output + ".provenance.json"),
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void WorldWritableCacheRootIsNotTrusted()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var world = new CacheWorld();
+
+        var first = world.RunPair();
+        Assert.Equal(0, first.ExitCode);
+        Assert.Equal(1, world.ProducerRunCount);
+        var address = world.AddressFrom(first);
+        Assert.True(Directory.Exists(Path.Combine(world.CacheRoot, address)));
+
+        // A cache root any user could have planted or written into (predictable
+        // shared-tmp path). Its re-verification anchors only PUBLIC tree inputs, so
+        // a forged entry would self-consistently re-verify; the only defence is to
+        // refuse to trust a group/other-writable (or foreign-owned) root.
+        File.SetUnixFileMode(
+            world.CacheRoot,
+            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute
+                | UnixFileMode.GroupRead | UnixFileMode.GroupWrite | UnixFileMode.GroupExecute
+                | UnixFileMode.OtherRead | UnixFileMode.OtherWrite | UnixFileMode.OtherExecute);
+
+        var second = world.RunPair();
+        Assert.Equal(0, second.ExitCode);
+        // Untrusted root: the existing entry is NOT served; the report is reproduced.
+        Assert.Equal(2, world.ProducerRunCount);
+    }
+
+    [Fact]
+    public void FailedProducerIsNeverStored()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var world = new CacheWorld();
+
+        var result = world.RunPair(producerFails: true);
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Equal(1, world.ProducerRunCount);
+        // The content address is printed before production begins, so it is
+        // available even though the producer failed.
+        var address = world.AddressFrom(result);
+        Assert.False(Directory.Exists(Path.Combine(world.CacheRoot, address)));
+        // A killed / rc!=0 producer must never leave a committed cache entry that a
+        // later run could serve as a "good" report.
+        Assert.Empty(world.CommittedCacheEntries());
+    }
+
     private sealed class CacheWorld : IDisposable
     {
         private readonly TemporaryDirectory _tmp = new();
@@ -180,14 +261,27 @@ public sealed class LeanReportCacheTests
 
         internal int SlotAcquireCount => CountLines(SlotLog);
 
-        internal ProcessOutput RunPair(bool cacheEnabled = true)
+        internal IReadOnlyList<string> CommittedCacheEntries() =>
+            Directory.Exists(CacheRoot)
+                ? Directory.GetDirectories(CacheRoot)
+                    .Where(static d => !Path.GetFileName(d).StartsWith(".tmp", StringComparison.Ordinal))
+                    .ToArray()
+                : [];
+
+        internal ProcessOutput RunPair(bool cacheEnabled = true, bool producerFails = false)
         {
-            var arguments = new List<string>
+            var arguments = new List<string>();
+            if (!cacheEnabled)
             {
-                $"STUB_SLOT_LOG={SlotLog}",
-                $"STUB_PRODUCER_LOG={ProducerLog}",
-                "STUB_REPORT_CONTENT={\"schema\":\"stub-lean-report\",\"v\":1}",
-            };
+                // Seal against an ambient STRATALINT_REPORT_CACHE_ROOT leaking in from
+                // the test runner's own environment: `env -u` strips it for the child.
+                arguments.Add("-u");
+                arguments.Add("STRATALINT_REPORT_CACHE_ROOT");
+            }
+            arguments.Add($"STUB_SLOT_LOG={SlotLog}");
+            arguments.Add($"STUB_PRODUCER_LOG={ProducerLog}");
+            arguments.Add("STUB_REPORT_CONTENT={\"schema\":\"stub-lean-report\",\"v\":1}");
+            if (producerFails) arguments.Add("STUB_PRODUCER_FAIL=1");
             if (cacheEnabled) arguments.Add($"STRATALINT_REPORT_CACHE_ROOT={CacheRoot}");
             arguments.AddRange(
             [
@@ -260,6 +354,10 @@ public sealed class LeanReportCacheTests
             #!/usr/bin/env bash
             set -euo pipefail
             printf 'run\n' >> "$STUB_PRODUCER_LOG"
+            if [[ -n "${STUB_PRODUCER_FAIL:-}" ]]; then
+              echo "stub-producer: forced failure (no report written)" >&2
+              exit 1
+            fi
             output=""
             while [[ $# -gt 0 ]]; do
               case "$1" in

@@ -130,12 +130,41 @@ verify_report() {
 # stratalint-canonical-lean-report-v1-<address>). Enabled only when
 # STRATALINT_REPORT_CACHE_ROOT is set; CI never sets it. A cache entry is a
 # directory named by the report's full content address holding the complete
-# verified bundle (report + .sha256 + .input.attestation + .provenance.json).
-# Serving is FAIL-CLOSED: every hit is re-verified against the CURRENT tree, and
-# any anomaly evicts the entry and falls through to a fresh production. Only a
-# producer-rc=0, verify_report()-clean report is ever stored. Mis-serving would
-# require BOTH a sha256 content-address collision AND passing the input-helper
-# re-verification (a second, independent sha256 over the live tree) — impossible.
+# bundle (report + .sha256 + .input.attestation + .provenance.json).
+#
+# SECURITY MODEL (honest): the re-verification below anchors only PUBLIC
+# repository-tree inputs (Trureturing.lean, D5, toolchain, manifest) — it is NOT a
+# secret trust anchor. Anyone who can write into the cache directory can forge an
+# entry whose .sha256 and .input.attestation self-consistently pass re-verification
+# (all derived from public files). Cache correctness therefore DEPENDS on the cache
+# directory being writable only by this UID: entries are trusted only when
+# $CACHE_ROOT is owned by us and is not group/other-writable (cache_root_trusted),
+# and cache_store creates it 0700. A foreign-owned or world-writable root (e.g.
+# pre-created in a shared /tmp) is never trusted and falls through to a fresh
+# production. On top of that ownership guarantee, the re-verification stays a
+# fail-closed defence against key skew and stale inputs, and only producer-rc=0,
+# verify_report()-clean reports are ever stored.
+
+# Trust the cache only when its root exists, is owned by the current user, and
+# grants no group/other write bit — so no other non-root user could have planted
+# or altered an entry. Cross-platform stat: BSD (%u/%Lp) then GNU (%u/%a).
+cache_root_trusted() {
+  [[ -n "$CACHE_ROOT" && -d "$CACHE_ROOT" ]] || return 1
+  local owner perm
+  if owner="$(stat -f '%u' "$CACHE_ROOT" 2>/dev/null)" \
+    && perm="$(stat -f '%Lp' "$CACHE_ROOT" 2>/dev/null)"; then
+    :
+  elif owner="$(stat -c '%u' "$CACHE_ROOT" 2>/dev/null)" \
+    && perm="$(stat -c '%a' "$CACHE_ROOT" 2>/dev/null)"; then
+    :
+  else
+    return 1
+  fi
+  [[ "$owner" == "$(id -u)" ]] || return 1
+  [[ "$perm" =~ ^[0-7]+$ ]] || return 1
+  (( (8#$perm & 8#22) == 0 )) || return 1
+  return 0
+}
 
 cache_evict() {
   local address="$1"
@@ -152,6 +181,8 @@ cache_try_restore() {
   local root="$2"
   local output="$3"
   [[ -n "$CACHE_ROOT" && "$address" =~ ^[0-9a-f]{64}$ ]] || return 1
+  # Refuse to trust a cache root that any other non-root user could have written.
+  cache_root_trusted || return 1
   local entry="$CACHE_ROOT/$address"
   local report="$entry/raw-lean-report.json"
   # Completeness: the whole stored bundle must be present before we trust it.
@@ -203,6 +234,11 @@ cache_store() {
   local entry="$CACHE_ROOT/$address"
   [[ -e "$entry" ]] && return 0
   mkdir -p "$CACHE_ROOT" 2>/dev/null || return 0
+  # Lock the root to this UID (harmless if we already own a 0700 dir; a no-op fail
+  # if some other user pre-created it, in which case the trust check below refuses
+  # to store). Never write into a root we cannot secure.
+  chmod 700 "$CACHE_ROOT" 2>/dev/null || true
+  cache_root_trusted || return 0
   local tmp
   tmp="$(mktemp -d "$CACHE_ROOT/.tmp.$$.XXXXXXXX" 2>/dev/null)" || return 0
   local report="$tmp/raw-lean-report.json"
