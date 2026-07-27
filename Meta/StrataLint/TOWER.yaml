@@ -223,7 +223,7 @@ components:
     members:
       - phase1-protected-content-admission
       - phase2-dual-harness-conservative-extension
-      - "c0/base-commit git-commit/6f46cc2ce460143bca9f1a7379bcdb29dfc8b42f"
+      - "c0/base-commit git-commit/7b24eca7c68e1d1abd1bf7cf6ab8f3b409cfe4bb"
       - "c0/ceremony-commit convention/this-pr-merge-commit"
       - "c0/controller git-sha1/10c0bdf8b5667e7cb2e4d472fb40364ac2daeec2 Meta/StrataLint/StrataLint.Cli/Admission/FrozenEvidenceResolver.cs"
       - "c0/controller git-sha1/1444b0196cd537b34ebdc32c858cb52fe7694bb2 Meta/StrataLint/StrataLint.Cli/Conservative/ContractEpoch/ContractEpochLedger.cs"
@@ -242,7 +242,8 @@ components:
       - "c0/controller git-sha1/549b319d3da150f040a1340dc3d9f1c74c79cc3a Meta/StrataLint/StrataLint.Cli/Conservative/ContractEpoch/ContractEpochCorpusEvaluator.cs"
       - "c0/controller git-sha1/629f498006f431aea1bd6fa70be07d450a162663 Meta/StrataLint/StrataLint.Cli/Conservative/ContractEpoch/TransitionPlan.cs"
       - "c0/controller git-sha1/6310c0de3e6fcaf52cc6d96a96b5fccf9a29ff63 Meta/StrataLint/StrataLint.Cli/Conservative/ConservativeCorpusWorker.cs"
-      - "c0/controller git-sha1/74da018a9b23e24821aa80b94763ba68953399f9 Meta/StrataLint/scripts/lean-report-pair.sh"
+      - "c0/controller git-sha1/70c3fe1aa467cdf4663ad21a6d83ad259582c8e3 Meta/StrataLint/scripts/lean-report-pair.sh"
+      - "c0/controller git-sha1/73a82e77782b2828a1167c123dafa8312c4f446d Meta/StrataLint/scripts/local-harness-gate.sh"
       - "c0/controller git-sha1/7523cdd2cfd989924b4604f3593116a91a6d74ea Meta/StrataLint/StrataLint.Engine/Coverage/TowerActualValidator.cs"
       - "c0/controller git-sha1/7fcd2d380a90169a469feb8fc67629e05840b9c9 Meta/StrataLint/StrataLint.Cli/Conservative/ConservativeReplayEnvelopeCodec.cs"
       - "c0/controller git-sha1/846df8019ada5da1e6943ede526c4e95dacc2abd Meta/StrataLint/StrataLint.Cli/Conservative/ConservativeActualTreeEvaluator.cs"
@@ -252,7 +253,6 @@ components:
       - "c0/controller git-sha1/a5be2a27da2f38ad8b50c3756259747a6649cbee Meta/StrataLint/StrataLint.Cli/Admission/GitRepositoryGateway.FrozenLedger.cs"
       - "c0/controller git-sha1/a749ad1467cdaca36272554d38dba26a0cbc4ae4 Meta/StrataLint/StrataLint.Cli/Conservative/C0RenewCommand.cs"
       - "c0/controller git-sha1/b37c7c780c2e7c0e847b0b0324f68a678f7bdddf Meta/StrataLint/StrataLint.Cli/Conservative/ContractEpoch/ContractEpochEvidence.cs"
-      - "c0/controller git-sha1/b58b382a917d2970e6d786dca9083f9ee4cb1739 Meta/StrataLint/scripts/local-harness-gate.sh"
       - "c0/controller git-sha1/baa374244cd50d4bd97fff1e5dd55216d6de00ff Meta/StrataLint/StrataLint.Cli/Conservative/GoldenCorpusMaterializer.cs"
       - "c0/controller git-sha1/c3bc16c8c9677b5c4c3e9b2a8705e97f974e659c Meta/StrataLint/StrataLint.Cli/Conservative/Verification/ConservativeExtensionCertificate.cs"
       - "c0/controller git-sha1/c6dff8e08bb1f07c6a72c1c0219428390314e700 Meta/StrataLint/StrataLint.Cli/Commands/CliApplication.cs"
@@ -272,9 +272,9 @@ components:
       - "c0/corpus git-sha1/a12fb72cb7a3717e936a2b14fb3d89f8906a540e Golden/cases/protected-semantics.toml"
       - "c0/corpus git-sha1/fdcb38587e9d5895073f230bdcb2d03735b66a2e Golden/fixture-registry.yaml"
       - "c0/gate-wiring git-sha1/ed802e8827117d1b4621044cbd32933c7d580923 .github/scripts/harness-gate.sh"
-      - "c0/inaugural-certificate sha256/24a5226268e83f18ddf33f465fd35e6348ddfc0fce35e026f0a28490332d8937 Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json"
-      - "c0/preimage-commit git-commit/c4f605b237c43785d9dd8b6f5a165b770e30bd3f"
-      - "c0/preimage-tree git-tree/a6f0d3f49ac9e0395a250174081a549268a1aa97"
+      - "c0/inaugural-certificate sha256/ee6be22f693c29577580b32e231dbb75192deb36174424323414c71210e580d5 Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json"
+      - "c0/preimage-commit git-commit/57fa1742041c2ecb303ecf78178a276ecb067441"
+      - "c0/preimage-tree git-tree/8c91c65a37a81d4526f5c3ba52088a0155c765aa"
     judged_by:
       - bootstrap-pr-1
     verification: verified

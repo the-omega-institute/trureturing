@@ -211,6 +211,14 @@ PAIR_PRODUCER="$CANDIDATE_ROOT/Meta/StrataLint/scripts/lean-report-pair.sh"
 [[ -x "$PAIR_PRODUCER" ]] \
   || { echo "local-harness-gate: candidate Lean report pair helper is absent" >&2; exit 2; }
 
+# User-private content-addressed report cache. Turns the unchanging base-tree
+# (redrive) report into a cache hit so it skips the serialized global Lean slot.
+# The base MUST be user-private (not a predictable world-writable /tmp path):
+# the pair helper only trusts a root it owns and that is not group/other-writable,
+# because re-verification anchors public tree inputs, not a secret. Local-only:
+# CI never runs this gate and the pair helper ignores the env when unset.
+export STRATALINT_REPORT_CACHE_ROOT="${STRATALINT_REPORT_CACHE_ROOT:-${XDG_CACHE_HOME:-$HOME/.cache}/stratalint-lean-report-cache}"
+
 CANDIDATE_REPORT="$CANDIDATE_ROOT/.lake/build/stratalint/raw-lean-report.json"
 run_stage lean-reports \
   "$PAIR_PRODUCER" \
