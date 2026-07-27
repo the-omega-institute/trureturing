@@ -19699,6 +19699,70 @@ sources:
         status:
           migration: residual
           truth: open
+      - atom_id: wm-residual-254fd3b4bb15a273ca1edd8729161fa83547630a7a9db00000eed0d9a66ffc1b
+        ast_path: version/v0.4
+        fingerprints:
+          raw_sha256: sha256:254fd3b4bb15a273ca1edd8729161fa83547630a7a9db00000eed0d9a66ffc1b
+          normalized_sha256: sha256:254fd3b4bb15a273ca1edd8729161fa83547630a7a9db00000eed0d9a66ffc1b
+        cas_ref: sha256:254fd3b4bb15a273ca1edd8729161fa83547630a7a9db00000eed0d9a66ffc1b
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: wm-residual-b44a04c3603c4f0150a5f870ff1246530a4097201860540e7062cbd9c8e60c86
+        ast_path: section/7
+        fingerprints:
+          raw_sha256: sha256:b44a04c3603c4f0150a5f870ff1246530a4097201860540e7062cbd9c8e60c86
+          normalized_sha256: sha256:b44a04c3603c4f0150a5f870ff1246530a4097201860540e7062cbd9c8e60c86
+        cas_ref: sha256:b44a04c3603c4f0150a5f870ff1246530a4097201860540e7062cbd9c8e60c86
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: wm-residual-93f036133853d82ce121d3b37f549f895e0a8a90b295171dd046791d882aea38
+        ast_path: section/8
+        fingerprints:
+          raw_sha256: sha256:93f036133853d82ce121d3b37f549f895e0a8a90b295171dd046791d882aea38
+          normalized_sha256: sha256:93f036133853d82ce121d3b37f549f895e0a8a90b295171dd046791d882aea38
+        cas_ref: sha256:93f036133853d82ce121d3b37f549f895e0a8a90b295171dd046791d882aea38
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: wm-residual-2ce1ea5ade94d9770ffaa2150c7a181a679f840d0f1ea9e7705d32196a2342e9
+        ast_path: audit/v0.4
+        fingerprints:
+          raw_sha256: sha256:2ce1ea5ade94d9770ffaa2150c7a181a679f840d0f1ea9e7705d32196a2342e9
+          normalized_sha256: sha256:2ce1ea5ade94d9770ffaa2150c7a181a679f840d0f1ea9e7705d32196a2342e9
+        cas_ref: sha256:2ce1ea5ade94d9770ffaa2150c7a181a679f840d0f1ea9e7705d32196a2342e9
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
   - source_id: golden-ledger-spec-v7.11
     path: docs/develop/spec/golden-ledger-repo-spec.md
     atomizer: none
