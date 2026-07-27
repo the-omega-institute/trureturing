@@ -1,0 +1,14 @@
+## 7. 已结之账(状态如实)
+
+**结账 E1**。公开 JEPA checkpoint 之失败面可廉价读出:单模型、小 head,AUROC 0.61–0.80,四公开载体,matched-random 对照与 episode bootstrap 在案。效应量如实:部分可读。**解释权待 B2 裁定**(动力学 vs 密度,合同已注册)。〔runner-closed;措辞随 B2 判决可修〕
+
+**结账 E2**。失败面**非** state-recovery 缺陷:残差预测 AUROC 0.455/0.466 vs gap head 0.731——"模型在潜编码差处错"之最自然假说被拒。〔runner-closed〕
+
+**结账 E3(检测 ≠ 干预)**。failure probability 非 compute value:oracle 分配有效(−0.016)而 ledger score 反向(+0.013);survival matrix 判据——变量可在 readout 下存活而非 planning 变量;BEDC-native 世界态要求 distinction、mediation、sign convention、selection rule 同时认证。Pearl 因果阶梯之账本形。〔runner-closed〕
+
+**结账 E4(负,强形之墙的证据)**。prediction parity 全线阴性(native/LeWM MSE 比 11–16×,A100 无正向 scale 信号)——账本头是 monitor 非替代世界模型;**记账不凭空创造一阶预测力**。〔runner-closed〕
+
+**结账 E5(负,论题降级)**。朴素"记账→更好"为假:L_unlogged 无独立效应;post-hoc probe 0.731 > trained transformer 0.675(单真实载体);"账本必须进训练目标"论题悬于 horizon paired +0.050 [0.0043, 0.100] 单点。状态分型:前述数字及单载体反例〔runner-closed〕;"账本必须进训练目标"仅登记为待跨载体检验之 open 候查〔runner可关〕。
+
+**结账 E6(复合气体之符号动力面,自候查 B5 结案)**。(i) **分叉**:"k-自由 Zeckendorf"歧义为值封顶(有限截断,平凡)与位封顶(真气体);良定位始于 fork。(ii) **识别**:严格排除 × 位封顶 c 之复合气体("Gentile 封顶 × Fibonacci 排除"),计数 a_L = a_{L−1} + c·a_{L−2}(广义 Jacobsthal),Perron 数 β(c) = (1+√(1+4c))/2;pronic 整点谱 c = m(m+1) → β = m+1(c=2 处排除恰偿一位,熵恰 log 2)。(iii) **金点双重刚性**:全族中 c=1 唯一 Pisot(共轭模 β−1)且唯一代数单位(N = −c)——两独立判据同指;经 Meyer 定理,c ≥ 2 无准晶户籍。(iv) **旋钮耦合之墙**:欲抬封顶保 Pisot 必弱化排除(Lekkerkerker 族 x²=ax+b,全 Pisot,b=1 支全单位)——封顶与排除非独立旋钮。数值证书:暴力 ≡ 递推 ≡ 特征根三方对账在案(`b5_composite_gas.py`)。组件 literature-attested(Parry 1960;Frougny–Solomyak 1992;Meyer 1972;Fraenkel 1985;OEIS Jacobsthal 族);框架四点 suspected-novel(结案卷 §7),检索留痕待补。〔数值+初等代数已关;Lean L1 级升格候选〕**WM-R1 裁定注(v0.2)**:计数对象钉死为位封顶支;c = 每位最大值(字母表 {0..c},非零选择恰 c 种,系数机理);基例 a₀=1(空串)、a₁=c+1,c=0 合法不排除(β(0)=1 与全零串增长率对榫);基例为形式化增补,原卷未书,记勘误性补账。三方数值对账未能显形此三处陈述自由度——T4 之实证源。Lean 路径:GoldenInt 供应链在建(依赖账带"欠"标),递推层已冻结(正典 v0.2,PR#417),余层不冒领。〔runner-closed(数值),余层分型随各层原标〕**升格执行(v0.3)**:正典卷 v0.2 记 PR#417 冻结 `D5.S1.Digit.e6_gas_equiv`(显式首位双射,toFun/invFun 双向证)与 `D5.S1.Digit.e6_count_recurrence`(card_congr 三行推论),公理闭包 {propext, Classical.choice, Quot.sound} 如实声明;本条递推层即升〔**Lean-closed(递推层)**〕;基例引理 e6_count_zero/one 与 WM-R1 之 A3 逐字对榫,约束取析取形、L≤1 空真与基例自动一致;冻结粒度为机制(双射)而非统计(计数),统计为推论——L5 补注之锚。余层(闭式 β(c)/Pisot 单位双刚性/pronic 整点)仍〔Lean L1 升格候选〕,MinkowskiModelSet 等邻债机器已预建其大半(B4 补注之锚)。〔Lean-closed(递推层),余层分型随各层原标〕**勘误注(v0.6,伴根收缩)**:E6(iii) 原句"c=1 唯一 Pisot"按标准定义不成立——pronic 点 β=m+1 为有理整数,极小多项式线性、无 Galois 共轭,平凡满足 Pisot;本卷所指实为**特征多项式伴根** η=1−β(转移矩阵第二特征值),二概念仅在 x²−x−c 不可约(c 非 pronic)时重合。可关真命题:**伴根严格入开单位圆 ⟺ c=1**(c=2 落圆周,c≥3 出盘,pronic c≥6 虽整数-Pisot 而伴根模 m>1、登记照样失灵)——伴根收缩才是承载准晶户籍/影子收缩之判据;"Pisot"降为 scholium。单位判量词域钉 c≥1(c=0 之 β=1 为平凡单位,入 scholium;可约情形"N=−c"读特征根积非域范数,同病)。同批:B9 词条"非 Pisot,共轭出盘"自此读作"伴根出盘"。此案身位:E6 为 T4 诞生地,其第二层复咬作者——数值无一错,错在"Pisot"一词之所指;勘误链及于立法者,体系健康之证。〔勘误,数值已关、陈述再钉;Lean-closed 待第六层〕
+
