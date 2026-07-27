@@ -23,6 +23,9 @@ domains:
   Phase:
     stratum: S1
     definition: Additive golden-ratio phases modulo one.
+  Quad:
+    stratum: S1
+    definition: Parameterized quadratic presentation rings and actual orders carrying the digit-gas root-unit criteria.
   Quantum:
     stratum: S3
     definition: Finite-dimensional complex operator-algebra and probability structures.
