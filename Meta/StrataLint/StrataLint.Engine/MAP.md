@@ -10,6 +10,8 @@
   `TheoryAtomizers.cs` after the shared atomizer source reached the file ceiling.
 - 2026-07-23 (SL-003): split WM structural validation into `Digestion/Wm/`
   after its fail-closed regression fix brought `TheoryAtomizers.cs` to the file ceiling.
+- 2026-07-27 (SL-003): add `Splits/` for deterministic capacity planning and
+  split-without-migration receipt generation.
 
 ## Buckets
 
@@ -25,5 +27,6 @@
 - `Rules/`: rule catalog, execution, repository rule implementations, and the shared BACKFILL loader.
 - `Runtime/`: bounded processes, Git working-tree snapshots, and precomputed report adapters.
 - `Snapshot/`: repository snapshots, canonical writers, and the source-bound raw Lean report contract.
+- `Splits/`: registry-authoritative capacity plans, exact reference rewrites, and split receipts.
 
 The root contains only assembly and SDK project metadata plus this map.

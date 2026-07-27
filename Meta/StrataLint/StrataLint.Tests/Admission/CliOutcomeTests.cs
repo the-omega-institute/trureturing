@@ -117,6 +117,24 @@ public sealed class CliOutcomeTests
         Assert.Equal(error, console.Error);
     }
 
+    [Fact]
+    public void SplitDelegatesToTheAuthoringEnvironment()
+    {
+        var console = new BufferedConsole();
+        var environment = new StubCliEnvironment(
+            Admitted(),
+            split: new CommandResult(true, "{\"status\":\"planned\"}\n", string.Empty));
+
+        var exitCode = CliApplication.Run(
+            ["split", "D5/S1/Digit", "--domain", "Phase", "--date", "2026-07-27"],
+            environment,
+            console);
+
+        Assert.Equal(0, exitCode);
+        Assert.Equal("{\"status\":\"planned\"}\n", console.Output);
+        Assert.Equal(string.Empty, console.Error);
+    }
+
     private static AdmissionOutcome Outcome(string fixture) => fixture switch
     {
         "admitted" => Admitted(),
@@ -187,7 +205,8 @@ internal sealed class StubCliEnvironment(
     ExplicitCommandResult? conservative = null,
     CommandResult? recordGolden = null,
     CommandResult? renewC0 = null,
-    ExplicitCommandResult? echoVerify = null) : ICliEnvironment
+    ExplicitCommandResult? echoVerify = null,
+    CommandResult? split = null) : ICliEnvironment
 {
     public AdmissionOutcome Check(IReadOnlyList<string> arguments) => outcome;
 
@@ -208,6 +227,9 @@ internal sealed class StubCliEnvironment(
 
     public CommandResult Route(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "route is not configured in this fixture");
+
+    public CommandResult Split(IReadOnlyList<string> arguments) =>
+        split ?? new(false, string.Empty, "split is not configured in this fixture");
 
     public CommandResult RecordGolden(IReadOnlyList<string> arguments) =>
         recordGolden ?? new(false, string.Empty, "golden record is not configured in this fixture");

@@ -51,6 +51,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
     private readonly IRepositoryGateway repository;
     private readonly ILeanReportSource leanReportSource;
     private readonly IScribeEmissionVerifier? scribeEmissionVerifier;
+    private readonly ISplitDerivationRunner splitDerivationRunner;
 
     internal ProductionCliEnvironment(string repositoryRoot)
         : this(
@@ -73,12 +74,14 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         string repositoryRoot,
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
-        IScribeEmissionVerifier? scribeEmissionVerifier)
+        IScribeEmissionVerifier? scribeEmissionVerifier,
+        ISplitDerivationRunner? splitDerivationRunner = null)
     {
         this.repositoryRoot = Path.GetFullPath(repositoryRoot);
         this.repository = repository;
         this.leanReportSource = leanReportSource;
         this.scribeEmissionVerifier = scribeEmissionVerifier;
+        this.splitDerivationRunner = splitDerivationRunner ?? new ProductionSplitDerivationRunner();
     }
 
     public AdmissionOutcome Check(IReadOnlyList<string> arguments)
@@ -264,6 +267,9 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
 
     public CommandResult RecordGolden(IReadOnlyList<string> arguments) =>
         GoldenRecordCommand.Run(repositoryRoot, arguments);
+
+    public CommandResult Split(IReadOnlyList<string> arguments) =>
+        SplitCommand.Run(repositoryRoot, repository, splitDerivationRunner, arguments);
 
     public CommandResult SelfTest(IReadOnlyList<string> arguments)
     {

@@ -10,6 +10,8 @@
 - `Admission/`: repository preparation, topology checks, and production admission.
 - `Commands/`: command dispatch, coverage, registry loading, golden snapshot recording,
   ledger commands, and worktree provisioning.
+- `Commands/Splits/`: deterministic capacity planning, transactional application,
+  canonical derivation reruns, rollback, and split receipts.
 - `Conservative/`: base-owned replay, TOML golden fixture execution/materialization,
   conservative-extension verification, and contract-epoch policy/plan/ledger/evidence
   obligation accounting from exact commit snapshots.
