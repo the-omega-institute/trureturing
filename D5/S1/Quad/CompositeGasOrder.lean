@@ -1,4 +1,4 @@
-/- GID: D5/S1/Digit/CompositeGasOrder
+/- GID: D5/S1/Quad/CompositeGasOrder
    generality: I
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -10,7 +10,9 @@ import D5.S1.Digit.CompositeGasUnit
 import Mathlib.Algebra.GCDMonoid.IntegrallyClosed
 import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
 
-namespace D5.S1.Digit
+namespace D5.S1.Quad
+
+open D5.S1.Digit
 
 /-- A parameter is pronic when it is a product of two consecutive naturals. -/
 def E6Pronic (c : ℕ) : Prop := ∃ m : ℕ, c = m * (m + 1)
@@ -411,4 +413,4 @@ theorem e6_beta_order_root_isUnit_iff (c : ℕ) (hc : 1 ≤ c) :
     rw [mul_sub, mul_one, ← pow_two, e6_beta_sq]
     norm_num
 
-end D5.S1.Digit
+end D5.S1.Quad
