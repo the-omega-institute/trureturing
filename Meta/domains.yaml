@@ -32,6 +32,9 @@ domains:
   Weil:
     stratum: S3
     definition: Classical zeta conventions, Weil test functions, and Fourier-Laplace analysis.
+  Word:
+    stratum: S2
+    definition: Infinite symbolic words, their contiguous factor languages, and factor-complexity invariants.
   Zeros:
     stratum: S3
     definition: Geometry, symmetry, and local balance of classical zeta zeros.

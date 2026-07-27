@@ -438,6 +438,47 @@ public sealed partial class ReviewRegressionTests
     }
 
     [Fact]
+    public void Cf6RepositoryRegistryRoutesTheExactWordComplexityFloor()
+    {
+        using var repository = new TemporaryDirectory();
+        var meta = Path.Combine(repository.Path, "Meta");
+        Directory.CreateDirectory(meta);
+        var sourceRoot = FindRepositoryRoot();
+        File.Copy(
+            Path.Combine(sourceRoot, "Meta", "registry.yaml"),
+            Path.Combine(meta, "registry.yaml"));
+        File.Copy(
+            Path.Combine(sourceRoot, "Meta", "domains.yaml"),
+            Path.Combine(meta, "domains.yaml"));
+        File.WriteAllText(
+            Path.Combine(repository.Path, "manifest.json"),
+            "{\"artifact\":\"lean\",\"domain\":\"Word\",\"generality\":\"E\",\"module\":\"Complexity\",\"plane\":\"F\",\"selector\":\"complexity_floor\",\"tag\":\"\",\"theory\":\"D5\"}\n",
+            new UTF8Encoding(false));
+        var environment = new ProductionCliEnvironment(
+            repository.Path,
+            new FakeRepositoryGateway(RawChangeSet.Create(Array.Empty<string>()), null, null),
+            new FakeLeanReportSource(null));
+
+        var result = environment.Route(new[] { "manifest.json" });
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains(
+            "\"gid\": \"D5/S2/Word/Complexity.complexity_floor\"",
+            result.Output,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "\"path\": \"D5/S2/Word/Complexity.lean\"",
+            result.Output,
+            StringComparison.Ordinal);
+        Assert.Contains("\"stratum\": \"S2\"", result.Output, StringComparison.Ordinal);
+        Assert.Contains("generality: E", result.Output, StringComparison.Ordinal);
+        Assert.Contains(
+            "mirror-B: D5/B/S2/Word/Complexity",
+            result.Output,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void Cf7UnknownLeanAxiomIsSl020BlockInsteadOfInfrastructureFailure()
     {
         using var temporary = new TemporaryDirectory();

@@ -102,7 +102,7 @@ public static class RouteEngine
 
             if (!RepositoryPathPolicy.TryResolve(gid.Path, policy, out var reverse)
                 || reverse is null
-                || !reverse.Equals(gid))
+                || !HasPolicyAdmittedInverse(gid, reverse))
             {
                 throw new FormatException("routed path does not have a policy-admitted GID inverse");
             }
@@ -116,6 +116,22 @@ public static class RouteEngine
         {
             return new RouteOutcome.Rejected(RuleId.CreateKnown(15), exception.Message);
         }
+    }
+
+    private static bool HasPolicyAdmittedInverse(Gid routed, Gid reverse)
+    {
+        if (routed.Equals(reverse))
+        {
+            return true;
+        }
+
+        return routed.ToTarget() is Target.Formal selected
+            && reverse.ToTarget() is Target.Formal module
+            && selected.Declaration is not null
+            && module.Declaration is null
+            && string.Equals(selected.Theory, module.Theory, StringComparison.Ordinal)
+            && selected.Coordinates.Equals(module.Coordinates)
+            && selected.Path.Equals(module.Path);
     }
 
     private static (string Gid, Stratum? Stratum) Formal(
