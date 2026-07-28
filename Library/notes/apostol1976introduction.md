@@ -4,8 +4,9 @@ authors: Tom M. Apostol
 year: 1976
 title: Introduction to Analytic Number Theory
 doi: 10.1007/978-1-4757-5579-4
-claim: Euler products, von Mangoldt weights, and the logarithmic derivative of the zeta function.
+claim: The fundamental theorem of arithmetic and Euclid's lemma, plus Euler products, von Mangoldt weights, and the logarithmic derivative of the zeta function.
 strata_touched:
+  - D5/S3/Arith/EuclidLemma
   - D5/S3/Weil/EulerProduct
   - D5/S3/Zeros/EulerWindows
 license: citation-only
@@ -25,6 +26,14 @@ real part is positive, none of a finite prime window's local denominators can
 vanish, so the total finite product is nonzero. The stronger PZG claim about
 tail participation and continuation in the critical strip is not attributed
 to Apostol and remains outside that declaration.
+
+Chapter 1 (The Fundamental Theorem of Arithmetic) states Euclid's lemma as
+Theorem 1.5: if a prime `p` divides a product `ab`, then `p` divides `a` or
+`p` divides `b`. That classical statement anchors `D5/S3/Arith/EuclidLemma`,
+which formalizes PZG Lemma 9.1 over the natural numbers. Apostol proves the
+lemma from the fundamental theorem; the repository proof discharges the same
+statement through Mathlib's `Nat.Prime.dvd_mul`, so only the statement, not
+the source's `v_p`-additivity derivation, is attributed to Apostol.
 
 The book does not state the repository declarations verbatim. In particular,
 Lean's field inverse is a total function with `0^-1 = 0`, so the formal finite
@@ -55,6 +64,12 @@ certificate and does not claim a meromorphic pole order.
   preceding batch. Reissuing raw JSON on stdin with
   `Content-Type: application/json` succeeded; no bibliographic conclusion was
   drawn from the failed calls.
+- 2026-07-28: Confirmed from the book's Chapter 1 that Euclid's lemma is
+  Theorem 1.5 ("if `p` is prime and `p | ab`, then `p | a` or `p | b`"),
+  proved there from the fundamental theorem of arithmetic. This anchors the
+  new `D5/S3/Arith/EuclidLemma` declaration (PZG Lemma 9.1). The DOI
+  `10.1007/978-1-4757-5579-4` and title were already verified above; no new
+  online lookup was required for this in-book locator.
 
 ## Verified locator
 
