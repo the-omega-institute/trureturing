@@ -169,7 +169,11 @@ public static class ScribeEmitter
 
         var attestationBytes = ScribeEmissionAttestation.Write(attestations).ToArray();
 
-        var differences = 0;
+        // documentDifferences counts only base-owned emissions (documents compiled into this binary's
+        // DocumentDefinitions.All) whose render disagrees with the on-disk .md. When this binary is the
+        // dev-baseline harness judging a candidate, DocumentDefinitions.All is exactly the base-owned set;
+        // a base-owned emission mismatch is therefore real corruption and must void the capability.
+        var documentDifferences = 0;
         var writes = 0;
         foreach (var (definition, expected) in rendered)
         {
@@ -182,7 +186,7 @@ public static class ScribeEmitter
 
             if (check)
             {
-                differences++;
+                documentDifferences++;
                 error.WriteLine($"out of date: {definition.RelativePath.Value}");
                 continue;
             }
@@ -195,6 +199,13 @@ public static class ScribeEmitter
             output.WriteLine($"wrote: {definition.RelativePath.Value}");
         }
 
+        // The attestation covers every on-disk Blueprint scribe, including candidate-only documents this
+        // binary cannot render (their .scribe.cs is absent from DocumentDefinitions.All). A candidate that
+        // adds such a document produces an attestation this base binary cannot reproduce byte-for-byte, yet
+        // that is a protected-surface signal (SL-022 routes the new .scribe.cs to Component C), not base-owned
+        // corruption. So the attestation diff still fails the emit --check exit code (kept strict below) but
+        // must not, on its own, void the per-document capability for the base-owned documents that verified.
+        var attestationOutOfDate = false;
         var attestationPath = Path.Combine(repositoryRoot, ScribeEmissionAttestation.RelativePath);
         var currentAttestation = File.Exists(attestationPath)
             ? File.ReadAllBytes(attestationPath)
@@ -203,7 +214,7 @@ public static class ScribeEmitter
         {
             if (check)
             {
-                differences++;
+                attestationOutOfDate = true;
                 error.WriteLine($"out of date: {ScribeEmissionAttestation.RelativePath}");
             }
             else
@@ -216,6 +227,7 @@ public static class ScribeEmitter
             }
         }
 
+        var differences = documentDifferences + (attestationOutOfDate ? 1 : 0);
         if (check && differences == 0)
         {
             output.WriteLine($"checked: {DocumentDefinitions.All.Length} blueprint(s)");
@@ -228,7 +240,7 @@ public static class ScribeEmitter
 
         return new ScribeEmissionRun(
             differences == 0 ? 0 : 1,
-            check && differences == 0
+            check && documentDifferences == 0
                 ? VerifiedScribeEmissions.Create(
                     attestations,
                     declarationReferences,
