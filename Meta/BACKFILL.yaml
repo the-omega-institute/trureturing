@@ -9143,16 +9143,23 @@ sources:
           raw_sha256: sha256:1327426fea2f2d19681f41aa2f06767efa3d321026b35ea92bd249303ca9f7dd
           normalized_sha256: sha256:1327426fea2f2d19681f41aa2f06767efa3d321026b35ea92bd249303ca9f7dd
         cas_ref: sha256:1327426fea2f2d19681f41aa2f06767efa3d321026b35ea92bd249303ca9f7dd
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Analytic/CompletedZetaMellinReconstruction.completed_zeta_mellin_reconstruction
         receipts:
-          coverage: []
-          scribe: []
+          coverage:
+            - gid: D5/S3/Analytic/CompletedZetaMellinReconstruction.completed_zeta_mellin_reconstruction
+              source_sha256: sha256:1327426fea2f2d19681f41aa2f06767efa3d321026b35ea92bd249303ca9f7dd
+              target_sha256: sha256:e32fd30ae5c7b1838dffeaa0213fe13fbdd3d4e2e31309b6581255fc0f7a6502
+          scribe:
+            - gid: D5/S3/Analytic/CompletedZetaMellinReconstruction.completed_zeta_mellin_reconstruction
+              definition_sha256: sha256:7cd503510f9a9e7fb74e12946a854e0b060fb9fba6f0cd13a0460147f49d5d50
+              emission_sha256: sha256:d28a9b7789016d2fd165dfd95f7405669b6f43eb0942291628050bc529dc0194
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: absorbed
+          truth: closed
       - atom_id: pzg-residual-d8d80ec3f19f65a7714d4a4a8a02c18931cd42fb5669463c1edda24f55a776fc
         ast_path: corollary/23.11
         fingerprints:
