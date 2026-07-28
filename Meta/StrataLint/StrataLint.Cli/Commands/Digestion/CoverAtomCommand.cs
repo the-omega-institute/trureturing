@@ -7,9 +7,22 @@ namespace StrataLint.Cli;
 // existing open residual atom by writing coverage_gids + coverage/scribe
 // receipts. cover is the narrow sibling of ingest — it reuses
 // DigestionStatusEvaluator for the structural gates and never adds residual
-// atoms or rebinds boundaries. The write is all-or-nothing: every gate must pass
-// before ReplaceLedgerAtomically touches disk, otherwise BACKFILL.yaml is
-// byte-unchanged.
+// atoms or rebinds boundaries. The write is all-or-nothing with a
+// compare-and-swap: every gate must pass and the on-disk ledger must be
+// unchanged before ReplaceLedgerAtomically touches disk, otherwise BACKFILL.yaml
+// is byte-unchanged.
+//
+// Deferred to Phase 2 (recorded, not silent):
+//  - CAS-drift / envelope pinning: cover does not compare the atom's identity
+//    against a pre-committed envelope's cas_ref/raw_sha256 — that needs the
+//    Phase-2 digestion envelope.
+//  - Complete declaration-level newness: gate ②(c) here is file-level (sound but
+//    incomplete); pinning the exact declaration to a pre-committed signature
+//    (§4a) needs the Phase-2 envelope or a baseline Lean report.
+//  - Semantic-fidelity gates (§4: pre-committed signature match, hollow-True
+//    negative) require upstream digestion-formalization-v1 /
+//    digestion-fidelity-attestation-v1 receipts + /sshx consensus.
+//  - kind exclusion gate (spec §5): a producer responsibility, not cover's.
 internal static class CoverAtomCommand
 {
     internal static CommandResult Run(
@@ -54,6 +67,22 @@ internal static class CoverAtomCommand
             {
                 throw new InvalidOperationException(
                     $"cover GID {options.Gid} is already bound in the baseline ledger");
+            }
+
+            // Gate ②(c): file-level declaration newness (sound but incomplete for
+            // Phase 1). The covered declaration's Lean file must be new or changed
+            // relative to the baseline; if the baseline holds byte-identical
+            // content, the declaration already existed and an old theorem cannot be
+            // re-deposited as a fresh atom. Complete declaration-level newness
+            // (a signature that was pre-committed before the proof landed) needs
+            // the Phase-2 envelope's pre-committed signature (§4a) and is deferred.
+            if (baseline.TryGetFile(gid.Path.Value, out var baselineTarget)
+                && current.TryGetFile(gid.Path.Value, out var currentTarget)
+                && baselineTarget.RawBytes.AsSpan().SequenceEqual(currentTarget.RawBytes.AsSpan()))
+            {
+                throw new InvalidOperationException(
+                    $"cover declaration {options.Gid} is not new: its Lean file "
+                    + $"{gid.Path.Value} is byte-identical to the baseline");
             }
 
             // Gate ⑤: the declaration may not already be bound to any other atom in
@@ -126,12 +155,13 @@ internal static class CoverAtomCommand
                 lean,
                 verifiedScribeEmissions);
 
-            // Gate ③/④/⑥: the covered atom must actually reach a deletable
-            // absorbed-closed (or absorbed-tail) state with zero gaps. Anything
-            // short of that — a missing/sorry-only declaration, an unverified
-            // Scribe emission, a drifted receipt — is partial-closed and is never
-            // written.
-            RequireDeletable(EvaluationFor(evaluation, options.AtomId));
+            // Gate ③/④/⑥: the covered atom must reach a deletable *Closed* state
+            // with zero gaps — spec §3.4 ③ requires TruthDag=Closed and no
+            // sorry/private/unregistered axiom, so an absorbed-tail (any
+            // non-standard axiom present) is rejected, not written. Anything short
+            // of Closed — a missing/sorry-only declaration, an unverified Scribe
+            // emission, a drifted receipt — is refused.
+            RequireClosedDeletable(EvaluationFor(evaluation, options.AtomId));
 
             var currentLedger = currentRaw.Entries.Single(static entry =>
                 entry.Path == BackfillInventoryLoader.RelativePath);
@@ -141,6 +171,21 @@ internal static class CoverAtomCommand
                 var outputPath = Path.Combine(
                     Path.GetFullPath(repositoryRoot),
                     BackfillInventoryLoader.RelativePath.Replace('/', Path.DirectorySeparatorChar));
+
+                // Compare-and-swap: re-read the ledger from disk and confirm it
+                // still matches the bytes we validated against. Two concurrent
+                // covers can both validate against the same ledger L; without this
+                // check the second write would silently clobber the first deposit
+                // (lost update). If the ledger moved under us, abort.
+                if (File.Exists(outputPath)
+                    && !File.ReadAllBytes(outputPath).AsSpan()
+                        .SequenceEqual(currentLedger.Bytes.AsSpan()))
+                {
+                    throw new InvalidOperationException(
+                        "ledger changed under us between read and write; "
+                        + "aborting to avoid a lost update");
+                }
+
                 IngestCommand.ReplaceLedgerAtomically(outputPath, finalBytes.AsSpan());
             }
 
@@ -266,15 +311,15 @@ internal static class CoverAtomCommand
         evaluation.Entries.Single(entry =>
             string.Equals(entry.Entry.AtomId, atomId, StringComparison.Ordinal));
 
-    private static void RequireDeletable(DigestionEntryEvaluation covered)
+    private static void RequireClosedDeletable(DigestionEntryEvaluation covered)
     {
-        if (covered.Deletable)
+        if (covered.Deletable && covered.DerivedStatus.Truth == DigestionTruthState.Closed)
         {
             return;
         }
 
         throw new InvalidOperationException(
-            $"cover atom {covered.Entry.AtomId} did not reach a deletable absorbed-closed state: "
+            $"cover atom {covered.Entry.AtomId} did not reach a deletable Closed state: "
             + $"{DigestionStatusNames.Migration(covered.DerivedStatus.Migration)}-"
             + $"{DigestionStatusNames.Truth(covered.DerivedStatus.Truth)} "
             + $"deletable={covered.Deletable.ToString().ToLowerInvariant()} "

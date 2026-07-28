@@ -159,6 +159,68 @@ public sealed class CoverAtomTests
     }
 
     [Fact]
+    public void CoverRejectsAbsorbedTailThatIsNotClosed()
+    {
+        // A declaration proven with a non-standard (unregistered) axiom derives a
+        // Tail truth state. Even when the residual atom already carries a verified
+        // tail authorization — so it would reach Absorbed-Tail-deletable — cover
+        // must reject: spec §3.4 ③ requires TruthDag=Closed with no
+        // sorry/private/unregistered axiom.
+        var (result, after, before) = Execute(new CoverSpec
+        {
+            TargetAxioms = ImmutableArray.Create("customAxiom"),
+            TailAuthorized = true,
+        });
+
+        Assert.False(result.Success);
+        Assert.Contains("Closed", result.Error, StringComparison.Ordinal);
+        Assert.Contains("absorbed-tail", result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, after);
+    }
+
+    [Fact]
+    public void CoverRejectsDeclarationWhoseLeanFileIsUnchangedFromBaseline()
+    {
+        // The covered declaration's Lean file is byte-identical at the baseline,
+        // so the declaration is not new — an old theorem cannot be re-deposited as
+        // a fresh atom (spec gate ②, "new relative to base").
+        var (result, after, before) = Execute(new CoverSpec { BaselineTargetIdentical = true });
+
+        Assert.False(result.Success);
+        Assert.Contains("is not new", result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, after);
+    }
+
+    [Fact]
+    public void CoverAbortsWhenLedgerChangedUnderItBetweenReadAndWrite()
+    {
+        // Compare-and-swap: the on-disk ledger no longer matches the bytes cover
+        // validated against (a concurrent cover deposited in between). cover must
+        // abort rather than silently overwrite the other deposit (lost update).
+        var inputs = CoverWorld.Materialize(new CoverSpec());
+        using var temporary = new TemporaryDirectory();
+        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
+        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+        var concurrent = inputs.Ledger + "\n# concurrent deposit\n";
+        File.WriteAllText(outputPath, concurrent, new UTF8Encoding(false));
+        var environment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(Array.Empty<string>()),
+                CoverWorld.Raw(inputs.Files),
+                CoverWorld.Raw(inputs.Baseline)),
+            new FakeLeanReportSource(inputs.Report),
+            new FakeScribeEmissionVerifier(inputs.VerifiedEmissions));
+
+        var result = environment.CoverAtom(
+            ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline"]);
+
+        Assert.False(result.Success);
+        Assert.Contains("changed under us", result.Error, StringComparison.Ordinal);
+        Assert.Equal(concurrent, File.ReadAllText(outputPath));
+    }
+
+    [Fact]
     public void CoverRejectsIncompleteArguments()
     {
         var spec = new CoverSpec();
@@ -267,6 +329,16 @@ internal sealed record CoverSpec
 
     internal (string AtomId, string Gid)? OtherAtomBinding { get; init; }
 
+    // When true the residual entry carries a verified tail authorization, so a
+    // target proven only with a non-standard axiom (Tail) derives an
+    // absorbed-tail deletable state. Used to prove gate (6) rejects Tail.
+    internal bool TailAuthorized { get; init; }
+
+    // When true the baseline holds the covered declaration's Lean file with
+    // identical bytes (the declaration is not new). Default: the file is new
+    // relative to the baseline (absent), which is the ordinary cover case.
+    internal bool BaselineTargetIdentical { get; init; }
+
     internal string Gid => Declaration is null ? ModuleGid : ModuleGid + "." + Declaration;
 
     internal CoverInputs Materialize() => CoverWorld.Materialize(this);
@@ -305,7 +377,23 @@ internal static class CoverWorld
             DigestionFingerprint.Compute(emission).RawSha256);
         var attestation = ScribeEmissionAttestation.Write([record]);
 
-        var ledger = BuildLedger(spec, atom, spec.InitialCoverage, includeOtherAtom: true);
+        string? tailAuthPath = null;
+        string? tailAuthSha = null;
+        var tailAuthBytes = ImmutableArray<byte>.Empty;
+        if (spec.TailAuthorized)
+        {
+            tailAuthBytes = TailAuthorizationArtifact.Write(spec.AtomId, [spec.Gid]);
+            tailAuthPath = TailAuthorizationArtifact.PathFor(spec.AtomId);
+            tailAuthSha = DigestionFingerprint.Compute(tailAuthBytes.AsSpan()).RawSha256;
+        }
+
+        var ledger = BuildLedger(
+            spec,
+            atom,
+            spec.InitialCoverage,
+            includeOtherAtom: true,
+            tailAuthPath,
+            tailAuthSha);
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             [BackfillInventoryLoader.RelativePath] = ledger,
@@ -323,6 +411,11 @@ internal static class CoverWorld
             files[casPath] = Encoding.UTF8.GetString(casBytes);
         }
 
+        if (tailAuthPath is not null)
+        {
+            files[tailAuthPath] = Encoding.UTF8.GetString(tailAuthBytes.AsSpan());
+        }
+
         // The baseline is always sibling-free: cross-atom binding (gate ⑤) is a
         // candidate-only conflict, so the sibling entry must not appear at base
         // (otherwise gate ②(b) would fire first).
@@ -332,8 +425,16 @@ internal static class CoverWorld
         var baseline = new Dictionary<string, string>(files, StringComparer.Ordinal)
         {
             [BackfillInventoryLoader.RelativePath] =
-                BuildLedger(spec, atom, baselineCoverage, includeOtherAtom: false),
+                BuildLedger(spec, atom, baselineCoverage, includeOtherAtom: false, null, null),
         };
+
+        // File-level declaration newness (gate ②c): by default the covered Lean
+        // file is new relative to the baseline (absent). BaselineTargetIdentical
+        // keeps it byte-identical at base so the declaration reads as not-new.
+        if (!spec.BaselineTargetIdentical)
+        {
+            baseline.Remove(targetPath);
+        }
 
         var declarations = spec.ReportDeclarations
             .Select(name => new LeanDeclaration(name, "theorem", "True", spec.TargetAxioms))
@@ -356,7 +457,9 @@ internal static class CoverWorld
         CoverSpec spec,
         DigestionAtom atom,
         ImmutableArray<string> coverage,
-        bool includeOtherAtom)
+        bool includeOtherAtom,
+        string? tailAuthPath,
+        string? tailAuthSha)
     {
         var builder = new StringBuilder();
         builder.Append("schema_version: 3\n");
@@ -367,7 +470,16 @@ internal static class CoverWorld
         builder.Append($"    atomizer: {AtomizerRegistry.RegisteredIds[0]}\n");
         builder.Append("    acknowledged_stale: []\n");
         builder.Append("    entries:\n");
-        AppendEntry(builder, spec.AtomId, atom.AstPath, atom.Fingerprints, coverage, spec.Migration, spec.Truth);
+        AppendEntry(
+            builder,
+            spec.AtomId,
+            atom.AstPath,
+            atom.Fingerprints,
+            coverage,
+            spec.Migration,
+            spec.Truth,
+            tailAuthPath,
+            tailAuthSha);
         if (includeOtherAtom && spec.OtherAtomBinding is { } other)
         {
             AppendEntry(
@@ -377,7 +489,9 @@ internal static class CoverWorld
                 atom.Fingerprints,
                 ImmutableArray.Create(other.Gid),
                 "partial",
-                "closed");
+                "closed",
+                null,
+                null);
         }
 
         builder.Append("ticket_index: []\n");
@@ -391,7 +505,9 @@ internal static class CoverWorld
         DigestionFingerprints fingerprints,
         ImmutableArray<string> coverage,
         string migration,
-        string truth)
+        string truth,
+        string? tailAuthPath,
+        string? tailAuthSha)
     {
         builder.Append($"      - atom_id: {atomId}\n");
         builder.Append($"        ast_path: {astPath}\n");
@@ -417,7 +533,17 @@ internal static class CoverWorld
         builder.Append("          scribe: []\n");
         builder.Append("          unresolved_subitems: []\n");
         builder.Append("          chain_atoms: []\n");
-        builder.Append("          tail_authorization: null\n");
+        if (tailAuthPath is not null && tailAuthSha is not null)
+        {
+            builder.Append("          tail_authorization:\n");
+            builder.Append($"            path: {tailAuthPath}\n");
+            builder.Append($"            sha256: {tailAuthSha}\n");
+        }
+        else
+        {
+            builder.Append("          tail_authorization: null\n");
+        }
+
         builder.Append("        status:\n");
         builder.Append($"          migration: {migration}\n");
         builder.Append($"          truth: {truth}\n");
