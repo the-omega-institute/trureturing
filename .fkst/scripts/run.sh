@@ -495,7 +495,7 @@ lua_gate_selftest() {
 
   work="$(mktemp -d "${TMPDIR:-/tmp}/trureturing-lua-selftest.XXXXXX")" \
     || die "cannot create Lua gate selftest directory"
-  trap 'rm -rf -- "$work"' EXIT
+  trap 'rm -rf -- "${work:-}"' EXIT
   fixture_root="$work/repository"
   fixture_fk="$fixture_root/.fkst"
   mkdir -p "$fixture_fk" "$fixture_root/packages/fixture/tests"
@@ -587,7 +587,7 @@ lua_test() {
 
   work="$(mktemp -d "${TMPDIR:-/tmp}/trureturing-lua-test.XXXXXX")" \
     || die "cannot create Lua test work directory"
-  trap 'rm -rf -- "$work"' EXIT
+  trap 'rm -rf -- "${work:-}"' EXIT
   substrate_root="$(materialize_pinned_source substrate "$SUBSTRATE_URL" "$SUBSTRATE_PIN" "${FKST_SUBSTRATE:-}" "$work/substrate")"
   platform_root="$(materialize_pinned_source platform "$PLATFORM_URL" "$PLATFORM_PIN" "${FKST_PLATFORM:-}" "$work/platform")"
   target_dir="$work/cargo-target"
