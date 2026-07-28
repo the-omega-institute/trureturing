@@ -194,6 +194,10 @@ none --declares--> [Meta/registry.yaml | data]
 [Meta/registry.yaml | data] --consumed-by--> RegistryLoader
 [Meta/registry.yaml | data] --verified-by--> RegistryLoader
 
+none --declares--> [Papers/recipes/** | data]
+[Papers/recipes/** | data] --consumed-by--> PapergenCommand
+[Papers/recipes/** | data] --verified-by--> PapergenCommand
+
 none --declares--> [README.md | data]
 [README.md | data] --consumed-by--> reader
 [README.md | data] --verified-by--> SnapshotDecoder
