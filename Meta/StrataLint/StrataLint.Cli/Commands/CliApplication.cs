@@ -20,6 +20,8 @@ internal interface ICliEnvironment
 
     CommandResult Ingest(IReadOnlyList<string> arguments);
 
+    CommandResult CoverAtom(IReadOnlyList<string> arguments);
+
     ExplicitCommandResult Papergen(IReadOnlyList<string> arguments);
 
     CommandResult Route(IReadOnlyList<string> arguments);
@@ -100,7 +102,7 @@ internal static class CliApplication
         if (arguments.Count == 0)
         {
             console.WriteError(
-                "USAGE: StrataLint c0-renew|check|clean-lanes|coverage|digest-status|echo-verify|ingest|golden-record|ledger-genesis|papergen|route|selftest|topology|worktree|ledger-append|ledger-reattest|perf-append|perf-report|verify-conservative|evaluate-conservative-corpus\n");
+                "USAGE: StrataLint c0-renew|check|clean-lanes|coverage|cover-atom|digest-status|echo-verify|ingest|golden-record|ledger-genesis|papergen|route|selftest|topology|worktree|ledger-append|ledger-reattest|perf-append|perf-report|verify-conservative|evaluate-conservative-corpus\n");
             return 2;
         }
 
@@ -111,6 +113,7 @@ internal static class CliApplication
             "check" => RenderAdmission(environment.Check(tail), console),
             "clean-lanes" => RenderCommand(environment.CleanLanes(tail), console),
             "coverage" => RenderCommand(environment.Coverage(tail), console),
+            "cover-atom" => RenderCommand(environment.CoverAtom(tail), console),
             "digest-status" => RenderCommand(environment.DigestStatus(tail), console),
             "echo-verify" => RenderExplicit(environment.EchoVerify(tail), console),
             "ingest" => RenderCommand(environment.Ingest(tail), console),
