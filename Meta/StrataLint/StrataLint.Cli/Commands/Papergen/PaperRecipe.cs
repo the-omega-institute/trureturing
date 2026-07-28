@@ -195,10 +195,10 @@ internal static class PaperRecipeValidator
             return Invalid("paper id must be canonical A11");
         }
 
-        var recipePath = Path.Combine(repositoryRoot, "Papers", "recipes", id + ".yaml");
+        var recipePath = Path.Combine(repositoryRoot, paperGid.Path.Value);
         if (!File.Exists(recipePath))
         {
-            return Invalid($"recipe file is missing: Papers/recipes/{id}.yaml");
+            return Invalid($"recipe file is missing: {paperGid.Path.Value}");
         }
 
         var bytes = ImmutableArray.CreateRange(File.ReadAllBytes(recipePath));

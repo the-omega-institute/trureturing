@@ -10,12 +10,16 @@
   `TheoryAtomizerTests.cs` after the fail-closed regression suite reached the file ceiling.
 - 2026-07-24 (SL-003): split the five new PR shepherd recalculation test parts from
   `Commands/`; existing command tests remain in place and namespaces remain unchanged.
+- 2026-07-28 (SL-003): split the new papergen command suite from `Commands/` when
+  that bucket reached 13 files; existing command tests remain in place and namespaces
+  remain unchanged.
 
 ## Buckets
 
 - `Admission/`: CLI outcomes, production admission, topology, and review regressions.
 - `Authorization/`: Hearts ledger format, append-only history, and exact SL-008 delta behavior.
 - `Commands/`: command parsing and end-to-end command behavior;
+  `Commands/Papergen/` holds paper recipe validation and
   `Commands/PrShepherd/` holds the focused PR shepherd recalculation suite.
 - `Conservative/`: base-owned replay, policy roots, contract-epoch schemas/stores,
   obligation comparison, and conservative certificate behavior;

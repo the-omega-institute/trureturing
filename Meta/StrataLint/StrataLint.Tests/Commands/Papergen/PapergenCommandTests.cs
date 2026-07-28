@@ -1,11 +1,17 @@
 using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Cli;
+using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
 public sealed class PapergenCommandTests
 {
+    private static readonly string RecipePath = PathFor("D5/P/D5-P001");
+    private static readonly string FormalPath =
+        PathFor("D5/S3/Zeros/CompletedZeta.xi_reading_reflection");
+    private static readonly string BlueprintPath = PathFor("D5/B/S3/Zeros/CompletedZeta");
+
     private const string CanonicalRecipe = """
         blueprint:
           - D5/B/S3/Zeros/CompletedZeta
@@ -132,10 +138,10 @@ public sealed class PapergenCommandTests
         using var repository = RecipeRepository();
         var missingFile = PaperRecipeValidator.Validate(repository.Path, "D5-P001");
         File.WriteAllText(
-            Path.Combine(repository.Path, "D5/S3/Zeros/CompletedZeta.lean"),
+            Path.Combine(repository.Path, FormalPath),
             "namespace D5\n\nend D5\n");
         File.WriteAllText(
-            Path.Combine(repository.Path, "Blueprint/D5/S3/Zeros/CompletedZeta.md"),
+            Path.Combine(repository.Path, BlueprintPath),
             "# Completed Zeta\n");
         var missingDeclaration = PaperRecipeValidator.Validate(repository.Path, "D5-P001");
 
@@ -149,12 +155,12 @@ public sealed class PapergenCommandTests
         using var repository = RecipeRepository(includeTargets: true);
         Write(
             repository.Path,
-            "D5/S3/Zeros/CompletedZeta.lean",
+            FormalPath,
             "namespace Wrong.Namespace\n\ntheorem xi_reading_reflection : True := by trivial\n\nend Wrong.Namespace\n");
         var wrongNamespace = PaperRecipeValidator.Validate(repository.Path, "D5-P001");
         Write(
             repository.Path,
-            "D5/S3/Zeros/CompletedZeta.lean",
+            FormalPath,
             "namespace D5.S3.Zeros.CompletedZeta\n\nprivate theorem xi_reading_reflection : True := by trivial\n\nend D5.S3.Zeros.CompletedZeta\n");
         var privateDeclaration = PaperRecipeValidator.Validate(repository.Path, "D5-P001");
 
@@ -195,18 +201,18 @@ public sealed class PapergenCommandTests
     private static TemporaryDirectory RecipeRepository(bool includeTargets = false)
     {
         var repository = new TemporaryDirectory();
-        Write(repository.Path, "Papers/recipes/D5-P001.yaml", CanonicalRecipe);
-        Directory.CreateDirectory(Path.Combine(repository.Path, "D5/S3/Zeros"));
-        Directory.CreateDirectory(Path.Combine(repository.Path, "Blueprint/D5/S3/Zeros"));
+        Write(repository.Path, RecipePath, CanonicalRecipe);
+        Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine(repository.Path, FormalPath))!);
+        Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine(repository.Path, BlueprintPath))!);
         if (includeTargets)
         {
             Write(
                 repository.Path,
-                "D5/S3/Zeros/CompletedZeta.lean",
+                FormalPath,
                 "namespace D5.S3.Zeros.CompletedZeta\n\ntheorem xi_reading_reflection : True := by trivial\n\nend D5.S3.Zeros.CompletedZeta\n");
             Write(
                 repository.Path,
-                "Blueprint/D5/S3/Zeros/CompletedZeta.md",
+                BlueprintPath,
                 "# Completed Zeta\n");
         }
 
@@ -222,5 +228,11 @@ public sealed class PapergenCommandTests
 
     private static ImmutableArray<byte> CanonicalBytes(string value) =>
         ImmutableArray.CreateRange(new UTF8Encoding(false, true).GetBytes(value));
+
+    private static string PathFor(string gidText)
+    {
+        Assert.True(Gid.TryParse(gidText, out var gid));
+        return gid.Path.Value;
+    }
 
 }

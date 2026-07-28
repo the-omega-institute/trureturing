@@ -17,7 +17,7 @@ internal static class FileMapPolicy
     private const string LibraryNoteCatalogPath =
         "Meta/StrataLint/StrataLint.Scribe/Library/LibraryNoteCatalog.cs";
     private const string PapergenCommandPath =
-        "Meta/StrataLint/StrataLint.Cli/Commands/PapergenCommand.cs";
+        "Meta/StrataLint/StrataLint.Cli/Commands/Papergen/PapergenCommand.cs";
     private const string RegistryLoaderPath =
         "Meta/StrataLint/StrataLint.Cli/Commands/RegistryLoader.cs";
     private const string ScribeProjectPath =
