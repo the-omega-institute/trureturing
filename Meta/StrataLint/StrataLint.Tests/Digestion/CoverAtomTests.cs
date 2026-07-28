@@ -63,9 +63,11 @@ public sealed class CoverAtomTests
     public void CoverRejectsAtomAbsentFromLedger()
     {
         var spec = new CoverSpec();
+        var envelopePath = "Meta/Digestion/formalizations/" + spec.AtomId + ".v1.json";
         var (result, after, before) = Execute(
             spec,
-            ["--cover-atom", "no-such-atom", "--gid", spec.Gid, "--base", "baseline"]);
+            ["--cover-atom", "no-such-atom", "--gid", spec.Gid, "--base", "baseline",
+                "--envelope", envelopePath]);
 
         Assert.False(result.Success);
         Assert.Contains("is absent", result.Error, StringComparison.Ordinal);
@@ -179,15 +181,105 @@ public sealed class CoverAtomTests
     }
 
     [Fact]
-    public void CoverRejectsDeclarationWhoseLeanFileIsUnchangedFromBaseline()
+    public void CoverAcceptsBaseOwnedDeclarationWhenSignatureMatchesPreCommittedReceipt()
     {
-        // The covered declaration's Lean file is byte-identical at the baseline,
-        // so the declaration is not new — an old theorem cannot be re-deposited as
-        // a fresh atom (spec gate ②, "new relative to base").
+        // Two-phase deposit: the covered declaration's Lean file was already landed
+        // (and frozen) in PR-1, so at PR-2 the file is byte-identical to the base.
+        // The old file-level newness gate false-rejected this ("is not new"),
+        // forcing a fragile `--base <deposit-origin>` workaround. Gate ②(c) is now a
+        // declaration-signature match against the pre-committed receipt, which is
+        // base-agnostic: a base-owned declaration whose current signature equals the
+        // pinned signature is admitted with an honest `--base baseline`.
         var (result, after, before) = Execute(new CoverSpec { BaselineTargetIdentical = true });
 
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
+        Assert.NotEqual(before, after);
+        var entry = Assert.Single(
+            BackfillInventoryLoader.Load(after).RequireDigestionEntries(),
+            candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
+        Assert.Equal(["D5/S0/Carrier/Probe.probe"], entry.CoverageGids.ToArray());
+        Assert.Equal(DigestionTruthState.Closed, entry.ProjectedStatus.Truth);
+    }
+
+    [Fact]
+    public void CoverRejectsMissingEnvelopeReceipt()
+    {
+        // Fail-closed: without the pre-committed formalization receipt, cover cannot
+        // confirm the deposited declaration matches a signature pinned before the
+        // proof landed, so it refuses (no silent admission).
+        var (result, after, before) = Execute(new CoverSpec { IncludeEnvelope = false });
+
         Assert.False(result.Success);
-        Assert.Contains("is not new", result.Error, StringComparison.Ordinal);
+        Assert.Contains("receipt is missing", result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, after);
+    }
+
+    [Fact]
+    public void CoverRejectsMalformedEnvelopeReceipt()
+    {
+        // Fail-closed: a receipt that is not canonical closed-schema JSON is refused.
+        var (result, after, before) = Execute(new CoverSpec { MalformedEnvelope = true });
+
+        Assert.False(result.Success);
+        Assert.Contains("COVER_INVALID", result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, after);
+    }
+
+    [Fact]
+    public void CoverRejectsEnvelopePinnedForAnotherAtom()
+    {
+        // anti-Goodhart: a receipt pinned for atom A may not be used to cover a
+        // different atom B — the receipt's atom_id must equal --cover-atom.
+        var (result, after, before) = Execute(new CoverSpec { EnvelopeAtomId = "other-atom" });
+
+        Assert.False(result.Success);
+        Assert.Contains("atom_id other-atom does not match --cover-atom", result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, after);
+    }
+
+    [Fact]
+    public void CoverRejectsEnvelopeWhosePrimaryGidDoesNotMatchCoverGid()
+    {
+        // The receipt pins a different primary declaration GID than the one being
+        // covered: reject rather than bind the atom to an unpinned declaration.
+        var (result, after, before) = Execute(new CoverSpec
+        {
+            EnvelopePrimaryGid = "D5/S0/Carrier/Probe.other",
+        });
+
+        Assert.False(result.Success);
+        Assert.Contains("primary_gid", result.Error, StringComparison.Ordinal);
+        Assert.Contains("does not match --gid", result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, after);
+    }
+
+    [Fact]
+    public void CoverRejectsEnvelopeWhoseFingerprintDriftedFromAtom()
+    {
+        // The receipt's pinned content fingerprint no longer matches the atom's
+        // fingerprint (the atom content drifted after the receipt was pinned).
+        var (result, after, before) = Execute(new CoverSpec
+        {
+            EnvelopeCasRef = "sha256:" + new string('b', 64),
+            EnvelopeRawSha256 = "sha256:" + new string('b', 64),
+        });
+
+        Assert.False(result.Success);
+        Assert.Contains("fingerprint does not match atom", result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, after);
+    }
+
+    [Fact]
+    public void CoverRequiresTheEnvelopeArgument()
+    {
+        var spec = new CoverSpec();
+        var (result, after, before) = Execute(
+            spec,
+            ["--cover-atom", spec.AtomId, "--gid", spec.Gid, "--base", "baseline"]);
+
+        Assert.False(result.Success);
+        Assert.Contains("USAGE: StrataLint cover-atom", result.Error, StringComparison.Ordinal);
         Assert.Equal(before, after);
     }
 
@@ -213,7 +305,8 @@ public sealed class CoverAtomTests
             new FakeScribeEmissionVerifier(inputs.VerifiedEmissions));
 
         var result = environment.CoverAtom(
-            ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline"]);
+            ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline",
+                "--envelope", inputs.EnvelopePath]);
 
         Assert.False(result.Success);
         Assert.Contains("changed under us", result.Error, StringComparison.Ordinal);
@@ -242,7 +335,8 @@ public sealed class CoverAtomTests
             new FakeScribeEmissionVerifier(inputs.VerifiedEmissions));
 
         var result = environment.CoverAtom(
-            ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline"]);
+            ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline",
+                "--envelope", inputs.EnvelopePath]);
 
         Assert.False(result.Success);
         Assert.Contains("missing", result.Error, StringComparison.Ordinal);
@@ -280,17 +374,37 @@ public sealed class CoverAtomTests
         Assert.Contains("Scribe emission verifier is unavailable", result.Error, StringComparison.Ordinal);
     }
 
-    // §4 semantic-fidelity gates are Phase 2: they require upstream
-    // digestion-formalization-v1 + digestion-fidelity-attestation-v1 receipts and
-    // /sshx multi-model consensus on the fidelity contract, none of which exist yet.
-    [Fact(Skip = "Phase 2 §4: needs upstream digestion-formalization-v1/"
-        + "digestion-fidelity-attestation-v1 receipts + /sshx consensus")]
+    // §4(a) pre-committed signature match (implemented): a declaration whose
+    // current signature diverges from the signature the formalizer pinned before
+    // the proof landed is rejected. This is the machine guard against proving a
+    // faithful statement and then swapping the theorem body (e.g. to `True`).
+    [Fact]
     public void CoverRejectsFormalizationWhoseSignatureDoesNotMatchPreCommittedClaim()
     {
+        // The receipt pins the real claim; the deposited declaration in the current
+        // Lean report carries the hollow `True` body instead — signature mismatch.
+        var (result, after, before) = Execute(new CoverSpec
+        {
+            PrecommittedSignature = new DigestionFormalizationSignature(
+                "probe", "theorem", "2 + 2 = 4"),
+        });
+
+        Assert.False(result.Success);
+        Assert.Contains("does not match the pre-committed signature", result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, after);
     }
 
-    [Fact(Skip = "Phase 2 §4: needs upstream digestion-formalization-v1/"
-        + "digestion-fidelity-attestation-v1 receipts + /sshx consensus")]
+    // §4(b) hollow-fidelity attestation is still deferred: signature-match proves
+    // the deposited declaration equals what was pre-committed, but does NOT prove
+    // the pre-committed signature itself is a faithful, non-hollow rendering of the
+    // natural-language atom. A hollow pre-commitment (`theorem t : True`) deposited
+    // unchanged would pass signature-match. Guarding the pre-commitment's fidelity
+    // needs the separate digestion-fidelity-attestation-v1 / multi-model consensus
+    // gate, which does not exist yet.
+    [Fact(Skip = "Phase 2 §4(b): needs digestion-fidelity-attestation-v1 receipt "
+        + "+ /sshx multi-model consensus attesting the pre-committed signature is "
+        + "non-hollow; signature-match (§4a) is implemented and only proves "
+        + "deposited == pre-committed")]
     public void CoverRejectsHollowTrueEmissionThatDischargesNothing()
     {
     }
@@ -313,7 +427,8 @@ public sealed class CoverAtomTests
             new FakeLeanReportSource(inputs.Report),
             new FakeScribeEmissionVerifier(inputs.VerifiedEmissions));
         var effectiveArgs = args
-            ?? ["--cover-atom", spec.AtomId, "--gid", inputs.Gid, "--base", "baseline"];
+            ?? ["--cover-atom", spec.AtomId, "--gid", inputs.Gid, "--base", "baseline",
+                "--envelope", inputs.EnvelopePath];
 
         var result = environment.CoverAtom(effectiveArgs);
 
@@ -327,6 +442,7 @@ internal sealed record CoverInputs(
     LeanAxiomReport Report,
     VerifiedScribeEmissions? VerifiedEmissions,
     string Gid,
+    string EnvelopePath,
     string Ledger);
 
 // Declarative fixture for the cover gate matrix. Defaults produce a clean happy
@@ -350,9 +466,33 @@ internal sealed record CoverSpec
 
     internal ImmutableArray<string> ReportDeclarations { get; init; } = ImmutableArray.Create("probe");
 
+    // Deposited declaration signature (kind/type) in the raw Lean report. The
+    // pre-committed receipt signature defaults to match these, so the happy path
+    // is a signature match; a gate test flips one side to force a mismatch.
+    internal string ReportKind { get; init; } = "theorem";
+
+    internal string ReportType { get; init; } = "True";
+
     internal ImmutableArray<string> TargetAxioms { get; init; } = ImmutableArray<string>.Empty;
 
     internal bool VerifyScribe { get; init; } = true;
+
+    // Pre-committed formalization receipt (digestion-formalization-v1, spec §4a).
+    // Defaults produce a receipt that binds this atom and pins a signature equal to
+    // the deposited declaration; each envelope gate test flips exactly one field.
+    internal bool IncludeEnvelope { get; init; } = true;
+
+    internal bool MalformedEnvelope { get; init; }
+
+    internal string? EnvelopeAtomId { get; init; }
+
+    internal string? EnvelopePrimaryGid { get; init; }
+
+    internal DigestionFormalizationSignature? PrecommittedSignature { get; init; }
+
+    internal string? EnvelopeCasRef { get; init; }
+
+    internal string? EnvelopeRawSha256 { get; init; }
 
     internal string? BaselineCoverageGid { get; init; }
 
@@ -423,6 +563,7 @@ internal static class CoverWorld
             includeOtherAtom: true,
             tailAuthPath,
             tailAuthSha);
+        var envelopePath = "Meta/Digestion/formalizations/" + spec.AtomId + ".v1.json";
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             [BackfillInventoryLoader.RelativePath] = ledger,
@@ -434,6 +575,11 @@ internal static class CoverWorld
             [ScribeEmissionAttestation.EmissionPath(spec.ModuleGid)] = Encoding.UTF8.GetString(emission),
             [ScribeEmissionAttestation.RelativePath] = Encoding.UTF8.GetString(attestation.AsSpan()),
         };
+        if (spec.IncludeEnvelope)
+        {
+            files[envelopePath] = Encoding.UTF8.GetString(Envelope(spec, atom).AsSpan());
+        }
+
         if (spec.IncludeCasBlob)
         {
             var (casPath, casBytes) = DigestionTestSupport.CasFile(atom);
@@ -466,7 +612,7 @@ internal static class CoverWorld
         }
 
         var declarations = spec.ReportDeclarations
-            .Select(name => new LeanDeclaration(name, "theorem", "True", spec.TargetAxioms))
+            .Select(name => new LeanDeclaration(name, spec.ReportKind, spec.ReportType, spec.TargetAxioms))
             .ToImmutableArray();
         var report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
         {
@@ -479,7 +625,31 @@ internal static class CoverWorld
                 spec.Declaration is null ? [] : [spec.Gid])
             : VerifiedScribeEmissions.Empty;
 
-        return new CoverInputs(files, baseline, report, verified, spec.Gid, ledger);
+        return new CoverInputs(files, baseline, report, verified, spec.Gid, envelopePath, ledger);
+    }
+
+    // Build the pre-committed digestion-formalization-v1 receipt bytes. Defaults
+    // bind this atom (atom_id + content fingerprint) and pin a signature equal to
+    // the deposited declaration; MalformedEnvelope writes non-receipt bytes so the
+    // fail-closed loader is exercised.
+    private static ImmutableArray<byte> Envelope(CoverSpec spec, DigestionAtom atom)
+    {
+        if (spec.MalformedEnvelope)
+        {
+            return ImmutableArray.CreateRange(Encoding.UTF8.GetBytes("{ not a receipt"));
+        }
+
+        var declarationName = spec.Declaration ?? "probe";
+        var primaryGid = spec.EnvelopePrimaryGid
+            ?? (spec.Declaration is null ? spec.ModuleGid + ".probe" : spec.Gid);
+        var signature = spec.PrecommittedSignature
+            ?? new DigestionFormalizationSignature(declarationName, spec.ReportKind, spec.ReportType);
+        return DigestionFormalizationReceipt.Write(new DigestionFormalizationReceipt(
+            spec.EnvelopeAtomId ?? spec.AtomId,
+            primaryGid,
+            signature,
+            spec.EnvelopeCasRef ?? atom.Fingerprints.RawSha256,
+            spec.EnvelopeRawSha256 ?? atom.Fingerprints.RawSha256));
     }
 
     private static string BuildLedger(

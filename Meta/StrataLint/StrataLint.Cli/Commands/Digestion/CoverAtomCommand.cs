@@ -15,16 +15,25 @@ namespace StrataLint.Cli;
 // (serialized manual/CI invocation makes it sufficient; an OS file lock for a
 // hard guarantee is deferred).
 //
-// Deferred to Phase 2 (recorded, not silent):
-//  - CAS-drift / envelope pinning: cover does not compare the atom's identity
-//    against a pre-committed envelope's cas_ref/raw_sha256 — that needs the
-//    Phase-2 digestion envelope.
-//  - Complete declaration-level newness: gate ②(c) here is file-level (sound but
-//    incomplete); pinning the exact declaration to a pre-committed signature
-//    (§4a) needs the Phase-2 envelope or a baseline Lean report.
-//  - Semantic-fidelity gates (§4: pre-committed signature match, hollow-True
-//    negative) require upstream digestion-formalization-v1 /
-//    digestion-fidelity-attestation-v1 receipts + /sshx consensus.
+// Gate ②(c) (§4a, implemented): cover pins the deposit against a pre-committed
+// digestion-formalization-v1 receipt supplied by --envelope. The receipt binds
+// atom_id + primary_gid + the atom's content fingerprint (cas_ref/raw_sha256), and
+// the deposited declaration's current signature (name_key/kind/type) must equal the
+// signature the formalizer pinned before the proof landed. This replaces the old
+// file-level newness heuristic: it is base-agnostic (survives the two-phase deposit
+// where the declaration is base-owned) yet rejects a post-proof statement swap and
+// prevents an arbitrary --base from laundering an old declaration as new.
+//
+// Deferred (recorded, not silent):
+//  - Hollow-fidelity attestation (§4b): signature-match proves deposited ==
+//    pre-committed, but not that the pre-committed signature is itself a faithful,
+//    non-hollow rendering of the natural-language atom. A hollow pre-commit
+//    (`theorem t : True`) deposited unchanged would pass. That needs the separate
+//    digestion-fidelity-attestation-v1 receipt + /sshx multi-model consensus.
+//  - Receipt emission + residence: the formalizer/workflow (step 1) is responsible
+//    for producing and committing the receipt at a digestion data path; this
+//    command only consumes it. Receipt lifecycle (deletion after absorption) is a
+//    workflow concern.
 //  - kind exclusion gate (spec §5): a producer responsibility, not cover's.
 internal static class CoverAtomCommand
 {
@@ -72,21 +81,12 @@ internal static class CoverAtomCommand
                     $"cover GID {options.Gid} is already bound in the baseline ledger");
             }
 
-            // Gate ②(c): file-level declaration newness (sound but incomplete for
-            // Phase 1). The covered declaration's Lean file must be new or changed
-            // relative to the baseline; if the baseline holds byte-identical
-            // content, the declaration already existed and an old theorem cannot be
-            // re-deposited as a fresh atom. Complete declaration-level newness
-            // (a signature that was pre-committed before the proof landed) needs
-            // the Phase-2 envelope's pre-committed signature (§4a) and is deferred.
-            if (baseline.TryGetFile(gid.Path.Value, out var baselineTarget)
-                && current.TryGetFile(gid.Path.Value, out var currentTarget)
-                && baselineTarget.RawBytes.AsSpan().SequenceEqual(currentTarget.RawBytes.AsSpan()))
-            {
-                throw new InvalidOperationException(
-                    $"cover declaration {options.Gid} is not new: its Lean file "
-                    + $"{gid.Path.Value} is byte-identical to the baseline");
-            }
+            // Gate ②(c) is now a declaration-signature match against the
+            // pre-committed formalization receipt (spec §4a); it runs after the
+            // Closed-deletable gate below so that a genuinely missing/ambiguous
+            // declaration reports through the standard gap path first. See the
+            // `DigestionFormalizationReceipt.Load` + RequireEnvelopeBinding +
+            // RequireSignatureMatch block near the end of the transaction.
 
             // Gate ⑤: the declaration may not already be bound to any other atom in
             // the candidate ledger (unique GID -> atom mapping).
@@ -165,6 +165,29 @@ internal static class CoverAtomCommand
             // of Closed — a missing/sorry-only declaration, an unverified Scribe
             // emission, a drifted receipt — is refused.
             RequireClosedDeletable(EvaluationFor(evaluation, options.AtomId));
+
+            // Gate ②(c): pre-committed formalization receipt + declaration-signature
+            // match (spec §4a). Replaces the old file-level newness gate. The
+            // formalizer pins the atom's primary declaration signature
+            // (name_key/kind/type) before the proof lands; cover admits the
+            // declaration only when its *current* signature in the raw Lean report
+            // equals the pinned signature. This is base-agnostic — the honest
+            // two-phase deposit (freeze in PR-1, cover in PR-2 with --base
+            // origin/dev) is accepted because no file-byte comparison is made —
+            // while a post-proof statement swap (e.g. to `True`) is rejected because
+            // the deposited signature then diverges. The receipt also binds atom_id
+            // + primary_gid + the atom's content fingerprint, so a receipt pinned for
+            // one atom cannot cover another (anti-Goodhart); an arbitrary --base is
+            // therefore no longer able to launder an old declaration as new.
+            //
+            // Deferred (§4b, recorded not silent): this does not attest that the
+            // pre-committed signature is itself a faithful, non-hollow rendering of
+            // the natural-language atom — a hollow pre-commit deposited unchanged
+            // would pass. That is the separate digestion-fidelity-attestation-v1 /
+            // multi-model consensus gate, out of scope for this block.
+            var receipt = DigestionFormalizationReceipt.Load(current, options.EnvelopePath);
+            RequireEnvelopeBinding(receipt, options, target);
+            RequireSignatureMatch(receipt, gid, report);
 
             var currentLedger = currentRaw.Entries.Single(static entry =>
                 entry.Path == BackfillInventoryLoader.RelativePath);
@@ -340,13 +363,59 @@ internal static class CoverAtomCommand
             + $"gaps={string.Join(",", covered.Gaps.Select(static gap => gap.Code))}");
     }
 
-    private sealed record CoverArguments(string AtomId, string Gid, string BaselineRevision);
+    private static void RequireEnvelopeBinding(
+        DigestionFormalizationReceipt receipt,
+        CoverArguments options,
+        DigestionLedgerEntry target)
+    {
+        if (!string.Equals(receipt.AtomId, options.AtomId, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException(
+                $"cover envelope atom_id {receipt.AtomId} does not match --cover-atom {options.AtomId}");
+        }
+
+        if (!string.Equals(receipt.PrimaryGid, options.Gid, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException(
+                $"cover envelope primary_gid {receipt.PrimaryGid} does not match --gid {options.Gid}");
+        }
+
+        if (!string.Equals(receipt.CasRef, target.Fingerprints.RawSha256, StringComparison.Ordinal)
+            || !string.Equals(receipt.RawSha256, target.Fingerprints.RawSha256, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException(
+                $"cover envelope fingerprint does not match atom {options.AtomId} "
+                + $"(atom raw {target.Fingerprints.RawSha256})");
+        }
+    }
+
+    private static void RequireSignatureMatch(
+        DigestionFormalizationReceipt receipt,
+        Gid gid,
+        LeanAxiomReport report)
+    {
+        // By the time this runs the Closed-deletable gate has already established the
+        // declaration exists and is unique, so ResolveSignature is expected to
+        // succeed; its fail-closed throw remains a defensive invariant guard.
+        var deposited = DigestionFormalizationReceipt.ResolveSignature(gid, report);
+        if (deposited != receipt.Signature)
+        {
+            throw new InvalidOperationException(
+                $"cover declaration {gid.Value} signature "
+                + $"({deposited.NameKey}, {deposited.Kind}, {deposited.Type}) "
+                + "does not match the pre-committed signature "
+                + $"({receipt.Signature.NameKey}, {receipt.Signature.Kind}, {receipt.Signature.Type})");
+        }
+    }
+
+    private sealed record CoverArguments(string AtomId, string Gid, string BaselineRevision, string EnvelopePath);
 
     private static CoverArguments ParseArguments(IReadOnlyList<string> arguments)
     {
         string? atomId = null;
         string? gid = null;
         string? baselineRevision = null;
+        string? envelopePath = null;
         for (var index = 0; index < arguments.Count; index += 2)
         {
             if (index + 1 >= arguments.Count)
@@ -365,6 +434,9 @@ internal static class CoverAtomCommand
                 case "--base" when baselineRevision is null:
                     baselineRevision = arguments[index + 1];
                     break;
+                case "--envelope" when envelopePath is null:
+                    envelopePath = arguments[index + 1];
+                    break;
                 default:
                     throw Usage();
             }
@@ -372,16 +444,18 @@ internal static class CoverAtomCommand
 
         if (string.IsNullOrWhiteSpace(atomId)
             || string.IsNullOrWhiteSpace(gid)
-            || string.IsNullOrWhiteSpace(baselineRevision))
+            || string.IsNullOrWhiteSpace(baselineRevision)
+            || string.IsNullOrWhiteSpace(envelopePath))
         {
             throw Usage();
         }
 
-        return new CoverArguments(atomId, gid, baselineRevision);
+        return new CoverArguments(atomId, gid, baselineRevision, envelopePath);
     }
 
     private static InvalidOperationException Usage() => new(
-        "USAGE: StrataLint cover-atom --cover-atom ATOM_ID --gid DECL_GID --base REV");
+        "USAGE: StrataLint cover-atom --cover-atom ATOM_ID --gid DECL_GID --base REV "
+        + "--envelope RECEIPT_PATH");
 
     private static BackfillInventoryDocument LoadDocument(RepositorySnapshot snapshot, string side)
     {

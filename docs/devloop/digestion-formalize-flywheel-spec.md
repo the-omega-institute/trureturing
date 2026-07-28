@@ -47,6 +47,7 @@ digestion query        producer (theory-selfgrowth)     formalize workflow      
 结构门(新/Closed/无sorry/有Scribe/hash匹配)能拒空回填/旧GID/sorry/缺Blueprint,**但拦不住** `theorem t : True := trivial` 这种**忠实覆盖了错命题**的空洞——kernel/hash 不证"自然语言 atom ↔ Lean type 语义等价"(一般不可判)。spec 必须三选一并获后续一致:
 
 - **(a) pre-committed signature(推荐主干)**:formalize workflow 在**证明前**产出机器可比对的 formal Lean signature/typed-claim receipt;cover 事务只接受与该预承诺 signature **完全相同**的 declaration。把"猜 WHAT"从证明后前移到可核对的承诺。
+  - **实现状态(P0 已落)**:`digestion-formalization-v1` receipt(engine 内 `DigestionFormalizationReceipt`,closed-schema fail-closed loader)+ cover `--envelope`。receipt pin `atom_id / primary_gid / precommitted_signature{name_key,kind,type} / cas_ref / raw_sha256`;cover Gate②(c) 由 file-newness 换成 **declaration-signature match**(deposited 声明当前签名须完全等于预承诺签名)——base 无关,故消除旧 `--base <deposit-origin>` workaround,并挡"证后 swap 成 True"。receipt 的**产出/提交**(formalizer / workflow step1)与 §4(b) 空洞防护仍未做。
 - **(b) 多模型对抗 attestation(补充,诚实标非证明)**:formalize 的机器共识门对抗验证"Lean statement 忠实对应 atom 且非 vacuous/trivial",产 durable receipt。**明确标记这是 attestation,非形式证明**(NL↔Lean 等价不可判);多模型独立(第14条)降空洞风险,但不冒充 kernel 保证。
 - **(c) 收窄到 machine-form atoms**:若不接受 (b) 的 attestation 为信任边界,候选收窄到自带机器可解析 formal signature 的 atom——**当前可交付量可能为 0**,须诚实允许。
 
