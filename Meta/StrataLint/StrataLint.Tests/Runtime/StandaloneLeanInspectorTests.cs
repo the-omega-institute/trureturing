@@ -168,6 +168,33 @@ public sealed class StandaloneLeanInspectorTests
             static declaration => declaration.DeclarationNameKey.Contains("_proof_", StringComparison.Ordinal));
     }
 
+    [Fact]
+    public void AxiomsAreAttributedPerDeclarationAcrossTheSharedCollectionCache()
+    {
+        // Regression guard for the run-shared axiom-collection cache: each
+        // declaration must report exactly its own transitive axiom closure. A
+        // naive shared-visited cache would either drop the axiom from a later
+        // declaration that shares the dependency, or leak it onto an unrelated
+        // axiom-free declaration processed afterwards. Both are excluded here.
+        var report = InspectSingleModule(
+            """
+            axiom groundless : False
+
+            theorem consumesAxiom : True := False.elim groundless
+            def axiomFree : Nat := 1
+            theorem alsoConsumesAxiom : True := False.elim groundless
+            """ + "\n");
+
+        var consumes = report.Declarations.Single(static d => d.Name == "consumesAxiom");
+        var free = report.Declarations.Single(static d => d.Name == "axiomFree");
+        var alsoConsumes = report.Declarations.Single(static d => d.Name == "alsoConsumesAxiom");
+
+        Assert.Contains("groundless", consumes.Axioms);
+        Assert.Contains("groundless", alsoConsumes.Axioms);
+        Assert.DoesNotContain("groundless", free.Axioms);
+        Assert.Empty(free.Axioms);
+    }
+
     private static LeanFileReport InspectSingleModule(string source)
     {
         using var repository = new TemporaryDirectory();
