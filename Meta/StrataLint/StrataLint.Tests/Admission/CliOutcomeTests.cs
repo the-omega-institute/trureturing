@@ -209,6 +209,9 @@ internal sealed class StubCliEnvironment(
     public CommandResult CoverAtom(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "cover-atom is not configured in this fixture");
 
+    public ExplicitCommandResult Papergen(IReadOnlyList<string> arguments) =>
+        new(2, string.Empty, "papergen is not configured in this fixture");
+
     public CommandResult Route(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "route is not configured in this fixture");
 
