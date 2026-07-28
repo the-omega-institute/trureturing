@@ -394,7 +394,10 @@ internal static class CoverAtomCommand
         Gid gid,
         LeanAxiomReport report)
     {
-        var deposited = DepositedSignature(gid, report);
+        // By the time this runs the Closed-deletable gate has already established the
+        // declaration exists and is unique, so ResolveSignature is expected to
+        // succeed; its fail-closed throw remains a defensive invariant guard.
+        var deposited = DigestionFormalizationReceipt.ResolveSignature(gid, report);
         if (deposited != receipt.Signature)
         {
             throw new InvalidOperationException(
@@ -403,42 +406,6 @@ internal static class CoverAtomCommand
                 + "does not match the pre-committed signature "
                 + $"({receipt.Signature.NameKey}, {receipt.Signature.Kind}, {receipt.Signature.Type})");
         }
-    }
-
-    // Resolve the deposited declaration's canonical signature from the raw Lean
-    // report, using the same GID-selector matching as DigestionStatusEvaluator.
-    // By the time this runs the Closed-deletable gate has already established the
-    // declaration exists and is unique, so a zero/multiple match here is a
-    // fail-closed invariant breach rather than the normal missing-declaration path.
-    private static DigestionFormalizationSignature DepositedSignature(Gid gid, LeanAxiomReport report)
-    {
-        if (gid.ToTarget() is not Target.Formal { Declaration: { } selector } formal)
-        {
-            throw new InvalidOperationException($"cover GID must select a Lean declaration: {gid.Value}");
-        }
-
-        if (!report.Files.TryGetValue(formal.Path, out var module) || !string.IsNullOrEmpty(module.Error))
-        {
-            throw new InvalidOperationException(
-                $"cover declaration is absent from the Lean report: {gid.Value}");
-        }
-
-        var suffix = "." + selector;
-        var matches = module.Declarations
-            .Where(candidate => string.Equals(candidate.Name, selector, StringComparison.Ordinal)
-                || candidate.Name.EndsWith(suffix, StringComparison.Ordinal))
-            .ToArray();
-        if (matches.Length != 1)
-        {
-            throw new InvalidOperationException(
-                $"cover declaration {gid.Value} resolves to {matches.Length} report declarations");
-        }
-
-        var declaration = matches[0];
-        return new DigestionFormalizationSignature(
-            declaration.NameKey,
-            declaration.Kind,
-            declaration.TypeRepresentation);
     }
 
     private sealed record CoverArguments(string AtomId, string Gid, string BaselineRevision, string EnvelopePath);

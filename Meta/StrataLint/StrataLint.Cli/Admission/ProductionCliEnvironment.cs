@@ -229,6 +229,13 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 scribeEmissionVerifier,
                 arguments);
 
+    public CommandResult EmitFormalizationReceipt(IReadOnlyList<string> arguments) =>
+        EmitFormalizationReceiptCommand.Run(
+            repositoryRoot,
+            repository,
+            leanReportSource,
+            arguments);
+
     public ExplicitCommandResult Papergen(IReadOnlyList<string> arguments) =>
         PapergenCommand.Run(repositoryRoot, arguments);
 

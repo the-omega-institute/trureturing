@@ -113,6 +113,43 @@ internal sealed record DigestionFormalizationReceipt(
         return receipt;
     }
 
+    // Resolve a declaration's canonical signature (name_key/kind/type) from a raw
+    // Lean report, using the same GID-selector matching as DigestionStatusEvaluator
+    // (Name == selector, or Name ends with ".selector"). Shared by the emitter
+    // (which pins the pre-committed signature) and cover (which checks the deposited
+    // signature against the pin), so both read the WHAT from one place. A missing
+    // module or a zero/multiple declaration match is a fail-closed FormatException.
+    internal static DigestionFormalizationSignature ResolveSignature(Gid gid, LeanAxiomReport report)
+    {
+        ArgumentNullException.ThrowIfNull(report);
+        if (gid.ToTarget() is not Target.Formal { Declaration: { } selector } formal)
+        {
+            throw new FormatException($"GID must select a Lean declaration: {gid.Value}");
+        }
+
+        if (!report.Files.TryGetValue(formal.Path, out var module) || !string.IsNullOrEmpty(module.Error))
+        {
+            throw new FormatException($"declaration is absent from the Lean report: {gid.Value}");
+        }
+
+        var suffix = "." + selector;
+        var matches = module.Declarations
+            .Where(candidate => string.Equals(candidate.Name, selector, StringComparison.Ordinal)
+                || candidate.Name.EndsWith(suffix, StringComparison.Ordinal))
+            .ToArray();
+        if (matches.Length != 1)
+        {
+            throw new FormatException(
+                $"declaration {gid.Value} resolves to {matches.Length} report declarations");
+        }
+
+        var declaration = matches[0];
+        return new DigestionFormalizationSignature(
+            declaration.NameKey,
+            declaration.Kind,
+            declaration.TypeRepresentation);
+    }
+
     private static void Validate(DigestionFormalizationReceipt receipt)
     {
         if (string.IsNullOrWhiteSpace(receipt.AtomId)
