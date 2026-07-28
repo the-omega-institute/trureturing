@@ -7,6 +7,7 @@ doi: 10.1007/978-1-4757-5579-4
 claim: The fundamental theorem of arithmetic and Euclid's lemma, plus Euler products, von Mangoldt weights, and the logarithmic derivative of the zeta function.
 strata_touched:
   - D5/S3/Arith/EuclidLemma
+  - D5/S3/Arith/PrimeFactorization
   - D5/S3/Weil/EulerProduct
   - D5/S3/Zeros/EulerWindows
 license: citation-only
@@ -34,6 +35,14 @@ which formalizes PZG Lemma 9.1 over the natural numbers. Apostol proves the
 lemma from the fundamental theorem; the repository proof discharges the same
 statement through Mathlib's `Nat.Prime.dvd_mul`, so only the statement, not
 the source's `v_p`-additivity derivation, is attributed to Apostol.
+
+The same chapter states the fundamental theorem of arithmetic as Theorem 1.10:
+every integer greater than one is a product of primes, uniquely up to order.
+Its existence half — every natural number greater than one is a product of
+finitely many primes — anchors `D5/S3/Arith/PrimeFactorization`. The repository
+proof exhibits Mathlib's prime-factors list as the witnessing product, so only
+the existence statement, not the source's minimal-counterexample argument or
+the uniqueness half, is attributed to Apostol.
 
 The book does not state the repository declarations verbatim. In particular,
 Lean's field inverse is a total function with `0^-1 = 0`, so the formal finite
@@ -64,6 +73,12 @@ certificate and does not claim a meromorphic pole order.
   preceding batch. Reissuing raw JSON on stdin with
   `Content-Type: application/json` succeeded; no bibliographic conclusion was
   drawn from the failed calls.
+- 2026-07-29: Confirmed from the book's Chapter 1 that the fundamental theorem
+  of arithmetic is Theorem 1.10 ("every integer n > 1 is a product of primes,
+  and the factorization is unique apart from order"). Its existence half anchors
+  the new `D5/S3/Arith/PrimeFactorization` declaration. The DOI
+  `10.1007/978-1-4757-5579-4` and title were already verified above; no new
+  online lookup was required for this in-book locator.
 - 2026-07-28: Confirmed from the book's Chapter 1 that Euclid's lemma is
   Theorem 1.5 ("if `p` is prime and `p | ab`, then `p | a` or `p | b`"),
   proved there from the fundamental theorem of arithmetic. This anchors the

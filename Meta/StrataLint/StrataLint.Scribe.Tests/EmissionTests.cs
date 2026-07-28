@@ -428,6 +428,83 @@ public sealed class EmissionTests
     }
 
     [Fact]
+    public void VerificationToleratesDocumentAbsentFromEvaluatedTree()
+    {
+        var root = Path.Combine(
+            Path.GetTempPath(),
+            "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+
+        try
+        {
+            var report = LeanReportFixture.ForDocuments(
+                DocumentDefinitions.All.Select(static definition => definition.Document));
+            PrepareEmittedRepository(root, report);
+
+            // Mirror the conservative-extension baseline-tree replay: the candidate harness knows a
+            // document (compiled into DocumentDefinitions.All) whose .scribe.cs source, .md emission, and
+            // Lean declaration are all absent from the evaluated (older) tree — a not-yet-materialized
+            // protected-surface addition. The base binary that already admitted this tree never saw the
+            // document, so voiding the capability would make the candidate block what the baseline admits.
+            var absent = DocumentDefinitions.All[^1];
+            Assert.NotEqual("D5/S0/Carrier/GoldenRatio", absent.Document.Header.Gid.Value);
+            Assert.NotEqual("D5/S1/Scale/FibonacciEigen", absent.Document.Header.Gid.Value);
+            File.Delete(Path.Combine(root, absent.RelativePath.Value));
+            File.Delete(Path.Combine(root, absent.RelativePath.Value[..^3] + ".scribe.cs"));
+
+            var reportWithoutAbsent = LeanReportFixture.ForDocuments(
+                DocumentDefinitions.All
+                    .Where(definition => definition != absent)
+                    .Select(static definition => definition.Document));
+
+            var error = new StringWriter();
+            var verification = ScribeEmitter.Verify(root, error, reportWithoutAbsent);
+
+            Assert.NotNull(verification);
+            Assert.True(verification!.ReferencesDeclaration(
+                "D5/S0/Carrier/GoldenRatio.golden_ratio_spec"));
+            Assert.True(verification.ReferencesDeclaration(
+                "D5/S1/Scale/FibonacciEigen.fibonacci_substitution_spec"));
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Fact]
+    public void VerificationRejectsMaterializedDocumentWithMissingEmission()
+    {
+        var root = Path.Combine(
+            Path.GetTempPath(),
+            "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+
+        try
+        {
+            var report = LeanReportFixture.ForDocuments(
+                DocumentDefinitions.All.Select(static definition => definition.Document));
+            PrepareEmittedRepository(root, report);
+
+            // A materialized document keeps its .scribe.cs source in the tree; a missing .md emission is
+            // then a deleted or out-of-date base-owned emission, not a candidate-only addition. It must
+            // still void the capability locally, never be laundered through the not-materialized skip.
+            var target = DocumentDefinitions.All[0];
+            File.Delete(Path.Combine(root, target.RelativePath.Value));
+
+            var error = new StringWriter();
+            var verification = ScribeEmitter.Verify(root, error, report);
+
+            Assert.Null(verification);
+            Assert.Contains("out of date", error.ToString(), StringComparison.Ordinal);
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Fact]
     public void CliRejectsAnythingOutsideClosedCommandsAndOptionalCheck()
     {
         var error = new StringWriter();

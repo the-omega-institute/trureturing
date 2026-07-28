@@ -21,7 +21,8 @@ public static class ScribeEmitter
             output,
             error,
             LeanCompiledArtifactReports.InspectRepository,
-            validateRepository: true).ExitCode;
+            validateRepository: true,
+            tolerateAbsentDocuments: false).ExitCode;
 
     internal static int Emit(
         string repositoryRoot,
@@ -37,7 +38,8 @@ public static class ScribeEmitter
             output,
             error,
             _ => leanReport,
-            validateRepository: false).ExitCode;
+            validateRepository: false,
+            tolerateAbsentDocuments: false).ExitCode;
     }
 
     internal static int Emit(
@@ -55,7 +57,8 @@ public static class ScribeEmitter
             output,
             error,
             _ => leanReport,
-            validateRepository).ExitCode;
+            validateRepository,
+            tolerateAbsentDocuments: false).ExitCode;
     }
 
     internal static VerifiedScribeEmissions? Verify(
@@ -70,7 +73,8 @@ public static class ScribeEmitter
             TextWriter.Null,
             error,
             _ => leanReport,
-            validateRepository: true).Verification;
+            validateRepository: true,
+            tolerateAbsentDocuments: true).Verification;
     }
 
     private static ScribeEmissionRun Run(
@@ -79,7 +83,8 @@ public static class ScribeEmitter
         TextWriter output,
         TextWriter error,
         Func<string, LeanAxiomReport> loadLeanReport,
-        bool validateRepository)
+        bool validateRepository,
+        bool tolerateAbsentDocuments)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(output);
@@ -89,25 +94,33 @@ public static class ScribeEmitter
         try
         {
             var leanReport = loadLeanReport(repositoryRoot);
-            // Check mode judges a supplied tree (e.g. the candidate harness replaying the baseline
-            // tree during conservative verification): a compiled document whose .scribe.cs source is
-            // absent from that tree belongs to a world the tree has not adopted, so validation,
-            // rendering, and attestation cover only tree-owned documents — the mirror of the
-            // candidate-only attestation tolerance below. Emit mode is the author's own tree, where
-            // every compiled document must have its committed source (the dangling-gid contract), so
-            // no filtering applies. Deleting a base-owned source cannot launder a forgery through
-            // the check-mode filter: receipts referencing the absent document gap out downstream and
-            // the deletion itself is a protected-surface change.
-            var definitions = check
+
+            // Emission (make emit / emit-check) runs against the binary's own tree, where every document's
+            // .scribe.cs source must be present; a missing source there is a real fault, so the strict path
+            // keeps the full DocumentDefinitions.All (an absent source dangling-fails or "emit failed").
+            //
+            // Capability verification (Verify), by contrast, judges an arbitrary tree that may predate some
+            // of this binary's documents. A document this binary knows about is only materialized in that
+            // tree when its .scribe.cs source is present. During conservative-extension replay the candidate
+            // harness re-judges the baseline tree, which lacks a newly added Blueprint's source entirely;
+            // that document is a not-yet-materialized protected-surface addition (SL-022 routes its
+            // .scribe.cs to Component C), not part of this tree — so it must not be dangling-flagged, read,
+            // attested, or counted, which would make the candidate block a tree the baseline admits.
+            // A document whose source IS present stays in scope: a present source with a missing or
+            // mismatched .md is a real out-of-date/corruption and still voids the capability below
+            // (deleted or forged base-owned emissions are caught locally, not laundered through this skip).
+            var definitions = tolerateAbsentDocuments
                 ? DocumentDefinitions.All
                     .Where(definition => File.Exists(Path.Combine(
                         repositoryRoot,
-                        ScribeEmissionAttestation.DefinitionPath(
-                            definition.Document.Header.Gid.Value))))
+                        ScribeEmissionAttestation.DefinitionPath(definition.Document.Header.Gid.Value))))
                     .ToArray()
                 : [.. DocumentDefinitions.All];
-            if (check && definitions.Length == 0 && !DocumentDefinitions.All.IsEmpty)
+            if (tolerateAbsentDocuments && definitions.Length == 0 && !DocumentDefinitions.All.IsEmpty)
             {
+                // A tree owning zero of this binary's documents is not an older world of this
+                // repository at all (wrong root, gutted checkout): verifying it vacuously would
+                // hide the fault behind distant digestion gaps — fail loud at the source instead.
                 throw new InvalidOperationException(
                     $"no Scribe definition sources found under {repositoryRoot}");
             }
