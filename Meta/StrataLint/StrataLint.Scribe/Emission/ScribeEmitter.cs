@@ -89,11 +89,33 @@ public static class ScribeEmitter
         try
         {
             var leanReport = loadLeanReport(repositoryRoot);
+            // Check mode judges a supplied tree (e.g. the candidate harness replaying the baseline
+            // tree during conservative verification): a compiled document whose .scribe.cs source is
+            // absent from that tree belongs to a world the tree has not adopted, so validation,
+            // rendering, and attestation cover only tree-owned documents — the mirror of the
+            // candidate-only attestation tolerance below. Emit mode is the author's own tree, where
+            // every compiled document must have its committed source (the dangling-gid contract), so
+            // no filtering applies. Deleting a base-owned source cannot launder a forgery through
+            // the check-mode filter: receipts referencing the absent document gap out downstream and
+            // the deletion itself is a protected-surface change.
+            var definitions = check
+                ? DocumentDefinitions.All
+                    .Where(definition => File.Exists(Path.Combine(
+                        repositoryRoot,
+                        ScribeEmissionAttestation.DefinitionPath(
+                            definition.Document.Header.Gid.Value))))
+                    .ToArray()
+                : [.. DocumentDefinitions.All];
+            if (check && definitions.Length == 0 && !DocumentDefinitions.All.IsEmpty)
+            {
+                throw new InvalidOperationException(
+                    $"no Scribe definition sources found under {repositoryRoot}");
+            }
             if (validateRepository)
             {
                 var findings = DescribeRepositoryValidator.Validate(
                     repositoryRoot,
-                    DocumentDefinitions.All.Select(static definition => definition.Document),
+                    definitions.Select(static definition => definition.Document),
                     leanReport);
                 if (!findings.IsEmpty)
                 {
@@ -107,7 +129,7 @@ public static class ScribeEmitter
                 }
             }
 
-            return EmitVerified(repositoryRoot, check, output, error, leanReport);
+            return EmitVerified(repositoryRoot, check, output, error, leanReport, definitions);
         }
         catch (Exception exception) when (
             exception is InvalidOperationException
@@ -126,14 +148,15 @@ public static class ScribeEmitter
         bool check,
         TextWriter output,
         TextWriter error,
-        LeanAxiomReport leanReport)
+        LeanAxiomReport leanReport,
+        IReadOnlyList<DocumentDefinition> definitions)
     {
         var rendered = new List<(DocumentDefinition Definition, byte[] Bytes)>();
         var attestations = new List<ScribeEmissionRecord>();
         var declarationReferences = new HashSet<string>(StringComparer.Ordinal);
         var describeLatexRecords = new List<ScribeDescribeLatexRecord>();
         var citations = LibraryNoteCatalog.Load(repositoryRoot).Citations;
-        foreach (var definition in DocumentDefinitions.All)
+        foreach (var definition in definitions)
         {
             var first = CanonicalMarkdownWriter.Write(
                 definition.Document,
@@ -230,7 +253,7 @@ public static class ScribeEmitter
         var differences = documentDifferences + (attestationOutOfDate ? 1 : 0);
         if (check && differences == 0)
         {
-            output.WriteLine($"checked: {DocumentDefinitions.All.Length} blueprint(s)");
+            output.WriteLine($"checked: {definitions.Count} blueprint(s)");
             output.WriteLine($"checked: {ScribeEmissionAttestation.RelativePath}");
         }
         else if (!check)

@@ -329,6 +329,64 @@ public sealed class EmissionTests
     }
 
     [Fact]
+    public void VerificationSkipsBinaryOnlyDocumentAbsentFromTree()
+    {
+        var root = Path.Combine(
+            Path.GetTempPath(),
+            "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+
+        try
+        {
+            var report = LeanReportFixture.ForDocuments(
+                DocumentDefinitions.All.Select(static definition => definition.Document));
+            PrepareEmittedRepository(root, report);
+
+            // The candidate harness compiles a newer document set than the baseline tree it
+            // replays during conservative verification. A compiled document whose .scribe.cs
+            // source is absent from the evaluated tree belongs to a world that tree has not
+            // adopted: the verifier must skip it and still vouch for every document the tree
+            // does own. Collapsing to null would un-absorb every base-owned atom of the older
+            // tree — the exact mirror of the candidate-only tolerance above. Deleting a
+            // base-owned source cannot launder a forgery through this skip: receipts that
+            // reference the absent document gap out downstream and the deletion itself is a
+            // protected-surface change.
+            var victim = DocumentDefinitions.All.Single(static definition =>
+                definition.Document.Header.Gid.Value == "D5/S1/Scale/FibonacciEigen");
+            var victimSourcePath = Path.Combine(root, victim.RelativePath.Value[..^3] + ".scribe.cs");
+            var victimEmissionPath = Path.Combine(root, victim.RelativePath.Value);
+            var victimEntry =
+                "{\"definition_path\": \"Blueprint/D5/S1/Scale/FibonacciEigen.scribe.cs\", "
+                + "\"definition_sha256\": \"" + Sha256(File.ReadAllBytes(victimSourcePath)) + "\", "
+                + "\"emission_path\": \"Blueprint/D5/S1/Scale/FibonacciEigen.md\", "
+                + "\"emission_sha256\": \"" + Sha256(File.ReadAllBytes(victimEmissionPath)) + "\", "
+                + "\"gid\": \"D5/S1/Scale/FibonacciEigen\"}";
+            File.Delete(victimSourcePath);
+            File.Delete(victimEmissionPath);
+            var attestationPath = Path.Combine(root, ScribeEmitter.AttestationRelativePath);
+            var original = File.ReadAllText(attestationPath, Encoding.UTF8);
+            var pruned = original.Replace(victimEntry + ", ", string.Empty, StringComparison.Ordinal);
+            Assert.NotEqual(original, pruned);
+            File.WriteAllText(attestationPath, pruned, new UTF8Encoding(false));
+
+            var error = new StringWriter();
+            var verification = ScribeEmitter.Verify(root, error, report);
+
+            Assert.NotNull(verification);
+            Assert.Equal(string.Empty, error.ToString());
+            Assert.True(verification!.ReferencesDeclaration(
+                "D5/S0/Carrier/GoldenRatio.golden_ratio_spec"));
+            Assert.False(verification.ReferencesDeclaration(
+                "D5/S1/Scale/FibonacciEigen.fibonacci_substitution_spec"));
+            Assert.False(verification.TryGet("D5/S1/Scale/FibonacciEigen", out _));
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Fact]
     public void VerificationRejectsForgedBaseOwnedEmissionDressedAsCandidateOnly()
     {
         var root = Path.Combine(
