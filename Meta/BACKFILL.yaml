@@ -5003,16 +5003,23 @@ sources:
           raw_sha256: sha256:0c12d6f29b67f19afd7260e90da96e6c8522e6bda9d50a46d407ddb19fc4d2ed
           normalized_sha256: sha256:0c12d6f29b67f19afd7260e90da96e6c8522e6bda9d50a46d407ddb19fc4d2ed
         cas_ref: sha256:0c12d6f29b67f19afd7260e90da96e6c8522e6bda9d50a46d407ddb19fc4d2ed
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Arith/PrimeFactorization.exists_prime_factorization
         receipts:
-          coverage: []
-          scribe: []
+          coverage:
+            - gid: D5/S3/Arith/PrimeFactorization.exists_prime_factorization
+              source_sha256: sha256:0c12d6f29b67f19afd7260e90da96e6c8522e6bda9d50a46d407ddb19fc4d2ed
+              target_sha256: sha256:714a1c568291451bddbacc784c75342e724836383e80f9cce80394e2450a9f89
+          scribe:
+            - gid: D5/S3/Arith/PrimeFactorization.exists_prime_factorization
+              definition_sha256: sha256:9b96ab515b2820b84c4cc4887d00ab6e1bff94cfdf81e184b6752e884cc9bdab
+              emission_sha256: sha256:dc662259b09052a7189c54f114eb4f069fe59913d0b01e713bb9f2f79aed6504
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: absorbed
+          truth: closed
       - atom_id: pzg-residual-d6d815c749842be08e1f33e8420bf5fee8008e3fd81cfba7fb3f73354cb76386
         ast_path: theorem/4.3
         fingerprints:
