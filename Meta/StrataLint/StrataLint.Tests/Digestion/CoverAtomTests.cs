@@ -221,6 +221,35 @@ public sealed class CoverAtomTests
     }
 
     [Fact]
+    public void CoverAbortsWhenLedgerDeletedBetweenReadAndWrite()
+    {
+        // Fail-closed: if the on-disk ledger disappeared between read and write
+        // (e.g. deleted by another actor), cover must abort — not create a fresh
+        // ledger and overwrite the missing deposit (no-silent-failure, first
+        // principle). The gateway still holds the ledger cover validated against.
+        var inputs = CoverWorld.Materialize(new CoverSpec());
+        using var temporary = new TemporaryDirectory();
+        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
+        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+        Assert.False(File.Exists(outputPath));
+        var environment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(Array.Empty<string>()),
+                CoverWorld.Raw(inputs.Files),
+                CoverWorld.Raw(inputs.Baseline)),
+            new FakeLeanReportSource(inputs.Report),
+            new FakeScribeEmissionVerifier(inputs.VerifiedEmissions));
+
+        var result = environment.CoverAtom(
+            ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline"]);
+
+        Assert.False(result.Success);
+        Assert.Contains("missing", result.Error, StringComparison.Ordinal);
+        Assert.False(File.Exists(outputPath));
+    }
+
+    [Fact]
     public void CoverRejectsIncompleteArguments()
     {
         var spec = new CoverSpec();

@@ -7,10 +7,13 @@ namespace StrataLint.Cli;
 // existing open residual atom by writing coverage_gids + coverage/scribe
 // receipts. cover is the narrow sibling of ingest — it reuses
 // DigestionStatusEvaluator for the structural gates and never adds residual
-// atoms or rebinds boundaries. The write is all-or-nothing with a
-// compare-and-swap: every gate must pass and the on-disk ledger must be
-// unchanged before ReplaceLedgerAtomically touches disk, otherwise BACKFILL.yaml
-// is byte-unchanged.
+// atoms or rebinds boundaries. The write is all-or-nothing with a fail-closed
+// check-then-act guard: every gate must pass and the on-disk ledger must still
+// exist and be unchanged before ReplaceLedgerAtomically touches disk, otherwise
+// BACKFILL.yaml is byte-unchanged. This is not a true CAS/lock — a residual
+// sub-millisecond TOCTOU window remains between the reread and the atomic rename
+// (serialized manual/CI invocation makes it sufficient; an OS file lock for a
+// hard guarantee is deferred).
 //
 // Deferred to Phase 2 (recorded, not silent):
 //  - CAS-drift / envelope pinning: cover does not compare the atom's identity
@@ -172,13 +175,24 @@ internal static class CoverAtomCommand
                     Path.GetFullPath(repositoryRoot),
                     BackfillInventoryLoader.RelativePath.Replace('/', Path.DirectorySeparatorChar));
 
-                // Compare-and-swap: re-read the ledger from disk and confirm it
-                // still matches the bytes we validated against. Two concurrent
-                // covers can both validate against the same ledger L; without this
-                // check the second write would silently clobber the first deposit
-                // (lost update). If the ledger moved under us, abort.
-                if (File.Exists(outputPath)
-                    && !File.ReadAllBytes(outputPath).AsSpan()
+                // Check-then-act guard (fail-closed): re-read the ledger from disk
+                // and confirm it still exists and matches the bytes we validated
+                // against. Two concurrent covers can both validate against the same
+                // ledger L; without this the second write would clobber the first
+                // deposit (lost update). A missing file is treated as drift and
+                // aborts too — never re-create a ledger that disappeared under us.
+                // NOTE: this is not a true CAS/lock; a sub-millisecond residual
+                // TOCTOU window remains between this reread and the atomic rename.
+                // Serialized manual/CI invocation makes that sufficient; a hard
+                // guarantee needs an OS file lock (deferred).
+                if (!File.Exists(outputPath))
+                {
+                    throw new InvalidOperationException(
+                        "ledger went missing between read and write; "
+                        + "aborting to avoid a lost update");
+                }
+
+                if (!File.ReadAllBytes(outputPath).AsSpan()
                         .SequenceEqual(currentLedger.Bytes.AsSpan()))
                 {
                     throw new InvalidOperationException(
