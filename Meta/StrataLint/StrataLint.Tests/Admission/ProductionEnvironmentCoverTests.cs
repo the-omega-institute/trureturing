@@ -90,5 +90,6 @@ public sealed partial class ProductionEnvironmentTests
             new FakeScribeEmissionVerifier(inputs.VerifiedEmissions));
 
     private static string[] CoverArgs(CoverInputs inputs) =>
-        ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline"];
+        ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline",
+            "--envelope", inputs.EnvelopePath];
 }
