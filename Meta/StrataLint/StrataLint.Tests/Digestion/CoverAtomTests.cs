@@ -394,6 +394,63 @@ public sealed class CoverAtomTests
         Assert.Equal(before, after);
     }
 
+    // §4(a) base-owned receipt (hardening): the pre-committed receipt is only
+    // authoritative when it is part of the baseline (committed in PR-1). A same-PR
+    // (spec A16 hostile-fork) attack that writes BOTH the declaration and a matching
+    // receipt in one PR — so the receipt exists only in the candidate, never
+    // pre-committed to the baseline — must be rejected. Otherwise the anti-swap
+    // guard is forgeable in-PR (candidate-side "pre-commitment") and collapses.
+    [Fact]
+    public void CoverRejectsReceiptPresentOnlyInCandidateNotBaseline()
+    {
+        var (result, after, before) = Execute(new CoverSpec { EnvelopeInBaseline = false });
+
+        Assert.False(result.Success);
+        Assert.Contains("receipt is missing", result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, after);
+    }
+
+    // §4(a) base-owned receipt (hardening): a co-tampered same-PR swap. The honest
+    // receipt in the baseline pins the real claim (`2 + 2 = 4`); the candidate
+    // swaps the deposited declaration to the hollow `True` body AND overwrites the
+    // candidate copy of the receipt to pin `True` so a candidate-side signature
+    // match would pass. Base-owned load reads the baseline receipt, whose pinned
+    // signature no longer matches the deposited `True` — the swap is caught. Before
+    // the fix (candidate-side load) this deposit was admitted.
+    [Fact]
+    public void CoverUsesBaselineReceiptNotCandidateForSignatureMatch()
+    {
+        var (result, after, before) = Execute(new CoverSpec
+        {
+            BaselinePrecommittedSignature = new DigestionFormalizationSignature(
+                "probe", "theorem", "2 + 2 = 4"),
+        });
+
+        Assert.False(result.Success);
+        Assert.Contains("does not match the pre-committed signature", result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, after);
+    }
+
+    // §4(a) base-owned receipt (hardening): the legitimate two-phase deposit. The
+    // receipt was committed in PR-1 and is part of the baseline; PR-2 covers with
+    // the deposited declaration's current signature equal to the baseline-pinned
+    // signature. Base-owned load reads the pre-committed baseline receipt and
+    // admits the deposit.
+    [Fact]
+    public void CoverAcceptsWhenReceiptIsPreCommittedInBaselineAndSignatureMatches()
+    {
+        var (result, after, before) = Execute(new CoverSpec { EnvelopeInBaseline = true });
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
+        Assert.NotEqual(before, after);
+        var entry = Assert.Single(
+            BackfillInventoryLoader.Load(after).RequireDigestionEntries(),
+            candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
+        Assert.Equal(["D5/S0/Carrier/Probe.probe"], entry.CoverageGids.ToArray());
+        Assert.Equal(DigestionTruthState.Closed, entry.ProjectedStatus.Truth);
+    }
+
     // §4(b) hollow-fidelity attestation is still deferred: signature-match proves
     // the deposited declaration equals what was pre-committed, but does NOT prove
     // the pre-committed signature itself is a faithful, non-hollow rendering of the
@@ -481,6 +538,20 @@ internal sealed record CoverSpec
     // Defaults produce a receipt that binds this atom and pins a signature equal to
     // the deposited declaration; each envelope gate test flips exactly one field.
     internal bool IncludeEnvelope { get; init; } = true;
+
+    // Base-owned receipt (§4a hardening): in the honest two-phase deposit the
+    // receipt is committed in PR-1 and is therefore part of the baseline at PR-2.
+    // Default true keeps the receipt pre-committed in the baseline. Setting it
+    // false models a same-PR (spec A16 hostile-fork) attack where the receipt is
+    // fabricated in the candidate only and never pre-committed to the baseline.
+    internal bool EnvelopeInBaseline { get; init; } = true;
+
+    // When set, the baseline receipt pins this (divergent) signature while the
+    // candidate copy of the receipt pins PrecommittedSignature/default. Models a
+    // same-PR statement swap where the attacker co-tampers the candidate receipt
+    // to match the swapped declaration: base-owned load must read the baseline
+    // receipt and reject the swap.
+    internal DigestionFormalizationSignature? BaselinePrecommittedSignature { get; init; }
 
     internal bool MalformedEnvelope { get; init; }
 
@@ -609,6 +680,24 @@ internal static class CoverWorld
         if (!spec.BaselineTargetIdentical)
         {
             baseline.Remove(targetPath);
+        }
+
+        // Base-owned receipt (§4a hardening): the receipt is authoritative only
+        // when it is pre-committed to the baseline. A same-PR attack fabricates the
+        // receipt in the candidate only (EnvelopeInBaseline=false) — drop it from
+        // the baseline so the base-owned load sees no pre-commitment.
+        if (spec.IncludeEnvelope && !spec.EnvelopeInBaseline)
+        {
+            baseline.Remove(envelopePath);
+        }
+
+        // Co-tampered same-PR swap: the baseline holds the honest receipt while the
+        // candidate copy is overwritten to match a swapped declaration. Only the
+        // baseline receipt is authoritative under base-owned load.
+        if (spec.IncludeEnvelope && spec.EnvelopeInBaseline && spec.BaselinePrecommittedSignature is not null)
+        {
+            baseline[envelopePath] = Encoding.UTF8.GetString(
+                Envelope(spec with { PrecommittedSignature = spec.BaselinePrecommittedSignature }, atom).AsSpan());
         }
 
         var declarations = spec.ReportDeclarations

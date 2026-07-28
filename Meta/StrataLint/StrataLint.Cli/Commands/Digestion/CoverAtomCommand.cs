@@ -16,20 +16,32 @@ namespace StrataLint.Cli;
 // hard guarantee is deferred).
 //
 // Gate ②(c) (§4a, implemented): cover pins the deposit against a pre-committed
-// digestion-formalization-v1 receipt supplied by --envelope. The receipt binds
-// atom_id + primary_gid + the atom's content fingerprint (cas_ref/raw_sha256), and
-// the deposited declaration's current signature (name_key/kind/type) must equal the
-// signature the formalizer pinned before the proof landed. This replaces the old
-// file-level newness heuristic: it is base-agnostic (survives the two-phase deposit
-// where the declaration is base-owned) yet rejects a post-proof statement swap and
-// prevents an arbitrary --base from laundering an old declaration as new.
+// digestion-formalization-v1 receipt supplied by --envelope. The receipt is loaded
+// from the BASELINE snapshot (repository.ReadRevision(--base)), never the candidate,
+// so "pre-committed" is a machine invariant rather than an honesty convention: the
+// receipt must already be committed to the baseline (PR-1 of the two-phase flow),
+// and a candidate PR cannot fabricate or alter the receipt it is judged against from
+// inside its own diff. Under the admission gate --base is the pull_request_target-
+// fixed baseline (dev), so a receipt introduced by the candidate is not yet in the
+// baseline and the deposit is rejected. The receipt binds atom_id + primary_gid +
+// the atom's content fingerprint (cas_ref/raw_sha256), and the deposited
+// declaration's *current* signature (name_key/kind/type, read from the candidate raw
+// Lean report) must equal the signature the formalizer pinned in the base-owned
+// receipt before the proof landed. This replaces the old file-level newness
+// heuristic: no declaration file bytes are compared, so the honest two-phase deposit
+// (declaration frozen/base-owned in PR-1) is still accepted, while a post-proof
+// statement swap is machine-rejected because the deposited signature then diverges
+// from the base-owned pinned signature — even if the attacker co-tampers the
+// candidate copy of the receipt in the same PR (the co-tampered copy is not read).
 //
 // Deferred (recorded, not silent):
 //  - Hollow-fidelity attestation (§4b): signature-match proves deposited ==
 //    pre-committed, but not that the pre-committed signature is itself a faithful,
-//    non-hollow rendering of the natural-language atom. A hollow pre-commit
-//    (`theorem t : True`) deposited unchanged would pass. That needs the separate
-//    digestion-fidelity-attestation-v1 receipt + /sshx multi-model consensus.
+//    non-hollow rendering of the natural-language atom. base-ownership does NOT close
+//    this: a hollow pre-commitment landed in PR-1 (both the `theorem t : True`
+//    declaration and its matching receipt base-owned) then deposited unchanged still
+//    passes signature-match. That needs the separate digestion-fidelity-
+//    attestation-v1 receipt + /sshx multi-model consensus.
 //  - Receipt emission + residence: the formalizer/workflow (step 1) is responsible
 //    for producing and committing the receipt at a digestion data path; this
 //    command only consumes it. Receipt lifecycle (deletion after absorption) is a
@@ -81,12 +93,12 @@ internal static class CoverAtomCommand
                     $"cover GID {options.Gid} is already bound in the baseline ledger");
             }
 
-            // Gate ②(c) is now a declaration-signature match against the
+            // Gate ②(c) is now a declaration-signature match against the base-owned
             // pre-committed formalization receipt (spec §4a); it runs after the
             // Closed-deletable gate below so that a genuinely missing/ambiguous
             // declaration reports through the standard gap path first. See the
-            // `DigestionFormalizationReceipt.Load` + RequireEnvelopeBinding +
-            // RequireSignatureMatch block near the end of the transaction.
+            // `DigestionFormalizationReceipt.Load(baseline, …)` + RequireEnvelopeBinding
+            // + RequireSignatureMatch block near the end of the transaction.
 
             // Gate ⑤: the declaration may not already be bound to any other atom in
             // the candidate ledger (unique GID -> atom mapping).
@@ -166,26 +178,34 @@ internal static class CoverAtomCommand
             // emission, a drifted receipt — is refused.
             RequireClosedDeletable(EvaluationFor(evaluation, options.AtomId));
 
-            // Gate ②(c): pre-committed formalization receipt + declaration-signature
-            // match (spec §4a). Replaces the old file-level newness gate. The
-            // formalizer pins the atom's primary declaration signature
-            // (name_key/kind/type) before the proof lands; cover admits the
-            // declaration only when its *current* signature in the raw Lean report
-            // equals the pinned signature. This is base-agnostic — the honest
-            // two-phase deposit (freeze in PR-1, cover in PR-2 with --base
-            // origin/dev) is accepted because no file-byte comparison is made —
-            // while a post-proof statement swap (e.g. to `True`) is rejected because
-            // the deposited signature then diverges. The receipt also binds atom_id
-            // + primary_gid + the atom's content fingerprint, so a receipt pinned for
-            // one atom cannot cover another (anti-Goodhart); an arbitrary --base is
-            // therefore no longer able to launder an old declaration as new.
+            // Gate ②(c): base-owned pre-committed formalization receipt +
+            // declaration-signature match (spec §4a). Replaces the old file-level
+            // newness gate. The receipt is loaded from the BASELINE snapshot, so the
+            // anti-swap property is now a machine invariant rather than honesty-only:
+            // the formalizer pins the atom's primary declaration signature
+            // (name_key/kind/type) in a receipt committed to the baseline (PR-1)
+            // before the proof lands; cover admits the declaration only when its
+            // *current* signature in the candidate raw Lean report equals the
+            // base-owned pinned signature. No file-byte comparison is made, so the
+            // honest two-phase deposit (freeze in PR-1, cover in PR-2 with --base the
+            // fixed baseline) is accepted, while a post-proof statement swap (e.g. to
+            // `True`) is machine-rejected because the deposited signature diverges
+            // from the base-owned pin — and, crucially, the candidate cannot launder
+            // the swap by co-forging its own copy of the receipt in the same PR, since
+            // the co-tampered candidate copy is never read (only the baseline receipt
+            // is). The receipt also binds atom_id + primary_gid + the atom's content
+            // fingerprint, so a receipt pinned for one atom cannot cover another
+            // (anti-Goodhart).
             //
-            // Deferred (§4b, recorded not silent): this does not attest that the
-            // pre-committed signature is itself a faithful, non-hollow rendering of
-            // the natural-language atom — a hollow pre-commit deposited unchanged
-            // would pass. That is the separate digestion-fidelity-attestation-v1 /
-            // multi-model consensus gate, out of scope for this block.
-            var receipt = DigestionFormalizationReceipt.Load(current, options.EnvelopePath);
+            // Deferred (§4b, recorded not silent): base-ownership closes the same-PR
+            // fabrication/swap, but does NOT attest that the pre-committed signature is
+            // itself a faithful, non-hollow rendering of the natural-language atom. A
+            // hollow pre-commitment landed together in PR-1 (both the `True`
+            // declaration and its matching receipt base-owned) then deposited unchanged
+            // still passes signature-match. That is the separate
+            // digestion-fidelity-attestation-v1 / multi-model consensus gate, out of
+            // scope for this block.
+            var receipt = DigestionFormalizationReceipt.Load(baseline, options.EnvelopePath);
             RequireEnvelopeBinding(receipt, options, target);
             RequireSignatureMatch(receipt, gid, report);
 
