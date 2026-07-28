@@ -1,0 +1,18 @@
+blueprint:
+  - D5/B/S3/Zeros/CompletedZeta
+  - D5/B/S3/Zeros/SpectralShift
+decls:
+  - D5/S3/Zeros/CompletedZeta.xi_reading_eq_completed_zeta
+  - D5/S3/Zeros/CompletedZeta.xi_reading_differentiable
+  - D5/S3/Zeros/CompletedZeta.xi_reading_reflection
+  - D5/S3/Zeros/SpectralShift.backwardShift
+  - D5/S3/Zeros/SpectralShift.labeled_zeta_backward_shift_eigen
+  - D5/S3/Zeros/SpectralShift.labeled_zeta_vector_backward_shift_eigen
+evidence: []
+id: D5-P001
+narrative_order:
+  - completed zeta and the entire xi reading
+  - reflection symmetry of the xi reading
+  - multiplicative address shifts
+  - labeled-zeta eigen-actions
+venue: arXiv-math.NT

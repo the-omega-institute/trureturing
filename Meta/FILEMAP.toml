@@ -336,6 +336,13 @@ consumed_by = ["RegistryLoader"]
 verified_by = ["RegistryLoader"]
 
 [[files]]
+pattern = "Papers/recipes/**"
+kind = "data"
+produced_by = "none"
+consumed_by = ["PapergenCommand"]
+verified_by = ["PapergenCommand"]
+
+[[files]]
 pattern = "README.md"
 kind = "data"
 produced_by = "none"

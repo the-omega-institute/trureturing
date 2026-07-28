@@ -216,6 +216,9 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 scribeEmissionVerifier,
                 arguments);
 
+    public ExplicitCommandResult Papergen(IReadOnlyList<string> arguments) =>
+        PapergenCommand.Run(repositoryRoot, arguments);
+
     public CommandResult Route(IReadOnlyList<string> arguments)
     {
         try

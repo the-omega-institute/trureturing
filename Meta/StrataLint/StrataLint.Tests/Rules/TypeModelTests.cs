@@ -6,6 +6,8 @@ namespace StrataLint.Tests;
 
 public sealed class TypeModelTests
 {
+    private const string PaperRecipePath = "Papers/recipes/D5-P001.yaml";
+
     [Fact]
     public void DigestionCasBlobIsClosedWorldRegisteredButNotASemanticTarget()
     {
@@ -77,7 +79,7 @@ public sealed class TypeModelTests
     [InlineData("D5/C/2026-07-11/r168", "Chronicle/2026/07/11-r168.md")]
     [InlineData("D5/L/bellissard1992gap", "Library/notes/bellissard1992gap.md")]
     [InlineData("D5/L/Weil/sample2026paper", "Library/Weil/sample2026paper.md")]
-    [InlineData("D5/P/D5-P001", "Papers/recipes/D5-P001.yaml")]
+    [InlineData("D5/P/D5-P001", PaperRecipePath)]
     [InlineData("D5/P/D5-P001--frozen", "Papers/frozen/D5-P001/manifest.sha256")]
     public void GidAndTargetAreCanonicalTwoWayMappings(string text, string path)
     {
