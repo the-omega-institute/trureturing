@@ -116,7 +116,14 @@ public static class ScribeEmitter
                         ScribeEmissionAttestation.DefinitionPath(definition.Document.Header.Gid.Value))))
                     .ToArray()
                 : [.. DocumentDefinitions.All];
-
+            if (tolerateAbsentDocuments && definitions.Length == 0 && !DocumentDefinitions.All.IsEmpty)
+            {
+                // A tree owning zero of this binary's documents is not an older world of this
+                // repository at all (wrong root, gutted checkout): verifying it vacuously would
+                // hide the fault behind distant digestion gaps — fail loud at the source instead.
+                throw new InvalidOperationException(
+                    $"no Scribe definition sources found under {repositoryRoot}");
+            }
             if (validateRepository)
             {
                 var findings = DescribeRepositoryValidator.Validate(
