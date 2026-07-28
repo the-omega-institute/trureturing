@@ -16,6 +16,8 @@ internal static class FileMapPolicy
         "Meta/StrataLint/StrataLint.Scribe/FileMap/FileMapManifest.cs";
     private const string LibraryNoteCatalogPath =
         "Meta/StrataLint/StrataLint.Scribe/Library/LibraryNoteCatalog.cs";
+    private const string PapergenCommandPath =
+        "Meta/StrataLint/StrataLint.Cli/Commands/PapergenCommand.cs";
     private const string RegistryLoaderPath =
         "Meta/StrataLint/StrataLint.Cli/Commands/RegistryLoader.cs";
     private const string ScribeProjectPath =
@@ -46,6 +48,7 @@ internal static class FileMapPolicy
             ["FileMapLoader"] = FileMapLoaderPath,
             ["GoldenFixtureRegistryLoader"] = GoldenFixtureRegistryLoaderPath,
             ["LibraryNoteCatalog"] = LibraryNoteCatalogPath,
+            ["PapergenCommand"] = PapergenCommandPath,
             ["PerfBudgetLoader"] = PerfBudgetLoaderPath,
             ["RegistryLoader"] = RegistryLoaderPath,
             ["ScribeCompiler"] = ScribeProjectPath,
