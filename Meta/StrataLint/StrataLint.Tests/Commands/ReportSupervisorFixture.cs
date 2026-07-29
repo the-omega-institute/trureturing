@@ -7,10 +7,16 @@ namespace StrataLint.Tests;
 
 internal sealed class ReportSupervisorFixture : IDisposable
 {
+    private static readonly Lazy<ProcessOutput> releaseCliBuild = new(BuildReleaseCli);
     private readonly TemporaryDirectory temporary = new();
 
     internal ReportSupervisorFixture()
     {
+        var build = releaseCliBuild.Value;
+        Assert.True(
+            build.ExitCode == 0,
+            "could not build the Release CLI required by the performance writer: "
+                + Encoding.UTF8.GetString(build.StandardError));
         ScratchWriter = WriteExecutable("scratch-writer.sh", """
             #!/usr/bin/env bash
             set -euo pipefail
@@ -69,6 +75,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
                 read -r pid < "$pid_file"
                 kill -0 "$pid" 2>/dev/null && printf '%s 1 00:00\n' "$pid"
               done
+              :
             elif [[ "$*" == *"lstart="* ]]; then
               printf 'synthetic-start-%s\n' "$requested_pid"
             elif [[ "$*" == *"stat="* ]]; then
@@ -349,6 +356,23 @@ internal sealed class ReportSupervisorFixture : IDisposable
         }
 
         throw new DirectoryNotFoundException("Could not locate repository root.");
+    }
+
+    private static ProcessOutput BuildReleaseCli()
+    {
+        var root = FindRepositoryRoot();
+        return BoundedProcessRunner.Run(
+            "dotnet",
+            [
+                "build",
+                Path.Combine(root, "Meta", "StrataLint", "StrataLint.Cli", "StrataLint.Cli.csproj"),
+                "--configuration", "Release",
+                "--no-restore",
+                "--verbosity", "quiet",
+            ],
+            root,
+            TimeSpan.FromMinutes(2),
+            1024 * 1024);
     }
 }
 
