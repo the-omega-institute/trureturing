@@ -63,13 +63,21 @@ internal static partial class RepositoryRules
     internal const int DirectoryFileLimit = 12;
 
     // SL-003 capacity exclusions: theory inputs, the Lake manifest, the backfill
-    // inventory, and canonical CAS blobs are not artifacts the capacity pressure
-    // rule bounds. Single source shared with the CapacityPolicy dotnet-test net.
+    // inventory, canonical CAS blobs, and emitted Blueprint projections (FILEMAP
+    // kind=generated, produced by ScribeEmitter, verified by emit-check) are not
+    // artifacts the capacity pressure rule bounds. A Blueprint document's
+    // structural slot is its .scribe.cs source; its GID must name an existing
+    // Lean module and the definition path is bijective with that GID, so
+    // bounding the projections would cap a lawful twelve-module Lean bucket at
+    // six blueprinted modules. Single source shared with the CapacityPolicy
+    // dotnet-test net.
     internal static bool IsCapacityExcluded(string path) =>
         path.StartsWith("docs/develop/", StringComparison.Ordinal)
         || string.Equals(path, "lake-manifest.json", StringComparison.Ordinal)
         || string.Equals(path, BackfillInventoryLoader.RelativePath, StringComparison.Ordinal)
-        || DigestionCasStore.IsCanonicalPath(path);
+        || DigestionCasStore.IsCanonicalPath(path)
+        || (path.StartsWith("Blueprint/", StringComparison.Ordinal)
+            && path.EndsWith(".md", StringComparison.Ordinal));
 
     // The canonical artifact line count: newline-delimited lines, not counting a
     // trailing terminator. Shared with CapacityPolicy so both nets agree exactly.

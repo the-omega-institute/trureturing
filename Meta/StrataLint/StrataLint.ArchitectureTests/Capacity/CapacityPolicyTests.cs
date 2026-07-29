@@ -67,6 +67,37 @@ public sealed class CapacityPolicyTests
         Assert.Empty(findings);
     }
 
+    // Emitted Blueprint projections (FILEMAP kind=generated, produced by
+    // ScribeEmitter, verified by emit-check) are photographs of the graph, not
+    // skeleton: each document already pays its structural slot through its
+    // .scribe.cs source. Bounding the projections halves the effective bucket:
+    // the document GID must name an existing Lean module and the definition
+    // path is bijective with that GID, so a lawful twelve-module Lean bucket
+    // overflows its Blueprint mirror at the seventh blueprinted module.
+    [Fact]
+    public void EmittedBlueprintProjectionIsNotBounded()
+    {
+        var files = Enumerable.Range(0, RepositoryRules.DirectoryFileLimit + 1)
+            .Select(static i => ($"Blueprint/D5/S1/Synthetic/File{i}.md", "x"))
+            .ToArray();
+
+        Assert.Empty(CapacityPolicy.InspectFiles(files));
+    }
+
+    // The canonical definition sources beside those projections stay bounded.
+    [Fact]
+    public void BlueprintDefinitionSourcesRemainBounded()
+    {
+        var files = Enumerable.Range(0, RepositoryRules.DirectoryFileLimit + 1)
+            .Select(static i => ($"Blueprint/D5/S1/Synthetic/File{i}.scribe.cs", "x"))
+            .ToArray();
+
+        var finding = Assert.Single(CapacityPolicy.InspectFiles(files));
+
+        Assert.Equal("Blueprint/D5/S1/Synthetic", finding.Path);
+        Assert.Contains("maximum", finding.Message, StringComparison.Ordinal);
+    }
+
     // The backfill inventory path, restated here only to exercise the exclusion;
     // the enforcement source is RepositoryRules.IsCapacityExcluded.
     private const string BackfillInventoryRelativePath = "Meta/BACKFILL.yaml";
