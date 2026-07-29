@@ -54,12 +54,91 @@ internal sealed class ReportSupervisorFixture : IDisposable
             sleep 60 &
             printf '%s\n' "$!" > "$1"
             """);
+        _ = WriteExecutable("ps", """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            previous=""
+            requested_pid=""
+            for argument in "$@"; do
+              if [[ "$previous" == "-p" ]]; then requested_pid="$argument"; fi
+              previous="$argument"
+            done
+            if [[ "$*" == *"pid=,ppid=,etime="* ]]; then
+              for pid_file in "$PWD/detached.pid" "$PWD/grandchild.pid" "$PWD/scratch.txt"; do
+                [[ -s "$pid_file" ]] || continue
+                read -r pid < "$pid_file"
+                kill -0 "$pid" 2>/dev/null && printf '%s 1 00:00\n' "$pid"
+              done
+            elif [[ "$*" == *"lstart="* ]]; then
+              printf 'synthetic-start-%s\n' "$requested_pid"
+            elif [[ "$*" == *"stat="* ]]; then
+              printf 'S\n'
+            elif [[ "$*" == *"rss="* ]]; then
+              printf '0\n'
+            else
+              exit 1
+            fi
+            """);
+        _ = WriteExecutable("pgrep", """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            [[ "$#" == "2" && "$1" == "-P" && "$2" =~ ^[1-9][0-9]*$ ]] || exit 2
+            parent="$2"
+            worker=""
+            helper=""
+            detached=""
+            [[ -s "$PWD/detached-worker.pid" ]] && read -r worker < "$PWD/detached-worker.pid"
+            [[ -s "$PWD/detached-parent.pid" ]] && read -r helper < "$PWD/detached-parent.pid"
+            [[ -s "$PWD/detached.pid" ]] && read -r detached < "$PWD/detached.pid"
+            if [[ -n "$worker" && "$parent" == "$worker" \
+              && -n "$helper" ]] && kill -0 "$helper" 2>/dev/null; then
+              printf '%s\n' "$helper"
+            elif [[ -n "$helper" && "$parent" == "$helper" \
+              && -n "$detached" ]] && kill -0 "$detached" 2>/dev/null; then
+              printf '%s\n' "$detached"
+            fi
+            for pid_file in "$PWD/grandchild.pid" "$PWD/scratch.txt"; do
+              [[ -s "$pid_file" ]] || continue
+              read -r pid < "$pid_file"
+              if [[ "$pid" =~ ^[1-9][0-9]*$ && "$pid" != "$parent" ]] \
+                && kill -0 "$pid" 2>/dev/null; then
+                printf '%s\n' "$pid"
+              fi
+            done
+            """);
         DetachedWorker = WriteExecutable("detached-worker.sh", """
             #!/usr/bin/env bash
             set -euo pipefail
-            perl -MPOSIX -e 'POSIX::setsid(); exec "sleep", "60"' &
-            printf '%s\n' "$!" > "$1"
-            wait
+            printf '%s\n' "$$" > "$1"
+            perl -MPOSIX -e '
+              my ($pid_path, $parent_path, $release) = @ARGV;
+              my $deadline = time() + 20;
+              my $child = fork();
+              die "fork failed" unless defined $child;
+              if ($child == 0) {
+                POSIX::setsid();
+                open my $out, ">", $pid_path or die $!;
+                print {$out} "$$\n";
+                close $out or die $!;
+                close STDOUT;
+                close STDERR;
+                POSIX::close(9);
+                while (!-e $release && time() < $deadline) {
+                  select undef, undef, undef, 0.02;
+                }
+                exit 2 unless -e $release;
+                exec "sleep", "60";
+              }
+              open my $parent, ">", $parent_path or die $!;
+              print {$parent} "$$\n";
+              close $parent or die $!;
+              while (!-e $release && time() < $deadline) {
+                select undef, undef, undef, 0.02;
+              }
+              exit 2 unless -e $release;
+            ' "$2" "$3" "$4" &
+            wait "$!"
+            sleep 60
             """);
         DoubleForkWorker = WriteExecutable("double-fork-worker.sh", """
             #!/usr/bin/env bash
@@ -101,12 +180,16 @@ internal sealed class ReportSupervisorFixture : IDisposable
     internal string MetricsLog => Path.Combine(Root, "metrics.jsonl");
     internal string DefaultMetricsLog => Path.Combine(Root, ".stratalint-perf", "events.jsonl");
     internal string StateRoot => Path.Combine(Root, "state");
+    internal string HostPath => Environment.GetEnvironmentVariable("PATH") ?? "/bin:/usr/bin";
     internal string ScratchRecord => Path.Combine(Root, "scratch.txt");
     internal string ActiveMarker => Path.Combine(Root, "active");
     internal string OverlapMarker => Path.Combine(Root, "overlap");
     internal string GrandchildPid => Path.Combine(Root, "grandchild.pid");
     internal string ExitedGrandchildPid => ScratchRecord;
     internal string DetachedPid => Path.Combine(Root, "detached.pid");
+    internal string DetachedWorkerPid => Path.Combine(Root, "detached-worker.pid");
+    internal string DetachedParentPid => Path.Combine(Root, "detached-parent.pid");
+    internal string DetachedRelease => Path.Combine(Root, "detached.release");
     internal string DoubleForkPid => ScratchRecord;
     internal string ScratchWriter { get; }
     internal string ProducerWorker { get; }
@@ -128,6 +211,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
     {
         var arguments = new List<string>
         {
+            $"PATH={Root}:{HostPath}",
             $"STRATALINT_REPORT_METRICS_LOG={MetricsLog}",
             $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
         };
@@ -147,6 +231,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
         BoundedProcessRunner.Run(
             "env",
             [
+                $"PATH={Root}:{HostPath}",
                 $"HOME={Root}",
                 $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
                 Supervisor,
@@ -162,6 +247,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
             FileSizeLimitedDriver,
             [
                 "env",
+                $"PATH={Root}:{HostPath}",
                 $"STRATALINT_REPORT_METRICS_LOG={MetricsLog}",
                 $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
                 Supervisor,
@@ -184,6 +270,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
         };
         foreach (var argument in new[]
         {
+            $"PATH={Root}:{HostPath}",
             $"STRATALINT_REPORT_METRICS_LOG={MetricsLog}",
             $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
             Supervisor,
@@ -207,15 +294,29 @@ internal sealed class ReportSupervisorFixture : IDisposable
         };
         foreach (var argument in new[]
         {
+            $"PATH={Root}:{HostPath}",
             $"STRATALINT_REPORT_METRICS_LOG={MetricsLog}",
             $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
             Supervisor,
             "--role", "lean-producer", "--lean-slot", "--",
-            DetachedWorker, DetachedPid,
+            DetachedWorker, DetachedWorkerPid, DetachedPid, DetachedParentPid, DetachedRelease,
         }) info.ArgumentList.Add(argument);
         var process = new Process { StartInfo = info };
         Assert.True(process.Start());
         return process;
+    }
+
+    internal bool HasRecordedProcessCandidate(int pid)
+    {
+        var runs = Path.Combine(StateRoot, "runs");
+        if (!Directory.Exists(runs)) return false;
+        var prefix = pid.ToString(System.Globalization.CultureInfo.InvariantCulture) + "|";
+        return Directory.EnumerateFiles(
+                runs,
+                "process-candidates",
+                SearchOption.AllDirectories)
+            .Any(path => File.ReadLines(path)
+                .Any(line => line.StartsWith(prefix, StringComparison.Ordinal)));
     }
 
     internal IReadOnlyList<JsonElement> ReadMetrics() => File.ReadAllLines(MetricsLog)
