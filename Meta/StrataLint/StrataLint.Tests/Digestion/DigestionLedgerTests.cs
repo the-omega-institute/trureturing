@@ -469,6 +469,66 @@ public sealed partial class DigestionLedgerTests
     }
 
     [Fact]
+    public void ReceiptInspectorReturnsLocalCompletenessAndProgressFacts()
+    {
+        var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
+        var atom = Assert.Single(GictAtomizer.Atomize(source).Claims);
+        var target = Encoding.UTF8.GetBytes(Lean("D5/S0/Carrier/Probe"));
+        var definition = Encoding.UTF8.GetBytes("scribe definition\n");
+        var emission = Encoding.UTF8.GetBytes("# emitted narrative\n");
+        var coverage = $$"""
+            - gid: D5/S0/Carrier/Probe
+              source_sha256: {{atom.Fingerprints.RawSha256}}
+              target_sha256: {{DigestionFingerprint.Compute(target).RawSha256}}
+            """;
+        var scribe = $$"""
+            - gid: D5/S0/Carrier/Probe
+              definition_sha256: {{DigestionFingerprint.Compute(definition).RawSha256}}
+              emission_sha256: {{DigestionFingerprint.Compute(emission).RawSha256}}
+            """;
+        var yaml = LedgerYaml(
+            atom,
+            migration: "absorbed",
+            truth: "closed",
+            coverageReceipts: coverage,
+            scribeReceipts: scribe,
+            coverageGid: "D5/S0/Carrier/Probe");
+        var entry = Assert.Single(BackfillInventoryLoader.Load(yaml).RequireDigestionEntries());
+        var findings = ImmutableArray.CreateBuilder<string>();
+
+        var inspection = DigestionReceiptInspector.Inspect(
+            entry,
+            DigestionReceiptAlignment.Seen,
+            Snapshot(
+                ("docs/source.md", source),
+                CasFile(atom),
+                ("D5/S0/Carrier/Probe.lean", target),
+                ("Blueprint/D5/S0/Carrier/Probe.scribe.cs", definition),
+                ("Blueprint/D5/S0/Carrier/Probe.md", emission)),
+            AcceptedLean("D5/S0/Carrier/Probe.lean").Report,
+            new Dictionary<RepoPath, TruthNode>
+            {
+                [RepoPath.CreateKnown("D5/S0/Carrier/Probe.lean")] = TruthNode.Create(
+                    RepoPath.CreateKnown("D5/S0/Carrier/Probe.lean"),
+                    gid: null,
+                    TruthState.Closed,
+                    "D5.S0.Carrier.Probe"),
+            },
+            ScribeEmissionAttestation.Empty,
+            verifiedScribeEmissions: null,
+            findings);
+
+        Assert.False(inspection.LocalComplete);
+        Assert.True(inspection.HasProgress);
+        var targetState = Assert.Single(inspection.TargetStates);
+        Assert.Equal("D5/S0/Carrier/Probe", targetState.Gid);
+        Assert.Equal(TruthState.Closed, targetState.State);
+        Assert.Contains(inspection.Gaps, gap => gap.Code == "scribe-attestation-missing");
+        Assert.Contains(inspection.Gaps, gap => gap.Code == "scribe-emission-unverified");
+        Assert.Empty(findings);
+    }
+
+    [Fact]
     public void TailCannotAppearBeforeAbsorptionAndExternalAuthorizationReceipt()
     {
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
