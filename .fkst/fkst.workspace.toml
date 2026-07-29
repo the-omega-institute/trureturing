@@ -4,7 +4,7 @@ units = ["packages/theory-selfgrowth"]
 [[external_sources]]
 id = "fkst-packages-platform"
 git = "https://github.com/ChronoAIProject/fkst-packages.git"
-rev = "9d67a87db56fb7bc5d2cba9eb2cb8545d16a64ed"
+rev = "93880763b8a400e8fe39e89cd0c4c07f2420787a"
 packages = [
   "github-proxy",
   "consensus",
