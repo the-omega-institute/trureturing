@@ -480,27 +480,66 @@ public sealed class ReportSupervisorScriptTests
     {
         using var fixture = new ReportSupervisorFixture();
         using var process = fixture.StartDetachedProducer();
-        Assert.True(SpinWait.SpinUntil(
-            () => File.Exists(fixture.DetachedPid)
-                && new FileInfo(fixture.DetachedPid).Length > 0,
-            TimeSpan.FromSeconds(10)));
-        var detached = int.Parse(
-            File.ReadAllText(fixture.DetachedPid).Trim(),
-            System.Globalization.CultureInfo.InvariantCulture);
+        using var watchdog = new ReportSupervisorTestWatchdog(TimeSpan.FromSeconds(45));
+        watchdog.Track(process);
+        int? detached = null;
+        try
+        {
+            Assert.True(SpinWait.SpinUntil(
+                () => File.Exists(fixture.DetachedPid)
+                    && new FileInfo(fixture.DetachedPid).Length > 0
+                    && File.Exists(fixture.DetachedParentPid)
+                    && new FileInfo(fixture.DetachedParentPid).Length > 0,
+                TimeSpan.FromSeconds(10)),
+                "detached worker did not publish its process topology");
+            detached = int.Parse(
+                File.ReadAllText(fixture.DetachedPid).Trim(),
+                System.Globalization.CultureInfo.InvariantCulture);
+            var detachedParent = int.Parse(
+                File.ReadAllText(fixture.DetachedParentPid).Trim(),
+                System.Globalization.CultureInfo.InvariantCulture);
 
-        var signal = BoundedProcessRunner.Run(
-            "/bin/kill",
-            ["-TERM", process.Id.ToString(System.Globalization.CultureInfo.InvariantCulture)],
-            fixture.Root,
-            TimeSpan.FromSeconds(10),
-            4096);
-        Assert.Equal(0, signal.ExitCode);
-        Assert.True(process.WaitForExit(10_000));
+            Assert.True(SpinWait.SpinUntil(
+                () => fixture.HasRecordedProcessCandidate(detached.Value),
+                TimeSpan.FromSeconds(10)),
+                "supervisor did not record the session-changing descendant");
 
-        Assert.True(SpinWait.SpinUntil(
-            () => !ProcessExists(detached),
-            TimeSpan.FromSeconds(10)));
-        Assert.False(ProcessExists(detached));
+            File.WriteAllText(fixture.DetachedRelease, string.Empty, new UTF8Encoding(false));
+            Assert.True(SpinWait.SpinUntil(
+                () => !ProcessExists(detachedParent) && ProcessExists(detached.Value),
+                TimeSpan.FromSeconds(10)),
+                "detached child did not outlive its helper parent");
+
+            var signal = BoundedProcessRunner.Run(
+                "/bin/kill",
+                ["-TERM", process.Id.ToString(System.Globalization.CultureInfo.InvariantCulture)],
+                fixture.Root,
+                TimeSpan.FromSeconds(10),
+                4096);
+            Assert.Equal(0, signal.ExitCode);
+            Assert.True(SpinWait.SpinUntil(
+                () => process.HasExited,
+                TimeSpan.FromSeconds(10)),
+                "supervisor did not exit after SIGTERM");
+            Assert.True(SpinWait.SpinUntil(
+                () => !ProcessExists(detached.Value),
+                TimeSpan.FromSeconds(10)),
+                "recorded session-changing descendant survived supervisor termination");
+        }
+        finally
+        {
+            TerminateForTestCleanup(process);
+            if (detached.HasValue && ProcessExists(detached.Value))
+            {
+                _ = BoundedProcessRunner.Run(
+                    "/bin/kill",
+                    ["-KILL", detached.Value.ToString(
+                        System.Globalization.CultureInfo.InvariantCulture)],
+                    fixture.Root,
+                    TimeSpan.FromSeconds(5),
+                    4096);
+            }
+        }
     }
 
     [Fact]
@@ -532,14 +571,57 @@ public sealed class ReportSupervisorScriptTests
             TimeSpan.FromSeconds(5),
             4096);
         if (result.ExitCode != 0) return false;
-        var state = BoundedProcessRunner.Run(
-            "/bin/ps",
-            ["-o", "stat=", "-p", pid.ToString(System.Globalization.CultureInfo.InvariantCulture)],
-            Directory.GetCurrentDirectory(),
-            TimeSpan.FromSeconds(5),
-            4096);
-        return state.ExitCode == 0
-            && !Encoding.UTF8.GetString(state.StandardOutput).TrimStart()
-                .StartsWith('Z');
+        if (Directory.Exists("/proc"))
+        {
+            try
+            {
+                var stat = File.ReadAllText(Path.Combine(
+                    "/proc",
+                    pid.ToString(System.Globalization.CultureInfo.InvariantCulture),
+                    "stat"));
+                var commandEnd = stat.LastIndexOf(')');
+                return commandEnd < 0
+                    || commandEnd + 2 >= stat.Length
+                    || stat[commandEnd + 2] is not ('Z' or 'X');
+            }
+            catch (IOException)
+            {
+                return true;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return true;
+            }
+        }
+        try
+        {
+            using var process = Process.GetProcessById(pid);
+            return !process.HasExited;
+        }
+        catch (ArgumentException)
+        {
+            return false;
+        }
+        catch (InvalidOperationException)
+        {
+            return true;
+        }
+    }
+
+    private static void TerminateForTestCleanup(Process process)
+    {
+        try
+        {
+            if (!process.HasExited) process.Kill(entireProcessTree: true);
+            _ = process.WaitForExit(5_000);
+        }
+        catch (InvalidOperationException)
+        {
+            // The process exited concurrently with cleanup.
+        }
+        catch (System.ComponentModel.Win32Exception)
+        {
+            // The detached PID fallback below remains available to the test.
+        }
     }
 }
