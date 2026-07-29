@@ -14,6 +14,7 @@ internal static class DigestionReceiptInspector
     internal static DigestionReceiptInspection Inspect(
         DigestionLedgerEntry entry,
         DigestionReceiptAlignment alignment,
+        DigestionLedgerEntry? baselineEntry,
         RepositorySnapshot snapshot,
         LeanAxiomReport leanReport,
         IReadOnlyDictionary<RepoPath, TruthNode> nodes,
@@ -63,6 +64,7 @@ internal static class DigestionReceiptInspector
         var coverage = VerifyCoverageReceipts(entry, existingTargets, gaps, findings);
         var scribe = VerifyScribeReceipts(
             entry,
+            baselineEntry,
             snapshot,
             scribeAttestation,
             verifiedScribeEmissions,
@@ -286,6 +288,7 @@ internal static class DigestionReceiptInspector
 
     private static bool VerifyScribeReceipts(
         DigestionLedgerEntry entry,
+        DigestionLedgerEntry? baselineEntry,
         RepositorySnapshot snapshot,
         ScribeEmissionAttestation attestation,
         VerifiedScribeEmissions? verifiedEmissions,
@@ -321,7 +324,9 @@ internal static class DigestionReceiptInspector
             {
                 verified = verifiedRecord;
             }
-            else
+            else if (verifiedEmissions is not null
+                || !hasReceipt
+                || !HasBaselineScribeCapability(entry, baselineEntry, gid, receipt!))
             {
                 gaps.Add(new DigestionGap("scribe-emission-unverified", gid));
                 complete = false;
@@ -381,6 +386,37 @@ internal static class DigestionReceiptInspector
         }
 
         return complete;
+    }
+
+    private static bool HasBaselineScribeCapability(
+        DigestionLedgerEntry entry,
+        DigestionLedgerEntry? baselineEntry,
+        string gid,
+        DigestionScribeReceipt receipt)
+    {
+        if (baselineEntry is null
+            || baselineEntry.ProjectedStatus.Migration != DigestionMigrationState.Absorbed
+            || baselineEntry.ProjectedStatus.Truth is not (
+                DigestionTruthState.Closed or DigestionTruthState.Tail)
+            || !baselineEntry.CoverageGids.Contains(gid, StringComparer.Ordinal))
+        {
+            return false;
+        }
+
+        var currentCoverage = entry.Receipts.Coverage
+            .Where(item => string.Equals(item.Gid, gid, StringComparison.Ordinal))
+            .ToArray();
+        var baselineCoverage = baselineEntry.Receipts.Coverage
+            .Where(item => string.Equals(item.Gid, gid, StringComparison.Ordinal))
+            .ToArray();
+        var baselineScribe = baselineEntry.Receipts.Scribe
+            .Where(item => string.Equals(item.Gid, gid, StringComparison.Ordinal))
+            .ToArray();
+        return currentCoverage.Length == 1
+            && baselineCoverage.Length == 1
+            && baselineCoverage[0] == currentCoverage[0]
+            && baselineScribe.Length == 1
+            && baselineScribe[0] == receipt;
     }
 
     private static Dictionary<string, T> UniqueByGid<T>(

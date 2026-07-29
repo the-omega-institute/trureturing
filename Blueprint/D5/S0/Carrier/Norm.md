@@ -51,3 +51,15 @@ The norm-Euclidean structure supplies `IsPrincipalIdealRing GoldenInt` through m
 Mathlib's generic principal-ideal-domain instance then supplies `UniqueFactorizationMonoid GoldenInt`; the formal node records this consequence as `golden_int_is_ufd` without declaring redundant specialized instances.
 
 This result does not classify the units of `GoldenInt`. The converse assertion that every norm-unit is a signed integral power of `phi` remains open in `D5-T0008`.
+
+**Theorem 1.4 (The golden norm is power-multiplicative).**
+
+$\forall x\in\mathbb{Z}[\varphi],\ \forall n\in\mathbb{N},\ \operatorname{norm}(x^{n})=\operatorname{norm}(x)^{n}$
+
+*Proof.* Machine-checked in Lean as `D5/S0/Carrier/NormPowers.norm_pow` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The golden norm is a monoid homomorphism from `GoldenInt` to the integers, packaged as `normMonoidHom` out of its unit and multiplicativity laws. The norm of a power is therefore the same power of the norm, obtained directly as `map_pow normMonoidHom` rather than by a coordinate induction.

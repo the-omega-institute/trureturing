@@ -216,6 +216,29 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 scribeEmissionVerifier,
                 arguments);
 
+    public CommandResult CoverAtom(IReadOnlyList<string> arguments) =>
+        scribeEmissionVerifier is null
+            ? new CommandResult(
+                false,
+                string.Empty,
+                "COVER_INVALID Scribe emission verifier is unavailable\n")
+            : CoverAtomCommand.Run(
+                repositoryRoot,
+                repository,
+                leanReportSource,
+                scribeEmissionVerifier,
+                arguments);
+
+    public CommandResult EmitFormalizationReceipt(IReadOnlyList<string> arguments) =>
+        EmitFormalizationReceiptCommand.Run(
+            repositoryRoot,
+            repository,
+            leanReportSource,
+            arguments);
+
+    public ExplicitCommandResult Papergen(IReadOnlyList<string> arguments) =>
+        PapergenCommand.Run(repositoryRoot, arguments);
+
     public CommandResult Route(IReadOnlyList<string> arguments)
     {
         try

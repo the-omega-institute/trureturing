@@ -77,6 +77,7 @@ internal static class DigestionStatusEvaluator
             .Select(entry => Inspect(
                 entry,
                 alignment.AlignmentFor(entry.AtomId),
+                null,
                 snapshot,
                 emptyLeanReport,
                 emptyTruthNodes,
@@ -113,6 +114,11 @@ internal static class DigestionStatusEvaluator
             baselineDocument,
             DigestionAlignmentMode.Admission);
         findings.AddRange(alignment.Findings);
+        var baselineEntries = (baselineDocument?.RequireDigestionEntries()
+                ?? ImmutableArray<DigestionLedgerEntry>.Empty)
+            .GroupBy(static entry => entry.AtomId, StringComparer.Ordinal)
+            .Where(static group => group.Count() == 1)
+            .ToDictionary(static group => group.Key, static group => group.Single(), StringComparer.Ordinal);
 
         var dag = AcyclicTruthDag.Build(snapshot, lean) switch
         {
@@ -126,6 +132,7 @@ internal static class DigestionStatusEvaluator
             Inspect(
                 entry,
                 alignment.AlignmentFor(entry.AtomId),
+                baselineEntries.GetValueOrDefault(entry.AtomId),
                 snapshot,
                 lean.Report,
                 nodes,
@@ -187,6 +194,7 @@ internal static class DigestionStatusEvaluator
     private static EntryWork Inspect(
         DigestionLedgerEntry entry,
         DigestionReceiptAlignment alignment,
+        DigestionLedgerEntry? baselineEntry,
         RepositorySnapshot snapshot,
         LeanAxiomReport leanReport,
         IReadOnlyDictionary<RepoPath, TruthNode> nodes,
@@ -197,6 +205,7 @@ internal static class DigestionStatusEvaluator
         var inspection = DigestionReceiptInspector.Inspect(
             entry,
             alignment,
+            baselineEntry,
             snapshot,
             leanReport,
             nodes,

@@ -499,6 +499,7 @@ public sealed partial class DigestionLedgerTests
         var inspection = DigestionReceiptInspector.Inspect(
             entry,
             DigestionReceiptAlignment.Seen,
+            baselineEntry: null,
             Snapshot(
                 ("docs/source.md", source),
                 CasFile(atom),

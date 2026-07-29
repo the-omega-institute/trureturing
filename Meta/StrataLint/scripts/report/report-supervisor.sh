@@ -56,6 +56,7 @@ LOCK_INITIALIZATION_GRACE_SECONDS=5
 TMP_ROOT=""
 CHILD_PID=""
 PROCESS_GROUP_ID=""
+PROCESS_CANDIDATES_FILE=""
 STDOUT_RELAY_PID=""
 STDERR_RELAY_PID=""
 SLOT_DIR=""
@@ -81,8 +82,10 @@ mkdir -p "$SCRATCH"
 RUN_STDOUT="$TMP_ROOT/stdout.pipe"
 RUN_STDERR="$TMP_ROOT/stderr.pipe"
 RUN_MARKER="$TMP_ROOT/process.marker"
+PROCESS_CANDIDATES_FILE="$TMP_ROOT/process-candidates"
 mkfifo "$RUN_STDOUT" "$RUN_STDERR"
 : > "$RUN_MARKER"
+: > "$PROCESS_CANDIDATES_FILE"
 if [[ ! -d /proc ]] && ! command -v lsof >/dev/null 2>&1; then
   echo "report-supervisor: lsof is required for process supervision on this host" >&2
   exit 2
@@ -307,10 +310,55 @@ signal_marker_processes() {
   done
 }
 
+remember_process_candidate() {
+  local pid="$1"
+  local identity=""
+  [[ "$pid" =~ ^[1-9][0-9]*$ ]] || return 0
+  identity="$(process_start_identity "$pid")" || return 0
+  [[ -n "$identity" ]] || return 0
+  grep -Fqx -- "$pid|$identity" "$PROCESS_CANDIDATES_FILE" 2>/dev/null \
+    || printf '%s|%s\n' "$pid" "$identity" >> "$PROCESS_CANDIDATES_FILE"
+}
+
+record_process_candidates() {
+  local pid
+  while IFS= read -r pid; do
+    remember_process_candidate "$pid"
+  done
+}
+
+record_supervised_processes() {
+  {
+    if [[ -n "$CHILD_PID" ]]; then collect_process_tree "$CHILD_PID"; fi
+    marker_processes
+  } | sort -un | record_process_candidates
+}
+
+signal_recorded_processes() {
+  local signal="$1"
+  local pid identity current_identity
+  [[ -f "$PROCESS_CANDIDATES_FILE" ]] || return 0
+  while IFS='|' read -r pid identity; do
+    [[ "$pid" =~ ^[1-9][0-9]*$ \
+      && -n "$identity" \
+      && "$pid" != "$$" \
+      && "$pid" != "$STDOUT_RELAY_PID" \
+      && "$pid" != "$STDERR_RELAY_PID" ]] || continue
+    current_identity="$(process_start_identity "$pid")" || continue
+    [[ "$current_identity" == "$identity" ]] || continue
+    kill "-$signal" "$pid" >/dev/null 2>&1 || true
+  done < <(sort -t '|' -k1,1nr "$PROCESS_CANDIDATES_FILE")
+}
+
 sample_process_tree() {
-  local pid rss fd
+  local pid rss fd members
   local rss_total=0
   local fd_total=0
+  members="$({
+    if [[ -n "$CHILD_PID" ]]; then collect_process_tree "$CHILD_PID"; fi
+    marker_processes
+  } | sort -un)"
+  record_process_candidates <<< "$members"
   while IFS= read -r pid; do
     [[ -n "$pid" \
       && "$pid" != "$STDOUT_RELAY_PID" \
@@ -325,19 +373,20 @@ sample_process_tree() {
       fd=0
     fi
     fd_total=$((fd_total + fd))
-  done < <({
-    if [[ -n "$CHILD_PID" ]]; then collect_process_tree "$CHILD_PID"; fi
-    marker_processes
-  } | sort -un)
+  done <<< "$members"
   if [[ "$rss_total" -gt "$RSS_PEAK_KB" ]]; then RSS_PEAK_KB="$rss_total"; fi
   if [[ "$fd_total" -gt "$FD_PEAK" ]]; then FD_PEAK="$fd_total"; fi
 }
 
 terminate_process_group() {
   local group_id="$1"
+  record_supervised_processes
+  signal_recorded_processes TERM
   signal_marker_processes TERM
   kill -TERM -- "-$group_id" >/dev/null 2>&1 || true
   sleep 0.2
+  record_supervised_processes
+  signal_recorded_processes KILL
   signal_marker_processes KILL
   kill -KILL -- "-$group_id" >/dev/null 2>&1 || true
 }

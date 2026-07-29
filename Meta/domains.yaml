@@ -1,4 +1,7 @@
 domains:
+  Analytic:
+    stratum: S3
+    definition: Mellin-transform analysis reconstructing completed zeta from theta-kernel tails.
   Arith:
     stratum: S3
     definition: Elementary integer arithmetic — prime factorization, divisibility, and modular residue structure — used as foundations by the golden-integer and analytic strata.
@@ -11,12 +14,18 @@ domains:
   Conventions:
     stratum: S0
     definition: Canonical W-digit and notation conventions used by later strata.
+  Deficit:
+    stratum: S1
+    definition: Normalized beta deficits and signed carry accounting of golden addition.
   Depth:
     stratum: S1
     definition: Finite-resolution depth combining logarithmic scale, Zeckendorf support size, and quantized phase.
   Digit:
     stratum: S1
     definition: Raw and canonical W-digit representations and local value-preserving carry rules.
+  Dynamics:
+    stratum: S1
+    definition: Visible-hidden dynamics of phase trajectories, throat transitions, and jump cocycles.
   Fourier:
     stratum: S3
     definition: Entire analytic extensions of the Weil Fourier-Laplace transform.
