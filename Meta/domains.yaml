@@ -14,6 +14,9 @@ domains:
   Conventions:
     stratum: S0
     definition: Canonical W-digit and notation conventions used by later strata.
+  Deficit:
+    stratum: S1
+    definition: Normalized beta deficits and signed carry accounting of golden addition.
   Depth:
     stratum: S1
     definition: Finite-resolution depth combining logarithmic scale, Zeckendorf support size, and quantized phase.
