@@ -14,3 +14,5 @@
 - `Quad/`: parameterized quadratic presentation rings and actual orders
   carrying the digit-gas root-unit criteria.
 - `Scale/`: real embeddings and logarithmic scales of golden integers.
+
+- 2026-07-30 SL-003 分裂记录:Digit 桶达 12 上限;按"只裂不迁"新增子疆域桶 `Deficit/`(组名已入词表),存量 Digit 模块地址全数保留;首件 `Deficit/DeficitInteger.lean`。
