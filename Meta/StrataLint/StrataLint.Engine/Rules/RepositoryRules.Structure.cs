@@ -53,29 +53,46 @@ internal static partial class RepositoryRules
         return findings.ToImmutable();
     }
 
+    // SL-003 capacity limits. These are the single enforcement source shared by
+    // the admission rule (Capacity, below) and the ArchitectureTests CapacityPolicy
+    // dotnet-test net, so both agree on the exact thresholds with no drift.
+    internal const int ArtifactHardLineLimit = 800;
+
+    internal const int ArtifactSoftLineLimit = 600;
+
+    internal const int DirectoryFileLimit = 12;
+
+    // SL-003 capacity exclusions: theory inputs, the Lake manifest, the backfill
+    // inventory, and canonical CAS blobs are not artifacts the capacity pressure
+    // rule bounds. Single source shared with the CapacityPolicy dotnet-test net.
+    internal static bool IsCapacityExcluded(string path) =>
+        path.StartsWith("docs/develop/", StringComparison.Ordinal)
+        || string.Equals(path, "lake-manifest.json", StringComparison.Ordinal)
+        || string.Equals(path, BackfillInventoryLoader.RelativePath, StringComparison.Ordinal)
+        || DigestionCasStore.IsCanonicalPath(path);
+
+    // The canonical artifact line count: newline-delimited lines, not counting a
+    // trailing terminator. Shared with CapacityPolicy so both nets agree exactly.
+    internal static int CountArtifactLines(string text) =>
+        text.Split('\n').Length - (text.EndsWith('\n') ? 1 : 0);
+
     private static ImmutableArray<RuleFinding> Capacity(RuleEvaluationContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         var directories = new Dictionary<string, int>(StringComparer.Ordinal);
         foreach (var (path, file) in context.Current.Files)
         {
-            if (path.Value.StartsWith("docs/develop/", StringComparison.Ordinal)
-                || string.Equals(path.Value, "lake-manifest.json", StringComparison.Ordinal)
-                || string.Equals(
-                    path.Value,
-                    BackfillInventoryLoader.RelativePath,
-                    StringComparison.Ordinal)
-                || DigestionCasStore.IsCanonicalPath(path.Value))
+            if (IsCapacityExcluded(path.Value))
             {
                 continue;
             }
 
-            var lineCount = file.Text.Split('\n').Length - (file.Text.EndsWith('\n') ? 1 : 0);
-            if (lineCount > 800)
+            var lineCount = CountArtifactLines(file.Text);
+            if (lineCount > ArtifactHardLineLimit)
             {
                 findings.Add(new RuleFinding(path.Value, "artifact exceeds 800 lines"));
             }
-            else if (lineCount > 600)
+            else if (lineCount > ArtifactSoftLineLimit)
             {
                 findings.Add(new RuleFinding(
                     path.Value,
@@ -89,7 +106,7 @@ internal static partial class RepositoryRules
         }
 
         findings.AddRange(directories
-            .Where(static item => item.Value > 12)
+            .Where(static item => item.Value > DirectoryFileLimit)
             .Select(static item => new RuleFinding(
                 item.Key,
                 $"directory contains {item.Value} files (maximum 12)")));
