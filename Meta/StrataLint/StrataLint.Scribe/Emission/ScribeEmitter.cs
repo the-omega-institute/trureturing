@@ -21,7 +21,8 @@ public static class ScribeEmitter
             output,
             error,
             LeanCompiledArtifactReports.InspectRepository,
-            validateRepository: true).ExitCode;
+            validateRepository: true,
+            tolerateAbsentDocuments: false).ExitCode;
 
     internal static int Emit(
         string repositoryRoot,
@@ -37,7 +38,8 @@ public static class ScribeEmitter
             output,
             error,
             _ => leanReport,
-            validateRepository: false).ExitCode;
+            validateRepository: false,
+            tolerateAbsentDocuments: false).ExitCode;
     }
 
     internal static int Emit(
@@ -55,7 +57,8 @@ public static class ScribeEmitter
             output,
             error,
             _ => leanReport,
-            validateRepository).ExitCode;
+            validateRepository,
+            tolerateAbsentDocuments: false).ExitCode;
     }
 
     internal static VerifiedScribeEmissions? Verify(
@@ -70,7 +73,8 @@ public static class ScribeEmitter
             TextWriter.Null,
             error,
             _ => leanReport,
-            validateRepository: true).Verification;
+            validateRepository: true,
+            tolerateAbsentDocuments: true).Verification;
     }
 
     private static ScribeEmissionRun Run(
@@ -79,7 +83,8 @@ public static class ScribeEmitter
         TextWriter output,
         TextWriter error,
         Func<string, LeanAxiomReport> loadLeanReport,
-        bool validateRepository)
+        bool validateRepository,
+        bool tolerateAbsentDocuments)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(output);
@@ -89,11 +94,41 @@ public static class ScribeEmitter
         try
         {
             var leanReport = loadLeanReport(repositoryRoot);
+
+            // Emission (make emit / emit-check) runs against the binary's own tree, where every document's
+            // .scribe.cs source must be present; a missing source there is a real fault, so the strict path
+            // keeps the full DocumentDefinitions.All (an absent source dangling-fails or "emit failed").
+            //
+            // Capability verification (Verify), by contrast, judges an arbitrary tree that may predate some
+            // of this binary's documents. A document this binary knows about is only materialized in that
+            // tree when its .scribe.cs source is present. During conservative-extension replay the candidate
+            // harness re-judges the baseline tree, which lacks a newly added Blueprint's source entirely;
+            // that document is a not-yet-materialized protected-surface addition (SL-022 routes its
+            // .scribe.cs to Component C), not part of this tree — so it must not be dangling-flagged, read,
+            // attested, or counted, which would make the candidate block a tree the baseline admits.
+            // A document whose source IS present stays in scope: a present source with a missing or
+            // mismatched .md is a real out-of-date/corruption and still voids the capability below
+            // (deleted or forged base-owned emissions are caught locally, not laundered through this skip).
+            var definitions = tolerateAbsentDocuments
+                ? DocumentDefinitions.All
+                    .Where(definition => File.Exists(Path.Combine(
+                        repositoryRoot,
+                        ScribeEmissionAttestation.DefinitionPath(definition.Document.Header.Gid.Value))))
+                    .ToArray()
+                : [.. DocumentDefinitions.All];
+            if (tolerateAbsentDocuments && definitions.Length == 0 && !DocumentDefinitions.All.IsEmpty)
+            {
+                // A tree owning zero of this binary's documents is not an older world of this
+                // repository at all (wrong root, gutted checkout): verifying it vacuously would
+                // hide the fault behind distant digestion gaps — fail loud at the source instead.
+                throw new InvalidOperationException(
+                    $"no Scribe definition sources found under {repositoryRoot}");
+            }
             if (validateRepository)
             {
                 var findings = DescribeRepositoryValidator.Validate(
                     repositoryRoot,
-                    DocumentDefinitions.All.Select(static definition => definition.Document),
+                    definitions.Select(static definition => definition.Document),
                     leanReport);
                 if (!findings.IsEmpty)
                 {
@@ -107,7 +142,7 @@ public static class ScribeEmitter
                 }
             }
 
-            return EmitVerified(repositoryRoot, check, output, error, leanReport);
+            return EmitVerified(repositoryRoot, check, output, error, leanReport, definitions);
         }
         catch (Exception exception) when (
             exception is InvalidOperationException
@@ -126,14 +161,15 @@ public static class ScribeEmitter
         bool check,
         TextWriter output,
         TextWriter error,
-        LeanAxiomReport leanReport)
+        LeanAxiomReport leanReport,
+        IReadOnlyList<DocumentDefinition> definitions)
     {
         var rendered = new List<(DocumentDefinition Definition, byte[] Bytes)>();
         var attestations = new List<ScribeEmissionRecord>();
         var declarationReferences = new HashSet<string>(StringComparer.Ordinal);
         var describeLatexRecords = new List<ScribeDescribeLatexRecord>();
         var citations = LibraryNoteCatalog.Load(repositoryRoot).Citations;
-        foreach (var definition in DocumentDefinitions.All)
+        foreach (var definition in definitions)
         {
             var first = CanonicalMarkdownWriter.Write(
                 definition.Document,
@@ -169,7 +205,11 @@ public static class ScribeEmitter
 
         var attestationBytes = ScribeEmissionAttestation.Write(attestations).ToArray();
 
-        var differences = 0;
+        // documentDifferences counts only base-owned emissions (documents compiled into this binary's
+        // DocumentDefinitions.All) whose render disagrees with the on-disk .md. When this binary is the
+        // dev-baseline harness judging a candidate, DocumentDefinitions.All is exactly the base-owned set;
+        // a base-owned emission mismatch is therefore real corruption and must void the capability.
+        var documentDifferences = 0;
         var writes = 0;
         foreach (var (definition, expected) in rendered)
         {
@@ -182,7 +222,7 @@ public static class ScribeEmitter
 
             if (check)
             {
-                differences++;
+                documentDifferences++;
                 error.WriteLine($"out of date: {definition.RelativePath.Value}");
                 continue;
             }
@@ -195,6 +235,13 @@ public static class ScribeEmitter
             output.WriteLine($"wrote: {definition.RelativePath.Value}");
         }
 
+        // The attestation covers every on-disk Blueprint scribe, including candidate-only documents this
+        // binary cannot render (their .scribe.cs is absent from DocumentDefinitions.All). A candidate that
+        // adds such a document produces an attestation this base binary cannot reproduce byte-for-byte, yet
+        // that is a protected-surface signal (SL-022 routes the new .scribe.cs to Component C), not base-owned
+        // corruption. So the attestation diff still fails the emit --check exit code (kept strict below) but
+        // must not, on its own, void the per-document capability for the base-owned documents that verified.
+        var attestationOutOfDate = false;
         var attestationPath = Path.Combine(repositoryRoot, ScribeEmissionAttestation.RelativePath);
         var currentAttestation = File.Exists(attestationPath)
             ? File.ReadAllBytes(attestationPath)
@@ -203,7 +250,7 @@ public static class ScribeEmitter
         {
             if (check)
             {
-                differences++;
+                attestationOutOfDate = true;
                 error.WriteLine($"out of date: {ScribeEmissionAttestation.RelativePath}");
             }
             else
@@ -216,9 +263,10 @@ public static class ScribeEmitter
             }
         }
 
+        var differences = documentDifferences + (attestationOutOfDate ? 1 : 0);
         if (check && differences == 0)
         {
-            output.WriteLine($"checked: {DocumentDefinitions.All.Length} blueprint(s)");
+            output.WriteLine($"checked: {definitions.Count} blueprint(s)");
             output.WriteLine($"checked: {ScribeEmissionAttestation.RelativePath}");
         }
         else if (!check)
@@ -228,7 +276,7 @@ public static class ScribeEmitter
 
         return new ScribeEmissionRun(
             differences == 0 ? 0 : 1,
-            check && differences == 0
+            check && documentDifferences == 0
                 ? VerifiedScribeEmissions.Create(
                     attestations,
                     declarationReferences,

@@ -196,6 +196,13 @@ consumed_by = ["DigestionCasStore"]
 verified_by = ["DigestionCasStore"]
 
 [[files]]
+pattern = "Meta/Digestion/formalizations/*.v1.json"
+kind = "ledger"
+produced_by = "EmitFormalizationReceiptCommand"
+consumed_by = ["CoverAtomCommand"]
+verified_by = ["DigestionFormalizationReceipt"]
+
+[[files]]
 pattern = "Meta/FILEMAP.toml"
 kind = "data"
 produced_by = "none"
@@ -334,6 +341,13 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["RegistryLoader"]
 verified_by = ["RegistryLoader"]
+
+[[files]]
+pattern = "Papers/recipes/**"
+kind = "data"
+produced_by = "none"
+consumed_by = ["PapergenCommand"]
+verified_by = ["PapergenCommand"]
 
 [[files]]
 pattern = "README.md"

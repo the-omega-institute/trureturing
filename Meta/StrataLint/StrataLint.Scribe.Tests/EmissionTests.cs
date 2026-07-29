@@ -1,5 +1,6 @@
 using System.Text;
 using System.Security.Cryptography;
+using StrataLint.Engine;
 
 namespace StrataLint.Scribe.Tests;
 
@@ -284,6 +285,226 @@ public sealed class EmissionTests
     }
 
     [Fact]
+    public void VerificationToleratesCandidateOnlyAttestationEntry()
+    {
+        var root = Path.Combine(
+            Path.GetTempPath(),
+            "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+
+        try
+        {
+            var report = LeanReportFixture.ForDocuments(
+                DocumentDefinitions.All.Select(static definition => definition.Document));
+            PrepareEmittedRepository(root, report);
+
+            var baseline = ScribeEmitter.Verify(root, TextWriter.Null, report);
+            Assert.NotNull(baseline);
+
+            // A candidate that adds a brand-new Blueprint scribe emits an attestation entry for a
+            // document GID that is absent from the base binary's DocumentDefinitions.All. The base
+            // binary cannot render that candidate-only document, so its recomputed attestation omits
+            // the entry and byte-differs from the candidate on-disk attestation. Every base-owned
+            // emission remains byte-identical, so the capability must still vouch for the base-owned
+            // documents rather than collapse to null (which would un-absorb every base-owned atom).
+            var attestationPath = Path.Combine(root, ScribeEmitter.AttestationRelativePath);
+            var original = File.ReadAllText(attestationPath, Encoding.UTF8);
+            var injected = InjectCandidateOnlyAttestationEntry(original);
+            Assert.NotEqual(original, injected);
+            File.WriteAllText(attestationPath, injected, new UTF8Encoding(false));
+
+            var error = new StringWriter();
+            var verification = ScribeEmitter.Verify(root, error, report);
+
+            Assert.NotNull(verification);
+            Assert.True(verification!.ReferencesDeclaration(
+                "D5/S0/Carrier/GoldenRatio.golden_ratio_spec"));
+            Assert.True(verification.ReferencesDeclaration(
+                "D5/S1/Scale/FibonacciEigen.fibonacci_substitution_spec"));
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Fact]
+    public void VerificationSkipsBinaryOnlyDocumentAbsentFromTree()
+    {
+        var root = Path.Combine(
+            Path.GetTempPath(),
+            "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+
+        try
+        {
+            var report = LeanReportFixture.ForDocuments(
+                DocumentDefinitions.All.Select(static definition => definition.Document));
+            PrepareEmittedRepository(root, report);
+
+            // The candidate harness compiles a newer document set than the baseline tree it
+            // replays during conservative verification. A compiled document whose .scribe.cs
+            // source is absent from the evaluated tree belongs to a world that tree has not
+            // adopted: the verifier must skip it and still vouch for every document the tree
+            // does own. Collapsing to null would un-absorb every base-owned atom of the older
+            // tree — the exact mirror of the candidate-only tolerance above. Deleting a
+            // base-owned source cannot launder a forgery through this skip: receipts that
+            // reference the absent document gap out downstream and the deletion itself is a
+            // protected-surface change.
+            var victim = DocumentDefinitions.All.Single(static definition =>
+                definition.Document.Header.Gid.Value == "D5/S1/Scale/FibonacciEigen");
+            var victimSourcePath = Path.Combine(root, victim.RelativePath.Value[..^3] + ".scribe.cs");
+            var victimEmissionPath = Path.Combine(root, victim.RelativePath.Value);
+            var victimEntry =
+                "{\"definition_path\": \"Blueprint/D5/S1/Scale/FibonacciEigen.scribe.cs\", "
+                + "\"definition_sha256\": \"" + Sha256(File.ReadAllBytes(victimSourcePath)) + "\", "
+                + "\"emission_path\": \"Blueprint/D5/S1/Scale/FibonacciEigen.md\", "
+                + "\"emission_sha256\": \"" + Sha256(File.ReadAllBytes(victimEmissionPath)) + "\", "
+                + "\"gid\": \"D5/S1/Scale/FibonacciEigen\"}";
+            File.Delete(victimSourcePath);
+            File.Delete(victimEmissionPath);
+            var attestationPath = Path.Combine(root, ScribeEmitter.AttestationRelativePath);
+            var original = File.ReadAllText(attestationPath, Encoding.UTF8);
+            var pruned = original.Replace(victimEntry + ", ", string.Empty, StringComparison.Ordinal);
+            Assert.NotEqual(original, pruned);
+            File.WriteAllText(attestationPath, pruned, new UTF8Encoding(false));
+
+            var error = new StringWriter();
+            var verification = ScribeEmitter.Verify(root, error, report);
+
+            Assert.NotNull(verification);
+            Assert.Equal(string.Empty, error.ToString());
+            Assert.True(verification!.ReferencesDeclaration(
+                "D5/S0/Carrier/GoldenRatio.golden_ratio_spec"));
+            Assert.False(verification.ReferencesDeclaration(
+                "D5/S1/Scale/FibonacciEigen.fibonacci_substitution_spec"));
+            Assert.False(verification.TryGet("D5/S1/Scale/FibonacciEigen", out _));
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Fact]
+    public void VerificationRejectsForgedBaseOwnedEmissionDressedAsCandidateOnly()
+    {
+        var root = Path.Combine(
+            Path.GetTempPath(),
+            "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+
+        try
+        {
+            var report = LeanReportFixture.ForDocuments(
+                DocumentDefinitions.All.Select(static definition => definition.Document));
+            PrepareEmittedRepository(root, report);
+
+            // Corrupt a base-owned emission whose .scribe.cs is compiled into the base binary, then
+            // disguise it as an innocent candidate-only addition: patch the forged doc's attestation
+            // hash AND splice in a candidate-only entry. The base binary still renders the true bytes,
+            // so per-document rendering must catch the corruption and refuse the whole capability;
+            // base-owned corruption must never be laundered through the candidate-only tolerance.
+            var emissionPath = Path.Combine(root, DocumentDefinitions.All[0].RelativePath.Value);
+            var originalEmission = File.ReadAllBytes(emissionPath);
+            var forgedEmission = Encoding.UTF8.GetBytes("# forged emission\n");
+            File.WriteAllBytes(emissionPath, forgedEmission);
+            var attestationPath = Path.Combine(root, ScribeEmitter.AttestationRelativePath);
+            var attestation = File.ReadAllText(attestationPath, Encoding.UTF8)
+                .Replace(Sha256(originalEmission), Sha256(forgedEmission), StringComparison.Ordinal);
+            attestation = InjectCandidateOnlyAttestationEntry(attestation);
+            File.WriteAllText(attestationPath, attestation, new UTF8Encoding(false));
+
+            var error = new StringWriter();
+            var verification = ScribeEmitter.Verify(root, error, report);
+
+            Assert.Null(verification);
+            Assert.Contains("out of date", error.ToString(), StringComparison.Ordinal);
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Fact]
+    public void VerificationToleratesDocumentAbsentFromEvaluatedTree()
+    {
+        var root = Path.Combine(
+            Path.GetTempPath(),
+            "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+
+        try
+        {
+            var report = LeanReportFixture.ForDocuments(
+                DocumentDefinitions.All.Select(static definition => definition.Document));
+            PrepareEmittedRepository(root, report);
+
+            // Mirror the conservative-extension baseline-tree replay: the candidate harness knows a
+            // document (compiled into DocumentDefinitions.All) whose .scribe.cs source, .md emission, and
+            // Lean declaration are all absent from the evaluated (older) tree — a not-yet-materialized
+            // protected-surface addition. The base binary that already admitted this tree never saw the
+            // document, so voiding the capability would make the candidate block what the baseline admits.
+            var absent = DocumentDefinitions.All[^1];
+            Assert.NotEqual("D5/S0/Carrier/GoldenRatio", absent.Document.Header.Gid.Value);
+            Assert.NotEqual("D5/S1/Scale/FibonacciEigen", absent.Document.Header.Gid.Value);
+            File.Delete(Path.Combine(root, absent.RelativePath.Value));
+            File.Delete(Path.Combine(root, absent.RelativePath.Value[..^3] + ".scribe.cs"));
+
+            var reportWithoutAbsent = LeanReportFixture.ForDocuments(
+                DocumentDefinitions.All
+                    .Where(definition => definition != absent)
+                    .Select(static definition => definition.Document));
+
+            var error = new StringWriter();
+            var verification = ScribeEmitter.Verify(root, error, reportWithoutAbsent);
+
+            Assert.NotNull(verification);
+            Assert.True(verification!.ReferencesDeclaration(
+                "D5/S0/Carrier/GoldenRatio.golden_ratio_spec"));
+            Assert.True(verification.ReferencesDeclaration(
+                "D5/S1/Scale/FibonacciEigen.fibonacci_substitution_spec"));
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Fact]
+    public void VerificationRejectsMaterializedDocumentWithMissingEmission()
+    {
+        var root = Path.Combine(
+            Path.GetTempPath(),
+            "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+
+        try
+        {
+            var report = LeanReportFixture.ForDocuments(
+                DocumentDefinitions.All.Select(static definition => definition.Document));
+            PrepareEmittedRepository(root, report);
+
+            // A materialized document keeps its .scribe.cs source in the tree; a missing .md emission is
+            // then a deleted or out-of-date base-owned emission, not a candidate-only addition. It must
+            // still void the capability locally, never be laundered through the not-materialized skip.
+            var target = DocumentDefinitions.All[0];
+            File.Delete(Path.Combine(root, target.RelativePath.Value));
+
+            var error = new StringWriter();
+            var verification = ScribeEmitter.Verify(root, error, report);
+
+            Assert.Null(verification);
+            Assert.Contains("out of date", error.ToString(), StringComparison.Ordinal);
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Fact]
     public void CliRejectsAnythingOutsideClosedCommandsAndOptionalCheck()
     {
         var error = new StringWriter();
@@ -318,8 +539,53 @@ public sealed class EmissionTests
             $"missing Scribe definition for {path}"));
     }
 
+    private const string CandidateOnlyGid = "D5/S9/Candidate/PrimeFactorization";
+
     private static string Sha256(byte[] bytes) =>
         "sha256:" + Convert.ToHexStringLower(SHA256.HashData(bytes));
+
+    private static void PrepareEmittedRepository(string root, LeanAxiomReport report)
+    {
+        var repositoryRoot = FindRepositoryRoot();
+        foreach (var definition in DocumentDefinitions.All)
+        {
+            var relativeSource = definition.RelativePath.Value[..^3] + ".scribe.cs";
+            var destination = Path.Combine(root, relativeSource);
+            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+            // Deterministic CI builds map [CallerFilePath] to the /_/ source root,
+            // so fixture copies must resolve through the runtime repository root.
+            File.Copy(Path.Combine(repositoryRoot, relativeSource), destination);
+        }
+
+        foreach (var source in Directory.EnumerateFiles(
+                     Path.Combine(repositoryRoot, "D5"),
+                     "*.lean",
+                     SearchOption.AllDirectories))
+        {
+            var relative = Path.GetRelativePath(repositoryRoot, source);
+            var destination = Path.Combine(root, relative);
+            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+            File.Copy(source, destination);
+        }
+
+        CopyRepositoryLibrary(root);
+
+        if (ScribeEmitter.Emit(root, check: false, TextWriter.Null, TextWriter.Null, report) != 0)
+        {
+            throw new InvalidOperationException("fixture emission was not clean");
+        }
+    }
+
+    private static string InjectCandidateOnlyAttestationEntry(string attestation)
+    {
+        var entry =
+            "{\"definition_path\": \"Blueprint/" + CandidateOnlyGid + ".scribe.cs\", "
+            + "\"definition_sha256\": \"sha256:" + new string('a', 64) + "\", "
+            + "\"emission_path\": \"Blueprint/" + CandidateOnlyGid + ".md\", "
+            + "\"emission_sha256\": \"sha256:" + new string('b', 64) + "\", "
+            + "\"gid\": \"" + CandidateOnlyGid + "\"}, ";
+        return attestation.Replace("\"entries\": [", "\"entries\": [" + entry, StringComparison.Ordinal);
+    }
 
     private static void CopyRepositoryLibrary(string destinationRoot)
     {

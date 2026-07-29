@@ -20,6 +20,12 @@ internal interface ICliEnvironment
 
     CommandResult Ingest(IReadOnlyList<string> arguments);
 
+    CommandResult CoverAtom(IReadOnlyList<string> arguments);
+
+    CommandResult EmitFormalizationReceipt(IReadOnlyList<string> arguments);
+
+    ExplicitCommandResult Papergen(IReadOnlyList<string> arguments);
+
     CommandResult Route(IReadOnlyList<string> arguments);
 
     CommandResult RecordGolden(IReadOnlyList<string> arguments);
@@ -98,7 +104,7 @@ internal static class CliApplication
         if (arguments.Count == 0)
         {
             console.WriteError(
-                "USAGE: StrataLint c0-renew|check|clean-lanes|coverage|digest-status|echo-verify|ingest|golden-record|ledger-genesis|route|selftest|topology|worktree|ledger-append|ledger-reattest|perf-append|perf-report|verify-conservative|evaluate-conservative-corpus\n");
+                "USAGE: StrataLint c0-renew|check|clean-lanes|coverage|cover-atom|digest-status|echo-verify|emit-formalization-receipt|ingest|golden-record|ledger-genesis|papergen|route|selftest|topology|worktree|ledger-append|ledger-reattest|perf-append|perf-report|verify-conservative|evaluate-conservative-corpus\n");
             return 2;
         }
 
@@ -109,6 +115,9 @@ internal static class CliApplication
             "check" => RenderAdmission(environment.Check(tail), console),
             "clean-lanes" => RenderCommand(environment.CleanLanes(tail), console),
             "coverage" => RenderCommand(environment.Coverage(tail), console),
+            "cover-atom" => RenderCommand(environment.CoverAtom(tail), console),
+            "emit-formalization-receipt" =>
+                RenderCommand(environment.EmitFormalizationReceipt(tail), console),
             "digest-status" => RenderCommand(environment.DigestStatus(tail), console),
             "echo-verify" => RenderExplicit(environment.EchoVerify(tail), console),
             "ingest" => RenderCommand(environment.Ingest(tail), console),
@@ -118,6 +127,7 @@ internal static class CliApplication
             "ledger-genesis" => RenderCommand(environment.GenerateLedger(tail), console),
             "ledger-append" => RenderCommand(environment.AppendLedger(tail), console),
             "ledger-reattest" => RenderCommand(environment.ReattestLedger(tail), console),
+            "papergen" => RenderExplicit(environment.Papergen(tail), console),
             "perf-append" => RenderCommand(environment.AppendPerf(tail), console),
             "perf-report" => RenderCommand(environment.PerfReport(tail), console),
             "route" => RenderCommand(environment.Route(tail), console),

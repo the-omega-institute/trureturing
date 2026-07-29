@@ -114,6 +114,10 @@ IngestCommand --produces--> [Meta/Digestion/atoms/sha256/* | ledger]
 [Meta/Digestion/atoms/sha256/* | ledger] --consumed-by--> DigestionCasStore
 [Meta/Digestion/atoms/sha256/* | ledger] --verified-by--> DigestionCasStore
 
+EmitFormalizationReceiptCommand --produces--> [Meta/Digestion/formalizations/*.v1.json | ledger]
+[Meta/Digestion/formalizations/*.v1.json | ledger] --consumed-by--> CoverAtomCommand
+[Meta/Digestion/formalizations/*.v1.json | ledger] --verified-by--> DigestionFormalizationReceipt
+
 none --declares--> [Meta/FILEMAP.toml | data]
 [Meta/FILEMAP.toml | data] --consumed-by--> FileMapEmitter, FileMapLoader, FileMapPolicy
 [Meta/FILEMAP.toml | data] --verified-by--> FileMapLoader
@@ -193,6 +197,10 @@ none --declares--> [Meta/domains.yaml | data]
 none --declares--> [Meta/registry.yaml | data]
 [Meta/registry.yaml | data] --consumed-by--> RegistryLoader
 [Meta/registry.yaml | data] --verified-by--> RegistryLoader
+
+none --declares--> [Papers/recipes/** | data]
+[Papers/recipes/** | data] --consumed-by--> PapergenCommand
+[Papers/recipes/** | data] --verified-by--> PapergenCommand
 
 none --declares--> [README.md | data]
 [README.md | data] --consumed-by--> reader

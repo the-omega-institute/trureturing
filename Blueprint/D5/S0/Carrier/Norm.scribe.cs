@@ -58,5 +58,16 @@ internal sealed class NormDocument : IScribeDocumentDefinition
                         "Mathlib's generic principal-ideal-domain instance then supplies `UniqueFactorizationMonoid GoldenInt`; the formal node records this consequence as `golden_int_is_ufd` without declaring redundant specialized instances.")),
                     Paragraph(Text(
                         "This result does not classify the units of `GoldenInt`. The converse assertion that every norm-unit is a signed integral power of `phi` remains open in `D5-T0008`."))),
-                LatexStatement.Create(@"$\mathbb{Z}[\varphi]\text{ is a principal ideal domain.}$")))));
+                LatexStatement.Create(@"$\mathbb{Z}[\varphi]\text{ is a principal ideal domain.}$")),
+            new DocumentBlock.Describe(
+                DescribeId.Create("golden-norm-is-power-multiplicative"),
+                DescribeKind.Theorem,
+                H("The golden norm is power-multiplicative"),
+                DescribeStatement.FromLean(LeanTheorem(
+                    "D5/S0/Carrier/NormPowers.norm_pow")),
+                DescribeProvenance.RepoDerived(),
+                Blocks(
+                    Paragraph(Text(
+                        "The golden norm is a monoid homomorphism from `GoldenInt` to the integers, packaged as `normMonoidHom` out of its unit and multiplicativity laws. The norm of a power is therefore the same power of the norm, obtained directly as `map_pow normMonoidHom` rather than by a coordinate induction."))),
+                LatexStatement.Create(@"$\forall x\in\mathbb{Z}[\varphi],\ \forall n\in\mathbb{N},\ \operatorname{norm}(x^{n})=\operatorname{norm}(x)^{n}$")))));
 }
