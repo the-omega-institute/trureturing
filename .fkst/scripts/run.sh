@@ -113,6 +113,18 @@ start() {
   checkout_root="$(cd -- "$checkout_root" && pwd -P)"
   [[ "$checkout_root" != "$REPO_ROOT" ]] \
     || die "dedicated checkout must not be the source worktree: $checkout_root"
+  load_lua_test_contract "$checkout_root/.fkst"
+  validate_platform_composition
+  # The platform resolves fkst.workspace.toml and fkst.lock at the project
+  # root; the repo keeps them under .fkst/ (single source). Provision root
+  # copies into the dedicated checkout (host state, reconstructible from the
+  # repository alone) and keep them out of the checkout's git status.
+  cp "$checkout_root/.fkst/fkst.workspace.toml" "$checkout_root/fkst.workspace.toml"
+  cp "$checkout_root/.fkst/fkst.lock" "$checkout_root/fkst.lock"
+  if [[ -d "$checkout_root/.git/info" ]]; then
+    grep -qxF '/fkst.workspace.toml' "$checkout_root/.git/info/exclude" 2>/dev/null \
+      || printf '/fkst.workspace.toml\n/fkst.lock\n' >>"$checkout_root/.git/info/exclude"
+  fi
   log="$LOG_DIR/supervise-$(date -u +%Y%m%dT%H%M%SZ).log"
   ln -sfn "$(basename -- "$log")" "$LOG_DIR/latest.log"
   (
@@ -291,6 +303,19 @@ PY
   PLATFORM_PACKAGE_NAMES="$(printf '%s\n' "$data" | sed -n '2p')"
   PLATFORM_LIBRARY_NAMES="$(printf '%s\n' "$data" | sed -n '3p')"
   [[ "$PLATFORM_PIN" =~ ^[0-9a-f]{40}$ ]] || die "platform pin parser returned an invalid SHA"
+}
+
+validate_platform_composition() {
+  # The requested composition (PLATFORM_PACKAGES above) and the declared one
+  # (fkst.workspace.toml packages, loaded into PLATFORM_PACKAGE_NAMES) must be
+  # the same set. A package present in only one list is silent composition
+  # drift: the 64736bd pin bump dropped archaudit from the manifest while
+  # run.sh kept requesting it, and the divergence stayed latent until the next
+  # supervise start refused to boot.
+  local requested declared
+  requested="$(tr ' ' '\n' <<<"$PLATFORM_PACKAGES" | LC_ALL=C sort)"
+  declared="$(tr ' ' '\n' <<<"$PLATFORM_PACKAGE_NAMES" | LC_ALL=C sort)"
+  [[ "$requested" == "$declared" ]] || die "platform composition drift: run.sh requests [$PLATFORM_PACKAGES] but fkst.workspace.toml declares [$PLATFORM_PACKAGE_NAMES]"
 }
 
 load_target_packages() {
@@ -517,6 +542,12 @@ lua_gate_selftest() {
     load_lua_test_contract "$fixture_fk"
   cp "$FKST_ROOT/fkst.lock" "$fixture_fk/fkst.lock"
 
+  grep -v '"idle-detector",' "$FKST_ROOT/fkst.workspace.toml" >"$fixture_fk/fkst.workspace.toml"
+  load_lua_test_contract "$fixture_fk"
+  expect_selftest_rejection composition-drift "platform composition drift" \
+    validate_platform_composition
+  cp "$FKST_ROOT/fkst.workspace.toml" "$fixture_fk/fkst.workspace.toml"
+
   source="$work/source"
   git init -q "$source"
   git -C "$source" config user.name fkst-selftest
@@ -583,6 +614,7 @@ lua_test() {
   command -v tar >/dev/null 2>&1 || die "tar is required for Lua tests"
   lua_gate_selftest
   load_lua_test_contract
+  validate_platform_composition
   load_target_packages
 
   work="$(mktemp -d "${TMPDIR:-/tmp}/trureturing-lua-test.XXXXXX")" \
