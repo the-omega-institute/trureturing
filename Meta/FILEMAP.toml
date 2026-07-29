@@ -196,6 +196,13 @@ consumed_by = ["DigestionCasStore"]
 verified_by = ["DigestionCasStore"]
 
 [[files]]
+pattern = "Meta/Digestion/formalizations/*.v1.json"
+kind = "ledger"
+produced_by = "EmitFormalizationReceiptCommand"
+consumed_by = ["CoverAtomCommand"]
+verified_by = ["DigestionFormalizationReceipt"]
+
+[[files]]
 pattern = "Meta/FILEMAP.toml"
 kind = "data"
 produced_by = "none"

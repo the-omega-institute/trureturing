@@ -36,6 +36,36 @@ internal sealed record DigestionFormalizationReceipt(
 {
     internal const string Schema = "digestion-formalization-v1";
 
+    internal const string RootPath = "Meta/Digestion/formalizations/";
+
+    internal const string PathSuffix = ".v1.json";
+
+    // Shape-only residence check for the closed-world path policy (SL-000): one
+    // lowercase atom-id segment between the canonical root and the versioned
+    // suffix. Content validity stays with Load; residence classification stays
+    // with FILEMAP.
+    internal static bool IsCanonicalPath(string path)
+    {
+        if (!path.StartsWith(RootPath, StringComparison.Ordinal)
+            || !path.EndsWith(PathSuffix, StringComparison.Ordinal)
+            || path.Length <= RootPath.Length + PathSuffix.Length)
+        {
+            return false;
+        }
+
+        foreach (var value in path.AsSpan(
+            RootPath.Length,
+            path.Length - RootPath.Length - PathSuffix.Length))
+        {
+            if (value is not ((>= 'a' and <= 'z') or (>= '0' and <= '9') or '-'))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     private static readonly ImmutableHashSet<string> RootFields = ImmutableHashSet.Create(
         StringComparer.Ordinal,
         "atom_id",

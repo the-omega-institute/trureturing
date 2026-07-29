@@ -114,6 +114,10 @@ IngestCommand --produces--> [Meta/Digestion/atoms/sha256/* | ledger]
 [Meta/Digestion/atoms/sha256/* | ledger] --consumed-by--> DigestionCasStore
 [Meta/Digestion/atoms/sha256/* | ledger] --verified-by--> DigestionCasStore
 
+EmitFormalizationReceiptCommand --produces--> [Meta/Digestion/formalizations/*.v1.json | ledger]
+[Meta/Digestion/formalizations/*.v1.json | ledger] --consumed-by--> CoverAtomCommand
+[Meta/Digestion/formalizations/*.v1.json | ledger] --verified-by--> DigestionFormalizationReceipt
+
 none --declares--> [Meta/FILEMAP.toml | data]
 [Meta/FILEMAP.toml | data] --consumed-by--> FileMapEmitter, FileMapLoader, FileMapPolicy
 [Meta/FILEMAP.toml | data] --verified-by--> FileMapLoader

@@ -67,6 +67,7 @@ internal static partial class RepositoryPathPolicy
             or ".github/scripts/baseline-admission.sh" or HarnessGatePath
             || value.StartsWith("Meta/StrataLint/", StringComparison.Ordinal)
             || DigestionCasStore.IsCanonicalPath(value)
+            || DigestionFormalizationReceipt.IsCanonicalPath(value)
             || value.StartsWith(".fkst/", StringComparison.Ordinal)
             || value.StartsWith("packages/", StringComparison.Ordinal)
             || value.StartsWith(".claude/skills/", StringComparison.Ordinal)
