@@ -61,9 +61,13 @@ diag_count() {
   printf 'diag over %s  (current = since last boot; full = all history across restarts)\n' "$(basename "$log")"
   local pat now hist last
   for pat in "$@"; do
-    now="$(grep -acE "$pat" "$ilog" 2>/dev/null | tr -dc '0-9')"; now="${now:-0}"
-    hist="$(grep -acE "$pat" "$log" 2>/dev/null | tr -dc '0-9')"; hist="${hist:-0}"
-    last="$(grep -aE "$pat" "$ilog" 2>/dev/null | grep -aoE 'TIMESTAMP=[0-9T:-]+Z' | tail -1)"
+    # `grep -c` exits 1 on zero matches; under `set -e` an unguarded assignment aborted the whole
+    # loop, so the FIRST zero-count pattern silently truncated the report (the tool built to prevent
+    # log misreads was itself emitting bad material). Every capture is `|| true`-guarded — a
+    # zero-count pattern must report `current=0`, never vanish.
+    now="$(grep -acE "$pat" "$ilog" 2>/dev/null | tr -dc '0-9' || true)"; now="${now:-0}"
+    hist="$(grep -acE "$pat" "$log" 2>/dev/null | tr -dc '0-9' || true)"; hist="${hist:-0}"
+    last="$(grep -aE "$pat" "$ilog" 2>/dev/null | grep -aoE 'TIMESTAMP=[0-9T:-]+Z' | tail -1 || true)"
     printf '  %-44s current=%-6s full=%-7s last=%s\n' "$pat" "$now" "$hist" "${last:-none-in-instance}"
   done
   [[ -n "${INSTANCE_SLICE:-}" && -f "${INSTANCE_SLICE:-}" ]] && rm -f "$INSTANCE_SLICE"; INSTANCE_SLICE=""
