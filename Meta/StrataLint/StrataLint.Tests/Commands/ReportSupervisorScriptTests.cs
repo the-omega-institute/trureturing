@@ -345,7 +345,14 @@ public sealed class ReportSupervisorScriptTests
         Assert.True(
             stopwatch.Elapsed < TimeSpan.FromSeconds(20),
             $"supervisor ignored the build timeout (elapsed {stopwatch.Elapsed})");
-        Assert.Equal(124, result.ExitCode);
+        Assert.True(
+            result.ExitCode == 124,
+            "expected supervisor timeout exit 124 but got "
+            + result.ExitCode.ToString(System.Globalization.CultureInfo.InvariantCulture)
+            + "\nstderr:\n"
+            + Encoding.UTF8.GetString(result.StandardError)
+            + "\nstdout:\n"
+            + Encoding.UTF8.GetString(result.StandardOutput));
         Assert.Contains(
             "exceeded",
             Encoding.UTF8.GetString(result.StandardError),

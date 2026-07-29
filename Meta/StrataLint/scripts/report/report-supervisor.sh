@@ -551,8 +551,8 @@ while process_exists "$CHILD_PID"; do
   if (( BUILD_DEADLINE > 0 )) && (( $(date +%s) >= BUILD_DEADLINE )); then
     echo "report-supervisor: build exceeded ${BUILD_TIMEOUT_SECONDS}s wall-clock budget;" \
       "terminating to release the lean slot (#403)" >&2
-    terminate_process_group "$PROCESS_GROUP_ID"
     BUILD_TIMED_OUT=1
+    terminate_process_group "$PROCESS_GROUP_ID" || true
     break
   fi
   sleep 0.1
