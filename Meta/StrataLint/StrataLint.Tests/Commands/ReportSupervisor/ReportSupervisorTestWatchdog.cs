@@ -88,6 +88,13 @@ internal sealed class ReportSupervisorTestWatchdog : IDisposable
         try
         {
             if (!process.HasExited) process.Kill(entireProcessTree: true);
+            // Drain the async stdout/stderr readers so SnapshotDiagnostics sees
+            // output the process wrote before the kill. BeginErrorReadLine delivers
+            // on a background thread; a 100ms watchdog can fire before that line
+            // lands, so the parameterless WaitForExit (which the .NET contract says
+            // is required after a bounded wait to flush redirected async events)
+            // must run once the process has exited.
+            if (process.WaitForExit(2000)) process.WaitForExit();
         }
         catch (InvalidOperationException)
         {
