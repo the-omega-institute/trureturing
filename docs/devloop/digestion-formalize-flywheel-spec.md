@@ -51,11 +51,23 @@ digestion query        producer (theory-selfgrowth)     formalize workflow      
 - **(b) 多模型对抗 attestation(补充,诚实标非证明)**:formalize 的机器共识门对抗验证"Lean statement 忠实对应 atom 且非 vacuous/trivial",产 durable receipt。**明确标记这是 attestation,非形式证明**(NL↔Lean 等价不可判);多模型独立(第14条)降空洞风险,但不冒充 kernel 保证。
 - **(c) 收窄到 machine-form atoms**:若不接受 (b) 的 attestation 为信任边界,候选收窄到自带机器可解析 formal signature 的 atom——**当前可交付量可能为 0**,须诚实允许。
 
-**收敛推荐 = (a)+(b)+负例 fixture**:pre-committed signature match(结构可判)+ 多模型对抗忠实 attestation(诚实标 attestation)+ **负例**(任意 atom 覆盖到 `theorem t : True` 必须被拒)。这是无人审下 NL↔Lean 忠实性的最佳机器可核近似,不冒领为证明。
+### §4b 收口(2026-07-29 6 席对抗共识,exit=meta-layer convergence,5 revise + 1 reject)
+
+**前"(a)+(b)+负例"推荐被推翻——不安全。** 毁灭攻击(6 席独立发现,版本无关):敌意 fork 预承诺 + 证明**无关真命题** `theorem t : 0 = 0 := rfl`(或 `P→P`/`x=x`/任意 Closed 真定理,皆不含 `True`)→ 过负例门、过 (a) signature-match(fork 自选此 precommit)、过全结构门(Closed/无 axiom/Scribe/hash)、伪造 (b) receipt → atom 被**错误 absorbed-closed**。
+
+**根本真理(第19条零信任 + NL↔Lean 不可判)**:identity-independent 机器门**不能**安全 auto-cover NL-only atom;可伪造的 (b) attestation 不能作准入门;负例 denylist 假阴无穷。**唯 machine-form atom(base-owned `formal_claim` + base 可重放 Expr 比对)可安全自主 auto-cover。** 收口:
+
+- **(a) 保留**——§4a #517 已落 base-owned(cover 从 baseline 读 receipt,`Load(baseline)`)。
+- **(b) 删除作准入门,降为 audit-only**——多模型输出留 CI artifact(`authority=none, admission_effect=none`),cover **不** require(base-present≠base-produced,fork 可先把伪 receipt 洗入 base;closed-schema 只证完整性非正确性)。仅当带 **base-issued 不可伪造 provenance**(签名 workflow identity/key + base admission 禁普通 PR 写该 namespace)才可重建为门,且即便如此只是"概率语义裁决"非 kernel 保证。
+- **(c) machine-form-only = 唯一对抗-安全自主接线**——auto-cover **仅** ledger 带 base-owned `formal_claim`(canonical Lean Expr/signature,dispatch 前已存在并绑 atom fingerprint)的 atom;base judge 机械比对 candidate declaration 的 canonical Expr 与之(defeq/normalization)。**NL-only atom → step2 fail-closed**:只自主 deposit **真定理**(kernel 可判真)并记 **`semantic-open`/`attested-not-proven` 中间态**(可逆 candidate linkage),**不写 `coverage_gids`、不宣 `absorbed-closed`**(NL↔Lean 忠实结算不可判,不冒领)。
+- **负例 → `HollowDenylistV1`**(诚实改名:sound-but-incomplete「已知空洞形 canary」,**非 fidelity 门**):由 **base-owned Lean inspector 在 Expr 上**判(whnf + 剥顶层 `forallE`,箭头亦 forallE;拒 conclusion definitionally-equal builtin `_root_.True`,按 fully-qualified 常量身份),**非 string/regex**(`TypeRepresentation` 是 encodeExpr 结构指纹,string 剥 ∀/→ 对括号/隐式 binder/unicode/printer 版本脆弱)。**不拒 `True ∧ P`**(等价 P,非平凡真=假阳);只挂 cover-atom(非全局 admission,真以 True 为结论的定理仍可存在,只是不自动 closure)。fixtures 明示 `0=0`/`P→P`/无关真定理 **通过**本 canary(记录承认的假阴,不冒领为 non-vacuity 证书)。
+- **cover 硬化**:cover 内强制 `kind==theorem`(producer responsibility 在敌意威胁下不承重);TOCTOU/lost-update → CAS/bot-rebase;**step2 trust topology**——workflow/judge/inspector/vacuity-parser/baseline 全取 event base SHA,candidate 仅作 snapshot;隔离无 secrets/无写-token job 跑 candidate Lean,写-token job 不执行 candidate 码只消费内容寻址重验结果。
+
+**Goal-decision(第22条铁律 machine-safe 无人门 + 不冒领)**:全自主 NL 忠实结算机器不可判 → **不接线**。**自主真数学 = kernel-真定理 deposit**(machine-form auto-cover,或 NL 走 semantic-open 中间态沉积真定理但不结算 atom);NL residual atom 的 `absorbed-closed` 结算留 machine-form 或非自主路径。**含义:飞轮可自主长真定理(goal 的"实实在在数学内容"可自主),但"此定理忠实 = 该 NL atom"的结算链不自主宣告。** 裁决全文见 sshx-4b/META-JUDGE-VERDICT.md(6 席 log_ref 全 terminal)。
 
 ## 5. 验收 fixtures(RED-first)
 
-kind 排除(observation/remark/definition 不入)· CAS/ledger 漂移 fail-closed · deterministic 选序 + generation 轮转公平 · active-request 去重 · 空集/超长 body no-op · same-atom replay 不重发 · **深定理失败→零账本变更 + 下一代轮转**(不降格命题不卡死)· 旧GID/module-only GID/缺 declaration/sorryAx/未注册 axiom/缺 Scribe/hash mismatch **全拒** · **hollow `theorem t : True` 覆盖任意 atom 必拒** · happy path 唯一新 GID + atom absorbed-closed · cover replay byte-identical。
+kind 排除(observation/remark/definition 不入)· CAS/ledger 漂移 fail-closed · deterministic 选序 + generation 轮转公平 · active-request 去重 · 空集/超长 body no-op · same-atom replay 不重发 · **深定理失败→零账本变更 + 下一代轮转**(不降格命题不卡死)· 旧GID/module-only GID/缺 declaration/sorryAx/未注册 axiom/缺 Scribe/hash mismatch **全拒** · **`HollowDenylistV1`(§4b):conclusion defeq builtin `True`(含 `theorem t : True`、`P→True`、`∀x,True`、alias-to-True)覆盖任意 atom 必拒;`True∧P`/`MyNs.True` 不因此拒(假阳);`0=0`/`P→P` 明示通过(记录承认假阴,非 non-vacuity 证书)** · happy path 唯一新 GID + atom absorbed-closed · cover replay byte-identical。
 
 ## 6. worth(值不值,worth 席)
 
@@ -63,4 +75,4 @@ kind 排除(observation/remark/definition 不入)· CAS/ledger 漂移 fail-close
 
 ## 7. 对抗轨迹 + 未解项(诚实)
 
-6 席全 `revise`:方向(消化残余为源)对,收口 4 段管线 + owner 分离 + 反 Goodhart 选序 + 显式 cover 事务;THE gap = 语义忠实(§4)。**`implement` 前须先定 §4 的 (a)/(b)/(c) 并获后续一致**——这是本 spec 唯一未闭 conflict edge(NL↔Lean 语义等价机器不可判,是硬开放问题非机制 bug)。次要待定:投影/envelope 精确 schema+原子性、issue >100 分页、round-robin 在候选集变动下的公平性、host 能否稳定调 StrataLint 取 raw Lean report。ASSUMED-UNVERIFIED:234 中实际能无新 axiom 忠实 formalize 的数量;多模型 consensus 能否作可重放抗自证的语义判词;atom_text 加 envelope 是否全落 12000-byte body。
+6 席全 `revise`:方向(消化残余为源)对,收口 4 段管线 + owner 分离 + 反 Goodhart 选序 + 显式 cover 事务;THE gap = 语义忠实(§4)。**~~`implement` 前须先定 §4 的 (a)/(b)/(c) 并获后续一致~~ → 已由 §4b 收口(2026-07-29 6 席共识)闭合**:前"(a)+(b)+负例"推荐经二轮对抗共识被推翻为不安全(0=0 攻击),收敛于 **(a 保留)+(b 删作门)+(c machine-form-only)+ HollowDenylistV1 + NL 走 semantic-open 中间态**——详见 §4b。NL↔Lean 语义等价机器不可判(硬开放问题非机制 bug)的诚实处置 = 自主只 deposit kernel-真定理,不自主宣告 NL atom absorbed-closed。次要待定:投影/envelope 精确 schema+原子性、issue >100 分页、round-robin 在候选集变动下的公平性、host 能否稳定调 StrataLint 取 raw Lean report。ASSUMED-UNVERIFIED:234 中实际能无新 axiom 忠实 formalize 的数量;多模型 consensus 能否作可重放抗自证的语义判词;atom_text 加 envelope 是否全落 12000-byte body。
