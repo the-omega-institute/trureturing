@@ -409,9 +409,13 @@ internal static partial class GoldenCorpusMaterializer
                         AddTask(caseName, files, reports, task);
                         break;
                     case GoldenMutation.PopulateDirectory:
-                        for (var index = 0; index < 12; index++)
+                        // Thirteen canonical definition sources: emitted .md
+                        // projections no longer count against SL-003, so the
+                        // capacity witness must live on a bounded artifact
+                        // class to keep the blocking-rule floor occupied.
+                        for (var index = 0; index < 13; index++)
                         {
-                            files[$"Blueprint/D5/S0/Carrier/Extra{index:00}.md"] = "fixture\n";
+                            files[$"Blueprint/D5/S0/Carrier/Extra{index:00}.scribe.cs"] = "fixture\n";
                         }
 
                         break;

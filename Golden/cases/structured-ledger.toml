@@ -165,7 +165,7 @@ expected_diagnostics = [{ rule = 19, path = "Chronicle/2026/07/11-ledger.md", me
 name = "directory-at-capacity"
 changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
 baseline_mutations = []
-mutations = [{ op = "populate_directory" }, { op = "delete", path = "Blueprint/D5/S0/Carrier/Extra11.md" }]
+mutations = [{ op = "populate_directory" }, { op = "delete", path = "Blueprint/D5/S0/Carrier/Extra11.scribe.cs" }]
 expected_diagnostics = []
 
 [[cases]]
