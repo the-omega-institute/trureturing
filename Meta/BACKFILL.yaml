@@ -2706,16 +2706,23 @@ sources:
           raw_sha256: sha256:1614202e858b8782b7da0a289033669a0d5e5f5d3b138200a3c892b6e5a81c11
           normalized_sha256: sha256:1614202e858b8782b7da0a289033669a0d5e5f5d3b138200a3c892b6e5a81c11
         cas_ref: sha256:1614202e858b8782b7da0a289033669a0d5e5f5d3b138200a3c892b6e5a81c11
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Analytic/LiCausalTrichotomy.causal_iff_integer_iff_monodromy
         receipts:
-          coverage: []
-          scribe: []
+          coverage:
+            - gid: D5/S3/Analytic/LiCausalTrichotomy.causal_iff_integer_iff_monodromy
+              source_sha256: sha256:1614202e858b8782b7da0a289033669a0d5e5f5d3b138200a3c892b6e5a81c11
+              target_sha256: sha256:2fd22301f5414f5466b60b1b87ab4b032f98b144c9759976ed92a35523168bdb
+          scribe:
+            - gid: D5/S3/Analytic/LiCausalTrichotomy.causal_iff_integer_iff_monodromy
+              definition_sha256: sha256:d7f0f2c4330eada01d662dcca8c342dbea8a5989cbc572f35775376fdce20b0a
+              emission_sha256: sha256:eb8cdfc089758e3dabf2e05b3e3977d223e9dbf224a4201975ad85402c8f45d7
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: absorbed
+          truth: closed
       - atom_id: gict-residual-2c35b352f01e41718c6428f8119ea9060126b717e632634f894e8582ed98c1b1
         ast_path: theorem/6.14
         fingerprints:
