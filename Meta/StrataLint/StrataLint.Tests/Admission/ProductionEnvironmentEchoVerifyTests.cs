@@ -7,6 +7,28 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
+    public void EchoVerifyAcceptsProjectionFromBaseCommitWhenDerivedResidualIsUnchanged()
+    {
+        var result = RunRealGitEchoRoundTrip(changeResidualSummary: false);
+        var objectFormat = result.BaseOid.Length == 40 ? "git-sha1:" : "git-sha256:";
+
+        Assert.NotEqual(result.BaseOid, result.CandidateOid);
+        Assert.Equal(0, result.Verification.ExitCode);
+        Assert.Contains($"candidate={objectFormat}{result.CandidateOid}", result.Verification.Output, StringComparison.Ordinal);
+        Assert.Contains($"base={objectFormat}{result.BaseOid}", result.Verification.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void EchoVerifyRejectsProjectionFromBaseCommitWhenDerivedResidualChanges()
+    {
+        var result = RunRealGitEchoRoundTrip(changeResidualSummary: true);
+
+        Assert.NotEqual(result.BaseOid, result.CandidateOid);
+        Assert.Equal(1, result.Verification.ExitCode);
+        Assert.Contains("byte-match", result.Verification.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void EchoVerifyMachineRejectsChangedResidualTamperedDigestAndMissingBlocks()
     {
         var fixture = new RuleFixture();
@@ -111,4 +133,68 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(0, result.ExitCode);
         Assert.Equal("ECHO_VERIFY_NOT_APPLICABLE\n", result.Output);
     }
+
+    private static RealGitEchoRoundTrip RunRealGitEchoRoundTrip(bool changeResidualSummary)
+    {
+        using var repository = new TemporaryDirectory();
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        WriteFixture(repository.Path, fixture.Files);
+        ReviewRegressionTests.RunGit(repository.Path, "init");
+        ReviewRegressionTests.RunGit(repository.Path, "config", "user.email", "stratalint@example.invalid");
+        ReviewRegressionTests.RunGit(repository.Path, "config", "user.name", "StrataLint Tests");
+        ReviewRegressionTests.RunGit(repository.Path, "add", ".");
+        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "echo base A");
+        var baseOid = ReviewRegressionTests.RunGit(repository.Path, "rev-parse", "HEAD").Trim();
+
+        var environment = new ProductionCliEnvironment(
+            repository.Path,
+            new GitRepositoryGateway(repository.Path),
+            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+        var dirtyPath = Path.Combine(repository.Path, "echo-emit-sentinel.tmp");
+        File.WriteAllText(dirtyPath, "emit against A\n", new UTF8Encoding(false));
+        var emitted = environment.EchoVerify(["--emit", "--base", baseOid]);
+        File.Delete(dirtyPath);
+        Assert.Equal(0, emitted.ExitCode);
+
+        if (changeResidualSummary)
+        {
+            var backfillPath = Path.Combine(repository.Path, "Meta", "BACKFILL.yaml");
+            var backfill = File.ReadAllText(backfillPath, Encoding.UTF8).Replace(
+                "          unresolved_subitems: []",
+                "          unresolved_subitems:\n            - newly-open",
+                StringComparison.Ordinal);
+            Assert.NotEqual(fixture.Files["Meta/BACKFILL.yaml"], backfill);
+            File.WriteAllText(backfillPath, backfill, new UTF8Encoding(false));
+        }
+        else
+        {
+            File.WriteAllText(Path.Combine(repository.Path, "README.md"), "base-only advance\n", new UTF8Encoding(false));
+        }
+
+        ReviewRegressionTests.RunGit(repository.Path, "add", ".");
+        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "echo candidate B");
+        var candidateOid = ReviewRegressionTests.RunGit(repository.Path, "rev-parse", "HEAD").Trim();
+        var candidatePath = Path.Combine(repository.Path, "echo-review.md");
+        File.WriteAllText(candidatePath, emitted.Output, new UTF8Encoding(false));
+
+        var verification = environment.EchoVerify(["--file", candidatePath, "--base", baseOid]);
+        return new RealGitEchoRoundTrip(baseOid, candidateOid, verification);
+    }
+
+    private static void WriteFixture(string root, IReadOnlyDictionary<string, string> files)
+    {
+        foreach (var (relativePath, content) in files)
+        {
+            var path = Path.Combine(root, relativePath);
+            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+            File.WriteAllText(path, content, new UTF8Encoding(false));
+        }
+    }
+
+    private sealed record RealGitEchoRoundTrip(
+        string BaseOid,
+        string CandidateOid,
+        ExplicitCommandResult Verification);
 }

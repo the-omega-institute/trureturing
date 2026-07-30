@@ -169,21 +169,12 @@ internal static class EchoResidualBlock
 
     internal static string? Verify(ReadOnlySpan<byte> candidate, ReadOnlySpan<byte> expected)
     {
-        var markerCount = Count(candidate, MarkerPrefixBytes);
-        if (markerCount > 1)
-        {
-            return "candidate contains multiple echo residual summary blocks";
-        }
-
-        if (markerCount == 0)
-        {
-            return "candidate contains no echo residual summary block";
-        }
-
         if (!TrySplit(candidate, out var candidateDigest, out _)
             || !TrySplit(expected, out _, out var expectedBody))
         {
-            return "candidate contains malformed echo residual summary marker";
+            return candidate.StartsWith(MarkerPrefixBytes)
+                ? "candidate contains malformed echo residual summary marker"
+                : "candidate contains no echo residual summary block";
         }
 
         if (!candidateDigest.SequenceEqual(Encoding.ASCII.GetBytes(ComputeDigest(expectedBody))))
@@ -234,17 +225,5 @@ internal static class EchoResidualBlock
         DigestDomainBytes.CopyTo(preimage, 0);
         residualSummary.CopyTo(preimage.AsSpan(DigestDomainBytes.Length));
         return Convert.ToHexStringLower(SHA256.HashData(preimage));
-    }
-
-    private static int Count(ReadOnlySpan<byte> source, ReadOnlySpan<byte> value)
-    {
-        var count = 0;
-        while (source.IndexOf(value) is var index && index >= 0)
-        {
-            count++;
-            source = source[(index + value.Length)..];
-        }
-
-        return count;
     }
 }

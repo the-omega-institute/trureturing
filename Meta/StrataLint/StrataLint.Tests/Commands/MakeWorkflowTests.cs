@@ -546,13 +546,13 @@ public sealed class MakeWorkflowTests
     }
 
     [Fact]
-    public void TheoryIngestReemitsBaseBoundEchoProjectionBeforeWriteback()
+    public void TheoryIngestReemitsContentAddressedEchoProjectionBeforeWriteback()
     {
         var root = FindRepositoryRoot();
         var workflow = File.ReadAllText(Path.Combine(root, TheoryIngestWorkflowPath));
         var ingestIndex = workflow.IndexOf("          make ingest BASE=HEAD\n", StringComparison.Ordinal);
         var emitIndex = workflow.IndexOf(
-            "- name: Re-emit base-bound echo projection",
+            "- name: Re-emit content-addressed echo projection",
             StringComparison.Ordinal);
         var commitIndex = workflow.IndexOf(
             "- name: Enforce write-path whitelist and commit back",

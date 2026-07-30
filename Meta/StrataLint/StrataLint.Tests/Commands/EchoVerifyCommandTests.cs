@@ -26,17 +26,21 @@ public sealed class EchoVerifyCommandTests
     }
 
     [Fact]
-    public void BaseAdvanceWithUnchangedCanonicalBodyStillVerifies()
+    public void ContentAddressedBlockTreatsMarkerTextInResidualBodyAsOpaque()
     {
-        // Issue #573 race sample: this base-only advance was rejected by the v2 contract.
-        var emittedAgainstBaseA = EchoResidualBlock.Render(Summary);
-        var expectedAgainstBaseB = EchoResidualBlock.Render(Summary);
+        var summaryWithMarkerText = Summary
+            + "<!-- echo-residual-summary: this is residual prose, not a header -->\n";
+        var expected = EchoResidualBlock.Render(summaryWithMarkerText);
 
         var error = EchoResidualBlock.Verify(
-            Encoding.UTF8.GetBytes(emittedAgainstBaseA),
-            Encoding.UTF8.GetBytes(expectedAgainstBaseB));
+            Encoding.UTF8.GetBytes(expected),
+            Encoding.UTF8.GetBytes(expected));
 
         Assert.Null(error);
+        Assert.Contains(
+            "<!-- echo-residual-summary: this is residual prose, not a header -->",
+            expected[(expected.IndexOf('\n') + 1)..],
+            StringComparison.Ordinal);
     }
 
     [Fact]
@@ -70,6 +74,8 @@ public sealed class EchoVerifyCommandTests
 
     [Theory]
     [InlineData("review prose only\n", "candidate contains no echo residual summary block")]
+    [InlineData("review prose only\n<!-- echo-residual-summary:v3 residual=sha256:05f4f3c3989efd7578fb7fdf6716b7a76aed13b8e840bd5a3fd624b86dd9bca9 -->\n", "candidate contains no echo residual summary block")]
+    [InlineData("<!-- echo-residual-summary:v2 residual=sha256:05f4f3c3989efd7578fb7fdf6716b7a76aed13b8e840bd5a3fd624b86dd9bca9 -->\nbody\n", "candidate contains malformed echo residual summary marker")]
     [InlineData("<!-- echo-residual-summary:v3 residual=sha256:not-a-digest -->\nbody\n", "candidate contains malformed echo residual summary marker")]
     public void MissingOrMalformedMarkerFailsClosed(string candidate, string expectedError)
     {
@@ -80,17 +86,6 @@ public sealed class EchoVerifyCommandTests
             Encoding.UTF8.GetBytes(expected));
 
         Assert.Equal(expectedError, error);
-    }
-
-    [Fact]
-    public void DuplicateBlockFailsClosed()
-    {
-        var expected = EchoResidualBlock.Render(Summary);
-        var error = EchoResidualBlock.Verify(
-            Encoding.UTF8.GetBytes(expected + expected),
-            Encoding.UTF8.GetBytes(expected));
-
-        Assert.Equal("candidate contains multiple echo residual summary blocks", error);
     }
 
     [Theory]
