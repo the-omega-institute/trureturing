@@ -1,0 +1,4 @@
+**E.72 三阶互反定理**。$K$ 为 $\rho_0$ 处之 $\pi$-旋转($\det=3$,居 $PGL_2(\mathbb Q)$):$\boxed{\text{axis}(\gamma)\ni\rho_0\iff K\gamma K^{-1}=(\det\gamma)\gamma^{-1}}$(⟹:$\alpha I-W=(\mathrm{tr}X)I-X$ 加 Cayley–Hamilton;⟸:保测地之 $\pi$-旋转心必居轴)。类级:**穿越 $\iff$ 被某 $\rho$-提升之 $\pi$-旋转反转**。系理:(一)Sarnak 对偶字典——二阶镜整而免费(reciprocal $=\mathbb Z$-互反),三阶镜有理标价 $\det3$(穿越类一般非 $\mathbb Z$-互反之谜解);(二)Fricke 桥:$K\sim_{GL_2(\mathbb Q)}W_3$(同极小式 $x^2+3$ 一行;显式共轭元候誊)——通往 $X_0(3)$/CM 之路标;(三)线性宪法两条全文:资格 $\mathrm{tr}(XK)=0$、释义 $=$ 被 $K$ 反转。四对齐代表精确有理全票。(27.474)
+
+---
+
