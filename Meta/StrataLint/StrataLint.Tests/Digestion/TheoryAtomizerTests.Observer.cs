@@ -149,4 +149,28 @@ public sealed partial class TheoryAtomizerTests
             document.Claims.Select(static item => item.AstPath));
         AssertRecognitionComplete(document, bytes);
     }
+
+    [Theory]
+    [InlineData("**§13.1 商定理与首枚外部定理样本**。claim。", "quotient-court/quotient-theorem")]
+    [InlineData("**§13.2 对数钟之算术分店(指针)**。claim。", "quotient-court/log-clock-arithmetic")]
+    [InlineData("**§13.3 边界与署名**。claim。", "quotient-court/boundary-signature")]
+    [InlineData("**§14.1 定理脊柱(全部自含证明与证书,居本文辖区)**。claim。", "formal-volume/theorem-spine")]
+    [InlineData("**§14.2 合成判词与两条新焊缝**。claim。", "formal-volume/synthesis-welds")]
+    [InlineData("**§14.3 边界与申报**。claim。", "formal-volume/boundary-declaration")]
+    [InlineData("**§15.1 账本公理之定理化**。claim。", "ledger-axioms/theoremization")]
+    [InlineData("**§15.2 本体对象之谓词分家与投影族**。claim。", "ledger-axioms/ontic-predicate-split")]
+    [InlineData("**§15.3 边界与申报**。claim。", "ledger-axioms/boundary-declaration")]
+    [InlineData("**§16.1 观察者之钟(运动学定理三条 + 证书)**。claim。", "observer-clock/clock-rate-theorems")]
+    [InlineData("**§16.2 形与签(本文主张之二分定理化)**。claim。", "observer-clock/form-signature-split")]
+    [InlineData("**§16.3 测量论之算术同址(指针)**。claim。", "observer-clock/measurement-arithmetic")]
+    public void ObserverV1RecognizesTheV61ThroughV64CourtClaimLeads(
+        string claim,
+        string expectedAstPath)
+    {
+        var bytes = Encoding.UTF8.GetBytes($"# Observer\n\n{claim}\n");
+
+        var atom = Assert.Single(AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes).Claims);
+
+        Assert.Equal(expectedAstPath, atom.AstPath);
+    }
 }
