@@ -269,6 +269,7 @@ internal static class C0RenewCommand
 internal sealed class ProductionC0RenewEnvironment : IC0RenewEnvironment
 {
     internal const int LeanReportBudgetMinutes = 90;
+    internal const int GitOperationBudgetMinutes = 10;
 
     private readonly string root;
     private readonly GitRepositoryGateway repository;
@@ -585,7 +586,7 @@ internal sealed class C0RenewCandidateWorkspace : IDisposable
             "git",
             arguments,
             workingDirectory,
-            TimeSpan.FromMinutes(2),
+            TimeSpan.FromMinutes(ProductionC0RenewEnvironment.GitOperationBudgetMinutes),
             64 * 1024 * 1024);
         if (result.ExitCode != 0)
         {
