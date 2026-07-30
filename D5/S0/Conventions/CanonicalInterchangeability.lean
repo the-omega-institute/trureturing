@@ -1,5 +1,5 @@
 /- GID: D5/S0/Conventions/CanonicalInterchangeability
-   generality: G
+   generality: I
    mirror-B: D5/B/S0/Conventions/CanonicalInterchangeability
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
