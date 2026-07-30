@@ -473,7 +473,20 @@ public sealed partial class PrShepherdRecalculationTests
                 if [[ "$PR_TEST_FAIL_MERGE" == 1 && " $* " == *" merge --no-commit "* ]]; then
                   exit 97
                 fi
-                if [[ " $* " == *" push "* ]]; then printf 'push\n' >> "$PR_TEST_CALLS"; fi
+                if [[ "${PR_TEST_CONFLICTING:-0}" == 1 && " $* " == *" merge --no-commit "* ]]; then
+                  printf 'local-merge\n' >> "$PR_TEST_CALLS"
+                fi
+                if [[ " $* " == *" push "* ]]; then
+                  push_call=push
+                  for argument in "$@"; do
+                    case "$argument" in
+                      -f|--force|--force=*|--force-with-lease*|--force-if-includes|+*)
+                        push_call=force-push
+                        ;;
+                    esac
+                  done
+                  printf '%s\n' "$push_call" >> "$PR_TEST_CALLS"
+                fi
                 exec /usr/bin/git "$@"
                 """);
             WriteExecutable(
