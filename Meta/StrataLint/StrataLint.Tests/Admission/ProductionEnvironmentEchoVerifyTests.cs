@@ -7,7 +7,7 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
-    public void EchoVerifyMachineRejectsHandEditedStaleAndMissingBlocks()
+    public void EchoVerifyMachineRejectsChangedResidualTamperedDigestAndMissingBlocks()
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
@@ -33,16 +33,16 @@ public sealed partial class ProductionEnvironmentTests
         var modified = environment.EchoVerify(["--file", candidatePath, "--base", "baseline"]);
         File.WriteAllText(
             candidatePath,
-            emitted.Output.Replace("git-sha256:baseline", "git-sha256:cccccccc", StringComparison.Ordinal),
+            emitted.Output.Replace("residual=sha256:", "residual=sha256:0", StringComparison.Ordinal),
             new UTF8Encoding(false));
-        var stale = environment.EchoVerify(["--file", candidatePath, "--base", "baseline"]);
+        var tamperedDigest = environment.EchoVerify(["--file", candidatePath, "--base", "baseline"]);
         File.Delete(candidatePath);
         var missing = environment.EchoVerify(["--file", candidatePath, "--base", "baseline"]);
 
         Assert.Equal(0, exact.ExitCode);
-        Assert.All([modified, stale, missing], result => Assert.Equal(1, result.ExitCode));
+        Assert.All([modified, tamperedDigest, missing], result => Assert.Equal(1, result.ExitCode));
         Assert.Contains("byte-match", modified.Error, StringComparison.Ordinal);
-        Assert.Contains("byte-match", stale.Error, StringComparison.Ordinal);
+        Assert.Contains("byte-match", tamperedDigest.Error, StringComparison.Ordinal);
         Assert.Contains("candidate file is missing", missing.Error, StringComparison.Ordinal);
     }
 

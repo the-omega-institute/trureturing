@@ -172,7 +172,7 @@ public sealed class MakeWorkflowTests
             """
             #!/usr/bin/env bash
             [[ "$*" == *"echo-verify --emit --base synthetic-base"* ]] || exit 19
-            printf '%s\n' '<!-- echo-residual-summary:v2 base=git-sha1:2222222222222222222222222222222222222222 -->' '# Echo Residual Summary' '<!-- /echo-residual-summary:v2 -->'
+            printf '%s\n' '<!-- echo-residual-summary:v3 residual=sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->' '# Echo Residual Summary'
             """);
         File.SetUnixFileMode(
             Path.Combine(fixture.Path, LeanReportScriptPath),
@@ -191,9 +191,8 @@ public sealed class MakeWorkflowTests
         Assert.Equal(0, result.ExitCode);
         Assert.Equal(
             """
-            <!-- echo-residual-summary:v2 base=git-sha1:2222222222222222222222222222222222222222 -->
+            <!-- echo-residual-summary:v3 residual=sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
             # Echo Residual Summary
-            <!-- /echo-residual-summary:v2 -->
             """ + "\n",
             System.Text.Encoding.UTF8.GetString(result.StandardOutput));
         Assert.Equal("lean provenance\n", System.Text.Encoding.UTF8.GetString(result.StandardError));

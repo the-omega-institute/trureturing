@@ -6,57 +6,44 @@ namespace StrataLint.Tests;
 
 public sealed class EchoVerifyCommandTests
 {
-    private const string BaseCommit = "git-sha1:2222222222222222222222222222222222222222";
-    private const string OtherBaseCommit = "git-sha1:3333333333333333333333333333333333333333";
     private const string Summary = "# Echo Residual Summary\n\n- unresolved_subitems: 1\n";
 
     [Fact]
-    public void SnapshotBoundBlockRoundTripsAsExactProjectionFile()
+    public void ContentAddressedBlockRoundTripsAsExactProjectionFile()
     {
-        var expected = EchoResidualBlock.Render(Summary, BaseCommit);
+        var expected = EchoResidualBlock.Render(Summary);
 
         var error = EchoResidualBlock.Verify(
             Encoding.UTF8.GetBytes(expected),
             Encoding.UTF8.GetBytes(expected));
 
         Assert.Null(error);
-        Assert.Equal(
-            $"""
-            <!-- echo-residual-summary:v2 base={BaseCommit} -->
-            {Summary}<!-- /echo-residual-summary:v2 -->
-            """ + "\n",
+        Assert.Matches(
+            "^<!-- echo-residual-summary:v3 residual=sha256:[0-9a-f]{64} -->\\n",
             expected);
+        Assert.Equal(Summary, expected[(expected.IndexOf('\n') + 1)..]);
     }
 
     [Fact]
-    public void MarkerTextInsideResidualDataDoesNotBreakExactProjectionVerification()
+    public void BaseAdvanceWithUnchangedCanonicalBodyStillVerifies()
     {
-        const string collisionSummary = """
-            # Echo Residual Summary
-
-            - `<!-- echo-residual-summary:v2 synthetic -->`
-            - `<!-- /echo-residual-summary:v2 -->`
-
-            """;
-        var expected = EchoResidualBlock.Render(collisionSummary, BaseCommit);
+        // Issue #573 race sample: this base-only advance was rejected by the v2 contract.
+        var emittedAgainstBaseA = EchoResidualBlock.Render(Summary);
+        var expectedAgainstBaseB = EchoResidualBlock.Render(Summary);
 
         var error = EchoResidualBlock.Verify(
-            Encoding.UTF8.GetBytes(expected),
-            Encoding.UTF8.GetBytes(expected));
+            Encoding.UTF8.GetBytes(emittedAgainstBaseA),
+            Encoding.UTF8.GetBytes(expectedAgainstBaseB));
 
         Assert.Null(error);
     }
 
-    [Theory]
-    [InlineData("hand-edited", "unresolved_subitems: 1", "unresolved_subitems: 2")]
-    [InlineData("stale-snapshot", BaseCommit, OtherBaseCommit)]
-    public void HandEditedOrStaleBlockFailsByteVerification(
-        string _,
-        string original,
-        string replacement)
+    [Fact]
+    public void ChangedResidualBodyFailsByteVerification()
     {
-        var expected = EchoResidualBlock.Render(Summary, BaseCommit);
-        var candidate = expected.Replace(original, replacement, StringComparison.Ordinal);
+        var candidate = EchoResidualBlock.Render(Summary);
+        var expected = EchoResidualBlock.Render(
+            Summary.Replace("unresolved_subitems: 1", "unresolved_subitems: 2", StringComparison.Ordinal));
 
         var error = EchoResidualBlock.Verify(
             Encoding.UTF8.GetBytes(candidate),
@@ -66,22 +53,38 @@ public sealed class EchoVerifyCommandTests
     }
 
     [Fact]
-    public void MissingBlockFailsClosed()
+    public void TamperedHeaderDigestFailsClosed()
     {
-        var expected = EchoResidualBlock.Render(Summary, BaseCommit);
+        var expected = EchoResidualBlock.Render(Summary);
+        var digestIndex = expected.IndexOf("sha256:", StringComparison.Ordinal) + "sha256:".Length;
+        var replacement = expected[digestIndex] == '0' ? '1' : '0';
+        var candidate = expected[..digestIndex] + replacement + expected[(digestIndex + 1)..];
 
         var error = EchoResidualBlock.Verify(
-            "review prose only\n"u8,
+            Encoding.UTF8.GetBytes(candidate),
             Encoding.UTF8.GetBytes(expected));
 
-        Assert.Equal("candidate contains no echo residual summary block", error);
+        Assert.Equal("candidate block does not byte-match the derived residual summary", error);
+    }
+
+    [Theory]
+    [InlineData("review prose only\n", "candidate contains no echo residual summary block")]
+    [InlineData("<!-- echo-residual-summary:v3 residual=sha256:not-a-digest -->\nbody\n", "candidate contains malformed echo residual summary marker")]
+    public void MissingOrMalformedMarkerFailsClosed(string candidate, string expectedError)
+    {
+        var expected = EchoResidualBlock.Render(Summary);
+
+        var error = EchoResidualBlock.Verify(
+            Encoding.UTF8.GetBytes(candidate),
+            Encoding.UTF8.GetBytes(expected));
+
+        Assert.Equal(expectedError, error);
     }
 
     [Fact]
     public void DuplicateBlockFailsClosed()
     {
-        var expected = EchoResidualBlock.Render(Summary, BaseCommit);
-
+        var expected = EchoResidualBlock.Render(Summary);
         var error = EchoResidualBlock.Verify(
             Encoding.UTF8.GetBytes(expected + expected),
             Encoding.UTF8.GetBytes(expected));
