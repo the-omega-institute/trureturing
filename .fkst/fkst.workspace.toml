@@ -18,6 +18,5 @@ packages = [
   "github-devloop-ops",
   "github-external-pr-intake",
   "idle-detector",
-  "archaudit",
 ]
 libraries = ["contract", "workflow", "testkit", "forge", "devloop"]
