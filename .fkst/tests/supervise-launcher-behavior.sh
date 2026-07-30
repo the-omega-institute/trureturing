@@ -629,16 +629,22 @@ EOF
     fail "supervise renderer rejects cross-checkout composition drift"
   fi
 
-  if assert_workspace_rev_drift_is_rejected "$scratch" "$host_config"; then
-    pass "supervise renderer rejects workspace rev drift"
+  if assert_workspace_rev_drift_is_accepted_with_consumer_parity "$scratch" "$host_config"; then
+    pass "supervise renderer matches pinned consumer on workspace rev drift"
   else
-    fail "supervise renderer rejects workspace rev drift"
+    fail "supervise renderer matches pinned consumer on workspace rev drift"
   fi
 
-  if assert_lock_intent_drift_is_rejected "$scratch" "$host_config"; then
-    pass "supervise renderer rejects lock intent drift"
+  if assert_lock_intent_drift_is_accepted_with_consumer_parity "$scratch" "$host_config"; then
+    pass "supervise renderer matches pinned consumer on lock intent drift"
   else
-    fail "supervise renderer rejects lock intent drift"
+    fail "supervise renderer matches pinned consumer on lock intent drift"
+  fi
+
+  if assert_checkout_path_identity_is_accepted_with_consumer_parity "$scratch" "$host_config"; then
+    pass "supervise renderer matches pinned consumer on checkout path identity"
+  else
+    fail "supervise renderer matches pinned consumer on checkout path identity"
   fi
 
   if assert_workspace_lock_git_drift_is_rejected "$scratch" "$host_config"; then

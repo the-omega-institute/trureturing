@@ -193,6 +193,7 @@ import subprocess
 import sys
 import tomllib
 from pathlib import Path, PurePosixPath
+from urllib.parse import unquote, urlparse
 
 REV_RE = re.compile(r"[0-9a-fA-F]{40}")
 LOCK_SOURCE_ID_RE = re.compile(r"[A-Za-z0-9._-]+")
@@ -223,13 +224,67 @@ def tables(data, key, role):
     return value
 
 
+def is_scp_like_url(value):
+    return bool(re.match(r"^[A-Za-z0-9_.-]+@[^:]+:", value))
+
+
+def git_ref_names(value, *, base):
+    text = value.rstrip("/")
+    refs = {text}
+    parsed = urlparse(text)
+    if parsed.scheme == "file":
+        refs.add(str(Path(unquote(parsed.path)).resolve()))
+    elif "://" not in text and not is_scp_like_url(text):
+        path = Path(text)
+        if not path.is_absolute():
+            path = base / path
+        refs.add(str(path.resolve()))
+    return refs
+
+
+def git_output(arguments, *, cwd):
+    return subprocess.run(
+        ["git", "-C", str(cwd), *arguments],
+        check=True,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    ).stdout.strip()
+
+
+def git_output_optional(arguments, *, cwd):
+    completed = subprocess.run(
+        ["git", "-C", str(cwd), *arguments],
+        check=False,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    return completed.stdout.strip() if completed.returncode == 0 else ""
+
+
+def trusted_platform_identity(platform_root):
+    platform_head = git_output(["rev-parse", "HEAD"], cwd=platform_root).lower()
+    if REV_RE.fullmatch(platform_head) is None:
+        fail("trusted platform checkout HEAD is not a full git SHA")
+    top = Path(git_output(["rev-parse", "--show-toplevel"], cwd=platform_root)).resolve()
+    refs = git_ref_names(str(top), base=top)
+    refs.update(git_ref_names(str(platform_root), base=top))
+    origin = git_output_optional(
+        ["config", "--get", "remote.origin.url"],
+        cwd=platform_root,
+    )
+    if origin:
+        refs.update(git_ref_names(origin, base=top))
+    return refs
+
+
 def source_composition(data, role):
     all_sources = tables(data, "external_sources", role)
     source_ids = []
     for source in all_sources:
         source_id = source.get("id")
         git_url = source.get("git")
-        rev = source.get("rev")
         packages = source.get("packages")
         libraries = source.get("libraries")
         if (
@@ -239,8 +294,6 @@ def source_composition(data, role):
             fail(f"{role} contains an invalid external source id")
         if not isinstance(git_url, str) or not git_url:
             fail(f"{role} external source {source_id} is missing git")
-        if not isinstance(rev, str) or REV_RE.fullmatch(rev) is None:
-            fail(f"{role} external source {source_id} rev is not a full git SHA")
         for field, values in (("packages", packages), ("libraries", libraries)):
             if (
                 not isinstance(values, list)
@@ -348,22 +401,13 @@ try:
     if len(lock_sources) != 1:
         fail(f"target lockfile must contain exactly one {SOURCE_ID} source")
     lock_source = lock_sources[0]
-    intent = lock_source.get("intent")
     resolved = lock_source.get("resolved")
-    intended_rev = intent.get("rev") if isinstance(intent, dict) else None
     locked_rev = resolved.get("rev") if isinstance(resolved, dict) else None
-    workspace_rev = target_source.get("rev")
     target_git = target_source.get("git")
     if lock_source.get("git") != target_git:
         fail("target workspace source git differs from target lockfile")
-    if not isinstance(intended_rev, str) or REV_RE.fullmatch(intended_rev) is None:
-        fail("target lockfile intent.rev is not a full git SHA")
     if not isinstance(locked_rev, str) or REV_RE.fullmatch(locked_rev) is None:
         fail("target lockfile resolved.rev is not a full git SHA")
-    if intended_rev.lower() != locked_rev.lower():
-        fail("target lockfile intent.rev differs from resolved.rev")
-    if workspace_rev.lower() != intended_rev.lower():
-        fail("target workspace source rev differs from target lockfile")
     lock_libraries = lock_source.get("libraries")
     if (
         not isinstance(lock_libraries, list)
@@ -380,26 +424,11 @@ try:
         fail("target workspace libraries differ from target lockfile")
 
     try:
-        platform_head = subprocess.run(
-            ["git", "-C", str(platform_root), "rev-parse", "HEAD"],
-            check=True,
-            text=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-        ).stdout.strip()
-        platform_origin = subprocess.run(
-            ["git", "-C", str(platform_root), "config", "--get", "remote.origin.url"],
-            check=True,
-            text=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-        ).stdout.strip()
+        platform_refs = trusted_platform_identity(platform_root)
     except (FileNotFoundError, subprocess.CalledProcessError) as error:
         fail(f"trusted platform checkout identity is unavailable: {platform_root}: {error}")
-    if REV_RE.fullmatch(platform_head) is None:
-        fail("trusted platform checkout HEAD is not a full git SHA")
-    if platform_origin.rstrip("/") != target_git.rstrip("/"):
-        fail("trusted platform checkout origin differs from target workspace source")
+    if platform_refs.isdisjoint(git_ref_names(target_git, base=target_path.parent)):
+        fail("trusted platform checkout identity differs from target workspace source")
 except ValueError as error:
     print(f"supervise-launcher: {error}", file=sys.stderr)
     raise SystemExit(2)
