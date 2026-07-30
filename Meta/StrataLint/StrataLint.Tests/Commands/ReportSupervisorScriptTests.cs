@@ -220,6 +220,29 @@ public sealed class ReportSupervisorScriptTests
     }
 
     [Fact]
+    public void VanishedLsofCandidateDoesNotKillSupervisorOrHealthyChild()
+    {
+        if (Directory.Exists("/proc")) return;
+        using var fixture = new ReportSupervisorFixture();
+        fixture.InstallFailingLsof();
+
+        var result = fixture.Run(
+            "lean-producer",
+            leanSlot: false,
+            fixture.LsofRaceWorker);
+
+        Assert.True(
+            result.ExitCode == 0,
+            $"supervisor exited {result.ExitCode}; stderr: "
+                + Encoding.UTF8.GetString(result.StandardError));
+        Assert.Equal("completed\n", File.ReadAllText(fixture.ScratchRecord));
+        Assert.True(
+            File.Exists(fixture.FailingLsofInvocation),
+            "the fake lsof was not invoked");
+        Assert.NotEmpty(File.ReadAllLines(fixture.FailingLsofInvocation));
+    }
+
+    [Fact]
     public void OwnerlessSlotIsNeverGuessedStale()
     {
         using var fixture = new ReportSupervisorFixture();
