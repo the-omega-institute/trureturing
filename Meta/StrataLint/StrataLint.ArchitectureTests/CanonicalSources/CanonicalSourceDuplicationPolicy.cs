@@ -61,11 +61,7 @@ internal static class CanonicalSourceDuplicationPolicy
             return [];
         }
 
-        return Regex.Split(
-                specification,
-                "(?<=[。！？])|(?:\\r?\\n){2,}",
-                RegexOptions.CultureInvariant,
-                TimeSpan.FromSeconds(1))
+        return SplitSpecificationPassages(specification)
             .Select(static passage => passage.Trim())
             .Where(static passage => passage.Length >= 64 && CountCjk(passage) >= 24)
             .Distinct(StringComparer.Ordinal)
@@ -74,6 +70,62 @@ internal static class CanonicalSourceDuplicationPolicy
                 path,
                 $"fixture copies a {passage.Length}-character passage from the canonical specification; use neutral synthetic text"))
             .ToArray();
+    }
+
+    private static IEnumerable<string> SplitSpecificationPassages(string specification)
+    {
+        var start = 0;
+        for (var index = 0; index < specification.Length; index++)
+        {
+            var current = specification[index];
+            if (current is '。' or '！' or '？')
+            {
+                yield return specification[start..(index + 1)];
+                start = index + 1;
+                continue;
+            }
+
+            if (current is not ('\r' or '\n'))
+            {
+                continue;
+            }
+
+            var delimiterStart = index;
+            var cursor = index;
+            var lineBreaks = 0;
+            while (cursor < specification.Length)
+            {
+                if (specification[cursor] == '\r'
+                    && cursor + 1 < specification.Length
+                    && specification[cursor + 1] == '\n')
+                {
+                    lineBreaks++;
+                    cursor += 2;
+                    continue;
+                }
+
+                if (specification[cursor] == '\n')
+                {
+                    lineBreaks++;
+                    cursor++;
+                    continue;
+                }
+
+                break;
+            }
+
+            if (lineBreaks < 2)
+            {
+                index = cursor - 1;
+                continue;
+            }
+
+            yield return specification[start..delimiterStart];
+            start = cursor;
+            index = cursor - 1;
+        }
+
+        yield return specification[start..];
     }
 
     internal static IReadOnlyList<CanonicalSourceDuplicationFinding> InspectAtomizerIdLiterals(
