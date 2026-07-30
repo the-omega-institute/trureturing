@@ -107,7 +107,7 @@ dryrun_recalculation() {
 }
 
 prepare_worktree() {
-  local num="$1" head="$2" expected_head="$3" expected_base="$4" workspace="$5" slug="$6"
+  local num="$1" head="$2" expected_head="$3" workspace="$4" slug="$5"
   if [[ ! -e "$workspace/.git" ]]; then
     mkdir -p "$CACHE_ROOT"
     if ! make -C "$ROOT" --no-print-directory worktree \
@@ -121,6 +121,8 @@ prepare_worktree() {
     return 1
   fi
 
+  local observed_base
+  observed_base="$(git -C "$workspace" rev-parse "refs/remotes/$REMOTE/dev")"
   git -C "$workspace" merge --abort >/dev/null 2>&1 || true
   git -C "$workspace" reset --hard HEAD >/dev/null
   git -C "$workspace" clean -fd >/dev/null
@@ -131,11 +133,18 @@ prepare_worktree() {
     return 1
   fi
 
-  local fetched_head fetched_base
+  local fetched_head fetched_base drifted=0
   fetched_head="$(git -C "$workspace" rev-parse "refs/remotes/$REMOTE/$head")"
   fetched_base="$(git -C "$workspace" rev-parse "refs/remotes/$REMOTE/dev")"
-  if [[ "$fetched_head" != "$expected_head" || "$fetched_base" != "$expected_base" ]]; then
-    log "SWEEP #$num head/base 已漂移,放弃本轮(下轮重试)"
+  if [[ "$fetched_head" != "$expected_head" ]]; then
+    log "SWEEP #$num head 已漂移 expected=${expected_head:0:12} actual=${fetched_head:0:12},放弃本轮(下轮重试)"
+    drifted=1
+  fi
+  if [[ "$fetched_base" != "$observed_base" ]]; then
+    log "SWEEP #$num base 已漂移 expected=${observed_base:0:12} actual=${fetched_base:0:12},放弃本轮(下轮重试)"
+    drifted=1
+  fi
+  if [[ "$drifted" -ne 0 ]]; then
     return 1
   fi
   git -C "$workspace" checkout --detach "$fetched_head" >/dev/null
@@ -289,8 +298,8 @@ release_branch_lock() {
 }
 
 recalculate_pr_locked() {
-  local num="$1" head="$2" expected_head="$3" expected_base="$4" workspace="$5" slug="$6"
-  prepare_worktree "$num" "$head" "$expected_head" "$expected_base" "$workspace" "$slug" \
+  local num="$1" head="$2" expected_head="$3" workspace="$4" slug="$5"
+  prepare_worktree "$num" "$head" "$expected_head" "$workspace" "$slug" \
     || return 1
   merge_dev "$num" "$head" "$workspace" || return 1
   run_derivation_chain "$num" "$workspace" || return 1
@@ -313,7 +322,7 @@ recalculate_pr_locked() {
 }
 
 recalculate_pr() {
-  local num="$1" head="$2" expected_head="$3" expected_base="$4" slug workspace lock rc=0
+  local num="$1" head="$2" expected_head="$3" slug workspace lock rc=0
   git check-ref-format --branch "$head" >/dev/null \
     || { log "SWEEP #$num 非法 head branch=$head,放弃本轮"; return 1; }
   slug="$(branch_slug "$head")"
@@ -328,7 +337,7 @@ recalculate_pr() {
   lock="$CACHE_ROOT/lock-$slug"
   acquire_branch_lock "$num" "$lock" || return 1
   recalculate_pr_locked \
-    "$num" "$head" "$expected_head" "$expected_base" "$workspace" "$slug" || rc=$?
+    "$num" "$head" "$expected_head" "$workspace" "$slug" || rc=$?
   release_branch_lock "$lock"
   return "$rc"
 }
@@ -383,7 +392,7 @@ sweep() {
             continue
           fi
           recalculated+="$num "
-          recalculate_pr "$num" "$head" "$head_oid" "$base_oid" || true
+          recalculate_pr "$num" "$head" "$head_oid" || true
         elif [[ "$DRYRUN" == "1" ]]; then
           log "DRYRUN #$num BEHIND -> update-branch(本地身份,checks 会触发)"
         else
