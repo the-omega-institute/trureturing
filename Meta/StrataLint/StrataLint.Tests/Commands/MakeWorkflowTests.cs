@@ -565,8 +565,17 @@ public sealed class MakeWorkflowTests
         var root = FindRepositoryRoot();
         var localGate = File.ReadAllText(Path.Combine(root, LocalHarnessGateScriptPath));
 
+        Assert.Contains("LOCAL_GATE_TMP_ROOT=\"${TMPDIR:-}\"", localGate, StringComparison.Ordinal);
         Assert.Contains(
-            "mktemp -d \"${TMPDIR:-/tmp}/stratalint-local-gate.XXXXXXXX\"",
+            "if [[ -z \"$LOCAL_GATE_TMP_ROOT\" && -d /private/tmp ]]; then LOCAL_GATE_TMP_ROOT=/private/tmp; fi",
+            localGate,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "if [[ -z \"$LOCAL_GATE_TMP_ROOT\" ]]; then LOCAL_GATE_TMP_ROOT=/tmp; fi",
+            localGate,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "mktemp -d \"$LOCAL_GATE_TMP_ROOT/stratalint-local-gate.XXXXXXXX\"",
             localGate,
             StringComparison.Ordinal);
     }

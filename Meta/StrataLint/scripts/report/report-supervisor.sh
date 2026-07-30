@@ -65,6 +65,9 @@ CONCURRENCY_COUNT=0
 FD_PEAK=0
 RSS_PEAK_KB=0
 STARTED_MS=0
+SIGNALLED_SHUTDOWN=0
+LAST_FD_SAMPLE_MS=0
+FD_SAMPLE_INTERVAL_MS=1000
 
 early_cleanup() {
   if [[ -n "$TMP_ROOT" ]]; then rm -rf -- "$TMP_ROOT"; fi
@@ -289,9 +292,17 @@ marker_processes() {
           $2 == 1 && elapsed($3) <= window {print $1}
         ' | paste -sd, -)"
     [[ -n "$candidates" ]] || return 0
-    { lsof -a -p "$candidates" -d 1,2,9 2>/dev/null || true; } \
+    { bounded_lsof -a -p "$candidates" -d 1,2,9 2>/dev/null || true; } \
       | awk -v stdout="$RUN_STDOUT" -v stderr="$RUN_STDERR" -v marker="$RUN_MARKER" \
           '$NF == stdout || $NF == stderr || $NF == marker {print $2}'
+  fi
+}
+
+bounded_lsof() {
+  if command -v perl >/dev/null 2>&1; then
+    perl -e 'alarm shift @ARGV; exec @ARGV or exit 127' 2 lsof "$@"
+  else
+    lsof "$@"
   fi
 }
 
@@ -351,9 +362,18 @@ signal_recorded_processes() {
 }
 
 sample_process_tree() {
-  local pid rss fd members
+  local pid rss fd members current_ms sample_fd
   local rss_total=0
   local fd_total=0
+  sample_fd=1
+  if [[ ! -d /proc ]] && command -v lsof >/dev/null 2>&1; then
+    current_ms="$(now_ms)"
+    sample_fd=0
+    if (( current_ms - LAST_FD_SAMPLE_MS >= FD_SAMPLE_INTERVAL_MS )); then
+      sample_fd=1
+      LAST_FD_SAMPLE_MS="$current_ms"
+    fi
+  fi
   members="$({
     if [[ -n "$CHILD_PID" ]]; then collect_process_tree "$CHILD_PID"; fi
     marker_processes
@@ -367,8 +387,8 @@ sample_process_tree() {
     rss_total=$((rss_total + rss))
     if [[ -d "/proc/$pid/fd" ]]; then
       fd="$( { find "/proc/$pid/fd" -mindepth 1 -maxdepth 1 -print 2>/dev/null || true; } | awk 'END {print NR + 0}')"
-    elif command -v lsof >/dev/null 2>&1; then
-      fd="$( { lsof -a -p "$pid" -d 0-999999 2>/dev/null || true; } | awk 'NR > 1 {count++} END {print count + 0}')"
+    elif [[ "$sample_fd" == "1" ]] && command -v lsof >/dev/null 2>&1; then
+      fd="$( { bounded_lsof -a -p "$pid" -d 0-999999 2>/dev/null || true; } | awk 'NR > 1 {count++} END {print count + 0}')"
     else
       fd=0
     fi
@@ -380,14 +400,15 @@ sample_process_tree() {
 
 terminate_process_group() {
   local group_id="$1"
-  record_supervised_processes
+  local refresh_candidates="${2:-1}"
+  if [[ "$refresh_candidates" == "1" ]]; then record_supervised_processes; fi
   signal_recorded_processes TERM
-  signal_marker_processes TERM
+  if [[ "$refresh_candidates" == "1" ]]; then signal_marker_processes TERM; fi
   kill -TERM -- "-$group_id" >/dev/null 2>&1 || true
   sleep 0.2
-  record_supervised_processes
+  if [[ "$refresh_candidates" == "1" ]]; then record_supervised_processes; fi
   signal_recorded_processes KILL
-  signal_marker_processes KILL
+  if [[ "$refresh_candidates" == "1" ]]; then signal_marker_processes KILL; fi
   kill -KILL -- "-$group_id" >/dev/null 2>&1 || true
 }
 
@@ -502,8 +523,12 @@ finish() {
   trap - EXIT HUP INT TERM
   set +e
   if [[ -n "$PROCESS_GROUP_ID" ]]; then
-    sample_process_tree
-    terminate_process_group "$PROCESS_GROUP_ID"
+    if [[ "$SIGNALLED_SHUTDOWN" == "1" ]]; then
+      terminate_process_group "$PROCESS_GROUP_ID" 0
+    else
+      sample_process_tree
+      terminate_process_group "$PROCESS_GROUP_ID"
+    fi
   fi
   if [[ -n "$CHILD_PID" ]]; then
     wait "$CHILD_PID" >/dev/null 2>&1 || true
@@ -511,11 +536,14 @@ finish() {
   if [[ -n "$STDOUT_RELAY_PID" ]]; then wait_for_relay "$STDOUT_RELAY_PID"; fi
   if [[ -n "$STDERR_RELAY_PID" ]]; then wait_for_relay "$STDERR_RELAY_PID"; fi
   finished_ms="$(now_ms)"
-  if [[ -n "$CHILD_PID" && "$STARTED_MS" -gt 0 ]]; then
+  if [[ -n "$SLOT_DIR" ]]; then
+    rm -rf -- "$SLOT_DIR"
+    SLOT_DIR=""
+  fi
+  if [[ "$rc" != "124" && -n "$CHILD_PID" && "$STARTED_MS" -gt 0 ]]; then
     append_metrics "$rc" "$((finished_ms - STARTED_MS))" >/dev/null 2>&1 || true
   fi
   if [[ -n "$METRICS_LOCK_DIR" ]]; then rm -rf -- "$METRICS_LOCK_DIR"; fi
-  if [[ -n "$SLOT_DIR" ]]; then rm -rf -- "$SLOT_DIR"; fi
   rm -rf -- "$TMP_ROOT"
   exit "$rc"
 }
@@ -523,7 +551,7 @@ finish() {
 trap finish EXIT
 trap 'exit 129' HUP
 trap 'exit 130' INT
-trap 'exit 143' TERM
+trap 'SIGNALLED_SHUTDOWN=1; exit 143' TERM
 
 if [[ "$LEAN_SLOT" == "1" ]]; then
   acquire_lean_slot

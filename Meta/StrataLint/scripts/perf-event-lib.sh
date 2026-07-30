@@ -146,10 +146,15 @@ perf_flush_events() {
   [[ -n "$spool" && -s "$spool" ]] || return 0
   local project="$root/Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj"
   local target=""
-  target="$(dotnet msbuild "$project" \
-    -getProperty:TargetPath \
-    -property:Configuration=Release \
-    -verbosity:quiet 2>/dev/null)" || return 1
+  target="$(find "$root/Meta/StrataLint/StrataLint.Cli/bin/Release" \
+    -type f -name StrataLint.dll -print 2>/dev/null | sort | awk 'NR == 1 {first = $0} END {if (NR == 1) print first}')" \
+    || target=""
+  if [[ -z "$target" ]]; then
+    target="$(dotnet msbuild "$project" \
+      -getProperty:TargetPath \
+      -property:Configuration=Release \
+      -verbosity:quiet 2>/dev/null)" || return 1
+  fi
   [[ -n "$target" && "$target" == /* && -f "$target" ]] || return 1
   local ledger="${STRATALINT_PERF_LEDGER:-$HOME/.stratalint-perf/events.jsonl}"
   (cd "$root" && dotnet "$target" perf-append --input "$spool" --ledger "$ledger")

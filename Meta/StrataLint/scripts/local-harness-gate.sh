@@ -38,7 +38,10 @@ CANDIDATE_ROOT="$(cd "$CANDIDATE_ROOT" && pwd -P)"
 export PATH="$HOME/.elan/bin:/usr/local/share/dotnet:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${PATH:-}"
 
 GATE_STARTED="$(date +%s)"
-TMP_ROOT="$(mktemp -d "${TMPDIR:-/tmp}/stratalint-local-gate.XXXXXXXX")"
+LOCAL_GATE_TMP_ROOT="${TMPDIR:-}"
+if [[ -z "$LOCAL_GATE_TMP_ROOT" && -d /private/tmp ]]; then LOCAL_GATE_TMP_ROOT=/private/tmp; fi
+if [[ -z "$LOCAL_GATE_TMP_ROOT" ]]; then LOCAL_GATE_TMP_ROOT=/tmp; fi
+TMP_ROOT="$(mktemp -d "$LOCAL_GATE_TMP_ROOT/stratalint-local-gate.XXXXXXXX")"
 LOCAL_TIMING_FILE="$TMP_ROOT/local-gate-timing.jsonl"
 SHARED_TIMING_FILE="$TMP_ROOT/shared-gate-timing.jsonl"
 PERF_TMP="$(perf_make_spool_dir "$CANDIDATE_ROOT" stratalint-local-gate-perf 2>/dev/null || true)"
