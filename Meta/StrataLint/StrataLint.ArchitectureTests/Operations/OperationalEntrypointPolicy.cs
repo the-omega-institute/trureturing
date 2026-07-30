@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Text;
 using System.Text.RegularExpressions;
 using StrataLint.Engine;
@@ -249,12 +250,7 @@ internal static class OperationalEntrypointPolicy
                 var relativePath = $"{relativeDirectory}/{pathWithinDirectory}";
                 if (inspectAllEntryTypes)
                 {
-                    var attributes = File.GetAttributes(path);
-                    const FileAttributes nonRegularAttributes =
-                        FileAttributes.Directory
-                        | FileAttributes.ReparsePoint
-                        | FileAttributes.Device;
-                    if ((attributes & nonRegularAttributes) != 0 || !File.Exists(path))
+                    if (!IsPosixRegularFile(path, repositoryRoot))
                     {
                         findings.Add(new OperationalEntrypointFinding(
                             relativePath,
@@ -321,6 +317,36 @@ internal static class OperationalEntrypointPolicy
             if (match.Success) units.Add(match.Groups[1].Value);
         }
         return new LaunchdDiscovery(units, findings);
+    }
+
+    private static bool IsPosixRegularFile(string path, string repositoryRoot)
+    {
+        try
+        {
+            var info = new FileInfo(path);
+            if (info.LinkTarget is not null
+                || (info.Attributes & FileAttributes.ReparsePoint) != 0)
+            {
+                return false;
+            }
+
+            // POSIX test -f performs the stat/S_IFREG check that FileAttributes omits on Unix.
+            var result = BoundedProcessRunner.Run(
+                "/bin/test",
+                ["-f", path],
+                repositoryRoot,
+                TimeSpan.FromSeconds(5),
+                4 * 1024);
+            return result.ExitCode == 0;
+        }
+        catch (Exception exception) when (exception is IOException
+                                          or UnauthorizedAccessException
+                                          or InvalidOperationException
+                                          or Win32Exception
+                                          or TimeoutException)
+        {
+            return false;
+        }
     }
 
     private static void AddLaunchdCandidate(string path, ISet<string> candidates)

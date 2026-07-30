@@ -384,6 +384,48 @@ public sealed class OperationalEntrypointTests
     }
 
     [Fact]
+    public void FifoIsRejectedAsANonRegularLaunchdEntry()
+    {
+        WithRepository(
+            [Operation("hourly-maintenance", "ops/scripts/synthetic-maintenance.sh")],
+            repository =>
+            {
+                TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
+                CreateFifo(repository, ".fkst/launchd/rogue.plist");
+
+                var finding = Assert.Single(
+                    OperationalEntrypointPolicy.InspectRepository(repository, []),
+                    item => string.Equals(
+                        item.Path,
+                        ".fkst/launchd/rogue.plist",
+                        StringComparison.Ordinal));
+
+                Assert.Equal(".fkst/launchd/rogue.plist", finding.Path);
+                Assert.Contains("non-regular filesystem entry", finding.Message, StringComparison.Ordinal);
+            });
+    }
+
+    [Fact]
+    public void TrackedCanonicalLaunchdTemplateReplacedByFifoIsRejected()
+    {
+        WithRepository(
+            LaunchdOperations("synthetic"),
+            repository =>
+            {
+                PrepareLaunchdUnit(repository, "synthetic");
+                var template = Path.Combine(repository, ".fkst", "launchd", "synthetic.plist.in");
+                File.Delete(template);
+                CreateFifo(repository, ".fkst/launchd/synthetic.plist.in");
+
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
+
+                Assert.Equal(".fkst/launchd/synthetic.plist.in", finding.Path);
+                Assert.Contains("non-regular filesystem entry", finding.Message, StringComparison.Ordinal);
+            },
+            launchdUnits: ["synthetic"]);
+    }
+
+    [Fact]
     public void ExtensionlessLaunchdSymlinkIsRejected()
     {
         WithRepository(
@@ -600,6 +642,23 @@ public sealed class OperationalEntrypointTests
         File.WriteAllText(blobSource, "hourly-maintenance-target\n");
         var oid = Git(repository, "hash-object", "-w", blobSource);
         Git(repository, "update-index", "--add", "--cacheinfo", $"120000,{oid},{path}");
+    }
+
+    private static void CreateFifo(string repository, string path)
+    {
+        var fullPath = Path.Combine(repository, path.Replace('/', Path.DirectorySeparatorChar));
+        Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
+        var startInfo = new ProcessStartInfo("mkfifo")
+        {
+            RedirectStandardError = true,
+            UseShellExecute = false,
+        };
+        startInfo.ArgumentList.Add(fullPath);
+        using var process = Process.Start(startInfo)
+            ?? throw new InvalidOperationException("could not start mkfifo");
+        var error = process.StandardError.ReadToEnd();
+        process.WaitForExit();
+        Assert.True(process.ExitCode == 0, $"mkfifo exited {process.ExitCode}: {error}");
     }
 
     private static void WriteFile(string repository, string path, string contents)
