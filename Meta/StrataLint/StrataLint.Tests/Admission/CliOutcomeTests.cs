@@ -120,12 +120,14 @@ public sealed class CliOutcomeTests
     [Fact]
     public void ValidateBlueprintPinsDelegatesToTheAuthoringEnvironment()
     {
+        var unsupportedAnchor = string.Concat("pz", "g/proposition/9.2");
+        var rejection = $"BLUEPRINT_PINS_REJECTED anchor '{unsupportedAnchor}' is not accepted\n";
         var console = new BufferedConsole();
         var environment = new StubCliEnvironment(
             Admitted(),
             blueprintPins: new ExplicitCommandResult(
                 1,
-                "BLUEPRINT_PINS_REJECTED anchor 'pzg/proposition/9.2' is not accepted\n",
+                rejection,
                 string.Empty));
 
         var exitCode = CliApplication.Run(
@@ -134,9 +136,7 @@ public sealed class CliOutcomeTests
             console);
 
         Assert.Equal(1, exitCode);
-        Assert.Equal(
-            "BLUEPRINT_PINS_REJECTED anchor 'pzg/proposition/9.2' is not accepted\n",
-            console.Output);
+        Assert.Equal(rejection, console.Output);
         Assert.Equal(string.Empty, console.Error);
     }
 

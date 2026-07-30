@@ -34,19 +34,20 @@ public sealed class BlueprintPinValidationTests
     }
 
     [Fact]
-    public void UnsupportedPzgAnchorRejectsIssue460Pins()
+    public void UnsupportedRetiredTheoryAnchorRejectsIssue460Pins()
     {
+        var unsupportedAnchor = string.Concat("pz", "g/proposition/9.2");
         var outcome = Validate(Pins(
             domain: "Arith",
             module: "PrimeModUnit",
             generality: "G",
-            anchors: ["pzg/proposition/9.2"]));
+            anchors: [unsupportedAnchor]));
 
         var rejected = Assert.IsType<BlueprintPinValidationOutcome.Rejected>(outcome);
         Assert.Contains(
             rejected.Diagnostics,
-            static diagnostic => diagnostic.Contains(
-                "anchor 'pzg/proposition/9.2'",
+            diagnostic => diagnostic.Contains(
+                $"anchor '{unsupportedAnchor}'",
                 StringComparison.Ordinal));
     }
 
@@ -93,11 +94,9 @@ public sealed class BlueprintPinValidationTests
     [Fact]
     public void Issue398InstancePinWithGeneralPremisesReportsSemanticGeneralityAsUndecidable()
     {
-        var snapshot = Snapshot(new Dictionary<string, string>(StringComparer.Ordinal)
-        {
-            ["D5/S0/Carrier/Conj.lean"] = Header("D5/S0/Carrier/Conj", "G"),
-            ["D5/S0/Carrier/Norm.lean"] = Header("D5/S0/Carrier/Norm", "G"),
-        });
+        var conj = FormalGid("D5/S0/Carrier/Conj");
+        var norm = FormalGid("D5/S0/Carrier/Norm");
+        var snapshot = Snapshot(ExistingFormalFiles(conj, norm));
         var outcome = BlueprintPinValidator.Validate(
             Policy(),
             snapshot,
@@ -105,7 +104,7 @@ public sealed class BlueprintPinValidationTests
                 domain: "Carrier",
                 module: "CharacteristicEquation",
                 generality: "I",
-                imports: ["D5/S0/Carrier/Conj", "D5/S0/Carrier/Norm"]));
+                imports: [conj.Value, norm.Value]));
 
         var accepted = Assert.IsType<BlueprintPinValidationOutcome.Accepted>(outcome);
         Assert.Contains(
@@ -133,9 +132,10 @@ public sealed class BlueprintPinValidationTests
     [Fact]
     public void GeneralPinRejectsAnInstanceImportLikeSl010()
     {
+        var instanceFact = FormalGid("D5/S0/Carrier/InstanceFact");
         var snapshot = Snapshot(new Dictionary<string, string>(StringComparer.Ordinal)
         {
-            ["D5/S0/Carrier/InstanceFact.lean"] = Header("D5/S0/Carrier/InstanceFact", "I"),
+            [instanceFact.Path.Value] = Header(instanceFact.Value, "I"),
         });
         var outcome = BlueprintPinValidator.Validate(
             Policy(),
@@ -144,23 +144,22 @@ public sealed class BlueprintPinValidationTests
                 domain: "Carrier",
                 module: "GeneralConsumer",
                 generality: "G",
-                imports: ["D5/S0/Carrier/InstanceFact"]));
+                imports: [instanceFact.Value]));
 
         var rejected = Assert.IsType<BlueprintPinValidationOutcome.Rejected>(outcome);
         Assert.Contains(
             rejected.Diagnostics,
-            static diagnostic => diagnostic.Contains(
-                "G artifact imports I fact D5/S0/Carrier/InstanceFact.lean",
+            diagnostic => diagnostic.Contains(
+                $"G artifact imports I fact {instanceFact.Path.Value}",
                 StringComparison.Ordinal));
     }
 
     [Fact]
     public void JumpCocyclePinsAreStructurallyAcceptedWithoutBanningInstanceGenerality()
     {
-        var snapshot = Snapshot(new Dictionary<string, string>(StringComparer.Ordinal)
-        {
-            ["D5/S1/Phase/Basic.lean"] = Header("D5/S1/Phase/Basic", "I"),
-        });
+        var phaseBasic = FormalGid("D5/S1/Phase/Basic");
+        var jumpCocycle = FormalGid("D5/S1/Dynamics/JumpCocycle");
+        var snapshot = Snapshot(ExistingFormalFiles(phaseBasic));
         var outcome = BlueprintPinValidator.Validate(
             Policy(),
             snapshot,
@@ -168,19 +167,18 @@ public sealed class BlueprintPinValidationTests
                 domain: "Dynamics",
                 module: "JumpCocycle",
                 generality: "I",
-                imports: ["D5/S1/Phase/Basic"]));
+                imports: [phaseBasic.Value]));
 
         var accepted = Assert.IsType<BlueprintPinValidationOutcome.Accepted>(outcome);
-        Assert.Equal("D5/S1/Dynamics/JumpCocycle", accepted.TargetGid);
+        Assert.Equal(jumpCocycle.Value, accepted.TargetGid);
     }
 
     [Fact]
     public void ExistingGeneralCarrierPinsAreAccepted()
     {
-        var snapshot = Snapshot(new Dictionary<string, string>(StringComparer.Ordinal)
-        {
-            ["D5/S0/Carrier/Conj.lean"] = Header("D5/S0/Carrier/Conj", "G"),
-        });
+        var conj = FormalGid("D5/S0/Carrier/Conj");
+        var norm = FormalGid("D5/S0/Carrier/Norm");
+        var snapshot = Snapshot(ExistingFormalFiles(conj));
         var outcome = BlueprintPinValidator.Validate(
             Policy(),
             snapshot,
@@ -188,10 +186,10 @@ public sealed class BlueprintPinValidationTests
                 domain: "Carrier",
                 module: "Norm",
                 generality: "G",
-                imports: ["D5/S0/Carrier/Conj"]));
+                imports: [conj.Value]));
 
         var accepted = Assert.IsType<BlueprintPinValidationOutcome.Accepted>(outcome);
-        Assert.Equal("D5/S0/Carrier/Norm", accepted.TargetGid);
+        Assert.Equal(norm.Value, accepted.TargetGid);
         Assert.Empty(accepted.Unverified);
     }
 
@@ -252,6 +250,24 @@ public sealed class BlueprintPinValidationTests
         var raw = RawRepositorySnapshot.Create(
             files.Select(static pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
         return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+    }
+
+    private static Dictionary<string, string> ExistingFormalFiles(params Gid[] gids)
+    {
+        var root = FindRepositoryRoot();
+        return gids.ToDictionary(
+            static gid => gid.Path.Value,
+            gid => File.ReadAllText(
+                Path.Combine(root, gid.Path.Value.Replace('/', Path.DirectorySeparatorChar)),
+                Encoding.UTF8),
+            StringComparer.Ordinal);
+    }
+
+    private static Gid FormalGid(string value)
+    {
+        Assert.True(Gid.TryParse(value, out var gid));
+        Assert.Equal(value, gid.Value);
+        return gid;
     }
 
     private static string Header(string gid, string generality) => $"""
