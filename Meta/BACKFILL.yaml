@@ -1704,16 +1704,23 @@ sources:
           raw_sha256: sha256:58e8f015eea7218ab85a93414db29b65667b79f34b18b8f9ab343676c454adf2
           normalized_sha256: sha256:58e8f015eea7218ab85a93414db29b65667b79f34b18b8f9ab343676c454adf2
         cas_ref: sha256:58e8f015eea7218ab85a93414db29b65667b79f34b18b8f9ab343676c454adf2
-        coverage_gids: []
+        coverage_gids:
+          - D5/S1/Scale/CarrierFoundations.golden_carrier_foundations
         receipts:
-          coverage: []
-          scribe: []
+          coverage:
+            - gid: D5/S1/Scale/CarrierFoundations.golden_carrier_foundations
+              source_sha256: sha256:58e8f015eea7218ab85a93414db29b65667b79f34b18b8f9ab343676c454adf2
+              target_sha256: sha256:351b14e9a00f243b0d304094d2272f8f0648c9f79e4ddd3a566bf8007810dc50
+          scribe:
+            - gid: D5/S1/Scale/CarrierFoundations.golden_carrier_foundations
+              definition_sha256: sha256:3bfb1632666db91ead5e5f693b485acb892f47062a387bbe8db77033d74d9340
+              emission_sha256: sha256:d8c7f40c7755d023de8a9444fedd56061f2c0ff015d214bdb129e7acb0fd0140
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: absorbed
+          truth: closed
       - atom_id: gict-residual-e38742ca0c18ff6ec5b2e9bdcdf99bc700c0ff2c38031b60a79dd17f4a617766
         ast_path: definition/1.4
         fingerprints:
