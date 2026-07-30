@@ -1,4 +1,6 @@
-schema_version = 1
+schema_version = 2
+host_contract_schema = ".fkst/host-contract.schema"
+launcher_template = ".fkst/launchd/maintenance.plist.in"
 
 [[operations]]
 id = "hourly-maintenance"
@@ -26,6 +28,7 @@ external_tools = [
   "mv",
   "pgrep",
   "ps",
+  "pwd",
   "rm",
   "rmdir",
   "sed",
@@ -33,4 +36,50 @@ external_tools = [
   "tee",
   "timeout",
   "tr",
+]
+
+[[operations]]
+id = "maintenance-launcher-render"
+make_target = "maintenance-launcher-render"
+implementation = ".fkst/scripts/render-maintenance-launcher.sh"
+tests = [
+  ".fkst/tests/hourly-maintenance-behavior.sh",
+  "Meta/StrataLint/StrataLint.ArchitectureTests/Operations/OperationalEntrypointTests.cs",
+  "Meta/StrataLint/StrataLint.Tests/Commands/MakeWorkflowTests.cs",
+]
+external_tools = [
+  "bash",
+  "basename",
+  "chmod",
+  "dirname",
+  "grep",
+  "mktemp",
+  "mv",
+  "plutil",
+  "pwd",
+  "sed",
+]
+
+[[operations]]
+id = "maintenance-launcher-check"
+make_target = "maintenance-launcher-check"
+implementation = ".fkst/scripts/check-maintenance-launcher.sh"
+tests = [
+  ".fkst/tests/hourly-maintenance-behavior.sh",
+  "Meta/StrataLint/StrataLint.ArchitectureTests/Operations/OperationalEntrypointTests.cs",
+  "Meta/StrataLint/StrataLint.Tests/Commands/MakeWorkflowTests.cs",
+]
+external_tools = [
+  "bash",
+  "basename",
+  "chmod",
+  "cmp",
+  "dirname",
+  "grep",
+  "mktemp",
+  "mv",
+  "plutil",
+  "pwd",
+  "rm",
+  "sed",
 ]

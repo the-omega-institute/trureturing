@@ -3,6 +3,10 @@
 # worktree collection, and stuck Lean build/slot collection.
 set -uo pipefail
 
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
+# shellcheck source=.fkst/scripts/host-contract.sh
+source "$SCRIPT_DIR/host-contract.sh"
+
 CHANGED=0
 PLATFORM_CHANGED=0
 CHECKOUT_DEV_REV=""
@@ -35,22 +39,22 @@ require_absolute_path() {
 validate_configuration() {
   local name
   for name in \
-    FKST_CHECKOUT_ROOT \
+    FKST_HOST_ROOT \
     FKST_PLATFORM_ROOT \
-    FKST_FRAMEWORK_BIN \
+    BIN \
     FKST_RUN_SCRIPT \
     FKST_MAINTENANCE_LOG \
     FKST_WORKTREE_ROOT \
     FKST_REPORT_SLOT_ROOT \
     FKST_TIMEOUT_BIN \
-    FKST_GITHUB_REPOSITORY \
+    FKST_GITHUB_REPO \
     FKST_LAUNCHD_LABEL; do
     require_parameter "$name" || return
   done
   for name in \
-    FKST_CHECKOUT_ROOT \
+    FKST_HOST_ROOT \
     FKST_PLATFORM_ROOT \
-    FKST_FRAMEWORK_BIN \
+    BIN \
     FKST_RUN_SCRIPT \
     FKST_MAINTENANCE_LOG \
     FKST_WORKTREE_ROOT \
@@ -71,14 +75,14 @@ restore_platform_bytes() {
   [[ -n "$PLATFORM_LOCK_BACKUP" && -f "$PLATFORM_LOCK_BACKUP" ]] \
     || { say "ROLLBACK-FAIL: lock backup unavailable"; return 1; }
 
-  cp "$PLATFORM_WORKSPACE_BACKUP" "$FKST_CHECKOUT_ROOT/fkst.workspace.toml" \
-    && cp "$PLATFORM_LOCK_BACKUP" "$FKST_CHECKOUT_ROOT/fkst.lock"
+  cp "$PLATFORM_WORKSPACE_BACKUP" "$FKST_HOST_ROOT/fkst.workspace.toml" \
+    && cp "$PLATFORM_LOCK_BACKUP" "$FKST_HOST_ROOT/fkst.lock"
 }
 
 rollback_platform() {
   restore_platform_bytes || return 1
-  if ! "$FKST_TIMEOUT_BIN" 240 "$FKST_FRAMEWORK_BIN" host lock \
-      --project-root "$FKST_CHECKOUT_ROOT" >/dev/null 2>&1; then
+  if ! "$FKST_TIMEOUT_BIN" 240 "$BIN" host lock \
+      --project-root "$FKST_HOST_ROOT" >/dev/null 2>&1; then
     say "ROLLBACK-HOST-LOCK-FAIL; preserving original pin and lock bytes"
   fi
   # host lock may rewrite the lock even for the restored pin. The rollback contract is the
@@ -93,7 +97,7 @@ sync_platform() {
   # Issue #2461: the deployed engine reads checkout/fkst.workspace.toml, not the committed
   # checkout/.fkst copy. The deployed top-level file is therefore the only pin updated here.
   PLATFORM_CURRENT_REV="$(
-    grep -oE '[0-9a-f]{40}' "$FKST_CHECKOUT_ROOT/fkst.workspace.toml" 2>/dev/null \
+    grep -oE '[0-9a-f]{40}' "$FKST_HOST_ROOT/fkst.workspace.toml" 2>/dev/null \
       | head -1
   )"
   PLATFORM_DEV_REV="$(git -C "$FKST_PLATFORM_ROOT" rev-parse origin/dev 2>/dev/null)"
@@ -109,17 +113,17 @@ sync_platform() {
 
   local stamp temporary_workspace
   stamp="$(date -u +%Y%m%d-%H%M%S)"
-  PLATFORM_WORKSPACE_BACKUP="$FKST_CHECKOUT_ROOT/fkst.workspace.toml.bak-$stamp"
-  PLATFORM_LOCK_BACKUP="$FKST_CHECKOUT_ROOT/fkst.lock.bak-$stamp"
-  temporary_workspace="$FKST_CHECKOUT_ROOT/fkst.workspace.toml.next-$stamp"
-  cp "$FKST_CHECKOUT_ROOT/fkst.workspace.toml" "$PLATFORM_WORKSPACE_BACKUP" \
-    && cp "$FKST_CHECKOUT_ROOT/fkst.lock" "$PLATFORM_LOCK_BACKUP" \
+  PLATFORM_WORKSPACE_BACKUP="$FKST_HOST_ROOT/fkst.workspace.toml.bak-$stamp"
+  PLATFORM_LOCK_BACKUP="$FKST_HOST_ROOT/fkst.lock.bak-$stamp"
+  temporary_workspace="$FKST_HOST_ROOT/fkst.workspace.toml.next-$stamp"
+  cp "$FKST_HOST_ROOT/fkst.workspace.toml" "$PLATFORM_WORKSPACE_BACKUP" \
+    && cp "$FKST_HOST_ROOT/fkst.lock" "$PLATFORM_LOCK_BACKUP" \
     || { say "PLATFORM-BACKUP-FAIL"; return 1; }
 
   say "PLATFORM BEHIND ${PLATFORM_CURRENT_REV:0:12} -> ${PLATFORM_DEV_REV:0:12}; syncing"
   if ! sed "s/$PLATFORM_CURRENT_REV/$PLATFORM_DEV_REV/g" \
-      "$FKST_CHECKOUT_ROOT/fkst.workspace.toml" > "$temporary_workspace" \
-      || ! mv "$temporary_workspace" "$FKST_CHECKOUT_ROOT/fkst.workspace.toml"; then
+      "$FKST_HOST_ROOT/fkst.workspace.toml" > "$temporary_workspace" \
+      || ! mv "$temporary_workspace" "$FKST_HOST_ROOT/fkst.workspace.toml"; then
     rm -f "$temporary_workspace"
     if rollback_platform; then
       say "PLATFORM-PIN-WRITE-FAIL; reverted platform"
@@ -129,8 +133,8 @@ sync_platform() {
     return 1
   fi
 
-  if ! "$FKST_TIMEOUT_BIN" 240 "$FKST_FRAMEWORK_BIN" host lock \
-      --project-root "$FKST_CHECKOUT_ROOT" >/dev/null 2>&1; then
+  if ! "$FKST_TIMEOUT_BIN" 240 "$BIN" host lock \
+      --project-root "$FKST_HOST_ROOT" >/dev/null 2>&1; then
     say "HOST-LOCK-FAIL for ${PLATFORM_DEV_REV:0:12}; reverting platform"
     rollback_platform
     return 1
@@ -141,14 +145,14 @@ sync_platform() {
 }
 
 sync_checkout() {
-  if ! git -C "$FKST_CHECKOUT_ROOT" fetch origin dev >/dev/null 2>&1; then
+  if ! git -C "$FKST_HOST_ROOT" fetch origin dev >/dev/null 2>&1; then
     say "CHECKOUT-FETCH-FAIL; skipped checkout sync"
     return 0
   fi
 
   local checkout_head checkout_status behind
-  checkout_head="$(git -C "$FKST_CHECKOUT_ROOT" rev-parse HEAD 2>/dev/null)"
-  CHECKOUT_DEV_REV="$(git -C "$FKST_CHECKOUT_ROOT" rev-parse origin/dev 2>/dev/null)"
+  checkout_head="$(git -C "$FKST_HOST_ROOT" rev-parse HEAD 2>/dev/null)"
+  CHECKOUT_DEV_REV="$(git -C "$FKST_HOST_ROOT" rev-parse origin/dev 2>/dev/null)"
   if [[ -z "$checkout_head" || -z "$CHECKOUT_DEV_REV" ]]; then
     say "CHECKOUT-REV-PARSE-FAIL; skipped checkout sync"
     return 0
@@ -157,14 +161,25 @@ sync_checkout() {
     say "CHECKOUT CURRENT (${checkout_head:0:12})"
     return 0
   fi
-  if ! git -C "$FKST_CHECKOUT_ROOT" merge-base --is-ancestor \
+  if ! git -C "$FKST_HOST_ROOT" merge-base --is-ancestor \
       "$checkout_head" "$CHECKOUT_DEV_REV" >/dev/null 2>&1; then
     say "CHECKOUT DIVERGED from origin/dev; not auto-FF (manual review)"
     return 0
   fi
 
+  # Only TRACKED modifications may block the fast-forward. Untracked files provably do not
+  # prevent one -- `git merge --ff-only` succeeds with them present -- and `--ff-only` below is
+  # already the correct arbiter for the one case that matters, an untracked file the merge would
+  # overwrite, which it refuses on its own.
+  #
+  # Counting untracked files as "uncommitted changes" froze the deployed checkout permanently on a
+  # real host: this tool's own rollback backups (fkst.lock.bak-*, fkst.workspace.toml.bak-*) are
+  # created every run, so the guard blocked the very fast-forward the backups exist to protect;
+  # and `.metadata_never_index`, an intentional Spotlight-exclusion marker that must stay, blocked
+  # it on its own even after every backup was cleaned. The checkout sat 24 commits behind with no
+  # path forward.
   if ! checkout_status="$(
-      git -C "$FKST_CHECKOUT_ROOT" status --porcelain --untracked-files=normal 2>/dev/null
+      git -C "$FKST_HOST_ROOT" status --porcelain --untracked-files=no 2>/dev/null
     )"; then
     say "CHECKOUT-STATUS-FAIL; skipped checkout sync"
     return 0
@@ -174,10 +189,10 @@ sync_checkout() {
     return 0
   fi
 
-  behind="$(git -C "$FKST_CHECKOUT_ROOT" rev-list \
+  behind="$(git -C "$FKST_HOST_ROOT" rev-list \
     "$checkout_head..$CHECKOUT_DEV_REV" --count 2>/dev/null)"
   say "CHECKOUT BEHIND ${checkout_head:0:12} -> ${CHECKOUT_DEV_REV:0:12} ($behind commits); FF"
-  if git -C "$FKST_CHECKOUT_ROOT" merge --ff-only "$CHECKOUT_DEV_REV" >/dev/null 2>&1; then
+  if git -C "$FKST_HOST_ROOT" merge --ff-only "$CHECKOUT_DEV_REV" >/dev/null 2>&1; then
     CHANGED=1
   else
     say "CHECKOUT-FF-BLOCKED; skipped, engine stays on ${checkout_head:0:12}"
@@ -223,19 +238,19 @@ gc_worktrees() {
     if [[ "$lane" =~ ([0-9]+)-[0-9]+$ ]]; then
       issue_number="${BASH_REMATCH[1]}"
       state="$(gh issue view "$issue_number" \
-        --repo "$FKST_GITHUB_REPOSITORY" --json state --jq '.state' 2>/dev/null)"
+        --repo "$FKST_GITHUB_REPO" --json state --jq '.state' 2>/dev/null)"
       [[ "$state" == "CLOSED" ]] && eligible=1
     fi
     [[ "$eligible" == "1" ]] || continue
 
-    if git -C "$FKST_CHECKOUT_ROOT" worktree remove "${directory%/}" >/dev/null 2>&1; then
+    if git -C "$FKST_HOST_ROOT" worktree remove "${directory%/}" >/dev/null 2>&1; then
       removed=$((removed + 1))
     else
       say "WT-GC retained $lane (git refused removal)"
     fi
   done
   if [[ "$removed" -gt 0 ]]; then
-    git -C "$FKST_CHECKOUT_ROOT" worktree prune >/dev/null 2>&1 || true
+    git -C "$FKST_HOST_ROOT" worktree prune >/dev/null 2>&1 || true
     say "WT-GC removed $removed orphan worktree(s)"
   fi
 }
@@ -278,13 +293,13 @@ gc_stuck_lean_builds() {
 }
 
 cleanup_old_backups() {
-  find "$FKST_CHECKOUT_ROOT" -maxdepth 1 -name '*.bak-*' -mtime +3 -delete \
+  find "$FKST_HOST_ROOT" -maxdepth 1 -name '*.bak-*' -mtime +3 -delete \
     2>/dev/null || true
 }
 
 engine_pid() {
   local escaped_root
-  escaped_root="$(printf '%s' "$FKST_CHECKOUT_ROOT" | sed 's/[][\\.^$*+?{}|()]/\\&/g')"
+  escaped_root="$(printf '%s' "$FKST_HOST_ROOT" | sed 's/[][\\.^$*+?{}|()]/\\&/g')"
   pgrep -f "fkst-framework.*supervise --project-root $escaped_root" 2>/dev/null | head -1
 }
 
@@ -336,7 +351,7 @@ restart_if_needed() {
     fi
     if ! implementing="$(
         LEAN4_GUARDRAILS_BYPASS=1 gh issue list \
-        --repo "$FKST_GITHUB_REPOSITORY" \
+        --repo "$FKST_GITHUB_REPO" \
         --state open \
         --label 'fkst-dev:implementing' \
         --json number \
@@ -362,7 +377,32 @@ restart_if_needed() {
 }
 
 main() {
+  local host_config="${HOST_CONFIG:-}" validate_only="${VALIDATE_ONLY:-0}"
+  [[ "$validate_only" == "0" || "$validate_only" == "1" ]] \
+    || { printf 'hourly-maintenance: VALIDATE_ONLY must be 0 or 1\n' >&2; return 2; }
+  while [[ "$#" -gt 0 ]]; do
+    case "$1" in
+      --host-config)
+        [[ "$#" -ge 2 ]] \
+          || { printf 'hourly-maintenance: --host-config requires a path\n' >&2; return 2; }
+        host_config="$2"
+        shift 2
+        ;;
+      --validate-only)
+        validate_only=1
+        shift
+        ;;
+      *)
+        printf 'hourly-maintenance: unknown argument %s\n' "$1" >&2
+        return 2
+        ;;
+    esac
+  done
+  [[ -n "$host_config" ]] \
+    || { printf 'hourly-maintenance: --host-config is required\n' >&2; return 2; }
+  host_contract_load "$host_config" || return
   validate_configuration || return
+  [[ "$validate_only" == "0" ]] || return 0
   sync_platform || return
   sync_checkout
   gc_worktrees
