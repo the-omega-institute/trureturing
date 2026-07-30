@@ -116,6 +116,10 @@ from pathlib import Path
 
 text = Path(sys.argv[1]).read_text(encoding="utf-8")
 required = [
+    'cp .fkst/fkst.workspace.toml fkst.workspace.toml',
+    'host lock --project-root "$PWD"',
+    'FKST_LAUNCHD_LABEL=<deployment-namespace>.supervise',
+    'FKST_MAINTENANCE_LAUNCHD_LABEL=<deployment-namespace>.maintenance',
     'make supervise-launcher-render HOST_CONFIG=',
     'plutil -lint "<absolute-path-to-rendered-supervise-plist>"',
     'launchctl bootstrap "gui/$(id -u)" "<absolute-path-to-rendered-supervise-plist>"',

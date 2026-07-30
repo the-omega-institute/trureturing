@@ -11,7 +11,23 @@ the integration base used by this repository, then create the durable, runtime, 
 rate-pool, report-slot, worktree, and workflow-catalog directories named below. The launcher
 directory must already exist before rendering.
 
-## 2. Create the host file
+## 2. Provision the runtime workspace contract
+
+The platform consumer reads `fkst.workspace.toml` and `fkst.lock` from the checkout root, while
+the repository-owned manifest remains tracked under `.fkst/`. From the dedicated checkout root,
+provision the top-level manifest and have the configured framework resolve its lock:
+
+```sh
+cp .fkst/fkst.workspace.toml fkst.workspace.toml
+<absolute-path-to-fkst-framework> host lock --project-root "$PWD"
+test -s fkst.workspace.toml
+test -s fkst.lock
+```
+
+All four commands must exit zero. Repeat the copy and lock step after changing the tracked
+workspace composition or platform source pin. Do not hand-edit the generated top-level lock.
+
+## 3. Create the host file
 
 Create one host-local file named `host.env` outside Git and set its mode to `0600`. Replace every
 angle-bracket value below with a literal value for this machine. Values must not contain shell
@@ -37,8 +53,8 @@ export FKST_MAINTENANCE_LAUNCHER_LOG=<absolute-path-to-launchd-output-log>
 export FKST_WORKTREE_ROOT=<absolute-path-to-runtime-worktrees>
 export FKST_REPORT_SLOT_ROOT=<absolute-path-to-report-supervisor-slots>
 export FKST_TIMEOUT_BIN=<absolute-path-to-timeout-command>
-export FKST_LAUNCHD_LABEL=<loaded-supervisor-launchd-label>
-export FKST_MAINTENANCE_LAUNCHD_LABEL=<maintenance-launchd-label-for-this-machine>
+export FKST_LAUNCHD_LABEL=<deployment-namespace>.supervise
+export FKST_MAINTENANCE_LAUNCHD_LABEL=<deployment-namespace>.maintenance
 export FKST_MAINTENANCE_LAUNCHER_PATH=<absolute-path-to-rendered-maintenance-plist>
 export FKST_BASH_BIN=<absolute-path-to-bash>
 export FKST_ZSH_BIN=<absolute-path-to-zsh>
@@ -46,6 +62,12 @@ export FKST_PYTHON_BIN=<absolute-path-to-python3>
 export FKST_SUPERVISE_LAUNCHER_LOG=<absolute-path-to-supervise-launchd-output-log>
 export FKST_SUPERVISE_LAUNCHER_PATH=<absolute-path-to-rendered-supervise-plist>
 ```
+
+Choose one machine-specific `<deployment-namespace>` that matches the launchd label grammar
+`[A-Za-z0-9][A-Za-z0-9._-]*`. Both labels must use that exact namespace: supervise has the fixed
+`.supervise` suffix and maintenance has the fixed `.maintenance` suffix. Every additional
+inventory unit uses `<deployment-namespace>.<unit-id>`; a different prefix or suffix is outside
+this deployment and makes the inventory-wide conformance check fail closed.
 
 The `source` line is data to the strict maintenance parser: it must appear exactly as shown. It
 declares exactly one repository-data include, but the parser reads `.fkst/deploy.env` beside its
@@ -63,7 +85,7 @@ Existing hosts must add the five supervise provider keys above to their operator
 repository migration. The periodic conformance gate fails closed when any provider key is absent
 and names the missing key as `required host key <KEY> is unset`; it never skips the affected unit.
 
-## 3. Validate and render
+## 4. Validate and render
 
 From `FKST_HOST_ROOT`, validate the complete contract without performing maintenance, then render
 both inventory units to their configured launcher paths. The supervise render requires all five
@@ -83,7 +105,7 @@ checkout, bot login, and integration branch, and its program arguments must cont
 the same host config and contain the configured durable root, runtime root, platform package set,
 and host package set.
 
-## 4. Load the launcher
+## 5. Load the launcher
 
 Use the user launchd domain. If this label has never been loaded, the `bootout` command may report
 that no service exists; continue to `bootstrap`.
@@ -99,7 +121,7 @@ Do not copy either launcher implementation into a host directory. The maintenanc
 the tracked Make target in the dedicated checkout, and the supervise plist invokes the pinned
 platform run script with repository-derived package arguments.
 
-## 5. Verify deployment conformance
+## 6. Verify deployment conformance
 
 Run the inventory-wide conformance check after loading and after every checkout update that
 changes the contract, a launchd template, or a renderer:
