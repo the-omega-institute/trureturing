@@ -77,7 +77,7 @@ public sealed partial class PrShepherdRecalculationTests
         Assert.Equal(
             2,
             result.Log.Split(
-                "DRYRUN #1 BEHIND stale derivations -> ensure worktree",
+                "DRYRUN #1 RECALCULATE -> ensure worktree",
                 StringSplitOptions.None).Length - 1);
         Assert.Contains(
             "WATCH renew(1 轮耗尽,仍有 open 且 auto-merge armed PR,重启计数)",
