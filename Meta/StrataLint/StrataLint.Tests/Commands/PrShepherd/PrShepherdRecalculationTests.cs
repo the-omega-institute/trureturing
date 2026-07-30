@@ -457,7 +457,7 @@ public sealed partial class PrShepherdRecalculationTests
                 [[ -z "${GITHUB_TOKEN+x}" ]] || exit 92
                 [[ "$*" == *"echo-verify --emit --base origin/dev"* ]] || exit 96
                 printf 'echo-verify\n' >> "$PR_TEST_CALLS"
-                printf '%s\n' '<!-- echo-residual-summary:v2 base=git-sha1:1111111111111111111111111111111111111111 -->' '# Echo Residual Summary'
+                printf '%s\n' '<!-- echo-residual-summary:v3 residual=sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->' '# Echo Residual Summary'
                 """);
             WriteExecutable(
                 "git",
