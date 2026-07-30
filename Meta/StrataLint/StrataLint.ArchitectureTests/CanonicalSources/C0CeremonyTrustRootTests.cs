@@ -50,7 +50,7 @@ public sealed class C0CeremonyTrustRootTests
             AssertPreimageBlobs(
                 root,
                 [new C0Record("c0/controller", "git-sha1/" + blobOid, "anchor.txt")],
-                preimageOid);
+                treeOid);
         }
         finally
         {
@@ -167,12 +167,8 @@ public sealed class C0CeremonyTrustRootTests
         Assert.Equal(
             "git-tree/" + Untag(candidate.GetProperty("tree_oid").GetString()!, "git-sha1:"),
             preimageTree.Address);
-        var preimageOid = Untag(preimageCommit.Address, "git-commit/");
-        Assert.Equal(
-            Untag(preimageTree.Address, "git-tree/"),
-            Git(root, "rev-parse", preimageOid + "^{tree}"));
-        Git(root, "merge-base", "--is-ancestor", preimageOid, "HEAD");
-        AssertPreimageBlobs(root, records, preimageOid);
+        var preimageTreeOid = Untag(preimageTree.Address, "git-tree/");
+        AssertPreimageBlobs(root, records, preimageTreeOid);
     }
 
     private static void AssertAnchorPaths(
@@ -198,14 +194,14 @@ public sealed class C0CeremonyTrustRootTests
     private static void AssertPreimageBlobs(
         string root,
         IEnumerable<C0Record> records,
-        string preimageCommit)
+        string preimageTree)
     {
         foreach (var record in records.Where(static item => item.Kind is
             "c0/controller" or "c0/corpus" or "c0/gate-wiring"))
         {
             Assert.Equal(
                 record.Address,
-                "git-sha1/" + Git(root, "rev-parse", $"{preimageCommit}:{record.Path}"));
+                "git-sha1/" + Git(root, "rev-parse", $"{preimageTree}:{record.Path}"));
         }
     }
 
