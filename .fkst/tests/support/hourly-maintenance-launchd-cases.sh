@@ -76,3 +76,58 @@ missing_launchd_provider_key_fails_maintenance_cycle() (
   command grep -Fq 'required host key FKST_PYTHON_BIN is unset' "$output" \
     || fail "missing launchd provider key was not named actionably: $(<"$output")"
 )
+
+tracked_entrypoint_loads_strict_host_config() (
+  local root output
+  root="$(mktemp -d -t hourly-maintenance-host-contract.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  write_host_contract_fixture "$root" second-host-bot integration-second-host
+  output="$root/entrypoint.output"
+
+  env -i HOME="$root/home" PATH="/usr/bin:/bin" \
+    /usr/bin/make --no-print-directory -C "$REPOSITORY_ROOT" hourly-maintenance \
+    HOST_CONFIG="$FIXTURE_HOST_CONFIG" VALIDATE_ONLY=1 \
+    >"$output" 2>&1 \
+    || fail "tracked entrypoint did not accept the strict host contract: $(<"$output")"
+)
+
+validate_only_rejects_missing_supervise_provider_key() (
+  local root incomplete output
+  root="$(mktemp -d -t hourly-maintenance-validate-provider.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  write_host_contract_fixture "$root" second-host-bot integration-second-host
+  incomplete="$root/incomplete-host.env"
+  output="$root/validate-only.output"
+  grep -v '^export FKST_PYTHON_BIN=' "$FIXTURE_HOST_CONFIG" > "$incomplete"
+
+  if env -i HOME="$root/home" PATH="/usr/bin:/bin" \
+      /usr/bin/make --no-print-directory -C "$REPOSITORY_ROOT" hourly-maintenance \
+      HOST_CONFIG="$incomplete" VALIDATE_ONLY=1 >"$output" 2>&1; then
+    fail "VALIDATE_ONLY accepted a contract missing FKST_PYTHON_BIN"
+  fi
+  command grep -qF 'required host key FKST_PYTHON_BIN is unset' "$output" \
+    || fail "VALIDATE_ONLY did not name the missing provider key: $(<"$output")"
+)
+
+bring_up_document_bootstraps_supervise_before_inventory_check() (
+  python3 - "$REPOSITORY_ROOT/docs/devloop/fkst-host-bringup.md" <<'PY'
+import sys
+from pathlib import Path
+
+text = Path(sys.argv[1]).read_text(encoding="utf-8")
+required = [
+    'make supervise-launcher-render HOST_CONFIG=',
+    'plutil -lint "<absolute-path-to-rendered-supervise-plist>"',
+    'launchctl bootstrap "gui/$(id -u)" "<absolute-path-to-rendered-supervise-plist>"',
+    'make launchd-conformance-check HOST_CONFIG=',
+]
+positions = []
+for fragment in required:
+    position = text.find(fragment)
+    if position < 0:
+        raise SystemExit(f"bring-up document is missing: {fragment}")
+    positions.append(position)
+if positions != sorted(positions):
+    raise SystemExit("bring-up document checks inventory before supervise is rendered and bootstrapped")
+PY
+)

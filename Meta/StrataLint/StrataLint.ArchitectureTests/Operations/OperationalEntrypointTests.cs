@@ -363,6 +363,27 @@ public sealed class OperationalEntrypointTests
     }
 
     [Fact]
+    public void EmptyPlistDirectoryIsRejectedAsANonRegularLaunchdEntry()
+    {
+        WithRepository(
+            [Operation("hourly-maintenance", "ops/scripts/synthetic-maintenance.sh")],
+            repository =>
+            {
+                TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
+                Directory.CreateDirectory(Path.Combine(
+                    repository,
+                    ".fkst",
+                    "launchd",
+                    "rogue.plist"));
+
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
+
+                Assert.Equal(".fkst/launchd/rogue.plist", finding.Path);
+                Assert.Contains("non-regular filesystem entry", finding.Message, StringComparison.Ordinal);
+            });
+    }
+
+    [Fact]
     public void ExtensionlessLaunchdSymlinkIsRejected()
     {
         WithRepository(
@@ -400,9 +421,15 @@ public sealed class OperationalEntrypointTests
                 TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
                 WriteFile(repository, $".fkst/launchd/{relativePath}", "<plist/>\n");
 
-                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
+                var expectedPath = $".fkst/launchd/{relativePath}";
+                var finding = Assert.Single(
+                    OperationalEntrypointPolicy.InspectRepository(repository, []),
+                    item => string.Equals(
+                        item.Path,
+                        expectedPath,
+                        StringComparison.Ordinal));
 
-                Assert.Equal($".fkst/launchd/{relativePath}", finding.Path);
+                Assert.Equal(expectedPath, finding.Path);
                 Assert.Contains(
                     "noncanonical launchd entry",
                     finding.Message,

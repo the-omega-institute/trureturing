@@ -216,6 +216,7 @@ internal static class OperationalEntrypointPolicy
     {
         var units = new HashSet<string>(StringComparer.Ordinal);
         var launchdCandidates = new HashSet<string>(StringComparer.Ordinal);
+        var findings = new List<OperationalEntrypointFinding>();
         foreach (var path in indexedPaths)
         {
             AddLaunchdCandidate(path, launchdCandidates);
@@ -234,17 +235,38 @@ internal static class OperationalEntrypointPolicy
                 StringComparison.Ordinal)
                 ? SearchOption.AllDirectories
                 : SearchOption.TopDirectoryOnly;
-            foreach (var path in Directory.EnumerateFiles(directory, "*", searchOption))
+            var inspectAllEntryTypes = string.Equals(
+                relativeDirectory,
+                ".fkst/launchd",
+                StringComparison.Ordinal);
+            var paths = inspectAllEntryTypes
+                ? Directory.EnumerateFileSystemEntries(directory, "*", searchOption)
+                : Directory.EnumerateFiles(directory, "*", searchOption);
+            foreach (var path in paths)
             {
                 var pathWithinDirectory = Path.GetRelativePath(directory, path)
                     .Replace(Path.DirectorySeparatorChar, '/');
                 var relativePath = $"{relativeDirectory}/{pathWithinDirectory}";
+                if (inspectAllEntryTypes)
+                {
+                    var attributes = File.GetAttributes(path);
+                    const FileAttributes nonRegularAttributes =
+                        FileAttributes.Directory
+                        | FileAttributes.ReparsePoint
+                        | FileAttributes.Device;
+                    if ((attributes & nonRegularAttributes) != 0 || !File.Exists(path))
+                    {
+                        findings.Add(new OperationalEntrypointFinding(
+                            relativePath,
+                            "non-regular filesystem entry is forbidden in .fkst/launchd"));
+                        continue;
+                    }
+                }
                 AddLaunchdCandidate(relativePath, launchdCandidates);
                 AddLaunchdUnitFromScriptPath(relativePath, units);
             }
         }
 
-        var findings = new List<OperationalEntrypointFinding>();
         var candidatePathsByUnit = new Dictionary<string, List<string>>(StringComparer.Ordinal);
         foreach (var path in launchdCandidates.Order(StringComparer.Ordinal))
         {

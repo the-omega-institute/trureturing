@@ -105,6 +105,64 @@ require_runtime_package_directory() {
     }
 }
 
+require_distinct_runtime_directories() {
+  local durable runtime
+  durable="$(cd -- "$FKST_DURABLE_ROOT" && pwd -P)" || return 2
+  runtime="$(cd -- "$FKST_RUNTIME_ROOT" && pwd -P)" || return 2
+  [[ "$durable" != "$runtime" ]] \
+    || {
+      printf 'supervise-launcher: runtime root and durable root resolve to the same directory\n' >&2
+      return 2
+    }
+}
+
+validate_local_test_command() {
+  local name command executable candidate needs_local_gate=0
+  for name in $FKST_PLATFORM_PACKAGES $FKST_HOST_PACKAGES; do
+    case "$name" in
+      github-devloop|github-devloop-pr) needs_local_gate=1 ;;
+    esac
+  done
+  [[ "$needs_local_gate" == "1" ]] || return 0
+
+  command="${FKST_DEVLOOP_LOCAL_TEST_COMMAND:-scripts/run.sh test-affected}"
+  command="${command#"${command%%[![:space:]]*}"}"
+  command="${command%"${command##*[![:space:]]}"}"
+  case "$command" in
+    ""|*$'\n'*|*';'*|*'&'*|*'|'*|*'<'*|*'>'*|*'`'*|*'$('* )
+      printf 'supervise-launcher: FKST_DEVLOOP_LOCAL_TEST_COMMAND must be one executable invocation\n' >&2
+      return 2
+      ;;
+  esac
+  if ! /bin/bash -n -c "$command" >/dev/null 2>&1; then
+    printf 'supervise-launcher: FKST_DEVLOOP_LOCAL_TEST_COMMAND has invalid shell syntax\n' >&2
+    return 2
+  fi
+
+  executable="${command%%[[:space:]]*}"
+  case "$executable" in
+    ""|*[!A-Za-z0-9_./+-]*)
+      printf 'supervise-launcher: FKST_DEVLOOP_LOCAL_TEST_COMMAND must start with an unquoted executable name or path\n' >&2
+      return 2
+      ;;
+    /*) candidate="$executable" ;;
+    */*) candidate="$FKST_HOST_ROOT/$executable" ;;
+    *)
+      if ! (cd -- "$FKST_HOST_ROOT" && command -v "$executable" >/dev/null 2>&1); then
+        printf 'supervise-launcher: local iteration test command is not runnable from %s: %s\n' \
+          "$FKST_HOST_ROOT" "$command" >&2
+        return 2
+      fi
+      candidate=""
+      ;;
+  esac
+  if [[ -n "$candidate" && ( ! -f "$candidate" || ! -x "$candidate" ) ]]; then
+    printf 'supervise-launcher: local iteration test command is not runnable from %s: %s\n' \
+      "$FKST_HOST_ROOT" "$command" >&2
+    return 2
+  fi
+}
+
 validate_runtime_package_contract() {
   local tracked_workspace="$SCRIPT_DIR/../fkst.workspace.toml"
   local target_workspace="$FKST_HOST_ROOT/fkst.workspace.toml"
@@ -137,6 +195,7 @@ import tomllib
 from pathlib import Path, PurePosixPath
 
 REV_RE = re.compile(r"[0-9a-fA-F]{40}")
+LOCK_SOURCE_ID_RE = re.compile(r"[A-Za-z0-9._-]+")
 SOURCE_ID = "fkst-packages-platform"
 
 
@@ -225,6 +284,26 @@ def source_composition(data, role):
     return packages, host_packages, source, all_sources
 
 
+def validate_lock_source(source):
+    source_id = source.get("id")
+    if (
+        not isinstance(source_id, str)
+        or LOCK_SOURCE_ID_RE.fullmatch(source_id) is None
+        or source_id in {".", ".."}
+    ):
+        fail("target lockfile external_source has an invalid id")
+    git_url = source.get("git")
+    if not isinstance(git_url, str) or not git_url:
+        fail(f"target lockfile external source {source_id} is missing git")
+    resolved = source.get("resolved")
+    resolved_rev = resolved.get("rev") if isinstance(resolved, dict) else None
+    if not isinstance(resolved_rev, str) or REV_RE.fullmatch(resolved_rev) is None:
+        fail(
+            f"target lockfile external source {source_id} "
+            "resolved.rev is not a full git SHA"
+        )
+
+
 try:
     tracked_path = Path(sys.argv[1])
     target_path = Path(sys.argv[2])
@@ -252,7 +331,7 @@ try:
     ):
         fail("runtime package composition differs from the tracked checkout")
     for package in requested_platform:
-        owners = [
+        owners = (["workspace"] if package in target_host else []) + [
             source.get("id")
             for source in target_sources
             if package in source.get("packages", [])
@@ -262,7 +341,10 @@ try:
         if owners[0] != SOURCE_ID:
             fail(f"requested platform package {package} belongs to unexpected source {owners[0]}")
 
-    lock_sources = [item for item in tables(lock, "external_source", "target lockfile") if item.get("id") == SOURCE_ID]
+    all_lock_sources = tables(lock, "external_source", "target lockfile")
+    for source in all_lock_sources:
+        validate_lock_source(source)
+    lock_sources = [item for item in all_lock_sources if item.get("id") == SOURCE_ID]
     if len(lock_sources) != 1:
         fail(f"target lockfile must contain exactly one {SOURCE_ID} source")
     lock_source = lock_sources[0]
@@ -314,8 +396,8 @@ try:
         ).stdout.strip()
     except (FileNotFoundError, subprocess.CalledProcessError) as error:
         fail(f"trusted platform checkout identity is unavailable: {platform_root}: {error}")
-    if platform_head.lower() != locked_rev.lower():
-        fail("trusted platform checkout HEAD differs from target lockfile")
+    if REV_RE.fullmatch(platform_head) is None:
+        fail("trusted platform checkout HEAD is not a full git SHA")
     if platform_origin.rstrip("/") != target_git.rstrip("/"):
         fail("trusted platform checkout origin differs from target workspace source")
 except ValueError as error:
@@ -352,6 +434,7 @@ validate_runtime_paths() {
   require_runtime_directory "$FKST_PLATFORM_ROOT"
   require_runtime_directory "$FKST_DURABLE_ROOT"
   require_runtime_directory "$FKST_RUNTIME_ROOT"
+  require_distinct_runtime_directories
   run_script="$FKST_PLATFORM_ROOT/scripts/run.sh"
   [[ -f "$run_script" && -r "$run_script" ]] \
     || { printf 'supervise-launcher: platform run script is missing or unreadable: %s\n' "$run_script" >&2; return 2; }
@@ -382,6 +465,7 @@ main() {
   validate_runtime_paths
   load_package_composition
   validate_runtime_package_contract
+  validate_local_test_command
   [[ -f "$TEMPLATE" ]] \
     || { printf 'supervise-launcher: template is missing: %s\n' "$TEMPLATE" >&2; return 2; }
 

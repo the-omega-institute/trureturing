@@ -298,6 +298,19 @@ assert_cross_checkout_composition_drift_is_rejected() {
 
 . "$REPOSITORY_ROOT/.fkst/tests/support/supervise-runtime-contract-cases.sh"
 
+prepare_renderer_fixture() {
+  local root="$1"
+  mkdir -p "$root/.fkst/scripts" "$root/.fkst/launchd"
+  cp "$REPOSITORY_ROOT/.fkst/host-contract.schema" "$root/.fkst/host-contract.schema"
+  cp "$REPOSITORY_ROOT/.fkst/deploy.env" "$root/.fkst/deploy.env"
+  cp "$REPOSITORY_ROOT/.fkst/fkst.workspace.toml" "$root/.fkst/fkst.workspace.toml"
+  cp "$REPOSITORY_ROOT/.fkst/launchd/supervise.plist.in" \
+    "$root/.fkst/launchd/supervise.plist.in"
+  cp "$REPOSITORY_ROOT/.fkst/scripts/host-contract.sh" "$root/.fkst/scripts/host-contract.sh"
+  cp "$REPOSITORY_ROOT/.fkst/scripts/render-supervise-launcher.sh" \
+    "$root/.fkst/scripts/render-supervise-launcher.sh"
+}
+
 prepare_runtime_package_contract() {
   local scratch="$1" package_data kind package platform_rev
   package_data="$(python3 - "$REPOSITORY_ROOT/.fkst/fkst.workspace.toml" <<'PY'
@@ -634,12 +647,6 @@ EOF
     fail "supervise renderer rejects workspace-lock git drift"
   fi
 
-  if assert_lock_rev_platform_head_drift_is_rejected "$scratch" "$host_config"; then
-    pass "supervise renderer rejects lock rev and platform HEAD drift"
-  else
-    fail "supervise renderer rejects lock rev and platform HEAD drift"
-  fi
-
   if assert_platform_origin_drift_is_rejected "$scratch" "$host_config"; then
     pass "supervise renderer rejects platform origin drift"
   else
@@ -664,6 +671,30 @@ EOF
     fail "supervise renderer rejects ambiguous external package ownership"
   fi
 
+  if assert_malformed_non_target_lock_source_is_rejected "$scratch" "$host_config"; then
+    pass "supervise renderer rejects malformed non-target lock sources"
+  else
+    fail "supervise renderer rejects malformed non-target lock sources"
+  fi
+
+  if assert_workspace_and_external_package_ownership_is_rejected "$scratch" "$host_config"; then
+    pass "supervise renderer rejects workspace and external package ownership ambiguity"
+  else
+    fail "supervise renderer rejects workspace and external package ownership ambiguity"
+  fi
+
+  if assert_same_physical_runtime_and_durable_roots_are_rejected "$scratch" "$host_config"; then
+    pass "supervise renderer rejects physically identical runtime and durable roots"
+  else
+    fail "supervise renderer rejects physically identical runtime and durable roots"
+  fi
+
+  if assert_unrunnable_local_test_command_is_rejected "$scratch" "$host_config"; then
+    pass "supervise renderer rejects an unrunnable local test command"
+  else
+    fail "supervise renderer rejects an unrunnable local test command"
+  fi
+
   if assert_existing_invalid_log_path_is_rejected "$scratch" "$host_config"; then
     pass "supervise renderer rejects an existing invalid log path"
   else
@@ -680,6 +711,12 @@ EOF
     pass "supervise renderer rejects a nonexistent second host-config address"
   else
     fail "supervise renderer rejects a nonexistent second host-config address"
+  fi
+
+  if assert_platform_head_advanced_past_lock_is_accepted "$scratch" "$host_config"; then
+    pass "supervise renderer accepts a trusted platform HEAD advanced past the lock"
+  else
+    fail "supervise renderer accepts a trusted platform HEAD advanced past the lock"
   fi
 
   printf 'supervise launcher behavior tests: %d passed, %d failed, %d total\n' \

@@ -619,23 +619,14 @@ write_host_contract_fixture() {
     printf 'export FKST_LAUNCHD_LABEL=%s\n' 'local.fkst.synthetic.supervise'
     printf 'export FKST_MAINTENANCE_LAUNCHD_LABEL=%s\n' 'local.fkst.synthetic.maintenance'
     printf 'export FKST_MAINTENANCE_LAUNCHER_PATH=%s\n' "$FIXTURE_LAUNCHER_PATH"
+    printf 'export FKST_BASH_BIN=%s\n' /bin/bash
+    printf 'export FKST_ZSH_BIN=%s\n' /bin/zsh
     printf 'export FKST_PYTHON_BIN=%s\n' "$(command -v python3)"
+    printf 'export FKST_SUPERVISE_LAUNCHER_LOG=%s\n' "$root/logs/supervise-launcher.log"
+    printf 'export FKST_SUPERVISE_LAUNCHER_PATH=%s\n' "$root/launchd/supervise.plist"
   } > "$FIXTURE_HOST_CONFIG"
 }
 . "$REPOSITORY_ROOT/.fkst/tests/support/hourly-maintenance-launchd-cases.sh"
-tracked_entrypoint_loads_strict_host_config() (
-  local root output
-  root="$(mktemp -d -t hourly-maintenance-host-contract.XXXXXX)" || exit 1
-  trap 'rm -rf "$root"' EXIT
-  write_host_contract_fixture "$root" second-host-bot integration-second-host
-  output="$root/entrypoint.output"
-
-  env -i HOME="$root/home" PATH="/usr/bin:/bin" \
-    /usr/bin/make --no-print-directory -C "$REPOSITORY_ROOT" hourly-maintenance \
-    HOST_CONFIG="$FIXTURE_HOST_CONFIG" VALIDATE_ONLY=1 \
-    >"$output" 2>&1 \
-    || fail "tracked entrypoint did not accept the strict host contract: $(<"$output")"
-)
 
 stale_deployed_repository_contract_does_not_block_checkout_refresh() (
   local root output checkout_remote checkout_writer stale_rev current_rev
@@ -790,6 +781,8 @@ run_test "maintenance delegates launchd conformance gate" maintenance_delegates_
 run_test "launchd conformance failure fails maintenance cycle" launchd_conformance_failure_fails_maintenance_cycle
 run_test "missing launchd provider key fails maintenance cycle" missing_launchd_provider_key_fails_maintenance_cycle
 run_test "tracked entrypoint loads strict host config" tracked_entrypoint_loads_strict_host_config
+run_test "VALIDATE_ONLY rejects a missing supervise provider key" validate_only_rejects_missing_supervise_provider_key
+run_test "bring-up bootstraps supervise before inventory check" bring_up_document_bootstraps_supervise_before_inventory_check
 run_test "stale deployed repository contract does not block checkout refresh" stale_deployed_repository_contract_does_not_block_checkout_refresh
 run_test "host config rejects shell control flow without evaluation" host_config_rejects_shell_control_flow_without_evaluation
 run_test "fictional second-host launcher is portable" fictional_second_host_launcher_is_portable

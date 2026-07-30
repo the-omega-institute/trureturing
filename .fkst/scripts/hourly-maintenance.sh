@@ -419,6 +419,12 @@ main() {
     || { printf 'hourly-maintenance: --host-config is required\n' >&2; return 2; }
   host_contract_load "$host_config" || return
   validate_configuration || return
+  host_contract_require \
+    FKST_BASH_BIN \
+    FKST_ZSH_BIN \
+    FKST_PYTHON_BIN \
+    FKST_SUPERVISE_LAUNCHER_LOG \
+    FKST_SUPERVISE_LAUNCHER_PATH || return
   [[ "$validate_only" == "0" ]] || return 0
   sync_platform || return
   sync_checkout

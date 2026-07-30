@@ -1,8 +1,8 @@
 # fkst Host Bring-Up
 
-This procedure installs the repository-owned maintenance launcher on a new macOS host. The
-launcher runs once daily at 09:30 and always enters through `make hourly-maintenance` in the
-dedicated checkout.
+This procedure installs the repository-owned supervise and maintenance launchers on a new macOS
+host. The supervise launcher runs the engine continuously; the maintenance launcher runs once
+daily at 09:30 and always enters through `make hourly-maintenance` in the dedicated checkout.
 
 ## 1. Prepare the checkout and host directories
 
@@ -66,17 +66,22 @@ and names the missing key as `required host key <KEY> is unset`; it never skips 
 ## 3. Validate and render
 
 From `FKST_HOST_ROOT`, validate the complete contract without performing maintenance, then render
-the plist to `FKST_MAINTENANCE_LAUNCHER_PATH`:
+both inventory units to their configured launcher paths. The supervise render requires all five
+provider keys listed above.
 
 ```sh
 make hourly-maintenance HOST_CONFIG="<absolute-path-to-host.env>" VALIDATE_ONLY=1
 make maintenance-launcher-render HOST_CONFIG="<absolute-path-to-host.env>"
+make supervise-launcher-render HOST_CONFIG="<absolute-path-to-host.env>"
 plutil -lint "<absolute-path-to-rendered-maintenance-plist>"
+plutil -lint "<absolute-path-to-rendered-supervise-plist>"
 ```
 
-Validation must exit zero. The rendered plist must name the new host's checkout, bot login, and
-integration branch, and its program arguments must contain `hourly-maintenance` and
-`HOST_CONFIG=<absolute-path-to-host.env>`.
+Validation and both renders must exit zero. The maintenance plist must name the new host's
+checkout, bot login, and integration branch, and its program arguments must contain
+`hourly-maintenance` and `HOST_CONFIG=<absolute-path-to-host.env>`. The supervise plist must use
+the same host config and contain the configured durable root, runtime root, platform package set,
+and host package set.
 
 ## 4. Load the launcher
 
@@ -86,10 +91,13 @@ that no service exists; continue to `bootstrap`.
 ```sh
 launchctl bootout "gui/$(id -u)" "<absolute-path-to-rendered-maintenance-plist>"
 launchctl bootstrap "gui/$(id -u)" "<absolute-path-to-rendered-maintenance-plist>"
+launchctl bootout "gui/$(id -u)" "<absolute-path-to-rendered-supervise-plist>"
+launchctl bootstrap "gui/$(id -u)" "<absolute-path-to-rendered-supervise-plist>"
 ```
 
-Do not copy the maintenance script into a host directory. The plist invokes the tracked Make
-target in the dedicated checkout.
+Do not copy either launcher implementation into a host directory. The maintenance plist invokes
+the tracked Make target in the dedicated checkout, and the supervise plist invokes the pinned
+platform run script with repository-derived package arguments.
 
 ## 5. Verify deployment conformance
 
@@ -99,11 +107,12 @@ changes the contract, a launchd template, or a renderer:
 ```sh
 make launchd-conformance-check HOST_CONFIG="<absolute-path-to-host.env>"
 launchctl print "gui/$(id -u)/<maintenance-launchd-label-for-this-machine>"
+launchctl print "gui/$(id -u)/<supervise-launchd-label-for-this-machine>"
 ```
 
 The first command exits zero only when host launchd membership exactly matches the repository
 inventory and every deployed plist is byte-for-byte identical to a fresh render from the tracked
 template and this host's values. `make hourly-maintenance` delegates this same gate after its
-normal cycle and propagates any gate failure as a failed periodic run. The second command must
-show the same label, 09:30 calendar interval, log path, checkout path, bot login, and integration
-branch.
+normal cycle and propagates any gate failure as a failed periodic run. The two `launchctl print`
+commands must show the configured labels and paths; maintenance must also show the 09:30 calendar
+interval, bot login, and integration branch.
