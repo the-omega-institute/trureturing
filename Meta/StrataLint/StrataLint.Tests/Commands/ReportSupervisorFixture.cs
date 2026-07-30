@@ -7,11 +7,20 @@ namespace StrataLint.Tests;
 
 internal sealed class ReportSupervisorFixture : IDisposable
 {
+    private static readonly TimeSpan defaultSafetyTimeout = TimeSpan.FromMinutes(5);
     private static readonly string performanceConfiguration = FindPerformanceConfiguration();
     private readonly TemporaryDirectory temporary = new();
+    private readonly TimeSpan safetyTimeout;
 
-    internal ReportSupervisorFixture()
+    internal ReportSupervisorFixture(TimeSpan? safetyTimeout = null)
     {
+        this.safetyTimeout = safetyTimeout ?? defaultSafetyTimeout;
+        if (this.safetyTimeout <= TimeSpan.Zero)
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(safetyTimeout),
+                "the report-supervisor test safety timeout must be positive");
+        }
         ScratchWriter = WriteExecutable("scratch-writer.sh", """
             #!/usr/bin/env bash
             set -euo pipefail
@@ -214,6 +223,8 @@ internal sealed class ReportSupervisorFixture : IDisposable
     internal string DoubleForkWorker { get; }
     internal string FileSizeLimitedDriver { get; }
 
+    internal TimeSpan SafetyTimeout => safetyTimeout;
+
     internal ProcessOutput Run(string role, bool leanSlot, string command)
         => RunWithEnvironment(role, leanSlot, command);
 
@@ -229,6 +240,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
             $"STRATALINT_REPORT_METRICS_LOG={MetricsLog}",
             $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
             $"STRATALINT_PERF_CONFIGURATION={PerformanceConfiguration}",
+            "STRATALINT_LOCK_TIMEOUT_SECONDS=86400",
         };
         arguments.AddRange(environment);
         arguments.Add(Supervisor);
@@ -239,7 +251,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
         arguments.Add(command);
         arguments.Add(ScratchRecord);
         return BoundedProcessRunner.Run(
-            "env", arguments, Root, TimeSpan.FromSeconds(30), 1024 * 1024);
+            "env", arguments, Root, safetyTimeout, 1024 * 1024);
     }
 
     internal void InstallFailingLsof()
@@ -260,12 +272,13 @@ internal sealed class ReportSupervisorFixture : IDisposable
                 $"HOME={Root}",
                 $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
                 $"STRATALINT_PERF_CONFIGURATION={PerformanceConfiguration}",
+                "STRATALINT_LOCK_TIMEOUT_SECONDS=86400",
                 Supervisor,
                 "--role", role,
                 "--", command, ScratchRecord,
             ],
             Root,
-            TimeSpan.FromSeconds(30),
+            safetyTimeout,
             1024 * 1024);
 
     internal ProcessOutput RunWithFileSizeLimit(string role, string command) =>
@@ -277,13 +290,36 @@ internal sealed class ReportSupervisorFixture : IDisposable
                 $"STRATALINT_REPORT_METRICS_LOG={MetricsLog}",
                 $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
                 $"STRATALINT_PERF_CONFIGURATION={PerformanceConfiguration}",
+                "STRATALINT_LOCK_TIMEOUT_SECONDS=86400",
                 Supervisor,
                 "--role", role,
                 "--", command, ScratchRecord,
             ],
             Root,
-            TimeSpan.FromSeconds(30),
+            safetyTimeout,
             1024 * 1024);
+
+    internal ProcessOutput RunExternalProcess(
+        string fileName,
+        IEnumerable<string> arguments,
+        string? workingDirectory = null,
+        int maximumOutputBytes = 1024 * 1024) =>
+        BoundedProcessRunner.Run(
+            fileName,
+            arguments,
+            workingDirectory ?? Root,
+            safetyTimeout,
+            maximumOutputBytes);
+
+    internal void WaitUntil(Func<bool> condition, string failureMessage)
+    {
+        Assert.True(
+            SpinWait.SpinUntil(condition, safetyTimeout),
+            $"{failureMessage} (safety timeout: {safetyTimeout})");
+    }
+
+    internal void WaitForExit(Process process, string failureMessage) =>
+        WaitUntil(() => process.HasExited, failureMessage);
 
     internal Process StartLongRunningProducer()
     {
@@ -301,6 +337,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
             $"STRATALINT_REPORT_METRICS_LOG={MetricsLog}",
             $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
             $"STRATALINT_PERF_CONFIGURATION={PerformanceConfiguration}",
+            "STRATALINT_LOCK_TIMEOUT_SECONDS=86400",
             Supervisor,
             "--role", "lean-producer", "--lean-slot", "--",
             LongRunningWorker, GrandchildPid,
@@ -326,6 +363,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
             $"STRATALINT_REPORT_METRICS_LOG={MetricsLog}",
             $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
             $"STRATALINT_PERF_CONFIGURATION={PerformanceConfiguration}",
+            "STRATALINT_LOCK_TIMEOUT_SECONDS=86400",
             Supervisor,
             "--role", "lean-producer", "--lean-slot", "--",
             DetachedWorker, DetachedWorkerPid, DetachedPid, DetachedParentPid, DetachedRelease,
@@ -361,7 +399,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
         var path = Path.Combine(Root, name);
         File.WriteAllText(path, contents + "\n", new UTF8Encoding(false));
         var chmod = BoundedProcessRunner.Run(
-            "chmod", ["+x", path], Root, TimeSpan.FromSeconds(10), 4096);
+            "chmod", ["+x", path], Root, safetyTimeout, 4096);
         Assert.Equal(0, chmod.ExitCode);
         return path;
     }
