@@ -117,6 +117,29 @@ public sealed class CliOutcomeTests
         Assert.Equal(error, console.Error);
     }
 
+    [Fact]
+    public void ValidateBlueprintPinsDelegatesToTheAuthoringEnvironment()
+    {
+        var console = new BufferedConsole();
+        var environment = new StubCliEnvironment(
+            Admitted(),
+            blueprintPins: new ExplicitCommandResult(
+                1,
+                "BLUEPRINT_PINS_REJECTED anchor 'pzg/proposition/9.2' is not accepted\n",
+                string.Empty));
+
+        var exitCode = CliApplication.Run(
+            ["validate-blueprint-pins", "pins.json"],
+            environment,
+            console);
+
+        Assert.Equal(1, exitCode);
+        Assert.Equal(
+            "BLUEPRINT_PINS_REJECTED anchor 'pzg/proposition/9.2' is not accepted\n",
+            console.Output);
+        Assert.Equal(string.Empty, console.Error);
+    }
+
     private static AdmissionOutcome Outcome(string fixture) => fixture switch
     {
         "admitted" => Admitted(),
@@ -187,7 +210,8 @@ internal sealed class StubCliEnvironment(
     ExplicitCommandResult? conservative = null,
     CommandResult? recordGolden = null,
     CommandResult? renewC0 = null,
-    ExplicitCommandResult? echoVerify = null) : ICliEnvironment
+    ExplicitCommandResult? echoVerify = null,
+    ExplicitCommandResult? blueprintPins = null) : ICliEnvironment
 {
     public AdmissionOutcome Check(IReadOnlyList<string> arguments) => outcome;
 
@@ -217,6 +241,9 @@ internal sealed class StubCliEnvironment(
 
     public CommandResult Route(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "route is not configured in this fixture");
+
+    public ExplicitCommandResult ValidateBlueprintPins(IReadOnlyList<string> arguments) =>
+        blueprintPins ?? new(2, string.Empty, "blueprint pin validation is not configured in this fixture");
 
     public CommandResult RecordGolden(IReadOnlyList<string> arguments) =>
         recordGolden ?? new(false, string.Empty, "golden record is not configured in this fixture");
