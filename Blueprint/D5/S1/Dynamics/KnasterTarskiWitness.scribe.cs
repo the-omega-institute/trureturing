@@ -31,7 +31,7 @@ internal sealed class KnasterTarskiWitnessDocument : IScribeDocumentDefinition
                             + "theorem packages the general result and its concrete instance "
                             + "behind a single declaration without re-proving either."))),
                     LatexStatement.Create(
-                        @"$$(\forall f\colon\alpha\to_{o}\alpha,\ "
+                        @"$$(\forall f:\alpha\to_{o}\alpha,\ "
                         + @"\operatorname{lfp}(f)=\min\operatorname{Fix}(f)\ \land\ "
                         + @"\operatorname{gfp}(f)=\max\operatorname{Fix}(f))\ \land\ "
                         + @"\operatorname{lfp}(\sigma_{3})=\varnothing\ \land\ "
