@@ -2480,16 +2480,23 @@ sources:
           raw_sha256: sha256:922b0bff9129a59885f446f0858e25f6a580f81f77f5dec77a657fb7404fcad4
           normalized_sha256: sha256:922b0bff9129a59885f446f0858e25f6a580f81f77f5dec77a657fb7404fcad4
         cas_ref: sha256:922b0bff9129a59885f446f0858e25f6a580f81f77f5dec77a657fb7404fcad4
-        coverage_gids: []
+        coverage_gids:
+          - D5/S1/Dynamics/KnasterTarskiWitness.knaster_tarski_with_three_cycle_instance
         receipts:
-          coverage: []
-          scribe: []
+          coverage:
+            - gid: D5/S1/Dynamics/KnasterTarskiWitness.knaster_tarski_with_three_cycle_instance
+              source_sha256: sha256:922b0bff9129a59885f446f0858e25f6a580f81f77f5dec77a657fb7404fcad4
+              target_sha256: sha256:d5c55a94a02a20940b9a39180d91ff8d4180244c73d535be428c8bf55a4a45f2
+          scribe:
+            - gid: D5/S1/Dynamics/KnasterTarskiWitness.knaster_tarski_with_three_cycle_instance
+              definition_sha256: sha256:937e3136ee8a72c117979f996134c915a0c227734ed2b6c68d04321bfbac3fad
+              emission_sha256: sha256:2f35b02335e17b644833b84614a4c11de6883f59f6c41a3dadecca763e6ba040
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: absorbed
+          truth: closed
       - atom_id: gict-residual-345c00e75efa6387c97717df2d117e3ae889903a7c1a03bf64b82f18a928a0e2
         ast_path: theorem/7.2
         fingerprints:
