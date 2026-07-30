@@ -121,7 +121,16 @@ public sealed class MakeWorkflowTests
         Assert.Contains(EchoVerifyScriptPath, Recipe(makefile, "echo-verify"), StringComparison.Ordinal);
         Assert.Contains("golden-record", Recipe(makefile, "record-golden"), StringComparison.Ordinal);
         Assert.Contains(SelftestScriptPath, Recipe(makefile, "selftest"), StringComparison.Ordinal);
-        Assert.Contains("stratalint-c0-renew-", Recipe(makefile, "scratch-sweep"), StringComparison.Ordinal);
+        // scratch-sweep reclaimed essentially nothing on a live host, for two independent reasons.
+        // Measured: $TMPDIR held 537 stratalint-* directories, 320 of them older than a day, and ZERO
+        // matched the two enumerated prefixes -- 304 were stratalint-tests-*. Enumerating prefixes is
+        // the per-instance whack-a-mole this repository rejects, so the sweep covers the family and the
+        // -mtime guard decides staleness.
+        Assert.Contains("stratalint-*", Recipe(makefile, "scratch-sweep"), StringComparison.Ordinal);
+        // And /tmp is a symlink to private/tmp on macOS, which `find` does not follow, so
+        // `find /tmp -maxdepth 1` yielded 0 while the same directory via /private/tmp yielded 65.
+        // The sweep must name a root find can descend.
+        Assert.Contains("/private/tmp", Recipe(makefile, "scratch-sweep"), StringComparison.Ordinal);
         Assert.Contains(LocalHarnessGateScriptPath, Recipe(makefile, "gate"), StringComparison.Ordinal);
         Assert.Contains(PerfReportScriptPath, Recipe(makefile, "perf-report"), StringComparison.Ordinal);
         Assert.Contains("Golden/perf-budgets.toml", Recipe(makefile, "perf-report"), StringComparison.Ordinal);
