@@ -8,7 +8,7 @@ local t = fkst.test
 local MARKER = "theory-selfgrowth:frontier-request:v1"
 local BOT_LOGIN = "loning"
 
--- A frontier-request issue as returned by `gh issue list --json state,body`.
+-- A frontier-request issue as returned by `gh issue list --json state,body,comments`.
 local function candidate(atom_id, atom_text, cas_ref)
   return {
     source_id = "GICT",
@@ -125,23 +125,48 @@ return {
   -- self-recover and generate its next request while the terminal one is being cleaned up.
   test_terminal_blocked_open_request_does_not_freeze_generation = function()
     local blocked = request_issue("owner/repo", 0, "OPEN")
-    blocked.labels = { { name = "fkst-dev:enabled" }, { name = "fkst-dev:blocked" } }
+    blocked.comments = { {
+      body = '<!-- fkst:github-devloop:state:v1 proposal="issue/373" state="blocked" -->',
+    } }
     local d = core.decide_generation({ blocked }, BOT_LOGIN)
     t.eq(d.generation, 1)          -- still counted toward the generation index (monotonic)
     t.is_true(not d.open_exists)   -- but does NOT gate: producer self-recovers and fires gen1
   end,
 
-  test_is_terminal_blocked = function()
-    t.is_true(core.is_terminal_blocked({ labels = { { name = "fkst-dev:blocked" } } }))
+  test_is_terminal_request_uses_authoritative_marker_not_labels = function()
+    t.is_true(core.is_terminal_request({
+      body = '<!-- fkst:github-devloop:state:v1 proposal="issue/373" state="blocked" -->',
+    }))
     -- impl-failed is a devloop TERMINAL_STATE (retries exhausted); it must gate exactly like
     -- blocked so a request whose codex timed out does not freeze the producer forever (#446).
-    t.is_true(core.is_terminal_blocked({ labels = { { name = "fkst-dev:impl-failed" } } }))
-    t.is_true(core.is_terminal_blocked({
-      labels = { { name = "fkst-dev:enabled" }, { name = "fkst-dev:impl-failed" } } }))
-    t.is_true(not core.is_terminal_blocked({ labels = { { name = "fkst-dev:implementing" } } }))
-    t.is_true(not core.is_terminal_blocked({ labels = {} }))
-    t.is_true(not core.is_terminal_blocked({}))            -- no labels field at all
-    t.is_true(not core.is_terminal_blocked({ labels = "not-a-table" }))
+    t.is_true(core.is_terminal_request({ comments = { {
+      body = '<!-- fkst:github-devloop:state:v1 proposal="issue/446" state="impl-failed" -->',
+    } } }))
+    t.is_true(core.is_terminal_request({
+      labels = { { name = "fkst-dev:thinking" } },
+      comments = { {
+        body = '<!-- fkst:github-devloop:state:v1 proposal="issue/500" state="impl-failed" -->',
+      } },
+    }))
+    t.is_true(not core.is_terminal_request({
+      body = '<!-- fkst:github-devloop:state:v1 proposal="issue/501" state="implementing" -->',
+    }))
+    -- Labels are projections only: neither a stale active label nor a terminal-looking label
+    -- can decide source-of-truth terminality.
+    t.is_true(not core.is_terminal_request({ labels = { { name = "fkst-dev:implementing" } } }))
+    t.is_true(not core.is_terminal_request({ labels = { { name = "fkst-dev:impl-failed" } } }))
+    t.is_true(not core.is_terminal_request({}))
+    t.is_true(not core.is_terminal_request("not-an-issue"))
+  end,
+
+  test_unsupported_authoritative_marker_version_fails_loudly = function()
+    local ok, err = pcall(core.is_terminal_request, {
+      comments = { {
+        body = '<!-- fkst:github-devloop:state:v2 proposal="issue/502" state="impl-failed" -->',
+      } },
+    })
+    t.is_true(not ok)
+    t.is_true(tostring(err):find("unsupported-devloop-state-marker", 1, true) ~= nil)
   end,
 
   -- THE #446 REGRESSION: a terminal impl-failed (codex-timed-out, retry-exhausted) OPEN request
@@ -150,9 +175,26 @@ return {
   test_impl_failed_open_request_does_not_freeze_generation = function()
     local failed = request_issue("owner/repo", 0, "OPEN")
     failed.labels = { { name = "fkst-dev:enabled" }, { name = "fkst-dev:impl-failed" } }
+    failed.body = failed.body .. '\n<!-- fkst:github-devloop:state:v1 proposal="issue/446" '
+      .. 'state="impl-failed" -->'
     local d = core.decide_generation({ failed }, BOT_LOGIN)
     t.eq(d.generation, 1)          -- still counted toward the generation index (monotonic)
     t.is_true(not d.open_exists)   -- but does NOT gate: producer self-recovers and fires gen1
+  end,
+
+  -- THE #500 REGRESSION: labels are a lagging projection. The authoritative append-only
+  -- devloop marker says impl-failed, so the stale `thinking` label must not hold the slot.
+  test_issue_500_stale_thinking_label_with_impl_failed_marker_does_not_freeze_generation = function()
+    local failed = request_issue("owner/repo", 0, "OPEN")
+    failed.labels = { { name = "fkst-dev:thinking" } }
+    failed.comments = { {
+      body = '<!-- fkst:github-devloop:state:v1 proposal="https://github.com/'
+        .. 'the-omega-institute/trureturing/issues/500" state="impl-failed" attempt="2" -->\n'
+        .. "github-devloop implementation failed: retry-exhausted",
+    } }
+    local d = core.decide_generation({ failed }, BOT_LOGIN)
+    t.eq(d.generation, 1)
+    t.is_true(not d.open_exists)
   end,
 
   -- Conservative: an ACTIVE (non-blocked) open request still gates, even with labels present.
