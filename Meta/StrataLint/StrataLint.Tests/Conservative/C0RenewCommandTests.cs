@@ -14,6 +14,13 @@ public sealed class C0RenewCommandTests
     private static readonly string PreimageTree = new('d', 40);
 
     [Fact]
+    public void CeremonyBudgetsMatchColdScratchCalibration()
+    {
+        Assert.Equal(90, ProductionC0RenewEnvironment.LeanReportBudgetMinutes);
+        Assert.Equal(600, ProductionConservativeExtensionEnvironment.DefaultEvaluationBudgetSeconds);
+    }
+
+    [Fact]
     public void RepeatedRenewIsAByteExactNoOpAfterGateRevalidation()
     {
         var environment = new SyntheticRenewEnvironment(Certificate());

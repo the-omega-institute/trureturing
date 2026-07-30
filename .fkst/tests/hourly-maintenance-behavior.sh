@@ -1,0 +1,559 @@
+#!/usr/bin/env bash
+set -u
+set -o pipefail
+export LC_ALL=C
+export LANG=C
+
+REPOSITORY_ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd -P)"
+SCRIPT_UNDER_TEST="$REPOSITORY_ROOT/.fkst/scripts/hourly-maintenance.sh"
+PASS_COUNT=0
+FAIL_COUNT=0
+
+fail() {
+  echo "FAIL: $*" >&2
+  exit 1
+}
+
+load_implementation() {
+  [[ -f "$SCRIPT_UNDER_TEST" ]] \
+    || fail "canonical implementation is missing: .fkst/scripts/hourly-maintenance.sh"
+  # shellcheck disable=SC1090
+  source "$SCRIPT_UNDER_TEST"
+}
+
+git_quiet() {
+  command git "$@" >/dev/null 2>&1
+}
+
+configure_repository() {
+  local repository="$1"
+  command git -C "$repository" config user.name "Hourly Maintenance Fixture"
+  command git -C "$repository" config user.email "hourly-maintenance@example.invalid"
+}
+
+create_platform_fixture() {
+  local root="$1"
+  PLATFORM_REMOTE="$root/platform-remote.git"
+  PLATFORM_ROOT="$root/platform"
+  git_quiet init --bare --initial-branch=dev "$PLATFORM_REMOTE" || return 1
+  git_quiet clone "$PLATFORM_REMOTE" "$PLATFORM_ROOT" || return 1
+  configure_repository "$PLATFORM_ROOT" || return 1
+  printf 'old\n' > "$PLATFORM_ROOT/version"
+  command git -C "$PLATFORM_ROOT" add version
+  git_quiet -C "$PLATFORM_ROOT" commit -m old || return 1
+  git_quiet -C "$PLATFORM_ROOT" push -u origin dev || return 1
+  OLD_PLATFORM_REV="$(command git -C "$PLATFORM_ROOT" rev-parse HEAD)"
+  printf 'new\n' > "$PLATFORM_ROOT/version"
+  command git -C "$PLATFORM_ROOT" add version
+  git_quiet -C "$PLATFORM_ROOT" commit -m new || return 1
+  git_quiet -C "$PLATFORM_ROOT" push origin dev || return 1
+  NEW_PLATFORM_REV="$(command git -C "$PLATFORM_ROOT" rev-parse HEAD)"
+}
+
+create_checkout_files() {
+  local root="$1"
+  CHECKOUT_ROOT="$root/checkout"
+  mkdir -p "$CHECKOUT_ROOT/.fkst" "$root/logs" "$root/bin"
+  printf '[external_sources.platform]\nrev = "%s"\n' "$OLD_PLATFORM_REV" \
+    > "$CHECKOUT_ROOT/fkst.workspace.toml"
+  printf 'deployed-lock-before\nwithout-final-newline' > "$CHECKOUT_ROOT/fkst.lock"
+  printf '[external_sources.platform]\nrev = "%s"\n' "$OLD_PLATFORM_REV" \
+    > "$CHECKOUT_ROOT/.fkst/fkst.workspace.toml"
+  LOG_FILE="$root/logs/hourly-maintenance.log"
+  FRAMEWORK_BIN="$root/bin/fkst-framework"
+  TIMEOUT_BIN="$root/bin/timeout"
+  cat > "$TIMEOUT_BIN" <<'SH'
+#!/usr/bin/env bash
+shift
+exec "$@"
+SH
+  chmod +x "$TIMEOUT_BIN"
+}
+
+write_framework_stub() {
+  local behavior="$1"
+  cat > "$FRAMEWORK_BIN" <<SH
+#!/usr/bin/env bash
+printf 'host-lock-called\n' >> "${FRAMEWORK_CALLS_FILE}"
+printf 'lock-mutated-by-host-lock-%s\n' "\$(wc -l < "${FRAMEWORK_CALLS_FILE}")" > "${CHECKOUT_ROOT}/fkst.lock"
+[[ "$behavior" == success ]]
+SH
+  chmod +x "$FRAMEWORK_BIN"
+}
+
+export_platform_environment() {
+  export FKST_CHECKOUT_ROOT="$CHECKOUT_ROOT"
+  export FKST_PLATFORM_ROOT="$PLATFORM_ROOT"
+  export FKST_FRAMEWORK_BIN="$FRAMEWORK_BIN"
+  export FKST_MAINTENANCE_LOG="$LOG_FILE"
+  export FKST_TIMEOUT_BIN="$TIMEOUT_BIN"
+}
+
+create_checkout_history_fixture() {
+  local root="$1"
+  CHECKOUT_REMOTE="$root/checkout-remote.git"
+  CHECKOUT_ROOT="$root/checkout"
+  CHECKOUT_WRITER="$root/checkout-writer"
+  git_quiet init --bare --initial-branch=dev "$CHECKOUT_REMOTE" || return 1
+  git_quiet clone "$CHECKOUT_REMOTE" "$CHECKOUT_ROOT" || return 1
+  configure_repository "$CHECKOUT_ROOT" || return 1
+  printf 'base\n' > "$CHECKOUT_ROOT/tracked"
+  command git -C "$CHECKOUT_ROOT" add tracked
+  git_quiet -C "$CHECKOUT_ROOT" commit -m base || return 1
+  git_quiet -C "$CHECKOUT_ROOT" push -u origin dev || return 1
+  CHECKOUT_BASE_REV="$(command git -C "$CHECKOUT_ROOT" rev-parse HEAD)"
+  git_quiet clone "$CHECKOUT_REMOTE" "$CHECKOUT_WRITER" || return 1
+  configure_repository "$CHECKOUT_WRITER" || return 1
+}
+
+advance_checkout_dev() {
+  local contents="$1"
+  printf '%s\n' "$contents" > "$CHECKOUT_WRITER/tracked"
+  command git -C "$CHECKOUT_WRITER" add tracked
+  git_quiet -C "$CHECKOUT_WRITER" commit -m "advance $contents" || return 1
+  git_quiet -C "$CHECKOUT_WRITER" push origin dev || return 1
+  CHECKOUT_DEV_REV="$(command git -C "$CHECKOUT_WRITER" rev-parse HEAD)"
+}
+
+deployed_top_level_workspace_is_authoritative() (
+  load_implementation || exit 1
+  local root
+  root="$(mktemp -d -t hourly-maintenance-top-level.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  create_platform_fixture "$root" || exit 1
+  create_checkout_files "$root" || exit 1
+  FRAMEWORK_CALLS_FILE="$root/framework.calls"
+  export FRAMEWORK_CALLS_FILE
+  write_framework_stub success
+  export_platform_environment
+  local committed_before
+  committed_before="$(command shasum -a 256 "$CHECKOUT_ROOT/.fkst/fkst.workspace.toml")"
+
+  sync_platform || fail "platform sync should succeed"
+  command grep -q "$NEW_PLATFORM_REV" "$CHECKOUT_ROOT/fkst.workspace.toml" \
+    || fail "deployed top-level workspace pin was not updated"
+  [[ "$committed_before" == "$(command shasum -a 256 "$CHECKOUT_ROOT/.fkst/fkst.workspace.toml")" ]] \
+    || fail "committed .fkst workspace copy must not be touched (#2461)"
+)
+
+host_lock_failure_rolls_back_pin_and_lock_bytes() (
+  load_implementation || exit 1
+  local root
+  root="$(mktemp -d -t hourly-maintenance-lock-rollback.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  create_platform_fixture "$root" || exit 1
+  create_checkout_files "$root" || exit 1
+  FRAMEWORK_CALLS_FILE="$root/framework.calls"
+  export FRAMEWORK_CALLS_FILE
+  write_framework_stub fail
+  export_platform_environment
+  command cp "$CHECKOUT_ROOT/fkst.workspace.toml" "$root/workspace.before"
+  command cp "$CHECKOUT_ROOT/fkst.lock" "$root/lock.before"
+
+  sync_platform && fail "host-lock validation failure must fail the platform sync"
+  command cmp -s "$root/workspace.before" "$CHECKOUT_ROOT/fkst.workspace.toml" \
+    || fail "workspace pin rollback was not byte-for-byte"
+  command cmp -s "$root/lock.before" "$CHECKOUT_ROOT/fkst.lock" \
+    || fail "lock rollback was not byte-for-byte"
+)
+
+post_restart_health_failure_rolls_back_pin_and_lock_bytes() (
+  load_implementation || exit 1
+  local root
+  root="$(mktemp -d -t hourly-maintenance-health-rollback.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  create_platform_fixture "$root" || exit 1
+  create_checkout_files "$root" || exit 1
+  FRAMEWORK_CALLS_FILE="$root/framework.calls"
+  export FRAMEWORK_CALLS_FILE
+  write_framework_stub success
+  export_platform_environment
+  export FKST_RUN_SCRIPT="$root/bin/run-engine"
+  export FKST_LAUNCHD_LABEL="com.example.synthetic-fkst"
+  cat > "$FKST_RUN_SCRIPT" <<SH
+#!/usr/bin/env bash
+printf '%s\n' "\$*" >> "$root/run.calls"
+SH
+  cat > "$root/bin/sleep" <<'SH'
+#!/usr/bin/env bash
+exit 0
+SH
+  cat > "$root/bin/launchctl" <<'SH'
+#!/usr/bin/env bash
+exit 0
+SH
+  cat > "$root/bin/pgrep" <<'SH'
+#!/usr/bin/env bash
+exit 1
+SH
+  chmod +x "$FKST_RUN_SCRIPT" "$root/bin/sleep" "$root/bin/launchctl" "$root/bin/pgrep"
+  export PATH="$root/bin:$PATH"
+  command cp "$CHECKOUT_ROOT/fkst.workspace.toml" "$root/workspace.before"
+  command cp "$CHECKOUT_ROOT/fkst.lock" "$root/lock.before"
+
+  sync_platform || fail "platform sync setup should succeed"
+  restart_engine && fail "failed health check must fail restart"
+  command cmp -s "$root/workspace.before" "$CHECKOUT_ROOT/fkst.workspace.toml" \
+    || fail "health failure did not restore workspace bytes"
+  command cmp -s "$root/lock.before" "$CHECKOUT_ROOT/fkst.lock" \
+    || fail "health failure did not restore lock bytes"
+)
+
+checkout_fast_forwards_only_clean_ancestors() (
+  load_implementation || exit 1
+  local root
+  root="$(mktemp -d -t hourly-maintenance-clean-ancestor.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  mkdir -p "$root/logs"
+  LOG_FILE="$root/logs/hourly-maintenance.log"
+  export FKST_MAINTENANCE_LOG="$LOG_FILE"
+  create_checkout_history_fixture "$root" || exit 1
+  advance_checkout_dev first || exit 1
+  export FKST_CHECKOUT_ROOT="$CHECKOUT_ROOT"
+
+  sync_checkout || fail "clean ancestor sync should be nonfatal"
+  [[ "$(command git -C "$CHECKOUT_ROOT" rev-parse HEAD)" == "$CHECKOUT_DEV_REV" ]] \
+    || fail "clean ancestor did not fast-forward"
+
+  advance_checkout_dev second || exit 1
+  printf 'dirty\n' >> "$CHECKOUT_ROOT/tracked"
+  local dirty_head
+  dirty_head="$(command git -C "$CHECKOUT_ROOT" rev-parse HEAD)"
+  sync_checkout || fail "dirty ancestor refusal should be nonfatal"
+  [[ "$(command git -C "$CHECKOUT_ROOT" rev-parse HEAD)" == "$dirty_head" ]] \
+    || fail "dirty ancestor was changed"
+  command grep -q 'CHECKOUT-FF-BLOCKED' "$LOG_FILE" \
+    || fail "dirty ancestor refusal was not reported"
+)
+
+checkout_divergence_refuses_auto_fast_forward() (
+  load_implementation || exit 1
+  local root
+  root="$(mktemp -d -t hourly-maintenance-diverged.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  mkdir -p "$root/logs"
+  LOG_FILE="$root/logs/hourly-maintenance.log"
+  export FKST_MAINTENANCE_LOG="$LOG_FILE"
+  create_checkout_history_fixture "$root" || exit 1
+  advance_checkout_dev remote || exit 1
+  printf 'local\n' > "$CHECKOUT_ROOT/local-only"
+  command git -C "$CHECKOUT_ROOT" add local-only
+  git_quiet -C "$CHECKOUT_ROOT" commit -m local || exit 1
+  local local_head
+  local_head="$(command git -C "$CHECKOUT_ROOT" rev-parse HEAD)"
+  export FKST_CHECKOUT_ROOT="$CHECKOUT_ROOT"
+
+  sync_checkout || fail "divergence refusal should be nonfatal"
+  [[ "$(command git -C "$CHECKOUT_ROOT" rev-parse HEAD)" == "$local_head" ]] \
+    || fail "diverged checkout was silently reset"
+  command grep -q 'CHECKOUT DIVERGED' "$LOG_FILE" \
+    || fail "divergence refusal was not reported"
+)
+
+checkout_status_failure_refuses_auto_fast_forward() (
+  load_implementation || exit 1
+  local root
+  root="$(mktemp -d -t hourly-maintenance-status-failure.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  mkdir -p "$root/bin" "$root/logs"
+  LOG_FILE="$root/logs/hourly-maintenance.log"
+  export FKST_MAINTENANCE_LOG="$LOG_FILE"
+  create_checkout_history_fixture "$root" || exit 1
+  advance_checkout_dev remote || exit 1
+  export FKST_CHECKOUT_ROOT="$CHECKOUT_ROOT"
+  local real_git before
+  real_git="$(command -v git)"
+  before="$(command git -C "$CHECKOUT_ROOT" rev-parse HEAD)"
+  cat > "$root/bin/git" <<SH
+#!/usr/bin/env bash
+if [[ "\$*" == *" status --porcelain "* ]]; then exit 9; fi
+exec "$real_git" "\$@"
+SH
+  chmod +x "$root/bin/git"
+  export PATH="$root/bin:$PATH"
+
+  sync_checkout || fail "checkout inspection failure should be nonfatal"
+  [[ "$(command git -C "$CHECKOUT_ROOT" rev-parse HEAD)" == "$before" ]] \
+    || fail "checkout advanced after cleanliness inspection failed"
+  command grep -q 'CHECKOUT-STATUS-FAIL' "$LOG_FILE" \
+    || fail "checkout cleanliness inspection failure was not reported"
+)
+
+implementing_issues_defer_restart() (
+  load_implementation || exit 1
+  local root
+  root="$(mktemp -d -t hourly-maintenance-defer.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  mkdir -p "$root/bin" "$root/checkout" "$root/logs"
+  export FKST_CHECKOUT_ROOT="$root/checkout"
+  export FKST_MAINTENANCE_LOG="$root/logs/hourly-maintenance.log"
+  export FKST_GITHUB_REPOSITORY="example/synthetic"
+  export FKST_RUN_SCRIPT="$root/bin/run-engine"
+  export FKST_LAUNCHD_LABEL="com.example.synthetic-fkst"
+  cat > "$FKST_RUN_SCRIPT" <<SH
+#!/usr/bin/env bash
+printf 'restart attempted\n' >> "$root/run.calls"
+SH
+  cat > "$root/bin/pgrep" <<'SH'
+#!/usr/bin/env bash
+printf '4242\n'
+SH
+  cat > "$root/bin/gh" <<'SH'
+#!/usr/bin/env bash
+printf '2\n'
+SH
+  cat > "$root/bin/sleep" <<'SH'
+#!/usr/bin/env bash
+exit 0
+SH
+  cat > "$root/bin/launchctl" <<'SH'
+#!/usr/bin/env bash
+printf '4242 0 com.example.synthetic-fkst\n'
+SH
+  chmod +x "$FKST_RUN_SCRIPT" "$root/bin/pgrep" "$root/bin/gh" \
+    "$root/bin/sleep" "$root/bin/launchctl"
+  export PATH="$root/bin:/usr/bin:/bin"
+  CHANGED=1
+
+  restart_if_needed || fail "restart deferral should exit successfully"
+  [[ ! -e "$root/run.calls" ]] || fail "engine control ran during DEFER-RESTART"
+  command grep -q 'DEFER-RESTART' "$FKST_MAINTENANCE_LOG" \
+    || fail "restart deferral was not reported"
+
+  rm -f "$FKST_MAINTENANCE_LOG" "$root/run.calls"
+  cat > "$root/bin/gh" <<'SH'
+#!/usr/bin/env bash
+exit 9
+SH
+  restart_if_needed || fail "unknown implementation state should defer safely"
+  [[ ! -e "$root/run.calls" ]] || fail "engine control ran when GitHub state was unavailable"
+  command grep -q 'DEFER-RESTART.*unavailable' "$FKST_MAINTENANCE_LOG" \
+    || fail "unavailable implementation state was not reported as a deferral"
+
+  rm -f "$root/bin/gh" "$FKST_MAINTENANCE_LOG" "$root/run.calls"
+  restart_if_needed || fail "missing GitHub CLI should defer safely"
+  [[ ! -e "$root/run.calls" ]] || fail "engine control ran without GitHub state"
+  command grep -q 'DEFER-RESTART.*unavailable' "$FKST_MAINTENANCE_LOG" \
+    || fail "missing GitHub CLI was not reported as a deferral"
+)
+
+worktree_gc_preserves_owned_or_dirty_lanes() (
+  load_implementation || exit 1
+  local root
+  root="$(mktemp -d -t hourly-maintenance-worktree-gc.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  local remote="$root/remote.git"
+  CHECKOUT_ROOT="$root/checkout"
+  local lanes="$root/lanes"
+  mkdir -p "$lanes" "$root/bin" "$root/logs"
+  git_quiet init --bare --initial-branch=dev "$remote" || exit 1
+  git_quiet clone "$remote" "$CHECKOUT_ROOT" || exit 1
+  configure_repository "$CHECKOUT_ROOT" || exit 1
+  printf 'base\n' > "$CHECKOUT_ROOT/tracked"
+  command git -C "$CHECKOUT_ROOT" add tracked
+  git_quiet -C "$CHECKOUT_ROOT" commit -m base || exit 1
+  git_quiet -C "$CHECKOUT_ROOT" push -u origin dev || exit 1
+  local owned="$lanes/lane-101-1"
+  local dirty="$lanes/lane-102-1"
+  local clean="$lanes/lane-103-1"
+  git_quiet -C "$CHECKOUT_ROOT" worktree add -b lane-101 "$owned" origin/dev || exit 1
+  git_quiet -C "$CHECKOUT_ROOT" worktree add -b lane-102 "$dirty" origin/dev || exit 1
+  git_quiet -C "$CHECKOUT_ROOT" worktree add -b lane-103 "$clean" origin/dev || exit 1
+  configure_repository "$owned" || exit 1
+  printf 'owned\n' > "$owned/own-commit"
+  command git -C "$owned" add own-commit
+  git_quiet -C "$owned" commit -m owned || exit 1
+  printf 'dirty\n' >> "$dirty/tracked"
+  cat > "$root/bin/gh" <<'SH'
+#!/usr/bin/env bash
+[[ "$*" == *"issue view"* ]] || exit 8
+printf 'CLOSED\n'
+SH
+  chmod +x "$root/bin/gh"
+  export PATH="$root/bin:$PATH"
+  export FKST_CHECKOUT_ROOT="$CHECKOUT_ROOT"
+  export FKST_WORKTREE_ROOT="$lanes"
+  export FKST_GITHUB_REPOSITORY="example/synthetic"
+  export FKST_MAINTENANCE_LOG="$root/logs/hourly-maintenance.log"
+
+  gc_worktrees || fail "worktree GC should be nonfatal"
+  [[ -d "$owned" ]] || fail "lane with own commits was removed"
+  [[ -d "$dirty" ]] || fail "lane with uncommitted work was removed"
+  [[ ! -e "$clean" ]] || fail "clean closed-issue lane was not reclaimed"
+)
+
+gc_roots_are_canonical_and_never_the_filesystem_root() (
+  load_implementation || exit 1
+  local root
+  root="$(mktemp -d -t hourly-maintenance-safe-root.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  type canonical_gc_root >/dev/null 2>&1 || fail "canonical GC-root validator is missing"
+  [[ "$(canonical_gc_root "$root")" == "$(cd "$root" && pwd -P)" ]] \
+    || fail "safe GC root was not canonicalized"
+  ! canonical_gc_root "/tmp/.." >/dev/null 2>&1 \
+    || fail "normalized filesystem root was accepted for GC"
+)
+
+stale_slot_gc_requires_a_genuinely_dead_owner() (
+  load_implementation || exit 1
+  local root
+  root="$(mktemp -d -t hourly-maintenance-slot-gc.XXXXXX)" || exit 1
+  mkdir -p "$root/slots/live.lock" "$root/slots/dead.lock" "$root/logs"
+  sleep 30 &
+  local live_pid=$!
+  trap 'kill "$live_pid" 2>/dev/null || true; wait "$live_pid" 2>/dev/null || true; rm -rf "$root"' EXIT
+  printf '%s\n' "$live_pid" > "$root/slots/live.lock/owner"
+  local dead_pid=999999
+  while command ps -p "$dead_pid" >/dev/null 2>&1; do dead_pid=$((dead_pid-1)); done
+  printf '%s\n' "$dead_pid" > "$root/slots/dead.lock/owner"
+  export FKST_REPORT_SLOT_ROOT="$root/slots"
+  export FKST_MAINTENANCE_LOG="$root/logs/hourly-maintenance.log"
+
+  reclaim_stale_slots || fail "slot GC should be nonfatal"
+  [[ -d "$root/slots/live.lock" ]] || fail "live owner's slot was reclaimed"
+  [[ ! -e "$root/slots/dead.lock" ]] || fail "dead owner's stale slot was retained"
+)
+
+slot_reclaim_rechecks_owner_after_atomic_claim() (
+  load_implementation || exit 1
+  local root
+  root="$(mktemp -d -t hourly-maintenance-slot-race.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  mkdir -p "$root/slots/race.lock" "$root/logs"
+  printf '7001\n' > "$root/slots/race.lock/owner"
+  export FKST_REPORT_SLOT_ROOT="$root/slots"
+  export FKST_MAINTENANCE_LOG="$root/logs/hourly-maintenance.log"
+  local kill_checks=0
+  kill() {
+    [[ "$1" == "-0" ]] || return 1
+    kill_checks=$((kill_checks + 1))
+    [[ "$kill_checks" -ge 2 ]]
+  }
+  ps() { return 0; }
+
+  reclaim_stale_slots || fail "racing slot reclaim should be nonfatal"
+  [[ -d "$root/slots/race.lock" ]] || fail "slot was removed after its owner became live"
+  [[ ! -e "$root/slots/race.lock.reclaim-guard" ]] \
+    || fail "reclaim guard leaked after owner recheck"
+)
+
+restart_health_requires_successful_stop_and_new_pid() (
+  load_implementation || exit 1
+  local root
+  root="$(mktemp -d -t hourly-maintenance-restart-proof.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  mkdir -p "$root/bin" "$root/checkout" "$root/logs"
+  export FKST_CHECKOUT_ROOT="$root/checkout"
+  export FKST_MAINTENANCE_LOG="$root/logs/hourly-maintenance.log"
+  export FKST_RUN_SCRIPT="$root/bin/run-engine"
+  export FKST_LAUNCHD_LABEL="com.example.synthetic-fkst"
+  cat > "$FKST_RUN_SCRIPT" <<'SH'
+#!/usr/bin/env bash
+exit "${RUN_EXIT_CODE:-0}"
+SH
+  cat > "$root/bin/pgrep" <<'SH'
+#!/usr/bin/env bash
+printf '4242\n'
+SH
+  cat > "$root/bin/launchctl" <<'SH'
+#!/usr/bin/env bash
+printf '4242 0 com.example.synthetic-fkst\n'
+SH
+  cat > "$root/bin/sleep" <<'SH'
+#!/usr/bin/env bash
+exit 0
+SH
+  chmod +x "$FKST_RUN_SCRIPT" "$root/bin/pgrep" "$root/bin/launchctl" "$root/bin/sleep"
+  export PATH="$root/bin:$PATH"
+  PLATFORM_CHANGED=0
+
+  RUN_EXIT_CODE=7 restart_engine && fail "failed stop was accepted as a restart"
+  RUN_EXIT_CODE=0 restart_engine && fail "unchanged pre-stop PID was accepted as a new engine"
+  return 0
+)
+
+rollback_failure_is_not_reported_as_reverted() (
+  load_implementation || exit 1
+  local root
+  root="$(mktemp -d -t hourly-maintenance-rollback-honesty.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  create_platform_fixture "$root" || exit 1
+  create_checkout_files "$root" || exit 1
+  FRAMEWORK_CALLS_FILE="$root/framework.calls"
+  export FRAMEWORK_CALLS_FILE
+  write_framework_stub success
+  export_platform_environment
+  export FKST_RUN_SCRIPT="$root/bin/run-engine"
+  export FKST_LAUNCHD_LABEL="com.example.synthetic-fkst"
+  printf '#!/usr/bin/env bash\nexit 0\n' > "$FKST_RUN_SCRIPT"
+  printf '#!/usr/bin/env bash\nexit 0\n' > "$root/bin/sleep"
+  printf '#!/usr/bin/env bash\nexit 0\n' > "$root/bin/launchctl"
+  printf '#!/usr/bin/env bash\nexit 1\n' > "$root/bin/pgrep"
+  chmod +x "$FKST_RUN_SCRIPT" "$root/bin/sleep" "$root/bin/launchctl" "$root/bin/pgrep"
+  export PATH="$root/bin:$PATH"
+
+  sync_platform || fail "platform sync setup should succeed"
+  rm -f "$PLATFORM_WORKSPACE_BACKUP" "$PLATFORM_LOCK_BACKUP"
+  restart_engine && fail "health failure with missing backups must fail"
+  command grep -q 'ROLLBACK-FAIL' "$FKST_MAINTENANCE_LOG" \
+    || fail "rollback failure was not reported"
+  ! command grep -q 'reverted platform' "$FKST_MAINTENANCE_LOG" \
+    || fail "failed rollback was falsely reported as reverted"
+)
+
+pin_write_rollback_failure_is_not_reported_as_reverted() (
+  load_implementation || exit 1
+  local root
+  root="$(mktemp -d -t hourly-maintenance-pin-write-rollback.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  create_platform_fixture "$root" || exit 1
+  create_checkout_files "$root" || exit 1
+  FRAMEWORK_CALLS_FILE="$root/framework.calls"
+  export FRAMEWORK_CALLS_FILE
+  write_framework_stub success
+  export_platform_environment
+  cat > "$root/bin/mv" <<'SH'
+#!/usr/bin/env bash
+rm -f "$FKST_CHECKOUT_ROOT"/fkst.workspace.toml.bak-*
+exit 9
+SH
+  chmod +x "$root/bin/mv"
+  export PATH="$root/bin:$PATH"
+
+  sync_platform && fail "pin-write failure must fail platform sync"
+  command grep -q 'ROLLBACK-FAIL' "$FKST_MAINTENANCE_LOG" \
+    || fail "pin-write rollback failure was not reported"
+  ! command grep -q 'reverted platform' "$FKST_MAINTENANCE_LOG" \
+    || fail "failed pin-write rollback was falsely reported as reverted"
+)
+
+run_test() {
+  local name="$1"
+  shift
+  if "$@"; then
+    PASS_COUNT=$((PASS_COUNT + 1))
+    printf 'ok %d - %s\n' "$((PASS_COUNT + FAIL_COUNT))" "$name"
+  else
+    FAIL_COUNT=$((FAIL_COUNT + 1))
+    printf 'not ok %d - %s\n' "$((PASS_COUNT + FAIL_COUNT))" "$name"
+  fi
+}
+
+run_test "deployed top-level workspace is authoritative" deployed_top_level_workspace_is_authoritative
+run_test "host-lock failure rolls back pin and lock bytes" host_lock_failure_rolls_back_pin_and_lock_bytes
+run_test "post-restart health failure rolls back pin and lock bytes" post_restart_health_failure_rolls_back_pin_and_lock_bytes
+run_test "checkout fast-forwards only clean ancestors" checkout_fast_forwards_only_clean_ancestors
+run_test "checkout divergence refuses auto fast-forward" checkout_divergence_refuses_auto_fast_forward
+run_test "checkout status failure refuses auto fast-forward" checkout_status_failure_refuses_auto_fast_forward
+run_test "implementing issues defer restart" implementing_issues_defer_restart
+run_test "worktree GC preserves owned or dirty lanes" worktree_gc_preserves_owned_or_dirty_lanes
+run_test "GC roots are canonical and never filesystem root" gc_roots_are_canonical_and_never_the_filesystem_root
+run_test "stale slot GC requires a genuinely dead owner" stale_slot_gc_requires_a_genuinely_dead_owner
+run_test "slot reclaim rechecks owner after atomic claim" slot_reclaim_rechecks_owner_after_atomic_claim
+run_test "restart health requires successful stop and new PID" restart_health_requires_successful_stop_and_new_pid
+run_test "rollback failure is not reported as reverted" rollback_failure_is_not_reported_as_reverted
+run_test "pin-write rollback failure is not reported as reverted" pin_write_rollback_failure_is_not_reported_as_reverted
+
+printf 'behavior tests: %d passed, %d failed, %d total\n' \
+  "$PASS_COUNT" "$FAIL_COUNT" "$((PASS_COUNT + FAIL_COUNT))"
+[[ "$FAIL_COUNT" -eq 0 ]]
