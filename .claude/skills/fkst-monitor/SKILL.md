@@ -1,6 +1,6 @@
 ---
 name: fkst-monitor
-description: Snapshot, diagnose, and keep current the fkst autonomous-development engine deployed on this repo (supervise liveness, log errors, delivery throughput, durable/DLQ state, issue/PR processing, and fkst-packages platform-pin freshness against dev). Use when checking whether the fkst devloop is running/healthy, why it stalled, whether newer platform packages are on dev, or when the user mentions fkst status, the supervise loop, the autonomous dev engine, ~/.fkst, or the github-devloop pipeline.
+description: Snapshot, diagnose, and maintain the fkst autonomous-development engine deployed on this repo (supervise liveness, log errors, delivery throughput, durable/DLQ state, issue/PR processing, platform-pin freshness, checkout freshness, restart deferral, and conservative garbage collection). Use when checking whether the fkst devloop is running/healthy, why it stalled, whether deployed code is current, or when the user mentions fkst status, the supervise loop, the autonomous dev engine, ~/.fkst, or the github-devloop pipeline.
 ---
 
 # fkst-monitor
@@ -31,23 +31,15 @@ bash .claude/skills/fkst-monitor/scripts/status.sh --watch
 - **Durable / DLQ** — `fkst-framework observe --durable-root ~/.fkst/trureturing/durable --json`: rising DLQ depth means deliveries are exhausting retries (a stage keeps failing — inspect the failing dept's `error_class`). `subscriber_status:absent` on a reliable queue means a consumer never started.
 - **Issue/PR processing** — `github_entity_changed` → `intake.admission` / `observe_issue` / `observe_pr` acks show the devloop is picking up and driving GitHub work. `error_class=codex-failed` with `No such file` means the `codex` binary is not on the supervise child PATH (fix in `host.env`, not source).
 
-## Keep the platform current (fkst-packages dev)
+## Run the hourly maintenance cycle
 
-The deployment pins the fkst-packages platform at `.fkst/fkst.workspace.toml` `external_sources.rev`. fkst-packages `dev` moves (bug fixes, new packages); the pin should follow it so the engine runs the latest platform. **Fixes to the devloop merge/rollup, review, or intake often land on dev** — a stalled or looping pipeline is frequently resolved by syncing.
+The repository-owned operational entrypoint is the Make target:
 
-Check whether newer platform packages are on dev (read-only):
-
-```sh
-bash .claude/skills/fkst-monitor/scripts/platform_sync.sh check
+```console
+make hourly-maintenance
 ```
 
-Reports `CURRENT` or `BEHIND by N commit(s)` with the new commit list. To apply — stop supervise → fast-forward the platform checkout to `origin/dev` → re-pin `fkst.workspace.toml` → regenerate `fkst.lock` → restart supervise → sync the engine checkout:
-
-```sh
-bash .claude/skills/fkst-monitor/scripts/platform_sync.sh sync
-```
-
-After `sync`, **commit the pin bump** (`.fkst/fkst.workspace.toml` + `.fkst/fkst.lock`) so the repo records the platform revision.
+The host launcher supplies the required absolute paths and deployment identity as environment parameters. The target delegates to the single tracked implementation; it synchronizes the deployed top-level platform pin and lock, fast-forwards only a clean ancestor checkout, defers restart while issues are implementing, and conservatively reclaims eligible worktrees and dead-owner report slots.
 
 ## Diagnosing a stall
 
