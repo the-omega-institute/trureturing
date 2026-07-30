@@ -99,37 +99,6 @@ jobs:
       - name: Run candidate golden and integration tests
         run: make -C candidate test
 
-      - name: Rejudge C0 trust root on the synthetic squash carrier
-        if: github.event_name == 'pull_request_target'
-        shell: bash
-        env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
-          CANDIDATE_SHA: ${{ github.event.pull_request.head.sha }}
-        run: |
-          set -euo pipefail
-          actual_candidate="$(git -C candidate rev-parse HEAD)"
-          test "$actual_candidate" = "$CANDIDATE_SHA"
-          candidate_tree="$(git -C candidate rev-parse "$CANDIDATE_SHA^{tree}")"
-          squash_sha="$(
-            printf '%s\n' 'C0 synthetic squash carrier' |
-              GIT_AUTHOR_NAME='C0 admission' \
-              GIT_AUTHOR_EMAIL='c0-admission@example.invalid' \
-              GIT_COMMITTER_NAME='C0 admission' \
-              GIT_COMMITTER_EMAIL='c0-admission@example.invalid' \
-              git -C candidate commit-tree "$candidate_tree" -p "$BASE_SHA"
-          )"
-          restore_candidate() {
-            git -C candidate checkout --detach "$CANDIDATE_SHA"
-          }
-          trap restore_candidate EXIT
-          git -C candidate checkout --detach "$squash_sha"
-          test "$(git -C candidate rev-parse HEAD^{tree})" = "$candidate_tree"
-          test "$(git -C candidate rev-parse HEAD^)" = "$BASE_SHA"
-          dotnet test \
-            candidate/Meta/StrataLint/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj \
-            --filter FullyQualifiedName~C0CeremonyTrustRootTests \
-            --no-restore
-
       - name: Run candidate pinned Lua package gate
         run: make -C candidate lua-test
 

@@ -7,6 +7,29 @@ namespace StrataLint.ArchitectureTests;
 public sealed class C0CeremonyTrustRootTests
 {
     private const string TowerPath = "Meta/StrataLint/TOWER.yaml";
+    private const string JudgePath =
+        "Meta/StrataLint/StrataLint.ArchitectureTests/CanonicalSources/C0CeremonyTrustRootJudge.cs";
+
+    [Fact]
+    public void CanonicalTrustRootSourceDoesNotUseCommitAncestry()
+    {
+        var root = RepositoryLayout.FindRoot();
+        var canonicalSources = new[]
+        {
+            JudgePath,
+        };
+        var forbidden = "merge-base --is-" + "ancestor";
+        var occurrences = canonicalSources
+            .SelectMany(path => File.ReadLines(Absolute(root, path)).Select((line, index) =>
+                (Path: path, Line: index + 1, Text: line)))
+            .Where(item => item.Text.Contains(
+                forbidden,
+                StringComparison.Ordinal))
+            .Select(static item => $"{item.Path}:{item.Line}")
+            .ToArray();
+
+        Assert.Empty(occurrences);
+    }
 
     [Fact]
     public void PreimageBlobValidationSurvivesSquashAndGarbageCollection()
@@ -43,11 +66,12 @@ public sealed class C0CeremonyTrustRootTests
             Git(root, "reflog", "expire", "--expire=now", "--all");
             Git(root, "gc", "--prune=now");
 
-            Assert.NotEqual(0, GitExitCode(
-                root, "merge-base", "--is-ancestor", preimageOid, "HEAD"));
-            Assert.NotEqual(0, GitExitCode(root, "rev-parse", $"{preimageOid}:anchor.txt"));
+            Assert.NotEqual(0, GitExitCode(root, "cat-file", "-e", $"{preimageOid}^{{commit}}"));
+            Assert.Equal(0, GitExitCode(root, "cat-file", "-e", $"{treeOid}^{{tree}}"));
 
-            AssertPreimageBlobs(
+            // Mutation pin: changing the production judge back to commitOid:path must fail here,
+            // because the preimage commit is pruned while HEAD still carries its exact tree.
+            C0CeremonyTrustRootJudge.AssertPreimageBlobs(
                 root,
                 [new C0Record("c0/controller", "git-sha1/" + blobOid, "anchor.txt")],
                 treeOid);
@@ -168,7 +192,7 @@ public sealed class C0CeremonyTrustRootTests
             "git-tree/" + Untag(candidate.GetProperty("tree_oid").GetString()!, "git-sha1:"),
             preimageTree.Address);
         var preimageTreeOid = Untag(preimageTree.Address, "git-tree/");
-        AssertPreimageBlobs(root, records, preimageTreeOid);
+        C0CeremonyTrustRootJudge.AssertPreimageBlobs(root, records, preimageTreeOid);
     }
 
     private static void AssertAnchorPaths(
@@ -189,20 +213,6 @@ public sealed class C0CeremonyTrustRootTests
             .Order(StringComparer.Ordinal)
             .ToArray();
         Assert.Equal(expected, actual);
-    }
-
-    private static void AssertPreimageBlobs(
-        string root,
-        IEnumerable<C0Record> records,
-        string preimageTree)
-    {
-        foreach (var record in records.Where(static item => item.Kind is
-            "c0/controller" or "c0/corpus" or "c0/gate-wiring"))
-        {
-            Assert.Equal(
-                record.Address,
-                "git-sha1/" + Git(root, "rev-parse", $"{preimageTree}:{record.Path}"));
-        }
     }
 
     private static C0Record ParseRecord(string value)
@@ -267,5 +277,5 @@ public sealed class C0CeremonyTrustRootTests
         Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
             GitRepositorySnapshotReader.ReadCurrent(root))).Snapshot;
 
-    private sealed record C0Record(string Kind, string Address, string? Path);
+    internal sealed record C0Record(string Kind, string Address, string? Path);
 }
