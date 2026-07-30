@@ -206,7 +206,8 @@ host_contract_load() {
 
   host_contract_load_schema || return
   host_contract_parse_file "$host_config" host true || return
-  repository_config="$FKST_HOST_ROOT/.fkst/deploy.env"
+  # The schema and the repository data it governs must come from the same checkout.
+  repository_config="$HOST_CONTRACT_SCRIPT_DIR/../deploy.env"
   host_contract_parse_file "$repository_config" repository false || return
 
   index=0
