@@ -100,7 +100,10 @@ internal static class C0RenewCommand
             return new CommandResult(
                 false,
                 string.Empty,
-                $"C0_RENEW_FAILED {exception.Message}\n");
+                $"C0_RENEW_FAILED [{exception.GetType().Name}] {exception.Message}\n"
+                + (exception.InnerException is { } inner
+                    ? $"C0_RENEW_FAILED_INNER [{inner.GetType().Name}] {inner.Message}\n"
+                    : string.Empty));
         }
     }
 
