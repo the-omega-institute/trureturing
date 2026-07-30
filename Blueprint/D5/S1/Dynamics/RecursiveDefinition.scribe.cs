@@ -36,7 +36,7 @@ internal sealed class RecursiveDefinitionDocument : IScribeDocumentDefinition
                         + "fixed points differ, both selected values satisfy the fixed-point "
                         + "equation and the two selected values are unequal."))),
                     LatexStatement.Create(
-                        @"$$\operatorname{lfp}(f)\neq\operatorname{gfp}(f)\Longrightarrow "
+                        @"$$\operatorname{lfp}(f)\neq\operatorname{gfp}(f)\Rightarrow "
                         + @"f(\operatorname{select}_f(\mathrm{least}))="
                         + @"\operatorname{select}_f(\mathrm{least})\land "
                         + @"f(\operatorname{select}_f(\mathrm{greatest}))="
@@ -55,6 +55,6 @@ internal sealed class RecursiveDefinitionDocument : IScribeDocumentDefinition
                         + "exactly one value satisfying f(x) = x implies that the least and "
                         + "greatest fixed points coincide."))),
                     LatexStatement.Create(
-                        @"$$\left(\exists!x,\ f(x)=x\right)\Longrightarrow "
+                        @"$$\left(\exists!x,\ f(x)=x\right)\Rightarrow "
                         + @"\operatorname{lfp}(f)=\operatorname{gfp}(f).$$")))));
 }
