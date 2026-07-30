@@ -153,7 +153,8 @@ public sealed partial class PrShepherdRecalculationTests
             bool dryRun = false,
             bool expiryFingerprint = true,
             bool duplicatePrRow = false,
-            bool splitFingerprintAcrossJobs = false)
+            bool splitFingerprintAcrossJobs = false,
+            bool conflicting = false)
         {
             var script = Path.Combine(FindRepositoryRoot(), ShepherdScriptPath);
             var home = Path.Combine(temporary.Path, "home");
@@ -174,6 +175,7 @@ public sealed partial class PrShepherdRecalculationTests
                 $"PR_TEST_EXPIRY={(expiryFingerprint ? "1" : "0")}",
                 $"PR_TEST_SPLIT={(splitFingerprintAcrossJobs ? "1" : "0")}",
                 $"PR_TEST_DUPLICATE={(duplicatePrRow ? "1" : "0")}",
+                $"PR_TEST_CONFLICTING={(conflicting ? "1" : "0")}",
                 $"PR_TEST_FAIL_TARGET={failingTarget}",
                 $"PR_TEST_MOVE_HEAD={(moveHeadBeforePush ? "1" : "0")}",
                 $"PR_TEST_FAIL_MERGE={(failMergeWithoutConflict ? "1" : "0")}",
@@ -368,6 +370,8 @@ public sealed partial class PrShepherdRecalculationTests
                   base="$(git --git-dir "$PR_TEST_ORIGIN" rev-parse refs/heads/dev)"
                   if [[ "${PR_TEST_NO_CHECKS:-0}" == 1 ]]; then
                     row="1	MERGEABLE	BLOCKED	${PR_TEST_HEAD}	${head}	${base}	0	-	-"
+                  elif [[ "${PR_TEST_CONFLICTING:-0}" == 1 ]]; then
+                    row="1	CONFLICTING	DIRTY	${PR_TEST_HEAD}	${head}	${base}	1	FAILURE	https://github.com/fixture/repository/actions/runs/123/job/456"
                   else
                     row="1	MERGEABLE	BEHIND	${PR_TEST_HEAD}	${head}	${base}	1	FAILURE	https://github.com/fixture/repository/actions/runs/123/job/456"
                   fi
@@ -467,7 +471,13 @@ public sealed partial class PrShepherdRecalculationTests
                 if [[ "$PR_TEST_FAIL_MERGE" == 1 && " $* " == *" merge --no-commit "* ]]; then
                   exit 97
                 fi
-                if [[ " $* " == *" push "* ]]; then printf 'push\n' >> "$PR_TEST_CALLS"; fi
+                if [[ " $* " == *" push "* ]]; then
+                  if [[ " $* " == *" --force "* || " $* " == *" --force-with-lease "* || " $* " == *" -f "* ]]; then
+                    printf 'force-push\n' >> "$PR_TEST_CALLS"
+                  else
+                    printf 'push\n' >> "$PR_TEST_CALLS"
+                  fi
+                fi
                 exec /usr/bin/git "$@"
                 """);
             WriteExecutable(

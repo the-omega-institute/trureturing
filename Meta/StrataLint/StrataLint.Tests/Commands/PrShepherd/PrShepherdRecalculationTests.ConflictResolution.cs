@@ -3,34 +3,45 @@ namespace StrataLint.Tests;
 public sealed partial class PrShepherdRecalculationTests
 {
     [Fact]
-    public void SourceConflictKeepsExistingConflictingAlertAndDoesNotPush()
+    public void ConflictingWithSourceConflictReachesLocalAuthorityAndAlertsOnceWithoutPush()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new ShepherdFixture(sourceConflict: true);
 
-        var result = fixture.Run();
+        var result = fixture.Run(duplicatePrRow: true, conflicting: true);
 
         Assert.Equal(0, result.ExitCode);
         Assert.Equal(fixture.OriginalHead, fixture.RemoteHead());
-        Assert.DoesNotContain("push", fixture.MutationCalls());
-        Assert.Contains(
-            "ALERT #1 CONFLICTING head=feature 需语义合并(派 shepherd lane,本器不代解)",
-            result.Log,
-            StringComparison.Ordinal);
+        Assert.True(Directory.Exists(fixture.CacheWorktree));
+        Assert.Equal(["worktree"], fixture.MutationCalls());
+        Assert.Equal(
+            1,
+            result.Log.Split(
+                "ALERT #1 CONFLICTING head=feature 需语义合并(派 shepherd lane,本器不代解)",
+                StringSplitOptions.None).Length - 1);
     }
 
     [Fact]
-    public void DerivedConflictTakesDevSideBeforeReemission()
+    public void ConflictingWithOnlyDerivedConflictsRecalculatesAndPushesNonForce()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new ShepherdFixture();
 
-        var result = fixture.Run();
+        var result = fixture.Run(
+            expiryFingerprint: false,
+            duplicatePrRow: true,
+            conflicting: true);
 
         Assert.Equal(0, result.ExitCode);
         Assert.NotEqual(fixture.OriginalHead, fixture.RemoteHead());
         Assert.Equal("dev choice\n", fixture.ShowRemote("Generated/dev-choice.md"));
-        Assert.Contains("push", fixture.MutationCalls());
+        Assert.Equal(
+            ["worktree", "lean-report", "emit", "ingest", "echo-verify", "emit-check", "push"],
+            fixture.MutationCalls());
+        Assert.Contains(
+            "SWEEP #1 本地 merge+regen+push 完成 head=feature",
+            result.Log,
+            StringComparison.Ordinal);
     }
 
     [Fact]

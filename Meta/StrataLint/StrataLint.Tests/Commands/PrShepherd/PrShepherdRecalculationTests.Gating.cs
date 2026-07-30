@@ -16,9 +16,9 @@ public sealed partial class PrShepherdRecalculationTests
         Assert.Empty(fixture.MutationCalls());
         AssertInOrder(
             result.Log,
-            "DRYRUN #1 BEHIND stale derivations -> ensure worktree",
+            "DRYRUN #1 recalculate -> ensure worktree",
             "DRYRUN #1 fetch origin/dev and origin/feature; verify observed OIDs",
-            "DRYRUN #1 checkout feature; merge origin/dev (derived conflicts take dev)",
+            "DRYRUN #1 checkout feature; merge origin/dev (classify conflicts locally; derived take dev)",
             "DRYRUN #1 run make lean-report",
             "DRYRUN #1 run make emit",
             "DRYRUN #1 run make ingest BASE=origin/dev",
