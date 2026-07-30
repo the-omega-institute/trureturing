@@ -23,9 +23,7 @@ local REQUEST_MARKER = "theory-selfgrowth:frontier-request:v1"
 -- fields), so the 5-judge intake correctly declined it (#359). This title instead asks the
 -- consumer to PROPOSE-AND-PROVE a new theorem by mathematical judgment and routes on the
 -- "Deliver ONE NEW D5 result:" prefix to blueprint-then-formalize (verified accepted + routed by
--- #366). Each self-tick's generation-scoped dedup key yields a distinct request; the consumer
--- picks a fresh (novelty-guarded) theorem each generation, so the library grows unbounded.
-local REQUEST_TITLE = "Deliver ONE NEW D5 result: a new golden-integer theorem (proposer's choice)"
+-- #366). Requests are atom-scoped (one digestion atom = one request; see atom_marker).
 
 -- Reject idle hints older than this (mirror archaudit's 10-minute freshness budget): a
 -- durable idle prompt must not create work once the system is no longer idle (#296 Major 2).
@@ -47,7 +45,6 @@ local POLL_INTERVAL_SECONDS = 30 * 60
 local POLL_INTERVAL = tostring(math.floor(POLL_INTERVAL_SECONDS / 60)) .. "m"
 
 function M.request_marker() return REQUEST_MARKER end
-function M.request_title() return REQUEST_TITLE end
 function M.freshness_budget_seconds() return FRESHNESS_BUDGET_SECONDS end
 function M.poll_interval() return POLL_INTERVAL end
 
@@ -66,19 +63,6 @@ end
 function M.producer_marker(bot_login)
   assert_bot_login(bot_login)
   return REQUEST_MARKER .. ":" .. tostring(bot_login)
-end
-
--- Idempotency key handed to github-proxy — GENERATION-SCOPED (#296 Major 1).
--- github-proxy dedups by searching issues with `--state all` for the create-marker derived
--- from this key. A stable per-repo key matches the FIRST created issue forever (even after
--- it is closed), so the self-growth flywheel could only ever spin once. Scoping the key by
--- producer + generation makes each bot's new obligation marker distinct, so `--state all`
--- no longer matches another producer or a prior CLOSED generation. The "at most one OPEN
--- request per producer at a time" invariant is enforced SEPARATELY by the producer's
--- open-request exclusion (see M.decide_generation) — hence "idempotency scoped by producer
--- and generation, open-request exclusion done separately".
-function M.dedup_key(repo, generation, bot_login)
-  return M.producer_marker(bot_login) .. ":" .. tostring(repo) .. ":gen" .. tostring(generation)
 end
 
 -- Search query the producer runs against its OWN prior requests (used with
@@ -347,34 +331,6 @@ local function assert_field(ok, name)
   if not ok then
     error("theory-selfgrowth: invalid-request-field: " .. tostring(name), 0)
   end
-end
-
-local function body_text(dedup_key, bot_login)
-  local producer_marker = M.producer_marker(bot_login)
-  return table.concat({
-    "Theory self-growth (CLAUDE.md 第22条 open-driven flywheel): the system PROPOSES a new",
-    "mathematical truth AND proves it, growing the library. Deliver as ONE conservative increment.",
-    "producer: " .. tostring(bot_login),
-    "frontier-request-marker: " .. producer_marker,
-    "",
-    "Propose ONE genuinely-new, non-trivial, worthwhile theorem about the golden integers ℤ[φ]",
-    "(`GoldenInt`), building ONLY on the already-CLOSED `D5/S0/Carrier/` library (Norm, Conj, Units,",
-    "Euclidean/`EuclideanDomain GoldenInt`, GoldenRatio, Ring, AlgebraicModel — all proved sorry-free).",
-    "Choose by mathematical judgment what is worthwhile and NOT already proven (美是罗盘, CLAUDE.md 第3条);",
-    "do NOT compute or fabricate any novelty/worth number (the substrate cannot, and must not fake it).",
-    "",
-    "Deliver: a real Lean F-layer theorem (NOT a `Unit` placeholder), PROVED (`lake build` green;",
-    "`#print axioms` shows NO `sorryAx` and NO custom/non-mathlib axiom), plus its mirroring Blueprint",
-    "(B) narrative. Place it at the address + classification the repo's OWN rules dictate — derive the",
-    "generality and target path from the classification + SL-003 capacity rules (a DERIVED consequence",
-    "is typically `generality: I`); do NOT force a fixed path or mirror a base node's `generality: G`.",
-    "",
-    "Honesty guards: NON-VACUITY — reject trivial/vacuous statements (e.g. `P ∨ True`, `Nonempty`-of-",
-    "trivial); pick a substantive claim. NOVELTY — search first; it must not already exist.",
-    "CONSERVATIVE EXTENSION — append a new node only; never touch a frozen node.",
-    "",
-    "dedup-marker: " .. tostring(dedup_key),
-  }, "\n")
 end
 
 return M
