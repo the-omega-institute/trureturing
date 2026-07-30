@@ -9,6 +9,56 @@ public sealed class C0CeremonyTrustRootTests
     private const string TowerPath = "Meta/StrataLint/TOWER.yaml";
 
     [Fact]
+    public void PreimageBlobValidationSurvivesSquashAndGarbageCollection()
+    {
+        var root = Path.Combine(
+            Path.GetTempPath(),
+            $"stratalint-c0-squash-{Guid.NewGuid():N}");
+        Directory.CreateDirectory(root);
+        try
+        {
+            Git(root, "init", "--initial-branch=preimage");
+            Git(root, "config", "user.name", "C0 fixture");
+            Git(root, "config", "user.email", "c0-fixture@example.invalid");
+
+            File.WriteAllText(Absolute(root, "anchor.txt"), "base\n");
+            Git(root, "add", "anchor.txt");
+            Git(root, "commit", "-m", "base");
+            var baseOid = Git(root, "rev-parse", "HEAD");
+
+            File.WriteAllText(Absolute(root, "anchor.txt"), "candidate\n");
+            Git(root, "add", "anchor.txt");
+            Git(root, "commit", "-m", "candidate preimage");
+            var preimageOid = Git(root, "rev-parse", "HEAD");
+            var treeOid = Git(root, "rev-parse", "HEAD^{tree}");
+            var blobOid = Git(root, "rev-parse", "HEAD:anchor.txt");
+
+            Git(root, "checkout", "--orphan", "carrier");
+            Git(root, "reset", "--hard", baseOid);
+            Git(root, "read-tree", treeOid);
+            Git(root, "checkout-index", "--all", "--force");
+            Git(root, "commit", "-m", "squash carrier");
+            Assert.Equal(treeOid, Git(root, "rev-parse", "HEAD^{tree}"));
+            Git(root, "branch", "-D", "preimage");
+            Git(root, "reflog", "expire", "--expire=now", "--all");
+            Git(root, "gc", "--prune=now");
+
+            Assert.NotEqual(0, GitExitCode(
+                root, "merge-base", "--is-ancestor", preimageOid, "HEAD"));
+            Assert.NotEqual(0, GitExitCode(root, "rev-parse", $"{preimageOid}:anchor.txt"));
+
+            AssertPreimageBlobs(
+                root,
+                [new C0Record("c0/controller", "git-sha1/" + blobOid, "anchor.txt")],
+                preimageOid);
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Fact]
     public void CanonicalTowerJudgeGraphIsClosed()
     {
         var root = RepositoryLayout.FindRoot();
@@ -188,6 +238,24 @@ public sealed class C0CeremonyTrustRootTests
             process.ExitCode == 0,
             $"git {string.Join(' ', arguments)} exited {process.ExitCode}: {error}");
         return output.TrimEnd('\r', '\n');
+    }
+
+    private static int GitExitCode(string root, params string[] arguments)
+    {
+        var startInfo = new ProcessStartInfo("git")
+        {
+            WorkingDirectory = root,
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            UseShellExecute = false,
+        };
+        foreach (var argument in arguments) startInfo.ArgumentList.Add(argument);
+        using var process = Process.Start(startInfo)
+            ?? throw new InvalidOperationException("could not start git");
+        process.StandardOutput.ReadToEnd();
+        process.StandardError.ReadToEnd();
+        process.WaitForExit();
+        return process.ExitCode;
     }
 
     private static string Untag(string value, string prefix)
