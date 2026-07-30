@@ -6,7 +6,7 @@ make_target = "hourly-maintenance"
 implementation = ".fkst/scripts/hourly-maintenance.sh"
 tests = [
   ".fkst/tests/hourly-maintenance-behavior.sh",
-  "Meta/StrataLint/StrataLint.ArchitectureTests/CanonicalSources/OperationalEntrypointTests.cs",
+  "Meta/StrataLint/StrataLint.ArchitectureTests/Operations/OperationalEntrypointTests.cs",
   "Meta/StrataLint/StrataLint.Tests/Commands/MakeWorkflowTests.cs",
 ]
 external_tools = [
