@@ -75,6 +75,7 @@ public sealed class MakeWorkflowTests
         "gate",
         "perf-report",
         "worktree",
+        "pr-watch",
     ];
 
     [Fact]
@@ -166,6 +167,48 @@ public sealed class MakeWorkflowTests
         Assert.Contains("dry-run", output, StringComparison.Ordinal);
         Assert.Contains("FORCE=1", output, StringComparison.Ordinal);
         Assert.Contains("values", output, StringComparison.OrdinalIgnoreCase);
+        var prWatchHelp = Assert.Single(
+            output.Split('\n'),
+            static line => line.StartsWith("make pr-watch ", StringComparison.Ordinal));
+        var policyClauses = prWatchHelp.Split(
+            ';',
+            StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+        var stalePolicyClause = Assert.Single(
+            policyClauses,
+            static clause => Regex.IsMatch(
+                clause,
+                @"\bstale\b",
+                RegexOptions.CultureInvariant));
+        Assert.All(
+            new[]
+            {
+                @"\bstale\b",
+                @"\bBEHIND\b",
+                @"\bCONFLICTING\b",
+                @"\bpersistent-worktree\b",
+                @"\bpath classification\b",
+                @"\b(?:regen|recompute)\b",
+                @"\b(?:alert|warn)\b",
+            },
+            pattern => Assert.Matches(
+                new Regex(pattern, RegexOptions.CultureInvariant),
+                stalePolicyClause));
+        var updateBranchClause = Assert.Single(
+            policyClauses,
+            static clause => Regex.IsMatch(
+                clause,
+                @"\bother\s+BEHIND\b",
+                RegexOptions.CultureInvariant));
+        Assert.All(
+            new[] { @"\bother\s+BEHIND\b", @"\bupdate-branch\b" },
+            pattern => Assert.Matches(
+                new Regex(pattern, RegexOptions.CultureInvariant),
+                updateBranchClause));
+        Assert.DoesNotMatch(
+            new Regex(
+                @"\b(?:do\s+not|never|excludes|disables|prevents)\b",
+                RegexOptions.CultureInvariant | RegexOptions.IgnoreCase),
+            prWatchHelp);
     }
 
     [Fact]

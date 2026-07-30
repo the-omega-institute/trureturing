@@ -21,8 +21,19 @@ public sealed partial class PrShepherdRecalculationTests
         Assert.Equal(1, fixture.CountCommitsWithSubject(CommitSubject));
         Assert.True(Directory.Exists(fixture.CacheWorktree));
 
+        var firstBase = fixture.BaseHead;
         fixture.AdvanceDev();
         fixture.ClearMutationCalls();
+        var skipped = fixture.Run();
+
+        Assert.Equal(0, skipped.ExitCode);
+        Assert.Equal(firstHead, fixture.RemoteHead());
+        Assert.Empty(fixture.MutationCalls());
+        Assert.Contains(
+            $"base 已漂移 expected={firstBase[..12]} actual={fixture.BaseHead[..12]}",
+            skipped.Log,
+            StringComparison.Ordinal);
+
         var second = fixture.Run();
 
         Assert.Equal(0, second.ExitCode);

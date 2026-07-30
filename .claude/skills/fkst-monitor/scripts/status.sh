@@ -169,15 +169,42 @@ snapshot() {
   elif [[ ! -d "$DURABLE_ROOT" ]]; then
     observe_why="durable root absent: $DURABLE_ROOT"
   else
-    local obs_err="" obs_rc=0
+    # BOUNDED. observe's latency grows with the backlog it reports on: measured 79s against a 54 MB
+    # durable db with 14k+ pending, versus 27s for a whole snapshot minutes earlier. Unbounded, this
+    # monitor gets slower exactly as the thing it watches gets worse, and under --watch it eventually
+    # stops reporting — silence reads as "nothing to report", which is worse than DEGRADED.
+    # This is NOT the fixed-sleep-then-check-once shape filed as #602/#608: the budget is generous,
+    # configurable, and exceeding it is reported as a probe failure rather than absorbed.
+    # `timeout(1)` is deliberately not used — absent from a base macOS install (here only via Homebrew),
+    # and a second host must come up without host-specific tool assumptions.
+    local obs_err="" obs_out="" obs_rc=0 probe_pid=0 waited=0
+    local budget="${FKST_OBSERVE_BUDGET_S:-120}"
     obs_err="$(mktemp -t fkst-observe-err.XXXXXX)"
-    if obs="$("$bin" observe --durable-root "$DURABLE_ROOT" 2>"$obs_err")"; then
-      observe_ok=1
+    obs_out="$(mktemp -t fkst-observe-out.XXXXXX)"
+    "$bin" observe --durable-root "$DURABLE_ROOT" >"$obs_out" 2>"$obs_err" &
+    probe_pid=$!
+    while kill -0 "$probe_pid" 2>/dev/null && (( waited < budget )); do
+      sleep 1; waited=$(( waited + 1 ))
+    done
+    if kill -0 "$probe_pid" 2>/dev/null; then
+      # disown before killing: otherwise the shell reports the reaped job on stderr
+      # ("Terminated: 15 \"$bin\" observe ..."), which lands as noise inside this very report.
+      # A diagnostic whose own output is polluted is bad raw material — see the tests.
+      disown "$probe_pid" 2>/dev/null || true
+      kill -TERM "$probe_pid" 2>/dev/null || true
+      sleep 1
+      kill -KILL "$probe_pid" 2>/dev/null || true
+      observe_why="observe exceeded ${budget}s budget (raise FKST_OBSERVE_BUDGET_S); backlog grows this probe's latency"
     else
-      obs_rc=$?
-      observe_why="observe failed (exit $obs_rc): $( { head -c 300 "$obs_err" 2>/dev/null || true; } | tr '\n' ' ' | sed 's/  */ /g')"
+      if wait "$probe_pid"; then obs_rc=0; else obs_rc=$?; fi
+      if (( obs_rc == 0 )); then
+        obs="$(cat "$obs_out")"
+        observe_ok=1
+      else
+        observe_why="observe failed (exit $obs_rc): $( { head -c 300 "$obs_err" 2>/dev/null || true; } | tr '\n' ' ' | sed 's/  */ /g')"
+      fi
     fi
-    rm -f "$obs_err"
+    rm -f "$obs_err" "$obs_out"
   fi
   if (( ! observe_ok )); then
     [[ "$verdict" == HEALTHY ]] && verdict="DEGRADED"
