@@ -66,6 +66,7 @@ public sealed class MakeWorkflowTests
         "gate",
         "perf-report",
         "worktree",
+        "pr-watch",
     ];
 
     [Fact]
@@ -145,6 +146,22 @@ public sealed class MakeWorkflowTests
         Assert.Contains("dry-run", output, StringComparison.Ordinal);
         Assert.Contains("FORCE=1", output, StringComparison.Ordinal);
         Assert.Contains("values", output, StringComparison.OrdinalIgnoreCase);
+        var prWatchHelp = Assert.Single(
+            output.Split('\n'),
+            static line => line.StartsWith("make pr-watch ", StringComparison.Ordinal));
+        Assert.Matches(
+            new Regex(
+                @"\bstale\b.*\bBEHIND\b.*\bCONFLICTING\b.*\bpersistent-worktree\b.*\bpath classification\b",
+                RegexOptions.CultureInvariant),
+            prWatchHelp);
+        Assert.Matches(
+            new Regex(
+                @"\bclassification\b.*\b(?:regen|recompute)\b.*\b(?:alert|warn)\b",
+                RegexOptions.CultureInvariant),
+            prWatchHelp);
+        Assert.Matches(
+            new Regex(@"\bother BEHIND\b.*\bupdate-branch\b", RegexOptions.CultureInvariant),
+            prWatchHelp);
     }
 
     [Fact]
