@@ -68,6 +68,44 @@ public sealed partial class TheoryAtomizerTests
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
 
+    // Byte-faithful canonical status-marker forms used by theory atoms.
+    private const string PlainClosedMarker = "〔closed〕";
+    private const string QualifiedClosedMarker = "〔closed;数值证书〕";
+    private const string UnterminatedPlainClosedMarker = "〔closed";
+    private const string UnterminatedClosedMarker = "〔closed;数值证书";
+    private const string WhitespaceBeforeSeparatorMarker = "〔closed ;数值证书〕";
+    private const string FullwidthSeparatorMarker = "〔closed；数值证书〕";
+    private const string WhitespaceStatusMarker = "〔 closed〕";
+    private const string ExtraSeparatorMarker = "〔closed;数值证书;附注〕";
+    private const string BlankQualifierMarker = "〔closed;  〕";
+    private const string SpacedClosedMarker = "  〔closed〕";
+
+    [Theory]
+    [InlineData(PlainClosedMarker, "Valid", "closed", null)]
+    [InlineData(QualifiedClosedMarker, "Valid", "closed", "数值证书")]
+    [InlineData(UnterminatedPlainClosedMarker, "Malformed", "closed", null)]
+    [InlineData(UnterminatedClosedMarker, "Malformed", "closed", "数值证书")]
+    [InlineData(WhitespaceBeforeSeparatorMarker, "Malformed", "closed ", "数值证书")]
+    [InlineData(FullwidthSeparatorMarker, "Malformed", "closed；数值证书", null)]
+    [InlineData(WhitespaceStatusMarker, "Malformed", " closed", null)]
+    [InlineData(ExtraSeparatorMarker, "Malformed", "closed", "数值证书;附注")]
+    [InlineData(BlankQualifierMarker, "Malformed", "closed", "  ")]
+    [InlineData(SpacedClosedMarker, "Malformed", "closed", null)]
+    public void PzgAdapterOwnsCanonicalStatusMarkerParsing(
+        string marker,
+        string expectedKind,
+        string expectedStatus,
+        string? expectedQualifier)
+    {
+        var bytes = Encoding.UTF8.GetBytes($"# PZG\n\n**定理 26.3**{marker}");
+
+        var atom = Assert.Single(PzgAtomizer.Atomize(bytes).Claims);
+
+        Assert.Equal(expectedKind, atom.StatusMarker.Kind.ToString());
+        Assert.Equal(expectedStatus, atom.StatusMarker.Status);
+        Assert.Equal(expectedQualifier, atom.StatusMarker.Qualifier);
+    }
+
     [Fact]
     public void PeriodicTreeV1TreatsNumberedSectionsAsAtomicClaims()
     {
@@ -752,35 +790,4 @@ public sealed partial class TheoryAtomizerTests
         return segments;
     }
 
-    private static string FindRepositoryRoot()
-    {
-        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
-             current is not null;
-             current = current.Parent)
-        {
-            if (File.Exists(Path.Combine(current.FullName, "Meta", "BACKFILL.yaml")))
-            {
-                return current.FullName;
-            }
-        }
-
-        throw new DirectoryNotFoundException("Could not locate repository root.");
-    }
-
-    private static DigestionLedgerEntry LedgerEntry(
-        string atomId,
-        string atomizer,
-        DigestionAtom atom) => new(
-        atomizer,
-        "docs/source.md",
-        atomizer,
-        atomId,
-        atom.AstPath,
-        new DigestionBoundary(atom.AstPath, atom.StartByte, atom.EndByte),
-        atom.Fingerprints,
-        [],
-        new DigestionReceipts([], [], [], [], null),
-        new DigestionStatus(DigestionMigrationState.Residual, DigestionTruthState.Open),
-        ReceiptSyntax: null,
-        CasRef: atom.Fingerprints.RawSha256);
 }

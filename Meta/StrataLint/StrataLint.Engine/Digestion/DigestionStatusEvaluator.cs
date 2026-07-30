@@ -8,10 +8,21 @@ internal sealed record DigestionGap(string Code, string Detail);
 internal sealed record DigestionEntryEvaluation(
     DigestionLedgerEntry Entry,
     DigestionReceiptAlignment Alignment,
+    DigestionAtom? Atom,
     DigestionStatus DerivedStatus,
     bool Deletable,
     ImmutableArray<DigestionGap> Gaps)
 {
+    internal DigestionEntryEvaluation(
+        DigestionLedgerEntry entry,
+        DigestionReceiptAlignment alignment,
+        DigestionStatus derivedStatus,
+        bool deletable,
+        ImmutableArray<DigestionGap> gaps)
+        : this(entry, alignment, null, derivedStatus, deletable, gaps)
+    {
+    }
+
     internal string Render() =>
         $"{Entry.SourceId}/{Entry.AtomId} "
         + $"alignment={DigestionReceiptAlignmentNames.Render(Alignment)} "
@@ -68,7 +79,7 @@ internal static class DigestionStatusEvaluator
             document,
             snapshot,
             baselineDocument,
-            DigestionAlignmentMode.Admission);
+            DigestionAlignmentMode.Projection);
         findings.AddRange(alignment.Findings);
         var emptyLeanReport = LeanAxiomReport.Create(
             new Dictionary<string, LeanFileReport>(StringComparer.Ordinal));
@@ -78,6 +89,7 @@ internal static class DigestionStatusEvaluator
             .Select(entry => Inspect(
                 entry,
                 alignment.AlignmentFor(entry.AtomId),
+                alignment.AtomFor(entry.AtomId),
                 null,
                 snapshot,
                 emptyLeanReport,
@@ -133,6 +145,7 @@ internal static class DigestionStatusEvaluator
             Inspect(
                 entry,
                 alignment.AlignmentFor(entry.AtomId),
+                alignment.AtomFor(entry.AtomId),
                 baselineEntries.GetValueOrDefault(entry.AtomId),
                 snapshot,
                 lean.Report,
@@ -180,6 +193,7 @@ internal static class DigestionStatusEvaluator
             evaluations.Add(new DigestionEntryEvaluation(
                 item.Entry,
                 item.Alignment,
+                item.Atom,
                 status,
                 item.Migration == DigestionMigrationState.Absorbed
                     && truth is DigestionTruthState.Closed or DigestionTruthState.Tail
@@ -195,6 +209,7 @@ internal static class DigestionStatusEvaluator
     private static EntryWork Inspect(
         DigestionLedgerEntry entry,
         DigestionReceiptAlignment alignment,
+        DigestionAtom? atom,
         DigestionLedgerEntry? baselineEntry,
         RepositorySnapshot snapshot,
         LeanAxiomReport leanReport,
@@ -261,7 +276,7 @@ internal static class DigestionStatusEvaluator
         var hasProgress = existingTargets.Count > 0
             || entry.Receipts.Coverage.Length > 0
             || entry.Receipts.Scribe.Length > 0;
-        return new EntryWork(entry, alignment, gaps, targetStates, localComplete, hasProgress);
+        return new EntryWork(entry, alignment, atom, gaps, targetStates, localComplete, hasProgress);
     }
 
     private static bool DeclarationExists(
@@ -699,6 +714,7 @@ internal static class DigestionStatusEvaluator
     private sealed class EntryWork(
         DigestionLedgerEntry entry,
         DigestionReceiptAlignment alignment,
+        DigestionAtom? atom,
         List<DigestionGap> gaps,
         List<(string Gid, TruthState State)> targetStates,
         bool localComplete,
@@ -707,6 +723,8 @@ internal static class DigestionStatusEvaluator
         internal DigestionLedgerEntry Entry { get; } = entry;
 
         internal DigestionReceiptAlignment Alignment { get; } = alignment;
+
+        internal DigestionAtom? Atom { get; } = atom;
 
         internal List<DigestionGap> Gaps { get; } = gaps;
 
