@@ -364,6 +364,8 @@ internal static class ConservativeExtensionCommand
 
 internal sealed class ProductionConservativeExtensionEnvironment : IConservativeExtensionEnvironment
 {
+    internal const int DefaultEvaluationBudgetSeconds = 600;
+
     public MaterializedConservativeCorpus Materialize(string baselineRoot) =>
         GoldenCorpusMaterializer.Materialize(baselineRoot);
 
@@ -538,9 +540,9 @@ internal sealed class ProductionConservativeExtensionEnvironment : IConservative
             bundle);
     }
 
-    // 预算默认 180s(历史行为);本机在与其它工作负载共存时 corpus 评估可超 180s
+    // 预算默认 600s;本机在与其它工作负载共存时 corpus 评估可超 180s
     // (2026-07-19 九次 ceremony 实证,load 6–40 均超时),允许经
-    // STRATALINT_CONSERVATIVE_TIMEOUT_SECONDS 显式上调,夹在 [180, 3600] 内。
+    // STRATALINT_CONSERVATIVE_TIMEOUT_SECONDS 显式覆盖,夹在 [180, 3600] 内。
     private static TimeSpan EvaluationBudget
     {
         get
@@ -551,7 +553,7 @@ internal sealed class ProductionConservativeExtensionEnvironment : IConservative
                 return TimeSpan.FromSeconds(Math.Clamp(seconds, 180, 3600));
             }
 
-            return TimeSpan.FromMinutes(3);
+            return TimeSpan.FromSeconds(DefaultEvaluationBudgetSeconds);
         }
     }
 

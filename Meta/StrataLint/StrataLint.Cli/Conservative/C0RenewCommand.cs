@@ -100,7 +100,10 @@ internal static class C0RenewCommand
             return new CommandResult(
                 false,
                 string.Empty,
-                $"C0_RENEW_FAILED {exception.Message}\n");
+                $"C0_RENEW_FAILED [{exception.GetType().Name}] {exception.Message}\n"
+                + (exception.InnerException is { } inner
+                    ? $"C0_RENEW_FAILED_INNER [{inner.GetType().Name}] {inner.Message}\n"
+                    : string.Empty));
         }
     }
 
@@ -268,6 +271,9 @@ internal static class C0RenewCommand
 
 internal sealed class ProductionC0RenewEnvironment : IC0RenewEnvironment
 {
+    internal const int LeanReportBudgetMinutes = 90;
+    internal const int GitOperationBudgetMinutes = 10;
+
     private readonly string root;
     private readonly GitRepositoryGateway repository;
 
@@ -331,7 +337,7 @@ internal sealed class ProductionC0RenewEnvironment : IC0RenewEnvironment
                 baselineReport,
             ],
             candidate.Root,
-            TimeSpan.FromMinutes(30),
+            TimeSpan.FromMinutes(LeanReportBudgetMinutes),
             "base-owned Lean report production failed");
         var result = BoundedProcessRunner.Run(
             "/usr/bin/env",
@@ -351,7 +357,7 @@ internal sealed class ProductionC0RenewEnvironment : IC0RenewEnvironment
                 baselineReport,
             ],
             @base.Root,
-            TimeSpan.FromMinutes(30),
+            TimeSpan.FromMinutes(LeanReportBudgetMinutes),
             64 * 1024 * 1024);
         return new C0RenewGateResult(
             result.ExitCode == 3 ? 0 : result.ExitCode,
@@ -583,7 +589,7 @@ internal sealed class C0RenewCandidateWorkspace : IDisposable
             "git",
             arguments,
             workingDirectory,
-            TimeSpan.FromMinutes(2),
+            TimeSpan.FromMinutes(ProductionC0RenewEnvironment.GitOperationBudgetMinutes),
             64 * 1024 * 1024);
         if (result.ExitCode != 0)
         {
