@@ -167,8 +167,19 @@ sync_checkout() {
     return 0
   fi
 
+  # Only TRACKED modifications may block the fast-forward. Untracked files provably do not
+  # prevent one -- `git merge --ff-only` succeeds with them present -- and `--ff-only` below is
+  # already the correct arbiter for the one case that matters, an untracked file the merge would
+  # overwrite, which it refuses on its own.
+  #
+  # Counting untracked files as "uncommitted changes" froze the deployed checkout permanently on a
+  # real host: this tool's own rollback backups (fkst.lock.bak-*, fkst.workspace.toml.bak-*) are
+  # created every run, so the guard blocked the very fast-forward the backups exist to protect;
+  # and `.metadata_never_index`, an intentional Spotlight-exclusion marker that must stay, blocked
+  # it on its own even after every backup was cleaned. The checkout sat 24 commits behind with no
+  # path forward.
   if ! checkout_status="$(
-      git -C "$FKST_HOST_ROOT" status --porcelain --untracked-files=normal 2>/dev/null
+      git -C "$FKST_HOST_ROOT" status --porcelain --untracked-files=no 2>/dev/null
     )"; then
     say "CHECKOUT-STATUS-FAIL; skipped checkout sync"
     return 0

@@ -229,6 +229,47 @@ checkout_fast_forwards_only_clean_ancestors() (
     || fail "dirty ancestor refusal was not reported"
 )
 
+checkout_untracked_files_do_not_block_fast_forward() (
+  load_implementation || exit 1
+  local root
+  root="$(mktemp -d -t hourly-maintenance-untracked-ff.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  mkdir -p "$root/logs"
+  LOG_FILE="$root/logs/hourly-maintenance.log"
+  export FKST_MAINTENANCE_LOG="$LOG_FILE"
+  create_checkout_history_fixture "$root" || exit 1
+  advance_checkout_dev first || exit 1
+  export FKST_HOST_ROOT="$CHECKOUT_ROOT"
+
+  # Untracked files provably do not prevent a fast-forward: git merge --ff-only
+  # succeeds with them present. Two kinds occur on real hosts and neither may
+  # freeze the deployment: this tool's own rollback backups (fkst.lock.bak-*,
+  # fkst.workspace.toml.bak-*), and an intentional, permanent Spotlight-exclusion
+  # marker (.metadata_never_index) that must stay. Treating either as "uncommitted
+  # changes" makes the checkout unable to ever advance.
+  printf 'litter
+' > "$CHECKOUT_ROOT/fkst.lock.bak-20260730-051505"
+  printf '' > "$CHECKOUT_ROOT/.metadata_never_index"
+
+  sync_checkout || fail "untracked-only checkout sync should be nonfatal"
+  [[ "$(command git -C "$CHECKOUT_ROOT" rev-parse HEAD)" == "$CHECKOUT_DEV_REV" ]]     || fail "untracked files blocked the fast-forward"
+  command grep -q 'CHECKOUT-FF-BLOCKED' "$LOG_FILE"     && fail "untracked files were reported as uncommitted changes"
+
+  # the untracked files must survive the fast-forward untouched
+  [[ -f "$CHECKOUT_ROOT/fkst.lock.bak-20260730-051505" ]]     || fail "fast-forward destroyed an untracked backup"
+  [[ -f "$CHECKOUT_ROOT/.metadata_never_index" ]]     || fail "fast-forward destroyed the Spotlight marker"
+
+  # a TRACKED modification must still block, so the guard is not simply removed
+  advance_checkout_dev second || exit 1
+  printf 'dirty
+' >> "$CHECKOUT_ROOT/tracked"
+  local dirty_head
+  dirty_head="$(command git -C "$CHECKOUT_ROOT" rev-parse HEAD)"
+  sync_checkout || fail "tracked-dirty refusal should be nonfatal"
+  [[ "$(command git -C "$CHECKOUT_ROOT" rev-parse HEAD)" == "$dirty_head" ]]     || fail "tracked-dirty checkout was advanced"
+  command grep -q 'CHECKOUT-FF-BLOCKED' "$LOG_FILE"     || fail "tracked-dirty refusal was not reported"
+)
+
 checkout_divergence_refuses_auto_fast_forward() (
   load_implementation || exit 1
   local root
@@ -673,6 +714,7 @@ run_test "deployed top-level workspace is authoritative" deployed_top_level_work
 run_test "host-lock failure rolls back pin and lock bytes" host_lock_failure_rolls_back_pin_and_lock_bytes
 run_test "post-restart health failure rolls back pin and lock bytes" post_restart_health_failure_rolls_back_pin_and_lock_bytes
 run_test "checkout fast-forwards only clean ancestors" checkout_fast_forwards_only_clean_ancestors
+run_test "checkout untracked files do not block fast-forward" checkout_untracked_files_do_not_block_fast_forward
 run_test "checkout divergence refuses auto fast-forward" checkout_divergence_refuses_auto_fast_forward
 run_test "checkout status failure refuses auto fast-forward" checkout_status_failure_refuses_auto_fast_forward
 run_test "implementing issues defer restart" implementing_issues_defer_restart
