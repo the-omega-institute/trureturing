@@ -482,6 +482,7 @@ main() {
   printf '# repository runtime fixture\n' > "$scratch/checkout/.fkst/deploy.env"
   printf '#!/usr/bin/env bash\nexit 0\n' > "$scratch/platform/scripts/run.sh"
   prepare_runtime_package_contract "$scratch"
+  materialize_pinned_host_run "$scratch" || return 1
 
   cat > "$host_config" <<EOF
 BIN=$scratch/fkst-framework
@@ -659,10 +660,27 @@ EOF
     fail "supervise renderer rejects platform origin drift"
   fi
 
-  if assert_duplicate_lock_source_is_rejected "$scratch" "$host_config"; then
-    pass "supervise renderer rejects duplicate lock sources"
+  # KNOWN-DIVERGENCE: the repository preflight is intentionally stricter than
+  # pinned host_run.sh because duplicate identities make requested-package
+  # ownership non-unique and able to drift silently with enumeration order.
+  # Remove both markers and unify the accepted set when upstream converges:
+  # https://github.com/ChronoAIProject/fkst-packages/issues/2935
+  if assert_duplicate_workspace_source_is_known_divergence "$scratch" "$host_config"; then
+    pass "KNOWN-DIVERGENCE duplicate workspace source: pinned=0 preflight=2"
   else
-    fail "supervise renderer rejects duplicate lock sources"
+    fail "KNOWN-DIVERGENCE duplicate workspace source: pinned=0 preflight=2"
+  fi
+
+  if assert_duplicate_lock_source_is_known_divergence "$scratch" "$host_config"; then
+    pass "KNOWN-DIVERGENCE duplicate lock source: pinned=0 preflight=2"
+  else
+    fail "KNOWN-DIVERGENCE duplicate lock source: pinned=0 preflight=2"
+  fi
+
+  if assert_pinned_rejection_implies_preflight_rejection "$scratch" "$host_config"; then
+    pass "pinned rejection implies repository preflight rejection"
+  else
+    fail "pinned rejection implies repository preflight rejection"
   fi
 
   if assert_lock_libraries_drift_is_rejected "$scratch" "$host_config"; then

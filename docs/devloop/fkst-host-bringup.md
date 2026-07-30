@@ -27,6 +27,15 @@ test -s fkst.lock
 All four commands must exit zero. Repeat the copy and lock step after changing the tracked
 workspace composition or platform source pin. Do not hand-edit the generated top-level lock.
 
+The repository preflight is intentionally stricter than the consumer at the currently pinned
+`host_run.sh`: byte-identical duplicate `external_sources` entries in the workspace and duplicate
+`external_source` entries in the lock are rejected here even though the pin accepts them. Duplicate
+identities make requested-package ownership non-unique, so the selected owner can drift silently
+with enumeration order. The behavior suite executes the real script bytes from the locked commit
+and records these two cases as `KNOWN-DIVERGENCE` in
+[ChronoAIProject/fkst-packages#2935](https://github.com/ChronoAIProject/fkst-packages/issues/2935).
+Remove the markers and unify the accepted set after upstream converges.
+
 ## 3. Create the host file
 
 Create one host-local file named `host.env` outside Git and set its mode to `0600`. Replace every

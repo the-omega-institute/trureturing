@@ -1,89 +1,65 @@
-assert_pinned_consumer_source_identity_accepts() {
-  local scratch="$1"
-  python3 - "$scratch/checkout" "$scratch/platform" <<'PY'
-import re
-import subprocess
+materialize_pinned_host_run() {
+  local scratch="$1" pin source_root destination
+  pin="$(python3 - "$REPOSITORY_ROOT/.fkst/fkst.lock" <<'PY'
 import sys
 import tomllib
-from pathlib import Path
-from urllib.parse import unquote, urlparse
 
-REV_RE = re.compile(r"[0-9a-fA-F]{40}")
-SOURCE_ID = "fkst-packages-platform"
-
-
-def git_output(arguments, cwd):
-    return subprocess.run(
-        ["git", "-C", str(cwd), *arguments],
-        check=True,
-        text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-    ).stdout.strip()
-
-
-def git_output_optional(arguments, cwd):
-    completed = subprocess.run(
-        ["git", "-C", str(cwd), *arguments],
-        check=False,
-        text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-    )
-    return completed.stdout.strip() if completed.returncode == 0 else ""
-
-
-def is_scp_like_url(value):
-    return bool(re.match(r"^[A-Za-z0-9_.-]+@[^:]+:", value))
-
-
-def git_ref_names(value, *, base):
-    text = value.rstrip("/")
-    refs = {text}
-    parsed = urlparse(text)
-    if parsed.scheme == "file":
-        refs.add(str(Path(unquote(parsed.path)).resolve()))
-    elif "://" not in text and not is_scp_like_url(text):
-        path = Path(text)
-        if not path.is_absolute():
-            path = base / path
-        refs.add(str(path.resolve()))
-    return refs
-
-
-def trusted_platform_identity(platform_root):
-    head = git_output(["rev-parse", "HEAD"], platform_root).lower()
-    if REV_RE.fullmatch(head) is None:
-        raise SystemExit("pinned consumer rejected trusted platform HEAD")
-    top = Path(git_output(["rev-parse", "--show-toplevel"], platform_root)).resolve()
-    refs = git_ref_names(str(top), base=top)
-    refs.update(git_ref_names(str(platform_root), base=top))
-    origin = git_output_optional(["config", "--get", "remote.origin.url"], platform_root)
-    if origin:
-        refs.update(git_ref_names(origin, base=top))
-    return refs
-
-
-project_root = Path(sys.argv[1]).resolve()
-platform_root = Path(sys.argv[2]).resolve()
-with (project_root / "fkst.workspace.toml").open("rb") as handle:
-    workspace = tomllib.load(handle)
-with (project_root / "fkst.lock").open("rb") as handle:
+with open(sys.argv[1], "rb") as handle:
     lock = tomllib.load(handle)
-workspace_source = next(
-    source for source in workspace["external_sources"] if source["id"] == SOURCE_ID
-)
-lock_source = next(source for source in lock["external_source"] if source["id"] == SOURCE_ID)
-locked_rev = lock_source.get("resolved", {}).get("rev")
-if not isinstance(locked_rev, str) or REV_RE.fullmatch(locked_rev) is None:
-    raise SystemExit("pinned consumer rejected lock resolved.rev")
-if lock_source.get("git") != workspace_source.get("git"):
-    raise SystemExit("pinned consumer rejected workspace-lock git parity")
-trusted_refs = trusted_platform_identity(platform_root)
-source_refs = git_ref_names(lock_source["git"], base=project_root)
-if trusted_refs.isdisjoint(source_refs):
-    raise SystemExit("pinned consumer rejected trusted platform source identity")
+sources = [
+    source for source in lock.get("external_source", [])
+    if source.get("id") == "fkst-packages-platform"
+]
+if len(sources) != 1:
+    raise SystemExit("repository lock must contain exactly one fkst-packages-platform source")
+resolved = sources[0].get("resolved", {})
+pin = resolved.get("rev") if isinstance(resolved, dict) else None
+if not isinstance(pin, str):
+    raise SystemExit("repository lock platform source has no resolved.rev")
+print(pin)
 PY
+)" || return 1
+  source_root="${FKST_PLATFORM:-${FKST_CACHE_ROOT:-${XDG_CACHE_HOME:-$HOME/.cache}/fkst-lua-gate}/platform-$pin}"
+  destination="$scratch/pinned-host_run.sh"
+  if ! git -C "$source_root" cat-file -e "$pin^{commit}" 2>/dev/null; then
+    printf 'pinned host_run source lacks commit %s: %s\n' "$pin" "$source_root" >&2
+    return 1
+  fi
+  git -C "$source_root" show "$pin:scripts/host_run.sh" > "$destination" || return 1
+  printf 'pinned host_run materialized: pin=%s blob=%s\n' \
+    "$pin" "$(git -C "$source_root" rev-parse "$pin:scripts/host_run.sh")"
+}
+
+assert_pinned_consumer_source_identity_accepts() {
+  local scratch="$1"
+  (
+    # host_run.sh is a sourced library. Calling its real resolver executes the
+    # pinned consumer path without starting the supervise event loop.
+    source "$scratch/pinned-host_run.sh"
+    HOST_RUN_PROJECT_ROOT="$scratch/checkout"
+    HOST_RUN_PLATFORM_ROOT="$scratch/platform"
+    HOST_RUN_PLATFORM_PACKAGES="github-proxy"
+    HOST_RUN_PACKAGE_ROOTS=()
+    host_run_resolve_target_platform_roots
+  ) > "$scratch/pinned-consumer.out" 2>&1
+}
+
+capture_source_identity_parity() {
+  local scratch="$1" host_config="$2" case_id="$3"
+  if assert_pinned_consumer_source_identity_accepts "$scratch"; then
+    PINNED_CONSUMER_STATUS=0
+  else
+    PINNED_CONSUMER_STATUS=$?
+  fi
+  if HOST_CONFIG="$host_config" OUTPUT="$scratch/$case_id.plist" \
+      make -s -C "$REPOSITORY_ROOT" supervise-launcher-render \
+      > "$scratch/$case_id-preflight.out" 2>&1; then
+    REPOSITORY_PREFLIGHT_STATUS=0
+  else
+    REPOSITORY_PREFLIGHT_STATUS=$?
+  fi
+  printf 'source identity parity %s: pinned=%s preflight=%s\n' \
+    "$case_id" "$PINNED_CONSUMER_STATUS" "$REPOSITORY_PREFLIGHT_STATUS"
 }
 
 assert_workspace_rev_drift_is_accepted_with_consumer_parity() {
@@ -239,11 +215,33 @@ assert_platform_origin_drift_is_rejected() {
   return "$status"
 }
 
-assert_duplicate_lock_source_is_rejected() {
-  local scratch="$1" host_config="$2" lock backup output status
+assert_duplicate_workspace_source_is_known_divergence() {
+  local scratch="$1" host_config="$2" manifest backup status
+  manifest="$scratch/checkout/fkst.workspace.toml"
+  backup="$manifest.duplicate-source"
+  cp "$manifest" "$backup"
+  python3 - "$manifest" <<'PY'
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+text = path.read_text(encoding="utf-8")
+start = text.index("[[external_sources]]")
+path.write_text(text + "\n" + text[start:], encoding="utf-8")
+PY
+  capture_source_identity_parity "$scratch" "$host_config" duplicate-workspace-source
+  status=0
+  if [[ "$PINNED_CONSUMER_STATUS" -ne 0 || "$REPOSITORY_PREFLIGHT_STATUS" -ne 2 ]]; then
+    status=1
+  fi
+  mv "$backup" "$manifest"
+  return "$status"
+}
+
+assert_duplicate_lock_source_is_known_divergence() {
+  local scratch="$1" host_config="$2" lock backup status
   lock="$scratch/checkout/fkst.lock"
   backup="$lock.duplicate-source"
-  output="$scratch/duplicate-lock-source.out"
   cp "$lock" "$backup"
   python3 - "$lock" <<'PY'
 import sys
@@ -253,15 +251,81 @@ path = Path(sys.argv[1])
 text = path.read_text(encoding="utf-8")
 path.write_text(text + "\n" + text, encoding="utf-8")
 PY
+  capture_source_identity_parity "$scratch" "$host_config" duplicate-lock-source
   status=0
-  if HOST_CONFIG="$host_config" OUTPUT="$scratch/duplicate-lock-source.plist" \
-      make -s -C "$REPOSITORY_ROOT" supervise-launcher-render > "$output" 2>&1; then
-    status=1
-  elif ! grep -Fq 'supervise-launcher: target lockfile must contain exactly one fkst-packages-platform source' \
-      "$output"; then
+  if [[ "$PINNED_CONSUMER_STATUS" -ne 0 || "$REPOSITORY_PREFLIGHT_STATUS" -ne 2 ]]; then
     status=1
   fi
   mv "$backup" "$lock"
+  return "$status"
+}
+
+assert_pinned_rejection_implies_preflight_rejection() {
+  local scratch="$1" host_config="$2" manifest lock manifest_backup lock_backup
+  local original_origin status=0
+  manifest="$scratch/checkout/fkst.workspace.toml"
+  lock="$scratch/checkout/fkst.lock"
+  manifest_backup="$manifest.rejection-parity"
+  lock_backup="$lock.rejection-parity"
+  original_origin="$(git -C "$scratch/platform" config --get remote.origin.url)"
+  cp "$manifest" "$manifest_backup"
+  cp "$lock" "$lock_backup"
+
+  sed 's#https://github.com/ChronoAIProject/fkst-packages.git#https://example.invalid/fkst-packages.git#' \
+    "$manifest_backup" > "$manifest"
+  git -C "$scratch/platform" remote set-url origin https://example.invalid/fkst-packages.git
+  capture_source_identity_parity "$scratch" "$host_config" rejects-workspace-lock-git-drift
+  if [[ "$PINNED_CONSUMER_STATUS" -eq 0 || "$REPOSITORY_PREFLIGHT_STATUS" -eq 0 ]]; then
+    status=1
+  fi
+  cp "$manifest_backup" "$manifest"
+  git -C "$scratch/platform" remote set-url origin "$original_origin"
+
+  git -C "$scratch/platform" remote set-url origin https://example.invalid/fkst-packages.git
+  capture_source_identity_parity "$scratch" "$host_config" rejects-platform-origin-drift
+  if [[ "$PINNED_CONSUMER_STATUS" -eq 0 || "$REPOSITORY_PREFLIGHT_STATUS" -eq 0 ]]; then
+    status=1
+  fi
+  git -C "$scratch/platform" remote set-url origin "$original_origin"
+
+  python3 - "$manifest" <<'PY'
+import sys
+from pathlib import Path
+
+path = Path(sys.argv[1])
+path.write_text(path.read_text(encoding="utf-8") + '''
+
+[[external_sources]]
+id = "other-platform"
+git = "https://example.invalid/other-platform.git"
+rev = "4444444444444444444444444444444444444444"
+packages = ["github-proxy"]
+libraries = []
+''', encoding="utf-8")
+PY
+  capture_source_identity_parity "$scratch" "$host_config" rejects-ambiguous-package-owner
+  if [[ "$PINNED_CONSUMER_STATUS" -eq 0 || "$REPOSITORY_PREFLIGHT_STATUS" -eq 0 ]]; then
+    status=1
+  fi
+  cp "$manifest_backup" "$manifest"
+
+  cat >> "$lock" <<'EOF'
+
+[[external_source]]
+id = "other-source"
+git = "https://example.invalid/other-source.git"
+
+[external_source.resolved]
+rev = "not-a-full-git-sha"
+EOF
+  capture_source_identity_parity "$scratch" "$host_config" rejects-malformed-nontarget-lock-source
+  if [[ "$PINNED_CONSUMER_STATUS" -eq 0 || "$REPOSITORY_PREFLIGHT_STATUS" -eq 0 ]]; then
+    status=1
+  fi
+
+  mv "$manifest_backup" "$manifest"
+  mv "$lock_backup" "$lock"
+  git -C "$scratch/platform" remote set-url origin "$original_origin"
   return "$status"
 }
 

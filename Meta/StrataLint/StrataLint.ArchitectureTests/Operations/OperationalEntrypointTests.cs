@@ -426,6 +426,82 @@ public sealed class OperationalEntrypointTests
     }
 
     [Fact]
+    public void ConcurrentlyReplacedTrackedLaunchdTemplateNeverAcceptsASymlink()
+    {
+        WithRepository(
+            LaunchdOperations("synthetic"),
+            repository =>
+            {
+                PrepareLaunchdUnit(repository, "synthetic");
+                var template = Path.Combine(repository, ".fkst", "launchd", "synthetic.plist.in");
+                var regularCandidate = Path.Combine(repository, "template-regular-candidate");
+                var symlinkCandidate = Path.Combine(repository, "template-symlink-candidate");
+                var symlinkTarget = Path.Combine(repository, "template-symlink-target");
+                File.WriteAllText(symlinkTarget, "regular symlink target\n");
+
+                using var cancellation = new CancellationTokenSource();
+                var stateGate = new object();
+                var currentStateIsSymlink = false;
+                var currentStateSince = Stopwatch.GetTimestamp();
+                var replacer = Task.Run(() =>
+                {
+                    while (!cancellation.IsCancellationRequested)
+                    {
+                        File.WriteAllText(regularCandidate, "regular template\n");
+                        lock (stateGate)
+                        {
+                            File.Move(regularCandidate, template, overwrite: true);
+                            currentStateSince = Stopwatch.GetTimestamp();
+                            currentStateIsSymlink = false;
+                        }
+                        Thread.Sleep(2);
+
+                        File.CreateSymbolicLink(symlinkCandidate, symlinkTarget);
+                        lock (stateGate)
+                        {
+                            File.Move(symlinkCandidate, template, overwrite: true);
+                            currentStateSince = Stopwatch.GetTimestamp();
+                            currentStateIsSymlink = true;
+                        }
+                        Thread.Sleep(2);
+                    }
+                }, cancellation.Token);
+
+                int? falseNegativeIteration = null;
+                try
+                {
+                    for (var iteration = 0; iteration < 10_000; iteration++)
+                    {
+                        if (!PosixFileType.IsRegularFile(template)) continue;
+
+                        var completedAt = Stopwatch.GetTimestamp();
+                        lock (stateGate)
+                        {
+                            // Exclude a replacement published only as the probe returned; the old
+                            // fork/exec gap leaves the symlink stable well beyond this interval.
+                            if (currentStateIsSymlink
+                                && currentStateSince <= completedAt
+                                && Stopwatch.GetElapsedTime(currentStateSince, completedAt)
+                                    >= TimeSpan.FromMilliseconds(0.5))
+                            {
+                                falseNegativeIteration = iteration;
+                                break;
+                            }
+                        }
+                    }
+                }
+                finally
+                {
+                    cancellation.Cancel();
+                    replacer.GetAwaiter().GetResult();
+                }
+
+                Assert.Null(falseNegativeIteration);
+            },
+            launchdUnits: ["synthetic"]);
+    }
+
+    [Fact]
     public void ExtensionlessLaunchdSymlinkIsRejected()
     {
         WithRepository(
