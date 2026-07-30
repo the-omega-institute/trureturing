@@ -42,12 +42,16 @@ export FKST_MAINTENANCE_LAUNCHD_LABEL=<maintenance-launchd-label-for-this-machin
 export FKST_MAINTENANCE_LAUNCHER_PATH=<absolute-path-to-rendered-maintenance-plist>
 ```
 
-The `source` line is data to the strict maintenance parser: it must appear exactly as shown. The
-parser resolves that one include and parses the versioned `.fkst/deploy.env` with the same
-non-evaluating assignment grammar. Any other shell statement is rejected. The engine lifecycle
-script still sources `host.env` because migration of the already-running supervise launcher is
-outside this maintenance-launcher increment; keep this file within the restricted grammar so both
-consumers receive the same values.
+The `source` line is data to the strict maintenance parser: it must appear exactly as shown. It
+declares exactly one repository-data include, but the parser reads `.fkst/deploy.env` beside its
+own tracked scripts rather than following `FKST_HOST_ROOT`. The parser, schema, and repository
+data therefore always come from one revision. A normal invocation from `FKST_HOST_ROOT` validates
+the deployed copy; during a cutover invoked from a newer checkout, the newer contract is validated
+without letting the stale deployed copy block its own refresh. The file uses the same
+non-evaluating assignment grammar, and any other shell statement is rejected. The engine
+lifecycle script still sources `host.env` because migration of the already-running supervise
+launcher is outside this maintenance-launcher increment; keep this file within the restricted
+grammar so both consumers receive the same values.
 
 ## 3. Validate and render
 
