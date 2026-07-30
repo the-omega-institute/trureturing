@@ -303,36 +303,85 @@ engine_pid() {
   pgrep -f "fkst-framework.*supervise --project-root $escaped_root" 2>/dev/null | head -1
 }
 
+launchd_service_state() {
+  local output line
+  if ! output="$(launchctl list 2>/dev/null)"; then
+    printf 'unknown\n'
+    return 0
+  fi
+  while IFS= read -r line; do
+    if [[ "$line" == *[[:space:]]"$FKST_LAUNCHD_LABEL" ]]; then
+      printf 'in-service\n'
+      return 0
+    fi
+  done <<< "$output"
+  printf 'not-in-service\n'
+}
+
 restart_engine() {
-  local previous_pid
+  local budget="${FKST_RESTART_TIMEOUT_SECONDS:-180}"
+  local poll_interval="${FKST_RESTART_POLL_SECONDS:-5}"
+  if [[ ! "$budget" =~ ^[1-9][0-9]*$ \
+      || ! "$poll_interval" =~ ^[1-9][0-9]*$ ]]; then
+    say "RESTART-CONFIG-FAIL: timeout and poll interval must be positive integers (timeout=$budget poll=$poll_interval)"
+    return 1
+  fi
+
+  local previous_pid elapsed=0 launchd_state pid wait_seconds health_state
   previous_pid="$(engine_pid)"
   if ! bash "$FKST_RUN_SCRIPT" stop >/dev/null 2>&1; then
     say "RESTART-STOP-FAIL; engine state unchanged"
     return 1
   fi
-  sleep 10
-  sleep 20
 
-  local launch_count pid
-  launch_count="$(launchctl list 2>/dev/null | grep -cF "$FKST_LAUNCHD_LABEL" || true)"
-  pid="$(engine_pid)"
-  if [[ "$launch_count" == "0" || -z "$pid" \
-      || ( -n "$previous_pid" && "$pid" == "$previous_pid" ) ]]; then
-    say "UNHEALTHY after restart (launchd=$launch_count old_pid=${previous_pid:-none} new_pid=${pid:-none})"
-    if [[ "$PLATFORM_CHANGED" == "1" ]]; then
-      if rollback_platform; then
-        bash "$FKST_RUN_SCRIPT" stop >/dev/null 2>&1
-        sleep 8
-        say "reverted platform to ${PLATFORM_CURRENT_REV:0:12}"
-      else
-        say "PLATFORM-ROLLBACK-FAIL after unhealthy restart; original bytes not confirmed"
-      fi
+  while true; do
+    launchd_state="$(launchd_service_state)"
+    pid="$(engine_pid)"
+    if [[ "$launchd_state" == "in-service" && -n "$pid" \
+        && ( -z "$previous_pid" || "$pid" != "$previous_pid" ) ]]; then
+      say "SYNCED OK (engine pid $pid; platform ${PLATFORM_DEV_REV:0:12}; checkout $([ -n "$CHECKOUT_DEV_REV" ] && printf '%s' "${CHECKOUT_DEV_REV:0:12}" || printf 'n/a'))"
+      cleanup_old_backups
+      return 0
     fi
-    return 1
-  fi
+    [[ "$elapsed" -lt "$budget" ]] || break
 
-  say "SYNCED OK (engine pid $pid; platform ${PLATFORM_DEV_REV:0:12}; checkout $([ -n "$CHECKOUT_DEV_REV" ] && printf '%s' "${CHECKOUT_DEV_REV:0:12}" || printf 'n/a'))"
-  cleanup_old_backups
+    wait_seconds="$poll_interval"
+    if [[ $((elapsed + wait_seconds)) -gt "$budget" ]]; then
+      wait_seconds=$((budget - elapsed))
+    fi
+    if ! sleep "$wait_seconds"; then
+      say "RESTART-WAIT-FAIL after ${elapsed}s (budget=${budget}s launchd=$launchd_state last_pid=${pid:-none})"
+      return 1
+    fi
+    elapsed=$((elapsed + wait_seconds))
+  done
+
+  if [[ -z "$pid" && "$launchd_state" == "not-in-service" ]]; then
+    health_state="launchd-not-in-service"
+  elif [[ -z "$pid" ]]; then
+    health_state="waiting-for-new-pid"
+  elif [[ -n "$previous_pid" && "$pid" == "$previous_pid" ]]; then
+    health_state="old-pid-still-present"
+  elif [[ "$launchd_state" == "not-in-service" ]]; then
+    health_state="new-pid-without-launchd-service"
+  else
+    health_state="launchd-status-unknown"
+  fi
+  say "UNHEALTHY after restart (state=$health_state waited=${elapsed}s budget=${budget}s launchd=$launchd_state old_pid=${previous_pid:-none} last_pid=${pid:-none})"
+
+  if [[ "$PLATFORM_CHANGED" == "1" \
+      && -z "$pid" && "$launchd_state" == "not-in-service" ]]; then
+    if rollback_platform; then
+      bash "$FKST_RUN_SCRIPT" stop >/dev/null 2>&1
+      sleep 8
+      say "reverted platform to ${PLATFORM_CURRENT_REV:0:12}"
+    else
+      say "PLATFORM-ROLLBACK-FAIL after confirmed startup failure; original bytes not confirmed"
+    fi
+  elif [[ "$PLATFORM_CHANGED" == "1" ]]; then
+    say "PLATFORM-ROLLBACK-SKIPPED: restart budget expired but startup failure not confirmed (launchd=$launchd_state last_pid=${pid:-none})"
+  fi
+  return 1
 }
 
 restart_if_needed() {
