@@ -292,7 +292,7 @@ return {
 
   test_validate_bot_login = function()
     t.is_true(core.validate_bot_login("loning"))
-    t.is_true(core.validate_bot_login("ElonSG"))
+    t.is_true(core.validate_bot_login("synthetic-bot"))
     t.is_true(core.validate_bot_login("AlyciaBHZ.bot_1"))
     t.is_true(not core.validate_bot_login(""))
     t.is_true(not core.validate_bot_login("bad/login"))

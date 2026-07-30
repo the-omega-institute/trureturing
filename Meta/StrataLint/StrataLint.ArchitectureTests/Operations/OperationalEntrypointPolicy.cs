@@ -39,12 +39,20 @@ internal static class OperationalEntrypointPolicy
         }
 
         var inventory = LoadInventory(Path.Combine(repositoryRoot, InventoryPath));
-        var duplicateIds = inventory
+        findings.AddRange(InspectDeclaredArtifact(
+            inventory.HostContractSchema,
+            "host contract schema",
+            index));
+        findings.AddRange(InspectDeclaredArtifact(
+            inventory.LauncherTemplate,
+            "launcher template",
+            index));
+        var duplicateIds = inventory.Operations
             .GroupBy(static operation => operation.Id, StringComparer.Ordinal)
             .Where(static group => group.Count() > 1)
             .Select(static group => group.Key)
             .ToHashSet(StringComparer.Ordinal);
-        foreach (var duplicate in inventory
+        foreach (var duplicate in inventory.Operations
                      .Where(operation => duplicateIds.Contains(operation.Id))
                      .GroupBy(static operation => operation.Id, StringComparer.Ordinal))
         {
@@ -61,7 +69,7 @@ internal static class OperationalEntrypointPolicy
         }
 
         var makefile = File.ReadAllText(Path.Combine(repositoryRoot, "Makefile"));
-        foreach (var operation in inventory.Where(operation => !duplicateIds.Contains(operation.Id)))
+        foreach (var operation in inventory.Operations.Where(operation => !duplicateIds.Contains(operation.Id)))
         {
             var implementationFindings = InspectImplementation(operation, index);
             findings.AddRange(implementationFindings);
@@ -73,6 +81,60 @@ internal static class OperationalEntrypointPolicy
         }
 
         return findings;
+    }
+
+    private static IReadOnlyList<OperationalEntrypointFinding> InspectDeclaredArtifact(
+        string path,
+        string role,
+        IReadOnlyDictionary<string, string> index)
+    {
+        if (IsHostLocal(path))
+        {
+            return
+            [
+                new OperationalEntrypointFinding(
+                    path,
+                    $"operational inventory declares a host-local path for {role}"),
+            ];
+        }
+        if (!RepoPath.TryCreate(path, out _))
+        {
+            return
+            [
+                new OperationalEntrypointFinding(
+                    path,
+                    $"declared {role} is not a canonical repository-relative path"),
+            ];
+        }
+        if (!index.TryGetValue(path, out var mode))
+        {
+            return
+            [
+                new OperationalEntrypointFinding(
+                    path,
+                    $"declared {role} is absent from the git index"),
+            ];
+        }
+        if (mode == "120000")
+        {
+            return
+            [
+                new OperationalEntrypointFinding(
+                    path,
+                    $"declared {role} is a symlink (git mode 120000)"),
+            ];
+        }
+        if (mode is not ("100644" or "100755"))
+        {
+            return
+            [
+                new OperationalEntrypointFinding(
+                    path,
+                    $"declared {role} has non-regular git mode {mode}"),
+            ];
+        }
+
+        return [];
     }
 
     private static IReadOnlyList<OperationalEntrypointFinding> InspectImplementation(
@@ -87,6 +149,15 @@ internal static class OperationalEntrypointPolicy
                 new OperationalEntrypointFinding(
                     path,
                     $"operation {operation.Id} declares an absolute path"),
+            ];
+        }
+        if (IsHostLocal(path))
+        {
+            return
+            [
+                new OperationalEntrypointFinding(
+                    path,
+                    $"operation {operation.Id} declares a host-local path"),
             ];
         }
         if (!RepoPath.TryCreate(path, out _))
@@ -136,7 +207,13 @@ internal static class OperationalEntrypointPolicy
         var findings = new List<OperationalEntrypointFinding>();
         foreach (var path in operation.Tests)
         {
-            if (IsAbsolute(path) || !RepoPath.TryCreate(path, out _))
+            if (IsHostLocal(path))
+            {
+                findings.Add(new OperationalEntrypointFinding(
+                    path,
+                    $"operation {operation.Id} declared test is a host-local path"));
+            }
+            else if (!RepoPath.TryCreate(path, out _))
             {
                 findings.Add(new OperationalEntrypointFinding(
                     path,
@@ -199,7 +276,16 @@ internal static class OperationalEntrypointPolicy
             RegexOptions.CultureInvariant,
             TimeSpan.FromSeconds(1));
 
-    private static Operation[] LoadInventory(string path)
+    private static bool IsHostLocal(string path) =>
+        IsAbsolute(path)
+        || path.Equals("~", StringComparison.Ordinal)
+        || path.StartsWith("~/", StringComparison.Ordinal)
+        || path.StartsWith("~\\", StringComparison.Ordinal)
+        || path.StartsWith("$HOME/", StringComparison.Ordinal)
+        || path.StartsWith("${HOME}/", StringComparison.Ordinal)
+        || path.StartsWith("%USERPROFILE%", StringComparison.OrdinalIgnoreCase);
+
+    private static Inventory LoadInventory(string path)
     {
         TomlTable root;
         try
@@ -212,12 +298,28 @@ internal static class OperationalEntrypointPolicy
             throw new InvalidDataException("operational inventory is invalid TOML", exception);
         }
 
-        RequireExactKeys(root, "inventory", "schema_version", "operations");
+        if (!root.ContainsKey("host_contract_schema"))
+        {
+            throw new InvalidDataException(
+                "operational inventory must declare host_contract_schema");
+        }
+        if (!root.ContainsKey("launcher_template"))
+        {
+            throw new InvalidDataException(
+                "operational inventory must declare launcher_template");
+        }
+        RequireExactKeys(
+            root,
+            "inventory",
+            "schema_version",
+            "host_contract_schema",
+            "launcher_template",
+            "operations");
         if (!root.TryGetValue("schema_version", out var rawVersion)
             || rawVersion is not long version
-            || version != 1)
+            || version != 2)
         {
-            throw new InvalidDataException("operational inventory schema_version must be 1");
+            throw new InvalidDataException("operational inventory schema_version must be 2");
         }
         if (!root.TryGetValue("operations", out var rawOperations)
             || rawOperations is not TomlTableArray tables
@@ -226,7 +328,10 @@ internal static class OperationalEntrypointPolicy
             throw new InvalidDataException("operational inventory must declare operations");
         }
 
-        return tables.Select((table, index) => ParseOperation(table, index)).ToArray();
+        return new Inventory(
+            RequiredString(root, "host_contract_schema", "inventory"),
+            RequiredString(root, "launcher_template", "inventory"),
+            tables.Select((table, index) => ParseOperation(table, index)).ToArray());
     }
 
     private static Operation ParseOperation(TomlTable table, int index)
@@ -353,4 +458,9 @@ internal static class OperationalEntrypointPolicy
         string Implementation,
         IReadOnlyList<string> Tests,
         IReadOnlyList<string> ExternalTools);
+
+    private sealed record Inventory(
+        string HostContractSchema,
+        string LauncherTemplate,
+        IReadOnlyList<Operation> Operations);
 }
