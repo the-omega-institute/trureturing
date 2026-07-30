@@ -7,13 +7,31 @@ public sealed class OperationalEntrypointTests
     [Fact]
     public void RepositoryOperationalEntrypointsAreTrackedRegularFilesAndUnique()
     {
-        var findings = OperationalEntrypointPolicy.InspectRepository(RepositoryLayout.FindRoot());
+        var repository = RepositoryLayout.FindRoot();
+        var membership = OperationalEntrypointPolicy.EnumerateRepositoryLaunchdMembership(repository);
+        var findings = OperationalEntrypointPolicy.InspectRepository(repository, membership);
 
         Assert.True(
             findings.Count == 0,
             string.Join(
                 Environment.NewLine,
                 findings.Select(static finding => $"{finding.Path}: {finding.Message}")));
+    }
+
+    [Fact]
+    public void RepositoryLaunchdMembershipEnumeratorRejectsAnUngroundedEmptySet()
+    {
+        WithRepository(
+            [Operation("hourly-maintenance", "ops/scripts/synthetic-maintenance.sh")],
+            repository =>
+            {
+                TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
+
+                var exception = Assert.Throws<InvalidDataException>(
+                    () => OperationalEntrypointPolicy.EnumerateRepositoryLaunchdMembership(repository));
+
+                Assert.Contains("returned no launchd units", exception.Message, StringComparison.Ordinal);
+            });
     }
 
     [Fact]
@@ -25,7 +43,7 @@ public sealed class OperationalEntrypointTests
             {
                 TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
 
-                Assert.Empty(OperationalEntrypointPolicy.InspectRepository(repository));
+                Assert.Empty(OperationalEntrypointPolicy.InspectRepository(repository, []));
             });
     }
 
@@ -36,7 +54,7 @@ public sealed class OperationalEntrypointTests
             [Operation("hourly-maintenance", "ops/scripts/synthetic-maintenance.sh")],
             repository =>
             {
-                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains("absent from the git index", finding.Message, StringComparison.Ordinal);
             });
@@ -49,7 +67,7 @@ public sealed class OperationalEntrypointTests
             [Operation("hourly-maintenance", "/tmp/synthetic-maintenance.sh")],
             repository =>
             {
-                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains("absolute path", finding.Message, StringComparison.Ordinal);
             });
@@ -62,7 +80,7 @@ public sealed class OperationalEntrypointTests
             [Operation("hourly-maintenance", "../synthetic-maintenance.sh")],
             repository =>
             {
-                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains("escapes the repository root", finding.Message, StringComparison.Ordinal);
             });
@@ -77,7 +95,7 @@ public sealed class OperationalEntrypointTests
             {
                 TrackSymlinkMode(repository, "ops/scripts/synthetic-maintenance.sh");
 
-                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains("symlink", finding.Message, StringComparison.Ordinal);
                 Assert.Contains("120000", finding.Message, StringComparison.Ordinal);
@@ -97,7 +115,7 @@ public sealed class OperationalEntrypointTests
                 TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
                 TrackFile(repository, "ops/scripts/other-maintenance.sh");
 
-                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains("claimed by multiple tracked implementations", finding.Message, StringComparison.Ordinal);
             });
@@ -113,7 +131,7 @@ public sealed class OperationalEntrypointTests
             {
                 TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
 
-                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains("duplicate operation id", finding.Message, StringComparison.Ordinal);
             });
@@ -129,7 +147,7 @@ public sealed class OperationalEntrypointTests
                 TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
                 Git(repository, "rm", "--cached", "--", "tests/synthetic-test.sh");
 
-                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains(
                     "declared test is absent from the git index",
@@ -152,7 +170,7 @@ public sealed class OperationalEntrypointTests
                     "hourly-maintenance:\n\t@/bin/bash ops/scripts/different-maintenance.sh\n");
                 Git(repository, "add", "--", "Makefile");
 
-                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains("does not delegate exactly", finding.Message, StringComparison.Ordinal);
             });
@@ -166,7 +184,7 @@ public sealed class OperationalEntrypointTests
             repository =>
             {
                 var exception = Assert.Throws<InvalidDataException>(
-                    () => OperationalEntrypointPolicy.InspectRepository(repository));
+                    () => OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains(
                     "must declare host_contract_schema",
@@ -177,21 +195,21 @@ public sealed class OperationalEntrypointTests
     }
 
     [Fact]
-    public void MissingLauncherTemplateDeclarationIsRejected()
+    public void MissingLaunchdUnitsDeclarationIsRejected()
     {
         WithRepository(
             [Operation("hourly-maintenance", "ops/scripts/synthetic-maintenance.sh")],
             repository =>
             {
                 var exception = Assert.Throws<InvalidDataException>(
-                    () => OperationalEntrypointPolicy.InspectRepository(repository));
+                    () => OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains(
-                    "must declare launcher_template",
+                    "must declare launchd_units",
                     exception.Message,
                     StringComparison.Ordinal);
             },
-            declareLauncherTemplate: false);
+            declareLaunchdUnits: false);
     }
 
     [Fact]
@@ -204,7 +222,7 @@ public sealed class OperationalEntrypointTests
                 TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
                 Git(repository, "rm", "--cached", "--", "ops/host-contract.schema");
 
-                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains(
                     "host contract schema is absent from the git index",
@@ -214,22 +232,22 @@ public sealed class OperationalEntrypointTests
     }
 
     [Fact]
-    public void LauncherTemplateAbsentFromGitIndexIsRejected()
+    public void LaunchdUnitTemplateAbsentFromGitIndexIsRejected()
     {
         WithRepository(
-            [Operation("hourly-maintenance", "ops/scripts/synthetic-maintenance.sh")],
+            LaunchdOperations("synthetic"),
             repository =>
             {
-                TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
-                Git(repository, "rm", "--cached", "--", "ops/maintenance.plist.in");
+                PrepareLaunchdUnit(repository, "synthetic", includeTemplate: false);
 
-                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains(
-                    "launcher template is absent from the git index",
+                    "launchd unit synthetic template is absent from the git index",
                     finding.Message,
                     StringComparison.Ordinal);
-            });
+            },
+            launchdUnits: ["synthetic"]);
     }
 
     [Fact]
@@ -243,26 +261,316 @@ public sealed class OperationalEntrypointTests
                 Git(repository, "rm", "--cached", "--", "ops/host-contract.schema");
                 TrackSymlinkMode(repository, "ops/host-contract.schema");
 
-                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains("host contract schema is a symlink", finding.Message, StringComparison.Ordinal);
             });
     }
 
     [Fact]
-    public void LauncherTemplateSymlinkIsRejectedFromIndexMode()
+    public void LaunchdUnitTemplateSymlinkIsRejectedFromIndexMode()
+    {
+        WithRepository(
+            LaunchdOperations("synthetic"),
+            repository =>
+            {
+                PrepareLaunchdUnit(repository, "synthetic", includeTemplate: false);
+                TrackSymlinkMode(repository, ".fkst/launchd/synthetic.plist.in");
+
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
+
+                Assert.Contains("launchd unit synthetic template is a symlink", finding.Message, StringComparison.Ordinal);
+            },
+            launchdUnits: ["synthetic"]);
+    }
+
+    [Fact]
+    public void LaunchdUnitWithoutRendererIsRejected()
+    {
+        WithRepository(
+            LaunchdOperations("synthetic", includeRenderer: false),
+            repository =>
+            {
+                PrepareLaunchdUnit(repository, "synthetic", includeRenderer: false);
+
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
+
+                Assert.Contains(
+                    "launchd unit synthetic has no render operation synthetic-launcher-render",
+                    finding.Message,
+                    StringComparison.Ordinal);
+            },
+            launchdUnits: ["synthetic"]);
+    }
+
+    [Fact]
+    public void LaunchdUnitWithoutCheckTargetIsRejected()
+    {
+        WithRepository(
+            LaunchdOperations("synthetic"),
+            repository =>
+            {
+                PrepareLaunchdUnit(repository, "synthetic", includeCheckTarget: false);
+
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
+
+                Assert.Contains(
+                    "make target synthetic-launcher-check does not delegate exactly",
+                    finding.Message,
+                    StringComparison.Ordinal);
+            },
+            launchdUnits: ["synthetic"]);
+    }
+
+    [Fact]
+    public void UntrackedLaunchdUnitAbsentFromOperationalInventoryIsRejected()
     {
         WithRepository(
             [Operation("hourly-maintenance", "ops/scripts/synthetic-maintenance.sh")],
             repository =>
             {
                 TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
-                Git(repository, "rm", "--cached", "--", "ops/maintenance.plist.in");
-                TrackSymlinkMode(repository, "ops/maintenance.plist.in");
+                WriteFile(repository, ".fkst/launchd/synthetic.plist", "<plist/>\n");
 
-                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
 
-                Assert.Contains("launcher template is a symlink", finding.Message, StringComparison.Ordinal);
+                Assert.Contains(
+                    "launchd unit synthetic is absent from operational inventory",
+                    finding.Message,
+                    StringComparison.Ordinal);
+            });
+    }
+
+    [Fact]
+    public void AdditionalCanonicalPlistForDeclaredLaunchdUnitIsRejectedByPath()
+    {
+        WithRepository(
+            LaunchdOperations("synthetic"),
+            repository =>
+            {
+                PrepareLaunchdUnit(repository, "synthetic");
+                WriteFile(repository, ".fkst/launchd/synthetic.plist", "<plist/>\n");
+
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
+
+                Assert.Equal(".fkst/launchd/synthetic.plist", finding.Path);
+                Assert.Contains(
+                    "additional launchd path for unit synthetic",
+                    finding.Message,
+                    StringComparison.Ordinal);
+            },
+            launchdUnits: ["synthetic"]);
+    }
+
+    [Fact]
+    public void EmptyPlistDirectoryIsRejectedAsANonRegularLaunchdEntry()
+    {
+        WithRepository(
+            [Operation("hourly-maintenance", "ops/scripts/synthetic-maintenance.sh")],
+            repository =>
+            {
+                TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
+                Directory.CreateDirectory(Path.Combine(
+                    repository,
+                    ".fkst",
+                    "launchd",
+                    "rogue.plist"));
+
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
+
+                Assert.Equal(".fkst/launchd/rogue.plist", finding.Path);
+                Assert.Contains("non-regular filesystem entry", finding.Message, StringComparison.Ordinal);
+            });
+    }
+
+    [Fact]
+    public void FifoIsRejectedAsANonRegularLaunchdEntry()
+    {
+        WithRepository(
+            [Operation("hourly-maintenance", "ops/scripts/synthetic-maintenance.sh")],
+            repository =>
+            {
+                TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
+                CreateFifo(repository, ".fkst/launchd/rogue.plist");
+
+                var finding = Assert.Single(
+                    OperationalEntrypointPolicy.InspectRepository(repository, []),
+                    item => string.Equals(
+                        item.Path,
+                        ".fkst/launchd/rogue.plist",
+                        StringComparison.Ordinal));
+
+                Assert.Equal(".fkst/launchd/rogue.plist", finding.Path);
+                Assert.Contains("non-regular filesystem entry", finding.Message, StringComparison.Ordinal);
+            });
+    }
+
+    [Fact]
+    public void TrackedCanonicalLaunchdTemplateReplacedByFifoIsRejected()
+    {
+        WithRepository(
+            LaunchdOperations("synthetic"),
+            repository =>
+            {
+                PrepareLaunchdUnit(repository, "synthetic");
+                var template = Path.Combine(repository, ".fkst", "launchd", "synthetic.plist.in");
+                File.Delete(template);
+                CreateFifo(repository, ".fkst/launchd/synthetic.plist.in");
+
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
+
+                Assert.Equal(".fkst/launchd/synthetic.plist.in", finding.Path);
+                Assert.Contains("non-regular filesystem entry", finding.Message, StringComparison.Ordinal);
+            },
+            launchdUnits: ["synthetic"]);
+    }
+
+    [Fact]
+    public void ConcurrentlyReplacedTrackedLaunchdTemplateNeverAcceptsASymlink()
+    {
+        WithRepository(
+            LaunchdOperations("synthetic"),
+            repository =>
+            {
+                PrepareLaunchdUnit(repository, "synthetic");
+                var template = Path.Combine(repository, ".fkst", "launchd", "synthetic.plist.in");
+                var regularCandidate = Path.Combine(repository, "template-regular-candidate");
+                var symlinkCandidate = Path.Combine(repository, "template-symlink-candidate");
+                var symlinkTarget = Path.Combine(repository, "template-symlink-target");
+                File.WriteAllText(symlinkTarget, "regular symlink target\n");
+
+                using var cancellation = new CancellationTokenSource();
+                var stateGate = new object();
+                var currentStateIsSymlink = false;
+                var currentStateSince = Stopwatch.GetTimestamp();
+                var replacer = Task.Run(() =>
+                {
+                    while (!cancellation.IsCancellationRequested)
+                    {
+                        File.WriteAllText(regularCandidate, "regular template\n");
+                        lock (stateGate)
+                        {
+                            File.Move(regularCandidate, template, overwrite: true);
+                            currentStateSince = Stopwatch.GetTimestamp();
+                            currentStateIsSymlink = false;
+                        }
+                        Thread.Sleep(2);
+
+                        File.CreateSymbolicLink(symlinkCandidate, symlinkTarget);
+                        lock (stateGate)
+                        {
+                            File.Move(symlinkCandidate, template, overwrite: true);
+                            currentStateSince = Stopwatch.GetTimestamp();
+                            currentStateIsSymlink = true;
+                        }
+                        Thread.Sleep(2);
+                    }
+                }, cancellation.Token);
+
+                int? falseNegativeIteration = null;
+                try
+                {
+                    for (var iteration = 0; iteration < 10_000; iteration++)
+                    {
+                        if (!PosixFileType.IsRegularFile(template)) continue;
+
+                        var completedAt = Stopwatch.GetTimestamp();
+                        lock (stateGate)
+                        {
+                            // Exclude a replacement published only as the probe returned; the old
+                            // fork/exec gap leaves the symlink stable well beyond this interval.
+                            if (currentStateIsSymlink
+                                && currentStateSince <= completedAt
+                                && Stopwatch.GetElapsedTime(currentStateSince, completedAt)
+                                    >= TimeSpan.FromMilliseconds(0.5))
+                            {
+                                falseNegativeIteration = iteration;
+                                break;
+                            }
+                        }
+                    }
+                }
+                finally
+                {
+                    cancellation.Cancel();
+                    replacer.GetAwaiter().GetResult();
+                }
+
+                Assert.Null(falseNegativeIteration);
+            },
+            launchdUnits: ["synthetic"]);
+    }
+
+    [Fact]
+    public void ExtensionlessLaunchdSymlinkIsRejected()
+    {
+        WithRepository(
+            [Operation("hourly-maintenance", "ops/scripts/synthetic-maintenance.sh")],
+            repository =>
+            {
+                TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
+                TrackSymlinkMode(repository, ".fkst/launchd/rogue");
+
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
+
+                Assert.Equal(".fkst/launchd/rogue", finding.Path);
+                Assert.Contains(
+                    "noncanonical launchd entry",
+                    finding.Message,
+                    StringComparison.Ordinal);
+            });
+    }
+
+    [Theory]
+    [InlineData("local.fkst.synthetic.worker.plist")]
+    [InlineData("synthetic_worker.plist")]
+    [InlineData("SyntheticWorker.plist.in")]
+    [InlineData(".plist")]
+    [InlineData(".plist.in")]
+    [InlineData("SyntheticWorker.PLIST")]
+    [InlineData("worker.plist.IN")]
+    [InlineData("nested/worker.plist")]
+    public void NoncanonicalLaunchdPlistCandidateIsRejected(string relativePath)
+    {
+        WithRepository(
+            [Operation("hourly-maintenance", "ops/scripts/synthetic-maintenance.sh")],
+            repository =>
+            {
+                TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
+                WriteFile(repository, $".fkst/launchd/{relativePath}", "<plist/>\n");
+
+                var expectedPath = $".fkst/launchd/{relativePath}";
+                var finding = Assert.Single(
+                    OperationalEntrypointPolicy.InspectRepository(repository, []),
+                    item => string.Equals(
+                        item.Path,
+                        expectedPath,
+                        StringComparison.Ordinal));
+
+                Assert.Equal(expectedPath, finding.Path);
+                Assert.Contains(
+                    "noncanonical launchd entry",
+                    finding.Message,
+                    StringComparison.Ordinal);
+            });
+    }
+
+    [Fact]
+    public void ExternalOperationalLaunchdMemberAbsentFromInventoryIsRejected()
+    {
+        WithRepository(
+            [Operation("hourly-maintenance", "ops/scripts/synthetic-maintenance.sh")],
+            repository =>
+            {
+                TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
+
+                var finding = Assert.Single(
+                    OperationalEntrypointPolicy.InspectRepository(repository, ["worker"]));
+
+                Assert.Contains(
+                    "operational launchd unit worker is absent from operational inventory",
+                    finding.Message,
+                    StringComparison.Ordinal);
             });
     }
 
@@ -273,7 +581,7 @@ public sealed class OperationalEntrypointTests
             [Operation("hourly-maintenance", "~/.fkst/synthetic-maintenance.sh")],
             repository =>
             {
-                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains("declares a host-local path", finding.Message, StringComparison.Ordinal);
             });
@@ -283,20 +591,23 @@ public sealed class OperationalEntrypointTests
         IReadOnlyList<string> operations,
         Action<string> assertion,
         bool declareHostContractSchema = true,
-        bool declareLauncherTemplate = true)
+        bool declareLaunchdUnits = true,
+        IReadOnlyList<string>? launchdUnits = null)
     {
         var root = Directory.CreateTempSubdirectory("stratalint-operational-entrypoint-").FullName;
         try
         {
             Git(root, "init", "--initial-branch=dev");
-            var declarations = new List<string> { "schema_version = 2" };
+            var declarations = new List<string> { "schema_version = 3" };
             if (declareHostContractSchema)
             {
                 declarations.Add("host_contract_schema = \"ops/host-contract.schema\"");
             }
-            if (declareLauncherTemplate)
+            if (declareLaunchdUnits)
             {
-                declarations.Add("launcher_template = \"ops/maintenance.plist.in\"");
+                var unitIds = launchdUnits ?? [];
+                declarations.Add(
+                    $"launchd_units = [{string.Join(", ", unitIds.Select(static id => $"\"{id}\""))}]");
             }
             var inventory = string.Join("\n", declarations) + "\n\n" + string.Join("\n", operations);
             WriteFile(root, ".fkst/operations.toml", inventory);
@@ -306,7 +617,6 @@ public sealed class OperationalEntrypointTests
                 "hourly-maintenance:\n\t@/bin/bash ops/scripts/synthetic-maintenance.sh\n");
             WriteFile(root, "tests/synthetic-test.sh", "#!/usr/bin/env bash\nexit 0\n");
             WriteFile(root, "ops/host-contract.schema", "schema_version|1\n");
-            WriteFile(root, "ops/maintenance.plist.in", "<plist/>\n");
             Git(
                 root,
                 "add",
@@ -314,7 +624,6 @@ public sealed class OperationalEntrypointTests
                 ".fkst/operations.toml",
                 "Makefile",
                 "ops/host-contract.schema",
-                "ops/maintenance.plist.in",
                 "tests/synthetic-test.sh");
 
             assertion(root);
@@ -325,14 +634,77 @@ public sealed class OperationalEntrypointTests
         }
     }
 
-    private static string Operation(string id, string implementation) => $$"""
+    private static string Operation(
+        string id,
+        string implementation,
+        string makeTarget = "hourly-maintenance") => $$"""
         [[operations]]
         id = "{{id}}"
-        make_target = "hourly-maintenance"
+        make_target = "{{makeTarget}}"
         implementation = "{{implementation}}"
         tests = ["tests/synthetic-test.sh"]
         external_tools = ["bash", "git"]
         """;
+
+    private static IReadOnlyList<string> LaunchdOperations(
+        string id,
+        bool includeRenderer = true,
+        bool includeCheck = true)
+    {
+        var operations = new List<string>();
+        if (includeRenderer)
+        {
+            operations.Add(Operation(
+                $"{id}-launcher-render",
+                $".fkst/scripts/render-{id}-launcher.sh",
+                $"{id}-launcher-render"));
+        }
+        if (includeCheck)
+        {
+            operations.Add(Operation(
+                $"{id}-launcher-check",
+                $".fkst/scripts/check-{id}-launcher.sh",
+                $"{id}-launcher-check"));
+        }
+        return operations;
+    }
+
+    private static void PrepareLaunchdUnit(
+        string repository,
+        string id,
+        bool includeTemplate = true,
+        bool includeRenderer = true,
+        bool includeCheck = true,
+        bool includeCheckTarget = true)
+    {
+        if (includeTemplate) TrackFile(repository, $".fkst/launchd/{id}.plist.in");
+        if (includeRenderer) TrackFile(repository, $".fkst/scripts/render-{id}-launcher.sh");
+        if (includeCheck) TrackFile(repository, $".fkst/scripts/check-{id}-launcher.sh");
+
+        var makefile = new List<string>
+        {
+            "hourly-maintenance:",
+            "\t@/bin/bash ops/scripts/synthetic-maintenance.sh",
+        };
+        if (includeRenderer)
+        {
+            makefile.AddRange(
+            [
+                $"{id}-launcher-render:",
+                $"\t@/bin/bash .fkst/scripts/render-{id}-launcher.sh",
+            ]);
+        }
+        if (includeCheck && includeCheckTarget)
+        {
+            makefile.AddRange(
+            [
+                $"{id}-launcher-check:",
+                $"\t@/bin/bash .fkst/scripts/check-{id}-launcher.sh",
+            ]);
+        }
+        WriteFile(repository, "Makefile", string.Join('\n', makefile) + "\n");
+        Git(repository, "add", "--", "Makefile");
+    }
 
     private static void TrackFile(string repository, string path)
     {
@@ -346,6 +718,23 @@ public sealed class OperationalEntrypointTests
         File.WriteAllText(blobSource, "hourly-maintenance-target\n");
         var oid = Git(repository, "hash-object", "-w", blobSource);
         Git(repository, "update-index", "--add", "--cacheinfo", $"120000,{oid},{path}");
+    }
+
+    private static void CreateFifo(string repository, string path)
+    {
+        var fullPath = Path.Combine(repository, path.Replace('/', Path.DirectorySeparatorChar));
+        Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
+        var startInfo = new ProcessStartInfo("mkfifo")
+        {
+            RedirectStandardError = true,
+            UseShellExecute = false,
+        };
+        startInfo.ArgumentList.Add(fullPath);
+        using var process = Process.Start(startInfo)
+            ?? throw new InvalidOperationException("could not start mkfifo");
+        var error = process.StandardError.ReadToEnd();
+        process.WaitForExit();
+        Assert.True(process.ExitCode == 0, $"mkfifo exited {process.ExitCode}: {error}");
     }
 
     private static void WriteFile(string repository, string path, string contents)

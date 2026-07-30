@@ -2,6 +2,9 @@
 # name|type|required|source
 schema_version|1
 BIN|absolute_path|true|host
+FKST_BASH_BIN|absolute_path|false|host
+FKST_ZSH_BIN|absolute_path|false|host
+FKST_PYTHON_BIN|absolute_path|false|host
 FKST_HOST_ROOT|absolute_path|true|host
 FKST_PLATFORM_ROOT|absolute_path|true|host
 FKST_DURABLE_ROOT|absolute_path|true|host
@@ -21,6 +24,8 @@ FKST_TIMEOUT_BIN|absolute_path|true|host
 FKST_LAUNCHD_LABEL|label|true|host
 FKST_MAINTENANCE_LAUNCHD_LABEL|label|true|host
 FKST_MAINTENANCE_LAUNCHER_PATH|absolute_path|true|host
+FKST_SUPERVISE_LAUNCHER_LOG|absolute_path|false|host
+FKST_SUPERVISE_LAUNCHER_PATH|absolute_path|false|host
 FKST_GITHUB_WRITE|boolean|true|repository
 FKST_GITHUB_AUTHORIZE_ORG_MEMBERS|boolean|true|repository
 FKST_GITHUB_PROXY_POLL_LABEL_PREFIX|label_prefix|true|repository
