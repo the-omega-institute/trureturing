@@ -7,6 +7,7 @@ namespace StrataLint.Tests;
 
 internal sealed class ReportSupervisorFixture : IDisposable
 {
+    private static readonly string performanceConfiguration = FindPerformanceConfiguration();
     private readonly TemporaryDirectory temporary = new();
 
     internal ReportSupervisorFixture()
@@ -33,9 +34,11 @@ internal sealed class ReportSupervisorFixture : IDisposable
             active="$5"
             overlap="$6"
             env STRATALINT_REPORT_METRICS_LOG="$metrics" STRATALINT_SUPERVISOR_ROOT="$state" \
+              STRATALINT_PERF_CONFIGURATION="$7" \
               "$supervisor" --role lean-producer --lean-slot -- "$worker" "$active" "$overlap" &
             first=$!
             env STRATALINT_REPORT_METRICS_LOG="$metrics" STRATALINT_SUPERVISOR_ROOT="$state" \
+              STRATALINT_PERF_CONFIGURATION="$7" \
               "$supervisor" --role lean-producer --lean-slot -- "$worker" "$active" "$overlap" &
             second=$!
             wait "$first"
@@ -69,6 +72,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
                 read -r pid < "$pid_file"
                 kill -0 "$pid" 2>/dev/null && printf '%s 1 00:00\n' "$pid"
               done
+              :
             elif [[ "$*" == *"lstart="* ]]; then
               printf 'synthetic-start-%s\n' "$requested_pid"
             elif [[ "$*" == *"stat="* ]]; then
@@ -181,6 +185,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
     internal string DefaultMetricsLog => Path.Combine(Root, ".stratalint-perf", "events.jsonl");
     internal string StateRoot => Path.Combine(Root, "state");
     internal string HostPath => Environment.GetEnvironmentVariable("PATH") ?? "/bin:/usr/bin";
+    internal string PerformanceConfiguration => performanceConfiguration;
     internal string ScratchRecord => Path.Combine(Root, "scratch.txt");
     internal string ActiveMarker => Path.Combine(Root, "active");
     internal string OverlapMarker => Path.Combine(Root, "overlap");
@@ -214,6 +219,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
             $"PATH={Root}:{HostPath}",
             $"STRATALINT_REPORT_METRICS_LOG={MetricsLog}",
             $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
+            $"STRATALINT_PERF_CONFIGURATION={PerformanceConfiguration}",
         };
         arguments.AddRange(environment);
         arguments.Add(Supervisor);
@@ -234,6 +240,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
                 $"PATH={Root}:{HostPath}",
                 $"HOME={Root}",
                 $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
+                $"STRATALINT_PERF_CONFIGURATION={PerformanceConfiguration}",
                 Supervisor,
                 "--role", role,
                 "--", command, ScratchRecord,
@@ -250,6 +257,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
                 $"PATH={Root}:{HostPath}",
                 $"STRATALINT_REPORT_METRICS_LOG={MetricsLog}",
                 $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
+                $"STRATALINT_PERF_CONFIGURATION={PerformanceConfiguration}",
                 Supervisor,
                 "--role", role,
                 "--", command, ScratchRecord,
@@ -273,6 +281,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
             $"PATH={Root}:{HostPath}",
             $"STRATALINT_REPORT_METRICS_LOG={MetricsLog}",
             $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
+            $"STRATALINT_PERF_CONFIGURATION={PerformanceConfiguration}",
             Supervisor,
             "--role", "lean-producer", "--lean-slot", "--",
             LongRunningWorker, GrandchildPid,
@@ -297,6 +306,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
             $"PATH={Root}:{HostPath}",
             $"STRATALINT_REPORT_METRICS_LOG={MetricsLog}",
             $"STRATALINT_SUPERVISOR_ROOT={StateRoot}",
+            $"STRATALINT_PERF_CONFIGURATION={PerformanceConfiguration}",
             Supervisor,
             "--role", "lean-producer", "--lean-slot", "--",
             DetachedWorker, DetachedWorkerPid, DetachedPid, DetachedParentPid, DetachedRelease,
@@ -349,6 +359,15 @@ internal sealed class ReportSupervisorFixture : IDisposable
         }
 
         throw new DirectoryNotFoundException("Could not locate repository root.");
+    }
+
+    private static string FindPerformanceConfiguration()
+    {
+        var targetFrameworkDirectory = new DirectoryInfo(AppContext.BaseDirectory);
+        var configuration = targetFrameworkDirectory.Parent?.Name;
+        return !string.IsNullOrWhiteSpace(configuration)
+            ? configuration
+            : throw new DirectoryNotFoundException("Could not determine the test build configuration.");
     }
 }
 
