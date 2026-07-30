@@ -1,13 +1,13 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S1.Phase;
+namespace StrataLint.Scribe.Blueprint.D5.S1.Words;
 
 internal sealed class GoldenMechanicalWordDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() =>
         DocumentDefinition.Create(ScribeDocument.Create(
             Header(
-                "D5/S1/Phase/GoldenMechanicalWord",
+                "D5/S1/Words/GoldenMechanicalWord",
                 "Identify the exact fractional-coordinate window for a golden mechanical letter."),
             H("Golden Mechanical Word Window"),
             Blocks(
@@ -18,7 +18,7 @@ internal sealed class GoldenMechanicalWordDocument : IScribeDocumentDefinition
                     DescribeKind.Theorem,
                     H("A letter is one exactly on the local window"),
                     DescribeStatement.FromLean(LeanTheorem(
-                        "D5/S1/Phase/GoldenMechanicalWord.golden_mechanical_letter_eq_one_iff")),
+                        "D5/S1/Words/GoldenMechanicalWord.golden_mechanical_letter_eq_one_iff")),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "For every natural index, the floor-difference letter equals one if and only if the golden fractional coordinate lies in the stated half-open interval. No complexity, substitution, or cut-and-project classification is asserted."))),

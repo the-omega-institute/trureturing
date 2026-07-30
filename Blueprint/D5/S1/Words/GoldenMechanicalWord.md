@@ -10,7 +10,7 @@ The lower golden mechanical word is defined by consecutive floor differences at 
 
 $$\forall n\in\mathbb{N},\ s_n=1\ \Leftrightarrow\ \{n\varphi\}\in[1-\varphi^{-1},1)$$
 
-*Proof.* Machine-checked in Lean as `D5/S1/Phase/GoldenMechanicalWord.golden_mechanical_letter_eq_one_iff` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S1/Words/GoldenMechanicalWord.golden_mechanical_letter_eq_one_iff` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 

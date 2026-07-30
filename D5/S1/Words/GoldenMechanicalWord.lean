@@ -1,4 +1,4 @@
-/- GID: D5/S1/Phase/GoldenMechanicalWord
+/- GID: D5/S1/Words/GoldenMechanicalWord
    generality: I
    mirror-B: D5/B/S1/Phase/GoldenMechanicalWord
    mirror-E: none(waiver:exact-symbolic-window-criterion)
@@ -8,7 +8,9 @@
 import D5.S1.Phase.Basic
 import D5.S1.Phase.ThreeDistance
 
-namespace D5.S1.Phase
+namespace D5.S1.Words
+
+open D5.S1.Phase
 
 /-- The slope `1 / phi` of the lower golden mechanical word. -/
 noncomputable def goldenMechanicalSlope : ℝ := Real.goldenRatio⁻¹
@@ -61,4 +63,4 @@ theorem golden_mechanical_letter_eq_one_iff (n : ℕ) :
     · norm_num
       linarith
 
-end D5.S1.Phase
+end D5.S1.Words
