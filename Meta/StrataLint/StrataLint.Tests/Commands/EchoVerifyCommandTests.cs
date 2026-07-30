@@ -18,9 +18,10 @@ public sealed class EchoVerifyCommandTests
             Encoding.UTF8.GetBytes(expected));
 
         Assert.Null(error);
-        Assert.Matches(
-            "^<!-- echo-residual-summary:v3 residual=sha256:[0-9a-f]{64} -->\\n",
-            expected);
+        Assert.StartsWith(
+            "<!-- echo-residual-summary:v3 residual=sha256:05f4f3c3989efd7578fb7fdf6716b7a76aed13b8e840bd5a3fd624b86dd9bca9 -->\n",
+            expected,
+            StringComparison.Ordinal);
         Assert.Equal(Summary, expected[(expected.IndexOf('\n') + 1)..]);
     }
 

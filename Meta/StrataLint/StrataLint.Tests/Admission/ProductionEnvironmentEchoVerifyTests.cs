@@ -31,9 +31,11 @@ public sealed partial class ProductionEnvironmentTests
             emitted.Output.Replace("unresolved_subitems", "hand_modified", StringComparison.Ordinal),
             new UTF8Encoding(false));
         var modified = environment.EchoVerify(["--file", candidatePath, "--base", "baseline"]);
+        var digestIndex = emitted.Output.IndexOf("sha256:", StringComparison.Ordinal) + "sha256:".Length;
+        var replacement = emitted.Output[digestIndex] == '0' ? '1' : '0';
         File.WriteAllText(
             candidatePath,
-            emitted.Output.Replace("residual=sha256:", "residual=sha256:0", StringComparison.Ordinal),
+            emitted.Output[..digestIndex] + replacement + emitted.Output[(digestIndex + 1)..],
             new UTF8Encoding(false));
         var tamperedDigest = environment.EchoVerify(["--file", candidatePath, "--base", "baseline"]);
         File.Delete(candidatePath);

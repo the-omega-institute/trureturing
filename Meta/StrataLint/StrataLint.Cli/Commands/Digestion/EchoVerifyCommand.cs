@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using System.Text;
 using StrataLint.Engine;
 using StrataLint.Scribe;
@@ -42,9 +43,7 @@ internal static class EchoVerifyCommand
 
             var candidate = repository.ResolveCurrentRevision();
             var baseline = repository.ResolveFrozenRevision(prepared.Revision);
-            var expected = EchoResidualBlock.Render(
-                summary.Output,
-                baseline.CommitOid);
+            var expected = EchoResidualBlock.Render(summary.Output);
             if (options.Emit)
             {
                 return new ExplicitCommandResult(0, expected, string.Empty);
@@ -146,45 +145,95 @@ internal static class EchoVerifyCommand
 internal static class EchoResidualBlock
 {
     internal const string RelativePath = GeneratedArtifactInventory.EchoResidualSummaryPath;
-    private const string StartPrefix = "<!-- echo-residual-summary:v2 ";
-    private const string EndMarker = "<!-- /echo-residual-summary:v2 -->";
+    private const string DigestDomain = "stratalint.echo-residual-summary.v3\0";
+    private const string MarkerPrefix = "<!-- echo-residual-summary:";
+    private const string StartPrefix = "<!-- echo-residual-summary:v3 residual=sha256:";
+    private const string HeaderSuffix = " -->";
+    private const int Sha256HexLength = 64;
+    private static readonly byte[] DigestDomainBytes = Encoding.ASCII.GetBytes(DigestDomain);
+    private static readonly byte[] HeaderSuffixBytes = Encoding.ASCII.GetBytes(HeaderSuffix);
+    private static readonly byte[] MarkerPrefixBytes = Encoding.ASCII.GetBytes(MarkerPrefix);
     private static readonly byte[] StartPrefixBytes = Encoding.ASCII.GetBytes(StartPrefix);
 
-    internal static string Render(
-        string residualSummary,
-        string baseCommitOid)
+    internal static string Render(string residualSummary)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(residualSummary);
-        ArgumentException.ThrowIfNullOrWhiteSpace(baseCommitOid);
         if (!residualSummary.EndsWith('\n'))
         {
             throw new ArgumentException("residual summary must end with LF", nameof(residualSummary));
         }
 
-        return $"{StartPrefix}base={baseCommitOid} -->\n"
-            + residualSummary
-            + EndMarker
-            + "\n";
+        var body = Encoding.UTF8.GetBytes(residualSummary);
+        return $"{StartPrefix}{ComputeDigest(body)}{HeaderSuffix}\n" + residualSummary;
     }
 
     internal static string? Verify(ReadOnlySpan<byte> candidate, ReadOnlySpan<byte> expected)
     {
-        if (candidate.SequenceEqual(expected))
-        {
-            return null;
-        }
-
-        if (Count(candidate, expected) > 1)
+        var markerCount = Count(candidate, MarkerPrefixBytes);
+        if (markerCount > 1)
         {
             return "candidate contains multiple echo residual summary blocks";
         }
 
-        if (candidate.IndexOf(StartPrefixBytes) < 0)
+        if (markerCount == 0)
         {
             return "candidate contains no echo residual summary block";
         }
 
-        return "candidate block does not byte-match the derived residual summary";
+        if (!TrySplit(candidate, out var candidateDigest, out _)
+            || !TrySplit(expected, out _, out var expectedBody))
+        {
+            return "candidate contains malformed echo residual summary marker";
+        }
+
+        if (!candidateDigest.SequenceEqual(Encoding.ASCII.GetBytes(ComputeDigest(expectedBody))))
+        {
+            return "candidate block does not byte-match the derived residual summary";
+        }
+
+        return candidate.SequenceEqual(expected)
+            ? null
+            : "candidate block does not byte-match the derived residual summary";
+    }
+
+    private static bool TrySplit(
+        ReadOnlySpan<byte> value,
+        out ReadOnlySpan<byte> digest,
+        out ReadOnlySpan<byte> body)
+    {
+        digest = default;
+        body = default;
+        var lineFeed = value.IndexOf((byte)'\n');
+        if (lineFeed < 0 || !value.StartsWith(StartPrefixBytes)) return false;
+
+        var header = value[..lineFeed];
+        var expectedHeaderLength = StartPrefixBytes.Length + Sha256HexLength + HeaderSuffix.Length;
+        if (header.Length != expectedHeaderLength
+            || !header.EndsWith(HeaderSuffixBytes))
+        {
+            return false;
+        }
+
+        digest = header.Slice(StartPrefixBytes.Length, Sha256HexLength);
+        foreach (var valueByte in digest)
+        {
+            if (valueByte is not (>= (byte)'0' and <= (byte)'9')
+                and not (>= (byte)'a' and <= (byte)'f'))
+            {
+                return false;
+            }
+        }
+
+        body = value[(lineFeed + 1)..];
+        return true;
+    }
+
+    private static string ComputeDigest(ReadOnlySpan<byte> residualSummary)
+    {
+        var preimage = new byte[DigestDomainBytes.Length + residualSummary.Length];
+        DigestDomainBytes.CopyTo(preimage, 0);
+        residualSummary.CopyTo(preimage.AsSpan(DigestDomainBytes.Length));
+        return Convert.ToHexStringLower(SHA256.HashData(preimage));
     }
 
     private static int Count(ReadOnlySpan<byte> source, ReadOnlySpan<byte> value)
