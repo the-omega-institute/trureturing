@@ -38,6 +38,9 @@ domains:
   Quantum:
     stratum: S3
     definition: Finite-dimensional complex operator-algebra and probability structures.
+  Rewriting:
+    stratum: S0
+    definition: Abstract terminating rewrite relations, confluence, and canonical normal forms.
   Scale:
     stratum: S1
     definition: Real embeddings and logarithmic scales of golden integers.
