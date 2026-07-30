@@ -14,6 +14,26 @@ internal static class OperationalEntrypointPolicy
 
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
+    internal static IReadOnlyList<string> EnumerateRepositoryLaunchdMembership(
+        string repositoryRoot)
+    {
+        var index = ReadIndex(repositoryRoot);
+        var inventory = LoadInventory(Path.Combine(repositoryRoot, InventoryPath));
+        var makefile = File.ReadAllText(Path.Combine(repositoryRoot, "Makefile"));
+        var discovery = DiscoverLaunchdUnits(
+            repositoryRoot,
+            inventory.Operations,
+            index.Keys,
+            makefile);
+        var units = discovery.Units.Order(StringComparer.Ordinal).ToArray();
+        if (units.Length == 0)
+        {
+            throw new InvalidDataException(
+                "repository launchd membership source returned no launchd units");
+        }
+        return units;
+    }
+
     internal static IReadOnlyList<OperationalEntrypointFinding> InspectRepository(
         string repositoryRoot,
         IEnumerable<string> operationalLaunchdMembership)
@@ -208,9 +228,17 @@ internal static class OperationalEntrypointPolicy
                 repositoryRoot,
                 relativeDirectory.Replace('/', Path.DirectorySeparatorChar));
             if (!Directory.Exists(directory)) continue;
-            foreach (var path in Directory.EnumerateFiles(directory))
+            var searchOption = string.Equals(
+                relativeDirectory,
+                ".fkst/launchd",
+                StringComparison.Ordinal)
+                ? SearchOption.AllDirectories
+                : SearchOption.TopDirectoryOnly;
+            foreach (var path in Directory.EnumerateFiles(directory, "*", searchOption))
             {
-                var relativePath = $"{relativeDirectory}/{Path.GetFileName(path)}";
+                var pathWithinDirectory = Path.GetRelativePath(directory, path)
+                    .Replace(Path.DirectorySeparatorChar, '/');
+                var relativePath = $"{relativeDirectory}/{pathWithinDirectory}";
                 AddLaunchdCandidate(relativePath, launchdCandidates);
                 AddLaunchdUnitFromScriptPath(relativePath, units);
             }
@@ -254,11 +282,9 @@ internal static class OperationalEntrypointPolicy
 
     private static void AddLaunchdCandidate(string path, ISet<string> candidates)
     {
-        if (Regex.IsMatch(
-            path,
-            @"^\.fkst/launchd/.+\.plist(?:\.in)?$",
-            RegexOptions.CultureInvariant,
-            TimeSpan.FromSeconds(1)))
+        if (path.StartsWith(".fkst/launchd/", StringComparison.Ordinal)
+            && (path.EndsWith(".plist", StringComparison.OrdinalIgnoreCase)
+                || path.EndsWith(".plist.in", StringComparison.OrdinalIgnoreCase)))
         {
             candidates.Add(path);
         }

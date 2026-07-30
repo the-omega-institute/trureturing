@@ -61,6 +61,24 @@ external_tools = [
 ]
 
 [[operations]]
+id = "launchd-conformance-check"
+make_target = "launchd-conformance-check"
+implementation = ".fkst/scripts/check-launchd-conformance.sh"
+tests = [
+  ".fkst/tests/launchd-conformance-behavior.sh",
+  "Meta/StrataLint/StrataLint.ArchitectureTests/Operations/OperationalEntrypointTests.cs",
+  "Meta/StrataLint/StrataLint.Tests/Commands/MakeWorkflowTests.cs",
+]
+external_tools = [
+  "bash",
+  "dirname",
+  "launchctl",
+  "make",
+  "pwd",
+  "python3",
+]
+
+[[operations]]
 id = "maintenance-launcher-check"
 make_target = "maintenance-launcher-check"
 implementation = ".fkst/scripts/check-maintenance-launcher.sh"
@@ -98,6 +116,7 @@ external_tools = [
   "basename",
   "chmod",
   "dirname",
+  "git",
   "grep",
   "mktemp",
   "mv",

@@ -17,6 +17,8 @@ public sealed class MakeWorkflowTests
         ".fkst/scripts/render-supervise-launcher.sh";
     private const string SuperviseLauncherConformanceScriptPath =
         ".fkst/scripts/check-supervise-launcher.sh";
+    private const string LaunchdConformanceScriptPath =
+        ".fkst/scripts/check-launchd-conformance.sh";
     private const string ScribeScriptPath = "Meta/StrataLint/scripts/scribe.sh";
     private const string SelftestScriptPath = "Meta/StrataLint/scripts/stratalint-selftest.sh";
     private const string LocalHarnessGateScriptPath =
@@ -56,6 +58,7 @@ public sealed class MakeWorkflowTests
         "maintenance-launcher-check",
         "supervise-launcher-render",
         "supervise-launcher-check",
+        "launchd-conformance-check",
         "lean",
         "lean-report",
         "build",
@@ -120,6 +123,10 @@ public sealed class MakeWorkflowTests
         Assert.Contains(
             SuperviseLauncherConformanceScriptPath,
             Recipe(makefile, "supervise-launcher-check"),
+            StringComparison.Ordinal);
+        Assert.Contains(
+            LaunchdConformanceScriptPath,
+            Recipe(makefile, "launchd-conformance-check"),
             StringComparison.Ordinal);
         Assert.Contains("lake build", Recipe(makefile, "lean"), StringComparison.Ordinal);
         Assert.Contains(LeanReportScriptPath, Recipe(makefile, "lean-report"), StringComparison.Ordinal);

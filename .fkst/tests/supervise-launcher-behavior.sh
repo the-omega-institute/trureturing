@@ -181,24 +181,165 @@ PY
     && grep -Fxq -- '--host-packages' "$arguments_file"
 }
 
-assert_noncanonical_platform_package_is_rejected() {
-  local scratch="$1" host_config="$2" fixture output
-  fixture="$scratch/platform-package-fixture"
-  output="$scratch/platform-package.out"
+assert_noncanonical_package_is_rejected() {
+  local scratch="$1" host_config="$2" branch="$3" fixture output target backup status
+  fixture="$scratch/$branch-package-fixture"
+  output="$scratch/$branch-package.out"
+  target="$scratch/checkout/fkst.workspace.toml"
+  backup="$target.canonical"
   mkdir -p "$fixture/scripts" "$fixture/launchd"
   cp "$REPOSITORY_ROOT/.fkst/scripts/render-supervise-launcher.sh" "$fixture/scripts/"
   cp "$REPOSITORY_ROOT/.fkst/scripts/host-contract.sh" "$fixture/scripts/"
   cp "$REPOSITORY_ROOT/.fkst/launchd/supervise.plist.in" "$fixture/launchd/"
   cp "$REPOSITORY_ROOT/.fkst/host-contract.schema" "$fixture/"
   cp "$REPOSITORY_ROOT/.fkst/deploy.env" "$fixture/"
-  sed '1,/"github-proxy"/s/"github-proxy"/"invalid package;id"/' \
-    "$REPOSITORY_ROOT/.fkst/fkst.workspace.toml" > "$fixture/fkst.workspace.toml"
+  cp "$target" "$backup"
+  case "$branch" in
+    platform)
+      sed '1,/"github-proxy"/s/"github-proxy"/"InvalidPackage"/' \
+        "$REPOSITORY_ROOT/.fkst/fkst.workspace.toml" > "$fixture/fkst.workspace.toml"
+      sed '1,/"github-proxy"/s/"github-proxy"/"InvalidPackage"/' \
+        "$backup" > "$target"
+      mkdir -p "$scratch/platform/packages/InvalidPackage"
+      ;;
+    host)
+      sed 's#"packages/theory-selfgrowth"#"packages/InvalidPackage"#' \
+        "$REPOSITORY_ROOT/.fkst/fkst.workspace.toml" > "$fixture/fkst.workspace.toml"
+      sed 's#"packages/theory-selfgrowth"#"packages/InvalidPackage"#' \
+        "$backup" > "$target"
+      mkdir -p "$scratch/checkout/packages/InvalidPackage"
+      ;;
+    *) mv "$backup" "$target"; return 2 ;;
+  esac
 
+  status=0
   if HOST_CONFIG="$host_config" OUTPUT="$scratch/invalid-package.plist" \
       /bin/bash "$fixture/scripts/render-supervise-launcher.sh" > "$output" 2>&1; then
+    status=1
+  elif ! grep -Fq "supervise-launcher: invalid workspace package composition" "$output"; then
+    status=1
+  fi
+  mv "$backup" "$target"
+  return "$status"
+}
+
+assert_missing_runtime_executable_is_rejected() {
+  local scratch="$1" host_config="$2" key="$3" invalid output
+  invalid="$scratch/missing-$key.env"
+  output="$scratch/missing-$key.out"
+  grep -v "^$key=" "$host_config" > "$invalid"
+  printf '%s=%s\n' "$key" "$scratch/missing/$key" >> "$invalid"
+
+  if HOST_CONFIG="$invalid" OUTPUT="$scratch/missing-$key.plist" \
+      make -s -C "$REPOSITORY_ROOT" supervise-launcher-render > "$output" 2>&1; then
     return 1
   fi
-  grep -Fq "supervise-launcher: invalid workspace package composition" "$output"
+  grep -Fq "supervise-launcher: runtime executable is missing or not executable: $scratch/missing/$key" \
+    "$output"
+}
+
+assert_missing_target_contract_file_is_rejected() {
+  local scratch="$1" host_config="$2" file="$3" path backup output status
+  path="$scratch/checkout/$file"
+  backup="$path.present"
+  output="$scratch/missing-target-$file.out"
+  mv "$path" "$backup"
+  status=0
+  if HOST_CONFIG="$host_config" OUTPUT="$scratch/missing-target-$file.plist" \
+      make -s -C "$REPOSITORY_ROOT" supervise-launcher-render > "$output" 2>&1; then
+    status=1
+  elif ! grep -Fq "supervise-launcher: target $file is missing or unreadable: $path" "$output"; then
+    status=1
+  fi
+  mv "$backup" "$path"
+  return "$status"
+}
+
+assert_missing_runtime_package_directory_is_rejected() {
+  local scratch="$1" host_config="$2" kind="$3" package="$4" path backup output status
+  case "$kind" in
+    platform) path="$scratch/platform/packages/$package" ;;
+    host) path="$scratch/checkout/packages/$package" ;;
+    *) return 2 ;;
+  esac
+  backup="$path.present"
+  output="$scratch/missing-$kind-$package.out"
+  mv "$path" "$backup"
+  status=0
+  if HOST_CONFIG="$host_config" OUTPUT="$scratch/missing-$kind-$package.plist" \
+      make -s -C "$REPOSITORY_ROOT" supervise-launcher-render > "$output" 2>&1; then
+    status=1
+  elif ! grep -Fq "supervise-launcher: runtime $kind package directory is missing: $path" \
+      "$output"; then
+    status=1
+  fi
+  mv "$backup" "$path"
+  return "$status"
+}
+
+assert_cross_checkout_composition_drift_is_rejected() {
+  local scratch="$1" host_config="$2" manifest backup output status
+  manifest="$scratch/checkout/fkst.workspace.toml"
+  backup="$manifest.consistent"
+  output="$scratch/composition-drift.out"
+  cp "$manifest" "$backup"
+  sed '1,/"idle-detector"/s/"idle-detector",//' "$backup" > "$manifest"
+  status=0
+  if HOST_CONFIG="$host_config" OUTPUT="$scratch/composition-drift.plist" \
+      make -s -C "$REPOSITORY_ROOT" supervise-launcher-render > "$output" 2>&1; then
+    status=1
+  elif ! grep -Fq 'supervise-launcher: runtime package composition differs from the tracked checkout' \
+      "$output"; then
+    status=1
+  fi
+  mv "$backup" "$manifest"
+  return "$status"
+}
+
+prepare_runtime_package_contract() {
+  local scratch="$1" package_data kind package platform_rev
+  package_data="$(python3 - "$REPOSITORY_ROOT/.fkst/fkst.workspace.toml" <<'PY'
+import sys
+import tomllib
+from pathlib import Path
+
+with open(sys.argv[1], "rb") as handle:
+    manifest = tomllib.load(handle)
+source = next(
+    item for item in manifest["external_sources"]
+    if item["id"] == "fkst-packages-platform"
+)
+for package in source["packages"]:
+    print(f"platform:{package}")
+for unit in manifest["workspace"]["units"]:
+    print(f"host:{Path(unit).name}")
+PY
+)"
+  while IFS=: read -r kind package; do
+    case "$kind" in
+      platform)
+        mkdir -p "$scratch/platform/packages/$package"
+        printf 'name = "%s"\n' "$package" > "$scratch/platform/packages/$package/fkst.toml"
+        ;;
+      host)
+        mkdir -p "$scratch/checkout/packages/$package"
+        printf 'name = "%s"\n' "$package" > "$scratch/checkout/packages/$package/fkst.toml"
+        ;;
+    esac
+  done <<EOF
+$package_data
+EOF
+
+  git -C "$scratch/platform" init --initial-branch=fixture >/dev/null
+  git -C "$scratch/platform" config user.email fixture@example.invalid
+  git -C "$scratch/platform" config user.name fixture
+  git -C "$scratch/platform" remote add origin https://github.com/ChronoAIProject/fkst-packages.git
+  git -C "$scratch/platform" add -- .
+  git -C "$scratch/platform" commit -m fixture >/dev/null
+  platform_rev="$(git -C "$scratch/platform" rev-parse HEAD)"
+  cp "$REPOSITORY_ROOT/.fkst/fkst.workspace.toml" "$scratch/checkout/fkst.workspace.toml"
+  sed "s/07ed65100c8f189ee718aca6bd757f25694c62d0/$platform_rev/g" \
+    "$REPOSITORY_ROOT/.fkst/fkst.lock" > "$scratch/checkout/fkst.lock"
 }
 
 write_missing_runtime_config() {
@@ -324,6 +465,7 @@ main() {
     "$scratch/worktrees"
   printf '# repository runtime fixture\n' > "$scratch/checkout/.fkst/deploy.env"
   printf '#!/usr/bin/env bash\nexit 0\n' > "$scratch/platform/scripts/run.sh"
+  prepare_runtime_package_contract "$scratch"
 
   cat > "$host_config" <<EOF
 BIN=$scratch/fkst-framework
@@ -385,10 +527,28 @@ EOF
     fail "supervise host paths and package lists cross zsh as data"
   fi
 
-  if assert_noncanonical_platform_package_is_rejected "$scratch" "$host_config"; then
-    pass "supervise renderer applies canonical package validation symmetrically"
+  if assert_noncanonical_package_is_rejected "$scratch" "$host_config" platform; then
+    pass "supervise renderer rejects a noncanonical platform package"
   else
-    fail "supervise renderer applies canonical package validation symmetrically"
+    fail "supervise renderer rejects a noncanonical platform package"
+  fi
+
+  if assert_noncanonical_package_is_rejected "$scratch" "$host_config" host; then
+    pass "supervise renderer rejects a noncanonical host package"
+  else
+    fail "supervise renderer rejects a noncanonical host package"
+  fi
+
+  if assert_missing_runtime_executable_is_rejected "$scratch" "$host_config" FKST_BASH_BIN; then
+    pass "supervise renderer rejects a missing bash executable"
+  else
+    fail "supervise renderer rejects a missing bash executable"
+  fi
+
+  if assert_missing_runtime_executable_is_rejected "$scratch" "$host_config" FKST_PYTHON_BIN; then
+    pass "supervise renderer rejects a missing python executable"
+  else
+    fail "supervise renderer rejects a missing python executable"
   fi
 
   if assert_nonexistent_runtime_paths_are_rejected_by_renderer "$scratch" "$host_config"; then
@@ -407,6 +567,50 @@ EOF
     pass "supervise renderer rejects a missing runtime deploy config"
   else
     fail "supervise renderer rejects a missing runtime deploy config"
+  fi
+
+  if assert_missing_target_contract_file_is_rejected "$scratch" "$host_config" fkst.workspace.toml; then
+    pass "supervise renderer rejects a missing target workspace manifest"
+  else
+    fail "supervise renderer rejects a missing target workspace manifest"
+  fi
+
+  if assert_missing_target_contract_file_is_rejected "$scratch" "$host_config" fkst.lock; then
+    pass "supervise renderer rejects a missing target lockfile"
+  else
+    fail "supervise renderer rejects a missing target lockfile"
+  fi
+
+  while IFS= read -r package; do
+    if assert_missing_runtime_package_directory_is_rejected \
+        "$scratch" "$host_config" platform "$package"; then
+      pass "supervise renderer rejects missing platform package $package"
+    else
+      fail "supervise renderer rejects missing platform package $package"
+    fi
+  done <<EOF
+$(python3 - "$REPOSITORY_ROOT/.fkst/fkst.workspace.toml" <<'PY'
+import sys
+import tomllib
+with open(sys.argv[1], "rb") as handle:
+    manifest = tomllib.load(handle)
+source = next(item for item in manifest["external_sources"] if item["id"] == "fkst-packages-platform")
+print("\n".join(source["packages"]))
+PY
+)
+EOF
+
+  if assert_missing_runtime_package_directory_is_rejected \
+      "$scratch" "$host_config" host theory-selfgrowth; then
+    pass "supervise renderer rejects missing host package theory-selfgrowth"
+  else
+    fail "supervise renderer rejects missing host package theory-selfgrowth"
+  fi
+
+  if assert_cross_checkout_composition_drift_is_rejected "$scratch" "$host_config"; then
+    pass "supervise renderer rejects cross-checkout composition drift"
+  else
+    fail "supervise renderer rejects cross-checkout composition drift"
   fi
 
   if assert_existing_invalid_log_path_is_rejected "$scratch" "$host_config"; then

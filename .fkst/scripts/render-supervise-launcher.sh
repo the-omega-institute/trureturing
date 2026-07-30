@@ -95,6 +95,179 @@ require_runtime_directory() {
     || { printf 'supervise-launcher: runtime directory is missing: %s\n' "$path" >&2; return 2; }
 }
 
+require_runtime_package_directory() {
+  local kind="$1" path="$2"
+  [[ -d "$path" ]] \
+    || {
+      printf 'supervise-launcher: runtime %s package directory is missing: %s\n' \
+        "$kind" "$path" >&2
+      return 2
+    }
+}
+
+validate_runtime_package_contract() {
+  local tracked_workspace="$SCRIPT_DIR/../fkst.workspace.toml"
+  local target_workspace="$FKST_HOST_ROOT/fkst.workspace.toml"
+  local target_lock="$FKST_HOST_ROOT/fkst.lock"
+  local package
+  [[ -f "$target_workspace" && -r "$target_workspace" ]] \
+    || {
+      printf 'supervise-launcher: target fkst.workspace.toml is missing or unreadable: %s\n' \
+        "$target_workspace" >&2
+      return 2
+    }
+  [[ -f "$target_lock" && -r "$target_lock" ]] \
+    || {
+      printf 'supervise-launcher: target fkst.lock is missing or unreadable: %s\n' \
+        "$target_lock" >&2
+      return 2
+    }
+
+  "$FKST_PYTHON_BIN" - \
+      "$tracked_workspace" \
+      "$target_workspace" \
+      "$target_lock" \
+      "$FKST_PLATFORM_ROOT" \
+      "$FKST_PLATFORM_PACKAGES" \
+      "$FKST_HOST_PACKAGES" <<'PY'
+import re
+import subprocess
+import sys
+import tomllib
+from pathlib import Path, PurePosixPath
+
+REV_RE = re.compile(r"[0-9a-fA-F]{40}")
+SOURCE_ID = "fkst-packages-platform"
+
+
+def fail(message):
+    raise ValueError(message)
+
+
+def load_toml(path, role):
+    try:
+        with path.open("rb") as handle:
+            data = tomllib.load(handle)
+    except Exception as error:
+        fail(f"{role} is invalid: {path}: {error}")
+    if not isinstance(data, dict):
+        fail(f"{role} must be a TOML table: {path}")
+    return data
+
+
+def tables(data, key, role):
+    value = data.get(key, [])
+    if isinstance(value, dict):
+        value = [value]
+    if not isinstance(value, list) or any(not isinstance(item, dict) for item in value):
+        fail(f"{role} {key} must be a table array")
+    return value
+
+
+def composition(data, role):
+    sources = [item for item in tables(data, "external_sources", role) if item.get("id") == SOURCE_ID]
+    if len(sources) != 1:
+        fail(f"{role} must declare exactly one {SOURCE_ID} source")
+    source = sources[0]
+    git_url = source.get("git")
+    packages = source.get("packages")
+    if not isinstance(git_url, str) or not git_url:
+        fail(f"{role} {SOURCE_ID} source is missing git")
+    if (
+        not isinstance(packages, list)
+        or not packages
+        or any(not isinstance(item, str) or not item for item in packages)
+        or len(packages) != len(set(packages))
+    ):
+        fail(f"{role} platform packages are invalid")
+    workspace = data.get("workspace")
+    units = workspace.get("units") if isinstance(workspace, dict) else None
+    if not isinstance(units, list) or not units:
+        fail(f"{role} workspace.units must be a non-empty array")
+    host_packages = []
+    for unit in units:
+        path = PurePosixPath(unit) if isinstance(unit, str) else None
+        if (
+            path is None
+            or len(path.parts) != 2
+            or path.parts[0] != "packages"
+            or not path.parts[1]
+        ):
+            fail(f"{role} workspace.units contains a noncanonical host package")
+        host_packages.append(path.parts[1])
+    if len(host_packages) != len(set(host_packages)):
+        fail(f"{role} host packages contain duplicates")
+    return packages, host_packages, git_url
+
+
+try:
+    tracked_path = Path(sys.argv[1])
+    target_path = Path(sys.argv[2])
+    lock_path = Path(sys.argv[3])
+    platform_root = Path(sys.argv[4])
+    requested_platform = sys.argv[5].split()
+    requested_host = sys.argv[6].split()
+
+    tracked = load_toml(tracked_path, "tracked workspace manifest")
+    target = load_toml(target_path, "target workspace manifest")
+    lock = load_toml(lock_path, "target lockfile")
+    tracked_platform, tracked_host, _ = composition(tracked, "tracked workspace manifest")
+    target_platform, target_host, target_git = composition(target, "target workspace manifest")
+    if (
+        target_platform != tracked_platform
+        or target_host != tracked_host
+        or requested_platform != tracked_platform
+        or requested_host != tracked_host
+    ):
+        fail("runtime package composition differs from the tracked checkout")
+
+    lock_sources = [item for item in tables(lock, "external_source", "target lockfile") if item.get("id") == SOURCE_ID]
+    if len(lock_sources) != 1:
+        fail(f"target lockfile must contain exactly one {SOURCE_ID} source")
+    lock_source = lock_sources[0]
+    resolved = lock_source.get("resolved")
+    locked_rev = resolved.get("rev") if isinstance(resolved, dict) else None
+    if lock_source.get("git") != target_git:
+        fail("target workspace source git differs from target lockfile")
+    if not isinstance(locked_rev, str) or REV_RE.fullmatch(locked_rev) is None:
+        fail("target lockfile resolved.rev is not a full git SHA")
+
+    try:
+        platform_head = subprocess.run(
+            ["git", "-C", str(platform_root), "rev-parse", "HEAD"],
+            check=True,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        ).stdout.strip()
+        platform_origin = subprocess.run(
+            ["git", "-C", str(platform_root), "config", "--get", "remote.origin.url"],
+            check=True,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        ).stdout.strip()
+    except (FileNotFoundError, subprocess.CalledProcessError) as error:
+        fail(f"trusted platform checkout identity is unavailable: {platform_root}: {error}")
+    if platform_head.lower() != locked_rev.lower():
+        fail("trusted platform checkout HEAD differs from target lockfile")
+    if platform_origin.rstrip("/") != target_git.rstrip("/"):
+        fail("trusted platform checkout origin differs from target workspace source")
+except ValueError as error:
+    print(f"supervise-launcher: {error}", file=sys.stderr)
+    raise SystemExit(2)
+PY
+
+  for package in $FKST_PLATFORM_PACKAGES; do
+    require_runtime_package_directory \
+      platform "$FKST_PLATFORM_ROOT/packages/$package"
+  done
+  for package in $FKST_HOST_PACKAGES; do
+    require_runtime_package_directory \
+      host "$FKST_HOST_ROOT/packages/$package"
+  done
+}
+
 validate_runtime_paths() {
   local run_script runtime_deploy_config log_directory
   require_runtime_executable "$FKST_ZSH_BIN"
@@ -143,6 +316,7 @@ main() {
     FKST_SUPERVISE_LAUNCHER_PATH
   validate_runtime_paths
   load_package_composition
+  validate_runtime_package_contract
   [[ -f "$TEMPLATE" ]] \
     || { printf 'supervise-launcher: template is missing: %s\n' "$TEMPLATE" >&2; return 2; }
 

@@ -7,13 +7,31 @@ public sealed class OperationalEntrypointTests
     [Fact]
     public void RepositoryOperationalEntrypointsAreTrackedRegularFilesAndUnique()
     {
-        var findings = OperationalEntrypointPolicy.InspectRepository(RepositoryLayout.FindRoot(), []);
+        var repository = RepositoryLayout.FindRoot();
+        var membership = OperationalEntrypointPolicy.EnumerateRepositoryLaunchdMembership(repository);
+        var findings = OperationalEntrypointPolicy.InspectRepository(repository, membership);
 
         Assert.True(
             findings.Count == 0,
             string.Join(
                 Environment.NewLine,
                 findings.Select(static finding => $"{finding.Path}: {finding.Message}")));
+    }
+
+    [Fact]
+    public void RepositoryLaunchdMembershipEnumeratorRejectsAnUngroundedEmptySet()
+    {
+        WithRepository(
+            [Operation("hourly-maintenance", "ops/scripts/synthetic-maintenance.sh")],
+            repository =>
+            {
+                TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
+
+                var exception = Assert.Throws<InvalidDataException>(
+                    () => OperationalEntrypointPolicy.EnumerateRepositoryLaunchdMembership(repository));
+
+                Assert.Contains("returned no launchd units", exception.Message, StringComparison.Ordinal);
+            });
     }
 
     [Fact]
@@ -327,18 +345,23 @@ public sealed class OperationalEntrypointTests
     [InlineData("local.fkst.synthetic.worker.plist")]
     [InlineData("synthetic_worker.plist")]
     [InlineData("SyntheticWorker.plist.in")]
-    public void NoncanonicalLaunchdPlistCandidateIsRejected(string fileName)
+    [InlineData(".plist")]
+    [InlineData(".plist.in")]
+    [InlineData("SyntheticWorker.PLIST")]
+    [InlineData("worker.plist.IN")]
+    [InlineData("nested/worker.plist")]
+    public void NoncanonicalLaunchdPlistCandidateIsRejected(string relativePath)
     {
         WithRepository(
             [Operation("hourly-maintenance", "ops/scripts/synthetic-maintenance.sh")],
             repository =>
             {
                 TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
-                WriteFile(repository, $".fkst/launchd/{fileName}", "<plist/>\n");
+                WriteFile(repository, $".fkst/launchd/{relativePath}", "<plist/>\n");
 
                 var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
 
-                Assert.Equal($".fkst/launchd/{fileName}", finding.Path);
+                Assert.Equal($".fkst/launchd/{relativePath}", finding.Path);
                 Assert.Contains(
                     "noncanonical launchd plist candidate",
                     finding.Message,
