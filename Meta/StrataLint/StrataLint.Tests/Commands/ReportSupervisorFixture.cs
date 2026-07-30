@@ -57,6 +57,13 @@ internal sealed class ReportSupervisorFixture : IDisposable
             sleep 60 &
             printf '%s\n' "$!" > "$1"
             """);
+        LsofRaceWorker = WriteExecutable("lsof-race-worker.sh", """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            printf '%s\n' "$$" > "$1"
+            sleep 1
+            printf 'completed\n' > "$1"
+            """);
         _ = WriteExecutable("ps", """
             #!/usr/bin/env bash
             set -euo pipefail
@@ -196,11 +203,13 @@ internal sealed class ReportSupervisorFixture : IDisposable
     internal string DetachedParentPid => Path.Combine(Root, "detached-parent.pid");
     internal string DetachedRelease => Path.Combine(Root, "detached.release");
     internal string DoubleForkPid => ScratchRecord;
+    internal string FailingLsofInvocation => Path.Combine(Root, "lsof-invocations.txt");
     internal string ScratchWriter { get; }
     internal string ProducerWorker { get; }
     internal string ConcurrentDriver { get; }
     internal string LongRunningWorker { get; }
     internal string ExitingWorker { get; }
+    internal string LsofRaceWorker { get; }
     internal string DetachedWorker { get; }
     internal string DoubleForkWorker { get; }
     internal string FileSizeLimitedDriver { get; }
@@ -231,6 +240,16 @@ internal sealed class ReportSupervisorFixture : IDisposable
         arguments.Add(ScratchRecord);
         return BoundedProcessRunner.Run(
             "env", arguments, Root, TimeSpan.FromSeconds(30), 1024 * 1024);
+    }
+
+    internal void InstallFailingLsof()
+    {
+        _ = WriteExecutable("lsof", """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            printf '%s\n' "$*" >> "$PWD/lsof-invocations.txt"
+            exit 1
+            """);
     }
 
     internal ProcessOutput RunWithDefaultMetrics(string role, string command) =>

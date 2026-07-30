@@ -14,6 +14,36 @@ public sealed class C0RenewCommandTests
     private static readonly string PreimageTree = new('d', 40);
 
     [Fact]
+    public void CeremonyBudgetsMatchColdScratchCalibration()
+    {
+        Assert.Equal(90, ProductionC0RenewEnvironment.LeanReportBudgetMinutes);
+        Assert.Equal(10, ProductionC0RenewEnvironment.GitOperationBudgetMinutes);
+        Assert.Equal(600, ProductionConservativeExtensionEnvironment.DefaultEvaluationBudgetSeconds);
+    }
+
+    [Fact]
+    public void NestedGateFailureEmitsOuterAndInnerExceptionFingerprints()
+    {
+        var environment = new SyntheticRenewEnvironment(
+            Certificate(),
+            gateException: new InvalidOperationException(
+                "outer gate failure",
+                new IOException("inner gate failure")));
+
+        var result = C0RenewCommand.Run(["--base", BaseCommit], environment);
+
+        Assert.False(result.Success);
+        Assert.Contains(
+            "C0_RENEW_FAILED [InvalidOperationException] outer gate failure",
+            result.Error,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "C0_RENEW_FAILED_INNER [IOException] inner gate failure",
+            result.Error,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void RepeatedRenewIsAByteExactNoOpAfterGateRevalidation()
     {
         var environment = new SyntheticRenewEnvironment(Certificate());
@@ -321,15 +351,18 @@ public sealed class C0RenewCommandTests
     {
         private readonly ImmutableArray<byte> gateCertificate;
         private readonly int gateExitCode;
+        private readonly Exception? gateException;
         private readonly RepositorySnapshot preimageSnapshot;
         private bool outputsDirty;
 
         internal SyntheticRenewEnvironment(
             ImmutableArray<byte> gateCertificate,
-            int gateExitCode = 0)
+            int gateExitCode = 0,
+            Exception? gateException = null)
         {
             this.gateCertificate = gateCertificate;
             this.gateExitCode = gateExitCode;
+            this.gateException = gateException;
             CurrentTower = TowerBytes();
             CurrentCertificate = ImmutableArray.CreateRange(Encoding.UTF8.GetBytes("{}\n"));
             preimageSnapshot = Snapshot(CurrentTower, CurrentCertificate);
@@ -370,6 +403,7 @@ public sealed class C0RenewCommandTests
             Assert.Equal(BaseCommit, exactBaseCommit);
             Assert.Equal(PreimageCommit, exactPreimageCommit);
             GateRuns++;
+            if (gateException is not null) throw gateException;
             var prefix = Encoding.UTF8.GetBytes("PROTECTED_SURFACE_CHANGE fixture\n");
             var suffix = Encoding.UTF8.GetBytes("gate summary\n");
             return new C0RenewGateResult(

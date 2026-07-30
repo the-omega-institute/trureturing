@@ -17,7 +17,7 @@ public sealed class WorktreeCommandTests
 
         Assert.Equal(2, exitCode);
         Assert.Contains(
-            "check|clean-lanes|coverage|cover-atom|digest-status|echo-verify|emit-formalization-receipt|ingest|golden-record|ledger-genesis|papergen|route|selftest|topology|worktree",
+            "check|clean-lanes|coverage|cover-atom|digest-status|echo-verify|emit-formalization-receipt|ingest|golden-record|ledger-genesis|papergen|route|selftest|topology|validate-blueprint-pins|worktree",
             console.Error);
     }
 
