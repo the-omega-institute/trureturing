@@ -222,3 +222,17 @@ host_contract_load() {
   HOST_CONFIG="$host_config"
   export HOST_CONFIG
 }
+
+host_contract_require() {
+  local name index
+  for name in "$@"; do
+    index="$(host_contract_index "$name")" \
+      || { host_contract_error "schema does not declare required key $name"; return; }
+    [[ "${HOST_CONTRACT_SEEN[$index]}" == "1" ]] \
+      || {
+        host_contract_error \
+          "required ${HOST_CONTRACT_SOURCES[$index]} key $name is unset"
+        return
+      }
+  done
+}
