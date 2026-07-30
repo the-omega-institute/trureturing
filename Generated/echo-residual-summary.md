@@ -1,4 +1,4 @@
-<!-- echo-residual-summary:v2 base=git-sha1:2759d9e229dc31323c6c6badef44db1c952a9c0d -->
+<!-- echo-residual-summary:v3 residual=sha256:45d57a8aa95fbc1d67f7b517b8a002c3bf517e1ef7f6d4b40492a3cfdf4b947b -->
 # Echo Residual Summary
 
 - unresolved_subitems: 466
@@ -565,4 +565,3 @@ Mother residual atoms:
   - `jacobi-theta-poisson-mellin-derivation`
   - `pzg-completed-reading-identification`
   - `source-theorems-23-9-and-23-10-component-chain`
-<!-- /echo-residual-summary:v2 -->

@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Text.Json;
+using System.Xml.Linq;
 using StrataLint.Engine;
 
 namespace StrataLint.ArchitectureTests;
@@ -7,6 +8,147 @@ namespace StrataLint.ArchitectureTests;
 public sealed class C0CeremonyTrustRootTests
 {
     private const string TowerPath = "Meta/StrataLint/TOWER.yaml";
+
+    [Fact]
+    public void CanonicalTrustRootSourceDoesNotUseCommitAncestry()
+    {
+        var root = RepositoryLayout.FindRoot();
+        var projectDirectory = Absolute(
+            root,
+            "Meta/StrataLint/StrataLint.ArchitectureTests");
+        AssertCompileSetIsClosed(root, projectDirectory);
+
+        var forbidden = "--is-" + "ancestor";
+        var occurrences = Directory
+            .EnumerateFiles(projectDirectory, "*.cs", SearchOption.AllDirectories)
+            .Where(path => !Path.GetRelativePath(projectDirectory, path)
+                .Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
+                .Any(static segment => segment is "bin" or "obj"))
+            .Order(StringComparer.Ordinal)
+            .SelectMany(path => File.ReadLines(path).Select((line, index) =>
+                (Path: Path.GetRelativePath(root, path).Replace('\\', '/'),
+                    Line: index + 1,
+                    Text: line)))
+            .Where(item => item.Text.Contains(
+                forbidden,
+                StringComparison.Ordinal))
+            .Select(static item => $"{item.Path}:{item.Line}")
+            .ToArray();
+
+        Assert.Empty(occurrences);
+    }
+
+    private static void AssertCompileSetIsClosed(string root, string projectDirectory)
+    {
+        var projectFiles = new List<string>
+        {
+            Path.Combine(projectDirectory, "StrataLint.ArchitectureTests.csproj"),
+        };
+
+        for (var directory = new DirectoryInfo(projectDirectory);
+             directory is not null && IsWithin(root, directory.FullName);
+             directory = directory.Parent)
+        {
+            var props = Path.Combine(directory.FullName, "Directory.Build.props");
+            if (File.Exists(props))
+            {
+                projectFiles.Add(props);
+            }
+        }
+
+        var externalIncludes = projectFiles
+            .SelectMany(path => XDocument.Load(path)
+                .Descendants("Compile")
+                .SelectMany(element => ((string?)element.Attribute("Include") ?? string.Empty)
+                    .Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                    .Select(include => (ProjectFile: path, Include: include))))
+            .Where(item => IsExternalCompileInclude(projectDirectory, item.Include))
+            .Select(item => $"{Path.GetRelativePath(root, item.ProjectFile).Replace('\\', '/')} -> {item.Include}")
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+
+        Assert.Empty(externalIncludes);
+    }
+
+    private static bool IsExternalCompileInclude(string projectDirectory, string include)
+    {
+        if (include.Contains("$(", StringComparison.Ordinal)
+            || Path.IsPathRooted(include)
+            || include.StartsWith('\\')
+            || (include.Length >= 2 && char.IsAsciiLetter(include[0]) && include[1] == ':')
+            || include.Split('/', '\\').Contains("..", StringComparer.Ordinal))
+        {
+            return true;
+        }
+
+        var normalized = Path.GetFullPath(include, projectDirectory);
+        return !IsWithin(projectDirectory, normalized);
+    }
+
+    private static bool IsWithin(string directory, string path)
+    {
+        var relative = Path.GetRelativePath(directory, path);
+        return relative != ".."
+            && !relative.StartsWith($"..{Path.DirectorySeparatorChar}", StringComparison.Ordinal)
+            && !Path.IsPathRooted(relative);
+    }
+
+    [Fact]
+    public void PreimageBlobValidationSurvivesSquashAndGarbageCollection()
+    {
+        var root = Path.Combine(
+            Path.GetTempPath(),
+            $"stratalint-c0-squash-{Guid.NewGuid():N}");
+        Directory.CreateDirectory(root);
+        try
+        {
+            Git(root, "init", "--initial-branch=preimage");
+            Git(root, "config", "user.name", "C0 fixture");
+            Git(root, "config", "user.email", "c0-fixture@example.invalid");
+
+            File.WriteAllText(Absolute(root, "anchor.txt"), "base\n");
+            Git(root, "add", "anchor.txt");
+            Git(root, "commit", "-m", "base");
+            var baseOid = Git(root, "rev-parse", "HEAD");
+
+            File.WriteAllText(Absolute(root, "anchor.txt"), "candidate\n");
+            Git(root, "add", "anchor.txt");
+            Git(root, "commit", "-m", "candidate preimage");
+            var preimageOid = Git(root, "rev-parse", "HEAD");
+            var treeOid = Git(root, "rev-parse", "HEAD^{tree}");
+            var blobOid = Git(root, "rev-parse", "HEAD:anchor.txt");
+
+            Git(root, "checkout", "--orphan", "carrier");
+            Git(root, "reset", "--hard", baseOid);
+            Git(root, "read-tree", treeOid);
+            Git(root, "checkout-index", "--all", "--force");
+            Git(root, "commit", "-m", "squash carrier");
+            Assert.Equal(treeOid, Git(root, "rev-parse", "HEAD^{tree}"));
+            Git(root, "branch", "-D", "preimage");
+            Git(root, "reflog", "expire", "--expire=now", "--all");
+            Git(root, "gc", "--prune=now");
+
+            Assert.NotEqual(0, GitExitCode(root, "cat-file", "-e", $"{preimageOid}^{{commit}}"));
+            Assert.Equal(0, GitExitCode(root, "cat-file", "-e", $"{treeOid}^{{tree}}"));
+
+            // Mutation pin: changing the production judge back to commitOid:path must fail here,
+            // because the preimage commit is pruned while HEAD still carries its exact tree.
+            var certificate = JsonSerializer.SerializeToUtf8Bytes(new
+            {
+                candidate = new { tree_oid = "git-sha1:" + treeOid },
+            });
+            C0Record[] records =
+            [
+                new("c0/controller", "git-sha1/" + blobOid, "anchor.txt"),
+                new("c0/preimage-tree", "git-tree/" + treeOid, null),
+            ];
+            C0CeremonyTrustRootJudge.AssertPreimageBlobs(root, certificate, records);
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
 
     [Fact]
     public void CanonicalTowerJudgeGraphIsClosed()
@@ -117,12 +259,7 @@ public sealed class C0CeremonyTrustRootTests
         Assert.Equal(
             "git-tree/" + Untag(candidate.GetProperty("tree_oid").GetString()!, "git-sha1:"),
             preimageTree.Address);
-        var preimageOid = Untag(preimageCommit.Address, "git-commit/");
-        Assert.Equal(
-            Untag(preimageTree.Address, "git-tree/"),
-            Git(root, "rev-parse", preimageOid + "^{tree}"));
-        Git(root, "merge-base", "--is-ancestor", preimageOid, "HEAD");
-        AssertPreimageBlobs(root, records, preimageOid);
+        C0CeremonyTrustRootJudge.AssertPreimageBlobs(root, certificateBytes, records);
     }
 
     private static void AssertAnchorPaths(
@@ -143,20 +280,6 @@ public sealed class C0CeremonyTrustRootTests
             .Order(StringComparer.Ordinal)
             .ToArray();
         Assert.Equal(expected, actual);
-    }
-
-    private static void AssertPreimageBlobs(
-        string root,
-        IEnumerable<C0Record> records,
-        string preimageCommit)
-    {
-        foreach (var record in records.Where(static item => item.Kind is
-            "c0/controller" or "c0/corpus" or "c0/gate-wiring"))
-        {
-            Assert.Equal(
-                record.Address,
-                "git-sha1/" + Git(root, "rev-parse", $"{preimageCommit}:{record.Path}"));
-        }
     }
 
     private static C0Record ParseRecord(string value)
@@ -190,6 +313,24 @@ public sealed class C0CeremonyTrustRootTests
         return output.TrimEnd('\r', '\n');
     }
 
+    private static int GitExitCode(string root, params string[] arguments)
+    {
+        var startInfo = new ProcessStartInfo("git")
+        {
+            WorkingDirectory = root,
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            UseShellExecute = false,
+        };
+        foreach (var argument in arguments) startInfo.ArgumentList.Add(argument);
+        using var process = Process.Start(startInfo)
+            ?? throw new InvalidOperationException("could not start git");
+        process.StandardOutput.ReadToEnd();
+        process.StandardError.ReadToEnd();
+        process.WaitForExit();
+        return process.ExitCode;
+    }
+
     private static string Untag(string value, string prefix)
     {
         Assert.StartsWith(prefix, value, StringComparison.Ordinal);
@@ -203,5 +344,5 @@ public sealed class C0CeremonyTrustRootTests
         Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
             GitRepositorySnapshotReader.ReadCurrent(root))).Snapshot;
 
-    private sealed record C0Record(string Kind, string Address, string? Path);
+    internal sealed record C0Record(string Kind, string Address, string? Path);
 }

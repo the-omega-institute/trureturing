@@ -1,5 +1,5 @@
 # 理论卷自动摄入:PR 触碰 docs/develop/theory/** 时,以 base 侧法官跑 make ingest,
-# 产生的账本对齐与 base-bound echo 投影 bot-commit 回 PR 分支。
+# 产生的账本对齐与 content-addressed echo 投影 bot-commit 回 PR 分支。
 # 信任拓扑:代码=base 侧(pull_request_target),PR 侧仅理论卷数据输入;写路径白名单硬校验。
 name: theory-ingest
 
@@ -156,7 +156,7 @@ jobs:
           cd candidate
           make ingest BASE=HEAD
 
-      - name: Re-emit base-bound echo projection
+      - name: Re-emit content-addressed echo projection
         shell: bash
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
