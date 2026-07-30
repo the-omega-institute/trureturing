@@ -145,10 +145,12 @@ perf_flush_events() {
   local spool="$2"
   [[ -n "$spool" && -s "$spool" ]] || return 0
   local project="$root/Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj"
+  local configuration="${STRATALINT_PERF_CONFIGURATION:-Release}"
   local target=""
+  [[ "$configuration" =~ ^[A-Za-z0-9._-]+$ ]] || return 1
   target="$(dotnet msbuild "$project" \
     -getProperty:TargetPath \
-    -property:Configuration=Release \
+    -property:Configuration="$configuration" \
     -verbosity:quiet 2>/dev/null)" || return 1
   [[ -n "$target" && "$target" == /* && -f "$target" ]] || return 1
   local ledger="${STRATALINT_PERF_LEDGER:-$HOME/.stratalint-perf/events.jsonl}"
