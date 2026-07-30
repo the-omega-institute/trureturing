@@ -27,7 +27,19 @@ internal sealed class KnasterTarskiDocument : IScribeDocumentDefinition
                             + "constructions and their extremality theorems. No repository "
                             + "literature note currently attests the classical source, so the "
                             + "provenance is conservatively recorded as repository-derived rather "
-                            + "than literature-attested.")),
+                            + "than literature-attested."))),
+                    LatexStatement.Create(
+                        @"$$f:L\to L\ \text{monotone}\Rightarrow "
+                        + @"\mu=\operatorname{lfp}(f)=\min\operatorname{Fix}(f),\ "
+                        + @"\nu=\operatorname{gfp}(f)=\max\operatorname{Fix}(f).$$")),
+                new DocumentBlock.Describe(
+                    DescribeId.Create("three-state-successor-cycle"),
+                    DescribeKind.Theorem,
+                    H("Three-state successor cycle"),
+                    DescribeStatement.FromLean(LeanTheorem(
+                        "D5/S1/Dynamics/KnasterTarski.three_cycle_extremal_fixed_points")),
+                    DescribeProvenance.RepoDerived(),
+                    Blocks(
                         Paragraph(Text(
                             "On the three-state successor cycle, the induced powerset operator is "
                             + "inverse image under succession. It preserves the empty set and the "
@@ -37,10 +49,7 @@ internal sealed class KnasterTarskiDocument : IScribeDocumentDefinition
                             + "begin, whereas the coinductive interpretation accepts the entire "
                             + "self-sustaining cycle."))),
                     LatexStatement.Create(
-                        @"$$f:L\to L\ \text{monotone}\Rightarrow "
-                        + @"\mu=\operatorname{lfp}(f)=\min\operatorname{Fix}(f),\ "
-                        + @"\nu=\operatorname{gfp}(f)=\max\operatorname{Fix}(f);\qquad "
-                        + @"F(X)=\{s\mid\operatorname{succ}(s)\in X\}\Rightarrow "
+                        @"$$F(X)=\{s\mid\operatorname{succ}(s)\in X\}\Rightarrow "
                         + @"\operatorname{lfp}(F)=\varnothing,\ "
                         + @"\operatorname{gfp}(F)=S.$$")))));
 }
