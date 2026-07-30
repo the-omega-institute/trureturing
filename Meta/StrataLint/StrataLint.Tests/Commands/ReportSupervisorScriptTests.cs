@@ -108,6 +108,7 @@ public sealed class ReportSupervisorScriptTests
             [
                 $"STRATALINT_REPORT_METRICS_LOG={metrics}",
                 $"STRATALINT_SUPERVISOR_ROOT={state}",
+                $"STRATALINT_PERF_CONFIGURATION={fixture.PerformanceConfiguration}",
                 fixture.Supervisor,
                 "--role", "scribe-consumer",
                 "--", "/usr/bin/true",
@@ -146,6 +147,47 @@ public sealed class ReportSupervisorScriptTests
 
         Assert.Equal(0, result.ExitCode);
         Assert.Equal(expected, Encoding.UTF8.GetString(result.StandardOutput));
+    }
+
+    [Fact]
+    public void PerformanceWriterUsesTheCallersBuildConfiguration()
+    {
+        using var temporary = new TemporaryDirectory();
+        var root = FindRepositoryRoot();
+        var library = Path.Combine(root, "Meta", "StrataLint", "scripts", "perf-event-lib.sh");
+        var spool = Path.Combine(temporary.Path, "events.jsonl");
+        var target = Path.Combine(temporary.Path, "StrataLint.dll");
+        var invocations = Path.Combine(temporary.Path, "dotnet-invocations.txt");
+        var dotnet = Path.Combine(temporary.Path, "dotnet");
+        File.WriteAllText(spool, "{}\n", new UTF8Encoding(false));
+        File.WriteAllText(target, string.Empty, new UTF8Encoding(false));
+        File.WriteAllText(dotnet, $$"""
+            #!/usr/bin/env bash
+            set -euo pipefail
+            printf '%s\n' "$*" >> "{{invocations}}"
+            if [[ "$1" == "msbuild" ]]; then printf '%s\n' "{{target}}"; fi
+            """ + "\n", new UTF8Encoding(false));
+        var chmod = BoundedProcessRunner.Run(
+            "chmod", ["+x", dotnet], temporary.Path, TimeSpan.FromSeconds(10), 4096);
+        Assert.Equal(0, chmod.ExitCode);
+
+        var result = BoundedProcessRunner.Run(
+            "env",
+            [
+                $"PATH={temporary.Path}:{Environment.GetEnvironmentVariable("PATH")}",
+                "STRATALINT_PERF_CONFIGURATION=Debug",
+                "bash", "-c", "source \"$1\"; perf_flush_events \"$2\" \"$3\"",
+                "bash", library, root, spool,
+            ],
+            temporary.Path,
+            TimeSpan.FromSeconds(10),
+            4096);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains(
+            "-property:Configuration=Debug",
+            File.ReadAllText(invocations),
+            StringComparison.Ordinal);
     }
 
     [Fact]
@@ -345,7 +387,10 @@ public sealed class ReportSupervisorScriptTests
         Assert.True(
             stopwatch.Elapsed < TimeSpan.FromSeconds(20),
             $"supervisor ignored the build timeout (elapsed {stopwatch.Elapsed})");
-        Assert.Equal(124, result.ExitCode);
+        Assert.True(
+            result.ExitCode == 124,
+            $"expected timeout exit 124, got {result.ExitCode}; stderr: "
+                + Encoding.UTF8.GetString(result.StandardError));
         Assert.Contains(
             "exceeded",
             Encoding.UTF8.GetString(result.StandardError),
@@ -396,12 +441,18 @@ public sealed class ReportSupervisorScriptTests
         var result = BoundedProcessRunner.Run(
             "bash",
             [fixture.ConcurrentDriver, fixture.Supervisor, fixture.ProducerWorker,
-             fixture.MetricsLog, fixture.StateRoot, fixture.ActiveMarker, fixture.OverlapMarker],
+             fixture.MetricsLog, fixture.StateRoot, fixture.ActiveMarker, fixture.OverlapMarker,
+             fixture.PerformanceConfiguration],
             fixture.Root,
             TimeSpan.FromSeconds(30),
             1024 * 1024);
 
-        Assert.Equal(0, result.ExitCode);
+        Assert.True(
+            result.ExitCode == 0,
+            $"concurrent driver exited {result.ExitCode}; stdout: "
+                + Encoding.UTF8.GetString(result.StandardOutput)
+                + "; stderr: "
+                + Encoding.UTF8.GetString(result.StandardError));
         Assert.False(File.Exists(fixture.OverlapMarker));
         var metrics = fixture.ReadMetrics();
         Assert.Equal(2, metrics.Count);
@@ -543,6 +594,17 @@ public sealed class ReportSupervisorScriptTests
     }
 
     [Fact]
+    public void ProcessExistenceTreatsAnUnreapedChildAsTerminated()
+    {
+        // On macOS, the non-/proc Process API can expose an unreaped child as
+        // not exited but threadless. Linux excludes Z/X states through /proc
+        // before reaching this predicate.
+        Assert.False(
+            IsLiveNonProcProcess(hasExited: false, threadCount: 0),
+            "an exited, threadless child is not a live process");
+    }
+
+    [Fact]
     public void WorkerExitReapsAFastDoubleForkedSession()
     {
         using var fixture = new ReportSupervisorFixture();
@@ -596,7 +658,7 @@ public sealed class ReportSupervisorScriptTests
         try
         {
             using var process = Process.GetProcessById(pid);
-            return !process.HasExited;
+            return IsLiveNonProcProcess(process.HasExited, process.Threads.Count);
         }
         catch (ArgumentException)
         {
@@ -606,7 +668,14 @@ public sealed class ReportSupervisorScriptTests
         {
             return true;
         }
+        catch (System.ComponentModel.Win32Exception)
+        {
+            return true;
+        }
     }
+
+    private static bool IsLiveNonProcProcess(bool hasExited, int threadCount) =>
+        !hasExited && threadCount > 0;
 
     private static void TerminateForTestCleanup(Process process)
     {
@@ -623,5 +692,17 @@ public sealed class ReportSupervisorScriptTests
         {
             // The detached PID fallback below remains available to the test.
         }
+    }
+
+    private static string FindRepositoryRoot()
+    {
+        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
+             current is not null;
+             current = current.Parent)
+        {
+            if (File.Exists(Path.Combine(current.FullName, "CLAUDE.md"))) return current.FullName;
+        }
+
+        throw new DirectoryNotFoundException("Could not locate repository root.");
     }
 }
