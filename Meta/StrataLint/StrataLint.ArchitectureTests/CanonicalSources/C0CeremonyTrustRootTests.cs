@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Text.Json;
+using System.Xml.Linq;
 using StrataLint.Engine;
 
 namespace StrataLint.ArchitectureTests;
@@ -15,6 +16,8 @@ public sealed class C0CeremonyTrustRootTests
         var projectDirectory = Absolute(
             root,
             "Meta/StrataLint/StrataLint.ArchitectureTests");
+        AssertCompileSetIsClosed(root, projectDirectory);
+
         var forbidden = "--is-" + "ancestor";
         var occurrences = Directory
             .EnumerateFiles(projectDirectory, "*.cs", SearchOption.AllDirectories)
@@ -33,6 +36,61 @@ public sealed class C0CeremonyTrustRootTests
             .ToArray();
 
         Assert.Empty(occurrences);
+    }
+
+    private static void AssertCompileSetIsClosed(string root, string projectDirectory)
+    {
+        var projectFiles = new List<string>
+        {
+            Path.Combine(projectDirectory, "StrataLint.ArchitectureTests.csproj"),
+        };
+
+        for (var directory = new DirectoryInfo(projectDirectory);
+             directory is not null && IsWithin(root, directory.FullName);
+             directory = directory.Parent)
+        {
+            var props = Path.Combine(directory.FullName, "Directory.Build.props");
+            if (File.Exists(props))
+            {
+                projectFiles.Add(props);
+            }
+        }
+
+        var externalIncludes = projectFiles
+            .SelectMany(path => XDocument.Load(path)
+                .Descendants("Compile")
+                .SelectMany(element => ((string?)element.Attribute("Include") ?? string.Empty)
+                    .Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                    .Select(include => (ProjectFile: path, Include: include))))
+            .Where(item => IsExternalCompileInclude(projectDirectory, item.Include))
+            .Select(item => $"{Path.GetRelativePath(root, item.ProjectFile).Replace('\\', '/')} -> {item.Include}")
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+
+        Assert.Empty(externalIncludes);
+    }
+
+    private static bool IsExternalCompileInclude(string projectDirectory, string include)
+    {
+        if (include.Contains("$(", StringComparison.Ordinal)
+            || Path.IsPathRooted(include)
+            || include.StartsWith('\\')
+            || (include.Length >= 2 && char.IsAsciiLetter(include[0]) && include[1] == ':')
+            || include.Split('/', '\\').Contains("..", StringComparer.Ordinal))
+        {
+            return true;
+        }
+
+        var normalized = Path.GetFullPath(include, projectDirectory);
+        return !IsWithin(projectDirectory, normalized);
+    }
+
+    private static bool IsWithin(string directory, string path)
+    {
+        var relative = Path.GetRelativePath(directory, path);
+        return relative != ".."
+            && !relative.StartsWith($"..{Path.DirectorySeparatorChar}", StringComparison.Ordinal)
+            && !Path.IsPathRooted(relative);
     }
 
     [Fact]
