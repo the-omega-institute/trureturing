@@ -154,11 +154,36 @@ snapshot() {
   fi
 
   # Durable / DLQ via observe
-  local dlq=0 retrying=0 absent=0 observe_ok=0 obs=""
+  local dlq=0 retrying=0 absent=0 observe_ok=0 obs="" observe_why=""
   local worst_lag_ms=0 worst_lag_queue="" worst_lag_pending=0
-  if [[ -n "$bin" && -d "$DURABLE_ROOT" ]]; then
-    if obs="$("$bin" observe --durable-root "$DURABLE_ROOT" 2>/dev/null)"; then
+  # FAIL-CLOSED. `observe` is the only source of the backlog-lag check below, and that check exists
+  # precisely to stop this snapshot reporting HEALTHY over a 26-hour consumer lag. So a probe that
+  # cannot run must degrade the verdict: a green light earned by not looking retires the check
+  # invisibly, which is the one thing execution grading (CLAUDE.md 第20条) never permits.
+  # 2026-07-30: this printed "HEALTHY" + "(observe unavailable — BIN or durable root missing)" while
+  # both existed; observe had exited 2 with "Database already open" because the engine held the redb
+  # lock. Blaming absent prerequisites for a failing probe sends the reader after a file that is
+  # right there — report the probe's own words instead.
+  if [[ -z "$bin" ]]; then
+    observe_why="observe binary not found (set BIN or fix host.env)"
+  elif [[ ! -d "$DURABLE_ROOT" ]]; then
+    observe_why="durable root absent: $DURABLE_ROOT"
+  else
+    local obs_err="" obs_rc=0
+    obs_err="$(mktemp -t fkst-observe-err.XXXXXX)"
+    if obs="$("$bin" observe --durable-root "$DURABLE_ROOT" 2>"$obs_err")"; then
       observe_ok=1
+    else
+      obs_rc=$?
+      observe_why="observe failed (exit $obs_rc): $( { head -c 300 "$obs_err" 2>/dev/null || true; } | tr '\n' ' ' | sed 's/  */ /g')"
+    fi
+    rm -f "$obs_err"
+  fi
+  if (( ! observe_ok )); then
+    [[ "$verdict" == HEALTHY ]] && verdict="DEGRADED"
+    reasons+=("backlog check did not run — $observe_why")
+  fi
+  if (( observe_ok )); then
       dlq="$(awk '/^dead_letters/{f=1;next}/^[a-z]/{f=0}f&&/^  id=/{n++}END{print n+0}' <<<"$obs")"
       retrying="$( { grep -oE 'retrying=[0-9]+' <<<"$obs" || true; } | awk -F= '{s+=$2}END{print s+0}')"
       absent="$(cnt_s 'subscriber_status=absent' "$obs")"
@@ -192,7 +217,6 @@ snapshot() {
         [[ "$verdict" == HEALTHY ]] && verdict="DEGRADED"
         reasons+=("$worst_lag_queue backlog $(( worst_lag_ms / 60000 ))min behind (pending=$worst_lag_pending)")
       fi
-    fi
   fi
 
   # Recent devloop activity (current instance only)
@@ -237,7 +261,8 @@ snapshot() {
       printf '  backlog     : none pending\n'
     fi
   else
-    printf '  durable     : (observe unavailable — BIN or durable root missing)\n'
+    printf '  durable     : UNAVAILABLE — %s\n' "$observe_why"
+    printf '  backlog     : NOT CHECKED (verdict degraded; this probe is the only backlog signal)\n'
   fi
   printf '  codex       : codex-failed=%s\n' "$codex_failed"
   printf '  recent work : %s\n' "${recent_issue:-none in current log}"
