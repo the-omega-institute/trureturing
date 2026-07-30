@@ -1,6 +1,6 @@
 /- GID: D5/S1/Words/GoldenMechanicalWord
    generality: I
-   mirror-B: D5/B/S1/Phase/GoldenMechanicalWord
+   mirror-B: D5/B/S1/Words/GoldenMechanicalWord
    mirror-E: none(waiver:exact-symbolic-window-criterion)
    anchors: []
    digest: A golden mechanical letter is one exactly on its fractional-coordinate window. -/
