@@ -108,6 +108,7 @@ public sealed class ReportSupervisorScriptTests
             [
                 $"STRATALINT_REPORT_METRICS_LOG={metrics}",
                 $"STRATALINT_SUPERVISOR_ROOT={state}",
+                $"STRATALINT_PERF_CONFIGURATION={fixture.PerformanceConfiguration}",
                 fixture.Supervisor,
                 "--role", "scribe-consumer",
                 "--", "/usr/bin/true",
@@ -146,6 +147,47 @@ public sealed class ReportSupervisorScriptTests
 
         Assert.Equal(0, result.ExitCode);
         Assert.Equal(expected, Encoding.UTF8.GetString(result.StandardOutput));
+    }
+
+    [Fact]
+    public void PerformanceWriterUsesTheCallersBuildConfiguration()
+    {
+        using var temporary = new TemporaryDirectory();
+        var root = FindRepositoryRoot();
+        var library = Path.Combine(root, "Meta", "StrataLint", "scripts", "perf-event-lib.sh");
+        var spool = Path.Combine(temporary.Path, "events.jsonl");
+        var target = Path.Combine(temporary.Path, "StrataLint.dll");
+        var invocations = Path.Combine(temporary.Path, "dotnet-invocations.txt");
+        var dotnet = Path.Combine(temporary.Path, "dotnet");
+        File.WriteAllText(spool, "{}\n", new UTF8Encoding(false));
+        File.WriteAllText(target, string.Empty, new UTF8Encoding(false));
+        File.WriteAllText(dotnet, $$"""
+            #!/usr/bin/env bash
+            set -euo pipefail
+            printf '%s\n' "$*" >> "{{invocations}}"
+            if [[ "$1" == "msbuild" ]]; then printf '%s\n' "{{target}}"; fi
+            """ + "\n", new UTF8Encoding(false));
+        var chmod = BoundedProcessRunner.Run(
+            "chmod", ["+x", dotnet], temporary.Path, TimeSpan.FromSeconds(10), 4096);
+        Assert.Equal(0, chmod.ExitCode);
+
+        var result = BoundedProcessRunner.Run(
+            "env",
+            [
+                $"PATH={temporary.Path}:{Environment.GetEnvironmentVariable("PATH")}",
+                "STRATALINT_PERF_CONFIGURATION=Debug",
+                "bash", "-c", "source \"$1\"; perf_flush_events \"$2\" \"$3\"",
+                "bash", library, root, spool,
+            ],
+            temporary.Path,
+            TimeSpan.FromSeconds(10),
+            4096);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains(
+            "-property:Configuration=Debug",
+            File.ReadAllText(invocations),
+            StringComparison.Ordinal);
     }
 
     [Fact]
@@ -399,12 +441,18 @@ public sealed class ReportSupervisorScriptTests
         var result = BoundedProcessRunner.Run(
             "bash",
             [fixture.ConcurrentDriver, fixture.Supervisor, fixture.ProducerWorker,
-             fixture.MetricsLog, fixture.StateRoot, fixture.ActiveMarker, fixture.OverlapMarker],
+             fixture.MetricsLog, fixture.StateRoot, fixture.ActiveMarker, fixture.OverlapMarker,
+             fixture.PerformanceConfiguration],
             fixture.Root,
             TimeSpan.FromSeconds(30),
             1024 * 1024);
 
-        Assert.Equal(0, result.ExitCode);
+        Assert.True(
+            result.ExitCode == 0,
+            $"concurrent driver exited {result.ExitCode}; stdout: "
+                + Encoding.UTF8.GetString(result.StandardOutput)
+                + "; stderr: "
+                + Encoding.UTF8.GetString(result.StandardError));
         Assert.False(File.Exists(fixture.OverlapMarker));
         var metrics = fixture.ReadMetrics();
         Assert.Equal(2, metrics.Count);
@@ -546,6 +594,55 @@ public sealed class ReportSupervisorScriptTests
     }
 
     [Fact]
+    public void ProcessExistenceTreatsAnUnreapedChildAsTerminated()
+    {
+        using var temporary = new TemporaryDirectory();
+        var childPid = Path.Combine(temporary.Path, "child.pid");
+        using var parent = new Process
+        {
+            StartInfo = new ProcessStartInfo
+            {
+                FileName = "perl",
+                UseShellExecute = false,
+            },
+        };
+        parent.StartInfo.Environment["LC_ALL"] = "C";
+        parent.StartInfo.Environment["LANG"] = "C";
+        parent.StartInfo.ArgumentList.Add("-e");
+        parent.StartInfo.ArgumentList.Add("""
+            my $path = shift;
+            my $child = fork();
+            die "fork failed" unless defined $child;
+            if ($child == 0) { exit 0; }
+            open my $out, ">", $path or die $!;
+            print {$out} "$child\n";
+            close $out or die $!;
+            sleep 60;
+            """);
+        parent.StartInfo.ArgumentList.Add(childPid);
+
+        try
+        {
+            Assert.True(parent.Start());
+            Assert.True(SpinWait.SpinUntil(
+                () => File.Exists(childPid) && new FileInfo(childPid).Length > 0,
+                TimeSpan.FromSeconds(5)));
+            var pid = int.Parse(
+                File.ReadAllText(childPid).Trim(),
+                System.Globalization.CultureInfo.InvariantCulture);
+            Assert.True(
+                SpinWait.SpinUntil(() => IsZombieProcess(pid), TimeSpan.FromSeconds(5)),
+                "child did not enter the expected unreaped zombie state");
+
+            Assert.False(ProcessExists(pid), "an exited zombie is not a live process");
+        }
+        finally
+        {
+            TerminateForTestCleanup(parent);
+        }
+    }
+
+    [Fact]
     public void WorkerExitReapsAFastDoubleForkedSession()
     {
         using var fixture = new ReportSupervisorFixture();
@@ -599,7 +696,7 @@ public sealed class ReportSupervisorScriptTests
         try
         {
             using var process = Process.GetProcessById(pid);
-            return !process.HasExited;
+            return !process.HasExited && process.Threads.Count > 0;
         }
         catch (ArgumentException)
         {
@@ -608,6 +705,31 @@ public sealed class ReportSupervisorScriptTests
         catch (InvalidOperationException)
         {
             return true;
+        }
+        catch (System.ComponentModel.Win32Exception)
+        {
+            return true;
+        }
+    }
+
+    private static bool IsZombieProcess(int pid)
+    {
+        try
+        {
+            using var process = Process.GetProcessById(pid);
+            return !process.HasExited && process.Threads.Count == 0;
+        }
+        catch (ArgumentException)
+        {
+            return false;
+        }
+        catch (InvalidOperationException)
+        {
+            return false;
+        }
+        catch (System.ComponentModel.Win32Exception)
+        {
+            return false;
         }
     }
 
@@ -626,5 +748,17 @@ public sealed class ReportSupervisorScriptTests
         {
             // The detached PID fallback below remains available to the test.
         }
+    }
+
+    private static string FindRepositoryRoot()
+    {
+        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
+             current is not null;
+             current = current.Parent)
+        {
+            if (File.Exists(Path.Combine(current.FullName, "CLAUDE.md"))) return current.FullName;
+        }
+
+        throw new DirectoryNotFoundException("Could not locate repository root.");
     }
 }
