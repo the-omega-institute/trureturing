@@ -182,6 +182,32 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(string.Empty, console.Error);
     }
 
+    // --merge-base was an undocumented legacy alias of --protected-base; the
+    // parser accepts the canonical spelling only (no compatibility shims).
+    [Fact]
+    public void CheckRejectsTheRetiredMergeBaseAlias()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        var gateway = new FakeRepositoryGateway(
+            RawChangeSet.Create(new[] { RuleFixture.SyntheticProtectedPath }),
+            Snapshot(fixture.Files),
+            Snapshot(fixture.Baseline));
+        var source = new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports));
+        var environment = new ProductionCliEnvironment("/repo", gateway, source);
+
+        var outcome = environment.Check(new[]
+        {
+            "--merge-base", "0000000000000000000000000000000000000000",
+            "--candidate-lean-report", "candidate.json",
+            "--baseline-lean-report", "baseline.json",
+        });
+
+        var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
+        Assert.Contains("USAGE:", failure.Message, StringComparison.Ordinal);
+        Assert.Equal(0, source.CallCount);
+    }
+
     [Fact]
     public void CheckRequiresBothPrecomputedLeanReportsForProtectedChanges()
     {

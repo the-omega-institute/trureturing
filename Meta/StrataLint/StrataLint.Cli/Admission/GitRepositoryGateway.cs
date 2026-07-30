@@ -55,7 +55,7 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
         else
         {
             throw new InvalidOperationException(
-                "clean checkout requires --protected-base/--merge-base; candidate HEAD cannot protect itself");
+                "clean checkout requires --protected-base; candidate HEAD cannot protect itself");
         }
 
         var ancestor = GitRaw(new[] { "merge-base", "--is-ancestor", revision, head }, allowNonzero: true);
