@@ -1,0 +1,36 @@
+schema_version = 1
+
+[[operations]]
+id = "hourly-maintenance"
+make_target = "hourly-maintenance"
+implementation = ".fkst/scripts/hourly-maintenance.sh"
+tests = [
+  ".fkst/tests/hourly-maintenance-behavior.sh",
+  "Meta/StrataLint/StrataLint.ArchitectureTests/CanonicalSources/OperationalEntrypointTests.cs",
+  "Meta/StrataLint/StrataLint.Tests/Commands/MakeWorkflowTests.cs",
+]
+external_tools = [
+  "bash",
+  "basename",
+  "cp",
+  "date",
+  "dirname",
+  "find",
+  "fkst-framework",
+  "gh",
+  "git",
+  "grep",
+  "head",
+  "launchctl",
+  "mkdir",
+  "mv",
+  "pgrep",
+  "ps",
+  "rm",
+  "rmdir",
+  "sed",
+  "sleep",
+  "tee",
+  "timeout",
+  "tr",
+]
