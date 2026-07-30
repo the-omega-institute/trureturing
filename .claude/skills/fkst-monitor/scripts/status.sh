@@ -187,10 +187,13 @@ snapshot() {
       sleep 1; waited=$(( waited + 1 ))
     done
     if kill -0 "$probe_pid" 2>/dev/null; then
+      # disown before killing: otherwise the shell reports the reaped job on stderr
+      # ("Terminated: 15 \"$bin\" observe ..."), which lands as noise inside this very report.
+      # A diagnostic whose own output is polluted is bad raw material — see the tests.
+      disown "$probe_pid" 2>/dev/null || true
       kill -TERM "$probe_pid" 2>/dev/null || true
       sleep 1
       kill -KILL "$probe_pid" 2>/dev/null || true
-      wait "$probe_pid" 2>/dev/null || true
       observe_why="observe exceeded ${budget}s budget (raise FKST_OBSERVE_BUDGET_S); backlog grows this probe's latency"
     else
       if wait "$probe_pid"; then obs_rc=0; else obs_rc=$?; fi

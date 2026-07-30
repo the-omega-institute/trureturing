@@ -85,6 +85,13 @@ if (( elapsed > 20 )); then
   fail "the snapshot waited ${elapsed}s on a 2s budget against a 30s stub — the bound is not enforced."
 fi
 
+# --- killing the probe must not pollute the report the reader is looking at ---
+if grep -qE 'Terminated|Killed|line [0-9]+:.*observe' <<<"$out_slow"; then
+  fail "the shell's job-control notice for the killed probe leaked into the report. A diagnostic whose own
+output carries noise is bad raw material — the reader should never have to filter it. Output:
+$out_slow"
+fi
+
 # --- a probe that answers within budget must behave exactly as before ---
 out_fast="$(run_status fast 60)"
 grep -qE 'verdict *: *HEALTHY' <<<"$out_fast" \
