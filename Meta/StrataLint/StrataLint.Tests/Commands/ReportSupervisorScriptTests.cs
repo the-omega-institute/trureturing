@@ -15,13 +15,11 @@ public sealed class ReportSupervisorScriptTests
             fixture.RepositoryRoot,
             "Meta", "StrataLint", "scripts", "report", "report-consumer.sh");
 
-        var result = BoundedProcessRunner.Run(
+        var result = fixture.RunExternalProcess(
             "bash",
             [consumer, "--role", "ingest-consumer", "--report", Path.Combine(fixture.Root, "missing.json"),
              "--", "/usr/bin/true"],
-            fixture.Root,
-            TimeSpan.FromSeconds(30),
-            1024 * 1024);
+            maximumOutputBytes: 1024 * 1024);
 
         Assert.Equal(2, result.ExitCode);
         Assert.Contains(
@@ -103,7 +101,7 @@ public sealed class ReportSupervisorScriptTests
         var metrics = Path.Combine(caller.Path, "metrics.jsonl");
         var state = Path.Combine(caller.Path, "state");
 
-        var result = BoundedProcessRunner.Run(
+        var result = fixture.RunExternalProcess(
             "env",
             [
                 $"STRATALINT_REPORT_METRICS_LOG={metrics}",
@@ -114,7 +112,6 @@ public sealed class ReportSupervisorScriptTests
                 "--", "/usr/bin/true",
             ],
             caller.Path,
-            TimeSpan.FromSeconds(30),
             1024 * 1024);
 
         Assert.Equal(0, result.ExitCode);
@@ -132,7 +129,7 @@ public sealed class ReportSupervisorScriptTests
             fixture.RepositoryRoot,
             "Meta", "StrataLint", "scripts", "perf-event-lib.sh");
 
-        var result = BoundedProcessRunner.Run(
+        var result = fixture.RunExternalProcess(
             "bash",
             [
                 "-c",
@@ -141,9 +138,7 @@ public sealed class ReportSupervisorScriptTests
                 library,
                 sample,
             ],
-            fixture.Root,
-            TimeSpan.FromSeconds(10),
-            4096);
+            maximumOutputBytes: 4096);
 
         Assert.Equal(0, result.ExitCode);
         Assert.Equal(expected, Encoding.UTF8.GetString(result.StandardOutput));
@@ -152,6 +147,7 @@ public sealed class ReportSupervisorScriptTests
     [Fact]
     public void PerformanceWriterUsesTheCallersBuildConfiguration()
     {
+        using var fixture = new ReportSupervisorFixture();
         using var temporary = new TemporaryDirectory();
         var root = FindRepositoryRoot();
         var library = Path.Combine(root, "Meta", "StrataLint", "scripts", "perf-event-lib.sh");
@@ -167,11 +163,11 @@ public sealed class ReportSupervisorScriptTests
             printf '%s\n' "$*" >> "{{invocations}}"
             if [[ "$1" == "msbuild" ]]; then printf '%s\n' "{{target}}"; fi
             """ + "\n", new UTF8Encoding(false));
-        var chmod = BoundedProcessRunner.Run(
-            "chmod", ["+x", dotnet], temporary.Path, TimeSpan.FromSeconds(10), 4096);
+        var chmod = fixture.RunExternalProcess(
+            "chmod", ["+x", dotnet], temporary.Path, 4096);
         Assert.Equal(0, chmod.ExitCode);
 
-        var result = BoundedProcessRunner.Run(
+        var result = fixture.RunExternalProcess(
             "env",
             [
                 $"PATH={temporary.Path}:{Environment.GetEnvironmentVariable("PATH")}",
@@ -180,7 +176,6 @@ public sealed class ReportSupervisorScriptTests
                 "bash", library, root, spool,
             ],
             temporary.Path,
-            TimeSpan.FromSeconds(10),
             4096);
 
         Assert.Equal(0, result.ExitCode);
@@ -248,6 +243,7 @@ public sealed class ReportSupervisorScriptTests
         using var fixture = new ReportSupervisorFixture();
         var ownerlessLock = Path.Combine(fixture.StateRoot, "slots", "slot-1.lock");
         Directory.CreateDirectory(ownerlessLock);
+        Directory.SetLastWriteTimeUtc(ownerlessLock, new DateTime(2100, 1, 1, 0, 0, 0, DateTimeKind.Utc));
 
         var result = fixture.RunWithEnvironment(
             "lean-producer",
@@ -461,14 +457,12 @@ public sealed class ReportSupervisorScriptTests
     {
         using var fixture = new ReportSupervisorFixture();
 
-        var result = BoundedProcessRunner.Run(
+        var result = fixture.RunExternalProcess(
             "bash",
             [fixture.ConcurrentDriver, fixture.Supervisor, fixture.ProducerWorker,
              fixture.MetricsLog, fixture.StateRoot, fixture.ActiveMarker, fixture.OverlapMarker,
              fixture.PerformanceConfiguration],
-            fixture.Root,
-            TimeSpan.FromSeconds(30),
-            1024 * 1024);
+            maximumOutputBytes: 1024 * 1024);
 
         Assert.True(
             result.ExitCode == 0,
@@ -491,25 +485,23 @@ public sealed class ReportSupervisorScriptTests
     {
         using var fixture = new ReportSupervisorFixture();
         using var process = fixture.StartLongRunningProducer();
-        Assert.True(SpinWait.SpinUntil(
+        fixture.WaitUntil(
             () => File.Exists(fixture.GrandchildPid),
-            TimeSpan.FromSeconds(10)));
+            "worker did not publish its child pid");
         var grandchild = int.Parse(
             File.ReadAllText(fixture.GrandchildPid).Trim(),
             System.Globalization.CultureInfo.InvariantCulture);
 
-        var signal = BoundedProcessRunner.Run(
+        var signal = fixture.RunExternalProcess(
             "/bin/kill",
             ["-TERM", process.Id.ToString(System.Globalization.CultureInfo.InvariantCulture)],
-            fixture.Root,
-            TimeSpan.FromSeconds(10),
-            4096);
+            maximumOutputBytes: 4096);
         Assert.Equal(0, signal.ExitCode);
-        Assert.True(process.WaitForExit(10_000));
+        fixture.WaitForExit(process, "supervisor did not exit after SIGTERM");
 
-        Assert.True(SpinWait.SpinUntil(
+        fixture.WaitUntil(
             () => !ProcessExists(grandchild),
-            TimeSpan.FromSeconds(10)));
+            "supervisor did not reap the worker process tree");
         Assert.False(ProcessExists(grandchild));
         var metric = Assert.Single(fixture.ReadMetrics());
         Assert.Equal(143, metric.GetProperty("rc").GetInt32());
@@ -531,20 +523,18 @@ public sealed class ReportSupervisorScriptTests
 
         try
         {
-            Assert.True(SpinWait.SpinUntil(
+            fixture.WaitUntil(
                 () => !ProcessExists(grandchild),
-                TimeSpan.FromSeconds(10)));
+                "supervisor did not reap the background descendant");
         }
         finally
         {
             if (ProcessExists(grandchild))
             {
-                _ = BoundedProcessRunner.Run(
+                _ = fixture.RunExternalProcess(
                     "/bin/kill",
                     ["-KILL", grandchild.ToString(System.Globalization.CultureInfo.InvariantCulture)],
-                    fixture.Root,
-                    TimeSpan.FromSeconds(5),
-                    4096);
+                    maximumOutputBytes: 4096);
             }
         }
     }
@@ -554,17 +544,16 @@ public sealed class ReportSupervisorScriptTests
     {
         using var fixture = new ReportSupervisorFixture();
         using var process = fixture.StartDetachedProducer();
-        using var watchdog = new ReportSupervisorTestWatchdog(TimeSpan.FromSeconds(45));
+        using var watchdog = new ReportSupervisorTestWatchdog(fixture.SafetyTimeout);
         watchdog.Track(process);
         int? detached = null;
         try
         {
-            Assert.True(SpinWait.SpinUntil(
+            fixture.WaitUntil(
                 () => File.Exists(fixture.DetachedPid)
                     && new FileInfo(fixture.DetachedPid).Length > 0
                     && File.Exists(fixture.DetachedParentPid)
                     && new FileInfo(fixture.DetachedParentPid).Length > 0,
-                TimeSpan.FromSeconds(10)),
                 "detached worker did not publish its process topology");
             detached = int.Parse(
                 File.ReadAllText(fixture.DetachedPid).Trim(),
@@ -573,45 +562,37 @@ public sealed class ReportSupervisorScriptTests
                 File.ReadAllText(fixture.DetachedParentPid).Trim(),
                 System.Globalization.CultureInfo.InvariantCulture);
 
-            Assert.True(SpinWait.SpinUntil(
+            fixture.WaitUntil(
                 () => fixture.HasRecordedProcessCandidate(detached.Value),
-                TimeSpan.FromSeconds(10)),
                 "supervisor did not record the session-changing descendant");
 
             File.WriteAllText(fixture.DetachedRelease, string.Empty, new UTF8Encoding(false));
-            Assert.True(SpinWait.SpinUntil(
+            fixture.WaitUntil(
                 () => !ProcessExists(detachedParent) && ProcessExists(detached.Value),
-                TimeSpan.FromSeconds(10)),
                 "detached child did not outlive its helper parent");
 
-            var signal = BoundedProcessRunner.Run(
+            var signal = fixture.RunExternalProcess(
                 "/bin/kill",
                 ["-TERM", process.Id.ToString(System.Globalization.CultureInfo.InvariantCulture)],
-                fixture.Root,
-                TimeSpan.FromSeconds(10),
-                4096);
+                maximumOutputBytes: 4096);
             Assert.Equal(0, signal.ExitCode);
-            Assert.True(SpinWait.SpinUntil(
+            fixture.WaitUntil(
                 () => process.HasExited,
-                TimeSpan.FromSeconds(10)),
                 "supervisor did not exit after SIGTERM");
-            Assert.True(SpinWait.SpinUntil(
+            fixture.WaitUntil(
                 () => !ProcessExists(detached.Value),
-                TimeSpan.FromSeconds(10)),
                 "recorded session-changing descendant survived supervisor termination");
         }
         finally
         {
-            TerminateForTestCleanup(process);
+            TerminateForTestCleanup(process, fixture);
             if (detached.HasValue && ProcessExists(detached.Value))
             {
-                _ = BoundedProcessRunner.Run(
+                _ = fixture.RunExternalProcess(
                     "/bin/kill",
                     ["-KILL", detached.Value.ToString(
                         System.Globalization.CultureInfo.InvariantCulture)],
-                    fixture.Root,
-                    TimeSpan.FromSeconds(5),
-                    4096);
+                    maximumOutputBytes: 4096);
             }
         }
     }
@@ -641,9 +622,9 @@ public sealed class ReportSupervisorScriptTests
             File.ReadAllText(fixture.DoubleForkPid).Trim(),
             System.Globalization.CultureInfo.InvariantCulture);
 
-        Assert.True(SpinWait.SpinUntil(
+        fixture.WaitUntil(
             () => !ProcessExists(detached),
-            TimeSpan.FromSeconds(10)));
+            "supervisor did not reap the double-forked session");
         Assert.False(ProcessExists(detached));
     }
 
@@ -700,12 +681,14 @@ public sealed class ReportSupervisorScriptTests
     private static bool IsLiveNonProcProcess(bool hasExited, int threadCount) =>
         !hasExited && threadCount > 0;
 
-    private static void TerminateForTestCleanup(Process process)
+    private static void TerminateForTestCleanup(
+        Process process,
+        ReportSupervisorFixture fixture)
     {
         try
         {
             if (!process.HasExited) process.Kill(entireProcessTree: true);
-            _ = process.WaitForExit(5_000);
+            fixture.WaitForExit(process, "test cleanup could not terminate the supervisor");
         }
         catch (InvalidOperationException)
         {
