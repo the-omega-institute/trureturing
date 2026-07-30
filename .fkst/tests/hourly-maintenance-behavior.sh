@@ -9,6 +9,7 @@ SCRIPT_UNDER_TEST="$REPOSITORY_ROOT/.fkst/scripts/hourly-maintenance.sh"
 HOST_CONTRACT_LOADER="$REPOSITORY_ROOT/.fkst/scripts/host-contract.sh"
 LAUNCHER_RENDERER="$REPOSITORY_ROOT/.fkst/scripts/render-maintenance-launcher.sh"
 LAUNCHER_CONFORMANCE="$REPOSITORY_ROOT/.fkst/scripts/check-maintenance-launcher.sh"
+RESTART_CASES="$REPOSITORY_ROOT/.fkst/tests/hourly-maintenance-restart-cases.sh"
 PASS_COUNT=0
 FAIL_COUNT=0
 
@@ -481,41 +482,6 @@ slot_reclaim_rechecks_owner_after_atomic_claim() (
     || fail "reclaim guard leaked after owner recheck"
 )
 
-restart_health_requires_successful_stop_and_new_pid() (
-  load_implementation || exit 1
-  local root
-  root="$(mktemp -d -t hourly-maintenance-restart-proof.XXXXXX)" || exit 1
-  trap 'rm -rf "$root"' EXIT
-  mkdir -p "$root/bin" "$root/checkout" "$root/logs"
-  export FKST_HOST_ROOT="$root/checkout"
-  export FKST_MAINTENANCE_LOG="$root/logs/hourly-maintenance.log"
-  export FKST_RUN_SCRIPT="$root/bin/run-engine"
-  export FKST_LAUNCHD_LABEL="com.example.synthetic-fkst"
-  cat > "$FKST_RUN_SCRIPT" <<'SH'
-#!/usr/bin/env bash
-exit "${RUN_EXIT_CODE:-0}"
-SH
-  cat > "$root/bin/pgrep" <<'SH'
-#!/usr/bin/env bash
-printf '4242\n'
-SH
-  cat > "$root/bin/launchctl" <<'SH'
-#!/usr/bin/env bash
-printf '4242 0 com.example.synthetic-fkst\n'
-SH
-  cat > "$root/bin/sleep" <<'SH'
-#!/usr/bin/env bash
-exit 0
-SH
-  chmod +x "$FKST_RUN_SCRIPT" "$root/bin/pgrep" "$root/bin/launchctl" "$root/bin/sleep"
-  export PATH="$root/bin:$PATH"
-  PLATFORM_CHANGED=0
-
-  RUN_EXIT_CODE=7 restart_engine && fail "failed stop was accepted as a restart"
-  RUN_EXIT_CODE=0 restart_engine && fail "unchanged pre-stop PID was accepted as a new engine"
-  return 0
-)
-
 rollback_failure_is_not_reported_as_reverted() (
   load_implementation || exit 1
   local root
@@ -766,6 +732,10 @@ run_test() {
   fi
 }
 
+[[ -f "$RESTART_CASES" ]] || fail "restart behavior cases are missing"
+# shellcheck disable=SC1090
+source "$RESTART_CASES"
+
 run_test "deployed top-level workspace is authoritative" deployed_top_level_workspace_is_authoritative
 run_test "host-lock failure rolls back pin and lock bytes" host_lock_failure_rolls_back_pin_and_lock_bytes
 run_test "post-restart health failure rolls back pin and lock bytes" post_restart_health_failure_rolls_back_pin_and_lock_bytes
@@ -778,7 +748,11 @@ run_test "worktree GC preserves owned or dirty lanes" worktree_gc_preserves_owne
 run_test "GC roots are canonical and never filesystem root" gc_roots_are_canonical_and_never_the_filesystem_root
 run_test "stale slot GC requires a genuinely dead owner" stale_slot_gc_requires_a_genuinely_dead_owner
 run_test "slot reclaim rechecks owner after atomic claim" slot_reclaim_rechecks_owner_after_atomic_claim
-run_test "restart health requires successful stop and new PID" restart_health_requires_successful_stop_and_new_pid
+run_test "late engine PID is accepted before restart budget expires" late_engine_pid_is_accepted_before_restart_budget_expires
+run_test "restart timeout with launchd in service does not roll back platform" restart_timeout_with_launchd_in_service_does_not_roll_back_platform
+run_test "restart timeout with launchd absent rolls back platform" restart_timeout_with_launchd_absent_rolls_back_platform
+run_test "unchanged PID remains unhealthy after restart budget" unchanged_pid_remains_unhealthy_after_restart_budget
+run_test "restart requires successful stop" restart_requires_successful_stop
 run_test "rollback failure is not reported as reverted" rollback_failure_is_not_reported_as_reverted
 run_test "pin-write rollback failure is not reported as reverted" pin_write_rollback_failure_is_not_reported_as_reverted
 run_test "tracked entrypoint loads strict host config" tracked_entrypoint_loads_strict_host_config
