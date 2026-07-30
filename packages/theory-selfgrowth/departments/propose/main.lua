@@ -41,13 +41,14 @@ local function read_bot_login()
 end
 
 -- Read the producer's OWN prior frontier-request issues (any state) so decide_generation can
--- compute the next generation and detect an open one. Host-legal but forge-less: exec_sync +
--- json.decode; registered as gh-git-adapter migration debt. The search marker has no
--- shell-special characters.
+-- compute the next generation and detect an active one. Comments carry github-devloop's
+-- authoritative append-only state markers; labels are intentionally not fetched because they
+-- are a fallible projection. Host-legal but forge-less: exec_sync + json.decode; registered as
+-- gh-git-adapter migration debt. The search marker has no shell-special characters.
 local function existing_requests(repo, bot_login)
   local cmd = "gh issue list --repo '" .. repo
     .. "' --state all --search '" .. core.marker_search_query(bot_login)
-    .. "' --json number,state,body,labels --limit 1000"
+    .. "' --json number,state,body,comments --limit 1000"
   local out = exec_sync({ cmd = cmd, timeout = 30 })
   if type(out) ~= "table" or out.exit_code ~= 0 then
     error("theory-selfgrowth: request-search-failed: gh issue list", 0)
