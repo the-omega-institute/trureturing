@@ -10,8 +10,8 @@ public sealed class DigestionReceiptInspectorTests
     [Fact]
     public void InspectorReturnsLocalCompletenessAndProgressFacts()
     {
-        var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
-        var atom = Assert.Single(GictAtomizer.Atomize(source).Claims);
+        var source = Encoding.UTF8.GetBytes("# Synthetic\n\nsynthetic receipt claim\n");
+        var atom = SyntheticAtom("synthetic/receipt", "synthetic receipt claim\n");
         var target = Encoding.UTF8.GetBytes(Lean("D5/S0/Carrier/Probe"));
         var definition = Encoding.UTF8.GetBytes("scribe definition\n");
         var emission = Encoding.UTF8.GetBytes("# emitted narrative\n");
@@ -54,10 +54,10 @@ public sealed class DigestionReceiptInspectorTests
         byte[] definition,
         byte[] emission) =>
         new(
-            AtomizerRegistry.GictId,
+            "synthetic-atomizer",
             "docs/source.md",
-            AtomizerRegistry.GictId,
-            "gict-1.1",
+            "synthetic-atomizer",
+            "synthetic-1.1",
             atom.AstPath,
             new DigestionBoundary(atom.AstPath, atom.StartByte, atom.EndByte),
             atom.Fingerprints,
@@ -81,4 +81,16 @@ public sealed class DigestionReceiptInspectorTests
             new DigestionStatus(DigestionMigrationState.Absorbed, DigestionTruthState.Closed),
             ReceiptSyntax: null,
             atom.Fingerprints.RawSha256);
+
+    private static DigestionAtom SyntheticAtom(string astPath, string raw)
+    {
+        var rawBytes = Encoding.UTF8.GetBytes(raw);
+        return new DigestionAtom(
+            astPath,
+            0,
+            rawBytes.Length,
+            ImmutableArray.CreateRange(rawBytes),
+            DigestionFingerprint.Compute(rawBytes),
+            []);
+    }
 }
