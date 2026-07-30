@@ -6,7 +6,6 @@ FKST_BASH_BIN|absolute_path|false|host
 FKST_ZSH_BIN|absolute_path|false|host
 FKST_PYTHON_BIN|absolute_path|false|host
 FKST_HOST_ROOT|absolute_path|true|host
-FKST_HOST_CONFIG|absolute_path|false|host
 FKST_PLATFORM_ROOT|absolute_path|true|host
 FKST_DURABLE_ROOT|absolute_path|true|host
 FKST_RUNTIME_ROOT|absolute_path|true|host

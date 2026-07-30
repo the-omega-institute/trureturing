@@ -7,7 +7,7 @@ public sealed class OperationalEntrypointTests
     [Fact]
     public void RepositoryOperationalEntrypointsAreTrackedRegularFilesAndUnique()
     {
-        var findings = OperationalEntrypointPolicy.InspectRepository(RepositoryLayout.FindRoot());
+        var findings = OperationalEntrypointPolicy.InspectRepository(RepositoryLayout.FindRoot(), []);
 
         Assert.True(
             findings.Count == 0,
@@ -25,7 +25,7 @@ public sealed class OperationalEntrypointTests
             {
                 TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
 
-                Assert.Empty(OperationalEntrypointPolicy.InspectRepository(repository));
+                Assert.Empty(OperationalEntrypointPolicy.InspectRepository(repository, []));
             });
     }
 
@@ -36,7 +36,7 @@ public sealed class OperationalEntrypointTests
             [Operation("hourly-maintenance", "ops/scripts/synthetic-maintenance.sh")],
             repository =>
             {
-                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains("absent from the git index", finding.Message, StringComparison.Ordinal);
             });
@@ -49,7 +49,7 @@ public sealed class OperationalEntrypointTests
             [Operation("hourly-maintenance", "/tmp/synthetic-maintenance.sh")],
             repository =>
             {
-                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains("absolute path", finding.Message, StringComparison.Ordinal);
             });
@@ -62,7 +62,7 @@ public sealed class OperationalEntrypointTests
             [Operation("hourly-maintenance", "../synthetic-maintenance.sh")],
             repository =>
             {
-                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains("escapes the repository root", finding.Message, StringComparison.Ordinal);
             });
@@ -77,7 +77,7 @@ public sealed class OperationalEntrypointTests
             {
                 TrackSymlinkMode(repository, "ops/scripts/synthetic-maintenance.sh");
 
-                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains("symlink", finding.Message, StringComparison.Ordinal);
                 Assert.Contains("120000", finding.Message, StringComparison.Ordinal);
@@ -97,7 +97,7 @@ public sealed class OperationalEntrypointTests
                 TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
                 TrackFile(repository, "ops/scripts/other-maintenance.sh");
 
-                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains("claimed by multiple tracked implementations", finding.Message, StringComparison.Ordinal);
             });
@@ -113,7 +113,7 @@ public sealed class OperationalEntrypointTests
             {
                 TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
 
-                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains("duplicate operation id", finding.Message, StringComparison.Ordinal);
             });
@@ -129,7 +129,7 @@ public sealed class OperationalEntrypointTests
                 TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
                 Git(repository, "rm", "--cached", "--", "tests/synthetic-test.sh");
 
-                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains(
                     "declared test is absent from the git index",
@@ -152,7 +152,7 @@ public sealed class OperationalEntrypointTests
                     "hourly-maintenance:\n\t@/bin/bash ops/scripts/different-maintenance.sh\n");
                 Git(repository, "add", "--", "Makefile");
 
-                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains("does not delegate exactly", finding.Message, StringComparison.Ordinal);
             });
@@ -166,7 +166,7 @@ public sealed class OperationalEntrypointTests
             repository =>
             {
                 var exception = Assert.Throws<InvalidDataException>(
-                    () => OperationalEntrypointPolicy.InspectRepository(repository));
+                    () => OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains(
                     "must declare host_contract_schema",
@@ -184,7 +184,7 @@ public sealed class OperationalEntrypointTests
             repository =>
             {
                 var exception = Assert.Throws<InvalidDataException>(
-                    () => OperationalEntrypointPolicy.InspectRepository(repository));
+                    () => OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains(
                     "must declare launchd_units",
@@ -204,7 +204,7 @@ public sealed class OperationalEntrypointTests
                 TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
                 Git(repository, "rm", "--cached", "--", "ops/host-contract.schema");
 
-                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains(
                     "host contract schema is absent from the git index",
@@ -222,7 +222,7 @@ public sealed class OperationalEntrypointTests
             {
                 PrepareLaunchdUnit(repository, "synthetic", includeTemplate: false);
 
-                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains(
                     "launchd unit synthetic template is absent from the git index",
@@ -243,7 +243,7 @@ public sealed class OperationalEntrypointTests
                 Git(repository, "rm", "--cached", "--", "ops/host-contract.schema");
                 TrackSymlinkMode(repository, "ops/host-contract.schema");
 
-                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains("host contract schema is a symlink", finding.Message, StringComparison.Ordinal);
             });
@@ -259,7 +259,7 @@ public sealed class OperationalEntrypointTests
                 PrepareLaunchdUnit(repository, "synthetic", includeTemplate: false);
                 TrackSymlinkMode(repository, ".fkst/launchd/synthetic.plist.in");
 
-                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains("launchd unit synthetic template is a symlink", finding.Message, StringComparison.Ordinal);
             },
@@ -275,7 +275,7 @@ public sealed class OperationalEntrypointTests
             {
                 PrepareLaunchdUnit(repository, "synthetic", includeRenderer: false);
 
-                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains(
                     "launchd unit synthetic has no render operation synthetic-launcher-render",
@@ -294,7 +294,7 @@ public sealed class OperationalEntrypointTests
             {
                 PrepareLaunchdUnit(repository, "synthetic", includeCheckTarget: false);
 
-                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains(
                     "make target synthetic-launcher-check does not delegate exactly",
@@ -314,10 +314,52 @@ public sealed class OperationalEntrypointTests
                 TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
                 WriteFile(repository, ".fkst/launchd/synthetic.plist", "<plist/>\n");
 
-                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains(
                     "launchd unit synthetic is absent from operational inventory",
+                    finding.Message,
+                    StringComparison.Ordinal);
+            });
+    }
+
+    [Theory]
+    [InlineData("local.fkst.synthetic.worker.plist")]
+    [InlineData("synthetic_worker.plist")]
+    [InlineData("SyntheticWorker.plist.in")]
+    public void NoncanonicalLaunchdPlistCandidateIsRejected(string fileName)
+    {
+        WithRepository(
+            [Operation("hourly-maintenance", "ops/scripts/synthetic-maintenance.sh")],
+            repository =>
+            {
+                TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
+                WriteFile(repository, $".fkst/launchd/{fileName}", "<plist/>\n");
+
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
+
+                Assert.Equal($".fkst/launchd/{fileName}", finding.Path);
+                Assert.Contains(
+                    "noncanonical launchd plist candidate",
+                    finding.Message,
+                    StringComparison.Ordinal);
+            });
+    }
+
+    [Fact]
+    public void ExternalOperationalLaunchdMemberAbsentFromInventoryIsRejected()
+    {
+        WithRepository(
+            [Operation("hourly-maintenance", "ops/scripts/synthetic-maintenance.sh")],
+            repository =>
+            {
+                TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
+
+                var finding = Assert.Single(
+                    OperationalEntrypointPolicy.InspectRepository(repository, ["worker"]));
+
+                Assert.Contains(
+                    "operational launchd unit worker is absent from operational inventory",
                     finding.Message,
                     StringComparison.Ordinal);
             });
@@ -330,7 +372,7 @@ public sealed class OperationalEntrypointTests
             [Operation("hourly-maintenance", "~/.fkst/synthetic-maintenance.sh")],
             repository =>
             {
-                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
 
                 Assert.Contains("declares a host-local path", finding.Message, StringComparison.Ordinal);
             });

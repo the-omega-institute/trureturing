@@ -41,7 +41,11 @@ try:
     if (
         not isinstance(packages, list)
         or not packages
-        or any(not isinstance(value, str) or not value for value in packages)
+        or any(
+            not isinstance(value, str)
+            or re.fullmatch(r"[a-z0-9][a-z0-9-]*", value) is None
+            for value in packages
+        )
         or len(packages) != len(set(packages))
     ):
         raise ValueError("platform packages must be unique non-empty strings")
@@ -75,6 +79,57 @@ PY
   FKST_HOST_PACKAGES="$(printf '%s\n' "$data" | sed -n '2p')"
 }
 
+require_runtime_executable() {
+  local path="$1"
+  [[ -f "$path" && -x "$path" ]] \
+    || {
+      printf 'supervise-launcher: runtime executable is missing or not executable: %s\n' \
+        "$path" >&2
+      return 2
+    }
+}
+
+require_runtime_directory() {
+  local path="$1"
+  [[ -d "$path" ]] \
+    || { printf 'supervise-launcher: runtime directory is missing: %s\n' "$path" >&2; return 2; }
+}
+
+validate_runtime_paths() {
+  local run_script runtime_deploy_config log_directory
+  require_runtime_executable "$FKST_ZSH_BIN"
+  require_runtime_executable "$FKST_BASH_BIN"
+  require_runtime_executable "$FKST_PYTHON_BIN"
+  [[ -f "$HOST_CONFIG" && -r "$HOST_CONFIG" ]] \
+    || { printf 'supervise-launcher: host config is missing or unreadable: %s\n' "$HOST_CONFIG" >&2; return 2; }
+  require_runtime_directory "$FKST_HOST_ROOT"
+  require_runtime_directory "$FKST_HOST_ROOT/packages"
+  runtime_deploy_config="$FKST_HOST_ROOT/.fkst/deploy.env"
+  [[ -f "$runtime_deploy_config" && -r "$runtime_deploy_config" ]] \
+    || {
+      printf 'supervise-launcher: runtime deploy config is missing or unreadable: %s\n' \
+        "$runtime_deploy_config" >&2
+      return 2
+    }
+  require_runtime_directory "$FKST_PLATFORM_ROOT"
+  require_runtime_directory "$FKST_DURABLE_ROOT"
+  require_runtime_directory "$FKST_RUNTIME_ROOT"
+  run_script="$FKST_PLATFORM_ROOT/scripts/run.sh"
+  [[ -f "$run_script" && -r "$run_script" ]] \
+    || { printf 'supervise-launcher: platform run script is missing or unreadable: %s\n' "$run_script" >&2; return 2; }
+  log_directory="$(dirname -- "$FKST_SUPERVISE_LAUNCHER_LOG")"
+  [[ -d "$log_directory" && -w "$log_directory" ]] \
+    || { printf 'supervise-launcher: log directory is missing or not writable: %s\n' "$log_directory" >&2; return 2; }
+  if [[ -e "$FKST_SUPERVISE_LAUNCHER_LOG" || -L "$FKST_SUPERVISE_LAUNCHER_LOG" ]]; then
+    [[ -f "$FKST_SUPERVISE_LAUNCHER_LOG" && -w "$FKST_SUPERVISE_LAUNCHER_LOG" ]] \
+      || {
+        printf 'supervise-launcher: existing log path is not a writable regular file: %s\n' \
+          "$FKST_SUPERVISE_LAUNCHER_LOG" >&2
+        return 2
+      }
+  fi
+}
+
 main() {
   local host_config="${HOST_CONFIG:-}" output temporary output_directory
   [[ -n "$host_config" ]] \
@@ -84,9 +139,9 @@ main() {
     FKST_BASH_BIN \
     FKST_ZSH_BIN \
     FKST_PYTHON_BIN \
-    FKST_HOST_CONFIG \
     FKST_SUPERVISE_LAUNCHER_LOG \
     FKST_SUPERVISE_LAUNCHER_PATH
+  validate_runtime_paths
   load_package_composition
   [[ -f "$TEMPLATE" ]] \
     || { printf 'supervise-launcher: template is missing: %s\n' "$TEMPLATE" >&2; return 2; }
@@ -100,7 +155,7 @@ main() {
   RENDERED="$(<"$TEMPLATE")"
   replace_placeholder FKST_LAUNCHD_LABEL "$FKST_LAUNCHD_LABEL"
   replace_placeholder FKST_ZSH_BIN "$FKST_ZSH_BIN"
-  replace_placeholder FKST_HOST_CONFIG "$FKST_HOST_CONFIG"
+  replace_placeholder HOST_CONFIG "$HOST_CONFIG"
   replace_placeholder FKST_BASH_BIN "$FKST_BASH_BIN"
   replace_placeholder FKST_SUPERVISE_LAUNCHER_LOG "$FKST_SUPERVISE_LAUNCHER_LOG"
   replace_placeholder FKST_HOST_ROOT "$FKST_HOST_ROOT"

@@ -21,6 +21,7 @@ assert_rendered_supervise_launcher() {
   local platform_packages host_packages
   rendered="$scratch/rendered.plist"
   expected="$scratch/expected.plist"
+  host_config="$(cd -- "$(dirname -- "$host_config")" && pwd -P)/$(basename -- "$host_config")"
   package_data="$(python3 - "$REPOSITORY_ROOT/.fkst/fkst.workspace.toml" <<'PY'
 import sys
 import tomllib
@@ -54,7 +55,12 @@ PY
 	<array>
 		<string>/bin/zsh</string>
 		<string>-lc</string>
-		<string>set -a; source $host_config; set +a; cd "\$FKST_HOST_ROOT"; exec /bin/bash "\$FKST_PLATFORM_ROOT/scripts/run.sh" supervise --project-root "\$FKST_HOST_ROOT" --platform-root "\$FKST_PLATFORM_ROOT" --platform-packages "$platform_packages" --host-packages "$host_packages" --local-packages "\$FKST_HOST_ROOT/packages" --durable-root "\$FKST_DURABLE_ROOT" --runtime-root "\$FKST_RUNTIME_ROOT" --restart</string>
+		<string>set -a; source "\$1"; set +a; cd "\$FKST_HOST_ROOT"; exec "\$2" "\$FKST_PLATFORM_ROOT/scripts/run.sh" supervise --project-root "\$FKST_HOST_ROOT" --platform-root "\$FKST_PLATFORM_ROOT" --platform-packages "\$3" --host-packages "\$4" --local-packages "\$FKST_HOST_ROOT/packages" --durable-root "\$FKST_DURABLE_ROOT" --runtime-root "\$FKST_RUNTIME_ROOT" --restart</string>
+		<string>fkst-supervise</string>
+		<string>$host_config</string>
+		<string>/bin/bash</string>
+		<string>$platform_packages</string>
+		<string>$host_packages</string>
 	</array>
 	<key>RunAtLoad</key>
 	<true/>
@@ -120,6 +126,184 @@ assert_missing_supervise_host_key_is_rejected() {
     "$output"
 }
 
+assert_shell_data_is_parameterized() {
+  local scratch="$1" host_config="$2" special_config bash_bin rendered arguments_file
+  local canonical_special_config injected_marker
+  special_config="$scratch/host.env; touch $scratch/injected/marker"
+  bash_bin="$scratch/bin/bash wrapper;not-code"
+  rendered="$scratch/metachar-rendered.plist"
+  arguments_file="$scratch/supervise.arguments"
+  injected_marker="$scratch/injected/marker"
+  mkdir -p \
+    "$(dirname -- "$special_config")" \
+    "$(dirname -- "$bash_bin")" \
+    "$scratch/injected"
+  grep -v '^FKST_BASH_BIN=' "$host_config" > "$special_config"
+  printf 'FKST_BASH_BIN="%s"\n' "$bash_bin" >> "$special_config"
+  canonical_special_config="$(cd -- "$(dirname -- "$special_config")" && pwd -P)/$(basename -- "$special_config")"
+  cat > "$bash_bin" <<'SH'
+#!/usr/bin/env bash
+printf '%s\n' "$@" > "$SUPERVISE_ARGUMENTS_FILE"
+SH
+  chmod +x "$bash_bin"
+
+  HOST_CONFIG="$special_config" OUTPUT="$rendered" \
+    make -s -C "$REPOSITORY_ROOT" supervise-launcher-render >/dev/null 2>&1 \
+    || return 1
+  SUPERVISE_ARGUMENTS_FILE="$arguments_file" \
+    python3 - "$rendered" "$canonical_special_config" "$bash_bin" "$injected_marker" <<'PY'
+import os
+import plistlib
+import subprocess
+import sys
+
+with open(sys.argv[1], "rb") as handle:
+    arguments = plistlib.load(handle)["ProgramArguments"]
+completed = subprocess.run(
+    arguments,
+    check=False,
+    env={**os.environ, "SUPERVISE_ARGUMENTS_FILE": os.environ["SUPERVISE_ARGUMENTS_FILE"]},
+)
+if completed.returncode != 0:
+    raise SystemExit(f"rendered command exited {completed.returncode}")
+if os.path.exists(sys.argv[4]):
+    raise SystemExit("host path escaped the data boundary")
+if len(arguments) != 8:
+    raise SystemExit(f"expected 8 parameterized arguments, got {len(arguments)}")
+if arguments[4] != sys.argv[2] or arguments[5] != sys.argv[3]:
+    raise SystemExit("host path or executable did not round-trip as an argument")
+if sys.argv[2] in arguments[2] or sys.argv[3] in arguments[2]:
+    raise SystemExit("host data was embedded in shell source")
+PY
+  [[ "$?" -eq 0 ]] || return 1
+  grep -Fxq "$scratch/platform/scripts/run.sh" "$arguments_file" \
+    && grep -Fxq -- '--platform-packages' "$arguments_file" \
+    && grep -Fxq -- '--host-packages' "$arguments_file"
+}
+
+assert_noncanonical_platform_package_is_rejected() {
+  local scratch="$1" host_config="$2" fixture output
+  fixture="$scratch/platform-package-fixture"
+  output="$scratch/platform-package.out"
+  mkdir -p "$fixture/scripts" "$fixture/launchd"
+  cp "$REPOSITORY_ROOT/.fkst/scripts/render-supervise-launcher.sh" "$fixture/scripts/"
+  cp "$REPOSITORY_ROOT/.fkst/scripts/host-contract.sh" "$fixture/scripts/"
+  cp "$REPOSITORY_ROOT/.fkst/launchd/supervise.plist.in" "$fixture/launchd/"
+  cp "$REPOSITORY_ROOT/.fkst/host-contract.schema" "$fixture/"
+  cp "$REPOSITORY_ROOT/.fkst/deploy.env" "$fixture/"
+  sed '1,/"github-proxy"/s/"github-proxy"/"invalid package;id"/' \
+    "$REPOSITORY_ROOT/.fkst/fkst.workspace.toml" > "$fixture/fkst.workspace.toml"
+
+  if HOST_CONFIG="$host_config" OUTPUT="$scratch/invalid-package.plist" \
+      /bin/bash "$fixture/scripts/render-supervise-launcher.sh" > "$output" 2>&1; then
+    return 1
+  fi
+  grep -Fq "supervise-launcher: invalid workspace package composition" "$output"
+}
+
+write_missing_runtime_config() {
+  local scratch="$1" host_config="$2" missing="$3"
+  grep -Ev '^(FKST_BASH_BIN|FKST_ZSH_BIN|FKST_SUPERVISE_LAUNCHER_LOG)=' \
+    "$host_config" > "$missing"
+  {
+    printf 'FKST_BASH_BIN=%s\n' "$scratch/missing/bash"
+    printf 'FKST_ZSH_BIN=%s\n' "$scratch/missing/zsh"
+    printf 'FKST_SUPERVISE_LAUNCHER_LOG=%s\n' "$scratch/missing-logs/supervise.log"
+  } >> "$missing"
+}
+
+assert_nonexistent_runtime_paths_are_rejected_by_renderer() {
+  local scratch="$1" host_config="$2" missing output
+  missing="$scratch/missing-runtime.env"
+  output="$scratch/missing-runtime-render.out"
+  write_missing_runtime_config "$scratch" "$host_config" "$missing"
+
+  if HOST_CONFIG="$missing" OUTPUT="$scratch/missing-runtime.plist" \
+      make -s -C "$REPOSITORY_ROOT" supervise-launcher-render > "$output" 2>&1; then
+    return 1
+  fi
+  grep -Fq "supervise-launcher: runtime executable is missing or not executable" "$output"
+}
+
+assert_nonexistent_runtime_paths_are_rejected_by_checker() {
+  local scratch="$1" host_config="$2" missing deployed output
+  missing="$scratch/missing-runtime-check.env"
+  deployed="$scratch/missing-runtime-deployed.plist"
+  output="$scratch/missing-runtime-check.out"
+  write_missing_runtime_config "$scratch" "$host_config" "$missing"
+
+  HOST_CONFIG="$missing" OUTPUT="$deployed" \
+    make -s -C "$REPOSITORY_ROOT" supervise-launcher-render >/dev/null 2>&1 || :
+  [[ -f "$deployed" ]] || printf '<plist/>\n' > "$deployed"
+  if HOST_CONFIG="$missing" DEPLOYED_LAUNCHER="$deployed" \
+      make -s -C "$REPOSITORY_ROOT" supervise-launcher-check > "$output" 2>&1; then
+    return 1
+  fi
+  grep -Fq "supervise-launcher: runtime executable is missing or not executable" "$output"
+}
+
+assert_missing_runtime_deploy_config_is_rejected() {
+  local scratch="$1" host_config="$2" host_root invalid output
+  host_root="$scratch/checkout-without-deploy-config"
+  invalid="$scratch/missing-deploy-config.env"
+  output="$scratch/missing-deploy-config.out"
+  mkdir -p "$host_root/packages"
+  grep -v '^FKST_HOST_ROOT=' "$host_config" > "$invalid"
+  printf 'FKST_HOST_ROOT=%s\n' "$host_root" >> "$invalid"
+
+  if HOST_CONFIG="$invalid" OUTPUT="$scratch/missing-deploy-config.plist" \
+      make -s -C "$REPOSITORY_ROOT" supervise-launcher-render > "$output" 2>&1; then
+    return 1
+  fi
+  grep -Fq "supervise-launcher: runtime deploy config is missing or unreadable" "$output"
+}
+
+assert_existing_invalid_log_path_is_rejected() {
+  local scratch="$1" host_config="$2" invalid invalid_log output
+  invalid="$scratch/invalid-log.env"
+  invalid_log="$scratch/logs/not-a-regular-file"
+  output="$scratch/invalid-log.out"
+  mkdir "$invalid_log"
+  grep -v '^FKST_SUPERVISE_LAUNCHER_LOG=' "$host_config" > "$invalid"
+  printf 'FKST_SUPERVISE_LAUNCHER_LOG=%s\n' "$invalid_log" >> "$invalid"
+
+  if HOST_CONFIG="$invalid" OUTPUT="$scratch/invalid-log.plist" \
+      make -s -C "$REPOSITORY_ROOT" supervise-launcher-render > "$output" 2>&1; then
+    return 1
+  fi
+  grep -Fq "supervise-launcher: existing log path is not a writable regular file" "$output"
+}
+
+assert_second_host_config_address_is_rejected() {
+  local scratch="$1" host_config="$2" second divergent output
+  second="$scratch/second-host.env"
+  divergent="$scratch/divergent-host.env"
+  output="$scratch/divergent-host.out"
+  cp "$host_config" "$second"
+  grep -v '^FKST_HOST_CONFIG=' "$host_config" > "$divergent"
+  printf 'FKST_HOST_CONFIG=%s\n' "$second" >> "$divergent"
+
+  if HOST_CONFIG="$divergent" OUTPUT="$scratch/divergent.plist" \
+      make -s -C "$REPOSITORY_ROOT" supervise-launcher-render > "$output" 2>&1; then
+    return 1
+  fi
+  grep -Fq "undeclared key FKST_HOST_CONFIG" "$output"
+}
+
+assert_nonexistent_second_host_config_address_is_rejected() {
+  local scratch="$1" host_config="$2" divergent output
+  divergent="$scratch/nonexistent-second-host.env"
+  output="$scratch/nonexistent-second-host.out"
+  grep -v '^FKST_HOST_CONFIG=' "$host_config" > "$divergent"
+  printf 'FKST_HOST_CONFIG=%s\n' "$scratch/does-not-exist/host.env" >> "$divergent"
+
+  if HOST_CONFIG="$divergent" OUTPUT="$scratch/nonexistent-second.plist" \
+      make -s -C "$REPOSITORY_ROOT" supervise-launcher-render > "$output" 2>&1; then
+    return 1
+  fi
+  grep -Fq "undeclared key FKST_HOST_CONFIG" "$output"
+}
+
 main() {
   local scratch host_config python_bin
   scratch="$(mktemp -d -t supervise-launcher-behavior.XXXXXXXX)"
@@ -128,15 +312,18 @@ main() {
   host_config="$scratch/host.env"
   python_bin="$(command -v python3)"
   mkdir -p \
-    "$scratch/checkout" \
+    "$scratch/checkout/.fkst" \
+    "$scratch/checkout/packages" \
     "$scratch/durable" \
     "$scratch/logs" \
-    "$scratch/platform" \
+    "$scratch/platform/scripts" \
     "$scratch/rate-pool" \
     "$scratch/report-slots" \
     "$scratch/runtime" \
     "$scratch/workflows" \
     "$scratch/worktrees"
+  printf '# repository runtime fixture\n' > "$scratch/checkout/.fkst/deploy.env"
+  printf '#!/usr/bin/env bash\nexit 0\n' > "$scratch/platform/scripts/run.sh"
 
   cat > "$host_config" <<EOF
 BIN=$scratch/fkst-framework
@@ -162,7 +349,6 @@ FKST_MAINTENANCE_LAUNCHER_PATH=$scratch/local.fkst.synthetic.maintenance.plist
 FKST_BASH_BIN=/bin/bash
 FKST_ZSH_BIN=/bin/zsh
 FKST_PYTHON_BIN=$python_bin
-FKST_HOST_CONFIG=$host_config
 FKST_SUPERVISE_LAUNCHER_LOG=$scratch/logs/supervise-launchd.log
 FKST_SUPERVISE_LAUNCHER_PATH=$scratch/local.fkst.synthetic.supervise.plist
 source "\$FKST_HOST_ROOT/.fkst/deploy.env"
@@ -191,6 +377,54 @@ EOF
     pass "supervise package composition comes from the repository manifest"
   else
     fail "supervise package composition comes from the repository manifest"
+  fi
+
+  if assert_shell_data_is_parameterized "$scratch" "$host_config"; then
+    pass "supervise host paths and package lists cross zsh as data"
+  else
+    fail "supervise host paths and package lists cross zsh as data"
+  fi
+
+  if assert_noncanonical_platform_package_is_rejected "$scratch" "$host_config"; then
+    pass "supervise renderer applies canonical package validation symmetrically"
+  else
+    fail "supervise renderer applies canonical package validation symmetrically"
+  fi
+
+  if assert_nonexistent_runtime_paths_are_rejected_by_renderer "$scratch" "$host_config"; then
+    pass "supervise renderer rejects nonexistent runtime paths"
+  else
+    fail "supervise renderer rejects nonexistent runtime paths"
+  fi
+
+  if assert_nonexistent_runtime_paths_are_rejected_by_checker "$scratch" "$host_config"; then
+    pass "supervise checker rejects nonexistent runtime paths"
+  else
+    fail "supervise checker rejects nonexistent runtime paths"
+  fi
+
+  if assert_missing_runtime_deploy_config_is_rejected "$scratch" "$host_config"; then
+    pass "supervise renderer rejects a missing runtime deploy config"
+  else
+    fail "supervise renderer rejects a missing runtime deploy config"
+  fi
+
+  if assert_existing_invalid_log_path_is_rejected "$scratch" "$host_config"; then
+    pass "supervise renderer rejects an existing invalid log path"
+  else
+    fail "supervise renderer rejects an existing invalid log path"
+  fi
+
+  if assert_second_host_config_address_is_rejected "$scratch" "$host_config"; then
+    pass "supervise renderer rejects a divergent second host-config address"
+  else
+    fail "supervise renderer rejects a divergent second host-config address"
+  fi
+
+  if assert_nonexistent_second_host_config_address_is_rejected "$scratch" "$host_config"; then
+    pass "supervise renderer rejects a nonexistent second host-config address"
+  else
+    fail "supervise renderer rejects a nonexistent second host-config address"
   fi
 
   printf 'supervise launcher behavior tests: %d passed, %d failed, %d total\n' \
