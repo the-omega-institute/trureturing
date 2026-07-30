@@ -289,7 +289,7 @@ marker_processes() {
           $2 == 1 && elapsed($3) <= window {print $1}
         ' | paste -sd, -)"
     [[ -n "$candidates" ]] || return 0
-    lsof -a -p "$candidates" -d 1,2,9 2>/dev/null \
+    { lsof -a -p "$candidates" -d 1,2,9 2>/dev/null || true; } \
       | awk -v stdout="$RUN_STDOUT" -v stderr="$RUN_STDERR" -v marker="$RUN_MARKER" \
           '$NF == stdout || $NF == stderr || $NF == marker {print $2}'
   fi
@@ -545,15 +545,13 @@ BUILD_DEADLINE=0
 if (( BUILD_TIMEOUT_SECONDS > 0 )); then
   BUILD_DEADLINE=$(( $(date +%s) + BUILD_TIMEOUT_SECONDS ))
 fi
-BUILD_TIMED_OUT=0
 while process_exists "$CHILD_PID"; do
   sample_process_tree
   if (( BUILD_DEADLINE > 0 )) && (( $(date +%s) >= BUILD_DEADLINE )); then
     echo "report-supervisor: build exceeded ${BUILD_TIMEOUT_SECONDS}s wall-clock budget;" \
       "terminating to release the lean slot (#403)" >&2
-    terminate_process_group "$PROCESS_GROUP_ID"
-    BUILD_TIMED_OUT=1
-    break
+    terminate_process_group "$PROCESS_GROUP_ID" || true
+    exit 124
   fi
   sleep 0.1
 done
@@ -561,5 +559,4 @@ set +e
 wait "$CHILD_PID"
 rc=$?
 set -e
-if [[ "$BUILD_TIMED_OUT" == "1" ]]; then rc=124; fi
 exit "$rc"

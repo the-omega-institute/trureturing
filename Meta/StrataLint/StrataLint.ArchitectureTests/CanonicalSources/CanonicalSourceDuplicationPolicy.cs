@@ -61,11 +61,7 @@ internal static class CanonicalSourceDuplicationPolicy
             return [];
         }
 
-        return Regex.Split(
-                specification,
-                "(?<=[。！？])|(?:\\r?\\n){2,}",
-                RegexOptions.CultureInvariant,
-                TimeSpan.FromSeconds(1))
+        return SplitSpecificationPassages(specification)
             .Select(static passage => passage.Trim())
             .Where(static passage => passage.Length >= 64 && CountCjk(passage) >= 24)
             .Distinct(StringComparer.Ordinal)
@@ -193,6 +189,58 @@ internal static class CanonicalSourceDuplicationPolicy
     private static int CountCjk(string value) => value.Count(static character =>
         character is >= '\u3400' and <= '\u4dbf'
             or >= '\u4e00' and <= '\u9fff');
+
+    private static IEnumerable<string> SplitSpecificationPassages(string specification)
+    {
+        var start = 0;
+        var lineStart = 0;
+        for (var index = 0; index < specification.Length; index++)
+        {
+            var character = specification[index];
+            if (character is '\r' or '\n')
+            {
+                var newlineEnd = character == '\r'
+                    && index + 1 < specification.Length
+                    && specification[index + 1] == '\n'
+                    ? index + 2
+                    : index + 1;
+                if (IsBlank(specification.AsSpan(lineStart, index - lineStart)))
+                {
+                    yield return specification[start..lineStart];
+                    start = newlineEnd;
+                }
+
+                lineStart = newlineEnd;
+                index = newlineEnd - 1;
+                continue;
+            }
+
+            if (character is '。' or '！' or '？')
+            {
+                yield return specification[start..(index + 1)];
+                start = index + 1;
+                lineStart = start;
+            }
+        }
+
+        if (start < specification.Length)
+        {
+            yield return specification[start..];
+        }
+    }
+
+    private static bool IsBlank(ReadOnlySpan<char> value)
+    {
+        foreach (var character in value)
+        {
+            if (character is not (' ' or '\t'))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     private static IEnumerable<(string RelativePath, string FullPath)> EnumerateToml(
         string repositoryRoot)
