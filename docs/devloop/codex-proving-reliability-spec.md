@@ -1,7 +1,7 @@
 # SPEC:提升飞轮 codex 证明可靠性(deposit rate)
 
 > 由 sshx 对抗共识产出(31 轮,6 哲学席 + 多轮 re-challenge + review triplet;每轮亲核源码)。
-> 每个前提对 `/Users/auric/trureturing`、`/Users/auric/fkst-packages`、`~/newmath` 源码核实;方法论移植自 `~/newmath`(BEDC)已验证的可靠证明管线。
+> 每个前提对主仓、平台仓与 BEDC 参考仓源码核实;方法论移植自 BEDC 已验证的可靠证明管线。
 
 ---
 

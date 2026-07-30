@@ -158,27 +158,163 @@ public sealed class OperationalEntrypointTests
             });
     }
 
+    [Fact]
+    public void MissingHostContractSchemaDeclarationIsRejected()
+    {
+        WithRepository(
+            [Operation("hourly-maintenance", "ops/scripts/synthetic-maintenance.sh")],
+            repository =>
+            {
+                var exception = Assert.Throws<InvalidDataException>(
+                    () => OperationalEntrypointPolicy.InspectRepository(repository));
+
+                Assert.Contains(
+                    "must declare host_contract_schema",
+                    exception.Message,
+                    StringComparison.Ordinal);
+            },
+            declareHostContractSchema: false);
+    }
+
+    [Fact]
+    public void MissingLauncherTemplateDeclarationIsRejected()
+    {
+        WithRepository(
+            [Operation("hourly-maintenance", "ops/scripts/synthetic-maintenance.sh")],
+            repository =>
+            {
+                var exception = Assert.Throws<InvalidDataException>(
+                    () => OperationalEntrypointPolicy.InspectRepository(repository));
+
+                Assert.Contains(
+                    "must declare launcher_template",
+                    exception.Message,
+                    StringComparison.Ordinal);
+            },
+            declareLauncherTemplate: false);
+    }
+
+    [Fact]
+    public void HostContractSchemaAbsentFromGitIndexIsRejected()
+    {
+        WithRepository(
+            [Operation("hourly-maintenance", "ops/scripts/synthetic-maintenance.sh")],
+            repository =>
+            {
+                TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
+                Git(repository, "rm", "--cached", "--", "ops/host-contract.schema");
+
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+
+                Assert.Contains(
+                    "host contract schema is absent from the git index",
+                    finding.Message,
+                    StringComparison.Ordinal);
+            });
+    }
+
+    [Fact]
+    public void LauncherTemplateAbsentFromGitIndexIsRejected()
+    {
+        WithRepository(
+            [Operation("hourly-maintenance", "ops/scripts/synthetic-maintenance.sh")],
+            repository =>
+            {
+                TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
+                Git(repository, "rm", "--cached", "--", "ops/maintenance.plist.in");
+
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+
+                Assert.Contains(
+                    "launcher template is absent from the git index",
+                    finding.Message,
+                    StringComparison.Ordinal);
+            });
+    }
+
+    [Fact]
+    public void HostContractSchemaSymlinkIsRejectedFromIndexMode()
+    {
+        WithRepository(
+            [Operation("hourly-maintenance", "ops/scripts/synthetic-maintenance.sh")],
+            repository =>
+            {
+                TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
+                Git(repository, "rm", "--cached", "--", "ops/host-contract.schema");
+                TrackSymlinkMode(repository, "ops/host-contract.schema");
+
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+
+                Assert.Contains("host contract schema is a symlink", finding.Message, StringComparison.Ordinal);
+            });
+    }
+
+    [Fact]
+    public void LauncherTemplateSymlinkIsRejectedFromIndexMode()
+    {
+        WithRepository(
+            [Operation("hourly-maintenance", "ops/scripts/synthetic-maintenance.sh")],
+            repository =>
+            {
+                TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
+                Git(repository, "rm", "--cached", "--", "ops/maintenance.plist.in");
+                TrackSymlinkMode(repository, "ops/maintenance.plist.in");
+
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+
+                Assert.Contains("launcher template is a symlink", finding.Message, StringComparison.Ordinal);
+            });
+    }
+
+    [Fact]
+    public void OperationNamingAHostLocalImplementationPathIsRejected()
+    {
+        WithRepository(
+            [Operation("hourly-maintenance", "~/.fkst/synthetic-maintenance.sh")],
+            repository =>
+            {
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+
+                Assert.Contains("declares a host-local path", finding.Message, StringComparison.Ordinal);
+            });
+    }
+
     private static void WithRepository(
         IReadOnlyList<string> operations,
-        Action<string> assertion)
+        Action<string> assertion,
+        bool declareHostContractSchema = true,
+        bool declareLauncherTemplate = true)
     {
         var root = Directory.CreateTempSubdirectory("stratalint-operational-entrypoint-").FullName;
         try
         {
             Git(root, "init", "--initial-branch=dev");
-            var inventory = "schema_version = 1\n\n" + string.Join("\n", operations);
+            var declarations = new List<string> { "schema_version = 2" };
+            if (declareHostContractSchema)
+            {
+                declarations.Add("host_contract_schema = \"ops/host-contract.schema\"");
+            }
+            if (declareLauncherTemplate)
+            {
+                declarations.Add("launcher_template = \"ops/maintenance.plist.in\"");
+            }
+            var inventory = string.Join("\n", declarations) + "\n\n" + string.Join("\n", operations);
             WriteFile(root, ".fkst/operations.toml", inventory);
             WriteFile(
                 root,
                 "Makefile",
                 "hourly-maintenance:\n\t@/bin/bash ops/scripts/synthetic-maintenance.sh\n");
             WriteFile(root, "tests/synthetic-test.sh", "#!/usr/bin/env bash\nexit 0\n");
+            WriteFile(root, "ops/host-contract.schema", "schema_version|1\n");
+            WriteFile(root, "ops/maintenance.plist.in", "<plist/>\n");
             Git(
                 root,
                 "add",
                 "--",
                 ".fkst/operations.toml",
                 "Makefile",
+                "ops/host-contract.schema",
+                "ops/maintenance.plist.in",
                 "tests/synthetic-test.sh");
 
             assertion(root);

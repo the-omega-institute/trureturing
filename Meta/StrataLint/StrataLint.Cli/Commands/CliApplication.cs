@@ -28,6 +28,8 @@ internal interface ICliEnvironment
 
     CommandResult Route(IReadOnlyList<string> arguments);
 
+    ExplicitCommandResult ValidateBlueprintPins(IReadOnlyList<string> arguments);
+
     CommandResult RecordGolden(IReadOnlyList<string> arguments);
 
     CommandResult SelfTest(IReadOnlyList<string> arguments);
@@ -104,7 +106,7 @@ internal static class CliApplication
         if (arguments.Count == 0)
         {
             console.WriteError(
-                "USAGE: StrataLint c0-renew|check|clean-lanes|coverage|cover-atom|digest-status|echo-verify|emit-formalization-receipt|ingest|golden-record|ledger-genesis|papergen|route|selftest|topology|worktree|ledger-append|ledger-reattest|perf-append|perf-report|verify-conservative|evaluate-conservative-corpus\n");
+                "USAGE: StrataLint c0-renew|check|clean-lanes|coverage|cover-atom|digest-status|echo-verify|emit-formalization-receipt|ingest|golden-record|ledger-genesis|papergen|route|selftest|topology|validate-blueprint-pins|worktree|ledger-append|ledger-reattest|perf-append|perf-report|verify-conservative|evaluate-conservative-corpus\n");
             return 2;
         }
 
@@ -133,6 +135,8 @@ internal static class CliApplication
             "route" => RenderCommand(environment.Route(tail), console),
             "selftest" => RenderCommand(environment.SelfTest(tail), console),
             "topology" => RenderTopology(environment.Topology(tail), console),
+            "validate-blueprint-pins" =>
+                RenderExplicit(environment.ValidateBlueprintPins(tail), console),
             "verify-conservative" => RenderExplicit(environment.VerifyConservative(tail), console),
             "worktree" => RenderCommand(environment.Worktree(tail), console),
             _ => UnknownCommand(arguments[0], console),
