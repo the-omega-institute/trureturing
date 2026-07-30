@@ -35,7 +35,7 @@ public sealed partial class PrShepherdRecalculationTests
         Assert.Empty(fixture.MutationCalls());
         Assert.False(Directory.Exists(fixture.CacheWorktree));
         Assert.False(Directory.Exists(fixture.StateDirectory));
-        Assert.Contains("DRYRUN #1 BEHIND stale derivations -> ensure worktree", result.Log);
+        Assert.Contains("DRYRUN #1 RECALCULATE -> ensure worktree", result.Log);
         Assert.DoesNotContain("ALERT #1 CONFLICTING", result.Log, StringComparison.Ordinal);
     }
 
