@@ -81,7 +81,11 @@ local function formalize_candidates()
     return nil
   end
   local ok, decoded = pcall(json.decode, tostring(out.stdout or "{}"))
-  if not ok or type(decoded) ~= "table" or type(decoded.candidates) ~= "table" then
+  if not ok
+    or type(decoded) ~= "table"
+    or decoded.schema ~= "stratalint-formalize-candidates-v2"
+    or type(decoded.candidates) ~= "table"
+    or type(decoded.withheld) ~= "table" then
     return nil
   end
   return decoded.candidates

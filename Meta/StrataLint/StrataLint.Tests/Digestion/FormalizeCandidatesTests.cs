@@ -8,6 +8,29 @@ namespace StrataLint.Tests;
 
 public sealed class FormalizeCandidatesTests
 {
+    // Byte-faithful canonical status-marker forms used by theory atoms.
+    private const string PlainClosedMarker = "〔closed〕";
+    private const string QualifiedClosedMarker = "〔closed;数值证书〕";
+    private const string UnterminatedPlainClosedMarker = "〔closed";
+    private const string UnterminatedClosedMarker = "〔closed;数值证书";
+    private const string WhitespaceOnlyClosedMarker = "〔closed;  〕";
+    private const string WhitespaceBeforeSeparatorMarker = "〔closed ;数值证书〕";
+    private const string FullwidthSeparatorMarker = "〔closed；数值证书〕";
+    private const string WhitespaceStatusMarker = "〔 closed〕";
+    private const string ExtraSeparatorMarker = "〔closed;数值证书;附注〕";
+    private const string SpacedClosedMarker = "  〔closed〕";
+
+    [Fact]
+    public void StatusMarkerParserDoesNotScanLaterBodyBrackets()
+    {
+        var bytes = Encoding.UTF8.GetBytes(
+            "# PZG\n\n**定理 26.3**。正文随后提到〔closed〕。\n");
+
+        var atom = Assert.Single(PzgAtomizer.Atomize(bytes).Claims);
+
+        Assert.Equal(DigestionAtomStatusMarkerKind.Absent, atom.StatusMarker.Kind);
+    }
+
     [Fact]
     public void FormalizeCandidatesIncludesOnlyAtomizerFormalizableKinds()
     {
@@ -106,8 +129,9 @@ public sealed class FormalizeCandidatesTests
 
         Assert.True(result.Success, result.Error);
         using var json = JsonDocument.Parse(result.Output);
-        Assert.Equal("stratalint-formalize-candidates-v1", json.RootElement.GetProperty("schema").GetString());
+        Assert.Equal("stratalint-formalize-candidates-v2", json.RootElement.GetProperty("schema").GetString());
         Assert.Empty(json.RootElement.GetProperty("candidates").EnumerateArray());
+        Assert.Empty(json.RootElement.GetProperty("withheld").EnumerateArray());
     }
 
     [Fact]
@@ -137,17 +161,114 @@ public sealed class FormalizeCandidatesTests
         Assert.Equal(entry.Atom.Fingerprints.RawSha256, candidate.GetProperty("cas_ref").GetString());
     }
 
+    [Fact]
+    public void FormalizeCandidatesWithholdsQualifiedClosedStatusWithoutRejectingClosedPins()
+    {
+        var qualified = Entry(
+            "source",
+            "qualified-closed",
+            "定理",
+            "7.1",
+            status: QualifiedClosedMarker);
+        var plain = Entry(
+            "source",
+            "plain-closed",
+            "定理",
+            "7.2",
+            status: PlainClosedMarker);
+        var proved = Entry(
+            "source",
+            "proved-closed",
+            "定理",
+            "7.3",
+            body: "陈述。\n\n*证明*。完整推导。证毕。",
+            status: PlainClosedMarker);
+
+        var result = Run([qualified, plain, proved]);
+
+        Assert.True(result.Success, result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        Assert.Equal("stratalint-formalize-candidates-v2", json.RootElement.GetProperty("schema").GetString());
+        Assert.Equal(
+            ["plain-closed", "proved-closed"],
+            json.RootElement.GetProperty("candidates")
+                .EnumerateArray()
+                .Select(static candidate => candidate.GetProperty("atom_id").GetString())
+                .Order(StringComparer.Ordinal));
+        var withheld = Assert.Single(json.RootElement.GetProperty("withheld").EnumerateArray());
+        Assert.Equal("qualified-closed", withheld.GetProperty("atom_id").GetString());
+        Assert.Equal("qualified-closed-status", withheld.GetProperty("withhold_reason").GetString());
+        Assert.Equal("数值证书", withheld.GetProperty("status_qualifier").GetString());
+    }
+
+    [Theory]
+    [InlineData("unterminated-plain-closed", UnterminatedPlainClosedMarker, null)]
+    [InlineData("unterminated-closed", UnterminatedClosedMarker, "数值证书")]
+    [InlineData("whitespace-only-closed", WhitespaceOnlyClosedMarker, "  ")]
+    [InlineData("whitespace-before-separator", WhitespaceBeforeSeparatorMarker, "数值证书")]
+    [InlineData("fullwidth-separator", FullwidthSeparatorMarker, null)]
+    [InlineData("whitespace-status", WhitespaceStatusMarker, null)]
+    [InlineData("extra-separator", ExtraSeparatorMarker, "数值证书;附注")]
+    [InlineData("spaced-closed", SpacedClosedMarker, null)]
+    public void FormalizeCandidatesWithholdsMalformedClosedStatusMarkers(
+        string atomId,
+        string marker,
+        string? expectedQualifier)
+    {
+        var malformed = Entry("source", atomId, "定理", "7.4", status: marker);
+
+        var result = Run([malformed]);
+
+        Assert.True(result.Success, result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        Assert.Empty(json.RootElement.GetProperty("candidates").EnumerateArray());
+        var withheld = Assert.Single(json.RootElement.GetProperty("withheld").EnumerateArray());
+        Assert.Equal(atomId, withheld.GetProperty("atom_id").GetString());
+        Assert.Equal("malformed-status-marker", withheld.GetProperty("withhold_reason").GetString());
+        var qualifier = withheld.GetProperty("status_qualifier");
+        if (expectedQualifier is null)
+        {
+            Assert.Equal(JsonValueKind.Null, qualifier.ValueKind);
+        }
+        else
+        {
+            Assert.Equal(expectedQualifier, qualifier.GetString());
+        }
+    }
+
     private static CommandResult Run(
         IReadOnlyList<EntryFixture> entries,
         bool includeCas = true,
         bool driftCas = false,
         string? ledger = null)
     {
+        var sources = entries
+            .GroupBy(static entry => entry.SourceId, StringComparer.Ordinal)
+            .Select(group =>
+            {
+                var bytes = ImmutableArray.CreateRange(
+                    group.SelectMany(static entry => entry.Atom.RawBytes));
+                var atoms = PzgAtomizer.Atomize(bytes.AsSpan()).Claims;
+                var fixtures = group.ToArray();
+                Assert.Equal(fixtures.Length, atoms.Length);
+                return new SourceFixture(
+                    group.Key,
+                    bytes,
+                    fixtures.Select((entry, index) => entry with { Atom = atoms[index] }).ToArray());
+            })
+            .ToArray();
+        entries = sources.SelectMany(static source => source.Entries).ToArray();
         ledger ??= Ledger(entries);
         var files = new List<RawRepositoryEntry>
         {
             RawRepositoryEntry.FromText(BackfillInventoryLoader.RelativePath, ledger),
         };
+        foreach (var source in sources)
+        {
+            files.Add(new RawRepositoryEntry(
+                $"synthetic/{source.SourceId}.md",
+                source.RawBytes));
+        }
         if (includeCas)
         {
             foreach (var entry in entries)
@@ -179,9 +300,13 @@ public sealed class FormalizeCandidatesTests
         string body = "陈述。",
         string[]? coverageGids = null,
         string migration = "residual",
-        string truth = "open")
+        string truth = "open",
+        string status = "")
     {
-        var source = Encoding.UTF8.GetBytes($"# Synthetic\n\n**{kind} {number}**。{body}\n");
+        var source = Encoding.UTF8.GetBytes(
+            status is UnterminatedPlainClosedMarker or UnterminatedClosedMarker
+            ? $"# Synthetic\n\n**{kind} {number}**{status}"
+            : $"# Synthetic\n\n**{kind} {number}**{status}。{body}\n");
         var atom = Assert.Single(PzgAtomizer.Atomize(source).Claims);
         return new EntryFixture(
             sourceId,
@@ -249,4 +374,9 @@ public sealed class FormalizeCandidatesTests
         string[] CoverageGids,
         string Migration,
         string Truth);
+
+    private sealed record SourceFixture(
+        string SourceId,
+        ImmutableArray<byte> RawBytes,
+        EntryFixture[] Entries);
 }

@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Engine;
 
@@ -5,6 +6,54 @@ namespace StrataLint.Tests;
 
 public sealed partial class TheoryAtomizerTests
 {
+    private static string FindRepositoryRoot()
+    {
+        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
+             current is not null;
+             current = current.Parent)
+        {
+            if (File.Exists(Path.Combine(current.FullName, "Meta", "BACKFILL.yaml")))
+            {
+                return current.FullName;
+            }
+        }
+
+        throw new DirectoryNotFoundException("Could not locate repository root.");
+    }
+
+    private static DigestionLedgerEntry LedgerEntry(
+        string atomId,
+        string atomizer,
+        DigestionAtom atom) => new(
+        atomizer,
+        "docs/source.md",
+        atomizer,
+        atomId,
+        atom.AstPath,
+        new DigestionBoundary(atom.AstPath, atom.StartByte, atom.EndByte),
+        atom.Fingerprints,
+        [],
+        new DigestionReceipts([], [], [], [], null),
+        new DigestionStatus(DigestionMigrationState.Residual, DigestionTruthState.Open),
+        ReceiptSyntax: null,
+        CasRef: atom.Fingerprints.RawSha256);
+
+    [Fact]
+    public void WmCreateAtomAttachesCanonicalStatusMetadata()
+    {
+        var raw = Encoding.UTF8.GetBytes("**title**〔closed〕");
+        var atom = WmAtomizer.CreateAtom(
+            raw,
+            "fixture/status",
+            0,
+            raw.Length,
+            ImmutableArray<DigestionContext>.Empty);
+
+        Assert.Equal(DigestionAtomStatusMarkerKind.Valid, atom.StatusMarker.Kind);
+        Assert.Equal("closed", atom.StatusMarker.Status);
+        Assert.Null(atom.StatusMarker.Qualifier);
+    }
+
     public static TheoryData<string, byte[]> InvalidWmSources
     {
         get

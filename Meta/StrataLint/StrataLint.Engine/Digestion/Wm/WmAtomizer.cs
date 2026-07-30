@@ -333,7 +333,7 @@ internal static partial class WmAtomizer
     private static DigestionAtom ReSpan(byte[] raw, DigestionAtom atom, int start, int end) =>
         CreateAtom(raw, atom.AstPath, start, end, atom.Context);
 
-    private static DigestionAtom CreateAtom(
+    internal static DigestionAtom CreateAtom(
         byte[] raw,
         string astPath,
         int start,
@@ -352,6 +352,7 @@ internal static partial class WmAtomizer
             end,
             atomBytes,
             DigestionFingerprint.Compute(atomBytes.AsSpan()),
-            context);
+            context,
+            DigestionAtomStatusMarker.Parse(atomBytes.AsSpan()));
     }
 }
