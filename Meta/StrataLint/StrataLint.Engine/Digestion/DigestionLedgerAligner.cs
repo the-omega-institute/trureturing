@@ -8,6 +8,7 @@ internal enum DigestionAlignmentMode
 {
     Admission,
     Ingest,
+    Projection,
 }
 
 internal enum DigestionReceiptAlignment
@@ -42,6 +43,7 @@ internal sealed record DigestionIngestFallback(string SourceId, string Reason);
 
 internal sealed record DigestionLedgerAlignment(
     ImmutableDictionary<string, DigestionReceiptAlignment> EntryAlignments,
+    ImmutableDictionary<string, DigestionAtom> MatchedAtoms,
     ImmutableArray<StructuredResidualAdmission> Residual,
     ImmutableArray<DigestionIngestFallback> Fallbacks,
     ImmutableArray<string> ActualStale,
@@ -51,6 +53,8 @@ internal sealed record DigestionLedgerAlignment(
         EntryAlignments.TryGetValue(atomId, out var alignment)
             ? alignment
             : throw new InvalidOperationException($"digestion alignment omitted entry {atomId}");
+
+    internal DigestionAtom? AtomFor(string atomId) => MatchedAtoms.GetValueOrDefault(atomId);
 }
 
 internal static class DigestionLedgerAligner
@@ -68,6 +72,7 @@ internal static class DigestionLedgerAligner
 
         var alignments = ImmutableDictionary.CreateBuilder<string, DigestionReceiptAlignment>(
             StringComparer.Ordinal);
+        var matchedAtoms = ImmutableDictionary.CreateBuilder<string, DigestionAtom>(StringComparer.Ordinal);
         var residual = ImmutableArray.CreateBuilder<StructuredResidualAdmission>();
         var fallbacks = ImmutableArray.CreateBuilder<DigestionIngestFallback>();
         var actualStale = ImmutableArray.CreateBuilder<string>();
@@ -279,17 +284,19 @@ internal static class DigestionLedgerAligner
                         == legacy.Fingerprints.NormalizedSha256))
                 {
                     matchedAstPaths.Add(atom.AstPath);
+                    matchedAtoms[legacy.AtomId] = atom;
                 }
             }
 
-            var casOccurrences = source.Entries
-                .Where(entry => cas.ValidAtomIds.Contains(entry.AtomId))
-                .Select(static entry => (entry.AstPath, RawSha256: entry.CasRef))
-                .ToHashSet();
-            foreach (var atom in atomized.Claims.Where(atom =>
-                         casOccurrences.Contains((atom.AstPath, atom.Fingerprints.RawSha256))))
+            foreach (var entry in source.Entries.Where(entry => cas.ValidAtomIds.Contains(entry.AtomId)))
             {
-                matchedAstPaths.Add(atom.AstPath);
+                if (claims.TryGetValue(entry.AstPath, out var atom)
+                    && (atom.Fingerprints.RawSha256 == entry.Fingerprints.RawSha256
+                        || atom.Fingerprints.NormalizedSha256 == entry.Fingerprints.NormalizedSha256))
+                {
+                    matchedAstPaths.Add(atom.AstPath);
+                    matchedAtoms[entry.AtomId] = atom;
+                }
             }
 
             var registration = AtomizerRegistry.Require(source.Atomizer);
@@ -338,6 +345,7 @@ internal static class DigestionLedgerAligner
 
         return new DigestionLedgerAlignment(
             alignments.ToImmutable(),
+            matchedAtoms.ToImmutable(),
             residual.ToImmutable(),
             fallbacks.ToImmutable(),
             actualStale.Order(StringComparer.Ordinal).ToImmutableArray(),

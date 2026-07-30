@@ -210,7 +210,7 @@ internal static class DigestStatusCommand
                 && item.DerivedStatus.Migration == DigestionMigrationState.Residual
                 && item.DerivedStatus.Truth == DigestionTruthState.Open
                 && item.Entry.CoverageGids.Length == 0)
-            .Select(item => Projection(item.Entry, snapshot))
+            .Select(item => Projection(item, snapshot))
             .Where(static item => item is not null)
             .OrderBy(static item => item!.SourceId, StringComparer.Ordinal)
             .ThenBy(static item => item!.AtomId, StringComparer.Ordinal)
@@ -231,9 +231,10 @@ internal static class DigestStatusCommand
     }
 
     private static FormalizeProjection? Projection(
-        DigestionLedgerEntry entry,
+        DigestionEntryEvaluation evaluation,
         RepositorySnapshot snapshot)
     {
+        var entry = evaluation.Entry;
         var separator = entry.AstPath.IndexOf('/', StringComparison.Ordinal);
         if (separator <= 0)
         {
@@ -264,8 +265,26 @@ internal static class DigestStatusCommand
                 exception);
         }
 
-        var status = DigestionAtomStatusMarker.Parse(atom.RawBytes.AsSpan());
-        if (status is { Status: "closed", Qualifier.Length: > 0 })
+        var status = evaluation.Atom?.StatusMarker
+            ?? throw new FormatException($"entry {entry.AtomId} has no canonical atom alignment");
+        if (status.Kind == DigestionAtomStatusMarkerKind.Malformed)
+        {
+            return new FormalizeProjection(
+                entry.SourceId,
+                entry.AtomId,
+                null,
+                new WithheldFormalizeCandidate(
+                    entry.AtomId,
+                    "malformed-status-marker",
+                    status.Qualifier));
+        }
+
+        if (status is
+            {
+                Kind: DigestionAtomStatusMarkerKind.Valid,
+                Status: "closed",
+                Qualifier.Length: > 0,
+            })
         {
             return new FormalizeProjection(
                 entry.SourceId,
@@ -334,7 +353,7 @@ internal static class DigestStatusCommand
     private sealed record WithheldFormalizeCandidate(
         string AtomId,
         string WithholdReason,
-        string StatusQualifier);
+        string? StatusQualifier);
 
     private sealed record FormalizeProjection(
         string SourceId,
