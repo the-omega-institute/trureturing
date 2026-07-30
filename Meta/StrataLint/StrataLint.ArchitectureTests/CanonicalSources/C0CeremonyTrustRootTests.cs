@@ -7,26 +7,25 @@ namespace StrataLint.ArchitectureTests;
 public sealed class C0CeremonyTrustRootTests
 {
     private const string TowerPath = "Meta/StrataLint/TOWER.yaml";
-    private const string JudgePath =
-        "Meta/StrataLint/StrataLint.ArchitectureTests/CanonicalSources/C0CeremonyTrustRootJudge.cs";
-    private const string TestsPath =
-        "Meta/StrataLint/StrataLint.ArchitectureTests/CanonicalSources/C0CeremonyTrustRootTests.cs";
 
     [Fact]
     public void CanonicalTrustRootSourceDoesNotUseCommitAncestry()
     {
         var root = RepositoryLayout.FindRoot();
-        // Closed world: the judge owns the decision and this test file is its only caller and
-        // the former home of the assertion. No other source participates in this trust-root check.
-        var canonicalSources = new[]
-        {
-            JudgePath,
-            TestsPath,
-        };
+        var projectDirectory = Absolute(
+            root,
+            "Meta/StrataLint/StrataLint.ArchitectureTests");
         var forbidden = "--is-" + "ancestor";
-        var occurrences = canonicalSources
-            .SelectMany(path => File.ReadLines(Absolute(root, path)).Select((line, index) =>
-                (Path: path, Line: index + 1, Text: line)))
+        var occurrences = Directory
+            .EnumerateFiles(projectDirectory, "*.cs", SearchOption.AllDirectories)
+            .Where(path => !Path.GetRelativePath(projectDirectory, path)
+                .Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
+                .Any(static segment => segment is "bin" or "obj"))
+            .Order(StringComparer.Ordinal)
+            .SelectMany(path => File.ReadLines(path).Select((line, index) =>
+                (Path: Path.GetRelativePath(root, path).Replace('\\', '/'),
+                    Line: index + 1,
+                    Text: line)))
             .Where(item => item.Text.Contains(
                 forbidden,
                 StringComparison.Ordinal))
