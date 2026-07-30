@@ -426,7 +426,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
 
             var target = arguments[index] switch
             {
-                "--protected-base" or "--merge-base" when protectedBase is null => 0,
+                "--protected-base" when protectedBase is null => 0,
                 "--candidate-lean-report" when candidateLeanReport is null => 1,
                 "--baseline-lean-report" when baselineLeanReport is null => 2,
                 "--frozen-evidence-root" when frozenEvidenceRoot is null => 3,
