@@ -43,10 +43,6 @@ internal static class OperationalEntrypointPolicy
             inventory.HostContractSchema,
             "host contract schema",
             index));
-        findings.AddRange(InspectDeclaredArtifact(
-            inventory.LauncherTemplate,
-            "launcher template",
-            index));
         var duplicateIds = inventory.Operations
             .GroupBy(static operation => operation.Id, StringComparer.Ordinal)
             .Where(static group => group.Count() > 1)
@@ -69,6 +65,12 @@ internal static class OperationalEntrypointPolicy
         }
 
         var makefile = File.ReadAllText(Path.Combine(repositoryRoot, "Makefile"));
+        findings.AddRange(InspectLaunchdUnits(
+            repositoryRoot,
+            inventory,
+            duplicateIds,
+            index,
+            makefile));
         foreach (var operation in inventory.Operations.Where(operation => !duplicateIds.Contains(operation.Id)))
         {
             var implementationFindings = InspectImplementation(operation, index);
@@ -81,6 +83,154 @@ internal static class OperationalEntrypointPolicy
         }
 
         return findings;
+    }
+
+    private static IReadOnlyList<OperationalEntrypointFinding> InspectLaunchdUnits(
+        string repositoryRoot,
+        Inventory inventory,
+        IReadOnlySet<string> duplicateOperationIds,
+        IReadOnlyDictionary<string, string> index,
+        string makefile)
+    {
+        var findings = new List<OperationalEntrypointFinding>();
+        var declaredUnits = inventory.LaunchdUnits.ToHashSet(StringComparer.Ordinal);
+        var discoveredUnits = DiscoverLaunchdUnits(
+            repositoryRoot,
+            inventory.Operations,
+            index.Keys,
+            makefile);
+        foreach (var id in discoveredUnits.Except(declaredUnits, StringComparer.Ordinal).Order())
+        {
+            findings.Add(new OperationalEntrypointFinding(
+                InventoryPath,
+                $"launchd unit {id} is absent from operational inventory"));
+        }
+
+        var operations = inventory.Operations
+            .Where(operation => !duplicateOperationIds.Contains(operation.Id))
+            .ToDictionary(static operation => operation.Id, StringComparer.Ordinal);
+        foreach (var id in inventory.LaunchdUnits)
+        {
+            findings.AddRange(InspectDeclaredArtifact(
+                $".fkst/launchd/{id}.plist.in",
+                $"launchd unit {id} template",
+                index));
+            findings.AddRange(InspectLaunchdOperation(
+                id,
+                "render",
+                $".fkst/scripts/render-{id}-launcher.sh",
+                operations));
+            findings.AddRange(InspectLaunchdOperation(
+                id,
+                "check",
+                $".fkst/scripts/check-{id}-launcher.sh",
+                operations));
+        }
+
+        return findings;
+    }
+
+    private static IReadOnlyList<OperationalEntrypointFinding> InspectLaunchdOperation(
+        string unitId,
+        string role,
+        string expectedImplementation,
+        IReadOnlyDictionary<string, Operation> operations)
+    {
+        var expectedId = $"{unitId}-launcher-{role}";
+        if (!operations.TryGetValue(expectedId, out var operation))
+        {
+            return
+            [
+                new OperationalEntrypointFinding(
+                    InventoryPath,
+                    $"launchd unit {unitId} has no {role} operation {expectedId}"),
+            ];
+        }
+
+        var findings = new List<OperationalEntrypointFinding>();
+        if (!string.Equals(operation.MakeTarget, expectedId, StringComparison.Ordinal))
+        {
+            findings.Add(new OperationalEntrypointFinding(
+                InventoryPath,
+                $"launchd unit {unitId} {role} operation must use make target {expectedId}"));
+        }
+        if (!string.Equals(operation.Implementation, expectedImplementation, StringComparison.Ordinal))
+        {
+            findings.Add(new OperationalEntrypointFinding(
+                InventoryPath,
+                $"launchd unit {unitId} {role} operation must use implementation {expectedImplementation}"));
+        }
+        return findings;
+    }
+
+    private static HashSet<string> DiscoverLaunchdUnits(
+        string repositoryRoot,
+        IReadOnlyList<Operation> operations,
+        IEnumerable<string> indexedPaths,
+        string makefile)
+    {
+        var units = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var path in indexedPaths)
+        {
+            AddLaunchdUnitFromPath(path, units);
+        }
+
+        foreach (var relativeDirectory in new[] { ".fkst/launchd", ".fkst/scripts" })
+        {
+            var directory = Path.Combine(
+                repositoryRoot,
+                relativeDirectory.Replace('/', Path.DirectorySeparatorChar));
+            if (!Directory.Exists(directory)) continue;
+            foreach (var path in Directory.EnumerateFiles(directory))
+            {
+                AddLaunchdUnitFromPath(
+                    $"{relativeDirectory}/{Path.GetFileName(path)}",
+                    units);
+            }
+        }
+
+        foreach (var operation in operations)
+        {
+            AddLaunchdUnitFromOperationId(operation.Id, units);
+        }
+        foreach (var line in makefile.Replace("\r\n", "\n", StringComparison.Ordinal).Split('\n'))
+        {
+            var match = Regex.Match(
+                line,
+                "^([a-z0-9][a-z0-9-]*)-launcher-(?:render|check):$",
+                RegexOptions.CultureInvariant,
+                TimeSpan.FromSeconds(1));
+            if (match.Success) units.Add(match.Groups[1].Value);
+        }
+        return units;
+    }
+
+    private static void AddLaunchdUnitFromPath(string path, ISet<string> units)
+    {
+        var match = Regex.Match(
+            path,
+            @"^\.fkst/launchd/([a-z0-9][a-z0-9-]*)\.plist(?:\.in)?$",
+            RegexOptions.CultureInvariant,
+            TimeSpan.FromSeconds(1));
+        if (!match.Success)
+        {
+            match = Regex.Match(
+                path,
+                @"^\.fkst/scripts/(?:render|check)-([a-z0-9][a-z0-9-]*)-launcher\.sh$",
+                RegexOptions.CultureInvariant,
+                TimeSpan.FromSeconds(1));
+        }
+        if (match.Success) units.Add(match.Groups[1].Value);
+    }
+
+    private static void AddLaunchdUnitFromOperationId(string id, ISet<string> units)
+    {
+        var match = Regex.Match(
+            id,
+            "^([a-z0-9][a-z0-9-]*)-launcher-(?:render|check)$",
+            RegexOptions.CultureInvariant,
+            TimeSpan.FromSeconds(1));
+        if (match.Success) units.Add(match.Groups[1].Value);
     }
 
     private static IReadOnlyList<OperationalEntrypointFinding> InspectDeclaredArtifact(
@@ -303,23 +453,23 @@ internal static class OperationalEntrypointPolicy
             throw new InvalidDataException(
                 "operational inventory must declare host_contract_schema");
         }
-        if (!root.ContainsKey("launcher_template"))
+        if (!root.ContainsKey("launchd_units"))
         {
             throw new InvalidDataException(
-                "operational inventory must declare launcher_template");
+                "operational inventory must declare launchd_units");
         }
         RequireExactKeys(
             root,
             "inventory",
             "schema_version",
             "host_contract_schema",
-            "launcher_template",
+            "launchd_units",
             "operations");
         if (!root.TryGetValue("schema_version", out var rawVersion)
             || rawVersion is not long version
-            || version != 2)
+            || version != 3)
         {
-            throw new InvalidDataException("operational inventory schema_version must be 2");
+            throw new InvalidDataException("operational inventory schema_version must be 3");
         }
         if (!root.TryGetValue("operations", out var rawOperations)
             || rawOperations is not TomlTableArray tables
@@ -328,9 +478,21 @@ internal static class OperationalEntrypointPolicy
             throw new InvalidDataException("operational inventory must declare operations");
         }
 
+        var launchdUnits = RequiredStringArrayAllowEmpty(root, "launchd_units", "inventory");
+        if (launchdUnits.Distinct(StringComparer.Ordinal).Count() != launchdUnits.Length
+            || launchdUnits.Any(static id => !Regex.IsMatch(
+                id,
+                "^[a-z0-9][a-z0-9-]*$",
+                RegexOptions.CultureInvariant,
+                TimeSpan.FromSeconds(1))))
+        {
+            throw new InvalidDataException(
+                "inventory.launchd_units must contain unique literal unit ids");
+        }
+
         return new Inventory(
             RequiredString(root, "host_contract_schema", "inventory"),
-            RequiredString(root, "launcher_template", "inventory"),
+            launchdUnits,
             tables.Select((table, index) => ParseOperation(table, index)).ToArray());
     }
 
@@ -388,6 +550,21 @@ internal static class OperationalEntrypointPolicy
         {
             throw new InvalidDataException(
                 $"{location}.{key} must be a non-empty string array");
+        }
+        return array.Cast<string>().ToArray();
+    }
+
+    private static string[] RequiredStringArrayAllowEmpty(
+        TomlTable table,
+        string key,
+        string location)
+    {
+        if (!table.TryGetValue(key, out var raw)
+            || raw is not TomlArray array
+            || array.Any(static item => item is not string { Length: > 0 }))
+        {
+            throw new InvalidDataException(
+                $"{location}.{key} must be a string array");
         }
         return array.Cast<string>().ToArray();
     }
@@ -461,6 +638,6 @@ internal static class OperationalEntrypointPolicy
 
     private sealed record Inventory(
         string HostContractSchema,
-        string LauncherTemplate,
+        IReadOnlyList<string> LaunchdUnits,
         IReadOnlyList<Operation> Operations);
 }

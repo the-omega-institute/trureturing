@@ -177,7 +177,7 @@ public sealed class OperationalEntrypointTests
     }
 
     [Fact]
-    public void MissingLauncherTemplateDeclarationIsRejected()
+    public void MissingLaunchdUnitsDeclarationIsRejected()
     {
         WithRepository(
             [Operation("hourly-maintenance", "ops/scripts/synthetic-maintenance.sh")],
@@ -187,11 +187,11 @@ public sealed class OperationalEntrypointTests
                     () => OperationalEntrypointPolicy.InspectRepository(repository));
 
                 Assert.Contains(
-                    "must declare launcher_template",
+                    "must declare launchd_units",
                     exception.Message,
                     StringComparison.Ordinal);
             },
-            declareLauncherTemplate: false);
+            declareLaunchdUnits: false);
     }
 
     [Fact]
@@ -214,22 +214,22 @@ public sealed class OperationalEntrypointTests
     }
 
     [Fact]
-    public void LauncherTemplateAbsentFromGitIndexIsRejected()
+    public void LaunchdUnitTemplateAbsentFromGitIndexIsRejected()
     {
         WithRepository(
-            [Operation("hourly-maintenance", "ops/scripts/synthetic-maintenance.sh")],
+            LaunchdOperations("synthetic"),
             repository =>
             {
-                TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
-                Git(repository, "rm", "--cached", "--", "ops/maintenance.plist.in");
+                PrepareLaunchdUnit(repository, "synthetic", includeTemplate: false);
 
                 var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
 
                 Assert.Contains(
-                    "launcher template is absent from the git index",
+                    "launchd unit synthetic template is absent from the git index",
                     finding.Message,
                     StringComparison.Ordinal);
-            });
+            },
+            launchdUnits: ["synthetic"]);
     }
 
     [Fact]
@@ -250,19 +250,76 @@ public sealed class OperationalEntrypointTests
     }
 
     [Fact]
-    public void LauncherTemplateSymlinkIsRejectedFromIndexMode()
+    public void LaunchdUnitTemplateSymlinkIsRejectedFromIndexMode()
+    {
+        WithRepository(
+            LaunchdOperations("synthetic"),
+            repository =>
+            {
+                PrepareLaunchdUnit(repository, "synthetic", includeTemplate: false);
+                TrackSymlinkMode(repository, ".fkst/launchd/synthetic.plist.in");
+
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+
+                Assert.Contains("launchd unit synthetic template is a symlink", finding.Message, StringComparison.Ordinal);
+            },
+            launchdUnits: ["synthetic"]);
+    }
+
+    [Fact]
+    public void LaunchdUnitWithoutRendererIsRejected()
+    {
+        WithRepository(
+            LaunchdOperations("synthetic", includeRenderer: false),
+            repository =>
+            {
+                PrepareLaunchdUnit(repository, "synthetic", includeRenderer: false);
+
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+
+                Assert.Contains(
+                    "launchd unit synthetic has no render operation synthetic-launcher-render",
+                    finding.Message,
+                    StringComparison.Ordinal);
+            },
+            launchdUnits: ["synthetic"]);
+    }
+
+    [Fact]
+    public void LaunchdUnitWithoutCheckTargetIsRejected()
+    {
+        WithRepository(
+            LaunchdOperations("synthetic"),
+            repository =>
+            {
+                PrepareLaunchdUnit(repository, "synthetic", includeCheckTarget: false);
+
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
+
+                Assert.Contains(
+                    "make target synthetic-launcher-check does not delegate exactly",
+                    finding.Message,
+                    StringComparison.Ordinal);
+            },
+            launchdUnits: ["synthetic"]);
+    }
+
+    [Fact]
+    public void UntrackedLaunchdUnitAbsentFromOperationalInventoryIsRejected()
     {
         WithRepository(
             [Operation("hourly-maintenance", "ops/scripts/synthetic-maintenance.sh")],
             repository =>
             {
                 TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
-                Git(repository, "rm", "--cached", "--", "ops/maintenance.plist.in");
-                TrackSymlinkMode(repository, "ops/maintenance.plist.in");
+                WriteFile(repository, ".fkst/launchd/synthetic.plist", "<plist/>\n");
 
                 var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository));
 
-                Assert.Contains("launcher template is a symlink", finding.Message, StringComparison.Ordinal);
+                Assert.Contains(
+                    "launchd unit synthetic is absent from operational inventory",
+                    finding.Message,
+                    StringComparison.Ordinal);
             });
     }
 
@@ -283,20 +340,23 @@ public sealed class OperationalEntrypointTests
         IReadOnlyList<string> operations,
         Action<string> assertion,
         bool declareHostContractSchema = true,
-        bool declareLauncherTemplate = true)
+        bool declareLaunchdUnits = true,
+        IReadOnlyList<string>? launchdUnits = null)
     {
         var root = Directory.CreateTempSubdirectory("stratalint-operational-entrypoint-").FullName;
         try
         {
             Git(root, "init", "--initial-branch=dev");
-            var declarations = new List<string> { "schema_version = 2" };
+            var declarations = new List<string> { "schema_version = 3" };
             if (declareHostContractSchema)
             {
                 declarations.Add("host_contract_schema = \"ops/host-contract.schema\"");
             }
-            if (declareLauncherTemplate)
+            if (declareLaunchdUnits)
             {
-                declarations.Add("launcher_template = \"ops/maintenance.plist.in\"");
+                var unitIds = launchdUnits ?? [];
+                declarations.Add(
+                    $"launchd_units = [{string.Join(", ", unitIds.Select(static id => $"\"{id}\""))}]");
             }
             var inventory = string.Join("\n", declarations) + "\n\n" + string.Join("\n", operations);
             WriteFile(root, ".fkst/operations.toml", inventory);
@@ -306,7 +366,6 @@ public sealed class OperationalEntrypointTests
                 "hourly-maintenance:\n\t@/bin/bash ops/scripts/synthetic-maintenance.sh\n");
             WriteFile(root, "tests/synthetic-test.sh", "#!/usr/bin/env bash\nexit 0\n");
             WriteFile(root, "ops/host-contract.schema", "schema_version|1\n");
-            WriteFile(root, "ops/maintenance.plist.in", "<plist/>\n");
             Git(
                 root,
                 "add",
@@ -314,7 +373,6 @@ public sealed class OperationalEntrypointTests
                 ".fkst/operations.toml",
                 "Makefile",
                 "ops/host-contract.schema",
-                "ops/maintenance.plist.in",
                 "tests/synthetic-test.sh");
 
             assertion(root);
@@ -325,14 +383,77 @@ public sealed class OperationalEntrypointTests
         }
     }
 
-    private static string Operation(string id, string implementation) => $$"""
+    private static string Operation(
+        string id,
+        string implementation,
+        string makeTarget = "hourly-maintenance") => $$"""
         [[operations]]
         id = "{{id}}"
-        make_target = "hourly-maintenance"
+        make_target = "{{makeTarget}}"
         implementation = "{{implementation}}"
         tests = ["tests/synthetic-test.sh"]
         external_tools = ["bash", "git"]
         """;
+
+    private static IReadOnlyList<string> LaunchdOperations(
+        string id,
+        bool includeRenderer = true,
+        bool includeCheck = true)
+    {
+        var operations = new List<string>();
+        if (includeRenderer)
+        {
+            operations.Add(Operation(
+                $"{id}-launcher-render",
+                $".fkst/scripts/render-{id}-launcher.sh",
+                $"{id}-launcher-render"));
+        }
+        if (includeCheck)
+        {
+            operations.Add(Operation(
+                $"{id}-launcher-check",
+                $".fkst/scripts/check-{id}-launcher.sh",
+                $"{id}-launcher-check"));
+        }
+        return operations;
+    }
+
+    private static void PrepareLaunchdUnit(
+        string repository,
+        string id,
+        bool includeTemplate = true,
+        bool includeRenderer = true,
+        bool includeCheck = true,
+        bool includeCheckTarget = true)
+    {
+        if (includeTemplate) TrackFile(repository, $".fkst/launchd/{id}.plist.in");
+        if (includeRenderer) TrackFile(repository, $".fkst/scripts/render-{id}-launcher.sh");
+        if (includeCheck) TrackFile(repository, $".fkst/scripts/check-{id}-launcher.sh");
+
+        var makefile = new List<string>
+        {
+            "hourly-maintenance:",
+            "\t@/bin/bash ops/scripts/synthetic-maintenance.sh",
+        };
+        if (includeRenderer)
+        {
+            makefile.AddRange(
+            [
+                $"{id}-launcher-render:",
+                $"\t@/bin/bash .fkst/scripts/render-{id}-launcher.sh",
+            ]);
+        }
+        if (includeCheck && includeCheckTarget)
+        {
+            makefile.AddRange(
+            [
+                $"{id}-launcher-check:",
+                $"\t@/bin/bash .fkst/scripts/check-{id}-launcher.sh",
+            ]);
+        }
+        WriteFile(repository, "Makefile", string.Join('\n', makefile) + "\n");
+        Git(repository, "add", "--", "Makefile");
+    }
 
     private static void TrackFile(string repository, string path)
     {

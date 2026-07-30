@@ -1,6 +1,6 @@
-schema_version = 2
+schema_version = 3
 host_contract_schema = ".fkst/host-contract.schema"
-launcher_template = ".fkst/launchd/maintenance.plist.in"
+launchd_units = ["maintenance", "supervise"]
 
 [[operations]]
 id = "hourly-maintenance"
@@ -80,6 +80,54 @@ external_tools = [
   "mv",
   "plutil",
   "pwd",
+  "rm",
+  "sed",
+]
+
+[[operations]]
+id = "supervise-launcher-render"
+make_target = "supervise-launcher-render"
+implementation = ".fkst/scripts/render-supervise-launcher.sh"
+tests = [
+  ".fkst/tests/supervise-launcher-behavior.sh",
+  "Meta/StrataLint/StrataLint.ArchitectureTests/Operations/OperationalEntrypointTests.cs",
+  "Meta/StrataLint/StrataLint.Tests/Commands/MakeWorkflowTests.cs",
+]
+external_tools = [
+  "bash",
+  "basename",
+  "chmod",
+  "dirname",
+  "grep",
+  "mktemp",
+  "mv",
+  "plutil",
+  "pwd",
+  "python3",
+  "sed",
+]
+
+[[operations]]
+id = "supervise-launcher-check"
+make_target = "supervise-launcher-check"
+implementation = ".fkst/scripts/check-supervise-launcher.sh"
+tests = [
+  ".fkst/tests/supervise-launcher-behavior.sh",
+  "Meta/StrataLint/StrataLint.ArchitectureTests/Operations/OperationalEntrypointTests.cs",
+  "Meta/StrataLint/StrataLint.Tests/Commands/MakeWorkflowTests.cs",
+]
+external_tools = [
+  "bash",
+  "basename",
+  "chmod",
+  "cmp",
+  "dirname",
+  "grep",
+  "mktemp",
+  "mv",
+  "plutil",
+  "pwd",
+  "python3",
   "rm",
   "sed",
 ]
