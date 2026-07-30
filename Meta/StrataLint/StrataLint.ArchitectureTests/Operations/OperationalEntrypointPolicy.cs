@@ -245,6 +245,7 @@ internal static class OperationalEntrypointPolicy
         }
 
         var findings = new List<OperationalEntrypointFinding>();
+        var candidatePathsByUnit = new Dictionary<string, List<string>>(StringComparer.Ordinal);
         foreach (var path in launchdCandidates.Order(StringComparer.Ordinal))
         {
             var match = Regex.Match(
@@ -254,13 +255,33 @@ internal static class OperationalEntrypointPolicy
                 TimeSpan.FromSeconds(1));
             if (match.Success)
             {
-                units.Add(match.Groups[1].Value);
+                var id = match.Groups[1].Value;
+                units.Add(id);
+                if (!candidatePathsByUnit.TryGetValue(id, out var paths))
+                {
+                    paths = [];
+                    candidatePathsByUnit.Add(id, paths);
+                }
+                paths.Add(path);
             }
             else
             {
                 findings.Add(new OperationalEntrypointFinding(
                     path,
-                    "noncanonical launchd plist candidate; expected <unit-id>.plist or <unit-id>.plist.in"));
+                    "noncanonical launchd entry; expected <unit-id>.plist or <unit-id>.plist.in"));
+            }
+        }
+        foreach (var (id, paths) in candidatePathsByUnit.Where(static item => item.Value.Count > 1))
+        {
+            var canonicalTemplate = $".fkst/launchd/{id}.plist.in";
+            foreach (var path in paths.Where(path => !string.Equals(
+                         path,
+                         canonicalTemplate,
+                         StringComparison.Ordinal)))
+            {
+                findings.Add(new OperationalEntrypointFinding(
+                    path,
+                    $"additional launchd path for unit {id}; canonical template is {canonicalTemplate}"));
             }
         }
 
@@ -282,9 +303,7 @@ internal static class OperationalEntrypointPolicy
 
     private static void AddLaunchdCandidate(string path, ISet<string> candidates)
     {
-        if (path.StartsWith(".fkst/launchd/", StringComparison.Ordinal)
-            && (path.EndsWith(".plist", StringComparison.OrdinalIgnoreCase)
-                || path.EndsWith(".plist.in", StringComparison.OrdinalIgnoreCase)))
+        if (path.StartsWith(".fkst/launchd/", StringComparison.Ordinal))
         {
             candidates.Add(path);
         }

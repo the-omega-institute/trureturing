@@ -341,6 +341,47 @@ public sealed class OperationalEntrypointTests
             });
     }
 
+    [Fact]
+    public void AdditionalCanonicalPlistForDeclaredLaunchdUnitIsRejectedByPath()
+    {
+        WithRepository(
+            LaunchdOperations("synthetic"),
+            repository =>
+            {
+                PrepareLaunchdUnit(repository, "synthetic");
+                WriteFile(repository, ".fkst/launchd/synthetic.plist", "<plist/>\n");
+
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
+
+                Assert.Equal(".fkst/launchd/synthetic.plist", finding.Path);
+                Assert.Contains(
+                    "additional launchd path for unit synthetic",
+                    finding.Message,
+                    StringComparison.Ordinal);
+            },
+            launchdUnits: ["synthetic"]);
+    }
+
+    [Fact]
+    public void ExtensionlessLaunchdSymlinkIsRejected()
+    {
+        WithRepository(
+            [Operation("hourly-maintenance", "ops/scripts/synthetic-maintenance.sh")],
+            repository =>
+            {
+                TrackFile(repository, "ops/scripts/synthetic-maintenance.sh");
+                TrackSymlinkMode(repository, ".fkst/launchd/rogue");
+
+                var finding = Assert.Single(OperationalEntrypointPolicy.InspectRepository(repository, []));
+
+                Assert.Equal(".fkst/launchd/rogue", finding.Path);
+                Assert.Contains(
+                    "noncanonical launchd entry",
+                    finding.Message,
+                    StringComparison.Ordinal);
+            });
+    }
+
     [Theory]
     [InlineData("local.fkst.synthetic.worker.plist")]
     [InlineData("synthetic_worker.plist")]
@@ -363,7 +404,7 @@ public sealed class OperationalEntrypointTests
 
                 Assert.Equal($".fkst/launchd/{relativePath}", finding.Path);
                 Assert.Contains(
-                    "noncanonical launchd plist candidate",
+                    "noncanonical launchd entry",
                     finding.Message,
                     StringComparison.Ordinal);
             });

@@ -4,6 +4,7 @@
 set -uo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
+REPOSITORY_ROOT="$(cd -- "$SCRIPT_DIR/../.." && pwd -P)"
 # shellcheck source=.fkst/scripts/host-contract.sh
 source "$SCRIPT_DIR/host-contract.sh"
 
@@ -67,6 +68,22 @@ validate_configuration() {
       "$(dirname -- "$FKST_MAINTENANCE_LOG")" >&2
     return 2
   }
+}
+
+check_launchd_conformance() {
+  local make_bin="${FKST_MAKE_BIN:-}"
+  if [[ -z "$make_bin" ]]; then
+    make_bin="$(command -v make)" \
+      || { printf 'hourly-maintenance: make is unavailable\n' >&2; return 2; }
+  fi
+  [[ "$make_bin" == /* && -f "$make_bin" && -x "$make_bin" ]] \
+    || {
+      printf 'hourly-maintenance: make is not an executable absolute path: %s\n' \
+        "$make_bin" >&2
+      return 2
+    }
+  HOST_CONFIG="$HOST_CONFIG" FKST_MAKE_BIN="$make_bin" \
+    "$make_bin" -s -C "$REPOSITORY_ROOT" launchd-conformance-check
 }
 
 restore_platform_bytes() {
@@ -407,7 +424,8 @@ main() {
   sync_checkout
   gc_worktrees
   gc_stuck_lean_builds
-  restart_if_needed
+  restart_if_needed || return
+  check_launchd_conformance
 }
 
 if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then

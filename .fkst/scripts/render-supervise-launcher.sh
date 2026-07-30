@@ -164,15 +164,40 @@ def tables(data, key, role):
     return value
 
 
-def composition(data, role):
-    sources = [item for item in tables(data, "external_sources", role) if item.get("id") == SOURCE_ID]
+def source_composition(data, role):
+    all_sources = tables(data, "external_sources", role)
+    source_ids = []
+    for source in all_sources:
+        source_id = source.get("id")
+        git_url = source.get("git")
+        rev = source.get("rev")
+        packages = source.get("packages")
+        libraries = source.get("libraries")
+        if (
+            not isinstance(source_id, str)
+            or re.fullmatch(r"[a-z0-9][a-z0-9-]*", source_id) is None
+        ):
+            fail(f"{role} contains an invalid external source id")
+        if not isinstance(git_url, str) or not git_url:
+            fail(f"{role} external source {source_id} is missing git")
+        if not isinstance(rev, str) or REV_RE.fullmatch(rev) is None:
+            fail(f"{role} external source {source_id} rev is not a full git SHA")
+        for field, values in (("packages", packages), ("libraries", libraries)):
+            if (
+                not isinstance(values, list)
+                or any(not isinstance(item, str) or not item for item in values)
+                or len(values) != len(set(values))
+            ):
+                fail(f"{role} external source {source_id} {field} are invalid")
+        source_ids.append(source_id)
+    if len(source_ids) != len(set(source_ids)):
+        fail(f"{role} contains duplicate external source ids")
+    sources = [item for item in all_sources if item.get("id") == SOURCE_ID]
     if len(sources) != 1:
         fail(f"{role} must declare exactly one {SOURCE_ID} source")
     source = sources[0]
     git_url = source.get("git")
     packages = source.get("packages")
-    if not isinstance(git_url, str) or not git_url:
-        fail(f"{role} {SOURCE_ID} source is missing git")
     if (
         not isinstance(packages, list)
         or not packages
@@ -197,7 +222,7 @@ def composition(data, role):
         host_packages.append(path.parts[1])
     if len(host_packages) != len(set(host_packages)):
         fail(f"{role} host packages contain duplicates")
-    return packages, host_packages, git_url
+    return packages, host_packages, source, all_sources
 
 
 try:
@@ -211,8 +236,14 @@ try:
     tracked = load_toml(tracked_path, "tracked workspace manifest")
     target = load_toml(target_path, "target workspace manifest")
     lock = load_toml(lock_path, "target lockfile")
-    tracked_platform, tracked_host, _ = composition(tracked, "tracked workspace manifest")
-    target_platform, target_host, target_git = composition(target, "target workspace manifest")
+    tracked_platform, tracked_host, _, _ = source_composition(
+        tracked,
+        "tracked workspace manifest",
+    )
+    target_platform, target_host, target_source, target_sources = source_composition(
+        target,
+        "target workspace manifest",
+    )
     if (
         target_platform != tracked_platform
         or target_host != tracked_host
@@ -220,17 +251,51 @@ try:
         or requested_host != tracked_host
     ):
         fail("runtime package composition differs from the tracked checkout")
+    for package in requested_platform:
+        owners = [
+            source.get("id")
+            for source in target_sources
+            if package in source.get("packages", [])
+        ]
+        if len(owners) != 1:
+            fail(f"requested platform package {package} has ambiguous ownership")
+        if owners[0] != SOURCE_ID:
+            fail(f"requested platform package {package} belongs to unexpected source {owners[0]}")
 
     lock_sources = [item for item in tables(lock, "external_source", "target lockfile") if item.get("id") == SOURCE_ID]
     if len(lock_sources) != 1:
         fail(f"target lockfile must contain exactly one {SOURCE_ID} source")
     lock_source = lock_sources[0]
+    intent = lock_source.get("intent")
     resolved = lock_source.get("resolved")
+    intended_rev = intent.get("rev") if isinstance(intent, dict) else None
     locked_rev = resolved.get("rev") if isinstance(resolved, dict) else None
+    workspace_rev = target_source.get("rev")
+    target_git = target_source.get("git")
     if lock_source.get("git") != target_git:
         fail("target workspace source git differs from target lockfile")
+    if not isinstance(intended_rev, str) or REV_RE.fullmatch(intended_rev) is None:
+        fail("target lockfile intent.rev is not a full git SHA")
     if not isinstance(locked_rev, str) or REV_RE.fullmatch(locked_rev) is None:
         fail("target lockfile resolved.rev is not a full git SHA")
+    if intended_rev.lower() != locked_rev.lower():
+        fail("target lockfile intent.rev differs from resolved.rev")
+    if workspace_rev.lower() != intended_rev.lower():
+        fail("target workspace source rev differs from target lockfile")
+    lock_libraries = lock_source.get("libraries")
+    if (
+        not isinstance(lock_libraries, list)
+        or any(not isinstance(item, dict) for item in lock_libraries)
+    ):
+        fail("target lockfile libraries must be a table array")
+    lock_library_names = [item.get("name") for item in lock_libraries]
+    if (
+        any(not isinstance(name, str) or not name for name in lock_library_names)
+        or len(lock_library_names) != len(set(lock_library_names))
+    ):
+        fail("target lockfile library names are invalid")
+    if target_source.get("libraries") != lock_library_names:
+        fail("target workspace libraries differ from target lockfile")
 
     try:
         platform_head = subprocess.run(

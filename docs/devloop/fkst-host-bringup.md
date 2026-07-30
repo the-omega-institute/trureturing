@@ -40,6 +40,11 @@ export FKST_TIMEOUT_BIN=<absolute-path-to-timeout-command>
 export FKST_LAUNCHD_LABEL=<loaded-supervisor-launchd-label>
 export FKST_MAINTENANCE_LAUNCHD_LABEL=<maintenance-launchd-label-for-this-machine>
 export FKST_MAINTENANCE_LAUNCHER_PATH=<absolute-path-to-rendered-maintenance-plist>
+export FKST_BASH_BIN=<absolute-path-to-bash>
+export FKST_ZSH_BIN=<absolute-path-to-zsh>
+export FKST_PYTHON_BIN=<absolute-path-to-python3>
+export FKST_SUPERVISE_LAUNCHER_LOG=<absolute-path-to-supervise-launchd-output-log>
+export FKST_SUPERVISE_LAUNCHER_PATH=<absolute-path-to-rendered-supervise-plist>
 ```
 
 The `source` line is data to the strict maintenance parser: it must appear exactly as shown. It
@@ -52,6 +57,11 @@ non-evaluating assignment grammar, and any other shell statement is rejected. Th
 lifecycle script still sources `host.env` because migration of the already-running supervise
 launcher is outside this maintenance-launcher increment; keep this file within the restricted
 grammar so both consumers receive the same values.
+
+Existing hosts must add the five supervise provider keys above to their operator-owned
+`host.env` before the first maintenance cycle using this revision. Do not edit the file from a
+repository migration. The periodic conformance gate fails closed when any provider key is absent
+and names the missing key as `required host key <KEY> is unset`; it never skips the affected unit.
 
 ## 3. Validate and render
 
@@ -83,14 +93,17 @@ target in the dedicated checkout.
 
 ## 5. Verify deployment conformance
 
-Run both checks after loading and after every checkout update that changes the contract, template,
-or renderer:
+Run the inventory-wide conformance check after loading and after every checkout update that
+changes the contract, a launchd template, or a renderer:
 
 ```sh
-make maintenance-launcher-check HOST_CONFIG="<absolute-path-to-host.env>"
+make launchd-conformance-check HOST_CONFIG="<absolute-path-to-host.env>"
 launchctl print "gui/$(id -u)/<maintenance-launchd-label-for-this-machine>"
 ```
 
-The first command exits zero only when the deployed plist is byte-for-byte identical to a fresh
-render from the tracked template and this host's values. The second must show the same label,
-09:30 calendar interval, log path, checkout path, bot login, and integration branch.
+The first command exits zero only when host launchd membership exactly matches the repository
+inventory and every deployed plist is byte-for-byte identical to a fresh render from the tracked
+template and this host's values. `make hourly-maintenance` delegates this same gate after its
+normal cycle and propagates any gate failure as a failed periodic run. The second command must
+show the same label, 09:30 calendar interval, log path, checkout path, bot login, and integration
+branch.

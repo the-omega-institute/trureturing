@@ -296,6 +296,8 @@ assert_cross_checkout_composition_drift_is_rejected() {
   return "$status"
 }
 
+. "$REPOSITORY_ROOT/.fkst/tests/support/supervise-runtime-contract-cases.sh"
+
 prepare_runtime_package_contract() {
   local scratch="$1" package_data kind package platform_rev
   package_data="$(python3 - "$REPOSITORY_ROOT/.fkst/fkst.workspace.toml" <<'PY'
@@ -337,7 +339,8 @@ EOF
   git -C "$scratch/platform" add -- .
   git -C "$scratch/platform" commit -m fixture >/dev/null
   platform_rev="$(git -C "$scratch/platform" rev-parse HEAD)"
-  cp "$REPOSITORY_ROOT/.fkst/fkst.workspace.toml" "$scratch/checkout/fkst.workspace.toml"
+  sed "s/07ed65100c8f189ee718aca6bd757f25694c62d0/$platform_rev/g" \
+    "$REPOSITORY_ROOT/.fkst/fkst.workspace.toml" > "$scratch/checkout/fkst.workspace.toml"
   sed "s/07ed65100c8f189ee718aca6bd757f25694c62d0/$platform_rev/g" \
     "$REPOSITORY_ROOT/.fkst/fkst.lock" > "$scratch/checkout/fkst.lock"
 }
@@ -611,6 +614,54 @@ EOF
     pass "supervise renderer rejects cross-checkout composition drift"
   else
     fail "supervise renderer rejects cross-checkout composition drift"
+  fi
+
+  if assert_workspace_rev_drift_is_rejected "$scratch" "$host_config"; then
+    pass "supervise renderer rejects workspace rev drift"
+  else
+    fail "supervise renderer rejects workspace rev drift"
+  fi
+
+  if assert_lock_intent_drift_is_rejected "$scratch" "$host_config"; then
+    pass "supervise renderer rejects lock intent drift"
+  else
+    fail "supervise renderer rejects lock intent drift"
+  fi
+
+  if assert_workspace_lock_git_drift_is_rejected "$scratch" "$host_config"; then
+    pass "supervise renderer rejects workspace-lock git drift"
+  else
+    fail "supervise renderer rejects workspace-lock git drift"
+  fi
+
+  if assert_lock_rev_platform_head_drift_is_rejected "$scratch" "$host_config"; then
+    pass "supervise renderer rejects lock rev and platform HEAD drift"
+  else
+    fail "supervise renderer rejects lock rev and platform HEAD drift"
+  fi
+
+  if assert_platform_origin_drift_is_rejected "$scratch" "$host_config"; then
+    pass "supervise renderer rejects platform origin drift"
+  else
+    fail "supervise renderer rejects platform origin drift"
+  fi
+
+  if assert_duplicate_lock_source_is_rejected "$scratch" "$host_config"; then
+    pass "supervise renderer rejects duplicate lock sources"
+  else
+    fail "supervise renderer rejects duplicate lock sources"
+  fi
+
+  if assert_lock_libraries_drift_is_rejected "$scratch" "$host_config"; then
+    pass "supervise renderer rejects lock library drift"
+  else
+    fail "supervise renderer rejects lock library drift"
+  fi
+
+  if assert_ambiguous_external_source_is_rejected "$scratch" "$host_config"; then
+    pass "supervise renderer rejects ambiguous external package ownership"
+  else
+    fail "supervise renderer rejects ambiguous external package ownership"
   fi
 
   if assert_existing_invalid_log_path_is_rejected "$scratch" "$host_config"; then

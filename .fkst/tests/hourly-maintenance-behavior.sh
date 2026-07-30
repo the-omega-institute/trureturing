@@ -619,9 +619,10 @@ write_host_contract_fixture() {
     printf 'export FKST_LAUNCHD_LABEL=%s\n' 'local.fkst.synthetic.supervise'
     printf 'export FKST_MAINTENANCE_LAUNCHD_LABEL=%s\n' 'local.fkst.synthetic.maintenance'
     printf 'export FKST_MAINTENANCE_LAUNCHER_PATH=%s\n' "$FIXTURE_LAUNCHER_PATH"
+    printf 'export FKST_PYTHON_BIN=%s\n' "$(command -v python3)"
   } > "$FIXTURE_HOST_CONFIG"
 }
-
+. "$REPOSITORY_ROOT/.fkst/tests/support/hourly-maintenance-launchd-cases.sh"
 tracked_entrypoint_loads_strict_host_config() (
   local root output
   root="$(mktemp -d -t hourly-maintenance-host-contract.XXXXXX)" || exit 1
@@ -678,7 +679,11 @@ SH
 [[ "$*" == *"issue list"* ]] || exit 8
 printf '1\n'
 SH
-  chmod +x "$root/bin/pgrep" "$root/bin/gh"
+  cat > "$root/bin/make" <<'SH'
+#!/usr/bin/env bash
+exit 0
+SH
+  chmod +x "$root/bin/pgrep" "$root/bin/gh" "$root/bin/make"
 
   env -i HOME="$root/home" PATH="/usr/bin:/bin" \
     /bin/bash "$SCRIPT_UNDER_TEST" --host-config "$FIXTURE_HOST_CONFIG" \
@@ -781,6 +786,9 @@ run_test "slot reclaim rechecks owner after atomic claim" slot_reclaim_rechecks_
 run_test "restart health requires successful stop and new PID" restart_health_requires_successful_stop_and_new_pid
 run_test "rollback failure is not reported as reverted" rollback_failure_is_not_reported_as_reverted
 run_test "pin-write rollback failure is not reported as reverted" pin_write_rollback_failure_is_not_reported_as_reverted
+run_test "maintenance delegates launchd conformance gate" maintenance_delegates_launchd_conformance_gate
+run_test "launchd conformance failure fails maintenance cycle" launchd_conformance_failure_fails_maintenance_cycle
+run_test "missing launchd provider key fails maintenance cycle" missing_launchd_provider_key_fails_maintenance_cycle
 run_test "tracked entrypoint loads strict host config" tracked_entrypoint_loads_strict_host_config
 run_test "stale deployed repository contract does not block checkout refresh" stale_deployed_repository_contract_does_not_block_checkout_refresh
 run_test "host config rejects shell control flow without evaluation" host_config_rejects_shell_control_flow_without_evaluation
