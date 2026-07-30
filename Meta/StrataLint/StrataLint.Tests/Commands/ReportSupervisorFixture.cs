@@ -38,8 +38,14 @@ internal sealed class ReportSupervisorFixture : IDisposable
             env STRATALINT_REPORT_METRICS_LOG="$metrics" STRATALINT_SUPERVISOR_ROOT="$state" \
               "$supervisor" --role lean-producer --lean-slot -- "$worker" "$active" "$overlap" &
             second=$!
-            wait "$first"
-            wait "$second"
+            first_status=0
+            second_status=0
+            wait "$first" || first_status=$?
+            wait "$second" || second_status=$?
+            if [[ "$first_status" != 0 || "$second_status" != 0 ]]; then
+              printf 'producer statuses: first=%s second=%s\n' "$first_status" "$second_status" >&2
+              exit 1
+            fi
             """);
         LongRunningWorker = WriteExecutable("long-running-worker.sh", """
             #!/usr/bin/env bash
