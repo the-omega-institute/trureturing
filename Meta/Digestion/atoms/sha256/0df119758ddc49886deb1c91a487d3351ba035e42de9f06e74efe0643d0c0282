@@ -1,0 +1,2 @@
+**E.110 负 CF 机与号型定律**。负 CF(Hirzebruch–Jung)圈机正典化(流-圈 $\leftrightarrow$ 窄类双射);$h(p){=}1$ 域单向圈亏和 $\Sigma(b_i{-}3)=3h(-p)$(五十余素);**反对称定理**(全圈总和恒零;圈反演=类求逆翻号,一行)。文献轮:Zagier《Nombres de classes et fractions continues》(Astérisque 24-25 (1975) 81–97)原文取证成功——式 $(23)$(一般-$h$ 亏格加权式)、$(24)$($h{=}1$ 特例)、引理 $(26)$($n_A=\Sigma(b_i{-}3)$)、§V"signes convenables"。**号型定律(全证级,$154/154$)**:$\boxed{3h(-p)=\sum_{C:n_C>0}\chi(C)n_C}$,$\chi(C)=(\tfrac{-4}{a_C})$——号型即 $4p=(-4)(-p)$ 之亏格特征标;二千内一百五十四素零例外,含全部 $h{>}1$ 疑难行。候引转实引。(27.527–27.528)
+

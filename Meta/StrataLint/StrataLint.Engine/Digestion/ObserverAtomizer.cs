@@ -78,6 +78,18 @@ internal static class ObserverAtomizer
             _ when Starts(paragraph, "**§12.1 互反-干涉庭(\"真理一半看不见\")**") => "semantic-court/reciprocity-interference",
             _ when Starts(paragraph, "**§12.2 投影-干涉庭与署名**") => "semantic-court/projection-interference",
             _ when Starts(paragraph, "**§12.3 滤镜与视界庭(Fable/Mythos)**") => "semantic-court/filters-and-horizons",
+            _ when Starts(paragraph, "**§13.1 商定理与首枚外部定理样本**") => "quotient-court/quotient-theorem",
+            _ when Starts(paragraph, "**§13.2 对数钟之算术分店(指针)**") => "quotient-court/log-clock-arithmetic",
+            _ when Starts(paragraph, "**§13.3 边界与署名**") => "quotient-court/boundary-signature",
+            _ when Starts(paragraph, "**§14.1 定理脊柱(全部自含证明与证书,居本文辖区)**") => "formal-volume/theorem-spine",
+            _ when Starts(paragraph, "**§14.2 合成判词与两条新焊缝**") => "formal-volume/synthesis-welds",
+            _ when Starts(paragraph, "**§14.3 边界与申报**") => "formal-volume/boundary-declaration",
+            _ when Starts(paragraph, "**§15.1 账本公理之定理化**") => "ledger-axioms/theoremization",
+            _ when Starts(paragraph, "**§15.2 本体对象之谓词分家与投影族**") => "ledger-axioms/ontic-predicate-split",
+            _ when Starts(paragraph, "**§15.3 边界与申报**") => "ledger-axioms/boundary-declaration",
+            _ when Starts(paragraph, "**§16.1 观察者之钟(运动学定理三条 + 证书)**") => "observer-clock/clock-rate-theorems",
+            _ when Starts(paragraph, "**§16.2 形与签(本文主张之二分定理化)**") => "observer-clock/form-signature-split",
+            _ when Starts(paragraph, "**§16.3 测量论之算术同址(指针)**") => "observer-clock/measurement-arithmetic",
             _ => null,
         };
         if (locator is null && HasBoldClaimLead(paragraph))
