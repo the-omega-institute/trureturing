@@ -149,10 +149,30 @@ public sealed class MakeWorkflowTests
         var prWatchHelp = Assert.Single(
             output.Split('\n'),
             static line => line.StartsWith("make pr-watch ", StringComparison.Ordinal));
-        Assert.Matches(
+        var stalePolicyClause = Assert.Single(
+            prWatchHelp.Split(
+                ';',
+                StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries),
+            static clause => Regex.IsMatch(
+                clause,
+                @"\bstale\b",
+                RegexOptions.CultureInvariant));
+        Assert.All(
+            new[]
+            {
+                @"\bstale\b",
+                @"\bBEHIND\b",
+                @"\bCONFLICTING\b",
+                @"\bpersistent-worktree\b",
+                @"\bpath classification\b",
+            },
+            pattern => Assert.Matches(
+                new Regex(pattern, RegexOptions.CultureInvariant),
+                stalePolicyClause));
+        Assert.DoesNotMatch(
             new Regex(
-                @"\bstale\b.*\bBEHIND\b.*\bCONFLICTING\b.*\bpersistent-worktree\b.*\bpath classification\b",
-                RegexOptions.CultureInvariant),
+                @"\b(?:do\s+not|never|excludes|disables|prevents)\b",
+                RegexOptions.CultureInvariant | RegexOptions.IgnoreCase),
             prWatchHelp);
         Assert.Matches(
             new Regex(
