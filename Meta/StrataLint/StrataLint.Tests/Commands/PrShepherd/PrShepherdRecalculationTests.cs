@@ -56,6 +56,7 @@ public sealed partial class PrShepherdRecalculationTests
         private readonly string headBranch;
         private readonly bool pauseWorktreeCreation;
         private readonly bool delayFirstLockOwnerRead;
+        private readonly bool conflicting;
         private int devAdvance;
 
         internal ShepherdFixture(
@@ -66,7 +67,8 @@ public sealed partial class PrShepherdRecalculationTests
             bool devDeletesDerived = false,
             string headBranch = "feature",
             bool pauseWorktreeCreation = false,
-            bool delayFirstLockOwnerRead = false)
+            bool delayFirstLockOwnerRead = false,
+            bool conflicting = false)
         {
             this.failingTarget = failingTarget;
             this.moveHeadBeforePush = moveHeadBeforePush;
@@ -74,6 +76,7 @@ public sealed partial class PrShepherdRecalculationTests
             this.headBranch = headBranch;
             this.pauseWorktreeCreation = pauseWorktreeCreation;
             this.delayFirstLockOwnerRead = delayFirstLockOwnerRead;
+            this.conflicting = conflicting;
             origin = Path.Combine(temporary.Path, "origin.git");
             repository = Path.Combine(temporary.Path, "repository");
             seed = Path.Combine(temporary.Path, "seed");
@@ -179,6 +182,7 @@ public sealed partial class PrShepherdRecalculationTests
                 $"PR_TEST_FAIL_MERGE={(failMergeWithoutConflict ? "1" : "0")}",
                 $"PR_TEST_PAUSE_WORKTREE={(pauseWorktreeCreation ? "1" : "0")}",
                 $"PR_TEST_DELAY_LOCK_READ={(delayFirstLockOwnerRead ? "1" : "0")}",
+                $"PR_TEST_CONFLICTING={(conflicting ? "1" : "0")}",
                 $"PR_TEST_LOCK_READ_MARKER={Path.Combine(temporary.Path, "lock-read-marker")}",
                 $"SHEPHERD_DRYRUN={(dryRun ? "1" : "0")}",
                 "GH_TOKEN=must-not-reach-candidate-producers",
@@ -368,6 +372,8 @@ public sealed partial class PrShepherdRecalculationTests
                   base="$(git --git-dir "$PR_TEST_ORIGIN" rev-parse refs/heads/dev)"
                   if [[ "${PR_TEST_NO_CHECKS:-0}" == 1 ]]; then
                     row="1	MERGEABLE	BLOCKED	${PR_TEST_HEAD}	${head}	${base}	0	-	-"
+                  elif [[ "${PR_TEST_CONFLICTING:-0}" == 1 ]]; then
+                    row="1	CONFLICTING	DIRTY	${PR_TEST_HEAD}	${head}	${base}	1	FAILURE	https://github.com/fixture/repository/actions/runs/123/job/456"
                   else
                     row="1	MERGEABLE	BEHIND	${PR_TEST_HEAD}	${head}	${base}	1	FAILURE	https://github.com/fixture/repository/actions/runs/123/job/456"
                   fi
@@ -457,7 +463,7 @@ public sealed partial class PrShepherdRecalculationTests
                 [[ -z "${GITHUB_TOKEN+x}" ]] || exit 92
                 [[ "$*" == *"echo-verify --emit --base origin/dev"* ]] || exit 96
                 printf 'echo-verify\n' >> "$PR_TEST_CALLS"
-                printf '%s\n' '<!-- echo-residual-summary:v2 base=git-sha1:1111111111111111111111111111111111111111 -->' '# Echo Residual Summary'
+                printf '%s\n' '<!-- echo-residual-summary:v3 residual=sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->' '# Echo Residual Summary'
                 """);
             WriteExecutable(
                 "git",
