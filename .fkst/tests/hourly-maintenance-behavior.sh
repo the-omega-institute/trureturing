@@ -6,6 +6,9 @@ export LANG=C
 
 REPOSITORY_ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd -P)"
 SCRIPT_UNDER_TEST="$REPOSITORY_ROOT/.fkst/scripts/hourly-maintenance.sh"
+HOST_CONTRACT_LOADER="$REPOSITORY_ROOT/.fkst/scripts/host-contract.sh"
+LAUNCHER_RENDERER="$REPOSITORY_ROOT/.fkst/scripts/render-maintenance-launcher.sh"
+LAUNCHER_CONFORMANCE="$REPOSITORY_ROOT/.fkst/scripts/check-maintenance-launcher.sh"
 PASS_COUNT=0
 FAIL_COUNT=0
 
@@ -82,9 +85,9 @@ SH
 }
 
 export_platform_environment() {
-  export FKST_CHECKOUT_ROOT="$CHECKOUT_ROOT"
+  export FKST_HOST_ROOT="$CHECKOUT_ROOT"
   export FKST_PLATFORM_ROOT="$PLATFORM_ROOT"
-  export FKST_FRAMEWORK_BIN="$FRAMEWORK_BIN"
+  export BIN="$FRAMEWORK_BIN"
   export FKST_MAINTENANCE_LOG="$LOG_FILE"
   export FKST_TIMEOUT_BIN="$TIMEOUT_BIN"
 }
@@ -209,7 +212,7 @@ checkout_fast_forwards_only_clean_ancestors() (
   export FKST_MAINTENANCE_LOG="$LOG_FILE"
   create_checkout_history_fixture "$root" || exit 1
   advance_checkout_dev first || exit 1
-  export FKST_CHECKOUT_ROOT="$CHECKOUT_ROOT"
+  export FKST_HOST_ROOT="$CHECKOUT_ROOT"
 
   sync_checkout || fail "clean ancestor sync should be nonfatal"
   [[ "$(command git -C "$CHECKOUT_ROOT" rev-parse HEAD)" == "$CHECKOUT_DEV_REV" ]] \
@@ -241,7 +244,7 @@ checkout_divergence_refuses_auto_fast_forward() (
   git_quiet -C "$CHECKOUT_ROOT" commit -m local || exit 1
   local local_head
   local_head="$(command git -C "$CHECKOUT_ROOT" rev-parse HEAD)"
-  export FKST_CHECKOUT_ROOT="$CHECKOUT_ROOT"
+  export FKST_HOST_ROOT="$CHECKOUT_ROOT"
 
   sync_checkout || fail "divergence refusal should be nonfatal"
   [[ "$(command git -C "$CHECKOUT_ROOT" rev-parse HEAD)" == "$local_head" ]] \
@@ -260,7 +263,7 @@ checkout_status_failure_refuses_auto_fast_forward() (
   export FKST_MAINTENANCE_LOG="$LOG_FILE"
   create_checkout_history_fixture "$root" || exit 1
   advance_checkout_dev remote || exit 1
-  export FKST_CHECKOUT_ROOT="$CHECKOUT_ROOT"
+  export FKST_HOST_ROOT="$CHECKOUT_ROOT"
   local real_git before
   real_git="$(command -v git)"
   before="$(command git -C "$CHECKOUT_ROOT" rev-parse HEAD)"
@@ -285,9 +288,9 @@ implementing_issues_defer_restart() (
   root="$(mktemp -d -t hourly-maintenance-defer.XXXXXX)" || exit 1
   trap 'rm -rf "$root"' EXIT
   mkdir -p "$root/bin" "$root/checkout" "$root/logs"
-  export FKST_CHECKOUT_ROOT="$root/checkout"
+  export FKST_HOST_ROOT="$root/checkout"
   export FKST_MAINTENANCE_LOG="$root/logs/hourly-maintenance.log"
-  export FKST_GITHUB_REPOSITORY="example/synthetic"
+  export FKST_GITHUB_REPO="example/synthetic"
   export FKST_RUN_SCRIPT="$root/bin/run-engine"
   export FKST_LAUNCHD_LABEL="com.example.synthetic-fkst"
   cat > "$FKST_RUN_SCRIPT" <<SH
@@ -371,9 +374,9 @@ printf 'CLOSED\n'
 SH
   chmod +x "$root/bin/gh"
   export PATH="$root/bin:$PATH"
-  export FKST_CHECKOUT_ROOT="$CHECKOUT_ROOT"
+  export FKST_HOST_ROOT="$CHECKOUT_ROOT"
   export FKST_WORKTREE_ROOT="$lanes"
-  export FKST_GITHUB_REPOSITORY="example/synthetic"
+  export FKST_GITHUB_REPO="example/synthetic"
   export FKST_MAINTENANCE_LOG="$root/logs/hourly-maintenance.log"
 
   gc_worktrees || fail "worktree GC should be nonfatal"
@@ -443,7 +446,7 @@ restart_health_requires_successful_stop_and_new_pid() (
   root="$(mktemp -d -t hourly-maintenance-restart-proof.XXXXXX)" || exit 1
   trap 'rm -rf "$root"' EXIT
   mkdir -p "$root/bin" "$root/checkout" "$root/logs"
-  export FKST_CHECKOUT_ROOT="$root/checkout"
+  export FKST_HOST_ROOT="$root/checkout"
   export FKST_MAINTENANCE_LOG="$root/logs/hourly-maintenance.log"
   export FKST_RUN_SCRIPT="$root/bin/run-engine"
   export FKST_LAUNCHD_LABEL="com.example.synthetic-fkst"
@@ -514,7 +517,7 @@ pin_write_rollback_failure_is_not_reported_as_reverted() (
   export_platform_environment
   cat > "$root/bin/mv" <<'SH'
 #!/usr/bin/env bash
-rm -f "$FKST_CHECKOUT_ROOT"/fkst.workspace.toml.bak-*
+rm -f "$FKST_HOST_ROOT"/fkst.workspace.toml.bak-*
 exit 9
 SH
   chmod +x "$root/bin/mv"
@@ -525,6 +528,133 @@ SH
     || fail "pin-write rollback failure was not reported"
   ! command grep -q 'reverted platform' "$FKST_MAINTENANCE_LOG" \
     || fail "failed pin-write rollback was falsely reported as reverted"
+)
+
+write_host_contract_fixture() {
+  local root="$1"
+  local bot_login="$2"
+  local integration_branch="$3"
+  FIXTURE_HOST_ROOT="$root/host-checkout"
+  FIXTURE_HOST_CONFIG="$root/host.env"
+  FIXTURE_LAUNCHER_PATH="$root/launchd/maintenance.plist"
+  mkdir -p \
+    "$FIXTURE_HOST_ROOT/.fkst/scripts" \
+    "$FIXTURE_HOST_ROOT/.fkst/workflows" \
+    "$root/bin" \
+    "$root/durable" \
+    "$root/launchd" \
+    "$root/logs" \
+    "$root/platform" \
+    "$root/rate-pools" \
+    "$root/runtime/worktrees" \
+    "$root/supervisor/slots"
+  command cp "$REPOSITORY_ROOT/.fkst/deploy.env" "$FIXTURE_HOST_ROOT/.fkst/deploy.env"
+  printf '#!/usr/bin/env bash\nexit 0\n' > "$root/bin/fkst-framework"
+  printf '#!/usr/bin/env bash\nshift\nexec "$@"\n' > "$root/bin/timeout"
+  printf '#!/usr/bin/env bash\nexit 0\n' > "$FIXTURE_HOST_ROOT/.fkst/scripts/run.sh"
+  chmod +x \
+    "$root/bin/fkst-framework" \
+    "$root/bin/timeout" \
+    "$FIXTURE_HOST_ROOT/.fkst/scripts/run.sh"
+  {
+    printf 'BIN=%s\n' "$root/bin/fkst-framework"
+    printf 'FKST_HOST_ROOT=%s\n' "$FIXTURE_HOST_ROOT"
+    printf 'FKST_PLATFORM_ROOT=%s\n' "$root/platform"
+    printf 'FKST_DURABLE_ROOT=%s\n' "$root/durable"
+    printf 'FKST_RUNTIME_ROOT=%s\n' "$root/runtime"
+    printf 'FKST_RATE_POOL_ROOT=%s\n' "$root/rate-pools"
+    printf 'FKST_WORKFLOW_CATALOG_ROOT=%s\n' "$FIXTURE_HOST_ROOT/.fkst/workflows"
+    printf 'PATH=%s\n' "$root/bin:/usr/bin:/bin"
+    printf '%s\n' 'source "$FKST_HOST_ROOT/.fkst/deploy.env"'
+    printf 'export FKST_GITHUB_BOT_LOGIN=%s\n' "$bot_login"
+    printf 'export FKST_DEVLOOP_INTEGRATION_BRANCH=%s\n' "$integration_branch"
+    printf 'export FKST_DEVLOOP_MANAGED_BOT_LOGINS=%s\n' "$bot_login"
+    printf 'export FKST_RUN_SCRIPT=%s\n' "$FIXTURE_HOST_ROOT/.fkst/scripts/run.sh"
+    printf 'export FKST_MAINTENANCE_LOG=%s\n' "$root/logs/hourly-maintenance.log"
+    printf 'export FKST_MAINTENANCE_LAUNCHER_LOG=%s\n' "$root/logs/maintenance-launcher.log"
+    printf 'export FKST_WORKTREE_ROOT=%s\n' "$root/runtime/worktrees"
+    printf 'export FKST_REPORT_SLOT_ROOT=%s\n' "$root/supervisor/slots"
+    printf 'export FKST_TIMEOUT_BIN=%s\n' "$root/bin/timeout"
+    printf 'export FKST_LAUNCHD_LABEL=%s\n' 'local.fkst.synthetic.supervise'
+    printf 'export FKST_MAINTENANCE_LAUNCHD_LABEL=%s\n' 'local.fkst.synthetic.maintenance'
+    printf 'export FKST_MAINTENANCE_LAUNCHER_PATH=%s\n' "$FIXTURE_LAUNCHER_PATH"
+  } > "$FIXTURE_HOST_CONFIG"
+}
+
+tracked_entrypoint_loads_strict_host_config() (
+  local root output
+  root="$(mktemp -d -t hourly-maintenance-host-contract.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  write_host_contract_fixture "$root" second-host-bot integration-second-host
+  output="$root/entrypoint.output"
+
+  env -i HOME="$root/home" PATH="/usr/bin:/bin" \
+    /usr/bin/make --no-print-directory -C "$REPOSITORY_ROOT" hourly-maintenance \
+    HOST_CONFIG="$FIXTURE_HOST_CONFIG" VALIDATE_ONLY=1 \
+    >"$output" 2>&1 \
+    || fail "tracked entrypoint did not accept the strict host contract: $(<"$output")"
+)
+
+host_config_rejects_shell_control_flow_without_evaluation() (
+  local root output pwned
+  root="$(mktemp -d -t hourly-maintenance-host-data.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  write_host_contract_fixture "$root" second-host-bot integration-second-host
+  output="$root/entrypoint.output"
+  pwned="$root/evaluated-shell"
+  printf 'FKST_HOST_ROOT=$(touch %s)\n' "$pwned" >> "$FIXTURE_HOST_CONFIG"
+
+  if env -i HOME="$root/home" PATH="/usr/bin:/bin" \
+      /bin/bash "$SCRIPT_UNDER_TEST" --validate-only --host-config "$FIXTURE_HOST_CONFIG" \
+      >"$output" 2>&1; then
+    fail "host config containing shell control flow was accepted"
+  fi
+  [[ ! -e "$pwned" ]] || fail "host config was evaluated as shell"
+  command grep -q 'invalid data line' "$output" \
+    || fail "strict parser did not identify the rejected data line: $(<"$output")"
+)
+
+fictional_second_host_launcher_is_portable() (
+  local root rendered
+  root="$(mktemp -d -t maintenance-launcher-render.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  write_host_contract_fixture "$root" second-host-bot integration-second-host
+  rendered="$root/rendered.plist"
+
+  HOST_CONFIG="$FIXTURE_HOST_CONFIG" OUTPUT="$rendered" \
+    /bin/bash "$LAUNCHER_RENDERER" \
+    || fail "fictional second-host launcher did not render"
+  command grep -qF "<string>$FIXTURE_HOST_ROOT</string>" "$rendered" \
+    || fail "rendered launcher did not contain the fictional checkout"
+  command grep -qF '<string>second-host-bot</string>' "$rendered" \
+    || fail "rendered launcher did not contain the fictional bot login"
+  command grep -qF '<string>integration-second-host</string>' "$rendered" \
+    || fail "rendered launcher did not contain the fictional integration branch"
+  command grep -qF "<string>$root/logs/maintenance-launcher.log</string>" "$rendered" \
+    || fail "rendered launcher did not use the distinct launcher log"
+  command grep -qF '<string>hourly-maintenance</string>' "$rendered" \
+    || fail "rendered launcher does not invoke the Make entrypoint"
+  ! command grep -qF 'safe-platform-sync.sh' "$rendered" \
+    || fail "rendered launcher still invokes a host-local script copy"
+)
+
+launcher_conformance_compares_rendered_and_deployed_bytes() (
+  local root deployed
+  root="$(mktemp -d -t maintenance-launcher-conformance.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  write_host_contract_fixture "$root" second-host-bot integration-second-host
+  deployed="$root/deployed.plist"
+  HOST_CONFIG="$FIXTURE_HOST_CONFIG" OUTPUT="$deployed" \
+    /bin/bash "$LAUNCHER_RENDERER" || exit 1
+
+  HOST_CONFIG="$FIXTURE_HOST_CONFIG" DEPLOYED_LAUNCHER="$deployed" \
+    /bin/bash "$LAUNCHER_CONFORMANCE" \
+    || fail "byte-identical deployed launcher was rejected"
+  printf '\n<!-- drift -->\n' >> "$deployed"
+  if HOST_CONFIG="$FIXTURE_HOST_CONFIG" DEPLOYED_LAUNCHER="$deployed" \
+      /bin/bash "$LAUNCHER_CONFORMANCE" >/dev/null 2>&1; then
+    fail "drifted deployed launcher was accepted"
+  fi
 )
 
 run_test() {
@@ -553,6 +683,10 @@ run_test "slot reclaim rechecks owner after atomic claim" slot_reclaim_rechecks_
 run_test "restart health requires successful stop and new PID" restart_health_requires_successful_stop_and_new_pid
 run_test "rollback failure is not reported as reverted" rollback_failure_is_not_reported_as_reverted
 run_test "pin-write rollback failure is not reported as reverted" pin_write_rollback_failure_is_not_reported_as_reverted
+run_test "tracked entrypoint loads strict host config" tracked_entrypoint_loads_strict_host_config
+run_test "host config rejects shell control flow without evaluation" host_config_rejects_shell_control_flow_without_evaluation
+run_test "fictional second-host launcher is portable" fictional_second_host_launcher_is_portable
+run_test "launcher conformance compares rendered and deployed bytes" launcher_conformance_compares_rendered_and_deployed_bytes
 
 printf 'behavior tests: %d passed, %d failed, %d total\n' \
   "$PASS_COUNT" "$FAIL_COUNT" "$((PASS_COUNT + FAIL_COUNT))"

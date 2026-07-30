@@ -31,15 +31,15 @@ bash .claude/skills/fkst-monitor/scripts/status.sh --watch
 - **Durable / DLQ** — `fkst-framework observe --durable-root ~/.fkst/trureturing/durable --json`: rising DLQ depth means deliveries are exhausting retries (a stage keeps failing — inspect the failing dept's `error_class`). `subscriber_status:absent` on a reliable queue means a consumer never started.
 - **Issue/PR processing** — `github_entity_changed` → `intake.admission` / `observe_issue` / `observe_pr` acks show the devloop is picking up and driving GitHub work. `error_class=codex-failed` with `No such file` means the `codex` binary is not on the supervise child PATH (fix in `host.env`, not source).
 
-## Run the hourly maintenance cycle
+## Run the maintenance cycle
 
 The repository-owned operational entrypoint is the Make target:
 
 ```console
-make hourly-maintenance
+make hourly-maintenance HOST_CONFIG="$HOME/.fkst/trureturing/host.env"
 ```
 
-The host launcher supplies the required absolute paths and deployment identity as environment parameters. The target delegates to the single tracked implementation; it synchronizes the deployed top-level platform pin and lock, fast-forwards only a clean ancestor checkout, defers restart while issues are implementing, and conservatively reclaims eligible worktrees and dead-owner report slots.
+The tracked entrypoint parses that file as data against `.fkst/host-contract.schema`; it does not source it. The target delegates to the single tracked implementation, which synchronizes the deployed top-level platform pin and lock, fast-forwards only a clean ancestor checkout, defers restart while issues are implementing, and conservatively reclaims eligible worktrees and dead-owner report slots. The tracked launchd template runs this same Make target daily at 09:30; setup and conformance commands are in `docs/devloop/fkst-host-bringup.md`.
 
 ## Diagnosing a stall
 

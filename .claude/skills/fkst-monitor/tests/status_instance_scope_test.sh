@@ -33,7 +33,7 @@ TIMESTAMP=2026-07-22T18:00:00Z LEVEL=INFO package_roots=["/prior/instance"] MSG=
 TIMESTAMP=2026-07-22T18:00:01Z LEVEL=INFO MSG=delivery acked
 [framework] startup error: parse raisers/frontier_poll.lua: deserialize error: invalid type: integer `1800`, expected a string
 TIMESTAMP=2026-07-22T18:00:03Z LEVEL=FATAL MSG=prior instance died
-exec: /Users/x/fkst-substrate/target/debug/fkst-framework supervise --project-root /Users/x/.fkst/trureturing/checkout --package-root /x
+exec: /opt/synthetic/fkst-framework supervise --project-root /opt/synthetic/checkout --package-root /opt/synthetic/packages
 TIMESTAMP=2026-07-22T19:46:16Z LEVEL=INFO package_roots=["/live/instance"] MSG=compose
 TIMESTAMP=2026-07-22T19:46:17Z LEVEL=INFO dept=theory-selfgrowth.propose MSG=consumer started
 TIMESTAMP=2026-07-22T19:46:40Z LEVEL=INFO MSG=delivery acked
