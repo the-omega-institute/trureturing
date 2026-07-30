@@ -22,7 +22,7 @@ internal sealed class RecursiveDefinitionDocument : IScribeDocumentDefinition
                         "For an arbitrary endomorphism and candidate value, the equation "
                         + "f(x) = x is equivalent to membership in Function.fixedPoints f."))),
                     LatexStatement.Create(
-                        @"$$f(x)=x\Longleftrightarrow x\in\operatorname{Fix}(f).$$")),
+                        @"$$f(x)=x\iff x\in\operatorname{Fix}(f).$$")),
                 new DocumentBlock.Describe(
                     DescribeId.Create("distinct-extremal-selections"),
                     DescribeKind.Theorem,
