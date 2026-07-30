@@ -8,7 +8,8 @@ public sealed class ReportSupervisorTestWatchdogTests
     [Fact]
     public void TimeoutKillsTrackedProcessAndReportsCapturedError()
     {
-        var watchdog = new ReportSupervisorTestWatchdog(TimeSpan.FromMilliseconds(100));
+        using var fixture = new ReportSupervisorFixture();
+        var ready = Path.Combine(fixture.Root, "watchdog-ready");
         using var process = new Process
         {
             StartInfo = new ProcessStartInfo
@@ -20,13 +21,20 @@ public sealed class ReportSupervisorTestWatchdogTests
             },
         };
         process.StartInfo.ArgumentList.Add("-c");
-        process.StartInfo.ArgumentList.Add("printf 'watchdog-err\\n' >&2; sleep 60");
+        process.StartInfo.ArgumentList.Add("printf 'watchdog-err\\n' >&2; touch \"$1\"; sleep 60");
+        process.StartInfo.ArgumentList.Add("bash");
+        process.StartInfo.ArgumentList.Add(ready);
 
+        ReportSupervisorTestWatchdog? watchdog = null;
         try
         {
             Assert.True(process.Start());
+            fixture.WaitUntil(
+                () => File.Exists(ready),
+                "tracked process did not publish its ready sentinel");
+            watchdog = new ReportSupervisorTestWatchdog(TimeSpan.FromMilliseconds(100));
             watchdog.Track(process);
-            Assert.True(process.WaitForExit(5_000), "watchdog did not terminate the tracked process");
+            fixture.WaitForExit(process, "watchdog did not terminate the tracked process");
 
             var failure = Assert.Throws<XunitException>(() => watchdog.Dispose());
             Assert.Contains("timed out", failure.Message, StringComparison.OrdinalIgnoreCase);
@@ -42,7 +50,7 @@ public sealed class ReportSupervisorTestWatchdogTests
             {
                 // The process exited concurrently with test cleanup.
             }
-            watchdog.Dispose();
+            watchdog?.Dispose();
         }
     }
 }
