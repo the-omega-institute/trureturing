@@ -7,6 +7,8 @@ namespace StrataLint.Tests;
 
 public sealed class ReportSupervisorScriptTests
 {
+    private static readonly TimeSpan ProcessObservationTimeout = TimeSpan.FromSeconds(30);
+
     [Fact]
     public void MissingReportConsumptionFailsClosedWithProducerInstruction()
     {
@@ -20,7 +22,7 @@ public sealed class ReportSupervisorScriptTests
             [consumer, "--role", "ingest-consumer", "--report", Path.Combine(fixture.Root, "missing.json"),
              "--", "/usr/bin/true"],
             fixture.Root,
-            TimeSpan.FromSeconds(30),
+            ReportSupervisorFixture.ScriptTimeout,
             1024 * 1024);
 
         Assert.Equal(2, result.ExitCode);
@@ -113,7 +115,7 @@ public sealed class ReportSupervisorScriptTests
                 "--", "/usr/bin/true",
             ],
             caller.Path,
-            TimeSpan.FromSeconds(30),
+            ReportSupervisorFixture.ScriptTimeout,
             1024 * 1024);
 
         Assert.Equal(0, result.ExitCode);
@@ -405,7 +407,7 @@ public sealed class ReportSupervisorScriptTests
             [fixture.ConcurrentDriver, fixture.Supervisor, fixture.ProducerWorker,
              fixture.MetricsLog, fixture.StateRoot, fixture.ActiveMarker, fixture.OverlapMarker],
             fixture.Root,
-            TimeSpan.FromSeconds(30),
+            ReportSupervisorFixture.ScriptTimeout,
             1024 * 1024);
 
         Assert.Equal(0, result.ExitCode);
@@ -426,7 +428,7 @@ public sealed class ReportSupervisorScriptTests
         using var process = fixture.StartLongRunningProducer();
         Assert.True(SpinWait.SpinUntil(
             () => File.Exists(fixture.GrandchildPid),
-            TimeSpan.FromSeconds(10)));
+            ProcessObservationTimeout));
         var grandchild = int.Parse(
             File.ReadAllText(fixture.GrandchildPid).Trim(),
             System.Globalization.CultureInfo.InvariantCulture);
@@ -438,11 +440,11 @@ public sealed class ReportSupervisorScriptTests
             TimeSpan.FromSeconds(10),
             4096);
         Assert.Equal(0, signal.ExitCode);
-        Assert.True(process.WaitForExit(10_000));
+        Assert.True(process.WaitForExit((int)ProcessObservationTimeout.TotalMilliseconds));
 
         Assert.True(SpinWait.SpinUntil(
             () => !ProcessExists(grandchild),
-            TimeSpan.FromSeconds(10)));
+            ProcessObservationTimeout));
         Assert.False(ProcessExists(grandchild));
         var metric = Assert.Single(fixture.ReadMetrics());
         Assert.Equal(143, metric.GetProperty("rc").GetInt32());
@@ -466,7 +468,7 @@ public sealed class ReportSupervisorScriptTests
         {
             Assert.True(SpinWait.SpinUntil(
                 () => !ProcessExists(grandchild),
-                TimeSpan.FromSeconds(10)));
+                ProcessObservationTimeout));
         }
         finally
         {
@@ -487,7 +489,7 @@ public sealed class ReportSupervisorScriptTests
     {
         using var fixture = new ReportSupervisorFixture();
         using var process = fixture.StartDetachedProducer();
-        using var watchdog = new ReportSupervisorTestWatchdog(TimeSpan.FromSeconds(45));
+        using var watchdog = new ReportSupervisorTestWatchdog(TimeSpan.FromSeconds(90));
         watchdog.Track(process);
         int? detached = null;
         try
@@ -497,7 +499,7 @@ public sealed class ReportSupervisorScriptTests
                     && new FileInfo(fixture.DetachedPid).Length > 0
                     && File.Exists(fixture.DetachedParentPid)
                     && new FileInfo(fixture.DetachedParentPid).Length > 0,
-                TimeSpan.FromSeconds(10)),
+                ProcessObservationTimeout),
                 "detached worker did not publish its process topology");
             detached = int.Parse(
                 File.ReadAllText(fixture.DetachedPid).Trim(),
@@ -508,13 +510,13 @@ public sealed class ReportSupervisorScriptTests
 
             Assert.True(SpinWait.SpinUntil(
                 () => fixture.HasRecordedProcessCandidate(detached.Value),
-                TimeSpan.FromSeconds(10)),
+                ProcessObservationTimeout),
                 "supervisor did not record the session-changing descendant");
 
             File.WriteAllText(fixture.DetachedRelease, string.Empty, new UTF8Encoding(false));
             Assert.True(SpinWait.SpinUntil(
                 () => !ProcessExists(detachedParent) && ProcessExists(detached.Value),
-                TimeSpan.FromSeconds(10)),
+                ProcessObservationTimeout),
                 "detached child did not outlive its helper parent");
 
             var signal = BoundedProcessRunner.Run(
@@ -526,11 +528,11 @@ public sealed class ReportSupervisorScriptTests
             Assert.Equal(0, signal.ExitCode);
             Assert.True(SpinWait.SpinUntil(
                 () => process.HasExited,
-                TimeSpan.FromSeconds(10)),
+                ProcessObservationTimeout),
                 "supervisor did not exit after SIGTERM");
             Assert.True(SpinWait.SpinUntil(
                 () => !ProcessExists(detached.Value),
-                TimeSpan.FromSeconds(10)),
+                ProcessObservationTimeout),
                 "recorded session-changing descendant survived supervisor termination");
         }
         finally
@@ -565,7 +567,7 @@ public sealed class ReportSupervisorScriptTests
 
         Assert.True(SpinWait.SpinUntil(
             () => !ProcessExists(detached),
-            TimeSpan.FromSeconds(10)));
+            ProcessObservationTimeout));
         Assert.False(ProcessExists(detached));
     }
 

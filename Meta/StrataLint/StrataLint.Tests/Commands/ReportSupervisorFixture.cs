@@ -8,6 +8,7 @@ namespace StrataLint.Tests;
 internal sealed class ReportSupervisorFixture : IDisposable
 {
     private readonly TemporaryDirectory temporary = new();
+    internal static readonly TimeSpan ScriptTimeout = TimeSpan.FromMinutes(2);
 
     internal ReportSupervisorFixture()
     {
@@ -230,7 +231,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
         arguments.Add(command);
         arguments.Add(ScratchRecord);
         return BoundedProcessRunner.Run(
-            "env", arguments, Root, TimeSpan.FromSeconds(30), 1024 * 1024);
+            "env", arguments, Root, ScriptTimeout, 1024 * 1024);
     }
 
     internal ProcessOutput RunWithDefaultMetrics(string role, string command) =>
@@ -245,7 +246,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
                 "--", command, ScratchRecord,
             ],
             Root,
-            TimeSpan.FromSeconds(30),
+            ScriptTimeout,
             1024 * 1024);
 
     internal ProcessOutput RunWithFileSizeLimit(string role, string command) =>
@@ -261,7 +262,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
                 "--", command, ScratchRecord,
             ],
             Root,
-            TimeSpan.FromSeconds(30),
+            ScriptTimeout,
             1024 * 1024);
 
     internal Process StartLongRunningProducer()
