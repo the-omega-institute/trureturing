@@ -289,7 +289,11 @@ marker_processes() {
           $2 == 1 && elapsed($3) <= window {print $1}
         ' | paste -sd, -)"
     [[ -n "$candidates" ]] || return 0
-    lsof -a -p "$candidates" -d 1,2,9 2>/dev/null \
+    # lsof exits non-zero when a candidate pid vanished between ps and lsof (a
+    # routine race under short-lived build children); with set -euo pipefail
+    # that killed the supervisor, whose EXIT trap then TERM'd the healthy child
+    # process group — the drifting-kill-site ceremony deaths of #570.
+    { lsof -a -p "$candidates" -d 1,2,9 2>/dev/null || true; } \
       | awk -v stdout="$RUN_STDOUT" -v stderr="$RUN_STDERR" -v marker="$RUN_MARKER" \
           '$NF == stdout || $NF == stderr || $NF == marker {print $2}'
   fi
