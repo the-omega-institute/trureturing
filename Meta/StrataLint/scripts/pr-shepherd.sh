@@ -3,7 +3,7 @@
 #
 # 职责:开 PR 到 dev 并挂 auto-merge;轮询在飞 PR。BEHIND 且最新 admission
 # 仅因 dev 前进导致派生物过期时,在持久 worktree 合并并走 canonical 重算链;
-# 其余 BEHIND 仍由本地 gh 身份 update-branch。CONFLICTING 只告警不代解。
+# 其余 BEHIND 仍由本地 gh 身份 update-branch。CONFLICTING 由本地冲突集分类。
 #
 # 用法:
 #   pr-shepherd.sh open <head-branch> <title> [body-file]   开 PR + 挂 auto-merge
@@ -94,7 +94,7 @@ branch_slug() {
 
 dryrun_recalculation() {
   local num="$1" head="$2" workspace="$3"
-  log "DRYRUN #$num BEHIND stale derivations -> ensure worktree path=$workspace"
+  log "DRYRUN #$num RECALCULATE -> ensure worktree path=$workspace"
   log "DRYRUN #$num fetch origin/dev and origin/$head; verify observed OIDs"
   log "DRYRUN #$num checkout $head; merge origin/dev (derived conflicts take dev)"
   log "DRYRUN #$num run make lean-report"
@@ -309,7 +309,7 @@ recalculate_pr_locked() {
     log "SWEEP #$num push 非 FF 被拒,放弃本轮(下轮重试)"
     return 1
   fi
-  log "SWEEP #$num BEHIND -> 本地 merge+regen+push 完成 head=$head"
+  log "SWEEP #$num RECALCULATE -> 本地 merge+regen+push 完成 head=$head"
 }
 
 recalculate_pr() {
@@ -375,8 +375,9 @@ sweep() {
     --jq '.[] | select(.autoMergeRequest != null) | ((.statusCheckRollup | map(select(.__typename == "CheckRun" and .name == "Content-addressed dev baseline admission")) | sort_by(.startedAt // .completedAt // "") | last) // {}) as $admission | [.number,.mergeable,.mergeStateStatus,.headRefName,.headRefOid,.baseRefOid,(.statusCheckRollup|length),($admission.conclusion // "-"),($admission.detailsUrl // "-")] | @tsv' |
   while IFS=$'\t' read -r num mergeable mstate head head_oid base_oid checks admission_conclusion admission_url; do
     case "$mergeable:$mstate" in
-      MERGEABLE:BEHIND)
-        if has_expiry_fingerprint "$admission_conclusion" "$admission_url"; then
+      MERGEABLE:BEHIND|CONFLICTING:*)
+        if [[ "$mergeable" == "CONFLICTING" ]] \
+          || has_expiry_fingerprint "$admission_conclusion" "$admission_url"; then
           if [[ "$recalculated" == *" $num "* ]]; then
             log "SWEEP #$num 本轮已重算一次,跳过重复项"
             continue
@@ -392,9 +393,6 @@ sweep() {
             log "SWEEP #$num update-branch 失败: $(printf '%s' "$out" | head -c 100)"
           fi
         fi
-        ;;
-      CONFLICTING:*)
-        log "ALERT #$num CONFLICTING head=$head 需语义合并(派 shepherd lane,本器不代解)"
         ;;
       *)
         # BLOCKED/UNKNOWN 且 head 无任何 check:多为 bot push 死锁。
