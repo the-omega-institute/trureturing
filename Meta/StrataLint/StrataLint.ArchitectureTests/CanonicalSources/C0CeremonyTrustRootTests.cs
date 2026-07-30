@@ -9,16 +9,21 @@ public sealed class C0CeremonyTrustRootTests
     private const string TowerPath = "Meta/StrataLint/TOWER.yaml";
     private const string JudgePath =
         "Meta/StrataLint/StrataLint.ArchitectureTests/CanonicalSources/C0CeremonyTrustRootJudge.cs";
+    private const string TestsPath =
+        "Meta/StrataLint/StrataLint.ArchitectureTests/CanonicalSources/C0CeremonyTrustRootTests.cs";
 
     [Fact]
     public void CanonicalTrustRootSourceDoesNotUseCommitAncestry()
     {
         var root = RepositoryLayout.FindRoot();
+        // Closed world: the judge owns the decision and this test file is its only caller and
+        // the former home of the assertion. No other source participates in this trust-root check.
         var canonicalSources = new[]
         {
             JudgePath,
+            TestsPath,
         };
-        var forbidden = "merge-base --is-" + "ancestor";
+        var forbidden = "--is-" + "ancestor";
         var occurrences = canonicalSources
             .SelectMany(path => File.ReadLines(Absolute(root, path)).Select((line, index) =>
                 (Path: path, Line: index + 1, Text: line)))
@@ -71,10 +76,16 @@ public sealed class C0CeremonyTrustRootTests
 
             // Mutation pin: changing the production judge back to commitOid:path must fail here,
             // because the preimage commit is pruned while HEAD still carries its exact tree.
-            C0CeremonyTrustRootJudge.AssertPreimageBlobs(
-                root,
-                [new C0Record("c0/controller", "git-sha1/" + blobOid, "anchor.txt")],
-                treeOid);
+            var certificate = JsonSerializer.SerializeToUtf8Bytes(new
+            {
+                candidate = new { tree_oid = "git-sha1:" + treeOid },
+            });
+            C0Record[] records =
+            [
+                new("c0/controller", "git-sha1/" + blobOid, "anchor.txt"),
+                new("c0/preimage-tree", "git-tree/" + treeOid, null),
+            ];
+            C0CeremonyTrustRootJudge.AssertPreimageBlobs(root, certificate, records);
         }
         finally
         {
@@ -191,8 +202,7 @@ public sealed class C0CeremonyTrustRootTests
         Assert.Equal(
             "git-tree/" + Untag(candidate.GetProperty("tree_oid").GetString()!, "git-sha1:"),
             preimageTree.Address);
-        var preimageTreeOid = Untag(preimageTree.Address, "git-tree/");
-        C0CeremonyTrustRootJudge.AssertPreimageBlobs(root, records, preimageTreeOid);
+        C0CeremonyTrustRootJudge.AssertPreimageBlobs(root, certificateBytes, records);
     }
 
     private static void AssertAnchorPaths(
