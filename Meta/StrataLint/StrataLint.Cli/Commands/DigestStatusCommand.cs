@@ -204,13 +204,13 @@ internal static class DigestStatusCommand
         RepositorySnapshot snapshot,
         RepositoryFile ledgerFile)
     {
-        var candidates = evaluation.Entries
+        var projections = evaluation.Entries
             .Where(static item =>
                 item.Alignment == DigestionReceiptAlignment.Seen
                 && item.DerivedStatus.Migration == DigestionMigrationState.Residual
                 && item.DerivedStatus.Truth == DigestionTruthState.Open
                 && item.Entry.CoverageGids.Length == 0)
-            .Select(item => Candidate(item.Entry, snapshot))
+            .Select(item => Projection(item.Entry, snapshot))
             .Where(static item => item is not null)
             .OrderBy(static item => item!.SourceId, StringComparer.Ordinal)
             .ThenBy(static item => item!.AtomId, StringComparer.Ordinal)
@@ -218,14 +218,19 @@ internal static class DigestStatusCommand
             .ToArray();
         var material = new
         {
-            schema = "stratalint-formalize-candidates-v1",
+            schema = "stratalint-formalize-candidates-v2",
             ledger_sha256 = DigestionFingerprint.ComputeOpaque(ledgerFile.RawBytes.AsSpan()).RawSha256,
-            candidates,
+            candidates = projections
+                .Where(static item => item.Candidate is not null)
+                .Select(static item => item.Candidate!),
+            withheld = projections
+                .Where(static item => item.Withheld is not null)
+                .Select(static item => item.Withheld!),
         };
         return JsonSerializer.Serialize(material, JsonOptions) + "\n";
     }
 
-    private static FormalizeCandidate? Candidate(
+    private static FormalizeProjection? Projection(
         DigestionLedgerEntry entry,
         RepositorySnapshot snapshot)
     {
@@ -259,14 +264,31 @@ internal static class DigestStatusCommand
                 exception);
         }
 
-        return new FormalizeCandidate(
+        var status = DigestionAtomStatusMarker.Parse(atom.RawBytes.AsSpan());
+        if (status is { Status: "closed", Qualifier.Length: > 0 })
+        {
+            return new FormalizeProjection(
+                entry.SourceId,
+                entry.AtomId,
+                null,
+                new WithheldFormalizeCandidate(
+                    entry.AtomId,
+                    "qualified-closed-status",
+                    status.Qualifier));
+        }
+
+        return new FormalizeProjection(
             entry.SourceId,
             entry.AtomId,
-            entry.AstPath,
-            kind,
-            entry.CasRef,
-            entry.Fingerprints.RawSha256,
-            atomText);
+            new FormalizeCandidate(
+                entry.SourceId,
+                entry.AtomId,
+                entry.AstPath,
+                kind,
+                entry.CasRef,
+                entry.Fingerprints.RawSha256,
+                atomText),
+            null);
     }
 
     private static CommandResult InvalidEvaluation(DigestionLedgerEvaluation evaluation)
@@ -308,6 +330,17 @@ internal static class DigestStatusCommand
         string CasRef,
         string RawSha256,
         string AtomText);
+
+    private sealed record WithheldFormalizeCandidate(
+        string AtomId,
+        string WithholdReason,
+        string StatusQualifier);
+
+    private sealed record FormalizeProjection(
+        string SourceId,
+        string AtomId,
+        FormalizeCandidate? Candidate,
+        WithheldFormalizeCandidate? Withheld);
 }
 
 internal static class DigestResidualSummary

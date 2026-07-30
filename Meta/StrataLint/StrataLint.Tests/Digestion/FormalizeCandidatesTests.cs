@@ -106,8 +106,9 @@ public sealed class FormalizeCandidatesTests
 
         Assert.True(result.Success, result.Error);
         using var json = JsonDocument.Parse(result.Output);
-        Assert.Equal("stratalint-formalize-candidates-v1", json.RootElement.GetProperty("schema").GetString());
+        Assert.Equal("stratalint-formalize-candidates-v2", json.RootElement.GetProperty("schema").GetString());
         Assert.Empty(json.RootElement.GetProperty("candidates").EnumerateArray());
+        Assert.Empty(json.RootElement.GetProperty("withheld").EnumerateArray());
     }
 
     [Fact]
@@ -135,6 +136,46 @@ public sealed class FormalizeCandidatesTests
         Assert.Contains("完整推导", candidate.GetProperty("atom_text").GetString(), StringComparison.Ordinal);
         Assert.Equal(entry.Atom.Fingerprints.RawSha256, candidate.GetProperty("raw_sha256").GetString());
         Assert.Equal(entry.Atom.Fingerprints.RawSha256, candidate.GetProperty("cas_ref").GetString());
+    }
+
+    [Fact]
+    public void FormalizeCandidatesWithholdsQualifiedClosedStatusWithoutRejectingClosedPins()
+    {
+        var qualified = Entry(
+            "source",
+            "qualified-closed",
+            "定理",
+            "7.1",
+            status: "〔closed;数值证书 n ≤ 2×10⁴〕");
+        var plain = Entry(
+            "source",
+            "plain-closed",
+            "定理",
+            "7.2",
+            status: "〔closed〕");
+        var proved = Entry(
+            "source",
+            "proved-closed",
+            "定理",
+            "7.3",
+            body: "陈述。\n\n*证明*。完整推导。证毕。",
+            status: "〔closed〕");
+
+        var result = Run([qualified, plain, proved]);
+
+        Assert.True(result.Success, result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        Assert.Equal("stratalint-formalize-candidates-v2", json.RootElement.GetProperty("schema").GetString());
+        Assert.Equal(
+            ["plain-closed", "proved-closed"],
+            json.RootElement.GetProperty("candidates")
+                .EnumerateArray()
+                .Select(static candidate => candidate.GetProperty("atom_id").GetString())
+                .Order(StringComparer.Ordinal));
+        var withheld = Assert.Single(json.RootElement.GetProperty("withheld").EnumerateArray());
+        Assert.Equal("qualified-closed", withheld.GetProperty("atom_id").GetString());
+        Assert.Equal("qualified-closed-status", withheld.GetProperty("withhold_reason").GetString());
+        Assert.Equal("数值证书 n ≤ 2×10⁴", withheld.GetProperty("status_qualifier").GetString());
     }
 
     private static CommandResult Run(
@@ -179,9 +220,10 @@ public sealed class FormalizeCandidatesTests
         string body = "陈述。",
         string[]? coverageGids = null,
         string migration = "residual",
-        string truth = "open")
+        string truth = "open",
+        string status = "")
     {
-        var source = Encoding.UTF8.GetBytes($"# Synthetic\n\n**{kind} {number}**。{body}\n");
+        var source = Encoding.UTF8.GetBytes($"# Synthetic\n\n**{kind} {number}**{status}。{body}\n");
         var atom = Assert.Single(PzgAtomizer.Atomize(source).Claims);
         return new EntryFixture(
             sourceId,

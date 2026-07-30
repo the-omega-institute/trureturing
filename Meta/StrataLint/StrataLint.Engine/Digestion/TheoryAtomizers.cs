@@ -19,6 +19,39 @@ internal sealed record DigestionAtom(
 
 internal sealed record DigestionSlice(bool IsClaim, ImmutableArray<byte> RawBytes);
 
+internal sealed record DigestionAtomStatusMarker(string Status, string? Qualifier)
+{
+    private static readonly UTF8Encoding StrictUtf8 = new(false, true);
+
+    internal static DigestionAtomStatusMarker? Parse(ReadOnlySpan<byte> atomBytes)
+    {
+        var atomText = StrictUtf8.GetString(atomBytes);
+        if (!atomText.StartsWith("**", StringComparison.Ordinal))
+        {
+            return null;
+        }
+
+        var titleEnd = atomText.IndexOf("**", 2, StringComparison.Ordinal);
+        if (titleEnd < 0 || !atomText.AsSpan(titleEnd + 2).StartsWith("〔", StringComparison.Ordinal))
+        {
+            return null;
+        }
+
+        var markerStart = titleEnd + 3;
+        var markerEnd = atomText.IndexOf('〕', markerStart);
+        if (markerEnd < 0)
+        {
+            return null;
+        }
+
+        var marker = atomText[markerStart..markerEnd];
+        var separator = marker.IndexOf(';', StringComparison.Ordinal);
+        return separator < 0
+            ? new DigestionAtomStatusMarker(marker, null)
+            : new DigestionAtomStatusMarker(marker[..separator], marker[(separator + 1)..]);
+    }
+}
+
 internal sealed class AtomizedTheoryDocument
 {
     internal AtomizedTheoryDocument(
