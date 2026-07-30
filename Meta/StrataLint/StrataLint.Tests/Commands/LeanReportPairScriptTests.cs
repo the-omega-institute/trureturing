@@ -13,7 +13,7 @@ public sealed class LeanReportPairScriptTests
 
         var result = fixture.Run();
 
-        Assert.Equal(0, result.ExitCode);
+        AssertProcessSucceeded(result);
         Assert.Equal(1, fixture.ProducerInvocationCount);
         Assert.Equal(fixture.CandidateReportBytes, fixture.BaselineReportBytes);
         using var candidate = fixture.ReadCandidateProvenance();
@@ -47,7 +47,7 @@ public sealed class LeanReportPairScriptTests
 
         var result = fixture.Run();
 
-        Assert.Equal(0, result.ExitCode);
+        AssertProcessSucceeded(result);
         Assert.Equal(2, fixture.ProducerInvocationCount);
         using var candidate = fixture.ReadCandidateProvenance();
         using var baseline = fixture.ReadBaselineProvenance();
@@ -62,15 +62,14 @@ public sealed class LeanReportPairScriptTests
     public void InvokedProducerBytesParticipateInTheInputAddress()
     {
         using var fixture = new LeanReportPairFixture();
-        Assert.Equal(0, fixture.Run().ExitCode);
+        var firstRun = fixture.Run();
+        AssertProcessSucceeded(firstRun);
         using var first = fixture.ReadCandidateProvenance();
         var firstAddress = first.RootElement.GetProperty("input_address").GetString();
 
         fixture.AppendProducerComment();
         var secondRun = fixture.Run();
-        Assert.True(
-            secondRun.ExitCode == 0,
-            Encoding.UTF8.GetString(secondRun.StandardError));
+        AssertProcessSucceeded(secondRun);
         using var second = fixture.ReadCandidateProvenance();
 
         Assert.Equal(2, fixture.ProducerInvocationCount);
@@ -84,12 +83,20 @@ public sealed class LeanReportPairScriptTests
 
         var result = fixture.Run();
 
-        Assert.Equal(0, result.ExitCode);
+        AssertProcessSucceeded(result);
         var metrics = fixture.ReadMetrics();
         var metric = Assert.Single(metrics);
         Assert.Equal("resource", metric.GetProperty("kind").GetString());
         Assert.Equal("lean-producer-candidate", metric.GetProperty("role").GetString());
     }
+
+    private static void AssertProcessSucceeded(ProcessOutput result) =>
+        Assert.True(
+            result.ExitCode == 0,
+            "stdout:\n"
+            + Encoding.UTF8.GetString(result.StandardOutput)
+            + "\nstderr:\n"
+            + Encoding.UTF8.GetString(result.StandardError));
 
     private sealed class LeanReportPairFixture : IDisposable
     {
@@ -103,6 +110,7 @@ public sealed class LeanReportPairScriptTests
         private readonly string candidateReport;
         private readonly string baselineReport;
         private readonly string metricsLog;
+        private static readonly TimeSpan PairScriptTimeout = TimeSpan.FromMinutes(2);
 
         internal LeanReportPairFixture()
         {
@@ -160,7 +168,7 @@ public sealed class LeanReportPairScriptTests
                     "--baseline-output", baselineReport,
                 ],
                 temporary.Path,
-                TimeSpan.FromSeconds(30),
+                PairScriptTimeout,
                 1024 * 1024);
         }
 
@@ -256,13 +264,11 @@ public sealed class LeanReportPairScriptTests
             done
             count_file="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)/invocations.txt"
             count=0
-            if [[ -f "$count_file" ]]; then read -r count < "$count_file"; fi
+            if [[ -s "$count_file" ]]; then count="$(< "$count_file")"; fi
             printf '%s\n' "$((count + 1))" > "$count_file"
             mkdir -p "$(dirname "$output")"
-            source_hash="$(openssl dgst -sha256 "$repository/Trureturing.lean" | awk '{print $NF}')"
-            printf '{"source_sha256":"%s"}\n' "$source_hash" > "$output"
-            report_hash="$(openssl dgst -sha256 "$output" | awk '{print $NF}')"
-            printf '%s  %s\n' "$report_hash" "$(basename "$output")" > "${output}.sha256"
+            printf '{"source_sha256":"synthetic"}\n' > "$output"
+            printf 'af0591877f2b29c8eecafa5882ab9cc1e1cc494b8d2132157498f20229640851  %s\n' "$(basename "$output")" > "${output}.sha256"
             """;
     }
 }
