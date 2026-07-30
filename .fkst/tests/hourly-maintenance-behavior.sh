@@ -636,6 +636,62 @@ tracked_entrypoint_loads_strict_host_config() (
     || fail "tracked entrypoint did not accept the strict host contract: $(<"$output")"
 )
 
+stale_deployed_repository_contract_does_not_block_checkout_refresh() (
+  local root output checkout_remote checkout_writer stale_rev current_rev
+  root="$(mktemp -d -t hourly-maintenance-contract-bootstrap.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  create_platform_fixture "$root" || exit 1
+  write_host_contract_fixture "$root" second-host-bot integration-second-host
+  output="$root/entrypoint.output"
+  checkout_remote="$root/checkout-remote.git"
+  checkout_writer="$root/checkout-writer"
+
+  printf '[external_sources.platform]\nrev = "%s"\n' "$NEW_PLATFORM_REV" \
+    > "$FIXTURE_HOST_ROOT/fkst.workspace.toml"
+  printf 'deployed-lock\n' > "$FIXTURE_HOST_ROOT/fkst.lock"
+  printf 'FKST_GITHUB_BOT_LOGIN=stale-repository-copy\n' \
+    >> "$FIXTURE_HOST_ROOT/.fkst/deploy.env"
+  git_quiet init --bare --initial-branch=dev "$checkout_remote" || exit 1
+  git_quiet -C "$FIXTURE_HOST_ROOT" init --initial-branch=dev || exit 1
+  configure_repository "$FIXTURE_HOST_ROOT" || exit 1
+  command git -C "$FIXTURE_HOST_ROOT" add .
+  git_quiet -C "$FIXTURE_HOST_ROOT" commit -m stale-contract || exit 1
+  git_quiet -C "$FIXTURE_HOST_ROOT" remote add origin "$checkout_remote" || exit 1
+  git_quiet -C "$FIXTURE_HOST_ROOT" push -u origin dev || exit 1
+  stale_rev="$(command git -C "$FIXTURE_HOST_ROOT" rev-parse HEAD)"
+
+  git_quiet clone "$checkout_remote" "$checkout_writer" || exit 1
+  configure_repository "$checkout_writer" || exit 1
+  command cp "$REPOSITORY_ROOT/.fkst/deploy.env" "$checkout_writer/.fkst/deploy.env"
+  command git -C "$checkout_writer" add .fkst/deploy.env
+  git_quiet -C "$checkout_writer" commit -m current-contract || exit 1
+  git_quiet -C "$checkout_writer" push origin dev || exit 1
+  current_rev="$(command git -C "$checkout_writer" rev-parse HEAD)"
+  [[ "$stale_rev" != "$current_rev" ]] || fail "stale checkout fixture did not advance"
+
+  cat > "$root/bin/pgrep" <<'SH'
+#!/usr/bin/env bash
+printf '4242\n'
+SH
+  cat > "$root/bin/gh" <<'SH'
+#!/usr/bin/env bash
+[[ "$*" == *"issue list"* ]] || exit 8
+printf '1\n'
+SH
+  chmod +x "$root/bin/pgrep" "$root/bin/gh"
+
+  env -i HOME="$root/home" PATH="/usr/bin:/bin" \
+    /bin/bash "$SCRIPT_UNDER_TEST" --host-config "$FIXTURE_HOST_CONFIG" \
+    >"$output" 2>&1 \
+    || fail "stale repository contract blocked maintenance: $(<"$output")"
+  [[ "$(command git -C "$FIXTURE_HOST_ROOT" rev-parse HEAD)" == "$current_rev" ]] \
+    || fail "maintenance did not refresh the stale checkout: $(<"$output")"
+  ! command grep -q '^FKST_GITHUB_BOT_LOGIN=' "$FIXTURE_HOST_ROOT/.fkst/deploy.env" \
+    || fail "refreshed checkout retained the stale host-owned repository key"
+  command grep -q 'CHECKOUT BEHIND' "$output" \
+    || fail "maintenance output did not record the checkout refresh: $(<"$output")"
+)
+
 host_config_rejects_shell_control_flow_without_evaluation() (
   local root output pwned
   root="$(mktemp -d -t hourly-maintenance-host-data.XXXXXX)" || exit 1
@@ -726,6 +782,7 @@ run_test "restart health requires successful stop and new PID" restart_health_re
 run_test "rollback failure is not reported as reverted" rollback_failure_is_not_reported_as_reverted
 run_test "pin-write rollback failure is not reported as reverted" pin_write_rollback_failure_is_not_reported_as_reverted
 run_test "tracked entrypoint loads strict host config" tracked_entrypoint_loads_strict_host_config
+run_test "stale deployed repository contract does not block checkout refresh" stale_deployed_repository_contract_does_not_block_checkout_refresh
 run_test "host config rejects shell control flow without evaluation" host_config_rejects_shell_control_flow_without_evaluation
 run_test "fictional second-host launcher is portable" fictional_second_host_launcher_is_portable
 run_test "launcher conformance compares rendered and deployed bytes" launcher_conformance_compares_rendered_and_deployed_bytes
