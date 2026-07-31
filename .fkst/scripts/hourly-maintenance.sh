@@ -216,6 +216,305 @@ sync_checkout() {
   fi
 }
 
+workspace_composition_tool() {
+  local mode="$1" temporary_workspace="${2:-}"
+  "$FKST_PYTHON_BIN" - \
+    "$mode" \
+    "$FKST_HOST_ROOT/.fkst/fkst.workspace.toml" \
+    "$FKST_HOST_ROOT/fkst.workspace.toml" \
+    "$temporary_workspace" <<'PY'
+import json
+import os
+import re
+import stat
+import sys
+import tomllib
+from pathlib import Path
+
+SOURCE_ID = "fkst-packages-platform"
+
+
+def fail(message):
+    raise ValueError(message)
+
+
+def load_manifest(path, role):
+    try:
+        with path.open("rb") as handle:
+            manifest = tomllib.load(handle)
+    except Exception as error:
+        fail(f"{role} is invalid: {path}: {error}")
+    if not isinstance(manifest, dict):
+        fail(f"{role} must be a TOML table: {path}")
+    return manifest
+
+
+def string_list(value, role):
+    if (
+        not isinstance(value, list)
+        or any(not isinstance(item, str) or not item for item in value)
+        or len(value) != len(set(value))
+    ):
+        fail(f"{role} must be an array of unique non-empty strings")
+    return tuple(value)
+
+
+def composition(manifest, role):
+    workspace = manifest.get("workspace")
+    if not isinstance(workspace, dict):
+        fail(f"{role} workspace must be a table")
+    units = string_list(workspace.get("units"), f"{role} workspace.units")
+
+    sources = manifest.get("external_sources")
+    if not isinstance(sources, list) or any(not isinstance(item, dict) for item in sources):
+        fail(f"{role} external_sources must be a table array")
+    matching = [
+        (index, source)
+        for index, source in enumerate(sources)
+        if source.get("id") == SOURCE_ID
+    ]
+    if len(matching) != 1:
+        fail(f"{role} must declare exactly one {SOURCE_ID} source")
+    source_index, source = matching[0]
+    packages = string_list(source.get("packages"), f"{role} {SOURCE_ID} packages")
+    libraries = string_list(source.get("libraries"), f"{role} {SOURCE_ID} libraries")
+    return {
+        "packages": packages,
+        "libraries": libraries,
+        "units": units,
+    }, source_index
+
+
+def table_body(text, header_pattern, role):
+    matches = list(re.finditer(header_pattern, text, re.MULTILINE))
+    if len(matches) != 1:
+        fail(f"{role} must occur exactly once")
+    start = matches[0].end()
+    next_header = re.search(r"^[ \t]*\[", text[start:], re.MULTILINE)
+    end = start + next_header.start() if next_header else len(text)
+    return start, end
+
+
+def external_source_body(text, source_index):
+    headers = list(
+        re.finditer(
+            r"^[ \t]*\[\[external_sources\]\][ \t]*(?:#.*)?$",
+            text,
+            re.MULTILINE,
+        )
+    )
+    if source_index >= len(headers):
+        fail("runtime workspace external_sources syntax does not match parsed tables")
+    start = headers[source_index].end()
+    next_header = re.search(r"^[ \t]*\[", text[start:], re.MULTILINE)
+    end = start + next_header.start() if next_header else len(text)
+    return start, end
+
+
+def array_value_span(text, body_start, body_end, key, role):
+    body = text[body_start:body_end]
+    assignments = list(
+        re.finditer(rf"^[ \t]*{re.escape(key)}[ \t]*=", body, re.MULTILINE)
+    )
+    if len(assignments) != 1:
+        fail(f"{role}.{key} assignment must occur exactly once")
+    cursor = body_start + assignments[0].end()
+    while cursor < body_end and text[cursor] in " \t":
+        cursor += 1
+    if cursor >= body_end or text[cursor] != "[":
+        fail(f"{role}.{key} must use TOML array syntax")
+
+    start = cursor
+    depth = 0
+    quote = None
+    while cursor < body_end:
+        if quote is not None:
+            if text.startswith(quote, cursor):
+                cursor += len(quote)
+                quote = None
+                continue
+            if quote in {'"', '"""'} and text[cursor] == "\\":
+                cursor += 2
+                continue
+            cursor += 1
+            continue
+
+        if text.startswith('"""', cursor) or text.startswith("'''", cursor):
+            quote = text[cursor:cursor + 3]
+            cursor += 3
+            continue
+        if text[cursor] in {'"', "'"}:
+            quote = text[cursor]
+            cursor += 1
+            continue
+        if text[cursor] == "#":
+            newline = text.find("\n", cursor, body_end)
+            cursor = body_end if newline < 0 else newline + 1
+            continue
+        if text[cursor] == "[":
+            depth += 1
+        elif text[cursor] == "]":
+            depth -= 1
+            if depth == 0:
+                return start, cursor + 1
+        cursor += 1
+    fail(f"{role}.{key} array is not syntactically bounded")
+
+
+def render_array(values):
+    encoded = (json.dumps(value, ensure_ascii=True) for value in values)
+    return "[" + ", ".join(encoded) + "]"
+
+
+def render_runtime(runtime, tracked_composition, runtime_source_index, output):
+    try:
+        text = runtime.read_text(encoding="utf-8")
+    except Exception as error:
+        fail(f"runtime workspace is unreadable: {runtime}: {error}")
+
+    workspace_start, workspace_end = table_body(
+        text,
+        r"^[ \t]*\[workspace\][ \t]*(?:#.*)?$",
+        "runtime workspace [workspace] table",
+    )
+    source_start, source_end = external_source_body(text, runtime_source_index)
+    replacements = []
+    for key, start, end, role in (
+        ("units", workspace_start, workspace_end, "runtime workspace workspace"),
+        ("packages", source_start, source_end, f"runtime workspace {SOURCE_ID}"),
+        ("libraries", source_start, source_end, f"runtime workspace {SOURCE_ID}"),
+    ):
+        value_start, value_end = array_value_span(text, start, end, key, role)
+        replacements.append(
+            (value_start, value_end, render_array(tracked_composition[key]))
+        )
+    for start, end, replacement in sorted(replacements, reverse=True):
+        text = text[:start] + replacement + text[end:]
+
+    try:
+        rendered = tomllib.loads(text)
+    except Exception as error:
+        fail(f"rendered runtime workspace is invalid: {error}")
+    rendered_composition, _ = composition(rendered, "rendered runtime workspace")
+    if rendered_composition != tracked_composition:
+        fail("rendered runtime workspace composition does not match tracked workspace")
+
+    original = runtime.read_text(encoding="utf-8")
+    if text == original:
+        print("CURRENT")
+        return
+    try:
+        with output.open("x", encoding="utf-8", newline="") as handle:
+            handle.write(text)
+        os.chmod(output, stat.S_IMODE(runtime.stat().st_mode))
+    except Exception as error:
+        fail(f"cannot stage runtime workspace: {output}: {error}")
+    print("UPDATED")
+
+
+def format_values(values):
+    return "[" + ",".join(values) + "]"
+
+
+def verify_composition(tracked, runtime):
+    differences = []
+    for key in ("packages", "libraries", "units"):
+        tracked_values = tracked[key]
+        runtime_values = runtime[key]
+        only_tracked = sorted(set(tracked_values) - set(runtime_values))
+        only_runtime = sorted(set(runtime_values) - set(tracked_values))
+        if only_tracked or only_runtime:
+            differences.append(
+                f"{key} only-in-tracked={format_values(only_tracked)} "
+                f"only-in-runtime={format_values(only_runtime)}"
+            )
+        elif tracked_values != runtime_values:
+            differences.append(
+                f"{key} order tracked={format_values(tracked_values)} "
+                f"runtime={format_values(runtime_values)}"
+            )
+    if differences:
+        print("\n".join(differences), file=sys.stderr)
+        raise SystemExit(1)
+
+
+def main():
+    mode = sys.argv[1]
+    tracked_path = Path(sys.argv[2])
+    runtime_path = Path(sys.argv[3])
+    output_path = Path(sys.argv[4]) if sys.argv[4] else None
+    tracked_manifest = load_manifest(tracked_path, "tracked workspace")
+    runtime_manifest = load_manifest(runtime_path, "runtime workspace")
+    tracked_composition, _ = composition(tracked_manifest, "tracked workspace")
+    runtime_composition, runtime_source_index = composition(
+        runtime_manifest,
+        "runtime workspace",
+    )
+    if mode == "render":
+        if output_path is None:
+            fail("render mode requires an output path")
+        render_runtime(
+            runtime_path,
+            tracked_composition,
+            runtime_source_index,
+            output_path,
+        )
+    elif mode == "verify":
+        verify_composition(tracked_composition, runtime_composition)
+    else:
+        fail(f"unknown workspace composition mode: {mode}")
+
+
+try:
+    main()
+except SystemExit:
+    raise
+except Exception as error:
+    print(error, file=sys.stderr)
+    raise SystemExit(1)
+PY
+}
+
+sync_workspace_composition() {
+  local runtime_workspace="$FKST_HOST_ROOT/fkst.workspace.toml"
+  local temporary_workspace result diagnostic
+  temporary_workspace="${runtime_workspace}.composition-next-$$-$RANDOM"
+
+  if ! result="$(workspace_composition_tool render "$temporary_workspace" 2>&1)"; then
+    rm -f "$temporary_workspace"
+    say "WORKSPACE-COMPOSITION-SYNC-FAIL: $result"
+    return 1
+  fi
+  case "$result" in
+    UPDATED)
+      if ! mv "$temporary_workspace" "$runtime_workspace"; then
+        rm -f "$temporary_workspace"
+        say "WORKSPACE-COMPOSITION-WRITE-FAIL: atomic replacement failed"
+        return 1
+      fi
+      ;;
+    CURRENT)
+      ;;
+    *)
+      rm -f "$temporary_workspace"
+      say "WORKSPACE-COMPOSITION-SYNC-FAIL: unexpected renderer result: $result"
+      return 1
+      ;;
+  esac
+
+  if ! diagnostic="$(workspace_composition_tool verify 2>&1)"; then
+    while IFS= read -r line; do
+      say "WORKSPACE-COMPOSITION-DRIFT: $line"
+    done <<< "$diagnostic"
+    return 1
+  fi
+  if [[ "$result" == "UPDATED" ]]; then
+    say "WORKSPACE COMPOSITION SYNCED"
+  else
+    say "WORKSPACE COMPOSITION CURRENT"
+  fi
+}
+
 canonical_gc_root() {
   local root="$1" resolved relative
   [[ -d "$root" ]] || return 1
@@ -477,6 +776,7 @@ main() {
   [[ "$validate_only" == "0" ]] || return 0
   sync_platform || return
   sync_checkout
+  sync_workspace_composition || return
   gc_worktrees
   gc_stuck_lean_builds
   restart_if_needed || return
