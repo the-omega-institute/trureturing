@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using StrataLint.Engine;
 
 namespace StrataLint.ArchitectureTests;
@@ -81,6 +82,8 @@ public sealed class CanonicalSourceDuplicationTests
             "stratalint-canonical-source-" + Guid.NewGuid().ToString("N"));
         try
         {
+            Directory.CreateDirectory(root);
+            Git(root, "init", "--initial-branch=dev");
             Directory.CreateDirectory(Path.Combine(root, "Meta", "StrataLint"));
             File.WriteAllText(
                 Path.Combine(root, "Meta", "BACKFILL.yaml"),
@@ -101,6 +104,7 @@ public sealed class CanonicalSourceDuplicationTests
             File.WriteAllText(
                 Path.Combine(blueprint, "Synthetic.scribe.cs"),
                 "var copied = new Dictionary<string, string> { [\"synthetic/gid\"] = \"SYNTHETIC-CASE\" };\n");
+            Git(root, "add", "--", ".");
 
             var finding = Assert.Single(CanonicalSourceDuplicationPolicy.InspectRepository(root));
 
@@ -108,8 +112,33 @@ public sealed class CanonicalSourceDuplicationTests
         }
         finally
         {
-            Directory.Delete(root, recursive: true);
+            if (Directory.Exists(root))
+            {
+                Directory.Delete(root, recursive: true);
+            }
         }
+    }
+
+    private static void Git(string repositoryRoot, params string[] arguments)
+    {
+        var startInfo = new ProcessStartInfo("git")
+        {
+            WorkingDirectory = repositoryRoot,
+            RedirectStandardError = true,
+            UseShellExecute = false,
+        };
+        foreach (var argument in arguments)
+        {
+            startInfo.ArgumentList.Add(argument);
+        }
+
+        using var process = Process.Start(startInfo)
+            ?? throw new InvalidOperationException("could not start git");
+        var error = process.StandardError.ReadToEnd();
+        process.WaitForExit();
+        Assert.True(
+            process.ExitCode == 0,
+            $"git {string.Join(' ', arguments)} exited {process.ExitCode}: {error}");
     }
 
     [Theory]

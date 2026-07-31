@@ -18,20 +18,16 @@ internal static class TargetFrameworkSingleSourcePolicy
         string repositoryRoot)
     {
         var findings = new List<TargetFrameworkLiteralFinding>();
-        foreach (var fullPath in Directory.EnumerateFiles(
-                     repositoryRoot,
-                     "*",
-                     SearchOption.AllDirectories))
+        foreach (var file in GitIndexRepositoryFiles.Enumerate(repositoryRoot))
         {
-            var path = Path.GetRelativePath(repositoryRoot, fullPath).Replace('\\', '/');
-            if (path.Split('/').Any(static segment =>
-                    segment is ".git" or ".lake" or "bin" or "obj")
-                || !IsInspectedExtension(Path.GetExtension(path)))
+            if (!IsInspectedExtension(Path.GetExtension(file.RelativePath)))
             {
                 continue;
             }
 
-            findings.AddRange(InspectText(path, File.ReadAllText(fullPath)));
+            findings.AddRange(InspectText(
+                file.RelativePath,
+                File.ReadAllText(file.FullPath)));
         }
 
         return findings;
