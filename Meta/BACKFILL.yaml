@@ -7317,16 +7317,23 @@ sources:
           raw_sha256: sha256:9f311bb36f2a675a7c7c56959be666ac001bb48101a26c0227152421c06e1c20
           normalized_sha256: sha256:9f311bb36f2a675a7c7c56959be666ac001bb48101a26c0227152421c06e1c20
         cas_ref: sha256:9f311bb36f2a675a7c7c56959be666ac001bb48101a26c0227152421c06e1c20
-        coverage_gids: []
+        coverage_gids:
+          - D5/S1/Scale/BilateralLiftUniqueness.bilateral_lift_uniqueness
         receipts:
-          coverage: []
-          scribe: []
+          coverage:
+            - gid: D5/S1/Scale/BilateralLiftUniqueness.bilateral_lift_uniqueness
+              source_sha256: sha256:9f311bb36f2a675a7c7c56959be666ac001bb48101a26c0227152421c06e1c20
+              target_sha256: sha256:51135499bad725f1f7a664f6dbe54f6511f7336fcbac9100c9a0d39f375f5a00
+          scribe:
+            - gid: D5/S1/Scale/BilateralLiftUniqueness.bilateral_lift_uniqueness
+              definition_sha256: sha256:ec447e28ed1e545bb2290feadbbf8511ed045defbdd20644cc45a71560533ca2
+              emission_sha256: sha256:3b5ba4e4bb3d2348d324683d76761adf4770ad136596e12b79da3e21c7b01e3e
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: absorbed
+          truth: closed
       - atom_id: pzg-residual-e2361e0ae4aa1ed4150e77040884d302efcea1b3bfebb649e08469fcdf39154e
         ast_path: definition/6.4
         fingerprints:
