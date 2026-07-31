@@ -63,6 +63,58 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
+    public void CasValidReceiptWithChangedAstPathIsNotInherited()
+    {
+        var oldBytes = Encoding.UTF8.GetBytes("historical span");
+        var currentBytes = Encoding.UTF8.GetBytes("rewritten span");
+        var oldAtom = Atom("claim/historical", oldBytes);
+        var currentAtom = Atom("claim/historical", currentBytes);
+        var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
+        var baseline = BackfillInventoryLoader.Load(Ledger(
+            [],
+            CasEntry("historical-receipt", oldAtom, oldCapture.Reference)));
+        var candidateEntry = CasEntry("historical-receipt", oldAtom, oldCapture.Reference)
+            .Replace("ast_path: claim/historical", "ast_path: claim/tampered", StringComparison.Ordinal);
+        var candidate = BackfillInventoryLoader.Load(Ledger([], candidateEntry));
+
+        var result = DigestionLedgerAligner.Evaluate(
+            candidate,
+            Snapshot(currentBytes, [oldCapture]),
+            baseline,
+            DigestionAlignmentMode.Admission,
+            _ => _ => Atomized(currentAtom));
+
+        Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor("historical-receipt"));
+        Assert.Null(result.AtomFor("historical-receipt"));
+    }
+
+    [Fact]
+    public void CasValidReceiptMovedToAnotherSourceIsNotInherited()
+    {
+        var oldBytes = Encoding.UTF8.GetBytes("historical span");
+        var currentBytes = Encoding.UTF8.GetBytes("rewritten span");
+        var oldAtom = Atom("claim/historical", oldBytes);
+        var currentAtom = Atom("claim/historical", currentBytes);
+        var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
+        var entry = CasEntry("historical-receipt", oldAtom, oldCapture.Reference);
+        var baseline = BackfillInventoryLoader.Load(Ledger([], entry));
+        var candidate = BackfillInventoryLoader.Load(Ledger([], entry).Replace(
+            "source_id: source",
+            "source_id: moved-source",
+            StringComparison.Ordinal));
+
+        var result = DigestionLedgerAligner.Evaluate(
+            candidate,
+            Snapshot(currentBytes, [oldCapture]),
+            baseline,
+            DigestionAlignmentMode.Admission,
+            _ => _ => Atomized(currentAtom));
+
+        Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor("historical-receipt"));
+        Assert.Null(result.AtomFor("historical-receipt"));
+    }
+
+    [Fact]
     public void CasValidReceiptAbsentFromBaseIsAlignedByCurrentSourceSpan()
     {
         var currentBytes = Encoding.UTF8.GetBytes("current live span");

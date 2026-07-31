@@ -320,7 +320,7 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void CasIdentitySurvivesBoundaryToStructuralMigration()
+    public void ChangedAstPathCannotInheritCasIdentity()
     {
         var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
         var newBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。rewritten。\n");
@@ -344,13 +344,13 @@ public sealed partial class DigestionAlignmentTests
 
         Assert.Empty(result.Findings);
         Assert.Empty(result.Residual);
-        Assert.Equal(DigestionReceiptAlignment.Seen, result.AlignmentFor("old-receipt"));
+        Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor("old-receipt"));
         Assert.Equal(DigestionReceiptAlignment.Seen, result.AlignmentFor("current-receipt"));
         Assert.Empty(result.ActualStale);
     }
 
     [Fact]
-    public void MachineDerivedStatusIsExcludedFromBaselineReceiptPreimage()
+    public void ChangedStatusCannotInheritBaselineReceipt()
     {
         var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
         var newBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。rewritten。\n");
@@ -371,7 +371,7 @@ public sealed partial class DigestionAlignmentTests
             DigestionAlignmentMode.Ingest);
 
         Assert.Empty(result.Findings);
-        Assert.Equal(DigestionReceiptAlignment.Seen, result.AlignmentFor("old-receipt"));
+        Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor("old-receipt"));
         Assert.Single(result.Residual);
     }
 

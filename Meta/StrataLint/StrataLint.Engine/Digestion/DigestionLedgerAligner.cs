@@ -83,7 +83,7 @@ internal static class DigestionLedgerAligner
         var inheritedEntries = InheritedEntries(baselineDocument);
         foreach (var entry in document.RequireDigestionEntries()
                      .Where(entry => cas.ValidAtomIds.Contains(entry.AtomId)
-                         && inheritedEntries.Contains((entry.AtomId, entry.Fingerprints))))
+                         && inheritedEntries.Contains(CanonicalEntry(entry))))
         {
             var path = DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..];
             if (snapshot.TryGetFile(path, out var blob))
@@ -150,7 +150,7 @@ internal static class DigestionLedgerAligner
                         && entry.Boundary is not null
                             ? DigestionReceiptAlignment.LegacyBoundary
                             : cas.ValidAtomIds.Contains(entry.AtomId)
-                                && inheritedEntries.Contains((entry.AtomId, entry.Fingerprints))
+                                && inheritedEntries.Contains(CanonicalEntry(entry))
                                 ? DigestionReceiptAlignment.Seen
                                 : DigestionReceiptAlignment.Rejected;
             }
@@ -160,7 +160,7 @@ internal static class DigestionLedgerAligner
                 coarseReplacementObligationsBySource.GetValueOrDefault(source.SourceId, []);
             var unprovenCasEntries = source.Entries.Where(entry =>
                 cas.ValidAtomIds.Contains(entry.AtomId)
-                && !inheritedEntries.Contains((entry.AtomId, entry.Fingerprints))).ToArray();
+                && !inheritedEntries.Contains(CanonicalEntry(entry))).ToArray();
             if (((mode == DigestionAlignmentMode.Admission && unprovenCasEntries.Length == 0)
                     || !registeredAtomizer)
                 && coarseReplacementObligations.Length == 0)
@@ -476,11 +476,14 @@ internal static class DigestionLedgerAligner
         return result;
     }
 
-    private static HashSet<(string AtomId, DigestionFingerprints Fingerprints)> InheritedEntries(
+    private static HashSet<string> InheritedEntries(
         BackfillInventoryDocument? baselineDocument) =>
         (baselineDocument?.RequireDigestionEntries() ?? [])
-            .Select(static entry => (entry.AtomId, entry.Fingerprints))
-            .ToHashSet();
+            .Select(CanonicalEntry)
+            .ToHashSet(StringComparer.Ordinal);
+
+    private static string CanonicalEntry(DigestionLedgerEntry entry) =>
+        Convert.ToBase64String(BackfillInventoryWriter.WriteEntry(entry).AsSpan());
 
     private static string? AtomizerIntegrityFailure(
         AtomizedTheoryDocument document,
