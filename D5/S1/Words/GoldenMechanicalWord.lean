@@ -6,7 +6,7 @@
    digest: A golden mechanical letter is one exactly on its fractional-coordinate window. -/
 
 import D5.S1.Phase.Basic
-import D5.S1.Phase.ThreeDistance
+import D5.S1.Phase.GoldenFractionalPart
 
 namespace D5.S1.Words
 

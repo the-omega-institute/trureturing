@@ -6,15 +6,11 @@
    digest: Golden rotation points have at most three distinct cyclic adjacent gaps. -/
 
 import D5.X_Assumptions.AxiomDebt
-import Mathlib.NumberTheory.Real.GoldenRatio
+import D5.S1.Phase.GoldenFractionalPart
 
 namespace D5.S1.Phase
 
 open D5.X_Assumptions
-
-/-- The representative `{n * phi}` of `goldenPhase n` in `[0, 1)`. -/
-noncomputable def goldenFractionalPart (n : ℕ) : ℝ :=
-  Int.fract ((n : ℝ) * Real.goldenRatio)
 
 /-- The `N` points `{n * phi}` for `0 ≤ n < N`. -/
 noncomputable def goldenOrbit (N : ℕ) : Finset ℝ :=
