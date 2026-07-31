@@ -79,7 +79,8 @@ theorem fibonacci_solution_space_eq_span :
     rw [finrank_span_set_eq_card hlin,
       Module.finrank_eq_card_basis (Real.fibRec : LinearRecurrence ℝ).basis]
     simp [Real.fibRec, hne]
-    rw [Fintype.card_fin]
+    change 2 = 2
+    rfl
 
 /-- Forward shift acts diagonally on the two golden eigensequences. -/
 theorem shift_golden_eigenvectors :
@@ -143,5 +144,25 @@ theorem fibonacci_weight_residual (k : ℕ) :
     fibonacciWeight (k + 1) - Real.goldenRatio * fibonacciWeight k =
       Real.goldenConj ^ (k + 1) := by
   exact Real.fib_succ_sub_goldenRatio_mul_fib (k + 1)
+
+/-- The complete bilateral-lift package: the two-dimensional solution space, diagonal shift,
+Binet decomposition, cyclic minimality, and exact contracting residual. -/
+theorem bilateral_lift_uniqueness :
+    (Real.fibRec : LinearRecurrence ℝ).solSpace =
+        Submodule.span ℝ {expandingSequence, contractingSequence} ∧
+      (shift expandingSequence = Real.goldenRatio • expandingSequence ∧
+        shift contractingSequence = Real.goldenConj • contractingSequence) ∧
+      (∀ k, fibonacciWeight k =
+        (expandingSequence k - contractingSequence k) / √5) ∧
+      (fibonacciWeight ∈ Submodule.span ℝ {expandingSequence, contractingSequence} ∧
+        (∀ u ∈ Submodule.span ℝ {expandingSequence, contractingSequence},
+          shift u ∈ Submodule.span ℝ {expandingSequence, contractingSequence}) ∧
+        ∀ W : Submodule ℝ Seq, fibonacciWeight ∈ W →
+          (∀ u ∈ W, shift u ∈ W) →
+          Submodule.span ℝ {expandingSequence, contractingSequence} ≤ W) ∧
+      ∀ k, fibonacciWeight (k + 1) - Real.goldenRatio * fibonacciWeight k =
+        Real.goldenConj ^ (k + 1) := by
+  exact ⟨fibonacci_solution_space_eq_span, shift_golden_eigenvectors,
+    fibonacci_weight_binet, fibonacci_cyclic_span_minimal, fibonacci_weight_residual⟩
 
 end D5.S1.Scale
