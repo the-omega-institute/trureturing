@@ -80,6 +80,16 @@ internal static class DigestionLedgerAligner
         var suggestedAtomIds = new HashSet<string>(StringComparer.Ordinal);
         var cas = DigestionCasStore.Evaluate(document, snapshot);
         findings.AddRange(cas.Findings);
+        foreach (var entry in document.RequireDigestionEntries()
+                     .Where(entry => cas.ValidAtomIds.Contains(entry.AtomId)))
+        {
+            var path = DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..];
+            if (snapshot.TryGetFile(path, out var blob))
+            {
+                matchedAtoms[entry.AtomId] = DigestionAtom.FromFrozenCas(entry.AstPath, blob.RawBytes);
+            }
+        }
+
         var baselineSources = BaselineSources(baselineDocument, findings);
         var sources = document.RequireDigestionSources();
         var candidateSources = sources.ToDictionary(

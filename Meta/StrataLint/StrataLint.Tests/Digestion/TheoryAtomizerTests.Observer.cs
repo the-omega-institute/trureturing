@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Engine;
 
@@ -5,6 +6,33 @@ namespace StrataLint.Tests;
 
 public sealed partial class TheoryAtomizerTests
 {
+    [Fact]
+    public void ObserverClaimExtentIncludesTrailingThematicSeparator()
+    {
+        const string claim = "**定理(叠加不违反经典刚性)。** claim。\n\n---\n\n";
+        var bytes = Encoding.UTF8.GetBytes("# Observer\n\n" + claim);
+
+        var atom = Assert.Single(AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes).Claims);
+
+        Assert.Equal(Encoding.UTF8.GetBytes(claim), atom.RawBytes.ToArray());
+    }
+
+    [Fact]
+    public void ObserverStateNotPathExtentMatchesFrozenCasBytes()
+    {
+        var root = FindRepositoryRoot();
+        var golden = File.ReadAllBytes(Path.Combine(
+            root,
+            DigestionCasStore.RootPath,
+            "8d5c4162772d2b6674b2c46ab17550880a2670b134d5893a353659610617b8fe"));
+        var atom = DigestionAtom.FromFrozenCas(
+            "theorem/state-not-path",
+            ImmutableArray.CreateRange(golden));
+
+        Assert.Equal(golden, atom.RawBytes.ToArray());
+        Assert.Equal(golden.Length, atom.EndByte);
+    }
+
     [Fact]
     public void ObserverAdapterRecognizesEveryProductionClaim()
     {
