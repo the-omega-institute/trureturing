@@ -393,9 +393,6 @@ internal sealed record CoverSpec
 
 internal static class CoverWorld
 {
-    // Neutral atom id: the source atom is never re-atomized under admission-mode
-    // alignment, so the fixture builds it directly and keeps program sources free
-    // of internal theory-volume tokens (TheoryIsolationPolicy).
     internal const string DefaultAtomId = "cover-1";
 
     internal static RawRepositorySnapshot Raw(IReadOnlyDictionary<string, string> files) =>
@@ -403,15 +400,10 @@ internal static class CoverWorld
 
     internal static CoverInputs Materialize(CoverSpec spec)
     {
-        var atomBytes = Encoding.UTF8.GetBytes("cover fixture atom body\n");
-        var atom = new DigestionAtom(
-            "claim/probe",
-            0,
-            atomBytes.Length,
-            ImmutableArray.CreateRange(atomBytes),
-            DigestionFingerprint.Compute(atomBytes),
-            ImmutableArray<DigestionContext>.Empty);
-        var sourceBytes = Encoding.UTF8.GetBytes("cover fixture governance source\n");
+        var sourceBytes = Encoding.UTF8.GetBytes(
+            "# Synthetic\n\n**定理 1.1(A)**。cover fixture atom body。\n");
+        var atom = Assert.Single(
+            AtomizerRegistry.Atomize(AtomizerRegistry.RegisteredIds[0], sourceBytes).Claims);
         var targetPath = spec.ModuleGid + ".lean";
         var targetBytes = Encoding.UTF8.GetBytes(DigestionTestSupport.Lean(spec.ModuleGid));
         var definition = Encoding.UTF8.GetBytes("scribe definition\n");
