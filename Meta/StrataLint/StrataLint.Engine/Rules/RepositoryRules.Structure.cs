@@ -63,13 +63,16 @@ internal static partial class RepositoryRules
     internal const int DirectoryFileLimit = 12;
 
     // SL-003 capacity exclusions: theory inputs, the Lake manifest, the backfill
-    // inventory, and canonical CAS blobs are not artifacts the capacity pressure
-    // rule bounds. Single source shared with the CapacityPolicy dotnet-test net.
+    // inventory, canonical CAS blobs, and per-atom formalization receipts are not
+    // artifacts the capacity pressure rule bounds — machine-derived inventories
+    // grow one entry per admitted unit and are never navigated as content buckets.
+    // Single source shared with the CapacityPolicy dotnet-test net.
     internal static bool IsCapacityExcluded(string path) =>
         path.StartsWith("docs/develop/", StringComparison.Ordinal)
         || string.Equals(path, "lake-manifest.json", StringComparison.Ordinal)
         || string.Equals(path, BackfillInventoryLoader.RelativePath, StringComparison.Ordinal)
-        || DigestionCasStore.IsCanonicalPath(path);
+        || DigestionCasStore.IsCanonicalPath(path)
+        || path.StartsWith(DigestionFormalizationReceipt.RootPath, StringComparison.Ordinal);
 
     // The canonical artifact line count: newline-delimited lines, not counting a
     // trailing terminator. Shared with CapacityPolicy so both nets agree exactly.
