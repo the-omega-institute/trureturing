@@ -29,6 +29,9 @@ domains:
   Fourier:
     stratum: S3
     definition: Entire analytic extensions of the Weil Fourier-Laplace transform.
+  History:
+    stratum: S0
+    definition: Finite marker and event histories, their append operation, and faithful self-encoding bridges.
   Phase:
     stratum: S1
     definition: Additive golden-ratio phases modulo one.
