@@ -195,21 +195,6 @@ internal static class CanonicalSourceDuplicationPolicy
             or >= '\u4e00' and <= '\u9fff');
 
     private static IEnumerable<(string RelativePath, string FullPath)> EnumerateToml(
-        string repositoryRoot)
-    {
-        foreach (var path in Directory.EnumerateFiles(
-                     repositoryRoot,
-                     "*.toml",
-                     SearchOption.AllDirectories))
-        {
-            var relativePath = Path.GetRelativePath(repositoryRoot, path).Replace('\\', '/');
-            if (relativePath.Split('/').Any(static segment =>
-                    segment is ".git" or ".lake" or "bin" or "obj"))
-            {
-                continue;
-            }
-
-            yield return (relativePath, path);
-        }
-    }
+        string repositoryRoot) => GitIndexRepositoryFiles.Enumerate(repositoryRoot)
+        .Where(static file => file.RelativePath.EndsWith(".toml", StringComparison.Ordinal));
 }
