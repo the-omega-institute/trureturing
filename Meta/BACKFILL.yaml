@@ -7332,7 +7332,7 @@ sources:
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-e2361e0ae4aa1ed4150e77040884d302efcea1b3bfebb649e08469fcdf39154e
         ast_path: definition/6.4
