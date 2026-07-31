@@ -31,5 +31,5 @@ internal sealed class UniversalSolenoidDocument : IScribeDocumentDefinition
                         "The projection formula is machine-checked directly. The same module "
                         + "proves dense range and derives connectedness from it."))),
                     LatexStatement.Create(
-                        @"$$\pi(\operatorname{realFlow}(t))=t\pmod 1.$$")))));
+                        @"$$\pi(\operatorname{realFlow}(t))=t\operatorname{mod}1.$$")))));
 }
