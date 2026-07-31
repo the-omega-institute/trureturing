@@ -47,6 +47,9 @@ domains:
   Weil:
     stratum: S3
     definition: Classical zeta conventions, Weil test functions, and Fourier-Laplace analysis.
+  Words:
+    stratum: S1
+    definition: Golden mechanical words and their local window letter conditions.
   Zeros:
     stratum: S3
     definition: Geometry, symmetry, and local balance of classical zeta zeros.
