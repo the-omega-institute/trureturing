@@ -13,6 +13,7 @@ SH
   chmod +x "$root/bin/make"
   sync_platform() { return 0; }
   sync_checkout() { return 0; }
+  sync_workspace_composition() { return 0; }
   gc_worktrees() { return 0; }
   gc_stuck_lean_builds() { return 0; }
   restart_if_needed() { return 0; }
@@ -40,6 +41,7 @@ SH
   chmod +x "$enumerator"
   sync_platform() { return 0; }
   sync_checkout() { return 0; }
+  sync_workspace_composition() { return 0; }
   gc_worktrees() { return 0; }
   gc_stuck_lean_builds() { return 0; }
   restart_if_needed() { return 0; }
@@ -65,6 +67,7 @@ missing_launchd_provider_key_fails_maintenance_cycle() (
   command grep -v '^export FKST_PYTHON_BIN=' "$FIXTURE_HOST_CONFIG" > "$incomplete"
   sync_platform() { return 0; }
   sync_checkout() { return 0; }
+  sync_workspace_composition() { return 0; }
   gc_worktrees() { return 0; }
   gc_stuck_lean_builds() { return 0; }
   restart_if_needed() { return 0; }
