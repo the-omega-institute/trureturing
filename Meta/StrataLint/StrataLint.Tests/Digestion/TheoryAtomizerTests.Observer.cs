@@ -173,4 +173,31 @@ public sealed partial class TheoryAtomizerTests
 
         Assert.Equal(expectedAstPath, atom.AstPath);
     }
+
+    [Theory]
+    [InlineData("**§17.1 六环链(本文测量论之链式定理化)**。claim。", "chain-court/six-link-chain")]
+    [InlineData("**§17.2 双柱贯链(熵-自由对偶升为簿记法)**。claim。", "chain-court/double-column-ledger")]
+    [InlineData("**§17.3 测量几何与算术同址续报(指针)**。claim。", "chain-court/measurement-geometry-pointer")]
+    [InlineData("**§18.1 文体定名**。claim。", "ledger-machine/genre-naming")]
+    [InlineData("**§18.2 机器全貌(编号引用,零新假设)**。claim。", "ledger-machine/full-picture")]
+    [InlineData("**§18.3 三词收官与边界**。claim。", "ledger-machine/three-word-closure")]
+    [InlineData("**§19.1 非是集(以否定完成定位)**。claim。", "machine-negations/negative-set")]
+    [InlineData("**§19.2 教学面(入门件指针)**。claim。", "machine-negations/teaching-surface")]
+    [InlineData("**§19.3 能量与力(运动学词条 + 墙)**。claim。", "machine-negations/energy-and-force")]
+    [InlineData("**§20.1 熵之相对论(本文核心命题之收官形)**。claim。", "entropy-relativity/relativity-of-entropy")]
+    [InlineData("**§20.2 动力学合流与 Wick 指针(界限申报)**。claim。", "entropy-relativity/wick-pointer")]
+    [InlineData("**§20.3 谱之双重身份与子系统概念之三重松动**。claim。", "entropy-relativity/spectrum-dual-identity")]
+    [InlineData("**§21.1 总装卷之本文定位**。claim。", "assembly-volume/positioning")]
+    [InlineData("**§21.2 观察者代价定理(本批新增之 OQ 切片)**。claim。", "assembly-volume/observer-cost-theorem")]
+    [InlineData("**§21.3 结构出身与收官**。claim。", "assembly-volume/structural-origin")]
+    public void ObserverV1RecognizesTheV65ThroughV69CourtClaimLeads(
+        string claim,
+        string expectedAstPath)
+    {
+        var bytes = Encoding.UTF8.GetBytes($"# Observer\n\n{claim}\n");
+
+        var atom = Assert.Single(AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes).Claims);
+
+        Assert.Equal(expectedAstPath, atom.AstPath);
+    }
 }
