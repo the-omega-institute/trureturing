@@ -276,7 +276,20 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
 
     private CommandResult RenderRoute(ValidatedPolicy policy, RouteOutcome.Routed routed)
     {
-        var capacityFailure = RouteCapacityPreflight.Evaluate(repository.ReadCurrent(), policy, routed.Result);
+        var capacityFailure = routed.Result.Gid.ToTarget() switch
+        {
+            Target.Formal formal => RouteCapacityPreflight.Evaluate(
+                repository.ReadCurrent(),
+                policy,
+                routed.Result.Stratum,
+                formal),
+            Target.Blueprint blueprint => RouteCapacityPreflight.Evaluate(
+                repository.ReadCurrent(),
+                policy,
+                routed.Result.Stratum,
+                blueprint),
+            _ => null,
+        };
         if (capacityFailure is not null)
         {
             return new CommandResult(false, string.Empty, $"SL-003 route: {capacityFailure}\n");

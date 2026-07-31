@@ -312,24 +312,38 @@ internal static class RouteCapacityPreflight
     internal static string? Evaluate(
         RawRepositorySnapshot repository,
         ValidatedPolicy policy,
-        RouteResult route)
+        Stratum? stratum,
+        Target.Formal target) =>
+        Evaluate(repository, policy, stratum, ProjectedOutputs(target));
+
+    internal static string? Evaluate(
+        RawRepositorySnapshot repository,
+        ValidatedPolicy policy,
+        Stratum? stratum,
+        Target.Blueprint target) =>
+        Evaluate(repository, policy, stratum, ProjectedOutputs(target));
+
+    private static string? Evaluate(
+        RawRepositorySnapshot repository,
+        ValidatedPolicy policy,
+        Stratum? stratum,
+        IEnumerable<string> projectedOutputs)
     {
         ArgumentNullException.ThrowIfNull(repository);
         ArgumentNullException.ThrowIfNull(policy);
-        ArgumentNullException.ThrowIfNull(route);
 
         var currentPaths = repository.Entries
             .Select(static entry => entry.Path)
             .Where(static path => !RepositoryRules.IsCapacityExcluded(path))
             .Distinct(StringComparer.Ordinal)
             .ToHashSet(StringComparer.Ordinal);
-        var stratumDomains = route.Stratum is { } stratum
+        var stratumDomains = stratum is { } routeStratum
             ? policy.Domains
-                .Where(item => item.Value == stratum)
+                .Where(item => item.Value == routeStratum)
                 .Select(static item => item.Key.Value)
                 .ToArray()
             : [];
-        var failures = ProjectedOutputs(route.Path.Value)
+        var failures = projectedOutputs
             .Where(static path => !RepositoryRules.IsCapacityExcluded(path))
             .GroupBy(DirectoryOf, StringComparer.Ordinal)
             .Select(group => CapacityFailure(currentPaths, stratumDomains, group.Key, group))
@@ -340,30 +354,24 @@ internal static class RouteCapacityPreflight
         return failures.Length == 0 ? null : string.Join(" ", failures);
     }
 
-    private static IEnumerable<string> ProjectedOutputs(string routedPath)
+    private static IEnumerable<string> ProjectedOutputs(Target.Formal target)
     {
         const string blueprintPrefix = "Blueprint/";
-        if (routedPath.StartsWith("D5/", StringComparison.Ordinal)
-            && routedPath.EndsWith(".lean", StringComparison.Ordinal))
-        {
-            var stem = routedPath[..^".lean".Length];
-            yield return routedPath;
-            yield return $"{blueprintPrefix}{stem}.scribe.cs";
-            yield return $"{blueprintPrefix}{stem}.md";
-            yield break;
-        }
+        var routedPath = target.Path.Value;
+        var stem = routedPath[..^".lean".Length];
+        yield return routedPath;
+        yield return $"{blueprintPrefix}{stem}.scribe.cs";
+        yield return $"{blueprintPrefix}{stem}.md";
+    }
 
-        if (routedPath.StartsWith("Blueprint/D5/", StringComparison.Ordinal)
-            && routedPath.EndsWith(".md", StringComparison.Ordinal))
-        {
-            var blueprintStem = routedPath[..^".md".Length];
-            var leanStem = blueprintStem[blueprintPrefix.Length..];
-            yield return $"{leanStem}.lean";
-            yield return $"{blueprintStem}.scribe.cs";
-            yield return routedPath;
-            yield break;
-        }
-
+    private static IEnumerable<string> ProjectedOutputs(Target.Blueprint target)
+    {
+        const string blueprintPrefix = "Blueprint/";
+        var routedPath = target.Path.Value;
+        var blueprintStem = routedPath[..^".md".Length];
+        var leanStem = blueprintStem[blueprintPrefix.Length..];
+        yield return $"{leanStem}.lean";
+        yield return $"{blueprintStem}.scribe.cs";
         yield return routedPath;
     }
 
