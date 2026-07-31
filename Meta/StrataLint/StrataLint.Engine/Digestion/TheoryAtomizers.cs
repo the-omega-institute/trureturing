@@ -28,6 +28,16 @@ internal sealed record DigestionAtom(
         : this(astPath, startByte, endByte, rawBytes, fingerprints, context, DigestionAtomStatusMarker.Absent)
     {
     }
+
+    internal static DigestionAtom FromFrozenCas(string astPath, ImmutableArray<byte> rawBytes) =>
+        new(
+            astPath,
+            0,
+            rawBytes.Length,
+            rawBytes,
+            DigestionFingerprint.Compute(rawBytes.AsSpan()),
+            [],
+            DigestionAtomStatusMarker.Parse(rawBytes.AsSpan()));
 }
 
 internal sealed record DigestionSlice(bool IsClaim, ImmutableArray<byte> RawBytes);

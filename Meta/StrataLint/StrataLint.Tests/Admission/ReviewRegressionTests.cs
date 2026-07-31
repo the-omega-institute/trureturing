@@ -117,7 +117,7 @@ public sealed partial class ReviewRegressionTests
     }
 
     [Fact]
-    public void Sl016AcceptsCasBackedReceiptWithoutItsSourceVolume()
+    public void Sl016RejectsCasBackedLiveReceiptWithoutItsSourceVolume()
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
@@ -140,7 +140,8 @@ public sealed partial class ReviewRegressionTests
             RuleId.CreateKnown(16),
             fixture.Build());
 
-        Assert.Empty(evaluation.Diagnostics);
+        Assert.Contains(evaluation.Diagnostics, diagnostic =>
+            diagnostic.Message.Contains("source path is dangling", StringComparison.Ordinal));
     }
 
     [Fact]
