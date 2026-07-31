@@ -41,6 +41,9 @@ domains:
   Quantum:
     stratum: S3
     definition: Finite-dimensional complex operator-algebra and probability structures.
+  Recurrence:
+    stratum: S1
+    definition: Linear recurrence solution spaces, shift eigenstructure, and self-similar weight lifts.
   Rewriting:
     stratum: S0
     definition: Abstract terminating rewrite relations, confluence, and canonical normal forms.
