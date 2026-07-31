@@ -5,7 +5,9 @@
    anchors: []
    digest: The universal solenoid carries its visible projection and dense real flow. -/
 
-import D5.S1.Dynamics.JumpCocycle
+import Mathlib.Topology.Instances.AddCircle.Real
+import Mathlib.Topology.Connected.Basic
+import Mathlib.Topology.Algebra.Group.Basic
 
 namespace D5.S1.Dynamics
 
