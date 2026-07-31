@@ -1,5 +1,5 @@
 /- GID: D5/S1/Dynamics/GoldenFractionalPart
-   generality: I
+   generality: G
    mirror-B: D5/B/S1/Dynamics/GoldenFractionalPart
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
