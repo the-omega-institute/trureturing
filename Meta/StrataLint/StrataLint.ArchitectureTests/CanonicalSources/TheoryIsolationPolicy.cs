@@ -47,29 +47,31 @@ internal static class TheoryIsolationPolicy
 
     internal static IReadOnlyList<TheoryIsolationFinding> InspectRepository(string repositoryRoot)
     {
-        var findings = CSharpRepositorySources.Enumerate(repositoryRoot)
+        var repositoryFiles = GitIndexRepositoryFiles.Enumerate(repositoryRoot);
+        var findings = repositoryFiles
+            .Where(static file => file.RelativePath.EndsWith(".cs", StringComparison.Ordinal))
             .SelectMany(source => InspectSource(
                 source.RelativePath,
                 File.ReadAllText(source.FullPath)))
             .ToList();
 
-        foreach (var path in Directory.EnumerateFiles(repositoryRoot, "*.lean", SearchOption.AllDirectories))
+        foreach (var source in repositoryFiles.Where(static file =>
+                     file.RelativePath.EndsWith(".lean", StringComparison.Ordinal)))
         {
-            var relativePath = Path.GetRelativePath(repositoryRoot, path).Replace('\\', '/');
-            if (relativePath.Split('/').Any(static segment => segment is ".git" or ".lake" or "bin" or "obj"))
-            {
-                continue;
-            }
-
-            findings.AddRange(InspectSource(relativePath, File.ReadAllText(path)));
+            findings.AddRange(InspectSource(
+                source.RelativePath,
+                File.ReadAllText(source.FullPath)));
         }
 
-        var fullCatalogPath = Path.Combine(repositoryRoot, AnchorCatalogPath);
-        if (File.Exists(fullCatalogPath))
+        var catalog = repositoryFiles.SingleOrDefault(file => string.Equals(
+            file.RelativePath,
+            AnchorCatalogPath,
+            StringComparison.Ordinal));
+        if (catalog != default)
         {
             findings.AddRange(InspectCatalog(
                 AnchorCatalogPath,
-                File.ReadAllText(fullCatalogPath)));
+                File.ReadAllText(catalog.FullPath)));
         }
 
         return findings;
