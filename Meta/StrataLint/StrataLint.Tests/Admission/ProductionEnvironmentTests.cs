@@ -454,7 +454,10 @@ public sealed partial class ProductionEnvironmentTests
             new UTF8Encoding(false));
         var environment = new ProductionCliEnvironment(
             temporary.Path,
-            new FakeRepositoryGateway(RawChangeSet.Create(Array.Empty<string>()), null, null),
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(Array.Empty<string>()),
+                Snapshot(new Dictionary<string, string>()),
+                null),
             new FakeLeanReportSource(null));
 
         var result = environment.Route(new[] { "manifest.json" });
