@@ -7,6 +7,98 @@ namespace StrataLint.Tests;
 public sealed partial class DigestionAlignmentTests
 {
     [Fact]
+    public void CasValidReceiptAbsentFromBaseAndCurrentSourceIsRejected()
+    {
+        var currentBytes = Encoding.UTF8.GetBytes("current live span");
+        var currentAtom = Atom("claim/current", currentBytes);
+        var forgedBytes = Encoding.UTF8.GetBytes("fabricated receipt bytes");
+        var forgedAtom = new DigestionAtom(
+            "theorem/does-not-exist",
+            0,
+            forgedBytes.Length,
+            ImmutableArray.CreateRange(forgedBytes),
+            DigestionFingerprint.Compute(forgedBytes),
+            []);
+        var forgedCapture = DigestionCasStore.Capture(forgedBytes);
+        var baseline = BackfillInventoryLoader.Load(Ledger([], Entry("baseline-receipt", currentAtom)));
+        var candidate = BackfillInventoryLoader.Load(Ledger(
+            [],
+            CasEntry("forged-receipt", forgedAtom, forgedCapture.Reference)));
+
+        var result = DigestionLedgerAligner.Evaluate(
+            candidate,
+            Snapshot(currentBytes, [forgedCapture]),
+            baseline,
+            DigestionAlignmentMode.Admission,
+            _ => _ => Atomized(currentAtom));
+
+        Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor("forged-receipt"));
+        Assert.Null(result.AtomFor("forged-receipt"));
+    }
+
+    [Fact]
+    public void CasValidReceiptWithExactBaseProvenanceIsInherited()
+    {
+        var oldBytes = Encoding.UTF8.GetBytes("historical span");
+        var currentBytes = Encoding.UTF8.GetBytes("rewritten span");
+        var oldAtom = Atom("claim/historical", oldBytes);
+        var currentAtom = Atom("claim/historical", currentBytes);
+        var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
+        var baseline = BackfillInventoryLoader.Load(Ledger(
+            [],
+            CasEntry("historical-receipt", oldAtom, oldCapture.Reference)));
+        var candidate = BackfillInventoryLoader.Load(Ledger(
+            [],
+            CasEntry("historical-receipt", oldAtom, oldCapture.Reference)));
+
+        var result = DigestionLedgerAligner.Evaluate(
+            candidate,
+            Snapshot(currentBytes, [oldCapture]),
+            baseline,
+            DigestionAlignmentMode.Admission,
+            _ => _ => Atomized(currentAtom));
+
+        Assert.Equal(DigestionReceiptAlignment.Seen, result.AlignmentFor("historical-receipt"));
+        Assert.Equal(oldAtom.Fingerprints, result.AtomFor("historical-receipt")?.Fingerprints);
+    }
+
+    [Fact]
+    public void CasValidReceiptAbsentFromBaseIsAlignedByCurrentSourceSpan()
+    {
+        var currentBytes = Encoding.UTF8.GetBytes("current live span");
+        var currentAtom = Atom("claim/current", currentBytes);
+        var currentCapture = DigestionCasStore.Capture(currentAtom.RawBytes.AsSpan());
+        var baselineBytes = Encoding.UTF8.GetBytes("baseline span");
+        var baselineAtom = Atom("claim/baseline", baselineBytes);
+        var baseline = BackfillInventoryLoader.Load(Ledger([], Entry("baseline-receipt", baselineAtom)));
+        var candidate = BackfillInventoryLoader.Load(Ledger(
+            [],
+            CasEntry("live-receipt", currentAtom, currentCapture.Reference)));
+
+        var result = DigestionLedgerAligner.Evaluate(
+            candidate,
+            Snapshot(currentBytes, [currentCapture]),
+            baseline,
+            DigestionAlignmentMode.Admission,
+            _ => _ => Atomized(currentAtom));
+
+        Assert.Equal(DigestionReceiptAlignment.Seen, result.AlignmentFor("live-receipt"));
+        Assert.Equal(currentAtom.Fingerprints, result.AtomFor("live-receipt")?.Fingerprints);
+    }
+
+    private static DigestionAtom Atom(string astPath, byte[] bytes) => new(
+        astPath,
+        0,
+        bytes.Length,
+        ImmutableArray.CreateRange(bytes),
+        DigestionFingerprint.Compute(bytes),
+        []);
+
+    private static AtomizedTheoryDocument Atomized(DigestionAtom atom) => new(
+        [atom],
+        [new DigestionSlice(true, atom.RawBytes)]);
+
+    [Fact]
     public void IngestRejectsAtomizerHashFailureInsteadOfFallingBack()
     {
         var (ledger, oldCapture) = ExistingCasBackedLedger();
