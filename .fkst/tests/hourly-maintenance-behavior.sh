@@ -10,6 +10,7 @@ HOST_CONTRACT_LOADER="$REPOSITORY_ROOT/.fkst/scripts/host-contract.sh"
 LAUNCHER_RENDERER="$REPOSITORY_ROOT/.fkst/scripts/render-maintenance-launcher.sh"
 LAUNCHER_CONFORMANCE="$REPOSITORY_ROOT/.fkst/scripts/check-maintenance-launcher.sh"
 RESTART_CASES="$REPOSITORY_ROOT/.fkst/tests/hourly-maintenance-restart-cases.sh"
+COMPOSITION_CASES="$REPOSITORY_ROOT/.fkst/tests/hourly-maintenance-composition-cases.sh"
 PASS_COUNT=0
 FAIL_COUNT=0
 
@@ -556,6 +557,10 @@ write_host_contract_fixture() {
     "$root/runtime/worktrees" \
     "$root/supervisor/slots"
   command cp "$REPOSITORY_ROOT/.fkst/deploy.env" "$FIXTURE_HOST_ROOT/.fkst/deploy.env"
+  command cp "$REPOSITORY_ROOT/.fkst/fkst.workspace.toml" \
+    "$FIXTURE_HOST_ROOT/.fkst/fkst.workspace.toml"
+  command cp "$REPOSITORY_ROOT/.fkst/fkst.workspace.toml" \
+    "$FIXTURE_HOST_ROOT/fkst.workspace.toml"
   printf '#!/usr/bin/env bash\nexit 0\n' > "$root/bin/fkst-framework"
   printf '#!/usr/bin/env bash\nshift\nexec "$@"\n' > "$root/bin/timeout"
   printf '#!/usr/bin/env bash\nexit 0\n' > "$FIXTURE_HOST_ROOT/.fkst/scripts/run.sh"
@@ -604,7 +609,8 @@ stale_deployed_repository_contract_does_not_block_checkout_refresh() (
   checkout_remote="$root/checkout-remote.git"
   checkout_writer="$root/checkout-writer"
 
-  printf '[external_sources.platform]\nrev = "%s"\n' "$NEW_PLATFORM_REV" \
+  sed "s/^rev = \"[0-9a-f]*\"/rev = \"$NEW_PLATFORM_REV\"/" \
+    "$FIXTURE_HOST_ROOT/.fkst/fkst.workspace.toml" \
     > "$FIXTURE_HOST_ROOT/fkst.workspace.toml"
   printf 'deployed-lock\n' > "$FIXTURE_HOST_ROOT/fkst.lock"
   printf 'FKST_GITHUB_BOT_LOGIN=stale-repository-copy\n' \
@@ -731,6 +737,9 @@ run_test() {
 [[ -f "$RESTART_CASES" ]] || fail "restart behavior cases are missing"
 # shellcheck disable=SC1090
 source "$RESTART_CASES"
+[[ -f "$COMPOSITION_CASES" ]] || fail "composition behavior cases are missing"
+# shellcheck disable=SC1090
+source "$COMPOSITION_CASES"
 
 run_test "deployed top-level workspace is authoritative" deployed_top_level_workspace_is_authoritative
 run_test "host-lock failure rolls back pin and lock bytes" host_lock_failure_rolls_back_pin_and_lock_bytes
@@ -739,6 +748,11 @@ run_test "checkout fast-forwards only clean ancestors" checkout_fast_forwards_on
 run_test "checkout untracked files do not block fast-forward" checkout_untracked_files_do_not_block_fast_forward
 run_test "checkout divergence refuses auto fast-forward" checkout_divergence_refuses_auto_fast_forward
 run_test "checkout status failure refuses auto fast-forward" checkout_status_failure_refuses_auto_fast_forward
+run_test "tracked package removal propagates after checkout fast-forward" tracked_package_removal_propagates_after_checkout_fast_forward
+run_test "tracked package addition propagates after checkout fast-forward" tracked_package_addition_propagates_after_checkout_fast_forward
+run_test "platform-current cycle still propagates composition" platform_current_cycle_still_propagates_composition
+run_test "post-write composition drift fails closed with differences" post_write_composition_drift_fails_closed_with_differences
+run_test "composition-only propagation does not trigger restart" composition_only_propagation_does_not_trigger_restart
 run_test "implementing issues defer restart" implementing_issues_defer_restart
 run_test "worktree GC preserves owned or dirty lanes" worktree_gc_preserves_owned_or_dirty_lanes
 run_test "GC roots are canonical and never filesystem root" gc_roots_are_canonical_and_never_the_filesystem_root
