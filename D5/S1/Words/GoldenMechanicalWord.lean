@@ -6,11 +6,12 @@
    digest: A golden mechanical letter is one exactly on its fractional-coordinate window. -/
 
 import D5.S1.Phase.Basic
-import D5.S1.Phase.GoldenFractionalPart
+import D5.S1.Dynamics.GoldenFractionalPart
 
 namespace D5.S1.Words
 
 open D5.S1.Phase
+open D5.S1.Dynamics
 
 /-- The slope `1 / phi` of the lower golden mechanical word. -/
 noncomputable def goldenMechanicalSlope : ℝ := Real.goldenRatio⁻¹
