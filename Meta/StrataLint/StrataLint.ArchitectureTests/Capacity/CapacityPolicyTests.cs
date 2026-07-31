@@ -67,6 +67,23 @@ public sealed class CapacityPolicyTests
         Assert.Empty(findings);
     }
 
+    // Formalization receipts accrue one file per admitted unit; the directory is a
+    // machine inventory, never a navigated content bucket, so thirteen receipts must
+    // not trip the directory file limit.
+    [Fact]
+    public void FormalizationReceiptInventoryIsNotBoundedByDirectoryLimit()
+    {
+        var receipts = Enumerable.Range(0, RepositoryRules.DirectoryFileLimit + 1)
+            .Select(static i => (
+                $"Meta/Digestion/formalizations/atom-{i:x2}.v1.json",
+                "{}"))
+            .ToArray();
+
+        var findings = CapacityPolicy.InspectFiles(receipts);
+
+        Assert.Empty(findings);
+    }
+
     // The backfill inventory path, restated here only to exercise the exclusion;
     // the enforcement source is RepositoryRules.IsCapacityExcluded.
     private const string BackfillInventoryRelativePath = "Meta/BACKFILL.yaml";
