@@ -123,7 +123,9 @@ public sealed partial class ProductionEnvironmentTests
     public void RouteRejectsBlueprintBucketWhenBlueprintOriginWouldExceedLimit()
     {
         using var temporary = RouteRepository(Manifest("B", "Carrier", "Probe", "", "markdown", ""));
-        var files = BlueprintBucketFiles(RepositoryRules.DirectoryFileLimit - 1);
+        // Same arithmetic as the formal-origin case: the emitted .md is exempt, so the
+        // module's one structural slot only overflows an already-full bucket.
+        var files = BlueprintBucketFiles(RepositoryRules.DirectoryFileLimit);
         var environment = RouteEnvironment(temporary.Path, files);
 
         var result = environment.Route(["manifest.json"]);
@@ -131,7 +133,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.False(result.Success);
         Assert.Contains("Blueprint/D5/S0/Carrier", result.Error, StringComparison.Ordinal);
         Assert.Contains("projected occupancy 13 exceeds maximum 12", result.Error, StringComparison.Ordinal);
-        Assert.Contains("Carrier=11", result.Error, StringComparison.Ordinal);
+        Assert.Contains("Carrier=12", result.Error, StringComparison.Ordinal);
     }
 
     [Fact]
