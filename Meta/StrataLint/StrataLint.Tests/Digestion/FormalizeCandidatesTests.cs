@@ -135,6 +135,60 @@ public sealed class FormalizeCandidatesTests
     }
 
     [Fact]
+    public void FormalizeCandidatesExcludesAtomCoveredByValidFormalizationReceipt()
+    {
+        var entry = Entry("source", "receipt-covered", "定理", "5.2");
+
+        var result = Run([entry], formalizationReceipt: ValidReceipt(entry));
+
+        Assert.True(result.Success, result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        Assert.Empty(json.RootElement.GetProperty("candidates").EnumerateArray());
+        Assert.Empty(json.RootElement.GetProperty("withheld").EnumerateArray());
+    }
+
+    [Theory]
+    [InlineData("{not-json}\n")]
+    [InlineData("{}\n")]
+    public void FormalizeCandidatesKeepsAtomWhenFormalizationReceiptIsMalformed(string receipt)
+    {
+        var entry = Entry("source", "malformed-receipt", "定理", "5.3");
+
+        var result = Run([entry], formalizationReceipt: Encoding.UTF8.GetBytes(receipt));
+
+        Assert.True(result.Success, result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        Assert.Equal(
+            entry.AtomId,
+            Assert.Single(json.RootElement.GetProperty("candidates").EnumerateArray())
+                .GetProperty("atom_id")
+                .GetString());
+        Assert.Empty(json.RootElement.GetProperty("withheld").EnumerateArray());
+    }
+
+    [Fact]
+    public void FormalizeCandidatesKeepsAtomWhenReceiptAtomIdDoesNotMatchPath()
+    {
+        var entry = Entry("source", "receipt-path-owner", "定理", "5.4");
+        var receipt = DigestionFormalizationReceipt.Write(new DigestionFormalizationReceipt(
+            "different-atom",
+            "D5/S0/Synthetic/Receipt.different_atom",
+            new DigestionFormalizationSignature("different-atom", "theorem", "statement-v1"),
+            entry.Atom.Fingerprints.RawSha256,
+            entry.Atom.Fingerprints.RawSha256)).ToArray();
+
+        var result = Run([entry], formalizationReceipt: receipt);
+
+        Assert.True(result.Success, result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        Assert.Equal(
+            entry.AtomId,
+            Assert.Single(json.RootElement.GetProperty("candidates").EnumerateArray())
+                .GetProperty("atom_id")
+                .GetString());
+    }
+
+    [Fact]
     public void FormalizeCandidatesReadsCompleteAtomTextFromCasAndAddressesLedgerBytes()
     {
         var entry = Entry(
@@ -240,7 +294,8 @@ public sealed class FormalizeCandidatesTests
         IReadOnlyList<EntryFixture> entries,
         bool includeCas = true,
         bool driftCas = false,
-        string? ledger = null)
+        string? ledger = null,
+        byte[]? formalizationReceipt = null)
     {
         var sources = entries
             .GroupBy(static entry => entry.SourceId, StringComparer.Ordinal)
@@ -281,6 +336,16 @@ public sealed class FormalizeCandidatesTests
             }
         }
 
+        if (formalizationReceipt is not null)
+        {
+            Assert.Single(entries);
+            files.Add(new RawRepositoryEntry(
+                DigestionFormalizationReceipt.RootPath
+                    + entries[0].AtomId
+                    + DigestionFormalizationReceipt.PathSuffix,
+                ImmutableArray.CreateRange(formalizationReceipt)));
+        }
+
         var environment = new ProductionCliEnvironment(
             "/repo",
             new FakeRepositoryGateway(
@@ -291,6 +356,14 @@ public sealed class FormalizeCandidatesTests
             new FakeScribeEmissionVerifier(null));
         return environment.DigestStatus(["--formalize-candidates"]);
     }
+
+    private static byte[] ValidReceipt(EntryFixture entry) =>
+        DigestionFormalizationReceipt.Write(new DigestionFormalizationReceipt(
+            entry.AtomId,
+            "D5/S0/Synthetic/Receipt.receipt_covered",
+            new DigestionFormalizationSignature("receipt-covered", "theorem", "statement-v1"),
+            entry.Atom.Fingerprints.RawSha256,
+            entry.Atom.Fingerprints.RawSha256)).ToArray();
 
     private static EntryFixture Entry(
         string sourceId,

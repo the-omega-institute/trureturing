@@ -247,6 +247,11 @@ internal static class DigestStatusCommand
             return null;
         }
 
+        if (HasValidFormalizationReceipt(entry.AtomId, snapshot))
+        {
+            return null;
+        }
+
         var casPath = DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..];
         if (!snapshot.TryGetFile(casPath, out var atom))
         {
@@ -308,6 +313,29 @@ internal static class DigestStatusCommand
                 entry.Fingerprints.RawSha256,
                 atomText),
             null);
+    }
+
+    private static bool HasValidFormalizationReceipt(string atomId, RepositorySnapshot snapshot)
+    {
+        var path = DigestionFormalizationReceipt.RootPath
+            + atomId
+            + DigestionFormalizationReceipt.PathSuffix;
+        if (!snapshot.TryGetFile(path, out _))
+        {
+            return false;
+        }
+
+        try
+        {
+            return string.Equals(
+                DigestionFormalizationReceipt.Load(snapshot, path).AtomId,
+                atomId,
+                StringComparison.Ordinal);
+        }
+        catch (Exception exception) when (exception is FormatException or JsonException)
+        {
+            return false;
+        }
     }
 
     private static CommandResult InvalidEvaluation(DigestionLedgerEvaluation evaluation)
