@@ -44,7 +44,6 @@ SH
   chmod +x "$root/bin/pgrep" "$root/bin/launchctl"
   export FKST_RESTART_TIMEOUT_SECONDS=10
   export FKST_RESTART_POLL_SECONDS=2
-  PLATFORM_CHANGED=1
   PLATFORM_DEV_REV=2222222222222222222222222222222222222222
   CHECKOUT_DEV_REV=3333333333333333333333333333333333333333
 
@@ -126,15 +125,12 @@ SH
   chmod +x "$root/bin/pgrep" "$root/bin/launchctl"
   export FKST_RESTART_TIMEOUT_SECONDS=6
   export FKST_RESTART_POLL_SECONDS=2
-  command cp "$CHECKOUT_ROOT/fkst.workspace.toml" "$root/workspace.before"
-  command cp "$CHECKOUT_ROOT/fkst.lock" "$root/lock.before"
-
   sync_platform || fail "platform sync setup should succeed"
   restart_engine && fail "missing launchd service and PID must be unhealthy"
-  command cmp -s "$root/workspace.before" "$CHECKOUT_ROOT/fkst.workspace.toml" \
-    || fail "confirmed startup failure did not restore workspace bytes"
-  command cmp -s "$root/lock.before" "$CHECKOUT_ROOT/fkst.lock" \
-    || fail "confirmed startup failure did not restore lock bytes"
+  command grep -q "$OLD_PLATFORM_REV" "$CHECKOUT_ROOT/fkst.workspace.toml" \
+    || fail "confirmed startup failure did not restore the previous revision"
+  command grep -q "lock-for-$OLD_PLATFORM_REV" "$CHECKOUT_ROOT/fkst.lock" \
+    || fail "confirmed startup failure did not regenerate the previous lock"
   command grep -q \
     'UNHEALTHY after restart (state=launchd-not-in-service waited=6s budget=6s launchd=not-in-service old_pid=none last_pid=none)' \
     "$FKST_MAINTENANCE_LOG" \
@@ -163,7 +159,6 @@ SH
   chmod +x "$root/bin/pgrep" "$root/bin/launchctl"
   export FKST_RESTART_TIMEOUT_SECONDS=6
   export FKST_RESTART_POLL_SECONDS=2
-  PLATFORM_CHANGED=0
 
   restart_engine && fail "unchanged pre-stop PID was accepted as a new engine"
   command grep -q \
@@ -231,6 +226,187 @@ grant_implement_lease() {
   printf '%s\n' "$owner" > "$root/slots/lane.lock/owner"
 }
 
+write_activation_obligation_fixture() {
+  local path="$1" generation="$2" created_at="$3"
+  local previous_revision="${4:-none}" target_revision="${5:-none}"
+  {
+    printf 'generation=%s\n' "$generation"
+    printf 'created_at=%s\n' "$created_at"
+    printf 'previous_platform_rev=%s\n' "$previous_revision"
+    printf 'target_platform_rev=%s\n' "$target_revision"
+  } > "$path"
+}
+
+run_activation_cycle() (
+  local host_config="$1"
+  load_implementation || exit 1
+  host_contract_load() { HOST_CONFIG="$1"; export HOST_CONFIG; }
+  validate_configuration() { return 0; }
+  host_contract_require() { return 0; }
+  sync_checkout() { return 0; }
+  sync_workspace_composition() { return 0; }
+  gc_worktrees() { return 0; }
+  gc_stuck_lean_builds() { return 0; }
+  check_launchd_conformance() { return 0; }
+  main --host-config "$host_config"
+)
+
+deferred_activation_survives_a_current_second_cycle() (
+  local root obligation real_mv
+  root="$(mktemp -d -t hourly-maintenance-activation-cycle.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  create_platform_fixture "$root" || exit 1
+  create_checkout_files "$root" || exit 1
+  FRAMEWORK_CALLS_FILE="$root/framework.calls"
+  export FRAMEWORK_CALLS_FILE
+  write_framework_stub success
+  export_platform_environment
+  mkdir -p "$root/slots"
+  export FKST_REPORT_SLOT_ROOT="$root/slots"
+  export FKST_RESTART_DEFER_MAX_SECONDS=3600
+  export FKST_RESTART_ACTIVATION_STATE="$root/logs/restart-activation.state"
+  export FKST_RESTART_DEFER_STATE="$root/logs/restart-defer.state"
+  obligation="$FKST_RESTART_ACTIVATION_STATE"
+  create_restart_control_fixture "$root"
+  grant_implement_lease "$root" "$$"
+
+  export PGREP_CALLS_FILE="$root/pgrep.calls"
+  cat > "$root/bin/pgrep" <<'SH'
+#!/usr/bin/env bash
+count=0
+[[ ! -f "$PGREP_CALLS_FILE" ]] || count="$(<"$PGREP_CALLS_FILE")"
+count=$((count + 1))
+printf '%s\n' "$count" > "$PGREP_CALLS_FILE"
+if [[ "$count" -lt 4 ]]; then
+  printf '4242\n'
+else
+  printf '5252\n'
+fi
+SH
+  cat > "$root/bin/launchctl" <<'SH'
+#!/usr/bin/env bash
+printf '5252 0 com.example.synthetic-fkst\n'
+SH
+  real_mv="$(command -v mv)"
+  export REAL_MV="$real_mv"
+  cat > "$root/bin/mv" <<'SH'
+#!/usr/bin/env bash
+target="${!#}"
+if [[ "$target" == "$FKST_HOST_ROOT/fkst.workspace.toml" \
+    && -s "$FKST_RESTART_ACTIVATION_STATE" ]]; then
+  : > "$FKST_HOST_ROOT/obligation-observed-before-pin"
+fi
+exec "$REAL_MV" "$@"
+SH
+  chmod +x "$root/bin/pgrep" "$root/bin/launchctl" "$root/bin/mv"
+
+  run_activation_cycle "$root/host.env" \
+    || fail "first activation cycle failed"
+  [[ -s "$obligation" ]] || fail "deferred cycle did not retain its activation obligation"
+  command grep -q "^previous_platform_rev=$OLD_PLATFORM_REV$" "$obligation" \
+    || fail "deferred obligation did not retain its rollback revision"
+  command grep -q "^target_platform_rev=$NEW_PLATFORM_REV$" "$obligation" \
+    || fail "deferred obligation did not retain its target revision"
+  [[ -e "$root/checkout/obligation-observed-before-pin" ]] \
+    || fail "activation obligation was not durable before the platform pin mutation"
+  [[ ! -e "$root/run.calls" ]] || fail "first cycle restarted despite its live lease"
+
+  rm -rf "$root/slots/lane.lock"
+  run_activation_cycle "$root/host.env" \
+    || fail "second activation cycle failed"
+  [[ -e "$root/run.calls" ]] \
+    || fail "current second cycle dropped the deferred activation instead of restarting"
+  [[ ! -e "$obligation" ]] \
+    || fail "verified restart did not clear its reconciled activation generation"
+  command grep -q 'PLATFORM CURRENT' "$FKST_MAINTENANCE_LOG" \
+    || fail "second cycle did not exercise pins-already-current behavior"
+  command grep -q 'RESTART-OBLIGATION RECORDED' "$FKST_MAINTENANCE_LOG" \
+    || fail "obligation creation was not reported"
+  command grep -q 'RESTART-OBLIGATION CLEARED' "$FKST_MAINTENANCE_LOG" \
+    || fail "obligation completion was not reported"
+)
+
+older_restart_cannot_clear_a_newer_generation() (
+  load_implementation || exit 1
+  local root obligation now
+  root="$(mktemp -d -t hourly-maintenance-generation-clear.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  create_defer_policy_fixture "$root"
+  obligation="$root/logs/restart-activation.state"
+  export FKST_RESTART_ACTIVATION_STATE="$obligation"
+  export FKST_RESTART_DEFER_STATE="$root/logs/restart-defer.state"
+  now="$(date +%s)"
+  write_activation_obligation_fixture "$obligation" "${now}-1-1" "$now"
+  CHANGED=0
+  restart_engine() {
+    write_activation_obligation_fixture "$obligation" "${now}-2-2" "$now"
+    return 0
+  }
+
+  restart_if_needed || fail "simulated verified restart should reconcile successfully"
+  command grep -q "generation=${now}-2-2" "$obligation" \
+    || fail "an older completing restart erased a newer activation generation"
+  command grep -q 'RESTART-OBLIGATION RETAINED.*newer generation' \
+    "$FKST_MAINTENANCE_LOG" \
+    || fail "newer generation retention was not reported"
+)
+
+failed_restart_retains_the_activation_generation() (
+  load_implementation || exit 1
+  local root obligation now
+  root="$(mktemp -d -t hourly-maintenance-generation-retain.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  create_defer_policy_fixture "$root"
+  obligation="$root/logs/restart-activation.state"
+  export FKST_RESTART_ACTIVATION_STATE="$obligation"
+  export FKST_RESTART_DEFER_STATE="$root/logs/restart-defer.state"
+  now="$(date +%s)"
+  write_activation_obligation_fixture "$obligation" "${now}-3-3" "$now"
+  CHANGED=0
+  restart_engine() { return 1; }
+
+  restart_if_needed && fail "failed restart was accepted as activation reconciliation"
+  command grep -q "generation=${now}-3-3" "$obligation" \
+    || fail "restart failure erased the pending activation generation"
+  command grep -q 'RESTART-OBLIGATION RETAINED.*restart failed' \
+    "$FKST_MAINTENANCE_LOG" \
+    || fail "restart-failure retention was not reported"
+)
+
+unusable_defer_timestamp_forces_restart() (
+  local unusable="$1"
+  load_implementation || exit 1
+  local root obligation state now
+  root="$(mktemp -d -t hourly-maintenance-invalid-defer-time.XXXXXX)" || exit 1
+  trap "rm -rf '$root'" EXIT
+  create_defer_policy_fixture "$root"
+  grant_implement_lease "$root" "$$"
+  state="$root/logs/restart-defer.state"
+  obligation="$root/logs/restart-activation.state"
+  export FKST_RESTART_ACTIVATION_STATE="$obligation"
+  export FKST_RESTART_DEFER_STATE="$state"
+  now="$(date +%s)"
+  write_activation_obligation_fixture "$obligation" "${now}-4-4" "$now"
+  printf '%s\n' "$unusable" > "$state"
+  restart_engine() { : > "$root/restart-forced"; return 0; }
+
+  restart_if_needed || fail "unusable defer timestamp should fail closed to restart"
+  [[ -e "$root/restart-forced" ]] \
+    || fail "unusable defer timestamp $unusable did not force a restart"
+  command grep -q \
+    "RESTART-DEFER INVALID.*started=$unusable.*forcing restart" \
+    "$FKST_MAINTENANCE_LOG" \
+    || fail "unusable defer timestamp $unusable was not reported"
+)
+
+leading_zero_defer_timestamp_forces_restart() {
+  unusable_defer_timestamp_forces_restart 08
+}
+
+overflowing_defer_timestamp_forces_restart() {
+  unusable_defer_timestamp_forces_restart 9223372036854775808
+}
+
 zombie_label_without_live_lease_restarts() (
   load_implementation || exit 1
   local root
@@ -283,6 +459,5 @@ defer_bound_exceeded_forces_restart() (
     || fail "an unbounded deferral survived past the configured bound"
   command grep -q 'FORCE-RESTART: defer bound exceeded' "$FKST_MAINTENANCE_LOG" \
     || fail "bound-exceeded forced restart was not recorded"
-  [[ ! -e "$state" ]] || fail "forced restart did not clear the deferral window"
+  [[ -e "$state" ]] || fail "failed forced restart erased the deferral window"
 )
-

@@ -19,6 +19,24 @@ public sealed class WorktreeCommandTests
         Assert.Contains(
             "check|clean-lanes|coverage|cover-atom|digest-status|echo-verify|emit-formalization-receipt|ingest|golden-record|ledger-genesis|papergen|route|selftest|topology|validate-blueprint-pins|worktree",
             console.Error);
+        Assert.DoesNotContain("|lean-cache|", console.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void CliDispatchesLeanCacheEnsureThroughWorktree()
+    {
+        using var repository = new TemporaryDirectory();
+        Directory.CreateDirectory(Path.Combine(repository.Path, ".lake"));
+        var console = new BufferedConsole();
+
+        var exitCode = CliApplication.Run(
+            ["worktree", "ensure-cache"],
+            new ProductionCliEnvironment(repository.Path),
+            console);
+
+        Assert.Equal(0, exitCode);
+        Assert.Contains("present", console.Output, StringComparison.Ordinal);
+        Assert.Empty(console.Error);
     }
 
     [Fact]
