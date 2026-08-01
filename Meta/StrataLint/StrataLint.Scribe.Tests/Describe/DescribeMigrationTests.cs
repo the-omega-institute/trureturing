@@ -5,6 +5,84 @@ namespace StrataLint.Scribe.Tests;
 public sealed class DescribeMigrationTests
 {
     [Fact]
+    public void InventoryCurrentDescribeKindContracts()
+    {
+        var inventory = DocumentDefinitions.All
+            .SelectMany(static definition => EnumerateDescribe(definition.Document.Content)
+                .Select(node => new
+                {
+                    Document = definition.Document.Header.Gid.Value,
+                    Node = node,
+                }))
+            .ToArray();
+        var matrix = inventory
+            .GroupBy(static item => item.Node.Kind)
+            .ToDictionary(
+                static group => group.Key,
+                static group => new
+                {
+                    Total = group.Count(),
+                    Latex = group.Count(static item => item.Node.StatementLatex is not null),
+                    Formula = group.Count(static item => item.Node.Statement is DescribeStatement.FormulaAst),
+                    Lean = group.Count(static item => item.Node.Statement is DescribeStatement.LeanDeclaration),
+                    Provenance = group
+                    .GroupBy(static item => item.Node.Provenance.Kind)
+                    .ToDictionary(static provenance => provenance.Key, static provenance => provenance.Count()),
+                });
+        var ownershipViolations = inventory
+            .Where(static item => item.Node.Statement is DescribeStatement.LeanDeclaration)
+            .Where(item => !AssertSameModule(
+                item.Document,
+                ((DescribeStatement.LeanDeclaration)item.Node.Statement).Value.Value))
+            .Select(static item => $"{item.Document}#{item.Node.Id.Value}")
+            .ToArray();
+
+        Assert.Equal(70, DocumentDefinitions.All.Length);
+        Assert.Equal(59, DocumentDefinitions.All.Select(static item => item.SourcePath).Distinct().Count());
+        Assert.Equal(173, inventory.Length);
+        AssertKind(DescribeKind.Definition, 13, 2, 0, 13, 6, 7);
+        AssertKind(DescribeKind.Theorem, 119, 119, 0, 119, 30, 89);
+        AssertKind(DescribeKind.Proposition, 9, 9, 0, 9, 1, 8);
+        AssertKind(DescribeKind.Lemma, 1, 1, 0, 1, 1, 0);
+        AssertKind(DescribeKind.Example, 1, 0, 1, 0, 0, 1);
+        AssertKind(DescribeKind.Remark, 30, 0, 11, 19, 2, 28);
+        Assert.Equal(
+        [
+            "D5/S0/Carrier/Norm#golden-norm-is-power-multiplicative",
+            "D5/S0/Carrier/Norm#norm-euclidean-division",
+            "D5/S0/Carrier/Norm#principal-ideal-domain",
+        ],
+            ownershipViolations.Order(StringComparer.Ordinal));
+        return;
+
+        void AssertKind(
+            DescribeKind kind,
+            int total,
+            int latex,
+            int formula,
+            int lean,
+            int literatureAttested,
+            int repoDerived)
+        {
+            var actual = matrix[kind];
+            Assert.Equal(total, actual.Total);
+            Assert.Equal(latex, actual.Latex);
+            Assert.Equal(formula, actual.Formula);
+            Assert.Equal(lean, actual.Lean);
+            Assert.Equal(literatureAttested, actual.Provenance.GetValueOrDefault(DescribeProvenanceKind.LiteratureAttested));
+            Assert.Equal(repoDerived, actual.Provenance.GetValueOrDefault(DescribeProvenanceKind.RepoDerived));
+            Assert.Equal(total, actual.Provenance.Values.Sum());
+        }
+    }
+
+    private static bool AssertSameModule(string documentGid, string declarationGid)
+    {
+        var separator = declarationGid.LastIndexOf('.');
+        return separator > 0
+            && string.Equals(documentGid, declarationGid[..separator], StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void EveryCurrentTheoremClassNodeHasAnExplicitLatexStatement()
     {
         var nodes = DocumentDefinitions.All

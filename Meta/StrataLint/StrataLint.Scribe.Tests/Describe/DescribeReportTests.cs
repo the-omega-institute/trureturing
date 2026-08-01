@@ -9,6 +9,32 @@ public sealed class DescribeReportTests
     private const string FormalPath = "D5/S1/Phase/Basic.lean";
 
     [Fact]
+    public void ReportObservesTitleDerivedIdsAndCrossModuleDeclarationsWithoutBlocking()
+    {
+        WithRepository(root =>
+        {
+            var document = ScribeDocument.Create(
+                DefinitionDsl.Header("D5/S1/Phase/Basic", "Observation fixture."),
+                Heading.Create("Observations"),
+                DefinitionDsl.Blocks(DocumentBlock.Describe.Remark(
+                    DescribeId.Create("same-title"),
+                    Heading.Create("Same title"),
+                    DescribeStatement.FromLean(DefinitionDsl.LeanTheorem(
+                        "D5/S1/Scale/Embedding.embedding_injective")),
+                    DescribeProvenance.RepoDerived(),
+                    DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("Content."))))));
+
+            var report = DescribeReport.Build(root, [document]);
+
+            Assert.Empty(report.RedFindings);
+            Assert.Contains(report.Observations, static item =>
+                item.Code == "title-derived-id" && item.Path.EndsWith("#describe/same-title", StringComparison.Ordinal));
+            Assert.Contains(report.Observations, static item =>
+                item.Code == "cross-module-lean-declaration" && item.Path.EndsWith("#describe/same-title", StringComparison.Ordinal));
+        });
+    }
+
+    [Fact]
     public void JsonReportIsAQueryableClassificationLedgerWithGradedObservations()
     {
         WithRepository(root =>

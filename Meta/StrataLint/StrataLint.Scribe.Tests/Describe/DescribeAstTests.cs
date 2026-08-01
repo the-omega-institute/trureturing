@@ -5,6 +5,74 @@ namespace StrataLint.Scribe.Tests;
 public sealed class DescribeAstTests
 {
     [Fact]
+    public void DescribeHasOnlyTheSixPublicKindFactories()
+    {
+        Assert.Empty(typeof(DocumentBlock.Describe).GetConstructors(BindingFlags.Instance | BindingFlags.Public));
+
+        var factories = typeof(DocumentBlock.Describe)
+            .GetMethods(BindingFlags.Static | BindingFlags.Public)
+            .OrderBy(static method => method.Name, StringComparer.Ordinal)
+            .ToArray();
+
+        Assert.Equal(
+            ["Definition", "Example", "Lemma", "Proposition", "Remark", "Theorem"],
+            factories.Select(static method => method.Name));
+        Assert.Equal(
+            [
+                typeof(DescribeId), typeof(Heading), typeof(LeanDeclarationRef),
+                typeof(DescribeProvenance), typeof(BlockSequence), typeof(LatexStatement),
+            ],
+            Assert.Single(factories, static method => method.Name == "Definition")
+                .GetParameters().Select(static parameter => parameter.ParameterType));
+        Assert.Equal(
+            [
+                typeof(DescribeId), typeof(Heading), typeof(Formula),
+                typeof(DescribeProvenance), typeof(BlockSequence),
+            ],
+            Assert.Single(factories, static method => method.Name == "Example")
+                .GetParameters().Select(static parameter => parameter.ParameterType));
+        Assert.Equal(
+            [
+                typeof(DescribeId), typeof(Heading), typeof(DescribeStatement),
+                typeof(DescribeProvenance), typeof(BlockSequence),
+            ],
+            Assert.Single(factories, static method => method.Name == "Remark")
+                .GetParameters().Select(static parameter => parameter.ParameterType));
+        foreach (var name in new[] { "Theorem", "Proposition", "Lemma" })
+        {
+            Assert.Equal(
+                [
+                    typeof(DescribeId), typeof(Heading), typeof(LeanDeclarationRef),
+                    typeof(LatexStatement), typeof(DescribeProvenance), typeof(BlockSequence),
+                ],
+                Assert.Single(factories, method => method.Name == name)
+                    .GetParameters().Select(static parameter => parameter.ParameterType));
+        }
+    }
+
+    [Fact]
+    public void TheoremFactoryFailsClosedForNullLatexAtRuntime()
+    {
+        var factory = typeof(DocumentBlock.Describe).GetMethod(
+            "Theorem",
+            BindingFlags.Static | BindingFlags.Public);
+        Assert.NotNull(factory);
+
+        var exception = Assert.Throws<TargetInvocationException>(() => factory.Invoke(
+            null,
+            [
+                DescribeId.Create("required-claim"),
+                Heading.Create("Required claim"),
+                DefinitionDsl.LeanTheorem("D5/S1/Phase/Basic.required_claim"),
+                null,
+                DescribeProvenance.RepoDerived(),
+                DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("Content."))),
+            ]));
+
+        Assert.IsType<ArgumentNullException>(exception.InnerException);
+    }
+
+    [Fact]
     public void DescribeNodeCarriesKindStatementProvenanceAndContent()
     {
         var statement = DescribeStatement.FromFormula(new Formula.Phi());
