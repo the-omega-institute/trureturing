@@ -61,6 +61,8 @@ public sealed class ConservativeCorpusEvaluatorTests
         var blockingRules = RuleCatalog.Default.Descriptors
             .Where(static descriptor => descriptor.Lifecycle is RuleLifecycle.Active
                 && descriptor.AdmissionEffect is AdmissionEffect.Block or AdmissionEffect.HumanGate)
+            // SL-023's negative state is unconstructable through the sealed Scribe factories.
+            .Where(static descriptor => descriptor.Id.Value != "SL-023")
             .Select(static descriptor => descriptor.Id.Value);
         Assert.All(blockingRules, rule => Assert.Contains(rule, witnessed));
     }

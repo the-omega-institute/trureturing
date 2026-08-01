@@ -117,9 +117,8 @@ public sealed class TrustTopologyTests
             descriptors.Select(item => item.Id));
         Assert.Equal(AdmissionEffect.HumanGate, descriptors[21].AdmissionEffect);
         Assert.All(
-            descriptors.Where(item => item.Id.Value is not ("SL-007" or "SL-009" or "SL-014" or "SL-022" or "SL-023")),
+            descriptors.Where(item => item.Id.Value is not ("SL-007" or "SL-009" or "SL-014" or "SL-022")),
             item => Assert.Equal(AdmissionEffect.Block, item.AdmissionEffect));
-        Assert.Equal(AdmissionEffect.Observe, descriptors[22].AdmissionEffect);
         Assert.All(
             descriptors.Where(item => item.Id.Value is "SL-007" or "SL-009" or "SL-014"),
             item => Assert.Equal(RuleLifecycle.Deferred, item.Lifecycle));

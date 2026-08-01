@@ -56,13 +56,12 @@ public sealed class ConservativePolicySnapshotTests
     public void Sl023IsAnActiveBlockObligationAfterTheContractEpoch()
     {
         var current = ConservativePolicySnapshot.Current();
-
         var sl023 = Assert.Single(current.RuleObligations, item => item.RuleId == "SL-023");
         Assert.Equal(AdmissionEffect.Block.ToString(), sl023.AdmissionEffect);
         Assert.StartsWith("sha256:", sl023.DescriptorRoot, StringComparison.Ordinal);
         Assert.Equal(71, sl023.DescriptorRoot.Length);
         Assert.Equal(
-            "sha256:3cf6dbb7d64c99791db2145cc072c914a63bbe2e0c7acf9c9bc7aca5b0ad95ee",
+            "sha256:d22ffade248c23e4ca904ed479bd522748884fabbaeecdef4afdeee9b06345b1",
             current.Root);
     }
 
@@ -83,7 +82,7 @@ public sealed class ConservativePolicySnapshotTests
 
         Assert.Equal(ResidenceEpochRetiredPaths, current.ExactExclusions);
         Assert.Equal(
-            "sha256:3cf6dbb7d64c99791db2145cc072c914a63bbe2e0c7acf9c9bc7aca5b0ad95ee",
+            "sha256:d22ffade248c23e4ca904ed479bd522748884fabbaeecdef4afdeee9b06345b1",
             current.Root);
         Assert.All(ResidenceEpochRetiredPaths, path => Assert.False(current.IsProtected(path)));
     }

@@ -51,7 +51,7 @@ public sealed class ConservativeExtensionVerifierTests
     }
 
     [Fact]
-    public void ObserveOnlyActiveRuleIsDeferredFromNegativeFloorUntilItCanBlock()
+    public void BlockingSl023WithoutABaseOwnedWitnessFailsClosed()
     {
         var input = ConservativeTestData.Input();
         var baseline = Assert.IsType<ConservativeHarnessExecution.Completed>(input.BaselineExecution);
@@ -71,17 +71,9 @@ public sealed class ConservativeExtensionVerifierTests
             }),
         };
 
-        var accepted = Assert.IsType<ConservativeExtensionOutcome.Accepted>(
+        var failure = Assert.IsType<ConservativeExtensionOutcome.InfrastructureFailure>(
             ConservativeExtensionVerifier.Verify(input));
-        using var certificate = JsonDocument.Parse(accepted.Certificate.ToArray());
-        var negativeFloor = certificate.RootElement.GetProperty("negative_floor");
-
-        Assert.Equal(2, negativeFloor.GetProperty("active_rule_count").GetInt32());
-        Assert.Equal(
-            ["SL-001", "SL-022"],
-            negativeFloor.GetProperty("rules").EnumerateArray()
-                .Select(static item => item.GetString()!)
-                .ToArray());
+        Assert.Contains("SL-023", failure.Message, StringComparison.Ordinal);
     }
 
     [Fact]
