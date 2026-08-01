@@ -74,20 +74,56 @@ theorem cyclic_gaps_partition_circle (S : Finset ℝ)
         exact hCorrection
   exact ⟨succ_mem, gap_pos, gap_sum⟩
 
-example :
-    let S : Finset ℝ := {0}
-    let hS : S.Nonempty := Finset.singleton_nonempty 0
-    gap S hS 0 = 1 ∧ ∑ x ∈ S, gap S hS x = 1 := by
-  dsimp only
-  let S : Finset ℝ := {0}
-  let hS : S.Nonempty := Finset.singleton_nonempty 0
-  have hUnit : (↑S : Set ℝ) ⊆ Set.Ico 0 1 := by
-    intro x hx
-    have hx : x = 0 := Finset.mem_singleton.mp hx
-    subst x
+-- Non-vacuity witness: a two-point carrier exercises both branches of `gap` -- the
+-- non-maximal point resolves through `cyclicSucc`, the maximal one through the wrap --
+-- and the two gaps still partition the circle.
+example (S : Finset ℝ) (hSdef : S = {0, 1 / 2}) (hS : S.Nonempty) :
+    gap S hS 0 = 1 / 2 ∧ gap S hS (1 / 2) = 1 / 2 ∧ ∑ x ∈ S, gap S hS x = 1 := by
+  subst hSdef
+  have hMem : ∀ y : ℝ, y ∈ ({0, 1 / 2} : Finset ℝ) ↔ y = 0 ∨ y = 1 / 2 := by
+    intro y; simp
+  have hMax : ({0, 1 / 2} : Finset ℝ).max' hS = 1 / 2 := by
+    refine le_antisymm (Finset.max'_le _ hS _ ?_) (Finset.le_max' _ (1 / 2) ?_)
+    · intro y hy
+      rcases (hMem y).mp hy with rfl | rfl <;> norm_num
+    · exact (hMem (1 / 2)).mpr (Or.inr rfl)
+  have hMin : ({0, 1 / 2} : Finset ℝ).min' hS = 0 := by
+    refine le_antisymm (Finset.min'_le _ 0 ?_) (Finset.le_min' _ hS _ ?_)
+    · exact (hMem 0).mpr (Or.inl rfl)
+    · intro y hy
+      rcases (hMem y).mp hy with rfl | rfl <;> norm_num
+  have hFilter :
+      ({0, 1 / 2} : Finset ℝ).filter (fun y => (0 : ℝ) < y) = {1 / 2} := by
+    ext y
+    simp only [Finset.mem_filter, Finset.mem_singleton]
+    constructor
+    · rintro ⟨hy, hpos⟩
+      rcases (hMem y).mp hy with rfl | rfl
+      · exact absurd hpos (by norm_num)
+      · rfl
+    · rintro rfl
+      exact ⟨(hMem (1 / 2)).mpr (Or.inr rfl), by norm_num⟩
+  have hAbove :
+      (({0, 1 / 2} : Finset ℝ).filter (fun y => (0 : ℝ) < y)).Nonempty := by
+    rw [hFilter]; exact ⟨1 / 2, Finset.mem_singleton_self _⟩
+  have hSucc : cyclicSucc ({0, 1 / 2} : Finset ℝ) hS 0 = 1 / 2 := by
+    rw [cyclicSucc, dif_pos hAbove]
+    -- `min'` carries a proof of nonemptiness, so rewriting the filtered set under it is
+    -- not type correct; pin the value by antisymmetry on membership instead.
+    refine le_antisymm (Finset.min'_le _ _ ?_) (Finset.le_min' _ _ _ ?_)
+    · rw [hFilter]; exact Finset.mem_singleton_self _
+    · intro y hy
+      have hy' : y ∈ ({1 / 2} : Finset ℝ) := by rw [← hFilter]; exact hy
+      have hyEq : y = 1 / 2 := Finset.mem_singleton.mp hy'
+      exact le_of_eq hyEq.symm
+  have hGapZero : gap ({0, 1 / 2} : Finset ℝ) hS 0 = 1 / 2 := by
+    rw [gap, if_neg (by rw [hMax]; norm_num), hSucc]
     norm_num
-  have hPartition := cyclic_gaps_partition_circle S hUnit hS
-  refine ⟨?_, hPartition.2.2⟩
-  norm_num [S, gap]
+  have hGapHalf : gap ({0, 1 / 2} : Finset ℝ) hS (1 / 2) = 1 / 2 := by
+    rw [gap, if_pos hMax.symm, hMin]
+    norm_num
+  refine ⟨hGapZero, hGapHalf, ?_⟩
+  rw [Finset.sum_insert (by norm_num), Finset.sum_singleton, hGapZero, hGapHalf]
+  norm_num
 
 end D5.S1.Recurrence.CyclicGapsPartition
