@@ -38,7 +38,7 @@ public sealed class DescribeMigrationTests
             .ToArray();
 
         Assert.Equal(70, DocumentDefinitions.All.Length);
-        Assert.Equal(59, DocumentDefinitions.All.Select(static item => item.SourcePath).Distinct().Count());
+        Assert.Equal(70, DocumentDefinitions.All.Select(static item => item.SourcePath).Distinct().Count());
         Assert.Equal(173, inventory.Length);
         AssertKind(DescribeKind.Definition, 13, 2, 0, 13, 6, 7);
         AssertKind(DescribeKind.Theorem, 119, 119, 0, 119, 30, 89);

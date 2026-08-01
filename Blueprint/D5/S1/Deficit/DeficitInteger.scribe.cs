@@ -10,12 +10,15 @@ internal sealed class DeficitIntegerDocument : IScribeDocumentDefinition
             "The normalized beta deficit of golden addition is an integer counting bottom carries."),
         H("The Normalized Beta Deficit Is an Integer Counting Bottom Carries"),
         Blocks(
-            new DocumentBlock.Describe(
+            DocumentBlock.Describe.Theorem(
                 DescribeId.Create("the-normalized-beta-deficit-is-an-integer-counting-bottom-carries"),
-                DescribeKind.Theorem,
                 H("The normalized beta deficit is an integer counting bottom carries"),
-                DescribeStatement.FromLean(LeanTheorem(
-                    "D5/S1/Deficit/DeficitInteger.deficit_integer")),
+                LeanTheorem(
+                    "D5/S1/Deficit/DeficitInteger.deficit_integer"),
+                LatexStatement.Create(
+                    @"$$c(v_1,v_2) := \beta(v_1) + \beta(v_2) - \beta(v_1+v_2) = "
+                    + @"\beta'(v_1) + \beta'(v_2) - \beta'(v_1+v_2), \quad c \in \mathbb{Z}, "
+                    + @"\quad c = \operatorname{lowCarries} - \operatorname{secondCarries}$$"),
                 DescribeProvenance.RepoDerived(),
                 Blocks(
                     Paragraph(Text(
@@ -42,9 +45,6 @@ internal sealed class DeficitIntegerDocument : IScribeDocumentDefinition
                         + "and higher repeated carries are exactly value-neutral, each a direct consequence of "
                         + "the golden fixed-point relation, while the two lowest repeated carries each hide a "
                         + "single unit of opposite sign. Summing these contributions along the deterministic "
-                        + "normalization path expresses the deficit as the signed count of bottom carries."))),
-                LatexStatement.Create(
-                    @"$$c(v_1,v_2) := \beta(v_1) + \beta(v_2) - \beta(v_1+v_2) = "
-                    + @"\beta'(v_1) + \beta'(v_2) - \beta'(v_1+v_2), \quad c \in \mathbb{Z}, "
-                    + @"\quad c = \operatorname{lowCarries} - \operatorname{secondCarries}$$")))));
+                        + "normalization path expresses the deficit as the signed count of bottom carries.")))
+            ))));
 }
