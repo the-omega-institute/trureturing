@@ -50,6 +50,9 @@ record_timing restore-proofs
 CI=true make dotnet
 record_timing dotnet
 
+make lean-report
+record_timing lean-report
+
 CI=true make test
 record_timing test
 
