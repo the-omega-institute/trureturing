@@ -134,10 +134,59 @@ public sealed class FormalizeCandidatesTests
         Assert.Empty(json.RootElement.GetProperty("withheld").EnumerateArray());
     }
 
-    [Fact]
-    public void FormalizeCandidatesExcludesAtomCoveredByValidFormalizationReceipt()
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public void FormalizeCandidatesKeepsAtomWhenReceiptContentDoesNotMatchCurrentEntry(
+        bool mismatchCasRef)
     {
-        var entry = Entry("source", "receipt-covered", "定理", "5.2");
+        var entry = Entry("source", "stale-receipt", "定理", "5.2");
+        var receipt = DigestionFormalizationReceipt.Write(new DigestionFormalizationReceipt(
+            entry.AtomId,
+            "D5/S0/Synthetic/Receipt.stale_receipt",
+            new DigestionFormalizationSignature("stale-receipt", "theorem", "statement-v1"),
+            mismatchCasRef
+                ? "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+                : entry.Atom.Fingerprints.RawSha256,
+            mismatchCasRef
+                ? entry.Atom.Fingerprints.RawSha256
+                : "sha256:1111111111111111111111111111111111111111111111111111111111111111"))
+            .ToArray();
+
+        var result = Run([entry], formalizationReceipt: receipt);
+
+        Assert.True(result.Success, result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        Assert.Equal(
+            entry.AtomId,
+            Assert.Single(json.RootElement.GetProperty("candidates").EnumerateArray())
+                .GetProperty("atom_id")
+                .GetString());
+    }
+
+    [Fact]
+    public void FormalizeCandidatesKeepsAtomWhenReceiptDeclarationIsMissingFromCurrentLeanReport()
+    {
+        var entry = Entry("source", "missing-declaration", "定理", "5.3");
+
+        var result = Run(
+            [entry],
+            formalizationReceipt: ValidReceipt(entry),
+            leanReport: LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>()));
+
+        Assert.True(result.Success, result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        Assert.Equal(
+            entry.AtomId,
+            Assert.Single(json.RootElement.GetProperty("candidates").EnumerateArray())
+                .GetProperty("atom_id")
+                .GetString());
+    }
+
+    [Fact]
+    public void FormalizeCandidatesExcludesAtomCoveredByCurrentResolvableFormalizationReceipt()
+    {
+        var entry = Entry("source", "receipt-covered", "定理", "5.4");
 
         var result = Run([entry], formalizationReceipt: ValidReceipt(entry));
 
@@ -295,7 +344,8 @@ public sealed class FormalizeCandidatesTests
         bool includeCas = true,
         bool driftCas = false,
         string? ledger = null,
-        byte[]? formalizationReceipt = null)
+        byte[]? formalizationReceipt = null,
+        LeanAxiomReport? leanReport = null)
     {
         var sources = entries
             .GroupBy(static entry => entry.SourceId, StringComparer.Ordinal)
@@ -352,7 +402,7 @@ public sealed class FormalizeCandidatesTests
                 RawChangeSet.Create(Array.Empty<string>()),
                 RawRepositorySnapshot.Create(files),
                 null),
-            new FakeLeanReportSource(null),
+            new FakeLeanReportSource(leanReport ?? CurrentLeanReport(entries)),
             new FakeScribeEmissionVerifier(null));
         return environment.DigestStatus(["--formalize-candidates"]);
     }
@@ -361,9 +411,21 @@ public sealed class FormalizeCandidatesTests
         DigestionFormalizationReceipt.Write(new DigestionFormalizationReceipt(
             entry.AtomId,
             "D5/S0/Synthetic/Receipt.receipt_covered",
-            new DigestionFormalizationSignature("receipt-covered", "theorem", "statement-v1"),
+            new DigestionFormalizationSignature("signature-is-not-an-exclusion-criterion", "axiom", "False"),
             entry.Atom.Fingerprints.RawSha256,
             entry.Atom.Fingerprints.RawSha256)).ToArray();
+
+    private static LeanAxiomReport CurrentLeanReport(IReadOnlyList<EntryFixture> entries) =>
+        LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
+        {
+            ["D5/S0/Synthetic/Receipt.lean"] = new LeanFileReport(
+                ImmutableArray<string>.Empty,
+                entries.Select(static entry => new LeanDeclaration(
+                    entry.AtomId.Replace('-', '_'),
+                    "theorem",
+                    "statement-v1",
+                    ImmutableArray<string>.Empty)).ToImmutableArray()),
+        });
 
     private static EntryFixture Entry(
         string sourceId,
