@@ -33,7 +33,7 @@ internal static class DigestStatusCommand
                 throw new InvalidOperationException($"{BackfillInventoryLoader.RelativePath} is missing");
             }
 
-            if (options.FormalizeCandidates)
+            if (options.FormalizeCandidates || options.FormalizationReconciliation)
             {
                 var formalizeLeanReport = leanReportSource.Load(snapshot);
                 var formalizeDocument = BackfillInventoryLoader.Load(ledgerFile.Text);
@@ -61,11 +61,17 @@ internal static class DigestStatusCommand
 
                 return new CommandResult(
                     true,
-                    RenderFormalizeCandidates(
-                        formalizeEvaluation,
-                        snapshot,
-                        ledgerFile,
-                        formalizeLeanReport),
+                    options.FormalizationReconciliation
+                        ? RenderFormalizationReconciliation(
+                            formalizeEvaluation,
+                            snapshot,
+                            ledgerFile,
+                            formalizeLeanReport)
+                        : RenderFormalizeCandidates(
+                            formalizeEvaluation,
+                            snapshot,
+                            ledgerFile,
+                            formalizeLeanReport),
                     string.Empty);
             }
 
@@ -121,6 +127,7 @@ internal static class DigestStatusCommand
         var json = false;
         var residualSummary = false;
         var formalizeCandidates = false;
+        var formalizationReconciliation = false;
         string? baselineRevision = null;
         for (var index = 0; index < arguments.Count; index++)
         {
@@ -135,6 +142,9 @@ internal static class DigestStatusCommand
                 case "--formalize-candidates" when !formalizeCandidates:
                     formalizeCandidates = true;
                     break;
+                case "--formalization-reconciliation" when !formalizationReconciliation:
+                    formalizationReconciliation = true;
+                    break;
                 case "--base" when baselineRevision is null && index + 1 < arguments.Count:
                     baselineRevision = arguments[++index];
                     if (string.IsNullOrWhiteSpace(baselineRevision)) throw Usage();
@@ -144,16 +154,26 @@ internal static class DigestStatusCommand
             }
         }
 
-        if ((json ? 1 : 0) + (residualSummary ? 1 : 0) + (formalizeCandidates ? 1 : 0) > 1)
+        if ((json ? 1 : 0)
+            + (residualSummary ? 1 : 0)
+            + (formalizeCandidates ? 1 : 0)
+            + (formalizationReconciliation ? 1 : 0) > 1)
         {
             throw Usage();
         }
 
-        return new DigestStatusOptions(json, residualSummary, formalizeCandidates, baselineRevision);
+        return new DigestStatusOptions(
+            json,
+            residualSummary,
+            formalizeCandidates,
+            formalizationReconciliation,
+            baselineRevision);
     }
 
     private static InvalidOperationException Usage() => new(
-        "USAGE: StrataLint digest-status [--json|--residual-summary|--formalize-candidates] [--base REV]");
+        "USAGE: StrataLint digest-status "
+        + "[--json|--residual-summary|--formalize-candidates|--formalization-reconciliation] "
+        + "[--base REV]");
 
     internal static string RenderText(DigestionLedgerEvaluation evaluation)
     {
@@ -234,6 +254,98 @@ internal static class DigestStatusCommand
                 .Select(static item => item.Withheld!),
         };
         return JsonSerializer.Serialize(material, JsonOptions) + "\n";
+    }
+
+    private static string RenderFormalizationReconciliation(
+        DigestionLedgerEvaluation evaluation,
+        RepositorySnapshot snapshot,
+        RepositoryFile ledgerFile,
+        LeanAxiomReport leanReport)
+    {
+        var projections = evaluation.Entries
+            .Where(static item =>
+                item.Alignment == DigestionReceiptAlignment.Seen
+                && item.DerivedStatus.Migration == DigestionMigrationState.Residual
+                && item.DerivedStatus.Truth == DigestionTruthState.Open
+                && item.Entry.CoverageGids.Length == 0)
+            .Select(item => ReconciliationProjection(item, snapshot, leanReport))
+            .Where(static item => item is not null)
+            .OrderBy(static item => item!.SourceId, StringComparer.Ordinal)
+            .ThenBy(static item => item!.AtomId, StringComparer.Ordinal)
+            .Select(static item => item!)
+            .ToArray();
+        var ready = projections
+            .Where(static item => item.BackfillReady is not null)
+            .Select(static item => item.BackfillReady!)
+            .ToArray();
+        var semanticOpen = projections
+            .Where(static item => item.SemanticOpen is not null)
+            .Select(static item => item.SemanticOpen!)
+            .ToArray();
+        var material = new
+        {
+            schema = "stratalint-formalization-reconciliation-v1",
+            ledger_sha256 = DigestionFingerprint.ComputeOpaque(ledgerFile.RawBytes.AsSpan()).RawSha256,
+            residuals_total = projections.Length,
+            backfill_ready_total = ready.Length,
+            semantic_open_total = semanticOpen.Length,
+            backfill_ready = ready,
+            semantic_open = semanticOpen,
+        };
+        return JsonSerializer.Serialize(material, JsonOptions) + "\n";
+    }
+
+    private static FormalizationReconciliationProjection? ReconciliationProjection(
+        DigestionEntryEvaluation evaluation,
+        RepositorySnapshot snapshot,
+        LeanAxiomReport leanReport)
+    {
+        var entry = evaluation.Entry;
+        var separator = entry.AstPath.IndexOf('/', StringComparison.Ordinal);
+        if (separator <= 0
+            || entry.AstPath[..separator] is not ("theorem" or "proposition" or "lemma" or "corollary"))
+        {
+            return null;
+        }
+
+        var path = DigestionFormalizationReceipt.RootPath
+            + entry.AtomId
+            + DigestionFormalizationReceipt.PathSuffix;
+        if (!snapshot.TryGetFile(path, out _))
+        {
+            return new FormalizationReconciliationProjection(
+                entry.SourceId,
+                entry.AtomId,
+                null,
+                new SemanticOpenFormalization(
+                    entry.SourceId,
+                    entry.AtomId,
+                    "semantic-open",
+                    "none",
+                    "none",
+                    "no-formalization-receipt"));
+        }
+
+        try
+        {
+            var receipt = RequireMatchingFormalizationReceipt(entry, snapshot, leanReport, path);
+
+            return new FormalizationReconciliationProjection(
+                entry.SourceId,
+                entry.AtomId,
+                new FormalizationBackfill(
+                    entry.SourceId,
+                    entry.AtomId,
+                    receipt.PrimaryGid,
+                    path),
+                null);
+        }
+        catch (Exception exception) when (exception is FormatException or JsonException)
+        {
+            throw new InvalidOperationException(
+                $"formalization receipt for atom {entry.AtomId} is invalid: {exception.Message}",
+                exception);
+        }
     }
 
     private static FormalizeProjection? Projection(
@@ -342,25 +454,46 @@ internal static class DigestStatusCommand
 
         try
         {
-            var receipt = DigestionFormalizationReceipt.Load(snapshot, path);
-            if (!string.Equals(receipt.AtomId, entry.AtomId, StringComparison.Ordinal)
-                || !string.Equals(receipt.CasRef, entry.CasRef, StringComparison.Ordinal)
-                || !string.Equals(
-                    receipt.RawSha256,
-                    entry.Fingerprints.RawSha256,
-                    StringComparison.Ordinal)
-                || !Gid.TryParse(receipt.PrimaryGid, out var gid))
-            {
-                return false;
-            }
-
-            _ = DigestionFormalizationReceipt.ResolveSignature(gid, leanReport);
+            _ = RequireMatchingFormalizationReceipt(entry, snapshot, leanReport, path);
             return true;
         }
         catch (Exception exception) when (exception is FormatException or JsonException)
         {
             return false;
         }
+    }
+
+    private static DigestionFormalizationReceipt RequireMatchingFormalizationReceipt(
+        DigestionLedgerEntry entry,
+        RepositorySnapshot snapshot,
+        LeanAxiomReport leanReport,
+        string path)
+    {
+        if (!DigestionFormalizationReceipt.IsCanonicalPath(path))
+        {
+            throw new FormatException($"receipt path is not canonical: {path}");
+        }
+
+        var receipt = DigestionFormalizationReceipt.Load(snapshot, path);
+        if (!string.Equals(receipt.AtomId, entry.AtomId, StringComparison.Ordinal)
+            || !string.Equals(receipt.CasRef, entry.CasRef, StringComparison.Ordinal)
+            || !string.Equals(receipt.RawSha256, entry.Fingerprints.RawSha256, StringComparison.Ordinal))
+        {
+            throw new FormatException("receipt atom identity or fingerprint does not match the ledger");
+        }
+
+        if (!Gid.TryParse(receipt.PrimaryGid, out var gid))
+        {
+            throw new FormatException($"receipt primary GID is invalid: {receipt.PrimaryGid}");
+        }
+
+        var currentSignature = DigestionFormalizationReceipt.ResolveSignature(gid, leanReport);
+        if (currentSignature != receipt.Signature)
+        {
+            throw new FormatException("receipt signature does not match the current Lean declaration");
+        }
+
+        return receipt;
     }
 
     private static CommandResult InvalidEvaluation(DigestionLedgerEvaluation evaluation)
@@ -392,6 +525,7 @@ internal static class DigestStatusCommand
         bool Json,
         bool ResidualSummary,
         bool FormalizeCandidates,
+        bool FormalizationReconciliation,
         string? BaselineRevision);
 
     private sealed record FormalizeCandidate(
@@ -413,6 +547,26 @@ internal static class DigestStatusCommand
         string AtomId,
         FormalizeCandidate? Candidate,
         WithheldFormalizeCandidate? Withheld);
+
+    private sealed record FormalizationBackfill(
+        string SourceId,
+        string AtomId,
+        string PrimaryGid,
+        string EnvelopePath);
+
+    private sealed record SemanticOpenFormalization(
+        string SourceId,
+        string AtomId,
+        string Status,
+        string Authority,
+        string AdmissionEffect,
+        string Reason);
+
+    private sealed record FormalizationReconciliationProjection(
+        string SourceId,
+        string AtomId,
+        FormalizationBackfill? BackfillReady,
+        SemanticOpenFormalization? SemanticOpen);
 }
 
 internal static class DigestResidualSummary
