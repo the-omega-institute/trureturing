@@ -394,7 +394,26 @@ wake_pr() {
   log "WAKE #$num close/reopen 完成,auto-merge 重挂"
 }
 
+# GitHub's rate_limit endpoint is itself exempt from rate limiting, so reading the
+# remaining budget costs nothing. A sweep does not: the PR listing alone is a GraphQL
+# query over up to a thousand pull requests, and a long-running watch repeats it every
+# interval. Burning the last of the budget here starves the engine that shares this
+# account, which is how it died repeatedly on this host.
+graphql_remaining() {
+  gh api rate_limit --jq '.resources.graphql.remaining' 2>/dev/null
+}
+
 sweep() {
+  local remaining floor="${PR_SHEPHERD_GRAPHQL_FLOOR:-200}"
+  remaining="$(graphql_remaining)" || remaining=""
+  # An unreadable budget must not stall the shepherd: if gh is broken the sweep will
+  # report that on its own, and a guard that fails closed here would lock the very
+  # recalculation that unblocks the queue.
+  if [[ "$remaining" =~ ^[0-9]+$ && "$floor" =~ ^[0-9]+$ && "$remaining" -lt "$floor" ]]; then
+    log "SWEEP 跳过:GraphQL 余额 $remaining 低于下限 $floor,让配额恢复"
+    return 0
+  fi
+
   [[ "$DRYRUN" == "1" ]] || mkdir -p "$STATE_DIR"
   local recalculated=" "
   GH pr list --repo "$REPO" --state open --limit 1000 \
