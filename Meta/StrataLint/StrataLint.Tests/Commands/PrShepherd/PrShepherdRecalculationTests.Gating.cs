@@ -124,7 +124,7 @@ public sealed partial class PrShepherdRecalculationTests
         Assert.NotEqual(fixture.GithubBaseRefOid, fixture.BaseHead);
         Assert.NotEqual(fixture.OriginalHead, fixture.RemoteHead());
         Assert.Equal(
-            ["worktree", "lean-report", "emit", "ingest", "echo-verify", "emit-check", "push"],
+            ["worktree", "lean-report", "emit", "ingest", "echo-verify", "ledger-append", "emit-check", "push"],
             fixture.MutationCalls());
         Assert.Contains("RECALCULATE -> 本地 merge+regen+push 完成", result.Log);
     }
