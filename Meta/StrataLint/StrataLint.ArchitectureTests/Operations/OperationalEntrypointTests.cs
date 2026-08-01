@@ -488,17 +488,20 @@ public sealed class OperationalEntrypointTests
                 {
                     for (var iteration = 0; iteration < 10_000; iteration++)
                     {
+                        var startedAt = Stopwatch.GetTimestamp();
                         if (!PosixFileType.IsRegularFile(template)) continue;
 
-                        var completedAt = Stopwatch.GetTimestamp();
                         lock (stateGate)
                         {
-                            // Exclude a replacement published only as the probe returned; the old
-                            // fork/exec gap leaves the symlink stable well beyond this interval.
-                            if (currentStateIsSymlink
-                                && currentStateSince <= completedAt
-                                && Stopwatch.GetElapsedTime(currentStateSince, completedAt)
-                                    >= TimeSpan.FromMilliseconds(0.5))
+                            // A "regular" answer is only provably wrong when the symlink was
+                            // already published before this probe began and no replacement has
+                            // been published since -- then it was the template for the probe's
+                            // whole duration. Bounding the race by elapsed time instead would
+                            // assume a scheduling latency the host does not guarantee: under
+                            // contention the gap between the syscall and reading the clock
+                            // exceeds any such bound, and the test fails on load rather than on
+                            // the defect it guards (reproduced at six concurrent runs).
+                            if (currentStateIsSymlink && currentStateSince <= startedAt)
                             {
                                 falseNegativeIteration = iteration;
                                 break;

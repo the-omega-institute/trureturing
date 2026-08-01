@@ -57,6 +57,8 @@ public sealed partial class PrShepherdRecalculationTests
         private readonly bool pauseWorktreeCreation;
         private readonly bool delayFirstLockOwnerRead;
         private readonly bool conflicting;
+        private readonly bool ledgerConflict;
+        private readonly string graphqlRemaining;
         private readonly bool staleBaseRefOid;
         private readonly bool moveHeadDuringFetch;
         private readonly bool moveBaseDuringFetch;
@@ -72,6 +74,8 @@ public sealed partial class PrShepherdRecalculationTests
             bool pauseWorktreeCreation = false,
             bool delayFirstLockOwnerRead = false,
             bool conflicting = false,
+            bool ledgerConflict = false,
+            string graphqlRemaining = "5000",
             bool staleBaseRefOid = false,
             bool moveHeadDuringFetch = false,
             bool moveBaseDuringFetch = false)
@@ -83,6 +87,8 @@ public sealed partial class PrShepherdRecalculationTests
             this.pauseWorktreeCreation = pauseWorktreeCreation;
             this.delayFirstLockOwnerRead = delayFirstLockOwnerRead;
             this.conflicting = conflicting;
+            this.ledgerConflict = ledgerConflict;
+            this.graphqlRemaining = graphqlRemaining;
             this.staleBaseRefOid = staleBaseRefOid;
             this.moveHeadDuringFetch = moveHeadDuringFetch;
             this.moveBaseDuringFetch = moveBaseDuringFetch;
@@ -104,6 +110,7 @@ public sealed partial class PrShepherdRecalculationTests
             Write(seed, "Generated/artifact.md", "base artifact\n");
             Write(seed, "Generated/dev-choice.md", "base choice\n");
             Write(seed, "Generated/echo-residual-summary.md", "base echo\n");
+            Write(seed, FrozenLedgerChangeClassifier.LedgerPath, "{\"event\":\"base\"}\n");
             Write(seed, "shared.txt", "base shared\n");
             Git(seed, "add", ".");
             Git(seed, "commit", "-m", "base");
@@ -118,6 +125,11 @@ public sealed partial class PrShepherdRecalculationTests
             Write(seed, "Generated/artifact.md", "feature artifact\n");
             Write(seed, "Generated/dev-choice.md", "feature choice\n");
             if (sourceConflict) Write(seed, "shared.txt", "feature shared\n");
+            if (ledgerConflict)
+                Write(
+                    seed,
+                    FrozenLedgerChangeClassifier.LedgerPath,
+                    "{\"event\":\"base\"}\n{\"event\":\"feature-freeze\"}\n");
             Git(seed, "add", ".");
             Git(seed, "commit", "-m", "feature content");
             OriginalHead = GitOutput(seed, "rev-parse", "HEAD");
@@ -137,6 +149,11 @@ public sealed partial class PrShepherdRecalculationTests
             else
                 Write(seed, "Generated/dev-choice.md", "dev choice\n");
             Write(seed, sourceConflict ? "shared.txt" : "dev-input.txt", "advanced dev\n");
+            if (ledgerConflict)
+                Write(
+                    seed,
+                    FrozenLedgerChangeClassifier.LedgerPath,
+                    "{\"event\":\"base\"}\n{\"event\":\"dev-freeze\"}\n");
             Git(seed, "add", "-A");
             Git(seed, "commit", "-m", "advance dev");
             BaseHead = GitOutput(seed, "rev-parse", "HEAD");
@@ -213,6 +230,7 @@ public sealed partial class PrShepherdRecalculationTests
                 $"PR_TEST_MOVED_BASE={MovedBaseHead}",
                 $"PR_TEST_LOCK_READ_MARKER={Path.Combine(temporary.Path, "lock-read-marker")}",
                 $"SHEPHERD_DRYRUN={(dryRun ? "1" : "0")}",
+                $"PR_TEST_GRAPHQL_REMAINING={graphqlRemaining}",
                 "GH_TOKEN=must-not-reach-candidate-producers",
                 "/bin/bash",
                 script,
@@ -431,6 +449,11 @@ public sealed partial class PrShepherdRecalculationTests
                   fi
                   exit 0
                 fi
+                if [[ "${1:-}" == api && "${2:-}" == rate_limit ]]; then
+                  [[ "${PR_TEST_GRAPHQL_REMAINING:-}" != unreadable ]] || exit 1
+                  printf '%s\n' "${PR_TEST_GRAPHQL_REMAINING:-5000}"
+                  exit 0
+                fi
                 if [[ "${1:-}" == api ]]; then
                   printf 'gh-api:%s\n' "${*:2}" >> "$PR_TEST_CALLS"
                   exit 0
@@ -490,6 +513,10 @@ public sealed partial class PrShepherdRecalculationTests
                 set -euo pipefail
                 [[ -z "${GH_TOKEN+x}" ]] || exit 91
                 [[ -z "${GITHUB_TOKEN+x}" ]] || exit 92
+                if [[ "$*" == *"ledger-append --candidate-lean-report"* ]]; then
+                  printf 'ledger-append\n' >> "$PR_TEST_CALLS"
+                  exit 0
+                fi
                 [[ "$*" == *"echo-verify --emit --base origin/dev"* ]] || exit 96
                 printf 'echo-verify\n' >> "$PR_TEST_CALLS"
                 printf '%s\n' '<!-- echo-residual-summary:v3 residual=sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->' '# Echo Residual Summary'
