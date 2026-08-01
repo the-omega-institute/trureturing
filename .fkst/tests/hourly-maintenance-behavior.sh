@@ -88,6 +88,8 @@ SH
 }
 
 export_platform_environment() {
+  export FKST_RUNTIME_ROOT="$(dirname -- "$CHECKOUT_ROOT")/runtime"
+  mkdir -p "$FKST_RUNTIME_ROOT"
   export FKST_HOST_ROOT="$CHECKOUT_ROOT"
   export FKST_PLATFORM_ROOT="$PLATFORM_ROOT"
   export BIN="$FRAMEWORK_BIN"
@@ -100,6 +102,8 @@ create_checkout_history_fixture() {
   CHECKOUT_REMOTE="$root/checkout-remote.git"
   CHECKOUT_ROOT="$root/checkout"
   CHECKOUT_WRITER="$root/checkout-writer"
+  export FKST_RUNTIME_ROOT="$root/runtime"
+  mkdir -p "$FKST_RUNTIME_ROOT"
   git_quiet init --bare --initial-branch=dev "$CHECKOUT_REMOTE" || return 1
   git_quiet clone "$CHECKOUT_REMOTE" "$CHECKOUT_ROOT" || return 1
   configure_repository "$CHECKOUT_ROOT" || return 1
@@ -146,6 +150,56 @@ deployed_top_level_workspace_is_authoritative() (
     | command sed "s#^$CHECKOUT_ROOT/##" | command sort > "$root/paths.after"
   command cmp -s "$root/paths.before" "$root/paths.after" \
     || fail "platform sync created a second restore representation"
+)
+
+activation_intent_is_write_ahead_at_cycle_entry() (
+  load_implementation || exit 1
+  local root output pending_state
+  root="$(mktemp -d -t hourly-maintenance-write-ahead.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  create_composition_cycle_fixture "$root" '"alpha"' '"stale"' || exit 1
+  mkdir -p "$root/runtime"
+  export FKST_RUNTIME_ROOT="$root/runtime"
+  pending_state="$FKST_RUNTIME_ROOT/hourly-maintenance.pending-activation"
+
+  sed "s/$NEW_PLATFORM_REV/$OLD_PLATFORM_REV/" \
+    "$CHECKOUT_ROOT/fkst.workspace.toml" > "$root/runtime-workspace.old-pin"
+  mv "$root/runtime-workspace.old-pin" "$CHECKOUT_ROOT/fkst.workspace.toml"
+  FRAMEWORK_BIN="$root/bin/fkst-framework"
+  TIMEOUT_BIN="$root/bin/timeout"
+  FRAMEWORK_CALLS_FILE="$root/framework.calls"
+  export FRAMEWORK_CALLS_FILE BIN="$FRAMEWORK_BIN" FKST_TIMEOUT_BIN="$TIMEOUT_BIN"
+  write_framework_stub success
+  cat > "$TIMEOUT_BIN" <<'SH'
+#!/usr/bin/env bash
+shift
+exec "$@"
+SH
+  chmod +x "$TIMEOUT_BIN"
+
+  eval "$(declare -f write_platform_pin_revision \
+    | sed '1s/write_platform_pin_revision/original_write_platform_pin_revision/')"
+  write_platform_pin_revision() {
+    [[ -f "$pending_state" ]] \
+      || fail "platform pin mutation began before its activation intent was durable"
+    command grep -q "^previous_platform_rev=$OLD_PLATFORM_REV$" "$pending_state" \
+      || fail "write-ahead activation intent omitted the rollback origin"
+    original_write_platform_pin_revision "$@"
+  }
+  sync_workspace_composition() {
+    say "SYNTHETIC-COMPOSITION-FAIL after platform mutation"
+    return 1
+  }
+  output="$root/output"
+
+  main --host-config "$root/host.env" >"$output" 2>&1 \
+    && fail "synthetic post-pin composition failure did not fail the cycle"
+  command grep -q "$NEW_PLATFORM_REV" "$CHECKOUT_ROOT/fkst.workspace.toml" \
+    || fail "fixture did not advance the platform pin before the later failure"
+  [[ -f "$pending_state" ]] \
+    || fail "later cycle failure lost the activation obligation"
+  command grep -q 'SYNTHETIC-COMPOSITION-FAIL' "$output" \
+    || fail "fixture did not reach the post-pin failure point: $(<"$output")"
 )
 
 host_lock_failure_reverts_to_previous_platform_revision() (
@@ -476,6 +530,9 @@ pin_write_failure_reverts_from_previous_revision() (
   real_mv="$(command -v mv)"
   cat > "$root/bin/mv" <<'SH'
 #!/usr/bin/env bash
+if [[ "${!#}" != "$FKST_HOST_ROOT/fkst.workspace.toml" ]]; then
+  exec "$REAL_MV" "$@"
+fi
 count=0
 [[ ! -f "$MV_CALLS_FILE" ]] || count="$(<"$MV_CALLS_FILE")"
 count=$((count + 1))
@@ -702,6 +759,7 @@ source "$RESTART_CASES"
 source "$COMPOSITION_CASES"
 
 run_test "deployed top-level workspace is authoritative" deployed_top_level_workspace_is_authoritative
+run_test "activation intent is write-ahead at the cycle entry point" activation_intent_is_write_ahead_at_cycle_entry
 run_test "host-lock failure reverts to previous platform revision" host_lock_failure_reverts_to_previous_platform_revision
 run_test "post-restart health failure reverts to previous platform revision" post_restart_health_failure_reverts_to_previous_platform_revision
 run_test "checkout fast-forwards only clean ancestors" checkout_fast_forwards_only_clean_ancestors
@@ -714,6 +772,10 @@ run_test "platform-current cycle still propagates composition" platform_current_
 run_test "post-write composition drift fails closed with differences" post_write_composition_drift_fails_closed_with_differences
 run_test "composition-only propagation does not trigger restart" composition_only_propagation_does_not_trigger_restart
 run_test "local implement work controls pending restart" local_implement_work_controls_pending_restart
+run_test "deferred activation retains platform rollback origin" deferred_activation_retains_platform_rollback_origin
+run_test "verified restart cannot clear newer activation generation" verified_restart_cannot_clear_newer_activation_generation
+run_test "octal defer timestamp forces restart" octal_defer_timestamp_forces_restart
+run_test "overflowing defer timestamp forces restart" overflowing_defer_timestamp_forces_restart
 run_test "failed restart retains pending activation" failed_restart_retains_pending_activation
 run_test "orphaned defer state is not dropped" orphaned_defer_state_is_not_dropped
 run_test "worktree GC preserves owned or dirty lanes" worktree_gc_preserves_owned_or_dirty_lanes

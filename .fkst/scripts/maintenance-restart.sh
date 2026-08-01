@@ -3,7 +3,7 @@
 #
 # Split out of hourly-maintenance.sh at the SL-003 bucket limit (CLAUDE.md 8:
 # split, do not migrate). Sourced into the parent shell, so it shares the
-# parent's globals (FKST_* host contract values, CHANGED, PLATFORM_CHANGED)
+# parent's globals (FKST_* host contract values, CHANGED, ACTIVATION_ROLLBACK_REV)
 # and its `say` reporter exactly as before.
 
 engine_pid() {
@@ -77,16 +77,16 @@ restart_engine() {
   fi
   say "UNHEALTHY after restart (state=$health_state waited=${elapsed}s budget=${budget}s launchd=$launchd_state old_pid=${previous_pid:-none} last_pid=${pid:-none})"
 
-  if [[ "$PLATFORM_CHANGED" == "1" \
+  if [[ "$ACTIVATION_ROLLBACK_REV" =~ ^[0-9a-f]{40}$ \
       && -z "$pid" && "$launchd_state" == "not-in-service" ]]; then
-    if rollback_platform; then
+    if rollback_platform "$ACTIVATION_ROLLBACK_REV"; then
       bash "$FKST_RUN_SCRIPT" stop >/dev/null 2>&1
       sleep 8
-      say "reverted platform to ${PLATFORM_CURRENT_REV:0:12}"
+      say "reverted platform to ${ACTIVATION_ROLLBACK_REV:0:12}"
     else
       say "PLATFORM-ROLLBACK-FAIL after confirmed startup failure; previous revision not fully activated"
     fi
-  elif [[ "$PLATFORM_CHANGED" == "1" ]]; then
+  elif [[ "$ACTIVATION_ROLLBACK_REV" =~ ^[0-9a-f]{40}$ ]]; then
     say "PLATFORM-ROLLBACK-SKIPPED: restart budget expired but startup failure not confirmed (launchd=$launchd_state last_pid=${pid:-none})"
   fi
   return 1
@@ -98,6 +98,120 @@ restart_defer_state_path() {
 
 pending_activation_state_path() {
   printf '%s\n' "$FKST_RUNTIME_ROOT/hourly-maintenance.pending-activation"
+}
+
+timestamp_is_usable() {
+  local value="$1" now="$2"
+  [[ "$value" =~ ^(0|[1-9][0-9]*)$ && "$now" =~ ^(0|[1-9][0-9]*)$ ]] || return 1
+  if [[ "${#value}" -lt "${#now}" ]]; then
+    return 0
+  fi
+  [[ "${#value}" -eq "${#now}" \
+    && ( "$value" == "$now" || "$value" < "$now" ) ]]
+}
+
+load_pending_activation() {
+  local path="$1" line now generation created_at previous_rev target_rev
+  local -a lines=()
+  [[ -f "$path" && -r "$path" ]] || return 1
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    lines+=("$line")
+  done < "$path"
+  [[ "${#lines[@]}" -eq 4 \
+    && "${lines[0]}" == generation=* \
+    && "${lines[1]}" == created_at=* \
+    && "${lines[2]}" == previous_platform_rev=* \
+    && "${lines[3]}" == target_platform_rev=* ]] || return 1
+
+  generation="${lines[0]#generation=}"
+  created_at="${lines[1]#created_at=}"
+  previous_rev="${lines[2]#previous_platform_rev=}"
+  target_rev="${lines[3]#target_platform_rev=}"
+  now="$(date -u +%s)" || return 1
+  [[ "$generation" =~ ^[0-9]+-[0-9]+-[0-9]+$ ]] || return 1
+  timestamp_is_usable "$created_at" "$now" || return 1
+  if [[ "$previous_rev" == "none" ]]; then
+    [[ "$target_rev" == "none" ]] || return 1
+  else
+    [[ "$previous_rev" =~ ^[0-9a-f]{40}$ \
+      && "$target_rev" =~ ^[0-9a-f]{40}$ ]] || return 1
+  fi
+
+  PENDING_ACTIVATION_GENERATION="$generation"
+  PENDING_ACTIVATION_PREVIOUS_REV="$previous_rev"
+  PENDING_ACTIVATION_TARGET_REV="$target_rev"
+}
+
+record_pending_activation() {
+  local previous_rev="$1" target_rev="$2" reason="$3"
+  local pending_path lock_path temporary now generation existing_previous existing_target
+  pending_path="$(pending_activation_state_path)"
+  lock_path="${pending_path}.lock"
+  [[ -d "$FKST_RUNTIME_ROOT" ]] || {
+    say "RESTART-PENDING-STATE-FAIL: runtime root is unavailable; refusing $reason"
+    return 1
+  }
+  if ! mkdir "$lock_path" 2>/dev/null; then
+    say "RESTART-PENDING-STATE-FAIL: activation record is locked; refusing $reason"
+    return 1
+  fi
+
+  if [[ -e "$pending_path" ]]; then
+    if ! load_pending_activation "$pending_path"; then
+      rmdir "$lock_path" 2>/dev/null || true
+      say "RESTART-PENDING-STATE-FAIL: existing activation record is invalid; refusing $reason"
+      return 1
+    fi
+    existing_previous="$PENDING_ACTIVATION_PREVIOUS_REV"
+    existing_target="$PENDING_ACTIVATION_TARGET_REV"
+    if [[ "$existing_previous" != "none" ]]; then
+      previous_rev="$existing_previous"
+      [[ -n "$target_rev" ]] || target_rev="$existing_target"
+    fi
+  fi
+
+  [[ -n "$previous_rev" ]] || previous_rev="none"
+  [[ -n "$target_rev" ]] || target_rev="none"
+  if [[ "$previous_rev" == "none" ]]; then
+    if [[ "$target_rev" != "none" ]]; then
+      rmdir "$lock_path" 2>/dev/null || true
+      say "RESTART-PENDING-STATE-FAIL: activation record has no rollback origin; refusing $reason"
+      return 1
+    fi
+  elif [[ ! "$previous_rev" =~ ^[0-9a-f]{40}$ \
+      || ! "$target_rev" =~ ^[0-9a-f]{40}$ ]]; then
+    rmdir "$lock_path" 2>/dev/null || true
+    say "RESTART-PENDING-STATE-FAIL: activation revisions are invalid; refusing $reason"
+    return 1
+  fi
+
+  now="$(date -u +%s)" || now=""
+  if ! timestamp_is_usable "$now" "$now"; then
+    rmdir "$lock_path" 2>/dev/null || true
+    say "RESTART-PENDING-STATE-FAIL: cannot read a usable clock; refusing $reason"
+    return 1
+  fi
+  generation="${now}-$$-${RANDOM}"
+  temporary="${pending_path}.next-${generation}"
+  if ! (set -o noclobber; {
+      printf 'generation=%s\n' "$generation"
+      printf 'created_at=%s\n' "$now"
+      printf 'previous_platform_rev=%s\n' "$previous_rev"
+      printf 'target_platform_rev=%s\n' "$target_rev"
+    } > "$temporary") 2>/dev/null \
+      || ! mv "$temporary" "$pending_path"; then
+    rm -f -- "$temporary"
+    rmdir "$lock_path" 2>/dev/null || true
+    say "RESTART-PENDING-STATE-FAIL: cannot persist activation obligation; refusing $reason"
+    return 1
+  fi
+
+  ACTIVATION_ROLLBACK_REV="$([[ "$previous_rev" == "none" ]] || printf '%s' "$previous_rev")"
+  if ! rmdir "$lock_path" 2>/dev/null; then
+    say "RESTART-PENDING-LOCK-RELEASE-FAIL: generation $generation is durable but locked"
+    return 1
+  fi
+  say "ACTIVATION-PENDING: recorded generation $generation before $reason"
 }
 
 current_supervisor_log() {
@@ -166,12 +280,12 @@ defer_restart_with_bound() {
     return 1
   fi
   since="$(head -1 "$state_path" 2>/dev/null)"
-  if [[ ! "$since" =~ ^[0-9]+$ || "$since" -gt "$now" ]]; then
+  if ! timestamp_is_usable "$since" "$now"; then
     say "FORCE-RESTART: invalid defer state; applying pending pin"
     return 1
   fi
 
-  age=$((now - since))
+  age=$((10#$now - 10#$since))
   if [[ "$age" -ge "$FKST_CODEX_TIMEOUT_IMPLEMENT" ]]; then
     say "FORCE-RESTART: defer bound reached ($reason; age=${age}s bound=${FKST_CODEX_TIMEOUT_IMPLEMENT}s); applying pending pin"
     return 1
@@ -181,39 +295,56 @@ defer_restart_with_bound() {
 }
 
 clear_pending_activation() {
-  local pending_path="$1" defer_path="$2"
+  local pending_path="$1" defer_path="$2" verified_generation="$3"
+  local lock_path="${pending_path}.lock" current_generation
+  if ! mkdir "$lock_path" 2>/dev/null; then
+    say "ACTIVATION-RETAINED: restart verified but activation record is locked"
+    return 1
+  fi
+
+  if load_pending_activation "$pending_path"; then
+    current_generation="$PENDING_ACTIVATION_GENERATION"
+    if [[ "$verified_generation" == "invalid" \
+        || "$current_generation" != "$verified_generation" ]]; then
+      rmdir "$lock_path" 2>/dev/null || true
+      say "ACTIVATION-RETAINED: verified generation $verified_generation was superseded by $current_generation"
+      return 0
+    fi
+  elif [[ "$verified_generation" != "invalid" ]]; then
+    rmdir "$lock_path" 2>/dev/null || true
+    say "ACTIVATION-RETAINED: verified generation $verified_generation changed to invalid state"
+    return 0
+  fi
+
   if ! rm -f -- "$defer_path"; then
+    rmdir "$lock_path" 2>/dev/null || true
     say "ACTIVATION-RETAINED: restart verified but defer state could not be cleared"
     return 1
   fi
   if ! rm -f -- "$pending_path" || [[ -e "$pending_path" ]]; then
+    rmdir "$lock_path" 2>/dev/null || true
     say "ACTIVATION-RETAINED: restart verified but pending obligation could not be cleared"
     return 1
   fi
-  say "ACTIVATION-CLEARED: restart verified with a new pid and launchd in service"
+  if ! rmdir "$lock_path" 2>/dev/null; then
+    say "ACTIVATION-CLEAR-LOCK-FAIL: generation $verified_generation cleared but lock remained"
+    return 1
+  fi
+  say "ACTIVATION-CLEARED: restart verified generation $verified_generation with a new pid and launchd in service"
 }
 
 restart_if_needed() {
-  local pending_path defer_path alive implementing reason now pending_since
+  local pending_path defer_path alive implementing reason verified_generation
   pending_path="$(pending_activation_state_path)"
   defer_path="$(restart_defer_state_path)"
 
   if [[ "$CHANGED" == "1" ]]; then
     if [[ -e "$pending_path" ]]; then
-      if [[ ! -f "$pending_path" ]]; then
-        say "RESTART-PENDING-STATE-FAIL: pending activation path is not a regular file; restarting immediately"
-        if restart_engine; then
-          say "ACTIVATION-VERIFIED: immediate restart succeeded while pending state remained invalid"
-          return 0
-        fi
-        say "ACTIVATION-UNRECORDED: immediate restart failed while pending state was invalid"
-        return 1
-      fi
       say "ACTIVATION-PENDING: change detected; durable obligation already recorded"
     else
-      now="$(date -u +%s)" || now=""
-      if [[ ! "$now" =~ ^[0-9]+$ ]] \
-          || ! ensure_timestamp_state "$pending_path" "$now"; then
+      say "ACTIVATION-INTENT-MISSING: changed state has no write-ahead obligation; recovering before restart"
+      if ! record_pending_activation \
+          "${PLATFORM_CURRENT_REV:-}" "${PLATFORM_DEV_REV:-}" "post-mutation intent recovery"; then
         say "RESTART-PENDING-STATE-FAIL: cannot persist activation obligation; restarting immediately"
         if restart_engine; then
           say "ACTIVATION-VERIFIED: immediate restart succeeded after persistence failure"
@@ -222,19 +353,12 @@ restart_if_needed() {
         say "ACTIVATION-UNRECORDED: immediate restart failed after persistence failure"
         return 1
       fi
-      say "ACTIVATION-PENDING: recorded durable restart obligation"
     fi
   fi
 
   if [[ ! -e "$pending_path" ]]; then
     if [[ -e "$defer_path" ]]; then
-      pending_since="$(head -1 "$defer_path" 2>/dev/null)"
-      if [[ ! "$pending_since" =~ ^[0-9]+$ ]]; then
-        now="$(date -u +%s)" || now=""
-        pending_since="$now"
-      fi
-      if [[ ! "$pending_since" =~ ^[0-9]+$ ]] \
-          || ! ensure_timestamp_state "$pending_path" "$pending_since"; then
+      if ! record_pending_activation "" "" "orphaned defer-state recovery"; then
         say "ACTIVATION-PENDING-RECOVERY-FAIL: defer state exists but its obligation marker cannot be restored; restarting immediately"
         if restart_engine; then
           if ! rm -f -- "$defer_path"; then
@@ -254,11 +378,22 @@ restart_if_needed() {
     fi
   fi
 
-  pending_since="$(head -1 "$pending_path" 2>/dev/null)"
-  if [[ ! "$pending_since" =~ ^[0-9]+$ ]]; then
+  if load_pending_activation "$pending_path"; then
+    verified_generation="$PENDING_ACTIVATION_GENERATION"
+    if [[ "$PENDING_ACTIVATION_PREVIOUS_REV" == "none" ]]; then
+      ACTIVATION_ROLLBACK_REV=""
+    else
+      ACTIVATION_ROLLBACK_REV="$PENDING_ACTIVATION_PREVIOUS_REV"
+      PLATFORM_CURRENT_REV="$PENDING_ACTIVATION_PREVIOUS_REV"
+      PLATFORM_DEV_REV="$PENDING_ACTIVATION_TARGET_REV"
+    fi
+  else
+    verified_generation="invalid"
+    ACTIVATION_ROLLBACK_REV=""
     say "ACTIVATION-PENDING-STATE-INVALID: retaining and re-evaluating the obligation"
-  elif [[ "$CHANGED" == "0" ]]; then
-    say "ACTIVATION-PENDING: retrying durable obligation on a current-pin cycle"
+  fi
+  if [[ "$CHANGED" == "0" ]]; then
+    say "ACTIVATION-PENDING: retrying durable obligation generation $verified_generation on a current-pin cycle"
   fi
 
   alive="$(engine_pid)"
@@ -278,7 +413,7 @@ restart_if_needed() {
   fi
 
   if restart_engine; then
-    clear_pending_activation "$pending_path" "$defer_path"
+    clear_pending_activation "$pending_path" "$defer_path" "$verified_generation"
     return
   fi
   say "ACTIVATION-RETAINED: restart failed; durable obligation will be retried"

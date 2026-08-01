@@ -12,12 +12,11 @@ tests = [
   "Meta/StrataLint/StrataLint.Tests/Commands/MakeWorkflowTests.cs",
 ]
 external_tools = [
+  "awk",
   "bash",
   "basename",
-  "cp",
   "date",
   "dirname",
-  "find",
   "fkst-framework",
   "gh",
   "git",

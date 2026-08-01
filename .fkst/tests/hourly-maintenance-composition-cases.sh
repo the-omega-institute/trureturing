@@ -48,11 +48,12 @@ create_composition_cycle_fixture() {
     '"packages/legacy-host"' \
     keep-runtime
   printf 'synthetic-lock\n' > "$CHECKOUT_ROOT/fkst.lock"
-  mkdir -p "$root/bin" "$root/logs" "$root/worktrees" "$root/slots"
+  mkdir -p "$root/bin" "$root/logs" "$root/runtime" "$root/worktrees" "$root/slots"
   LOG_FILE="$root/logs/hourly-maintenance.log"
   export FKST_HOST_ROOT="$CHECKOUT_ROOT"
   export FKST_PLATFORM_ROOT="$PLATFORM_ROOT"
   export FKST_MAINTENANCE_LOG="$LOG_FILE"
+  export FKST_RUNTIME_ROOT="$root/runtime"
   export FKST_WORKTREE_ROOT="$root/worktrees"
   export FKST_REPORT_SLOT_ROOT="$root/slots"
   export FKST_GITHUB_REPO="example/synthetic"

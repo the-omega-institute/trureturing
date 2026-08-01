@@ -11,10 +11,10 @@ source "$SCRIPT_DIR/host-contract.sh"
 source "$SCRIPT_DIR/maintenance-restart.sh"
 
 CHANGED=0
-PLATFORM_CHANGED=0
 CHECKOUT_DEV_REV=""
 PLATFORM_CURRENT_REV=""
 PLATFORM_DEV_REV=""
+ACTIVATION_ROLLBACK_REV=""
 
 say() {
   printf '[%s] %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$*" \
@@ -121,15 +121,16 @@ regenerate_platform_lock() {
 }
 
 rollback_platform() {
-  if ! write_platform_pin_revision "$PLATFORM_CURRENT_REV"; then
-    say "ROLLBACK-PIN-WRITE-FAIL for previous revision ${PLATFORM_CURRENT_REV:0:12}"
+  local previous_revision="$1"
+  if ! write_platform_pin_revision "$previous_revision"; then
+    say "ROLLBACK-PIN-WRITE-FAIL for previous revision ${previous_revision:0:12}"
     return 1
   fi
   if ! regenerate_platform_lock; then
-    say "ROLLBACK-HOST-LOCK-FAIL for previous revision ${PLATFORM_CURRENT_REV:0:12}"
+    say "ROLLBACK-HOST-LOCK-FAIL for previous revision ${previous_revision:0:12}"
     return 1
   fi
-  say "PLATFORM-ROLLBACK-OK: restored revision ${PLATFORM_CURRENT_REV:0:12} and regenerated lock"
+  say "PLATFORM-ROLLBACK-OK: restored revision ${previous_revision:0:12} and regenerated lock"
 }
 
 sync_platform() {
@@ -151,8 +152,14 @@ sync_platform() {
   fi
 
   say "PLATFORM BEHIND ${PLATFORM_CURRENT_REV:0:12} -> ${PLATFORM_DEV_REV:0:12}; syncing"
+  if ! record_pending_activation \
+      "$PLATFORM_CURRENT_REV" "$PLATFORM_DEV_REV" \
+      "platform pin ${PLATFORM_CURRENT_REV:0:12}->${PLATFORM_DEV_REV:0:12}"; then
+    say "PLATFORM-ACTIVATION-INTENT-FAIL; pin mutation refused"
+    return 1
+  fi
   if ! write_platform_pin_revision "$PLATFORM_DEV_REV"; then
-    if rollback_platform; then
+    if rollback_platform "$PLATFORM_CURRENT_REV"; then
       say "PLATFORM-PIN-WRITE-FAIL; reverted to ${PLATFORM_CURRENT_REV:0:12} from previous revision"
     else
       say "PLATFORM-PIN-WRITE-FAIL; revision-derived rollback failed"
@@ -162,7 +169,7 @@ sync_platform() {
 
   if ! regenerate_platform_lock; then
     say "HOST-LOCK-FAIL for ${PLATFORM_DEV_REV:0:12}; reverting platform"
-    if rollback_platform; then
+    if rollback_platform "$PLATFORM_CURRENT_REV"; then
       say "HOST-LOCK-FAIL recovery restored ${PLATFORM_CURRENT_REV:0:12}"
     else
       say "PLATFORM-ROLLBACK-FAIL after host-lock failure; previous revision not fully activated"
@@ -170,7 +177,6 @@ sync_platform() {
     return 1
   fi
 
-  PLATFORM_CHANGED=1
   CHANGED=1
 }
 
@@ -219,6 +225,11 @@ sync_checkout() {
   behind="$(git -C "$FKST_HOST_ROOT" rev-list \
     "$checkout_head..$CHECKOUT_DEV_REV" --count 2>/dev/null)"
   say "CHECKOUT BEHIND ${checkout_head:0:12} -> ${CHECKOUT_DEV_REV:0:12} ($behind commits); FF"
+  if ! record_pending_activation "" "" \
+      "checkout fast-forward ${checkout_head:0:12}->${CHECKOUT_DEV_REV:0:12}"; then
+    say "CHECKOUT-ACTIVATION-INTENT-FAIL; fast-forward refused"
+    return 0
+  fi
   if git -C "$FKST_HOST_ROOT" merge --ff-only "$CHECKOUT_DEV_REV" >/dev/null 2>&1; then
     CHANGED=1
   else

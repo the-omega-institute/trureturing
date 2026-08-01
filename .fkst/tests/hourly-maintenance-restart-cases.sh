@@ -19,6 +19,16 @@ SH
   export PATH="$root/bin:/usr/bin:/bin"
 }
 
+write_pending_activation_fixture() {
+  local path="$1" generation="$2" created_at="$3" previous_rev="$4" target_rev="$5"
+  {
+    printf 'generation=%s\n' "$generation"
+    printf 'created_at=%s\n' "$created_at"
+    printf 'previous_platform_rev=%s\n' "$previous_rev"
+    printf 'target_platform_rev=%s\n' "$target_rev"
+  } > "$path"
+}
+
 local_implement_work_controls_pending_restart() (
   load_implementation || exit 1
   local root implement_pid pending_state defer_state supervisor_log
@@ -73,6 +83,8 @@ SH
   implement_pid=$!
   printf 'event=dept_child_spawn dept=github-devloop.implement pid=%s exit_code=pending\n' \
     "$implement_pid" > "$supervisor_log"
+  record_pending_activation "" "" "synthetic local implement activation" \
+    || fail "could not create the activation obligation"
   CHANGED=1
 
   restart_if_needed || fail "restart deferral should exit successfully"
@@ -100,6 +112,8 @@ SH
   implement_pid=$!
   printf 'event=dept_child_spawn dept=github-devloop.implement pid=%s exit_code=pending\n' \
     "$implement_pid" > "$supervisor_log"
+  record_pending_activation "" "" "second synthetic local implement activation" \
+    || fail "could not create the second activation obligation"
   CHANGED=1
   restart_if_needed || fail "fresh local implement work should defer restart"
   printf '1\n' > "$defer_state"
@@ -111,6 +125,124 @@ SH
     || fail "bounded defer transition was not reported"
 )
 
+deferred_activation_retains_platform_rollback_origin() (
+  load_implementation || exit 1
+  local root pending_state
+  root="$(mktemp -d -t hourly-maintenance-deferred-rollback.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  create_platform_fixture "$root" || exit 1
+  create_checkout_files "$root" || exit 1
+  mkdir -p "$root/runtime"
+  export FKST_RUNTIME_ROOT="$root/runtime"
+  FRAMEWORK_CALLS_FILE="$root/framework.calls"
+  export FRAMEWORK_CALLS_FILE
+  write_framework_stub success
+  export_platform_environment
+  export FKST_CODEX_TIMEOUT_IMPLEMENT=10800
+  export FKST_RESTART_TIMEOUT_SECONDS=1
+  export FKST_RESTART_POLL_SECONDS=1
+  export FKST_RUN_SCRIPT="$root/bin/run-engine"
+  export FKST_LAUNCHD_LABEL="com.example.synthetic-fkst"
+  cat > "$FKST_RUN_SCRIPT" <<'SH'
+#!/usr/bin/env bash
+exit 0
+SH
+  cat > "$root/bin/sleep" <<'SH'
+#!/usr/bin/env bash
+exit 0
+SH
+  chmod +x "$FKST_RUN_SCRIPT" "$root/bin/sleep"
+  export PATH="$root/bin:/usr/bin:/bin"
+  pending_state="$FKST_RUNTIME_ROOT/hourly-maintenance.pending-activation"
+
+  sync_platform || fail "platform activation setup should succeed"
+  engine_pid() { printf '4242\n'; }
+  active_local_implement_count() { printf '1\n'; }
+  restart_if_needed || fail "cycle 1 should defer the pending platform activation"
+  command grep -q "$NEW_PLATFORM_REV" "$CHECKOUT_ROOT/fkst.workspace.toml" \
+    || fail "cycle 1 did not leave the new revision pending activation"
+
+  # A later cycle reads the new pin as current and has none of cycle 1's globals.
+  CHANGED=0
+  PLATFORM_CURRENT_REV="$NEW_PLATFORM_REV"
+  ACTIVATION_ROLLBACK_REV=""
+  engine_pid() { return 1; }
+  launchd_service_state() { printf 'not-in-service\n'; }
+  restart_if_needed && fail "confirmed startup failure should fail after rollback"
+
+  command grep -q "$OLD_PLATFORM_REV" "$CHECKOUT_ROOT/fkst.workspace.toml" \
+    || fail "deferred activation did not roll back to its durable known-good revision"
+  command grep -q 'lock-mutated-by-host-lock-2' "$CHECKOUT_ROOT/fkst.lock" \
+    || fail "deferred rollback did not regenerate the known-good lock"
+  [[ -f "$pending_state" ]] \
+    || fail "failed activation dropped its durable obligation"
+)
+
+verified_restart_cannot_clear_newer_activation_generation() (
+  load_implementation || exit 1
+  local root pending_state now
+  root="$(mktemp -d -t hourly-maintenance-generation-fence.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  mkdir -p "$root/runtime" "$root/logs"
+  export FKST_RUNTIME_ROOT="$root/runtime"
+  export FKST_MAINTENANCE_LOG="$root/logs/hourly-maintenance.log"
+  pending_state="$FKST_RUNTIME_ROOT/hourly-maintenance.pending-activation"
+  now="$(date -u +%s)"
+  write_pending_activation_fixture "$pending_state" "${now}-1-1" "$now" none none
+  CHANGED=0
+  engine_pid() { return 1; }
+  restart_engine() {
+    write_pending_activation_fixture \
+      "$pending_state" "${now}-2-2" "$now" none none
+    return 0
+  }
+
+  restart_if_needed || fail "older generation reconciliation should remain successful"
+  [[ -f "$pending_state" ]] \
+    || fail "verified restart erased a newer activation generation"
+  command grep -q "^generation=${now}-2-2$" "$pending_state" \
+    || fail "older reconciler did not preserve the newer generation"
+  command grep -q 'ACTIVATION-RETAINED: verified generation .* was superseded by' \
+    "$FKST_MAINTENANCE_LOG" \
+    || fail "generation-fence retention was not reported"
+)
+
+unusable_defer_timestamp_forces_restart() (
+  local unusable_timestamp="$1"
+  load_implementation || exit 1
+  local root pending_state defer_state now
+  root="$(mktemp -d -t hourly-maintenance-invalid-defer.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  mkdir -p "$root/runtime" "$root/logs"
+  export FKST_RUNTIME_ROOT="$root/runtime"
+  export FKST_MAINTENANCE_LOG="$root/logs/hourly-maintenance.log"
+  export FKST_CODEX_TIMEOUT_IMPLEMENT=10800
+  pending_state="$FKST_RUNTIME_ROOT/hourly-maintenance.pending-activation"
+  defer_state="$FKST_RUNTIME_ROOT/hourly-maintenance.restart-defer-since"
+  now="$(date -u +%s)"
+  write_pending_activation_fixture "$pending_state" "${now}-1-1" "$now" none none
+  printf '%s\n' "$unusable_timestamp" > "$defer_state"
+  CHANGED=0
+  engine_pid() { printf '4242\n'; }
+  active_local_implement_count() { printf '1\n'; }
+  restart_engine() { printf 'verified restart\n' > "$root/restart.calls"; }
+
+  restart_if_needed \
+    || fail "unusable defer timestamp $unusable_timestamp aborted reconciliation"
+  [[ -f "$root/restart.calls" ]] \
+    || fail "unusable defer timestamp $unusable_timestamp allowed unbounded deferral"
+  command grep -q 'FORCE-RESTART: invalid defer state' "$FKST_MAINTENANCE_LOG" \
+    || fail "unusable defer timestamp $unusable_timestamp was not reported"
+)
+
+octal_defer_timestamp_forces_restart() (
+  unusable_defer_timestamp_forces_restart 08
+)
+
+overflowing_defer_timestamp_forces_restart() (
+  unusable_defer_timestamp_forces_restart 9223372036854775808
+)
+
 failed_restart_retains_pending_activation() (
   load_implementation || exit 1
   local root pending_state
@@ -120,8 +252,9 @@ failed_restart_retains_pending_activation() (
   export FKST_RUNTIME_ROOT="$root/runtime"
   export FKST_MAINTENANCE_LOG="$root/logs/hourly-maintenance.log"
   pending_state="$FKST_RUNTIME_ROOT/hourly-maintenance.pending-activation"
+  record_pending_activation "" "" "synthetic failed activation" \
+    || fail "could not create the failed activation obligation"
   CHANGED=1
-  PLATFORM_CHANGED=0
   engine_pid() { return 1; }
   restart_engine() { say "synthetic restart failure"; return 1; }
 
@@ -178,7 +311,6 @@ SH
   chmod +x "$root/bin/pgrep" "$root/bin/launchctl"
   export FKST_RESTART_TIMEOUT_SECONDS=10
   export FKST_RESTART_POLL_SECONDS=2
-  PLATFORM_CHANGED=1
   PLATFORM_DEV_REV=2222222222222222222222222222222222222222
   CHECKOUT_DEV_REV=3333333333333333333333333333333333333333
 
@@ -295,7 +427,6 @@ SH
   chmod +x "$root/bin/pgrep" "$root/bin/launchctl"
   export FKST_RESTART_TIMEOUT_SECONDS=6
   export FKST_RESTART_POLL_SECONDS=2
-  PLATFORM_CHANGED=0
 
   restart_engine && fail "unchanged pre-stop PID was accepted as a new engine"
   command grep -q \
