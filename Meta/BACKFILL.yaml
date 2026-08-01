@@ -25159,6 +25159,54 @@ sources:
         status:
           migration: residual
           truth: open
+      - atom_id: wm-residual-efb46c629b2c0af2b863017470cf96bec9328ba55efc2bd43430e3ca6bb7c2c8
+        ast_path: metadata/preamble
+        fingerprints:
+          raw_sha256: sha256:efb46c629b2c0af2b863017470cf96bec9328ba55efc2bd43430e3ca6bb7c2c8
+          normalized_sha256: sha256:efb46c629b2c0af2b863017470cf96bec9328ba55efc2bd43430e3ca6bb7c2c8
+        cas_ref: sha256:efb46c629b2c0af2b863017470cf96bec9328ba55efc2bd43430e3ca6bb7c2c8
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: wm-residual-9f78bbda963e788c5fc472401cb2652b73d8e290281276944f4de47b6e515442
+        ast_path: version/v0.5
+        fingerprints:
+          raw_sha256: sha256:9f78bbda963e788c5fc472401cb2652b73d8e290281276944f4de47b6e515442
+          normalized_sha256: sha256:9f78bbda963e788c5fc472401cb2652b73d8e290281276944f4de47b6e515442
+        cas_ref: sha256:9f78bbda963e788c5fc472401cb2652b73d8e290281276944f4de47b6e515442
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: wm-residual-314b21b5520bf0feeba28d06ed43f4915e6850672c0a2c1429abb74092021b67
+        ast_path: audit/v0.5
+        fingerprints:
+          raw_sha256: sha256:314b21b5520bf0feeba28d06ed43f4915e6850672c0a2c1429abb74092021b67
+          normalized_sha256: sha256:314b21b5520bf0feeba28d06ed43f4915e6850672c0a2c1429abb74092021b67
+        cas_ref: sha256:314b21b5520bf0feeba28d06ed43f4915e6850672c0a2c1429abb74092021b67
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
   - source_id: golden-ledger-spec-v7.11
     path: docs/develop/spec/golden-ledger-repo-spec.md
     atomizer: none
