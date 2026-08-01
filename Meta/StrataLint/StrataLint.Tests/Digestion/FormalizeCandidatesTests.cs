@@ -238,6 +238,28 @@ public sealed class FormalizeCandidatesTests
     }
 
     [Fact]
+    public void FormalizeCandidatesKeepsAtomWhenMatchingReceiptPathIsNoncanonical()
+    {
+        var entry = Entry("source", "Uppercase-atom", "定理", "5.5");
+        var receipt = DigestionFormalizationReceipt.Write(new DigestionFormalizationReceipt(
+            entry.AtomId,
+            "D5/S0/Synthetic/Receipt.Uppercase_atom",
+            new DigestionFormalizationSignature("Uppercase_atom", "theorem", "statement-v1"),
+            entry.Atom.Fingerprints.RawSha256,
+            entry.Atom.Fingerprints.RawSha256)).ToArray();
+
+        var result = Run([entry], formalizationReceipt: receipt);
+
+        Assert.True(result.Success, result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        Assert.Equal(
+            entry.AtomId,
+            Assert.Single(json.RootElement.GetProperty("candidates").EnumerateArray())
+                .GetProperty("atom_id")
+                .GetString());
+    }
+
+    [Fact]
     public void FormalizeCandidatesReadsCompleteAtomTextFromCasAndAddressesLedgerBytes()
     {
         var entry = Entry(

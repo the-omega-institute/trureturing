@@ -330,6 +330,11 @@ internal static class DigestStatusCommand
         var path = DigestionFormalizationReceipt.RootPath
             + entry.AtomId
             + DigestionFormalizationReceipt.PathSuffix;
+        if (!DigestionFormalizationReceipt.IsCanonicalPath(path))
+        {
+            return false;
+        }
+
         if (!snapshot.TryGetFile(path, out _))
         {
             return false;
