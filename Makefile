@@ -2,6 +2,7 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := help
 
 BASE ?= origin/dev
+C0_RENEW_DEADLINE_SECONDS ?= 16200
 WORKTREE_PATH = $(if $(filter command line,$(origin PATH)),$(PATH),$(abspath ../trureturing-$(NAME)))
 export HOST_CONFIG OUTPUT DEPLOYED_LAUNCHER VALIDATE_ONLY
 
@@ -46,7 +47,7 @@ lean-report:
 build: dotnet lean
 
 c0-renew: scratch-sweep
-	@dotnet run --project Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- c0-renew --base "$(BASE)"
+	@base="$$(git merge-base -- HEAD "$(BASE)")" && dotnet run --project Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- c0-renew --base "$$base" --deadline-seconds "$(C0_RENEW_DEADLINE_SECONDS)"
 
 clean-lanes:
 	@/bin/bash Meta/StrataLint/scripts/clean-lanes.sh --base "$(BASE)" $(if $(filter 1,$(FORCE)),--force,)

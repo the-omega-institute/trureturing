@@ -13,12 +13,50 @@ public sealed class C0RenewCommandTests
     private static readonly string PreimageCommit = new('c', 40);
     private static readonly string PreimageTree = new('d', 40);
 
+    private static string[] Arguments(string? baseCommit = null) =>
+    [
+        "--base",
+        baseCommit ?? BaseCommit,
+        "--deadline-seconds",
+        "16200",
+    ];
+
     [Fact]
     public void CeremonyBudgetsMatchColdScratchCalibration()
     {
-        Assert.Equal(90, ProductionC0RenewEnvironment.LeanReportBudgetMinutes);
-        Assert.Equal(10, ProductionC0RenewEnvironment.GitOperationBudgetMinutes);
-        Assert.Equal(600, ProductionConservativeExtensionEnvironment.DefaultEvaluationBudgetSeconds);
+        Assert.True(
+            ProductionC0RenewEnvironment.LeanReportBudgetMinutes
+            > ProductionConservativeExtensionEnvironment.DefaultEvaluationBudgetSeconds / 60);
+        Assert.True(
+            ProductionC0RenewEnvironment.LeanReportBudgetMinutes
+            > ProductionC0RenewEnvironment.GitOperationBudgetMinutes);
+    }
+
+    [Fact]
+    public void CeremonyDeadlineCapsChildrenAndFailsClosedWhenExhausted()
+    {
+        var elapsed = TimeSpan.Zero;
+        var deadline = new C0RenewDeadline(
+            TimeSpan.FromSeconds(20),
+            () => elapsed);
+
+        Assert.Equal(TimeSpan.FromSeconds(10), deadline.Remaining(TimeSpan.FromSeconds(10)));
+        elapsed = TimeSpan.FromSeconds(15);
+        Assert.Equal(TimeSpan.FromSeconds(5), deadline.Remaining(TimeSpan.FromSeconds(10)));
+        elapsed = TimeSpan.FromSeconds(20);
+        Assert.Throws<TimeoutException>(() => deadline.Remaining(TimeSpan.FromSeconds(10)));
+    }
+
+    [Fact]
+    public void MutableBaseReferenceIsRejectedBeforeRepositoryAccess()
+    {
+        var environment = new SyntheticRenewEnvironment(Certificate());
+
+        var result = C0RenewCommand.Run(Arguments("origin/dev"), environment);
+
+        Assert.False(result.Success);
+        Assert.Contains("exact 40-character lowercase commit", result.Error, StringComparison.Ordinal);
+        Assert.Equal(0, environment.StateReads);
     }
 
     [Fact]
@@ -30,7 +68,7 @@ public sealed class C0RenewCommandTests
                 "outer gate failure",
                 new IOException("inner gate failure")));
 
-        var result = C0RenewCommand.Run(["--base", BaseCommit], environment);
+        var result = C0RenewCommand.Run(Arguments(), environment);
 
         Assert.False(result.Success);
         Assert.Contains(
@@ -48,10 +86,10 @@ public sealed class C0RenewCommandTests
     {
         var environment = new SyntheticRenewEnvironment(Certificate());
 
-        var first = C0RenewCommand.Run(["--base", BaseCommit], environment);
+        var first = C0RenewCommand.Run(Arguments(), environment);
         var firstTower = environment.CurrentTower;
         var firstCertificate = environment.CurrentCertificate;
-        var second = C0RenewCommand.Run(["--base", BaseCommit], environment);
+        var second = C0RenewCommand.Run(Arguments(), environment);
 
         Assert.True(first.Success, first.Error);
         Assert.Contains("changed_files=2", first.Output, StringComparison.Ordinal);
@@ -73,8 +111,11 @@ public sealed class C0RenewCommandTests
         var beforeTower = environment.CurrentTower;
         var beforeCertificate = environment.CurrentCertificate;
 
-        var renew = C0RenewCommand.Run(["--base", BaseCommit], environment);
-        var postGate = environment.RunConservativeGate(BaseCommit, PreimageCommit);
+        var renew = C0RenewCommand.Run(Arguments(), environment);
+        var postGate = environment.RunConservativeGate(
+            BaseCommit,
+            PreimageCommit,
+            C0RenewDeadline.Start(TimeSpan.FromMinutes(5)));
 
         Assert.False(renew.Success);
         Assert.Contains("did not produce a renewable certificate", renew.Error, StringComparison.Ordinal);
@@ -94,7 +135,7 @@ public sealed class C0RenewCommandTests
         var beforeTower = environment.CurrentTower;
         var beforeCertificate = environment.CurrentCertificate;
 
-        var renew = C0RenewCommand.Run(["--base", BaseCommit], environment);
+        var renew = C0RenewCommand.Run(Arguments(), environment);
 
         Assert.False(renew.Success);
         Assert.Contains("did not produce a renewable certificate", renew.Error, StringComparison.Ordinal);
@@ -102,6 +143,55 @@ public sealed class C0RenewCommandTests
         Assert.Equal(0, environment.Installations);
         Assert.Equal(beforeTower, environment.CurrentTower);
         Assert.Equal(beforeCertificate, environment.CurrentCertificate);
+    }
+
+    [Fact]
+    public void CandidateFailureRemainsRejectedWhenTheBaseNoOpPasses()
+    {
+        var environment = new SyntheticRenewEnvironment(
+            Certificate(),
+            candidateGateExitCodes: [1],
+            noOpGateExitCode: 0);
+
+        var result = C0RenewCommand.Run(Arguments(), environment);
+
+        Assert.False(result.Success);
+        Assert.Equal(1, environment.GateRuns);
+        Assert.Equal(1, environment.NoOpGateRuns);
+        Assert.Equal(0, environment.Installations);
+    }
+
+    [Fact]
+    public void FailedBaseNoOpPermitsOneOrdinaryGateReplay()
+    {
+        var environment = new SyntheticRenewEnvironment(
+            Certificate(),
+            candidateGateExitCodes: [2, 0],
+            noOpGateExitCode: 2);
+
+        var result = C0RenewCommand.Run(Arguments(), environment);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Equal(2, environment.GateRuns);
+        Assert.Equal(1, environment.NoOpGateRuns);
+        Assert.Equal(1, environment.Installations);
+    }
+
+    [Fact]
+    public void FailedRecoveryReplayRemainsRejected()
+    {
+        var environment = new SyntheticRenewEnvironment(
+            Certificate(),
+            candidateGateExitCodes: [2, 1],
+            noOpGateExitCode: 2);
+
+        var result = C0RenewCommand.Run(Arguments(), environment);
+
+        Assert.False(result.Success);
+        Assert.Contains("ordinary conservative gate replay failed", result.Error, StringComparison.Ordinal);
+        Assert.Equal(2, environment.GateRuns);
+        Assert.Equal(1, environment.NoOpGateRuns);
+        Assert.Equal(0, environment.Installations);
     }
 
     [Fact]
@@ -134,7 +224,10 @@ public sealed class C0RenewCommandTests
         Write(repository.Path, RepositoryRules.TowerManifestPath, "dirty tower\n");
         Write(repository.Path, C0CeremonyProjection.CertificatePath, "dirty certificate\n");
 
-        using var candidate = C0RenewCandidateWorkspace.Materialize(repository.Path, preimage);
+        using var candidate = C0RenewCandidateWorkspace.Materialize(
+            repository.Path,
+            preimage,
+            C0RenewDeadline.Start(TimeSpan.FromMinutes(5)));
 
         Assert.Equal(
             preimage,
@@ -217,11 +310,87 @@ public sealed class C0RenewCommandTests
             "HEAD").Trim();
 
         var result = new ProductionC0RenewEnvironment(repository.Path)
-            .RunConservativeGate(@base, candidate);
+            .RunConservativeGate(
+                @base,
+                candidate,
+                C0RenewDeadline.Start(TimeSpan.FromMinutes(5)));
 
         Assert.Equal(0, result.ExitCode);
         Assert.Equal("BASE_GATE\n", Encoding.UTF8.GetString(result.Output.AsSpan()));
         Assert.DoesNotContain("FORGED", Encoding.UTF8.GetString(result.Output.AsSpan()));
+    }
+
+    [Fact]
+    public void ProductionNoOpProbeUsesAnEmptyDescendantAndExactBasePrograms()
+    {
+        using var repository = new TemporaryDirectory();
+        ReviewRegressionTests.RunGit(repository.Path, "init", "--initial-branch=dev");
+        ReviewRegressionTests.RunGit(
+            repository.Path,
+            "config",
+            "user.email",
+            "stratalint@example.invalid");
+        ReviewRegressionTests.RunGit(
+            repository.Path,
+            "config",
+            "user.name",
+            "StrataLint Tests");
+        Write(repository.Path, ".gitignore", "/.lake/\n");
+        Write(
+            repository.Path,
+            C0CeremonyProjection.LeanReportPairPath,
+            """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            candidate=''
+            baseline=''
+            while [[ $# -gt 0 ]]; do
+              case "$1" in
+                --candidate-output) candidate="$2" ;;
+                --baseline-output) baseline="$2" ;;
+              esac
+              shift 2
+            done
+            mkdir -p "$(dirname "$candidate")" "$(dirname "$baseline")"
+            printf '{}\n' > "$candidate"
+            printf '{}\n' > "$baseline"
+            """ + "\n");
+        Write(
+            repository.Path,
+            C0CeremonyProjection.GateWiringPath,
+            """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            candidate=''
+            judge=''
+            base=''
+            while [[ $# -gt 0 ]]; do
+              case "$1" in
+                --candidate) candidate="$2" ;;
+                --judge-root) judge="$2" ;;
+                --base) base="$2" ;;
+              esac
+              shift 2
+            done
+            [[ "$(git -C "$candidate" rev-parse HEAD^)" == "$base" ]]
+            [[ "$(git -C "$candidate" rev-parse HEAD^{tree})" == "$(git -C "$judge" rev-parse HEAD^{tree})" ]]
+            [[ -z "$(git -C "$candidate" status --porcelain --untracked-files=all)" ]]
+            printf 'BASE_NOOP\n'
+            """ + "\n");
+        ReviewRegressionTests.RunGit(repository.Path, "add", ".");
+        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "base gate");
+        var @base = ReviewRegressionTests.RunGit(
+            repository.Path,
+            "rev-parse",
+            "HEAD").Trim();
+
+        var result = new ProductionC0RenewEnvironment(repository.Path)
+            .RunBaseNoOpGate(
+                @base,
+                C0RenewDeadline.Start(TimeSpan.FromMinutes(5)));
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal("BASE_NOOP\n", Encoding.UTF8.GetString(result.Output.AsSpan()));
     }
 
     [Fact]
@@ -350,7 +519,8 @@ public sealed class C0RenewCommandTests
     private sealed class SyntheticRenewEnvironment : IC0RenewEnvironment
     {
         private readonly ImmutableArray<byte> gateCertificate;
-        private readonly int gateExitCode;
+        private readonly ImmutableArray<int> candidateGateExitCodes;
+        private readonly int noOpGateExitCode;
         private readonly Exception? gateException;
         private readonly RepositorySnapshot preimageSnapshot;
         private bool outputsDirty;
@@ -358,10 +528,14 @@ public sealed class C0RenewCommandTests
         internal SyntheticRenewEnvironment(
             ImmutableArray<byte> gateCertificate,
             int gateExitCode = 0,
-            Exception? gateException = null)
+            Exception? gateException = null,
+            int[]? candidateGateExitCodes = null,
+            int noOpGateExitCode = 0)
         {
             this.gateCertificate = gateCertificate;
-            this.gateExitCode = gateExitCode;
+            this.candidateGateExitCodes = ImmutableArray.CreateRange(
+                candidateGateExitCodes ?? [gateExitCode]);
+            this.noOpGateExitCode = noOpGateExitCode;
             this.gateException = gateException;
             CurrentTower = TowerBytes();
             CurrentCertificate = ImmutableArray.CreateRange(Encoding.UTF8.GetBytes("{}\n"));
@@ -369,6 +543,10 @@ public sealed class C0RenewCommandTests
         }
 
         internal int GateRuns { get; private set; }
+
+        internal int NoOpGateRuns { get; private set; }
+
+        internal int StateReads { get; private set; }
 
         internal int Installations { get; private set; }
 
@@ -380,6 +558,7 @@ public sealed class C0RenewCommandTests
 
         public C0RenewState ReadState(string baseReference)
         {
+            StateReads++;
             Assert.Equal(BaseCommit, baseReference);
             var changed = outputsDirty
                 ? [RepositoryRules.TowerManifestPath, C0CeremonyProjection.CertificatePath]
@@ -398,17 +577,30 @@ public sealed class C0RenewCommandTests
 
         public C0RenewGateResult RunConservativeGate(
             string exactBaseCommit,
-            string exactPreimageCommit)
+            string exactPreimageCommit,
+            C0RenewDeadline deadline)
         {
             Assert.Equal(BaseCommit, exactBaseCommit);
             Assert.Equal(PreimageCommit, exactPreimageCommit);
             GateRuns++;
-            if (gateException is not null) throw gateException;
+            if (gateException is not null && GateRuns == 1) throw gateException;
             var prefix = Encoding.UTF8.GetBytes("PROTECTED_SURFACE_CHANGE fixture\n");
             var suffix = Encoding.UTF8.GetBytes("gate summary\n");
             return new C0RenewGateResult(
-                gateExitCode,
+                candidateGateExitCodes[Math.Min(GateRuns - 1, candidateGateExitCodes.Length - 1)],
                 ImmutableArray.CreateRange(prefix.Concat(gateCertificate).Concat(suffix)),
+                ImmutableArray<byte>.Empty);
+        }
+
+        public C0RenewGateResult RunBaseNoOpGate(
+            string exactBaseCommit,
+            C0RenewDeadline deadline)
+        {
+            Assert.Equal(BaseCommit, exactBaseCommit);
+            NoOpGateRuns++;
+            return new C0RenewGateResult(
+                noOpGateExitCode,
+                ImmutableArray<byte>.Empty,
                 ImmutableArray<byte>.Empty);
         }
 

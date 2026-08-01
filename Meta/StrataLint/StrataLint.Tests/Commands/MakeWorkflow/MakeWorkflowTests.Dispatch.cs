@@ -25,7 +25,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("build: dotnet lean", makefile, StringComparison.Ordinal);
         Assert.Equal(0, RecipeCount(makefile, "build"));
         Assert.Contains(
-            " c0-renew --base \"$(BASE)\"",
+            "c0-renew --base \"$$base\" --deadline-seconds \"$(C0_RENEW_DEADLINE_SECONDS)\"",
             Recipe(makefile, "c0-renew"),
             StringComparison.Ordinal);
         Assert.Contains(CleanLanesScriptPath, Recipe(makefile, "clean-lanes"), StringComparison.Ordinal);

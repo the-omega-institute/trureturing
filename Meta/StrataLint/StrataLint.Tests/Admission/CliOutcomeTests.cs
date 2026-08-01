@@ -85,7 +85,13 @@ public sealed class CliOutcomeTests
                 string.Empty));
 
         var exitCode = CliApplication.Run(
-            ["c0-renew", "--base", new string('a', 40)],
+            [
+                "c0-renew",
+                "--base",
+                new string('a', 40),
+                "--deadline-seconds",
+                "16200",
+            ],
             environment,
             console);
 

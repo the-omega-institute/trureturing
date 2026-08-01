@@ -43,6 +43,7 @@ public sealed partial class MakeWorkflowTests
     private const string PerfReportScriptPath = "Meta/StrataLint/scripts/perf-report.sh";
     private const string PerfEventScriptPath = "Meta/StrataLint/scripts/perf-event-lib.sh";
     private const string AdmissionWorkflowPath = ".github/workflows/ci.yml";
+    private const string C0CeremonyWorkflowPath = ".github/workflows/c0-ceremony.yml";
     private const string TheoryIngestWorkflowPath = ".github/workflows/theory-ingest.yml";
     private const string EchoResidualSummaryPath = "Generated/echo-residual-summary.md";
     private const string PrShepherdScriptPath = "Meta/StrataLint/scripts/pr-shepherd.sh";
@@ -288,6 +289,31 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("|| true", localGate, StringComparison.Ordinal);
         Assert.Contains("|| true", preflight, StringComparison.Ordinal);
         Assert.Contains(">> \"$LOCAL_TIMING_FILE\" || true", localGate, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void C0RenewPinsTheLocalMergeBaseAndTheOuterDeadlineDominatesTheCeremony()
+    {
+        var root = FindRepositoryRoot();
+        var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
+        var workflow = File.ReadAllText(Path.Combine(root, C0CeremonyWorkflowPath));
+        var recipe = Recipe(makefile, "c0-renew");
+        var commandBudget = Regex.Match(
+            makefile,
+            @"(?m)^C0_RENEW_DEADLINE_SECONDS \?= (?<seconds>[1-9][0-9]*)$");
+        var outerBudget = Regex.Match(
+            workflow,
+            @"(?ms)^  renew:.*?^    timeout-minutes: (?<minutes>[1-9][0-9]*)$");
+
+        Assert.Contains("git merge-base -- HEAD \"$(BASE)\"", recipe, StringComparison.Ordinal);
+        Assert.Contains("--base \"$$base\"", recipe, StringComparison.Ordinal);
+        Assert.Contains("--deadline-seconds \"$(C0_RENEW_DEADLINE_SECONDS)\"", recipe, StringComparison.Ordinal);
+        Assert.True(commandBudget.Success, "Makefile must own the bounded C0 command deadline");
+        Assert.True(outerBudget.Success, "workflow must own the outer C0 job deadline");
+        Assert.True(
+            int.Parse(outerBudget.Groups["minutes"].Value) * 60
+            > int.Parse(commandBudget.Groups["seconds"].Value),
+            "the workflow deadline must dominate the complete C0 command deadline");
     }
 
     [Fact]

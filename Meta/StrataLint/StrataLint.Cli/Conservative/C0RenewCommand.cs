@@ -1,4 +1,7 @@
 using System.Collections.Immutable;
+using System.Diagnostics;
+using System.Globalization;
+using System.Runtime.ExceptionServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -23,13 +26,63 @@ internal sealed record C0RenewOutput(
     ImmutableArray<byte> TowerBytes,
     ImmutableArray<byte> CertificateBytes);
 
+internal sealed record C0RenewOptions(
+    string ExactBaseCommit,
+    TimeSpan OperationBudget);
+
+internal sealed class C0RenewDeadline
+{
+    private readonly TimeSpan budget;
+    private readonly Func<TimeSpan> elapsed;
+
+    internal C0RenewDeadline(TimeSpan budget, Func<TimeSpan> elapsed)
+    {
+        if (budget <= TimeSpan.Zero) throw new ArgumentOutOfRangeException(nameof(budget));
+        this.elapsed = elapsed ?? throw new ArgumentNullException(nameof(elapsed));
+        this.budget = budget;
+    }
+
+    internal static C0RenewDeadline Start(TimeSpan budget)
+    {
+        var stopwatch = Stopwatch.StartNew();
+        return new C0RenewDeadline(budget, () => stopwatch.Elapsed);
+    }
+
+    internal TimeSpan Remaining(TimeSpan stageMaximum)
+    {
+        if (stageMaximum <= TimeSpan.Zero)
+        {
+            throw new ArgumentOutOfRangeException(nameof(stageMaximum));
+        }
+
+        var consumed = elapsed();
+        if (consumed < TimeSpan.Zero)
+        {
+            throw new InvalidOperationException("C0 renewal deadline clock moved backwards");
+        }
+
+        var remaining = budget - consumed;
+        if (remaining <= TimeSpan.Zero)
+        {
+            throw new TimeoutException("C0 renewal operation deadline was exhausted");
+        }
+
+        return remaining < stageMaximum ? remaining : stageMaximum;
+    }
+}
+
 internal interface IC0RenewEnvironment
 {
     C0RenewState ReadState(string baseReference);
 
     C0RenewGateResult RunConservativeGate(
         string exactBaseCommit,
-        string exactPreimageCommit);
+        string exactPreimageCommit,
+        C0RenewDeadline deadline);
+
+    C0RenewGateResult RunBaseNoOpGate(
+        string exactBaseCommit,
+        C0RenewDeadline deadline);
 
     IDisposable AcquireInstallLock();
 
@@ -56,8 +109,9 @@ internal static class C0RenewCommand
         ArgumentNullException.ThrowIfNull(environment);
         try
         {
-            var baseReference = Parse(arguments);
-            var initial = environment.ReadState(baseReference);
+            var options = Parse(arguments);
+            var deadline = C0RenewDeadline.Start(options.OperationBudget);
+            var initial = environment.ReadState(options.ExactBaseCommit);
             RequireSha1(initial);
             var dirty = initial.ChangedPaths.ToImmutableHashSet(StringComparer.Ordinal);
             if (!dirty.IsSubsetOf(OutputPaths))
@@ -66,20 +120,12 @@ internal static class C0RenewCommand
                     "C0 renewal requires a clean committed preimage; only prior C0 outputs may differ");
             }
 
-            var gate = environment.RunConservativeGate(
-                initial.Base.Revision,
-                initial.Preimage.Revision);
-            if (gate.ExitCode != 0)
-            {
-                throw new InvalidOperationException(
-                    "the conservative gate did not produce a renewable certificate"
-                    + GateDetail(gate));
-            }
+            var gate = RunGateWithRecovery(initial, environment, deadline);
 
             var certificate = ExtractCertificate(gate.Output, initial);
             var output = Materialize(initial, certificate);
             using var installLock = environment.AcquireInstallLock();
-            var confirmed = environment.ReadState(baseReference);
+            var confirmed = environment.ReadState(options.ExactBaseCommit);
             RequireUnchanged(initial, confirmed);
             var changedFiles = 0;
             if (!output.CertificateBytes.AsSpan().SequenceEqual(initial.CurrentCertificate.AsSpan()))
@@ -105,6 +151,65 @@ internal static class C0RenewCommand
                     ? $"C0_RENEW_FAILED_INNER [{inner.GetType().Name}] {inner.Message}\n"
                     : string.Empty));
         }
+    }
+
+    private static C0RenewGateResult RunGateWithRecovery(
+        C0RenewState state,
+        IC0RenewEnvironment environment,
+        C0RenewDeadline deadline)
+    {
+        var initial = CaptureGate(() => environment.RunConservativeGate(
+            state.Base.Revision,
+            state.Preimage.Revision,
+            deadline));
+        if (initial.Succeeded) return initial.Result!;
+
+        var noOp = CaptureGate(() => environment.RunBaseNoOpGate(
+            state.Base.Revision,
+            deadline));
+        if (noOp.Succeeded)
+        {
+            return ThrowInitialGateFailure(initial);
+        }
+
+        var replay = CaptureGate(() => environment.RunConservativeGate(
+            state.Base.Revision,
+            state.Preimage.Revision,
+            deadline));
+        if (replay.Succeeded) return replay.Result!;
+        throw ReplayFailure(replay);
+    }
+
+    private static C0RenewGateAttempt CaptureGate(Func<C0RenewGateResult> run)
+    {
+        try
+        {
+            return new C0RenewGateAttempt(run(), null);
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+            return new C0RenewGateAttempt(null, exception);
+        }
+    }
+
+    private static C0RenewGateResult ThrowInitialGateFailure(C0RenewGateAttempt attempt)
+    {
+        if (attempt.Failure is { } failure)
+        {
+            ExceptionDispatchInfo.Capture(failure).Throw();
+        }
+
+        throw new InvalidOperationException(
+            "the conservative gate did not produce a renewable certificate"
+            + GateDetail(attempt.Result!));
+    }
+
+    private static Exception ReplayFailure(C0RenewGateAttempt attempt)
+    {
+        const string Message = "ordinary conservative gate replay failed after the base no-op gate also failed";
+        return attempt.Failure is { } failure
+            ? new InvalidOperationException($"{Message}: {failure.Message}", failure)
+            : new InvalidOperationException(Message + GateDetail(attempt.Result!));
     }
 
     private static C0RenewOutput Materialize(
@@ -235,16 +340,34 @@ internal static class C0RenewCommand
         }
     }
 
-    private static string Parse(IReadOnlyList<string> arguments)
+    private static C0RenewOptions Parse(IReadOnlyList<string> arguments)
     {
-        if (arguments.Count != 2
+        if (arguments.Count != 4
             || arguments[0] != "--base"
-            || string.IsNullOrWhiteSpace(arguments[1]))
+            || arguments[2] != "--deadline-seconds"
+            || !int.TryParse(
+                arguments[3],
+                NumberStyles.None,
+                CultureInfo.InvariantCulture,
+                out var deadlineSeconds)
+            || deadlineSeconds <= 0)
         {
-            throw new ArgumentException("USAGE: StrataLint c0-renew --base REV");
+            throw new ArgumentException(
+                "USAGE: StrataLint c0-renew --base COMMIT --deadline-seconds POSITIVE_INT");
         }
 
-        return arguments[1];
+        var exactBaseCommit = arguments[1];
+        if (exactBaseCommit.Length != 40
+            || exactBaseCommit.Any(static character =>
+                character is not (>= '0' and <= '9') and not (>= 'a' and <= 'f')))
+        {
+            throw new ArgumentException(
+                "C0 base must be an exact 40-character lowercase commit OID");
+        }
+
+        return new C0RenewOptions(
+            exactBaseCommit,
+            TimeSpan.FromSeconds(deadlineSeconds));
     }
 
     private static string Untag(string value, string prefix)
@@ -267,6 +390,13 @@ internal static class C0RenewCommand
         true,
         $"C0_RENEWED changed_files={changedFiles} admission=not-evaluated\n",
         string.Empty);
+}
+
+internal sealed record C0RenewGateAttempt(
+    C0RenewGateResult? Result,
+    Exception? Failure)
+{
+    internal bool Succeeded => Failure is null && Result?.ExitCode == 0;
 }
 
 internal sealed class ProductionC0RenewEnvironment : IC0RenewEnvironment
@@ -305,14 +435,42 @@ internal sealed class ProductionC0RenewEnvironment : IC0RenewEnvironment
 
     public C0RenewGateResult RunConservativeGate(
         string exactBaseCommit,
-        string exactPreimageCommit)
+        string exactPreimageCommit,
+        C0RenewDeadline deadline)
     {
         using var @base = C0RenewCandidateWorkspace.Materialize(
             root,
-            exactBaseCommit);
+            exactBaseCommit,
+            deadline);
         using var candidate = C0RenewCandidateWorkspace.Materialize(
             root,
-            exactPreimageCommit);
+            exactPreimageCommit,
+            deadline);
+        return RunBaseOwnedGate(@base, candidate, exactBaseCommit, deadline);
+    }
+
+    public C0RenewGateResult RunBaseNoOpGate(
+        string exactBaseCommit,
+        C0RenewDeadline deadline)
+    {
+        using var @base = C0RenewCandidateWorkspace.Materialize(
+            root,
+            exactBaseCommit,
+            deadline);
+        using var candidate = C0RenewCandidateWorkspace.Materialize(
+            root,
+            exactBaseCommit,
+            deadline);
+        candidate.CreateNoOpDescendant(deadline);
+        return RunBaseOwnedGate(@base, candidate, exactBaseCommit, deadline);
+    }
+
+    private C0RenewGateResult RunBaseOwnedGate(
+        C0RenewCandidateWorkspace @base,
+        C0RenewCandidateWorkspace candidate,
+        string exactBaseCommit,
+        C0RenewDeadline deadline)
+    {
         var candidateReport = Absolute(
             candidate.Root,
             ".lake/build/stratalint/raw-lean-report.json");
@@ -337,7 +495,7 @@ internal sealed class ProductionC0RenewEnvironment : IC0RenewEnvironment
                 baselineReport,
             ],
             candidate.Root,
-            TimeSpan.FromMinutes(LeanReportBudgetMinutes),
+            deadline.Remaining(TimeSpan.FromMinutes(LeanReportBudgetMinutes)),
             "base-owned Lean report production failed");
         var result = BoundedProcessRunner.Run(
             "/usr/bin/env",
@@ -357,7 +515,7 @@ internal sealed class ProductionC0RenewEnvironment : IC0RenewEnvironment
                 baselineReport,
             ],
             @base.Root,
-            TimeSpan.FromMinutes(LeanReportBudgetMinutes),
+            deadline.Remaining(TimeSpan.FromMinutes(LeanReportBudgetMinutes)),
             64 * 1024 * 1024);
         return new C0RenewGateResult(
             result.ExitCode == 3 ? 0 : result.ExitCode,
@@ -530,7 +688,8 @@ internal sealed class C0RenewCandidateWorkspace : IDisposable
 
     internal static C0RenewCandidateWorkspace Materialize(
         string sourceRoot,
-        string exactPreimageCommit)
+        string exactPreimageCommit,
+        C0RenewDeadline deadline)
     {
         var source = Path.GetFullPath(sourceRoot);
         var expected = new GitRepositoryGateway(source).ResolveFrozenRevision(
@@ -545,10 +704,12 @@ internal sealed class C0RenewCandidateWorkspace : IDisposable
             RunGit(
                 source,
                 ["clone", "--no-checkout", "--quiet", "--shared", "--", source, candidate],
+                deadline,
                 "could not clone the C0 preimage");
             RunGit(
                 candidate,
                 ["checkout", "--detach", "--quiet", exactPreimageCommit],
+                deadline,
                 "could not check out the C0 preimage");
             var repository = new GitRepositoryGateway(candidate);
             var actual = repository.ResolveCurrentRevision();
@@ -573,6 +734,31 @@ internal sealed class C0RenewCandidateWorkspace : IDisposable
         }
     }
 
+    internal void CreateNoOpDescendant(C0RenewDeadline deadline)
+    {
+        var repository = new GitRepositoryGateway(Root);
+        var parent = repository.ResolveCurrentRevision();
+        RunGit(
+            Root,
+            [
+                "-c", "core.hooksPath=/dev/null",
+                "-c", "user.name=C0 base-owned probe",
+                "-c", "user.email=c0-probe@example.invalid",
+                "commit", "--allow-empty", "--no-gpg-sign", "--quiet",
+                "-m", "C0 base-owned no-op probe",
+            ],
+            deadline,
+            "could not create the C0 base no-op probe");
+        var descendant = repository.ResolveCurrentRevision();
+        repository.RequireStrictAncestor(parent.Revision, descendant.Revision);
+        if (!string.Equals(parent.TreeOid, descendant.TreeOid, StringComparison.Ordinal)
+            || !repository.WorkingTreeChanges().IsDefaultOrEmpty)
+        {
+            throw new InvalidOperationException(
+                "C0 base no-op probe did not preserve the exact base tree");
+        }
+    }
+
     public void Dispose()
     {
         if (disposed) return;
@@ -583,13 +769,15 @@ internal sealed class C0RenewCandidateWorkspace : IDisposable
     private static void RunGit(
         string workingDirectory,
         IReadOnlyList<string> arguments,
+        C0RenewDeadline deadline,
         string failure)
     {
         var result = BoundedProcessRunner.Run(
             "git",
             arguments,
             workingDirectory,
-            TimeSpan.FromMinutes(ProductionC0RenewEnvironment.GitOperationBudgetMinutes),
+            deadline.Remaining(
+                TimeSpan.FromMinutes(ProductionC0RenewEnvironment.GitOperationBudgetMinutes)),
             64 * 1024 * 1024);
         if (result.ExitCode != 0)
         {
