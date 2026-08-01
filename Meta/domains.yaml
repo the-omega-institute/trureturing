@@ -35,6 +35,9 @@ domains:
   Phase:
     stratum: S1
     definition: Additive golden-ratio phases modulo one.
+  PrimeForms:
+    stratum: S3
+    definition: Representations of prime numbers by integral quadratic forms.
   Quad:
     stratum: S1
     definition: Parameterized quadratic presentation rings and actual orders carrying the digit-gas root-unit criteria.
