@@ -3,9 +3,10 @@
    mirror-B: D5/B/S1/Recurrence/CyclicNearestReturn
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Cyclic successor and predecessor as mutually inverse nearest returns on a finite order. -/
+   digest: Cyclic successor and predecessor as mutually inverse nearest returns. -/
 
-import Mathlib
+import Mathlib.Data.Finset.Max
+import Mathlib.Order.Fin.Basic
 
 namespace D5.S1.Recurrence.CyclicNearestReturn
 
