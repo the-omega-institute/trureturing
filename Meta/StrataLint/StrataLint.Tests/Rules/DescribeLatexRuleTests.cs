@@ -5,7 +5,7 @@ namespace StrataLint.Tests;
 public sealed class DescribeLatexRuleTests
 {
     [Fact]
-    public void ContractEpochBlocksTheoremClassDescribeWithoutLatex()
+    public void ObserveEpochFlagsTheoremClassDescribeWithoutLatex()
     {
         var capability = VerifiedScribeEmissions.Create(
             [],
@@ -24,8 +24,8 @@ public sealed class DescribeLatexRuleTests
 
         var diagnostic = Assert.Single(evaluation.Diagnostics);
         Assert.Equal("SL-023", diagnostic.RuleId.Value);
-        Assert.Equal(DisplaySeverity.Error, diagnostic.DisplaySeverity);
-        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Equal(DisplaySeverity.Warning, diagnostic.DisplaySeverity);
+        Assert.Equal(AdmissionEffect.Observe, diagnostic.AdmissionEffect);
         Assert.Contains("SCRIBE-LATEX-EPOCH", diagnostic.Message, StringComparison.Ordinal);
         Assert.Contains("critical-line", diagnostic.Message, StringComparison.Ordinal);
     }
