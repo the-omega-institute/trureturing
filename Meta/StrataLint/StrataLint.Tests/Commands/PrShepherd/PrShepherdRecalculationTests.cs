@@ -107,7 +107,7 @@ public sealed partial class PrShepherdRecalculationTests
             Write(seed, "Generated/artifact.md", "base artifact\n");
             Write(seed, "Generated/dev-choice.md", "base choice\n");
             Write(seed, "Generated/echo-residual-summary.md", "base echo\n");
-            Write(seed, "Meta/StrataLint/Golden/Frozen/events.jsonl", "{\"event\":\"base\"}\n");
+            Write(seed, FrozenLedgerChangeClassifier.LedgerPath, "{\"event\":\"base\"}\n");
             Write(seed, "shared.txt", "base shared\n");
             Git(seed, "add", ".");
             Git(seed, "commit", "-m", "base");
@@ -125,7 +125,7 @@ public sealed partial class PrShepherdRecalculationTests
             if (ledgerConflict)
                 Write(
                     seed,
-                    "Meta/StrataLint/Golden/Frozen/events.jsonl",
+                    FrozenLedgerChangeClassifier.LedgerPath,
                     "{\"event\":\"base\"}\n{\"event\":\"feature-freeze\"}\n");
             Git(seed, "add", ".");
             Git(seed, "commit", "-m", "feature content");
@@ -149,7 +149,7 @@ public sealed partial class PrShepherdRecalculationTests
             if (ledgerConflict)
                 Write(
                     seed,
-                    "Meta/StrataLint/Golden/Frozen/events.jsonl",
+                    FrozenLedgerChangeClassifier.LedgerPath,
                     "{\"event\":\"base\"}\n{\"event\":\"dev-freeze\"}\n");
             Git(seed, "add", "-A");
             Git(seed, "commit", "-m", "advance dev");

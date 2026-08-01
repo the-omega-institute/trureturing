@@ -1,3 +1,5 @@
+using StrataLint.Engine;
+
 namespace StrataLint.Tests;
 
 public sealed partial class PrShepherdRecalculationTests
@@ -96,7 +98,7 @@ public sealed partial class PrShepherdRecalculationTests
         var result = fixture.Run(expiryFingerprint: false, duplicatePrRow: true);
 
         Assert.Equal(0, result.ExitCode);
-        var ledger = fixture.ShowRemote("Meta/StrataLint/Golden/Frozen/events.jsonl");
+        var ledger = fixture.ShowRemote(FrozenLedgerChangeClassifier.LedgerPath);
         Assert.Contains("dev-freeze", ledger, StringComparison.Ordinal);
         Assert.DoesNotContain("feature-freeze", ledger, StringComparison.Ordinal);
     }
