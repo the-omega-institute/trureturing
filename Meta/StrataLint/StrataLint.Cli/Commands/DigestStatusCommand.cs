@@ -35,6 +35,7 @@ internal static class DigestStatusCommand
 
             if (options.FormalizeCandidates)
             {
+                var formalizeLeanReport = leanReportSource.Load(snapshot);
                 var formalizeDocument = BackfillInventoryLoader.Load(ledgerFile.Text);
                 BackfillInventoryDocument? formalizeBaselineDocument = null;
                 if (options.BaselineRevision is not null)
@@ -60,7 +61,11 @@ internal static class DigestStatusCommand
 
                 return new CommandResult(
                     true,
-                    RenderFormalizeCandidates(formalizeEvaluation, snapshot, ledgerFile),
+                    RenderFormalizeCandidates(
+                        formalizeEvaluation,
+                        snapshot,
+                        ledgerFile,
+                        formalizeLeanReport),
                     string.Empty);
             }
 
@@ -202,7 +207,8 @@ internal static class DigestStatusCommand
     private static string RenderFormalizeCandidates(
         DigestionLedgerEvaluation evaluation,
         RepositorySnapshot snapshot,
-        RepositoryFile ledgerFile)
+        RepositoryFile ledgerFile,
+        LeanAxiomReport leanReport)
     {
         var projections = evaluation.Entries
             .Where(static item =>
@@ -210,7 +216,7 @@ internal static class DigestStatusCommand
                 && item.DerivedStatus.Migration == DigestionMigrationState.Residual
                 && item.DerivedStatus.Truth == DigestionTruthState.Open
                 && item.Entry.CoverageGids.Length == 0)
-            .Select(item => Projection(item, snapshot))
+            .Select(item => Projection(item, snapshot, leanReport))
             .Where(static item => item is not null)
             .OrderBy(static item => item!.SourceId, StringComparer.Ordinal)
             .ThenBy(static item => item!.AtomId, StringComparer.Ordinal)
@@ -232,7 +238,8 @@ internal static class DigestStatusCommand
 
     private static FormalizeProjection? Projection(
         DigestionEntryEvaluation evaluation,
-        RepositorySnapshot snapshot)
+        RepositorySnapshot snapshot,
+        LeanAxiomReport leanReport)
     {
         var entry = evaluation.Entry;
         var separator = entry.AstPath.IndexOf('/', StringComparison.Ordinal);
@@ -243,6 +250,11 @@ internal static class DigestStatusCommand
 
         var kind = entry.AstPath[..separator];
         if (kind is not ("theorem" or "proposition" or "lemma" or "corollary"))
+        {
+            return null;
+        }
+
+        if (HasValidFormalizationReceipt(entry, snapshot, leanReport))
         {
             return null;
         }
@@ -308,6 +320,47 @@ internal static class DigestStatusCommand
                 entry.Fingerprints.RawSha256,
                 atomText),
             null);
+    }
+
+    private static bool HasValidFormalizationReceipt(
+        DigestionLedgerEntry entry,
+        RepositorySnapshot snapshot,
+        LeanAxiomReport leanReport)
+    {
+        var path = DigestionFormalizationReceipt.RootPath
+            + entry.AtomId
+            + DigestionFormalizationReceipt.PathSuffix;
+        if (!DigestionFormalizationReceipt.IsCanonicalPath(path))
+        {
+            return false;
+        }
+
+        if (!snapshot.TryGetFile(path, out _))
+        {
+            return false;
+        }
+
+        try
+        {
+            var receipt = DigestionFormalizationReceipt.Load(snapshot, path);
+            if (!string.Equals(receipt.AtomId, entry.AtomId, StringComparison.Ordinal)
+                || !string.Equals(receipt.CasRef, entry.CasRef, StringComparison.Ordinal)
+                || !string.Equals(
+                    receipt.RawSha256,
+                    entry.Fingerprints.RawSha256,
+                    StringComparison.Ordinal)
+                || !Gid.TryParse(receipt.PrimaryGid, out var gid))
+            {
+                return false;
+            }
+
+            _ = DigestionFormalizationReceipt.ResolveSignature(gid, leanReport);
+            return true;
+        }
+        catch (Exception exception) when (exception is FormatException or JsonException)
+        {
+            return false;
+        }
     }
 
     private static CommandResult InvalidEvaluation(DigestionLedgerEvaluation evaluation)
