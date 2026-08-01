@@ -96,6 +96,7 @@ public sealed class CapacityPolicyTests
 
         Assert.Equal("Blueprint/D5/S1/Synthetic", finding.Path);
         Assert.Contains("maximum", finding.Message, StringComparison.Ordinal);
+    }
 
     // Formalization receipts accrue one file per admitted unit; the directory is a
     // machine inventory, never a navigated content bucket, so thirteen receipts must
