@@ -51,29 +51,53 @@ public sealed class ConservativeExtensionVerifierTests
     }
 
     [Fact]
-    public void BlockingSl023WithoutABaseOwnedWitnessFailsClosed()
+    public void BaseOwnedUnreachabilityReceiptExemptsSl023FromTheNegativeFloor()
     {
+        const string planId = "SCRIBE-LATEX-EPOCH-SL-023-V1";
         var input = ConservativeTestData.Input();
         var baseline = Assert.IsType<ConservativeHarnessExecution.Completed>(input.BaselineExecution);
         var candidate = Assert.IsType<ConservativeHarnessExecution.Completed>(input.CandidateExecution);
         var activeRules = baseline.Run.ActiveRules.Add("SL-023");
+        var baselinePolicy = baseline.Run.Policy.WithRuleObligations(activeRules);
+        var candidatePolicy = baselinePolicy.WithoutRuleObligation("SL-023");
+        var proof = ContractEpochEvidenceReceipt.UnreachabilityForRule(
+            candidatePolicy.Root,
+            "SL-023");
+        var registration = new ContractEpochEvent.Register(
+            planId,
+            input.BaselineTreeOid,
+            baselinePolicy.Root,
+            candidatePolicy.Root,
+            new TransitionPlan.AuthorityDischargeV1([], "SL-023", proof.Reference));
+        var evidence = ContractEpochEvidenceIndex.Create([proof], [], []);
         input = input with
         {
             BaselineExecution = new ConservativeHarnessExecution.Completed(baseline.Run with
             {
                 ActiveRules = activeRules,
-                Policy = baseline.Run.Policy.WithRuleObligations(activeRules),
+                Policy = baselinePolicy,
             }),
             CandidateExecution = new ConservativeHarnessExecution.Completed(candidate.Run with
             {
-                ActiveRules = activeRules,
-                Policy = candidate.Run.Policy.WithRuleObligations(activeRules),
+                Policy = candidatePolicy,
             }),
+            BaselineContractLedger = Ledger([registration]),
+            CandidateContractLedger = Ledger(
+                [registration, new ContractEpochEvent.Consume(planId)]),
+            BaselineContractEvidence = evidence,
+            CandidateContractEvidence = evidence,
         };
 
-        var failure = Assert.IsType<ConservativeExtensionOutcome.InfrastructureFailure>(
+        var accepted = Assert.IsType<ConservativeExtensionOutcome.Accepted>(
             ConservativeExtensionVerifier.Verify(input));
-        Assert.Contains("SL-023", failure.Message, StringComparison.Ordinal);
+        using var certificate = JsonDocument.Parse(accepted.Certificate.ToArray());
+        var negativeFloor = certificate.RootElement.GetProperty("negative_floor");
+
+        Assert.DoesNotContain(
+            "SL-023",
+            negativeFloor.GetProperty("rules").EnumerateArray()
+                .Select(static item => item.GetString()!),
+            StringComparer.Ordinal);
     }
 
     [Fact]

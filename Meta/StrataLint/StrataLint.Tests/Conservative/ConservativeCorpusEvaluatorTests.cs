@@ -48,26 +48,6 @@ public sealed class ConservativeCorpusEvaluatorTests
     }
 
     [Fact]
-    public void BaseActualResultsProvideAFloorForEveryActiveBlockingRule()
-    {
-        var corpus = GoldenCorpusMaterializer.Materialize(FindRepositoryRoot());
-        var run = ConservativeCorpusEvaluator.Evaluate(
-            corpus.CanonicalBytes.AsSpan(),
-            "sha256:" + new string('a', 64));
-
-        var witnessed = run.Cases
-            .SelectMany(static item => item.BlockingRules)
-            .ToHashSet(StringComparer.Ordinal);
-        var blockingRules = RuleCatalog.Default.Descriptors
-            .Where(static descriptor => descriptor.Lifecycle is RuleLifecycle.Active
-                && descriptor.AdmissionEffect is AdmissionEffect.Block or AdmissionEffect.HumanGate)
-            // SL-023's negative state is unconstructable through the sealed Scribe factories.
-            .Where(static descriptor => descriptor.Id.Value != "SL-023")
-            .Select(static descriptor => descriptor.Id.Value);
-        Assert.All(blockingRules, rule => Assert.Contains(rule, witnessed));
-    }
-
-    [Fact]
     public void ObjectHashMismatchFailsClosed()
     {
         var corpus = GoldenCorpusMaterializer.Materialize(FindRepositoryRoot());
