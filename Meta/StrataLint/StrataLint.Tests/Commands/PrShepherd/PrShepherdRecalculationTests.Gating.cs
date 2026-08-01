@@ -164,4 +164,30 @@ public sealed partial class PrShepherdRecalculationTests
             StringComparison.Ordinal);
         Assert.DoesNotContain("head 已漂移", result.Log, StringComparison.Ordinal);
     }
+
+    [Fact]
+    public void SweepIsSkippedWhileTheGraphqlQuotaSitsBelowItsFloor()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ShepherdFixture(graphqlRemaining: "10");
+
+        var result = fixture.Run();
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains("SWEEP 跳过", result.Log, StringComparison.Ordinal);
+        Assert.Empty(fixture.MutationCalls());
+    }
+
+    [Fact]
+    public void AnUnreadableQuotaDoesNotStallTheSweep()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ShepherdFixture(graphqlRemaining: "unreadable");
+
+        var result = fixture.Run();
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.DoesNotContain("SWEEP 跳过", result.Log, StringComparison.Ordinal);
+        Assert.Contains("push", fixture.MutationCalls());
+    }
 }
