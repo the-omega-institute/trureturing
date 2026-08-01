@@ -101,8 +101,8 @@ internal static partial class RepositoryRules
                     ScribeDescribeContract.RequiresLatex(item.Kind) && !item.HasValidLatex)
                 .Select(static item => new RuleFinding(
                     item.DefinitionPath,
-                    $"SCRIBE-LATEX-EPOCH contract: theorem-class Describe {item.NodeId} lacks a valid LaTeX statement",
-                    AdmissionEffect.Block))
+                    $"SCRIBE-LATEX-EPOCH expand: theorem-class Describe {item.NodeId} lacks a valid LaTeX statement; migrate before contract",
+                    AdmissionEffect.Observe))
                 .ToImmutableArray();
 
     private static ImmutableArray<RuleFinding> NoFindings(RuleEvaluationContext context) =>

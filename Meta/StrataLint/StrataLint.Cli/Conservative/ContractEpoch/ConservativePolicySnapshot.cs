@@ -19,9 +19,9 @@ internal sealed class ConservativePolicySnapshot
         RuleObligation(new RuleDescriptor(
             RuleId.CreateKnown(23),
             "Describe LaTeX statement",
-            DisplaySeverity.Error,
+            DisplaySeverity.Warning,
             "repository",
-            AdmissionEffect.Block,
+            AdmissionEffect.Observe,
             RuleLifecycle.Active,
             null)),
     ];

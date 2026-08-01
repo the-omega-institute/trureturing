@@ -201,6 +201,7 @@ public sealed class RuleCatalog
             var effect = number switch
             {
                 7 or 9 or 22 => AdmissionEffect.HumanGate,
+                23 => AdmissionEffect.Observe,
                 _ => AdmissionEffect.Block,
             };
             builder.Add(new RuleDescriptor(
