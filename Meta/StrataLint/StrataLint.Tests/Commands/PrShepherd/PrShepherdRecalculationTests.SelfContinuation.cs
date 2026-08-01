@@ -87,5 +87,18 @@ public sealed partial class PrShepherdRecalculationTests
             "WATCH end(1 轮耗尽,无 open auto-merge armed PR)\n",
             result.Log,
             StringComparison.Ordinal);
+
+        var root = FindRepositoryRoot();
+        var currentBlob = GitBlob(Path.Combine(root, ShepherdScriptPath));
+        Assert.Equal(
+            [currentBlob, currentBlob],
+            LoadedScriptBlobs(result.Log));
     }
+
+    private static string[] LoadedScriptBlobs(string log) =>
+        log.Split('\n', StringSplitOptions.RemoveEmptyEntries)
+            .Where(line => line.Contains("loaded_script_blob=", StringComparison.Ordinal))
+            .Select(line => line[(line.IndexOf("loaded_script_blob=", StringComparison.Ordinal)
+                + "loaded_script_blob=".Length)..])
+            .ToArray();
 }

@@ -13,6 +13,7 @@
 # 判定只看机器字段(mergeable/mergeStateStatus/autoMergeRequest),不看输出散文。
 set -euo pipefail
 
+SCRIPT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)/${BASH_SOURCE[0]##*/}"
 ROOT="${PR_SHEPHERD_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)}"
 REMOTE="${PR_SHEPHERD_REMOTE:-origin}"
 REPO="${PR_SHEPHERD_REPO:-the-omega-institute/trureturing}"
@@ -23,6 +24,8 @@ CACHE_ROOT="${PR_SHEPHERD_CACHE:-$HOME/.cache/trureturing-shepherd}"
 DRYRUN="${SHEPHERD_DRYRUN:-0}"
 COMMIT_SUBJECT="recompute derivations after dev advance (auto, pr-shepherd)"
 ORIGINAL_HOME="${HOME:-/tmp}"
+WATCH_SWEEP_BLOB=""
+WATCH_SWEEP_SNAPSHOT=""
 
 GH() { LEAN4_GUARDRAILS_BYPASS=1 gh "$@"; }
 
@@ -443,6 +446,51 @@ armed_pr_count() {
   printf '%s\n' "$out"
 }
 
+run_current_sweep() {
+  local cycle="$1" previous_blob="$2" blob rc=0
+  if ! WATCH_SWEEP_SNAPSHOT="$(mktemp "${TMPDIR:-/tmp}/pr-shepherd-sweep.XXXXXXXX")"; then
+    log "WATCH cycle=$cycle cannot allocate script snapshot; sweep skipped"
+    return 1
+  fi
+  if ! cp "$SCRIPT_PATH" "$WATCH_SWEEP_SNAPSHOT" 2>/dev/null; then
+    rm -f "$WATCH_SWEEP_SNAPSHOT"
+    WATCH_SWEEP_SNAPSHOT=""
+    log "WATCH cycle=$cycle current script unavailable; sweep skipped path=$SCRIPT_PATH"
+    return 1
+  fi
+  if ! chmod 0400 "$WATCH_SWEEP_SNAPSHOT" \
+    || ! blob="$(git hash-object "$WATCH_SWEEP_SNAPSHOT" 2>/dev/null)"; then
+    rm -f "$WATCH_SWEEP_SNAPSHOT"
+    WATCH_SWEEP_SNAPSHOT=""
+    log "WATCH cycle=$cycle cannot identify immutable script snapshot; sweep skipped"
+    return 1
+  fi
+
+  if [[ -n "$previous_blob" && "$previous_blob" != "$blob" ]]; then
+    log "WATCH SCRIPT CHANGED previous_blob=$previous_blob current_blob=$blob"
+  fi
+  log "WATCH cycle=$cycle loaded_script_blob=$blob"
+  WATCH_SWEEP_BLOB="$blob"
+
+  PR_SHEPHERD_ROOT="$ROOT" \
+  PR_SHEPHERD_REMOTE="$REMOTE" \
+  PR_SHEPHERD_REPO="$REPO" \
+  PR_SHEPHERD_LOG="$LOG" \
+  PR_SHEPHERD_PID="$PIDFILE" \
+  PR_SHEPHERD_STATE="$STATE_DIR" \
+  PR_SHEPHERD_CACHE="$CACHE_ROOT" \
+  SHEPHERD_DRYRUN="$DRYRUN" \
+    /bin/bash "$WATCH_SWEEP_SNAPSHOT" sweep || rc=$?
+  rm -f "$WATCH_SWEEP_SNAPSHOT"
+  WATCH_SWEEP_SNAPSHOT=""
+  return "$rc"
+}
+
+cleanup_watch() {
+  [[ -z "$WATCH_SWEEP_SNAPSHOT" ]] || rm -f "$WATCH_SWEEP_SNAPSHOT"
+  [[ "$DRYRUN" == "1" ]] || rm -f "$PIDFILE"
+}
+
 watch() {
   local interval="${1:-60}" max="${2:-360}"
   if [[ "$DRYRUN" != "1" ]]; then
@@ -450,13 +498,14 @@ watch() {
       log "WATCH 已有实例在跑(pid=$(cat "$PIDFILE")),退出"; exit 1
     fi
     printf '%s' "$$" > "$PIDFILE"
-    trap 'rm -f "$PIDFILE"' EXIT
   fi
+  trap cleanup_watch EXIT
   log "WATCH start interval=${interval}s max_cycles=${max} pid=$$"
-  local i armed
+  local i armed previous_blob=""
   while true; do
     for ((i = 1; i <= max; i++)); do
-      sweep || log "SWEEP cycle=$i 出错(继续)"
+      run_current_sweep "$i" "$previous_blob" || log "SWEEP cycle=$i 出错(继续)"
+      [[ -z "$WATCH_SWEEP_BLOB" ]] || previous_blob="$WATCH_SWEEP_BLOB"
       sleep "$interval"
     done
     if ! armed="$(armed_pr_count)"; then
