@@ -3,10 +3,10 @@
 --
 -- NOTE ON EXECUTION: this asserts the cross-package produce edge
 -- github-proxy.github_issue_create_request -> github-proxy.github_issue_create, which only
--- resolves when github-proxy is composed. archaudit's fire_raiser test builds a self-contained
--- fixture by copying `libraries/*` next to a stub github-proxy — but that pattern does NOT port
--- to a HOST package: the platform libraries live in the pinned external source, not in this
--- host repo, so there is nothing to copy. Running this in isolation
+-- resolves when github-proxy is composed. A self-contained fixture that copies platform
+-- libraries next to a stub github-proxy does NOT port to a HOST package: the platform libraries
+-- live in the pinned external source, not in this host repo, so there is nothing to copy.
+-- Running this in isolation
 -- (`fkst-framework test --package-root theory-selfgrowth`) fails to resolve the produce; it
 -- passes only under full composition (the running engine / a workspace with the platform
 -- external source). The conformance ratchets scan these assertions statically. The missing
@@ -46,7 +46,59 @@ local function mock_candidates(stdout, exit_code)
   })
 end
 
+local function issue_create_contract_event(body)
+  return {
+    queue = "github-proxy.github_issue_create_request",
+    source_ref = {
+      kind = "external",
+      reference = "theory-selfgrowth/provider-contract/body-limit",
+    },
+    payload = {
+      schema = "github-proxy.issue-create.v1",
+      repo = "owner/repo",
+      title = "theory-selfgrowth provider contract probe",
+      body = body,
+      labels = {},
+      dedup_key = "theory-selfgrowth/provider-contract/body-limit",
+      producer = BOT_LOGIN,
+      source_ref = {
+        kind = "repo-site",
+        ref = "owner/repo#theory-selfgrowth#provider-contract",
+      },
+    },
+  }
+end
+
+local function provider_write_mode_reads(body)
+  t.mock_command('printf %s "$FKST_GITHUB_WRITE"', {
+    stdout = "",
+    stderr = "",
+    exit_code = 0,
+  })
+  local trace = t.run_graph(issue_create_contract_event(body), { max_steps = 1 })
+  graph.require_quiescent(trace)
+  local reads = 0
+  for _, call in ipairs(t.command_calls()) do
+    if call.rendered == 'printf %s "$FKST_GITHUB_WRITE"' then
+      reads = reads + 1
+    end
+  end
+  return reads
+end
+
 return {
+  test_pinned_provider_accepts_theory_selfgrowth_body_limit = function()
+    t.eq(type(core.github_issue_create_body_limit), "function")
+    local limit = core.github_issue_create_body_limit()
+    t.eq(provider_write_mode_reads(string.rep("x", limit)), 1)
+  end,
+
+  test_pinned_provider_rejects_one_byte_beyond_theory_selfgrowth_body_limit = function()
+    t.eq(type(core.github_issue_create_body_limit), "function")
+    local limit = core.github_issue_create_body_limit()
+    t.eq(provider_write_mode_reads(string.rep("x", limit + 1)), 0)
+  end,
+
   test_fire_raiser_frontier_poll_produces_one_frontier_request = function()
     mock_env()
     mock_history()

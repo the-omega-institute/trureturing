@@ -3,15 +3,10 @@ local M = {}
 local strings = require("contract.strings")
 local time = require("contract.time")
 
--- github-proxy.issue-create.v1 field bounds (mirror archaudit/core.lua limits).
-local limits = {
-  repo = 200,
-  title = 240,
-  body = 12000,
-  dedup_key = 512,
-  source_ref_kind = 80,
-  source_ref_ref = 200,
-}
+-- Local expectation of the pinned github-proxy.issue-create.v1 body contract. The composed
+-- provider boundary tests fail closed if github-proxy accepts a different maximum; replace this
+-- copy with the provider's public accessor once the pinned contract library exports one.
+local GITHUB_ISSUE_CREATE_BODY_LIMIT = 12000
 
 -- Stable base marker for frontier-request bodies. github-proxy routes this exact title to
 -- `.fkst/workflows/frontier-generation.json`; the producer scopes this base by bot login
@@ -25,27 +20,25 @@ local REQUEST_MARKER = "theory-selfgrowth:frontier-request:v1"
 -- "Deliver ONE NEW D5 result:" prefix to blueprint-then-formalize (verified accepted + routed by
 -- #366). Requests are atom-scoped (one digestion atom = one request; see atom_marker).
 
--- Reject idle hints older than this (mirror archaudit's 10-minute freshness budget): a
--- durable idle prompt must not create work once the system is no longer idle (#296 Major 2).
+-- Package-owned freshness policy: a durable idle prompt must not create work once the system is
+-- no longer idle (#296 Major 2).
 local FRESHNESS_BUDGET_SECONDS = 10 * 60
 
 -- Self-tick poll interval (#346). theory-selfgrowth's ONLY trigger was `idle-detector.
 -- system_idle`, which idle-detector broadcasts only when the bot has ZERO self-assigned open
 -- issues (`idle_gate` self_assigned_open_issues==0) — effectively never, while any backlog is
--- open — so it has never fired once. (By contrast archaudit is also idle-gated, but on a
--- LOOSER signal — `is_idle_observe`, i.e. the durable observe is not truncated / queues are
--- not overflowing — AND it carries its own cron tick, so it fires on ordinary load; a host
--- package cannot reach that observe signal.) A periodic self-tick gives the frontier producer
--- a trigger it actually receives; the per-producer open-request exclusion (decide_generation)
--- bounds each bot to at most one open frontier-request regardless of this interval.
+-- open — so it has never fired once. A periodic self-tick gives the frontier producer a trigger
+-- it actually receives; the per-producer open-request exclusion (decide_generation) bounds each
+-- bot to at most one open frontier-request regardless of this interval.
 local POLL_INTERVAL_SECONDS = 30 * 60
 -- The cron raiser's `interval` field must be a duration STRING (e.g. "30m"), not an integer —
 -- the framework's raiser parser rejects a bare number ("invalid type: integer, expected a
--- string"). Mirror archaudit's audit_poll_interval, which is `tostring(minutes) .. "m"`.
+-- string"). Keep the canonical minute-duration representation at this package-owned boundary.
 local POLL_INTERVAL = tostring(math.floor(POLL_INTERVAL_SECONDS / 60)) .. "m"
 
 function M.request_marker() return REQUEST_MARKER end
 function M.freshness_budget_seconds() return FRESHNESS_BUDGET_SECONDS end
+function M.github_issue_create_body_limit() return GITHUB_ISSUE_CREATE_BODY_LIMIT end
 function M.poll_interval() return POLL_INTERVAL end
 
 function M.validate_bot_login(bot_login)
@@ -268,7 +261,7 @@ function M.build_frontier_request(repo, candidate, bot_login)
     "----- theory atom (byte-exact statement + derivation) -----",
     tostring(candidate.atom_text),
   }, "\n")
-  if #body > limits.body then
+  if #body > GITHUB_ISSUE_CREATE_BODY_LIMIT then
     return nil
   end
   return {
@@ -287,8 +280,8 @@ function M.build_frontier_request(repo, candidate, bot_login)
 end
 
 -- Freshness verdict for a system_idle hint: "fresh" | "stale" | "expired" | "malformed".
--- Mirrors archaudit.core.idle_hint_freshness. "stale" when the hint's detected_at is older
--- than the budget; "expired" when its expires_at has already passed.
+-- This package owns the policy: "stale" means detected_at is older than the budget, while
+-- "expired" means expires_at has already passed.
 function M.idle_hint_freshness(detected_seconds, expires_seconds, now_seconds, budget_seconds)
   if type(detected_seconds) ~= "number"
     or type(now_seconds) ~= "number"

@@ -1,6 +1,6 @@
 -- Package-scoped dead-letter handler (G-DEAD-LETTER): a package that consumes reliable
--- queues must consume the generic `dead_letter` queue. Mirrors archaudit's/idle-detector's
--- dead_letter department; workflow.dead_letter + workflow.saga are publishable host-legal.
+-- queues must consume the generic `dead_letter` queue. workflow.dead_letter + workflow.saga
+-- are the publishable, host-legal owners of this behavior.
 local dead_letter = require("workflow.dead_letter")
 local saga = require("workflow.saga")
 
