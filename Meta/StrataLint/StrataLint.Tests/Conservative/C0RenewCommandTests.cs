@@ -269,6 +269,8 @@ public sealed class C0RenewCommandTests
         Write(repository.Path, reportPair, """
             #!/usr/bin/env bash
             set -euo pipefail
+            [[ "${STRATALINT_LOCK_TIMEOUT_SECONDS:-}" =~ ^[1-9][0-9]*$ ]]
+            [[ "$STRATALINT_LOCK_TIMEOUT_SECONDS" == "$STRATALINT_BUILD_TIMEOUT_SECONDS" ]]
             candidate=''
             baseline=''
             while [[ $# -gt 0 ]]; do

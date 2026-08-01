@@ -477,9 +477,17 @@ internal sealed class ProductionC0RenewEnvironment : IC0RenewEnvironment
         var baselineReport = Absolute(
             @base.Root,
             ".lake/build/stratalint/raw-lean-report.json");
+        var reportBudget = deadline.Remaining(TimeSpan.FromMinutes(LeanReportBudgetMinutes));
+        var reportBudgetSeconds = Math.Clamp(
+            checked((int)Math.Ceiling(reportBudget.TotalSeconds)),
+            1,
+            86_400).ToString(CultureInfo.InvariantCulture);
         RunRequired(
-            "/bin/bash",
+            "/usr/bin/env",
             [
+                $"STRATALINT_LOCK_TIMEOUT_SECONDS={reportBudgetSeconds}",
+                $"STRATALINT_BUILD_TIMEOUT_SECONDS={reportBudgetSeconds}",
+                "/bin/bash",
                 Absolute(@base.Root, C0CeremonyProjection.LeanReportPairPath),
                 "--producer",
                 Absolute(@base.Root, C0CeremonyProjection.LeanInspectorScriptPath),
@@ -495,7 +503,7 @@ internal sealed class ProductionC0RenewEnvironment : IC0RenewEnvironment
                 baselineReport,
             ],
             candidate.Root,
-            deadline.Remaining(TimeSpan.FromMinutes(LeanReportBudgetMinutes)),
+            reportBudget,
             "base-owned Lean report production failed");
         var result = BoundedProcessRunner.Run(
             "/usr/bin/env",
