@@ -13,8 +13,8 @@ open D5.S3.Weil.Convention
 open D5.S3.Zeros.CompletedZeta
 
 /--
-This formalizes only the sufficient, address-independence direction of PZG Definition 23.2
-used by Theorem 23.7. The intrinsic criteria for "unrecorded" and "explicit global ledger"
+This formalizes only the sufficient, address-independence direction of the ledger-versus-
+register criterion. The intrinsic criteria for "unrecorded" and "explicit global ledger"
 remain at the narrative layer.
 -/
 theorem completion_factors_are_explicit_ledger :
