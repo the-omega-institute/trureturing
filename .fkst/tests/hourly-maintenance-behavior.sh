@@ -325,64 +325,6 @@ SH
     || fail "checkout cleanliness inspection failure was not reported"
 )
 
-implementing_issues_defer_restart() (
-  load_implementation || exit 1
-  local root
-  root="$(mktemp -d -t hourly-maintenance-defer.XXXXXX)" || exit 1
-  trap 'rm -rf "$root"' EXIT
-  mkdir -p "$root/bin" "$root/checkout" "$root/logs"
-  export FKST_HOST_ROOT="$root/checkout"
-  export FKST_MAINTENANCE_LOG="$root/logs/hourly-maintenance.log"
-  export FKST_GITHUB_REPO="example/synthetic"
-  export FKST_RUN_SCRIPT="$root/bin/run-engine"
-  export FKST_LAUNCHD_LABEL="com.example.synthetic-fkst"
-  cat > "$FKST_RUN_SCRIPT" <<SH
-#!/usr/bin/env bash
-printf 'restart attempted\n' >> "$root/run.calls"
-SH
-  cat > "$root/bin/pgrep" <<'SH'
-#!/usr/bin/env bash
-printf '4242\n'
-SH
-  cat > "$root/bin/gh" <<'SH'
-#!/usr/bin/env bash
-printf '2\n'
-SH
-  cat > "$root/bin/sleep" <<'SH'
-#!/usr/bin/env bash
-exit 0
-SH
-  cat > "$root/bin/launchctl" <<'SH'
-#!/usr/bin/env bash
-printf '4242 0 com.example.synthetic-fkst\n'
-SH
-  chmod +x "$FKST_RUN_SCRIPT" "$root/bin/pgrep" "$root/bin/gh" \
-    "$root/bin/sleep" "$root/bin/launchctl"
-  export PATH="$root/bin:/usr/bin:/bin"
-  CHANGED=1
-
-  restart_if_needed || fail "restart deferral should exit successfully"
-  [[ ! -e "$root/run.calls" ]] || fail "engine control ran during DEFER-RESTART"
-  command grep -q 'DEFER-RESTART' "$FKST_MAINTENANCE_LOG" \
-    || fail "restart deferral was not reported"
-
-  rm -f "$FKST_MAINTENANCE_LOG" "$root/run.calls"
-  cat > "$root/bin/gh" <<'SH'
-#!/usr/bin/env bash
-exit 9
-SH
-  restart_if_needed || fail "unknown implementation state should defer safely"
-  [[ ! -e "$root/run.calls" ]] || fail "engine control ran when GitHub state was unavailable"
-  command grep -q 'DEFER-RESTART.*unavailable' "$FKST_MAINTENANCE_LOG" \
-    || fail "unavailable implementation state was not reported as a deferral"
-
-  rm -f "$root/bin/gh" "$FKST_MAINTENANCE_LOG" "$root/run.calls"
-  restart_if_needed || fail "missing GitHub CLI should defer safely"
-  [[ ! -e "$root/run.calls" ]] || fail "engine control ran without GitHub state"
-  command grep -q 'DEFER-RESTART.*unavailable' "$FKST_MAINTENANCE_LOG" \
-    || fail "missing GitHub CLI was not reported as a deferral"
-)
-
 worktree_gc_preserves_owned_or_dirty_lanes() (
   load_implementation || exit 1
   local root
@@ -647,6 +589,9 @@ SH
 exit 0
 SH
   chmod +x "$root/bin/pgrep" "$root/bin/gh" "$root/bin/make"
+  # A live implement lease keeps this checkout-refresh case off the restart path.
+  mkdir -p "$root/supervisor/slots/lane.lock"
+  printf '%s\n' "$$" > "$root/supervisor/slots/lane.lock/owner"
 
   env -i HOME="$root/home" PATH="/usr/bin:/bin" \
     /bin/bash "$SCRIPT_UNDER_TEST" --host-config "$FIXTURE_HOST_CONFIG" \
@@ -753,7 +698,9 @@ run_test "tracked package addition propagates after checkout fast-forward" track
 run_test "platform-current cycle still propagates composition" platform_current_cycle_still_propagates_composition
 run_test "post-write composition drift fails closed with differences" post_write_composition_drift_fails_closed_with_differences
 run_test "composition-only propagation does not trigger restart" composition_only_propagation_does_not_trigger_restart
-run_test "implementing issues defer restart" implementing_issues_defer_restart
+run_test "zombie implementing label without a live lease restarts" zombie_label_without_live_lease_restarts
+run_test "live implement lease defers restart within its bound" live_lease_defers_restart_within_bound
+run_test "deferral past its bound forces a restart" defer_bound_exceeded_forces_restart
 run_test "worktree GC preserves owned or dirty lanes" worktree_gc_preserves_owned_or_dirty_lanes
 run_test "GC roots are canonical and never filesystem root" gc_roots_are_canonical_and_never_the_filesystem_root
 run_test "stale slot GC requires a genuinely dead owner" stale_slot_gc_requires_a_genuinely_dead_owner
