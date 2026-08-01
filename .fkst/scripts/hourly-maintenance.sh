@@ -700,44 +700,63 @@ restart_engine() {
   return 1
 }
 
+implement_lease_count() {
+  local lock owner count=0
+  if [[ -n "${FKST_REPORT_SLOT_ROOT:-}" && -d "$FKST_REPORT_SLOT_ROOT" ]]; then
+    for lock in "$FKST_REPORT_SLOT_ROOT"/*.lock; do
+      [[ -e "$lock/owner" ]] || continue
+      owner="$(grep -oE '^[0-9]+' "$lock/owner" 2>/dev/null | head -1)"
+      [[ -n "$owner" ]] || continue
+      kill -0 "$owner" 2>/dev/null || continue
+      count=$((count + 1))
+    done
+  fi
+  printf '%s\n' "$count"
+}
+
+restart_defer_state_path() {
+  printf '%s\n' \
+    "${FKST_RESTART_DEFER_STATE:-$(dirname -- "$FKST_MAINTENANCE_LOG")/restart-defer.state}"
+}
+
+restart_defer_bound_seconds() {
+  local bound="${FKST_RESTART_DEFER_MAX_SECONDS:-21600}"
+  [[ "$bound" =~ ^[0-9]+$ ]] || bound=21600
+  printf '%s\n' "$bound"
+}
+
 restart_if_needed() {
+  local state
+  state="$(restart_defer_state_path)"
   if [[ "$CHANGED" == "0" ]]; then
     say "ALL CURRENT; no restart"
+    rm -f -- "$state" 2>/dev/null || true
     return 0
   fi
 
-  local alive implementing
+  local alive leases bound started now elapsed
   alive="$(engine_pid)"
   if [[ -n "$alive" ]]; then
-    if ! command -v gh >/dev/null 2>&1; then
-      say "DEFER-RESTART: implementing issue state unavailable; engine alive (pid $alive)"
-      cleanup_old_backups
-      return 0
-    fi
-    if ! implementing="$(
-        LEAN4_GUARDRAILS_BYPASS=1 gh issue list \
-        --repo "$FKST_GITHUB_REPO" \
-        --state open \
-        --label 'fkst-dev:implementing' \
-        --json number \
-        --jq 'length' 2>/dev/null
-      )"; then
-      say "DEFER-RESTART: implementing issue state unavailable; engine alive (pid $alive)"
-      cleanup_old_backups
-      return 0
-    fi
-    if [[ ! "$implementing" =~ ^[0-9]+$ ]]; then
-      say "DEFER-RESTART: implementing issue state unavailable; engine alive (pid $alive)"
-      cleanup_old_backups
-      return 0
-    fi
-    if [[ "$implementing" -gt 0 ]]; then
-      say "DEFER-RESTART: $implementing issue(s) implementing + engine alive (pid $alive); pin updated, restart deferred"
-      cleanup_old_backups
-      return 0
+    leases="$(implement_lease_count)"
+    if [[ "$leases" -gt 0 ]]; then
+      bound="$(restart_defer_bound_seconds)"
+      now="$(date +%s)"
+      started="$(grep -oE '^[0-9]+' "$state" 2>/dev/null | head -1)"
+      if [[ -z "$started" || "$started" -gt "$now" ]]; then
+        started="$now"
+        printf '%s\n' "$started" > "$state" 2>/dev/null || true
+      fi
+      elapsed=$((now - started))
+      if [[ "$elapsed" -lt "$bound" ]]; then
+        say "DEFER-RESTART: $leases live implement lease(s) + engine alive (pid $alive); deferred ${elapsed}s of ${bound}s bound"
+        cleanup_old_backups
+        return 0
+      fi
+      say "FORCE-RESTART: defer bound exceeded (elapsed=${elapsed}s bound=${bound}s leases=$leases); draining and restarting"
     fi
   fi
 
+  rm -f -- "$state" 2>/dev/null || true
   restart_engine
 }
 
