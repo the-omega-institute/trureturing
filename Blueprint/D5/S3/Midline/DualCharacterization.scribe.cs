@@ -25,8 +25,9 @@ internal sealed class DualCharacterizationDocument : IScribeDocumentDefinition
                     + "pointwise critical-line characterizations. It locates no zeta zero and "
                     + "asserts no Riemann-hypothesis conclusion."))),
                 LatexStatement.Create(
-                    @"$$\{s\in\mathbb{C}:\operatorname{mirror}(s)=s\}"
+                    @"$$\forall A\ [\operatorname{AddMonoid}(A)],\ \forall \ell:A\to_{+}\mathbb{R},\ (\exists a,\ell(a)\neq 0) \Rightarrow "
+                    + @"(\{s\in\mathbb{C}:\operatorname{mirror}(s)=s\}"
                     + @"=\{s\in\mathbb{C}:\forall a,\Vert\operatorname{halfDensityReading}(\ell,s,a)\Vert=1\}"
-                    + @"\quad\land\quad\{s\in\mathbb{C}:\operatorname{mirror}(s)=s\}"
-                    + @"=\{s\in\mathbb{C}:\Re(s)=\frac{1}{2}\}$$")))));
+                    + @"\ \land\ \{s\in\mathbb{C}:\operatorname{mirror}(s)=s\}"
+                    + @"=\{s\in\mathbb{C}:\Re(s)=\frac{1}{2}\})$$")))));
 }
