@@ -292,6 +292,8 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
 
     internal bool FailClonefile { get; init; }
 
+    internal bool FailCopy { get; init; }
+
     internal bool FailLake { get; init; }
 
     internal bool FailDotnet { get; init; }
@@ -315,6 +317,11 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
         if (fileName == "cp" && arguments.FirstOrDefault() == "-c" && FailClonefile)
         {
             return Failure("clonefile unavailable");
+        }
+
+        if (fileName == "cp" && arguments.FirstOrDefault() == "-R" && FailCopy)
+        {
+            return Failure("ordinary copy unavailable");
         }
 
         if (fileName == "lake")

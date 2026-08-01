@@ -19,6 +19,22 @@ public sealed class OperationalEntrypointTests
     }
 
     [Fact]
+    public void LeanCacheEnsureOperationUsesItsSingleTrackedImplementation()
+    {
+        var repository = RepositoryLayout.FindRoot();
+        var inventory = File.ReadAllText(
+            Path.Combine(repository, OperationalEntrypointPolicy.InventoryPath));
+        var membership = OperationalEntrypointPolicy.EnumerateRepositoryLaunchdMembership(repository);
+
+        Assert.Contains("id = \"lean-cache-ensure\"", inventory, StringComparison.Ordinal);
+        Assert.Contains(
+            "implementation = \"Meta/StrataLint/scripts/worktree/lean-cache-ensure.sh\"",
+            inventory,
+            StringComparison.Ordinal);
+        Assert.Empty(OperationalEntrypointPolicy.InspectRepository(repository, membership));
+    }
+
+    [Fact]
     public void RepositoryLaunchdMembershipEnumeratorRejectsAnUngroundedEmptySet()
     {
         WithRepository(
