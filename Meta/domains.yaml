@@ -29,21 +29,39 @@ domains:
   Fourier:
     stratum: S3
     definition: Entire analytic extensions of the Weil Fourier-Laplace transform.
+  History:
+    stratum: S0
+    definition: Finite marker and event histories, their append operation, and faithful self-encoding bridges.
+  Midline:
+    stratum: S3
+    definition: Dual and multiple characterizations of the critical midline sigma equals one half.
   Phase:
     stratum: S1
     definition: Additive golden-ratio phases modulo one.
+  PrimeForms:
+    stratum: S3
+    definition: Representations of prime numbers by integral quadratic forms.
   Quad:
     stratum: S1
     definition: Parameterized quadratic presentation rings and actual orders carrying the digit-gas root-unit criteria.
   Quantum:
     stratum: S3
     definition: Finite-dimensional complex operator-algebra and probability structures.
+  Recurrence:
+    stratum: S1
+    definition: Linear recurrence solution spaces, shift eigenstructure, and self-similar weight lifts.
+  Rewriting:
+    stratum: S0
+    definition: Abstract terminating rewrite relations, confluence, and canonical normal forms.
   Scale:
     stratum: S1
     definition: Real embeddings and logarithmic scales of golden integers.
   Weil:
     stratum: S3
     definition: Classical zeta conventions, Weil test functions, and Fourier-Laplace analysis.
+  Words:
+    stratum: S1
+    definition: Golden mechanical words and their local window letter conditions.
   Zeros:
     stratum: S3
     definition: Geometry, symmetry, and local balance of classical zeta zeros.

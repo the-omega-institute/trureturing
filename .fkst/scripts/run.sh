@@ -6,7 +6,7 @@ readonly REPO_ROOT="$(cd -- "$FKST_ROOT/.." && pwd -P)"
 readonly OPERATE_ROOT="${FKST_OPERATE_ROOT:-$HOME/.fkst/trureturing}"
 readonly ENV_FILE="$OPERATE_ROOT/host.env"
 readonly LOG_DIR="$OPERATE_ROOT/logs"
-readonly PLATFORM_PACKAGES="github-proxy consensus github-devloop github-devloop-pr github-devloop-integration github-devloop-intake github-devloop-intake-default github-devloop-workflow github-devloop-decompose github-devloop-ops github-external-pr-intake idle-detector archaudit"
+readonly PLATFORM_PACKAGES="github-proxy consensus github-devloop github-devloop-pr github-devloop-integration github-devloop-intake github-devloop-intake-default github-devloop-workflow github-devloop-decompose github-devloop-ops github-external-pr-intake idle-detector"
 readonly HOST_PACKAGES="theory-selfgrowth"
 readonly SUBSTRATE_URL="https://github.com/ChronoAIProject/fkst-substrate.git"
 readonly PLATFORM_URL="https://github.com/ChronoAIProject/fkst-packages.git"
@@ -16,61 +16,10 @@ die() {
   exit 1
 }
 
-shell_value() {
-  printf '%q' "$1"
-}
-
-primary_worktree() {
-  git -C "$REPO_ROOT" worktree list --porcelain 2>/dev/null \
-    | awk '/^worktree / { sub(/^worktree /, ""); print; exit }'
-}
-
-discover_platform_root() {
-  local primary candidate
-  primary="$(primary_worktree)"
-  [[ -n "$primary" ]] || return 1
-  candidate="$(dirname -- "$primary")/fkst-packages"
-  [[ -x "$candidate/scripts/run.sh" ]] || return 1
-  printf '%s\n' "$candidate"
-}
-
-discover_bin() {
-  local primary candidate
-  if command -v fkst-framework >/dev/null 2>&1; then
-    command -v fkst-framework
-    return
-  fi
-  primary="$(primary_worktree)"
-  [[ -n "$primary" ]] || return 1
-  candidate="$(dirname -- "$primary")/fkst-substrate/target/debug/fkst-framework"
-  [[ -x "$candidate" ]] || return 1
-  printf '%s\n' "$candidate"
-}
-
 ensure_host_env() {
-  local bin platform
   mkdir -p "$OPERATE_ROOT/durable" "$OPERATE_ROOT/runtime" "$LOG_DIR" "$HOME/.fkst/rate-pools"
-  [[ ! -e "$ENV_FILE" ]] || return 0
-  bin="$(discover_bin)" || die "cannot discover BIN; put fkst-framework on PATH"
-  platform="$(discover_platform_root)" \
-    || die "cannot discover sibling fkst-packages checkout"
-  {
-    printf '# Generated host-local configuration. Do not commit.\n'
-    printf 'BIN=%s\n' "$(shell_value "$bin")"
-    printf 'FKST_HOST_ROOT=%s\n' "$(shell_value "$OPERATE_ROOT/checkout")"
-    printf 'FKST_PLATFORM_ROOT=%s\n' "$(shell_value "$platform")"
-    printf 'FKST_DURABLE_ROOT=%s\n' "$(shell_value "$OPERATE_ROOT/durable")"
-    printf 'FKST_RUNTIME_ROOT=%s\n' "$(shell_value "$OPERATE_ROOT/runtime")"
-    printf 'FKST_RATE_POOL_ROOT=%s\n' "$(shell_value "$HOME/.fkst/rate-pools")"
-    printf 'FKST_GITHUB_REPO=the-omega-institute/trureturing\n'
-    printf 'unset FKST_GITHUB_WRITE\n'
-    printf 'FKST_GITHUB_BOT_LOGIN=ElonSG\n'
-    printf 'FKST_GITHUB_PROXY_POLL_LABEL_PREFIX=fkst-dev:\n'
-    printf 'FKST_DEVLOOP_UPSTREAM_BRANCH=dev\n'
-    printf 'FKST_DEVLOOP_INTEGRATION_BRANCH=integration-ElonSG\n'
-    printf 'FKST_DEVLOOP_ROLLUP_MERGE=auto\n'
-  } >"$ENV_FILE"
-  chmod 600 "$ENV_FILE"
+  [[ -f "$ENV_FILE" ]] \
+    || die "host.env is missing; follow docs/devloop/fkst-host-bringup.md"
 }
 
 load_host_env() {
@@ -79,10 +28,8 @@ load_host_env() {
   # shellcheck disable=SC1090
   source "$ENV_FILE"
   set +a
-  # GitHub write posture is a host-local operational fact carried by host.env
-  # (gitignored, not committed): unset/anything-but-1 = dry-run; 1 = real writes.
-  # A freshly generated host.env defaults to dry-run (see ensure_host_env); the
-  # operator opts into real writes by editing their own host.env.
+  # host.env supplies machine paths and identity; the sourced versioned deploy.env
+  # supplies repository behavior such as GitHub write posture.
   [[ -x "${BIN:-}" ]] || die "host.env BIN is not executable: ${BIN:-<unset>}"
   [[ -x "${FKST_PLATFORM_ROOT:-}/scripts/run.sh" ]] \
     || die "host.env FKST_PLATFORM_ROOT is invalid: ${FKST_PLATFORM_ROOT:-<unset>}"

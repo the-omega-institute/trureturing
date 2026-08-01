@@ -1,0 +1,152 @@
+schema_version = 3
+host_contract_schema = ".fkst/host-contract.schema"
+launchd_units = ["maintenance", "supervise"]
+
+[[operations]]
+id = "hourly-maintenance"
+make_target = "hourly-maintenance"
+implementation = ".fkst/scripts/hourly-maintenance.sh"
+tests = [
+  ".fkst/tests/hourly-maintenance-behavior.sh",
+  "Meta/StrataLint/StrataLint.ArchitectureTests/Operations/OperationalEntrypointTests.cs",
+  "Meta/StrataLint/StrataLint.Tests/Commands/MakeWorkflowTests.cs",
+]
+external_tools = [
+  "bash",
+  "basename",
+  "cp",
+  "date",
+  "dirname",
+  "find",
+  "fkst-framework",
+  "gh",
+  "git",
+  "grep",
+  "head",
+  "launchctl",
+  "mkdir",
+  "mv",
+  "pgrep",
+  "ps",
+  "pwd",
+  "rm",
+  "rmdir",
+  "sed",
+  "sleep",
+  "tee",
+  "timeout",
+  "tr",
+]
+
+[[operations]]
+id = "maintenance-launcher-render"
+make_target = "maintenance-launcher-render"
+implementation = ".fkst/scripts/render-maintenance-launcher.sh"
+tests = [
+  ".fkst/tests/hourly-maintenance-behavior.sh",
+  "Meta/StrataLint/StrataLint.ArchitectureTests/Operations/OperationalEntrypointTests.cs",
+  "Meta/StrataLint/StrataLint.Tests/Commands/MakeWorkflowTests.cs",
+]
+external_tools = [
+  "bash",
+  "basename",
+  "chmod",
+  "dirname",
+  "grep",
+  "mktemp",
+  "mv",
+  "plutil",
+  "pwd",
+  "sed",
+]
+
+[[operations]]
+id = "launchd-conformance-check"
+make_target = "launchd-conformance-check"
+implementation = ".fkst/scripts/check-launchd-conformance.sh"
+tests = [
+  ".fkst/tests/launchd-conformance-behavior.sh",
+  "Meta/StrataLint/StrataLint.ArchitectureTests/Operations/OperationalEntrypointTests.cs",
+  "Meta/StrataLint/StrataLint.Tests/Commands/MakeWorkflowTests.cs",
+]
+external_tools = [
+  "bash",
+  "dirname",
+  "launchctl",
+  "make",
+  "pwd",
+  "python3",
+]
+
+[[operations]]
+id = "maintenance-launcher-check"
+make_target = "maintenance-launcher-check"
+implementation = ".fkst/scripts/check-maintenance-launcher.sh"
+tests = [
+  ".fkst/tests/hourly-maintenance-behavior.sh",
+  "Meta/StrataLint/StrataLint.ArchitectureTests/Operations/OperationalEntrypointTests.cs",
+  "Meta/StrataLint/StrataLint.Tests/Commands/MakeWorkflowTests.cs",
+]
+external_tools = [
+  "bash",
+  "basename",
+  "chmod",
+  "cmp",
+  "dirname",
+  "grep",
+  "mktemp",
+  "mv",
+  "plutil",
+  "pwd",
+  "rm",
+  "sed",
+]
+
+[[operations]]
+id = "supervise-launcher-render"
+make_target = "supervise-launcher-render"
+implementation = ".fkst/scripts/render-supervise-launcher.sh"
+tests = [
+  ".fkst/tests/supervise-launcher-behavior.sh",
+  "Meta/StrataLint/StrataLint.ArchitectureTests/Operations/OperationalEntrypointTests.cs",
+  "Meta/StrataLint/StrataLint.Tests/Commands/MakeWorkflowTests.cs",
+]
+external_tools = [
+  "bash",
+  "basename",
+  "chmod",
+  "dirname",
+  "git",
+  "grep",
+  "mktemp",
+  "mv",
+  "plutil",
+  "pwd",
+  "python3",
+  "sed",
+]
+
+[[operations]]
+id = "supervise-launcher-check"
+make_target = "supervise-launcher-check"
+implementation = ".fkst/scripts/check-supervise-launcher.sh"
+tests = [
+  ".fkst/tests/supervise-launcher-behavior.sh",
+  "Meta/StrataLint/StrataLint.ArchitectureTests/Operations/OperationalEntrypointTests.cs",
+  "Meta/StrataLint/StrataLint.Tests/Commands/MakeWorkflowTests.cs",
+]
+external_tools = [
+  "bash",
+  "basename",
+  "chmod",
+  "cmp",
+  "dirname",
+  "grep",
+  "mktemp",
+  "mv",
+  "plutil",
+  "pwd",
+  "python3",
+  "rm",
+  "sed",
+]

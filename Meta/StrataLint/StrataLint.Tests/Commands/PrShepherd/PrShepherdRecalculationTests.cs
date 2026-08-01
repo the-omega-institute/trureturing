@@ -56,6 +56,11 @@ public sealed partial class PrShepherdRecalculationTests
         private readonly string headBranch;
         private readonly bool pauseWorktreeCreation;
         private readonly bool delayFirstLockOwnerRead;
+        private readonly bool conflicting;
+        private readonly bool ledgerConflict;
+        private readonly bool staleBaseRefOid;
+        private readonly bool moveHeadDuringFetch;
+        private readonly bool moveBaseDuringFetch;
         private int devAdvance;
 
         internal ShepherdFixture(
@@ -66,7 +71,12 @@ public sealed partial class PrShepherdRecalculationTests
             bool devDeletesDerived = false,
             string headBranch = "feature",
             bool pauseWorktreeCreation = false,
-            bool delayFirstLockOwnerRead = false)
+            bool delayFirstLockOwnerRead = false,
+            bool conflicting = false,
+            bool ledgerConflict = false,
+            bool staleBaseRefOid = false,
+            bool moveHeadDuringFetch = false,
+            bool moveBaseDuringFetch = false)
         {
             this.failingTarget = failingTarget;
             this.moveHeadBeforePush = moveHeadBeforePush;
@@ -74,6 +84,11 @@ public sealed partial class PrShepherdRecalculationTests
             this.headBranch = headBranch;
             this.pauseWorktreeCreation = pauseWorktreeCreation;
             this.delayFirstLockOwnerRead = delayFirstLockOwnerRead;
+            this.conflicting = conflicting;
+            this.ledgerConflict = ledgerConflict;
+            this.staleBaseRefOid = staleBaseRefOid;
+            this.moveHeadDuringFetch = moveHeadDuringFetch;
+            this.moveBaseDuringFetch = moveBaseDuringFetch;
             origin = Path.Combine(temporary.Path, "origin.git");
             repository = Path.Combine(temporary.Path, "repository");
             seed = Path.Combine(temporary.Path, "seed");
@@ -92,9 +107,11 @@ public sealed partial class PrShepherdRecalculationTests
             Write(seed, "Generated/artifact.md", "base artifact\n");
             Write(seed, "Generated/dev-choice.md", "base choice\n");
             Write(seed, "Generated/echo-residual-summary.md", "base echo\n");
+            Write(seed, FrozenLedgerChangeClassifier.LedgerPath, "{\"event\":\"base\"}\n");
             Write(seed, "shared.txt", "base shared\n");
             Git(seed, "add", ".");
             Git(seed, "commit", "-m", "base");
+            InitialBaseHead = GitOutput(seed, "rev-parse", "HEAD");
             Git(seed, "branch", "-M", "dev");
             Git(seed, "remote", "add", "origin", origin);
             Git(seed, "push", "-u", "origin", "dev");
@@ -105,6 +122,11 @@ public sealed partial class PrShepherdRecalculationTests
             Write(seed, "Generated/artifact.md", "feature artifact\n");
             Write(seed, "Generated/dev-choice.md", "feature choice\n");
             if (sourceConflict) Write(seed, "shared.txt", "feature shared\n");
+            if (ledgerConflict)
+                Write(
+                    seed,
+                    FrozenLedgerChangeClassifier.LedgerPath,
+                    "{\"event\":\"base\"}\n{\"event\":\"feature-freeze\"}\n");
             Git(seed, "add", ".");
             Git(seed, "commit", "-m", "feature content");
             OriginalHead = GitOutput(seed, "rev-parse", "HEAD");
@@ -124,10 +146,23 @@ public sealed partial class PrShepherdRecalculationTests
             else
                 Write(seed, "Generated/dev-choice.md", "dev choice\n");
             Write(seed, sourceConflict ? "shared.txt" : "dev-input.txt", "advanced dev\n");
+            if (ledgerConflict)
+                Write(
+                    seed,
+                    FrozenLedgerChangeClassifier.LedgerPath,
+                    "{\"event\":\"base\"}\n{\"event\":\"dev-freeze\"}\n");
             Git(seed, "add", "-A");
             Git(seed, "commit", "-m", "advance dev");
             BaseHead = GitOutput(seed, "rev-parse", "HEAD");
             Git(seed, "push", "origin", "dev");
+
+            Git(seed, "checkout", "-b", "dev-moved");
+            Write(seed, "dev-moved.txt", "dev moved during fetch\n");
+            Git(seed, "add", ".");
+            Git(seed, "commit", "-m", "move dev during fetch");
+            MovedBaseHead = GitOutput(seed, "rev-parse", "HEAD");
+            Git(seed, "push", "origin", "dev-moved");
+            Git(seed, "checkout", "dev");
 
             Git(temporary.Path, "clone", origin, repository);
             InstallStubs();
@@ -137,7 +172,13 @@ public sealed partial class PrShepherdRecalculationTests
 
         internal string AttackerHead { get; }
 
+        internal string InitialBaseHead { get; }
+
         internal string BaseHead { get; private set; }
+
+        internal string MovedBaseHead { get; }
+
+        internal string GithubBaseRefOid => staleBaseRefOid ? InitialBaseHead : BaseHead;
 
         internal string CacheWorktree =>
             Directory.Exists(CacheRoot)
@@ -170,6 +211,7 @@ public sealed partial class PrShepherdRecalculationTests
                 $"PR_SHEPHERD_CACHE={CacheRoot}",
                 $"PR_TEST_ORIGIN={origin}",
                 $"PR_TEST_HEAD={headBranch}",
+                $"PR_TEST_BASE_OID={GithubBaseRefOid}",
                 $"PR_TEST_CALLS={calls}",
                 $"PR_TEST_EXPIRY={(expiryFingerprint ? "1" : "0")}",
                 $"PR_TEST_SPLIT={(splitFingerprintAcrossJobs ? "1" : "0")}",
@@ -179,6 +221,10 @@ public sealed partial class PrShepherdRecalculationTests
                 $"PR_TEST_FAIL_MERGE={(failMergeWithoutConflict ? "1" : "0")}",
                 $"PR_TEST_PAUSE_WORKTREE={(pauseWorktreeCreation ? "1" : "0")}",
                 $"PR_TEST_DELAY_LOCK_READ={(delayFirstLockOwnerRead ? "1" : "0")}",
+                $"PR_TEST_CONFLICTING={(conflicting ? "1" : "0")}",
+                $"PR_TEST_MOVE_HEAD_DURING_FETCH={(moveHeadDuringFetch ? "1" : "0")}",
+                $"PR_TEST_MOVE_BASE_DURING_FETCH={(moveBaseDuringFetch ? "1" : "0")}",
+                $"PR_TEST_MOVED_BASE={MovedBaseHead}",
                 $"PR_TEST_LOCK_READ_MARKER={Path.Combine(temporary.Path, "lock-read-marker")}",
                 $"SHEPHERD_DRYRUN={(dryRun ? "1" : "0")}",
                 "GH_TOKEN=must-not-reach-candidate-producers",
@@ -217,6 +263,7 @@ public sealed partial class PrShepherdRecalculationTests
                 $"PR_SHEPHERD_CACHE={CacheRoot}",
                 $"PR_TEST_ORIGIN={origin}",
                 $"PR_TEST_HEAD={headBranch}",
+                $"PR_TEST_BASE_OID={GithubBaseRefOid}",
                 $"PR_TEST_CALLS={calls}",
                 $"PR_TEST_WATCH_STATE={Path.Combine(temporary.Path, "watch-state")}",
                 "PR_TEST_EXPIRY=1",
@@ -365,9 +412,11 @@ public sealed partial class PrShepherdRecalculationTests
                     exit 0
                   fi
                   head="$(git --git-dir "$PR_TEST_ORIGIN" rev-parse "refs/heads/$PR_TEST_HEAD")"
-                  base="$(git --git-dir "$PR_TEST_ORIGIN" rev-parse refs/heads/dev)"
+                  base="$PR_TEST_BASE_OID"
                   if [[ "${PR_TEST_NO_CHECKS:-0}" == 1 ]]; then
                     row="1	MERGEABLE	BLOCKED	${PR_TEST_HEAD}	${head}	${base}	0	-	-"
+                  elif [[ "${PR_TEST_CONFLICTING:-0}" == 1 ]]; then
+                    row="1	CONFLICTING	DIRTY	${PR_TEST_HEAD}	${head}	${base}	1	FAILURE	https://github.com/fixture/repository/actions/runs/123/job/456"
                   else
                     row="1	MERGEABLE	BEHIND	${PR_TEST_HEAD}	${head}	${base}	1	FAILURE	https://github.com/fixture/repository/actions/runs/123/job/456"
                   fi
@@ -455,19 +504,47 @@ public sealed partial class PrShepherdRecalculationTests
                 set -euo pipefail
                 [[ -z "${GH_TOKEN+x}" ]] || exit 91
                 [[ -z "${GITHUB_TOKEN+x}" ]] || exit 92
+                if [[ "$*" == *"ledger-append --candidate-lean-report"* ]]; then
+                  printf 'ledger-append\n' >> "$PR_TEST_CALLS"
+                  exit 0
+                fi
                 [[ "$*" == *"echo-verify --emit --base origin/dev"* ]] || exit 96
                 printf 'echo-verify\n' >> "$PR_TEST_CALLS"
-                printf '%s\n' '<!-- echo-residual-summary:v2 base=git-sha1:1111111111111111111111111111111111111111 -->' '# Echo Residual Summary'
+                printf '%s\n' '<!-- echo-residual-summary:v3 residual=sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->' '# Echo Residual Summary'
                 """);
             WriteExecutable(
                 "git",
                 """
                 #!/usr/bin/env bash
                 set -euo pipefail
+                if [[ " $* " == *" fetch --no-tags "* ]]; then
+                  if [[ "$PR_TEST_MOVE_HEAD_DURING_FETCH" == 1 ]]; then
+                    attacker="$(/usr/bin/git --git-dir "$PR_TEST_ORIGIN" rev-parse refs/heads/attacker)"
+                    /usr/bin/git --git-dir "$PR_TEST_ORIGIN" update-ref \
+                      "refs/heads/$PR_TEST_HEAD" "$attacker"
+                  fi
+                  if [[ "$PR_TEST_MOVE_BASE_DURING_FETCH" == 1 ]]; then
+                    /usr/bin/git --git-dir "$PR_TEST_ORIGIN" update-ref \
+                      refs/heads/dev "$PR_TEST_MOVED_BASE"
+                  fi
+                fi
                 if [[ "$PR_TEST_FAIL_MERGE" == 1 && " $* " == *" merge --no-commit "* ]]; then
                   exit 97
                 fi
-                if [[ " $* " == *" push "* ]]; then printf 'push\n' >> "$PR_TEST_CALLS"; fi
+                if [[ "${PR_TEST_CONFLICTING:-0}" == 1 && " $* " == *" merge --no-commit "* ]]; then
+                  printf 'local-merge\n' >> "$PR_TEST_CALLS"
+                fi
+                if [[ " $* " == *" push "* ]]; then
+                  push_call=push
+                  for argument in "$@"; do
+                    case "$argument" in
+                      -f|--force|--force=*|--force-with-lease*|--force-if-includes|+*)
+                        push_call=force-push
+                        ;;
+                    esac
+                  done
+                  printf '%s\n' "$push_call" >> "$PR_TEST_CALLS"
+                fi
                 exec /usr/bin/git "$@"
                 """);
             WriteExecutable(

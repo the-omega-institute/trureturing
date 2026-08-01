@@ -83,6 +83,15 @@ cnt_s() { # count fixed substring in a string
   local n; n="$(grep -c "$1" <<<"$2" 2>/dev/null || true)"; echo "${n:-0}"
 }
 
+# Extract `key=value` from a line, empty when absent. THIRD occurrence in this file of the same bug
+# family: an unguarded `grep`/`grep -c` in a command substitution exits nonzero on a legitimately empty
+# result, and under `set -euo pipefail` that aborts the caller — it silently truncated diag's report, and
+# it silently killed the whole snapshot when a `queue=` line carried `oldest_pending_age_ms=-`. Rather
+# than sprinkle a fourth `|| true`, extraction goes through here so no caller can reintroduce it.
+kv() { # $1 key  $2 line  -> value, or empty
+  grep -oE "$1=[0-9A-Za-z_.:/-]+" <<<"$2" 2>/dev/null | head -1 | cut -d= -f2- || true
+}
+
 # REAL load, not the load average. On macOS `uptime` load average counts BLOCKED/waiting threads
 # (I/O, locks, mutual waits), so with many fkst/lean/codex processes it reads e.g. 76 while the CPU
 # is actually 55% IDLE on a 14-core Mac — it does NOT indicate saturation and must not be used to
@@ -145,15 +154,96 @@ snapshot() {
   fi
 
   # Durable / DLQ via observe
-  local dlq=0 retrying=0 absent=0 observe_ok=0 obs=""
-  if [[ -n "$bin" && -d "$DURABLE_ROOT" ]]; then
-    if obs="$("$bin" observe --durable-root "$DURABLE_ROOT" 2>/dev/null)"; then
-      observe_ok=1
+  local dlq=0 retrying=0 absent=0 observe_ok=0 obs="" observe_why=""
+  local worst_lag_ms=0 worst_lag_queue="" worst_lag_pending=0
+  # FAIL-CLOSED. `observe` is the only source of the backlog-lag check below, and that check exists
+  # precisely to stop this snapshot reporting HEALTHY over a 26-hour consumer lag. So a probe that
+  # cannot run must degrade the verdict: a green light earned by not looking retires the check
+  # invisibly, which is the one thing execution grading (CLAUDE.md 第20条) never permits.
+  # 2026-07-30: this printed "HEALTHY" + "(observe unavailable — BIN or durable root missing)" while
+  # both existed; observe had exited 2 with "Database already open" because the engine held the redb
+  # lock. Blaming absent prerequisites for a failing probe sends the reader after a file that is
+  # right there — report the probe's own words instead.
+  if [[ -z "$bin" ]]; then
+    observe_why="observe binary not found (set BIN or fix host.env)"
+  elif [[ ! -d "$DURABLE_ROOT" ]]; then
+    observe_why="durable root absent: $DURABLE_ROOT"
+  else
+    # BOUNDED. observe's latency grows with the backlog it reports on: measured 79s against a 54 MB
+    # durable db with 14k+ pending, versus 27s for a whole snapshot minutes earlier. Unbounded, this
+    # monitor gets slower exactly as the thing it watches gets worse, and under --watch it eventually
+    # stops reporting — silence reads as "nothing to report", which is worse than DEGRADED.
+    # This is NOT the fixed-sleep-then-check-once shape filed as #602/#608: the budget is generous,
+    # configurable, and exceeding it is reported as a probe failure rather than absorbed.
+    # `timeout(1)` is deliberately not used — absent from a base macOS install (here only via Homebrew),
+    # and a second host must come up without host-specific tool assumptions.
+    local obs_err="" obs_out="" obs_rc=0 probe_pid=0 waited=0
+    local budget="${FKST_OBSERVE_BUDGET_S:-120}"
+    obs_err="$(mktemp -t fkst-observe-err.XXXXXX)"
+    obs_out="$(mktemp -t fkst-observe-out.XXXXXX)"
+    "$bin" observe --durable-root "$DURABLE_ROOT" >"$obs_out" 2>"$obs_err" &
+    probe_pid=$!
+    while kill -0 "$probe_pid" 2>/dev/null && (( waited < budget )); do
+      sleep 1; waited=$(( waited + 1 ))
+    done
+    if kill -0 "$probe_pid" 2>/dev/null; then
+      # disown before killing: otherwise the shell reports the reaped job on stderr
+      # ("Terminated: 15 \"$bin\" observe ..."), which lands as noise inside this very report.
+      # A diagnostic whose own output is polluted is bad raw material — see the tests.
+      disown "$probe_pid" 2>/dev/null || true
+      kill -TERM "$probe_pid" 2>/dev/null || true
+      sleep 1
+      kill -KILL "$probe_pid" 2>/dev/null || true
+      observe_why="observe exceeded ${budget}s budget (raise FKST_OBSERVE_BUDGET_S); backlog grows this probe's latency"
+    else
+      if wait "$probe_pid"; then obs_rc=0; else obs_rc=$?; fi
+      if (( obs_rc == 0 )); then
+        obs="$(cat "$obs_out")"
+        observe_ok=1
+      else
+        observe_why="observe failed (exit $obs_rc): $( { head -c 300 "$obs_err" 2>/dev/null || true; } | tr '\n' ' ' | sed 's/  */ /g')"
+      fi
+    fi
+    rm -f "$obs_err" "$obs_out"
+  fi
+  if (( ! observe_ok )); then
+    [[ "$verdict" == HEALTHY ]] && verdict="DEGRADED"
+    reasons+=("backlog check did not run — $observe_why")
+  fi
+  if (( observe_ok )); then
       dlq="$(awk '/^dead_letters/{f=1;next}/^[a-z]/{f=0}f&&/^  id=/{n++}END{print n+0}' <<<"$obs")"
       retrying="$( { grep -oE 'retrying=[0-9]+' <<<"$obs" || true; } | awk -F= '{s+=$2}END{print s+0}')"
       absent="$(cnt_s 'subscriber_status=absent' "$obs")"
       (( absent > 0 )) && { [[ "$verdict" == HEALTHY ]] && verdict="DEGRADED"; reasons+=("$absent absent subscriber(s)"); }
-    fi
+
+      # BACKLOG LAG — the signal every other field here is blind to. 2026-07-30: this snapshot
+      # reported HEALTHY while github_issue_observed sat at pending=11191 with
+      # oldest_pending_age_ms=93266721 (25.9 HOURS) and growing ~1080/hour, on a queue whose entries
+      # are superseded every 300s poll. A newly created issue's observation was behind ~11000 stale
+      # entries, so it was unreachable — the pipeline was busy and none of it was current. Liveness,
+      # acks, fatals, dead-letters and CPU were all fine; "busy and current" is indistinguishable from
+      # "busy and hopelessly behind" unless lag is measured.
+      # Use oldest_pending_age_ms, NOT depth: depth alone cannot tell a healthy burst from a stall,
+      # and lag is immune to arguments about what depth counts. Threshold is generous — a queue driven
+      # by a 300s poll should never carry an entry for tens of minutes.
+      local lag_threshold_ms="${FKST_BACKLOG_LAG_THRESHOLD_MS:-1800000}"   # 30 min
+      worst_lag_ms=0; worst_lag_queue=""; worst_lag_pending=0
+      while IFS= read -r qline; do
+        [[ -n "$qline" ]] || continue
+        local qn qage qpend
+        qn="$(kv queue "$qline")"
+        qage="$(kv oldest_pending_age_ms "$qline")"
+        qpend="$(kv pending "$qline")"
+        # "-" means nothing pending, so kv yields "-" or empty; neither is a lag.
+        [[ "$qage" =~ ^[0-9]+$ ]] || continue
+        if (( qage > worst_lag_ms )); then
+          worst_lag_ms="$qage"; worst_lag_queue="$qn"; worst_lag_pending="${qpend:-0}"
+        fi
+      done < <(grep -aE '^\s+queue=' <<<"$obs" || true)
+      if (( worst_lag_ms > lag_threshold_ms )); then
+        [[ "$verdict" == HEALTHY ]] && verdict="DEGRADED"
+        reasons+=("$worst_lag_queue backlog $(( worst_lag_ms / 60000 ))min behind (pending=$worst_lag_pending)")
+      fi
   fi
 
   # Recent devloop activity (current instance only)
@@ -191,8 +281,15 @@ snapshot() {
   printf '  resources   : CPU %s%% idle / %s cores · mem %s%% free  (real load — macOS load-avg overstates, ignore it)\n' "${cpu_idle:-?}" "${cores:-?}" "${memfree:-?}"
   if (( observe_ok )); then
     printf '  durable     : dead_letters=%s  retrying=%s  absent_subscribers=%s\n' "$dlq" "$retrying" "$absent"
+    if [[ -n "$worst_lag_queue" ]]; then
+      printf '  backlog     : %s pending=%s oldest=%smin  (consumer lag — HEALTHY hides this; see FKST_BACKLOG_LAG_THRESHOLD_MS)\n' \
+        "$worst_lag_queue" "$worst_lag_pending" "$(( worst_lag_ms / 60000 ))"
+    else
+      printf '  backlog     : none pending\n'
+    fi
   else
-    printf '  durable     : (observe unavailable — BIN or durable root missing)\n'
+    printf '  durable     : UNAVAILABLE — %s\n' "$observe_why"
+    printf '  backlog     : NOT CHECKED (verdict degraded; this probe is the only backlog signal)\n'
   fi
   printf '  codex       : codex-failed=%s\n' "$codex_failed"
   printf '  recent work : %s\n' "${recent_issue:-none in current log}"

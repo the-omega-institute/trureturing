@@ -14,6 +14,17 @@ internal static class BackfillInventoryWriter
     internal static ImmutableArray<byte> WriteForIngest(BackfillInventoryDocument document) =>
         Write(document, preserveReceiptSyntax: true);
 
+    internal static ImmutableArray<byte> WriteEntry(DigestionLedgerEntry entry)
+    {
+        ArgumentNullException.ThrowIfNull(entry);
+        var builder = new StringBuilder();
+        Line(builder, $"source_id: {Scalar(entry.SourceId)}");
+        Line(builder, $"source_path: {Scalar(entry.SourcePath)}");
+        Line(builder, $"atomizer: {Scalar(entry.Atomizer)}");
+        Entry(builder, entry);
+        return ImmutableArray.CreateRange(StrictUtf8.GetBytes(builder.ToString()));
+    }
+
     private static ImmutableArray<byte> Write(
         BackfillInventoryDocument document,
         bool preserveReceiptSyntax)

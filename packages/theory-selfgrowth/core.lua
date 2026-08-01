@@ -23,9 +23,7 @@ local REQUEST_MARKER = "theory-selfgrowth:frontier-request:v1"
 -- fields), so the 5-judge intake correctly declined it (#359). This title instead asks the
 -- consumer to PROPOSE-AND-PROVE a new theorem by mathematical judgment and routes on the
 -- "Deliver ONE NEW D5 result:" prefix to blueprint-then-formalize (verified accepted + routed by
--- #366). Each self-tick's generation-scoped dedup key yields a distinct request; the consumer
--- picks a fresh (novelty-guarded) theorem each generation, so the library grows unbounded.
-local REQUEST_TITLE = "Deliver ONE NEW D5 result: a new golden-integer theorem (proposer's choice)"
+-- #366). Requests are atom-scoped (one digestion atom = one request; see atom_marker).
 
 -- Reject idle hints older than this (mirror archaudit's 10-minute freshness budget): a
 -- durable idle prompt must not create work once the system is no longer idle (#296 Major 2).
@@ -47,7 +45,6 @@ local POLL_INTERVAL_SECONDS = 30 * 60
 local POLL_INTERVAL = tostring(math.floor(POLL_INTERVAL_SECONDS / 60)) .. "m"
 
 function M.request_marker() return REQUEST_MARKER end
-function M.request_title() return REQUEST_TITLE end
 function M.freshness_budget_seconds() return FRESHNESS_BUDGET_SECONDS end
 function M.poll_interval() return POLL_INTERVAL end
 
@@ -68,19 +65,6 @@ function M.producer_marker(bot_login)
   return REQUEST_MARKER .. ":" .. tostring(bot_login)
 end
 
--- Idempotency key handed to github-proxy — GENERATION-SCOPED (#296 Major 1).
--- github-proxy dedups by searching issues with `--state all` for the create-marker derived
--- from this key. A stable per-repo key matches the FIRST created issue forever (even after
--- it is closed), so the self-growth flywheel could only ever spin once. Scoping the key by
--- producer + generation makes each bot's new obligation marker distinct, so `--state all`
--- no longer matches another producer or a prior CLOSED generation. The "at most one OPEN
--- request per producer at a time" invariant is enforced SEPARATELY by the producer's
--- open-request exclusion (see M.decide_generation) — hence "idempotency scoped by producer
--- and generation, open-request exclusion done separately".
-function M.dedup_key(repo, generation, bot_login)
-  return M.producer_marker(bot_login) .. ":" .. tostring(repo) .. ":gen" .. tostring(generation)
-end
-
 -- Search query the producer runs against its OWN prior requests (used with
 -- `gh issue list --state all --search <query>`) to compute the next generation and to
 -- detect a still-open request. This is a READ for the dedup decision; issue-create egress
@@ -94,45 +78,72 @@ function M.validate_repo(repo)
   return repo:match("^[%w._-]+/[%w._-]+$") ~= nil
 end
 
--- A frontier-request the devloop has TERMINALLY given up on is still OPEN on GitHub but is NOT
--- an active "one at a time" request. Counting it as open freezes THIS producer's generation
--- indefinitely, deadlocking the flywheel at the generation stage. Two devloop terminal states
--- reach this:
---   * `fkst-dev:blocked`     -- state-output-obligation-timeout, then decomposed into a sub-issue
---                               (observed: a blocked #373 starved the producer ~5h).
---   * `fkst-dev:impl-failed` -- implementation retries exhausted (observed: #446, a deep atom
---                               whose codex times out at the 3h budget, reached impl-failed /
---                               "retry-exhausted after 2 attempts" and its churn stopped, yet
---                               the producer kept counting it as open and never emitted the next
---                               atom -- the flywheel deadlocked).
--- Both are TERMINAL per the devloop's own lifecycle (TERMINAL_STATES = blocked, impl-failed,
--- merged, declined; merged/declined are closed so never reach open_exists). Excluding a request
--- in either terminal state lets the producer self-recover and advance to the next candidate --
--- feedback-based deferral of a DEMONSTRABLY stuck atom, NOT fabricated easy-first difficulty.
-local TERMINAL_LABELS = {
-  ["fkst-dev:blocked"] = true,
-  ["fkst-dev:impl-failed"] = true,
+-- github-devloop's append-only state marker is authoritative; `fkst-dev:*` labels are only a
+-- fallible projection of it. The one-at-a-time gate therefore reads marker lineage from the
+-- issue body/comments and never derives terminality from labels. This deliberately couples the
+-- producer to the versioned v1 marker contract: a detectable version/shape change fails loudly
+-- instead of silently restoring the stale-label deadlock seen on #373, #446, and #500.
+local DEVLOOP_STATE_MARKER_VERSION = "v1"
+local TERMINAL_DEVLOOP_STATES = {
+  ["blocked"] = true,
+  ["impl-failed"] = true,
+  ["merged"] = true,
+  ["declined"] = true,
 }
 
-function M.is_terminal_blocked(issue)
-  if type(issue) ~= "table" or type(issue.labels) ~= "table" then
-    return false
+local function latest_devloop_state_in_text(text, latest)
+  if type(text) ~= "string" then
+    return latest
   end
-  for _, label in ipairs(issue.labels) do
-    if type(label) == "table" and TERMINAL_LABELS[label.name] then
-      return true
+
+  local saw_marker = false
+  for version in text:gmatch("fkst:github%-devloop:state:([^%s>]+)") do
+    saw_marker = true
+    if version ~= DEVLOOP_STATE_MARKER_VERSION then
+      error("theory-selfgrowth: unsupported-devloop-state-marker: " .. tostring(version), 0)
     end
   end
-  return false
+
+  local parsed = false
+  for attributes in text:gmatch(
+    "<!%-%-%s*fkst:github%-devloop:state:v1%s+(.-)%s*%-%->") do
+    local state = attributes:match('state%s*=%s*"([^"]+)"')
+    if state == nil then
+      error("theory-selfgrowth: malformed-devloop-state-marker: missing state", 0)
+    end
+    latest = state
+    parsed = true
+  end
+  if saw_marker and not parsed then
+    error("theory-selfgrowth: malformed-devloop-state-marker: expected v1 HTML comment", 0)
+  end
+  return latest
+end
+
+function M.authoritative_devloop_state(issue)
+  if type(issue) ~= "table" then return nil end
+  local latest = latest_devloop_state_in_text(issue.body, nil)
+  if type(issue.comments) == "table" then
+    for _, comment in ipairs(issue.comments) do
+      if type(comment) == "table" then
+        latest = latest_devloop_state_in_text(comment.body, latest)
+      end
+    end
+  end
+  return latest
+end
+
+function M.is_terminal_request(issue)
+  return TERMINAL_DEVLOOP_STATES[M.authoritative_devloop_state(issue)] == true
 end
 
 -- Decide the next generation index and whether an open request already exists, from the
--- producer's own frontier-request issues (each { state = ..., body = ..., labels = ... }).
+-- producer's own frontier-request issues (each { state = ..., body = ..., comments = ... }).
 -- Issues are filtered to those actually carrying the producer-scoped marker in the body so an
 -- over-matching search never inflates the counter or lets another bot suppress this one.
 --   generation  = count of prior requests (any state) -> index for the NEXT request
---   open_exists = any prior request still open AND NOT terminal-blocked -> exclude firing
---                 (one ACTIVE at a time; a terminal-blocked request must not freeze generation)
+--   open_exists = any prior request still open without authoritative terminal state -> exclude
+--                 firing (one ACTIVE at a time; terminal requests do not freeze generation)
 function M.decide_generation(issues, bot_login)
   local producer_marker = M.producer_marker(bot_login)
   local generation = 0
@@ -144,7 +155,7 @@ function M.decide_generation(issues, bot_login)
         and issue.body:find(producer_marker, 1, true) ~= nil then
         generation = generation + 1
         local state = issue.state
-        if (state == "open" or state == "OPEN") and not M.is_terminal_blocked(issue) then
+        if (state == "open" or state == "OPEN") and not M.is_terminal_request(issue) then
           open_exists = true
         end
       end
@@ -320,34 +331,6 @@ local function assert_field(ok, name)
   if not ok then
     error("theory-selfgrowth: invalid-request-field: " .. tostring(name), 0)
   end
-end
-
-local function body_text(dedup_key, bot_login)
-  local producer_marker = M.producer_marker(bot_login)
-  return table.concat({
-    "Theory self-growth (CLAUDE.md 第22条 open-driven flywheel): the system PROPOSES a new",
-    "mathematical truth AND proves it, growing the library. Deliver as ONE conservative increment.",
-    "producer: " .. tostring(bot_login),
-    "frontier-request-marker: " .. producer_marker,
-    "",
-    "Propose ONE genuinely-new, non-trivial, worthwhile theorem about the golden integers ℤ[φ]",
-    "(`GoldenInt`), building ONLY on the already-CLOSED `D5/S0/Carrier/` library (Norm, Conj, Units,",
-    "Euclidean/`EuclideanDomain GoldenInt`, GoldenRatio, Ring, AlgebraicModel — all proved sorry-free).",
-    "Choose by mathematical judgment what is worthwhile and NOT already proven (美是罗盘, CLAUDE.md 第3条);",
-    "do NOT compute or fabricate any novelty/worth number (the substrate cannot, and must not fake it).",
-    "",
-    "Deliver: a real Lean F-layer theorem (NOT a `Unit` placeholder), PROVED (`lake build` green;",
-    "`#print axioms` shows NO `sorryAx` and NO custom/non-mathlib axiom), plus its mirroring Blueprint",
-    "(B) narrative. Place it at the address + classification the repo's OWN rules dictate — derive the",
-    "generality and target path from the classification + SL-003 capacity rules (a DERIVED consequence",
-    "is typically `generality: I`); do NOT force a fixed path or mirror a base node's `generality: G`.",
-    "",
-    "Honesty guards: NON-VACUITY — reject trivial/vacuous statements (e.g. `P ∨ True`, `Nonempty`-of-",
-    "trivial); pick a substantive claim. NOVELTY — search first; it must not already exist.",
-    "CONSERVATIVE EXTENSION — append a new node only; never touch a frozen node.",
-    "",
-    "dedup-marker: " .. tostring(dedup_key),
-  }, "\n")
 end
 
 return M

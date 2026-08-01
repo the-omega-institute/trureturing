@@ -16,7 +16,7 @@ public sealed partial class PrShepherdRecalculationTests
         Assert.Empty(fixture.MutationCalls());
         AssertInOrder(
             result.Log,
-            "DRYRUN #1 BEHIND stale derivations -> ensure worktree",
+            "DRYRUN #1 RECALCULATE -> ensure worktree",
             "DRYRUN #1 fetch origin/dev and origin/feature; verify observed OIDs",
             "DRYRUN #1 checkout feature; merge origin/dev (derived conflicts take dev)",
             "DRYRUN #1 run make lean-report",
@@ -110,5 +110,58 @@ public sealed partial class PrShepherdRecalculationTests
         Assert.Equal(
             2,
             result.Log.Split("DRYRUN #1 head=", StringSplitOptions.None).Length - 1);
+    }
+
+    [Fact]
+    public void StaleGithubBaseOidDoesNotPreventRecalculationWhenLocalBaseIsStable()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ShepherdFixture(staleBaseRefOid: true);
+
+        var result = fixture.Run();
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.NotEqual(fixture.GithubBaseRefOid, fixture.BaseHead);
+        Assert.NotEqual(fixture.OriginalHead, fixture.RemoteHead());
+        Assert.Equal(
+            ["worktree", "lean-report", "emit", "ingest", "echo-verify", "ledger-append", "emit-check", "push"],
+            fixture.MutationCalls());
+        Assert.Contains("RECALCULATE -> 本地 merge+regen+push 完成", result.Log);
+    }
+
+    [Fact]
+    public void HeadChangingDuringFetchStopsAndLogsExpectedAndActualOids()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ShepherdFixture(moveHeadDuringFetch: true);
+
+        var result = fixture.Run();
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(fixture.AttackerHead, fixture.RemoteHead());
+        Assert.Equal(["worktree"], fixture.MutationCalls());
+        Assert.Contains(
+            $"head 已漂移 expected={fixture.OriginalHead[..12]} actual={fixture.AttackerHead[..12]}",
+            result.Log,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain("base 已漂移", result.Log, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void BaseChangingDuringFetchStopsAndLogsExpectedAndActualOids()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ShepherdFixture(moveBaseDuringFetch: true);
+
+        var result = fixture.Run();
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(fixture.OriginalHead, fixture.RemoteHead());
+        Assert.Equal(["worktree"], fixture.MutationCalls());
+        Assert.Contains(
+            $"base 已漂移 expected={fixture.BaseHead[..12]} actual={fixture.MovedBaseHead[..12]}",
+            result.Log,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain("head 已漂移", result.Log, StringComparison.Ordinal);
     }
 }

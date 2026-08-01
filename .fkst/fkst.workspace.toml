@@ -4,7 +4,7 @@ units = ["packages/theory-selfgrowth"]
 [[external_sources]]
 id = "fkst-packages-platform"
 git = "https://github.com/ChronoAIProject/fkst-packages.git"
-rev = "8e82f4bc8bcc6de0e4a2107a25260ab45d606cbb"
+rev = "07ed65100c8f189ee718aca6bd757f25694c62d0"
 packages = [
   "github-proxy",
   "consensus",
@@ -18,6 +18,5 @@ packages = [
   "github-devloop-ops",
   "github-external-pr-intake",
   "idle-detector",
-  "archaudit",
 ]
 libraries = ["contract", "workflow", "testkit", "forge", "devloop"]

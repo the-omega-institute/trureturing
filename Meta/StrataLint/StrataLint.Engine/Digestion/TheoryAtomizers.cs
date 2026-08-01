@@ -15,9 +15,93 @@ internal sealed record DigestionAtom(
     int EndByte,
     ImmutableArray<byte> RawBytes,
     DigestionFingerprints Fingerprints,
-    ImmutableArray<DigestionContext> Context);
+    ImmutableArray<DigestionContext> Context,
+    DigestionAtomStatusMarker StatusMarker)
+{
+    internal DigestionAtom(
+        string astPath,
+        int startByte,
+        int endByte,
+        ImmutableArray<byte> rawBytes,
+        DigestionFingerprints fingerprints,
+        ImmutableArray<DigestionContext> context)
+        : this(astPath, startByte, endByte, rawBytes, fingerprints, context, DigestionAtomStatusMarker.Absent)
+    {
+    }
+
+    internal static DigestionAtom FromFrozenCas(string astPath, ImmutableArray<byte> rawBytes) =>
+        new(
+            astPath,
+            0,
+            rawBytes.Length,
+            rawBytes,
+            DigestionFingerprint.Compute(rawBytes.AsSpan()),
+            [],
+            DigestionAtomStatusMarker.Parse(rawBytes.AsSpan()));
+}
 
 internal sealed record DigestionSlice(bool IsClaim, ImmutableArray<byte> RawBytes);
+
+internal enum DigestionAtomStatusMarkerKind
+{
+    Absent,
+    Valid,
+    Malformed,
+}
+
+internal sealed record DigestionAtomStatusMarker(
+    DigestionAtomStatusMarkerKind Kind,
+    string? Status,
+    string? Qualifier)
+{
+    private static readonly UTF8Encoding StrictUtf8 = new(false, true);
+    internal static readonly DigestionAtomStatusMarker Absent =
+        new(DigestionAtomStatusMarkerKind.Absent, null, null);
+
+    internal static DigestionAtomStatusMarker Parse(ReadOnlySpan<byte> atomBytes)
+    {
+        var atomText = StrictUtf8.GetString(atomBytes);
+        if (!atomText.StartsWith("**", StringComparison.Ordinal))
+        {
+            return Absent;
+        }
+
+        var titleEnd = atomText.IndexOf("**", 2, StringComparison.Ordinal);
+        if (titleEnd < 0)
+        {
+            return Absent;
+        }
+
+        var suffix = atomText.AsSpan(titleEnd + 2);
+        var whitespaceLength = 0;
+        while (whitespaceLength < suffix.Length && char.IsWhiteSpace(suffix[whitespaceLength]))
+        {
+            whitespaceLength++;
+        }
+
+        if (whitespaceLength >= suffix.Length || suffix[whitespaceLength] != '〔')
+        {
+            return Absent;
+        }
+
+        var markerStart = titleEnd + 3 + whitespaceLength;
+        var markerEnd = atomText.IndexOf('〕', markerStart);
+        var marker = markerEnd < 0 ? atomText[markerStart..] : atomText[markerStart..markerEnd];
+        var separator = marker.IndexOf(';', StringComparison.Ordinal);
+        var status = separator < 0 ? marker : marker[..separator];
+        var qualifier = separator < 0 ? null : marker[(separator + 1)..];
+        var isPlainClosed = marker == "closed";
+        var isQualifiedClosed = status == "closed"
+            && separator == "closed".Length
+            && marker.LastIndexOf(';') == separator
+            && qualifier is not null
+            && !string.IsNullOrWhiteSpace(qualifier);
+        var kind = whitespaceLength == 0 && markerEnd >= 0 && (isPlainClosed || isQualifiedClosed)
+            ? DigestionAtomStatusMarkerKind.Valid
+            : DigestionAtomStatusMarkerKind.Malformed;
+        return new DigestionAtomStatusMarker(kind, status, qualifier);
+    }
+}
 
 internal sealed class AtomizedTheoryDocument
 {
@@ -469,7 +553,8 @@ internal static class MarkdownAstAtomizer
                 end,
                 atomBytes,
                 DigestionFingerprint.Compute(atomBytes.AsSpan()),
-                candidate.Context));
+                candidate.Context,
+                DigestionAtomStatusMarker.Parse(atomBytes.AsSpan())));
             cursor = end;
         }
 

@@ -63,19 +63,21 @@ internal static partial class RepositoryRules
     internal const int DirectoryFileLimit = 12;
 
     // SL-003 capacity exclusions: theory inputs, the Lake manifest, the backfill
-    // inventory, canonical CAS blobs, and emitted Blueprint projections (FILEMAP
-    // kind=generated, produced by ScribeEmitter, verified by emit-check) are not
-    // artifacts the capacity pressure rule bounds. A Blueprint document's
-    // structural slot is its .scribe.cs source; its GID must name an existing
-    // Lean module and the definition path is bijective with that GID, so
-    // bounding the projections would cap a lawful twelve-module Lean bucket at
-    // six blueprinted modules. Single source shared with the CapacityPolicy
-    // dotnet-test net.
+    // inventory, canonical CAS blobs, per-atom formalization receipts, and emitted
+    // Blueprint projections are not artifacts the capacity pressure rule bounds.
+    // Machine-derived inventories grow one entry per admitted unit and are never
+    // navigated as content buckets. A Blueprint document's structural slot is its
+    // .scribe.cs source (FILEMAP kind=generated for the .md, produced by
+    // ScribeEmitter and verified by emit-check); its GID must name an existing Lean
+    // module and the definition path is bijective with that GID, so bounding the
+    // projections would cap a lawful twelve-module Lean bucket at six blueprinted
+    // modules. Single source shared with the CapacityPolicy dotnet-test net.
     internal static bool IsCapacityExcluded(string path) =>
         path.StartsWith("docs/develop/", StringComparison.Ordinal)
         || string.Equals(path, "lake-manifest.json", StringComparison.Ordinal)
         || string.Equals(path, BackfillInventoryLoader.RelativePath, StringComparison.Ordinal)
         || DigestionCasStore.IsCanonicalPath(path)
+        || path.StartsWith(DigestionFormalizationReceipt.RootPath, StringComparison.Ordinal)
         || (path.StartsWith("Blueprint/", StringComparison.Ordinal)
             && path.EndsWith(".md", StringComparison.Ordinal));
 

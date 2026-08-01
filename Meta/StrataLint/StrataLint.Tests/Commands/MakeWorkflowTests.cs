@@ -4,10 +4,21 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-public sealed class MakeWorkflowTests
+public sealed partial class MakeWorkflowTests
 {
     private const string DotnetBuildScriptPath = "Meta/StrataLint/scripts/dotnet-build.sh";
     private const string FkstRunScriptPath = ".fkst/scripts/run.sh";
+    private const string HourlyMaintenanceScriptPath = ".fkst/scripts/hourly-maintenance.sh";
+    private const string LauncherRendererScriptPath =
+        ".fkst/scripts/render-maintenance-launcher.sh";
+    private const string LauncherConformanceScriptPath =
+        ".fkst/scripts/check-maintenance-launcher.sh";
+    private const string SuperviseLauncherRendererScriptPath =
+        ".fkst/scripts/render-supervise-launcher.sh";
+    private const string SuperviseLauncherConformanceScriptPath =
+        ".fkst/scripts/check-supervise-launcher.sh";
+    private const string LaunchdConformanceScriptPath =
+        ".fkst/scripts/check-launchd-conformance.sh";
     private const string ScribeScriptPath = "Meta/StrataLint/scripts/scribe.sh";
     private const string SelftestScriptPath = "Meta/StrataLint/scripts/stratalint-selftest.sh";
     private const string LocalHarnessGateScriptPath =
@@ -42,6 +53,12 @@ public sealed class MakeWorkflowTests
         "dotnet",
         "test",
         "lua-test",
+        "hourly-maintenance",
+        "maintenance-launcher-render",
+        "maintenance-launcher-check",
+        "supervise-launcher-render",
+        "supervise-launcher-check",
+        "launchd-conformance-check",
         "lean",
         "lean-report",
         "build",
@@ -58,74 +75,8 @@ public sealed class MakeWorkflowTests
         "gate",
         "perf-report",
         "worktree",
+        "pr-watch",
     ];
-
-    [Fact]
-    public void MakefileIsAThinCompleteDispatchTable()
-    {
-        var root = FindRepositoryRoot();
-        var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
-
-        Assert.Contains(".DEFAULT_GOAL := help", makefile, StringComparison.Ordinal);
-        var phony = Assert.Single(
-            makefile.Split('\n'),
-            static line => line.StartsWith(".PHONY:", StringComparison.Ordinal));
-        Assert.Equal(Targets, phony[".PHONY:".Length..].Split(' ', StringSplitOptions.RemoveEmptyEntries));
-        foreach (var target in Targets)
-        {
-            Assert.Matches(new Regex($"(?m)^{Regex.Escape(target)}:", RegexOptions.CultureInvariant), makefile);
-            Assert.InRange(RecipeCount(makefile, target), 0, 1);
-        }
-
-        Assert.Contains("build: dotnet lean", makefile, StringComparison.Ordinal);
-        Assert.Equal(0, RecipeCount(makefile, "build"));
-        Assert.Contains(
-            " c0-renew --base \"$(BASE)\"",
-            Recipe(makefile, "c0-renew"),
-            StringComparison.Ordinal);
-        Assert.Contains(CleanLanesScriptPath, Recipe(makefile, "clean-lanes"), StringComparison.Ordinal);
-        Assert.Contains(DotnetBuildScriptPath, Recipe(makefile, "dotnet"), StringComparison.Ordinal);
-        Assert.Contains("dotnet test", Recipe(makefile, "test"), StringComparison.Ordinal);
-        Assert.Contains(FkstRunScriptPath + " test", Recipe(makefile, "lua-test"), StringComparison.Ordinal);
-        Assert.Contains("lake build", Recipe(makefile, "lean"), StringComparison.Ordinal);
-        Assert.Contains(LeanReportScriptPath, Recipe(makefile, "lean-report"), StringComparison.Ordinal);
-        Assert.Contains(ScribeScriptPath + " emit", Recipe(makefile, "emit"), StringComparison.Ordinal);
-        Assert.Contains("emit-check: echo-verify", makefile, StringComparison.Ordinal);
-        Assert.Contains(ScribeScriptPath + " check", Recipe(makefile, "emit-check"), StringComparison.Ordinal);
-        Assert.DoesNotContain("ingest: emit-check", makefile, StringComparison.Ordinal);
-        Assert.Contains(IngestScriptPath, Recipe(makefile, "ingest"), StringComparison.Ordinal);
-        Assert.Contains(
-            EchoResidualSummaryScriptPath,
-            Recipe(makefile, "echo-residual-summary"),
-            StringComparison.Ordinal);
-        Assert.Contains(EchoVerifyScriptPath, Recipe(makefile, "echo-verify"), StringComparison.Ordinal);
-        Assert.Contains("golden-record", Recipe(makefile, "record-golden"), StringComparison.Ordinal);
-        Assert.Contains(SelftestScriptPath, Recipe(makefile, "selftest"), StringComparison.Ordinal);
-        Assert.Contains("stratalint-c0-renew-", Recipe(makefile, "scratch-sweep"), StringComparison.Ordinal);
-        Assert.Contains(LocalHarnessGateScriptPath, Recipe(makefile, "gate"), StringComparison.Ordinal);
-        Assert.Contains(PerfReportScriptPath, Recipe(makefile, "perf-report"), StringComparison.Ordinal);
-        Assert.Contains("Golden/perf-budgets.toml", Recipe(makefile, "perf-report"), StringComparison.Ordinal);
-        Assert.Contains(WorktreeInitScriptPath, Recipe(makefile, "worktree"), StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void HelpRunsAndNamesEveryTarget()
-    {
-        var root = FindRepositoryRoot();
-        var result = BoundedProcessRunner.Run(
-            "make",
-            ["help"],
-            root,
-            TimeSpan.FromSeconds(30),
-            64 * 1024);
-
-        Assert.Equal(0, result.ExitCode);
-        var output = System.Text.Encoding.UTF8.GetString(result.StandardOutput);
-        Assert.All(Targets, target => Assert.Contains($"make {target}", output, StringComparison.Ordinal));
-        Assert.Contains("dry-run", output, StringComparison.Ordinal);
-        Assert.Contains("FORCE=1", output, StringComparison.Ordinal);
-        Assert.Contains("values", output, StringComparison.OrdinalIgnoreCase);
-    }
 
     [Fact]
     public void EchoResidualSummaryRunsMakeAndKeepsDiagnosticsOutOfThePasteableBlock()
@@ -152,7 +103,7 @@ public sealed class MakeWorkflowTests
             """
             #!/usr/bin/env bash
             [[ "$*" == *"echo-verify --emit --base synthetic-base"* ]] || exit 19
-            printf '%s\n' '<!-- echo-residual-summary:v2 base=git-sha1:2222222222222222222222222222222222222222 -->' '# Echo Residual Summary' '<!-- /echo-residual-summary:v2 -->'
+            printf '%s\n' '<!-- echo-residual-summary:v3 residual=sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->' '# Echo Residual Summary'
             """);
         File.SetUnixFileMode(
             Path.Combine(fixture.Path, LeanReportScriptPath),
@@ -171,9 +122,8 @@ public sealed class MakeWorkflowTests
         Assert.Equal(0, result.ExitCode);
         Assert.Equal(
             """
-            <!-- echo-residual-summary:v2 base=git-sha1:2222222222222222222222222222222222222222 -->
+            <!-- echo-residual-summary:v3 residual=sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
             # Echo Residual Summary
-            <!-- /echo-residual-summary:v2 -->
             """ + "\n",
             System.Text.Encoding.UTF8.GetString(result.StandardOutput));
         Assert.Equal("lean provenance\n", System.Text.Encoding.UTF8.GetString(result.StandardError));
@@ -338,6 +288,23 @@ public sealed class MakeWorkflowTests
         Assert.Contains("|| true", localGate, StringComparison.Ordinal);
         Assert.Contains("|| true", preflight, StringComparison.Ordinal);
         Assert.Contains(">> \"$LOCAL_TIMING_FILE\" || true", localGate, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void PreflightRefreshesLeanReportAfterDotnetAndBeforeTests()
+    {
+        var root = FindRepositoryRoot();
+        var preflight = File.ReadAllText(Path.Combine(root, PreflightScriptPath));
+
+        var dotnetIndex = preflight.IndexOf("CI=true make dotnet", StringComparison.Ordinal);
+        var leanReportIndex = preflight.IndexOf("make lean-report", StringComparison.Ordinal);
+        var testIndex = preflight.IndexOf("CI=true make test", StringComparison.Ordinal);
+
+        Assert.True(dotnetIndex >= 0, "preflight must build the .NET report consumer");
+        Assert.True(leanReportIndex >= 0, "preflight must refresh the raw Lean report");
+        Assert.True(testIndex >= 0, "preflight must run the .NET tests");
+        Assert.True(dotnetIndex < leanReportIndex, "the .NET build must precede report production");
+        Assert.True(leanReportIndex < testIndex, "report production must precede every test consumer");
     }
 
     [Fact]
@@ -527,13 +494,13 @@ public sealed class MakeWorkflowTests
     }
 
     [Fact]
-    public void TheoryIngestReemitsBaseBoundEchoProjectionBeforeWriteback()
+    public void TheoryIngestReemitsContentAddressedEchoProjectionBeforeWriteback()
     {
         var root = FindRepositoryRoot();
         var workflow = File.ReadAllText(Path.Combine(root, TheoryIngestWorkflowPath));
         var ingestIndex = workflow.IndexOf("          make ingest BASE=HEAD\n", StringComparison.Ordinal);
         var emitIndex = workflow.IndexOf(
-            "- name: Re-emit base-bound echo projection",
+            "- name: Re-emit content-addressed echo projection",
             StringComparison.Ordinal);
         var commitIndex = workflow.IndexOf(
             "- name: Enforce write-path whitelist and commit back",

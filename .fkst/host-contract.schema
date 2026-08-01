@@ -1,0 +1,37 @@
+# Host configuration contract. Parsed as pipe-delimited data; never sourced by maintenance tools.
+# name|type|required|source
+schema_version|1
+BIN|absolute_path|true|host
+FKST_BASH_BIN|absolute_path|false|host
+FKST_ZSH_BIN|absolute_path|false|host
+FKST_PYTHON_BIN|absolute_path|false|host
+FKST_HOST_ROOT|absolute_path|true|host
+FKST_PLATFORM_ROOT|absolute_path|true|host
+FKST_DURABLE_ROOT|absolute_path|true|host
+FKST_RUNTIME_ROOT|absolute_path|true|host
+FKST_RATE_POOL_ROOT|absolute_path|true|host
+FKST_WORKFLOW_CATALOG_ROOT|absolute_path|true|host
+PATH|path_list|true|host
+FKST_GITHUB_BOT_LOGIN|identity|true|host
+FKST_DEVLOOP_MANAGED_BOT_LOGINS|identity_list|true|host
+FKST_DEVLOOP_INTEGRATION_BRANCH|identity|true|host
+FKST_RUN_SCRIPT|absolute_path|true|host
+FKST_MAINTENANCE_LOG|absolute_path|true|host
+FKST_MAINTENANCE_LAUNCHER_LOG|absolute_path|true|host
+FKST_WORKTREE_ROOT|absolute_path|true|host
+FKST_REPORT_SLOT_ROOT|absolute_path|true|host
+FKST_TIMEOUT_BIN|absolute_path|true|host
+FKST_LAUNCHD_LABEL|label|true|host
+FKST_MAINTENANCE_LAUNCHD_LABEL|label|true|host
+FKST_MAINTENANCE_LAUNCHER_PATH|absolute_path|true|host
+FKST_SUPERVISE_LAUNCHER_LOG|absolute_path|false|host
+FKST_SUPERVISE_LAUNCHER_PATH|absolute_path|false|host
+FKST_GITHUB_WRITE|boolean|true|repository
+FKST_GITHUB_AUTHORIZE_ORG_MEMBERS|boolean|true|repository
+FKST_GITHUB_PROXY_POLL_LABEL_PREFIX|label_prefix|true|repository
+FKST_DEVLOOP_ROLLUP_MERGE|identity|true|repository
+FKST_GITHUB_REPO|repository|true|repository
+FKST_DEVLOOP_UPSTREAM_BRANCH|identity|true|repository
+FKST_DEVLOOP_LOCAL_TEST_COMMAND|command|true|repository
+FKST_CODEX_TIMEOUT_IMPLEMENT|positive_integer|true|repository
+FKST_CODEX_TIMEOUT_FIX|positive_integer|true|repository

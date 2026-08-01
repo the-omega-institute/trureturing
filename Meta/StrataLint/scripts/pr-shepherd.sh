@@ -3,7 +3,7 @@
 #
 # 职责:开 PR 到 dev 并挂 auto-merge;轮询在飞 PR。BEHIND 且最新 admission
 # 仅因 dev 前进导致派生物过期时,在持久 worktree 合并并走 canonical 重算链;
-# 其余 BEHIND 仍由本地 gh 身份 update-branch。CONFLICTING 只告警不代解。
+# 其余 BEHIND 仍由本地 gh 身份 update-branch。CONFLICTING 由本地冲突集分类。
 #
 # 用法:
 #   pr-shepherd.sh open <head-branch> <title> [body-file]   开 PR + 挂 auto-merge
@@ -78,9 +78,16 @@ has_expiry_fingerprint() {
     && "$out" == *"residual"* ]]
 }
 
+# Conflicts a machine can settle by rebuilding rather than by reading intent. The frozen
+# ledger belongs here even though it is append-only source: two lanes that each freeze a
+# module always collide textually, yet the correct result is never a hand-merge of the two
+# tails -- it is the dev tail plus this branch's freeze re-attested from its own Lean report,
+# which run_derivation_chain does below. Without this, every D5 delivery whose sibling merges
+# first stalls as "needs a semantic merge" and waits for a human that this harness has none of.
 is_derived_conflict() {
   case "$1" in
     Meta/StrataLint/Generated/*|Generated/*|Evidence/D5/values.json) return 0 ;;
+    Meta/StrataLint/Golden/Frozen/events.jsonl) return 0 ;;
     *) return 1 ;;
   esac
 }
@@ -94,7 +101,7 @@ branch_slug() {
 
 dryrun_recalculation() {
   local num="$1" head="$2" workspace="$3"
-  log "DRYRUN #$num BEHIND stale derivations -> ensure worktree path=$workspace"
+  log "DRYRUN #$num RECALCULATE -> ensure worktree path=$workspace"
   log "DRYRUN #$num fetch origin/dev and origin/$head; verify observed OIDs"
   log "DRYRUN #$num checkout $head; merge origin/dev (derived conflicts take dev)"
   log "DRYRUN #$num run make lean-report"
@@ -107,7 +114,7 @@ dryrun_recalculation() {
 }
 
 prepare_worktree() {
-  local num="$1" head="$2" expected_head="$3" expected_base="$4" workspace="$5" slug="$6"
+  local num="$1" head="$2" expected_head="$3" workspace="$4" slug="$5"
   if [[ ! -e "$workspace/.git" ]]; then
     mkdir -p "$CACHE_ROOT"
     if ! make -C "$ROOT" --no-print-directory worktree \
@@ -121,6 +128,8 @@ prepare_worktree() {
     return 1
   fi
 
+  local observed_base
+  observed_base="$(git -C "$workspace" rev-parse "refs/remotes/$REMOTE/dev")"
   git -C "$workspace" merge --abort >/dev/null 2>&1 || true
   git -C "$workspace" reset --hard HEAD >/dev/null
   git -C "$workspace" clean -fd >/dev/null
@@ -131,11 +140,18 @@ prepare_worktree() {
     return 1
   fi
 
-  local fetched_head fetched_base
+  local fetched_head fetched_base drifted=0
   fetched_head="$(git -C "$workspace" rev-parse "refs/remotes/$REMOTE/$head")"
   fetched_base="$(git -C "$workspace" rev-parse "refs/remotes/$REMOTE/dev")"
-  if [[ "$fetched_head" != "$expected_head" || "$fetched_base" != "$expected_base" ]]; then
-    log "SWEEP #$num head/base 已漂移,放弃本轮(下轮重试)"
+  if [[ "$fetched_head" != "$expected_head" ]]; then
+    log "SWEEP #$num head 已漂移 expected=${expected_head:0:12} actual=${fetched_head:0:12},放弃本轮(下轮重试)"
+    drifted=1
+  fi
+  if [[ "$fetched_base" != "$observed_base" ]]; then
+    log "SWEEP #$num base 已漂移 expected=${observed_base:0:12} actual=${fetched_base:0:12},放弃本轮(下轮重试)"
+    drifted=1
+  fi
+  if [[ "$drifted" -ne 0 ]]; then
     return 1
   fi
   git -C "$workspace" checkout --detach "$fetched_head" >/dev/null
@@ -225,6 +241,17 @@ run_derivation_chain() {
   fi
   mv "$projection" "$workspace/Generated/echo-residual-summary.md"
 
+  # Freeze last: every step above rewrites tracked bytes, and an attestation taken before
+  # them binds a blob that no longer exists. Appending here also repairs a branch that
+  # produced a closed module without ever freezing it, which SL-008 otherwise rejects.
+  if ! (cd "$workspace" && credentialless "$isolated_home" dotnet run \
+    --project Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj \
+    --configuration Release -- ledger-append \
+    --candidate-lean-report .lake/build/stratalint/raw-lean-report.json); then
+    rm -rf "$isolated_home"
+    log "SWEEP #$num ledger-append 失败,不 push"; return 1
+  fi
+
   if ! credentialless "$isolated_home" \
     make -C "$workspace" --no-print-directory emit-check BASE="$REMOTE/dev"; then
     rm -rf "$isolated_home"
@@ -289,8 +316,8 @@ release_branch_lock() {
 }
 
 recalculate_pr_locked() {
-  local num="$1" head="$2" expected_head="$3" expected_base="$4" workspace="$5" slug="$6"
-  prepare_worktree "$num" "$head" "$expected_head" "$expected_base" "$workspace" "$slug" \
+  local num="$1" head="$2" expected_head="$3" workspace="$4" slug="$5"
+  prepare_worktree "$num" "$head" "$expected_head" "$workspace" "$slug" \
     || return 1
   merge_dev "$num" "$head" "$workspace" || return 1
   run_derivation_chain "$num" "$workspace" || return 1
@@ -309,11 +336,11 @@ recalculate_pr_locked() {
     log "SWEEP #$num push 非 FF 被拒,放弃本轮(下轮重试)"
     return 1
   fi
-  log "SWEEP #$num BEHIND -> 本地 merge+regen+push 完成 head=$head"
+  log "SWEEP #$num RECALCULATE -> 本地 merge+regen+push 完成 head=$head"
 }
 
 recalculate_pr() {
-  local num="$1" head="$2" expected_head="$3" expected_base="$4" slug workspace lock rc=0
+  local num="$1" head="$2" expected_head="$3" slug workspace lock rc=0
   git check-ref-format --branch "$head" >/dev/null \
     || { log "SWEEP #$num 非法 head branch=$head,放弃本轮"; return 1; }
   slug="$(branch_slug "$head")"
@@ -328,7 +355,7 @@ recalculate_pr() {
   lock="$CACHE_ROOT/lock-$slug"
   acquire_branch_lock "$num" "$lock" || return 1
   recalculate_pr_locked \
-    "$num" "$head" "$expected_head" "$expected_base" "$workspace" "$slug" || rc=$?
+    "$num" "$head" "$expected_head" "$workspace" "$slug" || rc=$?
   release_branch_lock "$lock"
   return "$rc"
 }
@@ -375,14 +402,15 @@ sweep() {
     --jq '.[] | select(.autoMergeRequest != null) | ((.statusCheckRollup | map(select(.__typename == "CheckRun" and .name == "Content-addressed dev baseline admission")) | sort_by(.startedAt // .completedAt // "") | last) // {}) as $admission | [.number,.mergeable,.mergeStateStatus,.headRefName,.headRefOid,.baseRefOid,(.statusCheckRollup|length),($admission.conclusion // "-"),($admission.detailsUrl // "-")] | @tsv' |
   while IFS=$'\t' read -r num mergeable mstate head head_oid base_oid checks admission_conclusion admission_url; do
     case "$mergeable:$mstate" in
-      MERGEABLE:BEHIND)
-        if has_expiry_fingerprint "$admission_conclusion" "$admission_url"; then
+      MERGEABLE:BEHIND|CONFLICTING:*)
+        if [[ "$mergeable" == "CONFLICTING" ]] \
+          || has_expiry_fingerprint "$admission_conclusion" "$admission_url"; then
           if [[ "$recalculated" == *" $num "* ]]; then
             log "SWEEP #$num 本轮已重算一次,跳过重复项"
             continue
           fi
           recalculated+="$num "
-          recalculate_pr "$num" "$head" "$head_oid" "$base_oid" || true
+          recalculate_pr "$num" "$head" "$head_oid" || true
         elif [[ "$DRYRUN" == "1" ]]; then
           log "DRYRUN #$num BEHIND -> update-branch(本地身份,checks 会触发)"
         else
@@ -392,9 +420,6 @@ sweep() {
             log "SWEEP #$num update-branch 失败: $(printf '%s' "$out" | head -c 100)"
           fi
         fi
-        ;;
-      CONFLICTING:*)
-        log "ALERT #$num CONFLICTING head=$head 需语义合并(派 shepherd lane,本器不代解)"
         ;;
       *)
         # BLOCKED/UNKNOWN 且 head 无任何 check:多为 bot push 死锁。

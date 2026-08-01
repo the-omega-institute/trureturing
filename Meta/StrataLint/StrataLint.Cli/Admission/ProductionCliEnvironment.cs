@@ -261,18 +261,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             var manifest = ((ManifestLoadOutcome.Loaded)manifestOutcome).Syntax;
             return RouteEngine.Route(registry.Policy, manifest) switch
             {
-                RouteOutcome.Routed routed => new CommandResult(
-                    true,
-                    JsonSerializer.Serialize(
-                        new
-                        {
-                            gid = routed.Result.Gid.Value,
-                            path = routed.Result.Path.Value,
-                            stratum = routed.Result.Stratum?.ToString(),
-                            skeleton = routed.Result.Skeleton,
-                        },
-                        RouteJsonOptions) + "\n",
-                    string.Empty),
+                RouteOutcome.Routed routed => RenderRoute(registry.Policy, routed),
                 RouteOutcome.Rejected rejected => new CommandResult(
                     false,
                     string.Empty,
@@ -282,6 +271,99 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         catch (Exception exception)
         {
             return new CommandResult(false, string.Empty, $"INFRASTRUCTURE_FAILURE {exception.Message}\n");
+        }
+    }
+
+    private CommandResult RenderRoute(ValidatedPolicy policy, RouteOutcome.Routed routed)
+    {
+        var capacityFailure = routed.Result.Gid.ToTarget() switch
+        {
+            Target.Formal formal => RouteCapacityPreflight.Evaluate(
+                repository.ReadCurrent(),
+                policy,
+                routed.Result.Stratum,
+                formal),
+            Target.Blueprint blueprint => RouteCapacityPreflight.Evaluate(
+                repository.ReadCurrent(),
+                policy,
+                routed.Result.Stratum,
+                blueprint),
+            _ => null,
+        };
+        if (capacityFailure is not null)
+        {
+            return new CommandResult(false, string.Empty, $"SL-003 route: {capacityFailure}\n");
+        }
+
+        return new CommandResult(
+            true,
+            JsonSerializer.Serialize(
+                new
+                {
+                    gid = routed.Result.Gid.Value,
+                    path = routed.Result.Path.Value,
+                    stratum = routed.Result.Stratum?.ToString(),
+                    skeleton = routed.Result.Skeleton,
+                },
+                RouteJsonOptions) + "\n",
+            string.Empty);
+    }
+
+    public ExplicitCommandResult ValidateBlueprintPins(IReadOnlyList<string> arguments)
+    {
+        try
+        {
+            if (arguments.Count != 1)
+            {
+                return new ExplicitCommandResult(
+                    2,
+                    string.Empty,
+                    "USAGE: StrataLint validate-blueprint-pins PIN_MANIFEST|-\n");
+            }
+
+            var manifestBytes = arguments[0] == "-"
+                ? ReadStandardInput()
+                : ReadRepositoryFile(arguments[0]);
+            var loaded = BlueprintPinManifestLoader.Load(manifestBytes);
+            if (loaded is BlueprintPinManifestLoadOutcome.Rejected malformed)
+            {
+                return new ExplicitCommandResult(
+                    1,
+                    $"BLUEPRINT_PINS_REJECTED manifest: {malformed.Message}\n",
+                    string.Empty);
+            }
+
+            var manifest = ((BlueprintPinManifestLoadOutcome.Loaded)loaded).Manifest;
+            var outcome = BlueprintPinValidator.Validate(
+                LoadRegistry().Policy,
+                Decode(repository.ReadCurrent()),
+                manifest);
+            if (outcome is BlueprintPinValidationOutcome.Rejected rejected)
+            {
+                return new ExplicitCommandResult(
+                    1,
+                    string.Concat(rejected.Diagnostics.Select(
+                        static diagnostic => $"BLUEPRINT_PINS_REJECTED {diagnostic}\n")),
+                    string.Empty);
+            }
+
+            var accepted = (BlueprintPinValidationOutcome.Accepted)outcome;
+            var output = $"BLUEPRINT_PINS_ACCEPTED gid={accepted.TargetGid} "
+                + $"generality={accepted.Generality} anchors={accepted.AnchorCount} "
+                + $"imports={accepted.ImportCount}\n";
+            foreach (var unverified in accepted.Unverified)
+            {
+                output += $"ASSUMED-UNVERIFIED {unverified}\n";
+            }
+
+            return new ExplicitCommandResult(0, output, string.Empty);
+        }
+        catch (Exception exception)
+        {
+            return new ExplicitCommandResult(
+                2,
+                string.Empty,
+                $"BLUEPRINT_PINS_INFRASTRUCTURE {exception.Message}\n");
         }
     }
 
@@ -426,7 +508,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
 
             var target = arguments[index] switch
             {
-                "--protected-base" or "--merge-base" when protectedBase is null => 0,
+                "--protected-base" when protectedBase is null => 0,
                 "--candidate-lean-report" when candidateLeanReport is null => 1,
                 "--baseline-lean-report" when baselineLeanReport is null => 2,
                 "--frozen-evidence-root" when frozenEvidenceRoot is null => 3,

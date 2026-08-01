@@ -306,3 +306,109 @@ public static class RouteEngine
     private static bool SafeSegment(string value) =>
         value is not "." and not ".." && SafeSegmentPattern.IsMatch(value);
 }
+
+internal static class RouteCapacityPreflight
+{
+    internal static string? Evaluate(
+        RawRepositorySnapshot repository,
+        ValidatedPolicy policy,
+        Stratum? stratum,
+        Target.Formal target) =>
+        Evaluate(repository, policy, stratum, ProjectedOutputs(target));
+
+    internal static string? Evaluate(
+        RawRepositorySnapshot repository,
+        ValidatedPolicy policy,
+        Stratum? stratum,
+        Target.Blueprint target) =>
+        Evaluate(repository, policy, stratum, ProjectedOutputs(target));
+
+    private static string? Evaluate(
+        RawRepositorySnapshot repository,
+        ValidatedPolicy policy,
+        Stratum? stratum,
+        IEnumerable<string> projectedOutputs)
+    {
+        ArgumentNullException.ThrowIfNull(repository);
+        ArgumentNullException.ThrowIfNull(policy);
+
+        var currentPaths = repository.Entries
+            .Select(static entry => entry.Path)
+            .Where(static path => !RepositoryRules.IsCapacityExcluded(path))
+            .Distinct(StringComparer.Ordinal)
+            .ToHashSet(StringComparer.Ordinal);
+        var stratumDomains = stratum is { } routeStratum
+            ? policy.Domains
+                .Where(item => item.Value == routeStratum)
+                .Select(static item => item.Key.Value)
+                .ToArray()
+            : [];
+        var failures = projectedOutputs
+            .Where(static path => !RepositoryRules.IsCapacityExcluded(path))
+            .GroupBy(DirectoryOf, StringComparer.Ordinal)
+            .Select(group => CapacityFailure(currentPaths, stratumDomains, group.Key, group))
+            .Where(static failure => failure is not null)
+            .Select(static failure => failure!)
+            .ToArray();
+
+        return failures.Length == 0 ? null : string.Join(" ", failures);
+    }
+
+    private static IEnumerable<string> ProjectedOutputs(Target.Formal target)
+    {
+        const string blueprintPrefix = "Blueprint/";
+        var routedPath = target.Path.Value;
+        var stem = routedPath[..^".lean".Length];
+        yield return routedPath;
+        yield return $"{blueprintPrefix}{stem}.scribe.cs";
+        yield return $"{blueprintPrefix}{stem}.md";
+    }
+
+    private static IEnumerable<string> ProjectedOutputs(Target.Blueprint target)
+    {
+        const string blueprintPrefix = "Blueprint/";
+        var routedPath = target.Path.Value;
+        var blueprintStem = routedPath[..^".md".Length];
+        var leanStem = blueprintStem[blueprintPrefix.Length..];
+        yield return $"{leanStem}.lean";
+        yield return $"{blueprintStem}.scribe.cs";
+        yield return routedPath;
+    }
+
+    private static string? CapacityFailure(
+        IReadOnlySet<string> currentPaths,
+        IReadOnlyCollection<string> stratumDomains,
+        string targetDirectory,
+        IEnumerable<string> projectedOutputs)
+    {
+        var currentOccupancy = currentPaths.Count(path => DirectoryOf(path) == targetDirectory);
+        var additions = projectedOutputs.Count(path => !currentPaths.Contains(path));
+        var projectedOccupancy = currentOccupancy + additions;
+        if (projectedOccupancy <= RepositoryRules.DirectoryFileLimit)
+        {
+            return null;
+        }
+
+        var stratumRoot = DirectoryOf(targetDirectory);
+        var bucketPrefix = stratumRoot == "." ? string.Empty : stratumRoot + "/";
+        var presentDomains = currentPaths
+            .Select(DirectoryOf)
+            .Where(directory => DirectoryOf(directory) == stratumRoot)
+            .Select(directory => directory[bucketPrefix.Length..]);
+        var bucketCounts = stratumDomains
+            .Concat(presentDomains)
+            .Distinct(StringComparer.Ordinal)
+            .OrderBy(static domain => domain, StringComparer.Ordinal)
+            .Select(domain => $"{domain}={currentPaths.Count(path => DirectoryOf(path) == bucketPrefix + domain)}");
+
+        return $"bucket at capacity — 只裂不迁: {targetDirectory} projected occupancy {projectedOccupancy} "
+            + $"exceeds maximum {RepositoryRules.DirectoryFileLimit}; split only, choose a sibling domain or new domain. "
+            + $"Same-stratum buckets: {string.Join(", ", bucketCounts)}";
+    }
+
+    private static string DirectoryOf(string path)
+    {
+        var slash = path.LastIndexOf('/');
+        return slash < 0 ? "." : path[..slash];
+    }
+}
