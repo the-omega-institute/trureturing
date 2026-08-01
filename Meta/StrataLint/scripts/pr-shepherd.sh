@@ -78,9 +78,16 @@ has_expiry_fingerprint() {
     && "$out" == *"residual"* ]]
 }
 
+# Conflicts a machine can settle by rebuilding rather than by reading intent. The frozen
+# ledger belongs here even though it is append-only source: two lanes that each freeze a
+# module always collide textually, yet the correct result is never a hand-merge of the two
+# tails -- it is the dev tail plus this branch's freeze re-attested from its own Lean report,
+# which run_derivation_chain does below. Without this, every D5 delivery whose sibling merges
+# first stalls as "needs a semantic merge" and waits for a human that this harness has none of.
 is_derived_conflict() {
   case "$1" in
     Meta/StrataLint/Generated/*|Generated/*|Evidence/D5/values.json) return 0 ;;
+    Meta/StrataLint/Golden/Frozen/events.jsonl) return 0 ;;
     *) return 1 ;;
   esac
 }
@@ -233,6 +240,17 @@ run_derivation_chain() {
     return 1
   fi
   mv "$projection" "$workspace/Generated/echo-residual-summary.md"
+
+  # Freeze last: every step above rewrites tracked bytes, and an attestation taken before
+  # them binds a blob that no longer exists. Appending here also repairs a branch that
+  # produced a closed module without ever freezing it, which SL-008 otherwise rejects.
+  if ! (cd "$workspace" && credentialless "$isolated_home" dotnet run \
+    --project Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj \
+    --configuration Release -- ledger-append \
+    --candidate-lean-report .lake/build/stratalint/raw-lean-report.json); then
+    rm -rf "$isolated_home"
+    log "SWEEP #$num ledger-append 失败,不 push"; return 1
+  fi
 
   if ! credentialless "$isolated_home" \
     make -C "$workspace" --no-print-directory emit-check BASE="$REMOTE/dev"; then

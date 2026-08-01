@@ -1,3 +1,5 @@
+using StrataLint.Engine;
+
 namespace StrataLint.Tests;
 
 public sealed partial class PrShepherdRecalculationTests
@@ -58,6 +60,7 @@ public sealed partial class PrShepherdRecalculationTests
                 "emit",
                 "ingest",
                 "echo-verify",
+                "ledger-append",
                 "emit-check",
                 "push",
             ],
@@ -69,6 +72,35 @@ public sealed partial class PrShepherdRecalculationTests
             new[] { "SWEEP #1", "RECALCULATE", "head=feature" },
             token => Assert.Contains(token, completionLine, StringComparison.Ordinal));
         Assert.DoesNotContain("ALERT #1 CONFLICTING", result.Log, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void FrozenLedgerConflictIsRebuiltInsteadOfAlertingAsASemanticConflict()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ShepherdFixture(conflicting: true, ledgerConflict: true);
+
+        var result = fixture.Run(expiryFingerprint: false, duplicatePrRow: true);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.NotEqual(fixture.OriginalHead, fixture.RemoteHead());
+        Assert.DoesNotContain("ALERT #1 CONFLICTING", result.Log, StringComparison.Ordinal);
+        Assert.Contains("ledger-append", fixture.MutationCalls());
+        Assert.Contains("push", fixture.MutationCalls());
+    }
+
+    [Fact]
+    public void RebuiltLedgerTakesTheDevSideBeforeReattestation()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ShepherdFixture(conflicting: true, ledgerConflict: true);
+
+        var result = fixture.Run(expiryFingerprint: false, duplicatePrRow: true);
+
+        Assert.Equal(0, result.ExitCode);
+        var ledger = fixture.ShowRemote(FrozenLedgerChangeClassifier.LedgerPath);
+        Assert.Contains("dev-freeze", ledger, StringComparison.Ordinal);
+        Assert.DoesNotContain("feature-freeze", ledger, StringComparison.Ordinal);
     }
 
     [Fact]
