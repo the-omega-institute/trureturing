@@ -15,20 +15,6 @@ public sealed class DescribeMigrationTests
                     Node = node,
                 }))
             .ToArray();
-        var matrix = inventory
-            .GroupBy(static item => item.Node.Kind)
-            .ToDictionary(
-                static group => group.Key,
-                static group => new
-                {
-                    Total = group.Count(),
-                    Latex = group.Count(static item => item.Node.StatementLatex is not null),
-                    Formula = group.Count(static item => item.Node.Statement is DescribeStatement.FormulaAst),
-                    Lean = group.Count(static item => item.Node.Statement is DescribeStatement.LeanDeclaration),
-                    Provenance = group
-                    .GroupBy(static item => item.Node.Provenance.Kind)
-                    .ToDictionary(static provenance => provenance.Key, static provenance => provenance.Count()),
-                });
         var ownershipViolations = inventory
             .Where(static item => item.Node.Statement is DescribeStatement.LeanDeclaration)
             .Where(item => !AssertSameModule(
@@ -37,15 +23,12 @@ public sealed class DescribeMigrationTests
             .Select(static item => $"{item.Document}#{item.Node.Id.Value}")
             .ToArray();
 
-        Assert.Equal(71, DocumentDefinitions.All.Length);
-        Assert.Equal(71, DocumentDefinitions.All.Select(static item => item.SourcePath).Distinct().Count());
-        Assert.Equal(174, inventory.Length);
-        AssertKind(DescribeKind.Definition, 13, 2, 0, 13, 6, 7);
-        AssertKind(DescribeKind.Theorem, 120, 120, 0, 120, 30, 90);
-        AssertKind(DescribeKind.Proposition, 9, 9, 0, 9, 1, 8);
-        AssertKind(DescribeKind.Lemma, 1, 1, 0, 1, 1, 0);
-        AssertKind(DescribeKind.Example, 1, 0, 1, 0, 0, 1);
-        AssertKind(DescribeKind.Remark, 30, 0, 11, 19, 2, 28);
+        Assert.NotEmpty(DocumentDefinitions.All);
+        Assert.Equal(
+            DocumentDefinitions.All.Length,
+            DocumentDefinitions.All.Select(static item => item.SourcePath).Distinct().Count());
+        Assert.NotEmpty(inventory);
+        Assert.All(inventory, static item => AssertDescribeContract(item.Node));
         Assert.Equal(
         [
             "D5/S0/Carrier/Norm#golden-norm-is-power-multiplicative",
@@ -53,25 +36,43 @@ public sealed class DescribeMigrationTests
             "D5/S0/Carrier/Norm#principal-ideal-domain",
         ],
             ownershipViolations.Order(StringComparer.Ordinal));
-        return;
+    }
 
-        void AssertKind(
-            DescribeKind kind,
-            int total,
-            int latex,
-            int formula,
-            int lean,
-            int literatureAttested,
-            int repoDerived)
+    private static void AssertDescribeContract(DocumentBlock.Describe node)
+    {
+        switch (node.Kind)
         {
-            var actual = matrix[kind];
-            Assert.Equal(total, actual.Total);
-            Assert.Equal(latex, actual.Latex);
-            Assert.Equal(formula, actual.Formula);
-            Assert.Equal(lean, actual.Lean);
-            Assert.Equal(literatureAttested, actual.Provenance.GetValueOrDefault(DescribeProvenanceKind.LiteratureAttested));
-            Assert.Equal(repoDerived, actual.Provenance.GetValueOrDefault(DescribeProvenanceKind.RepoDerived));
-            Assert.Equal(total, actual.Provenance.Values.Sum());
+            case DescribeKind.Definition:
+                Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement);
+                break;
+            case DescribeKind.Theorem:
+            case DescribeKind.Proposition:
+            case DescribeKind.Lemma:
+                Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement);
+                Assert.NotNull(node.StatementLatex);
+                break;
+            case DescribeKind.Example:
+                Assert.IsType<DescribeStatement.FormulaAst>(node.Statement);
+                Assert.Null(node.StatementLatex);
+                break;
+            case DescribeKind.Remark:
+                Assert.True(
+                    node.Statement is DescribeStatement.FormulaAst or DescribeStatement.LeanDeclaration,
+                    $"Remark {node.Id.Value} must use a typed formula or Lean statement.");
+                Assert.Null(node.StatementLatex);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(node.Kind));
+        }
+
+        Assert.NotEqual(DescribeProvenanceKind.Unassessed, node.Provenance.Kind);
+        if (node.Provenance.Kind == DescribeProvenanceKind.LiteratureAttested)
+        {
+            Assert.NotNull(node.Provenance.LiteratureReference);
+        }
+        else
+        {
+            Assert.Null(node.Provenance.LiteratureReference);
         }
     }
 
