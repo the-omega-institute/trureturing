@@ -261,18 +261,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             var manifest = ((ManifestLoadOutcome.Loaded)manifestOutcome).Syntax;
             return RouteEngine.Route(registry.Policy, manifest) switch
             {
-                RouteOutcome.Routed routed => new CommandResult(
-                    true,
-                    JsonSerializer.Serialize(
-                        new
-                        {
-                            gid = routed.Result.Gid.Value,
-                            path = routed.Result.Path.Value,
-                            stratum = routed.Result.Stratum?.ToString(),
-                            skeleton = routed.Result.Skeleton,
-                        },
-                        RouteJsonOptions) + "\n",
-                    string.Empty),
+                RouteOutcome.Routed routed => RenderRoute(registry.Policy, routed),
                 RouteOutcome.Rejected rejected => new CommandResult(
                     false,
                     string.Empty,
@@ -283,6 +272,41 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         {
             return new CommandResult(false, string.Empty, $"INFRASTRUCTURE_FAILURE {exception.Message}\n");
         }
+    }
+
+    private CommandResult RenderRoute(ValidatedPolicy policy, RouteOutcome.Routed routed)
+    {
+        var capacityFailure = routed.Result.Gid.ToTarget() switch
+        {
+            Target.Formal formal => RouteCapacityPreflight.Evaluate(
+                repository.ReadCurrent(),
+                policy,
+                routed.Result.Stratum,
+                formal),
+            Target.Blueprint blueprint => RouteCapacityPreflight.Evaluate(
+                repository.ReadCurrent(),
+                policy,
+                routed.Result.Stratum,
+                blueprint),
+            _ => null,
+        };
+        if (capacityFailure is not null)
+        {
+            return new CommandResult(false, string.Empty, $"SL-003 route: {capacityFailure}\n");
+        }
+
+        return new CommandResult(
+            true,
+            JsonSerializer.Serialize(
+                new
+                {
+                    gid = routed.Result.Gid.Value,
+                    path = routed.Result.Path.Value,
+                    stratum = routed.Result.Stratum?.ToString(),
+                    skeleton = routed.Result.Skeleton,
+                },
+                RouteJsonOptions) + "\n",
+            string.Empty);
     }
 
     public ExplicitCommandResult ValidateBlueprintPins(IReadOnlyList<string> arguments)
