@@ -28,6 +28,8 @@ public sealed partial class MakeWorkflowTests
     private const string WorktreeInitScriptPath = "Meta/StrataLint/scripts/worktree-init.sh";
     private const string LeanReportScriptPath =
         "Meta/StrataLint/scripts/report/lean-report.sh";
+    private const string LeanCacheEnsureScriptPath =
+        "Meta/StrataLint/scripts/worktree/lean-cache-ensure.sh";
     private const string IngestScriptPath = "Meta/StrataLint/scripts/ingest.sh";
     private const string EchoResidualSummaryScriptPath =
         "Meta/StrataLint/scripts/report/echo-residual-summary.sh";
@@ -60,6 +62,7 @@ public sealed partial class MakeWorkflowTests
         "supervise-launcher-render",
         "supervise-launcher-check",
         "launchd-conformance-check",
+        "lean-cache-ensure",
         "lean",
         "lean-report",
         "build",

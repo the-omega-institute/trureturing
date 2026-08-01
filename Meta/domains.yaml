@@ -32,6 +32,9 @@ domains:
   History:
     stratum: S0
     definition: Finite marker and event histories, their append operation, and faithful self-encoding bridges.
+  Midline:
+    stratum: S3
+    definition: Dual and multiple characterizations of the critical midline sigma equals one half.
   Phase:
     stratum: S1
     definition: Additive golden-ratio phases modulo one.
