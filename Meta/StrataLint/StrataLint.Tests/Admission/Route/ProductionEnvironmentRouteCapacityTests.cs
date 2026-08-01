@@ -186,15 +186,16 @@ public sealed partial class ProductionEnvironmentTests
 
     private static TemporaryDirectory RouteRepository(string? manifest = null)
     {
-        var temporary = new TemporaryDirectory();
-        Directory.CreateDirectory(Path.Combine(temporary.Path, "Meta"));
-        File.WriteAllText(Path.Combine(temporary.Path, "Meta", "registry.yaml"), TestRegistry.Canonical, new UTF8Encoding(false));
-        File.WriteAllText(Path.Combine(temporary.Path, "Meta", "domains.yaml"), TestRegistry.Domains, new UTF8Encoding(false));
-        File.WriteAllText(
-            Path.Combine(temporary.Path, "manifest.json"),
-            manifest ?? Manifest("F", "Carrier", "Probe", "", "lean", ""),
-            new UTF8Encoding(false));
-        return temporary;
+        return TemporaryDirectory.Create(repositoryPath =>
+        {
+            Directory.CreateDirectory(Path.Combine(repositoryPath, "Meta"));
+            File.WriteAllText(Path.Combine(repositoryPath, "Meta", "registry.yaml"), TestRegistry.Canonical, new UTF8Encoding(false));
+            File.WriteAllText(Path.Combine(repositoryPath, "Meta", "domains.yaml"), TestRegistry.Domains, new UTF8Encoding(false));
+            File.WriteAllText(
+                Path.Combine(repositoryPath, "manifest.json"),
+                manifest ?? Manifest("F", "Carrier", "Probe", "", "lean", ""),
+                new UTF8Encoding(false));
+        });
     }
 
     private static string Manifest(

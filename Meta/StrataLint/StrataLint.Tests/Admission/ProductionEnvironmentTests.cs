@@ -8,6 +8,22 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
+    public void TemporaryDirectoryDeletesRootWhenInitializationFails()
+    {
+        string? root = null;
+
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+            TemporaryDirectory.Create(path =>
+            {
+                root = path;
+                throw new InvalidOperationException("synthetic setup failure");
+            }));
+
+        Assert.Equal("synthetic setup failure", exception.Message);
+        Assert.False(Directory.Exists(root));
+    }
+
+    [Fact]
     public void CheckEvaluatesProtectedChangeContentAndReturnsStructuredMetaSignal()
     {
         var fixture = new RuleFixture();
@@ -662,6 +678,21 @@ internal sealed class TemporaryDirectory : IDisposable
     {
         Path = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "stratalint-tests-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(Path);
+    }
+
+    internal static TemporaryDirectory Create(Action<string> initialize)
+    {
+        var temporary = new TemporaryDirectory();
+        try
+        {
+            initialize(temporary.Path);
+            return temporary;
+        }
+        catch
+        {
+            temporary.Dispose();
+            throw;
+        }
     }
 
     internal string Path { get; }

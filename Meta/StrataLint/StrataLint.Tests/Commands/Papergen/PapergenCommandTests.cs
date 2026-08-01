@@ -200,23 +200,23 @@ public sealed class PapergenCommandTests
 
     private static TemporaryDirectory RecipeRepository(bool includeTargets = false)
     {
-        var repository = new TemporaryDirectory();
-        Write(repository.Path, RecipePath, CanonicalRecipe);
-        Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine(repository.Path, FormalPath))!);
-        Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine(repository.Path, BlueprintPath))!);
-        if (includeTargets)
+        return TemporaryDirectory.Create(repositoryPath =>
         {
-            Write(
-                repository.Path,
-                FormalPath,
-                "namespace D5.S3.Zeros.CompletedZeta\n\ntheorem xi_reading_reflection : True := by trivial\n\nend D5.S3.Zeros.CompletedZeta\n");
-            Write(
-                repository.Path,
-                BlueprintPath,
-                "# Completed Zeta\n");
-        }
-
-        return repository;
+            Write(repositoryPath, RecipePath, CanonicalRecipe);
+            Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine(repositoryPath, FormalPath))!);
+            Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine(repositoryPath, BlueprintPath))!);
+            if (includeTargets)
+            {
+                Write(
+                    repositoryPath,
+                    FormalPath,
+                    "namespace D5.S3.Zeros.CompletedZeta\n\ntheorem xi_reading_reflection : True := by trivial\n\nend D5.S3.Zeros.CompletedZeta\n");
+                Write(
+                    repositoryPath,
+                    BlueprintPath,
+                    "# Completed Zeta\n");
+            }
+        });
     }
 
     private static void Write(string root, string relativePath, string content)

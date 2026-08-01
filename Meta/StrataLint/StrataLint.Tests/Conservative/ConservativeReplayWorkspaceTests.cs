@@ -310,14 +310,15 @@ public sealed class ConservativeReplayWorkspaceTests
 
     private static TemporaryDirectory CreateRepository(string objectFormat, string text)
     {
-        var repository = new TemporaryDirectory();
-        Git(repository.Path, "init", $"--object-format={objectFormat}", "-b", "dev");
-        Git(repository.Path, "config", "user.name", "StrataLint Fixture");
-        Git(repository.Path, "config", "user.email", "fixture@example.invalid");
-        File.WriteAllText(Path.Combine(repository.Path, "tracked.txt"), text + "\n", new UTF8Encoding(false));
-        Git(repository.Path, "add", "tracked.txt");
-        Git(repository.Path, "commit", "-m", text);
-        return repository;
+        return TemporaryDirectory.Create(repositoryPath =>
+        {
+            Git(repositoryPath, "init", $"--object-format={objectFormat}", "-b", "dev");
+            Git(repositoryPath, "config", "user.name", "StrataLint Fixture");
+            Git(repositoryPath, "config", "user.email", "fixture@example.invalid");
+            File.WriteAllText(Path.Combine(repositoryPath, "tracked.txt"), text + "\n", new UTF8Encoding(false));
+            Git(repositoryPath, "add", "tracked.txt");
+            Git(repositoryPath, "commit", "-m", text);
+        });
     }
 
     private static RepositorySnapshot Snapshot(params (string Path, string Text)[] files) =>
