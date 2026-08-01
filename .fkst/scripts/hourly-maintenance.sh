@@ -700,45 +700,124 @@ restart_engine() {
   return 1
 }
 
+restart_defer_state_path() {
+  printf '%s\n' "$FKST_RUNTIME_ROOT/hourly-maintenance.restart-defer-since"
+}
+
+current_supervisor_log() {
+  local engine_pid_value="$1" candidate newest=""
+  for candidate in "$FKST_RUNTIME_ROOT"/logs/supervisor-*-"$engine_pid_value".log; do
+    [[ -f "$candidate" && -r "$candidate" ]] || continue
+    if [[ -z "$newest" || "$candidate" -nt "$newest" ]]; then
+      newest="$candidate"
+    fi
+  done
+  [[ -n "$newest" ]] || return 1
+  printf '%s\n' "$newest"
+}
+
+active_local_implement_count() {
+  local engine_pid_value="$1" supervisor_log pids pid count=0
+  supervisor_log="$(current_supervisor_log "$engine_pid_value")" || return 1
+  pids="$(awk '
+    function value(name, field_index, prefix) {
+      prefix = name "="
+      for (field_index = 1; field_index <= NF; field_index++) {
+        if (index($field_index, prefix) == 1) {
+          return substr($field_index, length(prefix) + 1)
+        }
+      }
+      return ""
+    }
+    $1 == "event=dept_child_spawn" && value("dept") == "github-devloop.implement" {
+      pid = value("pid")
+      if (pid ~ /^[0-9]+$/) active[pid] = 1
+      next
+    }
+    $1 == "event=dept_child_exit" && value("dept") == "github-devloop.implement" {
+      pid = value("pid")
+      if (pid ~ /^[0-9]+$/) delete active[pid]
+    }
+    END { for (pid in active) print pid }
+  ' "$supervisor_log")" || return 1
+
+  while IFS= read -r pid; do
+    [[ "$pid" =~ ^[0-9]+$ ]] || continue
+    kill -0 "$pid" 2>/dev/null && count=$((count + 1))
+  done <<< "$pids"
+  printf '%s\n' "$count"
+}
+
+ensure_restart_pending() {
+  local state_path="$1" now="$2"
+  [[ -e "$state_path" ]] && return 0
+  [[ -d "$FKST_RUNTIME_ROOT" ]] || return 1
+  (set -o noclobber; printf '%s\n' "$now" > "$state_path") 2>/dev/null \
+    || [[ -f "$state_path" ]]
+}
+
+defer_restart_with_bound() {
+  local reason="$1" alive="$2" state_path="$3" now since age
+  now="$(date -u +%s)" || {
+    say "FORCE-RESTART: cannot read clock for defer bound; applying pending pin"
+    return 1
+  }
+  if ! ensure_restart_pending "$state_path" "$now"; then
+    say "FORCE-RESTART: cannot record bounded defer state; applying pending pin"
+    return 1
+  fi
+  since="$(head -1 "$state_path" 2>/dev/null)"
+  if [[ ! "$since" =~ ^[0-9]+$ || "$since" -gt "$now" ]]; then
+    say "FORCE-RESTART: invalid defer state; applying pending pin"
+    return 1
+  fi
+
+  age=$((now - since))
+  if [[ "$age" -ge "$FKST_CODEX_TIMEOUT_IMPLEMENT" ]]; then
+    say "FORCE-RESTART: defer bound reached ($reason; age=${age}s bound=${FKST_CODEX_TIMEOUT_IMPLEMENT}s); applying pending pin"
+    return 1
+  fi
+  say "DEFER-RESTART: $reason + engine alive (pid $alive); defer_age=${age}s bound=${FKST_CODEX_TIMEOUT_IMPLEMENT}s"
+  cleanup_old_backups
+  return 0
+}
+
 restart_if_needed() {
-  if [[ "$CHANGED" == "0" ]]; then
+  local state_path alive implementing reason now
+  state_path="$(restart_defer_state_path)"
+  if [[ "$CHANGED" == "0" && ! -e "$state_path" ]]; then
     say "ALL CURRENT; no restart"
     return 0
   fi
 
-  local alive implementing
-  alive="$(engine_pid)"
-  if [[ -n "$alive" ]]; then
-    if ! command -v gh >/dev/null 2>&1; then
-      say "DEFER-RESTART: implementing issue state unavailable; engine alive (pid $alive)"
-      cleanup_old_backups
-      return 0
-    fi
-    if ! implementing="$(
-        LEAN4_GUARDRAILS_BYPASS=1 gh issue list \
-        --repo "$FKST_GITHUB_REPO" \
-        --state open \
-        --label 'fkst-dev:implementing' \
-        --json number \
-        --jq 'length' 2>/dev/null
-      )"; then
-      say "DEFER-RESTART: implementing issue state unavailable; engine alive (pid $alive)"
-      cleanup_old_backups
-      return 0
-    fi
-    if [[ ! "$implementing" =~ ^[0-9]+$ ]]; then
-      say "DEFER-RESTART: implementing issue state unavailable; engine alive (pid $alive)"
-      cleanup_old_backups
-      return 0
-    fi
-    if [[ "$implementing" -gt 0 ]]; then
-      say "DEFER-RESTART: $implementing issue(s) implementing + engine alive (pid $alive); pin updated, restart deferred"
-      cleanup_old_backups
-      return 0
+  if [[ "$CHANGED" == "1" && ! -e "$state_path" ]]; then
+    now="$(date -u +%s)" || now=""
+    if [[ ! "$now" =~ ^[0-9]+$ ]] \
+        || ! ensure_restart_pending "$state_path" "$now"; then
+      say "RESTART-PENDING-STATE-FAIL: cannot persist pending restart; restarting immediately"
+      restart_engine
+      return
     fi
   fi
 
-  restart_engine
+  alive="$(engine_pid)"
+  if [[ -n "$alive" ]]; then
+    if implementing="$(active_local_implement_count "$alive")"; then
+      if [[ "$implementing" -gt 0 ]]; then
+        reason="$implementing local implement child process(es) active"
+        defer_restart_with_bound "$reason" "$alive" "$state_path" && return 0
+      fi
+    else
+      reason="local implement execution state unavailable"
+      defer_restart_with_bound "$reason" "$alive" "$state_path" && return 0
+    fi
+  fi
+
+  if restart_engine; then
+    rm -f -- "$state_path"
+    return 0
+  fi
+  return 1
 }
 
 main() {
