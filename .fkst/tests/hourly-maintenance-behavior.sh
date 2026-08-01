@@ -80,8 +80,9 @@ write_framework_stub() {
   cat > "$FRAMEWORK_BIN" <<SH
 #!/usr/bin/env bash
 printf 'host-lock-called\n' >> "${FRAMEWORK_CALLS_FILE}"
-printf 'lock-mutated-by-host-lock-%s\n' "\$(wc -l < "${FRAMEWORK_CALLS_FILE}")" > "${CHECKOUT_ROOT}/fkst.lock"
-[[ "$behavior" == success ]]
+call_count="\$(wc -l < "${FRAMEWORK_CALLS_FILE}" | tr -d '[:space:]')"
+printf 'lock-mutated-by-host-lock-%s\n' "\$call_count" > "${CHECKOUT_ROOT}/fkst.lock"
+[[ "$behavior" == success || ( "$behavior" == fail-once && "\$call_count" -gt 1 ) ]]
 SH
   chmod +x "$FRAMEWORK_BIN"
 }
@@ -133,15 +134,21 @@ deployed_top_level_workspace_is_authoritative() (
   export_platform_environment
   local committed_before
   committed_before="$(command shasum -a 256 "$CHECKOUT_ROOT/.fkst/fkst.workspace.toml")"
+  command find "$CHECKOUT_ROOT" -maxdepth 1 -type f -print \
+    | command sed "s#^$CHECKOUT_ROOT/##" | command sort > "$root/paths.before"
 
   sync_platform || fail "platform sync should succeed"
   command grep -q "$NEW_PLATFORM_REV" "$CHECKOUT_ROOT/fkst.workspace.toml" \
     || fail "deployed top-level workspace pin was not updated"
   [[ "$committed_before" == "$(command shasum -a 256 "$CHECKOUT_ROOT/.fkst/fkst.workspace.toml")" ]] \
     || fail "committed .fkst workspace copy must not be touched (#2461)"
+  command find "$CHECKOUT_ROOT" -maxdepth 1 -type f -print \
+    | command sed "s#^$CHECKOUT_ROOT/##" | command sort > "$root/paths.after"
+  command cmp -s "$root/paths.before" "$root/paths.after" \
+    || fail "platform sync created a second restore representation"
 )
 
-host_lock_failure_rolls_back_pin_and_lock_bytes() (
+host_lock_failure_reverts_to_previous_platform_revision() (
   load_implementation || exit 1
   local root
   root="$(mktemp -d -t hourly-maintenance-lock-rollback.XXXXXX)" || exit 1
@@ -150,19 +157,21 @@ host_lock_failure_rolls_back_pin_and_lock_bytes() (
   create_checkout_files "$root" || exit 1
   FRAMEWORK_CALLS_FILE="$root/framework.calls"
   export FRAMEWORK_CALLS_FILE
-  write_framework_stub fail
+  write_framework_stub fail-once
   export_platform_environment
-  command cp "$CHECKOUT_ROOT/fkst.workspace.toml" "$root/workspace.before"
-  command cp "$CHECKOUT_ROOT/fkst.lock" "$root/lock.before"
 
   sync_platform && fail "host-lock validation failure must fail the platform sync"
-  command cmp -s "$root/workspace.before" "$CHECKOUT_ROOT/fkst.workspace.toml" \
-    || fail "workspace pin rollback was not byte-for-byte"
-  command cmp -s "$root/lock.before" "$CHECKOUT_ROOT/fkst.lock" \
-    || fail "lock rollback was not byte-for-byte"
+  command grep -q "$OLD_PLATFORM_REV" "$CHECKOUT_ROOT/fkst.workspace.toml" \
+    || fail "failed upgrade did not restore the previous platform revision"
+  ! command grep -q "$NEW_PLATFORM_REV" "$CHECKOUT_ROOT/fkst.workspace.toml" \
+    || fail "failed upgrade left the new platform revision pinned"
+  command grep -q 'lock-mutated-by-host-lock-2' "$CHECKOUT_ROOT/fkst.lock" \
+    || fail "rollback did not regenerate the lock from the previous revision"
+  [[ "$(wc -l < "$FRAMEWORK_CALLS_FILE" | tr -d '[:space:]')" == "2" ]] \
+    || fail "rollback did not re-run the canonical lock writer"
 )
 
-post_restart_health_failure_rolls_back_pin_and_lock_bytes() (
+post_restart_health_failure_reverts_to_previous_platform_revision() (
   load_implementation || exit 1
   local root
   root="$(mktemp -d -t hourly-maintenance-health-rollback.XXXXXX)" || exit 1
@@ -193,15 +202,12 @@ exit 1
 SH
   chmod +x "$FKST_RUN_SCRIPT" "$root/bin/sleep" "$root/bin/launchctl" "$root/bin/pgrep"
   export PATH="$root/bin:$PATH"
-  command cp "$CHECKOUT_ROOT/fkst.workspace.toml" "$root/workspace.before"
-  command cp "$CHECKOUT_ROOT/fkst.lock" "$root/lock.before"
-
   sync_platform || fail "platform sync setup should succeed"
   restart_engine && fail "failed health check must fail restart"
-  command cmp -s "$root/workspace.before" "$CHECKOUT_ROOT/fkst.workspace.toml" \
-    || fail "health failure did not restore workspace bytes"
-  command cmp -s "$root/lock.before" "$CHECKOUT_ROOT/fkst.lock" \
-    || fail "health failure did not restore lock bytes"
+  command grep -q "$OLD_PLATFORM_REV" "$CHECKOUT_ROOT/fkst.workspace.toml" \
+    || fail "health failure did not restore the previous platform revision"
+  command grep -q 'lock-mutated-by-host-lock-2' "$CHECKOUT_ROOT/fkst.lock" \
+    || fail "health rollback did not regenerate the lock from the previous revision"
 )
 
 checkout_fast_forwards_only_clean_ancestors() (
@@ -244,13 +250,10 @@ checkout_untracked_files_do_not_block_fast_forward() (
   export FKST_HOST_ROOT="$CHECKOUT_ROOT"
 
   # Untracked files provably do not prevent a fast-forward: git merge --ff-only
-  # succeeds with them present. Two kinds occur on real hosts and neither may
-  # freeze the deployment: this tool's own rollback backups (fkst.lock.bak-*,
-  # fkst.workspace.toml.bak-*), and an intentional, permanent Spotlight-exclusion
-  # marker (.metadata_never_index) that must stay. Treating either as "uncommitted
-  # changes" makes the checkout unable to ever advance.
+  # succeeds with them present. Intentional host-local files such as the
+  # Spotlight-exclusion marker must not freeze deployment.
   printf 'litter
-' > "$CHECKOUT_ROOT/fkst.lock.bak-20260730-051505"
+' > "$CHECKOUT_ROOT/runtime.note"
   printf '' > "$CHECKOUT_ROOT/.metadata_never_index"
 
   sync_checkout || fail "untracked-only checkout sync should be nonfatal"
@@ -258,7 +261,7 @@ checkout_untracked_files_do_not_block_fast_forward() (
   command grep -q 'CHECKOUT-FF-BLOCKED' "$LOG_FILE"     && fail "untracked files were reported as uncommitted changes"
 
   # the untracked files must survive the fast-forward untouched
-  [[ -f "$CHECKOUT_ROOT/fkst.lock.bak-20260730-051505" ]]     || fail "fast-forward destroyed an untracked backup"
+  [[ -f "$CHECKOUT_ROOT/runtime.note" ]]     || fail "fast-forward destroyed an untracked host file"
   [[ -f "$CHECKOUT_ROOT/.metadata_never_index" ]]     || fail "fast-forward destroyed the Spotlight marker"
 
   # a TRACKED modification must still block, so the guard is not simply removed
@@ -323,64 +326,6 @@ SH
     || fail "checkout advanced after cleanliness inspection failed"
   command grep -q 'CHECKOUT-STATUS-FAIL' "$LOG_FILE" \
     || fail "checkout cleanliness inspection failure was not reported"
-)
-
-implementing_issues_defer_restart() (
-  load_implementation || exit 1
-  local root
-  root="$(mktemp -d -t hourly-maintenance-defer.XXXXXX)" || exit 1
-  trap 'rm -rf "$root"' EXIT
-  mkdir -p "$root/bin" "$root/checkout" "$root/logs"
-  export FKST_HOST_ROOT="$root/checkout"
-  export FKST_MAINTENANCE_LOG="$root/logs/hourly-maintenance.log"
-  export FKST_GITHUB_REPO="example/synthetic"
-  export FKST_RUN_SCRIPT="$root/bin/run-engine"
-  export FKST_LAUNCHD_LABEL="com.example.synthetic-fkst"
-  cat > "$FKST_RUN_SCRIPT" <<SH
-#!/usr/bin/env bash
-printf 'restart attempted\n' >> "$root/run.calls"
-SH
-  cat > "$root/bin/pgrep" <<'SH'
-#!/usr/bin/env bash
-printf '4242\n'
-SH
-  cat > "$root/bin/gh" <<'SH'
-#!/usr/bin/env bash
-printf '2\n'
-SH
-  cat > "$root/bin/sleep" <<'SH'
-#!/usr/bin/env bash
-exit 0
-SH
-  cat > "$root/bin/launchctl" <<'SH'
-#!/usr/bin/env bash
-printf '4242 0 com.example.synthetic-fkst\n'
-SH
-  chmod +x "$FKST_RUN_SCRIPT" "$root/bin/pgrep" "$root/bin/gh" \
-    "$root/bin/sleep" "$root/bin/launchctl"
-  export PATH="$root/bin:/usr/bin:/bin"
-  CHANGED=1
-
-  restart_if_needed || fail "restart deferral should exit successfully"
-  [[ ! -e "$root/run.calls" ]] || fail "engine control ran during DEFER-RESTART"
-  command grep -q 'DEFER-RESTART' "$FKST_MAINTENANCE_LOG" \
-    || fail "restart deferral was not reported"
-
-  rm -f "$FKST_MAINTENANCE_LOG" "$root/run.calls"
-  cat > "$root/bin/gh" <<'SH'
-#!/usr/bin/env bash
-exit 9
-SH
-  restart_if_needed || fail "unknown implementation state should defer safely"
-  [[ ! -e "$root/run.calls" ]] || fail "engine control ran when GitHub state was unavailable"
-  command grep -q 'DEFER-RESTART.*unavailable' "$FKST_MAINTENANCE_LOG" \
-    || fail "unavailable implementation state was not reported as a deferral"
-
-  rm -f "$root/bin/gh" "$FKST_MAINTENANCE_LOG" "$root/run.calls"
-  restart_if_needed || fail "missing GitHub CLI should defer safely"
-  [[ ! -e "$root/run.calls" ]] || fail "engine control ran without GitHub state"
-  command grep -q 'DEFER-RESTART.*unavailable' "$FKST_MAINTENANCE_LOG" \
-    || fail "missing GitHub CLI was not reported as a deferral"
 )
 
 worktree_gc_preserves_owned_or_dirty_lanes() (
@@ -483,7 +428,7 @@ slot_reclaim_rechecks_owner_after_atomic_claim() (
     || fail "reclaim guard leaked after owner recheck"
 )
 
-rollback_failure_is_not_reported_as_reverted() (
+revision_rollback_lock_failure_is_not_reported_as_reverted() (
   load_implementation || exit 1
   local root
   root="$(mktemp -d -t hourly-maintenance-rollback-honesty.XXXXXX)" || exit 1
@@ -504,15 +449,19 @@ rollback_failure_is_not_reported_as_reverted() (
   export PATH="$root/bin:$PATH"
 
   sync_platform || fail "platform sync setup should succeed"
-  rm -f "$PLATFORM_WORKSPACE_BACKUP" "$PLATFORM_LOCK_BACKUP"
-  restart_engine && fail "health failure with missing backups must fail"
-  command grep -q 'ROLLBACK-FAIL' "$FKST_MAINTENANCE_LOG" \
-    || fail "rollback failure was not reported"
+  write_framework_stub fail
+  restart_engine && fail "health failure with failed revision rollback must fail"
+  command grep -q "$OLD_PLATFORM_REV" "$CHECKOUT_ROOT/fkst.workspace.toml" \
+    || fail "rollback did not derive the previous platform revision"
+  command grep -q 'lock-mutated-by-host-lock-2' "$CHECKOUT_ROOT/fkst.lock" \
+    || fail "rollback did not attempt lock regeneration from the previous revision"
+  command grep -q 'ROLLBACK-HOST-LOCK-FAIL' "$FKST_MAINTENANCE_LOG" \
+    || fail "revision-derived rollback failure was not reported"
   ! command grep -q 'reverted platform' "$FKST_MAINTENANCE_LOG" \
     || fail "failed rollback was falsely reported as reverted"
 )
 
-pin_write_rollback_failure_is_not_reported_as_reverted() (
+pin_write_failure_reverts_from_previous_revision() (
   load_implementation || exit 1
   local root
   root="$(mktemp -d -t hourly-maintenance-pin-write-rollback.XXXXXX)" || exit 1
@@ -523,19 +472,30 @@ pin_write_rollback_failure_is_not_reported_as_reverted() (
   export FRAMEWORK_CALLS_FILE
   write_framework_stub success
   export_platform_environment
+  export MV_CALLS_FILE="$root/mv.calls"
+  real_mv="$(command -v mv)"
   cat > "$root/bin/mv" <<'SH'
 #!/usr/bin/env bash
-rm -f "$FKST_HOST_ROOT"/fkst.workspace.toml.bak-*
-exit 9
+count=0
+[[ ! -f "$MV_CALLS_FILE" ]] || count="$(<"$MV_CALLS_FILE")"
+count=$((count + 1))
+printf '%s\n' "$count" > "$MV_CALLS_FILE"
+[[ "$count" -gt 1 ]] || exit 9
+exec "$REAL_MV" "$@"
 SH
   chmod +x "$root/bin/mv"
+  export REAL_MV="$real_mv"
   export PATH="$root/bin:$PATH"
 
   sync_platform && fail "pin-write failure must fail platform sync"
-  command grep -q 'ROLLBACK-FAIL' "$FKST_MAINTENANCE_LOG" \
-    || fail "pin-write rollback failure was not reported"
-  ! command grep -q 'reverted platform' "$FKST_MAINTENANCE_LOG" \
-    || fail "failed pin-write rollback was falsely reported as reverted"
+  command grep -q "$OLD_PLATFORM_REV" "$CHECKOUT_ROOT/fkst.workspace.toml" \
+    || fail "pin-write failure did not restore the previous revision"
+  [[ "$(<"$MV_CALLS_FILE")" == "2" ]] \
+    || fail "pin-write rollback did not re-run the canonical revision writer"
+  command grep -q 'lock-mutated-by-host-lock-1' "$CHECKOUT_ROOT/fkst.lock" \
+    || fail "pin-write rollback did not regenerate the lock"
+  command grep -q 'PLATFORM-PIN-WRITE-FAIL; reverted to' "$FKST_MAINTENANCE_LOG" \
+    || fail "successful revision-derived pin rollback was not reported"
 )
 
 write_host_contract_fixture() {
@@ -742,8 +702,8 @@ source "$RESTART_CASES"
 source "$COMPOSITION_CASES"
 
 run_test "deployed top-level workspace is authoritative" deployed_top_level_workspace_is_authoritative
-run_test "host-lock failure rolls back pin and lock bytes" host_lock_failure_rolls_back_pin_and_lock_bytes
-run_test "post-restart health failure rolls back pin and lock bytes" post_restart_health_failure_rolls_back_pin_and_lock_bytes
+run_test "host-lock failure reverts to previous platform revision" host_lock_failure_reverts_to_previous_platform_revision
+run_test "post-restart health failure reverts to previous platform revision" post_restart_health_failure_reverts_to_previous_platform_revision
 run_test "checkout fast-forwards only clean ancestors" checkout_fast_forwards_only_clean_ancestors
 run_test "checkout untracked files do not block fast-forward" checkout_untracked_files_do_not_block_fast_forward
 run_test "checkout divergence refuses auto fast-forward" checkout_divergence_refuses_auto_fast_forward
@@ -753,7 +713,9 @@ run_test "tracked package addition propagates after checkout fast-forward" track
 run_test "platform-current cycle still propagates composition" platform_current_cycle_still_propagates_composition
 run_test "post-write composition drift fails closed with differences" post_write_composition_drift_fails_closed_with_differences
 run_test "composition-only propagation does not trigger restart" composition_only_propagation_does_not_trigger_restart
-run_test "implementing issues defer restart" implementing_issues_defer_restart
+run_test "local implement work controls pending restart" local_implement_work_controls_pending_restart
+run_test "failed restart retains pending activation" failed_restart_retains_pending_activation
+run_test "orphaned defer state is not dropped" orphaned_defer_state_is_not_dropped
 run_test "worktree GC preserves owned or dirty lanes" worktree_gc_preserves_owned_or_dirty_lanes
 run_test "GC roots are canonical and never filesystem root" gc_roots_are_canonical_and_never_the_filesystem_root
 run_test "stale slot GC requires a genuinely dead owner" stale_slot_gc_requires_a_genuinely_dead_owner
@@ -763,8 +725,8 @@ run_test "restart timeout with launchd in service does not roll back platform" r
 run_test "restart timeout with launchd absent rolls back platform" restart_timeout_with_launchd_absent_rolls_back_platform
 run_test "unchanged PID remains unhealthy after restart budget" unchanged_pid_remains_unhealthy_after_restart_budget
 run_test "restart requires successful stop" restart_requires_successful_stop
-run_test "rollback failure is not reported as reverted" rollback_failure_is_not_reported_as_reverted
-run_test "pin-write rollback failure is not reported as reverted" pin_write_rollback_failure_is_not_reported_as_reverted
+run_test "revision rollback lock failure is not reported as reverted" revision_rollback_lock_failure_is_not_reported_as_reverted
+run_test "pin-write failure reverts from previous revision" pin_write_failure_reverts_from_previous_revision
 run_test "maintenance delegates launchd conformance gate" maintenance_delegates_launchd_conformance_gate
 run_test "launchd conformance failure fails maintenance cycle" launchd_conformance_failure_fails_maintenance_cycle
 run_test "missing launchd provider key fails maintenance cycle" missing_launchd_provider_key_fails_maintenance_cycle

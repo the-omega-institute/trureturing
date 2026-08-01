@@ -90,12 +90,12 @@ public sealed partial class MakeWorkflowTests
               expired-local)
                 printf 'event=dept_child_spawn dept=github-devloop.implement pid=%s exit_code=pending\n' "$$" > "$supervisor_log"
                 printf '1\n' > "$FKST_RUNTIME_ROOT/hourly-maintenance.restart-defer-since"
+                printf '1\n' > "$FKST_RUNTIME_ROOT/hourly-maintenance.pending-activation"
                 CHANGED=0
                 ;;
               *) exit 91 ;;
             esac
             engine_pid() { printf '%s\n' "$$"; }
-            cleanup_old_backups() { :; }
             restart_engine() { printf 'RESTART_ENGINE\n'; }
             restart_if_needed
             """;

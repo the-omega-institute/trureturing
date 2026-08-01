@@ -47,9 +47,8 @@ restart_engine() {
     launchd_state="$(launchd_service_state)"
     pid="$(engine_pid)"
     if [[ "$launchd_state" == "in-service" && -n "$pid" \
-        && ( -z "$previous_pid" || "$pid" != "$previous_pid" ) ]]; then
+      && ( -z "$previous_pid" || "$pid" != "$previous_pid" ) ]]; then
       say "SYNCED OK (engine pid $pid; platform ${PLATFORM_DEV_REV:0:12}; checkout $([ -n "$CHECKOUT_DEV_REV" ] && printf '%s' "${CHECKOUT_DEV_REV:0:12}" || printf 'n/a'))"
-      cleanup_old_backups
       return 0
     fi
     [[ "$elapsed" -lt "$budget" ]] || break
@@ -85,7 +84,7 @@ restart_engine() {
       sleep 8
       say "reverted platform to ${PLATFORM_CURRENT_REV:0:12}"
     else
-      say "PLATFORM-ROLLBACK-FAIL after confirmed startup failure; original bytes not confirmed"
+      say "PLATFORM-ROLLBACK-FAIL after confirmed startup failure; previous revision not fully activated"
     fi
   elif [[ "$PLATFORM_CHANGED" == "1" ]]; then
     say "PLATFORM-ROLLBACK-SKIPPED: restart budget expired but startup failure not confirmed (launchd=$launchd_state last_pid=${pid:-none})"
@@ -95,6 +94,10 @@ restart_engine() {
 
 restart_defer_state_path() {
   printf '%s\n' "$FKST_RUNTIME_ROOT/hourly-maintenance.restart-defer-since"
+}
+
+pending_activation_state_path() {
+  printf '%s\n' "$FKST_RUNTIME_ROOT/hourly-maintenance.pending-activation"
 }
 
 current_supervisor_log() {
@@ -141,9 +144,12 @@ active_local_implement_count() {
   printf '%s\n' "$count"
 }
 
-ensure_restart_pending() {
+ensure_timestamp_state() {
   local state_path="$1" now="$2"
-  [[ -e "$state_path" ]] && return 0
+  if [[ -e "$state_path" ]]; then
+    [[ -f "$state_path" ]]
+    return
+  fi
   [[ -d "$FKST_RUNTIME_ROOT" ]] || return 1
   (set -o noclobber; printf '%s\n' "$now" > "$state_path") 2>/dev/null \
     || [[ -f "$state_path" ]]
@@ -155,7 +161,7 @@ defer_restart_with_bound() {
     say "FORCE-RESTART: cannot read clock for defer bound; applying pending pin"
     return 1
   }
-  if ! ensure_restart_pending "$state_path" "$now"; then
+  if ! ensure_timestamp_state "$state_path" "$now"; then
     say "FORCE-RESTART: cannot record bounded defer state; applying pending pin"
     return 1
   fi
@@ -171,44 +177,110 @@ defer_restart_with_bound() {
     return 1
   fi
   say "DEFER-RESTART: $reason + engine alive (pid $alive); defer_age=${age}s bound=${FKST_CODEX_TIMEOUT_IMPLEMENT}s"
-  cleanup_old_backups
   return 0
 }
 
+clear_pending_activation() {
+  local pending_path="$1" defer_path="$2"
+  if ! rm -f -- "$defer_path"; then
+    say "ACTIVATION-RETAINED: restart verified but defer state could not be cleared"
+    return 1
+  fi
+  if ! rm -f -- "$pending_path" || [[ -e "$pending_path" ]]; then
+    say "ACTIVATION-RETAINED: restart verified but pending obligation could not be cleared"
+    return 1
+  fi
+  say "ACTIVATION-CLEARED: restart verified with a new pid and launchd in service"
+}
+
 restart_if_needed() {
-  local state_path alive implementing reason now
-  state_path="$(restart_defer_state_path)"
-  if [[ "$CHANGED" == "0" && ! -e "$state_path" ]]; then
-    say "ALL CURRENT; no restart"
-    return 0
+  local pending_path defer_path alive implementing reason now pending_since
+  pending_path="$(pending_activation_state_path)"
+  defer_path="$(restart_defer_state_path)"
+
+  if [[ "$CHANGED" == "1" ]]; then
+    if [[ -e "$pending_path" ]]; then
+      if [[ ! -f "$pending_path" ]]; then
+        say "RESTART-PENDING-STATE-FAIL: pending activation path is not a regular file; restarting immediately"
+        if restart_engine; then
+          say "ACTIVATION-VERIFIED: immediate restart succeeded while pending state remained invalid"
+          return 0
+        fi
+        say "ACTIVATION-UNRECORDED: immediate restart failed while pending state was invalid"
+        return 1
+      fi
+      say "ACTIVATION-PENDING: change detected; durable obligation already recorded"
+    else
+      now="$(date -u +%s)" || now=""
+      if [[ ! "$now" =~ ^[0-9]+$ ]] \
+          || ! ensure_timestamp_state "$pending_path" "$now"; then
+        say "RESTART-PENDING-STATE-FAIL: cannot persist activation obligation; restarting immediately"
+        if restart_engine; then
+          say "ACTIVATION-VERIFIED: immediate restart succeeded after persistence failure"
+          return 0
+        fi
+        say "ACTIVATION-UNRECORDED: immediate restart failed after persistence failure"
+        return 1
+      fi
+      say "ACTIVATION-PENDING: recorded durable restart obligation"
+    fi
   fi
 
-  if [[ "$CHANGED" == "1" && ! -e "$state_path" ]]; then
-    now="$(date -u +%s)" || now=""
-    if [[ ! "$now" =~ ^[0-9]+$ ]] \
-        || ! ensure_restart_pending "$state_path" "$now"; then
-      say "RESTART-PENDING-STATE-FAIL: cannot persist pending restart; restarting immediately"
-      restart_engine
-      return
+  if [[ ! -e "$pending_path" ]]; then
+    if [[ -e "$defer_path" ]]; then
+      pending_since="$(head -1 "$defer_path" 2>/dev/null)"
+      if [[ ! "$pending_since" =~ ^[0-9]+$ ]]; then
+        now="$(date -u +%s)" || now=""
+        pending_since="$now"
+      fi
+      if [[ ! "$pending_since" =~ ^[0-9]+$ ]] \
+          || ! ensure_timestamp_state "$pending_path" "$pending_since"; then
+        say "ACTIVATION-PENDING-RECOVERY-FAIL: defer state exists but its obligation marker cannot be restored; restarting immediately"
+        if restart_engine; then
+          if ! rm -f -- "$defer_path"; then
+            say "ACTIVATION-RETAINED: restart verified but orphaned defer state could not be cleared"
+            return 1
+          fi
+          say "ACTIVATION-CLEARED: orphaned defer evidence resolved by a verified restart"
+          return 0
+        fi
+        say "ACTIVATION-RETAINED: restart failed while recovering orphaned defer evidence"
+        return 1
+      fi
+      say "ACTIVATION-PENDING-RECOVERED: defer state existed without its obligation marker"
+    else
+      say "ALL CURRENT; no restart"
+      return 0
     fi
+  fi
+
+  pending_since="$(head -1 "$pending_path" 2>/dev/null)"
+  if [[ ! "$pending_since" =~ ^[0-9]+$ ]]; then
+    say "ACTIVATION-PENDING-STATE-INVALID: retaining and re-evaluating the obligation"
+  elif [[ "$CHANGED" == "0" ]]; then
+    say "ACTIVATION-PENDING: retrying durable obligation on a current-pin cycle"
   fi
 
   alive="$(engine_pid)"
   if [[ -n "$alive" ]]; then
     if implementing="$(active_local_implement_count "$alive")"; then
-      if [[ "$implementing" -gt 0 ]]; then
+      if [[ ! "$implementing" =~ ^[0-9]+$ ]]; then
+        reason="local implement execution state is invalid"
+        defer_restart_with_bound "$reason" "$alive" "$defer_path" && return 0
+      elif [[ "$implementing" -gt 0 ]]; then
         reason="$implementing local implement child process(es) active"
-        defer_restart_with_bound "$reason" "$alive" "$state_path" && return 0
+        defer_restart_with_bound "$reason" "$alive" "$defer_path" && return 0
       fi
     else
       reason="local implement execution state unavailable"
-      defer_restart_with_bound "$reason" "$alive" "$state_path" && return 0
+      defer_restart_with_bound "$reason" "$alive" "$defer_path" && return 0
     fi
   fi
 
   if restart_engine; then
-    rm -f -- "$state_path"
-    return 0
+    clear_pending_activation "$pending_path" "$defer_path"
+    return
   fi
+  say "ACTIVATION-RETAINED: restart failed; durable obligation will be retried"
   return 1
 }
