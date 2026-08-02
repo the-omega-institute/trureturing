@@ -64,6 +64,7 @@ internal static class DigestStatusCommand
                     options.FormalizationReconciliation
                         ? RenderFormalizationReconciliation(
                             formalizeEvaluation,
+                            formalizeDocument,
                             snapshot,
                             ledgerFile,
                             formalizeLeanReport)
@@ -258,6 +259,7 @@ internal static class DigestStatusCommand
 
     private static string RenderFormalizationReconciliation(
         DigestionLedgerEvaluation evaluation,
+        BackfillInventoryDocument document,
         RepositorySnapshot snapshot,
         RepositoryFile ledgerFile,
         LeanAxiomReport leanReport)
@@ -273,8 +275,8 @@ internal static class DigestStatusCommand
         var eligibleReceiptPaths = eligibleResiduals
             .Select(static item => FormalizationReceiptPath(item.Entry.AtomId))
             .ToHashSet(StringComparer.Ordinal);
-        var ledgerAtomIds = evaluation.Entries
-            .Select(static item => item.Entry.AtomId)
+        var ledgerAtomIds = document.RequireDigestionEntries()
+            .Select(static entry => entry.AtomId)
             .ToHashSet(StringComparer.Ordinal);
         var unmatchedReceipts = snapshot.Files.Keys
             .Select(static path => path.Value)
@@ -373,7 +375,17 @@ internal static class DigestStatusCommand
             throw new FormatException($"formalization receipt path is not canonical: {path}");
         }
 
-        var receipt = DigestionFormalizationReceipt.Load(snapshot, path);
+        DigestionFormalizationReceipt receipt;
+        try
+        {
+            receipt = DigestionFormalizationReceipt.Load(snapshot, path);
+        }
+        catch (JsonException exception)
+        {
+            throw new FormatException(
+                $"formalization receipt is invalid: {path}: {exception.Message}",
+                exception);
+        }
         if (!string.Equals(path, FormalizationReceiptPath(receipt.AtomId), StringComparison.Ordinal))
         {
             throw new FormatException(

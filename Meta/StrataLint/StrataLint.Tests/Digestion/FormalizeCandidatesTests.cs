@@ -328,6 +328,78 @@ public sealed class FormalizeCandidatesTests
             unmatched.GetProperty("envelope_path").GetString());
     }
 
+    [Fact]
+    public void FormalizationReconciliationReportsCoveredReceiptAsNotEligibleResidual()
+    {
+        var covered = Entry(
+            "source",
+            "covered-receipt",
+            "定理",
+            "5.10",
+            coverageGids: ["D5/S0/Synthetic/Receipt.covered_receipt"],
+            migration: "absorbed",
+            truth: "closed");
+
+        var result = Run(
+            [covered],
+            formalizationReceipt: CoverReadyReceipt(covered),
+            arguments: ["--formalization-reconciliation"]);
+
+        Assert.True(result.Success, result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        Assert.Equal(0, json.RootElement.GetProperty("residuals_total").GetInt32());
+        var unmatched = Assert.Single(
+            json.RootElement.GetProperty("unmatched_receipts").EnumerateArray());
+        Assert.Equal("not-eligible-residual", unmatched.GetProperty("reason").GetString());
+    }
+
+    [Fact]
+    public void FormalizationReconciliationFailsClosedForMalformedOrphanReceiptEvidence()
+    {
+        var entry = Entry("source", "eligible-for-malformed", "定理", "5.11");
+
+        var result = Run(
+            [entry],
+            formalizationReceipts: new Dictionary<string, byte[]>(StringComparer.Ordinal)
+            {
+                ["malformed-orphan"] = Encoding.UTF8.GetBytes("{not-json}\n"),
+            },
+            arguments: ["--formalization-reconciliation"]);
+
+        Assert.False(result.Success);
+        Assert.Empty(result.Output);
+        Assert.Contains(
+            "formalization receipt is invalid: "
+                + DigestionFormalizationReceipt.RootPath
+                + "malformed-orphan"
+                + DigestionFormalizationReceipt.PathSuffix,
+            result.Error,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void FormalizationReconciliationFailsClosedForOrphanReceiptPathMismatch()
+    {
+        var entry = Entry("source", "eligible-for-mismatch", "定理", "5.12");
+        var pathAtom = Entry("path-source", "path-atom", "定理", "5.13");
+        var receiptAtom = Entry("receipt-source", "receipt-atom", "定理", "5.14");
+
+        var result = Run(
+            [entry],
+            formalizationReceipts: new Dictionary<string, byte[]>(StringComparer.Ordinal)
+            {
+                [pathAtom.AtomId] = CoverReadyReceipt(receiptAtom),
+            },
+            arguments: ["--formalization-reconciliation"]);
+
+        Assert.False(result.Success);
+        Assert.Empty(result.Output);
+        Assert.Contains(
+            "formalization receipt path does not match atom_id receipt-atom",
+            result.Error,
+            StringComparison.Ordinal);
+    }
+
     [Theory]
     [InlineData("{not-json}\n")]
     [InlineData("{}\n")]
