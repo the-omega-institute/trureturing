@@ -29,6 +29,7 @@ internal static class CanonicalSourceDuplicationPolicy
         var specification = File.ReadAllText(Path.Combine(
             repositoryRoot,
             BootstrapGate.SpecificationPath));
+        var specificationPassages = ExtractSpecificationPassages(specification);
         var domains = LoadDomains(repositoryRoot);
         var findings = new List<CanonicalSourceDuplicationFinding>();
         foreach (var (relativePath, path) in CSharpRepositorySources.Enumerate(repositoryRoot))
@@ -37,7 +38,7 @@ internal static class CanonicalSourceDuplicationPolicy
             findings.AddRange(InspectSource(relativePath, source, tickets));
             findings.AddRange(InspectDomainMappings(relativePath, source, domains));
             findings.AddRange(InspectAtomizerIdLiterals(relativePath, source, atomizerIds));
-            findings.AddRange(InspectSpecificationCopies(relativePath, source, specification));
+            findings.AddRange(InspectSpecificationCopies(relativePath, source, specificationPassages));
         }
 
         foreach (var (relativePath, path) in EnumerateToml(repositoryRoot))
@@ -45,7 +46,7 @@ internal static class CanonicalSourceDuplicationPolicy
             findings.AddRange(InspectSpecificationCopies(
                 relativePath,
                 File.ReadAllText(path),
-                specification));
+                specificationPassages));
         }
 
         return findings;
@@ -54,26 +55,91 @@ internal static class CanonicalSourceDuplicationPolicy
     internal static IReadOnlyList<CanonicalSourceDuplicationFinding> InspectSpecificationCopies(
         string path,
         string source,
-        string specification)
+        string specification) =>
+        InspectSpecificationCopies(path, source, ExtractSpecificationPassages(specification));
+
+    private static IReadOnlyList<CanonicalSourceDuplicationFinding> InspectSpecificationCopies(
+        string path,
+        string source,
+        IReadOnlyList<string> specificationPassages)
     {
         if (string.Equals(path, BootstrapGate.SpecificationPath, StringComparison.Ordinal))
         {
             return [];
         }
 
-        return Regex.Split(
-                specification,
-                "(?<=[。！？])|(?:\\r?\\n){2,}",
-                RegexOptions.CultureInvariant,
-                TimeSpan.FromSeconds(1))
-            .Select(static passage => passage.Trim())
-            .Where(static passage => passage.Length >= 64 && CountCjk(passage) >= 24)
-            .Distinct(StringComparer.Ordinal)
+        return specificationPassages
             .Where(passage => source.Contains(passage, StringComparison.Ordinal))
             .Select(passage => new CanonicalSourceDuplicationFinding(
                 path,
                 $"fixture copies a {passage.Length}-character passage from the canonical specification; use neutral synthetic text"))
             .ToArray();
+    }
+
+    private static string[] ExtractSpecificationPassages(string specification) =>
+        SplitSpecificationPassages(specification)
+            .Select(static passage => passage.Trim())
+            .Where(static passage => passage.Length >= 64 && CountCjk(passage) >= 24)
+            .Distinct(StringComparer.Ordinal)
+            .ToArray();
+
+    private static IEnumerable<string> SplitSpecificationPassages(string specification)
+    {
+        var start = 0;
+        var index = 0;
+        while (index < specification.Length)
+        {
+            if (specification[index] is '。' or '！' or '？')
+            {
+                yield return specification[start..(index + 1)];
+                start = ++index;
+                continue;
+            }
+
+            if (!TryReadLineEnding(specification, index, out var lineEndingLength))
+            {
+                index++;
+                continue;
+            }
+
+            var delimiterStart = index;
+            var cursor = index + lineEndingLength;
+            if (!TryReadLineEnding(specification, cursor, out lineEndingLength))
+            {
+                index = cursor;
+                continue;
+            }
+
+            do
+            {
+                cursor += lineEndingLength;
+            }
+            while (TryReadLineEnding(specification, cursor, out lineEndingLength));
+
+            yield return specification[start..delimiterStart];
+            start = cursor;
+            index = cursor;
+        }
+
+        yield return specification[start..];
+    }
+
+    private static bool TryReadLineEnding(string value, int index, out int length)
+    {
+        if (index < value.Length && value[index] == '\n')
+        {
+            length = 1;
+            return true;
+        }
+
+        if (index + 1 < value.Length && value[index] == '\r' && value[index + 1] == '\n')
+        {
+            length = 2;
+            return true;
+        }
+
+        length = 0;
+        return false;
     }
 
     internal static IReadOnlyList<CanonicalSourceDuplicationFinding> InspectAtomizerIdLiterals(
