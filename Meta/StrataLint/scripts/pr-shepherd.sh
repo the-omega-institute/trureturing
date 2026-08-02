@@ -78,9 +78,16 @@ has_expiry_fingerprint() {
     && "$out" == *"residual"* ]]
 }
 
+# Conflicts a machine can settle by rebuilding rather than by reading intent. The frozen
+# ledger belongs here even though it is append-only source: two lanes that each freeze a
+# module always collide textually, yet the correct result is never a hand-merge of the two
+# tails -- it is the dev tail plus this branch's freeze re-attested from its own Lean report,
+# which run_derivation_chain does below. Without this, every D5 delivery whose sibling merges
+# first stalls as "needs a semantic merge" and waits for a human that this harness has none of.
 is_derived_conflict() {
   case "$1" in
     Meta/StrataLint/Generated/*|Generated/*|Evidence/D5/values.json) return 0 ;;
+    Meta/StrataLint/Golden/Frozen/events.jsonl) return 0 ;;
     *) return 1 ;;
   esac
 }
@@ -234,6 +241,17 @@ run_derivation_chain() {
   fi
   mv "$projection" "$workspace/Generated/echo-residual-summary.md"
 
+  # Freeze last: every step above rewrites tracked bytes, and an attestation taken before
+  # them binds a blob that no longer exists. Appending here also repairs a branch that
+  # produced a closed module without ever freezing it, which SL-008 otherwise rejects.
+  if ! (cd "$workspace" && credentialless "$isolated_home" dotnet run \
+    --project Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj \
+    --configuration Release -- ledger-append \
+    --candidate-lean-report .lake/build/stratalint/raw-lean-report.json); then
+    rm -rf "$isolated_home"
+    log "SWEEP #$num ledger-append 失败,不 push"; return 1
+  fi
+
   if ! credentialless "$isolated_home" \
     make -C "$workspace" --no-print-directory emit-check BASE="$REMOTE/dev"; then
     rm -rf "$isolated_home"
@@ -376,7 +394,26 @@ wake_pr() {
   log "WAKE #$num close/reopen 完成,auto-merge 重挂"
 }
 
+# GitHub's rate_limit endpoint is itself exempt from rate limiting, so reading the
+# remaining budget costs nothing. A sweep does not: the PR listing alone is a GraphQL
+# query over up to a thousand pull requests, and a long-running watch repeats it every
+# interval. Burning the last of the budget here starves the engine that shares this
+# account, which is how it died repeatedly on this host.
+graphql_remaining() {
+  gh api rate_limit --jq '.resources.graphql.remaining' 2>/dev/null
+}
+
 sweep() {
+  local remaining floor="${PR_SHEPHERD_GRAPHQL_FLOOR:-200}"
+  remaining="$(graphql_remaining)" || remaining=""
+  # An unreadable budget must not stall the shepherd: if gh is broken the sweep will
+  # report that on its own, and a guard that fails closed here would lock the very
+  # recalculation that unblocks the queue.
+  if [[ "$remaining" =~ ^[0-9]+$ && "$floor" =~ ^[0-9]+$ && "$remaining" -lt "$floor" ]]; then
+    log "SWEEP 跳过:GraphQL 余额 $remaining 低于下限 $floor,让配额恢复"
+    return 0
+  fi
+
   [[ "$DRYRUN" == "1" ]] || mkdir -p "$STATE_DIR"
   local recalculated=" "
   GH pr list --repo "$REPO" --state open --limit 1000 \

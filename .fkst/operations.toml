@@ -150,3 +150,18 @@ external_tools = [
   "rm",
   "sed",
 ]
+
+[[operations]]
+id = "lean-cache-ensure"
+make_target = "lean-cache-ensure"
+implementation = "Meta/StrataLint/scripts/worktree/lean-cache-ensure.sh"
+tests = [
+  "Meta/StrataLint/StrataLint.ArchitectureTests/Operations/OperationalEntrypointTests.cs",
+  "Meta/StrataLint/StrataLint.Tests/Commands/Worktrees/LeanCacheEnsureCommandTests.cs",
+  "Meta/StrataLint/StrataLint.Tests/Commands/MakeWorkflowTests.cs",
+  "Meta/StrataLint/StrataLint.Tests/Commands/MakeWorkflow/MakeWorkflowTests.Dispatch.cs",
+]
+external_tools = [
+  "bash",
+  "dotnet",
+]

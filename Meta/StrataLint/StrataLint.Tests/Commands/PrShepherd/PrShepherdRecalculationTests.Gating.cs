@@ -124,7 +124,7 @@ public sealed partial class PrShepherdRecalculationTests
         Assert.NotEqual(fixture.GithubBaseRefOid, fixture.BaseHead);
         Assert.NotEqual(fixture.OriginalHead, fixture.RemoteHead());
         Assert.Equal(
-            ["worktree", "lean-report", "emit", "ingest", "echo-verify", "emit-check", "push"],
+            ["worktree", "lean-report", "emit", "ingest", "echo-verify", "ledger-append", "emit-check", "push"],
             fixture.MutationCalls());
         Assert.Contains("RECALCULATE -> 本地 merge+regen+push 完成", result.Log);
     }
@@ -163,5 +163,31 @@ public sealed partial class PrShepherdRecalculationTests
             result.Log,
             StringComparison.Ordinal);
         Assert.DoesNotContain("head 已漂移", result.Log, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void SweepIsSkippedWhileTheGraphqlQuotaSitsBelowItsFloor()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ShepherdFixture(graphqlRemaining: "10");
+
+        var result = fixture.Run();
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains("SWEEP 跳过", result.Log, StringComparison.Ordinal);
+        Assert.Empty(fixture.MutationCalls());
+    }
+
+    [Fact]
+    public void AnUnreadableQuotaDoesNotStallTheSweep()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ShepherdFixture(graphqlRemaining: "unreadable");
+
+        var result = fixture.Run();
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.DoesNotContain("SWEEP 跳过", result.Log, StringComparison.Ordinal);
+        Assert.Contains("push", fixture.MutationCalls());
     }
 }

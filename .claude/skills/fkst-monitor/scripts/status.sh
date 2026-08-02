@@ -83,6 +83,18 @@ cnt_s() { # count fixed substring in a string
   local n; n="$(grep -c "$1" <<<"$2" 2>/dev/null || true)"; echo "${n:-0}"
 }
 
+json_quote() { # quote one string as a JSON value
+  local value="${1:-}"
+  value="${value//\\/\\\\}"
+  value="${value//\"/\\\"}"
+  value="${value//$'\b'/\\b}"
+  value="${value//$'\f'/\\f}"
+  value="${value//$'\n'/\\n}"
+  value="${value//$'\r'/\\r}"
+  value="${value//$'\t'/\\t}"
+  printf '"%s"' "$(printf '%s' "$value" | LC_ALL=C tr -d '\000-\010\013\014\016-\037')"
+}
+
 # Extract `key=value` from a line, empty when absent. THIRD occurrence in this file of the same bug
 # family: an unguarded `grep`/`grep -c` in a command substitution exits nonzero on a legitimately empty
 # result, and under `set -euo pipefail` that aborts the caller — it silently truncated diag's report, and
@@ -266,8 +278,14 @@ snapshot() {
   fi
 
   if [[ "${1:-}" == "--json" ]]; then
-    printf '{"verdict":"%s","running":%d,"pid":"%s","uptime":"%s","fatal":%d,"warn_error":%d,"acks":%d,"dlq":%d,"retrying":%d,"absent_subscribers":%d,"codex_failed":%d,"progress_age_s":%d,"cpu_idle_pct":"%s","cores":"%s","mem_free_pct":"%s"}\n' \
-      "$verdict" "$running" "${pid:-}" "${uptime:-}" "$fatal" "$warns" "$acks" "$dlq" "$retrying" "$absent" "$codex_failed" "$progress_age" "$cpu_idle" "$cores" "$memfree"
+    local observe_ok_json=false observe_error_json dlq_json=null retrying_json=null absent_json=null
+    observe_error_json="$(json_quote "$observe_why")"
+    if (( observe_ok )); then
+      observe_ok_json=true; observe_error_json=null
+      dlq_json="$dlq"; retrying_json="$retrying"; absent_json="$absent"
+    fi
+    printf '{"verdict":"%s","running":%d,"pid":"%s","uptime":"%s","fatal":%d,"warn_error":%d,"acks":%d,"observe_ok":%s,"observe_error":%s,"dlq":%s,"retrying":%s,"absent_subscribers":%s,"codex_failed":%d,"progress_age_s":%d,"cpu_idle_pct":"%s","cores":"%s","mem_free_pct":"%s"}\n' \
+      "$verdict" "$running" "${pid:-}" "${uptime:-}" "$fatal" "$warns" "$acks" "$observe_ok_json" "$observe_error_json" "$dlq_json" "$retrying_json" "$absent_json" "$codex_failed" "$progress_age" "$cpu_idle" "$cores" "$memfree"
     [[ "$verdict" == HEALTHY ]]; return
   fi
 
