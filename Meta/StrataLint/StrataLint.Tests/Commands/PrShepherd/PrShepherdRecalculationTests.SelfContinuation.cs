@@ -80,11 +80,11 @@ public sealed partial class PrShepherdRecalculationTests
                 "DRYRUN #1 RECALCULATE -> ensure worktree",
                 StringSplitOptions.None).Length - 1);
         Assert.Contains(
-            "WATCH renew(1 轮耗尽,仍有 open 且 auto-merge armed PR,重启计数)",
+            "WATCH renew(1 cycles exhausted; open armed PR remains)",
             result.Log,
             StringComparison.Ordinal);
         Assert.EndsWith(
-            "WATCH end(1 轮耗尽,无 open auto-merge armed PR)\n",
+            "WATCH end(1 cycles exhausted; no open armed PR)\n",
             result.Log,
             StringComparison.Ordinal);
 

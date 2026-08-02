@@ -13,7 +13,8 @@
 # 判定只看机器字段(mergeable/mergeStateStatus/autoMergeRequest),不看输出散文。
 set -euo pipefail
 
-SCRIPT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)/${BASH_SOURCE[0]##*/}"
+LOADED_SCRIPT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)/${BASH_SOURCE[0]##*/}"
+SCRIPT_PATH="${PR_SHEPHERD_CANONICAL_SCRIPT:-$LOADED_SCRIPT_PATH}"
 ROOT="${PR_SHEPHERD_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)}"
 REMOTE="${PR_SHEPHERD_REMOTE:-origin}"
 REPO="${PR_SHEPHERD_REPO:-the-omega-institute/trureturing}"
@@ -24,8 +25,10 @@ CACHE_ROOT="${PR_SHEPHERD_CACHE:-$HOME/.cache/trureturing-shepherd}"
 DRYRUN="${SHEPHERD_DRYRUN:-0}"
 COMMIT_SUBJECT="recompute derivations after dev advance (auto, pr-shepherd)"
 ORIGINAL_HOME="${HOME:-/tmp}"
-WATCH_SWEEP_BLOB=""
-WATCH_SWEEP_SNAPSHOT=""
+WATCH_LOADED_BLOB="${PR_SHEPHERD_WATCH_LOADED_BLOB:-}"
+WATCH_PREVIOUS_SCRIPT="${PR_SHEPHERD_WATCH_PREVIOUS_SCRIPT:-}"
+WATCH_PROCESS_START="${PR_SHEPHERD_WATCH_PROCESS_START:-}"
+WATCH_OWNS_LEASE=0
 
 GH() { LEAN4_GUARDRAILS_BYPASS=1 gh "$@"; }
 
@@ -483,79 +486,218 @@ armed_pr_count() {
   printf '%s\n' "$out"
 }
 
-run_current_sweep() {
-  local cycle="$1" previous_blob="$2" blob rc=0
-  if ! WATCH_SWEEP_SNAPSHOT="$(mktemp "${TMPDIR:-/tmp}/pr-shepherd-sweep.XXXXXXXX")"; then
-    log "WATCH cycle=$cycle cannot allocate script snapshot; sweep skipped"
+watch_process_start() {
+  ps -p "$1" -o lstart= 2>/dev/null \
+    | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
+}
+
+watch_process_command() {
+  ps -p "$1" -o command= 2>/dev/null
+}
+
+watch_lease_owner_is_live() {
+  local owner_file="$PIDFILE.lock/owner" schema pid process_start canonical_script
+  local actual_start command
+  [[ -f "$owner_file" ]] || return 1
+  IFS= read -r schema < "$owner_file" || return 1
+  IFS= read -r pid < <(sed -n '2p' "$owner_file") || return 1
+  IFS= read -r process_start < <(sed -n '3p' "$owner_file") || return 1
+  IFS= read -r canonical_script < <(sed -n '4p' "$owner_file") || return 1
+  [[ "$schema" == "schema=pr-watch-owner-v1" \
+      && "$pid" =~ ^pid=([1-9][0-9]*)$ \
+      && "$process_start" == process_start=* \
+      && "$canonical_script" == canonical_script=* ]] || return 1
+  pid="${BASH_REMATCH[1]}"
+  process_start="${process_start#process_start=}"
+  canonical_script="${canonical_script#canonical_script=}"
+  kill -0 "$pid" 2>/dev/null || return 1
+  actual_start="$(watch_process_start "$pid")" || return 1
+  command="$(watch_process_command "$pid")" || return 1
+  [[ -n "$process_start" && "$actual_start" == "$process_start" \
+      && "$command" == *"$canonical_script"* \
+      && "$command" == *" watch "* ]]
+}
+
+acquire_watch_lease() {
+  local lock="$PIDFILE.lock" stale="$PIDFILE.lock.stale.$$.$RANDOM" attempt
+  WATCH_PROCESS_START="$(watch_process_start "$$")" || WATCH_PROCESS_START=""
+  [[ -n "$WATCH_PROCESS_START" ]] \
+    || { log "WATCH identity unavailable: process start cannot be read"; return 1; }
+  for attempt in 1 2; do
+    if mkdir "$lock" 2>/dev/null; then
+      if ! {
+          printf 'schema=pr-watch-owner-v1\n'
+          printf 'pid=%s\n' "$$"
+          printf 'process_start=%s\n' "$WATCH_PROCESS_START"
+          printf 'canonical_script=%s\n' "$SCRIPT_PATH"
+        } > "$lock/owner"; then
+        rmdir "$lock" 2>/dev/null || true
+        log "WATCH lease unavailable: owner identity cannot be written"
+        return 1
+      fi
+      WATCH_OWNS_LEASE=1
+      return 0
+    fi
+    if watch_lease_owner_is_live; then
+      log "WATCH already running with a verified lease"
+      return 1
+    fi
+    if ! mv "$lock" "$stale" 2>/dev/null; then
+      continue
+    fi
+    rm -f "$stale/owner" 2>/dev/null || true
+    rmdir "$stale" 2>/dev/null || true
+  done
+  log "WATCH lease unavailable: stale ownership could not be reclaimed"
+  return 1
+}
+
+watch_lease_belongs_to_current_process() {
+  local owner_file="$PIDFILE.lock/owner" pid process_start
+  [[ -f "$owner_file" ]] || return 1
+  pid="$(sed -n 's/^pid=//p' "$owner_file")"
+  process_start="$(sed -n 's/^process_start=//p' "$owner_file")"
+  [[ "$pid" == "$$" && -n "$WATCH_PROCESS_START" \
+      && "$process_start" == "$WATCH_PROCESS_START" ]]
+}
+
+publish_watch_identity() {
+  local interval="$1" max="$2" cycle="$3" actual_blob temporary
+  actual_blob="$(git hash-object "$LOADED_SCRIPT_PATH" 2>/dev/null)" || actual_blob=""
+  if [[ ! "$WATCH_LOADED_BLOB" =~ ^[0-9a-f]{40}$ \
+      || "$actual_blob" != "$WATCH_LOADED_BLOB" ]]; then
+    log "WATCH identity mismatch expected=${WATCH_LOADED_BLOB:-missing} actual=${actual_blob:-unreadable}"
     return 1
   fi
-  if ! cp "$SCRIPT_PATH" "$WATCH_SWEEP_SNAPSHOT" 2>/dev/null; then
-    rm -f "$WATCH_SWEEP_SNAPSHOT"
-    WATCH_SWEEP_SNAPSHOT=""
-    log "WATCH cycle=$cycle current script unavailable; sweep skipped path=$SCRIPT_PATH"
+  watch_lease_belongs_to_current_process \
+    || { log "WATCH lease lost before identity publication"; return 1; }
+  temporary="$PIDFILE.next.$$.$RANDOM"
+  umask 077
+  if ! {
+      printf 'schema=pr-watch-state-v1\n'
+      printf 'pid=%s\n' "$$"
+      printf 'process_start=%s\n' "$WATCH_PROCESS_START"
+      printf 'canonical_script=%s\n' "$SCRIPT_PATH"
+      printf 'loaded_script=%s\n' "$LOADED_SCRIPT_PATH"
+      printf 'loaded_blob=%s\n' "$WATCH_LOADED_BLOB"
+      printf 'interval=%s\n' "$interval"
+      printf 'max_cycles=%s\n' "$max"
+      printf 'cycle=%s\n' "$cycle"
+    } > "$temporary" \
+      || ! mv "$temporary" "$PIDFILE"; then
+    rm -f "$temporary" 2>/dev/null || true
+    log "WATCH identity publication failed path=$PIDFILE"
     return 1
   fi
-  if ! chmod 0400 "$WATCH_SWEEP_SNAPSHOT" \
-    || ! blob="$(git hash-object "$WATCH_SWEEP_SNAPSHOT" 2>/dev/null)"; then
-    rm -f "$WATCH_SWEEP_SNAPSHOT"
-    WATCH_SWEEP_SNAPSHOT=""
-    log "WATCH cycle=$cycle cannot identify immutable script snapshot; sweep skipped"
+  log "WATCH cycle=$cycle loaded_script_blob=$WATCH_LOADED_BLOB"
+}
+
+remove_watch_snapshot() {
+  local snapshot="$1" snapshot_directory temporary_directory
+  [[ "${snapshot##*/}" == pr-shepherd-watch.* ]] || return 0
+  snapshot_directory="$(cd "$(dirname "$snapshot")" 2>/dev/null && pwd -P)" || return 0
+  temporary_directory="$(cd "${TMPDIR:-/tmp}" 2>/dev/null && pwd -P)" || return 0
+  [[ "$snapshot_directory" == "$temporary_directory" ]] \
+    && rm -f "$snapshot" 2>/dev/null || true
+}
+
+reload_watch() {
+  local interval="$1" max="$2" next_cycle="$3" snapshot blob rc
+  if ! snapshot="$(mktemp "${TMPDIR:-/tmp}/pr-shepherd-watch.XXXXXXXX")"; then
+    log "WATCH reload unavailable: immutable snapshot cannot be allocated"
     return 1
+  fi
+  if ! cp "$SCRIPT_PATH" "$snapshot" 2>/dev/null \
+      || ! chmod 0400 "$snapshot" \
+      || ! /bin/bash -n "$snapshot" \
+      || ! blob="$(git hash-object "$snapshot" 2>/dev/null)"; then
+    rm -f "$snapshot" 2>/dev/null || true
+    log "WATCH reload unavailable path=$SCRIPT_PATH"
+    return 1
+  fi
+  if [[ -n "$WATCH_LOADED_BLOB" && "$WATCH_LOADED_BLOB" != "$blob" ]]; then
+    log "WATCH SCRIPT CHANGED previous_blob=$WATCH_LOADED_BLOB current_blob=$blob"
   fi
 
-  if [[ -n "$previous_blob" && "$previous_blob" != "$blob" ]]; then
-    log "WATCH SCRIPT CHANGED previous_blob=$previous_blob current_blob=$blob"
+  export PR_SHEPHERD_CANONICAL_SCRIPT="$SCRIPT_PATH"
+  export PR_SHEPHERD_WATCH_LOADED_BLOB="$blob"
+  export PR_SHEPHERD_WATCH_PREVIOUS_SCRIPT="$LOADED_SCRIPT_PATH"
+  export PR_SHEPHERD_WATCH_PROCESS_START="$WATCH_PROCESS_START"
+  export PR_SHEPHERD_WATCH_CYCLE="$next_cycle"
+  if exec /bin/bash "$snapshot" watch "$interval" "$max"; then
+    return 0
   fi
-  log "WATCH cycle=$cycle loaded_script_blob=$blob"
-  WATCH_SWEEP_BLOB="$blob"
-
-  PR_SHEPHERD_ROOT="$ROOT" \
-  PR_SHEPHERD_REMOTE="$REMOTE" \
-  PR_SHEPHERD_REPO="$REPO" \
-  PR_SHEPHERD_LOG="$LOG" \
-  PR_SHEPHERD_PID="$PIDFILE" \
-  PR_SHEPHERD_STATE="$STATE_DIR" \
-  PR_SHEPHERD_CACHE="$CACHE_ROOT" \
-  SHEPHERD_DRYRUN="$DRYRUN" \
-    /bin/bash "$WATCH_SWEEP_SNAPSHOT" sweep || rc=$?
-  rm -f "$WATCH_SWEEP_SNAPSHOT"
-  WATCH_SWEEP_SNAPSHOT=""
+  rc=$?
+  rm -f "$snapshot" 2>/dev/null || true
+  log "WATCH reload exec failed path=$snapshot exit=$rc"
   return "$rc"
 }
 
 cleanup_watch() {
-  [[ -z "$WATCH_SWEEP_SNAPSHOT" ]] || rm -f "$WATCH_SWEEP_SNAPSHOT"
-  [[ "$DRYRUN" == "1" ]] || rm -f "$PIDFILE"
+  local state_pid state_start
+  if [[ "$WATCH_OWNS_LEASE" == "1" ]] && watch_lease_belongs_to_current_process; then
+    if [[ -f "$PIDFILE" ]]; then
+      state_pid="$(sed -n 's/^pid=//p' "$PIDFILE")"
+      state_start="$(sed -n 's/^process_start=//p' "$PIDFILE")"
+      if [[ "$state_pid" == "$$" && "$state_start" == "$WATCH_PROCESS_START" ]]; then
+        rm -f "$PIDFILE" 2>/dev/null || true
+      fi
+    fi
+    rm -f "$PIDFILE.lock/owner" 2>/dev/null || true
+    rmdir "$PIDFILE.lock" 2>/dev/null || true
+  fi
+  remove_watch_snapshot "$LOADED_SCRIPT_PATH"
 }
 
 watch() {
-  local interval="${1:-60}" max="${2:-360}"
-  if [[ "$DRYRUN" != "1" ]]; then
-    if [[ -f "$PIDFILE" ]] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
-      log "WATCH 已有实例在跑(pid=$(cat "$PIDFILE")),退出"; exit 1
-    fi
-    printf '%s' "$$" > "$PIDFILE"
-  fi
-  trap cleanup_watch EXIT
-  log "WATCH start interval=${interval}s max_cycles=${max} pid=$$"
-  local i armed previous_blob=""
-  while true; do
-    for ((i = 1; i <= max; i++)); do
-      run_current_sweep "$i" "$previous_blob" || log "SWEEP cycle=$i 出错(继续)"
-      [[ -z "$WATCH_SWEEP_BLOB" ]] || previous_blob="$WATCH_SWEEP_BLOB"
-      sleep "$interval"
-    done
-    if ! armed="$(armed_pr_count)"; then
-      log "WATCH renew(${max} 轮耗尽,armed PR 状态不可判,保守重启计数)"
-      continue
-    fi
-    if [[ "$armed" -gt 0 ]]; then
-      log "WATCH renew(${max} 轮耗尽,仍有 open 且 auto-merge armed PR,重启计数)"
-      continue
-    fi
-    log "WATCH end(${max} 轮耗尽,无 open auto-merge armed PR)"
+  local interval="${1:-60}" max="${2:-360}" cycle armed
+  [[ "$interval" =~ ^(0|[1-9][0-9]*)$ && "$max" =~ ^[1-9][0-9]*$ ]] \
+    || { log "WATCH invalid interval or max_cycles (interval=$interval max_cycles=$max)"; return 2; }
+
+  if [[ -z "$WATCH_LOADED_BLOB" ]]; then
+    acquire_watch_lease || return
+    trap cleanup_watch EXIT
+    trap 'exit 143' TERM
+    trap 'exit 130' INT
+    reload_watch "$interval" "$max" 1
     return
-  done
+  fi
+
+  cycle="${PR_SHEPHERD_WATCH_CYCLE:-}"
+  [[ "$cycle" =~ ^[1-9][0-9]*$ && "$cycle" -le "$max" ]] \
+    || { log "WATCH reload rejected invalid cycle=${cycle:-missing}"; return 2; }
+  WATCH_OWNS_LEASE=1
+  watch_lease_belongs_to_current_process \
+    || { log "WATCH reload rejected: verified lease is absent"; return 1; }
+  trap cleanup_watch EXIT
+  trap 'exit 143' TERM
+  trap 'exit 130' INT
+  publish_watch_identity "$interval" "$max" "$cycle" || return
+  remove_watch_snapshot "$WATCH_PREVIOUS_SCRIPT"
+  WATCH_PREVIOUS_SCRIPT=""
+  if [[ "$cycle" == "1" ]]; then
+    log "WATCH start interval=${interval}s max_cycles=${max} pid=$$"
+  else
+    log "WATCH reloaded cycle=$cycle interval=${interval}s max_cycles=${max} pid=$$"
+  fi
+
+  sweep || log "SWEEP cycle=$cycle error (continuing)"
+  sleep "$interval"
+  if [[ "$cycle" -lt "$max" ]]; then
+    reload_watch "$interval" "$max" "$((cycle + 1))"
+    return
+  fi
+  if ! armed="$(armed_pr_count)"; then
+    log "WATCH renew(${max} cycles exhausted; armed PR state unknown)"
+    reload_watch "$interval" "$max" 1
+    return
+  fi
+  if [[ "$armed" -gt 0 ]]; then
+    log "WATCH renew(${max} cycles exhausted; open armed PR remains)"
+    reload_watch "$interval" "$max" 1
+    return
+  fi
+  log "WATCH end(${max} cycles exhausted; no open armed PR)"
 }
 
 case "${1:-}" in
