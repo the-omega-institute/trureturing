@@ -201,14 +201,15 @@ return {
   test_fire_raiser_skips_oversize_candidate_without_truncating = function()
     mock_env()
     mock_history()
+    local oversize_atom = string.rep("x", core.github_issue_create_body_limit())
     mock_candidates('{"schema":"stratalint-formalize-candidates-v2","ledger_sha256":"sha256:ledger","candidates":['
       .. '{"source_id":"GICT","atom_id":"large","ast_path":"theorem/large","kind":"theorem","cas_ref":"sha256:large","raw_sha256":"sha256:raw-large","atom_text":"'
-      .. string.rep("x", 12000) .. '"},'
+      .. oversize_atom .. '"},'
       .. '{"source_id":"GICT","atom_id":"small","ast_path":"theorem/small","kind":"theorem","cas_ref":"sha256:small","raw_sha256":"sha256:raw-small","atom_text":"small theorem"}],"withheld":[]}')
     local trace = t.fire_raiser("frontier_poll")
     t.eq(trace.consumer_result.status, "accepted")
     t.eq(#trace.raised, 1)
     t.eq(trace.raised[1].payload.dedup_key, "digestion-atom:small:sha256:small")
-    t.is_true(trace.raised[1].payload.body:find(string.rep("x", 12000), 1, true) == nil)
+    t.is_true(trace.raised[1].payload.body:find(oversize_atom, 1, true) == nil)
   end,
 }

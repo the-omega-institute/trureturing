@@ -102,7 +102,7 @@ return {
   end,
 
   test_oversize_request_body_is_skipped_without_truncation = function()
-    local c = candidate("large", string.rep("x", 12000))
+    local c = candidate("large", string.rep("x", core.github_issue_create_body_limit()))
     t.eq(core.build_frontier_request("owner/repo", c, BOT_LOGIN), nil)
   end,
 
