@@ -3,7 +3,7 @@
    mirror-B: none(waiver:axiom-debt-registry-is-the-semantic-mirror)
    mirror-E: none(waiver:classical-theorem-without-numerical-evidence-dependency)
    anchors: []
-   digest: Register classical three-gap, Fourier-Laplace, and Weil explicit-formula debts. -/
+   digest: Register the classical three-gap and Weil explicit-formula debts; the Fourier-Laplace debt is discharged (proved in D5/S3/Fourier/PaleyWiener). -/
 
 import Mathlib.Algebra.Order.Floor.Ring
 import Mathlib.Algebra.Order.Archimedean.Real.Basic
@@ -52,23 +52,13 @@ axiom three_gap_classic (alpha : ℝ) (hirrational : Irrational alpha) (N : ℕ)
     (fractionalGapValues alpha N).card ≤ 3
 
 /-
-FROZEN TAIL D5-T0018-C: pinned mathlib supplies smooth compactly supported
-functions and real Fourier theory, but no direct theorem exposing the entire
-complex Fourier-Laplace extension. The transform below is fixed, not free.
+AxiomDebt case `D5-T0018-C` (DISCHARGED). Pinned mathlib supplies smooth
+compactly supported functions and real Fourier theory but no direct theorem
+exposing the entire complex Fourier-Laplace extension; that classical bridge
+is now proved natively in
+`D5/S3/Fourier/PaleyWiener.fourier_laplace_entire_classic`, so no axiom is
+registered here. This case is retained as a discharge marker only.
 -/
-
-/--
-The classical Paley-Wiener theorem (Paley and Wiener 1934): the
-angular-frequency transform of a smooth compactly supported function is
-entire.
-
-AxiomDebt case `D5-T0018-C`. This is the level-C Paley-Wiener input only; no
-Weil explicit-formula identity or positivity claim is included.
--/
-axiom fourier_laplace_entire_classic
-    (g : ℝ → ℂ) (hsmooth : ContDiff ℝ ∞ g) (hcompact : HasCompactSupport g) :
-    Differentiable ℂ fun z : ℂ =>
-      ∫ x : ℝ, Complex.exp (-Complex.I * z * (x : ℂ)) * g x
 
 /-
 TAIL D5-T0018-F: pinned mathlib has no theorem binding the concrete prime,
