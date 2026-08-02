@@ -21,6 +21,11 @@ done
 [[ "$ROLE" =~ ^[a-z0-9][a-z0-9-]*$ ]] \
   || { echo "report-supervisor: --role must use lowercase ASCII words" >&2; exit 2; }
 [[ $# -gt 0 ]] || { echo "report-supervisor: command is required after --" >&2; exit 2; }
+CALLER_WORKTREE=""
+if (( LEAN_SLOT )); then
+  CALLER_WORKTREE="$(pwd -P)" \
+    || { echo "report-supervisor: could not identify the caller working directory" >&2; exit 2; }
+fi
 
 REPOSITORY_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../../.." && pwd -P)"
 PERF_EVENT_LIB="$REPOSITORY_ROOT/Meta/StrataLint/scripts/perf-event-lib.sh"
@@ -191,7 +196,11 @@ reclaim_stale_lock() {
 
 claim_lock() {
   local lock="$1"
+  local record_holder_metadata="${2:-0}"
   local identity
+  local acquired_metadata
+  local acquired_at_epoch
+  local acquired_at
   identity="$(owner_identity)" \
     || { echo "report-supervisor: could not identify lock owner process" >&2; return 2; }
   acquire_lock_guard "$lock" || return 1
@@ -204,12 +213,93 @@ claim_lock() {
     release_lock_guard "$lock"
     return 2
   fi
+  if (( record_holder_metadata )); then
+    acquired_metadata="$(date -u '+%s|%Y-%m-%dT%H:%M:%SZ')" || acquired_metadata=""
+    acquired_at_epoch="${acquired_metadata%%|*}"
+    acquired_at="${acquired_metadata#*|}"
+    if [[ ! "$acquired_at_epoch" =~ ^[0-9]+$ \
+      || ! "$acquired_at" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$ ]] \
+      || ! {
+        printf '%s\n' "$ROLE" > "$lock/role" \
+          && printf '%s\n' "$CALLER_WORKTREE" > "$lock/worktree" \
+          && printf '%s\n' "$acquired_at" > "$lock/acquired-at" \
+          && printf '%s\n' "$acquired_at_epoch" > "$lock/acquired-at-epoch"
+      }; then
+      rm -rf -- "$lock"
+      release_lock_guard "$lock"
+      return 2
+    fi
+  fi
   release_lock_guard "$lock"
 }
 
 active_slot_count() {
   find "$SLOT_ROOT" -maxdepth 1 -type d -name 'slot-*.lock' -print 2>/dev/null \
     | awk 'END {print NR + 0}'
+}
+
+read_lock_field() {
+  local lock="$1"
+  local name="$2"
+  local value=""
+  [[ -f "$lock/$name" ]] || return 1
+  IFS= read -r value < "$lock/$name" || true
+  [[ -n "$value" ]] || return 1
+  printf '%s' "$value"
+}
+
+report_lean_slot_holder() {
+  local lock="$1"
+  local identity
+  local confirmed_identity
+  local role
+  local worktree
+  local acquired_at
+  local acquired_at_epoch
+  local held_seconds="unknown"
+  local now
+
+  identity="$(read_lock_field "$lock" owner || true)"
+  role="$(read_lock_field "$lock" role || true)"
+  worktree="$(read_lock_field "$lock" worktree || true)"
+  acquired_at="$(read_lock_field "$lock" acquired-at || true)"
+  acquired_at_epoch="$(read_lock_field "$lock" acquired-at-epoch || true)"
+  confirmed_identity="$(read_lock_field "$lock" owner || true)"
+
+  if [[ -z "$identity" || "$identity" != "$confirmed_identity" || ! -d "$lock" ]]; then
+    identity="unknown"
+    role="unknown"
+    worktree="unknown"
+    acquired_at="unknown"
+    acquired_at_epoch=""
+  fi
+  [[ "$role" =~ ^[a-z0-9][a-z0-9-]*$ ]] || role="unknown"
+  [[ "$worktree" == /* ]] || worktree="unknown"
+  [[ "$acquired_at" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$ ]] \
+    || acquired_at="unknown"
+  now="$(date +%s)"
+  if [[ "$acquired_at_epoch" =~ ^[0-9]+$ && "$now" =~ ^[0-9]+$ \
+    && "$acquired_at_epoch" -le "$now" ]]; then
+    held_seconds=$((now - acquired_at_epoch))
+  fi
+
+  printf 'report-supervisor: Lean slot holder slot=%q identity=%q acquired_at=%q held_seconds=%q role=%q worktree=%q\n' \
+    "${lock##*/}" "$identity" "$acquired_at" "$held_seconds" "$role" "$worktree" >&2
+}
+
+report_lean_slot_holders() {
+  local index
+  local lock
+  local found=0
+  for ((index = 1; index <= MAX_CONCURRENCY; index++)); do
+    lock="$SLOT_ROOT/slot-$index.lock"
+    [[ -d "$lock" ]] || continue
+    found=1
+    report_lean_slot_holder "$lock"
+  done
+  if (( found == 0 )); then
+    echo "report-supervisor: Lean slot holder metadata unavailable" >&2
+  fi
 }
 
 acquire_lean_slot() {
@@ -219,7 +309,7 @@ acquire_lean_slot() {
   while true; do
     for ((index = 1; index <= MAX_CONCURRENCY; index++)); do
       candidate="$SLOT_ROOT/slot-$index.lock"
-      if claim_lock "$candidate"; then
+      if claim_lock "$candidate" 1; then
         SLOT_DIR="$candidate"
         CONCURRENCY_COUNT="$(active_slot_count)"
         return 0
@@ -228,6 +318,7 @@ acquire_lean_slot() {
     done
     if (( $(date +%s) >= deadline )); then
       echo "report-supervisor: timed out waiting for a Lean slot" >&2
+      report_lean_slot_holders
       return 2
     fi
     sleep 0.1
