@@ -7,14 +7,14 @@ SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
 REPOSITORY_ROOT="$(cd -- "$SCRIPT_DIR/../.." && pwd -P)"
 # shellcheck source=.fkst/scripts/host-contract.sh
 source "$SCRIPT_DIR/host-contract.sh"
+# shellcheck source=.fkst/scripts/restart-policy.sh
+source "$SCRIPT_DIR/restart-policy.sh"
 
 CHANGED=0
-PLATFORM_CHANGED=0
 CHECKOUT_DEV_REV=""
 PLATFORM_CURRENT_REV=""
 PLATFORM_DEV_REV=""
-PLATFORM_WORKSPACE_BACKUP=""
-PLATFORM_LOCK_BACKUP=""
+ACTIVATION_ROLLBACK_REV=""
 
 say() {
   printf '[%s] %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$*" \
@@ -86,25 +86,48 @@ check_launchd_conformance() {
     "$make_bin" -s -C "$REPOSITORY_ROOT" launchd-conformance-check
 }
 
-restore_platform_bytes() {
-  [[ -n "$PLATFORM_WORKSPACE_BACKUP" && -f "$PLATFORM_WORKSPACE_BACKUP" ]] \
-    || { say "ROLLBACK-FAIL: workspace backup unavailable"; return 1; }
-  [[ -n "$PLATFORM_LOCK_BACKUP" && -f "$PLATFORM_LOCK_BACKUP" ]] \
-    || { say "ROLLBACK-FAIL: lock backup unavailable"; return 1; }
+read_deployed_platform_revision() {
+  grep -oE '[0-9a-f]{40}' "$FKST_HOST_ROOT/fkst.workspace.toml" 2>/dev/null \
+    | head -1
+}
 
-  cp "$PLATFORM_WORKSPACE_BACKUP" "$FKST_HOST_ROOT/fkst.workspace.toml" \
-    && cp "$PLATFORM_LOCK_BACKUP" "$FKST_HOST_ROOT/fkst.lock"
+write_platform_pin_revision() {
+  local target_revision="$1" current_revision temporary_workspace
+  [[ "$target_revision" =~ ^[0-9a-f]{40}$ ]] \
+    || { say "PLATFORM-PIN-WRITE-FAIL: invalid target revision"; return 1; }
+  current_revision="$(read_deployed_platform_revision)"
+  [[ "$current_revision" =~ ^[0-9a-f]{40}$ ]] \
+    || { say "PLATFORM-PIN-WRITE-FAIL: deployed revision is unreadable"; return 1; }
+
+  temporary_workspace="$FKST_HOST_ROOT/fkst.workspace.toml.next-$$-$RANDOM"
+  if ! (set -o noclobber; : > "$temporary_workspace") 2>/dev/null; then
+    say "PLATFORM-PIN-WRITE-FAIL: cannot create temporary workspace"
+    return 1
+  fi
+  if ! sed "s/$current_revision/$target_revision/g" \
+      "$FKST_HOST_ROOT/fkst.workspace.toml" > "$temporary_workspace" \
+      || ! mv "$temporary_workspace" "$FKST_HOST_ROOT/fkst.workspace.toml"; then
+    rm -f -- "$temporary_workspace" 2>/dev/null || true
+    return 1
+  fi
+}
+
+regenerate_platform_lock() {
+  "$FKST_TIMEOUT_BIN" 240 "$BIN" host lock \
+    --project-root "$FKST_HOST_ROOT" >/dev/null 2>&1
 }
 
 rollback_platform() {
-  restore_platform_bytes || return 1
-  if ! "$FKST_TIMEOUT_BIN" 240 "$BIN" host lock \
-      --project-root "$FKST_HOST_ROOT" >/dev/null 2>&1; then
-    say "ROLLBACK-HOST-LOCK-FAIL; preserving original pin and lock bytes"
+  local previous_revision="$1"
+  if ! write_platform_pin_revision "$previous_revision"; then
+    say "ROLLBACK-PIN-WRITE-FAIL for previous revision ${previous_revision:0:12}"
+    return 1
   fi
-  # host lock may rewrite the lock even for the restored pin. The rollback contract is the
-  # exact pre-cycle bytes, so restore once more after the validation attempt.
-  restore_platform_bytes
+  if ! regenerate_platform_lock; then
+    say "ROLLBACK-HOST-LOCK-FAIL for previous revision ${previous_revision:0:12}"
+    return 1
+  fi
+  say "PLATFORM-ROLLBACK-OK: restored revision ${previous_revision:0:12} and regenerated lock"
 }
 
 sync_platform() {
@@ -113,10 +136,7 @@ sync_platform() {
 
   # Issue #2461: the deployed engine reads checkout/fkst.workspace.toml, not the committed
   # checkout/.fkst copy. The deployed top-level file is therefore the only pin updated here.
-  PLATFORM_CURRENT_REV="$(
-    grep -oE '[0-9a-f]{40}' "$FKST_HOST_ROOT/fkst.workspace.toml" 2>/dev/null \
-      | head -1
-  )"
+  PLATFORM_CURRENT_REV="$(read_deployed_platform_revision)"
   PLATFORM_DEV_REV="$(git -C "$FKST_PLATFORM_ROOT" rev-parse origin/dev 2>/dev/null)"
   [[ "$PLATFORM_CURRENT_REV" =~ ^[0-9a-f]{40}$ ]] \
     || { say "invalid deployed platform pin"; return 1; }
@@ -128,36 +148,34 @@ sync_platform() {
     return 0
   fi
 
-  local stamp temporary_workspace
-  stamp="$(date -u +%Y%m%d-%H%M%S)"
-  PLATFORM_WORKSPACE_BACKUP="$FKST_HOST_ROOT/fkst.workspace.toml.bak-$stamp"
-  PLATFORM_LOCK_BACKUP="$FKST_HOST_ROOT/fkst.lock.bak-$stamp"
-  temporary_workspace="$FKST_HOST_ROOT/fkst.workspace.toml.next-$stamp"
-  cp "$FKST_HOST_ROOT/fkst.workspace.toml" "$PLATFORM_WORKSPACE_BACKUP" \
-    && cp "$FKST_HOST_ROOT/fkst.lock" "$PLATFORM_LOCK_BACKUP" \
-    || { say "PLATFORM-BACKUP-FAIL"; return 1; }
-
   say "PLATFORM BEHIND ${PLATFORM_CURRENT_REV:0:12} -> ${PLATFORM_DEV_REV:0:12}; syncing"
-  if ! sed "s/$PLATFORM_CURRENT_REV/$PLATFORM_DEV_REV/g" \
-      "$FKST_HOST_ROOT/fkst.workspace.toml" > "$temporary_workspace" \
-      || ! mv "$temporary_workspace" "$FKST_HOST_ROOT/fkst.workspace.toml"; then
-    rm -f "$temporary_workspace"
-    if rollback_platform; then
-      say "PLATFORM-PIN-WRITE-FAIL; reverted platform"
+  if ! record_restart_obligation \
+      "$PLATFORM_CURRENT_REV" "$PLATFORM_DEV_REV" \
+      "platform pin ${PLATFORM_CURRENT_REV:0:12}->${PLATFORM_DEV_REV:0:12}"; then
+    say "PLATFORM-ACTIVATION-INTENT-FAIL; pin mutation refused"
+    return 1
+  fi
+  if ! write_platform_pin_revision "$PLATFORM_DEV_REV"; then
+    if rollback_platform "$PLATFORM_CURRENT_REV"; then
+      say "PLATFORM-PIN-WRITE-FAIL; reverted to ${PLATFORM_CURRENT_REV:0:12} from previous revision"
     else
-      say "PLATFORM-PIN-WRITE-FAIL; rollback failed, original bytes not confirmed"
+      say "PLATFORM-PIN-WRITE-FAIL; rollback failed from previous revision"
     fi
+    say "RESTART-OBLIGATION RETAINED: mutation failed; verified restart still required"
     return 1
   fi
 
-  if ! "$FKST_TIMEOUT_BIN" 240 "$BIN" host lock \
-      --project-root "$FKST_HOST_ROOT" >/dev/null 2>&1; then
+  if ! regenerate_platform_lock; then
     say "HOST-LOCK-FAIL for ${PLATFORM_DEV_REV:0:12}; reverting platform"
-    rollback_platform
+    if rollback_platform "$PLATFORM_CURRENT_REV"; then
+      say "HOST-LOCK-FAIL recovery restored ${PLATFORM_CURRENT_REV:0:12}"
+    else
+      say "PLATFORM-ROLLBACK-FAIL after host-lock failure; previous revision not fully activated"
+    fi
+    say "RESTART-OBLIGATION RETAINED: host-lock failure; verified restart still required"
     return 1
   fi
 
-  PLATFORM_CHANGED=1
   CHANGED=1
 }
 
@@ -189,12 +207,8 @@ sync_checkout() {
   # already the correct arbiter for the one case that matters, an untracked file the merge would
   # overwrite, which it refuses on its own.
   #
-  # Counting untracked files as "uncommitted changes" froze the deployed checkout permanently on a
-  # real host: this tool's own rollback backups (fkst.lock.bak-*, fkst.workspace.toml.bak-*) are
-  # created every run, so the guard blocked the very fast-forward the backups exist to protect;
-  # and `.metadata_never_index`, an intentional Spotlight-exclusion marker that must stay, blocked
-  # it on its own even after every backup was cleaned. The checkout sat 24 commits behind with no
-  # path forward.
+  # Counting untracked files as "uncommitted changes" can freeze a deployed checkout on intentional
+  # host-owned files such as `.metadata_never_index`; `--ff-only` remains the overwrite arbiter.
   if ! checkout_status="$(
       git -C "$FKST_HOST_ROOT" status --porcelain --untracked-files=no 2>/dev/null
     )"; then
@@ -209,10 +223,16 @@ sync_checkout() {
   behind="$(git -C "$FKST_HOST_ROOT" rev-list \
     "$checkout_head..$CHECKOUT_DEV_REV" --count 2>/dev/null)"
   say "CHECKOUT BEHIND ${checkout_head:0:12} -> ${CHECKOUT_DEV_REV:0:12} ($behind commits); FF"
+  if ! record_restart_obligation "" "" \
+      "checkout fast-forward ${checkout_head:0:12}->${CHECKOUT_DEV_REV:0:12}"; then
+    say "CHECKOUT-ACTIVATION-INTENT-FAIL; fast-forward refused"
+    return 0
+  fi
   if git -C "$FKST_HOST_ROOT" merge --ff-only "$CHECKOUT_DEV_REV" >/dev/null 2>&1; then
     CHANGED=1
   else
     say "CHECKOUT-FF-BLOCKED; skipped, engine stays on ${checkout_head:0:12}"
+    say "RESTART-OBLIGATION RETAINED: fast-forward failed; verified restart still required"
   fi
 }
 
@@ -608,11 +628,6 @@ gc_stuck_lean_builds() {
   reclaim_stale_slots
 }
 
-cleanup_old_backups() {
-  find "$FKST_HOST_ROOT" -maxdepth 1 -name '*.bak-*' -mtime +3 -delete \
-    2>/dev/null || true
-}
-
 engine_pid() {
   local escaped_root
   escaped_root="$(printf '%s' "$FKST_HOST_ROOT" | sed 's/[][\\.^$*+?{}|()]/\\&/g')"
@@ -632,113 +647,6 @@ launchd_service_state() {
     fi
   done <<< "$output"
   printf 'not-in-service\n'
-}
-
-restart_engine() {
-  local budget="${FKST_RESTART_TIMEOUT_SECONDS:-180}"
-  local poll_interval="${FKST_RESTART_POLL_SECONDS:-5}"
-  if [[ ! "$budget" =~ ^[1-9][0-9]*$ \
-      || ! "$poll_interval" =~ ^[1-9][0-9]*$ ]]; then
-    say "RESTART-CONFIG-FAIL: timeout and poll interval must be positive integers (timeout=$budget poll=$poll_interval)"
-    return 1
-  fi
-
-  local previous_pid elapsed=0 launchd_state pid wait_seconds health_state
-  previous_pid="$(engine_pid)"
-  if ! bash "$FKST_RUN_SCRIPT" stop >/dev/null 2>&1; then
-    say "RESTART-STOP-FAIL; engine state unchanged"
-    return 1
-  fi
-
-  while true; do
-    launchd_state="$(launchd_service_state)"
-    pid="$(engine_pid)"
-    if [[ "$launchd_state" == "in-service" && -n "$pid" \
-        && ( -z "$previous_pid" || "$pid" != "$previous_pid" ) ]]; then
-      say "SYNCED OK (engine pid $pid; platform ${PLATFORM_DEV_REV:0:12}; checkout $([ -n "$CHECKOUT_DEV_REV" ] && printf '%s' "${CHECKOUT_DEV_REV:0:12}" || printf 'n/a'))"
-      cleanup_old_backups
-      return 0
-    fi
-    [[ "$elapsed" -lt "$budget" ]] || break
-
-    wait_seconds="$poll_interval"
-    if [[ $((elapsed + wait_seconds)) -gt "$budget" ]]; then
-      wait_seconds=$((budget - elapsed))
-    fi
-    if ! sleep "$wait_seconds"; then
-      say "RESTART-WAIT-FAIL after ${elapsed}s (budget=${budget}s launchd=$launchd_state last_pid=${pid:-none})"
-      return 1
-    fi
-    elapsed=$((elapsed + wait_seconds))
-  done
-
-  if [[ -z "$pid" && "$launchd_state" == "not-in-service" ]]; then
-    health_state="launchd-not-in-service"
-  elif [[ -z "$pid" ]]; then
-    health_state="waiting-for-new-pid"
-  elif [[ -n "$previous_pid" && "$pid" == "$previous_pid" ]]; then
-    health_state="old-pid-still-present"
-  elif [[ "$launchd_state" == "not-in-service" ]]; then
-    health_state="new-pid-without-launchd-service"
-  else
-    health_state="launchd-status-unknown"
-  fi
-  say "UNHEALTHY after restart (state=$health_state waited=${elapsed}s budget=${budget}s launchd=$launchd_state old_pid=${previous_pid:-none} last_pid=${pid:-none})"
-
-  if [[ "$PLATFORM_CHANGED" == "1" \
-      && -z "$pid" && "$launchd_state" == "not-in-service" ]]; then
-    if rollback_platform; then
-      bash "$FKST_RUN_SCRIPT" stop >/dev/null 2>&1
-      sleep 8
-      say "reverted platform to ${PLATFORM_CURRENT_REV:0:12}"
-    else
-      say "PLATFORM-ROLLBACK-FAIL after confirmed startup failure; original bytes not confirmed"
-    fi
-  elif [[ "$PLATFORM_CHANGED" == "1" ]]; then
-    say "PLATFORM-ROLLBACK-SKIPPED: restart budget expired but startup failure not confirmed (launchd=$launchd_state last_pid=${pid:-none})"
-  fi
-  return 1
-}
-
-restart_if_needed() {
-  if [[ "$CHANGED" == "0" ]]; then
-    say "ALL CURRENT; no restart"
-    return 0
-  fi
-
-  local alive implementing
-  alive="$(engine_pid)"
-  if [[ -n "$alive" ]]; then
-    if ! command -v gh >/dev/null 2>&1; then
-      say "DEFER-RESTART: implementing issue state unavailable; engine alive (pid $alive)"
-      cleanup_old_backups
-      return 0
-    fi
-    if ! implementing="$(
-        LEAN4_GUARDRAILS_BYPASS=1 gh issue list \
-        --repo "$FKST_GITHUB_REPO" \
-        --state open \
-        --label 'fkst-dev:implementing' \
-        --json number \
-        --jq 'length' 2>/dev/null
-      )"; then
-      say "DEFER-RESTART: implementing issue state unavailable; engine alive (pid $alive)"
-      cleanup_old_backups
-      return 0
-    fi
-    if [[ ! "$implementing" =~ ^[0-9]+$ ]]; then
-      say "DEFER-RESTART: implementing issue state unavailable; engine alive (pid $alive)"
-      cleanup_old_backups
-      return 0
-    fi
-    if [[ "$implementing" -gt 0 ]]; then
-      say "DEFER-RESTART: $implementing issue(s) implementing + engine alive (pid $alive); pin updated, restart deferred"
-      cleanup_old_backups
-      return 0
-    fi
-  fi
-
-  restart_engine
 }
 
 main() {
