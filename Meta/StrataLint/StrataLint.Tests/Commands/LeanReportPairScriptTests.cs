@@ -93,12 +93,14 @@ public sealed class LeanReportPairScriptTests
 
     private sealed class LeanReportPairFixture : IDisposable
     {
+        private static readonly TimeSpan safetyTimeout = TimeSpan.FromMinutes(2);
         private readonly TemporaryDirectory temporary = new();
         private readonly string candidateRoot;
         private readonly string baselineRoot;
         private readonly string artifacts;
         private readonly string producerDirectory;
         private readonly string producer;
+        private readonly string performanceAppender;
         private readonly string invocationCount;
         private readonly string candidateReport;
         private readonly string baselineReport;
@@ -111,6 +113,9 @@ public sealed class LeanReportPairScriptTests
             artifacts = Path.Combine(temporary.Path, "reports");
             producerDirectory = Path.Combine(temporary.Path, "producer");
             producer = Path.Combine(producerDirectory, "inspect.sh");
+            var lsof = Path.Combine(producerDirectory, "lsof");
+            var dotnet = Path.Combine(producerDirectory, "dotnet");
+            performanceAppender = Path.Combine(producerDirectory, "perf-appender.dll");
             invocationCount = Path.Combine(producerDirectory, "invocations.txt");
             candidateReport = Path.Combine(artifacts, "candidate.json");
             baselineReport = Path.Combine(artifacts, "baseline.json");
@@ -124,11 +129,14 @@ public sealed class LeanReportPairScriptTests
                 "def producerFixture : True := by trivial\n",
                 new UTF8Encoding(false));
             File.WriteAllText(producer, FakeProducer, new UTF8Encoding(false));
+            File.WriteAllText(lsof, FakeLsof, new UTF8Encoding(false));
+            File.WriteAllText(dotnet, FakeDotnet, new UTF8Encoding(false));
+            File.WriteAllText(performanceAppender, "fixture\n", new UTF8Encoding(false));
             var chmod = BoundedProcessRunner.Run(
                 "chmod",
-                ["+x", producer],
+                ["+x", producer, lsof, dotnet],
                 temporary.Path,
-                TimeSpan.FromSeconds(30),
+                safetyTimeout,
                 4096);
             Assert.Equal(0, chmod.ExitCode);
         }
@@ -148,6 +156,8 @@ public sealed class LeanReportPairScriptTests
             return BoundedProcessRunner.Run(
                 "env",
                 [
+                    $"PATH={producerDirectory}:{Environment.GetEnvironmentVariable("PATH") ?? "/bin:/usr/bin"}",
+                    $"STRATALINT_TEST_PERF_APPENDER={performanceAppender}",
                     $"STRATALINT_REPORT_METRICS_LOG={metricsLog}",
                     $"STRATALINT_SUPERVISOR_ROOT={Path.Combine(temporary.Path, "supervisor")}",
                     "bash",
@@ -160,7 +170,7 @@ public sealed class LeanReportPairScriptTests
                     "--baseline-output", baselineReport,
                 ],
                 temporary.Path,
-                TimeSpan.FromSeconds(30),
+                safetyTimeout,
                 1024 * 1024);
         }
 
@@ -263,6 +273,35 @@ public sealed class LeanReportPairScriptTests
             printf '{"source_sha256":"%s"}\n' "$source_hash" > "$output"
             report_hash="$(openssl dgst -sha256 "$output" | awk '{print $NF}')"
             printf '%s  %s\n' "$report_hash" "$(basename "$output")" > "${output}.sha256"
+            """;
+
+        private const string FakeLsof = """
+            #!/usr/bin/env bash
+            exit 1
+            """;
+
+        private const string FakeDotnet = """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            target="${STRATALINT_TEST_PERF_APPENDER:?}"
+            if [[ "${1:-}" == "msbuild" ]]; then
+              printf '%s\n' "$target"
+              exit 0
+            fi
+            [[ "${1:-}" == "$target" && "${2:-}" == "perf-append" ]] || exit 2
+            shift 2
+            input=""
+            ledger=""
+            while [[ $# -gt 0 ]]; do
+              case "$1" in
+                --input) input="$2"; shift 2 ;;
+                --ledger) ledger="$2"; shift 2 ;;
+                *) exit 2 ;;
+              esac
+            done
+            [[ -s "$input" && "$ledger" == /* ]] || exit 2
+            mkdir -p "$(dirname "$ledger")"
+            cat "$input" >> "$ledger"
             """;
     }
 }
