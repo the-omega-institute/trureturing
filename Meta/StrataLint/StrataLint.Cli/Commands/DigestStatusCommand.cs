@@ -262,48 +262,58 @@ internal static class DigestStatusCommand
         RepositoryFile ledgerFile,
         LeanAxiomReport leanReport)
     {
-        var semanticOpen = evaluation.Entries
+        var eligibleResiduals = evaluation.Entries
             .Where(static item =>
                 item.Alignment == DigestionReceiptAlignment.Seen
                 && item.DerivedStatus.Migration == DigestionMigrationState.Residual
                 && item.DerivedStatus.Truth == DigestionTruthState.Open
                 && item.Entry.CoverageGids.Length == 0)
+            .Where(static item => IsFormalizationAtom(item.Entry))
+            .ToArray();
+        var eligibleReceiptPaths = eligibleResiduals
+            .Select(static item => FormalizationReceiptPath(item.Entry.AtomId))
+            .ToHashSet(StringComparer.Ordinal);
+        var ledgerAtomIds = evaluation.Entries
+            .Select(static item => item.Entry.AtomId)
+            .ToHashSet(StringComparer.Ordinal);
+        var unmatchedReceipts = snapshot.Files.Keys
+            .Select(static path => path.Value)
+            .Where(static path =>
+                path.StartsWith(DigestionFormalizationReceipt.RootPath, StringComparison.Ordinal))
+            .Where(path => !eligibleReceiptPaths.Contains(path))
+            .OrderBy(static path => path, StringComparer.Ordinal)
+            .Select(path => UnmatchedReceiptProjection(snapshot, ledgerAtomIds, path))
+            .ToArray();
+
+        var semanticOpen = eligibleResiduals
             .Select(item => ReconciliationProjection(item, snapshot, leanReport))
-            .Where(static item => item is not null)
-            .OrderBy(static item => item!.SourceId, StringComparer.Ordinal)
-            .ThenBy(static item => item!.AtomId, StringComparer.Ordinal)
-            .Select(static item => item!)
+            .OrderBy(static item => item.SourceId, StringComparer.Ordinal)
+            .ThenBy(static item => item.AtomId, StringComparer.Ordinal)
             .ToArray();
         var material = new
         {
             schema = "stratalint-formalization-reconciliation-v1",
             ledger_sha256 = DigestionFingerprint.ComputeOpaque(ledgerFile.RawBytes.AsSpan()).RawSha256,
             residuals_total = semanticOpen.Length,
-            validated_receipt_total = semanticOpen.Count(static item => item.EnvelopePath is not null),
+            signature_matched_receipt_total = semanticOpen.Count(
+                static item => item.EnvelopePath is not null),
             backfill_ready_total = 0,
             semantic_open_total = semanticOpen.Length,
+            unmatched_receipt_total = unmatchedReceipts.Length,
             backfill_ready = Array.Empty<object>(),
             semantic_open = semanticOpen,
+            unmatched_receipts = unmatchedReceipts,
         };
         return JsonSerializer.Serialize(material, JsonOptions) + "\n";
     }
 
-    private static SemanticOpenFormalization? ReconciliationProjection(
+    private static SemanticOpenFormalization ReconciliationProjection(
         DigestionEntryEvaluation evaluation,
         RepositorySnapshot snapshot,
         LeanAxiomReport leanReport)
     {
         var entry = evaluation.Entry;
-        var separator = entry.AstPath.IndexOf('/', StringComparison.Ordinal);
-        if (separator <= 0
-            || entry.AstPath[..separator] is not ("theorem" or "proposition" or "lemma" or "corollary"))
-        {
-            return null;
-        }
-
-        var path = DigestionFormalizationReceipt.RootPath
-            + entry.AtomId
-            + DigestionFormalizationReceipt.PathSuffix;
+        var path = FormalizationReceiptPath(entry.AtomId);
         if (!snapshot.TryGetFile(path, out _))
         {
             return new SemanticOpenFormalization(
@@ -339,6 +349,47 @@ internal static class DigestStatusCommand
                 $"formalization receipt for atom {entry.AtomId} is invalid: {exception.Message}",
                 exception);
         }
+    }
+
+    private static bool IsFormalizationAtom(DigestionLedgerEntry entry)
+    {
+        var separator = entry.AstPath.IndexOf('/', StringComparison.Ordinal);
+        return separator > 0
+            && entry.AstPath[..separator] is "theorem" or "proposition" or "lemma" or "corollary";
+    }
+
+    private static string FormalizationReceiptPath(string atomId) =>
+        DigestionFormalizationReceipt.RootPath
+        + atomId
+        + DigestionFormalizationReceipt.PathSuffix;
+
+    private static UnmatchedFormalizationReceipt UnmatchedReceiptProjection(
+        RepositorySnapshot snapshot,
+        IReadOnlySet<string> ledgerAtomIds,
+        string path)
+    {
+        if (!DigestionFormalizationReceipt.IsCanonicalPath(path))
+        {
+            throw new FormatException($"formalization receipt path is not canonical: {path}");
+        }
+
+        var receipt = DigestionFormalizationReceipt.Load(snapshot, path);
+        if (!string.Equals(path, FormalizationReceiptPath(receipt.AtomId), StringComparison.Ordinal))
+        {
+            throw new FormatException(
+                $"formalization receipt path does not match atom_id {receipt.AtomId}: {path}");
+        }
+
+        return new UnmatchedFormalizationReceipt(
+            receipt.AtomId,
+            "semantic-open",
+            "none",
+            "none",
+            ledgerAtomIds.Contains(receipt.AtomId)
+                ? "not-eligible-residual"
+                : "no-ledger-entry",
+            receipt.PrimaryGid,
+            path);
     }
 
     private static FormalizeProjection? Projection(
@@ -550,6 +601,15 @@ internal static class DigestStatusCommand
         string Reason,
         string? PrimaryGid,
         string? EnvelopePath);
+
+    private sealed record UnmatchedFormalizationReceipt(
+        string AtomId,
+        string Status,
+        string Authority,
+        string AdmissionEffect,
+        string Reason,
+        string ReceiptPrimaryGid,
+        string EnvelopePath);
 }
 
 internal static class DigestResidualSummary

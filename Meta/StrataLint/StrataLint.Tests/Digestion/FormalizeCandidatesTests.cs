@@ -238,10 +238,12 @@ public sealed class FormalizeCandidatesTests
             "stratalint-formalization-reconciliation-v1",
             json.RootElement.GetProperty("schema").GetString());
         Assert.Equal(2, json.RootElement.GetProperty("residuals_total").GetInt32());
-        Assert.Equal(1, json.RootElement.GetProperty("validated_receipt_total").GetInt32());
+        Assert.Equal(1, json.RootElement.GetProperty("signature_matched_receipt_total").GetInt32());
         Assert.Equal(0, json.RootElement.GetProperty("backfill_ready_total").GetInt32());
         Assert.Equal(2, json.RootElement.GetProperty("semantic_open_total").GetInt32());
+        Assert.Equal(0, json.RootElement.GetProperty("unmatched_receipt_total").GetInt32());
         Assert.Empty(json.RootElement.GetProperty("backfill_ready").EnumerateArray());
+        Assert.Empty(json.RootElement.GetProperty("unmatched_receipts").EnumerateArray());
 
         var open = json.RootElement.GetProperty("semantic_open")
             .EnumerateArray()
@@ -289,6 +291,41 @@ public sealed class FormalizeCandidatesTests
             "formalization receipt for atom invalid-receipt is invalid",
             result.Error,
             StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void FormalizationReconciliationReportsOrphanReceiptEvidenceWithoutAuthority()
+    {
+        var entry = Entry("source", "eligible-residual", "定理", "5.8");
+        var orphan = Entry("orphan-source", "orphan-receipt", "定理", "5.9");
+
+        var result = Run(
+            [entry],
+            formalizationReceipts: new Dictionary<string, byte[]>(StringComparer.Ordinal)
+            {
+                [orphan.AtomId] = CoverReadyReceipt(orphan),
+            },
+            arguments: ["--formalization-reconciliation"]);
+
+        Assert.True(result.Success, result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        Assert.Equal(1, json.RootElement.GetProperty("residuals_total").GetInt32());
+        Assert.Equal(1, json.RootElement.GetProperty("unmatched_receipt_total").GetInt32());
+        var unmatched = Assert.Single(
+            json.RootElement.GetProperty("unmatched_receipts").EnumerateArray());
+        Assert.Equal(orphan.AtomId, unmatched.GetProperty("atom_id").GetString());
+        Assert.Equal("semantic-open", unmatched.GetProperty("status").GetString());
+        Assert.Equal("none", unmatched.GetProperty("authority").GetString());
+        Assert.Equal("none", unmatched.GetProperty("admission_effect").GetString());
+        Assert.Equal("no-ledger-entry", unmatched.GetProperty("reason").GetString());
+        Assert.Equal(
+            "D5/S0/Synthetic/Receipt.orphan_receipt",
+            unmatched.GetProperty("receipt_primary_gid").GetString());
+        Assert.Equal(
+            DigestionFormalizationReceipt.RootPath
+                + orphan.AtomId
+                + DigestionFormalizationReceipt.PathSuffix,
+            unmatched.GetProperty("envelope_path").GetString());
     }
 
     [Theory]
