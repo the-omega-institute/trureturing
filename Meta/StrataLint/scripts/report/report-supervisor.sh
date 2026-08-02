@@ -25,6 +25,8 @@ CALLER_WORKTREE=""
 if (( LEAN_SLOT )); then
   CALLER_WORKTREE="$(pwd -P)" \
     || { echo "report-supervisor: could not identify the caller working directory" >&2; exit 2; }
+  [[ "$CALLER_WORKTREE" != *$'\n'* && "$CALLER_WORKTREE" != *$'\r'* ]] \
+    || { echo "report-supervisor: caller working directory must not contain line breaks" >&2; exit 2; }
 fi
 
 REPOSITORY_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../../.." && pwd -P)"

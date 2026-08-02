@@ -101,4 +101,32 @@ public sealed partial class ReportSupervisorScriptTests
             long.Parse(heldSeconds.Groups[1].Value, System.Globalization.CultureInfo.InvariantCulture) >= 75,
             $"hold duration was shorter than the persisted acquisition time: {error}");
     }
+
+    [Fact]
+    public void LeanSlotRejectsWorktreeThatCannotRoundTripThroughLineMetadata()
+    {
+        using var fixture = new ReportSupervisorFixture();
+        var worktree = Path.Combine(fixture.Root, "work\ntree");
+        Directory.CreateDirectory(worktree);
+
+        var result = fixture.RunExternalProcess(
+            "env",
+            [
+                $"PATH={fixture.Root}:{fixture.HostPath}",
+                $"STRATALINT_REPORT_METRICS_LOG={fixture.MetricsLog}",
+                $"STRATALINT_SUPERVISOR_ROOT={fixture.StateRoot}",
+                $"STRATALINT_PERF_CONFIGURATION={fixture.PerformanceConfiguration}",
+                fixture.Supervisor,
+                "--role", "lean-producer", "--lean-slot", "--",
+                fixture.ScratchWriter, fixture.ScratchRecord,
+            ],
+            worktree);
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains(
+            "caller working directory must not contain line breaks",
+            Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.Ordinal);
+        Assert.False(Directory.Exists(Path.Combine(fixture.StateRoot, "slots", "slot-1.lock")));
+    }
 }
