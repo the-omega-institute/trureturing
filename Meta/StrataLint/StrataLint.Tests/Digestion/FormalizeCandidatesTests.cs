@@ -219,16 +219,16 @@ public sealed class FormalizeCandidatesTests
     }
 
     [Fact]
-    public void FormalizationReconciliationMeasuresReceiptBackfillAndSemanticOpenSeparately()
+    public void FormalizationReconciliationKeepsNlOnlyReceiptLinksSemanticOpen()
     {
-        var backfillReady = Entry("source-2", "receipt-backed", "定理", "5.5");
+        var receiptLinked = Entry("source-2", "receipt-backed", "定理", "5.5");
         var semanticOpen = Entry("source-1", "nl-only", "定理", "5.6");
 
         var result = Run(
-            [backfillReady, semanticOpen],
+            [receiptLinked, semanticOpen],
             formalizationReceipts: new Dictionary<string, byte[]>(StringComparer.Ordinal)
             {
-                [backfillReady.AtomId] = CoverReadyReceipt(backfillReady),
+                [receiptLinked.AtomId] = CoverReadyReceipt(receiptLinked),
             },
             arguments: ["--formalization-reconciliation"]);
 
@@ -238,28 +238,39 @@ public sealed class FormalizeCandidatesTests
             "stratalint-formalization-reconciliation-v1",
             json.RootElement.GetProperty("schema").GetString());
         Assert.Equal(2, json.RootElement.GetProperty("residuals_total").GetInt32());
-        Assert.Equal(1, json.RootElement.GetProperty("backfill_ready_total").GetInt32());
-        Assert.Equal(1, json.RootElement.GetProperty("semantic_open_total").GetInt32());
+        Assert.Equal(1, json.RootElement.GetProperty("validated_receipt_total").GetInt32());
+        Assert.Equal(0, json.RootElement.GetProperty("backfill_ready_total").GetInt32());
+        Assert.Equal(2, json.RootElement.GetProperty("semantic_open_total").GetInt32());
+        Assert.Empty(json.RootElement.GetProperty("backfill_ready").EnumerateArray());
 
-        var ready = Assert.Single(json.RootElement.GetProperty("backfill_ready").EnumerateArray());
-        Assert.Equal("source-2", ready.GetProperty("source_id").GetString());
-        Assert.Equal(backfillReady.AtomId, ready.GetProperty("atom_id").GetString());
+        var open = json.RootElement.GetProperty("semantic_open")
+            .EnumerateArray()
+            .ToDictionary(
+                static item => item.GetProperty("atom_id").GetString()!,
+                StringComparer.Ordinal);
+        var unlinked = open[semanticOpen.AtomId];
+        Assert.Equal("source-1", unlinked.GetProperty("source_id").GetString());
+        Assert.Equal("semantic-open", unlinked.GetProperty("status").GetString());
+        Assert.Equal("none", unlinked.GetProperty("authority").GetString());
+        Assert.Equal("none", unlinked.GetProperty("admission_effect").GetString());
+        Assert.Equal("no-formalization-receipt", unlinked.GetProperty("reason").GetString());
+        Assert.Equal(JsonValueKind.Null, unlinked.GetProperty("primary_gid").ValueKind);
+        Assert.Equal(JsonValueKind.Null, unlinked.GetProperty("envelope_path").ValueKind);
+
+        var linked = open[receiptLinked.AtomId];
+        Assert.Equal("source-2", linked.GetProperty("source_id").GetString());
+        Assert.Equal("semantic-open", linked.GetProperty("status").GetString());
+        Assert.Equal("none", linked.GetProperty("authority").GetString());
+        Assert.Equal("none", linked.GetProperty("admission_effect").GetString());
+        Assert.Equal("nl-only-formalization-receipt", linked.GetProperty("reason").GetString());
         Assert.Equal(
             "D5/S0/Synthetic/Receipt.receipt_backed",
-            ready.GetProperty("primary_gid").GetString());
+            linked.GetProperty("primary_gid").GetString());
         Assert.Equal(
             DigestionFormalizationReceipt.RootPath
-                + backfillReady.AtomId
+                + receiptLinked.AtomId
                 + DigestionFormalizationReceipt.PathSuffix,
-            ready.GetProperty("envelope_path").GetString());
-
-        var open = Assert.Single(json.RootElement.GetProperty("semantic_open").EnumerateArray());
-        Assert.Equal("source-1", open.GetProperty("source_id").GetString());
-        Assert.Equal(semanticOpen.AtomId, open.GetProperty("atom_id").GetString());
-        Assert.Equal("semantic-open", open.GetProperty("status").GetString());
-        Assert.Equal("none", open.GetProperty("authority").GetString());
-        Assert.Equal("none", open.GetProperty("admission_effect").GetString());
-        Assert.Equal("no-formalization-receipt", open.GetProperty("reason").GetString());
+            linked.GetProperty("envelope_path").GetString());
     }
 
     [Fact]

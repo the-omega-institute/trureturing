@@ -262,7 +262,7 @@ internal static class DigestStatusCommand
         RepositoryFile ledgerFile,
         LeanAxiomReport leanReport)
     {
-        var projections = evaluation.Entries
+        var semanticOpen = evaluation.Entries
             .Where(static item =>
                 item.Alignment == DigestionReceiptAlignment.Seen
                 && item.DerivedStatus.Migration == DigestionMigrationState.Residual
@@ -274,28 +274,21 @@ internal static class DigestStatusCommand
             .ThenBy(static item => item!.AtomId, StringComparer.Ordinal)
             .Select(static item => item!)
             .ToArray();
-        var ready = projections
-            .Where(static item => item.BackfillReady is not null)
-            .Select(static item => item.BackfillReady!)
-            .ToArray();
-        var semanticOpen = projections
-            .Where(static item => item.SemanticOpen is not null)
-            .Select(static item => item.SemanticOpen!)
-            .ToArray();
         var material = new
         {
             schema = "stratalint-formalization-reconciliation-v1",
             ledger_sha256 = DigestionFingerprint.ComputeOpaque(ledgerFile.RawBytes.AsSpan()).RawSha256,
-            residuals_total = projections.Length,
-            backfill_ready_total = ready.Length,
+            residuals_total = semanticOpen.Length,
+            validated_receipt_total = semanticOpen.Count(static item => item.EnvelopePath is not null),
+            backfill_ready_total = 0,
             semantic_open_total = semanticOpen.Length,
-            backfill_ready = ready,
+            backfill_ready = Array.Empty<object>(),
             semantic_open = semanticOpen,
         };
         return JsonSerializer.Serialize(material, JsonOptions) + "\n";
     }
 
-    private static FormalizationReconciliationProjection? ReconciliationProjection(
+    private static SemanticOpenFormalization? ReconciliationProjection(
         DigestionEntryEvaluation evaluation,
         RepositorySnapshot snapshot,
         LeanAxiomReport leanReport)
@@ -313,32 +306,32 @@ internal static class DigestStatusCommand
             + DigestionFormalizationReceipt.PathSuffix;
         if (!snapshot.TryGetFile(path, out _))
         {
-            return new FormalizationReconciliationProjection(
+            return new SemanticOpenFormalization(
                 entry.SourceId,
                 entry.AtomId,
+                "semantic-open",
+                "none",
+                "none",
+                "no-formalization-receipt",
                 null,
-                new SemanticOpenFormalization(
-                    entry.SourceId,
-                    entry.AtomId,
-                    "semantic-open",
-                    "none",
-                    "none",
-                    "no-formalization-receipt"));
+                null);
         }
 
         try
         {
             var receipt = RequireMatchingFormalizationReceipt(entry, snapshot, leanReport, path);
 
-            return new FormalizationReconciliationProjection(
+            // digestion-formalization-v1 proves receipt integrity and declaration identity,
+            // but carries no base-owned formal_claim evidence for NL-to-Lean equivalence.
+            return new SemanticOpenFormalization(
                 entry.SourceId,
                 entry.AtomId,
-                new FormalizationBackfill(
-                    entry.SourceId,
-                    entry.AtomId,
-                    receipt.PrimaryGid,
-                    path),
-                null);
+                "semantic-open",
+                "none",
+                "none",
+                "nl-only-formalization-receipt",
+                receipt.PrimaryGid,
+                path);
         }
         catch (Exception exception) when (exception is FormatException or JsonException)
         {
@@ -548,25 +541,15 @@ internal static class DigestStatusCommand
         FormalizeCandidate? Candidate,
         WithheldFormalizeCandidate? Withheld);
 
-    private sealed record FormalizationBackfill(
-        string SourceId,
-        string AtomId,
-        string PrimaryGid,
-        string EnvelopePath);
-
     private sealed record SemanticOpenFormalization(
         string SourceId,
         string AtomId,
         string Status,
         string Authority,
         string AdmissionEffect,
-        string Reason);
-
-    private sealed record FormalizationReconciliationProjection(
-        string SourceId,
-        string AtomId,
-        FormalizationBackfill? BackfillReady,
-        SemanticOpenFormalization? SemanticOpen);
+        string Reason,
+        string? PrimaryGid,
+        string? EnvelopePath);
 }
 
 internal static class DigestResidualSummary
