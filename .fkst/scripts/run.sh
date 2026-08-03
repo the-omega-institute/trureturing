@@ -11,6 +11,9 @@ readonly HOST_PACKAGES="theory-selfgrowth"
 readonly SUBSTRATE_URL="https://github.com/ChronoAIProject/fkst-substrate.git"
 readonly PLATFORM_URL="https://github.com/ChronoAIProject/fkst-packages.git"
 readonly GRAPHQL_STARTUP_BUDGET_PERCENT=20
+readonly GRAPHQL_PROBE_TIMEOUT_SECONDS=2
+readonly BASH_ARITHMETIC_MAX=9223372036854775807
+readonly BASH_ARITHMETIC_MAX_TAIL=223372036854775807
 
 die() {
   printf 'fkst: %s\n' "$*" >&2
@@ -52,9 +55,46 @@ read_live_pid() {
   printf '%s\n' "$pid"
 }
 
+parse_bash_arithmetic_uint() {
+  local value="$1" normalized tail
+  [[ "$value" =~ ^[0-9]+$ ]] || return 1
+  normalized="$value"
+  while [[ ${#normalized} -gt 1 && "${normalized:0:1}" == 0 ]]; do
+    normalized="${normalized:1}"
+  done
+  [[ ${#normalized} -lt ${#BASH_ARITHMETIC_MAX} ]] \
+    || { [[ ${#normalized} -eq ${#BASH_ARITHMETIC_MAX} ]] \
+      && { [[ "${normalized:0:1}" -lt 9 ]] \
+        || { [[ "${normalized:0:1}" == 9 ]] \
+          && tail="${normalized:1}" \
+          && (( 10#$tail <= BASH_ARITHMETIC_MAX_TAIL )); }; }; } \
+    || return 1
+  printf '%s\n' "$normalized"
+}
+
 wait_for_graphql_startup_budget() {
-  local data limit remaining reset extra limit_value remaining_value reset_value now delay
-  if ! data="$(gh api rate_limit --jq '.resources.graphql | [.limit, .remaining, .reset] | @tsv' 2>&1)"; then
+  local data limit remaining reset extra limit_value remaining_value reset_value threshold now delay
+  if ! data="$(perl -e '
+    use strict;
+    use warnings;
+    my $timeout = shift @ARGV;
+    my $pid = fork();
+    die "cannot fork GraphQL rate-limit probe: $!\n" unless defined $pid;
+    if ($pid == 0) {
+      exec @ARGV;
+      die "cannot execute GraphQL rate-limit probe: $!\n";
+    }
+    $SIG{ALRM} = sub {
+      kill "KILL", $pid;
+      waitpid $pid, 0;
+      print STDERR "timed out after $timeout seconds\n";
+      exit 124;
+    };
+    alarm $timeout;
+    waitpid $pid, 0;
+    alarm 0;
+    exit(($? & 127) ? 128 + ($? & 127) : $? >> 8);
+  ' "$GRAPHQL_PROBE_TIMEOUT_SECONDS" gh api rate_limit --jq '.resources.graphql | [.limit, .remaining, .reset] | @tsv' 2>&1)"; then
     die "GraphQL rate-limit probe failed: ${data:-no diagnostic}"
   fi
   IFS=$'\t' read -r limit remaining reset extra <<<"$data"
@@ -65,13 +105,16 @@ wait_for_graphql_startup_budget() {
       || -n "$extra" ]]; then
     die "GraphQL rate-limit probe returned malformed fields: limit=${limit:-<missing>} remaining=${remaining:-<missing>} reset=${reset:-<missing>}"
   fi
-  limit_value=$((10#$limit))
-  remaining_value=$((10#$remaining))
-  reset_value=$((10#$reset))
+  if ! limit_value="$(parse_bash_arithmetic_uint "$limit")" \
+      || ! remaining_value="$(parse_bash_arithmetic_uint "$remaining")" \
+      || ! reset_value="$(parse_bash_arithmetic_uint "$reset")"; then
+    die "GraphQL rate-limit probe returned malformed fields: limit=$limit remaining=$remaining reset=$reset"
+  fi
   if (( limit_value <= 0 || remaining_value > limit_value || reset_value <= 0 )); then
     die "GraphQL rate-limit probe returned malformed fields: limit=$limit remaining=$remaining reset=$reset"
   fi
-  if (( remaining_value * 100 >= limit_value * GRAPHQL_STARTUP_BUDGET_PERCENT )); then
+  threshold=$((limit_value / 5 + (limit_value % 5 != 0)))
+  if (( remaining_value >= threshold )); then
     return
   fi
 
