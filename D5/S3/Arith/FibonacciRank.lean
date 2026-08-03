@@ -9,8 +9,7 @@ import Mathlib
 import D5.S1.Recurrence.GoldenFibDivisibility
 import D5.S3.Arith.GoldenApparition
 
-/- Provenance: re-proved native from automath witness
-`Omega.fib_prime_entry_point`, no automath import. -/
+/- Provenance: Native proof over pinned mathlib. -/
 
 namespace D5.S3.Arith.FibonacciRank
 

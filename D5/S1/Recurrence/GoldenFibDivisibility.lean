@@ -1,13 +1,13 @@
 /- GID: D5/S1/Recurrence/GoldenFibDivisibility
    generality: I
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S1/Recurrence/GoldenFibDivisibility
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Fibonacci divisibility reflects divisibility of indices from index three onward. -/
 
 import Mathlib
 
-/- Provenance: re-proved native from automath witness (Omega.fib_dvd_iff), no automath import. -/
+/- Provenance: Native proof over pinned mathlib. -/
 
 namespace D5.S1.Recurrence.GoldenFibDivisibility
 
