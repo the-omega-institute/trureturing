@@ -30,7 +30,9 @@ tmpdir="$(mktemp -d -t fkst-monitor-backlog.XXXXXX)"
 cleanup() { rm -rf "$tmpdir"; }
 trap cleanup EXIT
 
-mkdir -p "$tmpdir/logs" "$tmpdir/durable" "$tmpdir/bin"
+mkdir -p "$tmpdir/logs" "$tmpdir/durable" "$tmpdir/bin" "$tmpdir/dotnet-bin" \
+  "$tmpdir/checkout/Meta/StrataLint/StrataLint.Cli"
+touch "$tmpdir/checkout/Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj"
 cat > "$tmpdir/logs/supervise-launchd.log" <<'LOG'
 exec: /x/fkst-substrate/target/debug/fkst-framework supervise --project-root /x/checkout --package-root /x
 TIMESTAMP=2026-07-30T00:00:00Z LEVEL=INFO package_roots=["/live/instance"] MSG=compose
@@ -81,8 +83,13 @@ OUT
 esac
 BIN
 chmod +x "$tmpdir/bin/fkst-framework"
+cat > "$tmpdir/dotnet-bin/dotnet" <<'DOTNET'
+#!/usr/bin/env bash
+printf '{"schema":"stratalint-formalize-candidates-v2","candidates":[]}\n'
+DOTNET
+chmod +x "$tmpdir/dotnet-bin/dotnet"
 
-run_status() { FIXTURE="$1" FKST_HOME="$tmpdir" BIN="$tmpdir/bin/fkst-framework" bash "$STATUS_UNDER_TEST" 2>&1 || true; }
+run_status() { FIXTURE="$1" PATH="$tmpdir/dotnet-bin:$PATH" FKST_HOME="$tmpdir" BIN="$tmpdir/bin/fkst-framework" bash "$STATUS_UNDER_TEST" 2>&1 || true; }
 
 # --- a consumer 25.9h behind must NOT read as HEALTHY ---
 out="$(run_status behind)"

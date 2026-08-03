@@ -17,7 +17,9 @@ tmpdir="$(mktemp -d -t fkst-monitor-json.XXXXXX)"
 cleanup() { rm -rf "$tmpdir"; }
 trap cleanup EXIT
 
-mkdir -p "$tmpdir/logs" "$tmpdir/durable" "$tmpdir/bin"
+mkdir -p "$tmpdir/logs" "$tmpdir/durable" "$tmpdir/bin" "$tmpdir/dotnet-bin" \
+  "$tmpdir/checkout/Meta/StrataLint/StrataLint.Cli"
+touch "$tmpdir/checkout/Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj"
 cat > "$tmpdir/logs/supervise-launchd.log" <<'LOG'
 exec: /x/fkst-substrate/target/debug/fkst-framework supervise --project-root /x/checkout --package-root /x
 TIMESTAMP=2026-08-02T00:00:00Z LEVEL=INFO package_roots=["/live/instance"] MSG=compose
@@ -55,9 +57,15 @@ dead_letters
 OUT
 BIN
 chmod +x "$tmpdir/bin/fkst-framework"
+cat > "$tmpdir/dotnet-bin/dotnet" <<'DOTNET'
+#!/usr/bin/env bash
+printf '{"schema":"stratalint-formalize-candidates-v2","candidates":[]}\n'
+DOTNET
+chmod +x "$tmpdir/dotnet-bin/dotnet"
 
 run_status() { # $1=fixture $2=BIN $3=budget
   FIXTURE="$1" FKST_OBSERVE_BUDGET_S="$3" \
+  PATH="$tmpdir/dotnet-bin:$PATH" \
   FKST_HOME="$tmpdir" BIN="$2" \
   bash "$STATUS_UNDER_TEST" --json 2>&1 || true
 }
