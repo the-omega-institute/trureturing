@@ -15,7 +15,8 @@ internal static class WorktreeCommand
 {
     internal const string SolutionPath = "Meta/StrataLint/StrataLint.sln";
     internal const string Usage =
-        "USAGE: StrataLint worktree --branch NAME --path DIR "
+        "USAGE: StrataLint worktree ensure-cache [--path DIR] | "
+        + "StrataLint worktree --branch NAME --path DIR "
         + "[--base REV] [--source REPO_ROOT] [--skip-restore]. "
         + ".lake caches are copied for isolation; symlink sharing is forbidden.";
 
@@ -46,7 +47,17 @@ internal static class WorktreeCommand
         IReadOnlyList<string> arguments,
         IWorktreeProcessRunner runner)
     {
+        ArgumentNullException.ThrowIfNull(arguments);
         ArgumentNullException.ThrowIfNull(runner);
+        if (arguments.Count > 0
+            && string.Equals(arguments[0], "ensure-cache", StringComparison.Ordinal))
+        {
+            return LeanCacheEnsureCommand.Run(
+                repositoryRoot,
+                arguments.Skip(1).ToArray(),
+                runner);
+        }
+
         WorktreeOptions? options = null;
         var worktreeCreated = false;
         var stopwatch = System.Diagnostics.Stopwatch.StartNew();

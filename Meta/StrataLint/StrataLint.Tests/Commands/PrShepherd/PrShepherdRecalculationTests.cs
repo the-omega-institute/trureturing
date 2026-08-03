@@ -58,6 +58,7 @@ public sealed partial class PrShepherdRecalculationTests
         private readonly bool delayFirstLockOwnerRead;
         private readonly bool conflicting;
         private readonly bool ledgerConflict;
+        private readonly string graphqlRemaining;
         private readonly bool staleBaseRefOid;
         private readonly bool moveHeadDuringFetch;
         private readonly bool moveBaseDuringFetch;
@@ -74,6 +75,7 @@ public sealed partial class PrShepherdRecalculationTests
             bool delayFirstLockOwnerRead = false,
             bool conflicting = false,
             bool ledgerConflict = false,
+            string graphqlRemaining = "5000",
             bool staleBaseRefOid = false,
             bool moveHeadDuringFetch = false,
             bool moveBaseDuringFetch = false)
@@ -86,6 +88,7 @@ public sealed partial class PrShepherdRecalculationTests
             this.delayFirstLockOwnerRead = delayFirstLockOwnerRead;
             this.conflicting = conflicting;
             this.ledgerConflict = ledgerConflict;
+            this.graphqlRemaining = graphqlRemaining;
             this.staleBaseRefOid = staleBaseRefOid;
             this.moveHeadDuringFetch = moveHeadDuringFetch;
             this.moveBaseDuringFetch = moveBaseDuringFetch;
@@ -227,6 +230,7 @@ public sealed partial class PrShepherdRecalculationTests
                 $"PR_TEST_MOVED_BASE={MovedBaseHead}",
                 $"PR_TEST_LOCK_READ_MARKER={Path.Combine(temporary.Path, "lock-read-marker")}",
                 $"SHEPHERD_DRYRUN={(dryRun ? "1" : "0")}",
+                $"PR_TEST_GRAPHQL_REMAINING={graphqlRemaining}",
                 "GH_TOKEN=must-not-reach-candidate-producers",
                 "/bin/bash",
                 script,
@@ -443,6 +447,11 @@ public sealed partial class PrShepherdRecalculationTests
                   else
                     printf '%s\n' 'SL-001 unrelated admission failure'
                   fi
+                  exit 0
+                fi
+                if [[ "${1:-}" == api && "${2:-}" == rate_limit ]]; then
+                  [[ "${PR_TEST_GRAPHQL_REMAINING:-}" != unreadable ]] || exit 1
+                  printf '%s\n' "${PR_TEST_GRAPHQL_REMAINING:-5000}"
                   exit 0
                 fi
                 if [[ "${1:-}" == api ]]; then

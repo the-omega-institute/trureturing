@@ -56,7 +56,17 @@ internal static class LeanCacheProvisioner
 
         var copyError = Error(copy, "cp -R failed");
         RemovePartial(target);
-        RunCacheGet(worktreeRoot, runner);
+        try
+        {
+            RunCacheGet(worktreeRoot, runner);
+        }
+        catch (Exception exception)
+        {
+            throw new InvalidOperationException(
+                $"clonefile failed ({clonefileError}); ordinary copy failed ({copyError}); "
+                + $"cache fallback failed ({exception.Message})",
+                exception);
+        }
         return new LeanCacheProvisionResult(
             "cache-get",
             "cache-get",

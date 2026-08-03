@@ -22,7 +22,7 @@ public sealed partial class MakeWorkflowTests
             Assert.InRange(RecipeCount(makefile, target), 0, 1);
         }
 
-        Assert.Contains("build: dotnet lean", makefile, StringComparison.Ordinal);
+        Assert.Contains("build: lean-cache-ensure dotnet lean", makefile, StringComparison.Ordinal);
         Assert.Equal(0, RecipeCount(makefile, "build"));
         Assert.Contains(
             " c0-renew --base \"$(BASE)\"",
@@ -56,7 +56,12 @@ public sealed partial class MakeWorkflowTests
             LaunchdConformanceScriptPath,
             Recipe(makefile, "launchd-conformance-check"),
             StringComparison.Ordinal);
+        Assert.Equal(
+            $"\t@/bin/bash {LeanCacheEnsureScriptPath}",
+            Recipe(makefile, "lean-cache-ensure"));
+        Assert.Contains("lean: lean-cache-ensure", makefile, StringComparison.Ordinal);
         Assert.Contains("lake build", Recipe(makefile, "lean"), StringComparison.Ordinal);
+        Assert.Contains("lean-report: lean-cache-ensure", makefile, StringComparison.Ordinal);
         Assert.Contains(LeanReportScriptPath, Recipe(makefile, "lean-report"), StringComparison.Ordinal);
         Assert.Contains(ScribeScriptPath + " emit", Recipe(makefile, "emit"), StringComparison.Ordinal);
         Assert.Contains("emit-check: echo-verify", makefile, StringComparison.Ordinal);
