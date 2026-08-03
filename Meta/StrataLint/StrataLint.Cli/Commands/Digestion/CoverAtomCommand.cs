@@ -63,6 +63,17 @@ internal static class CoverAtomCommand
         ArgumentNullException.ThrowIfNull(arguments);
         try
         {
+            if (arguments.Count > 0
+                && string.Equals(arguments[0], "--align-scribe-receipt", StringComparison.Ordinal))
+            {
+                return AlignScribeReceipt(
+                    repositoryRoot,
+                    repository,
+                    leanReportSource,
+                    scribeEmissionVerifier,
+                    arguments);
+            }
+
             var options = ParseArguments(arguments);
             var currentRaw = repository.ReadCurrent();
             var baselineRaw = repository.ReadRevision(options.BaselineRevision);
@@ -212,39 +223,7 @@ internal static class CoverAtomCommand
             var currentLedger = currentRaw.Entries.Single(static entry =>
                 entry.Path == BackfillInventoryLoader.RelativePath);
             var changed = !currentLedger.Bytes.AsSpan().SequenceEqual(finalBytes.AsSpan());
-            if (changed)
-            {
-                var outputPath = Path.Combine(
-                    Path.GetFullPath(repositoryRoot),
-                    BackfillInventoryLoader.RelativePath.Replace('/', Path.DirectorySeparatorChar));
-
-                // Check-then-act guard (fail-closed): re-read the ledger from disk
-                // and confirm it still exists and matches the bytes we validated
-                // against. Two concurrent covers can both validate against the same
-                // ledger L; without this the second write would clobber the first
-                // deposit (lost update). A missing file is treated as drift and
-                // aborts too — never re-create a ledger that disappeared under us.
-                // NOTE: this is not a true CAS/lock; a sub-millisecond residual
-                // TOCTOU window remains between this reread and the atomic rename.
-                // Serialized manual/CI invocation makes that sufficient; a hard
-                // guarantee needs an OS file lock (deferred).
-                if (!File.Exists(outputPath))
-                {
-                    throw new InvalidOperationException(
-                        "ledger went missing between read and write; "
-                        + "aborting to avoid a lost update");
-                }
-
-                if (!File.ReadAllBytes(outputPath).AsSpan()
-                        .SequenceEqual(currentLedger.Bytes.AsSpan()))
-                {
-                    throw new InvalidOperationException(
-                        "ledger changed under us between read and write; "
-                        + "aborting to avoid a lost update");
-                }
-
-                IngestCommand.ReplaceLedgerAtomically(outputPath, finalBytes.AsSpan());
-            }
+            WriteLedgerIfChanged(repositoryRoot, currentLedger, finalBytes, changed);
 
             return new CommandResult(
                 true,
@@ -257,6 +236,154 @@ internal static class CoverAtomCommand
         {
             return new CommandResult(false, string.Empty, $"COVER_INVALID {exception.Message}\n");
         }
+    }
+
+    private static CommandResult AlignScribeReceipt(
+        string repositoryRoot,
+        IRepositoryGateway repository,
+        ILeanReportSource leanReportSource,
+        IScribeEmissionVerifier scribeEmissionVerifier,
+        IReadOnlyList<string> arguments)
+    {
+        var options = ParseAlignArguments(arguments);
+        var currentRaw = repository.ReadCurrent();
+        var current = Decode(currentRaw);
+        var document = LoadDocument(current, "candidate");
+        var matches = document.RequireDigestionEntries()
+            .Where(entry => string.Equals(entry.AtomId, options.AtomId, StringComparison.Ordinal))
+            .ToArray();
+        if (matches.Length != 1)
+        {
+            throw new InvalidOperationException(
+                matches.Length == 0
+                    ? $"align atom {options.AtomId} is absent from the ledger"
+                    : $"align atom {options.AtomId} is ambiguous in the ledger");
+        }
+
+        var target = matches[0];
+        if (target.CoverageGids.Count(gid =>
+                string.Equals(gid, options.Gid, StringComparison.Ordinal)) != 1)
+        {
+            throw new InvalidOperationException(
+                $"align GID {options.Gid} must occur exactly once in atom {options.AtomId} coverage_gids");
+        }
+
+        var receiptMatches = target.Receipts.Scribe
+            .Where(receipt => string.Equals(receipt.Gid, options.Gid, StringComparison.Ordinal))
+            .ToArray();
+        if (receiptMatches.Length != 1)
+        {
+            throw new InvalidOperationException(
+                $"align GID {options.Gid} must have exactly one Scribe receipt in atom {options.AtomId}");
+        }
+
+        if (!Gid.TryParse(options.Gid, out var gid)
+            || gid.ToTarget() is not Target.Formal { Declaration: not null })
+        {
+            throw new InvalidOperationException(
+                $"align GID must select a Lean declaration: {options.Gid}");
+        }
+
+        var report = leanReportSource.Load(current);
+        var lean = ValidateLean(current, report);
+        var verified = scribeEmissionVerifier.Verify(report);
+        var documentGid = ScribeEmissionAttestation.DocumentGid(options.Gid);
+        if (!verified.TryGet(documentGid, out var verifiedRecord)
+            || !verified.ReferencesDeclaration(options.Gid))
+        {
+            throw new InvalidOperationException(
+                $"align GID {options.Gid} has no verified Scribe emission and declaration reference");
+        }
+
+        var oldReceipt = receiptMatches[0];
+        var newReceipt = oldReceipt with
+        {
+            DefinitionSha256 = verifiedRecord.DefinitionSha256,
+            EmissionSha256 = verifiedRecord.EmissionSha256,
+        };
+        var alignedEntry = target with
+        {
+            Receipts = target.Receipts with
+            {
+                Scribe = target.Receipts.Scribe
+                    .Select(receipt => string.Equals(receipt.Gid, options.Gid, StringComparison.Ordinal)
+                            ? newReceipt
+                            : receipt)
+                    .ToImmutableArray(),
+            },
+            ReceiptSyntax = null,
+        };
+        var planned = ReplaceEntry(document, options.AtomId, alignedEntry);
+        var derived = DigestionStatusEvaluator.Evaluate(
+            planned,
+            current,
+            lean,
+            verified,
+            baselineDocument: null,
+            validateProjectedStatus: false);
+        RequireNoFindings(derived);
+        var finalBytes = BackfillInventoryWriter.WriteForIngest(planned);
+        var finalRaw = ReplaceLedger(currentRaw, finalBytes);
+        var finalSnapshot = Decode(finalRaw);
+        var finalDocument = LoadDocument(finalSnapshot, "final");
+        var finalEvaluation = DigestionStatusEvaluator.Evaluate(
+            finalDocument,
+            finalSnapshot,
+            lean,
+            verified,
+            baselineDocument: null);
+        RequireNoFindings(finalEvaluation);
+        RequireValidBackfill(
+            finalDocument,
+            finalSnapshot,
+            finalSnapshot,
+            LoadPolicy(finalSnapshot),
+            lean,
+            verified);
+
+        var currentLedger = currentRaw.Entries.Single(static entry =>
+            entry.Path == BackfillInventoryLoader.RelativePath);
+        var changed = !currentLedger.Bytes.AsSpan().SequenceEqual(finalBytes.AsSpan());
+        WriteLedgerIfChanged(repositoryRoot, currentLedger, finalBytes, changed);
+
+        return new CommandResult(
+            true,
+            $"ALIGN_SCRIBE_RECEIPT atom_id={options.AtomId} gid={options.Gid} "
+            + $"old_definition_sha256={oldReceipt.DefinitionSha256} "
+            + $"new_definition_sha256={newReceipt.DefinitionSha256} "
+            + $"old_emission_sha256={oldReceipt.EmissionSha256} "
+            + $"new_emission_sha256={newReceipt.EmissionSha256} "
+            + $"ledger_changed={changed.ToString().ToLowerInvariant()}\n",
+            string.Empty);
+    }
+
+    private static void WriteLedgerIfChanged(
+        string repositoryRoot,
+        RawRepositoryEntry currentLedger,
+        ImmutableArray<byte> finalBytes,
+        bool changed)
+    {
+        if (!changed)
+        {
+            return;
+        }
+
+        var outputPath = Path.Combine(
+            Path.GetFullPath(repositoryRoot),
+            BackfillInventoryLoader.RelativePath.Replace('/', Path.DirectorySeparatorChar));
+        if (!File.Exists(outputPath))
+        {
+            throw new InvalidOperationException(
+                "ledger went missing between read and write; aborting to avoid a lost update");
+        }
+
+        if (!File.ReadAllBytes(outputPath).AsSpan().SequenceEqual(currentLedger.Bytes.AsSpan()))
+        {
+            throw new InvalidOperationException(
+                "ledger changed under us between read and write; aborting to avoid a lost update");
+        }
+
+        IngestCommand.ReplaceLedgerAtomically(outputPath, finalBytes.AsSpan());
     }
 
     private static DigestionLedgerEntry LocateTarget(
@@ -429,6 +556,49 @@ internal static class CoverAtomCommand
     }
 
     private sealed record CoverArguments(string AtomId, string Gid, string BaselineRevision, string EnvelopePath);
+
+    private sealed record AlignArguments(string AtomId, string Gid);
+
+    private static AlignArguments ParseAlignArguments(IReadOnlyList<string> arguments)
+    {
+        if (arguments.Count != 5
+            || !string.Equals(arguments[0], "--align-scribe-receipt", StringComparison.Ordinal))
+        {
+            throw AlignUsage();
+        }
+
+        string? atomId = null;
+        string? gid = null;
+        for (var index = 1; index < arguments.Count; index += 2)
+        {
+            if (index + 1 >= arguments.Count)
+            {
+                throw AlignUsage();
+            }
+
+            switch (arguments[index])
+            {
+                case "--atom-id" when atomId is null:
+                    atomId = arguments[index + 1];
+                    break;
+                case "--gid" when gid is null:
+                    gid = arguments[index + 1];
+                    break;
+                default:
+                    throw AlignUsage();
+            }
+        }
+
+        if (string.IsNullOrWhiteSpace(atomId) || string.IsNullOrWhiteSpace(gid))
+        {
+            throw AlignUsage();
+        }
+
+        return new AlignArguments(atomId, gid);
+    }
+
+    private static InvalidOperationException AlignUsage() => new(
+        "USAGE: StrataLint cover-atom --align-scribe-receipt --atom-id ATOM_ID --gid GID");
 
     private static CoverArguments ParseArguments(IReadOnlyList<string> arguments)
     {

@@ -14,6 +14,73 @@ namespace StrataLint.Tests;
 public sealed partial class CoverAtomTests
 {
     [Fact]
+    public void AlignScribeReceiptUsesVerifiedFingerprintsAndIsIdempotent()
+    {
+        var inputs = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec());
+        using var temporary = new TemporaryDirectory();
+        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
+        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+        File.WriteAllText(outputPath, inputs.Ledger, new UTF8Encoding(false));
+
+        var first = CoverWorld.Environment(temporary.Path, inputs, inputs.Files)
+            .CoverAtom(CoverWorld.AlignArgs(inputs));
+
+        Assert.True(first.Success, first.Error);
+        Assert.Contains("ALIGN_SCRIBE_RECEIPT", first.Output, StringComparison.Ordinal);
+        Assert.Contains($"atom_id={CoverWorld.DefaultAtomId}", first.Output, StringComparison.Ordinal);
+        Assert.Contains($"gid={inputs.Gid}", first.Output, StringComparison.Ordinal);
+        Assert.Contains("old_definition_sha256=sha256:aaaaaaaa", first.Output, StringComparison.Ordinal);
+        Assert.Contains("new_definition_sha256=sha256:", first.Output, StringComparison.Ordinal);
+        Assert.Contains("old_emission_sha256=sha256:bbbbbbbb", first.Output, StringComparison.Ordinal);
+        Assert.Contains("new_emission_sha256=sha256:", first.Output, StringComparison.Ordinal);
+        Assert.Contains("ledger_changed=true", first.Output, StringComparison.Ordinal);
+        var afterFirst = File.ReadAllText(outputPath);
+        Assert.True(inputs.VerifiedEmissions!.TryGet(
+            inputs.Gid[..inputs.Gid.LastIndexOf('.')], out var verifiedRecord));
+        Assert.Equal(
+            inputs.Ledger
+                .Replace(
+                    "sha256:" + new string('a', 64),
+                    verifiedRecord.DefinitionSha256,
+                    StringComparison.Ordinal)
+                .Replace(
+                    "sha256:" + new string('b', 64),
+                    verifiedRecord.EmissionSha256,
+                    StringComparison.Ordinal),
+            afterFirst);
+
+        var replayFiles = new Dictionary<string, string>(inputs.Files, StringComparer.Ordinal)
+        {
+            [BackfillInventoryLoader.RelativePath] = afterFirst,
+        };
+        var second = CoverWorld.Environment(temporary.Path, inputs, replayFiles)
+            .CoverAtom(CoverWorld.AlignArgs(inputs));
+
+        Assert.True(second.Success, second.Error);
+        Assert.Contains("ledger_changed=false", second.Output, StringComparison.Ordinal);
+        Assert.Equal(afterFirst, File.ReadAllText(outputPath));
+    }
+
+    [Theory]
+    [InlineData("no-such-atom", "D5/S0/Carrier/Probe.probe")]
+    [InlineData(CoverWorld.DefaultAtomId, "D5/S0/Carrier/Probe.missing")]
+    public void AlignScribeReceiptFailsClosedForUnknownAtomOrGid(string atomId, string gid)
+    {
+        var inputs = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec());
+        using var temporary = new TemporaryDirectory();
+        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
+        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+        File.WriteAllText(outputPath, inputs.Ledger, new UTF8Encoding(false));
+
+        var result = CoverWorld.Environment(temporary.Path, inputs, inputs.Files).CoverAtom(
+            ["--align-scribe-receipt", "--atom-id", atomId, "--gid", gid]);
+
+        Assert.False(result.Success);
+        Assert.Contains("COVER_INVALID", result.Error, StringComparison.Ordinal);
+        Assert.Equal(inputs.Ledger, File.ReadAllText(outputPath));
+    }
+
+    [Fact]
     public void CoverBindsDeletableDeclarationAndWritesCoverageReceipts()
     {
         var (result, after, before) = Execute(new CoverSpec());
@@ -322,6 +389,10 @@ internal sealed record CoverSpec
 
     internal ImmutableArray<string> InitialCoverage { get; init; } = ImmutableArray<string>.Empty;
 
+    internal string? InitialDefinitionSha256 { get; init; }
+
+    internal string? InitialEmissionSha256 { get; init; }
+
     internal string Migration { get; init; } = "residual";
 
     internal string Truth { get; init; } = "open";
@@ -395,6 +466,31 @@ internal static class CoverWorld
 {
     internal const string DefaultAtomId = "cover-1";
 
+    internal static CoverSpec StaleReceiptSpec() => new()
+    {
+        InitialCoverage = ImmutableArray.Create("D5/S0/Carrier/Probe.probe"),
+        InitialDefinitionSha256 = "sha256:" + new string('a', 64),
+        InitialEmissionSha256 = "sha256:" + new string('b', 64),
+        Migration = "absorbed",
+        Truth = "closed",
+    };
+
+    internal static string[] AlignArgs(CoverInputs inputs) =>
+        ["--align-scribe-receipt", "--atom-id", DefaultAtomId, "--gid", inputs.Gid];
+
+    internal static ProductionCliEnvironment Environment(
+        string repositoryRoot,
+        CoverInputs inputs,
+        IReadOnlyDictionary<string, string> currentFiles) =>
+        new(
+            repositoryRoot,
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(Array.Empty<string>()),
+                Raw(currentFiles),
+                Raw(inputs.Baseline)),
+            new FakeLeanReportSource(inputs.Report),
+            new FakeScribeEmissionVerifier(inputs.VerifiedEmissions));
+
     internal static RawRepositorySnapshot Raw(IReadOnlyDictionary<string, string> files) =>
         RawRepositorySnapshot.Create(files.Select(pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
 
@@ -432,7 +528,8 @@ internal static class CoverWorld
             spec.InitialCoverage,
             includeOtherAtom: true,
             tailAuthPath,
-            tailAuthSha);
+            tailAuthSha,
+            DigestionFingerprint.Compute(targetBytes).RawSha256);
         var envelopePath = "Meta/Digestion/formalizations/" + spec.AtomId + ".v1.json";
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
@@ -546,7 +643,8 @@ internal static class CoverWorld
         ImmutableArray<string> coverage,
         bool includeOtherAtom,
         string? tailAuthPath,
-        string? tailAuthSha)
+        string? tailAuthSha,
+        string? targetSha256 = null)
     {
         var builder = new StringBuilder();
         builder.Append("schema_version: 3\n");
@@ -566,7 +664,10 @@ internal static class CoverWorld
             spec.Migration,
             spec.Truth,
             tailAuthPath,
-            tailAuthSha);
+            tailAuthSha,
+            targetSha256,
+            spec.InitialDefinitionSha256,
+            spec.InitialEmissionSha256);
         if (includeOtherAtom && spec.OtherAtomBinding is { } other)
         {
             AppendEntry(
@@ -577,6 +678,9 @@ internal static class CoverWorld
                 ImmutableArray.Create(other.Gid),
                 "partial",
                 "closed",
+                null,
+                null,
+                null,
                 null,
                 null);
         }
@@ -594,7 +698,10 @@ internal static class CoverWorld
         string migration,
         string truth,
         string? tailAuthPath,
-        string? tailAuthSha)
+        string? tailAuthSha,
+        string? targetSha256,
+        string? definitionSha256,
+        string? emissionSha256)
     {
         builder.Append($"      - atom_id: {atomId}\n");
         builder.Append($"        ast_path: {astPath}\n");
@@ -616,8 +723,29 @@ internal static class CoverWorld
         }
 
         builder.Append("        receipts:\n");
-        builder.Append("          coverage: []\n");
-        builder.Append("          scribe: []\n");
+        if (coverage.Length == 1 && targetSha256 is not null)
+        {
+            builder.Append("          coverage:\n");
+            builder.Append($"            - gid: {coverage[0]}\n");
+            builder.Append($"              source_sha256: {fingerprints.RawSha256}\n");
+            builder.Append($"              target_sha256: {targetSha256}\n");
+        }
+        else
+        {
+            builder.Append("          coverage: []\n");
+        }
+
+        if (coverage.Length == 1 && definitionSha256 is not null && emissionSha256 is not null)
+        {
+            builder.Append("          scribe:\n");
+            builder.Append($"            - gid: {coverage[0]}\n");
+            builder.Append($"              definition_sha256: {definitionSha256}\n");
+            builder.Append($"              emission_sha256: {emissionSha256}\n");
+        }
+        else
+        {
+            builder.Append("          scribe: []\n");
+        }
         builder.Append("          unresolved_subitems: []\n");
         builder.Append("          chain_atoms: []\n");
         if (tailAuthPath is not null && tailAuthSha is not null)

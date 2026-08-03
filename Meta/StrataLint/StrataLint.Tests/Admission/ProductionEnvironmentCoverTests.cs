@@ -7,6 +7,80 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
+    public void CoverAtomAlignModeIsReachableThroughCliDispatch()
+    {
+        var inputs = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec());
+        using var temporary = new TemporaryDirectory();
+        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
+        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+        File.WriteAllText(outputPath, inputs.Ledger, new UTF8Encoding(false));
+        var console = new BufferedConsole();
+
+        var exitCode = CliApplication.Run(
+            ["cover-atom", .. CoverWorld.AlignArgs(inputs)],
+            CoverWorld.Environment(temporary.Path, inputs, inputs.Files),
+            console);
+
+        Assert.Equal(0, exitCode);
+        Assert.Contains("ALIGN_SCRIBE_RECEIPT", console.Output, StringComparison.Ordinal);
+        Assert.Equal(string.Empty, console.Error);
+    }
+
+    [Fact]
+    public void AlignRemovesMismatchAndDefinitionDriftIsDetectedAgain()
+    {
+        var inputs = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec());
+        using var temporary = new TemporaryDirectory();
+        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
+        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+        File.WriteAllText(outputPath, inputs.Ledger, new UTF8Encoding(false));
+        var initialEnvironment = CoverWorld.Environment(temporary.Path, inputs, inputs.Files);
+
+        var before = initialEnvironment.DigestStatus(Array.Empty<string>());
+        Assert.False(before.Success);
+        Assert.Contains("scribe-definition-mismatch", before.Error, StringComparison.Ordinal);
+        Assert.Contains("scribe-emission-mismatch", before.Error, StringComparison.Ordinal);
+
+        var aligned = initialEnvironment.CoverAtom(CoverWorld.AlignArgs(inputs));
+        Assert.True(aligned.Success, aligned.Error);
+        var alignedLedger = File.ReadAllText(outputPath);
+        var alignedFiles = new Dictionary<string, string>(inputs.Files, StringComparer.Ordinal)
+        {
+            [BackfillInventoryLoader.RelativePath] = alignedLedger,
+        };
+        var after = CoverWorld.Environment(temporary.Path, inputs, alignedFiles)
+            .DigestStatus(Array.Empty<string>());
+        Assert.True(after.Success, after.Error);
+        Assert.DoesNotContain("scribe-definition-mismatch", after.Output, StringComparison.Ordinal);
+        Assert.DoesNotContain("scribe-emission-mismatch", after.Output, StringComparison.Ordinal);
+
+        var changedDefinition = "changed scribe definition\n";
+        alignedFiles[ScribeEmissionAttestation.DefinitionPath(inputs.Gid[..inputs.Gid.LastIndexOf('.')])] =
+            changedDefinition;
+        Assert.True(inputs.VerifiedEmissions!.TryGet(
+            inputs.Gid[..inputs.Gid.LastIndexOf('.')], out var oldRecord));
+        var changedRecord = oldRecord with
+        {
+            DefinitionSha256 = DigestionFingerprint.Compute(
+                Encoding.UTF8.GetBytes(changedDefinition)).RawSha256,
+        };
+        var changedVerification = VerifiedScribeEmissions.Create([changedRecord], [inputs.Gid]);
+        var driftEnvironment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(Array.Empty<string>()),
+                CoverWorld.Raw(alignedFiles),
+                CoverWorld.Raw(inputs.Baseline)),
+            new FakeLeanReportSource(inputs.Report),
+            new FakeScribeEmissionVerifier(changedVerification));
+
+        var drifted = driftEnvironment.DigestStatus(Array.Empty<string>());
+
+        Assert.False(drifted.Success);
+        Assert.Contains("scribe-definition-mismatch", drifted.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void CoverAtomWritesCoverageAndRecomputesDigestStatusThroughProductionEnvironment()
     {
         var inputs = CoverWorld.Materialize(new CoverSpec());
