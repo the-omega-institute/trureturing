@@ -53,7 +53,8 @@ example :
     let S := rotationOrbit (1 / 2 : ℝ) 2
     let hS : S.Nonempty := rotationOrbitNonempty (1 / 2 : ℝ) 2 (by norm_num)
     S = {0, 1 / 2} ∧ cyclicSucc S hS 0 = 1 / 2 ∧
-      0 ≠ S.max' hS ∧ 1 / 2 = S.max' hS ∧
+      gap S hS 0 = 1 / 2 ∧ cyclicSucc S hS (1 / 2) = 0 ∧
+      gap S hS (1 / 2) = 1 / 2 ∧
       ∑ x ∈ S, gap S hS x = 1 := by
   dsimp only
   have hFractInv : Int.fract (2⁻¹ : ℝ) = 2⁻¹ := by
@@ -100,8 +101,39 @@ example :
     · apply Finset.le_max'
       rw [hOrbit]
       simp
+  have hMin :
+      (rotationOrbit (1 / 2 : ℝ) 2).min'
+        (rotationOrbitNonempty (1 / 2 : ℝ) 2 (by norm_num)) = 0 := by
+    apply le_antisymm
+    · apply Finset.min'_le
+      rw [hOrbit]
+      simp
+    · apply Finset.le_min'
+      intro y hy
+      rw [hOrbit] at hy
+      simp only [Finset.mem_insert, Finset.mem_singleton] at hy
+      rcases hy with rfl | rfl <;> norm_num
+  have hGapZero :
+      gap (rotationOrbit (1 / 2 : ℝ) 2)
+        (rotationOrbitNonempty (1 / 2 : ℝ) 2 (by norm_num)) 0 = 1 / 2 := by
+    rw [gap, if_neg (by rw [hMax]; norm_num), hSucc]
+    norm_num
+  have hSuccWrap :
+      cyclicSucc (rotationOrbit (1 / 2 : ℝ) 2)
+        (rotationOrbitNonempty (1 / 2 : ℝ) 2 (by norm_num)) (1 / 2) = 0 := by
+    rw [cyclicSucc, dif_neg, hMin]
+    rintro ⟨y, hy⟩
+    rw [Finset.mem_filter] at hy
+    have hyLe := Finset.le_max' _ _ hy.1
+    rw [hMax] at hyLe
+    exact (not_lt_of_ge hyLe) hy.2
+  have hGapWrap :
+      gap (rotationOrbit (1 / 2 : ℝ) 2)
+        (rotationOrbitNonempty (1 / 2 : ℝ) 2 (by norm_num)) (1 / 2) = 1 / 2 := by
+    rw [gap, if_pos hMax.symm, hMin]
+    norm_num
   have hSum :=
     (rotation_orbit_gaps_partition (1 / 2 : ℝ) 2).2.2 (by norm_num)
-  exact ⟨hOrbit, hSucc, by rw [hMax]; norm_num, hMax.symm, hSum.2⟩
+  exact ⟨hOrbit, hSucc, hGapZero, hSuccWrap, hGapWrap, hSum.2⟩
 
 end D5.S1.Recurrence.RotationOrbitGapsPartition
