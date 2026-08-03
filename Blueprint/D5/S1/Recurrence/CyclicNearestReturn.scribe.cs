@@ -18,7 +18,9 @@ internal sealed class CyclicNearestReturnDocument : IScribeDocumentDefinition
                         "D5/S1/Recurrence/CyclicNearestReturn."
                         + "cyclic_nearest_return_spec"),
                     LatexStatement.Create(
-                        @"$$\forall S\subseteq\alpha\ \text{finite},\ S\neq\emptyset:\ "
+                        @"$$\forall \alpha\ [\operatorname{LinearOrder}(\alpha)]\ "
+                        + @"[\operatorname{DecidableEq}(\alpha)],\ "
+                        + @"\forall S\subseteq\alpha\ \text{finite},\ S\neq\emptyset:\ "
                         + @"(\forall x\in S,\ \operatorname{succ}_S(x)\in S)\ \land\ "
                         + @"(\forall x\in S,\ \operatorname{pred}_S(x)\in S)\ \land\ "
                         + @"(\forall x\in S,\ \operatorname{pred}_S(\operatorname{succ}_S(x))=x)"
