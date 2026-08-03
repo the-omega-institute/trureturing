@@ -163,17 +163,17 @@ expected_diagnostics = [{ rule = 19, path = "Chronicle/2026/07/11-ledger.md", me
 
 [[cases]]
 name = "directory-at-capacity"
-changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+changes = ["Golden/cases/CapacityExtra00.toml"]
 baseline_mutations = []
-mutations = [{ op = "populate_directory" }, { op = "delete", path = "Blueprint/D5/S0/Carrier/Extra11.md" }]
+mutations = [{ op = "populate_directory" }, { op = "delete", path = "Golden/cases/CapacityExtra12.toml" }]
 expected_diagnostics = []
 
 [[cases]]
 name = "directory-over-capacity"
-changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+changes = ["Golden/cases/CapacityExtra00.toml"]
 baseline_mutations = []
 mutations = [{ op = "populate_directory" }]
-expected_diagnostics = [{ rule = 3, path = "Blueprint/D5/S0/Carrier", message = "directory contains 13 files (maximum 12)" }]
+expected_diagnostics = [{ rule = 3, path = "Golden/cases", message = "directory contains 13 files (maximum 12)" }]
 
 [[cases]]
 name = "directory-over-capacity-definition-sources"
