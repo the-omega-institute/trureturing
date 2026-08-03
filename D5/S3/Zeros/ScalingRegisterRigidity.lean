@@ -65,7 +65,7 @@ structure NoScalingRegister {A : Type*} [AddMonoid A]
   totalCodeLayer : ¬ ScalingRegister length R
 
 /--
-PZG 23.4 (C3a), at the formal analytic and definitional scope available in this repository.
+The C3a conclusion, at the formal analytic and definitional scope available in this repository.
 The same-germ premise is consumed by analytic continuation uniqueness. The same-total-code
 premise is consumed through `no_hidden_register`, whose second clause exposes a changed
 data, rules, or ledger component. A "real addition" is represented by the two explicit
