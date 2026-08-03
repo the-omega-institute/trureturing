@@ -13,6 +13,10 @@
 - 2026-07-28 (SL-003): split the new papergen command suite from `Commands/` when
   that bucket reached 13 files; existing command tests remain in place and namespaces
   remain unchanged.
+- 2026-08-03 (SL-003): split `Commands/Papergen/PapergenCommandTests.cs` into loader tests,
+  membership tests and the carrier fixture once frozen-ledger membership coverage pushed it
+  past the 800-line artifact ceiling. Declared `partial` rather than moving helpers, so the
+  fixture stays a single source and no visibility changed; namespaces remain unchanged.
 
 ## Buckets
 
