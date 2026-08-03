@@ -487,17 +487,13 @@ armed_pr_count() {
 }
 
 watch_process_start() {
-  ps -p "$1" -o lstart= 2>/dev/null \
+  LC_ALL=C ps -p "$1" -o lstart= 2>/dev/null \
     | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
-}
-
-watch_process_command() {
-  ps -p "$1" -o command= 2>/dev/null
 }
 
 watch_lease_owner_is_live() {
   local owner_file="$PIDFILE.lock/owner" schema pid process_start canonical_script
-  local actual_start command
+  local actual_start
   [[ -f "$owner_file" ]] || return 1
   IFS= read -r schema < "$owner_file" || return 1
   IFS= read -r pid < <(sed -n '2p' "$owner_file") || return 1
@@ -512,10 +508,8 @@ watch_lease_owner_is_live() {
   canonical_script="${canonical_script#canonical_script=}"
   kill -0 "$pid" 2>/dev/null || return 1
   actual_start="$(watch_process_start "$pid")" || return 1
-  command="$(watch_process_command "$pid")" || return 1
-  [[ -n "$process_start" && "$actual_start" == "$process_start" \
-      && "$command" == *"$canonical_script"* \
-      && "$command" == *" watch "* ]]
+  [[ -n "$canonical_script" && -n "$process_start" \
+      && "$actual_start" == "$process_start" ]]
 }
 
 acquire_watch_lease() {
@@ -626,8 +620,9 @@ reload_watch() {
   export PR_SHEPHERD_WATCH_CYCLE="$next_cycle"
   if exec /bin/bash "$snapshot" watch "$interval" "$max"; then
     return 0
+  else
+    rc=$?
   fi
-  rc=$?
   rm -f "$snapshot" 2>/dev/null || true
   log "WATCH reload exec failed path=$snapshot exit=$rc"
   return "$rc"
@@ -663,15 +658,15 @@ watch() {
     return
   fi
 
-  cycle="${PR_SHEPHERD_WATCH_CYCLE:-}"
-  [[ "$cycle" =~ ^[1-9][0-9]*$ && "$cycle" -le "$max" ]] \
-    || { log "WATCH reload rejected invalid cycle=${cycle:-missing}"; return 2; }
   WATCH_OWNS_LEASE=1
-  watch_lease_belongs_to_current_process \
-    || { log "WATCH reload rejected: verified lease is absent"; return 1; }
   trap cleanup_watch EXIT
   trap 'exit 143' TERM
   trap 'exit 130' INT
+  cycle="${PR_SHEPHERD_WATCH_CYCLE:-}"
+  [[ "$cycle" =~ ^[1-9][0-9]*$ && "$cycle" -le "$max" ]] \
+    || { log "WATCH reload rejected invalid cycle=${cycle:-missing}"; return 2; }
+  watch_lease_belongs_to_current_process \
+    || { log "WATCH reload rejected: verified lease is absent"; return 1; }
   publish_watch_identity "$interval" "$max" "$cycle" || return
   remove_watch_snapshot "$WATCH_PREVIOUS_SCRIPT"
   WATCH_PREVIOUS_SCRIPT=""

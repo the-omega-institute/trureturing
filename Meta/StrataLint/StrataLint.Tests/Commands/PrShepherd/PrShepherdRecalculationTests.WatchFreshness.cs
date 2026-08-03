@@ -75,6 +75,18 @@ public sealed partial class PrShepherdRecalculationTests
     }
 
     [Fact]
+    public void WatchRejectsAConcurrentStartWhileTheVerifiedLeaseIsLive()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new WatchFreshnessFixture("hold");
+
+        var result = fixture.RunConcurrentStart();
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Contains("WATCH already running with a verified lease", result.Log, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void WatchPreservesNoCheckObservationAcrossFreshSweepProcesses()
     {
         if (OperatingSystem.IsWindows()) return;
@@ -177,6 +189,56 @@ public sealed partial class PrShepherdRecalculationTests
                 File.Exists(log) ? File.ReadAllText(log) : string.Empty);
         }
 
+        internal ShepherdResult RunConcurrentStart()
+        {
+            var home = Path.Combine(temporary.Path, "home");
+            Directory.CreateDirectory(home);
+            var result = BoundedProcessRunner.Run(
+                "/usr/bin/env",
+                [
+                    $"PATH={bin}:{Environment.GetEnvironmentVariable("PATH")}",
+                    $"HOME={home}",
+                    $"PR_SHEPHERD_ROOT={temporary.Path}",
+                    "PR_SHEPHERD_REPO=fixture/repository",
+                    $"PR_SHEPHERD_LOG={log}",
+                    $"PR_SHEPHERD_PID={StateFile}",
+                    $"PR_SHEPHERD_STATE={StateDirectory}",
+                    $"PR_SHEPHERD_CACHE={Path.Combine(temporary.Path, "cache")}",
+                    $"PR_TEST_CANONICAL_SCRIPT={script}",
+                    $"PR_TEST_CALLS={calls}",
+                    $"PR_TEST_CAPTURED_IDENTITY={capturedIdentity}",
+                    $"PR_TEST_MARKER={marker}",
+                    $"PR_TEST_MODE={mode}",
+                    $"PR_TEST_SWEEP_STATE={Path.Combine(temporary.Path, "sweep-state")}",
+                    $"PR_TEST_WATCH_STATE={Path.Combine(temporary.Path, "watch-state")}",
+                    "SHEPHERD_DRYRUN=0",
+                    "/bin/bash",
+                    "-c",
+                    """
+                    /bin/bash "$PR_TEST_CANONICAL_SCRIPT" watch 30 2 &
+                    owner=$!
+                    attempt=0
+                    while [[ ! -f "$PR_SHEPHERD_PID" && "$attempt" -lt 100 ]]; do
+                      /bin/sleep 0.05
+                      attempt=$((attempt + 1))
+                    done
+                    /bin/bash "$PR_TEST_CANONICAL_SCRIPT" watch 0 1
+                    second=$?
+                    kill "$owner" 2>/dev/null || true
+                    wait "$owner" 2>/dev/null || true
+                    exit "$second"
+                    """,
+                ],
+                temporary.Path,
+                TimeSpan.FromSeconds(15),
+                64 * 1024);
+            return new ShepherdResult(
+                result.ExitCode,
+                Encoding.UTF8.GetString(result.StandardOutput),
+                Encoding.UTF8.GetString(result.StandardError),
+                File.Exists(log) ? File.ReadAllText(log) : string.Empty);
+        }
+
         internal string ScriptBlob() =>
             GitBlob(script);
 
@@ -243,6 +305,9 @@ public sealed partial class PrShepherdRecalculationTests
                 #!/usr/bin/env bash
                 if [[ -f "$PR_SHEPHERD_PID" ]]; then
                   cp "$PR_SHEPHERD_PID" "$PR_TEST_CAPTURED_IDENTITY"
+                fi
+                if [[ "$PR_TEST_MODE" == hold ]]; then
+                  exec /bin/sleep 5
                 fi
                 exit 0
                 """);
