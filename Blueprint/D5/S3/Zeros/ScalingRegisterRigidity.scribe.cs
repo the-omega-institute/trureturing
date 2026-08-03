@@ -13,7 +13,7 @@ internal sealed class ScalingRegisterRigidityDocument : IScribeDocumentDefinitio
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
         Header(
             "D5/S3/Zeros/ScalingRegisterRigidity",
-            "Same-germ and same-total-code continuations exclude nontrivial scaling registers."),
+            "Analytic uniqueness and total-code identity impose conditional scaling-register rigidity."),
         H("Scaling-Register Rigidity"),
         Blocks(
             DocumentBlock.Describe.Definition(
@@ -43,51 +43,70 @@ internal sealed class ScalingRegisterRigidityDocument : IScribeDocumentDefinitio
                 LatexStatement.Create(
                     @"$$\forall A\,[\operatorname{AddMonoid}(A)],\ \forall \ell:A\to_{+}\mathbb{R},"
                     + @"\ \forall R:\mathbb{C}\to A\to\mathbb{C},\ "
-                    + @"(\exists a,\ell(a)\neq0)\land\operatorname{ScalingRegister}(\ell,R)"
+                    + @"\operatorname{ScalingRegister}(\ell,R)"
                     + @"\Rightarrow\neg\forall s,a,b,\ R(s,a)=R(s,b).$$"),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "At the zero address every exponential register equals one. Address "
                     + "independence would therefore make every coordinate one, contradicting "
-                    + "the explicit nontrivial witness. The supplied nontrivial-length premise "
-                    + "records that the ledger itself has a genuine coordinate direction.")))
+                    + "the explicit nontrivial witness.")))
+            ),
+            DocumentBlock.Describe.Definition(
+                DescribeId.Create("a-register-acts-on-the-tagged-data-field"),
+                H("A register acts on the tagged data field"),
+                LeanDefinition(
+                    "D5/S3/Zeros/ScalingRegisterRigidity.applyRegister"),
+                DescribeProvenance.RepoDerived(),
+                Blocks(Paragraph(Text(
+                    "For data X.data(a,s), applyRegister(R,X) replaces that value by "
+                    + "R(s,a)X.data(a,s), while preserving the rules and ledger fields.")))
             ),
             DocumentBlock.Describe.Theorem(
-                DescribeId.Create("same-germ-and-same-total-code-exclude-scaling-registers"),
-                H("Same germ and same total code exclude scaling registers"),
+                DescribeId.Create("a-nontrivial-register-changes-nowhere-zero-data"),
+                H("A nontrivial register changes nowhere-zero data"),
                 LeanTheorem(
-                    "D5/S3/Zeros/ScalingRegisterRigidity.same_germ_same_total_code_has_no_scaling_register"),
+                    "D5/S3/Zeros/ScalingRegisterRigidity.applyRegister_ne_of_nontrivial"),
+                LatexStatement.Create(
+                    @"$$\left(\forall a,s,\ X_{\operatorname{data}}(a,s)\neq0\right)\land"
+                    + @"\left(\exists s,a,\ R(s,a)\neq1\right)\Rightarrow"
+                    + @"\operatorname{applyRegister}(R,X)\neq X.$$"),
+                DescribeProvenance.RepoDerived(),
+                Blocks(Paragraph(Text(
+                    "At the nontrivial witness, equality of total codes would equate the data "
+                    + "values R(s,a)X.data(a,s) and X.data(a,s). Cancelling the explicitly "
+                    + "nonzero data value forces R(s,a)=1, a contradiction.")))
+            ),
+            DocumentBlock.Describe.Theorem(
+                DescribeId.Create("same-germ-and-same-total-code-force-a-trivial-register"),
+                H("Same germ and same total code force a trivial register"),
+                LeanTheorem(
+                    "D5/S3/Zeros/ScalingRegisterRigidity.same_germ_same_total_code_forces_trivial_register"),
                 LatexStatement.Create(
                     @"$$\begin{gathered}U\subseteq\mathbb{C},\ f,\widetilde f:\mathbb{C}\to\mathbb{C},"
                     + @"\quad \operatorname{AnalyticOnNhd}(f,U),\quad"
                     + @"\operatorname{AnalyticOnNhd}(\widetilde f,U),\\"
                     + @"\operatorname{IsPreconnected}(U),\quad s_0\in U,\ "
                     + @"f=_{\operatorname{nhds}(s_0)}\widetilde f,\\"
-                    + @"T:\operatorname{TotalCode}(D,Q,L)\to\operatorname{TotalCode}(D,Q,L),"
-                    + @"\quad X:\operatorname{TotalCode}(D,Q,L),\quad T(X)=X,\\"
-                    + @"A\ [\operatorname{AddMonoid}(A)],\quad \ell:A\to_{+}\mathbb{R},"
-                    + @"\quad R:\mathbb{C}\to A\to\mathbb{C},\\"
-                    + @"\operatorname{ScalingRegister}(\ell,R)\Rightarrow"
-                    + @"\exists s\in U,\ \widetilde f(s)\neq f(s),\\"
-                    + @"\operatorname{ScalingRegister}(\ell,R)\Rightarrow T(X)\neq X"
+                    + @"R:\mathbb{C}\to A\to\mathbb{C},\quad "
+                    + @"X:\operatorname{TotalCode}(A\to\mathbb{C}\to\mathbb{C},Q,L),\\"
+                    + @"\forall a,s,\ X_{\operatorname{data}}(a,s)\neq0,\quad"
+                    + @"\operatorname{applyRegister}(R,X)=X"
                     + @"\end{gathered}\quad\Rightarrow\quad"
-                    + @"\operatorname{NoScalingRegister}(\ell,R).$$"),
+                    + @"\left(f=\widetilde f\text{ on }U\right)\land"
+                    + @"\left(\forall s,a,\ R(s,a)=1\right).$$"),
                 DescribeProvenance.RepoDerived(),
                 Blocks(
                     Paragraph(Text(
-                        "The analytic field of the certificate consumes the same-germ premise "
-                        + "through analytic_continuation_unique, so a register cannot produce the "
-                        + "required pointwise change on U. The total-code field consumes T(X)=X "
-                        + "through no_hidden_register: a genuine object change must expose a "
-                        + "changed data, rules, or ledger component, each impossible after the "
-                        + "code equality is rewritten.")),
+                        "Analytic continuation uniqueness consumes the same-germ premise and proves "
+                        + "f and its continuation equal on U. Independently, a non-one register "
+                        + "witness and nowhere-zero data construct an actual applyRegister object "
+                        + "change. no_hidden_register exposes a changed data, rules, or ledger "
+                        + "component, contradicting the supplied equality of total codes.")),
                     Paragraph(Text(
-                        "Honest scope declaration: Lean does not derive from complex analysis "
-                        + "that every unrecorded register changes both the continued function and "
-                        + "the represented object. Those two faithfulness bridges are explicit "
-                        + "premises. The theorem is closed at the analytic layer plus the "
-                        + "definitional TotalCode reading of criterion 7.2; it does not claim an "
-                        + "ontological proof beyond those typed inputs.")))
+                        "Honest scope declaration: applyRegister is a typed action on the TotalCode "
+                        + "data field; this theorem does not identify that action with analytic "
+                        + "continuation or internalize ledger custody. Its combined conclusion is "
+                        + "exactly analytic uniqueness plus conditional data-layer rigidity.")))
             ),
             DocumentBlock.Describe.Theorem(
                 DescribeId.Create("the-scaling-register-predicate-has-a-concrete-witness"),

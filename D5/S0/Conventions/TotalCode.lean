@@ -11,7 +11,7 @@ universe u v w
 
 /--
 The total code of an object, parameterized independently by its data, rules, and ledger.
-PZG criterion 7.2 is semantic: here its kernel-identity reading is carried definitionally
+    The total-code identity criterion is semantic: here its kernel-identity reading is carried definitionally
 by equality of this structure, rather than presented as a proved ontological criterion.
 -/
 structure TotalCode (α : Type u) (β : Type v) (γ : Type w) where
