@@ -95,6 +95,57 @@ json_quote() { # quote one string as a JSON value
   printf '"%s"' "$(printf '%s' "$value" | LC_ALL=C tr -d '\000-\010\013\014\016-\037')"
 }
 
+run_bounded_probe() { # $1=budget $2=label $3=working directory (empty = current) $4...=command
+  local budget="$1" label="$2" working_directory="$3"
+  shift 3
+  local probe_err="" probe_out="" probe_pid=0 waited=0 diagnostic=""
+  BOUNDED_PROBE_COMPLETED=0
+  BOUNDED_PROBE_RC=""
+  BOUNDED_PROBE_ERROR=""
+  BOUNDED_PROBE_OUTPUT=""
+
+  if [[ ! "$budget" =~ ^[1-9][0-9]*$ ]]; then
+    BOUNDED_PROBE_ERROR="$label budget must be a positive integer (got $budget)"
+    return 0
+  fi
+  if ! probe_err="$(mktemp -t fkst-probe-err.XXXXXX)" \
+      || ! probe_out="$(mktemp -t fkst-probe-out.XXXXXX)"; then
+    [[ -n "$probe_err" ]] && rm -f "$probe_err"
+    [[ -n "$probe_out" ]] && rm -f "$probe_out"
+    BOUNDED_PROBE_ERROR="$label could not allocate bounded-probe output"
+    return 0
+  fi
+
+  if [[ -n "$working_directory" ]]; then
+    (cd -- "$working_directory" && "$@") >"$probe_out" 2>"$probe_err" &
+  else
+    "$@" >"$probe_out" 2>"$probe_err" &
+  fi
+  probe_pid=$!
+  while kill -0 "$probe_pid" 2>/dev/null && (( waited < budget )); do
+    sleep 1
+    waited=$((waited + 1))
+  done
+  if kill -0 "$probe_pid" 2>/dev/null; then
+    disown "$probe_pid" 2>/dev/null || true
+    kill -TERM "$probe_pid" 2>/dev/null || true
+    sleep 1
+    kill -KILL "$probe_pid" 2>/dev/null || true
+    BOUNDED_PROBE_ERROR="$label exceeded ${budget}s budget"
+  else
+    BOUNDED_PROBE_COMPLETED=1
+    if wait "$probe_pid"; then BOUNDED_PROBE_RC=0; else BOUNDED_PROBE_RC=$?; fi
+    BOUNDED_PROBE_OUTPUT="$(cat "$probe_out")"
+    if (( BOUNDED_PROBE_RC != 0 )); then
+      diagnostic="$( { head -c 300 "$probe_err" 2>/dev/null || true; } | tr '\n' ' ' | sed 's/  */ /g')"
+      [[ -n "$diagnostic" ]] \
+        || diagnostic="$( { head -c 300 "$probe_out" 2>/dev/null || true; } | tr '\n' ' ' | sed 's/  */ /g')"
+      BOUNDED_PROBE_ERROR="$label failed (exit $BOUNDED_PROBE_RC): $diagnostic"
+    fi
+  fi
+  rm -f "$probe_err" "$probe_out"
+}
+
 # Extract `key=value` from a line, empty when absent. THIRD occurrence in this file of the same bug
 # family: an unguarded `grep`/`grep -c` in a command substitution exits nonzero on a legitimately empty
 # result, and under `set -euo pipefail` that aborts the caller — it silently truncated diag's report, and
@@ -189,34 +240,17 @@ snapshot() {
     # configurable, and exceeding it is reported as a probe failure rather than absorbed.
     # `timeout(1)` is deliberately not used — absent from a base macOS install (here only via Homebrew),
     # and a second host must come up without host-specific tool assumptions.
-    local obs_err="" obs_out="" obs_rc=0 probe_pid=0 waited=0
     local budget="${FKST_OBSERVE_BUDGET_S:-120}"
-    obs_err="$(mktemp -t fkst-observe-err.XXXXXX)"
-    obs_out="$(mktemp -t fkst-observe-out.XXXXXX)"
-    "$bin" observe --durable-root "$DURABLE_ROOT" >"$obs_out" 2>"$obs_err" &
-    probe_pid=$!
-    while kill -0 "$probe_pid" 2>/dev/null && (( waited < budget )); do
-      sleep 1; waited=$(( waited + 1 ))
-    done
-    if kill -0 "$probe_pid" 2>/dev/null; then
-      # disown before killing: otherwise the shell reports the reaped job on stderr
-      # ("Terminated: 15 \"$bin\" observe ..."), which lands as noise inside this very report.
-      # A diagnostic whose own output is polluted is bad raw material — see the tests.
-      disown "$probe_pid" 2>/dev/null || true
-      kill -TERM "$probe_pid" 2>/dev/null || true
-      sleep 1
-      kill -KILL "$probe_pid" 2>/dev/null || true
-      observe_why="observe exceeded ${budget}s budget (raise FKST_OBSERVE_BUDGET_S); backlog grows this probe's latency"
+    run_bounded_probe "$budget" observe "" \
+      "$bin" observe --durable-root "$DURABLE_ROOT"
+    if (( BOUNDED_PROBE_COMPLETED )) && [[ "$BOUNDED_PROBE_RC" == "0" ]]; then
+      obs="$BOUNDED_PROBE_OUTPUT"
+      observe_ok=1
+    elif [[ "$BOUNDED_PROBE_ERROR" == observe\ exceeded* ]]; then
+      observe_why="$BOUNDED_PROBE_ERROR (raise FKST_OBSERVE_BUDGET_S); backlog grows this probe's latency"
     else
-      if wait "$probe_pid"; then obs_rc=0; else obs_rc=$?; fi
-      if (( obs_rc == 0 )); then
-        obs="$(cat "$obs_out")"
-        observe_ok=1
-      else
-        observe_why="observe failed (exit $obs_rc): $( { head -c 300 "$obs_err" 2>/dev/null || true; } | tr '\n' ' ' | sed 's/  */ /g')"
-      fi
+      observe_why="$BOUNDED_PROBE_ERROR"
     fi
-    rm -f "$obs_err" "$obs_out"
   fi
   if (( ! observe_ok )); then
     [[ "$verdict" == HEALTHY ]] && verdict="DEGRADED"
@@ -258,6 +292,49 @@ snapshot() {
       fi
   fi
 
+  # Formalization readiness: packages/theory-selfgrowth consumes this exact command and emits no
+  # candidate when it exits non-zero. File existence and mtime are not readiness signals; only the
+  # command's fail-closed verdict can answer whether mathematical production can proceed.
+  local formalize_checkout="$FKST_HOME/checkout"
+  local formalize_project="Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj"
+  local formalize_probe_ok=0 formalize_ready=-1 formalize_why="" dotnet_bin=""
+  local formalize_budget="${FKST_FORMALIZE_CANDIDATES_BUDGET_S:-60}"
+  if [[ ! -d "$formalize_checkout" ]]; then
+    formalize_why="deployed checkout absent: $formalize_checkout"
+  elif [[ ! -f "$formalize_checkout/$formalize_project" ]]; then
+    formalize_why="formalize-candidate project absent: $formalize_checkout/$formalize_project"
+  else
+    dotnet_bin="$(command -v dotnet 2>/dev/null || true)"
+    if [[ -z "$dotnet_bin" ]]; then
+      formalize_why="dotnet binary not found"
+    else
+      run_bounded_probe "$formalize_budget" "formalize-candidate readiness" \
+        "$formalize_checkout" \
+        "$dotnet_bin" run --project "$formalize_project" \
+          --configuration Release --verbosity quiet -- \
+          digest-status --formalize-candidates
+      if (( BOUNDED_PROBE_COMPLETED )); then
+        if [[ "$BOUNDED_PROBE_RC" == "0" ]]; then
+          formalize_probe_ok=1
+          formalize_ready=1
+        else
+          formalize_ready=0
+          formalize_why="$BOUNDED_PROBE_ERROR"
+        fi
+      else
+        formalize_why="$BOUNDED_PROBE_ERROR"
+      fi
+    fi
+  fi
+  if (( formalize_ready != 1 )); then
+    [[ "$verdict" == HEALTHY ]] && verdict="DEGRADED"
+    if (( formalize_ready == 0 )); then
+      reasons+=("formalize candidates not ready — $formalize_why")
+    else
+      reasons+=("formalize-candidate readiness not checked — $formalize_why")
+    fi
+  fi
+
   # Recent devloop activity (current instance only)
   local codex_failed=0 recent_issue=""
   if [[ -n "$ilog" ]]; then
@@ -279,13 +356,21 @@ snapshot() {
 
   if [[ "${1:-}" == "--json" ]]; then
     local observe_ok_json=false observe_error_json dlq_json=null retrying_json=null absent_json=null
+    local formalize_probe_ok_json=false formalize_ready_json=null formalize_error_json
     observe_error_json="$(json_quote "$observe_why")"
+    formalize_error_json="$(json_quote "$formalize_why")"
     if (( observe_ok )); then
       observe_ok_json=true; observe_error_json=null
       dlq_json="$dlq"; retrying_json="$retrying"; absent_json="$absent"
     fi
-    printf '{"verdict":"%s","running":%d,"pid":"%s","uptime":"%s","fatal":%d,"warn_error":%d,"acks":%d,"observe_ok":%s,"observe_error":%s,"dlq":%s,"retrying":%s,"absent_subscribers":%s,"codex_failed":%d,"progress_age_s":%d,"cpu_idle_pct":"%s","cores":"%s","mem_free_pct":"%s"}\n' \
-      "$verdict" "$running" "${pid:-}" "${uptime:-}" "$fatal" "$warns" "$acks" "$observe_ok_json" "$observe_error_json" "$dlq_json" "$retrying_json" "$absent_json" "$codex_failed" "$progress_age" "$cpu_idle" "$cores" "$memfree"
+    if (( formalize_ready == 1 )); then
+      (( formalize_probe_ok )) && formalize_probe_ok_json=true
+      formalize_ready_json=true; formalize_error_json=null
+    elif (( formalize_ready == 0 )); then
+      formalize_ready_json=false
+    fi
+    printf '{"verdict":"%s","running":%d,"pid":"%s","uptime":"%s","fatal":%d,"warn_error":%d,"acks":%d,"observe_ok":%s,"observe_error":%s,"dlq":%s,"retrying":%s,"absent_subscribers":%s,"formalize_candidates_probe_ok":%s,"formalize_candidates_ready":%s,"formalize_candidates_error":%s,"codex_failed":%d,"progress_age_s":%d,"cpu_idle_pct":"%s","cores":"%s","mem_free_pct":"%s"}\n' \
+      "$verdict" "$running" "${pid:-}" "${uptime:-}" "$fatal" "$warns" "$acks" "$observe_ok_json" "$observe_error_json" "$dlq_json" "$retrying_json" "$absent_json" "$formalize_probe_ok_json" "$formalize_ready_json" "$formalize_error_json" "$codex_failed" "$progress_age" "$cpu_idle" "$cores" "$memfree"
     [[ "$verdict" == HEALTHY ]]; return
   fi
 
@@ -308,6 +393,13 @@ snapshot() {
   else
     printf '  durable     : UNAVAILABLE — %s\n' "$observe_why"
     printf '  backlog     : NOT CHECKED (verdict degraded; this probe is the only backlog signal)\n'
+  fi
+  if (( formalize_ready == 1 )); then
+    printf '  formalize   : READY\n'
+  elif (( formalize_ready == 0 )); then
+    printf '  formalize   : NOT READY — %s\n' "$formalize_why"
+  else
+    printf '  formalize   : NOT CHECKED — %s\n' "$formalize_why"
   fi
   printf '  codex       : codex-failed=%s\n' "$codex_failed"
   printf '  recent work : %s\n' "${recent_issue:-none in current log}"
