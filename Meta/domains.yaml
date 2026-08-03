@@ -8,6 +8,9 @@ domains:
   Carrier:
     stratum: S0
     definition: The golden integer carrier, conjugation, norm, and units.
+  Axis:
+    stratum: S3
+    definition: Prime-axis escape arguments over the natural primes.
   Constants:
     stratum: S3
     definition: Canonical real constants and registered reference centers used by audited projections.
