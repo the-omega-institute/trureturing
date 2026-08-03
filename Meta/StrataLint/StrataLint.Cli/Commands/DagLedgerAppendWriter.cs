@@ -67,6 +67,8 @@ internal static class DagLedgerAppendWriter
                 + string.Concat(appended.Select(static item => $"FROZEN {item.Payload.NodePath.Value}\n"));
             return new CommandResult(true, output, string.Empty);
         }
+        // Preparation marks report and repository faults now. Without these two the wrapped
+        // forms escape this catch and the command loses its own diagnostic.
         catch (Exception exception) when (
             exception is ArgumentException
                 or FormatException
@@ -74,12 +76,14 @@ internal static class DagLedgerAppendWriter
                 or InvalidOperationException
                 or JsonException
                 or KeyNotFoundException
-                or UnauthorizedAccessException)
+                or UnauthorizedAccessException
+                or DagLedgerCommandPreparation.LeanReportUnusableException
+                or DagLedgerCommandPreparation.RepositoryUnavailableException)
         {
             return new CommandResult(
                 false,
                 string.Empty,
-                "LEDGER_APPEND_FAILED " + exception.Message + "\n");
+                "LEDGER_APPEND_FAILED " + (exception.InnerException ?? exception).Message + "\n");
         }
     }
 
