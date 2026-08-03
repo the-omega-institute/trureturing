@@ -308,13 +308,10 @@ public static class ScribeEmitter
                     {
                         references.Add(declaration.Value.Value);
                     }
-                    var requiresLatex = describe.Kind is DescribeKind.Theorem
-                        or DescribeKind.Proposition
-                        or DescribeKind.Lemma;
                     latexRecords.Add(new ScribeDescribeLatexRecord(
                         $"{documentGid}#describe/{describe.Id.Value}",
                         definitionPath,
-                        requiresLatex,
+                        DescribeVocabulary.CanonicalName(describe.Kind),
                         describe.Statement is DescribeStatement.FormulaAst
                             || describe.StatementLatex is not null));
                     CollectDescribeCapabilities(

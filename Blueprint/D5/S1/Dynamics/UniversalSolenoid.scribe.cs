@@ -20,16 +20,16 @@ internal sealed class UniversalSolenoidDocument : IScribeDocumentDefinition
                     + "This is a continuous additive flow, its visible projection is t modulo "
                     + "one, and its image is dense. The density proof exactly matches every "
                     + "finite coordinate window by passing through a common multiple.")),
-                new DocumentBlock.Describe(
+                DocumentBlock.Describe.Theorem(
                     DescribeId.Create("universal-solenoid-projection-flow"),
-                    DescribeKind.Theorem,
                     H("The real flow projects visibly and has dense range"),
-                    DescribeStatement.FromLean(LeanTheorem(
-                        "D5/S1/Dynamics/UniversalSolenoid.projection_realFlow")),
+                    LeanTheorem(
+                        "D5/S1/Dynamics/UniversalSolenoid.projection_realFlow"),
+                    LatexStatement.Create(
+                        @"$$\pi(\operatorname{realFlow}(t))=t\operatorname{mod}1.$$"),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "The projection formula is machine-checked directly. The same module "
-                        + "proves dense range and derives connectedness from it."))),
-                    LatexStatement.Create(
-                        @"$$\pi(\operatorname{realFlow}(t))=t\operatorname{mod}1.$$")))));
+                        + "proves dense range and derives connectedness from it.")))
+                ))));
 }

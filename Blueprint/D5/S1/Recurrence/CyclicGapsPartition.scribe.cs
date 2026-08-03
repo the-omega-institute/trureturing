@@ -11,13 +11,18 @@ internal sealed class CyclicGapsPartitionDocument : IScribeDocumentDefinition
                 "Positive cyclic gaps partition the unit circle."),
             H("Cyclic Gap Partition"),
             Blocks(
-                new DocumentBlock.Describe(
+                DocumentBlock.Describe.Theorem(
                     DescribeId.Create("cyclic-gaps-partition-circle"),
-                    DescribeKind.Theorem,
                     H("Cyclic gaps partition the circle"),
-                    DescribeStatement.FromLean(LeanTheorem(
+                    LeanTheorem(
                         "D5/S1/Recurrence/CyclicGapsPartition."
-                        + "cyclic_gaps_partition_circle")),
+                        + "cyclic_gaps_partition_circle"),
+                    LatexStatement.Create(
+                        @"$$\forall S\subseteq[0,1)\ \text{finite},\ S\neq\emptyset,\ "
+                        + @"g_S(x)=\begin{cases}(1-x)+\min S,&x=\max S\\"
+                        + @"\operatorname{succ}_S(x)-x,&x\neq\max S\end{cases}:\ "
+                        + @"(\forall x\in S,\ \operatorname{succ}_S(x)\in S)\ \land\ "
+                        + @"(\forall x\in S,\ g_S(x)>0)\ \land\ \sum_{x\in S}g_S(x)=1$$"),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "For a nonempty finite subset of the half-open unit interval, each "
@@ -25,8 +30,5 @@ internal sealed class CyclicGapsPartitionDocument : IScribeDocumentDefinition
                         + "strictly positive. The successor and predecessor are inverse "
                         + "permutations of the subset, so successor terms cancel against the "
                         + "original points in the total sum. The unique wrap correction then "
-                        + "contributes exactly one, and all gaps sum to the circumference."))),
-                    LatexStatement.Create(
-                        @"$$g_S(x)>0\quad(x\in S),\qquad "
-                        + @"\sum_{x\in S}g_S(x)=1.$$")))));
+                        + "contributes exactly one, and all gaps sum to the circumference.")))))));
 }

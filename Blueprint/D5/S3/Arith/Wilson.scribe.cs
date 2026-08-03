@@ -10,12 +10,14 @@ internal sealed class WilsonDocument : IScribeDocumentDefinition
             "The factorial of one less than a prime is congruent to minus one modulo that prime."),
         H("Wilson's Theorem"),
         Blocks(
-            new DocumentBlock.Describe(
+            DocumentBlock.Describe.Theorem(
                 DescribeId.Create("factorial-before-a-prime-is-minus-one-modulo-the-prime"),
-                DescribeKind.Theorem,
                 H("The factorial before a prime is minus one modulo the prime"),
-                DescribeStatement.FromLean(LeanTheorem(
-                    "D5/S3/Arith/Wilson.wilson_theorem")),
+                LeanTheorem(
+                    "D5/S3/Arith/Wilson.wilson_theorem"),
+                LatexStatement.Create(
+                    @"$$p\ \text{prime}\quad\Rightarrow\quad (p-1)!\equiv -1\ "
+                    + @"(\operatorname{mod}\ p)$$"),
                 DescribeProvenance.RepoDerived(),
                 Blocks(
                     Paragraph(Text(
@@ -31,8 +33,6 @@ internal sealed class WilsonDocument : IScribeDocumentDefinition
                         + "and is therefore 1 or -1; their product leaves -1. The Lean proof "
                         + "constructs the required primality Fact from the explicit hypothesis and "
                         + "assembles this skeleton through Mathlib's ZMod.wilsons_lemma. No "
-                        + "numerical certificate is asserted."))),
-                LatexStatement.Create(
-                    @"$$p\ \text{prime}\quad\Rightarrow\quad (p-1)!\equiv -1\ "
-                    + @"(\operatorname{mod}\ p)$$")))));
+                        + "numerical certificate is asserted.")))
+            ))));
 }
