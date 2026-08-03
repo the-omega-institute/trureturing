@@ -90,6 +90,44 @@ public sealed class LedgerAppendCommandTests
         Assert.Equal(appendedBytes, File.ReadAllBytes(fixture.LedgerPath));
     }
 
+    /// The preparation step marks an unusable raw report with its own exception type. Drop that
+    /// type from this command's catch list and the failure escapes with no LEDGER_APPEND_FAILED
+    /// diagnostic at all -- which is exactly how a real contract break went unnoticed here.
+    [Fact]
+    public void ProductionCommandKeepsItsDiagnosticWhenTheReportCannotBeLoaded()
+    {
+        using var fixture = new LedgerAppendFixture();
+        File.WriteAllText(fixture.ReportPath, "this is not a raw Lean report");
+
+        var result = fixture.Environment.AppendLedger(
+            new[] { "--candidate-lean-report", fixture.ReportPath });
+
+        Assert.False(result.Success, result.Output);
+        Assert.StartsWith("LEDGER_APPEND_FAILED ", result.Error, StringComparison.Ordinal);
+        // The marker's own message says only "raw Lean report is unusable". Reporting that instead
+        // of the cause would silently drop the diagnostic this command had before the marker existed.
+        Assert.Contains("Raw Lean report is not valid JSON.", result.Error, StringComparison.Ordinal);
+    }
+
+    /// The gateway is asked before the report is read, so this reaches the other marker type and
+    /// no other. Orthogonal to the report case above: neither mutant kills both tests.
+    [Fact]
+    public void ProductionCommandKeepsItsDiagnosticWhenTheRepositoryCannotBeRead()
+    {
+        using var fixture = new LedgerAppendFixture();
+        var environment = new ProductionCliEnvironment(
+            fixture.Root,
+            new FakeRepositoryGateway(RawChangeSet.Create([]), null, null),
+            new FakeLeanReportSource(null));
+
+        var result = environment.AppendLedger(
+            new[] { "--candidate-lean-report", fixture.ReportPath });
+
+        Assert.False(result.Success, result.Output);
+        Assert.StartsWith("LEDGER_APPEND_FAILED ", result.Error, StringComparison.Ordinal);
+        Assert.Contains("current snapshot should not be read", result.Error, StringComparison.Ordinal);
+    }
+
     [Fact]
     public void PublicHistoryValidationStillRejectsAnIncompleteClosedCatalog()
     {
@@ -162,6 +200,8 @@ public sealed class LedgerAppendCommandTests
         internal string LedgerPath { get; }
 
         internal string ReportPath { get; }
+
+        internal string Root => temporary.Path;
 
         public void Dispose() => temporary.Dispose();
 
