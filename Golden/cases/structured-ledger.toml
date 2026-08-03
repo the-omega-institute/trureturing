@@ -176,6 +176,13 @@ mutations = [{ op = "populate_directory" }]
 expected_diagnostics = [{ rule = 3, path = "Blueprint/D5/S0/Carrier", message = "directory contains 13 files (maximum 12)" }]
 
 [[cases]]
+name = "directory-over-capacity-definition-sources"
+changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Blueprint/D5/S0/Conventions/Definition00.scribe.cs", content = "internal static class Definition00 { }\n" }, { op = "write", path = "Blueprint/D5/S0/Conventions/Definition01.scribe.cs", content = "internal static class Definition01 { }\n" }, { op = "write", path = "Blueprint/D5/S0/Conventions/Definition02.scribe.cs", content = "internal static class Definition02 { }\n" }, { op = "write", path = "Blueprint/D5/S0/Conventions/Definition03.scribe.cs", content = "internal static class Definition03 { }\n" }, { op = "write", path = "Blueprint/D5/S0/Conventions/Definition04.scribe.cs", content = "internal static class Definition04 { }\n" }, { op = "write", path = "Blueprint/D5/S0/Conventions/Definition05.scribe.cs", content = "internal static class Definition05 { }\n" }, { op = "write", path = "Blueprint/D5/S0/Conventions/Definition06.scribe.cs", content = "internal static class Definition06 { }\n" }, { op = "write", path = "Blueprint/D5/S0/Conventions/Definition07.scribe.cs", content = "internal static class Definition07 { }\n" }, { op = "write", path = "Blueprint/D5/S0/Conventions/Definition08.scribe.cs", content = "internal static class Definition08 { }\n" }, { op = "write", path = "Blueprint/D5/S0/Conventions/Definition09.scribe.cs", content = "internal static class Definition09 { }\n" }, { op = "write", path = "Blueprint/D5/S0/Conventions/Definition10.scribe.cs", content = "internal static class Definition10 { }\n" }, { op = "write", path = "Blueprint/D5/S0/Conventions/Definition11.scribe.cs", content = "internal static class Definition11 { }\n" }, { op = "write", path = "Blueprint/D5/S0/Conventions/Definition12.scribe.cs", content = "internal static class Definition12 { }\n" }]
+expected_diagnostics = [{ rule = 3, path = "Blueprint/D5/S0/Conventions", message = "directory contains 13 files (maximum 12)" }]
+
+[[cases]]
 name = "empty-mirror-waiver"
 changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
 baseline_mutations = []
