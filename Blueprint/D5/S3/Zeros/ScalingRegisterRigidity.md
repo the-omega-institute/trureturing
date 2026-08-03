@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Analytic uniqueness and total-code identity impose conditional scaling-register rigidity.
+Typed realization carries analytic uniqueness through the registered action to conditional total-code rigidity.
 
 **Definition 1.1 (A scaling register is a nontrivial coordinatewise exponential).**
 
@@ -54,21 +54,45 @@ $$\left(\forall a,s,\ X_{\operatorname{data}}(a,s)\neq0\right)\land\left(\exists
 
 At the nontrivial witness, equality of total codes would equate the data values R(s,a)X.data(a,s) and X.data(a,s). Cancelling the explicitly nonzero data value forces R(s,a)=1, a contradiction.
 
-**Theorem 1.5 (Same germ and same total code force a trivial register).**
+**Definition 1.5 (Realization projects object data and carries register actions).**
 
-$$\begin{gathered}U\subseteq\mathbb{C},\ f,\widetilde f:\mathbb{C}\to\mathbb{C},\quad \operatorname{AnalyticOnNhd}(f,U),\quad\operatorname{AnalyticOnNhd}(\widetilde f,U),\\\operatorname{IsPreconnected}(U),\quad s_0\in U,\ f=_{\operatorname{nhds}(s_0)}\widetilde f,\\R:\mathbb{C}\to A\to\mathbb{C},\quad X:\operatorname{TotalCode}(A\to\mathbb{C}\to\mathbb{C},Q,L),\\\forall a,s,\ X_{\operatorname{data}}(a,s)\neq0,\quad\operatorname{applyRegister}(R,X)=X\end{gathered}\quad\Rightarrow\quad\left(f=\widetilde f\text{ on }U\right)\land\left(\forall s,a,\ R(s,a)=1\right).$$
+Lean statement: `D5/S3/Zeros/ScalingRegisterRigidity.RealizesAt`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Zeros/ScalingRegisterRigidity.same_germ_same_total_code_forces_trivial_register` (`✓ std3`). ∎
+*Formalization.* `D5/S3/Zeros/ScalingRegisterRigidity.RealizesAt` (`✓ std3`).
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-Analytic continuation uniqueness consumes the same-germ premise and proves f and its continuation equal on U. Independently, a non-one register witness and nowhere-zero data construct an actual applyRegister object change. no_hidden_register exposes a changed data, rules, or ledger component, contradicting the supplied equality of total codes.
+RealizesAt(a,X,f) records both that the declared address projection of X.data reads as f and that the same projection sends applyRegister(R,X) to the pointwise product R(s,a)f(s). The compatibility clause is a defining model law, not a bridge assumption derived from mathlib.
 
-Honest scope declaration: applyRegister is a typed action on the TotalCode data field; this theorem does not identify that action with analytic continuation or internalize ledger custody. Its combined conclusion is exactly analytic uniqueness plus conditional data-layer rigidity.
+**Theorem 1.6 (Realized same germ and same total code force a trivial register).**
 
-**Theorem 1.6 (The scaling-register predicate has a concrete witness).**
+$$\begin{gathered}U\subseteq\mathbb{C},\ f,\widetilde f:\mathbb{C}\to\mathbb{C},\quad \operatorname{AnalyticOnNhd}(f,U),\quad\operatorname{AnalyticOnNhd}(\widetilde f,U),\\\operatorname{IsPreconnected}(U),\quad s_0\in U,\ f=_{\operatorname{nhds}(s_0)}\widetilde f,\\R:\mathbb{C}\to A\to\mathbb{C},\quad X:\operatorname{TotalCode}(A\to\mathbb{C}\to\mathbb{C},Q,L),\\\operatorname{RealizesAt}(a,X,f),\quad\operatorname{RealizesAt}(a,\operatorname{applyRegister}(R,X),\widetilde f),\\\forall a,s,\ X_{\operatorname{data}}(a,s)\neq0,\quad\operatorname{applyRegister}(R,X)=X\end{gathered}\quad\Rightarrow\quad\left(f=\widetilde f\text{ on }U\right)\land\left(\forall s,\ \widetilde f(s)=R(s,a)f(s)\right)\land\left(\forall s,a,\ R(s,a)=1\right).$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Zeros/ScalingRegisterRigidity.realized_same_germ_same_total_code_forces_trivial_register` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Analytic continuation uniqueness identifies the two readings on U. The RealizesAt model law then identifies the registered reading pointwise with R(s,a)f(s). Finally, a non-one witness and nowhere-zero data would produce an applyRegister object change, contradicting equal total code.
+
+Honest scope declaration: this is conditional on the typed realization relations and does not internalize unrecorded ledger custody.
+
+**Theorem 1.7 (Realized code-preserving continuations exclude scaling registers).**
+
+$$\operatorname{RealizesAt}(a,X,f)\land\operatorname{RealizesAt}(a,\operatorname{applyRegister}(R,X),\widetilde f)\land\text{ same germ}\land\text{ same total code}\Rightarrow\neg\operatorname{ScalingRegister}(\ell,R).$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Zeros/ScalingRegisterRigidity.realized_same_germ_same_total_code_excludes_scaling_register` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The realized rigidity theorem makes R pointwise one, contradicting the nontriviality witness required by ScalingRegister. This is the explicit ScalingRegister exclusion and retains every realization and code premise.
+
+**Theorem 1.8 (The scaling-register predicate has a concrete witness).**
 
 $$\operatorname{ScalingRegister}\!\left(\operatorname{castAddHom}_{\mathbb{R}},\ (s,n)\mapsto\exp(\pi i n)\right).$$
 

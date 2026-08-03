@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Zeros/ScalingRegisterRigidity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Exclude scaling registers from code-preserving analytic continuations. -/
+   digest: Conditional register exclusion for realized analytic readings with equal total code. -/
 
 import D5.S0.Conventions.TotalCode
 import D5.S3.Zeros.CompletedZeta
@@ -62,6 +62,19 @@ def applyRegister {A Rules Ledger : Type*} (R : ℂ → A → ℂ)
     TotalCode (A → ℂ → ℂ) Rules Ledger :=
   { X with data := fun a s => R s a * X.data a s }
 
+/--
+`RealizesAt a X f` is the typed realization relation between a total-code object and
+its analytic reading at the declared address `a`. Its second field is a model law:
+the declared projection must carry `applyRegister R X` to pointwise multiplication
+of the reading by `R · a`. This compatibility is part of the model structure, not an
+independent bridge hypothesis claimed to follow from mathlib.
+-/
+structure RealizesAt {A Rules Ledger : Type*} (a : A)
+    (X : TotalCode (A → ℂ → ℂ) Rules Ledger) (f : ℂ → ℂ) : Prop where
+  reads : ∀ s, X.data a s = f s
+  register_compatible : ∀ (R : ℂ → A → ℂ) s,
+    (applyRegister R X).data a s = R s a * f s
+
 /-- A nontrivial register changes every total code whose tagged data are nowhere zero. -/
 theorem applyRegister_ne_of_nontrivial {A Rules Ledger : Type*}
     (R : ℂ → A → ℂ) (X : TotalCode (A → ℂ → ℂ) Rules Ledger)
@@ -76,29 +89,30 @@ theorem applyRegister_ne_of_nontrivial {A Rules Ledger : Type*}
   simpa [applyRegister] using hAtWitness
 
 /--
-Conditional rigidity at the two formal layers represented here. Analytic continuation
-uniqueness makes the two continuations equal on `U`. Independently, if applying `R` leaves
-the same total code and the tagged data are nowhere zero, then `R` is pointwise one.
-
-The second conclusion is constructive: a non-one witness would make `applyRegister R X`
-different from `X`; `no_hidden_register` would expose a changed component, contradicting
-the supplied total-code equality. This statement does not identify `R` with an analytic
-continuation operation or internalize ledger custody, so it makes no claim beyond those two
-typed layers.
+Conditional rigidity for two analytic functions realized by an object and its registered
+action. Analytic uniqueness identifies the readings on `U`; the `RealizesAt` model law
+identifies the second reading with the pointwise registered action; equal total code and
+nowhere-zero tagged data then force the register to be pointwise one.
 -/
-theorem same_germ_same_total_code_forces_trivial_register
+theorem realized_same_germ_same_total_code_forces_trivial_register
     {U : Set ℂ} {f fRegister : ℂ → ℂ}
     (hf : AnalyticOnNhd ℂ f U) (hfRegister : AnalyticOnNhd ℂ fRegister U)
     (hU : IsPreconnected U) {s₀ : ℂ} (hs₀ : s₀ ∈ U)
     (hSameGerm : f =ᶠ[nhds s₀] fRegister)
     {A Rules Ledger : Type*} (R : ℂ → A → ℂ)
-    (X : TotalCode (A → ℂ → ℂ) Rules Ledger)
+    (X : TotalCode (A → ℂ → ℂ) Rules Ledger) (a : A)
+    (hRealizes : RealizesAt a X f)
+    (hRegisterRealizes : RealizesAt a (applyRegister R X) fRegister)
     (hData : ∀ a s, X.data a s ≠ 0)
     (hSameTotalCode : applyRegister R X = X) :
-    Set.EqOn f fRegister U ∧ ∀ s a, R s a = 1 := by
+    Set.EqOn f fRegister U ∧
+      (∀ s, fRegister s = R s a * f s) ∧ ∀ s a, R s a = 1 := by
   have hUnique : Set.EqOn f fRegister U :=
     analytic_continuation_unique hf hfRegister hU hs₀ hSameGerm
-  refine ⟨hUnique, ?_⟩
+  have hRealizedAction : ∀ s, fRegister s = R s a * f s := by
+    intro s
+    rw [← hRegisterRealizes.reads s, hRealizes.register_compatible R s]
+  refine ⟨hUnique, hRealizedAction, ?_⟩
   intro s a
   by_contra hR
   have hObjectChange : applyRegister R X ≠ X :=
@@ -109,5 +123,25 @@ theorem same_germ_same_total_code_forces_trivial_register
   · exact hChanged rfl
   · exact hChanged rfl
   · exact hChanged rfl
+
+/-- A realized code-preserving continuation cannot carry a scaling register. -/
+theorem realized_same_germ_same_total_code_excludes_scaling_register
+    {U : Set ℂ} {f fRegister : ℂ → ℂ}
+    (hf : AnalyticOnNhd ℂ f U) (hfRegister : AnalyticOnNhd ℂ fRegister U)
+    (hU : IsPreconnected U) {s₀ : ℂ} (hs₀ : s₀ ∈ U)
+    (hSameGerm : f =ᶠ[nhds s₀] fRegister)
+    {A Rules Ledger : Type*} [AddMonoid A] (length : LedgerLength A)
+    (R : ℂ → A → ℂ) (X : TotalCode (A → ℂ → ℂ) Rules Ledger) (a : A)
+    (hRealizes : RealizesAt a X f)
+    (hRegisterRealizes : RealizesAt a (applyRegister R X) fRegister)
+    (hData : ∀ a s, X.data a s ≠ 0)
+    (hSameTotalCode : applyRegister R X = X) :
+    ¬ ScalingRegister length R := by
+  intro hScaling
+  obtain ⟨_, _, hTrivial⟩ :=
+    realized_same_germ_same_total_code_forces_trivial_register
+      hf hfRegister hU hs₀ hSameGerm R X a hRealizes hRegisterRealizes hData hSameTotalCode
+  rcases hScaling.2 with ⟨s, a, hNontrivial⟩
+  exact hNontrivial (hTrivial s a)
 
 end D5.S3.Zeros.ScalingRegisterRigidity

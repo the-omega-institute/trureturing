@@ -10,10 +10,16 @@ internal sealed class ScalingRegisterRigidityDocument : IScribeDocumentDefinitio
             expectedKind: LeanDeclarationKind.Definition,
             requireNoSorry: true);
 
+    private static LeanDeclarationRef LeanInductive(string value) =>
+        LeanDeclarationRef.Create(
+            value,
+            expectedKind: LeanDeclarationKind.Inductive,
+            requireNoSorry: true);
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
         Header(
             "D5/S3/Zeros/ScalingRegisterRigidity",
-            "Analytic uniqueness and total-code identity impose conditional scaling-register rigidity."),
+            "Typed realization carries analytic uniqueness through the registered action to conditional total-code rigidity."),
         H("Scaling-Register Rigidity"),
         Blocks(
             DocumentBlock.Describe.Definition(
@@ -76,11 +82,23 @@ internal sealed class ScalingRegisterRigidityDocument : IScribeDocumentDefinitio
                     + "values R(s,a)X.data(a,s) and X.data(a,s). Cancelling the explicitly "
                     + "nonzero data value forces R(s,a)=1, a contradiction.")))
             ),
+            DocumentBlock.Describe.Definition(
+                DescribeId.Create("realization-projects-object-data-and-carries-register-actions"),
+                H("Realization projects object data and carries register actions"),
+                LeanInductive(
+                    "D5/S3/Zeros/ScalingRegisterRigidity.RealizesAt"),
+                DescribeProvenance.RepoDerived(),
+                Blocks(Paragraph(Text(
+                    "RealizesAt(a,X,f) records both that the declared address projection of "
+                    + "X.data reads as f and that the same projection sends applyRegister(R,X) "
+                    + "to the pointwise product R(s,a)f(s). The compatibility clause is a "
+                    + "defining model law, not a bridge assumption derived from mathlib.")))
+            ),
             DocumentBlock.Describe.Theorem(
-                DescribeId.Create("same-germ-and-same-total-code-force-a-trivial-register"),
-                H("Same germ and same total code force a trivial register"),
+                DescribeId.Create("realized-same-germ-and-same-total-code-force-a-trivial-register"),
+                H("Realized same germ and same total code force a trivial register"),
                 LeanTheorem(
-                    "D5/S3/Zeros/ScalingRegisterRigidity.same_germ_same_total_code_forces_trivial_register"),
+                    "D5/S3/Zeros/ScalingRegisterRigidity.realized_same_germ_same_total_code_forces_trivial_register"),
                 LatexStatement.Create(
                     @"$$\begin{gathered}U\subseteq\mathbb{C},\ f,\widetilde f:\mathbb{C}\to\mathbb{C},"
                     + @"\quad \operatorname{AnalyticOnNhd}(f,U),\quad"
@@ -89,24 +107,40 @@ internal sealed class ScalingRegisterRigidityDocument : IScribeDocumentDefinitio
                     + @"f=_{\operatorname{nhds}(s_0)}\widetilde f,\\"
                     + @"R:\mathbb{C}\to A\to\mathbb{C},\quad "
                     + @"X:\operatorname{TotalCode}(A\to\mathbb{C}\to\mathbb{C},Q,L),\\"
+                    + @"\operatorname{RealizesAt}(a,X,f),\quad"
+                    + @"\operatorname{RealizesAt}(a,\operatorname{applyRegister}(R,X),\widetilde f),\\"
                     + @"\forall a,s,\ X_{\operatorname{data}}(a,s)\neq0,\quad"
                     + @"\operatorname{applyRegister}(R,X)=X"
                     + @"\end{gathered}\quad\Rightarrow\quad"
                     + @"\left(f=\widetilde f\text{ on }U\right)\land"
+                    + @"\left(\forall s,\ \widetilde f(s)=R(s,a)f(s)\right)\land"
                     + @"\left(\forall s,a,\ R(s,a)=1\right).$$"),
                 DescribeProvenance.RepoDerived(),
                 Blocks(
                     Paragraph(Text(
-                        "Analytic continuation uniqueness consumes the same-germ premise and proves "
-                        + "f and its continuation equal on U. Independently, a non-one register "
-                        + "witness and nowhere-zero data construct an actual applyRegister object "
-                        + "change. no_hidden_register exposes a changed data, rules, or ledger "
-                        + "component, contradicting the supplied equality of total codes.")),
+                        "Analytic continuation uniqueness identifies the two readings on U. The "
+                        + "RealizesAt model law then identifies the registered reading pointwise "
+                        + "with R(s,a)f(s). Finally, a non-one witness and nowhere-zero data would "
+                        + "produce an applyRegister object change, contradicting equal total code.")),
                     Paragraph(Text(
-                        "Honest scope declaration: applyRegister is a typed action on the TotalCode "
-                        + "data field; this theorem does not identify that action with analytic "
-                        + "continuation or internalize ledger custody. Its combined conclusion is "
-                        + "exactly analytic uniqueness plus conditional data-layer rigidity.")))
+                        "Honest scope declaration: this is conditional on the typed realization "
+                        + "relations and does not internalize unrecorded ledger custody.")))
+            ),
+            DocumentBlock.Describe.Theorem(
+                DescribeId.Create("realized-code-preserving-continuations-exclude-scaling-registers"),
+                H("Realized code-preserving continuations exclude scaling registers"),
+                LeanTheorem(
+                    "D5/S3/Zeros/ScalingRegisterRigidity.realized_same_germ_same_total_code_excludes_scaling_register"),
+                LatexStatement.Create(
+                    @"$$\operatorname{RealizesAt}(a,X,f)\land"
+                    + @"\operatorname{RealizesAt}(a,\operatorname{applyRegister}(R,X),\widetilde f)"
+                    + @"\land\text{ same germ}\land\text{ same total code}"
+                    + @"\Rightarrow\neg\operatorname{ScalingRegister}(\ell,R).$$"),
+                DescribeProvenance.RepoDerived(),
+                Blocks(Paragraph(Text(
+                    "The realized rigidity theorem makes R pointwise one, contradicting the "
+                    + "nontriviality witness required by ScalingRegister. This is the explicit "
+                    + "ScalingRegister exclusion and retains every realization and code premise.")))
             ),
             DocumentBlock.Describe.Theorem(
                 DescribeId.Create("the-scaling-register-predicate-has-a-concrete-witness"),
