@@ -9647,16 +9647,23 @@ sources:
           raw_sha256: sha256:5964a60e049847146f1b2812c5f7a21811688f91a4ad81540257e2fa129e2efe
           normalized_sha256: sha256:5964a60e049847146f1b2812c5f7a21811688f91a4ad81540257e2fa129e2efe
         cas_ref: sha256:5964a60e049847146f1b2812c5f7a21811688f91a4ad81540257e2fa129e2efe
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/PrimeForms/QuadraticResidues.square_residues_and_sum_obstruction
         receipts:
-          coverage: []
-          scribe: []
+          coverage:
+            - gid: D5/S3/PrimeForms/QuadraticResidues.square_residues_and_sum_obstruction
+              source_sha256: sha256:5964a60e049847146f1b2812c5f7a21811688f91a4ad81540257e2fa129e2efe
+              target_sha256: sha256:4b9afbb9c5483978e38297e36b4661e32126832d27b1c6722f16a0b11bd44cdc
+          scribe:
+            - gid: D5/S3/PrimeForms/QuadraticResidues.square_residues_and_sum_obstruction
+              definition_sha256: sha256:03b9ca388fbc83c2d06f6ea466ca6a3635677d4c14cef076087767600896d62d
+              emission_sha256: sha256:b6dfeaeaaffbdd6b9ababff6d940258267deb8e7ac4c325bf3347650e87d5619
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: absorbed
+          truth: closed
       - atom_id: pzg-residual-04b9d7a92102a4d1b437b29ee7a326c7da4f16a52e3fc70663fab125873b4c69
         ast_path: lemma/9.9
         fingerprints:

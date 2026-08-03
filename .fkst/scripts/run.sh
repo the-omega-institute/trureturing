@@ -10,6 +10,10 @@ readonly PLATFORM_PACKAGES="github-proxy consensus github-devloop github-devloop
 readonly HOST_PACKAGES="theory-selfgrowth"
 readonly SUBSTRATE_URL="https://github.com/ChronoAIProject/fkst-substrate.git"
 readonly PLATFORM_URL="https://github.com/ChronoAIProject/fkst-packages.git"
+readonly GRAPHQL_STARTUP_BUDGET_PERCENT=20
+readonly GRAPHQL_PROBE_TIMEOUT_SECONDS=2
+readonly BASH_ARITHMETIC_MAX=9223372036854775807
+readonly BASH_ARITHMETIC_MAX_TAIL=223372036854775807
 
 die() {
   printf 'fkst: %s\n' "$*" >&2
@@ -33,6 +37,8 @@ load_host_env() {
   [[ -x "${BIN:-}" ]] || die "host.env BIN is not executable: ${BIN:-<unset>}"
   [[ -x "${FKST_PLATFORM_ROOT:-}/scripts/run.sh" ]] \
     || die "host.env FKST_PLATFORM_ROOT is invalid: ${FKST_PLATFORM_ROOT:-<unset>}"
+  [[ -x "${FKST_TIMEOUT_BIN:-}" ]] \
+    || die "host.env FKST_TIMEOUT_BIN is not executable: ${FKST_TIMEOUT_BIN:-<unset>}"
   [[ "${FKST_GITHUB_REPO:-}" == "the-omega-institute/trureturing" ]] \
     || die "host.env targets unexpected repository: ${FKST_GITHUB_REPO:-<unset>}"
 }
@@ -49,6 +55,65 @@ read_live_pid() {
   [[ "$pid" =~ ^[0-9]+$ ]] || return 1
   kill -0 "$pid" 2>/dev/null || return 1
   printf '%s\n' "$pid"
+}
+
+parse_bash_arithmetic_uint() {
+  local value="$1" normalized tail
+  [[ "$value" =~ ^[0-9]+$ ]] || return 1
+  normalized="$value"
+  while [[ ${#normalized} -gt 1 && "${normalized:0:1}" == 0 ]]; do
+    normalized="${normalized:1}"
+  done
+  [[ ${#normalized} -lt ${#BASH_ARITHMETIC_MAX} ]] \
+    || { [[ ${#normalized} -eq ${#BASH_ARITHMETIC_MAX} ]] \
+      && { [[ "${normalized:0:1}" -lt 9 ]] \
+        || { [[ "${normalized:0:1}" == 9 ]] \
+          && tail="${normalized:1}" \
+          && (( 10#$tail <= BASH_ARITHMETIC_MAX_TAIL )); }; }; } \
+    || return 1
+  printf '%s\n' "$normalized"
+}
+
+wait_for_graphql_startup_budget() {
+  local data probe_status limit remaining reset extra limit_value remaining_value reset_value threshold now delay
+  if data="$("$FKST_TIMEOUT_BIN" -k 1 "$GRAPHQL_PROBE_TIMEOUT_SECONDS" \
+      gh api rate_limit --jq '.resources.graphql | [.limit, .remaining, .reset] | @tsv' 2>&1)"; then
+    :
+  else
+    probe_status=$?
+    if [[ "$probe_status" -eq 124 || "$probe_status" -eq 137 ]]; then
+      data="timed out after $GRAPHQL_PROBE_TIMEOUT_SECONDS seconds"
+    fi
+    die "GraphQL rate-limit probe failed: ${data:-no diagnostic}"
+  fi
+  IFS=$'\t' read -r limit remaining reset extra <<<"$data"
+  if [[ "$data" == *$'\n'* \
+      || ! "$limit" =~ ^[0-9]+$ \
+      || ! "$remaining" =~ ^[0-9]+$ \
+      || ! "$reset" =~ ^[0-9]+$ \
+      || -n "$extra" ]]; then
+    die "GraphQL rate-limit probe returned malformed fields: limit=${limit:-<missing>} remaining=${remaining:-<missing>} reset=${reset:-<missing>}"
+  fi
+  if ! limit_value="$(parse_bash_arithmetic_uint "$limit")" \
+      || ! remaining_value="$(parse_bash_arithmetic_uint "$remaining")" \
+      || ! reset_value="$(parse_bash_arithmetic_uint "$reset")"; then
+    die "GraphQL rate-limit probe returned malformed fields: limit=$limit remaining=$remaining reset=$reset"
+  fi
+  if (( limit_value <= 0 || remaining_value > limit_value || reset_value <= 0 )); then
+    die "GraphQL rate-limit probe returned malformed fields: limit=$limit remaining=$remaining reset=$reset"
+  fi
+  threshold=$((limit_value / 5 + (limit_value % 5 != 0)))
+  if (( remaining_value >= threshold )); then
+    return
+  fi
+
+  now="$(date +%s)"
+  delay=$((reset_value - now))
+  printf 'fkst: GraphQL budget below %s%%; remaining=%s limit=%s reset=%s\n' \
+    "$GRAPHQL_STARTUP_BUDGET_PERCENT" "$remaining" "$limit" "$reset"
+  if (( delay > 0 )); then
+    sleep "$delay"
+  fi
 }
 
 start() {
@@ -74,6 +139,7 @@ start() {
   fi
   log="$LOG_DIR/supervise-$(date -u +%Y%m%dT%H%M%SZ).log"
   ln -sfn "$(basename -- "$log")" "$LOG_DIR/latest.log"
+  wait_for_graphql_startup_budget
   (
     cd -- "$checkout_root"
     exec nohup bash "$FKST_PLATFORM_ROOT/scripts/run.sh" supervise \
@@ -552,6 +618,11 @@ lua_gate_selftest() {
   printf '%s\n' 'fkst: Lua gate selftest passed'
 }
 
+run_selftests() {
+  lua_gate_selftest
+  /bin/bash "$FKST_ROOT/tests/startup-graphql-budget-behavior.sh"
+}
+
 lua_test() {
   local substrate_root platform_root target_dir bin work conformance_root normal_root graph_root
   local normal_report graph_report
@@ -559,7 +630,7 @@ lua_test() {
   command -v cargo >/dev/null 2>&1 || die "cargo is required for Lua tests"
   command -v python3 >/dev/null 2>&1 || die "python3 is required for Lua tests"
   command -v tar >/dev/null 2>&1 || die "tar is required for Lua tests"
-  lua_gate_selftest
+  run_selftests
   load_lua_test_contract
   validate_platform_composition
   load_target_packages
@@ -616,6 +687,6 @@ case "$1" in
   status) status ;;
   logs) logs ;;
   test) lua_test ;;
-  selftest) lua_gate_selftest ;;
+  selftest) run_selftests ;;
   *) die "usage: $0 supervise|stop|status|logs|test|selftest" ;;
 esac
