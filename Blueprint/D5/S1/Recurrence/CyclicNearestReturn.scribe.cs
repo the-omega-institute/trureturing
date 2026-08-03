@@ -18,16 +18,17 @@ internal sealed class CyclicNearestReturnDocument : IScribeDocumentDefinition
                         "D5/S1/Recurrence/CyclicNearestReturn."
                         + "cyclic_nearest_return_spec"),
                     LatexStatement.Create(
-                        @"Let $S$ be a nonempty finite subset of a linear order. For every "
-                        + @"$x\in S$: $$\operatorname{succ}_S(x)\in S,\qquad "
-                        + @"\operatorname{pred}_S(x)\in S,\qquad "
-                        + @"\operatorname{pred}_S(\operatorname{succ}_S(x))=x,\qquad "
-                        + @"\operatorname{succ}_S(\operatorname{pred}_S(x))=x,$$ and for "
-                        + @"every $y\in S$: $$x<y\implies\neg\,"
-                        + @"(y<\operatorname{succ}_S(x)),\qquad y<x\implies\neg\,"
-                        + @"(\operatorname{pred}_S(x)<y).$$ At the endpoints the maps wrap: "
-                        + @"$$\operatorname{succ}_S(\max S)=\min S,\qquad "
-                        + @"\operatorname{pred}_S(\min S)=\max S.$$"),
+                        @"$$\forall S\subseteq\alpha\ \text{finite},\ S\neq\emptyset:\ "
+                        + @"(\forall x\in S,\ \operatorname{succ}_S(x)\in S)\ \land\ "
+                        + @"(\forall x\in S,\ \operatorname{pred}_S(x)\in S)\ \land\ "
+                        + @"(\forall x\in S,\ \operatorname{pred}_S(\operatorname{succ}_S(x))=x)"
+                        + @"\ \land\ (\forall x\in S,\ "
+                        + @"\operatorname{succ}_S(\operatorname{pred}_S(x))=x)\ \land\ "
+                        + @"(\forall x,y\in S,\ x<y\Rightarrow\neg\,"
+                        + @"(y<\operatorname{succ}_S(x)))\ \land\ (\forall x,y\in S,\ "
+                        + @"y<x\Rightarrow\neg\,(\operatorname{pred}_S(x)<y))\ \land\ "
+                        + @"\operatorname{succ}_S(\max S)=\min S\ \land\ "
+                        + @"\operatorname{pred}_S(\min S)=\max S$$"),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "Every nonempty finite subset of a linear order has a cyclic successor "
