@@ -32,22 +32,21 @@ public sealed class MarkdownWriterTests
                     Heading.Create("Results"),
                     BlockSequence.Create(
                     [
-                        new DocumentBlock.Describe(
+                        DocumentBlock.Describe.Example(
                             DescribeId.Create("formula"),
-                            DescribeKind.Definition,
                             Heading.Create("Formula"),
-                            DescribeStatement.FromFormula(identity),
+                            identity,
                             DescribeProvenance.RepoDerived(),
                             BlockSequence.Create([paragraph])),
-                        new DocumentBlock.Describe(
+                        DocumentBlock.Describe.Theorem(
                             DescribeId.Create("injectivity"),
-                            DescribeKind.Theorem,
                             Heading.Create("Injectivity"),
-                            DescribeStatement.FromLean(LeanDeclarationRef.Create(
-                                "D5/S1/Scale/Embedding.embedding_injective")),
+                            LeanDeclarationRef.Create(
+                                "D5/S1/Scale/Embedding.embedding_injective"),
+                            LatexStatement.Create("$\\operatorname{embed}(x) = 0 \\Rightarrow x = 0$"),
                             DescribeProvenance.RepoDerived(),
-                            BlockSequence.Create([paragraph]),
-                            LatexStatement.Create("$\\operatorname{embed}(x) = 0 \\Rightarrow x = 0$")),
+                            BlockSequence.Create([paragraph])
+                        ),
                     ])),
             ]));
 
@@ -61,7 +60,7 @@ public sealed class MarkdownWriterTests
             + "Map $\\varphi$ mirrors `D5/B/S1/Scale/Embedding`.\n\n"
             + "$$\n\\varphi^{2} = \\varphi + 1\n$$\n\n"
             + "## Results\n\n"
-            + "**Definition 1.1 (Formula).**\n\n"
+            + "**Example 1.1 (Formula).**\n\n"
             + "$$\n\\varphi^{2} = \\varphi + 1\n$$\n\n"
             + "*Source.* Repository-derived.\n\n"
             + "*Commentary.*\n\n"
@@ -104,16 +103,16 @@ public sealed class MarkdownWriterTests
             Heading.Create("Literature sample"),
             BlockSequence.Create(
             [
-                new DocumentBlock.Describe(
+                DocumentBlock.Describe.Remark(
                     DescribeId.Create("three-gap-context"),
-                    DescribeKind.Remark,
                     Heading.Create("Three-gap context"),
                     DescribeStatement.FromFormula(new Formula.Phi()),
                     DescribeProvenance.LiteratureAttested(reference),
                     BlockSequence.Create(
                     [
                         Paragraph(new Inline.Text(TextRun.Create("Referenced context."))),
-                    ])),
+                    ])
+                ),
             ]));
 
         var citations = new Dictionary<string, LiteratureCitation>(StringComparer.Ordinal)
@@ -145,15 +144,15 @@ public sealed class MarkdownWriterTests
             Heading.Create("Critical line"),
             BlockSequence.Create(
             [
-                new DocumentBlock.Describe(
+                DocumentBlock.Describe.Theorem(
                     DescribeId.Create("critical-line"),
-                    DescribeKind.Theorem,
                     Heading.Create("Critical line"),
-                    DescribeStatement.FromLean(LeanDeclarationRef.Create(
-                        "D5/S1/Scale/Embedding.embedding_injective")),
+                    LeanDeclarationRef.Create(
+                        "D5/S1/Scale/Embedding.embedding_injective"),
+                    LatexStatement.Create(latex),
                     DescribeProvenance.RepoDerived(),
-                    BlockSequence.Create([Paragraph(new Inline.Text(TextRun.Create("Commentary.")))]),
-                    LatexStatement.Create(latex)),
+                    BlockSequence.Create([Paragraph(new Inline.Text(TextRun.Create("Commentary.")))])
+                ),
             ]));
 
         var report = LeanReportFixture.ForDocuments([document]);

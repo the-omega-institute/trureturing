@@ -24,16 +24,16 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
                     Text(" sends the golden integer "),
                     Math(coordinates),
                     Text(" to the real number with the same coordinate formula.")),
-                new DocumentBlock.Describe(
+                DocumentBlock.Describe.Proposition(
                     DescribeId.Create("coordinate-formula"),
-                    DescribeKind.Proposition,
                     H("Coordinate formula"),
-                    DescribeStatement.FromLean(
-                        LeanTheorem("D5/S1/Scale/Embedding.embedding_apply")),
+
+                        LeanTheorem("D5/S1/Scale/Embedding.embedding_apply"),
+                    LatexStatement.Create(@"$\forall x \in \operatorname{GoldenInt},\ \operatorname{embedding}(x)=x.a+x.b\varphi$"),
                     DescribeProvenance.RepoDerived(),
                     Blocks(new DocumentBlock.DisplayFormula(
-                        Equal(Call("embedding", coordinates), coordinates))),
-                    LatexStatement.Create(@"$\forall x \in \operatorname{GoldenInt},\ \operatorname{embedding}(x)=x.a+x.b\varphi$")),
+                        Equal(Call("embedding", coordinates), coordinates)))
+                ),
                 new DocumentBlock.Section(
                     H("Quadratic relation"),
                     Blocks(
@@ -51,12 +51,12 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
                                 Subtract(Num(1), new Formula.Phi()))),
                         new DocumentBlock.DisplayFormula(
                             new Formula.SetLiteral([new Formula.Phi(), new Formula.Psi()])))),
-                new DocumentBlock.Describe(
+                DocumentBlock.Describe.Theorem(
                     DescribeId.Create("injectivity"),
-                    DescribeKind.Theorem,
                     H("Injectivity"),
-                    DescribeStatement.FromLean(
-                        LeanTheorem("D5/S1/Scale/Embedding.embedding_injective")),
+
+                        LeanTheorem("D5/S1/Scale/Embedding.embedding_injective"),
+                    LatexStatement.Create(@"$\forall x,y \in \operatorname{GoldenInt},\ \operatorname{embedding}(x)=\operatorname{embedding}(y) \Rightarrow x=y$"),
                     DescribeProvenance.RepoDerived(),
                     Blocks(
                         Paragraph(
@@ -66,29 +66,29 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
                         new DocumentBlock.DisplayFormula(
                             Equal(
                                 new Formula.Phi(),
-                                new Formula.Fraction(new Formula.Negate(a), b)))),
-                    LatexStatement.Create(@"$\forall x,y \in \operatorname{GoldenInt},\ \operatorname{embedding}(x)=\operatorname{embedding}(y) \Rightarrow x=y$")),
+                                new Formula.Fraction(new Formula.Negate(a), b))))
+                ),
                 new DocumentBlock.Section(
                     H("Norm recovery"),
                     Blocks(
-                        new DocumentBlock.Describe(
+                        DocumentBlock.Describe.Theorem(
                             DescribeId.Create("embedding-times-conjugate"),
-                            DescribeKind.Theorem,
                             H("Embedding times conjugate"),
-                            DescribeStatement.FromLean(LeanTheorem(
-                                "D5/S1/Scale/Embedding.embedding_mul_conj")),
+                            LeanTheorem(
+                                "D5/S1/Scale/Embedding.embedding_mul_conj"),
+                            LatexStatement.Create(@"$\forall x \in \operatorname{GoldenInt},\ \operatorname{embedding}(x)\operatorname{embedding}(\operatorname{conj}(x))=\operatorname{norm}(x)$"),
                             DescribeProvenance.RepoDerived(),
                             Blocks(new DocumentBlock.DisplayFormula(
                                 Equal(
                                     Multiply(embedded, Call("embedding", conjugate)),
-                                    Call("norm", x)))),
-                            LatexStatement.Create(@"$\forall x \in \operatorname{GoldenInt},\ \operatorname{embedding}(x)\operatorname{embedding}(\operatorname{conj}(x))=\operatorname{norm}(x)$")),
-                        new DocumentBlock.Describe(
+                                    Call("norm", x))))
+                        ),
+                        DocumentBlock.Describe.Theorem(
                             DescribeId.Create("absolute-norm-relation"),
-                            DescribeKind.Theorem,
                             H("Absolute norm relation"),
-                            DescribeStatement.FromLean(LeanTheorem(
-                                "D5/S1/Scale/Embedding.abs_embedding_mul_abs_conj")),
+                            LeanTheorem(
+                                "D5/S1/Scale/Embedding.abs_embedding_mul_abs_conj"),
+                            LatexStatement.Create(@"$\forall x \in \operatorname{GoldenInt},\ \lvert\operatorname{embedding}(x)\rvert\,\lvert\operatorname{embedding}(\operatorname{conj}(x))\rvert=\lvert\operatorname{norm}(x)\rvert$"),
                             DescribeProvenance.RepoDerived(),
                             Blocks(
                                 Paragraph(
@@ -98,7 +98,7 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
                                         Multiply(
                                             new Formula.Absolute(embedded),
                                             new Formula.Absolute(Call("embedding", conjugate))),
-                                        new Formula.Absolute(Call("norm", x))))),
-                            LatexStatement.Create(@"$\forall x \in \operatorname{GoldenInt},\ \lvert\operatorname{embedding}(x)\rvert\,\lvert\operatorname{embedding}(\operatorname{conj}(x))\rvert=\lvert\operatorname{norm}(x)\rvert$")))))));
+                                        new Formula.Absolute(Call("norm", x)))))
+                        ))))));
     }
 }

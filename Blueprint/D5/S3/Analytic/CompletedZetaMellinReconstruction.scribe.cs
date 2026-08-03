@@ -13,12 +13,12 @@ internal sealed class CompletedZetaMellinReconstructionDocument : IScribeDocumen
             "Completed zeta is reconstructed from its symmetric theta-tail Mellin integral."),
         H("Mellin Reconstruction of the Completed Zeta"),
         Blocks(
-            new DocumentBlock.Describe(
+            DocumentBlock.Describe.Theorem(
                 DescribeId.Create("completed-zeta-is-reconstructed-from-the-symmetric-theta-tail"),
-                DescribeKind.Theorem,
                 H("Completed zeta is reconstructed from the symmetric theta tail"),
-                DescribeStatement.FromLean(LeanTheorem(
-                    "D5/S3/Analytic/CompletedZetaMellinReconstruction.completed_zeta_mellin_reconstruction")),
+                LeanTheorem(
+                    "D5/S3/Analytic/CompletedZetaMellinReconstruction.completed_zeta_mellin_reconstruction"),
+                LatexStatement.Create(@"$$\text{Let } \theta(t)=\theta_{\mathrm{even}}(0,t),\ \omega=\frac{\theta-1}{2},\ M(s)=\int_{1}^{\infty}\omega(t)\,\left(t^{s/2}+t^{(1-s)/2}\right)\,\frac{dt}{t}.\ \text{Then } (\forall s,\ \Re s>1 \Rightarrow \Lambda(s)=\pi^{-s/2}\,\Gamma(\frac{s}{2})\,\zeta(s)) \land (\forall s,\ \Lambda(s)=M(s)-\frac{1}{s}-\frac{1}{1-s}) \land \operatorname{Differentiable}_{\mathbb{C}}(M) \land (\forall s,\ M(1-s)=M(s)) \land (\forall s,\ s\neq 0 \land s\neq 1 \Rightarrow \operatorname{DifferentiableAt}_{\mathbb{C}}(\Lambda,s)) \land \lim_{s\to 0}s\,\Lambda(s)=-1 \land \lim_{s\to 1}(s-1)\,\Lambda(s)=1 \land (\forall s,\ \xi(1-s)=\xi(s))$$"),
                 DescribeProvenance.LiteratureAttested(CoffeyXi),
                 Blocks(Paragraph(Text(
                     "With the theta kernel supplied by mathlib's even Hurwitz kernel at parameter zero, its "
@@ -35,6 +35,6 @@ internal sealed class CompletedZetaMellinReconstructionDocument : IScribeDocumen
                     + "profile at one and algebraizing the inversion substitution through the unconditional "
                     + "pointwise Mellin composition identities. The theorem introduces no public concept "
                     + "beyond its selector and supplies the reconstruction bridge between the theta tail and "
-                    + "the pole ledger that the zero-symmetry route below O-6 consumes."))),
-                LatexStatement.Create(@"$$\text{Let } \theta(t)=\theta_{\mathrm{even}}(0,t),\ \omega=\frac{\theta-1}{2},\ M(s)=\int_{1}^{\infty}\omega(t)\,\left(t^{s/2}+t^{(1-s)/2}\right)\,\frac{dt}{t}.\ \text{Then } (\forall s,\ \Re s>1 \Rightarrow \Lambda(s)=\pi^{-s/2}\,\Gamma(\frac{s}{2})\,\zeta(s)) \land (\forall s,\ \Lambda(s)=M(s)-\frac{1}{s}-\frac{1}{1-s}) \land \operatorname{Differentiable}_{\mathbb{C}}(M) \land (\forall s,\ M(1-s)=M(s)) \land (\forall s,\ s\neq 0 \land s\neq 1 \Rightarrow \operatorname{DifferentiableAt}_{\mathbb{C}}(\Lambda,s)) \land \lim_{s\to 0}s\,\Lambda(s)=-1 \land \lim_{s\to 1}(s-1)\,\Lambda(s)=1 \land (\forall s,\ \xi(1-s)=\xi(s))$$")))));
+                    + "the pole ledger that the zero-symmetry route below O-6 consumes.")))
+            ))));
 }

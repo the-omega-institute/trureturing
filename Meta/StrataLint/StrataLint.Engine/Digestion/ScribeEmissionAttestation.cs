@@ -13,7 +13,7 @@ internal sealed record ScribeEmissionRecord(
 internal sealed record ScribeDescribeLatexRecord(
     string NodeId,
     string DefinitionPath,
-    bool RequiresLatex,
+    string Kind,
     bool HasValidLatex);
 
 internal sealed class VerifiedScribeEmissions
@@ -84,6 +84,7 @@ internal sealed class VerifiedScribeEmissions
                 throw new FormatException(
                     $"invalid Scribe Describe LaTeX coverage record {record.NodeId}");
             }
+            _ = ScribeDescribeContract.RequiresLatex(record.Kind);
         }
 
         return new VerifiedScribeEmissions(

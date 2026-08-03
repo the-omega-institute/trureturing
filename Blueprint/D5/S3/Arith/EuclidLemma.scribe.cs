@@ -13,12 +13,14 @@ internal sealed class EuclidLemmaDocument : IScribeDocumentDefinition
             "A prime dividing a product of two naturals divides one of the factors."),
         H("Euclid's Lemma on the Prime Axis"),
         Blocks(
-            new DocumentBlock.Describe(
+            DocumentBlock.Describe.Lemma(
                 DescribeId.Create("prime-dividing-a-product-divides-a-factor"),
-                DescribeKind.Lemma,
                 H("A prime dividing a product divides a factor"),
-                DescribeStatement.FromLean(LeanTheorem(
-                    "D5/S3/Arith/EuclidLemma.euclid_prime_dvd_mul")),
+                LeanTheorem(
+                    "D5/S3/Arith/EuclidLemma.euclid_prime_dvd_mul"),
+                LatexStatement.Create(
+                    @"$$\forall p,a,b\in\mathbb{N},\ p\ \text{prime} \land p \mid a\cdot b "
+                    + @"\Rightarrow p \mid a \lor p \mid b$$"),
                 DescribeProvenance.LiteratureAttested(Apostol),
                 Blocks(Paragraph(Text(
                     "For natural numbers, a prime that divides a product divides at least one "
@@ -33,8 +35,6 @@ internal sealed class EuclidLemmaDocument : IScribeDocumentDefinition
                     + "deposited atom asserts the truth of the statement, and the proof route "
                     + "may differ from the source's valuation-additivity derivation. Original "
                     + "numerical-certificate disposition: the source lemma is a purely logical "
-                    + "divisibility implication and contains no numerical certificate."))),
-                LatexStatement.Create(
-                    @"$$\forall p,a,b\in\mathbb{N},\ p\ \text{prime} \land p \mid a\cdot b "
-                    + @"\Rightarrow p \mid a \lor p \mid b$$")))));
+                    + "divisibility implication and contains no numerical certificate.")))
+            ))));
 }

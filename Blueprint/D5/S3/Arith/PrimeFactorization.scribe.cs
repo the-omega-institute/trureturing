@@ -13,12 +13,14 @@ internal sealed class PrimeFactorizationDocument : IScribeDocumentDefinition
             "Every natural number greater than one is a product of finitely many primes."),
         H("Existence of Prime Factorization"),
         Blocks(
-            new DocumentBlock.Describe(
+            DocumentBlock.Describe.Theorem(
                 DescribeId.Create("every-natural-above-one-is-a-product-of-primes"),
-                DescribeKind.Theorem,
                 H("Every natural number above one is a product of primes"),
-                DescribeStatement.FromLean(LeanTheorem(
-                    "D5/S3/Arith/PrimeFactorization.exists_prime_factorization")),
+                LeanTheorem(
+                    "D5/S3/Arith/PrimeFactorization.exists_prime_factorization"),
+                LatexStatement.Create(
+                    @"$$\forall n\in\mathbb{N},\ n>1 \Rightarrow \exists\, l,\ "
+                    + @"(\forall p\in l,\ p\ \text{prime}) \land \prod l = n$$"),
                 DescribeProvenance.LiteratureAttested(Apostol),
                 Blocks(Paragraph(Text(
                     "Every natural number greater than one factors as a product of finitely "
@@ -34,8 +36,6 @@ internal sealed class PrimeFactorizationDocument : IScribeDocumentDefinition
                     + "truth of the statement, and the proof route may differ from the source's "
                     + "minimal-counterexample argument. Original numerical-certificate disposition: "
                     + "the source theorem is a purely existential factorization statement and "
-                    + "contains no numerical certificate."))),
-                LatexStatement.Create(
-                    @"$$\forall n\in\mathbb{N},\ n>1 \Rightarrow \exists\, l,\ "
-                    + @"(\forall p\in l,\ p\ \text{prime}) \land \prod l = n$$")))));
+                    + "contains no numerical certificate.")))
+            ))));
 }

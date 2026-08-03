@@ -177,8 +177,9 @@ internal sealed class DescribeReport
                         ref formulaContentSlots);
                     break;
                 case DocumentBlock.Describe describe:
+                    var nodeId = $"{documentGid}#describe/{describe.Id.Value}";
                     nodes.Add(new DescribeNodeRecord(
-                        $"{documentGid}#describe/{describe.Id.Value}",
+                        nodeId,
                         documentGid,
                         DescribeVocabulary.CanonicalName(describe.Kind),
                         describe.Title.Value,
@@ -187,6 +188,21 @@ internal sealed class DescribeReport
                             : "lean-declaration",
                         DescribeVocabulary.CanonicalName(describe.Provenance.Kind),
                         describe.Provenance.LiteratureReference?.Value));
+                    if (string.Equals(describe.Id.Value, PlainSlug(describe.Title.Value), StringComparison.Ordinal))
+                    {
+                        observations.Add(new DescribeObservation(
+                            "title-derived-id",
+                            nodeId,
+                            $"Describe ID equals the plain title slug: {describe.Id.Value}"));
+                    }
+                    if (describe.Statement is DescribeStatement.LeanDeclaration lean
+                        && !string.Equals(documentGid, DeclarationModule(lean.Value.Value), StringComparison.Ordinal))
+                    {
+                        observations.Add(new DescribeObservation(
+                            "cross-module-lean-declaration",
+                            nodeId,
+                            $"Lean declaration {lean.Value.Value} is outside document module {documentGid}"));
+                    }
                     VisitBlocks(
                         documentGid,
                         describe.Content,
@@ -277,6 +293,20 @@ internal sealed class DescribeReport
         || value.Contains("<->", StringComparison.Ordinal)
         || value.Contains('^')
         || value.Any(IsUnicodeFormulaCharacter);
+
+    private static string PlainSlug(string value) =>
+        string.Join(
+            '-',
+            value.ToLowerInvariant()
+                .Split([' ', '\t', '\r', '\n'], StringSplitOptions.RemoveEmptyEntries)
+                .Select(static word => new string(word.Where(char.IsLetterOrDigit).ToArray()))
+                .Where(static word => word.Length > 0));
+
+    private static string DeclarationModule(string value)
+    {
+        var separator = value.LastIndexOf('.');
+        return separator < 0 ? string.Empty : value[..separator];
+    }
 
     private static bool IsUnicodeFormulaCharacter(char value) => value is
         'φ' or 'ψ' or '∈' or '∉' or '≤' or '≥' or '→' or '↔' or '∑' or '∏'
