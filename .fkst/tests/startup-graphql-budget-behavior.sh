@@ -27,6 +27,7 @@ FKST_GITHUB_REPO=the-omega-institute/trureturing
 FKST_HOST_ROOT=$root/checkout
 FKST_DURABLE_ROOT=$root/durable
 FKST_RUNTIME_ROOT=$root/runtime
+FKST_TIMEOUT_BIN=$root/bin/timeout
 EOF
 
   cat >"$root/bin/gh" <<'EOF'
@@ -46,14 +47,34 @@ esac
 EOF
   chmod +x "$root/bin/gh"
 
+  cat >"$root/bin/timeout" <<'EOF'
+#!/bin/bash
+[[ "${1:-}" == -k && "${2:-}" =~ ^[0-9]+$ && "${3:-}" =~ ^[0-9]+$ ]] || exit 68
+kill_after="$2"
+timeout="$3"
+shift 3
+"$@" &
+pid=$!
+deadline=$((SECONDS + timeout))
+while kill -0 "$pid" 2>/dev/null && (( SECONDS < deadline )); do :; done
+if kill -0 "$pid" 2>/dev/null; then
+  kill -TERM "$pid" 2>/dev/null || true
+  deadline=$((SECONDS + kill_after))
+  while kill -0 "$pid" 2>/dev/null && (( SECONDS < deadline )); do :; done
+  kill -KILL "$pid" 2>/dev/null || true
+  wait "$pid" 2>/dev/null || true
+  exit 124
+fi
+wait "$pid"
+EOF
+  chmod +x "$root/bin/timeout"
+
   cat >"$root/bin/sleep" <<'EOF'
 #!/bin/bash
 printf 'sleep %s\n' "$1" >>"$EVENTS"
 if [[ "$1" == 2 ]]; then
-  attempts=0
-  while [[ ! -f "$PLATFORM_PID_FILE" && "$attempts" -lt 1000000 ]]; do
-    attempts=$((attempts + 1))
-  done
+  deadline=$((SECONDS + 5))
+  while [[ ! -f "$PLATFORM_PID_FILE" && SECONDS -lt deadline ]]; do :; done
 fi
 EOF
   chmod +x "$root/bin/sleep"
@@ -157,6 +178,33 @@ run_rejection_case() (
     || fail "$mode probe launched platform: $(cat "$EVENTS")"
 )
 
+run_timeout_contract_rejection_case() (
+  local mode="$1" expected="$2" root reset output status timeout_path
+  root="$(mktemp -d "${TMPDIR:-/tmp}/startup-graphql-budget-timeout-contract.XXXXXX")"
+  root="$(cd -- "$root" && pwd -P)"
+  trap 'rm -rf -- "$root"' EXIT
+  reset=$(($(date +%s) + 30))
+  make_fixture "$root" sufficient "$reset"
+  timeout_path="$root/bin/timeout"
+  expected="${expected//%TIMEOUT%/$timeout_path}"
+  case "$mode" in
+    missing) sed -i.bak '/^FKST_TIMEOUT_BIN=/d' "$root/operate/host.env" ;;
+    nonexecutable) chmod -x "$root/bin/timeout" ;;
+    *) fail "unknown timeout contract case: $mode" ;;
+  esac
+  output="$root/output"
+
+  set +e
+  /bin/bash "$SCRIPT_UNDER_TEST" supervise >"$output" 2>&1
+  status=$?
+  set -e
+  [[ "$status" -ne 0 ]] || fail "$mode timeout contract unexpectedly started supervise"
+  [[ "$(cat "$output")" == "$expected" ]] \
+    || fail "$mode timeout contract diagnostic mismatch (exit=$status): $(cat "$output")"
+  [[ ! -f "$EVENTS" || "$(grep -c '^platform ' "$EVENTS" || true)" == 0 ]] \
+    || fail "$mode timeout contract launched platform: $(cat "$EVENTS")"
+)
+
 ORIGINAL_PATH="$PATH"
 TEST_WALL_EVIDENCE="${TMPDIR:-/tmp}/startup-graphql-budget-wall-seconds"
 TEST_DELAY_EVIDENCE="${TMPDIR:-/tmp}/startup-graphql-budget-requested-delay-seconds"
@@ -173,3 +221,7 @@ run_rejection_case overflow 'fkst: GraphQL rate-limit probe returned malformed f
 printf '%s\n' 'PASS startup-graphql-budget rejects integers outside the Bash arithmetic domain'
 run_rejection_case timeout 'fkst: GraphQL rate-limit probe failed: timed out after 2 seconds'
 printf '%s\n' 'PASS startup-graphql-budget bounds a hung probe without launch'
+run_timeout_contract_rejection_case missing 'fkst: host.env FKST_TIMEOUT_BIN is not executable: <unset>'
+printf '%s\n' 'PASS startup-graphql-budget rejects missing timeout contract without launch'
+run_timeout_contract_rejection_case nonexecutable 'fkst: host.env FKST_TIMEOUT_BIN is not executable: %TIMEOUT%'
+printf '%s\n' 'PASS startup-graphql-budget rejects non-executable timeout contract without launch'

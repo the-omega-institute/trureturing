@@ -37,6 +37,8 @@ load_host_env() {
   [[ -x "${BIN:-}" ]] || die "host.env BIN is not executable: ${BIN:-<unset>}"
   [[ -x "${FKST_PLATFORM_ROOT:-}/scripts/run.sh" ]] \
     || die "host.env FKST_PLATFORM_ROOT is invalid: ${FKST_PLATFORM_ROOT:-<unset>}"
+  [[ -x "${FKST_TIMEOUT_BIN:-}" ]] \
+    || die "host.env FKST_TIMEOUT_BIN is not executable: ${FKST_TIMEOUT_BIN:-<unset>}"
   [[ "${FKST_GITHUB_REPO:-}" == "the-omega-institute/trureturing" ]] \
     || die "host.env targets unexpected repository: ${FKST_GITHUB_REPO:-<unset>}"
 }
@@ -73,28 +75,15 @@ parse_bash_arithmetic_uint() {
 }
 
 wait_for_graphql_startup_budget() {
-  local data limit remaining reset extra limit_value remaining_value reset_value threshold now delay
-  if ! data="$(perl -e '
-    use strict;
-    use warnings;
-    my $timeout = shift @ARGV;
-    my $pid = fork();
-    die "cannot fork GraphQL rate-limit probe: $!\n" unless defined $pid;
-    if ($pid == 0) {
-      exec @ARGV;
-      die "cannot execute GraphQL rate-limit probe: $!\n";
-    }
-    $SIG{ALRM} = sub {
-      kill "KILL", $pid;
-      waitpid $pid, 0;
-      print STDERR "timed out after $timeout seconds\n";
-      exit 124;
-    };
-    alarm $timeout;
-    waitpid $pid, 0;
-    alarm 0;
-    exit(($? & 127) ? 128 + ($? & 127) : $? >> 8);
-  ' "$GRAPHQL_PROBE_TIMEOUT_SECONDS" gh api rate_limit --jq '.resources.graphql | [.limit, .remaining, .reset] | @tsv' 2>&1)"; then
+  local data probe_status limit remaining reset extra limit_value remaining_value reset_value threshold now delay
+  if data="$("$FKST_TIMEOUT_BIN" -k 1 "$GRAPHQL_PROBE_TIMEOUT_SECONDS" \
+      gh api rate_limit --jq '.resources.graphql | [.limit, .remaining, .reset] | @tsv' 2>&1)"; then
+    :
+  else
+    probe_status=$?
+    if [[ "$probe_status" -eq 124 ]]; then
+      data="timed out after $GRAPHQL_PROBE_TIMEOUT_SECONDS seconds"
+    fi
     die "GraphQL rate-limit probe failed: ${data:-no diagnostic}"
   fi
   IFS=$'\t' read -r limit remaining reset extra <<<"$data"
