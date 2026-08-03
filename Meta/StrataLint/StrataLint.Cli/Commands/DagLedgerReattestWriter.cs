@@ -69,6 +69,8 @@ internal static class DagLedgerReattestWriter
                     $"REATTESTED {context.Baseline.ActiveEntries[item.Payload.CaseId].Material.RepoPath.Value}\n"));
             return new CommandResult(true, output, string.Empty);
         }
+        // Preparation marks report and repository faults now. Without these two the wrapped
+        // forms escape this catch and the command loses its own diagnostic.
         catch (Exception exception) when (
             exception is ArgumentException
                 or FormatException
@@ -76,12 +78,14 @@ internal static class DagLedgerReattestWriter
                 or InvalidOperationException
                 or JsonException
                 or KeyNotFoundException
-                or UnauthorizedAccessException)
+                or UnauthorizedAccessException
+                or DagLedgerCommandPreparation.LeanReportUnusableException
+                or DagLedgerCommandPreparation.RepositoryUnavailableException)
         {
             return new CommandResult(
                 false,
                 string.Empty,
-                "LEDGER_REATTEST_FAILED " + exception.Message + "\n");
+                "LEDGER_REATTEST_FAILED " + (exception.InnerException ?? exception).Message + "\n");
         }
     }
 }
