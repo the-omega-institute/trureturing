@@ -35,5 +35,6 @@ internal sealed class PrimeAxisEscapeDocument : IScribeDocumentDefinition
                     + "Mathlib's existence of a prime divisor for a natural different from one, "
                     + "then rules out membership in S because a common divisor of the product and "
                     + "the product plus one would divide one. No numerical certificate is "
-                    + "asserted."))))));
+                    + "asserted.")))
+            ))));
 }
