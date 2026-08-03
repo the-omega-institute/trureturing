@@ -11,6 +11,7 @@ LAUNCHER_RENDERER="$REPOSITORY_ROOT/.fkst/scripts/render-maintenance-launcher.sh
 LAUNCHER_CONFORMANCE="$REPOSITORY_ROOT/.fkst/scripts/check-maintenance-launcher.sh"
 RESTART_CASES="$REPOSITORY_ROOT/.fkst/tests/hourly-maintenance-restart-cases.sh"
 COMPOSITION_CASES="$REPOSITORY_ROOT/.fkst/tests/hourly-maintenance-composition-cases.sh"
+LEAN_REPORT_CASES="$REPOSITORY_ROOT/.fkst/tests/hourly-maintenance-lean-report-cases.sh"
 PASS_COUNT=0
 FAIL_COUNT=0
 
@@ -687,11 +688,18 @@ source "$RESTART_CASES"
 [[ -f "$COMPOSITION_CASES" ]] || fail "composition behavior cases are missing"
 # shellcheck disable=SC1090
 source "$COMPOSITION_CASES"
+[[ -f "$LEAN_REPORT_CASES" ]] || fail "Lean-report behavior cases are missing"
+# shellcheck disable=SC1090
+source "$LEAN_REPORT_CASES"
 
 run_test "deployed top-level workspace is authoritative" deployed_top_level_workspace_is_authoritative
 run_test "host-lock failure reverts from the previous revision" host_lock_failure_reverts_from_the_previous_revision
 run_test "post-restart health failure reverts from the previous revision" post_restart_health_failure_reverts_from_the_previous_revision
 run_test "checkout fast-forwards only clean ancestors" checkout_fast_forwards_only_clean_ancestors
+run_test "checkout Lean change rebuilds report before restart" checkout_lean_change_rebuilds_report_before_restart
+run_test "checkout non-Lean change does not rebuild report" checkout_non_lean_change_does_not_rebuild_report
+run_test "failed Lean report rebuild fails cycle and retains obligation" failed_lean_report_rebuild_fails_cycle_and_retains_obligation
+run_test "blocked Lean fast-forward does not rebuild report" blocked_lean_fast_forward_does_not_rebuild_report
 run_test "checkout untracked files do not block fast-forward" checkout_untracked_files_do_not_block_fast_forward
 run_test "checkout divergence refuses auto fast-forward" checkout_divergence_refuses_auto_fast_forward
 run_test "checkout status failure refuses auto fast-forward" checkout_status_failure_refuses_auto_fast_forward

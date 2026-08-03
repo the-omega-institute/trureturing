@@ -229,11 +229,16 @@ grant_implement_lease() {
 write_activation_obligation_fixture() {
   local path="$1" generation="$2" created_at="$3"
   local previous_revision="${4:-none}" target_revision="${5:-none}"
+  local checkout_previous_revision="${6:-none}" checkout_target_revision="${7:-none}"
+  local lean_report_required="${8:-0}"
   {
     printf 'generation=%s\n' "$generation"
     printf 'created_at=%s\n' "$created_at"
     printf 'previous_platform_rev=%s\n' "$previous_revision"
     printf 'target_platform_rev=%s\n' "$target_revision"
+    printf 'checkout_previous_rev=%s\n' "$checkout_previous_revision"
+    printf 'checkout_target_rev=%s\n' "$checkout_target_revision"
+    printf 'lean_report_required=%s\n' "$lean_report_required"
   } > "$path"
 }
 
