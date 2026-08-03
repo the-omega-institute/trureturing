@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Runtime.ExceptionServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -93,6 +94,8 @@ internal static class PaperRecipeLoader
         var declarations = Gids(mapping["decls"], "decls", static target =>
             target is Target.Formal { Declaration: not null }, "formal declaration GID");
         if (declarations.Error is not null) return Invalid(declarations.Error);
+        // Per key, not on the shared Gids helper: evidence is legitimately empty.
+        if (declarations.Values.IsEmpty) return Invalid("decls must be a non-empty sequence");
 
         var blueprint = Gids(mapping["blueprint"], "blueprint", static target =>
             target is Target.Blueprint, "Blueprint GID");
@@ -185,8 +188,22 @@ internal abstract record PaperRecipeValidationOutcome
 
 internal static class PaperRecipeValidator
 {
-    internal static PaperRecipeValidationOutcome Validate(string repositoryRoot, string id)
+    /// The frozen-ledger capabilities are taken here rather than resolved from the repository
+    /// root because trust cannot be reconstructed from a path: TrustedFrozenGitReferences comes
+    /// from IRepositoryGateway.ValidateFrozenReferences, which resolves every recorded object
+    /// through the repository itself.
+    ///
+    /// A recipe may only name declarations the frozen ledger actually carries. Reading the source
+    /// and matching text -- what this did before -- certifies declarations that were never frozen,
+    /// that belong to a revoked node, or that were added after their module was attested.
+    internal static PaperRecipeValidationOutcome Validate(
+        string repositoryRoot,
+        IRepositoryGateway repository,
+        ILeanReportSource leanReportSource,
+        string id)
     {
+        ArgumentNullException.ThrowIfNull(repository);
+        ArgumentNullException.ThrowIfNull(leanReportSource);
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentException.ThrowIfNullOrWhiteSpace(id);
         if (!Gid.TryParse($"D5/P/{id}", out var paperGid)
@@ -219,13 +236,21 @@ internal static class PaperRecipeValidator
                 return Invalid($"GID {gid.Value} target file is missing: {gid.Path.Value}");
             }
 
-            if (gid.ToTarget() is Target.Formal { Declaration: { } declaration }
-                && !LeanDeclarationScanner.Contains(
-                    File.ReadAllText(targetPath, Encoding.UTF8),
-                    gid.Path.Value[..^".lean".Length].Replace('/', '.'),
-                    declaration))
+        }
+
+        var resolution = ResolveActiveFrozenLedger(repositoryRoot, repository, leanReportSource);
+        if (resolution is FrozenLedgerResolution.Failed failed)
+        {
+            return failed.Failure;
+        }
+
+        var (ledger, report) = (FrozenLedgerResolution.Ready)resolution;
+
+        foreach (var gid in material.Recipe.Declarations)
+        {
+            if (!IsActivelyFrozen(gid, ledger, report))
             {
-                return Invalid($"GID {gid.Value} Lean declaration is missing from {gid.Path.Value}");
+                return Invalid($"GID {gid.Value} is not an active frozen declaration");
             }
         }
 
@@ -233,133 +258,82 @@ internal static class PaperRecipeValidator
         return new PaperRecipeValidationOutcome.Valid(material.Recipe, "sha256:" + hash);
     }
 
+
+    /// Builds the authoritative active view by running the engine's own preparation. Replaying
+    /// the ledger here instead would be a second implementation of its semantics, and the ledger
+    /// is the single source of that truth.
+    ///
+    /// Failures are two different kinds and must not be merged. A ledger that is absent or does
+    /// not describe this repository is a verdict about the repository, and comes back as Invalid.
+    /// A raw Lean report that cannot be read or parsed is infrastructure -- the report is a build
+    /// artefact, not a claim -- so it is allowed to propagate for the command to classify. The
+    /// report is loaded inside preparation's callback, so its failures are tagged on the way out
+    /// rather than being swept up by the ledger's catch.
+    private abstract record FrozenLedgerResolution
+    {
+        internal sealed record Ready(FrozenLedgerConsistent Ledger, LeanAxiomReport Report)
+            : FrozenLedgerResolution;
+
+        internal sealed record Failed(PaperRecipeValidationOutcome.Invalid Failure)
+            : FrozenLedgerResolution;
+    }
+
+    private static FrozenLedgerResolution
+        ResolveActiveFrozenLedger(
+            string repositoryRoot,
+            IRepositoryGateway repository,
+            ILeanReportSource leanReportSource)
+    {
+        // No File.Exists probe: it answers false for an unreadable path as readily as for an
+        // absent one, which would report a ledger we were never allowed to look at as a content
+        // fault. Preparation distinguishes the two, so the exception type decides. Its markers are
+        // deliberately not caught here -- they are the environment failing, and PapergenCommand
+        // turns them into the infrastructure exit.
+        try
+        {
+            var context = DagLedgerCommandPreparation.Prepare(
+                repositoryRoot,
+                repository,
+                leanReportSource);
+            return new FrozenLedgerResolution.Ready(context.Baseline, context.Report);
+        }
+        catch (Exception exception) when (exception is FileNotFoundException or DirectoryNotFoundException)
+        {
+            return new FrozenLedgerResolution.Failed(
+                Invalid($"frozen ledger is missing: {FrozenLedgerChangeClassifier.LedgerPath}: {exception.Message}"));
+        }
+        catch (Exception exception) when (exception is InvalidOperationException or FormatException)
+        {
+            return new FrozenLedgerResolution.Failed(
+                Invalid($"frozen ledger is not usable: {FrozenLedgerChangeClassifier.LedgerPath}: {exception.Message}"));
+        }
+    }
+
+    /// Membership is two coordinates, not one: the active node for the declaration's own module,
+    /// and that node's own declaration set. Matching a leaf name across the whole ledger would
+    /// certify a declaration from a different module.
+    private static bool IsActivelyFrozen(Gid gid, FrozenLedgerConsistent ledger, LeanAxiomReport report)
+    {
+        if (gid.ToTarget() is not Target.Formal { Declaration: not null } formal)
+        {
+            return false;
+        }
+
+        string nameKey;
+        try
+        {
+            nameKey = DigestionFormalizationReceipt.ResolveSignature(gid, report).NameKey;
+        }
+        catch (FormatException)
+        {
+            return false;
+        }
+
+        return ledger.ActiveFrozenNodes.Any(node =>
+            node.RepoPath == formal.Path
+            && node.DeclarationStatementIds.Any(statement =>
+                string.Equals(statement.DeclarationNameKey, nameKey, StringComparison.Ordinal)));
+    }
+
     private static PaperRecipeValidationOutcome.Invalid Invalid(string message) => new(message);
-}
-
-internal static class LeanDeclarationScanner
-{
-    private static readonly Regex NamespacePattern = new(
-        "^namespace[ \\t]+(?<name>[A-Za-z_][A-Za-z0-9_.]*)[ \\t]*$",
-        RegexOptions.CultureInvariant);
-
-    private static readonly Regex ScopePattern = new(
-        "^(?:section(?:[ \\t]+[A-Za-z_][A-Za-z0-9_]*)?|mutual)[ \\t]*$",
-        RegexOptions.CultureInvariant);
-
-    private static readonly Regex EndPattern = new(
-        "^end(?:[ \\t]+[A-Za-z_][A-Za-z0-9_.]*)?[ \\t]*$",
-        RegexOptions.CultureInvariant);
-
-    internal static bool Contains(string source, string expectedNamespace, string declaration)
-    {
-        var visible = RemoveCommentsAndStrings(source);
-        var declarationPattern = "^[ \\t]*(?:@\\[[^]\\r\\n]+\\][ \\t]*)*"
-            + "(?:(?:noncomputable|unsafe|partial)[ \\t]+)*"
-            + "(?:theorem|lemma|def|abbrev|opaque|axiom|instance|structure|class|inductive)[ \\t]+"
-            + Regex.Escape(declaration)
-            + "(?=[ \\t\\r\\n:({\\[])";
-        var scopes = new List<string?>();
-        foreach (var line in visible.Split('\n'))
-        {
-            var content = line.Trim();
-            var namespaceMatch = NamespacePattern.Match(content);
-            if (namespaceMatch.Success)
-            {
-                scopes.Add(namespaceMatch.Groups["name"].Value);
-                continue;
-            }
-
-            if (ScopePattern.IsMatch(content))
-            {
-                scopes.Add(null);
-                continue;
-            }
-
-            if (EndPattern.IsMatch(content))
-            {
-                if (scopes.Count > 0) scopes.RemoveAt(scopes.Count - 1);
-                continue;
-            }
-
-            var currentNamespace = string.Join('.', scopes.OfType<string>());
-            if (string.Equals(currentNamespace, expectedNamespace, StringComparison.Ordinal)
-                && Regex.IsMatch(line, declarationPattern, RegexOptions.CultureInvariant))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private static string RemoveCommentsAndStrings(string source)
-    {
-        var result = source.ToCharArray();
-        var blockDepth = 0;
-        var lineComment = false;
-        var inString = false;
-        var escaped = false;
-        for (var index = 0; index < source.Length; index++)
-        {
-            var current = source[index];
-            var next = index + 1 < source.Length ? source[index + 1] : '\0';
-            if (lineComment)
-            {
-                if (current == '\n') lineComment = false;
-                else result[index] = ' ';
-                continue;
-            }
-
-            if (blockDepth > 0)
-            {
-                if (current == '/' && next == '-')
-                {
-                    result[index++] = ' ';
-                    result[index] = ' ';
-                    blockDepth++;
-                }
-                else if (current == '-' && next == '/')
-                {
-                    result[index++] = ' ';
-                    result[index] = ' ';
-                    blockDepth--;
-                }
-                else if (current != '\n')
-                {
-                    result[index] = ' ';
-                }
-
-                continue;
-            }
-
-            if (inString)
-            {
-                if (current != '\n') result[index] = ' ';
-                if (current == '"' && !escaped) inString = false;
-                escaped = current == '\\' && !escaped;
-                if (current != '\\') escaped = false;
-                continue;
-            }
-
-            if (current == '-' && next == '-')
-            {
-                result[index++] = ' ';
-                result[index] = ' ';
-                lineComment = true;
-            }
-            else if (current == '/' && next == '-')
-            {
-                result[index++] = ' ';
-                result[index] = ' ';
-                blockDepth = 1;
-            }
-            else if (current == '"')
-            {
-                result[index] = ' ';
-                inString = true;
-            }
-        }
-
-        return new string(result);
-    }
 }
