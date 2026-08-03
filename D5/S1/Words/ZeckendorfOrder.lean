@@ -1,11 +1,13 @@
 /- GID: D5/S1/Words/ZeckendorfOrder
    generality: I
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S1/Words/ZeckendorfOrder
    mirror-E: none(waiver:algebraically-proved)
    anchors: [mathlib/module/Mathlib.Data.Nat.Fib.Zeckendorf]
    digest: Zeckendorf lists ordered from greatest index down have numerical lexicographic order. -/
 
 import Mathlib.Data.Nat.Fib.Zeckendorf
+
+/- Provenance: Native proof over pinned mathlib. -/
 
 namespace D5.S1.Words
 
