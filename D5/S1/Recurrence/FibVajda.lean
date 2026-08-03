@@ -1,6 +1,6 @@
 /- GID: D5/S1/Recurrence/FibVajda
    generality: I
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S1/Recurrence/FibVajda
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Vajda's identity relates shifted Fibonacci products over the integers. -/
@@ -9,7 +9,7 @@ import Mathlib
 
 namespace D5.S1.Recurrence.FibVajda
 
-/- Provenance: re-proved native from automath witness (Omega.fib_vajda), no automath import. -/
+/- Provenance: Native proof over pinned mathlib. -/
 
 /-- Vajda's identity for natural-number indices under the convention `F_0 = 0`, `F_1 = 1`.
 All Fibonacci values are coerced to `ℤ` so that subtraction and `(-1)^n` are literal integer

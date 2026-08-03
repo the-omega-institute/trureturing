@@ -16,9 +16,9 @@ open scoped ContDiff
 /-- A smooth, compactly supported function has an entire complex Fourier-Laplace
 transform. This discharges the former `D5-T0018-C` classical-analysis debt:
 the proof is native over pinned mathlib (differentiation under the integral via
-`hasDerivAt_integral_of_dominated_loc_of_deriv_le`), re-proved from an automath
-witness with no automath dependency. The proposition is definitionally the one
-formerly registered as `AxiomDebt.fourier_laplace_entire_classic`, and the
+`hasDerivAt_integral_of_dominated_loc_of_deriv_le`). The proposition is
+definitionally the one formerly registered as
+`AxiomDebt.fourier_laplace_entire_classic`, and the
 consumer `D5.S3.Weil.FourierLaplace.fourierLaplace_entire` closes under the
 standard `{propext, Classical.choice, Quot.sound}` axioms only. -/
 theorem fourier_laplace_entire_classic
