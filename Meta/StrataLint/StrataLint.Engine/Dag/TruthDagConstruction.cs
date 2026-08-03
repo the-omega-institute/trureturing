@@ -36,9 +36,12 @@ public sealed partial class AcyclicTruthDag
             .Where(static node => node.ModuleName is not null)
             .ToImmutableDictionary(static node => node.ModuleName!, static node => node.RepoPath, StringComparer.Ordinal);
 
-        // Module imports are a safe over-approximation of declaration dependencies. A declaration-level
-        // upgrade remains open until an olean freshness gate exists and DefinitionVal.all mutual groups
-        // are unioned before SCC condensation.
+        // When the loaded Lean environment corresponds to the candidate sources, module imports are a
+        // safe over-approximation of declaration dependencies. The canonical inspector currently
+        // establishes that precondition operationally by building immediately before inspection, but
+        // the report carries no independently checkable freshness credential. Adding one requires a
+        // staged producer/consumer migration. A declaration-level upgrade also remains open until
+        // DefinitionVal.all mutual groups are unioned before SCC condensation.
         var edgeSet = new HashSet<TruthEdge>();
         var blockerSet = new HashSet<TruthDependencyBlocker>();
         foreach (var node in nodes.Where(static node => node.ModuleName is not null))
