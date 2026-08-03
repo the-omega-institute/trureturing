@@ -18,16 +18,20 @@ internal static class FrozenLedgerTestData
         foreach (var module in modules)
         {
             files[PathFor(module.Name)] = module.Source;
+            var declarationNames = module.Declarations.IsDefaultOrEmpty
+                ? ImmutableArray.Create(module.Name.ToLowerInvariant())
+                : module.Declarations;
             reports[PathFor(module.Name)] = new LeanFileReport(
                 module.Imports.Select(ModuleNameFor).ToImmutableArray(),
-                ImmutableArray.Create(new LeanDeclaration(
-                    module.Name.ToLowerInvariant(),
-                    "theorem",
-                    "True",
-                    module.Axioms)
-                {
-                    NameKey = $"ns(n0,{module.Name.Length}:{module.Name.ToLowerInvariant()})",
-                }));
+                declarationNames
+                    .Order(StringComparer.Ordinal)
+                    .Select(name => new LeanDeclaration(name, "theorem", "True", module.Axioms)
+                    {
+                        NameKey = module.OpaqueNameKeys ? NameKeyFor(name) : $"ns(n0,{name.Length}:{name})",
+                        IncludeInStatement = module.Excluded.IsDefaultOrEmpty
+                            || !module.Excluded.Contains(name),
+                    })
+                    .ToImmutableArray());
         }
 
         var raw = RawRepositorySnapshot.Create(
@@ -94,14 +98,29 @@ internal static class FrozenLedgerTestData
         IReadOnlyList<string>? imports = null,
         IEnumerable<string>? axioms = null,
         string? baseCommitOid = null,
-        string? baseTreeOid = null) =>
+        string? baseTreeOid = null,
+        IEnumerable<string>? declarations = null,
+        IEnumerable<string>? excluded = null,
+        bool opaqueNameKeys = false) =>
         new(
             name,
             source ?? $"theorem {name.ToLowerInvariant()} : True := by trivial\n",
             imports ?? Array.Empty<string>(),
             (axioms ?? Array.Empty<string>()).Order(StringComparer.Ordinal).ToImmutableArray(),
             baseCommitOid,
-            baseTreeOid);
+            baseTreeOid,
+            declarations is null
+                ? ImmutableArray<string>.Empty
+                : declarations.Order(StringComparer.Ordinal).ToImmutableArray(),
+            excluded is null
+                ? ImmutableArray<string>.Empty
+                : excluded.Order(StringComparer.Ordinal).ToImmutableArray(),
+            opaqueNameKeys);
+
+    /// Deliberately not derivable from the declaration name. A key an implementation could
+    /// assemble from the selector would let it skip the report resolver entirely and still match.
+    internal static string NameKeyFor(string name) =>
+        "nk-" + Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(name)))[..16];
 
     internal static string PathFor(string module) => $"D5/S0/Carrier/{module}.lean";
 
@@ -188,5 +207,8 @@ internal static class FrozenLedgerTestData
         IReadOnlyList<string> Imports,
         ImmutableArray<string> Axioms,
         string? BaseCommitOid,
-        string? BaseTreeOid);
+        string? BaseTreeOid,
+        ImmutableArray<string> Declarations = default,
+        ImmutableArray<string> Excluded = default,
+        bool OpaqueNameKeys = false);
 }
