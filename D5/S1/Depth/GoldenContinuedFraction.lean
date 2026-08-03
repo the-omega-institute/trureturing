@@ -1,11 +1,13 @@
 /- GID: D5/S1/Depth/GoldenContinuedFraction
    generality: I
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S1/Depth/GoldenContinuedFraction
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Mathlib's computed continued fraction of the golden ratio has every coefficient one. -/
 
 import Mathlib
+
+/- Provenance: Native proof over pinned mathlib. -/
 
 namespace D5.S1.Depth.GoldenContinuedFraction
 

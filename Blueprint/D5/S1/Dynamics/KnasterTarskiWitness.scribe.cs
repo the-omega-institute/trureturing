@@ -11,12 +11,17 @@ internal sealed class KnasterTarskiWitnessDocument : IScribeDocumentDefinition
                 "Frozen proofs assemble the extremal fixed-point theorem with its three-state instance."),
             H("Knaster–Tarski Witness"),
             Blocks(
-                new DocumentBlock.Describe(
+                DocumentBlock.Describe.Theorem(
                     DescribeId.Create("knaster-tarski-with-three-cycle-instance"),
-                    DescribeKind.Theorem,
                     H("Extremal fixed points with the three-state successor instance"),
-                    DescribeStatement.FromLean(LeanTheorem(
-                        "D5/S1/Dynamics/KnasterTarskiWitness.knaster_tarski_with_three_cycle_instance")),
+                    LeanTheorem(
+                        "D5/S1/Dynamics/KnasterTarskiWitness.knaster_tarski_with_three_cycle_instance"),
+                    LatexStatement.Create(
+                        @"$$(\forall f:\alpha\to_{o}\alpha,\ "
+                        + @"\operatorname{lfp}(f)=\min\operatorname{Fix}(f)\ \land\ "
+                        + @"\operatorname{gfp}(f)=\max\operatorname{Fix}(f))\ \land\ "
+                        + @"\operatorname{lfp}(\sigma_{3})=\varnothing\ \land\ "
+                        + @"\operatorname{gfp}(\sigma_{3})=\mathrm{univ}.$$"),
                     DescribeProvenance.RepoDerived(),
                     Blocks(
                         Paragraph(Text(
@@ -29,11 +34,6 @@ internal sealed class KnasterTarskiWitnessDocument : IScribeDocumentDefinition
                             "The statement is assembly-only: both conjuncts are witnessed by "
                             + "their frozen proofs in the Knaster–Tarski module, so the "
                             + "theorem packages the general result and its concrete instance "
-                            + "behind a single declaration without re-proving either."))),
-                    LatexStatement.Create(
-                        @"$$(\forall f:\alpha\to_{o}\alpha,\ "
-                        + @"\operatorname{lfp}(f)=\min\operatorname{Fix}(f)\ \land\ "
-                        + @"\operatorname{gfp}(f)=\max\operatorname{Fix}(f))\ \land\ "
-                        + @"\operatorname{lfp}(\sigma_{3})=\varnothing\ \land\ "
-                        + @"\operatorname{gfp}(\sigma_{3})=\mathrm{univ}.$$")))));
+                            + "behind a single declaration without re-proving either.")))
+                ))));
 }

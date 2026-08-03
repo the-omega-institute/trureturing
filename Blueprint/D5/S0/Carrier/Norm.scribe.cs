@@ -15,9 +15,8 @@ internal sealed class NormDocument : IScribeDocumentDefinition
                 Text(" defines `N(a+b*phi)=a^2+ab-b^2`. Multiplying an element by its conjugate eliminates the `phi` coordinate and produces this integer, which makes the multiplicativity proof a direct polynomial identity.")),
             Paragraph(
                 Text("Under the doubled `Zsqrtd 5` coordinates from the carrier module, the mathlib norm is exactly four times the golden norm. This factor is the expected square of the coordinate scaling.")),
-            new DocumentBlock.Describe(
+            DocumentBlock.Describe.Remark(
                 DescribeId.Create("two-square-norm-as-a-shared-interpretive-core"),
-                DescribeKind.Remark,
                 H("The two-square norm as a shared interpretive core"),
                 DescribeStatement.FromFormula(Equal(
                     Call("gaussianNorm", Id("a"), Id("b")),
@@ -26,13 +25,14 @@ internal sealed class NormDocument : IScribeDocumentDefinition
                         new Formula.Power(Id("b"), Num(2))))),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
-                    "The source groups a^2+b^2 under four roles: the defining two-axis norm, the Gaussian norm, the modulus-four obstruction, and the splitting reading modulo a prime. It states that each role has its own theorem and that norm multiplicativity is the pivot used in the composition step. The vocabulary in which primes congruent to one split, primes congruent to three remain inert, and two ramifies is explicitly interpretive: the classification theorem is said not to depend on that Gaussian-integer language. A separate dynamical role is referenced but not added as a claim of this module.")))),
-            new DocumentBlock.Describe(
+                    "The source groups a^2+b^2 under four roles: the defining two-axis norm, the Gaussian norm, the modulus-four obstruction, and the splitting reading modulo a prime. It states that each role has its own theorem and that norm multiplicativity is the pivot used in the composition step. The vocabulary in which primes congruent to one split, primes congruent to three remain inert, and two ramifies is explicitly interpretive: the classification theorem is said not to depend on that Gaussian-integer language. A separate dynamical role is referenced but not added as a claim of this module.")))
+            ),
+            DocumentBlock.Describe.Theorem(
                 DescribeId.Create("norm-euclidean-division"),
-                DescribeKind.Theorem,
                 H("Norm-Euclidean division"),
-                DescribeStatement.FromLean(LeanTheorem(
-                    "D5/S0/Carrier/Euclidean.golden_division")),
+                LeanTheorem(
+                    "D5/S0/Carrier/Euclidean.golden_division"),
+                LatexStatement.Create(@"$$\forall a,b\in\mathbb{Z}[\varphi],\ b\neq 0 \Rightarrow \exists q,r\in\mathbb{Z}[\varphi],\ a=qb+r \land (r=0 \lor \lvert\operatorname{norm}(r)\rvert<\lvert\operatorname{norm}(b)\rvert)$$"),
                 DescribeProvenance.LiteratureAttested(
                     LibraryNoteRef.Create("D5/L/Carrier/chatland1949euclidean")),
                 Blocks(
@@ -41,14 +41,14 @@ internal sealed class NormDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "If the two coordinate errors are `x` and `y`, then each has absolute value at most `1/2`. Completing squares bounds `|x^2 + xy - y^2|` by `5/16`, so multiplicativity of the norm gives a remainder with strictly smaller absolute norm.")),
                     Paragraph(Text(
-                        "The `EuclideanDomain GoldenInt` instance uses this quotient and remainder with Euclidean relation `(N(r)).natAbs < (N(b)).natAbs`."))),
-                LatexStatement.Create(@"$$\forall a,b\in\mathbb{Z}[\varphi],\ b\neq 0 \Rightarrow \exists q,r\in\mathbb{Z}[\varphi],\ a=qb+r \land (r=0 \lor \lvert\operatorname{norm}(r)\rvert<\lvert\operatorname{norm}(b)\rvert)$$")),
-            new DocumentBlock.Describe(
+                        "The `EuclideanDomain GoldenInt` instance uses this quotient and remainder with Euclidean relation `(N(r)).natAbs < (N(b)).natAbs`.")))
+            ),
+            DocumentBlock.Describe.Theorem(
                 DescribeId.Create("principal-ideal-domain"),
-                DescribeKind.Theorem,
                 H("Principal ideal domain"),
-                DescribeStatement.FromLean(LeanTheorem(
-                    "D5/S0/Carrier/PrincipalIdeal.golden_int_is_pid")),
+                LeanTheorem(
+                    "D5/S0/Carrier/PrincipalIdeal.golden_int_is_pid"),
+                LatexStatement.Create(@"$\mathbb{Z}[\varphi]\text{ is a principal ideal domain.}$"),
                 DescribeProvenance.LiteratureAttested(
                     LibraryNoteRef.Create("D5/L/Carrier/chatland1949euclidean")),
                 Blocks(
@@ -57,17 +57,17 @@ internal sealed class NormDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "Mathlib's generic principal-ideal-domain instance then supplies `UniqueFactorizationMonoid GoldenInt`; the formal node records this consequence as `golden_int_is_ufd` without declaring redundant specialized instances.")),
                     Paragraph(Text(
-                        "This result does not classify the units of `GoldenInt`. The converse assertion that every norm-unit is a signed integral power of `phi` remains open in `D5-T0008`."))),
-                LatexStatement.Create(@"$\mathbb{Z}[\varphi]\text{ is a principal ideal domain.}$")),
-            new DocumentBlock.Describe(
+                        "This result does not classify the units of `GoldenInt`. The converse assertion that every norm-unit is a signed integral power of `phi` remains open in `D5-T0008`.")))
+            ),
+            DocumentBlock.Describe.Theorem(
                 DescribeId.Create("golden-norm-is-power-multiplicative"),
-                DescribeKind.Theorem,
                 H("The golden norm is power-multiplicative"),
-                DescribeStatement.FromLean(LeanTheorem(
-                    "D5/S0/Carrier/NormPowers.norm_pow")),
+                LeanTheorem(
+                    "D5/S0/Carrier/NormPowers.norm_pow"),
+                LatexStatement.Create(@"$\forall x\in\mathbb{Z}[\varphi],\ \forall n\in\mathbb{N},\ \operatorname{norm}(x^{n})=\operatorname{norm}(x)^{n}$"),
                 DescribeProvenance.RepoDerived(),
                 Blocks(
                     Paragraph(Text(
-                        "The golden norm is a monoid homomorphism from `GoldenInt` to the integers, packaged as `normMonoidHom` out of its unit and multiplicativity laws. The norm of a power is therefore the same power of the norm, obtained directly as `map_pow normMonoidHom` rather than by a coordinate induction."))),
-                LatexStatement.Create(@"$\forall x\in\mathbb{Z}[\varphi],\ \forall n\in\mathbb{N},\ \operatorname{norm}(x^{n})=\operatorname{norm}(x)^{n}$")))));
+                        "The golden norm is a monoid homomorphism from `GoldenInt` to the integers, packaged as `normMonoidHom` out of its unit and multiplicativity laws. The norm of a power is therefore the same power of the norm, obtained directly as `map_pow normMonoidHom` rather than by a coordinate induction.")))
+            ))));
 }

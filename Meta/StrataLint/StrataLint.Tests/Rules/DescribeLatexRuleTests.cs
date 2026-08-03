@@ -5,7 +5,7 @@ namespace StrataLint.Tests;
 public sealed class DescribeLatexRuleTests
 {
     [Fact]
-    public void ExpandEpochWarnsForTheoremClassDescribeWithoutLatex()
+    public void ObserveEpochFlagsTheoremClassDescribeWithoutLatex()
     {
         var capability = VerifiedScribeEmissions.Create(
             [],
@@ -14,7 +14,7 @@ public sealed class DescribeLatexRuleTests
                 new ScribeDescribeLatexRecord(
                     "D5/S3/Weil/LatexFixture#describe/critical-line",
                     "Blueprint/D5/S3/Weil/LatexFixture.scribe.cs",
-                    RequiresLatex: true,
+                    Kind: "theorem",
                     HasValidLatex: false),
             ]);
 
@@ -40,12 +40,12 @@ public sealed class DescribeLatexRuleTests
                 new ScribeDescribeLatexRecord(
                     "D5/S3/Weil/LatexFixture#describe/critical-line",
                     "Blueprint/D5/S3/Weil/LatexFixture.scribe.cs",
-                    RequiresLatex: true,
+                    Kind: "theorem",
                     HasValidLatex: true),
                 new ScribeDescribeLatexRecord(
                     "D5/S3/Weil/LatexFixture#describe/context",
                     "Blueprint/D5/S3/Weil/LatexFixture.scribe.cs",
-                    RequiresLatex: false,
+                    Kind: "remark",
                     HasValidLatex: false),
             ]);
 

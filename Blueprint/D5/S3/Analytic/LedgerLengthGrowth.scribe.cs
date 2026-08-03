@@ -10,17 +10,17 @@ internal sealed class LedgerLengthGrowthDocument : IScribeDocumentDefinition
             "A positive generation strictly increases every additive real ledger length."),
         H("Positive Ledger-Length Growth"),
         Blocks(
-            new DocumentBlock.Describe(
+            DocumentBlock.Describe.Theorem(
                 DescribeId.Create("positive-generation-strictly-increases-ledger-length"),
-                DescribeKind.Theorem,
                 H("Positive generation strictly increases ledger length"),
-                DescribeStatement.FromLean(LeanTheorem(
+                LeanTheorem(
                     "D5/S3/Analytic/LedgerLengthGrowth."
-                    + "ledger_length_strict_mono_of_positive_generation")),
+                    + "ledger_length_strict_mono_of_positive_generation"),
+                LatexStatement.Create(
+                    @"$L(u)>0\quad\Rightarrow\quad L(a)<L(a+u)$"),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "正生成之正性以 length u > 0 承载(素指数求和的具体形属素账本载体,另单);"
-                    + "推论中\"逆账本/群化扩张\"属 open 账,留叙事层不入定理。"))),
-                LatexStatement.Create(
-                    @"$L(u)>0\quad\Rightarrow\quad L(a)<L(a+u)$")))));
+                    + "推论中\"逆账本/群化扩张\"属 open 账,留叙事层不入定理。")))
+            ))));
 }
