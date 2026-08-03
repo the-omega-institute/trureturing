@@ -77,23 +77,24 @@ public sealed class LeanReferenceTests
             Heading.Create("Compiled statement fixture"),
             BlockSequence.Create(
             [
-                new DocumentBlock.Describe(
+                DocumentBlock.Describe.Theorem(
                     DescribeId.Create("compiled-theorem"),
-                    DescribeKind.Theorem,
                     Heading.Create("Compiled theorem"),
-                    DescribeStatement.FromLean(reference),
+                    reference,
+                    LatexStatement.Create("$x = x$"),
                     DescribeProvenance.RepoDerived(),
                     BlockSequence.Create(
                     [
                         DefinitionDsl.Paragraph(DefinitionDsl.Text("Resolved statement.")),
-                    ])),
+                    ])
+                ),
             ]));
 
         var markdown = CanonicalMarkdownWriter.Write(
             document,
             Report(Declaration(typeRepresentation: typeRepresentation)));
         var text = Encoding.UTF8.GetString(markdown.AsSpan());
-        Assert.Contains($"Lean statement: `{Gid}`", text, StringComparison.Ordinal);
+        Assert.Contains("$x = x$", text, StringComparison.Ordinal);
         Assert.Contains(
             $"*Proof.* Machine-checked in Lean as `{Gid}` (`✓ std3`). ∎",
             text,

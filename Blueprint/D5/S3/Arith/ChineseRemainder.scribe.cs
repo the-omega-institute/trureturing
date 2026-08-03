@@ -10,12 +10,17 @@ internal sealed class ChineseRemainderDocument : IScribeDocumentDefinition
             "The natural map modulo coprime factors is bijective."),
         H("Chinese Remainder Bijectivity"),
         Blocks(
-            new DocumentBlock.Describe(
+            DocumentBlock.Describe.Theorem(
                 DescribeId.Create("the-natural-map-modulo-coprime-factors-is-bijective"),
-                DescribeKind.Theorem,
                 H("The natural map modulo coprime factors is bijective"),
-                DescribeStatement.FromLean(LeanTheorem(
-                    "D5/S3/Arith/ChineseRemainder.chinese_remainder_bijective")),
+                LeanTheorem(
+                    "D5/S3/Arith/ChineseRemainder.chinese_remainder_bijective"),
+                LatexStatement.Create(
+                    @"$$\gcd(m,n)=1 \Rightarrow "
+                    + @"\left(\mathbb{Z}/mn\mathbb{Z} \to "
+                    + @"\mathbb{Z}/m\mathbb{Z}\times\mathbb{Z}/n\mathbb{Z},\ "
+                    + @"x\mapsto(x\operatorname{mod}m,x\operatorname{mod}n)\right)"
+                    + @"\text{ is bijective}$$"),
                 DescribeProvenance.RepoDerived(),
                 Blocks(
                     Paragraph(Text(
@@ -33,11 +38,6 @@ internal sealed class ChineseRemainderDocument : IScribeDocumentDefinition
                         + "map displayed in the statement, and assembles the result through the "
                         + "equivalence's bijectivity. This is a faithful library-level assembly of "
                         + "the atomic skeleton under precedent 6.1, and it asserts no numerical "
-                        + "certificate."))),
-                LatexStatement.Create(
-                    @"$$\gcd(m,n)=1 \Rightarrow "
-                    + @"\left(\mathbb{Z}/mn\mathbb{Z} \to "
-                    + @"\mathbb{Z}/m\mathbb{Z}\times\mathbb{Z}/n\mathbb{Z},\ "
-                    + @"x\mapsto(x\operatorname{mod}m,x\operatorname{mod}n)\right)"
-                    + @"\text{ is bijective}$$")))));
+                        + "certificate.")))
+            ))));
 }

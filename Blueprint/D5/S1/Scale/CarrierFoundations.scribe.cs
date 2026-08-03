@@ -11,12 +11,18 @@ internal sealed class CarrierFoundationsDocument : IScribeDocumentDefinition
                 "Frozen proofs assemble conjugation, norm, units, and unique factorization."),
             H("Golden Carrier Foundations"),
             Blocks(
-                new DocumentBlock.Describe(
+                DocumentBlock.Describe.Theorem(
                     DescribeId.Create("golden-carrier-foundations"),
-                    DescribeKind.Theorem,
                     H("Conjugation, norm, units, and factorization of the golden carrier"),
-                    DescribeStatement.FromLean(LeanTheorem(
-                        "D5/S1/Scale/CarrierFoundations.golden_carrier_foundations")),
+                    LeanTheorem(
+                        "D5/S1/Scale/CarrierFoundations.golden_carrier_foundations"),
+                    LatexStatement.Create(
+                        @"$$\exists\,\sigma\in\operatorname{Aut}(\mathcal{O}_\varphi):\ "
+                        + @"\sigma=\overline{(\,\cdot\,)},\ \sigma^{2}=\mathrm{id};\quad "
+                        + @"N(xy)=N(x)\,N(y);\quad "
+                        + @"\mathcal{O}_\varphi^{\times}=\{\pm\varphi^{n}\mid n\in\mathbb{Z}\},\ "
+                        + @"N(\varphi)=-1;\quad "
+                        + @"\mathcal{O}_\varphi\ \text{is a PID and a UFD.}$$"),
                     DescribeProvenance.RepoDerived(),
                     Blocks(
                         Paragraph(Text(
@@ -32,12 +38,6 @@ internal sealed class CarrierFoundationsDocument : IScribeDocumentDefinition
                             + "multiplicativity, the signed-power unit classification, and the "
                             + "principal-ideal and unique-factorization instances — so the "
                             + "theorem packages the four foundations behind a single "
-                            + "declaration without re-proving any of them."))),
-                    LatexStatement.Create(
-                        @"$$\exists\,\sigma\in\operatorname{Aut}(\mathcal{O}_\varphi):\ "
-                        + @"\sigma=\overline{(\,\cdot\,)},\ \sigma^{2}=\mathrm{id};\quad "
-                        + @"N(xy)=N(x)\,N(y);\quad "
-                        + @"\mathcal{O}_\varphi^{\times}=\{\pm\varphi^{n}\mid n\in\mathbb{Z}\},\ "
-                        + @"N(\varphi)=-1;\quad "
-                        + @"\mathcal{O}_\varphi\ \text{is a PID and a UFD.}$$")))));
+                            + "declaration without re-proving any of them.")))
+                ))));
 }

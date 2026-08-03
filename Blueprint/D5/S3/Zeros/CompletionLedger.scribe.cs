@@ -10,12 +10,16 @@ internal sealed class CompletionLedgerDocument : IScribeDocumentDefinition
             "Address independence exposes the completed-zeta factors as explicit global entries."),
         H("Completed Zeta Factors as Explicit Ledger Entries"),
         Blocks(
-            new DocumentBlock.Describe(
+            DocumentBlock.Describe.Theorem(
                 DescribeId.Create("the-completion-factors-are-address-independent-explicit-ledger-entries"),
-                DescribeKind.Theorem,
                 H("The completion factors are address-independent explicit ledger entries"),
-                DescribeStatement.FromLean(LeanTheorem(
-                    "D5/S3/Zeros/CompletionLedger.completion_factors_are_explicit_ledger")),
+                LeanTheorem(
+                    "D5/S3/Zeros/CompletionLedger.completion_factors_are_explicit_ledger"),
+                LatexStatement.Create(
+                    @"$$A(s)=\pi^{-s/2}\Gamma(s/2),\quad P(s)=s(s-1);\quad "
+                    + @"A(s),P(s)\text{ are address-independent};\quad "
+                    + @"\Re(s)>1\Rightarrow\Lambda(s)=A(s)\zeta(s);\quad "
+                    + @"s\neq0,1\Rightarrow\xi(s)=\frac{1}{2}P(s)\Lambda(s)$$"),
                 DescribeProvenance.RepoDerived(),
                 Blocks(
                     Paragraph(Text(
@@ -28,10 +32,6 @@ internal sealed class CompletionLedgerDocument : IScribeDocumentDefinition
                         + "completed reading is the archimedean factor times classical zeta. Away "
                         + "from zero and one, the xi reading is one half times the pole-removal "
                         + "factor times the completed reading. The analytic equalities reuse the "
-                        + "existing Mellin reconstruction and pole-cancellation theorems."))),
-                LatexStatement.Create(
-                    @"$$A(s)=\pi^{-s/2}\Gamma(s/2),\quad P(s)=s(s-1);\quad "
-                    + @"A(s),P(s)\text{ are address-independent};\quad "
-                    + @"\Re(s)>1\Rightarrow\Lambda(s)=A(s)\zeta(s);\quad "
-                    + @"s\neq0,1\Rightarrow\xi(s)=\frac{1}{2}P(s)\Lambda(s)$$")))));
+                        + "existing Mellin reconstruction and pole-cancellation theorems.")))
+            ))));
 }

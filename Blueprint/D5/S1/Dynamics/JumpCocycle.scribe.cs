@@ -11,12 +11,16 @@ internal sealed class JumpCocycleDocument : IScribeDocumentDefinition
                 "Hidden-fiber jump legality is exactly cocycle consistency."),
             H("Hidden-Fiber Jump Cocycle"),
             Blocks(
-                new DocumentBlock.Describe(
+                DocumentBlock.Describe.Theorem(
                     DescribeId.Create("hidden-fiber-jump-cocycle"),
-                    DescribeKind.Theorem,
                     H("Hidden-fiber jump legality is cocycle consistency"),
-                    DescribeStatement.FromLean(LeanTheorem(
-                        "D5/S1/Dynamics/JumpCocycle.jump_cocycle")),
+                    LeanTheorem(
+                        "D5/S1/Dynamics/JumpCocycle.jump_cocycle"),
+                    LatexStatement.Create(
+                        @"$$s_{\beta}=s_{\alpha}+\iota(k_{\alpha\beta}),\quad "
+                        + @"s_{\gamma}=s_{\beta}+\iota(k_{\beta\gamma})\Rightarrow "
+                        + @"\left(s_{\gamma}=s_{\alpha}+\iota(k_{\alpha\gamma})\Leftrightarrow "
+                        + @"k_{\alpha\gamma}=k_{\alpha\beta}+k_{\beta\gamma}\right)$$"),
                     DescribeProvenance.RepoDerived(),
                     Blocks(
                         Paragraph(Text(
@@ -35,10 +39,6 @@ internal sealed class JumpCocycleDocument : IScribeDocumentDefinition
                             + "and using injectivity of the kernel equivalence prove that endpoint "
                             + "legality is equivalent to the pointwise sum of the two intervening "
                             + "jumps. Any disagreement therefore supplies an explicit endpoint "
-                            + "residual and cannot be a legal motion."))),
-                    LatexStatement.Create(
-                        @"$$s_{\beta}=s_{\alpha}+\iota(k_{\alpha\beta}),\quad "
-                        + @"s_{\gamma}=s_{\beta}+\iota(k_{\beta\gamma})\Rightarrow "
-                        + @"\left(s_{\gamma}=s_{\alpha}+\iota(k_{\alpha\gamma})\Leftrightarrow "
-                        + @"k_{\alpha\gamma}=k_{\alpha\beta}+k_{\beta\gamma}\right)$$")))));
+                            + "residual and cannot be a legal motion.")))
+                ))));
 }
