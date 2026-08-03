@@ -1,8 +1,13 @@
+using System.Text;
 namespace StrataLint.Cli;
 
 internal static class PapergenCommand
 {
-    internal static ExplicitCommandResult Run(string repositoryRoot, IReadOnlyList<string> arguments)
+    internal static ExplicitCommandResult Run(
+        string repositoryRoot,
+        IRepositoryGateway repository,
+        ILeanReportSource leanReportSource,
+        IReadOnlyList<string> arguments)
     {
         if (arguments.Count != 2
             || !string.Equals(arguments[0], "validate", StringComparison.Ordinal))
@@ -16,7 +21,7 @@ internal static class PapergenCommand
         var id = arguments[1];
         try
         {
-            return PaperRecipeValidator.Validate(repositoryRoot, id) switch
+            return PaperRecipeValidator.Validate(repositoryRoot, repository, leanReportSource, id) switch
             {
                 PaperRecipeValidationOutcome.Valid valid => new ExplicitCommandResult(
                     0,
@@ -35,12 +40,20 @@ internal static class PapergenCommand
                 _ => throw new InvalidOperationException("unknown paper recipe validation outcome"),
             };
         }
-        catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
+        // The marker types say a fault came from the raw Lean report or from reading the
+        // repository -- both infrastructure. They are caught as themselves rather than unwrapped,
+        // because unwrapping hands back the very exception types a ledger verdict uses, and the
+        // distinction is then lost at exactly the boundary that needs it. The plain types remain
+        // for faults raised before preparation is reached.
+        catch (Exception exception) when (exception
+            is DagLedgerCommandPreparation.LeanReportUnusableException
+            or DagLedgerCommandPreparation.RepositoryUnavailableException
+            or IOException or UnauthorizedAccessException or FormatException or DecoderFallbackException)
         {
             return new ExplicitCommandResult(
                 2,
                 string.Empty,
-                $"PAPERGEN_VALIDATE_INFRASTRUCTURE id={id} {exception.Message}\n");
+                $"PAPERGEN_VALIDATE_INFRASTRUCTURE id={id} {(exception.InnerException ?? exception).Message}\n");
         }
     }
 }
