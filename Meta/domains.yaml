@@ -56,6 +56,9 @@ domains:
   Scale:
     stratum: S1
     definition: Real embeddings and logarithmic scales of golden integers.
+  Solenoid:
+    stratum: S1
+    definition: The universal solenoid carrier, its visible projection, and hidden fiber structure.
   Weil:
     stratum: S3
     definition: Classical zeta conventions, Weil test functions, and Fourier-Laplace analysis.
