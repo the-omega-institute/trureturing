@@ -12,11 +12,10 @@ public sealed class PdfWriterTests
             Heading.Create("Describe PDF"),
             BlockSequence.Create(
             [
-                new DocumentBlock.Describe(
+                DocumentBlock.Describe.Example(
                     DescribeId.Create("golden-identity"),
-                    DescribeKind.Lemma,
                     Heading.Create("Golden identity"),
-                    DescribeStatement.FromFormula(new Formula.Phi()),
+                    new Formula.Phi(),
                     DescribeProvenance.RepoDerived(),
                     BlockSequence.Create(
                     [
@@ -38,18 +37,18 @@ public sealed class PdfWriterTests
             Heading.Create("Describe PDF LaTeX"),
             BlockSequence.Create(
             [
-                new DocumentBlock.Describe(
+                DocumentBlock.Describe.Theorem(
                     DescribeId.Create("critical-line"),
-                    DescribeKind.Theorem,
                     Heading.Create("Critical line"),
-                    DescribeStatement.FromLean(LeanDeclarationRef.Create(
-                        "D5/S1/Scale/Embedding.embedding_injective")),
+                    LeanDeclarationRef.Create(
+                        "D5/S1/Scale/Embedding.embedding_injective"),
+                    LatexStatement.Create("$\\operatorname{Re}(s) = \\frac{1}{2}$"),
                     DescribeProvenance.RepoDerived(),
                     BlockSequence.Create(
                     [
                         DefinitionDsl.Paragraph(DefinitionDsl.Text("Commentary.")),
-                    ]),
-                    LatexStatement.Create("$\\operatorname{Re}(s) = \\frac{1}{2}$")),
+                    ])
+                ),
             ]));
 
         var pdf = QuestPdfWriter.Write(document, LeanReportFixture.ForDocuments([document]));
@@ -67,16 +66,16 @@ public sealed class PdfWriterTests
             Heading.Create("Academic citation"),
             BlockSequence.Create(
             [
-                new DocumentBlock.Describe(
+                DocumentBlock.Describe.Remark(
                     DescribeId.Create("three-gap-context"),
-                    DescribeKind.Remark,
                     Heading.Create("Three-gap context"),
                     DescribeStatement.FromFormula(new Formula.Phi()),
                     DescribeProvenance.LiteratureAttested(reference),
                     BlockSequence.Create(
                     [
                         DefinitionDsl.Paragraph(DefinitionDsl.Text("Referenced context.")),
-                    ])),
+                    ])
+                ),
             ]));
         var citations = new Dictionary<string, LiteratureCitation>(StringComparer.Ordinal)
         {

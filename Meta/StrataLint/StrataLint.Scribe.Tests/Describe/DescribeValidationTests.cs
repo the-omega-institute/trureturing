@@ -213,16 +213,16 @@ public sealed class DescribeValidationTests
         Heading.Create("Validation"),
         BlockSequence.Create(
         [
-            new DocumentBlock.Describe(
+            DocumentBlock.Describe.Remark(
                 DescribeId.Create("validated-claim"),
-                DescribeKind.Remark,
                 Heading.Create("Validated claim"),
                 DescribeStatement.FromFormula(new Formula.Phi()),
                 provenance,
                 BlockSequence.Create(
                 [
                     DefinitionDsl.Paragraph(new Inline.GidReference(inlineReference)),
-                ])),
+                ])
+            ),
         ]));
 
     private static void WriteNote(

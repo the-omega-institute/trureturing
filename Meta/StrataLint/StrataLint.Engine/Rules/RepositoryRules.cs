@@ -97,7 +97,8 @@ internal static partial class RepositoryRules
         context.VerifiedScribeEmissions is null
             ? []
             : context.VerifiedScribeEmissions.DescribeLatexRecords
-                .Where(static item => item.RequiresLatex && !item.HasValidLatex)
+                .Where(static item =>
+                    ScribeDescribeContract.RequiresLatex(item.Kind) && !item.HasValidLatex)
                 .Select(static item => new RuleFinding(
                     item.DefinitionPath,
                     $"SCRIBE-LATEX-EPOCH expand: theorem-class Describe {item.NodeId} lacks a valid LaTeX statement; migrate before contract",

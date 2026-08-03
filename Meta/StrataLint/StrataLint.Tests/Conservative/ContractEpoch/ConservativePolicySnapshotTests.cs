@@ -56,7 +56,6 @@ public sealed class ConservativePolicySnapshotTests
     public void Sl023IsAnActiveObserveObligationDuringTheExpandEpoch()
     {
         var current = ConservativePolicySnapshot.Current();
-
         var sl023 = Assert.Single(current.RuleObligations, item => item.RuleId == "SL-023");
         Assert.Equal(AdmissionEffect.Observe.ToString(), sl023.AdmissionEffect);
         Assert.StartsWith("sha256:", sl023.DescriptorRoot, StringComparison.Ordinal);

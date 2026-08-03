@@ -25,52 +25,52 @@ internal sealed class LogDocument : IScribeDocumentDefinition
                     Text(" assigns a scale only when "),
                     Math(NotEqual(x, Num(0))),
                     Text(". Zero is represented by `none`, never by a fabricated integer.")),
-                new DocumentBlock.Describe(
+                DocumentBlock.Describe.Proposition(
                     DescribeId.Create("zero-has-no-scale"),
-                    DescribeKind.Proposition,
                     H("Zero has no scale"),
-                    DescribeStatement.FromLean(
-                        LeanTheorem("D5/S1/Scale/Log.logScale_zero")),
+
+                        LeanTheorem("D5/S1/Scale/Log.logScale_zero"),
+                    LatexStatement.Create(@"$\operatorname{logScale}(0)=\operatorname{none}$"),
                     DescribeProvenance.RepoDerived(),
-                    Blocks(Paragraph(Text("The option-valued definition returns `none` at zero."))),
-                    LatexStatement.Create(@"$\operatorname{logScale}(0)=\operatorname{none}$")),
-                new DocumentBlock.Describe(
+                    Blocks(Paragraph(Text("The option-valued definition returns `none` at zero.")))
+                ),
+                DocumentBlock.Describe.Proposition(
                     DescribeId.Create("nonzero-scale"),
-                    DescribeKind.Proposition,
                     H("Nonzero scale"),
-                    DescribeStatement.FromLean(
-                        LeanTheorem("D5/S1/Scale/Log.logScale_ne_zero")),
+
+                        LeanTheorem("D5/S1/Scale/Log.logScale_ne_zero"),
+                    LatexStatement.Create(@"$\forall x \in \operatorname{GoldenInt},\ x\neq 0 \Rightarrow \operatorname{logScale}(x)=\operatorname{some}(\lfloor\log_{\varphi}\lvert\operatorname{embedding}(x)\rvert\rfloor)$"),
                     DescribeProvenance.RepoDerived(),
                     Blocks(
                         Paragraph(Text("For nonzero input the following integer is wrapped in `some`:")),
                         new DocumentBlock.DisplayFormula(
                             Equal(
                                 Call("logScale", x),
-                                Call("some", scaleValue)))),
-                    LatexStatement.Create(@"$\forall x \in \operatorname{GoldenInt},\ x\neq 0 \Rightarrow \operatorname{logScale}(x)=\operatorname{some}(\lfloor\log_{\varphi}\lvert\operatorname{embedding}(x)\rvert\rfloor)$")),
+                                Call("some", scaleValue))))
+                ),
                 new DocumentBlock.Section(
                     H("Integral unit shifts"),
                     Blocks(
-                        new DocumentBlock.Describe(
+                        DocumentBlock.Describe.Proposition(
                             DescribeId.Create("embedding-of-unit-power"),
-                            DescribeKind.Proposition,
                             H("Embedding of a unit power"),
-                            DescribeStatement.FromLean(LeanTheorem(
-                                "D5/S1/Scale/Log.embedding_phiUnitZPowMul")),
+                            LeanTheorem(
+                                "D5/S1/Scale/Log.embedding_phiUnitZPowMul"),
+                            LatexStatement.Create(@"$\forall n \in \mathbb{Z},\ \forall x \in \operatorname{GoldenInt},\ \operatorname{embedding}(\operatorname{phiUnitZPowMul}(n,x))=\varphi^{n}\operatorname{embedding}(x)$"),
                             DescribeProvenance.RepoDerived(),
                             Blocks(new DocumentBlock.DisplayFormula(
                                 Equal(
                                     Call("embedding", shifted),
                                     Multiply(
                                         new Formula.Power(new Formula.Phi(), n),
-                                        Call("embedding", x))))),
-                            LatexStatement.Create(@"$\forall n \in \mathbb{Z},\ \forall x \in \operatorname{GoldenInt},\ \operatorname{embedding}(\operatorname{phiUnitZPowMul}(n,x))=\varphi^{n}\operatorname{embedding}(x)$")),
-                        new DocumentBlock.Describe(
+                                        Call("embedding", x)))))
+                        ),
+                        DocumentBlock.Describe.Theorem(
                             DescribeId.Create("exact-scale-translation"),
-                            DescribeKind.Theorem,
                             H("Exact scale translation"),
-                            DescribeStatement.FromLean(LeanTheorem(
-                                "D5/S1/Scale/Log.logScale_phiUnit_zpow_mul")),
+                            LeanTheorem(
+                                "D5/S1/Scale/Log.logScale_phiUnit_zpow_mul"),
+                            LatexStatement.Create(@"$\forall n \in \mathbb{Z},\ \forall x \in \operatorname{GoldenInt},\ x\neq 0 \Rightarrow \operatorname{logScale}(\operatorname{phiUnitZPowMul}(n,x))=\operatorname{map}(n+\cdot,\operatorname{logScale}(x))$"),
                             DescribeProvenance.RepoDerived(),
                             Blocks(
                                 Paragraph(
@@ -81,7 +81,7 @@ internal sealed class LogDocument : IScribeDocumentDefinition
                                         Call(
                                             "map",
                                             Add(n, new Formula.Placeholder()),
-                                            Call("logScale", x))))),
-                            LatexStatement.Create(@"$\forall n \in \mathbb{Z},\ \forall x \in \operatorname{GoldenInt},\ x\neq 0 \Rightarrow \operatorname{logScale}(\operatorname{phiUnitZPowMul}(n,x))=\operatorname{map}(n+\cdot,\operatorname{logScale}(x))$")))))));
+                                            Call("logScale", x)))))
+                        ))))));
     }
 }
