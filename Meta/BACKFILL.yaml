@@ -10610,16 +10610,23 @@ sources:
           raw_sha256: sha256:12959535dd5d215e6f12aea36a2ca0c32bce2222874e97d1b6cdf66df4b31cc5
           normalized_sha256: sha256:12959535dd5d215e6f12aea36a2ca0c32bce2222874e97d1b6cdf66df4b31cc5
         cas_ref: sha256:12959535dd5d215e6f12aea36a2ca0c32bce2222874e97d1b6cdf66df4b31cc5
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Midline/OffLineScaling.off_line_scaling_ledger_growth
         receipts:
-          coverage: []
-          scribe: []
+          coverage:
+            - gid: D5/S3/Midline/OffLineScaling.off_line_scaling_ledger_growth
+              source_sha256: sha256:12959535dd5d215e6f12aea36a2ca0c32bce2222874e97d1b6cdf66df4b31cc5
+              target_sha256: sha256:b2589658600ebcfe91be9052225f465e1d58ceb65f00bbeacc8f57b68e5704d6
+          scribe:
+            - gid: D5/S3/Midline/OffLineScaling.off_line_scaling_ledger_growth
+              definition_sha256: sha256:3b8740b12a329c71f76cde8fdbf3ece641880ec6ea1c02a02fc82516802ff711
+              emission_sha256: sha256:4ea4c3342a261fbb5909443fd16092e2b1a429398f9d56662f27d6b9d87495f6
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: absorbed
+          truth: closed
       - atom_id: pzg-residual-c2b458c0ec6e7494ffe7b15cc71ca9aa7afd5559254301851904c9c91c88d13f
         ast_path: theorem/19.5
         fingerprints:
