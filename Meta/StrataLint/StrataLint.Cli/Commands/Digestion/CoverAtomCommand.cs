@@ -63,17 +63,6 @@ internal static class CoverAtomCommand
         ArgumentNullException.ThrowIfNull(arguments);
         try
         {
-            if (arguments.Count > 0
-                && string.Equals(arguments[0], "--align-scribe-receipt", StringComparison.Ordinal))
-            {
-                return AlignScribeReceipt(
-                    repositoryRoot,
-                    repository,
-                    leanReportSource,
-                    scribeEmissionVerifier,
-                    arguments);
-            }
-
             var options = ParseArguments(arguments);
             var currentRaw = repository.ReadCurrent();
             var baselineRaw = repository.ReadRevision(options.BaselineRevision);
@@ -238,7 +227,7 @@ internal static class CoverAtomCommand
         }
     }
 
-    private static CommandResult AlignScribeReceipt(
+    internal static CommandResult AlignScribeReceipt(
         string repositoryRoot,
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
@@ -321,7 +310,7 @@ internal static class CoverAtomCommand
             verified,
             baselineDocument: null,
             validateProjectedStatus: false);
-        RequireNoFindings(derived);
+        RequireAlignedTarget(EvaluationFor(derived, options.AtomId), options.Gid);
         var finalBytes = BackfillInventoryWriter.WriteForIngest(planned);
         var finalRaw = ReplaceLedger(currentRaw, finalBytes);
         var finalSnapshot = Decode(finalRaw);
@@ -332,14 +321,7 @@ internal static class CoverAtomCommand
             lean,
             verified,
             baselineDocument: null);
-        RequireNoFindings(finalEvaluation);
-        RequireValidBackfill(
-            finalDocument,
-            finalSnapshot,
-            finalSnapshot,
-            LoadPolicy(finalSnapshot),
-            lean,
-            verified);
+        RequireAlignedTarget(EvaluationFor(finalEvaluation, options.AtomId), options.Gid);
 
         var currentLedger = currentRaw.Entries.Single(static entry =>
             entry.Path == BackfillInventoryLoader.RelativePath);
@@ -510,6 +492,21 @@ internal static class CoverAtomCommand
             + $"gaps={string.Join(",", covered.Gaps.Select(static gap => gap.Code))}");
     }
 
+    private static void RequireAlignedTarget(DigestionEntryEvaluation target, string gid)
+    {
+        var targetGaps = target.Gaps
+            .Where(gap => string.Equals(gap.Detail, gid, StringComparison.Ordinal))
+            .ToArray();
+        if (targetGaps.Length == 0)
+        {
+            return;
+        }
+
+        throw new InvalidOperationException(
+            $"align target {target.Entry.AtomId} remains invalid for {gid}: "
+            + string.Join(",", targetGaps.Select(static gap => gap.Code)));
+    }
+
     private static void RequireEnvelopeBinding(
         DigestionFormalizationReceipt receipt,
         CoverArguments options,
@@ -561,15 +558,14 @@ internal static class CoverAtomCommand
 
     private static AlignArguments ParseAlignArguments(IReadOnlyList<string> arguments)
     {
-        if (arguments.Count != 5
-            || !string.Equals(arguments[0], "--align-scribe-receipt", StringComparison.Ordinal))
+        if (arguments.Count != 4)
         {
             throw AlignUsage();
         }
 
         string? atomId = null;
         string? gid = null;
-        for (var index = 1; index < arguments.Count; index += 2)
+        for (var index = 0; index < arguments.Count; index += 2)
         {
             if (index + 1 >= arguments.Count)
             {
@@ -598,7 +594,7 @@ internal static class CoverAtomCommand
     }
 
     private static InvalidOperationException AlignUsage() => new(
-        "USAGE: StrataLint cover-atom --align-scribe-receipt --atom-id ATOM_ID --gid GID");
+        "USAGE: StrataLint align-scribe-receipt --atom-id ATOM_ID --gid GID");
 
     private static CoverArguments ParseArguments(IReadOnlyList<string> arguments)
     {

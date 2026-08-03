@@ -7,7 +7,7 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
-    public void CoverAtomAlignModeIsReachableThroughCliDispatch()
+    public void AlignScribeReceiptIsReachableThroughProductionCliDispatch()
     {
         var inputs = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec());
         using var temporary = new TemporaryDirectory();
@@ -17,13 +17,27 @@ public sealed partial class ProductionEnvironmentTests
         var console = new BufferedConsole();
 
         var exitCode = CliApplication.Run(
-            ["cover-atom", .. CoverWorld.AlignArgs(inputs)],
+            ["align-scribe-receipt", .. CoverWorld.AlignArgs(inputs)],
             CoverWorld.Environment(temporary.Path, inputs, inputs.Files),
             console);
 
         Assert.Equal(0, exitCode);
         Assert.Contains("ALIGN_SCRIBE_RECEIPT", console.Output, StringComparison.Ordinal);
         Assert.Equal(string.Empty, console.Error);
+    }
+
+    [Fact]
+    public void RootUsageListsAlignScribeReceipt()
+    {
+        var console = new BufferedConsole();
+
+        var exitCode = CliApplication.Run(
+            Array.Empty<string>(),
+            new StubCliEnvironment(new AdmissionOutcome.InfrastructureFailure("unused")),
+            console);
+
+        Assert.Equal(2, exitCode);
+        Assert.Contains("align-scribe-receipt", console.Error, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -41,7 +55,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains("scribe-definition-mismatch", before.Error, StringComparison.Ordinal);
         Assert.Contains("scribe-emission-mismatch", before.Error, StringComparison.Ordinal);
 
-        var aligned = initialEnvironment.CoverAtom(CoverWorld.AlignArgs(inputs));
+        var aligned = initialEnvironment.AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
         Assert.True(aligned.Success, aligned.Error);
         var alignedLedger = File.ReadAllText(outputPath);
         var alignedFiles = new Dictionary<string, string>(inputs.Files, StringComparer.Ordinal)

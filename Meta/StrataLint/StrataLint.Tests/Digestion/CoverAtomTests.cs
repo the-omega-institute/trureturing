@@ -23,7 +23,7 @@ public sealed partial class CoverAtomTests
         File.WriteAllText(outputPath, inputs.Ledger, new UTF8Encoding(false));
 
         var first = CoverWorld.Environment(temporary.Path, inputs, inputs.Files)
-            .CoverAtom(CoverWorld.AlignArgs(inputs));
+            .AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
 
         Assert.True(first.Success, first.Error);
         Assert.Contains("ALIGN_SCRIBE_RECEIPT", first.Output, StringComparison.Ordinal);
@@ -54,7 +54,7 @@ public sealed partial class CoverAtomTests
             [BackfillInventoryLoader.RelativePath] = afterFirst,
         };
         var second = CoverWorld.Environment(temporary.Path, inputs, replayFiles)
-            .CoverAtom(CoverWorld.AlignArgs(inputs));
+            .AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
 
         Assert.True(second.Success, second.Error);
         Assert.Contains("ledger_changed=false", second.Output, StringComparison.Ordinal);
@@ -72,12 +72,42 @@ public sealed partial class CoverAtomTests
         Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
         File.WriteAllText(outputPath, inputs.Ledger, new UTF8Encoding(false));
 
-        var result = CoverWorld.Environment(temporary.Path, inputs, inputs.Files).CoverAtom(
-            ["--align-scribe-receipt", "--atom-id", atomId, "--gid", gid]);
+        var result = CoverWorld.Environment(temporary.Path, inputs, inputs.Files).AlignScribeReceipt(
+            ["--atom-id", atomId, "--gid", gid]);
 
         Assert.False(result.Success);
-        Assert.Contains("COVER_INVALID", result.Error, StringComparison.Ordinal);
+        Assert.Contains("ALIGN_SCRIBE_RECEIPT_INVALID", result.Error, StringComparison.Ordinal);
         Assert.Equal(inputs.Ledger, File.ReadAllText(outputPath));
+    }
+
+    [Fact]
+    public void AlignScribeReceiptIgnoresSiblingDriftAndPreservesSiblingEntry()
+    {
+        var spec = CoverWorld.StaleReceiptSpec() with
+        {
+            OtherAtomBinding = ("drifted-sibling", "D5/S0/Carrier/Probe.sibling"),
+        };
+        var inputs = CoverWorld.Materialize(spec);
+        using var temporary = new TemporaryDirectory();
+        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
+        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+        File.WriteAllText(outputPath, inputs.Ledger, new UTF8Encoding(false));
+        var result = CoverWorld.Environment(temporary.Path, inputs, inputs.Files)
+            .AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
+
+        Assert.True(result.Success, result.Error);
+        Assert.True(inputs.VerifiedEmissions!.TryGet(
+            inputs.Gid[..inputs.Gid.LastIndexOf('.')], out var verifiedRecord));
+        var expected = inputs.Ledger
+            .Replace(
+                "sha256:" + new string('a', 64),
+                verifiedRecord.DefinitionSha256,
+                StringComparison.Ordinal)
+            .Replace(
+                "sha256:" + new string('b', 64),
+                verifiedRecord.EmissionSha256,
+                StringComparison.Ordinal);
+        Assert.Equal(expected, File.ReadAllText(outputPath));
     }
 
     [Fact]
@@ -476,7 +506,7 @@ internal static class CoverWorld
     };
 
     internal static string[] AlignArgs(CoverInputs inputs) =>
-        ["--align-scribe-receipt", "--atom-id", DefaultAtomId, "--gid", inputs.Gid];
+        ["--atom-id", DefaultAtomId, "--gid", inputs.Gid];
 
     internal static ProductionCliEnvironment Environment(
         string repositoryRoot,
