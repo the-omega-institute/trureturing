@@ -81,7 +81,7 @@ wait_for_graphql_startup_budget() {
     :
   else
     probe_status=$?
-    if [[ "$probe_status" -eq 124 ]]; then
+    if [[ "$probe_status" -eq 124 || "$probe_status" -eq 137 ]]; then
       data="timed out after $GRAPHQL_PROBE_TIMEOUT_SECONDS seconds"
     fi
     die "GraphQL rate-limit probe failed: ${data:-no diagnostic}"

@@ -41,7 +41,8 @@ case "$PROBE_MODE" in
   failure) printf 'probe unavailable\n' >&2; exit 2 ;;
   malformed) printf '5000\tnot-a-number\t%s\n' "$RESET_EPOCH" ;;
   overflow) printf '99999999999999999999\t1\t%s\n' "$RESET_EPOCH" ;;
-  timeout) trap '' TERM; while :; do :; done ;;
+  timeout_term) trap 'exit 0' TERM; : >"$TIMEOUT_PROBE_READY"; while :; do :; done ;;
+  timeout_kill) trap '' TERM; : >"$TIMEOUT_PROBE_READY"; while :; do :; done ;;
   *) exit 65 ;;
 esac
 EOF
@@ -53,19 +54,28 @@ EOF
 kill_after="$2"
 timeout="$3"
 shift 3
+rm -f -- "$TIMEOUT_PROBE_READY"
 "$@" &
 pid=$!
-deadline=$((SECONDS + timeout))
-while kill -0 "$pid" 2>/dev/null && (( SECONDS < deadline )); do :; done
-if kill -0 "$pid" 2>/dev/null; then
-  kill -TERM "$pid" 2>/dev/null || true
-  deadline=$((SECONDS + kill_after))
-  while kill -0 "$pid" 2>/dev/null && (( SECONDS < deadline )); do :; done
-  kill -KILL "$pid" 2>/dev/null || true
-  wait "$pid" 2>/dev/null || true
-  exit 124
-fi
-wait "$pid"
+while [[ ! -e "$TIMEOUT_PROBE_READY" ]]; do
+  kill -0 "$pid" 2>/dev/null || { wait "$pid"; exit $?; }
+done
+kill -TERM "$pid"
+case "$PROBE_MODE" in
+  timeout_term)
+    wait "$pid" 2>/dev/null || true
+    exit 124
+    ;;
+  timeout_kill)
+    kill -KILL "$pid"
+    wait "$pid" 2>/dev/null || status=$?
+    [[ "${status:-0}" -eq 137 ]] || exit 69
+    exit 137
+    ;;
+  *)
+    exit 70
+    ;;
+esac
 EOF
   chmod +x "$root/bin/timeout"
 
@@ -100,6 +110,7 @@ EOF
   export FAKE_PLATFORM_SCRIPT="$root/platform/scripts/run.sh"
   export PROBE_MODE="$probe_mode"
   export RESET_EPOCH="$reset"
+  export TIMEOUT_PROBE_READY="$root/timeout-probe-ready"
   export FKST_OPERATE_ROOT="$root/operate"
   export PATH="$root/bin:$ORIGINAL_PATH"
 }
@@ -219,8 +230,10 @@ run_rejection_case malformed 'fkst: GraphQL rate-limit probe returned malformed 
 printf '%s\n' 'PASS startup-graphql-budget rejects malformed probe without launch'
 run_rejection_case overflow 'fkst: GraphQL rate-limit probe returned malformed fields: limit=99999999999999999999 remaining=1 reset=%RESET%'
 printf '%s\n' 'PASS startup-graphql-budget rejects integers outside the Bash arithmetic domain'
-run_rejection_case timeout 'fkst: GraphQL rate-limit probe failed: timed out after 2 seconds'
-printf '%s\n' 'PASS startup-graphql-budget bounds a hung probe without launch'
+run_rejection_case timeout_term 'fkst: GraphQL rate-limit probe failed: timed out after 2 seconds'
+printf '%s\n' 'PASS startup-graphql-budget normalizes timeout TERM exit without launch'
+run_rejection_case timeout_kill 'fkst: GraphQL rate-limit probe failed: timed out after 2 seconds'
+printf '%s\n' 'PASS startup-graphql-budget normalizes timeout KILL exit without launch'
 run_timeout_contract_rejection_case missing 'fkst: host.env FKST_TIMEOUT_BIN is not executable: <unset>'
 printf '%s\n' 'PASS startup-graphql-budget rejects missing timeout contract without launch'
 run_timeout_contract_rejection_case nonexecutable 'fkst: host.env FKST_TIMEOUT_BIN is not executable: %TIMEOUT%'
