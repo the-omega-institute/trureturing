@@ -24,6 +24,16 @@ public sealed class StatementProjectionPilotTests
         Assert.Throws<FormatException>(() => StatementV1Decoder.Decode(encoded));
 
     [Fact]
+    public void ProjectorMapsBindingAndPropositionCore()
+    {
+        const string encoded = "statement-v1(uparams=[],type=ep(bd,ec(ns(n0,4:Real),[]),ea(ea(ea(ec(ns(n0,2:Eq),[]),ec(ns(n0,4:Real),[])),eb(0)),eb(0))))";
+        var result = StatementProjector.Project(StatementV1Decoder.Decode(encoded).Type);
+
+        var formula = Assert.IsType<ProjectionOutcome.Projected>(result).Formula;
+        Assert.Equal("\\forall x0 \\in \\mathrm{Real},\\; \\mathit{x0} = \\mathit{x0}", LatexWriter.Write(formula));
+    }
+
+    [Fact]
     public void PilotProjectsFiveRealDeclarationsAndPinsTheComparisonReport()
     {
         var root = FindRepositoryRoot();
@@ -31,11 +41,12 @@ public sealed class StatementProjectionPilotTests
             root, ".lake/build/stratalint/raw-lean-report.json")));
         var declarations = report.RootElement.GetProperty("modules")
             .EnumerateArray().SelectMany(module => module.GetProperty("declarations").EnumerateArray())
-            .ToDictionary(item => item.GetProperty("name").GetString()!, StringComparer.Ordinal);
+            .GroupBy(item => item.GetProperty("name").GetString()!, StringComparer.Ordinal)
+            .ToDictionary(group => group.Key, group => group.First(), StringComparer.Ordinal);
 
         var results = ProjectionPilot.Run(declarations);
 
-        Assert.Equal(5, results.Cases.Count);
+        Assert.Equal(5, results.Cases.Length);
         Assert.Equal(ProjectionPilot.GoldenReport, results.Report);
         Assert.Equal(ProjectionNotation.Entries.Count, results.NotationSize);
         Assert.All(results.Cases, item => Assert.Equal(item.GoldenLatex, LatexWriter.Write(item.Formula)));
