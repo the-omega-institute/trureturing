@@ -10,14 +10,14 @@ internal sealed class PrimeAxisAdditionDocument : IScribeDocumentDefinition
             "Rowwise W normalization of prime-axis table sums decodes as multiplication."),
         H("Prime-Axis Normalized Addition"),
         Blocks(
-            new DocumentBlock.Describe(
+            DocumentBlock.Describe.Theorem(
                 DescribeId.Create("prime-axis-rowwise-normalization-product"),
-                DescribeKind.Theorem,
                 H("Rowwise normalized addition and decoder multiplication"),
-                DescribeStatement.FromLean(LeanTheorem(
-                    "D5/S1/Digit/PrimeAxisAddition.prime_axis_addition_spec")),
+                LeanTheorem(
+                    "D5/S1/Digit/PrimeAxisAddition.prime_axis_addition_spec"),
+                LatexStatement.Create(@"$$\forall z,w \in \operatorname{PrimeAxisTable},\ \operatorname{Bijective}(\operatorname{primeAxisEncoding}) \land \operatorname{decodePrimeAxisTable}(\operatorname{normalizedPrimeAxisAdd}(z,w)) = \operatorname{decodePrimeAxisTable}(z)\operatorname{decodePrimeAxisTable}(w)$$"),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
-                    "Prime-indexed canonical W rows are equivalent to positive naturals. Adding raw rows and applying the existing local W normalizer preserves exponent sums, so the finite prime-power decoder turns the normalized table sum into multiplication."))),
-                LatexStatement.Create(@"$$\forall z,w \in \operatorname{PrimeAxisTable},\ \operatorname{Bijective}(\operatorname{primeAxisEncoding}) \land \operatorname{decodePrimeAxisTable}(\operatorname{normalizedPrimeAxisAdd}(z,w)) = \operatorname{decodePrimeAxisTable}(z)\operatorname{decodePrimeAxisTable}(w)$$")))));
+                    "Prime-indexed canonical W rows are equivalent to positive naturals. Adding raw rows and applying the existing local W normalizer preserves exponent sums, so the finite prime-power decoder turns the normalized table sum into multiplication.")))
+            ))));
 }

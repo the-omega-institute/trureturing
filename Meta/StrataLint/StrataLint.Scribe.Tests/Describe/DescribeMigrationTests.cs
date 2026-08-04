@@ -5,6 +5,85 @@ namespace StrataLint.Scribe.Tests;
 public sealed class DescribeMigrationTests
 {
     [Fact]
+    public void InventoryCurrentDescribeKindContracts()
+    {
+        var inventory = DocumentDefinitions.All
+            .SelectMany(static definition => EnumerateDescribe(definition.Document.Content)
+                .Select(node => new
+                {
+                    Document = definition.Document.Header.Gid.Value,
+                    Node = node,
+                }))
+            .ToArray();
+        var ownershipViolations = inventory
+            .Where(static item => item.Node.Statement is DescribeStatement.LeanDeclaration)
+            .Where(item => !AssertSameModule(
+                item.Document,
+                ((DescribeStatement.LeanDeclaration)item.Node.Statement).Value.Value))
+            .Select(static item => $"{item.Document}#{item.Node.Id.Value}")
+            .ToArray();
+
+        Assert.NotEmpty(DocumentDefinitions.All);
+        Assert.Equal(
+            DocumentDefinitions.All.Length,
+            DocumentDefinitions.All.Select(static item => item.SourcePath).Distinct().Count());
+        Assert.NotEmpty(inventory);
+        Assert.All(inventory, static item => AssertDescribeContract(item.Node));
+        Assert.Equal(
+        [
+            "D5/S0/Carrier/Norm#golden-norm-is-power-multiplicative",
+            "D5/S0/Carrier/Norm#norm-euclidean-division",
+            "D5/S0/Carrier/Norm#principal-ideal-domain",
+        ],
+            ownershipViolations.Order(StringComparer.Ordinal));
+    }
+
+    private static void AssertDescribeContract(DocumentBlock.Describe node)
+    {
+        switch (node.Kind)
+        {
+            case DescribeKind.Definition:
+                Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement);
+                break;
+            case DescribeKind.Theorem:
+            case DescribeKind.Proposition:
+            case DescribeKind.Lemma:
+                Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement);
+                Assert.NotNull(node.StatementLatex);
+                break;
+            case DescribeKind.Example:
+                Assert.IsType<DescribeStatement.FormulaAst>(node.Statement);
+                Assert.Null(node.StatementLatex);
+                break;
+            case DescribeKind.Remark:
+                Assert.True(
+                    node.Statement is DescribeStatement.FormulaAst or DescribeStatement.LeanDeclaration,
+                    $"Remark {node.Id.Value} must use a typed formula or Lean statement.");
+                Assert.Null(node.StatementLatex);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(node.Kind));
+        }
+
+        Assert.NotEqual(DescribeProvenanceKind.Unassessed, node.Provenance.Kind);
+        if (node.Provenance.Kind == DescribeProvenanceKind.LiteratureAttested)
+        {
+            Assert.NotNull(node.Provenance.LiteratureReference);
+        }
+        else
+        {
+            Assert.Null(node.Provenance.LiteratureReference);
+        }
+    }
+
+    private static bool AssertSameModule(string documentGid, string declarationGid)
+    {
+        var separator = declarationGid.LastIndexOf('.');
+        return separator > 0
+            && string.Equals(documentGid, declarationGid[..separator], StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void EveryCurrentTheoremClassNodeHasAnExplicitLatexStatement()
     {
         var nodes = DocumentDefinitions.All

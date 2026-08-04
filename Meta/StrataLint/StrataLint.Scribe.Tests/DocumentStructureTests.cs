@@ -16,22 +16,24 @@ public sealed class DocumentStructureTests
             new Inline.Text(TextRun.Create(".")),
         ]));
         var display = new DocumentBlock.DisplayFormula(new Formula.Phi());
-        var proposition = new DocumentBlock.Describe(
+        var proposition = DocumentBlock.Describe.Proposition(
             DescribeId.Create("embedding-formula"),
-            DescribeKind.Proposition,
             Heading.Create("Embedding formula"),
-            DescribeStatement.FromLean(
-                LeanDeclarationRef.Create("D5/S1/Scale/Embedding.embedding_apply")),
+
+                LeanDeclarationRef.Create("D5/S1/Scale/Embedding.embedding_apply"),
+            LatexStatement.Create("$\\operatorname{embed}(x) = x$"),
             DescribeProvenance.RepoDerived(),
-            BlockSequence.Create([paragraph]));
-        var theorem = new DocumentBlock.Describe(
+            BlockSequence.Create([paragraph])
+        );
+        var theorem = DocumentBlock.Describe.Theorem(
             DescribeId.Create("embedding-is-injective"),
-            DescribeKind.Theorem,
             Heading.Create("Embedding is injective"),
-            DescribeStatement.FromLean(
-                LeanDeclarationRef.Create("D5/S1/Scale/Embedding.embedding_injective")),
+
+                LeanDeclarationRef.Create("D5/S1/Scale/Embedding.embedding_injective"),
+            LatexStatement.Create("$\\operatorname{embed}(x) = 0 \\Rightarrow x = 0$"),
             DescribeProvenance.RepoDerived(),
-            BlockSequence.Create([paragraph]));
+            BlockSequence.Create([paragraph])
+        );
         var section = new DocumentBlock.Section(
             Heading.Create("Consequences"),
             BlockSequence.Create([proposition, theorem]));

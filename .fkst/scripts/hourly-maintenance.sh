@@ -185,7 +185,7 @@ sync_checkout() {
     return 0
   fi
 
-  local checkout_head checkout_status behind
+  local checkout_head checkout_status behind lean_report_required=0 lean_diff_rc
   checkout_head="$(git -C "$FKST_HOST_ROOT" rev-parse HEAD 2>/dev/null)"
   CHECKOUT_DEV_REV="$(git -C "$FKST_HOST_ROOT" rev-parse origin/dev 2>/dev/null)"
   if [[ -z "$checkout_head" || -z "$CHECKOUT_DEV_REV" ]]; then
@@ -222,9 +222,21 @@ sync_checkout() {
 
   behind="$(git -C "$FKST_HOST_ROOT" rev-list \
     "$checkout_head..$CHECKOUT_DEV_REV" --count 2>/dev/null)"
+  git -C "$FKST_HOST_ROOT" diff --quiet \
+    "$checkout_head" "$CHECKOUT_DEV_REV" -- '*.lean' 2>/dev/null
+  lean_diff_rc=$?
+  case "$lean_diff_rc" in
+    0) lean_report_required=0 ;;
+    1) lean_report_required=1 ;;
+    *)
+      say "CHECKOUT-LEAN-DIFF-FAIL; fast-forward refused"
+      return 0
+      ;;
+  esac
   say "CHECKOUT BEHIND ${checkout_head:0:12} -> ${CHECKOUT_DEV_REV:0:12} ($behind commits); FF"
   if ! record_restart_obligation "" "" \
-      "checkout fast-forward ${checkout_head:0:12}->${CHECKOUT_DEV_REV:0:12}"; then
+      "checkout fast-forward ${checkout_head:0:12}->${CHECKOUT_DEV_REV:0:12}" \
+      "$checkout_head" "$CHECKOUT_DEV_REV" "$lean_report_required"; then
     say "CHECKOUT-ACTIVATION-INTENT-FAIL; fast-forward refused"
     return 0
   fi

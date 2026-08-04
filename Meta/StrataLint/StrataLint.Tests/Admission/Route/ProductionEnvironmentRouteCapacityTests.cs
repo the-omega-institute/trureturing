@@ -41,7 +41,10 @@ public sealed partial class ProductionEnvironmentTests
     public void RouteRejectsBlueprintBucketWhenModulePairWouldExceedLimit()
     {
         using var temporary = RouteRepository();
-        var files = BlueprintBucketFiles(RepositoryRules.DirectoryFileLimit - 1);
+        // A blueprinted module now occupies one structural slot (its .scribe.cs); the
+        // emitted .md is a projection SL-003 exempts, so the bucket must already be full
+        // for the next module to overflow it.
+        var files = BlueprintBucketFiles(RepositoryRules.DirectoryFileLimit);
         var environment = RouteEnvironment(temporary.Path, files);
 
         var result = environment.Route(["manifest.json"]);
@@ -49,7 +52,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.False(result.Success);
         Assert.Contains("Blueprint/D5/S0/Carrier", result.Error, StringComparison.Ordinal);
         Assert.Contains("projected occupancy 13 exceeds maximum 12", result.Error, StringComparison.Ordinal);
-        Assert.Contains("Carrier=11", result.Error, StringComparison.Ordinal);
+        Assert.Contains("Carrier=12", result.Error, StringComparison.Ordinal);
     }
 
     [Theory]
@@ -120,7 +123,9 @@ public sealed partial class ProductionEnvironmentTests
     public void RouteRejectsBlueprintBucketWhenBlueprintOriginWouldExceedLimit()
     {
         using var temporary = RouteRepository(Manifest("B", "Carrier", "Probe", "", "markdown", ""));
-        var files = BlueprintBucketFiles(RepositoryRules.DirectoryFileLimit - 1);
+        // Same arithmetic as the formal-origin case: the emitted .md is exempt, so the
+        // module's one structural slot only overflows an already-full bucket.
+        var files = BlueprintBucketFiles(RepositoryRules.DirectoryFileLimit);
         var environment = RouteEnvironment(temporary.Path, files);
 
         var result = environment.Route(["manifest.json"]);
@@ -128,7 +133,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.False(result.Success);
         Assert.Contains("Blueprint/D5/S0/Carrier", result.Error, StringComparison.Ordinal);
         Assert.Contains("projected occupancy 13 exceeds maximum 12", result.Error, StringComparison.Ordinal);
-        Assert.Contains("Carrier=11", result.Error, StringComparison.Ordinal);
+        Assert.Contains("Carrier=12", result.Error, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -174,7 +179,7 @@ public sealed partial class ProductionEnvironmentTests
 
     private static Dictionary<string, string> BlueprintBucketFiles(int count) =>
         Enumerable.Range(0, count).ToDictionary(
-            index => $"Blueprint/D5/S0/Carrier/Existing{index:D2}.md",
+            index => $"Blueprint/D5/S0/Carrier/Existing{index:D2}.scribe.cs",
             static _ => "<!-- fixture -->\n",
             StringComparer.Ordinal);
 

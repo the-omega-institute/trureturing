@@ -9,6 +9,37 @@ public sealed class DescribeReportTests
     private const string FormalPath = "D5/S1/Phase/Basic.lean";
 
     [Fact]
+    public void ReportObservesTitleDerivedIdsAndCrossModuleDeclarationsWithoutBlocking()
+    {
+        WithRepository(root =>
+        {
+            var targetDirectory = Path.Combine(root, "D5", "S1", "Scale");
+            Directory.CreateDirectory(targetDirectory);
+            File.WriteAllText(
+                Path.Combine(targetDirectory, "Embedding.lean"),
+                "namespace D5.S1.Scale.Embedding\n");
+            var document = ScribeDocument.Create(
+                DefinitionDsl.Header("D5/S1/Phase/Basic", "Observation fixture."),
+                Heading.Create("Observations"),
+                DefinitionDsl.Blocks(DocumentBlock.Describe.Remark(
+                    DescribeId.Create("same-title"),
+                    Heading.Create("Same title"),
+                    DescribeStatement.FromLean(DefinitionDsl.LeanTheorem(
+                        "D5/S1/Scale/Embedding.embedding_injective")),
+                    DescribeProvenance.RepoDerived(),
+                    DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("Content."))))));
+
+            var report = DescribeReport.Build(root, [document]);
+
+            Assert.Empty(report.RedFindings);
+            Assert.Contains(report.Observations, static item =>
+                item.Code == "title-derived-id" && item.Path.EndsWith("#describe/same-title", StringComparison.Ordinal));
+            Assert.Contains(report.Observations, static item =>
+                item.Code == "cross-module-lean-declaration" && item.Path.EndsWith("#describe/same-title", StringComparison.Ordinal));
+        });
+    }
+
+    [Fact]
     public void JsonReportIsAQueryableClassificationLedgerWithGradedObservations()
     {
         WithRepository(root =>
@@ -44,7 +75,7 @@ public sealed class DescribeReportTests
             var stats = rootElement.GetProperty("node_stats");
             Assert.Equal(4, stats.GetProperty("total").GetInt32());
             Assert.Equal(2, stats.GetProperty("formula_content_slots").GetInt32());
-            Assert.Equal(4, stats.GetProperty("formula_statements").GetInt32());
+            Assert.Equal(1, stats.GetProperty("formula_statements").GetInt32());
             Assert.Single(rootElement.GetProperty("suspected_novel").EnumerateArray());
             Assert.Single(rootElement.GetProperty("unassessed").EnumerateArray());
             Assert.Empty(rootElement.GetProperty("red_findings").EnumerateArray());
@@ -92,17 +123,18 @@ public sealed class DescribeReportTests
                 Heading.Create("Selector"),
                 BlockSequence.Create(
                 [
-                    new DocumentBlock.Describe(
+                    DocumentBlock.Describe.Theorem(
                         DescribeId.Create("missing-declaration"),
-                        DescribeKind.Theorem,
                         Heading.Create("Missing declaration"),
-                        DescribeStatement.FromLean(LeanDeclarationRef.Create(
-                            "D5/S1/Phase/Basic.missing_declaration")),
+                        LeanDeclarationRef.Create(
+                            "D5/S1/Phase/Basic.missing_declaration"),
+                        LatexStatement.Create("$x = x$"),
                         DescribeProvenance.RepoDerived(),
                         BlockSequence.Create(
                         [
                             DefinitionDsl.Paragraph(DefinitionDsl.Text("Missing selector fixture.")),
-                        ])),
+                        ])
+                    ),
                 ]));
             var leanReport = LeanAxiomReport.Create(
                 new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
@@ -214,16 +246,35 @@ public sealed class DescribeReportTests
         string id,
         string title,
         DescribeKind kind,
-        DescribeProvenance provenance) => new(
-        DescribeId.Create(id),
-        kind,
-        Heading.Create(title),
-        DescribeStatement.FromFormula(new Formula.Phi()),
-        provenance,
-        BlockSequence.Create(
-        [
-            DefinitionDsl.Paragraph(DefinitionDsl.Text("Typed narrative.")),
-        ]));
+        DescribeProvenance provenance)
+    {
+        var describeId = DescribeId.Create(id);
+        var heading = Heading.Create(title);
+        var content = DefinitionDsl.Blocks(
+            DefinitionDsl.Paragraph(DefinitionDsl.Text("Typed narrative.")));
+        var lean = DefinitionDsl.LeanTheorem("D5/S1/Phase/Basic.fixture_claim");
+        var latex = LatexStatement.Create("$x = x$");
+        return kind switch
+        {
+            DescribeKind.Definition => DocumentBlock.Describe.Definition(
+                describeId, heading, lean, provenance, content),
+            DescribeKind.Theorem => DocumentBlock.Describe.Theorem(
+                describeId, heading, lean, latex, provenance, content),
+            DescribeKind.Proposition => DocumentBlock.Describe.Proposition(
+                describeId, heading, lean, latex, provenance, content),
+            DescribeKind.Lemma => DocumentBlock.Describe.Lemma(
+                describeId, heading, lean, latex, provenance, content),
+            DescribeKind.Example => DocumentBlock.Describe.Example(
+                describeId, heading, new Formula.Phi(), provenance, content),
+            DescribeKind.Remark => DocumentBlock.Describe.Remark(
+                describeId,
+                heading,
+                DescribeStatement.FromFormula(new Formula.Phi()),
+                provenance,
+                content),
+            _ => throw new ArgumentOutOfRangeException(nameof(kind)),
+        };
+    }
 
     private static void WithRepository(
         Action<string> assertion,

@@ -158,21 +158,28 @@ restart_state_lock_release() {
 
 load_restart_obligation() {
   local path="$1" line now generation created_at previous_revision target_revision
+  local checkout_previous_revision checkout_target_revision lean_report_required
   local -a lines=()
   [[ -f "$path" && -r "$path" ]] || return 1
   while IFS= read -r line || [[ -n "$line" ]]; do
     lines+=("$line")
   done < "$path"
-  [[ "${#lines[@]}" -eq 4 \
+  [[ "${#lines[@]}" -eq 7 \
       && "${lines[0]}" == generation=* \
       && "${lines[1]}" == created_at=* \
       && "${lines[2]}" == previous_platform_rev=* \
-      && "${lines[3]}" == target_platform_rev=* ]] || return 1
+      && "${lines[3]}" == target_platform_rev=* \
+      && "${lines[4]}" == checkout_previous_rev=* \
+      && "${lines[5]}" == checkout_target_rev=* \
+      && "${lines[6]}" == lean_report_required=* ]] || return 1
 
   generation="${lines[0]#generation=}"
   created_at="${lines[1]#created_at=}"
   previous_revision="${lines[2]#previous_platform_rev=}"
   target_revision="${lines[3]#target_platform_rev=}"
+  checkout_previous_revision="${lines[4]#checkout_previous_rev=}"
+  checkout_target_revision="${lines[5]#checkout_target_rev=}"
+  lean_report_required="${lines[6]#lean_report_required=}"
   now="$(date -u +%s 2>/dev/null)" || return 1
   [[ "$generation" =~ ^[0-9]+-[0-9]+-[0-9]+$ ]] || return 1
   timestamp_is_usable "$created_at" "$now" || return 1
@@ -182,15 +189,52 @@ load_restart_obligation() {
     [[ "$previous_revision" =~ ^[0-9a-f]{40}$ \
         && "$target_revision" =~ ^[0-9a-f]{40}$ ]] || return 1
   fi
+  [[ "$lean_report_required" == "0" || "$lean_report_required" == "1" ]] \
+    || return 1
+  if [[ "$checkout_previous_revision" == "none" ]]; then
+    [[ "$checkout_target_revision" == "none" \
+        && "$lean_report_required" == "0" ]] || return 1
+  else
+    [[ "$checkout_previous_revision" =~ ^[0-9a-f]{40}$ \
+        && "$checkout_target_revision" =~ ^[0-9a-f]{40}$ ]] || return 1
+  fi
 
   RESTART_OBLIGATION_GENERATION="$generation"
+  RESTART_OBLIGATION_CREATED_AT="$created_at"
   RESTART_OBLIGATION_PREVIOUS_REV="$previous_revision"
   RESTART_OBLIGATION_TARGET_REV="$target_revision"
+  RESTART_OBLIGATION_CHECKOUT_PREVIOUS_REV="$checkout_previous_revision"
+  RESTART_OBLIGATION_CHECKOUT_TARGET_REV="$checkout_target_revision"
+  RESTART_OBLIGATION_LEAN_REPORT_REQUIRED="$lean_report_required"
+}
+
+persist_restart_obligation() {
+  local state="$1" generation="$2" created_at="$3"
+  local previous_revision="$4" target_revision="$5"
+  local checkout_previous_revision="$6" checkout_target_revision="$7"
+  local lean_report_required="$8" temporary
+  temporary="${state}.next-${generation}-$RANDOM"
+  if ! (set -o noclobber; {
+      printf 'generation=%s\n' "$generation"
+      printf 'created_at=%s\n' "$created_at"
+      printf 'previous_platform_rev=%s\n' "$previous_revision"
+      printf 'target_platform_rev=%s\n' "$target_revision"
+      printf 'checkout_previous_rev=%s\n' "$checkout_previous_revision"
+      printf 'checkout_target_rev=%s\n' "$checkout_target_revision"
+      printf 'lean_report_required=%s\n' "$lean_report_required"
+    } > "$temporary") 2>/dev/null \
+      || ! mv "$temporary" "$state"; then
+    rm -f -- "$temporary" 2>/dev/null || true
+    return 1
+  fi
 }
 
 record_restart_obligation() {
   local previous_revision="$1" target_revision="$2" reason="$3"
-  local state temporary now generation existing_generation existing_previous existing_target
+  local checkout_previous_revision="${4:-}" checkout_target_revision="${5:-}"
+  local lean_report_required="${6:-0}"
+  local state now generation existing_generation existing_previous existing_target
+  local existing_checkout_previous existing_checkout_target existing_lean_report_required
   state="$(restart_activation_state_path)"
   [[ -d "$(dirname -- "$state")" ]] || {
     say "RESTART-OBLIGATION WRITE-FAIL: state directory unavailable; refusing $reason"
@@ -209,10 +253,21 @@ record_restart_obligation() {
     fi
     existing_previous="$RESTART_OBLIGATION_PREVIOUS_REV"
     existing_target="$RESTART_OBLIGATION_TARGET_REV"
+    existing_checkout_previous="$RESTART_OBLIGATION_CHECKOUT_PREVIOUS_REV"
+    existing_checkout_target="$RESTART_OBLIGATION_CHECKOUT_TARGET_REV"
+    existing_lean_report_required="$RESTART_OBLIGATION_LEAN_REPORT_REQUIRED"
     existing_generation="$RESTART_OBLIGATION_GENERATION"
     if [[ "$existing_previous" != "none" ]]; then
       previous_revision="$existing_previous"
       [[ -n "$target_revision" ]] || target_revision="$existing_target"
+    fi
+    if [[ "$existing_checkout_previous" != "none" ]]; then
+      checkout_previous_revision="$existing_checkout_previous"
+      [[ -n "$checkout_target_revision" ]] \
+        || checkout_target_revision="$existing_checkout_target"
+    fi
+    if [[ "$existing_lean_report_required" == "1" ]]; then
+      lean_report_required=1
     fi
   fi
 
@@ -230,6 +285,26 @@ record_restart_obligation() {
     say "RESTART-OBLIGATION WRITE-FAIL: invalid revisions; refusing $reason"
     return 1
   fi
+  [[ -n "$checkout_previous_revision" ]] || checkout_previous_revision="none"
+  [[ -n "$checkout_target_revision" ]] || checkout_target_revision="none"
+  if [[ "$lean_report_required" != "0" && "$lean_report_required" != "1" ]]; then
+    restart_state_lock_release 2>/dev/null || true
+    say "RESTART-OBLIGATION WRITE-FAIL: invalid Lean report flag; refusing $reason"
+    return 1
+  fi
+  if [[ "$checkout_previous_revision" == "none" ]]; then
+    if [[ "$checkout_target_revision" != "none" \
+        || "$lean_report_required" != "0" ]]; then
+      restart_state_lock_release 2>/dev/null || true
+      say "RESTART-OBLIGATION WRITE-FAIL: missing checkout origin; refusing $reason"
+      return 1
+    fi
+  elif [[ ! "$checkout_previous_revision" =~ ^[0-9a-f]{40}$ \
+      || ! "$checkout_target_revision" =~ ^[0-9a-f]{40}$ ]]; then
+    restart_state_lock_release 2>/dev/null || true
+    say "RESTART-OBLIGATION WRITE-FAIL: invalid checkout revisions; refusing $reason"
+    return 1
+  fi
 
   now="$(date -u +%s 2>/dev/null)" || now=""
   if ! timestamp_is_usable "$now" "$now"; then
@@ -241,15 +316,11 @@ record_restart_obligation() {
   while [[ "$generation" == "${existing_generation:-}" ]]; do
     generation="${now}-$$-${RANDOM}"
   done
-  temporary="${state}.next-${generation}"
-  if ! (set -o noclobber; {
-      printf 'generation=%s\n' "$generation"
-      printf 'created_at=%s\n' "$now"
-      printf 'previous_platform_rev=%s\n' "$previous_revision"
-      printf 'target_platform_rev=%s\n' "$target_revision"
-    } > "$temporary") 2>/dev/null \
-      || ! mv "$temporary" "$state"; then
-    rm -f -- "$temporary" 2>/dev/null || true
+  if ! persist_restart_obligation \
+      "$state" "$generation" "$now" \
+      "$previous_revision" "$target_revision" \
+      "$checkout_previous_revision" "$checkout_target_revision" \
+      "$lean_report_required"; then
     restart_state_lock_release 2>/dev/null || true
     say "RESTART-OBLIGATION WRITE-FAIL: persistence failed; refusing $reason"
     return 1
@@ -261,6 +332,81 @@ record_restart_obligation() {
     return 1
   fi
   say "RESTART-OBLIGATION RECORDED: generation $generation before $reason"
+}
+
+clear_lean_report_requirement() {
+  local state="$1" verified_generation="$2" current_generation
+  if ! restart_state_lock_acquire "$state"; then
+    say "LEAN-REPORT-OBLIGATION RETAINED: generation $verified_generation; state locked"
+    return 1
+  fi
+  if ! load_restart_obligation "$state"; then
+    restart_state_lock_release 2>/dev/null || true
+    say "LEAN-REPORT-OBLIGATION RETAINED: generation $verified_generation changed to invalid state"
+    return 1
+  fi
+  current_generation="$RESTART_OBLIGATION_GENERATION"
+  if [[ "$current_generation" != "$verified_generation" ]]; then
+    restart_state_lock_release 2>/dev/null || true
+    say "LEAN-REPORT-OBLIGATION RETAINED: newer generation $current_generation superseded generation $verified_generation"
+    return 1
+  fi
+  if ! persist_restart_obligation \
+      "$state" "$current_generation" "$RESTART_OBLIGATION_CREATED_AT" \
+      "$RESTART_OBLIGATION_PREVIOUS_REV" "$RESTART_OBLIGATION_TARGET_REV" \
+      "$RESTART_OBLIGATION_CHECKOUT_PREVIOUS_REV" \
+      "$RESTART_OBLIGATION_CHECKOUT_TARGET_REV" 0; then
+    restart_state_lock_release 2>/dev/null || true
+    say "LEAN-REPORT-OBLIGATION RETAINED: generation $verified_generation could not be persisted"
+    return 1
+  fi
+  if ! restart_state_lock_release; then
+    say "LEAN-REPORT-OBLIGATION RETAINED: generation $verified_generation but state lock remained"
+    return 1
+  fi
+}
+
+reconcile_lean_report_obligation() {
+  local state="$1" verified_generation="$2" make_bin="${FKST_MAKE_BIN:-}"
+  local rebuild_rc checkout_head
+  checkout_head="$(git -C "$FKST_HOST_ROOT" rev-parse HEAD 2>/dev/null)" || checkout_head=""
+  if [[ ! "$checkout_head" =~ ^[0-9a-f]{40}$ ]]; then
+    say "LEAN-REPORT-REBUILD FAIL: deployed checkout HEAD is unreadable; obligation retained"
+    return 1
+  fi
+  if [[ "$checkout_head" == "$RESTART_OBLIGATION_CHECKOUT_PREVIOUS_REV" ]]; then
+    if ! clear_lean_report_requirement "$state" "$verified_generation"; then
+      return 1
+    fi
+    say "LEAN-REPORT-REBUILD NOT REQUIRED: generation $verified_generation target not deployed"
+    return 0
+  fi
+  if [[ "$checkout_head" != "$RESTART_OBLIGATION_CHECKOUT_TARGET_REV" ]] \
+      && ! git -C "$FKST_HOST_ROOT" merge-base --is-ancestor \
+        "$RESTART_OBLIGATION_CHECKOUT_TARGET_REV" "$checkout_head" >/dev/null 2>&1; then
+    say "LEAN-REPORT-REBUILD FAIL: deployed checkout HEAD ${checkout_head:0:12} does not reconcile with generation $verified_generation; obligation retained"
+    return 1
+  fi
+  if [[ -z "$make_bin" ]]; then
+    make_bin="$(command -v make 2>/dev/null)" || make_bin=""
+  fi
+  if [[ "$make_bin" != /* || ! -f "$make_bin" || ! -x "$make_bin" ]]; then
+    say "LEAN-REPORT-REBUILD FAIL: make is not an executable absolute path: ${make_bin:-missing}"
+    return 1
+  fi
+
+  say "LEAN-REPORT-REBUILD REQUIRED: generation $verified_generation checkout ${RESTART_OBLIGATION_CHECKOUT_PREVIOUS_REV:0:12}->${RESTART_OBLIGATION_CHECKOUT_TARGET_REV:0:12}"
+  if "$make_bin" -C "$FKST_HOST_ROOT" lean-report; then
+    if ! clear_lean_report_requirement "$state" "$verified_generation"; then
+      return 1
+    fi
+    say "LEAN-REPORT-REBUILD OK: generation $verified_generation"
+    return 0
+  else
+    rebuild_rc=$?
+  fi
+  say "LEAN-REPORT-REBUILD FAIL: generation $verified_generation make lean-report exit $rebuild_rc; obligation retained"
+  return 1
 }
 
 ensure_restart_defer_state() {
@@ -374,6 +520,12 @@ restart_if_needed() {
       ACTIVATION_ROLLBACK_REV="$RESTART_OBLIGATION_PREVIOUS_REV"
       PLATFORM_CURRENT_REV="$RESTART_OBLIGATION_PREVIOUS_REV"
       PLATFORM_DEV_REV="$RESTART_OBLIGATION_TARGET_REV"
+    fi
+    if [[ "$RESTART_OBLIGATION_LEAN_REPORT_REQUIRED" == "1" ]]; then
+      if ! reconcile_lean_report_obligation "$state" "$verified_generation"; then
+        say "RESTART-OBLIGATION RETAINED: Lean report rebuild failed for generation $verified_generation"
+        return 1
+      fi
     fi
   else
     verified_generation="invalid"
