@@ -117,6 +117,27 @@ public sealed class CliOutcomeTests
         Assert.Equal(error, console.Error);
     }
 
+    [Theory]
+    [InlineData(0, "LEAN_REPORT_STATUS valid\n", "")]
+    [InlineData(1, "LEAN_REPORT_STATUS invalid stale report\n", "")]
+    [InlineData(2, "", "LEAN_REPORT_STATUS not-checked probe unavailable\n")]
+    public void LeanReportStatusPreservesItsThreeWayExitContract(
+        int expectedExit,
+        string output,
+        string error)
+    {
+        var console = new BufferedConsole();
+        var environment = new StubCliEnvironment(
+            Admitted(),
+            leanReportStatus: new ExplicitCommandResult(expectedExit, output, error));
+
+        var exitCode = CliApplication.Run(["lean-report-status"], environment, console);
+
+        Assert.Equal(expectedExit, exitCode);
+        Assert.Equal(output, console.Output);
+        Assert.Equal(error, console.Error);
+    }
+
     [Fact]
     public void ValidateBlueprintPinsDelegatesToTheAuthoringEnvironment()
     {
@@ -211,7 +232,8 @@ internal sealed class StubCliEnvironment(
     CommandResult? recordGolden = null,
     CommandResult? renewC0 = null,
     ExplicitCommandResult? echoVerify = null,
-    ExplicitCommandResult? blueprintPins = null) : ICliEnvironment
+    ExplicitCommandResult? blueprintPins = null,
+    ExplicitCommandResult? leanReportStatus = null) : ICliEnvironment
 {
     public AdmissionOutcome Check(IReadOnlyList<string> arguments) => outcome;
 
@@ -223,6 +245,9 @@ internal sealed class StubCliEnvironment(
 
     public CommandResult DigestStatus(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "digest status is not configured in this fixture");
+
+    public ExplicitCommandResult LeanReportStatus(IReadOnlyList<string> arguments) =>
+        leanReportStatus ?? new(2, string.Empty, "lean report status is not configured in this fixture");
 
     public ExplicitCommandResult EchoVerify(IReadOnlyList<string> arguments) =>
         echoVerify ?? new(2, string.Empty, "echo verify is not configured in this fixture");

@@ -252,6 +252,7 @@ run_activation_cycle() (
   sync_workspace_composition() { return 0; }
   gc_worktrees() { return 0; }
   gc_stuck_lean_builds() { return 0; }
+  reconcile_lean_report_invariant() { return 0; }
   check_launchd_conformance() { return 0; }
   main --host-config "$host_config"
 )

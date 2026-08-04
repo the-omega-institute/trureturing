@@ -16,6 +16,8 @@ internal interface ICliEnvironment
 
     CommandResult DigestStatus(IReadOnlyList<string> arguments);
 
+    ExplicitCommandResult LeanReportStatus(IReadOnlyList<string> arguments);
+
     ExplicitCommandResult EchoVerify(IReadOnlyList<string> arguments);
 
     CommandResult Ingest(IReadOnlyList<string> arguments);
@@ -106,7 +108,7 @@ internal static class CliApplication
         if (arguments.Count == 0)
         {
             console.WriteError(
-                "USAGE: StrataLint c0-renew|check|clean-lanes|coverage|cover-atom|digest-status|echo-verify|emit-formalization-receipt|ingest|golden-record|ledger-genesis|papergen|route|selftest|topology|validate-blueprint-pins|worktree|ledger-append|ledger-reattest|perf-append|perf-report|verify-conservative|evaluate-conservative-corpus\n");
+                "USAGE: StrataLint c0-renew|check|clean-lanes|coverage|cover-atom|digest-status|echo-verify|emit-formalization-receipt|ingest|golden-record|lean-report-status|ledger-genesis|papergen|route|selftest|topology|validate-blueprint-pins|worktree|ledger-append|ledger-reattest|perf-append|perf-report|verify-conservative|evaluate-conservative-corpus\n");
             return 2;
         }
 
@@ -123,6 +125,7 @@ internal static class CliApplication
             "digest-status" => RenderCommand(environment.DigestStatus(tail), console),
             "echo-verify" => RenderExplicit(environment.EchoVerify(tail), console),
             "ingest" => RenderCommand(environment.Ingest(tail), console),
+            "lean-report-status" => RenderExplicit(environment.LeanReportStatus(tail), console),
             "evaluate-conservative-corpus" =>
                 RenderExplicit(environment.EvaluateConservativeCorpus(tail), console),
             "golden-record" => RenderCommand(environment.RecordGolden(tail), console),

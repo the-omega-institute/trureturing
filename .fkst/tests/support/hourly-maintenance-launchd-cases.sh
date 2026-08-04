@@ -17,6 +17,7 @@ SH
   gc_worktrees() { return 0; }
   gc_stuck_lean_builds() { return 0; }
   restart_if_needed() { return 0; }
+  reconcile_lean_report_invariant() { return 0; }
 
   FKST_FAKE_MAKE_CALLS="$calls" FKST_MAKE_BIN="$root/bin/make" \
     main --host-config "$FIXTURE_HOST_CONFIG" \
@@ -45,6 +46,7 @@ SH
   gc_worktrees() { return 0; }
   gc_stuck_lean_builds() { return 0; }
   restart_if_needed() { return 0; }
+  reconcile_lean_report_invariant() { return 0; }
 
   if FKST_LAUNCHD_ENUMERATOR="$enumerator" FKST_MAKE_BIN=/usr/bin/make \
       main --host-config "$FIXTURE_HOST_CONFIG" >"$output" 2>&1; then
@@ -71,6 +73,7 @@ missing_launchd_provider_key_fails_maintenance_cycle() (
   gc_worktrees() { return 0; }
   gc_stuck_lean_builds() { return 0; }
   restart_if_needed() { return 0; }
+  reconcile_lean_report_invariant() { return 0; }
 
   if FKST_MAKE_BIN=/usr/bin/make \
       main --host-config "$incomplete" >"$output" 2>&1; then

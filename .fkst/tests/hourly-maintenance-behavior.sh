@@ -591,12 +591,16 @@ SH
 #!/usr/bin/env bash
 exit 0
 SH
-  chmod +x "$root/bin/pgrep" "$root/bin/gh" "$root/bin/make"
+  cat > "$root/bin/dotnet" <<'SH'
+#!/usr/bin/env bash
+printf 'LEAN_REPORT_STATUS valid\n'
+SH
+  chmod +x "$root/bin/pgrep" "$root/bin/gh" "$root/bin/make" "$root/bin/dotnet"
   # A live implement lease keeps this checkout-refresh case off the restart path.
   mkdir -p "$root/supervisor/slots/lane.lock"
   printf '%s\n' "$$" > "$root/supervisor/slots/lane.lock/owner"
 
-  env -i HOME="$root/home" PATH="/usr/bin:/bin" \
+  env -i HOME="$root/home" PATH="/usr/bin:/bin" FKST_DOTNET_BIN="$root/bin/dotnet" \
     /bin/bash "$SCRIPT_UNDER_TEST" --host-config "$FIXTURE_HOST_CONFIG" \
     >"$output" 2>&1 \
     || fail "stale repository contract blocked maintenance: $(<"$output")"
@@ -700,6 +704,11 @@ run_test "checkout Lean change rebuilds report before restart" checkout_lean_cha
 run_test "checkout non-Lean change does not rebuild report" checkout_non_lean_change_does_not_rebuild_report
 run_test "failed Lean report rebuild fails cycle and retains obligation" failed_lean_report_rebuild_fails_cycle_and_retains_obligation
 run_test "blocked Lean fast-forward does not rebuild report" blocked_lean_fast_forward_does_not_rebuild_report
+run_test "already-current stale checkout rebuilds and revalidates report" already_current_stale_checkout_rebuilds_and_revalidates_report
+run_test "invalid post-rebuild report fails without a second rebuild" invalid_post_rebuild_report_fails_without_a_second_rebuild
+run_test "obligation rebuild is not repeated by invariant reconciliation" obligation_rebuild_is_not_repeated_by_invariant_reconciliation
+run_test "not-checked report status fails cycle without rebuild" not_checked_report_status_fails_cycle_without_rebuild
+run_test "unrelated digest failure does not authorize report rebuild" unrelated_digest_failure_does_not_authorize_report_rebuild
 run_test "checkout untracked files do not block fast-forward" checkout_untracked_files_do_not_block_fast_forward
 run_test "checkout divergence refuses auto fast-forward" checkout_divergence_refuses_auto_fast_forward
 run_test "checkout status failure refuses auto fast-forward" checkout_status_failure_refuses_auto_fast_forward

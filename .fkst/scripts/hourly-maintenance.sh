@@ -15,6 +15,10 @@ CHECKOUT_DEV_REV=""
 PLATFORM_CURRENT_REV=""
 PLATFORM_DEV_REV=""
 ACTIVATION_ROLLBACK_REV=""
+LEAN_REPORT_REBUILT_THIS_CYCLE=0
+LEAN_REPORT_STATUS_CHECKED_THIS_CYCLE=0
+LEAN_REPORT_STATUS_STATE="not-checked"
+LEAN_REPORT_STATUS_DETAIL="not observed"
 
 say() {
   printf '[%s] %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$*" \
@@ -663,6 +667,10 @@ launchd_service_state() {
 
 main() {
   local host_config="${HOST_CONFIG:-}" validate_only="${VALIDATE_ONLY:-0}"
+  LEAN_REPORT_REBUILT_THIS_CYCLE=0
+  LEAN_REPORT_STATUS_CHECKED_THIS_CYCLE=0
+  LEAN_REPORT_STATUS_STATE="not-checked"
+  LEAN_REPORT_STATUS_DETAIL="not observed"
   [[ "$validate_only" == "0" || "$validate_only" == "1" ]] \
     || { printf 'hourly-maintenance: VALIDATE_ONLY must be 0 or 1\n' >&2; return 2; }
   while [[ "$#" -gt 0 ]]; do
@@ -700,6 +708,7 @@ main() {
   gc_worktrees
   gc_stuck_lean_builds
   restart_if_needed || return
+  reconcile_lean_report_invariant || return
   check_launchd_conformance
 }
 

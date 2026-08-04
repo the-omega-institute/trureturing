@@ -190,6 +190,9 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 scribeEmissionVerifier,
                 arguments);
 
+    public ExplicitCommandResult LeanReportStatus(IReadOnlyList<string> arguments) =>
+        LeanReportStatusCommand.Run(repository, leanReportSource, arguments);
+
     public ExplicitCommandResult EchoVerify(IReadOnlyList<string> arguments) =>
         scribeEmissionVerifier is null
             ? new ExplicitCommandResult(

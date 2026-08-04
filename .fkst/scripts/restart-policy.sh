@@ -397,6 +397,12 @@ reconcile_lean_report_obligation() {
 
   say "LEAN-REPORT-REBUILD REQUIRED: generation $verified_generation checkout ${RESTART_OBLIGATION_CHECKOUT_PREVIOUS_REV:0:12}->${RESTART_OBLIGATION_CHECKOUT_TARGET_REV:0:12}"
   if "$make_bin" -C "$FKST_HOST_ROOT" lean-report; then
+    LEAN_REPORT_REBUILT_THIS_CYCLE=1
+    probe_lean_report_status
+    if [[ "$LEAN_REPORT_STATUS_STATE" != "valid" ]]; then
+      say "LEAN-REPORT-REBUILD FAIL: generation $verified_generation rebuilt report status $LEAN_REPORT_STATUS_STATE: $LEAN_REPORT_STATUS_DETAIL; obligation retained"
+      return 1
+    fi
     if ! clear_lean_report_requirement "$state" "$verified_generation"; then
       return 1
     fi
@@ -406,6 +412,126 @@ reconcile_lean_report_obligation() {
     rebuild_rc=$?
   fi
   say "LEAN-REPORT-REBUILD FAIL: generation $verified_generation make lean-report exit $rebuild_rc; obligation retained"
+  return 1
+}
+
+probe_lean_report_status() {
+  local dotnet_bin="${FKST_DOTNET_BIN:-}" timeout_bin="${FKST_TIMEOUT_BIN:-}"
+  local budget="${FKST_LEAN_REPORT_STATUS_BUDGET_S:-60}"
+  local project output verdict_lines verdict verdict_count probe_rc
+  LEAN_REPORT_STATUS_CHECKED_THIS_CYCLE=1
+  LEAN_REPORT_STATUS_STATE="not-checked"
+  LEAN_REPORT_STATUS_DETAIL="probe did not complete"
+
+  if [[ ! "$budget" =~ ^[1-9][0-9]*$ ]]; then
+    LEAN_REPORT_STATUS_DETAIL="invalid probe budget: $budget"
+    return 0
+  fi
+  if [[ -z "$dotnet_bin" ]]; then
+    dotnet_bin="$(command -v dotnet 2>/dev/null)" || dotnet_bin=""
+  fi
+  if [[ "$dotnet_bin" != /* || ! -f "$dotnet_bin" || ! -x "$dotnet_bin" ]]; then
+    LEAN_REPORT_STATUS_DETAIL="dotnet is not an executable absolute path: ${dotnet_bin:-missing}"
+    return 0
+  fi
+  if [[ "$timeout_bin" != /* || ! -f "$timeout_bin" || ! -x "$timeout_bin" ]]; then
+    LEAN_REPORT_STATUS_DETAIL="timeout is not an executable absolute path: ${timeout_bin:-missing}"
+    return 0
+  fi
+
+  project="$FKST_HOST_ROOT/Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj"
+  output="$(
+    "$timeout_bin" "$budget" "$dotnet_bin" run \
+      --project "$project" \
+      --configuration Release --verbosity quiet -- \
+      lean-report-status 2>&1
+  )"
+  probe_rc=$?
+  verdict_lines="$(
+    printf '%s\n' "$output" \
+      | grep -aE '^LEAN_REPORT_STATUS (valid|invalid|not-checked)( |$)' \
+      || true
+  )"
+  verdict_count="$(printf '%s\n' "$verdict_lines" | awk 'NF { count += 1 } END { print count + 0 }')"
+  if [[ "$verdict_count" != "1" ]]; then
+    LEAN_REPORT_STATUS_DETAIL="probe exit $probe_rc emitted $verdict_count typed verdicts"
+    return 0
+  fi
+  verdict="$verdict_lines"
+  case "$probe_rc:$verdict" in
+    "0:LEAN_REPORT_STATUS valid")
+      LEAN_REPORT_STATUS_STATE="valid"
+      LEAN_REPORT_STATUS_DETAIL="canonical report matches the current snapshot"
+      ;;
+    1:LEAN_REPORT_STATUS\ invalid\ *)
+      LEAN_REPORT_STATUS_STATE="invalid"
+      LEAN_REPORT_STATUS_DETAIL="${verdict#LEAN_REPORT_STATUS invalid }"
+      ;;
+    2:LEAN_REPORT_STATUS\ not-checked\ *)
+      LEAN_REPORT_STATUS_DETAIL="${verdict#LEAN_REPORT_STATUS not-checked }"
+      ;;
+    *)
+      LEAN_REPORT_STATUS_DETAIL="probe exit $probe_rc contradicted typed verdict: $verdict"
+      ;;
+  esac
+}
+
+reconcile_lean_report_invariant() {
+  local make_bin="${FKST_MAKE_BIN:-}" rebuild_rc
+  if [[ "$LEAN_REPORT_REBUILT_THIS_CYCLE" == "1" \
+      && "$LEAN_REPORT_STATUS_CHECKED_THIS_CYCLE" == "1" ]]; then
+    if [[ "$LEAN_REPORT_STATUS_STATE" == "valid" ]]; then
+      say "LEAN-REPORT-RECONCILE OK: rebuilt report is valid"
+      return 0
+    fi
+    say "LEAN-REPORT-RECONCILE FAIL: rebuilt report status $LEAN_REPORT_STATUS_STATE: $LEAN_REPORT_STATUS_DETAIL"
+    return 1
+  fi
+
+  probe_lean_report_status
+  case "$LEAN_REPORT_STATUS_STATE" in
+    valid)
+      say "LEAN-REPORT-STATUS VALID: canonical report matches current checkout"
+      return 0
+      ;;
+    not-checked)
+      say "LEAN-REPORT-STATUS NOT CHECKED: $LEAN_REPORT_STATUS_DETAIL"
+      return 1
+      ;;
+    invalid)
+      say "LEAN-REPORT-RECONCILE REQUIRED: $LEAN_REPORT_STATUS_DETAIL"
+      ;;
+    *)
+      say "LEAN-REPORT-STATUS NOT CHECKED: unknown typed state $LEAN_REPORT_STATUS_STATE"
+      return 1
+      ;;
+  esac
+
+  if [[ -z "$make_bin" ]]; then
+    make_bin="$(command -v make 2>/dev/null)" || make_bin=""
+  fi
+  if [[ "$make_bin" != /* || ! -f "$make_bin" || ! -x "$make_bin" ]]; then
+    say "LEAN-REPORT-RECONCILE FAIL: make is not an executable absolute path: ${make_bin:-missing}"
+    return 1
+  fi
+  if "$make_bin" -C "$FKST_HOST_ROOT" lean-report; then
+    LEAN_REPORT_REBUILT_THIS_CYCLE=1
+  else
+    rebuild_rc=$?
+    say "LEAN-REPORT-RECONCILE FAIL: make lean-report exit $rebuild_rc"
+    return 1
+  fi
+
+  probe_lean_report_status
+  if [[ "$LEAN_REPORT_STATUS_STATE" == "valid" ]]; then
+    say "LEAN-REPORT-RECONCILE OK: rebuilt report is valid"
+    return 0
+  fi
+  if [[ "$LEAN_REPORT_STATUS_STATE" == "invalid" ]]; then
+    say "LEAN-REPORT-RECONCILE FAIL: rebuilt report remains invalid: $LEAN_REPORT_STATUS_DETAIL"
+  else
+    say "LEAN-REPORT-RECONCILE FAIL: rebuilt report status not checked: $LEAN_REPORT_STATUS_DETAIL"
+  fi
   return 1
 }
 
