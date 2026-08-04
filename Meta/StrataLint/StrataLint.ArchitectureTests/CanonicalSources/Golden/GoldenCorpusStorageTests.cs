@@ -50,7 +50,7 @@ public sealed class GoldenCorpusStorageTests
         var cases = (IEnumerable)corpus.GetType().GetProperty(
             "Cases",
             BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(corpus)!;
-        Assert.Equal(119, cases.Cast<object>().Count());
+        Assert.Equal(StrataLint.Tests.GoldenCorpusShapeTests.ExpectedCaseCount, cases.Cast<object>().Count());
         Assert.Empty(Directory.EnumerateFiles(
             Path.Combine(root, "Meta", "StrataLint", "StrataLint.Cli", "Golden"),
             "GoldenCorpus.Cases*.cs"));

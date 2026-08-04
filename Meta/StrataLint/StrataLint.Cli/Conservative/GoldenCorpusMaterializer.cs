@@ -409,9 +409,9 @@ internal static partial class GoldenCorpusMaterializer
                         AddTask(caseName, files, reports, task);
                         break;
                     case GoldenMutation.PopulateDirectory:
-                        for (var index = 0; index < 12; index++)
+                        for (var index = 0; index < 13; index++)
                         {
-                            files[$"Blueprint/D5/S0/Carrier/Extra{index:00}.md"] = "fixture\n";
+                            files[$"Golden/cases/CapacityExtra{index:00}.toml"] = "fixture = true\n";
                         }
 
                         break;

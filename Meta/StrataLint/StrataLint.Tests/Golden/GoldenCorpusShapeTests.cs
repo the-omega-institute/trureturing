@@ -5,13 +5,15 @@ namespace StrataLint.Tests;
 
 public sealed class GoldenCorpusShapeTests
 {
+    public const int ExpectedCaseCount = 120;
+
     [Fact]
     public void CorpusContainsEveryTomlCaseExactlyOnce()
     {
         var corpus = TomlGoldenLoader.LoadRepository(FindRepositoryRoot());
 
         Assert.Equal(4, corpus.Files.Count);
-        Assert.Equal(119, corpus.Cases.Count);
+        Assert.Equal(ExpectedCaseCount, corpus.Cases.Count);
         Assert.Equal(6, corpus.Cases.Count(static item => item.ContractEpoch is not null));
         Assert.Equal(
             [
