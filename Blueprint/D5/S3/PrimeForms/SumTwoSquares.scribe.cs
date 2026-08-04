@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.PrimeForms;
 
@@ -16,7 +18,7 @@ internal sealed class SumTwoSquaresDocument : IScribeDocumentDefinition
                 LeanTheorem(
                     "D5/S3/PrimeForms/SumTwoSquares."
                     + "prime_eq_sq_add_sq_of_mod_four_eq_one"),
-                new Formula.Layout(FormulaLayoutMode.Display, new Formula.LatexSequence([new Formula.LatexWord(FormulaIdentifier.Create("p")), new Formula.LatexMacro(FormulaLatexMacro.EscapedSpace), new Formula.LatexMacro(FormulaLatexMacro.Text), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("prime"))]), new Formula.LatexMacro(FormulaLatexMacro.EscapedSpace), new Formula.LatexMacro(FormulaLatexMacro.Land), new Formula.LatexMacro(FormulaLatexMacro.EscapedSpace), new Formula.LatexWord(FormulaIdentifier.Create("p")), new Formula.LatexMacro(FormulaLatexMacro.Equiv), new Formula.LatexSpace(), new Formula.LatexDigits([1]), new Formula.LatexMacro(FormulaLatexMacro.EscapedSpace), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexMacro(FormulaLatexMacro.Operatorname), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("mod"))]), new Formula.LatexMacro(FormulaLatexMacro.EscapedSpace), new Formula.LatexDigits([4]), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis), new Formula.LatexMacro(FormulaLatexMacro.Quad), new Formula.LatexMacro(FormulaLatexMacro.Rightarrow), new Formula.LatexMacro(FormulaLatexMacro.Quad), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.Exists), new Formula.LatexSpace(), new Formula.LatexWord(FormulaIdentifier.Create("a")), new Formula.LatexSymbol(FormulaLatexSymbol.Comma), new Formula.LatexWord(FormulaIdentifier.Create("b")), new Formula.LatexMacro(FormulaLatexMacro.In), new Formula.LatexMacro(FormulaLatexMacro.Mathbb), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("N"))]), new Formula.LatexSymbol(FormulaLatexSymbol.Comma), new Formula.LatexMacro(FormulaLatexMacro.EscapedSpace), new Formula.LatexWord(FormulaIdentifier.Create("p")), new Formula.LatexSymbol(FormulaLatexSymbol.Equal), new Formula.LatexWord(FormulaIdentifier.Create("a")), new Formula.LatexSymbol(FormulaLatexSymbol.Caret), new Formula.LatexDigits([2]), new Formula.LatexSymbol(FormulaLatexSymbol.Plus), new Formula.LatexWord(FormulaIdentifier.Create("b")), new Formula.LatexSymbol(FormulaLatexSymbol.Caret), new Formula.LatexDigits([2])])),
+                Disp(Seq(F.Id("p"), Esc, F.Text, Grp(F.Id("prime")), Esc, Land, Esc, F.Id("p"), Equiv, Sp, D(1), Esc, Open, Operatorname, Grp(F.Id("mod")), Esc, D(4), Close, Quad, Rightarrow, Quad, Sp, Exists, Sp, F.Id("a"), Comma, F.Id("b"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Esc, F.Id("p"), Eq, F.Id("a"), Caret, D(2), Plus, F.Id("b"), Caret, D(2))),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "For every natural prime p whose remainder modulo four is one, there are "

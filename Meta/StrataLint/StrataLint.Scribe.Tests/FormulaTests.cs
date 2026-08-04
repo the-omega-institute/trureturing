@@ -39,7 +39,12 @@ public sealed class FormulaTests
             .Order(StringComparer.Ordinal)
             .ToArray();
 
-        Assert.Equal(["StrataLint.Scribe.DefinitionDsl.Id"], rawEntrypoints);
+        Assert.Equal(
+        [
+            "StrataLint.Scribe.DefinitionDsl.Id",
+            "StrataLint.Scribe.FormulaDsl.Id",
+        ],
+            rawEntrypoints);
     }
 
     [Fact]

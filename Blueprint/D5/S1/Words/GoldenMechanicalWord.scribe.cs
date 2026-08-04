@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Words;
 
@@ -18,7 +20,7 @@ internal sealed class GoldenMechanicalWordDocument : IScribeDocumentDefinition
                     H("A letter is one exactly on the local window"),
                     LeanTheorem(
                         "D5/S1/Words/GoldenMechanicalWord.golden_mechanical_letter_eq_one_iff"),
-                    new Formula.Layout(FormulaLayoutMode.Display, new Formula.LatexSequence([new Formula.LatexMacro(FormulaLatexMacro.Forall), new Formula.LatexSpace(), new Formula.LatexWord(FormulaIdentifier.Create("n")), new Formula.LatexMacro(FormulaLatexMacro.In), new Formula.LatexMacro(FormulaLatexMacro.Mathbb), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("N"))]), new Formula.LatexSymbol(FormulaLatexSymbol.Comma), new Formula.LatexMacro(FormulaLatexMacro.EscapedSpace), new Formula.LatexWord(FormulaIdentifier.Create("s")), new Formula.LatexSymbol(FormulaLatexSymbol.Underscore), new Formula.LatexWord(FormulaIdentifier.Create("n")), new Formula.LatexSymbol(FormulaLatexSymbol.Equal), new Formula.LatexDigits([1]), new Formula.LatexMacro(FormulaLatexMacro.EscapedSpace), new Formula.LatexMacro(FormulaLatexMacro.Leftrightarrow), new Formula.LatexMacro(FormulaLatexMacro.EscapedSpace), new Formula.LatexMacro(FormulaLatexMacro.OpenBrace), new Formula.LatexWord(FormulaIdentifier.Create("n")), new Formula.LatexMacro(FormulaLatexMacro.Varphi), new Formula.LatexMacro(FormulaLatexMacro.CloseBrace), new Formula.LatexMacro(FormulaLatexMacro.In), new Formula.LatexSymbol(FormulaLatexSymbol.OpenBracket), new Formula.LatexDigits([1]), new Formula.LatexSymbol(FormulaLatexSymbol.Minus), new Formula.LatexMacro(FormulaLatexMacro.Varphi), new Formula.LatexSymbol(FormulaLatexSymbol.Caret), new Formula.LatexGroup([new Formula.LatexSymbol(FormulaLatexSymbol.Minus), new Formula.LatexDigits([1])]), new Formula.LatexSymbol(FormulaLatexSymbol.Comma), new Formula.LatexDigits([1]), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis)])),
+                    Disp(Seq(Forall, Sp, F.Id("n"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Esc, F.Id("s"), Underscore, F.Id("n"), Eq, D(1), Esc, Leftrightarrow, Esc, OpenBrace, F.Id("n"), Varphi, CloseBrace, InMacro, OpenBracket, D(1), Minus, Varphi, Caret, Grp(Minus, D(1)), Comma, D(1), Close)),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "For every natural index, the floor-difference letter equals one if and only if the golden fractional coordinate lies in the stated half-open interval. No complexity, substitution, or cut-and-project classification is asserted.")))

@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Arith;
 
@@ -18,7 +20,7 @@ internal sealed class EuclidLemmaDocument : IScribeDocumentDefinition
                 H("A prime dividing a product divides a factor"),
                 LeanTheorem(
                     "D5/S3/Arith/EuclidLemma.euclid_prime_dvd_mul"),
-                new Formula.Layout(FormulaLayoutMode.Display, new Formula.LatexSequence([new Formula.LatexMacro(FormulaLatexMacro.Forall), new Formula.LatexSpace(), new Formula.LatexWord(FormulaIdentifier.Create("p")), new Formula.LatexSymbol(FormulaLatexSymbol.Comma), new Formula.LatexWord(FormulaIdentifier.Create("a")), new Formula.LatexSymbol(FormulaLatexSymbol.Comma), new Formula.LatexWord(FormulaIdentifier.Create("b")), new Formula.LatexMacro(FormulaLatexMacro.In), new Formula.LatexMacro(FormulaLatexMacro.Mathbb), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("N"))]), new Formula.LatexSymbol(FormulaLatexSymbol.Comma), new Formula.LatexMacro(FormulaLatexMacro.EscapedSpace), new Formula.LatexWord(FormulaIdentifier.Create("p")), new Formula.LatexMacro(FormulaLatexMacro.EscapedSpace), new Formula.LatexMacro(FormulaLatexMacro.Text), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("prime"))]), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.Land), new Formula.LatexSpace(), new Formula.LatexWord(FormulaIdentifier.Create("p")), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.Mid), new Formula.LatexSpace(), new Formula.LatexWord(FormulaIdentifier.Create("a")), new Formula.LatexMacro(FormulaLatexMacro.Cdot), new Formula.LatexSpace(), new Formula.LatexWord(FormulaIdentifier.Create("b")), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.Rightarrow), new Formula.LatexSpace(), new Formula.LatexWord(FormulaIdentifier.Create("p")), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.Mid), new Formula.LatexSpace(), new Formula.LatexWord(FormulaIdentifier.Create("a")), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.Lor), new Formula.LatexSpace(), new Formula.LatexWord(FormulaIdentifier.Create("p")), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.Mid), new Formula.LatexSpace(), new Formula.LatexWord(FormulaIdentifier.Create("b"))])),
+                Disp(Seq(Forall, Sp, F.Id("p"), Comma, F.Id("a"), Comma, F.Id("b"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Esc, F.Id("p"), Esc, F.Text, Grp(F.Id("prime")), Sp, Land, Sp, F.Id("p"), Sp, Mid, Sp, F.Id("a"), Cdot, Sp, F.Id("b"), Sp, Rightarrow, Sp, F.Id("p"), Sp, Mid, Sp, F.Id("a"), Sp, Lor, Sp, F.Id("p"), Sp, Mid, Sp, F.Id("b"))),
                 DescribeProvenance.LiteratureAttested(Apostol),
                 Blocks(Paragraph(Text(
                     "For natural numbers, a prime that divides a product divides at least one "

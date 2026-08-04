@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S0.Conventions;
 
@@ -27,13 +29,13 @@ internal sealed class GeometricWeightsDocument : IScribeDocumentDefinition
     private static Formula GeometricNoGoFormula()
     {
         Formula equation = Equal(
-            Multiply(Id("w1"), new Formula.Power(Id("Lambda"), Id("k"))),
-            Multiply(Id("c"), new Formula.Subscript(Id("F"), Add(Id("k"), Num(2)))));
+            Multiply(DefinitionDsl.Id("w1"), new Formula.Power(DefinitionDsl.Id("Lambda"), DefinitionDsl.Id("k"))),
+            Multiply(DefinitionDsl.Id("c"), new Formula.Subscript(DefinitionDsl.Id("F"), Add(DefinitionDsl.Id("k"), Num(2)))));
         Formula allIndices = new Formula.Bind(
             FormulaQuantifier.ForAll,
             FormulaIdentifier.Create("k"),
-            Id("Naturals"),
+            DefinitionDsl.Id("Naturals"),
             equation);
-        return new Formula.Layout(FormulaLayoutMode.Inline, new Formula.LatexSequence([new Formula.LatexMacro(FormulaLatexMacro.Neg), new Formula.LatexMacro(FormulaLatexMacro.Exists), new Formula.LatexMacro(FormulaLatexMacro.ThinSpace), new Formula.LatexWord(FormulaIdentifier.Create("w")), new Formula.LatexSymbol(FormulaLatexSymbol.Underscore), new Formula.LatexDigits([1]), new Formula.LatexSymbol(FormulaLatexSymbol.Comma), new Formula.LatexMacro(FormulaLatexMacro.Lambda), new Formula.LatexSymbol(FormulaLatexSymbol.Comma), new Formula.LatexWord(FormulaIdentifier.Create("c")), new Formula.LatexMacro(FormulaLatexMacro.In), new Formula.LatexMacro(FormulaLatexMacro.Mathbb), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("Q"))]), new Formula.LatexSymbol(FormulaLatexSymbol.Comma), new Formula.LatexMacro(FormulaLatexMacro.EscapedSpace), new Formula.LatexWord(FormulaIdentifier.Create("c")), new Formula.LatexMacro(FormulaLatexMacro.Neq), new Formula.LatexDigits([0]), new Formula.LatexSymbol(FormulaLatexSymbol.Colon), new Formula.LatexMacro(FormulaLatexMacro.EscapedSpace), new Formula.LatexWord(FormulaIdentifier.Create("w")), new Formula.LatexSymbol(FormulaLatexSymbol.Underscore), new Formula.LatexDigits([1]), new Formula.LatexMacro(FormulaLatexMacro.Lambda), new Formula.LatexSymbol(FormulaLatexSymbol.Caret), new Formula.LatexWord(FormulaIdentifier.Create("k")), new Formula.LatexSymbol(FormulaLatexSymbol.Equal), new Formula.LatexWord(FormulaIdentifier.Create("cF")), new Formula.LatexSymbol(FormulaLatexSymbol.Underscore), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("k")), new Formula.LatexSymbol(FormulaLatexSymbol.Plus), new Formula.LatexDigits([2])]), new Formula.LatexMacro(FormulaLatexMacro.EscapedSpace), new Formula.LatexMacro(FormulaLatexMacro.Text), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("for")), new Formula.LatexSpace(), new Formula.LatexWord(FormulaIdentifier.Create("every")), new Formula.LatexSpace()]), new Formula.LatexWord(FormulaIdentifier.Create("k")), new Formula.LatexMacro(FormulaLatexMacro.Ge), new Formula.LatexDigits([0]), new Formula.LatexSymbol(FormulaLatexSymbol.Period)]));
+        return In(Seq(Neg, Exists, Thin, F.Id("w"), Underscore, D(1), Comma, Lambda, Comma, F.Id("c"), InMacro, Mathbb, Grp(F.Id("Q")), Comma, Esc, F.Id("c"), Neq, D(0), Colon, Esc, F.Id("w"), Underscore, D(1), Lambda, Caret, F.Id("k"), Eq, F.Id("cF"), Underscore, Grp(F.Id("k"), Plus, D(2)), Esc, F.Text, Grp(F.Id("for"), Sp, F.Id("every"), Sp), F.Id("k"), Ge, D(0), Dot));
     }
 }

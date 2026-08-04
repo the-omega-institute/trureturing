@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Scale;
 
@@ -6,9 +8,9 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create()
     {
-        var a = Id("a");
-        var b = Id("b");
-        var x = Id("x");
+        var a = DefinitionDsl.Id("a");
+        var b = DefinitionDsl.Id("b");
+        var x = DefinitionDsl.Id("x");
         var coordinates = Add(a, Multiply(b, new Formula.Phi()));
         var embedded = Call("embedding", x);
         var conjugate = Call("conj", x);
@@ -29,7 +31,7 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
                     H("Coordinate formula"),
 
                         LeanTheorem("D5/S1/Scale/Embedding.embedding_apply"),
-                    new Formula.Layout(FormulaLayoutMode.Inline, new Formula.LatexSequence([new Formula.LatexMacro(FormulaLatexMacro.Forall), new Formula.LatexSpace(), new Formula.LatexWord(FormulaIdentifier.Create("x")), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.In), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.Operatorname), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("GoldenInt"))]), new Formula.LatexSymbol(FormulaLatexSymbol.Comma), new Formula.LatexMacro(FormulaLatexMacro.EscapedSpace), new Formula.LatexMacro(FormulaLatexMacro.Operatorname), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("embedding"))]), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexWord(FormulaIdentifier.Create("x")), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis), new Formula.LatexSymbol(FormulaLatexSymbol.Equal), new Formula.LatexWord(FormulaIdentifier.Create("x")), new Formula.LatexSymbol(FormulaLatexSymbol.Period), new Formula.LatexWord(FormulaIdentifier.Create("a")), new Formula.LatexSymbol(FormulaLatexSymbol.Plus), new Formula.LatexWord(FormulaIdentifier.Create("x")), new Formula.LatexSymbol(FormulaLatexSymbol.Period), new Formula.LatexWord(FormulaIdentifier.Create("b")), new Formula.LatexMacro(FormulaLatexMacro.Varphi)])),
+                    In(Seq(Forall, Sp, F.Id("x"), Sp, InMacro, Sp, Operatorname, Grp(F.Id("GoldenInt")), Comma, Esc, Operatorname, Grp(F.Id("embedding")), Open, F.Id("x"), Close, Eq, F.Id("x"), Dot, F.Id("a"), Plus, F.Id("x"), Dot, F.Id("b"), Varphi)),
                     DescribeProvenance.RepoDerived(),
                     Blocks(new DocumentBlock.DisplayFormula(
                         Equal(Call("embedding", coordinates), coordinates)))
@@ -56,7 +58,7 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
                     H("Injectivity"),
 
                         LeanTheorem("D5/S1/Scale/Embedding.embedding_injective"),
-                    new Formula.Layout(FormulaLayoutMode.Inline, new Formula.LatexSequence([new Formula.LatexMacro(FormulaLatexMacro.Forall), new Formula.LatexSpace(), new Formula.LatexWord(FormulaIdentifier.Create("x")), new Formula.LatexSymbol(FormulaLatexSymbol.Comma), new Formula.LatexWord(FormulaIdentifier.Create("y")), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.In), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.Operatorname), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("GoldenInt"))]), new Formula.LatexSymbol(FormulaLatexSymbol.Comma), new Formula.LatexMacro(FormulaLatexMacro.EscapedSpace), new Formula.LatexMacro(FormulaLatexMacro.Operatorname), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("embedding"))]), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexWord(FormulaIdentifier.Create("x")), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis), new Formula.LatexSymbol(FormulaLatexSymbol.Equal), new Formula.LatexMacro(FormulaLatexMacro.Operatorname), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("embedding"))]), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexWord(FormulaIdentifier.Create("y")), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.Rightarrow), new Formula.LatexSpace(), new Formula.LatexWord(FormulaIdentifier.Create("x")), new Formula.LatexSymbol(FormulaLatexSymbol.Equal), new Formula.LatexWord(FormulaIdentifier.Create("y"))])),
+                    In(Seq(Forall, Sp, F.Id("x"), Comma, F.Id("y"), Sp, InMacro, Sp, Operatorname, Grp(F.Id("GoldenInt")), Comma, Esc, Operatorname, Grp(F.Id("embedding")), Open, F.Id("x"), Close, Eq, Operatorname, Grp(F.Id("embedding")), Open, F.Id("y"), Close, Sp, Rightarrow, Sp, F.Id("x"), Eq, F.Id("y"))),
                     DescribeProvenance.RepoDerived(),
                     Blocks(
                         Paragraph(
@@ -76,7 +78,7 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
                             H("Embedding times conjugate"),
                             LeanTheorem(
                                 "D5/S1/Scale/Embedding.embedding_mul_conj"),
-                            new Formula.Layout(FormulaLayoutMode.Inline, new Formula.LatexSequence([new Formula.LatexMacro(FormulaLatexMacro.Forall), new Formula.LatexSpace(), new Formula.LatexWord(FormulaIdentifier.Create("x")), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.In), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.Operatorname), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("GoldenInt"))]), new Formula.LatexSymbol(FormulaLatexSymbol.Comma), new Formula.LatexMacro(FormulaLatexMacro.EscapedSpace), new Formula.LatexMacro(FormulaLatexMacro.Operatorname), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("embedding"))]), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexWord(FormulaIdentifier.Create("x")), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis), new Formula.LatexMacro(FormulaLatexMacro.Operatorname), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("embedding"))]), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexMacro(FormulaLatexMacro.Operatorname), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("conj"))]), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexWord(FormulaIdentifier.Create("x")), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis), new Formula.LatexSymbol(FormulaLatexSymbol.Equal), new Formula.LatexMacro(FormulaLatexMacro.Operatorname), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("norm"))]), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexWord(FormulaIdentifier.Create("x")), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis)])),
+                            In(Seq(Forall, Sp, F.Id("x"), Sp, InMacro, Sp, Operatorname, Grp(F.Id("GoldenInt")), Comma, Esc, Operatorname, Grp(F.Id("embedding")), Open, F.Id("x"), Close, Operatorname, Grp(F.Id("embedding")), Open, Operatorname, Grp(F.Id("conj")), Open, F.Id("x"), Close, Close, Eq, Operatorname, Grp(F.Id("norm")), Open, F.Id("x"), Close)),
                             DescribeProvenance.RepoDerived(),
                             Blocks(new DocumentBlock.DisplayFormula(
                                 Equal(
@@ -88,7 +90,7 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
                             H("Absolute norm relation"),
                             LeanTheorem(
                                 "D5/S1/Scale/Embedding.abs_embedding_mul_abs_conj"),
-                            new Formula.Layout(FormulaLayoutMode.Inline, new Formula.LatexSequence([new Formula.LatexMacro(FormulaLatexMacro.Forall), new Formula.LatexSpace(), new Formula.LatexWord(FormulaIdentifier.Create("x")), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.In), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.Operatorname), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("GoldenInt"))]), new Formula.LatexSymbol(FormulaLatexSymbol.Comma), new Formula.LatexMacro(FormulaLatexMacro.EscapedSpace), new Formula.LatexMacro(FormulaLatexMacro.Lvert), new Formula.LatexMacro(FormulaLatexMacro.Operatorname), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("embedding"))]), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexWord(FormulaIdentifier.Create("x")), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis), new Formula.LatexMacro(FormulaLatexMacro.Rvert), new Formula.LatexMacro(FormulaLatexMacro.ThinSpace), new Formula.LatexMacro(FormulaLatexMacro.Lvert), new Formula.LatexMacro(FormulaLatexMacro.Operatorname), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("embedding"))]), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexMacro(FormulaLatexMacro.Operatorname), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("conj"))]), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexWord(FormulaIdentifier.Create("x")), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis), new Formula.LatexMacro(FormulaLatexMacro.Rvert), new Formula.LatexSymbol(FormulaLatexSymbol.Equal), new Formula.LatexMacro(FormulaLatexMacro.Lvert), new Formula.LatexMacro(FormulaLatexMacro.Operatorname), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("norm"))]), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexWord(FormulaIdentifier.Create("x")), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis), new Formula.LatexMacro(FormulaLatexMacro.Rvert)])),
+                            In(Seq(Forall, Sp, F.Id("x"), Sp, InMacro, Sp, Operatorname, Grp(F.Id("GoldenInt")), Comma, Esc, Lvert, Operatorname, Grp(F.Id("embedding")), Open, F.Id("x"), Close, Rvert, Thin, Lvert, Operatorname, Grp(F.Id("embedding")), Open, Operatorname, Grp(F.Id("conj")), Open, F.Id("x"), Close, Close, Rvert, Eq, Lvert, Operatorname, Grp(F.Id("norm")), Open, F.Id("x"), Close, Rvert)),
                             DescribeProvenance.RepoDerived(),
                             Blocks(
                                 Paragraph(

@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Dynamics;
 
@@ -25,7 +27,7 @@ internal sealed class UniversalSolenoidDocument : IScribeDocumentDefinition
                     H("The real flow projects visibly and has dense range"),
                     LeanTheorem(
                         "D5/S1/Dynamics/UniversalSolenoid.projection_realFlow"),
-                    new Formula.Layout(FormulaLayoutMode.Display, new Formula.LatexSequence([new Formula.LatexMacro(FormulaLatexMacro.Pi), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexMacro(FormulaLatexMacro.Operatorname), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("realFlow"))]), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexWord(FormulaIdentifier.Create("t")), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis), new Formula.LatexSymbol(FormulaLatexSymbol.Equal), new Formula.LatexWord(FormulaIdentifier.Create("t")), new Formula.LatexMacro(FormulaLatexMacro.Operatorname), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("mod"))]), new Formula.LatexDigits([1]), new Formula.LatexSymbol(FormulaLatexSymbol.Period)])),
+                    Disp(Seq(Pi, Open, Operatorname, Grp(F.Id("realFlow")), Open, F.Id("t"), Close, Close, Eq, F.Id("t"), Operatorname, Grp(F.Id("mod")), D(1), Dot)),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "The projection formula is machine-checked directly. The same module "

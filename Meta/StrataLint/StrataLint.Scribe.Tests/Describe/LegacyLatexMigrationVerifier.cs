@@ -31,20 +31,49 @@ internal static class LegacyLatexMigrationVerifier
 
     internal static string EmitCSharp(Formula formula) => formula switch
     {
-        Formula.Layout value => $"new Formula.Layout(FormulaLayoutMode.{value.Mode}, {EmitCSharp(value.Content)})",
-        Formula.LatexSequence value => $"new Formula.LatexSequence([{Join(value.Items)}])",
-        Formula.LatexGroup value => $"new Formula.LatexGroup([{Join(value.Items)}])",
-        Formula.LatexMacro value => $"new Formula.LatexMacro(FormulaLatexMacro.{value.Value})",
-        Formula.LatexSymbol value => $"new Formula.LatexSymbol(FormulaLatexSymbol.{value.Value})",
-        Formula.LatexSpace => "new Formula.LatexSpace()",
-        Formula.LatexNewline => "new Formula.LatexNewline()",
-        Formula.LatexWord value => $"new Formula.LatexWord(FormulaIdentifier.Create(\"{value.Value.Value}\"))",
-        Formula.LatexDigits value => $"new Formula.LatexDigits([{string.Join(", ", value.Digits)}])",
+        Formula.Layout { Mode: FormulaLayoutMode.Inline } value => $"In({EmitCSharp(value.Content)})",
+        Formula.Layout { Mode: FormulaLayoutMode.Display } value => $"Disp({EmitCSharp(value.Content)})",
+        Formula.LatexSequence value => $"Seq({Join(value.Items)})",
+        Formula.LatexGroup value => $"Grp({Join(value.Items)})",
+        Formula.LatexMacro value => MacroName(value.Value),
+        Formula.LatexSymbol value => SymbolName(value.Value),
+        Formula.LatexSpace => "Sp",
+        Formula.LatexNewline => "Nl",
+        Formula.LatexWord value => $"F.Id(\"{value.Value.Value}\")",
+        Formula.LatexDigits value => $"D({string.Join(", ", value.Digits)})",
         _ => throw new ArgumentException("The migration emitter accepts parsed legacy syntax trees only.", nameof(formula)),
     };
 
     private static string Join(ImmutableArray<Formula> values) =>
         string.Join(", ", values.Select(EmitCSharp));
+
+    private static string MacroName(FormulaLatexMacro value) => value switch
+    {
+        FormulaLatexMacro.In => "InMacro",
+        FormulaLatexMacro.EscapedSpace => "Esc",
+        FormulaLatexMacro.NegativeThinSpace => "NegThin",
+        FormulaLatexMacro.ThinSpace => "Thin",
+        FormulaLatexMacro.SemicolonSpace => "SemiSpace",
+        FormulaLatexMacro.Text => "F.Text",
+        _ => value.ToString(),
+    };
+
+    private static string SymbolName(FormulaLatexSymbol value) => value switch
+    {
+        FormulaLatexSymbol.Exclamation => "Bang",
+        FormulaLatexSymbol.Ampersand => "Amp",
+        FormulaLatexSymbol.Apostrophe => "Apos",
+        FormulaLatexSymbol.OpenParenthesis => "Open",
+        FormulaLatexSymbol.CloseParenthesis => "Close",
+        FormulaLatexSymbol.Asterisk => "Star",
+        FormulaLatexSymbol.Period => "Dot",
+        FormulaLatexSymbol.Semicolon => "Semi",
+        FormulaLatexSymbol.LessThan => "Lt",
+        FormulaLatexSymbol.Equal => "Eq",
+        FormulaLatexSymbol.GreaterThan => "Gt",
+        FormulaLatexSymbol.VerticalBar => "Bar",
+        _ => value.ToString(),
+    };
 
     private sealed class Parser(string source)
     {
@@ -139,6 +168,21 @@ internal static class LegacyLatexMigrationVerifier
 public sealed class LegacyLatexMigrationVerifierTests
 {
     [Fact]
+    public void FormulaDslConstructsTheExactClosedLatexNodeTypes()
+    {
+        Assert.IsType<Formula.LatexSequence>(FormulaDsl.Seq(FormulaDsl.Id("A")));
+        Assert.IsType<Formula.LatexGroup>(FormulaDsl.Grp(FormulaDsl.Id("A")));
+        Assert.IsType<Formula.LatexWord>(FormulaDsl.Id("A"));
+        Assert.Equal<byte>([1, 2, 0], Assert.IsType<Formula.LatexDigits>(FormulaDsl.D(1, 2, 0)).Digits);
+        Assert.IsType<Formula.LatexSpace>(FormulaDsl.Sp);
+        Assert.IsType<Formula.LatexMacro>(FormulaDsl.Esc);
+        Assert.Equal(FormulaLatexMacro.Forall, Assert.IsType<Formula.LatexMacro>(FormulaDsl.Forall).Value);
+        Assert.Equal(FormulaLatexSymbol.Equal, Assert.IsType<Formula.LatexSymbol>(FormulaDsl.Eq).Value);
+        Assert.Throws<ArgumentException>(() => FormulaDsl.Id("A_1"));
+        Assert.Throws<ArgumentException>(() => FormulaDsl.D(10));
+    }
+
+    [Fact]
     public void MigrationVerifierParsesRoundTripsAndEmitsRepresentativeLegacyStatements()
     {
         string[] fixtures =
@@ -152,10 +196,11 @@ public sealed class LegacyLatexMigrationVerifierTests
         {
             var parsed = LegacyLatexMigrationVerifier.ParseStatement(fixture);
             Assert.Equal(fixture, LatexWriter.WriteStatement(parsed));
-            Assert.StartsWith(
-                "new Formula.Layout(",
-                LegacyLatexMigrationVerifier.EmitCSharp(parsed),
-                StringComparison.Ordinal);
+            var emitted = LegacyLatexMigrationVerifier.EmitCSharp(parsed);
+            Assert.True(
+                emitted.StartsWith("In(Seq(", StringComparison.Ordinal)
+                || emitted.StartsWith("Disp(Seq(", StringComparison.Ordinal));
+            Assert.DoesNotContain("new Formula.", emitted, StringComparison.Ordinal);
         }
     }
 }

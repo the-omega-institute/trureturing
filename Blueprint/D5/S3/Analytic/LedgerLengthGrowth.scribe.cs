@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic;
 
@@ -16,7 +18,7 @@ internal sealed class LedgerLengthGrowthDocument : IScribeDocumentDefinition
                 LeanTheorem(
                     "D5/S3/Analytic/LedgerLengthGrowth."
                     + "ledger_length_strict_mono_of_positive_generation"),
-                new Formula.Layout(FormulaLayoutMode.Inline, new Formula.LatexSequence([new Formula.LatexWord(FormulaIdentifier.Create("L")), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexWord(FormulaIdentifier.Create("u")), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis), new Formula.LatexSymbol(FormulaLatexSymbol.GreaterThan), new Formula.LatexDigits([0]), new Formula.LatexMacro(FormulaLatexMacro.Quad), new Formula.LatexMacro(FormulaLatexMacro.Rightarrow), new Formula.LatexMacro(FormulaLatexMacro.Quad), new Formula.LatexSpace(), new Formula.LatexWord(FormulaIdentifier.Create("L")), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexWord(FormulaIdentifier.Create("a")), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis), new Formula.LatexSymbol(FormulaLatexSymbol.LessThan), new Formula.LatexWord(FormulaIdentifier.Create("L")), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexWord(FormulaIdentifier.Create("a")), new Formula.LatexSymbol(FormulaLatexSymbol.Plus), new Formula.LatexWord(FormulaIdentifier.Create("u")), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis)])),
+                In(Seq(F.Id("L"), Open, F.Id("u"), Close, Gt, D(0), Quad, Rightarrow, Quad, Sp, F.Id("L"), Open, F.Id("a"), Close, Lt, F.Id("L"), Open, F.Id("a"), Plus, F.Id("u"), Close)),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "正生成之正性以 length u > 0 承载(素指数求和的具体形属素账本载体,另单);"

@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Recurrence;
 
@@ -15,7 +17,7 @@ internal sealed class GoldenFibDivisibilityDocument : IScribeDocumentDefinition
                 H("Fibonacci divisibility detects index divisibility"),
                 LeanTheorem(
                     "D5/S1/Recurrence/GoldenFibDivisibility.fib_dvd_iff"),
-                new Formula.Layout(FormulaLayoutMode.Display, new Formula.LatexSequence([new Formula.LatexWord(FormulaIdentifier.Create("a")), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.Ge), new Formula.LatexSpace(), new Formula.LatexDigits([3]), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.Implies), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.Left), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexWord(FormulaIdentifier.Create("F")), new Formula.LatexSymbol(FormulaLatexSymbol.Underscore), new Formula.LatexWord(FormulaIdentifier.Create("a")), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.Mid), new Formula.LatexSpace(), new Formula.LatexWord(FormulaIdentifier.Create("F")), new Formula.LatexSymbol(FormulaLatexSymbol.Underscore), new Formula.LatexWord(FormulaIdentifier.Create("b")), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.Iff), new Formula.LatexSpace(), new Formula.LatexWord(FormulaIdentifier.Create("a")), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.Mid), new Formula.LatexSpace(), new Formula.LatexWord(FormulaIdentifier.Create("b")), new Formula.LatexMacro(FormulaLatexMacro.Right), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis)])),
+                Disp(Seq(F.Id("a"), Sp, Ge, Sp, D(3), Sp, Implies, Sp, Left, Open, F.Id("F"), Underscore, F.Id("a"), Sp, Mid, Sp, F.Id("F"), Underscore, F.Id("b"), Sp, Iff, Sp, F.Id("a"), Sp, Mid, Sp, F.Id("b"), Right, Close)),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "For natural indices a and b with a at least three, the Fibonacci "

@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Depth;
 
@@ -15,7 +17,7 @@ internal sealed class GoldenContinuedFractionDocument : IScribeDocumentDefinitio
                 H("Every continued-fraction coefficient is one"),
                 LeanTheorem(
                     "D5/S1/Depth/GoldenContinuedFraction.golden_ratio_continued_fraction"),
-                new Formula.Layout(FormulaLayoutMode.Display, new Formula.LatexSequence([new Formula.LatexMacro(FormulaLatexMacro.Varphi), new Formula.LatexSpace(), new Formula.LatexSymbol(FormulaLatexSymbol.Equal), new Formula.LatexSpace(), new Formula.LatexSymbol(FormulaLatexSymbol.OpenBracket), new Formula.LatexMacro(FormulaLatexMacro.ThinSpace), new Formula.LatexDigits([1]), new Formula.LatexSymbol(FormulaLatexSymbol.Semicolon), new Formula.LatexMacro(FormulaLatexMacro.Overline), new Formula.LatexGroup([new Formula.LatexDigits([1])]), new Formula.LatexMacro(FormulaLatexMacro.ThinSpace), new Formula.LatexSymbol(FormulaLatexSymbol.CloseBracket)])),                DescribeProvenance.RepoDerived(),
+                Disp(Seq(Varphi, Sp, Eq, Sp, OpenBracket, Thin, D(1), Semi, Overline, Grp(D(1)), Thin, CloseBracket)),                DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "Mathlib's generalized continued fraction of the real golden ratio "
                     + "has head one, and every subsequent numerator-denominator pair is "

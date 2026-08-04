@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Phase;
 
@@ -6,8 +8,8 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create()
     {
-        var n = Id("n");
-        var m = Id("m");
+        var n = DefinitionDsl.Id("n");
+        var m = DefinitionDsl.Id("m");
         var phaseN = Call("goldenPhase", n);
         var phaseValue = new Formula.Modulo(
             Multiply(n, new Formula.Phi()),
@@ -38,7 +40,7 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                             H("Zero"),
 
                                 LeanTheorem("D5/S1/Phase/Basic.goldenPhase_zero"),
-                            new Formula.Layout(FormulaLayoutMode.Inline, new Formula.LatexSequence([new Formula.LatexMacro(FormulaLatexMacro.Operatorname), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("goldenPhase"))]), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexDigits([0]), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis), new Formula.LatexSymbol(FormulaLatexSymbol.Equal), new Formula.LatexDigits([0])])),
+                            In(Seq(Operatorname, Grp(F.Id("goldenPhase")), Open, D(0), Close, Eq, D(0))),
                             DescribeProvenance.RepoDerived(),
                             Blocks(new DocumentBlock.DisplayFormula(
                                 Equal(Call("goldenPhase", Num(0)), Num(0))))
@@ -48,7 +50,7 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                             H("Addition"),
 
                                 LeanTheorem("D5/S1/Phase/Basic.goldenPhase_add"),
-                            new Formula.Layout(FormulaLayoutMode.Inline, new Formula.LatexSequence([new Formula.LatexMacro(FormulaLatexMacro.Forall), new Formula.LatexSpace(), new Formula.LatexWord(FormulaIdentifier.Create("n")), new Formula.LatexSymbol(FormulaLatexSymbol.Comma), new Formula.LatexWord(FormulaIdentifier.Create("m")), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.In), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.Mathbb), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("Z"))]), new Formula.LatexSymbol(FormulaLatexSymbol.Comma), new Formula.LatexMacro(FormulaLatexMacro.EscapedSpace), new Formula.LatexMacro(FormulaLatexMacro.Operatorname), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("goldenPhase"))]), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexWord(FormulaIdentifier.Create("n")), new Formula.LatexSymbol(FormulaLatexSymbol.Plus), new Formula.LatexWord(FormulaIdentifier.Create("m")), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis), new Formula.LatexSymbol(FormulaLatexSymbol.Equal), new Formula.LatexMacro(FormulaLatexMacro.Operatorname), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("goldenPhase"))]), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexWord(FormulaIdentifier.Create("n")), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis), new Formula.LatexSymbol(FormulaLatexSymbol.Plus), new Formula.LatexMacro(FormulaLatexMacro.Operatorname), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("goldenPhase"))]), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexWord(FormulaIdentifier.Create("m")), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis)])),
+                            In(Seq(Forall, Sp, F.Id("n"), Comma, F.Id("m"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("Z")), Comma, Esc, Operatorname, Grp(F.Id("goldenPhase")), Open, F.Id("n"), Plus, F.Id("m"), Close, Eq, Operatorname, Grp(F.Id("goldenPhase")), Open, F.Id("n"), Close, Plus, Operatorname, Grp(F.Id("goldenPhase")), Open, F.Id("m"), Close)),
                             DescribeProvenance.RepoDerived(),
                             Blocks(new DocumentBlock.DisplayFormula(
                                 Equal(
@@ -60,7 +62,7 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                             H("Negation"),
 
                                 LeanTheorem("D5/S1/Phase/Basic.goldenPhase_neg"),
-                            new Formula.Layout(FormulaLayoutMode.Inline, new Formula.LatexSequence([new Formula.LatexMacro(FormulaLatexMacro.Forall), new Formula.LatexSpace(), new Formula.LatexWord(FormulaIdentifier.Create("n")), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.In), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.Mathbb), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("Z"))]), new Formula.LatexSymbol(FormulaLatexSymbol.Comma), new Formula.LatexMacro(FormulaLatexMacro.EscapedSpace), new Formula.LatexMacro(FormulaLatexMacro.Operatorname), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("goldenPhase"))]), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexSymbol(FormulaLatexSymbol.Minus), new Formula.LatexWord(FormulaIdentifier.Create("n")), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis), new Formula.LatexSymbol(FormulaLatexSymbol.Equal), new Formula.LatexSymbol(FormulaLatexSymbol.Minus), new Formula.LatexMacro(FormulaLatexMacro.Operatorname), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("goldenPhase"))]), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexWord(FormulaIdentifier.Create("n")), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis)])),
+                            In(Seq(Forall, Sp, F.Id("n"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("Z")), Comma, Esc, Operatorname, Grp(F.Id("goldenPhase")), Open, Minus, F.Id("n"), Close, Eq, Minus, Operatorname, Grp(F.Id("goldenPhase")), Open, F.Id("n"), Close)),
                             DescribeProvenance.RepoDerived(),
                             Blocks(new DocumentBlock.DisplayFormula(
                                 Equal(
@@ -73,7 +75,7 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                         Paragraph(
                             Text("The same orbit has sequence and set presentations:")),
                         new DocumentBlock.DisplayFormula(
-                            Equal(new Formula.Subscript(Id("p"), n), phaseValue)),
+                            Equal(new Formula.Subscript(DefinitionDsl.Id("p"), n), phaseValue)),
                         new DocumentBlock.DisplayFormula(
                             new Formula.Sequence(phaseValue, n, new Formula.Integers())),
                         new DocumentBlock.DisplayFormula(
@@ -82,7 +84,7 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                     DescribeId.Create("injectivity"),
                     H("Injectivity"),
                     injectivity,
-                    new Formula.Layout(FormulaLayoutMode.Inline, new Formula.LatexSequence([new Formula.LatexMacro(FormulaLatexMacro.Forall), new Formula.LatexSpace(), new Formula.LatexWord(FormulaIdentifier.Create("n")), new Formula.LatexSymbol(FormulaLatexSymbol.Comma), new Formula.LatexWord(FormulaIdentifier.Create("m")), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.In), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.Mathbb), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("Z"))]), new Formula.LatexSymbol(FormulaLatexSymbol.Comma), new Formula.LatexMacro(FormulaLatexMacro.EscapedSpace), new Formula.LatexMacro(FormulaLatexMacro.Operatorname), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("goldenPhase"))]), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexWord(FormulaIdentifier.Create("n")), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis), new Formula.LatexSymbol(FormulaLatexSymbol.Equal), new Formula.LatexMacro(FormulaLatexMacro.Operatorname), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("goldenPhase"))]), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexWord(FormulaIdentifier.Create("m")), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.Rightarrow), new Formula.LatexSpace(), new Formula.LatexWord(FormulaIdentifier.Create("n")), new Formula.LatexSymbol(FormulaLatexSymbol.Equal), new Formula.LatexWord(FormulaIdentifier.Create("m"))])),
+                    In(Seq(Forall, Sp, F.Id("n"), Comma, F.Id("m"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("Z")), Comma, Esc, Operatorname, Grp(F.Id("goldenPhase")), Open, F.Id("n"), Close, Eq, Operatorname, Grp(F.Id("goldenPhase")), Open, F.Id("m"), Close, Sp, Rightarrow, Sp, F.Id("n"), Eq, F.Id("m"))),
                     DescribeProvenance.RepoDerived(),
                     Blocks(
                         Paragraph(
@@ -93,7 +95,7 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                 DocumentBlock.Describe.Remark(
                     DescribeId.Create("visible-phase-and-hidden-prime-fiber"),
                     H("Visible phase and hidden prime fiber"),
-                    DescribeStatement.FromFormula(Equal(Id("visiblePhase"), Id("T"))),
+                    DescribeStatement.FromFormula(Equal(DefinitionDsl.Id("visiblePhase"), DefinitionDsl.Id("T"))),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "The source treats the all-prime hidden fiber K_infinity = product_p Z_p as derived rather than postulated: accepting a compatible family of congruence readings incurs its dual completion. Its phase interpretation is the exact sequence 0 -> K_infinity -> Sigma_infinity -> T -> 0, where T is visible phase, K_infinity is the hidden all-prime fiber, and Sigma_infinity is the complete phase object.")))
@@ -101,7 +103,7 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                 DocumentBlock.Describe.Remark(
                     DescribeId.Create("congruence-readings-close-under-dual-completion"),
                     H("Congruence readings close under dual completion"),
-                    DescribeStatement.FromFormula(Equal(Id("dualK"), Id("QmodZ"))),
+                    DescribeStatement.FromFormula(Equal(DefinitionDsl.Id("dualK"), DefinitionDsl.Id("QmodZ"))),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "In the source's forward direction, a compatible family of congruence readings determines the completion, so hidden structure is the debt incurred by those readings. In the reverse direction, all continuous readings of the completion recover exactly Q/Z = union_m (1/m)Z/Z. Reading, completion, and reading again therefore form a closed loop on the pure congruence layer; the source points separately to the mixed-layer closure.")))
@@ -109,7 +111,7 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                 DocumentBlock.Describe.Remark(
                     DescribeId.Create("the-two-phase-duality-loops"),
                     H("The two phase-duality loops"),
-                    DescribeStatement.FromFormula(Equal(Id("dualSigma"), Id("Q"))),
+                    DescribeStatement.FromFormula(Equal(DefinitionDsl.Id("dualSigma"), DefinitionDsl.Id("Q"))),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "The source records both dual loops as closed: the pure congruence layer has K_infinity dual to Q/Z, and the mixed layer has Sigma_infinity dual to Q. Conversely, the dual of Q is the constructional origin assigned to Sigma_infinity. On this interpretation the complete phase object's measurable content is precisely the rational numbers, with readings and completion serving as each other's character groups.")))
@@ -118,8 +120,8 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                     DescribeId.Create("dense-phase-leaves-and-discrete-switching"),
                     H("Dense phase leaves and discrete switching"),
                     DescribeStatement.FromFormula(NotEqual(
-                        Call("timeline", Id("a")),
-                        Call("timeline", Id("b")))),
+                        Call("timeline", DefinitionDsl.Id("a")),
+                        Call("timeline", DefinitionDsl.Id("b")))),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "The source's strict replacement for switchable parallel timelines is an uncountable family K_infinity/Z of leaves with one generator and different hidden offsets. Distinct leaves never intersect, while every leaf is dense, so they remain disjoint yet arbitrarily close everywhere. Continuous switching is ruled out; a genuine switch must be a discrete jump obeying a cocycle composition law, and every finite observation is said to be unable to distinguish such a jump from ordinary motion. The continuous phase leaf and discrete address leaf are then read as wave and particle. Finally, every switch must pass through an address reading and enter the ledger, giving the slogan that observation is bookkeeping.")))
