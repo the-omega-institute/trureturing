@@ -165,11 +165,7 @@ expected_diagnostics = [{ rule = 19, path = "Chronicle/2026/07/11-ledger.md", me
 name = "directory-at-capacity"
 changes = ["Golden/cases/CapacityExtra00.toml"]
 baseline_mutations = []
-<<<<<<< HEAD
-mutations = [{ op = "populate_directory" }, { op = "delete", path = "Blueprint/D5/S0/Carrier/Extra11.scribe.cs" }]
-=======
 mutations = [{ op = "populate_directory" }, { op = "delete", path = "Golden/cases/CapacityExtra12.toml" }]
->>>>>>> origin/dev
 expected_diagnostics = []
 
 [[cases]]
