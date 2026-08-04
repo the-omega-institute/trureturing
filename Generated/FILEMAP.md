@@ -66,6 +66,10 @@ ValuesEmitter --produces--> [Evidence/D5/values.json | generated]
 [Evidence/D5/values.json | generated] --consumed-by--> ValuesProjectionLoader
 [Evidence/D5/values.json | generated] --verified-by--> emit-check
 
+DagEmitter --produces--> [Generated/DAG.md | generated]
+[Generated/DAG.md | generated] --consumed-by--> reader
+[Generated/DAG.md | generated] --verified-by--> emit-check
+
 FileMapEmitter --produces--> [Generated/FILEMAP.md | generated]
 [Generated/FILEMAP.md | generated] --consumed-by--> reader
 [Generated/FILEMAP.md | generated] --verified-by--> emit-check
