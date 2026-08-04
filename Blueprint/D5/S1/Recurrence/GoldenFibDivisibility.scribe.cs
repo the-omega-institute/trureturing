@@ -15,8 +15,7 @@ internal sealed class GoldenFibDivisibilityDocument : IScribeDocumentDefinition
                 H("Fibonacci divisibility detects index divisibility"),
                 LeanTheorem(
                     "D5/S1/Recurrence/GoldenFibDivisibility.fib_dvd_iff"),
-                LatexStatement.Create(
-                    @"$$a \ge 3 \implies \left(F_a \mid F_b \iff a \mid b\right)$$"),
+                new Formula.Layout(FormulaLayoutMode.Display, new Formula.LatexSequence([new Formula.LatexWord(FormulaIdentifier.Create("a")), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.Ge), new Formula.LatexSpace(), new Formula.LatexDigits([3]), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.Implies), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.Left), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexWord(FormulaIdentifier.Create("F")), new Formula.LatexSymbol(FormulaLatexSymbol.Underscore), new Formula.LatexWord(FormulaIdentifier.Create("a")), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.Mid), new Formula.LatexSpace(), new Formula.LatexWord(FormulaIdentifier.Create("F")), new Formula.LatexSymbol(FormulaLatexSymbol.Underscore), new Formula.LatexWord(FormulaIdentifier.Create("b")), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.Iff), new Formula.LatexSpace(), new Formula.LatexWord(FormulaIdentifier.Create("a")), new Formula.LatexSpace(), new Formula.LatexMacro(FormulaLatexMacro.Mid), new Formula.LatexSpace(), new Formula.LatexWord(FormulaIdentifier.Create("b")), new Formula.LatexMacro(FormulaLatexMacro.Right), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis)])),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "For natural indices a and b with a at least three, the Fibonacci "

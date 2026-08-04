@@ -15,9 +15,7 @@ internal sealed class WilsonDocument : IScribeDocumentDefinition
                 H("The factorial before a prime is minus one modulo the prime"),
                 LeanTheorem(
                     "D5/S3/Arith/Wilson.wilson_theorem"),
-                LatexStatement.Create(
-                    @"$$p\ \text{prime}\quad\Rightarrow\quad (p-1)!\equiv -1\ "
-                    + @"(\operatorname{mod}\ p)$$"),
+                new Formula.Layout(FormulaLayoutMode.Display, new Formula.LatexSequence([new Formula.LatexWord(FormulaIdentifier.Create("p")), new Formula.LatexMacro(FormulaLatexMacro.EscapedSpace), new Formula.LatexMacro(FormulaLatexMacro.Text), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("prime"))]), new Formula.LatexMacro(FormulaLatexMacro.Quad), new Formula.LatexMacro(FormulaLatexMacro.Rightarrow), new Formula.LatexMacro(FormulaLatexMacro.Quad), new Formula.LatexSpace(), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexWord(FormulaIdentifier.Create("p")), new Formula.LatexSymbol(FormulaLatexSymbol.Minus), new Formula.LatexDigits([1]), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis), new Formula.LatexSymbol(FormulaLatexSymbol.Exclamation), new Formula.LatexMacro(FormulaLatexMacro.Equiv), new Formula.LatexSpace(), new Formula.LatexSymbol(FormulaLatexSymbol.Minus), new Formula.LatexDigits([1]), new Formula.LatexMacro(FormulaLatexMacro.EscapedSpace), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexMacro(FormulaLatexMacro.Operatorname), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("mod"))]), new Formula.LatexMacro(FormulaLatexMacro.EscapedSpace), new Formula.LatexWord(FormulaIdentifier.Create("p")), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis)])),
                 DescribeProvenance.RepoDerived(),
                 Blocks(
                     Paragraph(Text(

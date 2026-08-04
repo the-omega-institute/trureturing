@@ -25,8 +25,7 @@ internal sealed class UniversalSolenoidDocument : IScribeDocumentDefinition
                     H("The real flow projects visibly and has dense range"),
                     LeanTheorem(
                         "D5/S1/Dynamics/UniversalSolenoid.projection_realFlow"),
-                    LatexStatement.Create(
-                        @"$$\pi(\operatorname{realFlow}(t))=t\operatorname{mod}1.$$"),
+                    new Formula.Layout(FormulaLayoutMode.Display, new Formula.LatexSequence([new Formula.LatexMacro(FormulaLatexMacro.Pi), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexMacro(FormulaLatexMacro.Operatorname), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("realFlow"))]), new Formula.LatexSymbol(FormulaLatexSymbol.OpenParenthesis), new Formula.LatexWord(FormulaIdentifier.Create("t")), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis), new Formula.LatexSymbol(FormulaLatexSymbol.CloseParenthesis), new Formula.LatexSymbol(FormulaLatexSymbol.Equal), new Formula.LatexWord(FormulaIdentifier.Create("t")), new Formula.LatexMacro(FormulaLatexMacro.Operatorname), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("mod"))]), new Formula.LatexDigits([1]), new Formula.LatexSymbol(FormulaLatexSymbol.Period)])),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "The projection formula is machine-checked directly. The same module "

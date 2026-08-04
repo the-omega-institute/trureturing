@@ -7252,7 +7252,7 @@ sources:
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-fb7034e5aae28c13cdb90c723c23beb452f6ddf68f8ae6c6e7c2fd1914a02bae
         ast_path: theorem/5.6
@@ -9399,7 +9399,7 @@ sources:
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-0e09132a1f3ec5f44216dd5019605bfe47f975bddbb39c65892dc0e98ba12df2
         ast_path: consequence/7.4
@@ -9676,7 +9676,7 @@ sources:
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-04b9d7a92102a4d1b437b29ee7a326c7da4f16a52e3fc70663fab125873b4c69
         ast_path: lemma/9.9
@@ -9903,7 +9903,7 @@ sources:
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-163b117bf8d71533380dda3c03c27c13e02d3d02c999a6baebda24fdca60ab45
         ast_path: remark/10.11
@@ -10653,7 +10653,7 @@ sources:
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-c2b458c0ec6e7494ffe7b15cc71ca9aa7afd5559254301851904c9c91c88d13f
         ast_path: theorem/19.5
@@ -10795,7 +10795,7 @@ sources:
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-2bf22a61c83cffae0134a75dff11aa487139dba7ba1cb1c154e81ef6004e052d
         ast_path: corollary/20.7
@@ -10905,7 +10905,7 @@ sources:
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-22ba601a3694429398fb3739b5b607a1b19044baffdde4417e4fc1f955f5f4f1
         ast_path: remark/20.13
@@ -11194,7 +11194,7 @@ sources:
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-7e62077dde65f6e6c6f13313e8a6bff867bee9f9a1b0f3f4173a10545d3ca36e
         ast_path: definition/23.5
@@ -11289,7 +11289,7 @@ sources:
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-d6f017ca0e0084e3a192c44e1f76e886e2c4e6eb9641de0e0cde86d8117d36f3
         ast_path: proposition/23.8
@@ -11849,7 +11849,7 @@ sources:
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-285db8f38013cb8ba4ef3c3dc00a597c3ae22871f85e248538ea8f39353906a8
         ast_path: corollary/25.11

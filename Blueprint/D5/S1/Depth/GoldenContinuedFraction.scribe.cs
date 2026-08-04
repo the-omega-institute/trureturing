@@ -15,8 +15,7 @@ internal sealed class GoldenContinuedFractionDocument : IScribeDocumentDefinitio
                 H("Every continued-fraction coefficient is one"),
                 LeanTheorem(
                     "D5/S1/Depth/GoldenContinuedFraction.golden_ratio_continued_fraction"),
-                LatexStatement.Create(@"$$\varphi = [\,1;\overline{1}\,]$$"),
-                DescribeProvenance.RepoDerived(),
+                new Formula.Layout(FormulaLayoutMode.Display, new Formula.LatexSequence([new Formula.LatexMacro(FormulaLatexMacro.Varphi), new Formula.LatexSpace(), new Formula.LatexSymbol(FormulaLatexSymbol.Equal), new Formula.LatexSpace(), new Formula.LatexSymbol(FormulaLatexSymbol.OpenBracket), new Formula.LatexMacro(FormulaLatexMacro.ThinSpace), new Formula.LatexDigits([1]), new Formula.LatexSymbol(FormulaLatexSymbol.Semicolon), new Formula.LatexMacro(FormulaLatexMacro.Overline), new Formula.LatexGroup([new Formula.LatexDigits([1])]), new Formula.LatexMacro(FormulaLatexMacro.ThinSpace), new Formula.LatexSymbol(FormulaLatexSymbol.CloseBracket)])),                DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "Mathlib's generalized continued fraction of the real golden ratio "
                     + "has head one, and every subsequent numerator-denominator pair is "

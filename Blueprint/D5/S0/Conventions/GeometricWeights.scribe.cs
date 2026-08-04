@@ -16,13 +16,24 @@ internal sealed class GeometricWeightsDocument : IScribeDocumentDefinition
                 LeanTheorem(
                     "D5/S0/Conventions/GeometricWeights."
                     + "no_geometric_weights_match_zeckendorf_singletons"),
-                LatexStatement.Create(
-                    @"$\neg\exists\,w_1,\Lambda,c\in\mathbb{Q},\ c\neq0:\ "
-                    + @"w_1\Lambda^k=cF_{k+2}\ \text{for every }k\ge0.$"),
+                GeometricNoGoFormula(),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "The W-digit convention defines wValue k as fib(k+2), so singleton bits have "
                     + "weights 1, 2, 3 at indices 0, 1, 2. The first two equations force the "
                     + "geometric ratio to be 2, while the third requires its square to be 3; "
                     + "the nonzero scale excludes cancellation.")))))));
+
+    private static Formula GeometricNoGoFormula()
+    {
+        Formula equation = Equal(
+            Multiply(Id("w1"), new Formula.Power(Id("Lambda"), Id("k"))),
+            Multiply(Id("c"), new Formula.Subscript(Id("F"), Add(Id("k"), Num(2)))));
+        Formula allIndices = new Formula.Bind(
+            FormulaQuantifier.ForAll,
+            FormulaIdentifier.Create("k"),
+            Id("Naturals"),
+            equation);
+        return new Formula.Layout(FormulaLayoutMode.Inline, new Formula.LatexSequence([new Formula.LatexMacro(FormulaLatexMacro.Neg), new Formula.LatexMacro(FormulaLatexMacro.Exists), new Formula.LatexMacro(FormulaLatexMacro.ThinSpace), new Formula.LatexWord(FormulaIdentifier.Create("w")), new Formula.LatexSymbol(FormulaLatexSymbol.Underscore), new Formula.LatexDigits([1]), new Formula.LatexSymbol(FormulaLatexSymbol.Comma), new Formula.LatexMacro(FormulaLatexMacro.Lambda), new Formula.LatexSymbol(FormulaLatexSymbol.Comma), new Formula.LatexWord(FormulaIdentifier.Create("c")), new Formula.LatexMacro(FormulaLatexMacro.In), new Formula.LatexMacro(FormulaLatexMacro.Mathbb), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("Q"))]), new Formula.LatexSymbol(FormulaLatexSymbol.Comma), new Formula.LatexMacro(FormulaLatexMacro.EscapedSpace), new Formula.LatexWord(FormulaIdentifier.Create("c")), new Formula.LatexMacro(FormulaLatexMacro.Neq), new Formula.LatexDigits([0]), new Formula.LatexSymbol(FormulaLatexSymbol.Colon), new Formula.LatexMacro(FormulaLatexMacro.EscapedSpace), new Formula.LatexWord(FormulaIdentifier.Create("w")), new Formula.LatexSymbol(FormulaLatexSymbol.Underscore), new Formula.LatexDigits([1]), new Formula.LatexMacro(FormulaLatexMacro.Lambda), new Formula.LatexSymbol(FormulaLatexSymbol.Caret), new Formula.LatexWord(FormulaIdentifier.Create("k")), new Formula.LatexSymbol(FormulaLatexSymbol.Equal), new Formula.LatexWord(FormulaIdentifier.Create("cF")), new Formula.LatexSymbol(FormulaLatexSymbol.Underscore), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("k")), new Formula.LatexSymbol(FormulaLatexSymbol.Plus), new Formula.LatexDigits([2])]), new Formula.LatexMacro(FormulaLatexMacro.EscapedSpace), new Formula.LatexMacro(FormulaLatexMacro.Text), new Formula.LatexGroup([new Formula.LatexWord(FormulaIdentifier.Create("for")), new Formula.LatexSpace(), new Formula.LatexWord(FormulaIdentifier.Create("every")), new Formula.LatexSpace()]), new Formula.LatexWord(FormulaIdentifier.Create("k")), new Formula.LatexMacro(FormulaLatexMacro.Ge), new Formula.LatexDigits([0]), new Formula.LatexSymbol(FormulaLatexSymbol.Period)]));
+    }
 }
