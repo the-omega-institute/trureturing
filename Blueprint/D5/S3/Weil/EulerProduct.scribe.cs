@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Weil;
 
@@ -18,7 +20,7 @@ internal sealed class EulerProductDocument : IScribeDocumentDefinition
                 H("Finite Euler windows have only the local denominator lattice"),
                 LeanTheorem(
                     "D5/S3/Weil/EulerProduct.finite_euler_zero_free_and_pole_locus"),
-                LatexStatement.Create(@"$$\forall S\subset_{\operatorname{fin}}\mathbb{N},\ (\forall p\in S,\operatorname{Prime}(p)) \Rightarrow \forall s\in\mathbb{C},\ (\operatorname{finiteEulerProduct}(S,s)\neq 0 \Leftrightarrow \operatorname{FiniteEulerRegular}(S,s)) \land (\neg\operatorname{FiniteEulerRegular}(S,s) \Leftrightarrow \exists p\in S,\exists k\in\mathbb{Z},\ s=\frac{2\pi i k}{\log p})$$"),
+                Disp(Seq(Forall, Sp, F.Id("S"), Subset, Underscore, Grp(Operatorname, Grp(F.Id("fin"))), Mathbb, Grp(F.Id("N")), Comma, Esc, Open, Forall, Sp, F.Id("p"), InMacro, Sp, F.Id("S"), Comma, Operatorname, Grp(F.Id("Prime")), Open, F.Id("p"), Close, Close, Sp, Rightarrow, Sp, Forall, Sp, F.Id("s"), InMacro, Mathbb, Grp(F.Id("C")), Comma, Esc, Open, Operatorname, Grp(F.Id("finiteEulerProduct")), Open, F.Id("S"), Comma, F.Id("s"), Close, Neq, Sp, D(0), Sp, Leftrightarrow, Sp, Operatorname, Grp(F.Id("FiniteEulerRegular")), Open, F.Id("S"), Comma, F.Id("s"), Close, Close, Sp, Land, Sp, Open, Neg, Operatorname, Grp(F.Id("FiniteEulerRegular")), Open, F.Id("S"), Comma, F.Id("s"), Close, Sp, Leftrightarrow, Sp, Exists, Sp, F.Id("p"), InMacro, Sp, F.Id("S"), Comma, Exists, Sp, F.Id("k"), InMacro, Mathbb, Grp(F.Id("Z")), Comma, Esc, F.Id("s"), Eq, Frac, Grp(D(2), Pi, Sp, F.Id("i"), Sp, F.Id("k")), Grp(Log, Sp, F.Id("p")), Close)),
                 DescribeProvenance.LiteratureAttested(Apostol),
                 Blocks(Paragraph(Text(
                     "A finite Euler product is nonzero exactly on the locus where every local denominator is nonzero, and the complementary denominator-zero locus is the union of the imaginary lattices indexed by its primes. Lean totalizes inversion with zero inverse equal to zero, so the zero-free clause is deliberately restricted to the regular locus; no pole order or numerical window certificate is asserted.")))
@@ -37,7 +39,7 @@ internal sealed class EulerProductDocument : IScribeDocumentDefinition
                 H("The logarithmic derivative is the single-address heat trace"),
                 LeanTheorem(
                     "D5/S3/Weil/EulerProduct.single_address_heat_trace_eq_log_derivative"),
-                LatexStatement.Create(@"$\forall s\in\mathbb{C},\ 1<\Re(s) \Rightarrow \operatorname{singleAddressHeatTrace}(s)=-\frac{\operatorname{deriv}(\operatorname{classicalZeta})(s)}{\operatorname{classicalZeta}(s)}$"),
+                In(Seq(Forall, Sp, F.Id("s"), InMacro, Mathbb, Grp(F.Id("C")), Comma, Esc, D(1), Lt, Re, Open, F.Id("s"), Close, Sp, Rightarrow, Sp, Operatorname, Grp(F.Id("singleAddressHeatTrace")), Open, F.Id("s"), Close, Eq, Minus, Frac, Grp(Operatorname, Grp(F.Id("deriv")), Open, Operatorname, Grp(F.Id("classicalZeta")), Close, Open, F.Id("s"), Close), Grp(Operatorname, Grp(F.Id("classicalZeta")), Open, F.Id("s"), Close))),
                 DescribeProvenance.LiteratureAttested(Apostol),
                 Blocks(Paragraph(Text(
                     "In the convergence half-plane with real part greater than one, the L-series of the single-address reading equals minus the derivative of the classical zeta function divided by the zeta function. The statement adds no continuation beyond that half-plane.")))

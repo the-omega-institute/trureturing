@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Recurrence;
 
@@ -16,11 +18,7 @@ internal sealed class BilateralLiftUniquenessDocument : IScribeDocumentDefinitio
                     H("Bilateral lift uniqueness"),
                     LeanTheorem(
                         "D5/S1/Recurrence/BilateralLiftUniqueness.bilateral_lift_uniqueness"),
-                    LatexStatement.Create(
-                        @"$$\operatorname{Sol}(F)=\langle e_{\varphi},e_{\psi}\rangle,\quad "
-                        + @"Se_{\lambda}=\lambda e_{\lambda},\quad "
-                        + @"F_{k+1}=\frac{\varphi^{k+1}-\psi^{k+1}}{\sqrt{5}},\quad "
-                        + @"\langle F\rangle_S=\langle e_{\varphi},e_{\psi}\rangle.$$"),
+                    Disp(Seq(Operatorname, Grp(F.Id("Sol")), Open, F.Id("F"), Close, Eq, Langle, Sp, F.Id("e"), Underscore, Grp(Varphi), Comma, F.Id("e"), Underscore, Grp(Psi), Rangle, Comma, Quad, Sp, F.Id("Se"), Underscore, Grp(LambdaLower), Eq, LambdaLower, Sp, F.Id("e"), Underscore, Grp(LambdaLower), Comma, Quad, Sp, F.Id("F"), Underscore, Grp(F.Id("k"), Plus, D(1)), Eq, Frac, Grp(Varphi, Caret, Grp(F.Id("k"), Plus, D(1)), Minus, Psi, Caret, Grp(F.Id("k"), Plus, D(1))), Grp(Sqrt, Grp(D(5))), Comma, Quad, Sp, Langle, Sp, F.Id("F"), Rangle, Underscore, F.Id("S"), Eq, Langle, Sp, F.Id("e"), Underscore, Grp(Varphi), Comma, F.Id("e"), Underscore, Grp(Psi), Rangle, Dot)),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "The aggregate theorem packages the two-dimensional recurrence space, "
@@ -33,9 +31,7 @@ internal sealed class BilateralLiftUniquenessDocument : IScribeDocumentDefinitio
                     LeanTheorem(
                         "D5/S1/Recurrence/BilateralLiftUniqueness."
                         + "fibonacci_solution_space_eq_span"),
-                    LatexStatement.Create(
-                        @"$$\operatorname{Sol}(u_{k+2}=u_{k+1}+u_k)="
-                        + @"\operatorname{span}_{\mathbb{R}}\{e_{\varphi},e_{\psi}\}.$$"),
+                    Disp(Seq(Operatorname, Grp(F.Id("Sol")), Open, F.Id("u"), Underscore, Grp(F.Id("k"), Plus, D(2)), Eq, F.Id("u"), Underscore, Grp(F.Id("k"), Plus, D(1)), Plus, F.Id("u"), Underscore, F.Id("k"), Close, Eq, Operatorname, Grp(F.Id("span")), Underscore, Grp(Mathbb, Grp(F.Id("R"))), OpenBrace, F.Id("e"), Underscore, Grp(Varphi), Comma, F.Id("e"), Underscore, Grp(Psi), CloseBrace, Dot)),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "The real solution space of the Fibonacci recurrence is exactly the "
@@ -46,9 +42,7 @@ internal sealed class BilateralLiftUniquenessDocument : IScribeDocumentDefinitio
                     H("Shift eigenlines"),
                     LeanTheorem(
                         "D5/S1/Recurrence/BilateralLiftUniqueness.shift_golden_eigenvectors"),
-                    LatexStatement.Create(
-                        @"$$Se_{\varphi}=\varphi e_{\varphi},\qquad "
-                        + @"Se_{\psi}=\psi e_{\psi}.$$"),
+                    Disp(Seq(F.Id("Se"), Underscore, Grp(Varphi), Eq, Varphi, Sp, F.Id("e"), Underscore, Grp(Varphi), Comma, Qquad, Sp, F.Id("Se"), Underscore, Grp(Psi), Eq, Psi, Sp, F.Id("e"), Underscore, Grp(Psi), Dot)),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "Forward shift acts by the expanding golden ratio on one line and by "
@@ -59,8 +53,7 @@ internal sealed class BilateralLiftUniquenessDocument : IScribeDocumentDefinitio
                     H("Shifted Binet formula"),
                     LeanTheorem(
                         "D5/S1/Recurrence/BilateralLiftUniqueness.fibonacci_weight_binet"),
-                    LatexStatement.Create(
-                        @"$$F_{k+1}=\frac{\varphi^{k+1}-\psi^{k+1}}{\sqrt{5}}.$$"),
+                    Disp(Seq(F.Id("F"), Underscore, Grp(F.Id("k"), Plus, D(1)), Eq, Frac, Grp(Varphi, Caret, Grp(F.Id("k"), Plus, D(1)), Minus, Psi, Caret, Grp(F.Id("k"), Plus, D(1))), Grp(Sqrt, Grp(D(5))), Dot)),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "With Fibonacci weights indexed from F_1, both golden components have "
@@ -72,9 +65,7 @@ internal sealed class BilateralLiftUniquenessDocument : IScribeDocumentDefinitio
                     LeanTheorem(
                         "D5/S1/Recurrence/BilateralLiftUniqueness."
                         + "fibonacci_cyclic_span_minimal"),
-                    LatexStatement.Create(
-                        @"$$\langle F\rangle_{S}="
-                        + @"\operatorname{span}_{\mathbb{R}}\{e_{\varphi},e_{\psi}\}.$$"),
+                    Disp(Seq(Langle, Sp, F.Id("F"), Rangle, Underscore, Grp(F.Id("S")), Eq, Operatorname, Grp(F.Id("span")), Underscore, Grp(Mathbb, Grp(F.Id("R"))), OpenBrace, F.Id("e"), Underscore, Grp(Varphi), Comma, F.Id("e"), Underscore, Grp(Psi), CloseBrace, Dot)),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "The golden two-line span contains the Fibonacci weight sequence, is "
@@ -86,8 +77,7 @@ internal sealed class BilateralLiftUniquenessDocument : IScribeDocumentDefinitio
                     H("Exact contracting residual"),
                     LeanTheorem(
                         "D5/S1/Recurrence/BilateralLiftUniqueness.fibonacci_weight_residual"),
-                    LatexStatement.Create(
-                        @"$$F_{k+2}-\varphi F_{k+1}=\psi^{k+1}.$$"),
+                    Disp(Seq(F.Id("F"), Underscore, Grp(F.Id("k"), Plus, D(2)), Minus, Varphi, Sp, F.Id("F"), Underscore, Grp(F.Id("k"), Plus, D(1)), Eq, Psi, Caret, Grp(F.Id("k"), Plus, D(1)), Dot)),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "Subtracting the expanding golden component from the shifted Fibonacci "

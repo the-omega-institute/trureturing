@@ -3647,7 +3647,7 @@ sources:
               target_sha256: sha256:2fd22301f5414f5466b60b1b87ab4b032f98b144c9759976ed92a35523168bdb
           scribe:
             - gid: D5/S3/Analytic/LiCausalTrichotomy.causal_iff_integer_iff_monodromy
-              definition_sha256: sha256:aea9e9df715ed7d036bb15120dcfde02eb91e5673f9834e5fba3024df41ef9f6
+              definition_sha256: sha256:afc1a2dcc698daa30dad8ef496cc920b118685d773011b01586de8c0b05066fc
               emission_sha256: sha256:eb8cdfc089758e3dabf2e05b3e3977d223e9dbf224a4201975ad85402c8f45d7
           unresolved_subitems: []
           chain_atoms: []
@@ -8191,7 +8191,7 @@ sources:
               target_sha256: sha256:714a1c568291451bddbacc784c75342e724836383e80f9cce80394e2450a9f89
           scribe:
             - gid: D5/S3/Arith/PrimeFactorization.exists_prime_factorization
-              definition_sha256: sha256:2bd3c83f0aea9244e6294b09dddc53a9ca23e8cb8e4c6e7db8e9e51973efcf0a
+              definition_sha256: sha256:bcf109a48330464ce226245e07df609f7c292c568a99cdb193f9dc8ff3211abf
               emission_sha256: sha256:dc662259b09052a7189c54f114eb4f069fe59913d0b01e713bb9f2f79aed6504
           unresolved_subitems: []
           chain_atoms: []
@@ -8332,7 +8332,7 @@ sources:
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-fb7034e5aae28c13cdb90c723c23beb452f6ddf68f8ae6c6e7c2fd1914a02bae
         ast_path: theorem/5.6
@@ -10482,7 +10482,7 @@ sources:
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-0e09132a1f3ec5f44216dd5019605bfe47f975bddbb39c65892dc0e98ba12df2
         ast_path: consequence/7.4
@@ -10563,7 +10563,7 @@ sources:
               target_sha256: sha256:9059d951457c0196457f830f43d7bebcf6468419498fe0379125088b1e8cad54
           scribe:
             - gid: D5/S3/Arith/ResidueSeparation.residue_separation
-              definition_sha256: sha256:8ea44af592ad0f3254dcc1bd4696daf502f0f783956e4b252cbd69cf29b9a74b
+              definition_sha256: sha256:504db0205babf1dab4421a07bf29afd905fc9c32600123e7613d248eb4f4f152
               emission_sha256: sha256:3fa22d2aa38f21512aaadc52f60ec4b08f0d692c28d4d37f6f43165030b00fd2
           unresolved_subitems: []
           chain_atoms: []
@@ -10634,7 +10634,7 @@ sources:
               target_sha256: sha256:9584966ae5edc94f100aa0085339fc81ea04fd8c4d033624698346619e5f083b
           scribe:
             - gid: D5/S3/Arith/EuclidLemma.euclid_prime_dvd_mul
-              definition_sha256: sha256:c86b8ad26ce82321a596a4fefaec5f57319f5642c78357a6424510a7efdd8522
+              definition_sha256: sha256:567e6e563cc43fa425f7dd51277ff3fb4f9f79dca52d6ccad3fb97f54459eedd
               emission_sha256: sha256:fe581540bcdb6f089b6b897a53dab1d666a3251e48204fecda5adc9ef68a83fb
           unresolved_subitems: []
           chain_atoms: []
@@ -10759,7 +10759,7 @@ sources:
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-04b9d7a92102a4d1b437b29ee7a326c7da4f16a52e3fc70663fab125873b4c69
         ast_path: lemma/9.9
@@ -10986,7 +10986,7 @@ sources:
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-163b117bf8d71533380dda3c03c27c13e02d3d02c999a6baebda24fdca60ab45
         ast_path: remark/10.11
@@ -11736,7 +11736,7 @@ sources:
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-c2b458c0ec6e7494ffe7b15cc71ca9aa7afd5559254301851904c9c91c88d13f
         ast_path: theorem/19.5
@@ -11817,7 +11817,7 @@ sources:
               target_sha256: sha256:ca6b448393c8b3a2fa0f33ec59a1106f9114f2550ea096ad58956b13f2c02546
           scribe:
             - gid: D5/S3/Arith/HiddenFiberRigidity.hidden_fiber_rigidity
-              definition_sha256: sha256:cb2580f3ba77a766e02735e17c4cbcc254018dd66f1dd6e6b1cc541012502d51
+              definition_sha256: sha256:41c293c3ceaf357efc4738f910055299f1f5f1601c8ab5e2d95b403e988e884a
               emission_sha256: sha256:ad5fb85604780a3c0d5af4a1936099c2665a94b4224631e76cc8dbe921981556
           unresolved_subitems: []
           chain_atoms: []
@@ -11878,7 +11878,7 @@ sources:
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-2bf22a61c83cffae0134a75dff11aa487139dba7ba1cb1c154e81ef6004e052d
         ast_path: corollary/20.7
@@ -11895,7 +11895,7 @@ sources:
               target_sha256: sha256:74bfa7df4c91b2f408ba39d7e389f16e5d3bc63e17d32b1f17cdc3cc2233aa62
           scribe:
             - gid: D5/S1/Dynamics/JumpCocycle.jump_cocycle
-              definition_sha256: sha256:5f0a7a68eb4921bed9508824a2dc163eeccd38600dc3faf40877a1f110b8d254
+              definition_sha256: sha256:81729595629aef8e8227dee246da82b4b8a63b25bdf909b0767a934ffc9e87fe
               emission_sha256: sha256:ce41d85c634932b3661161ff24b6da30e5ed558ade0ae1d3e2c26afe27e1f2d6
           unresolved_subitems: []
           chain_atoms: []
@@ -11988,7 +11988,7 @@ sources:
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-22ba601a3694429398fb3739b5b607a1b19044baffdde4417e4fc1f955f5f4f1
         ast_path: remark/20.13
@@ -12277,7 +12277,7 @@ sources:
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-7e62077dde65f6e6c6f13313e8a6bff867bee9f9a1b0f3f4173a10545d3ca36e
         ast_path: definition/23.5
@@ -12372,7 +12372,7 @@ sources:
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-d6f017ca0e0084e3a192c44e1f76e886e2c4e6eb9641de0e0cde86d8117d36f3
         ast_path: proposition/23.8
@@ -12933,7 +12933,7 @@ sources:
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-285db8f38013cb8ba4ef3c3dc00a597c3ae22871f85e248538ea8f39353906a8
         ast_path: corollary/25.11

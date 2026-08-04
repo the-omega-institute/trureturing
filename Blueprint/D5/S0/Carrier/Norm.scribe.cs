@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S0.Carrier;
 
@@ -19,10 +21,10 @@ internal sealed class NormDocument : IScribeDocumentDefinition
                 DescribeId.Create("two-square-norm-as-a-shared-interpretive-core"),
                 H("The two-square norm as a shared interpretive core"),
                 DescribeStatement.FromFormula(Equal(
-                    Call("gaussianNorm", Id("a"), Id("b")),
+                    Call("gaussianNorm", DefinitionDsl.Id("a"), DefinitionDsl.Id("b")),
                     Add(
-                        new Formula.Power(Id("a"), Num(2)),
-                        new Formula.Power(Id("b"), Num(2))))),
+                        new Formula.Power(DefinitionDsl.Id("a"), Num(2)),
+                        new Formula.Power(DefinitionDsl.Id("b"), Num(2))))),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "The source groups a^2+b^2 under four roles: the defining two-axis norm, the Gaussian norm, the modulus-four obstruction, and the splitting reading modulo a prime. It states that each role has its own theorem and that norm multiplicativity is the pivot used in the composition step. The vocabulary in which primes congruent to one split, primes congruent to three remain inert, and two ramifies is explicitly interpretive: the classification theorem is said not to depend on that Gaussian-integer language. A separate dynamical role is referenced but not added as a claim of this module.")))
@@ -32,7 +34,7 @@ internal sealed class NormDocument : IScribeDocumentDefinition
                 H("Norm-Euclidean division"),
                 LeanTheorem(
                     "D5/S0/Carrier/Euclidean.golden_division"),
-                LatexStatement.Create(@"$$\forall a,b\in\mathbb{Z}[\varphi],\ b\neq 0 \Rightarrow \exists q,r\in\mathbb{Z}[\varphi],\ a=qb+r \land (r=0 \lor \lvert\operatorname{norm}(r)\rvert<\lvert\operatorname{norm}(b)\rvert)$$"),
+                Disp(Seq(Forall, Sp, F.Id("a"), Comma, F.Id("b"), InMacro, Mathbb, Grp(F.Id("Z")), OpenBracket, Varphi, CloseBracket, Comma, Esc, F.Id("b"), Neq, Sp, D(0), Sp, Rightarrow, Sp, Exists, Sp, F.Id("q"), Comma, F.Id("r"), InMacro, Mathbb, Grp(F.Id("Z")), OpenBracket, Varphi, CloseBracket, Comma, Esc, F.Id("a"), Eq, F.Id("qb"), Plus, F.Id("r"), Sp, Land, Sp, Open, F.Id("r"), Eq, D(0), Sp, Lor, Sp, Lvert, Operatorname, Grp(F.Id("norm")), Open, F.Id("r"), Close, Rvert, Lt, Lvert, Operatorname, Grp(F.Id("norm")), Open, F.Id("b"), Close, Rvert, Close)),
                 DescribeProvenance.LiteratureAttested(
                     LibraryNoteRef.Create("D5/L/Carrier/chatland1949euclidean")),
                 Blocks(
@@ -48,7 +50,7 @@ internal sealed class NormDocument : IScribeDocumentDefinition
                 H("Principal ideal domain"),
                 LeanTheorem(
                     "D5/S0/Carrier/PrincipalIdeal.golden_int_is_pid"),
-                LatexStatement.Create(@"$\mathbb{Z}[\varphi]\text{ is a principal ideal domain.}$"),
+                In(Seq(Mathbb, Grp(F.Id("Z")), OpenBracket, Varphi, CloseBracket, F.Text, Grp(Sp, F.Id("is"), Sp, F.Id("a"), Sp, F.Id("principal"), Sp, F.Id("ideal"), Sp, F.Id("domain"), Dot))),
                 DescribeProvenance.LiteratureAttested(
                     LibraryNoteRef.Create("D5/L/Carrier/chatland1949euclidean")),
                 Blocks(
@@ -64,7 +66,7 @@ internal sealed class NormDocument : IScribeDocumentDefinition
                 H("The golden norm is power-multiplicative"),
                 LeanTheorem(
                     "D5/S0/Carrier/NormPowers.norm_pow"),
-                LatexStatement.Create(@"$\forall x\in\mathbb{Z}[\varphi],\ \forall n\in\mathbb{N},\ \operatorname{norm}(x^{n})=\operatorname{norm}(x)^{n}$"),
+                In(Seq(Forall, Sp, F.Id("x"), InMacro, Mathbb, Grp(F.Id("Z")), OpenBracket, Varphi, CloseBracket, Comma, Esc, Forall, Sp, F.Id("n"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Esc, Operatorname, Grp(F.Id("norm")), Open, F.Id("x"), Caret, Grp(F.Id("n")), Close, Eq, Operatorname, Grp(F.Id("norm")), Open, F.Id("x"), Close, Caret, Grp(F.Id("n")))),
                 DescribeProvenance.RepoDerived(),
                 Blocks(
                     Paragraph(Text(

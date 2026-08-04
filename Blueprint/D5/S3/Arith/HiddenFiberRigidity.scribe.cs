@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Arith;
 
@@ -15,9 +17,7 @@ internal sealed class HiddenFiberRigidityDocument : IScribeDocumentDefinition
                 H("A continuous interval map into the profinite fiber is constant"),
                 LeanTheorem(
                     "D5/S3/Arith/HiddenFiberRigidity.hidden_fiber_rigidity"),
-                LatexStatement.Create(
-                    @"$$s \subseteq \mathbb{R} \text{ preconnected} \land f : s \to \prod_{p \text{ prime}} "
-                    + @"\mathbb{Z}_p \text{ continuous} \Rightarrow \forall x, y \in s,\ f(x) = f(y)$$"),
+                Disp(Seq(F.Id("s"), Sp, Subseteq, Sp, Mathbb, Grp(F.Id("R")), Sp, F.Text, Grp(Sp, F.Id("preconnected")), Sp, Land, Sp, F.Id("f"), Sp, Colon, Sp, F.Id("s"), Sp, To, Sp, Prod, Underscore, Grp(F.Id("p"), Sp, F.Text, Grp(Sp, F.Id("prime"))), Sp, Mathbb, Grp(F.Id("Z")), Underscore, F.Id("p"), Sp, F.Text, Grp(Sp, F.Id("continuous")), Sp, Rightarrow, Sp, Forall, Sp, F.Id("x"), Comma, Sp, F.Id("y"), Sp, InMacro, Sp, F.Id("s"), Comma, Esc, F.Id("f"), Open, F.Id("x"), Close, Sp, Eq, Sp, F.Id("f"), Open, F.Id("y"), Close)),
                 DescribeProvenance.RepoDerived(),
                 Blocks(
                     Paragraph(Text(

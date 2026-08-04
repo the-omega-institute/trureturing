@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Arith;
 
@@ -15,9 +17,7 @@ internal sealed class WilsonDocument : IScribeDocumentDefinition
                 H("The factorial before a prime is minus one modulo the prime"),
                 LeanTheorem(
                     "D5/S3/Arith/Wilson.wilson_theorem"),
-                LatexStatement.Create(
-                    @"$$p\ \text{prime}\quad\Rightarrow\quad (p-1)!\equiv -1\ "
-                    + @"(\operatorname{mod}\ p)$$"),
+                Disp(Seq(F.Id("p"), Esc, F.Text, Grp(F.Id("prime")), Quad, Rightarrow, Quad, Sp, Open, F.Id("p"), Minus, D(1), Close, Bang, Equiv, Sp, Minus, D(1), Esc, Open, Operatorname, Grp(F.Id("mod")), Esc, F.Id("p"), Close)),
                 DescribeProvenance.RepoDerived(),
                 Blocks(
                     Paragraph(Text(

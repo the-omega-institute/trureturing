@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Scale;
 
@@ -6,8 +8,8 @@ internal sealed class LogDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create()
     {
-        var n = Id("n");
-        var x = Id("x");
+        var n = DefinitionDsl.Id("n");
+        var x = DefinitionDsl.Id("x");
         var scaleValue = new Formula.Floor(
             new Formula.Log(
                 new Formula.Phi(),
@@ -30,7 +32,7 @@ internal sealed class LogDocument : IScribeDocumentDefinition
                     H("Zero has no scale"),
 
                         LeanTheorem("D5/S1/Scale/Log.logScale_zero"),
-                    LatexStatement.Create(@"$\operatorname{logScale}(0)=\operatorname{none}$"),
+                    In(Seq(Operatorname, Grp(F.Id("logScale")), Open, D(0), Close, Eq, Operatorname, Grp(F.Id("none")))),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text("The option-valued definition returns `none` at zero.")))
                 ),
@@ -39,7 +41,7 @@ internal sealed class LogDocument : IScribeDocumentDefinition
                     H("Nonzero scale"),
 
                         LeanTheorem("D5/S1/Scale/Log.logScale_ne_zero"),
-                    LatexStatement.Create(@"$\forall x \in \operatorname{GoldenInt},\ x\neq 0 \Rightarrow \operatorname{logScale}(x)=\operatorname{some}(\lfloor\log_{\varphi}\lvert\operatorname{embedding}(x)\rvert\rfloor)$"),
+                    In(Seq(Forall, Sp, F.Id("x"), Sp, InMacro, Sp, Operatorname, Grp(F.Id("GoldenInt")), Comma, Esc, F.Id("x"), Neq, Sp, D(0), Sp, Rightarrow, Sp, Operatorname, Grp(F.Id("logScale")), Open, F.Id("x"), Close, Eq, Operatorname, Grp(F.Id("some")), Open, Lfloor, Log, Underscore, Grp(Varphi), Lvert, Operatorname, Grp(F.Id("embedding")), Open, F.Id("x"), Close, Rvert, Rfloor, Close)),
                     DescribeProvenance.RepoDerived(),
                     Blocks(
                         Paragraph(Text("For nonzero input the following integer is wrapped in `some`:")),
@@ -56,7 +58,7 @@ internal sealed class LogDocument : IScribeDocumentDefinition
                             H("Embedding of a unit power"),
                             LeanTheorem(
                                 "D5/S1/Scale/Log.embedding_phiUnitZPowMul"),
-                            LatexStatement.Create(@"$\forall n \in \mathbb{Z},\ \forall x \in \operatorname{GoldenInt},\ \operatorname{embedding}(\operatorname{phiUnitZPowMul}(n,x))=\varphi^{n}\operatorname{embedding}(x)$"),
+                            In(Seq(Forall, Sp, F.Id("n"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("Z")), Comma, Esc, Forall, Sp, F.Id("x"), Sp, InMacro, Sp, Operatorname, Grp(F.Id("GoldenInt")), Comma, Esc, Operatorname, Grp(F.Id("embedding")), Open, Operatorname, Grp(F.Id("phiUnitZPowMul")), Open, F.Id("n"), Comma, F.Id("x"), Close, Close, Eq, Varphi, Caret, Grp(F.Id("n")), Operatorname, Grp(F.Id("embedding")), Open, F.Id("x"), Close)),
                             DescribeProvenance.RepoDerived(),
                             Blocks(new DocumentBlock.DisplayFormula(
                                 Equal(
@@ -70,7 +72,7 @@ internal sealed class LogDocument : IScribeDocumentDefinition
                             H("Exact scale translation"),
                             LeanTheorem(
                                 "D5/S1/Scale/Log.logScale_phiUnit_zpow_mul"),
-                            LatexStatement.Create(@"$\forall n \in \mathbb{Z},\ \forall x \in \operatorname{GoldenInt},\ x\neq 0 \Rightarrow \operatorname{logScale}(\operatorname{phiUnitZPowMul}(n,x))=\operatorname{map}(n+\cdot,\operatorname{logScale}(x))$"),
+                            In(Seq(Forall, Sp, F.Id("n"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("Z")), Comma, Esc, Forall, Sp, F.Id("x"), Sp, InMacro, Sp, Operatorname, Grp(F.Id("GoldenInt")), Comma, Esc, F.Id("x"), Neq, Sp, D(0), Sp, Rightarrow, Sp, Operatorname, Grp(F.Id("logScale")), Open, Operatorname, Grp(F.Id("phiUnitZPowMul")), Open, F.Id("n"), Comma, F.Id("x"), Close, Close, Eq, Operatorname, Grp(F.Id("map")), Open, F.Id("n"), Plus, Cdot, Comma, Operatorname, Grp(F.Id("logScale")), Open, F.Id("x"), Close, Close)),
                             DescribeProvenance.RepoDerived(),
                             Blocks(
                                 Paragraph(

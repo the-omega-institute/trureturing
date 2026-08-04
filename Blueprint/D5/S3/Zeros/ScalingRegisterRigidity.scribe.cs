@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Zeros;
 
@@ -46,11 +48,7 @@ internal sealed class ScalingRegisterRigidityDocument : IScribeDocumentDefinitio
                 H("A nontrivial register is not address-independent"),
                 LeanTheorem(
                     "D5/S3/Zeros/ScalingRegisterRigidity.scaling_register_not_address_independent"),
-                LatexStatement.Create(
-                    @"$$\forall A\,[\operatorname{AddMonoid}(A)],\ \forall \ell:A\to_{+}\mathbb{R},"
-                    + @"\ \forall R:\mathbb{C}\to A\to\mathbb{C},\ "
-                    + @"\operatorname{ScalingRegister}(\ell,R)"
-                    + @"\Rightarrow\neg\forall s,a,b,\ R(s,a)=R(s,b).$$"),
+                Disp(Seq(Forall, Sp, F.Id("A"), Thin, OpenBracket, Operatorname, Grp(F.Id("AddMonoid")), Open, F.Id("A"), Close, CloseBracket, Comma, Esc, Forall, Sp, Ell, Colon, F.Id("A"), To, Underscore, Grp(Plus), Mathbb, Grp(F.Id("R")), Comma, Esc, Forall, Sp, F.Id("R"), Colon, Mathbb, Grp(F.Id("C")), To, Sp, F.Id("A"), To, Mathbb, Grp(F.Id("C")), Comma, Esc, Operatorname, Grp(F.Id("ScalingRegister")), Open, Ell, Comma, F.Id("R"), Close, Rightarrow, Neg, Forall, Sp, F.Id("s"), Comma, F.Id("a"), Comma, F.Id("b"), Comma, Esc, F.Id("R"), Open, F.Id("s"), Comma, F.Id("a"), Close, Eq, F.Id("R"), Open, F.Id("s"), Comma, F.Id("b"), Close, Dot)),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "At the zero address every exponential register equals one. Address "
@@ -72,10 +70,7 @@ internal sealed class ScalingRegisterRigidityDocument : IScribeDocumentDefinitio
                 H("A nontrivial register changes nowhere-zero data"),
                 LeanTheorem(
                     "D5/S3/Zeros/ScalingRegisterRigidity.applyRegister_ne_of_nontrivial"),
-                LatexStatement.Create(
-                    @"$$\left(\forall a,s,\ X_{\operatorname{data}}(a,s)\neq0\right)\land"
-                    + @"\left(\exists s,a,\ R(s,a)\neq1\right)\Rightarrow"
-                    + @"\operatorname{applyRegister}(R,X)\neq X.$$"),
+                Disp(Seq(Left, Open, Forall, Sp, F.Id("a"), Comma, F.Id("s"), Comma, Esc, F.Id("X"), Underscore, Grp(Operatorname, Grp(F.Id("data"))), Open, F.Id("a"), Comma, F.Id("s"), Close, Neq, D(0), Right, Close, Land, Left, Open, Exists, Sp, F.Id("s"), Comma, F.Id("a"), Comma, Esc, F.Id("R"), Open, F.Id("s"), Comma, F.Id("a"), Close, Neq, D(1), Right, Close, Rightarrow, Operatorname, Grp(F.Id("applyRegister")), Open, F.Id("R"), Comma, F.Id("X"), Close, Neq, Sp, F.Id("X"), Dot)),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "At the nontrivial witness, equality of total codes would equate the data "
@@ -99,22 +94,7 @@ internal sealed class ScalingRegisterRigidityDocument : IScribeDocumentDefinitio
                 H("Realized same germ and same total code force a trivial register"),
                 LeanTheorem(
                     "D5/S3/Zeros/ScalingRegisterRigidity.realized_same_germ_same_total_code_forces_trivial_register"),
-                LatexStatement.Create(
-                    @"$$\begin{gathered}U\subseteq\mathbb{C},\ f,\widetilde f:\mathbb{C}\to\mathbb{C},"
-                    + @"\quad \operatorname{AnalyticOnNhd}(f,U),\quad"
-                    + @"\operatorname{AnalyticOnNhd}(\widetilde f,U),\\"
-                    + @"\operatorname{IsPreconnected}(U),\quad s_0\in U,\ "
-                    + @"f=_{\operatorname{nhds}(s_0)}\widetilde f,\\"
-                    + @"R:\mathbb{C}\to A\to\mathbb{C},\quad "
-                    + @"X:\operatorname{TotalCode}(A\to\mathbb{C}\to\mathbb{C},Q,L),\\"
-                    + @"\operatorname{RealizesAt}(a,X,f),\quad"
-                    + @"\operatorname{RealizesAt}(a,\operatorname{applyRegister}(R,X),\widetilde f),\\"
-                    + @"\forall a,s,\ X_{\operatorname{data}}(a,s)\neq0,\quad"
-                    + @"\operatorname{applyRegister}(R,X)=X"
-                    + @"\end{gathered}\quad\Rightarrow\quad"
-                    + @"\left(f=\widetilde f\text{ on }U\right)\land"
-                    + @"\left(\forall s,\ \widetilde f(s)=R(s,a)f(s)\right)\land"
-                    + @"\left(\forall s,a,\ R(s,a)=1\right).$$"),
+                Disp(Seq(Begin, Grp(F.Id("gathered")), F.Id("U"), Subseteq, Mathbb, Grp(F.Id("C")), Comma, Esc, F.Id("f"), Comma, Widetilde, Sp, F.Id("f"), Colon, Mathbb, Grp(F.Id("C")), To, Mathbb, Grp(F.Id("C")), Comma, Quad, Sp, Operatorname, Grp(F.Id("AnalyticOnNhd")), Open, F.Id("f"), Comma, F.Id("U"), Close, Comma, Quad, Operatorname, Grp(F.Id("AnalyticOnNhd")), Open, Widetilde, Sp, F.Id("f"), Comma, F.Id("U"), Close, Comma, RowBreak, Operatorname, Grp(F.Id("IsPreconnected")), Open, F.Id("U"), Close, Comma, Quad, Sp, F.Id("s"), Underscore, D(0), InMacro, Sp, F.Id("U"), Comma, Esc, F.Id("f"), Eq, Underscore, Grp(Operatorname, Grp(F.Id("nhds")), Open, F.Id("s"), Underscore, D(0), Close), Widetilde, Sp, F.Id("f"), Comma, RowBreak, F.Id("R"), Colon, Mathbb, Grp(F.Id("C")), To, Sp, F.Id("A"), To, Mathbb, Grp(F.Id("C")), Comma, Quad, Sp, F.Id("X"), Colon, Operatorname, Grp(F.Id("TotalCode")), Open, F.Id("A"), To, Mathbb, Grp(F.Id("C")), To, Mathbb, Grp(F.Id("C")), Comma, F.Id("Q"), Comma, F.Id("L"), Close, Comma, RowBreak, Operatorname, Grp(F.Id("RealizesAt")), Open, F.Id("a"), Comma, F.Id("X"), Comma, F.Id("f"), Close, Comma, Quad, Operatorname, Grp(F.Id("RealizesAt")), Open, F.Id("a"), Comma, Operatorname, Grp(F.Id("applyRegister")), Open, F.Id("R"), Comma, F.Id("X"), Close, Comma, Widetilde, Sp, F.Id("f"), Close, Comma, RowBreak, Forall, Sp, F.Id("a"), Comma, F.Id("s"), Comma, Esc, F.Id("X"), Underscore, Grp(Operatorname, Grp(F.Id("data"))), Open, F.Id("a"), Comma, F.Id("s"), Close, Neq, D(0), Comma, Quad, Operatorname, Grp(F.Id("applyRegister")), Open, F.Id("R"), Comma, F.Id("X"), Close, Eq, F.Id("X"), End, Grp(F.Id("gathered")), Quad, Rightarrow, Quad, Left, Open, F.Id("f"), Eq, Widetilde, Sp, F.Id("f"), F.Text, Grp(Sp, F.Id("on"), Sp), F.Id("U"), Right, Close, Land, Left, Open, Forall, Sp, F.Id("s"), Comma, Esc, Widetilde, Sp, F.Id("f"), Open, F.Id("s"), Close, Eq, F.Id("R"), Open, F.Id("s"), Comma, F.Id("a"), Close, F.Id("f"), Open, F.Id("s"), Close, Right, Close, Land, Left, Open, Forall, Sp, F.Id("s"), Comma, F.Id("a"), Comma, Esc, F.Id("R"), Open, F.Id("s"), Comma, F.Id("a"), Close, Eq, D(1), Right, Close, Dot)),
                 DescribeProvenance.RepoDerived(),
                 Blocks(
                     Paragraph(Text(
@@ -131,11 +111,7 @@ internal sealed class ScalingRegisterRigidityDocument : IScribeDocumentDefinitio
                 H("Realized code-preserving continuations exclude scaling registers"),
                 LeanTheorem(
                     "D5/S3/Zeros/ScalingRegisterRigidity.realized_same_germ_same_total_code_excludes_scaling_register"),
-                LatexStatement.Create(
-                    @"$$\operatorname{RealizesAt}(a,X,f)\land"
-                    + @"\operatorname{RealizesAt}(a,\operatorname{applyRegister}(R,X),\widetilde f)"
-                    + @"\land\text{ same germ}\land\text{ same total code}"
-                    + @"\Rightarrow\neg\operatorname{ScalingRegister}(\ell,R).$$"),
+                Disp(Seq(Operatorname, Grp(F.Id("RealizesAt")), Open, F.Id("a"), Comma, F.Id("X"), Comma, F.Id("f"), Close, Land, Operatorname, Grp(F.Id("RealizesAt")), Open, F.Id("a"), Comma, Operatorname, Grp(F.Id("applyRegister")), Open, F.Id("R"), Comma, F.Id("X"), Close, Comma, Widetilde, Sp, F.Id("f"), Close, Land, F.Text, Grp(Sp, F.Id("same"), Sp, F.Id("germ")), Land, F.Text, Grp(Sp, F.Id("same"), Sp, F.Id("total"), Sp, F.Id("code")), Rightarrow, Neg, Operatorname, Grp(F.Id("ScalingRegister")), Open, Ell, Comma, F.Id("R"), Close, Dot)),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "The realized rigidity theorem makes R pointwise one, contradicting the "
@@ -147,9 +123,7 @@ internal sealed class ScalingRegisterRigidityDocument : IScribeDocumentDefinitio
                 H("The scaling-register predicate has a concrete witness"),
                 LeanTheorem(
                     "D5/S3/Zeros/ScalingRegisterRigidity.integer_scaling_register_exists"),
-                LatexStatement.Create(
-                    @"$$\operatorname{ScalingRegister}\!\left(\operatorname{castAddHom}_{\mathbb{R}},"
-                    + @"\ (s,n)\mapsto\exp(\pi i n)\right).$$"),
+                Disp(Seq(Operatorname, Grp(F.Id("ScalingRegister")), NegThin, Left, Open, Operatorname, Grp(F.Id("castAddHom")), Underscore, Grp(Mathbb, Grp(F.Id("R"))), Comma, Esc, Open, F.Id("s"), Comma, F.Id("n"), Close, Mapsto, Exp, Open, Pi, Sp, F.Id("i"), Sp, F.Id("n"), Close, Right, Close, Dot)),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "On the integer ledger, the cast-to-real length and the factor exp(pi i n) "

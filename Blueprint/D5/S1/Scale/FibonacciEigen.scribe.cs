@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Scale;
 
@@ -15,7 +17,7 @@ internal sealed class FibonacciEigenDocument : IScribeDocumentDefinition
                 H("Golden eigenpairs and contracting error"),
                 LeanTheorem(
                     "D5/S1/Scale/FibonacciEigen.fibonacci_substitution_spec"),
-                LatexStatement.Create(@"$$\forall n \in \mathbb{N},\ \operatorname{expandingEigenvector}\neq 0 \land \operatorname{fibonacciSubstitution}\operatorname{expandingEigenvector}=\varphi\operatorname{expandingEigenvector} \land \operatorname{contractingEigenvector}\neq 0 \land \operatorname{fibonacciSubstitution}\operatorname{contractingEigenvector}=\operatorname{contractingEigenvalue}\operatorname{contractingEigenvector} \land (F_{n}\varphi-F_{n+1})=-\operatorname{contractingEigenvalue}^{n}$$"),
+                Disp(Seq(Forall, Sp, F.Id("n"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Esc, Operatorname, Grp(F.Id("expandingEigenvector")), Neq, Sp, D(0), Sp, Land, Sp, Operatorname, Grp(F.Id("fibonacciSubstitution")), Operatorname, Grp(F.Id("expandingEigenvector")), Eq, Varphi, Operatorname, Grp(F.Id("expandingEigenvector")), Sp, Land, Sp, Operatorname, Grp(F.Id("contractingEigenvector")), Neq, Sp, D(0), Sp, Land, Sp, Operatorname, Grp(F.Id("fibonacciSubstitution")), Operatorname, Grp(F.Id("contractingEigenvector")), Eq, Operatorname, Grp(F.Id("contractingEigenvalue")), Operatorname, Grp(F.Id("contractingEigenvector")), Sp, Land, Sp, Open, F.Id("F"), Underscore, Grp(F.Id("n")), Varphi, Minus, F.Id("F"), Underscore, Grp(F.Id("n"), Plus, D(1)), Close, Eq, Minus, Operatorname, Grp(F.Id("contractingEigenvalue")), Caret, Grp(F.Id("n")))),
                 DescribeProvenance.LiteratureAttested(
                     LibraryNoteRef.Create("D5/L/koshy2001fibonacci")),
                 Blocks(Paragraph(Text(

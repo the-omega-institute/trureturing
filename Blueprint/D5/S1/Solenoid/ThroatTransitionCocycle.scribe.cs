@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Solenoid;
 
@@ -17,21 +19,7 @@ internal sealed class ThroatTransitionCocycleDocument : IScribeDocumentDefinitio
                     LeanTheorem(
                         "D5/S1/Solenoid/ThroatTransitionCocycle."
                         + "three_lift_difference_cocycle"),
-                    LatexStatement.Create(
-                        @"$$\pi\circ s_{\alpha}=\pi\circ s_{\beta},\quad "
-                        + @"\pi\circ s_{\beta}=\pi\circ s_{\gamma}\quad\Rightarrow\quad "
-                        + @"\begin{gathered}"
-                        + @"\exists!\,k_{\alpha\beta}:U\to\mathcal S,\ "
-                        + @"\pi(k_{\alpha\beta}(u))=0,\ "
-                        + @"s_{\beta}(u)=s_{\alpha}(u)+k_{\alpha\beta}(u),\\"
-                        + @"\exists!\,k_{\beta\gamma}:U\to\mathcal S,\ "
-                        + @"\pi(k_{\beta\gamma}(u))=0,\ "
-                        + @"s_{\gamma}(u)=s_{\beta}(u)+k_{\beta\gamma}(u),\\"
-                        + @"\exists!\,k_{\alpha\gamma}:U\to\mathcal S,\ "
-                        + @"\pi(k_{\alpha\gamma}(u))=0,\ "
-                        + @"s_{\gamma}(u)=s_{\alpha}(u)+k_{\alpha\gamma}(u),\\"
-                        + @"k_{\alpha\gamma}(u)=k_{\alpha\beta}(u)+k_{\beta\gamma}(u)"
-                        + @"\end{gathered}\qquad(u\in U),$$"),
+                    Disp(Seq(Pi, Circ, Sp, F.Id("s"), Underscore, Grp(Alpha), Eq, Pi, Circ, Sp, F.Id("s"), Underscore, Grp(Beta), Comma, Quad, Sp, Pi, Circ, Sp, F.Id("s"), Underscore, Grp(Beta), Eq, Pi, Circ, Sp, F.Id("s"), Underscore, Grp(GammaLower), Quad, Rightarrow, Quad, Sp, Begin, Grp(F.Id("gathered")), Exists, Bang, Thin, F.Id("k"), Underscore, Grp(Alpha, Beta), Colon, F.Id("U"), To, Mathcal, Sp, F.Id("S"), Comma, Esc, Pi, Open, F.Id("k"), Underscore, Grp(Alpha, Beta), Open, F.Id("u"), Close, Close, Eq, D(0), Comma, Esc, F.Id("s"), Underscore, Grp(Beta), Open, F.Id("u"), Close, Eq, F.Id("s"), Underscore, Grp(Alpha), Open, F.Id("u"), Close, Plus, F.Id("k"), Underscore, Grp(Alpha, Beta), Open, F.Id("u"), Close, Comma, RowBreak, Exists, Bang, Thin, F.Id("k"), Underscore, Grp(Beta, GammaLower), Colon, F.Id("U"), To, Mathcal, Sp, F.Id("S"), Comma, Esc, Pi, Open, F.Id("k"), Underscore, Grp(Beta, GammaLower), Open, F.Id("u"), Close, Close, Eq, D(0), Comma, Esc, F.Id("s"), Underscore, Grp(GammaLower), Open, F.Id("u"), Close, Eq, F.Id("s"), Underscore, Grp(Beta), Open, F.Id("u"), Close, Plus, F.Id("k"), Underscore, Grp(Beta, GammaLower), Open, F.Id("u"), Close, Comma, RowBreak, Exists, Bang, Thin, F.Id("k"), Underscore, Grp(Alpha, GammaLower), Colon, F.Id("U"), To, Mathcal, Sp, F.Id("S"), Comma, Esc, Pi, Open, F.Id("k"), Underscore, Grp(Alpha, GammaLower), Open, F.Id("u"), Close, Close, Eq, D(0), Comma, Esc, F.Id("s"), Underscore, Grp(GammaLower), Open, F.Id("u"), Close, Eq, F.Id("s"), Underscore, Grp(Alpha), Open, F.Id("u"), Close, Plus, F.Id("k"), Underscore, Grp(Alpha, GammaLower), Open, F.Id("u"), Close, Comma, RowBreak, F.Id("k"), Underscore, Grp(Alpha, GammaLower), Open, F.Id("u"), Close, Eq, F.Id("k"), Underscore, Grp(Alpha, Beta), Open, F.Id("u"), Close, Plus, F.Id("k"), Underscore, Grp(Beta, GammaLower), Open, F.Id("u"), Close, End, Grp(F.Id("gathered")), Qquad, Open, F.Id("u"), InMacro, Sp, F.Id("U"), Close, Comma)),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "Each difference is constructed pointwise by subtraction. "

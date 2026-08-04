@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Zeros;
 
@@ -32,7 +34,7 @@ internal sealed class SpectralShiftDocument : IScribeDocumentDefinition
                 H("Labeled-zeta coefficients are pointwise shift eigenfamilies"),
                 LeanTheorem(
                     "D5/S3/Zeros/SpectralShift.labeled_zeta_backward_shift_eigen"),
-                LatexStatement.Create(@"$$\forall s\in\mathbb{C},\ \forall u,a\in\operatorname{PrimeAxisTable},\ \operatorname{backwardShift}(u,\operatorname{labeledZetaCoefficient}(s),a)=\operatorname{labeledZetaCoefficient}(s,u)\operatorname{labeledZetaCoefficient}(s,a)$$"),
+                Disp(Seq(Forall, Sp, F.Id("s"), InMacro, Mathbb, Grp(F.Id("C")), Comma, Esc, Forall, Sp, F.Id("u"), Comma, F.Id("a"), InMacro, Operatorname, Grp(F.Id("PrimeAxisTable")), Comma, Esc, Operatorname, Grp(F.Id("backwardShift")), Open, F.Id("u"), Comma, Operatorname, Grp(F.Id("labeledZetaCoefficient")), Open, F.Id("s"), Close, Comma, F.Id("a"), Close, Eq, Operatorname, Grp(F.Id("labeledZetaCoefficient")), Open, F.Id("s"), Comma, F.Id("u"), Close, Operatorname, Grp(F.Id("labeledZetaCoefficient")), Open, F.Id("s"), Comma, F.Id("a"), Close)),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(
                     Text("At every supplied complex parameter and pair of prime addresses, pulling the labeled coefficient family backward by u multiplies the value at a by the labeled coefficient at u. The theorem is an exact consequence of normalized address multiplication and complex powers, with no summability hypothesis. It does not bundle simultaneous eigenvectors for operators or prove boundedness, adjointness, commutation, or completeness. "),
@@ -44,7 +46,7 @@ internal sealed class SpectralShiftDocument : IScribeDocumentDefinition
                 H("The square-summable labeled vector has the same pointwise eigen-action"),
                 LeanTheorem(
                     "D5/S3/Zeros/SpectralShift.labeled_zeta_vector_backward_shift_eigen"),
-                LatexStatement.Create(@"$$\forall s\in\mathbb{C},\ \operatorname{criticalAbscissa}<\Re(s) \Rightarrow \forall u,a\in\operatorname{PrimeAxisTable},\ \operatorname{backwardShift}(u,\operatorname{labeledZetaVector}(s),a)=\operatorname{labeledZetaCoefficient}(s,u)\operatorname{labeledZetaVector}(s,a)$$"),
+                Disp(Seq(Forall, Sp, F.Id("s"), InMacro, Mathbb, Grp(F.Id("C")), Comma, Esc, Operatorname, Grp(F.Id("criticalAbscissa")), Lt, Re, Open, F.Id("s"), Close, Sp, Rightarrow, Sp, Forall, Sp, F.Id("u"), Comma, F.Id("a"), InMacro, Operatorname, Grp(F.Id("PrimeAxisTable")), Comma, Esc, Operatorname, Grp(F.Id("backwardShift")), Open, F.Id("u"), Comma, Operatorname, Grp(F.Id("labeledZetaVector")), Open, F.Id("s"), Close, Comma, F.Id("a"), Close, Eq, Operatorname, Grp(F.Id("labeledZetaCoefficient")), Open, F.Id("s"), Comma, F.Id("u"), Close, Operatorname, Grp(F.Id("labeledZetaVector")), Open, F.Id("s"), Comma, F.Id("a"), Close)),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(
                     Text("When the real part lies strictly to the right of the existing critical abscissa, the actual square-summable labeled-zeta vector satisfies the same equality at each supplied address. The half-plane premise is a typing witness for that vector; the result remains pointwise because backwardShift is not a bundled continuous operator. Compared with the CAS theorem, this omits the joint bounded-operator assertion, basis subtraction rule, Bloch-wave and Bost-Connes identifications, and numerical certificate. "),

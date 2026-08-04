@@ -112,14 +112,14 @@ public abstract record DocumentBlock
             DescribeStatement statement,
             DescribeProvenance provenance,
             BlockSequence content,
-            LatexStatement? statementLatex = null)
+            Formula? statementFormula = null)
         {
             Id = id ?? throw new ArgumentNullException(nameof(id));
             Title = title ?? throw new ArgumentNullException(nameof(title));
             Statement = statement ?? throw new ArgumentNullException(nameof(statement));
             Provenance = provenance ?? throw new ArgumentNullException(nameof(provenance));
             Content = content ?? throw new ArgumentNullException(nameof(content));
-            StatementLatex = statementLatex;
+            StatementFormula = statementFormula;
             Kind = kind is DescribeKind.Definition
                 or DescribeKind.Theorem
                 or DescribeKind.Proposition
@@ -142,34 +142,34 @@ public abstract record DocumentBlock
 
         public BlockSequence Content { get; }
 
-        public LatexStatement? StatementLatex { get; }
+        public Formula? StatementFormula { get; }
 
         public static Describe Theorem(
             DescribeId id,
             Heading title,
             LeanDeclarationRef leanRef,
-            LatexStatement latex,
+            Formula formula,
             DescribeProvenance provenance,
             BlockSequence content) =>
-            LeanDescribe(id, DescribeKind.Theorem, title, leanRef, provenance, content, latex);
+            LeanDescribe(id, DescribeKind.Theorem, title, leanRef, provenance, content, formula);
 
         public static Describe Proposition(
             DescribeId id,
             Heading title,
             LeanDeclarationRef leanRef,
-            LatexStatement latex,
+            Formula formula,
             DescribeProvenance provenance,
             BlockSequence content) =>
-            LeanDescribe(id, DescribeKind.Proposition, title, leanRef, provenance, content, latex);
+            LeanDescribe(id, DescribeKind.Proposition, title, leanRef, provenance, content, formula);
 
         public static Describe Lemma(
             DescribeId id,
             Heading title,
             LeanDeclarationRef leanRef,
-            LatexStatement latex,
+            Formula formula,
             DescribeProvenance provenance,
             BlockSequence content) =>
-            LeanDescribe(id, DescribeKind.Lemma, title, leanRef, provenance, content, latex);
+            LeanDescribe(id, DescribeKind.Lemma, title, leanRef, provenance, content, formula);
 
         public static Describe Definition(
             DescribeId id,
@@ -177,8 +177,8 @@ public abstract record DocumentBlock
             LeanDeclarationRef leanRef,
             DescribeProvenance provenance,
             BlockSequence content,
-            LatexStatement? latex = null) =>
-            LeanDescribe(id, DescribeKind.Definition, title, leanRef, provenance, content, latex);
+            Formula? formula = null) =>
+            LeanDescribe(id, DescribeKind.Definition, title, leanRef, provenance, content, formula);
 
         public static Describe Example(
             DescribeId id,
@@ -209,12 +209,12 @@ public abstract record DocumentBlock
             LeanDeclarationRef leanRef,
             DescribeProvenance provenance,
             BlockSequence content,
-            LatexStatement? latex)
+            Formula? formula)
         {
             ArgumentNullException.ThrowIfNull(leanRef);
             if (ScribeDescribeContract.RequiresLatex(DescribeVocabulary.CanonicalName(kind)))
             {
-                ArgumentNullException.ThrowIfNull(latex);
+                ArgumentNullException.ThrowIfNull(formula);
             }
 
             return new Describe(
@@ -224,7 +224,7 @@ public abstract record DocumentBlock
                 DescribeStatement.FromLean(leanRef),
                 provenance,
                 content,
-                latex);
+                formula);
         }
     }
 

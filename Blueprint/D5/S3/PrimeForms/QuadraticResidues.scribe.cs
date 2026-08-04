@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.PrimeForms;
 
@@ -16,10 +18,7 @@ internal sealed class QuadraticResiduesDocument : IScribeDocumentDefinition
                 LeanTheorem(
                     "D5/S3/PrimeForms/QuadraticResidues."
                     + "square_residues_and_sum_obstruction"),
-                LatexStatement.Create(
-                    @"$$\left(\forall n\in\mathbb{N},\ n^2\operatorname{mod}4\in\{0,1\}\right)"
-                    + @"\ \land\ "
-                    + @"\left(\forall a,b\in\mathbb{N},\ (a^2+b^2)\operatorname{mod}4\neq3\right).$$"),
+                Disp(Seq(Left, Open, Forall, Sp, F.Id("n"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Esc, F.Id("n"), Caret, D(2), Operatorname, Grp(F.Id("mod")), D(4), InMacro, OpenBrace, D(0), Comma, D(1), CloseBrace, Right, Close, Esc, Land, Esc, Left, Open, Forall, Sp, F.Id("a"), Comma, F.Id("b"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Esc, Open, F.Id("a"), Caret, D(2), Plus, F.Id("b"), Caret, D(2), Close, Operatorname, Grp(F.Id("mod")), D(4), Neq, D(3), Right, Close, Dot)),
                 DescribeProvenance.RepoDerived(),
                 Blocks(
                     Paragraph(Text(

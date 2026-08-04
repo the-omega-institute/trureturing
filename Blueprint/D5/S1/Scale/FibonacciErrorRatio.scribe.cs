@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Scale;
 
@@ -16,9 +18,7 @@ internal sealed class FibonacciErrorRatioDocument : IScribeDocumentDefinition
                     H("Exact signed golden residual"),
                     LeanTheorem(
                         "D5/S1/Scale/FibonacciErrorRatio.fibonacci_golden_residual"),
-                    LatexStatement.Create(
-                        @"$$\forall n\in\mathbb{N},\ F_n\varphi-F_{n+1}="
-                        + @"-\left(-\frac{1}{\varphi}\right)^n.$$"),
+                    Disp(Seq(Forall, Sp, F.Id("n"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Esc, F.Id("F"), Underscore, F.Id("n"), Varphi, Minus, F.Id("F"), Underscore, Grp(F.Id("n"), Plus, D(1)), Eq, Minus, Left, Open, Minus, Frac, Grp(D(1)), Grp(Varphi), Right, Close, Caret, F.Id("n"), Dot)),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "For every natural index, multiplying the Fibonacci denominator by the "
@@ -30,10 +30,7 @@ internal sealed class FibonacciErrorRatioDocument : IScribeDocumentDefinition
                     H("Adjacent absolute-error ratio"),
                     LeanTheorem(
                         "D5/S1/Scale/FibonacciErrorRatio.fibonacci_convergent_error_ratio"),
-                    LatexStatement.Create(
-                        @"$$e_n=\varphi-\frac{F_{n+2}}{F_{n+1}},\quad "
-                        + @"\frac{\lvert e_{n+1}\rvert}{\lvert e_n\rvert}="
-                        + @"\frac{F_{n+1}}{F_{n+2}}\frac{1}{\varphi}.$$"),
+                    Disp(Seq(F.Id("e"), Underscore, F.Id("n"), Eq, Varphi, Minus, Frac, Grp(F.Id("F"), Underscore, Grp(F.Id("n"), Plus, D(2))), Grp(F.Id("F"), Underscore, Grp(F.Id("n"), Plus, D(1))), Comma, Quad, Sp, Frac, Grp(Lvert, Sp, F.Id("e"), Underscore, Grp(F.Id("n"), Plus, D(1)), Rvert), Grp(Lvert, Sp, F.Id("e"), Underscore, F.Id("n"), Rvert), Eq, Frac, Grp(F.Id("F"), Underscore, Grp(F.Id("n"), Plus, D(1))), Grp(F.Id("F"), Underscore, Grp(F.Id("n"), Plus, D(2))), Frac, Grp(D(1)), Grp(Varphi), Dot)),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "Let e_n be the signed error of the shifted Fibonacci convergent "
@@ -46,9 +43,7 @@ internal sealed class FibonacciErrorRatioDocument : IScribeDocumentDefinition
                     LeanTheorem(
                         "D5/S1/Scale/FibonacciErrorRatio."
                         + "fibonacci_convergent_error_ratio_tendsto"),
-                    LatexStatement.Create(
-                        @"$$\lim_{n\to\infty}\frac{\lvert e_{n+1}\rvert}"
-                        + @"{\lvert e_n\rvert}=\frac{1}{\varphi^2}.$$"),
+                    Disp(Seq(Lim, Underscore, Grp(F.Id("n"), To, Infty), Frac, Grp(Lvert, Sp, F.Id("e"), Underscore, Grp(F.Id("n"), Plus, D(1)), Rvert), Grp(Lvert, Sp, F.Id("e"), Underscore, F.Id("n"), Rvert), Eq, Frac, Grp(D(1)), Grp(Varphi, Caret, D(2)), Dot)),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "The adjacent absolute-error ratios of the shifted Fibonacci "

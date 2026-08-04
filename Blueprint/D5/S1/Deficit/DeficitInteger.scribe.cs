@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Deficit;
 
@@ -15,10 +17,7 @@ internal sealed class DeficitIntegerDocument : IScribeDocumentDefinition
                 H("The normalized beta deficit is an integer counting bottom carries"),
                 LeanTheorem(
                     "D5/S1/Deficit/DeficitInteger.deficit_integer"),
-                LatexStatement.Create(
-                    @"$$c(v_1,v_2) := \beta(v_1) + \beta(v_2) - \beta(v_1+v_2) = "
-                    + @"\beta'(v_1) + \beta'(v_2) - \beta'(v_1+v_2), \quad c \in \mathbb{Z}, "
-                    + @"\quad c = \operatorname{lowCarries} - \operatorname{secondCarries}$$"),
+                DeficitFormula(),
                 DescribeProvenance.RepoDerived(),
                 Blocks(
                     Paragraph(Text(
@@ -47,4 +46,16 @@ internal sealed class DeficitIntegerDocument : IScribeDocumentDefinition
                         + "single unit of opposite sign. Summing these contributions along the deterministic "
                         + "normalization path expresses the deficit as the signed count of bottom carries.")))
             ))));
+
+    private static Formula DeficitFormula()
+    {
+        Formula v1 = new Formula.Subscript(DefinitionDsl.Id("v"), Num(1));
+        Formula v2 = new Formula.Subscript(DefinitionDsl.Id("v"), Num(2));
+        Formula deficit = Call("c", v1, v2);
+        Formula betaDeficit = Subtract(
+            Add(Call("beta", v1), Call("beta", v2)),
+            Call("beta", Add(v1, v2)));
+        Formula carryDeficit = Subtract(Call("lowCarries"), Call("secondCarries"));
+        return Disp(Seq(F.Id("c"), Open, F.Id("v"), Underscore, D(1), Comma, F.Id("v"), Underscore, D(2), Close, Sp, Colon, Eq, Sp, Beta, Open, F.Id("v"), Underscore, D(1), Close, Sp, Plus, Sp, Beta, Open, F.Id("v"), Underscore, D(2), Close, Sp, Minus, Sp, Beta, Open, F.Id("v"), Underscore, D(1), Plus, F.Id("v"), Underscore, D(2), Close, Sp, Eq, Sp, Beta, Apos, Open, F.Id("v"), Underscore, D(1), Close, Sp, Plus, Sp, Beta, Apos, Open, F.Id("v"), Underscore, D(2), Close, Sp, Minus, Sp, Beta, Apos, Open, F.Id("v"), Underscore, D(1), Plus, F.Id("v"), Underscore, D(2), Close, Comma, Sp, Quad, Sp, F.Id("c"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("Z")), Comma, Sp, Quad, Sp, F.Id("c"), Sp, Eq, Sp, Operatorname, Grp(F.Id("lowCarries")), Sp, Minus, Sp, Operatorname, Grp(F.Id("secondCarries"))));
+    }
 }

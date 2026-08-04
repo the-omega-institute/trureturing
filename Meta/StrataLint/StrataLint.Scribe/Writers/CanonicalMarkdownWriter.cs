@@ -148,10 +148,10 @@ public static class CanonicalMarkdownWriter
                 break;
             case DescribeStatement.LeanDeclaration lean:
                 var verified = Resolve(lean.Value, leanReport);
-                if (describe.StatementLatex is { } latex)
+                if (describe.StatementFormula is { } statementFormula)
                 {
                     builder.Append("\n\n")
-                        .Append(latex.Value);
+                        .Append(LatexWriter.WriteStatement(statementFormula));
                 }
                 else
                 {

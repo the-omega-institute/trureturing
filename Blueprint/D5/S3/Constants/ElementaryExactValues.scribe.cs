@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Constants;
 
@@ -16,11 +18,7 @@ internal sealed class ElementaryExactValuesDocument : IScribeDocumentDefinition
                     H("The elementary constants lie in the golden quadratic field"),
                     LeanTheorem(
                         "D5/S3/Constants/ElementaryExactValues.elementary_exact_values"),
-                    LatexStatement.Create(
-                        @"$$A_F=\kappa=\frac{1}{2\varphi}=\frac{\sqrt{5}-1}{4},\qquad "
-                        + @"\overline{h}=-\frac{1}{2},\qquad s_1=\frac{1+\sqrt{5}}{12},\qquad "
-                        + @"A_h=\frac{5\sqrt{5}-3}{24},\qquad "
-                        + @"E=\frac{137-61\sqrt{5}}{24}.$$"),
+                    Disp(Seq(F.Id("A"), Underscore, F.Id("F"), Eq, Kappa, Eq, Frac, Grp(D(1)), Grp(D(2), Varphi), Eq, Frac, Grp(Sqrt, Grp(D(5)), Minus, D(1)), Grp(D(4)), Comma, Qquad, Sp, Overline, Grp(F.Id("h")), Eq, Minus, Frac, Grp(D(1)), Grp(D(2)), Comma, Qquad, Sp, F.Id("s"), Underscore, D(1), Eq, Frac, Grp(D(1), Plus, Sqrt, Grp(D(5))), Grp(D(1, 2)), Comma, Qquad, Sp, F.Id("A"), Underscore, F.Id("h"), Eq, Frac, Grp(D(5), Sqrt, Grp(D(5)), Minus, D(3)), Grp(D(2, 4)), Comma, Qquad, Sp, F.Id("E"), Eq, Frac, Grp(D(1, 3, 7), Minus, D(6, 1), Sqrt, Grp(D(5))), Grp(D(2, 4)), Dot)),
                     DescribeProvenance.RepoDerived(),
                     Blocks(
                         Paragraph(Text(

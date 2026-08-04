@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Midline;
 
@@ -13,18 +15,8 @@ internal sealed class OffLineScalingDocument : IScribeDocumentDefinition
             DocumentBlock.Describe.Theorem(
                 DescribeId.Create("off-line-nonempty-ledgers-have-one-sign-and-unbounded-multiples"),
                 H("Off-line nonempty ledgers have one sign and unbounded multiples"),
-                LeanTheorem(
-                    "D5/S3/Midline/OffLineScaling.off_line_scaling_ledger_growth"),
-                LatexStatement.Create(
-                    @"$$\forall A\ [\operatorname{AddMonoid}(A)],\ \forall \ell:A\to_{+}\mathbb{R},\ "
-                    + @"\forall s\in\mathbb{C},\ \Re(s)\neq\frac{1}{2}\ \Rightarrow\ "
-                    + @"(\forall a\in A,\ 0<\ell(a)\Rightarrow\operatorname{scalingLedger}(\ell,s,a)\neq 0)\ \land\ "
-                    + @"(\forall a,b\in A,\ 0<\ell(a)\Rightarrow 0<\ell(b)\Rightarrow "
-                    + @"(0<\operatorname{scalingLedger}(\ell,s,a)\Leftrightarrow 0<\operatorname{scalingLedger}(\ell,s,b)))\ \land\ "
-                    + @"(\forall a\in A,\ \forall m\in\mathbb{N},\ "
-                    + @"\operatorname{scalingLedger}(\ell,s,m\cdot a)=m\operatorname{scalingLedger}(\ell,s,a))\ \land\ "
-                    + @"(\forall a\in A,\ 0<\ell(a)\Rightarrow\forall C\in\mathbb{R},\ "
-                    + @"\exists m\in\mathbb{N},\ C<\lvert\operatorname{scalingLedger}(\ell,s,m\cdot a)\rvert)$$"),
+                LeanTheorem("D5/S3/Midline/OffLineScaling.off_line_scaling_ledger_growth"),
+                Disp(Seq(Forall, Sp, F.Id("A"), Esc, OpenBracket, Operatorname, Grp(F.Id("AddMonoid")), Open, F.Id("A"), Close, CloseBracket, Comma, Esc, Forall, Sp, Ell, Colon, F.Id("A"), To, Underscore, Grp(Plus), Mathbb, Grp(F.Id("R")), Comma, Esc, Forall, Sp, F.Id("s"), InMacro, Mathbb, Grp(F.Id("C")), Comma, Esc, Re, Open, F.Id("s"), Close, Neq, Frac, Grp(D(1)), Grp(D(2)), Esc, Rightarrow, Esc, Open, Forall, Sp, F.Id("a"), InMacro, Sp, F.Id("A"), Comma, Esc, D(0), Lt, Ell, Open, F.Id("a"), Close, Rightarrow, Operatorname, Grp(F.Id("scalingLedger")), Open, Ell, Comma, F.Id("s"), Comma, F.Id("a"), Close, Neq, Sp, D(0), Close, Esc, Land, Esc, Open, Forall, Sp, F.Id("a"), Comma, F.Id("b"), InMacro, Sp, F.Id("A"), Comma, Esc, D(0), Lt, Ell, Open, F.Id("a"), Close, Rightarrow, Sp, D(0), Lt, Ell, Open, F.Id("b"), Close, Rightarrow, Sp, Open, D(0), Lt, Operatorname, Grp(F.Id("scalingLedger")), Open, Ell, Comma, F.Id("s"), Comma, F.Id("a"), Close, Leftrightarrow, Sp, D(0), Lt, Operatorname, Grp(F.Id("scalingLedger")), Open, Ell, Comma, F.Id("s"), Comma, F.Id("b"), Close, Close, Close, Esc, Land, Esc, Open, Forall, Sp, F.Id("a"), InMacro, Sp, F.Id("A"), Comma, Esc, Forall, Sp, F.Id("m"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Esc, Operatorname, Grp(F.Id("scalingLedger")), Open, Ell, Comma, F.Id("s"), Comma, F.Id("m"), Cdot, Sp, F.Id("a"), Close, Eq, F.Id("m"), Operatorname, Grp(F.Id("scalingLedger")), Open, Ell, Comma, F.Id("s"), Comma, F.Id("a"), Close, Close, Esc, Land, Esc, Open, Forall, Sp, F.Id("a"), InMacro, Sp, F.Id("A"), Comma, Esc, D(0), Lt, Ell, Open, F.Id("a"), Close, Rightarrow, Forall, Sp, F.Id("C"), InMacro, Mathbb, Grp(F.Id("R")), Comma, Esc, Exists, Sp, F.Id("m"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Esc, F.Id("C"), Lt, Lvert, Operatorname, Grp(F.Id("scalingLedger")), Open, Ell, Comma, F.Id("s"), Comma, F.Id("m"), Cdot, Sp, F.Id("a"), Close, Rvert, Close)),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "For an additive ledger length and a spectral parameter off the critical "
