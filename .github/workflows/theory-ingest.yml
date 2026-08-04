@@ -60,6 +60,9 @@ jobs:
           done < <(git -C candidate diff --name-only --no-renames -z "$BASE_SHA...$HEAD_SHA")
           if [[ "${#bad[@]}" -ne 0 ]]; then
             printf '::error::theory ingest refuses non-data candidate path: %s\n' "${bad[@]}"
+            if printf '%s\n' "${bad[@]}" | grep -Fxq 'Meta/registry.yaml'; then
+              printf '%s\n' '::error::THEORY-INGEST-REGISTRY-001: land a separate harness PR that adds the new theory path to Meta/registry.yaml first, then rebase the theory PR and drop its registry diff from the data PR'
+            fi
             exit 1
           fi
 

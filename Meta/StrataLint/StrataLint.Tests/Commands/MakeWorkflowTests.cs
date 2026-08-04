@@ -519,6 +519,43 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Fact]
+    public void TheoryIngestRegistryBoundaryExplainsTheRequiredTwoPrRemedy()
+    {
+        var root = FindRepositoryRoot();
+        var workflow = File.ReadAllText(Path.Combine(root, TheoryIngestWorkflowPath));
+        var boundaryIndex = workflow.IndexOf(
+            "- name: Enforce candidate data-only boundary",
+            StringComparison.Ordinal);
+        var nextStepIndex = workflow.IndexOf("      - name: ", boundaryIndex + 1, StringComparison.Ordinal);
+        Assert.True(boundaryIndex >= 0, "the candidate data-only boundary must exist");
+        Assert.True(nextStepIndex > boundaryIndex, "the candidate data-only boundary must have a bounded body");
+
+        var boundary = workflow[boundaryIndex..nextStepIndex];
+        var caseIndex = boundary.IndexOf("case \"$path\" in", StringComparison.Ordinal);
+        var caseEndIndex = boundary.IndexOf("esac", caseIndex, StringComparison.Ordinal);
+        Assert.True(caseIndex >= 0, "the input whitelist case arm must exist");
+        Assert.True(caseEndIndex > caseIndex, "the input whitelist case arm must be bounded");
+        Assert.DoesNotContain(
+            "Meta/registry.yaml",
+            boundary[caseIndex..caseEndIndex],
+            StringComparison.Ordinal);
+
+        var failureIndex = boundary.IndexOf("if [[ \"${#bad[@]}\" -ne 0 ]]", StringComparison.Ordinal);
+        Assert.True(failureIndex >= 0, "the rejected-path failure block must exist");
+        var failure = boundary[failureIndex..];
+        Assert.Contains("THEORY-INGEST-REGISTRY-001", failure, StringComparison.Ordinal);
+        Assert.Contains(
+            "land a separate harness PR that adds the new theory path to Meta/registry.yaml first, "
+                + "then rebase the theory PR and drop its registry diff from the data PR",
+            failure,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "theory ingest refuses non-data candidate path: %s\\n' \"${bad[@]}\"",
+            failure,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void TheoryIngestReemitsContentAddressedEchoProjectionBeforeWriteback()
     {
         var root = FindRepositoryRoot();
