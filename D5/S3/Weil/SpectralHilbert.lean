@@ -59,81 +59,66 @@ private theorem labeledZetaCoefficient_norm_sq (s : ℂ) (n : ℕ) :
   congr 1
   ring
 
-/-- The logarithmic length on the existing prime-axis carrier. -/
-private noncomputable def primeAxisLogLength (a : PrimeAxisTable) : ℝ :=
-  Real.log (((primeAxisEncoding a : ℕ+) : ℕ) : ℝ)
-
-private theorem primeAxisLogLength_addressEquivNat (n : ℕ) :
-    primeAxisLogLength (addressEquivNat n) = Real.log (n + 1 : ℝ) := by
-  rw [primeAxisLogLength, addressEquivNat_encode]
-  norm_num
-
-private theorem primeAxisHeatTerm_addressEquivNat (σ : ℝ) (n : ℕ) :
-    Real.exp (-σ * primeAxisLogLength (addressEquivNat n)) =
-      1 / ((n + 1 : ℕ) : ℝ) ^ σ := by
-  rw [primeAxisLogLength_addressEquivNat, Real.rpow_def_of_pos (by positivity)]
-  rw [one_div, ← Real.exp_neg]
-  congr 1
-  norm_num [Nat.cast_add, Nat.cast_one]
-  ring
-
-/-- The prime-axis logarithmic length has genuine abscissa one, with no boundary
-claim folded into the definition. -/
-private theorem prime_axis_log_length_is_heat_abscissa :
-    IsHeatAbscissa primeAxisLogLength 1 := by
-  constructor
-  · intro σ hσ
-    rw [← addressEquivNat.summable_iff]
-    refine (summable_congr (primeAxisHeatTerm_addressEquivNat σ)).2 ?_
-    have hp := (Real.summable_one_div_nat_add_rpow 1 σ).2 hσ
-    have hshift (n : ℕ) : |(n : ℝ) + 1| = ((n + 1 : ℕ) : ℝ) := by
-      rw [abs_of_pos (by positivity), Nat.cast_add, Nat.cast_one]
-    simpa only [hshift] using hp
-  · intro σ hσ hsum
-    have hnat : Summable (fun n : ℕ => 1 / ((n + 1 : ℕ) : ℝ) ^ σ) := by
-      rw [← addressEquivNat.summable_iff] at hsum
-      exact (summable_congr (primeAxisHeatTerm_addressEquivNat σ)).mp hsum
-    have hp : 1 < σ := by
-      apply (Real.summable_one_div_nat_add_rpow 1 σ).mp
-      have hshift (n : ℕ) : |(n : ℝ) + 1| = ((n + 1 : ℕ) : ℝ) := by
-        rw [abs_of_pos (by positivity), Nat.cast_add, Nat.cast_one]
-      simpa only [hshift] using hnat
-    linarith
-
-private theorem heatCoefficient_primeAxisLogLength (s : ℂ) (a : PrimeAxisTable) :
-    heatCoefficient primeAxisLogLength s a = labeledZetaCoefficient s a := by
-  have hN : 0 < (((primeAxisEncoding a : ℕ+) : ℕ) : ℝ) := by
-    exact_mod_cast PNat.pos (primeAxisEncoding a)
-  rw [heatCoefficient, primeAxisLogLength, labeledZetaCoefficient,
-    Complex.cpow_def]
-  simp only [Nat.cast_eq_zero]
-  rw [if_neg (Nat.ne_of_gt (PNat.pos (primeAxisEncoding a)))]
-  rw [Complex.ofReal_log hN.le]
-  rw [one_div, ← Complex.exp_neg]
-  congr 1
-  norm_num
-  ring
-
 /-- The labeled zeta vector is square-summable exactly right of the critical line. -/
 theorem labeled_zeta_mem_iff (s : ℂ) :
     Memℓp (labeledZetaCoefficient s) 2 ↔ criticalAbscissa < s.re := by
-  have hcoeff : labeledZetaCoefficient s = heatCoefficient primeAxisLogLength s := by
+  let M : PrimeAxisTable → ℝ := fun a =>
+    Real.log (((primeAxisEncoding a : ℕ+) : ℕ) : ℝ)
+  have hterm (σ : ℝ) (n : ℕ) :
+      Real.exp (-σ * M (addressEquivNat n)) =
+        1 / ((n + 1 : ℕ) : ℝ) ^ σ := by
+    dsimp [M]
+    rw [addressEquivNat_encode, Real.rpow_def_of_pos (by positivity)]
+    rw [one_div, ← Real.exp_neg]
+    congr 1
+    norm_num [Nat.cast_add, Nat.cast_one]
+    ring
+  have habscissa : IsHeatAbscissa M 1 := by
+    constructor
+    · intro σ hσ
+      rw [← addressEquivNat.summable_iff]
+      refine (summable_congr (hterm σ)).2 ?_
+      have hp := (Real.summable_one_div_nat_add_rpow 1 σ).2 hσ
+      have hshift (n : ℕ) : |(n : ℝ) + 1| = ((n + 1 : ℕ) : ℝ) := by
+        rw [abs_of_pos (by positivity), Nat.cast_add, Nat.cast_one]
+      simpa only [hshift] using hp
+    · intro σ hσ hsum
+      have hnat : Summable (fun n : ℕ => 1 / ((n + 1 : ℕ) : ℝ) ^ σ) := by
+        rw [← addressEquivNat.summable_iff] at hsum
+        exact (summable_congr (hterm σ)).mp hsum
+      have hp : 1 < σ := by
+        apply (Real.summable_one_div_nat_add_rpow 1 σ).mp
+        have hshift (n : ℕ) : |(n : ℝ) + 1| = ((n + 1 : ℕ) : ℝ) := by
+          rw [abs_of_pos (by positivity), Nat.cast_add, Nat.cast_one]
+        simpa only [hshift] using hnat
+      linarith
+  have hcoeff : labeledZetaCoefficient s = heatCoefficient M s := by
     funext a
-    exact (heatCoefficient_primeAxisLogLength s a).symm
+    have hN : 0 < (((primeAxisEncoding a : ℕ+) : ℕ) : ℝ) := by
+      exact_mod_cast PNat.pos (primeAxisEncoding a)
+    rw [heatCoefficient, labeledZetaCoefficient, Complex.cpow_def]
+    dsimp [M]
+    simp only [Nat.cast_eq_zero]
+    rw [if_neg (Nat.ne_of_gt (PNat.pos (primeAxisEncoding a)))]
+    rw [Complex.ofReal_log hN.le]
+    rw [one_div, ← Complex.exp_neg]
+    congr 1
+    norm_num
+    ring
   rw [hcoeff, criticalAbscissa]
   constructor
   · intro hmem
-    rw [heat_coefficient_mem_iff primeAxisLogLength 1 s] at hmem
+    rw [heat_coefficient_mem_iff M 1 s] at hmem
     by_contra hnot
     have hle : s.re ≤ 1 / 2 := le_of_not_gt hnot
     rcases lt_or_eq_of_le hle with hlt | heq
-    · exact (prime_axis_log_length_is_heat_abscissa.2 (2 * s.re) (by linarith)) hmem
+    · exact (habscissa.2 (2 * s.re) (by linarith)) hmem
     · have hboundary : ¬Summable (fun a =>
-          Real.exp (-1 * primeAxisLogLength a)) := by
+          Real.exp (-1 * M a)) := by
         intro hb
         have hcomp := (addressEquivNat.summable_iff).2 hb
         have hnat : Summable (fun n : ℕ => 1 / ((n + 1 : ℕ) : ℝ)) := by
-          simpa using (summable_congr (primeAxisHeatTerm_addressEquivNat 1)).mp hcomp
+          simpa using (summable_congr (hterm 1)).mp hcomp
         have hp : Summable (fun n : ℕ => 1 / |(n : ℝ) + 1| ^ (1 : ℝ)) := by
           have hshift (n : ℕ) : |(n : ℝ) + 1| = ((n + 1 : ℕ) : ℝ) := by
             rw [abs_of_pos (by positivity), Nat.cast_add, Nat.cast_one]
@@ -143,8 +128,8 @@ theorem labeled_zeta_mem_iff (s : ℂ) :
           norm_num
         exact hn hp
       apply hboundary
-      have hfun : (fun a => Real.exp (-1 * primeAxisLogLength a)) =
-          (fun a => Real.exp (-(2 * s.re) * primeAxisLogLength a)) := by
+      have hfun : (fun a => Real.exp (-1 * M a)) =
+          (fun a => Real.exp (-(2 * s.re) * M a)) := by
         funext a
         congr 1
         rw [heq]
@@ -152,8 +137,7 @@ theorem labeled_zeta_mem_iff (s : ℂ) :
       rw [hfun]
       exact hmem
   · intro hs
-    exact heat_coefficient_mem_of_abscissa primeAxisLogLength 1
-      prime_axis_log_length_is_heat_abscissa s hs
+    exact heat_coefficient_mem_of_abscissa M 1 habscissa s hs
 
 /-- The labeled zeta coefficient family as an actual Hilbert vector. -/
 noncomputable def labeledZetaVector (s : ℂ) (hs : criticalAbscissa < s.re) :
