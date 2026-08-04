@@ -13,6 +13,17 @@ open scoped ComplexConjugate
 
 variable {A : Type*} [Countable A] [Zero A]
 
+/-- A genuine convergence abscissa: convergence and divergence are prescribed only
+on the two strict sides. No behavior at the boundary is implied. -/
+def IsHeatAbscissa (M : A → ℝ) (α : ℝ) : Prop :=
+  (∀ σ, α < σ → Summable (fun a => Real.exp (-σ * M a))) ∧
+  (∀ σ, σ < α → ¬Summable (fun a => Real.exp (-σ * M a)))
+
+/-- A heat abscissa whose boundary series also diverges. The flat iff used by
+the original atom (i) implicitly adopts exactly this stronger convention. -/
+def BoundaryDivergentAbscissa (M : A → ℝ) (α : ℝ) : Prop :=
+  IsHeatAbscissa M α ∧ ¬Summable (fun a => Real.exp (-α * M a))
+
 /-- The complex heat trace associated with a nonnegative length function. -/
 noncomputable def heatTrace (M : A → ℝ) (s : ℂ) : ℂ :=
   ∑' a, Complex.exp (-s * (M a : ℂ))
@@ -43,18 +54,14 @@ theorem heatCoefficient_norm
   congr 1
   simp
 
-/--
-`α` is assumed to be the abscissa through `hAbscissa`; this module does not
-construct the abscissa. The zero, nonnegativity, and nontriviality hypotheses
-record the intended heat-length setting and are used by the half-density law.
--/
+omit [Countable A] [Zero A] in
+/-- Square summability is exactly summability of the heat series at twice the
+real parameter. This statement makes no boundary convention. -/
 theorem heat_coefficient_mem_iff
-    (M : A → ℝ) (α : ℝ)
-    (_hM0 : M 0 = 0) (_hMnn : ∀ a, 0 ≤ M a) (_hMne : ∃ a, M a ≠ 0)
-    (hAbscissa : ∀ σ : ℝ,
-      Summable (fun a => Real.exp (-σ * M a)) ↔ α < σ)
+    (M : A → ℝ) (_α : ℝ)
     (s : ℂ) :
-    Memℓp (heatCoefficient M s) 2 ↔ α / 2 < s.re := by
+    Memℓp (heatCoefficient M s) 2 ↔
+      Summable (fun a => Real.exp (-(2 * s.re) * M a)) := by
   rw [memℓp_gen_iff (by norm_num)]
   change (Summable fun a => ‖heatCoefficient M s a‖ ^ ENNReal.toReal 2) ↔ _
   rw [show ENNReal.toReal 2 = 2 by norm_num]
@@ -66,25 +73,61 @@ theorem heat_coefficient_mem_iff
         rw [Real.rpow_two, pow_two, ← Real.exp_add]
         congr 1
         ring
-    _ ↔ α < 2 * s.re := hAbscissa (2 * s.re)
-    _ ↔ α / 2 < s.re := by constructor <;> intro h <;> linarith
+    _ ↔ Summable (fun a => Real.exp (-(2 * s.re) * M a)) := Iff.rfl
+
+omit [Countable A] [Zero A] in
+/-- Strictly right of half the abscissa, the heat coefficients are square-summable. -/
+theorem heat_coefficient_mem_of_abscissa
+    (M : A → ℝ) (α : ℝ)
+    (hAbscissa : IsHeatAbscissa M α) (s : ℂ) (hs : α / 2 < s.re) :
+    Memℓp (heatCoefficient M s) 2 :=
+  (heat_coefficient_mem_iff M α s).2
+    (hAbscissa.1 (2 * s.re) (by linarith))
+
+omit [Countable A] [Zero A] in
+/-- Strictly left of half the abscissa, the heat coefficients are not square-summable. -/
+theorem not_heat_coefficient_mem_of_abscissa
+    (M : A → ℝ) (α : ℝ)
+    (hAbscissa : IsHeatAbscissa M α) (s : ℂ) (hs : s.re < α / 2) :
+    ¬Memℓp (heatCoefficient M s) 2 := by
+  rw [heat_coefficient_mem_iff M α s]
+  exact hAbscissa.2 (2 * s.re) (by linarith)
+
+omit [Countable A] [Zero A] in
+/-- Under explicit boundary divergence, square summability has the flat strict iff. -/
+theorem heat_coefficient_mem_iff_of_boundary_divergent
+    (M : A → ℝ) (α : ℝ)
+    (hAbscissa : BoundaryDivergentAbscissa M α) (s : ℂ) :
+    Memℓp (heatCoefficient M s) 2 ↔ α / 2 < s.re := by
+  rw [heat_coefficient_mem_iff M α s]
+  constructor
+  · intro h
+    rcases lt_trichotomy s.re (α / 2) with hlt | heq | hgt
+    · exact False.elim ((hAbscissa.1.2 (2 * s.re) (by linarith)) h)
+    · exfalso
+      apply hAbscissa.2
+      have htwo : 2 * s.re = α := by linarith
+      convert h using 1
+      ext a
+      rw [htwo]
+    · exact hgt
+  · intro hs
+    exact hAbscissa.1.1 (2 * s.re) (by linarith)
 
 /-- The actual labeled heat vector in its square-summable half-plane. -/
 noncomputable def heatVector
     (M : A → ℝ) (α : ℝ)
     (hM0 : M 0 = 0) (hMnn : ∀ a, 0 ≤ M a) (hMne : ∃ a, M a ≠ 0)
-    (hAbscissa : ∀ σ : ℝ,
-      Summable (fun a => Real.exp (-σ * M a)) ↔ α < σ)
+    (hAbscissa : IsHeatAbscissa M α)
     (s : ℂ) (hs : α / 2 < s.re) : HeatHilbertSpace (A := A) :=
   ⟨heatCoefficient M s,
-    (heat_coefficient_mem_iff M α hM0 hMnn hMne hAbscissa s).2 hs⟩
+    heat_coefficient_mem_of_abscissa M α hAbscissa s hs⟩
 
 @[simp]
 theorem heatVector_apply
     (M : A → ℝ) (α : ℝ)
     (hM0 : M 0 = 0) (hMnn : ∀ a, 0 ≤ M a) (hMne : ∃ a, M a ≠ 0)
-    (hAbscissa : ∀ σ : ℝ,
-      Summable (fun a => Real.exp (-σ * M a)) ↔ α < σ)
+    (hAbscissa : IsHeatAbscissa M α)
     (s : ℂ) (hs : α / 2 < s.re) (a : A) :
     heatVector M α hM0 hMnn hMne hAbscissa s hs a = heatCoefficient M s a :=
   rfl
@@ -93,8 +136,7 @@ theorem heatVector_apply
 theorem heat_vector_norm_sq
     (M : A → ℝ) (α : ℝ)
     (hM0 : M 0 = 0) (hMnn : ∀ a, 0 ≤ M a) (hMne : ∃ a, M a ≠ 0)
-    (hAbscissa : ∀ σ : ℝ,
-      Summable (fun a => Real.exp (-σ * M a)) ↔ α < σ)
+    (hAbscissa : IsHeatAbscissa M α)
     (σ t : ℝ) (hσ : α / 2 < σ) :
     ((‖heatVector M α hM0 hMnn hMne hAbscissa
       ((σ : ℂ) + Complex.I * (t : ℂ)) (by simpa using hσ)‖ ^ 2 : ℝ) : ℂ) =
@@ -105,7 +147,7 @@ theorem heat_vector_norm_sq
       ∑' a : A, ‖x a‖ ^ (2 : ℝ) := by
     exact lp.norm_rpow_eq_tsum (p := (2 : ENNReal)) (by norm_num) x
   have hsum : Summable (fun a => Real.exp (-(2 * σ) * M a)) :=
-    (hAbscissa (2 * σ)).2 (by linarith)
+    hAbscissa.1 (2 * σ) (by linarith)
   have hcoord (a : A) : ‖x a‖ ^ (2 : ℝ) =
       Real.exp (-(2 * σ) * M a) := by
     change ‖heatCoefficient M ((σ : ℂ) + Complex.I * (t : ℂ)) a‖ ^ (2 : ℝ) = _
@@ -134,8 +176,7 @@ omit [Countable A] [Zero A] in
 /-- The raw source-ordered pairing is the heat-trace reproducing kernel. -/
 theorem heat_kernel
     (M : A → ℝ) (α : ℝ)
-    (_hAbscissa : ∀ σ : ℝ,
-      Summable (fun a => Real.exp (-σ * M a)) ↔ α < σ)
+    (_hAbscissa : IsHeatAbscissa M α)
     (s w : ℂ) (_h : α < (s + conj w).re) :
     (∑' a, heatCoefficient M s a * conj (heatCoefficient M w a)) =
       heatTrace M (s + conj w) := by
@@ -152,8 +193,7 @@ theorem heat_kernel
 theorem heat_vector_inner
     (M : A → ℝ) (α : ℝ)
     (hM0 : M 0 = 0) (hMnn : ∀ a, 0 ≤ M a) (hMne : ∃ a, M a ≠ 0)
-    (hAbscissa : ∀ σ : ℝ,
-      Summable (fun a => Real.exp (-σ * M a)) ↔ α < σ)
+    (hAbscissa : IsHeatAbscissa M α)
     (s w : ℂ) (hs : α / 2 < s.re) (hw : α / 2 < w.re) :
     sourcePairing
       (heatVector M α hM0 hMnn hMne hAbscissa s hs)
@@ -233,22 +273,39 @@ theorem half_density_unit_modulus_iff
     ring
 
 /--
-The universal heat-trace midline theorem. The abscissa is characterized by
-`hAbscissa`, not constructed here. The three conclusions respectively encode
-the l2 boundary, kernel self-resonance, and half-density unitarity; no functional
-equation is assumed.
+The honest universal heat-trace theorem. A genuine abscissa leaves boundary
+behavior unspecified. Atom (i) therefore consists of the exact summability
+criterion plus the two strict-side implications. The resonance and half-density
+conclusions do not depend on boundary behavior; no functional equation is assumed.
 -/
 theorem universal_heat_trace_midline
     (M : A → ℝ) (α : ℝ)
     (hM0 : M 0 = 0) (hMnn : ∀ a, 0 ≤ M a) (hMne : ∃ a, M a ≠ 0)
     (_hα : 0 < α)
-    (hAbscissa : ∀ σ : ℝ,
-      Summable (fun a => Real.exp (-σ * M a)) ↔ α < σ) :
+    (hAbscissa : IsHeatAbscissa M α) :
+    (∀ s : ℂ, Memℓp (heatCoefficient M s) 2 ↔
+      Summable (fun a => Real.exp (-(2 * s.re) * M a))) ∧
+    (∀ s : ℂ, α / 2 < s.re → Memℓp (heatCoefficient M s) 2) ∧
+    (∀ s : ℂ, s.re < α / 2 → ¬Memℓp (heatCoefficient M s) 2) ∧
+    (∀ s : ℂ, KernelResonant α s s ↔ s.re = α / 2) ∧
+    (∀ s : ℂ, (∀ a, ‖halfDensityCoefficient M α s a‖ = 1) ↔
+      s.re = α / 2) := by
+  exact ⟨fun s => heat_coefficient_mem_iff M α s,
+    fun s => heat_coefficient_mem_of_abscissa M α hAbscissa s,
+    fun s => not_heat_coefficient_mem_of_abscissa M α hAbscissa s,
+    fun s => (resonance_partner_spec α s s).2.1,
+    fun s => half_density_unit_modulus_iff M α hMnn hMne s⟩
+
+/-- The original flat iff is valid for the explicitly stronger boundary-divergent class. -/
+theorem universal_heat_trace_midline_of_boundary_divergent
+    (M : A → ℝ) (α : ℝ)
+    (hM0 : M 0 = 0) (hMnn : ∀ a, 0 ≤ M a) (hMne : ∃ a, M a ≠ 0)
+    (_hα : 0 < α) (hAbscissa : BoundaryDivergentAbscissa M α) :
     (∀ s : ℂ, Memℓp (heatCoefficient M s) 2 ↔ α / 2 < s.re) ∧
     (∀ s : ℂ, KernelResonant α s s ↔ s.re = α / 2) ∧
     (∀ s : ℂ, (∀ a, ‖halfDensityCoefficient M α s a‖ = 1) ↔
       s.re = α / 2) := by
-  exact ⟨fun s => heat_coefficient_mem_iff M α hM0 hMnn hMne hAbscissa s,
+  exact ⟨fun s => heat_coefficient_mem_iff_of_boundary_divergent M α hAbscissa s,
     fun s => (resonance_partner_spec α s s).2.1,
     fun s => half_density_unit_modulus_iff M α hMnn hMne s⟩
 

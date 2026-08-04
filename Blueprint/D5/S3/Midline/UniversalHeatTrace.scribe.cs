@@ -7,7 +7,7 @@ internal sealed class UniversalHeatTraceDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
         Header(
             "D5/S3/Midline/UniversalHeatTrace",
-            "The abscissa of a nonnegative heat trace canonically determines its l2, resonance, and half-density midline."),
+            "A genuine heat abscissa determines strict-side l2 behavior, resonance, and the half-density midline while leaving boundary convergence explicit."),
         H("The Universal Heat-Trace Midline"),
         Blocks(
             DocumentBlock.Describe.Theorem(
@@ -15,10 +15,10 @@ internal sealed class UniversalHeatTraceDocument : IScribeDocumentDefinition
                 H("Heat coefficients have the half-abscissa boundary"),
                 LeanTheorem(
                     "D5/S3/Midline/UniversalHeatTrace.heat_coefficient_mem_iff"),
-                LatexStatement.Create(@"$$\begin{gathered} A\ \text{countable},\ 0\in A,\ M:A\to\mathbb{R},\ M(0)=0,\ (\forall a,\ 0\le M(a)),\ (\exists a,\ M(a)\neq0),\\ \forall\sigma\in\mathbb{R},\ \operatorname{Summable}(a\mapsto e^{-\sigma M(a)})\Leftrightarrow\alpha<\sigma\\ \Rightarrow\quad \operatorname{MemLp}(a\mapsto e^{-sM(a)},2)\Leftrightarrow\frac{\alpha}{2}<\Re(s). \end{gathered}$$"),
+                LatexStatement.Create(@"$$\operatorname{MemLp}(a\mapsto e^{-sM(a)},2)\Leftrightarrow\operatorname{Summable}(a\mapsto e^{-2\Re(s)M(a)}).$$"),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
-                    "The abscissa alpha is characterized by the displayed summability equivalence; it is not constructed in this module. Squaring coordinate norms doubles the real parameter, so square summability begins exactly to the right of alpha over two.")))
+                    "Boundary behavior is extracted from the genuine abscissa definition: it prescribes convergence for sigma greater than alpha and divergence for sigma less than alpha, but says nothing at sigma equal to alpha. The flat iff in atom (i) implicitly assumes the separately named boundary-divergent convention. Squaring coordinate norms doubles the real parameter; the general theorem gives the exact summability criterion and the two strict-side implications.")))
             ),
             DocumentBlock.Describe.Theorem(
                 DescribeId.Create("norm-square-is-the-vertical-invariant-heat-trace"),
@@ -45,10 +45,20 @@ internal sealed class UniversalHeatTraceDocument : IScribeDocumentDefinition
                 H("Resonance and half-density select the same midline"),
                 LeanTheorem(
                     "D5/S3/Midline/UniversalHeatTrace.universal_heat_trace_midline"),
-                LatexStatement.Create(@"$$\begin{gathered} A\ \text{countable},\ 0\in A,\ M:A\to\mathbb{R},\ M(0)=0,\ (\forall a,\ 0\le M(a)),\ (\exists a,\ M(a)\neq0),\ 0<\alpha,\\ \forall\sigma\in\mathbb{R},\ \operatorname{Summable}(a\mapsto e^{-\sigma M(a)})\Leftrightarrow\alpha<\sigma\\ \Rightarrow\quad \left[\operatorname{MemLp}(\mathbf{Z}_{M}(s),2)\Leftrightarrow\frac{\alpha}{2}<\Re(s)\right],\\ \left[s+\overline{s}=\alpha\Leftrightarrow\Re(s)=\frac{\alpha}{2}\right],\\ \left[(\forall a,\ |e^{\alpha M(a)/2}e^{-sM(a)}|=1)\Leftrightarrow\Re(s)=\frac{\alpha}{2}\right]. \end{gathered}$$"),
+                LatexStatement.Create(@"$$\begin{gathered} \operatorname{IsHeatAbscissa}(M,\alpha)\\ \Rightarrow [\operatorname{MemLp}(\mathbf{Z}_{M}(s),2)\Leftrightarrow\operatorname{Summable}(a\mapsto e^{-2\Re(s)M(a)})],\\ [\Re(s)>\alpha/2\Rightarrow\operatorname{MemLp}(\mathbf{Z}_{M}(s),2)],\quad[\Re(s)<\alpha/2\Rightarrow\neg\operatorname{MemLp}(\mathbf{Z}_{M}(s),2)],\\ [s+\overline{s}=\alpha\Leftrightarrow\Re(s)=\alpha/2],\quad[(\forall a,|e^{\alpha M(a)/2}e^{-sM(a)}|=1)\Leftrightarrow\Re(s)=\alpha/2]. \end{gathered}$$"),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
-                    "The square-summability boundary, self-resonance line, and coordinatewise unit-modulus half-density line all equal alpha over two. This free triple coincidence uses no functional equation. The companion resonance theorem also derives the unique partner w = alpha - conjugate s and proves that this partner map is an involution.")))
+                    "The general theorem leaves equality at the boundary open. Self-resonance and coordinatewise unit modulus still select alpha over two and do not use boundary behavior. The companion resonance theorem also derives the unique partner w = alpha - conjugate s and proves that this partner map is an involution.")))
+            ),
+            DocumentBlock.Describe.Theorem(
+                DescribeId.Create("boundary-divergence-restores-the-flat-iff"),
+                H("Boundary divergence restores the flat iff"),
+                LeanTheorem(
+                    "D5/S3/Midline/UniversalHeatTrace.universal_heat_trace_midline_of_boundary_divergent"),
+                LatexStatement.Create(@"$$\operatorname{BoundaryDivergentAbscissa}(M,\alpha)\Rightarrow[\operatorname{MemLp}(\mathbf{Z}_{M}(s),2)\Leftrightarrow\alpha/2<\Re(s)].$$"),
+                DescribeProvenance.RepoDerived(),
+                Blocks(Paragraph(Text(
+                    "This is the explicitly stronger class required by the original atom (i). Boundary behavior has not been folded into the genuine abscissa predicate; the strict flat iff is recovered only after boundary divergence is supplied.")))
             ),
             DocumentBlock.Describe.Theorem(
                 DescribeId.Create("reflection-center-equals-the-abscissa"),

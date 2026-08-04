@@ -40,7 +40,7 @@ internal sealed class SpectralHilbertDocument : IScribeDocumentDefinition
                 LatexStatement.Create(@"$\forall s\in\mathbb{C},\ \operatorname{MemLp}(\operatorname{labeledZetaCoefficient}(s),2) \Leftrightarrow \frac{1}{2}<\Re(s)$"),
                 DescribeProvenance.LiteratureAttested(HedenmalmHilbert),
                 Blocks(Paragraph(Text(
-                    "The raw labeled coefficient function is square-summable exactly when the spectral parameter has real part greater than one half. Thus the reverse implication includes every parameter on or to the left of the boundary; the statement does not replace that exact p-series criterion by a separate pole or Euler-product claim.")))
+                    "The raw labeled coefficient function is square-summable exactly when the spectral parameter has real part greater than one half. The proof specializes the universal heat-abscissa theorem to PrimeAxisTable with logarithmic length and alpha equal to one; the explicit bridge is labeled_zeta_mem_iff_via_universal_heat_trace. Thus this instance is downstream of the general theorem rather than a parallel derivation. The boundary divergence used here is proved from the harmonic series.")))
             ),
             DocumentBlock.Describe.Theorem(
                 DescribeId.Create("coefficient-pairing-is-the-zeta-kernel"),
