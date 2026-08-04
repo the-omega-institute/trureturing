@@ -34,15 +34,39 @@ public sealed class StatementProjectionPilotTests
     }
 
     [Fact]
+    public void DenoiserStripsOnlyRegisteredElaborationArguments()
+    {
+        const string encoded = "statement-v1(uparams=[],type=ea(ea(ea(ec(ns(n0,2:Eq),[]),ec(ns(n0,4:Real),[])),ei(ln(7))),ei(ln(7))))";
+
+        var result = StatementProjector.Project(StatementV1Decoder.Decode(encoded).Type);
+
+        var formula = Assert.IsType<ProjectionOutcome.Projected>(result).Formula;
+        Assert.Equal("7 = 7", LatexWriter.Write(formula));
+    }
+
+    [Fact]
+    public void DenoiserFailsClosedForUnknownElaborationShape()
+    {
+        const string encoded = "statement-v1(uparams=[],type=ea(ea(ec(ns(n0,13:Unknown.noise),[]),ec(ns(n0,4:Real),[])),ei(ln(7))))";
+
+        var result = Assert.IsType<ProjectionOutcome.Unprojectable>(
+            StatementProjector.Project(StatementV1Decoder.Decode(encoded).Type));
+
+        Assert.Contains("Unknown.noise", result.Reason, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void PilotProjectsFiveRealDeclarationsAndPinsTheComparisonReport()
     {
         using var fixture = LoadPinnedFixture();
         var results = ProjectionPilot.Run(ReadFixtureDeclarations(fixture));
 
-        Assert.Equal(5, results.Cases.Length);
+        Assert.Equal(10, results.Cases.Length);
         Assert.Equal(ProjectionPilot.GoldenReport, results.Report);
         Assert.Equal(ProjectionNotation.Entries.Count, results.NotationSize);
         Assert.All(results.Cases, item => Assert.Equal(item.GoldenLatex, LatexWriter.Write(item.Formula)));
+        Assert.Equal(8, results.Cases.Count(item => item.Unprojectable.IsEmpty));
+        Assert.Equal(2, results.Cases.Count(item => !item.Unprojectable.IsEmpty));
     }
 
     [LiveReportFact]
