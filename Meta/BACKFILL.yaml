@@ -11827,16 +11827,23 @@ sources:
           raw_sha256: sha256:695c575d32e9c5efb152ace6fc5c61672243e025c76144a3cfadcf0082bc1db2
           normalized_sha256: sha256:695c575d32e9c5efb152ace6fc5c61672243e025c76144a3cfadcf0082bc1db2
         cas_ref: sha256:695c575d32e9c5efb152ace6fc5c61672243e025c76144a3cfadcf0082bc1db2
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Midline/UniversalHeatTrace.universal_heat_trace_midline
         receipts:
-          coverage: []
-          scribe: []
+          coverage:
+            - gid: D5/S3/Midline/UniversalHeatTrace.universal_heat_trace_midline
+              source_sha256: sha256:695c575d32e9c5efb152ace6fc5c61672243e025c76144a3cfadcf0082bc1db2
+              target_sha256: sha256:b7707a1da106632439eda980bb6a2a719b5892de105cc586076b13e2415cb87c
+          scribe:
+            - gid: D5/S3/Midline/UniversalHeatTrace.universal_heat_trace_midline
+              definition_sha256: sha256:75abc6938897679a12d68a59188b6443e6636dd00b4bf6bdc193e7af64206866
+              emission_sha256: sha256:670a92b29777ccbb6d4765e3283a07f7a1acce89f5bfae60e5a1c9f70e53e10a
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: absorbed
+          truth: closed
       - atom_id: pzg-residual-285db8f38013cb8ba4ef3c3dc00a597c3ae22871f85e248538ea8f39353906a8
         ast_path: corollary/25.11
         fingerprints:
@@ -25270,8 +25277,8 @@ sources:
       - atom_id: spec-acceptance-01
         boundary:
           ast_path: sample/01
-          start_byte: 45294
-          end_byte: 45538
+          start_byte: 45690
+          end_byte: 45934
         fingerprints:
           raw_sha256: sha256:798034b5b9fcb3d19b71c9d9eb7904c1e87eb4dda350368bcf4e4a1aa0c0c2c5
           normalized_sha256: sha256:798034b5b9fcb3d19b71c9d9eb7904c1e87eb4dda350368bcf4e4a1aa0c0c2c5
@@ -25290,8 +25297,8 @@ sources:
       - atom_id: spec-acceptance-02
         boundary:
           ast_path: sample/02
-          start_byte: 45538
-          end_byte: 45762
+          start_byte: 45934
+          end_byte: 46158
         fingerprints:
           raw_sha256: sha256:e5bc5cd0485b6a4876c6327a0685be5f7575cda0c4d248fd9812b490d59a1c45
           normalized_sha256: sha256:e5bc5cd0485b6a4876c6327a0685be5f7575cda0c4d248fd9812b490d59a1c45
@@ -25310,8 +25317,8 @@ sources:
       - atom_id: spec-acceptance-03
         boundary:
           ast_path: sample/03
-          start_byte: 45762
-          end_byte: 45967
+          start_byte: 46158
+          end_byte: 46363
         fingerprints:
           raw_sha256: sha256:16aeb5220d79b9ee321a1933fc3a99f881017e2a7bb6701ae1cebe0815c012ab
           normalized_sha256: sha256:16aeb5220d79b9ee321a1933fc3a99f881017e2a7bb6701ae1cebe0815c012ab
@@ -25330,8 +25337,8 @@ sources:
       - atom_id: spec-acceptance-04
         boundary:
           ast_path: sample/04
-          start_byte: 45967
-          end_byte: 46133
+          start_byte: 46363
+          end_byte: 46529
         fingerprints:
           raw_sha256: sha256:f687d7504bb441c95a8d659c346bffb3a30d758f3757b0e0a34a58742251a09c
           normalized_sha256: sha256:f687d7504bb441c95a8d659c346bffb3a30d758f3757b0e0a34a58742251a09c
@@ -25350,8 +25357,8 @@ sources:
       - atom_id: spec-acceptance-05
         boundary:
           ast_path: sample/05
-          start_byte: 46133
-          end_byte: 46806
+          start_byte: 46529
+          end_byte: 47202
         fingerprints:
           raw_sha256: sha256:aff80c2819f040e9faa1ce5304b705e750917528fc97a5bf820d4ffe2bcdfc09
           normalized_sha256: sha256:aff80c2819f040e9faa1ce5304b705e750917528fc97a5bf820d4ffe2bcdfc09
@@ -25370,8 +25377,8 @@ sources:
       - atom_id: spec-acceptance-06
         boundary:
           ast_path: sample/06
-          start_byte: 46806
-          end_byte: 47163
+          start_byte: 47202
+          end_byte: 47559
         fingerprints:
           raw_sha256: sha256:1cdeffb9c38a12dc186be13302e0236d1cbe64db1443b1218934ed79e0495b5c
           normalized_sha256: sha256:1cdeffb9c38a12dc186be13302e0236d1cbe64db1443b1218934ed79e0495b5c
@@ -25390,8 +25397,8 @@ sources:
       - atom_id: spec-acceptance-07
         boundary:
           ast_path: sample/07
-          start_byte: 47163
-          end_byte: 47639
+          start_byte: 47559
+          end_byte: 48035
         fingerprints:
           raw_sha256: sha256:a9f07f7b0a89f8f78bad0550c383df81587ae3f6b340d81bce2d128595c665b1
           normalized_sha256: sha256:a9f07f7b0a89f8f78bad0550c383df81587ae3f6b340d81bce2d128595c665b1
@@ -25410,8 +25417,8 @@ sources:
       - atom_id: spec-acceptance-08
         boundary:
           ast_path: sample/08
-          start_byte: 47639
-          end_byte: 47933
+          start_byte: 48035
+          end_byte: 48329
         fingerprints:
           raw_sha256: sha256:62a209d5f7f16d269aaf8ee7fde6f8ff427152fe55f57cf0b9420afe6b4c6e24
           normalized_sha256: sha256:62a209d5f7f16d269aaf8ee7fde6f8ff427152fe55f57cf0b9420afe6b4c6e24
@@ -25430,8 +25437,8 @@ sources:
       - atom_id: spec-acceptance-09
         boundary:
           ast_path: sample/09
-          start_byte: 47933
-          end_byte: 48178
+          start_byte: 48329
+          end_byte: 48574
         fingerprints:
           raw_sha256: sha256:97b1ff8b1042994df778555f96b6e4299c6629f3ed873d0f21633a0f8bc5e9a9
           normalized_sha256: sha256:97b1ff8b1042994df778555f96b6e4299c6629f3ed873d0f21633a0f8bc5e9a9
@@ -25450,8 +25457,8 @@ sources:
       - atom_id: spec-acceptance-10
         boundary:
           ast_path: sample/10
-          start_byte: 48178
-          end_byte: 48413
+          start_byte: 48574
+          end_byte: 48809
         fingerprints:
           raw_sha256: sha256:d9bf4c5a303161959232a2e57dfe9d34c88754ad3f5cbbf4e4c8e1c6e7a6aac4
           normalized_sha256: sha256:d9bf4c5a303161959232a2e57dfe9d34c88754ad3f5cbbf4e4c8e1c6e7a6aac4
@@ -25470,8 +25477,8 @@ sources:
       - atom_id: spec-acceptance-11
         boundary:
           ast_path: sample/11
-          start_byte: 48413
-          end_byte: 48809
+          start_byte: 48809
+          end_byte: 49205
         fingerprints:
           raw_sha256: sha256:1d5d65810358f0f49e66bd771668df3814ee8da7bcc9adf21bfb5df3e3e48e91
           normalized_sha256: sha256:1d5d65810358f0f49e66bd771668df3814ee8da7bcc9adf21bfb5df3e3e48e91
@@ -25490,8 +25497,8 @@ sources:
       - atom_id: spec-acceptance-12
         boundary:
           ast_path: sample/12
-          start_byte: 48809
-          end_byte: 49025
+          start_byte: 49205
+          end_byte: 49421
         fingerprints:
           raw_sha256: sha256:7025126ce7d3cba2fc1259e5f837f377c121ca266851a9cb2504223c8e18041c
           normalized_sha256: sha256:7025126ce7d3cba2fc1259e5f837f377c121ca266851a9cb2504223c8e18041c

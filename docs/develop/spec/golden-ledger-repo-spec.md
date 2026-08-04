@@ -80,7 +80,7 @@ golden-ledger/
 地层是显式语义坐标,由疆域词表决定:`Meta/domains.yaml` 每个疆域必须携 `stratum` 字段,落格 `S<stratum>/<疆域>/<模块>.lean`。执法两条:(i)H1 闭包不变量:S_k 单元之库内 import 闭包 ⊆ S_{≤k}(同层互引合法,S0 亦然);(ii)一致性:单元 import 闭包之最高地层 ≤ 其疆域地层。`1 + max(import 之地层)` 仅为新概念选层之下界启发,不再定义地层。
 
 ## 2.3 生长律
-目录 >12 文件或文件 >400 行 ⟹ **局部分裂**(按子疆域,组名先入词表;分裂工具(`StrataLint split` 子命令,D5-T0004;成熟前以 git mv+手工 import 重写代行,SL-003 机器执法)单 PR 完成 mv+import 重写;该目录 MAP.md 追加记录);**只裂不迁,永不全局重排;深度对数增长,结构演化 append-only。**
+目录 >12 文件或文件 >400 行 ⟹ **局部分裂**(按子疆域,组名先入词表;分裂工具(`StrataLint split` 子命令,D5-T0004;成熟前以 git mv+手工 import 重写代行,SL-003 机器执法)单 PR 完成 mv+import 重写;该目录 MAP.md 追加记录);**只裂不迁,永不全局重排;深度对数增长,结构演化 append-only。** 容量只约束骨骼:发射投影(FILEMAP `kind=generated` 的 Blueprint md,ScribeEmitter 产、emit-check 验)不计容量——文档的结构名额由其 `.scribe.cs` 真源支付;文档 GID 须指向既存 Lean 模块且定义路径与 GID 双射,若投影计数,合法的十二模块 Lean 桶在第七个蓝图化模块处即溢出其 Blueprint 镜像(2026-07-30,#499/#543 撞墙先例)。
 
 ## 2.4 第五坐标:通用性(理论自分类之工程兑现)
 文件头声明 `generality: G|I|E`——G 通用机器(任意实二次域/任意无理;**自然普遍性律:能免费一般化者必须一般化陈述**,证于 `Zsqrtd d` 末行特化);I 实例运气(h=1、模数 5;**I 承重须警示注**——现查唯一承重 I 为 h=1/UFD,推广至 h>1 需理想论翻修);E 极值指纹(Hurwitz/Markov 根/复杂度地板——理论签名,不可亦无需一般化)。实测分解 G80%/I9%/E9%,承重 13G+1I。**因子分解落位(v7.4)**:G 层就地为根包 `Metallic/`(不析出——析出仅当外部需求已证实,且走 lake package 边界非分仓);实例层 `D<disc>/`;**跨族比较定理居 `Moduli/`**(Hurwitz 极值、Markov 谱、Lagrange 谱、分类表)——分库将使全族最好的定理无家可归,故不分。
