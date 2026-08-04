@@ -433,6 +433,9 @@ public sealed class FormalizeCandidatesTests
         var files = new List<RawRepositoryEntry>
         {
             RawRepositoryEntry.FromText(BackfillInventoryLoader.RelativePath, ledger),
+            new(
+                TheoryAtomizerDataLoader.DataPath,
+                ImmutableArray.CreateRange(DigestionTestSupport.RulesBytes)),
         };
         foreach (var source in sources)
         {

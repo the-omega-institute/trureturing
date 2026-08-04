@@ -131,6 +131,7 @@ public sealed partial class ProductionEnvironmentTests
         var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
         var planningSnapshot = Decode(Snapshot(new Dictionary<string, string>(StringComparer.Ordinal)
         {
+            [TheoryAtomizerDataLoader.DataPath] = Encoding.UTF8.GetString(DigestionTestSupport.RulesBytes),
             [GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes),
             [oldCapture.RelativePath] = Encoding.UTF8.GetString(oldCapture.Bytes.AsSpan()),
         }));

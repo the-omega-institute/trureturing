@@ -28,6 +28,8 @@ internal static class FileMapPolicy
         "Meta/StrataLint/StrataLint.Scribe/Projection/StatementProjection.cs";
     private const string TomlGoldenLoaderPath =
         "Meta/StrataLint/StrataLint.Cli/Golden/TomlGoldenLoader.cs";
+    private const string TheoryAtomizerDataLoaderPath =
+        "Meta/StrataLint/StrataLint.Engine/Digestion/Configuration/TheoryAtomizerDataLoader.cs";
     private const string GoldenFixtureRegistryLoaderPath =
         "Meta/StrataLint/StrataLint.Cli/Golden/GoldenFixtureRegistryLoader.cs";
     private const string PerfBudgetLoaderPath =
@@ -57,6 +59,7 @@ internal static class FileMapPolicy
             ["SnapshotDecoder"] = SnapshotDecoderPath,
             ["StatementProjectionFixtureLoader"] = StatementProjectionFixtureLoaderPath,
             ["TomlGoldenLoader"] = TomlGoldenLoaderPath,
+            ["TheoryAtomizerDataLoader"] = TheoryAtomizerDataLoaderPath,
             ["ValuesKernelDataLoader"] = ValuesKernelLoaderPath,
             ["YamlSubsetParser"] = YamlSubsetParserPath,
         };

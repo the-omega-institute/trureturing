@@ -615,19 +615,22 @@ internal sealed class FakeRepositoryGateway(
     public RawRepositorySnapshot ReadCurrent()
     {
         ReadCount++;
-        return current ?? throw new InvalidOperationException("current snapshot should not be read");
+        return WithAtomizerData(
+            current ?? throw new InvalidOperationException("current snapshot should not be read"));
     }
 
     public RawRepositorySnapshot ReadRevision(string revision)
     {
         ReadCount++;
-        return baseline ?? throw new InvalidOperationException("baseline snapshot should not be read");
+        return WithAtomizerData(
+            baseline ?? throw new InvalidOperationException("baseline snapshot should not be read"));
     }
 
     public RawRepositorySnapshot ReadFrozenRevision(string revision)
     {
         ReadCount++;
-        return baseline ?? throw new InvalidOperationException("frozen revision snapshot should not be read");
+        return WithAtomizerData(
+            baseline ?? throw new InvalidOperationException("frozen revision snapshot should not be read"));
     }
 
     public TrustedFrozenGitReferences ValidateFrozenReferences(FrozenLedgerReferenceSet references)
@@ -636,6 +639,13 @@ internal sealed class FakeRepositoryGateway(
         return frozenReferenceValidator?.Invoke(references)
             ?? TrustedFrozenGitReferences.CreateForTrustedAdapter(references.Inputs);
     }
+
+    private static RawRepositorySnapshot WithAtomizerData(RawRepositorySnapshot snapshot) =>
+        snapshot.Entries.Any(static entry => entry.Path == TheoryAtomizerDataLoader.DataPath)
+            ? snapshot
+            : RawRepositorySnapshot.Create(snapshot.Entries.Add(new RawRepositoryEntry(
+                TheoryAtomizerDataLoader.DataPath,
+                ImmutableArray.CreateRange(DigestionTestSupport.RulesBytes))));
 }
 
 internal sealed class FakeLeanReportSource(LeanAxiomReport? report) : ILeanReportSource

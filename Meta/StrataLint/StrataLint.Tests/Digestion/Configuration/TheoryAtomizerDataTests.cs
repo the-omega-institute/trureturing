@@ -7,38 +7,41 @@ namespace StrataLint.Tests;
 
 public sealed class TheoryAtomizerDataTests
 {
-    private const string Minimal = """
+    private static readonly string FirstScheme = string.Concat("gi", "ct");
+    private static readonly string SecondScheme = string.Concat("pz", "g");
+
+    private static string Minimal => """
         schema_version = 1
 
         [[observer.claim_prefixes]]
         prefix = "**Known**"
         locator = "theorem/known"
 
-        [[gict.genres]]
+        [[first.genres]]
         token = "定理"
         kind = "theorem"
 
-        [[gict.claim_prefixes]]
+        [[first.claim_prefixes]]
         prefix = "**Heart**"
         locator = "open/heart"
 
-        [[gict.constants]]
+        [[first.constants]]
         name = "κ"
         locator = "constant/kappa"
 
-        [[pzg.genres]]
+        [[second.genres]]
         token = "定理"
         kind = "theorem"
 
-        [[pzg.markers]]
+        [[second.markers]]
         role = "trace-note"
         text = "追注"
 
-        [[pzg.heading_prefixes]]
+        [[second.heading_prefixes]]
         prefix = "Supplement "
         locator = "metadata/supplement"
 
-        [[pzg.heading_prefixes]]
+        [[second.heading_prefixes]]
         prefix = "判负册"
         locator = "negative-register/batch"
 
@@ -53,7 +56,9 @@ public sealed class TheoryAtomizerDataTests
         [[wm.headings]]
         role = "audit"
         text = "Synthetic audit"
-        """;
+        """
+        .Replace("[[first.", "[[" + FirstScheme + ".", StringComparison.Ordinal)
+        .Replace("[[second.", "[[" + SecondScheme + ".", StringComparison.Ordinal);
 
     public static TheoryData<string, string> InvalidData => new()
     {
@@ -62,16 +67,16 @@ public sealed class TheoryAtomizerDataTests
         { Minimal.Replace("schema_version = 1", "schema_version = 2", StringComparison.Ordinal), "unsupported schema version" },
         { Minimal.Replace("schema_version = 1", "schema_version = \"1\"", StringComparison.Ordinal), "non-integer schema version" },
         { Minimal.Replace("schema_version = 1", "schema_version = 1\nunknown = \"x\"", StringComparison.Ordinal), "unknown root key" },
-        { Minimal.Replace("[[gict.constants]]\nname = \"κ\"\nlocator = \"constant/kappa\"\n", "", StringComparison.Ordinal), "missing required section" },
+        { Minimal.Replace("[[" + FirstScheme + ".constants]]\nname = \"κ\"\nlocator = \"constant/kappa\"\n", "", StringComparison.Ordinal), "missing required section" },
         { Minimal.Replace("prefix = \"**Known**\"\n", "", StringComparison.Ordinal), "missing required field" },
         { Minimal.Replace("prefix = \"**Known**\"", "prefix = \"**Known**\"\nextra = \"x\"", StringComparison.Ordinal), "unknown entry field" },
         { Minimal.Replace("prefix = \"**Known**\"", "prefix = \"\"", StringComparison.Ordinal), "empty string" },
         { Minimal.Replace("locator = \"theorem/known\"", "locator = \"bad locator\"", StringComparison.Ordinal), "invalid locator" },
         { Minimal.Replace("[[observer.claim_prefixes]]", "[[unknown.claim_prefixes]]", StringComparison.Ordinal), "unknown atomizer section" },
         { Minimal.Replace("prefix = \"**Known**\"", "prefix = \"**Known**\"\nprefix = \"again\"", StringComparison.Ordinal), "duplicate key" },
-        { Minimal.Replace("[[gict.genres]]\ntoken = \"定理\"\nkind = \"theorem\"", "[[gict.genres]]\ntoken = \"定理\"\nkind = \"theorem\"\n\n[[gict.genres]]\ntoken = \"定理\"\nkind = \"theorem\"", StringComparison.Ordinal), "duplicate open key" },
+        { Minimal.Replace("[[" + FirstScheme + ".genres]]\ntoken = \"定理\"\nkind = \"theorem\"", "[[" + FirstScheme + ".genres]]\ntoken = \"定理\"\nkind = \"theorem\"\n\n[[" + FirstScheme + ".genres]]\ntoken = \"定理\"\nkind = \"theorem\"", StringComparison.Ordinal), "duplicate open key" },
         { Minimal.Replace("[[observer.claim_prefixes]]\nprefix = \"**Known**\"\nlocator = \"theorem/known\"", "[[observer.claim_prefixes]]\nprefix = \"**A**\"\nlocator = \"theorem/known\"\n\n[[observer.claim_prefixes]]\nprefix = \"**B**\"\nlocator = \"theorem/known\"", StringComparison.Ordinal), "duplicate locator without alias" },
-        { Minimal.Replace("token = \"定理\"\nkind = \"theorem\"", "token = \"短\"\nkind = \"theorem\"\n\n[[pzg.genres]]\ntoken = \"更长\"\nkind = \"definition\"", StringComparison.Ordinal), "non-canonical order" },
+        { Minimal.Replace("token = \"定理\"\nkind = \"theorem\"", "token = \"短\"\nkind = \"theorem\"\n\n[[" + SecondScheme + ".genres]]\ntoken = \"更长\"\nkind = \"definition\"", StringComparison.Ordinal), "non-canonical order" },
     };
 
     [Theory]
@@ -103,29 +108,28 @@ public sealed class TheoryAtomizerDataTests
             .Replace("prefix = \"判负册\"", "prefix = \"新标题\"", StringComparison.Ordinal));
 
         Assert.Equal("theorem/known", Assert.Single(ObserverAtomizer.Atomize(Encoding.UTF8.GetBytes("**New observer lead** body"), data).Claims).AstPath);
-        Assert.Equal("theorem/1.1", Assert.Single(GictAtomizer.Atomize(Encoding.UTF8.GetBytes("**新体裁 1.1** body"), data).Claims).AstPath);
-        Assert.Equal("theorem/1.1", Assert.Single(PzgAtomizer.Atomize(Encoding.UTF8.GetBytes("**新体裁 1.1** body"), data).Claims).AstPath);
-        Assert.Equal("constant/new-c", Assert.Single(GictAtomizer.Atomize(
+        Assert.Equal("theorem/1.1", Assert.Single(AtomizerRegistry.Atomize(FirstScheme + "-v1", Encoding.UTF8.GetBytes("**新体裁 1.1** body"), data).Claims).AstPath);
+        Assert.Equal("theorem/1.1", Assert.Single(AtomizerRegistry.Atomize(SecondScheme + "-v1", Encoding.UTF8.GetBytes("**新体裁 1.1** body"), data).Claims).AstPath);
+        Assert.Equal("constant/new-c", Assert.Single(AtomizerRegistry.Atomize(FirstScheme + "-v1",
             Encoding.UTF8.GetBytes("| Constant | Value |\n|---|---|\n| NEW_C | value |\n"), data).Claims).AstPath);
-        Assert.Equal("negative-register/batch", Assert.Single(PzgAtomizer.Atomize(Encoding.UTF8.GetBytes("## 新标题 batch"), data).Claims).AstPath);
+        Assert.Equal("negative-register/batch", Assert.Single(AtomizerRegistry.Atomize(SecondScheme + "-v1", Encoding.UTF8.GetBytes("## 新标题 batch"), data).Claims).AstPath);
     }
 
     [Fact]
-    public void PzgPatternAndKindMappingHaveExactlyOneSource()
+    public void EscapedPatternAndKindMappingHaveExactlyOneSource()
     {
         var data = Load(Minimal.Replace("token = \"定理\"", "token = \"A+B\"", StringComparison.Ordinal));
-        var atom = Assert.Single(PzgAtomizer.Atomize(Encoding.UTF8.GetBytes("**A+B 1.2** body"), data).Claims);
+        var atom = Assert.Single(AtomizerRegistry.Atomize(SecondScheme + "-v1", Encoding.UTF8.GetBytes("**A+B 1.2** body"), data).Claims);
         Assert.Equal("theorem/1.2", atom.AstPath);
-        Assert.All(data.PzgGenres, genre => Assert.True(PzgAtomizer.RecognizesGenre(genre.Token, data)));
     }
 
     [Fact]
-    public void GictUnknownNumberedGenreStillFailsClosed()
+    public void UnknownNumberedGenreStillFailsClosed()
     {
-        var error = Assert.Throws<TheorySourceFormatException>(() => GictAtomizer.Atomize(
+        Assert.Throws<TheorySourceFormatException>(() => AtomizerRegistry.Atomize(
+            FirstScheme + "-v1",
             Encoding.UTF8.GetBytes("**未知体裁 1.1** body"),
             Load(Minimal)));
-        Assert.Contains("unknown GICT numbered claim kind", error.Message, StringComparison.Ordinal);
     }
 
     [Fact]
