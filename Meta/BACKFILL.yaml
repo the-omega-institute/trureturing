@@ -9888,16 +9888,23 @@ sources:
           raw_sha256: sha256:b2ff1592c4c24b12dcc970a03ac6e2d0665a0b789156795ae37275aef122977c
           normalized_sha256: sha256:b2ff1592c4c24b12dcc970a03ac6e2d0665a0b789156795ae37275aef122977c
         cas_ref: sha256:b2ff1592c4c24b12dcc970a03ac6e2d0665a0b789156795ae37275aef122977c
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Fourier/FinitePoisson.finite_poisson_summation
         receipts:
-          coverage: []
-          scribe: []
+          coverage:
+            - gid: D5/S3/Fourier/FinitePoisson.finite_poisson_summation
+              source_sha256: sha256:b2ff1592c4c24b12dcc970a03ac6e2d0665a0b789156795ae37275aef122977c
+              target_sha256: sha256:f84f54241ab57e89ad70448f03c112e69abf149c5e104cca590b883521a06dd1
+          scribe:
+            - gid: D5/S3/Fourier/FinitePoisson.finite_poisson_summation
+              definition_sha256: sha256:27beefb9b4326c55ef5620eee62001d0e0bd900d8bc50d8493bf133552d948e7
+              emission_sha256: sha256:50fd9ff54a9f86633e242a21ff40126c551efe343c691806d777554af26decc6
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: absorbed
+          truth: closed
       - atom_id: pzg-residual-163b117bf8d71533380dda3c03c27c13e02d3d02c999a6baebda24fdca60ab45
         ast_path: remark/10.11
         fingerprints:
