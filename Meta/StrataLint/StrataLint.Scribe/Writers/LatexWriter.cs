@@ -8,6 +8,7 @@ namespace StrataLint.Scribe;
 public static class LatexWriter
 {
     private const int RelationPrecedence = 10;
+    private const int LogicPrecedence = 5;
     private const int AdditivePrecedence = 20;
     private const int MultiplicativePrecedence = 30;
     private const int PrefixPrecedence = 40;
@@ -27,6 +28,18 @@ public static class LatexWriter
     public static ImmutableArray<byte> WriteUtf8(Formula formula) =>
         ImmutableArray.CreateRange(StrictUtf8.GetBytes(Write(formula)));
 
+    public static string WriteStatement(Formula formula)
+    {
+        ArgumentNullException.ThrowIfNull(formula);
+        if (formula is not Formula.Layout layout)
+        {
+            return "$$" + Write(formula) + "$$";
+        }
+
+        var delimiter = layout.Mode == FormulaLayoutMode.Display ? "$$" : "$";
+        return delimiter + Write(layout.Content) + delimiter;
+    }
+
     private static void WriteFormula(
         StringBuilder builder,
         Formula formula,
@@ -41,6 +54,84 @@ public static class LatexWriter
 
         switch (formula)
         {
+            case Formula.TextRun text:
+                builder.Append(text.Value);
+                break;
+            case Formula.AlignedRows aligned:
+                builder.Append("\\begin{aligned}");
+                for (var index = 0; index < aligned.Rows.Length; index++)
+                {
+                    if (index > 0)
+                    {
+                        builder.Append("\\\\");
+                    }
+                    builder.Append(aligned.Rows[index].Value);
+                }
+                builder.Append("\\end{aligned}");
+                break;
+            case Formula.Aligned aligned:
+                builder.Append("\\begin{aligned}");
+                for (var index = 0; index < aligned.Rows.Length; index++)
+                {
+                    if (index > 0)
+                    {
+                        builder.Append("\\\\");
+                    }
+                    WriteFormula(builder, aligned.Rows[index], 0);
+                }
+                builder.Append("\\end{aligned}");
+                break;
+            case Formula.LatexSequence sequence:
+                foreach (var item in sequence.Items)
+                {
+                    WriteFormula(builder, item, 0);
+                }
+                break;
+            case Formula.LatexGroup group:
+                builder.Append('{');
+                foreach (var item in group.Items)
+                {
+                    WriteFormula(builder, item, 0);
+                }
+                builder.Append('}');
+                break;
+            case Formula.LatexMacro macro:
+                WriteLatexMacro(builder, macro.Value);
+                break;
+            case Formula.LatexSymbol symbol:
+                builder.Append(symbol.Value switch
+                {
+                    FormulaLatexSymbol.Exclamation => '!', FormulaLatexSymbol.Ampersand => '&',
+                    FormulaLatexSymbol.Apostrophe => '\'', FormulaLatexSymbol.OpenParenthesis => '(',
+                    FormulaLatexSymbol.CloseParenthesis => ')', FormulaLatexSymbol.Asterisk => '*',
+                    FormulaLatexSymbol.Plus => '+', FormulaLatexSymbol.Comma => ',',
+                    FormulaLatexSymbol.Minus => '-', FormulaLatexSymbol.Period => '.',
+                    FormulaLatexSymbol.Slash => '/', FormulaLatexSymbol.Colon => ':',
+                    FormulaLatexSymbol.Semicolon => ';', FormulaLatexSymbol.LessThan => '<',
+                    FormulaLatexSymbol.Equal => '=', FormulaLatexSymbol.GreaterThan => '>',
+                    FormulaLatexSymbol.OpenBracket => '[', FormulaLatexSymbol.CloseBracket => ']',
+                    FormulaLatexSymbol.Caret => '^', FormulaLatexSymbol.Underscore => '_',
+                    FormulaLatexSymbol.VerticalBar => '|', _ => throw new UnreachableException(),
+                });
+                break;
+            case Formula.LatexSpace:
+                builder.Append(' ');
+                break;
+            case Formula.LatexNewline:
+                builder.Append('\n');
+                break;
+            case Formula.LatexWord word:
+                builder.Append(word.Value.Value);
+                break;
+            case Formula.LatexDigits digits:
+                foreach (var digit in digits.Digits)
+                {
+                    builder.Append((char)('0' + digit));
+                }
+                break;
+            case Formula.Layout layout:
+                WriteFormula(builder, layout.Content, 0);
+                break;
             case Formula.Symbol symbol:
                 WriteIdentifier(builder, symbol.Name, false);
                 break;
@@ -59,6 +150,9 @@ public static class LatexWriter
             case Formula.Integers:
                 builder.Append("\\mathbb{Z}");
                 break;
+            case Formula.NamedConstant constant:
+                builder.Append("\\mathrm{").Append(constant.Name.Value).Append('}');
+                break;
             case Formula.Negate negate:
                 builder.Append('-');
                 WriteFormula(builder, negate.Operand, PrefixPrecedence);
@@ -67,6 +161,11 @@ public static class LatexWriter
                 builder.Append("\\left|");
                 WriteFormula(builder, absolute.Operand, 0);
                 builder.Append("\\right|");
+                break;
+            case Formula.Norm norm:
+                builder.Append("\\left\\lVert ");
+                WriteFormula(builder, norm.Operand, 0);
+                builder.Append(" \\right\\rVert");
                 break;
             case Formula.Binary binary:
                 WriteBinary(builder, binary);
@@ -146,11 +245,54 @@ public static class LatexWriter
                 WriteList(builder, function.Arguments);
                 builder.Append("\\right)");
                 break;
+            case Formula.Apply application:
+                WriteFormula(builder, application.Function, AtomPrecedence);
+                builder.Append("\\left(");
+                WriteList(builder, application.Arguments);
+                builder.Append("\\right)");
+                break;
+            case Formula.TypeArrow arrow:
+                WriteFormula(builder, arrow.Domain, RelationPrecedence + 1);
+                builder.Append(" \\to ");
+                WriteFormula(builder, arrow.Codomain, RelationPrecedence + 1);
+                break;
             case Formula.Relation relation:
                 WriteRelation(builder, relation);
                 break;
             case Formula.RelationChain relationChain:
                 WriteRelationChain(builder, relationChain);
+                break;
+            case Formula.Logic logic:
+                WriteLogic(builder, logic);
+                break;
+            case Formula.Not not:
+                builder.Append("\\neg ");
+                WriteFormula(builder, not.Operand, LogicPrecedence + 1);
+                break;
+            case Formula.Bind bind:
+                builder.Append(bind.Quantifier == FormulaQuantifier.ForAll
+                    ? "\\forall "
+                    : "\\exists ");
+                builder.Append(bind.Variable.Value).Append(" \\in ");
+                WriteFormula(builder, bind.Domain, LogicPrecedence + 1);
+                builder.Append(",\\; ");
+                WriteFormula(builder, bind.Body, LogicPrecedence);
+                break;
+            case Formula.BindMany bind:
+                builder.Append(bind.Quantifier == FormulaQuantifier.ForAll
+                    ? "\\forall "
+                    : "\\exists ");
+                for (var index = 0; index < bind.Variables.Length; index++)
+                {
+                    if (index > 0)
+                    {
+                        builder.Append(", ");
+                    }
+                    builder.Append(bind.Variables[index].Name.Value).Append(" \\in ");
+                    WriteFormula(builder, bind.Variables[index].Domain, LogicPrecedence + 1);
+                }
+                builder.Append(",\\; ");
+                WriteFormula(builder, bind.Body, LogicPrecedence);
                 break;
             default:
                 throw new UnreachableException("Unknown formula node.");
@@ -160,6 +302,35 @@ public static class LatexWriter
         {
             builder.Append("\\right)");
         }
+    }
+
+    private static void WriteLatexMacro(StringBuilder builder, FormulaLatexMacro macro)
+    {
+        var name = macro switch
+        {
+            FormulaLatexMacro.Delta => "Delta",
+            FormulaLatexMacro.Gamma => "Gamma",
+            FormulaLatexMacro.Lambda => "Lambda",
+            FormulaLatexMacro.Leftrightarrow => "Leftrightarrow",
+            FormulaLatexMacro.Re => "Re",
+            FormulaLatexMacro.Rightarrow => "Rightarrow",
+            FormulaLatexMacro.Sigma => "Sigma",
+            FormulaLatexMacro.Vert => "Vert",
+            FormulaLatexMacro.Alpha => "alpha",
+            FormulaLatexMacro.DeltaLower => "delta",
+            FormulaLatexMacro.GammaLower => "gamma",
+            FormulaLatexMacro.LambdaLower => "lambda",
+            FormulaLatexMacro.SigmaLower => "sigma",
+            FormulaLatexMacro.EscapedSpace => " ",
+            FormulaLatexMacro.NegativeThinSpace => "!",
+            FormulaLatexMacro.ThinSpace => ",",
+            FormulaLatexMacro.SemicolonSpace => ";",
+            FormulaLatexMacro.RowBreak => "\\",
+            FormulaLatexMacro.OpenBrace => "{",
+            FormulaLatexMacro.CloseBrace => "}",
+            _ => macro.ToString().ToLowerInvariant(),
+        };
+        builder.Append('\\').Append(name);
     }
 
     private static void WriteBinary(StringBuilder builder, Formula.Binary binary)
@@ -190,6 +361,14 @@ public static class LatexWriter
         {
             FormulaRelationOperator.Equal => " = ",
             FormulaRelationOperator.NotEqual => " \\ne ",
+            FormulaRelationOperator.LessThan => " < ",
+            FormulaRelationOperator.LessThanOrEqual => " \\le ",
+            FormulaRelationOperator.GreaterThan => " > ",
+            FormulaRelationOperator.GreaterThanOrEqual => " \\ge ",
+            FormulaRelationOperator.MemberOf => " \\in ",
+            FormulaRelationOperator.Divides => " \\mid ",
+            FormulaRelationOperator.SubsetOf => " \\subseteq ",
+            FormulaRelationOperator.Equivalent => " \\equiv ",
             _ => throw new UnreachableException("Unknown relation operator."),
         });
         WriteFormula(builder, relation.Right, RelationPrecedence + 1);
@@ -207,12 +386,34 @@ public static class LatexWriter
                 {
                     FormulaRelationOperator.Equal => " = ",
                     FormulaRelationOperator.NotEqual => " \\ne ",
+                    FormulaRelationOperator.LessThan => " < ",
+                    FormulaRelationOperator.LessThanOrEqual => " \\le ",
+                    FormulaRelationOperator.GreaterThan => " > ",
+                    FormulaRelationOperator.GreaterThanOrEqual => " \\ge ",
+                    FormulaRelationOperator.MemberOf => " \\in ",
+                    FormulaRelationOperator.Divides => " \\mid ",
+                    FormulaRelationOperator.SubsetOf => " \\subseteq ",
+                    FormulaRelationOperator.Equivalent => " \\equiv ",
                     _ => throw new UnreachableException("Unknown relation operator."),
                 });
             }
 
             WriteFormula(builder, relation.Operands[index], RelationPrecedence + 1);
         }
+    }
+
+    private static void WriteLogic(StringBuilder builder, Formula.Logic logic)
+    {
+        WriteFormula(builder, logic.Left, LogicPrecedence + 1);
+        builder.Append(logic.Operator switch
+        {
+            FormulaLogicOperator.And => " \\land ",
+            FormulaLogicOperator.Or => " \\lor ",
+            FormulaLogicOperator.Implies => " \\Rightarrow ",
+            FormulaLogicOperator.Iff => " \\Leftrightarrow ",
+            _ => throw new UnreachableException("Unknown logic operator."),
+        });
+        WriteFormula(builder, logic.Right, LogicPrecedence + 1);
     }
 
     private static void WriteIdentifier(
@@ -245,7 +446,8 @@ public static class LatexWriter
 
     private static int GetPrecedence(Formula formula) => formula switch
     {
-        Formula.Relation or Formula.RelationChain => RelationPrecedence,
+        Formula.Logic or Formula.Not or Formula.Bind => LogicPrecedence,
+        Formula.Relation or Formula.RelationChain or Formula.TypeArrow => RelationPrecedence,
         Formula.Binary { Operator: FormulaBinaryOperator.Add or FormulaBinaryOperator.Subtract } =>
             AdditivePrecedence,
         Formula.Binary => MultiplicativePrecedence,
