@@ -4,8 +4,6 @@
 
 Conjugate reflection reverses scaling entries around the critical line.
 
-<a id="describe-mirror-fixed-points-lie-on-the-critical-line"></a>
-
 **Proposition 1.1 (Mirror fixed points lie on the critical line).**
 
 $\forall s\in\mathbb{C},\ \operatorname{mirror}(s)=s \Rightarrow \Re(s)=\frac{1}{2}$
@@ -17,8 +15,6 @@ $\forall s\in\mathbb{C},\ \operatorname{mirror}(s)=s \Rightarrow \Re(s)=\frac{1}
 *Commentary.*
 
 Conjugate reflection sends a spectral parameter to one minus its conjugate. Every fixed point therefore has real part one half; no zero-location claim is made.
-
-<a id="describe-mirror-reverses-every-scaling-entry"></a>
 
 **Theorem 1.2 (The mirror reverses every scaling entry).**
 
@@ -32,8 +28,6 @@ $$\forall A\ [\operatorname{AddMonoid}(A)],\ \forall \ell:A\to_{+}\mathbb{R},\ \
 
 For the entry given by displacement from one half times ledger length, mirroring negates every coordinate. The same theorem identifies the full fixed locus.
 
-<a id="describe-symmetry-channel-is-not-location-force"></a>
-
 **Remark 1.3 (A symmetry channel is not a location force).**
 
 Lean statement: `D5/S3/Weil/ReflectionLedger.mirror_fixed_re_eq`
@@ -45,8 +39,6 @@ Lean statement: `D5/S3/Weil/ReflectionLedger.mirror_fixed_re_eq`
 *Commentary.*
 
 Reflection identifies the critical fixed line and can serve as a channel for spectral comparisons. It is not a force that places zeros on that line; positivity and the open analytic obligations remain separate.
-
-<a id="describe-symmetry-does-not-force-fixed-points"></a>
 
 **Remark 1.4 (Symmetry does not force fixed points).**
 
@@ -60,8 +52,6 @@ Lean statement: `D5/S3/Weil/ReflectionLedger.mirror_reversal_spec`
 
 Invariance under the mirror permits two-cycles away from the fixed line. The checked coordinate reversal supplies pairing symmetry but no positivity argument, self-adjoint realization, or zero-location result.
 
-<a id="describe-fixed-line-versus-orbit-collapse"></a>
-
 **Remark 1.5 (Fixed line versus orbit collapse).**
 
 Lean statement: `D5/S3/Weil/ReflectionLedger.mirror_reversal_spec`
@@ -73,8 +63,6 @@ Lean statement: `D5/S3/Weil/ReflectionLedger.mirror_reversal_spec`
 *Commentary.*
 
 Real part one half is exactly the fixed locus of the mirror. Interpreting the Riemann hypothesis as collapse of every zero orbit to that locus is a classification of the open problem, not a conclusion of the fixed-point theorem.
-
-<a id="describe-set-invariance-versus-pointwise-invariance"></a>
 
 **Remark 1.6 (Set invariance versus pointwise invariance).**
 
@@ -88,8 +76,6 @@ Lean statement: `D5/S3/Weil/ReflectionLedger.mirror_reversal_spec`
 
 Mirror reversal can preserve a collection while exchanging its members. Even and odd combinations may change phase conventions, but they do not turn set-level symmetry into the pointwise fixedness needed for a critical-line conclusion.
 
-<a id="describe-antilinear-reflection-produces-a-line"></a>
-
 **Remark 1.7 (Antilinear reflection produces a line).**
 
 Lean statement: `D5/S3/Weil/ReflectionLedger.mirror_reversal_spec`
@@ -101,8 +87,6 @@ Lean statement: `D5/S3/Weil/ReflectionLedger.mirror_reversal_spec`
 *Commentary.*
 
 Combining conjugation with reflection gives an antiholomorphic involution whose fixed locus is the entire critical line rather than a single real point. The theorem establishes that stage; it does not establish that a zero lies on it.
-
-<a id="describe-invariant-set-need-not-lie-in-fixed-locus"></a>
 
 **Remark 1.8 (An invariant set need not lie in the fixed locus).**
 
@@ -116,8 +100,6 @@ Lean statement: `D5/S3/Weil/ReflectionLedger.mirror_fixed_re_eq`
 
 A mirror-stable pair may have neither member fixed. This elementary distinction is the precise gap between a symmetric zero inventory and the assertion that every zero has real part one half.
 
-<a id="describe-scaled-midline-reading"></a>
-
 **Remark 1.9 (Scaled midline reading).**
 
 Lean statement: `D5/S3/Weil/ReflectionLedger.mirror_fixed_re_eq`
@@ -130,8 +112,6 @@ Lean statement: `D5/S3/Weil/ReflectionLedger.mirror_fixed_re_eq`
 
 A positive rescaling transports the half-density coordinate to a correspondingly scaled midline. This is an interpretive coordinate change: the checked declaration proves only the original mirror fixed locus and makes no claim about quasiperiodic zeta zeros, structural zeros, or denominator safety.
 
-<a id="describe-three-order-two-mechanisms-have-different-sources"></a>
-
 **Remark 1.10 (Three order-two mechanisms have different sources).**
 
 $$
@@ -143,8 +123,3 @@ $$
 *Commentary.*
 
 The source distinguishes three independent appearances of two. Complex conjugation supplies the code-blind pair behind J(s) = 1-conj(s), squared modulus, and the coefficient inner product. The real Galois pair phi <-> psi supplies the code-specific integrality of the deficit. Additive multiplicity two, through the double-occupancy prohibition, supplies the denominator zeta(2*phi^2*s). Replacing Fibonacci by Tribonacci is reported to preserve the half-line while destroying integrality, so the conjugation and Galois mechanisms are independently replaceable. All three are order-two structures, but only the first two are compared through fixed sets: the critical midline is fixed by the complex involution, while the integers are fixed by the real conjugation. The source consequently reads ontological zeros on the midline and integral deficits as parallel fixed-point statements, and places their intersection where the quasiperiodic critical line meets the multiplicity pole, one deficit unit from its carry image.
-
-## References
-
-- Truth anchor: `D5/S3/Weil/ReflectionLedger.mirror_fixed_re_eq`
-- Truth anchor: `D5/S3/Weil/ReflectionLedger.mirror_reversal_spec`

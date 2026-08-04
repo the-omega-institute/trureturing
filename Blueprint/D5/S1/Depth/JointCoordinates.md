@@ -4,8 +4,6 @@
 
 Joint golden coordinates combine logarithmic scale, canonical W digits, circle phase, and finite depth.
 
-<a id="describe-joint-scale-digit-phase-and-finite-depth"></a>
-
 **Definition 1.1 (Joint scale, digit, phase, and finite-depth coordinates).**
 
 Lean statement: `D5/S1/Depth/JointCoordinates.joint_coordinates_spec`
@@ -17,7 +15,3 @@ Lean statement: `D5/S1/Depth/JointCoordinates.joint_coordinates_spec`
 *Commentary.*
 
 A nonzero golden integer receives an option-valued logarithmic scale, while a positive natural point supplies its canonical W row and circle phase. The same statement records the W-indexed resolution and its dependent finite phase bucket.
-
-## References
-
-- Truth anchor: `D5/S1/Depth/JointCoordinates.joint_coordinates_spec`

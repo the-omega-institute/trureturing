@@ -8,8 +8,6 @@ Raw W digits bridge finite multiplicities to mathlib Zeckendorf lists.
 
 Canonical strings are the binary, nonadjacent ones. The file bridges canonical strings to the mathlib Zeckendorf representation in both directions, with the index offset `W_i = Fib (i + 2)` stated once at the bridge.
 
-<a id="describe-illustrative-zeckendorf-normalization"></a>
-
 **Example 1.1 (Illustrative Zeckendorf normalization).**
 
 $$
@@ -21,7 +19,3 @@ $$
 *Commentary.*
 
 This illustrative normalization is derived by the repository's deterministic W-digit computation.
-
-## References
-
-- Narrative reference: [D5/S1/Digit/Raw](Raw.md)

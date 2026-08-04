@@ -9,7 +9,3 @@ Natural golden-rotation indices have canonical fractional representatives.
 $$
 \operatorname{goldenFractionalPart}\left(n\right) = \operatorname{fract}\left(n \cdot \varphi\right)
 $$
-
-## References
-
-- Narrative reference: [D5/S1/Dynamics/GoldenFractionalPart](GoldenFractionalPart.md)

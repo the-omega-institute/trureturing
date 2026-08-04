@@ -95,6 +95,8 @@ public sealed class DocumentGraphTests
         var second = CanonicalMarkdownWriter.Write(source, report, graph: graph);
         Assert.True(first.AsSpan().SequenceEqual(second.AsSpan()));
         var markdown = Encoding.UTF8.GetString(first.AsSpan());
+        var targetMarkdown = Encoding.UTF8.GetString(
+            CanonicalMarkdownWriter.Write(target, report, graph: graph).AsSpan());
         var truthIndex = markdown.IndexOf(
             "- Truth anchor: `D5/S0/Test/Target.anchor`", StringComparison.Ordinal);
         var dependencyIndex = markdown.IndexOf(
@@ -103,6 +105,7 @@ public sealed class DocumentGraphTests
             "- Narrative reference: [D5/S0/Test/Target#describe/target](Target.md#describe-target)",
             StringComparison.Ordinal);
         Assert.Contains("## References", markdown, StringComparison.Ordinal);
+        Assert.Contains("<a id=\"describe-target\"></a>", targetMarkdown, StringComparison.Ordinal);
         Assert.True(
             truthIndex >= 0 && truthIndex < dependencyIndex && dependencyIndex < narrativeIndex,
             $"indices={truthIndex},{dependencyIndex},{narrativeIndex}\n{markdown}");

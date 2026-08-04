@@ -9,18 +9,35 @@ public sealed class DocumentGraph
 {
     internal DocumentGraph(
         ImmutableDictionary<string, ImmutableArray<DocumentEdge>> edges,
+        ImmutableDictionary<string, ImmutableArray<DocumentEdge>> explicitEdges,
         ImmutableArray<DocumentGraphFinding> findings)
     {
         Edges = edges;
+        ExplicitEdges = explicitEdges;
         Findings = findings;
     }
 
     internal ImmutableDictionary<string, ImmutableArray<DocumentEdge>> Edges { get; }
 
+    internal ImmutableDictionary<string, ImmutableArray<DocumentEdge>> ExplicitEdges { get; }
+
     internal ImmutableArray<DocumentGraphFinding> Findings { get; }
 
     internal ImmutableArray<DocumentEdge> For(ScribeDocument document) =>
         Edges.TryGetValue(document.Header.Gid.Value, out var edges) ? edges : [];
+
+    internal ImmutableHashSet<string> ReferencedDescribeIds(ScribeDocument document) =>
+        ExplicitEdges.Values
+            .SelectMany(static edges => edges)
+            .OfType<DocumentEdge.NarrativeReference>()
+            .Select(static edge => edge.Target)
+            .OfType<NarrativeTarget.Describe>()
+            .Where(target => string.Equals(
+                target.DocumentGid.Value,
+                document.Header.Gid.Value,
+                StringComparison.Ordinal))
+            .Select(static target => target.DescribeId.Value)
+            .ToImmutableHashSet(StringComparer.Ordinal);
 }
 
 public static class DocumentGraphAssembler
@@ -37,11 +54,14 @@ public static class DocumentGraphAssembler
         var findings = ImmutableArray.CreateBuilder<DocumentGraphFinding>();
         var edges = ImmutableDictionary.CreateBuilder<string, ImmutableArray<DocumentEdge>>(
             StringComparer.Ordinal);
+        var explicitEdges = ImmutableDictionary.CreateBuilder<string, ImmutableArray<DocumentEdge>>(
+            StringComparer.Ordinal);
 
         foreach (var document in material.OrderBy(static item => item.Header.Gid.Value, StringComparer.Ordinal))
         {
             var assembled = Extract(document);
             edges.Add(document.Header.Gid.Value, assembled);
+            explicitEdges.Add(document.Header.Gid.Value, document.Edges);
             foreach (var edge in assembled)
             {
                 var isExplicit = document.Edges.Any(candidate => string.Equals(
@@ -59,6 +79,7 @@ public static class DocumentGraphAssembler
         FindDependencyCycles(edges, findings);
         return new DocumentGraph(
             edges.ToImmutable(),
+            explicitEdges.ToImmutable(),
             findings
                 .OrderBy(static finding => finding.Path, StringComparer.Ordinal)
                 .ThenBy(static finding => finding.Code, StringComparer.Ordinal)

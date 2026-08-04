@@ -4,8 +4,6 @@
 
 Fibonacci divisibility detects divisibility of indices from index three onward.
 
-<a id="describe-fibonacci-divisibility-detects-index-divisibility"></a>
-
 **Theorem 1.1 (Fibonacci divisibility detects index divisibility).**
 
 $$a \ge 3 \implies \left(F_a \mid F_b \iff a \mid b\right)$$
@@ -17,7 +15,3 @@ $$a \ge 3 \implies \left(F_a \mid F_b \iff a \mid b\right)$$
 *Commentary.*
 
 For natural indices a and b with a at least three, the Fibonacci number F_a divides F_b exactly when a divides b. The lower bound removes the exceptional index two, where F_2 equals one.
-
-## References
-
-- Truth anchor: `D5/S1/Recurrence/GoldenFibDivisibility.fib_dvd_iff`

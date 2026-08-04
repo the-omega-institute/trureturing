@@ -4,8 +4,6 @@
 
 Mirror fixed points and unitary half-density parameters define the same midline.
 
-<a id="describe-mirror-fixed-points-and-unitary-parameters-define-the-critical-midline"></a>
-
 **Theorem 1.1 (Mirror fixed points and unitary parameters define the critical midline).**
 
 $$\forall A\ [\operatorname{AddMonoid}(A)],\ \forall \ell:A\to_{+}\mathbb{R},\ (\exists a,\ell(a)\neq 0) \Rightarrow (\{s\in\mathbb{C}:\operatorname{mirror}(s)=s\}=\{s\in\mathbb{C}:\forall a,\Vert\operatorname{halfDensityReading}(\ell,s,a)\Vert=1\}\ \land\ \{s\in\mathbb{C}:\operatorname{mirror}(s)=s\}=\{s\in\mathbb{C}:\Re(s)=\frac{1}{2}\})$$
@@ -17,7 +15,3 @@ $$\forall A\ [\operatorname{AddMonoid}(A)],\ \forall \ell:A\to_{+}\mathbb{R},\ (
 *Commentary.*
 
 For any additive ledger with at least one nonzero length, the set of conjugate-reflection fixed points equals both the set of parameters whose half-density readings all have unit norm and the line of parameters with real part one half. This set-level theorem is derived from the existing pointwise critical-line characterizations. It locates no zeta zero and asserts no Riemann-hypothesis conclusion.
-
-## References
-
-- Truth anchor: `D5/S3/Midline/DualCharacterization.midline_dual_characterization`

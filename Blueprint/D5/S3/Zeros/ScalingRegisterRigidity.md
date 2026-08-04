@@ -4,8 +4,6 @@
 
 Typed realization carries analytic uniqueness through the registered action to conditional total-code rigidity.
 
-<a id="describe-a-scaling-register-is-a-nontrivial-coordinatewise-exponential"></a>
-
 **Definition 1.1 (A scaling register is a nontrivial coordinatewise exponential).**
 
 Lean statement: `D5/S3/Zeros/ScalingRegisterRigidity.ScalingRegister`
@@ -20,8 +18,6 @@ For a ledger length ell and factor family R, ScalingRegister(ell,R) means that s
 
 Honest scope declaration: the predicate does not internalize "unrecorded" ledger custody. Address independence is the formal proxy for an explicit global ledger factor; the institutional classification itself remains at the narrative layer.
 
-<a id="describe-a-nontrivial-register-is-not-address-independent"></a>
-
 **Theorem 1.2 (A nontrivial register is not address-independent).**
 
 $$\forall A\,[\operatorname{AddMonoid}(A)],\ \forall \ell:A\to_{+}\mathbb{R},\ \forall R:\mathbb{C}\to A\to\mathbb{C},\ \operatorname{ScalingRegister}(\ell,R)\Rightarrow\neg\forall s,a,b,\ R(s,a)=R(s,b).$$
@@ -33,8 +29,6 @@ $$\forall A\,[\operatorname{AddMonoid}(A)],\ \forall \ell:A\to_{+}\mathbb{R},\ \
 *Commentary.*
 
 At the zero address every exponential register equals one. Address independence would therefore make every coordinate one, contradicting the explicit nontrivial witness.
-
-<a id="describe-a-register-acts-on-the-tagged-data-field"></a>
 
 **Definition 1.3 (A register acts on the tagged data field).**
 
@@ -48,8 +42,6 @@ Lean statement: `D5/S3/Zeros/ScalingRegisterRigidity.applyRegister`
 
 For data X.data(a,s), applyRegister(R,X) replaces that value by R(s,a)X.data(a,s), while preserving the rules and ledger fields.
 
-<a id="describe-a-nontrivial-register-changes-nowhere-zero-data"></a>
-
 **Theorem 1.4 (A nontrivial register changes nowhere-zero data).**
 
 $$\left(\forall a,s,\ X_{\operatorname{data}}(a,s)\neq0\right)\land\left(\exists s,a,\ R(s,a)\neq1\right)\Rightarrow\operatorname{applyRegister}(R,X)\neq X.$$
@@ -62,8 +54,6 @@ $$\left(\forall a,s,\ X_{\operatorname{data}}(a,s)\neq0\right)\land\left(\exists
 
 At the nontrivial witness, equality of total codes would equate the data values R(s,a)X.data(a,s) and X.data(a,s). Cancelling the explicitly nonzero data value forces R(s,a)=1, a contradiction.
 
-<a id="describe-realization-projects-object-data-and-carries-register-actions"></a>
-
 **Definition 1.5 (Realization projects object data and carries register actions).**
 
 Lean statement: `D5/S3/Zeros/ScalingRegisterRigidity.RealizesAt`
@@ -75,8 +65,6 @@ Lean statement: `D5/S3/Zeros/ScalingRegisterRigidity.RealizesAt`
 *Commentary.*
 
 RealizesAt(a,X,f) records both that the declared address projection of X.data reads as f and that the same projection sends applyRegister(R,X) to the pointwise product R(s,a)f(s). The compatibility clause is a defining model law, not a bridge assumption derived from mathlib.
-
-<a id="describe-realized-same-germ-and-same-total-code-force-a-trivial-register"></a>
 
 **Theorem 1.6 (Realized same germ and same total code force a trivial register).**
 
@@ -92,8 +80,6 @@ Analytic continuation uniqueness identifies the two readings on U. The RealizesA
 
 Honest scope declaration: this is conditional on the typed realization relations and does not internalize unrecorded ledger custody.
 
-<a id="describe-realized-code-preserving-continuations-exclude-scaling-registers"></a>
-
 **Theorem 1.7 (Realized code-preserving continuations exclude scaling registers).**
 
 $$\operatorname{RealizesAt}(a,X,f)\land\operatorname{RealizesAt}(a,\operatorname{applyRegister}(R,X),\widetilde f)\land\text{ same germ}\land\text{ same total code}\Rightarrow\neg\operatorname{ScalingRegister}(\ell,R).$$
@@ -106,8 +92,6 @@ $$\operatorname{RealizesAt}(a,X,f)\land\operatorname{RealizesAt}(a,\operatorname
 
 The realized rigidity theorem makes R pointwise one, contradicting the nontriviality witness required by ScalingRegister. This is the explicit ScalingRegister exclusion and retains every realization and code premise.
 
-<a id="describe-the-scaling-register-predicate-has-a-concrete-witness"></a>
-
 **Theorem 1.8 (The scaling-register predicate has a concrete witness).**
 
 $$\operatorname{ScalingRegister}\!\left(\operatorname{castAddHom}_{\mathbb{R}},\ (s,n)\mapsto\exp(\pi i n)\right).$$
@@ -119,14 +103,3 @@ $$\operatorname{ScalingRegister}\!\left(\operatorname{castAddHom}_{\mathbb{R}},\
 *Commentary.*
 
 On the integer ledger, the cast-to-real length and the factor exp(pi i n) satisfy the register shape, while n=1 evaluates to minus one rather than one. This kernel-checked counterexample-style witness prevents the main exclusion theorem from succeeding merely because ScalingRegister is empty.
-
-## References
-
-- Truth anchor: `D5/S3/Zeros/ScalingRegisterRigidity.RealizesAt`
-- Truth anchor: `D5/S3/Zeros/ScalingRegisterRigidity.ScalingRegister`
-- Truth anchor: `D5/S3/Zeros/ScalingRegisterRigidity.applyRegister`
-- Truth anchor: `D5/S3/Zeros/ScalingRegisterRigidity.applyRegister_ne_of_nontrivial`
-- Truth anchor: `D5/S3/Zeros/ScalingRegisterRigidity.integer_scaling_register_exists`
-- Truth anchor: `D5/S3/Zeros/ScalingRegisterRigidity.realized_same_germ_same_total_code_excludes_scaling_register`
-- Truth anchor: `D5/S3/Zeros/ScalingRegisterRigidity.realized_same_germ_same_total_code_forces_trivial_register`
-- Truth anchor: `D5/S3/Zeros/ScalingRegisterRigidity.scaling_register_not_address_independent`

@@ -6,6 +6,37 @@ namespace StrataLint.Scribe.Tests;
 public sealed class MarkdownWriterTests
 {
     [Fact]
+    public void EdgeFreeDocumentPreservesLegacyEmissionBytes()
+    {
+        var document = ScribeDocument.Create(
+            CreateHeader(),
+            Heading.Create("Sample"),
+            BlockSequence.Create(
+            [
+                DocumentBlock.Describe.Remark(
+                    DescribeId.Create("legacy"),
+                    Heading.Create("Legacy"),
+                    DescribeStatement.FromFormula(new Formula.Number(1)),
+                    DescribeProvenance.RepoDerived(),
+                    BlockSequence.Create([Paragraph(new Inline.Text(TextRun.Create("Stable.")))])),
+            ]));
+
+        var bytes = CanonicalMarkdownWriter.Write(document);
+
+        Assert.Equal(
+            Encoding.UTF8.GetBytes(
+                "# Sample\n\n"
+                + "## Abstract\n\n"
+                + "The real embedding is injective.\n\n"
+                + "**Remark 1.1 (Legacy).**\n\n"
+                + "$$\n1\n$$\n\n"
+                + "*Source.* Repository-derived.\n\n"
+                + "*Commentary.*\n\n"
+                + "Stable.\n"),
+            bytes.ToArray());
+    }
+
+    [Fact]
     public void WriterEmitsAcademicMarkdownWithAstNumberingAndLeanProofs()
     {
         var paragraph = Paragraph(
@@ -60,22 +91,18 @@ public sealed class MarkdownWriterTests
             + "Map $\\varphi$ mirrors `D5/B/S1/Scale/Embedding`.\n\n"
             + "$$\n\\varphi^{2} = \\varphi + 1\n$$\n\n"
             + "## Results\n\n"
-            + "<a id=\"describe-formula\"></a>\n\n"
             + "**Example 1.1 (Formula).**\n\n"
             + "$$\n\\varphi^{2} = \\varphi + 1\n$$\n\n"
             + "*Source.* Repository-derived.\n\n"
             + "*Commentary.*\n\n"
             + "Map $\\varphi$ mirrors `D5/B/S1/Scale/Embedding`.\n\n"
-            + "<a id=\"describe-injectivity\"></a>\n\n"
             + "**Theorem 1.2 (Injectivity).**\n\n"
             + "$\\operatorname{embed}\\left(x\\right) = 0 \\Rightarrow x = 0$\n\n"
             + "*Proof.* Machine-checked in Lean as "
             + "`D5/S1/Scale/Embedding.embedding_injective` (`✓ std3`). ∎\n\n"
             + "*Source.* Repository-derived.\n\n"
             + "*Commentary.*\n\n"
-            + "Map $\\varphi$ mirrors `D5/B/S1/Scale/Embedding`.\n\n"
-            + "## References\n\n"
-            + "- Truth anchor: `D5/S1/Scale/Embedding.embedding_injective`\n",
+            + "Map $\\varphi$ mirrors `D5/B/S1/Scale/Embedding`.\n",
             text);
     }
 

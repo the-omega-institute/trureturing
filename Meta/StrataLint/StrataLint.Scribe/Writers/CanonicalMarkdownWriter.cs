@@ -22,17 +22,22 @@ public static class CanonicalMarkdownWriter
             .Append(document.Header.Digest.Value)
             .Append("\n\n");
         var describeNumber = 0;
+        var referencedDescribeIds = graph?.ReferencedDescribeIds(document)
+            ?? ReferencedDescribeIds(document, DocumentGraphAssembler.Extract(document));
         WriteBlocks(
             builder,
             document.Content,
             2,
             leanReport,
             citations,
+            referencedDescribeIds,
             ref describeNumber);
         WriteReferences(
             builder,
             document,
-            graph?.For(document) ?? DocumentGraphAssembler.Extract(document));
+            document.Edges.IsEmpty
+                ? []
+                : graph?.For(document) ?? DocumentGraphAssembler.Extract(document));
         builder.Append('\n');
         return ImmutableArray.CreateRange(StrictUtf8.GetBytes(builder.ToString()));
     }
@@ -43,6 +48,7 @@ public static class CanonicalMarkdownWriter
         int headingLevel,
         LeanAxiomReport? leanReport,
         IReadOnlyDictionary<string, LiteratureCitation>? citations,
+        IReadOnlySet<string> referencedDescribeIds,
         ref int describeNumber)
     {
         for (var index = 0; index < content.Items.Length; index++)
@@ -58,6 +64,7 @@ public static class CanonicalMarkdownWriter
                 headingLevel,
                 leanReport,
                 citations,
+                referencedDescribeIds,
                 ref describeNumber);
         }
     }
@@ -68,6 +75,7 @@ public static class CanonicalMarkdownWriter
         int headingLevel,
         LeanAxiomReport? leanReport,
         IReadOnlyDictionary<string, LiteratureCitation>? citations,
+        IReadOnlySet<string> referencedDescribeIds,
         ref int describeNumber)
     {
         switch (block)
@@ -89,6 +97,7 @@ public static class CanonicalMarkdownWriter
                     headingLevel + 1,
                     leanReport,
                     citations,
+                    referencedDescribeIds,
                     ref describeNumber);
                 break;
             case DocumentBlock.Describe describe:
@@ -98,6 +107,7 @@ public static class CanonicalMarkdownWriter
                     headingLevel,
                     leanReport,
                     citations,
+                    referencedDescribeIds,
                     ref describeNumber);
                 break;
             default:
@@ -134,12 +144,17 @@ public static class CanonicalMarkdownWriter
         int headingLevel,
         LeanAxiomReport? leanReport,
         IReadOnlyDictionary<string, LiteratureCitation>? citations,
+        IReadOnlySet<string> referencedDescribeIds,
         ref int describeNumber)
     {
         describeNumber++;
-        builder.Append("<a id=\"describe-")
-            .Append(describe.Id.Value)
-            .Append("\"></a>\n\n**")
+        if (referencedDescribeIds.Contains(describe.Id.Value))
+        {
+            builder.Append("<a id=\"describe-")
+                .Append(describe.Id.Value)
+                .Append("\"></a>\n\n");
+        }
+        builder.Append("**")
             .Append(DescribeVocabulary.HeadingName(describe.Kind))
             .Append(" 1.")
             .Append(describeNumber)
@@ -228,8 +243,23 @@ public static class CanonicalMarkdownWriter
             headingLevel + 1,
             leanReport,
             citations,
+            referencedDescribeIds,
             ref describeNumber);
     }
+
+    private static IReadOnlySet<string> ReferencedDescribeIds(
+        ScribeDocument document,
+        IEnumerable<DocumentEdge> edges) =>
+        edges
+            .OfType<DocumentEdge.NarrativeReference>()
+            .Select(static edge => edge.Target)
+            .OfType<NarrativeTarget.Describe>()
+            .Where(target => string.Equals(
+                target.DocumentGid.Value,
+                document.Header.Gid.Value,
+                StringComparison.Ordinal))
+            .Select(static target => target.DescribeId.Value)
+            .ToHashSet(StringComparer.Ordinal);
 
     private static bool IsTheoremClass(DescribeKind kind) =>
         kind is DescribeKind.Theorem or DescribeKind.Proposition or DescribeKind.Lemma;

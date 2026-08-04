@@ -8,8 +8,6 @@ The golden norm is multiplicative and agrees with the scaled mathlib norm.
 
 Under the doubled `Zsqrtd 5` coordinates from the carrier module, the mathlib norm is exactly four times the golden norm. This factor is the expected square of the coordinate scaling.
 
-<a id="describe-two-square-norm-as-a-shared-interpretive-core"></a>
-
 **Remark 1.1 (The two-square norm as a shared interpretive core).**
 
 $$
@@ -21,8 +19,6 @@ $$
 *Commentary.*
 
 The source groups a^2+b^2 under four roles: the defining two-axis norm, the Gaussian norm, the modulus-four obstruction, and the splitting reading modulo a prime. It states that each role has its own theorem and that norm multiplicativity is the pivot used in the composition step. The vocabulary in which primes congruent to one split, primes congruent to three remain inert, and two ramifies is explicitly interpretive: the classification theorem is said not to depend on that Gaussian-integer language. A separate dynamical role is referenced but not added as a claim of this module.
-
-<a id="describe-norm-euclidean-division"></a>
 
 **Theorem 1.2 (Norm-Euclidean division).**
 
@@ -40,8 +36,6 @@ If the two coordinate errors are `x` and `y`, then each has absolute value at mo
 
 The `EuclideanDomain GoldenInt` instance uses this quotient and remainder with Euclidean relation `(N(r)).natAbs < (N(b)).natAbs`.
 
-<a id="describe-principal-ideal-domain"></a>
-
 **Theorem 1.3 (Principal ideal domain).**
 
 $\mathbb{Z}[\varphi]\text{ is a principal ideal domain.}$
@@ -58,8 +52,6 @@ Mathlib's generic principal-ideal-domain instance then supplies `UniqueFactoriza
 
 This result does not classify the units of `GoldenInt`. The converse assertion that every norm-unit is a signed integral power of `phi` remains open in `D5-T0008`.
 
-<a id="describe-golden-norm-is-power-multiplicative"></a>
-
 **Theorem 1.4 (The golden norm is power-multiplicative).**
 
 $\forall x\in\mathbb{Z}[\varphi],\ \forall n\in\mathbb{N},\ \operatorname{norm}(x^{n})=\operatorname{norm}(x)^{n}$
@@ -71,10 +63,3 @@ $\forall x\in\mathbb{Z}[\varphi],\ \forall n\in\mathbb{N},\ \operatorname{norm}(
 *Commentary.*
 
 The golden norm is a monoid homomorphism from `GoldenInt` to the integers, packaged as `normMonoidHom` out of its unit and multiplicativity laws. The norm of a power is therefore the same power of the norm, obtained directly as `map_pow normMonoidHom` rather than by a coordinate induction.
-
-## References
-
-- Truth anchor: `D5/S0/Carrier/Euclidean.golden_division`
-- Truth anchor: `D5/S0/Carrier/NormPowers.norm_pow`
-- Truth anchor: `D5/S0/Carrier/PrincipalIdeal.golden_int_is_pid`
-- Narrative reference: [D5/S0/Carrier/Norm](Norm.md)

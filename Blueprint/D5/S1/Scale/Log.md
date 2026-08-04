@@ -6,8 +6,6 @@ Nonzero golden integers have an integer logarithmic scale with exact unit shifts
 
 `D5/S1/Scale/Log` assigns a scale only when $x \ne 0$. Zero is represented by `none`, never by a fabricated integer.
 
-<a id="describe-zero-has-no-scale"></a>
-
 **Proposition 1.1 (Zero has no scale).**
 
 $\operatorname{logScale}(0)=\operatorname{none}$
@@ -19,8 +17,6 @@ $\operatorname{logScale}(0)=\operatorname{none}$
 *Commentary.*
 
 The option-valued definition returns `none` at zero.
-
-<a id="describe-nonzero-scale"></a>
 
 **Proposition 1.2 (Nonzero scale).**
 
@@ -40,8 +36,6 @@ $$
 
 ## Integral unit shifts
 
-<a id="describe-embedding-of-unit-power"></a>
-
 **Proposition 1.3 (Embedding of a unit power).**
 
 $\forall n \in \mathbb{Z},\ \forall x \in \operatorname{GoldenInt},\ \operatorname{embedding}(\operatorname{phiUnitZPowMul}(n,x))=\varphi^{n}\operatorname{embedding}(x)$
@@ -55,8 +49,6 @@ $\forall n \in \mathbb{Z},\ \forall x \in \operatorname{GoldenInt},\ \operatorna
 $$
 \operatorname{embedding}\left(\operatorname{phiUnitZPowMul}\left(n, x\right)\right) = \varphi^{n} \cdot \operatorname{embedding}\left(x\right)
 $$
-
-<a id="describe-exact-scale-translation"></a>
 
 **Theorem 1.4 (Exact scale translation).**
 
@@ -73,11 +65,3 @@ At the option level, every integer exponent, including negative powers, translat
 $$
 \operatorname{logScale}\left(\operatorname{phiUnitZPowMul}\left(n, x\right)\right) = \operatorname{map}\left(n + \mathord{\cdot}, \operatorname{logScale}\left(x\right)\right)
 $$
-
-## References
-
-- Truth anchor: `D5/S1/Scale/Log.embedding_phiUnitZPowMul`
-- Truth anchor: `D5/S1/Scale/Log.logScale_ne_zero`
-- Truth anchor: `D5/S1/Scale/Log.logScale_phiUnit_zpow_mul`
-- Truth anchor: `D5/S1/Scale/Log.logScale_zero`
-- Narrative reference: [D5/S1/Scale/Log](Log.md)

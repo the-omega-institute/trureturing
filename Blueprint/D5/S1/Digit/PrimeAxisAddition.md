@@ -4,8 +4,6 @@
 
 Rowwise W normalization of prime-axis table sums decodes as multiplication.
 
-<a id="describe-prime-axis-rowwise-normalization-product"></a>
-
 **Theorem 1.1 (Rowwise normalized addition and decoder multiplication).**
 
 $$\forall z,w \in \operatorname{PrimeAxisTable},\ \operatorname{Bijective}(\operatorname{primeAxisEncoding}) \land \operatorname{decodePrimeAxisTable}(\operatorname{normalizedPrimeAxisAdd}(z,w)) = \operatorname{decodePrimeAxisTable}(z)\operatorname{decodePrimeAxisTable}(w)$$
@@ -17,7 +15,3 @@ $$\forall z,w \in \operatorname{PrimeAxisTable},\ \operatorname{Bijective}(\oper
 *Commentary.*
 
 Prime-indexed canonical W rows are equivalent to positive naturals. Adding raw rows and applying the existing local W normalizer preserves exponent sums, so the finite prime-power decoder turns the normalized table sum into multiplication.
-
-## References
-
-- Truth anchor: `D5/S1/Digit/PrimeAxisAddition.prime_axis_addition_spec`
