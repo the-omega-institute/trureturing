@@ -228,4 +228,42 @@ public sealed partial class TheoryAtomizerTests
 
         Assert.Equal(expectedAstPath, atom.AstPath);
     }
+
+    [Theory]
+    [InlineData("**§24.1 本文三命题之对偶论重述**。claim。", "duality/symplectic-reframing")]
+    [InlineData("**§24.2 SIC 续报与界限**。claim。", "duality/sic-boundary")]
+    [InlineData("**§25.1 本文核心量之六身定稿**。claim。", "entropy/six-forms")]
+    [InlineData("**§25.2 观察者经济学**。claim。", "entropy/observer-economics")]
+    [InlineData("**§26.1 观察之价(费率表之 OQ 定稿)**。claim。", "measurement/price-table")]
+    [InlineData("**§26.2 不等式之家谱(双旗舰)**。claim。", "measurement/inequality-lineage")]
+    [InlineData("**§27.1 禁令之族谱(本文诸不等式之归宗)**。claim。", "shadow/constraint-lineage")]
+    [InlineData("**§27.2 量子的\"当初\"(本文反事实论之动力学面)**。claim。", "shadow/quantum-counterfactual")]
+    [InlineData("**§28.1 三行总纲**。claim。", "shadow-tax/three-line-program")]
+    [InlineData("**§28.2 观察之价终表**。claim。", "shadow-tax/final-price-table")]
+    [InlineData("**§29.1 不可逆之终形**。claim。", "path-divergence/irreversibility")]
+    [InlineData("**§29.2 稀有之价**。claim。", "path-divergence/rarity-price")]
+    [InlineData("**§30.1 信道之收缩指纹**。claim。", "contraction-spectrum/channel-fingerprint")]
+    [InlineData("**§30.2 路径三联画**。claim。", "contraction-spectrum/path-triptych")]
+    [InlineData("**§31.1 四行图景(本文总纲之终形)**。claim。", "synthesis/four-line-picture")]
+    [InlineData("**§31.2 时间之价(本文时间观定稿)**。claim。", "synthesis/price-of-time")]
+    [InlineData("**§32.1 本文所建之物(终答)**。claim。", "cone-engine/final-object")]
+    [InlineData("**§32.2 三核与本文之位**。claim。", "cone-engine/three-kernels")]
+    [InlineData("**§33.1 破对偶与观察者**。claim。", "entanglement/broken-self-duality")]
+    [InlineData("**§33.2 纠缠之塔与山腰**。claim。", "entanglement/metric-tower")]
+    [InlineData("**§34.1 两座高度**。claim。", "dual-heights/two-heights")]
+    [InlineData("**§34.2 配平之墙与 Schur 之门**。claim。", "dual-heights/schur-gate")]
+    [InlineData("**§35.1 观察者知识之相变**。claim。", "crystallization/knowledge-transition")]
+    [InlineData("**§35.2 刻度、执照与户口**。claim。", "crystallization/scale-license-residence")]
+    [InlineData("**§36.1 观察者的时间从何而来**。claim。", "modular-time/origin")]
+    [InlineData("**§36.2 时间有形状,失衡有账目**。claim。", "modular-time/shape-and-imbalance")]
+    public void ObserverV1RecognizesTheV612ThroughV624ClaimLeads(
+        string claim,
+        string expectedAstPath)
+    {
+        var bytes = Encoding.UTF8.GetBytes($"# Observer\n\n{claim}\n");
+
+        var atom = Assert.Single(AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes).Claims);
+
+        Assert.Equal(expectedAstPath, atom.AstPath);
+    }
 }
