@@ -24,6 +24,8 @@ internal interface ICliEnvironment
 
     CommandResult CoverAtom(IReadOnlyList<string> arguments);
 
+    CommandResult AlignScribeReceipt(IReadOnlyList<string> arguments);
+
     CommandResult EmitFormalizationReceipt(IReadOnlyList<string> arguments);
 
     ExplicitCommandResult Papergen(IReadOnlyList<string> arguments);
@@ -108,13 +110,14 @@ internal static class CliApplication
         if (arguments.Count == 0)
         {
             console.WriteError(
-                "USAGE: StrataLint c0-renew|check|clean-lanes|coverage|cover-atom|digest-status|echo-verify|emit-formalization-receipt|ingest|golden-record|lean-report-status|ledger-genesis|papergen|route|selftest|topology|validate-blueprint-pins|worktree|ledger-append|ledger-reattest|perf-append|perf-report|verify-conservative|evaluate-conservative-corpus\n");
+                "USAGE: StrataLint align-scribe-receipt|c0-renew|check|clean-lanes|coverage|cover-atom|digest-status|echo-verify|emit-formalization-receipt|ingest|golden-record|lean-report-status|ledger-genesis|papergen|route|selftest|topology|validate-blueprint-pins|worktree|ledger-append|ledger-reattest|perf-append|perf-report|verify-conservative|evaluate-conservative-corpus\n");
             return 2;
         }
 
         var tail = arguments.Skip(1).ToArray();
         return arguments[0] switch
         {
+            "align-scribe-receipt" => RenderCommand(environment.AlignScribeReceipt(tail), console),
             "c0-renew" => RenderCommand(environment.RenewC0(tail), console),
             "check" => RenderAdmission(environment.Check(tail), console),
             "clean-lanes" => RenderCommand(environment.CleanLanes(tail), console),
