@@ -95,6 +95,79 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void AlignRepairsScribeReceiptWhilePreservingCoverageMismatchDiagnostic()
+    {
+        var inputs = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec());
+        var entry = Assert.Single(
+            BackfillInventoryLoader.Load(inputs.Ledger).RequireDigestionEntries(),
+            candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
+        var oldCoverage = Assert.Single(entry.Receipts.Coverage);
+        var driftedLedger = inputs.Ledger.Replace(
+            oldCoverage.TargetSha256,
+            "sha256:" + new string('c', 64),
+            StringComparison.Ordinal);
+        var driftedFiles = new Dictionary<string, string>(inputs.Files, StringComparer.Ordinal)
+        {
+            [BackfillInventoryLoader.RelativePath] = driftedLedger,
+        };
+        using var temporary = new TemporaryDirectory();
+        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
+        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+        File.WriteAllText(outputPath, driftedLedger, new UTF8Encoding(false));
+        var console = new BufferedConsole();
+
+        var exitCode = CliApplication.Run(
+            ["align-scribe-receipt", .. CoverWorld.AlignArgs(inputs)],
+            CoverWorld.Environment(temporary.Path, inputs, driftedFiles),
+            console);
+
+        Assert.True(exitCode == 0, $"exit_code={exitCode} stderr={console.Error}");
+        Assert.Equal(string.Empty, console.Error);
+        Assert.Contains("ledger_changed=true", console.Output, StringComparison.Ordinal);
+        var alignedLedger = File.ReadAllText(outputPath);
+        Assert.NotEqual(driftedLedger, alignedLedger);
+        var alignedFiles = new Dictionary<string, string>(driftedFiles, StringComparer.Ordinal)
+        {
+            [BackfillInventoryLoader.RelativePath] = alignedLedger,
+        };
+        var status = CoverWorld.Environment(temporary.Path, inputs, alignedFiles)
+            .DigestStatus(Array.Empty<string>());
+        Assert.False(status.Success);
+        Assert.Contains("coverage-receipt-mismatch", status.Error, StringComparison.Ordinal);
+        Assert.DoesNotContain("scribe-definition-mismatch", status.Error, StringComparison.Ordinal);
+        Assert.DoesNotContain("scribe-emission-mismatch", status.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void AlignFailsClosedWhenTargetScribeMismatchRemainsAfterAlignment()
+    {
+        var inputs = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec());
+        Assert.True(inputs.VerifiedEmissions!.TryGet(
+            inputs.Gid[..inputs.Gid.LastIndexOf('.')], out var verifiedRecord));
+        var inconsistentVerification = VerifiedScribeEmissions.Create(
+            [verifiedRecord with { DefinitionSha256 = "sha256:" + new string('c', 64) }],
+            [inputs.Gid]);
+        using var temporary = new TemporaryDirectory();
+        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
+        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+        File.WriteAllText(outputPath, inputs.Ledger, new UTF8Encoding(false));
+        var environment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(Array.Empty<string>()),
+                CoverWorld.Raw(inputs.Files),
+                CoverWorld.Raw(inputs.Baseline)),
+            new FakeLeanReportSource(inputs.Report),
+            new FakeScribeEmissionVerifier(inconsistentVerification));
+
+        var result = environment.AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
+
+        Assert.False(result.Success);
+        Assert.Contains("scribe-definition-mismatch", result.Error, StringComparison.Ordinal);
+        Assert.Equal(inputs.Ledger, File.ReadAllText(outputPath));
+    }
+
+    [Fact]
     public void CoverAtomWritesCoverageAndRecomputesDigestStatusThroughProductionEnvironment()
     {
         var inputs = CoverWorld.Materialize(new CoverSpec());
