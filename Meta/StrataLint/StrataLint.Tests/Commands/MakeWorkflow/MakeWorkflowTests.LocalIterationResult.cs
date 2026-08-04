@@ -77,7 +77,7 @@ public sealed partial class MakeWorkflowTests
             "/bin/bash",
             [
                 "-c",
-                "PREFLIGHT_SCENARIO=\"$1\" PATH=\"$2:/usr/bin:/bin\" exec /bin/bash \"$3\"",
+                "PREFLIGHT_SCENARIO=\"$1\" BASE=HEAD^ PATH=\"$2:/usr/bin:/bin\" exec /bin/bash \"$3\"",
                 "preflight-contract",
                 scenario,
                 binDirectory,

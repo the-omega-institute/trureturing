@@ -79,7 +79,7 @@ internal static class C0RenewCommand
             var certificate = ExtractCertificate(gate.Output, initial);
             var output = Materialize(initial, certificate);
             using var installLock = environment.AcquireInstallLock();
-            var confirmed = environment.ReadState(baseReference);
+            var confirmed = environment.ReadState(initial.Base.Revision);
             RequireUnchanged(initial, confirmed);
             var changedFiles = 0;
             if (!output.CertificateBytes.AsSpan().SequenceEqual(initial.CurrentCertificate.AsSpan()))

@@ -9,6 +9,8 @@ PREFLIGHT_FAULT_CLASS="CONFIGURATION"
 PERF_TMP=""
 PERF_EVENT_SPOOL=""
 PERF_BASE="unknown"
+BASE_REF="${BASE:-origin/dev}"
+BASE_SHA=""
 STRATALINT_PERF_RUN_ID=""
 
 finish_preflight() {
@@ -63,6 +65,19 @@ lake --version >/dev/null
 PREFLIGHT_FAULT_CLASS="CONFIGURATION"
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
+
+remote="${BASE_REF%%/*}"
+if [[ "$remote" != "$BASE_REF" ]] && git remote | grep -Fxq "$remote"; then
+  git fetch --prune "$remote"
+fi
+BASE_SHA="$(git rev-parse --verify "${BASE_REF}^{commit}")"
+CANDIDATE_SHA="$(git rev-parse --verify HEAD^{commit})"
+if [[ "$BASE_SHA" == "$CANDIDATE_SHA" ]] \
+  || ! git merge-base --is-ancestor "$BASE_SHA" "$CANDIDATE_SHA"; then
+  echo "preflight: pinned base is not a strict ancestor of candidate HEAD" >&2
+  exit 1
+fi
+
 source "$ROOT/Meta/StrataLint/scripts/perf-event-lib.sh"
 PREFLIGHT_STARTED="$(date +%s)"
 PERF_TMP="$(perf_make_spool_dir "$ROOT" stratalint-preflight-perf 2>/dev/null || true)"
@@ -71,7 +86,7 @@ if [[ -n "$PERF_TMP" ]]; then
   : > "$PERF_EVENT_SPOOL" || PERF_EVENT_SPOOL=""
 fi
 PERF_COMMIT="$(git rev-parse --verify HEAD 2>/dev/null || printf unknown)"
-PERF_BASE="$(git rev-parse --verify "${BASE:-origin/dev}^{commit}" 2>/dev/null || printf unknown)"
+PERF_BASE="$BASE_SHA"
 STRATALINT_PERF_RUN_ID="${STRATALINT_PERF_RUN_ID:-preflight-${PREFLIGHT_STARTED}-$$-${PERF_COMMIT:0:12}}"
 export STRATALINT_PERF_RUN_ID
 
@@ -142,7 +157,16 @@ expect_compile_failure \
 record_timing compile-fail-proofs
 
 PREFLIGHT_FAULT_CLASS="SEMANTIC"
-make gate BASE="${BASE:-origin/dev}" GATE_ARGS=--skip-engineering
+set +e
+make gate BASE="$BASE_SHA" GATE_ARGS=--skip-engineering
+gate_rc=$?
+set -e
 record_timing gate
+
+observed_base="$(git rev-parse --verify "${BASE_REF}^{commit}" 2>/dev/null || true)"
+if [[ -n "$observed_base" && "$observed_base" != "$BASE_SHA" ]]; then
+  printf 'BASE_ADVANCED pinned=%s observed=%s\n' "$BASE_SHA" "$observed_base" || true
+fi
+if [[ "$gate_rc" -ne 0 ]]; then exit "$gate_rc"; fi
 
 echo "[preflight] PASS — CI 双 required check 预证绿"
