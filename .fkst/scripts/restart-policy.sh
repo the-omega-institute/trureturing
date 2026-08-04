@@ -387,6 +387,28 @@ reconcile_lean_report_obligation() {
     say "LEAN-REPORT-REBUILD FAIL: deployed checkout HEAD ${checkout_head:0:12} does not reconcile with generation $verified_generation; obligation retained"
     return 1
   fi
+
+  probe_lean_report_status
+  case "$LEAN_REPORT_STATUS_STATE" in
+    valid)
+      if ! clear_lean_report_requirement "$state" "$verified_generation"; then
+        return 1
+      fi
+      say "LEAN-REPORT-REBUILD NOT REQUIRED: generation $verified_generation report already valid"
+      return 0
+      ;;
+    not-checked)
+      say "LEAN-REPORT-REBUILD FAIL: generation $verified_generation report status not checked: $LEAN_REPORT_STATUS_DETAIL; obligation retained"
+      return 1
+      ;;
+    invalid)
+      ;;
+    *)
+      say "LEAN-REPORT-REBUILD FAIL: generation $verified_generation unknown report status $LEAN_REPORT_STATUS_STATE; obligation retained"
+      return 1
+      ;;
+  esac
+
   if [[ -z "$make_bin" ]]; then
     make_bin="$(command -v make 2>/dev/null)" || make_bin=""
   fi
@@ -478,10 +500,13 @@ probe_lean_report_status() {
 
 reconcile_lean_report_invariant() {
   local make_bin="${FKST_MAKE_BIN:-}" rebuild_rc
-  if [[ "$LEAN_REPORT_REBUILT_THIS_CYCLE" == "1" \
-      && "$LEAN_REPORT_STATUS_CHECKED_THIS_CYCLE" == "1" ]]; then
+  if [[ "$LEAN_REPORT_STATUS_CHECKED_THIS_CYCLE" == "1" ]]; then
     if [[ "$LEAN_REPORT_STATUS_STATE" == "valid" ]]; then
-      say "LEAN-REPORT-RECONCILE OK: rebuilt report is valid"
+      if [[ "$LEAN_REPORT_REBUILT_THIS_CYCLE" == "1" ]]; then
+        say "LEAN-REPORT-RECONCILE OK: rebuilt report is valid"
+      else
+        say "LEAN-REPORT-STATUS VALID: canonical report matches current checkout"
+      fi
       return 0
     fi
     say "LEAN-REPORT-RECONCILE FAIL: rebuilt report status $LEAN_REPORT_STATUS_STATE: $LEAN_REPORT_STATUS_DETAIL"

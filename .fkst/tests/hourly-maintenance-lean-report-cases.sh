@@ -2,7 +2,7 @@
 
 checkout_lean_change_rebuilds_report_before_restart() (
   load_implementation || exit 1
-  local root obligation make_calls
+  local root obligation make_calls report_state dotnet_calls
   root="$(mktemp -d -t hourly-maintenance-lean-report.XXXXXX)" || exit 1
   trap 'rm -rf "$root"' EXIT
   mkdir -p "$root/bin" "$root/logs" "$root/slots"
@@ -20,10 +20,16 @@ checkout_lean_change_rebuilds_report_before_restart() (
   export FKST_HOST_ROOT="$CHECKOUT_ROOT"
   obligation="$FKST_RESTART_ACTIVATION_STATE"
   make_calls="$root/make.calls"
+  report_state="$root/lean-report.state"
+  dotnet_calls="$root/dotnet.calls"
   export MAKE_CALLS="$make_calls"
+  export LEAN_REPORT_STATE="$report_state"
+  export LEAN_REPORT_DOTNET_CALLS="$dotnet_calls"
+  printf 'invalid\n' > "$report_state"
   cat > "$root/bin/make" <<'SH'
 #!/usr/bin/env bash
 printf '%s\n' "$*" >> "$MAKE_CALLS"
+printf 'valid\n' > "$LEAN_REPORT_STATE"
 SH
   chmod +x "$root/bin/make"
   export FKST_MAKE_BIN="$root/bin/make"
@@ -34,7 +40,13 @@ exec "$@"
 SH
   cat > "$root/bin/dotnet" <<'SH'
 #!/usr/bin/env bash
-printf 'LEAN_REPORT_STATUS valid\n'
+printf '%s\n' "$*" >> "$LEAN_REPORT_DOTNET_CALLS"
+if [[ "$(<"$LEAN_REPORT_STATE")" == "valid" ]]; then
+  printf 'LEAN_REPORT_STATUS valid\n'
+  exit 0
+fi
+printf 'LEAN_REPORT_STATUS invalid Raw Lean report is stale\n'
+exit 1
 SH
   chmod +x "$root/bin/timeout" "$root/bin/dotnet"
   export FKST_TIMEOUT_BIN="$root/bin/timeout"
@@ -55,6 +67,8 @@ SH
     || fail "successful rebuild and restart did not clear the activation obligation"
   command grep -q 'LEAN-REPORT-REBUILD OK' "$LOG_FILE" \
     || fail "successful report obligation discharge was not reported"
+  [[ "$(wc -l < "$dotnet_calls" | tr -d '[:space:]')" == "2" ]] \
+    || fail "obligation repair was not observed before and after rebuild"
 )
 
 checkout_non_lean_change_does_not_rebuild_report() (
@@ -131,6 +145,11 @@ SH
   gc_worktrees() { return 0; }
   gc_stuck_lean_builds() { return 0; }
   check_launchd_conformance() { return 0; }
+  probe_lean_report_status() {
+    LEAN_REPORT_STATUS_CHECKED_THIS_CYCLE=1
+    LEAN_REPORT_STATUS_STATE="invalid"
+    LEAN_REPORT_STATUS_DETAIL="synthetic stale report"
+  }
 
   main --host-config "$root/host.env" \
     && fail "failed Lean report rebuild was reported as a successful cycle"
@@ -138,8 +157,8 @@ SH
     || fail "failed rebuild erased its durable report obligation"
   [[ ! -e "$root/restart-called" ]] \
     || fail "engine restarted even though its Lean report rebuild failed"
-  command grep -q 'LEAN-REPORT-REBUILD FAIL' "$LOG_FILE" \
-    || fail "failed report rebuild was not reported loudly"
+  command grep -q 'LEAN-REPORT-REBUILD FAIL.*make lean-report exit 9' "$LOG_FILE" \
+    || fail "the make lean-report failure was not reported loudly"
 )
 
 blocked_lean_fast_forward_does_not_rebuild_report() (
@@ -239,6 +258,31 @@ stub_report_cycle_dependencies() {
   check_launchd_conformance() { return 0; }
 }
 
+configure_pending_lean_report_obligation() {
+  local root="$1" checkout_target now
+  mkdir -p "$root/bin" "$root/logs" "$root/slots"
+  create_checkout_history_fixture "$root" || return 1
+  export FKST_HOST_ROOT="$CHECKOUT_ROOT"
+  export FKST_MAINTENANCE_LOG="$root/logs/hourly-maintenance.log"
+  export FKST_RESTART_ACTIVATION_STATE="$root/logs/restart-activation.state"
+  export FKST_RESTART_DEFER_STATE="$root/logs/restart-defer.state"
+  export FKST_REPORT_SLOT_ROOT="$root/slots"
+  export LEAN_REPORT_MAKE_CALLS="$root/make.calls"
+  export FKST_MAKE_BIN="$root/bin/make"
+  checkout_target="$(command git -C "$CHECKOUT_ROOT" rev-parse HEAD)"
+  now="$(date -u +%s)"
+  write_activation_obligation_fixture \
+    "$FKST_RESTART_ACTIVATION_STATE" "$now-77-1" "$now" \
+    none none "$(printf '1%.0s' {1..40})" "$checkout_target" 1
+  cat > "$FKST_MAKE_BIN" <<'SH'
+#!/usr/bin/env bash
+printf '%s\n' "$*" >> "$LEAN_REPORT_MAKE_CALLS"
+SH
+  chmod +x "$FKST_MAKE_BIN"
+  restart_engine() { return 0; }
+  engine_pid() { return 1; }
+}
+
 already_current_stale_checkout_rebuilds_and_revalidates_report() (
   load_implementation || exit 1
   local root checkout_head
@@ -332,8 +376,59 @@ obligation_rebuild_is_not_repeated_by_invariant_reconciliation() (
 
   [[ "$(wc -l < "$LEAN_REPORT_MAKE_CALLS" | tr -d '[:space:]')" == "1" ]] \
     || fail "the obligation rebuild was repeated by invariant reconciliation"
-  [[ "$(wc -l < "$LEAN_REPORT_DOTNET_CALLS" | tr -d '[:space:]')" == "1" ]] \
-    || fail "the obligation rebuild was not revalidated exactly once"
+  [[ "$(wc -l < "$LEAN_REPORT_DOTNET_CALLS" | tr -d '[:space:]')" == "2" ]] \
+    || fail "the obligation repair was not observed before and after rebuild"
+)
+
+valid_report_clears_obligation_without_rebuilding() (
+  load_implementation || exit 1
+  local root probe_calls=0
+  root="$(mktemp -d -t hourly-maintenance-valid-obligation.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  configure_pending_lean_report_obligation "$root" || exit 1
+  probe_lean_report_status() {
+    probe_calls=$((probe_calls + 1))
+    LEAN_REPORT_STATUS_CHECKED_THIS_CYCLE=1
+    LEAN_REPORT_STATUS_STATE="valid"
+    LEAN_REPORT_STATUS_DETAIL="canonical report matches the current snapshot"
+  }
+
+  restart_if_needed \
+    || fail "a valid report did not reconcile its pending activation"
+
+  [[ ! -e "$LEAN_REPORT_MAKE_CALLS" ]] \
+    || fail "a valid report was unnecessarily rebuilt for a stale obligation"
+  [[ "$probe_calls" == "1" ]] \
+    || fail "the valid report was not observed exactly once"
+  [[ ! -e "$FKST_RESTART_ACTIVATION_STATE" ]] \
+    || fail "the valid report did not permit the activation obligation to clear"
+)
+
+not_checked_obligation_fails_without_rebuilding() (
+  load_implementation || exit 1
+  local root probe_calls=0
+  root="$(mktemp -d -t hourly-maintenance-not-checked-obligation.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  configure_pending_lean_report_obligation "$root" || exit 1
+  probe_lean_report_status() {
+    probe_calls=$((probe_calls + 1))
+    LEAN_REPORT_STATUS_CHECKED_THIS_CYCLE=1
+    LEAN_REPORT_STATUS_STATE="not-checked"
+    LEAN_REPORT_STATUS_DETAIL="synthetic observation failure"
+  }
+  restart_engine() { : > "$root/restart-called"; return 0; }
+
+  restart_if_needed \
+    && fail "an unmeasured obligation was reported as a successful activation"
+
+  [[ ! -e "$LEAN_REPORT_MAKE_CALLS" ]] \
+    || fail "an unmeasured obligation authorized make lean-report"
+  [[ "$probe_calls" == "1" ]] \
+    || fail "the unmeasured report was observed more than once"
+  command grep -q '^lean_report_required=1$' "$FKST_RESTART_ACTIVATION_STATE" \
+    || fail "the unmeasured report did not retain its durable requirement"
+  [[ ! -e "$root/restart-called" ]] \
+    || fail "the engine restarted before report validity was established"
 )
 
 not_checked_report_status_fails_cycle_without_rebuild() (

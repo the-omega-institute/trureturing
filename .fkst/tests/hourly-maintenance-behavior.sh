@@ -707,6 +707,8 @@ run_test "blocked Lean fast-forward does not rebuild report" blocked_lean_fast_f
 run_test "already-current stale checkout rebuilds and revalidates report" already_current_stale_checkout_rebuilds_and_revalidates_report
 run_test "invalid post-rebuild report fails without a second rebuild" invalid_post_rebuild_report_fails_without_a_second_rebuild
 run_test "obligation rebuild is not repeated by invariant reconciliation" obligation_rebuild_is_not_repeated_by_invariant_reconciliation
+run_test "valid report clears obligation without rebuilding" valid_report_clears_obligation_without_rebuilding
+run_test "not-checked obligation fails without rebuilding" not_checked_obligation_fails_without_rebuilding
 run_test "not-checked report status fails cycle without rebuild" not_checked_report_status_fails_cycle_without_rebuild
 run_test "unrelated digest failure does not authorize report rebuild" unrelated_digest_failure_does_not_authorize_report_rebuild
 run_test "checkout untracked files do not block fast-forward" checkout_untracked_files_do_not_block_fast_forward
