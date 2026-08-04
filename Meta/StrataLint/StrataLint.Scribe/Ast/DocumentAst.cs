@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using StrataLint.Engine;
 
 namespace StrataLint.Scribe;
 
@@ -104,7 +105,7 @@ public abstract record DocumentBlock
 
     public sealed record Describe : DocumentBlock
     {
-        public Describe(
+        private Describe(
             DescribeId id,
             DescribeKind kind,
             Heading title,
@@ -142,6 +143,89 @@ public abstract record DocumentBlock
         public BlockSequence Content { get; }
 
         public LatexStatement? StatementLatex { get; }
+
+        public static Describe Theorem(
+            DescribeId id,
+            Heading title,
+            LeanDeclarationRef leanRef,
+            LatexStatement latex,
+            DescribeProvenance provenance,
+            BlockSequence content) =>
+            LeanDescribe(id, DescribeKind.Theorem, title, leanRef, provenance, content, latex);
+
+        public static Describe Proposition(
+            DescribeId id,
+            Heading title,
+            LeanDeclarationRef leanRef,
+            LatexStatement latex,
+            DescribeProvenance provenance,
+            BlockSequence content) =>
+            LeanDescribe(id, DescribeKind.Proposition, title, leanRef, provenance, content, latex);
+
+        public static Describe Lemma(
+            DescribeId id,
+            Heading title,
+            LeanDeclarationRef leanRef,
+            LatexStatement latex,
+            DescribeProvenance provenance,
+            BlockSequence content) =>
+            LeanDescribe(id, DescribeKind.Lemma, title, leanRef, provenance, content, latex);
+
+        public static Describe Definition(
+            DescribeId id,
+            Heading title,
+            LeanDeclarationRef leanRef,
+            DescribeProvenance provenance,
+            BlockSequence content,
+            LatexStatement? latex = null) =>
+            LeanDescribe(id, DescribeKind.Definition, title, leanRef, provenance, content, latex);
+
+        public static Describe Example(
+            DescribeId id,
+            Heading title,
+            Formula formula,
+            DescribeProvenance provenance,
+            BlockSequence content) =>
+            new(
+                id,
+                DescribeKind.Example,
+                title,
+                DescribeStatement.FromFormula(formula),
+                provenance,
+                content);
+
+        public static Describe Remark(
+            DescribeId id,
+            Heading title,
+            DescribeStatement statement,
+            DescribeProvenance provenance,
+            BlockSequence content) =>
+            new(id, DescribeKind.Remark, title, statement, provenance, content);
+
+        private static Describe LeanDescribe(
+            DescribeId id,
+            DescribeKind kind,
+            Heading title,
+            LeanDeclarationRef leanRef,
+            DescribeProvenance provenance,
+            BlockSequence content,
+            LatexStatement? latex)
+        {
+            ArgumentNullException.ThrowIfNull(leanRef);
+            if (ScribeDescribeContract.RequiresLatex(DescribeVocabulary.CanonicalName(kind)))
+            {
+                ArgumentNullException.ThrowIfNull(latex);
+            }
+
+            return new Describe(
+                id,
+                kind,
+                title,
+                DescribeStatement.FromLean(leanRef),
+                provenance,
+                content,
+                latex);
+        }
     }
 
 }

@@ -10,12 +10,14 @@ internal sealed class ResidueSeparationDocument : IScribeDocumentDefinition
             "A modulus above both operands makes the modular reading separate distinct naturals."),
         H("Separation of Distinct Naturals by a Sufficiently Large Modular Reading"),
         Blocks(
-            new DocumentBlock.Describe(
+            DocumentBlock.Describe.Theorem(
                 DescribeId.Create("a-modulus-above-both-operands-separates-distinct-residues"),
-                DescribeKind.Theorem,
                 H("A modulus above both operands separates distinct residues"),
-                DescribeStatement.FromLean(LeanTheorem(
-                    "D5/S3/Arith/ResidueSeparation.residue_separation")),
+                LeanTheorem(
+                    "D5/S3/Arith/ResidueSeparation.residue_separation"),
+                LatexStatement.Create(
+                    @"$$\forall m,n,M\in\mathbb{N},\ m \neq n \land \max(m,n) < M \Rightarrow "
+                    + @"(m \operatorname{mod} M) \neq (n \operatorname{mod} M)$$"),
                 DescribeProvenance.RepoDerived(),
                 Blocks(
                     Paragraph(Text(
@@ -38,8 +40,6 @@ internal sealed class ResidueSeparationDocument : IScribeDocumentDefinition
                         + "readings therefore equal the operands themselves, and their inequality is exactly "
                         + "the given distinctness of m and n transported across the two identities. The "
                         + "argument is purely arithmetic and logical: it invokes only the identity behaviour "
-                        + "of the remainder on its canonical range and asserts no numerical certificate."))),
-                LatexStatement.Create(
-                    @"$$\forall m,n,M\in\mathbb{N},\ m \neq n \land \max(m,n) < M \Rightarrow "
-                    + @"(m \operatorname{mod} M) \neq (n \operatorname{mod} M)$$")))));
+                        + "of the remainder on its canonical range and asserts no numerical certificate.")))
+            ))));
 }

@@ -13,20 +13,20 @@ internal sealed class RawDocument : IScribeDocumentDefinition
             ZeckendorfBits(total),
             NumberStyles.None,
             CultureInfo.InvariantCulture);
-        var example = new DocumentBlock.Describe(
+        var example = DocumentBlock.Describe.Example(
             DescribeId.Create("illustrative-zeckendorf-normalization"),
-            DescribeKind.Example,
             H("Illustrative Zeckendorf normalization"),
-            DescribeStatement.FromFormula(new Formula.RelationChain(
+            new Formula.RelationChain(
                 FormulaRelationOperator.Equal,
                 [
                     Add(Call("Z", Num(89)), Call("Z", Num(34))),
                     Call("Z", Num(checked((long)total))),
                     new Formula.Subscript(Num(bits), Id("W")),
-                ])),
+                ]),
             DescribeProvenance.RepoDerived(),
             Blocks(Paragraph(Text(
-                "This illustrative normalization is derived by the repository's deterministic W-digit computation."))));
+                "This illustrative normalization is derived by the repository's deterministic W-digit computation.")))
+        );
 
         return DocumentDefinition.Create(ScribeDocument.Create(
             Header(
