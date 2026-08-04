@@ -42,6 +42,43 @@ public sealed class LeanReportStatusCommandTests
     }
 
     [Fact]
+    public void MissingReportHasAnActionSpecificTypedVerdict()
+    {
+        var result = LeanReportStatusCommand.Run(
+            Repository(),
+            new ThrowingLeanReportSource(new FileNotFoundException("raw Lean report is missing")),
+            []);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Equal(
+            "LEAN_REPORT_STATUS invalid raw Lean report is missing\n",
+            result.Output);
+        Assert.Empty(result.Error);
+    }
+
+    [Theory]
+    [MemberData(nameof(ObservationFailures))]
+    public void ObservationFailureCannotAuthorizeRepair(Exception failure)
+    {
+        var result = LeanReportStatusCommand.Run(
+            Repository(),
+            new ThrowingLeanReportSource(failure),
+            []);
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Empty(result.Output);
+        Assert.Equal(
+            $"LEAN_REPORT_STATUS not-checked {failure.Message}\n",
+            result.Error);
+    }
+
+    public static TheoryData<Exception> ObservationFailures => new()
+    {
+        new IOException("transient report read failure"),
+        new UnauthorizedAccessException("raw report access denied"),
+    };
+
+    [Fact]
     public void SnapshotFailureIsNotReportedAsAnInvalidReport()
     {
         var result = LeanReportStatusCommand.Run(

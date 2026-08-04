@@ -40,9 +40,9 @@ internal static class LeanReportStatusCommand
         }
         catch (Exception exception) when (
             exception is FormatException
-                or IOException
-                or UnauthorizedAccessException
-                or DecoderFallbackException)
+                or DecoderFallbackException
+                or FileNotFoundException
+                or DirectoryNotFoundException)
         {
             return new ExplicitCommandResult(
                 1,
