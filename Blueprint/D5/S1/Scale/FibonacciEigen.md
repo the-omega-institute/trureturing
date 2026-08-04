@@ -4,6 +4,8 @@
 
 The Fibonacci substitution has two golden eigenpairs and an exact contracting error.
 
+<a id="describe-golden-eigenpairs-and-contracting-error"></a>
+
 **Theorem 1.1 (Golden eigenpairs and contracting error).**
 
 $$\forall n \in \mathbb{N},\ \operatorname{expandingEigenvector}\neq 0 \land \operatorname{fibonacciSubstitution}\operatorname{expandingEigenvector}=\varphi\operatorname{expandingEigenvector} \land \operatorname{contractingEigenvector}\neq 0 \land \operatorname{fibonacciSubstitution}\operatorname{contractingEigenvector}=\operatorname{contractingEigenvalue}\operatorname{contractingEigenvector} \land (F_{n}\varphi-F_{n+1})=-\operatorname{contractingEigenvalue}^{n}$$
@@ -15,3 +17,7 @@ $$\forall n \in \mathbb{N},\ \operatorname{expandingEigenvector}\neq 0 \land \op
 *Commentary.*
 
 The explicit substitution matrix has nonzero expanding and contracting eigenvectors, and the same theorem gives the exact signed Fibonacci error for every natural index.
+
+## References
+
+- Truth anchor: `D5/S1/Scale/FibonacciEigen.fibonacci_substitution_spec`

@@ -4,6 +4,8 @@
 
 A labeled Dirichlet vector remains nonzero at every spectral parameter.
 
+<a id="describe-labeled-zeta-vector-never-vanishes"></a>
+
 **Theorem 1.1 (The labeled vector never vanishes).**
 
 $\forall A\ [\operatorname{AddMonoid}(A)],\ \forall \ell:A\to_{+}\mathbb{R},\ \forall s\in\mathbb{C},\ \operatorname{labeledZeta}(\ell,s)\neq 0$
@@ -15,3 +17,7 @@ $\forall A\ [\operatorname{AddMonoid}(A)],\ \forall \ell:A\to_{+}\mathbb{R},\ \f
 *Commentary.*
 
 The coordinate product needs no summability claim. Its empty-ledger coordinate is one, so the kernel-checked function cannot equal the zero vector.
+
+## References
+
+- Truth anchor: `D5/S3/Weil/LabeledZeta.labeled_zeta_vector_ne_zero`

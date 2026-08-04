@@ -4,6 +4,8 @@
 
 Recursive definitions are fixed points with explicit extremal selections.
 
+<a id="describe-recursive-definition-is-fixed-point"></a>
+
 **Theorem 1.1 (A recursive equation is a fixed-point equation).**
 
 $$f(x)=x\iff x\in\operatorname{Fix}(f).$$
@@ -15,6 +17,8 @@ $$f(x)=x\iff x\in\operatorname{Fix}(f).$$
 *Commentary.*
 
 For an arbitrary endomorphism and candidate value, the equation f(x) = x is equivalent to membership in Function.fixedPoints f.
+
+<a id="describe-distinct-extremal-selections"></a>
 
 **Theorem 1.2 (Distinct extremal fixed points make the selection observable).**
 
@@ -28,6 +32,8 @@ $$\operatorname{lfp}(f)\neq\operatorname{gfp}(f)\Rightarrow f(\operatorname{sele
 
 The selector is explicit data with least and greatest cases. For a monotone endomorphism of a complete lattice, if its least and greatest fixed points differ, both selected values satisfy the fixed-point equation and the two selected values are unequal.
 
+<a id="describe-unique-fixed-point-collapses-extremes"></a>
+
 **Theorem 1.3 (Uniqueness identifies the least and greatest fixed points).**
 
 $$\left(\exists!x,\ f(x)=x\right)\Rightarrow \operatorname{lfp}(f)=\operatorname{gfp}(f).$$
@@ -39,3 +45,9 @@ $$\left(\exists!x,\ f(x)=x\right)\Rightarrow \operatorname{lfp}(f)=\operatorname
 *Commentary.*
 
 For a monotone endomorphism of a complete lattice, the existence of exactly one value satisfying f(x) = x implies that the least and greatest fixed points coincide.
+
+## References
+
+- Truth anchor: `D5/S1/Dynamics/RecursiveDefinition.extremal_selection_distinguishes_fixed_points`
+- Truth anchor: `D5/S1/Dynamics/RecursiveDefinition.is_recursive_definition_iff_fixed_point`
+- Truth anchor: `D5/S1/Dynamics/RecursiveDefinition.unique_fixed_point_implies_lfp_eq_gfp`
