@@ -29,6 +29,9 @@ internal static class DescribeRepositoryValidator
         var findings = ImmutableArray.CreateBuilder<DescribeRedFinding>();
         findings.AddRange(inspectedLibrary.Findings.Select(static finding =>
             new DescribeRedFinding(finding.Code, finding.Path, finding.Message)));
+        var graph = DocumentGraphAssembler.Assemble(material, leanReport);
+        findings.AddRange(graph.Findings.Select(static finding =>
+            new DescribeRedFinding(finding.Code, finding.Path, finding.Message)));
 
         foreach (var document in material)
         {
@@ -121,7 +124,9 @@ internal static class DescribeRepositoryValidator
                 case DocumentBlock.Paragraph paragraph:
                     foreach (var reference in paragraph.Content.Items
                                  .OfType<Inline.GidReference>()
-                                 .Select(static inline => inline.Reference))
+                                 .Select(static inline => inline.Reference)
+                                 .Where(static reference =>
+                                     !reference.IsFormalDeclaration && !reference.IsFormalModule))
                     {
                         ValidateGid(
                             repositoryRoot,
@@ -143,16 +148,6 @@ internal static class DescribeRepositoryValidator
                         findings);
                     break;
                 case DocumentBlock.Describe describe:
-                    if (describe.Statement is DescribeStatement.LeanDeclaration lean)
-                    {
-                        ValidateGid(
-                            repositoryRoot,
-                            documentGid,
-                            lean.Value.Reference,
-                            generatedPaths,
-                            leanReport,
-                            findings);
-                    }
                     if (describe.Provenance.LiteratureReference is { } literature)
                     {
                         ValidateLiterature(documentGid, literature, notes, findings);

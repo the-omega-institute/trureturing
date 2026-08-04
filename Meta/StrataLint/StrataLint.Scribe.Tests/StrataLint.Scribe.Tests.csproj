@@ -14,4 +14,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Projection/Fixtures/statement-projection-pilot-v1.json"
+          CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
 </Project>
