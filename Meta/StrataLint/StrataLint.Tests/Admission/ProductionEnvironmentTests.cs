@@ -655,16 +655,3 @@ internal sealed class FakeScribeEmissionVerifier(VerifiedScribeEmissions? verifi
     public VerifiedScribeEmissions Verify(LeanAxiomReport report) =>
         verification ?? throw new InvalidOperationException("Scribe emission verification failed: synthetic");
 }
-
-internal sealed class TemporaryDirectory : IDisposable
-{
-    internal TemporaryDirectory()
-    {
-        Path = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "stratalint-tests-" + Guid.NewGuid().ToString("N"));
-        Directory.CreateDirectory(Path);
-    }
-
-    internal string Path { get; }
-
-    public void Dispose() => Directory.Delete(Path, recursive: true);
-}
