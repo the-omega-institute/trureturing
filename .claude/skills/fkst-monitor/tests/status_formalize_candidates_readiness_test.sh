@@ -46,7 +46,7 @@ cat > "$tmpdir/bin/dotnet" <<'DOTNET'
 printf '%s\n' "$PWD|$*" >> "$DOTNET_CALLS"
 case "${FORMALIZE_FIXTURE:-ready}" in
   ready)
-    printf '{"schema":"stratalint-formalize-candidates-v2","candidates":[]}\n'
+    printf '{"schema":"stratalint-formalize-candidates-v3","candidates":[],"recorded_formalizations":[],"withheld":[]}\n'
     ;;
   invalid)
     printf 'DIGEST_STATUS_INVALID Raw Lean report source hash does not match D5/Changed.lean.\n' >&2
