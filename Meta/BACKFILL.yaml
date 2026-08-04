@@ -2808,11 +2808,13 @@ sources:
             - gid: D5/S1/Dynamics/RecursiveDefinition.is_recursive_definition_iff_fixed_point
               definition_sha256: sha256:cf62f8634c729bb101e45538498e9b284e93593799b3973396f064ff05afbae2
               emission_sha256: sha256:c56337da6fd27b1f5f305f68ce66a2856f122be8903931750816834bbd86bd28
-          unresolved_subitems: []
+          unresolved_subitems:
+            - extremal-fixed-point-selection-principle
+            - unique-fixed-point-selection-collapse
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: gict-residual-e9fe3bcc994bb241f7be34e4922ba1bff75c9c4ea64ba8328a98e12b0791ffe0
         ast_path: theorem/7.5

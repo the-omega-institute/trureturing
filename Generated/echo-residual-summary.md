@@ -1,8 +1,8 @@
-<!-- echo-residual-summary:v3 residual=sha256:b309ae7b2bad06837ed657f260c6c49b34f85df27c44f77c53a891c347d68d8b -->
+<!-- echo-residual-summary:v3 residual=sha256:dd26588f3b74c9b4832a3a024054da9c35c5e58b7a88f078a2aa5935416e2a47 -->
 # Echo Residual Summary
 
-- unresolved_subitems: 476
-- mother_residual_atom_ids: 63
+- unresolved_subitems: 478
+- mother_residual_atom_ids: 64
 
 ## `bedc-wm-v0.1`
 
@@ -13,8 +13,8 @@ Mother residual atoms: none.
 
 ## `gict-v3.6`
 
-- unresolved_subitems: 111
-- mother_residual_atom_ids: 9
+- unresolved_subitems: 113
+- mother_residual_atom_ids: 10
 
 Mother residual atoms:
 
@@ -98,6 +98,9 @@ Mother residual atoms:
 - `gict-residual-922b0bff9129a59885f446f0858e25f6a580f81f77f5dec77a657fb7404fcad4` (2)
   - `induction-coinduction-reachability-interpretation`
   - `self-reference-gap-identification`
+- `gict-residual-9b7a3ffc25dbae19ef334f68bbfdc9182d64e32492f99436316099057780b1da` (2)
+  - `extremal-fixed-point-selection-principle`
+  - `unique-fixed-point-selection-collapse`
 - `gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3` (35)
   - `absolute-angle-gap-rejection`
   - `continuous-statistics-congruence-meta-law`
