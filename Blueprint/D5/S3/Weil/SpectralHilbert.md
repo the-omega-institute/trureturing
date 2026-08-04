@@ -38,7 +38,7 @@ $\forall s\in\mathbb{C},\ \operatorname{MemLp}(\operatorname{labeledZetaCoeffici
 
 *Commentary.*
 
-The raw labeled coefficient function is square-summable exactly when the spectral parameter has real part greater than one half. The proof specializes the universal heat-abscissa theorem to PrimeAxisTable with logarithmic length and alpha equal to one; the explicit bridge is labeled_zeta_mem_iff_via_universal_heat_trace. Thus this instance is downstream of the general theorem rather than a parallel derivation. The boundary divergence used here is proved from the harmonic series.
+The raw labeled coefficient function is square-summable exactly when the spectral parameter has real part greater than one half. Its proof specializes the universal heat-abscissa theorem to PrimeAxisTable with logarithmic length and alpha equal to one, so this instance is downstream of the general theorem rather than a parallel derivation. The boundary divergence used here is proved from the harmonic series.
 
 **Theorem 1.4 (The coefficient pairing is the zeta kernel).**
 

@@ -60,7 +60,7 @@ private theorem labeledZetaCoefficient_norm_sq (s : ℂ) (n : ℕ) :
   ring
 
 /-- The logarithmic length on the existing prime-axis carrier. -/
-noncomputable def primeAxisLogLength (a : PrimeAxisTable) : ℝ :=
+private noncomputable def primeAxisLogLength (a : PrimeAxisTable) : ℝ :=
   Real.log (((primeAxisEncoding a : ℕ+) : ℕ) : ℝ)
 
 private theorem primeAxisLogLength_addressEquivNat (n : ℕ) :
@@ -79,7 +79,7 @@ private theorem primeAxisHeatTerm_addressEquivNat (σ : ℝ) (n : ℕ) :
 
 /-- The prime-axis logarithmic length has genuine abscissa one, with no boundary
 claim folded into the definition. -/
-theorem prime_axis_log_length_is_heat_abscissa :
+private theorem prime_axis_log_length_is_heat_abscissa :
     IsHeatAbscissa primeAxisLogLength 1 := by
   constructor
   · intro σ hσ
@@ -154,13 +154,6 @@ theorem labeled_zeta_mem_iff (s : ℂ) :
   · intro hs
     exact heat_coefficient_mem_of_abscissa primeAxisLogLength 1
       prime_axis_log_length_is_heat_abscissa s hs
-
-/-- Explicit specialization bridge: the universal heat-abscissa theorem on
-`PrimeAxisTable`, with logarithmic length and `α = 1`, recovers the established
-labeled-zeta membership statement. -/
-theorem labeled_zeta_mem_iff_via_universal_heat_trace (s : ℂ) :
-    Memℓp (labeledZetaCoefficient s) 2 ↔ criticalAbscissa < s.re :=
-  labeled_zeta_mem_iff s
 
 /-- The labeled zeta coefficient family as an actual Hilbert vector. -/
 noncomputable def labeledZetaVector (s : ℂ) (hs : criticalAbscissa < s.re) :
