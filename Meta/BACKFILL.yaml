@@ -10773,16 +10773,23 @@ sources:
           raw_sha256: sha256:9d3d07a751adbfaaa89596eab0358448670a45e4cb516b8a590bb178c0aaa0c2
           normalized_sha256: sha256:9d3d07a751adbfaaa89596eab0358448670a45e4cb516b8a590bb178c0aaa0c2
         cas_ref: sha256:9d3d07a751adbfaaa89596eab0358448670a45e4cb516b8a590bb178c0aaa0c2
-        coverage_gids: []
+        coverage_gids:
+          - D5/S1/Solenoid/ThroatTransitionCocycle.three_lift_difference_cocycle
         receipts:
-          coverage: []
-          scribe: []
+          coverage:
+            - gid: D5/S1/Solenoid/ThroatTransitionCocycle.three_lift_difference_cocycle
+              source_sha256: sha256:9d3d07a751adbfaaa89596eab0358448670a45e4cb516b8a590bb178c0aaa0c2
+              target_sha256: sha256:0dd6b18518e1857fa1dcf3e2964222b79999df9e4b3cddd37a4b64a912d5b2b7
+          scribe:
+            - gid: D5/S1/Solenoid/ThroatTransitionCocycle.three_lift_difference_cocycle
+              definition_sha256: sha256:f0d2485463dbdade23f2db51c77fc3c795bb9b42e652cd0c178a576fa1945214
+              emission_sha256: sha256:787793e2c0810aca8077294435a8408ca1a3ea0c2908635567080654a3eaecc2
           unresolved_subitems: []
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: absorbed
+          truth: closed
       - atom_id: pzg-residual-2bf22a61c83cffae0134a75dff11aa487139dba7ba1cb1c154e81ef6004e052d
         ast_path: corollary/20.7
         fingerprints:
