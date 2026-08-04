@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Dynamics;
 
@@ -16,10 +18,7 @@ internal sealed class KnasterTarskiDocument : IScribeDocumentDefinition
                     H("Least and greatest fixed points"),
                     LeanTheorem(
                         "D5/S1/Dynamics/KnasterTarski.knaster_tarski_extremal_fixed_points"),
-                    LatexStatement.Create(
-                        @"$$f:L\to L\ \text{monotone}\Rightarrow "
-                        + @"\mu=\operatorname{lfp}(f)=\min\operatorname{Fix}(f),\ "
-                        + @"\nu=\operatorname{gfp}(f)=\max\operatorname{Fix}(f).$$"),
+                    Disp(Seq(F.Id("f"), Colon, F.Id("L"), To, Sp, F.Id("L"), Esc, F.Text, Grp(F.Id("monotone")), Rightarrow, Sp, Mu, Eq, Operatorname, Grp(F.Id("lfp")), Open, F.Id("f"), Close, Eq, Min, Operatorname, Grp(F.Id("Fix")), Open, F.Id("f"), Close, Comma, Esc, Nu, Eq, Operatorname, Grp(F.Id("gfp")), Open, F.Id("f"), Close, Eq, Max, Operatorname, Grp(F.Id("Fix")), Open, F.Id("f"), Close, Dot)),
                     DescribeProvenance.RepoDerived(),
                     Blocks(
                         Paragraph(Text(
@@ -37,10 +36,7 @@ internal sealed class KnasterTarskiDocument : IScribeDocumentDefinition
                     H("Three-state successor cycle"),
                     LeanTheorem(
                         "D5/S1/Dynamics/KnasterTarski.three_cycle_extremal_fixed_points"),
-                    LatexStatement.Create(
-                        @"$$F(X)=\{s\mid\operatorname{succ}(s)\in X\}\Rightarrow "
-                        + @"\operatorname{lfp}(F)=\varnothing,\ "
-                        + @"\operatorname{gfp}(F)=S.$$"),
+                    Disp(Seq(F.Id("F"), Open, F.Id("X"), Close, Eq, OpenBrace, F.Id("s"), Mid, Operatorname, Grp(F.Id("succ")), Open, F.Id("s"), Close, InMacro, Sp, F.Id("X"), CloseBrace, Rightarrow, Sp, Operatorname, Grp(F.Id("lfp")), Open, F.Id("F"), Close, Eq, Varnothing, Comma, Esc, Operatorname, Grp(F.Id("gfp")), Open, F.Id("F"), Close, Eq, F.Id("S"), Dot)),
                     DescribeProvenance.RepoDerived(),
                     Blocks(
                         Paragraph(Text(

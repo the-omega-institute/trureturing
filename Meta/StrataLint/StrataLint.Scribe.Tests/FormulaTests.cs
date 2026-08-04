@@ -1,9 +1,100 @@
 using System.Collections.Immutable;
+using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Tests;
 
 public sealed class FormulaTests
 {
+    [Theory]
+    [InlineData("for every index, choose one value.")]
+    [InlineData("Case 2: finite and nonzero!")]
+    [InlineData("x\\y")]
+    [InlineData("x{y}")]
+    [InlineData("x^2")]
+    [InlineData("x_y")]
+    [InlineData("$x$")]
+    public void FormulaTextRunsAcceptOnlyPlainProse(string value)
+    {
+        if (value is "for every index, choose one value." or "Case 2: finite and nonzero!")
+        {
+            Assert.Equal(value, new Formula.TextRun(value).Value);
+            return;
+        }
+
+        Assert.Throws<ArgumentException>(() => new Formula.TextRun(value));
+    }
+
+    [Fact]
+    public void FormulaHasNoRawStringConstructionEntryPoint()
+    {
+        var rawEntrypoints = typeof(Formula).Assembly.GetTypes()
+            .SelectMany(static type => type.GetMethods(
+                System.Reflection.BindingFlags.Public
+                | System.Reflection.BindingFlags.NonPublic
+                | System.Reflection.BindingFlags.Static))
+            .Where(static method => typeof(Formula).IsAssignableFrom(method.ReturnType))
+            .Where(static method => method.GetParameters() is [{ ParameterType: var type }]
+                && type == typeof(string))
+            .Select(static method => $"{method.DeclaringType!.FullName}.{method.Name}")
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+
+        Assert.Equal(
+        [
+            "StrataLint.Scribe.DefinitionDsl.Id",
+            "StrataLint.Scribe.FormulaDsl.Id",
+        ],
+            rawEntrypoints);
+    }
+
+    [Fact]
+    public void LinearFormulaTokenVocabularyIsNotPubliclyReachable()
+    {
+        var assembly = typeof(Formula).Assembly;
+        var forbiddenTypes = new[]
+        {
+            "StrataLint.Scribe.FormulaToken",
+            "StrataLint.Scribe.FormulaMark",
+            "StrataLint.Scribe.FormulaSpace",
+            "StrataLint.Scribe.Formula+TokenTree",
+        };
+
+        foreach (var typeName in forbiddenTypes)
+        {
+            Assert.Null(assembly.GetType(typeName, throwOnError: false));
+        }
+
+        var forbiddenFactories = new[] { "FormulaTokens", "W", "M", "K", "S", "P" };
+        var exposedFactories = typeof(DefinitionDsl).GetMethods(
+                System.Reflection.BindingFlags.Public
+                | System.Reflection.BindingFlags.Static)
+            .Select(static method => method.Name)
+            .Intersect(forbiddenFactories, StringComparer.Ordinal)
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+
+        Assert.Empty(exposedFactories);
+    }
+
+    [Fact]
+    public void StructuralPresentationPreservesDelimitersAndAlignedRows()
+    {
+        Formula inline = new Formula.Layout(
+            FormulaLayoutMode.Inline,
+            Equal(Call("realPart", Id("s")), new Formula.Fraction(Num(1), Num(2))));
+        Formula display = new Formula.Layout(
+            FormulaLayoutMode.Display,
+            new Formula.Aligned([
+                Equal(Id("x"), Num(1)),
+                Equal(Id("y"), Num(2)),
+            ]));
+
+        Assert.Equal(@"$\operatorname{realPart}\left(s\right) = \frac{1}{2}$", LatexWriter.WriteStatement(inline));
+        Assert.Equal(@"$$\begin{aligned}x = 1\\y = 2\end{aligned}$$", LatexWriter.WriteStatement(display));
+        Assert.IsType<Formula.Layout>(inline);
+        Assert.IsType<Formula.Aligned>(((Formula.Layout)display).Content);
+    }
+
     [Fact]
     public void IdentifierRejectsSyntaxThatHasDedicatedAstNodes()
     {
@@ -264,6 +355,68 @@ public sealed class FormulaTests
         Assert.Throws<ArgumentException>(() => new Formula.RelationChain(
             FormulaRelationOperator.Equal,
             [Num(1)]));
+        Assert.Throws<ArgumentException>(() => new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [],
+            new Formula.Relation(Id("x"), FormulaRelationOperator.Equal, Id("x"))));
+        Assert.Throws<ArgumentException>(() => new Formula.Aligned([]));
+    }
+
+    [Fact]
+    public void LatexWriterEmitsTheInventoriedLogicalCoreCanonically()
+    {
+        Formula formula = new Formula.Bind(
+            FormulaQuantifier.ForAll,
+            FormulaIdentifier.Create("x"),
+            new Formula.NamedConstant(FormulaIdentifier.Create("Integers")),
+            new Formula.Logic(
+                new Formula.Relation(Id("x"), FormulaRelationOperator.GreaterThanOrEqual, Num(0)),
+                FormulaLogicOperator.Implies,
+                new Formula.Relation(
+                    new Formula.Norm(Id("x")),
+                    FormulaRelationOperator.MemberOf,
+                    new Formula.NamedConstant(FormulaIdentifier.Create("Naturals")))));
+
+        Assert.Equal(
+            "\\forall x \\in \\mathrm{Integers},\\; x \\ge 0 \\Rightarrow \\left\\lVert x \\right\\rVert \\in \\mathrm{Naturals}",
+            LatexWriter.Write(formula));
+    }
+
+    [Fact]
+    public void LatexWriterEmitsApplyTypeArrowAndBiconditional()
+    {
+        Formula functionType = new Formula.TypeArrow(
+            new Formula.NamedConstant(FormulaIdentifier.Create("Real")),
+            new Formula.NamedConstant(FormulaIdentifier.Create("Complex")));
+        Formula application = new Formula.Apply(
+            new Formula.NamedConstant(FormulaIdentifier.Create("embedding")),
+            [Id("x")]);
+        Formula formula = new Formula.Logic(
+            new Formula.Relation(application, FormulaRelationOperator.Equivalent, Id("x")),
+            FormulaLogicOperator.Iff,
+            new Formula.Relation(functionType, FormulaRelationOperator.NotEqual, Id("x")));
+
+        Assert.Equal(
+            "\\mathrm{embedding}\\left(x\\right) \\equiv x \\Leftrightarrow \\left(\\mathrm{Real} \\to \\mathrm{Complex}\\right) \\ne x",
+            LatexWriter.Write(formula));
+    }
+
+    [Fact]
+    public void NewClosedOperatorsRejectUndefinedEnumValues()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => new Formula.Bind(
+            (FormulaQuantifier)99,
+            FormulaIdentifier.Create("x"),
+            new Formula.Integers(),
+            new Formula.Relation(Id("x"), FormulaRelationOperator.Equal, Id("x"))));
+        Assert.Throws<ArgumentOutOfRangeException>(() => new Formula.Logic(
+            new Formula.Relation(Id("x"), FormulaRelationOperator.Equal, Id("x")),
+            (FormulaLogicOperator)99,
+            new Formula.Relation(Id("x"), FormulaRelationOperator.Equal, Id("x"))));
+        Assert.Throws<ArgumentOutOfRangeException>(() => new Formula.Relation(
+            Id("x"),
+            (FormulaRelationOperator)99,
+            Id("x")));
     }
 
     private static Formula Id(string value) =>

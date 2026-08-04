@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Arith;
 
@@ -18,9 +20,7 @@ internal sealed class PrimeFactorizationDocument : IScribeDocumentDefinition
                 H("Every natural number above one is a product of primes"),
                 LeanTheorem(
                     "D5/S3/Arith/PrimeFactorization.exists_prime_factorization"),
-                LatexStatement.Create(
-                    @"$$\forall n\in\mathbb{N},\ n>1 \Rightarrow \exists\, l,\ "
-                    + @"(\forall p\in l,\ p\ \text{prime}) \land \prod l = n$$"),
+                Disp(Seq(Forall, Sp, F.Id("n"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Esc, F.Id("n"), Gt, D(1), Sp, Rightarrow, Sp, Exists, Thin, Sp, F.Id("l"), Comma, Esc, Open, Forall, Sp, F.Id("p"), InMacro, Sp, F.Id("l"), Comma, Esc, F.Id("p"), Esc, F.Text, Grp(F.Id("prime")), Close, Sp, Land, Sp, Prod, Sp, F.Id("l"), Sp, Eq, Sp, F.Id("n"))),
                 DescribeProvenance.LiteratureAttested(Apostol),
                 Blocks(Paragraph(Text(
                     "Every natural number greater than one factors as a product of finitely "

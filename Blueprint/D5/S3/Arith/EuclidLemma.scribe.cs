@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Arith;
 
@@ -18,9 +20,7 @@ internal sealed class EuclidLemmaDocument : IScribeDocumentDefinition
                 H("A prime dividing a product divides a factor"),
                 LeanTheorem(
                     "D5/S3/Arith/EuclidLemma.euclid_prime_dvd_mul"),
-                LatexStatement.Create(
-                    @"$$\forall p,a,b\in\mathbb{N},\ p\ \text{prime} \land p \mid a\cdot b "
-                    + @"\Rightarrow p \mid a \lor p \mid b$$"),
+                Disp(Seq(Forall, Sp, F.Id("p"), Comma, F.Id("a"), Comma, F.Id("b"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Esc, F.Id("p"), Esc, F.Text, Grp(F.Id("prime")), Sp, Land, Sp, F.Id("p"), Sp, Mid, Sp, F.Id("a"), Cdot, Sp, F.Id("b"), Sp, Rightarrow, Sp, F.Id("p"), Sp, Mid, Sp, F.Id("a"), Sp, Lor, Sp, F.Id("p"), Sp, Mid, Sp, F.Id("b"))),
                 DescribeProvenance.LiteratureAttested(Apostol),
                 Blocks(Paragraph(Text(
                     "For natural numbers, a prime that divides a product divides at least one "

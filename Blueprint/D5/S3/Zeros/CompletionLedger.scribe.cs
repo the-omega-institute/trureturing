@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Zeros;
 
@@ -15,11 +17,7 @@ internal sealed class CompletionLedgerDocument : IScribeDocumentDefinition
                 H("The completion factors are address-independent explicit ledger entries"),
                 LeanTheorem(
                     "D5/S3/Zeros/CompletionLedger.completion_factors_are_explicit_ledger"),
-                LatexStatement.Create(
-                    @"$$A(s)=\pi^{-s/2}\Gamma(s/2),\quad P(s)=s(s-1);\quad "
-                    + @"A(s),P(s)\text{ are address-independent};\quad "
-                    + @"\Re(s)>1\Rightarrow\Lambda(s)=A(s)\zeta(s);\quad "
-                    + @"s\neq0,1\Rightarrow\xi(s)=\frac{1}{2}P(s)\Lambda(s)$$"),
+                Disp(Seq(F.Id("A"), Open, F.Id("s"), Close, Eq, Pi, Caret, Grp(Minus, F.Id("s"), Slash, D(2)), Gamma, Open, F.Id("s"), Slash, D(2), Close, Comma, Quad, Sp, F.Id("P"), Open, F.Id("s"), Close, Eq, F.Id("s"), Open, F.Id("s"), Minus, D(1), Close, Semi, Quad, Sp, F.Id("A"), Open, F.Id("s"), Close, Comma, F.Id("P"), Open, F.Id("s"), Close, F.Text, Grp(Sp, F.Id("are"), Sp, F.Id("address"), Minus, F.Id("independent")), Semi, Quad, Sp, Re, Open, F.Id("s"), Close, Gt, D(1), Rightarrow, Lambda, Open, F.Id("s"), Close, Eq, F.Id("A"), Open, F.Id("s"), Close, Zeta, Open, F.Id("s"), Close, Semi, Quad, Sp, F.Id("s"), Neq, D(0), Comma, D(1), Rightarrow, Xi, Open, F.Id("s"), Close, Eq, Frac, Grp(D(1)), Grp(D(2)), F.Id("P"), Open, F.Id("s"), Close, Lambda, Open, F.Id("s"), Close)),
                 DescribeProvenance.RepoDerived(),
                 Blocks(
                     Paragraph(Text(

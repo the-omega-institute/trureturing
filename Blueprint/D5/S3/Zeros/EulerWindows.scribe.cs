@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Zeros;
 
@@ -37,7 +39,7 @@ internal sealed class EulerWindowsDocument : IScribeDocumentDefinition
                 H("The prime-axis heat trace equals classical zeta in the absolute half-plane"),
                 LeanTheorem(
                     "D5/S3/Zeros/EulerWindows.prime_axis_heat_trace_eq_zeta"),
-                LatexStatement.Create(@"$\forall s\in\mathbb{C},\ 1<\Re(s) \Rightarrow \operatorname{primeAxisHeatTrace}(s)=\operatorname{classicalZeta}(s)$"),
+                In(Seq(Forall, Sp, F.Id("s"), InMacro, Mathbb, Grp(F.Id("C")), Comma, Esc, D(1), Lt, Re, Open, F.Id("s"), Close, Sp, Rightarrow, Sp, Operatorname, Grp(F.Id("primeAxisHeatTrace")), Open, F.Id("s"), Close, Eq, Operatorname, Grp(F.Id("classicalZeta")), Open, F.Id("s"), Close)),
                 DescribeProvenance.LiteratureAttested(HedenmalmHilbert),
                 Blocks(Paragraph(Text(
                     "For real part strictly greater than one, the PrimeAxisTable coefficient sum is classical zeta. The half-plane hypothesis is explicit and supplies the convergence needed by the existing zeta-kernel theorem. Compared with the ingested definition, the checked statement uses the repository's established coefficient family and asserts no analytic continuation beyond this domain. It is the local-germ endpoint that continuation uniqueness can eventually join to the completed reading on the O-6 path.")))
@@ -47,7 +49,7 @@ internal sealed class EulerWindowsDocument : IScribeDocumentDefinition
                 H("Finite prime windows have no zeros at positive abscissa"),
                 LeanTheorem(
                     "D5/S3/Zeros/EulerWindows.finite_euler_window_ne_zero"),
-                LatexStatement.Create(@"$$\forall S\subset_{\operatorname{fin}}\mathbb{N},\ (\forall p\in S,\ \operatorname{Prime}(p)) \Rightarrow \forall s\in\mathbb{C},\ 0<\Re(s) \Rightarrow \operatorname{finiteEulerProduct}(S,s)\neq 0$$"),
+                Disp(Seq(Forall, Sp, F.Id("S"), Subset, Underscore, Grp(Operatorname, Grp(F.Id("fin"))), Mathbb, Grp(F.Id("N")), Comma, Esc, Open, Forall, Sp, F.Id("p"), InMacro, Sp, F.Id("S"), Comma, Esc, Operatorname, Grp(F.Id("Prime")), Open, F.Id("p"), Close, Close, Sp, Rightarrow, Sp, Forall, Sp, F.Id("s"), InMacro, Mathbb, Grp(F.Id("C")), Comma, Esc, D(0), Lt, Re, Open, F.Id("s"), Close, Sp, Rightarrow, Sp, Operatorname, Grp(F.Id("finiteEulerProduct")), Open, F.Id("S"), Comma, F.Id("s"), Close, Neq, Sp, D(0))),
                 DescribeProvenance.LiteratureAttested(ApostolEuler),
                 Blocks(Paragraph(Text(
                     "For a supplied finite set of natural numbers, a supplied proof that every member is prime, and a complex parameter with positive real part, the corresponding finite Euler product is nonzero. A finite set is always inhabited as a value, but it may be empty; no nonempty window is required. Compared with the ingested corollary, Lean proves only finite-window nonvanishing. It does not prove all-prime tail participation, critical-strip convergence failure, epsilon-readout necessity, window escape, or a continued-correlation interpretation. For O-6 this excludes finite Euler factors as the source of a projected zero while leaving the analytic tail and continuation obligations open.")))

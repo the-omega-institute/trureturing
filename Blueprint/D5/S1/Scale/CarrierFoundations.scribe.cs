@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Scale;
 
@@ -16,13 +18,7 @@ internal sealed class CarrierFoundationsDocument : IScribeDocumentDefinition
                     H("Conjugation, norm, units, and factorization of the golden carrier"),
                     LeanTheorem(
                         "D5/S1/Scale/CarrierFoundations.golden_carrier_foundations"),
-                    LatexStatement.Create(
-                        @"$$\exists\,\sigma\in\operatorname{Aut}(\mathcal{O}_\varphi):\ "
-                        + @"\sigma=\overline{(\,\cdot\,)},\ \sigma^{2}=\mathrm{id};\quad "
-                        + @"N(xy)=N(x)\,N(y);\quad "
-                        + @"\mathcal{O}_\varphi^{\times}=\{\pm\varphi^{n}\mid n\in\mathbb{Z}\},\ "
-                        + @"N(\varphi)=-1;\quad "
-                        + @"\mathcal{O}_\varphi\ \text{is a PID and a UFD.}$$"),
+                    Disp(Seq(Exists, Thin, SigmaLower, InMacro, Operatorname, Grp(F.Id("Aut")), Open, Mathcal, Grp(F.Id("O")), Underscore, Varphi, Close, Colon, Esc, SigmaLower, Eq, Overline, Grp(Open, Thin, Cdot, Thin, Close), Comma, Esc, SigmaLower, Caret, Grp(D(2)), Eq, Mathrm, Grp(F.Id("id")), Semi, Quad, Sp, F.Id("N"), Open, F.Id("xy"), Close, Eq, F.Id("N"), Open, F.Id("x"), Close, Thin, F.Id("N"), Open, F.Id("y"), Close, Semi, Quad, Sp, Mathcal, Grp(F.Id("O")), Underscore, Varphi, Caret, Grp(Times), Eq, OpenBrace, Pm, Varphi, Caret, Grp(F.Id("n")), Mid, Sp, F.Id("n"), InMacro, Mathbb, Grp(F.Id("Z")), CloseBrace, Comma, Esc, F.Id("N"), Open, Varphi, Close, Eq, Minus, D(1), Semi, Quad, Sp, Mathcal, Grp(F.Id("O")), Underscore, Varphi, Esc, F.Text, Grp(F.Id("is"), Sp, F.Id("a"), Sp, F.Id("PID"), Sp, F.Id("and"), Sp, F.Id("a"), Sp, F.Id("UFD"), Dot))),
                     DescribeProvenance.RepoDerived(),
                     Blocks(
                         Paragraph(Text(

@@ -49,17 +49,17 @@ public sealed class DescribeMigrationTests
             case DescribeKind.Proposition:
             case DescribeKind.Lemma:
                 Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement);
-                Assert.NotNull(node.StatementLatex);
+                Assert.NotNull(node.StatementFormula);
                 break;
             case DescribeKind.Example:
                 Assert.IsType<DescribeStatement.FormulaAst>(node.Statement);
-                Assert.Null(node.StatementLatex);
+                Assert.Null(node.StatementFormula);
                 break;
             case DescribeKind.Remark:
                 Assert.True(
                     node.Statement is DescribeStatement.FormulaAst or DescribeStatement.LeanDeclaration,
                     $"Remark {node.Id.Value} must use a typed formula or Lean statement.");
-                Assert.Null(node.StatementLatex);
+                Assert.Null(node.StatementFormula);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(node.Kind));
@@ -93,7 +93,7 @@ public sealed class DescribeMigrationTests
             .ToArray();
 
         Assert.NotEmpty(nodes);
-        Assert.All(nodes, static node => Assert.NotNull(node.StatementLatex));
+        Assert.All(nodes, static node => Assert.NotNull(node.StatementFormula));
     }
 
     [Fact]

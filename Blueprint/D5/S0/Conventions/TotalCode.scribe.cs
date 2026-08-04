@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S0.Conventions;
 
@@ -15,22 +17,7 @@ internal sealed class TotalCodeDocument : IScribeDocumentDefinition
                     DescribeId.Create("no-hidden-register"),
                     H("Preserving the total code preserves the object"),
                     LeanTheorem("D5/S0/Conventions/TotalCode.no_hidden_register"),
-                    LatexStatement.Create(
-                        @"$$\forall D,R,L,\quad "
-                        + @"\left[\forall f:\operatorname{TotalCode}(D,R,L)"
-                        + @"\to\operatorname{TotalCode}(D,R,L),\ "
-                        + @"\left(\forall X,\ \operatorname{data}(f(X))="
-                        + @"\operatorname{data}(X)\right)\land "
-                        + @"\left(\forall X,\ \operatorname{rules}(f(X))="
-                        + @"\operatorname{rules}(X)\right)\land "
-                        + @"\left(\forall X,\ \operatorname{ledger}(f(X))="
-                        + @"\operatorname{ledger}(X)\right)"
-                        + @"\Rightarrow\forall X,\ f(X)=X\right]\land "
-                        + @"\left[\forall f,X,\ f(X)\neq X\Rightarrow "
-                        + @"\operatorname{data}(f(X))\neq\operatorname{data}(X)\lor "
-                        + @"\operatorname{rules}(f(X))\neq\operatorname{rules}(X)\lor "
-                        + @"\operatorname{ledger}(f(X))\neq\operatorname{ledger}(X)"
-                        + @"\right].$$"),
+                    Disp(Seq(Forall, Sp, F.Id("D"), Comma, F.Id("R"), Comma, F.Id("L"), Comma, Quad, Sp, Left, OpenBracket, Forall, Sp, F.Id("f"), Colon, Operatorname, Grp(F.Id("TotalCode")), Open, F.Id("D"), Comma, F.Id("R"), Comma, F.Id("L"), Close, To, Operatorname, Grp(F.Id("TotalCode")), Open, F.Id("D"), Comma, F.Id("R"), Comma, F.Id("L"), Close, Comma, Esc, Left, Open, Forall, Sp, F.Id("X"), Comma, Esc, Operatorname, Grp(F.Id("data")), Open, F.Id("f"), Open, F.Id("X"), Close, Close, Eq, Operatorname, Grp(F.Id("data")), Open, F.Id("X"), Close, Right, Close, Land, Sp, Left, Open, Forall, Sp, F.Id("X"), Comma, Esc, Operatorname, Grp(F.Id("rules")), Open, F.Id("f"), Open, F.Id("X"), Close, Close, Eq, Operatorname, Grp(F.Id("rules")), Open, F.Id("X"), Close, Right, Close, Land, Sp, Left, Open, Forall, Sp, F.Id("X"), Comma, Esc, Operatorname, Grp(F.Id("ledger")), Open, F.Id("f"), Open, F.Id("X"), Close, Close, Eq, Operatorname, Grp(F.Id("ledger")), Open, F.Id("X"), Close, Right, Close, Rightarrow, Forall, Sp, F.Id("X"), Comma, Esc, F.Id("f"), Open, F.Id("X"), Close, Eq, F.Id("X"), Right, CloseBracket, Land, Sp, Left, OpenBracket, Forall, Sp, F.Id("f"), Comma, F.Id("X"), Comma, Esc, F.Id("f"), Open, F.Id("X"), Close, Neq, Sp, F.Id("X"), Rightarrow, Sp, Operatorname, Grp(F.Id("data")), Open, F.Id("f"), Open, F.Id("X"), Close, Close, Neq, Operatorname, Grp(F.Id("data")), Open, F.Id("X"), Close, Lor, Sp, Operatorname, Grp(F.Id("rules")), Open, F.Id("f"), Open, F.Id("X"), Close, Close, Neq, Operatorname, Grp(F.Id("rules")), Open, F.Id("X"), Close, Lor, Sp, Operatorname, Grp(F.Id("ledger")), Open, F.Id("f"), Open, F.Id("X"), Close, Close, Neq, Operatorname, Grp(F.Id("ledger")), Open, F.Id("X"), Close, Right, CloseBracket, Dot)),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "The semantic kernel-identity criterion is represented here by "

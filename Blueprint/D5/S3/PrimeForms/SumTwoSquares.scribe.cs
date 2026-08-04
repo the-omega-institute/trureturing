@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.PrimeForms;
 
@@ -16,10 +18,7 @@ internal sealed class SumTwoSquaresDocument : IScribeDocumentDefinition
                 LeanTheorem(
                     "D5/S3/PrimeForms/SumTwoSquares."
                     + "prime_eq_sq_add_sq_of_mod_four_eq_one"),
-                LatexStatement.Create(
-                    @"$$p\ \text{prime}\ \land\ p\equiv 1\ (\operatorname{mod}\ 4)"
-                    + @"\quad\Rightarrow\quad "
-                    + @"\exists a,b\in\mathbb{N},\ p=a^2+b^2$$"),
+                Disp(Seq(F.Id("p"), Esc, F.Text, Grp(F.Id("prime")), Esc, Land, Esc, F.Id("p"), Equiv, Sp, D(1), Esc, Open, Operatorname, Grp(F.Id("mod")), Esc, D(4), Close, Quad, Rightarrow, Quad, Sp, Exists, Sp, F.Id("a"), Comma, F.Id("b"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Esc, F.Id("p"), Eq, F.Id("a"), Caret, D(2), Plus, F.Id("b"), Caret, D(2))),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "For every natural prime p whose remainder modulo four is one, there are "

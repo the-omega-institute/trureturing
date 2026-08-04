@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Recurrence;
 
@@ -15,8 +17,7 @@ internal sealed class FibVajdaDocument : IScribeDocumentDefinition
                 H("Vajda's identity"),
                 LeanTheorem(
                     "D5/S1/Recurrence/FibVajda.fib_vajda"),
-                LatexStatement.Create(
-                    @"$$F_{n+i}F_{n+j} - F_n F_{n+i+j} = (-1)^n F_i F_j$$"),
+                Disp(Seq(F.Id("F"), Underscore, Grp(F.Id("n"), Plus, F.Id("i")), F.Id("F"), Underscore, Grp(F.Id("n"), Plus, F.Id("j")), Sp, Minus, Sp, F.Id("F"), Underscore, F.Id("n"), Sp, F.Id("F"), Underscore, Grp(F.Id("n"), Plus, F.Id("i"), Plus, F.Id("j")), Sp, Eq, Sp, Open, Minus, D(1), Close, Caret, F.Id("n"), Sp, F.Id("F"), Underscore, F.Id("i"), Sp, F.Id("F"), Underscore, F.Id("j"))),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "For natural indices n, i, and j, the difference between the two "

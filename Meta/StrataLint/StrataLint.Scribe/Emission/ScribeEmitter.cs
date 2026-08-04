@@ -313,7 +313,7 @@ public static class ScribeEmitter
                         definitionPath,
                         DescribeVocabulary.CanonicalName(describe.Kind),
                         describe.Statement is DescribeStatement.FormulaAst
-                            || describe.StatementLatex is not null));
+                            || describe.StatementFormula is not null));
                     CollectDescribeCapabilities(
                         documentGid,
                         definitionPath,

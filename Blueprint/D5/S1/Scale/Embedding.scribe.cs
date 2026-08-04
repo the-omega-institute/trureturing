@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Scale;
 
@@ -6,9 +8,9 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create()
     {
-        var a = Id("a");
-        var b = Id("b");
-        var x = Id("x");
+        var a = DefinitionDsl.Id("a");
+        var b = DefinitionDsl.Id("b");
+        var x = DefinitionDsl.Id("x");
         var coordinates = Add(a, Multiply(b, new Formula.Phi()));
         var embedded = Call("embedding", x);
         var conjugate = Call("conj", x);
@@ -29,7 +31,7 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
                     H("Coordinate formula"),
 
                         LeanTheorem("D5/S1/Scale/Embedding.embedding_apply"),
-                    LatexStatement.Create(@"$\forall x \in \operatorname{GoldenInt},\ \operatorname{embedding}(x)=x.a+x.b\varphi$"),
+                    In(Seq(Forall, Sp, F.Id("x"), Sp, InMacro, Sp, Operatorname, Grp(F.Id("GoldenInt")), Comma, Esc, Operatorname, Grp(F.Id("embedding")), Open, F.Id("x"), Close, Eq, F.Id("x"), Dot, F.Id("a"), Plus, F.Id("x"), Dot, F.Id("b"), Varphi)),
                     DescribeProvenance.RepoDerived(),
                     Blocks(new DocumentBlock.DisplayFormula(
                         Equal(Call("embedding", coordinates), coordinates)))
@@ -56,7 +58,7 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
                     H("Injectivity"),
 
                         LeanTheorem("D5/S1/Scale/Embedding.embedding_injective"),
-                    LatexStatement.Create(@"$\forall x,y \in \operatorname{GoldenInt},\ \operatorname{embedding}(x)=\operatorname{embedding}(y) \Rightarrow x=y$"),
+                    In(Seq(Forall, Sp, F.Id("x"), Comma, F.Id("y"), Sp, InMacro, Sp, Operatorname, Grp(F.Id("GoldenInt")), Comma, Esc, Operatorname, Grp(F.Id("embedding")), Open, F.Id("x"), Close, Eq, Operatorname, Grp(F.Id("embedding")), Open, F.Id("y"), Close, Sp, Rightarrow, Sp, F.Id("x"), Eq, F.Id("y"))),
                     DescribeProvenance.RepoDerived(),
                     Blocks(
                         Paragraph(
@@ -76,7 +78,7 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
                             H("Embedding times conjugate"),
                             LeanTheorem(
                                 "D5/S1/Scale/Embedding.embedding_mul_conj"),
-                            LatexStatement.Create(@"$\forall x \in \operatorname{GoldenInt},\ \operatorname{embedding}(x)\operatorname{embedding}(\operatorname{conj}(x))=\operatorname{norm}(x)$"),
+                            In(Seq(Forall, Sp, F.Id("x"), Sp, InMacro, Sp, Operatorname, Grp(F.Id("GoldenInt")), Comma, Esc, Operatorname, Grp(F.Id("embedding")), Open, F.Id("x"), Close, Operatorname, Grp(F.Id("embedding")), Open, Operatorname, Grp(F.Id("conj")), Open, F.Id("x"), Close, Close, Eq, Operatorname, Grp(F.Id("norm")), Open, F.Id("x"), Close)),
                             DescribeProvenance.RepoDerived(),
                             Blocks(new DocumentBlock.DisplayFormula(
                                 Equal(
@@ -88,7 +90,7 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
                             H("Absolute norm relation"),
                             LeanTheorem(
                                 "D5/S1/Scale/Embedding.abs_embedding_mul_abs_conj"),
-                            LatexStatement.Create(@"$\forall x \in \operatorname{GoldenInt},\ \lvert\operatorname{embedding}(x)\rvert\,\lvert\operatorname{embedding}(\operatorname{conj}(x))\rvert=\lvert\operatorname{norm}(x)\rvert$"),
+                            In(Seq(Forall, Sp, F.Id("x"), Sp, InMacro, Sp, Operatorname, Grp(F.Id("GoldenInt")), Comma, Esc, Lvert, Operatorname, Grp(F.Id("embedding")), Open, F.Id("x"), Close, Rvert, Thin, Lvert, Operatorname, Grp(F.Id("embedding")), Open, Operatorname, Grp(F.Id("conj")), Open, F.Id("x"), Close, Close, Rvert, Eq, Lvert, Operatorname, Grp(F.Id("norm")), Open, F.Id("x"), Close, Rvert)),
                             DescribeProvenance.RepoDerived(),
                             Blocks(
                                 Paragraph(

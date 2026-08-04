@@ -171,12 +171,12 @@ public static class QuestPdfWriter
                 break;
             case DescribeStatement.LeanDeclaration lean:
                 var verified = Resolve(lean.Value, leanReport);
-                if (describe.StatementLatex is { } latex)
+                if (describe.StatementFormula is { } statementFormula)
                 {
                     column.Item()
                         .Padding(6)
                         .Background(Colors.Grey.Lighten4)
-                        .Text(latex.Value)
+                        .Text(LatexWriter.WriteStatement(statementFormula))
                         .FontFamily(MonospaceFonts)
                         .FontSize(9);
                 }
