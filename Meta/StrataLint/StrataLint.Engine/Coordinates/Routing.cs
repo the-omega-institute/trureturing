@@ -381,8 +381,14 @@ internal static class RouteCapacityPreflight
         string targetDirectory,
         IEnumerable<string> projectedOutputs)
     {
-        var currentOccupancy = currentPaths.Count(path => DirectoryOf(path) == targetDirectory);
-        var additions = projectedOutputs.Count(path => !currentPaths.Contains(path));
+        // This preflight exists to predict SL-003, so it must count exactly what SL-003
+        // counts. Reusing IsCapacityExcluded keeps the two in one source: a preflight that
+        // bounded artifacts the rule itself exempts would refuse addresses the gate would
+        // have admitted, which is a stricter policy invented in the wrong place.
+        var currentOccupancy = currentPaths.Count(path =>
+            DirectoryOf(path) == targetDirectory && !RepositoryRules.IsCapacityExcluded(path));
+        var additions = projectedOutputs.Count(path =>
+            !currentPaths.Contains(path) && !RepositoryRules.IsCapacityExcluded(path));
         var projectedOccupancy = currentOccupancy + additions;
         if (projectedOccupancy <= RepositoryRules.DirectoryFileLimit)
         {
@@ -399,7 +405,9 @@ internal static class RouteCapacityPreflight
             .Concat(presentDomains)
             .Distinct(StringComparer.Ordinal)
             .OrderBy(static domain => domain, StringComparer.Ordinal)
-            .Select(domain => $"{domain}={currentPaths.Count(path => DirectoryOf(path) == bucketPrefix + domain)}");
+            .Select(domain => $"{domain}={currentPaths.Count(path =>
+                DirectoryOf(path) == bucketPrefix + domain
+                && !RepositoryRules.IsCapacityExcluded(path))}");
 
         return $"bucket at capacity — 只裂不迁: {targetDirectory} projected occupancy {projectedOccupancy} "
             + $"exceeds maximum {RepositoryRules.DirectoryFileLimit}; split only, choose a sibling domain or new domain. "

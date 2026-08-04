@@ -366,7 +366,10 @@ internal static class DigestStatusCommand
     private static CommandResult InvalidEvaluation(DigestionLedgerEvaluation evaluation)
     {
         var error = "DIGEST_STATUS_INVALID count=" + evaluation.Findings.Length + "\n"
-            + string.Concat(evaluation.Findings.Select(static finding => $"FINDING {finding}\n"));
+            + string.Concat(evaluation.Findings.Select(static finding => $"FINDING {finding}\n"))
+            + string.Concat(evaluation.Entries.SelectMany(static entry => entry.Gaps.Select(gap =>
+                $"GAP atom={entry.Entry.AtomId} code={gap.Code} "
+                + $"detail={JsonSerializer.Serialize(gap.Detail)}\n")));
         return new CommandResult(false, string.Empty, error);
     }
 
