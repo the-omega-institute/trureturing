@@ -14,11 +14,12 @@ public sealed partial class TheoryAtomizerTests
     {
         var baseline = AtomizerRegistry.Atomize(
             AtomizerRegistry.WmId,
-            Encoding.UTF8.GetBytes(CanonicalWmV02Fixture().ReplaceLineEndings(lineEnding)));
+            Encoding.UTF8.GetBytes(CanonicalWmV02Fixture().ReplaceLineEndings(lineEnding)),
+            DigestionTestSupport.Rules);
         var source = Encoding.UTF8.GetBytes(
             CanonicalWmV03Fixture().ReplaceLineEndings(lineEnding));
 
-        var evolved = AtomizerRegistry.Atomize(AtomizerRegistry.WmId, source);
+        var evolved = AtomizerRegistry.Atomize(AtomizerRegistry.WmId, source, DigestionTestSupport.Rules);
 
         Assert.Equal(
             baseline.Claims.Select(static atom => atom.AstPath)
@@ -38,10 +39,11 @@ public sealed partial class TheoryAtomizerTests
     {
         var baseline = AtomizerRegistry.Atomize(
             AtomizerRegistry.WmId,
-            Encoding.UTF8.GetBytes(CanonicalWmV03Fixture()));
+            Encoding.UTF8.GetBytes(CanonicalWmV03Fixture()),
+            DigestionTestSupport.Rules);
         var source = Encoding.UTF8.GetBytes(CanonicalWmV04Fixture());
 
-        var evolved = AtomizerRegistry.Atomize(AtomizerRegistry.WmId, source);
+        var evolved = AtomizerRegistry.Atomize(AtomizerRegistry.WmId, source, DigestionTestSupport.Rules);
 
         Assert.Equal(
             baseline.Claims.Select(static atom => atom.AstPath)
@@ -60,7 +62,8 @@ public sealed partial class TheoryAtomizerTests
     {
         var error = Record.Exception(() => AtomizerRegistry.Atomize(
             AtomizerRegistry.WmId,
-            Encoding.UTF8.GetBytes(source)));
+            Encoding.UTF8.GetBytes(source),
+            DigestionTestSupport.Rules));
 
         Assert.True(error is FormatException or DecoderFallbackException, error?.ToString());
     }
@@ -70,7 +73,8 @@ public sealed partial class TheoryAtomizerTests
     {
         var baseline = AtomizerRegistry.Atomize(
             AtomizerRegistry.WmId,
-            Encoding.UTF8.GetBytes(CanonicalWmV02Fixture()));
+            Encoding.UTF8.GetBytes(CanonicalWmV02Fixture()),
+            DigestionTestSupport.Rules);
         var ledger = baseline.Claims
             .Select((atom, index) => LedgerEntry(
                 $"wm-v02-{index}",
@@ -81,7 +85,8 @@ public sealed partial class TheoryAtomizerTests
         var result = TheoryIngestion.AdmitResidual(
             AtomizerRegistry.WmId,
             Encoding.UTF8.GetBytes(CanonicalWmV03Fixture()),
-            ledger);
+            ledger,
+            DigestionTestSupport.Rules);
 
         Assert.Equal(baseline.Claims.Length, result.Seen.Length);
         Assert.All(result.Seen, static seen =>

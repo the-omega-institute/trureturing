@@ -123,7 +123,7 @@ public sealed partial class ProductionEnvironmentTests
         var fixture = new RuleFixture();
         var atomizerId = AtomizerRegistry.RegisteredIds[0];
         var baselineBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。old。\n");
-        var atom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, baselineBytes).Claims);
+        var atom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, baselineBytes, DigestionTestSupport.Rules).Claims);
         var inserted = Encoding.UTF8.GetBytes("界");
         var currentBytes = baselineBytes[..(atom.EndByte - 1)]
             .Concat(inserted)

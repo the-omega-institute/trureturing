@@ -407,7 +407,10 @@ internal static class DigestionStatusEvaluator
         AtomizedTheoryDocument atomized;
         try
         {
-            atomized = AtomizerRegistry.Atomize(entry.Atomizer, source.RawBytes.AsSpan());
+            atomized = AtomizerRegistry.Atomize(
+                entry.Atomizer,
+                source.RawBytes.AsSpan(),
+                TheoryAtomizerDataLoader.Load(snapshot));
         }
         catch (FormatException exception)
         {

@@ -69,6 +69,7 @@ internal static class DigestionLedgerAligner
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
         atomizerResolver ??= static id => AtomizerRegistry.Require(id).Atomize;
+        var atomizerRules = TheoryAtomizerDataLoader.Load(snapshot);
 
         var alignments = ImmutableDictionary.CreateBuilder<string, DigestionReceiptAlignment>(
             StringComparer.Ordinal);
@@ -222,7 +223,7 @@ internal static class DigestionLedgerAligner
             try
             {
                 var atomize = atomizerResolver(source.Atomizer);
-                atomized = atomize(sourceFile.RawBytes.AsSpan());
+                atomized = atomize(sourceFile.RawBytes.AsSpan(), atomizerRules);
             }
             catch (Exception exception) when (
                 exception is TheorySourceFormatException or DecoderFallbackException)

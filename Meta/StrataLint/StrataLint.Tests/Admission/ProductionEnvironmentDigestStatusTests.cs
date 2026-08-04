@@ -15,7 +15,7 @@ public sealed partial class ProductionEnvironmentTests
             "# Synthetic\r\n\r\n**定理 1.1(Test)**。claim。\r\n");
         var currentBytes = Encoding.UTF8.GetBytes(
             "# Synthetic\n\n**定理 1.1(Test)**。claim。\n");
-        var atom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, ledgerBytes).Claims);
+        var atom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, ledgerBytes, DigestionTestSupport.Rules).Claims);
         var captured = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
         fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
         fixture.Files.Remove(GoldenCorpus.FixtureCasPath);
@@ -125,7 +125,7 @@ public sealed partial class ProductionEnvironmentTests
         var atomizerId = AtomizerRegistry.RegisteredIds[0];
         var oldBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。old。\n");
         var currentBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。rewritten。\n");
-        var oldAtom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, oldBytes).Claims);
+        var oldAtom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, oldBytes, DigestionTestSupport.Rules).Claims);
         var baselineLedger = IngestLedger(atomizerId, oldAtom);
         var baselineDocument = BackfillInventoryLoader.Load(baselineLedger);
         var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());

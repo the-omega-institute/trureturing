@@ -12,7 +12,7 @@ public sealed partial class TheoryAtomizerTests
         const string claim = "**定理(叠加不违反经典刚性)。** claim。\n\n---\n\n";
         var bytes = Encoding.UTF8.GetBytes("# Observer\n\n" + claim);
 
-        var atom = Assert.Single(AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes).Claims);
+        var atom = Assert.Single(AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes, DigestionTestSupport.Rules).Claims);
 
         Assert.Equal(Encoding.UTF8.GetBytes(claim), atom.RawBytes.ToArray());
     }
@@ -39,7 +39,7 @@ public sealed partial class TheoryAtomizerTests
         var root = FindRepositoryRoot();
         var bytes = File.ReadAllBytes(Path.Combine(root, ThirdProductionSource));
 
-        var document = AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes);
+        var document = AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes, DigestionTestSupport.Rules);
 
         AssertRecognitionComplete(document, bytes);
     }
@@ -130,7 +130,7 @@ public sealed partial class TheoryAtomizerTests
             **边界**。claim。
             """);
 
-        var document = AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes);
+        var document = AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes, DigestionTestSupport.Rules);
 
         Assert.Equal(
             [
@@ -197,7 +197,7 @@ public sealed partial class TheoryAtomizerTests
     {
         var bytes = Encoding.UTF8.GetBytes($"# Observer\n\n{claim}\n");
 
-        var atom = Assert.Single(AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes).Claims);
+        var atom = Assert.Single(AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes, DigestionTestSupport.Rules).Claims);
 
         Assert.Equal(expectedAstPath, atom.AstPath);
     }
@@ -224,7 +224,7 @@ public sealed partial class TheoryAtomizerTests
     {
         var bytes = Encoding.UTF8.GetBytes($"# Observer\n\n{claim}\n");
 
-        var atom = Assert.Single(AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes).Claims);
+        var atom = Assert.Single(AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes, DigestionTestSupport.Rules).Claims);
 
         Assert.Equal(expectedAstPath, atom.AstPath);
     }
@@ -262,7 +262,7 @@ public sealed partial class TheoryAtomizerTests
     {
         var bytes = Encoding.UTF8.GetBytes($"# Observer\n\n{claim}\n");
 
-        var atom = Assert.Single(AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes).Claims);
+        var atom = Assert.Single(AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes, DigestionTestSupport.Rules).Claims);
 
         Assert.Equal(expectedAstPath, atom.AstPath);
     }
