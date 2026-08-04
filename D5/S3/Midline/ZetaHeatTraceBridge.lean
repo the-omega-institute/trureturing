@@ -5,6 +5,7 @@
    anchors: []
    digest: Expose the PrimeAxisTable specialization of the universal heat-abscissa theorem. -/
 
+import D5.S3.Midline.UniversalHeatTrace
 import D5.S3.Weil.SpectralHilbert
 
 namespace D5.S3.Midline.ZetaHeatTraceBridge
