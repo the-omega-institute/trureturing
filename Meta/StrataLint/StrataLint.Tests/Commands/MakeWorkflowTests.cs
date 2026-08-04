@@ -311,6 +311,28 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Fact]
+    public void PreflightPinsOneStrictAncestorBeforeExpensiveStagesAndReportsBaseAdvanceAdvisory()
+    {
+        var root = FindRepositoryRoot();
+        var preflight = File.ReadAllText(Path.Combine(root, PreflightScriptPath));
+
+        var fetchIndex = preflight.IndexOf("fetch --prune", StringComparison.Ordinal);
+        var pinIndex = preflight.IndexOf(
+            "BASE_SHA=\"$(git rev-parse --verify \"${BASE_REF}^{commit}\")\"",
+            StringComparison.Ordinal);
+        var ancestorIndex = preflight.IndexOf("merge-base --is-ancestor", StringComparison.Ordinal);
+        var buildIndex = preflight.IndexOf("CI=true make dotnet", StringComparison.Ordinal);
+
+        Assert.True(fetchIndex >= 0, "preflight must perform the run's single base fetch");
+        Assert.True(pinIndex > fetchIndex, "the exact base OID must be resolved after the fetch");
+        Assert.True(ancestorIndex > pinIndex, "the pinned OID must retain strict ancestor validation");
+        Assert.True(buildIndex > ancestorIndex, "base validation must precede every expensive stage");
+        Assert.Contains("make gate BASE=\"$BASE_SHA\"", preflight, StringComparison.Ordinal);
+        Assert.Contains("BASE_ADVANCED pinned=%s observed=%s", preflight, StringComparison.Ordinal);
+        Assert.Contains("|| true", preflight[preflight.IndexOf("BASE_ADVANCED", StringComparison.Ordinal)..], StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void AdmissionBaselineCheckoutsRetainFrozenLedgerHistory()
     {
         var root = FindRepositoryRoot();

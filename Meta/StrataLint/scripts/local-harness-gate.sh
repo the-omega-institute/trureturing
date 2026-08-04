@@ -5,6 +5,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
 source "$ROOT/Meta/StrataLint/scripts/perf-event-lib.sh"
 CANDIDATE_ROOT="$ROOT"
 BASE_REF="origin/dev"
+OBSERVED_BASE_REF=""
 SKIP_ENGINEERING=0
 
 while [[ $# -gt 0 ]]; do
@@ -116,6 +117,13 @@ finish() {
   if [[ -f "$LOCAL_TIMING_FILE" ]]; then
     timing_payload="$(cat "$LOCAL_TIMING_FILE")"
   fi
+  if [[ -n "$OBSERVED_BASE_REF" ]]; then
+    local observed_base=""
+    observed_base="$(git -C "$CANDIDATE_ROOT" rev-parse --verify "${OBSERVED_BASE_REF}^{commit}" 2>/dev/null || true)"
+    if [[ -n "$observed_base" && "$observed_base" != "$BASE_SHA" ]]; then
+      printf 'BASE_ADVANCED pinned=%s observed=%s\n' "$BASE_SHA" "$observed_base" >&2 || true
+    fi
+  fi
   perf_flush_events "$CANDIDATE_ROOT" "$PERF_EVENT_SPOOL" >/dev/null 2>&1 || true
   cleanup
   printf '[local-gate] timing-summary status=%s exit=%s\n' "$status" "$rc" >&2
@@ -131,12 +139,22 @@ trap 'exit 130' INT
 trap 'exit 143' TERM
 
 prepare_judge() {
+  if [[ ! "$BASE_REF" =~ ^[0-9a-fA-F]{40}$ ]]; then
+    OBSERVED_BASE_REF="$BASE_REF"
+  fi
   local remote="${BASE_REF%%/*}"
   if [[ "$remote" != "$BASE_REF" ]] \
     && git -C "$CANDIDATE_ROOT" remote | grep -Fxq "$remote"; then
     git -C "$CANDIDATE_ROOT" fetch --prune "$remote"
   fi
   BASE_SHA="$(git -C "$CANDIDATE_ROOT" rev-parse --verify "${BASE_REF}^{commit}")"
+  local candidate_sha
+  candidate_sha="$(git -C "$CANDIDATE_ROOT" rev-parse --verify HEAD^{commit})"
+  if [[ "$BASE_SHA" == "$candidate_sha" ]] \
+    || ! git -C "$CANDIDATE_ROOT" merge-base --is-ancestor "$BASE_SHA" "$candidate_sha"; then
+    echo "local-harness-gate: pinned base is not a strict ancestor of candidate HEAD" >&2
+    return 1
+  fi
 
   local current_path=""
   local current_head=""
