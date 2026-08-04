@@ -142,7 +142,9 @@ public static class ScribeEmitter
                 }
             }
 
-            return EmitVerified(repositoryRoot, check, output, error, leanReport, definitions);
+            var graph = DocumentGraphAssembler.Assemble(
+                definitions.Select(static definition => definition.Document), leanReport);
+            return EmitVerified(repositoryRoot, check, output, error, leanReport, definitions, graph);
         }
         catch (Exception exception) when (
             exception is InvalidOperationException
@@ -162,7 +164,8 @@ public static class ScribeEmitter
         TextWriter output,
         TextWriter error,
         LeanAxiomReport leanReport,
-        IReadOnlyList<DocumentDefinition> definitions)
+        IReadOnlyList<DocumentDefinition> definitions,
+        DocumentGraph graph)
     {
         var rendered = new List<(DocumentDefinition Definition, byte[] Bytes)>();
         var attestations = new List<ScribeEmissionRecord>();
@@ -174,11 +177,13 @@ public static class ScribeEmitter
             var first = CanonicalMarkdownWriter.Write(
                 definition.Document,
                 leanReport,
-                citations).ToArray();
+                citations,
+                graph).ToArray();
             var second = CanonicalMarkdownWriter.Write(
                 definition.Document,
                 leanReport,
-                citations).ToArray();
+                citations,
+                graph).ToArray();
             if (!first.AsSpan().SequenceEqual(second))
             {
                 throw new InvalidOperationException(

@@ -6,6 +6,37 @@ namespace StrataLint.Scribe.Tests;
 public sealed class MarkdownWriterTests
 {
     [Fact]
+    public void EdgeFreeDocumentPreservesLegacyEmissionBytes()
+    {
+        var document = ScribeDocument.Create(
+            CreateHeader(),
+            Heading.Create("Sample"),
+            BlockSequence.Create(
+            [
+                DocumentBlock.Describe.Remark(
+                    DescribeId.Create("legacy"),
+                    Heading.Create("Legacy"),
+                    DescribeStatement.FromFormula(new Formula.Number(1)),
+                    DescribeProvenance.RepoDerived(),
+                    BlockSequence.Create([Paragraph(new Inline.Text(TextRun.Create("Stable.")))])),
+            ]));
+
+        var bytes = CanonicalMarkdownWriter.Write(document);
+
+        Assert.Equal(
+            Encoding.UTF8.GetBytes(
+                "# Sample\n\n"
+                + "## Abstract\n\n"
+                + "The real embedding is injective.\n\n"
+                + "**Remark 1.1 (Legacy).**\n\n"
+                + "$$\n1\n$$\n\n"
+                + "*Source.* Repository-derived.\n\n"
+                + "*Commentary.*\n\n"
+                + "Stable.\n"),
+            bytes.ToArray());
+    }
+
+    [Fact]
     public void WriterEmitsAcademicMarkdownWithAstNumberingAndLeanProofs()
     {
         var paragraph = Paragraph(

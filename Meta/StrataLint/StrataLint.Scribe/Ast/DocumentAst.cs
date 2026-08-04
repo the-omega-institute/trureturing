@@ -235,11 +235,13 @@ public sealed class ScribeDocument
     private ScribeDocument(
         DocumentHeader header,
         Heading title,
-        BlockSequence content)
+        BlockSequence content,
+        ImmutableArray<DocumentEdge> edges)
     {
         Header = header;
         Title = title;
         Content = content;
+        Edges = edges;
     }
 
     public DocumentHeader Header { get; }
@@ -248,16 +250,24 @@ public sealed class ScribeDocument
 
     public BlockSequence Content { get; }
 
+    public ImmutableArray<DocumentEdge> Edges { get; }
+
     public static ScribeDocument Create(
         DocumentHeader header,
         Heading title,
-        BlockSequence content)
+        BlockSequence content,
+        IEnumerable<DocumentEdge>? edges = null)
     {
         ArgumentNullException.ThrowIfNull(header);
         ArgumentNullException.ThrowIfNull(title);
         ArgumentNullException.ThrowIfNull(content);
+        var edgeArray = (edges ?? []).ToImmutableArray();
+        if (edgeArray.Any(static edge => edge is null))
+        {
+            throw new ArgumentException("Document edges cannot contain null.", nameof(edges));
+        }
         RequireUniqueDescribeIds(content);
-        return new ScribeDocument(header, title, content);
+        return new ScribeDocument(header, title, content, edgeArray);
     }
 
     private static void RequireUniqueDescribeIds(BlockSequence content)
