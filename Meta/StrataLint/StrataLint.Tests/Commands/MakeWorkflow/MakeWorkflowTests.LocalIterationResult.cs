@@ -16,6 +16,7 @@ public sealed partial class MakeWorkflowTests
     [InlineData("exit-127", 127, "FAIL:TOOLCHAIN")]
     [InlineData("unknown-dotnet", 73, "UNKNOWN:UNKNOWN")]
     [InlineData("unknown", 73, "UNKNOWN:UNKNOWN")]
+    [InlineData("starved-lean-slot", 2, "UNKNOWN:UNKNOWN")]
     public void PreflightEmitsOneTypedLocalIterationResultAndPreservesExitCode(
         string scenario,
         int expectedExitCode,
@@ -69,6 +70,7 @@ public sealed partial class MakeWorkflowTests
               exit-127:lean-report) exit 127 ;;
               unknown-dotnet:dotnet) exit 73 ;;
               unknown:lean-report) exit 73 ;;
+              starved-lean-slot:lean-report) exit 2 ;;
             esac
             exit 0
             """);
