@@ -1,8 +1,8 @@
-<!-- echo-residual-summary:v3 residual=sha256:45d57a8aa95fbc1d67f7b517b8a002c3bf517e1ef7f6d4b40492a3cfdf4b947b -->
+<!-- echo-residual-summary:v3 residual=sha256:b309ae7b2bad06837ed657f260c6c49b34f85df27c44f77c53a891c347d68d8b -->
 # Echo Residual Summary
 
-- unresolved_subitems: 466
-- mother_residual_atom_ids: 58
+- unresolved_subitems: 476
+- mother_residual_atom_ids: 63
 
 ## `bedc-wm-v0.1`
 
@@ -13,8 +13,8 @@ Mother residual atoms: none.
 
 ## `gict-v3.6`
 
-- unresolved_subitems: 105
-- mother_residual_atom_ids: 6
+- unresolved_subitems: 111
+- mother_residual_atom_ids: 9
 
 Mother residual atoms:
 
@@ -77,6 +77,12 @@ Mother residual atoms:
   - `sixty-six-case-certificate`
   - `station-flip-angle-jump`
   - `zero-family-pin-ledger`
+- `gict-residual-58e8f015eea7218ab85a93414db29b65667b79f34b18b8f9ab343676c454adf2` (2)
+  - `additive-closure-random-scan-certificate`
+  - `conjugation-and-norm-random-scan-certificates`
+- `gict-residual-6e1053eef77278dd897b092fcb456d24c310e0f3556bfed13449ff25a1fc297c` (2)
+  - `ah-exact-value-delta-certificate`
+  - `phi-derivative-at-zero-identification`
 - `gict-residual-78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26` (11)
   - `bhk-1755-enumeration-certificate`
   - `bhk-continued-fraction-theorem`
@@ -89,6 +95,9 @@ Mother residual atoms:
   - `translation-asymptotic`
   - `w3-440-enumeration-certificate`
   - `w3-sign-reversal-postmortem`
+- `gict-residual-922b0bff9129a59885f446f0858e25f6a580f81f77f5dec77a657fb7404fcad4` (2)
+  - `induction-coinduction-reachability-interpretation`
+  - `self-reference-gap-identification`
 - `gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3` (35)
   - `absolute-angle-gap-rejection`
   - `continuous-statistics-congruence-meta-law`
@@ -190,8 +199,8 @@ Mother residual atoms:
 
 ## `pzg-v170`
 
-- unresolved_subitems: 325
-- mother_residual_atom_ids: 45
+- unresolved_subitems: 329
+- mother_residual_atom_ids: 47
 
 Mother residual atoms:
 
@@ -223,10 +232,16 @@ Mother residual atoms:
 - `pzg-residual-0e4c1864295a8fa2d7347817f3fa806a80a7669ce7a406684aa5cc3ccdaf1e8a` (2)
   - `diagonal-length-operator-spectrum-equals-log-natural-numbers`
   - `known-channel-from-length-spectrum-to-zero-spectrum`
+- `pzg-residual-1327426fea2f2d19681f41aa2f06767efa3d321026b35ea92bd249303ca9f7dd` (1)
+  - `mellin-reconstruction-two-point-numerical-certificate`
 - `pzg-residual-163b117bf8d71533380dda3c03c27c13e02d3d02c999a6baebda24fdca60ab45` (3)
   - `o9-limit-transition-kernelization`
   - `poisson-theta-cofinal-analytic-limit`
   - `theta-modular-functional-equation`
+- `pzg-residual-227d06253ab1ea9dc06f8121378fb433b01737466585e507f09608027a2b61ae` (3)
+  - `exact-deficit-value-distribution`
+  - `global-absolute-deficit-at-most-one-conjecture`
+  - `triangular-window-45150-pair-scan-certificate`
 - `pzg-residual-238bbaa442a0ccdc095f377f556435e13ea9b5923b49ab4a8a135607e047df6c` (4)
   - `de-bruijn-newman-threshold-family-equivalence`
   - `ising-lee-yang-positive-family-and-villain-counterexamples`

@@ -2179,11 +2179,13 @@ sources:
             - gid: D5/S1/Scale/CarrierFoundations.golden_carrier_foundations
               definition_sha256: sha256:5d2b868a21458546e306c63f41584a9c4eff2654789efbf9f270ec32d080d001
               emission_sha256: sha256:d8c7f40c7755d023de8a9444fedd56061f2c0ff015d214bdb129e7acb0fd0140
-          unresolved_subitems: []
+          unresolved_subitems:
+            - conjugation-and-norm-random-scan-certificates
+            - additive-closure-random-scan-certificate
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: gict-residual-e38742ca0c18ff6ec5b2e9bdcdf99bc700c0ff2c38031b60a79dd17f4a617766
         ast_path: definition/1.4
@@ -2532,11 +2534,13 @@ sources:
             - gid: D5/S3/Constants/ElementaryExactValues.elementary_exact_values
               definition_sha256: sha256:63bfd9059f036ddf97e45bfdc228fd57a60aafa33fe675fd0f1392c8fcf3b68e
               emission_sha256: sha256:ce39f5137cb3b7eed8a073dd95ce7e5c038a55014b68cb21e380ab7b171bc7fc
-          unresolved_subitems: []
+          unresolved_subitems:
+            - phi-derivative-at-zero-identification
+            - ah-exact-value-delta-certificate
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: gict-residual-6964bf1e8116074d6e411bd303b78f34e8e48aa52960f3dabdc4dc1d309ff51f
         ast_path: theorem/5.3
@@ -2747,11 +2751,13 @@ sources:
             - gid: D5/S1/Dynamics/KnasterTarskiWitness.knaster_tarski_with_three_cycle_instance
               definition_sha256: sha256:d1422474efa77eb97915d863bf7e86468863be4cdc7ab0b33dd11d0fda125ceb
               emission_sha256: sha256:2f35b02335e17b644833b84614a4c11de6883f59f6c41a3dadecca763e6ba040
-          unresolved_subitems: []
+          unresolved_subitems:
+            - induction-coinduction-reachability-interpretation
+            - self-reference-gap-identification
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: gict-residual-345c00e75efa6387c97717df2d117e3ae889903a7c1a03bf64b82f18a928a0e2
         ast_path: theorem/7.2
@@ -7643,11 +7649,14 @@ sources:
             - gid: D5/S1/Deficit/DeficitInteger.deficit_integer
               definition_sha256: sha256:18e755b6af385cf2024513195a8f3e0308dd3d8462e0d440368a9bb0e0df5878
               emission_sha256: sha256:35640ce96685d485d258f210c0b486342332b210016c059e18c239d81eefbe2d
-          unresolved_subitems: []
+          unresolved_subitems:
+            - triangular-window-45150-pair-scan-certificate
+            - exact-deficit-value-distribution
+            - global-absolute-deficit-at-most-one-conjecture
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-1277b0530d1df95ed96dfdefb1f1111fdb201fc5153066b04b6c64b7021706bd
         ast_path: theorem/6.23
@@ -11344,11 +11353,12 @@ sources:
             - gid: D5/S3/Analytic/CompletedZetaMellinReconstruction.completed_zeta_mellin_reconstruction
               definition_sha256: sha256:045b1b2d6e2e26bfc7e3cf016d397df98ef529bbf4e91b587b526c813bc5d291
               emission_sha256: sha256:d28a9b7789016d2fd165dfd95f7405669b6f43eb0942291628050bc529dc0194
-          unresolved_subitems: []
+          unresolved_subitems:
+            - mellin-reconstruction-two-point-numerical-certificate
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: absorbed
+          migration: partial
           truth: closed
       - atom_id: pzg-residual-d8d80ec3f19f65a7714d4a4a8a02c18931cd42fb5669463c1edda24f55a776fc
         ast_path: corollary/23.11
