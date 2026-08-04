@@ -129,8 +129,9 @@ public sealed class FormalizeCandidatesTests
 
         Assert.True(result.Success, result.Error);
         using var json = JsonDocument.Parse(result.Output);
-        Assert.Equal("stratalint-formalize-candidates-v2", json.RootElement.GetProperty("schema").GetString());
+        Assert.Equal("stratalint-formalize-candidates-v3", json.RootElement.GetProperty("schema").GetString());
         Assert.Empty(json.RootElement.GetProperty("candidates").EnumerateArray());
+        Assert.Empty(json.RootElement.GetProperty("recorded_formalizations").EnumerateArray());
         Assert.Empty(json.RootElement.GetProperty("withheld").EnumerateArray());
     }
 
@@ -184,16 +185,59 @@ public sealed class FormalizeCandidatesTests
     }
 
     [Fact]
-    public void FormalizeCandidatesExcludesAtomCoveredByCurrentResolvableFormalizationReceipt()
+    public void FormalizeCandidatesReportsRecordedFormalizationWithEmptyCoverageSeparately()
     {
-        var entry = Entry("source", "receipt-covered", "定理", "5.4");
+        var entry = Entry(
+            "pzg-v170",
+            "pzg-residual-c2b458c0ec6e7494ffe7b15cc71ca9aa7afd5559254301851904c9c91c88d13f",
+            "定理",
+            "19.5");
 
         var result = Run([entry], formalizationReceipt: ValidReceipt(entry));
 
         Assert.True(result.Success, result.Error);
         using var json = JsonDocument.Parse(result.Output);
+        Assert.Equal("stratalint-formalize-candidates-v3", json.RootElement.GetProperty("schema").GetString());
         Assert.Empty(json.RootElement.GetProperty("candidates").EnumerateArray());
         Assert.Empty(json.RootElement.GetProperty("withheld").EnumerateArray());
+        var recorded = Assert.Single(
+            json.RootElement.GetProperty("recorded_formalizations").EnumerateArray());
+        Assert.Equal("pzg-v170", recorded.GetProperty("source_id").GetString());
+        Assert.Equal(entry.AtomId, recorded.GetProperty("atom_id").GetString());
+        Assert.Equal(
+            "current-formalization-receipt",
+            recorded.GetProperty("evidence_kind").GetString());
+        Assert.Equal(
+            "D5/S0/Synthetic/Receipt." + entry.AtomId.Replace('-', '_'),
+            recorded.GetProperty("primary_gid").GetString());
+        Assert.Equal(
+            DigestionFormalizationReceipt.RootPath
+                + entry.AtomId
+                + DigestionFormalizationReceipt.PathSuffix,
+            recorded.GetProperty("receipt_path").GetString());
+    }
+
+    [Fact]
+    public void FormalizeCandidatesDoesNotTreatDriftedReceiptSignatureAsCurrentFormalization()
+    {
+        var entry = Entry("source", "signature-drift", "定理", "5.5");
+        var receipt = DigestionFormalizationReceipt.Write(new DigestionFormalizationReceipt(
+            entry.AtomId,
+            "D5/S0/Synthetic/Receipt.signature_drift",
+            new DigestionFormalizationSignature("different", "axiom", "False"),
+            entry.Atom.Fingerprints.RawSha256,
+            entry.Atom.Fingerprints.RawSha256)).ToArray();
+
+        var result = Run([entry], formalizationReceipt: receipt);
+
+        Assert.True(result.Success, result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        Assert.Equal(
+            entry.AtomId,
+            Assert.Single(json.RootElement.GetProperty("candidates").EnumerateArray())
+                .GetProperty("atom_id")
+                .GetString());
+        Assert.Empty(json.RootElement.GetProperty("recorded_formalizations").EnumerateArray());
     }
 
     [Theory]
@@ -313,7 +357,7 @@ public sealed class FormalizeCandidatesTests
 
         Assert.True(result.Success, result.Error);
         using var json = JsonDocument.Parse(result.Output);
-        Assert.Equal("stratalint-formalize-candidates-v2", json.RootElement.GetProperty("schema").GetString());
+        Assert.Equal("stratalint-formalize-candidates-v3", json.RootElement.GetProperty("schema").GetString());
         Assert.Equal(
             ["plain-closed", "proved-closed"],
             json.RootElement.GetProperty("candidates")
@@ -432,8 +476,11 @@ public sealed class FormalizeCandidatesTests
     private static byte[] ValidReceipt(EntryFixture entry) =>
         DigestionFormalizationReceipt.Write(new DigestionFormalizationReceipt(
             entry.AtomId,
-            "D5/S0/Synthetic/Receipt.receipt_covered",
-            new DigestionFormalizationSignature("signature-is-not-an-exclusion-criterion", "axiom", "False"),
+            "D5/S0/Synthetic/Receipt." + entry.AtomId.Replace('-', '_'),
+            new DigestionFormalizationSignature(
+                entry.AtomId.Replace('-', '_'),
+                "theorem",
+                "statement-v1"),
             entry.Atom.Fingerprints.RawSha256,
             entry.Atom.Fingerprints.RawSha256)).ToArray();
 

@@ -74,7 +74,7 @@ BIN
 chmod +x "$tmpdir/bin/fkst-framework"
 cat > "$tmpdir/dotnet-bin/dotnet" <<'DOTNET'
 #!/usr/bin/env bash
-printf '{"schema":"stratalint-formalize-candidates-v2","candidates":[]}\n'
+printf '{"schema":"stratalint-formalize-candidates-v3","candidates":[],"recorded_formalizations":[],"withheld":[]}\n'
 DOTNET
 chmod +x "$tmpdir/dotnet-bin/dotnet"
 
