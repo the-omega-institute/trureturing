@@ -73,8 +73,10 @@ end
 
 -- Read the digestion formalize-candidates projection (spec slice 1: the flywheel's formalize
 -- target source is the digestion-ledger residual, not proposer's-choice). Host-legal but
--- forge-less: exec_sync + json.decode (mirrors the gh read above). Returns the candidates array,
--- or nil when the command fails / output is malformed (fail-closed -> honest no-op, never guess).
+-- forge-less: exec_sync + json.decode (mirrors the gh read above). The v3 projection separates
+-- current formalization receipts from proposal candidates; this consumer never derives Lean
+-- existence from coverage_gids. Returns the candidates array, or nil when the command fails /
+-- output is malformed (fail-closed -> honest no-op, never guess).
 local function formalize_candidates()
   local out = exec_sync({ cmd = core.formalize_candidates_command(), timeout = 300 })
   if type(out) ~= "table" or out.exit_code ~= 0 then
@@ -83,8 +85,9 @@ local function formalize_candidates()
   local ok, decoded = pcall(json.decode, tostring(out.stdout or "{}"))
   if not ok
     or type(decoded) ~= "table"
-    or decoded.schema ~= "stratalint-formalize-candidates-v2"
+    or decoded.schema ~= "stratalint-formalize-candidates-v3"
     or type(decoded.candidates) ~= "table"
+    or type(decoded.recorded_formalizations) ~= "table"
     or type(decoded.withheld) ~= "table" then
     return nil
   end

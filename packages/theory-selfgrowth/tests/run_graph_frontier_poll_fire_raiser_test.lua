@@ -21,8 +21,10 @@ local PRODUCER_MARKER = MARKER .. ":" .. BOT_LOGIN
 local GH_COMMAND = "gh issue list --repo 'owner/repo' --state all --search 'in:body " .. PRODUCER_MARKER
   .. "' --json number,state,body,comments --limit 1000"
 local DIGEST_COMMAND = core.formalize_candidates_command()
-local CANDIDATES = [[{"schema":"stratalint-formalize-candidates-v2","ledger_sha256":"sha256:ledger","candidates":[{"source_id":"GICT","atom_id":"GICT-T0001","ast_path":"theorem/one","kind":"theorem","cas_ref":"sha256:cas1","raw_sha256":"sha256:raw1","atom_text":"Theorem one\nDerivation one"},{"source_id":"GICT","atom_id":"GICT-T0002","ast_path":"theorem/two","kind":"theorem","cas_ref":"sha256:cas2","raw_sha256":"sha256:raw2","atom_text":"Theorem two\nDerivation two"}],"withheld":[]}]]
-local EMPTY_CANDIDATES = [[{"schema":"stratalint-formalize-candidates-v2","ledger_sha256":"sha256:ledger","candidates":[],"withheld":[]}]]
+local RECORDED_ATOM = "pzg-residual-c2b458c0ec6e7494ffe7b15cc71ca9aa7afd5559254301851904c9c91c88d13f"
+local RECORDED_GID = "D5/S3/Weil/SpectralDynamics.critical_line_characterizations"
+local CANDIDATES = [[{"schema":"stratalint-formalize-candidates-v3","ledger_sha256":"sha256:ledger","candidates":[{"source_id":"GICT","atom_id":"GICT-T0001","ast_path":"theorem/one","kind":"theorem","cas_ref":"sha256:cas1","raw_sha256":"sha256:raw1","atom_text":"Theorem one\nDerivation one"},{"source_id":"GICT","atom_id":"GICT-T0002","ast_path":"theorem/two","kind":"theorem","cas_ref":"sha256:cas2","raw_sha256":"sha256:raw2","atom_text":"Theorem two\nDerivation two"}],"recorded_formalizations":[{"source_id":"pzg-v170","atom_id":"]] .. RECORDED_ATOM .. [[","evidence_kind":"current-formalization-receipt","primary_gid":"]] .. RECORDED_GID .. [[","receipt_path":"Meta/Digestion/formalizations/]] .. RECORDED_ATOM .. [[.v1.json"}],"withheld":[]}]]
+local EMPTY_CANDIDATES = [[{"schema":"stratalint-formalize-candidates-v3","ledger_sha256":"sha256:ledger","candidates":[],"recorded_formalizations":[],"withheld":[]}]]
 
 local function mock_env()
   t.mock_command('printf %s "$FKST_GITHUB_REPO"', { stdout = "owner/repo", stderr = "", exit_code = 0 })
@@ -68,6 +70,7 @@ return {
     t.eq(trace.raised[1].payload.producer, BOT_LOGIN)
     t.is_true(trace.raised[1].payload.body:find("atom_id: GICT-T0001", 1, true) ~= nil)
     t.is_true(trace.raised[1].payload.body:find("Theorem one\nDerivation one", 1, true) ~= nil)
+    t.is_true(trace.raised[1].payload.body:find(RECORDED_ATOM, 1, true) == nil)
   end,
 
   test_run_graph_frontier_poll_produces_and_delivers_one_frontier_request = function()
@@ -149,10 +152,10 @@ return {
   test_fire_raiser_skips_oversize_candidate_without_truncating = function()
     mock_env()
     mock_history()
-    mock_candidates('{"schema":"stratalint-formalize-candidates-v2","ledger_sha256":"sha256:ledger","candidates":['
+    mock_candidates('{"schema":"stratalint-formalize-candidates-v3","ledger_sha256":"sha256:ledger","candidates":['
       .. '{"source_id":"GICT","atom_id":"large","ast_path":"theorem/large","kind":"theorem","cas_ref":"sha256:large","raw_sha256":"sha256:raw-large","atom_text":"'
       .. string.rep("x", 12000) .. '"},'
-      .. '{"source_id":"GICT","atom_id":"small","ast_path":"theorem/small","kind":"theorem","cas_ref":"sha256:small","raw_sha256":"sha256:raw-small","atom_text":"small theorem"}],"withheld":[]}')
+      .. '{"source_id":"GICT","atom_id":"small","ast_path":"theorem/small","kind":"theorem","cas_ref":"sha256:small","raw_sha256":"sha256:raw-small","atom_text":"small theorem"}],"recorded_formalizations":[],"withheld":[]}')
     local trace = t.fire_raiser("frontier_poll")
     t.eq(trace.consumer_result.status, "accepted")
     t.eq(#trace.raised, 1)
