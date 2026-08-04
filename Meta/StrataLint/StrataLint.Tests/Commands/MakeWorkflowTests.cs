@@ -519,6 +519,67 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Fact]
+    public void TheoryIngestRegistryBoundaryExplainsTheRequiredTwoPrRemedy()
+    {
+        var root = FindRepositoryRoot();
+        var workflow = File.ReadAllText(Path.Combine(root, TheoryIngestWorkflowPath));
+        var boundaryIndex = workflow.IndexOf(
+            "- name: Enforce candidate data-only boundary",
+            StringComparison.Ordinal);
+        var nextStepIndex = workflow.IndexOf("      - name: ", boundaryIndex + 1, StringComparison.Ordinal);
+        Assert.True(boundaryIndex >= 0, "the candidate data-only boundary must exist");
+        Assert.True(nextStepIndex > boundaryIndex, "the candidate data-only boundary must have a bounded body");
+
+        var boundary = workflow[boundaryIndex..nextStepIndex];
+        var caseIndex = boundary.IndexOf("case \"$path\" in", StringComparison.Ordinal);
+        Assert.True(caseIndex >= 0, "the input whitelist case arm must exist");
+        var caseEndIndex = boundary.IndexOf("esac", caseIndex, StringComparison.Ordinal);
+        Assert.True(caseEndIndex > caseIndex, "the input whitelist case arm must be bounded");
+        Assert.DoesNotContain(
+            "Meta/registry.yaml",
+            boundary[caseIndex..caseEndIndex],
+            StringComparison.Ordinal);
+
+        var failureIndex = boundary.IndexOf("if [[ \"${#bad[@]}\" -ne 0 ]]", StringComparison.Ordinal);
+        Assert.True(failureIndex >= 0, "the rejected-path failure block must exist");
+        var failure = boundary[failureIndex..];
+        var registryLoopIndex = failure.IndexOf("for path in \"${bad[@]}\"; do", StringComparison.Ordinal);
+        Assert.True(registryLoopIndex >= 0, "the rejected paths must be checked as native array elements");
+        var registryGuardIndex = failure.IndexOf(
+            "if [[ $path == \"Meta/registry.yaml\" ]]; then",
+            registryLoopIndex,
+            StringComparison.Ordinal);
+        Assert.True(registryGuardIndex > registryLoopIndex, "the registry flag must use exact path equality");
+        var registryLoopEndIndex = failure.IndexOf("done", registryGuardIndex, StringComparison.Ordinal);
+        Assert.True(registryLoopEndIndex > registryGuardIndex, "the registry path loop must be bounded");
+        var remedyGuardIndex = failure.IndexOf(
+            "if [[ $registry_rejected == true ]]; then",
+            registryLoopEndIndex,
+            StringComparison.Ordinal);
+        Assert.True(remedyGuardIndex > registryLoopEndIndex, "the registry remedy must be conditionally guarded");
+        var remedyGuardEndIndex = failure.IndexOf("\n            fi", remedyGuardIndex, StringComparison.Ordinal);
+        Assert.True(remedyGuardEndIndex > remedyGuardIndex, "the registry remedy guard must be bounded");
+        var registryRemedy = failure[remedyGuardIndex..remedyGuardEndIndex];
+        Assert.Contains("THEORY-INGEST-REGISTRY-001", registryRemedy, StringComparison.Ordinal);
+        Assert.Contains(
+            "separate harness PR",
+            registryRemedy,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "Meta/registry.yaml",
+            registryRemedy,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "drop its registry diff",
+            registryRemedy,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "theory ingest refuses non-data candidate path: %s\\n' \"${bad[@]}\"",
+            failure,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void TheoryIngestReemitsContentAddressedEchoProjectionBeforeWriteback()
     {
         var root = FindRepositoryRoot();
