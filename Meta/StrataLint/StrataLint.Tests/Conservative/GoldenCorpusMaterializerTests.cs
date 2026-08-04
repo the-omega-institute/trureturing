@@ -1,5 +1,6 @@
 using System.Text;
 using StrataLint.Cli;
+using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
@@ -76,6 +77,10 @@ public sealed class GoldenCorpusMaterializerTests
             repositoryRoot,
             temporary.Path,
             SpecificationPath);
+        Copy(
+            repositoryRoot,
+            temporary.Path,
+            TheoryAtomizerDataLoader.DataPath);
 
         var exception = Assert.Throws<FileNotFoundException>(
             () => GoldenCorpusMaterializer.Materialize(temporary.Path));
