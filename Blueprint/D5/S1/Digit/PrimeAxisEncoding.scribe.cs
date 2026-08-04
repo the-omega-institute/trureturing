@@ -10,6 +10,17 @@ internal sealed class PrimeAxisEncodingDocument : IScribeDocumentDefinition
             "Prime-indexed canonical W rows encode positive naturals and transport multiplication to table addition."),
         H("Prime-Axis Encoding"),
         Blocks(
+            DocumentBlock.Describe.Definition(
+                DescribeId.Create("prime-axis-encoding"),
+                H("Prime-axis encoding is the canonical bijection"),
+                LeanDefinition(
+                    "D5/S1/Digit/PrimeAxisEncoding.primeAxisEncoding"),
+                DescribeProvenance.RepoDerived(),
+                Blocks(Paragraph(Text(
+                    "Canonical finite-support W rows on every prime axis are equivalent "
+                    + "to positive natural numbers. The forward map decodes each axis "
+                    + "to its prime exponent and then applies unique factorization.")))
+            ),
             DocumentBlock.Describe.Theorem(
                 DescribeId.Create("prime-axis-table-equivalence-and-multiplication"),
                 H("Prime-axis table equivalence and multiplication"),
@@ -20,4 +31,10 @@ internal sealed class PrimeAxisEncodingDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text(
                     "Finitely supported prime axes carrying canonical W rows are equivalent to positive naturals through their factorization exponents. Addition transported through this equivalence decodes exactly as multiplication.")))
             ))));
+
+    private static LeanDeclarationRef LeanDefinition(string value) =>
+        LeanDeclarationRef.Create(
+            value,
+            expectedKind: LeanDeclarationKind.Definition,
+            requireNoSorry: true);
 }
