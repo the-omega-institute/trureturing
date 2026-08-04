@@ -310,7 +310,7 @@ internal static class CoverAtomCommand
             verified,
             baselineDocument: null,
             validateProjectedStatus: false);
-        RequireAlignedTarget(EvaluationFor(derived, options.AtomId), options.Gid);
+        RequireAlignedScribeReceipt(EvaluationFor(derived, options.AtomId), options.Gid);
         var finalBytes = BackfillInventoryWriter.WriteForIngest(planned);
         var finalRaw = ReplaceLedger(currentRaw, finalBytes);
         var finalSnapshot = Decode(finalRaw);
@@ -321,7 +321,7 @@ internal static class CoverAtomCommand
             lean,
             verified,
             baselineDocument: null);
-        RequireAlignedTarget(EvaluationFor(finalEvaluation, options.AtomId), options.Gid);
+        RequireAlignedScribeReceipt(EvaluationFor(finalEvaluation, options.AtomId), options.Gid);
 
         var currentLedger = currentRaw.Entries.Single(static entry =>
             entry.Path == BackfillInventoryLoader.RelativePath);
@@ -492,10 +492,12 @@ internal static class CoverAtomCommand
             + $"gaps={string.Join(",", covered.Gaps.Select(static gap => gap.Code))}");
     }
 
-    private static void RequireAlignedTarget(DigestionEntryEvaluation target, string gid)
+    private static void RequireAlignedScribeReceipt(DigestionEntryEvaluation target, string gid)
     {
         var targetGaps = target.Gaps
             .Where(gap => string.Equals(gap.Detail, gid, StringComparison.Ordinal))
+            .Where(static gap => gap.Code is
+                "scribe-definition-mismatch" or "scribe-emission-mismatch")
             .ToArray();
         if (targetGaps.Length == 0)
         {
