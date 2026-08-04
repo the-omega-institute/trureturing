@@ -81,7 +81,12 @@ public sealed class LeanReferenceTests
                     DescribeId.Create("compiled-theorem"),
                     Heading.Create("Compiled theorem"),
                     reference,
-                    LatexStatement.Create("$x = x$"),
+                    new Formula.Layout(
+                        FormulaLayoutMode.Inline,
+                        new Formula.Relation(
+                            new Formula.Symbol(FormulaIdentifier.Create("x")),
+                            FormulaRelationOperator.Equal,
+                            new Formula.Symbol(FormulaIdentifier.Create("x")))),
                     DescribeProvenance.RepoDerived(),
                     BlockSequence.Create(
                     [

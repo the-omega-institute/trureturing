@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Dynamics;
 
@@ -16,12 +18,7 @@ internal sealed class KnasterTarskiWitnessDocument : IScribeDocumentDefinition
                     H("Extremal fixed points with the three-state successor instance"),
                     LeanTheorem(
                         "D5/S1/Dynamics/KnasterTarskiWitness.knaster_tarski_with_three_cycle_instance"),
-                    LatexStatement.Create(
-                        @"$$(\forall f:\alpha\to_{o}\alpha,\ "
-                        + @"\operatorname{lfp}(f)=\min\operatorname{Fix}(f)\ \land\ "
-                        + @"\operatorname{gfp}(f)=\max\operatorname{Fix}(f))\ \land\ "
-                        + @"\operatorname{lfp}(\sigma_{3})=\varnothing\ \land\ "
-                        + @"\operatorname{gfp}(\sigma_{3})=\mathrm{univ}.$$"),
+                    Disp(Seq(Open, Forall, Sp, F.Id("f"), Colon, Alpha, To, Underscore, Grp(F.Id("o")), Alpha, Comma, Esc, Operatorname, Grp(F.Id("lfp")), Open, F.Id("f"), Close, Eq, Min, Operatorname, Grp(F.Id("Fix")), Open, F.Id("f"), Close, Esc, Land, Esc, Operatorname, Grp(F.Id("gfp")), Open, F.Id("f"), Close, Eq, Max, Operatorname, Grp(F.Id("Fix")), Open, F.Id("f"), Close, Close, Esc, Land, Esc, Operatorname, Grp(F.Id("lfp")), Open, SigmaLower, Underscore, Grp(D(3)), Close, Eq, Varnothing, Esc, Land, Esc, Operatorname, Grp(F.Id("gfp")), Open, SigmaLower, Underscore, Grp(D(3)), Close, Eq, Mathrm, Grp(F.Id("univ")), Dot)),
                     DescribeProvenance.RepoDerived(),
                     Blocks(
                         Paragraph(Text(

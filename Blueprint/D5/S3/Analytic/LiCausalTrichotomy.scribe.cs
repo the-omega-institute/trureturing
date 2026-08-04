@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic;
 
@@ -15,7 +17,7 @@ internal sealed class LiCausalTrichotomyDocument : IScribeDocumentDefinition
                 H("Causality, integrality, and monodromy are equivalent"),
                 LeanTheorem(
                     "D5/S3/Analytic/LiCausalTrichotomy.causal_iff_integer_iff_monodromy"),
-                LatexStatement.Create(@"$$\kappa\ge 0:\quad \operatorname{CausalRealization}(\kappa)\Leftrightarrow \kappa\in\mathbb{N}\Leftrightarrow e^{2\pi i\kappa}=1,\qquad \Delta_0\left(z^\kappa-1\right)=2i\sin(\pi\kappa),\qquad \ell_\kappa(u)\sim\frac{\sin(\pi\kappa)}{\pi u}\ \ (u\to\pm\infty).$$"),
+                Disp(Seq(Kappa, Ge, Sp, D(0), Colon, Quad, Sp, Operatorname, Grp(F.Id("CausalRealization")), Open, Kappa, Close, Leftrightarrow, Sp, Kappa, InMacro, Mathbb, Grp(F.Id("N")), Leftrightarrow, Sp, F.Id("e"), Caret, Grp(D(2), Pi, Sp, F.Id("i"), Kappa), Eq, D(1), Comma, Qquad, Sp, Delta, Underscore, D(0), Left, Open, F.Id("z"), Caret, Kappa, Minus, D(1), Right, Close, Eq, D(2), F.Id("i"), Sin, Open, Pi, Kappa, Close, Comma, Qquad, Sp, Ell, Underscore, Kappa, Open, F.Id("u"), Close, Sim, Frac, Grp(Sin, Open, Pi, Kappa, Close), Grp(Pi, Sp, F.Id("u")), Esc, Esc, Open, F.Id("u"), To, Pm, Infty, Close, Dot)),
                 DescribeProvenance.RepoDerived(),
                 Blocks(
                     Paragraph(Text(

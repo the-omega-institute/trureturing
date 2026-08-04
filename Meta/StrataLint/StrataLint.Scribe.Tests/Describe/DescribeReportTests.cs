@@ -128,7 +128,7 @@ public sealed class DescribeReportTests
                         Heading.Create("Missing declaration"),
                         LeanDeclarationRef.Create(
                             "D5/S1/Phase/Basic.missing_declaration"),
-                        LatexStatement.Create("$x = x$"),
+                        InlineIdentity(),
                         DescribeProvenance.RepoDerived(),
                         BlockSequence.Create(
                         [
@@ -253,7 +253,7 @@ public sealed class DescribeReportTests
         var content = DefinitionDsl.Blocks(
             DefinitionDsl.Paragraph(DefinitionDsl.Text("Typed narrative.")));
         var lean = DefinitionDsl.LeanTheorem("D5/S1/Phase/Basic.fixture_claim");
-        var latex = LatexStatement.Create("$x = x$");
+        var latex = InlineIdentity();
         return kind switch
         {
             DescribeKind.Definition => DocumentBlock.Describe.Definition(
@@ -275,6 +275,13 @@ public sealed class DescribeReportTests
             _ => throw new ArgumentOutOfRangeException(nameof(kind)),
         };
     }
+
+    private static Formula InlineIdentity() => new Formula.Layout(
+        FormulaLayoutMode.Inline,
+        new Formula.Relation(
+            new Formula.Symbol(FormulaIdentifier.Create("x")),
+            FormulaRelationOperator.Equal,
+            new Formula.Symbol(FormulaIdentifier.Create("x"))));
 
     private static void WithRepository(
         Action<string> assertion,

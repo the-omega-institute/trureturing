@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Recurrence;
 
@@ -17,12 +19,7 @@ internal sealed class CyclicGapsPartitionDocument : IScribeDocumentDefinition
                     LeanTheorem(
                         "D5/S1/Recurrence/CyclicGapsPartition."
                         + "cyclic_gaps_partition_circle"),
-                    LatexStatement.Create(
-                        @"$$\forall S\subseteq[0,1)\ \text{finite},\ S\neq\emptyset,\ "
-                        + @"g_S(x)=\begin{cases}(1-x)+\min S,&x=\max S\\"
-                        + @"\operatorname{succ}_S(x)-x,&x\neq\max S\end{cases}:\ "
-                        + @"(\forall x\in S,\ \operatorname{succ}_S(x)\in S)\ \land\ "
-                        + @"(\forall x\in S,\ g_S(x)>0)\ \land\ \sum_{x\in S}g_S(x)=1$$"),
+                    Disp(Seq(Forall, Sp, F.Id("S"), Subseteq, OpenBracket, D(0), Comma, D(1), Close, Esc, F.Text, Grp(F.Id("finite")), Comma, Esc, F.Id("S"), Neq, Emptyset, Comma, Esc, F.Id("g"), Underscore, F.Id("S"), Open, F.Id("x"), Close, Eq, Begin, Grp(F.Id("cases")), Open, D(1), Minus, F.Id("x"), Close, Plus, Min, Sp, F.Id("S"), Comma, Amp, F.Id("x"), Eq, Max, Sp, F.Id("S"), RowBreak, Operatorname, Grp(F.Id("succ")), Underscore, F.Id("S"), Open, F.Id("x"), Close, Minus, F.Id("x"), Comma, Amp, F.Id("x"), Neq, Max, Sp, F.Id("S"), End, Grp(F.Id("cases")), Colon, Esc, Open, Forall, Sp, F.Id("x"), InMacro, Sp, F.Id("S"), Comma, Esc, Operatorname, Grp(F.Id("succ")), Underscore, F.Id("S"), Open, F.Id("x"), Close, InMacro, Sp, F.Id("S"), Close, Esc, Land, Esc, Open, Forall, Sp, F.Id("x"), InMacro, Sp, F.Id("S"), Comma, Esc, F.Id("g"), Underscore, F.Id("S"), Open, F.Id("x"), Close, Gt, D(0), Close, Esc, Land, Esc, Sum, Underscore, Grp(F.Id("x"), InMacro, Sp, F.Id("S")), F.Id("g"), Underscore, F.Id("S"), Open, F.Id("x"), Close, Eq, D(1))),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "For a nonempty finite subset of the half-open unit interval, each "

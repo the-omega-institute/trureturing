@@ -65,6 +65,17 @@ public sealed class C0RenewCommandTests
     }
 
     [Fact]
+    public void InstallConfirmationReusesTheInitiallyFrozenBaseIdentity()
+    {
+        var environment = new SyntheticRenewEnvironment(Certificate());
+
+        var result = C0RenewCommand.Run(["--base", "origin/dev"], environment);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Equal(["origin/dev", BaseCommit], environment.ReadStateReferences);
+    }
+
+    [Fact]
     public void TamperedCandidateCannotBeLaunderedByRenewAndPostGateRemainsRed()
     {
         var environment = new SyntheticRenewEnvironment(
@@ -374,13 +385,19 @@ public sealed class C0RenewCommandTests
 
         internal int LockAcquisitions { get; private set; }
 
+        internal List<string> ReadStateReferences { get; } = [];
+
         internal ImmutableArray<byte> CurrentTower { get; private set; }
 
         internal ImmutableArray<byte> CurrentCertificate { get; private set; }
 
         public C0RenewState ReadState(string baseReference)
         {
-            Assert.Equal(BaseCommit, baseReference);
+            ReadStateReferences.Add(baseReference);
+            Assert.True(
+                ReadStateReferences.Count == 1
+                    ? baseReference == "origin/dev" || baseReference == BaseCommit
+                    : baseReference == BaseCommit);
             var changed = outputsDirty
                 ? [RepositoryRules.TowerManifestPath, C0CeremonyProjection.CertificatePath]
                 : ImmutableArray<string>.Empty;

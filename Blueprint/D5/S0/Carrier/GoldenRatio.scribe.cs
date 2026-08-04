@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S0.Carrier;
 
@@ -15,7 +17,7 @@ internal sealed class GoldenRatioDocument : IScribeDocumentDefinition
                 H("Radical, fixed-point, and conjugate identities"),
                 LeanTheorem(
                     "D5/S0/Carrier/GoldenRatio.golden_ratio_spec"),
-                LatexStatement.Create(@"$$\varphi = \frac{1 + \sqrt{5}}{2} \land \varphi^{2} = \varphi + 1 \land 1 - \varphi = -\frac{1}{\varphi}$$"),
+                Disp(Seq(Varphi, Sp, Eq, Sp, Frac, Grp(D(1), Sp, Plus, Sp, Sqrt, Grp(D(5))), Grp(D(2)), Sp, Land, Sp, Varphi, Caret, Grp(D(2)), Sp, Eq, Sp, Varphi, Sp, Plus, Sp, D(1), Sp, Land, Sp, D(1), Sp, Minus, Sp, Varphi, Sp, Eq, Sp, Minus, Frac, Grp(D(1)), Grp(Varphi))),
                 DescribeProvenance.LiteratureAttested(
                     LibraryNoteRef.Create("D5/L/koshy2001fibonacci")),
                 Blocks(Paragraph(Text(

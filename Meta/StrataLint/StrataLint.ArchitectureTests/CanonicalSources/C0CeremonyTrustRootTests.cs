@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Text.Json;
 using System.Xml.Linq;
+using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.ArchitectureTests;
@@ -236,7 +237,10 @@ public sealed class C0CeremonyTrustRootTests
             certificateRoot.GetProperty("schema").GetString());
         Assert.Equal("CORPUS_CONSERVATIVE", certificateRoot.GetProperty("status").GetString());
         Assert.Empty(certificateRoot.GetProperty("findings").EnumerateArray());
-        Assert.Equal(119, certificateRoot.GetProperty("golden_case_count").GetInt32());
+        var goldenCorpus = TomlGoldenLoader.LoadRepository(root);
+        Assert.Equal(
+            goldenCorpus.Cases.Count,
+            certificateRoot.GetProperty("golden_case_count").GetInt32());
         var implication = certificateRoot.GetProperty("positive_implication");
         Assert.Equal(
             implication.GetProperty("baseline_admit_count").GetInt32(),

@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Dynamics;
 
@@ -16,8 +18,7 @@ internal sealed class RecursiveDefinitionDocument : IScribeDocumentDefinition
                     H("A recursive equation is a fixed-point equation"),
                     LeanTheorem(
                         "D5/S1/Dynamics/RecursiveDefinition.is_recursive_definition_iff_fixed_point"),
-                    LatexStatement.Create(
-                        @"$$f(x)=x\iff x\in\operatorname{Fix}(f).$$"),
+                    Disp(Seq(F.Id("f"), Open, F.Id("x"), Close, Eq, F.Id("x"), Iff, Sp, F.Id("x"), InMacro, Operatorname, Grp(F.Id("Fix")), Open, F.Id("f"), Close, Dot)),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "For an arbitrary endomorphism and candidate value, the equation "
@@ -28,14 +29,7 @@ internal sealed class RecursiveDefinitionDocument : IScribeDocumentDefinition
                     H("Distinct extremal fixed points make the selection observable"),
                     LeanTheorem(
                         "D5/S1/Dynamics/RecursiveDefinition.extremal_selection_distinguishes_fixed_points"),
-                    LatexStatement.Create(
-                        @"$$\operatorname{lfp}(f)\neq\operatorname{gfp}(f)\Rightarrow "
-                        + @"f(\operatorname{select}_f(\mathrm{least}))="
-                        + @"\operatorname{select}_f(\mathrm{least})\land "
-                        + @"f(\operatorname{select}_f(\mathrm{greatest}))="
-                        + @"\operatorname{select}_f(\mathrm{greatest})\land "
-                        + @"\operatorname{select}_f(\mathrm{least})\neq"
-                        + @"\operatorname{select}_f(\mathrm{greatest}).$$"),
+                    Disp(Seq(Operatorname, Grp(F.Id("lfp")), Open, F.Id("f"), Close, Neq, Operatorname, Grp(F.Id("gfp")), Open, F.Id("f"), Close, Rightarrow, Sp, F.Id("f"), Open, Operatorname, Grp(F.Id("select")), Underscore, F.Id("f"), Open, Mathrm, Grp(F.Id("least")), Close, Close, Eq, Operatorname, Grp(F.Id("select")), Underscore, F.Id("f"), Open, Mathrm, Grp(F.Id("least")), Close, Land, Sp, F.Id("f"), Open, Operatorname, Grp(F.Id("select")), Underscore, F.Id("f"), Open, Mathrm, Grp(F.Id("greatest")), Close, Close, Eq, Operatorname, Grp(F.Id("select")), Underscore, F.Id("f"), Open, Mathrm, Grp(F.Id("greatest")), Close, Land, Sp, Operatorname, Grp(F.Id("select")), Underscore, F.Id("f"), Open, Mathrm, Grp(F.Id("least")), Close, Neq, Operatorname, Grp(F.Id("select")), Underscore, F.Id("f"), Open, Mathrm, Grp(F.Id("greatest")), Close, Dot)),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "The selector is explicit data with least and greatest cases. For a "
@@ -48,9 +42,7 @@ internal sealed class RecursiveDefinitionDocument : IScribeDocumentDefinition
                     H("Uniqueness identifies the least and greatest fixed points"),
                     LeanTheorem(
                         "D5/S1/Dynamics/RecursiveDefinition.unique_fixed_point_implies_lfp_eq_gfp"),
-                    LatexStatement.Create(
-                        @"$$\left(\exists!x,\ f(x)=x\right)\Rightarrow "
-                        + @"\operatorname{lfp}(f)=\operatorname{gfp}(f).$$"),
+                    Disp(Seq(Left, Open, Exists, Bang, F.Id("x"), Comma, Esc, F.Id("f"), Open, F.Id("x"), Close, Eq, F.Id("x"), Right, Close, Rightarrow, Sp, Operatorname, Grp(F.Id("lfp")), Open, F.Id("f"), Close, Eq, Operatorname, Grp(F.Id("gfp")), Open, F.Id("f"), Close, Dot)),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "For a monotone endomorphism of a complete lattice, the existence of "

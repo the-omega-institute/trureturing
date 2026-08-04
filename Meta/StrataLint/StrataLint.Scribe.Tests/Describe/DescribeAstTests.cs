@@ -21,7 +21,7 @@ public sealed class DescribeAstTests
         Assert.Equal(
             [
                 typeof(DescribeId), typeof(Heading), typeof(LeanDeclarationRef),
-                typeof(DescribeProvenance), typeof(BlockSequence), typeof(LatexStatement),
+                typeof(DescribeProvenance), typeof(BlockSequence), typeof(Formula),
             ],
             Assert.Single(factories, static method => method.Name == "Definition")
                 .GetParameters().Select(static parameter => parameter.ParameterType));
@@ -44,7 +44,7 @@ public sealed class DescribeAstTests
             Assert.Equal(
                 [
                     typeof(DescribeId), typeof(Heading), typeof(LeanDeclarationRef),
-                    typeof(LatexStatement), typeof(DescribeProvenance), typeof(BlockSequence),
+                    typeof(Formula), typeof(DescribeProvenance), typeof(BlockSequence),
                 ],
                 Assert.Single(factories, method => method.Name == name)
                     .GetParameters().Select(static parameter => parameter.ParameterType));
@@ -91,14 +91,22 @@ public sealed class DescribeAstTests
             DefinitionDsl.LeanTheorem("D5/S1/Phase/Basic.golden_generator"),
             provenance,
             content,
-            LatexStatement.Create("$\\varphi^{2} = \\varphi + 1$"));
+            new Formula.Layout(
+                FormulaLayoutMode.Inline,
+                new Formula.Relation(
+                    new Formula.Power(new Formula.Phi(), new Formula.Number(2)),
+                    FormulaRelationOperator.Equal,
+                    new Formula.Binary(
+                        new Formula.Phi(),
+                        FormulaBinaryOperator.Add,
+                        new Formula.Number(1)))));
 
         Assert.Equal("golden-generator", describe.Id.Value);
         Assert.Equal(DescribeKind.Definition, describe.Kind);
         Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
         Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.Provenance.Kind);
         Assert.Same(content, describe.Content);
-        Assert.Equal("$\\varphi^{2} = \\varphi + 1$", describe.StatementLatex?.Value);
+        Assert.Equal("$\\varphi^{2} = \\varphi + 1$", describe.StatementFormula is null ? null : LatexWriter.WriteStatement(describe.StatementFormula));
     }
 
     [Fact]

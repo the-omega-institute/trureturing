@@ -31,7 +31,7 @@ domains:
     definition: Visible-hidden dynamics of phase trajectories, throat transitions, and jump cocycles.
   Fourier:
     stratum: S3
-    definition: Entire analytic extensions of the Weil Fourier-Laplace transform.
+    definition: Fourier analysis for the kernel, including finite and discrete Poisson summation and entire analytic extensions of the Weil Fourier-Laplace transform.
   History:
     stratum: S0
     definition: Finite marker and event histories, their append operation, and faithful self-encoding bridges.

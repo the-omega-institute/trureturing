@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Arith;
 
@@ -15,12 +17,7 @@ internal sealed class ChineseRemainderDocument : IScribeDocumentDefinition
                 H("The natural map modulo coprime factors is bijective"),
                 LeanTheorem(
                     "D5/S3/Arith/ChineseRemainder.chinese_remainder_bijective"),
-                LatexStatement.Create(
-                    @"$$\gcd(m,n)=1 \Rightarrow "
-                    + @"\left(\mathbb{Z}/mn\mathbb{Z} \to "
-                    + @"\mathbb{Z}/m\mathbb{Z}\times\mathbb{Z}/n\mathbb{Z},\ "
-                    + @"x\mapsto(x\operatorname{mod}m,x\operatorname{mod}n)\right)"
-                    + @"\text{ is bijective}$$"),
+                Disp(Seq(Gcd, Open, F.Id("m"), Comma, F.Id("n"), Close, Eq, D(1), Sp, Rightarrow, Sp, Left, Open, Mathbb, Grp(F.Id("Z")), Slash, F.Id("mn"), Mathbb, Grp(F.Id("Z")), Sp, To, Sp, Mathbb, Grp(F.Id("Z")), Slash, F.Id("m"), Mathbb, Grp(F.Id("Z")), Times, Mathbb, Grp(F.Id("Z")), Slash, F.Id("n"), Mathbb, Grp(F.Id("Z")), Comma, Esc, F.Id("x"), Mapsto, Open, F.Id("x"), Operatorname, Grp(F.Id("mod")), F.Id("m"), Comma, F.Id("x"), Operatorname, Grp(F.Id("mod")), F.Id("n"), Close, Right, Close, F.Text, Grp(Sp, F.Id("is"), Sp, F.Id("bijective")))),
                 DescribeProvenance.RepoDerived(),
                 Blocks(
                     Paragraph(Text(

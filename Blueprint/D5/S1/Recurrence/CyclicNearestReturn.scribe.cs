@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Recurrence;
 
@@ -17,18 +19,7 @@ internal sealed class CyclicNearestReturnDocument : IScribeDocumentDefinition
                     LeanTheorem(
                         "D5/S1/Recurrence/CyclicNearestReturn."
                         + "cyclic_nearest_return_spec"),
-                    LatexStatement.Create(
-                        @"$$\forall S\subseteq\alpha\ \text{finite},\ S\neq\emptyset:\ "
-                        + @"(\forall x\in S,\ \operatorname{succ}_S(x)\in S)\ \land\ "
-                        + @"(\forall x\in S,\ \operatorname{pred}_S(x)\in S)\ \land\ "
-                        + @"(\forall x\in S,\ \operatorname{pred}_S(\operatorname{succ}_S(x))=x)"
-                        + @"\ \land\ (\forall x\in S,\ "
-                        + @"\operatorname{succ}_S(\operatorname{pred}_S(x))=x)\ \land\ "
-                        + @"(\forall x,y\in S,\ x<y\Rightarrow\neg\,"
-                        + @"(y<\operatorname{succ}_S(x)))\ \land\ (\forall x,y\in S,\ "
-                        + @"y<x\Rightarrow\neg\,(\operatorname{pred}_S(x)<y))\ \land\ "
-                        + @"\operatorname{succ}_S(\max S)=\min S\ \land\ "
-                        + @"\operatorname{pred}_S(\min S)=\max S$$"),
+                    Disp(Seq(Forall, Sp, F.Id("S"), Subseteq, Alpha, Esc, F.Text, Grp(F.Id("finite")), Comma, Esc, F.Id("S"), Neq, Emptyset, Colon, Esc, Open, Forall, Sp, F.Id("x"), InMacro, Sp, F.Id("S"), Comma, Esc, Operatorname, Grp(F.Id("succ")), Underscore, F.Id("S"), Open, F.Id("x"), Close, InMacro, Sp, F.Id("S"), Close, Esc, Land, Esc, Open, Forall, Sp, F.Id("x"), InMacro, Sp, F.Id("S"), Comma, Esc, Operatorname, Grp(F.Id("pred")), Underscore, F.Id("S"), Open, F.Id("x"), Close, InMacro, Sp, F.Id("S"), Close, Esc, Land, Esc, Open, Forall, Sp, F.Id("x"), InMacro, Sp, F.Id("S"), Comma, Esc, Operatorname, Grp(F.Id("pred")), Underscore, F.Id("S"), Open, Operatorname, Grp(F.Id("succ")), Underscore, F.Id("S"), Open, F.Id("x"), Close, Close, Eq, F.Id("x"), Close, Esc, Land, Esc, Open, Forall, Sp, F.Id("x"), InMacro, Sp, F.Id("S"), Comma, Esc, Operatorname, Grp(F.Id("succ")), Underscore, F.Id("S"), Open, Operatorname, Grp(F.Id("pred")), Underscore, F.Id("S"), Open, F.Id("x"), Close, Close, Eq, F.Id("x"), Close, Esc, Land, Esc, Open, Forall, Sp, F.Id("x"), Comma, F.Id("y"), InMacro, Sp, F.Id("S"), Comma, Esc, F.Id("x"), Lt, F.Id("y"), Rightarrow, Neg, Thin, Open, F.Id("y"), Lt, Operatorname, Grp(F.Id("succ")), Underscore, F.Id("S"), Open, F.Id("x"), Close, Close, Close, Esc, Land, Esc, Open, Forall, Sp, F.Id("x"), Comma, F.Id("y"), InMacro, Sp, F.Id("S"), Comma, Esc, F.Id("y"), Lt, F.Id("x"), Rightarrow, Neg, Thin, Open, Operatorname, Grp(F.Id("pred")), Underscore, F.Id("S"), Open, F.Id("x"), Close, Lt, F.Id("y"), Close, Close, Esc, Land, Esc, Operatorname, Grp(F.Id("succ")), Underscore, F.Id("S"), Open, Max, Sp, F.Id("S"), Close, Eq, Min, Sp, F.Id("S"), Esc, Land, Esc, Operatorname, Grp(F.Id("pred")), Underscore, F.Id("S"), Open, Min, Sp, F.Id("S"), Close, Eq, Max, Sp, F.Id("S"))),
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "Every nonempty finite subset of a linear order has a cyclic successor "

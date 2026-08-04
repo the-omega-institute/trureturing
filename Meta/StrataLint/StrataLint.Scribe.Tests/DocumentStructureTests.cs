@@ -21,7 +21,7 @@ public sealed class DocumentStructureTests
             Heading.Create("Embedding formula"),
 
                 LeanDeclarationRef.Create("D5/S1/Scale/Embedding.embedding_apply"),
-            LatexStatement.Create("$\\operatorname{embed}(x) = x$"),
+            InlineEmbedEquality(new Formula.Symbol(FormulaIdentifier.Create("x"))),
             DescribeProvenance.RepoDerived(),
             BlockSequence.Create([paragraph])
         );
@@ -30,7 +30,15 @@ public sealed class DocumentStructureTests
             Heading.Create("Embedding is injective"),
 
                 LeanDeclarationRef.Create("D5/S1/Scale/Embedding.embedding_injective"),
-            LatexStatement.Create("$\\operatorname{embed}(x) = 0 \\Rightarrow x = 0$"),
+            new Formula.Layout(
+                FormulaLayoutMode.Inline,
+                new Formula.Logic(
+                    ((Formula.Layout)InlineEmbedEquality(new Formula.Number(0))).Content,
+                    FormulaLogicOperator.Implies,
+                    new Formula.Relation(
+                        new Formula.Symbol(FormulaIdentifier.Create("x")),
+                        FormulaRelationOperator.Equal,
+                        new Formula.Number(0)))),
             DescribeProvenance.RepoDerived(),
             BlockSequence.Create([paragraph])
         );
@@ -57,6 +65,15 @@ public sealed class DocumentStructureTests
                 DescribeKind.Theorem,
                 Assert.IsType<DocumentBlock.Describe>(item).Kind));
     }
+
+    private static Formula InlineEmbedEquality(Formula right) => new Formula.Layout(
+        FormulaLayoutMode.Inline,
+        new Formula.Relation(
+            new Formula.FunctionCall(
+                FormulaIdentifier.Create("embed"),
+                [new Formula.Symbol(FormulaIdentifier.Create("x"))]),
+            FormulaRelationOperator.Equal,
+            right));
 
     [Fact]
     public void TextRunsAndHeadingsRejectStructuralLineBreaks()

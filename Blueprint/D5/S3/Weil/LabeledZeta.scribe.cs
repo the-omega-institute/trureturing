@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Weil;
 
@@ -15,7 +17,7 @@ internal sealed class LabeledZetaDocument : IScribeDocumentDefinition
                 H("The labeled vector never vanishes"),
                 LeanTheorem(
                     "D5/S3/Weil/LabeledZeta.labeled_zeta_vector_ne_zero"),
-                LatexStatement.Create(@"$\forall A\ [\operatorname{AddMonoid}(A)],\ \forall \ell:A\to_{+}\mathbb{R},\ \forall s\in\mathbb{C},\ \operatorname{labeledZeta}(\ell,s)\neq 0$"),
+                In(Seq(Forall, Sp, F.Id("A"), Esc, OpenBracket, Operatorname, Grp(F.Id("AddMonoid")), Open, F.Id("A"), Close, CloseBracket, Comma, Esc, Forall, Sp, Ell, Colon, F.Id("A"), To, Underscore, Grp(Plus), Mathbb, Grp(F.Id("R")), Comma, Esc, Forall, Sp, F.Id("s"), InMacro, Mathbb, Grp(F.Id("C")), Comma, Esc, Operatorname, Grp(F.Id("labeledZeta")), Open, Ell, Comma, F.Id("s"), Close, Neq, Sp, D(0))),
                 DescribeProvenance.LiteratureAttested(
                     LibraryNoteRef.Create("D5/L/hedenmalm1997hilbert")),
                 Blocks(Paragraph(Text(

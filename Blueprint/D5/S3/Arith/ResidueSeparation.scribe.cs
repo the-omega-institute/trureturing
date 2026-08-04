@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Arith;
 
@@ -15,9 +17,7 @@ internal sealed class ResidueSeparationDocument : IScribeDocumentDefinition
                 H("A modulus above both operands separates distinct residues"),
                 LeanTheorem(
                     "D5/S3/Arith/ResidueSeparation.residue_separation"),
-                LatexStatement.Create(
-                    @"$$\forall m,n,M\in\mathbb{N},\ m \neq n \land \max(m,n) < M \Rightarrow "
-                    + @"(m \operatorname{mod} M) \neq (n \operatorname{mod} M)$$"),
+                Disp(Seq(Forall, Sp, F.Id("m"), Comma, F.Id("n"), Comma, F.Id("M"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Esc, F.Id("m"), Sp, Neq, Sp, F.Id("n"), Sp, Land, Sp, Max, Open, F.Id("m"), Comma, F.Id("n"), Close, Sp, Lt, Sp, F.Id("M"), Sp, Rightarrow, Sp, Open, F.Id("m"), Sp, Operatorname, Grp(F.Id("mod")), Sp, F.Id("M"), Close, Sp, Neq, Sp, Open, F.Id("n"), Sp, Operatorname, Grp(F.Id("mod")), Sp, F.Id("M"), Close)),
                 DescribeProvenance.RepoDerived(),
                 Blocks(
                     Paragraph(Text(

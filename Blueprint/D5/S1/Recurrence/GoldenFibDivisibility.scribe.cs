@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Recurrence;
 
@@ -15,8 +17,7 @@ internal sealed class GoldenFibDivisibilityDocument : IScribeDocumentDefinition
                 H("Fibonacci divisibility detects index divisibility"),
                 LeanTheorem(
                     "D5/S1/Recurrence/GoldenFibDivisibility.fib_dvd_iff"),
-                LatexStatement.Create(
-                    @"$$a \ge 3 \implies \left(F_a \mid F_b \iff a \mid b\right)$$"),
+                Disp(Seq(F.Id("a"), Sp, Ge, Sp, D(3), Sp, Implies, Sp, Left, Open, F.Id("F"), Underscore, F.Id("a"), Sp, Mid, Sp, F.Id("F"), Underscore, F.Id("b"), Sp, Iff, Sp, F.Id("a"), Sp, Mid, Sp, F.Id("b"), Right, Close)),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "For natural indices a and b with a at least three, the Fibonacci "

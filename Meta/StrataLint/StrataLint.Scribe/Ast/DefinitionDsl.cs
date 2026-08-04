@@ -57,4 +57,5 @@ public static class DefinitionDsl
 
     public static Formula NotEqual(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.NotEqual, right);
+
 }

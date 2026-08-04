@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Dynamics;
 
@@ -16,11 +18,7 @@ internal sealed class JumpCocycleDocument : IScribeDocumentDefinition
                     H("Hidden-fiber jump legality is cocycle consistency"),
                     LeanTheorem(
                         "D5/S1/Dynamics/JumpCocycle.jump_cocycle"),
-                    LatexStatement.Create(
-                        @"$$s_{\beta}=s_{\alpha}+\iota(k_{\alpha\beta}),\quad "
-                        + @"s_{\gamma}=s_{\beta}+\iota(k_{\beta\gamma})\Rightarrow "
-                        + @"\left(s_{\gamma}=s_{\alpha}+\iota(k_{\alpha\gamma})\Leftrightarrow "
-                        + @"k_{\alpha\gamma}=k_{\alpha\beta}+k_{\beta\gamma}\right)$$"),
+                    Disp(Seq(F.Id("s"), Underscore, Grp(Beta), Eq, F.Id("s"), Underscore, Grp(Alpha), Plus, Iota, Open, F.Id("k"), Underscore, Grp(Alpha, Beta), Close, Comma, Quad, Sp, F.Id("s"), Underscore, Grp(GammaLower), Eq, F.Id("s"), Underscore, Grp(Beta), Plus, Iota, Open, F.Id("k"), Underscore, Grp(Beta, GammaLower), Close, Rightarrow, Sp, Left, Open, F.Id("s"), Underscore, Grp(GammaLower), Eq, F.Id("s"), Underscore, Grp(Alpha), Plus, Iota, Open, F.Id("k"), Underscore, Grp(Alpha, GammaLower), Close, Leftrightarrow, Sp, F.Id("k"), Underscore, Grp(Alpha, GammaLower), Eq, F.Id("k"), Underscore, Grp(Alpha, Beta), Plus, F.Id("k"), Underscore, Grp(Beta, GammaLower), Right, Close)),
                     DescribeProvenance.RepoDerived(),
                     Blocks(
                         Paragraph(Text(

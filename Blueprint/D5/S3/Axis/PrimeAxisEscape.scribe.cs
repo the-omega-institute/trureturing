@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Axis;
 
@@ -18,12 +20,7 @@ internal sealed class PrimeAxisEscapeDocument : IScribeDocumentDefinition
                 H("A finite prime axis has an external prime divisor"),
                 LeanTheorem(
                     "D5/S3/Axis/PrimeAxisEscape.prime_axis_escape"),
-                LatexStatement.Create(
-                    @"$$\forall S\subset_{\operatorname{fin}}\mathbb{N},\ "
-                    + @"(\forall p\in S,\ p\ \text{prime}) \Rightarrow "
-                    + @"((\forall p\in S,\ \prod_{r\in S}r+1\equiv 1\ "
-                    + @"(\operatorname{mod}\ p)) \land \exists q\in\mathbb{N},\ "
-                    + @"q\ \text{prime}\land q\mid \prod_{r\in S}r+1\land q\notin S)$$"),
+                PrimeAxisEscapeFormula(),
                 DescribeProvenance.LiteratureAttested(Apostol),
                 Blocks(Paragraph(Text(
                     "For a finite set S consisting only of natural primes, its product plus one "
@@ -37,4 +34,36 @@ internal sealed class PrimeAxisEscapeDocument : IScribeDocumentDefinition
                     + "the product plus one would divide one. No numerical certificate is "
                     + "asserted.")))
             ))));
+
+    private static Formula PrimeAxisEscapeFormula()
+    {
+        Formula naturals = Seq(Mathbb, Grp(F.Id("N")));
+        Formula finiteSubset = new Formula.Subscript(
+            Subset,
+            Seq(Operatorname, Grp(F.Id("fin"))));
+        Formula productPlusOne = Seq(
+            new Formula.Subscript(
+                Prod,
+                Seq(F.Id("r"), InMacro, F.Id("S"))),
+            F.Id("r"),
+            Plus,
+            D(1));
+
+        return Disp(Seq(
+            Forall, Sp, F.Id("S"), finiteSubset, naturals, Comma, Esc,
+            Open,
+            Forall, Sp, F.Id("p"), InMacro, F.Id("S"), Comma, Esc,
+            F.Id("p"), Esc, F.Text, Grp(F.Id("prime")),
+            Close, Sp, Rightarrow, Sp,
+            Open, Open,
+            Forall, Sp, F.Id("p"), InMacro, F.Id("S"), Comma, Esc,
+            productPlusOne, Equiv, Sp, D(1), Esc,
+            Open, Operatorname, Grp(F.Id("mod")), Esc, F.Id("p"), Close,
+            Close, Sp, Land, Sp,
+            Exists, Sp, F.Id("q"), InMacro, naturals, Comma, Esc,
+            F.Id("q"), Esc, F.Text, Grp(F.Id("prime")),
+            Land, Sp, F.Id("q"), Mid, Sp, productPlusOne,
+            Land, Sp, Neg, Open, F.Id("q"), InMacro, F.Id("S"), Close,
+            Close));
+    }
 }

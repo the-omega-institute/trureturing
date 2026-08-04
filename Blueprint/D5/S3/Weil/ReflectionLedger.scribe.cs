@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Weil;
 
@@ -15,7 +17,7 @@ internal sealed class ReflectionLedgerDocument : IScribeDocumentDefinition
                 H("Mirror fixed points lie on the critical line"),
                 LeanTheorem(
                     "D5/S3/Weil/ReflectionLedger.mirror_fixed_re_eq"),
-                LatexStatement.Create(@"$\forall s\in\mathbb{C},\ \operatorname{mirror}(s)=s \Rightarrow \Re(s)=\frac{1}{2}$"),
+                In(Seq(Forall, Sp, F.Id("s"), InMacro, Mathbb, Grp(F.Id("C")), Comma, Esc, Operatorname, Grp(F.Id("mirror")), Open, F.Id("s"), Close, Eq, F.Id("s"), Sp, Rightarrow, Sp, Re, Open, F.Id("s"), Close, Eq, Frac, Grp(D(1)), Grp(D(2)))),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "Conjugate reflection sends a spectral parameter to one minus its conjugate. Every fixed point therefore has real part one half; no zero-location claim is made.")))
@@ -25,7 +27,7 @@ internal sealed class ReflectionLedgerDocument : IScribeDocumentDefinition
                 H("The mirror reverses every scaling entry"),
                 LeanTheorem(
                     "D5/S3/Weil/ReflectionLedger.mirror_reversal_spec"),
-                LatexStatement.Create(@"$$\forall A\ [\operatorname{AddMonoid}(A)],\ \forall \ell:A\to_{+}\mathbb{R},\ \forall s\in\mathbb{C},\ (\forall a,\operatorname{scalingLedger}(\ell,\operatorname{mirror}(s),a)=-\operatorname{scalingLedger}(\ell,s,a)) \land (s=\operatorname{mirror}(s) \Leftrightarrow \Re(s)=\frac{1}{2})$$"),
+                Disp(Seq(Forall, Sp, F.Id("A"), Esc, OpenBracket, Operatorname, Grp(F.Id("AddMonoid")), Open, F.Id("A"), Close, CloseBracket, Comma, Esc, Forall, Sp, Ell, Colon, F.Id("A"), To, Underscore, Grp(Plus), Mathbb, Grp(F.Id("R")), Comma, Esc, Forall, Sp, F.Id("s"), InMacro, Mathbb, Grp(F.Id("C")), Comma, Esc, Open, Forall, Sp, F.Id("a"), Comma, Operatorname, Grp(F.Id("scalingLedger")), Open, Ell, Comma, Operatorname, Grp(F.Id("mirror")), Open, F.Id("s"), Close, Comma, F.Id("a"), Close, Eq, Minus, Operatorname, Grp(F.Id("scalingLedger")), Open, Ell, Comma, F.Id("s"), Comma, F.Id("a"), Close, Close, Sp, Land, Sp, Open, F.Id("s"), Eq, Operatorname, Grp(F.Id("mirror")), Open, F.Id("s"), Close, Sp, Leftrightarrow, Sp, Re, Open, F.Id("s"), Close, Eq, Frac, Grp(D(1)), Grp(D(2)), Close)),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "For the entry given by displacement from one half times ledger length, mirroring negates every coordinate. The same theorem identifies the full fixed locus.")))
@@ -97,8 +99,8 @@ internal sealed class ReflectionLedgerDocument : IScribeDocumentDefinition
                 DescribeId.Create("three-order-two-mechanisms-have-different-sources"),
                 H("Three order-two mechanisms have different sources"),
                 DescribeStatement.FromFormula(Equal(
-                    Call("J", Id("s")),
-                    Subtract(Num(1), Call("conj", Id("s"))))),
+                    Call("J", DefinitionDsl.Id("s")),
+                    Subtract(Num(1), Call("conj", DefinitionDsl.Id("s"))))),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "The source distinguishes three independent appearances of two. Complex conjugation supplies the code-blind pair behind J(s) = 1-conj(s), squared modulus, and the coefficient inner product. The real Galois pair phi <-> psi supplies the code-specific integrality of the deficit. Additive multiplicity two, through the double-occupancy prohibition, supplies the denominator zeta(2*phi^2*s). Replacing Fibonacci by Tribonacci is reported to preserve the half-line while destroying integrality, so the conjugation and Galois mechanisms are independently replaceable. All three are order-two structures, but only the first two are compared through fixed sets: the critical midline is fixed by the complex involution, while the integers are fixed by the real conjugation. The source consequently reads ontological zeros on the midline and integral deficits as parallel fixed-point statements, and places their intersection where the quasiperiodic critical line meets the multiplicity pole, one deficit unit from its carry image.")))
