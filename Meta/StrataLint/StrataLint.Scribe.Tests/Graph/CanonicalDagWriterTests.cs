@@ -12,8 +12,8 @@ public sealed class CanonicalDagWriterTests
     public void WriteIsByteDeterministic()
     {
         var dag = Build(
-            Module("Ring"),
-            Module("Field", "Ring"));
+            Module("Delta"),
+            Module("Epsilon", "Delta"));
 
         var first = CanonicalDagWriter.Write(dag);
         var second = CanonicalDagWriter.Write(dag);
@@ -24,7 +24,7 @@ public sealed class CanonicalDagWriterTests
     [Fact]
     public void ProjectionIsUtf8WithoutBomAndEndsWithASingleNewline()
     {
-        var bytes = CanonicalDagWriter.Write(Build(Module("Ring")));
+        var bytes = CanonicalDagWriter.Write(Build(Module("Delta")));
 
         Assert.False(bytes.Length >= 3 && bytes[0] == 0xEF && bytes[1] == 0xBB && bytes[2] == 0xBF);
         var text = StrictUtf8.GetString(bytes.AsSpan());
@@ -37,9 +37,9 @@ public sealed class CanonicalDagWriterTests
     public void EmitsAMermaidFlowchartCarryingEveryFormalNodeAndEdge()
     {
         var dag = Build(
-            Module("Ring"),
-            Module("Field", "Ring"),
-            Module("Module", "Ring", "Field"));
+            Module("Delta"),
+            Module("Epsilon", "Delta"),
+            Module("Zeta", "Delta", "Epsilon"));
         var text = Render(dag);
 
         Assert.Contains("```mermaid\n", text, StringComparison.Ordinal);
@@ -65,17 +65,17 @@ public sealed class CanonicalDagWriterTests
         var dag = Build(
             new Dictionary<string, string>(StringComparer.Ordinal)
             {
-                ["D5/S0/Carrier/Ring.lean"] = "def ring : Nat := 0\n",
+                ["D5/S0/Carrier/Delta.lean"] = "def delta : Nat := 0\n",
                 ["Meta/notes.md"] = "not part of the proof topology\n",
             },
             new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
             {
-                ["D5/S0/Carrier/Ring.lean"] = Report(),
+                ["D5/S0/Carrier/Delta.lean"] = Report(),
             });
         var text = Render(dag);
         var fence = Fence(text);
 
-        Assert.Contains("D5/S0/Carrier/Ring.lean", fence, StringComparison.Ordinal);
+        Assert.Contains("D5/S0/Carrier/Delta.lean", fence, StringComparison.Ordinal);
         Assert.DoesNotContain("Meta/notes.md", fence, StringComparison.Ordinal);
         Assert.Contains("semantic 1", text, StringComparison.Ordinal);
         Assert.Contains("not drawn", text, StringComparison.Ordinal);
@@ -85,15 +85,15 @@ public sealed class CanonicalDagWriterTests
     public void ArrowsRunFromDependencyToDependent()
     {
         var dag = Build(
-            Module("Ring"),
-            Module("Field", "Ring"));
+            Module("Delta"),
+            Module("Epsilon", "Delta"));
         var fence = Fence(Render(dag));
 
-        var ringId = IdentifierFor(fence, "D5/S0/Carrier/Ring.lean");
-        var fieldId = IdentifierFor(fence, "D5/S0/Carrier/Field.lean");
+        var rootId = IdentifierFor(fence, "D5/S0/Carrier/Delta.lean");
+        var leafId = IdentifierFor(fence, "D5/S0/Carrier/Epsilon.lean");
 
-        Assert.Contains($"{ringId} --> {fieldId}", fence, StringComparison.Ordinal);
-        Assert.DoesNotContain($"{fieldId} --> {ringId}", fence, StringComparison.Ordinal);
+        Assert.Contains($"{rootId} --> {leafId}", fence, StringComparison.Ordinal);
+        Assert.DoesNotContain($"{leafId} --> {rootId}", fence, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -124,8 +124,8 @@ public sealed class CanonicalDagWriterTests
     public void SummaryRecordsTheContentAddressAndTheStateCensus()
     {
         var dag = Build(
-            Module("Ring"),
-            Module("Field", "Ring"));
+            Module("Delta"),
+            Module("Epsilon", "Delta"));
         var text = Render(dag);
 
         Assert.Contains(dag.RootSha256, text, StringComparison.Ordinal);
@@ -140,16 +140,16 @@ public sealed class CanonicalDagWriterTests
     public void NodesAreGroupedByGraphDepth()
     {
         var dag = Build(
-            Module("Ring"),
-            Module("Field", "Ring"),
-            Module("Module", "Field"));
+            Module("Delta"),
+            Module("Epsilon", "Delta"),
+            Module("Zeta", "Epsilon"));
         var text = Render(dag);
 
-        // depth(Ring)=0, depth(Field)=1, depth(Module)=2 — the writer must expose the
+        // depth(Delta)=0, depth(Epsilon)=1, depth(Zeta)=2 — the writer must expose the
         // longest-dependency-path depth, not an arbitrary topological index.
-        Assert.Equal(0, dag.Depth(PathOf(dag, "Ring")));
-        Assert.Equal(1, dag.Depth(PathOf(dag, "Field")));
-        Assert.Equal(2, dag.Depth(PathOf(dag, "Module")));
+        Assert.Equal(0, dag.Depth(PathOf(dag, "Delta")));
+        Assert.Equal(1, dag.Depth(PathOf(dag, "Epsilon")));
+        Assert.Equal(2, dag.Depth(PathOf(dag, "Zeta")));
         Assert.Contains("depth 0", text, StringComparison.Ordinal);
         Assert.Contains("depth 1", text, StringComparison.Ordinal);
         Assert.Contains("depth 2", text, StringComparison.Ordinal);
@@ -197,11 +197,11 @@ public sealed class CanonicalDagWriterTests
         var dag = Build(
             new Dictionary<string, string>(StringComparer.Ordinal)
             {
-                ["D5/S0/Carrier/Ring.lean"] = "def ring : Nat := 0\n",
+                ["D5/S0/Carrier/Delta.lean"] = "def delta : Nat := 0\n",
             },
             new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
             {
-                ["D5/S0/Carrier/Ring.lean"] = Report("D5.S0.Carrier.Absent"),
+                ["D5/S0/Carrier/Delta.lean"] = Report("D5.S0.Carrier.Absent"),
             });
         var text = Render(dag);
 

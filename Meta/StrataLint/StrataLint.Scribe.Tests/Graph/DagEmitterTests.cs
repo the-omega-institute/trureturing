@@ -119,16 +119,16 @@ public sealed class DagEmitterTests
     {
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
-            ["D5/S0/Carrier/Ring.lean"] = "def ring : Nat := 0\n",
-            ["D5/S0/Carrier/Field.lean"] = "def field : Nat := 0\n",
+            ["D5/S0/Carrier/Delta.lean"] = "def delta : Nat := 0\n",
+            ["D5/S0/Carrier/Epsilon.lean"] = "def epsilon : Nat := 0\n",
         };
         var reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
         {
-            ["D5/S0/Carrier/Ring.lean"] = new(
+            ["D5/S0/Carrier/Delta.lean"] = new(
                 ImmutableArray<string>.Empty,
                 ImmutableArray<LeanDeclaration>.Empty),
-            ["D5/S0/Carrier/Field.lean"] = new(
-                ["D5.S0.Carrier.Ring"],
+            ["D5/S0/Carrier/Epsilon.lean"] = new(
+                ["D5.S0.Carrier.Delta"],
                 ImmutableArray<LeanDeclaration>.Empty),
         };
         var raw = RawRepositorySnapshot.Create(
