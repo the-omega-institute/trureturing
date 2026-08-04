@@ -36,20 +36,47 @@ public sealed class StatementProjectionPilotTests
     [Fact]
     public void PilotProjectsFiveRealDeclarationsAndPinsTheComparisonReport()
     {
-        var root = FindRepositoryRoot();
-        using var report = JsonDocument.Parse(File.ReadAllBytes(Path.Combine(
-            root, ".lake/build/stratalint/raw-lean-report.json")));
-        var declarations = report.RootElement.GetProperty("modules")
-            .EnumerateArray().SelectMany(module => module.GetProperty("declarations").EnumerateArray())
-            .GroupBy(item => item.GetProperty("name").GetString()!, StringComparer.Ordinal)
-            .ToDictionary(group => group.Key, group => group.First(), StringComparer.Ordinal);
-
-        var results = ProjectionPilot.Run(declarations);
+        using var fixture = LoadPinnedFixture();
+        var results = ProjectionPilot.Run(ReadFixtureDeclarations(fixture));
 
         Assert.Equal(5, results.Cases.Length);
         Assert.Equal(ProjectionPilot.GoldenReport, results.Report);
         Assert.Equal(ProjectionNotation.Entries.Count, results.NotationSize);
         Assert.All(results.Cases, item => Assert.Equal(item.GoldenLatex, LatexWriter.Write(item.Formula)));
+    }
+
+    [LiveReportFact]
+    public void LiveReportMatchesPinnedFixtureWhenAvailable()
+    {
+        var reportPath = Path.Combine(FindRepositoryRoot(), ".lake/build/stratalint/raw-lean-report.json");
+        using var fixture = LoadPinnedFixture();
+        using var report = JsonDocument.Parse(File.ReadAllBytes(reportPath));
+        var expected = ReadFixtureDeclarations(fixture).ToDictionary(
+            item => item.Key,
+            item => item.Value.GetProperty("type").GetString()!,
+            StringComparer.Ordinal);
+        var actual = report.RootElement.GetProperty("modules")
+            .EnumerateArray().SelectMany(module => module.GetProperty("declarations").EnumerateArray())
+            .Where(item => expected.ContainsKey(item.GetProperty("name").GetString()!))
+            .GroupBy(item => item.GetProperty("name").GetString()!, StringComparer.Ordinal)
+            .ToDictionary(
+                group => group.Key,
+                group => Assert.Single(group).GetProperty("type").GetString()!,
+                StringComparer.Ordinal);
+
+        Assert.Equal(expected, actual);
+    }
+
+    private static JsonDocument LoadPinnedFixture() => JsonDocument.Parse(File.ReadAllBytes(Path.Combine(
+        AppContext.BaseDirectory, "Projection", "Fixtures", "statement-projection-pilot-v1.json")));
+
+    private static Dictionary<string, JsonElement> ReadFixtureDeclarations(JsonDocument fixture)
+    {
+        Assert.Equal("statement-projection-pilot-fixture-v1",
+            fixture.RootElement.GetProperty("schema").GetString());
+        return fixture.RootElement.GetProperty("declarations")
+            .EnumerateArray()
+            .ToDictionary(item => item.GetProperty("name").GetString()!, StringComparer.Ordinal);
     }
 
     private static string FindRepositoryRoot()
@@ -60,5 +87,18 @@ public sealed class StatementProjectionPilotTests
         }
 
         throw new InvalidOperationException("Repository root was not found.");
+    }
+
+    private sealed class LiveReportFactAttribute : FactAttribute
+    {
+        public LiveReportFactAttribute()
+        {
+            var directory = new DirectoryInfo(AppContext.BaseDirectory);
+            while (directory is not null && !File.Exists(Path.Combine(directory.FullName, "lakefile.toml")))
+                directory = directory.Parent;
+            if (directory is null || !File.Exists(Path.Combine(
+                    directory.FullName, ".lake/build/stratalint/raw-lean-report.json")))
+                Skip = "Live raw Lean report is absent; pinned statement-v1 fixture remains the self-contained verifier asset.";
+        }
     }
 }
