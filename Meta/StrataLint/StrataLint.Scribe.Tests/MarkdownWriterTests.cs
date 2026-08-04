@@ -43,7 +43,7 @@ public sealed class MarkdownWriterTests
                             Heading.Create("Injectivity"),
                             LeanDeclarationRef.Create(
                                 "D5/S1/Scale/Embedding.embedding_injective"),
-                            LatexStatement.Create("$\\operatorname{embed}(x) = 0 \\Rightarrow x = 0$"),
+                            EmbedInjectiveFormula(),
                             DescribeProvenance.RepoDerived(),
                             BlockSequence.Create([paragraph])
                         ),
@@ -66,7 +66,7 @@ public sealed class MarkdownWriterTests
             + "*Commentary.*\n\n"
             + "Map $\\varphi$ mirrors `D5/B/S1/Scale/Embedding`.\n\n"
             + "**Theorem 1.2 (Injectivity).**\n\n"
-            + "$\\operatorname{embed}(x) = 0 \\Rightarrow x = 0$\n\n"
+            + "$\\operatorname{embed}\\left(x\\right) = 0 \\Rightarrow x = 0$\n\n"
             + "*Proof.* Machine-checked in Lean as "
             + "`D5/S1/Scale/Embedding.embedding_injective` (`✓ std3`). ∎\n\n"
             + "*Source.* Repository-derived.\n\n"
@@ -136,9 +136,9 @@ public sealed class MarkdownWriterTests
     }
 
     [Fact]
-    public void LeanDescribeStatementPreservesExplicitLatexVerbatim()
+    public void LeanDescribeStatementPinsCanonicalTypedFormulaRendering()
     {
-        const string latex = "$\\operatorname{Re}(s) = \\frac{1}{2}$";
+        const string latex = "$\\operatorname{Re}\\left(s\\right) = \\frac{1}{2}$";
         var document = ScribeDocument.Create(
             CreateHeader(),
             Heading.Create("Critical line"),
@@ -149,7 +149,7 @@ public sealed class MarkdownWriterTests
                     Heading.Create("Critical line"),
                     LeanDeclarationRef.Create(
                         "D5/S1/Scale/Embedding.embedding_injective"),
-                    LatexStatement.Create(latex),
+                    CriticalLineFormula(),
                     DescribeProvenance.RepoDerived(),
                     BlockSequence.Create([Paragraph(new Inline.Text(TextRun.Create("Commentary.")))])
                 ),
@@ -165,6 +165,30 @@ public sealed class MarkdownWriterTests
             text,
             StringComparison.Ordinal);
     }
+
+    private static Formula EmbedInjectiveFormula() => new Formula.Layout(
+        FormulaLayoutMode.Inline,
+        new Formula.Logic(
+            new Formula.Relation(
+                new Formula.FunctionCall(
+                    FormulaIdentifier.Create("embed"),
+                    [new Formula.Symbol(FormulaIdentifier.Create("x"))]),
+                FormulaRelationOperator.Equal,
+                new Formula.Number(0)),
+            FormulaLogicOperator.Implies,
+            new Formula.Relation(
+                new Formula.Symbol(FormulaIdentifier.Create("x")),
+                FormulaRelationOperator.Equal,
+                new Formula.Number(0))));
+
+    private static Formula CriticalLineFormula() => new Formula.Layout(
+        FormulaLayoutMode.Inline,
+        new Formula.Relation(
+            new Formula.FunctionCall(
+                FormulaIdentifier.Create("Re"),
+                [new Formula.Symbol(FormulaIdentifier.Create("s"))]),
+            FormulaRelationOperator.Equal,
+            new Formula.Fraction(new Formula.Number(1), new Formula.Number(2))));
 
     private static DocumentBlock Paragraph(params Inline[] content) =>
         new DocumentBlock.Paragraph(InlineSequence.Create(content));

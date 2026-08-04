@@ -42,7 +42,7 @@ public sealed class PdfWriterTests
                     Heading.Create("Critical line"),
                     LeanDeclarationRef.Create(
                         "D5/S1/Scale/Embedding.embedding_injective"),
-                    LatexStatement.Create("$\\operatorname{Re}(s) = \\frac{1}{2}$"),
+                    CriticalLineFormula(),
                     DescribeProvenance.RepoDerived(),
                     BlockSequence.Create(
                     [
@@ -56,6 +56,15 @@ public sealed class PdfWriterTests
         Assert.True(pdf.Length > 5);
         Assert.Equal("%PDF-", Encoding.ASCII.GetString(pdf.AsSpan()[..5]));
     }
+
+    private static Formula CriticalLineFormula() => new Formula.Layout(
+        FormulaLayoutMode.Inline,
+        new Formula.Relation(
+            new Formula.FunctionCall(
+                FormulaIdentifier.Create("Re"),
+                [new Formula.Symbol(FormulaIdentifier.Create("s"))]),
+            FormulaRelationOperator.Equal,
+            new Formula.Fraction(new Formula.Number(1), new Formula.Number(2))));
 
     [Fact]
     public void QuestPdfWriterCompilesAcademicLiteratureCitations()

@@ -40,16 +40,11 @@ public sealed class PartialQuotientExtractionDocumentTests
 
         var floor = Assert.Single(describes, static describe =>
             describe.Id.Value == "continued-fraction-twelve-floor");
-        Assert.NotNull(floor.StatementLatex);
-        Assert.Contains(@"A(q)=\max C(q)", floor.StatementLatex.Value, StringComparison.Ordinal);
-        Assert.Contains(
-            @"(\forall\psi\in S,\ 12\mid\psi\land\psi\neq0)",
-            floor.StatementLatex.Value,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            @"(\exists\psi_0\in S,\ |\psi_0|=12)",
-            floor.StatementLatex.Value,
-            StringComparison.Ordinal);
+        var layout = Assert.IsType<Formula.Layout>(floor.StatementFormula);
+        Assert.IsType<Formula.LatexSequence>(layout.Content);
+        Assert.Equal(
+            "$$\\forall q\\in\\mathbb{Q}\\setminus\\mathbb{Z},\\ \\forall S\\subset_{\\mathrm{fin}}\\mathbb{Z},\\ (\\forall\\psi\\in S,\\ 12\\mid\\psi\\land\\psi\\neq0)\\land(\\exists\\psi_0\\in S,\\ |\\psi_0|=12)\\Rightarrow\\min\\left\\{\\frac{|\\psi|}{A(q)}:\\psi\\in S\\right\\}=\\frac{12}{A(q)},\\qquad A(q)=\\max C(q)$$",
+            LatexWriter.WriteStatement(layout));
 
         var report = LeanReportFixture.ForDocuments([definition.Document]);
         var markdown = System.Text.Encoding.UTF8.GetString(
