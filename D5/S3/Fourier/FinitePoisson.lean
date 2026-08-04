@@ -188,12 +188,109 @@ theorem evenSubgroupFour_nontrivial :
     (ZMod.cast (1 : ZMod 4) : ZMod 2) ≠ 0
   decide
 
+@[simp] theorem mem_evenSubgroupFour_iff (x : ZMod 4) :
+    x ∈ evenSubgroupFour ↔ x = 0 ∨ x = 2 := by
+  change (ZMod.cast x : ZMod 2) = 0 ↔ x = 0 ∨ x = 2
+  rw [ZMod.cast_eq_val, CharP.cast_eq_zero_iff]
+  constructor
+  · intro hdvd
+    have hxlt := x.val_lt
+    have hval : x.val = 0 ∨ x.val = 2 := by omega
+    rcases hval with hval | hval
+    · left
+      apply ZMod.val_injective 4
+      simpa using hval
+    · right
+      apply ZMod.val_injective 4
+      rw [hval]
+      rfl
+  · rintro (rfl | rfl)
+    · norm_num
+    · change 2 ∣ 2
+      norm_num
+
+/-- The nonzero even frequency is explicitly in the annihilator of `{0, 2}`. -/
+theorem two_mem_annihilator_evenSubgroupFour :
+    (2 : ZMod 4) ∈ annihilator evenSubgroupFour := by
+  rw [mem_annihilator]
+  intro h hh
+  rcases (mem_evenSubgroupFour_iff h).1 hh with rfl | rfl
+  · simp
+  · rw [character_apply, show (2 : ZMod 4) * 2 = 0 by decide]
+    simp
+
+/-- The odd frequency one is explicitly excluded from the annihilator of `{0, 2}`. -/
+theorem one_not_mem_annihilator_evenSubgroupFour :
+    (1 : ZMod 4) ∉ annihilator evenSubgroupFour := by
+  rw [mem_annihilator]
+  intro h
+  have hvalue := h (2 : ZMod 4) evenSubgroupFour_nontrivial.1
+  have heq : ZMod.stdAddChar (2 : ZMod 4) = ZMod.stdAddChar (0 : ZMod 4) := by
+    simpa [character_apply] using hvalue
+  have : (2 : ZMod 4) = 0 := ZMod.injective_stdAddChar heq
+  exact (by decide : (2 : ZMod 4) ≠ 0) this
+
+theorem card_evenSubgroupFour : Fintype.card evenSubgroupFour = 2 := by
+  classical
+  rw [Fintype.card_subtype]
+  simp_rw [mem_evenSubgroupFour_iff]
+  rw [show Finset.univ.filter (fun x : ZMod 4 => x = 0 ∨ x = 2) = {0, 2} by
+    ext x
+    simp]
+  simp [show (0 : ZMod 4) ≠ 2 by decide]
+
+theorem card_annihilator_evenSubgroupFour :
+    Fintype.card (annihilator evenSubgroupFour) = 2 := by
+  have hcard := card_mul_card_annihilator evenSubgroupFour
+  rw [card_evenSubgroupFour] at hcard
+  omega
+
+/-- The in-subgroup branch of annihilator orthogonality evaluates to two. -/
+theorem sum_annihilator_character_even_two :
+    ∑ k : annihilator evenSubgroupFour, character k.1 (2 : ZMod 4) = 2 := by
+  calc
+    ∑ k : annihilator evenSubgroupFour, character k.1 (2 : ZMod 4) =
+        if (2 : ZMod 4) ∈ evenSubgroupFour then
+          (Fintype.card (annihilator evenSubgroupFour) : ℂ) else 0 :=
+      sum_annihilator_character evenSubgroupFour 2
+    _ = 2 := by
+      rw [if_pos evenSubgroupFour_nontrivial.1, card_annihilator_evenSubgroupFour]
+      norm_num
+
+/-- The out-of-subgroup branch of annihilator orthogonality evaluates to zero. -/
+theorem sum_annihilator_character_even_one :
+    ∑ k : annihilator evenSubgroupFour, character k.1 (1 : ZMod 4) = 0 := by
+  rw [sum_annihilator_character]
+  simp [evenSubgroupFour_nontrivial.2]
+
 /-- Machine-checkable nontrivial witness: Poisson summation on `{0, 2} ≤ ZMod 4`. -/
 theorem finite_poisson_mod_four_even (f : ZMod 4 → ℂ) :
     ∑ h : evenSubgroupFour, f h.1 =
       ((Fintype.card evenSubgroupFour : ℂ) / 4) *
         ∑ k : annihilator evenSubgroupFour, ZMod.dft f k.1 :=
   finite_poisson_summation evenSubgroupFour f
+
+/-- A concrete input for which both sides of finite Poisson summation reduce to one. -/
+theorem finite_poisson_mod_four_even_delta :
+    (∑ h : evenSubgroupFour, if h.1 = 0 then (1 : ℂ) else 0) = 1 ∧
+      ((Fintype.card evenSubgroupFour : ℂ) / 4) *
+          ∑ k : annihilator evenSubgroupFour,
+            ZMod.dft (fun x : ZMod 4 => if x = 0 then 1 else 0) k.1 = 1 := by
+  have hpoisson := finite_poisson_mod_four_even
+    (fun x : ZMod 4 => if x = 0 then 1 else 0)
+  have hleft : (∑ h : evenSubgroupFour, if h.1 = 0 then (1 : ℂ) else 0) = 1 := by
+    classical
+    let z : evenSubgroupFour := ⟨0, evenSubgroupFour.zero_mem⟩
+    have hz (h : evenSubgroupFour) : (h.1 = 0) ↔ h = z := by
+      constructor
+      · intro hh
+        apply Subtype.ext
+        simpa [z] using hh
+      · intro hh
+        simpa [z] using congrArg Subtype.val hh
+    simp_rw [hz]
+    simp
+  exact ⟨hleft, hpoisson.symm.trans hleft⟩
 
 end
 
