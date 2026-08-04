@@ -6,7 +6,7 @@ A finite prime axis is escaped by a prime divisor of the product plus one.
 
 **Theorem 1.1 (A finite prime axis has an external prime divisor).**
 
-$$\forall S\subset_{\operatorname{fin}}\mathbb{N},\ (\forall p\in S,\ p\ \text{prime}) \Rightarrow ((\forall p\in S,\ \prod_{r\in S}r+1\equiv 1\ (\operatorname{mod}\ p)) \land \exists q\in\mathbb{N},\ q\ \text{prime}\land q\mid \prod_{r\in S}r+1\land q\notin S)$$
+$$\forall S\subset_{\operatorname{fin}}\mathbb{N},\ (\forall p\inS,\ p\ \text{prime}) \Rightarrow ((\forall p\inS,\ \prod_{r\inS}r+1\equiv 1\ (\operatorname{mod}\ p)) \land \exists q\in\mathbb{N},\ q\ \text{prime}\land q\mid \prod_{r\inS}r+1\land \neg(q\inS))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Axis/PrimeAxisEscape.prime_axis_escape` (`✓ std3`). ∎
 
