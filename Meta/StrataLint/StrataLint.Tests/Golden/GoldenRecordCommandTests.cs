@@ -37,7 +37,7 @@ public sealed class GoldenRecordCommandTests
         var first = GoldenRecordCommand.Run(temporary.Path, []);
 
         Assert.True(first.Success, first.Error);
-        Assert.Contains("cases=119", first.Output, StringComparison.Ordinal);
+        Assert.Contains($"cases={GoldenCorpusShapeTests.ExpectedCaseCount}", first.Output, StringComparison.Ordinal);
         Assert.Contains("changed_files=1", first.Output, StringComparison.Ordinal);
         var after = TomlGoldenLoader.LoadRepository(temporary.Path);
         Assert.Equal(behaviorBefore, WithoutExpectations(after));
