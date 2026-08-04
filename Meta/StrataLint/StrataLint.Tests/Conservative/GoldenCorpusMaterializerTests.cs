@@ -40,6 +40,25 @@ public sealed class GoldenCorpusMaterializerTests
     }
 
     [Fact]
+    public void PopulateDirectoryUsesNonProjectionCapacityWitnesses()
+    {
+        var corpus = GoldenCorpusMaterializer.Materialize(FindRepositoryRoot());
+        var canonical = Encoding.UTF8.GetString(corpus.CanonicalBytes.AsSpan());
+
+        for (var index = 0; index < 13; index++)
+        {
+            Assert.Contains(
+                $"Golden/cases/CapacityExtra{index:00}.toml",
+                canonical,
+                StringComparison.Ordinal);
+            Assert.DoesNotContain(
+                $"Blueprint/D5/S0/Carrier/Extra{index:00}.md",
+                canonical,
+                StringComparison.Ordinal);
+        }
+    }
+
+    [Fact]
     public void MaterializerFailsClosedWhenTheExternalFixtureRegistryIsAbsent()
     {
         var repositoryRoot = FindRepositoryRoot();
