@@ -15,3 +15,9 @@ $\forall s\in\mathbb{C},\ \operatorname{MemLp}(\operatorname{labeledZetaCoeffici
 *Commentary.*
 
 The bridge identifies the universal heat coefficient with the labeled-zeta coefficient, proves boundary-divergent abscissa one by transporting to the p-series on natural addresses, and then applies the universal strict theorem.
+
+## References
+
+- Truth anchor: `D5/S3/Midline/ZetaHeatTraceBridge.zeta_mem_iff_from_universal_heat_trace`
+- Dependency: [D5/S3/Midline/UniversalHeatTrace](UniversalHeatTrace.md)
+- Dependency: [D5/S3/Weil/SpectralHilbert](../Weil/SpectralHilbert.md)

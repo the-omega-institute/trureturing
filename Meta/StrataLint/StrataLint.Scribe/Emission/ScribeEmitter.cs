@@ -142,8 +142,23 @@ public static class ScribeEmitter
                 }
             }
 
+            var documents = definitions.Select(static definition => definition.Document).ToArray();
+            var census = ReceiptFreeDocumentCatalog.Load(
+                repositoryRoot,
+                documents,
+                tolerateAbsentDocuments);
             var graph = DocumentGraphAssembler.Assemble(
-                definitions.Select(static definition => definition.Document), leanReport);
+                documents,
+                leanReport,
+                census.ReceiptFreeDocumentGids);
+            var wired = documents.Count(document => graph.For(document).Length > 0);
+            var graphEdges = documents.SelectMany(document => graph.For(document)).ToArray();
+            output.WriteLine(
+                $"document graph: receipt-free={census.ReceiptFreeDocumentGids.Count} "
+                + $"receipt-bound={census.ReceiptBoundDocumentGids.Count} wired={wired} "
+                + $"truth-anchor={graphEdges.OfType<DocumentEdge.TruthAnchor>().Count()} "
+                + $"dependency={graphEdges.OfType<DocumentEdge.Dependency>().Count()} "
+                + $"narrative={graphEdges.OfType<DocumentEdge.NarrativeReference>().Count()}");
             return EmitVerified(repositoryRoot, check, output, error, leanReport, definitions, graph);
         }
         catch (Exception exception) when (

@@ -87,3 +87,14 @@ $$\forall A\ [\operatorname{AddMonoid}(A)],\ \forall \ell:A\to_{+}\mathbb{R},\ (
 *Commentary.*
 
 Given one nonzero ledger-length coordinate, the local-balance conjunct of an ontological zero forces its real part to one half. The abstract witness replaces the source's concrete log-two coordinate, and no property of the carried closure predicate is used. The missing implication from every projected zero to local balance is exactly the open O-6 bridge. This theorem closes only the final algebraic edge after that bridge.
+
+## References
+
+- Truth anchor: `D5/S3/Zeros/ZeroGeometry.IsOntologicalZero`
+- Truth anchor: `D5/S3/Zeros/ZeroGeometry.global_factor_clearing_forces_critical_line`
+- Truth anchor: `D5/S3/Zeros/ZeroGeometry.mirror_pair_distinct_iff_off_line_and_cancels`
+- Truth anchor: `D5/S3/Zeros/ZeroGeometry.off_line_scaling_entry_spec`
+- Truth anchor: `D5/S3/Zeros/ZeroGeometry.ontological_zero_re_eq_critical`
+- Truth anchor: `D5/S3/Zeros/ZeroGeometry.projection_zero_labeled_vector_spec`
+- Truth anchor: `D5/S3/Zeros/ZeroGeometry.zero_quartet_scaling_spec`
+- Dependency: [D5/S3/Weil/CriticalLine](../Weil/CriticalLine.md)
