@@ -17,5 +17,7 @@
   <ItemGroup>
     <None Include="Projection/Fixtures/statement-projection-pilot-v1.json"
           CopyToOutputDirectory="PreserveNewest" />
+    <None Include="Projection/Fixtures/statement-projection-expansion-v1.json"
+          CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

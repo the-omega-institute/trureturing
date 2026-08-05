@@ -12,6 +12,7 @@ LAUNCHER_CONFORMANCE="$REPOSITORY_ROOT/.fkst/scripts/check-maintenance-launcher.
 RESTART_CASES="$REPOSITORY_ROOT/.fkst/tests/hourly-maintenance-restart-cases.sh"
 COMPOSITION_CASES="$REPOSITORY_ROOT/.fkst/tests/hourly-maintenance-composition-cases.sh"
 LEAN_REPORT_CASES="$REPOSITORY_ROOT/.fkst/tests/hourly-maintenance-lean-report-cases.sh"
+READINESS_FIXTURES="$REPOSITORY_ROOT/.fkst/tests/hourly-maintenance-readiness-fixtures.sh"
 PASS_COUNT=0
 FAIL_COUNT=0
 
@@ -74,6 +75,7 @@ shift
 exec "$@"
 SH
   chmod +x "$TIMEOUT_BIN"
+  write_ready_formalize_readiness_provider "$CHECKOUT_ROOT"
 }
 
 write_framework_stub() {
@@ -112,6 +114,7 @@ create_checkout_history_fixture() {
   CHECKOUT_BASE_REV="$(command git -C "$CHECKOUT_ROOT" rev-parse HEAD)"
   git_quiet clone "$CHECKOUT_REMOTE" "$CHECKOUT_WRITER" || return 1
   configure_repository "$CHECKOUT_WRITER" || return 1
+  write_ready_formalize_readiness_provider "$CHECKOUT_ROOT"
 }
 
 advance_checkout_dev() {
@@ -541,6 +544,7 @@ write_host_contract_fixture() {
     printf 'export FKST_SUPERVISE_LAUNCHER_LOG=%s\n' "$root/logs/supervise-launcher.log"
     printf 'export FKST_SUPERVISE_LAUNCHER_PATH=%s\n' "$root/launchd/supervise.plist"
   } > "$FIXTURE_HOST_CONFIG"
+  write_ready_formalize_readiness_provider "$FIXTURE_HOST_ROOT"
 }
 . "$REPOSITORY_ROOT/.fkst/tests/support/hourly-maintenance-launchd-cases.sh"
 
@@ -682,6 +686,9 @@ run_test() {
   fi
 }
 
+[[ -f "$READINESS_FIXTURES" ]] || fail "readiness behavior fixtures are missing"
+# shellcheck disable=SC1090
+source "$READINESS_FIXTURES"
 [[ -f "$RESTART_CASES" ]] || fail "restart behavior cases are missing"
 # shellcheck disable=SC1090
 source "$RESTART_CASES"
@@ -696,6 +703,7 @@ run_test "deployed top-level workspace is authoritative" deployed_top_level_work
 run_test "host-lock failure reverts from the previous revision" host_lock_failure_reverts_from_the_previous_revision
 run_test "post-restart health failure reverts from the previous revision" post_restart_health_failure_reverts_from_the_previous_revision
 run_test "checkout fast-forwards only clean ancestors" checkout_fast_forwards_only_clean_ancestors
+run_test "already-stale current checkout rebuilds report" already_stale_current_checkout_rebuilds_report
 run_test "checkout Lean change rebuilds report before restart" checkout_lean_change_rebuilds_report_before_restart
 run_test "checkout non-Lean change does not rebuild report" checkout_non_lean_change_does_not_rebuild_report
 run_test "failed Lean report rebuild fails cycle and retains obligation" failed_lean_report_rebuild_fails_cycle_and_retains_obligation
@@ -709,6 +717,8 @@ run_test "platform-current cycle still propagates composition" platform_current_
 run_test "post-write composition drift fails closed with differences" post_write_composition_drift_fails_closed_with_differences
 run_test "composition-only propagation does not trigger restart" composition_only_propagation_does_not_trigger_restart
 run_test "deferred activation survives a current second cycle" deferred_activation_survives_a_current_second_cycle
+run_test "legacy activation obligation migrates before platform pin" legacy_activation_obligation_migrates_before_platform_pin
+run_test "corrupt activation obligation still refuses platform pin" corrupt_activation_obligation_still_refuses_platform_pin
 run_test "older restart cannot clear a newer generation" older_restart_cannot_clear_a_newer_generation
 run_test "failed restart retains the activation generation" failed_restart_retains_the_activation_generation
 run_test "leading-zero defer timestamp forces restart" leading_zero_defer_timestamp_forces_restart

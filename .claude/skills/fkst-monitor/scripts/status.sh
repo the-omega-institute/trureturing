@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # fkst-monitor: read-only health snapshot of the fkst devloop deployed on this repo.
-# Usage: status.sh [--watch] [--json]
+# Usage: status.sh [--watch] [--json] [--formalize-readiness]
 #   --watch  loop every 60s, print only when the verdict is not HEALTHY
 #   --json   emit a compact machine-readable line instead of the human report
 set -euo pipefail
@@ -144,6 +144,55 @@ run_bounded_probe() { # $1=budget $2=label $3=working directory (empty = current
     fi
   fi
   rm -f "$probe_err" "$probe_out"
+}
+
+# Canonical three-valued formalization-readiness verdict. Both the health snapshot and the
+# maintenance invariant consume these exact results; digest-status remains the only predicate.
+formalize_candidates_readiness() {
+  local checkout="${FKST_FORMALIZE_CHECKOUT:-$FKST_HOME/checkout}"
+  local project="Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj"
+  local budget="${FKST_FORMALIZE_CANDIDATES_BUDGET_S:-60}" dotnet_bin=""
+  FORMALIZE_CANDIDATES_PROBE_OK=0
+  FORMALIZE_CANDIDATES_READY=-1
+  FORMALIZE_CANDIDATES_ERROR=""
+
+  if [[ ! -d "$checkout" ]]; then
+    FORMALIZE_CANDIDATES_ERROR="deployed checkout absent: $checkout"
+  elif [[ ! -f "$checkout/$project" ]]; then
+    FORMALIZE_CANDIDATES_ERROR="formalize-candidate project absent: $checkout/$project"
+  else
+    dotnet_bin="$(command -v dotnet 2>/dev/null || true)"
+    if [[ -z "$dotnet_bin" ]]; then
+      FORMALIZE_CANDIDATES_ERROR="dotnet binary not found"
+    else
+      run_bounded_probe "$budget" "formalize-candidate readiness" \
+        "$checkout" \
+        "$dotnet_bin" run --project "$project" \
+          --configuration Release --verbosity quiet -- \
+          digest-status --formalize-candidates
+      if (( BOUNDED_PROBE_COMPLETED )); then
+        if [[ "$BOUNDED_PROBE_RC" == "0" ]]; then
+          FORMALIZE_CANDIDATES_PROBE_OK=1
+          FORMALIZE_CANDIDATES_READY=1
+        else
+          FORMALIZE_CANDIDATES_READY=0
+          FORMALIZE_CANDIDATES_ERROR="$BOUNDED_PROBE_ERROR"
+        fi
+      else
+        FORMALIZE_CANDIDATES_ERROR="$BOUNDED_PROBE_ERROR"
+      fi
+    fi
+  fi
+}
+
+render_formalize_candidates_readiness() {
+  formalize_candidates_readiness
+  case "$FORMALIZE_CANDIDATES_READY" in
+    1) printf 'ready\n' ;;
+    0) printf 'not-ready\t%s\n' "$FORMALIZE_CANDIDATES_ERROR" ;;
+    -1) printf 'not-checked\t%s\n' "$FORMALIZE_CANDIDATES_ERROR" ;;
+    *) printf 'formalize readiness produced an invalid state\n' >&2; return 2 ;;
+  esac
 }
 
 # Extract `key=value` from a line, empty when absent. THIRD occurrence in this file of the same bug
@@ -295,37 +344,10 @@ snapshot() {
   # Formalization readiness: packages/theory-selfgrowth consumes this exact command and emits no
   # candidate when it exits non-zero. File existence and mtime are not readiness signals; only the
   # command's fail-closed verdict can answer whether mathematical production can proceed.
-  local formalize_checkout="$FKST_HOME/checkout"
-  local formalize_project="Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj"
-  local formalize_probe_ok=0 formalize_ready=-1 formalize_why="" dotnet_bin=""
-  local formalize_budget="${FKST_FORMALIZE_CANDIDATES_BUDGET_S:-60}"
-  if [[ ! -d "$formalize_checkout" ]]; then
-    formalize_why="deployed checkout absent: $formalize_checkout"
-  elif [[ ! -f "$formalize_checkout/$formalize_project" ]]; then
-    formalize_why="formalize-candidate project absent: $formalize_checkout/$formalize_project"
-  else
-    dotnet_bin="$(command -v dotnet 2>/dev/null || true)"
-    if [[ -z "$dotnet_bin" ]]; then
-      formalize_why="dotnet binary not found"
-    else
-      run_bounded_probe "$formalize_budget" "formalize-candidate readiness" \
-        "$formalize_checkout" \
-        "$dotnet_bin" run --project "$formalize_project" \
-          --configuration Release --verbosity quiet -- \
-          digest-status --formalize-candidates
-      if (( BOUNDED_PROBE_COMPLETED )); then
-        if [[ "$BOUNDED_PROBE_RC" == "0" ]]; then
-          formalize_probe_ok=1
-          formalize_ready=1
-        else
-          formalize_ready=0
-          formalize_why="$BOUNDED_PROBE_ERROR"
-        fi
-      else
-        formalize_why="$BOUNDED_PROBE_ERROR"
-      fi
-    fi
-  fi
+  formalize_candidates_readiness
+  local formalize_probe_ok="$FORMALIZE_CANDIDATES_PROBE_OK"
+  local formalize_ready="$FORMALIZE_CANDIDATES_READY"
+  local formalize_why="$FORMALIZE_CANDIDATES_ERROR"
   if (( formalize_ready != 1 )); then
     [[ "$verdict" == HEALTHY ]] && verdict="DEGRADED"
     if (( formalize_ready == 0 )); then
@@ -415,8 +437,9 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
         sleep 60
       done ;;
     --json) snapshot --json ;;
+    --formalize-readiness) render_formalize_candidates_readiness ;;
     diag|--diag) shift; diag_count "$@" ;;
     ""|--report) snapshot ;;
-    *) echo "usage: status.sh [--watch] [--json] | diag <ERE-pattern>...  (diag = scope-aware count, never raw grep -ac an append-only log)" >&2; exit 2 ;;
+    *) echo "usage: status.sh [--watch] [--json] [--formalize-readiness] | diag <ERE-pattern>...  (diag = scope-aware count, never raw grep -ac an append-only log)" >&2; exit 2 ;;
   esac
 fi
