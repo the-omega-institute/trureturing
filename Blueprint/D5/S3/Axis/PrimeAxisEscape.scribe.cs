@@ -28,7 +28,7 @@ internal sealed class PrimeAxisEscapeDocument : IScribeDocumentDefinition
                     + "divisor q outside S, supplied as an explicit existential witness together "
                     + "with primality, divisibility, and non-membership. This is the finite-set "
                     + "escape form of Euclid's classical argument; the formal theorem does not "
-                    + "assert any later PZG encoding or tail interpretation. The proof uses "
+                    + "assert any later encoding or tail interpretation. The proof uses "
                     + "Mathlib's existence of a prime divisor for a natural different from one, "
                     + "then rules out membership in S because a common divisor of the product and "
                     + "the product plus one would divide one. No numerical certificate is "
@@ -44,7 +44,7 @@ internal sealed class PrimeAxisEscapeDocument : IScribeDocumentDefinition
         Formula productPlusOne = Seq(
             new Formula.Subscript(
                 Prod,
-                Seq(F.Id("r"), InMacro, F.Id("S"))),
+                Seq(F.Id("r"), InMacro, Sp, F.Id("S"))),
             F.Id("r"),
             Plus,
             D(1));
@@ -52,18 +52,18 @@ internal sealed class PrimeAxisEscapeDocument : IScribeDocumentDefinition
         return Disp(Seq(
             Forall, Sp, F.Id("S"), finiteSubset, naturals, Comma, Esc,
             Open,
-            Forall, Sp, F.Id("p"), InMacro, F.Id("S"), Comma, Esc,
+            Forall, Sp, F.Id("p"), InMacro, Sp, F.Id("S"), Comma, Esc,
             F.Id("p"), Esc, F.Text, Grp(F.Id("prime")),
             Close, Sp, Rightarrow, Sp,
             Open, Open,
-            Forall, Sp, F.Id("p"), InMacro, F.Id("S"), Comma, Esc,
+            Forall, Sp, F.Id("p"), InMacro, Sp, F.Id("S"), Comma, Esc,
             productPlusOne, Equiv, Sp, D(1), Esc,
             Open, Operatorname, Grp(F.Id("mod")), Esc, F.Id("p"), Close,
             Close, Sp, Land, Sp,
             Exists, Sp, F.Id("q"), InMacro, naturals, Comma, Esc,
             F.Id("q"), Esc, F.Text, Grp(F.Id("prime")),
             Land, Sp, F.Id("q"), Mid, Sp, productPlusOne,
-            Land, Sp, Neg, Open, F.Id("q"), InMacro, F.Id("S"), Close,
+            Land, Sp, Neg, Open, F.Id("q"), InMacro, Sp, F.Id("S"), Close,
             Close));
     }
 }
