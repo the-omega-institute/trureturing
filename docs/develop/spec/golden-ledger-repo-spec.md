@@ -526,6 +526,10 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 - v2.x:证据等级 E0–E4、SSOT 两层账、证书拆分、Gödel 条款(并入 v3+)。
 - v1:初版雏形。
 
+**A18.1 结构化真值图导出(v1 未冻约)** `Meta/StrataLint/Generated/truth-graph.v1.json` 的唯一方言为 `stratalint.truth-graph.v1` / `schema_version:1`;根节闭集为 `{schema,schema_version,provenance,truth,documents,joins,deferred_layers}`。`truth` 保留 formal truth DAG 的节点、module-import 边、open blocker、状态计数与最长依赖路径 depth。`documents.document_nodes` 以 canonical Blueprint markdown `repo_path` + Scribe `gid` 唯一标识文档,并以 `receipt∈{receipt-free,receipt-bound}` 分类;节点集必须与本次 `DocumentDefinitions` 蓝图集合动态全等,不得硬编码基线数字。`documents.document_edges` 是封闭的分型对象:`dependency[{dependency,dependent}]` 表示承重前置指向依赖者,必须无环;`narrative_reference[{source,target}]` 表示叙事阅读引用,允许有环且**绝不承重**——消费者禁止用它计算拓扑、depth、准入 blocker 或撤销后代,也禁止与 dependency 扁平合并。两类边均只由 `DocumentGraphAssembler` 的已验证产物投影,canonical writer 不枚举仓库、不重算图。
+
+`joins.truth_anchors` 每项固定为 `{document_repo_path,document_gid,lean_declaration_gid,formal_truth_repo_path}`:一个文档锚必须经 compiled-artifact report 恰解析一个 Lean declaration,且该 declaration 的模块路径必须恰命中一个 `truth.nodes.repo_path`;零解析、多解析或缺 formal 节点均 fail-closed。锚点总数从 assembler 图动态派生,不得硬编码历史读数。根 `deferred_layers` 当前必须逐字等于 `["digestion"]`,显式声明 digestion/1879 原子层未进入 v1;该层归后续版本,不得以字段缺席静默冒充已覆盖。writer 以 DTO 纯投影并发射确定性 UTF-8 canonical bytes;strict reader 拒未知/缺失字段、乱序、重复、跨节悬空及非 canonical bytes。`Generated/DAG.md` 仍只读 formal DAG,与 documents/joins 双投影互不读取。
+
 **Hearts 授权条款:**SL-008 仅在 `D5/X_Frontier/HeartsAuthorizations.md` 中存在与实际唯一新增声明的全名及 canonical statement SHA-256 精确匹配的条目,且 baseline 声明全不变、无额外新增时放行;该账只增不删,无匹配照拒。
 
 - **v7.13 R2**(2026-07-17):`HEARTS-AUTH-P0` 将 SL-008 最小松动为 append-only git 授权账上的声明全名+canonical statement SHA-256 精确单增,保留既有声明冻结与防夹带;密码学身份、签名及 nonce 消费机依用户裁决不进入系统,伪造风险归公开史检测、判词可诉勘正与追责。

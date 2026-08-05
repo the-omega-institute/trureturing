@@ -112,6 +112,104 @@ public sealed class TruthGraphJsonTests
     }
 
     [Fact]
+    public void DocumentLayersKeepLoadBearingAndNarrativeEdgesSeparateAndJoinEveryAnchor()
+    {
+        var declaration = LeanDeclarationRef.Create("D5/S0/Carrier/Target.anchor");
+        var source = Document(
+            "D5/S0/Carrier/Source",
+            [
+                DocumentEdge.Dependency.Create(GidRef.Create("D5/S0/Carrier/Target")),
+                DocumentEdge.NarrativeReference.ToDocument(GidRef.Create("D5/S0/Carrier/Target")),
+                DocumentEdge.TruthAnchor.Create(declaration),
+            ]);
+        var target = Document("D5/S0/Carrier/Target");
+        var reportFiles = new Dictionary<string, LeanFileReport>
+        {
+            ["D5/S0/Carrier/Target.lean"] = new([], [new LeanDeclaration(
+                "D5.S0.Carrier.Target.anchor", "theorem", "True", [])]),
+        };
+        var report = LeanAxiomReport.Create(reportFiles);
+        var graph = DocumentGraphAssembler.Assemble([target, source], report);
+        Assert.Empty(graph.Findings);
+        var documents = DocumentGraphExportProjection.Create(
+            [
+                new DocumentGraphDocument("Blueprint/D5/S0/Carrier/Target.md", target, "receipt-bound"),
+                new DocumentGraphDocument("Blueprint/D5/S0/Carrier/Source.md", source, "receipt-free"),
+            ],
+            graph,
+            report,
+            new HashSet<string>(["D5/S0/Carrier/Target.lean"], StringComparer.Ordinal));
+        var model = TruthGraphExportModel.Create(Build(
+            new Dictionary<string, string> { ["D5/S0/Carrier/Target.lean"] = "theorem anchor : True := True.intro\n" },
+            reportFiles), Provenance, documents);
+        var reorderedDocuments = DocumentGraphExportProjection.Create(
+            [
+                new DocumentGraphDocument("Blueprint/D5/S0/Carrier/Source.md", source, "receipt-free"),
+                new DocumentGraphDocument("Blueprint/D5/S0/Carrier/Target.md", target, "receipt-bound"),
+            ],
+            DocumentGraphAssembler.Assemble([source, target], report),
+            report,
+            new HashSet<string>(["D5/S0/Carrier/Target.lean"], StringComparer.Ordinal));
+        var reorderedModel = TruthGraphExportModel.Create(Build(
+            new Dictionary<string, string> { ["D5/S0/Carrier/Target.lean"] = "theorem anchor : True := True.intro\n" },
+            reportFiles), Provenance, reorderedDocuments);
+        Assert.True(TruthGraphJsonWriter.Write(model).AsSpan()
+            .SequenceEqual(TruthGraphJsonWriter.Write(reorderedModel).AsSpan()));
+
+        var dependency = Assert.Single(model.Documents.DependencyEdges);
+        Assert.Equal("Blueprint/D5/S0/Carrier/Target.md", dependency.Dependency);
+        Assert.Equal("Blueprint/D5/S0/Carrier/Source.md", dependency.Dependent);
+        var narrative = Assert.Single(model.Documents.NarrativeReferenceEdges);
+        Assert.Equal("Blueprint/D5/S0/Carrier/Source.md", narrative.Source);
+        Assert.Equal("Blueprint/D5/S0/Carrier/Target.md", narrative.Target);
+        var join = Assert.Single(model.Joins.TruthAnchors);
+        Assert.Equal("Blueprint/D5/S0/Carrier/Source.md", join.DocumentRepoPath);
+        Assert.Equal(declaration.Value, join.LeanDeclarationGid);
+        Assert.Equal("D5/S0/Carrier/Target.lean", join.FormalTruthRepoPath);
+        Assert.True(model.DeferredLayers.SequenceEqual(["digestion"]));
+
+        var roundTrip = TruthGraphJsonReader.Read(TruthGraphJsonWriter.Write(model).AsSpan());
+        Assert.True(model.Documents.Nodes.SequenceEqual(roundTrip.Documents.Nodes));
+        Assert.True(model.Documents.DependencyEdges.SequenceEqual(roundTrip.Documents.DependencyEdges));
+        Assert.True(model.Documents.NarrativeReferenceEdges.SequenceEqual(roundTrip.Documents.NarrativeReferenceEdges));
+        Assert.True(model.Joins.TruthAnchors.SequenceEqual(roundTrip.Joins.TruthAnchors));
+        Assert.True(model.DeferredLayers.SequenceEqual(roundTrip.DeferredLayers));
+    }
+
+    [Fact]
+    public void DocumentProjectionRejectsMissingOrAmbiguousAnchorResolutionAndMissingFormalNode()
+    {
+        var reference = LeanDeclarationRef.Create("D5/S0/Carrier/Target.anchor");
+        var document = Document("D5/S0/Carrier/Source", [DocumentEdge.TruthAnchor.Create(reference)]);
+        var source = new DocumentGraphDocument("Blueprint/D5/S0/Carrier/Source.md", document, "receipt-free");
+
+        Assert.Throws<InvalidOperationException>(() => DocumentGraphExportProjection.Create(
+            [source],
+            DocumentGraphAssembler.Assemble([document], null),
+            LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>()),
+            new HashSet<string>(["D5/S0/Carrier/Target.lean"], StringComparer.Ordinal)));
+
+        var ambiguous = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>
+        {
+            ["D5/S0/Carrier/Target.lean"] = new([], [
+                new LeanDeclaration("anchor", "theorem", "True", []),
+                new LeanDeclaration("Namespace.anchor", "theorem", "True", []),
+            ]),
+        });
+        Assert.Throws<InvalidOperationException>(() => DocumentGraphExportProjection.Create(
+            [source], DocumentGraphAssembler.Assemble([document], null), ambiguous,
+            new HashSet<string>(["D5/S0/Carrier/Target.lean"], StringComparer.Ordinal)));
+
+        var resolved = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>
+        {
+            ["D5/S0/Carrier/Target.lean"] = new([], [new LeanDeclaration("anchor", "theorem", "True", [])]),
+        });
+        Assert.Throws<InvalidOperationException>(() => DocumentGraphExportProjection.Create(
+            [source], DocumentGraphAssembler.Assemble([document], resolved), resolved,
+            new HashSet<string>(StringComparer.Ordinal)));
+    }
+
+    [Fact]
     public void StrictReaderRoundTripsEveryCapabilityField()
     {
         var dag = Build(
@@ -179,6 +277,23 @@ public sealed class TruthGraphJsonTests
 
     private static LeanFileReport Report(params string[] imports) =>
         new(imports.ToImmutableArray(), ImmutableArray<LeanDeclaration>.Empty);
+
+    private static ScribeDocument Document(string gid, IEnumerable<DocumentEdge>? edges = null) =>
+        ScribeDocument.Create(
+            DocumentHeader.Create(
+                GidRef.Create(gid),
+                Generality.Instance,
+                GidRef.Create("D5/B/" + gid["D5/".Length..]),
+                new EvidenceMirror.Waiver(WaiverReason.Create("test-only")),
+                [],
+                Digest.Create("Test document.")),
+            Heading.Create(gid),
+            BlockSequence.Create([
+                new DocumentBlock.Paragraph(InlineSequence.Create([
+                    new Inline.Text(TextRun.Create("Body.")),
+                ])),
+            ]),
+            edges ?? []);
 
     private static RepositorySnapshot Snapshot(params (string Path, string Text)[] files) =>
         Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(RawRepositorySnapshot.Create(

@@ -63,7 +63,31 @@ internal static class DagRenderCommand
         var provenance = new TruthGraphProvenance(
             TruthGraphSnapshotIdentity.Compute(truth.Snapshot),
             leanReportDigest);
-        var exit = DagEmitter.Emit(repositoryRoot, truth.Dag, provenance, check, output, error);
+        DocumentGraphExportProjection documentProjection;
+        try
+        {
+            documentProjection = DocumentGraphExportProjection.AssembleRepository(
+                repositoryRoot,
+                truth.Report,
+                truth.Dag.Nodes.Select(static node => node.RepoPath.Value).ToHashSet(StringComparer.Ordinal));
+        }
+        catch (Exception exception) when (
+            exception is InvalidOperationException
+                or FormatException
+                or IOException
+                or UnauthorizedAccessException
+                or ArgumentException)
+        {
+            return Failure("document graph could not be built", exception);
+        }
+        var exit = DagEmitter.Emit(
+            repositoryRoot,
+            truth.Dag,
+            provenance,
+            check,
+            output,
+            error,
+            documentProjection);
         return new CommandResult(exit == 0, output.ToString(), error.ToString());
     }
 
