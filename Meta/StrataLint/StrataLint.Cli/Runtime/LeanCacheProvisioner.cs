@@ -10,7 +10,24 @@ internal sealed record LeanCacheProvisionResult(
 
 internal static class LeanCacheProvisioner
 {
+    internal const int DefaultProvisionBudgetSeconds = 1800;
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
+
+    // Cold provisioning spans package clones plus olean download and extraction. Five minutes
+    // permits useful fail-fast runs; two hours gives that path 4x headroom without an unbounded hang.
+    private static TimeSpan ProvisionBudget
+    {
+        get
+        {
+            var raw = Environment.GetEnvironmentVariable("STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS");
+            if (int.TryParse(raw, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out var seconds))
+            {
+                return TimeSpan.FromSeconds(Math.Clamp(seconds, 300, 7200));
+            }
+
+            return TimeSpan.FromSeconds(DefaultProvisionBudgetSeconds);
+        }
+    }
 
     internal static LeanCacheProvisionResult Provision(
         LeanCacheDonorSelection selection,
@@ -31,7 +48,7 @@ internal static class LeanCacheProvisioner
             "cp",
             ["-c", "-R", source, target],
             worktreeRoot,
-            TimeSpan.FromSeconds(1800));
+            ProvisionBudget);
         if (clonefile.ExitCode == 0)
         {
             VerifyPrivateDirectory(target);
@@ -44,7 +61,7 @@ internal static class LeanCacheProvisioner
             "cp",
             ["-R", source, target],
             worktreeRoot,
-            TimeSpan.FromSeconds(1800));
+            ProvisionBudget);
         if (copy.ExitCode == 0)
         {
             VerifyPrivateDirectory(target);
@@ -79,7 +96,7 @@ internal static class LeanCacheProvisioner
             "lake",
             ["exe", "cache", "get"],
             worktreeRoot,
-            TimeSpan.FromSeconds(1800));
+            ProvisionBudget);
         if (result.ExitCode != 0)
         {
             throw new InvalidOperationException(

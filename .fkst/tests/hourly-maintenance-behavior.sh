@@ -775,6 +775,7 @@ run_test "dead pr-watch state is retained for recovery" dead_pr_watch_state_is_r
 run_test "live pr-watch lease without state fails closed" live_pr_watch_lease_without_state_fails_closed
 run_test "dangling pr-watch lease without state fails closed" dangling_pr_watch_lease_without_state_fails_closed
 run_test "dangling pr-watch state fails closed" dangling_pr_watch_state_fails_closed
+run_test "live watcher verifies despite symlinked temp paths" live_watcher_is_verified_despite_symlinked_temp_paths
 run_test "legacy pr-watch pidfile is reported unknown" legacy_pidfile_is_reported_unknown
 run_test "unverifiable pr-watch identity fails closed" unverifiable_pr_watch_identity_fails_closed
 

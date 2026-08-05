@@ -38,10 +38,10 @@ internal static class DagRenderCommand
                 $"dag-render: unknown argument {argument}\nusage: dag-render [--check]\n");
         }
 
-        AcyclicTruthDag dag;
+        TruthContext truth;
         try
         {
-            dag = DagLedgerCommandPreparation.BuildTruth(repository, leanReportSource).Dag;
+            truth = DagLedgerCommandPreparation.BuildTruth(repository, leanReportSource);
         }
         catch (DagLedgerCommandPreparation.RepositoryUnavailableException exception)
         {
@@ -58,7 +58,36 @@ internal static class DagRenderCommand
 
         var output = new StringWriter();
         var error = new StringWriter();
-        var exit = DagEmitter.Emit(repositoryRoot, dag, check, output, error);
+        var leanReportDigest = RawLeanReportArtifact.ContentAddress(
+            RawLeanReportArtifact.Write(truth.Snapshot, truth.Report).AsSpan());
+        var provenance = new TruthGraphProvenance(
+            TruthGraphSnapshotIdentity.Compute(truth.Snapshot),
+            leanReportDigest);
+        DocumentGraphExportProjection documentProjection;
+        try
+        {
+            documentProjection = DocumentGraphExportProjection.AssembleRepository(
+                repositoryRoot,
+                truth.Report,
+                truth.Dag.Nodes.Select(static node => node.RepoPath.Value).ToHashSet(StringComparer.Ordinal));
+        }
+        catch (Exception exception) when (
+            exception is InvalidOperationException
+                or FormatException
+                or IOException
+                or UnauthorizedAccessException
+                or ArgumentException)
+        {
+            return Failure("document graph could not be built", exception);
+        }
+        var exit = DagEmitter.Emit(
+            repositoryRoot,
+            truth.Dag,
+            provenance,
+            check,
+            output,
+            error,
+            documentProjection);
         return new CommandResult(exit == 0, output.ToString(), error.ToString());
     }
 
