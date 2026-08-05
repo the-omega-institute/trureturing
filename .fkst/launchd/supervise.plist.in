@@ -21,6 +21,11 @@
 	</array>
 	<key>RunAtLoad</key>
 	<true/>
+	<key>SoftResourceLimits</key>
+	<dict>
+		<key>NumberOfFiles</key>
+		<integer>16384</integer>
+	</dict>
 	<key>StandardErrorPath</key>
 	<string>@@FKST_SUPERVISE_LAUNCHER_LOG@@</string>
 	<key>StandardOutPath</key>

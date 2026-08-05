@@ -64,6 +64,11 @@ PY
 	</array>
 	<key>RunAtLoad</key>
 	<true/>
+	<key>SoftResourceLimits</key>
+	<dict>
+		<key>NumberOfFiles</key>
+		<integer>16384</integer>
+	</dict>
 	<key>StandardErrorPath</key>
 	<string>$scratch/logs/supervise-launchd.log</string>
 	<key>StandardOutPath</key>
