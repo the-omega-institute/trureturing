@@ -47,6 +47,7 @@ list of absolute directories; do not append `$PATH`.
 BIN=<absolute-path-to-fkst-framework>
 FKST_HOST_ROOT=<absolute-path-to-dedicated-checkout>
 FKST_PLATFORM_ROOT=<absolute-path-to-platform-checkout>
+FKST_GITHUB_PROXY_AUTHORITY_ROOT=<absolute-path-to-authority-checkout/packages/github-proxy>
 FKST_DURABLE_ROOT=<absolute-path-to-durable-directory>
 FKST_RUNTIME_ROOT=<absolute-path-to-runtime-directory>
 FKST_RATE_POOL_ROOT=<absolute-path-to-rate-pool-directory>
@@ -103,6 +104,11 @@ Existing hosts must add the five supervise provider keys above to their operator
 `host.env` before the first maintenance cycle using this revision. Do not edit the file from a
 repository migration. The periodic conformance gate fails closed when any provider key is absent
 and names the missing key as `required host key <KEY> is unset`; it never skips the affected unit.
+
+`FKST_GITHUB_PROXY_AUTHORITY_ROOT` has the same package-root meaning as the Lua contract tests'
+override of that name. The maintenance cycle fetches its containing checkout and fast-forwards a
+clean ancestor to the deployed platform pin. Dirty, diverged, or unverifiable authority checkouts
+are left untouched and reported with an `AUTHORITY-*` entry in `FKST_MAINTENANCE_LOG`.
 
 ## 4. Validate and render
 
