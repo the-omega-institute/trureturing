@@ -12,22 +12,32 @@
 #
 # 判定只看机器字段(mergeable/mergeStateStatus/autoMergeRequest),不看输出散文。
 set -euo pipefail
-
-ROOT="${PR_SHEPHERD_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)}"
+LOADED_SCRIPT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)/${BASH_SOURCE[0]##*/}"
+SCRIPT_PATH="${PR_SHEPHERD_CANONICAL_SCRIPT:-$LOADED_SCRIPT_PATH}"
+ROOT="${PR_SHEPHERD_ROOT:-$(cd "$(dirname "$SCRIPT_PATH")/../../.." && pwd -P)}"
 REMOTE="${PR_SHEPHERD_REMOTE:-origin}"
 REPO="${PR_SHEPHERD_REPO:-the-omega-institute/trureturing}"
 LOG="${PR_SHEPHERD_LOG:-$HOME/.pr-shepherd.log}"
 PIDFILE="${PR_SHEPHERD_PID:-$HOME/.pr-shepherd.pid}"
+PIDFILE_PARENT="$(cd "$(dirname "$PIDFILE")" 2>/dev/null && pwd -P)" \
+  || { printf 'pr-shepherd: state directory is unavailable: %s\n' "$(dirname "$PIDFILE")" >&2; exit 1; }
+PIDFILE="$PIDFILE_PARENT/${PIDFILE##*/}"
 STATE_DIR="${PR_SHEPHERD_STATE:-$HOME/.pr-shepherd-state}"
 CACHE_ROOT="${PR_SHEPHERD_CACHE:-$HOME/.cache/trureturing-shepherd}"
 DRYRUN="${SHEPHERD_DRYRUN:-0}"
 COMMIT_SUBJECT="recompute derivations after dev advance (auto, pr-shepherd)"
 ORIGINAL_HOME="${HOME:-/tmp}"
+WATCH_LOADED_BLOB="${PR_SHEPHERD_WATCH_LOADED_BLOB:-}"
+WATCH_PREVIOUS_SCRIPT="${PR_SHEPHERD_WATCH_PREVIOUS_SCRIPT:-}"
+WATCH_PROCESS_START="${PR_SHEPHERD_WATCH_PROCESS_START:-}"
+WATCH_OWNS_LEASE=0
+WATCH_LOCK_CANDIDATE=""
+WATCH_RECLAIM_REPOSITORY=""
+WATCH_RECLAIM_REF=""
+WATCH_RECLAIM_OID=""
 
 GH() { LEAN4_GUARDRAILS_BYPASS=1 gh "$@"; }
-
 log() { printf '%s %s\n' "$(date '+%F %T')" "$*" | tee -a "$LOG" >&2; }
-
 credentialless() {
   local isolated_home="$1"
   shift
@@ -51,7 +61,6 @@ credentialless() {
     GCM_INTERACTIVE=Never \
     "$@"
 }
-
 has_expiry_fingerprint() {
   local conclusion="$1" details_url="$2" run_id job_id tail out
   [[ "$conclusion" == "FAILURE" ]] || return 1
@@ -77,7 +86,6 @@ has_expiry_fingerprint() {
     && "$out" == *"ECHO_VERIFY_INFRASTRUCTURE"* \
     && "$out" == *"residual"* ]]
 }
-
 # Conflicts a machine can settle by rebuilding rather than by reading intent. The frozen
 # ledger belongs here even though it is append-only source: two lanes that each freeze a
 # module always collide textually, yet the correct result is never a hand-merge of the two
@@ -91,14 +99,12 @@ is_derived_conflict() {
     *) return 1 ;;
   esac
 }
-
 branch_slug() {
   local branch="$1" slug digest
   slug="$(printf '%s' "$branch" | sed 's#[^A-Za-z0-9._-]#-#g')"
   digest="$(printf '%s' "$branch" | git hash-object --stdin | cut -c 1-12)"
   printf '%s-%s' "${slug:0:80}" "$digest"
 }
-
 dryrun_recalculation() {
   local num="$1" head="$2" workspace="$3"
   log "DRYRUN #$num RECALCULATE -> ensure worktree path=$workspace"
@@ -112,7 +118,6 @@ dryrun_recalculation() {
   log "DRYRUN #$num commit: $COMMIT_SUBJECT"
   log "DRYRUN #$num push HEAD:refs/heads/$head (non-force)"
 }
-
 prepare_worktree() {
   local num="$1" head="$2" expected_head="$3" workspace="$4" slug="$5"
   if [[ ! -e "$workspace/.git" ]]; then
@@ -127,7 +132,6 @@ prepare_worktree() {
     log "SWEEP #$num cache path 不是已注册 worktree: $workspace"
     return 1
   fi
-
   local observed_base
   observed_base="$(git -C "$workspace" rev-parse "refs/remotes/$REMOTE/dev")"
   git -C "$workspace" merge --abort >/dev/null 2>&1 || true
@@ -139,7 +143,6 @@ prepare_worktree() {
     log "SWEEP #$num fetch 失败,放弃本轮"
     return 1
   fi
-
   local fetched_head fetched_base drifted=0
   fetched_head="$(git -C "$workspace" rev-parse "refs/remotes/$REMOTE/$head")"
   fetched_base="$(git -C "$workspace" rev-parse "refs/remotes/$REMOTE/dev")"
@@ -156,7 +159,6 @@ prepare_worktree() {
   fi
   git -C "$workspace" checkout --detach "$fetched_head" >/dev/null
 }
-
 merge_dev() {
   local num="$1" head="$2" workspace="$3" merge_rc path source_conflict=0 conflict_count=0
   set +e
@@ -167,7 +169,6 @@ merge_dev() {
     merge --no-commit --no-ff "$REMOTE/dev"
   merge_rc=$?
   set -e
-
   if [[ "$merge_rc" -ne 0 ]]; then
     while IFS= read -r -d '' path; do
       conflict_count=$((conflict_count + 1))
@@ -200,7 +201,6 @@ merge_dev() {
       return 1
     fi
   fi
-
   if git -C "$workspace" rev-parse -q --verify MERGE_HEAD >/dev/null; then
     git -C "$workspace" \
       -c core.hooksPath=/dev/null \
@@ -209,7 +209,6 @@ merge_dev() {
       commit -m "Merge $REMOTE/dev into $head (pr-shepherd)" >/dev/null
   fi
 }
-
 run_derivation_chain() {
   local num="$1" workspace="$2" projection isolated_home
   isolated_home="$(mktemp -d "${TMPDIR:-/tmp}/pr-shepherd-derivation.XXXXXXXX")"
@@ -228,7 +227,6 @@ run_derivation_chain() {
     rm -rf "$isolated_home"
     log "SWEEP #$num ingest 失败,不 push"; return 1
   fi
-
   mkdir -p "$workspace/Generated"
   projection="$workspace/Generated/.echo-residual-summary.md.pr-shepherd.$$"
   if ! (cd "$workspace" && credentialless "$isolated_home" dotnet run \
@@ -240,7 +238,6 @@ run_derivation_chain() {
     return 1
   fi
   mv "$projection" "$workspace/Generated/echo-residual-summary.md"
-
   # Freeze last: every step above rewrites tracked bytes, and an attestation taken before
   # them binds a blob that no longer exists. Appending here also repairs a branch that
   # produced a closed module without ever freezing it, which SL-008 otherwise rejects.
@@ -251,7 +248,6 @@ run_derivation_chain() {
     rm -rf "$isolated_home"
     log "SWEEP #$num ledger-append 失败,不 push"; return 1
   fi
-
   if ! credentialless "$isolated_home" \
     make -C "$workspace" --no-print-directory emit-check BASE="$REMOTE/dev"; then
     rm -rf "$isolated_home"
@@ -259,7 +255,6 @@ run_derivation_chain() {
   fi
   rm -rf "$isolated_home"
 }
-
 acquire_branch_lock() {
   local num="$1" lock="$2" owner="" reap="$2.reap" stale="$2.stale.$$"
   if mkdir "$lock" 2>/dev/null; then
@@ -280,7 +275,6 @@ acquire_branch_lock() {
     return 1
   fi
   printf '%s' "$$" > "$reap/pid"
-
   owner=""
   if [[ -f "$lock/pid" ]]; then owner="$(cat "$lock/pid" 2>/dev/null || true)"; fi
   if [[ "$owner" =~ ^[1-9][0-9]*$ ]] && kill -0 "$owner" 2>/dev/null; then
@@ -306,7 +300,6 @@ acquire_branch_lock() {
   rmdir "$stale" "$reap" 2>/dev/null \
     || log "SWEEP #$num stale 重算锁留痕清理失败 stale=$stale reap=$reap"
 }
-
 release_branch_lock() {
   local lock="$1" owner=""
   if [[ -f "$lock/pid" ]]; then owner="$(cat "$lock/pid" 2>/dev/null || true)"; fi
@@ -314,14 +307,12 @@ release_branch_lock() {
   rm -f "$lock/pid"
   rmdir "$lock" 2>/dev/null || true
 }
-
 recalculate_pr_locked() {
   local num="$1" head="$2" expected_head="$3" workspace="$4" slug="$5"
   prepare_worktree "$num" "$head" "$expected_head" "$workspace" "$slug" \
     || return 1
   merge_dev "$num" "$head" "$workspace" || return 1
   run_derivation_chain "$num" "$workspace" || return 1
-
   git -C "$workspace" add -A
   if ! git -C "$workspace" \
     -c core.hooksPath=/dev/null \
@@ -338,7 +329,6 @@ recalculate_pr_locked() {
   fi
   log "SWEEP #$num RECALCULATE -> 本地 merge+regen+push 完成 head=$head"
 }
-
 recalculate_pr() {
   local num="$1" head="$2" expected_head="$3" slug workspace lock rc=0
   git check-ref-format --branch "$head" >/dev/null \
@@ -346,7 +336,6 @@ recalculate_pr() {
   slug="$(branch_slug "$head")"
   [[ -n "$slug" ]] || { log "SWEEP #$num head slug 为空,放弃本轮"; return 1; }
   workspace="$CACHE_ROOT/wt-$slug"
-
   if [[ "$DRYRUN" == "1" ]]; then
     dryrun_recalculation "$num" "$head" "$workspace"
     return 0
@@ -359,7 +348,6 @@ recalculate_pr() {
   release_branch_lock "$lock"
   return "$rc"
 }
-
 open_pr() {
   local head="$1" title="$2" body_file="${3:-}"
   if [[ "$DRYRUN" == "1" ]]; then
@@ -376,7 +364,6 @@ open_pr() {
   log "OPEN #$num head=$head auto-merge=armed $url"
   printf '%s\n' "$num"
 }
-
 # 唤醒:armed 但 head 上无任何 check 的 PR(bot 以 GITHUB_TOKEN push 不触发
 # workflow 的防递归缺口,见 retire-auto-update 尸检)。本地身份 close→reopen
 # 重铸触发事件;close 会撤 auto-merge,故唤醒后必须重挂。
@@ -393,7 +380,6 @@ wake_pr() {
     || log "WAKE #$num re-arm auto-merge 失败(需会话补挂)"
   log "WAKE #$num close/reopen 完成,auto-merge 重挂"
 }
-
 # GitHub's rate_limit endpoint is itself exempt from rate limiting, so reading the
 # remaining budget costs nothing. A sweep does not: the PR listing alone is a GraphQL
 # query over up to a thousand pull requests, and a long-running watch repeats it every
@@ -402,7 +388,6 @@ wake_pr() {
 graphql_remaining() {
   gh api rate_limit --jq '.resources.graphql.remaining' 2>/dev/null
 }
-
 sweep() {
   local remaining floor="${PR_SHEPHERD_GRAPHQL_FLOOR:-200}"
   remaining="$(graphql_remaining)" || remaining=""
@@ -413,7 +398,6 @@ sweep() {
     log "SWEEP 跳过:GraphQL 余额 $remaining 低于下限 $floor,让配额恢复"
     return 0
   fi
-
   [[ "$DRYRUN" == "1" ]] || mkdir -p "$STATE_DIR"
   local recalculated=" "
   GH pr list --repo "$REPO" --state open --limit 1000 \
@@ -464,7 +448,6 @@ sweep() {
     esac
   done
 }
-
 armed_pr_count() {
   local out
   if ! out="$(GH pr list --repo "$REPO" --state open --limit 1000 \
@@ -480,33 +463,333 @@ armed_pr_count() {
   printf '%s\n' "$out"
 }
 
-watch() {
-  local interval="${1:-60}" max="${2:-360}"
-  if [[ "$DRYRUN" != "1" ]]; then
-    if [[ -f "$PIDFILE" ]] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
-      log "WATCH 已有实例在跑(pid=$(cat "$PIDFILE")),退出"; exit 1
-    fi
-    printf '%s' "$$" > "$PIDFILE"
-    trap 'rm -f "$PIDFILE"' EXIT
+watch_process_start() {
+  LC_ALL=C ps -p "$1" -o lstart= 2>/dev/null \
+    | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
+}
+# 0=live owner, 1=recorded owner is provably gone, 2=identity cannot be verified.
+watch_lease_owner_status() {
+  local owner_file="${1:-$PIDFILE.lock}" line pid process_start canonical_script
+  local actual_start="" process_status
+  local -a lines=()
+  WATCH_OWNER_PID=""
+  WATCH_OWNER_PROCESS_START=""
+  WATCH_OWNER_CANONICAL_SCRIPT=""
+  [[ -f "$owner_file" && -r "$owner_file" ]] || return 2
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    lines+=("$line")
+  done < "$owner_file"
+  [[ "${#lines[@]}" -eq 4 \
+      && "${lines[0]}" == "schema=pr-watch-owner-v1" \
+      && "${lines[1]}" =~ ^pid=([1-9][0-9]*)$ \
+      && "${lines[2]}" == process_start=* \
+      && "${lines[3]}" == canonical_script=/* ]] || return 2
+  pid="${BASH_REMATCH[1]}"
+  process_start="${lines[2]#process_start=}"
+  canonical_script="${lines[3]#canonical_script=}"
+  [[ -n "$process_start" && -n "$canonical_script" ]] || return 2
+  WATCH_OWNER_PID="$pid"
+  WATCH_OWNER_PROCESS_START="$process_start"
+  WATCH_OWNER_CANONICAL_SCRIPT="$canonical_script"
+  if actual_start="$(watch_process_start "$pid")"; then
+    process_status=0
+  else
+    process_status=$?
+    actual_start=""
   fi
-  log "WATCH start interval=${interval}s max_cycles=${max} pid=$$"
-  local i armed
-  while true; do
-    for ((i = 1; i <= max; i++)); do
-      sweep || log "SWEEP cycle=$i 出错(继续)"
-      sleep "$interval"
-    done
-    if ! armed="$(armed_pr_count)"; then
-      log "WATCH renew(${max} 轮耗尽,armed PR 状态不可判,保守重启计数)"
-      continue
+  if kill -0 "$pid" 2>/dev/null; then
+    [[ "$process_status" == "0" && "$actual_start" == "$process_start" ]] \
+      && return 0
+    return 2
+  fi
+  if [[ "$process_status" == "1" && -z "$actual_start" ]]; then
+    return 1
+  fi
+  if [[ "$process_status" == "0" && -n "$actual_start" \
+      && "$actual_start" != "$process_start" ]]; then
+    return 1
+  fi
+  return 2
+}
+write_watch_owner() {
+  local target="$1"
+  (set -o noclobber; {
+      printf 'schema=pr-watch-owner-v1\n'
+      printf 'pid=%s\n' "$$"
+      printf 'process_start=%s\n' "$WATCH_PROCESS_START"
+      printf 'canonical_script=%s\n' "$SCRIPT_PATH"
+    } > "$target") 2>/dev/null
+}
+clear_watch_reclaim() {
+  local rc=0
+  if [[ -n "$WATCH_RECLAIM_REF" && -n "$WATCH_RECLAIM_OID" ]]; then
+    if ! git -C "$WATCH_RECLAIM_REPOSITORY" update-ref -d \
+        "$WATCH_RECLAIM_REF" "$WATCH_RECLAIM_OID" 2>/dev/null; then
+      log "WATCH lease unavailable: reclaim claim release failed"
+      rc=1
     fi
-    if [[ "$armed" -gt 0 ]]; then
-      log "WATCH renew(${max} 轮耗尽,仍有 open 且 auto-merge armed PR,重启计数)"
-      continue
+  fi
+  WATCH_RECLAIM_REPOSITORY=""
+  WATCH_RECLAIM_REF=""
+  WATCH_RECLAIM_OID=""
+  return "$rc"
+}
+acquire_watch_reclaim_claim() {
+  local candidate="$1" repository candidate_oid observed_oid observed_status attempt rc observed
+  local zero=0000000000000000000000000000000000000000
+  repository="$PIDFILE.reclaim.git"
+  if ! git init --bare -q "$repository" 2>/dev/null; then
+    log "WATCH lease unavailable: reclaim repository cannot be initialized"; return 1
+  fi
+  [[ "$(git -C "$repository" rev-parse --is-bare-repository 2>/dev/null)" == "true" ]] \
+    || { log "WATCH lease unavailable: reclaim repository is invalid"; return 1; }
+  candidate_oid="$(git -C "$repository" hash-object -w "$candidate" 2>/dev/null)" \
+    || candidate_oid=""
+  [[ "$candidate_oid" =~ ^[0-9a-f]{40}$ ]] \
+    || { log "WATCH lease unavailable: reclaim identity cannot be stored"; return 1; }
+  WATCH_RECLAIM_REF="refs/trureturing/pr-watch-reclaim"
+  for attempt in 1 2 3; do
+    if observed_oid="$(git -C "$repository" rev-parse --verify --quiet \
+        "$WATCH_RECLAIM_REF" 2>/dev/null)"; then
+      observed="$candidate.observed"
+      if ! git -C "$repository" cat-file blob "$observed_oid" \
+          > "$observed" 2>/dev/null; then
+        rm -f "$observed"
+        log "WATCH lease unavailable: reclaim identity is unverifiable"
+        return 1
+      fi
+      watch_lease_owner_status "$observed" && observed_status=0 || observed_status=$?
+      rm -f "$observed"
+      case "$observed_status" in
+        0) log "WATCH lease unavailable: ownership reclamation already in progress"; return 1 ;;
+        2) log "WATCH lease unavailable: reclaim identity is unverifiable"; return 1 ;;
+      esac
+    else
+      rc=$?
+      [[ "$rc" == "1" ]] \
+        || { log "WATCH lease unavailable: reclaim claim cannot be read"; return 1; }
+      observed_oid="$zero"
     fi
-    log "WATCH end(${max} 轮耗尽,无 open auto-merge armed PR)"
-    return
+    if git -C "$repository" update-ref "$WATCH_RECLAIM_REF" \
+        "$candidate_oid" "$observed_oid" 2>/dev/null; then
+      WATCH_RECLAIM_REPOSITORY="$repository"
+      WATCH_RECLAIM_OID="$candidate_oid"
+      return 0
+    fi
   done
+  log "WATCH lease unavailable: reclaim claim changed repeatedly"
+  return 1
+}
+
+acquire_watch_lease() {
+  local lock="$PIDFILE.lock" status replacement
+  WATCH_PROCESS_START="$(watch_process_start "$$")" || WATCH_PROCESS_START=""
+  [[ -n "$WATCH_PROCESS_START" ]] \
+    || { log "WATCH identity unavailable: process start cannot be read"; return 1; }
+  if [[ -e "$PIDFILE" && ! -f "$lock" ]]; then
+    log "WATCH lease unavailable: state exists without ownership lease path=$PIDFILE"
+    return 1
+  fi
+  WATCH_LOCK_CANDIDATE="$lock.next.$$.$RANDOM"
+  if ! write_watch_owner "$WATCH_LOCK_CANDIDATE"; then
+    WATCH_LOCK_CANDIDATE=""
+    log "WATCH lease unavailable: owner identity cannot be written"
+    return 1
+  fi
+  if ln "$WATCH_LOCK_CANDIDATE" "$lock" 2>/dev/null; then
+    rm -f "$WATCH_LOCK_CANDIDATE" 2>/dev/null || true
+    WATCH_LOCK_CANDIDATE=""
+    WATCH_OWNS_LEASE=1
+    rm -f "$PIDFILE" 2>/dev/null || true
+    return 0
+  fi
+  [[ -f "$lock" ]] \
+    || { log "WATCH lease unavailable: owner identity is absent"; return 1; }
+  acquire_watch_reclaim_claim "$WATCH_LOCK_CANDIDATE" || return 1
+  rm -f "$WATCH_LOCK_CANDIDATE" 2>/dev/null || true
+  WATCH_LOCK_CANDIDATE="$lock.observed.$$.$RANDOM"
+  if ! cp "$lock" "$WATCH_LOCK_CANDIDATE" 2>/dev/null \
+      || ! cmp -s "$lock" "$WATCH_LOCK_CANDIDATE"; then
+    clear_watch_reclaim || true
+    log "WATCH lease unavailable: ownership changed during reclamation"
+    return 1
+  fi
+  if watch_lease_owner_status "$WATCH_LOCK_CANDIDATE"; then
+    status=0
+  else
+    status=$?
+  fi
+  case "$status" in
+    0)
+      clear_watch_reclaim || true
+      log "WATCH already running with a verified lease"
+      return 1
+      ;;
+    2)
+      clear_watch_reclaim || true
+      log "WATCH lease unavailable: ownership identity is unverifiable"
+      return 1
+      ;;
+  esac
+  rm -f "$WATCH_LOCK_CANDIDATE" 2>/dev/null || true
+  WATCH_LOCK_CANDIDATE=""
+  replacement="$lock.next.$$.$RANDOM"
+  WATCH_LOCK_CANDIDATE="$replacement"
+  if ! write_watch_owner "$replacement" || ! mv "$replacement" "$lock"; then
+    rm -f "$replacement" 2>/dev/null || true
+    WATCH_LOCK_CANDIDATE=""
+    clear_watch_reclaim || true
+    log "WATCH lease unavailable: reclaimed owner identity cannot be written"
+    return 1
+  fi
+  WATCH_LOCK_CANDIDATE=""
+  WATCH_OWNS_LEASE=1
+  rm -f "$PIDFILE" 2>/dev/null || true
+  clear_watch_reclaim || return 1
+  return 0
+}
+watch_lease_belongs_to_current_process() {
+  watch_lease_owner_status "$PIDFILE.lock" || return 1
+  [[ "$WATCH_OWNER_PID" == "$$" && -n "$WATCH_PROCESS_START" \
+      && "$WATCH_OWNER_PROCESS_START" == "$WATCH_PROCESS_START" \
+      && "$WATCH_OWNER_CANONICAL_SCRIPT" == "$SCRIPT_PATH" ]]
+}
+
+publish_watch_identity() {
+  local interval="$1" max="$2" cycle="$3" actual_blob temporary
+  actual_blob="$(git hash-object "$LOADED_SCRIPT_PATH" 2>/dev/null)" || actual_blob=""
+  if [[ ! "$WATCH_LOADED_BLOB" =~ ^[0-9a-f]{40}$ \
+      || "$actual_blob" != "$WATCH_LOADED_BLOB" ]]; then
+    log "WATCH identity mismatch expected=${WATCH_LOADED_BLOB:-missing} actual=${actual_blob:-unreadable}"
+    return 1
+  fi
+  watch_lease_belongs_to_current_process \
+    || { log "WATCH lease lost before identity publication"; return 1; }
+  temporary="$PIDFILE.next.$$.$RANDOM"
+  umask 077
+  if ! {
+      printf 'schema=pr-watch-state-v1\n'
+      printf 'pid=%s\n' "$$"
+      printf 'process_start=%s\n' "$WATCH_PROCESS_START"
+      printf 'canonical_script=%s\n' "$SCRIPT_PATH"
+      printf 'loaded_script=%s\n' "$LOADED_SCRIPT_PATH"
+      printf 'loaded_blob=%s\n' "$WATCH_LOADED_BLOB"
+      printf 'interval=%s\n' "$interval"
+      printf 'max_cycles=%s\n' "$max"
+      printf 'cycle=%s\n' "$cycle"
+    } > "$temporary" \
+      || ! mv "$temporary" "$PIDFILE"; then
+    rm -f "$temporary" 2>/dev/null || true
+    log "WATCH identity publication failed path=$PIDFILE"
+    return 1
+  fi
+  log "WATCH cycle=$cycle loaded_script_blob=$WATCH_LOADED_BLOB"
+}
+remove_watch_snapshot() {
+  local snapshot="$1" snapshot_directory temporary_directory
+  [[ "${snapshot##*/}" == pr-shepherd-watch.* ]] || return 0
+  snapshot_directory="$(cd "$(dirname "$snapshot")" 2>/dev/null && pwd -P)" || return 0
+  temporary_directory="$(cd "${TMPDIR:-/tmp}" 2>/dev/null && pwd -P)" || return 0
+  [[ "$snapshot_directory" == "$temporary_directory" ]] \
+    && rm -f "$snapshot" 2>/dev/null || true
+}
+reload_watch() {
+  local interval="$1" max="$2" next_cycle="$3" snapshot blob rc
+  local script_repository script_relative tracked_blob
+  if ! snapshot="$(mktemp "${TMPDIR:-/tmp}/pr-shepherd-watch.XXXXXXXX")"; then
+    log "WATCH reload unavailable: immutable snapshot cannot be allocated"
+    return 1
+  fi
+  if ! cp "$SCRIPT_PATH" "$snapshot" 2>/dev/null \
+      || ! chmod 0400 "$snapshot" \
+      || ! /bin/bash -n "$snapshot" \
+      || ! blob="$(git hash-object "$snapshot" 2>/dev/null)"; then
+    rm -f "$snapshot" 2>/dev/null || true
+    log "WATCH reload unavailable path=$SCRIPT_PATH"
+    return 1
+  fi
+  script_repository="$(git -C "$(dirname "$SCRIPT_PATH")" rev-parse --show-toplevel 2>/dev/null)" \
+    || script_repository=""
+  script_relative="$(git -C "$script_repository" ls-files --full-name \
+    --error-unmatch -- "$SCRIPT_PATH" 2>/dev/null)" || script_relative=""
+  tracked_blob="$(git -C "$script_repository" \
+    rev-parse "HEAD:$script_relative" 2>/dev/null)" || tracked_blob=""
+  if [[ -z "$script_repository" || -z "$script_relative" \
+      || ! "$tracked_blob" =~ ^[0-9a-f]{40}$ || "$blob" != "$tracked_blob" ]]; then
+    rm -f "$snapshot" 2>/dev/null || true
+    log "WATCH reload blocked: canonical script does not match tracked HEAD path=$SCRIPT_PATH"
+    return 1
+  fi
+  if [[ -n "$WATCH_LOADED_BLOB" && "$WATCH_LOADED_BLOB" != "$blob" ]]; then
+    log "WATCH SCRIPT CHANGED previous_blob=$WATCH_LOADED_BLOB current_blob=$blob"
+  fi
+  export PR_SHEPHERD_CANONICAL_SCRIPT="$SCRIPT_PATH"
+  export PR_SHEPHERD_ROOT="$ROOT"
+  export PR_SHEPHERD_WATCH_LOADED_BLOB="$blob"
+  export PR_SHEPHERD_WATCH_PREVIOUS_SCRIPT="$LOADED_SCRIPT_PATH"
+  export PR_SHEPHERD_WATCH_PROCESS_START="$WATCH_PROCESS_START"
+  export PR_SHEPHERD_WATCH_CYCLE="$next_cycle"
+  if exec /bin/bash "$snapshot" watch "$interval" "$max"; then
+    return 0
+  else
+    rc=$?
+  fi
+  rm -f "$snapshot" 2>/dev/null || true
+  log "WATCH reload exec failed path=$snapshot exit=$rc"
+  return "$rc"
+}
+cleanup_watch() {
+  [[ -z "$WATCH_LOCK_CANDIDATE" ]] \
+    || rm -f "$WATCH_LOCK_CANDIDATE" 2>/dev/null || true
+  clear_watch_reclaim || true
+  remove_watch_snapshot "$LOADED_SCRIPT_PATH"
+}
+watch() {
+  local interval="${1:-60}" max="${2:-360}" cycle armed
+  [[ "$interval" =~ ^(0|[1-9][0-9]*)$ && "$max" =~ ^[1-9][0-9]*$ ]] \
+    || { log "WATCH invalid interval or max_cycles (interval=$interval max_cycles=$max)"; return 2; }
+  if [[ -z "$WATCH_LOADED_BLOB" ]]; then
+    trap cleanup_watch EXIT
+    trap 'exit 143' TERM
+    trap 'exit 130' INT
+    acquire_watch_lease || return
+    reload_watch "$interval" "$max" 1
+    return
+  fi
+  WATCH_OWNS_LEASE=1
+  trap cleanup_watch EXIT
+  trap 'exit 143' TERM
+  trap 'exit 130' INT
+  cycle="${PR_SHEPHERD_WATCH_CYCLE:-}"
+  [[ "$cycle" =~ ^[1-9][0-9]*$ && "$cycle" -le "$max" ]] \
+    || { log "WATCH reload rejected invalid cycle=${cycle:-missing}"; return 2; }
+  watch_lease_belongs_to_current_process \
+    || { log "WATCH reload rejected: verified lease is absent"; return 1; }
+  publish_watch_identity "$interval" "$max" "$cycle" || return
+  remove_watch_snapshot "$WATCH_PREVIOUS_SCRIPT"
+  WATCH_PREVIOUS_SCRIPT=""
+  if [[ "$cycle" == "1" ]]; then
+    log "WATCH start interval=${interval}s max_cycles=${max} pid=$$"
+  else
+    log "WATCH reloaded cycle=$cycle interval=${interval}s max_cycles=${max} pid=$$"
+  fi
+  sweep || log "SWEEP cycle=$cycle error (continuing)"
+  sleep "$interval"
+  if [[ "$cycle" -lt "$max" ]]; then
+    reload_watch "$interval" "$max" "$((cycle + 1))"
+    return
+  fi
+  if ! armed="$(armed_pr_count)"; then
+    log "WATCH renew(${max} 轮耗尽,armed PR 状态不可判,保守重启计数)"
+    reload_watch "$interval" "$max" 1
+    return
+  fi
+  if [[ "$armed" -gt 0 ]]; then
+    log "WATCH renew(${max} 轮耗尽,仍有 open 且 auto-merge armed PR,重启计数)"
+    reload_watch "$interval" "$max" 1
+    return
+  fi
+  log "WATCH end(${max} 轮耗尽,无 open auto-merge armed PR)"
 }
 
 case "${1:-}" in

@@ -251,7 +251,11 @@ public sealed partial class PrShepherdRecalculationTests
 
         internal ShepherdResult RunWatch(bool noChecks = false)
         {
-            var script = Path.Combine(FindRepositoryRoot(), ShepherdScriptPath);
+            var script = Path.Combine(repository, ShepherdScriptPath);
+            Directory.CreateDirectory(Path.GetDirectoryName(script)!);
+            File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdScriptPath), script);
+            Git(repository, "add", ShepherdScriptPath);
+            Git(repository, "commit", "-m", "track pr-shepherd fixture");
             var home = Path.Combine(temporary.Path, "home");
             Directory.CreateDirectory(home);
             var arguments = new List<string>
