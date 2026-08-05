@@ -118,6 +118,15 @@ plutil -lint "<absolute-path-to-rendered-maintenance-plist>"
 plutil -lint "<absolute-path-to-rendered-supervise-plist>"
 ```
 
+The supervise template raises `SoftResourceLimits.NumberOfFiles` to 16384 because a launchd job
+inherits the domain's 256-file soft limit, while a shell-launched engine inherited the login
+shell's much larger one. The engine runs dozens of concurrent department children, reaches 256
+open descriptors within the hour, and every subsequent spawn fails with `EMFILE`; the framework
+records that as `DeliveryFailure::permanent`, so the affected deliveries go straight to the dead
+letter queue instead of retrying. The hard limit is already unlimited, so the soft raise needs no
+privilege. The failing spawn's real errno appears only in the child log's `SPAWN_ERROR=` line —
+the supervise log records the context string alone.
+
 Validation and both renders must exit zero. The maintenance plist must name the new host's
 checkout, bot login, and integration branch, and its program arguments must contain
 `hourly-maintenance` and `HOST_CONFIG=<absolute-path-to-host.env>`. The supervise plist must use
