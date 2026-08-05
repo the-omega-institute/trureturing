@@ -85,13 +85,13 @@ perf-report:
 	@/bin/bash Meta/StrataLint/scripts/perf-report.sh "$(RECENT)" "$(abspath Golden/perf-budgets.toml)"
 
 deliver-check:
-	@/bin/bash Meta/StrataLint/scripts/playbook-workflows.sh deliver-check "$(BASE)"
+	@/bin/bash Meta/StrataLint/scripts/workflow/playbook-workflows.sh deliver-check "$(BASE)"
 
 receipts-stage:
-	@/bin/bash Meta/StrataLint/scripts/playbook-workflows.sh receipts-stage "$(BASE)"
+	@/bin/bash Meta/StrataLint/scripts/workflow/playbook-workflows.sh receipts-stage "$(BASE)"
 
 derived-refresh:
-	@/bin/bash Meta/StrataLint/scripts/playbook-workflows.sh derived-refresh "$(BASE)"
+	@/bin/bash Meta/StrataLint/scripts/workflow/playbook-workflows.sh derived-refresh "$(BASE)"
 
 preflight: scratch-sweep
 	@/bin/bash Meta/StrataLint/scripts/preflight.sh

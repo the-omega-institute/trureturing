@@ -5,7 +5,7 @@ namespace StrataLint.Tests;
 
 public sealed class PlaybookWorkflowScriptTests
 {
-    private const string ScriptPath = "Meta/StrataLint/scripts/playbook-workflows.sh";
+    private const string ScriptPath = "Meta/StrataLint/scripts/workflow/playbook-workflows.sh";
 
     [Fact]
     public void DeliverCheckFreezesAfterReceiptsAndBeforeReadOnlyChecks()

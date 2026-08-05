@@ -3,7 +3,7 @@ namespace StrataLint.Tests;
 public sealed partial class MakeWorkflowTests
 {
     private const string PlaybookWorkflowScriptPath =
-        "Meta/StrataLint/scripts/playbook-workflows.sh";
+        "Meta/StrataLint/scripts/workflow/playbook-workflows.sh";
 
     [Fact]
     public void PlaybookTargetsAreHelpedAndDelegateToOneCanonicalScript()
@@ -16,7 +16,7 @@ public sealed partial class MakeWorkflowTests
         {
             Assert.Contains($"make {target}", makefile, StringComparison.Ordinal);
             Assert.Contains(
-                $"playbook-workflows.sh {target} \"$(BASE)\"",
+                $"scripts/workflow/playbook-workflows.sh {target} \"$(BASE)\"",
                 makefile,
                 StringComparison.Ordinal);
         }
