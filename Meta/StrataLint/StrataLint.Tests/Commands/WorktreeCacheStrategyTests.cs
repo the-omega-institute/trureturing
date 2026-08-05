@@ -284,7 +284,8 @@ public sealed class WorktreeCacheStrategyTests
 internal sealed record WorktreeProcessInvocation(
     string FileName,
     IReadOnlyList<string> Arguments,
-    string WorkingDirectory);
+    string WorkingDirectory,
+    TimeSpan Timeout);
 
 internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
 {
@@ -306,7 +307,11 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
         string workingDirectory,
         TimeSpan timeout)
     {
-        Invocations.Add(new WorktreeProcessInvocation(fileName, arguments.ToArray(), workingDirectory));
+        Invocations.Add(new WorktreeProcessInvocation(
+            fileName,
+            arguments.ToArray(),
+            workingDirectory,
+            timeout));
         if (fileName == "git"
             && arguments.Take(2).SequenceEqual(["worktree", "add"])
             && FailWorktreeAdd)
