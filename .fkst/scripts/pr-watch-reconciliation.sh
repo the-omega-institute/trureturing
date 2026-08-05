@@ -62,6 +62,29 @@ pr_watch_process_start() {
     | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
 }
 
+pr_watch_resolve_path() {
+  local path="$1" dir base
+  [[ -n "$path" ]] || return 1
+  dir="$(dirname -- "$path")"
+  base="$(basename -- "$path")"
+  ( cd -- "$dir" 2>/dev/null && printf '%s/%s\n' "$(pwd -P)" "$base" ) || printf '%s\n' "$path"
+}
+
+# A process command line carries a script path as it was invoked; the recorded
+# state may carry its symlink-resolved form. On macOS $TMPDIR is /var/... while
+# pwd -P yields /private/var/..., and an invocation can also double a separator.
+# Compare what the two spellings denote, not how they are spelled.
+pr_watch_command_loads_script() {
+  local command="$1" script="$2" token resolved_script
+  [[ -n "$script" ]] || return 1
+  resolved_script="$(pr_watch_resolve_path "$script")" || return 1
+  for token in $command; do
+    [[ "$token" == /* ]] || continue
+    [[ "$(pr_watch_resolve_path "$token")" == "$resolved_script" ]] && return 0
+  done
+  return 1
+}
+
 pr_watch_process_command() {
   LC_ALL=C ps -ww -p "$1" -o command= 2>/dev/null
 }
@@ -102,10 +125,13 @@ reconcile_pr_watch() {
   command="$(pr_watch_process_command "$PR_WATCH_STATE_PID")" || command=""
   loaded_blob="$(git -C "$FKST_HOST_ROOT" \
     hash-object "$PR_WATCH_STATE_LOADED_SCRIPT" 2>/dev/null)" || loaded_blob=""
+  local command_loads_script=0
+  pr_watch_command_loads_script "$command" "$PR_WATCH_STATE_LOADED_SCRIPT" \
+    && command_loads_script=1
   if [[ -z "$expected_script" \
       || "$PR_WATCH_STATE_CANONICAL_SCRIPT" != "$expected_script" \
       || "$actual_start" != "$PR_WATCH_STATE_PROCESS_START" \
-      || "$command" != *"$PR_WATCH_STATE_LOADED_SCRIPT"* \
+      || "$command_loads_script" != "1" \
       || "$command" != *" watch "* \
       || "$loaded_blob" != "$PR_WATCH_STATE_LOADED_BLOB" ]]; then
     say "PR-WATCH IDENTITY UNKNOWN: live state cannot be verified pid=$PR_WATCH_STATE_PID"
