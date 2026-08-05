@@ -22,15 +22,6 @@ sync_authority_checkout() {
     say "AUTHORITY-REV-PARSE-FAIL; authority checkout not changed"
     return 0
   fi
-  if [[ "$authority_head" == "$target_revision" ]]; then
-    say "AUTHORITY CURRENT (${authority_head:0:12})"
-    return 0
-  fi
-  if ! git -C "$authority_root" merge-base --is-ancestor \
-      "$authority_head" "$target_revision" >/dev/null 2>&1; then
-    say "AUTHORITY DIVERGED from deployed pin ${target_revision:0:12}; not auto-FF"
-    return 0
-  fi
   if ! authority_status="$(
       git -C "$authority_root" status --porcelain --untracked-files=no 2>/dev/null
     )"; then
@@ -39,6 +30,15 @@ sync_authority_checkout() {
   fi
   if [[ -n "$authority_status" ]]; then
     say "AUTHORITY-FF-BLOCKED (uncommitted changes); authority stays on ${authority_head:0:12}"
+    return 0
+  fi
+  if [[ "$authority_head" == "$target_revision" ]]; then
+    say "AUTHORITY CURRENT (${authority_head:0:12})"
+    return 0
+  fi
+  if ! git -C "$authority_root" merge-base --is-ancestor \
+      "$authority_head" "$target_revision" >/dev/null 2>&1; then
+    say "AUTHORITY DIVERGED from deployed pin ${target_revision:0:12}; not auto-FF"
     return 0
   fi
 
