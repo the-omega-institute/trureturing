@@ -205,6 +205,35 @@ dangling_pr_watch_state_fails_closed() (
     || fail "dangling pr-watch state did not produce a loud unknown-identity signal"
 )
 
+live_watcher_is_verified_despite_symlinked_temp_paths() (
+  load_implementation || exit 1
+  local root real link recorded invoked
+  root="$(mktemp -d -t hourly-maintenance-pr-watch-realpath.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+
+  # A process command line carries a script path as it was invoked; the recorded
+  # state may carry its symlink-resolved form, and an invocation can double a
+  # separator. On macOS this is not hypothetical: $TMPDIR is /var/... while
+  # pwd -P yields /private/var/.... Construct exactly that divergence.
+  real="$root/real"
+  link="$root/link"
+  mkdir -p "$real" || exit 1
+  ln -s "$real" "$link" || exit 1
+  : > "$real/pr-shepherd-watch.fixture"
+  recorded="$real/pr-shepherd-watch.fixture"
+  invoked="/bin/bash $link//pr-shepherd-watch.fixture watch 60 360"
+
+  [[ "$invoked" != *"$recorded"* ]] \
+    || fail "fixture failed to diverge the two spellings; the case would prove nothing"
+
+  pr_watch_command_loads_script "$invoked" "$recorded" \
+    || fail "a command that loads the recorded script was not recognised through a symlinked path"
+
+  pr_watch_command_loads_script "/bin/bash $link//other.fixture watch 60 360" "$recorded" \
+    && fail "an unrelated script was accepted as the recorded one"
+  return 0
+)
+
 legacy_pidfile_is_reported_unknown() (
   load_implementation || exit 1
   local root
