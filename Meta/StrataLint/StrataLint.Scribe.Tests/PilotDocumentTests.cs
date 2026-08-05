@@ -119,6 +119,27 @@ public sealed class DocumentDiscoveryTests
             documents,
             report,
             census.ReceiptFreeDocumentGids);
+        var projection = DocumentGraphExportProjection.Create(
+            DocumentDefinitions.All.Select(definition => new DocumentGraphDocument(
+                definition.RelativePath.Value,
+                definition.Document,
+                census.ReceiptFreeDocumentGids.Contains(definition.Document.Header.Gid.Value)
+                    ? "receipt-free"
+                    : "receipt-bound")),
+            graph,
+            report,
+            report.Files.Keys.Select(static path => path.Value).ToHashSet(StringComparer.Ordinal));
+
+        Assert.Equal(DocumentDefinitions.All.Length, projection.Documents.Nodes.Length);
+        Assert.Equal(
+            documents.SelectMany(document => graph.For(document)).OfType<DocumentEdge.TruthAnchor>().Count(),
+            projection.Joins.TruthAnchors.Length);
+        Assert.All(projection.Joins.TruthAnchors, anchor =>
+        {
+            Assert.Contains(projection.Documents.Nodes, node =>
+                node.RepoPath == anchor.DocumentRepoPath && node.Gid == anchor.DocumentGid);
+            Assert.Contains(anchor.FormalTruthRepoPath, report.Files.Keys.Select(static path => path.Value));
+        });
 
         foreach (var definition in DocumentDefinitions.All)
         {

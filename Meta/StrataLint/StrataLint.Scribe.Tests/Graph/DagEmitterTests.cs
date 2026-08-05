@@ -95,6 +95,31 @@ public sealed class DagEmitterTests
     }
 
     [Fact]
+    public void MarkdownProjectionDoesNotReadTheDocumentProjection()
+    {
+        var firstProjection = DocumentGraphExportProjection.Empty;
+        var secondProjection = new DocumentGraphExportProjection(
+            new DocumentGraphSection(
+                [new DocumentGraphNode("Blueprint/D5/S0/Carrier/Delta.md", "D5/S0/Carrier/Delta", "receipt-free")],
+                [],
+                []),
+            new TruthGraphJoinsSection([]));
+        WithRoot(firstRoot => WithRoot(secondRoot =>
+        {
+            var dag = Build();
+            Assert.Equal(0, DagEmitter.Emit(
+                firstRoot, dag, Provenance, check: false, TextWriter.Null, TextWriter.Null, firstProjection));
+            Assert.Equal(0, DagEmitter.Emit(
+                secondRoot, dag, Provenance, check: false, TextWriter.Null, TextWriter.Null, secondProjection));
+
+            Assert.True(File.ReadAllBytes(Path.Combine(firstRoot, DagEmitter.RelativePath)).AsSpan()
+                .SequenceEqual(File.ReadAllBytes(Path.Combine(secondRoot, DagEmitter.RelativePath))));
+            Assert.False(File.ReadAllBytes(Path.Combine(firstRoot, DagEmitter.TruthGraphRelativePath)).AsSpan()
+                .SequenceEqual(File.ReadAllBytes(Path.Combine(secondRoot, DagEmitter.TruthGraphRelativePath))));
+        }));
+    }
+
+    [Fact]
     public void TheProjectionIsDeclaredInTheGeneratedArtifactInventory()
     {
         // FileMapPolicy cross-checks this inventory against Meta/FILEMAP.toml, so an artifact that

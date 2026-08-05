@@ -19,7 +19,8 @@ public static class DagEmitter
         TruthGraphProvenance provenance,
         bool check,
         TextWriter output,
-        TextWriter error)
+        TextWriter error,
+        DocumentGraphExportProjection? documentProjection = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(dag);
@@ -29,7 +30,7 @@ public static class DagEmitter
 
         try
         {
-            var model = TruthGraphExportModel.Create(dag, provenance);
+            var model = TruthGraphExportModel.Create(dag, provenance, documentProjection);
             var markdown = CanonicalDagWriter.Write(dag);
             var markdownAgain = CanonicalDagWriter.Write(dag);
             var json = TruthGraphJsonWriter.Write(model);

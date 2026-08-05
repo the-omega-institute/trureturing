@@ -70,15 +70,173 @@ public sealed record TruthGraphSection(
     ImmutableArray<TruthGraphOpenBlocker> OpenBlockers,
     TruthGraphStateCounts StateCounts);
 
+public sealed record DocumentGraphDocument(
+    string RepoPath,
+    ScribeDocument Document,
+    string Receipt);
+
+public sealed record DocumentGraphNode(string RepoPath, string Gid, string Receipt);
+
+public sealed record DocumentDependencyEdge(string Dependency, string Dependent);
+
+public sealed record DocumentNarrativeReferenceEdge(string Source, string Target);
+
+public sealed record DocumentGraphSection(
+    ImmutableArray<DocumentGraphNode> Nodes,
+    ImmutableArray<DocumentDependencyEdge> DependencyEdges,
+    ImmutableArray<DocumentNarrativeReferenceEdge> NarrativeReferenceEdges);
+
+public sealed record TruthAnchorJoin(
+    string DocumentRepoPath,
+    string DocumentGid,
+    string LeanDeclarationGid,
+    string FormalTruthRepoPath);
+
+public sealed record TruthGraphJoinsSection(ImmutableArray<TruthAnchorJoin> TruthAnchors);
+
+public sealed record DocumentGraphExportProjection(
+    DocumentGraphSection Documents,
+    TruthGraphJoinsSection Joins)
+{
+    public static DocumentGraphExportProjection Empty { get; } = new(
+        new DocumentGraphSection([], [], []),
+        new TruthGraphJoinsSection([]));
+
+    public static DocumentGraphExportProjection Create(
+        IEnumerable<DocumentGraphDocument> documents,
+        DocumentGraph graph,
+        LeanAxiomReport leanReport,
+        IReadOnlySet<string> formalTruthRepoPaths)
+    {
+        ArgumentNullException.ThrowIfNull(documents);
+        ArgumentNullException.ThrowIfNull(graph);
+        ArgumentNullException.ThrowIfNull(leanReport);
+        ArgumentNullException.ThrowIfNull(formalTruthRepoPaths);
+        if (!graph.Findings.IsEmpty)
+        {
+            throw new InvalidOperationException(
+                $"Document graph is invalid: {graph.Findings[0].Code} {graph.Findings[0].Message}");
+        }
+
+        var material = documents.ToImmutableArray();
+        var byGid = material.ToDictionary(
+            static item => item.Document.Header.Gid.Value,
+            StringComparer.Ordinal);
+        if (material.Select(static item => item.RepoPath).Distinct(StringComparer.Ordinal).Count() != material.Length)
+        {
+            throw new InvalidOperationException("Document graph export contains duplicate repository paths.");
+        }
+        if (material.Any(static item => item.Receipt is not ("receipt-free" or "receipt-bound")))
+        {
+            throw new InvalidOperationException("Document graph export contains an unsupported receipt category.");
+        }
+
+        var nodes = material
+            .OrderBy(static item => item.RepoPath, StringComparer.Ordinal)
+            .Select(static item => new DocumentGraphNode(
+                item.RepoPath,
+                item.Document.Header.Gid.Value,
+                item.Receipt))
+            .ToImmutableArray();
+        var dependencies = ImmutableArray.CreateBuilder<DocumentDependencyEdge>();
+        var narratives = ImmutableArray.CreateBuilder<DocumentNarrativeReferenceEdge>();
+        var anchors = ImmutableArray.CreateBuilder<TruthAnchorJoin>();
+        foreach (var source in material)
+        {
+            foreach (var edge in graph.For(source.Document))
+            {
+                switch (edge)
+                {
+                    case DocumentEdge.Dependency dependency:
+                        dependencies.Add(new DocumentDependencyEdge(
+                            byGid[dependency.Target.Value].RepoPath,
+                            source.RepoPath));
+                        break;
+                    case DocumentEdge.NarrativeReference narrative:
+                        var targetGid = narrative.Target switch
+                        {
+                            NarrativeTarget.Document target => target.DocumentGid.Value,
+                            NarrativeTarget.Describe target => target.DocumentGid.Value,
+                            _ => throw new InvalidOperationException("Unknown narrative target."),
+                        };
+                        var fragment = narrative.Target is NarrativeTarget.Describe describe
+                            ? $"#describe/{describe.DescribeId.Value}"
+                            : string.Empty;
+                        narratives.Add(new DocumentNarrativeReferenceEdge(
+                            source.RepoPath,
+                            byGid[targetGid].RepoPath + fragment));
+                        break;
+                    case DocumentEdge.TruthAnchor anchor:
+                        _ = LeanReferenceResolver.Resolve(anchor.Target, leanReport);
+                        var formalPath = anchor.Target.Reference.Path.Value;
+                        if (!formalTruthRepoPaths.Contains(formalPath))
+                        {
+                            throw new InvalidOperationException(
+                                $"Truth anchor {anchor.Target.Value} has no formal truth node {formalPath}.");
+                        }
+                        anchors.Add(new TruthAnchorJoin(
+                            source.RepoPath,
+                            source.Document.Header.Gid.Value,
+                            anchor.Target.Value,
+                            formalPath));
+                        break;
+                }
+            }
+        }
+
+        return new DocumentGraphExportProjection(
+            new DocumentGraphSection(
+                nodes,
+                dependencies.OrderBy(static edge => edge.Dependency, StringComparer.Ordinal)
+                    .ThenBy(static edge => edge.Dependent, StringComparer.Ordinal).ToImmutableArray(),
+                narratives.OrderBy(static edge => edge.Source, StringComparer.Ordinal)
+                    .ThenBy(static edge => edge.Target, StringComparer.Ordinal).ToImmutableArray()),
+            new TruthGraphJoinsSection(
+                anchors.OrderBy(static anchor => anchor.DocumentRepoPath, StringComparer.Ordinal)
+                    .ThenBy(static anchor => anchor.LeanDeclarationGid, StringComparer.Ordinal)
+                    .ToImmutableArray()));
+    }
+
+    public static DocumentGraphExportProjection AssembleRepository(
+        string repositoryRoot,
+        LeanAxiomReport leanReport,
+        IReadOnlySet<string> formalTruthRepoPaths)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
+        ArgumentNullException.ThrowIfNull(leanReport);
+        ArgumentNullException.ThrowIfNull(formalTruthRepoPaths);
+        var definitions = DocumentDefinitions.Discover(typeof(DocumentDefinitions).Assembly, repositoryRoot);
+        var documents = definitions.Select(static definition => definition.Document).ToArray();
+        var census = ReceiptFreeDocumentCatalog.Load(repositoryRoot, documents);
+        var graph = DocumentGraphAssembler.Assemble(
+            documents,
+            leanReport,
+            census.ReceiptFreeDocumentGids);
+        var sources = definitions.Select(definition => new DocumentGraphDocument(
+            definition.RelativePath.Value,
+            definition.Document,
+            census.ReceiptFreeDocumentGids.Contains(definition.Document.Header.Gid.Value)
+                ? "receipt-free"
+                : "receipt-bound"));
+        return Create(sources, graph, leanReport, formalTruthRepoPaths);
+    }
+}
+
 public sealed record TruthGraphExportModel(
     string Schema,
     int SchemaVersion,
     TruthGraphProvenance Provenance,
-    TruthGraphSection Truth)
+    TruthGraphSection Truth,
+    DocumentGraphSection Documents,
+    TruthGraphJoinsSection Joins,
+    ImmutableArray<string> DeferredLayers)
 {
     public const string Dialect = "stratalint.truth-graph.v1";
 
-    public static TruthGraphExportModel Create(AcyclicTruthDag dag, TruthGraphProvenance provenance)
+    public static TruthGraphExportModel Create(
+        AcyclicTruthDag dag,
+        TruthGraphProvenance provenance,
+        DocumentGraphExportProjection? documentProjection = null)
     {
         ArgumentNullException.ThrowIfNull(dag);
         ArgumentNullException.ThrowIfNull(provenance);
@@ -108,6 +266,7 @@ public sealed record TruthGraphExportModel(
             nodes.Count(static node => node.State == "open"),
             nodes.Count(static node => node.State == "tail"),
             nodes.Count(static node => node.State == "semantic"));
+        var projection = documentProjection ?? DocumentGraphExportProjection.Empty;
         return new TruthGraphExportModel(
             Dialect,
             1,
@@ -116,7 +275,10 @@ public sealed record TruthGraphExportModel(
                 TruthRootSha256 = dag.RootSha256,
                 DependencyGranularity = "module-import",
             },
-            new TruthGraphSection(nodes, edges, blockers, counts));
+            new TruthGraphSection(nodes, edges, blockers, counts),
+            projection.Documents,
+            projection.Joins,
+            ["digestion"]);
     }
 
     private static string StateName(TruthState state) => state switch
@@ -177,6 +339,39 @@ public static class TruthGraphJsonWriter
                     semantic = model.Truth.StateCounts.Semantic,
                 },
             },
+            documents = new
+            {
+                document_nodes = model.Documents.Nodes.Select(static node => new
+                {
+                    repo_path = node.RepoPath,
+                    gid = node.Gid,
+                    receipt = node.Receipt,
+                }),
+                document_edges = new
+                {
+                    dependency = model.Documents.DependencyEdges.Select(static edge => new
+                    {
+                        dependency = edge.Dependency,
+                        dependent = edge.Dependent,
+                    }),
+                    narrative_reference = model.Documents.NarrativeReferenceEdges.Select(static edge => new
+                    {
+                        source = edge.Source,
+                        target = edge.Target,
+                    }),
+                },
+            },
+            joins = new
+            {
+                truth_anchors = model.Joins.TruthAnchors.Select(static anchor => new
+                {
+                    document_repo_path = anchor.DocumentRepoPath,
+                    document_gid = anchor.DocumentGid,
+                    lean_declaration_gid = anchor.LeanDeclarationGid,
+                    formal_truth_repo_path = anchor.FormalTruthRepoPath,
+                }),
+            },
+            deferred_layers = model.DeferredLayers,
         });
         return StructuredCanonicalWriter.WriteJson(element);
     }
@@ -193,7 +388,10 @@ public static class TruthGraphJsonReader
             var text = StrictUtf8.GetString(bytes);
             using var document = JsonDocument.Parse(text);
             var root = document.RootElement;
-            RequireProperties(root, ["provenance", "schema", "schema_version", "truth"], "truth graph");
+            RequireProperties(
+                root,
+                ["deferred_layers", "documents", "joins", "provenance", "schema", "schema_version", "truth"],
+                "truth graph");
             var schema = String(root, "schema");
             var version = Integer(root, "schema_version");
             if (schema != TruthGraphExportModel.Dialect || version != 1)
@@ -236,11 +434,35 @@ public static class TruthGraphJsonReader
                 Integer(countsElement, "open"),
                 Integer(countsElement, "tail"),
                 Integer(countsElement, "semantic"));
+
+            var documentsElement = Object(root, "documents");
+            RequireProperties(documentsElement, ["document_edges", "document_nodes"], "documents");
+            var documentNodes = Array(documentsElement, "document_nodes")
+                .EnumerateArray().Select(ReadDocumentNode).ToImmutableArray();
+            var documentEdges = Object(documentsElement, "document_edges");
+            RequireProperties(documentEdges, ["dependency", "narrative_reference"], "document_edges");
+            var dependencyEdges = Array(documentEdges, "dependency")
+                .EnumerateArray().Select(ReadDocumentDependencyEdge).ToImmutableArray();
+            var narrativeEdges = Array(documentEdges, "narrative_reference")
+                .EnumerateArray().Select(ReadDocumentNarrativeEdge).ToImmutableArray();
+
+            var joinsElement = Object(root, "joins");
+            RequireProperties(joinsElement, ["truth_anchors"], "joins");
+            var anchors = Array(joinsElement, "truth_anchors")
+                .EnumerateArray().Select(ReadTruthAnchor).ToImmutableArray();
+            var deferredLayers = Array(root, "deferred_layers")
+                .EnumerateArray().Select(element => element.ValueKind == JsonValueKind.String
+                    ? element.GetString() ?? throw new FormatException("Deferred layer is null.")
+                    : throw new FormatException("Deferred layer must be a string."))
+                .ToImmutableArray();
             var model = new TruthGraphExportModel(
                 schema,
                 version,
                 provenance,
-                new TruthGraphSection(nodes, edges, blockers, counts));
+                new TruthGraphSection(nodes, edges, blockers, counts),
+                new DocumentGraphSection(documentNodes, dependencyEdges, narrativeEdges),
+                new TruthGraphJoinsSection(anchors),
+                deferredLayers);
             Validate(model);
             if (!TruthGraphJsonWriter.Write(model).AsSpan().SequenceEqual(bytes))
             {
@@ -278,12 +500,61 @@ public static class TruthGraphJsonReader
         return new TruthGraphOpenBlocker(String(element, "dependent"), String(element, "dependency_module"));
     }
 
+    private static DocumentGraphNode ReadDocumentNode(JsonElement element)
+    {
+        RequireProperties(element, ["gid", "receipt", "repo_path"], "document node");
+        return new DocumentGraphNode(
+            String(element, "repo_path"), String(element, "gid"), String(element, "receipt"));
+    }
+
+    private static DocumentDependencyEdge ReadDocumentDependencyEdge(JsonElement element)
+    {
+        RequireProperties(element, ["dependency", "dependent"], "document dependency edge");
+        return new DocumentDependencyEdge(String(element, "dependency"), String(element, "dependent"));
+    }
+
+    private static DocumentNarrativeReferenceEdge ReadDocumentNarrativeEdge(JsonElement element)
+    {
+        RequireProperties(element, ["source", "target"], "document narrative reference edge");
+        return new DocumentNarrativeReferenceEdge(String(element, "source"), String(element, "target"));
+    }
+
+    private static TruthAnchorJoin ReadTruthAnchor(JsonElement element)
+    {
+        RequireProperties(
+            element,
+            ["document_gid", "document_repo_path", "formal_truth_repo_path", "lean_declaration_gid"],
+            "truth anchor join");
+        return new TruthAnchorJoin(
+            String(element, "document_repo_path"),
+            String(element, "document_gid"),
+            String(element, "lean_declaration_gid"),
+            String(element, "formal_truth_repo_path"));
+    }
+
     private static void Validate(TruthGraphExportModel model)
     {
         RequireStrictOrder(model.Truth.Nodes.Select(static node => node.RepoPath), "nodes");
         RequireStrictOrder(model.Truth.Edges.Select(static edge => edge.Dependency + "\0" + edge.Dependent), "edges");
         RequireStrictOrder(model.Truth.OpenBlockers.Select(static blocker => blocker.Dependent + "\0" + blocker.DependencyModule), "open blockers");
+        RequireStrictOrder(model.Documents.Nodes.Select(static node => node.RepoPath), "document nodes");
+        RequireStrictOrder(
+            model.Documents.DependencyEdges.Select(static edge => edge.Dependency + "\0" + edge.Dependent),
+            "document dependency edges");
+        RequireStrictOrder(
+            model.Documents.NarrativeReferenceEdges.Select(static edge => edge.Source + "\0" + edge.Target),
+            "document narrative reference edges");
+        RequireStrictOrder(
+            model.Joins.TruthAnchors.Select(static anchor =>
+                anchor.DocumentRepoPath + "\0" + anchor.LeanDeclarationGid),
+            "truth anchor joins");
         var paths = model.Truth.Nodes.Select(static node => node.RepoPath).ToHashSet(StringComparer.Ordinal);
+        var documentPaths = model.Documents.Nodes.Select(static node => node.RepoPath).ToHashSet(StringComparer.Ordinal);
+        var documentGids = model.Documents.Nodes.Select(static node => node.Gid).ToHashSet(StringComparer.Ordinal);
+        var documentIdentities = model.Documents.Nodes.ToDictionary(
+            static node => node.RepoPath,
+            static node => node.Gid,
+            StringComparer.Ordinal);
         if (model.Truth.Nodes.Any(node => node.Depth < 0 || node.State is not ("closed" or "open" or "tail" or "semantic"))
             || model.Truth.Edges.Any(edge => !paths.Contains(edge.Dependency) || !paths.Contains(edge.Dependent))
             || model.Truth.OpenBlockers.Any(blocker => !paths.Contains(blocker.Dependent))
@@ -291,7 +562,22 @@ public static class TruthGraphJsonReader
             || model.Truth.StateCounts.Closed != model.Truth.Nodes.Count(static node => node.State == "closed")
             || model.Truth.StateCounts.Open != model.Truth.Nodes.Count(static node => node.State == "open")
             || model.Truth.StateCounts.Tail != model.Truth.Nodes.Count(static node => node.State == "tail")
-            || model.Truth.StateCounts.Semantic != model.Truth.Nodes.Count(static node => node.State == "semantic"))
+            || model.Truth.StateCounts.Semantic != model.Truth.Nodes.Count(static node => node.State == "semantic")
+            || model.Documents.Nodes.Any(node => node.Receipt is not ("receipt-free" or "receipt-bound"))
+            || documentGids.Count != model.Documents.Nodes.Length
+            || model.Documents.DependencyEdges.Any(edge =>
+                !documentPaths.Contains(edge.Dependency) || !documentPaths.Contains(edge.Dependent))
+            || model.Documents.NarrativeReferenceEdges.Any(edge =>
+                !documentPaths.Contains(edge.Source) || !documentPaths.Contains(DocumentTargetPath(edge.Target)))
+            || model.Joins.TruthAnchors.Any(anchor =>
+                !documentPaths.Contains(anchor.DocumentRepoPath)
+                || !documentGids.Contains(anchor.DocumentGid)
+                || !string.Equals(
+                    documentIdentities.GetValueOrDefault(anchor.DocumentRepoPath),
+                    anchor.DocumentGid,
+                    StringComparison.Ordinal)
+                || !paths.Contains(anchor.FormalTruthRepoPath))
+            || !model.DeferredLayers.SequenceEqual(["digestion"], StringComparer.Ordinal))
         {
             throw new FormatException("Truth graph facts are inconsistent.");
         }
@@ -307,6 +593,12 @@ public static class TruthGraphJsonReader
                 throw new FormatException("Truth graph node depth is inconsistent.");
             }
         }
+    }
+
+    private static string DocumentTargetPath(string target)
+    {
+        var fragment = target.IndexOf('#', StringComparison.Ordinal);
+        return fragment < 0 ? target : target[..fragment];
     }
 
     private static void RequireStrictOrder(IEnumerable<string> values, string name)
