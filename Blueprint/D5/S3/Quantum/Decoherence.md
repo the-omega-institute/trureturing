@@ -27,3 +27,9 @@ $$\forall c \in [0,1],\ \forall \rho \in \operatorname{QubitMatrix},\ c\neq 1 \R
 *Commentary.*
 
 For a retention coefficient in [0,1] whose real value is explicitly not one, an arbitrary complex two-by-two matrix is fixed exactly when every off-diagonal entry vanishes. No positivity, normalization, Hermiticity, density-state, environment, or record-generation premise is hidden. This identifies the fixed points of the stipulated map only; it does not prove that address records physically select this basis or that Fourier records select another basis. Original certificate disposition: the source atoms' symbolic (1/2) * c0^N law remains covered by the frozen QubitWitnesses theorem, with no fixed numeric c0 or N supplied by the atoms.
+
+## References
+
+- Truth anchor: `D5/S3/Quantum/Decoherence.phase_damping_composition`
+- Truth anchor: `D5/S3/Quantum/Decoherence.phase_damping_fixed_iff_diagonal`
+- Dependency: [D5/S3/Quantum/QubitWitnesses](QubitWitnesses.md)

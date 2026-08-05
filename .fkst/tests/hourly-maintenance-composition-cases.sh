@@ -39,6 +39,7 @@ create_composition_cycle_fixture() {
   git_quiet -C "$CHECKOUT_ROOT" push -u origin dev || return 1
   git_quiet clone "$CHECKOUT_REMOTE" "$CHECKOUT_WRITER" || return 1
   configure_repository "$CHECKOUT_WRITER" || return 1
+  write_ready_formalize_readiness_provider "$CHECKOUT_ROOT"
 
   write_composition_workspace \
     "$CHECKOUT_ROOT/fkst.workspace.toml" \

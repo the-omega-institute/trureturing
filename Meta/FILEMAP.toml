@@ -126,6 +126,13 @@ consumed_by = ["harness-gate"]
 verified_by = ["echo-verify", "emit-check"]
 
 [[files]]
+pattern = "Golden/Projection/*.json"
+kind = "data"
+produced_by = "none"
+consumed_by = ["StatementProjectionFixtureLoader"]
+verified_by = ["StatementProjectionFixtureLoader"]
+
+[[files]]
 pattern = "Golden/cases/**/*.toml"
 kind = "data"
 produced_by = "none"

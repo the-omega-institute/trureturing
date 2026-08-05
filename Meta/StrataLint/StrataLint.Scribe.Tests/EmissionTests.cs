@@ -13,6 +13,7 @@ public sealed class EmissionTests
             Path.GetTempPath(),
             "stratalint-scribe-validation-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(root);
+        CopyProjectionFixtures(root);
         try
         {
             var error = new StringWriter();
@@ -47,6 +48,7 @@ public sealed class EmissionTests
             "stratalint-scribe-library-" + Guid.NewGuid().ToString("N"));
         var notes = Path.Combine(root, "Library", "notes");
         Directory.CreateDirectory(notes);
+        CopyProjectionFixtures(root);
         try
         {
             File.WriteAllText(
@@ -84,6 +86,7 @@ public sealed class EmissionTests
             Path.GetTempPath(),
             "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(root);
+        CopyProjectionFixtures(root);
 
         try
         {
@@ -111,6 +114,14 @@ public sealed class EmissionTests
                 ScribeEmitter.AttestationRelativePath)));
             var firstEmission = new Dictionary<string, byte[]>(StringComparer.Ordinal);
             var citations = LibraryNoteCatalog.Load(root).Citations;
+            var documents = DocumentDefinitions.All
+                .Select(static definition => definition.Document)
+                .ToArray();
+            var census = ReceiptFreeDocumentCatalog.Load(root, documents);
+            var graph = DocumentGraphAssembler.Assemble(
+                documents,
+                report,
+                census.ReceiptFreeDocumentGids);
             foreach (var definition in DocumentDefinitions.All)
             {
                 var path = Path.Combine(root, definition.RelativePath.Value);
@@ -119,7 +130,8 @@ public sealed class EmissionTests
                     CanonicalMarkdownWriter.Write(
                         definition.Document,
                         report,
-                        citations).ToArray(),
+                        citations,
+                        graph).ToArray(),
                     File.ReadAllBytes(path));
             }
 
@@ -188,6 +200,7 @@ public sealed class EmissionTests
             Path.GetTempPath(),
             "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(root);
+        CopyProjectionFixtures(root);
 
         try
         {
@@ -223,6 +236,7 @@ public sealed class EmissionTests
             Path.GetTempPath(),
             "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(root);
+        CopyProjectionFixtures(root);
 
         try
         {
@@ -291,6 +305,7 @@ public sealed class EmissionTests
             Path.GetTempPath(),
             "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(root);
+        CopyProjectionFixtures(root);
 
         try
         {
@@ -335,6 +350,7 @@ public sealed class EmissionTests
             Path.GetTempPath(),
             "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(root);
+        CopyProjectionFixtures(root);
 
         try
         {
@@ -393,6 +409,7 @@ public sealed class EmissionTests
             Path.GetTempPath(),
             "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(root);
+        CopyProjectionFixtures(root);
 
         try
         {
@@ -434,6 +451,7 @@ public sealed class EmissionTests
             Path.GetTempPath(),
             "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(root);
+        CopyProjectionFixtures(root);
 
         try
         {
@@ -547,6 +565,7 @@ public sealed class EmissionTests
     private static void PrepareEmittedRepository(string root, LeanAxiomReport report)
     {
         var repositoryRoot = FindRepositoryRoot();
+        CopyProjectionFixtures(root);
         foreach (var definition in DocumentDefinitions.All)
         {
             var relativeSource = definition.RelativePath.Value[..^3] + ".scribe.cs";
@@ -590,6 +609,10 @@ public sealed class EmissionTests
     private static void CopyRepositoryLibrary(string destinationRoot)
     {
         var repositoryRoot = FindRepositoryRoot();
+        var backfillSource = Path.Combine(repositoryRoot, "Meta", "BACKFILL.yaml");
+        var backfillDestination = Path.Combine(destinationRoot, "Meta", "BACKFILL.yaml");
+        Directory.CreateDirectory(Path.GetDirectoryName(backfillDestination)!);
+        File.Copy(backfillSource, backfillDestination);
         foreach (var source in Directory.EnumerateFiles(
                      Path.Combine(repositoryRoot, "Library"),
                      "*.md",
@@ -599,6 +622,21 @@ public sealed class EmissionTests
             var destination = Path.Combine(destinationRoot, relative);
             Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
             File.Copy(source, destination);
+        }
+    }
+
+    private static void CopyProjectionFixtures(string destinationRoot)
+    {
+        var repositoryRoot = FindRepositoryRoot();
+        var sourceDirectory = Path.Combine(repositoryRoot, "Golden", "Projection");
+        var destinationDirectory = Path.Combine(destinationRoot, "Golden", "Projection");
+        Directory.CreateDirectory(destinationDirectory);
+        foreach (var source in Directory.EnumerateFiles(sourceDirectory, "*.json"))
+        {
+            File.Copy(
+                source,
+                Path.Combine(destinationDirectory, Path.GetFileName(source)),
+                overwrite: true);
         }
     }
 

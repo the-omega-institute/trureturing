@@ -63,3 +63,11 @@ $\forall x\in\mathbb{Z}[\varphi],\ \forall n\in\mathbb{N},\ \operatorname{norm}(
 *Commentary.*
 
 The golden norm is a monoid homomorphism from `GoldenInt` to the integers, packaged as `normMonoidHom` out of its unit and multiplicativity laws. The norm of a power is therefore the same power of the norm, obtained directly as `map_pow normMonoidHom` rather than by a coordinate induction.
+
+## References
+
+- Truth anchor: `D5/S0/Carrier/Euclidean.golden_division`
+- Truth anchor: `D5/S0/Carrier/NormPowers.norm_pow`
+- Truth anchor: `D5/S0/Carrier/PrincipalIdeal.golden_int_is_pid`
+- Dependency: [D5/S0/Carrier/Conj](Conj.md)
+- Dependency: [D5/S0/Carrier/Ring](Ring.md)

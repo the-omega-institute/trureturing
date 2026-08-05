@@ -8,6 +8,19 @@ public sealed class DocumentDiscoveryTests
     private const string PhaseSourcePath = "Blueprint/D5/S1/Phase/Basic.scribe.cs";
 
     [Fact]
+    public void ProductionReceiptFreeDocumentCensusIsDerivedFromBackfill()
+    {
+        var census = ReceiptFreeDocumentCatalog.Load(
+            FindRepositoryRoot(),
+            DocumentDefinitions.All.Select(static definition => definition.Document));
+
+        Assert.Equal(50, census.ReceiptFreeDocumentGids.Count);
+        Assert.Equal(40, census.ReceiptBoundDocumentGids.Count);
+        Assert.Contains("D5/S0/Carrier/Norm", census.ReceiptFreeDocumentGids);
+        Assert.Contains("D5/S1/Scale/CarrierFoundations", census.ReceiptBoundDocumentGids);
+    }
+
+    [Fact]
     public void FilesystemAndRegisteredDefinitionsFormACanonicalBijection()
     {
         var repositoryRoot = FindRepositoryRoot();
@@ -98,11 +111,19 @@ public sealed class DocumentDiscoveryTests
 
         var report = LeanCompiledArtifactReports.InspectRepository(repositoryRoot);
         var citations = LibraryNoteCatalog.Load(repositoryRoot).Citations;
+        var documents = DocumentDefinitions.All
+            .Select(static definition => definition.Document)
+            .ToArray();
+        var census = ReceiptFreeDocumentCatalog.Load(repositoryRoot, documents);
+        var graph = DocumentGraphAssembler.Assemble(
+            documents,
+            report,
+            census.ReceiptFreeDocumentGids);
 
         foreach (var definition in DocumentDefinitions.All)
         {
-            var first = CanonicalMarkdownWriter.Write(definition.Document, report, citations);
-            var second = CanonicalMarkdownWriter.Write(definition.Document, report, citations);
+            var first = CanonicalMarkdownWriter.Write(definition.Document, report, citations, graph);
+            var second = CanonicalMarkdownWriter.Write(definition.Document, report, citations, graph);
             var committed = File.ReadAllBytes(
                 Path.Combine(repositoryRoot, definition.RelativePath.Value));
 

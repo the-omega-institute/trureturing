@@ -129,3 +129,10 @@ $$
 *Commentary.*
 
 The source's strict replacement for switchable parallel timelines is an uncountable family K_infinity/Z of leaves with one generator and different hidden offsets. Distinct leaves never intersect, while every leaf is dense, so they remain disjoint yet arbitrarily close everywhere. Continuous switching is ruled out; a genuine switch must be a discrete jump obeying a cocycle composition law, and every finite observation is said to be unable to distinguish such a jump from ordinary motion. The continuous phase leaf and discrete address leaf are then read as wave and particle. Finally, every switch must pass through an address reading and enter the ledger, giving the slogan that observation is bookkeeping.
+
+## References
+
+- Truth anchor: `D5/S1/Phase/Basic.goldenPhase_add`
+- Truth anchor: `D5/S1/Phase/Basic.goldenPhase_injective`
+- Truth anchor: `D5/S1/Phase/Basic.goldenPhase_neg`
+- Truth anchor: `D5/S1/Phase/Basic.goldenPhase_zero`

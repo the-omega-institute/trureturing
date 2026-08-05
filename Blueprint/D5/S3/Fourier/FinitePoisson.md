@@ -6,13 +6,7 @@ Finite Poisson summation on an arbitrary additive subgroup of a positive cyclic 
 
 **Theorem 1.1 (Finite Poisson summation on a cyclic subgroup).**
 
-$$\begin{gathered}
-m>0,\quad H\leq \mathbb{Z}/m\mathbb{Z},\quad
-H^\perp=\{k:\forall h\in H,\ e^{2\pi i kh/m}=1\},\\
-\widehat f(k)=\sum_{x\in\mathbb{Z}/m\mathbb{Z}}f(x)e^{-2\pi i kx/m}
-\quad\Rightarrow\quad
-\sum_{h\in H}f(h)=\frac{|H|}{m}\sum_{k\in H^\perp}\widehat f(k).
-\end{gathered}$$
+$$\forall x2 \in \mathrm{AddSubgroup}\left(\mathrm{ZMod}\left(\mathord{\cdot}\right)\right),\; \forall x3 \in \left(\forall x3 \in \mathrm{ZMod}\left(\mathord{\cdot}\right),\; \mathrm{Complex}\right),\; \mathrm{sum}\left(\mathrm{univ}, \forall x4 \in \mathrm{Type},\; \mathit{x3}\left(\mathrm{val}\left(\mathit{x4}\right)\right)\right) = \mathrm{divide}\left(\mathrm{cast}\left(\mathrm{card}\left(\mathrm{Subtype}\left(\mathrm{ZMod}\left(\mathord{\cdot}\right), \forall x4 \in \mathrm{Type},\; \mathit{x2} \in \mathit{x4}\right)\right)\right), \mathrm{cast}\left(\mathord{\cdot}\right)\right) \cdot \mathrm{sum}\left(\mathrm{univ}, \forall x4 \in \mathrm{Type},\; \mathit{x3}\left(\mathrm{val}\left(\mathit{x4}\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Fourier/FinitePoisson.finite_poisson_summation` (`✓ std3`). ∎
 
