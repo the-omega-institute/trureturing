@@ -3,10 +3,10 @@
 --
 -- NOTE ON EXECUTION: this asserts the cross-package produce edge
 -- github-proxy.github_issue_create_request -> github-proxy.github_issue_create, which only
--- resolves when github-proxy is composed. archaudit's fire_raiser test builds a self-contained
--- fixture by copying `libraries/*` next to a stub github-proxy — but that pattern does NOT port
--- to a HOST package: the platform libraries live in the pinned external source, not in this
--- host repo, so there is nothing to copy. Running this in isolation
+-- resolves when github-proxy is composed. A self-contained fixture that copies `libraries/*`
+-- next to a stub github-proxy does NOT port to a HOST package: the platform libraries live in
+-- the pinned external source, not in this host repo, so there is nothing to copy. Running this
+-- in isolation
 -- (`fkst-framework test --package-root theory-selfgrowth`) fails to resolve the produce; it
 -- passes only under full composition (the running engine / a workspace with the platform
 -- external source). The conformance ratchets scan these assertions statically. The missing

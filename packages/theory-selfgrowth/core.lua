@@ -3,7 +3,8 @@ local M = {}
 local strings = require("contract.strings")
 local time = require("contract.time")
 
--- github-proxy.issue-create.v1 field bounds (mirror archaudit/core.lua limits).
+-- Local copy of the deployed github-proxy.issue-create.v1 field boundaries.
+-- Machine drift check: tests/github_issue_create_contract_drift_test.lua.
 local limits = {
   repo = 200,
   title = 240,
@@ -12,6 +13,14 @@ local limits = {
   source_ref_kind = 80,
   source_ref_ref = 200,
 }
+
+function M.issue_create_limits()
+  local copied = {}
+  for field, limit in pairs(limits) do
+    copied[field] = limit
+  end
+  return copied
+end
 
 -- Stable base marker for frontier-request bodies. github-proxy routes this exact title to
 -- `.fkst/workflows/frontier-generation.json`; the producer scopes this base by bot login
@@ -25,23 +34,20 @@ local REQUEST_MARKER = "theory-selfgrowth:frontier-request:v1"
 -- "Deliver ONE NEW D5 result:" prefix to blueprint-then-formalize (verified accepted + routed by
 -- #366). Requests are atom-scoped (one digestion atom = one request; see atom_marker).
 
--- Reject idle hints older than this (mirror archaudit's 10-minute freshness budget): a
--- durable idle prompt must not create work once the system is no longer idle (#296 Major 2).
+-- Local replay-safety budget for system_idle hints: a durable idle prompt must not create
+-- work once the system is no longer idle (#296 Major 2).
 local FRESHNESS_BUDGET_SECONDS = 10 * 60
 
 -- Self-tick poll interval (#346). theory-selfgrowth's ONLY trigger was `idle-detector.
 -- system_idle`, which idle-detector broadcasts only when the bot has ZERO self-assigned open
 -- issues (`idle_gate` self_assigned_open_issues==0) — effectively never, while any backlog is
--- open — so it has never fired once. (By contrast archaudit is also idle-gated, but on a
--- LOOSER signal — `is_idle_observe`, i.e. the durable observe is not truncated / queues are
--- not overflowing — AND it carries its own cron tick, so it fires on ordinary load; a host
--- package cannot reach that observe signal.) A periodic self-tick gives the frontier producer
--- a trigger it actually receives; the per-producer open-request exclusion (decide_generation)
--- bounds each bot to at most one open frontier-request regardless of this interval.
+-- open — so it has never fired once. A periodic self-tick gives the frontier producer a trigger
+-- it actually receives; the per-producer open-request exclusion (decide_generation) bounds each
+-- bot to at most one open frontier-request regardless of this interval.
 local POLL_INTERVAL_SECONDS = 30 * 60
 -- The cron raiser's `interval` field must be a duration STRING (e.g. "30m"), not an integer —
 -- the framework's raiser parser rejects a bare number ("invalid type: integer, expected a
--- string"). Mirror archaudit's audit_poll_interval, which is `tostring(minutes) .. "m"`.
+-- string"). Format the local interval under that parser contract.
 local POLL_INTERVAL = tostring(math.floor(POLL_INTERVAL_SECONDS / 60)) .. "m"
 
 function M.request_marker() return REQUEST_MARKER end
@@ -286,25 +292,21 @@ function M.build_frontier_request(repo, candidate, bot_login)
   }
 end
 
--- Freshness verdict for a system_idle hint: "fresh" | "stale" | "expired" | "malformed".
--- Mirrors archaudit.core.idle_hint_freshness. "stale" when the hint's detected_at is older
--- than the budget; "expired" when its expires_at has already passed.
+-- Local system_idle freshness contract: validate numeric fields, reject hints older than the
+-- consumer budget, then honor the producer's optional expiry. Verdicts are "fresh", "stale",
+-- "expired", or "malformed"; consumer staleness takes precedence over producer expiry.
 function M.idle_hint_freshness(detected_seconds, expires_seconds, now_seconds, budget_seconds)
   if type(detected_seconds) ~= "number"
     or type(now_seconds) ~= "number"
-    or type(budget_seconds) ~= "number" then
+    or type(budget_seconds) ~= "number"
+    or (expires_seconds ~= nil and type(expires_seconds) ~= "number") then
     return "malformed"
   end
   if now_seconds - detected_seconds > budget_seconds then
     return "stale"
   end
-  if expires_seconds ~= nil then
-    if type(expires_seconds) ~= "number" then
-      return "malformed"
-    end
-    if expires_seconds <= now_seconds then
-      return "expired"
-    end
+  if expires_seconds ~= nil and expires_seconds <= now_seconds then
+    return "expired"
   end
   return "fresh"
 end

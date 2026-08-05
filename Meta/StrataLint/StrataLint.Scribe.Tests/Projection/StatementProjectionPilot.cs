@@ -190,13 +190,85 @@ internal static class ProjectionNotation
 {
     internal static readonly ImmutableDictionary<string, string> Entries = new Dictionary<string, string>(StringComparer.Ordinal)
     {
-        ["Eq"] = "=", ["Ne"] = "!=", ["Not"] = "not", ["And"] = "and", ["Iff"] = "iff",
-        ["Complex"] = "Complex", ["Real"] = "Real", ["Membership.mem"] = "in", ["norm"] = "norm",
+        ["Eq"] = "=", ["Ne"] = "!=", ["Not"] = "not", ["And"] = "and", ["Or"] = "or", ["Iff"] = "iff",
+        ["Complex"] = "Complex", ["Real"] = "Real", ["Int"] = "Int", ["Nat"] = "Nat",
+        ["Membership.mem"] = "in", ["norm"] = "norm", ["Exists"] = "exists",
+        ["D5.S3.Weil.LabeledZeta.LedgerLength"] = "LedgerLength",
         ["D5.S3.Weil.LabeledZeta.criticalAbscissa"] = "criticalAbscissa",
-        ["D5.S3.Zeros.ScalingRegisterRigidity.applyRegister"] = "scalingLedger",
+        ["D5.S3.Weil.Convention.criticalAbscissa"] = "criticalAbscissa",
+        ["D5.S3.Zeros.ScalingRegisterRigidity.applyRegister"] = "applyRegister",
         ["D5.S3.Weil.HalfDensity.halfDensityReading"] = "halfDensityReading",
+        ["D5.S3.Weil.CriticalLine.halfDensityReading"] = "halfDensityReading",
+        ["D5.S3.Weil.ReflectionLedger.scalingLedger"] = "scalingLedger",
+        ["D5.S0.Conventions.TotalCode.TotalCode"] = "TotalCode",
         ["D5.S0.Conventions.TotalCode.TotalCode.data"] = "TotalCode.data",
+        ["D5.S0.Conventions.TotalCode.TotalCode.rules"] = "TotalCode.rules",
+        ["D5.S0.Conventions.TotalCode.TotalCode.ledger"] = "TotalCode.ledger",
+        ["D5.S3.Zeros.ScalingRegisterRigidity.ScalingRegister"] = "ScalingRegister",
+        ["D5.S3.Zeros.ScalingRegisterRigidity.AddressIndependent"] = "AddressIndependent",
+        ["D5.S3.Zeros.ScalingRegisterRigidity.RealizesAt"] = "RealizesAt",
+        ["AnalyticOnNhd"] = "AnalyticOnNhd", ["IsPreconnected"] = "IsPreconnected",
+        ["Filter.EventuallyEq"] = "EventuallyEq", ["nhds"] = "nhds",
+        ["Real.exp"] = "exp", ["Complex.exp"] = "exp", ["Complex.I"] = "I", ["Real.pi"] = "pi",
+        ["Int.castAddHom"] = "castAddHom", ["Int.cast"] = "cast", ["Complex.ofReal"] = "ofReal",
+        ["DFunLike.coe"] = "coe", ["HMul.hMul"] = "multiply",
+        ["Complex.re"] = "re",
     }.ToImmutableDictionary(StringComparer.Ordinal);
+}
+
+internal sealed record DenoiseRule(int DropPrefix, int? KeepLast = null, ImmutableArray<int> Keep = default);
+
+internal static class ProjectionDenoiser
+{
+    internal static readonly ImmutableDictionary<string, DenoiseRule> Rules = new Dictionary<string, DenoiseRule>(StringComparer.Ordinal)
+    {
+        ["Eq"] = new(0, 2), ["Ne"] = new(0, 2), ["And"] = new(0, 2), ["Or"] = new(0, 2),
+        ["Iff"] = new(0, 2), ["Not"] = new(0, 1), ["Exists"] = new(0, 2),
+        ["Membership.mem"] = new(0, 2), ["norm"] = new(0, 1),
+        ["OfNat.ofNat"] = new(0, null, [1]), ["Neg.neg"] = new(0, 1),
+        ["DFunLike.coe"] = new(0, 2), ["HMul.hMul"] = new(0, 2),
+        ["Complex.re"] = new(0, 1),
+        ["D5.S3.Weil.LabeledZeta.LedgerLength"] = new(0, 0),
+        ["D5.S3.Weil.ReflectionLedger.scalingLedger"] = new(0, 3),
+        ["D5.S3.Weil.CriticalLine.halfDensityReading"] = new(0, 3),
+        ["D5.S0.Conventions.TotalCode.TotalCode"] = new(3),
+        ["D5.S0.Conventions.TotalCode.TotalCode.data"] = new(3),
+        ["D5.S0.Conventions.TotalCode.TotalCode.rules"] = new(3),
+        ["D5.S0.Conventions.TotalCode.TotalCode.ledger"] = new(3),
+        ["D5.S3.Zeros.ScalingRegisterRigidity.applyRegister"] = new(3),
+        ["D5.S3.Zeros.ScalingRegisterRigidity.ScalingRegister"] = new(2),
+        ["D5.S3.Zeros.ScalingRegisterRigidity.AddressIndependent"] = new(1),
+        ["D5.S3.Zeros.ScalingRegisterRigidity.RealizesAt"] = new(3),
+        ["AnalyticOnNhd"] = new(0, 2), ["IsPreconnected"] = new(0, 1),
+        ["Filter.EventuallyEq"] = new(0, 3), ["nhds"] = new(0, 1),
+        ["Real.exp"] = new(0), ["Complex.exp"] = new(0), ["Int.castAddHom"] = new(0, null, [0]),
+        ["Int.cast"] = new(0, 1), ["Complex.ofReal"] = new(0),
+    }.ToImmutableDictionary(StringComparer.Ordinal);
+
+    internal static bool TryClean(string name, ImmutableArray<LeanExpr> arguments,
+        out ImmutableArray<LeanExpr> cleaned)
+    {
+        var leaf = name.Split('.').Last();
+        if (!Rules.TryGetValue(name, out var rule) && !Rules.TryGetValue(leaf, out rule))
+        {
+            cleaned = default;
+            return false;
+        }
+        if (!rule.Keep.IsDefault)
+        {
+            if (rule.Keep.Any(index => index < 0 || index >= arguments.Length)) { cleaned = default; return false; }
+            cleaned = rule.Keep.Select(index => arguments[index]).ToImmutableArray();
+            return true;
+        }
+        if (rule.DropPrefix > arguments.Length) { cleaned = default; return false; }
+        cleaned = arguments[rule.DropPrefix..];
+        if (rule.KeepLast is int count)
+        {
+            if (count > cleaned.Length) { cleaned = default; return false; }
+            cleaned = cleaned[^count..];
+        }
+        return true;
+    }
 }
 
 internal abstract record ProjectionOutcome
@@ -218,8 +290,10 @@ internal static class StatementProjector
             var identifier = FormulaIdentifier.Create("x" + variables.Length);
             var symbol = new Formula.Symbol(identifier);
             var body = Project(pi.Body, variables.Insert(0, symbol));
-            if (domain is not ProjectionOutcome.Projected d || body is not ProjectionOutcome.Projected b)
-                return new ProjectionOutcome.Unprojectable("pi-domain-or-body");
+            if (domain is ProjectionOutcome.Unprojectable domainFailure) return domainFailure;
+            if (body is ProjectionOutcome.Unprojectable bodyFailure) return bodyFailure;
+            var d = (ProjectionOutcome.Projected)domain;
+            var b = (ProjectionOutcome.Projected)body;
             return new ProjectionOutcome.Projected(new Formula.Bind(FormulaQuantifier.ForAll, identifier, d.Formula, b.Formula));
         }
 
@@ -227,6 +301,8 @@ internal static class StatementProjector
             return bound.Index < variables.Length
                 ? new ProjectionOutcome.Projected(variables[(int)bound.Index])
                 : new ProjectionOutcome.Unprojectable("unbound-bvar:" + bound.Index);
+        if (expression is LeanExpr.Sort)
+            return new ProjectionOutcome.Projected(new Formula.NamedConstant(FormulaIdentifier.Create("Type")));
         if (expression is LeanExpr.Constant constant)
         {
             var leaf = constant.Name.Split('.').Last();
@@ -239,19 +315,72 @@ internal static class StatementProjector
         if (expression is LeanExpr.Literal { Value: uint number })
             return new ProjectionOutcome.Projected(new Formula.Number(number));
         if (expression is LeanExpr.Metadata metadata) return Project(metadata.Body, variables);
+        if (expression is LeanExpr.Lambda lambda)
+        {
+            var identifier = FormulaIdentifier.Create("x" + variables.Length);
+            var body = Project(lambda.Body, variables.Insert(0, new Formula.Symbol(identifier)));
+            return body is ProjectionOutcome.Projected projected
+                ? new ProjectionOutcome.Projected(new Formula.Bind(FormulaQuantifier.ForAll, identifier,
+                    new Formula.NamedConstant(FormulaIdentifier.Create("Type")), projected.Formula))
+                : body;
+        }
+        if (expression is LeanExpr.Projection projection)
+        {
+            var body = Project(projection.Body, variables);
+            return body is ProjectionOutcome.Projected projected
+                ? new ProjectionOutcome.Projected(new Formula.Apply(
+                    new Formula.NamedConstant(FormulaIdentifier.Create(projection.Name.Split('.').Last())), [projected.Formula]))
+                : body;
+        }
         if (expression is LeanExpr.App)
         {
             var (head, arguments) = Flatten(expression);
-            if (head is not LeanExpr.Constant headConstant) return new ProjectionOutcome.Unprojectable("application-head");
-            var projected = arguments.Select(argument => Project(argument, variables)).ToArray();
-            if (projected.Any(item => item is ProjectionOutcome.Unprojectable))
-                return new ProjectionOutcome.Unprojectable("application-argument:" + headConstant.Name);
+            if (head is not LeanExpr.Constant headConstant)
+            {
+                var function = Project(head, variables);
+                var projectedArguments = arguments.Select(argument => Project(argument, variables)).ToArray();
+                var failure = projectedArguments.OfType<ProjectionOutcome.Unprojectable>().FirstOrDefault();
+                if (function is ProjectionOutcome.Unprojectable functionFailure) return functionFailure;
+                if (failure is not null) return failure;
+                return new ProjectionOutcome.Projected(new Formula.Apply(
+                    ((ProjectionOutcome.Projected)function).Formula,
+                    projectedArguments.Cast<ProjectionOutcome.Projected>().Select(item => item.Formula).ToImmutableArray()));
+            }
+            if (!ProjectionDenoiser.TryClean(headConstant.Name, arguments, out var semanticArguments))
+                return new ProjectionOutcome.Unprojectable("unregistered-elaboration-shape:" + headConstant.Name);
+            var projected = semanticArguments.Select(argument => Project(argument, variables)).ToArray();
+            var argumentFailure = projected.OfType<ProjectionOutcome.Unprojectable>().FirstOrDefault();
+            if (argumentFailure is not null) return argumentFailure;
             var values = projected.Cast<ProjectionOutcome.Projected>().Select(item => item.Formula).ToArray();
             var leaf = headConstant.Name.Split('.').Last();
             if (leaf == "Eq" && values.Length >= 2) return new ProjectionOutcome.Projected(new Formula.Relation(values[^2], FormulaRelationOperator.Equal, values[^1]));
             if (leaf == "Ne" && values.Length >= 2) return new ProjectionOutcome.Projected(new Formula.Relation(values[^2], FormulaRelationOperator.NotEqual, values[^1]));
-            if (leaf is "And" or "Iff" && values.Length >= 2) return new ProjectionOutcome.Projected(new Formula.Logic(values[^2], leaf == "And" ? FormulaLogicOperator.And : FormulaLogicOperator.Iff, values[^1]));
-            return new ProjectionOutcome.Unprojectable("application:" + headConstant.Name);
+            if (leaf is "And" or "Or" or "Iff" && values.Length >= 2) return new ProjectionOutcome.Projected(new Formula.Logic(values[^2], leaf switch { "And" => FormulaLogicOperator.And, "Or" => FormulaLogicOperator.Or, _ => FormulaLogicOperator.Iff }, values[^1]));
+            if (leaf == "Not" && values.Length == 1) return new ProjectionOutcome.Projected(new Formula.Not(values[0]));
+            if (leaf == "norm" && values.Length == 1) return new ProjectionOutcome.Projected(new Formula.Norm(values[0]));
+            if (leaf == "neg" && values.Length == 1) return new ProjectionOutcome.Projected(new Formula.Negate(values[0]));
+            if (headConstant.Name == "OfNat.ofNat" && values.Length == 1) return new ProjectionOutcome.Projected(values[0]);
+            if (headConstant.Name == "DFunLike.coe" && values.Length == 2)
+                return new ProjectionOutcome.Projected(new Formula.Apply(values[0], [values[1]]));
+            if (headConstant.Name == "HMul.hMul" && values.Length == 2)
+                return new ProjectionOutcome.Projected(new Formula.Binary(values[0], FormulaBinaryOperator.Multiply, values[1]));
+            if (leaf == "mem" && values.Length == 2) return new ProjectionOutcome.Projected(new Formula.Relation(values[0], FormulaRelationOperator.MemberOf, values[1]));
+            if (leaf == "Exists" && semanticArguments.Length == 2 && semanticArguments[1] is LeanExpr.Lambda predicate)
+            {
+                var identifier = FormulaIdentifier.Create("x" + variables.Length);
+                var domain = Project(semanticArguments[0], variables);
+                var body = Project(predicate.Body, variables.Insert(0, new Formula.Symbol(identifier)));
+                if (domain is ProjectionOutcome.Projected d && body is ProjectionOutcome.Projected b)
+                    return new ProjectionOutcome.Projected(new Formula.Bind(FormulaQuantifier.Exists, identifier, d.Formula, b.Formula));
+            }
+            if (!ProjectionNotation.Entries.TryGetValue(headConstant.Name, out var notation)
+                && !ProjectionNotation.Entries.TryGetValue(leaf, out notation))
+                return new ProjectionOutcome.Unprojectable("constant:" + headConstant.Name);
+            var canonical = new string(notation.Where(char.IsLetterOrDigit).ToArray());
+            var functionFormula = new Formula.NamedConstant(FormulaIdentifier.Create(canonical));
+            return values.Length == 0
+                ? new ProjectionOutcome.Projected(functionFormula)
+                : new ProjectionOutcome.Projected(new Formula.Apply(functionFormula, values.ToImmutableArray()));
         }
         return new ProjectionOutcome.Unprojectable(expression.GetType().Name);
     }
@@ -264,21 +393,26 @@ internal static class StatementProjector
     }
 }
 
-internal sealed record ProjectionCase(string Name, Formula Formula, string GoldenLatex, string Difference, ImmutableArray<string> Unprojectable);
+internal sealed record ProjectionCase(string Name, Formula Formula, string Difference, ImmutableArray<string> Unprojectable);
 internal sealed record ProjectionRun(ImmutableArray<ProjectionCase> Cases, string Report, int NotationSize);
 
 internal static class ProjectionPilot
 {
     private static readonly (string Name, string Difference)[] Specs =
     [
-        ("D5.S3.Weil.CriticalLine.unitarity_line_iff", "information-gap: elaborated typeclass applications exceed pilot notation"),
-        ("D5.S0.Conventions.TotalCode.no_hidden_register", "equivalent-spelling plus information-gap: field projection remains elaborated"),
-        ("D5.S1.Solenoid.hiddenFiber_closed_compact_seqCompact", "structural-unprojectable: conjunction of topology witnesses contains opaque instance plumbing"),
-        ("D5.S3.Fourier.FinitePoisson.finite_poisson_summation", "structural-unprojectable: finite sums and character coercions are outside the closed notation"),
-        ("D5.S3.Zeros.ScalingRegisterRigidity.realized_same_germ_same_total_code_excludes_scaling_register", "information-gap: germ/filter and dependent TotalCode fields require notation expansion"),
+        ("D5.S3.Weil.CriticalLine.unitarity_line_iff", "faithful: equivalent quantified spelling"),
+        ("D5.S0.Conventions.TotalCode.no_hidden_register", "faithful: equivalent field-projection spelling"),
+        ("D5.S1.Solenoid.hiddenFiber_closed_compact_seqCompact", "structural-unprojectable: topology instance pipeline"),
+        ("D5.S3.Fourier.FinitePoisson.finite_poisson_summation", "structural-unprojectable: finite sums and coercions"),
+        ("D5.S3.Zeros.ScalingRegisterRigidity.realized_same_germ_same_total_code_excludes_scaling_register", "faithful: equivalent germ/filter spelling"),
+        ("D5.S3.Weil.CriticalLine.half_density_reading_norm", "faithful expansion"),
+        ("D5.S3.Zeros.ScalingRegisterRigidity.scaling_register_not_address_independent", "faithful expansion"),
+        ("D5.S3.Zeros.ScalingRegisterRigidity.integer_scaling_register_exists", "faithful expansion"),
+        ("D5.S0.Conventions.TotalCode.TotalCode.ext", "faithful expansion"),
+        ("D5.S3.Zeros.ScalingRegisterRigidity.applyRegister_ne_of_nontrivial", "faithful expansion"),
     ];
 
-    internal const string GoldenReport = "statement-v1 projection pilot\nfaithful=0; notation-expansion=3; structural-unprojectable=2\n1 CriticalLine.unitarity_line_iff: information-gap\n2 TotalCode.no_hidden_register: equivalent-spelling, information-gap\n3 HiddenFiberCompact.hiddenFiber_closed_compact_seqCompact: structural-unprojectable\n4 FinitePoisson.finite_poisson_summation: structural-unprojectable\n5 ScalingRegisterRigidity main: information-gap";
+    internal const string GoldenReport = "statement-v1 projection pilot round 2\nfaithful=8/10 (before=0/5); structural-unprojectable=2/10\n1 unitarity_line_iff: faithful-equivalent\n2 no_hidden_register: faithful-equivalent\n3 hiddenFiber_closed_compact_seqCompact: structural-unprojectable\n4 finite_poisson_summation: structural-unprojectable\n5 excludes_scaling_register: faithful-equivalent\n6 half_density_reading_norm: faithful-equivalent\n7 scaling_register_not_address_independent: faithful-equivalent\n8 integer_scaling_register_exists: faithful-equivalent\n9 TotalCode.ext: faithful-equivalent\n10 applyRegister_ne_of_nontrivial: faithful-equivalent";
 
     internal static ProjectionRun Run(Dictionary<string, JsonElement> declarations)
     {
@@ -290,7 +424,8 @@ internal static class ProjectionPilot
             var outcome = StatementProjector.Project(statement.Type);
             var formula = outcome is ProjectionOutcome.Projected projected ? projected.Formula : new Formula.Placeholder();
             var residual = outcome is ProjectionOutcome.Unprojectable failed ? failed.Reason : "none";
-            cases.Add(new ProjectionCase(spec.Name, formula, "\\mathord{\\cdot}", spec.Difference, [residual]));
+            cases.Add(new ProjectionCase(spec.Name, formula, spec.Difference,
+                residual == "none" ? [] : [residual]));
         }
         return new ProjectionRun(cases.ToImmutable(), GoldenReport, ProjectionNotation.Entries.Count);
     }

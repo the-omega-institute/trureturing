@@ -157,29 +157,46 @@ restart_state_lock_release() {
 }
 
 load_restart_obligation() {
-  local path="$1" line now generation created_at previous_revision target_revision
+  local path="$1" lock_held="${2:-0}"
+  local line now generation created_at previous_revision target_revision
   local checkout_previous_revision checkout_target_revision lean_report_required
-  local -a lines=()
+  local field_count index
+  local -a lines=() schema=(
+    generation
+    created_at
+    previous_platform_rev
+    target_platform_rev
+    checkout_previous_rev
+    checkout_target_rev
+    lean_report_required
+  )
   [[ -f "$path" && -r "$path" ]] || return 1
   while IFS= read -r line || [[ -n "$line" ]]; do
     lines+=("$line")
   done < "$path"
-  [[ "${#lines[@]}" -eq 7 \
-      && "${lines[0]}" == generation=* \
-      && "${lines[1]}" == created_at=* \
-      && "${lines[2]}" == previous_platform_rev=* \
-      && "${lines[3]}" == target_platform_rev=* \
-      && "${lines[4]}" == checkout_previous_rev=* \
-      && "${lines[5]}" == checkout_target_rev=* \
-      && "${lines[6]}" == lean_report_required=* ]] || return 1
+  field_count="${#lines[@]}"
+  [[ "$field_count" -ge 4 && "$field_count" -le "${#schema[@]}" ]] \
+    || return 1
+  for ((index = 0; index < field_count; index++)); do
+    [[ "${lines[index]}" == "${schema[index]}="* ]] || return 1
+  done
 
   generation="${lines[0]#generation=}"
   created_at="${lines[1]#created_at=}"
   previous_revision="${lines[2]#previous_platform_rev=}"
   target_revision="${lines[3]#target_platform_rev=}"
-  checkout_previous_revision="${lines[4]#checkout_previous_rev=}"
-  checkout_target_revision="${lines[5]#checkout_target_rev=}"
-  lean_report_required="${lines[6]#lean_report_required=}"
+  checkout_previous_revision=none
+  checkout_target_revision=none
+  lean_report_required=0
+  if [[ "$field_count" -ge 5 ]]; then
+    checkout_previous_revision="${lines[4]#checkout_previous_rev=}"
+  fi
+  if [[ "$field_count" -ge 6 ]]; then
+    checkout_target_revision="${lines[5]#checkout_target_rev=}"
+  fi
+  if [[ "$field_count" -ge 7 ]]; then
+    lean_report_required="${lines[6]#lean_report_required=}"
+  fi
   now="$(date -u +%s 2>/dev/null)" || return 1
   [[ "$generation" =~ ^[0-9]+-[0-9]+-[0-9]+$ ]] || return 1
   timestamp_is_usable "$created_at" "$now" || return 1
@@ -197,6 +214,26 @@ load_restart_obligation() {
   else
     [[ "$checkout_previous_revision" =~ ^[0-9a-f]{40}$ \
         && "$checkout_target_revision" =~ ^[0-9a-f]{40}$ ]] || return 1
+  fi
+
+  if [[ "$field_count" -lt "${#schema[@]}" ]]; then
+    if [[ "$lock_held" != "1" ]]; then
+      restart_state_lock_acquire "$path" || return 1
+      if ! load_restart_obligation "$path" 1; then
+        restart_state_lock_release 2>/dev/null || true
+        return 1
+      fi
+      restart_state_lock_release || return 1
+      return 0
+    fi
+    if ! persist_restart_obligation \
+        "$path" "$generation" "$created_at" \
+        "$previous_revision" "$target_revision" \
+        "$checkout_previous_revision" "$checkout_target_revision" \
+        "$lean_report_required"; then
+      return 1
+    fi
+    say "RESTART-OBLIGATION MIGRATED: generation $generation from $field_count to ${#schema[@]} fields"
   fi
 
   RESTART_OBLIGATION_GENERATION="$generation"
@@ -246,7 +283,7 @@ record_restart_obligation() {
   fi
 
   if [[ -e "$state" ]]; then
-    if ! load_restart_obligation "$state"; then
+    if ! load_restart_obligation "$state" 1; then
       restart_state_lock_release 2>/dev/null || true
       say "RESTART-OBLIGATION WRITE-FAIL: existing state invalid; refusing $reason"
       return 1
@@ -340,7 +377,7 @@ clear_lean_report_requirement() {
     say "LEAN-REPORT-OBLIGATION RETAINED: generation $verified_generation; state locked"
     return 1
   fi
-  if ! load_restart_obligation "$state"; then
+  if ! load_restart_obligation "$state" 1; then
     restart_state_lock_release 2>/dev/null || true
     say "LEAN-REPORT-OBLIGATION RETAINED: generation $verified_generation changed to invalid state"
     return 1
@@ -462,7 +499,7 @@ clear_restart_obligation() {
     say "RESTART-OBLIGATION RETAINED: verified generation $verified_generation; state locked"
     return 1
   fi
-  if ! load_restart_obligation "$state"; then
+  if ! load_restart_obligation "$state" 1; then
     restart_state_lock_release 2>/dev/null || true
     say "RESTART-OBLIGATION RETAINED: verified generation $verified_generation changed to invalid state"
     return 1

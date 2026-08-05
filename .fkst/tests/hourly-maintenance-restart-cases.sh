@@ -242,6 +242,98 @@ write_activation_obligation_fixture() {
   } > "$path"
 }
 
+write_legacy_activation_obligation_fixture() {
+  local path="$1" generation="$2" created_at="$3"
+  local previous_revision="$4" target_revision="$5"
+  {
+    printf 'generation=%s\n' "$generation"
+    printf 'created_at=%s\n' "$created_at"
+    printf 'previous_platform_rev=%s\n' "$previous_revision"
+    printf 'target_platform_rev=%s\n' "$target_revision"
+  } > "$path"
+}
+
+legacy_activation_obligation_migrates_before_platform_pin() (
+  local root obligation now legacy_generation legacy_previous
+  root="$(mktemp -d -t hourly-maintenance-legacy-obligation.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  create_platform_fixture "$root" || exit 1
+  create_checkout_files "$root" || exit 1
+  FRAMEWORK_CALLS_FILE="$root/framework.calls"
+  export FRAMEWORK_CALLS_FILE
+  write_framework_stub success
+  export_platform_environment
+  obligation="$root/logs/restart-activation.state"
+  export FKST_RESTART_ACTIVATION_STATE="$obligation"
+  now="$(date +%s)"
+  legacy_generation="${now}-768-1"
+  legacy_previous=1111111111111111111111111111111111111111
+  write_legacy_activation_obligation_fixture \
+    "$obligation" "$legacy_generation" "$now" \
+    "$legacy_previous" "$OLD_PLATFORM_REV"
+
+  export FKST_RESTART_DEFER_MAX_SECONDS=3600
+  export FKST_RESTART_DEFER_STATE="$root/logs/restart-defer.state"
+
+  run_deferred_activation_cycle "$root/host.env" \
+    || fail "maintenance cycle was blocked by a migrated legacy obligation"
+  [[ "$(wc -l < "$obligation" | tr -d '[:space:]')" == "7" ]] \
+    || fail "legacy activation obligation was not rewritten to the current schema"
+  command grep -q "$NEW_PLATFORM_REV" "$CHECKOUT_ROOT/fkst.workspace.toml" \
+    || fail "platform pin did not advance after legacy obligation migration"
+  command grep -q "^previous_platform_rev=$legacy_previous$" "$obligation" \
+    || fail "platform sync discarded the legacy obligation's rollback origin"
+  command grep -q "^target_platform_rev=$NEW_PLATFORM_REV$" "$obligation" \
+    || fail "platform sync did not extend the legacy obligation to the new target"
+  command grep -q '^checkout_previous_rev=none$' "$obligation" \
+    || fail "legacy migration did not add the neutral checkout origin"
+  command grep -q '^checkout_target_rev=none$' "$obligation" \
+    || fail "legacy migration did not add the neutral checkout target"
+  command grep -q '^lean_report_required=0$' "$obligation" \
+    || fail "legacy migration did not add the neutral Lean report flag"
+  command grep -q \
+    "RESTART-OBLIGATION MIGRATED: generation $legacy_generation from 4 to 7 fields" \
+    "$FKST_MAINTENANCE_LOG" \
+    || fail "legacy migration was not reported"
+  command grep -q 'DEFER-RESTART: 1 live implement lease' \
+    "$FKST_MAINTENANCE_LOG" \
+    || fail "maintenance cycle did not retain the migrated obligation for restart"
+)
+
+corrupt_activation_obligation_still_refuses_platform_pin() (
+  load_implementation || exit 1
+  local root obligation snapshot now
+  root="$(mktemp -d -t hourly-maintenance-corrupt-obligation.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  create_platform_fixture "$root" || exit 1
+  create_checkout_files "$root" || exit 1
+  FRAMEWORK_CALLS_FILE="$root/framework.calls"
+  export FRAMEWORK_CALLS_FILE
+  write_framework_stub success
+  export_platform_environment
+  obligation="$root/logs/restart-activation.state"
+  snapshot="$root/restart-activation.before"
+  export FKST_RESTART_ACTIVATION_STATE="$obligation"
+  now="$(date +%s)"
+  write_activation_obligation_fixture \
+    "$obligation" "${now}-768-2" "$now" \
+    1111111111111111111111111111111111111111 "$OLD_PLATFORM_REV" \
+    none none 2
+  command cp "$obligation" "$snapshot"
+
+  load_restart_obligation "$obligation" \
+    && fail "out-of-schema Lean report flag was accepted"
+  sync_platform && fail "platform sync overwrote a corrupt activation obligation"
+  command cmp -s "$snapshot" "$obligation" \
+    || fail "corrupt activation obligation was changed instead of retained"
+  command grep -q "$OLD_PLATFORM_REV" "$CHECKOUT_ROOT/fkst.workspace.toml" \
+    || fail "platform pin advanced despite a corrupt activation obligation"
+  command grep -q \
+    'RESTART-OBLIGATION WRITE-FAIL: existing state invalid; refusing platform pin' \
+    "$FKST_MAINTENANCE_LOG" \
+    || fail "corrupt obligation refusal did not retain WRITE-FAIL behavior"
+)
+
 run_activation_cycle() (
   local host_config="$1"
   load_implementation || exit 1
@@ -253,6 +345,23 @@ run_activation_cycle() (
   gc_worktrees() { return 0; }
   gc_stuck_lean_builds() { return 0; }
   check_launchd_conformance() { return 0; }
+  main --host-config "$host_config"
+)
+
+run_deferred_activation_cycle() (
+  local host_config="$1"
+  load_implementation || exit 1
+  host_contract_load() { HOST_CONFIG="$1"; export HOST_CONFIG; }
+  validate_configuration() { return 0; }
+  host_contract_require() { return 0; }
+  sync_checkout() { return 0; }
+  sync_workspace_composition() { return 0; }
+  gc_worktrees() { return 0; }
+  gc_stuck_lean_builds() { return 0; }
+  check_launchd_conformance() { return 0; }
+  engine_pid() { printf '4242\n'; }
+  implement_lease_count() { printf '1\n'; }
+  restart_engine() { return 1; }
   main --host-config "$host_config"
 )
 
