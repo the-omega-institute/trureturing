@@ -12,9 +12,13 @@ LAUNCHER_CONFORMANCE="$REPOSITORY_ROOT/.fkst/scripts/check-maintenance-launcher.
 RESTART_CASES="$REPOSITORY_ROOT/.fkst/tests/hourly-maintenance-restart-cases.sh"
 COMPOSITION_CASES="$REPOSITORY_ROOT/.fkst/tests/hourly-maintenance-composition-cases.sh"
 LEAN_REPORT_CASES="$REPOSITORY_ROOT/.fkst/tests/hourly-maintenance-lean-report-cases.sh"
+PR_WATCH_CASES="$REPOSITORY_ROOT/.fkst/tests/hourly-maintenance-pr-watch-cases.sh"
 READINESS_FIXTURES="$REPOSITORY_ROOT/.fkst/tests/hourly-maintenance-readiness-fixtures.sh"
 PASS_COUNT=0
 FAIL_COUNT=0
+TEST_PR_WATCH_ROOT="$(mktemp -d -t hourly-maintenance-pr-watch-state.XXXXXX)" || exit 1
+export PR_SHEPHERD_PID="$TEST_PR_WATCH_ROOT/pr-watch.state"
+trap 'rm -rf "$TEST_PR_WATCH_ROOT"' EXIT
 
 fail() {
   echo "FAIL: $*" >&2
@@ -108,7 +112,12 @@ create_checkout_history_fixture() {
   git_quiet clone "$CHECKOUT_REMOTE" "$CHECKOUT_ROOT" || return 1
   configure_repository "$CHECKOUT_ROOT" || return 1
   printf 'base\n' > "$CHECKOUT_ROOT/tracked"
-  command git -C "$CHECKOUT_ROOT" add tracked
+  mkdir -p "$CHECKOUT_ROOT/Meta/StrataLint/scripts"
+  cat > "$CHECKOUT_ROOT/Meta/StrataLint/scripts/pr-shepherd.sh" <<'SH'
+#!/usr/bin/env bash
+while true; do sleep 1; done
+SH
+  command git -C "$CHECKOUT_ROOT" add tracked Meta/StrataLint/scripts/pr-shepherd.sh
   git_quiet -C "$CHECKOUT_ROOT" commit -m base || return 1
   git_quiet -C "$CHECKOUT_ROOT" push -u origin dev || return 1
   CHECKOUT_BASE_REV="$(command git -C "$CHECKOUT_ROOT" rev-parse HEAD)"
@@ -698,6 +707,9 @@ source "$COMPOSITION_CASES"
 [[ -f "$LEAN_REPORT_CASES" ]] || fail "Lean-report behavior cases are missing"
 # shellcheck disable=SC1090
 source "$LEAN_REPORT_CASES"
+[[ -f "$PR_WATCH_CASES" ]] || fail "pr-watch maintenance behavior cases are missing"
+# shellcheck disable=SC1090
+source "$PR_WATCH_CASES"
 
 run_test "deployed top-level workspace is authoritative" deployed_top_level_workspace_is_authoritative
 run_test "host-lock failure reverts from the previous revision" host_lock_failure_reverts_from_the_previous_revision
@@ -747,6 +759,17 @@ run_test "stale deployed repository contract does not block checkout refresh" st
 run_test "host config rejects shell control flow without evaluation" host_config_rejects_shell_control_flow_without_evaluation
 run_test "fictional second-host launcher is portable" fictional_second_host_launcher_is_portable
 run_test "launcher conformance compares rendered and deployed bytes" launcher_conformance_compares_rendered_and_deployed_bytes
+run_test "current pr-watch identity is accepted" current_pr_watch_identity_is_accepted
+run_test "stale pr-watch identity is reported" stale_pr_watch_identity_is_reported
+run_test "post-boundary pr-watch identity is verified" post_boundary_reload_identity_is_verified
+run_test "checkout drift blocks pr-watch convergence" checkout_drift_blocks_pr_watch_convergence
+run_test "dirty checkout script blocks current identity" dirty_checkout_script_blocks_current_identity
+run_test "dead pr-watch state is retained for recovery" dead_pr_watch_state_is_retained_for_race_free_recovery
+run_test "live pr-watch lease without state fails closed" live_pr_watch_lease_without_state_fails_closed
+run_test "dangling pr-watch lease without state fails closed" dangling_pr_watch_lease_without_state_fails_closed
+run_test "dangling pr-watch state fails closed" dangling_pr_watch_state_fails_closed
+run_test "legacy pr-watch pidfile is reported unknown" legacy_pidfile_is_reported_unknown
+run_test "unverifiable pr-watch identity fails closed" unverifiable_pr_watch_identity_fails_closed
 
 printf 'behavior tests: %d passed, %d failed, %d total\n' \
   "$PASS_COUNT" "$FAIL_COUNT" "$((PASS_COUNT + FAIL_COUNT))"

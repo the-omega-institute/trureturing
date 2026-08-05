@@ -9,6 +9,8 @@ REPOSITORY_ROOT="$(cd -- "$SCRIPT_DIR/../.." && pwd -P)"
 source "$SCRIPT_DIR/host-contract.sh"
 # shellcheck source=.fkst/scripts/restart-policy.sh
 source "$SCRIPT_DIR/restart-policy.sh"
+# shellcheck source=.fkst/scripts/pr-watch-reconciliation.sh
+source "$SCRIPT_DIR/pr-watch-reconciliation.sh"
 
 CHANGED=0
 CHECKOUT_DEV_REV=""
@@ -721,7 +723,7 @@ launchd_service_state() {
 }
 
 main() {
-  local host_config="${HOST_CONFIG:-}" validate_only="${VALIDATE_ONLY:-0}"
+  local host_config="${HOST_CONFIG:-}" validate_only="${VALIDATE_ONLY:-0}" pr_watch_status=0
   LEAN_REPORT_REBUILT_THIS_CYCLE=0
   [[ "$validate_only" == "0" || "$validate_only" == "1" ]] \
     || { printf 'hourly-maintenance: VALIDATE_ONLY must be 0 or 1\n' >&2; return 2; }
@@ -756,12 +758,14 @@ main() {
   [[ "$validate_only" == "0" ]] || return 0
   sync_platform || return
   sync_checkout
+  reconcile_pr_watch || pr_watch_status=$?
   sync_workspace_composition || return
   gc_worktrees
   gc_stuck_lean_builds
   restart_if_needed || return
   reconcile_lean_report_readiness || return
-  check_launchd_conformance
+  check_launchd_conformance || return
+  return "$pr_watch_status"
 }
 
 if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
