@@ -154,8 +154,34 @@ internal static class DigestionStatusEvaluator
                 verifiedScribeEmissions,
                 findings)).ToArray();
         DeriveMigration(work);
+        RequireDecompositionBeforeNewAbsorption(work, baselineEntries, findings);
 
         return CompleteEvaluation(work, snapshot, findings, validateProjectedStatus);
+    }
+
+    private static void RequireDecompositionBeforeNewAbsorption(
+        IEnumerable<EntryWork> work,
+        IReadOnlyDictionary<string, DigestionLedgerEntry> baselineEntries,
+        ImmutableArray<string>.Builder findings)
+    {
+        foreach (var item in work.Where(static item => item.Atom is not null))
+        {
+            var baselineMigration = baselineEntries.TryGetValue(item.Entry.AtomId, out var baseline)
+                ? baseline.ProjectedStatus.Migration
+                : (DigestionMigrationState?)null;
+            if (!DigestionDecompositionPolicy.RejectsNewAbsorption(
+                    item.Atom!,
+                    item.Migration,
+                    item.Entry.Receipts.UnresolvedSubitems.Length,
+                    baselineMigration))
+            {
+                continue;
+            }
+
+            findings.Add(
+                $"entry {item.Entry.AtomId} has multiple clauses but newly claims absorbed "
+                + "with unresolved_subitems=[]; decompose the uncovered clauses before absorption");
+        }
     }
 
     private static string? FindDuplicateAtomId(IEnumerable<DigestionLedgerEntry> entries) =>

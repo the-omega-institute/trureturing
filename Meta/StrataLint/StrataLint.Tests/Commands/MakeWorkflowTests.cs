@@ -77,6 +77,9 @@ public sealed partial class MakeWorkflowTests
         "scratch-sweep",
         "gate",
         "perf-report",
+        "deliver-check",
+        "receipts-stage",
+        "derived-refresh",
         "worktree",
         "pr-watch",
     ];
