@@ -30,7 +30,7 @@ public sealed partial class DigestionAlignmentTests
             Snapshot(currentBytes, [forgedCapture]),
             baseline,
             DigestionAlignmentMode.Admission,
-            _ => _ => Atomized(currentAtom));
+            _ => (_, _) => Atomized(currentAtom));
 
         Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor("forged-receipt"));
         Assert.Null(result.AtomFor("forged-receipt"));
@@ -56,7 +56,7 @@ public sealed partial class DigestionAlignmentTests
             Snapshot(currentBytes, [oldCapture]),
             baseline,
             DigestionAlignmentMode.Admission,
-            _ => _ => Atomized(currentAtom));
+            _ => (_, _) => Atomized(currentAtom));
 
         Assert.Equal(DigestionReceiptAlignment.Seen, result.AlignmentFor("historical-receipt"));
         Assert.Equal(oldAtom.Fingerprints, result.AtomFor("historical-receipt")?.Fingerprints);
@@ -82,7 +82,7 @@ public sealed partial class DigestionAlignmentTests
             Snapshot(currentBytes, [oldCapture]),
             baseline,
             DigestionAlignmentMode.Admission,
-            _ => _ => Atomized(currentAtom));
+            _ => (_, _) => Atomized(currentAtom));
 
         Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor("historical-receipt"));
         Assert.Null(result.AtomFor("historical-receipt"));
@@ -108,7 +108,7 @@ public sealed partial class DigestionAlignmentTests
             Snapshot(currentBytes, [oldCapture]),
             baseline,
             DigestionAlignmentMode.Admission,
-            _ => _ => Atomized(currentAtom));
+            _ => (_, _) => Atomized(currentAtom));
 
         Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor("historical-receipt"));
         Assert.Null(result.AtomFor("historical-receipt"));
@@ -132,7 +132,7 @@ public sealed partial class DigestionAlignmentTests
             Snapshot(currentBytes, [currentCapture]),
             baseline,
             DigestionAlignmentMode.Admission,
-            _ => _ => Atomized(currentAtom));
+            _ => (_, _) => Atomized(currentAtom));
 
         Assert.Equal(DigestionReceiptAlignment.Seen, result.AlignmentFor("live-receipt"));
         Assert.Equal(currentAtom.Fingerprints, result.AtomFor("live-receipt")?.Fingerprints);
@@ -173,7 +173,7 @@ public sealed partial class DigestionAlignmentTests
             Snapshot(sourceBytes.ToArray(), [oldCapture]),
             ledger,
             DigestionAlignmentMode.Ingest,
-            _ => _ => corruptDocument);
+            _ => (_, _) => corruptDocument);
 
         Assert.Empty(result.Fallbacks);
         Assert.Contains(result.Findings, finding =>
@@ -202,7 +202,7 @@ public sealed partial class DigestionAlignmentTests
             Snapshot(sourceBytes.ToArray(), [oldCapture]),
             ledger,
             DigestionAlignmentMode.Ingest,
-            _ => _ => fabricatedDocument);
+            _ => (_, _) => fabricatedDocument);
 
         Assert.Empty(result.Fallbacks);
         Assert.Empty(result.Residual);
@@ -224,7 +224,7 @@ public sealed partial class DigestionAlignmentTests
             Snapshot(sourceBytes.ToArray(), [oldCapture]),
             ledger,
             DigestionAlignmentMode.Ingest,
-            _ => _ => corrupt);
+            _ => (_, _) => corrupt);
 
         Assert.Empty(result.Fallbacks);
         Assert.Empty(result.Residual);
@@ -246,7 +246,7 @@ public sealed partial class DigestionAlignmentTests
             Snapshot(sourceBytes.ToArray(), [oldCapture]),
             ledger,
             DigestionAlignmentMode.Ingest,
-            _ => _ => unrecognized);
+            _ => (_, _) => unrecognized);
 
         Assert.Empty(result.Findings);
         Assert.Single(result.Fallbacks);
@@ -278,7 +278,7 @@ public sealed partial class DigestionAlignmentTests
             Snapshot(sourceBytes.ToArray(), [captured]),
             ledger,
             DigestionAlignmentMode.Ingest,
-            _ => _ => unrecognized);
+            _ => (_, _) => unrecognized);
 
         Assert.Empty(result.Findings);
         Assert.Single(result.Fallbacks);
@@ -305,7 +305,7 @@ public sealed partial class DigestionAlignmentTests
             Snapshot([(byte)'a', (byte)'a'], [captured]),
             ledger,
             DigestionAlignmentMode.Ingest,
-            _ => _ => atomized);
+            _ => (_, _) => atomized);
 
         Assert.Empty(result.Findings);
         Assert.Equal("theorem/1.2", Assert.Single(result.Residual).Atom.AstPath);

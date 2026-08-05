@@ -2,7 +2,7 @@ using System.Collections.Immutable;
 
 namespace StrataLint.Engine;
 
-internal delegate AtomizedTheoryDocument TheoryAtomizer(ReadOnlySpan<byte> bytes);
+internal delegate AtomizedTheoryDocument TheoryAtomizer(ReadOnlySpan<byte> bytes, TheoryAtomizerRules rules);
 
 internal sealed record AtomizerRegistration(
     TheoryAtomizer Atomize,
@@ -33,7 +33,8 @@ internal static class AtomizerRegistry
 
     internal static AtomizedTheoryDocument Atomize(
         string id,
-        ReadOnlySpan<byte> bytes)
+        ReadOnlySpan<byte> bytes,
+        TheoryAtomizerRules rules)
     {
         if (id == NoAtomizerId)
         {
@@ -43,7 +44,7 @@ internal static class AtomizerRegistry
                 + ".");
         }
 
-        return Require(id).Atomize(bytes);
+        return Require(id).Atomize(bytes, rules);
     }
 
     internal static bool IsRegistered(string id) => Atomizers.ContainsKey(id);

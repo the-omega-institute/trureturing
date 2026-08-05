@@ -6,21 +6,26 @@ namespace StrataLint.Engine;
 internal static partial class WmAtomizer
 {
     private const string AppendedAuditClosureMarker = "旧块不改。";
-    private const string CurrentTodoClosureMarker =
-        "**v0.2**(新行追加于版本账,本节追加 v0.2 校核块)。";
-
     private static void ValidateClosure(
         string text,
         ImmutableArray<MarkdownBlock> blocks,
         WmAuditBlock[] auditBlocks,
-        WmAuditBlock[] appendedAudits)
+        WmAuditBlock[] appendedAudits,
+        string firstAppendedVersion)
     {
+        var escapedVersion = Regex.Escape(firstAppendedVersion);
+        var currentTodoClosureMarker =
+            $"**{firstAppendedVersion}**(新行追加于版本账,本节追加 {firstAppendedVersion} 校核块)。";
+        var currentTodoClosurePattern = new Regex(
+            "^\\*\\*当前待办\\*\\*\\(随版滚动\\):[^\\r\\n]*"
+            + $"\\*\\*{escapedVersion}\\*\\*\\(新行追加于版本账,本节追加 {escapedVersion} 校核块\\)。\\z",
+            RegexOptions.CultureInvariant);
         var paragraphs = blocks.OfType<MarkdownParagraph>().ToArray();
         var currentTodoClosures = paragraphs
             .Where(paragraph => IsUniqueClosure(
                 paragraph.Text,
-                CurrentTodoClosurePattern,
-                CurrentTodoClosureMarker))
+                currentTodoClosurePattern,
+                currentTodoClosureMarker))
             .ToArray();
         var v01Audits = auditBlocks.Where(static audit => audit.Revision == 1).ToArray();
         if (currentTodoClosures.Length != 1
@@ -100,7 +105,8 @@ internal static partial class WmAtomizer
         var discipline = disciplines[0];
         var lastVersionStart = text.LastIndexOf(lastVersionLead, StringComparison.Ordinal);
         var sectionZeroStart = headings.Single(static heading =>
-            IdentifyHeading(heading.Text) == "section/0").Start;
+            SectionHeadingPattern.Match(heading.Text) is { Success: true } match
+            && match.Groups["number"].Value == "0").Start;
         if (lastVersionStart < 0
             || discipline.Start <= lastVersionStart + lastVersionLead.Length
             || discipline.End >= sectionZeroStart

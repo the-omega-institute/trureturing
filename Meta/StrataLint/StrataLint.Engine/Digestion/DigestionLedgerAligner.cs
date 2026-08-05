@@ -69,6 +69,26 @@ internal static class DigestionLedgerAligner
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
         atomizerResolver ??= static id => AtomizerRegistry.Require(id).Atomize;
+        // Ingest is an explicit operation on the current tree, so a missing data file there is a
+        // real fault. Admission judges arbitrary trees, including the baseline tree that predates
+        // this data surface entirely; rejecting that tree would break conservative extension, so
+        // the re-atomization below is skipped for it instead. A data file that IS present parses
+        // fail-closed either way.
+        TheoryAtomizerRules? atomizerRules;
+        if (!TheoryAtomizerDataLoader.TryLoad(snapshot, out var loadedRules))
+        {
+            if (mode == DigestionAlignmentMode.Ingest)
+            {
+                throw new FormatException(
+                    $"Atomizer data file is missing: {TheoryAtomizerDataLoader.DataPath}");
+            }
+
+            atomizerRules = null;
+        }
+        else
+        {
+            atomizerRules = loadedRules;
+        }
 
         var alignments = ImmutableDictionary.CreateBuilder<string, DigestionReceiptAlignment>(
             StringComparer.Ordinal);
@@ -218,11 +238,18 @@ internal static class DigestionLedgerAligner
                 continue;
             }
 
+            if (atomizerRules is null)
+            {
+                // Tree predates the atomizer data surface: it cannot be re-atomized here, and
+                // reporting that as a finding would reject a tree the baseline harness admits.
+                continue;
+            }
+
             AtomizedTheoryDocument atomized;
             try
             {
                 var atomize = atomizerResolver(source.Atomizer);
-                atomized = atomize(sourceFile.RawBytes.AsSpan());
+                atomized = atomize(sourceFile.RawBytes.AsSpan(), atomizerRules);
             }
             catch (Exception exception) when (
                 exception is TheorySourceFormatException or DecoderFallbackException)
