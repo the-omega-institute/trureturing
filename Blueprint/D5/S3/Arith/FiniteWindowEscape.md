@@ -6,7 +6,7 @@ Finite prime windows escape; finite readings retain a nonzero kernel difference.
 
 **Theorem 1.1 (Finite prime windows escape and finite readings retain hidden differences).**
 
-$$\forall S\subset_{\mathrm{fin}}\mathbb{N},\ \left(\forall p\inS,\ \operatorname{Prime}(p)\right) \Rightarrow P_{S}=\prod_{r\inS}r,\ E_{S}=P_{S}+1,\ \left(\left(\forall p\inS,\ E_{S}\equiv1[\operatorname{mod}p]\right) \land \neg(E_{S}\inS) \land \left(\exists q\in\mathbb{N},\ \operatorname{Prime}(q) \land q\midE_{S} \land \neg(q\inS)\right) \land \left(\forall q\in\mathbb{N},\ \operatorname{Prime}(q) \land q\midE_{S} \Rightarrow \neg(q\inS)\right) \land \forall G\text{ infinite additive group},\ \forall A\text{ finite additive group},\ \forall R:G\toA\text{ additive},\ \exists x,y\inG,\ x\neqy \land R(x)=R(y) \land x-y\neq0 \land R(x-y)=0\right)$$
+$$\forall S\subset_{\mathrm{fin}}\mathbb{N},\ \left(\forall p\in S,\ \operatorname{Prime}(p)\right) \Rightarrow P_{S}=\prod_{r\in S}r,\ E_{S}=P_{S}+1,\ \left(\left(\forall p\in S,\ E_{S}\equiv1[\operatorname{mod}p]\right) \land \neg(E_{S}\in S) \land \left(\exists q\in\mathbb{N},\ \operatorname{Prime}(q) \land q\mid E_{S} \land \neg(q\in S)\right) \land \left(\forall q\in\mathbb{N},\ \operatorname{Prime}(q) \land q\mid E_{S} \Rightarrow \neg(q\in S)\right) \land \forall G\text{ infinite additive group},\ \forall A\text{ finite additive group},\ \forall R:G\to A\text{ additive},\ \exists x,y\in G,\ x\neq y \land R(x)=R(y) \land x-y\neq0 \land R(x-y)=0\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FiniteWindowEscape.finite_window_escape_and_hidden_fiber` (`✓ std3`). ∎
 
