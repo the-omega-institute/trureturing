@@ -121,6 +121,17 @@ public sealed class FileMapPolicyTests
     }
 
     [Fact]
+    public void ProjectionFixtureDirectoryRejectsNonDataEntries()
+    {
+        const string path = "Golden/Projection/x.json";
+        var manifest = Parse(Entry(path, "program", "none", "reader", "SnapshotDecoder"));
+
+        var finding = Assert.Single(FileMapPolicy.InspectDirectoryKinds(manifest, [path]));
+
+        Assert.Equal("FILEMAP-DIRECTORY-KIND", finding.Code);
+    }
+
+    [Fact]
     public void ExactProtectedResidenceCountIsAccepted()
     {
         const string path = "Meta/StrataLint/Golden/cases/known.toml";

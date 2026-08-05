@@ -252,6 +252,8 @@ internal static class FileMapPolicy
                 && kind is not FileMapKind.Generated
                 || path.StartsWith("Golden/cases/", StringComparison.Ordinal)
                     && kind is not FileMapKind.Data
+                || path.StartsWith("Golden/Projection/", StringComparison.Ordinal)
+                    && kind is not FileMapKind.Data
                 || (path.StartsWith("Meta/StrataLint/Golden/Frozen/", StringComparison.Ordinal)
                         || path == C0CertificatePath)
                     && kind is not FileMapKind.Ledger)
