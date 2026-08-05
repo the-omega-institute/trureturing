@@ -6,6 +6,40 @@ namespace StrataLint.Scribe.Tests;
 public sealed class StatementProjectionPilotTests
 {
     [Fact]
+    public void DocumentDefinitionsLoadFromExplicitRepositoryRoot()
+    {
+        var repositoryRoot = FindRepositoryRoot();
+        var definitions = DocumentDefinitions.Discover(
+            typeof(DocumentDefinitions).Assembly,
+            repositoryRoot);
+
+        Assert.NotEmpty(definitions);
+    }
+
+    [Fact]
+    public void DocumentDefinitionsFailClosedWithFixturePathForExplicitRepository()
+    {
+        var repositoryRoot = Directory.CreateTempSubdirectory("stratalint-scribe-missing-");
+        try
+        {
+            var exception = Assert.Throws<FileNotFoundException>(() =>
+                DocumentDefinitions.Discover(
+                    typeof(DocumentDefinitions).Assembly,
+                    repositoryRoot.FullName));
+
+            Assert.Contains(repositoryRoot.FullName, exception.Message, StringComparison.Ordinal);
+            Assert.Contains(
+                "statement-projection-pilot-v1.json",
+                exception.Message,
+                StringComparison.Ordinal);
+        }
+        finally
+        {
+            repositoryRoot.Delete(recursive: true);
+        }
+    }
+
+    [Fact]
     public void DecoderCoversEveryInspectorExpressionConstructor()
     {
         const string encoded = "statement-v1(uparams=[ns(n0,1:u)],type=ee(0,es(l0),ei(ln(7)),ej(ns(n0,1:S),0,ed(el(bd,ef(ns(n0,1:x)),ea(em(ns(n0,1:m)),eb(0)))))))";
@@ -34,24 +68,93 @@ public sealed class StatementProjectionPilotTests
     }
 
     [Fact]
-    public void PilotProjectsFiveRealDeclarationsAndPinsTheComparisonReport()
+    public void DenoiserStripsOnlyRegisteredElaborationArguments()
     {
-        using var fixture = LoadPinnedFixture();
-        var results = ProjectionPilot.Run(ReadFixtureDeclarations(fixture));
+        const string encoded = "statement-v1(uparams=[],type=ea(ea(ec(ns(ns(ns(ns(ns(n0,2:D5),2:S3),4:Weil),11:LabeledZeta),12:LedgerLength),[]),es(l0)),ec(ns(n0,9:AddMonoid),[])))";
 
-        Assert.Equal(5, results.Cases.Length);
+        var result = StatementProjector.Project(StatementV1Decoder.Decode(encoded).Type);
+
+        var formula = Assert.IsType<ProjectionOutcome.Projected>(result).Formula;
+        Assert.Equal("\\mathrm{LedgerLength}", LatexWriter.Write(formula));
+    }
+
+    [Fact]
+    public void DenoiserFailsClosedForUnknownElaborationShape()
+    {
+        const string encoded = "statement-v1(uparams=[],type=ea(ea(ec(ns(n0,13:Unknown.noise),[]),ec(ns(n0,4:Real),[])),ei(ln(7))))";
+
+        var result = Assert.IsType<ProjectionOutcome.Unprojectable>(
+            StatementProjector.Project(StatementV1Decoder.Decode(encoded).Type));
+
+        Assert.Contains("Unknown.noise", result.Reason, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void IsClosedTopologyInstanceFamilyProjectsFaithfullyFromFixture()
+    {
+        using var fixture = LoadPinnedFixture("statement-projection-pilot-v1.json");
+        using var expansion = LoadPinnedFixture("statement-projection-expansion-v1.json");
+        var result = Assert.Single(ProjectionPilot.Run(ReadFixtureDeclarations(fixture, expansion)).Cases,
+            item => item.Name.EndsWith("hiddenFiber_closed_compact_seqCompact", StringComparison.Ordinal));
+
+        Assert.Empty(result.Unprojectable);
+        Assert.IsNotType<Formula.Placeholder>(result.Formula);
+    }
+
+    [Fact]
+    public void AddSubgroupFiniteSumCoercionFamilyProjectsFaithfullyFromFixture()
+    {
+        using var fixture = LoadPinnedFixture("statement-projection-pilot-v1.json");
+        using var expansion = LoadPinnedFixture("statement-projection-expansion-v1.json");
+        var result = Assert.Single(ProjectionPilot.Run(ReadFixtureDeclarations(fixture, expansion)).Cases,
+            item => item.Name.EndsWith("finite_poisson_summation", StringComparison.Ordinal));
+
+        Assert.Empty(result.Unprojectable);
+        Assert.IsNotType<Formula.Placeholder>(result.Formula);
+    }
+
+    [Fact]
+    public void PilotProjectsTenOfTenRealDeclarationsAndPinsTheComparisonReport()
+    {
+        using var fixture = LoadPinnedFixture("statement-projection-pilot-v1.json");
+        using var expansion = LoadPinnedFixture("statement-projection-expansion-v1.json");
+        var results = ProjectionPilot.Run(ReadFixtureDeclarations(fixture, expansion));
+
+        Assert.Equal(10, results.Cases.Length);
         Assert.Equal(ProjectionPilot.GoldenReport, results.Report);
         Assert.Equal(ProjectionNotation.Entries.Count, results.NotationSize);
-        Assert.All(results.Cases, item => Assert.Equal(item.GoldenLatex, LatexWriter.Write(item.Formula)));
+        Assert.All(results.Cases.Where(item => item.Unprojectable.IsEmpty),
+            item => Assert.IsNotType<Formula.Placeholder>(item.Formula));
+        Assert.All(results.Cases.Where(item => !item.Unprojectable.IsEmpty),
+            item => Assert.IsType<Formula.Placeholder>(item.Formula));
+        Assert.Equal(10, results.Cases.Count(item => item.Unprojectable.IsEmpty));
+        Assert.Empty(results.Cases.Where(item => !item.Unprojectable.IsEmpty));
+    }
+
+    [Fact]
+    public void EveryExistingPilotDescribeFormulaIsProjectionDerivedWithoutHandwrittenDisp()
+    {
+        using var fixture = LoadPinnedFixture("statement-projection-pilot-v1.json");
+        using var expansion = LoadPinnedFixture("statement-projection-expansion-v1.json");
+        var names = ReadFixtureDeclarations(fixture, expansion).Keys.ToArray();
+        var blueprintRoot = Path.Combine(FindRepositoryRoot(), "Blueprint");
+        var sources = Directory.EnumerateFiles(blueprintRoot, "*.scribe.cs", SearchOption.AllDirectories)
+            .Select(File.ReadAllText).ToArray();
+
+        var projected = sources.Sum(source => source.Split(
+            "StatementProjectionFixtureLoader.FromLean(", StringSplitOptions.None).Length - 1);
+
+        Assert.Equal(8, projected);
     }
 
     [LiveReportFact]
     public void LiveReportMatchesPinnedFixtureWhenAvailable()
     {
         var reportPath = Path.Combine(FindRepositoryRoot(), ".lake/build/stratalint/raw-lean-report.json");
-        using var fixture = LoadPinnedFixture();
+        using var fixture = LoadPinnedFixture("statement-projection-pilot-v1.json");
+        using var expansion = LoadPinnedFixture("statement-projection-expansion-v1.json");
         using var report = JsonDocument.Parse(File.ReadAllBytes(reportPath));
-        var expected = ReadFixtureDeclarations(fixture).ToDictionary(
+        var expected = ReadFixtureDeclarations(fixture, expansion).ToDictionary(
             item => item.Key,
             item => item.Value.GetProperty("type").GetString()!,
             StringComparer.Ordinal);
@@ -67,15 +170,14 @@ public sealed class StatementProjectionPilotTests
         Assert.Equal(expected, actual);
     }
 
-    private static JsonDocument LoadPinnedFixture() => JsonDocument.Parse(File.ReadAllBytes(Path.Combine(
-        AppContext.BaseDirectory, "Projection", "Fixtures", "statement-projection-pilot-v1.json")));
+    private static JsonDocument LoadPinnedFixture(string name) => JsonDocument.Parse(File.ReadAllBytes(Path.Combine(
+        FindRepositoryRoot(), "Golden", "Projection", name)));
 
-    private static Dictionary<string, JsonElement> ReadFixtureDeclarations(JsonDocument fixture)
+    private static Dictionary<string, JsonElement> ReadFixtureDeclarations(params JsonDocument[] fixtures)
     {
-        Assert.Equal("statement-projection-pilot-fixture-v1",
-            fixture.RootElement.GetProperty("schema").GetString());
-        return fixture.RootElement.GetProperty("declarations")
-            .EnumerateArray()
+        Assert.Equal("statement-projection-pilot-fixture-v1", fixtures[0].RootElement.GetProperty("schema").GetString());
+        Assert.Equal("statement-projection-expansion-fixture-v1", fixtures[1].RootElement.GetProperty("schema").GetString());
+        return fixtures.SelectMany(fixture => fixture.RootElement.GetProperty("declarations").EnumerateArray())
             .ToDictionary(item => item.GetProperty("name").GetString()!, StringComparer.Ordinal);
     }
 

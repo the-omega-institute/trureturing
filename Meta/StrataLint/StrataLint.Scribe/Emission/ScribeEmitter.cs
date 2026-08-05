@@ -109,14 +109,17 @@ public static class ScribeEmitter
             // A document whose source IS present stays in scope: a present source with a missing or
             // mismatched .md is a real out-of-date/corruption and still voids the capability below
             // (deleted or forged base-owned emissions are caught locally, not laundered through this skip).
+            var repositoryDefinitions = DocumentDefinitions.Discover(
+                typeof(DocumentDefinitions).Assembly,
+                repositoryRoot);
             var definitions = tolerateAbsentDocuments
-                ? DocumentDefinitions.All
+                ? repositoryDefinitions
                     .Where(definition => File.Exists(Path.Combine(
                         repositoryRoot,
                         ScribeEmissionAttestation.DefinitionPath(definition.Document.Header.Gid.Value))))
                     .ToArray()
-                : [.. DocumentDefinitions.All];
-            if (tolerateAbsentDocuments && definitions.Length == 0 && !DocumentDefinitions.All.IsEmpty)
+                : [.. repositoryDefinitions];
+            if (tolerateAbsentDocuments && definitions.Length == 0 && !repositoryDefinitions.IsEmpty)
             {
                 // A tree owning zero of this binary's documents is not an older world of this
                 // repository at all (wrong root, gutted checkout): verifying it vacuously would
@@ -142,8 +145,23 @@ public static class ScribeEmitter
                 }
             }
 
+            var documents = definitions.Select(static definition => definition.Document).ToArray();
+            var census = ReceiptFreeDocumentCatalog.Load(
+                repositoryRoot,
+                documents,
+                tolerateAbsentDocuments);
             var graph = DocumentGraphAssembler.Assemble(
-                definitions.Select(static definition => definition.Document), leanReport);
+                documents,
+                leanReport,
+                census.ReceiptFreeDocumentGids);
+            var wired = documents.Count(document => graph.For(document).Length > 0);
+            var graphEdges = documents.SelectMany(document => graph.For(document)).ToArray();
+            output.WriteLine(
+                $"document graph: receipt-free={census.ReceiptFreeDocumentGids.Count} "
+                + $"receipt-bound={census.ReceiptBoundDocumentGids.Count} wired={wired} "
+                + $"truth-anchor={graphEdges.OfType<DocumentEdge.TruthAnchor>().Count()} "
+                + $"dependency={graphEdges.OfType<DocumentEdge.Dependency>().Count()} "
+                + $"narrative={graphEdges.OfType<DocumentEdge.NarrativeReference>().Count()}");
             return EmitVerified(repositoryRoot, check, output, error, leanReport, definitions, graph);
         }
         catch (Exception exception) when (

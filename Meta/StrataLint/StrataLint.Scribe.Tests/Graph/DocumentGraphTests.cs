@@ -111,6 +111,55 @@ public sealed class DocumentGraphTests
             $"indices={truthIndex},{dependencyIndex},{narrativeIndex}\n{markdown}");
     }
 
+    [Fact]
+    public void ReceiptFreeDocumentsProjectDirectLeanImportsAsDependencies()
+    {
+        var source = Document("D5/S0/Test/Source");
+        var target = Document("D5/S0/Test/Target");
+        var report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>
+        {
+            ["D5/S0/Test/Source.lean"] = new(["D5.S0.Test.Target"], []),
+            ["D5/S0/Test/Target.lean"] = new([], []),
+        });
+
+        var graph = DocumentGraphAssembler.Assemble(
+            [source, target],
+            report,
+            autoWireDocumentGids: new HashSet<string>(StringComparer.Ordinal)
+            {
+                source.Header.Gid.Value,
+            });
+
+        Assert.Empty(graph.Findings);
+        var dependency = Assert.Single(graph.For(source).OfType<DocumentEdge.Dependency>());
+        Assert.Equal(target.Header.Gid.Value, dependency.Target.Value);
+        var markdown = Encoding.UTF8.GetString(
+            CanonicalMarkdownWriter.Write(source, report, graph: graph).AsSpan());
+        Assert.Contains(
+            "- Dependency: [D5/S0/Test/Target](Target.md)",
+            markdown,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ReceiptBoundDocumentsKeepEdgeFreeEmissionBytes()
+    {
+        var source = DocumentWithLeanAnchor(
+            "D5/S0/Test/Source",
+            "D5/S0/Test/Source.anchor");
+        var report = LeanReport(LeanDeclarationRef.Create("D5/S0/Test/Source.anchor"));
+
+        var graph = DocumentGraphAssembler.Assemble(
+            [source],
+            report,
+            autoWireDocumentGids: new HashSet<string>(StringComparer.Ordinal));
+
+        Assert.Empty(graph.For(source));
+        var markdown = Encoding.UTF8.GetString(
+            CanonicalMarkdownWriter.Write(source, report, graph: graph).AsSpan());
+        Assert.DoesNotContain("## References", markdown, StringComparison.Ordinal);
+    }
+
     private static ScribeDocument Document(
         string gid,
         IEnumerable<DocumentEdge>? edges = null) =>
@@ -139,6 +188,29 @@ public sealed class DocumentGraphTests
 
     private static LeanAxiomReport EmptyLeanReport() =>
         LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>());
+
+    private static ScribeDocument DocumentWithLeanAnchor(string gid, string declaration) =>
+        ScribeDocument.Create(
+            DocumentHeader.Create(
+                GidRef.Create(gid),
+                Generality.Instance,
+                GidRef.Create("D5/B/" + gid["D5/".Length..]),
+                new EvidenceMirror.Waiver(WaiverReason.Create("test-only")),
+                [],
+                Digest.Create("Test document.")),
+            Heading.Create(gid),
+            BlockSequence.Create([
+                DocumentBlock.Describe.Definition(
+                    DescribeId.Create("anchor"),
+                    Heading.Create("Anchor"),
+                    LeanDeclarationRef.Create(declaration),
+                    DescribeProvenance.RepoDerived(),
+                    BlockSequence.Create([
+                        new DocumentBlock.Paragraph(InlineSequence.Create([
+                            new Inline.Text(TextRun.Create("Body.")),
+                        ])),
+                    ])),
+            ]));
 
     private static LeanAxiomReport LeanReport(LeanDeclarationRef reference) =>
         LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>

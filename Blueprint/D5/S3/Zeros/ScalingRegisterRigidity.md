@@ -20,7 +20,7 @@ Honest scope declaration: the predicate does not internalize "unrecorded" ledger
 
 **Theorem 1.2 (A nontrivial register is not address-independent).**
 
-$$\forall A\,[\operatorname{AddMonoid}(A)],\ \forall \ell:A\to_{+}\mathbb{R},\ \forall R:\mathbb{C}\to A\to\mathbb{C},\ \operatorname{ScalingRegister}(\ell,R)\Rightarrow\neg\forall s,a,b,\ R(s,a)=R(s,b).$$
+$$\forall x2 \in \mathrm{LedgerLength},\; \forall x3 \in \left(\forall x3 \in \mathrm{Complex},\; \forall x4 \in \mathord{\cdot},\; \mathrm{Complex}\right),\; \forall x4 \in \mathrm{ScalingRegister}\left(\mathit{x2}, \mathit{x3}\right),\; \neg \mathrm{AddressIndependent}\left(\mathit{x3}\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Zeros/ScalingRegisterRigidity.scaling_register_not_address_independent` (`✓ std3`). ∎
 
@@ -44,7 +44,7 @@ For data X.data(a,s), applyRegister(R,X) replaces that value by R(s,a)X.data(a,s
 
 **Theorem 1.4 (A nontrivial register changes nowhere-zero data).**
 
-$$\left(\forall a,s,\ X_{\operatorname{data}}(a,s)\neq0\right)\land\left(\exists s,a,\ R(s,a)\neq1\right)\Rightarrow\operatorname{applyRegister}(R,X)\neq X.$$
+$$\forall x3 \in \left(\forall x3 \in \mathrm{Complex},\; \forall x4 \in \mathord{\cdot},\; \mathrm{Complex}\right),\; \forall x4 \in \mathrm{TotalCode},\; \forall x5 \in \left(\forall x5 \in \mathord{\cdot},\; \forall x6 \in \mathrm{Complex},\; \mathrm{TotalCodedata}\left(\mathit{x4}, \mathit{x5}, \mathit{x6}\right) \ne 0\right),\; \forall x6 \in \left(\exists x6 \in \mathrm{Complex},\; \exists x7 \in \mathord{\cdot},\; \mathit{x3}\left(\mathit{x6}, \mathit{x7}\right) \ne 1\right),\; \mathrm{applyRegister}\left(\mathit{x3}, \mathit{x4}\right) \ne \mathit{x4}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Zeros/ScalingRegisterRigidity.applyRegister_ne_of_nontrivial` (`✓ std3`). ∎
 
@@ -82,7 +82,7 @@ Honest scope declaration: this is conditional on the typed realization relations
 
 **Theorem 1.7 (Realized code-preserving continuations exclude scaling registers).**
 
-$$\operatorname{RealizesAt}(a,X,f)\land\operatorname{RealizesAt}(a,\operatorname{applyRegister}(R,X),\widetilde f)\land\text{ same germ}\land\text{ same total code}\Rightarrow\neg\operatorname{ScalingRegister}(\ell,R).$$
+$$\forall x3 \in \mathrm{AnalyticOnNhd}\left(\mathord{\cdot}, \mathord{\cdot}\right),\; \forall x4 \in \mathrm{AnalyticOnNhd}\left(\mathord{\cdot}, \mathord{\cdot}\right),\; \forall x5 \in \mathrm{IsPreconnected}\left(\mathord{\cdot}\right),\; \forall x7 \in \mathord{\cdot} \in \mathord{\cdot},\; \forall x8 \in \mathrm{EventuallyEq}\left(\mathrm{nhds}\left(\mathord{\cdot}\right), \mathord{\cdot}, \mathord{\cdot}\right),\; \forall x13 \in \mathrm{LedgerLength},\; \forall x14 \in \left(\forall x14 \in \mathrm{Complex},\; \forall x15 \in \mathord{\cdot},\; \mathrm{Complex}\right),\; \forall x15 \in \mathrm{TotalCode},\; \forall x16 \in \mathord{\cdot},\; \forall x17 \in \mathrm{RealizesAt}\left(\mathit{x16}, \mathit{x15}, \mathord{\cdot}\right),\; \forall x18 \in \mathrm{RealizesAt}\left(\mathit{x16}, \mathrm{applyRegister}\left(\mathit{x14}, \mathit{x15}\right), \mathord{\cdot}\right),\; \forall x19 \in \left(\forall x19 \in \mathord{\cdot},\; \forall x20 \in \mathrm{Complex},\; \mathrm{TotalCodedata}\left(\mathit{x15}, \mathit{x19}, \mathit{x20}\right) \ne 0\right),\; \forall x20 \in \mathrm{applyRegister}\left(\mathit{x14}, \mathit{x15}\right) = \mathit{x15},\; \neg \mathrm{ScalingRegister}\left(\mathit{x13}, \mathit{x14}\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Zeros/ScalingRegisterRigidity.realized_same_germ_same_total_code_excludes_scaling_register` (`✓ std3`). ∎
 
@@ -94,7 +94,7 @@ The realized rigidity theorem makes R pointwise one, contradicting the nontrivia
 
 **Theorem 1.8 (The scaling-register predicate has a concrete witness).**
 
-$$\operatorname{ScalingRegister}\!\left(\operatorname{castAddHom}_{\mathbb{R}},\ (s,n)\mapsto\exp(\pi i n)\right).$$
+$$\mathrm{ScalingRegister}\left(\mathrm{castAddHom}\left(\mathrm{Real}\right), \forall x0 \in \mathrm{Type},\; \forall x1 \in \mathrm{Type},\; \mathrm{exp}\left(\mathrm{ofReal}\left(\mathrm{pi}\right) \cdot \mathrm{I} \cdot \mathrm{cast}\left(\mathit{x1}\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Zeros/ScalingRegisterRigidity.integer_scaling_register_exists` (`✓ std3`). ∎
 

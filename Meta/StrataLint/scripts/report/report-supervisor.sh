@@ -147,6 +147,127 @@ lock_is_stale() {
   (( $(date +%s) - mtime >= LOCK_INITIALIZATION_GRACE_SECONDS ))
 }
 
+process_command() {
+  ps -ww -o command= -p "$1" 2>/dev/null | awk '{$1=$1; print; exit}'
+}
+
+format_duration() {
+  local total_seconds="$1"
+  local days=$((total_seconds / 86400))
+  local hours=$(((total_seconds % 86400) / 3600))
+  local minutes=$(((total_seconds % 3600) / 60))
+  local seconds=$((total_seconds % 60))
+  if (( days > 0 )); then
+    printf '%dd%dh%dm%ds' "$days" "$hours" "$minutes" "$seconds"
+  elif (( hours > 0 )); then
+    printf '%dh%dm%ds' "$hours" "$minutes" "$seconds"
+  elif (( minutes > 0 )); then
+    printf '%dm%ds' "$minutes" "$seconds"
+  else
+    printf '%ds' "$seconds"
+  fi
+}
+
+report_stale_lock_owner() {
+  local slot="$1"
+  local pid="$2"
+  local expected_start="$3"
+  local phase="$4"
+  local actual_start=""
+  if ! process_exists "$pid"; then
+    echo "report-supervisor: $slot recorded holder exited $phase" >&2
+    return
+  fi
+  actual_start="$(process_start_identity "$pid" || true)"
+  if [[ -z "$actual_start" ]]; then
+    echo "report-supervisor: $slot holder identity unavailable for recorded pid=$pid $phase" >&2
+  elif [[ "$actual_start" != "$expected_start" ]]; then
+    printf 'report-supervisor: %s recorded holder PID was reused %s; expected_since=%s actual_since=%s\n' \
+      "$slot" "$phase" "$expected_start" "$actual_start" >&2
+  else
+    echo "report-supervisor: $slot holder state changed $phase" >&2
+  fi
+}
+
+report_lean_slot_holder() {
+  local lock="$1"
+  local slot="${lock##*/}"
+  local owner=""
+  local confirmed_owner=""
+  local pid=""
+  local expected_start=""
+  local actual_start=""
+  local command=""
+  local mtime=""
+  local current_time=""
+  local held_seconds=""
+  local held_for=""
+
+  if [[ ! -d "$lock" ]]; then
+    echo "report-supervisor: $slot was released before timeout diagnostics" >&2
+    return
+  fi
+  if [[ -f "$lock/owner" ]]; then
+    read -r owner < "$lock/owner" || owner=""
+  fi
+  if [[ ! "$owner" =~ ^([1-9][0-9]*)\|(.*)$ ]]; then
+    echo "report-supervisor: $slot holder identity unavailable: owner record is missing or malformed" >&2
+    return
+  fi
+  pid="${BASH_REMATCH[1]}"
+  expected_start="${BASH_REMATCH[2]}"
+  if lock_is_stale "$lock"; then
+    report_stale_lock_owner "$slot" "$pid" "$expected_start" \
+      "before timeout diagnostics"
+    return
+  fi
+
+  actual_start="$(process_start_identity "$pid" || true)"
+  command="$(process_command "$pid" || true)"
+  mtime="$(lock_mtime "$lock" || true)"
+  if [[ -f "$lock/owner" ]]; then
+    read -r confirmed_owner < "$lock/owner" || confirmed_owner=""
+  fi
+  if [[ "$confirmed_owner" != "$owner" ]]; then
+    echo "report-supervisor: $slot holder changed while timeout diagnostics were collected" >&2
+    return
+  fi
+  if lock_is_stale "$lock"; then
+    report_stale_lock_owner "$slot" "$pid" "$expected_start" \
+      "while timeout diagnostics were collected"
+    return
+  fi
+  if [[ -z "$actual_start" ]]; then
+    echo "report-supervisor: $slot holder identity unavailable for recorded pid=$pid while timeout diagnostics were collected" >&2
+    return
+  fi
+  if [[ "$actual_start" != "$expected_start" ]]; then
+    echo "report-supervisor: $slot holder changed while timeout diagnostics were collected" >&2
+    return
+  fi
+  if [[ -z "$command" ]]; then
+    echo "report-supervisor: $slot holder command unavailable for confirmed pid=$pid" >&2
+    return
+  fi
+  current_time="$(date +%s)"
+  if [[ ! "$mtime" =~ ^[0-9]+$ || "$mtime" -gt "$current_time" ]]; then
+    echo "report-supervisor: $slot hold duration unavailable: lock timestamp is invalid" >&2
+    return
+  fi
+  held_seconds=$((current_time - mtime))
+  held_for="$(format_duration "$held_seconds")"
+  printf 'report-supervisor: %s holder pid=%s since=%s held_for=%s command=%s\n' \
+    "$slot" "$pid" "$expected_start" "$held_for" "$command" >&2
+}
+
+report_lean_slot_timeout() {
+  local index
+  echo "report-supervisor: timed out waiting for a Lean slot" >&2
+  for ((index = 1; index <= MAX_CONCURRENCY; index++)); do
+    report_lean_slot_holder "$SLOT_ROOT/slot-$index.lock"
+  done
+}
+
 reclaim_lock_without_guard() {
   local lock="$1"
   lock_is_stale "$lock" || return 1
@@ -227,7 +348,7 @@ acquire_lean_slot() {
       reclaim_stale_lock "$candidate" || true
     done
     if (( $(date +%s) >= deadline )); then
-      echo "report-supervisor: timed out waiting for a Lean slot" >&2
+      report_lean_slot_timeout
       return 2
     fi
     sleep 0.1

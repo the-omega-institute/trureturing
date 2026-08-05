@@ -90,7 +90,21 @@ internal sealed class ReportSupervisorFixture : IDisposable
               done
               :
             elif [[ "$*" == *"lstart="* ]]; then
+              [[ ! -e "$PWD/ps-owner-exited" ]] || exit 1
               printf 'synthetic-start-%s\n' "$requested_pid"
+            elif [[ "$*" == *"command="* ]]; then
+              if [[ "${STRATALINT_TEST_PS_FAIL_AFTER_COMMAND:-}" == "1" ]]; then
+                : > "$PWD/ps-owner-exited"
+              fi
+              if [[ "${STRATALINT_TEST_PS_PAUSE_ON_COMMAND:-}" == "1" ]]; then
+                : > "$PWD/ps-command-observed"
+                for _ in {1..1000}; do
+                  [[ ! -e "$PWD/ps-command-release" ]] || break
+                  sleep 0.01
+                done
+                [[ -e "$PWD/ps-command-release" ]] || exit 2
+              fi
+              printf 'synthetic-command-%s\n' "$requested_pid"
             elif [[ "$*" == *"stat="* ]]; then
               printf 'S\n'
             elif [[ "$*" == *"rss="* ]]; then

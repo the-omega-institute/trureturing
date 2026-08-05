@@ -39,3 +39,10 @@ $$\forall c\in[0,1],\ \forall N\in\mathbb{N},\ \rho_{N}:=\operatorname{phaseDamp
 *Commentary.*
 
 For the standard real phase-damping map with retention coefficient c in [0,1], N repetitions leave both equal-superposition populations at one half and multiply both coherence entries by c^N. The map is assumed, not derived from a system-environment Hamiltonian. The declaration does not identify this repository's ledger with an environment, bookkeeping with decoherence, or address selection with einselection. Original certificate coverage: the source atom's symbolic (1/2) * c0^N coherence law and fixed one-half populations are formalized exactly; the atom supplies no fixed numeric c0 or N.
+
+## References
+
+- Truth anchor: `D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product`
+- Truth anchor: `D5/S3/Quantum/QubitWitnesses.equal_superposition_phase_damping_certificate`
+- Truth anchor: `D5/S3/Quantum/QubitWitnesses.pauli_observables_have_no_common_eigenvector`
+- Dependency: [D5/S3/Quantum/FiniteDimensional](FiniteDimensional.md)
