@@ -54,6 +54,7 @@ FKST_WORKFLOW_CATALOG_ROOT=<absolute-path-to-workflow-catalog-directory>
 PATH=<colon-separated-absolute-command-directories>
 source "$FKST_HOST_ROOT/.fkst/deploy.env"
 export FKST_GITHUB_BOT_LOGIN=<bot-login-for-this-machine>
+export FKST_GITHUB_CLAIM_MODE=<claim-mode-for-this-machine>
 export FKST_DEVLOOP_MANAGED_BOT_LOGINS=<comma-separated-managed-bot-logins>
 export FKST_DEVLOOP_INTEGRATION_BRANCH=<integration-branch-for-this-machine>
 export FKST_RUN_SCRIPT=<absolute-path-to-FKST_HOST_ROOT/.fkst/scripts/run.sh>
@@ -71,6 +72,15 @@ export FKST_PYTHON_BIN=<absolute-path-to-python3>
 export FKST_SUPERVISE_LAUNCHER_LOG=<absolute-path-to-supervise-launchd-output-log>
 export FKST_SUPERVISE_LAUNCHER_PATH=<absolute-path-to-rendered-supervise-plist>
 ```
+
+`FKST_GITHUB_CLAIM_MODE` is optional and selects how this machine holds ownership of an issue.
+Omit it (or set `assignee`) when the machine authenticates as an ordinary user account: ownership
+is the single self-assignee. Set `label` when the machine authenticates as a GitHub App
+installation bot, because GitHub never accepts an App as an issue assignee; ownership is then the
+presence of the `fkst-dev:claimed` label, which the App can set. The label must already exist in
+the repository before the first claim. The key is host data, not repository data: two machines
+supervising this repository can authenticate as different account kinds and therefore need
+different modes.
 
 Choose one machine-specific `<deployment-namespace>` that matches the launchd label grammar
 `[A-Za-z0-9][A-Za-z0-9._-]*`. Both labels must use that exact namespace: supervise has the fixed
