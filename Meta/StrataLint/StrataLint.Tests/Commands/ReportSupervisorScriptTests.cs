@@ -301,15 +301,19 @@ public sealed class ReportSupervisorScriptTests
     }
 
     [Fact]
-    public void LiveSlotWaitIsBounded()
+    public void LiveSlotTimeoutIdentifiesHolderDurationAndCommand()
     {
         using var fixture = new ReportSupervisorFixture();
+        var ownerPid = Environment.ProcessId.ToString(
+            System.Globalization.CultureInfo.InvariantCulture);
+        var ownerStart = $"synthetic-start-{ownerPid}";
         var liveLock = Path.Combine(fixture.StateRoot, "slots", "slot-1.lock");
         Directory.CreateDirectory(liveLock);
         File.WriteAllText(
             Path.Combine(liveLock, "owner"),
-            Environment.ProcessId.ToString(System.Globalization.CultureInfo.InvariantCulture) + "\n",
+            $"{ownerPid}|{ownerStart}\n",
             new UTF8Encoding(false));
+        Directory.SetLastWriteTimeUtc(liveLock, DateTime.UtcNow.AddHours(-1));
 
         var result = fixture.RunWithEnvironment(
             "lean-producer",
@@ -317,11 +321,83 @@ public sealed class ReportSupervisorScriptTests
             fixture.ScratchWriter,
             "STRATALINT_LOCK_TIMEOUT_SECONDS=1");
 
+        var stderr = Encoding.UTF8.GetString(result.StandardError);
+        Assert.True(
+            result.ExitCode == 2,
+            $"expected timeout exit 2, got {result.ExitCode}; stderr: {stderr}");
+        Assert.Contains("timed out waiting for a Lean slot", stderr, StringComparison.Ordinal);
+        Assert.Contains("slot-1", stderr, StringComparison.Ordinal);
+        Assert.True(
+            stderr.Contains($"pid={ownerPid}", StringComparison.Ordinal),
+            $"timeout diagnostic did not name the owner; stderr: {stderr}");
+        Assert.Contains($"since={ownerStart}", stderr, StringComparison.Ordinal);
+        Assert.Contains("held_for=1h", stderr, StringComparison.Ordinal);
+        Assert.Contains($"command=synthetic-command-{ownerPid}", stderr, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void UnobservableHolderIdentityDuringTimeoutReportingFailsClosed()
+    {
+        using var fixture = new ReportSupervisorFixture();
+        var ownerPid = Environment.ProcessId.ToString(
+            System.Globalization.CultureInfo.InvariantCulture);
+        var liveLock = Path.Combine(fixture.StateRoot, "slots", "slot-1.lock");
+        Directory.CreateDirectory(liveLock);
+        File.WriteAllText(
+            Path.Combine(liveLock, "owner"),
+            $"{ownerPid}|synthetic-start-{ownerPid}\n",
+            new UTF8Encoding(false));
+
+        var result = fixture.RunWithEnvironment(
+            "lean-producer",
+            leanSlot: true,
+            fixture.ScratchWriter,
+            "STRATALINT_LOCK_TIMEOUT_SECONDS=1",
+            "STRATALINT_TEST_PS_FAIL_AFTER_COMMAND=1");
+
         Assert.Equal(2, result.ExitCode);
-        Assert.Contains(
-            "timed out",
-            Encoding.UTF8.GetString(result.StandardError),
-            StringComparison.OrdinalIgnoreCase);
+        var stderr = Encoding.UTF8.GetString(result.StandardError);
+        Assert.Contains("holder identity unavailable", stderr, StringComparison.Ordinal);
+        Assert.DoesNotContain("recorded holder exited", stderr, StringComparison.Ordinal);
+        Assert.DoesNotContain("held_for=", stderr, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task HolderExitDuringTimeoutReportingIsStatedPlainly()
+    {
+        using var fixture = new ReportSupervisorFixture();
+        using var owner = new Process { StartInfo = new ProcessStartInfo("/bin/sleep", "60") };
+        Assert.True(owner.Start());
+        var ownerPid = owner.Id.ToString(System.Globalization.CultureInfo.InvariantCulture);
+        var liveLock = Path.Combine(fixture.StateRoot, "slots", "slot-1.lock");
+        Directory.CreateDirectory(liveLock);
+        File.WriteAllText(
+            Path.Combine(liveLock, "owner"),
+            $"{ownerPid}|synthetic-start-{ownerPid}\n",
+            new UTF8Encoding(false));
+        var observed = Path.Combine(fixture.Root, "ps-command-observed");
+        var release = Path.Combine(fixture.Root, "ps-command-release");
+        var waiter = Task.Run(() => fixture.RunWithEnvironment(
+            "lean-producer", leanSlot: true, fixture.ScratchWriter,
+            "STRATALINT_LOCK_TIMEOUT_SECONDS=1",
+            "STRATALINT_TEST_PS_PAUSE_ON_COMMAND=1"));
+        try
+        {
+            fixture.WaitUntil(() => File.Exists(observed), "timeout diagnostics did not inspect owner command");
+            owner.Kill();
+            owner.WaitForExit();
+            File.WriteAllText(release, string.Empty, new UTF8Encoding(false));
+            var result = await waiter;
+            Assert.Equal(2, result.ExitCode);
+            var stderr = Encoding.UTF8.GetString(result.StandardError);
+            Assert.Contains("recorded holder exited", stderr, StringComparison.Ordinal);
+            Assert.DoesNotContain("held_for=", stderr, StringComparison.Ordinal);
+        }
+        finally
+        {
+            File.WriteAllText(release, string.Empty, new UTF8Encoding(false));
+            if (!owner.HasExited) owner.Kill(entireProcessTree: true);
+        }
     }
 
     [Fact]
