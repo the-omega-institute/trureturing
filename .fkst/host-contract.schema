@@ -13,6 +13,7 @@ FKST_RATE_POOL_ROOT|absolute_path|true|host
 FKST_WORKFLOW_CATALOG_ROOT|absolute_path|true|host
 PATH|path_list|true|host
 FKST_GITHUB_BOT_LOGIN|identity|true|host
+FKST_GITHUB_CLAIM_MODE|identity|false|host
 FKST_DEVLOOP_MANAGED_BOT_LOGINS|identity_list|true|host
 FKST_DEVLOOP_INTEGRATION_BRANCH|identity|true|host
 FKST_RUN_SCRIPT|absolute_path|true|host
