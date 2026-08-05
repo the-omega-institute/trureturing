@@ -416,15 +416,18 @@ internal static class StatementProjector
 
 internal static class StatementProjectionFixtureLoader
 {
-    private static readonly Lazy<ImmutableDictionary<string, string>> Statements = new(LoadStatements);
+    private static readonly AsyncLocal<string?> RepositoryRoot = new();
+    private static readonly Dictionary<string, ImmutableDictionary<string, string>> StatementsByRoot =
+        new(StringComparer.Ordinal);
 
     internal static Formula FromLean(LeanDeclarationRef declaration)
     {
         ArgumentNullException.ThrowIfNull(declaration);
         var declarationName = declaration.Value.Replace('/', '.');
-        if (!Statements.Value.TryGetValue(declarationName, out var encoded))
+        var statements = StatementsForCurrentRepository();
+        if (!statements.TryGetValue(declarationName, out var encoded))
         {
-            var matches = Statements.Value
+            var matches = statements
                 .Where(pair => pair.Key.EndsWith('.' + declaration.DeclarationName, StringComparison.Ordinal))
                 .Select(static pair => pair.Value)
                 .ToArray();
@@ -445,9 +448,39 @@ internal static class StatementProjectionFixtureLoader
     internal static string FixtureDirectory(string repositoryRoot) => Path.Combine(
         repositoryRoot, "Golden", "Projection");
 
-    private static ImmutableDictionary<string, string> LoadStatements()
+    internal static T WithRepositoryRoot<T>(string repositoryRoot, Func<T> action)
     {
-        var repositoryRoot = FindRepositoryRoot();
+        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
+        ArgumentNullException.ThrowIfNull(action);
+        var previous = RepositoryRoot.Value;
+        RepositoryRoot.Value = Path.GetFullPath(repositoryRoot);
+        try
+        {
+            return action();
+        }
+        finally
+        {
+            RepositoryRoot.Value = previous;
+        }
+    }
+
+    private static ImmutableDictionary<string, string> StatementsForCurrentRepository()
+    {
+        var repositoryRoot = RepositoryRoot.Value ?? FindRepositoryRoot();
+        lock (StatementsByRoot)
+        {
+            if (!StatementsByRoot.TryGetValue(repositoryRoot, out var statements))
+            {
+                statements = LoadStatements(repositoryRoot);
+                StatementsByRoot.Add(repositoryRoot, statements);
+            }
+
+            return statements;
+        }
+    }
+
+    private static ImmutableDictionary<string, string> LoadStatements(string repositoryRoot)
+    {
         var fixtureDirectory = FixtureDirectory(repositoryRoot);
         var fixtures = new[]
         {
@@ -458,6 +491,12 @@ internal static class StatementProjectionFixtureLoader
         foreach (var fixtureSpec in fixtures)
         {
             var path = Path.Combine(fixtureDirectory, fixtureSpec.Name);
+            if (!File.Exists(path))
+            {
+                throw new FileNotFoundException(
+                    $"Projection fixture is missing from repository {repositoryRoot}: {path}",
+                    path);
+            }
             using var fixture = JsonDocument.Parse(File.ReadAllBytes(path));
             var schema = fixture.RootElement.GetProperty("schema").GetString();
             if (!string.Equals(schema, fixtureSpec.Schema, StringComparison.Ordinal))

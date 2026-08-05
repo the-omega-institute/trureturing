@@ -6,6 +6,40 @@ namespace StrataLint.Scribe.Tests;
 public sealed class StatementProjectionPilotTests
 {
     [Fact]
+    public void DocumentDefinitionsLoadFromExplicitRepositoryRoot()
+    {
+        var repositoryRoot = FindRepositoryRoot();
+        var definitions = DocumentDefinitions.Discover(
+            typeof(DocumentDefinitions).Assembly,
+            repositoryRoot);
+
+        Assert.NotEmpty(definitions);
+    }
+
+    [Fact]
+    public void DocumentDefinitionsFailClosedWithFixturePathForExplicitRepository()
+    {
+        var repositoryRoot = Directory.CreateTempSubdirectory("stratalint-scribe-missing-");
+        try
+        {
+            var exception = Assert.Throws<FileNotFoundException>(() =>
+                DocumentDefinitions.Discover(
+                    typeof(DocumentDefinitions).Assembly,
+                    repositoryRoot.FullName));
+
+            Assert.Contains(repositoryRoot.FullName, exception.Message, StringComparison.Ordinal);
+            Assert.Contains(
+                "statement-projection-pilot-v1.json",
+                exception.Message,
+                StringComparison.Ordinal);
+        }
+        finally
+        {
+            repositoryRoot.Delete(recursive: true);
+        }
+    }
+
+    [Fact]
     public void DecoderCoversEveryInspectorExpressionConstructor()
     {
         const string encoded = "statement-v1(uparams=[ns(n0,1:u)],type=ee(0,es(l0),ei(ln(7)),ej(ns(n0,1:S),0,ed(el(bd,ef(ns(n0,1:x)),ea(em(ns(n0,1:m)),eb(0)))))))";

@@ -13,6 +13,7 @@ public sealed class EmissionTests
             Path.GetTempPath(),
             "stratalint-scribe-validation-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(root);
+        CopyProjectionFixtures(root);
         try
         {
             var error = new StringWriter();
@@ -47,6 +48,7 @@ public sealed class EmissionTests
             "stratalint-scribe-library-" + Guid.NewGuid().ToString("N"));
         var notes = Path.Combine(root, "Library", "notes");
         Directory.CreateDirectory(notes);
+        CopyProjectionFixtures(root);
         try
         {
             File.WriteAllText(
@@ -84,6 +86,7 @@ public sealed class EmissionTests
             Path.GetTempPath(),
             "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(root);
+        CopyProjectionFixtures(root);
 
         try
         {
@@ -197,6 +200,7 @@ public sealed class EmissionTests
             Path.GetTempPath(),
             "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(root);
+        CopyProjectionFixtures(root);
 
         try
         {
@@ -232,6 +236,7 @@ public sealed class EmissionTests
             Path.GetTempPath(),
             "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(root);
+        CopyProjectionFixtures(root);
 
         try
         {
@@ -300,6 +305,7 @@ public sealed class EmissionTests
             Path.GetTempPath(),
             "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(root);
+        CopyProjectionFixtures(root);
 
         try
         {
@@ -344,6 +350,7 @@ public sealed class EmissionTests
             Path.GetTempPath(),
             "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(root);
+        CopyProjectionFixtures(root);
 
         try
         {
@@ -402,6 +409,7 @@ public sealed class EmissionTests
             Path.GetTempPath(),
             "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(root);
+        CopyProjectionFixtures(root);
 
         try
         {
@@ -443,6 +451,7 @@ public sealed class EmissionTests
             Path.GetTempPath(),
             "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(root);
+        CopyProjectionFixtures(root);
 
         try
         {
@@ -556,6 +565,7 @@ public sealed class EmissionTests
     private static void PrepareEmittedRepository(string root, LeanAxiomReport report)
     {
         var repositoryRoot = FindRepositoryRoot();
+        CopyProjectionFixtures(root);
         foreach (var definition in DocumentDefinitions.All)
         {
             var relativeSource = definition.RelativePath.Value[..^3] + ".scribe.cs";
@@ -612,6 +622,21 @@ public sealed class EmissionTests
             var destination = Path.Combine(destinationRoot, relative);
             Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
             File.Copy(source, destination);
+        }
+    }
+
+    private static void CopyProjectionFixtures(string destinationRoot)
+    {
+        var repositoryRoot = FindRepositoryRoot();
+        var sourceDirectory = Path.Combine(repositoryRoot, "Golden", "Projection");
+        var destinationDirectory = Path.Combine(destinationRoot, "Golden", "Projection");
+        Directory.CreateDirectory(destinationDirectory);
+        foreach (var source in Directory.EnumerateFiles(sourceDirectory, "*.json"))
+        {
+            File.Copy(
+                source,
+                Path.Combine(destinationDirectory, Path.GetFileName(source)),
+                overwrite: true);
         }
     }
 
