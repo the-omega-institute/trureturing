@@ -223,7 +223,7 @@ components:
     members:
       - phase1-protected-content-admission
       - phase2-dual-harness-conservative-extension
-      - "c0/base-commit git-commit/c6d13cb70f7cd284b9d877c6b9c421d7e5d60e37"
+      - "c0/base-commit git-commit/bdbecddedb60f3cb98597db59fdc4f26d575d427"
       - "c0/ceremony-commit convention/this-pr-merge-commit"
       - "c0/controller git-sha1/0e46f159e204963e163a473841ad26e2a159b7b4 Meta/StrataLint/StrataLint.Cli/Conservative/C0RenewCommand.cs"
       - "c0/controller git-sha1/10c0bdf8b5667e7cb2e4d472fb40364ac2daeec2 Meta/StrataLint/StrataLint.Cli/Admission/FrozenEvidenceResolver.cs"
@@ -247,6 +247,7 @@ components:
       - "c0/controller git-sha1/7d5143dd936be5c0eec7e29423959155910ecb26 Meta/StrataLint/StrataLint.Cli/Commands/CliApplication.cs"
       - "c0/controller git-sha1/7fcd2d380a90169a469feb8fc67629e05840b9c9 Meta/StrataLint/StrataLint.Cli/Conservative/ConservativeReplayEnvelopeCodec.cs"
       - "c0/controller git-sha1/846df8019ada5da1e6943ede526c4e95dacc2abd Meta/StrataLint/StrataLint.Cli/Conservative/ConservativeActualTreeEvaluator.cs"
+      - "c0/controller git-sha1/86bb1cd600fed84d7b49cbac01159fad02bdac8b Meta/StrataLint/StrataLint.Cli/Conservative/GoldenCorpusMaterializer.cs"
       - "c0/controller git-sha1/8d8ae5bd3c73899ecf22c37b483216d7bd01888a Meta/StrataLint/StrataLint.Cli/Conservative/ContractEpoch/ContractEpochStore.cs"
       - "c0/controller git-sha1/96f2dd23f7279e1ae36d220763c8edd92e9bb07d Meta/StrataLint/StrataLint.Cli/Conservative/ContractEpoch/ContractEpochCorpusMarker.cs"
       - "c0/controller git-sha1/a5be2a27da2f38ad8b50c3756259747a6649cbee Meta/StrataLint/StrataLint.Cli/Admission/GitRepositoryGateway.FrozenLedger.cs"
@@ -259,7 +260,6 @@ components:
       - "c0/controller git-sha1/d5e7fe7bdea3b75453751089c7c49c644a6cd0af Meta/StrataLint/StrataLint.Cli/Conservative/ContractEpoch/TransitionPlanCodec.cs"
       - "c0/controller git-sha1/d7964f4886cdaeb4c4c03600ce2b35b617831007 Meta/StrataLint/StrataLint.Engine/Coverage/TowerManifest.cs"
       - "c0/controller git-sha1/d9f1dde4368ed2f4b818ca08afad40cfe75b4340 Meta/StrataLint/StrataLint.Engine/Coverage/C0CeremonyProjection.cs"
-      - "c0/controller git-sha1/f30514caff8cb05fda5b345429d12d2903f72614 Meta/StrataLint/StrataLint.Cli/Conservative/GoldenCorpusMaterializer.cs"
       - "c0/controller git-sha1/fb5fdd30b5b7a317fb6a12d512c5f2698b0fe0ce Meta/StrataLint/StrataLint.Cli/Conservative/ConservativeExtensionCommand.cs"
       - "c0/corpus git-sha1/14f85ec50e88faeb77b2d8238a7da2d9c07436e9 Meta/StrataLint/StrataLint.Cli/Golden/TomlGoldenWriter.cs"
       - "c0/corpus git-sha1/1bf5fe31beda15bd82731fbd8729042de545627c Golden/values-kernels.toml"
@@ -270,11 +270,11 @@ components:
       - "c0/corpus git-sha1/8e89d95a3a85e96d19ef4427402f5de768457687 Golden/cases/structured-ledger.toml"
       - "c0/corpus git-sha1/9cbdcd2932d3cd4333b840ef32a0d0af5ef481a9 Meta/StrataLint/StrataLint.Cli/Golden/GoldenCorpus.cs"
       - "c0/corpus git-sha1/a12fb72cb7a3717e936a2b14fb3d89f8906a540e Golden/cases/protected-semantics.toml"
-      - "c0/corpus git-sha1/fdcb38587e9d5895073f230bdcb2d03735b66a2e Golden/fixture-registry.yaml"
+      - "c0/corpus git-sha1/ddaba219bd06fb509c65731098c07db87db53a4c Golden/fixture-registry.yaml"
       - "c0/gate-wiring git-sha1/ed802e8827117d1b4621044cbd32933c7d580923 .github/scripts/harness-gate.sh"
-      - "c0/inaugural-certificate sha256/9ac90693456a1e51a4c564d85781acb2b041ab07bc9429edd4b53140fae72f2d Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json"
-      - "c0/preimage-commit git-commit/94b428e66b8e7a70d932a626b035a0732418f159"
-      - "c0/preimage-tree git-tree/212d4d555554b17cacea3295849edc04a5a21088"
+      - "c0/inaugural-certificate sha256/2a36bc6dacaecf8316ecaed7225be1dd1a2cba34885c5fe14fb1d5a0dad7fa42 Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json"
+      - "c0/preimage-commit git-commit/c7f1ddc89879056a314f100c30f583e4404dcf9b"
+      - "c0/preimage-tree git-tree/5164241ce0fdbef3067c87ca86ed02dac648796b"
     judged_by:
       - bootstrap-pr-1
     verification: verified
