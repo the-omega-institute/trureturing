@@ -74,6 +74,10 @@ EchoVerifyCommand --produces--> [Generated/echo-residual-summary.md | generated]
 [Generated/echo-residual-summary.md | generated] --consumed-by--> harness-gate
 [Generated/echo-residual-summary.md | generated] --verified-by--> echo-verify, emit-check
 
+none --declares--> [Golden/Projection/*.json | data]
+[Golden/Projection/*.json | data] --consumed-by--> StatementProjectionFixtureLoader
+[Golden/Projection/*.json | data] --verified-by--> StatementProjectionFixtureLoader
+
 none --declares--> [Golden/cases/**/*.toml | data]
 [Golden/cases/**/*.toml | data] --consumed-by--> TomlGoldenLoader
 [Golden/cases/**/*.toml | data] --verified-by--> TomlGoldenLoader
