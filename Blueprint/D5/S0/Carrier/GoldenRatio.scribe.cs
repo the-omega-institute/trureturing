@@ -22,5 +22,7 @@ internal sealed class GoldenRatioDocument : IScribeDocumentDefinition
                     LibraryNoteRef.Create("D5/L/koshy2001fibonacci")),
                 Blocks(Paragraph(Text(
                     "One kernel-checked conjunction records the radical definition, the quadratic fixed point, and the negative-reciprocal conjugate identity.")))
-            ))));
+            )),
+        [DocumentEdge.NarrativeReference.ToDocument(
+            GidRef.Create("D5/S0/Conventions/Notation"))]));
 }

@@ -15,3 +15,8 @@ $$\varphi = \frac{1 + \sqrt{5}}{2} \land \varphi^{2} = \varphi + 1 \land 1 - \va
 *Commentary.*
 
 One kernel-checked conjunction records the radical definition, the quadratic fixed point, and the negative-reciprocal conjugate identity.
+
+## References
+
+- Truth anchor: `D5/S0/Carrier/GoldenRatio.golden_ratio_spec`
+- Narrative reference: [D5/S0/Conventions/Notation](../Conventions/Notation.md)
