@@ -403,8 +403,17 @@ clear_lean_report_requirement() {
   fi
 }
 
+resolve_lean_report_make_bin() {
+  local make_bin="${FKST_MAKE_BIN:-}"
+  if [[ -z "$make_bin" ]]; then
+    make_bin="$(command -v make 2>/dev/null)" || make_bin=""
+  fi
+  printf '%s\n' "$make_bin"
+  [[ "$make_bin" == /* && -f "$make_bin" && -x "$make_bin" ]]
+}
+
 reconcile_lean_report_obligation() {
-  local state="$1" verified_generation="$2" make_bin="${FKST_MAKE_BIN:-}"
+  local state="$1" verified_generation="$2" make_bin=""
   local rebuild_rc checkout_head
   checkout_head="$(git -C "$FKST_HOST_ROOT" rev-parse HEAD 2>/dev/null)" || checkout_head=""
   if [[ ! "$checkout_head" =~ ^[0-9a-f]{40}$ ]]; then
@@ -424,10 +433,7 @@ reconcile_lean_report_obligation() {
     say "LEAN-REPORT-REBUILD FAIL: deployed checkout HEAD ${checkout_head:0:12} does not reconcile with generation $verified_generation; obligation retained"
     return 1
   fi
-  if [[ -z "$make_bin" ]]; then
-    make_bin="$(command -v make 2>/dev/null)" || make_bin=""
-  fi
-  if [[ "$make_bin" != /* || ! -f "$make_bin" || ! -x "$make_bin" ]]; then
+  if ! make_bin="$(resolve_lean_report_make_bin)"; then
     say "LEAN-REPORT-REBUILD FAIL: make is not an executable absolute path: ${make_bin:-missing}"
     return 1
   fi
@@ -437,6 +443,7 @@ reconcile_lean_report_obligation() {
     if ! clear_lean_report_requirement "$state" "$verified_generation"; then
       return 1
     fi
+    LEAN_REPORT_REBUILT_THIS_CYCLE=1
     say "LEAN-REPORT-REBUILD OK: generation $verified_generation"
     return 0
   else
