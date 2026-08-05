@@ -22,15 +22,15 @@ public sealed partial class FormulaCorpusInventoryTests
 
     private static readonly string[] ExpectedMacros =
     [
-        "Delta", "Gamma", "Lambda", "Leftrightarrow", "Re", "Rightarrow", "Sigma",
+        "Delta", "Gamma", "Lambda", "Leftrightarrow", "Re", "Rightarrow",
         "Vert", "alpha", "begin", "beta", "cdot", "circ", "delta", "ell",
-        "emptyset", "end", "equiv", "exists", "exp", "forall", "frac", "gamma",
+        "emptyset", "end", "equiv", "exists", "forall", "frac", "gamma",
         "gcd", "ge", "geq", "iff", "implies", "in", "infty", "int", "iota",
-        "kappa", "ker", "lambda", "land", "langle", "le", "left", "leq",
-        "lfloor", "lim", "log", "longrightarrow", "lor", "lvert", "mapsto",
-        "mathbb", "mathbf", "mathcal", "mathrm", "max", "mid", "middle", "min",
-        "mu", "neg", "neq", "nu", "omega", "operatorname", "overline", "perp",
-        "phi", "pi", "pm", "prod", "psi", "qquad", "quad", "rangle", "rfloor",
+        "kappa", "lVert", "lambda", "land", "langle", "le", "left", "leq",
+        "lfloor", "lim", "log", "lor", "lvert", "mapsto",
+        "mathbb", "mathbf", "mathcal", "mathit", "mathord", "mathrm", "max", "mid", "min",
+        "mu", "ne", "neg", "neq", "nu", "omega", "operatorname", "overline", "perp",
+        "phi", "pi", "pm", "prod", "psi", "qquad", "quad", "rVert", "rangle", "rfloor",
         "rho", "right", "rvert", "setminus", "sigma", "sim", "sin", "sqrt",
         "subset", "subseteq", "sum", "tau", "text", "theta", "times", "to",
         "varepsilon", "varnothing", "varphi", "widehat", "widetilde", "xi", "zeta",

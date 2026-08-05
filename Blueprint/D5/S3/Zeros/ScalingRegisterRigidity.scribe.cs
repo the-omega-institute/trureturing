@@ -48,7 +48,7 @@ internal sealed class ScalingRegisterRigidityDocument : IScribeDocumentDefinitio
                 H("A nontrivial register is not address-independent"),
                 LeanTheorem(
                     "D5/S3/Zeros/ScalingRegisterRigidity.scaling_register_not_address_independent"),
-                Disp(Seq(Forall, Sp, F.Id("A"), Thin, OpenBracket, Operatorname, Grp(F.Id("AddMonoid")), Open, F.Id("A"), Close, CloseBracket, Comma, Esc, Forall, Sp, Ell, Colon, F.Id("A"), To, Underscore, Grp(Plus), Mathbb, Grp(F.Id("R")), Comma, Esc, Forall, Sp, F.Id("R"), Colon, Mathbb, Grp(F.Id("C")), To, Sp, F.Id("A"), To, Mathbb, Grp(F.Id("C")), Comma, Esc, Operatorname, Grp(F.Id("ScalingRegister")), Open, Ell, Comma, F.Id("R"), Close, Rightarrow, Neg, Forall, Sp, F.Id("s"), Comma, F.Id("a"), Comma, F.Id("b"), Comma, Esc, F.Id("R"), Open, F.Id("s"), Comma, F.Id("a"), Close, Eq, F.Id("R"), Open, F.Id("s"), Comma, F.Id("b"), Close, Dot)),
+                StatementProjectionFixtureLoader.FromLean(LeanTheorem("D5/S3/Zeros/ScalingRegisterRigidity.scaling_register_not_address_independent")),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "At the zero address every exponential register equals one. Address "
@@ -70,7 +70,7 @@ internal sealed class ScalingRegisterRigidityDocument : IScribeDocumentDefinitio
                 H("A nontrivial register changes nowhere-zero data"),
                 LeanTheorem(
                     "D5/S3/Zeros/ScalingRegisterRigidity.applyRegister_ne_of_nontrivial"),
-                Disp(Seq(Left, Open, Forall, Sp, F.Id("a"), Comma, F.Id("s"), Comma, Esc, F.Id("X"), Underscore, Grp(Operatorname, Grp(F.Id("data"))), Open, F.Id("a"), Comma, F.Id("s"), Close, Neq, D(0), Right, Close, Land, Left, Open, Exists, Sp, F.Id("s"), Comma, F.Id("a"), Comma, Esc, F.Id("R"), Open, F.Id("s"), Comma, F.Id("a"), Close, Neq, D(1), Right, Close, Rightarrow, Operatorname, Grp(F.Id("applyRegister")), Open, F.Id("R"), Comma, F.Id("X"), Close, Neq, Sp, F.Id("X"), Dot)),
+                StatementProjectionFixtureLoader.FromLean(LeanTheorem("D5/S3/Zeros/ScalingRegisterRigidity.applyRegister_ne_of_nontrivial")),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "At the nontrivial witness, equality of total codes would equate the data "
@@ -111,7 +111,7 @@ internal sealed class ScalingRegisterRigidityDocument : IScribeDocumentDefinitio
                 H("Realized code-preserving continuations exclude scaling registers"),
                 LeanTheorem(
                     "D5/S3/Zeros/ScalingRegisterRigidity.realized_same_germ_same_total_code_excludes_scaling_register"),
-                Disp(Seq(Operatorname, Grp(F.Id("RealizesAt")), Open, F.Id("a"), Comma, F.Id("X"), Comma, F.Id("f"), Close, Land, Operatorname, Grp(F.Id("RealizesAt")), Open, F.Id("a"), Comma, Operatorname, Grp(F.Id("applyRegister")), Open, F.Id("R"), Comma, F.Id("X"), Close, Comma, Widetilde, Sp, F.Id("f"), Close, Land, F.Text, Grp(Sp, F.Id("same"), Sp, F.Id("germ")), Land, F.Text, Grp(Sp, F.Id("same"), Sp, F.Id("total"), Sp, F.Id("code")), Rightarrow, Neg, Operatorname, Grp(F.Id("ScalingRegister")), Open, Ell, Comma, F.Id("R"), Close, Dot)),
+                StatementProjectionFixtureLoader.FromLean(LeanTheorem("D5/S3/Zeros/ScalingRegisterRigidity.realized_same_germ_same_total_code_excludes_scaling_register")),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "The realized rigidity theorem makes R pointwise one, contradicting the "
@@ -123,7 +123,7 @@ internal sealed class ScalingRegisterRigidityDocument : IScribeDocumentDefinitio
                 H("The scaling-register predicate has a concrete witness"),
                 LeanTheorem(
                     "D5/S3/Zeros/ScalingRegisterRigidity.integer_scaling_register_exists"),
-                Disp(Seq(Operatorname, Grp(F.Id("ScalingRegister")), NegThin, Left, Open, Operatorname, Grp(F.Id("castAddHom")), Underscore, Grp(Mathbb, Grp(F.Id("R"))), Comma, Esc, Open, F.Id("s"), Comma, F.Id("n"), Close, Mapsto, Exp, Open, Pi, Sp, F.Id("i"), Sp, F.Id("n"), Close, Right, Close, Dot)),
+                StatementProjectionFixtureLoader.FromLean(LeanTheorem("D5/S3/Zeros/ScalingRegisterRigidity.integer_scaling_register_exists")),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "On the integer ledger, the cast-to-real length and the factor exp(pi i n) "

@@ -36,13 +36,31 @@ public sealed record DocumentDefinition
 
 public static class DocumentDefinitions
 {
-    public static ImmutableArray<DocumentDefinition> All { get; } =
-        Discover(typeof(DocumentDefinitions).Assembly);
+    private static readonly Lazy<ImmutableArray<DocumentDefinition>> Definitions = new(
+        () => Discover(typeof(DocumentDefinitions).Assembly));
+
+    public static ImmutableArray<DocumentDefinition> All => Definitions.Value;
 
     public static ImmutableArray<DocumentDefinition> Discover(Assembly assembly)
     {
         ArgumentNullException.ThrowIfNull(assembly);
+        return DiscoverCore(assembly);
+    }
 
+    public static ImmutableArray<DocumentDefinition> Discover(
+        Assembly assembly,
+        string repositoryRoot)
+    {
+        ArgumentNullException.ThrowIfNull(assembly);
+        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
+
+        return StatementProjectionFixtureLoader.WithRepositoryRoot(
+            repositoryRoot,
+            () => DiscoverCore(assembly));
+    }
+
+    private static ImmutableArray<DocumentDefinition> DiscoverCore(Assembly assembly)
+    {
         var definitions = assembly.GetTypes()
             .Where(static type =>
                 !type.IsAbstract

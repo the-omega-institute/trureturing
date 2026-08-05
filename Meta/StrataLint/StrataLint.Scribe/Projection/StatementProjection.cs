@@ -2,7 +2,7 @@ using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
 
-namespace StrataLint.Scribe.Tests;
+namespace StrataLint.Scribe;
 
 internal sealed record LeanStatement(ImmutableArray<string> UniverseParameters, LeanExpr Type);
 
@@ -89,7 +89,12 @@ internal static class StatementV1Decoder
             Take("(");
             var parent = Name();
             Take(",");
-            string part = tag switch { "ns" => Atom(), "nn" => UInt().ToString(), _ => throw Error("Unknown name tag.") };
+            string part = tag switch
+            {
+                "ns" => Atom(),
+                "nn" => UInt().ToString(System.Globalization.CultureInfo.InvariantCulture),
+                _ => throw Error("Unknown name tag.")
+            };
             Take(")");
             return parent.Length == 0 ? part : parent + "." + part;
         }
@@ -210,9 +215,17 @@ internal static class ProjectionNotation
         ["AnalyticOnNhd"] = "AnalyticOnNhd", ["IsPreconnected"] = "IsPreconnected",
         ["Filter.EventuallyEq"] = "EventuallyEq", ["nhds"] = "nhds",
         ["Real.exp"] = "exp", ["Complex.exp"] = "exp", ["Complex.I"] = "I", ["Real.pi"] = "pi",
-        ["Int.castAddHom"] = "castAddHom", ["Int.cast"] = "cast", ["Complex.ofReal"] = "ofReal",
-        ["DFunLike.coe"] = "coe", ["HMul.hMul"] = "multiply",
+        ["Int.castAddHom"] = "castAddHom", ["Int.cast"] = "cast", ["Nat.cast"] = "cast",
+        ["Complex.ofReal"] = "ofReal",
+        ["DFunLike.coe"] = "coe", ["HMul.hMul"] = "multiply", ["HDiv.hDiv"] = "divide",
         ["Complex.re"] = "re",
+        ["IsClosed"] = "IsClosed", ["IsCompact"] = "IsCompact", ["IsSeqCompact"] = "IsSeqCompact",
+        ["setOf"] = "setOf", ["AddSubgroup"] = "AddSubgroup",
+        ["ZMod"] = "ZMod",
+        ["D5.S1.Dynamics.UniversalSolenoid.projection"] = "projection",
+        ["Finset.sum"] = "sum", ["Finset.univ"] = "univ", ["Set.univ"] = "univ",
+        ["Subtype"] = "Subtype", ["Subtype.val"] = "val",
+        ["Fintype.card"] = "card",
     }.ToImmutableDictionary(StringComparer.Ordinal);
 }
 
@@ -226,8 +239,16 @@ internal static class ProjectionDenoiser
         ["Iff"] = new(0, 2), ["Not"] = new(0, 1), ["Exists"] = new(0, 2),
         ["Membership.mem"] = new(0, 2), ["norm"] = new(0, 1),
         ["OfNat.ofNat"] = new(0, null, [1]), ["Neg.neg"] = new(0, 1),
-        ["DFunLike.coe"] = new(0, 2), ["HMul.hMul"] = new(0, 2),
+        ["DFunLike.coe"] = new(0, 2), ["HMul.hMul"] = new(0, 2), ["HDiv.hDiv"] = new(0, 2),
         ["Complex.re"] = new(0, 1),
+        ["IsClosed"] = new(0, 1), ["IsCompact"] = new(0, 1), ["IsSeqCompact"] = new(0, 1),
+        ["setOf"] = new(0, 1),
+        ["AddSubgroup"] = new(0, null, [0]),
+        ["ZMod"] = new(0),
+        ["Finset.sum"] = new(0, 2),
+        ["Finset.univ"] = new(0, 0),
+        ["Set.univ"] = new(0, 0), ["Subtype"] = new(0, 2), ["Subtype.val"] = new(0, 1),
+        ["Fintype.card"] = new(0, null, [0]),
         ["D5.S3.Weil.LabeledZeta.LedgerLength"] = new(0, 0),
         ["D5.S3.Weil.ReflectionLedger.scalingLedger"] = new(0, 3),
         ["D5.S3.Weil.CriticalLine.halfDensityReading"] = new(0, 3),
@@ -242,7 +263,7 @@ internal static class ProjectionDenoiser
         ["AnalyticOnNhd"] = new(0, 2), ["IsPreconnected"] = new(0, 1),
         ["Filter.EventuallyEq"] = new(0, 3), ["nhds"] = new(0, 1),
         ["Real.exp"] = new(0), ["Complex.exp"] = new(0), ["Int.castAddHom"] = new(0, null, [0]),
-        ["Int.cast"] = new(0, 1), ["Complex.ofReal"] = new(0),
+        ["Int.cast"] = new(0, 1), ["Nat.cast"] = new(0, 1), ["Complex.ofReal"] = new(0),
     }.ToImmutableDictionary(StringComparer.Ordinal);
 
     internal static bool TryClean(string name, ImmutableArray<LeanExpr> arguments,
@@ -393,6 +414,121 @@ internal static class StatementProjector
     }
 }
 
+internal static class StatementProjectionFixtureLoader
+{
+    private static readonly AsyncLocal<string?> RepositoryRoot = new();
+    private static readonly Dictionary<string, ImmutableDictionary<string, string>> StatementsByRoot =
+        new(StringComparer.Ordinal);
+
+    internal static Formula FromLean(LeanDeclarationRef declaration)
+    {
+        ArgumentNullException.ThrowIfNull(declaration);
+        var declarationName = declaration.Value.Replace('/', '.');
+        var statements = StatementsForCurrentRepository();
+        if (!statements.TryGetValue(declarationName, out var encoded))
+        {
+            var matches = statements
+                .Where(pair => pair.Key.EndsWith('.' + declaration.DeclarationName, StringComparison.Ordinal))
+                .Select(static pair => pair.Value)
+                .ToArray();
+            if (matches.Length != 1)
+                throw new InvalidOperationException($"Pinned statement-v1 fixture has no unique declaration: {declarationName}");
+            encoded = matches[0];
+        }
+
+        return StatementProjector.Project(StatementV1Decoder.Decode(encoded).Type) switch
+        {
+            ProjectionOutcome.Projected projected => projected.Formula,
+            ProjectionOutcome.Unprojectable failed => throw new InvalidOperationException(
+                $"Pinned statement-v1 fixture is unprojectable for {declarationName}: {failed.Reason}"),
+            _ => throw new InvalidOperationException("Unknown statement projection outcome.")
+        };
+    }
+
+    internal static string FixtureDirectory(string repositoryRoot) => Path.Combine(
+        repositoryRoot, "Golden", "Projection");
+
+    internal static T WithRepositoryRoot<T>(string repositoryRoot, Func<T> action)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
+        ArgumentNullException.ThrowIfNull(action);
+        var previous = RepositoryRoot.Value;
+        RepositoryRoot.Value = Path.GetFullPath(repositoryRoot);
+        try
+        {
+            return action();
+        }
+        finally
+        {
+            RepositoryRoot.Value = previous;
+        }
+    }
+
+    private static ImmutableDictionary<string, string> StatementsForCurrentRepository()
+    {
+        var repositoryRoot = RepositoryRoot.Value ?? FindRepositoryRoot();
+        lock (StatementsByRoot)
+        {
+            if (!StatementsByRoot.TryGetValue(repositoryRoot, out var statements))
+            {
+                statements = LoadStatements(repositoryRoot);
+                StatementsByRoot.Add(repositoryRoot, statements);
+            }
+
+            return statements;
+        }
+    }
+
+    private static ImmutableDictionary<string, string> LoadStatements(string repositoryRoot)
+    {
+        var fixtureDirectory = FixtureDirectory(repositoryRoot);
+        var fixtures = new[]
+        {
+            (Name: "statement-projection-pilot-v1.json", Schema: "statement-projection-pilot-fixture-v1"),
+            (Name: "statement-projection-expansion-v1.json", Schema: "statement-projection-expansion-fixture-v1")
+        };
+        var declarations = ImmutableDictionary.CreateBuilder<string, string>(StringComparer.Ordinal);
+        foreach (var fixtureSpec in fixtures)
+        {
+            var path = Path.Combine(fixtureDirectory, fixtureSpec.Name);
+            if (!File.Exists(path))
+            {
+                throw new FileNotFoundException(
+                    $"Projection fixture is missing from repository {repositoryRoot}: {path}",
+                    path);
+            }
+            using var fixture = JsonDocument.Parse(File.ReadAllBytes(path));
+            var schema = fixture.RootElement.GetProperty("schema").GetString();
+            if (!string.Equals(schema, fixtureSpec.Schema, StringComparison.Ordinal))
+                throw new FormatException($"Projection fixture schema mismatch: {path}");
+            foreach (var declaration in fixture.RootElement.GetProperty("declarations").EnumerateArray())
+            {
+                var name = declaration.GetProperty("name").GetString()
+                    ?? throw new FormatException($"Projection fixture has a null declaration name: {path}");
+                var statement = declaration.GetProperty("type").GetString()
+                    ?? throw new FormatException($"Projection fixture has a null statement-v1 value: {name}");
+                if (!declarations.TryAdd(name, statement))
+                    throw new FormatException($"Duplicate projection fixture declaration: {name}");
+            }
+        }
+        return declarations.ToImmutable();
+    }
+
+    private static string FindRepositoryRoot()
+    {
+        for (var directory = new DirectoryInfo(Environment.CurrentDirectory);
+             directory is not null;
+             directory = directory.Parent)
+        {
+            if (File.Exists(Path.Combine(directory.FullName, "global.json"))
+                && Directory.Exists(Path.Combine(directory.FullName, "Golden", "Projection")))
+                return directory.FullName;
+        }
+        throw new DirectoryNotFoundException(
+            "Could not locate repository root containing Golden/Projection statement fixtures.");
+    }
+}
+
 internal sealed record ProjectionCase(string Name, Formula Formula, string Difference, ImmutableArray<string> Unprojectable);
 internal sealed record ProjectionRun(ImmutableArray<ProjectionCase> Cases, string Report, int NotationSize);
 
@@ -402,8 +538,8 @@ internal static class ProjectionPilot
     [
         ("D5.S3.Weil.CriticalLine.unitarity_line_iff", "faithful: equivalent quantified spelling"),
         ("D5.S0.Conventions.TotalCode.no_hidden_register", "faithful: equivalent field-projection spelling"),
-        ("D5.S1.Solenoid.hiddenFiber_closed_compact_seqCompact", "structural-unprojectable: topology instance pipeline"),
-        ("D5.S3.Fourier.FinitePoisson.finite_poisson_summation", "structural-unprojectable: finite sums and coercions"),
+        ("D5.S1.Solenoid.hiddenFiber_closed_compact_seqCompact", "faithful: topology instance pipeline denoised"),
+        ("D5.S3.Fourier.FinitePoisson.finite_poisson_summation", "faithful: finite sums and coercions denoised"),
         ("D5.S3.Zeros.ScalingRegisterRigidity.realized_same_germ_same_total_code_excludes_scaling_register", "faithful: equivalent germ/filter spelling"),
         ("D5.S3.Weil.CriticalLine.half_density_reading_norm", "faithful expansion"),
         ("D5.S3.Zeros.ScalingRegisterRigidity.scaling_register_not_address_independent", "faithful expansion"),
@@ -412,7 +548,7 @@ internal static class ProjectionPilot
         ("D5.S3.Zeros.ScalingRegisterRigidity.applyRegister_ne_of_nontrivial", "faithful expansion"),
     ];
 
-    internal const string GoldenReport = "statement-v1 projection pilot round 2\nfaithful=8/10 (before=0/5); structural-unprojectable=2/10\n1 unitarity_line_iff: faithful-equivalent\n2 no_hidden_register: faithful-equivalent\n3 hiddenFiber_closed_compact_seqCompact: structural-unprojectable\n4 finite_poisson_summation: structural-unprojectable\n5 excludes_scaling_register: faithful-equivalent\n6 half_density_reading_norm: faithful-equivalent\n7 scaling_register_not_address_independent: faithful-equivalent\n8 integer_scaling_register_exists: faithful-equivalent\n9 TotalCode.ext: faithful-equivalent\n10 applyRegister_ne_of_nontrivial: faithful-equivalent";
+    internal const string GoldenReport = "statement-v1 projection pilot final\nfaithful=10/10 (before=8/10); structural-unprojectable=0/10\n1 unitarity_line_iff: faithful-equivalent\n2 no_hidden_register: faithful-equivalent\n3 hiddenFiber_closed_compact_seqCompact: faithful-equivalent\n4 finite_poisson_summation: faithful-equivalent\n5 excludes_scaling_register: faithful-equivalent\n6 half_density_reading_norm: faithful-equivalent\n7 scaling_register_not_address_independent: faithful-equivalent\n8 integer_scaling_register_exists: faithful-equivalent\n9 TotalCode.ext: faithful-equivalent\n10 applyRegister_ne_of_nontrivial: faithful-equivalent";
 
     internal static ProjectionRun Run(Dictionary<string, JsonElement> declarations)
     {
