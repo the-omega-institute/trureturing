@@ -35,6 +35,10 @@ internal static class GeneratedArtifactInventory
                     nameof(DagEmitter),
                     "emit-check"),
                 new GeneratedArtifactIdentity(
+                    DagEmitter.TruthGraphRelativePath,
+                    nameof(DagEmitter),
+                    "emit-check"),
+                new GeneratedArtifactIdentity(
                     EchoResidualSummaryPath,
                     "EchoVerifyCommand",
                     "emit-check"),

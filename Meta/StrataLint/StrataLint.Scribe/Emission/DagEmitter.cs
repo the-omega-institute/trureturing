@@ -11,47 +11,72 @@ namespace StrataLint.Scribe;
 public static class DagEmitter
 {
     public const string RelativePath = "Generated/DAG.md";
+    public const string TruthGraphRelativePath = "Meta/StrataLint/Generated/truth-graph.v1.json";
 
     public static int Emit(
         string repositoryRoot,
         AcyclicTruthDag dag,
+        TruthGraphProvenance provenance,
         bool check,
         TextWriter output,
         TextWriter error)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(dag);
+        ArgumentNullException.ThrowIfNull(provenance);
         ArgumentNullException.ThrowIfNull(output);
         ArgumentNullException.ThrowIfNull(error);
 
         try
         {
-            var first = CanonicalDagWriter.Write(dag);
-            var second = CanonicalDagWriter.Write(dag);
-            if (!first.AsSpan().SequenceEqual(second.AsSpan()))
+            var model = TruthGraphExportModel.Create(dag, provenance);
+            var markdown = CanonicalDagWriter.Write(dag);
+            var markdownAgain = CanonicalDagWriter.Write(dag);
+            var json = TruthGraphJsonWriter.Write(model);
+            var jsonAgain = TruthGraphJsonWriter.Write(model);
+            if (!markdown.AsSpan().SequenceEqual(markdownAgain.AsSpan())
+                || !json.AsSpan().SequenceEqual(jsonAgain.AsSpan()))
             {
                 throw new InvalidOperationException("DAG projection writer is not byte deterministic.");
             }
 
-            var path = Path.Combine(repositoryRoot, RelativePath);
-            var current = File.Exists(path) ? File.ReadAllBytes(path) : [];
-            if (current.AsSpan().SequenceEqual(first.AsSpan()))
+            var projections = new[]
             {
-                output.WriteLine("checked: " + RelativePath);
-                return 0;
-            }
+                (Path: RelativePath, Bytes: markdown),
+                (Path: TruthGraphRelativePath, Bytes: json),
+            };
+            var stale = projections.Where(projection =>
+            {
+                var path = Path.Combine(repositoryRoot, projection.Path);
+                var current = File.Exists(path) ? File.ReadAllBytes(path) : [];
+                return !current.AsSpan().SequenceEqual(projection.Bytes.AsSpan());
+            }).ToArray();
 
-            if (check)
+            if (check && stale.Length > 0)
             {
-                error.WriteLine("out of date: " + RelativePath);
+                foreach (var projection in stale)
+                {
+                    error.WriteLine("out of date: " + projection.Path);
+                }
+
                 return 1;
             }
 
-            var parent = Path.GetDirectoryName(path)
-                ?? throw new InvalidOperationException("DAG projection path has no parent directory.");
-            Directory.CreateDirectory(parent);
-            File.WriteAllBytes(path, first.AsSpan());
-            output.WriteLine("wrote: " + RelativePath);
+            foreach (var projection in stale)
+            {
+                var path = Path.Combine(repositoryRoot, projection.Path);
+                var parent = Path.GetDirectoryName(path)
+                    ?? throw new InvalidOperationException("DAG projection path has no parent directory.");
+                Directory.CreateDirectory(parent);
+                File.WriteAllBytes(path, projection.Bytes.AsSpan());
+                output.WriteLine("wrote: " + projection.Path);
+            }
+
+            foreach (var projection in projections.Except(stale))
+            {
+                output.WriteLine("checked: " + projection.Path);
+            }
+
             return 0;
         }
         catch (Exception exception) when (

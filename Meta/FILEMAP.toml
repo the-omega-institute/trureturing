@@ -287,6 +287,13 @@ consumed_by = ["DigestionStatusEvaluator"]
 verified_by = ["emit-check"]
 
 [[files]]
+pattern = "Meta/StrataLint/Generated/truth-graph.v1.json"
+kind = "generated"
+produced_by = "DagEmitter"
+consumed_by = ["TruthGraphJsonReader"]
+verified_by = ["emit-check"]
+
+[[files]]
 pattern = "Meta/StrataLint/Golden/Frozen/**/*.jsonl"
 kind = "ledger"
 produced_by = "FrozenLedgerCanonicalWriter"
