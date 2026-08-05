@@ -19,3 +19,7 @@ Fix a finite set S of natural primes, write P_S for its product, and set E_S = P
 For the finite-reading clause, G is any infinite additive group, A is any finite additive group, and R is any additive homomorphism from G to A. The witnesses x and y are distinct but have equal readings; their difference is explicitly nonzero and R maps it to zero. The formal statement therefore realizes the kernel branch of the hidden-difference alternative directly. It introduces no narrative ledger object and makes no claim about ledger custody.
 
 The proof combines the classical product-plus-one argument with the finite pigeonhole principle. Divisibility of P_S by every window prime gives the modular escape and excludes every prime divisor of E_S from S; existence of a prime divisor supplies the persistent tail. Finiteness of A and infinitude of G force a repeated reading, while additivity places the resulting nonzero difference in the kernel. The exact conjunction and its packaging as one declaration are repository-derived, and the result has no numerical certificate.
+
+## References
+
+- Truth anchor: `D5/S3/Arith/FiniteWindowEscape.finite_window_escape_and_hidden_fiber`
