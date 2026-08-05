@@ -11,7 +11,7 @@ public sealed partial class DigestionLedgerTests
     public void CasBackedLegacyBoundaryDoesNotContributeSourceOrBoundaryGaps()
     {
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
-        var atom = Assert.Single(GictAtomizer.Atomize(source).Claims);
+        var atom = Assert.Single(GictAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);
         var captured = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
         var yaml = LedgerYaml(
             atom,
@@ -121,7 +121,7 @@ public sealed partial class DigestionLedgerTests
         var atomizerId = AtomizerRegistry.RegisteredIds[0];
         var sourceBytes = Encoding.UTF8.GetBytes(
             "# Synthetic\n\n**定理 1.1(A)**。first。\n\n**定理 1.2(B)**。second。\n");
-        var atoms = AtomizerRegistry.Atomize(atomizerId, sourceBytes).Claims;
+        var atoms = AtomizerRegistry.Atomize(atomizerId, sourceBytes, DigestionTestSupport.Rules).Claims;
         var ledger = BackfillInventoryLoader.Load(EmptyLedger(atomizerId));
 
         var first = DigestionIngestor.Plan(
@@ -202,7 +202,7 @@ public sealed partial class DigestionLedgerTests
     public void LoaderReadsOnlySchemaThreeAtomicEntries()
     {
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
-        var atom = Assert.Single(GictAtomizer.Atomize(source).Claims);
+        var atom = Assert.Single(GictAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);
         var yaml = LedgerYaml(
             atom,
             migration: "partial",
@@ -244,7 +244,7 @@ public sealed partial class DigestionLedgerTests
     public void DerivationRejectsHandwrittenStatusThatClaimsMoreThanReceiptsProve()
     {
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
-        var atom = Assert.Single(GictAtomizer.Atomize(source).Claims);
+        var atom = Assert.Single(GictAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);
         var snapshot = Snapshot(
             ("docs/source.md", source),
             CasFile(atom),
@@ -275,7 +275,7 @@ public sealed partial class DigestionLedgerTests
     public void ReproducibleExtractionWithoutSemanticTargetRemainsResidual()
     {
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
-        var atom = Assert.Single(GictAtomizer.Atomize(source).Claims);
+        var atom = Assert.Single(GictAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);
         var yaml = LedgerYaml(
                 atom,
                 migration: "residual",
@@ -301,7 +301,7 @@ public sealed partial class DigestionLedgerTests
     public void StructuralRawSeenReplacesTheBoundaryPrerequisite()
     {
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
-        var atom = Assert.Single(GictAtomizer.Atomize(source).Claims);
+        var atom = Assert.Single(GictAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);
         var yaml = StructuralLedgerYaml(atom);
         var document = BackfillInventoryLoader.Load(yaml);
 
@@ -323,7 +323,7 @@ public sealed partial class DigestionLedgerTests
             "# GICT\r\n\r\n**定理 1.1(Test)**。claim。\r\n");
         var currentBytes = Encoding.UTF8.GetBytes(
             "# GICT\n\n**定理 1.1(Test)**。claim。\n");
-        var atom = Assert.Single(GictAtomizer.Atomize(ledgerBytes).Claims);
+        var atom = Assert.Single(GictAtomizer.Atomize(ledgerBytes, DigestionTestSupport.Rules).Claims);
         var document = BackfillInventoryLoader.Load(StructuralLedgerYaml(atom));
 
         var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
@@ -341,7 +341,7 @@ public sealed partial class DigestionLedgerTests
     public void SelfAuthoredScribeAttestationCannotProveEmissionPassed()
     {
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
-        var atom = Assert.Single(GictAtomizer.Atomize(source).Claims);
+        var atom = Assert.Single(GictAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);
         var target = Encoding.UTF8.GetBytes(Lean("D5/S0/Carrier/Probe"));
         var definition = Encoding.UTF8.GetBytes("scribe definition\n");
         var emission = Encoding.UTF8.GetBytes("# emitted narrative\n");
@@ -400,7 +400,7 @@ public sealed partial class DigestionLedgerTests
     public void MatchingScribeFileHashesWithoutEmitterAttestationFailClosed()
     {
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
-        var atom = Assert.Single(GictAtomizer.Atomize(source).Claims);
+        var atom = Assert.Single(GictAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);
         var target = Encoding.UTF8.GetBytes(Lean("D5/S0/Carrier/Probe"));
         var definition = Encoding.UTF8.GetBytes("arbitrary definition bytes\n");
         var emission = Encoding.UTF8.GetBytes("arbitrary emission bytes\n");
@@ -472,7 +472,7 @@ public sealed partial class DigestionLedgerTests
     public void TailCannotAppearBeforeAbsorptionAndExternalAuthorizationReceipt()
     {
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
-        var atom = Assert.Single(GictAtomizer.Atomize(source).Claims);
+        var atom = Assert.Single(GictAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);
         var targetPath = "D5/X_Assumptions/Probe.lean";
         var target = Encoding.UTF8.GetBytes(Lean("D5/X_Assumptions/Probe"));
         var snapshot = Snapshot(("docs/source.md", source), CasFile(atom), (targetPath, target));
@@ -570,7 +570,7 @@ public sealed partial class DigestionLedgerTests
         IEnumerable<string> describedDeclarations)
     {
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
-        var atom = Assert.Single(GictAtomizer.Atomize(source).Claims);
+        var atom = Assert.Single(GictAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);
         const string moduleGid = "D5/S0/Carrier/Probe";
         const string targetPath = "D5/S0/Carrier/Probe.lean";
         var target = Encoding.UTF8.GetBytes(Lean(moduleGid));
@@ -622,7 +622,7 @@ public sealed partial class DigestionLedgerTests
         byte[] authorization)
     {
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
-        var atom = Assert.Single(GictAtomizer.Atomize(source).Claims);
+        var atom = Assert.Single(GictAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);
         const string gid = "D5/X_Assumptions/Probe";
         const string targetPath = "D5/X_Assumptions/Probe.lean";
         var target = Encoding.UTF8.GetBytes(Lean(gid));

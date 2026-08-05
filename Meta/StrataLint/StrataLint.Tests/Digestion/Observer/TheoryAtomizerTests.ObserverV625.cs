@@ -33,7 +33,7 @@ public sealed partial class TheoryAtomizerTests
     {
         var bytes = Encoding.UTF8.GetBytes($"# Observer\n\n{claim}\n");
 
-        var atom = Assert.Single(AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes).Claims);
+        var atom = Assert.Single(AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes, DigestionTestSupport.Rules).Claims);
 
         Assert.Equal(expectedAstPath, atom.AstPath);
     }
@@ -43,7 +43,7 @@ public sealed partial class TheoryAtomizerTests
     {
         var root = FindRepositoryRoot();
         var source = File.ReadAllBytes(Path.Combine(root, ThirdProductionSource));
-        var document = AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, source);
+        var document = AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, source, DigestionTestSupport.Rules);
 
         using var output = new MemoryStream();
         using (var writer = new BinaryWriter(output, Encoding.UTF8, leaveOpen: true))

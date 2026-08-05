@@ -45,6 +45,8 @@ internal sealed partial class RuleFixture
         {
             ["Meta/domains.yaml"] = TestRegistry.Domains,
             ["Meta/BACKFILL.yaml"] = GoldenCorpus.FixtureBackfill,
+            [TheoryAtomizerDataLoader.DataPath] = File.ReadAllText(
+                Path.Combine(repositoryRoot, TheoryAtomizerDataLoader.DataPath), Encoding.UTF8),
             ["Meta/registry.yaml"] = TestRegistry.Canonical,
             [AnchorCatalogPath] = File.ReadAllText(
                 Path.Combine(repositoryRoot, "Meta", "StrataLint", "Generated", "anchor-catalog.v1.json"),
