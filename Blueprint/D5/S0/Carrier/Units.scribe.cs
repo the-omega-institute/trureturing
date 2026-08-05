@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S0.Carrier;
 
@@ -10,6 +12,16 @@ internal sealed class UnitsDocument : IScribeDocumentDefinition
             "Golden integers are units exactly when their norm is positive or negative one."),
         H("Golden Units"),
         Blocks(
+            DocumentBlock.Describe.Theorem(
+                DescribeId.Create("norm-of-golden-ratio-powers"),
+                H("Norm of golden-ratio powers"),
+                LeanTheorem("D5/S0/Carrier/Units.norm_phi_pow"),
+                Disp(Seq(
+                    F.Id("N"), Grp(Varphi, Caret, F.Id("n")), Sp, Eq, Sp,
+                    Grp(Minus, D(1)), Caret, F.Id("n"))),
+                DescribeProvenance.RepoDerived(),
+                Blocks(Paragraph(Text(
+                    "For every natural exponent, multiplicativity of the norm gives the alternating value exactly.")))),
             Paragraph(
                 Ref("D5/S0/Carrier/Units"),
                 Text(" proves the exact executable criterion `IsUnit x <-> N(x)=1 or N(x)=-1`. In the forward direction, the multiplicative norm maps units to integer units. In the reverse direction, conjugation gives an explicit inverse, with one sign correction when the norm is negative.")),
