@@ -6,6 +6,10 @@ namespace StrataLint.Scribe.Tests;
 
 public sealed class DagEmitterTests
 {
+    private static readonly TruthGraphProvenance Provenance = new(
+        "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+
     [Fact]
     public void EmitWritesTheCanonicalProjectionWhenTheArtifactIsAbsent()
     {
@@ -14,11 +18,14 @@ public sealed class DagEmitterTests
             var dag = Build();
             var output = new StringWriter();
 
-            var exit = DagEmitter.Emit(root, dag, check: false, output, TextWriter.Null);
+            var exit = DagEmitter.Emit(root, dag, Provenance, check: false, output, TextWriter.Null);
 
             Assert.Equal(0, exit);
             var written = File.ReadAllBytes(Path.Combine(root, DagEmitter.RelativePath));
             Assert.True(written.AsSpan().SequenceEqual(CanonicalDagWriter.Write(dag).AsSpan()));
+            var truthGraph = File.ReadAllBytes(Path.Combine(root, DagEmitter.TruthGraphRelativePath));
+            Assert.True(truthGraph.AsSpan().SequenceEqual(
+                TruthGraphJsonWriter.Write(TruthGraphExportModel.Create(dag, Provenance)).AsSpan()));
             Assert.Contains(DagEmitter.RelativePath, output.ToString(), StringComparison.Ordinal);
         });
     }
@@ -30,7 +37,7 @@ public sealed class DagEmitterTests
         {
             var error = new StringWriter();
 
-            var exit = DagEmitter.Emit(root, Build(), check: true, TextWriter.Null, error);
+            var exit = DagEmitter.Emit(root, Build(), Provenance, check: true, TextWriter.Null, error);
 
             Assert.Equal(1, exit);
             Assert.False(File.Exists(Path.Combine(root, DagEmitter.RelativePath)));
@@ -44,9 +51,9 @@ public sealed class DagEmitterTests
         WithRoot(root =>
         {
             var dag = Build();
-            Assert.Equal(0, DagEmitter.Emit(root, dag, check: false, TextWriter.Null, TextWriter.Null));
+            Assert.Equal(0, DagEmitter.Emit(root, dag, Provenance, check: false, TextWriter.Null, TextWriter.Null));
 
-            var exit = DagEmitter.Emit(root, dag, check: true, TextWriter.Null, TextWriter.Null);
+            var exit = DagEmitter.Emit(root, dag, Provenance, check: true, TextWriter.Null, TextWriter.Null);
 
             Assert.Equal(0, exit);
         });
@@ -62,7 +69,7 @@ public sealed class DagEmitterTests
             var stale = Encoding.UTF8.GetBytes("# Truth DAG\n\nstale\n");
             File.WriteAllBytes(path, stale);
 
-            var exit = DagEmitter.Emit(root, Build(), check: true, TextWriter.Null, TextWriter.Null);
+            var exit = DagEmitter.Emit(root, Build(), Provenance, check: true, TextWriter.Null, TextWriter.Null);
 
             Assert.Equal(1, exit);
             Assert.True(File.ReadAllBytes(path).AsSpan().SequenceEqual(stale));
@@ -79,7 +86,7 @@ public sealed class DagEmitterTests
             File.WriteAllBytes(path, Encoding.UTF8.GetBytes("stale\n"));
             var dag = Build();
 
-            var exit = DagEmitter.Emit(root, dag, check: false, TextWriter.Null, TextWriter.Null);
+            var exit = DagEmitter.Emit(root, dag, Provenance, check: false, TextWriter.Null, TextWriter.Null);
 
             Assert.Equal(0, exit);
             Assert.True(File.ReadAllBytes(path).AsSpan()
@@ -97,6 +104,11 @@ public sealed class DagEmitterTests
 
         Assert.Equal(nameof(DagEmitter), artifact.Producer);
         Assert.Equal("emit-check", artifact.VerifiedBy);
+
+        var truthArtifact = Assert.Single(
+            GeneratedArtifactInventory.All.Where(static item => item.Path == DagEmitter.TruthGraphRelativePath));
+        Assert.Equal(nameof(DagEmitter), truthArtifact.Producer);
+        Assert.Equal("emit-check", truthArtifact.VerifiedBy);
     }
 
     private static void WithRoot(Action<string> body)

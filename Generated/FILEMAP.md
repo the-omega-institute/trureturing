@@ -166,6 +166,10 @@ ScribeEmitter --produces--> [Meta/StrataLint/Generated/scribe-emissions.v1.json 
 [Meta/StrataLint/Generated/scribe-emissions.v1.json | generated] --consumed-by--> DigestionStatusEvaluator
 [Meta/StrataLint/Generated/scribe-emissions.v1.json | generated] --verified-by--> emit-check
 
+DagEmitter --produces--> [Meta/StrataLint/Generated/truth-graph.v1.json | generated]
+[Meta/StrataLint/Generated/truth-graph.v1.json | generated] --consumed-by--> TruthGraphJsonReader
+[Meta/StrataLint/Generated/truth-graph.v1.json | generated] --verified-by--> emit-check
+
 FrozenLedgerCanonicalWriter --produces--> [Meta/StrataLint/Golden/Frozen/**/*.jsonl | ledger]
 [Meta/StrataLint/Golden/Frozen/**/*.jsonl | ledger] --consumed-by--> FrozenLedger
 [Meta/StrataLint/Golden/Frozen/**/*.jsonl | ledger] --verified-by--> SL-008
