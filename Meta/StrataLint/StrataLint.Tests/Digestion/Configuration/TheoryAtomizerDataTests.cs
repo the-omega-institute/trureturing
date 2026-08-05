@@ -150,6 +150,33 @@ public sealed class TheoryAtomizerDataTests
             TheoryAtomizerRules.AllowedKinds.Order(StringComparer.Ordinal));
     }
 
+    [Fact]
+    public void TryLoadReportsAnAbsentDataFileWithoutThrowing()
+    {
+        // A tree that predates this data surface carries no atomizers.toml at all. Treating that
+        // as a defect would make a harness carrying this loader reject a tree the baseline
+        // harness admits, which conservative extension forbids.
+        // Built below the DigestionTestSupport helper on purpose: that helper injects the canonical
+        // atomizer data into every snapshot, which is exactly what this test must not have.
+        var raw = RawRepositorySnapshot.Create(
+            [RawRepositoryEntry.FromText("Meta/domains.yaml", "unrelated: true\n")]);
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+
+        Assert.False(TheoryAtomizerDataLoader.TryLoad(snapshot, out _));
+        Assert.Throws<FormatException>(() => TheoryAtomizerDataLoader.Load(snapshot));
+    }
+
+    [Fact]
+    public void TryLoadStillFailsClosedWhenThePresentDataFileIsMalformed()
+    {
+        // Only ABSENCE is tolerated. A file that exists must parse, otherwise corrupting it would
+        // become a way to switch the checks off.
+        var snapshot = DigestionTestSupport.Snapshot(
+            (TheoryAtomizerDataLoader.DataPath, Encoding.UTF8.GetBytes("schema_version = 2\n")));
+
+        Assert.Throws<FormatException>(() => TheoryAtomizerDataLoader.TryLoad(snapshot, out _));
+    }
+
     private static TheoryAtomizerRules Load(string text) => TheoryAtomizerDataLoader.Load(
         DigestionTestSupport.Snapshot((TheoryAtomizerDataLoader.DataPath, Encoding.UTF8.GetBytes(text))));
 }

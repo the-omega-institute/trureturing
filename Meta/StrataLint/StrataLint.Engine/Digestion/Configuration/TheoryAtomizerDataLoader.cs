@@ -61,10 +61,34 @@ internal static class TheoryAtomizerDataLoader
     internal static TheoryAtomizerRules Load(RepositorySnapshot snapshot)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
+        return TryLoad(snapshot, out var rules)
+            ? rules
+            : throw new FormatException($"Atomizer data file is missing: {DataPath}");
+    }
+
+    /// Loads the rules, reporting an ABSENT data file as false rather than throwing.
+    ///
+    /// Only absence is tolerated, and only so a harness that carries this loader can judge a tree
+    /// that predates it: the baseline tree has no atomizers.toml at all, and treating that as a
+    /// defect would make the candidate reject a tree the baseline admits, breaking conservative
+    /// extension. A data file that IS present stays fully fail-closed -- malformed content still
+    /// throws, so nothing can be laundered through this path by corrupting the file. The same
+    /// distinction ScribeEmitter draws for not-yet-materialized documents.
+    internal static bool TryLoad(RepositorySnapshot snapshot, out TheoryAtomizerRules rules)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
         if (!snapshot.TryGetFile(DataPath, out var file))
         {
-            throw new FormatException($"Atomizer data file is missing: {DataPath}");
+            rules = null!;
+            return false;
         }
+
+        rules = Parse(file);
+        return true;
+    }
+
+    private static TheoryAtomizerRules Parse(RepositoryFile file)
+    {
 
         string text;
         try
