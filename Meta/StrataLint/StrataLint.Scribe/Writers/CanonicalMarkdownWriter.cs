@@ -35,9 +35,9 @@ public static class CanonicalMarkdownWriter
         WriteReferences(
             builder,
             document,
-            document.Edges.IsEmpty
-                ? []
-                : graph?.For(document) ?? DocumentGraphAssembler.Extract(document));
+            graph is null
+                ? document.Edges.IsEmpty ? [] : DocumentGraphAssembler.Extract(document)
+                : graph.For(document));
         builder.Append('\n');
         return ImmutableArray.CreateRange(StrictUtf8.GetBytes(builder.ToString()));
     }
