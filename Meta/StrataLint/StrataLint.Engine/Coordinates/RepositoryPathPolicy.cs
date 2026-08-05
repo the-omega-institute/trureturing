@@ -73,6 +73,7 @@ internal static partial class RepositoryPathPolicy
             || value.StartsWith(".claude/skills/", StringComparison.Ordinal)
             || value.StartsWith("docs/devloop/", StringComparison.Ordinal)
             || IsGoldenCaseData(value)
+            || IsGoldenProjectionData(value)
             || IsCanonicalFutureCoordinate(value))
         {
             return null;
@@ -254,6 +255,21 @@ internal static partial class RepositoryPathPolicy
     {
         const string prefix = "Golden/cases/";
         const string suffix = ".toml";
+        if (!path.StartsWith(prefix, StringComparison.Ordinal)
+            || !path.EndsWith(suffix, StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        var stem = path[prefix.Length..^suffix.Length];
+        return stem.Length > 0 && stem.All(static character =>
+            char.IsAsciiLetterOrDigit(character) || character is '_' or '-');
+    }
+
+    private static bool IsGoldenProjectionData(string path)
+    {
+        const string prefix = "Golden/Projection/";
+        const string suffix = ".json";
         if (!path.StartsWith(prefix, StringComparison.Ordinal)
             || !path.EndsWith(suffix, StringComparison.Ordinal))
         {
