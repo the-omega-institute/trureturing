@@ -114,6 +114,10 @@ none --declares--> [Meta/BACKFILL.yaml | data]
 [Meta/BACKFILL.yaml | data] --consumed-by--> BackfillInventoryLoader
 [Meta/BACKFILL.yaml | data] --verified-by--> BackfillInventoryLoader
 
+none --declares--> [Meta/Digestion/atomizers.toml | data]
+[Meta/Digestion/atomizers.toml | data] --consumed-by--> TheoryAtomizerDataLoader
+[Meta/Digestion/atomizers.toml | data] --verified-by--> TheoryAtomizerDataLoader
+
 IngestCommand --produces--> [Meta/Digestion/atoms/sha256/* | ledger]
 [Meta/Digestion/atoms/sha256/* | ledger] --consumed-by--> DigestionCasStore
 [Meta/Digestion/atoms/sha256/* | ledger] --verified-by--> DigestionCasStore

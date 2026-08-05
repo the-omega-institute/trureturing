@@ -1,5 +1,6 @@
 using System.Text;
 using StrataLint.Cli;
+using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
@@ -9,6 +10,7 @@ public sealed class GoldenRecordCommandTests
     [
         RuleFixture.AnchorCatalogPath,
         RuleFixture.SpecificationPath,
+        TheoryAtomizerDataLoader.DataPath,
         GoldenFixtureRegistryLoader.RelativePath,
     ];
 

@@ -1,0 +1,747 @@
+schema_version = 1
+
+[[observer.claim_prefixes]]
+prefix = "本文主张的是:"
+locator = "scope/kinematics-statistics"
+
+[[observer.claim_prefixes]]
+prefix = "**簿记条款(v2)**"
+locator = "scope/bookkeeping"
+
+[[observer.claim_prefixes]]
+prefix = "因果方向是本文的第一主张:"
+locator = "scope/forced-causal-direction"
+
+[[observer.claim_prefixes]]
+prefix = "因果方向:"
+locator = "scope/forced-causal-direction"
+alias = "true"
+
+[[observer.claim_prefixes]]
+prefix = "**(i) 相位对象。**"
+locator = "premise/phase-object"
+
+[[observer.claim_prefixes]]
+prefix = "**(ii) 刚性定律。**"
+locator = "premise/rigidity"
+
+[[observer.claim_prefixes]]
+prefix = "**(iii) 账本纪律。**"
+locator = "premise/ledger-discipline"
+
+[[observer.claim_prefixes]]
+prefix = "**语义地基(v2 一层重写)**"
+locator = "premise/semantic-foundation"
+
+[[observer.claim_prefixes]]
+prefix = "**定理(观察者代数的唯一形态)。**"
+locator = "theorem/observer-algebra"
+
+[[observer.claim_prefixes]]
+prefix = "**定理(观察者代数的典范形态)。**"
+locator = "theorem/observer-algebra"
+alias = "true"
+
+[[observer.claim_prefixes]]
+prefix = "**定理(有限窗口 = 素数量子寄存器)。**"
+locator = "theorem/finite-window-register"
+
+[[observer.claim_prefixes]]
+prefix = "**定理(有限窗口 = 素数量子寄存器,绕行限定版)。**"
+locator = "theorem/finite-window-register"
+alias = "true"
+
+[[observer.claim_prefixes]]
+prefix = "**定理(无经典答案表)。**"
+locator = "theorem/no-classical-answer-table"
+
+[[observer.claim_prefixes]]
+prefix = "**定理(无经典答案表,收窄版)。**"
+locator = "theorem/no-classical-answer-table"
+alias = "true"
+
+[[observer.claim_prefixes]]
+prefix = "**定理(叠加不违反经典刚性)。**"
+locator = "theorem/state-not-path"
+
+[[observer.claim_prefixes]]
+prefix = "**定理(观察者度量与二型无穷远,v2 新增)。**"
+locator = "theorem/observer-metric"
+
+[[observer.claim_prefixes]]
+prefix = "**定理(两族窗口二分法与黄金支,v3 新增)。**"
+locator = "theorem/window-dichotomy"
+
+[[observer.claim_prefixes]]
+prefix = "**测量的完整理论只有两个动词。**"
+locator = "measurement/conditioning"
+
+[[observer.claim_prefixes]]
+prefix = "**遗忘是可审计的数学关系。**"
+locator = "measurement/forgetting"
+
+[[observer.claim_prefixes]]
+prefix = "**时间的连续性是统计的产物。**"
+locator = "measurement/statistical-time"
+
+[[observer.claim_prefixes]]
+prefix = "**时间的连续性是统计的产物(热时间假设,诠释级)。**"
+locator = "measurement/statistical-time"
+alias = "true"
+
+[[observer.claim_prefixes]]
+prefix = "**中心层(强制,无选择)。**"
+locator = "classical/center"
+
+[[observer.claim_prefixes]]
+prefix = "**指针基层(由记账规则选定)。**"
+locator = "classical/pointer-basis"
+
+[[observer.claim_prefixes]]
+prefix = "**冗余层(集体记忆)。**"
+locator = "classical/redundant-records"
+
+[[observer.claim_prefixes]]
+prefix = "且单配定理锁死了"
+locator = "classical/unique-record"
+
+[[observer.claim_prefixes]]
+prefix = "单配定理锁死"
+locator = "classical/unique-record"
+alias = "true"
+
+[[observer.claim_prefixes]]
+prefix = "**v4 补全:经典性的账本签名与两种命运。**"
+locator = "classical/ledger-signature"
+
+[[observer.claim_prefixes]]
+prefix = "**Q1(为何有概率):推出。**"
+locator = "probability/Q1"
+
+[[observer.claim_prefixes]]
+prefix = "**Q2(为何恰是 $|\\psi|^2$):条件推出。**"
+locator = "probability/Q2"
+
+[[observer.claim_prefixes]]
+prefix = "**Q2(为何恰是 $|\\psi|^2$):条件推出(路线 B)。**"
+locator = "probability/Q2"
+alias = "true"
+
+[[observer.claim_prefixes]]
+prefix = "**Q3(为何单一结果):动力学谜化解,索引谜搬家。**"
+locator = "probability/Q3"
+
+[[observer.claim_prefixes]]
+prefix = "**Q4(概率何义)。**"
+locator = "probability/Q4"
+
+[[observer.claim_prefixes]]
+prefix = "**设置格(选问题)与记账格(选经典):判真。**"
+locator = "freedom/settings-and-recording"
+
+[[observer.claim_prefixes]]
+prefix = "**结果格(选答案):三重封死。**"
+locator = "freedom/outcome"
+
+[[observer.claim_prefixes]]
+prefix = "**整体格(全局单选):被隔离而非被否证。**"
+locator = "freedom/global"
+
+[[observer.claim_prefixes]]
+prefix = "**距离-相位定律。**"
+locator = "freedom/distance-phase"
+
+[[observer.claim_prefixes]]
+prefix = "**距离-相位定律三代(v2 全谱)。**"
+locator = "freedom/distance-phase"
+alias = "true"
+
+[[observer.claim_prefixes]]
+prefix = "**自由价目全表**"
+locator = "freedom/price-list"
+
+[[observer.claim_prefixes]]
+prefix = "**互补预算定理(v2 新增,自含四行证)。**"
+locator = "freedom/complementarity-budget"
+
+[[observer.claim_prefixes]]
+prefix = "Wigner 之友、"
+locator = "observer/nested-facts"
+
+[[observer.claim_prefixes]]
+prefix = "附带一行:PBR 定理"
+locator = "observer/pbr"
+
+[[observer.claim_prefixes]]
+prefix = "\"连续本不存在,连续是统计\""
+locator = "physics/continuum-and-fields"
+
+[[observer.claim_prefixes]]
+prefix = "未具备者如实列出:"
+locator = "physics/open-geometry"
+
+[[observer.claim_prefixes]]
+prefix = "**已结案(八件,皆附证书):**"
+locator = "verdict/settled"
+
+[[observer.claim_prefixes]]
+prefix = "**已结案(附证书):**"
+locator = "verdict/settled"
+alias = "true"
+
+[[observer.claim_prefixes]]
+prefix = "**遗留(三类,性质各异):**"
+locator = "verdict/open"
+
+[[observer.claim_prefixes]]
+prefix = "**遗留(三类):**"
+locator = "verdict/open"
+alias = "true"
+
+[[observer.claim_prefixes]]
+prefix = "**总判词:**"
+locator = "verdict/final"
+
+[[observer.claim_prefixes]]
+prefix = "**§10.1 分层公共记忆中和原则**"
+locator = "memory/public-neutralization"
+
+[[observer.claim_prefixes]]
+prefix = "**§10.2 对数钟与通道谱(指针)**"
+locator = "memory/log-clock-channel-spectrum"
+
+[[observer.claim_prefixes]]
+prefix = "**§10.3 商余本体语义庭**"
+locator = "ontology/quotient-remainder"
+
+[[observer.claim_prefixes]]
+prefix = "**边界**"
+locator = "ontology/boundary"
+
+[[observer.claim_prefixes]]
+prefix = "**§11.1 章程(三定义,ZFC 内,零新公理)**"
+locator = "periodic-table/charter"
+
+[[observer.claim_prefixes]]
+prefix = "**§11.2 四问模板(逐层机械生成)**"
+locator = "periodic-table/four-question-template"
+
+[[observer.claim_prefixes]]
+prefix = "**§11.3 三科目终表(公理之辩四连案终审)**"
+locator = "periodic-table/axiom-hypothesis-definition"
+
+[[observer.claim_prefixes]]
+prefix = "**§11.4 首件产品指针**"
+locator = "periodic-table/first-product"
+
+[[observer.claim_prefixes]]
+prefix = "**§12.1 互反-干涉庭(\"真理一半看不见\")**"
+locator = "semantic-court/reciprocity-interference"
+
+[[observer.claim_prefixes]]
+prefix = "**§12.2 投影-干涉庭与署名**"
+locator = "semantic-court/projection-interference"
+
+[[observer.claim_prefixes]]
+prefix = "**§12.3 滤镜与视界庭(Fable/Mythos)**"
+locator = "semantic-court/filters-and-horizons"
+
+[[observer.claim_prefixes]]
+prefix = "**§13.1 商定理与首枚外部定理样本**"
+locator = "quotient-court/quotient-theorem"
+
+[[observer.claim_prefixes]]
+prefix = "**§13.2 对数钟之算术分店(指针)**"
+locator = "quotient-court/log-clock-arithmetic"
+
+[[observer.claim_prefixes]]
+prefix = "**§13.3 边界与署名**"
+locator = "quotient-court/boundary-signature"
+
+[[observer.claim_prefixes]]
+prefix = "**§14.1 定理脊柱(全部自含证明与证书,居本文辖区)**"
+locator = "formal-volume/theorem-spine"
+
+[[observer.claim_prefixes]]
+prefix = "**§14.2 合成判词与两条新焊缝**"
+locator = "formal-volume/synthesis-welds"
+
+[[observer.claim_prefixes]]
+prefix = "**§14.3 边界与申报**"
+locator = "formal-volume/boundary-declaration"
+
+[[observer.claim_prefixes]]
+prefix = "**§15.1 账本公理之定理化**"
+locator = "ledger-axioms/theoremization"
+
+[[observer.claim_prefixes]]
+prefix = "**§15.2 本体对象之谓词分家与投影族**"
+locator = "ledger-axioms/ontic-predicate-split"
+
+[[observer.claim_prefixes]]
+prefix = "**§15.3 边界与申报**"
+locator = "ledger-axioms/boundary-declaration"
+
+[[observer.claim_prefixes]]
+prefix = "**§16.1 观察者之钟(运动学定理三条 + 证书)**"
+locator = "observer-clock/clock-rate-theorems"
+
+[[observer.claim_prefixes]]
+prefix = "**§16.2 形与签(本文主张之二分定理化)**"
+locator = "observer-clock/form-signature-split"
+
+[[observer.claim_prefixes]]
+prefix = "**§16.3 测量论之算术同址(指针)**"
+locator = "observer-clock/measurement-arithmetic"
+
+[[observer.claim_prefixes]]
+prefix = "**§17.1 六环链(本文测量论之链式定理化)**"
+locator = "chain-court/six-link-chain"
+
+[[observer.claim_prefixes]]
+prefix = "**§17.2 双柱贯链(熵-自由对偶升为簿记法)**"
+locator = "chain-court/double-column-ledger"
+
+[[observer.claim_prefixes]]
+prefix = "**§17.3 测量几何与算术同址续报(指针)**"
+locator = "chain-court/measurement-geometry-pointer"
+
+[[observer.claim_prefixes]]
+prefix = "**§18.1 文体定名**"
+locator = "ledger-machine/genre-naming"
+
+[[observer.claim_prefixes]]
+prefix = "**§18.2 机器全貌(编号引用,零新假设)**"
+locator = "ledger-machine/full-picture"
+
+[[observer.claim_prefixes]]
+prefix = "**§18.3 三词收官与边界**"
+locator = "ledger-machine/three-word-closure"
+
+[[observer.claim_prefixes]]
+prefix = "**§19.1 非是集(以否定完成定位)**"
+locator = "machine-negations/negative-set"
+
+[[observer.claim_prefixes]]
+prefix = "**§19.2 教学面(入门件指针)**"
+locator = "machine-negations/teaching-surface"
+
+[[observer.claim_prefixes]]
+prefix = "**§19.3 能量与力(运动学词条 + 墙)**"
+locator = "machine-negations/energy-and-force"
+
+[[observer.claim_prefixes]]
+prefix = "**§20.1 熵之相对论(本文核心命题之收官形)**"
+locator = "entropy-relativity/relativity-of-entropy"
+
+[[observer.claim_prefixes]]
+prefix = "**§20.2 动力学合流与 Wick 指针(界限申报)**"
+locator = "entropy-relativity/wick-pointer"
+
+[[observer.claim_prefixes]]
+prefix = "**§20.3 谱之双重身份与子系统概念之三重松动**"
+locator = "entropy-relativity/spectrum-dual-identity"
+
+[[observer.claim_prefixes]]
+prefix = "**§21.1 总装卷之本文定位**"
+locator = "assembly-volume/positioning"
+
+[[observer.claim_prefixes]]
+prefix = "**§21.2 观察者代价定理(本批新增之 OQ 切片)**"
+locator = "assembly-volume/observer-cost-theorem"
+
+[[observer.claim_prefixes]]
+prefix = "**§21.3 结构出身与收官**"
+locator = "assembly-volume/structural-origin"
+
+[[observer.claim_prefixes]]
+prefix = "**§24.1 本文三命题之对偶论重述**"
+locator = "duality/symplectic-reframing"
+
+[[observer.claim_prefixes]]
+prefix = "**§24.2 SIC 续报与界限**"
+locator = "duality/sic-boundary"
+
+[[observer.claim_prefixes]]
+prefix = "**§25.1 本文核心量之六身定稿**"
+locator = "entropy/six-forms"
+
+[[observer.claim_prefixes]]
+prefix = "**§25.2 观察者经济学**"
+locator = "entropy/observer-economics"
+
+[[observer.claim_prefixes]]
+prefix = "**§26.1 观察之价(费率表之 OQ 定稿)**"
+locator = "measurement/price-table"
+
+[[observer.claim_prefixes]]
+prefix = "**§26.2 不等式之家谱(双旗舰)**"
+locator = "measurement/inequality-lineage"
+
+[[observer.claim_prefixes]]
+prefix = "**§27.1 禁令之族谱(本文诸不等式之归宗)**"
+locator = "shadow/constraint-lineage"
+
+[[observer.claim_prefixes]]
+prefix = "**§27.2 量子的\"当初\"(本文反事实论之动力学面)**"
+locator = "shadow/quantum-counterfactual"
+
+[[observer.claim_prefixes]]
+prefix = "**§28.1 三行总纲**"
+locator = "shadow-tax/three-line-program"
+
+[[observer.claim_prefixes]]
+prefix = "**§28.2 观察之价终表**"
+locator = "shadow-tax/final-price-table"
+
+[[observer.claim_prefixes]]
+prefix = "**§29.1 不可逆之终形**"
+locator = "path-divergence/irreversibility"
+
+[[observer.claim_prefixes]]
+prefix = "**§29.2 稀有之价**"
+locator = "path-divergence/rarity-price"
+
+[[observer.claim_prefixes]]
+prefix = "**§30.1 信道之收缩指纹**"
+locator = "contraction-spectrum/channel-fingerprint"
+
+[[observer.claim_prefixes]]
+prefix = "**§30.2 路径三联画**"
+locator = "contraction-spectrum/path-triptych"
+
+[[observer.claim_prefixes]]
+prefix = "**§31.1 四行图景(本文总纲之终形)**"
+locator = "synthesis/four-line-picture"
+
+[[observer.claim_prefixes]]
+prefix = "**§31.2 时间之价(本文时间观定稿)**"
+locator = "synthesis/price-of-time"
+
+[[observer.claim_prefixes]]
+prefix = "**§32.1 本文所建之物(终答)**"
+locator = "cone-engine/final-object"
+
+[[observer.claim_prefixes]]
+prefix = "**§32.2 三核与本文之位**"
+locator = "cone-engine/three-kernels"
+
+[[observer.claim_prefixes]]
+prefix = "**§33.1 破对偶与观察者**"
+locator = "entanglement/broken-self-duality"
+
+[[observer.claim_prefixes]]
+prefix = "**§33.2 纠缠之塔与山腰**"
+locator = "entanglement/metric-tower"
+
+[[observer.claim_prefixes]]
+prefix = "**§34.1 两座高度**"
+locator = "dual-heights/two-heights"
+
+[[observer.claim_prefixes]]
+prefix = "**§34.2 配平之墙与 Schur 之门**"
+locator = "dual-heights/schur-gate"
+
+[[observer.claim_prefixes]]
+prefix = "**§35.1 观察者知识之相变**"
+locator = "crystallization/knowledge-transition"
+
+[[observer.claim_prefixes]]
+prefix = "**§35.2 刻度、执照与户口**"
+locator = "crystallization/scale-license-residence"
+
+[[observer.claim_prefixes]]
+prefix = "**§36.1 观察者的时间从何而来**"
+locator = "modular-time/origin"
+
+[[observer.claim_prefixes]]
+prefix = "**§36.2 时间有形状,失衡有账目**"
+locator = "modular-time/shape-and-imbalance"
+
+[[observer.claim_prefixes]]
+prefix = "**§37.1 率的世界**"
+locator = "metric-rates/rate-world"
+
+[[observer.claim_prefixes]]
+prefix = "**§37.2 尺子的性格表**"
+locator = "metric-rates/metric-character"
+
+[[observer.claim_prefixes]]
+prefix = "**§38.1 塔的全貌**"
+locator = "research-boundary/tower-overview"
+
+[[observer.claim_prefixes]]
+prefix = "**§38.2 周期之句点**"
+locator = "research-boundary/cycle-closure"
+
+[[observer.claim_prefixes]]
+prefix = "**§39.1 最后的地图**"
+locator = "nameability/final-map"
+
+[[observer.claim_prefixes]]
+prefix = "**§39.2 匿名的教益**"
+locator = "nameability/anonymous-lesson"
+
+[[observer.claim_prefixes]]
+prefix = "**§40.1 算术的住址**"
+locator = "stationary-points/arithmetic-address"
+
+[[observer.claim_prefixes]]
+prefix = "**§40.2 水位线与门**"
+locator = "stationary-points/waterline-gates"
+
+[[observer.claim_prefixes]]
+prefix = "**§41.1 词典与墙**"
+locator = "mountainside/dictionary-wall"
+
+[[observer.claim_prefixes]]
+prefix = "**§41.2 山腰的账**"
+locator = "mountainside/ledger"
+
+[[observer.claim_prefixes]]
+prefix = "**§42.1 四律**"
+locator = "diagonal-ledger/four-laws"
+
+[[observer.claim_prefixes]]
+prefix = "**§42.2 刀锋之外**"
+locator = "diagonal-ledger/beyond-blade"
+
+[[observer.claim_prefixes]]
+prefix = "**§43.1 问与答的形状**"
+locator = "six-questions/shape"
+
+[[observer.claim_prefixes]]
+prefix = "**§43.2 语法与门后**"
+locator = "six-questions/grammar"
+
+[[observer.claim_prefixes]]
+prefix = "**§44.1 价目与王冠**"
+locator = "tower-top/prices-crowns"
+
+[[observer.claim_prefixes]]
+prefix = "**§44.2 三层与塔顶**"
+locator = "tower-top/three-layers"
+
+[[observer.claim_prefixes]]
+prefix = "**§45.1 蒙难记与星座**"
+locator = "final-volume/trials-constellation"
+
+[[observer.claim_prefixes]]
+prefix = "**§45.2 合卷**"
+locator = "final-volume/closure"
+
+[[observer.claim_prefixes]]
+prefix = "**§46.1 界面**"
+locator = "interface/interface"
+
+[[observer.claim_prefixes]]
+prefix = "**§46.2 合卷**"
+locator = "interface/closure"
+
+[[gict.genres]]
+token = "勘察"
+kind = "survey"
+
+[[gict.genres]]
+token = "命题"
+kind = "proposition"
+
+[[gict.genres]]
+token = "定义"
+kind = "definition"
+
+[[gict.genres]]
+token = "定理"
+kind = "theorem"
+
+[[gict.genres]]
+token = "引理"
+kind = "lemma"
+
+[[gict.genres]]
+token = "推论"
+kind = "corollary"
+
+[[gict.genres]]
+token = "注"
+kind = "note"
+
+[[gict.genres]]
+token = "观察"
+kind = "observation"
+
+[[gict.claim_prefixes]]
+prefix = "**心脏 O-5"
+locator = "open/O-5-O-6"
+
+[[gict.claim_prefixes]]
+prefix = "> **谱系**:"
+locator = "metadata/lineage"
+
+[[gict.constants]]
+name = "A_h"
+locator = "constant/Ah"
+
+[[gict.constants]]
+name = "B_h"
+locator = "constant/Bh"
+
+[[gict.constants]]
+name = "C_φ"
+locator = "constant/Cphi"
+
+[[gict.constants]]
+name = "C₀"
+locator = "constant/C0"
+
+[[gict.constants]]
+name = "E"
+locator = "constant/E"
+
+[[gict.constants]]
+name = "T₀"
+locator = "constant/T0"
+
+[[gict.constants]]
+name = "T₁"
+locator = "constant/T1"
+
+[[gict.constants]]
+name = "c*"
+locator = "constant/cstar"
+
+[[gict.constants]]
+name = "c₁"
+locator = "constant/c1"
+
+[[gict.constants]]
+name = "c₂"
+locator = "constant/c2"
+
+[[gict.constants]]
+name = "h̄"
+locator = "constant/hbar"
+
+[[gict.constants]]
+name = "s₁"
+locator = "constant/s1"
+
+[[gict.constants]]
+name = "δ̄"
+locator = "constant/delta-mean"
+
+[[gict.constants]]
+name = "κ"
+locator = "constant/kappa"
+
+[[pzg.genres]]
+token = "前沿引注"
+kind = "frontier-note"
+
+[[pzg.genres]]
+token = "定理形"
+kind = "theorem-form"
+
+[[pzg.genres]]
+token = "公理"
+kind = "axiom"
+
+[[pzg.genres]]
+token = "判据"
+kind = "criterion"
+
+[[pzg.genres]]
+token = "原则"
+kind = "principle"
+
+[[pzg.genres]]
+token = "后果"
+kind = "consequence"
+
+[[pzg.genres]]
+token = "命题"
+kind = "proposition"
+
+[[pzg.genres]]
+token = "契约"
+kind = "contract"
+
+[[pzg.genres]]
+token = "定义"
+kind = "definition"
+
+[[pzg.genres]]
+token = "定理"
+kind = "theorem"
+
+[[pzg.genres]]
+token = "延表"
+kind = "extension-table"
+
+[[pzg.genres]]
+token = "引理"
+kind = "lemma"
+
+[[pzg.genres]]
+token = "推论"
+kind = "corollary"
+
+[[pzg.genres]]
+token = "条目"
+kind = "entry"
+
+[[pzg.genres]]
+token = "范例"
+kind = "example"
+
+[[pzg.genres]]
+token = "观察"
+kind = "observation"
+
+[[pzg.genres]]
+token = "规格"
+kind = "specification"
+
+[[pzg.genres]]
+token = "评注"
+kind = "remark"
+
+[[pzg.genres]]
+token = "账目"
+kind = "ledger"
+
+[[pzg.genres]]
+token = "路线"
+kind = "route"
+
+[[pzg.markers]]
+role = "trace-note"
+text = "追注"
+
+[[pzg.heading_prefixes]]
+prefix = "PZG_BEDC 增补册:第"
+locator = "metadata/supplement"
+
+[[pzg.heading_prefixes]]
+prefix = "候查清单"
+locator = "research-queue/batch"
+
+[[pzg.heading_prefixes]]
+prefix = "判负册"
+locator = "negative-register/batch"
+
+[[pzg.heading_prefixes]]
+prefix = "本批收束"
+locator = "verdict/batch"
+
+[[wm.headings]]
+role = "title"
+text = "世界模型账本卷:公理纲要(BEDC-WM)"
+
+[[wm.headings]]
+role = "appendix"
+text = "§7-附 尸检账(只增不删)"
+
+[[wm.headings]]
+role = "audit"
+text = "校核记录(append-only,按版分块)"

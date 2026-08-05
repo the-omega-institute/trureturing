@@ -128,10 +128,12 @@ public sealed partial class TheoryAtomizerTests
     {
         var canonical = AtomizerRegistry.Atomize(
             AtomizerRegistry.WmId,
-            Encoding.UTF8.GetBytes(CanonicalWmFixture().ReplaceLineEndings(lineEnding)));
+            Encoding.UTF8.GetBytes(CanonicalWmFixture().ReplaceLineEndings(lineEnding)),
+            DigestionTestSupport.Rules);
         var evolved = AtomizerRegistry.Atomize(
             AtomizerRegistry.WmId,
-            Encoding.UTF8.GetBytes(CanonicalWmV02Fixture().ReplaceLineEndings(lineEnding)));
+            Encoding.UTF8.GetBytes(CanonicalWmV02Fixture().ReplaceLineEndings(lineEnding)),
+            DigestionTestSupport.Rules);
 
         Assert.Equal(18, canonical.Claims.Length);
         Assert.Equal(20, evolved.Claims.Length);

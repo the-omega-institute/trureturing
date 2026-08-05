@@ -25,7 +25,7 @@ public sealed partial class TheoryAtomizerTests
         const string unknown = "unregistered-v1";
 
         var error = Assert.Throws<FormatException>(() =>
-            AtomizerRegistry.Atomize(unknown, Array.Empty<byte>()));
+            AtomizerRegistry.Atomize(unknown, Array.Empty<byte>(), DigestionTestSupport.Rules));
 
         Assert.Equal(
             $"Unknown atomizer id '{unknown}'. Registered atomizers: "
@@ -42,7 +42,7 @@ public sealed partial class TheoryAtomizerTests
             + "**定理 7.15(G 轴质量)**〔定理·证〕。黄金频率最优。\r\n\r\n"
             + "*证明*。证毕。\r\n\r\n尾注。\r\n");
 
-        var document = GictAtomizer.Atomize(bytes);
+        var document = GictAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
         var atom = Assert.Single(document.Claims);
 
         Assert.Equal("theorem/7.15", atom.AstPath);
@@ -60,7 +60,7 @@ public sealed partial class TheoryAtomizerTests
             + "**定理 26.3(桥通道)**〔closed〕。通道存在。\n\n"
             + "**账目 26.4(RH 的三面孔)**〔open〕。正性未知。\n");
 
-        var document = PzgAtomizer.Atomize(bytes);
+        var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
 
         Assert.Equal(["theorem/26.3", "ledger/26.4"], document.Claims.Select(static item => item.AstPath));
         Assert.All(document.Claims, atom =>
@@ -99,7 +99,7 @@ public sealed partial class TheoryAtomizerTests
     {
         var bytes = Encoding.UTF8.GetBytes($"# PZG\n\n**定理 26.3**{marker}");
 
-        var atom = Assert.Single(PzgAtomizer.Atomize(bytes).Claims);
+        var atom = Assert.Single(PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules).Claims);
 
         Assert.Equal(expectedKind, atom.StatusMarker.Kind.ToString());
         Assert.Equal(expectedStatus, atom.StatusMarker.Status);
@@ -115,7 +115,7 @@ public sealed partial class TheoryAtomizerTests
             + "## 1. Mount protocol\n\nFour labels.\n\n"
             + "## 7. Construction log\n\nFirst registry.\n");
 
-        var document = AtomizerRegistry.Atomize(AtomizerRegistry.PeriodicTreeId, bytes);
+        var document = AtomizerRegistry.Atomize(AtomizerRegistry.PeriodicTreeId, bytes, DigestionTestSupport.Rules);
 
         Assert.Equal(
             ["section/0", "section/1", "section/7"],
@@ -131,7 +131,7 @@ public sealed partial class TheoryAtomizerTests
         var fixture = CanonicalWmFixtureSegments();
         var bytes = Encoding.UTF8.GetBytes(string.Concat(fixture.Select(static item => item.Text)));
 
-        var document = AtomizerRegistry.Atomize(AtomizerRegistry.WmId, bytes);
+        var document = AtomizerRegistry.Atomize(AtomizerRegistry.WmId, bytes, DigestionTestSupport.Rules);
 
         Assert.Equal(fixture.Select(static item => item.AstPath), document.Claims.Select(static item => item.AstPath));
         Assert.Equal(document.Claims.Length, document.Claims.Select(static item => item.AstPath).Distinct(StringComparer.Ordinal).Count());
@@ -149,12 +149,14 @@ public sealed partial class TheoryAtomizerTests
     {
         var original = AtomizerRegistry.Atomize(
             AtomizerRegistry.WmId,
-            Encoding.UTF8.GetBytes(CanonicalWmFixture()));
+            Encoding.UTF8.GetBytes(CanonicalWmFixture()),
+            DigestionTestSupport.Rules);
         AssertSplitIdempotent(AtomizerRegistry.WmId, original);
 
         var evolved = AtomizerRegistry.Atomize(
             AtomizerRegistry.WmId,
-            Encoding.UTF8.GetBytes(CanonicalWmV02Fixture()));
+            Encoding.UTF8.GetBytes(CanonicalWmV02Fixture()),
+            DigestionTestSupport.Rules);
 
         Assert.Equal(
             original.Claims.Select(static atom => atom.AstPath)
@@ -176,7 +178,7 @@ public sealed partial class TheoryAtomizerTests
     [MemberData(nameof(InvalidWmSources))]
     public void WmV1FailsClosedForStructuralDrift(string _, byte[] bytes)
     {
-        var error = Record.Exception(() => AtomizerRegistry.Atomize(AtomizerRegistry.WmId, bytes));
+        var error = Record.Exception(() => AtomizerRegistry.Atomize(AtomizerRegistry.WmId, bytes, DigestionTestSupport.Rules));
 
         Assert.True(error is FormatException or DecoderFallbackException, error?.ToString());
     }
@@ -186,7 +188,7 @@ public sealed partial class TheoryAtomizerTests
     {
         var bytes = Encoding.UTF8.GetBytes(CanonicalWmFixture());
 
-        var document = AtomizerRegistry.Atomize(AtomizerRegistry.WmId, bytes);
+        var document = AtomizerRegistry.Atomize(AtomizerRegistry.WmId, bytes, DigestionTestSupport.Rules);
 
         Assert.All(document.Slices, static slice => Assert.True(slice.IsClaim));
         Assert.Equal(bytes.Length, document.Slices.Sum(static slice => slice.RawBytes.Length));
@@ -198,7 +200,8 @@ public sealed partial class TheoryAtomizerTests
     {
         var document = AtomizerRegistry.Atomize(
             AtomizerRegistry.WmId,
-            Encoding.UTF8.GetBytes(CanonicalWmFixture()));
+            Encoding.UTF8.GetBytes(CanonicalWmFixture()),
+            DigestionTestSupport.Rules);
 
         var section = document.ResolveClaim("section/7");
         var appendix = document.ResolveClaim("section/7-appendix");
@@ -239,7 +242,7 @@ public sealed partial class TheoryAtomizerTests
             + "| C₀ | φ/2 |\n"
             + "| **C_φ** | 0.045 |\n");
 
-        var document = GictAtomizer.Atomize(bytes);
+        var document = GictAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
 
         Assert.Equal(
             ["constant/kappa", "constant/C0", "constant/Cphi"],
@@ -255,7 +258,7 @@ public sealed partial class TheoryAtomizerTests
             + "**O-5**〔open〕发动机未闭。\n"
             + "**O-6**〔open〕正性未闭。\n");
 
-        var document = PzgAtomizer.Atomize(bytes);
+        var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
 
         Assert.Equal(["open/O-5", "open/O-6"], document.Claims.Select(static item => item.AstPath));
         Assert.Equal(bytes, document.Reassemble().ToArray());
@@ -272,7 +275,7 @@ public sealed partial class TheoryAtomizerTests
     {
         var bytes = Encoding.UTF8.GetBytes($"# Observer\n\n{claim}\n");
 
-        var atom = Assert.Single(AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes).Claims);
+        var atom = Assert.Single(AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes, DigestionTestSupport.Rules).Claims);
 
         Assert.Equal(expectedAstPath, atom.AstPath);
     }
@@ -287,7 +290,7 @@ public sealed partial class TheoryAtomizerTests
     {
         var bytes = Encoding.UTF8.GetBytes($"# Observer\n\n{claim}\n");
 
-        var atom = Assert.Single(AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes).Claims);
+        var atom = Assert.Single(AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes, DigestionTestSupport.Rules).Claims);
 
         Assert.Equal(expectedAstPath, atom.AstPath);
     }
@@ -297,7 +300,7 @@ public sealed partial class TheoryAtomizerTests
     {
         var root = FindRepositoryRoot();
         var sourceBytes = File.ReadAllBytes(Path.Combine(root, ThirdProductionSource));
-        var document = ObserverAtomizer.Atomize(sourceBytes);
+        var document = ObserverAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
 
         AssertRecognitionComplete(document, sourceBytes);
         AssertSplitIdempotent(AtomizerRegistry.ObserverId, document);
@@ -309,7 +312,7 @@ public sealed partial class TheoryAtomizerTests
         var bytes = Encoding.UTF8.GetBytes(
             "# GICT\n\n**注 2.5(Why five)**。claim。\n");
 
-        var atom = Assert.Single(GictAtomizer.Atomize(bytes).Claims);
+        var atom = Assert.Single(GictAtomizer.Atomize(bytes, DigestionTestSupport.Rules).Claims);
 
         Assert.Equal("note/2.5", atom.AstPath);
     }
@@ -320,7 +323,7 @@ public sealed partial class TheoryAtomizerTests
         var bytes = Encoding.UTF8.GetBytes(
             "# GICT\n\n**勘察 6.35(量子度量丛与谱三元组路标)**〔勘察〕。claim。\n");
 
-        var atom = Assert.Single(GictAtomizer.Atomize(bytes).Claims);
+        var atom = Assert.Single(GictAtomizer.Atomize(bytes, DigestionTestSupport.Rules).Claims);
 
         Assert.Equal("survey/6.35", atom.AstPath);
     }
@@ -340,7 +343,7 @@ public sealed partial class TheoryAtomizerTests
             + "**E.27 城同余定理**〔本卷压轴,自足证明〕。claim。\n\n"
             + "**E.28 开放问题定位与仪器铁款**。claim。\n");
 
-        var document = GictAtomizer.Atomize(bytes);
+        var document = GictAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
 
         Assert.Equal(
             [
@@ -369,7 +372,7 @@ public sealed partial class TheoryAtomizerTests
             + "## 候查清单变动\n内容。\n\n"
             + "## 本批收束五判\n内容。\n");
 
-        var document = PzgAtomizer.Atomize(bytes);
+        var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
 
         Assert.Equal(
             [
@@ -399,7 +402,7 @@ public sealed partial class TheoryAtomizerTests
             + "**路线 21.1**。h。\n\n"
             + "**〔27.82 追注:receipt〕**。i。\n");
 
-        var document = PzgAtomizer.Atomize(bytes);
+        var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
 
         Assert.Equal(
             [
@@ -427,7 +430,7 @@ public sealed partial class TheoryAtomizerTests
             + $"**新判词。** claim。{newLine}");
 
         var error = Assert.Throws<TheorySourceFormatException>(() =>
-            AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes));
+            AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes, DigestionTestSupport.Rules));
 
         Assert.Contains("unknown observer claim lead", error.Message, StringComparison.Ordinal);
         Assert.Contains("**新判词。**", error.Message, StringComparison.Ordinal);
@@ -450,7 +453,7 @@ public sealed partial class TheoryAtomizerTests
             $"# Observer{newLine}{newLine}{header}{newLine}{delimiter}{newLine}{claim}{newLine}");
 
         var error = Assert.Throws<TheorySourceFormatException>(() =>
-            AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes));
+            AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes, DigestionTestSupport.Rules));
 
         Assert.Contains("unknown observer claim lead", error.Message, StringComparison.Ordinal);
         Assert.Contains("**新判词。**", error.Message, StringComparison.Ordinal);
@@ -465,7 +468,7 @@ public sealed partial class TheoryAtomizerTests
             + "**定理(观察者代数的唯一形态)。** known。\n");
 
         var error = Assert.Throws<TheorySourceFormatException>(() =>
-            AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes));
+            AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes, DigestionTestSupport.Rules));
 
         Assert.Contains("unknown observer claim lead", error.Message, StringComparison.Ordinal);
     }
@@ -484,7 +487,7 @@ public sealed partial class TheoryAtomizerTests
             + "**定理(观察者代数的唯一形态)。** known。\n");
 
         var error = Assert.Throws<TheorySourceFormatException>(() =>
-            AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes));
+            AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes, DigestionTestSupport.Rules));
 
         Assert.Contains("unknown observer claim lead", error.Message, StringComparison.Ordinal);
     }
@@ -498,7 +501,7 @@ public sealed partial class TheoryAtomizerTests
             + "**定理(观察者代数的唯一形态)。** second。\n");
 
         var error = Assert.Throws<TheorySourceFormatException>(() =>
-            AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes));
+            AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes, DigestionTestSupport.Rules));
 
         Assert.Contains("duplicate observer claim locator", error.Message, StringComparison.Ordinal);
     }
@@ -521,7 +524,7 @@ public sealed partial class TheoryAtomizerTests
         var bytes = Encoding.UTF8.GetBytes(
             "# GICT\n\n**定理 7.15(A)**。一。\n\n**定理 7.15(B)**。二。\n");
 
-        var document = GictAtomizer.Atomize(bytes);
+        var document = GictAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
         var error = Assert.Throws<FormatException>(() => document.ResolveClaim("theorem/7.15"));
 
         Assert.Contains("ambiguous", error.Message, StringComparison.OrdinalIgnoreCase);
@@ -534,7 +537,7 @@ public sealed partial class TheoryAtomizerTests
         var bytes = Encoding.UTF8.GetBytes(
             "# PZG\n\n**猜想 1.1(Unknown kind)**。claim。\n");
 
-        var error = Assert.Throws<TheorySourceFormatException>(() => PzgAtomizer.Atomize(bytes));
+        var error = Assert.Throws<TheorySourceFormatException>(() => PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules));
 
         Assert.Contains("unknown PZG numbered claim kind", error.Message, StringComparison.Ordinal);
     }
@@ -544,7 +547,7 @@ public sealed partial class TheoryAtomizerTests
     {
         var oldBytes = Encoding.UTF8.GetBytes(
             "# GICT\r\n\r\n**定理 1.1(Test)**。claim。\r\n\r\n*证明*。done。\r\n");
-        var oldAtom = Assert.Single(GictAtomizer.Atomize(oldBytes).Claims);
+        var oldAtom = Assert.Single(GictAtomizer.Atomize(oldBytes, DigestionTestSupport.Rules).Claims);
         var ledger = new[] { LedgerEntry("gict-old", AtomizerRegistry.GictId, oldAtom) };
         var lineEndingOnly = Encoding.UTF8.GetBytes(
             "# GICT\n\n**定理 1.1(Test)**。claim。\n\n*证明*。done。\n");
@@ -552,7 +555,8 @@ public sealed partial class TheoryAtomizerTests
         var seen = TheoryIngestion.AdmitResidual(
             AtomizerRegistry.GictId,
             lineEndingOnly,
-            ledger);
+            ledger,
+            DigestionTestSupport.Rules);
 
         var match = Assert.Single(seen.Seen);
         Assert.Equal("gict-old", match.LedgerAtomId);
@@ -564,7 +568,8 @@ public sealed partial class TheoryAtomizerTests
         var admitted = TheoryIngestion.AdmitResidual(
             AtomizerRegistry.GictId,
             rewritten,
-            ledger);
+            ledger,
+            DigestionTestSupport.Rules);
 
         Assert.Empty(admitted.Seen);
         var residual = Assert.Single(admitted.Residual);
@@ -581,13 +586,13 @@ public sealed partial class TheoryAtomizerTests
     {
         var oldBytes = Encoding.UTF8.GetBytes(
             "# PZG\n\n**定理 1.1(Test)**〔closed〕。claim。\n");
-        var oldAtom = Assert.Single(PzgAtomizer.Atomize(oldBytes).Claims);
+        var oldAtom = Assert.Single(PzgAtomizer.Atomize(oldBytes, DigestionTestSupport.Rules).Claims);
         var ledger = new[] { LedgerEntry("pzg-old", AtomizerRegistry.PzgId, oldAtom) };
 
-        var seen = TheoryIngestion.AdmitResidual(AtomizerRegistry.PzgId, oldBytes, ledger);
+        var seen = TheoryIngestion.AdmitResidual(AtomizerRegistry.PzgId, oldBytes, ledger, DigestionTestSupport.Rules);
         var incoming = Encoding.UTF8.GetBytes(
             "# PZG\n\n**定理 1.2(New)**〔open〕。new claim。\n");
-        var admitted = TheoryIngestion.AdmitResidual(AtomizerRegistry.PzgId, incoming, ledger);
+        var admitted = TheoryIngestion.AdmitResidual(AtomizerRegistry.PzgId, incoming, ledger, DigestionTestSupport.Rules);
 
         Assert.Equal(DigestionFingerprintMatch.Raw, Assert.Single(seen.Seen).Match);
         Assert.Empty(seen.Residual);
@@ -599,7 +604,7 @@ public sealed partial class TheoryAtomizerTests
     {
         var bytes = Encoding.UTF8.GetBytes(
             "# GICT\n\n**定理 1.1(Test)**。claim。\n");
-        var atom = Assert.Single(GictAtomizer.Atomize(bytes).Claims);
+        var atom = Assert.Single(GictAtomizer.Atomize(bytes, DigestionTestSupport.Rules).Claims);
         var ledger = new[]
         {
             LedgerEntry("gict-first", AtomizerRegistry.GictId, atom),
@@ -607,7 +612,7 @@ public sealed partial class TheoryAtomizerTests
         };
 
         var error = Assert.Throws<FormatException>(() =>
-            TheoryIngestion.AdmitResidual(AtomizerRegistry.GictId, bytes, ledger));
+            TheoryIngestion.AdmitResidual(AtomizerRegistry.GictId, bytes, ledger, DigestionTestSupport.Rules));
 
         Assert.Contains("ambiguous", error.Message, StringComparison.OrdinalIgnoreCase);
     }
@@ -617,11 +622,11 @@ public sealed partial class TheoryAtomizerTests
     {
         var bytes = Encoding.UTF8.GetBytes(
             "# GICT\n\n| 常数 | 值 |\n|---|---|\n| κ | 1 |\n| κ | 1 |\n");
-        var first = GictAtomizer.Atomize(bytes).Claims[0];
+        var first = GictAtomizer.Atomize(bytes, DigestionTestSupport.Rules).Claims[0];
         var ledger = new[] { LedgerEntry("gict-kappa", AtomizerRegistry.GictId, first) };
 
         var error = Assert.Throws<FormatException>(() =>
-            TheoryIngestion.AdmitResidual(AtomizerRegistry.GictId, bytes, ledger));
+            TheoryIngestion.AdmitResidual(AtomizerRegistry.GictId, bytes, ledger, DigestionTestSupport.Rules));
 
         Assert.Contains("matches multiple incoming atoms", error.Message, StringComparison.Ordinal);
     }
@@ -636,7 +641,8 @@ public sealed partial class TheoryAtomizerTests
             TheoryIngestion.AdmitResidual(
                 AtomizerRegistry.GictId,
                 bytes,
-                Array.Empty<DigestionLedgerEntry>()));
+                Array.Empty<DigestionLedgerEntry>(),
+                DigestionTestSupport.Rules));
 
         Assert.Contains("duplicate raw residual fingerprint", error.Message, StringComparison.Ordinal);
     }
@@ -646,7 +652,7 @@ public sealed partial class TheoryAtomizerTests
     {
         var bytes = Encoding.UTF8.GetBytes(
             "# GICT\n\n| 常数 | 值 |\n|---|---|\n| κ | 1 |\r\n| κ | 1 |\n");
-        var claims = GictAtomizer.Atomize(bytes).Claims;
+        var claims = GictAtomizer.Atomize(bytes, DigestionTestSupport.Rules).Claims;
         Assert.Equal(2, claims.Length);
         Assert.NotEqual(claims[0].Fingerprints.RawSha256, claims[1].Fingerprints.RawSha256);
         Assert.Equal(claims[0].Fingerprints.NormalizedSha256, claims[1].Fingerprints.NormalizedSha256);
@@ -655,7 +661,8 @@ public sealed partial class TheoryAtomizerTests
             TheoryIngestion.AdmitResidual(
                 AtomizerRegistry.GictId,
                 bytes,
-                Array.Empty<DigestionLedgerEntry>()));
+                Array.Empty<DigestionLedgerEntry>(),
+                DigestionTestSupport.Rules));
 
         Assert.Contains("duplicate normalized residual fingerprint", error.Message, StringComparison.Ordinal);
     }
@@ -669,7 +676,7 @@ public sealed partial class TheoryAtomizerTests
         var root = FindRepositoryRoot();
         var bytes = File.ReadAllBytes(Path.Combine(root, relativePath));
 
-        var document = AtomizerRegistry.Atomize(atomizerId, bytes);
+        var document = AtomizerRegistry.Atomize(atomizerId, bytes, DigestionTestSupport.Rules);
 
         AssertRecognitionComplete(document, bytes);
         AssertSplitIdempotent(atomizerId, document);
@@ -703,7 +710,7 @@ public sealed partial class TheoryAtomizerTests
         AtomizedTheoryDocument first)
     {
         var reassembled = first.Reassemble();
-        var second = AtomizerRegistry.Atomize(atomizerId, reassembled.AsSpan());
+        var second = AtomizerRegistry.Atomize(atomizerId, reassembled.AsSpan(), DigestionTestSupport.Rules);
 
         Assert.Equal(
             first.Claims.Select(static atom =>

@@ -26,7 +26,7 @@ public sealed class FormalizeCandidatesTests
         var bytes = Encoding.UTF8.GetBytes(
             "# PZG\n\n**定理 26.3**。正文随后提到〔closed〕。\n");
 
-        var atom = Assert.Single(PzgAtomizer.Atomize(bytes).Claims);
+        var atom = Assert.Single(PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules).Claims);
 
         Assert.Equal(DigestionAtomStatusMarkerKind.Absent, atom.StatusMarker.Kind);
     }
@@ -419,7 +419,7 @@ public sealed class FormalizeCandidatesTests
             {
                 var bytes = ImmutableArray.CreateRange(
                     group.SelectMany(static entry => entry.Atom.RawBytes));
-                var atoms = PzgAtomizer.Atomize(bytes.AsSpan()).Claims;
+                var atoms = PzgAtomizer.Atomize(bytes.AsSpan(), DigestionTestSupport.Rules).Claims;
                 var fixtures = group.ToArray();
                 Assert.Equal(fixtures.Length, atoms.Length);
                 return new SourceFixture(
@@ -433,6 +433,9 @@ public sealed class FormalizeCandidatesTests
         var files = new List<RawRepositoryEntry>
         {
             RawRepositoryEntry.FromText(BackfillInventoryLoader.RelativePath, ledger),
+            new(
+                TheoryAtomizerDataLoader.DataPath,
+                ImmutableArray.CreateRange(DigestionTestSupport.RulesBytes)),
         };
         foreach (var source in sources)
         {
@@ -511,7 +514,7 @@ public sealed class FormalizeCandidatesTests
             status is UnterminatedPlainClosedMarker or UnterminatedClosedMarker
             ? $"# Synthetic\n\n**{kind} {number}**{status}"
             : $"# Synthetic\n\n**{kind} {number}**{status}。{body}\n");
-        var atom = Assert.Single(PzgAtomizer.Atomize(source).Claims);
+        var atom = Assert.Single(PzgAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);
         return new EntryFixture(
             sourceId,
             atomId,

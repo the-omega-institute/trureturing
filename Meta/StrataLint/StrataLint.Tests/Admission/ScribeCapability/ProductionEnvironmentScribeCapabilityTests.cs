@@ -18,7 +18,7 @@ public sealed partial class ProductionEnvironmentTests
         var ticketIndex = canonicalLedger[canonicalLedger.IndexOf("ticket_index:", StringComparison.Ordinal)..];
         var atomizerId = AtomizerRegistry.RegisteredIds[0];
         var sourceBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。covered。\n");
-        var atom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, sourceBytes).Claims);
+        var atom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, sourceBytes, DigestionTestSupport.Rules).Claims);
         var captured = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
         const string coveredDocumentGid = "D5/S0/Carrier/BackfillTarget";
         const string coveredGid = coveredDocumentGid + ".protectedTargetFixture";

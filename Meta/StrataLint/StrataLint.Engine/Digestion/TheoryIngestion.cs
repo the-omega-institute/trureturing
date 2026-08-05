@@ -27,11 +27,12 @@ internal static class TheoryIngestion
     internal static TheoryIngestionResult AdmitResidual(
         string atomizerId,
         ReadOnlySpan<byte> bytes,
-        IEnumerable<DigestionLedgerEntry> ledger)
+        IEnumerable<DigestionLedgerEntry> ledger,
+        TheoryAtomizerRules rules)
     {
         var registration = AtomizerRegistry.Require(atomizerId);
         return DigestionFingerprintSubtractor.Subtract(
-            registration.Atomize(bytes),
+            registration.Atomize(bytes, rules),
             ledger,
             atomizerId,
             registration.ResidualPrefix);

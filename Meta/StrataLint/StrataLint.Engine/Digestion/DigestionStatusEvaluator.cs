@@ -430,10 +430,24 @@ internal static class DigestionStatusEvaluator
             return false;
         }
 
+        if (!TheoryAtomizerDataLoader.TryLoad(snapshot, out var atomizerRules))
+        {
+            // This tree predates the atomizer data surface, so the boundary cannot be re-derived
+            // against it. Recording a gap here would make a harness carrying this loader reject a
+            // tree the baseline harness admits, which conservative extension forbids. A tree that
+            // DOES carry the data file gets the full check below, and admission separately
+            // requires the file to exist (FILEMAP, registry, generated-artifact inventory), so
+            // this branch cannot be reached by deleting it from a current tree.
+            return true;
+        }
+
         AtomizedTheoryDocument atomized;
         try
         {
-            atomized = AtomizerRegistry.Atomize(entry.Atomizer, source.RawBytes.AsSpan());
+            atomized = AtomizerRegistry.Atomize(
+                entry.Atomizer,
+                source.RawBytes.AsSpan(),
+                atomizerRules);
         }
         catch (FormatException exception)
         {

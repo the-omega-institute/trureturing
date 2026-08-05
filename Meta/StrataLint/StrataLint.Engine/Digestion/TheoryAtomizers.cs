@@ -185,31 +185,25 @@ internal static class DigestionFingerprint
 
 internal static class GictAtomizer
 {
-    private static readonly Regex ClaimPattern = new(
-        "^\\*\\*(?<kind>定理|定义|命题|引理|推论|观察|勘察|注)\\s*(?<number>[0-9]+\\.[0-9]+)",
-        RegexOptions.CultureInvariant);
     private static readonly Regex UnknownNumberedClaimPattern = new(
         "^\\*\\*(?<kind>\\p{L}+)\\s*[0-9]+\\.[0-9]+",
         RegexOptions.CultureInvariant);
     private static readonly Regex AppendixClaimPattern = new(
         "^\\*\\*(?<number>E\\.[0-9]+)\\s+[^\\r\\n*]+\\*\\*",
         RegexOptions.CultureInvariant);
-    private static readonly Regex LineagePattern = new(
-        "^>\\s*\\*\\*谱系\\*\\*:",
-        RegexOptions.CultureInvariant);
-    private static readonly Regex HeartsPattern = new(
-        "^\\*\\*心脏 O-5.*O-6",
-        RegexOptions.CultureInvariant);
 
-    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes) =>
-        MarkdownAstAtomizer.Atomize(bytes, Identify, IdentifyConstant);
+    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules rules) =>
+        MarkdownAstAtomizer.Atomize(
+            bytes,
+            paragraph => Identify(paragraph, rules),
+            value => IdentifyConstant(value, rules));
 
-    private static string? Identify(string paragraph)
+    private static string? Identify(string paragraph, TheoryAtomizerRules rules)
     {
-        var match = ClaimPattern.Match(paragraph);
+        var match = ClaimPattern(rules).Match(paragraph);
         if (match.Success)
         {
-            return Kind(match.Groups["kind"].Value) + "/" + match.Groups["number"].Value;
+            return Kind(match.Groups["kind"].Value, rules.GictGenres) + "/" + match.Groups["number"].Value;
         }
 
         var appendix = AppendixClaimPattern.Match(paragraph);
@@ -225,45 +219,26 @@ internal static class GictAtomizer
                 $"unknown GICT numbered claim kind {unknown.Groups["kind"].Value}");
         }
 
-        if (HeartsPattern.IsMatch(paragraph))
+        var special = rules.GictClaimPrefixes
+            .FirstOrDefault(item => paragraph.StartsWith(item.Token, StringComparison.Ordinal));
+        if (special is not null)
         {
-            return "open/O-5-O-6";
+            return special.Value;
         }
-
-        return LineagePattern.IsMatch(paragraph) ? "metadata/lineage" : null;
+        return null;
     }
 
-    private static string Kind(string value) => value switch
-    {
-        "定理" => "theorem",
-        "定义" => "definition",
-        "命题" => "proposition",
-        "引理" => "lemma",
-        "推论" => "corollary",
-        "观察" => "observation",
-        "勘察" => "survey",
-        "注" => "note",
-        _ => throw new InvalidOperationException($"unknown GICT claim kind {value}"),
-    };
+    private static string Kind(string value, ImmutableArray<AtomizerMapping> genres) =>
+        genres.FirstOrDefault(item => item.Token == value)?.Value
+        ?? throw new InvalidOperationException($"unknown GICT claim kind {value}");
 
-    private static string? IdentifyConstant(string value) => value switch
-    {
-        "κ" => "constant/kappa",
-        "C₀" => "constant/C0",
-        "c*" => "constant/cstar",
-        "h̄" => "constant/hbar",
-        "s₁" => "constant/s1",
-        "A_h" => "constant/Ah",
-        "E" => "constant/E",
-        "C_φ" => "constant/Cphi",
-        "T₀" => "constant/T0",
-        "δ̄" => "constant/delta-mean",
-        "T₁" => "constant/T1",
-        "B_h" => "constant/Bh",
-        "c₁" => "constant/c1",
-        "c₂" => "constant/c2",
-        _ => null,
-    };
+    private static string? IdentifyConstant(string value, TheoryAtomizerRules rules) =>
+        rules.GictConstants.FirstOrDefault(item => item.Token == value)?.Value;
+
+    private static Regex ClaimPattern(TheoryAtomizerRules rules) => new(
+        "^\\*\\*(?<kind>" + string.Join('|', rules.GictGenres.Select(static item => Regex.Escape(item.Token)))
+        + ")\\s*(?<number>[0-9]+\\.[0-9]+)",
+        RegexOptions.CultureInvariant);
 }
 
 internal static class PeriodicTreeAtomizer
@@ -272,7 +247,7 @@ internal static class PeriodicTreeAtomizer
         "^(?<number>[0-9]+)\\.\\s+",
         RegexOptions.CultureInvariant);
 
-    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes) =>
+    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules _) =>
         MarkdownAstAtomizer.Atomize(bytes, static _ => null, identifyHeading: IdentifyHeading);
 
     private static string? IdentifyHeading(string heading)
@@ -284,37 +259,32 @@ internal static class PeriodicTreeAtomizer
 
 internal static class PzgAtomizer
 {
-    private static readonly Regex ClaimPattern = new(
-        "^\\*\\*(?<kind>前沿引注|定理形|定理|定义|命题|引理|推论|观察|评注|账目|条目|公理|范例|判据|后果|原则|规格|契约|延表|路线)\\s*(?<number>[0-9]+\\.[0-9]+[′″]*)",
-        RegexOptions.CultureInvariant);
-    private static readonly Regex TraceNotePattern = new(
-        "^\\*\\*〔(?<number>[0-9]+\\.[0-9]+)\\s+追注",
-        RegexOptions.CultureInvariant);
     private static readonly Regex UnknownNumberedClaimPattern = new(
         "^\\*\\*(?<kind>\\p{L}+)\\s*[0-9]+\\.[0-9]+",
         RegexOptions.CultureInvariant);
     private static readonly Regex OpenPattern = new(
         "^\\*\\*(?<id>O-[0-9]+)\\*\\*",
         RegexOptions.CultureInvariant);
-    private static readonly Regex SupplementHeadingPattern = new(
-        "^PZG_BEDC 增补册:第\\s*(?<version>[0-9]+)\\s*版",
-        RegexOptions.CultureInvariant);
-    private static readonly Regex RemarkHeadingPattern = new(
-        "^评注\\s+(?<range>[0-9]+\\.[0-9]+(?:[–—-][0-9]+\\.[0-9]+)?)",
-        RegexOptions.CultureInvariant);
 
-    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes) =>
-        MarkdownAstAtomizer.Atomize(bytes, Identify, identifyHeading: IdentifyHeading);
+    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules rules) =>
+        MarkdownAstAtomizer.Atomize(
+            bytes,
+            paragraph => Identify(paragraph, rules),
+            identifyHeading: heading => IdentifyHeading(heading, rules));
 
-    private static string? Identify(string paragraph)
+    private static string? Identify(string paragraph, TheoryAtomizerRules rules)
     {
-        var match = ClaimPattern.Match(paragraph);
+        var match = ClaimPattern(rules).Match(paragraph);
         if (match.Success)
         {
-            return Kind(match.Groups["kind"].Value) + "/" + match.Groups["number"].Value;
+            return Kind(match.Groups["kind"].Value, rules.PzgGenres) + "/" + match.Groups["number"].Value;
         }
 
-        var trace = TraceNotePattern.Match(paragraph);
+        var trace = Regex.Match(
+            paragraph,
+            "^\\*\\*〔(?<number>[0-9]+\\.[0-9]+)\\s+"
+                + Regex.Escape(rules.PzgMarkers["trace-note"]),
+            RegexOptions.CultureInvariant);
         if (trace.Success)
         {
             return "trace-note/" + trace.Groups["number"].Value;
@@ -336,61 +306,48 @@ internal static class PzgAtomizer
         return null;
     }
 
-    private static string? IdentifyHeading(string heading)
+    private static string? IdentifyHeading(string heading, TheoryAtomizerRules rules)
     {
-        var supplement = SupplementHeadingPattern.Match(heading);
+        var supplementPrefix = rules.PzgHeadingPrefixes
+            .Single(item => item.Value == "metadata/supplement").Token;
+        var supplement = Regex.Match(
+            heading,
+            "^" + Regex.Escape(supplementPrefix) + "\\s*(?<version>[0-9]+)\\s*版",
+            RegexOptions.CultureInvariant);
         if (supplement.Success)
         {
             return "metadata/supplement/" + supplement.Groups["version"].Value;
         }
 
-        var remark = RemarkHeadingPattern.Match(heading);
-        if (remark.Success)
+        var remarkToken = rules.PzgGenres.FirstOrDefault(item => item.Value == "remark")?.Token;
+        var remark = remarkToken is null ? null : Regex.Match(
+            heading,
+            "^" + Regex.Escape(remarkToken)
+                + "\\s+(?<range>[0-9]+\\.[0-9]+(?:[–—-][0-9]+\\.[0-9]+)?)",
+            RegexOptions.CultureInvariant);
+        if (remark is { Success: true })
         {
             return "remark/" + remark.Groups["range"].Value
                 .Replace('–', '-')
                 .Replace('—', '-');
         }
 
-        if (heading.StartsWith("判负册", StringComparison.Ordinal))
-        {
-            return "negative-register/batch";
-        }
-
-        if (heading.StartsWith("候查清单", StringComparison.Ordinal))
-        {
-            return "research-queue/batch";
-        }
-
-        return heading.StartsWith("本批收束", StringComparison.Ordinal)
-            ? "verdict/batch"
-            : null;
+        return rules.PzgHeadingPrefixes
+            .Where(static item => item.Value != "metadata/supplement")
+            .FirstOrDefault(item => heading.StartsWith(item.Token, StringComparison.Ordinal))?.Value;
     }
 
-    private static string Kind(string value) => value switch
-    {
-        "定理" => "theorem",
-        "定义" => "definition",
-        "命题" => "proposition",
-        "引理" => "lemma",
-        "推论" => "corollary",
-        "观察" => "observation",
-        "评注" => "remark",
-        "账目" => "ledger",
-        "条目" => "entry",
-        "公理" => "axiom",
-        "范例" => "example",
-        "判据" => "criterion",
-        "后果" => "consequence",
-        "原则" => "principle",
-        "规格" => "specification",
-        "契约" => "contract",
-        "定理形" => "theorem-form",
-        "前沿引注" => "frontier-note",
-        "延表" => "extension-table",
-        "路线" => "route",
-        _ => throw new InvalidOperationException($"unknown PZG claim kind {value}"),
-    };
+    private static Regex ClaimPattern(TheoryAtomizerRules rules) => new(
+        "^\\*\\*(?<kind>" + string.Join('|', rules.PzgGenres.Select(static item => Regex.Escape(item.Token)))
+        + ")\\s*(?<number>[0-9]+\\.[0-9]+[′″]*)",
+        RegexOptions.CultureInvariant);
+
+    internal static bool RecognizesGenre(string token, TheoryAtomizerRules rules) =>
+        ClaimPattern(rules).IsMatch($"**{token} 1.1**");
+
+    private static string Kind(string value, ImmutableArray<AtomizerMapping> genres) =>
+        genres.FirstOrDefault(item => item.Token == value)?.Value
+        ?? throw new InvalidOperationException($"unknown PZG claim kind {value}");
 }
 
 internal static class MarkdownAstAtomizer
