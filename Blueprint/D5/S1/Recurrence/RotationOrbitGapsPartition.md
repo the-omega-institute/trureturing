@@ -15,3 +15,8 @@ $$\forall \alpha\in\mathbb{R},\ n\in\mathbb{N},\ O_{\alpha,n}:=\operatorname{rot
 *Commentary.*
 
 The fractional parts of the first n multiples of a real rotation parameter lie in the half-open unit interval. For positive n, the orbit contains its zeroth point, so the cyclic gap partition applies: every clockwise gap is positive and their sum is one. At parameter one half and length two, the orbit is exactly zero and one half; zero uses the ordinary successor while one half uses the wrap branch.
+
+## References
+
+- Truth anchor: `D5/S1/Recurrence/RotationOrbitGapsPartition.rotation_orbit_gaps_partition`
+- Dependency: [D5/S1/Recurrence/CyclicGapsPartition](CyclicGapsPartition.md)

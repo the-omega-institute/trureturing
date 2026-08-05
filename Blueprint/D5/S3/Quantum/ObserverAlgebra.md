@@ -27,3 +27,8 @@ $$\forall I,\ \forall \tau \in \operatorname{Perm}(I),\ \forall f,\psi:I\to\math
 *Commentary.*
 
 Noncommutativity requires an explicit address i where the pulled-back read value differs from the current read value and a state whose predecessor amplitude is nonzero. That address is also the explicit inhabitability witness; there is no hidden Nonempty premise. The theorem does not say that every read function, reversible update, or state fails to commute, and it does not assert an abstract C*-algebra commutator identity. Original numerical-certificate disposition: neither observer-algebra CAS atom contains a numerical certificate.
+
+## References
+
+- Truth anchor: `D5/S3/Quantum/ObserverAlgebra.observer_read_update_noncommutative`
+- Truth anchor: `D5/S3/Quantum/ObserverAlgebra.observer_update_covariant_group_skeleton`

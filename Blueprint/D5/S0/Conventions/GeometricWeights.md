@@ -15,3 +15,8 @@ $\neg\exists\,w_1,\Lambda,c\in\mathbb{Q},\ c\neq0:\ w_1\Lambda^k=cF_{k+2}\ \text
 *Commentary.*
 
 The W-digit convention defines wValue k as fib(k+2), so singleton bits have weights 1, 2, 3 at indices 0, 1, 2. The first two equations force the geometric ratio to be 2, while the third requires its square to be 3; the nonzero scale excludes cancellation.
+
+## References
+
+- Truth anchor: `D5/S0/Conventions/GeometricWeights.no_geometric_weights_match_zeckendorf_singletons`
+- Dependency: [D5/S0/Conventions/WDigits](WDigits.md)
