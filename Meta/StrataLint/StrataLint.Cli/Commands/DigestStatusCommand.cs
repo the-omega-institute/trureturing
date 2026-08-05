@@ -224,11 +224,14 @@ internal static class DigestStatusCommand
             .ToArray();
         var material = new
         {
-            schema = "stratalint-formalize-candidates-v2",
+            schema = "stratalint-formalize-candidates-v3",
             ledger_sha256 = DigestionFingerprint.ComputeOpaque(ledgerFile.RawBytes.AsSpan()).RawSha256,
             candidates = projections
                 .Where(static item => item.Candidate is not null)
                 .Select(static item => item.Candidate!),
+            recorded_formalizations = projections
+                .Where(static item => item.RecordedFormalization is not null)
+                .Select(static item => item.RecordedFormalization!),
             withheld = projections
                 .Where(static item => item.Withheld is not null)
                 .Select(static item => item.Withheld!),
@@ -254,9 +257,15 @@ internal static class DigestStatusCommand
             return null;
         }
 
-        if (HasValidFormalizationReceipt(entry, snapshot, leanReport))
+        var recordedFormalization = CurrentFormalizationReceipt(entry, snapshot, leanReport);
+        if (recordedFormalization is not null)
         {
-            return null;
+            return new FormalizeProjection(
+                entry.SourceId,
+                entry.AtomId,
+                null,
+                recordedFormalization,
+                null);
         }
 
         var casPath = DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..];
@@ -285,6 +294,7 @@ internal static class DigestStatusCommand
                 entry.SourceId,
                 entry.AtomId,
                 null,
+                null,
                 new WithheldFormalizeCandidate(
                     entry.AtomId,
                     "malformed-status-marker",
@@ -301,6 +311,7 @@ internal static class DigestStatusCommand
             return new FormalizeProjection(
                 entry.SourceId,
                 entry.AtomId,
+                null,
                 null,
                 new WithheldFormalizeCandidate(
                     entry.AtomId,
@@ -319,10 +330,11 @@ internal static class DigestStatusCommand
                 entry.CasRef,
                 entry.Fingerprints.RawSha256,
                 atomText),
+            null,
             null);
     }
 
-    private static bool HasValidFormalizationReceipt(
+    private static RecordedFormalization? CurrentFormalizationReceipt(
         DigestionLedgerEntry entry,
         RepositorySnapshot snapshot,
         LeanAxiomReport leanReport)
@@ -332,12 +344,12 @@ internal static class DigestStatusCommand
             + DigestionFormalizationReceipt.PathSuffix;
         if (!DigestionFormalizationReceipt.IsCanonicalPath(path))
         {
-            return false;
+            return null;
         }
 
         if (!snapshot.TryGetFile(path, out _))
         {
-            return false;
+            return null;
         }
 
         try
@@ -351,15 +363,25 @@ internal static class DigestStatusCommand
                     StringComparison.Ordinal)
                 || !Gid.TryParse(receipt.PrimaryGid, out var gid))
             {
-                return false;
+                return null;
             }
 
-            _ = DigestionFormalizationReceipt.ResolveSignature(gid, leanReport);
-            return true;
+            var currentSignature = DigestionFormalizationReceipt.ResolveSignature(gid, leanReport);
+            if (receipt.Signature != currentSignature)
+            {
+                return null;
+            }
+
+            return new RecordedFormalization(
+                entry.SourceId,
+                entry.AtomId,
+                "current-formalization-receipt",
+                receipt.PrimaryGid,
+                path);
         }
         catch (Exception exception) when (exception is FormatException or JsonException)
         {
-            return false;
+            return null;
         }
     }
 
@@ -415,7 +437,15 @@ internal static class DigestStatusCommand
         string SourceId,
         string AtomId,
         FormalizeCandidate? Candidate,
+        RecordedFormalization? RecordedFormalization,
         WithheldFormalizeCandidate? Withheld);
+
+    private sealed record RecordedFormalization(
+        string SourceId,
+        string AtomId,
+        string EvidenceKind,
+        string PrimaryGid,
+        string ReceiptPath);
 }
 
 internal static class DigestResidualSummary
