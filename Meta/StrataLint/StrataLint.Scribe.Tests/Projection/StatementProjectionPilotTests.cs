@@ -56,7 +56,31 @@ public sealed class StatementProjectionPilotTests
     }
 
     [Fact]
-    public void PilotProjectsTenRealDeclarationsAndPinsTheComparisonReport()
+    public void IsClosedTopologyInstanceFamilyProjectsFaithfullyFromFixture()
+    {
+        using var fixture = LoadPinnedFixture("statement-projection-pilot-v1.json");
+        using var expansion = LoadPinnedFixture("statement-projection-expansion-v1.json");
+        var result = Assert.Single(ProjectionPilot.Run(ReadFixtureDeclarations(fixture, expansion)).Cases,
+            item => item.Name.EndsWith("hiddenFiber_closed_compact_seqCompact", StringComparison.Ordinal));
+
+        Assert.Empty(result.Unprojectable);
+        Assert.IsNotType<Formula.Placeholder>(result.Formula);
+    }
+
+    [Fact]
+    public void AddSubgroupFiniteSumCoercionFamilyProjectsFaithfullyFromFixture()
+    {
+        using var fixture = LoadPinnedFixture("statement-projection-pilot-v1.json");
+        using var expansion = LoadPinnedFixture("statement-projection-expansion-v1.json");
+        var result = Assert.Single(ProjectionPilot.Run(ReadFixtureDeclarations(fixture, expansion)).Cases,
+            item => item.Name.EndsWith("finite_poisson_summation", StringComparison.Ordinal));
+
+        Assert.Empty(result.Unprojectable);
+        Assert.IsNotType<Formula.Placeholder>(result.Formula);
+    }
+
+    [Fact]
+    public void PilotProjectsTenOfTenRealDeclarationsAndPinsTheComparisonReport()
     {
         using var fixture = LoadPinnedFixture("statement-projection-pilot-v1.json");
         using var expansion = LoadPinnedFixture("statement-projection-expansion-v1.json");
@@ -69,8 +93,24 @@ public sealed class StatementProjectionPilotTests
             item => Assert.IsNotType<Formula.Placeholder>(item.Formula));
         Assert.All(results.Cases.Where(item => !item.Unprojectable.IsEmpty),
             item => Assert.IsType<Formula.Placeholder>(item.Formula));
-        Assert.Equal(8, results.Cases.Count(item => item.Unprojectable.IsEmpty));
-        Assert.Equal(2, results.Cases.Count(item => !item.Unprojectable.IsEmpty));
+        Assert.Equal(10, results.Cases.Count(item => item.Unprojectable.IsEmpty));
+        Assert.Empty(results.Cases.Where(item => !item.Unprojectable.IsEmpty));
+    }
+
+    [Fact]
+    public void EveryExistingPilotDescribeFormulaIsProjectionDerivedWithoutHandwrittenDisp()
+    {
+        using var fixture = LoadPinnedFixture("statement-projection-pilot-v1.json");
+        using var expansion = LoadPinnedFixture("statement-projection-expansion-v1.json");
+        var names = ReadFixtureDeclarations(fixture, expansion).Keys.ToArray();
+        var blueprintRoot = Path.Combine(FindRepositoryRoot(), "Blueprint");
+        var sources = Directory.EnumerateFiles(blueprintRoot, "*.scribe.cs", SearchOption.AllDirectories)
+            .Select(File.ReadAllText).ToArray();
+
+        var projected = sources.Sum(source => source.Split(
+            "StatementProjectionFixtureLoader.FromLean(", StringSplitOptions.None).Length - 1);
+
+        Assert.Equal(8, projected);
     }
 
     [LiveReportFact]
@@ -97,7 +137,7 @@ public sealed class StatementProjectionPilotTests
     }
 
     private static JsonDocument LoadPinnedFixture(string name) => JsonDocument.Parse(File.ReadAllBytes(Path.Combine(
-        AppContext.BaseDirectory, "Projection", "Fixtures", name)));
+        FindRepositoryRoot(), "Golden", "Projection", name)));
 
     private static Dictionary<string, JsonElement> ReadFixtureDeclarations(params JsonDocument[] fixtures)
     {
