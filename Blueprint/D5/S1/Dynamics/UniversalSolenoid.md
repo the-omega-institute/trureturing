@@ -19,3 +19,7 @@ $$\pi(\operatorname{realFlow}(t))=t\operatorname{mod}1.$$
 *Commentary.*
 
 The projection formula is machine-checked directly. The same module proves dense range and derives connectedness from it.
+
+## References
+
+- Truth anchor: `D5/S1/Dynamics/UniversalSolenoid.projection_realFlow`

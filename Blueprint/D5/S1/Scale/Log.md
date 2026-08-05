@@ -65,3 +65,12 @@ At the option level, every integer exponent, including negative powers, translat
 $$
 \operatorname{logScale}\left(\operatorname{phiUnitZPowMul}\left(n, x\right)\right) = \operatorname{map}\left(n + \mathord{\cdot}, \operatorname{logScale}\left(x\right)\right)
 $$
+
+## References
+
+- Truth anchor: `D5/S1/Scale/Log.embedding_phiUnitZPowMul`
+- Truth anchor: `D5/S1/Scale/Log.logScale_ne_zero`
+- Truth anchor: `D5/S1/Scale/Log.logScale_phiUnit_zpow_mul`
+- Truth anchor: `D5/S1/Scale/Log.logScale_zero`
+- Dependency: [D5/S0/Carrier/Units](../../S0/Carrier/Units.md)
+- Dependency: [D5/S1/Scale/Embedding](Embedding.md)
