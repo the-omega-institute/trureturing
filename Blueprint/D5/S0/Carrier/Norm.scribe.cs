@@ -71,5 +71,6 @@ internal sealed class NormDocument : IScribeDocumentDefinition
                 Blocks(
                     Paragraph(Text(
                         "The golden norm is a monoid homomorphism from `GoldenInt` to the integers, packaged as `normMonoidHom` out of its unit and multiplicativity laws. The norm of a power is therefore the same power of the norm, obtained directly as `map_pow normMonoidHom` rather than by a coordinate induction.")))
-            ))));
+            )),
+        [DocumentEdge.Dependency.Create(GidRef.Create("D5/S0/Carrier/Ring"))]));
 }
