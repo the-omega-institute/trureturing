@@ -149,6 +149,7 @@ public sealed class TypeModelTests
     [InlineData("Golden/cases/a.toml")]
     [InlineData("Golden/cases/A0_case-name.toml")]
     [InlineData("Golden/fixture-registry.yaml")]
+    [InlineData("Golden/Projection/x.json")]
     [InlineData("Golden/values-kernels.toml")]
     public void CanonicalGoldenDataResidencesAreClosedWorldRegistered(string value)
     {
@@ -160,6 +161,13 @@ public sealed class TypeModelTests
 
     [Theory]
     [InlineData("Golden/other.toml")]
+    [InlineData("Golden/Other/x.json")]
+    [InlineData("Golden/Projection/nested/x.json")]
+    [InlineData("Golden/Projection/x.toml")]
+    [InlineData("Golden/Projection/.json")]
+    [InlineData("Golden/Projection/bad.name.json")]
+    [InlineData("Golden/Projection/bad+name.json")]
+    [InlineData("Golden/Projection/caf\u00e9.json")]
     [InlineData("Golden/cases/nested/case.toml")]
     [InlineData("Golden/cases/case.yaml")]
     [InlineData("Golden/cases/.toml")]
@@ -170,7 +178,10 @@ public sealed class TypeModelTests
     {
         var path = RepoPath.CreateKnown(value);
 
-        Assert.NotNull(RepositoryPathPolicy.Validate(path, Policy()));
+        var issue = Assert.IsType<RepositoryPathIssue>(
+            RepositoryPathPolicy.Validate(path, Policy()));
+
+        Assert.Equal("SL-000", issue.RuleId.Value);
         Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
     }
 
