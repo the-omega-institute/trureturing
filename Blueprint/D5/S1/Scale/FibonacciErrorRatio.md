@@ -39,3 +39,10 @@ $$\lim_{n\to\infty}\frac{\lvert e_{n+1}\rvert}{\lvert e_n\rvert}=\frac{1}{\varph
 *Commentary.*
 
 The adjacent absolute-error ratios of the shifted Fibonacci convergents tend to the reciprocal square of the golden ratio.
+
+## References
+
+- Truth anchor: `D5/S1/Scale/FibonacciErrorRatio.fibonacci_convergent_error_ratio`
+- Truth anchor: `D5/S1/Scale/FibonacciErrorRatio.fibonacci_convergent_error_ratio_tendsto`
+- Truth anchor: `D5/S1/Scale/FibonacciErrorRatio.fibonacci_golden_residual`
+- Dependency: [D5/S1/Scale/FibonacciEigen](FibonacciEigen.md)

@@ -13,4 +13,3 @@ A finite reading is an executable function from marker histories to `Bool`, with
 ## References
 
 - Dependency: [D5/S0/History/HistoryCarrier](HistoryCarrier.md)
-- Narrative reference: [D5/S0/History/MarkerHistorySearch](MarkerHistorySearch.md)

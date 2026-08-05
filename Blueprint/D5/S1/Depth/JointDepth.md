@@ -15,3 +15,8 @@ Lean statement: `D5/S1/Depth/JointDepth.joint_depth_spec`
 *Commentary.*
 
 A nonzero golden integer supplies both the logarithmic scale and the admissible W-resolution index. Canonical digits and circle phase come from the natural coordinate, and the dependent finite bucket records the resulting depth without truncating a negative index.
+
+## References
+
+- Truth anchor: `D5/S1/Depth/JointDepth.joint_depth_spec`
+- Dependency: [D5/S1/Depth/JointCoordinates](JointCoordinates.md)

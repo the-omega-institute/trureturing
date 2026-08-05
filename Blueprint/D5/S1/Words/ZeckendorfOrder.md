@@ -27,3 +27,8 @@ $$\operatorname{zeck}(m) <_{\text{lex}} \operatorname{zeck}(n) \iff m < n$$
 *Commentary.*
 
 Mathlib's canonical Zeckendorf representation maps natural numbers to greatest-index-first lists so that list lexicographic order holds exactly when the original natural numbers are strictly ordered.
+
+## References
+
+- Truth anchor: `D5/S1/Words/ZeckendorfOrder.isZeckendorfRep_lex_iff_sum_fib_lt`
+- Truth anchor: `D5/S1/Words/ZeckendorfOrder.zeckendorf_lex_iff_lt`
