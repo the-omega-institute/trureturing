@@ -5,6 +5,35 @@ namespace StrataLint.Tests;
 
 internal static class DigestionTestSupport
 {
+    private static readonly Lazy<TheoryAtomizerRules> CanonicalRules = new(() =>
+    {
+        var root = AppContext.BaseDirectory;
+        while (!File.Exists(Path.Combine(root, TheoryAtomizerDataLoader.DataPath)))
+        {
+            root = Directory.GetParent(root)?.FullName
+                ?? throw new InvalidOperationException("repository root not found");
+        }
+        return TheoryAtomizerDataLoader.Load(Snapshot((
+            TheoryAtomizerDataLoader.DataPath,
+            File.ReadAllBytes(Path.Combine(root, TheoryAtomizerDataLoader.DataPath)))));
+    });
+
+    internal static TheoryAtomizerRules Rules => CanonicalRules.Value;
+
+    internal static byte[] RulesBytes
+    {
+        get
+        {
+            var root = AppContext.BaseDirectory;
+            while (!File.Exists(Path.Combine(root, TheoryAtomizerDataLoader.DataPath)))
+            {
+                root = Directory.GetParent(root)?.FullName
+                    ?? throw new InvalidOperationException("repository root not found");
+            }
+            return File.ReadAllBytes(Path.Combine(root, TheoryAtomizerDataLoader.DataPath));
+        }
+    }
+
     internal static string EmptyLedger(string atomizerId) => $$"""
         schema_version: 3
         ledger: theory-digestion-v1
@@ -26,7 +55,14 @@ internal static class DigestionTestSupport
 
     internal static RepositorySnapshot Snapshot(params (string Path, byte[] Bytes)[] files)
     {
-        var raw = RawRepositorySnapshot.Create(files.Select(file => new RawRepositoryEntry(
+        var materialized = files.ToList();
+        if (materialized.All(static file => file.Path != TheoryAtomizerDataLoader.DataPath))
+        {
+            materialized.Add((
+                TheoryAtomizerDataLoader.DataPath,
+                RulesBytes));
+        }
+        var raw = RawRepositorySnapshot.Create(materialized.Select(file => new RawRepositoryEntry(
             file.Path,
             ImmutableArray.CreateRange(file.Bytes))));
         return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;

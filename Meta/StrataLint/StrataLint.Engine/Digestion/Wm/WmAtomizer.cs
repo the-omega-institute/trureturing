@@ -7,9 +7,6 @@ namespace StrataLint.Engine;
 
 internal static partial class WmAtomizer
 {
-    private const string Title = "世界模型账本卷:公理纲要(BEDC-WM)";
-    private const string AppendixHeading = "§7-附 尸检账(只增不删)";
-    private const string AuditHeading = "校核记录(append-only,按版分块)";
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     private static readonly Regex VersionPattern = new(
         "^-\\s+\\*\\*(?<version>v0(?:\\.(?<revision>[1-9][0-9]*))?)\\*\\*",
@@ -26,10 +23,6 @@ internal static partial class WmAtomizer
     private static readonly Regex AppendedAuditClosurePattern = new(
         "^\\*\\*v0\\.(?<revision>[1-9][0-9]*) 校核\\*\\*\\([^\\r\\n]+\\):[^\\r\\n]*旧块不改。\\z",
         RegexOptions.CultureInvariant);
-    private static readonly Regex CurrentTodoClosurePattern = new(
-        "^\\*\\*当前待办\\*\\*\\(随版滚动\\):[^\\r\\n]*"
-        + "\\*\\*v0\\.2\\*\\*\\(新行追加于版本账,本节追加 v0\\.2 校核块\\)。\\z",
-        RegexOptions.CultureInvariant);
     private static readonly Regex DisciplinePattern = new(
         "^> 一句话:[^\\r\\n]+(?:\\r\\n|\\r|\\n)> 纪律:[^\\r\\n]+\\z",
         RegexOptions.CultureInvariant);
@@ -37,15 +30,16 @@ internal static partial class WmAtomizer
         "^(?<number>0|[1-9][0-9]*)\\.\\s+",
         RegexOptions.CultureInvariant);
 
-    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes)
+    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules rules)
     {
+        ArgumentNullException.ThrowIfNull(rules);
         var scaffold = MarkdownAstAtomizer.Atomize(
             bytes,
             Identify,
-            identifyHeading: IdentifyHeading);
+            identifyHeading: heading => IdentifyHeading(heading, rules));
         var raw = bytes.ToArray();
         var text = StrictUtf8.GetString(raw);
-        ValidateStructure(text, scaffold);
+        ValidateStructure(text, scaffold, rules);
 
         var claims = scaffold.Claims.ToList();
         ExtendLastVersionLineEnding(raw, claims);
@@ -57,7 +51,7 @@ internal static partial class WmAtomizer
             "metadata/discipline",
             lastVersion.EndByte,
             sectionZero.StartByte,
-            [new DigestionContext(1, Title)]));
+            [new DigestionContext(1, rules.WmHeadings["title"])]));
         claims.Sort(static (left, right) => left.StartByte.CompareTo(right.StartByte));
 
         var slices = ImmutableArray.CreateBuilder<DigestionSlice>(claims.Count);
@@ -112,9 +106,9 @@ internal static partial class WmAtomizer
         return null;
     }
 
-    private static string? IdentifyHeading(string heading)
+    private static string? IdentifyHeading(string heading, TheoryAtomizerRules rules)
     {
-        if (heading == Title)
+        if (heading == rules.WmHeadings["title"])
         {
             return "metadata/preamble";
         }
@@ -125,22 +119,25 @@ internal static partial class WmAtomizer
             return "section/" + section.Groups["number"].Value;
         }
 
-        if (heading == AppendixHeading)
+        if (heading == rules.WmHeadings["appendix"])
         {
             return "section/7-appendix";
         }
 
-        return heading == AuditHeading ? "audit" : null;
+        return heading == rules.WmHeadings["audit"] ? "audit" : null;
     }
 
-    private static void ValidateStructure(string text, AtomizedTheoryDocument scaffold)
+    private static void ValidateStructure(
+        string text,
+        AtomizedTheoryDocument scaffold,
+        TheoryAtomizerRules rules)
     {
         var blocks = MarkdownBlockAst.Parse(text);
         var headings = blocks.OfType<MarkdownHeading>().ToArray();
         if (headings.Length == 0
             || headings[0].Start != 0
             || headings[0].Level != 1
-            || headings[0].Text != Title)
+            || headings[0].Text != rules.WmHeadings["title"])
         {
             throw new TheorySourceFormatException("WM source must begin with its exact H1 title");
         }
@@ -148,7 +145,7 @@ internal static partial class WmAtomizer
         var structuralOrder = new List<string> { "metadata/preamble" };
         foreach (var heading in headings.Skip(1))
         {
-            var locator = IdentifyHeading(heading.Text);
+            var locator = IdentifyHeading(heading.Text, rules);
             if (locator is null
                 || locator == "metadata/preamble"
                 || locator.StartsWith("section/", StringComparison.Ordinal) && heading.Level is not (2 or 3)
@@ -219,7 +216,7 @@ internal static partial class WmAtomizer
             || appendedAudits.Where((audit, index) => audit.Revision != index + 2).Any())
         {
             throw new TheorySourceFormatException(
-                "WM appended audits must be exactly v0.2 through v0.N in ledger order");
+                "WM appended audits must cover every revision after v0.1 in ledger order");
         }
 
         var expectedClaims = new List<string> { "metadata/preamble" };
@@ -233,7 +230,10 @@ internal static partial class WmAtomizer
             throw new TheorySourceFormatException("WM locator set does not match the canonical dialect");
         }
 
-        ValidateClosure(text, blocks, auditBlocks, appendedAudits);
+        var firstAppendedVersion = versions.Length > 2
+            ? versions[2]
+            : $"v0.{revisions[^1] + 1}";
+        ValidateClosure(text, blocks, auditBlocks, appendedAudits, firstAppendedVersion);
     }
 
     private static void ShiftAppendedAuditSeparators(byte[] raw, List<DigestionAtom> claims)
