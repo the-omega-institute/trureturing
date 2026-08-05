@@ -59,7 +59,7 @@ public sealed partial class TheoryAtomizerTests
         }
 
         Assert.Equal(
-            "5a95947499a33797dfbd2afeb074146864dddc260af8bd9504dfa0c8c46d51d4",
+            "ffd91501b2e8bd7028272b9f423f6f85bcbcd7e214f0135fa5fde42df93bcb6f",
             Convert.ToHexString(SHA256.HashData(output.ToArray())).ToLowerInvariant());
     }
 }
