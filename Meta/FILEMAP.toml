@@ -112,6 +112,13 @@ consumed_by = ["ValuesProjectionLoader"]
 verified_by = ["emit-check"]
 
 [[files]]
+pattern = "Generated/DAG.md"
+kind = "generated"
+produced_by = "DagEmitter"
+consumed_by = ["reader"]
+verified_by = ["emit-check"]
+
+[[files]]
 pattern = "Generated/FILEMAP.md"
 kind = "generated"
 produced_by = "FileMapEmitter"
