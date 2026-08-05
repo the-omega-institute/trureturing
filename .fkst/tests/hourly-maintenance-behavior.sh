@@ -709,6 +709,8 @@ run_test "platform-current cycle still propagates composition" platform_current_
 run_test "post-write composition drift fails closed with differences" post_write_composition_drift_fails_closed_with_differences
 run_test "composition-only propagation does not trigger restart" composition_only_propagation_does_not_trigger_restart
 run_test "deferred activation survives a current second cycle" deferred_activation_survives_a_current_second_cycle
+run_test "legacy activation obligation migrates before platform pin" legacy_activation_obligation_migrates_before_platform_pin
+run_test "corrupt activation obligation still refuses platform pin" corrupt_activation_obligation_still_refuses_platform_pin
 run_test "older restart cannot clear a newer generation" older_restart_cannot_clear_a_newer_generation
 run_test "failed restart retains the activation generation" failed_restart_retains_the_activation_generation
 run_test "leading-zero defer timestamp forces restart" leading_zero_defer_timestamp_forces_restart
