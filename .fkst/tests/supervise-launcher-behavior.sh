@@ -493,6 +493,7 @@ main() {
 BIN=$scratch/fkst-framework
 FKST_HOST_ROOT=$scratch/checkout
 FKST_PLATFORM_ROOT=$scratch/platform
+FKST_GITHUB_PROXY_AUTHORITY_ROOT=$scratch/platform/packages/github-proxy
 FKST_DURABLE_ROOT=$scratch/durable
 FKST_RUNTIME_ROOT=$scratch/runtime
 FKST_RATE_POOL_ROOT=$scratch/rate-pool

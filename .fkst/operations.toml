@@ -8,6 +8,7 @@ make_target = "hourly-maintenance"
 implementation = ".fkst/scripts/hourly-maintenance.sh"
 tests = [
   ".fkst/tests/hourly-maintenance-behavior.sh",
+  ".fkst/tests/hourly-maintenance-authority-cases.sh",
   ".fkst/tests/hourly-maintenance-pr-watch-cases.sh",
   ".fkst/tests/pr-shepherd-watch-freshness.sh",
   "Meta/StrataLint/StrataLint.ArchitectureTests/Operations/OperationalEntrypointTests.cs",
