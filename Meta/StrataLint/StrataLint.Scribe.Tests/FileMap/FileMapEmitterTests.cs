@@ -107,6 +107,7 @@ public sealed class FileMapEmitterTests
                 CanonicalAnchorCatalogWriter.RelativePath,
                 CanonicalValuesWriter.RelativePath,
                 DagEmitter.RelativePath,
+                DagEmitter.TruthGraphRelativePath,
                 GeneratedArtifactInventory.EchoResidualSummaryPath,
                 FileMapEmitter.RelativePath,
                 ScribeEmitter.AttestationRelativePath,
