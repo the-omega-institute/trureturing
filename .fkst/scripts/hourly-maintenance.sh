@@ -15,6 +15,7 @@ CHECKOUT_DEV_REV=""
 PLATFORM_CURRENT_REV=""
 PLATFORM_DEV_REV=""
 ACTIVATION_ROLLBACK_REV=""
+LEAN_REPORT_REBUILT_THIS_CYCLE=0
 
 say() {
   printf '[%s] %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$*" \
@@ -246,6 +247,64 @@ sync_checkout() {
     say "CHECKOUT-FF-BLOCKED; skipped, engine stays on ${checkout_head:0:12}"
     say "RESTART-OBLIGATION RETAINED: fast-forward failed; verified restart still required"
   fi
+}
+
+reconcile_lean_report_readiness() {
+  local status_script="$FKST_HOST_ROOT/.claude/skills/fkst-monitor/scripts/status.sh"
+  local bash_bin="${FKST_BASH_BIN:-/bin/bash}" output verdict diagnostic make_bin rebuild_rc
+
+  if [[ "$LEAN_REPORT_REBUILT_THIS_CYCLE" == "1" ]]; then
+    say "LEAN-REPORT-RECONCILE SATISFIED: activation obligation rebuilt the report"
+    return 0
+  fi
+  if [[ ! -f "$status_script" ]]; then
+    say "LEAN-REPORT-RECONCILE NOT CHECKED: canonical readiness provider is missing: $status_script"
+    return 1
+  fi
+  if ! output="$(
+      FKST_FORMALIZE_CHECKOUT="$FKST_HOST_ROOT" \
+        "$bash_bin" "$status_script" --formalize-readiness 2>&1
+    )"; then
+    say "LEAN-REPORT-RECONCILE NOT CHECKED: canonical readiness provider failed: $output"
+    return 1
+  fi
+  verdict="${output%%$'\t'*}"
+  if [[ "$output" == *$'\t'* ]]; then
+    diagnostic="${output#*$'\t'}"
+  else
+    diagnostic=""
+  fi
+  case "$verdict" in
+    ready)
+      say "LEAN-REPORT-RECONCILE READY"
+      return 0
+      ;;
+    not-checked)
+      say "LEAN-REPORT-RECONCILE NOT CHECKED: ${diagnostic:-no diagnostic}"
+      return 1
+      ;;
+    not-ready)
+      say "LEAN-REPORT-RECONCILE REQUIRED: ${diagnostic:-canonical readiness rejected the report}"
+      ;;
+    *)
+      say "LEAN-REPORT-RECONCILE NOT CHECKED: canonical readiness provider returned an invalid verdict: $output"
+      return 1
+      ;;
+  esac
+
+  if ! make_bin="$(resolve_lean_report_make_bin)"; then
+    say "LEAN-REPORT-RECONCILE FAIL: make is not an executable absolute path: ${make_bin:-missing}"
+    return 1
+  fi
+  if "$make_bin" -C "$FKST_HOST_ROOT" lean-report; then
+    LEAN_REPORT_REBUILT_THIS_CYCLE=1
+    say "LEAN-REPORT-RECONCILE OK"
+    return 0
+  else
+    rebuild_rc=$?
+  fi
+  say "LEAN-REPORT-RECONCILE FAIL: make lean-report exit $rebuild_rc; readiness remains not-ready"
+  return 1
 }
 
 workspace_composition_tool() {
@@ -663,6 +722,7 @@ launchd_service_state() {
 
 main() {
   local host_config="${HOST_CONFIG:-}" validate_only="${VALIDATE_ONLY:-0}"
+  LEAN_REPORT_REBUILT_THIS_CYCLE=0
   [[ "$validate_only" == "0" || "$validate_only" == "1" ]] \
     || { printf 'hourly-maintenance: VALIDATE_ONLY must be 0 or 1\n' >&2; return 2; }
   while [[ "$#" -gt 0 ]]; do
@@ -700,6 +760,7 @@ main() {
   gc_worktrees
   gc_stuck_lean_builds
   restart_if_needed || return
+  reconcile_lean_report_readiness || return
   check_launchd_conformance
 }
 
