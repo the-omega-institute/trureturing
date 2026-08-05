@@ -31,6 +31,7 @@ governance_documents:
   - "docs/develop/theory/BEDC-WM.md"
   - "docs/develop/theory/CONE_PROGRAM_FORMAL.md"
   - "docs/develop/theory/GICT.md"
+  - "docs/develop/theory/INTERFACE_PAPER.md"
   - "docs/develop/theory/OBSERVER-QUANTUM.md"
   - "docs/develop/theory/PERIODIC_TREE.md"
   - "docs/develop/theory/PERIODIC_TREE_registry.jsonl"
