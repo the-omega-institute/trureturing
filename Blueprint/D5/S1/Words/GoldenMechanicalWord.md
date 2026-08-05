@@ -17,3 +17,9 @@ $$\forall n\in\mathbb{N},\ s_n=1\ \Leftrightarrow\ \{n\varphi\}\in[1-\varphi^{-1
 *Commentary.*
 
 For every natural index, the floor-difference letter equals one if and only if the golden fractional coordinate lies in the stated half-open interval. No complexity, substitution, or cut-and-project classification is asserted.
+
+## References
+
+- Truth anchor: `D5/S1/Words/GoldenMechanicalWord.golden_mechanical_letter_eq_one_iff`
+- Dependency: [D5/S1/Dynamics/GoldenFractionalPart](../Dynamics/GoldenFractionalPart.md)
+- Dependency: [D5/S1/Phase/Basic](../Phase/Basic.md)

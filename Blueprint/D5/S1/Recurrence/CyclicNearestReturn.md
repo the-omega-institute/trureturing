@@ -15,3 +15,7 @@ $$\forall S\subseteq\alpha\ \text{finite},\ S\neq\emptyset:\ (\forall x\in S,\ \
 *Commentary.*
 
 Every nonempty finite subset of a linear order has a cyclic successor and predecessor. Both maps remain in the subset and are mutual inverses there. Away from the boundary they select the nearest point in the requested direction; at the maximum and minimum they wrap explicitly to the opposite endpoint.
+
+## References
+
+- Truth anchor: `D5/S1/Recurrence/CyclicNearestReturn.cyclic_nearest_return_spec`

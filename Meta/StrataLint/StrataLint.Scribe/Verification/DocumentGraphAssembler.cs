@@ -44,11 +44,16 @@ public static class DocumentGraphAssembler
 {
     public static DocumentGraph Assemble(
         IEnumerable<ScribeDocument> documents,
-        LeanAxiomReport? leanReport)
+        LeanAxiomReport? leanReport,
+        IReadOnlySet<string>? autoWireDocumentGids = null)
     {
         ArgumentNullException.ThrowIfNull(documents);
         var material = documents.ToImmutableArray();
         var byGid = material.ToDictionary(
+            static document => document.Header.Gid.Value,
+            StringComparer.Ordinal);
+        var byLeanModule = material.ToDictionary(
+            static document => LeanModuleName(document.Header.Gid.Value),
             static document => document.Header.Gid.Value,
             StringComparer.Ordinal);
         var findings = ImmutableArray.CreateBuilder<DocumentGraphFinding>();
@@ -59,7 +64,20 @@ public static class DocumentGraphAssembler
 
         foreach (var document in material.OrderBy(static item => item.Header.Gid.Value, StringComparer.Ordinal))
         {
-            var assembled = Extract(document);
+            var assembled = autoWireDocumentGids is null
+                ? Extract(document)
+                : autoWireDocumentGids.Contains(document.Header.Gid.Value)
+                    ? Extract(document)
+                        .Where(edge => !IsSelfNarrativeReference(document, edge))
+                        .Concat(ProjectLeanImports(document, leanReport, byLeanModule))
+                        .DistinctBy(CanonicalKey, StringComparer.Ordinal)
+                        .OrderBy(RoleOrder)
+                        .ThenBy(CanonicalKey, StringComparer.Ordinal)
+                        .ToImmutableArray()
+                    : document.Edges
+                        .OrderBy(RoleOrder)
+                        .ThenBy(CanonicalKey, StringComparer.Ordinal)
+                        .ToImmutableArray();
             edges.Add(document.Header.Gid.Value, assembled);
             explicitEdges.Add(document.Header.Gid.Value, document.Edges);
             foreach (var edge in assembled)
@@ -116,6 +134,40 @@ public static class DocumentGraphAssembler
             .ThenBy(CanonicalKey, StringComparer.Ordinal)
             .ToImmutableArray();
     }
+
+    private static IEnumerable<DocumentEdge> ProjectLeanImports(
+        ScribeDocument document,
+        LeanAxiomReport? leanReport,
+        IReadOnlyDictionary<string, string> documentsByLeanModule)
+    {
+        if (leanReport is null
+            || !RepoPath.TryCreate(document.Header.Gid.Value + ".lean", out var sourcePath)
+            || !leanReport.Files.TryGetValue(sourcePath, out var sourceReport))
+        {
+            yield break;
+        }
+
+        foreach (var importedModule in sourceReport.Imports
+                     .Distinct(StringComparer.Ordinal)
+                     .Order(StringComparer.Ordinal))
+        {
+            if (documentsByLeanModule.TryGetValue(importedModule, out var targetGid)
+                && !string.Equals(targetGid, document.Header.Gid.Value, StringComparison.Ordinal))
+            {
+                yield return DocumentEdge.Dependency.Create(GidRef.Create(targetGid));
+            }
+        }
+    }
+
+    private static string LeanModuleName(string documentGid) =>
+        documentGid.Replace('/', '.');
+
+    private static bool IsSelfNarrativeReference(ScribeDocument document, DocumentEdge edge) =>
+        edge is DocumentEdge.NarrativeReference { Target: NarrativeTarget.Document target }
+        && string.Equals(
+            target.DocumentGid.Value,
+            document.Header.Gid.Value,
+            StringComparison.Ordinal);
 
     private static IEnumerable<DocumentEdge> ImplicitEdges(BlockSequence blocks)
     {

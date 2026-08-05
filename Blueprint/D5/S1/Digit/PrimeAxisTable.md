@@ -15,3 +15,8 @@ $$\forall z \in \operatorname{PrimeAxisTable},\ (\forall p,\ \operatorname{Canon
 *Commentary.*
 
 An outer finitely supported table assigns canonical binary nonadjacent W digits to prime axes. The theorem exposes finite global support, each W-weighted exponent sum, and the corresponding finite prime-power product decode.
+
+## References
+
+- Truth anchor: `D5/S1/Digit/PrimeAxisTable.prime_axis_table_spec`
+- Dependency: [D5/S1/Digit/Raw](Raw.md)

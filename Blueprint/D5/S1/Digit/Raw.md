@@ -19,3 +19,7 @@ $$
 *Commentary.*
 
 This illustrative normalization is derived by the repository's deterministic W-digit computation.
+
+## References
+
+- Dependency: [D5/S0/Conventions/WDigits](../../S0/Conventions/WDigits.md)
