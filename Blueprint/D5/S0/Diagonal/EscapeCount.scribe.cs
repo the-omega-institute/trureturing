@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.Diagonal;
 internal sealed class EscapeCountDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Lawvere =
-        LibraryNoteRef.Create("D5/L/lawvere1969diagonal");
+        LibraryNoteRef.Create("D5/L/Diagonal/lawvere1969diagonal");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
         Header(
