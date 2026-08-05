@@ -12,6 +12,12 @@ internal sealed record DagLedgerCommandContext(
     FrozenMaterialCatalog Catalog,
     LeanAxiomReport Report);
 
+internal sealed record TruthContext(
+    RepositorySnapshot Snapshot,
+    AcceptedLeanClosure Lean,
+    LeanAxiomReport Report,
+    AcyclicTruthDag Dag);
+
 internal static class DagLedgerCommandPreparation
 {
     internal static DagLedgerCommandContext Prepare(
@@ -33,29 +39,11 @@ internal static class DagLedgerCommandPreparation
             FrozenLedgerChangeClassifier.LedgerPath.Replace('/', Path.DirectorySeparatorChar));
         var baselineBytes = File.ReadAllBytes(ledgerPath);
         var baselineSyntax = LoadLedger(baselineBytes, "existing frozen ledger");
-        var snapshot = Decode(Ask(repository.ReadCurrent));
-        // Loading and validating the report are one step from a caller's point of view: both
-        // failures say the build artefact is unusable, not that this repository is wrong. Keeping
-        // them together lets a caller classify them as one thing.
-        LeanAxiomReport report;
-        AcceptedLeanClosure lean;
-        try
-        {
-            report = leanReportSource.Load(snapshot);
-            lean = ValidateLean(snapshot, report);
-        }
-        catch (Exception exception) when (exception is not LeanReportUnusableException)
-        {
-            throw new LeanReportUnusableException(exception);
-        }
-        var dag = AcyclicTruthDag.Build(snapshot, lean) switch
-        {
-            DagBuildOutcome.Accepted accepted => accepted.Capability,
-            DagBuildOutcome.Rejected rejected => throw new InvalidOperationException(
-                "candidate truth DAG is cyclic: "
-                + string.Join(" -> ", rejected.Witness.Select(static path => path.Value))),
-            _ => throw new InvalidOperationException("unknown truth DAG outcome"),
-        };
+        var truth = BuildTruth(repository, leanReportSource);
+        var snapshot = truth.Snapshot;
+        var report = truth.Report;
+        var lean = truth.Lean;
+        var dag = truth.Dag;
         var environment = BuildEnvironment(snapshot, baselineSyntax);
         var currentIdentity = Ask(repository.ResolveCurrentRevision);
         if (currentIdentity.CommitOid.StartsWith("git-sha256:", StringComparison.Ordinal)
@@ -102,6 +90,40 @@ internal static class DagLedgerCommandPreparation
             _ => throw new InvalidOperationException("unknown ledger validation outcome"),
         };
         return new DagLedgerCommandContext(ledgerPath, baselineBytes, baseline, catalog, report);
+    }
+
+    /// Reads the repository, validates the Lean closure and builds the truth DAG -- the part of
+    /// Prepare that any DAG consumer needs, without the frozen-ledger work. Callers that only want
+    /// the graph (the DAG projection command) share this assembly line rather than growing a
+    /// second, drifting copy of it.
+    internal static TruthContext BuildTruth(
+        IRepositoryGateway repository,
+        ILeanReportSource leanReportSource)
+    {
+        var snapshot = Decode(Ask(repository.ReadCurrent));
+        // Loading and validating the report are one step from a caller's point of view: both
+        // failures say the build artefact is unusable, not that this repository is wrong. Keeping
+        // them together lets a caller classify them as one thing.
+        LeanAxiomReport report;
+        AcceptedLeanClosure lean;
+        try
+        {
+            report = leanReportSource.Load(snapshot);
+            lean = ValidateLean(snapshot, report);
+        }
+        catch (Exception exception) when (exception is not LeanReportUnusableException)
+        {
+            throw new LeanReportUnusableException(exception);
+        }
+        var dag = AcyclicTruthDag.Build(snapshot, lean) switch
+        {
+            DagBuildOutcome.Accepted accepted => accepted.Capability,
+            DagBuildOutcome.Rejected rejected => throw new InvalidOperationException(
+                "candidate truth DAG is cyclic: "
+                + string.Join(" -> ", rejected.Witness.Select(static path => path.Value))),
+            _ => throw new InvalidOperationException("unknown truth DAG outcome"),
+        };
+        return new TruthContext(snapshot, lean, report, dag);
     }
 
     /// Runs a gateway call that reads repository state, marking anything it throws. A repository
