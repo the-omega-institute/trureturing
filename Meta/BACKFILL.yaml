@@ -30018,7 +30018,16 @@ sources:
               source_sha256: sha256:0a6addfd806133bbb06c013f5cbc78f1f2c39e2de2a51dbb3c07119a86f38775
               target_sha256: sha256:70b3304a3a4c40b076d251f8d5f4d71dcc8c3febdd0a916f904a80f7df00b064
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - s-to-one-minus-s-exchange-involution
+            - even-weight-integral-as-jeffreys-symmetric-divergence
+            - odd-weight-one-minus-two-s-integral-as-directional-difference
+            - time-reversal-decomposition
+            - vanishing-odd-part-in-tracial-states
+            - kms-odd-part-as-arrow-of-time
+            - symmetry-breaking-law-as-fluctuation-theorem
+            - extension-to-negative-powers-for-integer-k
+            - even-conclusion-selected-by-the-cone
           chain_atoms: []
           tail_authorization: null
         status:
@@ -30134,7 +30143,11 @@ sources:
               source_sha256: sha256:36d8312a9a569a2b2587e59f623d05eceab91340b724e60e6767fca9c48becb5
               target_sha256: sha256:7cfcf5ece9ace87541f10b0012c644b0380bf73fc5a034592be15dcb34f6bff5
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - uniqueness-characterization-as-the-purest-self-referential-fixed-point
+            - hurwitz-theorem-and-optimality-of-sqrt-five
+            - q-squared-times-absolute-phi-minus-p-over-q-tends-to-one-over-sqrt-five
+            - first-two-lagrange-spectrum-levels-sqrt-five-and-sqrt-eight
           chain_atoms: []
           tail_authorization: null
         status:
@@ -30442,7 +30455,13 @@ sources:
               source_sha256: sha256:819d8f05f192d081658df28c99756a44dade1464f4ceaee6ca95d6af0637f372
               target_sha256: sha256:a87db21d2aecb91502d9d85d9c3fe27ce1ef893c2405075909a44ebb5baf6178
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - jones-wall-four-cos-squared-pi-over-five-equals-phi-squared
+            - maximal-real-subfield-of-q-zeta-five-equals-q-sqrt-five
+            - definition-and-evaluation-of-lagrange-number-of-phi-as-sqrt-nine-minus-four
+            - markov-discriminant-law
+            - number-field-discriminant-of-q-sqrt-five-is-five-not-the-polynomial-discriminant
+            - sqrt-five-landlord-identity-verdict
           chain_atoms: []
           tail_authorization: null
         status:

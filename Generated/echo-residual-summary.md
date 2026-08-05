@@ -1,8 +1,8 @@
-<!-- echo-residual-summary:v3 residual=sha256:dd26588f3b74c9b4832a3a024054da9c35c5e58b7a88f078a2aa5935416e2a47 -->
+<!-- echo-residual-summary:v3 residual=sha256:fa03c845521f8d3092ba7e2334cf5394236ca9f34d5e81a6b89a0daeb58c848f -->
 # Echo Residual Summary
 
-- unresolved_subitems: 478
-- mother_residual_atom_ids: 64
+- unresolved_subitems: 497
+- mother_residual_atom_ids: 67
 
 ## `bedc-wm-v0.1`
 
@@ -202,8 +202,8 @@ Mother residual atoms:
 
 ## `pzg-v170`
 
-- unresolved_subitems: 329
-- mother_residual_atom_ids: 47
+- unresolved_subitems: 348
+- mother_residual_atom_ids: 50
 
 Mother residual atoms:
 
@@ -232,6 +232,16 @@ Mother residual atoms:
   - `de-bruijn-newman-toy-heat-flow-four-frame-certificate`
   - `li-weil-positivity-as-second-law-equivalence`
   - `s-matrix-pole-resonance-dictionary`
+- `pzg-residual-0a6addfd806133bbb06c013f5cbc78f1f2c39e2de2a51dbb3c07119a86f38775` (9)
+  - `even-conclusion-selected-by-the-cone`
+  - `even-weight-integral-as-jeffreys-symmetric-divergence`
+  - `extension-to-negative-powers-for-integer-k`
+  - `kms-odd-part-as-arrow-of-time`
+  - `odd-weight-one-minus-two-s-integral-as-directional-difference`
+  - `s-to-one-minus-s-exchange-involution`
+  - `symmetry-breaking-law-as-fluctuation-theorem`
+  - `time-reversal-decomposition`
+  - `vanishing-odd-part-in-tracial-states`
 - `pzg-residual-0e4c1864295a8fa2d7347817f3fa806a80a7669ce7a406684aa5cc3ccdaf1e8a` (2)
   - `diagonal-length-operator-spectrum-equals-log-natural-numbers`
   - `known-channel-from-length-spectrum-to-zero-spectrum`
@@ -254,6 +264,11 @@ Mother residual atoms:
   - `critical-half-line-balance-point-interpretation`
   - `global-dirichlet-series-euler-product-identity`
   - `theta-modular-identity-1e-12-certificate`
+- `pzg-residual-36d8312a9a569a2b2587e59f623d05eceab91340b724e60e6767fca9c48becb5` (4)
+  - `first-two-lagrange-spectrum-levels-sqrt-five-and-sqrt-eight`
+  - `hurwitz-theorem-and-optimality-of-sqrt-five`
+  - `q-squared-times-absolute-phi-minus-p-over-q-tends-to-one-over-sqrt-five`
+  - `uniqueness-characterization-as-the-purest-self-referential-fixed-point`
 - `pzg-residual-376b418a41fdff9bfee58298b6ba89a101f8ea94bf6fc3ae504e9170daad3bc0` (12)
   - `completed-zeta-parameter-as-history-sampling-bias`
   - `dirichlet-series-time-foliation-versus-euler-product-space-foliation`
@@ -398,6 +413,13 @@ Mother residual atoms:
 - `pzg-residual-7e62077dde65f6e6c6f13313e8a6bff867bee9f9a1b0f3f4173a10545d3ca36e` (2)
   - `displayed-xi-product-form-at-zero-and-one`
   - `pzg-heat-trace-to-completed-zeta-analytic-continuation`
+- `pzg-residual-819d8f05f192d081658df28c99756a44dade1464f4ceaee6ca95d6af0637f372` (6)
+  - `definition-and-evaluation-of-lagrange-number-of-phi-as-sqrt-nine-minus-four`
+  - `jones-wall-four-cos-squared-pi-over-five-equals-phi-squared`
+  - `markov-discriminant-law`
+  - `maximal-real-subfield-of-q-zeta-five-equals-q-sqrt-five`
+  - `number-field-discriminant-of-q-sqrt-five-is-five-not-the-polynomial-discriminant`
+  - `sqrt-five-landlord-identity-verdict`
 - `pzg-residual-8b4ec2189a8c6772eb3aae47e8c078cf4ff32b28b5b72df589dd5b31afb1535d` (11)
   - `D5-T0011--pointwise-conservation-breakdown-with-window-leakage`
   - `all-scale-holographic-locking-numerical-certificate`
