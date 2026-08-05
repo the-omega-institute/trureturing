@@ -538,6 +538,14 @@ locator = "interface/interface"
 prefix = "**§46.2 合卷**"
 locator = "interface/closure"
 
+[[observer.claim_prefixes]]
+prefix = "**§47.1 会自我审稿的论文,会自我复制的塔**"
+locator = "pen-down/self-reviewing-paper"
+
+[[observer.claim_prefixes]]
+prefix = "**§47.2 搁笔**"
+locator = "pen-down/closure"
+
 [[gict.genres]]
 token = "勘察"
 kind = "survey"
