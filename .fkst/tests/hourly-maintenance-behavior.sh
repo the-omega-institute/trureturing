@@ -14,6 +14,7 @@ COMPOSITION_CASES="$REPOSITORY_ROOT/.fkst/tests/hourly-maintenance-composition-c
 LEAN_REPORT_CASES="$REPOSITORY_ROOT/.fkst/tests/hourly-maintenance-lean-report-cases.sh"
 PR_WATCH_CASES="$REPOSITORY_ROOT/.fkst/tests/hourly-maintenance-pr-watch-cases.sh"
 READINESS_FIXTURES="$REPOSITORY_ROOT/.fkst/tests/hourly-maintenance-readiness-fixtures.sh"
+AUTHORITY_CASES="$REPOSITORY_ROOT/.fkst/tests/hourly-maintenance-authority-cases.sh"
 PASS_COUNT=0
 FAIL_COUNT=0
 TEST_PR_WATCH_ROOT="$(mktemp -d -t hourly-maintenance-pr-watch-state.XXXXXX)" || exit 1
@@ -510,6 +511,7 @@ write_host_contract_fixture() {
     "$root/launchd" \
     "$root/logs" \
     "$root/platform" \
+    "$root/platform/packages/github-proxy" \
     "$root/rate-pools" \
     "$root/runtime/worktrees" \
     "$root/supervisor/slots"
@@ -529,6 +531,7 @@ write_host_contract_fixture() {
     printf 'BIN=%s\n' "$root/bin/fkst-framework"
     printf 'FKST_HOST_ROOT=%s\n' "$FIXTURE_HOST_ROOT"
     printf 'FKST_PLATFORM_ROOT=%s\n' "$root/platform"
+    printf 'FKST_GITHUB_PROXY_AUTHORITY_ROOT=%s\n' "$root/platform/packages/github-proxy"
     printf 'FKST_DURABLE_ROOT=%s\n' "$root/durable"
     printf 'FKST_RUNTIME_ROOT=%s\n' "$root/runtime"
     printf 'FKST_RATE_POOL_ROOT=%s\n' "$root/rate-pools"
@@ -710,6 +713,9 @@ source "$LEAN_REPORT_CASES"
 [[ -f "$PR_WATCH_CASES" ]] || fail "pr-watch maintenance behavior cases are missing"
 # shellcheck disable=SC1090
 source "$PR_WATCH_CASES"
+[[ -f "$AUTHORITY_CASES" ]] || fail "authority maintenance behavior cases are missing"
+# shellcheck disable=SC1090
+source "$AUTHORITY_CASES"
 
 run_test "deployed top-level workspace is authoritative" deployed_top_level_workspace_is_authoritative
 run_test "host-lock failure reverts from the previous revision" host_lock_failure_reverts_from_the_previous_revision
@@ -723,6 +729,7 @@ run_test "blocked Lean fast-forward does not rebuild report" blocked_lean_fast_f
 run_test "checkout untracked files do not block fast-forward" checkout_untracked_files_do_not_block_fast_forward
 run_test "checkout divergence refuses auto fast-forward" checkout_divergence_refuses_auto_fast_forward
 run_test "checkout status failure refuses auto fast-forward" checkout_status_failure_refuses_auto_fast_forward
+run_test "authority checkout tracks the deployed platform pin" authority_checkout_tracks_the_deployed_platform_pin
 run_test "tracked package removal propagates after checkout fast-forward" tracked_package_removal_propagates_after_checkout_fast_forward
 run_test "tracked package addition propagates after checkout fast-forward" tracked_package_addition_propagates_after_checkout_fast_forward
 run_test "platform-current cycle still propagates composition" platform_current_cycle_still_propagates_composition

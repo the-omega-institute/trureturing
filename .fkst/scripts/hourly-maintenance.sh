@@ -11,6 +11,8 @@ source "$SCRIPT_DIR/host-contract.sh"
 source "$SCRIPT_DIR/restart-policy.sh"
 # shellcheck source=.fkst/scripts/pr-watch-reconciliation.sh
 source "$SCRIPT_DIR/pr-watch-reconciliation.sh"
+# shellcheck source=.fkst/scripts/authority-checkout.sh
+source "$SCRIPT_DIR/authority-checkout.sh"
 
 CHANGED=0
 CHECKOUT_DEV_REV=""
@@ -45,6 +47,7 @@ validate_configuration() {
   for name in \
     FKST_HOST_ROOT \
     FKST_PLATFORM_ROOT \
+    FKST_GITHUB_PROXY_AUTHORITY_ROOT \
     BIN \
     FKST_RUN_SCRIPT \
     FKST_MAINTENANCE_LOG \
@@ -58,6 +61,7 @@ validate_configuration() {
   for name in \
     FKST_HOST_ROOT \
     FKST_PLATFORM_ROOT \
+    FKST_GITHUB_PROXY_AUTHORITY_ROOT \
     BIN \
     FKST_RUN_SCRIPT \
     FKST_MAINTENANCE_LOG \
@@ -757,6 +761,7 @@ main() {
     FKST_SUPERVISE_LAUNCHER_PATH || return
   [[ "$validate_only" == "0" ]] || return 0
   sync_platform || return
+  sync_authority_checkout "$PLATFORM_DEV_REV"
   sync_checkout
   reconcile_pr_watch || pr_watch_status=$?
   sync_workspace_composition || return

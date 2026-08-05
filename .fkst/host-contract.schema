@@ -7,6 +7,7 @@ FKST_ZSH_BIN|absolute_path|false|host
 FKST_PYTHON_BIN|absolute_path|false|host
 FKST_HOST_ROOT|absolute_path|true|host
 FKST_PLATFORM_ROOT|absolute_path|true|host
+FKST_GITHUB_PROXY_AUTHORITY_ROOT|absolute_path|true|host
 FKST_DURABLE_ROOT|absolute_path|true|host
 FKST_RUNTIME_ROOT|absolute_path|true|host
 FKST_RATE_POOL_ROOT|absolute_path|true|host
