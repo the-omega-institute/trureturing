@@ -27,7 +27,9 @@ public sealed partial class TheoryAtomizerTests
     [InlineData("**§45.2 合卷**。claim。", "final-volume/closure")]
     [InlineData("**§46.1 界面**。claim。", "interface/interface")]
     [InlineData("**§46.2 合卷**。claim。", "interface/closure")]
-    public void ObserverV1RecognizesSections37Through46(
+    [InlineData("**§47.1 会自我审稿的论文,会自我复制的塔**。claim。", "pen-down/self-reviewing-paper")]
+    [InlineData("**§47.2 搁笔**。claim。", "pen-down/closure")]
+    public void ObserverV1RecognizesSections37Through47(
         string claim,
         string expectedAstPath)
     {
@@ -59,7 +61,7 @@ public sealed partial class TheoryAtomizerTests
         }
 
         Assert.Equal(
-            "ffd91501b2e8bd7028272b9f423f6f85bcbcd7e214f0135fa5fde42df93bcb6f",
+            "fc2201cb0f6282b32f2a6ae77b3b86439c14e77b4ba88ca43a54107647031be4",
             Convert.ToHexString(SHA256.HashData(output.ToArray())).ToLowerInvariant());
     }
 }
