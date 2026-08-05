@@ -14,8 +14,8 @@ public sealed class DocumentDiscoveryTests
             FindRepositoryRoot(),
             DocumentDefinitions.All.Select(static definition => definition.Document));
 
-        Assert.Equal(52, census.ReceiptFreeDocumentGids.Count);
-        Assert.Equal(40, census.ReceiptBoundDocumentGids.Count);
+        Assert.Equal(51, census.ReceiptFreeDocumentGids.Count);
+        Assert.Equal(41, census.ReceiptBoundDocumentGids.Count);
         Assert.Contains("D5/S0/Carrier/Norm", census.ReceiptFreeDocumentGids);
         Assert.Contains("D5/S1/Scale/CarrierFoundations", census.ReceiptBoundDocumentGids);
     }
