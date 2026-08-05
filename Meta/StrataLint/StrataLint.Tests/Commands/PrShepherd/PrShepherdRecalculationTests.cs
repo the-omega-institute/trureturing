@@ -168,6 +168,8 @@ public sealed partial class PrShepherdRecalculationTests
             Git(seed, "checkout", "dev");
 
             Git(temporary.Path, "clone", origin, repository);
+            Git(repository, "config", "user.name", "Fixture");
+            Git(repository, "config", "user.email", "fixture@example.invalid");
             InstallStubs();
         }
 
