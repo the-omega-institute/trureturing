@@ -36,6 +36,8 @@ internal interface ICliEnvironment
 
     CommandResult SelfTest(IReadOnlyList<string> arguments);
 
+    CommandResult RenderDag(IReadOnlyList<string> arguments);
+
     CommandResult GenerateLedger(IReadOnlyList<string> arguments);
 
     CommandResult AppendLedger(IReadOnlyList<string> arguments);
@@ -123,6 +125,7 @@ internal static class CliApplication
             "cover-atom" => RenderCommand(environment.CoverAtom(tail), console),
             "emit-formalization-receipt" =>
                 RenderCommand(environment.EmitFormalizationReceipt(tail), console),
+            "dag-render" => RenderCommand(environment.RenderDag(tail), console),
             "digest-status" => RenderCommand(environment.DigestStatus(tail), console),
             "echo-verify" => RenderExplicit(environment.EchoVerify(tail), console),
             "ingest" => RenderCommand(environment.Ingest(tail), console),
