@@ -5,12 +5,12 @@ domains:
   Arith:
     stratum: S3
     definition: Elementary integer arithmetic — prime factorization, divisibility, and modular residue structure — used as foundations by the golden-integer and analytic strata.
-  Carrier:
-    stratum: S0
-    definition: The golden integer carrier, conjugation, norm, and units.
   Axis:
     stratum: S3
     definition: Prime-axis escape arguments over the natural primes.
+  Carrier:
+    stratum: S0
+    definition: The golden integer carrier, conjugation, norm, and units.
   Constants:
     stratum: S3
     definition: Canonical real constants and registered reference centers used by audited projections.
