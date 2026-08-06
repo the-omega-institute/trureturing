@@ -150,24 +150,35 @@ public sealed class StatementProjectionPilotTests
     [LiveReportFact]
     public void LiveReportMatchesPinnedFixtureWhenAvailable()
     {
-        var reportPath = Path.Combine(FindRepositoryRoot(), ".lake/build/stratalint/raw-lean-report.json");
-        using var fixture = LoadPinnedFixture("statement-projection-pilot-v1.json");
-        using var expansion = LoadPinnedFixture("statement-projection-expansion-v1.json");
-        using var report = JsonDocument.Parse(File.ReadAllBytes(reportPath));
-        var expected = ReadFixtureDeclarations(fixture, expansion).ToDictionary(
-            item => item.Key,
-            item => item.Value.GetProperty("type").GetString()!,
-            StringComparer.Ordinal);
-        var actual = report.RootElement.GetProperty("modules")
-            .EnumerateArray().SelectMany(module => module.GetProperty("declarations").EnumerateArray())
-            .Where(item => expected.ContainsKey(item.GetProperty("name").GetString()!))
-            .GroupBy(item => item.GetProperty("name").GetString()!, StringComparer.Ordinal)
-            .ToDictionary(
-                group => group.Key,
-                group => Assert.Single(group).GetProperty("type").GetString()!,
-                StringComparer.Ordinal);
+        StatementProjectionReconciliation.Verify(
+            FindRepositoryRoot(),
+            requireLiveReport: Environment.GetEnvironmentVariable("STRATALINT_REQUIRE_LIVE_REPORT") == "1");
+    }
 
-        Assert.Equal(expected, actual);
+    [Fact]
+    public void RequiredLiveReportFailsWhenReportIsAbsent()
+    {
+        using var repository = new TemporaryRepository();
+
+        Assert.Throws<FileNotFoundException>(() =>
+            StatementProjectionReconciliation.Verify(repository.Path, requireLiveReport: true));
+    }
+
+    [Fact]
+    public void RequiredLiveReportPassesWhenReportMatchesPinnedFixture()
+    {
+        using var repository = TemporaryRepository.WithReport(type: "statement-v1(uparams=[],type=es(l0))");
+
+        StatementProjectionReconciliation.Verify(repository.Path, requireLiveReport: true);
+    }
+
+    [Fact]
+    public void RequiredLiveReportFailsWhenReportDiffersFromPinnedFixture()
+    {
+        using var repository = TemporaryRepository.WithReport(type: "statement-v1(uparams=[],type=es(l1))");
+
+        Assert.Throws<InvalidDataException>(() =>
+            StatementProjectionReconciliation.Verify(repository.Path, requireLiveReport: true));
     }
 
     private static JsonDocument LoadPinnedFixture(string name) => JsonDocument.Parse(File.ReadAllBytes(Path.Combine(
@@ -198,9 +209,36 @@ public sealed class StatementProjectionPilotTests
             var directory = new DirectoryInfo(AppContext.BaseDirectory);
             while (directory is not null && !File.Exists(Path.Combine(directory.FullName, "lakefile.toml")))
                 directory = directory.Parent;
-            if (directory is null || !File.Exists(Path.Combine(
-                    directory.FullName, ".lake/build/stratalint/raw-lean-report.json")))
+            var requireLiveReport = Environment.GetEnvironmentVariable("STRATALINT_REQUIRE_LIVE_REPORT") == "1";
+            if (!requireLiveReport && (directory is null || !File.Exists(Path.Combine(
+                    directory.FullName, ".lake/build/stratalint/raw-lean-report.json"))))
                 Skip = "Live raw Lean report is absent; pinned statement-v1 fixture remains the self-contained verifier asset.";
         }
+    }
+
+    private sealed class TemporaryRepository : IDisposable
+    {
+        private readonly DirectoryInfo root = Directory.CreateTempSubdirectory("stratalint-statement-reconciliation-");
+
+        public string Path => root.FullName;
+
+        public static TemporaryRepository WithReport(string type)
+        {
+            var repository = new TemporaryRepository();
+            Directory.CreateDirectory(System.IO.Path.Combine(repository.Path, "Golden", "Projection"));
+            Directory.CreateDirectory(System.IO.Path.Combine(repository.Path, ".lake", "build", "stratalint"));
+            File.WriteAllText(
+                System.IO.Path.Combine(repository.Path, "Golden", "Projection", "statement-projection-pilot-v1.json"),
+                $$"""{"schema":"statement-projection-pilot-fixture-v1","declarations":[{"name":"D5.Test.declaration","type":"{{type}}"}]}""");
+            File.WriteAllText(
+                System.IO.Path.Combine(repository.Path, "Golden", "Projection", "statement-projection-expansion-v1.json"),
+                """{"schema":"statement-projection-expansion-fixture-v1","declarations":[]}""");
+            File.WriteAllText(
+                System.IO.Path.Combine(repository.Path, ".lake", "build", "stratalint", "raw-lean-report.json"),
+                """{"modules":[{"declarations":[{"name":"D5.Test.declaration","type":"statement-v1(uparams=[],type=es(l0))"}]}]}""");
+            return repository;
+        }
+
+        public void Dispose() => root.Delete(recursive: true);
     }
 }
