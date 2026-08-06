@@ -43,7 +43,7 @@ internal sealed class EscapeCountDocument : IScribeDocumentDefinition
                             new Formula.Power(Call("card", Id("Y")), Call("card", Id("A"))),
                             Call("card", Call("Fix", Id("f")))),
                         Call("card", Id("A"))))),
-                DescribeProvenance.SuspectedNovel(),
+                DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "For finite address and value types, the number of listings whose twisted "
                     + "diagonal is absent from the listing is the address-cardinality power of "

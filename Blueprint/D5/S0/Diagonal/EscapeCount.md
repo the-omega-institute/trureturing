@@ -22,7 +22,7 @@ $$\operatorname{card}\left(\operatorname{escapedListings}\left(f\right)\right) =
 
 *Proof.* Machine-checked in Lean as `D5/S0/Diagonal/EscapeCount.escaped_listing_card` (`✓ std3`). ∎
 
-*Source.* Suspected novel.
+*Source.* Repository-derived.
 
 *Commentary.*
 
