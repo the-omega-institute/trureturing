@@ -6,6 +6,8 @@ namespace StrataLint.Tests;
 public sealed partial class PrShepherdRecalculationTests
 {
     private const string ShepherdScriptPath = "Meta/StrataLint/scripts/pr-shepherd.sh";
+    private const string ShepherdLeaseScriptPath =
+        "Meta/StrataLint/scripts/pr-shepherd-lease.sh";
     private const string CommitSubject =
         "recompute derivations after dev advance (auto, pr-shepherd)";
 
@@ -39,6 +41,15 @@ public sealed partial class PrShepherdRecalculationTests
         }
 
         throw new DirectoryNotFoundException("Could not locate repository root.");
+    }
+
+    private static string ReadShepherdScripts()
+    {
+        var root = FindRepositoryRoot();
+        return string.Join(
+            '\n',
+            File.ReadAllText(Path.Combine(root, ShepherdScriptPath)),
+            File.ReadAllText(Path.Combine(root, ShepherdLeaseScriptPath)));
     }
 
     private sealed class ShepherdFixture : IDisposable
@@ -267,9 +278,11 @@ public sealed partial class PrShepherdRecalculationTests
         internal ShepherdResult RunWatch(bool noChecks = false)
         {
             var script = Path.Combine(repository, ShepherdScriptPath);
+            var leaseScript = Path.Combine(repository, ShepherdLeaseScriptPath);
             Directory.CreateDirectory(Path.GetDirectoryName(script)!);
             File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdScriptPath), script);
-            Git(repository, "add", ShepherdScriptPath);
+            File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdLeaseScriptPath), leaseScript);
+            Git(repository, "add", ShepherdScriptPath, ShepherdLeaseScriptPath);
             Git(repository, "commit", "-m", "track pr-shepherd fixture");
             var home = Path.Combine(temporary.Path, "home");
             Directory.CreateDirectory(home);

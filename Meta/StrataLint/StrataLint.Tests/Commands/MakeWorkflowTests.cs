@@ -48,6 +48,8 @@ public sealed partial class MakeWorkflowTests
     private const string TheoryIngestWorkflowPath = ".github/workflows/theory-ingest.yml";
     private const string EchoResidualSummaryPath = "Generated/echo-residual-summary.md";
     private const string PrShepherdScriptPath = "Meta/StrataLint/scripts/pr-shepherd.sh";
+    private const string PrShepherdLeaseScriptPath =
+        "Meta/StrataLint/scripts/pr-shepherd-lease.sh";
 
     private static readonly string[] Targets =
     [
@@ -740,7 +742,10 @@ public sealed partial class MakeWorkflowTests
     public void PrShepherdWakesArmedPrsWhoseHeadHasNoChecks()
     {
         var root = FindRepositoryRoot();
-        var shepherd = File.ReadAllText(Path.Combine(root, PrShepherdScriptPath));
+        var shepherd = string.Join(
+            '\n',
+            File.ReadAllText(Path.Combine(root, PrShepherdScriptPath)),
+            File.ReadAllText(Path.Combine(root, PrShepherdLeaseScriptPath)));
 
         // 采集面:sweep 必须读到 head 与 checks 数,否则判不出"armed 但 head 无 checks"
         // 的死锁类(bot 以 GITHUB_TOKEN push 不触发 workflow 的防递归缺口)。

@@ -101,8 +101,7 @@ public sealed partial class PrShepherdRecalculationTests
     [Fact]
     public void ScriptClassifierUsesLatestFailedAdmissionMachineFieldsAndAllExpiryTokens()
     {
-        var root = FindRepositoryRoot();
-        var script = File.ReadAllText(Path.Combine(root, ShepherdScriptPath));
+        var script = ReadShepherdScripts();
 
         Assert.Contains("Content-addressed dev baseline admission", script, StringComparison.Ordinal);
         Assert.Contains("completedAt", script, StringComparison.Ordinal);
