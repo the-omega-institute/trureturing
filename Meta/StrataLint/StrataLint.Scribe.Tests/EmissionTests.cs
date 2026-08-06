@@ -464,7 +464,8 @@ public sealed class EmissionTests
             // Lean declaration are all absent from the evaluated (older) tree — a not-yet-materialized
             // protected-surface addition. The base binary that already admitted this tree never saw the
             // document, so voiding the capability would make the candidate block what the baseline admits.
-            var absent = DocumentDefinitions.All[^1];
+            var absent = DocumentDefinitions.All.Single(static definition =>
+                definition.Document.Header.Gid.Value == "D5/S1/Scale/CarrierFoundations");
             Assert.NotEqual("D5/S0/Carrier/GoldenRatio", absent.Document.Header.Gid.Value);
             Assert.NotEqual("D5/S1/Scale/FibonacciEigen", absent.Document.Header.Gid.Value);
             File.Delete(Path.Combine(root, absent.RelativePath.Value));

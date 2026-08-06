@@ -103,3 +103,8 @@ $$\mathrm{ScalingRegister}\left(\mathrm{castAddHom}\left(\mathrm{Real}\right), \
 *Commentary.*
 
 On the integer ledger, the cast-to-real length and the factor exp(pi i n) satisfy the register shape, while n=1 evaluates to minus one rather than one. This kernel-checked counterexample-style witness prevents the main exclusion theorem from succeeding merely because ScalingRegister is empty.
+
+## References
+
+- Dependency: [D5/S0/Conventions/TotalCode](../../S0/Conventions/TotalCode.md)
+- Dependency: [D5/S3/Zeros/CompletedZeta](CompletedZeta.md)

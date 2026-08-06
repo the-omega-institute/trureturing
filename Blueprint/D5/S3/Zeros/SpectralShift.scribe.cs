@@ -52,5 +52,11 @@ internal sealed class SpectralShiftDocument : IScribeDocumentDefinition
                     Text("When the real part lies strictly to the right of the existing critical abscissa, the actual square-summable labeled-zeta vector satisfies the same equality at each supplied address. The half-plane premise is a typing witness for that vector; the result remains pointwise because backwardShift is not a bundled continuous operator. Compared with the CAS theorem, this omits the joint bounded-operator assertion, basis subtraction rule, Bloch-wave and Bost-Connes identifications, and numerical certificate. "),
                     Ref("D5/L/hedenmalm1997hilbert"),
                     Text(" is contextual rather than a verbatim source for this multi-axis claim. The theorem provides a concrete spectral action compatible with the O-6 Hilbert-space route, but neither constructs the positivity form nor connects eigenvalues to zeta zeros.")))
-            ))));
+            )),
+[
+                        DocumentEdge.Dependency.Create(
+                            GidRef.Create("D5/S1/Digit/PrimeAxisAddition")),
+                        DocumentEdge.Dependency.Create(
+                            GidRef.Create("D5/S3/Weil/SpectralHilbert")),
+                    ]));
 }
