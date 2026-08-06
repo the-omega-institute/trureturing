@@ -442,16 +442,28 @@ public sealed partial class PrShepherdRecalculationTests
                 new UTF8Encoding(false));
         }
 
-        internal long WriteIncompleteDerivedLease(long acquiredAt)
+        internal void WriteIncompleteDerivedLease()
         {
             var leaseDirectory = Path.Combine(StateDirectory, "derived-fifo.lease");
             Directory.CreateDirectory(leaseDirectory);
-            Directory.SetLastWriteTimeUtc(
-                leaseDirectory,
-                DateTimeOffset.FromUnixTimeSeconds(acquiredAt).UtcDateTime);
-            return new DateTimeOffset(Directory.GetLastWriteTimeUtc(leaseDirectory))
-                .ToUnixTimeSeconds();
         }
+
+        internal void UseGnuStatWithMtime(long epochSeconds) =>
+            WriteExecutable(
+                "stat",
+                $$"""
+                #!/usr/bin/env bash
+                set -euo pipefail
+                if [[ "${1:-}" == "-f" && "${2:-}" == "%m" ]]; then
+                  printf '%s\n' '/'
+                  exit 0
+                fi
+                if [[ "${1:-}" == "-c" && "${2:-}" == "%Y" ]]; then
+                  printf '%s\n' '{{epochSeconds}}'
+                  exit 0
+                fi
+                exit 64
+                """);
 
         internal void UseFixedClock(long epochSeconds) =>
             WriteExecutable(

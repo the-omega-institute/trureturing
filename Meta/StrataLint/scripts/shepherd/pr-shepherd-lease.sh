@@ -14,7 +14,15 @@ pr_has_derived_changes() {
 }
 
 derived_lease_mtime() {
-  stat -f '%m' "$1" 2>/dev/null || stat -c '%Y' "$1" 2>/dev/null
+  local mtime
+  mtime="$(stat -f '%m' "$1" 2>/dev/null || true)"
+  if [[ "$mtime" =~ ^[0-9]+$ ]]; then
+    printf '%s\n' "$mtime"
+    return 0
+  fi
+  mtime="$(stat -c '%Y' "$1" 2>/dev/null || true)"
+  [[ "$mtime" =~ ^[0-9]+$ ]] || return 1
+  printf '%s\n' "$mtime"
 }
 load_derived_lease() {
   local directory="$1" line schema="" pr="" acquired_at="" token=""

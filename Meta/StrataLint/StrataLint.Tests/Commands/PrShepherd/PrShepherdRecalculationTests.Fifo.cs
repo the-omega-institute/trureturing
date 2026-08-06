@@ -62,7 +62,9 @@ public sealed partial class PrShepherdRecalculationTests
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new ShepherdFixture();
-        var expiredAt = fixture.WriteIncompleteDerivedLease(1_700_000_000);
+        const long expiredAt = 1_700_000_000;
+        fixture.WriteIncompleteDerivedLease();
+        fixture.UseGnuStatWithMtime(expiredAt);
         fixture.UseFixedClock(expiredAt + 60);
 
         var result = fixture.Run(leaseTtlSeconds: 60);
