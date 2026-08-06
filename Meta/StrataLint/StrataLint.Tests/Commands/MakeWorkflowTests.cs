@@ -49,7 +49,7 @@ public sealed partial class MakeWorkflowTests
     private const string EchoResidualSummaryPath = "Generated/echo-residual-summary.md";
     private const string PrShepherdScriptPath = "Meta/StrataLint/scripts/pr-shepherd.sh";
     private const string PrShepherdLeaseScriptPath =
-        "Meta/StrataLint/scripts/pr-shepherd-lease.sh";
+        "Meta/StrataLint/scripts/shepherd/pr-shepherd-lease.sh";
 
     private static readonly string[] Targets =
     [

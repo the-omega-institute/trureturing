@@ -106,7 +106,7 @@ is_derived_conflict() {
     *) return 1 ;;
   esac
 }
-source "$(cd "$(dirname "$SCRIPT_PATH")" && pwd -P)/pr-shepherd-lease.sh"
+source "$(cd "$(dirname "$SCRIPT_PATH")" && pwd -P)/shepherd/pr-shepherd-lease.sh"
 branch_slug() {
   local branch="$1" slug digest
   slug="$(printf '%s' "$branch" | sed 's#[^A-Za-z0-9._-]#-#g')"

@@ -7,7 +7,7 @@ public sealed partial class PrShepherdRecalculationTests
 {
     private const string ShepherdScriptPath = "Meta/StrataLint/scripts/pr-shepherd.sh";
     private const string ShepherdLeaseScriptPath =
-        "Meta/StrataLint/scripts/pr-shepherd-lease.sh";
+        "Meta/StrataLint/scripts/shepherd/pr-shepherd-lease.sh";
     private const string CommitSubject =
         "recompute derivations after dev advance (auto, pr-shepherd)";
 
@@ -282,6 +282,7 @@ public sealed partial class PrShepherdRecalculationTests
             var script = Path.Combine(repository, ShepherdScriptPath);
             var leaseScript = Path.Combine(repository, ShepherdLeaseScriptPath);
             Directory.CreateDirectory(Path.GetDirectoryName(script)!);
+            Directory.CreateDirectory(Path.GetDirectoryName(leaseScript)!);
             File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdScriptPath), script);
             File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdLeaseScriptPath), leaseScript);
             Git(repository, "add", ShepherdScriptPath, ShepherdLeaseScriptPath);
@@ -441,14 +442,29 @@ public sealed partial class PrShepherdRecalculationTests
                 new UTF8Encoding(false));
         }
 
-        internal void WriteIncompleteDerivedLease(long acquiredAt)
+        internal long WriteIncompleteDerivedLease(long acquiredAt)
         {
             var leaseDirectory = Path.Combine(StateDirectory, "derived-fifo.lease");
             Directory.CreateDirectory(leaseDirectory);
             Directory.SetLastWriteTimeUtc(
                 leaseDirectory,
                 DateTimeOffset.FromUnixTimeSeconds(acquiredAt).UtcDateTime);
+            return new DateTimeOffset(Directory.GetLastWriteTimeUtc(leaseDirectory))
+                .ToUnixTimeSeconds();
         }
+
+        internal void UseFixedClock(long epochSeconds) =>
+            WriteExecutable(
+                "date",
+                $"""
+                #!/usr/bin/env bash
+                set -euo pipefail
+                if [[ "$*" == "+%s" ]]; then
+                  printf '%s\n' '{epochSeconds}'
+                  exit 0
+                fi
+                exec /bin/date "$@"
+                """);
 
         private void WriteBranchLock(string worktreeName, int owner)
         {
