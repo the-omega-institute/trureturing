@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Naming/NamingSystem
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.MeasureTheory.Measure.Typeclasses.NoAtoms]
+   anchors: []
    digest: Countable naming systems over uncountable carriers have null named image. -/
 
 import Mathlib.MeasureTheory.Measure.Typeclasses.NoAtoms
