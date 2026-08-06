@@ -15,7 +15,7 @@ output="$root/output"
 calls="$root/gh.calls"
 marker="$root/script-updated"
 root_marker="$root/reloaded-root"
-command cp "$SCRIPT_UNDER_TEST" "$script"
+command cp -R "$(dirname "$SCRIPT_UNDER_TEST")/." "$(dirname "$script")"
 lease_implementation="$(command sed -n \
   '/^clear_watch_reclaim()/,/^watch_lease_belongs_to_current_process()/p' \
   "$SCRIPT_UNDER_TEST")"
