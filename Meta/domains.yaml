@@ -23,6 +23,9 @@ domains:
   Depth:
     stratum: S1
     definition: Finite-resolution depth combining logarithmic scale, Zeckendorf support size, and quantized phase.
+  Diagonal:
+    stratum: S0
+    definition: Diagonal constructions on finite self-application listings and their exact escape counts.
   Digit:
     stratum: S1
     definition: Raw and canonical W-digit representations and local value-preserving carry rules.
