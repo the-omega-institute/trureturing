@@ -17,3 +17,7 @@ $$\exists\,\sigma\in\operatorname{Aut}(\mathcal{O}_\varphi):\ \sigma=\overline{(
 The golden integer carrier admits a ring automorphism that agrees pointwise with conjugation and is involutive. The integer norm is multiplicative. An element is a unit exactly when it is a signed integral power of the golden ratio, whose norm is minus one. The carrier is a principal ideal ring and a unique factorization monoid.
 
 The statement is assembly-only: each clause is witnessed by its frozen proof — the conjugation equivalence, norm multiplicativity, the signed-power unit classification, and the principal-ideal and unique-factorization instances — so the theorem packages the four foundations behind a single declaration without re-proving any of them.
+
+## References
+
+- Dependency: [D5/S0/Carrier/Norm](../../S0/Carrier/Norm.md)
