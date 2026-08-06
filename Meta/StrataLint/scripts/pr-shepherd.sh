@@ -25,6 +25,10 @@ PIDFILE="$PIDFILE_PARENT/${PIDFILE##*/}"
 STATE_DIR="${PR_SHEPHERD_STATE:-$HOME/.pr-shepherd-state}"
 CACHE_ROOT="${PR_SHEPHERD_CACHE:-$HOME/.cache/trureturing-shepherd}"
 DRYRUN="${SHEPHERD_DRYRUN:-0}"
+DERIVED_LEASE_TTL="${PR_SHEPHERD_LEASE_TTL_SECONDS:-14400}"
+DERIVED_LEASE_TOKEN=""
+DERIVED_LEASE_PR=""
+DERIVED_LEASE_ACQUIRED_AT=""
 COMMIT_SUBJECT="recompute derivations after dev advance (auto, pr-shepherd)"
 ORIGINAL_HOME="${HOME:-/tmp}"
 WATCH_LOADED_BLOB="${PR_SHEPHERD_WATCH_LOADED_BLOB:-}"
@@ -102,6 +106,7 @@ is_derived_conflict() {
     *) return 1 ;;
   esac
 }
+source "$(cd "$(dirname "$SCRIPT_PATH")" && pwd -P)/shepherd/pr-shepherd-lease.sh"
 branch_slug() {
   local branch="$1" slug digest
   slug="$(printf '%s' "$branch" | sed 's#[^A-Za-z0-9._-]#-#g')"
@@ -390,66 +395,6 @@ wake_pr() {
 # account, which is how it died repeatedly on this host.
 graphql_remaining() {
   gh api rate_limit --jq '.resources.graphql.remaining' 2>/dev/null
-}
-sweep() {
-  local remaining floor="${PR_SHEPHERD_GRAPHQL_FLOOR:-200}"
-  remaining="$(graphql_remaining)" || remaining=""
-  # An unreadable budget must not stall the shepherd: if gh is broken the sweep will
-  # report that on its own, and a guard that fails closed here would lock the very
-  # recalculation that unblocks the queue.
-  if [[ "$remaining" =~ ^[0-9]+$ && "$floor" =~ ^[0-9]+$ && "$remaining" -lt "$floor" ]]; then
-    log "SWEEP 跳过:GraphQL 余额 $remaining 低于下限 $floor,让配额恢复"
-    return 0
-  fi
-  [[ "$DRYRUN" == "1" ]] || mkdir -p "$STATE_DIR"
-  local recalculated=" "
-  GH pr list --repo "$REPO" --state open --limit 1000 \
-    --json number,mergeable,mergeStateStatus,autoMergeRequest,headRefName,headRefOid,baseRefOid,statusCheckRollup \
-    --jq '.[] | select(.autoMergeRequest != null) | ((.statusCheckRollup | map(select(.__typename == "CheckRun" and .name == "Content-addressed dev baseline admission")) | sort_by(.startedAt // .completedAt // "") | last) // {}) as $admission | [.number,.mergeable,.mergeStateStatus,.headRefName,.headRefOid,.baseRefOid,(.statusCheckRollup|length),($admission.conclusion // "-"),($admission.detailsUrl // "-")] | @tsv' |
-  while IFS=$'\t' read -r num mergeable mstate head head_oid base_oid checks admission_conclusion admission_url; do
-    case "$mergeable:$mstate" in
-      MERGEABLE:BEHIND|CONFLICTING:*)
-        if [[ "$mergeable" == "CONFLICTING" ]] \
-          || has_expiry_fingerprint "$admission_conclusion" "$admission_url"; then
-          if [[ "$recalculated" == *" $num "* ]]; then
-            log "SWEEP #$num 本轮已重算一次,跳过重复项"
-            continue
-          fi
-          recalculated+="$num "
-          recalculate_pr "$num" "$head" "$head_oid" || true
-        elif [[ "$DRYRUN" == "1" ]]; then
-          log "DRYRUN #$num BEHIND -> update-branch(本地身份,checks 会触发)"
-        else
-          if out="$(GH api -X PUT "repos/$REPO/pulls/$num/update-branch" 2>&1)"; then
-            log "SWEEP #$num BEHIND -> update-branch(本地身份,checks 会触发)"
-          else
-            log "SWEEP #$num update-branch 失败: $(printf '%s' "$out" | head -c 100)"
-          fi
-        fi
-        ;;
-      *)
-        # BLOCKED/UNKNOWN 且 head 无任何 check:多为 bot push 死锁。
-        # 同一 head 连续两轮观察为空才唤醒,防 checks 挂载延迟误触。
-        if [[ "$DRYRUN" == "1" ]]; then
-          if [[ "$checks" == "0" && ( "$mstate" == "BLOCKED" || "$mstate" == "UNKNOWN" ) ]]; then
-            log "DRYRUN #$num head=$head_oid 无 checks -> 观察/唤醒均抑制"
-          fi
-          continue
-        fi
-        marker="$STATE_DIR/nochecks-$num"
-        if [[ "$checks" == "0" && ( "$mstate" == "BLOCKED" || "$mstate" == "UNKNOWN" ) ]]; then
-          if [[ -f "$marker" && "$(cat "$marker")" == "$head_oid" ]]; then
-            wake_pr "$num" && rm -f "$marker"
-          else
-            printf '%s' "$head_oid" > "$marker"
-            log "SWEEP #$num head=$head_oid 无 checks,标记观察(下轮仍空即唤醒)"
-          fi
-        else
-          rm -f "$marker" 2>/dev/null || true
-        fi
-        ;;
-    esac
-  done
 }
 armed_pr_count() {
   local out
