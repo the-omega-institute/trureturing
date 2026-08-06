@@ -1,8 +1,8 @@
-<!-- echo-residual-summary:v3 residual=sha256:456302cd44bf286d0e406115a7e7a10a2fc786f2c3747f84b6740e4a3d8f9698 -->
+<!-- echo-residual-summary:v3 residual=sha256:b8b57b21dfe67962aaebf756653953d3809f49fdae7c61408fb0eba909f95fa8 -->
 # Echo Residual Summary
 
-- unresolved_subitems: 502
-- mother_residual_atom_ids: 69
+- unresolved_subitems: 508
+- mother_residual_atom_ids: 72
 
 ## `bedc-wm-v0.1`
 
@@ -209,8 +209,8 @@ Mother residual atoms:
 
 ## `pzg-v170`
 
-- unresolved_subitems: 348
-- mother_residual_atom_ids: 50
+- unresolved_subitems: 354
+- mother_residual_atom_ids: 53
 
 Mother residual atoms:
 
@@ -365,6 +365,9 @@ Mother residual atoms:
   - `zolotarev-congruence-to-selector-numerator`
   - `zolotarev-jacobi-factorization`
   - `zolotarev-selector-congruence`
+- `pzg-residual-61364dcfb96879a529a59450892412c60c668fa0cb3dc0438a59318cbc29ca71` (2)
+  - `c3b-local-scaling-ledger-zero-qualification`
+  - `c3b-positive-functional-o6-bridge`
 - `pzg-residual-62d1597aaf5576fe27e793a4e7a200b5c32d680149f8f842a37066d686f6b37e` (4)
   - `biane-pitman-yor-zeta-bridge-moment-identity`
   - `bridge-log-distribution-half-symmetry`
@@ -484,6 +487,9 @@ Mother residual atoms:
   - `sixty-six-case-certificate`
   - `station-flip-angle-jump`
   - `zero-family-pin-ledger`
+- `pzg-residual-9d3d07a751adbfaaa89596eab0358448670a45e4cb516b8a590bb178c0aaa0c2` (2)
+  - `concrete-solenoid-fiber-kernel-identification`
+  - `multiplicative-to-additive-cocycle-transport`
 - `pzg-residual-9f92118027a9f11747053931ee56ac8badd298ce7b7171bed1d76d4c80f19322` (4)
   - `mertens-three-scale-product-growth-certificate`
   - `noncompactness-versus-off-line-zero-causal-claim`
@@ -493,6 +499,9 @@ Mother residual atoms:
   - `hls-natural-domain-is-real-part-greater-than-one-half`
   - `source-theorems-25-2-through-25-5-as-all-one-vector-restatements`
   - `source-threefold-characterization-unification-claim`
+- `pzg-residual-b2ff1592c4c24b12dcc970a03ac6e2d0665a0b789156795ae37275aef122977c` (2)
+  - `annihilator-orthogonality-and-cardinality-proof-chain`
+  - `character-shape-theorem-10-6-binding`
 - `pzg-residual-b9b6b0a69c0a65c6d437b2c9f3983495cd0d52ffbef6fe6a2c4a7f06e1865ba0` (2)
   - `cubic-field-conjugate-trace-explanation`
   - `tribonacci-deficit-nonintegrality-and-scan-certificate`

@@ -147,5 +147,11 @@ internal sealed class SpectralDynamicsDocument : IScribeDocumentDefinition
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "The source presents an internal self-model in which evolution factors into orthogonal operations, classification, and bookkeeping. It assigns new axes to orthogonal pairing and convolution, two complementary halves to classification, and the growth of the ledger to time; this description is expressly not claimed for the external world. It then corrects the slogan that logic alone gives causality. Logic has no tense and reversible phase time has no arrow; causal direction appears only in the ledger layer, fueled by monotone cost. Hence its formula is causality = logic * irreversibility, with a minimal demonstration in which the same rule has a directionless period-two reversible implementation but a strictly growing bookkeeping implementation that orders events. Finally, the Pythagorean claim that everything is number is classified as a normative choice rather than a truth-valued proposition. The internal kernel may be considered a self-contained universe model, but whether the external world is that model is kept outside the classification scheme and deliberately left undecided.")))
-            ))));
+            )),
+[
+                        DocumentEdge.Dependency.Create(
+                            GidRef.Create("D5/S3/Weil/CriticalLine")),
+                        DocumentEdge.Dependency.Create(
+                            GidRef.Create("D5/S3/Weil/SpectralHilbert")),
+                    ]));
 }

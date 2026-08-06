@@ -50,5 +50,11 @@ internal sealed class TwelveScaleReductionDocument : IScribeDocumentDefinition
                     Disp(Seq(Forall, Sp, F.Id("x"), Comma, F.Id("y"), InMacro, Sp, F.Id("N"), Underscore, F.Id("A"), Open, F.Id("S"), Close, Comma, Esc, Open, Open, Forall, Sp, F.Id("z"), InMacro, Sp, F.Id("N"), Underscore, F.Id("A"), Open, F.Id("S"), Close, Comma, Esc, F.Id("x"), Leq, Sp, F.Id("z"), Close, Land, Open, Forall, Sp, F.Id("z"), InMacro, Sp, F.Id("N"), Underscore, F.Id("A"), Open, F.Id("S"), Close, Comma, Esc, F.Id("y"), Leq, Sp, F.Id("z"), Close, Close, Rightarrow, Sp, F.Id("x"), Eq, F.Id("y"))),                    DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "Two normalized sample members that are each no greater than every member are equal by antisymmetry. This order-theoretic uniqueness does not identify any other statistical reading with the sample minimum.")))
-                ))));
+                )),
+[
+                            DocumentEdge.Dependency.Create(
+                                GidRef.Create("D5/S1/Phase/SeatTowerArithmetic")),
+                            DocumentEdge.Dependency.Create(
+                                GidRef.Create("D5/S1/Phase/ZeroOrbitCongruence")),
+                        ]));
 }

@@ -15,3 +15,7 @@ $$\left(\forall x3 \in \left(\forall x3 \in \mathrm{TotalCode},\; \mathrm{TotalC
 *Commentary.*
 
 The semantic kernel-identity criterion is represented here by Lean structure equality, not claimed as a proof of an ontological identity criterion. Extensionality proves both the preservation clause and its componentwise dual. This is the C3a identity pillar announced for use in 23.4.
+
+## References
+
+- Truth anchor: `D5/S0/Conventions/TotalCode.no_hidden_register`

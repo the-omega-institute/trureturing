@@ -130,5 +130,11 @@ internal sealed class ScalingRegisterRigidityDocument : IScribeDocumentDefinitio
                     + "satisfy the register shape, while n=1 evaluates to minus one rather than "
                     + "one. This kernel-checked counterexample-style witness prevents the main "
                     + "exclusion theorem from succeeding merely because ScalingRegister is empty.")))
-            ))));
+            )),
+[
+                        DocumentEdge.Dependency.Create(
+                            GidRef.Create("D5/S0/Conventions/TotalCode")),
+                        DocumentEdge.Dependency.Create(
+                            GidRef.Create("D5/S3/Zeros/CompletedZeta")),
+                    ]));
 }

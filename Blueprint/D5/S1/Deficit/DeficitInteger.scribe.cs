@@ -45,7 +45,13 @@ internal sealed class DeficitIntegerDocument : IScribeDocumentDefinition
                         + "the golden fixed-point relation, while the two lowest repeated carries each hide a "
                         + "single unit of opposite sign. Summing these contributions along the deterministic "
                         + "normalization path expresses the deficit as the signed count of bottom carries.")))
-            ))));
+            )),
+[
+                        DocumentEdge.Dependency.Create(
+                            GidRef.Create("D5/S0/Carrier/Conj")),
+                        DocumentEdge.Dependency.Create(
+                            GidRef.Create("D5/S1/Scale/Embedding")),
+                    ]));
 
     private static Formula DeficitFormula()
     {
