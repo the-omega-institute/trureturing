@@ -2993,8 +2993,8 @@ sources:
               target_sha256: sha256:351b14e9a00f243b0d304094d2272f8f0648c9f79e4ddd3a566bf8007810dc50
           scribe:
             - gid: D5/S1/Scale/CarrierFoundations.golden_carrier_foundations
-              definition_sha256: sha256:5d2b868a21458546e306c63f41584a9c4eff2654789efbf9f270ec32d080d001
-              emission_sha256: sha256:d8c7f40c7755d023de8a9444fedd56061f2c0ff015d214bdb129e7acb0fd0140
+              definition_sha256: sha256:a268022c9b907374e781a6b2d73d63c1107fa6b4e7945646d2fa12ba6b508821
+              emission_sha256: sha256:3e82b018a0847a9b13c4a842836bb0722107d39c73cf291c1c41313fc7f4850c
           unresolved_subitems:
             - conjugation-and-norm-random-scan-certificates
             - additive-closure-random-scan-certificate

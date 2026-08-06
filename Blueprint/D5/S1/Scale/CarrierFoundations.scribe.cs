@@ -35,5 +35,6 @@ internal sealed class CarrierFoundationsDocument : IScribeDocumentDefinition
                             + "principal-ideal and unique-factorization instances — so the "
                             + "theorem packages the four foundations behind a single "
                             + "declaration without re-proving any of them.")))
-                ))));
+                )),
+            [DocumentEdge.Dependency.Create(GidRef.Create("D5/S0/Carrier/Norm"))]));
 }
