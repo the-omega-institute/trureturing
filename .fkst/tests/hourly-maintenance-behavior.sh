@@ -749,6 +749,9 @@ run_test "overflowing defer timestamp forces restart" overflowing_defer_timestam
 run_test "zombie implementing label without a live lease restarts" zombie_label_without_live_lease_restarts
 run_test "live implement lease defers restart within its bound" live_lease_defers_restart_within_bound
 run_test "deferral past its bound forces a restart" defer_bound_exceeded_forces_restart
+run_test "live codex implement worker counts as an implement lease" live_codex_implement_worker_counts_as_an_implement_lease
+run_test "dead codex implement worker is not an implement lease" dead_codex_implement_worker_is_not_an_implement_lease
+run_test "report slot lease still counts when no codex worker exists" report_slot_lease_still_counts_when_no_codex_worker_exists
 run_test "worktree GC preserves owned or dirty lanes" worktree_gc_preserves_owned_or_dirty_lanes
 run_test "GC roots are canonical and never filesystem root" gc_roots_are_canonical_and_never_the_filesystem_root
 run_test "stale slot GC requires a genuinely dead owner" stale_slot_gc_requires_a_genuinely_dead_owner
