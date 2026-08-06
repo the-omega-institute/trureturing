@@ -89,6 +89,8 @@ check_launchd_conformance() {
         "$make_bin" >&2
       return 2
     }
+  install_launchd_launchers "$make_bin" || return
+  ensure_launchd_services || return
   HOST_CONFIG="$HOST_CONFIG" FKST_MAKE_BIN="$make_bin" \
     "$make_bin" -s -C "$REPOSITORY_ROOT" launchd-conformance-check
 }

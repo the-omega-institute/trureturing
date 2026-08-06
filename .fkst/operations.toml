@@ -26,6 +26,7 @@ external_tools = [
   "git",
   "grep",
   "head",
+  "id",
   "launchctl",
   "mkdir",
   "mv",
@@ -54,6 +55,7 @@ external_tools = [
   "bash",
   "basename",
   "chmod",
+  "cp",
   "dirname",
   "grep",
   "mktemp",
@@ -74,6 +76,7 @@ tests = [
 ]
 external_tools = [
   "bash",
+  "cmp",
   "dirname",
   "launchctl",
   "make",
@@ -118,6 +121,7 @@ external_tools = [
   "bash",
   "basename",
   "chmod",
+  "cp",
   "dirname",
   "git",
   "grep",

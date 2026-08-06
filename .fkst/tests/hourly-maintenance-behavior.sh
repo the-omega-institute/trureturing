@@ -607,7 +607,11 @@ SH
 #!/usr/bin/env bash
 exit 0
 SH
-  chmod +x "$root/bin/pgrep" "$root/bin/gh" "$root/bin/make"
+  cat > "$root/bin/launchctl" <<'SH'
+#!/usr/bin/env bash
+[[ "$1" == "print" ]]
+SH
+  chmod +x "$root/bin/pgrep" "$root/bin/gh" "$root/bin/make" "$root/bin/launchctl"
   # A live implement lease keeps this checkout-refresh case off the restart path.
   mkdir -p "$root/supervisor/slots/lane.lock"
   printf '%s\n' "$$" > "$root/supervisor/slots/lane.lock/owner"
@@ -754,6 +758,8 @@ run_test "restart timeout with launchd in service does not roll back platform" r
 run_test "restart timeout with launchd absent rolls back platform" restart_timeout_with_launchd_absent_rolls_back_platform
 run_test "unchanged PID remains unhealthy after restart budget" unchanged_pid_remains_unhealthy_after_restart_budget
 run_test "restart requires successful stop" restart_requires_successful_stop
+run_test "missing launchd service is bootstrapped and logged" missing_launchd_service_is_bootstrapped_and_logged
+run_test "missing launchctl skips service loading and logs" missing_launchctl_skips_service_loading_and_logs
 run_test "rollback failure is not reported as reverted" rollback_failure_is_not_reported_as_reverted
 run_test "pin-write rollback failure is not reported as reverted" pin_write_rollback_failure_is_not_reported_as_reverted
 run_test "maintenance delegates launchd conformance gate" maintenance_delegates_launchd_conformance_gate
@@ -765,6 +771,7 @@ run_test "bring-up bootstraps supervise before inventory check" bring_up_documen
 run_test "stale deployed repository contract does not block checkout refresh" stale_deployed_repository_contract_does_not_block_checkout_refresh
 run_test "host config rejects shell control flow without evaluation" host_config_rejects_shell_control_flow_without_evaluation
 run_test "fictional second-host launcher is portable" fictional_second_host_launcher_is_portable
+run_test "canonical render installs byte-identical regular member" canonical_render_installs_byte_identical_regular_member
 run_test "launcher conformance compares rendered and deployed bytes" launcher_conformance_compares_rendered_and_deployed_bytes
 run_test "current pr-watch identity is accepted" current_pr_watch_identity_is_accepted
 run_test "stale pr-watch identity is reported" stale_pr_watch_identity_is_reported

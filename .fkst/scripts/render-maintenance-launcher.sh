@@ -55,6 +55,10 @@ main() {
   mv "$temporary" "$output"
   trap - EXIT
   printf '%s\n' "$output"
+  if [[ -z "${OUTPUT:-}" ]]; then
+    /bin/bash "$SCRIPT_DIR/install-launchd-launcher.sh" \
+      "$output" "$FKST_MAINTENANCE_LAUNCHD_LABEL"
+  fi
 }
 
 main "$@"

@@ -145,15 +145,49 @@ Use the user launchd domain. If this label has never been loaded, the `bootout` 
 that no service exists; continue to `bootstrap`.
 
 ```sh
-launchctl bootout "gui/$(id -u)" "<absolute-path-to-rendered-maintenance-plist>"
-launchctl bootstrap "gui/$(id -u)" "<absolute-path-to-rendered-maintenance-plist>"
-launchctl bootout "gui/$(id -u)" "<absolute-path-to-rendered-supervise-plist>"
-launchctl bootstrap "gui/$(id -u)" "<absolute-path-to-rendered-supervise-plist>"
+launchctl bootout "gui/$(id -u)" \
+  "$HOME/Library/LaunchAgents/<maintenance-launchd-label-for-this-machine>.plist"
+launchctl bootstrap "gui/$(id -u)" \
+  "$HOME/Library/LaunchAgents/<maintenance-launchd-label-for-this-machine>.plist"
+launchctl bootout "gui/$(id -u)" \
+  "$HOME/Library/LaunchAgents/<supervise-launchd-label-for-this-machine>.plist"
+launchctl bootstrap "gui/$(id -u)" \
+  "$HOME/Library/LaunchAgents/<supervise-launchd-label-for-this-machine>.plist"
 ```
 
 Do not copy either launcher implementation into a host directory. The maintenance plist invokes
 the tracked Make target in the dedicated checkout, and the supervise plist invokes the pinned
 platform run script with repository-derived package arguments.
+
+## 5.1. Persist both launchd units across login and restart
+
+The configured `FKST_MAINTENANCE_LAUNCHER_PATH` and `FKST_SUPERVISE_LAUNCHER_PATH` remain the
+rendered sources of truth. A canonical render without an `OUTPUT` override atomically copies each
+source byte-for-byte to `~/Library/LaunchAgents/<label>.plist`. macOS discovers that installed
+location when the user logs in; the source paths under `~/.fkst/trureturing/launchd/` are not
+login bootstrap locations.
+
+Run both tracked targets before bootstrap. Bootstrap the installed copies, not the rendered source
+paths:
+
+```sh
+make maintenance-launcher-render HOST_CONFIG="<absolute-path-to-host.env>"
+make supervise-launcher-render HOST_CONFIG="<absolute-path-to-host.env>"
+cmp "<absolute-path-to-rendered-maintenance-plist>" \
+  "$HOME/Library/LaunchAgents/<maintenance-launchd-label-for-this-machine>.plist"
+cmp "<absolute-path-to-rendered-supervise-plist>" \
+  "$HOME/Library/LaunchAgents/<supervise-launchd-label-for-this-machine>.plist"
+launchctl bootstrap "gui/$(id -u)" \
+  "$HOME/Library/LaunchAgents/<maintenance-launchd-label-for-this-machine>.plist"
+launchctl bootstrap "gui/$(id -u)" \
+  "$HOME/Library/LaunchAgents/<supervise-launchd-label-for-this-machine>.plist"
+```
+
+Both installed members must be regular files. Do not replace either with a symlink: the harness
+rejects symlinked sources, installation directories, and installed members fail closed. Every
+maintenance cycle refreshes the installed bytes, queries each service with `launchctl print`, and
+bootstraps any missing service from its installed member. Each reload success or failure is written
+to `FKST_MAINTENANCE_LOG` as `LAUNCHD-RELOAD` or `LAUNCHD-RELOAD-FAIL`.
 
 ## 6. Verify deployment conformance
 
@@ -167,8 +201,9 @@ launchctl print "gui/$(id -u)/<supervise-launchd-label-for-this-machine>"
 ```
 
 The first command exits zero only when host launchd membership exactly matches the repository
-inventory and every deployed plist is byte-for-byte identical to a fresh render from the tracked
-template and this host's values. `make hourly-maintenance` delegates this same gate after its
+inventory, every rendered source is byte-for-byte identical to a fresh render from the tracked
+template and this host's values, and every `~/Library/LaunchAgents` member exists as a regular file
+with bytes identical to its rendered source. `make hourly-maintenance` delegates this same gate after its
 normal cycle and propagates any gate failure as a failed periodic run. The two `launchctl print`
 commands must show the configured labels and paths; maintenance must also show the 09:30 calendar
 interval, bot login, and integration branch.

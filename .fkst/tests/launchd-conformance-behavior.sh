@@ -22,6 +22,7 @@ run_checker() {
   FAKE_LAUNCHD_MODE="$mode" \
   FAKE_MAKE_LOG="$scratch/make.log" \
   FKST_LAUNCHD_ENUMERATOR="$scratch/bin/launchd-enumerator" \
+  FKST_LAUNCH_AGENTS_DIR="$scratch/LaunchAgents" \
   FKST_MAKE_BIN="$scratch/bin/make" \
   HOST_CONFIG="$host_config" \
     /bin/bash "$CHECKER" > "$output" 2>&1
@@ -58,6 +59,47 @@ assert_declared_members_are_checked() {
     && grep -Fq 'maintenance-launcher-check' "$scratch/make.log" \
     && grep -Fq 'supervise-launcher-check' "$scratch/make.log" \
     && grep -Fq 'launchd-conformance-check: conformant units: maintenance supervise' "$output"
+}
+
+assert_missing_installed_member_is_rejected() {
+  local scratch="$1" host_config="$2" output="$scratch/missing-installed.out"
+  rm -f "$scratch/LaunchAgents/local.fkst.synthetic.supervise.plist"
+  if run_checker "$scratch" "$host_config" conformant "$output"; then
+    return 1
+  fi
+  grep -Fq \
+    "launchd-conformance-check: installed launchd unit supervise is missing: $scratch/LaunchAgents/local.fkst.synthetic.supervise.plist" \
+    "$output"
+}
+
+assert_drifted_installed_member_is_rejected() {
+  local scratch="$1" host_config="$2" output="$scratch/drifted-installed.out"
+  prepare_installed_launchers "$scratch"
+  printf '\n<!-- drift -->\n' >> "$scratch/LaunchAgents/local.fkst.synthetic.maintenance.plist"
+  if run_checker "$scratch" "$host_config" conformant "$output"; then
+    return 1
+  fi
+  grep -Fq \
+    "launchd-conformance-check: installed launchd unit maintenance differs from rendered source" \
+    "$output"
+}
+
+assert_identical_installed_members_are_accepted() {
+  local scratch="$1" host_config="$2" output="$scratch/identical-installed.out"
+  prepare_installed_launchers "$scratch"
+  run_checker "$scratch" "$host_config" conformant "$output" \
+    && grep -Fq 'launchd-conformance-check: conformant units: maintenance supervise' "$output"
+}
+
+prepare_installed_launchers() {
+  local scratch="$1"
+  mkdir -p "$scratch/LaunchAgents"
+  printf 'maintenance bytes\n' > "$scratch/local.fkst.synthetic.maintenance.plist"
+  printf 'supervise bytes\n' > "$scratch/local.fkst.synthetic.supervise.plist"
+  cp "$scratch/local.fkst.synthetic.maintenance.plist" \
+    "$scratch/LaunchAgents/local.fkst.synthetic.maintenance.plist"
+  cp "$scratch/local.fkst.synthetic.supervise.plist" \
+    "$scratch/LaunchAgents/local.fkst.synthetic.supervise.plist"
 }
 
 write_host_config() {
@@ -142,6 +184,7 @@ main() {
   python_bin="$(command -v python3)"
   write_host_config "$scratch" "$host_config" "$python_bin"
   write_fakes "$scratch"
+  prepare_installed_launchers "$scratch"
 
   if assert_enumerator_failure_is_rejected "$scratch" "$host_config"; then
     pass 'launchd membership source failure is rejected'
@@ -162,6 +205,21 @@ main() {
     pass 'declared host launchd members delegate to tracked byte checks'
   else
     fail 'declared host launchd members delegate to tracked byte checks'
+  fi
+  if assert_missing_installed_member_is_rejected "$scratch" "$host_config"; then
+    pass 'missing installed launchd member is rejected'
+  else
+    fail 'missing installed launchd member is rejected'
+  fi
+  if assert_drifted_installed_member_is_rejected "$scratch" "$host_config"; then
+    pass 'drifted installed launchd member is rejected'
+  else
+    fail 'drifted installed launchd member is rejected'
+  fi
+  if assert_identical_installed_members_are_accepted "$scratch" "$host_config"; then
+    pass 'byte-identical installed launchd members are accepted'
+  else
+    fail 'byte-identical installed launchd members are accepted'
   fi
 
   printf 'launchd conformance behavior tests: %d passed, %d failed, %d total\n' \
