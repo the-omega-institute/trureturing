@@ -11,6 +11,8 @@ public sealed partial class TheoryAtomizerTests
         "docs/develop/theory/PZG_BEDC.md";
     private const string ThirdProductionSource =
         "docs/develop/theory/OBSERVER-QUANTUM.md";
+    private const string FourthProductionSource =
+        "docs/develop/theory/INTERFACE_PAPER.md";
 
     public static TheoryData<string, string> ProductionTheorySources => new()
     {

@@ -5,9 +5,6 @@ namespace StrataLint.Tests;
 
 public sealed partial class TheoryAtomizerTests
 {
-    private const string FourthProductionSource =
-        "docs/develop/theory/INTERFACE_PAPER.md";
-
     [Fact]
     public void InterfacePaperDialectExhaustsNumberedClaimsWithStableKindsAndFingerprints()
     {
