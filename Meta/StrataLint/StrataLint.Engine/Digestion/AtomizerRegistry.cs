@@ -10,6 +10,7 @@ internal sealed record AtomizerRegistration(
 
 internal static class AtomizerRegistry
 {
+    internal const string ConeId = "cone-v1";
     internal const string GictId = "gict-v1";
     internal const string ObserverId = "observer-v1";
     internal const string PeriodicTreeId = "periodic-tree-v1";
@@ -20,6 +21,7 @@ internal static class AtomizerRegistry
     private static readonly ImmutableDictionary<string, AtomizerRegistration> Atomizers =
         ImmutableDictionary<string, AtomizerRegistration>.Empty
             .WithComparers(StringComparer.Ordinal)
+            .Add(ConeId, new AtomizerRegistration(ConeAtomizer.Atomize, "cone"))
             .Add(GictId, new AtomizerRegistration(GictAtomizer.Atomize, "gict"))
             .Add(ObserverId, new AtomizerRegistration(ObserverAtomizer.Atomize, "observer"))
             .Add(

@@ -127,7 +127,7 @@ public sealed partial class ReviewRegressionTests
                 BackfillInventoryLoader.RelativePath]
             .Replace(
                 $"atomizer: {AtomizerRegistry.NoAtomizerId}",
-                $"atomizer: {AtomizerRegistry.RegisteredIds[0]}",
+                $"atomizer: {SyntheticNumberedAtomizer.Id}",
                 StringComparison.Ordinal);
         fixture.Files[captured.RelativePath] = GoldenCorpus.FixtureDigestionSource;
         fixture.Files.Remove(GoldenCorpus.FixtureDigestionSourcePath);

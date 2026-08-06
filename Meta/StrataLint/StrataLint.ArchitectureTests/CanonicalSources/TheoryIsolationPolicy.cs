@@ -37,6 +37,7 @@ internal static class TheoryIsolationPolicy
             DigestionTestsPrefix + "DigestionAlignmentTests.cs",
             DigestionTestsPrefix + "DigestionLedgerTests.cs",
             DigestionTestsPrefix + "FormalizeCandidatesTests.cs",
+            DigestionTestsPrefix + "Atomizers/TheoryAtomizerTests.Cone.cs",
             DigestionTestsPrefix + "TheoryAtomizerTests.cs",
         ],
         StringComparer.Ordinal);

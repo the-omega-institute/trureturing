@@ -113,8 +113,7 @@ public sealed partial class TheoryAtomizerTests
     public void WmV1RegistryUsesOrdinalIdsAndTheWmResidualPrefix()
     {
         Assert.Equal(
-            [
-                AtomizerRegistry.GictId,
+            [AtomizerRegistry.ConeId, AtomizerRegistry.GictId,
                 AtomizerRegistry.ObserverId,
                 AtomizerRegistry.PeriodicTreeId,
                 AtomizerRegistry.PzgId,
@@ -602,10 +601,14 @@ public sealed partial class TheoryAtomizerTests
 
     private static void AssertSplitIdempotent(
         string atomizerId,
-        AtomizedTheoryDocument first)
+        AtomizedTheoryDocument first,
+        TheoryAtomizerRules? rules = null)
     {
         var reassembled = first.Reassemble();
-        var second = AtomizerRegistry.Atomize(atomizerId, reassembled.AsSpan(), DigestionTestSupport.Rules);
+        var second = AtomizerRegistry.Atomize(
+            atomizerId,
+            reassembled.AsSpan(),
+            rules ?? DigestionTestSupport.Rules);
 
         Assert.Equal(
             first.Claims.Select(static atom =>
@@ -775,3 +778,4 @@ public sealed partial class TheoryAtomizerTests
         Assert.NotEqual(incompatibleTheorems[0].Fingerprints, incompatibleTheorems[1].Fingerprints);
     }
 }
+internal static class SyntheticNumberedAtomizer { internal static string Id => AtomizerRegistry.GictId; }
