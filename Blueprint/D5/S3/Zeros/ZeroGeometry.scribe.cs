@@ -43,7 +43,8 @@ internal sealed class ZeroGeometryDocument : IScribeDocumentDefinition
                 H("A global factor cannot clear off-line scaling"),
                 LeanTheorem(
                     "D5/S3/Zeros/ZeroGeometry.global_factor_clearing_forces_critical_line"),
-                Disp(Seq(Forall, Sp, F.Id("A"), Esc, OpenBracket, Operatorname, Grp(F.Id("AddMonoid")), Open, F.Id("A"), Close, CloseBracket, Comma, Esc, Forall, Sp, Ell, Colon, F.Id("A"), To, Underscore, Grp(Plus), Mathbb, Grp(F.Id("R")), Comma, Esc, Open, Exists, Sp, F.Id("a"), Comma, Ell, Open, F.Id("a"), Close, Neq, Sp, D(0), Close, Sp, Rightarrow, Sp, Forall, Sp, F.Id("s"), Comma, F.Id("c"), InMacro, Mathbb, Grp(F.Id("C")), Comma, Esc, Open, Forall, Sp, F.Id("a"), Comma, Esc, Vert, Sp, F.Id("c"), Operatorname, Grp(F.Id("halfDensityReading")), Open, Ell, Comma, F.Id("s"), Comma, F.Id("a"), Close, Vert, Eq, D(1), Close, Sp, Rightarrow, Sp, Re, Open, F.Id("s"), Close, Eq, Operatorname, Grp(F.Id("criticalAbscissa")))),
+                StatementProjectionFixtureLoader.FromLean(LeanTheorem(
+                    "D5/S3/Zeros/ZeroGeometry.global_factor_clearing_forces_critical_line")),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "For a nontrivial additive ledger, if one complex factor makes every half-density reading have norm one, then the parameter has real part one half. The factor is arbitrary and independent of the coordinate; exact unit norm at every coordinate is the calibrated premise. The governance claim excluding an address-dependent inverse register is not part of this theorem. Thus O-6 positivity cannot be replaced by a single global normalization shortcut.")))
