@@ -20,8 +20,9 @@ point. The repository's landing lemma records the local implication used by
 that argument when a listed row equals its twisted diagonal.
 
 The source does not state the repository's finite cardinality formula. The
-exact number of escaped listings is therefore not attributed to Lawvere and
-is recorded separately as suspected novel.
+exact number of escaped listings is therefore not attributed to Lawvere; it
+is deposited as repository-derived kernel truth, and its relation to prior
+literature remains an open question tracked by this note's search log.
 
 ## Search log
 
