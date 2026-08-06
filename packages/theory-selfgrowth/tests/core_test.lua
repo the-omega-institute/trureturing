@@ -101,6 +101,17 @@ return {
     t.eq(r.producer, BOT_LOGIN)
   end,
 
+  test_build_frontier_request_requires_definition_closure_before_consensus = function()
+    local r = core.build_frontier_request("owner/repo", candidate("GICT-T0042"), BOT_LOGIN)
+    t.is_true(r.body:find("DEFINITION CLOSURE ADMISSION", 1, true) ~= nil)
+    t.is_true(r.body:find("theory volume", 1, true) ~= nil)
+    t.is_true(r.body:find("existing Lean corpus", 1, true) ~= nil)
+    t.is_true(r.body:find("Mathlib standard concept", 1, true) ~= nil)
+    t.is_true(r.body:find("definition-gap:", 1, true) ~= nil)
+    t.is_true(r.body:find("skip this atom before consensus", 1, true) ~= nil)
+    t.is_true(r.body:find("#710", 1, true) ~= nil)
+  end,
+
   test_oversize_request_body_is_skipped_without_truncation = function()
     local c = candidate("large", string.rep("x", 12000))
     t.eq(core.build_frontier_request("owner/repo", c, BOT_LOGIN), nil)

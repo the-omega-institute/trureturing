@@ -267,6 +267,13 @@ function M.build_frontier_request(repo, candidate, bot_login)
     "cas_ref: " .. tostring(candidate.cas_ref),
     "raw_sha256: " .. tostring(candidate.raw_sha256),
     "",
+    "DEFINITION CLOSURE ADMISSION. Before spending a consensus round, identify every definition "
+      .. "needed by the atom's core assertion. Admit the atom only when each definition closes "
+      .. "in the theory volume, the existing Lean corpus (strongest), or a Mathlib standard "
+      .. "concept. If closure fails, skip this atom before consensus and record exactly "
+      .. "`definition-gap: <missing concept>; searched: <theory paths>; <Lean declarations>; "
+      .. "<Mathlib concepts>` so the skip is structured and auditable (#710 precedent).",
+    "",
     "Formalize exactly ONE new declaration-level Lean GID faithful to the full theory claim "
       .. "below, with its Blueprint mirror; use the derivation as the proof sketch. Do not "
       .. "weaken the statement or take only a convenient sub-clause.",
