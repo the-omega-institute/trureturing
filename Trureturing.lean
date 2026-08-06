@@ -22,6 +22,7 @@ import D5.S1.Depth.PartialQuotientExtraction
 import D5.S1.Phase.WalkFormula
 import D5.S1.Phase.ZeroOrbitCongruence
 import D5.S3.Constants.MidslopeCurvature
+import D5.S3.Constants.RecordEntropy
 import D5.S3.Quantum.EnvironmentRecords
 import D5.S3.Quantum.ObserverCommutator
 import D5.S3.Quantum.PointerBasis
