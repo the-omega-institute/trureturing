@@ -325,8 +325,7 @@ public sealed partial class DigestionAlignmentTests
             DigestionFingerprint.ComputeOpaque(coarseBytes.AsSpan()),
             []);
         var captured = DigestionCasStore.Capture(coarseBytes.AsSpan());
-        var priorAtomizer = AtomizerRegistry.RegisteredIds.First(id =>
-            id != AtomizerRegistry.ObserverId);
+        var priorAtomizer = SyntheticNumberedAtomizer.Id;
         var baseline = BackfillInventoryLoader.Load(Ledger(
             [],
             CasEntry("coarse-receipt", coarse, captured.Reference)));
@@ -392,8 +391,7 @@ public sealed partial class DigestionAlignmentTests
             DigestionFingerprint.ComputeOpaque(coarseBytes.AsSpan()),
             []);
         var captured = DigestionCasStore.Capture(coarseBytes.AsSpan());
-        var priorAtomizer = AtomizerRegistry.RegisteredIds.First(id =>
-            id != AtomizerRegistry.ObserverId);
+        var priorAtomizer = SyntheticNumberedAtomizer.Id;
         var original = BackfillInventoryLoader.Load(Ledger(
             [],
             CasEntry("coarse-receipt", coarse, captured.Reference)));
@@ -619,8 +617,7 @@ public sealed partial class DigestionAlignmentTests
             DigestionFingerprint.ComputeOpaque(coarseBytes.AsSpan()),
             []);
         var captured = DigestionCasStore.Capture(coarseBytes.AsSpan());
-        var priorAtomizer = AtomizerRegistry.RegisteredIds.First(id =>
-            id != AtomizerRegistry.ObserverId);
+        var priorAtomizer = SyntheticNumberedAtomizer.Id;
         var original = BackfillInventoryLoader.Load(Ledger(
             [],
             CasEntry("coarse-receipt", coarse, captured.Reference)));

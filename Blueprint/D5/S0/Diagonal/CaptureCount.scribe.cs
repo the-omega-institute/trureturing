@@ -4,6 +4,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.Diagonal;
 
 internal sealed class CaptureCountDocument : IScribeDocumentDefinition
 {
+    private static readonly LibraryNoteRef Lawvere =
+        LibraryNoteRef.Create("D5/L/Diagonal/lawvere1969diagonal");
+
     public DocumentDefinition Create()
     {
         var cardA = Call("card", Id("A"));
@@ -75,7 +78,7 @@ internal sealed class CaptureCountDocument : IScribeDocumentDefinition
                         Equal(fixedPoints, Num(0)),
                         FormulaLogicOperator.Implies,
                         Call("allListingsEscaped", Id("f")))),
-                    DescribeProvenance.RepoDerived(),
+                    DescribeProvenance.LiteratureAttested(Lawvere),
                     Blocks(Paragraph(Text(
                         "The full escape count equals the size of the ambient listing type, so "
                         + "any unescaped listing would force a strict cardinality deficit. Thus "
