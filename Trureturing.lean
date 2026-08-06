@@ -7,6 +7,7 @@ import D5.S0.Conventions.Notation
 import D5.S0.Diagonal.EscapeCount
 import D5.S0.Diagonal.CaptureCount
 import D5.S0.Diagonal.DistanceProfile
+import D5.S0.Naming.NamingSystem
 import D5.S0.Tower.ConstantArms
 import D5.S1.Digit.Raw
 import D5.S1.Digit.Carry
