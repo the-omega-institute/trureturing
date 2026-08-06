@@ -226,6 +226,11 @@ jobs:
           "$HOME/.elan/bin/elan" default "$default_toolchain"
           "$HOME/.elan/bin/lake" --version
 
+      - name: Install pinned SDK for statement projection reconciliation
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: candidate/global.json
+
       - name: Restore candidate and baseline Lean build artifacts
         uses: actions/cache/restore@v4
         with:
@@ -268,6 +273,21 @@ jobs:
             --candidate-output "$reports/candidate-lean-report.json" \
             --baseline-root "$GITHUB_WORKSPACE/baseline" \
             --baseline-output "$reports/baseline-lean-report.json"
+
+      - name: Reconcile pinned statement projections with live Lean report
+        shell: bash
+        env:
+          STRATALINT_REQUIRE_LIVE_REPORT: "1"
+        run: |
+          set -euo pipefail
+          report="$RUNNER_TEMP/raw-lean-reports/candidate-lean-report.json"
+          target="$GITHUB_WORKSPACE/candidate/.lake/build/stratalint/raw-lean-report.json"
+          mkdir -p "$(dirname "$target")"
+          cp "$report" "$target"
+          dotnet test candidate/Meta/StrataLint/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj \
+            --configuration Release \
+            --filter 'FullyQualifiedName~LiveReportMatchesPinnedFixtureWhenAvailable' \
+            --verbosity normal
 
       - name: Stage candidate canonical Lean report cache
         shell: bash

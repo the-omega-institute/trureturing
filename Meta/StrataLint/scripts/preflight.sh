@@ -115,7 +115,7 @@ make lean-report
 record_timing lean-report
 
 PREFLIGHT_FAULT_CLASS="SEMANTIC"
-CI=true make test
+CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make test
 record_timing test
 
 PREFLIGHT_FAULT_CLASS="SEMANTIC"

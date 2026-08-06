@@ -304,7 +304,9 @@ public sealed partial class MakeWorkflowTests
 
         var dotnetIndex = preflight.IndexOf("CI=true make dotnet", StringComparison.Ordinal);
         var leanReportIndex = preflight.IndexOf("make lean-report", StringComparison.Ordinal);
-        var testIndex = preflight.IndexOf("CI=true make test", StringComparison.Ordinal);
+        var testIndex = preflight.IndexOf(
+            "CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make test",
+            StringComparison.Ordinal);
 
         Assert.True(dotnetIndex >= 0, "preflight must build the .NET report consumer");
         Assert.True(leanReportIndex >= 0, "preflight must refresh the raw Lean report");
