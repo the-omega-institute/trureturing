@@ -6,6 +6,7 @@ import D5.S0.Conventions.WDigits
 import D5.S0.Conventions.Notation
 import D5.S0.Diagonal.EscapeCount
 import D5.S0.Diagonal.CaptureCount
+import D5.S0.Tower.ConstantArms
 import D5.S1.Digit.Raw
 import D5.S1.Digit.Carry
 import D5.S1.Scale.Embedding
@@ -19,6 +20,7 @@ import D5.S1.Depth.TwelveScaleReduction
 import D5.S1.Depth.PartialQuotientExtraction
 import D5.S1.Phase.WalkFormula
 import D5.S1.Phase.ZeroOrbitCongruence
+import D5.S3.Constants.MidslopeCurvature
 import D5.S3.Quantum.EnvironmentRecords
 import D5.S3.Quantum.ObserverCommutator
 import D5.S3.Quantum.PointerBasis
