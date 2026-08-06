@@ -620,3 +620,62 @@ defer_bound_exceeded_forces_restart() (
     || fail "bound-exceeded forced restart was not recorded"
   [[ -e "$state" ]] || fail "failed forced restart erased the deferral window"
 )
+
+grant_codex_implement_worker() {
+  local root="$1" key="$2" status="$3" owner="$4"
+  mkdir -p "$root/runtime/logs/codex-adoption/$key"
+  printf '{"key":"%s","role":"implement","status":"%s","worker_pid":%s,"codex_pid":null}\n' \
+    "$key" "$status" "$owner" \
+    > "$root/runtime/logs/codex-adoption/$key/status.json"
+}
+
+reap_a_dead_pid() {
+  local pid
+  bash -c 'exit 0' &
+  pid=$!
+  wait "$pid" 2>/dev/null || true
+  printf '%s\n' "$pid"
+}
+
+live_codex_implement_worker_counts_as_an_implement_lease() (
+  load_implementation || exit 1
+  local root count
+  root="$(mktemp -d -t hourly-maintenance-codex-lease.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  mkdir -p "$root/slots"
+  export FKST_REPORT_SLOT_ROOT="$root/slots"
+  export FKST_RUNTIME_ROOT="$root/runtime"
+  grant_codex_implement_worker "$root" live-key running "$$"
+  count="$(implement_lease_count)"
+  [[ "$count" -ge 1 ]] \
+    || fail "a live codex implement worker was not counted as an implement lease (count=$count)"
+)
+
+dead_codex_implement_worker_is_not_an_implement_lease() (
+  load_implementation || exit 1
+  local root count dead
+  root="$(mktemp -d -t hourly-maintenance-codex-stale.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  mkdir -p "$root/slots"
+  export FKST_REPORT_SLOT_ROOT="$root/slots"
+  export FKST_RUNTIME_ROOT="$root/runtime"
+  dead="$(reap_a_dead_pid)"
+  grant_codex_implement_worker "$root" stale-key running "$dead"
+  count="$(implement_lease_count)"
+  [[ "$count" -eq 0 ]] \
+    || fail "a dead codex worker still claiming 'running' was counted, which would defer restarts forever (count=$count)"
+)
+
+report_slot_lease_still_counts_when_no_codex_worker_exists() (
+  load_implementation || exit 1
+  local root count
+  root="$(mktemp -d -t hourly-maintenance-slot-lease.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  mkdir -p "$root/slots" "$root/runtime/logs/codex-adoption"
+  export FKST_REPORT_SLOT_ROOT="$root/slots"
+  export FKST_RUNTIME_ROOT="$root/runtime"
+  grant_implement_lease "$root" "$$"
+  count="$(implement_lease_count)"
+  [[ "$count" -ge 1 ]] \
+    || fail "the existing report-slot lease stopped counting (count=$count)"
+)

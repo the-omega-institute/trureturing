@@ -78,6 +78,32 @@ implement_lease_count() {
       count=$((count + 1))
     done
   fi
+  count=$((count + $(codex_implement_worker_count)))
+  printf '%s\n' "$count"
+}
+
+# A shutdown terminates every registered department process group, so an implement
+# worker running at restart is killed, and an item already in `implementing` is not
+# re-driven afterwards. Such a worker therefore holds a lease exactly as a report slot
+# does. Only a worker whose recorded pid is still alive counts: an envelope left
+# claiming `running` by a killed worker must never defer a restart forever.
+codex_implement_worker_count() {
+  local root status_file owner count=0
+  root="${FKST_RUNTIME_ROOT:-}"
+  [[ -n "$root" && -d "$root/logs/codex-adoption" ]] || {
+    printf '%s\n' "$count"
+    return 0
+  }
+  while IFS= read -r status_file; do
+    [[ -n "$status_file" ]] || continue
+    grep -qE '"role"[[:space:]]*:[[:space:]]*"implement"' "$status_file" 2>/dev/null || continue
+    owner="$(grep -oE '"worker_pid"[[:space:]]*:[[:space:]]*[0-9]+' "$status_file" 2>/dev/null \
+      | grep -oE '[0-9]+$' | head -1)"
+    [[ -n "$owner" ]] || continue
+    kill -0 "$owner" 2>/dev/null || continue
+    count=$((count + 1))
+  done < <(grep -lE '"status"[[:space:]]*:[[:space:]]*"running"' \
+    "$root"/logs/codex-adoption/*/status.json 2>/dev/null)
   printf '%s\n' "$count"
 }
 
