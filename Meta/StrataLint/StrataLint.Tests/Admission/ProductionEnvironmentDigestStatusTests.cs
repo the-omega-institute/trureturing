@@ -10,7 +10,7 @@ public sealed partial class ProductionEnvironmentTests
     public void DigestStatusReportsCasSeenAcrossNormalizedSourceRewrite()
     {
         var fixture = new RuleFixture();
-        var atomizerId = AtomizerRegistry.RegisteredIds[0];
+        var atomizerId = SyntheticNumberedAtomizer.Id;
         var ledgerBytes = Encoding.UTF8.GetBytes(
             "# Synthetic\r\n\r\n**定理 1.1(Test)**。claim。\r\n");
         var currentBytes = Encoding.UTF8.GetBytes(
@@ -122,7 +122,7 @@ public sealed partial class ProductionEnvironmentTests
     public void DigestStatusReportsHistoricalAndCurrentCasReceiptsAsSeen()
     {
         var fixture = new RuleFixture();
-        var atomizerId = AtomizerRegistry.RegisteredIds[0];
+        var atomizerId = SyntheticNumberedAtomizer.Id;
         var oldBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。old。\n");
         var currentBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。rewritten。\n");
         var oldAtom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, oldBytes, DigestionTestSupport.Rules).Claims);

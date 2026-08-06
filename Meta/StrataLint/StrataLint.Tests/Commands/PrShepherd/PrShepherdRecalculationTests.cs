@@ -6,6 +6,8 @@ namespace StrataLint.Tests;
 public sealed partial class PrShepherdRecalculationTests
 {
     private const string ShepherdScriptPath = "Meta/StrataLint/scripts/pr-shepherd.sh";
+    private const string ShepherdLeaseScriptPath =
+        "Meta/StrataLint/scripts/shepherd/pr-shepherd-lease.sh";
     private const string CommitSubject =
         "recompute derivations after dev advance (auto, pr-shepherd)";
 
@@ -39,6 +41,15 @@ public sealed partial class PrShepherdRecalculationTests
         }
 
         throw new DirectoryNotFoundException("Could not locate repository root.");
+    }
+
+    private static string ReadShepherdScripts()
+    {
+        var root = FindRepositoryRoot();
+        return string.Join(
+            '\n',
+            File.ReadAllText(Path.Combine(root, ShepherdScriptPath)),
+            File.ReadAllText(Path.Combine(root, ShepherdLeaseScriptPath)));
     }
 
     private sealed class ShepherdFixture : IDisposable
@@ -201,7 +212,11 @@ public sealed partial class PrShepherdRecalculationTests
             bool dryRun = false,
             bool expiryFingerprint = true,
             bool duplicatePrRow = false,
-            bool splitFingerprintAcrossJobs = false)
+            bool splitFingerprintAcrossJobs = false,
+            bool twoDerivedPrRows = false,
+            int? leaseTtlSeconds = null,
+            bool derivedPr = true,
+            bool diffFailure = false)
         {
             var script = Path.Combine(FindRepositoryRoot(), ShepherdScriptPath);
             var home = Path.Combine(temporary.Path, "home");
@@ -223,6 +238,9 @@ public sealed partial class PrShepherdRecalculationTests
                 $"PR_TEST_EXPIRY={(expiryFingerprint ? "1" : "0")}",
                 $"PR_TEST_SPLIT={(splitFingerprintAcrossJobs ? "1" : "0")}",
                 $"PR_TEST_DUPLICATE={(duplicatePrRow ? "1" : "0")}",
+                $"PR_TEST_TWO_DERIVED={(twoDerivedPrRows ? "1" : "0")}",
+                $"PR_TEST_DERIVED={(derivedPr ? "1" : "0")}",
+                $"PR_TEST_DIFF_FAILURE={(diffFailure ? "1" : "0")}",
                 $"PR_TEST_FAIL_TARGET={failingTarget}",
                 $"PR_TEST_MOVE_HEAD={(moveHeadBeforePush ? "1" : "0")}",
                 $"PR_TEST_FAIL_MERGE={(failMergeWithoutConflict ? "1" : "0")}",
@@ -240,6 +258,12 @@ public sealed partial class PrShepherdRecalculationTests
                 script,
                 "sweep",
             };
+            if (leaseTtlSeconds is not null)
+            {
+                arguments.Insert(
+                    arguments.Count - 3,
+                    $"PR_SHEPHERD_LEASE_TTL_SECONDS={leaseTtlSeconds.Value}");
+            }
             var result = BoundedProcessRunner.Run(
                 "/usr/bin/env",
                 arguments,
@@ -256,9 +280,12 @@ public sealed partial class PrShepherdRecalculationTests
         internal ShepherdResult RunWatch(bool noChecks = false)
         {
             var script = Path.Combine(repository, ShepherdScriptPath);
+            var leaseScript = Path.Combine(repository, ShepherdLeaseScriptPath);
             Directory.CreateDirectory(Path.GetDirectoryName(script)!);
+            Directory.CreateDirectory(Path.GetDirectoryName(leaseScript)!);
             File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdScriptPath), script);
-            Git(repository, "add", ShepherdScriptPath);
+            File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdLeaseScriptPath), leaseScript);
+            Git(repository, "add", ShepherdScriptPath, ShepherdLeaseScriptPath);
             Git(repository, "commit", "-m", "track pr-shepherd fixture");
             var home = Path.Combine(temporary.Path, "home");
             Directory.CreateDirectory(home);
@@ -402,6 +429,55 @@ public sealed partial class PrShepherdRecalculationTests
         internal void CreateStaleBranchLock(string worktreeName) =>
             WriteBranchLock(worktreeName, 999_999_999);
 
+        internal void WriteDerivedLease(int pullRequest, long acquiredAt)
+        {
+            var leaseDirectory = Path.Combine(StateDirectory, "derived-fifo.lease");
+            Directory.CreateDirectory(leaseDirectory);
+            File.WriteAllText(
+                Path.Combine(leaseDirectory, "owner"),
+                $"schema=derived-fifo-lease-v1\n"
+                + $"pr={pullRequest}\n"
+                + $"acquired_at={acquiredAt}\n"
+                + "token=fixture-owner\n",
+                new UTF8Encoding(false));
+        }
+
+        internal void WriteIncompleteDerivedLease()
+        {
+            var leaseDirectory = Path.Combine(StateDirectory, "derived-fifo.lease");
+            Directory.CreateDirectory(leaseDirectory);
+        }
+
+        internal void UseGnuStatWithMtime(long epochSeconds) =>
+            WriteExecutable(
+                "stat",
+                $$"""
+                #!/usr/bin/env bash
+                set -euo pipefail
+                if [[ "${1:-}" == "-f" && "${2:-}" == "%m" ]]; then
+                  printf '%s\n' '/'
+                  exit 0
+                fi
+                if [[ "${1:-}" == "-c" && "${2:-}" == "%Y" ]]; then
+                  printf '%s\n' '{{epochSeconds}}'
+                  exit 0
+                fi
+                exit 64
+                """);
+
+        internal void UseFixedClock(long epochSeconds) =>
+            WriteExecutable(
+                "date",
+                $"""
+                #!/usr/bin/env bash
+                set -euo pipefail
+                if [[ "$*" == "+%s" ]]; then
+                  printf '%s\n' '{epochSeconds}'
+                  exit 0
+                fi
+                exec /bin/date "$@"
+                """);
+
         private void WriteBranchLock(string worktreeName, int owner)
         {
             var lockDirectory = Path.Combine(CacheRoot, $"lock-{worktreeName[3..]}");
@@ -478,6 +554,10 @@ public sealed partial class PrShepherdRecalculationTests
                   else
                     row="1	MERGEABLE	BEHIND	${PR_TEST_HEAD}	${head}	${base}	1	FAILURE	https://github.com/fixture/repository/actions/runs/123/job/456"
                   fi
+                  if [[ "${PR_TEST_TWO_DERIVED:-0}" == 1 ]]; then
+                    row2="2${row:1}"
+                    printf '%b\n' "$row2"
+                  fi
                   printf '%b\n' "$row"
                   [[ "$PR_TEST_DUPLICATE" != 1 ]] || printf '%b\n' "$row"
                   exit 0
@@ -500,6 +580,18 @@ public sealed partial class PrShepherdRecalculationTests
                       'ECHO_VERIFY_INFRASTRUCTURE residual derivation failed'
                   else
                     printf '%s\n' 'SL-001 unrelated admission failure'
+                  fi
+                  exit 0
+                fi
+                if [[ "${1:-}" == pr && "${2:-}" == diff ]]; then
+                  if [[ "${PR_TEST_DIFF_FAILURE:-0}" == 1 ]]; then
+                    printf '%s\n' 'synthetic pr diff failure' >&2
+                    exit 97
+                  fi
+                  if [[ "${PR_TEST_DERIVED:-1}" == 1 ]]; then
+                    printf '%s\n' 'Generated/artifact.md'
+                  else
+                    printf '%s\n' 'Blueprint/input.scribe.cs'
                   fi
                   exit 0
                 fi

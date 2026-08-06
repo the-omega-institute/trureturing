@@ -48,6 +48,8 @@ public sealed partial class MakeWorkflowTests
     private const string TheoryIngestWorkflowPath = ".github/workflows/theory-ingest.yml";
     private const string EchoResidualSummaryPath = "Generated/echo-residual-summary.md";
     private const string PrShepherdScriptPath = "Meta/StrataLint/scripts/pr-shepherd.sh";
+    private const string PrShepherdLeaseScriptPath =
+        "Meta/StrataLint/scripts/shepherd/pr-shepherd-lease.sh";
 
     private static readonly string[] Targets =
     [
@@ -736,33 +738,6 @@ public sealed partial class MakeWorkflowTests
         {
             if (Directory.Exists(spool)) Directory.Delete(spool, recursive: true);
         }
-    }
-
-    [Fact]
-    public void PrShepherdWakesArmedPrsWhoseHeadHasNoChecks()
-    {
-        var root = FindRepositoryRoot();
-        var shepherd = File.ReadAllText(Path.Combine(root, PrShepherdScriptPath));
-
-        // 采集面:sweep 必须读到 head 与 checks 数,否则判不出"armed 但 head 无 checks"
-        // 的死锁类(bot 以 GITHUB_TOKEN push 不触发 workflow 的防递归缺口)。
-        Assert.Contains("statusCheckRollup", shepherd, StringComparison.Ordinal);
-        Assert.Contains("headRefOid", shepherd, StringComparison.Ordinal);
-
-        // 防误触:同一 head 连续两轮观察无 checks 才唤醒(checks 挂载有延迟)。
-        Assert.Contains("nochecks-", shepherd, StringComparison.Ordinal);
-
-        // 唤醒动作:本地身份 close→reopen 重铸触发事件;close 会撤 auto-merge,
-        // 唤醒后必须重挂,否则绿灯也不合。
-        var wakeIndex = shepherd.IndexOf("wake_pr()", StringComparison.Ordinal);
-        Assert.True(wakeIndex >= 0, "the shepherd must define a wake action for checkless armed PRs");
-        var wake = shepherd[wakeIndex..];
-        var closeIndex = wake.IndexOf("pr close", StringComparison.Ordinal);
-        var reopenIndex = wake.IndexOf("pr reopen", StringComparison.Ordinal);
-        var rearmIndex = wake.IndexOf("--auto --merge", StringComparison.Ordinal);
-        Assert.True(closeIndex >= 0, "wake must close the PR to mint a fresh trigger event");
-        Assert.True(reopenIndex > closeIndex, "wake must reopen after close");
-        Assert.True(rearmIndex > reopenIndex, "close disarms auto-merge; wake must re-arm it");
     }
 
     private static int RecipeCount(string makefile, string target) =>
