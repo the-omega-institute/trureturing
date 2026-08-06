@@ -55,13 +55,8 @@ public sealed partial class FormulaCorpusInventoryTests
             .Order(StringComparer.Ordinal)
             .ToArray();
 
-<<<<<<< HEAD
-        Assert.Equal(180, entries.Length);
-        Assert.Equal(82, entries.Select(static entry => entry.SourcePath).Distinct().Count());
-=======
         Assert.Equal(178, entries.Length);
         Assert.Equal(81, entries.Select(static entry => entry.SourcePath).Distinct().Count());
->>>>>>> origin/dev
         Assert.Equal(ExpectedMacros, macros);
         AssertSyntaxFamily(corpus, "quantifier", "\\forall", "\\exists");
         AssertSyntaxFamily(corpus, "logic", "\\land", "\\lor", "\\neg", "\\Rightarrow");
@@ -92,13 +87,8 @@ public sealed partial class FormulaCorpusInventoryTests
                 }))
             .ToArray();
 
-<<<<<<< HEAD
-        Assert.Equal(180, actual.Length);
-        Assert.Equal(180, actual.Select(static entry =>
-=======
         Assert.Equal(178, actual.Length);
         Assert.Equal(178, actual.Select(static entry =>
->>>>>>> origin/dev
             (entry.SourcePath, entry.DescribeId, entry.Ordinal)).Distinct().Count());
         Assert.All(actual, static entry => Assert.NotEmpty(entry.Canonical));
     }
