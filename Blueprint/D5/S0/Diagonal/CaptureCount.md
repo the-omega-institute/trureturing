@@ -46,7 +46,7 @@ $$\operatorname{card}\left(\operatorname{Fix}\left(f\right)\right) = 0 \Rightarr
 
 *Proof.* Machine-checked in Lean as `D5/S0/Diagonal/CaptureCount.escape_all_of_fixfree` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* F. William Lawvere (1969). *Diagonal arguments and cartesian closed categories*. DOI: [10.1007/BFb0080769](https://doi.org/10.1007/BFb0080769).
 
 *Commentary.*
 
