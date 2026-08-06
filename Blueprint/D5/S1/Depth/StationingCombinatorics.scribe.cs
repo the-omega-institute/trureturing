@@ -59,5 +59,17 @@ internal sealed class StationingCombinatoricsDocument : IScribeDocumentDefinitio
                     In(Seq(Forall, Sp, F.Id("n"), Comma, F.Id("k"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Esc, Operatorname, Grp(F.Id("card")), OpenBrace, F.Id("s"), InMacro, Operatorname, Grp(F.Id("Stationing")), Open, F.Id("n"), Close, Colon, Bar, Operatorname, Grp(F.Id("Occ")), Open, F.Id("s"), Close, Bar, Eq, F.Id("k"), CloseBrace, Eq, Operatorname, Grp(F.Id("choose")), Open, F.Id("n"), Comma, F.Id("k"), Close)),                    DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "The support equivalence identifies stationings with exactly k true coordinates and k-element subsets of the n labeled stations. Their exact count is the binomial coefficient; this does not prove either empirical zero-statistics law.")))
-                ))));
+                )),
+[
+                        DocumentEdge.TruthAnchor.Create(
+                            LeanDeclarationRef.Create("D5/S1/Depth/StationingCombinatorics.mirror_occupied_count")),
+                        DocumentEdge.TruthAnchor.Create(
+                            LeanDeclarationRef.Create("D5/S1/Depth/StationingCombinatorics.mirror_stationing_ne_self")),
+                        DocumentEdge.TruthAnchor.Create(
+                            LeanDeclarationRef.Create("D5/S1/Depth/StationingCombinatorics.occupied_count_stationing_count")),
+                        DocumentEdge.TruthAnchor.Create(
+                            LeanDeclarationRef.Create("D5/S1/Depth/StationingCombinatorics.occupied_stations_mirror")),
+                        DocumentEdge.TruthAnchor.Create(
+                            LeanDeclarationRef.Create("D5/S1/Depth/StationingCombinatorics.stationing_count")),
+                    ]));
 }

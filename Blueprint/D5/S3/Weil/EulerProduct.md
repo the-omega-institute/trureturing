@@ -63,3 +63,9 @@ Lean statement: `D5/S3/Weil/EulerProduct.finite_euler_zero_free_and_pole_locus`
 *Commentary.*
 
 Every regular finite Euler window is nonzero, so no finite set of local factors realizes a nontrivial global zero. This supports only a finite-versus-tail boundary; collective-mode, prime-deletion, dense-phase, and equal-loudness interpretations are not proved here.
+
+## References
+
+- Truth anchor: `D5/S3/Weil/EulerProduct.finite_euler_zero_free_and_pole_locus`
+- Truth anchor: `D5/S3/Weil/EulerProduct.single_address_heat_trace_eq_log_derivative`
+- Truth anchor: `D5/S3/Weil/EulerProduct.single_address_reading_spec`

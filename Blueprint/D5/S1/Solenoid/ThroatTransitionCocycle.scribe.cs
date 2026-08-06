@@ -25,5 +25,13 @@ internal sealed class ThroatTransitionCocycleDocument : IScribeDocumentDefinitio
                         "Each difference is constructed pointwise by subtraction. "
                         + "The additive projection sends it to zero, group cancellation "
                         + "gives uniqueness, and the cocycle identity follows by "
-                        + "telescoping the two successive differences.")))))));
+                        + "telescoping the two successive differences."))))),
+[
+                                DocumentEdge.TruthAnchor.Create(
+                                    LeanDeclarationRef.Create("D5/S1/Solenoid/ThroatTransitionCocycle.three_lift_difference_cocycle")),
+                                DocumentEdge.Dependency.Create(
+                                    GidRef.Create("D5/S1/Dynamics/UniversalSolenoid")),
+                                DocumentEdge.Dependency.Create(
+                                    GidRef.Create("D5/S1/Solenoid/HiddenFiberCompact")),
+                            ]));
 }

@@ -57,5 +57,11 @@ internal sealed class MinkowskiModelSetDocument : IScribeDocumentDefinition
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "The cyclotomic Estermann-Kurokawa mechanism relies on explicit control of polynomial-factor zeros. For irrational exponents the source replaces that input by two obligations: scaled independence of zeta zeros on the zero side and Hecke-Mahler zero avoidance on the axis side. Excluding those two failure channels unconditionally is the outstanding N-4 subaccount of O-5. The source then separates three geometries: the proved code spectrum on a circle, the conjectural zeta-zero spectrum on a line, and a conditional continuation wall on an axis whose bricks are transported critical zeros. The no-door reading of that wall is another projection of scaled zero independence. This dictionary rearranges zeta information and supplies no independent zero input; its new content is the claimed boundary of Zqc as an analytic object. A second independent derivation of the full exponent table is also recorded as passing without a new audit exception.")))
-            ))));
+            )),
+[
+                    DocumentEdge.TruthAnchor.Create(
+                        LeanDeclarationRef.Create("D5/S1/Scale/MinkowskiModelSet.minkowski_model_set_spec")),
+                    DocumentEdge.Dependency.Create(
+                        GidRef.Create("D5/S1/Depth/JointCoordinates")),
+                ]));
 }

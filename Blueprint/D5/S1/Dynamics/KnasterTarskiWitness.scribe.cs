@@ -32,5 +32,11 @@ internal sealed class KnasterTarskiWitnessDocument : IScribeDocumentDefinition
                             + "their frozen proofs in the Knaster–Tarski module, so the "
                             + "theorem packages the general result and its concrete instance "
                             + "behind a single declaration without re-proving either.")))
-                ))));
+                )),
+[
+                        DocumentEdge.TruthAnchor.Create(
+                            LeanDeclarationRef.Create("D5/S1/Dynamics/KnasterTarskiWitness.knaster_tarski_with_three_cycle_instance")),
+                        DocumentEdge.Dependency.Create(
+                            GidRef.Create("D5/S1/Dynamics/KnasterTarski")),
+                    ]));
 }

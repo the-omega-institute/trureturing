@@ -90,5 +90,23 @@ internal sealed class CompletedZetaDocument : IScribeDocumentDefinition
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "For an arbitrary reading H, conjugation covariance and reflection invariance are explicit premises. From a supplied zero, Lean derives zeros at its conjugate, reflection, and conjugate reflection, then proves pointwise reversal for a supplied additive scaling ledger. The additive carrier is inhabited by its zero and the ledger length is supplied; no ZeroData value, zero enumeration, or ZeroData inhabitance is assumed or produced. Compared with the ingested theorem, real coefficients and analytic continuation are replaced by the two exact symmetry premises, while pairwise distinctness, the claim that symmetry cannot exclude off-line zeros, and the nonmultiplicative numerical instrument are omitted. This theorem gives O-6 the symmetry-controlled zero orbit whose cross-position cancellation must be distinguished from local positivity.")))
-            ))));
+            )),
+[
+                    DocumentEdge.TruthAnchor.Create(
+                        LeanDeclarationRef.Create("D5/S3/Zeros/CompletedZeta.analytic_continuation_unique")),
+                    DocumentEdge.TruthAnchor.Create(
+                        LeanDeclarationRef.Create("D5/S3/Zeros/CompletedZeta.completedZetaReading")),
+                    DocumentEdge.TruthAnchor.Create(
+                        LeanDeclarationRef.Create("D5/S3/Zeros/CompletedZeta.xiReading")),
+                    DocumentEdge.TruthAnchor.Create(
+                        LeanDeclarationRef.Create("D5/S3/Zeros/CompletedZeta.xi_reading_differentiable")),
+                    DocumentEdge.TruthAnchor.Create(
+                        LeanDeclarationRef.Create("D5/S3/Zeros/CompletedZeta.xi_reading_eq_completed_zeta")),
+                    DocumentEdge.TruthAnchor.Create(
+                        LeanDeclarationRef.Create("D5/S3/Zeros/CompletedZeta.xi_reading_reflection")),
+                    DocumentEdge.TruthAnchor.Create(
+                        LeanDeclarationRef.Create("D5/S3/Zeros/CompletedZeta.zero_quartet_scaling_spec")),
+                    DocumentEdge.Dependency.Create(
+                        GidRef.Create("D5/S3/Weil/ReflectionLedger")),
+                ]));
 }

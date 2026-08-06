@@ -64,5 +64,17 @@ internal sealed class SeatTowerArithmeticDocument : IScribeDocumentDefinition
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "Explicit divisibility by twelve and nonzeroness imply the absolute-value floor. No sampled congruence, asymptotic law, or measurable statement is closed.")))
-                ))));
+                )),
+[
+                        DocumentEdge.TruthAnchor.Create(
+                            LeanDeclarationRef.Create("D5/S1/Phase/SeatTowerArithmetic.bhk_implies_w3_walk")),
+                        DocumentEdge.TruthAnchor.Create(
+                            LeanDeclarationRef.Create("D5/S1/Phase/SeatTowerArithmetic.mod_twenty_four_eq_zero_or_twelve")),
+                        DocumentEdge.TruthAnchor.Create(
+                            LeanDeclarationRef.Create("D5/S1/Phase/SeatTowerArithmetic.pythagorean_gate_iff_eisenstein_norm")),
+                        DocumentEdge.TruthAnchor.Create(
+                            LeanDeclarationRef.Create("D5/S1/Phase/SeatTowerArithmetic.twelve_le_abs_of_dvd_of_ne_zero")),
+                        DocumentEdge.TruthAnchor.Create(
+                            LeanDeclarationRef.Create("D5/S1/Phase/SeatTowerArithmetic.twenty_four_dvd_iff_even_quotient")),
+                    ]));
 }

@@ -33,7 +33,11 @@ internal sealed class PrimeAxisEscapeDocument : IScribeDocumentDefinition
                     + "then rules out membership in S because a common divisor of the product and "
                     + "the product plus one would divide one. No numerical certificate is "
                     + "asserted.")))
-            ))));
+            )),
+[
+                    DocumentEdge.TruthAnchor.Create(
+                        LeanDeclarationRef.Create("D5/S3/Axis/PrimeAxisEscape.prime_axis_escape")),
+                ]));
 
     private static Formula PrimeAxisEscapeFormula()
     {

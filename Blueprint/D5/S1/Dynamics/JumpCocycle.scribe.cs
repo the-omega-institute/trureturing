@@ -38,5 +38,11 @@ internal sealed class JumpCocycleDocument : IScribeDocumentDefinition
                             + "legality is equivalent to the pointwise sum of the two intervening "
                             + "jumps. Any disagreement therefore supplies an explicit endpoint "
                             + "residual and cannot be a legal motion.")))
-                ))));
+                )),
+[
+                        DocumentEdge.TruthAnchor.Create(
+                            LeanDeclarationRef.Create("D5/S1/Dynamics/JumpCocycle.jump_cocycle")),
+                        DocumentEdge.Dependency.Create(
+                            GidRef.Create("D5/S1/Phase/Basic")),
+                    ]));
 }

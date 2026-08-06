@@ -42,5 +42,9 @@ internal sealed class HiddenFiberRigidityDocument : IScribeDocumentDefinition
                         + "content of the reading being single-valued on any connected source. The result is "
                         + "purely topological: it asserts no arithmetic of the p-adic factors and no numerical "
                         + "certificate.")))
-            ))));
+            )),
+[
+                    DocumentEdge.TruthAnchor.Create(
+                        LeanDeclarationRef.Create("D5/S3/Arith/HiddenFiberRigidity.hidden_fiber_rigidity")),
+                ]));
 }

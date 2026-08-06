@@ -65,5 +65,19 @@ internal sealed class UniversalHeatTraceDocument : IScribeDocumentDefinition
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "A separately supplied reflection s maps to c minus conjugate s has the universal heat-trace midline as its fixed line exactly when its center c is the heat-trace abscissa alpha.")))
-            ))));
+            )),
+[
+                    DocumentEdge.TruthAnchor.Create(
+                        LeanDeclarationRef.Create("D5/S3/Midline/UniversalHeatTrace.heat_coefficient_mem_iff")),
+                    DocumentEdge.TruthAnchor.Create(
+                        LeanDeclarationRef.Create("D5/S3/Midline/UniversalHeatTrace.heat_vector_inner")),
+                    DocumentEdge.TruthAnchor.Create(
+                        LeanDeclarationRef.Create("D5/S3/Midline/UniversalHeatTrace.heat_vector_norm_sq")),
+                    DocumentEdge.TruthAnchor.Create(
+                        LeanDeclarationRef.Create("D5/S3/Midline/UniversalHeatTrace.reflection_center_eq_abscissa_iff")),
+                    DocumentEdge.TruthAnchor.Create(
+                        LeanDeclarationRef.Create("D5/S3/Midline/UniversalHeatTrace.universal_heat_trace_midline")),
+                    DocumentEdge.TruthAnchor.Create(
+                        LeanDeclarationRef.Create("D5/S3/Midline/UniversalHeatTrace.universal_heat_trace_midline_of_boundary_divergent")),
+                ]));
 }

@@ -36,5 +36,10 @@ internal sealed class CarrierFoundationsDocument : IScribeDocumentDefinition
                             + "theorem packages the four foundations behind a single "
                             + "declaration without re-proving any of them.")))
                 )),
-            [DocumentEdge.Dependency.Create(GidRef.Create("D5/S0/Carrier/Norm"))]));
+[
+                    DocumentEdge.TruthAnchor.Create(
+                        LeanDeclarationRef.Create("D5/S1/Scale/CarrierFoundations.golden_carrier_foundations")),
+                    DocumentEdge.Dependency.Create(
+                        GidRef.Create("D5/S0/Carrier/Norm")),
+                ]));
 }

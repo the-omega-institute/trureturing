@@ -29,5 +29,9 @@ internal sealed class QuadraticResiduesDocument : IScribeDocumentDefinition
                         + "reading: inspect the square image {0, 1}, then its pairwise-sum image "
                         + "{0, 1, 2}. This certificate explains the proof search but is not an "
                         + "additional clause of the formal theorem.")))
-            ))));
+            )),
+[
+                    DocumentEdge.TruthAnchor.Create(
+                        LeanDeclarationRef.Create("D5/S3/PrimeForms/QuadraticResidues.square_residues_and_sum_obstruction")),
+                ]));
 }

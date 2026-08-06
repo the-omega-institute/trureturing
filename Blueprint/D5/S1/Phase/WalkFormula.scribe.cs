@@ -54,5 +54,15 @@ internal sealed class WalkFormulaDocument : IScribeDocumentDefinition
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "Adding an integral denominator multiple to the first endpoint adds exactly that integer to the rational W3 expression. This algebraic covariance does not assert a BHK or three-walk semantic identification.")))
-                ))));
+                )),
+[
+                        DocumentEdge.TruthAnchor.Create(
+                            LeanDeclarationRef.Create("D5/S1/Phase/WalkFormula.alternating_walk_append")),
+                        DocumentEdge.TruthAnchor.Create(
+                            LeanDeclarationRef.Create("D5/S1/Phase/WalkFormula.alternating_walk_reverse")),
+                        DocumentEdge.TruthAnchor.Create(
+                            LeanDeclarationRef.Create("D5/S1/Phase/WalkFormula.endpoint_correction_is_integer")),
+                        DocumentEdge.TruthAnchor.Create(
+                            LeanDeclarationRef.Create("D5/S1/Phase/WalkFormula.w3_walk_endpoint_translation")),
+                    ]));
 }

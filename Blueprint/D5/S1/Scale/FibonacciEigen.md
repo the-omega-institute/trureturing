@@ -15,3 +15,8 @@ $$\forall n \in \mathbb{N},\ \operatorname{expandingEigenvector}\neq 0 \land \op
 *Commentary.*
 
 The explicit substitution matrix has nonzero expanding and contracting eigenvectors, and the same theorem gives the exact signed Fibonacci error for every natural index.
+
+## References
+
+- Truth anchor: `D5/S1/Scale/FibonacciEigen.fibonacci_substitution_spec`
+- Dependency: [D5/S0/Carrier/GoldenRatio](../../S0/Carrier/GoldenRatio.md)

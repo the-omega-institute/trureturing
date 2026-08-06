@@ -48,5 +48,15 @@ internal sealed class RecursiveDefinitionDocument : IScribeDocumentDefinition
                         "For a monotone endomorphism of a complete lattice, the existence of "
                         + "exactly one value satisfying f(x) = x implies that the least and "
                         + "greatest fixed points coincide.")))
-                ))));
+                )),
+[
+                        DocumentEdge.TruthAnchor.Create(
+                            LeanDeclarationRef.Create("D5/S1/Dynamics/RecursiveDefinition.extremal_selection_distinguishes_fixed_points")),
+                        DocumentEdge.TruthAnchor.Create(
+                            LeanDeclarationRef.Create("D5/S1/Dynamics/RecursiveDefinition.is_recursive_definition_iff_fixed_point")),
+                        DocumentEdge.TruthAnchor.Create(
+                            LeanDeclarationRef.Create("D5/S1/Dynamics/RecursiveDefinition.unique_fixed_point_implies_lfp_eq_gfp")),
+                        DocumentEdge.Dependency.Create(
+                            GidRef.Create("D5/S1/Dynamics/KnasterTarski")),
+                    ]));
 }

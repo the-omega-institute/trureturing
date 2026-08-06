@@ -61,5 +61,13 @@ internal sealed class EulerProductDocument : IScribeDocumentDefinition
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "Every regular finite Euler window is nonzero, so no finite set of local factors realizes a nontrivial global zero. This supports only a finite-versus-tail boundary; collective-mode, prime-deletion, dense-phase, and equal-loudness interpretations are not proved here.")))
-            ))));
+            )),
+[
+                    DocumentEdge.TruthAnchor.Create(
+                        LeanDeclarationRef.Create("D5/S3/Weil/EulerProduct.finite_euler_zero_free_and_pole_locus")),
+                    DocumentEdge.TruthAnchor.Create(
+                        LeanDeclarationRef.Create("D5/S3/Weil/EulerProduct.single_address_heat_trace_eq_log_derivative")),
+                    DocumentEdge.TruthAnchor.Create(
+                        LeanDeclarationRef.Create("D5/S3/Weil/EulerProduct.single_address_reading_spec")),
+                ]));
 }

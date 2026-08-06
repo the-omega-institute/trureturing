@@ -17,3 +17,8 @@ $$(\forall f:\alpha\to_{o}\alpha,\ \operatorname{lfp}(f)=\min\operatorname{Fix}(
 For every monotone endomorphism of a complete lattice, the least fixed point is the least element of the fixed-point set and the greatest fixed point is its greatest element. For the three-state successor-cycle operator, the least fixed point is the empty set and the greatest fixed point is the full state set.
 
 The statement is assembly-only: both conjuncts are witnessed by their frozen proofs in the Knaster–Tarski module, so the theorem packages the general result and its concrete instance behind a single declaration without re-proving either.
+
+## References
+
+- Truth anchor: `D5/S1/Dynamics/KnasterTarskiWitness.knaster_tarski_with_three_cycle_instance`
+- Dependency: [D5/S1/Dynamics/KnasterTarski](KnasterTarski.md)

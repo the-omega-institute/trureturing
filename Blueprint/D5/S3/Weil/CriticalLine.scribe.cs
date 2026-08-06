@@ -28,5 +28,11 @@ internal sealed class CriticalLineDocument : IScribeDocumentDefinition
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "Half-density normalization singles out the critical line as the norm-preserving weight. It does not prove that a Mellin or Fourier cancellation occurs only at that weight, and spectral-dark-point interpretations remain external to this theorem.")))
-            ))));
+            )),
+[
+                    DocumentEdge.TruthAnchor.Create(
+                        LeanDeclarationRef.Create("D5/S3/Weil/CriticalLine.unitarity_line_iff")),
+                    DocumentEdge.Dependency.Create(
+                        GidRef.Create("D5/S3/Weil/ReflectionLedger")),
+                ]));
 }

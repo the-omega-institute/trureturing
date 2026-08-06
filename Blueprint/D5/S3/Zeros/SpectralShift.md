@@ -39,3 +39,11 @@ $$\forall s\in\mathbb{C},\ \operatorname{criticalAbscissa}<\Re(s) \Rightarrow \f
 *Commentary.*
 
 When the real part lies strictly to the right of the existing critical abscissa, the actual square-summable labeled-zeta vector satisfies the same equality at each supplied address. The half-plane premise is a typing witness for that vector; the result remains pointwise because backwardShift is not a bundled continuous operator. Compared with the CAS theorem, this omits the joint bounded-operator assertion, basis subtraction rule, Bloch-wave and Bost-Connes identifications, and numerical certificate. `D5/L/hedenmalm1997hilbert` is contextual rather than a verbatim source for this multi-axis claim. The theorem provides a concrete spectral action compatible with the O-6 Hilbert-space route, but neither constructs the positivity form nor connects eigenvalues to zeta zeros.
+
+## References
+
+- Truth anchor: `D5/S3/Zeros/SpectralShift.backwardShift`
+- Truth anchor: `D5/S3/Zeros/SpectralShift.labeled_zeta_backward_shift_eigen`
+- Truth anchor: `D5/S3/Zeros/SpectralShift.labeled_zeta_vector_backward_shift_eigen`
+- Dependency: [D5/S1/Digit/PrimeAxisAddition](../../S1/Digit/PrimeAxisAddition.md)
+- Dependency: [D5/S3/Weil/SpectralHilbert](../Weil/SpectralHilbert.md)

@@ -123,3 +123,9 @@ $$
 *Commentary.*
 
 The source distinguishes three independent appearances of two. Complex conjugation supplies the code-blind pair behind J(s) = 1-conj(s), squared modulus, and the coefficient inner product. The real Galois pair phi <-> psi supplies the code-specific integrality of the deficit. Additive multiplicity two, through the double-occupancy prohibition, supplies the denominator zeta(2*phi^2*s). Replacing Fibonacci by Tribonacci is reported to preserve the half-line while destroying integrality, so the conjugation and Galois mechanisms are independently replaceable. All three are order-two structures, but only the first two are compared through fixed sets: the critical midline is fixed by the complex involution, while the integers are fixed by the real conjugation. The source consequently reads ontological zeros on the midline and integral deficits as parallel fixed-point statements, and places their intersection where the quasiperiodic critical line meets the multiplicity pole, one deficit unit from its carry image.
+
+## References
+
+- Truth anchor: `D5/S3/Weil/ReflectionLedger.mirror_fixed_re_eq`
+- Truth anchor: `D5/S3/Weil/ReflectionLedger.mirror_reversal_spec`
+- Dependency: [D5/S3/Weil/LabeledZeta](LabeledZeta.md)
