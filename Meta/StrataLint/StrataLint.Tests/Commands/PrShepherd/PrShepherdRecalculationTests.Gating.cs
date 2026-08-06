@@ -64,6 +64,26 @@ public sealed partial class PrShepherdRecalculationTests
     }
 
     [Fact]
+    public void PrDiffFailureIsUnknownAndSkipsThePullRequestWithAnAlert()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ShepherdFixture();
+
+        var result = fixture.Run(diffFailure: true);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(fixture.OriginalHead, fixture.RemoteHead());
+        Assert.Empty(fixture.MutationCalls());
+        Assert.False(Directory.Exists(fixture.CacheWorktree));
+        Assert.Contains(
+            "ALERT #1 PR file classification=UNKNOWN; skip this sweep",
+            result.Log,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain("RECALCULATE", result.Log, StringComparison.Ordinal);
+        Assert.DoesNotContain("update-branch", result.Log, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void FingerprintsSplitAcrossWorkflowJobsRetainUpdateBranchBehavior()
     {
         if (OperatingSystem.IsWindows()) return;

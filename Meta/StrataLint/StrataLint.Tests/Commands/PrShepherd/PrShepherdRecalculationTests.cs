@@ -202,7 +202,8 @@ public sealed partial class PrShepherdRecalculationTests
             bool splitFingerprintAcrossJobs = false,
             bool twoDerivedPrRows = false,
             int? leaseTtlSeconds = null,
-            bool derivedPr = true)
+            bool derivedPr = true,
+            bool diffFailure = false)
         {
             var script = Path.Combine(FindRepositoryRoot(), ShepherdScriptPath);
             var home = Path.Combine(temporary.Path, "home");
@@ -226,6 +227,7 @@ public sealed partial class PrShepherdRecalculationTests
                 $"PR_TEST_DUPLICATE={(duplicatePrRow ? "1" : "0")}",
                 $"PR_TEST_TWO_DERIVED={(twoDerivedPrRows ? "1" : "0")}",
                 $"PR_TEST_DERIVED={(derivedPr ? "1" : "0")}",
+                $"PR_TEST_DIFF_FAILURE={(diffFailure ? "1" : "0")}",
                 $"PR_TEST_FAIL_TARGET={failingTarget}",
                 $"PR_TEST_MOVE_HEAD={(moveHeadBeforePush ? "1" : "0")}",
                 $"PR_TEST_FAIL_MERGE={(failMergeWithoutConflict ? "1" : "0")}",
@@ -493,6 +495,10 @@ public sealed partial class PrShepherdRecalculationTests
                   exit 0
                 fi
                 if [[ "${1:-}" == pr && "${2:-}" == diff ]]; then
+                  if [[ "${PR_TEST_DIFF_FAILURE:-0}" == 1 ]]; then
+                    printf '%s\n' 'synthetic pr diff failure' >&2
+                    exit 97
+                  fi
                   if [[ "${PR_TEST_DERIVED:-1}" == 1 ]]; then
                     printf '%s\n' 'Generated/artifact.md'
                   else

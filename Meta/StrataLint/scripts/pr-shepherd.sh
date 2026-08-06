@@ -106,8 +106,8 @@ is_derived_conflict() {
 pr_has_derived_changes() {
   local num="$1" out path
   if ! out="$(GH pr diff "$num" --repo "$REPO" --name-only 2>&1)"; then
-    log "SWEEP #$num PR 文件列表不可读,按非派生物路径处理"
-    return 1
+    log "ALERT #$num PR file classification=UNKNOWN; skip this sweep: $(printf '%s' "$out" | head -c 100)"
+    return 2
   fi
   while IFS= read -r path || [[ -n "$path" ]]; do
     is_derived_conflict "$path" && return 0
@@ -556,7 +556,7 @@ sweep() {
     return 0
   fi
   [[ "$DRYRUN" == "1" ]] || mkdir -p "$STATE_DIR"
-  local recalculated=" " derived_queue_head="" derived=0 expired=0
+  local recalculated=" " derived_queue_head="" derived="UNKNOWN" expired=0
   GH pr list --repo "$REPO" --state open --limit 1000 \
     --json number,mergeable,mergeStateStatus,autoMergeRequest,headRefName,headRefOid,baseRefOid,statusCheckRollup \
     --jq '.[] | select(.autoMergeRequest != null) | ((.statusCheckRollup | map(select(.__typename == "CheckRun" and .name == "Content-addressed dev baseline admission")) | sort_by(.startedAt // .completedAt // "") | last) // {}) as $admission | [.number,.mergeable,.mergeStateStatus,.headRefName,.headRefOid,.baseRefOid,(.statusCheckRollup|length),($admission.conclusion // "-"),($admission.detailsUrl // "-")] | @tsv' |
@@ -564,9 +564,15 @@ sweep() {
   while IFS=$'\t' read -r num mergeable mstate head head_oid base_oid checks admission_conclusion admission_url; do
     case "$mergeable:$mstate" in
       MERGEABLE:BEHIND|CONFLICTING:*)
-        derived=0
+        derived="UNKNOWN"
         expired=0
-        pr_has_derived_changes "$num" && derived=1
+        if pr_has_derived_changes "$num"; then
+          derived=1
+        elif [[ "$?" == "1" ]]; then
+          derived=0
+        else
+          continue
+        fi
         if [[ "$mergeable" == "MERGEABLE" ]] \
           && has_expiry_fingerprint "$admission_conclusion" "$admission_url"; then
           expired=1
