@@ -181,6 +181,51 @@ restart_requires_successful_stop() (
   return 0
 )
 
+missing_launchd_service_is_bootstrapped_and_logged() (
+  load_implementation || exit 1
+  local root launch_agents
+  root="$(mktemp -d -t hourly-maintenance-launchd-reload.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  launch_agents="$root/LaunchAgents"
+  mkdir -p "$root/bin" "$root/logs" "$launch_agents"
+  export FKST_MAINTENANCE_LOG="$root/logs/hourly-maintenance.log"
+  export FKST_LAUNCHD_LABEL="local.fkst.synthetic.supervise"
+  export FKST_MAINTENANCE_LAUNCHD_LABEL="local.fkst.synthetic.maintenance"
+  export FKST_LAUNCH_AGENTS_DIR="$launch_agents"
+  printf 'supervise bytes\n' > "$launch_agents/$FKST_LAUNCHD_LABEL.plist"
+  printf 'maintenance bytes\n' > "$launch_agents/$FKST_MAINTENANCE_LAUNCHD_LABEL.plist"
+  export LAUNCHCTL_CALLS="$root/launchctl.calls"
+  cat > "$root/bin/launchctl" <<'SH'
+#!/usr/bin/env bash
+printf '%s\n' "$*" >> "$LAUNCHCTL_CALLS"
+case "$1:$2" in
+  print:*/local.fkst.synthetic.maintenance) exit 0 ;;
+  print:*/local.fkst.synthetic.supervise) exit 113 ;;
+  bootstrap:*) exit 0 ;;
+  *) exit 64 ;;
+esac
+SH
+  chmod +x "$root/bin/launchctl"
+  export PATH="$root/bin:/usr/bin:/bin"
+
+  ensure_launchd_services || fail "missing launchd service was not recovered"
+  command grep -Fq \
+    "print gui/$(id -u)/local.fkst.synthetic.supervise" "$LAUNCHCTL_CALLS" \
+    || fail "supervise service was not queried with launchctl print"
+  command grep -Fq \
+    "bootstrap gui/$(id -u) $launch_agents/local.fkst.synthetic.supervise.plist" \
+    "$LAUNCHCTL_CALLS" \
+    || fail "missing supervise service was not bootstrapped from LaunchAgents"
+  ! command grep -Fq \
+    "bootstrap gui/$(id -u) $launch_agents/local.fkst.synthetic.maintenance.plist" \
+    "$LAUNCHCTL_CALLS" \
+    || fail "in-service maintenance unit was bootstrapped again"
+  command grep -Fq \
+    "LAUNCHD-RELOAD: local.fkst.synthetic.supervise absent; bootstrap succeeded from $launch_agents/local.fkst.synthetic.supervise.plist" \
+    "$FKST_MAINTENANCE_LOG" \
+    || fail "successful recovery was not recorded in the maintenance log"
+)
+
 create_defer_policy_fixture() {
   local root="$1"
   mkdir -p "$root/bin" "$root/checkout" "$root/logs" "$root/slots"

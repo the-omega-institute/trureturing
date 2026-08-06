@@ -17,6 +17,7 @@ SH
   gc_worktrees() { return 0; }
   gc_stuck_lean_builds() { return 0; }
   restart_if_needed() { return 0; }
+  ensure_launchd_services() { return 0; }
 
   FKST_FAKE_MAKE_CALLS="$calls" FKST_MAKE_BIN="$root/bin/make" \
     main --host-config "$FIXTURE_HOST_CONFIG" \
@@ -24,6 +25,9 @@ SH
   command grep -Fxq -- \
     "-s -C $REPOSITORY_ROOT launchd-conformance-check" "$calls" \
     || fail "maintenance did not delegate launchd conformance through its Make target"
+  command grep -Fxq -- \
+    "-s -C $REPOSITORY_ROOT maintenance-launcher-render supervise-launcher-render" "$calls" \
+    || fail "maintenance did not refresh both persistent launchd members"
 )
 
 launchd_conformance_failure_fails_maintenance_cycle() (
@@ -45,6 +49,8 @@ SH
   gc_worktrees() { return 0; }
   gc_stuck_lean_builds() { return 0; }
   restart_if_needed() { return 0; }
+  install_launchd_launchers() { return 0; }
+  ensure_launchd_services() { return 0; }
 
   if FKST_LAUNCHD_ENUMERATOR="$enumerator" FKST_MAKE_BIN=/usr/bin/make \
       main --host-config "$FIXTURE_HOST_CONFIG" >"$output" 2>&1; then
@@ -125,7 +131,7 @@ required = [
     'FKST_MAINTENANCE_LAUNCHD_LABEL=<deployment-namespace>.maintenance',
     'make supervise-launcher-render HOST_CONFIG=',
     'plutil -lint "<absolute-path-to-rendered-supervise-plist>"',
-    'launchctl bootstrap "gui/$(id -u)" "<absolute-path-to-rendered-supervise-plist>"',
+    '$HOME/Library/LaunchAgents/<supervise-launchd-label-for-this-machine>.plist',
     'make launchd-conformance-check HOST_CONFIG=',
 ]
 positions = []

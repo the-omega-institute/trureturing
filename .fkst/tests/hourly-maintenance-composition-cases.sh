@@ -109,6 +109,7 @@ SH
   host_contract_require() { return 0; }
   gc_worktrees() { return 0; }
   gc_stuck_lean_builds() { return 0; }
+  ensure_launchd_services() { return 0; }
 }
 
 advance_tracked_composition() {

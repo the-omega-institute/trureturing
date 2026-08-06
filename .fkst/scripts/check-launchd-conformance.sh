@@ -96,6 +96,7 @@ main() {
   local host_config="${HOST_CONFIG:-}" enumerator="${FKST_LAUNCHD_ENUMERATOR:-}"
   local make_bin="${FKST_MAKE_BIN:-}" supervise_prefix maintenance_prefix namespace
   local labels enumerator_status label unit declared_output template renderer checker
+  local launch_agents_dir installed rendered_source
   local -a host_units=() declared_units=()
   [[ -n "$host_config" ]] || { die 'HOST_CONFIG is required'; return; }
   host_contract_load "$host_config"
@@ -111,6 +112,9 @@ main() {
       && "$supervise_prefix" == "$maintenance_prefix" ]] \
     || { die 'configured launchd labels do not share a deployment namespace'; return; }
   namespace="$supervise_prefix"
+  launch_agents_dir="${FKST_LAUNCH_AGENTS_DIR:-$HOME/Library/LaunchAgents}"
+  [[ "$launch_agents_dir" == /* && -d "$launch_agents_dir" && ! -L "$launch_agents_dir" ]] \
+    || { die "LaunchAgents directory is unavailable: $launch_agents_dir"; return; }
 
   if [[ -n "$enumerator" ]]; then
     [[ "$enumerator" == /* && -f "$enumerator" && -x "$enumerator" ]] \
@@ -175,6 +179,24 @@ EOF
       || { die "launchd unit $unit renderer is missing: $renderer"; return; }
     [[ -f "$checker" ]] \
       || { die "launchd unit $unit checker is missing: $checker"; return; }
+    case "$unit" in
+      maintenance)
+        label="$FKST_MAINTENANCE_LAUNCHD_LABEL"
+        rendered_source="$FKST_MAINTENANCE_LAUNCHER_PATH"
+        ;;
+      supervise)
+        label="$FKST_LAUNCHD_LABEL"
+        rendered_source="$FKST_SUPERVISE_LAUNCHER_PATH"
+        ;;
+      *) die "launchd unit $unit has no installed-path mapping"; return ;;
+    esac
+    installed="$launch_agents_dir/$label.plist"
+    [[ -f "$installed" && ! -L "$installed" ]] \
+      || { die "installed launchd unit $unit is missing: $installed"; return; }
+    [[ -f "$rendered_source" && ! -L "$rendered_source" ]] \
+      || { die "rendered launchd source for $unit is missing: $rendered_source"; return; }
+    cmp -s "$rendered_source" "$installed" \
+      || { die "installed launchd unit $unit differs from rendered source: $installed"; return; }
   done
 
   if [[ -z "$make_bin" ]]; then
