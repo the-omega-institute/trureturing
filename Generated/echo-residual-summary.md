@@ -1,8 +1,8 @@
-<!-- echo-residual-summary:v3 residual=sha256:fa03c845521f8d3092ba7e2334cf5394236ca9f34d5e81a6b89a0daeb58c848f -->
+<!-- echo-residual-summary:v3 residual=sha256:456302cd44bf286d0e406115a7e7a10a2fc786f2c3747f84b6740e4a3d8f9698 -->
 # Echo Residual Summary
 
-- unresolved_subitems: 497
-- mother_residual_atom_ids: 67
+- unresolved_subitems: 502
+- mother_residual_atom_ids: 69
 
 ## `bedc-wm-v0.1`
 
@@ -13,8 +13,8 @@ Mother residual atoms: none.
 
 ## `gict-v3.6`
 
-- unresolved_subitems: 113
-- mother_residual_atom_ids: 10
+- unresolved_subitems: 118
+- mother_residual_atom_ids: 12
 
 Mother residual atoms:
 
@@ -57,12 +57,19 @@ Mother residual atoms:
   - `zolotarev-congruence-to-selector-numerator`
   - `zolotarev-jacobi-factorization`
   - `zolotarev-selector-congruence`
+- `gict-residual-1a97f6a7c25c71dca7998827b2e39cdac856ea83936e81a645ba01e088c6a4b4` (4)
+  - `comparison-claim-stronger-than-cyclic-branch-gleason-conditions`
+  - `golden-branch-born-type-pricing-unconditionally-unique`
+  - `golden-window-price-table-has-no-free-parameters`
+  - `unique-trace-pricing-double-tower-minimal-projection`
 - `gict-residual-447122eca84f80ed4adff91aa43cb176bac30244d3ed913efd17ebf8dc1726ef` (5)
   - `local-432-norm-congruence-residue-enumeration`
   - `mirror-conjugate-determinant-minus-one`
   - `mirror-even-word-odd-offset-rotation`
   - `mirror-pgl-not-reciprocal`
   - `mirror-second-order-nonintersection-certificate`
+- `gict-residual-4f569da66804d560bc53e6c1ac7d74ce201d944db708780a8f72b39b930112b8` (1)
+  - `quadratic-residue-equivalence-as-written-for-p-equals-two-is-false-and-requires-an-odd-prime-hypothesis`
 - `gict-residual-4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f` (13)
   - `cosecant-peak-equation-from-pin-data`
   - `cosecant-peak-identity`
