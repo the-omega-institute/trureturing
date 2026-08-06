@@ -1,4 +1,4 @@
-<!-- echo-residual-summary:v3 residual=sha256:b8b57b21dfe67962aaebf756653953d3809f49fdae7c61408fb0eba909f95fa8 -->
+<!-- echo-residual-summary:v3 residual=sha256:935ca6f12f0d8a7ad12fc34c00eb52a3b39f79df32983501ea0a75b3f13e86cf -->
 # Echo Residual Summary
 
 - unresolved_subitems: 508
@@ -150,6 +150,13 @@ Mother residual atoms:
   - `sign-reversal-phenomena-assignment-to-contracting-axis`
 
 ## `golden-ledger-spec-v7.11`
+
+- unresolved_subitems: 0
+- mother_residual_atom_ids: 0
+
+Mother residual atoms: none.
+
+## `interface-v1`
 
 - unresolved_subitems: 0
 - mother_residual_atom_ids: 0
