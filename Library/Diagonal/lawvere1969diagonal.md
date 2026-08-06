@@ -7,6 +7,7 @@ doi: 10.1007/BFb0080769
 claim: Diagonal self-application yields the qualitative fixed-point principle for point-surjective maps.
 strata_touched:
   - D5/S0/Diagonal/EscapeCount
+  - D5/S0/Diagonal/CaptureCount
 license: citation-only
 triage: anchor
 ---
