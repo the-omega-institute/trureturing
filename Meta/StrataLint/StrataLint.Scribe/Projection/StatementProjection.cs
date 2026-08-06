@@ -298,6 +298,51 @@ internal abstract record ProjectionOutcome
     internal sealed record Unprojectable(string Reason) : ProjectionOutcome;
 }
 
+internal static class PropPiToImplicationRule
+{
+    private static readonly ImmutableHashSet<string> PropositionConstructors =
+        ImmutableHashSet.Create(StringComparer.Ordinal,
+            "Eq", "Ne", "Not", "And", "Or", "Iff", "Exists");
+
+    internal static bool Matches(LeanExpr.Pi pi) =>
+        pi.BinderInfo == "bd"
+        && IsProposition(pi.Domain)
+        && !ContainsBoundVariable(pi.Body, depth: 0);
+
+    private static bool IsProposition(LeanExpr expression)
+    {
+        if (expression is LeanExpr.Metadata metadata)
+            return IsProposition(metadata.Body);
+        if (expression is LeanExpr.Pi pi)
+            return IsProposition(pi.Body);
+        if (expression is not LeanExpr.App)
+            return false;
+
+        var head = expression;
+        while (head is LeanExpr.App app)
+            head = app.Function;
+        return head is LeanExpr.Constant constant
+            && PropositionConstructors.Contains(constant.Name.Split('.').Last());
+    }
+
+    private static bool ContainsBoundVariable(LeanExpr expression, uint depth) => expression switch
+    {
+        LeanExpr.Bound bound => bound.Index == depth,
+        LeanExpr.App app => ContainsBoundVariable(app.Function, depth)
+            || ContainsBoundVariable(app.Argument, depth),
+        LeanExpr.Lambda lambda => ContainsBoundVariable(lambda.Domain, depth)
+            || ContainsBoundVariable(lambda.Body, checked(depth + 1)),
+        LeanExpr.Pi pi => ContainsBoundVariable(pi.Domain, depth)
+            || ContainsBoundVariable(pi.Body, checked(depth + 1)),
+        LeanExpr.Let let => ContainsBoundVariable(let.Type, depth)
+            || ContainsBoundVariable(let.Value, depth)
+            || ContainsBoundVariable(let.Body, checked(depth + 1)),
+        LeanExpr.Metadata metadata => ContainsBoundVariable(metadata.Body, depth),
+        LeanExpr.Projection projection => ContainsBoundVariable(projection.Body, depth),
+        _ => false
+    };
+}
+
 internal static class StatementProjector
 {
     internal static ProjectionOutcome Project(LeanExpr expression) => Project(expression, []);
@@ -307,6 +352,17 @@ internal static class StatementProjector
         if (expression is LeanExpr.Pi pi)
         {
             if (pi.BinderInfo is "bi" or "bs" or "bc") return Project(pi.Body, variables.Insert(0, new Formula.Placeholder()));
+            if (PropPiToImplicationRule.Matches(pi))
+            {
+                var premise = Project(pi.Domain, variables);
+                var conclusion = Project(pi.Body, variables.Insert(0, new Formula.Placeholder()));
+                if (premise is ProjectionOutcome.Unprojectable premiseFailure) return premiseFailure;
+                if (conclusion is ProjectionOutcome.Unprojectable conclusionFailure) return conclusionFailure;
+                return new ProjectionOutcome.Projected(new Formula.Logic(
+                    ((ProjectionOutcome.Projected)premise).Formula,
+                    FormulaLogicOperator.Implies,
+                    ((ProjectionOutcome.Projected)conclusion).Formula));
+            }
             var domain = Project(pi.Domain, variables);
             var identifier = FormulaIdentifier.Create("x" + variables.Length);
             var symbol = new Formula.Symbol(identifier);
