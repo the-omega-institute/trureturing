@@ -53,3 +53,8 @@ $$\forall x,y\in N_A(S),\ ((\forall z\in N_A(S),\ x\leq z)\land(\forall z\in N_A
 *Commentary.*
 
 Two normalized sample members that are each no greater than every member are equal by antisymmetry. This order-theoretic uniqueness does not identify any other statistical reading with the sample minimum.
+
+## References
+
+- Dependency: [D5/S1/Phase/SeatTowerArithmetic](../Phase/SeatTowerArithmetic.md)
+- Dependency: [D5/S1/Phase/ZeroOrbitCongruence](../Phase/ZeroOrbitCongruence.md)

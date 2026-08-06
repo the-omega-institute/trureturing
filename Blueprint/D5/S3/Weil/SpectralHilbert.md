@@ -87,3 +87,7 @@ Lean statement: `D5/S3/Weil/SpectralHilbert.labeled_zeta_inner`
 *Commentary.*
 
 The coefficient Hilbert space and its zeta reproducing kernel are the classical Hardy-space geometry of Dirichlet series. The repository supplies a typed translation and combined presentation of that known mathematics, not a novelty claim.
+
+## References
+
+- Dependency: [D5/S1/Digit/PrimeAxisEncoding](../../S1/Digit/PrimeAxisEncoding.md)

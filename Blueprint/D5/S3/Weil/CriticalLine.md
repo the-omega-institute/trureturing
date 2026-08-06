@@ -27,3 +27,7 @@ Lean statement: `D5/S3/Weil/CriticalLine.unitarity_line_iff`
 *Commentary.*
 
 Half-density normalization singles out the critical line as the norm-preserving weight. It does not prove that a Mellin or Fourier cancellation occurs only at that weight, and spectral-dark-point interpretations remain external to this theorem.
+
+## References
+
+- Dependency: [D5/S3/Weil/ReflectionLedger](ReflectionLedger.md)

@@ -31,5 +31,9 @@ internal sealed class CompletionLedgerDocument : IScribeDocumentDefinition
                         + "from zero and one, the xi reading is one half times the pole-removal "
                         + "factor times the completed reading. The analytic equalities reuse the "
                         + "existing Mellin reconstruction and pole-cancellation theorems.")))
-            ))));
+            )),
+[
+                        DocumentEdge.Dependency.Create(
+                            GidRef.Create("D5/S3/Analytic/CompletedZetaMellinReconstruction")),
+                    ]));
 }
