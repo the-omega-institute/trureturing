@@ -7,6 +7,12 @@ internal static class ConeAtomizer
     private static readonly Regex NumberedClaimPattern = new(
         "^\\*\\*(?<genre>\\p{L}+)\\s+(?<number>[0-9]+\\.[0-9]+[′″]*)",
         RegexOptions.CultureInvariant);
+    private static readonly Regex NumberedClaimLeadPattern = new(
+        "^\\*\\*\\p{L}+\\s*[0-9]+\\.[0-9]+",
+        RegexOptions.CultureInvariant);
+    private static readonly Regex TerminalGradePattern = new(
+        "(?<grade>\\[[^\\[\\]\\r\\n]+\\])+。$",
+        RegexOptions.CultureInvariant);
     private static readonly Regex ChapterHeadingPattern = new(
         "^第(?<number>十一|十|〇|一|二|三|四|五|六|七|八|九)章(?:\\s|$)",
         RegexOptions.CultureInvariant);
@@ -53,8 +59,11 @@ internal static class ConeAtomizer
             }
 
             var templates = mapping.Value.Split('|');
-            var exactProofGrade = paragraph.AsSpan(0, titleEnd)
-                .EndsWith("[证]。", StringComparison.Ordinal);
+            var terminalGrades = TerminalGradePattern.Match(paragraph, 0, titleEnd);
+            var gradeCaptures = terminalGrades.Groups["grade"].Captures;
+            var exactProofGrade = terminalGrades.Success
+                && gradeCaptures.Count == 1
+                && gradeCaptures[0].Value == "[证]";
             var template = exactProofGrade && templates.Length == 2
                 ? templates[0]
                 : templates[^1];
@@ -62,6 +71,11 @@ internal static class ConeAtomizer
                 .Replace("′", "-prime", StringComparison.Ordinal)
                 .Replace("″", "-double-prime", StringComparison.Ordinal);
             return template.Replace("{number}", semanticNumber, StringComparison.Ordinal);
+        }
+
+        if (NumberedClaimLeadPattern.IsMatch(paragraph))
+        {
+            throw Unknown(paragraph);
         }
 
         return null;

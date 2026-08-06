@@ -65,6 +65,21 @@ public sealed partial class TheoryAtomizerTests
     }
 
     [Fact]
+    public void ConeV1RejectsAMalformedNumberedClaimTitle()
+    {
+        var bytes = Encoding.UTF8.GetBytes(
+            "# 正锥纲领:形式化定理与证明\n\n"
+            + "## 第四章 收缩谱\n\n"
+            + "**定理4.6(KM 渐近律)[证]。**claim。\n");
+
+        var error = Assert.Throws<TheorySourceFormatException>(() =>
+            AtomizerRegistry.Atomize(ConeAtomizerId, bytes, DigestionTestSupport.Rules));
+
+        Assert.Contains("unknown cone numbered claim title", error.Message, StringComparison.Ordinal);
+        Assert.Contains("line 5", error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void ConeV1RejectsAClaimOutsideItsNumberedChapter()
     {
         var bytes = Encoding.UTF8.GetBytes(
@@ -99,7 +114,7 @@ public sealed partial class TheoryAtomizerTests
         var bytes = Encoding.UTF8.GetBytes(
             "# 正锥纲领:形式化定理与证明\n\n"
             + "## 第四章 收缩谱\n\n"
-            + "**定理 4.6(KM 渐近律)[证][数]。**claim。\n");
+            + "**定理 4.6(KM 渐近律)[数][证]。**claim。\n");
 
         var atom = Assert.Single(AtomizerRegistry.Atomize(
             ConeAtomizerId,
