@@ -529,7 +529,7 @@ internal static class CoverWorld
         var sourceBytes = Encoding.UTF8.GetBytes(
             "# Synthetic\n\n**定理 1.1(A)**。cover fixture atom body。\n");
         var atom = Assert.Single(
-            AtomizerRegistry.Atomize(AtomizerRegistry.RegisteredIds[0], sourceBytes, DigestionTestSupport.Rules).Claims);
+            AtomizerRegistry.Atomize(SyntheticNumberedAtomizer.Id, sourceBytes, DigestionTestSupport.Rules).Claims);
         var targetPath = spec.ModuleGid + ".lean";
         var targetBytes = Encoding.UTF8.GetBytes(DigestionTestSupport.Lean(spec.ModuleGid));
         var definition = Encoding.UTF8.GetBytes("scribe definition\n");
@@ -682,7 +682,7 @@ internal static class CoverWorld
         builder.Append("sources:\n");
         builder.Append("  - source_id: fixture-source\n");
         builder.Append($"    path: {GoldenCorpus.FixtureDigestionSourcePath}\n");
-        builder.Append($"    atomizer: {AtomizerRegistry.RegisteredIds[0]}\n");
+        builder.Append($"    atomizer: {SyntheticNumberedAtomizer.Id}\n");
         builder.Append("    acknowledged_stale: []\n");
         builder.Append("    entries:\n");
         AppendEntry(
