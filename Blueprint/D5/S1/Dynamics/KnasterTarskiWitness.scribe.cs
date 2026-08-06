@@ -34,9 +34,7 @@ internal sealed class KnasterTarskiWitnessDocument : IScribeDocumentDefinition
                             + "behind a single declaration without re-proving either.")))
                 )),
 [
-                        DocumentEdge.TruthAnchor.Create(
-                            LeanDeclarationRef.Create("D5/S1/Dynamics/KnasterTarskiWitness.knaster_tarski_with_three_cycle_instance")),
-                        DocumentEdge.Dependency.Create(
-                            GidRef.Create("D5/S1/Dynamics/KnasterTarski")),
-                    ]));
+                            DocumentEdge.Dependency.Create(
+                                GidRef.Create("D5/S1/Dynamics/KnasterTarski")),
+                        ]));
 }

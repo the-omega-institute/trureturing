@@ -30,5 +30,4 @@ Half-density normalization singles out the critical line as the norm-preserving 
 
 ## References
 
-- Truth anchor: `D5/S3/Weil/CriticalLine.unitarity_line_iff`
 - Dependency: [D5/S3/Weil/ReflectionLedger](ReflectionLedger.md)

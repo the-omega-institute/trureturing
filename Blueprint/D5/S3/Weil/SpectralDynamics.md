@@ -174,10 +174,5 @@ The source presents an internal self-model in which evolution factors into ortho
 
 ## References
 
-- Truth anchor: `D5/S3/Weil/SpectralDynamics.critical_line_characterizations`
-- Truth anchor: `D5/S3/Weil/SpectralDynamics.horizontal_evolution_contraction_semigroup`
-- Truth anchor: `D5/S3/Weil/SpectralDynamics.labeled_zeta_evolution_spec`
-- Truth anchor: `D5/S3/Weil/SpectralDynamics.vertical_evolution_unitary_group`
-- Truth anchor: `D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec`
 - Dependency: [D5/S3/Weil/CriticalLine](CriticalLine.md)
 - Dependency: [D5/S3/Weil/SpectralHilbert](SpectralHilbert.md)

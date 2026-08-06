@@ -27,9 +27,7 @@ internal sealed class OffLineScalingDocument : IScribeDocumentDefinition
                     + "after analytic continuation; cancellation of that sum is treated "
                     + "separately."))))),
 [
-                            DocumentEdge.TruthAnchor.Create(
-                                LeanDeclarationRef.Create("D5/S3/Midline/OffLineScaling.off_line_scaling_ledger_growth")),
-                            DocumentEdge.Dependency.Create(
-                                GidRef.Create("D5/S3/Zeros/ZeroGeometry")),
-                        ]));
+                                DocumentEdge.Dependency.Create(
+                                    GidRef.Create("D5/S3/Zeros/ZeroGeometry")),
+                            ]));
 }

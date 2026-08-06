@@ -27,11 +27,9 @@ internal sealed class ThroatTransitionCocycleDocument : IScribeDocumentDefinitio
                         + "gives uniqueness, and the cocycle identity follows by "
                         + "telescoping the two successive differences."))))),
 [
-                                DocumentEdge.TruthAnchor.Create(
-                                    LeanDeclarationRef.Create("D5/S1/Solenoid/ThroatTransitionCocycle.three_lift_difference_cocycle")),
-                                DocumentEdge.Dependency.Create(
-                                    GidRef.Create("D5/S1/Dynamics/UniversalSolenoid")),
-                                DocumentEdge.Dependency.Create(
-                                    GidRef.Create("D5/S1/Solenoid/HiddenFiberCompact")),
-                            ]));
+                                    DocumentEdge.Dependency.Create(
+                                        GidRef.Create("D5/S1/Dynamics/UniversalSolenoid")),
+                                    DocumentEdge.Dependency.Create(
+                                        GidRef.Create("D5/S1/Solenoid/HiddenFiberCompact")),
+                                ]));
 }

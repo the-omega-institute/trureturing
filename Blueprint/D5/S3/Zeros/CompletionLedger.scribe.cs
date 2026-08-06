@@ -33,9 +33,7 @@ internal sealed class CompletionLedgerDocument : IScribeDocumentDefinition
                         + "existing Mellin reconstruction and pole-cancellation theorems.")))
             )),
 [
-                    DocumentEdge.TruthAnchor.Create(
-                        LeanDeclarationRef.Create("D5/S3/Zeros/CompletionLedger.completion_factors_are_explicit_ledger")),
-                    DocumentEdge.Dependency.Create(
-                        GidRef.Create("D5/S3/Analytic/CompletedZetaMellinReconstruction")),
-                ]));
+                        DocumentEdge.Dependency.Create(
+                            GidRef.Create("D5/S3/Analytic/CompletedZetaMellinReconstruction")),
+                    ]));
 }

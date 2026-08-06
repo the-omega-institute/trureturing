@@ -27,9 +27,5 @@ internal sealed class HiddenFiberCompactDocument : IScribeDocumentDefinition
                         + "countable product topology is first countable, hence compactness "
                         + "gives a convergent subsequence; the formal coordinatewise "
                         + "convergence equivalence identifies this with the diagonal, "
-                        + "layer-by-layer limit."))))),
-[
-                                DocumentEdge.TruthAnchor.Create(
-                                    LeanDeclarationRef.Create("D5/S1/Solenoid/HiddenFiberCompact.hiddenFiber_closed_compact_seqCompact")),
-                            ]));
+                        + "layer-by-layer limit.")))))));
 }

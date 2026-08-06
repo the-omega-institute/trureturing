@@ -30,6 +30,4 @@ Finitely supported prime axes carrying canonical W rows are equivalent to positi
 
 ## References
 
-- Truth anchor: `D5/S1/Digit/PrimeAxisEncoding.primeAxisEncoding`
-- Truth anchor: `D5/S1/Digit/PrimeAxisEncoding.prime_axis_encoding_spec`
 - Dependency: [D5/S1/Digit/PrimeAxisTable](PrimeAxisTable.md)

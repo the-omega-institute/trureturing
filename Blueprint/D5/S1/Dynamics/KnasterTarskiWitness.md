@@ -20,5 +20,4 @@ The statement is assembly-only: both conjuncts are witnessed by their frozen pro
 
 ## References
 
-- Truth anchor: `D5/S1/Dynamics/KnasterTarskiWitness.knaster_tarski_with_three_cycle_instance`
 - Dependency: [D5/S1/Dynamics/KnasterTarski](KnasterTarski.md)

@@ -26,9 +26,5 @@ internal sealed class LiCausalTrichotomyDocument : IScribeDocumentDefinition
                         "At the Cayley branch cut, the right and left principal-log limits are exp(pi i kappa) - 1 and exp(-pi i kappa) - 1, so their difference is 2 i sin(pi kappa). For nonintegral kappa this jump is nonzero, while every L1 Fourier transform is continuous; therefore no causal L1 realization exists. The bounded scaled symbol nevertheless defines a tempered distribution, and inverse Fourier transform gives its canonical generalized inverse. Off zero, integration by parts separates the jump from the L1 transform of the symbol derivative. Riemann-Lebesgue then makes the remainder vanish and yields equivalence to sin(pi kappa)/(pi u) at both positive and negative infinity, hence eventual nonvanishing on both sides.")),
                     Paragraph(Text(
                         "The finite Laguerre transform is computed term by term from complex Laplace moments and the binomial theorem. The result is analytic only: it asserts neither Li positivity nor the Riemann hypothesis, zero statistics, numerical certification, or physical causality.")))
-            )),
-[
-                    DocumentEdge.TruthAnchor.Create(
-                        LeanDeclarationRef.Create("D5/S3/Analytic/LiCausalTrichotomy.causal_iff_integer_iff_monodromy")),
-                ]));
+            ))));
 }

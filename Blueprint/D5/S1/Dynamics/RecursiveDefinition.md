@@ -42,7 +42,4 @@ For a monotone endomorphism of a complete lattice, the existence of exactly one 
 
 ## References
 
-- Truth anchor: `D5/S1/Dynamics/RecursiveDefinition.extremal_selection_distinguishes_fixed_points`
-- Truth anchor: `D5/S1/Dynamics/RecursiveDefinition.is_recursive_definition_iff_fixed_point`
-- Truth anchor: `D5/S1/Dynamics/RecursiveDefinition.unique_fixed_point_implies_lfp_eq_gfp`
 - Dependency: [D5/S1/Dynamics/KnasterTarski](KnasterTarski.md)

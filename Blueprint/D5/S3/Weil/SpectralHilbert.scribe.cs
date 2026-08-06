@@ -84,19 +84,7 @@ internal sealed class SpectralHilbertDocument : IScribeDocumentDefinition
                     "The coefficient Hilbert space and its zeta reproducing kernel are the classical Hardy-space geometry of Dirichlet series. The repository supplies a typed translation and combined presentation of that known mathematics, not a novelty claim.")))
             )),
 [
-                    DocumentEdge.TruthAnchor.Create(
-                        LeanDeclarationRef.Create("D5/S3/Weil/SpectralHilbert.labeled_zeta_inner")),
-                    DocumentEdge.TruthAnchor.Create(
-                        LeanDeclarationRef.Create("D5/S3/Weil/SpectralHilbert.labeled_zeta_kernel")),
-                    DocumentEdge.TruthAnchor.Create(
-                        LeanDeclarationRef.Create("D5/S3/Weil/SpectralHilbert.labeled_zeta_mem_iff")),
-                    DocumentEdge.TruthAnchor.Create(
-                        LeanDeclarationRef.Create("D5/S3/Weil/SpectralHilbert.labeled_zeta_norm_sq")),
-                    DocumentEdge.TruthAnchor.Create(
-                        LeanDeclarationRef.Create("D5/S3/Weil/SpectralHilbert.resonance_partner_spec")),
-                    DocumentEdge.TruthAnchor.Create(
-                        LeanDeclarationRef.Create("D5/S3/Weil/SpectralHilbert.source_pairing_eq_tsum")),
-                    DocumentEdge.Dependency.Create(
-                        GidRef.Create("D5/S1/Digit/PrimeAxisEncoding")),
-                ]));
+                        DocumentEdge.Dependency.Create(
+                            GidRef.Create("D5/S1/Digit/PrimeAxisEncoding")),
+                    ]));
 }

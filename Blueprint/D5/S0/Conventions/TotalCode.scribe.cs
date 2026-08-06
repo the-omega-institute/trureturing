@@ -24,9 +24,5 @@ internal sealed class TotalCodeDocument : IScribeDocumentDefinition
                         + "Lean structure equality, not claimed as a proof of an ontological "
                         + "identity criterion. Extensionality proves both the preservation "
                         + "clause and its componentwise dual. This is the C3a identity pillar "
-                        + "announced for use in 23.4."))))),
-[
-                                DocumentEdge.TruthAnchor.Create(
-                                    LeanDeclarationRef.Create("D5/S0/Conventions/TotalCode.no_hidden_register")),
-                            ]));
+                        + "announced for use in 23.4.")))))));
 }

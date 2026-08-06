@@ -18,6 +18,5 @@ Each difference is constructed pointwise by subtraction. The additive projection
 
 ## References
 
-- Truth anchor: `D5/S1/Solenoid/ThroatTransitionCocycle.three_lift_difference_cocycle`
 - Dependency: [D5/S1/Dynamics/UniversalSolenoid](../Dynamics/UniversalSolenoid.md)
 - Dependency: [D5/S1/Solenoid/HiddenFiberCompact](HiddenFiberCompact.md)

@@ -41,9 +41,5 @@ internal sealed class ResidueSeparationDocument : IScribeDocumentDefinition
                         + "the given distinctness of m and n transported across the two identities. The "
                         + "argument is purely arithmetic and logical: it invokes only the identity behaviour "
                         + "of the remainder on its canonical range and asserts no numerical certificate.")))
-            )),
-[
-                    DocumentEdge.TruthAnchor.Create(
-                        LeanDeclarationRef.Create("D5/S3/Arith/ResidueSeparation.residue_separation")),
-                ]));
+            ))));
 }

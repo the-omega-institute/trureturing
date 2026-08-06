@@ -47,13 +47,11 @@ internal sealed class DeficitIntegerDocument : IScribeDocumentDefinition
                         + "normalization path expresses the deficit as the signed count of bottom carries.")))
             )),
 [
-                    DocumentEdge.TruthAnchor.Create(
-                        LeanDeclarationRef.Create("D5/S1/Deficit/DeficitInteger.deficit_integer")),
-                    DocumentEdge.Dependency.Create(
-                        GidRef.Create("D5/S0/Carrier/Conj")),
-                    DocumentEdge.Dependency.Create(
-                        GidRef.Create("D5/S1/Scale/Embedding")),
-                ]));
+                        DocumentEdge.Dependency.Create(
+                            GidRef.Create("D5/S0/Carrier/Conj")),
+                        DocumentEdge.Dependency.Create(
+                            GidRef.Create("D5/S1/Scale/Embedding")),
+                    ]));
 
     private static Formula DeficitFormula()
     {

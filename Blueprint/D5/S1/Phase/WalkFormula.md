@@ -53,10 +53,3 @@ $$\forall a,e,e',c\in\mathbb{Q},\ \forall t\in\mathbb{Z},\ c\neq 0 \Rightarrow 3
 *Commentary.*
 
 Adding an integral denominator multiple to the first endpoint adds exactly that integer to the rational W3 expression. This algebraic covariance does not assert a BHK or three-walk semantic identification.
-
-## References
-
-- Truth anchor: `D5/S1/Phase/WalkFormula.alternating_walk_append`
-- Truth anchor: `D5/S1/Phase/WalkFormula.alternating_walk_reverse`
-- Truth anchor: `D5/S1/Phase/WalkFormula.endpoint_correction_is_integer`
-- Truth anchor: `D5/S1/Phase/WalkFormula.w3_walk_endpoint_translation`

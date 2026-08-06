@@ -42,8 +42,5 @@ When the real part lies strictly to the right of the existing critical abscissa,
 
 ## References
 
-- Truth anchor: `D5/S3/Zeros/SpectralShift.backwardShift`
-- Truth anchor: `D5/S3/Zeros/SpectralShift.labeled_zeta_backward_shift_eigen`
-- Truth anchor: `D5/S3/Zeros/SpectralShift.labeled_zeta_vector_backward_shift_eigen`
 - Dependency: [D5/S1/Digit/PrimeAxisAddition](../../S1/Digit/PrimeAxisAddition.md)
 - Dependency: [D5/S3/Weil/SpectralHilbert](../Weil/SpectralHilbert.md)

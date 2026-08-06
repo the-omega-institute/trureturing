@@ -18,5 +18,4 @@ The explicit substitution matrix has nonzero expanding and contracting eigenvect
 
 ## References
 
-- Truth anchor: `D5/S1/Scale/FibonacciEigen.fibonacci_substitution_spec`
 - Dependency: [D5/S0/Carrier/GoldenRatio](../../S0/Carrier/GoldenRatio.md)

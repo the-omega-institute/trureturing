@@ -75,12 +75,3 @@ $$\forall\alpha,c\in\mathbb{R},\quad \left[\forall s\in\mathbb{C},\ s=c-\overlin
 *Commentary.*
 
 A separately supplied reflection s maps to c minus conjugate s has the universal heat-trace midline as its fixed line exactly when its center c is the heat-trace abscissa alpha.
-
-## References
-
-- Truth anchor: `D5/S3/Midline/UniversalHeatTrace.heat_coefficient_mem_iff`
-- Truth anchor: `D5/S3/Midline/UniversalHeatTrace.heat_vector_inner`
-- Truth anchor: `D5/S3/Midline/UniversalHeatTrace.heat_vector_norm_sq`
-- Truth anchor: `D5/S3/Midline/UniversalHeatTrace.reflection_center_eq_abscissa_iff`
-- Truth anchor: `D5/S3/Midline/UniversalHeatTrace.universal_heat_trace_midline`
-- Truth anchor: `D5/S3/Midline/UniversalHeatTrace.universal_heat_trace_midline_of_boundary_divergent`

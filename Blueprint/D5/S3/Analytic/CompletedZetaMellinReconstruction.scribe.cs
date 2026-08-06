@@ -40,9 +40,7 @@ internal sealed class CompletedZetaMellinReconstructionDocument : IScribeDocumen
                     + "the pole ledger that the zero-symmetry route below O-6 consumes.")))
             )),
 [
-                    DocumentEdge.TruthAnchor.Create(
-                        LeanDeclarationRef.Create("D5/S3/Analytic/CompletedZetaMellinReconstruction.completed_zeta_mellin_reconstruction")),
-                    DocumentEdge.Dependency.Create(
-                        GidRef.Create("D5/S3/Zeros/CompletedZeta")),
-                ]));
+                        DocumentEdge.Dependency.Create(
+                            GidRef.Create("D5/S3/Zeros/CompletedZeta")),
+                    ]));
 }

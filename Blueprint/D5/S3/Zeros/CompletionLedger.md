@@ -20,5 +20,4 @@ The theorem defines the archimedean factor and pole-removal factor only through 
 
 ## References
 
-- Truth anchor: `D5/S3/Zeros/CompletionLedger.completion_factors_are_explicit_ledger`
 - Dependency: [D5/S3/Analytic/CompletedZetaMellinReconstruction](../Analytic/CompletedZetaMellinReconstruction.md)

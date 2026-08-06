@@ -66,5 +66,4 @@ The cyclotomic Estermann-Kurokawa mechanism relies on explicit control of polyno
 
 ## References
 
-- Truth anchor: `D5/S1/Scale/MinkowskiModelSet.minkowski_model_set_spec`
 - Dependency: [D5/S1/Depth/JointCoordinates](../Depth/JointCoordinates.md)

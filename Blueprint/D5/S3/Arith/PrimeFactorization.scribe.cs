@@ -37,9 +37,5 @@ internal sealed class PrimeFactorizationDocument : IScribeDocumentDefinition
                     + "minimal-counterexample argument. Original numerical-certificate disposition: "
                     + "the source theorem is a purely existential factorization statement and "
                     + "contains no numerical certificate.")))
-            )),
-[
-                    DocumentEdge.TruthAnchor.Create(
-                        LeanDeclarationRef.Create("D5/S3/Arith/PrimeFactorization.exists_prime_factorization")),
-                ]));
+            ))));
 }

@@ -34,13 +34,9 @@ internal sealed class PrimeAxisEncodingDocument : IScribeDocumentDefinition
                     "Finitely supported prime axes carrying canonical W rows are equivalent to positive naturals through their factorization exponents. Addition transported through this equivalence decodes exactly as multiplication.")))
             )),
 [
-                    DocumentEdge.TruthAnchor.Create(
-                        LeanDeclarationRef.Create("D5/S1/Digit/PrimeAxisEncoding.primeAxisEncoding")),
-                    DocumentEdge.TruthAnchor.Create(
-                        LeanDeclarationRef.Create("D5/S1/Digit/PrimeAxisEncoding.prime_axis_encoding_spec")),
-                    DocumentEdge.Dependency.Create(
-                        GidRef.Create("D5/S1/Digit/PrimeAxisTable")),
-                ]));
+                        DocumentEdge.Dependency.Create(
+                            GidRef.Create("D5/S1/Digit/PrimeAxisTable")),
+                    ]));
 
     private static LeanDeclarationRef LeanDefinition(string value) =>
         LeanDeclarationRef.Create(

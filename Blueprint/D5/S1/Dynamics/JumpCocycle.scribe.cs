@@ -40,9 +40,7 @@ internal sealed class JumpCocycleDocument : IScribeDocumentDefinition
                             + "residual and cannot be a legal motion.")))
                 )),
 [
-                        DocumentEdge.TruthAnchor.Create(
-                            LeanDeclarationRef.Create("D5/S1/Dynamics/JumpCocycle.jump_cocycle")),
-                        DocumentEdge.Dependency.Create(
-                            GidRef.Create("D5/S1/Phase/Basic")),
-                    ]));
+                            DocumentEdge.Dependency.Create(
+                                GidRef.Create("D5/S1/Phase/Basic")),
+                        ]));
 }

@@ -63,19 +63,9 @@ internal sealed class PartialQuotientExtractionDocument : IScribeDocumentDefinit
                         "For a nonintegral rational q, every normalized sample member lies above twelve divided by A(q), and an absolute-value-twelve witness attains it. The theorem instantiates the frozen generic twelve-scale lemma at the extracted value; it does not identify which rational belongs to a historical sample.")))
                 )),
 [
-                        DocumentEdge.TruthAnchor.Create(
-                            LeanDeclarationRef.Create("D5/S1/Depth/PartialQuotientExtraction.aMax")),
-                        DocumentEdge.TruthAnchor.Create(
-                            LeanDeclarationRef.Create("D5/S1/Depth/PartialQuotientExtraction.aMax_pos")),
-                        DocumentEdge.TruthAnchor.Create(
-                            LeanDeclarationRef.Create("D5/S1/Depth/PartialQuotientExtraction.partialQuotients")),
-                        DocumentEdge.TruthAnchor.Create(
-                            LeanDeclarationRef.Create("D5/S1/Depth/PartialQuotientExtraction.partialQuotients_nonempty")),
-                        DocumentEdge.TruthAnchor.Create(
-                            LeanDeclarationRef.Create("D5/S1/Depth/PartialQuotientExtraction.twelve_scale_is_extracted_normalized_sample_minimum")),
-                        DocumentEdge.Dependency.Create(
-                            GidRef.Create("D5/S1/Depth/TwelveScaleReduction")),
-                    ]));
+                            DocumentEdge.Dependency.Create(
+                                GidRef.Create("D5/S1/Depth/TwelveScaleReduction")),
+                        ]));
 
     private static LeanDeclarationRef LeanDefinition(string value) =>
         LeanDeclarationRef.Create(

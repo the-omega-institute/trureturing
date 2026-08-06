@@ -126,6 +126,4 @@ The source distinguishes three independent appearances of two. Complex conjugati
 
 ## References
 
-- Truth anchor: `D5/S3/Weil/ReflectionLedger.mirror_fixed_re_eq`
-- Truth anchor: `D5/S3/Weil/ReflectionLedger.mirror_reversal_spec`
 - Dependency: [D5/S3/Weil/LabeledZeta](LabeledZeta.md)

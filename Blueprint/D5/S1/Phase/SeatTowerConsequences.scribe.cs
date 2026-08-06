@@ -74,19 +74,5 @@ internal sealed class SeatTowerConsequencesDocument : IScribeDocumentDefinition
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "Specializing the combination count to three gives three choices. This does not identify actual orbits of the 1729 example or prove the required orbit-to-choice bijection.")))
-                )),
-[
-                        DocumentEdge.TruthAnchor.Create(
-                            LeanDeclarationRef.Create("D5/S1/Phase/SeatTowerConsequences.cosecant_peak_identity")),
-                        DocumentEdge.TruthAnchor.Create(
-                            LeanDeclarationRef.Create("D5/S1/Phase/SeatTowerConsequences.dominant_term_gap_bound")),
-                        DocumentEdge.TruthAnchor.Create(
-                            LeanDeclarationRef.Create("D5/S1/Phase/SeatTowerConsequences.jacobi_factorization_of_selector_numerator")),
-                        DocumentEdge.TruthAnchor.Create(
-                            LeanDeclarationRef.Create("D5/S1/Phase/SeatTowerConsequences.mod_ninety_six_refines_twenty_four_and_forty_eight")),
-                        DocumentEdge.TruthAnchor.Create(
-                            LeanDeclarationRef.Create("D5/S1/Phase/SeatTowerConsequences.singleton_stationing_choice_count")),
-                        DocumentEdge.TruthAnchor.Create(
-                            LeanDeclarationRef.Create("D5/S1/Phase/SeatTowerConsequences.three_split_primes_have_three_singleton_choices")),
-                    ]));
+                ))));
 }

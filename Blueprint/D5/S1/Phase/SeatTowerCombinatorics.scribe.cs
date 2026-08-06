@@ -74,19 +74,5 @@ internal sealed class SeatTowerCombinatoricsDocument : IScribeDocumentDefinition
                     DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "After fixing the distinguished coordinate, all remaining Boolean coordinates are free, giving exactly two to the free-count representatives. This finite model implies no measured density or asymptotic exponent.")))
-                )),
-[
-                        DocumentEdge.TruthAnchor.Create(
-                            LeanDeclarationRef.Create("D5/S1/Phase/SeatTowerCombinatorics.even_offset_skeleton_count")),
-                        DocumentEdge.TruthAnchor.Create(
-                            LeanDeclarationRef.Create("D5/S1/Phase/SeatTowerCombinatorics.full_exponent_stationing_count")),
-                        DocumentEdge.TruthAnchor.Create(
-                            LeanDeclarationRef.Create("D5/S1/Phase/SeatTowerCombinatorics.matching_rotation_offset_is_odd")),
-                        DocumentEdge.TruthAnchor.Create(
-                            LeanDeclarationRef.Create("D5/S1/Phase/SeatTowerCombinatorics.mirror_normalization_is_unique")),
-                        DocumentEdge.TruthAnchor.Create(
-                            LeanDeclarationRef.Create("D5/S1/Phase/SeatTowerCombinatorics.mirror_representative_count")),
-                        DocumentEdge.TruthAnchor.Create(
-                            LeanDeclarationRef.Create("D5/S1/Phase/SeatTowerCombinatorics.reversal_swaps_parity")),
-                    ]));
+                ))));
 }

@@ -65,11 +65,3 @@ $\forall \psi\in\mathbb{Z},\ 12\mid\psi \land \psi\neq 0 \Rightarrow 12\leq |\ps
 *Commentary.*
 
 Explicit divisibility by twelve and nonzeroness imply the absolute-value floor. No sampled congruence, asymptotic law, or measurable statement is closed.
-
-## References
-
-- Truth anchor: `D5/S1/Phase/SeatTowerArithmetic.bhk_implies_w3_walk`
-- Truth anchor: `D5/S1/Phase/SeatTowerArithmetic.mod_twenty_four_eq_zero_or_twelve`
-- Truth anchor: `D5/S1/Phase/SeatTowerArithmetic.pythagorean_gate_iff_eisenstein_norm`
-- Truth anchor: `D5/S1/Phase/SeatTowerArithmetic.twelve_le_abs_of_dvd_of_ne_zero`
-- Truth anchor: `D5/S1/Phase/SeatTowerArithmetic.twenty_four_dvd_iff_even_quotient`

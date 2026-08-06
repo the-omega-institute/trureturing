@@ -54,15 +54,9 @@ internal sealed class SpectralShiftDocument : IScribeDocumentDefinition
                     Text(" is contextual rather than a verbatim source for this multi-axis claim. The theorem provides a concrete spectral action compatible with the O-6 Hilbert-space route, but neither constructs the positivity form nor connects eigenvalues to zeta zeros.")))
             )),
 [
-                    DocumentEdge.TruthAnchor.Create(
-                        LeanDeclarationRef.Create("D5/S3/Zeros/SpectralShift.backwardShift")),
-                    DocumentEdge.TruthAnchor.Create(
-                        LeanDeclarationRef.Create("D5/S3/Zeros/SpectralShift.labeled_zeta_backward_shift_eigen")),
-                    DocumentEdge.TruthAnchor.Create(
-                        LeanDeclarationRef.Create("D5/S3/Zeros/SpectralShift.labeled_zeta_vector_backward_shift_eigen")),
-                    DocumentEdge.Dependency.Create(
-                        GidRef.Create("D5/S1/Digit/PrimeAxisAddition")),
-                    DocumentEdge.Dependency.Create(
-                        GidRef.Create("D5/S3/Weil/SpectralHilbert")),
-                ]));
+                        DocumentEdge.Dependency.Create(
+                            GidRef.Create("D5/S1/Digit/PrimeAxisAddition")),
+                        DocumentEdge.Dependency.Create(
+                            GidRef.Create("D5/S3/Weil/SpectralHilbert")),
+                    ]));
 }

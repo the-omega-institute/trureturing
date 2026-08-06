@@ -36,9 +36,5 @@ internal sealed class EuclidLemmaDocument : IScribeDocumentDefinition
                     + "may differ from the source's valuation-additivity derivation. Original "
                     + "numerical-certificate disposition: the source lemma is a purely logical "
                     + "divisibility implication and contains no numerical certificate.")))
-            )),
-[
-                    DocumentEdge.TruthAnchor.Create(
-                        LeanDeclarationRef.Create("D5/S3/Arith/EuclidLemma.euclid_prime_dvd_mul")),
-                ]));
+            ))));
 }

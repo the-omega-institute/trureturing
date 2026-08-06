@@ -33,9 +33,5 @@ internal sealed class ElementaryExactValuesDocument : IScribeDocumentDefinition
                             + "that clause follows by clearing the nonzero golden-ratio denominator "
                             + "and using the identity (sqrt(5))^2 = 5. Thus the theorem is an exact "
                             + "algebraic package and introduces no numerical approximation.")))
-                )),
-[
-                        DocumentEdge.TruthAnchor.Create(
-                            LeanDeclarationRef.Create("D5/S3/Constants/ElementaryExactValues.elementary_exact_values")),
-                    ]));
+                ))));
 }

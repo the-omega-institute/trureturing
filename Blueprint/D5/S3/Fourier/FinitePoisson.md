@@ -29,8 +29,3 @@ $$H=\{0,2\},\quad f(x)=\mathbf{1}_{x=0}
 *Commentary.*
 
 Kernel-reduced membership checks prove that 2 belongs to H while 1 does not. The branch witnesses then prove 2 belongs to the annihilator and 1 does not; character orthogonality evaluates to 2 at x = 2 and to 0 at x = 1. For the delta function at zero, both sides of Poisson summation reduce to the explicit value 1.
-
-## References
-
-- Truth anchor: `D5/S3/Fourier/FinitePoisson.finite_poisson_mod_four_even_delta`
-- Truth anchor: `D5/S3/Fourier/FinitePoisson.finite_poisson_summation`
