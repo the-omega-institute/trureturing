@@ -6,7 +6,10 @@ import D5.S0.Conventions.WDigits
 import D5.S0.Conventions.Notation
 import D5.S0.Diagonal.EscapeCount
 import D5.S0.Diagonal.CaptureCount
+<<<<<<< HEAD
 import D5.S0.Tower.ConstantArms
+=======
+>>>>>>> origin/dev
 import D5.S1.Digit.Raw
 import D5.S1.Digit.Carry
 import D5.S1.Scale.Embedding
