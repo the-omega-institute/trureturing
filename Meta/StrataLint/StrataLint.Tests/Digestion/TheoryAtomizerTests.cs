@@ -218,8 +218,7 @@ public sealed partial class TheoryAtomizerTests
     public void WmV1RegistryUsesOrdinalIdsAndTheWmResidualPrefix()
     {
         Assert.Equal(
-            [
-                AtomizerRegistry.GictId,
+            [AtomizerRegistry.ConeId, AtomizerRegistry.GictId,
                 AtomizerRegistry.ObserverId,
                 AtomizerRegistry.PeriodicTreeId,
                 AtomizerRegistry.PzgId,
@@ -798,3 +797,4 @@ public sealed partial class TheoryAtomizerTests
     }
 
 }
+internal static class SyntheticNumberedAtomizer { internal static string Id => AtomizerRegistry.GictId; }

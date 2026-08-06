@@ -10,7 +10,7 @@ public sealed partial class ProductionEnvironmentTests
     public void IngestWritesOneCommitReadyLedgerUpdateAndRecomputesDigestStatus()
     {
         var fixture = new RuleFixture();
-        var atomizerId = AtomizerRegistry.RegisteredIds[0];
+        var atomizerId = SyntheticNumberedAtomizer.Id;
         var oldBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。old。\n");
         var currentBytes = Encoding.UTF8.GetBytes(
             "# Synthetic\n\n**定理 1.1(A)**。rewritten。\n\n**定理 1.2(B)**。new。\n");
@@ -69,7 +69,7 @@ public sealed partial class ProductionEnvironmentTests
     public void IngestRejectsStructurallyInvalidLedgerWithoutWriting()
     {
         var fixture = new RuleFixture();
-        var atomizerId = AtomizerRegistry.RegisteredIds[0];
+        var atomizerId = SyntheticNumberedAtomizer.Id;
         var sourceBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。claim。\n");
         var atom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, sourceBytes, DigestionTestSupport.Rules).Claims);
         var ledger = IngestLedger(atomizerId, atom).Replace(
@@ -103,7 +103,7 @@ public sealed partial class ProductionEnvironmentTests
     public void IngestPerformsFirstExtractionForRegisteredEmptySource()
     {
         var fixture = new RuleFixture();
-        var atomizerId = AtomizerRegistry.RegisteredIds[0];
+        var atomizerId = SyntheticNumberedAtomizer.Id;
         var sourceText = "# Synthetic\n\n**定理 1.1(A)**。claim。\n";
         var ledger = $$"""
             schema_version: 3
@@ -144,7 +144,7 @@ public sealed partial class ProductionEnvironmentTests
     public void IngestWarnsWhenChangedTheorySourceProducesNoNewAtoms()
     {
         var fixture = new RuleFixture();
-        var atomizerId = AtomizerRegistry.RegisteredIds[0];
+        var atomizerId = SyntheticNumberedAtomizer.Id;
         var oldText = "# Synthetic\n\n**定理 1.1(A)**。claim。\n\n## Existing\n\nold prose。\n";
         var currentText = oldText + "\n## Added dialect\n\nnew unrecognized prose。\n";
         var oldBytes = Encoding.UTF8.GetBytes(oldText);
@@ -179,7 +179,7 @@ public sealed partial class ProductionEnvironmentTests
     public void IngestCommitsReportedCoarseFallbackAndCasBlobThroughProductionEnvironment()
     {
         var fixture = new RuleFixture();
-        var atomizerId = AtomizerRegistry.RegisteredIds[0];
+        var atomizerId = SyntheticNumberedAtomizer.Id;
         var oldBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。old。\n");
         var oldAtom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, oldBytes, DigestionTestSupport.Rules).Claims);
         var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
@@ -234,7 +234,7 @@ public sealed partial class ProductionEnvironmentTests
     public void IngestRollsBackNewCasObjectsWhenTheLedgerWriteFails()
     {
         var fixture = new RuleFixture();
-        var atomizerId = AtomizerRegistry.RegisteredIds[0];
+        var atomizerId = SyntheticNumberedAtomizer.Id;
         var oldBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。old。\n");
         var currentBytes = Encoding.UTF8.GetBytes(
             "# Synthetic\n\n**定理 1.1(A)**。rewritten。\n\n**定理 1.2(B)**。new。\n");
@@ -298,7 +298,7 @@ public sealed partial class ProductionEnvironmentTests
     public void IngestPreservesExactNoncanonicalStaleReceiptRepresentation()
     {
         var fixture = new RuleFixture();
-        var atomizerId = AtomizerRegistry.RegisteredIds[0];
+        var atomizerId = SyntheticNumberedAtomizer.Id;
         var oldBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。old。\n");
         var currentBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。rewritten。\n");
         var oldAtom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, oldBytes, DigestionTestSupport.Rules).Claims);
@@ -335,7 +335,7 @@ public sealed partial class ProductionEnvironmentTests
     public void IngestMigratesLegacyBoundaryLedgerInOneStepAndIsIdempotent()
     {
         var fixture = new RuleFixture();
-        var atomizerId = AtomizerRegistry.RegisteredIds[0];
+        var atomizerId = SyntheticNumberedAtomizer.Id;
         var oldBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。old。\n");
         var currentBytes = Encoding.UTF8.GetBytes(
             "# Synthetic\n\n**定理 1.1(A)**。rewritten。\n\n**定理 1.2(B)**。new。\n");
