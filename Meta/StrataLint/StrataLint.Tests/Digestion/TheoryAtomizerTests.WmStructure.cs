@@ -138,4 +138,112 @@ public sealed partial class TheoryAtomizerTests
         Assert.Equal(18, canonical.Claims.Length);
         Assert.Equal(20, evolved.Claims.Length);
     }
+
+    [Fact]
+    public void PeriodicTreeV1TreatsNumberedSectionsAsAtomicClaims()
+    {
+        var bytes = Encoding.UTF8.GetBytes(
+            "# Periodic Tree\n\nProject preface.\n\n"
+            + "## 0. Name and deed\n\nRoot protocol.\n\n"
+            + "## 1. Mount protocol\n\nFour labels.\n\n"
+            + "## 7. Construction log\n\nFirst registry.\n");
+
+        var document = AtomizerRegistry.Atomize(AtomizerRegistry.PeriodicTreeId, bytes, DigestionTestSupport.Rules);
+
+        Assert.Equal(
+            ["section/0", "section/1", "section/7"],
+            document.Claims.Select(static item => item.AstPath));
+        Assert.All(document.Claims, atom =>
+            Assert.Equal(["Periodic Tree"], atom.Context.Select(static item => item.Text)));
+        Assert.Equal(bytes, document.Reassemble().ToArray());
+    }
+
+    [Fact]
+    public void WmV1SplitsTheCanonicalDialectIntoExactUniqueByteAtoms()
+    {
+        var fixture = CanonicalWmFixtureSegments();
+        var bytes = Encoding.UTF8.GetBytes(string.Concat(fixture.Select(static item => item.Text)));
+
+        var document = AtomizerRegistry.Atomize(AtomizerRegistry.WmId, bytes, DigestionTestSupport.Rules);
+
+        Assert.Equal(fixture.Select(static item => item.AstPath), document.Claims.Select(static item => item.AstPath));
+        Assert.Equal(document.Claims.Length, document.Claims.Select(static item => item.AstPath).Distinct(StringComparer.Ordinal).Count());
+        Assert.Equal(fixture.Count, document.Claims.Length);
+        for (var index = 0; index < fixture.Count; index++)
+        {
+            Assert.Equal(Encoding.UTF8.GetBytes(fixture[index].Text), document.Claims[index].RawBytes.ToArray());
+        }
+
+        Assert.Equal(bytes, document.Reassemble().ToArray());
+    }
+
+    [Fact]
+    public void WmV1SplitIsIdempotentAndV02OnlyAddsNewVersionAndAuditAtoms()
+    {
+        var original = AtomizerRegistry.Atomize(
+            AtomizerRegistry.WmId,
+            Encoding.UTF8.GetBytes(CanonicalWmFixture()),
+            DigestionTestSupport.Rules);
+        AssertSplitIdempotent(AtomizerRegistry.WmId, original);
+
+        var evolved = AtomizerRegistry.Atomize(
+            AtomizerRegistry.WmId,
+            Encoding.UTF8.GetBytes(CanonicalWmV02Fixture()),
+            DigestionTestSupport.Rules);
+
+        Assert.Equal(
+            original.Claims.Select(static atom => atom.AstPath)
+                .Append("version/v0.2")
+                .Append("audit/v0.2")
+                .Order(StringComparer.Ordinal),
+            evolved.Claims.Select(static atom => atom.AstPath).Order(StringComparer.Ordinal));
+        foreach (var atom in original.Claims)
+        {
+            var unchanged = Assert.Single(evolved.Claims, candidate => candidate.AstPath == atom.AstPath);
+            Assert.Equal(atom.Fingerprints, unchanged.Fingerprints);
+            Assert.Equal(atom.RawBytes.ToArray(), unchanged.RawBytes.ToArray());
+        }
+
+        AssertSplitIdempotent(AtomizerRegistry.WmId, evolved);
+    }
+
+    [Theory]
+    [MemberData(nameof(InvalidWmSources))]
+    public void WmV1FailsClosedForStructuralDrift(string _, byte[] bytes)
+    {
+        var error = Record.Exception(() => AtomizerRegistry.Atomize(AtomizerRegistry.WmId, bytes, DigestionTestSupport.Rules));
+
+        Assert.True(error is FormatException or DecoderFallbackException, error?.ToString());
+    }
+
+    [Fact]
+    public void WmV1AssignsEverySourceByteToAPrimaryAtom()
+    {
+        var bytes = Encoding.UTF8.GetBytes(CanonicalWmFixture());
+
+        var document = AtomizerRegistry.Atomize(AtomizerRegistry.WmId, bytes, DigestionTestSupport.Rules);
+
+        Assert.All(document.Slices, static slice => Assert.True(slice.IsClaim));
+        Assert.Equal(bytes.Length, document.Slices.Sum(static slice => slice.RawBytes.Length));
+        Assert.Equal(bytes, document.Reassemble().ToArray());
+    }
+
+    [Fact]
+    public void WmV1SeparatesSection7AndItsAutopsyAppendixWithNestedContext()
+    {
+        var document = AtomizerRegistry.Atomize(
+            AtomizerRegistry.WmId,
+            Encoding.UTF8.GetBytes(CanonicalWmFixture()),
+            DigestionTestSupport.Rules);
+
+        var section = document.ResolveClaim("section/7");
+        var appendix = document.ResolveClaim("section/7-appendix");
+
+        Assert.DoesNotContain("§7-附", Encoding.UTF8.GetString(section.RawBytes.AsSpan()), StringComparison.Ordinal);
+        Assert.StartsWith("### §7-附", Encoding.UTF8.GetString(appendix.RawBytes.AsSpan()), StringComparison.Ordinal);
+        Assert.Equal(
+            [WmTitle[2..], "7. Section 7"],
+            appendix.Context.Select(static item => item.Text));
+        Assert.Equal([1, 2], appendix.Context.Select(static item => item.Level));
+    }
 }
