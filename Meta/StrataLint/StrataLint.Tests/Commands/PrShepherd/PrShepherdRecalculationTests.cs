@@ -54,6 +54,8 @@ public sealed partial class PrShepherdRecalculationTests
 
     private sealed class ShepherdFixture : IDisposable
     {
+        internal const string GhAppToken = "fixture-gh-app-token";
+
         private readonly TemporaryDirectory temporary = new();
         private readonly string origin;
         private readonly string repository;
@@ -363,6 +365,52 @@ public sealed partial class PrShepherdRecalculationTests
                 File.Exists(log) ? File.ReadAllText(log) : string.Empty);
         }
 
+        internal ShepherdResult RunOpen(bool ghAppAvailable)
+        {
+            if (ghAppAvailable)
+            {
+                WriteExecutable(
+                    "gh-app",
+                    """
+                    #!/usr/bin/env bash
+                    set -euo pipefail
+                    [[ "$*" == "token --auto" ]] || exit 96
+                    printf '%s\n' "$PR_TEST_GH_APP_TOKEN"
+                    """);
+            }
+
+            var script = Path.Combine(FindRepositoryRoot(), ShepherdScriptPath);
+            var home = Path.Combine(temporary.Path, "home");
+            Directory.CreateDirectory(home);
+            var result = BoundedProcessRunner.Run(
+                "/usr/bin/env",
+                [
+                    "-u",
+                    "GH_TOKEN",
+                    "-u",
+                    "GITHUB_TOKEN",
+                    $"PATH={bin}:/usr/bin:/bin",
+                    $"HOME={home}",
+                    "PR_SHEPHERD_REPO=the-omega-institute/trureturing",
+                    $"PR_SHEPHERD_LOG={log}",
+                    $"PR_TEST_CALLS={calls}",
+                    $"PR_TEST_GH_APP_TOKEN={GhAppToken}",
+                    "/bin/bash",
+                    script,
+                    "open",
+                    headBranch,
+                    "fixture title",
+                ],
+                repository,
+                TimeSpan.FromSeconds(30),
+                256 * 1024);
+            return new ShepherdResult(
+                result.ExitCode,
+                Encoding.UTF8.GetString(result.StandardOutput),
+                Encoding.UTF8.GetString(result.StandardError),
+                File.Exists(log) ? File.ReadAllText(log) : string.Empty);
+        }
+
         internal void AdvanceDev()
         {
             devAdvance++;
@@ -526,6 +574,15 @@ public sealed partial class PrShepherdRecalculationTests
                 fi
                 if [[ "${1:-}" == api ]]; then
                   printf 'gh-api:%s\n' "${*:2}" >> "$PR_TEST_CALLS"
+                  exit 0
+                fi
+                if [[ "${1:-}" == pr && "${2:-}" == create ]]; then
+                  printf 'gh:%s|GH_TOKEN=%s\n' "$*" "${GH_TOKEN-<unset>}" >> "$PR_TEST_CALLS"
+                  printf '%s\n' 'https://github.com/the-omega-institute/trureturing/pull/42'
+                  exit 0
+                fi
+                if [[ "${1:-}" == pr && "${2:-}" == merge ]]; then
+                  printf 'gh:%s|GH_TOKEN=%s\n' "$*" "${GH_TOKEN-<unset>}" >> "$PR_TEST_CALLS"
                   exit 0
                 fi
                 printf 'gh:%s\n' "$*" >> "$PR_TEST_CALLS"

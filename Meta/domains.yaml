@@ -65,6 +65,9 @@ domains:
   Solenoid:
     stratum: S1
     definition: The universal solenoid carrier, its visible projection, and hidden fiber structure.
+  Tower:
+    stratum: S0
+    definition: Radix name towers and their normalized approximation arms.
   Weil:
     stratum: S3
     definition: Classical zeta conventions, Weil test functions, and Fourier-Laplace analysis.

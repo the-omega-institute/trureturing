@@ -82,6 +82,8 @@ public sealed partial class MakeWorkflowTests
         "deliver-check",
         "receipts-stage",
         "derived-refresh",
+        "deposit",
+        "cover",
         "worktree",
         "pr-watch",
     ];

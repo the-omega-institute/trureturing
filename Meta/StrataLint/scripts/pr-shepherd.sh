@@ -39,8 +39,11 @@ WATCH_LOCK_CANDIDATE=""
 WATCH_RECLAIM_REPOSITORY=""
 WATCH_RECLAIM_REF=""
 WATCH_RECLAIM_OID=""
-
 GH() { LEAN4_GUARDRAILS_BYPASS=1 gh "$@"; }
+GH_AS_APP() {
+  local token=""
+  if command -v gh-app >/dev/null 2>&1 && token="$(gh-app token --auto 2>/dev/null)" && [[ -n "$token" ]]; then GH_TOKEN="$token" LEAN4_GUARDRAILS_BYPASS=1 gh "$@"; else GH "$@"; fi
+}
 log() { printf '%s %s\n' "$(date '+%F %T')" "$*" | tee -a "$LOG" >&2; }
 credentialless() {
   local isolated_home="$1"
@@ -363,7 +366,7 @@ open_pr() {
   local args=(--repo "$REPO" --base dev --head "$head" --title "$title")
   if [[ -n "$body_file" ]]; then args+=(--body-file "$body_file"); else args+=(--fill-first); fi
   local url num
-  url="$(GH pr create "${args[@]}")"
+  url="$(GH_AS_APP pr create "${args[@]}")"
   num="${url##*/}"
   GH pr merge "$num" --repo "$REPO" --auto --merge
   log "OPEN #$num head=$head auto-merge=armed $url"
@@ -407,7 +410,6 @@ armed_pr_count() {
   fi
   printf '%s\n' "$out"
 }
-
 watch_process_start() {
   LC_ALL=C ps -p "$1" -o lstart= 2>/dev/null \
     | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
@@ -525,7 +527,6 @@ acquire_watch_reclaim_claim() {
   log "WATCH lease unavailable: reclaim claim changed repeatedly"
   return 1
 }
-
 acquire_watch_lease() {
   local lock="$PIDFILE.lock" status replacement
   WATCH_PROCESS_START="$(watch_process_start "$$")" || WATCH_PROCESS_START=""
@@ -599,7 +600,6 @@ watch_lease_belongs_to_current_process() {
       && "$WATCH_OWNER_PROCESS_START" == "$WATCH_PROCESS_START" \
       && "$WATCH_OWNER_CANONICAL_SCRIPT" == "$SCRIPT_PATH" ]]
 }
-
 publish_watch_identity() {
   local interval="$1" max="$2" cycle="$3" actual_blob temporary
   actual_blob="$(git hash-object "$LOADED_SCRIPT_PATH" 2>/dev/null)" || actual_blob=""
