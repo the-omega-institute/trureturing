@@ -172,6 +172,19 @@ public sealed class TheoryAtomizerDataTests
     }
 
     [Fact]
+    public void LoaderTreatsAMissingConeSectionAsEmptyRules()
+    {
+        var withoutCone = Minimal.Replace(
+            "\n[[cone.claim_prefixes]]\nprefix = \"定理\"\nlocator = \"theorem/{number}|theorem-form/{number}\"\n",
+            "",
+            StringComparison.Ordinal);
+
+        var rules = Load(withoutCone);
+
+        Assert.Empty(rules.ConeClaimPrefixes);
+    }
+
+    [Fact]
     public void TryLoadStillFailsClosedWhenThePresentDataFileIsMalformed()
     {
         // Only ABSENCE is tolerated. A file that exists must parse, otherwise corrupting it would

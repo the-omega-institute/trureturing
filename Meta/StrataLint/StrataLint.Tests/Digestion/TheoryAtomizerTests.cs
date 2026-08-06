@@ -601,10 +601,14 @@ public sealed partial class TheoryAtomizerTests
 
     private static void AssertSplitIdempotent(
         string atomizerId,
-        AtomizedTheoryDocument first)
+        AtomizedTheoryDocument first,
+        TheoryAtomizerRules? rules = null)
     {
         var reassembled = first.Reassemble();
-        var second = AtomizerRegistry.Atomize(atomizerId, reassembled.AsSpan(), DigestionTestSupport.Rules);
+        var second = AtomizerRegistry.Atomize(
+            atomizerId,
+            reassembled.AsSpan(),
+            rules ?? DigestionTestSupport.Rules);
 
         Assert.Equal(
             first.Claims.Select(static atom =>

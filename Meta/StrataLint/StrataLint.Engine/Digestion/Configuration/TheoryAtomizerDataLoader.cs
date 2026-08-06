@@ -172,7 +172,8 @@ internal static class TheoryAtomizerDataLoader
             }
         }
 
-        if (!sawSchema || entries.Any(static pair => pair.Value.Count == 0))
+        if (!sawSchema || entries.Any(static pair =>
+                pair.Key != "cone.claim_prefixes" && pair.Value.Count == 0))
         {
             throw new FormatException("Atomizer data is missing schema_version or a required section.");
         }

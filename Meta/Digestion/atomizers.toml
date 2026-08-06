@@ -546,40 +546,6 @@ locator = "pen-down/self-reviewing-paper"
 prefix = "**§47.2 搁笔**"
 locator = "pen-down/closure"
 
-[[cone.claim_prefixes]]
-prefix = "定理"
-locator = "theorem/{number}|theorem-form/{number}"
-[[cone.claim_prefixes]]
-prefix = "引理"
-locator = "lemma/{number}|theorem-form/{number}"
-[[cone.claim_prefixes]]
-prefix = "系"
-locator = "corollary/{number}|theorem-form/{number}"
-[[cone.claim_prefixes]]
-prefix = "定义"
-locator = "definition/{number}"
-[[cone.claim_prefixes]]
-prefix = "注"
-locator = "note/{number}"
-[[cone.claim_prefixes]]
-prefix = "约定"
-locator = "specification/{number}"
-[[cone.claim_prefixes]]
-prefix = "命题|数值定理"
-locator = "theorem-form/{number}"
-[[cone.claim_prefixes]]
-prefix = "结构|发现"
-locator = "observation/{number}"
-[[cone.claim_prefixes]]
-prefix = "目"
-locator = "frontier-note/{number}"
-[[cone.claim_prefixes]]
-prefix = "版图"
-locator = "extension-table/{number}"
-[[cone.claim_prefixes]]
-prefix = "定律"
-locator = "principle/{number}"
-
 [[gict.genres]]
 token = "勘察"
 kind = "survey"
