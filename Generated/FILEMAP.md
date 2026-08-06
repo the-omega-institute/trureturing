@@ -22,14 +22,6 @@ none --declares--> [*.toml | program]
 [*.toml | program] --consumed-by--> Lean
 [*.toml | program] --verified-by--> make-gate
 
-none --declares--> [.claude/** | program]
-[.claude/** | program] --consumed-by--> agent
-[.claude/** | program] --verified-by--> repository-policy
-
-none --declares--> [.fkst/** | program]
-[.fkst/** | program] --consumed-by--> fkst
-[.fkst/** | program] --verified-by--> repository-policy
-
 none --declares--> [.github/** | program]
 [.github/** | program] --consumed-by--> GitHub-Actions
 [.github/** | program] --verified-by--> make-gate
@@ -238,16 +230,8 @@ none --declares--> [docs/develop/theory/** | data]
 [docs/develop/theory/** | data] --consumed-by--> TheoryIngestion
 [docs/develop/theory/** | data] --verified-by--> SnapshotDecoder
 
-none --declares--> [docs/devloop/** | program]
-[docs/devloop/** | program] --consumed-by--> agent
-[docs/devloop/** | program] --verified-by--> repository-policy
-
 none --declares--> [lean-toolchain | program]
 [lean-toolchain | program] --consumed-by--> Lean
 [lean-toolchain | program] --verified-by--> make-gate
-
-none --declares--> [packages/** | program]
-[packages/** | program] --consumed-by--> fkst
-[packages/** | program] --verified-by--> repository-policy
 
 ```

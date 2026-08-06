@@ -5,7 +5,6 @@ set -euo pipefail
 
 ROOT=""
 PREFLIGHT_STARTED=0
-PREFLIGHT_FAULT_CLASS="CONFIGURATION"
 PERF_TMP=""
 PERF_EVENT_SPOOL=""
 PERF_BASE="unknown"
@@ -15,7 +14,6 @@ STRATALINT_PERF_RUN_ID=""
 
 finish_preflight() {
   local rc="$1"
-  local declaration="UNKNOWN:UNKNOWN"
   local status="failed"
   local finished_at="$PREFLIGHT_STARTED"
   trap - EXIT
@@ -24,20 +22,7 @@ finish_preflight() {
   set +u
 
   if [[ "$rc" -eq 0 ]]; then
-    declaration="PASS:NONE"
     status="passed"
-  else
-    case "$rc" in
-      124|130|143) declaration="FAIL:INFRASTRUCTURE" ;;
-      126|127) declaration="FAIL:TOOLCHAIN" ;;
-      *)
-        case "$PREFLIGHT_FAULT_CLASS" in
-          SEMANTIC|CONFIGURATION|TOOLCHAIN|INFRASTRUCTURE)
-            declaration="FAIL:$PREFLIGHT_FAULT_CLASS"
-            ;;
-        esac
-        ;;
-    esac
   fi
 
   finished_at="$(date +%s 2>/dev/null || printf '%s' "$PREFLIGHT_STARTED")"
@@ -48,21 +33,18 @@ finish_preflight() {
     perf_flush_events "$ROOT" "$PERF_EVENT_SPOOL" >/dev/null 2>&1 || true
   fi
   if [[ -n "$PERF_TMP" ]]; then rm -rf -- "$PERF_TMP"; fi
-  printf 'FKST_LOCAL_ITERATION_RESULT:v2:%s\n' "$declaration"
   exit "$rc"
 }
 trap 'finish_preflight "$?"' EXIT
 trap 'exit 130' INT
 trap 'exit 143' TERM
 
-PREFLIGHT_FAULT_CLASS="TOOLCHAIN"
 for tool in git make dotnet lake; do
   command -v "$tool" >/dev/null 2>&1 || exit 127
 done
 dotnet --version >/dev/null
 lake --version >/dev/null
 
-PREFLIGHT_FAULT_CLASS="CONFIGURATION"
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
 
@@ -101,28 +83,19 @@ record_timing() {
 }
 T=$(date +%s)
 
-PREFLIGHT_FAULT_CLASS="UNKNOWN"
 dotnet restore Meta/StrataLint/CompileFailProof/CompileFailProof.csproj --locked-mode >/dev/null
 dotnet restore Meta/StrataLint/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj --locked-mode >/dev/null
 record_timing restore-proofs
 
-PREFLIGHT_FAULT_CLASS="UNKNOWN"
 CI=true make dotnet
 record_timing dotnet
 
-PREFLIGHT_FAULT_CLASS="UNKNOWN"
 make lean-report
 record_timing lean-report
 
-PREFLIGHT_FAULT_CLASS="SEMANTIC"
 CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make test
 record_timing test
 
-PREFLIGHT_FAULT_CLASS="SEMANTIC"
-make lua-test
-record_timing lua-test
-
-PREFLIGHT_FAULT_CLASS="SEMANTIC"
 make selftest
 record_timing selftest
 
@@ -145,7 +118,6 @@ expect_compile_failure() {
   return 0
 }
 
-PREFLIGHT_FAULT_CLASS="SEMANTIC"
 expect_compile_failure \
   Meta/StrataLint/CompileFailProof/CompileFailProof.csproj \
   CompileFailProof \
@@ -156,7 +128,6 @@ expect_compile_failure \
   "禁 API 证明失效"
 record_timing compile-fail-proofs
 
-PREFLIGHT_FAULT_CLASS="SEMANTIC"
 set +e
 make gate BASE="$BASE_SHA" GATE_ARGS=--skip-engineering
 gate_rc=$?

@@ -31,31 +31,6 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains(CleanLanesScriptPath, Recipe(makefile, "clean-lanes"), StringComparison.Ordinal);
         Assert.Contains(DotnetBuildScriptPath, Recipe(makefile, "dotnet"), StringComparison.Ordinal);
         Assert.Contains("dotnet test", Recipe(makefile, "test"), StringComparison.Ordinal);
-        Assert.Contains(FkstRunScriptPath + " test", Recipe(makefile, "lua-test"), StringComparison.Ordinal);
-        Assert.Contains(
-            HourlyMaintenanceScriptPath,
-            Recipe(makefile, "hourly-maintenance"),
-            StringComparison.Ordinal);
-        Assert.Contains(
-            LauncherRendererScriptPath,
-            Recipe(makefile, "maintenance-launcher-render"),
-            StringComparison.Ordinal);
-        Assert.Contains(
-            LauncherConformanceScriptPath,
-            Recipe(makefile, "maintenance-launcher-check"),
-            StringComparison.Ordinal);
-        Assert.Contains(
-            SuperviseLauncherRendererScriptPath,
-            Recipe(makefile, "supervise-launcher-render"),
-            StringComparison.Ordinal);
-        Assert.Contains(
-            SuperviseLauncherConformanceScriptPath,
-            Recipe(makefile, "supervise-launcher-check"),
-            StringComparison.Ordinal);
-        Assert.Contains(
-            LaunchdConformanceScriptPath,
-            Recipe(makefile, "launchd-conformance-check"),
-            StringComparison.Ordinal);
         Assert.Equal(
             $"\t@/bin/bash {LeanCacheEnsureScriptPath}",
             Recipe(makefile, "lean-cache-ensure"));
@@ -99,47 +74,5 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("dry-run", output, StringComparison.Ordinal);
         Assert.Contains("FORCE=1", output, StringComparison.Ordinal);
         Assert.Contains("values", output, StringComparison.OrdinalIgnoreCase);
-        var prWatchHelp = Assert.Single(
-            output.Split('\n'),
-            static line => line.StartsWith("make pr-watch ", StringComparison.Ordinal));
-        var policyClauses = prWatchHelp.Split(
-            ';',
-            StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
-        var stalePolicyClause = Assert.Single(
-            policyClauses,
-            static clause => Regex.IsMatch(
-                clause,
-                @"\bstale\b",
-                RegexOptions.CultureInvariant));
-        Assert.All(
-            new[]
-            {
-                @"\bstale\b",
-                @"\bBEHIND\b",
-                @"\bCONFLICTING\b",
-                @"\bpersistent-worktree\b",
-                @"\bpath classification\b",
-                @"\b(?:regen|recompute)\b",
-                @"\b(?:alert|warn)\b",
-            },
-            pattern => Assert.Matches(
-                new Regex(pattern, RegexOptions.CultureInvariant),
-                stalePolicyClause));
-        var updateBranchClause = Assert.Single(
-            policyClauses,
-            static clause => Regex.IsMatch(
-                clause,
-                @"\bother\s+BEHIND\b",
-                RegexOptions.CultureInvariant));
-        Assert.All(
-            new[] { @"\bother\s+BEHIND\b", @"\bupdate-branch\b" },
-            pattern => Assert.Matches(
-                new Regex(pattern, RegexOptions.CultureInvariant),
-                updateBranchClause));
-        Assert.DoesNotMatch(
-            new Regex(
-                @"\b(?:do\s+not|never|excludes|disables|prevents)\b",
-                RegexOptions.CultureInvariant | RegexOptions.IgnoreCase),
-            prWatchHelp);
     }
 }
