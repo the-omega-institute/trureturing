@@ -16,6 +16,7 @@ internal sealed class TheoryAtomizerRules
 
     internal TheoryAtomizerRules(
         ImmutableArray<AtomizerMapping> observerClaimPrefixes,
+        ImmutableArray<AtomizerMapping> coneClaimPrefixes,
         ImmutableArray<AtomizerMapping> gictGenres,
         ImmutableArray<AtomizerMapping> gictClaimPrefixes,
         ImmutableArray<AtomizerMapping> gictConstants,
@@ -25,6 +26,7 @@ internal sealed class TheoryAtomizerRules
         ImmutableDictionary<string, string> wmHeadings)
     {
         ObserverClaimPrefixes = observerClaimPrefixes;
+        ConeClaimPrefixes = coneClaimPrefixes;
         GictGenres = gictGenres;
         GictClaimPrefixes = gictClaimPrefixes;
         GictConstants = gictConstants;
@@ -35,6 +37,7 @@ internal sealed class TheoryAtomizerRules
     }
 
     internal ImmutableArray<AtomizerMapping> ObserverClaimPrefixes { get; }
+    internal ImmutableArray<AtomizerMapping> ConeClaimPrefixes { get; }
     internal ImmutableArray<AtomizerMapping> GictGenres { get; }
     internal ImmutableArray<AtomizerMapping> GictClaimPrefixes { get; }
     internal ImmutableArray<AtomizerMapping> GictConstants { get; }
@@ -52,10 +55,14 @@ internal static class TheoryAtomizerDataLoader
     private static readonly Regex LocatorPattern = new(
         "^[A-Za-z0-9][A-Za-z0-9.-]*(?:/[A-Za-z0-9][A-Za-z0-9.-]*)+$",
         RegexOptions.CultureInvariant);
+    private static readonly Regex ConeLocatorTemplatePattern = new(
+        "^(?<kind>[a-z-]+)/\\{number\\}(?:\\|(?<fallback>[a-z-]+)/\\{number\\})?$",
+        RegexOptions.CultureInvariant);
     private static readonly string[] SectionOrder =
     [
-        "observer.claim_prefixes", "gict.genres", "gict.claim_prefixes", "gict.constants",
-        "pzg.genres", "pzg.markers", "pzg.heading_prefixes", "wm.headings",
+        "observer.claim_prefixes", "cone.claim_prefixes", "gict.genres",
+        "gict.claim_prefixes", "gict.constants", "pzg.genres", "pzg.markers",
+        "pzg.heading_prefixes", "wm.headings",
     ];
 
     internal static TheoryAtomizerRules Load(RepositorySnapshot snapshot)
@@ -165,7 +172,8 @@ internal static class TheoryAtomizerDataLoader
             }
         }
 
-        if (!sawSchema || entries.Any(static pair => pair.Value.Count == 0))
+        if (!sawSchema || entries.Any(static pair =>
+                pair.Key != "cone.claim_prefixes" && pair.Value.Count == 0))
         {
             throw new FormatException("Atomizer data is missing schema_version or a required section.");
         }
@@ -178,6 +186,12 @@ internal static class TheoryAtomizerDataLoader
             ordered: true,
             allowAlias: true);
         RejectOverlappingObserverPrefixes(observer);
+        var coneClaims = ParseMappings(
+            entries["cone.claim_prefixes"],
+            "prefix",
+            "locator",
+            ordered: true);
+        ValidateConeClaims(coneClaims);
         var gictGenres = ParseMappings(entries["gict.genres"], "token", "kind", kind: true);
         var gictClaims = ParseMappings(entries["gict.claim_prefixes"], "prefix", "locator", locator: true);
         var gictConstants = ParseMappings(entries["gict.constants"], "name", "locator", locator: true);
@@ -186,7 +200,41 @@ internal static class TheoryAtomizerDataLoader
         var pzgHeadings = ParseMappings(entries["pzg.heading_prefixes"], "prefix", "locator", locator: true);
         var wm = ParseWm(entries["wm.headings"]);
         return new TheoryAtomizerRules(
-            observer, gictGenres, gictClaims, gictConstants, pzgGenres, pzgMarkers, pzgHeadings, wm);
+            observer, coneClaims, gictGenres, gictClaims, gictConstants,
+            pzgGenres, pzgMarkers, pzgHeadings, wm);
+    }
+
+    private static void ValidateConeClaims(ImmutableArray<AtomizerMapping> claims)
+    {
+        var genres = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var claim in claims)
+        {
+            var templates = ConeLocatorTemplatePattern.Match(claim.Value);
+            var kinds = templates.Success
+                ? new[]
+                {
+                    templates.Groups["kind"].Value,
+                    templates.Groups["fallback"].Value,
+                }.Where(static kind => kind.Length > 0)
+                : [];
+            var formalKind = templates.Success
+                && templates.Groups["kind"].Value
+                    is "theorem" or "proposition" or "lemma" or "corollary";
+            var formalFallback = templates.Success
+                && templates.Groups["fallback"].Value
+                    is "theorem" or "proposition" or "lemma" or "corollary";
+            if (!templates.Success
+                || kinds.Any(static kind => !TheoryAtomizerRules.AllowedKinds.Contains(kind))
+                || templates.Groups["fallback"].Success != formalKind
+                || formalFallback
+                || claim.Token.Split('|').Any(genre =>
+                    genre.Length == 0
+                    || genre.Any(static character => !char.IsLetter(character))
+                    || !genres.Add(genre)))
+            {
+                throw new FormatException("Cone claim prefix or locator template is invalid or duplicated.");
+            }
+        }
     }
 
     private static ImmutableArray<AtomizerMapping> ParseMappings(

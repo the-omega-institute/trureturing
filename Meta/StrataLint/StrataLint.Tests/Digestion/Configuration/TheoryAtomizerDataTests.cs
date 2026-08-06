@@ -17,6 +17,10 @@ public sealed class TheoryAtomizerDataTests
         prefix = "**Known**"
         locator = "theorem/known"
 
+        [[cone.claim_prefixes]]
+        prefix = "定理"
+        locator = "theorem/{number}|theorem-form/{number}"
+
         [[first.genres]]
         token = "定理"
         kind = "theorem"
@@ -76,6 +80,7 @@ public sealed class TheoryAtomizerDataTests
         { Minimal.Replace("prefix = \"**Known**\"", "prefix = \"**Known**\"\nprefix = \"again\"", StringComparison.Ordinal), "duplicate key" },
         { Minimal.Replace("[[" + FirstScheme + ".genres]]\ntoken = \"定理\"\nkind = \"theorem\"", "[[" + FirstScheme + ".genres]]\ntoken = \"定理\"\nkind = \"theorem\"\n\n[[" + FirstScheme + ".genres]]\ntoken = \"定理\"\nkind = \"theorem\"", StringComparison.Ordinal), "duplicate open key" },
         { Minimal.Replace("[[observer.claim_prefixes]]\nprefix = \"**Known**\"\nlocator = \"theorem/known\"", "[[observer.claim_prefixes]]\nprefix = \"**A**\"\nlocator = \"theorem/known\"\n\n[[observer.claim_prefixes]]\nprefix = \"**B**\"\nlocator = \"theorem/known\"", StringComparison.Ordinal), "duplicate locator without alias" },
+        { Minimal.Replace("prefix = \"定理\"\nlocator = \"theorem/{number}|theorem-form/{number}\"", "prefix = \"定理|定理\"\nlocator = \"theorem/{number}|theorem-form/{number}\"", StringComparison.Ordinal), "duplicate cone prefix" },
         { Minimal.Replace("token = \"定理\"\nkind = \"theorem\"", "token = \"短\"\nkind = \"theorem\"\n\n[[" + SecondScheme + ".genres]]\ntoken = \"更长\"\nkind = \"definition\"", StringComparison.Ordinal), "non-canonical order" },
     };
 
@@ -164,6 +169,19 @@ public sealed class TheoryAtomizerDataTests
 
         Assert.False(TheoryAtomizerDataLoader.TryLoad(snapshot, out _));
         Assert.Throws<FormatException>(() => TheoryAtomizerDataLoader.Load(snapshot));
+    }
+
+    [Fact]
+    public void LoaderTreatsAMissingConeSectionAsEmptyRules()
+    {
+        var withoutCone = Minimal.Replace(
+            "\n[[cone.claim_prefixes]]\nprefix = \"定理\"\nlocator = \"theorem/{number}|theorem-form/{number}\"\n",
+            "",
+            StringComparison.Ordinal);
+
+        var rules = Load(withoutCone);
+
+        Assert.Empty(rules.ConeClaimPrefixes);
     }
 
     [Fact]

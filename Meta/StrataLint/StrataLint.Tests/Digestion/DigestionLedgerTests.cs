@@ -118,7 +118,7 @@ public sealed partial class DigestionLedgerTests
     [Fact]
     public void IngestOnboardsRegisteredEmptySourceAndRemainsByteIdempotent()
     {
-        var atomizerId = AtomizerRegistry.RegisteredIds[0];
+        var atomizerId = SyntheticNumberedAtomizer.Id;
         var sourceBytes = Encoding.UTF8.GetBytes(
             "# Synthetic\n\n**定理 1.1(A)**。first。\n\n**定理 1.2(B)**。second。\n");
         var atoms = AtomizerRegistry.Atomize(atomizerId, sourceBytes, DigestionTestSupport.Rules).Claims;
@@ -164,7 +164,7 @@ public sealed partial class DigestionLedgerTests
     [Fact]
     public void IngestOnboardsRegisteredEmptySourceWithCoarseFallback()
     {
-        var atomizerId = AtomizerRegistry.RegisteredIds[0];
+        var atomizerId = SyntheticNumberedAtomizer.Id;
         var sourceBytes = Encoding.UTF8.GetBytes(
             "# Synthetic\n\n**未知 1.1(A)**。free-form source。\n");
         var ledger = BackfillInventoryLoader.Load(EmptyLedger(atomizerId));

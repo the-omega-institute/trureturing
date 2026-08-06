@@ -16,7 +16,7 @@ public sealed partial class ProductionEnvironmentTests
         fixture.AddBackfillTargets();
         var canonicalLedger = fixture.Files[BackfillInventoryLoader.RelativePath];
         var ticketIndex = canonicalLedger[canonicalLedger.IndexOf("ticket_index:", StringComparison.Ordinal)..];
-        var atomizerId = AtomizerRegistry.RegisteredIds[0];
+        var atomizerId = SyntheticNumberedAtomizer.Id;
         var sourceBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。covered。\n");
         var atom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, sourceBytes, DigestionTestSupport.Rules).Claims);
         var captured = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
