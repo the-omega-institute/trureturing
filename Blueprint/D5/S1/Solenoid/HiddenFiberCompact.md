@@ -15,3 +15,7 @@ $$\mathrm{IsClosed}\left(\mathrm{setOf}\left(\forall x0 \in \mathrm{Type},\; \ma
 *Commentary.*
 
 Continuity of the visible projection makes its zero fiber closed. The ambient solenoid is compact, so the fiber is compact. Its countable product topology is first countable, hence compactness gives a convergent subsequence; the formal coordinatewise convergence equivalence identifies this with the diagonal, layer-by-layer limit.
+
+## References
+
+- Truth anchor: `D5/S1/Solenoid/HiddenFiberCompact.hiddenFiber_closed_compact_seqCompact`

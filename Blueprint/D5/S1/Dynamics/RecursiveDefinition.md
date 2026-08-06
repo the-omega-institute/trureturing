@@ -39,3 +39,7 @@ $$\left(\exists!x,\ f(x)=x\right)\Rightarrow \operatorname{lfp}(f)=\operatorname
 *Commentary.*
 
 For a monotone endomorphism of a complete lattice, the existence of exactly one value satisfying f(x) = x implies that the least and greatest fixed points coincide.
+
+## References
+
+- Dependency: [D5/S1/Dynamics/KnasterTarski](KnasterTarski.md)

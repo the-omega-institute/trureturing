@@ -15,3 +15,7 @@ $$\text{Let } \theta(t)=\theta_{\mathrm{even}}(0,t),\ \omega=\frac{\theta-1}{2},
 *Commentary.*
 
 With the theta kernel supplied by mathlib's even Hurwitz kernel at parameter zero, its halved tail omega, and the literal Mellin-type integral M over the ray beyond one, the theorem conjoins seven clauses: the Euler-factor identification of the completed reading on the convergence half-plane; the reconstruction identity expressing the completed reading as M minus the two simple pole terms at zero and one; entirety of M; the reflection symmetry of M under s to one minus s; differentiability of the completed reading away from the two exceptional points; the explicit residue ledger sending s times the completed reading to minus one at zero and s minus one times it to one at one; and the xi reflection equation. The integral M is stated as a genuine measure-theoretic integral rather than an alias of the pole-removed completion; the proof identifies it with that completion by splitting the modified weak-functional-equation profile at one and algebraizing the inversion substitution through the unconditional pointwise Mellin composition identities. The theorem introduces no public concept beyond its selector and supplies the reconstruction bridge between the theta tail and the pole ledger that the zero-symmetry route below O-6 consumes.
+
+## References
+
+- Dependency: [D5/S3/Zeros/CompletedZeta](../Zeros/CompletedZeta.md)

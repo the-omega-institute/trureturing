@@ -15,3 +15,8 @@ $$\pi\circ s_{\alpha}=\pi\circ s_{\beta},\quad \pi\circ s_{\beta}=\pi\circ s_{\g
 *Commentary.*
 
 Each difference is constructed pointwise by subtraction. The additive projection sends it to zero, group cancellation gives uniqueness, and the cocycle identity follows by telescoping the two successive differences.
+
+## References
+
+- Dependency: [D5/S1/Dynamics/UniversalSolenoid](../Dynamics/UniversalSolenoid.md)
+- Dependency: [D5/S1/Solenoid/HiddenFiberCompact](HiddenFiberCompact.md)

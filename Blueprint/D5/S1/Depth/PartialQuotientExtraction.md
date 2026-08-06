@@ -65,3 +65,7 @@ $$\forall q\in\mathbb{Q}\setminus\mathbb{Z},\ \forall S\subset_{\mathrm{fin}}\ma
 *Commentary.*
 
 For a nonintegral rational q, every normalized sample member lies above twelve divided by A(q), and an absolute-value-twelve witness attains it. The theorem instantiates the frozen generic twelve-scale lemma at the extracted value; it does not identify which rational belongs to a historical sample.
+
+## References
+
+- Dependency: [D5/S1/Depth/TwelveScaleReduction](TwelveScaleReduction.md)

@@ -27,3 +27,9 @@ $$\forall z,w \in \operatorname{PrimeAxisTable},\ \operatorname{Bijective}(\oper
 *Commentary.*
 
 Finitely supported prime axes carrying canonical W rows are equivalent to positive naturals through their factorization exponents. Addition transported through this equivalence decodes exactly as multiplication.
+
+## References
+
+- Truth anchor: `D5/S1/Digit/PrimeAxisEncoding.primeAxisEncoding`
+- Truth anchor: `D5/S1/Digit/PrimeAxisEncoding.prime_axis_encoding_spec`
+- Dependency: [D5/S1/Digit/PrimeAxisTable](PrimeAxisTable.md)
