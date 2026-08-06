@@ -3117,16 +3117,21 @@ sources:
           raw_sha256: sha256:4f569da66804d560bc53e6c1ac7d74ce201d944db708780a8f72b39b930112b8
           normalized_sha256: sha256:4f569da66804d560bc53e6c1ac7d74ce201d944db708780a8f72b39b930112b8
         cas_ref: sha256:4f569da66804d560bc53e6c1ac7d74ce201d944db708780a8f72b39b930112b8
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Arith/GoldenSplitSufficient.five_is_square_mod_prime_iff_mod_five_eq_one_or_four
+          - D5/S3/Arith/GoldenSplitSufficient.golden_not_prime_iff_mod_five_eq_one_or_four
+          - D5/S3/Arith/GoldenSplitSufficient.golden_prime_iff_mod_five_eq_two_or_three
+          - D5/S3/Arith/GoldenPrimeSplitting.golden_five_eq_ramified_square
         receipts:
           coverage: []
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - quadratic-residue-equivalence-as-written-for-p-equals-two-is-false-and-requires-an-odd-prime-hypothesis
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: gict-residual-3c40371e7e00b8445c9cea8b06d27b98d5c11bca0bca94b88c0416b3be07c5d1
         ast_path: theorem/2.2
         fingerprints:
@@ -4653,16 +4658,21 @@ sources:
           raw_sha256: sha256:1a97f6a7c25c71dca7998827b2e39cdac856ea83936e81a645ba01e088c6a4b4
           normalized_sha256: sha256:1a97f6a7c25c71dca7998827b2e39cdac856ea83936e81a645ba01e088c6a4b4
         cas_ref: sha256:1a97f6a7c25c71dca7998827b2e39cdac856ea83936e81a645ba01e088c6a4b4
-        coverage_gids: []
+        coverage_gids:
+          - D5/S1/Scale/Fibonacci.fibonacci_golden_partition
         receipts:
           coverage: []
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - unique-trace-pricing-double-tower-minimal-projection
+            - golden-branch-born-type-pricing-unconditionally-unique
+            - comparison-claim-stronger-than-cyclic-branch-gleason-conditions
+            - golden-window-price-table-has-no-free-parameters
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: gict-residual-38385fc5816545af6320d06071c31160bf5c4e0047d63fab11ba97000cf8d637
         ast_path: theorem/6.44
         fingerprints:

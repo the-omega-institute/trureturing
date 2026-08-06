@@ -1,6 +1,6 @@
 /- GID: D5/S3/Arith/GoldenPrimeSplitting
    generality: I
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/Arith/GoldenPrimeSplitting
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Inert rational primes in the golden integers. -/
