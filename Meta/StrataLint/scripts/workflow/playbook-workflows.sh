@@ -10,6 +10,12 @@ COMMAND="${1:-}"
 BASE="${2:-origin/dev}"
 ATOM_ID="${3:-}"
 GID="${4:-}"
+PREPARED_RECEIPT_PATH=""
+
+cleanup_prepared_receipt() {
+  [[ -z "$PREPARED_RECEIPT_PATH" ]] || rm -f -- "$PREPARED_RECEIPT_PATH"
+}
+trap cleanup_prepared_receipt EXIT
 
 run_cli() {
   dotnet run --project "$PROJECT" --configuration Release -- "$@"
@@ -98,6 +104,7 @@ commit_all_if_needed() {
 }
 
 freeze_exists() {
+  local active_state current_blob current_identity
   if ! command -v jq >/dev/null 2>&1; then
     echo "PLAYBOOK_INVALID jq is required to inspect $FROZEN_LEDGER" >&2
     return 2
@@ -111,16 +118,83 @@ freeze_exists() {
     return 2
   fi
 
-  if jq -e --arg node "$MODULE_PATH" \
-      'select(.event_type == "Freeze" and .payload.node_path == $node)' \
-      "$FROZEN_LEDGER" >/dev/null; then
-    return 0
-  else
-    local status=$?
-    [[ "$status" -eq 4 ]] && return 1
-    echo "PLAYBOOK_INVALID failed to inspect frozen ledger: $FROZEN_LEDGER" >&2
+  if ! current_blob="$(git hash-object -- "$MODULE_PATH")"; then
+    echo "PLAYBOOK_INVALID failed to identify current module: $MODULE_PATH" >&2
     return 2
   fi
+  case "${#current_blob}" in
+    40) current_identity="git-sha1:$current_blob" ;;
+    64) current_identity="git-sha256:$current_blob" ;;
+    *)
+      echo "PLAYBOOK_INVALID git returned a malformed module identity: $current_blob" >&2
+      return 2
+      ;;
+  esac
+
+  if ! active_state="$(jq -sc --arg node "$MODULE_PATH" --arg identity "$current_identity" '
+      reduce .[] as $event ({};
+        if $event.event_type == "Genesis" then
+          .
+        elif $event.event_type == "Freeze" then
+          ($event.payload.case_id // null) as $case
+          | ($event.payload.frozen_node_id // null) as $frozen_id
+          | ($event.payload.node_path // null) as $path
+          | ($event.payload.input.descriptor_blob_oid // null) as $blob
+          | if (($case | type) != "string"
+              or ($frozen_id | type) != "string"
+              or ($path | type) != "string"
+              or ($blob | type) != "string") then
+              error("Freeze is missing replay identity fields")
+            elif has($case) or any(.[]; .node_path == $path) then
+              error("Freeze reuses an active case or module path")
+            else
+              .[$case] = {
+                frozen_node_id: $frozen_id,
+                node_path: $path,
+                descriptor_blob_oid: $blob
+              }
+            end
+        elif $event.event_type == "Reattest" then
+          ($event.payload.case_id // null) as $case
+          | ($event.payload.input.descriptor_blob_oid // null) as $blob
+          | if (($case | type) != "string" or ($blob | type) != "string" or (has($case) | not)) then
+              error("Reattest targets no active case or lacks module identity")
+            else
+              .[$case].descriptor_blob_oid = $blob
+              | if (($event.payload.frozen_node_id? // null) | type) == "string" then
+                  .[$case].frozen_node_id = $event.payload.frozen_node_id
+                else . end
+            end
+        elif $event.event_type == "Revoke" then
+          ($event.payload.affected_case_ids // null) as $cases
+          | ($event.payload.affected_frozen_node_ids // null) as $frozen_ids
+          | if (($cases | type) != "array" or ($frozen_ids | type) != "array") then
+              error("Revoke is missing affected active identities")
+            else
+              reduce $frozen_ids[] as $frozen_id (.;
+                ([to_entries[]
+                  | select(.value.frozen_node_id == $frozen_id)
+                  | .key]) as $matching_cases
+                | if ($matching_cases | length) == 1 then del(.[$matching_cases[0]])
+                  else error("Revoke targets no unique active frozen node") end)
+            end
+        else
+          error("unknown frozen ledger event type")
+        end)
+      | any(.[]; .node_path == $node and .descriptor_blob_oid == $identity)
+    ' "$FROZEN_LEDGER" 2>&1)"; then
+    echo "PLAYBOOK_INVALID failed to replay frozen ledger $FROZEN_LEDGER: $active_state" >&2
+    return 2
+  fi
+
+  case "$active_state" in
+    true) return 0 ;;
+    false) return 1 ;;
+    *)
+      echo "PLAYBOOK_INVALID frozen ledger replay returned an invalid state: $active_state" >&2
+      return 2
+      ;;
+  esac
 }
 
 freeze_module_if_needed() {
@@ -141,11 +215,11 @@ freeze_module_if_needed() {
   fi
 }
 
-ensure_formalization_receipt() {
+prepare_formalization_receipt() {
   local temporary
   mkdir -p "$(dirname "$RECEIPT_PATH")"
   temporary="$(mktemp "${RECEIPT_PATH}.tmp.XXXXXX")"
-  printf 'PLAYBOOK_STEP command=deposit detail=emit-formalization-receipt\n' >&2
+  printf 'PLAYBOOK_STEP command=deposit detail=validate-formalization-receipt\n' >&2
   if run_cli emit-formalization-receipt \
       --atom-id "$ATOM_ID" --gid "$GID" --out "$temporary"; then
     :
@@ -168,7 +242,19 @@ ensure_formalization_receipt() {
     return 1
   fi
 
-  mv "$temporary" "$RECEIPT_PATH"
+  PREPARED_RECEIPT_PATH="$temporary"
+  printf 'PLAYBOOK_PREPARED path=%s mode=canonical-temporary\n' "$RECEIPT_PATH" >&2
+}
+
+install_prepared_formalization_receipt() {
+  [[ -n "$PREPARED_RECEIPT_PATH" ]] || return 0
+  if [[ -e "$RECEIPT_PATH" ]]; then
+    echo "PLAYBOOK_INVALID formalization receipt appeared after canonical validation: $RECEIPT_PATH" >&2
+    return 1
+  fi
+
+  mv "$PREPARED_RECEIPT_PATH" "$RECEIPT_PATH"
+  PREPARED_RECEIPT_PATH=""
   printf 'PLAYBOOK_WRITE path=%s mode=atom-derived\n' "$RECEIPT_PATH" >&2
 }
 
@@ -231,8 +317,9 @@ case "$COMMAND" in
       step emit-check make emit-check BASE="$BASE"
       commit_phase_a_if_needed
     fi
+    prepare_formalization_receipt
     freeze_module_if_needed
-    ensure_formalization_receipt
+    install_prepared_formalization_receipt
     step lean-report-refresh make lean-report
     refresh_echo_projection
     step emit-check-final make emit-check BASE="$BASE"

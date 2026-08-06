@@ -63,8 +63,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
             read -r -a parts <<< "$command"
             case "${parts[0]:-}" in
               ledger-append)
-                printf '{"event_type": "Freeze", "payload": {"node_path": "D5/S0/Carrier/Probe.lean"}}\n' \
-                  >> Meta/StrataLint/Golden/Frozen/events.jsonl
+                descriptor_blob_oid="git-sha1:$(git hash-object -- D5/S0/Carrier/Probe.lean)"
+                printf '{"event_type": "Freeze", "payload": {"case_id": "active-frozen/current-probe", "frozen_node_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222", "input": {"descriptor_blob_oid": "%s"}, "node_path": "D5/S0/Carrier/Probe.lean"}}\n' \
+                  "$descriptor_blob_oid" >> Meta/StrataLint/Golden/Frozen/events.jsonl
                 if [[ -f fail-ledger-once ]]; then
                   rm fail-ledger-once
                   echo 'LEDGER_APPEND_INTERRUPTED synthetic kill after append' >&2
@@ -72,6 +73,10 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 fi
                 ;;
               emit-formalization-receipt)
+                if [[ ${PLAYBOOK_INVALID_RECEIPT:-0} == 1 ]]; then
+                  echo 'FORMALIZATION_RECEIPT_INVALID synthetic canonical rejection' >&2
+                  exit 45
+                fi
                 atom=''
                 gid=''
                 out=''

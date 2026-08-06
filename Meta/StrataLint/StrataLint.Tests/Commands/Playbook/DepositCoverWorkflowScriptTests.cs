@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -26,8 +27,8 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 "make:emit",
                 "make:echo-residual-summary BASE=synthetic-base",
                 "make:emit-check BASE=synthetic-base",
-                "dotnet:ledger-append",
                 "dotnet:emit-formalization-receipt",
+                "dotnet:ledger-append",
                 "make:lean-report",
                 "make:echo-residual-summary BASE=synthetic-base",
                 "make:emit-check BASE=synthetic-base",
@@ -93,6 +94,36 @@ public sealed partial class DepositCoverWorkflowScriptTests
     }
 
     [Fact]
+    public void DepositAfterFreezeAndRevokeAppendsANewFreeze()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TransactionFixture();
+        fixture.ChangeFormalization();
+        fixture.WriteFreezeThenRevoke();
+
+        var result = fixture.Run("deposit");
+
+        Assert.True(result.ExitCode == 0, Diagnostics(result));
+        Assert.Equal(1, fixture.CallKinds().Count(call => call == "dotnet:ledger-append"));
+        Assert.Equal(2, fixture.FreezeCount());
+    }
+
+    [Fact]
+    public void DepositDoesNotSkipAFreezeForStaleModuleIdentity()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TransactionFixture();
+        fixture.ChangeFormalization();
+        fixture.WriteActiveFreeze(
+            "git-sha1:0000000000000000000000000000000000000000");
+
+        var result = fixture.Run("deposit");
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Equal(1, fixture.CallKinds().Count(call => call == "dotnet:ledger-append"));
+    }
+
+    [Fact]
     public void DepositRemovesInterruptedTemporaryFilesBeforeStaging()
     {
         if (OperatingSystem.IsWindows()) return;
@@ -136,6 +167,24 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.NotEqual(0, result.ExitCode);
         Assert.Contains("STALE_LEAN_REPORT", Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
         Assert.Equal(["make:lean-report", "make:emit"], fixture.CallKinds());
+        Assert.Equal(0, fixture.FreezeCount());
+    }
+
+    [Fact]
+    public void DepositValidatesTheCanonicalReceiptBeforeAppendingFreeze()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TransactionFixture();
+        fixture.ChangeFormalization();
+
+        var result = fixture.Run("deposit", invalidReceipt: true);
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Contains(
+            "FORMALIZATION_RECEIPT_INVALID synthetic canonical rejection",
+            Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.Ordinal);
+        Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
         Assert.Equal(0, fixture.FreezeCount());
     }
 
@@ -231,13 +280,63 @@ public sealed partial class DepositCoverWorkflowScriptTests
             ReceiptRelativePath,
             $"{{\"atom_id\":\"{AtomId}\",\"primary_gid\":\"{Gid}\"}}\n");
 
+        internal void WriteFreezeThenRevoke()
+        {
+            const string caseId = "active-frozen/revoked-probe";
+            const string frozenNodeId =
+                "sha256:1111111111111111111111111111111111111111111111111111111111111111";
+            var descriptorBlobOid = "git-sha1:" + Git("hash-object", "--", LeanPath).Trim();
+            var freeze = JsonSerializer.Serialize(new
+            {
+                event_type = "Freeze",
+                payload = new
+                {
+                    case_id = caseId,
+                    frozen_node_id = frozenNodeId,
+                    input = new { descriptor_blob_oid = descriptorBlobOid },
+                    node_path = LeanPath,
+                },
+            });
+            var revoke = JsonSerializer.Serialize(new
+            {
+                event_type = "Revoke",
+                payload = new
+                {
+                    affected_case_ids = new[] { caseId },
+                    affected_frozen_node_ids = new[] { frozenNodeId },
+                },
+            });
+            WriteFile(LedgerPath, freeze + "\n" + revoke + "\n");
+        }
+
+        internal void WriteActiveFreeze(string descriptorBlobOid)
+        {
+            var freeze = JsonSerializer.Serialize(new
+            {
+                event_type = "Freeze",
+                payload = new
+                {
+                    case_id = "active-frozen/stale-probe",
+                    frozen_node_id =
+                        "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+                    input = new { descriptor_blob_oid = descriptorBlobOid },
+                    node_path = LeanPath,
+                },
+            });
+            WriteFile(LedgerPath, freeze + "\n");
+        }
+
         internal void LeaveInterruptedTemporaryFiles()
         {
             WriteFile(EchoPath + ".tmp.abandoned", "partial echo\n");
             WriteFile(ReceiptRelativePath + ".tmp.abandoned", "partial receipt\n");
         }
 
-        internal ProcessOutput Run(string command, bool failEcho = false, bool staleReport = false) =>
+        internal ProcessOutput Run(
+            string command,
+            bool failEcho = false,
+            bool staleReport = false,
+            bool invalidReceipt = false) =>
             BoundedProcessRunner.Run(
                 "/usr/bin/env",
                 [
@@ -245,6 +344,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                     $"PLAYBOOK_TEST_CALLS={callsPath}",
                     $"PLAYBOOK_FAIL_ECHO={(failEcho ? "1" : "0")}",
                     $"PLAYBOOK_STALE_REPORT={(staleReport ? "1" : "0")}",
+                    $"PLAYBOOK_INVALID_RECEIPT={(invalidReceipt ? "1" : "0")}",
                     "/bin/bash",
                     Path.Combine(Root, ScriptPath),
                     command,
@@ -259,7 +359,13 @@ public sealed partial class DepositCoverWorkflowScriptTests
         internal int CommitCount() => int.Parse(Git("rev-list", "--count", "HEAD").Trim());
 
         internal int FreezeCount() => File.ReadAllLines(Path.Combine(Root, LedgerPath))
-            .Count(line => line.Contains($"\"node_path\": \"{LeanPath}\"", StringComparison.Ordinal));
+            .Count(line =>
+            {
+                using var document = JsonDocument.Parse(line);
+                var root = document.RootElement;
+                return root.GetProperty("event_type").GetString() == "Freeze"
+                    && root.GetProperty("payload").GetProperty("node_path").GetString() == LeanPath;
+            });
 
         internal string[] Status() => Git("status", "--porcelain=v1")
             .Split('\n', StringSplitOptions.RemoveEmptyEntries);
