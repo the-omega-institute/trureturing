@@ -681,6 +681,10 @@ token = "前沿引注"
 kind = "frontier-note"
 
 [[pzg.genres]]
+token = "负向证据"
+kind = "observation"
+
+[[pzg.genres]]
 token = "定理形"
 kind = "theorem-form"
 
@@ -733,6 +737,10 @@ token = "条目"
 kind = "entry"
 
 [[pzg.genres]]
+token = "猜想"
+kind = "observation"
+
+[[pzg.genres]]
 token = "范例"
 kind = "example"
 
@@ -755,6 +763,14 @@ kind = "ledger"
 [[pzg.genres]]
 token = "路线"
 kind = "route"
+
+[[pzg.genres]]
+token = "例"
+kind = "example"
+
+[[pzg.genres]]
+token = "注"
+kind = "remark"
 
 [[pzg.markers]]
 role = "trace-note"
