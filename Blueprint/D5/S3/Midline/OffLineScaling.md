@@ -15,3 +15,8 @@ $$\forall A\ [\operatorname{AddMonoid}(A)],\ \forall \ell:A\to_{+}\mathbb{R},\ \
 *Commentary.*
 
 For an additive ledger length and a spectral parameter off the critical line, every positive-length entry is nonzero, any two positive-length entries have the same sign, natural scaling multiplies each entry by the same natural number, and the absolute values along those multiples are unbounded. This is a coordinatewise fact only, not a claim about the sum after analytic continuation; cancellation of that sum is treated separately.
+
+## References
+
+- Truth anchor: `D5/S3/Midline/OffLineScaling.off_line_scaling_ledger_growth`
+- Dependency: [D5/S3/Zeros/ZeroGeometry](../Zeros/ZeroGeometry.md)

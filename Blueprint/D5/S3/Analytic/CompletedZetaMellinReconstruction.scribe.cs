@@ -38,5 +38,9 @@ internal sealed class CompletedZetaMellinReconstructionDocument : IScribeDocumen
                     + "pointwise Mellin composition identities. The theorem introduces no public concept "
                     + "beyond its selector and supplies the reconstruction bridge between the theta tail and "
                     + "the pole ledger that the zero-symmetry route below O-6 consumes.")))
-            ))));
+            )),
+[
+                        DocumentEdge.Dependency.Create(
+                            GidRef.Create("D5/S3/Zeros/CompletedZeta")),
+                    ]));
 }

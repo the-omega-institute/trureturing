@@ -22,5 +22,9 @@ internal sealed class FibonacciEigenDocument : IScribeDocumentDefinition
                     LibraryNoteRef.Create("D5/L/koshy2001fibonacci")),
                 Blocks(Paragraph(Text(
                     "The explicit substitution matrix has nonzero expanding and contracting eigenvectors, and the same theorem gives the exact signed Fibonacci error for every natural index.")))
-            ))));
+            )),
+[
+                        DocumentEdge.Dependency.Create(
+                            GidRef.Create("D5/S0/Carrier/GoldenRatio")),
+                    ]));
 }

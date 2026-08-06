@@ -25,5 +25,9 @@ internal sealed class OffLineScalingDocument : IScribeDocumentDefinition
                     + "same natural number, and the absolute values along those multiples are "
                     + "unbounded. This is a coordinatewise fact only, not a claim about the sum "
                     + "after analytic continuation; cancellation of that sum is treated "
-                    + "separately.")))))));
+                    + "separately."))))),
+[
+                                DocumentEdge.Dependency.Create(
+                                    GidRef.Create("D5/S3/Zeros/ZeroGeometry")),
+                            ]));
 }

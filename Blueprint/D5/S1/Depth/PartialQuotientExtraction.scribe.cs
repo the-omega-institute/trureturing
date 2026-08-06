@@ -61,7 +61,11 @@ internal sealed class PartialQuotientExtractionDocument : IScribeDocumentDefinit
                     Disp(Seq(Forall, Sp, F.Id("q"), InMacro, Mathbb, Grp(F.Id("Q")), Setminus, Mathbb, Grp(F.Id("Z")), Comma, Esc, Forall, Sp, F.Id("S"), Subset, Underscore, Grp(Mathrm, Grp(F.Id("fin"))), Mathbb, Grp(F.Id("Z")), Comma, Esc, Open, Forall, Psi, InMacro, Sp, F.Id("S"), Comma, Esc, D(1, 2), Mid, Psi, Land, Psi, Neq, D(0), Close, Land, Open, Exists, Psi, Underscore, D(0), InMacro, Sp, F.Id("S"), Comma, Esc, Bar, Psi, Underscore, D(0), Bar, Eq, D(1, 2), Close, Rightarrow, Min, Left, OpenBrace, Frac, Grp(Bar, Psi, Bar), Grp(F.Id("A"), Open, F.Id("q"), Close), Colon, Psi, InMacro, Sp, F.Id("S"), Right, CloseBrace, Eq, Frac, Grp(D(1, 2)), Grp(F.Id("A"), Open, F.Id("q"), Close), Comma, Qquad, Sp, F.Id("A"), Open, F.Id("q"), Close, Eq, Max, Sp, F.Id("C"), Open, F.Id("q"), Close)),                    DescribeProvenance.RepoDerived(),
                     Blocks(Paragraph(Text(
                         "For a nonintegral rational q, every normalized sample member lies above twelve divided by A(q), and an absolute-value-twelve witness attains it. The theorem instantiates the frozen generic twelve-scale lemma at the extracted value; it does not identify which rational belongs to a historical sample.")))
-                ))));
+                )),
+[
+                            DocumentEdge.Dependency.Create(
+                                GidRef.Create("D5/S1/Depth/TwelveScaleReduction")),
+                        ]));
 
     private static LeanDeclarationRef LeanDefinition(string value) =>
         LeanDeclarationRef.Create(
