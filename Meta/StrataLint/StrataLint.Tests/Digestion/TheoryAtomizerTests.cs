@@ -17,6 +17,7 @@ public sealed partial class TheoryAtomizerTests
         { FirstProductionSource, AtomizerRegistry.GictId },
         { SecondProductionSource, AtomizerRegistry.PzgId },
         { ThirdProductionSource, AtomizerRegistry.ObserverId },
+        { FourthProductionSource, AtomizerRegistry.PzgId },
     };
 
     [Fact]
@@ -535,7 +536,7 @@ public sealed partial class TheoryAtomizerTests
     public void UnknownNumberedClaimKindIsClassifiedAsASourceFormatFailure()
     {
         var bytes = Encoding.UTF8.GetBytes(
-            "# PZG\n\n**猜想 1.1(Unknown kind)**。claim。\n");
+            "# PZG\n\n**未知体 1.1(Unknown kind)**。claim。\n");
 
         var error = Assert.Throws<TheorySourceFormatException>(() => PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules));
 

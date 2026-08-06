@@ -32477,6 +32477,603 @@ sources:
         status:
           migration: partial
           truth: open
+  - source_id: interface-v1
+    path: docs/develop/theory/INTERFACE_PAPER.md
+    atomizer: pzg-v1
+    acknowledged_stale: []
+    entries:
+      - atom_id: pzg-residual-90b630c4c3fa672ee55a761ba6221aedfd597fb77c99066d62fdbc12bd37f523
+        ast_path: definition/2.1
+        fingerprints:
+          raw_sha256: sha256:90b630c4c3fa672ee55a761ba6221aedfd597fb77c99066d62fdbc12bd37f523
+          normalized_sha256: sha256:90b630c4c3fa672ee55a761ba6221aedfd597fb77c99066d62fdbc12bd37f523
+        cas_ref: sha256:90b630c4c3fa672ee55a761ba6221aedfd597fb77c99066d62fdbc12bd37f523
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-c6b3527cd190f09c1b601614e67c29ae0303bba0fc0129194aeb835aa06ae802
+        ast_path: example/2.2
+        fingerprints:
+          raw_sha256: sha256:c6b3527cd190f09c1b601614e67c29ae0303bba0fc0129194aeb835aa06ae802
+          normalized_sha256: sha256:c6b3527cd190f09c1b601614e67c29ae0303bba0fc0129194aeb835aa06ae802
+        cas_ref: sha256:c6b3527cd190f09c1b601614e67c29ae0303bba0fc0129194aeb835aa06ae802
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-69644bcd30842d78509038ef74185f749291d181176c168f0f1b5251418e4e18
+        ast_path: definition/2.3
+        fingerprints:
+          raw_sha256: sha256:69644bcd30842d78509038ef74185f749291d181176c168f0f1b5251418e4e18
+          normalized_sha256: sha256:69644bcd30842d78509038ef74185f749291d181176c168f0f1b5251418e4e18
+        cas_ref: sha256:69644bcd30842d78509038ef74185f749291d181176c168f0f1b5251418e4e18
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-8f0ea7d802c3374e1e7e180343c936251b8488cd332a1354e226d484535ed16b
+        ast_path: definition/2.4
+        fingerprints:
+          raw_sha256: sha256:8f0ea7d802c3374e1e7e180343c936251b8488cd332a1354e226d484535ed16b
+          normalized_sha256: sha256:8f0ea7d802c3374e1e7e180343c936251b8488cd332a1354e226d484535ed16b
+        cas_ref: sha256:8f0ea7d802c3374e1e7e180343c936251b8488cd332a1354e226d484535ed16b
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-9d52e41b062f81b1ce93cf241bf4ef9806f6e6de3fe9d6d10b5dc2de6d1f929a
+        ast_path: lemma/3.1
+        fingerprints:
+          raw_sha256: sha256:9d52e41b062f81b1ce93cf241bf4ef9806f6e6de3fe9d6d10b5dc2de6d1f929a
+          normalized_sha256: sha256:9d52e41b062f81b1ce93cf241bf4ef9806f6e6de3fe9d6d10b5dc2de6d1f929a
+        cas_ref: sha256:9d52e41b062f81b1ce93cf241bf4ef9806f6e6de3fe9d6d10b5dc2de6d1f929a
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-0ad32f2c7ce4a2a5cad5b4e99ed16faeec08d1dadb27a2eb20c9c8861028d4b2
+        ast_path: lemma/3.2
+        fingerprints:
+          raw_sha256: sha256:0ad32f2c7ce4a2a5cad5b4e99ed16faeec08d1dadb27a2eb20c9c8861028d4b2
+          normalized_sha256: sha256:0ad32f2c7ce4a2a5cad5b4e99ed16faeec08d1dadb27a2eb20c9c8861028d4b2
+        cas_ref: sha256:0ad32f2c7ce4a2a5cad5b4e99ed16faeec08d1dadb27a2eb20c9c8861028d4b2
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-30663de7c410f5395c74759b8a71a44edee1af7e09f719206af50c0b8a9837b9
+        ast_path: remark/3.3
+        fingerprints:
+          raw_sha256: sha256:30663de7c410f5395c74759b8a71a44edee1af7e09f719206af50c0b8a9837b9
+          normalized_sha256: sha256:30663de7c410f5395c74759b8a71a44edee1af7e09f719206af50c0b8a9837b9
+        cas_ref: sha256:30663de7c410f5395c74759b8a71a44edee1af7e09f719206af50c0b8a9837b9
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-c0a63f4cbbe848e456ae1f847150de6bf63e59a5295bf711230af4bbb4860cab
+        ast_path: theorem/3.4
+        fingerprints:
+          raw_sha256: sha256:c0a63f4cbbe848e456ae1f847150de6bf63e59a5295bf711230af4bbb4860cab
+          normalized_sha256: sha256:c0a63f4cbbe848e456ae1f847150de6bf63e59a5295bf711230af4bbb4860cab
+        cas_ref: sha256:c0a63f4cbbe848e456ae1f847150de6bf63e59a5295bf711230af4bbb4860cab
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-5182a7b237a49baa85ccb70a1989f2411de3b045e8461fe9359a15ab3789f0ab
+        ast_path: theorem/3.4′
+        fingerprints:
+          raw_sha256: sha256:5182a7b237a49baa85ccb70a1989f2411de3b045e8461fe9359a15ab3789f0ab
+          normalized_sha256: sha256:5182a7b237a49baa85ccb70a1989f2411de3b045e8461fe9359a15ab3789f0ab
+        cas_ref: sha256:5182a7b237a49baa85ccb70a1989f2411de3b045e8461fe9359a15ab3789f0ab
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-e6cddd24b6991a4e35299e627c57879f21e885e46e58a70a6513251d6a305e74
+        ast_path: theorem/3.8
+        fingerprints:
+          raw_sha256: sha256:e6cddd24b6991a4e35299e627c57879f21e885e46e58a70a6513251d6a305e74
+          normalized_sha256: sha256:e6cddd24b6991a4e35299e627c57879f21e885e46e58a70a6513251d6a305e74
+        cas_ref: sha256:e6cddd24b6991a4e35299e627c57879f21e885e46e58a70a6513251d6a305e74
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-3033ac6f443ddb6b04e0192ca76446823358795aa0f6394b34065c5271e5d570
+        ast_path: remark/3.5/occurrence/1
+        fingerprints:
+          raw_sha256: sha256:3033ac6f443ddb6b04e0192ca76446823358795aa0f6394b34065c5271e5d570
+          normalized_sha256: sha256:3033ac6f443ddb6b04e0192ca76446823358795aa0f6394b34065c5271e5d570
+        cas_ref: sha256:3033ac6f443ddb6b04e0192ca76446823358795aa0f6394b34065c5271e5d570
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-dba77477c6196adedcb70192c3a9bc3398f0bab574f7b27cf8dbd4e47ad391f9
+        ast_path: corollary/3.6/occurrence/1
+        fingerprints:
+          raw_sha256: sha256:dba77477c6196adedcb70192c3a9bc3398f0bab574f7b27cf8dbd4e47ad391f9
+          normalized_sha256: sha256:dba77477c6196adedcb70192c3a9bc3398f0bab574f7b27cf8dbd4e47ad391f9
+        cas_ref: sha256:dba77477c6196adedcb70192c3a9bc3398f0bab574f7b27cf8dbd4e47ad391f9
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-0fc2fbafca1ca2eadda19220eb981830b2762bc0799edb3acabf8fc4d7a1fcb4
+        ast_path: theorem/3.7/occurrence/1
+        fingerprints:
+          raw_sha256: sha256:0fc2fbafca1ca2eadda19220eb981830b2762bc0799edb3acabf8fc4d7a1fcb4
+          normalized_sha256: sha256:0fc2fbafca1ca2eadda19220eb981830b2762bc0799edb3acabf8fc4d7a1fcb4
+        cas_ref: sha256:0fc2fbafca1ca2eadda19220eb981830b2762bc0799edb3acabf8fc4d7a1fcb4
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-d83ea144a8ed0fc13492de5d92fa62e528e5c48aa814643734ea12ea844de265
+        ast_path: theorem/3.9
+        fingerprints:
+          raw_sha256: sha256:d83ea144a8ed0fc13492de5d92fa62e528e5c48aa814643734ea12ea844de265
+          normalized_sha256: sha256:d83ea144a8ed0fc13492de5d92fa62e528e5c48aa814643734ea12ea844de265
+        cas_ref: sha256:d83ea144a8ed0fc13492de5d92fa62e528e5c48aa814643734ea12ea844de265
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-3033ac6f443ddb6b04e0192ca76446823358795aa0f6394b34065c5271e5d570-cee046030d12bac964d75a8b951151a6d378d0c240964e2a8987aa2b371adef7
+        ast_path: remark/3.5/occurrence/2
+        fingerprints:
+          raw_sha256: sha256:3033ac6f443ddb6b04e0192ca76446823358795aa0f6394b34065c5271e5d570
+          normalized_sha256: sha256:3033ac6f443ddb6b04e0192ca76446823358795aa0f6394b34065c5271e5d570
+        cas_ref: sha256:3033ac6f443ddb6b04e0192ca76446823358795aa0f6394b34065c5271e5d570
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-dba77477c6196adedcb70192c3a9bc3398f0bab574f7b27cf8dbd4e47ad391f9-9b93ad7785515e384b902ebbf16c52b87d64eac77a37b8db322ac47182a5dc5b
+        ast_path: corollary/3.6/occurrence/2
+        fingerprints:
+          raw_sha256: sha256:dba77477c6196adedcb70192c3a9bc3398f0bab574f7b27cf8dbd4e47ad391f9
+          normalized_sha256: sha256:dba77477c6196adedcb70192c3a9bc3398f0bab574f7b27cf8dbd4e47ad391f9
+        cas_ref: sha256:dba77477c6196adedcb70192c3a9bc3398f0bab574f7b27cf8dbd4e47ad391f9
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-46dff93537eed229fec8ad7754c2824298b11edd322bc7273681722dc7075053
+        ast_path: theorem/3.7/occurrence/2
+        fingerprints:
+          raw_sha256: sha256:46dff93537eed229fec8ad7754c2824298b11edd322bc7273681722dc7075053
+          normalized_sha256: sha256:46dff93537eed229fec8ad7754c2824298b11edd322bc7273681722dc7075053
+        cas_ref: sha256:46dff93537eed229fec8ad7754c2824298b11edd322bc7273681722dc7075053
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-0a2d01d0a1264ae03eb64903f15ee214a2726da02d809fc995c2f6cf46e74b0a
+        ast_path: definition/4.1
+        fingerprints:
+          raw_sha256: sha256:0a2d01d0a1264ae03eb64903f15ee214a2726da02d809fc995c2f6cf46e74b0a
+          normalized_sha256: sha256:0a2d01d0a1264ae03eb64903f15ee214a2726da02d809fc995c2f6cf46e74b0a
+        cas_ref: sha256:0a2d01d0a1264ae03eb64903f15ee214a2726da02d809fc995c2f6cf46e74b0a
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-ce6cf904cf43f7a90a79800a86a692643004c2978edd1f863ca943775bba135d
+        ast_path: proposition/4.2
+        fingerprints:
+          raw_sha256: sha256:ce6cf904cf43f7a90a79800a86a692643004c2978edd1f863ca943775bba135d
+          normalized_sha256: sha256:ce6cf904cf43f7a90a79800a86a692643004c2978edd1f863ca943775bba135d
+        cas_ref: sha256:ce6cf904cf43f7a90a79800a86a692643004c2978edd1f863ca943775bba135d
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-45a7f53cd9ce355e47967cdefa47164a84bc0f4754cdeddc18a52ce53a4ed89c
+        ast_path: remark/4.3
+        fingerprints:
+          raw_sha256: sha256:45a7f53cd9ce355e47967cdefa47164a84bc0f4754cdeddc18a52ce53a4ed89c
+          normalized_sha256: sha256:45a7f53cd9ce355e47967cdefa47164a84bc0f4754cdeddc18a52ce53a4ed89c
+        cas_ref: sha256:45a7f53cd9ce355e47967cdefa47164a84bc0f4754cdeddc18a52ce53a4ed89c
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-b2dc7e9b94790edc2c97e9588a93adb0f814cd07a0cdad90756e6a1047f3044f
+        ast_path: theorem/4.2′
+        fingerprints:
+          raw_sha256: sha256:b2dc7e9b94790edc2c97e9588a93adb0f814cd07a0cdad90756e6a1047f3044f
+          normalized_sha256: sha256:b2dc7e9b94790edc2c97e9588a93adb0f814cd07a0cdad90756e6a1047f3044f
+        cas_ref: sha256:b2dc7e9b94790edc2c97e9588a93adb0f814cd07a0cdad90756e6a1047f3044f
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-738524665f4a7a821f0657889b6adf5dca6771b2d569a7d659ddeb75430cdc1b
+        ast_path: observation/4.4
+        fingerprints:
+          raw_sha256: sha256:738524665f4a7a821f0657889b6adf5dca6771b2d569a7d659ddeb75430cdc1b
+          normalized_sha256: sha256:738524665f4a7a821f0657889b6adf5dca6771b2d569a7d659ddeb75430cdc1b
+        cas_ref: sha256:738524665f4a7a821f0657889b6adf5dca6771b2d569a7d659ddeb75430cdc1b
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-e8d70a57b27363cefbfc01228e99831d00f441ed7ee2229dc0656e89e9f4ef94
+        ast_path: theorem/5.1
+        fingerprints:
+          raw_sha256: sha256:e8d70a57b27363cefbfc01228e99831d00f441ed7ee2229dc0656e89e9f4ef94
+          normalized_sha256: sha256:e8d70a57b27363cefbfc01228e99831d00f441ed7ee2229dc0656e89e9f4ef94
+        cas_ref: sha256:e8d70a57b27363cefbfc01228e99831d00f441ed7ee2229dc0656e89e9f4ef94
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-530ae1a15477ad1aa234af6f5d70eb51b7a7595f7f3d30b29ca7a1931cb14b83
+        ast_path: definition/5.2
+        fingerprints:
+          raw_sha256: sha256:530ae1a15477ad1aa234af6f5d70eb51b7a7595f7f3d30b29ca7a1931cb14b83
+          normalized_sha256: sha256:530ae1a15477ad1aa234af6f5d70eb51b7a7595f7f3d30b29ca7a1931cb14b83
+        cas_ref: sha256:530ae1a15477ad1aa234af6f5d70eb51b7a7595f7f3d30b29ca7a1931cb14b83
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-ba1a57ee5c08954445e08bf4574cd62353de58473846bccb4c9a7cb52136bd8c
+        ast_path: remark/5.3
+        fingerprints:
+          raw_sha256: sha256:ba1a57ee5c08954445e08bf4574cd62353de58473846bccb4c9a7cb52136bd8c
+          normalized_sha256: sha256:ba1a57ee5c08954445e08bf4574cd62353de58473846bccb4c9a7cb52136bd8c
+        cas_ref: sha256:ba1a57ee5c08954445e08bf4574cd62353de58473846bccb4c9a7cb52136bd8c
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-29dbc0f22f81e47fd93f0011befd30cd967a228dfe360662617303ab588dd044
+        ast_path: theorem/5.4
+        fingerprints:
+          raw_sha256: sha256:29dbc0f22f81e47fd93f0011befd30cd967a228dfe360662617303ab588dd044
+          normalized_sha256: sha256:29dbc0f22f81e47fd93f0011befd30cd967a228dfe360662617303ab588dd044
+        cas_ref: sha256:29dbc0f22f81e47fd93f0011befd30cd967a228dfe360662617303ab588dd044
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-554cef5be603439247a7e59a19cac3e1b574a9178c6400683c93723043d869f3
+        ast_path: theorem/5.5
+        fingerprints:
+          raw_sha256: sha256:554cef5be603439247a7e59a19cac3e1b574a9178c6400683c93723043d869f3
+          normalized_sha256: sha256:554cef5be603439247a7e59a19cac3e1b574a9178c6400683c93723043d869f3
+        cas_ref: sha256:554cef5be603439247a7e59a19cac3e1b574a9178c6400683c93723043d869f3
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-07e8dda88116520e0e98ba0c49382252b5add6b379a93e19d98002365c2690ea
+        ast_path: remark/5.6
+        fingerprints:
+          raw_sha256: sha256:07e8dda88116520e0e98ba0c49382252b5add6b379a93e19d98002365c2690ea
+          normalized_sha256: sha256:07e8dda88116520e0e98ba0c49382252b5add6b379a93e19d98002365c2690ea
+        cas_ref: sha256:07e8dda88116520e0e98ba0c49382252b5add6b379a93e19d98002365c2690ea
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-0eaf3641e0d053487ca7e83a76abe9ca5a601774713de57567c5419a6122648b
+        ast_path: theorem/6.1
+        fingerprints:
+          raw_sha256: sha256:0eaf3641e0d053487ca7e83a76abe9ca5a601774713de57567c5419a6122648b
+          normalized_sha256: sha256:0eaf3641e0d053487ca7e83a76abe9ca5a601774713de57567c5419a6122648b
+        cas_ref: sha256:0eaf3641e0d053487ca7e83a76abe9ca5a601774713de57567c5419a6122648b
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-18e15c8428a175ce293a6a0d7958114c3098c92aae5149805092e8b0e96607be
+        ast_path: remark/6.2
+        fingerprints:
+          raw_sha256: sha256:18e15c8428a175ce293a6a0d7958114c3098c92aae5149805092e8b0e96607be
+          normalized_sha256: sha256:18e15c8428a175ce293a6a0d7958114c3098c92aae5149805092e8b0e96607be
+        cas_ref: sha256:18e15c8428a175ce293a6a0d7958114c3098c92aae5149805092e8b0e96607be
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-2a0be2b846836d5e2d99df38f3c1866ee90bcec2d070b1a2f77ccee5f6687029
+        ast_path: theorem/6.3
+        fingerprints:
+          raw_sha256: sha256:2a0be2b846836d5e2d99df38f3c1866ee90bcec2d070b1a2f77ccee5f6687029
+          normalized_sha256: sha256:2a0be2b846836d5e2d99df38f3c1866ee90bcec2d070b1a2f77ccee5f6687029
+        cas_ref: sha256:2a0be2b846836d5e2d99df38f3c1866ee90bcec2d070b1a2f77ccee5f6687029
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-c4dd0c241dbf2b9cb4e59dd55a1419404192fab2b6089fb1d3ee6ea020117a9a
+        ast_path: theorem/6.4
+        fingerprints:
+          raw_sha256: sha256:c4dd0c241dbf2b9cb4e59dd55a1419404192fab2b6089fb1d3ee6ea020117a9a
+          normalized_sha256: sha256:c4dd0c241dbf2b9cb4e59dd55a1419404192fab2b6089fb1d3ee6ea020117a9a
+        cas_ref: sha256:c4dd0c241dbf2b9cb4e59dd55a1419404192fab2b6089fb1d3ee6ea020117a9a
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-920e64b230f6d076f125ba454e1364e8ee1e1003713f3b2a0211abf118b58cc0
+        ast_path: observation/6.5
+        fingerprints:
+          raw_sha256: sha256:920e64b230f6d076f125ba454e1364e8ee1e1003713f3b2a0211abf118b58cc0
+          normalized_sha256: sha256:920e64b230f6d076f125ba454e1364e8ee1e1003713f3b2a0211abf118b58cc0
+        cas_ref: sha256:920e64b230f6d076f125ba454e1364e8ee1e1003713f3b2a0211abf118b58cc0
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-508bf910245e9029961a30d6f5312d8458350ef94144e7cf1d43868ddf8de7ec
+        ast_path: observation/6.6
+        fingerprints:
+          raw_sha256: sha256:508bf910245e9029961a30d6f5312d8458350ef94144e7cf1d43868ddf8de7ec
+          normalized_sha256: sha256:508bf910245e9029961a30d6f5312d8458350ef94144e7cf1d43868ddf8de7ec
+        cas_ref: sha256:508bf910245e9029961a30d6f5312d8458350ef94144e7cf1d43868ddf8de7ec
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-ff14127294919113d962e4e8b4217f5b58d066eda5d6b559933bc3d4515012b2
+        ast_path: remark/6.7
+        fingerprints:
+          raw_sha256: sha256:ff14127294919113d962e4e8b4217f5b58d066eda5d6b559933bc3d4515012b2
+          normalized_sha256: sha256:ff14127294919113d962e4e8b4217f5b58d066eda5d6b559933bc3d4515012b2
+        cas_ref: sha256:ff14127294919113d962e4e8b4217f5b58d066eda5d6b559933bc3d4515012b2
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-313a0038cde0ba5e671294aedda7c78f0737af649e0d5899a5141d3bafc1625f
+        ast_path: proposition/7.1
+        fingerprints:
+          raw_sha256: sha256:313a0038cde0ba5e671294aedda7c78f0737af649e0d5899a5141d3bafc1625f
+          normalized_sha256: sha256:313a0038cde0ba5e671294aedda7c78f0737af649e0d5899a5141d3bafc1625f
+        cas_ref: sha256:313a0038cde0ba5e671294aedda7c78f0737af649e0d5899a5141d3bafc1625f
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-c23d4a4ef336ab7eab1c3a4547b68f561aa5211da51ed9f75072c5c0736a28b3
+        ast_path: proposition/7.2
+        fingerprints:
+          raw_sha256: sha256:c23d4a4ef336ab7eab1c3a4547b68f561aa5211da51ed9f75072c5c0736a28b3
+          normalized_sha256: sha256:c23d4a4ef336ab7eab1c3a4547b68f561aa5211da51ed9f75072c5c0736a28b3
+        cas_ref: sha256:c23d4a4ef336ab7eab1c3a4547b68f561aa5211da51ed9f75072c5c0736a28b3
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
 ticket_index:
   - case_id: D5-T0001
     gid: D5/X_Frontier/HeartsDraft
