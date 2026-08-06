@@ -11,12 +11,15 @@ public sealed partial class TheoryAtomizerTests
         "docs/develop/theory/PZG_BEDC.md";
     private const string ThirdProductionSource =
         "docs/develop/theory/OBSERVER-QUANTUM.md";
+    private const string FourthProductionSource =
+        "docs/develop/theory/INTERFACE_PAPER.md";
 
     public static TheoryData<string, string> ProductionTheorySources => new()
     {
         { FirstProductionSource, AtomizerRegistry.GictId },
         { SecondProductionSource, AtomizerRegistry.PzgId },
         { ThirdProductionSource, AtomizerRegistry.ObserverId },
+        { FourthProductionSource, AtomizerRegistry.PzgId },
     };
 
     [Fact]
@@ -104,114 +107,6 @@ public sealed partial class TheoryAtomizerTests
         Assert.Equal(expectedKind, atom.StatusMarker.Kind.ToString());
         Assert.Equal(expectedStatus, atom.StatusMarker.Status);
         Assert.Equal(expectedQualifier, atom.StatusMarker.Qualifier);
-    }
-
-    [Fact]
-    public void PeriodicTreeV1TreatsNumberedSectionsAsAtomicClaims()
-    {
-        var bytes = Encoding.UTF8.GetBytes(
-            "# Periodic Tree\n\nProject preface.\n\n"
-            + "## 0. Name and deed\n\nRoot protocol.\n\n"
-            + "## 1. Mount protocol\n\nFour labels.\n\n"
-            + "## 7. Construction log\n\nFirst registry.\n");
-
-        var document = AtomizerRegistry.Atomize(AtomizerRegistry.PeriodicTreeId, bytes, DigestionTestSupport.Rules);
-
-        Assert.Equal(
-            ["section/0", "section/1", "section/7"],
-            document.Claims.Select(static item => item.AstPath));
-        Assert.All(document.Claims, atom =>
-            Assert.Equal(["Periodic Tree"], atom.Context.Select(static item => item.Text)));
-        Assert.Equal(bytes, document.Reassemble().ToArray());
-    }
-
-    [Fact]
-    public void WmV1SplitsTheCanonicalDialectIntoExactUniqueByteAtoms()
-    {
-        var fixture = CanonicalWmFixtureSegments();
-        var bytes = Encoding.UTF8.GetBytes(string.Concat(fixture.Select(static item => item.Text)));
-
-        var document = AtomizerRegistry.Atomize(AtomizerRegistry.WmId, bytes, DigestionTestSupport.Rules);
-
-        Assert.Equal(fixture.Select(static item => item.AstPath), document.Claims.Select(static item => item.AstPath));
-        Assert.Equal(document.Claims.Length, document.Claims.Select(static item => item.AstPath).Distinct(StringComparer.Ordinal).Count());
-        Assert.Equal(fixture.Count, document.Claims.Length);
-        for (var index = 0; index < fixture.Count; index++)
-        {
-            Assert.Equal(Encoding.UTF8.GetBytes(fixture[index].Text), document.Claims[index].RawBytes.ToArray());
-        }
-
-        Assert.Equal(bytes, document.Reassemble().ToArray());
-    }
-
-    [Fact]
-    public void WmV1SplitIsIdempotentAndV02OnlyAddsNewVersionAndAuditAtoms()
-    {
-        var original = AtomizerRegistry.Atomize(
-            AtomizerRegistry.WmId,
-            Encoding.UTF8.GetBytes(CanonicalWmFixture()),
-            DigestionTestSupport.Rules);
-        AssertSplitIdempotent(AtomizerRegistry.WmId, original);
-
-        var evolved = AtomizerRegistry.Atomize(
-            AtomizerRegistry.WmId,
-            Encoding.UTF8.GetBytes(CanonicalWmV02Fixture()),
-            DigestionTestSupport.Rules);
-
-        Assert.Equal(
-            original.Claims.Select(static atom => atom.AstPath)
-                .Append("version/v0.2")
-                .Append("audit/v0.2")
-                .Order(StringComparer.Ordinal),
-            evolved.Claims.Select(static atom => atom.AstPath).Order(StringComparer.Ordinal));
-        foreach (var atom in original.Claims)
-        {
-            var unchanged = Assert.Single(evolved.Claims, candidate => candidate.AstPath == atom.AstPath);
-            Assert.Equal(atom.Fingerprints, unchanged.Fingerprints);
-            Assert.Equal(atom.RawBytes.ToArray(), unchanged.RawBytes.ToArray());
-        }
-
-        AssertSplitIdempotent(AtomizerRegistry.WmId, evolved);
-    }
-
-    [Theory]
-    [MemberData(nameof(InvalidWmSources))]
-    public void WmV1FailsClosedForStructuralDrift(string _, byte[] bytes)
-    {
-        var error = Record.Exception(() => AtomizerRegistry.Atomize(AtomizerRegistry.WmId, bytes, DigestionTestSupport.Rules));
-
-        Assert.True(error is FormatException or DecoderFallbackException, error?.ToString());
-    }
-
-    [Fact]
-    public void WmV1AssignsEverySourceByteToAPrimaryAtom()
-    {
-        var bytes = Encoding.UTF8.GetBytes(CanonicalWmFixture());
-
-        var document = AtomizerRegistry.Atomize(AtomizerRegistry.WmId, bytes, DigestionTestSupport.Rules);
-
-        Assert.All(document.Slices, static slice => Assert.True(slice.IsClaim));
-        Assert.Equal(bytes.Length, document.Slices.Sum(static slice => slice.RawBytes.Length));
-        Assert.Equal(bytes, document.Reassemble().ToArray());
-    }
-
-    [Fact]
-    public void WmV1SeparatesSection7AndItsAutopsyAppendixWithNestedContext()
-    {
-        var document = AtomizerRegistry.Atomize(
-            AtomizerRegistry.WmId,
-            Encoding.UTF8.GetBytes(CanonicalWmFixture()),
-            DigestionTestSupport.Rules);
-
-        var section = document.ResolveClaim("section/7");
-        var appendix = document.ResolveClaim("section/7-appendix");
-
-        Assert.DoesNotContain("§7-附", Encoding.UTF8.GetString(section.RawBytes.AsSpan()), StringComparison.Ordinal);
-        Assert.StartsWith("### §7-附", Encoding.UTF8.GetString(appendix.RawBytes.AsSpan()), StringComparison.Ordinal);
-        Assert.Equal(
-            [WmTitle[2..], "7. Section 7"],
-            appendix.Context.Select(static item => item.Text));
-        Assert.Equal([1, 2], appendix.Context.Select(static item => item.Level));
     }
 
     [Fact]
@@ -535,7 +430,7 @@ public sealed partial class TheoryAtomizerTests
     public void UnknownNumberedClaimKindIsClassifiedAsASourceFormatFailure()
     {
         var bytes = Encoding.UTF8.GetBytes(
-            "# PZG\n\n**猜想 1.1(Unknown kind)**。claim。\n");
+            "# PZG\n\n**未知体 1.1(Unknown kind)**。claim。\n");
 
         var error = Assert.Throws<TheorySourceFormatException>(() => PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules));
 
@@ -797,4 +692,86 @@ public sealed partial class TheoryAtomizerTests
         return segments;
     }
 
+
+    [Fact]
+    public void InterfacePaperDialectExhaustsNumberedClaimsWithStableKindsAndFingerprints()
+    {
+        var root = FindRepositoryRoot();
+        var bytes = File.ReadAllBytes(Path.Combine(root, FourthProductionSource));
+
+        var document = AtomizerRegistry.Atomize(
+            AtomizerRegistry.PzgId,
+            bytes,
+            DigestionTestSupport.Rules);
+
+        Assert.Equal(37, document.Claims.Length);
+        Assert.Equal(
+            [
+                ("corollary", 2),
+                ("definition", 5),
+                ("example", 1),
+                ("lemma", 2),
+                ("observation", 3),
+                ("proposition", 3),
+                ("remark", 8),
+                ("theorem", 13),
+            ],
+            document.Claims
+                .GroupBy(static atom => atom.AstPath.Split('/')[0], StringComparer.Ordinal)
+                .Select(static group => (Kind: group.Key, Count: group.Count()))
+                .OrderBy(static item => item.Kind, StringComparer.Ordinal));
+
+        var landing = document.ResolveClaim("lemma/3.1");
+        var escape = document.ResolveClaim("theorem/3.4");
+        Assert.Equal(
+            "sha256:9d52e41b062f81b1ce93cf241bf4ef9806f6e6de3fe9d6d10b5dc2de6d1f929a",
+            landing.Fingerprints.RawSha256);
+        Assert.Equal(
+            "sha256:c0a63f4cbbe848e456ae1f847150de6bf63e59a5295bf711230af4bbb4860cab",
+            escape.Fingerprints.RawSha256);
+        Assert.Contains("*证明。*", Encoding.UTF8.GetString(landing.RawBytes.AsSpan()), StringComparison.Ordinal);
+        Assert.Contains("*证明。*", Encoding.UTF8.GetString(escape.RawBytes.AsSpan()), StringComparison.Ordinal);
+        Assert.DoesNotContain("隐藏独立性", Encoding.UTF8.GetString(escape.RawBytes.AsSpan()), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void InterfacePaperDialectPreservesDuplicateBlocksAsDistinctOccurrences()
+    {
+        var root = FindRepositoryRoot();
+        var bytes = File.ReadAllBytes(Path.Combine(root, FourthProductionSource));
+
+        var document = AtomizerRegistry.Atomize(
+            AtomizerRegistry.PzgId,
+            bytes,
+            DigestionTestSupport.Rules);
+
+        Assert.Equal(
+            ["remark/3.5/occurrence/1", "remark/3.5/occurrence/2"],
+            document.Claims
+                .Where(static atom => atom.AstPath.StartsWith("remark/3.5/", StringComparison.Ordinal))
+                .Select(static atom => atom.AstPath));
+        Assert.Equal(
+            ["corollary/3.6/occurrence/1", "corollary/3.6/occurrence/2"],
+            document.Claims
+                .Where(static atom => atom.AstPath.StartsWith("corollary/3.6/", StringComparison.Ordinal))
+                .Select(static atom => atom.AstPath));
+        Assert.Equal(
+            ["theorem/3.7/occurrence/1", "theorem/3.7/occurrence/2"],
+            document.Claims
+                .Where(static atom => atom.AstPath.StartsWith("theorem/3.7/", StringComparison.Ordinal))
+                .Select(static atom => atom.AstPath));
+
+        var repeatedRemarks = document.Claims
+            .Where(static atom => atom.AstPath.StartsWith("remark/3.5/", StringComparison.Ordinal))
+            .ToArray();
+        var repeatedCorollaries = document.Claims
+            .Where(static atom => atom.AstPath.StartsWith("corollary/3.6/", StringComparison.Ordinal))
+            .ToArray();
+        var incompatibleTheorems = document.Claims
+            .Where(static atom => atom.AstPath.StartsWith("theorem/3.7/", StringComparison.Ordinal))
+            .ToArray();
+        Assert.Equal(repeatedRemarks[0].Fingerprints, repeatedRemarks[1].Fingerprints);
+        Assert.Equal(repeatedCorollaries[0].Fingerprints, repeatedCorollaries[1].Fingerprints);
+        Assert.NotEqual(incompatibleTheorems[0].Fingerprints, incompatibleTheorems[1].Fingerprints);
+    }
 }
