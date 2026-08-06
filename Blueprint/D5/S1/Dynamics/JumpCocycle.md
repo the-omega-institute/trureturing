@@ -20,4 +20,5 @@ A proposed direct jump is legal when translating the first lift by that jump rea
 
 ## References
 
+- Truth anchor: `D5/S1/Dynamics/JumpCocycle.jump_cocycle`
 - Dependency: [D5/S1/Phase/Basic](../Phase/Basic.md)

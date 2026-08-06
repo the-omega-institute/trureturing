@@ -18,4 +18,5 @@ For an additive ledger length and a spectral parameter off the critical line, ev
 
 ## References
 
+- Truth anchor: `D5/S3/Midline/OffLineScaling.off_line_scaling_ledger_growth`
 - Dependency: [D5/S3/Zeros/ZeroGeometry](../Zeros/ZeroGeometry.md)
