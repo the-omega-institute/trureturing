@@ -64,6 +64,7 @@ public sealed partial class MakeWorkflowTests
         "deposit",
         "cover",
         "worktree",
+        "pr-watch",
     ];
 
     [Fact]
