@@ -30,7 +30,7 @@ At every positive-length coordinate, the scaling entry is displacement from real
 
 **Theorem 1.3 (A global factor cannot clear off-line scaling).**
 
-$$\forall A\ [\operatorname{AddMonoid}(A)],\ \forall \ell:A\to_{+}\mathbb{R},\ (\exists a,\ell(a)\neq 0) \Rightarrow \forall s,c\in\mathbb{C},\ (\forall a,\ \Vert c\operatorname{halfDensityReading}(\ell,s,a)\Vert=1) \Rightarrow \Re(s)=\operatorname{criticalAbscissa}$$
+$$\forall x2 \in \mathrm{LedgerLength},\; \left(\exists x3 \in \mathord{\cdot},\; \mathit{x2}\left(\mathit{x3}\right) \ne 0\right) \Rightarrow \left(\forall x4 \in \mathrm{Complex},\; \forall x5 \in \mathrm{Complex},\; \left(\forall x6 \in \mathord{\cdot},\; \left\lVert \mathit{x5} \cdot \mathrm{halfDensityReading}\left(\mathit{x2}, \mathit{x4}, \mathit{x6}\right) \right\rVert = 1\right) \Rightarrow \mathrm{re}\left(\mathit{x4}\right) = \mathrm{criticalAbscissa}\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Zeros/ZeroGeometry.global_factor_clearing_forces_critical_line` (`✓ std3`). ∎
 

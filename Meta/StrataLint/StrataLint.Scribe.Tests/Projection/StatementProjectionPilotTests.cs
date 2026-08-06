@@ -68,6 +68,28 @@ public sealed class StatementProjectionPilotTests
     }
 
     [Fact]
+    public void PropPiToImplicationProjectsNondependentPropositionDomains()
+    {
+        const string encoded = "statement-v1(uparams=[],type=ep(bd,ea(ea(ea(ec(ns(n0,2:Eq),[]),ec(ns(n0,4:Real),[])),ei(ln(0))),ei(ln(0))),ea(ea(ea(ec(ns(n0,2:Eq),[]),ec(ns(n0,4:Real),[])),ei(ln(1))),ei(ln(1)))))";
+
+        var result = StatementProjector.Project(StatementV1Decoder.Decode(encoded).Type);
+
+        var formula = Assert.IsType<ProjectionOutcome.Projected>(result).Formula;
+        Assert.Equal("0 = 0 \\Rightarrow 1 = 1", LatexWriter.Write(formula));
+    }
+
+    [Fact]
+    public void PropPiToImplicationDoesNotRewriteDependentPiDomains()
+    {
+        const string encoded = "statement-v1(uparams=[],type=ep(bd,ec(ns(n0,4:Real),[]),ea(ea(ea(ec(ns(n0,2:Eq),[]),ec(ns(n0,4:Real),[])),eb(0)),eb(0))))";
+
+        var result = StatementProjector.Project(StatementV1Decoder.Decode(encoded).Type);
+
+        var formula = Assert.IsType<ProjectionOutcome.Projected>(result).Formula;
+        Assert.Equal("\\forall x0 \\in \\mathrm{Real},\\; \\mathit{x0} = \\mathit{x0}", LatexWriter.Write(formula));
+    }
+
+    [Fact]
     public void DenoiserStripsOnlyRegisteredElaborationArguments()
     {
         const string encoded = "statement-v1(uparams=[],type=ea(ea(ec(ns(ns(ns(ns(ns(n0,2:D5),2:S3),4:Weil),11:LabeledZeta),12:LedgerLength),[]),es(l0)),ec(ns(n0,9:AddMonoid),[])))";
@@ -114,6 +136,23 @@ public sealed class StatementProjectionPilotTests
     }
 
     [Fact]
+    public void PropPiToImplicationProjectsGlobalFactorClearingFixture()
+    {
+        using var fixture = LoadPinnedFixture("statement-projection-pilot-v1.json");
+        using var expansion = LoadPinnedFixture("statement-projection-expansion-v1.json");
+        var declaration = Assert.Single(ReadFixtureDeclarations(fixture, expansion), item =>
+            item.Key.EndsWith("global_factor_clearing_forces_critical_line", StringComparison.Ordinal));
+
+        var outcome = StatementProjector.Project(
+            StatementV1Decoder.Decode(declaration.Value.GetProperty("type").GetString()!).Type);
+
+        var formula = Assert.IsType<ProjectionOutcome.Projected>(outcome).Formula;
+        Assert.Equal(
+            "\\forall x2 \\in \\mathrm{LedgerLength},\\; \\left(\\exists x3 \\in \\mathord{\\cdot},\\; \\mathit{x2}\\left(\\mathit{x3}\\right) \\ne 0\\right) \\Rightarrow \\left(\\forall x4 \\in \\mathrm{Complex},\\; \\forall x5 \\in \\mathrm{Complex},\\; \\left(\\forall x6 \\in \\mathord{\\cdot},\\; \\left\\lVert \\mathit{x5} \\cdot \\mathrm{halfDensityReading}\\left(\\mathit{x2}, \\mathit{x4}, \\mathit{x6}\\right) \\right\\rVert = 1\\right) \\Rightarrow \\mathrm{re}\\left(\\mathit{x4}\\right) = \\mathrm{criticalAbscissa}\\right)",
+            LatexWriter.Write(formula));
+    }
+
+    [Fact]
     public void PilotProjectsTenOfTenRealDeclarationsAndPinsTheComparisonReport()
     {
         using var fixture = LoadPinnedFixture("statement-projection-pilot-v1.json");
@@ -144,7 +183,7 @@ public sealed class StatementProjectionPilotTests
         var projected = sources.Sum(source => source.Split(
             "StatementProjectionFixtureLoader.FromLean(", StringSplitOptions.None).Length - 1);
 
-        Assert.Equal(8, projected);
+        Assert.Equal(9, projected);
     }
 
     [LiveReportFact]
