@@ -95,38 +95,6 @@ check_launchd_conformance() {
     "$make_bin" -s -C "$REPOSITORY_ROOT" launchd-conformance-check
 }
 
-install_launchd_launchers() {
-  local make_bin="${1:-${FKST_MAKE_BIN:-}}"
-  if [[ -z "$make_bin" ]]; then
-    make_bin="$(command -v make)" \
-      || { printf 'hourly-maintenance: make is unavailable\n' >&2; return 2; }
-  fi
-  HOST_CONFIG="$HOST_CONFIG" "$make_bin" -s -C "$REPOSITORY_ROOT" \
-    maintenance-launcher-render \
-    supervise-launcher-render
-}
-
-ensure_launchd_services() {
-  local launch_agents_dir="${FKST_LAUNCH_AGENTS_DIR:-$HOME/Library/LaunchAgents}"
-  local domain="gui/$(id -u)" label installed
-  for label in "$FKST_MAINTENANCE_LAUNCHD_LABEL" "$FKST_LAUNCHD_LABEL"; do
-    if launchctl print "$domain/$label" >/dev/null 2>&1; then
-      continue
-    fi
-    installed="$launch_agents_dir/$label.plist"
-    if [[ ! -f "$installed" || -L "$installed" ]]; then
-      say "LAUNCHD-RELOAD-FAIL: $label absent; installed member unavailable: $installed"
-      return 1
-    fi
-    if launchctl bootstrap "$domain" "$installed" >/dev/null 2>&1; then
-      say "LAUNCHD-RELOAD: $label absent; bootstrap succeeded from $installed"
-    else
-      say "LAUNCHD-RELOAD-FAIL: $label absent; bootstrap failed from $installed"
-      return 1
-    fi
-  done
-}
-
 read_deployed_platform_revision() {
   grep -oE '[0-9a-f]{40}' "$FKST_HOST_ROOT/fkst.workspace.toml" 2>/dev/null \
     | head -1

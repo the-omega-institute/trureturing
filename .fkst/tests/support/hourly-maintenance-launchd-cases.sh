@@ -30,6 +30,43 @@ SH
     || fail "maintenance did not refresh both persistent launchd members"
 )
 
+missing_launchctl_skips_service_loading_and_logs() (
+  load_implementation || exit 1
+  local root output
+  root="$(mktemp -d -t hourly-maintenance-no-launchctl.XXXXXX)" || exit 1
+  trap "/bin/rm -rf '$root'" EXIT
+  output="$root/maintenance.out"
+  say() { printf '%s\n' "$*" >> "$output"; }
+
+  PATH="$root/bin" ensure_launchd_services \
+    || fail "host without launchctl did not skip service loading"
+  command grep -Fq \
+    'LAUNCHD-RELOAD-SKIP: launchctl unavailable; installed launcher bytes only' \
+    "$output" \
+    || fail "host without launchctl did not log the explicit loading skip"
+)
+
+canonical_render_installs_byte_identical_regular_member() (
+  local root launch_agents installed
+  root="$(mktemp -d -t maintenance-launcher-install.XXXXXX)" || exit 1
+  trap 'rm -rf "$root"' EXIT
+  write_host_contract_fixture "$root" second-host-bot integration-second-host
+  launch_agents="$root/LaunchAgents"
+  installed="$launch_agents/local.fkst.synthetic.maintenance.plist"
+  mkdir -p "$launch_agents"
+
+  env -u OUTPUT HOST_CONFIG="$FIXTURE_HOST_CONFIG" \
+    FKST_LAUNCH_AGENTS_DIR="$launch_agents" \
+    /bin/bash "$LAUNCHER_RENDERER" >/dev/null \
+    || fail "canonical render did not install the maintenance launcher"
+  [[ -f "$FIXTURE_LAUNCHER_PATH" && ! -L "$FIXTURE_LAUNCHER_PATH" ]] \
+    || fail "canonical rendered source is not a regular file"
+  [[ -f "$installed" && ! -L "$installed" ]] \
+    || fail "installed LaunchAgents member is not a regular file"
+  command cmp -s "$FIXTURE_LAUNCHER_PATH" "$installed" \
+    || fail "installed LaunchAgents member differs from rendered source"
+)
+
 launchd_conformance_failure_fails_maintenance_cycle() (
   load_implementation || exit 1
   local root output enumerator

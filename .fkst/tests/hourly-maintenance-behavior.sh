@@ -671,27 +671,6 @@ fictional_second_host_launcher_is_portable() (
     || fail "rendered launcher still invokes a host-local script copy"
 )
 
-canonical_render_installs_byte_identical_regular_member() (
-  local root launch_agents installed
-  root="$(mktemp -d -t maintenance-launcher-install.XXXXXX)" || exit 1
-  trap 'rm -rf "$root"' EXIT
-  write_host_contract_fixture "$root" second-host-bot integration-second-host
-  launch_agents="$root/LaunchAgents"
-  installed="$launch_agents/local.fkst.synthetic.maintenance.plist"
-  mkdir -p "$launch_agents"
-
-  env -u OUTPUT HOST_CONFIG="$FIXTURE_HOST_CONFIG" \
-    FKST_LAUNCH_AGENTS_DIR="$launch_agents" \
-    /bin/bash "$LAUNCHER_RENDERER" >/dev/null \
-    || fail "canonical render did not install the maintenance launcher"
-  [[ -f "$FIXTURE_LAUNCHER_PATH" && ! -L "$FIXTURE_LAUNCHER_PATH" ]] \
-    || fail "canonical rendered source is not a regular file"
-  [[ -f "$installed" && ! -L "$installed" ]] \
-    || fail "installed LaunchAgents member is not a regular file"
-  command cmp -s "$FIXTURE_LAUNCHER_PATH" "$installed" \
-    || fail "installed LaunchAgents member differs from rendered source"
-)
-
 launcher_conformance_compares_rendered_and_deployed_bytes() (
   local root deployed
   root="$(mktemp -d -t maintenance-launcher-conformance.XXXXXX)" || exit 1
@@ -780,6 +759,7 @@ run_test "restart timeout with launchd absent rolls back platform" restart_timeo
 run_test "unchanged PID remains unhealthy after restart budget" unchanged_pid_remains_unhealthy_after_restart_budget
 run_test "restart requires successful stop" restart_requires_successful_stop
 run_test "missing launchd service is bootstrapped and logged" missing_launchd_service_is_bootstrapped_and_logged
+run_test "missing launchctl skips service loading and logs" missing_launchctl_skips_service_loading_and_logs
 run_test "rollback failure is not reported as reverted" rollback_failure_is_not_reported_as_reverted
 run_test "pin-write rollback failure is not reported as reverted" pin_write_rollback_failure_is_not_reported_as_reverted
 run_test "maintenance delegates launchd conformance gate" maintenance_delegates_launchd_conformance_gate
