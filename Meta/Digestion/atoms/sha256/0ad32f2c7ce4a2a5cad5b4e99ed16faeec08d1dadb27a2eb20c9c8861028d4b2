@@ -1,0 +1,5 @@
+**引理 3.2(交计数)。** 对任意 S ⊆ A,|S| = s ≥ 1,有
+$$ \#\{g \in \mathcal{G} : \forall a \in S,\ g(a) = d_g\} = k^{s}\, n^{A(A-s)} .$$
+
+*证明。* 构造双射至参数集 Fix(f)^S × (Y^A)^{A∖S}。给定参数 (v, (g_a)_{a∉S}):定义 d ∈ Y^A 为 d(a) := v(a)(a ∈ S),d(a) := f(g_a(a))(a ∉ S);再令 g(a) := d(a ∈ S),g(a) := g_a(a ∉ S)。验证 d = d_g:当 a ∈ S,d_g(a) = f(g(a)(a)) = f(d(a)) = f(v(a)) = v(a) = d(a)(因 v(a) ∈ Fix(f));当 a ∉ S,d_g(a) = f(g_a(a)) = d(a)。故 g(a) = d = d_g 对 a ∈ S 成立。反之,任一满足事件之 g 唯一给出参数:v(a) := g(a)(a)(a ∈ S;由引理 3.1 落于 Fix(f),且 g(a) = d_g 迫使 S-列全等于公共函数 d_g,其 S-坐标为 v),自由列为 (g(a))_{a∉S}。两向互逆。∎
+
