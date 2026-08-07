@@ -359,15 +359,55 @@ public sealed class FileMapPolicyTests
             runtimeDisposition,
             "A-OUTPUT"));
         var inventory = new GeneratedArtifactIdentity(
-            "Generated/output.json",
-            "JsonEmitter",
-            "emit-check");
+            "Generated/output.json", "JsonEmitter", "emit-check", "A-OUTPUT");
 
         var findings = FileMapPolicy.InspectGeneratedInventory(manifest, [], [inventory]);
 
         Assert.Equal(
             expectsStaleFinding,
             findings.Any(static finding => finding.Code == "FILEMAP-GENERATED-STALE-INVENTORY"));
+    }
+
+    [Fact]
+    public void UntrackedRunLocalWithWrongProducerIsRejectedByTheRedFixture()
+    {
+        var manifest = Parse(DispositionEntry(
+            "Generated/output.json", "generated", "WrongEmitter", "reader", "emit-check",
+            "run-local", "A-OUTPUT"));
+        var inventory = new GeneratedArtifactIdentity(
+            "Generated/output.json", "JsonEmitter", "emit-check", "A-OUTPUT");
+
+        var findings = FileMapPolicy.InspectGeneratedInventory(manifest, [], [inventory]);
+
+        Assert.Contains(findings, static finding => finding.Code == "FILEMAP-GENERATED-PRODUCER");
+        Assert.Contains(findings, static finding => finding.Code == "FILEMAP-GENERATED-STALE-INVENTORY");
+    }
+
+    [Fact]
+    public void UntrackedRunLocalWithBroadGlobIsRejectedByTheRedFixture()
+    {
+        var manifest = Parse(DispositionEntry(
+            "Generated/*.json", "generated", "JsonEmitter", "reader", "emit-check",
+            "run-local", "A-OUTPUT"));
+        var inventory = new GeneratedArtifactIdentity(
+            "Generated/output.json", "JsonEmitter", "emit-check", "A-OUTPUT");
+
+        var findings = FileMapPolicy.InspectGeneratedInventory(manifest, [], [inventory]);
+
+        Assert.Contains(findings, static finding => finding.Code == "FILEMAP-GENERATED-LITERAL");
+        Assert.Contains(findings, static finding => finding.Code == "FILEMAP-GENERATED-STALE-INVENTORY");
+    }
+
+    [Fact]
+    public void RunLocalEntryMissingRequiredFieldIsRejectedByTheRedFixture()
+    {
+        var source = DispositionEntry(
+            "Generated/output.json", "generated", "JsonEmitter", "reader", "emit-check",
+            "run-local", "A-OUTPUT").Replace("mode = \"100644\"\n", string.Empty, StringComparison.Ordinal);
+
+        var exception = Assert.Throws<FormatException>(() => Parse(source));
+
+        Assert.Contains("mode", exception.Message, StringComparison.Ordinal);
     }
 
     [Theory]

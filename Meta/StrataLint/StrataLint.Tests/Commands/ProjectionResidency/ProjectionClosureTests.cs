@@ -87,10 +87,12 @@ public sealed class ProjectionClosureTests
     }
 
     [Fact]
-    public void RegistryGovernanceDocumentsRetainOnlyDeferredEchoProjection()
+    public void RegistryGovernanceDocumentsAreConsumersOfTheThreeProjections()
     {
         const string registry = """
             governance_documents:
+              - "Generated/DAG.md"
+              - "Generated/FILEMAP.md"
               - "Generated/echo-residual-summary.md"
             """;
         var found = RepositoryConsumerScanner.ScanRegistryGovernanceDocuments(
@@ -99,6 +101,8 @@ public sealed class ProjectionClosureTests
         Assert.Equal(
             new[]
             {
+                ("Generated/DAG.md", "Meta/registry.yaml", "registry:governance-documents"),
+                ("Generated/FILEMAP.md", "Meta/registry.yaml", "registry:governance-documents"),
                 ("Generated/echo-residual-summary.md", "Meta/registry.yaml", "registry:governance-documents"),
             },
             found.Select(static item => (item.ArtifactPath, item.ConsumerPath, item.Evidence)));

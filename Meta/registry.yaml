@@ -16,6 +16,8 @@ governance_documents:
   - "D5/S1/MAP.md"
   - "D5/S3/MAP.md"
   - "D5/X_Frontier/HeartsAuthorizations.md"
+  - "Generated/DAG.md"
+  - "Generated/FILEMAP.md"
   - "Generated/echo-residual-summary.md"
   - "Generated/truth-graph.v1.json"
   - "Golden/gate-authority-roots.toml"

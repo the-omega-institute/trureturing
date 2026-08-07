@@ -24,18 +24,18 @@ internal static class FileMapEmitter
                 throw new InvalidOperationException("FILEMAP projection writer is not byte deterministic.");
             }
 
-            if (check)
-            {
-                output.WriteLine("rebuilt twice: " + RelativePath);
-                return 0;
-            }
-
             var path = Path.Combine(repositoryRoot, RelativePath);
             var current = File.Exists(path) ? File.ReadAllBytes(path) : [];
             if (current.AsSpan().SequenceEqual(first.AsSpan()))
             {
                 output.WriteLine("checked: " + RelativePath);
                 return 0;
+            }
+
+            if (check)
+            {
+                error.WriteLine("out of date: " + RelativePath);
+                return 1;
             }
 
             var parent = Path.GetDirectoryName(path)

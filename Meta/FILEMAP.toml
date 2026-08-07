@@ -140,11 +140,9 @@ runtime_disposition = "committed-source"
 pattern = "Generated/DAG.md"
 artifact_id = "A-DAG"
 kind = "generated"
-mode = "100644"
 produced_by = "DagEmitter"
-consumed_by = ["run-handle-consumer"]
-history_requirement = "not-required"
-runtime_disposition = "run-local"
+consumed_by = ["reader"]
+runtime_disposition = "committed-source"
 verified_by = ["emit-check"]
 authority = "Lean"
 
@@ -152,11 +150,9 @@ authority = "Lean"
 pattern = "Generated/FILEMAP.md"
 artifact_id = "A-FILEMAP"
 kind = "generated"
-mode = "100644"
 produced_by = "FileMapEmitter"
-consumed_by = ["run-handle-consumer"]
-history_requirement = "not-required"
-runtime_disposition = "run-local"
+consumed_by = ["reader"]
+runtime_disposition = "committed-source"
 verified_by = ["emit-check"]
 authority = "FILEMAP"
 

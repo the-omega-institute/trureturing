@@ -209,9 +209,6 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
     public ExplicitCommandResult ProjectionClosure(IReadOnlyList<string> arguments) =>
         ProjectionClosureCommand.Run(repositoryRoot, arguments);
 
-    public ExplicitCommandResult ProjectionRun(IReadOnlyList<string> arguments) =>
-        RunHandleCommand.Run(repositoryRoot, arguments);
-
     public CommandResult Ingest(IReadOnlyList<string> arguments) =>
         scribeEmissionVerifier is null
             ? new CommandResult(
