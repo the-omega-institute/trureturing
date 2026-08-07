@@ -55,6 +55,9 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains(PerfReportScriptPath, Recipe(makefile, "perf-report"), StringComparison.Ordinal);
         Assert.Contains("Golden/perf-budgets.toml", Recipe(makefile, "perf-report"), StringComparison.Ordinal);
         Assert.Contains(WorktreeInitScriptPath, Recipe(makefile, "worktree"), StringComparison.Ordinal);
+        Assert.Equal(
+            $"\t@/bin/bash {PrShepherdScriptPath} watch $(INTERVAL) $(CYCLES)",
+            Recipe(makefile, "pr-watch"));
     }
 
     [Fact]
