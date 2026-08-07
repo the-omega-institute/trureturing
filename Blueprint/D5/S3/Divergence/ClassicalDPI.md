@@ -6,7 +6,7 @@ The finite classical data-processing identity from two decompositions of joint r
 
 **Theorem 1.1 (Joint relative entropy has two chain decompositions).**
 
-$$\begin{gathered}D(a\Vert\Vertb):=\sum_{i}a(i) \log(\frac{a(i)}{b(i)}),\\(Wr)(y):=\sum_{x}r(x)W(x, y),\\\widehat{r}_{y}(x):=\frac{r(x)W(x, y)}{(Wr)(y)};\\\forall X, Y\ [\operatorname{Fintype}(X)] [\operatorname{Nonempty}(X)] [\operatorname{Fintype}(Y)],\\\forall p, q: X\to\mathbb{R}, W: X\toY\to\mathbb{R},\\((\forall x: X, 0<p(x)) \land \sum_{x}p(x)=1) \Rightarrow\\((\forall x: X, 0<q(x)) \land \sum_{x}q(x)=1) \Rightarrow\\((\forall x: X, y: Y, 0<W(x, y)) \land (\forall x: X, \sum_{y}W(x, y)=1)) \Rightarrow\\D(p\Vert\Vertq)=D(Wp\Vert\VertWq)+\sum_{y}(Wp)(y)D(\widehat{p}_{y}\Vert\Vert\widehat{q}_{y}).\end{gathered}$$
+$$\begin{gathered}D(a\Vert\Vert b):=\sum_{i}a(i) \log(\frac{a(i)}{b(i)}),\\(Wr)(y):=\sum_{x}r(x)W(x, y),\\\widehat{r}_{y}(x):=\frac{r(x)W(x, y)}{(Wr)(y)};\\\forall X, Y\ [\operatorname{Fintype}(X)] [\operatorname{Nonempty}(X)] [\operatorname{Fintype}(Y)],\\\forall p, q: X\to\mathbb{R}, W: X\to Y\to\mathbb{R},\\((\forall x: X, 0<p(x)) \land \sum_{x}p(x)=1) \Rightarrow\\((\forall x: X, 0<q(x)) \land \sum_{x}q(x)=1) \Rightarrow\\((\forall x: X, y: Y, 0<W(x, y)) \land (\forall x: X, \sum_{y}W(x, y)=1)) \Rightarrow\\D(p\Vert\Vert q)=D(Wp\Vert\Vert Wq)+\sum_{y}(Wp)(y)D(\widehat{p}_{y}\Vert\Vert\widehat{q}_{y}).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Divergence/ClassicalDPI.classical_dpi_identity` (`✓ std3`). ∎
 
