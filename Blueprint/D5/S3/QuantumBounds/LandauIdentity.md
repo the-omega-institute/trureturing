@@ -8,7 +8,7 @@ The algebraic Landau identity for the finite-dimensional CHSH operator.
 
 $$\forall m, n,\ [\operatorname{Fintype}(m)] [\operatorname{DecidableEq}(m)] [\operatorname{Fintype}(n)] [\operatorname{DecidableEq}(n)],\ \forall A_{0}, A_{1}\in M_{m}(\mathbb{C}),\ \forall B_{0}, B_{1}\in M_{n}(\mathbb{C}),\ (\operatorname{Hermitian}(A_{0}) \land A_{0}^{2}=I_{m}) \land (\operatorname{Hermitian}(A_{1}) \land A_{1}^{2}=I_{m}) \land (\operatorname{Hermitian}(B_{0}) \land B_{0}^{2}=I_{n}) \land (\operatorname{Hermitian}(B_{1}) \land B_{1}^{2}=I_{n}) \Rightarrow \operatorname{let} S:=\operatorname{kronecker}(A_{0}, B_{0})+\operatorname{kronecker}(A_{0}, B_{1})+\operatorname{kronecker}(A_{1}, B_{0})-\operatorname{kronecker}(A_{1}, B_{1}),\ C:=-\operatorname{kronecker}((A_{0} A_{1}-A_{1} A_{0}), (B_{0} B_{1}-B_{1} B_{0}));\ S^{2}=4\cdot I_{m\times n}+C$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/LandauIdentity.landau_identity` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/QuantumBounds/LandauIdentity.landau_identity` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -18,4 +18,4 @@ Let m and n be finite index types with decidable equality. Let A0 and A1 be Herm
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/LandauIdentity.landau_identity`
+- Truth anchor: `D5/S3/QuantumBounds/LandauIdentity.landau_identity`

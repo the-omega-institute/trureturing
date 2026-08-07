@@ -2,20 +2,20 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum;
+namespace StrataLint.Scribe.Blueprint.D5.S3.QuantumBounds;
 
 internal sealed class LandauIdentityDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
         Header(
-            "D5/S3/Quantum/LandauIdentity",
+            "D5/S3/QuantumBounds/LandauIdentity",
             "The algebraic Landau identity for the finite-dimensional CHSH operator."),
         H("Landau Identity for Finite Matrix Observables"),
         Blocks(
             DocumentBlock.Describe.Theorem(
                 DescribeId.Create("the-chsh-square-is-governed-by-local-commutators"),
                 H("The CHSH square is governed by local commutators"),
-                LeanTheorem("D5/S3/Quantum/LandauIdentity.landau_identity"),
+                LeanTheorem("D5/S3/QuantumBounds/LandauIdentity.landau_identity"),
                 Disp(Seq(
                     Forall, Sp, F.Id("m"), Comma, Sp, F.Id("n"), Comma, Esc,
                     OpenBracket,

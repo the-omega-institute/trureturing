@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/LandauIdentity
+/- GID: D5/S3/QuantumBounds/LandauIdentity
    generality: G
-   mirror-B: D5/B/S3/Quantum/LandauIdentity
+   mirror-B: D5/B/S3/QuantumBounds/LandauIdentity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Prove the algebraic Landau identity for finite complex matrix observables. -/
@@ -22,7 +22,7 @@
 
 import Mathlib
 
-namespace D5.S3.Quantum.LandauIdentity
+namespace D5.S3.QuantumBounds.LandauIdentity
 
 open scoped Kronecker
 
@@ -58,4 +58,4 @@ theorem landau_identity {m n : Type*}
     Matrix.one_kronecker_one]
   abel
 
-end D5.S3.Quantum.LandauIdentity
+end D5.S3.QuantumBounds.LandauIdentity
