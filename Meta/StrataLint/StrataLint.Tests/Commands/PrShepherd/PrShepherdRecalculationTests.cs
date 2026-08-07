@@ -238,6 +238,9 @@ public sealed partial class PrShepherdRecalculationTests
         internal bool InfrastructureStateExists =>
             File.Exists(Path.Combine(StateDirectory, "infrastructure"));
 
+        internal bool RecalculationStateExists(int pullRequest) =>
+            File.Exists(Path.Combine(StateDirectory, $"recalculate-{pullRequest}"));
+
         internal bool DerivedLeaseExists =>
             Directory.Exists(Path.Combine(StateDirectory, "derived-fifo.lease"));
 
@@ -329,19 +332,44 @@ public sealed partial class PrShepherdRecalculationTests
                 File.Exists(log) ? File.ReadAllText(log) : string.Empty);
         }
 
-        internal ShepherdResult RunWatch(bool noChecks = false) =>
-            RunWatchCommand("watch", ["0", "1"], noChecks, TimeSpan.FromSeconds(30));
+        internal ShepherdResult RunWatch(
+            bool noChecks = false,
+            bool dryRun = true,
+            IReadOnlyDictionary<string, string>? environment = null) =>
+            RunWatchCommand(
+                "watch",
+                ["0", "1"],
+                noChecks,
+                TimeSpan.FromSeconds(30),
+                dryRun,
+                environment);
 
-        internal ShepherdResult RunStart(int intervalSeconds = 30, int maxCycles = 1)
+        internal ShepherdResult RunStart(
+            int intervalSeconds = 30,
+            int maxCycles = 1,
+            bool dryRun = true,
+            IReadOnlyDictionary<string, string>? environment = null)
         {
             var result = RunWatchCommand(
                 "start",
                 [intervalSeconds.ToString(), maxCycles.ToString()],
                 noChecks: false,
-                TimeSpan.FromSeconds(15));
+                TimeSpan.FromSeconds(15),
+                dryRun,
+                environment);
             if (File.Exists(WatchOwnerPath)) startedWatchPid = ReadOwnerPid();
             return result;
         }
+
+        internal ShepherdResult RunTrackedSweep(
+            IReadOnlyDictionary<string, string>? environment = null) =>
+            RunWatchCommand(
+                "sweep",
+                [],
+                noChecks: false,
+                TimeSpan.FromSeconds(30),
+                dryRun: false,
+                environment);
 
         internal ShepherdResult RunStatus() =>
             RunWatchCommand("status", [], noChecks: false, TimeSpan.FromSeconds(10));
@@ -350,7 +378,9 @@ public sealed partial class PrShepherdRecalculationTests
             string command,
             IReadOnlyCollection<string> commandArguments,
             bool noChecks,
-            TimeSpan timeout)
+            TimeSpan timeout,
+            bool dryRun = true,
+            IReadOnlyDictionary<string, string>? environment = null)
         {
             EnsureTrackedWatchScripts();
             var script = Path.Combine(repository, ShepherdScriptPath);
@@ -386,14 +416,25 @@ public sealed partial class PrShepherdRecalculationTests
                 "PR_TEST_FAIL_MERGE=0",
                 "PR_TEST_PAUSE_WORKTREE=0",
                 "PR_TEST_DELAY_LOCK_READ=0",
+                "PR_TEST_MOVE_HEAD_DURING_FETCH=0",
+                "PR_TEST_MOVE_BASE_DURING_FETCH=0",
+                $"PR_TEST_MOVED_BASE={MovedBaseHead}",
                 $"PR_TEST_LOCK_READ_MARKER={Path.Combine(temporary.Path, "lock-read-marker")}",
                 "PR_TEST_WATCH=1",
                 $"PR_TEST_NO_CHECKS={(noChecks ? "1" : "0")}",
-                "SHEPHERD_DRYRUN=1",
+                $"SHEPHERD_DRYRUN={(dryRun ? "1" : "0")}",
                 "/bin/bash",
                 script,
                 command,
             };
+            if (environment is not null)
+            {
+                var commandIndex = arguments.IndexOf("/bin/bash");
+                foreach (var (name, value) in environment)
+                {
+                    arguments.Insert(commandIndex++, $"{name}={value}");
+                }
+            }
             arguments.AddRange(commandArguments);
             var result = BoundedProcessRunner.Run(
                 "/usr/bin/env",
@@ -620,6 +661,15 @@ public sealed partial class PrShepherdRecalculationTests
 
         internal void SetFailingGhOperation(string operation) => failingGhOperation = operation;
 
+        internal void CommitTrackedHelperChange(string marker)
+        {
+            EnsureTrackedWatchScripts();
+            var helper = Path.Combine(repository, ShepherdActionsScriptPath);
+            File.AppendAllText(helper, $"\n# {marker}\n", new UTF8Encoding(false));
+            Git(repository, "add", ShepherdActionsScriptPath);
+            Git(repository, "commit", "-m", marker);
+        }
+
         internal string WatchState() => File.ReadAllText(WatchStatePath);
 
         internal void WaitForWatchPhase(string phase)
@@ -656,6 +706,62 @@ public sealed partial class PrShepherdRecalculationTests
 
         internal void CorruptWatchOwner() =>
             File.WriteAllText(WatchOwnerPath, "unverifiable-owner\n", new UTF8Encoding(false));
+
+        internal void ReplaceWatchOwner(int pid)
+        {
+            var processStart = BoundedProcessRunner.Run(
+                "/bin/ps",
+                ["-p", pid.ToString(), "-o", "lstart="],
+                repository,
+                TimeSpan.FromSeconds(2),
+                4 * 1024);
+            Assert.Equal(0, processStart.ExitCode);
+            File.WriteAllText(
+                WatchOwnerPath,
+                "schema=pr-watch-owner-v1\n"
+                + $"pid={pid}\n"
+                + $"process_start={Encoding.UTF8.GetString(processStart.StandardOutput).Trim()}\n"
+                + $"canonical_script={Path.Combine(repository, ShepherdScriptPath)}\n",
+                new UTF8Encoding(false));
+        }
+
+        internal void RemoveWatchOwner() => File.Delete(WatchOwnerPath);
+
+        internal void WaitForHangingProcesses()
+        {
+            for (var attempt = 0; attempt < 250; attempt++)
+            {
+                if (HangingProcessIds().Length >= 2) return;
+                Thread.Sleep(20);
+            }
+            Assert.Fail($"bounded command did not start\n{(File.Exists(log) ? File.ReadAllText(log) : "log missing")}");
+        }
+
+        internal TimeSpan TerminateWatch(TimeSpan maximumWait)
+        {
+            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+            var pid = startedWatchPid;
+            Assert.True(pid > 0, "watch owner pid is unavailable");
+            _ = BoundedProcessRunner.Run(
+                "/bin/kill",
+                ["-TERM", pid.ToString()],
+                repository,
+                TimeSpan.FromSeconds(2),
+                4 * 1024);
+            while (stopwatch.Elapsed < maximumWait && IsProcessAlive(pid)) Thread.Sleep(20);
+            stopwatch.Stop();
+            if (IsProcessAlive(pid))
+            {
+                _ = BoundedProcessRunner.Run(
+                    "/bin/kill",
+                    ["-KILL", pid.ToString()],
+                    repository,
+                    TimeSpan.FromSeconds(2),
+                    4 * 1024);
+            }
+            startedWatchPid = 0;
+            return stopwatch.Elapsed;
+        }
 
         internal void StopWatch(int? ownerPid = null)
         {

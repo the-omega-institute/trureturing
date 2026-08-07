@@ -40,7 +40,7 @@ cleanup_implementation="$(command sed -n \
 command git -C "$checkout" init --initial-branch=dev >/dev/null
 command git -C "$checkout" config user.name "PR Watch Fixture"
 command git -C "$checkout" config user.email "pr-watch@example.invalid"
-command git -C "$checkout" add Meta/StrataLint/scripts/pr-shepherd.sh
+command git -C "$checkout" add Meta/StrataLint/scripts
 command git -C "$checkout" commit -m initial >/dev/null
 
 cat > "$root/bin/ps" <<'SH'
@@ -87,6 +87,17 @@ run_watch() {
   PR_WATCH_TEST_SCRIPT="$script" \
     /bin/bash "$script" watch "$@"
 }
+
+printf '\n# uncommitted helper must block immutable reload\n' \
+  >> "$checkout/Meta/StrataLint/scripts/shepherd/pr-shepherd-actions.sh"
+if run_watch 0 1 >"$root/untracked-helper-output" 2>&1; then
+  printf 'watch sourced an untracked helper module\n' >&2
+  exit 1
+fi
+command grep -q 'does not match tracked HEAD' "$log" \
+  || { printf 'watch did not diagnose the untracked helper module\n' >&2; exit 1; }
+command git -C "$checkout" restore \
+  Meta/StrataLint/scripts/shepherd/pr-shepherd-actions.sh
 
 run_watch 0 2 >"$output" 2>&1 \
   || { command sed -n '1,120p' "$output" >&2; exit 1; }
@@ -212,4 +223,4 @@ run_watch 0 1 >"$root/dead-reclaimer-output" 2>&1 \
 ! command git -C "$reclaim_repository" show-ref --verify --quiet "$reclaim_ref" \
   || { printf 'watch left the recovered reclaim claim active\n' >&2; exit 1; }
 
-printf 'pr-shepherd watch freshness: 6 passed, 0 failed, 6 total\n'
+printf 'pr-shepherd watch freshness: 7 passed, 0 failed, 7 total\n'
