@@ -48,6 +48,52 @@ public sealed class FileMapPolicyTests
     }
 
     [Fact]
+    public void ComputationalProjectionRegistrationsAgreeAcrossCanonicalSources()
+    {
+        var expectedPaths = new HashSet<string>(
+            [
+                ScribeEmitter.AttestationRelativePath,
+                "Generated/truth-graph.v1.json",
+                CanonicalAnchorCatalogWriter.RelativePath,
+            ],
+            StringComparer.Ordinal);
+        var root = RepositoryLayout.FindRoot();
+        var manifest = FileMapLoader.LoadRepository(root);
+        var registry = Assert.IsType<RegistryLoadOutcome.Accepted>(
+            RegistryLoader.Load(
+                File.ReadAllBytes(Path.Combine(root, "Meta", "registry.yaml")),
+                File.ReadAllBytes(Path.Combine(root, "Meta", "domains.yaml"))));
+        var artifacts = GeneratedArtifactInventory.All
+            .Where(artifact => expectedPaths.Contains(artifact.Path))
+            .ToArray();
+
+        Assert.Equal(expectedPaths.Count, artifacts.Length);
+        Assert.All(artifacts, artifact =>
+        {
+            var entry = Assert.Single(manifest.Match(artifact.Path));
+            Assert.Equal(FileMapKind.Generated, entry.Kind);
+            Assert.Equal(artifact.Producer, entry.ProducedBy);
+            Assert.Contains(artifact.VerifiedBy, entry.VerifiedBy, StringComparer.Ordinal);
+        });
+
+        var topLevelProjectionPaths = expectedPaths
+            .Where(static path => path.StartsWith("Generated/", StringComparison.Ordinal))
+            .Select(RepoPath.CreateKnown)
+            .ToArray();
+        Assert.All(topLevelProjectionPaths, path =>
+            Assert.Contains(path, registry.Policy.GovernanceDocuments));
+
+        var anchorCatalog = Assert.Single(
+            artifacts,
+            static artifact => Path.GetFileName(artifact.Path) == "anchor-catalog.v1.json");
+        Assert.DoesNotContain(
+            RepoPath.CreateKnown(anchorCatalog.Path),
+            registry.Policy.GovernanceDocuments);
+        var tower = File.ReadAllText(Path.Combine(root, "Meta", "StrataLint", "TOWER.yaml"));
+        Assert.Contains("      - " + anchorCatalog.Path, tower, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void PerformanceBudgetsHaveARegisteredGoldenDataResidence()
     {
         const string value = "Golden/perf-budgets.toml";

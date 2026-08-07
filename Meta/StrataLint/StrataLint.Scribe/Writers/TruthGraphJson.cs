@@ -18,7 +18,10 @@ public sealed record TruthGraphProvenance(
 
 public static class TruthGraphSnapshotIdentity
 {
-    private static readonly byte[] SelfMarker = Encoding.UTF8.GetBytes("truth-graph-self-projection-v1");
+    private static readonly byte[] ProjectionMarker = Encoding.UTF8.GetBytes("scribe-generated-projection-v1");
+    private static readonly ImmutableHashSet<string> GeneratedPaths = GeneratedArtifactInventory.All
+        .Select(static artifact => artifact.Path)
+        .ToImmutableHashSet(StringComparer.Ordinal);
 
     public static string Compute(RepositorySnapshot snapshot)
     {
@@ -28,8 +31,8 @@ public static class TruthGraphSnapshotIdentity
         foreach (var file in snapshot.Files.Values.OrderBy(static file => file.Path.Value, StringComparer.Ordinal))
         {
             Append(hash, file.Path.Value);
-            var contentHash = file.Path.Value == DagEmitter.TruthGraphRelativePath
-                ? SHA256.HashData(SelfMarker)
+            var contentHash = GeneratedPaths.Contains(file.Path.Value)
+                ? SHA256.HashData(ProjectionMarker)
                 : SHA256.HashData(file.RawBytes.AsSpan());
             Append(hash, contentHash);
         }
