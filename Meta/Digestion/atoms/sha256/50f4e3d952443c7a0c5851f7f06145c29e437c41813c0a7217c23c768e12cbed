@@ -1,0 +1,6 @@
+**定理 2.1(经典 DPI 恒等式)[证]。**设信道 W(y|x),p, q 为输入分布,后验 p̂_y(x) = p(x)W(y|x)/(Wp)(y),q̂_y 同。则
+
+$$D(p\|q) = D(Wp\|Wq) + \mathbb{E}_{y\sim Wp}\, D(\hat p_y \| \hat q_y).$$
+
+*证明。*对联合分布 P(x,y) = p(x)W(y|x)、Q(x,y) = q(x)W(y|x) 之散度作两种链式分解。先 X 后 Y:D(P‖Q) = D(p‖q) + E_x D(W(·|x)‖W(·|x)) = D(p‖q)(同信道,第二项零)。先 Y 后 X:D(P‖Q) = D(Wp‖Wq) + E_{y~Wp} D(p̂_y‖q̂_y)。联立即得。∎
+

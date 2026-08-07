@@ -1,0 +1,2 @@
+**定义 11.1。**障碍高 B(ρ) = −ln det ρ;其 Bregman 散度(log-det 散度)D_ld(ρ‖σ) = Tr(σ⁻¹ρ) − ln det(σ⁻¹ρ) − d。
+
