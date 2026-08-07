@@ -20,6 +20,7 @@ public sealed class DocumentDiscoveryTests
         Assert.Contains("D5/S3/Quantum/GNSMatrix", census.ReceiptFreeDocumentGids);
         Assert.Contains("D5/S3/Quantum/ChannelFixedState", census.ReceiptFreeDocumentGids);
         Assert.Contains("D5/S3/Quantum/DoubleArtanhBounds", census.ReceiptFreeDocumentGids);
+        Assert.Contains("D5/S3/Quantum/MatrixInversion", census.ReceiptFreeDocumentGids);
         Assert.Contains("D5/S1/Scale/CarrierFoundations", census.ReceiptBoundDocumentGids);
     }
 
