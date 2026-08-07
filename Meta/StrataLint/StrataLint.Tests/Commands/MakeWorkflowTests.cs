@@ -258,7 +258,7 @@ public sealed partial class MakeWorkflowTests
 
         Assert.Contains("make -C candidate dotnet", workflow, StringComparison.Ordinal);
         Assert.Contains("make -C candidate test", workflow, StringComparison.Ordinal);
-        Assert.Contains("make -C candidate lua-test", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("make -C candidate lua-test", workflow, StringComparison.Ordinal);
         Assert.Contains("make -C candidate selftest", workflow, StringComparison.Ordinal);
         Assert.Contains("make lua-test", preflight, StringComparison.Ordinal);
         Assert.Contains("make -C \"$CANDIDATE_ROOT\" emit-check", localGate, StringComparison.Ordinal);
