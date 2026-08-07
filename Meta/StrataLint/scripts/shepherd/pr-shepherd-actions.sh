@@ -110,8 +110,8 @@ dryrun_recalculation() {
   log "DRYRUN #$num run make emit"
   log "DRYRUN #$num run make ingest BASE=origin/dev"
   log "DRYRUN #$num run echo-verify --emit --base origin/dev (atomic install)"
+  log "DRYRUN #$num commit/re-emit to fixed point (max 3 rounds): $COMMIT_SUBJECT"
   log "DRYRUN #$num run make emit-check BASE=origin/dev"
-  log "DRYRUN #$num commit: $COMMIT_SUBJECT"
   log "DRYRUN #$num push HEAD:refs/heads/$head (non-force)"
 }
 prepare_worktree() {
@@ -307,6 +307,10 @@ run_derivation_chain() {
     rm -rf "$isolated_home"
     log "SWEEP #$num ledger-append 失败,不 push"; return 1
   fi
+  if ! converge_truth_graph "$num" "$workspace" "$isolated_home"; then
+    rm -rf "$isolated_home"
+    return 1
+  fi
   if ! run_credentialless_bounded emit-check "$isolated_home" \
     make -C "$workspace" --no-print-directory emit-check BASE="$REMOTE/dev"; then
     set_bounded_failure emit-check
@@ -375,20 +379,6 @@ recalculate_pr_locked() {
   merge_dev "$num" "$head" "$workspace" \
     || { [[ -n "$LAST_FAILURE_CLASS" ]] || set_exit_failure merge-dev; return 1; }
   run_derivation_chain "$num" "$workspace" || return 1
-  if ! run_git_bounded add "$workspace" add -A; then
-    set_bounded_failure add
-    log "SWEEP #$num 派生物 add 失败,不 push"
-    return 1
-  fi
-  if ! run_git_bounded commit "$workspace" \
-    -c core.hooksPath=/dev/null \
-    -c user.name=pr-shepherd \
-    -c user.email=pr-shepherd@users.noreply.github.com \
-    commit --allow-empty -m "$COMMIT_SUBJECT" >/dev/null; then
-    set_bounded_failure commit
-    log "SWEEP #$num 派生物 commit 失败,不 push"
-    return 1
-  fi
   if ! run_bounded_capture push_output git push "$GIT_TIMEOUT_SECONDS" \
       /bin/bash -c '
         workspace="$1"; remote="$2"; head="$3"
