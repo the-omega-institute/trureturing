@@ -140,13 +140,26 @@ public sealed partial class PrShepherdRecalculationTests
                     fi
                     ;;
                   emit)
+                    count=0
+                    [[ ! -f "$PR_TEST_CALLS.emit-count" ]] \
+                      || count="$(cat "$PR_TEST_CALLS.emit-count")"
+                    count=$((count + 1))
+                    printf '%s' "$count" > "$PR_TEST_CALLS.emit-count"
+                    round="$count"
+                    if (( round > PR_TEST_TRUTH_GRAPH_DIRTY_ROUNDS )); then
+                      round="$PR_TEST_TRUTH_GRAPH_DIRTY_ROUNDS"
+                    fi
+                    printf 'emit:%s:%s\n' "$count" "$(git -C "$root" rev-parse HEAD)" \
+                      >> "$PR_TEST_CALLS.fixed-point"
                     if [[ "${PR_TEST_LEDGER_CONFLICT:-0}" == 1 ]]; then
-                      cmp -s "$root/Generated/dev-choice.md" \
-                        <(git -C "$root" show origin/dev:Generated/dev-choice.md) || exit 81
-                      printf 'emit:dev-projection\n' >> "$PR_TEST_CALLS.ledger"
+                      if [[ "$count" == 1 ]]; then
+                        cmp -s "$root/Generated/dev-choice.md" \
+                          <(git -C "$root" show origin/dev:Generated/dev-choice.md) || exit 81
+                        printf 'emit:dev-projection\n' >> "$PR_TEST_CALLS.ledger"
+                      fi
                     fi
                     mkdir -p "$root/Generated"
-                    printf 'derived artifact\n' > "$root/Generated/artifact.md"
+                    printf 'truth graph round %s\n' "$round" > "$root/Generated/artifact.md"
                     if [[ -f "$root/Generated/dev-choice.md" ]]; then
                       printf 'reemitted choice\n' > "$root/Generated/dev-choice.md"
                     fi

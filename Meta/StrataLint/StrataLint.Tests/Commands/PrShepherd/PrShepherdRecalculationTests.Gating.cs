@@ -23,8 +23,8 @@ public sealed partial class PrShepherdRecalculationTests
             "DRYRUN #1 run make emit",
             "DRYRUN #1 run make ingest BASE=origin/dev",
             "DRYRUN #1 run echo-verify --emit --base origin/dev (atomic install)",
+            $"DRYRUN #1 commit/re-emit to fixed point (max 3 rounds): {CommitSubject}",
             "DRYRUN #1 run make emit-check BASE=origin/dev",
-            $"DRYRUN #1 commit: {CommitSubject}",
             "DRYRUN #1 push HEAD:refs/heads/feature (non-force)");
     }
 
@@ -143,7 +143,7 @@ public sealed partial class PrShepherdRecalculationTests
         Assert.NotEqual(fixture.GithubBaseRefOid, fixture.BaseHead);
         Assert.NotEqual(fixture.OriginalHead, fixture.RemoteHead());
         Assert.Equal(
-            ["worktree", "lean-report", "emit", "ingest", "echo-verify", "ledger-append", "emit-check", "push"],
+            ["worktree", "lean-report", "emit", "ingest", "echo-verify", "ledger-append", "emit", "emit-check", "push"],
             fixture.MutationCalls());
         Assert.Contains("RECALCULATE -> 本地 merge+regen+push 完成", result.Log);
     }

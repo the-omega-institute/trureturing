@@ -61,6 +61,7 @@ public sealed partial class PrShepherdRecalculationTests
                 "ingest",
                 "echo-verify",
                 "ledger-append",
+                "emit",
                 "emit-check",
                 "push",
             ],
@@ -123,6 +124,7 @@ public sealed partial class PrShepherdRecalculationTests
                 "emit",
                 "ingest",
                 "echo-verify",
+                "emit",
                 "emit-check",
                 "push",
             ],
@@ -170,6 +172,7 @@ public sealed partial class PrShepherdRecalculationTests
                 "emit",
                 "ingest",
                 "echo-verify",
+                "emit",
                 "emit-check",
             ],
             fixture.MutationCalls());

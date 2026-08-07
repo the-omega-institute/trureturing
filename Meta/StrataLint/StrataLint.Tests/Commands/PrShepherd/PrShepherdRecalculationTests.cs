@@ -11,8 +11,9 @@ public sealed partial class PrShepherdRecalculationTests
 
     private const string ShepherdLedgerScriptPath =
         "Meta/StrataLint/scripts/shepherd/pr-shepherd-ledger.sh";
-    private const string CommitSubject =
-        "recompute derivations after dev advance (auto, pr-shepherd)";
+    private const string ShepherdFixedPointScriptPath =
+        "Meta/StrataLint/scripts/shepherd/pr-shepherd-fixed-point.sh";
+    private const string CommitSubject = "recompute the truth graph";
 
     private static void AssertInOrder(string text, params string[] fragments)
     {
@@ -52,7 +53,8 @@ public sealed partial class PrShepherdRecalculationTests
         return string.Join(
             '\n',
             File.ReadAllText(Path.Combine(root, ShepherdScriptPath)),
-            File.ReadAllText(Path.Combine(root, ShepherdLeaseScriptPath)));
+            File.ReadAllText(Path.Combine(root, ShepherdLeaseScriptPath)),
+            File.ReadAllText(Path.Combine(root, ShepherdFixedPointScriptPath)));
     }
 
     private sealed partial class ShepherdFixture : IDisposable
@@ -78,6 +80,7 @@ public sealed partial class PrShepherdRecalculationTests
         private readonly bool staleBaseRefOid;
         private readonly bool moveHeadDuringFetch;
         private readonly bool moveBaseDuringFetch;
+        private readonly int truthGraphDirtyRounds;
         private int devAdvance;
 
         internal ShepherdFixture(
@@ -94,7 +97,8 @@ public sealed partial class PrShepherdRecalculationTests
             string graphqlRemaining = "5000",
             bool staleBaseRefOid = false,
             bool moveHeadDuringFetch = false,
-            bool moveBaseDuringFetch = false)
+            bool moveBaseDuringFetch = false,
+            int truthGraphDirtyRounds = 1)
         {
             this.failingTarget = failingTarget;
             this.moveHeadBeforePush = moveHeadBeforePush;
@@ -108,6 +112,7 @@ public sealed partial class PrShepherdRecalculationTests
             this.staleBaseRefOid = staleBaseRefOid;
             this.moveHeadDuringFetch = moveHeadDuringFetch;
             this.moveBaseDuringFetch = moveBaseDuringFetch;
+            this.truthGraphDirtyRounds = truthGraphDirtyRounds;
             origin = Path.Combine(temporary.Path, "origin.git");
             repository = Path.Combine(temporary.Path, "repository");
             seed = Path.Combine(temporary.Path, "seed");
@@ -258,6 +263,7 @@ public sealed partial class PrShepherdRecalculationTests
                 $"PR_TEST_MOVE_HEAD_DURING_FETCH={(moveHeadDuringFetch ? "1" : "0")}",
                 $"PR_TEST_MOVE_BASE_DURING_FETCH={(moveBaseDuringFetch ? "1" : "0")}",
                 $"PR_TEST_MOVED_BASE={MovedBaseHead}",
+                $"PR_TEST_TRUTH_GRAPH_DIRTY_ROUNDS={truthGraphDirtyRounds}",
                 $"PR_TEST_LOCK_READ_MARKER={Path.Combine(temporary.Path, "lock-read-marker")}",
                 $"SHEPHERD_DRYRUN={(dryRun ? "1" : "0")}",
                 $"PR_TEST_GRAPHQL_REMAINING={graphqlRemaining}",
@@ -296,7 +302,15 @@ public sealed partial class PrShepherdRecalculationTests
             File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdLeaseScriptPath), leaseScript);
             var ledgerScript = Path.Combine(repository, ShepherdLedgerScriptPath);
             File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdLedgerScriptPath), ledgerScript);
-            Git(repository, "add", ShepherdScriptPath, ShepherdLeaseScriptPath, ShepherdLedgerScriptPath);
+            var fixedPointScript = Path.Combine(repository, ShepherdFixedPointScriptPath);
+            File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdFixedPointScriptPath), fixedPointScript);
+            Git(
+                repository,
+                "add",
+                ShepherdScriptPath,
+                ShepherdLeaseScriptPath,
+                ShepherdLedgerScriptPath,
+                ShepherdFixedPointScriptPath);
             Git(repository, "commit", "-m", "track pr-shepherd fixture");
             var home = Path.Combine(temporary.Path, "home");
             Directory.CreateDirectory(home);
@@ -512,6 +526,11 @@ public sealed partial class PrShepherdRecalculationTests
 
         internal string[] LedgerObservations() =>
             File.Exists(calls + ".ledger") ? File.ReadAllLines(calls + ".ledger") : [];
+
+        internal string[] FixedPointObservations() =>
+            File.Exists(calls + ".fixed-point")
+                ? File.ReadAllLines(calls + ".fixed-point")
+                : [];
 
         internal void ClearMutationCalls() => File.Delete(calls);
 

@@ -36,7 +36,7 @@ DERIVED_LEASE_ACQUIRED_AT=""
 FROZEN_LEDGER_CONFLICT=0
 FROZEN_LEDGER_PATH="Meta/StrataLint/Golden/Frozen/events.jsonl"
 TRURETURING_ROOT_PATH="Trureturing.lean"
-COMMIT_SUBJECT="recompute derivations after dev advance (auto, pr-shepherd)"
+COMMIT_SUBJECT="recompute the truth graph"
 ORIGINAL_HOME="${HOME:-/tmp}"
 WATCH_LOADED_BLOB="${PR_SHEPHERD_WATCH_LOADED_BLOB:-}"
 WATCH_PREVIOUS_SCRIPT="${PR_SHEPHERD_WATCH_PREVIOUS_SCRIPT:-}"
@@ -115,6 +115,7 @@ is_derived_conflict() {
 }
 source "$(cd "$(dirname "$SCRIPT_PATH")" && pwd -P)/shepherd/pr-shepherd-lease.sh"
 source "$(cd "$(dirname "$SCRIPT_PATH")" && pwd -P)/shepherd/pr-shepherd-ledger.sh"
+source "$(cd "$(dirname "$SCRIPT_PATH")" && pwd -P)/shepherd/pr-shepherd-fixed-point.sh"
 branch_slug() {
   local branch="$1" slug digest
   slug="$(printf '%s' "$branch" | sed 's#[^A-Za-z0-9._-]#-#g')"
@@ -132,8 +133,8 @@ dryrun_recalculation() {
   log "DRYRUN #$num run make emit"
   log "DRYRUN #$num run make ingest BASE=origin/dev"
   log "DRYRUN #$num run echo-verify --emit --base origin/dev (atomic install)"
+  log "DRYRUN #$num commit/re-emit to fixed point (max 3 rounds): $COMMIT_SUBJECT"
   log "DRYRUN #$num run make emit-check BASE=origin/dev"
-  log "DRYRUN #$num commit: $COMMIT_SUBJECT"
   log "DRYRUN #$num push HEAD:refs/heads/$head (non-force)"
 }
 prepare_worktree() {
@@ -284,6 +285,10 @@ run_derivation_chain() {
       rm -rf "$isolated_home"
       log "SWEEP #$num ledger-append 失败,不 push"; return 1
   fi
+  if ! converge_truth_graph "$num" "$workspace" "$isolated_home"; then
+    rm -rf "$isolated_home"
+    return 1
+  fi
   if ! credentialless "$isolated_home" \
     make -C "$workspace" --no-print-directory emit-check BASE="$REMOTE/dev"; then
     rm -rf "$isolated_home"
@@ -349,15 +354,6 @@ recalculate_pr_locked() {
     || return 1
   merge_dev "$num" "$head" "$workspace" || return 1
   run_derivation_chain "$num" "$workspace" || return 1
-  git -C "$workspace" add -A
-  if ! git -C "$workspace" \
-    -c core.hooksPath=/dev/null \
-    -c user.name=pr-shepherd \
-    -c user.email=pr-shepherd@users.noreply.github.com \
-    commit --allow-empty -m "$COMMIT_SUBJECT" >/dev/null; then
-    log "SWEEP #$num 派生物 commit 失败,不 push"
-    return 1
-  fi
   if ! git -C "$workspace" -c core.hooksPath=/dev/null push \
     "$REMOTE" "HEAD:refs/heads/$head"; then
     log "SWEEP #$num push 非 FF 被拒,放弃本轮(下轮重试)"
