@@ -55,8 +55,7 @@ public sealed partial class PrShepherdRecalculationTests
     [Fact]
     public void StaleLockReclamationUsesAtomicRenameOwnership()
     {
-        var root = FindRepositoryRoot();
-        var script = File.ReadAllText(Path.Combine(root, ShepherdScriptPath));
+        var script = ReadShepherdScripts();
 
         AssertInOrder(
             script,

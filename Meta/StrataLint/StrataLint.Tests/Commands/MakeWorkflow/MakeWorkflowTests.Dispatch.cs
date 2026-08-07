@@ -56,8 +56,11 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("Golden/perf-budgets.toml", Recipe(makefile, "perf-report"), StringComparison.Ordinal);
         Assert.Contains(WorktreeInitScriptPath, Recipe(makefile, "worktree"), StringComparison.Ordinal);
         Assert.Equal(
-            $"\t@/bin/bash {PrShepherdScriptPath} watch $(INTERVAL) $(CYCLES)",
+            $"\t@/bin/bash {PrShepherdScriptPath} start $(INTERVAL) $(CYCLES)",
             Recipe(makefile, "pr-watch"));
+        Assert.Equal(
+            $"\t@/bin/bash {PrShepherdScriptPath} status",
+            Recipe(makefile, "pr-watch-status"));
         Assert.Contains(
             " gate-authority --old-build \"$(OLD_BUILD)\" --out \"$(OUT)\"",
             Recipe(makefile, "refactor-p0-0-gate-authority"),
