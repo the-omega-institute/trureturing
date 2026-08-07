@@ -227,6 +227,9 @@ internal sealed class StubCliEnvironment(
     public ExplicitCommandResult EchoVerify(IReadOnlyList<string> arguments) =>
         echoVerify ?? new(2, string.Empty, "echo verify is not configured in this fixture");
 
+    public ExplicitCommandResult GateAuthority(IReadOnlyList<string> arguments) =>
+        new(2, string.Empty, "gate authority is not configured in this fixture");
+
     public CommandResult Ingest(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "ingest is not configured in this fixture");
 

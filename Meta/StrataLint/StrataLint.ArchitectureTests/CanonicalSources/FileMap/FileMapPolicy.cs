@@ -32,6 +32,8 @@ internal static class FileMapPolicy
         "Meta/StrataLint/StrataLint.Engine/Digestion/Configuration/TheoryAtomizerDataLoader.cs";
     private const string GoldenFixtureRegistryLoaderPath =
         "Meta/StrataLint/StrataLint.Cli/Golden/GoldenFixtureRegistryLoader.cs";
+    private const string GateAuthorityRootCatalogLoaderPath =
+        "Meta/StrataLint/StrataLint.Cli/GateAuthority/GateAuthorityRootCatalogLoader.cs";
     private const string PerfBudgetLoaderPath =
         "Meta/StrataLint/StrataLint.Cli/Performance/PerfBudgetLoader.cs";
     private const string ValuesKernelLoaderPath =
@@ -51,6 +53,7 @@ internal static class FileMapPolicy
             ["BackfillInventoryLoader"] = BackfillLoaderPath,
             ["FileMapLoader"] = FileMapLoaderPath,
             ["GoldenFixtureRegistryLoader"] = GoldenFixtureRegistryLoaderPath,
+            ["GateAuthorityRootCatalogLoader"] = GateAuthorityRootCatalogLoaderPath,
             ["LibraryNoteCatalog"] = LibraryNoteCatalogPath,
             ["PapergenCommand"] = PapergenCommandPath,
             ["PerfBudgetLoader"] = PerfBudgetLoaderPath,
