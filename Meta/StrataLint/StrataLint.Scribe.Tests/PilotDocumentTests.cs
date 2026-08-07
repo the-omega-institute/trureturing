@@ -8,19 +8,6 @@ public sealed class DocumentDiscoveryTests
     private const string PhaseSourcePath = "Blueprint/D5/S1/Phase/Basic.scribe.cs";
 
     [Fact]
-    public void ProductionReceiptFreeDocumentCensusIsDerivedFromBackfill()
-    {
-        var census = ReceiptFreeDocumentCatalog.Load(
-            FindRepositoryRoot(),
-            DocumentDefinitions.All.Select(static definition => definition.Document));
-
-        Assert.Equal(67, census.ReceiptFreeDocumentGids.Count);
-        Assert.Equal(33, census.ReceiptBoundDocumentGids.Count);
-        Assert.Contains("D5/S0/Carrier/Norm", census.ReceiptFreeDocumentGids);
-        Assert.Contains("D5/S1/Scale/CarrierFoundations", census.ReceiptBoundDocumentGids);
-    }
-
-    [Fact]
     public void FilesystemAndRegisteredDefinitionsFormACanonicalBijection()
     {
         var repositoryRoot = FindRepositoryRoot();

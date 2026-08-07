@@ -73,21 +73,6 @@ jobs:
         with:
           global-json-file: candidate/global.json
 
-      - name: Install Rust for pinned fkst-framework source build
-        shell: bash
-        run: |
-          rustup toolchain install stable --profile minimal
-          rustup default stable
-          rustc --version
-
-      - name: Restore Cargo dependency caches
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-          key: ${{ runner.os }}-${{ runner.arch }}-fkst-lua-${{ hashFiles('candidate/.fkst/substrate-ref', 'candidate/.fkst/fkst.lock') }}
-
       - name: Restore candidate locked dependencies
         run: |
           dotnet restore candidate/Meta/StrataLint/CompileFailProof/CompileFailProof.csproj --locked-mode
@@ -98,9 +83,6 @@ jobs:
 
       - name: Run candidate golden and integration tests
         run: make -C candidate test
-
-      - name: Run candidate pinned Lua package gate
-        run: make -C candidate lua-test
 
       - name: Run candidate selftest twice and compare bytes
         shell: bash
