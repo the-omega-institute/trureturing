@@ -468,6 +468,264 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 
 **升提律**:TheoryErratum 专用 schema/lint 规则仅在第二个同构实例出现,或已有路由被证实失效时再立;届时再机器化触发分类、唯一案件复用、issue/送达/重试等尚由评审守护的规范性动作,依第 8 条不预建空壳。〔守护:**元准则+评审**·第二同构实例或路由失效是升提前提;当前不冒领专用 schema/lint〕
 
+# 第十二部:投影居所与合并冲突根因重构(v7.14 R1)
+
+## 12.0 契约与判词约定
+
+本部是实施契约,已原位演进入本 spec,不另立第二真源(第一部 1.3 内容路由总表、CLAUDE.md 第 6 条)。其目标、约束与成功判据由 12.1 摘要与实施顺序、12.7 禁区、12.10 验收读数、12.11 范围限制共同固定;不引用仓外临时工件。
+
+canonical command 只有在返回 `0` 且 `OUT` 是满足指定 schema 的单个 JCS JSON 对象时通过。`1=reject`，`2=schema/usage`，`3=undecided/unknown`，`4=infrastructure`，`5=timeout`，`6=crash`；`2..6` 均不得折算为 admit。schema 中影响判词的字段封闭；可扩展信息只准放入版本化 `diagnostics`，且不得参与判词。所有数组按本节指定稳定键排序，所有 SHA-256 为小写十六进制。
+
+## 12.1 摘要与实施顺序
+
+已证根因是三类共享可写地址：七个可再生 aggregate、测试程序中的全语料快照、frozen ledger 的全局线性尾。问题在状态居所与写入协议，不在 Git 合并算法。
+
+本轮完成定义缩为 `P0-0 -> P0-2 -> PR-A -> P0-B classification receipt -> 独立 PR-B SPEC -> PR-C`。`P0-0` 必须先在完全未改的 old/base admission judge 下独立获准，PR-A、PR-C 及其候选 manifest 均不得参与其生成：
+
+1. P0-0 冻结 old gate 的固定顶层 authority roots 与完整 pinned entrypoint digests，作为后续候选 verdict 的 base-judge 输入。
+2. PR-A 把七个 aggregate 改为 invocation-local projection；artifact disposition 只在 `Meta/FILEMAP.toml` 声明。
+3. 本 SPEC 不在未知分类上实现 PR-B。P0-B 只产生真实、内容寻址的 classification receipt；随后另写绑定该 receipt 的单架构 SPEC。当前 `ExpectedMacros` 在此之前保持不变。
+4. PR-C 把 lane command 与 accepted state 分开：lane 只提交 intent；base-owned writer 机器串行化同 case 写入，先通过者接纳，后续 stale intent 拒绝。全局 stream/head 仅为派生物。
+
+三项均先写红测试，再在单 PR 内完成迁移，不留双读、alias、旧格式兼容或人工门。效果统计已移出本 SPEC，不是删除门。
+
+## 12.2 诚实分栏
+
+### 2.1 已验证读数
+
+| 读数 | 定位 |
+|---|---|
+| 七个普通 aggregate 合计 712,230 bytes | evidence head `4e1cc098`；GoalArtifact E1；路径见 `Meta/FILEMAP.toml:93-119,261-280` |
+| `truth-graph.v1.json` 与 `scribe-emissions.v1.json` 各一行；`Generated/DAG.md` 550 行 | GoalArtifact E1 的 `wc -l` |
+| frozen ledger 885,607 bytes、211 行 | GoalArtifact E1 |
+| `ExpectedMacros` 位于测试程序且随全 Blueprint corpus 比较 | `Meta/StrataLint/StrataLint.Scribe.Tests/Describe/FormulaCorpusInventoryTests.cs:23-60` |
+| `DocumentDefinitions.All` 已由 assembly reflection 确定性 discovery，不是手写中央表；按 type/output path 排序并拒绝重复 output path | `Meta/StrataLint/StrataLint.Scribe/Emission/DocumentDefinitions.cs:39-83` |
+| 当前 FILEMAP schema 为 1；`[[files]]` 仅接受 `pattern/kind/produced_by/consumed_by/verified_by`（另有 data residence flag），未知键 fail-closed；pattern 唯一且 ordinal 排序 | `Meta/FILEMAP.toml:1,9-14`；`FileMapManifest.cs:86-89,133-160,189-233` |
+| FILEMAP policy 已检查 tracked path 覆盖、generated inventory producer/verifier 与 data verifier | `FileMapPolicy.cs:67-103,106-162,190-235` |
+| 当前 projection 补偿与 ledger 共用分类器 | `Meta/StrataLint/scripts/pr-shepherd.sh:100-131,175-209` |
+| Blueprint markdown 110 tracked files、242,880 bytes，且有仓内语义消费者 | GoalArtifact E1、E8 |
+| BACKFILL 是 tracked source/消化账本，不是 disposable projection | `CLAUDE.md` 第 6 条；GoalArtifact E6 |
+| `golden-ledger-repo-spec.md` 是 BACKFILL 的消化 source，条目使用绝对 `start_byte`/`end_byte` | `Meta/BACKFILL.yaml:32218-32226`；该 source 后续条目边界见 `32242-32246` 至少延续至 `32445-32446` |
+| Freeze case ID 永久不可复用；Revoke 只移除 active，不移除 `allCaseIds` | `FrozenLedgerCandidateValidation.cs:48,77-85,158-165`；`FrozenLedgerHistoryValidation.cs:51,90-97,167-182` |
+
+### 2.2 ASSUMED-UNVERIFIED 与阻断
+
+| ID | 未验证项 | 测法 | 阻断 |
+|---|---|---|---|
+| AU-EXT-1 | 七项是否有仓外稳定/历史下载 consumer | §6 P0-2 对 FILEMAP 注册 scope 执行签名 query | 阻 PR-A |
+| AU-MACRO-1 | `ExpectedMacros` 是 corpus observation、程序能力边界还是外部 policy | §6 P0-B 的两 mutation + typed claims | 阻独立 PR-B SPEC |
+| AU-LEDGER-1 | 现有 freeze 输入是否足以导出稳定 `case_sha256` | §6 P0-3 collision corpus | 阻 PR-C |
+| AU-BACKFILL-1 | BACKFILL 并行变更可交换性与 consumer 闭包 | 独立 P0-BACKFILL | 不阻 A/C；禁止纳入 projection/ledger 方案 |
+| AU-BACKFILL-OFFSET-806 | PR #806 是否恰为插入 1052 bytes、24 对边界同移且 fingerprints 不变 | 对 merge `48194acd...` 正确 first-parent 逐 atom diff | 不阻 A/C；不得把该历史数字冒充本轮实测 |
+
+“consumer 为空”只能由已注册 scope 的成功签名 query 证明；缺 scope、未知 authority、query 失败或验签失败均为 `unknown`/exit `3`。
+
+## 12.3 根因与商映射
+
+R1：可再生全局 aggregate 入库，令独立 source change 争用相同路径。其字面强化实例是 `docs/develop/spec/golden-ledger-repo-spec.md` 为 `Meta/BACKFILL.yaml:32218-32219` 的消化 source，而 atom 边界以绝对 `start_byte`/`end_byte` 保存（首项 `32223-32226`，后续项如 `32243-32246`）：在 spec 中间插入 bytes 会使其后所有边界整体位移，即“派生数据入库”与脆弱位置锚合流。PR #806 的 merge `48194acd39767b418a7938181d81546a97f2eebb` 同时改 spec 与 BACKFILL；评审提供的“插入 1052 bytes 导致 24 对边界各移 1052、fingerprints 不变”本轮未从 merge diff 独立复算，标 `ASSUMED-UNVERIFIED AU-BACKFILL-OFFSET-806`；测法是对该 merge 的正确 first-parent 做逐 atom boundary/fingerprint 差分。无论该历史数字是否成立，当前 schema 的绝对 byte 边界已由上述行号直接证实。凡修改该 spec 的 PR 必须在同 PR 运行 `make ingest BASE=origin/dev` 重算 BACKFILL/CAS 派生项，禁止手改。
+
+R2：`ExpectedMacros` 把 corpus 派生集合写进程序。R3：并行 freeze intent 争用一条 canonical linear tail。R4：BACKFILL 是 source/消化账本热点，性质未测，移出本 SPEC；§4 因而保持 `Meta/BACKFILL.yaml` 为 `kind=data`、`runtime_disposition="committed-source"`、conflict policy 为“随 source 同 PR 运行 canonical ingest 重算，禁手改”，与当前 FILEMAP `Meta/FILEMAP.toml:184-189` 一致。
+
+保守性由 `make refactor-quotient CASE=<content-addressed.json> OUT=<json>` 判。old harness 在固定 old build 的隔离 checkout 运行；随后由同一 old build producer 重建七项 projection 后再运行。只有 `old_raw=reject`、`old_canonical=admit`、diff 全属 FILEMAP 标记为 `runtime_disposition="run-local"` 的路径，且除 `OBL-PROJECTION-FRESHNESS` 外的 obligation 集合与判词完全相等，才分类为 `projection-staleness-only`。source、ledger、C0、baseline admission、schema、hash binding、semantic、unknown path 或运行故障一律留在 `semantic-domain`。
+
+对 `semantic-domain` 要求 old/new disposition 相等；对每个 `classification=projection-staleness-only` 的 receipt 强制机器断言 `old_raw=reject`、`old_canonical=admit`、`new=admit`、`pass=true`，缺一即失败；运行故障整体失败。输出固定为 `{schema,case_id,input_sha256,old_build_sha256,new_build_sha256,old_raw,old_canonical,new,classification,expected_gate_authority_sha256,obligations,diff_paths,pass}`。`obligations` 必须与 §6.1 的不可拆 authority root 集合相等，每个 `root_id` 恰有一个 `successor_verifier_id`。`M-PROJECTION-STALE-NEW-REJECT` 必须把该类 case 的 `new` 改为 `reject`，且最终 `make refactor-spec-verify` 必须失败。
+
+## 12.4 ArtifactDisposition 唯一真源
+
+`Meta/FILEMAP.toml` 是唯一 artifact-disposition 真源。PR-A 在同一 PR 将 schema 升为 2，并由 strict loader 对每个 `[[files]]` 增加以下封闭字段：
+
+```toml
+authority = "<source-id|self>"
+runtime_disposition = "committed-source|committed-ledger|run-local"
+artifact_id = "<stable-id|none>"
+```
+
+现有 `kind`、`produced_by`、`consumed_by`、`verified_by` 继续表达 kind、producer、consumer、verifier。七个 aggregate 的既有精确 path entry 分别取得 `A-DAG/A-TRUTH/A-SCRIBE/A-ANCHOR/A-VALUES/A-FILEMAP/A-ECHO`，`runtime_disposition="run-local"`；authority 分别指向现有 Lean/Scribe/anchor/value-kernel/FILEMAP/digestion source。Blueprint markdown 与 BACKFILL 的唯一现状均标 `committed-source`，frozen accepted event 路径标 `committed-ledger`。P0-BLUEPRINT 若通过，只能在其原子 PR 内直接改为最终 disposition；不得预埋迁移态。glob 匹配必须仍唯一；缺字段、未知枚举、重复 artifact_id 或 run-local path 无 producer/verifier均 schema reject。
+
+§4 的人读表由 `make filemap --disposition-table` 从 FILEMAP 生成；P0-2 的 `artifacts` 数组由同一已解析对象生成。verifier 对生成表 bytes、数组 JCS digest 与 `filemap_sha256` 重算比对。不得维护 companion、硬编码 artifact 数组或让 `GeneratedArtifactInventory.All` 再声明 disposition；现有 inventory 若继续提供 producer dispatch，只能按 FILEMAP artifact_id join 并由 policy 断言集合相等。
+
+`Golden/refactor-v1/manifest.json` 只列 content-addressed fixture、old/new build identity、P0-0 authority digest 的审计副本与 mutation expectation；不得出现生产 `artifacts`、disposition、producer 或 consumer 清单，且 authority 的判词输入只能来自 base judge。
+
+## 12.5 PR 可执行契约
+
+### PR-A：run-handle-v1
+
+producer 接收非空绝对、预先存在且为空的 `--output-root`，该目录不得是 symlink；另接收唯一 `run-request-v1`。request/receipt/handle 均用 RFC 8785 JCS，所列字段即封闭字段集：
+
+```text
+run-request-v1 = {schema:"run-request-v1",run_id,source_tree_sha256,
+  base_tree_sha256,producer_build_sha256,source_date_epoch,
+  expected_artifact_inventory_sha256}
+request_sha256 = sha256(JCS(run-request-v1))
+receipt-v1 = {schema:"receipt-v1",request_sha256,run_id,source_tree_sha256,
+  base_tree_sha256,producer_build_sha256,source_date_epoch,
+  artifacts:[{artifact_id,path,sha256,mode}],artifact_set_sha256,
+  cross_artifact_sha256,verifiers:[{id,result_sha256,disposition}],pass}
+run-handle-v1 = {schema:"run-handle-v1",request_sha256,run_id,
+  receipt_path,receipt_sha256}
+```
+
+`run_id` 是 32 个 lowercase hex；所有 sha256 为 64 个 lowercase hex；epoch 为非负整数。生成前由 strict FILEMAP loader 派生 `artifact-inventory-v1={schema:"artifact-inventory-v1",artifacts:[{artifact_id,path,mode}]}`；按 `(path UTF-8,artifact_id UTF-8)` 排序且三字段组合唯一，`mode` 为 FILEMAP 声明的 Git 六位 octal string，`expected_artifact_inventory_sha256=sha256(UTF8("artifact-inventory-v1") || 0x00 || JCS(inventory))`。request 不含任何尚未生成的 byte digest。receipt 的 `artifacts` 按相同键排序；path 是相对最终 immutable run directory 的 NFC UTF-8 `/` 分隔规范路径：非空、非绝对、无空/`.`/`..` segment，解析沿途及终点均不得是 symlink，`realpath` 必须仍在 run directory 内。consumer 从同一 pinned FILEMAP 重算 inventory digest并与 request 比对，再要求 receipt identity/path/mode 投影与 inventory byte-exact 相等，逐项重算实际 bytes SHA，最后验证 `artifact_set_sha256=sha256(UTF8("artifact-set-v1") || 0x00 || JCS(artifacts))`。`cross_artifact_sha256=sha256(JCS({request_sha256,source_tree_sha256,base_tree_sha256,producer_build_sha256,artifact_set_sha256,verifiers}))`。`source_date_epoch` 是 provenance；artifact bytes 不得读取 wall clock。
+
+发布顺序固定：`--output-root` 是最终 run directories 的空容器；producer 直接在其中建 staging `.<run_id>.tmp`，拒绝已存在 `<run_id>`，写 artifacts 与 `receipt.json`；逐文件及 staging 目录 `fsync`，一次 rename 为 `<output-root>/<run_id>`，再 `fsync` output root。`receipt_path` 固定为相对最终目录的 `receipt.json`；handle temp 与最终 handle 也位于 output root，`fsync` 后 rename，最后再次 `fsync` output root。handle 在最终 run directory 已不可变发布前不存在；任一步失败不得留下 handle 或半成品最终目录。consumer 必须由调用者同时传入 output root 与 `EXPECTED_REQUEST_SHA256`，不得从 handle 自取期望值；它以 output root + `run_id` + `receipt_path` 解析 receipt，执行上述 path/symlink containment、重算 request/receipt/artifact/mode/verifier result，不符 exit `1`。
+
+P0-2 必须对每个 run-local artifact 给出 `history_requirement:not-required|required`。本 SPEC 只允许 `not-required`：其证据必须是所有 FILEMAP consumer 与签名外部 scope query 都不要求跨 run 历史或稳定 URL。任一为 `required`，PR-A 停止，该 artifact 保持 committed，另出绑定 provider、content-addressed namespace、retention、retrieval command 与 digest verifier 的独立发布 SPEC；本文件不以未定义的 “immutable CI artifact” 代替。
+
+`make refactor-pr-a-verify MANIFEST=<sha> OUT=<json>` 运行固定版本的必要 cases：两个非空绝对 clean output root；locale `C/en_US.UTF-8`；timezone `UTC/Asia/Singapore`；顺序 `canonical/reverse/seeded-shuffle`；并发 `1/4`；两个独立 clean checkout 在完全相同 env 各 rebuild 一次；以及 `SOURCE_DATE_EPOCH=0/1` clock metamorphism。两次生成均从生成前 inventory 起步，并比较实际 artifact identity/path/mode/sha256/bytes 集合。clock 比较投影固定为 receipt 除 `source_date_epoch`、`request_sha256`、`cross_artifact_sha256` 之外的全部字段，以及 handle 除 `request_sha256`、`receipt_sha256` 之外的全部字段；重新计算后受这些被排除 provenance 字段传递影响的值不得参与跨 clock 相等性，但每次运行内部仍须验真。artifact bytes、artifact_set_sha256、verifier result bytes/digests 与 `pass` 必须相同。跨 request/跨 run handle、path traversal、symlink escape、非空 root 均 reject。REMOVED：pairwise generator 的 `factors/levels/covered_pairs` 长期协议，以及 output root 与 parent 同 filesystem 要求和 cross-filesystem mutation；staging 与最终目录均直接位于同一 output root，rename 的同文件系统前提由布局保证。该 verifier永久接入 `make gate`/`make preflight`、CI `candidate-engineering`、`baseline-admission`、C0 两阶段与双 required checks。PR-A 同 PR 迁移全部已证 consumer、停止跟踪七项 bytes、加精确 ignore；不动 Blueprint、BACKFILL、ledger。
+
+### PR-B：NARROWED 为 receipt-bound 独立 SPEC
+
+当前完成定义不实施 PR-B。P0-B 先产生真实分类 receipt；独立 SPEC 必须将 receipt SHA 固定为输入，只保留其选中的一套架构，并完成 old obligation 全覆盖。当前文件仅规定 P0-B，不允许实施者从自然语言选择分支。
+
+现有 `DocumentDefinitions.All` 明确排除在 PR-B：它已从 Blueprint 声明类型通过 reflection discovery 派生，并拒绝重复 output path（`DocumentDefinitions.cs:39-83`），不是 E4 所述的手写全局注册热点。独立 PR-B 仍须保留三 mutation：重复 GID/output path reject、存在 `*.scribe.cs` 却 discovery 缺失 reject、discovery 多出无 source definition reject；其唯一输入仍是 Blueprint declarations，`All` 只是 runtime projection。
+
+### PR-C：command/accepted-state 单一边界
+
+只读核实：现行 union 定义是 `Genesis/Freeze/Reattest/Revoke` 四类（`Meta/StrataLint/StrataLint.Engine/Ledger/FrozenLedger.cs:111-134`），验证器要求线性 `previous_hash`（`Meta/StrataLint/StrataLint.Engine/Ledger/Validation/FrozenLedgerGenesisValidation.cs:41-49`、`Meta/StrataLint/StrataLint.Engine/Ledger/Validation/FrozenLedgerCandidateValidation.cs:61-64`、`Meta/StrataLint/StrataLint.Engine/Ledger/Validation/FrozenLedgerHistoryValidation.cs:61-64`）。PR-C 不把它虚构成三类；迁移 reducer 必须证明同一可观察状态。
+
+候选 lane 只可提交 `Meta/StrataLint/Golden/Frozen/intents/<case_sha256>/<intent_sha256>.json`，绝不可修改 accepted ledger 或提交 `events.jsonl`。封闭 schema 为 `{schema:"frozen-intent-v2",base_snapshot_sha256,case_sha256,operation,payload_sha256,lean_report_sha256,evidence_sha256,reason_sha256,producer_build_sha256,previous_case_event_sha256,intent_sha256}`；operation 枚举仅 `Genesis|Freeze|Reattest|Revoke`；`intent_sha256=sha256(UTF8("frozen-intent-v2") || 0x00 || JCS(除自身外全部字段))`。sha256 均为 64 lowercase hex，Genesis 的 case 固定为 64 个 `0`、previous 固定为 64 个 `0`；其它 operation 禁零 case。仅完整 intent SHA 相同才可能幂等。
+
+`base_snapshot_sha256` 定位 content-addressed subset proof 文件 `Meta/StrataLint/Golden/Frozen/intents/proofs/<base_snapshot_sha256>.json`；其封闭 schema 是 `{schema:"accepted-subset-proof-v1",event_paths:[string],event_sha256s:[sha256]}`，两数组等长，按 path UTF-8 升序且非空；snapshot digest 为 `sha256(UTF8("accepted-subset-proof-v1") || 0x00 || JCS(object))`。proof 不是随 accepted set 变化的全局 head，只是该 intent 的内容寻址输入。writer 从当前 accepted paths 逐项读取，要求 path 规范、event SHA 与 bytes 重算一致且 byte-identical；缺项、额外字段、重复、替换均 reject。随后 writer 在最新 accepted set 上重跑 evidence、Lean report、operation precondition、`previous_case_event_sha256` continuity 与冲突表。
+
+accepted-state 唯一真源改为 immutable shard：`Meta/StrataLint/Golden/Frozen/accepted/<case_sha256>/<event_sha256>.json`。`accepted-event-v1` 封闭 schema 是 `{schema:"accepted-event-v1",case_sha256,operation,payload_sha256,lean_report_sha256,evidence_sha256,reason_sha256,producer_build_sha256,previous_case_event_sha256,intent_sha256,event_sha256}`；`event_sha256=sha256(UTF8("accepted-event-v1") || 0x00 || JCS(除自身外全部字段))`。payload/evidence/Lean digest 均须经 manifest 的 content-addressed resolver 取得 bytes 并按 operation 的现行 typed loader 验证；解析失败为 reject。选择旧 global 顺序精化方案 (a)：每次接纳另写不可变 `Meta/StrataLint/Golden/Frozen/acceptance-receipts/<acceptance_sha256>.json`，封闭 schema 为 `{schema:"acceptance-receipt-v1",sequence,previous_global_acceptance_sha256,event_sha256,acceptance_sha256}`，`sequence` 从 `0` 连续递增，首项 previous 为 64 个 `0`，其余项 previous 指向唯一前项，`acceptance_sha256=sha256(UTF8("acceptance-receipt-v1") || 0x00 || JCS(除自身外全部字段))`；validator 要求 receipt 与 accepted event 一一对应、sequence 唯一连续、previous 构成覆盖全部 receipt 的唯一全局链。global head 只从唯一末端 receipt 派生，不提交。选择 (a) 是因为 GoalArtifact 明称旧 `events.jsonl` 为 append-only 审计链，不能假设旧 global 顺序不是可观察义务。`canonical-stream-v1` 封闭 schema 是 `{schema:"canonical-stream-v1",events:[accepted-event-v1]}`；events 按 `(case_sha256 bytes,event_sha256 bytes)` 升序，bytes 为 JCS(object)，只派生不提交。现有 211 events 在 PR-C 单步迁移并由 old/new replay 证明 reducer state 等价，且逐项迁移成上述唯一 global receipt 链；`events.jsonl` 与 head/index 不再提交。
+
+accepted-set root 定义为 Merkle set：leaf `L=sha256(0x00 || event_sha256_raw32)`；先按 `event_sha256_raw32` 升序并拒绝重复；内部节点 `N=sha256(0x01 || left_raw32 || right_raw32)`；每层奇数末节点原样提升（不复制、不再 hash）；空集 root=`sha256(0x02)`；单叶 root=L；递归至一个节点。最终标识 `{schema:"accepted-set-root-v1",root_sha256}`。排序只影响集合的规范表达，不产生“历史前缀”要求；ancestor 关系仅由 subset proof 的每个 byte-identical member 均属于当前 set 定义。
+
+每个 PR-C gate、accepted-set root validator 与 acceptance-chain validator 都必须同时读取 pinned base accepted snapshot 与 candidate/new accepted snapshot，并验证 base 的每个 accepted shard 在 candidate/new 中路径相同且 bytes byte-identical；缺失、替换或缩集一律 reject。该跨快照单调包含不由 writer 身份替代，对普通 lane 与 `FrozenLedgerBaseWriter` 输出独立执行。
+
+accepted-set validator 必须先按 `previous_case_event_sha256` 重建历史，不能以 event hash 排序代替历史顺序。算法固定为：解析并验真所有 shard；Genesis 独立验证为全局 singleton；对每个 nonzero case 建 `event_sha256 -> event` map；首个 Freeze 的 previous 必须为 64 个 `0`；其它 event 的 parent 必须存在、属于同一 case；用三色 DFS 拒绝 cycle；计算每节点 child 数并要求不大于 1；每 case 恰有一个 zero-parent Freeze、除 head 外每节点恰有一个 child、恰有一个 childless head，且从 head 反向恰好访问该 case 全部事件。任何 missing parent、cross-case parent、cycle、fork 或 multiple heads 均在 reducer 前 reject。
+
+同一 case 的 reference reducer 再按以下表处理；格内 `I`=仅 incoming 与现存 event 全字段相同才 idempotent，否则 reject，`A`=满足 payload/evidence/Lean 及 previous 指向该 case 唯一 childless head 才 admit，`R`=reject。`empty` 是尚无该 nonzero case 的状态，仅 `empty→Freeze` 可建立首事件且 previous 必须为零；Genesis 是全局 singleton，不是新 nonzero case 的 current，除唯一相同 Genesis 的 I 外不能与任何操作配对。
+
+| current \\ incoming | Genesis | Freeze | Reattest | Revoke |
+|---|---:|---:|---:|---:|
+| empty | R | A | R | R |
+| Genesis | I | R | R | R |
+| Freeze | R | I | A | A |
+| Reattest | R | R | I/A | A |
+| Revoke | R | R | R | I |
+
+`Reattest→Reattest`：全字段相同为 I；否则仅新 evidence/Lean 有效且 previous 连续时 A。`Revoke→Freeze` 对同一 case 永久为 R；后续 Freeze 必须使用从其 typed input 重新导出的新 `case_sha256`。这是现有 `allCaseIds` 永久集合的保守保持：candidate validator 在 `FrozenLedgerCandidateValidation.cs:48,77-85` 对 `allCaseIds.Add` 失败即拒绝，history validator 在 `FrozenLedgerHistoryValidation.cs:51,90-97` 同样拒绝；Revoke 仅从 active 集移除（分别 `158-165`、`167-182`），不从 `allCaseIds` 移除。
+
+优先级固定：schema/path/hash/tamper failure > accepted-set chain invariant > Genesis singleton > exact duplicate > previous continuity > 表中 transition > semantic evidence；高优先级失败不得被低优先级 idempotence 覆盖。选择方案 1：`FrozenLedgerBaseWriter` 是唯一机器线性化点，按其收到并完成验证的顺序串行处理；同 case 竞争中先通过并原子落盘者接纳，后续仍指旧 head 的 stale intent 因 previous continuity 失败而拒绝。该语义不要求人判断；同 case 竞争本就是互斥状态转移，赢家由 base-owned writer 的机器提交序确定。REMOVED：跨 cutover 聚合 same-snapshot 竞争并“全部拒绝”的要求，以及 same-case A/B 反序得到同 root 的虚假要求。只有异 case 必须交换；同 case 明确允许 A→B 得 `S∪{A}`、B→A 得 `S∪{B}`。
+
+唯一具名 `FrozenLedgerBaseWriter` 可写 accepted 路径。它在 base cutover 串行执行：验证 intents；为 admit intent 生成 event temp；逐文件 fsync/rename/directory fsync；在同一 base-owned change 删除成功 intent。失败 intent 不进入 base，保留在 candidate branch 作为 reject 证据。accepted event 的 presence 表示 accepted；intent presence从不表示 accepted。普通 lane 修改 accepted 路径、派生 `events.jsonl` 或 writer policy 时，path/writer tripwire exit `1`。
+
+强制集合 oracle：从同一 verified snapshot 制作独立异 case A/B；先 admit A，再以 B 原始 bytes/SHA 不变验证并 admit B；反向重跑 B→A。两序列只比较最终语义 accepted event path/bytes set、canonical stream bytes 与 accepted-set root，必须完全相同；顺序相关的 acceptance receipt bytes、receipt 链与派生 global head 不要求相同，但各序列内部都必须验真。same-case A/B 使用同一 head 且 reason 不同：A→B 要求 A admit、B stale reject；B→A 要求 B admit、A stale reject，不要求两序 root 相同。另固定 `M-LEDGER-MISSING-PARENT`、`M-LEDGER-CROSS-CASE-PARENT`、`M-LEDGER-CYCLE`、`M-LEDGER-FORK`、`M-LEDGER-MULTIPLE-HEADS`、`M-HISTORICAL-CASE-REUSE`；前五项 accepted-set validator 必须 reject，最后一项为 old negative fixture，old/new quotient 均须 reject。再固定 `M-EVENT-DELETE`（删除任一非末端 shard）、`M-CASE-DELETE`（删除某 case 全部 shards）、`M-TERMINAL-EVENT-DELETE`（删除某 case 末端 shard）；三项均保留 pinned base snapshot，且分别对普通 lane 与 `FrozenLedgerBaseWriter` 输出执行，所有相关 gate/root 必须因 byte-identical subset 失败而 reject。
+
+## 12.6 P0、corpus 与机器协议
+
+### 6.1 P0-0 与不可拆 old gate authority
+
+REMOVED：多语言递归静态调用图、runtime `--list-admission-verifiers` export、adapter fallback、内部 verifier catalog 四重机制及“独立 completeness verifier”声明。old tree 没有封闭语法标注或 registry 可把普通 helper 与 admission verifier 机器区分，因此本 SPEC 不拆内部 obligation；只有未来先在 old tree 建成并由当时 base judge 获准的封闭 registry，后续版本才可细分。
+
+本轮把实际 old wiring 中的具名顶层 stage 作为不可拆 roots。只读定位如下：Make roots `gate`（`Makefile:58-59`）、`preflight`（`:79-80`）、`emit-check`（`:37-38`）、`echo-verify`（`:46-47`）；`local-harness-gate.sh` roots `setup`（`:208`）、`engineering-dotnet`（`:211,215`）、`engineering-test`（`:212,216`）、`engineering-selftest`（`:213,217`）、`lean-reports`（`:241-248`）、`emit-check`（`:249`）、`admission`（`:253-269`）、条件性 `echo-verify-bootstrap`（`:271-276`）；base `.github/scripts/harness-gate.sh` roots `build-judge`（`:87-93`）、`selftest`（`:96-103`）、`admission`（`:105-117`）、条件性 `echo-verify`（`:135-143`）、`build-candidate`（`:150-153`）、`conservative`（`:154-169`）；CI job roots `candidate-engineering`（`.github/workflows/ci.yml:22-23`）、`lean-inspect`（`:124-125`）、`baseline-admission`（`:328-329`）。同名 stage 在不同 entrypoint 下以 `<entrypoint-id>/<stage-id>` 区分；条件 root 仍绑定完整 entrypoint bytes，不要求每次路径都执行。
+
+P0-0 唯一命令为 `make refactor-p0-0-gate-authority OLD_BUILD=<digest> OUT=<json>`；bootstrap PR 由未改的 old judge 裁决，该 command 合入后成为后续 base-owned authority producer，不得与 PR-A/PR-C 或候选 manifest 同 PR。输出 `expected-gate-authority-v1={schema:"expected-gate-authority-v1",old_build_sha256,roots:[{root_id,entrypoint,entrypoint_blob_sha256}]}`，roots 恰为上一段固定集合，按 `root_id` UTF-8 排序且字段封闭；每一 `entrypoint_blob_sha256` 绑定该 root 所属完整 Makefile/script/workflow bytes，不绑定内部 helper 子集。authority SHA 定义为 `sha256(UTF8("expected-gate-authority-v1") || 0x00 || JCS(object))`，由 base judge 通过独立、不可由 candidate 覆写的 verdict input `EXPECTED_GATE_AUTHORITY_SHA256` 注入。`Golden/refactor-v1/manifest.json` 可以记录同值作审计，但 candidate manifest、candidate authority 或 candidate catalog 均不是判词输入；不等即 base judge exit `2`。
+
+后续 quotient 的 obligation 集合恰为 authority roots。successor 对每个 root 只能 `preserved|refined`：`preserved` 执行 pinned old entrypoint 全 bytes；`refined` 同时运行完整 pinned old root 与 successor，并以该 root 的 old negative fixtures 证明 old reject 不被翻为 admit。不得把 root 拆成内部 verifier、不得只映射已知子集、不得 retirement。`M-GATE-AUTHORITY-SYNCHRONIZED-DELETE` 必须从 authority bytes、candidate manifest 与任何诊断 catalog 同步删去同一个 stage；由于 base judge 仍从独立 verdict input 解析已获准 authority SHA，必须 exit `2`。另对每个 root 执行 `M-GATE-ROOT-DELETE-EACH`，缺 root 或 entrypoint digest 改变均由 base judge exit `2`。
+
+PR-A/P0-2/PR-C 的 obligation root 集合必须等于 expected authority roots。每项绑定唯一 `successor_verifier_id`、`old_negative_fixture_sha256`、`mutation_id` 与 `quotient_result_sha256`；缺失、额外、重复、无 successor 或 digest 不符 exit `2`。
+
+mandatory mutations 为：`M-GATE-AUTHORITY-SYNCHRONIZED-DELETE`、`M-GATE-ROOT-DELETE-EACH`、`M-EXTERNAL-SCOPE-DELETE`、`M-DOC-DUPLICATE`、`M-PROJECTION-TAMPER`、`M-PROJECTION-STALE-NEW-REJECT`、`M-EMITTER-NONDETERMINISTIC`（含两显式 clock 值）、`M-EMISSION-UNKNOWN`、`M-FREEZE-EVIDENCE-MISSING`、`M-EVENT-TAMPER`、`M-EVENT-DELETE`、`M-CASE-DELETE`、`M-TERMINAL-EVENT-DELETE`、`M-PARALLEL-INDEPENDENT-ADD`、`M-INTENT-SAME-CASE-DIFFERENT-REASON`、`M-INTENT-SAME-CASE-DIFFERENT-LEAN`、`M-INTENT-SAME-CASE-DIFFERENT-BUILD`、`M-LEDGER-MISSING-PARENT`、`M-LEDGER-CROSS-CASE-PARENT`、`M-LEDGER-CYCLE`、`M-LEDGER-FORK`、`M-LEDGER-MULTIPLE-HEADS`、`M-HISTORICAL-CASE-REUSE`。P0-B 的两项另见 §6.3。
+
+### 6.2 P0-2：consumer 与 artifact closure
+
+`make refactor-p0-2 MANIFEST=<path> OUT=<json>` 从 FILEMAP 生成 artifacts。仓内扫描域固定为 tracked source、tests、shell/make、GitHub Actions、artifact upload、release assets、package manifests 与 docs links；分别使用 `git ls-files -z` 加语言 parser，`rg` 仅作漏检交叉检查。
+
+外部 consumer 不能由候选 FILEMAP 自己封闭。manifest 另绑定 base-owned `external-scope-authority-v1` blob digest；其封闭 schema 为 `{schema:"external-scope-authority-v1",scopes:[{scope_id,artifact_id,namespace,query_adapter,query_adapter_sha256,authority_id,key_id,signature_algorithm}]}`，按 `(artifact_id,scope_id)` 排序。本轮固定完整 scope ID/artifact 集为 `scope-a-dag/A-DAG`、`scope-a-truth/A-TRUTH`、`scope-a-scribe/A-SCRIBE`、`scope-a-anchor/A-ANCHOR`、`scope-a-values/A-VALUES`、`scope-a-filemap/A-FILEMAP`、`scope-a-echo/A-ECHO`，不得增删；各自真实 namespace/query adapter/authority/key 尚未测，状态为 `ASSUMED-UNVERIFIED AU-EXT-1`，P0-2 必须由 base-owned authority blob 固定并成功查询这七项，否则 PR-A 阻断。FILEMAP `[[external_scopes]]` 只是该 authority blob 的 byte-exact projection，且所有 `external:<scope_id>` 引用集合、projection 集合、authority 集合三者必须完全相等；缺失或额外均 exit `3`。`M-EXTERNAL-SCOPE-DELETE` 对每个 scope 逐项删除并要求 exit `3`。未注册的仓外 consumer 明确不属于受支持契约；世界闭包不可证明，registry 完备性持续标 `ASSUMED-UNVERIFIED AU-EXT-1`，不得冒称“世界上不存在”。
+
+允许签名算法仅 `ed25519`；public key 由 base-owned `Meta/registry.yaml` 的 authority stable ID 解析。attestation 封闭 schema为 `{schema:"external-scope-attestation-v1",scope_id,query_adapter_sha256,query_result_sha256,observed_consumers,issued_at,expires_at,authority_id,key_id,signature_algorithm,signature}`；验签 preimage 是 `UTF8("external-scope-attestation-v1") || 0x00 || JCS(除 signature 外对象)`。未知 authority/key、过期、query nonzero、result digest 不符或 signature invalid 均 `unknown`/exit `3`。空 observed_consumers 仍须有效 query 与签名，实施者不能自证。
+
+输出 `{schema,filemap_sha256,artifacts,artifact_set_sha256,boundary_attestations,expected_gate_authority_sha256,obligations,quotient_cases,tripwires,pass}`。artifacts 每项含 FILEMAP 的 artifact_id/path/authority/producer/runtime_disposition/verifiers/consumers、`history_requirement` 与 evidence SHA；集合/digest 必须与 FILEMAP 派生表相等。
+
+### 6.3 P0-B：只分类，不实施
+
+`make refactor-p0-b-classify MANIFEST=<path> OUT=<json>` 固定两个独立 mutation。每项 subject 由封闭 `mutation-case-v1={schema:"mutation-case-v1",mutation_id,macro,input_sha256,expected_old_disposition}` 给出：`M-MACRO-CORPUS-ABSENT` 的 input 是插入该 NFC macro 的 canonical corpus mutation bytes，expected old disposition 固定 `admit`；`M-MACRO-UNSUPPORTED` 的 input 是含该 macro/syntax 的 canonical parser input bytes，expected old disposition固定 `reject`。`input_sha256=sha256(UTF8("mutation-input-v1") || 0x00 || input_bytes)`；macro 非空，两个 mutation_id 各恰一项，缺失/额外/重复 exit `3`。唯一 claim source 是 base-owned typed evidence。公共 envelope 封闭为 `{schema:"macro-claim-v1",claim_id,claim_kind,source_blob_sha256,old_disposition,verifier_id,payload}`；payload 依 kind 封闭：
+
+```text
+corpus-exact-observation = {subject:"macro-set",corpus_sha256,macro_set_sha256,
+  policy_effect:"observe-only"}
+parser-capability = {subject:"macro",parser_build_sha256,
+  capability_relation:"supported-set",macro_set_sha256,
+  policy_effect:"reject-outside-set"}
+external-policy = {subject:"macro",scope_id,attestation_sha256,
+  capability_relation:"allowed-set",macro_set_sha256,
+  policy_effect:"reject-outside-set"}
+```
+
+content-addressed `macro-set-v1` blob 的封闭 bytes 为 JCS `{schema:"macro-set-v1",macros:[NFC strings]}`，macros 按 UTF-8 升序且唯一；resolver 唯一命令 `make resolve-macro-set SHA256=<digest> OUT=<path>` 从 base-owned CAS 取 bytes，拒绝 symlink/额外字段/非 canonical JCS，并要求 `digest=sha256(UTF8("macro-set-v1") || 0x00 || bytes)` 恰等于 claim payload 的 `macro_set_sha256`。classifier 只可使用 mutation-case 的 `macro`、`input_sha256`、`expected_old_disposition` 与 resolver 得到的 set membership 做表驱动判定。parser capability 的唯一真源是 parser 自身导出的 versioned capability table；external policy 必须引用 §6.2 已验签 scope。字段缺失/额外、枚举外值、subject 不符、relation/effect 错配、resolver 失败或 old disposition 与 mutation case 不等均 exit `3`，不得读 blob 散文猜语义。
+
+真值表固定：
+
+| claim_kind / payload predicate | ABSENT old | UNSUPPORTED old | classification |
+|---|---|---|---|
+| 仅 observation + `observe-only` | admit | reject | `observation` |
+| capability + `supported-set/reject-outside-set`，ABSENT macro 不在 set | reject | reject | `capability-policy` |
+| 已验签 policy + `allowed-set/reject-outside-set`，ABSENT macro 不在 set | reject | reject | `external-policy` |
+| 缺失、矛盾、其它组合或运行故障 | 任意 | 任意 | `undecided` / exit 3 |
+
+`mutation_results` 项封闭为 `{mutation_id,mutation_case_sha256,claim_id,macro,macro_set_sha256,membership,observed_old_disposition,expected_old_disposition,result}`；按 mutation_id UTF-8 排序，`membership` 仅 `present|absent`，`result` 仅 `matched|mismatched|undecided`，且 case/claim/set digest 均须重算。receipt 固定 `{schema:"macro-classification-v1",input_sha256,claims_sha256,mutation_results,classification,expected_gate_authority_sha256,pass}`。只有表中前三种、两项 result 均 `matched` 且无其它输入时 exit `0`；其余 exit `3`。独立 PR-B SPEC 必须绑定 receipt SHA，并为相关不可拆 authority root 给出唯一 successor。
+
+### 6.4 P0-3：ledger 最小证明集
+
+`make refactor-p0-3 MANIFEST=<path> OUT=<json>` 运行：211-event old/new replay及其逐项 acceptance receipt 全局链迁移；异 case snapshot A→B/B→A 的语义 event set 交换性；含 `empty` 的 5×4 表；same-case A/B 两个机器线性化顺序；三个 same-identity-near-miss；subset 缺失/替换、event tamper、普通 writer、失败原子性；以及 §5 的全部具名链/history/delete mutation，其中 `M-EVENT-DELETE`、`M-CASE-DELETE`、`M-TERMINAL-EVENT-DELETE` 对普通 lane 与 `FrozenLedgerBaseWriter` 输出各执行一次。测试侧独立 reference reducer 只编码 §5 schema、优先级、链算法、跨快照 byte-identical subset 与真值表并计算 expected disposition/set/root，不得调用 production reducer。固定 cases 覆盖 1/3 lanes、1/10 intents、四 operations、同/异 case 与同/异 snapshot；输出实际 cases/permutations/failures 与最小反例 SHA，并断言幂等、去重、same-case stale reject、异 case语义 event set 交换性、tamper、跨快照单调包含、唯一 per-case 链/head、唯一 global receipt 链/派生 head、derived stream/root equality；异 case反序不比较顺序相关 receipt bytes。不输出或信任 pairwise `factors/levels/covered_pairs` 元协议，不声称无限性质证明。
+
+### 6.5 效果指标
+
+REMOVED：未封闭的 P0-1 command 与 LOG_MANIFEST/event 分类协议。效果统计不属于安全 cutover gate；未来若需要，另立有封闭输入/输出 schema 与 fixture 真值表的 diagnostic SPEC。
+
+## 12.7 禁区
+
+1. 禁 merge driver、union、rerere 与 ledger 文本 union。
+2. 禁继续提交七个全局 projection；禁通用 CAS/emitter 平台。
+3. 禁把 Blueprint/BACKFILL 一刀切出库；二者不在 PR-A。
+4. 禁削弱 C0、baseline admission、双 required checks 或 semantic obligation。
+5. 禁 CI 回写 disposable projection；source/ledger 只能走各自协议。
+6. 禁手写 `DocumentDefinitions`/macro 中央 snapshot。
+7. 禁双读、alias、deprecated stub、双 classifier/ledger protocol。
+8. 禁人工裁决或 `requires human review`。
+9. 禁把运行故障、unknown、空 consumer 自证或缺历史协议冒充 reject/pass。
+10. 禁第二 artifact list；root/index/global head 必须派生。
+11. 禁 candidate 修改 accepted ledger；成功 intent 与 accepted event 不得长期重叠。
+12. 禁 ledger 每次变化提交全局 manifest/head；否则冲突只换名。
+
+## 12.8 τ / W / D / E 成本表
+
+| PR | τ | W | D | E |
+|---|---|---|---|---|
+| A | 中 | FILEMAP loader/policy、七 producer/consumer、local/CI/C0/baseline | handle/receipt、atomic publish、固定环境/clock cases | semantic quotient 与 old authority roots 相等 |
+| B | 本 SPEC 不实施 | P0-B receipt 后由独立 SPEC 固定 | 单一分类架构 | macro/document obligations 全接管 |
+| C | 0（信任根级） | base writer、211-event ledger、C0/coverage | snapshot/subset replay、conflict/atomicity、writer tripwire | accepted state与冻结 admission 不翻转 |
+
+成本只表达信任层、验证宽度、证明深度与保守扩展义务，不写 ROI 数字。
+
+## 12.9 补偿链删除与运维回退
+
+PR-A cutover 后唯一 projection protocol ID 为 `run-handle-v1`；`is_derived_conflict` 的七项 projection 分支与对应 `derived-refresh` 原子删除。PR-C cutover 后唯一 ledger protocol ID 为 `accepted-shards-v1`；旧 ledger-as-derived 分支原子删除。`make refactor-protocol-audit` 输出 `{schema,projection_protocol_ids,legacy_projection_compensation_ids,ledger_protocol_ids,legacy_reads,unknown_reads,pass}`；A 后要求 `projection_protocol_ids=["run-handle-v1"]`、compensation 空；C 后 ledger IDs 仅 `accepted-shards-v1`。count 不单列，避免与 ID 数组矛盾。
+
+REMOVED：通用 rollback 状态机、线上 404 observer、rollback dry-run gate。回退是实施运维说明而非本 SPEC 的长期协议：对 A/C 使用精确 Git revert 恢复该 PR 的代码、配置与 wiring，再在隔离 checkout 用当前 source 和旧 canonical producer 重建 legacy projection；禁止复制 merge-base 的旧 projection bytes，禁止恢复 unrelated path，禁止在现状保留双读。部署监测与 publish/push rollback trigger 归独立 deploy SPEC。
+
+## 12.10 验收读数（唯一完成定义）
+
+`make refactor-spec-verify MANIFEST=<path> OUT=<json>` 验证所有子结果 SHA，输出封闭对象 `{schema:"refactor-spec-verdict-v1",manifest_sha256,filemap_sha256,build_sha256,checks,mandatory_mutations,expected_gate_authority_sha256,pr_b_spec_path,pr_b_spec_sha256,classification_receipt_sha256,protocol_state,pass}`。`expected_gate_authority_sha256` 必须来自 base judge verdict input 并解析为 §6.1 P0-0 bytes。`pr_b_spec_path` 必须是 repo-relative canonical path（无绝对/`.`/`..`/symlink），其 bytes SHA-256 等于 `pr_b_spec_sha256`；该 SPEC 内声明的 classification receipt digest 必须等于 verdict 字段及实际 receipt bytes digest，三者不等、路径不存在或 schema 额外字段均 `pass=false`。
+
+本 SPEC 完成须同时满足：P0-0 bootstrap PR 已由完全未改 old gate 独立 admission，base judge 注入并强制 expected authority SHA，同步删除 mutation exit `2`；P0-2 无 unknown、authority/FILEMAP/external scope 三集合相等、七项均 `history_requirement=not-required`；每个不可拆 root 由唯一 successor 保存或精化；PR-A inventory request binding、双 clean rebuild、固定环境/clock/cross-run/atomic publish 全过；quotient semantic-domain 判词不翻，且最终 verifier 对每个 `projection-staleness-only` receipt 强制 `old_raw=reject`、`old_canonical=admit`、`new=admit`、`pass=true`，`M-PROJECTION-STALE-NEW-REJECT` 后必须 `pass=false`；C0、baseline 与双 required checks admit；P0-B receipt 已生成且独立 PR-B SPEC 路径与 receipt SHA 通过上述一致性校验，但 PR-B 实施不属于本完成定义；P0-3 的 211 replay、异 case A/B 两序语义 event set 交换性、5×4 表、same-case 线性化、跨快照 byte-identical subset、唯一 per-case 链/head、唯一 global receipt 链/派生 head、三项删除 mutation、historical-case-reuse、near-miss、writer tripwire 与原子性全过；协议 IDs 符合 §9；所有 mandatory mutation 具名执行。
+
+`M-PARALLEL-INDEPENDENT-ADD` 必须证明 A 合入扩大 accepted set 后 B 原始 intent bytes/SHA 不变仍 admit，并比较反序最终语义 event path/bytes set 与 accepted-set root；不比较顺序相关 acceptance receipt bytes。
+
+## 12.11 范围限制与 disputed findings
+
+Blueprint markdown 已证有仓内语义 consumer，移出 PR-A；只有独立 P0-BLUEPRINT 完成发布与 consumer 闭包后才可提案。BACKFILL 是 source/消化账本，归独立 P0-BACKFILL。本 SPEC 不声称解释近期所有 source conflict，也不建设长期迁移、artifact hosting 或 deploy rollback 平台。
+
+`disputed_findings`：
+
+1. `AR2-3` 关于“现有 DocumentDefinitions 全局注册表未处置”的前提不成立。`DocumentDefinitions.All` 是 `Lazy` 包装的 assembly reflection discovery，按 type 与 output path 确定排序，并在重复 output path 时抛错（`DocumentDefinitions.cs:39-83`）；没有手写中央注册项可删除。其 filesystem bijection obligations 保留给 receipt-bound PR-B，当前明确排除该实现。
+2. `QU2-3` 要求为 rollback 增加 changed-path receipt 与 canonical online observer，属于已删除的长期迁移/deploy 平台，不是 GoalArtifact 的边界冲突修复。§9 以精确 Git revert + 当前 source 重建旧 projection 给出运维回退；线上监测归独立 deploy SPEC。
+3. `TE2-1` 所称 obligation catalog 应放入 artifact manifest 的方向若指生产 disposition manifest，则会重造第二真源。fix pass 4 进一步删除内部 catalog：P0-0 由既有 base judge 冻结完整顶层 authority roots，候选 manifest 仅可留审计副本且不参与判词；FILEMAP 继续独占生产 disposition。
+
+---
+
 # 总纲
 
 **一名一址(GID),一律一码(H1–H12);地址算出,历史追加,状态即语法,台账即 git;**
@@ -541,3 +799,4 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 - **v7.13 R8**(2026-07-18):PR #204 pass3 终修将 TheoryErratum 结案收紧为“三环证据链闭合 ∧ coverage 所指 witness 经 truth DAG 判 `Closed` ∧ 送达工件在案”的显式清单,并规定无 witness 路径不因既有 `migration: absorbed` 闭合;同时将 11.21 entry 接受域按 `ParseEntry` 全形列出(含边界二选一),`cas_ref` 标为可选,canonical 数据现状另述。
 - **v7.13 R9**(2026-07-19):`SCRIBE-LATEX-EPOCH` PR-1 expand 安装独立 `LatexStatement`、定界/配平/宏白名单校验、Markdown 原样发射、QuestPDF 编译路径与 SL-023 typed capability;初裁 28/3 迁移队列及复核席忠实性义务入账,旧定理类缺位在本段仅 Observe,内容回填与 Block contract 分属后续 PR。
 - **v7.13 R10**(2026-07-20):#228 对抗评审 pass4/5 升提将 `cas_ref` 从 canonical 数据现状收紧为每条 entry 的 loader 必选不变量,并以 engineering 测试黑盒派生 `ParseEntry` 接受域与 11.21 机读锚逐次比对;11.27 的无 `cas_ref` 排除集随之空集化。
+- **v7.14 R1**(2026-08-07):`PROJECTION-RESIDENCY` 立第十二部,以六席思考面板 + 五轮对抗评审(architecture/quality/tests × codex-cli 与 ChatGPT Pro 混排载体)收敛合并冲突根因:三类共享可写地址——七个可再生 aggregate 入库、测试程序内的全语料快照、frozen ledger 的全局线性尾;`pr-shepherd` 的 `is_derived_conflict` 与 `derived-refresh` 判为消费者侧症状补偿,非根因消除。按天然 owner 拆 PR-A/PR-B/PR-C 并定序,每 PR 内一步迁移到位、不留兼容垫层。对抗过程勘正三处会致重构静默失败的陷阱:①保守性命题须走商映射(旧 committed projection 陈旧导致的 `old_raw=reject` 退出比较域,否则 PR-A 目标本身被判违规);②`old-obligation` 完备性根改为具名顶层 gate root 不可拆 + P0-0 由未改 old judge 裁决冻结 authority,杜绝候选自带 adapter/manifest/catalog 对自选子集全绿;③商映射反向漏洞须正向断言 `projection-staleness-only ⟹ new=admit`,否则新门全 reject 亦满足书面 quotient。frozen ledger 保持 append-only 权威真源不出库,冲突改由 base-owned 串行 writer 机器线性化(同 case 先落盘者接纳、stale 拒,不承诺同 case 交换性),并以不可变 acceptance-receipt 保存全局链、global head 仅派生不提交。R1 只立契约与 P0 义务,零实现;A/B/C 各自的 `ASSUMED-UNVERIFIED` 前置未过即机器阻断对应 PR。
