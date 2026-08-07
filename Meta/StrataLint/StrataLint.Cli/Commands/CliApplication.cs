@@ -18,6 +18,11 @@ internal interface ICliEnvironment
 
     ExplicitCommandResult EchoVerify(IReadOnlyList<string> arguments);
 
+    ExplicitCommandResult GateAuthority(IReadOnlyList<string> arguments);
+
+    ExplicitCommandResult ProjectionClosure(IReadOnlyList<string> arguments) =>
+        new(2, string.Empty, "P0_2_INVALID environment unavailable\n");
+
     CommandResult Ingest(IReadOnlyList<string> arguments);
 
     CommandResult CoverAtom(IReadOnlyList<string> arguments);
@@ -110,7 +115,7 @@ internal static class CliApplication
         if (arguments.Count == 0)
         {
             console.WriteError(
-                "USAGE: StrataLint align-scribe-receipt|c0-renew|check|clean-lanes|coverage|cover-atom|digest-status|echo-verify|emit-formalization-receipt|ingest|golden-record|ledger-genesis|papergen|route|selftest|topology|validate-blueprint-pins|worktree|ledger-append|ledger-reattest|perf-append|perf-report|verify-conservative|evaluate-conservative-corpus\n");
+                "USAGE: StrataLint align-scribe-receipt|c0-renew|check|clean-lanes|coverage|cover-atom|digest-status|echo-verify|emit-formalization-receipt|ingest|golden-record|ledger-genesis|papergen|projection-closure|route|selftest|topology|validate-blueprint-pins|worktree|ledger-append|ledger-reattest|perf-append|perf-report|verify-conservative|evaluate-conservative-corpus|gate-authority\n");
             return 2;
         }
 
@@ -128,6 +133,7 @@ internal static class CliApplication
             "dag-render" => RenderCommand(environment.RenderDag(tail), console),
             "digest-status" => RenderCommand(environment.DigestStatus(tail), console),
             "echo-verify" => RenderExplicit(environment.EchoVerify(tail), console),
+            "gate-authority" => RenderExplicit(environment.GateAuthority(tail), console),
             "ingest" => RenderCommand(environment.Ingest(tail), console),
             "evaluate-conservative-corpus" =>
                 RenderExplicit(environment.EvaluateConservativeCorpus(tail), console),
@@ -136,6 +142,7 @@ internal static class CliApplication
             "ledger-append" => RenderCommand(environment.AppendLedger(tail), console),
             "ledger-reattest" => RenderCommand(environment.ReattestLedger(tail), console),
             "papergen" => RenderExplicit(environment.Papergen(tail), console),
+            "projection-closure" => RenderExplicit(environment.ProjectionClosure(tail), console),
             "perf-append" => RenderCommand(environment.AppendPerf(tail), console),
             "perf-report" => RenderCommand(environment.PerfReport(tail), console),
             "route" => RenderCommand(environment.Route(tail), console),

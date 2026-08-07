@@ -19,6 +19,7 @@ governance_documents:
   - "Generated/DAG.md"
   - "Generated/FILEMAP.md"
   - "Generated/echo-residual-summary.md"
+  - "Golden/gate-authority-roots.toml"
   - "Golden/perf-budgets.toml"
   - "Library/MAP.md"
   - "Meta/Digestion/atomizers.toml"

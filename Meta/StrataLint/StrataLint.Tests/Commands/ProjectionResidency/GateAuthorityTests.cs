@@ -1,0 +1,191 @@
+using System.Security.Cryptography;
+using System.Text;
+using System.Text.Json;
+using StrataLint.Cli;
+using StrataLint.Engine;
+
+namespace StrataLint.Tests;
+
+public sealed class GateAuthorityTests
+{
+    private const string OldBuild =
+        "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef";
+
+    [Fact]
+    public void RepositoryCatalogHasTwentyOneUniqueUtf8SortedRoots()
+    {
+        var roots = GateAuthorityRootCatalogLoader.LoadRepository(FindRepositoryRoot());
+
+        Assert.Equal(21, roots.Length);
+        Assert.Equal(
+            roots.Length,
+            roots.Select(root => root.RootId).Distinct().Count());
+        Assert.Equal(
+            roots.Select(root => root.RootId),
+            roots.Select(root => root.RootId)
+                .OrderBy(value => Encoding.UTF8.GetBytes(value), ByteArrayComparer.Instance));
+    }
+
+    [Fact]
+    public void CatalogLoaderAcceptsClosedSyntheticCatalog()
+    {
+        var roots = GateAuthorityRootCatalogLoader.Parse(Encoding.UTF8.GetBytes("""
+            schema = "gate-authority-roots-v1"
+
+            [[roots]]
+            root_id = "Delta/check"
+            entrypoint = "Delta/check.sh"
+
+            [[roots]]
+            root_id = "Epsilon/check"
+            entrypoint = "Epsilon/check.sh"
+
+            [[roots]]
+            root_id = "Zeta/check"
+            entrypoint = "Zeta/check.sh"
+            """ + "\n"));
+
+        Assert.Equal(["Delta/check", "Epsilon/check", "Zeta/check"],
+            roots.Select(static root => root.RootId));
+    }
+
+    [Theory]
+    [InlineData("schema = \"gate-authority-roots-v1\"\nextra = true\n")]
+    [InlineData("schema = \"gate-authority-roots-v1\"\n[[roots]]\nroot_id = \"Delta/check\"\n")]
+    [InlineData("schema = \"gate-authority-roots-v1\"\n[[roots]]\nroot_id = \"Delta/check\"\nentrypoint = \"../check.sh\"\n")]
+    [InlineData("schema = \"gate-authority-roots-v1\"\n[[roots]]\nroot_id = \"Delta/check\"\nentrypoint = \"Delta/check.sh\"\n[[roots]]\nroot_id = \"Delta/check\"\nentrypoint = \"Epsilon/check.sh\"\n")]
+    [InlineData("schema = \"gate-authority-roots-v1\"\n[[roots]]\nroot_id = \"Zeta/check\"\nentrypoint = \"Zeta/check.sh\"\n[[roots]]\nroot_id = \"Delta/check\"\nentrypoint = \"Delta/check.sh\"\n")]
+    public void CatalogLoaderRejectsOpenMalformedUnsafeDuplicateOrUnsortedData(string text)
+    {
+        Assert.Throws<FormatException>(() =>
+            GateAuthorityRootCatalogLoader.Parse(Encoding.UTF8.GetBytes(text)));
+    }
+
+    [Fact]
+    public void EntrypointsExistAndEveryRootBindsTheCompleteFileBytes()
+    {
+        var root = FindRepositoryRoot();
+        var authority = GateAuthorityProducer.Create(root, OldBuild);
+
+        foreach (var item in authority.Roots)
+        {
+            var path = Path.Combine(root, item.Entrypoint.Replace('/', Path.DirectorySeparatorChar));
+            Assert.True(File.Exists(path), $"missing entrypoint {item.Entrypoint}");
+            Assert.Equal(
+                Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(path))),
+                item.EntrypointBlobSha256);
+        }
+    }
+
+    [Fact]
+    public void StrictReaderRejectsExtraMissingReorderedAndDuplicateFields()
+    {
+        var canonical = ProduceBytes();
+        using var document = JsonDocument.Parse(canonical);
+        var root = document.RootElement;
+        var roots = root.GetProperty("roots").GetRawText();
+        var oldBuild = root.GetProperty("old_build_sha256").GetString();
+        var first = root.GetProperty("roots")[0];
+        var malformed = new[]
+        {
+            $"{{\"schema\":\"expected-gate-authority-v1\",\"old_build_sha256\":\"{oldBuild}\",\"roots\":{roots},\"extra\":true}}",
+            $"{{\"schema\":\"expected-gate-authority-v1\",\"roots\":{roots}}}",
+            $"{{\"old_build_sha256\":\"{oldBuild}\",\"schema\":\"expected-gate-authority-v1\",\"roots\":{roots}}}",
+            $"{{\"schema\":\"expected-gate-authority-v1\",\"schema\":\"expected-gate-authority-v1\",\"old_build_sha256\":\"{oldBuild}\",\"roots\":{roots}}}",
+            $"{{\"schema\":\"expected-gate-authority-v1\",\"old_build_sha256\":\"{oldBuild}\",\"roots\":[{{\"entrypoint\":{JsonSerializer.Serialize(first.GetProperty("entrypoint").GetString())},\"root_id\":{JsonSerializer.Serialize(first.GetProperty("root_id").GetString())},\"entrypoint_blob_sha256\":{JsonSerializer.Serialize(first.GetProperty("entrypoint_blob_sha256").GetString())}}}]}}",
+        };
+
+        foreach (var json in malformed)
+        {
+            Assert.Equal(2, ValidateAuthority(Encoding.UTF8.GetBytes(json), null));
+        }
+    }
+
+    [Fact]
+    public void ProducerIsByteDeterministic()
+    {
+        Assert.Equal(ProduceBytes(), ProduceBytes());
+    }
+
+    [Fact]
+    public void DeletingEachRootIsSchemaExitTwo()
+    {
+        var bytes = ProduceBytes();
+        using var document = JsonDocument.Parse(bytes);
+        var roots = document.RootElement.GetProperty("roots").EnumerateArray().ToArray();
+
+        for (var removed = 0; removed < roots.Length; removed++)
+        {
+            var mutation = WriteMutation(
+                OldBuild,
+                roots.Where((_, index) => index != removed));
+            Assert.Equal(2, ValidateAuthority(mutation, null));
+        }
+    }
+
+    [Fact]
+    public void SynchronizedDeleteCannotOverrideIndependentApprovedAuthoritySha()
+    {
+        var bytes = ProduceBytes();
+        var approvedSha = GateAuthorityReader.AuthoritySha256(bytes);
+        using var document = JsonDocument.Parse(bytes);
+        var roots = document.RootElement.GetProperty("roots").EnumerateArray().Skip(1);
+        var authorityAndDiagnosticCatalogMutation = WriteMutation(OldBuild, roots);
+
+        Assert.Equal(
+            2,
+            ValidateAuthority(authorityAndDiagnosticCatalogMutation, approvedSha));
+    }
+
+    [Fact]
+    public void CommandRejectsMissingArgumentsAndUnwritableOutputAsUsage()
+    {
+        var root = FindRepositoryRoot();
+        using var temporary = new TemporaryDirectory();
+        Assert.Equal(2, GateAuthorityCommand.Run(root, null, Path.Combine(temporary.Path, "a.json")).ExitCode);
+        Assert.Equal(2, GateAuthorityCommand.Run(root, OldBuild, null).ExitCode);
+        Assert.Equal(2, GateAuthorityCommand.Run(root, OldBuild, temporary.Path).ExitCode);
+    }
+
+    private static byte[] ProduceBytes() =>
+        GateAuthorityProducer.Write(GateAuthorityProducer.Create(FindRepositoryRoot(), OldBuild));
+
+    private static int ValidateAuthority(byte[] bytes, string? expectedAuthoritySha256) =>
+        GateAuthorityReader.Validate(
+            bytes,
+            expectedAuthoritySha256,
+            GateAuthorityRootCatalogLoader.LoadRepository(FindRepositoryRoot()));
+
+    private static byte[] WriteMutation(string oldBuild, IEnumerable<JsonElement> roots) =>
+        StructuredCanonicalWriter.WriteJson(JsonSerializer.SerializeToElement(new
+        {
+            schema = "expected-gate-authority-v1",
+            old_build_sha256 = oldBuild,
+            roots = roots.Select(root => root.Clone()),
+        })).ToArray();
+
+    private static string FindRepositoryRoot()
+    {
+        var directory = new DirectoryInfo(AppContext.BaseDirectory);
+        while (directory is not null && !File.Exists(Path.Combine(directory.FullName, "CLAUDE.md")))
+        {
+            directory = directory.Parent;
+        }
+
+        return directory?.FullName ?? throw new InvalidOperationException("repository root not found");
+    }
+
+    private sealed class ByteArrayComparer : IComparer<byte[]>
+    {
+        internal static readonly ByteArrayComparer Instance = new();
+
+        public int Compare(byte[]? left, byte[]? right) =>
+            (left, right) switch
+            {
+                (null, null) => 0,
+                (null, _) => -1,
+                (_, null) => 1,
+                _ => left.AsSpan().SequenceCompareTo(right),
+            };
+    }
+}
