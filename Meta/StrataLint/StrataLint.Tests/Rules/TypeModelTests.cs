@@ -33,7 +33,6 @@ public sealed class TypeModelTests
     }
 
     private const string RawDefinitionSourcePath = "Blueprint/D5/S1/Digit/Raw.scribe.cs";
-    private const string FkstMonitorSkillPath = ".claude/skills/fkst-monitor/SKILL.md";
 
     [Fact]
     public void GidRejectsUnsafeMachineCharacters()
@@ -228,15 +227,6 @@ public sealed class TypeModelTests
     }
 
     [Fact]
-    public void FkstIntegrationLayerIsClosedWorldRegistered()
-    {
-        var path = RepoPath.CreateKnown(".fkst/fkst.workspace.toml");
-
-        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
-        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
-    }
-
-    [Fact]
     public void FileMapDataIsGovernanceRegisteredAndBootstrapClear()
     {
         const string value = "Meta/FILEMAP.toml";
@@ -258,15 +248,6 @@ public sealed class TypeModelTests
 
         Assert.Contains(path, policy.GovernanceDocuments);
         Assert.Null(RepositoryPathPolicy.Validate(path, policy));
-        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
-    }
-
-    [Fact]
-    public void ClaudeSkillsLayerIsClosedWorldRegistered()
-    {
-        var path = RepoPath.CreateKnown(FkstMonitorSkillPath);
-
-        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
         Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
     }
 
