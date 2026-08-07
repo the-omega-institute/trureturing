@@ -34,6 +34,7 @@ governance_documents:
   - "docs/develop/spec/golden-ledger-repo-spec.md"
   - "docs/develop/theory/BEDC-WM.md"
   - "docs/develop/theory/CONE_PROGRAM_FORMAL.md"
+  - "docs/develop/theory/ENTROPY-INFO-PRIMES-O5.md"
   - "docs/develop/theory/GICT.md"
   - "docs/develop/theory/INTERFACE_PAPER.md"
   - "docs/develop/theory/OBSERVER-QUANTUM.md"
