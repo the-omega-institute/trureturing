@@ -8,8 +8,7 @@ public sealed class GoldenCorpusMaterializerTests
 {
     private const string ValidGoldenFixturePath =
         "Meta/StrataLint/StrataLint.Tests/Golden/Fixtures/valid.toml";
-    private const string AnchorCatalogPath =
-        "Meta/StrataLint/Generated/anchor-catalog.v1.json";
+    private const string AnchorCatalogPath = "Meta/StrataLint/Generated/anchor-catalog.v1.json";
     private const string SpecificationPath = "docs/develop/spec/golden-ledger-repo-spec.md";
 
     [Fact]

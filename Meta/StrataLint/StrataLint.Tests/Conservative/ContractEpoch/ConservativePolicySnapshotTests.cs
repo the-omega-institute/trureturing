@@ -5,6 +5,12 @@ namespace StrataLint.Tests;
 
 public sealed class ConservativePolicySnapshotTests
 {
+    private const string UnprotectedTruthGraphPath = "Generated/truth-graph.v1.json";
+    private const string ProtectedScribeEmissionsPath =
+        "Meta/StrataLint/Generated/scribe-emissions.v1.json";
+    private const string ProtectedAnchorCatalogPath =
+        "Meta/StrataLint/Generated/anchor-catalog.v1.json";
+
     private const string BootstrapGatePath =
         "Meta/StrataLint/StrataLint.Engine/Admission/BootstrapGate.cs";
     private const string SpecificationPath = "docs/develop/spec/golden-ledger-repo-spec.md";
@@ -36,6 +42,39 @@ public sealed class ConservativePolicySnapshotTests
 
         Assert.Equal(expected, BootstrapProtectionPolicy.IsProtected(path));
         Assert.Equal(expected, BootstrapGate.IsProtected(path));
+    }
+
+    [Fact]
+    public void TopLevelTruthGraphChangeDoesNotProduceSl022Diagnostics()
+    {
+        var clear = Assert.IsType<BootstrapOutcome.Clear>(
+            BootstrapGate.Evaluate(RawChangeSet.Create([UnprotectedTruthGraphPath])));
+        Assert.NotNull(clear.Capability);
+    }
+
+    [Theory]
+    [InlineData(ProtectedScribeEmissionsPath)]
+    [InlineData(ProtectedAnchorCatalogPath)]
+    public void BaseJudgeGeneratedInputsProduceSl022Diagnostics(string protectedPath)
+    {
+        var review = Assert.IsType<BootstrapOutcome.HumanReviewRequired>(
+            BootstrapGate.Evaluate(RawChangeSet.Create([protectedPath])));
+
+        var diagnostic = Assert.Single(BootstrapGate.CreateSl022Diagnostics(review.ChangeSet));
+        Assert.Equal("SL-022", diagnostic.RuleId.Value);
+        Assert.Equal(protectedPath, diagnostic.Path);
+    }
+
+    private static string FindRepositoryRoot()
+    {
+        var directory = new DirectoryInfo(AppContext.BaseDirectory);
+        while (directory is not null && !File.Exists(Path.Combine(directory.FullName, "Trureturing.lean")))
+        {
+            directory = directory.Parent;
+        }
+
+        return directory?.FullName
+            ?? throw new InvalidOperationException("Could not locate repository root.");
     }
 
     [Fact]
