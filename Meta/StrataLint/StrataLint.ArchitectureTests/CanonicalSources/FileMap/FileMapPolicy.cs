@@ -156,6 +156,11 @@ internal static class FileMapPolicy
 
         foreach (var artifact in inventory.Where(artifact => !tracked.Contains(artifact.Path)))
         {
+            if (manifest.Match(artifact.Path) is [{ RuntimeDisposition: "run-local" }])
+            {
+                continue;
+            }
+
             findings.Add(new FileMapFinding(
                 "FILEMAP-GENERATED-STALE-INVENTORY",
                 artifact.Path,

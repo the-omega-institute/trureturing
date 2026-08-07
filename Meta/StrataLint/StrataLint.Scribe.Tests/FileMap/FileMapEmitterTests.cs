@@ -8,7 +8,7 @@ public sealed class FileMapEmitterTests
     public void DependencyProjectionIsByteStableAndDerivedFromEveryEntry()
     {
         var manifest = FileMapLoader.Parse(Encoding.UTF8.GetBytes("""
-            schema_version = 1
+            schema_version = 2
 
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
@@ -22,6 +22,9 @@ public sealed class FileMapEmitterTests
             produced_by = "ScribeEmitter"
             consumed_by = ["reader"]
             verified_by = ["emit-check"]
+            authority = "self"
+            runtime_disposition = "committed-source"
+            artifact_id = "none"
 
             [[files]]
             pattern = "D5/**/*.lean"
@@ -29,6 +32,9 @@ public sealed class FileMapEmitterTests
             produced_by = "none"
             consumed_by = ["Lean"]
             verified_by = ["lean-build"]
+            authority = "self"
+            runtime_disposition = "committed-source"
+            artifact_id = "none"
 
             [[files]]
             pattern = "Meta/StrataLint/Golden/cases/**/*.toml"
@@ -37,6 +43,9 @@ public sealed class FileMapEmitterTests
             consumed_by = ["TomlGoldenLoader"]
             verified_by = ["TomlGoldenLoader"]
             residence_violation = true
+            authority = "self"
+            runtime_disposition = "committed-source"
+            artifact_id = "none"
             """ + "\n"), "fixture.toml");
 
         var first = FileMapProjectionWriter.Write(manifest);

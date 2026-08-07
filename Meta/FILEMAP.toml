@@ -1,4 +1,4 @@
-schema_version = 1
+schema_version = 2
 
 [residence_policy]
 case_id = "RESIDENCE-EPOCH"
@@ -12,6 +12,9 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["automation"]
 verified_by = ["make-gate"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "*.lean"
@@ -19,6 +22,9 @@ kind = "truth"
 produced_by = "none"
 consumed_by = ["Lean", "Scribe", "StrataLint"]
 verified_by = ["lean-build", "lean-inspector"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "*.props"
@@ -26,6 +32,9 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["dotnet"]
 verified_by = ["make-gate"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "*.toml"
@@ -33,6 +42,9 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["Lean"]
 verified_by = ["make-gate"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = ".github/**"
@@ -40,6 +52,9 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["GitHub-Actions"]
 verified_by = ["make-gate"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = ".gitignore"
@@ -47,6 +62,9 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["git"]
 verified_by = ["repository-policy"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "AGENTS.md"
@@ -54,6 +72,9 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["agent"]
 verified_by = ["repository-policy"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Blueprint/**/*.md"
@@ -61,6 +82,9 @@ kind = "generated"
 produced_by = "ScribeEmitter"
 consumed_by = ["reader"]
 verified_by = ["emit-check"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Blueprint/**/*.scribe.cs"
@@ -68,6 +92,9 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["ScribeEmitter"]
 verified_by = ["ScribeCompiler"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "CLAUDE.md"
@@ -75,6 +102,9 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["agent"]
 verified_by = ["repository-policy"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "D5/**/*.lean"
@@ -82,6 +112,9 @@ kind = "truth"
 produced_by = "none"
 consumed_by = ["Lean", "Scribe", "StrataLint"]
 verified_by = ["lean-build", "lean-inspector"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "D5/**/*.md"
@@ -89,6 +122,9 @@ kind = "ledger"
 produced_by = "none"
 consumed_by = ["Admission"]
 verified_by = ["SL-002"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-ledger"
 
 [[files]]
 pattern = "Evidence/D5/values.json"
@@ -96,6 +132,9 @@ kind = "generated"
 produced_by = "ValuesEmitter"
 consumed_by = ["ValuesProjectionLoader"]
 verified_by = ["emit-check"]
+authority = "value-kernel"
+artifact_id = "A-VALUES"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Generated/DAG.md"
@@ -107,6 +146,7 @@ consumed_by = ["run-handle-consumer"]
 history_requirement = "not-required"
 runtime_disposition = "run-local"
 verified_by = ["emit-check"]
+authority = "Lean"
 
 [[files]]
 pattern = "Generated/FILEMAP.md"
@@ -118,6 +158,7 @@ consumed_by = ["run-handle-consumer"]
 history_requirement = "not-required"
 runtime_disposition = "run-local"
 verified_by = ["emit-check"]
+authority = "FILEMAP"
 
 [[files]]
 pattern = "Generated/echo-residual-summary.md"
@@ -125,6 +166,9 @@ kind = "generated"
 produced_by = "EchoVerifyCommand"
 consumed_by = ["harness-gate"]
 verified_by = ["echo-verify", "emit-check"]
+authority = "digestion"
+artifact_id = "A-ECHO"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Generated/truth-graph.v1.json"
@@ -132,6 +176,9 @@ kind = "generated"
 produced_by = "DagEmitter"
 consumed_by = ["TruthGraphJsonReader"]
 verified_by = ["emit-check"]
+authority = "Lean"
+artifact_id = "A-TRUTH"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Golden/Projection/*.json"
@@ -139,6 +186,9 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["StatementProjectionFixtureLoader"]
 verified_by = ["StatementProjectionFixtureLoader"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Golden/cases/**/*.toml"
@@ -146,6 +196,9 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["TomlGoldenLoader"]
 verified_by = ["TomlGoldenLoader"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Golden/fixture-registry.yaml"
@@ -153,6 +206,9 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["GoldenFixtureRegistryLoader"]
 verified_by = ["GoldenFixtureRegistryLoader"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Golden/gate-authority-roots.toml"
@@ -160,6 +216,9 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["GateAuthorityRootCatalogLoader"]
 verified_by = ["GateAuthorityRootCatalogLoader"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Golden/perf-budgets.toml"
@@ -167,6 +226,9 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["PerfBudgetLoader"]
 verified_by = ["PerfBudgetLoader"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Golden/values-kernels.toml"
@@ -174,6 +236,9 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["ValuesKernelDataLoader"]
 verified_by = ["ValuesKernelDataLoader"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Library/**/*.yaml"
@@ -181,6 +246,9 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["AnchorReferenceRule"]
 verified_by = ["SL-017", "YamlSubsetParser"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Library/*/*.md"
@@ -188,6 +256,9 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["DescribeRepositoryValidator", "ScribeEmitter"]
 verified_by = ["LibraryNoteCatalog", "emit-check"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Library/MAP.md"
@@ -195,6 +266,9 @@ kind = "ledger"
 produced_by = "none"
 consumed_by = ["developer"]
 verified_by = ["SL-003"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-ledger"
 
 [[files]]
 pattern = "Makefile"
@@ -202,6 +276,9 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["developer"]
 verified_by = ["make-gate"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Meta/BACKFILL.yaml"
@@ -209,6 +286,9 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["BackfillInventoryLoader"]
 verified_by = ["BackfillInventoryLoader"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Meta/Digestion/atomizers.toml"
@@ -216,6 +296,9 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["TheoryAtomizerDataLoader"]
 verified_by = ["TheoryAtomizerDataLoader"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Meta/Digestion/atoms/sha256/*"
@@ -223,6 +306,9 @@ kind = "ledger"
 produced_by = "IngestCommand"
 consumed_by = ["DigestionCasStore"]
 verified_by = ["DigestionCasStore"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-ledger"
 
 [[files]]
 pattern = "Meta/Digestion/formalizations/*.v1.json"
@@ -230,6 +316,9 @@ kind = "ledger"
 produced_by = "EmitFormalizationReceiptCommand"
 consumed_by = ["CoverAtomCommand"]
 verified_by = ["DigestionFormalizationReceipt"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-ledger"
 
 [[files]]
 pattern = "Meta/FILEMAP.toml"
@@ -237,6 +326,9 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["FileMapEmitter", "FileMapLoader", "FileMapPolicy"]
 verified_by = ["FileMapLoader"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Meta/StrataLint/ARCHITECTURE.md"
@@ -244,6 +336,9 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["developer"]
 verified_by = ["architecture-tests"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Meta/StrataLint/Architecture/*.txt"
@@ -251,6 +346,9 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["BannedApiAnalyzers"]
 verified_by = ["architecture-tests"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Meta/StrataLint/Architecture/HARDCODE-LEDGER.md"
@@ -258,6 +356,9 @@ kind = "ledger"
 produced_by = "none"
 consumed_by = ["ArchitectureTests"]
 verified_by = ["ArchitectureTests"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-ledger"
 
 [[files]]
 pattern = "Meta/StrataLint/Architecture/MAP.md"
@@ -265,6 +366,9 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["developer"]
 verified_by = ["architecture-tests"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Meta/StrataLint/BannedApiCompileFailProof/**"
@@ -272,6 +376,9 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["dotnet"]
 verified_by = ["dotnet-build"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Meta/StrataLint/CompileFailProof/**"
@@ -279,6 +386,9 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["dotnet"]
 verified_by = ["dotnet-build"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Meta/StrataLint/Generated/anchor-catalog.v1.json"
@@ -286,6 +396,9 @@ kind = "generated"
 produced_by = "AnchorCatalogEmitter"
 consumed_by = ["AnchorCatalogLoader"]
 verified_by = ["emit-check"]
+authority = "anchor"
+artifact_id = "A-ANCHOR"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Meta/StrataLint/Generated/scribe-emissions.v1.json"
@@ -293,6 +406,9 @@ kind = "generated"
 produced_by = "ScribeEmitter"
 consumed_by = ["DigestionStatusEvaluator"]
 verified_by = ["emit-check"]
+authority = "Scribe"
+artifact_id = "A-SCRIBE"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Meta/StrataLint/Golden/Frozen/**/*.jsonl"
@@ -300,6 +416,9 @@ kind = "ledger"
 produced_by = "FrozenLedgerCanonicalWriter"
 consumed_by = ["FrozenLedger"]
 verified_by = ["SL-008"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-ledger"
 
 [[files]]
 pattern = "Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json"
@@ -307,6 +426,9 @@ kind = "ledger"
 produced_by = "ConservativeExtensionVerifier"
 consumed_by = ["C0CeremonyTrustRootTests"]
 verified_by = ["C0CeremonyTrustRootTests"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-ledger"
 
 [[files]]
 pattern = "Meta/StrataLint/StrataLint.*/**"
@@ -314,6 +436,9 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["dotnet"]
 verified_by = ["dotnet-test"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Meta/StrataLint/StrataLint.sln"
@@ -321,6 +446,9 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["dotnet"]
 verified_by = ["dotnet-test"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Meta/StrataLint/TOWER.yaml"
@@ -328,6 +456,9 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["CoverageAnalyzer"]
 verified_by = ["make-gate"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Meta/StrataLint/lean-inspector/**"
@@ -335,6 +466,9 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["Lean"]
 verified_by = ["lean-inspector"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Meta/StrataLint/scripts/**"
@@ -342,6 +476,9 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["automation"]
 verified_by = ["make-gate"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Meta/contract-epoch/events.jsonl"
@@ -349,6 +486,9 @@ kind = "ledger"
 produced_by = "ContractEpochLedgerCodec"
 consumed_by = ["ContractEpochStore"]
 verified_by = ["ContractEpochStore"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-ledger"
 
 [[files]]
 pattern = "Meta/contract-epoch/evidence/sha256/*.json"
@@ -356,6 +496,9 @@ kind = "ledger"
 produced_by = "ContractEpochEvidenceReceipt"
 consumed_by = ["ContractEpochStore"]
 verified_by = ["ContractEpochStore"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-ledger"
 
 [[files]]
 pattern = "Meta/domains.yaml"
@@ -363,6 +506,9 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["RegistryLoader"]
 verified_by = ["RegistryLoader"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Meta/registry.yaml"
@@ -370,6 +516,9 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["RegistryLoader"]
 verified_by = ["RegistryLoader"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Papers/recipes/**"
@@ -377,6 +526,9 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["PapergenCommand"]
 verified_by = ["PapergenCommand"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "README.md"
@@ -384,6 +536,9 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["reader"]
 verified_by = ["SnapshotDecoder"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "agents/**"
@@ -391,6 +546,9 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["agent"]
 verified_by = ["repository-policy"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "docs/*.md"
@@ -398,6 +556,9 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["developer"]
 verified_by = ["repository-policy"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "docs/develop/spec/**"
@@ -405,6 +566,9 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["harness"]
 verified_by = ["SL-022"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "docs/develop/theory/**"
@@ -412,6 +576,9 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["TheoryIngestion"]
 verified_by = ["SnapshotDecoder"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "lean-toolchain"
@@ -419,3 +586,6 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["Lean"]
 verified_by = ["make-gate"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
