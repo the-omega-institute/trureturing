@@ -31,7 +31,11 @@ internal sealed record FileMapEntry
         string producedBy,
         ImmutableArray<string> consumedBy,
         ImmutableArray<string> verifiedBy,
-        bool residenceViolation)
+        bool residenceViolation,
+        string? artifactId,
+        string? mode,
+        string? runtimeDisposition,
+        string? historyRequirement)
     {
         glob = FileMapGlob.Create(pattern);
         Pattern = pattern;
@@ -40,6 +44,10 @@ internal sealed record FileMapEntry
         ConsumedBy = consumedBy;
         VerifiedBy = verifiedBy;
         ResidenceViolation = residenceViolation;
+        ArtifactId = artifactId;
+        Mode = mode;
+        RuntimeDisposition = runtimeDisposition;
+        HistoryRequirement = historyRequirement;
     }
 
     internal string Pattern { get; }
@@ -53,6 +61,14 @@ internal sealed record FileMapEntry
     internal ImmutableArray<string> VerifiedBy { get; }
 
     internal bool ResidenceViolation { get; }
+
+    internal string? ArtifactId { get; }
+
+    internal string? Mode { get; }
+
+    internal string? RuntimeDisposition { get; }
+
+    internal string? HistoryRequirement { get; }
 
     internal bool Matches(string path) => glob.IsMatch(path);
 }
@@ -87,6 +103,8 @@ internal static class FileMapLoader
         ["consumed_by", "kind", "pattern", "produced_by", "verified_by"];
     private static readonly string[] ResidenceEntryKeys =
         ["consumed_by", "kind", "pattern", "produced_by", "residence_violation", "verified_by"];
+    private static readonly string[] RunLocalEntryKeys =
+        ["artifact_id", "consumed_by", "history_requirement", "kind", "mode", "pattern", "produced_by", "runtime_disposition", "verified_by"];
 
     internal static FileMapManifest LoadRepository(string repositoryRoot)
     {
@@ -189,7 +207,8 @@ internal static class FileMapLoader
     private static FileMapEntry ParseEntry(TomlTable table, string location)
     {
         var hasResidenceViolation = table.ContainsKey("residence_violation");
-        RequireExactKeys(table, location, hasResidenceViolation ? ResidenceEntryKeys : EntryKeys);
+        var hasRunLocal = table.ContainsKey("runtime_disposition");
+        RequireExactKeys(table, location, hasRunLocal ? RunLocalEntryKeys : hasResidenceViolation ? ResidenceEntryKeys : EntryKeys);
         var pattern = RequiredString(table, "pattern", location);
         _ = FileMapGlob.Create(pattern);
         var kind = RequiredString(table, "kind", location) switch
@@ -224,13 +243,27 @@ internal static class FileMapLoader
                     : "generated verified_by must include emit-check");
         }
 
+        var artifactId = hasRunLocal ? RequiredName(table, "artifact_id", location, allowNone: false) : null;
+        var mode = hasRunLocal ? RequiredString(table, "mode", location) : null;
+        var runtimeDisposition = hasRunLocal ? RequiredString(table, "runtime_disposition", location) : null;
+        var historyRequirement = hasRunLocal ? RequiredString(table, "history_requirement", location) : null;
+        if (hasRunLocal && (kind is not FileMapKind.Generated || mode != "100644"
+            || runtimeDisposition != "run-local" || historyRequirement != "not-required"))
+        {
+            throw Invalid(location, "run-local projection fields are invalid");
+        }
+
         return new FileMapEntry(
             pattern,
             kind,
             producedBy,
             consumedBy,
             verifiedBy,
-            residenceViolation);
+            residenceViolation,
+            artifactId,
+            mode,
+            runtimeDisposition,
+            historyRequirement);
     }
 
     private static ImmutableArray<string> RequiredNames(

@@ -48,6 +48,10 @@ public static class DagEmitter
             };
             var stale = projections.Where(projection =>
             {
+                if (check && projection.Path == RelativePath)
+                {
+                    return false;
+                }
                 var path = Path.Combine(repositoryRoot, projection.Path);
                 var current = File.Exists(path) ? File.ReadAllBytes(path) : [];
                 return !current.AsSpan().SequenceEqual(projection.Bytes.AsSpan());
@@ -61,6 +65,12 @@ public static class DagEmitter
                 }
 
                 return 1;
+            }
+
+
+            if (check)
+            {
+                output.WriteLine("rebuilt twice: " + RelativePath);
             }
 
             foreach (var projection in stale)

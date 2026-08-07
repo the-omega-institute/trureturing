@@ -52,6 +52,8 @@ public sealed partial class MakeWorkflowTests
         "clean-lanes",
         "emit",
         "emit-check",
+        "projection-publish",
+        "projection-verify",
         "ingest",
         "echo-residual-summary",
         "echo-verify",

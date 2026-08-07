@@ -30,7 +30,6 @@ cd "$ROOT"
 run_scribe emit
 run_scribe catalog
 run_scribe emit-values
-run_scribe filemap
 
 # The truth DAG projection lives here rather than in the Scribe binary: building the graph needs a
 # RepositorySnapshot, which only the CLI's git gateway produces. Same emit/check contract.
@@ -43,3 +42,4 @@ run_dag() {
 }
 
 run_dag
+run_scribe filemap

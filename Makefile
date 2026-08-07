@@ -3,10 +3,12 @@ SHELL := /bin/bash
 
 BASE ?= origin/dev
 WORKTREE_PATH = $(if $(filter command line,$(origin PATH)),$(PATH),$(abspath ../trureturing-$(NAME)))
-.PHONY: help dotnet test lean-cache-ensure lean lean-report build c0-renew clean-lanes emit emit-check ingest echo-residual-summary echo-verify record-golden selftest scratch-sweep gate perf-report deliver-check receipts-stage derived-refresh deposit cover worktree pr-watch refactor-p0-0-gate-authority refactor-p0-2
+.PHONY: help dotnet test lean-cache-ensure lean lean-report build c0-renew clean-lanes emit emit-check projection-publish projection-verify ingest echo-residual-summary echo-verify record-golden selftest scratch-sweep gate perf-report deliver-check receipts-stage derived-refresh deposit cover worktree pr-watch refactor-p0-0-gate-authority refactor-p0-2
 
 ifeq ($(MAKECMDGOALS),help)
 $(info make emit-check                   Check canonical Scribe documents, catalog, and values)
+$(info make projection-publish           Publish a run-handle-v1 projection run)
+$(info make projection-verify            Verify a run-handle-v1 projection run)
 endif
 
 help:
@@ -40,6 +42,12 @@ emit:
 
 emit-check: echo-verify
 	@/bin/bash Meta/StrataLint/scripts/scribe.sh check
+
+projection-publish: emit
+	@dotnet run --project Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- projection-run publish --request "$(REQUEST)" --output-root "$(OUTPUT_ROOT)"
+
+projection-verify:
+	@dotnet run --project Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- projection-run verify --output-root "$(OUTPUT_ROOT)" --run-id "$(RUN_ID)" --expected-request-sha256 "$(EXPECTED_REQUEST_SHA256)"
 
 ingest:
 	@/bin/bash Meta/StrataLint/scripts/ingest.sh "$(BASE)"

@@ -11,4 +11,6 @@
 /.lake/
 /Papers/build/
 /build/
+/Generated/DAG.md
+/Generated/FILEMAP.md
 __pycache__/

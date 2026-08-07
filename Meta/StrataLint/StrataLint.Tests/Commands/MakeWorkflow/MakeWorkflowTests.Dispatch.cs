@@ -41,6 +41,8 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains(ScribeScriptPath + " emit", Recipe(makefile, "emit"), StringComparison.Ordinal);
         Assert.Contains("emit-check: echo-verify", makefile, StringComparison.Ordinal);
         Assert.Contains(ScribeScriptPath + " check", Recipe(makefile, "emit-check"), StringComparison.Ordinal);
+        Assert.Contains("projection-run publish", Recipe(makefile, "projection-publish"), StringComparison.Ordinal);
+        Assert.Contains("projection-run verify", Recipe(makefile, "projection-verify"), StringComparison.Ordinal);
         Assert.DoesNotContain("ingest: emit-check", makefile, StringComparison.Ordinal);
         Assert.Contains(IngestScriptPath, Recipe(makefile, "ingest"), StringComparison.Ordinal);
         Assert.Contains(

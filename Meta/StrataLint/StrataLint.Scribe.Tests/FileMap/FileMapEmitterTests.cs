@@ -63,7 +63,7 @@ public sealed class FileMapEmitterTests
     }
 
     [Fact]
-    public void FileMapEmitterWritesChecksAndDoesNotOverwriteDrift()
+    public void FileMapEmitterCheckRebuildsTwiceWithoutReadingRunLocalProjection()
     {
         var sourceRoot = FindRepositoryRoot();
         var root = Path.Combine(Path.GetTempPath(), "stratalint-filemap-" + Guid.NewGuid().ToString("N"));
@@ -83,9 +83,10 @@ public sealed class FileMapEmitterTests
             File.AppendAllText(path, "drift\n", new UTF8Encoding(false, true));
             var drifted = File.ReadAllBytes(path);
 
-            Assert.Equal(1, FileMapEmitter.Emit(root, check: true, output, error));
+            Assert.Equal(0, FileMapEmitter.Emit(root, check: true, output, error));
             Assert.Equal(drifted, File.ReadAllBytes(path));
-            Assert.Contains("out of date", error.ToString(), StringComparison.Ordinal);
+            Assert.Contains("rebuilt twice", output.ToString(), StringComparison.Ordinal);
+            Assert.Equal(string.Empty, error.ToString());
         }
         finally
         {

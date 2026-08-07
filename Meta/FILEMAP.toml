@@ -99,16 +99,24 @@ verified_by = ["emit-check"]
 
 [[files]]
 pattern = "Generated/DAG.md"
+artifact_id = "A-DAG"
 kind = "generated"
+mode = "100644"
 produced_by = "DagEmitter"
-consumed_by = ["reader"]
+consumed_by = ["run-handle-consumer"]
+history_requirement = "not-required"
+runtime_disposition = "run-local"
 verified_by = ["emit-check"]
 
 [[files]]
 pattern = "Generated/FILEMAP.md"
+artifact_id = "A-FILEMAP"
 kind = "generated"
+mode = "100644"
 produced_by = "FileMapEmitter"
-consumed_by = ["reader"]
+consumed_by = ["run-handle-consumer"]
+history_requirement = "not-required"
+runtime_disposition = "run-local"
 verified_by = ["emit-check"]
 
 [[files]]
