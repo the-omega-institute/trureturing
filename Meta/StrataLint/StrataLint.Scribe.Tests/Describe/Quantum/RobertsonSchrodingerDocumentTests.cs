@@ -6,12 +6,12 @@ public sealed class RobertsonSchrodingerDocumentTests
     public void RobertsonSchrodingerKeepsTheGramRemainderAndLiteratureProvenance()
     {
         var definition = DocumentDefinitions.All.Single(static item =>
-            item.Document.Header.Gid.Value == "D5/S3/Quantum/RobertsonSchrodinger");
+            item.Document.Header.Gid.Value == "D5/S3/QuantumBounds/RobertsonSchrodinger");
         var describe = Assert.IsType<DocumentBlock.Describe>(
             Assert.Single(definition.Document.Content.Items));
 
         Assert.Equal(
-            "D5/S3/Quantum/RobertsonSchrodinger.robertson_schrodinger",
+            "D5/S3/QuantumBounds/RobertsonSchrodinger.robertson_schrodinger",
             Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement).Value.Value);
         Assert.Equal(DescribeProvenanceKind.LiteratureAttested, describe.Provenance.Kind);
         Assert.Equal(

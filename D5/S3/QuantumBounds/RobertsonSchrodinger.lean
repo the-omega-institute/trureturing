@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/RobertsonSchrodinger
+/- GID: D5/S3/QuantumBounds/RobertsonSchrodinger
    generality: G
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -21,7 +21,7 @@ Library search (mathlib v4.31.0, offline, 2026-08-07):
 
 import Mathlib.Analysis.InnerProductSpace.Symmetric
 
-namespace D5.S3.Quantum.RobertsonSchrodinger
+namespace D5.S3.QuantumBounds.RobertsonSchrodinger
 
 open scoped InnerProductSpace
 
@@ -170,4 +170,4 @@ theorem robertson_schrodinger {E : Type*} [NormedAddCommGroup E] [InnerProductSp
         rw [← sq_abs, hnorm]
       rw [him_sq]
 
-end D5.S3.Quantum.RobertsonSchrodinger
+end D5.S3.QuantumBounds.RobertsonSchrodinger

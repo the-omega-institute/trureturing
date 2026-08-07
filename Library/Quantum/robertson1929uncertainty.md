@@ -6,7 +6,7 @@ title: The Uncertainty Principle
 doi: 10.1103/PhysRev.34.163
 claim: Robertson gives the variance-commutator uncertainty relation, and Schrodinger's 1930 refinement retains the symmetric covariance term.
 strata_touched:
-  - D5/S3/Quantum/RobertsonSchrodinger
+  - D5/S3/QuantumBounds/RobertsonSchrodinger
 license: citation-only
 triage: anchor
 ---

@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum;
+namespace StrataLint.Scribe.Blueprint.D5.S3.QuantumBounds;
 
 internal sealed class RobertsonSchrodingerDocument : IScribeDocumentDefinition
 {
@@ -11,7 +11,7 @@ internal sealed class RobertsonSchrodingerDocument : IScribeDocumentDefinition
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
         Header(
-            "D5/S3/Quantum/RobertsonSchrodinger",
+            "D5/S3/QuantumBounds/RobertsonSchrodinger",
             "Centered vectors satisfy an exact Robertson-Schrodinger identity with a nonnegative Gram remainder."),
         H("Robertson-Schrodinger Identity"),
         Blocks(
@@ -19,7 +19,7 @@ internal sealed class RobertsonSchrodingerDocument : IScribeDocumentDefinition
                 DescribeId.Create("centered-vectors-satisfy-the-robertson-schrodinger-identity"),
                 H("Centered vectors satisfy the Robertson-Schrodinger identity"),
                 LeanTheorem(
-                    "D5/S3/Quantum/RobertsonSchrodinger.robertson_schrodinger"),
+                    "D5/S3/QuantumBounds/RobertsonSchrodinger.robertson_schrodinger"),
                 RobertsonSchrodingerFormula(),
                 DescribeProvenance.LiteratureAttested(Robertson),
                 Blocks(
