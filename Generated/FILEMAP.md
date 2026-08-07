@@ -82,6 +82,10 @@ none --declares--> [Golden/fixture-registry.yaml | data]
 [Golden/fixture-registry.yaml | data] --consumed-by--> GoldenFixtureRegistryLoader
 [Golden/fixture-registry.yaml | data] --verified-by--> GoldenFixtureRegistryLoader
 
+none --declares--> [Golden/gate-authority-roots.toml | data]
+[Golden/gate-authority-roots.toml | data] --consumed-by--> GateAuthorityRootCatalogLoader
+[Golden/gate-authority-roots.toml | data] --verified-by--> GateAuthorityRootCatalogLoader
+
 none --declares--> [Golden/perf-budgets.toml | data]
 [Golden/perf-budgets.toml | data] --consumed-by--> PerfBudgetLoader
 [Golden/perf-budgets.toml | data] --verified-by--> PerfBudgetLoader

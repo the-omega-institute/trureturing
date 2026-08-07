@@ -33,6 +33,9 @@ WAKE_REOPEN_RETRY_SLEEP_SECONDS="${PR_SHEPHERD_WAKE_REOPEN_RETRY_SLEEP_SECONDS:-
 DERIVED_LEASE_TOKEN=""
 DERIVED_LEASE_PR=""
 DERIVED_LEASE_ACQUIRED_AT=""
+FROZEN_LEDGER_CONFLICT=0
+FROZEN_LEDGER_PATH="Meta/StrataLint/Golden/Frozen/events.jsonl"
+TRURETURING_ROOT_PATH="Trureturing.lean"
 COMMIT_SUBJECT="recompute derivations after dev advance (auto, pr-shepherd)"
 ORIGINAL_HOME="${HOME:-/tmp}"
 WATCH_LOADED_BLOB="${PR_SHEPHERD_WATCH_LOADED_BLOB:-}"
@@ -100,17 +103,18 @@ has_expiry_fingerprint() {
 # Conflicts a machine can settle by rebuilding rather than by reading intent. The frozen
 # ledger belongs here even though it is append-only source: two lanes that each freeze a
 # module always collide textually, yet the correct result is never a hand-merge of the two
-# tails -- it is the dev tail plus this branch's freeze re-attested from its own Lean report,
-# which run_derivation_chain does below. Without this, every D5 delivery whose sibling merges
-# first stalls as "needs a semantic merge" and waits for a human that this harness has none of.
+# tails. The dev bytes are the only valid history prefix; run_derivation_chain extends that
+# prefix through the canonical append/reattest protocol. Without this, every D5 delivery whose
+# sibling merges first stalls as "needs a semantic merge".
 is_derived_conflict() {
   case "$1" in
     Meta/StrataLint/Generated/*|Generated/*|Evidence/D5/values.json) return 0 ;;
-    Meta/StrataLint/Golden/Frozen/events.jsonl) return 0 ;;
+    "$FROZEN_LEDGER_PATH") return 0 ;;
     *) return 1 ;;
   esac
 }
 source "$(cd "$(dirname "$SCRIPT_PATH")" && pwd -P)/shepherd/pr-shepherd-lease.sh"
+source "$(cd "$(dirname "$SCRIPT_PATH")" && pwd -P)/shepherd/pr-shepherd-ledger.sh"
 branch_slug() {
   local branch="$1" slug digest
   slug="$(printf '%s' "$branch" | sed 's#[^A-Za-z0-9._-]#-#g')"
@@ -123,6 +127,8 @@ dryrun_recalculation() {
   log "DRYRUN #$num fetch origin/dev and origin/$head; verify observed OIDs"
   log "DRYRUN #$num checkout $head; merge origin/dev (derived conflicts take dev)"
   log "DRYRUN #$num run make lean-report"
+  log "DRYRUN #$num if frozen ledger conflicted: git show base Trureturing; lean-report; ledger-append"
+  log "DRYRUN #$num if frozen ledger conflicted: git show candidate Trureturing; lean-report; ledger-reattest"
   log "DRYRUN #$num run make emit"
   log "DRYRUN #$num run make ingest BASE=origin/dev"
   log "DRYRUN #$num run echo-verify --emit --base origin/dev (atomic install)"
@@ -173,6 +179,7 @@ prepare_worktree() {
 }
 merge_dev() {
   local num="$1" head="$2" workspace="$3" merge_rc path source_conflict=0 conflict_count=0
+  FROZEN_LEDGER_CONFLICT=0
   set +e
   git -C "$workspace" \
     -c core.hooksPath=/dev/null \
@@ -185,6 +192,9 @@ merge_dev() {
     while IFS= read -r -d '' path; do
       conflict_count=$((conflict_count + 1))
       if is_derived_conflict "$path"; then
+        if [[ "$path" == "$FROZEN_LEDGER_PATH" ]]; then
+          FROZEN_LEDGER_CONFLICT=1
+        fi
         if git -C "$workspace" cat-file -e ":3:$path" 2>/dev/null; then
           git -C "$workspace" checkout --theirs -- "$path" \
             && git -C "$workspace" add -- "$path" || {
@@ -221,13 +231,30 @@ merge_dev() {
       commit -m "Merge $REMOTE/dev into $head (pr-shepherd)" >/dev/null
   fi
 }
+install_revision_file() {
+  local workspace="$1" revision="$2" path="$3" temporary
+  temporary="$(mktemp "${TMPDIR:-/tmp}/pr-shepherd-revision.XXXXXXXX")" || return 1
+  if ! git -C "$workspace" show "$revision:$path" > "$temporary"; then
+    rm -f "$temporary"
+    return 1
+  fi
+  if ! mv "$temporary" "$workspace/$path"; then
+    rm -f "$temporary"
+    return 1
+  fi
+}
 run_derivation_chain() {
   local num="$1" workspace="$2" projection isolated_home
   isolated_home="$(mktemp -d "${TMPDIR:-/tmp}/pr-shepherd-derivation.XXXXXXXX")"
-  if ! credentialless "$isolated_home" \
-    make -C "$workspace" --no-print-directory lean-report; then
-    rm -rf "$isolated_home"
-    log "SWEEP #$num lean-report 失败,不 push"; return 1
+  if [[ "$FROZEN_LEDGER_CONFLICT" -eq 1 ]]; then
+    if ! reconcile_frozen_ledger "$num" "$workspace" "$isolated_home"; then
+      rm -rf "$isolated_home"
+      return 1
+    fi
+  elif ! credentialless "$isolated_home" \
+      make -C "$workspace" --no-print-directory lean-report; then
+      rm -rf "$isolated_home"
+      log "SWEEP #$num lean-report 失败,不 push"; return 1
   fi
   if ! credentialless "$isolated_home" \
     make -C "$workspace" --no-print-directory emit; then
@@ -240,7 +267,7 @@ run_derivation_chain() {
     log "SWEEP #$num ingest 失败,不 push"; return 1
   fi
   mkdir -p "$workspace/Generated"
-  projection="$workspace/Generated/.echo-residual-summary.md.pr-shepherd.$$"
+  projection="$(mktemp "${TMPDIR:-/tmp}/pr-shepherd-projection.XXXXXXXX")"
   if ! (cd "$workspace" && credentialless "$isolated_home" dotnet run \
     --project Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj \
     --configuration Release -- echo-verify --emit --base "$REMOTE/dev") > "$projection"; then
@@ -250,20 +277,17 @@ run_derivation_chain() {
     return 1
   fi
   mv "$projection" "$workspace/Generated/echo-residual-summary.md"
-  # Freeze last: every step above rewrites tracked bytes, and an attestation taken before
-  # them binds a blob that no longer exists. Appending here also repairs a branch that
-  # produced a closed module without ever freezing it, which SL-008 otherwise rejects.
-  if ! (cd "$workspace" && credentialless "$isolated_home" dotnet run \
-    --project Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj \
-    --configuration Release -- ledger-append \
-    --candidate-lean-report .lake/build/stratalint/raw-lean-report.json); then
-    rm -rf "$isolated_home"
-    log "SWEEP #$num ledger-append 失败,不 push"; return 1
+  # A non-conflicting lane freezes last. A conflicting ledger was already rebuilt from the
+  # dev prefix by reconcile_frozen_ledger and must not receive a second append here.
+  if [[ "$FROZEN_LEDGER_CONFLICT" -eq 0 ]] \
+      && ! run_ledger_cli "$workspace" "$isolated_home" ledger-append; then
+      rm -rf "$isolated_home"
+      log "SWEEP #$num ledger-append 失败,不 push"; return 1
   fi
   if ! credentialless "$isolated_home" \
     make -C "$workspace" --no-print-directory emit-check BASE="$REMOTE/dev"; then
     rm -rf "$isolated_home"
-    log "SWEEP #$num emit-check 失败,不 push"; return 1
+    log "ALERT #$num emit-check 失败,不 push"; return 1
   fi
   rm -rf "$isolated_home"
 }

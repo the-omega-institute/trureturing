@@ -140,6 +140,13 @@ consumed_by = ["GoldenFixtureRegistryLoader"]
 verified_by = ["GoldenFixtureRegistryLoader"]
 
 [[files]]
+pattern = "Golden/gate-authority-roots.toml"
+kind = "data"
+produced_by = "none"
+consumed_by = ["GateAuthorityRootCatalogLoader"]
+verified_by = ["GateAuthorityRootCatalogLoader"]
+
+[[files]]
 pattern = "Golden/perf-budgets.toml"
 kind = "data"
 produced_by = "none"

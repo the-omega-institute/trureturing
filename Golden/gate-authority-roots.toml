@@ -1,0 +1,85 @@
+schema = "gate-authority-roots-v1"
+
+[[roots]]
+root_id = "Makefile/echo-verify"
+entrypoint = "Makefile"
+
+[[roots]]
+root_id = "Makefile/emit-check"
+entrypoint = "Makefile"
+
+[[roots]]
+root_id = "Makefile/gate"
+entrypoint = "Makefile"
+
+[[roots]]
+root_id = "Makefile/preflight"
+entrypoint = "Makefile"
+
+[[roots]]
+root_id = "ci.yml/baseline-admission"
+entrypoint = ".github/workflows/ci.yml"
+
+[[roots]]
+root_id = "ci.yml/candidate-engineering"
+entrypoint = ".github/workflows/ci.yml"
+
+[[roots]]
+root_id = "ci.yml/lean-inspect"
+entrypoint = ".github/workflows/ci.yml"
+
+[[roots]]
+root_id = "harness-gate.sh/admission"
+entrypoint = ".github/scripts/harness-gate.sh"
+
+[[roots]]
+root_id = "harness-gate.sh/build-candidate"
+entrypoint = ".github/scripts/harness-gate.sh"
+
+[[roots]]
+root_id = "harness-gate.sh/build-judge"
+entrypoint = ".github/scripts/harness-gate.sh"
+
+[[roots]]
+root_id = "harness-gate.sh/conservative"
+entrypoint = ".github/scripts/harness-gate.sh"
+
+[[roots]]
+root_id = "harness-gate.sh/echo-verify"
+entrypoint = ".github/scripts/harness-gate.sh"
+
+[[roots]]
+root_id = "harness-gate.sh/selftest"
+entrypoint = ".github/scripts/harness-gate.sh"
+
+[[roots]]
+root_id = "local-harness-gate.sh/admission"
+entrypoint = "Meta/StrataLint/scripts/local-harness-gate.sh"
+
+[[roots]]
+root_id = "local-harness-gate.sh/echo-verify-bootstrap"
+entrypoint = "Meta/StrataLint/scripts/local-harness-gate.sh"
+
+[[roots]]
+root_id = "local-harness-gate.sh/emit-check"
+entrypoint = "Meta/StrataLint/scripts/local-harness-gate.sh"
+
+[[roots]]
+root_id = "local-harness-gate.sh/engineering-dotnet"
+entrypoint = "Meta/StrataLint/scripts/local-harness-gate.sh"
+
+[[roots]]
+root_id = "local-harness-gate.sh/engineering-selftest"
+entrypoint = "Meta/StrataLint/scripts/local-harness-gate.sh"
+
+[[roots]]
+root_id = "local-harness-gate.sh/engineering-test"
+entrypoint = "Meta/StrataLint/scripts/local-harness-gate.sh"
+
+[[roots]]
+root_id = "local-harness-gate.sh/lean-reports"
+entrypoint = "Meta/StrataLint/scripts/local-harness-gate.sh"
+
+[[roots]]
+root_id = "local-harness-gate.sh/setup"
+entrypoint = "Meta/StrataLint/scripts/local-harness-gate.sh"
