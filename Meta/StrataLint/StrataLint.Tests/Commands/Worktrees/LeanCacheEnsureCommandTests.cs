@@ -194,6 +194,55 @@ public sealed class LeanCacheEnsureCommandTests
 public sealed class LeanCacheEnsureScriptTests
 {
     [Fact]
+    public void MissingLakeDelegatesToCanonicalWorktreeEnsureCacheCommand()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var script = Path.Combine(FindRepositoryRoot(), LeanCacheEnsureScriptPath);
+        using var fixture = new TemporaryDirectory();
+        var bin = Path.Combine(fixture.Path, "bin");
+        var arguments = Path.Combine(fixture.Path, "dotnet-arguments");
+        Directory.CreateDirectory(bin);
+        var dotnet = Path.Combine(bin, "dotnet");
+        File.WriteAllText(
+            dotnet,
+            "#!/usr/bin/env bash\nprintf '%s\\n' \"$@\" > \"$DOTNET_ARGUMENTS\"\nprintf 'delegated\\n'\n");
+        File.SetUnixFileMode(
+            dotnet,
+            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+
+        var result = BoundedProcessRunner.Run(
+            "/bin/bash",
+            [
+                "-c",
+                "PATH=\"$1:$PATH\" DOTNET_ARGUMENTS=\"$2\" exec /bin/bash \"$3\"",
+                "lean-cache-test",
+                bin,
+                arguments,
+                script,
+            ],
+            fixture.Path,
+            TimeSpan.FromSeconds(10),
+            64 * 1024);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal("delegated\n", Encoding.UTF8.GetString(result.StandardOutput));
+        Assert.Empty(result.StandardError);
+        Assert.Equal(
+            """
+            run
+            --project
+            Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj
+            --configuration
+            Release
+            --
+            worktree
+            ensure-cache
+            """ + "\n",
+            File.ReadAllText(arguments));
+    }
+
+    [Fact]
     public void PrivateDirectoryFastPathDoesNotStartDotnet()
     {
         if (OperatingSystem.IsWindows()) return;

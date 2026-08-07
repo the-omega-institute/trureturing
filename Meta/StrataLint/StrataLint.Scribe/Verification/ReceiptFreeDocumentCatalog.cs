@@ -19,6 +19,11 @@ internal static class ReceiptFreeDocumentCatalog
         var documentGids = documents
             .Select(static document => document.Header.Gid.Value)
             .ToImmutableHashSet(StringComparer.Ordinal);
+        if (documentGids.IsEmpty)
+        {
+            throw new InvalidOperationException("Scribe document corpus must not be empty.");
+        }
+
         var backfillPath = Path.Combine(repositoryRoot, BackfillInventoryLoader.RelativePath);
         var inventory = BackfillInventoryLoader.Load(File.ReadAllText(backfillPath));
         var receiptBound = inventory.RequireDigestionEntries()

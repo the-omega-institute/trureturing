@@ -7,7 +7,11 @@ import D5.S0.Conventions.Notation
 import D5.S0.Diagonal.EscapeCount
 import D5.S0.Diagonal.CaptureCount
 import D5.S0.Diagonal.DistanceProfile
+import D5.S0.Diagonal.EscapeAsymptotics
+import D5.S0.Diagonal.EquivariantEscape
+import D5.S0.Naming.NamingSystem
 import D5.S0.Tower.ConstantArms
+import D5.S0.Tower.ChampionExtremality
 import D5.S1.Digit.Raw
 import D5.S1.Digit.Carry
 import D5.S1.Scale.Embedding
@@ -22,8 +26,11 @@ import D5.S1.Depth.PartialQuotientExtraction
 import D5.S1.Phase.WalkFormula
 import D5.S1.Phase.ZeroOrbitCongruence
 import D5.S3.Constants.MidslopeCurvature
+import D5.S3.Constants.MidslopeCurvatureValues
+import D5.S3.Constants.RecordEntropy
 import D5.S3.Quantum.EnvironmentRecords
 import D5.S3.Quantum.ObserverCommutator
 import D5.S3.Quantum.PointerBasis
+import D5.S3.Quantum.CloningMachine
 import D5.S3.Zeros.ZetaIdentities
 import D5.S3.Zeros.ZetaUpgrade

@@ -5,20 +5,8 @@
 *.py[cod]
 .DS_Store
 .caller-review-prompt.md
-# The fkst-monitor operational tool is a load-bearing repo artifact (SKILL.md + scripts + tests),
-# tracked from before `.claude/` was ignored. A blanket `.claude/` made the rule lie about reality:
-# tracked files stayed tracked, but every NEW file of that tool was rejected, so adding a test to it
-# required `git add -f` — routing around the rule until the rule means nothing.
-# Excluding directory CONTENTS (`dir/*`) rather than the directory itself (`dir/`) is what makes the
-# re-include possible at all: git does not descend into an excluded directory, so a `!` under a
-# `.claude/` rule can never be evaluated. Each level is therefore opened one step at a time.
-.claude/*
-!.claude/skills/
-.claude/skills/*
-!.claude/skills/fkst-monitor/
+.claude/
 .echo-review.md
-.fkst/env
-.fkst/run/
 .sshx-*
 /.lake/
 /Papers/build/
