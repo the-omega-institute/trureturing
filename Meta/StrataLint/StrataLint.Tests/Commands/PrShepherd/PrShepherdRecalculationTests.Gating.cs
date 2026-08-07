@@ -116,6 +116,20 @@ public sealed partial class PrShepherdRecalculationTests
     }
 
     [Fact]
+    public void DerivedConflictClassifierCoversBothBaseJudgeGeneratedProjections()
+    {
+        var script = ReadShepherdScripts();
+
+        Assert.Contains(
+            "Meta/StrataLint/Generated/*",
+            script,
+            StringComparison.Ordinal);
+        Assert.Matches(
+            "Meta/StrataLint/Generated/\\*[^\\n]*return 0",
+            script);
+    }
+
+    [Fact]
     public void DryRunNeverWritesNoCheckStateOrWakesPullRequest()
     {
         if (OperatingSystem.IsWindows()) return;

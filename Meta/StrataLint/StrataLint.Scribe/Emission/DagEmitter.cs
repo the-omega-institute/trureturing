@@ -11,7 +11,7 @@ namespace StrataLint.Scribe;
 public static class DagEmitter
 {
     public const string RelativePath = "Generated/DAG.md";
-    public const string TruthGraphRelativePath = "Meta/StrataLint/Generated/truth-graph.v1.json";
+    public const string TruthGraphRelativePath = "Generated/truth-graph.v1.json";
 
     public static int Emit(
         string repositoryRoot,

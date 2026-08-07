@@ -9,6 +9,7 @@ public sealed partial class MakeWorkflowTests
         var shepherd = string.Join(
             '\n',
             File.ReadAllText(Path.Combine(root, PrShepherdScriptPath)),
+            File.ReadAllText(Path.Combine(root, PrShepherdActionsScriptPath)),
             File.ReadAllText(Path.Combine(root, PrShepherdLeaseScriptPath)));
 
         // The sweep needs both head identity and check count to recognize an armed PR
