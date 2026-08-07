@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/ObserverMetric
+/- GID: D5/S3/Observer/ObserverMetric
    generality: G
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -8,7 +8,7 @@
 import D5.S3.Quantum.ObserverAlgebra
 import D5.S3.Quantum.ObserverCommutator
 
-namespace D5.S3.Quantum.ObserverMetric
+namespace D5.S3.Observer.ObserverMetric
 
 open D5.S3.Quantum.ObserverAlgebra
 open D5.S3.Quantum.ObserverCommutator
@@ -134,4 +134,4 @@ theorem perturbationSeminorm_smul {index : Type*}
     ‖c‖ * ‖f (tau.symm i) - f i‖
   rw [← mul_sub, norm_mul]
 
-end D5.S3.Quantum.ObserverMetric
+end D5.S3.Observer.ObserverMetric

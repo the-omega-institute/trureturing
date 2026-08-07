@@ -44,6 +44,9 @@ domains:
   Naming:
     stratum: S0
     definition: Countable naming systems over uncountable carriers and their dark-side measure.
+  Observer:
+    stratum: S3
+    definition: Observer read-write structures on finite windows from the observer-ledger reconstruction - update-defect metrics, window registers, and record conditioning.
   Phase:
     stratum: S1
     definition: Additive golden-ratio phases modulo one.
