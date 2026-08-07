@@ -52,7 +52,7 @@ public sealed partial class PrShepherdRecalculationTests
             File.ReadAllText(Path.Combine(root, ShepherdLeaseScriptPath)));
     }
 
-    private sealed class ShepherdFixture : IDisposable
+    private sealed partial class ShepherdFixture : IDisposable
     {
         internal const string GhAppToken = "fixture-gh-app-token";
 
@@ -691,6 +691,7 @@ public sealed partial class PrShepherdRecalculationTests
                   exit 0
                 fi
                 [[ "$*" == *"echo-verify --emit --base origin/dev"* ]] || exit 96
+                temporary="$(find "$PWD" -type f -name '*.pr-shepherd.*' -print -quit)"; if [[ -n "$temporary" ]]; then printf 'inside-workspace:%s\n' "$temporary" > "$PR_TEST_CALLS.projection"; else printf 'outside-workspace\n' > "$PR_TEST_CALLS.projection"; fi
                 printf 'echo-verify\n' >> "$PR_TEST_CALLS"
                 printf '%s\n' '<!-- echo-residual-summary:v3 residual=sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->' '# Echo Residual Summary'
                 """);
