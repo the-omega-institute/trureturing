@@ -27,7 +27,7 @@ public sealed partial class PrShepherdRecalculationTests
             result.ExitCode == 0,
             $"watch freshness shell regression failed with exit {result.ExitCode}\nstdout:\n{standardOutput}\nstderr:\n{standardError}");
         Assert.Equal(
-            "pr-shepherd watch freshness: 7 passed, 0 failed, 7 total\n",
+            "pr-shepherd watch freshness: 8 passed, 0 failed, 8 total\n",
             standardOutput);
         Assert.Empty(standardError);
     }

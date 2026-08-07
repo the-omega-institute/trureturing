@@ -73,6 +73,27 @@ public sealed partial class PrShepherdRecalculationTests
     }
 
     [Fact]
+    public void TrackedLedgerHelperChangeResetsTerminalRecalculationIdentity()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ShepherdFixture(failingTarget: "emit-check", failingPr: 1);
+        foreach (var timestamp in new[] { 1_000L, 1_480L, 3_400L })
+        {
+            fixture.UseFixedClock(timestamp);
+            Assert.Equal(0, fixture.RunTrackedSweep().ExitCode);
+        }
+        Assert.Contains("terminal=1", fixture.RecalculationState(1));
+
+        fixture.CommitTrackedLedgerHelperChange("change-ledger-identity");
+        fixture.UseFixedClock(3_401);
+        var probe = fixture.RunTrackedSweep();
+
+        Assert.Equal(0, probe.ExitCode);
+        Assert.Contains("RECALC_RESET pr=#1 reason=work-identity-changed", probe.Log);
+        Assert.Contains("total_attempts=1", fixture.RecalculationState(1));
+    }
+
+    [Fact]
     public void FailedWatchSweepPublishesFailureInsteadOfSweepComplete()
     {
         if (OperatingSystem.IsWindows()) return;

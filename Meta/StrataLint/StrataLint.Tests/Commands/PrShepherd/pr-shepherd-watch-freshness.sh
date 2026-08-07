@@ -100,6 +100,18 @@ rm -f "$root/pr-watch.state" "$root/pr-watch.state.lock"
 command git -C "$checkout" restore \
   Meta/StrataLint/scripts/shepherd/pr-shepherd-actions.sh
 
+printf '\n# uncommitted ledger helper must block immutable reload\n' \
+  >> "$checkout/Meta/StrataLint/scripts/shepherd/pr-shepherd-ledger.sh"
+if run_watch 0 1 >"$root/untracked-ledger-output" 2>&1; then
+  printf 'watch sourced an untracked ledger helper module\n' >&2
+  exit 1
+fi
+command grep -q 'does not match tracked HEAD' "$log" \
+  || { printf 'watch did not diagnose the untracked ledger helper module\n' >&2; exit 1; }
+rm -f "$root/pr-watch.state" "$root/pr-watch.state.lock"
+command git -C "$checkout" restore \
+  Meta/StrataLint/scripts/shepherd/pr-shepherd-ledger.sh
+
 run_watch 0 2 >"$output" 2>&1 \
   || { command sed -n '1,120p' "$output" >&2; exit 1; }
 
@@ -224,4 +236,4 @@ run_watch 0 1 >"$root/dead-reclaimer-output" 2>&1 \
 ! command git -C "$reclaim_repository" show-ref --verify --quiet "$reclaim_ref" \
   || { printf 'watch left the recovered reclaim claim active\n' >&2; exit 1; }
 
-printf 'pr-shepherd watch freshness: 7 passed, 0 failed, 7 total\n'
+printf 'pr-shepherd watch freshness: 8 passed, 0 failed, 8 total\n'

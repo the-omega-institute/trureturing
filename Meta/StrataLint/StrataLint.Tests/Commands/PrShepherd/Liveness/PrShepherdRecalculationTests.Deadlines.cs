@@ -143,4 +143,23 @@ public sealed partial class PrShepherdRecalculationTests
         Assert.Contains(
             calls,
             call => call.StartsWith($"{kind}|{step}|{timeoutSeconds}|", StringComparison.Ordinal));
+
+    [Fact]
+    public void FrozenLedgerReconciliationPublishesDeadlinesForEveryRevisionAndProducer()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ShepherdFixture(conflicting: true, ledgerConflict: true);
+
+        var result = fixture.Run(expiryFingerprint: false);
+
+        Assert.Equal(0, result.ExitCode);
+        var calls = fixture.BoundedCalls();
+        AssertBounded(calls, "git", "ledger-candidate-revision", "300");
+        AssertBounded(calls, "git", "ledger-base-source", "300");
+        AssertBounded(calls, "build", "ledger-base-report", "1800");
+        AssertBounded(calls, "build", "ledger-append", "1800");
+        AssertBounded(calls, "git", "ledger-candidate-source", "300");
+        AssertBounded(calls, "build", "ledger-candidate-report", "1800");
+        AssertBounded(calls, "build", "ledger-reattest", "1800");
+    }
 }

@@ -86,7 +86,7 @@ has_expiry_fingerprint() {
 is_derived_conflict() {
   case "$1" in
     Meta/StrataLint/Generated/*|Generated/*|Evidence/D5/values.json) return 0 ;;
-    Meta/StrataLint/Golden/Frozen/events.jsonl) return 0 ;;
+    "$FROZEN_LEDGER_PATH") return 0 ;;
     *) return 1 ;;
   esac
 }
@@ -105,6 +105,8 @@ dryrun_recalculation() {
   log "DRYRUN #$num fetch origin/dev and origin/$head; verify observed OIDs"
   log "DRYRUN #$num checkout $head; merge origin/dev (derived conflicts take dev)"
   log "DRYRUN #$num run make lean-report"
+  log "DRYRUN #$num if frozen ledger conflicted: git show base Trureturing; lean-report; ledger-append"
+  log "DRYRUN #$num if frozen ledger conflicted: git show candidate Trureturing; lean-report; ledger-reattest"
   log "DRYRUN #$num run make emit"
   log "DRYRUN #$num run make ingest BASE=origin/dev"
   log "DRYRUN #$num run echo-verify --emit --base origin/dev (atomic install)"
@@ -177,6 +179,7 @@ prepare_worktree() {
 merge_dev() {
   local num="$1" head="$2" workspace="$3" merge_rc path source_conflict=0 conflict_count=0
   local conflicts unresolved merge_head
+  FROZEN_LEDGER_CONFLICT=0
   set +e
   run_git_bounded merge "$workspace" \
     -c core.hooksPath=/dev/null \
@@ -202,6 +205,9 @@ merge_dev() {
     while IFS= read -r -d '' path; do
       conflict_count=$((conflict_count + 1))
       if is_derived_conflict "$path"; then
+        if [[ "$path" == "$FROZEN_LEDGER_PATH" ]]; then
+          FROZEN_LEDGER_CONFLICT=1
+        fi
         if run_git_bounded conflict-stage "$workspace" cat-file -e ":3:$path" 2>/dev/null; then
           run_git_bounded conflict-checkout "$workspace" checkout --theirs -- "$path" \
             && run_git_bounded conflict-add "$workspace" add -- "$path" || {
@@ -256,11 +262,16 @@ merge_dev() {
 run_derivation_chain() {
   local num="$1" workspace="$2" projection isolated_home
   isolated_home="$(mktemp -d "${TMPDIR:-/tmp}/pr-shepherd-derivation.XXXXXXXX")"
-  if ! run_credentialless_bounded lean-report "$isolated_home" \
-    make -C "$workspace" --no-print-directory lean-report; then
-    set_bounded_failure lean-report
-    rm -rf "$isolated_home"
-    log "SWEEP #$num lean-report 失败,不 push"; return 1
+  if [[ "$FROZEN_LEDGER_CONFLICT" -eq 1 ]]; then
+    if ! reconcile_frozen_ledger "$num" "$workspace" "$isolated_home"; then
+      rm -rf "$isolated_home"
+      return 1
+    fi
+  elif ! run_credentialless_bounded lean-report "$isolated_home" \
+      make -C "$workspace" --no-print-directory lean-report; then
+      set_bounded_failure lean-report
+      rm -rf "$isolated_home"
+      log "SWEEP #$num lean-report 失败,不 push"; return 1
   fi
   if ! run_credentialless_bounded emit "$isolated_home" \
     make -C "$workspace" --no-print-directory emit; then
@@ -288,14 +299,10 @@ run_derivation_chain() {
     return 1
   fi
   mv "$projection" "$workspace/Generated/echo-residual-summary.md"
-  # Freeze last: every step above rewrites tracked bytes, and an attestation taken before
-  # them binds a blob that no longer exists. Appending here also repairs a branch that
-  # produced a closed module without ever freezing it, which SL-008 otherwise rejects.
-  if ! run_credentialless_bounded ledger-append "$isolated_home" \
-    /bin/bash -c 'cd "$1"; shift; exec "$@"' pr-shepherd-workspace "$workspace" \
-      dotnet run --project Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj \
-      --configuration Release -- ledger-append \
-      --candidate-lean-report .lake/build/stratalint/raw-lean-report.json; then
+  # A non-conflicting lane freezes last. A conflicting ledger was already rebuilt from the
+  # dev prefix and re-attested by reconcile_frozen_ledger.
+  if [[ "$FROZEN_LEDGER_CONFLICT" -eq 0 ]] \
+      && ! run_ledger_cli "$workspace" "$isolated_home" ledger-append; then
     set_bounded_failure ledger-append
     rm -rf "$isolated_home"
     log "SWEEP #$num ledger-append 失败,不 push"; return 1
@@ -304,7 +311,7 @@ run_derivation_chain() {
     make -C "$workspace" --no-print-directory emit-check BASE="$REMOTE/dev"; then
     set_bounded_failure emit-check
     rm -rf "$isolated_home"
-    log "SWEEP #$num emit-check 失败,不 push"; return 1
+    log "ALERT #$num emit-check 失败,不 push"; return 1
   fi
   rm -rf "$isolated_home"
 }

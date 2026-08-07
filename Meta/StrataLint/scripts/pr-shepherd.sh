@@ -45,6 +45,9 @@ DERIVED_LEASE_TOKEN=""
 DERIVED_LEASE_PR=""
 DERIVED_LEASE_ACQUIRED_AT=""
 DERIVED_LEASE_OBSERVED_TOKEN=""
+FROZEN_LEDGER_CONFLICT=0
+FROZEN_LEDGER_PATH="Meta/StrataLint/Golden/Frozen/events.jsonl"
+TRURETURING_ROOT_PATH="Trureturing.lean"
 COMMIT_SUBJECT="recompute derivations after dev advance (auto, pr-shepherd)"
 ORIGINAL_HOME="${HOME:-/tmp}"
 WATCH_LOADED_BLOB="${PR_SHEPHERD_WATCH_LOADED_BLOB:-}"
@@ -256,7 +259,7 @@ GH_AS_APP_CAPTURE() {
   fi
 }
 log() { printf '%s %s\n' "$(date '+%F %T')" "$*" | tee -a "$LOG" >&2; }
-SHEPHERD_MODULE_NAMES=(pr-shepherd-actions.sh pr-shepherd-lease.sh)
+SHEPHERD_MODULE_NAMES=(pr-shepherd-actions.sh pr-shepherd-ledger.sh pr-shepherd-lease.sh)
 SHEPHERD_MODULE_DIR="$(cd "$(dirname "$LOADED_SCRIPT_PATH")" && pwd -P)/shepherd"
 compute_shepherd_identity() {
   local entrypoint="$1" module_directory="$2" name blob material=""
@@ -272,6 +275,7 @@ compute_shepherd_identity() {
 }
 if [[ "${1:-}" != watch || -n "$WATCH_LOADED_BLOB" ]]; then
   source "$SHEPHERD_MODULE_DIR/pr-shepherd-actions.sh"
+  source "$SHEPHERD_MODULE_DIR/pr-shepherd-ledger.sh"
   source "$SHEPHERD_MODULE_DIR/pr-shepherd-lease.sh"
 fi
 watch_process_start() {

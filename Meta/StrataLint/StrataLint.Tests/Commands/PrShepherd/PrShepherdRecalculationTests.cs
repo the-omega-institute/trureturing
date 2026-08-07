@@ -10,6 +10,8 @@ public sealed partial class PrShepherdRecalculationTests
         "Meta/StrataLint/scripts/shepherd/pr-shepherd-lease.sh";
     private const string ShepherdActionsScriptPath =
         "Meta/StrataLint/scripts/shepherd/pr-shepherd-actions.sh";
+    private const string ShepherdLedgerScriptPath =
+        "Meta/StrataLint/scripts/shepherd/pr-shepherd-ledger.sh";
     private const string CommitSubject =
         "recompute derivations after dev advance (auto, pr-shepherd)";
 
@@ -52,6 +54,7 @@ public sealed partial class PrShepherdRecalculationTests
             '\n',
             File.ReadAllText(Path.Combine(root, ShepherdScriptPath)),
             File.ReadAllText(Path.Combine(root, ShepherdActionsScriptPath)),
+            File.ReadAllText(Path.Combine(root, ShepherdLedgerScriptPath)),
             File.ReadAllText(Path.Combine(root, ShepherdLeaseScriptPath)));
     }
 
@@ -144,6 +147,7 @@ public sealed partial class PrShepherdRecalculationTests
             Write(seed, "Generated/dev-choice.md", "base choice\n");
             Write(seed, "Generated/echo-residual-summary.md", "base echo\n");
             Write(seed, FrozenLedgerChangeClassifier.LedgerPath, "{\"event\":\"base\"}\n");
+            Write(seed, "Trureturing.lean", "base trureturing\n");
             Write(seed, "shared.txt", "base shared\n");
             Git(seed, "add", ".");
             Git(seed, "commit", "-m", "base");
@@ -157,6 +161,7 @@ public sealed partial class PrShepherdRecalculationTests
             Write(seed, "Blueprint/input.scribe.cs", "feature input\n");
             Write(seed, "Generated/artifact.md", "feature artifact\n");
             Write(seed, "Generated/dev-choice.md", "feature choice\n");
+            Write(seed, "Trureturing.lean", "candidate trureturing\n");
             if (sourceConflict) Write(seed, "shared.txt", "feature shared\n");
             if (ledgerConflict)
                 Write(
@@ -182,6 +187,7 @@ public sealed partial class PrShepherdRecalculationTests
             else
                 Write(seed, "Generated/dev-choice.md", "dev choice\n");
             Write(seed, sourceConflict ? "shared.txt" : "dev-input.txt", "advanced dev\n");
+            Write(seed, "Trureturing.lean", "base trureturing\n");
             if (ledgerConflict)
                 Write(
                     seed,
@@ -297,6 +303,7 @@ public sealed partial class PrShepherdRecalculationTests
                 $"PR_TEST_PAUSE_WORKTREE={(pauseWorktreeCreation ? "1" : "0")}",
                 $"PR_TEST_DELAY_LOCK_READ={(delayFirstLockOwnerRead ? "1" : "0")}",
                 $"PR_TEST_CONFLICTING={(conflicting ? "1" : "0")}",
+                $"PR_TEST_LEDGER_CONFLICT={(ledgerConflict ? "1" : "0")}",
                 $"PR_TEST_MOVE_HEAD_DURING_FETCH={(moveHeadDuringFetch ? "1" : "0")}",
                 $"PR_TEST_MOVE_BASE_DURING_FETCH={(moveBaseDuringFetch ? "1" : "0")}",
                 $"PR_TEST_MOVED_BASE={MovedBaseHead}",
@@ -419,6 +426,7 @@ public sealed partial class PrShepherdRecalculationTests
                 "PR_TEST_FAIL_MERGE=0",
                 "PR_TEST_PAUSE_WORKTREE=0",
                 "PR_TEST_DELAY_LOCK_READ=0",
+                $"PR_TEST_LEDGER_CONFLICT={(ledgerConflict ? "1" : "0")}",
                 "PR_TEST_MOVE_HEAD_DURING_FETCH=0",
                 "PR_TEST_MOVE_BASE_DURING_FETCH=0",
                 $"PR_TEST_MOVED_BASE={MovedBaseHead}",
@@ -458,17 +466,20 @@ public sealed partial class PrShepherdRecalculationTests
             if (File.Exists(script)) return;
             var leaseScript = Path.Combine(repository, ShepherdLeaseScriptPath);
             var actionsScript = Path.Combine(repository, ShepherdActionsScriptPath);
+            var ledgerScript = Path.Combine(repository, ShepherdLedgerScriptPath);
             Directory.CreateDirectory(Path.GetDirectoryName(script)!);
             Directory.CreateDirectory(Path.GetDirectoryName(leaseScript)!);
             File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdScriptPath), script);
             File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdLeaseScriptPath), leaseScript);
             File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdActionsScriptPath), actionsScript);
+            File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdLedgerScriptPath), ledgerScript);
             Git(
                 repository,
                 "add",
                 ShepherdScriptPath,
                 ShepherdLeaseScriptPath,
-                ShepherdActionsScriptPath);
+                ShepherdActionsScriptPath,
+                ShepherdLedgerScriptPath);
             Git(repository, "commit", "-m", "track pr-shepherd fixture");
         }
 
@@ -643,6 +654,9 @@ public sealed partial class PrShepherdRecalculationTests
         internal string[] BoundedCalls() =>
             File.Exists(boundedCalls) ? File.ReadAllLines(boundedCalls) : [];
 
+        internal string[] LedgerObservations() =>
+            File.Exists(calls + ".ledger") ? File.ReadAllLines(calls + ".ledger") : [];
+
         internal int[] HangingProcessIds() =>
             File.Exists(hangingPids)
                 ? File.ReadAllLines(hangingPids).Select(int.Parse).ToArray()
@@ -670,6 +684,15 @@ public sealed partial class PrShepherdRecalculationTests
             var helper = Path.Combine(repository, ShepherdActionsScriptPath);
             File.AppendAllText(helper, $"\n# {marker}\n", new UTF8Encoding(false));
             Git(repository, "add", ShepherdActionsScriptPath);
+            Git(repository, "commit", "-m", marker);
+        }
+
+        internal void CommitTrackedLedgerHelperChange(string marker)
+        {
+            EnsureTrackedWatchScripts();
+            var helper = Path.Combine(repository, ShepherdLedgerScriptPath);
+            File.AppendAllText(helper, $"\n# {marker}\n", new UTF8Encoding(false));
+            Git(repository, "add", ShepherdLedgerScriptPath);
             Git(repository, "commit", "-m", marker);
         }
 
