@@ -124,6 +124,7 @@ public sealed partial class PrShepherdRecalculationTests
             Write(seed, "Generated/dev-choice.md", "base choice\n");
             Write(seed, "Generated/echo-residual-summary.md", "base echo\n");
             Write(seed, FrozenLedgerChangeClassifier.LedgerPath, "{\"event\":\"base\"}\n");
+            Write(seed, "Trureturing.lean", "base trureturing\n");
             Write(seed, "shared.txt", "base shared\n");
             Git(seed, "add", ".");
             Git(seed, "commit", "-m", "base");
@@ -137,6 +138,7 @@ public sealed partial class PrShepherdRecalculationTests
             Write(seed, "Blueprint/input.scribe.cs", "feature input\n");
             Write(seed, "Generated/artifact.md", "feature artifact\n");
             Write(seed, "Generated/dev-choice.md", "feature choice\n");
+            Write(seed, "Trureturing.lean", "candidate trureturing\n");
             if (sourceConflict) Write(seed, "shared.txt", "feature shared\n");
             if (ledgerConflict)
                 Write(
@@ -249,6 +251,7 @@ public sealed partial class PrShepherdRecalculationTests
                 $"PR_TEST_PAUSE_WORKTREE={(pauseWorktreeCreation ? "1" : "0")}",
                 $"PR_TEST_DELAY_LOCK_READ={(delayFirstLockOwnerRead ? "1" : "0")}",
                 $"PR_TEST_CONFLICTING={(conflicting ? "1" : "0")}",
+                $"PR_TEST_LEDGER_CONFLICT={(ledgerConflict ? "1" : "0")}",
                 $"PR_TEST_MOVE_HEAD_DURING_FETCH={(moveHeadDuringFetch ? "1" : "0")}",
                 $"PR_TEST_MOVE_BASE_DURING_FETCH={(moveBaseDuringFetch ? "1" : "0")}",
                 $"PR_TEST_MOVED_BASE={MovedBaseHead}",
@@ -502,6 +505,9 @@ public sealed partial class PrShepherdRecalculationTests
         internal string[] MutationCalls() =>
             File.Exists(calls) ? File.ReadAllLines(calls) : [];
 
+        internal string[] LedgerObservations() =>
+            File.Exists(calls + ".ledger") ? File.ReadAllLines(calls + ".ledger") : [];
+
         internal void ClearMutationCalls() => File.Delete(calls);
 
         internal string RemoteHead() =>
@@ -664,13 +670,38 @@ public sealed partial class PrShepherdRecalculationTests
                 printf '%s\n' "$target" >> "$PR_TEST_CALLS"
                 [[ "$target" != "$PR_TEST_FAIL_TARGET" ]] || exit 93
                 case "$target" in
-                  lean-report) mkdir -p "$root/.lake/build/stratalint" ;;
+                  lean-report)
+                    mkdir -p "$root/.lake/build/stratalint"
+                    cp "$root/Trureturing.lean" \
+                      "$root/.lake/build/stratalint/raw-lean-report.json"
+                    if [[ "${PR_TEST_LEDGER_CONFLICT:-0}" == 1 ]]; then
+                      printf 'lean-report:%s\n' "$(cat "$root/Trureturing.lean")" \
+                        >> "$PR_TEST_CALLS.ledger"
+                    fi
+                    ;;
                   emit)
+                    if [[ "${PR_TEST_LEDGER_CONFLICT:-0}" == 1 ]]; then
+                      cmp -s "$root/Generated/dev-choice.md" \
+                        <(git -C "$root" show origin/dev:Generated/dev-choice.md) || exit 81
+                      printf 'emit:dev-projection\n' >> "$PR_TEST_CALLS.ledger"
+                    fi
                     mkdir -p "$root/Generated"
                     printf 'derived artifact\n' > "$root/Generated/artifact.md"
+                    if [[ -f "$root/Generated/dev-choice.md" ]]; then
+                      printf 'reemitted choice\n' > "$root/Generated/dev-choice.md"
+                    fi
                     ;;
                   ingest) ;;
                   emit-check)
+                    if [[ "${PR_TEST_LEDGER_CONFLICT:-0}" == 1 ]]; then
+                      ledger="$root/Meta/StrataLint/Golden/Frozen/events.jsonl"
+                      grep -Fq 'dev-freeze' "$ledger" || exit 82
+                      grep -Fq 'appended-under-base' "$ledger" || exit 83
+                      grep -Fq 'reattested-candidate' "$ledger" || exit 84
+                      ! grep -Eq 'feature-freeze|<<<<<<<|=======|>>>>>>>' "$ledger" || exit 85
+                      [[ "$(cat "$root/Trureturing.lean")" == 'candidate trureturing' ]] || exit 86
+                      printf 'emit-check:balanced\n' >> "$PR_TEST_CALLS.ledger"
+                    fi
                     if [[ "$PR_TEST_MOVE_HEAD" == 1 ]]; then
                       attacker="$(git --git-dir "$PR_TEST_ORIGIN" rev-parse refs/heads/attacker)"
                       git --git-dir "$PR_TEST_ORIGIN" update-ref refs/heads/feature "$attacker"
@@ -688,6 +719,29 @@ public sealed partial class PrShepherdRecalculationTests
                 [[ -z "${GITHUB_TOKEN+x}" ]] || exit 92
                 if [[ "$*" == *"ledger-append --candidate-lean-report"* ]]; then
                   printf 'ledger-append\n' >> "$PR_TEST_CALLS"
+                  if [[ "${PR_TEST_LEDGER_CONFLICT:-0}" == 1 ]]; then
+                    ledger=Meta/StrataLint/Golden/Frozen/events.jsonl
+                    cmp -s Trureturing.lean <(git show origin/dev:Trureturing.lean) || exit 81
+                    cmp -s Trureturing.lean .lake/build/stratalint/raw-lean-report.json || exit 82
+                    cmp -s "$ledger" <(git show "origin/dev:$ledger") || exit 83
+                    ! grep -Eq '<<<<<<<|=======|>>>>>>>' "$ledger" || exit 84
+                    printf '{"event":"appended-under-base"}\n' >> "$ledger"
+                    printf 'ledger-append:base-trureturing:new-report:dev-ledger\n' \
+                      >> "$PR_TEST_CALLS.ledger"
+                  fi
+                  exit 0
+                fi
+                if [[ "$*" == *"ledger-reattest --candidate-lean-report"* ]]; then
+                  printf 'ledger-reattest\n' >> "$PR_TEST_CALLS"
+                  if [[ "${PR_TEST_LEDGER_CONFLICT:-0}" == 1 ]]; then
+                    ledger=Meta/StrataLint/Golden/Frozen/events.jsonl
+                    cmp -s Trureturing.lean <(git show HEAD:Trureturing.lean) || exit 85
+                    cmp -s Trureturing.lean .lake/build/stratalint/raw-lean-report.json || exit 86
+                    grep -Fq 'appended-under-base' "$ledger" || exit 87
+                    printf '{"event":"reattested-candidate"}\n' >> "$ledger"
+                    printf 'ledger-reattest:candidate-trureturing:new-report:appended-ledger\n' \
+                      >> "$PR_TEST_CALLS.ledger"
+                  fi
                   exit 0
                 fi
                 [[ "$*" == *"echo-verify --emit --base origin/dev"* ]] || exit 96
