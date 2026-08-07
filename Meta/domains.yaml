@@ -56,6 +56,9 @@ domains:
   Quantum:
     stratum: S3
     definition: Finite-dimensional complex operator-algebra and probability structures.
+  QuantumBounds:
+    stratum: S3
+    definition: Finite-dimensional quantum correlation and uncertainty bounds derived from Gram positivity, including Robertson-Schrodinger and CHSH/Tsirelson.
   Recurrence:
     stratum: S1
     definition: Linear recurrence solution spaces, shift eigenstructure, and self-similar weight lifts.
