@@ -14,11 +14,12 @@ public sealed class DocumentDiscoveryTests
             FindRepositoryRoot(),
             DocumentDefinitions.All.Select(static definition => definition.Document));
 
-        Assert.Equal(68, census.ReceiptFreeDocumentGids.Count);
+        Assert.Equal(69, census.ReceiptFreeDocumentGids.Count);
         Assert.Equal(33, census.ReceiptBoundDocumentGids.Count);
         Assert.Contains("D5/S0/Carrier/Norm", census.ReceiptFreeDocumentGids);
         Assert.Contains("D5/S3/Quantum/GNSMatrix", census.ReceiptFreeDocumentGids);
         Assert.Contains("D5/S3/Quantum/ChannelFixedState", census.ReceiptFreeDocumentGids);
+        Assert.Contains("D5/S3/Quantum/DoubleArtanhBounds", census.ReceiptFreeDocumentGids);
         Assert.Contains("D5/S1/Scale/CarrierFoundations", census.ReceiptBoundDocumentGids);
     }
 
