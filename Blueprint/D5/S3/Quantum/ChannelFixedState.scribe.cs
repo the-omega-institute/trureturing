@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum;
 internal sealed class ChannelFixedStateDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Watrous =
-        LibraryNoteRef.Create("D5/L/watrous2018theory");
+        LibraryNoteRef.Create("D5/L/Quantum/watrous2018theory");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
         Header(

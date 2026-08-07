@@ -20,7 +20,9 @@ public sealed class ChannelFixedStateDocumentTests
             formula,
             StringComparison.Ordinal);
         Assert.Equal(DescribeProvenanceKind.LiteratureAttested, describe.Provenance.Kind);
-        Assert.Equal("D5/L/watrous2018theory", describe.Provenance.LiteratureReference?.Value);
+        Assert.Equal(
+            "D5/L/Quantum/watrous2018theory",
+            describe.Provenance.LiteratureReference?.Value);
 
         var paragraph = Assert.IsType<DocumentBlock.Paragraph>(Assert.Single(describe.Content.Items));
         var prose = Assert.IsType<Inline.Text>(Assert.Single(paragraph.Content.Items)).Run.Value;
