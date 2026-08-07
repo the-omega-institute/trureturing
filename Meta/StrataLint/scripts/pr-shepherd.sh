@@ -105,7 +105,7 @@ has_expiry_fingerprint() {
 # first stalls as "needs a semantic merge" and waits for a human that this harness has none of.
 is_derived_conflict() {
   case "$1" in
-    Meta/StrataLint/Generated/*|Generated/*|Evidence/D5/values.json) return 0 ;;
+    Generated/*|Evidence/D5/values.json) return 0 ;;
     Meta/StrataLint/Golden/Frozen/events.jsonl) return 0 ;;
     *) return 1 ;;
   esac

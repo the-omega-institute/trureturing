@@ -6,7 +6,7 @@ namespace StrataLint.Scribe;
 
 public static class CanonicalAnchorCatalogWriter
 {
-    public const string RelativePath = "Meta/StrataLint/Generated/anchor-catalog.v1.json";
+    public const string RelativePath = "Generated/anchor-catalog.v1.json";
 
     public static ImmutableArray<byte> Write()
     {

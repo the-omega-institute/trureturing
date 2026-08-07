@@ -72,7 +72,7 @@ components:
   - id: anchor-catalog-projection
     kind: repository-files
     members:
-      - Meta/StrataLint/Generated/anchor-catalog.v1.json
+      - Generated/anchor-catalog.v1.json
       - Meta/StrataLint/StrataLint.Scribe/Emission/AnchorCatalogEmitter.cs
       - Meta/StrataLint/StrataLint.Scribe/Writers/CanonicalAnchorCatalogWriter.cs
     judged_by:

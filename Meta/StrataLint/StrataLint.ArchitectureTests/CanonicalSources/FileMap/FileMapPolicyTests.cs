@@ -48,6 +48,40 @@ public sealed class FileMapPolicyTests
     }
 
     [Fact]
+    public void ComputationalProjectionRegistrationsAgreeAcrossCanonicalSources()
+    {
+        var fileNames = new HashSet<string>(
+            ["anchor-catalog.v1.json", "scribe-emissions.v1.json", "truth-graph.v1.json"],
+            StringComparer.Ordinal);
+        var root = RepositoryLayout.FindRoot();
+        var manifest = FileMapLoader.LoadRepository(root);
+        var registry = Assert.IsType<RegistryLoadOutcome.Accepted>(
+            RegistryLoader.Load(
+                File.ReadAllBytes(Path.Combine(root, "Meta", "registry.yaml")),
+                File.ReadAllBytes(Path.Combine(root, "Meta", "domains.yaml"))));
+        var artifacts = GeneratedArtifactInventory.All
+            .Where(artifact => fileNames.Contains(Path.GetFileName(artifact.Path)))
+            .ToArray();
+
+        Assert.Equal(fileNames.Count, artifacts.Length);
+        Assert.All(artifacts, artifact =>
+        {
+            Assert.StartsWith("Generated/", artifact.Path, StringComparison.Ordinal);
+            var entry = Assert.Single(manifest.Match(artifact.Path));
+            Assert.Equal(FileMapKind.Generated, entry.Kind);
+            Assert.Equal(artifact.Producer, entry.ProducedBy);
+            Assert.Contains(artifact.VerifiedBy, entry.VerifiedBy, StringComparer.Ordinal);
+            Assert.Contains(RepoPath.CreateKnown(artifact.Path), registry.Policy.GovernanceDocuments);
+        });
+
+        var anchorCatalog = Assert.Single(
+            artifacts,
+            static artifact => Path.GetFileName(artifact.Path) == "anchor-catalog.v1.json");
+        var tower = File.ReadAllText(Path.Combine(root, "Meta", "StrataLint", "TOWER.yaml"));
+        Assert.Contains("      - " + anchorCatalog.Path, tower, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void PerformanceBudgetsHaveARegisteredGoldenDataResidence()
     {
         const string value = "Golden/perf-budgets.toml";

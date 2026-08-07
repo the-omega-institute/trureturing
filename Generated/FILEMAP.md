@@ -66,9 +66,21 @@ FileMapEmitter --produces--> [Generated/FILEMAP.md | generated]
 [Generated/FILEMAP.md | generated] --consumed-by--> reader
 [Generated/FILEMAP.md | generated] --verified-by--> emit-check
 
+AnchorCatalogEmitter --produces--> [Generated/anchor-catalog.v1.json | generated]
+[Generated/anchor-catalog.v1.json | generated] --consumed-by--> AnchorCatalogLoader
+[Generated/anchor-catalog.v1.json | generated] --verified-by--> emit-check
+
 EchoVerifyCommand --produces--> [Generated/echo-residual-summary.md | generated]
 [Generated/echo-residual-summary.md | generated] --consumed-by--> harness-gate
 [Generated/echo-residual-summary.md | generated] --verified-by--> echo-verify, emit-check
+
+ScribeEmitter --produces--> [Generated/scribe-emissions.v1.json | generated]
+[Generated/scribe-emissions.v1.json | generated] --consumed-by--> DigestionStatusEvaluator
+[Generated/scribe-emissions.v1.json | generated] --verified-by--> emit-check
+
+DagEmitter --produces--> [Generated/truth-graph.v1.json | generated]
+[Generated/truth-graph.v1.json | generated] --consumed-by--> TruthGraphJsonReader
+[Generated/truth-graph.v1.json | generated] --verified-by--> emit-check
 
 none --declares--> [Golden/Projection/*.json | data]
 [Golden/Projection/*.json | data] --consumed-by--> StatementProjectionFixtureLoader
@@ -153,18 +165,6 @@ none --declares--> [Meta/StrataLint/BannedApiCompileFailProof/** | program]
 none --declares--> [Meta/StrataLint/CompileFailProof/** | program]
 [Meta/StrataLint/CompileFailProof/** | program] --consumed-by--> dotnet
 [Meta/StrataLint/CompileFailProof/** | program] --verified-by--> dotnet-build
-
-AnchorCatalogEmitter --produces--> [Meta/StrataLint/Generated/anchor-catalog.v1.json | generated]
-[Meta/StrataLint/Generated/anchor-catalog.v1.json | generated] --consumed-by--> AnchorCatalogLoader
-[Meta/StrataLint/Generated/anchor-catalog.v1.json | generated] --verified-by--> emit-check
-
-ScribeEmitter --produces--> [Meta/StrataLint/Generated/scribe-emissions.v1.json | generated]
-[Meta/StrataLint/Generated/scribe-emissions.v1.json | generated] --consumed-by--> DigestionStatusEvaluator
-[Meta/StrataLint/Generated/scribe-emissions.v1.json | generated] --verified-by--> emit-check
-
-DagEmitter --produces--> [Meta/StrataLint/Generated/truth-graph.v1.json | generated]
-[Meta/StrataLint/Generated/truth-graph.v1.json | generated] --consumed-by--> TruthGraphJsonReader
-[Meta/StrataLint/Generated/truth-graph.v1.json | generated] --verified-by--> emit-check
 
 FrozenLedgerCanonicalWriter --produces--> [Meta/StrataLint/Golden/Frozen/**/*.jsonl | ledger]
 [Meta/StrataLint/Golden/Frozen/**/*.jsonl | ledger] --consumed-by--> FrozenLedger

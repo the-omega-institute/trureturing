@@ -5,6 +5,13 @@ namespace StrataLint.Tests;
 
 public sealed class ConservativePolicySnapshotTests
 {
+    private static readonly string[] ComputationalProjectionFileNames =
+    [
+        "anchor-catalog.v1.json",
+        "scribe-emissions.v1.json",
+        "truth-graph.v1.json",
+    ];
+
     private const string BootstrapGatePath =
         "Meta/StrataLint/StrataLint.Engine/Admission/BootstrapGate.cs";
     private const string SpecificationPath = "docs/develop/spec/golden-ledger-repo-spec.md";
@@ -36,6 +43,38 @@ public sealed class ConservativePolicySnapshotTests
 
         Assert.Equal(expected, BootstrapProtectionPolicy.IsProtected(path));
         Assert.Equal(expected, BootstrapGate.IsProtected(path));
+    }
+
+    [Fact]
+    public void ComputationalProjectionChangesDoNotProduceSl022Diagnostics()
+    {
+        var repositoryRoot = FindRepositoryRoot();
+        var paths = Directory.EnumerateFiles(repositoryRoot, "*.json", SearchOption.AllDirectories)
+            .Where(path => ComputationalProjectionFileNames.Contains(
+                Path.GetFileName(path),
+                StringComparer.Ordinal))
+            .Where(static path => !path.Contains("/bin/", StringComparison.Ordinal)
+                && !path.Contains("/obj/", StringComparison.Ordinal))
+            .Select(path => Path.GetRelativePath(repositoryRoot, path).Replace('\\', '/'))
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+
+        Assert.Equal(ComputationalProjectionFileNames.Length, paths.Length);
+        var clear = Assert.IsType<BootstrapOutcome.Clear>(
+            BootstrapGate.Evaluate(RawChangeSet.Create(paths)));
+        Assert.NotNull(clear.Capability);
+    }
+
+    private static string FindRepositoryRoot()
+    {
+        var directory = new DirectoryInfo(AppContext.BaseDirectory);
+        while (directory is not null && !File.Exists(Path.Combine(directory.FullName, "Trureturing.lean")))
+        {
+            directory = directory.Parent;
+        }
+
+        return directory?.FullName
+            ?? throw new InvalidOperationException("Could not locate repository root.");
     }
 
     [Fact]
