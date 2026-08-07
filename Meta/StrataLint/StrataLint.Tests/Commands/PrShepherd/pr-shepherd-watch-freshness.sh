@@ -2,7 +2,7 @@
 set -uo pipefail
 export LC_ALL=C
 
-REPOSITORY_ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd -P)"
+REPOSITORY_ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../../../../.." && pwd -P)"
 SCRIPT_UNDER_TEST="$REPOSITORY_ROOT/Meta/StrataLint/scripts/pr-shepherd.sh"
 root="$(mktemp -d -t pr-shepherd-watch-freshness.XXXXXX)" || exit 1
 trap 'rm -rf "$root"' EXIT
@@ -15,7 +15,7 @@ output="$root/output"
 calls="$root/gh.calls"
 marker="$root/script-updated"
 root_marker="$root/reloaded-root"
-command cp "$SCRIPT_UNDER_TEST" "$script"
+command cp -R "$(dirname "$SCRIPT_UNDER_TEST")/." "$(dirname "$script")"
 lease_implementation="$(command sed -n \
   '/^clear_watch_reclaim()/,/^watch_lease_belongs_to_current_process()/p' \
   "$SCRIPT_UNDER_TEST")"
