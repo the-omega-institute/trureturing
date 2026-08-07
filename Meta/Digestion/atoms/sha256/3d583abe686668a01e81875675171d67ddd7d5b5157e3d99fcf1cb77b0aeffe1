@@ -1,0 +1,4 @@
+**引理 4.3(双 atanh 引理)[证]。**对 u ∈ (0,1):(i)artanh u ≤ u/(1−u²);(ii)artanh u ≥ u/(1+u²)。
+
+*证明。*(i)artanh u = ∫₀ᵘ dt/(1−t²) ≤ u·max_{[0,u]}(1−t²)^{-1} = u/(1−u²)。(ii)artanh u ≥ u ≥ u/(1+u²)。∎
+
