@@ -67,6 +67,8 @@ public sealed partial class MakeWorkflowTests
         "cover",
         "worktree",
         "pr-watch",
+        "refactor-p0-0-gate-authority",
+        "refactor-p0-2",
     ];
 
     [Fact]

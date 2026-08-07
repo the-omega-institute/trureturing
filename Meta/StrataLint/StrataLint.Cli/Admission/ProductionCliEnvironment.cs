@@ -203,6 +203,12 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 scribeEmissionVerifier,
                 arguments);
 
+    public ExplicitCommandResult GateAuthority(IReadOnlyList<string> arguments) =>
+        GateAuthorityCommand.Run(repositoryRoot, arguments);
+
+    public ExplicitCommandResult ProjectionClosure(IReadOnlyList<string> arguments) =>
+        ProjectionClosureCommand.Run(repositoryRoot, arguments);
+
     public CommandResult Ingest(IReadOnlyList<string> arguments) =>
         scribeEmissionVerifier is null
             ? new CommandResult(
