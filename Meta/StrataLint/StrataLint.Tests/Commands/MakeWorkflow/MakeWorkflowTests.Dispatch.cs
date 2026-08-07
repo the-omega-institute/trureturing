@@ -58,6 +58,10 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(
             $"\t@/bin/bash {PrShepherdScriptPath} watch $(INTERVAL) $(CYCLES)",
             Recipe(makefile, "pr-watch"));
+        Assert.Contains(
+            " gate-authority --old-build \"$(OLD_BUILD)\" --out \"$(OUT)\"",
+            Recipe(makefile, "refactor-p0-0-gate-authority"),
+            StringComparison.Ordinal);
     }
 
     [Fact]
