@@ -8,34 +8,6 @@ namespace StrataLint.Cli;
 
 internal sealed record GateAuthorityRootDefinition(string RootId, string Entrypoint);
 
-internal static class GateAuthorityRootCatalog
-{
-    internal static readonly ImmutableArray<GateAuthorityRootDefinition> All =
-    [
-        new("Makefile/echo-verify", "Makefile"),
-        new("Makefile/emit-check", "Makefile"),
-        new("Makefile/gate", "Makefile"),
-        new("Makefile/preflight", "Makefile"),
-        new("ci.yml/baseline-admission", ".github/workflows/ci.yml"),
-        new("ci.yml/candidate-engineering", ".github/workflows/ci.yml"),
-        new("ci.yml/lean-inspect", ".github/workflows/ci.yml"),
-        new("harness-gate.sh/admission", ".github/scripts/harness-gate.sh"),
-        new("harness-gate.sh/build-candidate", ".github/scripts/harness-gate.sh"),
-        new("harness-gate.sh/build-judge", ".github/scripts/harness-gate.sh"),
-        new("harness-gate.sh/conservative", ".github/scripts/harness-gate.sh"),
-        new("harness-gate.sh/echo-verify", ".github/scripts/harness-gate.sh"),
-        new("harness-gate.sh/selftest", ".github/scripts/harness-gate.sh"),
-        new("local-harness-gate.sh/admission", "Meta/StrataLint/scripts/local-harness-gate.sh"),
-        new("local-harness-gate.sh/echo-verify-bootstrap", "Meta/StrataLint/scripts/local-harness-gate.sh"),
-        new("local-harness-gate.sh/emit-check", "Meta/StrataLint/scripts/local-harness-gate.sh"),
-        new("local-harness-gate.sh/engineering-dotnet", "Meta/StrataLint/scripts/local-harness-gate.sh"),
-        new("local-harness-gate.sh/engineering-selftest", "Meta/StrataLint/scripts/local-harness-gate.sh"),
-        new("local-harness-gate.sh/engineering-test", "Meta/StrataLint/scripts/local-harness-gate.sh"),
-        new("local-harness-gate.sh/lean-reports", "Meta/StrataLint/scripts/local-harness-gate.sh"),
-        new("local-harness-gate.sh/setup", "Meta/StrataLint/scripts/local-harness-gate.sh"),
-    ];
-}
-
 internal sealed record GateAuthorityRoot(
     string RootId,
     string Entrypoint,
@@ -54,7 +26,8 @@ internal static class GateAuthorityProducer
             throw new FormatException("OLD_BUILD must be 64 lowercase hexadecimal characters.");
         }
 
-        var roots = GateAuthorityRootCatalog.All.Select(root =>
+        var definitions = GateAuthorityRootCatalogLoader.LoadRepository(repositoryRoot);
+        var roots = definitions.Select(root =>
         {
             var path = Path.Combine(
                 repositoryRoot,
@@ -86,11 +59,14 @@ internal static class GateAuthorityReader
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
-    internal static int Validate(ReadOnlySpan<byte> bytes, string? expectedAuthoritySha256)
+    internal static int Validate(
+        ReadOnlySpan<byte> bytes,
+        string? expectedAuthoritySha256,
+        ImmutableArray<GateAuthorityRootDefinition> definitions)
     {
         try
         {
-            ValidateCore(bytes);
+            ValidateCore(bytes, definitions);
             if (expectedAuthoritySha256 is not null
                 && (!IsSha256(expectedAuthoritySha256)
                     || !string.Equals(
@@ -123,7 +99,9 @@ internal static class GateAuthorityReader
         value is { Length: 64 }
         && value.All(character => character is >= '0' and <= '9' or >= 'a' and <= 'f');
 
-    private static void ValidateCore(ReadOnlySpan<byte> bytes)
+    private static void ValidateCore(
+        ReadOnlySpan<byte> bytes,
+        ImmutableArray<GateAuthorityRootDefinition> definitions)
     {
         _ = StrictUtf8.GetString(bytes);
         RejectDuplicateKeys(bytes);
@@ -144,16 +122,16 @@ internal static class GateAuthorityReader
 
         var roots = root.GetProperty("roots");
         if (roots.ValueKind != JsonValueKind.Array
-            || roots.GetArrayLength() != GateAuthorityRootCatalog.All.Length)
+            || roots.GetArrayLength() != definitions.Length)
         {
             throw new FormatException("authority root set is incomplete");
         }
 
-        for (var index = 0; index < GateAuthorityRootCatalog.All.Length; index++)
+        for (var index = 0; index < definitions.Length; index++)
         {
             var item = roots[index];
             RequireObjectProperties(item, "entrypoint", "entrypoint_blob_sha256", "root_id");
-            var expected = GateAuthorityRootCatalog.All[index];
+            var expected = definitions[index];
             if (item.GetProperty("root_id").GetString() != expected.RootId
                 || item.GetProperty("entrypoint").GetString() != expected.Entrypoint
                 || !IsSha256(item.GetProperty("entrypoint_blob_sha256").GetString()))
@@ -211,7 +189,8 @@ internal static class GateAuthorityCommand
         {
             var bytes = GateAuthorityProducer.Write(
                 GateAuthorityProducer.Create(repositoryRoot, oldBuildSha256!));
-            if (GateAuthorityReader.Validate(bytes, null) != 0)
+            var definitions = GateAuthorityRootCatalogLoader.LoadRepository(repositoryRoot);
+            if (GateAuthorityReader.Validate(bytes, null, definitions) != 0)
             {
                 return Usage();
             }

@@ -11,44 +11,54 @@ public sealed class GateAuthorityTests
     private const string OldBuild =
         "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef";
 
-    private static readonly (string RootId, string Entrypoint)[] ExpectedRoots =
-    [
-        ("Makefile/echo-verify", "Makefile"),
-        ("Makefile/emit-check", "Makefile"),
-        ("Makefile/gate", "Makefile"),
-        ("Makefile/preflight", "Makefile"),
-        ("ci.yml/baseline-admission", ".github/workflows/ci.yml"),
-        ("ci.yml/candidate-engineering", ".github/workflows/ci.yml"),
-        ("ci.yml/lean-inspect", ".github/workflows/ci.yml"),
-        ("harness-gate.sh/admission", ".github/scripts/harness-gate.sh"),
-        ("harness-gate.sh/build-candidate", ".github/scripts/harness-gate.sh"),
-        ("harness-gate.sh/build-judge", ".github/scripts/harness-gate.sh"),
-        ("harness-gate.sh/conservative", ".github/scripts/harness-gate.sh"),
-        ("harness-gate.sh/echo-verify", ".github/scripts/harness-gate.sh"),
-        ("harness-gate.sh/selftest", ".github/scripts/harness-gate.sh"),
-        ("local-harness-gate.sh/admission", "Meta/StrataLint/scripts/local-harness-gate.sh"),
-        ("local-harness-gate.sh/echo-verify-bootstrap", "Meta/StrataLint/scripts/local-harness-gate.sh"),
-        ("local-harness-gate.sh/emit-check", "Meta/StrataLint/scripts/local-harness-gate.sh"),
-        ("local-harness-gate.sh/engineering-dotnet", "Meta/StrataLint/scripts/local-harness-gate.sh"),
-        ("local-harness-gate.sh/engineering-selftest", "Meta/StrataLint/scripts/local-harness-gate.sh"),
-        ("local-harness-gate.sh/engineering-test", "Meta/StrataLint/scripts/local-harness-gate.sh"),
-        ("local-harness-gate.sh/lean-reports", "Meta/StrataLint/scripts/local-harness-gate.sh"),
-        ("local-harness-gate.sh/setup", "Meta/StrataLint/scripts/local-harness-gate.sh"),
-    ];
+    [Fact]
+    public void RepositoryCatalogHasTwentyOneUniqueUtf8SortedRoots()
+    {
+        var roots = GateAuthorityRootCatalogLoader.LoadRepository(FindRepositoryRoot());
+
+        Assert.Equal(21, roots.Length);
+        Assert.Equal(
+            roots.Length,
+            roots.Select(root => root.RootId).Distinct().Count());
+        Assert.Equal(
+            roots.Select(root => root.RootId),
+            roots.Select(root => root.RootId)
+                .OrderBy(value => Encoding.UTF8.GetBytes(value), ByteArrayComparer.Instance));
+    }
 
     [Fact]
-    public void RootAlphabetIsExactlyTheSpecSetUniqueAndUtf8Sorted()
+    public void CatalogLoaderAcceptsClosedSyntheticCatalog()
     {
-        Assert.Equal(21, GateAuthorityRootCatalog.All.Length);
-        Assert.Equal(ExpectedRoots, GateAuthorityRootCatalog.All.Select(
-            root => (root.RootId, root.Entrypoint)));
-        Assert.Equal(
-            GateAuthorityRootCatalog.All.Length,
-            GateAuthorityRootCatalog.All.Select(root => root.RootId).Distinct().Count());
-        Assert.Equal(
-            GateAuthorityRootCatalog.All.Select(root => root.RootId),
-            GateAuthorityRootCatalog.All.Select(root => root.RootId)
-                .OrderBy(value => Encoding.UTF8.GetBytes(value), ByteArrayComparer.Instance));
+        var roots = GateAuthorityRootCatalogLoader.Parse(Encoding.UTF8.GetBytes("""
+            schema = "gate-authority-roots-v1"
+
+            [[roots]]
+            root_id = "Delta/check"
+            entrypoint = "Delta/check.sh"
+
+            [[roots]]
+            root_id = "Epsilon/check"
+            entrypoint = "Epsilon/check.sh"
+
+            [[roots]]
+            root_id = "Zeta/check"
+            entrypoint = "Zeta/check.sh"
+            """ + "\n"));
+
+        Assert.Equal(["Delta/check", "Epsilon/check", "Zeta/check"],
+            roots.Select(static root => root.RootId));
+    }
+
+    [Theory]
+    [InlineData("schema = \"gate-authority-roots-v1\"\nextra = true\n")]
+    [InlineData("schema = \"gate-authority-roots-v1\"\n[[roots]]\nroot_id = \"Delta/check\"\n")]
+    [InlineData("schema = \"gate-authority-roots-v1\"\n[[roots]]\nroot_id = \"Delta/check\"\nentrypoint = \"../check.sh\"\n")]
+    [InlineData("schema = \"gate-authority-roots-v1\"\n[[roots]]\nroot_id = \"Delta/check\"\nentrypoint = \"Delta/check.sh\"\n[[roots]]\nroot_id = \"Delta/check\"\nentrypoint = \"Epsilon/check.sh\"\n")]
+    [InlineData("schema = \"gate-authority-roots-v1\"\n[[roots]]\nroot_id = \"Zeta/check\"\nentrypoint = \"Zeta/check.sh\"\n[[roots]]\nroot_id = \"Delta/check\"\nentrypoint = \"Delta/check.sh\"\n")]
+    public void CatalogLoaderRejectsOpenMalformedUnsafeDuplicateOrUnsortedData(string text)
+    {
+        Assert.Throws<FormatException>(() =>
+            GateAuthorityRootCatalogLoader.Parse(Encoding.UTF8.GetBytes(text)));
     }
 
     [Fact]
@@ -87,7 +97,7 @@ public sealed class GateAuthorityTests
 
         foreach (var json in malformed)
         {
-            Assert.Equal(2, GateAuthorityReader.Validate(Encoding.UTF8.GetBytes(json), null));
+            Assert.Equal(2, ValidateAuthority(Encoding.UTF8.GetBytes(json), null));
         }
     }
 
@@ -109,7 +119,7 @@ public sealed class GateAuthorityTests
             var mutation = WriteMutation(
                 OldBuild,
                 roots.Where((_, index) => index != removed));
-            Assert.Equal(2, GateAuthorityReader.Validate(mutation, null));
+            Assert.Equal(2, ValidateAuthority(mutation, null));
         }
     }
 
@@ -124,7 +134,7 @@ public sealed class GateAuthorityTests
 
         Assert.Equal(
             2,
-            GateAuthorityReader.Validate(authorityAndDiagnosticCatalogMutation, approvedSha));
+            ValidateAuthority(authorityAndDiagnosticCatalogMutation, approvedSha));
     }
 
     [Fact]
@@ -139,6 +149,12 @@ public sealed class GateAuthorityTests
 
     private static byte[] ProduceBytes() =>
         GateAuthorityProducer.Write(GateAuthorityProducer.Create(FindRepositoryRoot(), OldBuild));
+
+    private static int ValidateAuthority(byte[] bytes, string? expectedAuthoritySha256) =>
+        GateAuthorityReader.Validate(
+            bytes,
+            expectedAuthoritySha256,
+            GateAuthorityRootCatalogLoader.LoadRepository(FindRepositoryRoot()));
 
     private static byte[] WriteMutation(string oldBuild, IEnumerable<JsonElement> roots) =>
         StructuredCanonicalWriter.WriteJson(JsonSerializer.SerializeToElement(new

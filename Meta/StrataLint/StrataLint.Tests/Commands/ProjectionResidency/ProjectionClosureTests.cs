@@ -227,13 +227,13 @@ internal sealed record ProjectionClosureCommandFixture(string ManifestPath, stri
         var fileTables = new StringBuilder();
         var pathByArtifact = new Dictionary<string, string>(StringComparer.Ordinal)
         {
-            ["A-ANCHOR"] = "Meta/StrataLint/Generated/anchor-catalog.v1.json",
+            ["A-ANCHOR"] = "Delta/anchor.json",
             ["A-DAG"] = "Generated/DAG.md",
             ["A-ECHO"] = "Generated/echo-residual-summary.md",
             ["A-FILEMAP"] = "Generated/FILEMAP.md",
-            ["A-SCRIBE"] = "Meta/StrataLint/Generated/scribe-emissions.v1.json",
-            ["A-TRUTH"] = "Meta/StrataLint/Generated/truth-graph.v1.json",
-            ["A-VALUES"] = "Evidence/D5/values.json",
+            ["A-SCRIBE"] = "Zeta/scribe.json",
+            ["A-TRUTH"] = "Zeta/truth.json",
+            ["A-VALUES"] = "Zeta/values.json",
         };
         foreach (var (scopeId, artifactId) in ProjectionClosureScopeCatalog.All)
         {
