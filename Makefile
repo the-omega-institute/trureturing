@@ -3,7 +3,6 @@ SHELL := /bin/bash
 
 BASE ?= origin/dev
 WORKTREE_PATH = $(if $(filter command line,$(origin PATH)),$(PATH),$(abspath ../trureturing-$(NAME)))
-
 .PHONY: help dotnet test lean-cache-ensure lean lean-report build c0-renew clean-lanes emit emit-check ingest echo-residual-summary echo-verify record-golden selftest scratch-sweep gate perf-report deliver-check receipts-stage derived-refresh deposit cover worktree pr-watch
 
 help:

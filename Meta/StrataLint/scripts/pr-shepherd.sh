@@ -26,6 +26,10 @@ STATE_DIR="${PR_SHEPHERD_STATE:-$HOME/.pr-shepherd-state}"
 CACHE_ROOT="${PR_SHEPHERD_CACHE:-$HOME/.cache/trureturing-shepherd}"
 DRYRUN="${SHEPHERD_DRYRUN:-0}"
 DERIVED_LEASE_TTL="${PR_SHEPHERD_LEASE_TTL_SECONDS:-14400}"
+WAKE_BACKOFF_BASE_SECONDS="${PR_SHEPHERD_WAKE_BACKOFF_BASE_SECONDS:-120}"
+WAKE_MAX_ATTEMPTS=3
+WAKE_SLEEP_SECONDS="${PR_SHEPHERD_WAKE_SLEEP_SECONDS:-3}"
+WAKE_REOPEN_RETRY_SLEEP_SECONDS="${PR_SHEPHERD_WAKE_REOPEN_RETRY_SLEEP_SECONDS:-5}"
 DERIVED_LEASE_TOKEN=""
 DERIVED_LEASE_PR=""
 DERIVED_LEASE_ACQUIRED_AT=""
@@ -378,9 +382,9 @@ open_pr() {
 wake_pr() {
   local num="$1"
   GH pr close "$num" --repo "$REPO" || { log "WAKE #$num close 失败"; return 1; }
-  sleep 3
+  sleep "$WAKE_SLEEP_SECONDS"
   if ! GH pr reopen "$num" --repo "$REPO"; then
-    sleep 5
+    sleep "$WAKE_REOPEN_RETRY_SLEEP_SECONDS"
     GH pr reopen "$num" --repo "$REPO" \
       || { log "ALERT #$num reopen 两次失败,PR 留在 closed,须立即恢复"; return 1; }
   fi
