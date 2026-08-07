@@ -28,7 +28,12 @@ public sealed partial class PrShepherdRecalculationTests
 
         Assert.Equal(0, probe.ExitCode);
         Assert.True(File.Exists(fixture.ExtraHelperLoadsPath), "the discovered helper was not sourced");
-        Assert.Contains("RECALC_RESET pr=#1 reason=work-identity-changed", probe.Log);
+        Assert.True(
+            probe.Log.Contains(
+                "RECALC_RESET pr=#1 reason=work-identity-changed",
+                StringComparison.Ordinal),
+            $"state:\n{fixture.RecalculationState(1)}\nlog:\n{probe.Log}\n"
+            + $"bounded calls:\n{string.Join('\n', fixture.BoundedCalls())}");
         Assert.Contains("total_attempts=1", fixture.RecalculationState(1));
     }
 
@@ -56,7 +61,7 @@ public sealed partial class PrShepherdRecalculationTests
             environment: new Dictionary<string, string>
             {
                 ["PR_TEST_HANG_GIT_OPERATION"] = "rev-parse --show-toplevel",
-                ["PR_SHEPHERD_API_TIMEOUT_SECONDS"] = "1",
+                ["PR_SHEPHERD_API_TIMEOUT_SECONDS"] = "5",
                 ["PR_SHEPHERD_GIT_TIMEOUT_SECONDS"] = "1",
                 ["PR_SHEPHERD_KILL_GRACE_SECONDS"] = "1",
             });

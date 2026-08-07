@@ -258,28 +258,60 @@ GH_AS_APP_CAPTURE() {
     GH_CAPTURE "$variable" "$step" "$@"
   fi
 }
+GIT() {
+  local step="$1"
+  shift
+  run_bounded git "$step" "$GIT_TIMEOUT_SECONDS" git "$@"
+}
+GIT_CAPTURE() {
+  local variable="$1" step="$2"
+  shift 2
+  run_bounded_capture "$variable" git "$step" "$GIT_TIMEOUT_SECONDS" git "$@"
+}
 log() { printf '%s %s\n' "$(date '+%F %T')" "$*" | tee -a "$LOG" >&2; }
-SHEPHERD_MODULE_NAMES=(pr-shepherd-actions.sh pr-shepherd-ledger.sh pr-shepherd-fixed-point.sh pr-shepherd-watch.sh pr-shepherd-wake.sh pr-shepherd-lease.sh)
 SHEPHERD_MODULE_DIR="$(cd "$(dirname "$LOADED_SCRIPT_PATH")" && pwd -P)/shepherd"
+SHEPHERD_MODULE_NAMES=()
+for shepherd_module_path in "$SHEPHERD_MODULE_DIR"/pr-shepherd-*.sh; do
+  [[ -f "$shepherd_module_path" ]] || continue
+  SHEPHERD_MODULE_NAMES+=("${shepherd_module_path##*/}")
+done
+if [[ "${#SHEPHERD_MODULE_NAMES[@]}" -eq 0 ]]; then
+  printf 'pr-shepherd: no helper modules found path=%s\n' "$SHEPHERD_MODULE_DIR" >&2
+  exit 1
+fi
 compute_shepherd_identity() {
-  local entrypoint="$1" module_directory="$2" name blob material=""
-  blob="$(git hash-object "$entrypoint" 2>/dev/null)" || return 1
-  [[ "$blob" =~ ^[0-9a-f]{40}$ ]] || return 1
-  material="pr-shepherd.sh $blob"
+  local entrypoint="$1" module_directory="$2" name blob hashes material="" material_file
+  local index=0
+  local -a source_files=("$entrypoint")
   for name in "${SHEPHERD_MODULE_NAMES[@]}"; do
-    blob="$(git hash-object "$module_directory/$name" 2>/dev/null)" || return 1
-    [[ "$blob" =~ ^[0-9a-f]{40}$ ]] || return 1
-    material+=$'\n'"shepherd/$name $blob"
+    source_files+=("$module_directory/$name")
   done
-  printf '%s\n' "$material" | git hash-object --stdin
+  GIT_CAPTURE hashes shepherd-source-hashes hash-object "${source_files[@]}" 2>/dev/null \
+    || return 1
+  while IFS= read -r blob || [[ -n "$blob" ]]; do
+    [[ "$blob" =~ ^[0-9a-f]{40}$ ]] || return 1
+    if [[ "$index" == 0 ]]; then
+      material="pr-shepherd.sh $blob"
+    else
+      name="${SHEPHERD_MODULE_NAMES[index - 1]}"
+      material+=$'\n'"shepherd/$name $blob"
+    fi
+    index=$((index + 1))
+  done <<< "$hashes"
+  [[ "$index" -eq "${#source_files[@]}" ]] || return 1
+  material_file="$(mktemp "${TMPDIR:-/tmp}/pr-shepherd-identity.XXXXXXXX")" || return 1
+  if ! printf '%s\n' "$material" > "$material_file" \
+      || ! GIT_CAPTURE blob shepherd-identity-hash hash-object "$material_file" 2>/dev/null; then
+    rm -f "$material_file"
+    return 1
+  fi
+  rm -f "$material_file"
+  printf '%s\n' "$blob"
 }
 if [[ "${1:-}" != watch || -n "$WATCH_LOADED_BLOB" ]]; then
-  source "$SHEPHERD_MODULE_DIR/pr-shepherd-actions.sh"
-  source "$SHEPHERD_MODULE_DIR/pr-shepherd-ledger.sh"
-  source "$SHEPHERD_MODULE_DIR/pr-shepherd-fixed-point.sh"
-  source "$SHEPHERD_MODULE_DIR/pr-shepherd-watch.sh"
-  source "$SHEPHERD_MODULE_DIR/pr-shepherd-wake.sh"
-  source "$SHEPHERD_MODULE_DIR/pr-shepherd-lease.sh"
+  for shepherd_module_name in "${SHEPHERD_MODULE_NAMES[@]}"; do
+    source "$SHEPHERD_MODULE_DIR/$shepherd_module_name"
+  done
 fi
 watch_process_start() {
   LC_ALL=C ps -p "$1" -o lstart= 2>/dev/null \
@@ -341,7 +373,7 @@ write_watch_owner() {
 clear_watch_reclaim() {
   local rc=0
   if [[ -n "$WATCH_RECLAIM_REF" && -n "$WATCH_RECLAIM_OID" ]]; then
-    if ! git -C "$WATCH_RECLAIM_REPOSITORY" update-ref -d \
+    if ! GIT watch-reclaim-release -C "$WATCH_RECLAIM_REPOSITORY" update-ref -d \
         "$WATCH_RECLAIM_REF" "$WATCH_RECLAIM_OID" 2>/dev/null; then
       log "WATCH lease unavailable: reclaim claim release failed"
       rc=1
@@ -356,21 +388,23 @@ acquire_watch_reclaim_claim() {
   local candidate="$1" repository candidate_oid observed_oid observed_status attempt rc observed
   local zero=0000000000000000000000000000000000000000
   repository="$PIDFILE.reclaim.git"
-  if ! git init --bare -q "$repository" 2>/dev/null; then
+  if ! GIT watch-reclaim-init init --bare -q "$repository" 2>/dev/null; then
     log "WATCH lease unavailable: reclaim repository cannot be initialized"; return 1
   fi
-  [[ "$(git -C "$repository" rev-parse --is-bare-repository 2>/dev/null)" == "true" ]] \
+  GIT_CAPTURE observed watch-reclaim-validate -C "$repository" \
+    rev-parse --is-bare-repository 2>/dev/null || observed=""
+  [[ "$observed" == "true" ]] \
     || { log "WATCH lease unavailable: reclaim repository is invalid"; return 1; }
-  candidate_oid="$(git -C "$repository" hash-object -w "$candidate" 2>/dev/null)" \
-    || candidate_oid=""
+  GIT_CAPTURE candidate_oid watch-reclaim-store -C "$repository" \
+    hash-object -w "$candidate" 2>/dev/null || candidate_oid=""
   [[ "$candidate_oid" =~ ^[0-9a-f]{40}$ ]] \
     || { log "WATCH lease unavailable: reclaim identity cannot be stored"; return 1; }
   WATCH_RECLAIM_REF="refs/trureturing/pr-watch-reclaim"
   for attempt in 1 2 3; do
-    if observed_oid="$(git -C "$repository" rev-parse --verify --quiet \
-        "$WATCH_RECLAIM_REF" 2>/dev/null)"; then
+    if GIT_CAPTURE observed_oid watch-reclaim-read -C "$repository" \
+        rev-parse --verify --quiet "$WATCH_RECLAIM_REF" 2>/dev/null; then
       observed="$candidate.observed"
-      if ! git -C "$repository" cat-file blob "$observed_oid" \
+      if ! GIT watch-reclaim-load -C "$repository" cat-file blob "$observed_oid" \
           > "$observed" 2>/dev/null; then
         rm -f "$observed"
         log "WATCH lease unavailable: reclaim identity is unverifiable"
@@ -388,7 +422,7 @@ acquire_watch_reclaim_claim() {
         || { log "WATCH lease unavailable: reclaim claim cannot be read"; return 1; }
       observed_oid="$zero"
     fi
-    if git -C "$repository" update-ref "$WATCH_RECLAIM_REF" \
+    if GIT watch-reclaim-cas -C "$repository" update-ref "$WATCH_RECLAIM_REF" \
         "$candidate_oid" "$observed_oid" 2>/dev/null; then
       WATCH_RECLAIM_REPOSITORY="$repository"
       WATCH_RECLAIM_OID="$candidate_oid"
@@ -499,7 +533,8 @@ write_watch_state() {
       && -n "$WATCH_STATE_OWNER_START" \
       && "$WATCH_STATE_INTERVAL" =~ ^(0|[1-9][0-9]*)$ \
       && "$WATCH_STATE_MAX" =~ ^[1-9][0-9]*$ \
-      && "$WATCH_LOADED_BLOB" =~ ^[0-9a-f]{40}$ ]] || return 1
+      && ( "$WATCH_LOADED_BLOB" =~ ^[0-9a-f]{40}$ \
+        || ( "$WATCH_LOADED_BLOB" == none && "$phase" == terminal ) ) ]] || return 1
   if ! watch_lease_owner_status "$PIDFILE.lock"; then return 1; fi
   [[ "$WATCH_OWNER_PID" == "$WATCH_STATE_OWNER_PID" \
       && "$WATCH_OWNER_PROCESS_START" == "$WATCH_STATE_OWNER_START" \
@@ -555,7 +590,8 @@ load_watch_state() {
       && -n "$process_start" \
       && "$canonical_script" == /* \
       && "$loaded_script" == /* \
-      && "$loaded_blob" =~ ^[0-9a-f]{40}$ \
+      && ( "$loaded_blob" =~ ^[0-9a-f]{40}$ \
+        || ( "$loaded_blob" == none && "$WATCH_STATE_PHASE" == terminal ) ) \
       && "$interval" =~ ^(0|[1-9][0-9]*)$ \
       && "$max_cycles" =~ ^[1-9][0-9]*$ \
       && -n "$WATCH_STATE_PHASE" \
@@ -662,6 +698,52 @@ remove_watch_snapshot() {
   done
   rmdir "$snapshot_root/shepherd" "$snapshot_root" 2>/dev/null || true
 }
+terminate_process_tree() {
+  local pid="$1" pgid="" deadline now tree child parent target changed alive attempt
+  [[ "$pid" =~ ^[1-9][0-9]*$ ]] || return 0
+  tree=" $pid "
+  changed=1
+  while [[ "$changed" == 1 ]]; do
+    changed=0
+    while read -r child parent; do
+      [[ "$child" =~ ^[1-9][0-9]*$ && "$parent" =~ ^[1-9][0-9]*$ ]] || continue
+      if [[ "$tree" == *" $parent "* && "$tree" != *" $child "* ]]; then
+        tree+="$child "
+        changed=1
+      fi
+    done < <(ps -axo pid=,ppid= 2>/dev/null)
+  done
+  pgid="$(ps -p "$pid" -o pgid= 2>/dev/null | tr -d '[:space:]')"
+  if [[ "$pgid" == "$pid" ]]; then kill -TERM -- "-$pid" 2>/dev/null || true; fi
+  for target in $tree; do kill -TERM "$target" 2>/dev/null || true; done
+  now="$(date '+%s')"; deadline=$((now + KILL_GRACE_SECONDS))
+  while :; do
+    alive=0
+    for target in $tree; do
+      if kill -0 "$target" 2>/dev/null; then alive=1; break; fi
+    done
+    [[ "$alive" == 1 ]] || break
+    now="$(date '+%s')"
+    [[ "$now" -lt "$deadline" ]] || break
+    sleep 0.05
+  done
+  for target in $tree; do kill -KILL "$target" 2>/dev/null || true; done
+  wait "$pid" 2>/dev/null || true
+  for attempt in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20; do
+    alive=0
+    for target in $tree; do
+      if kill -0 "$target" 2>/dev/null; then alive=1; break; fi
+    done
+    [[ "$alive" == 1 ]] || break
+    sleep 0.05
+  done
+}
+terminate_active_bounded_tree() {
+  local pid="${ACTIVE_BOUNDED_PID:-}"
+  [[ "$pid" =~ ^[1-9][0-9]*$ ]] || return 0
+  terminate_process_tree "$pid"
+  ACTIVE_BOUNDED_PID=""
+}
 reload_watch() {
   local interval="$1" max="$2" next_cycle="$3" snapshot_root snapshot blob rc
   local script_repository canonical_directory source_file destination_file
@@ -672,8 +754,8 @@ reload_watch() {
   fi
   snapshot="$snapshot_root/pr-shepherd.sh"
   mkdir "$snapshot_root/shepherd" || { rmdir "$snapshot_root"; return 1; }
-  script_repository="$(git -C "$(dirname "$SCRIPT_PATH")" rev-parse --show-toplevel 2>/dev/null)" \
-    || script_repository=""
+  GIT_CAPTURE script_repository watch-reload-root -C "$(dirname "$SCRIPT_PATH")" \
+    rev-parse --show-toplevel 2>/dev/null || script_repository=""
   canonical_directory="$(cd "$(dirname "$SCRIPT_PATH")" 2>/dev/null && pwd -P)"
   for name in pr-shepherd.sh "${SHEPHERD_MODULE_NAMES[@]}"; do
     if [[ "$name" == pr-shepherd.sh ]]; then
@@ -682,11 +764,13 @@ reload_watch() {
       source_file="$canonical_directory/shepherd/$name"
       destination_file="$snapshot_root/shepherd/$name"
     fi
-    script_relative="$(git -C "$script_repository" ls-files --full-name \
-      --error-unmatch -- "$source_file" 2>/dev/null)" || script_relative=""
-    tracked_blob="$(git -C "$script_repository" rev-parse "HEAD:$script_relative" 2>/dev/null)" \
-      || tracked_blob=""
-    actual_blob="$(git hash-object "$source_file" 2>/dev/null)" || actual_blob=""
+    GIT_CAPTURE script_relative watch-reload-tracked-path -C "$script_repository" \
+      ls-files --full-name --error-unmatch -- "$source_file" 2>/dev/null \
+      || script_relative=""
+    GIT_CAPTURE tracked_blob watch-reload-tracked-blob -C "$script_repository" \
+      rev-parse "HEAD:$script_relative" 2>/dev/null || tracked_blob=""
+    GIT_CAPTURE actual_blob watch-reload-actual-blob hash-object "$source_file" \
+      2>/dev/null || actual_blob=""
     if [[ -z "$script_repository" || -z "$script_relative" \
         || ! "$tracked_blob" =~ ^[0-9a-f]{40}$ || "$actual_blob" != "$tracked_blob" ]] \
         || ! cp "$source_file" "$destination_file" 2>/dev/null \
@@ -726,14 +810,38 @@ reload_watch() {
   log "WATCH reload exec failed path=$snapshot exit=$rc"
   return "$rc"
 }
+bootstrap_watch_exit_cleanup() {
+  local rc=$? now
+  terminate_active_bounded_tree
+  if [[ "$WATCH_OWNS_LEASE" == 1 ]]; then
+    WATCH_STATE_OWNER_PID="$$"
+    WATCH_STATE_OWNER_START="$WATCH_PROCESS_START"
+    WATCH_LOADED_BLOB=none
+    now="$(date '+%s')" || now=0
+    write_watch_state terminal none bootstrap "$now" 0 "$now" bootstrap-exit "$rc" 1 \
+      || log "WATCH bootstrap terminal state publication failed path=$PIDFILE exit=$rc"
+  fi
+  [[ -z "$WATCH_LOCK_CANDIDATE" ]] \
+    || rm -f "$WATCH_LOCK_CANDIDATE" 2>/dev/null || true
+  clear_watch_reclaim || true
+  remove_watch_snapshot "$LOADED_SCRIPT_PATH"
+  return "$rc"
+}
+bootstrap_interrupt_watch() {
+  local rc="$1"
+  terminate_active_bounded_tree
+  exit "$rc"
+}
 watch() {
   local interval="${1:-60}" max="${2:-360}" cycle armed now sleep_deadline
   [[ "$interval" =~ ^(0|[1-9][0-9]*)$ && "$max" =~ ^[1-9][0-9]*$ ]] \
     || { log "WATCH invalid interval or max_cycles (interval=$interval max_cycles=$max)"; return 2; }
   if [[ -z "$WATCH_LOADED_BLOB" ]]; then
-    trap watch_exit_cleanup EXIT
-    trap 'interrupt_watch 143' TERM
-    trap 'interrupt_watch 130' INT
+    WATCH_STATE_INTERVAL="$interval"
+    WATCH_STATE_MAX="$max"
+    trap bootstrap_watch_exit_cleanup EXIT
+    trap 'bootstrap_interrupt_watch 143' TERM
+    trap 'bootstrap_interrupt_watch 130' INT
     acquire_watch_lease || return
     reload_watch "$interval" "$max" 1
     return

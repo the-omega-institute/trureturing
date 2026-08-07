@@ -40,51 +40,6 @@ cleanup_supervised_sweep() {
   rm -f "$receipt" 2>/dev/null || true
   ACTIVE_SWEEP_LEASE_RECEIPT=""
 }
-terminate_active_bounded_tree() {
-  local pid="${ACTIVE_BOUNDED_PID:-}" pgid="" deadline now tree child parent target
-  local changed alive attempt
-  [[ "$pid" =~ ^[1-9][0-9]*$ ]] || return 0
-  tree=" $pid "
-  changed=1
-  while [[ "$changed" == 1 ]]; do
-    changed=0
-    while read -r child parent; do
-      [[ "$child" =~ ^[1-9][0-9]*$ && "$parent" =~ ^[1-9][0-9]*$ ]] || continue
-      if [[ "$tree" == *" $parent "* && "$tree" != *" $child "* ]]; then
-        tree+="$child "
-        changed=1
-      fi
-    done < <(ps -axo pid=,ppid= 2>/dev/null)
-  done
-  pgid="$(ps -p "$pid" -o pgid= 2>/dev/null | tr -d '[:space:]')"
-  if [[ "$pgid" == "$pid" ]]; then kill -TERM -- "-$pid" 2>/dev/null || true
-  fi
-  for target in $tree; do kill -TERM "$target" 2>/dev/null || true; done
-  now="$(date '+%s')"; deadline=$((now + KILL_GRACE_SECONDS))
-  while :; do
-    alive=0
-    for target in $tree; do
-      if kill -0 "$target" 2>/dev/null; then alive=1; break; fi
-    done
-    [[ "$alive" == 1 ]] || break
-    now="$(date '+%s')"
-    [[ "$now" -lt "$deadline" ]] || break
-    sleep 0.05
-  done
-  for target in $tree; do
-    kill -KILL "$target" 2>/dev/null || true
-  done
-  wait "$pid" 2>/dev/null || true
-  for attempt in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20; do
-    alive=0
-    for target in $tree; do
-      if kill -0 "$target" 2>/dev/null; then alive=1; break; fi
-    done
-    [[ "$alive" == 1 ]] || break
-    sleep 0.05
-  done
-  ACTIVE_BOUNDED_PID=""
-}
 run_sweep_bounded() {
   local receipt rc=0
   receipt="$(mktemp "${TMPDIR:-/tmp}/pr-shepherd-lease-receipt.XXXXXXXX")" || return 1
@@ -121,22 +76,23 @@ start_watch() {
   nohup /bin/bash "$SCRIPT_PATH" watch "$interval" "$max" \
     >> "$LOG" 2>&1 </dev/null &
   launched_pid=$!
-  disown "$launched_pid" 2>/dev/null || true
   now="$(date '+%s')"
   deadline=$((now + API_TIMEOUT_SECONDS))
   while [[ "$now" -le "$deadline" ]]; do
     if watch_status >/dev/null 2>&1; then
+      disown "$launched_pid" 2>/dev/null || true
       printf 'state=%s status_command=/bin/bash %s status\n' "$PIDFILE" "$SCRIPT_PATH"
       return 0
     fi
     if ! kill -0 "$launched_pid" 2>/dev/null; then
+      wait "$launched_pid" 2>/dev/null || true
       log "WATCH start failed before ready state=$PIDFILE"
       return 1
     fi
     sleep 0.1
     now="$(date '+%s')"
   done
-  kill -TERM "$launched_pid" 2>/dev/null || true
+  terminate_process_tree "$launched_pid"
   log "WATCH start timeout_seconds=$API_TIMEOUT_SECONDS state=$PIDFILE"
   return 1
 }
