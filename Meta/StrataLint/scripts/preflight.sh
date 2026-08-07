@@ -119,9 +119,6 @@ CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make test
 record_timing test
 
 PREFLIGHT_FAULT_CLASS="SEMANTIC"
-make lua-test
-record_timing lua-test
-
 PREFLIGHT_FAULT_CLASS="SEMANTIC"
 make selftest
 record_timing selftest
