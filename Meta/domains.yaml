@@ -41,6 +41,9 @@ domains:
   Midline:
     stratum: S3
     definition: Dual and multiple characterizations of the critical midline sigma equals one half.
+  Naming:
+    stratum: S0
+    definition: Countable naming systems over uncountable carriers and their dark-side measure.
   Phase:
     stratum: S1
     definition: Additive golden-ratio phases modulo one.
