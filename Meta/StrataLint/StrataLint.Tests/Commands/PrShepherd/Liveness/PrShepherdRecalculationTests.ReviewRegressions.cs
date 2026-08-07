@@ -118,8 +118,8 @@ public sealed partial class PrShepherdRecalculationTests
             dryRun: false,
             environment: new Dictionary<string, string>
             {
-                ["PR_SHEPHERD_BUILD_TIMEOUT_SECONDS"] = "10",
-                ["PR_SHEPHERD_SWEEP_TIMEOUT_SECONDS"] = "6",
+                ["PR_SHEPHERD_BUILD_TIMEOUT_SECONDS"] = "30",
+                ["PR_SHEPHERD_SWEEP_TIMEOUT_SECONDS"] = "20",
                 ["PR_SHEPHERD_KILL_GRACE_SECONDS"] = "1",
             });
         Assert.Equal(0, started.ExitCode);

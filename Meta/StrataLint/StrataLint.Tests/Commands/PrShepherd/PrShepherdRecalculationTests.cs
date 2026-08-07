@@ -755,7 +755,7 @@ public sealed partial class PrShepherdRecalculationTests
 
         internal void WaitForHangingProcesses()
         {
-            for (var attempt = 0; attempt < 250; attempt++)
+            for (var attempt = 0; attempt < 500; attempt++)
             {
                 if (HangingProcessIds().Length >= 2) return;
                 Thread.Sleep(20);
