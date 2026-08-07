@@ -216,7 +216,8 @@ public sealed partial class PrShepherdRecalculationTests
             bool twoDerivedPrRows = false,
             int? leaseTtlSeconds = null,
             bool derivedPr = true,
-            bool diffFailure = false)
+            bool diffFailure = false,
+            int? statusRollupCount = null)
         {
             var script = Path.Combine(FindRepositoryRoot(), ShepherdScriptPath);
             var home = Path.Combine(temporary.Path, "home");
@@ -241,6 +242,7 @@ public sealed partial class PrShepherdRecalculationTests
                 $"PR_TEST_TWO_DERIVED={(twoDerivedPrRows ? "1" : "0")}",
                 $"PR_TEST_DERIVED={(derivedPr ? "1" : "0")}",
                 $"PR_TEST_DIFF_FAILURE={(diffFailure ? "1" : "0")}",
+                $"PR_TEST_STATUS_ROLLUP_COUNT={statusRollupCount?.ToString() ?? string.Empty}",
                 $"PR_TEST_FAIL_TARGET={failingTarget}",
                 $"PR_TEST_MOVE_HEAD={(moveHeadBeforePush ? "1" : "0")}",
                 $"PR_TEST_FAIL_MERGE={(failMergeWithoutConflict ? "1" : "0")}",
@@ -253,6 +255,7 @@ public sealed partial class PrShepherdRecalculationTests
                 $"PR_TEST_LOCK_READ_MARKER={Path.Combine(temporary.Path, "lock-read-marker")}",
                 $"SHEPHERD_DRYRUN={(dryRun ? "1" : "0")}",
                 $"PR_TEST_GRAPHQL_REMAINING={graphqlRemaining}",
+                "PR_SHEPHERD_WAKE_SLEEP_SECONDS=0",
                 "GH_TOKEN=must-not-reach-candidate-producers",
                 "/bin/bash",
                 script,
@@ -478,6 +481,15 @@ public sealed partial class PrShepherdRecalculationTests
                 exec /bin/date "$@"
                 """);
 
+        internal void MoveHeadToAttacker() =>
+            Git(temporary.Path, "--git-dir", origin, "update-ref", $"refs/heads/{headBranch}", AttackerHead);
+
+        internal string WakeState() =>
+            File.ReadAllText(Path.Combine(StateDirectory, "nochecks-1"));
+
+        internal bool WakeStateExists() =>
+            File.Exists(Path.Combine(StateDirectory, "nochecks-1"));
+
         private void WriteBranchLock(string worktreeName, int owner)
         {
             var lockDirectory = Path.Combine(CacheRoot, $"lock-{worktreeName[3..]}");
@@ -547,7 +559,9 @@ public sealed partial class PrShepherdRecalculationTests
                   fi
                   head="$(git --git-dir "$PR_TEST_ORIGIN" rev-parse "refs/heads/$PR_TEST_HEAD")"
                   base="$PR_TEST_BASE_OID"
-                  if [[ "${PR_TEST_NO_CHECKS:-0}" == 1 ]]; then
+                  if [[ -n "${PR_TEST_STATUS_ROLLUP_COUNT:-}" ]]; then
+                    row="1\tMERGEABLE\tBLOCKED\t${PR_TEST_HEAD}\t${head}\t${base}\t${PR_TEST_STATUS_ROLLUP_COUNT}\t-\t-"
+                  elif [[ "${PR_TEST_NO_CHECKS:-0}" == 1 ]]; then
                     row="1	MERGEABLE	BLOCKED	${PR_TEST_HEAD}	${head}	${base}	0	-	-"
                   elif [[ "${PR_TEST_CONFLICTING:-0}" == 1 ]]; then
                     row="1	CONFLICTING	DIRTY	${PR_TEST_HEAD}	${head}	${base}	1	FAILURE	https://github.com/fixture/repository/actions/runs/123/job/456"
@@ -611,6 +625,10 @@ public sealed partial class PrShepherdRecalculationTests
                 fi
                 if [[ "${1:-}" == pr && "${2:-}" == merge ]]; then
                   printf 'gh:%s|GH_TOKEN=%s\n' "$*" "${GH_TOKEN-<unset>}" >> "$PR_TEST_CALLS"
+                  exit 0
+                fi
+                if [[ "${1:-}" == pr && ( "${2:-}" == close || "${2:-}" == reopen ) ]]; then
+                  printf 'gh:%s\n' "$*" >> "$PR_TEST_CALLS"
                   exit 0
                 fi
                 printf 'gh:%s\n' "$*" >> "$PR_TEST_CALLS"
