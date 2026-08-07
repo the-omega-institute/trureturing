@@ -17,6 +17,7 @@ public sealed class DocumentDiscoveryTests
         Assert.Equal(67, census.ReceiptFreeDocumentGids.Count);
         Assert.Equal(33, census.ReceiptBoundDocumentGids.Count);
         Assert.Contains("D5/S0/Carrier/Norm", census.ReceiptFreeDocumentGids);
+        Assert.Contains("D5/S3/Quantum/ChannelFixedState", census.ReceiptFreeDocumentGids);
         Assert.Contains("D5/S1/Scale/CarrierFoundations", census.ReceiptBoundDocumentGids);
     }
 

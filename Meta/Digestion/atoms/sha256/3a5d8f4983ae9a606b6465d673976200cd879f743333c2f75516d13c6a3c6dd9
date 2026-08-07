@@ -1,0 +1,6 @@
+**定理 5.1(三隙一标量与立方律系数)[证]。**CHSH 配置中记 N = ‖[A₀,A₁]⊗[B₀,B₁]‖ = 4 sinθ_A sinθ_B。由定理 2.7,S² 之谱为 {4+N, 4−N}(各二重),故 S 之谱为 {±a, ±b},a = √(4+N),b = √(4−N)。Haar 随机纯态之权重 w ~ Dirichlet(1,1,1,1)(密度 3! = 6),角锥体积给出逐配置立方律
+
+$$\mathbb{P}(\mathrm{Var}(S) < \varepsilon) = K(N)\,\varepsilon^3\,(1+O(\varepsilon)),\qquad K(N) = \sum_{k}\prod_{j\ne k}(\lambda_j-\lambda_k)^{-2} = \frac{1}{N^2(16-N^2)}.$$
+
+*证明。*顶点 ±a 之隙积:[(a−b)(a+b)(2a)]² = (2N·2a)²·? 精确:(a−b)(a+b) = a²−b² = 2N,乘 (a−(−a)) = 2a 得 4Na,平方 16N²a²;顶点 ±b 同理 16N²b²。K = 2/(16N²a²) + 2/(16N²b²) = (a²+b²)/(8N²a²b²);a²+b² = 8,a²b² = 16−N²,化简即闭式(直算恒等核验 4.8×10⁻¹²)。角锥体积:{w ⪰ 0, Σ_j w_jδ_j < ε} 之体积 = ε³/(6Πδ_j),乘 Haar 密度 6。∎
+
