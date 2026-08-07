@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/WindowRegister
+/- GID: D5/S3/Observer/WindowRegister
    generality: G
-   mirror-B: D5/B/S3/Quantum/WindowRegister
+   mirror-B: D5/B/S3/Observer/WindowRegister
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Prove finite cyclic window Weyl relations and scalar commutant rigidity. -/
@@ -10,7 +10,7 @@ import Mathlib.LinearAlgebra.Matrix.Circulant
 import Mathlib.LinearAlgebra.Matrix.Permutation
 import Mathlib.RingTheory.RootsOfUnity.Complex
 
-namespace D5.S3.Quantum.WindowRegister
+namespace D5.S3.Observer.WindowRegister
 
 open D5.S3.Fourier.FinitePoisson
 
@@ -190,4 +190,4 @@ theorem window_commutant_eq_scalars (A : Matrix (ZMod M) (ZMod M) ℂ)
 
 end
 
-end D5.S3.Quantum.WindowRegister
+end D5.S3.Observer.WindowRegister
