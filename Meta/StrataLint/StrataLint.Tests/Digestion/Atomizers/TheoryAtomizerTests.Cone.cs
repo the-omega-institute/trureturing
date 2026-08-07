@@ -5,7 +5,6 @@ namespace StrataLint.Tests;
 
 public sealed partial class TheoryAtomizerTests
 {
-    private const string ConeAtomizerId = "cone-v1";
     private static string ConeProductionSource => Path.Combine(
         "docs", "develop", "theory", "CONE_PROGRAM_FORMAL.md");
     private static readonly TheoryAtomizerRules ConeRules = TheoryAtomizerDataLoader.Load(
@@ -94,7 +93,7 @@ public sealed partial class TheoryAtomizerTests
         var bytes = File.ReadAllBytes(Path.Combine(root, ConeProductionSource));
 
         var document = AtomizerRegistry.Atomize(
-            ConeAtomizerId,
+            AtomizerRegistry.ConeId,
             bytes,
             ConeRules);
 
@@ -102,7 +101,7 @@ public sealed partial class TheoryAtomizerTests
         Assert.Equal(353, bytes.Count(static value => value == (byte)'\n'));
         Assert.Equal(67, document.Claims.Length);
         AssertRecognitionComplete(document, bytes);
-        AssertSplitIdempotent(ConeAtomizerId, document, ConeRules);
+        AssertSplitIdempotent(AtomizerRegistry.ConeId, document, ConeRules);
     }
 
     [Fact]
@@ -112,7 +111,7 @@ public sealed partial class TheoryAtomizerTests
         var bytes = File.ReadAllBytes(Path.Combine(root, ConeProductionSource));
 
         var atom = AtomizerRegistry.Atomize(
-                ConeAtomizerId,
+                AtomizerRegistry.ConeId,
                 bytes,
                 ConeRules)
             .ResolveClaim("lemma/3.6");
@@ -136,7 +135,7 @@ public sealed partial class TheoryAtomizerTests
             + "**猜想 3.6(未登记标题)[证]。**claim。\n");
 
         var error = Assert.Throws<TheorySourceFormatException>(() =>
-            AtomizerRegistry.Atomize(ConeAtomizerId, bytes, ConeRules));
+            AtomizerRegistry.Atomize(AtomizerRegistry.ConeId, bytes, ConeRules));
 
         Assert.Contains("unknown cone numbered claim title", error.Message, StringComparison.Ordinal);
         Assert.Contains("line 5", error.Message, StringComparison.Ordinal);
@@ -151,7 +150,7 @@ public sealed partial class TheoryAtomizerTests
             + "**定理4.6(KM 渐近律)[证]。**claim。\n");
 
         var error = Assert.Throws<TheorySourceFormatException>(() =>
-            AtomizerRegistry.Atomize(ConeAtomizerId, bytes, ConeRules));
+            AtomizerRegistry.Atomize(AtomizerRegistry.ConeId, bytes, ConeRules));
 
         Assert.Contains("unknown cone numbered claim title", error.Message, StringComparison.Ordinal);
         Assert.Contains("line 5", error.Message, StringComparison.Ordinal);
@@ -166,7 +165,7 @@ public sealed partial class TheoryAtomizerTests
             + "**引理 3.6(反演恒等式)[证]。**claim。\n");
 
         var error = Assert.Throws<TheorySourceFormatException>(() =>
-            AtomizerRegistry.Atomize(ConeAtomizerId, bytes, ConeRules));
+            AtomizerRegistry.Atomize(AtomizerRegistry.ConeId, bytes, ConeRules));
 
         Assert.Contains("cone claim chapter mismatch", error.Message, StringComparison.Ordinal);
     }
@@ -181,7 +180,7 @@ public sealed partial class TheoryAtomizerTests
             + "**引理 3.6(反演恒等式)[证]。**second。\n");
 
         var error = Assert.Throws<TheorySourceFormatException>(() =>
-            AtomizerRegistry.Atomize(ConeAtomizerId, bytes, ConeRules));
+            AtomizerRegistry.Atomize(AtomizerRegistry.ConeId, bytes, ConeRules));
 
         Assert.Contains("duplicate cone claim locator", error.Message, StringComparison.Ordinal);
     }
@@ -195,7 +194,7 @@ public sealed partial class TheoryAtomizerTests
             + "**定理 4.6(KM 渐近律)[数][证]。**claim。\n");
 
         var atom = Assert.Single(AtomizerRegistry.Atomize(
-            ConeAtomizerId,
+            AtomizerRegistry.ConeId,
             bytes,
             ConeRules).Claims);
 
@@ -208,7 +207,7 @@ public sealed partial class TheoryAtomizerTests
         var root = FindRepositoryRoot();
         var bytes = File.ReadAllBytes(Path.Combine(root, ConeProductionSource));
         var claims = AtomizerRegistry.Atomize(
-            ConeAtomizerId,
+            AtomizerRegistry.ConeId,
             bytes,
             ConeRules).Claims;
 

@@ -1,0 +1,6 @@
+**定理 3.3(量子 DPI 恒等式)[证]。**对任意信道 Φ:
+
+$$D(\rho\|\sigma) - D(\Phi\rho\|\Phi\sigma) = \int_0^1 (1-s)\Big[\|\Delta\|^2_{\mathrm{KM},m_s} - \|\Phi\Delta\|^2_{\mathrm{KM},\Phi m_s}\Big] ds,\quad \text{被积逐点} \ge 0.$$
+
+*证明。*Φ 保线段(Φm_s = (1−s)Φσ + sΦρ),两次应用定理 3.2 相减即恒等式;逐点非负由 KM 属 Petz 单调度量族([典]:Petz 分类)。∎(数值:六十片全非负,积分对真亏 1.1×10⁻¹⁴。)
+

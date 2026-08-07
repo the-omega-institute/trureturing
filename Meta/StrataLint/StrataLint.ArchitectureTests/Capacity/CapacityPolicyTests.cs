@@ -67,6 +67,22 @@ public sealed class CapacityPolicyTests
         Assert.Empty(findings);
     }
 
+    // Atomizer dialect rules are one canonical registry consumed through the
+    // strict loader, not a navigated content artifact to split at an arbitrary line.
+    [Fact]
+    public void TheoryAtomizerDataRegistryIsNotBounded()
+    {
+        var oversize = string.Join(
+            '\n',
+            Enumerable.Range(0, RepositoryRules.ArtifactHardLineLimit + 1)
+                .Select(static i => $"line {i}"));
+
+        var findings = CapacityPolicy.InspectFiles(
+            new[] { (TheoryAtomizerDataLoader.DataPath, oversize) });
+
+        Assert.Empty(findings);
+    }
+
     // Emitted Blueprint projections (FILEMAP kind=generated, produced by
     // ScribeEmitter, verified by emit-check) are photographs of the graph, not
     // skeleton: each document already pays its structural slot through its
