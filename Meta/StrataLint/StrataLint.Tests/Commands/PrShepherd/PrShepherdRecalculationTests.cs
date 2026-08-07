@@ -8,6 +8,9 @@ public sealed partial class PrShepherdRecalculationTests
     private const string ShepherdScriptPath = "Meta/StrataLint/scripts/pr-shepherd.sh";
     private const string ShepherdLeaseScriptPath =
         "Meta/StrataLint/scripts/shepherd/pr-shepherd-lease.sh";
+
+    private const string ShepherdLedgerScriptPath =
+        "Meta/StrataLint/scripts/shepherd/pr-shepherd-ledger.sh";
     private const string CommitSubject =
         "recompute derivations after dev advance (auto, pr-shepherd)";
 
@@ -291,7 +294,9 @@ public sealed partial class PrShepherdRecalculationTests
             Directory.CreateDirectory(Path.GetDirectoryName(leaseScript)!);
             File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdScriptPath), script);
             File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdLeaseScriptPath), leaseScript);
-            Git(repository, "add", ShepherdScriptPath, ShepherdLeaseScriptPath);
+            var ledgerScript = Path.Combine(repository, ShepherdLedgerScriptPath);
+            File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdLedgerScriptPath), ledgerScript);
+            Git(repository, "add", ShepherdScriptPath, ShepherdLeaseScriptPath, ShepherdLedgerScriptPath);
             Git(repository, "commit", "-m", "track pr-shepherd fixture");
             var home = Path.Combine(temporary.Path, "home");
             Directory.CreateDirectory(home);
