@@ -8,17 +8,38 @@ public sealed class DocumentDiscoveryTests
     private const string PhaseSourcePath = "Blueprint/D5/S1/Phase/Basic.scribe.cs";
 
     [Fact]
-    public void ProductionReceiptFreeDocumentCensusIsDerivedFromBackfill()
+    public void ReceiptClassificationRejectsAnEmptyDocumentCorpus()
     {
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+            ReceiptFreeDocumentCatalog.Load("not-read-for-empty-corpus", []));
+
+        Assert.Contains("document corpus must not be empty", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ProductionReceiptClassificationIsDisjointAndComplete()
+    {
+        var documents = DocumentDefinitions.Discover(typeof(DocumentDefinitions).Assembly)
+            .Select(static definition => definition.Document)
+            .ToArray();
+        var documentGids = documents
+            .Select(static document => document.Header.Gid.Value)
+            .ToHashSet(StringComparer.Ordinal);
         var census = ReceiptFreeDocumentCatalog.Load(
             FindRepositoryRoot(),
-            DocumentDefinitions.All.Select(static definition => definition.Document));
+            documents);
+        var classified = census.ReceiptFreeDocumentGids
+            .Union(census.ReceiptBoundDocumentGids, StringComparer.Ordinal)
+            .ToHashSet(StringComparer.Ordinal);
 
-        Assert.Equal(67, census.ReceiptFreeDocumentGids.Count);
-        Assert.Equal(33, census.ReceiptBoundDocumentGids.Count);
-        Assert.Contains("D5/S0/Carrier/Norm", census.ReceiptFreeDocumentGids);
-        Assert.Contains("D5/S3/Quantum/ChannelFixedState", census.ReceiptFreeDocumentGids);
-        Assert.Contains("D5/S1/Scale/CarrierFoundations", census.ReceiptBoundDocumentGids);
+        Assert.NotEmpty(documentGids);
+        Assert.Empty(census.ReceiptFreeDocumentGids.Intersect(
+            census.ReceiptBoundDocumentGids,
+            StringComparer.Ordinal));
+        Assert.Equal(documentGids.Order(StringComparer.Ordinal), classified.Order(StringComparer.Ordinal));
+        Assert.Equal(
+            documents.Length,
+            census.ReceiptFreeDocumentGids.Count + census.ReceiptBoundDocumentGids.Count);
     }
 
     [Fact]
