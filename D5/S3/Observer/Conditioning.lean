@@ -1,4 +1,4 @@
-/- GID: D5/S3/Quantum/Conditioning
+/- GID: D5/S3/Observer/Conditioning
    generality: G
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -18,7 +18,7 @@
 
 import D5.S3.Quantum.FiniteDimensional
 
-namespace D5.S3.Quantum.Conditioning
+namespace D5.S3.Observer.Conditioning
 
 open D5.S3.Quantum.FiniteDimensional
 open scoped BigOperators ComplexOrder
@@ -179,4 +179,4 @@ theorem unread_eq_weighted_ensemble (_hP : IsRecordMeasurement P) (rho : Matrix 
   intro k _
   rw [smul_smul, mul_inv_cancel₀ (hpos k), one_smul]
 
-end D5.S3.Quantum.Conditioning
+end D5.S3.Observer.Conditioning
