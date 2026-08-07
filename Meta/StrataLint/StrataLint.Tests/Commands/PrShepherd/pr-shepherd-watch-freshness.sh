@@ -96,6 +96,7 @@ if run_watch 0 1 >"$root/untracked-helper-output" 2>&1; then
 fi
 command grep -q 'does not match tracked HEAD' "$log" \
   || { printf 'watch did not diagnose the untracked helper module\n' >&2; exit 1; }
+rm -f "$root/pr-watch.state" "$root/pr-watch.state.lock"
 command git -C "$checkout" restore \
   Meta/StrataLint/scripts/shepherd/pr-shepherd-actions.sh
 

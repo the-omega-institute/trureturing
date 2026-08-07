@@ -17,6 +17,14 @@ RECALC_STATE_TERMINAL=""
 INFRA_STATE_FAILURE_CLASS=""
 INFRA_STATE_ATTEMPTS=""
 INFRA_STATE_NEXT_AT=""
+INFRA_PROBE_REPOSITORY=""
+INFRA_PROBE_REF=""
+INFRA_PROBE_OID=""
+INFRA_PROBE_TOKEN=""
+INFRA_PROBE_FAILURE_CLASS=""
+INFRA_PROBE_ATTEMPTS=""
+INFRA_PROBE_NEXT_AT=""
+INFRA_PROBE_EXPIRES_AT=""
 
 pr_has_derived_changes() {
   local num="$1" out path
@@ -59,7 +67,17 @@ load_derived_lease() {
       && -n "$token" ]] || return 1
   DERIVED_LEASE_PR="$pr"
   DERIVED_LEASE_ACQUIRED_AT="$acquired_at"
-  DERIVED_LEASE_TOKEN="$token"
+  DERIVED_LEASE_OBSERVED_TOKEN="$token"
+}
+write_derived_lease_receipt() {
+  local num="$1" token="$2" receipt="${PR_SHEPHERD_LEASE_RECEIPT:-}" temporary
+  [[ -n "$receipt" ]] || return 0
+  temporary="$receipt.next.$$.$RANDOM"
+  (umask 077; {
+    printf 'schema=derived-fifo-receipt-v1\n'
+    printf 'pr=%s\n' "$num"
+    printf 'token=%s\n' "$token"
+  } > "$temporary") && mv "$temporary" "$receipt"
 }
 create_derived_lease() {
   local num="$1" acquired_at="$2" directory="$STATE_DIR/derived-fifo.lease"
@@ -79,6 +97,10 @@ create_derived_lease() {
   DERIVED_LEASE_PR="$num"
   DERIVED_LEASE_ACQUIRED_AT="$acquired_at"
   DERIVED_LEASE_TOKEN="$token"
+  if ! write_derived_lease_receipt "$num" "$token"; then
+    release_derived_lease
+    return 1
+  fi
   log "FIFO LEASE acquired pr=#$num acquired_at=$acquired_at ttl=${DERIVED_LEASE_TTL}s"
 }
 acquire_derived_lease() {
@@ -101,6 +123,7 @@ acquire_derived_lease() {
   DERIVED_LEASE_PR=""
   DERIVED_LEASE_ACQUIRED_AT=""
   DERIVED_LEASE_TOKEN=""
+  DERIVED_LEASE_OBSERVED_TOKEN=""
   if load_derived_lease "$directory"; then
     observed_valid=1
     acquired_at="$DERIVED_LEASE_ACQUIRED_AT"
@@ -112,14 +135,14 @@ acquire_derived_lease() {
     }
     DERIVED_LEASE_PR="unknown"
     DERIVED_LEASE_ACQUIRED_AT="$acquired_at"
-    DERIVED_LEASE_TOKEN="invalid"
+    DERIVED_LEASE_OBSERVED_TOKEN="invalid"
   fi
   age=$((now - acquired_at))
   [[ "$age" -ge "$DERIVED_LEASE_TTL" ]] || return 1
 
   observed_pr="$DERIVED_LEASE_PR"
   observed_at="$DERIVED_LEASE_ACQUIRED_AT"
-  observed_token="$DERIVED_LEASE_TOKEN"
+  observed_token="$DERIVED_LEASE_OBSERVED_TOKEN"
   log "FIFO LEASE expired pr=#$observed_pr acquired_at=$observed_at ttl=${DERIVED_LEASE_TTL}s"
   stale="$directory.stale.$$.$RANDOM"
   if ! mv "$directory" "$stale" 2>/dev/null; then
@@ -128,12 +151,12 @@ acquire_derived_lease() {
   fi
   DERIVED_LEASE_PR=""
   DERIVED_LEASE_ACQUIRED_AT=""
-  DERIVED_LEASE_TOKEN=""
+  DERIVED_LEASE_OBSERVED_TOKEN=""
   if [[ "$observed_valid" == "1" ]]; then
     if ! load_derived_lease "$stale" \
         || [[ "$DERIVED_LEASE_PR" != "$observed_pr" \
             || "$DERIVED_LEASE_ACQUIRED_AT" != "$observed_at" \
-            || "$DERIVED_LEASE_TOKEN" != "$observed_token" ]]; then
+            || "$DERIVED_LEASE_OBSERVED_TOKEN" != "$observed_token" ]]; then
       changed=1
     fi
   else
@@ -157,17 +180,40 @@ acquire_derived_lease() {
     return 1
   }
 }
-release_derived_lease() {
-  local directory="$STATE_DIR/derived-fifo.lease" token="$DERIVED_LEASE_TOKEN"
-  local pr="$DERIVED_LEASE_PR"
+release_derived_lease_token() {
+  local token="$1" pr="$2" directory="$STATE_DIR/derived-fifo.lease"
   [[ "$DRYRUN" != "1" && -n "$token" ]] || return 0
+  DERIVED_LEASE_OBSERVED_TOKEN=""
   load_derived_lease "$directory" 2>/dev/null || return 0
-  [[ "$DERIVED_LEASE_TOKEN" == "$token" ]] || return 0
+  [[ "$DERIVED_LEASE_OBSERVED_TOKEN" == "$token" ]] || return 0
   rm -f "$directory/owner"
   if ! rmdir "$directory" 2>/dev/null; then
     log "FIFO LEASE release incomplete pr=#$pr path=$directory"
   fi
+}
+release_derived_lease() {
+  local token="$DERIVED_LEASE_TOKEN" pr="$DERIVED_LEASE_PR"
+  [[ -n "$token" ]] || return 0
+  release_derived_lease_token "$token" "$pr"
   DERIVED_LEASE_TOKEN=""
+  if [[ -n "${PR_SHEPHERD_LEASE_RECEIPT:-}" ]]; then
+    rm -f "$PR_SHEPHERD_LEASE_RECEIPT" 2>/dev/null || true
+  fi
+}
+release_derived_lease_receipt() {
+  local receipt="$1" line schema="" pr="" token="" seen=" " key value
+  [[ -f "$receipt" && -r "$receipt" ]] || return 0
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    key="${line%%=*}"; value="${line#*=}"
+    [[ "$line" == *=* && "$seen" != *" $key "* ]] || return 1
+    seen+="$key "
+    case "$key" in
+      schema) schema="$value" ;; pr) pr="$value" ;; token) token="$value" ;; *) return 1 ;;
+    esac
+  done < "$receipt"
+  [[ "$schema" == derived-fifo-receipt-v1 && "$pr" =~ ^[1-9][0-9]*$ && -n "$token" ]] \
+    || return 1
+  release_derived_lease_token "$token" "$pr"
 }
 
 recalculation_marker() { printf '%s/recalculate-%s\n' "$STATE_DIR" "$1"; }
@@ -330,6 +376,90 @@ write_infrastructure_state() {
     printf 'next_at=%s\n' "$next_at"
   } > "$temporary") && mv "$temporary" "$marker"
 }
+load_infrastructure_probe() {
+  local path="$1" line schema="" token="" failure_class="" attempts="" next_at="" expires_at=""
+  local seen=" " key value
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    key="${line%%=*}"; value="${line#*=}"
+    [[ "$line" == *=* && "$seen" != *" $key "* ]] || return 1
+    seen+="$key "
+    case "$key" in
+      schema) schema="$value" ;; token) token="$value" ;; failure_class) failure_class="$value" ;;
+      attempts) attempts="$value" ;; next_at) next_at="$value" ;; expires_at) expires_at="$value" ;;
+      *) return 1 ;;
+    esac
+  done < "$path" 2>/dev/null || return 1
+  [[ "$schema" == pr-infrastructure-probe-v1 && -n "$token" \
+      && "$failure_class" =~ ^[a-z0-9-]+\.(exit|timeout)$ \
+      && "$attempts" =~ ^[1-9][0-9]*$ && "$next_at" =~ ^[1-9][0-9]*$ \
+      && "$expires_at" =~ ^[1-9][0-9]*$ ]] || return 1
+  INFRA_PROBE_TOKEN="$token"
+  INFRA_PROBE_FAILURE_CLASS="$failure_class"
+  INFRA_PROBE_ATTEMPTS="$attempts"
+  INFRA_PROBE_NEXT_AT="$next_at"
+  INFRA_PROBE_EXPIRES_AT="$expires_at"
+}
+acquire_infrastructure_probe() {
+  local failure_class="$1" attempts="$2" next_at="$3" now="$4"
+  local repository="$STATE_DIR/infrastructure-probe.git" ref=refs/trureturing/half-open
+  local candidate candidate_oid old_oid zero=0000000000000000000000000000000000000000
+  local observed expires_at token="$$-$now-$RANDOM" attempt
+  candidate="$(mktemp "${TMPDIR:-/tmp}/pr-shepherd-infra-probe.XXXXXXXX")" || return 1
+  expires_at=$((now + SWEEP_TIMEOUT_SECONDS + KILL_GRACE_SECONDS + 1))
+  (umask 077; {
+    printf 'schema=pr-infrastructure-probe-v1\n'
+    printf 'token=%s\n' "$token"
+    printf 'failure_class=%s\n' "$failure_class"
+    printf 'attempts=%s\n' "$attempts"
+    printf 'next_at=%s\n' "$next_at"
+    printf 'expires_at=%s\n' "$expires_at"
+  } > "$candidate") || { rm -f "$candidate"; return 1; }
+  git init --bare -q "$repository" 2>/dev/null \
+    || { rm -f "$candidate"; log "ALERT INFRA_PROBE_STORE_INVALID path=$repository"; return 1; }
+  candidate_oid="$(git -C "$repository" hash-object -w "$candidate" 2>/dev/null)" \
+    || candidate_oid=""
+  [[ "$candidate_oid" =~ ^[0-9a-f]{40}$ ]] \
+    || { rm -f "$candidate"; return 1; }
+  for attempt in 1 2 3; do
+    if old_oid="$(git -C "$repository" rev-parse --verify --quiet "$ref" 2>/dev/null)"; then
+      observed="$candidate.observed"
+      if ! git -C "$repository" cat-file blob "$old_oid" > "$observed" 2>/dev/null \
+          || ! load_infrastructure_probe "$observed"; then
+        rm -f "$observed" "$candidate"
+        log "ALERT INFRA_PROBE_INVALID ref=$ref"
+        return 1
+      fi
+      rm -f "$observed"
+      if [[ "$now" -lt "$INFRA_PROBE_EXPIRES_AT" ]]; then
+        rm -f "$candidate"
+        return 1
+      fi
+    else
+      old_oid="$zero"
+    fi
+    if git -C "$repository" update-ref "$ref" "$candidate_oid" "$old_oid" 2>/dev/null; then
+      rm -f "$candidate"
+      INFRA_PROBE_REPOSITORY="$repository"
+      INFRA_PROBE_REF="$ref"
+      INFRA_PROBE_OID="$candidate_oid"
+      INFRA_PROBE_TOKEN="$token"
+      INFRA_PROBE_FAILURE_CLASS="$failure_class"
+      INFRA_PROBE_ATTEMPTS="$attempts"
+      INFRA_PROBE_NEXT_AT="$next_at"
+      INFRA_PROBE_EXPIRES_AT="$expires_at"
+      return 0
+    fi
+  done
+  rm -f "$candidate"
+  return 1
+}
+release_infrastructure_probe() {
+  if [[ -n "$INFRA_PROBE_REPOSITORY" && -n "$INFRA_PROBE_REF" && -n "$INFRA_PROBE_OID" ]]; then
+    git -C "$INFRA_PROBE_REPOSITORY" update-ref -d \
+      "$INFRA_PROBE_REF" "$INFRA_PROBE_OID" 2>/dev/null || true
+  fi
+  INFRA_PROBE_REPOSITORY=""; INFRA_PROBE_REF=""; INFRA_PROBE_OID=""
+}
 infrastructure_is_eligible() {
   local marker="$STATE_DIR/infrastructure" now
   [[ -f "$marker" ]] || return 0
@@ -341,6 +471,19 @@ infrastructure_is_eligible() {
   [[ "$now" =~ ^[0-9]+$ ]] || { log "ALERT INFRA_CLOCK_INVALID"; return 1; }
   if [[ "$now" -lt "$INFRA_STATE_NEXT_AT" ]]; then
     log "INFRA_BACKOFF failure_class=$INFRA_STATE_FAILURE_CLASS attempts=$INFRA_STATE_ATTEMPTS next_at=$INFRA_STATE_NEXT_AT now=$now"
+    return 1
+  fi
+  if ! acquire_infrastructure_probe "$INFRA_STATE_FAILURE_CLASS" \
+      "$INFRA_STATE_ATTEMPTS" "$INFRA_STATE_NEXT_AT" "$now"; then
+    log "INFRA_HALF_OPEN_BUSY failure_class=$INFRA_STATE_FAILURE_CLASS attempts=$INFRA_STATE_ATTEMPTS"
+    return 1
+  fi
+  if ! load_infrastructure_state "$marker" \
+      || [[ "$INFRA_STATE_FAILURE_CLASS" != "$INFRA_PROBE_FAILURE_CLASS" \
+          || "$INFRA_STATE_ATTEMPTS" != "$INFRA_PROBE_ATTEMPTS" \
+          || "$INFRA_STATE_NEXT_AT" != "$INFRA_PROBE_NEXT_AT" ]]; then
+    release_infrastructure_probe
+    log "INFRA_HALF_OPEN_STALE path=$marker"
     return 1
   fi
   log "INFRA_HALF_OPEN failure_class=$INFRA_STATE_FAILURE_CLASS attempts=$INFRA_STATE_ATTEMPTS now=$now"
@@ -526,6 +669,7 @@ cleanup_lease_scope() {
     ACTIVE_BRANCH_LOCK=""
   fi
   release_derived_lease
+  release_infrastructure_probe
 }
 sweep() {
   local remaining floor="${PR_SHEPHERD_GRAPHQL_FLOOR:-200}" rows sorted_rows
@@ -561,7 +705,7 @@ sweep() {
     log "ALERT INFRA_DEV_OID_INVALID value=$(printf '%s' "$dev_line" | head -c 100)"
     return 1
   fi
-  script_blob="$(git hash-object "$LOADED_SCRIPT_PATH" 2>/dev/null || true)"
+  script_blob="$(compute_shepherd_identity "$LOADED_SCRIPT_PATH" "$SHEPHERD_MODULE_DIR" 2>/dev/null || true)"
   [[ "$script_blob" =~ ^[0-9a-f]{40}$ ]] \
     || { record_infrastructure_failure script-blob.exit; log "ALERT INFRA_SCRIPT_BLOB_INVALID"; return 1; }
   sorted_rows="$(printf '%s\n' "$rows" | LC_ALL=C sort -t $'\t' -k1,1n)"
@@ -641,7 +785,7 @@ sweep() {
               infra_failed=1
             fi
           fi
-          cleanup_lease_scope
+          release_derived_lease
           if [[ "$RECALC_STATE_TERMINAL" == 1 ]]; then derived_queue_head=""; fi
         elif [[ "$mergeable" == "CONFLICTING" || "$expired" == "1" ]]; then
           if [[ "$recalculated" == *" $num "* ]]; then

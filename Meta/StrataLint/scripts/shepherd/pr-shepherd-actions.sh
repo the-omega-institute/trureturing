@@ -22,6 +22,26 @@ run_credentialless_bounded() {
     GCM_INTERACTIVE=Never \
     "$@"
 }
+run_git_bounded() {
+  local step="$1" workspace="$2"
+  shift 2
+  run_bounded git "$step" "$GIT_TIMEOUT_SECONDS" git -C "$workspace" "$@"
+}
+run_git_bounded_capture() {
+  local variable="$1" step="$2" workspace="$3"
+  shift 3
+  run_bounded_capture "$variable" git "$step" "$GIT_TIMEOUT_SECONDS" \
+    git -C "$workspace" "$@"
+}
+abort_merge_if_present() {
+  local workspace="$1" merge_head
+  if ! run_git_bounded_capture merge_head merge-state "$workspace" rev-parse --git-path MERGE_HEAD; then
+    return 1
+  fi
+  [[ "$merge_head" == /* ]] || merge_head="$workspace/$merge_head"
+  [[ -f "$merge_head" ]] || return 0
+  run_git_bounded merge-abort "$workspace" merge --abort >/dev/null
+}
 set_bounded_failure() {
   local step="$1"
   LAST_FAILURE_CLASS="$step.${LAST_BOUNDED_RESULT:-exit}"
@@ -73,7 +93,10 @@ is_derived_conflict() {
 branch_slug() {
   local branch="$1" slug digest
   slug="$(printf '%s' "$branch" | sed 's#[^A-Za-z0-9._-]#-#g')"
-  digest="$(printf '%s' "$branch" | git hash-object --stdin | cut -c 1-12)"
+  run_bounded_capture digest git branch-slug "$GIT_TIMEOUT_SECONDS" \
+    /bin/bash -c 'printf "%s" "$1" | git hash-object --stdin' pr-shepherd-branch "$branch" \
+    || return 1
+  digest="${digest:0:12}"
   printf '%s-%s' "${slug:0:80}" "$digest"
 }
 dryrun_recalculation() {
@@ -90,7 +113,7 @@ dryrun_recalculation() {
   log "DRYRUN #$num push HEAD:refs/heads/$head (non-force)"
 }
 prepare_worktree() {
-  local num="$1" head="$2" expected_head="$3" workspace="$4" slug="$5"
+  local num="$1" head="$2" expected_head="$3" workspace="$4" slug="$5" inside
   if [[ ! -e "$workspace/.git" ]]; then
     mkdir -p "$CACHE_ROOT"
     if ! run_bounded build worktree "$BUILD_TIMEOUT_SECONDS" \
@@ -101,15 +124,24 @@ prepare_worktree() {
       return 1
     fi
   fi
-  if [[ "$(git -C "$workspace" rev-parse --is-inside-work-tree 2>/dev/null || true)" != "true" ]]; then
+  if ! run_git_bounded_capture inside workspace-state "$workspace" \
+      rev-parse --is-inside-work-tree || [[ "$inside" != true ]]; then
+    [[ "${LAST_BOUNDED_RESULT:-}" == timeout ]] && set_bounded_failure workspace-state
     log "SWEEP #$num cache path 不是已注册 worktree: $workspace"
     return 1
   fi
   local observed_base
-  observed_base="$(git -C "$workspace" rev-parse "refs/remotes/$REMOTE/dev")"
-  git -C "$workspace" merge --abort >/dev/null 2>&1 || true
-  git -C "$workspace" reset --hard HEAD >/dev/null
-  git -C "$workspace" clean -fd >/dev/null
+  if ! run_git_bounded_capture observed_base observed-base "$workspace" \
+      rev-parse "refs/remotes/$REMOTE/dev"; then
+    set_bounded_failure observed-base
+    return 1
+  fi
+  abort_merge_if_present "$workspace" \
+    || { set_bounded_failure merge-abort; return 1; }
+  run_git_bounded reset "$workspace" reset --hard HEAD >/dev/null \
+    || { set_bounded_failure reset; return 1; }
+  run_git_bounded clean "$workspace" clean -fd >/dev/null \
+    || { set_bounded_failure clean; return 1; }
   if ! run_bounded git fetch "$GIT_TIMEOUT_SECONDS" \
     git -C "$workspace" fetch --no-tags "$REMOTE" \
     "+refs/heads/dev:refs/remotes/$REMOTE/dev" \
@@ -120,8 +152,12 @@ prepare_worktree() {
     return 1
   fi
   local fetched_head fetched_base drifted=0
-  fetched_head="$(git -C "$workspace" rev-parse "refs/remotes/$REMOTE/$head")"
-  fetched_base="$(git -C "$workspace" rev-parse "refs/remotes/$REMOTE/dev")"
+  run_git_bounded_capture fetched_head fetched-head "$workspace" \
+    rev-parse "refs/remotes/$REMOTE/$head" \
+    || { set_bounded_failure fetched-head; return 1; }
+  run_git_bounded_capture fetched_base fetched-base "$workspace" \
+    rev-parse "refs/remotes/$REMOTE/dev" \
+    || { set_bounded_failure fetched-base; return 1; }
   if [[ "$fetched_head" != "$expected_head" ]]; then
     log "SWEEP #$num head 已漂移 expected=${expected_head:0:12} actual=${fetched_head:0:12},放弃本轮(下轮重试)"
     drifted=1
@@ -135,12 +171,14 @@ prepare_worktree() {
     LAST_FAILURE_CLASS=""
     return 1
   fi
-  git -C "$workspace" checkout --detach "$fetched_head" >/dev/null
+  run_git_bounded checkout "$workspace" checkout --detach "$fetched_head" >/dev/null \
+    || { set_bounded_failure checkout; return 1; }
 }
 merge_dev() {
   local num="$1" head="$2" workspace="$3" merge_rc path source_conflict=0 conflict_count=0
+  local conflicts unresolved merge_head
   set +e
-  git -C "$workspace" \
+  run_git_bounded merge "$workspace" \
     -c core.hooksPath=/dev/null \
     -c user.name=pr-shepherd \
     -c user.email=pr-shepherd@users.noreply.github.com \
@@ -148,43 +186,71 @@ merge_dev() {
   merge_rc=$?
   set -e
   if [[ "$merge_rc" -ne 0 ]]; then
+    if [[ "${LAST_BOUNDED_RESULT:-exit}" == timeout ]]; then
+      set_bounded_failure merge
+      abort_merge_if_present "$workspace" || true
+      return 1
+    fi
+    conflicts="$(mktemp "${TMPDIR:-/tmp}/pr-shepherd-conflicts.XXXXXXXX")" || return 1
+    if ! run_git_bounded conflict-list "$workspace" \
+        diff --name-only --diff-filter=U -z > "$conflicts"; then
+      rm -f "$conflicts"
+      set_bounded_failure conflict-list
+      abort_merge_if_present "$workspace" || true
+      return 1
+    fi
     while IFS= read -r -d '' path; do
       conflict_count=$((conflict_count + 1))
       if is_derived_conflict "$path"; then
-        if git -C "$workspace" cat-file -e ":3:$path" 2>/dev/null; then
-          git -C "$workspace" checkout --theirs -- "$path" \
-            && git -C "$workspace" add -- "$path" || {
-              git -C "$workspace" merge --abort >/dev/null 2>&1 || true
+        if run_git_bounded conflict-stage "$workspace" cat-file -e ":3:$path" 2>/dev/null; then
+          run_git_bounded conflict-checkout "$workspace" checkout --theirs -- "$path" \
+            && run_git_bounded conflict-add "$workspace" add -- "$path" || {
+              abort_merge_if_present "$workspace" || true
+              rm -f "$conflicts"
+              set_bounded_failure conflict-resolution
               log "SWEEP #$num 派生物冲突取 dev 侧失败 path=$path,不 push"
               return 1
             }
-        elif ! git -C "$workspace" rm -f -- "$path"; then
-          git -C "$workspace" merge --abort >/dev/null 2>&1 || true
+        elif ! run_git_bounded conflict-remove "$workspace" rm -f -- "$path"; then
+          abort_merge_if_present "$workspace" || true
+          rm -f "$conflicts"
+          set_bounded_failure conflict-remove
           log "SWEEP #$num 派生物冲突取 dev 侧失败 path=$path,不 push"
           return 1
         fi
       else
         source_conflict=1
       fi
-    done < <(git -C "$workspace" diff --name-only --diff-filter=U -z)
+    done < "$conflicts"
+    rm -f "$conflicts"
     if [[ "$conflict_count" -eq 0 ]]; then
-      git -C "$workspace" merge --abort >/dev/null 2>&1 || true
+      abort_merge_if_present "$workspace" || true
       log "SWEEP #$num merge $REMOTE/dev 失败,不 push"
       return 1
     fi
-    if [[ "$source_conflict" -ne 0 ]] \
-      || git -C "$workspace" diff --name-only --diff-filter=U | grep -q .; then
-      git -C "$workspace" merge --abort >/dev/null 2>&1 || true
+    if ! run_git_bounded_capture unresolved unresolved-conflicts "$workspace" \
+        diff --name-only --diff-filter=U; then
+      set_bounded_failure unresolved-conflicts
+      abort_merge_if_present "$workspace" || true
+      return 1
+    fi
+    if [[ "$source_conflict" -ne 0 || -n "$unresolved" ]]; then
+      abort_merge_if_present "$workspace" || true
       log "ALERT #$num CONFLICTING head=$head 需语义合并(派 shepherd lane,本器不代解)"
       return 1
     fi
   fi
-  if git -C "$workspace" rev-parse -q --verify MERGE_HEAD >/dev/null; then
-    git -C "$workspace" \
+  if run_git_bounded_capture merge_head merge-head "$workspace" \
+      rev-parse -q --verify MERGE_HEAD; then
+    run_git_bounded merge-commit "$workspace" \
       -c core.hooksPath=/dev/null \
       -c user.name=pr-shepherd \
       -c user.email=pr-shepherd@users.noreply.github.com \
-      commit -m "Merge $REMOTE/dev into $head (pr-shepherd)" >/dev/null
+      commit -m "Merge $REMOTE/dev into $head (pr-shepherd)" >/dev/null \
+      || { set_bounded_failure merge-commit; return 1; }
+  elif [[ "${LAST_BOUNDED_RESULT:-exit}" == timeout ]]; then
+    set_bounded_failure merge-head
+    return 1
   fi
 }
 run_derivation_chain() {
@@ -295,29 +361,44 @@ release_branch_lock() {
   rmdir "$lock" 2>/dev/null || true
 }
 recalculate_pr_locked() {
-  local num="$1" head="$2" expected_head="$3" workspace="$4" slug="$5"
+  local num="$1" head="$2" expected_head="$3" workspace="$4" slug="$5" push_output=""
   prepare_worktree "$num" "$head" "$expected_head" "$workspace" "$slug" \
     || { [[ "$LAST_FAILURE_DISPOSITION" != poison || -n "$LAST_FAILURE_CLASS" ]] \
       || set_exit_failure prepare-worktree; return 1; }
   merge_dev "$num" "$head" "$workspace" \
     || { [[ -n "$LAST_FAILURE_CLASS" ]] || set_exit_failure merge-dev; return 1; }
   run_derivation_chain "$num" "$workspace" || return 1
-  git -C "$workspace" add -A
-  if ! git -C "$workspace" \
+  if ! run_git_bounded add "$workspace" add -A; then
+    set_bounded_failure add
+    log "SWEEP #$num 派生物 add 失败,不 push"
+    return 1
+  fi
+  if ! run_git_bounded commit "$workspace" \
     -c core.hooksPath=/dev/null \
     -c user.name=pr-shepherd \
     -c user.email=pr-shepherd@users.noreply.github.com \
     commit --allow-empty -m "$COMMIT_SUBJECT" >/dev/null; then
-    set_exit_failure commit
+    set_bounded_failure commit
     log "SWEEP #$num 派生物 commit 失败,不 push"
     return 1
   fi
-  if ! run_bounded git push "$GIT_TIMEOUT_SECONDS" \
-    git -C "$workspace" -c core.hooksPath=/dev/null push \
-  "$REMOTE" "HEAD:refs/heads/$head"; then
+  if ! run_bounded_capture push_output git push "$GIT_TIMEOUT_SECONDS" \
+      /bin/bash -c '
+        workspace="$1"; remote="$2"; head="$3"
+        git -C "$workspace" -c core.hooksPath=/dev/null push --porcelain \
+          "$remote" "HEAD:refs/heads/$head" 2>&1
+      ' pr-shepherd-push "$workspace" "$REMOTE" "$head"; then
     set_bounded_failure push
-    LAST_FAILURE_DISPOSITION=retry
-    log "SWEEP #$num push 非 FF 被拒,放弃本轮(下轮重试)"
+    if [[ "${LAST_BOUNDED_RESULT:-exit}" == exit \
+        && "$push_output" == *"[rejected]"* \
+        && ( "$push_output" == *"(non-fast-forward)"* \
+          || "$push_output" == *"(fetch first)"* ) ]]; then
+      LAST_FAILURE_DISPOSITION=retry
+      log "SWEEP #$num push 非 FF 被拒,放弃本轮(下轮重试)"
+    else
+      LAST_FAILURE_DISPOSITION=poison
+      log "SWEEP #$num push 失败 classification=${LAST_FAILURE_CLASS} exit=${LAST_FAILURE_EXIT} output=$(printf '%s' "$push_output" | head -c 160)"
+    fi
     return 1
   fi
   log "SWEEP #$num RECALCULATE -> 本地 merge+regen+push 完成 head=$head"
@@ -327,9 +408,12 @@ recalculate_pr() {
   LAST_FAILURE_CLASS=""
   LAST_FAILURE_EXIT=""
   LAST_FAILURE_DISPOSITION=poison
-  git check-ref-format --branch "$head" >/dev/null \
-    || { log "SWEEP #$num 非法 head branch=$head,放弃本轮"; return 1; }
-  slug="$(branch_slug "$head")"
+  run_bounded git ref-format "$GIT_TIMEOUT_SECONDS" git check-ref-format --branch "$head" >/dev/null \
+    || { set_bounded_failure ref-format; log "SWEEP #$num 非法 head branch=$head,放弃本轮"; return 1; }
+  if ! slug="$(branch_slug "$head")"; then
+    set_exit_failure branch-slug
+    return 1
+  fi
   [[ -n "$slug" ]] || { log "SWEEP #$num head slug 为空,放弃本轮"; return 1; }
   workspace="$CACHE_ROOT/wt-$slug"
   if [[ "$DRYRUN" == "1" ]]; then

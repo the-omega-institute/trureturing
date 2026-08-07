@@ -238,6 +238,9 @@ public sealed partial class PrShepherdRecalculationTests
         internal bool InfrastructureStateExists =>
             File.Exists(Path.Combine(StateDirectory, "infrastructure"));
 
+        internal string InfrastructureState() =>
+            File.ReadAllText(Path.Combine(StateDirectory, "infrastructure"));
+
         internal bool RecalculationStateExists(int pullRequest) =>
             File.Exists(Path.Combine(StateDirectory, $"recalculate-{pullRequest}"));
 

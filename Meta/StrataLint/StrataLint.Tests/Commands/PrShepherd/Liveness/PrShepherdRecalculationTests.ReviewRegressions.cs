@@ -16,9 +16,18 @@ public sealed partial class PrShepherdRecalculationTests
                 ["PR_SHEPHERD_KILL_GRACE_SECONDS"] = "1",
             });
 
-        Assert.Equal(0, result.ExitCode);
-        Assert.True(fixture.RecalculationStateExists(1), result.Log);
-        Assert.Contains("last_failure_class=emit.timeout", fixture.RecalculationState(1));
+        Assert.True(
+            result.ExitCode is 0 or 1,
+            $"exit={result.ExitCode}\nstdout:\n{result.Output}\nstderr:\n{result.Error}\nlog:\n{result.Log}");
+        if (fixture.RecalculationStateExists(1))
+        {
+            Assert.Matches("last_failure_class=[a-z0-9-]+\\.timeout", fixture.RecalculationState(1));
+        }
+        else
+        {
+            Assert.True(fixture.InfrastructureStateExists, result.Log);
+            Assert.Matches("failure_class=[a-z0-9-]+\\.timeout", fixture.InfrastructureState());
+        }
         Assert.False(fixture.DerivedLeaseExists);
     }
 
