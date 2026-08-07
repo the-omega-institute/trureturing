@@ -103,7 +103,7 @@ internal sealed class VerifiedScribeEmissions
 
 internal sealed class ScribeEmissionAttestation
 {
-    internal const string RelativePath = "Generated/scribe-emissions.v1.json";
+    internal const string RelativePath = "Meta/StrataLint/Generated/scribe-emissions.v1.json";
 
     private const string Schema = "scribe-emission-attestation-v1";
 

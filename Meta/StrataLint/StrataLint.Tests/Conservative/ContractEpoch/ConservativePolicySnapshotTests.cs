@@ -5,11 +5,9 @@ namespace StrataLint.Tests;
 
 public sealed class ConservativePolicySnapshotTests
 {
-    private static readonly string[] UnprotectedComputationalProjectionPaths =
-    [
-        "Generated/scribe-emissions.v1.json",
-        "Generated/truth-graph.v1.json",
-    ];
+    private const string UnprotectedTruthGraphPath = "Generated/truth-graph.v1.json";
+    private const string ProtectedScribeEmissionsPath =
+        "Meta/StrataLint/Generated/scribe-emissions.v1.json";
     private const string ProtectedAnchorCatalogPath =
         "Meta/StrataLint/Generated/anchor-catalog.v1.json";
 
@@ -47,22 +45,24 @@ public sealed class ConservativePolicySnapshotTests
     }
 
     [Fact]
-    public void TopLevelComputationalProjectionChangesDoNotProduceSl022Diagnostics()
+    public void TopLevelTruthGraphChangeDoesNotProduceSl022Diagnostics()
     {
         var clear = Assert.IsType<BootstrapOutcome.Clear>(
-            BootstrapGate.Evaluate(RawChangeSet.Create(UnprotectedComputationalProjectionPaths)));
+            BootstrapGate.Evaluate(RawChangeSet.Create([UnprotectedTruthGraphPath])));
         Assert.NotNull(clear.Capability);
     }
 
-    [Fact]
-    public void AnchorCatalogAtTheBaseJudgePathProducesSl022Diagnostics()
+    [Theory]
+    [InlineData(ProtectedScribeEmissionsPath)]
+    [InlineData(ProtectedAnchorCatalogPath)]
+    public void BaseJudgeGeneratedInputsProduceSl022Diagnostics(string protectedPath)
     {
         var review = Assert.IsType<BootstrapOutcome.HumanReviewRequired>(
-            BootstrapGate.Evaluate(RawChangeSet.Create([ProtectedAnchorCatalogPath])));
+            BootstrapGate.Evaluate(RawChangeSet.Create([protectedPath])));
 
         var diagnostic = Assert.Single(BootstrapGate.CreateSl022Diagnostics(review.ChangeSet));
         Assert.Equal("SL-022", diagnostic.RuleId.Value);
-        Assert.Equal(ProtectedAnchorCatalogPath, diagnostic.Path);
+        Assert.Equal(protectedPath, diagnostic.Path);
     }
 
     private static string FindRepositoryRoot()

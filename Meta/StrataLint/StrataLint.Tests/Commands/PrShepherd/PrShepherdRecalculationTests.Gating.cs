@@ -116,7 +116,7 @@ public sealed partial class PrShepherdRecalculationTests
     }
 
     [Fact]
-    public void DerivedConflictClassifierCoversTheProtectedAnchorCatalogProjection()
+    public void DerivedConflictClassifierCoversBothBaseJudgeGeneratedProjections()
     {
         var script = ReadShepherdScripts();
 
@@ -124,6 +124,9 @@ public sealed partial class PrShepherdRecalculationTests
             "Meta/StrataLint/Generated/*",
             script,
             StringComparison.Ordinal);
+        Assert.Matches(
+            "Meta/StrataLint/Generated/\\*[^\\n]*return 0",
+            script);
     }
 
     [Fact]

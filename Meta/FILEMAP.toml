@@ -119,13 +119,6 @@ consumed_by = ["harness-gate"]
 verified_by = ["echo-verify", "emit-check"]
 
 [[files]]
-pattern = "Generated/scribe-emissions.v1.json"
-kind = "generated"
-produced_by = "ScribeEmitter"
-consumed_by = ["DigestionStatusEvaluator"]
-verified_by = ["emit-check"]
-
-[[files]]
 pattern = "Generated/truth-graph.v1.json"
 kind = "generated"
 produced_by = "DagEmitter"
@@ -284,6 +277,13 @@ pattern = "Meta/StrataLint/Generated/anchor-catalog.v1.json"
 kind = "generated"
 produced_by = "AnchorCatalogEmitter"
 consumed_by = ["AnchorCatalogLoader"]
+verified_by = ["emit-check"]
+
+[[files]]
+pattern = "Meta/StrataLint/Generated/scribe-emissions.v1.json"
+kind = "generated"
+produced_by = "ScribeEmitter"
+consumed_by = ["DigestionStatusEvaluator"]
 verified_by = ["emit-check"]
 
 [[files]]

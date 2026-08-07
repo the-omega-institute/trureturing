@@ -45,18 +45,18 @@ public sealed partial class PrShepherdRecalculationTests
                 if [[ "${1:-}" == run && "${2:-}" == view ]]; then
                   if [[ "$PR_TEST_SPLIT" == 1 && " $* " != *" --job 456 "* ]]; then
                     printf '%s\n' \
-                      'DIGEST_STATUS_INVALID stale Generated/scribe-emissions.v1.json' \
+                      'DIGEST_STATUS_INVALID stale Meta/StrataLint/Generated/scribe-emissions.v1.json' \
                       'ECHO_VERIFY_INFRASTRUCTURE residual derivation failed'
                     exit 0
                   fi
                   [[ " $* " == *" --job 456 "* ]] || exit 98
                   if [[ "$PR_TEST_SPLIT" == 1 ]]; then
-                    printf '%s\n' 'DIGEST_STATUS_INVALID stale Generated/scribe-emissions.v1.json'
+                    printf '%s\n' 'DIGEST_STATUS_INVALID stale Meta/StrataLint/Generated/scribe-emissions.v1.json'
                     exit 0
                   fi
                   if [[ "$PR_TEST_EXPIRY" == 1 ]]; then
                     printf '%s\n' \
-                      'DIGEST_STATUS_INVALID stale Generated/scribe-emissions.v1.json' \
+                      'DIGEST_STATUS_INVALID stale Meta/StrataLint/Generated/scribe-emissions.v1.json' \
                       'ECHO_VERIFY_INFRASTRUCTURE residual derivation failed'
                   else
                     printf '%s\n' 'SL-001 unrelated admission failure'

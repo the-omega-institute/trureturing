@@ -70,10 +70,6 @@ EchoVerifyCommand --produces--> [Generated/echo-residual-summary.md | generated]
 [Generated/echo-residual-summary.md | generated] --consumed-by--> harness-gate
 [Generated/echo-residual-summary.md | generated] --verified-by--> echo-verify, emit-check
 
-ScribeEmitter --produces--> [Generated/scribe-emissions.v1.json | generated]
-[Generated/scribe-emissions.v1.json | generated] --consumed-by--> DigestionStatusEvaluator
-[Generated/scribe-emissions.v1.json | generated] --verified-by--> emit-check
-
 DagEmitter --produces--> [Generated/truth-graph.v1.json | generated]
 [Generated/truth-graph.v1.json | generated] --consumed-by--> TruthGraphJsonReader
 [Generated/truth-graph.v1.json | generated] --verified-by--> emit-check
@@ -165,6 +161,10 @@ none --declares--> [Meta/StrataLint/CompileFailProof/** | program]
 AnchorCatalogEmitter --produces--> [Meta/StrataLint/Generated/anchor-catalog.v1.json | generated]
 [Meta/StrataLint/Generated/anchor-catalog.v1.json | generated] --consumed-by--> AnchorCatalogLoader
 [Meta/StrataLint/Generated/anchor-catalog.v1.json | generated] --verified-by--> emit-check
+
+ScribeEmitter --produces--> [Meta/StrataLint/Generated/scribe-emissions.v1.json | generated]
+[Meta/StrataLint/Generated/scribe-emissions.v1.json | generated] --consumed-by--> DigestionStatusEvaluator
+[Meta/StrataLint/Generated/scribe-emissions.v1.json | generated] --verified-by--> emit-check
 
 FrozenLedgerCanonicalWriter --produces--> [Meta/StrataLint/Golden/Frozen/**/*.jsonl | ledger]
 [Meta/StrataLint/Golden/Frozen/**/*.jsonl | ledger] --consumed-by--> FrozenLedger

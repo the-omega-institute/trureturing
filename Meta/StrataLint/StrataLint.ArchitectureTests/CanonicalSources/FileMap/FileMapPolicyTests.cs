@@ -52,7 +52,7 @@ public sealed class FileMapPolicyTests
     {
         var expectedPaths = new HashSet<string>(
             [
-                "Generated/scribe-emissions.v1.json",
+                ScribeEmitter.AttestationRelativePath,
                 "Generated/truth-graph.v1.json",
                 CanonicalAnchorCatalogWriter.RelativePath,
             ],
