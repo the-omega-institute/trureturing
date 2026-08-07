@@ -20,6 +20,9 @@
    * Third-party dependency search terms: `Timeroot`, `QuantumInfo`, `CPTP`, and `quantum channel`.
      Neither Timeroot nor QuantumInfo occurs in the pinned `lake-manifest.json` or local packages;
      therefore no third-party theorem is importable in this toolchain.
+   * Literature-search conclusion: Watrous, The Theory of Quantum Information (Cambridge University
+     Press, 2018), Section 4.4, attests the finite-dimensional channel fixed-point setting (DOI
+     10.1017/9781316848142). No specific theorem number was verified or attributed.
 -/
 
 import Mathlib
