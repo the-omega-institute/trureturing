@@ -13,6 +13,18 @@ public sealed partial class PrShepherdRecalculationTests
                 """
                 #!/usr/bin/env bash
                 set -euo pipefail
+                printf 'api|%s|%s|gh %s\n' \
+                  "${PR_SHEPHERD_BOUND_STEP-}" \
+                  "${PR_SHEPHERD_BOUND_TIMEOUT_SECONDS-}" "$*" \
+                  >> "$PR_TEST_BOUNDED_CALLS"
+                if [[ -n "${PR_TEST_FAIL_GH_OPERATION:-}" \
+                    && "$*" == *"$PR_TEST_FAIL_GH_OPERATION"* ]]; then
+                  exit 89
+                fi
+                if [[ -n "${PR_TEST_PAUSE_GH_OPERATION:-}" \
+                    && "$*" == *"$PR_TEST_PAUSE_GH_OPERATION"* ]]; then
+                  /bin/sleep 1
+                fi
                 if [[ "${1:-}" == pr && "${2:-}" == list ]]; then
                   [[ " $* " == *" --limit 1000 "* ]] || exit 97
                   if [[ "${PR_TEST_WATCH:-0}" == 1 && " $* " == *" --json autoMergeRequest "* ]]; then
@@ -113,6 +125,10 @@ public sealed partial class PrShepherdRecalculationTests
                 if [[ "${1:-}" == -C ]]; then root="$2"; shift 2; fi
                 [[ "${1:-}" != --no-print-directory ]] || shift
                 target="${1:-}"
+                printf 'build|%s|%s|make %s\n' \
+                  "${PR_SHEPHERD_BOUND_STEP-}" \
+                  "${PR_SHEPHERD_BOUND_TIMEOUT_SECONDS-}" "$target" \
+                  >> "$PR_TEST_BOUNDED_CALLS"
                 if [[ "$target" == worktree ]]; then
                   [[ "$PR_TEST_PAUSE_WORKTREE" != 1 ]] || sleep 2
                   name=''; path=''; base=''
@@ -128,7 +144,22 @@ public sealed partial class PrShepherdRecalculationTests
                   exit 0
                 fi
                 printf '%s\n' "$target" >> "$PR_TEST_CALLS"
-                [[ "$target" != "$PR_TEST_FAIL_TARGET" ]] || exit 93
+                if [[ "$target" == "${PR_TEST_HANG_TARGET:-}" ]]; then
+                  printf '%s\n' "$$" >> "$PR_TEST_HANGING_PIDS"
+                  (
+                    trap '' TERM
+                    while :; do /bin/sleep 1; done
+                  ) &
+                  child=$!
+                  printf '%s\n' "$child" >> "$PR_TEST_HANGING_PIDS"
+                  trap '' TERM
+                  while :; do wait "$child" || true; done
+                fi
+                if [[ "$target" == "$PR_TEST_FAIL_TARGET" \
+                    && ( "${PR_TEST_FAIL_PR:-0}" == 0 \
+                      || "${PR_SHEPHERD_CURRENT_PR:-0}" == "$PR_TEST_FAIL_PR" ) ]]; then
+                  exit "$PR_TEST_FAIL_EXIT"
+                fi
                 case "$target" in
                   lean-report)
                     mkdir -p "$root/.lake/build/stratalint"
@@ -175,6 +206,10 @@ public sealed partial class PrShepherdRecalculationTests
                 """
                 #!/usr/bin/env bash
                 set -euo pipefail
+                printf 'build|%s|%s|dotnet %s\n' \
+                  "${PR_SHEPHERD_BOUND_STEP-}" \
+                  "${PR_SHEPHERD_BOUND_TIMEOUT_SECONDS-}" "$*" \
+                  >> "$PR_TEST_BOUNDED_CALLS"
                 [[ -z "${GH_TOKEN+x}" ]] || exit 91
                 [[ -z "${GITHUB_TOKEN+x}" ]] || exit 92
                 if [[ "$*" == *"ledger-append --candidate-lean-report"* ]]; then
@@ -214,6 +249,18 @@ public sealed partial class PrShepherdRecalculationTests
                 """
                 #!/usr/bin/env bash
                 set -euo pipefail
+                if [[ " $* " == *" fetch "* || " $* " == *" push "* \
+                    || " $* " == *" ls-remote "* || " $* " == *" reset --hard "* \
+                    || " $* " == *" clean -fd "* || " $* " == *" checkout --detach "* \
+                    || " $* " == *" merge --no-commit "* || " $* " == *" add -A "* \
+                    || " $* " == *" commit --allow-empty "* \
+                    || " $* " == *" rev-parse HEAD "* \
+                    || "${PR_SHEPHERD_BOUND_STEP:-}" == ledger-* ]]; then
+                  printf 'git|%s|%s|git %s\n' \
+                    "${PR_SHEPHERD_BOUND_STEP-}" \
+                    "${PR_SHEPHERD_BOUND_TIMEOUT_SECONDS-}" "$*" \
+                    >> "$PR_TEST_BOUNDED_CALLS"
+                fi
                 if [[ " $* " == *" fetch --no-tags "* ]]; then
                   if [[ "$PR_TEST_MOVE_HEAD_DURING_FETCH" == 1 ]]; then
                     attacker="$(/usr/bin/git --git-dir "$PR_TEST_ORIGIN" rev-parse refs/heads/attacker)"
@@ -228,6 +275,18 @@ public sealed partial class PrShepherdRecalculationTests
                 if [[ "$PR_TEST_FAIL_MERGE" == 1 && " $* " == *" merge --no-commit "* ]]; then
                   exit 97
                 fi
+                if [[ -n "${PR_TEST_HANG_GIT_OPERATION:-}" \
+                    && " $* " == *" ${PR_TEST_HANG_GIT_OPERATION} "* ]]; then
+                  printf '%s\n' "$$" >> "$PR_TEST_HANGING_PIDS"
+                  (
+                    trap '' TERM
+                    while :; do /bin/sleep 1; done
+                  ) &
+                  child=$!
+                  printf '%s\n' "$child" >> "$PR_TEST_HANGING_PIDS"
+                  trap '' TERM
+                  while :; do wait "$child" || true; done
+                fi
                 if [[ "${PR_TEST_CONFLICTING:-0}" == 1 && " $* " == *" merge --no-commit "* ]]; then
                   printf 'local-merge\n' >> "$PR_TEST_CALLS"
                 fi
@@ -241,6 +300,10 @@ public sealed partial class PrShepherdRecalculationTests
                     esac
                   done
                   printf '%s\n' "$push_call" >> "$PR_TEST_CALLS"
+                  if [[ "${PR_TEST_FAIL_TARGET:-}" == push ]]; then
+                    printf '%s\n' 'remote: pre-receive hook declined' >&2
+                    exit "$PR_TEST_FAIL_EXIT"
+                  fi
                 fi
                 exec /usr/bin/git "$@"
                 """);

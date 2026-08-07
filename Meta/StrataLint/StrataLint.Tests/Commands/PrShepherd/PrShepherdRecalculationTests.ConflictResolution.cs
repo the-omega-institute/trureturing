@@ -207,8 +207,7 @@ public sealed partial class PrShepherdRecalculationTests
     [Fact]
     public void SemanticConflictAlertHasOneSourceOfTruth()
     {
-        var root = FindRepositoryRoot();
-        var script = File.ReadAllText(Path.Combine(root, ShepherdScriptPath));
+        var script = ReadShepherdScripts();
         const string alert =
             "ALERT #$num CONFLICTING head=$head 需语义合并(派 shepherd lane,本器不代解)";
 
