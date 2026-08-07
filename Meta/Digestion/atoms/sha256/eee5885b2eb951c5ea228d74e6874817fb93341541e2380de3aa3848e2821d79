@@ -1,0 +1,2 @@
+**定理 10.3(五层塔)[证]。**D_SLD ≤ D_KL ≤ D_G ≤ D_BS ≤ D_max;末层两行(同谱 + ln M ⪯ (ln λ_max)I)。E_g := min_SEP D_g 皆 LOCC 单调。
+
