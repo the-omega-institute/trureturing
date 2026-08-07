@@ -201,6 +201,8 @@ public sealed class BlueprintPinValidationTests
                 [AnchorCatalogLoader.RelativePath] = File.ReadAllText(
                     Path.Combine(
                         FindRepositoryRoot(),
+                        "Meta",
+                        "StrataLint",
                         "Generated",
                         "anchor-catalog.v1.json"),
                     Encoding.UTF8),

@@ -18,7 +18,6 @@ governance_documents:
   - "D5/X_Frontier/HeartsAuthorizations.md"
   - "Generated/DAG.md"
   - "Generated/FILEMAP.md"
-  - "Generated/anchor-catalog.v1.json"
   - "Generated/echo-residual-summary.md"
   - "Generated/scribe-emissions.v1.json"
   - "Generated/truth-graph.v1.json"

@@ -43,7 +43,7 @@ internal static class TheoryIsolationPolicy
         StringComparer.Ordinal);
 
     internal static readonly string AnchorCatalogPath = string.Concat(
-        "Generated/",
+        "Meta/StrataLint/Generated/",
         "anchor-catalog.v1.json");
 
     internal static IReadOnlyList<TheoryIsolationFinding> InspectRepository(string repositoryRoot)

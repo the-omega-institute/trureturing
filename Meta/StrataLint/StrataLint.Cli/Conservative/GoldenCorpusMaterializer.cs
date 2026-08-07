@@ -49,7 +49,7 @@ internal sealed record MaterializedConservativeCorpus(
 internal static partial class GoldenCorpusMaterializer
 {
     private const string Schema = "stratalint-conservative-corpus-v1";
-    private const string AnchorCatalogPath = "Generated/anchor-catalog.v1.json";
+    private const string AnchorCatalogPath = "Meta/StrataLint/Generated/anchor-catalog.v1.json";
     private const string BackfillPath = "Meta/BACKFILL.yaml";
     private const string SpecificationPath = "docs/develop/spec/golden-ledger-repo-spec.md";
 

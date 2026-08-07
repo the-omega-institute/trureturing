@@ -7,7 +7,7 @@ namespace StrataLint.Tests;
 
 public sealed class AnchorReferenceRuleTests
 {
-    private const string CatalogPath = "Generated/anchor-catalog.v1.json";
+    private const string CatalogPath = "Meta/StrataLint/Generated/anchor-catalog.v1.json";
 
     [Fact]
     public void CanonicalRegisteredMathlibAnchorPasses()

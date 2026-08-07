@@ -17,7 +17,7 @@ internal sealed class AnchorCatalog
 
 internal static class AnchorCatalogLoader
 {
-    internal const string RelativePath = "Generated/anchor-catalog.v1.json";
+    internal const string RelativePath = "Meta/StrataLint/Generated/anchor-catalog.v1.json";
 
     internal static AnchorCatalog Load(RepositorySnapshot snapshot)
     {

@@ -5,12 +5,13 @@ namespace StrataLint.Tests;
 
 public sealed class ConservativePolicySnapshotTests
 {
-    private static readonly string[] ComputationalProjectionFileNames =
+    private static readonly string[] UnprotectedComputationalProjectionPaths =
     [
-        "anchor-catalog.v1.json",
-        "scribe-emissions.v1.json",
-        "truth-graph.v1.json",
+        "Generated/scribe-emissions.v1.json",
+        "Generated/truth-graph.v1.json",
     ];
+    private const string ProtectedAnchorCatalogPath =
+        "Meta/StrataLint/Generated/anchor-catalog.v1.json";
 
     private const string BootstrapGatePath =
         "Meta/StrataLint/StrataLint.Engine/Admission/BootstrapGate.cs";
@@ -46,23 +47,22 @@ public sealed class ConservativePolicySnapshotTests
     }
 
     [Fact]
-    public void ComputationalProjectionChangesDoNotProduceSl022Diagnostics()
+    public void TopLevelComputationalProjectionChangesDoNotProduceSl022Diagnostics()
     {
-        var repositoryRoot = FindRepositoryRoot();
-        var paths = Directory.EnumerateFiles(repositoryRoot, "*.json", SearchOption.AllDirectories)
-            .Where(path => ComputationalProjectionFileNames.Contains(
-                Path.GetFileName(path),
-                StringComparer.Ordinal))
-            .Where(static path => !path.Contains("/bin/", StringComparison.Ordinal)
-                && !path.Contains("/obj/", StringComparison.Ordinal))
-            .Select(path => Path.GetRelativePath(repositoryRoot, path).Replace('\\', '/'))
-            .Order(StringComparer.Ordinal)
-            .ToArray();
-
-        Assert.Equal(ComputationalProjectionFileNames.Length, paths.Length);
         var clear = Assert.IsType<BootstrapOutcome.Clear>(
-            BootstrapGate.Evaluate(RawChangeSet.Create(paths)));
+            BootstrapGate.Evaluate(RawChangeSet.Create(UnprotectedComputationalProjectionPaths)));
         Assert.NotNull(clear.Capability);
+    }
+
+    [Fact]
+    public void AnchorCatalogAtTheBaseJudgePathProducesSl022Diagnostics()
+    {
+        var review = Assert.IsType<BootstrapOutcome.HumanReviewRequired>(
+            BootstrapGate.Evaluate(RawChangeSet.Create([ProtectedAnchorCatalogPath])));
+
+        var diagnostic = Assert.Single(BootstrapGate.CreateSl022Diagnostics(review.ChangeSet));
+        Assert.Equal("SL-022", diagnostic.RuleId.Value);
+        Assert.Equal(ProtectedAnchorCatalogPath, diagnostic.Path);
     }
 
     private static string FindRepositoryRoot()

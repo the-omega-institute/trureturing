@@ -49,7 +49,7 @@ internal sealed partial class RuleFixture
                 Path.Combine(repositoryRoot, TheoryAtomizerDataLoader.DataPath), Encoding.UTF8),
             ["Meta/registry.yaml"] = TestRegistry.Canonical,
             [AnchorCatalogPath] = File.ReadAllText(
-                Path.Combine(repositoryRoot, "Generated", "anchor-catalog.v1.json"),
+                Path.Combine(repositoryRoot, "Meta", "StrataLint", "Generated", "anchor-catalog.v1.json"),
                 Encoding.UTF8),
             ["Library/queries.yaml"] = "schema_version: 1\nqueries: []\n",
             [RingPath] = Header + "def goldenRing : Nat := 0\n",

@@ -14,7 +14,6 @@ root_files:
   - "lean-toolchain"
 governance_documents:
   - "Generated/FILEMAP.md"
-  - "Generated/anchor-catalog.v1.json"
   - "Generated/scribe-emissions.v1.json"
   - "Generated/truth-graph.v1.json"
   - "Meta/Digestion/atomizers.toml"

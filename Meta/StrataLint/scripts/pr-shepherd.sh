@@ -108,7 +108,7 @@ has_expiry_fingerprint() {
 # sibling merges first stalls as "needs a semantic merge".
 is_derived_conflict() {
   case "$1" in
-    Generated/*|Evidence/D5/values.json) return 0 ;;
+    Meta/StrataLint/Generated/*|Generated/*|Evidence/D5/values.json) return 0 ;;
     "$FROZEN_LEDGER_PATH") return 0 ;;
     *) return 1 ;;
   esac

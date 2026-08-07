@@ -112,13 +112,6 @@ consumed_by = ["reader"]
 verified_by = ["emit-check"]
 
 [[files]]
-pattern = "Generated/anchor-catalog.v1.json"
-kind = "generated"
-produced_by = "AnchorCatalogEmitter"
-consumed_by = ["AnchorCatalogLoader"]
-verified_by = ["emit-check"]
-
-[[files]]
 pattern = "Generated/echo-residual-summary.md"
 kind = "generated"
 produced_by = "EchoVerifyCommand"
@@ -285,6 +278,13 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["dotnet"]
 verified_by = ["dotnet-build"]
+
+[[files]]
+pattern = "Meta/StrataLint/Generated/anchor-catalog.v1.json"
+kind = "generated"
+produced_by = "AnchorCatalogEmitter"
+consumed_by = ["AnchorCatalogLoader"]
+verified_by = ["emit-check"]
 
 [[files]]
 pattern = "Meta/StrataLint/Golden/Frozen/**/*.jsonl"
