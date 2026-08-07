@@ -1,6 +1,131 @@
 #!/usr/bin/env bash
 # Watch supervision runtime, sourced only by the canonical pr-shepherd entrypoint.
 
+load_watch_state() {
+  local line key value seen=" " schema="" pid="" process_start="" canonical_script=""
+  local loaded_script="" loaded_blob="" interval="" max_cycles=""
+  WATCH_STATE_PHASE=""; WATCH_STATE_CURRENT_PR=""; WATCH_STATE_CURRENT_STEP=""
+  WATCH_STATE_STEP_STARTED_AT=""; WATCH_STATE_STEP_DEADLINE_AT=""
+  WATCH_STATE_LAST_PROGRESS_AT=""; WATCH_STATE_LAST_OUTCOME=""
+  WATCH_STATE_CYCLE=""; WATCH_STATE_TERMINAL_EXIT=""
+  [[ -f "$PIDFILE" && -r "$PIDFILE" ]] || return 1
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    key="${line%%=*}"; value="${line#*=}"
+    [[ "$line" == *=* && "$seen" != *" $key "* ]] || return 1
+    seen+="$key "
+    case "$key" in
+      schema) schema="$value" ;; pid) pid="$value" ;; process_start) process_start="$value" ;;
+      canonical_script) canonical_script="$value" ;; loaded_script) loaded_script="$value" ;;
+      loaded_blob) loaded_blob="$value" ;; interval) interval="$value" ;; max_cycles) max_cycles="$value" ;;
+      phase) WATCH_STATE_PHASE="$value" ;; current_pr) WATCH_STATE_CURRENT_PR="$value" ;;
+      current_step) WATCH_STATE_CURRENT_STEP="$value" ;; step_started_at) WATCH_STATE_STEP_STARTED_AT="$value" ;;
+      step_deadline_at) WATCH_STATE_STEP_DEADLINE_AT="$value" ;; last_progress_at) WATCH_STATE_LAST_PROGRESS_AT="$value" ;;
+      last_outcome) WATCH_STATE_LAST_OUTCOME="$value" ;; cycle) WATCH_STATE_CYCLE="$value" ;;
+      terminal_exit) WATCH_STATE_TERMINAL_EXIT="$value" ;; *) return 1 ;;
+    esac
+  done < "$PIDFILE"
+  [[ "$schema" == pr-watch-state-v2 \
+      && "$pid" =~ ^[1-9][0-9]*$ \
+      && -n "$process_start" \
+      && "$canonical_script" == /* \
+      && "$loaded_script" == /* \
+      && ( "$loaded_blob" =~ ^[0-9a-f]{40}$ \
+        || ( "$loaded_blob" == none && "$WATCH_STATE_PHASE" == terminal ) ) \
+      && "$interval" =~ ^(0|[1-9][0-9]*)$ \
+      && "$max_cycles" =~ ^[1-9][0-9]*$ \
+      && -n "$WATCH_STATE_PHASE" \
+      && -n "$WATCH_STATE_CURRENT_PR" \
+      && -n "$WATCH_STATE_CURRENT_STEP" \
+      && "$WATCH_STATE_STEP_STARTED_AT" =~ ^(0|[1-9][0-9]*)$ \
+      && "$WATCH_STATE_STEP_DEADLINE_AT" =~ ^(0|[1-9][0-9]*)$ \
+      && "$WATCH_STATE_LAST_PROGRESS_AT" =~ ^(0|[1-9][0-9]*)$ \
+      && -n "$WATCH_STATE_LAST_OUTCOME" \
+      && "$WATCH_STATE_CYCLE" =~ ^[1-9][0-9]*$ \
+      && "$WATCH_STATE_TERMINAL_EXIT" =~ ^(none|0|[1-9][0-9]{0,2})$ ]] || return 1
+  WATCH_STATE_OWNER_PID="$pid"
+  WATCH_STATE_OWNER_START="$process_start"
+  WATCH_STATE_INTERVAL="$interval"
+  WATCH_STATE_MAX="$max_cycles"
+  [[ "$canonical_script" == "$SCRIPT_PATH" ]] || return 1
+}
+watch_step_started() {
+  local step="$1" deadline="$2" now
+  [[ -n "$WATCH_STATE_OWNER_PID" ]] || return 0
+  now="$(date '+%s')"
+  write_watch_state working "${CURRENT_PR:-none}" "$step" "$now" "$deadline" "$now" running none \
+    "${PR_SHEPHERD_WATCH_CYCLE:-1}"
+}
+watch_step_finished() {
+  local step="$1" outcome="$2" parent_step="${3:-}" parent_started_at="${4:-0}"
+  local parent_deadline_at="${5:-0}" now
+  [[ -n "$WATCH_STATE_OWNER_PID" ]] || return 0
+  now="$(date '+%s')"
+  if [[ -n "$parent_step" && "$parent_started_at" =~ ^[0-9]+$ \
+      && "$parent_deadline_at" =~ ^[1-9][0-9]*$ ]]; then
+    write_watch_state working "${CURRENT_PR:-none}" "$parent_step" \
+      "$parent_started_at" "$parent_deadline_at" "$now" "$step-$outcome" none \
+      "${PR_SHEPHERD_WATCH_CYCLE:-1}"
+    return
+  fi
+  write_watch_state working "${CURRENT_PR:-none}" "$step" "$now" 0 "$now" "$outcome" none \
+    "${PR_SHEPHERD_WATCH_CYCLE:-1}"
+}
+print_watch_status() {
+  local status="$1" reason="$2" state_valid="$3"
+  if [[ "$state_valid" == 1 ]]; then
+    printf 'status=%s reason=%s state=%s phase=%s current_pr=%s current_step=%s last_progress_at=%s step_deadline_at=%s cycle=%s terminal_exit=%s\n' \
+      "$status" "$reason" "$PIDFILE" "$WATCH_STATE_PHASE" "$WATCH_STATE_CURRENT_PR" \
+      "$WATCH_STATE_CURRENT_STEP" "$WATCH_STATE_LAST_PROGRESS_AT" \
+      "$WATCH_STATE_STEP_DEADLINE_AT" "$WATCH_STATE_CYCLE" "$WATCH_STATE_TERMINAL_EXIT"
+  else
+    printf 'status=%s reason=%s state=%s last_progress_at=unknown\n' \
+      "$status" "$reason" "$PIDFILE"
+  fi
+}
+watch_status() {
+  local state_valid=0 owner_status=2 now reason
+  if load_watch_state; then state_valid=1; fi
+  if [[ ! -f "$PIDFILE.lock" ]]; then
+    print_watch_status dead no-owner "$state_valid"
+    return 2
+  fi
+  if watch_lease_owner_status "$PIDFILE.lock"; then owner_status=0; else owner_status=$?; fi
+  if [[ "$owner_status" == 1 ]]; then
+    print_watch_status dead owner-gone "$state_valid"
+    return 2
+  fi
+  if [[ "$owner_status" == 2 ]]; then
+    print_watch_status stalled owner-unverifiable "$state_valid"
+    return 1
+  fi
+  if [[ "$state_valid" != 1 \
+      || "$WATCH_STATE_OWNER_PID" != "$WATCH_OWNER_PID" \
+      || "$WATCH_STATE_OWNER_START" != "$WATCH_OWNER_PROCESS_START" ]]; then
+    print_watch_status stalled state-unverifiable "$state_valid"
+    return 1
+  fi
+  if [[ "$WATCH_STATE_TERMINAL_EXIT" != none ]]; then
+    print_watch_status dead terminal "$state_valid"
+    return 2
+  fi
+  now="$(date '+%s')"
+  if [[ ! "$now" =~ ^[0-9]+$ ]]; then
+    printf 'status=stalled reason=clock-unavailable state=%s\n' "$PIDFILE"
+    return 1
+  fi
+  if [[ "$WATCH_STATE_STEP_DEADLINE_AT" -gt 0 \
+      && "$now" -gt "$WATCH_STATE_STEP_DEADLINE_AT" ]]; then
+    reason=deadline-exceeded
+    printf 'status=stalled reason=%s state=%s phase=%s current_pr=%s current_step=%s last_progress_at=%s step_deadline_at=%s cycle=%s terminal_exit=%s\n' \
+      "$reason" "$PIDFILE" "$WATCH_STATE_PHASE" "$WATCH_STATE_CURRENT_PR" "$WATCH_STATE_CURRENT_STEP" \
+      "$WATCH_STATE_LAST_PROGRESS_AT" "$WATCH_STATE_STEP_DEADLINE_AT" "$WATCH_STATE_CYCLE" "$WATCH_STATE_TERMINAL_EXIT"
+    return 1
+  fi
+  printf 'status=alive state=%s phase=%s current_pr=%s current_step=%s last_progress_at=%s step_deadline_at=%s cycle=%s terminal_exit=%s\n' \
+    "$PIDFILE" "$WATCH_STATE_PHASE" "$WATCH_STATE_CURRENT_PR" "$WATCH_STATE_CURRENT_STEP" \
+    "$WATCH_STATE_LAST_PROGRESS_AT" "$WATCH_STATE_STEP_DEADLINE_AT" "$WATCH_STATE_CYCLE" "$WATCH_STATE_TERMINAL_EXIT"
+}
+
 cleanup_watch() {
   [[ -z "$WATCH_LOCK_CANDIDATE" ]] \
     || rm -f "$WATCH_LOCK_CANDIDATE" 2>/dev/null || true
