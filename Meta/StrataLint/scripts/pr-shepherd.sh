@@ -240,7 +240,7 @@ run_derivation_chain() {
     log "SWEEP #$num ingest 失败,不 push"; return 1
   fi
   mkdir -p "$workspace/Generated"
-  projection="$workspace/Generated/.echo-residual-summary.md.pr-shepherd.$$"
+  projection="$(mktemp "${TMPDIR:-/tmp}/pr-shepherd-projection.XXXXXXXX")"
   if ! (cd "$workspace" && credentialless "$isolated_home" dotnet run \
     --project Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj \
     --configuration Release -- echo-verify --emit --base "$REMOTE/dev") > "$projection"; then
