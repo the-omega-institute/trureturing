@@ -480,12 +480,13 @@ canonical command 只有在返回 `0` 且 `OUT` 是满足指定 schema 的单个
 
 已证根因是三类共享可写地址：七个可再生 aggregate、测试程序中的全语料快照、frozen ledger 的全局线性尾。问题在状态居所与写入协议，不在 Git 合并算法。
 
-本轮完成定义缩为 `P0-0 -> P0-2 -> PR-A -> P0-B classification receipt -> 独立 PR-B SPEC -> PR-C`。`P0-0` 必须先在完全未改的 old/base admission judge 下独立获准，PR-A、PR-C 及其候选 manifest 均不得参与其生成：
+本轮完成定义缩为 `P0-0 -> P0-2 -> P0-F1 -> PR-A -> P0-B classification receipt -> 独立 PR-B SPEC -> PR-C`。`P0-0` 必须先在完全未改的 old/base admission judge 下独立获准，PR-A、PR-C 及其候选 manifest 均不得参与其生成：
 
 1. P0-0 冻结 old gate 的固定顶层 authority roots 与完整 pinned entrypoint digests，作为后续候选 verdict 的 base-judge 输入。
-2. PR-A 把七个 aggregate 改为 invocation-local projection；artifact disposition 只在 `Meta/FILEMAP.toml` 声明。
-3. 本 SPEC 不在未知分类上实现 PR-B。P0-B 只产生真实、内容寻址的 classification receipt；随后另写绑定该 receipt 的单架构 SPEC。当前 `ExpectedMacros` 在此之前保持不变。
-4. PR-C 把 lane command 与 accepted state 分开：lane 只提交 intent；base-owned writer 机器串行化同 case 写入，先通过者接纳，后续 stale intent 拒绝。全局 stream/head 仅为派生物。
+2. P0-F1 仅把 `Meta/StrataLint/Generated/truth-graph.v1.json` 这一项 `disposable-projection` 迁出保护面前缀；它是 PR-A 的单对象止血前哨与居所子集，收益立即且不依赖 P0-2 的任何前置，完成后不替代 PR-A 的七项 run-local protocol。`scribe-emissions`（`Engine/Digestion/ScribeEmissionAttestation.cs`）与 `anchor-catalog`（`Engine/Rules/`，经 `AnchorCatalogLoader`）因 base judge consumer 依赖留在原址；迁移它们必须先以 bootstrap PR 迁 consumer，不得以当前全绿冒充完成。
+3. PR-A 把七个 aggregate 改为 invocation-local projection；artifact disposition 只在 `Meta/FILEMAP.toml` 声明。
+4. 本 SPEC 不在未知分类上实现 PR-B。P0-B 只产生真实、内容寻址的 classification receipt；随后另写绑定该 receipt 的单架构 SPEC。当前 `ExpectedMacros` 在此之前保持不变。
+5. PR-C 把 lane command 与 accepted state 分开：lane 只提交 intent；base-owned writer 机器串行化同 case 写入，先通过者接纳，后续 stale intent 拒绝。全局 stream/head 仅为派生物。
 
 三项均先写红测试，再在单 PR 内完成迁移，不留双读、alias、旧格式兼容或人工门。效果统计已移出本 SPEC，不是删除门。
 
@@ -522,9 +523,19 @@ canonical command 只有在返回 `0` 且 `OUT` 是满足指定 schema 的单个
 
 ## 12.3 根因与商映射
 
+**父原则：治理须按「语义权威、所有权、可再生性与可逆性」，而非「物理居所」分类对象。** 当前仓库的物理居所、committed 字节、保护等级与写者拓扑，没有服从该原则：本应由程序与权威输入决定的可再生投影，被路径或 committed 副本反向赋予承重地位；本应由数据所有者维护的数据被编码进程序；具有真实权威的账本被实现成多写者共享线性尾。R1、R2、R3 的既有判词全部保留，并归为对该应然父原则的三种已冻结实然偏离；该父原则解释 R1、F1、F5、F6、F7，不单独解释 R2、R3，也不覆盖 F2/F3。
+
 R1：可再生全局 aggregate 入库，令独立 source change 争用相同路径。其字面强化实例是 `docs/develop/spec/golden-ledger-repo-spec.md` 为 `Meta/BACKFILL.yaml:32218-32219` 的消化 source，而 atom 边界以绝对 `start_byte`/`end_byte` 保存（首项 `32223-32226`，后续项如 `32243-32246`）：在 spec 中间插入 bytes 会使其后所有边界整体位移，即“派生数据入库”与脆弱位置锚合流。PR #806 的 merge `48194acd39767b418a7938181d81546a97f2eebb` 同时改 spec 与 BACKFILL；评审提供的“插入 1052 bytes 导致 24 对边界各移 1052、fingerprints 不变”本轮未从 merge diff 独立复算，标 `ASSUMED-UNVERIFIED AU-BACKFILL-OFFSET-806`；测法是对该 merge 的正确 first-parent 做逐 atom boundary/fingerprint 差分。无论该历史数字是否成立，当前 schema 的绝对 byte 边界已由上述行号直接证实。凡修改该 spec 的 PR 必须在同 PR 运行 `make ingest BASE=origin/dev` 重算 BACKFILL/CAS 派生项，禁止手改。
 
+**F1 居所不变量：**`disposable-projection` 不得住于保护面前缀之下；分类严格引用 `CLAUDE.md` 第〇节的四项合取与未知/外部依赖 fail-closed 条款，不在本 SPEC 另写定义。P0-F1 当前只迁 `truth-graph`；`scribe-emissions` 与 `anchor-catalog` 的 base judge consumer 边界及 bootstrap 前置见 §12.1，不得以双次重建或当前全绿冒充完整依赖闭包。实测该类计算物因住 `Meta/StrataLint/` 前缀下而触发 `conservative 529s`，同类的 `Generated/DAG.md` 住顶层则从不触发。
+
+**F6 叶节点依赖：**投影不得把兄弟投影计入自身身份/provenance；实测 `TruthGraphJson.cs:28-36` 的 snapshot 规范化了自身却 hash `Generated/DAG.md`，导致 emit 重写自己刚算出的图的输入，deposit 链首跑必红（3/3 复现），F5 由此合并为该结构性真因而不另立条目。
+
+**F7 补偿机制退场：**为「投影冲突」而建的补偿面（冲突分类器、自动重算链、FIFO 租约）的存在理由是被守错的对象；消除病因即按 §12.9 既有删除条件删除它们，不得优化或另立退场机制；实测 `pr-shepherd` 一族约 3,361 行，为生产 harness 的 7.6%，且并未补偿住。
+
 R2：`ExpectedMacros` 把 corpus 派生集合写进程序。R3：并行 freeze intent 争用一条 canonical linear tail。R4：BACKFILL 是 source/消化账本热点，性质未测，移出本 SPEC；§4 因而保持 `Meta/BACKFILL.yaml` 为 `kind=data`、`runtime_disposition="committed-source"`、conflict policy 为“随 source 同 PR 运行 canonical ingest 重算，禁手改”，与当前 FILEMAP `Meta/FILEMAP.toml:184-189` 一致。
+
+**范围边界：**F2/F3（多驱动者调度的收敛性与失败隔离）是独立因果支，不属第十二部，不把实现扩入本部。归宿为独立 issue **#922**；该 issue 必须覆盖多驱动者收敛性、单驱动者失败隔离、`#903` 卡 2h52m 与 `#904`/`#914` 排队证据、`is_derived_conflict` 白名单不覆盖 ceremony 产物，并以“并发驱动最终收敛到同一 accepted state；任一驱动失败不阻塞无依赖驱动；上述三个案件有可重放回归且全绿”为完成判据。另一同构实例是 CHANGELOG 的 `v7.14 R<n>` 共享单调递增计数器：dev 上 R1、R2、R4 各重复两次，多写者并发撞号与 `events.jsonl` 的 `sequence` 争用同属该独立因果支。以上问题不会因 PR-A 落地而自动消失，故不得把第十二部误作已覆盖。
 
 保守性由 `make refactor-quotient CASE=<content-addressed.json> OUT=<json>` 判。old harness 在固定 old build 的隔离 checkout 运行；随后由同一 old build producer 重建七项 projection 后再运行。只有 `old_raw=reject`、`old_canonical=admit`、diff 全属 FILEMAP 标记为 `runtime_disposition="run-local"` 的路径，且除 `OBL-PROJECTION-FRESHNESS` 外的 obligation 集合与判词完全相等，才分类为 `projection-staleness-only`。source、ledger、C0、baseline admission、schema、hash binding、semantic、unknown path 或运行故障一律留在 `semantic-domain`。
 
@@ -784,7 +795,7 @@ Blueprint markdown 已证有仓内语义 consumer，移出 PR-A；只有独立 P
 - v2.x:证据等级 E0–E4、SSOT 两层账、证书拆分、Gödel 条款(并入 v3+)。
 - v1:初版雏形。
 
-**A18.1 结构化真值图导出(v1 未冻约)** `Meta/StrataLint/Generated/truth-graph.v1.json` 的唯一方言为 `stratalint.truth-graph.v1` / `schema_version:1`;根节闭集为 `{schema,schema_version,provenance,truth,documents,joins,deferred_layers}`。`truth` 保留 formal truth DAG 的节点、module-import 边、open blocker、状态计数与最长依赖路径 depth。`documents.document_nodes` 以 canonical Blueprint markdown `repo_path` + Scribe `gid` 唯一标识文档,并以 `receipt∈{receipt-free,receipt-bound}` 分类;节点集必须与本次 `DocumentDefinitions` 蓝图集合动态全等,不得硬编码基线数字。`documents.document_edges` 是封闭的分型对象:`dependency[{dependency,dependent}]` 表示承重前置指向依赖者,必须无环;`narrative_reference[{source,target}]` 表示叙事阅读引用,允许有环且**绝不承重**——消费者禁止用它计算拓扑、depth、准入 blocker 或撤销后代,也禁止与 dependency 扁平合并。两类边均只由 `DocumentGraphAssembler` 的已验证产物投影,canonical writer 不枚举仓库、不重算图。
+**A18.1 结构化真值图导出(v1 未冻约)** `Generated/truth-graph.v1.json` 的唯一方言为 `stratalint.truth-graph.v1` / `schema_version:1`;根节闭集为 `{schema,schema_version,provenance,truth,documents,joins,deferred_layers}`。`truth` 保留 formal truth DAG 的节点、module-import 边、open blocker、状态计数与最长依赖路径 depth。`documents.document_nodes` 以 canonical Blueprint markdown `repo_path` + Scribe `gid` 唯一标识文档,并以 `receipt∈{receipt-free,receipt-bound}` 分类;节点集必须与本次 `DocumentDefinitions` 蓝图集合动态全等,不得硬编码基线数字。`documents.document_edges` 是封闭的分型对象:`dependency[{dependency,dependent}]` 表示承重前置指向依赖者,必须无环;`narrative_reference[{source,target}]` 表示叙事阅读引用,允许有环且**绝不承重**——消费者禁止用它计算拓扑、depth、准入 blocker 或撤销后代,也禁止与 dependency 扁平合并。两类边均只由 `DocumentGraphAssembler` 的已验证产物投影,canonical writer 不枚举仓库、不重算图。
 
 `joins.truth_anchors` 每项固定为 `{document_repo_path,document_gid,lean_declaration_gid,formal_truth_repo_path}`:一个文档锚必须经 compiled-artifact report 恰解析一个 Lean declaration,且该 declaration 的模块路径必须恰命中一个 `truth.nodes.repo_path`;零解析、多解析或缺 formal 节点均 fail-closed。锚点总数从 assembler 图动态派生,不得硬编码历史读数。根 `deferred_layers` 当前必须逐字等于 `["digestion"]`,显式声明 digestion/1879 原子层未进入 v1;该层归后续版本,不得以字段缺席静默冒充已覆盖。writer 以 DTO 纯投影并发射确定性 UTF-8 canonical bytes;strict reader 拒未知/缺失字段、乱序、重复、跨节悬空及非 canonical bytes。`Generated/DAG.md` 仍只读 formal DAG,与 documents/joins 双投影互不读取。
 
@@ -801,3 +812,4 @@ Blueprint markdown 已证有仓内语义 consumer，移出 PR-A；只有独立 P
 - **v7.13 R10**(2026-07-20):#228 对抗评审 pass4/5 升提将 `cas_ref` 从 canonical 数据现状收紧为每条 entry 的 loader 必选不变量,并以 engineering 测试黑盒派生 `ParseEntry` 接受域与 11.21 机读锚逐次比对;11.27 的无 `cas_ref` 排除集随之空集化。
 - **v7.14 R1**(2026-08-07):`PROJECTION-RESIDENCY` 立第十二部,以六席思考面板 + 五轮对抗评审(architecture/quality/tests × codex-cli 与 ChatGPT Pro 混排载体)收敛合并冲突根因:三类共享可写地址——七个可再生 aggregate 入库、测试程序内的全语料快照、frozen ledger 的全局线性尾;`pr-shepherd` 的 `is_derived_conflict` 与 `derived-refresh` 判为消费者侧症状补偿,非根因消除。按天然 owner 拆 PR-A/PR-B/PR-C 并定序,每 PR 内一步迁移到位、不留兼容垫层。对抗过程勘正三处会致重构静默失败的陷阱:①保守性命题须走商映射(旧 committed projection 陈旧导致的 `old_raw=reject` 退出比较域,否则 PR-A 目标本身被判违规);②`old-obligation` 完备性根改为具名顶层 gate root 不可拆 + P0-0 由未改 old judge 裁决冻结 authority,杜绝候选自带 adapter/manifest/catalog 对自选子集全绿;③商映射反向漏洞须正向断言 `projection-staleness-only ⟹ new=admit`,否则新门全 reject 亦满足书面 quotient。frozen ledger 保持 append-only 权威真源不出库,冲突改由 base-owned 串行 writer 机器线性化(同 case 先落盘者接纳、stale 拒,不承诺同 case 交换性),并以不可变 acceptance-receipt 保存全局链、global head 仅派生不提交。R1 只立契约与 P0 义务,零实现;A/B/C 各自的 `ASSUMED-UNVERIFIED` 前置未过即机器阻断对应 PR。
 - **v7.14 R2**(2026-08-07):`PROJECTION-RESIDENCY` 删除 12.6.2 P0-2 的 ed25519 签名机制(用户指出)。签名意在使「实施者不能自证」,但防自证要求签名者独立于实施者;本仓不存在这样的第三方,持私钥者即执行 P0-2 者时签名只是自证套壳,保证为零。承重结构本就是「判词输入来自 base 侧且候选不可覆写」——同一份 SPEC 的 12.6.1 P0-0 已以 `EXPECTED_GATE_AUTHORITY_SHA256` 用了该形态,P0-2 另造第二套且更弱,违反唯一真源与 parsimony;五轮对抗评审均未抓到(第 13 条:评审团也是单点)。改为 base 侧执行 query、七项 attestation digest 的封闭聚合由 base judge 经不可覆写的 `EXPECTED_EXTERNAL_SCOPE_RESULT_SHA256` 注入,与 P0-0 同形;`external-scope-authority-v1` 去掉 `authority_id/key_id/signature_algorithm`,attestation 去掉 `signature` 与验签 preimage。连带解除对 `Meta/registry.yaml` 新增 authority/key 结构的要求(`RegistryLoader` 为 exact-key strict loader,该负担一并消失),PR-A 不再被密钥管理阻断。`AU-EXT-1` 的诚实标注不变:世界闭包本就不可证,签名从来不能证明它,删除零损失。本裁决与 v7.13 R2「密码学身份、签名及 nonce 消费机依用户裁决不进入系统」一脉,并与 2026-07-30 退役 App 私钥路线之先例一致。
+- **v7.14 R6**(2026-08-08):`PROJECTION-RESIDENCY` 以「治理须按语义权威、所有权、可再生性与可逆性，而非物理居所」统摄 R1/R2/R3 对该原则的三种已冻结实然偏离，保持三项既有判词与商映射不变；在 R1 下补 F1 投影不得住保护面、F6 投影不得依赖兄弟投影、F7 病因消除即按 §12.9 删除补偿面，并明确 F5 并入 F6。F1 分类引用 CLAUDE.md 第〇节四项合取并 fail-closed；P0-F1 收缩为仅迁 `truth-graph`，`scribe-emissions` 与 `anchor-catalog` 须先迁 base judge consumer。F2/F3 多驱动者调度收敛与失败隔离划为具验收契约、待 caller 回填号码的独立 issue，并纳入 CHANGELOG 版本计数器与 `events.jsonl sequence` 的同构争用；不改门级、`emit-check` 或禁兼容垫层条款。

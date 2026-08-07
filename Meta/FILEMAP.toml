@@ -119,6 +119,13 @@ consumed_by = ["harness-gate"]
 verified_by = ["echo-verify", "emit-check"]
 
 [[files]]
+pattern = "Generated/truth-graph.v1.json"
+kind = "generated"
+produced_by = "DagEmitter"
+consumed_by = ["TruthGraphJsonReader"]
+verified_by = ["emit-check"]
+
+[[files]]
 pattern = "Golden/Projection/*.json"
 kind = "data"
 produced_by = "none"
@@ -277,13 +284,6 @@ pattern = "Meta/StrataLint/Generated/scribe-emissions.v1.json"
 kind = "generated"
 produced_by = "ScribeEmitter"
 consumed_by = ["DigestionStatusEvaluator"]
-verified_by = ["emit-check"]
-
-[[files]]
-pattern = "Meta/StrataLint/Generated/truth-graph.v1.json"
-kind = "generated"
-produced_by = "DagEmitter"
-consumed_by = ["TruthGraphJsonReader"]
 verified_by = ["emit-check"]
 
 [[files]]
