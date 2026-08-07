@@ -13,19 +13,27 @@ public sealed class TruthGraphJsonTests
         "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
     [Fact]
-    public void SnapshotIdentityIsContentAddressedWithoutSelfReferentialProjectionBytes()
+    public void SnapshotIdentityIsContentAddressedWithoutEmitterProjectionBytes()
     {
         var first = Snapshot(
             ("Meta/source.txt", "alpha\n"),
-            (DagEmitter.TruthGraphRelativePath, "old projection\n"));
-        var selfChanged = Snapshot(
+            (DagEmitter.RelativePath, "old dag projection\n"),
+            (DagEmitter.TruthGraphRelativePath, "old truth projection\n"),
+            (ScribeEmitter.AttestationRelativePath, "old attestation\n"));
+        var projectionsChanged = Snapshot(
             ("Meta/source.txt", "alpha\n"),
-            (DagEmitter.TruthGraphRelativePath, "new projection\n"));
+            (DagEmitter.RelativePath, "new dag projection\n"),
+            (DagEmitter.TruthGraphRelativePath, "new truth projection\n"),
+            (ScribeEmitter.AttestationRelativePath, "new attestation\n"));
         var sourceChanged = Snapshot(
             ("Meta/source.txt", "beta\n"),
-            (DagEmitter.TruthGraphRelativePath, "old projection\n"));
+            (DagEmitter.RelativePath, "old dag projection\n"),
+            (DagEmitter.TruthGraphRelativePath, "old truth projection\n"),
+            (ScribeEmitter.AttestationRelativePath, "old attestation\n"));
 
-        Assert.Equal(TruthGraphSnapshotIdentity.Compute(first), TruthGraphSnapshotIdentity.Compute(selfChanged));
+        Assert.Equal(
+            TruthGraphSnapshotIdentity.Compute(first),
+            TruthGraphSnapshotIdentity.Compute(projectionsChanged));
         Assert.NotEqual(TruthGraphSnapshotIdentity.Compute(first), TruthGraphSnapshotIdentity.Compute(sourceChanged));
     }
 
