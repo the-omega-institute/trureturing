@@ -75,8 +75,9 @@ public sealed class FileMapPolicyTests
         // Self-driving devloop plan documents are emitted under docs/devloop/plans/
         // with dynamically generated names (one per prove-task), so they cannot be
         // enumerated individually in registry.yaml governance_documents. The
-        // RepositoryPathPolicy admits the whole docs/devloop/ prefix; SL-000 must
-        // not reject dynamically generated plans as unknown top-level artifacts.
+        // RepositoryPathPolicy admits the whole docs/devloop/ prefix (mirroring
+        // packages/, .fkst/, .claude/skills/); SL-000 must not reject them as an
+        // unknown top-level artifact.
         const string value = "docs/devloop/plans/synthetic-prove-task-plan.md";
         var root = RepositoryLayout.FindRoot();
         var registry = Assert.IsType<RegistryLoadOutcome.Accepted>(

@@ -1,5 +1,7 @@
 # Agent Context
 
+This repository is configured to use the fkst automated development engine, which follows the harness and processes issues through `github-devloop`.
+
 Theory: D5 studies the golden integer/Zeckendorf coordinate system and its formal, narrative, and experimental consequences without promoting either open heart O-5/O-6. W1 uses Fibonacci weights `1,2,3,5,...`; W2 permits no adjacent occupied weights; W3 says the canonical W digits decode uniquely to the original natural number.
 
 Map: `D5/` is the only M0 formal instance; `Blueprint/` and `Evidence/` mirror its addresses; `Chronicle/` is append-only; `Library/` ingests; `Papers/` emits; `Meta/` holds the harness; `agents/` holds charters. `Metallic/`, `Moduli/`, and non-D5 theory roots remain gated by D5-T0009. Controlled domains and strata live only in `Meta/domains.yaml`.

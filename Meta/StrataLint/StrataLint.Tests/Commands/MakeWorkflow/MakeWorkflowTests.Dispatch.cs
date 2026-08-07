@@ -31,6 +31,31 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains(CleanLanesScriptPath, Recipe(makefile, "clean-lanes"), StringComparison.Ordinal);
         Assert.Contains(DotnetBuildScriptPath, Recipe(makefile, "dotnet"), StringComparison.Ordinal);
         Assert.Contains("dotnet test", Recipe(makefile, "test"), StringComparison.Ordinal);
+        Assert.Contains(FkstRunScriptPath + " test", Recipe(makefile, "lua-test"), StringComparison.Ordinal);
+        Assert.Contains(
+            HourlyMaintenanceScriptPath,
+            Recipe(makefile, "hourly-maintenance"),
+            StringComparison.Ordinal);
+        Assert.Contains(
+            LauncherRendererScriptPath,
+            Recipe(makefile, "maintenance-launcher-render"),
+            StringComparison.Ordinal);
+        Assert.Contains(
+            LauncherConformanceScriptPath,
+            Recipe(makefile, "maintenance-launcher-check"),
+            StringComparison.Ordinal);
+        Assert.Contains(
+            SuperviseLauncherRendererScriptPath,
+            Recipe(makefile, "supervise-launcher-render"),
+            StringComparison.Ordinal);
+        Assert.Contains(
+            SuperviseLauncherConformanceScriptPath,
+            Recipe(makefile, "supervise-launcher-check"),
+            StringComparison.Ordinal);
+        Assert.Contains(
+            LaunchdConformanceScriptPath,
+            Recipe(makefile, "launchd-conformance-check"),
+            StringComparison.Ordinal);
         Assert.Equal(
             $"\t@/bin/bash {LeanCacheEnsureScriptPath}",
             Recipe(makefile, "lean-cache-ensure"));
