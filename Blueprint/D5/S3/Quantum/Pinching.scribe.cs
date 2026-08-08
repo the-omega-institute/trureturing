@@ -37,7 +37,7 @@ internal sealed class PinchingDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text(
                     "For qubit matrices A and B, the scalar pairing is trace of the conjugate transpose of A times B. Mathlib supplies matrix trace and conjugate transpose, but its Frobenius matrix scope does not install an Inner instance for Matrix, so this declaration is the minimal formula-level wrapper rather than a competing inner-product-space structure."))),
                 Disp(Seq(
-                    Langle, F.Id("A"), Comma, Sp, F.Id("B"), Rangle,
+                    Langle, Sp, F.Id("A"), Comma, Sp, F.Id("B"), Rangle,
                     Underscore, Grp(F.Id("HS")), Eq,
                     Operatorname, Grp(F.Id("Tr")), Open,
                     F.Id("A"), Caret, Grp(Star), F.Id("B"), Close))
@@ -46,7 +46,7 @@ internal sealed class PinchingDocument : IScribeDocumentDefinition
                 DescribeId.Create("pinching-is-idempotent"),
                 H("Pinching is idempotent"),
                 LeanTheorem("D5/S3/Quantum/Pinching.pinching_idempotent"),
-                Disp(Seq(F.Id("P"), Circ, F.Id("P"), Eq, F.Id("P"))),
+                Disp(Seq(F.Id("P"), Sp, Circ, Sp, F.Id("P"), Eq, F.Id("P"))),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "Applying standard-basis pinching twice is the same function as applying it once. The equality is extensional over every complex two-by-two input and every matrix entry.")))
@@ -60,9 +60,9 @@ internal sealed class PinchingDocument : IScribeDocumentDefinition
                     Forall, Sp, F.Id("A"), Comma, F.Id("B"), Sp, InMacro, Sp,
                     F.Id("M"), Underscore, Grp(D(2)), Open, Mathbb, Grp(F.Id("C")), Close,
                     Comma, Esc,
-                    Langle, F.Id("P"), Open, F.Id("A"), Close, Comma, Sp, F.Id("B"),
+                    Langle, Sp, F.Id("P"), Open, F.Id("A"), Close, Comma, Sp, F.Id("B"),
                     Rangle, Underscore, Grp(F.Id("HS")), Eq,
-                    Langle, F.Id("A"), Comma, Sp, F.Id("P"), Open, F.Id("B"), Close,
+                    Langle, Sp, F.Id("A"), Comma, Sp, F.Id("P"), Open, F.Id("B"), Close,
                     Rangle, Underscore, Grp(F.Id("HS")))),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(

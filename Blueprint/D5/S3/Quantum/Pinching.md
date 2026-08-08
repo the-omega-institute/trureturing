@@ -18,7 +18,7 @@ For an arbitrary complex two-by-two matrix rho, pinching is exactly the existing
 
 **Definition 1.2 (The Hilbert-Schmidt pairing is the trace pairing).**
 
-$$\langleA, B\rangle_{HS}=\operatorname{Tr}(A^{*}B)$$
+$$\langle A, B\rangle_{HS}=\operatorname{Tr}(A^{*}B)$$
 
 *Formalization.* `D5/S3/Quantum/Pinching.hilbertSchmidtInner` (`✓ std3`).
 
@@ -30,7 +30,7 @@ For qubit matrices A and B, the scalar pairing is trace of the conjugate transpo
 
 **Theorem 1.3 (Pinching is idempotent).**
 
-$$P\circP=P$$
+$$P \circ P=P$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Pinching.pinching_idempotent` (`✓ std3`). ∎
 
@@ -42,7 +42,7 @@ Applying standard-basis pinching twice is the same function as applying it once.
 
 **Theorem 1.4 (Pinching is Hilbert-Schmidt self-adjoint).**
 
-$$\forall A,B \in M_{2}(\mathbb{C}),\ \langleP(A), B\rangle_{HS}=\langleA, P(B)\rangle_{HS}$$
+$$\forall A,B \in M_{2}(\mathbb{C}),\ \langle P(A), B\rangle_{HS}=\langle A, P(B)\rangle_{HS}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Pinching.pinching_hilbert_schmidt_self_adjoint` (`✓ std3`). ∎
 
