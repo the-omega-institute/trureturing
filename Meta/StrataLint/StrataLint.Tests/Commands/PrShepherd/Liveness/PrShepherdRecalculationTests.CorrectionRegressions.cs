@@ -82,6 +82,28 @@ public sealed partial class PrShepherdRecalculationTests
     }
 
     [Fact]
+    public void ScriptIdentityGitTimeoutRetainsItsTimeoutClassification()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ShepherdFixture();
+
+        var result = fixture.Run(
+            environment: new Dictionary<string, string>
+            {
+                ["PR_TEST_HANG_GIT_OPERATION"] = "hash-object",
+                ["PR_SHEPHERD_API_TIMEOUT_SECONDS"] = "5",
+                ["PR_SHEPHERD_GIT_TIMEOUT_SECONDS"] = "1",
+                ["PR_SHEPHERD_SWEEP_TIMEOUT_SECONDS"] = "10",
+                ["PR_SHEPHERD_KILL_GRACE_SECONDS"] = "1",
+            });
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.True(fixture.InfrastructureStateExists, result.Log);
+        Assert.Contains("failure_class=script-blob.timeout\n", fixture.InfrastructureState());
+        Assert.False(fixture.DerivedLeaseExists);
+    }
+
+    [Fact]
     public void BootstrapFreshnessRejectionPreservesExitAndPublishesTerminalState()
     {
         if (OperatingSystem.IsWindows()) return;
