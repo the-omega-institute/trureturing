@@ -418,7 +418,7 @@ CONTEXT.md(1 页)→ 各地层 `INDEX.md`(CI 从文件头 digest 行聚合)→ �
 `docs/MISSION.md`:北极星 = 两颗心脏(可仰望不可硬攻);价值序 = **理解 > 数量,诚实 > 速度,负知识与正结果等价记账**;探索靶评分 = 新颖性 × 依赖就绪度 × 结构变现潜力(可开支票否)× 收据潜力;禁令 = 刷 sorry 数、堆平凡引理、追引用。**PLAYBOOK 答"怎么找",MISSION 答"什么值得找"——无此文件,飞轮高速空转。**
 
 ## 11.21 回填溯源清单(消化完整性)
-<!-- BACKFILL_ENTRY_ACCEPTANCE: required=atom_id,cas_ref,coverage_gids,fingerprints,receipts,status;exactly_one=ast_path|boundary;optional=- -->
+<!-- BACKFILL_ENTRY_ACCEPTANCE: required=ast_path,atom_id,cas_ref,coverage_gids,fingerprints,receipts,status;optional=- -->
 **Digestion Ledger** 以目录为唯一真源:`Meta/Digestion/backfill/<source_id>/<migration>-<truth>/<atom_id>.yaml`;状态由路径表达,迁移状态即文件移动。每个 source 的 `{source_id,path,atomizer,acknowledged_stale}` 独立住同源目录的 `source.toml`,固定 TASK 映射住 `Meta/Digestion/ticket-index.toml`。现役 2,018 个原子文件只保存 `ast_path`、`fingerprints:{raw_sha256,normalized_sha256}`、`cas_ref` 及非空的 `coverage_gids`/`receipts`;`atom_id` 由文件名导出,`source_id` 与状态由路径导出。迁移前单文件实测 2,030 条 entry/2,030 个唯一 atom_id,而 ast_path 仅 1,878 个唯一值(152 次碰撞),故 ast_path 永不作文件名。旧 `Meta/BACKFILL.yaml`、boundary 位置锚及 `chain_atoms`/`tail_authorization` 字段只存于 git 历史,运行时无兼容读者、无双读。raw 指纹绑定原始字节,normalized 指纹只容许 UTF-8 BOM、CRLF/CR→LF 与 Unicode NFC 的受限规范化;二者均为 `sha256:<64 lowercase hex>`。
 
 **双轴状态由机器派生,status 只是受检投影,禁手写冒领。**迁移轴为 `{residual,partial,absorbed}`:仅完成 extract/identify 而无语义目标或收据进展者为 residual;已识别目标 GID 或已有迁移收据但合取未齐者为 partial;原子本地收据与全部 `chain_atoms` 均闭合者才为 absorbed。真值轴为 `{closed,tail,open}`:Lean 闭包 Closed 才是 closed;Tail 只有在 migration 已 absorbed 且 `Meta/StrataLint/Authorizations/digestion-tail/<atom_id>.json` 之 canonical 工件逐字绑定 atom 与全部 Tail GID 时才投影为 **absorbed-tail**,否则一律 open;Tail 不计已证。SL-016 对 source 结构、边界可重现、指纹、目标 GID、收据、双轴重算一致性逐项 fail-closed,任一 stored status 与派生不同即红。

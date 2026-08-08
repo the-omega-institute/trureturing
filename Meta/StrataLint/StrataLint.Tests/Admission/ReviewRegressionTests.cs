@@ -123,8 +123,7 @@ public sealed partial class ReviewRegressionTests
         fixture.AddBackfillTargets();
         var captured = DigestionCasStore.Capture(Encoding.UTF8.GetBytes(
             GoldenCorpus.FixtureDigestionSource));
-        fixture.Files[BackfillInventoryLoader.RelativePath] = fixture.Files[
-                BackfillInventoryLoader.RelativePath]
+        fixture.Files["Meta/BACKFILL.yaml"] = fixture.Files["Meta/BACKFILL.yaml"]
             .Replace(
                 $"atomizer: {AtomizerRegistry.NoAtomizerId}",
                 $"atomizer: {SyntheticNumberedAtomizer.Id}",
@@ -134,7 +133,7 @@ public sealed partial class ReviewRegressionTests
         Assert.Equal(
             captured.Reference,
             Assert.Single(BackfillInventoryLoader.Load(
-                fixture.Files[BackfillInventoryLoader.RelativePath]).RequireDigestionEntries()).CasRef);
+                fixture.Files["Meta/BACKFILL.yaml"]).RequireDigestionEntries()).CasRef);
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(16),
@@ -165,12 +164,13 @@ public sealed partial class ReviewRegressionTests
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        fixture.Files[BackfillInventoryLoader.RelativePath] = fixture.Files[
-                BackfillInventoryLoader.RelativePath]
-            .Replace(
-                $"        cas_ref: {GoldenCorpus.FixtureCasReference}\n",
-                string.Empty,
-                StringComparison.Ordinal);
+        SyntheticBackfillFixture.ExpandInPlace(fixture.Files);
+        var atomPath = fixture.Files.Keys.Single(static path => path.EndsWith(".yaml", StringComparison.Ordinal)
+            && path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal));
+        fixture.Files[atomPath] = fixture.Files[atomPath].Replace(
+            $"cas_ref: {GoldenCorpus.FixtureCasReference}\n",
+            string.Empty,
+            StringComparison.Ordinal);
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(16),
@@ -203,11 +203,9 @@ public sealed partial class ReviewRegressionTests
         var repositoryRoot = FindRepositoryRoot();
         var fixture = new RuleFixture();
         var fixtureInventory = BackfillInventoryLoader.Load(
-            fixture.Files[BackfillInventoryLoader.RelativePath]);
-        var repositoryInventory = BackfillInventoryLoader.Load(File.ReadAllText(
-            Path.Combine(repositoryRoot, BackfillInventoryLoader.RelativePath),
-            Encoding.UTF8));
-        fixture.Files[BackfillInventoryLoader.RelativePath] = Encoding.UTF8.GetString(
+            fixture.Files["Meta/BACKFILL.yaml"]);
+        var repositoryInventory = BackfillInventoryLoader.LoadDirectory(repositoryRoot);
+        fixture.Files["Meta/BACKFILL.yaml"] = Encoding.UTF8.GetString(
             BackfillInventoryWriter.Write(fixtureInventory.WithTickets(
                 repositoryInventory.RequireTickets())).AsSpan());
         fixture.AddBackfillTargets();
@@ -262,7 +260,7 @@ public sealed partial class ReviewRegressionTests
     }
 
     [Fact]
-    public void Sl016RejectsFormattedFingerprintThatDisagreesWithSourceSpan()
+    public void Sl016RejectsFingerprintWhoseCasObjectIsAbsent()
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
@@ -277,31 +275,7 @@ public sealed partial class ReviewRegressionTests
         var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build());
 
         Assert.Contains(evaluation.Diagnostics, diagnostic =>
-            diagnostic.Message.Contains("fingerprint", StringComparison.OrdinalIgnoreCase));
-    }
-
-    [Fact]
-    public void Sl016RejectsDuplicateSourceIdEvenWhenTheLaterSourceHasNoEntries()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        const string duplicate =
-            "  - source_id: fixture-source\n"
-            + "    path: docs/CONTRIBUTING.md\n"
-            + "    atomizer: none\n"
-            + "    entries: []\n"
-            + "ticket_index:\n";
-        fixture.Files["Meta/BACKFILL.yaml"] = fixture.Files["Meta/BACKFILL.yaml"].Replace(
-            "ticket_index:\n",
-            duplicate,
-            StringComparison.Ordinal);
-
-        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build());
-
-        Assert.Contains(evaluation.Diagnostics, diagnostic =>
-            diagnostic.Message.Contains("duplicate source_id", StringComparison.Ordinal));
-        Assert.Contains(evaluation.Diagnostics, diagnostic =>
-            diagnostic.Message.Contains("must contain at least one atomic entry", StringComparison.Ordinal));
+            diagnostic.Message.Contains("CAS blob is missing", StringComparison.Ordinal));
     }
 
     [Fact]

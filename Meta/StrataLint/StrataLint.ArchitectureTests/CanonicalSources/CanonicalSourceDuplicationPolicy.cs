@@ -97,7 +97,7 @@ internal static class CanonicalSourceDuplicationPolicy
                     TimeSpan.FromSeconds(1))
                 select new CanonicalSourceDuplicationFinding(
                     path,
-                    $"C# atomizer id literal {id} duplicates Meta/BACKFILL.yaml; dispatch through AtomizerRegistry"))
+                    $"C# atomizer id literal {id} duplicates the digestion backfill; dispatch through AtomizerRegistry"))
             .ToArray();
     }
 
@@ -131,7 +131,7 @@ internal static class CanonicalSourceDuplicationPolicy
 
             findings.Add(new CanonicalSourceDuplicationFinding(
                 path,
-                $"C# literal mapping {ticket.CaseId} <-> {ticket.Gid} duplicates Meta/BACKFILL.yaml; use BackfillInventoryLoader"));
+                $"C# literal mapping {ticket.CaseId} <-> {ticket.Gid} duplicates the digestion backfill; use BackfillInventoryLoader"));
         }
 
         return findings;

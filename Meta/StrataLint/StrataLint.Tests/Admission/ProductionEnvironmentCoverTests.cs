@@ -11,9 +11,7 @@ public sealed partial class ProductionEnvironmentTests
     {
         var inputs = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec());
         using var temporary = new TemporaryDirectory();
-        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
-        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
-        File.WriteAllText(outputPath, inputs.Ledger, new UTF8Encoding(false));
+        SyntheticBackfillFixture.WriteDirectory(temporary.Path, inputs.Ledger);
         var console = new BufferedConsole();
 
         var exitCode = CliApplication.Run(
@@ -45,9 +43,7 @@ public sealed partial class ProductionEnvironmentTests
     {
         var inputs = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec());
         using var temporary = new TemporaryDirectory();
-        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
-        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
-        File.WriteAllText(outputPath, inputs.Ledger, new UTF8Encoding(false));
+        SyntheticBackfillFixture.WriteDirectory(temporary.Path, inputs.Ledger);
         var initialEnvironment = CoverWorld.Environment(temporary.Path, inputs, inputs.Files);
 
         var before = initialEnvironment.DigestStatus(Array.Empty<string>());
@@ -57,11 +53,10 @@ public sealed partial class ProductionEnvironmentTests
 
         var aligned = initialEnvironment.AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
         Assert.True(aligned.Success, aligned.Error);
-        var alignedLedger = File.ReadAllText(outputPath);
-        var alignedFiles = new Dictionary<string, string>(inputs.Files, StringComparer.Ordinal)
-        {
-            [BackfillInventoryLoader.RelativePath] = alignedLedger,
-        };
+        var alignedLedger = SyntheticBackfillFixture.ReadAtom(temporary.Path, CoverWorld.DefaultAtomId);
+        var alignedFiles = SyntheticBackfillFixture.Expand(inputs.Files)
+            .ToDictionary(static pair => pair.Key, static pair => pair.Value, StringComparer.Ordinal);
+        alignedFiles[SyntheticBackfillFixture.AtomPath(inputs.Ledger)] = alignedLedger;
         var after = CoverWorld.Environment(temporary.Path, inputs, alignedFiles)
             .DigestStatus(Array.Empty<string>());
         Assert.True(after.Success, after.Error);
@@ -111,9 +106,7 @@ public sealed partial class ProductionEnvironmentTests
             [BackfillInventoryLoader.RelativePath] = driftedLedger,
         };
         using var temporary = new TemporaryDirectory();
-        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
-        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
-        File.WriteAllText(outputPath, driftedLedger, new UTF8Encoding(false));
+        SyntheticBackfillFixture.WriteDirectory(temporary.Path, driftedLedger);
         var console = new BufferedConsole();
 
         var exitCode = CliApplication.Run(
@@ -124,12 +117,11 @@ public sealed partial class ProductionEnvironmentTests
         Assert.True(exitCode == 0, $"exit_code={exitCode} stderr={console.Error}");
         Assert.Equal(string.Empty, console.Error);
         Assert.Contains("ledger_changed=true", console.Output, StringComparison.Ordinal);
-        var alignedLedger = File.ReadAllText(outputPath);
-        Assert.NotEqual(driftedLedger, alignedLedger);
-        var alignedFiles = new Dictionary<string, string>(driftedFiles, StringComparer.Ordinal)
-        {
-            [BackfillInventoryLoader.RelativePath] = alignedLedger,
-        };
+        var alignedLedger = SyntheticBackfillFixture.ReadAtom(temporary.Path, CoverWorld.DefaultAtomId);
+        Assert.NotEqual(SyntheticBackfillFixture.AtomText(driftedLedger, CoverWorld.DefaultAtomId), alignedLedger);
+        var alignedFiles = SyntheticBackfillFixture.Expand(driftedFiles)
+            .ToDictionary(static pair => pair.Key, static pair => pair.Value, StringComparer.Ordinal);
+        alignedFiles[SyntheticBackfillFixture.AtomPath(driftedLedger)] = alignedLedger;
         var status = CoverWorld.Environment(temporary.Path, inputs, alignedFiles)
             .DigestStatus(Array.Empty<string>());
         Assert.False(status.Success);
@@ -148,9 +140,7 @@ public sealed partial class ProductionEnvironmentTests
             [verifiedRecord with { DefinitionSha256 = "sha256:" + new string('c', 64) }],
             [inputs.Gid]);
         using var temporary = new TemporaryDirectory();
-        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
-        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
-        File.WriteAllText(outputPath, inputs.Ledger, new UTF8Encoding(false));
+        SyntheticBackfillFixture.WriteDirectory(temporary.Path, inputs.Ledger);
         var environment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(
@@ -164,7 +154,9 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.False(result.Success);
         Assert.Contains("scribe-definition-mismatch", result.Error, StringComparison.Ordinal);
-        Assert.Equal(inputs.Ledger, File.ReadAllText(outputPath));
+        Assert.Equal(
+            SyntheticBackfillFixture.AtomText(inputs.Ledger, CoverWorld.DefaultAtomId),
+            SyntheticBackfillFixture.ReadAtom(temporary.Path, CoverWorld.DefaultAtomId));
     }
 
     [Fact]
@@ -172,9 +164,7 @@ public sealed partial class ProductionEnvironmentTests
     {
         var inputs = CoverWorld.Materialize(new CoverSpec());
         using var temporary = new TemporaryDirectory();
-        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
-        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
-        File.WriteAllText(outputPath, inputs.Ledger, new UTF8Encoding(false));
+        SyntheticBackfillFixture.WriteDirectory(temporary.Path, inputs.Ledger);
         var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
 
         var result = environment.CoverAtom(CoverArgs(inputs));
@@ -182,10 +172,10 @@ public sealed partial class ProductionEnvironmentTests
         Assert.True(result.Success, result.Error);
         Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
         Assert.Contains("DIGEST_STATUS", result.Output, StringComparison.Ordinal);
-        var written = File.ReadAllText(outputPath);
-        Assert.NotEqual(inputs.Ledger, written);
+        var written = SyntheticBackfillFixture.ReadAtom(temporary.Path, CoverWorld.DefaultAtomId);
+        Assert.NotEqual(SyntheticBackfillFixture.AtomText(inputs.Ledger, CoverWorld.DefaultAtomId), written);
         var entry = Assert.Single(
-            BackfillInventoryLoader.Load(written).RequireDigestionEntries(),
+            BackfillInventoryLoader.LoadDirectory(temporary.Path).RequireDigestionEntries(),
             candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
         Assert.Equal(["D5/S0/Carrier/Probe.probe"], entry.CoverageGids.ToArray());
         Assert.Equal(DigestionMigrationState.Absorbed, entry.ProjectedStatus.Migration);
@@ -197,16 +187,16 @@ public sealed partial class ProductionEnvironmentTests
     {
         var inputs = CoverWorld.Materialize(new CoverSpec { VerifyScribe = false });
         using var temporary = new TemporaryDirectory();
-        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
-        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
-        File.WriteAllText(outputPath, inputs.Ledger, new UTF8Encoding(false));
+        SyntheticBackfillFixture.WriteDirectory(temporary.Path, inputs.Ledger);
         var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
 
         var result = environment.CoverAtom(CoverArgs(inputs));
 
         Assert.False(result.Success);
         Assert.Contains("COVER_INVALID", result.Error, StringComparison.Ordinal);
-        Assert.Equal(inputs.Ledger, File.ReadAllText(outputPath));
+        Assert.Equal(
+            SyntheticBackfillFixture.AtomText(inputs.Ledger, CoverWorld.DefaultAtomId),
+            SyntheticBackfillFixture.ReadAtom(temporary.Path, CoverWorld.DefaultAtomId));
     }
 
     [Fact]
@@ -214,27 +204,24 @@ public sealed partial class ProductionEnvironmentTests
     {
         var inputs = CoverWorld.Materialize(new CoverSpec());
         using var temporary = new TemporaryDirectory();
-        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
-        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
-        File.WriteAllText(outputPath, inputs.Ledger, new UTF8Encoding(false));
+        SyntheticBackfillFixture.WriteDirectory(temporary.Path, inputs.Ledger);
 
         var first = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files)
             .CoverAtom(CoverArgs(inputs));
 
         Assert.True(first.Success, first.Error);
-        var afterFirst = File.ReadAllText(outputPath);
-        Assert.NotEqual(inputs.Ledger, afterFirst);
+        var afterFirst = SyntheticBackfillFixture.ReadAtom(temporary.Path, CoverWorld.DefaultAtomId);
+        Assert.NotEqual(SyntheticBackfillFixture.AtomText(inputs.Ledger, CoverWorld.DefaultAtomId), afterFirst);
 
-        var replayFiles = new Dictionary<string, string>(inputs.Files, StringComparer.Ordinal)
-        {
-            [BackfillInventoryLoader.RelativePath] = afterFirst,
-        };
+        var replayFiles = SyntheticBackfillFixture.Expand(inputs.Files)
+            .ToDictionary(static pair => pair.Key, static pair => pair.Value, StringComparer.Ordinal);
+        replayFiles[SyntheticBackfillFixture.AtomPath(inputs.Ledger)] = afterFirst;
         var second = BuildCoverEnvironment(temporary.Path, inputs, replayFiles)
             .CoverAtom(CoverArgs(inputs));
 
         Assert.False(second.Success);
         Assert.Contains("already has coverage", second.Error, StringComparison.Ordinal);
-        Assert.Equal(afterFirst, File.ReadAllText(outputPath));
+        Assert.Equal(afterFirst, SyntheticBackfillFixture.ReadAtom(temporary.Path, CoverWorld.DefaultAtomId));
     }
 
     private static ProductionCliEnvironment BuildCoverEnvironment(

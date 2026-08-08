@@ -148,7 +148,7 @@ public sealed partial class ProductionEnvironmentTests
 
     private static void WriteFiles(string root, IReadOnlyDictionary<string, string> files)
     {
-        foreach (var (path, text) in files)
+        foreach (var (path, text) in SyntheticBackfillFixture.Expand(files))
         {
             var absolute = Path.Combine(root, path.Replace('/', Path.DirectorySeparatorChar));
             Directory.CreateDirectory(Path.GetDirectoryName(absolute)!);

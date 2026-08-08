@@ -12,7 +12,7 @@ internal sealed record BackfillInventoryValidationContext(
 
 internal static class BackfillInventoryRule
 {
-    private const string BackfillPath = BackfillInventoryLoader.RelativePath;
+    private const string BackfillPath = BackfillInventoryLoader.TicketIndexPath;
 
     private static readonly Regex CasePattern = new(
         "^D5-T[0-9]{4}$",

@@ -333,6 +333,19 @@ internal static class BackfillInventoryLoader
     internal const int SchemaVersion = 3;
     internal const string LedgerName = "theory-digestion-v1";
 
+    internal static bool IsCanonicalPath(string path)
+    {
+        if (string.Equals(path, TicketIndexPath, StringComparison.Ordinal)) return true;
+        if (!path.StartsWith(RootPath, StringComparison.Ordinal)) return false;
+        var parts = path[RootPath.Length..].Split('/');
+        if (parts.Length == 2 && parts[1] == "source.toml") return true;
+        if (parts.Length != 3 || !parts[2].EndsWith(".yaml", StringComparison.Ordinal)) return false;
+        var state = parts[1].Split('-');
+        return state.Length == 2
+            && state[0] is "residual" or "partial" or "absorbed"
+            && state[1] is "closed" or "tail" or "open";
+    }
+
     internal static BackfillInventoryDocument Load(string text)
     {
         if (YamlSubsetParser.Parse(text) is not Dictionary<string, object?> root)

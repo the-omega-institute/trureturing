@@ -26,8 +26,7 @@ public sealed class CensusDerivationTests
         var census = ReceiptFreeDocumentCatalog.Load(
             repositoryRoot,
             documents);
-        var receiptBoundDocumentGids = BackfillInventoryLoader.Load(File.ReadAllText(
-                Path.Combine(repositoryRoot, BackfillInventoryLoader.RelativePath)))
+        var receiptBoundDocumentGids = BackfillInventoryLoader.LoadDirectory(repositoryRoot)
             .RequireDigestionEntries()
             .SelectMany(static entry => entry.Receipts.Scribe)
             .Select(static receipt => ScribeEmissionAttestation.DocumentGid(receipt.Gid))
@@ -68,9 +67,7 @@ public sealed class CensusDerivationTests
         Directory.CreateDirectory(Path.Combine(repositoryRoot, "Meta"));
         try
         {
-            File.WriteAllText(
-                Path.Combine(repositoryRoot, BackfillInventoryLoader.RelativePath),
-                $$"""
+            WriteBackfillDirectory(repositoryRoot, $$"""
                 schema_version: 3
                 ledger: theory-digestion-v1
                 sources:
@@ -107,6 +104,16 @@ public sealed class CensusDerivationTests
         finally
         {
             Directory.Delete(repositoryRoot, recursive: true);
+        }
+    }
+
+    private static void WriteBackfillDirectory(string repositoryRoot, string legacy)
+    {
+        foreach (var entry in BackfillInventoryWriter.WriteDirectory(BackfillInventoryLoader.Load(legacy)))
+        {
+            var path = Path.Combine(repositoryRoot, entry.Path.Replace('/', Path.DirectorySeparatorChar));
+            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+            File.WriteAllBytes(path, entry.Bytes.AsSpan().ToArray());
         }
     }
 

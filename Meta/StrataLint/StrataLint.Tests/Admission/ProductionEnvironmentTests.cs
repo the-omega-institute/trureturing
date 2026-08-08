@@ -117,31 +117,20 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void CheckMapsUndecodableLegacyBoundaryToSl016RuleRejection()
+    public void CheckMapsMalformedAtomEntryToSl016RuleRejection()
     {
         using var temporary = new TemporaryDirectory();
         var fixture = new RuleFixture();
-        var atomizerId = SyntheticNumberedAtomizer.Id;
-        var baselineBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。old。\n");
-        var atom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, baselineBytes, DigestionTestSupport.Rules).Claims);
-        var inserted = Encoding.UTF8.GetBytes("界");
-        var currentBytes = baselineBytes[..(atom.EndByte - 1)]
-            .Concat(inserted)
-            .Concat(baselineBytes[(atom.EndByte - 1)..])
-            .ToArray();
-        var ledger = LegacyIngestLedger(atomizerId, atom).Replace(
-            $"atomizer: {atomizerId}",
-            $"atomizer: {AtomizerRegistry.NoAtomizerId}",
+        fixture.AddBackfillTargets();
+        SyntheticBackfillFixture.ExpandInPlace(fixture.Files);
+        SyntheticBackfillFixture.ExpandInPlace(fixture.Baseline);
+        var atomPath = fixture.Files.Keys.Single(static path =>
+            path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal)
+            && path.EndsWith(".yaml", StringComparison.Ordinal));
+        fixture.Files[atomPath] = fixture.Files[atomPath].Replace(
+            "fingerprints:\n",
+            "fingerprints: invalid\n",
             StringComparison.Ordinal);
-        var captured = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
-        fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
-        fixture.Baseline[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(baselineBytes);
-        fixture.Files[BackfillInventoryLoader.RelativePath] = ledger;
-        fixture.Baseline[BackfillInventoryLoader.RelativePath] = ledger;
-        fixture.Files.Remove(GoldenCorpus.FixtureCasPath);
-        fixture.Baseline.Remove(GoldenCorpus.FixtureCasPath);
-        fixture.Files[captured.RelativePath] = Encoding.UTF8.GetString(captured.Bytes.AsSpan());
-        fixture.Baseline[captured.RelativePath] = Encoding.UTF8.GetString(captured.Bytes.AsSpan());
         var currentRaw = Snapshot(fixture.Files);
         var baselineRaw = Snapshot(fixture.Baseline);
         var candidateReport = Path.Combine(temporary.Path, "candidate.json");
@@ -159,7 +148,7 @@ public sealed partial class ProductionEnvironmentTests
         var environment = new ProductionCliEnvironment(
             "/repo",
             new FakeRepositoryGateway(
-                RawChangeSet.Create([GoldenCorpus.FixtureDigestionSourcePath]),
+                RawChangeSet.Create([atomPath]),
                 currentRaw,
                 baselineRaw),
             new FakeLeanReportSource(null));
@@ -176,7 +165,6 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.Equal(1, exitCode);
         Assert.Contains("SL-016", console.Output, StringComparison.Ordinal);
-        Assert.Contains("run make ingest", console.Output, StringComparison.Ordinal);
         Assert.Contains("RULE_REJECTED", console.Output, StringComparison.Ordinal);
         Assert.DoesNotContain("INFRASTRUCTURE_FAILURE", console.Output, StringComparison.Ordinal);
         Assert.Equal(string.Empty, console.Error);
@@ -489,7 +477,8 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     private static RawRepositorySnapshot Snapshot(IReadOnlyDictionary<string, string> files) =>
-        RawRepositorySnapshot.Create(files.Select(pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
+        RawRepositorySnapshot.Create(SyntheticBackfillFixture.Expand(files)
+            .Select(pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;

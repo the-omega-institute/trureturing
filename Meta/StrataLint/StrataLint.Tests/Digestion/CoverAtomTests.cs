@@ -7,8 +7,8 @@ namespace StrataLint.Tests;
 
 // Phase 1 cover transaction gate matrix. cover binds one already-proven Lean
 // declaration to an existing open residual atom by writing coverage_gids +
-// coverage/scribe receipts, all-or-nothing. Every reject path must leave
-// Meta/BACKFILL.yaml byte-unchanged. The envelope / pre-committed-receipt /
+// coverage/scribe receipts, all-or-nothing. Every reject path must leave the
+// target atom file byte-unchanged. The envelope / pre-committed-receipt /
 // declaration-signature gates (spec §4a) live in the CoverAtomEnvelopeTests.cs
 // partial (kept there so this file stays under the SL-003 800-line cap).
 public sealed partial class CoverAtomTests
@@ -18,9 +18,7 @@ public sealed partial class CoverAtomTests
     {
         var inputs = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec());
         using var temporary = new TemporaryDirectory();
-        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
-        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
-        File.WriteAllText(outputPath, inputs.Ledger, new UTF8Encoding(false));
+        SyntheticBackfillFixture.WriteDirectory(temporary.Path, inputs.Ledger);
 
         var first = CoverWorld.Environment(temporary.Path, inputs, inputs.Files)
             .AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
@@ -34,11 +32,10 @@ public sealed partial class CoverAtomTests
         Assert.Contains("old_emission_sha256=sha256:bbbbbbbb", first.Output, StringComparison.Ordinal);
         Assert.Contains("new_emission_sha256=sha256:", first.Output, StringComparison.Ordinal);
         Assert.Contains("ledger_changed=true", first.Output, StringComparison.Ordinal);
-        var afterFirst = File.ReadAllText(outputPath);
+        var afterFirst = SyntheticBackfillFixture.ReadAtom(temporary.Path, CoverWorld.DefaultAtomId);
         Assert.True(inputs.VerifiedEmissions!.TryGet(
             inputs.Gid[..inputs.Gid.LastIndexOf('.')], out var verifiedRecord));
-        Assert.Equal(
-            inputs.Ledger
+        var replayLedger = inputs.Ledger
                 .Replace(
                     "sha256:" + new string('a', 64),
                     verifiedRecord.DefinitionSha256,
@@ -46,19 +43,21 @@ public sealed partial class CoverAtomTests
                 .Replace(
                     "sha256:" + new string('b', 64),
                     verifiedRecord.EmissionSha256,
-                    StringComparison.Ordinal),
+                    StringComparison.Ordinal);
+        Assert.Equal(
+            SyntheticBackfillFixture.AtomText(replayLedger, CoverWorld.DefaultAtomId),
             afterFirst);
 
         var replayFiles = new Dictionary<string, string>(inputs.Files, StringComparer.Ordinal)
         {
-            [BackfillInventoryLoader.RelativePath] = afterFirst,
+            [BackfillInventoryLoader.RelativePath] = replayLedger,
         };
         var second = CoverWorld.Environment(temporary.Path, inputs, replayFiles)
             .AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
 
         Assert.True(second.Success, second.Error);
         Assert.Contains("ledger_changed=false", second.Output, StringComparison.Ordinal);
-        Assert.Equal(afterFirst, File.ReadAllText(outputPath));
+        Assert.Equal(afterFirst, SyntheticBackfillFixture.ReadAtom(temporary.Path, CoverWorld.DefaultAtomId));
     }
 
     [Theory]
@@ -68,16 +67,15 @@ public sealed partial class CoverAtomTests
     {
         var inputs = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec());
         using var temporary = new TemporaryDirectory();
-        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
-        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
-        File.WriteAllText(outputPath, inputs.Ledger, new UTF8Encoding(false));
+        SyntheticBackfillFixture.WriteDirectory(temporary.Path, inputs.Ledger);
+        var before = SyntheticBackfillFixture.ReadAtom(temporary.Path, CoverWorld.DefaultAtomId);
 
         var result = CoverWorld.Environment(temporary.Path, inputs, inputs.Files).AlignScribeReceipt(
             ["--atom-id", atomId, "--gid", gid]);
 
         Assert.False(result.Success);
         Assert.Contains("ALIGN_SCRIBE_RECEIPT_INVALID", result.Error, StringComparison.Ordinal);
-        Assert.Equal(inputs.Ledger, File.ReadAllText(outputPath));
+        Assert.Equal(before, SyntheticBackfillFixture.ReadAtom(temporary.Path, CoverWorld.DefaultAtomId));
     }
 
     [Fact]
@@ -89,9 +87,7 @@ public sealed partial class CoverAtomTests
         };
         var inputs = CoverWorld.Materialize(spec);
         using var temporary = new TemporaryDirectory();
-        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
-        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
-        File.WriteAllText(outputPath, inputs.Ledger, new UTF8Encoding(false));
+        SyntheticBackfillFixture.WriteDirectory(temporary.Path, inputs.Ledger);
         var result = CoverWorld.Environment(temporary.Path, inputs, inputs.Files)
             .AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
 
@@ -107,7 +103,9 @@ public sealed partial class CoverAtomTests
                 "sha256:" + new string('b', 64),
                 verifiedRecord.EmissionSha256,
                 StringComparison.Ordinal);
-        Assert.Equal(expected, File.ReadAllText(outputPath));
+        Assert.Equal(
+            SyntheticBackfillFixture.AtomText(expected, CoverWorld.DefaultAtomId),
+            SyntheticBackfillFixture.ReadAtom(temporary.Path, CoverWorld.DefaultAtomId));
     }
 
     [Fact]
@@ -275,22 +273,21 @@ public sealed partial class CoverAtomTests
 
         Assert.False(result.Success);
         Assert.Contains("Closed", result.Error, StringComparison.Ordinal);
-        Assert.Contains("absorbed-tail", result.Error, StringComparison.Ordinal);
+        Assert.Contains("tail", result.Error, StringComparison.OrdinalIgnoreCase);
         Assert.Equal(before, after);
     }
 
     [Fact]
-    public void CoverAbortsWhenLedgerChangedUnderItBetweenReadAndWrite()
+    public void CoverDoesNotTouchSiblingAtomFile()
     {
-        // Compare-and-swap: the on-disk ledger no longer matches the bytes cover
-        // validated against (a concurrent cover deposited in between). cover must
-        // abort rather than silently overwrite the other deposit (lost update).
-        var inputs = CoverWorld.Materialize(new CoverSpec());
+        var spec = new CoverSpec
+        {
+            OtherAtomBinding = ("sibling", string.Empty),
+        };
+        var inputs = CoverWorld.Materialize(spec);
         using var temporary = new TemporaryDirectory();
-        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
-        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
-        var concurrent = inputs.Ledger + "\n# concurrent deposit\n";
-        File.WriteAllText(outputPath, concurrent, new UTF8Encoding(false));
+        SyntheticBackfillFixture.WriteDirectory(temporary.Path, inputs.Ledger);
+        var siblingBefore = SyntheticBackfillFixture.ReadAtom(temporary.Path, "sibling");
         var environment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(
@@ -304,23 +301,21 @@ public sealed partial class CoverAtomTests
             ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline",
                 "--envelope", inputs.EnvelopePath]);
 
-        Assert.False(result.Success);
-        Assert.Contains("changed under us", result.Error, StringComparison.Ordinal);
-        Assert.Equal(concurrent, File.ReadAllText(outputPath));
+        Assert.True(result.Success, result.Error);
+        Assert.Equal(siblingBefore, SyntheticBackfillFixture.ReadAtom(temporary.Path, "sibling"));
     }
 
     [Fact]
-    public void CoverAbortsWhenLedgerDeletedBetweenReadAndWrite()
+    public void CoverDoesNotTouchSourceMetadataOrTicketIndex()
     {
-        // Fail-closed: if the on-disk ledger disappeared between read and write
-        // (e.g. deleted by another actor), cover must abort — not create a fresh
-        // ledger and overwrite the missing deposit (no-silent-failure, first
-        // principle). The gateway still holds the ledger cover validated against.
         var inputs = CoverWorld.Materialize(new CoverSpec());
         using var temporary = new TemporaryDirectory();
-        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
-        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
-        Assert.False(File.Exists(outputPath));
+        SyntheticBackfillFixture.WriteDirectory(temporary.Path, inputs.Ledger);
+        var sourcePath = Path.Combine(temporary.Path, BackfillInventoryLoader.RootPath,
+            "fixture-source", "source.toml");
+        var ticketPath = Path.Combine(temporary.Path, BackfillInventoryLoader.TicketIndexPath);
+        var sourceBefore = File.ReadAllText(sourcePath);
+        var ticketBefore = File.ReadAllText(ticketPath);
         var environment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(
@@ -334,9 +329,9 @@ public sealed partial class CoverAtomTests
             ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline",
                 "--envelope", inputs.EnvelopePath]);
 
-        Assert.False(result.Success);
-        Assert.Contains("missing", result.Error, StringComparison.Ordinal);
-        Assert.False(File.Exists(outputPath));
+        Assert.True(result.Success, result.Error);
+        Assert.Equal(sourceBefore, File.ReadAllText(sourcePath));
+        Assert.Equal(ticketBefore, File.ReadAllText(ticketPath));
     }
 
     [Fact]
@@ -376,9 +371,7 @@ public sealed partial class CoverAtomTests
     {
         var inputs = spec.Materialize();
         using var temporary = new TemporaryDirectory();
-        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
-        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
-        File.WriteAllText(outputPath, inputs.Ledger, new UTF8Encoding(false));
+        SyntheticBackfillFixture.WriteDirectory(temporary.Path, inputs.Ledger);
         var environment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(
@@ -393,7 +386,11 @@ public sealed partial class CoverAtomTests
 
         var result = environment.CoverAtom(effectiveArgs);
 
-        return (result, File.ReadAllText(outputPath), inputs.Ledger);
+        var after = Encoding.UTF8.GetString(BackfillInventoryWriter.Write(
+            BackfillInventoryLoader.LoadDirectory(temporary.Path)).AsSpan());
+        var canonicalBefore = Encoding.UTF8.GetString(BackfillInventoryWriter.Write(
+            BackfillInventoryLoader.Load(inputs.Ledger)).AsSpan());
+        return (result, after, canonicalBefore);
     }
 }
 
@@ -522,7 +519,8 @@ internal static class CoverWorld
             new FakeScribeEmissionVerifier(inputs.VerifiedEmissions));
 
     internal static RawRepositorySnapshot Raw(IReadOnlyDictionary<string, string> files) =>
-        RawRepositorySnapshot.Create(files.Select(pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
+        RawRepositorySnapshot.Create(SyntheticBackfillFixture.Expand(files)
+            .Select(pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
 
     internal static CoverInputs Materialize(CoverSpec spec)
     {
@@ -699,9 +697,11 @@ internal static class CoverWorld
                 other.AtomId,
                 "theorem/sibling",
                 atom.Fingerprints,
-                ImmutableArray.Create(other.Gid),
-                "partial",
-                "closed",
+                string.IsNullOrEmpty(other.Gid)
+                    ? ImmutableArray<string>.Empty
+                    : ImmutableArray.Create(other.Gid),
+                "residual",
+                "open",
                 null,
                 null,
                 null,
@@ -771,18 +771,6 @@ internal static class CoverWorld
             builder.Append("          scribe: []\n");
         }
         builder.Append("          unresolved_subitems: []\n");
-        builder.Append("          chain_atoms: []\n");
-        if (tailAuthPath is not null && tailAuthSha is not null)
-        {
-            builder.Append("          tail_authorization:\n");
-            builder.Append($"            path: {tailAuthPath}\n");
-            builder.Append($"            sha256: {tailAuthSha}\n");
-        }
-        else
-        {
-            builder.Append("          tail_authorization: null\n");
-        }
-
         builder.Append("        status:\n");
         builder.Append($"          migration: {migration}\n");
         builder.Append($"          truth: {truth}\n");

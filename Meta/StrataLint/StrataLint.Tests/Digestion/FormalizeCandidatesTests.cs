@@ -318,8 +318,13 @@ public sealed class FormalizeCandidatesTests
 
         Assert.True(result.Success, result.Error);
         using var json = JsonDocument.Parse(result.Output);
+        var directoryBytes = BackfillInventoryWriter.WriteDirectory(BackfillInventoryLoader.Load(ledger))
+            .Where(static item => item.Path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal))
+            .OrderBy(static item => item.Path, StringComparer.Ordinal)
+            .SelectMany(static item => Encoding.UTF8.GetBytes(item.Path + "\n").Concat(item.Bytes))
+            .ToArray();
         Assert.Equal(
-            DigestionFingerprint.Compute(Encoding.UTF8.GetBytes(ledger)).RawSha256,
+            DigestionFingerprint.ComputeOpaque(directoryBytes).RawSha256,
             json.RootElement.GetProperty("ledger_sha256").GetString());
         var candidate = Assert.Single(json.RootElement.GetProperty("candidates").EnumerateArray());
         Assert.Equal(
@@ -432,11 +437,11 @@ public sealed class FormalizeCandidatesTests
         ledger ??= Ledger(entries);
         var files = new List<RawRepositoryEntry>
         {
-            RawRepositoryEntry.FromText(BackfillInventoryLoader.RelativePath, ledger),
             new(
                 TheoryAtomizerDataLoader.DataPath,
                 ImmutableArray.CreateRange(DigestionTestSupport.RulesBytes)),
         };
+        files.AddRange(BackfillInventoryWriter.WriteDirectory(BackfillInventoryLoader.Load(ledger)));
         foreach (var source in sources)
         {
             files.Add(new RawRepositoryEntry(
@@ -562,8 +567,6 @@ public sealed class FormalizeCandidatesTests
                 builder.AppendLine("          coverage: []");
                 builder.AppendLine("          scribe: []");
                 builder.AppendLine("          unresolved_subitems: []");
-                builder.AppendLine("          chain_atoms: []");
-                builder.AppendLine("          tail_authorization: null");
                 builder.AppendLine("        status:");
                 builder.AppendLine($"          migration: {entry.Migration}");
                 builder.AppendLine($"          truth: {entry.Truth}");

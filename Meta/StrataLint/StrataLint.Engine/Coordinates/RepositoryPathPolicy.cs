@@ -57,7 +57,7 @@ internal static partial class RepositoryPathPolicy
                 : Sl000(value, "unknown agent charter artifact");
         }
 
-        if (value is "Meta/domains.yaml" or "Meta/BACKFILL.yaml" or "Meta/registry.yaml"
+        if (value is "Meta/domains.yaml" or "Meta/registry.yaml"
             or LibraryMapPath or "Library/queries.yaml" or AssumptionRegistryPath
             or "Meta/split.py" or "Meta/papergen"
             or "Golden/fixture-registry.yaml" or "Golden/values-kernels.toml"
@@ -67,6 +67,7 @@ internal static partial class RepositoryPathPolicy
             or ".github/scripts/baseline-admission.sh" or HarnessGatePath
             || value.StartsWith("Meta/StrataLint/", StringComparison.Ordinal)
             || DigestionCasStore.IsCanonicalPath(value)
+            || BackfillInventoryLoader.IsCanonicalPath(value)
             || DigestionFormalizationReceipt.IsCanonicalPath(value)
             || value.StartsWith(".fkst/", StringComparison.Ordinal)
             || value.StartsWith("packages/", StringComparison.Ordinal)

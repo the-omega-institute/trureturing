@@ -23,7 +23,7 @@ public sealed class DigestionCasStoreTests
     }
 
     [Fact]
-    public void UnreferencedBlobIsRejectedAsAnOrphan()
+    public void UnreferencedHistoricalBlobDoesNotInvalidateCurrentInventory()
     {
         var referenced = DigestionCasStore.Capture(Encoding.UTF8.GetBytes("referenced atom\n"));
         var orphan = DigestionCasStore.Capture(Encoding.UTF8.GetBytes("orphan atom\n"));
@@ -34,7 +34,9 @@ public sealed class DigestionCasStoreTests
 
         var evaluation = DigestionCasStore.Evaluate(document, snapshot);
 
-        Assert.Contains($"orphan CAS blob: {orphan.RelativePath}", evaluation.Findings);
+        Assert.Empty(evaluation.Findings);
+        Assert.Contains("synthetic-atom", evaluation.ValidAtomIds);
+        Assert.True(snapshot.TryGetFile(orphan.RelativePath, out _));
     }
 
     [Fact]

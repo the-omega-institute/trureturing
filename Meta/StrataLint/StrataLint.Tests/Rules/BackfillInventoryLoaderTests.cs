@@ -11,7 +11,6 @@ public sealed class BackfillInventoryLoaderTests
     {
         var fields = LoaderEntryFields().ToHashSet(StringComparer.Ordinal);
         fields.Remove("cas_ref");
-        fields.Remove("boundary");
 
         var exception = Assert.Throws<FormatException>(() =>
             BackfillInventoryLoader.Load(EntryFixture(fields)).RequireDigestionEntries());
@@ -35,23 +34,11 @@ public sealed class BackfillInventoryLoaderTests
             .Where(field => accepted.All(fields => fields.Contains(field)))
             .Order(StringComparer.Ordinal)
             .ToArray();
-        var exclusivePair = Assert.Single(
-            entryFields.SelectMany((left, index) => entryFields[(index + 1)..]
-                .Select(right => (Left: left, Right: right))),
-            pair =>
-                accepted.All(fields => fields.Contains(pair.Left) ^ fields.Contains(pair.Right))
-                && accepted.Any(fields => fields.Contains(pair.Left))
-                && accepted.Any(fields => fields.Contains(pair.Right)));
-        var exclusive = new[] { exclusivePair.Left, exclusivePair.Right }
-            .Order(StringComparer.Ordinal)
-            .ToArray();
         var optional = entryFields
             .Except(required, StringComparer.Ordinal)
-            .Except(exclusive, StringComparer.Ordinal)
             .Order(StringComparer.Ordinal)
             .ToArray();
         var actual = $"required={string.Join(',', required)};"
-            + $"exactly_one={string.Join('|', exclusive)};"
             + $"optional={(optional.Length == 0 ? "-" : string.Join(',', optional))}";
 
         var root = FindRepositoryRoot();
@@ -117,10 +104,7 @@ public sealed class BackfillInventoryLoaderTests
                 atomizer: none
                 entries:
                   - atom_id: synthetic-atom
-                    boundary:
-                      ast_path: manual/synthetic
-                      start_byte: 0
-                      end_byte: 1
+                    ast_path: manual/synthetic
                     fingerprints:
                       raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
                       normalized_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
@@ -248,28 +232,24 @@ public sealed class BackfillInventoryLoaderTests
     public void CanonicalWriterRoundTripsTheCurrentLedgerByteExact()
     {
         var root = FindRepositoryRoot();
-        var path = Path.Combine(root, BackfillInventoryLoader.RelativePath);
-        var expected = File.ReadAllBytes(path);
-
-        var actual = BackfillInventoryWriter.Write(
-            BackfillInventoryLoader.Load(File.ReadAllText(path)));
-
-        Assert.Equal(expected, actual.ToArray());
+        var document = BackfillInventoryLoader.LoadDirectory(root);
+        foreach (var entry in BackfillInventoryWriter.WriteDirectory(document))
+        {
+            var path = Path.Combine(root, entry.Path.Replace('/', Path.DirectorySeparatorChar));
+            Assert.Equal(File.ReadAllBytes(path), entry.Bytes.ToArray());
+        }
     }
 
     [Fact]
     public void CanonicalLedgerE2StoresEveryReceiptPreimageInCas()
     {
         var root = FindRepositoryRoot();
-        var ledgerPath = Path.Combine(root, BackfillInventoryLoader.RelativePath);
-        var document = BackfillInventoryLoader.Load(File.ReadAllText(ledgerPath));
+        var document = BackfillInventoryLoader.LoadDirectory(root);
         var entries = document.RequireDigestionEntries();
 
         Assert.NotEmpty(entries);
         Assert.Contains(document.RequireDigestionSources(), static source =>
             AtomizerRegistry.IsRegistered(source.Atomizer));
-        Assert.Contains(document.RequireDigestionSources(), static source =>
-            source.Atomizer == AtomizerRegistry.NoAtomizerId);
         Assert.Empty(entries
             .Select(entry => (
                 Entry: entry,
@@ -296,8 +276,7 @@ public sealed class BackfillInventoryLoaderTests
     public void RemarkBatchUpgradeCandidatesRemainResidualWithNamedUnresolvedClaims()
     {
         var root = FindRepositoryRoot();
-        var ledgerPath = Path.Combine(root, BackfillInventoryLoader.RelativePath);
-        var entries = BackfillInventoryLoader.Load(File.ReadAllText(ledgerPath))
+        var entries = BackfillInventoryLoader.LoadDirectory(root)
             .RequireDigestionEntries();
         string[] expectedPaths =
         [
@@ -387,14 +366,6 @@ public sealed class BackfillInventoryLoaderTests
             entry.AppendLine("        ast_path: theorem/1.1");
         }
 
-        if (fields.Contains("boundary"))
-        {
-            entry.AppendLine("        boundary:");
-            entry.AppendLine("          ast_path: theorem/1.1");
-            entry.AppendLine("          start_byte: 0");
-            entry.AppendLine("          end_byte: 1");
-        }
-
         if (fields.Contains("fingerprints"))
         {
             entry.AppendLine("        fingerprints:");
@@ -418,8 +389,6 @@ public sealed class BackfillInventoryLoaderTests
             entry.AppendLine("          coverage: []");
             entry.AppendLine("          scribe: []");
             entry.AppendLine("          unresolved_subitems: []");
-            entry.AppendLine("          chain_atoms: []");
-            entry.AppendLine("          tail_authorization: null");
         }
 
         if (fields.Contains("status"))

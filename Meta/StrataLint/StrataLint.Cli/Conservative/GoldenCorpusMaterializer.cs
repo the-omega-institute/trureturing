@@ -131,9 +131,9 @@ internal static partial class GoldenCorpusMaterializer
         state.Apply(source.Name, source.BaselineMutations, baseline: true);
         state.Apply(source.Name, source.BaselineMutations, baseline: false);
         state.Apply(source.Name, source.Mutations, baseline: false);
+        state.ExpandBackfill();
         return state;
     }
-
     private static ImmutableArray<ConservativeCorpusFile> Files(
         IReadOnlyDictionary<string, string> files,
         IDictionary<string, ConservativeCorpusObject> objects)
@@ -232,7 +232,6 @@ internal static partial class GoldenCorpusMaterializer
             JsonSerializer.SerializeToElement(CanonicalCase(item, includeRoot: false)));
         return ContentRoot(bytes.AsSpan());
     }
-
     private sealed class GoldenFixtureState
     {
         private GoldenFixtureState(
@@ -366,6 +365,20 @@ internal static partial class GoldenCorpusMaterializer
                 }
 
                 files[BackfillPath] = string.Join('\n', normalized);
+            }
+        }
+
+        internal void ExpandBackfill()
+        {
+            foreach (var files in new[] { Files, Baseline })
+            {
+                var legacy = files[BackfillPath];
+                files.Remove(BackfillPath);
+                foreach (var entry in BackfillInventoryWriter.WriteDirectory(
+                             BackfillInventoryLoader.Load(legacy)))
+                {
+                    files.TryAdd(entry.Path, Encoding.UTF8.GetString(entry.Bytes.AsSpan()));
+                }
             }
         }
 

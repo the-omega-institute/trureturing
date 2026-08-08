@@ -94,7 +94,11 @@ internal sealed partial class RuleFixture
             case "header": Files[RingPath] = "def noHeader : Nat := 0\n"; break;
             case "task": AddMalformedTask(); break;
             case "formula": AddIllegalFormula(); break;
-            case "backfill": Files["Meta/BACKFILL.yaml"] = Files["Meta/BACKFILL.yaml"].Replace("schema_version: 3", "schema_version: 2", StringComparison.Ordinal); break;
+            case "backfill":
+                SyntheticBackfillFixture.ExpandInPlace(Files);
+                var sourceMetadata = Files.Keys.Single(static path => path.EndsWith("/source.toml", StringComparison.Ordinal));
+                Files[sourceMetadata] = "schema_version = \"2\"\n";
+                break;
             case "query": Files["Library/queries.yaml"] = "schema_version: 1\nqueries:\n  - id: D5-Q0099\n    target_gid: D5/S0/Carrier/Ring\n"; break;
             case "values": Files["Evidence/D5/values.result.json"] = "{\"D5/sample\": {\"status\": \"verified\"}}\n"; break;
             case "anomaly": Files["Evidence/D5/S0/Carrier/Result.run.json"] = "{\"anomaly\": \"fixture drift\"}\n"; break;
@@ -400,7 +404,8 @@ internal sealed partial class RuleFixture
 
     private static RepositorySnapshot Decode(IReadOnlyDictionary<string, string> files)
     {
-        var raw = RawRepositorySnapshot.Create(files.Select(pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
+        var raw = RawRepositorySnapshot.Create(SyntheticBackfillFixture.Expand(files)
+            .Select(pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
         return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
     }
 

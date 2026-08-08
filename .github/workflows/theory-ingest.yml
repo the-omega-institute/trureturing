@@ -54,7 +54,7 @@ jobs:
           bad=()
           while IFS= read -r -d '' path; do
             case "$path" in
-              docs/develop/theory/*|Meta/BACKFILL.yaml|Meta/Digestion/atoms/*|Generated/echo-residual-summary.md) ;;
+              docs/develop/theory/*|Meta/Digestion/backfill/*|Meta/Digestion/ticket-index.toml|Meta/Digestion/atoms/*|Generated/echo-residual-summary.md) ;;
               *) bad+=("$path") ;;
             esac
           done < <(git -C candidate diff --name-only --no-renames -z "$BASE_SHA...$HEAD_SHA")
@@ -192,13 +192,13 @@ jobs:
           git clean -fd -- Meta/StrataLint
           changed="$(git status --porcelain)"
           if [ -z "$changed" ]; then echo "ingest no-op"; exit 0; fi
-          bad="$(git status --porcelain | grep -vE '^.. (Meta/BACKFILL\.yaml|Meta/Digestion/atoms/.*|Generated/echo-residual-summary\.md)$' || true)"
+          bad="$(git status --porcelain | grep -vE '^.. (Meta/Digestion/backfill/.*|Meta/Digestion/ticket-index\.toml|Meta/Digestion/atoms/.*|Generated/echo-residual-summary\.md)$' || true)"
           if [ -n "$bad" ]; then
             echo "::error::ingest touched paths outside whitelist:"; echo "$bad"; exit 1
           fi
           git config user.name "theory-ingest-bot"
           git config user.email "theory-ingest-bot@users.noreply.github.com"
-          git add Meta/BACKFILL.yaml Meta/Digestion/atoms Generated/echo-residual-summary.md
+          git add Meta/Digestion/backfill Meta/Digestion/ticket-index.toml Meta/Digestion/atoms Generated/echo-residual-summary.md
           git commit -m "chore(digestion): auto-ingest theory update [theory-ingest-bot]"
           gh auth setup-git
           git push origin HEAD:${{ github.event.pull_request.head.ref }}

@@ -380,8 +380,8 @@ public sealed partial class DigestionLedgerTests
                 $"atomizer: {AtomizerRegistry.NoAtomizerId}",
                 StringComparison.Ordinal)
             .Replace(
-                syntheticAtom.Fingerprints.RawSha256,
-                "sha256:" + new string('0', 64),
+                $"raw_sha256: {syntheticAtom.Fingerprints.RawSha256}",
+                $"raw_sha256: sha256:{new string('0', 64)}",
                 StringComparison.Ordinal);
         var snapshot = Snapshot(
             ("docs/source.md", source),

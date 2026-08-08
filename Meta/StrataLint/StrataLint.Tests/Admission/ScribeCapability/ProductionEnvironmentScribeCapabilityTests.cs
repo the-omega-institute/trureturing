@@ -29,7 +29,7 @@ public sealed partial class ProductionEnvironmentTests
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        var canonicalLedger = fixture.Files[BackfillInventoryLoader.RelativePath];
+        var canonicalLedger = fixture.Files["Meta/BACKFILL.yaml"];
         var ticketIndex = canonicalLedger[canonicalLedger.IndexOf("ticket_index:", StringComparison.Ordinal)..];
         var atomizerId = SyntheticNumberedAtomizer.Id;
         var sourceBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。covered。\n");
@@ -87,8 +87,8 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Baseline.Remove(GoldenCorpus.FixtureCasPath);
         fixture.Files[captured.RelativePath] = cas;
         fixture.Baseline[captured.RelativePath] = cas;
-        fixture.Files[BackfillInventoryLoader.RelativePath] = ledger;
-        fixture.Baseline[BackfillInventoryLoader.RelativePath] = ledger;
+        fixture.Files["Meta/BACKFILL.yaml"] = ledger;
+        fixture.Baseline["Meta/BACKFILL.yaml"] = ledger;
         fixture.Files[definitionPath] = definition;
         fixture.Baseline[definitionPath] = definition;
         fixture.Files[emissionPath] = emission;
@@ -156,7 +156,7 @@ public sealed partial class ProductionEnvironmentTests
             Encoding.UTF8.GetBytes(changedEmission)).RawSha256;
         var changedFiles = new Dictionary<string, string>(fixture.Files, StringComparer.Ordinal)
         {
-            [BackfillInventoryLoader.RelativePath] = ledger.Replace(
+            ["Meta/BACKFILL.yaml"] = ledger.Replace(
                 emissionHash,
                 changedEmissionHash,
                 StringComparison.Ordinal),
@@ -171,7 +171,7 @@ public sealed partial class ProductionEnvironmentTests
         var changedLean = Assert.IsType<LeanValidationOutcome.Accepted>(
             LeanClosureValidator.Validate(changedSnapshot, currentReport)).Capability;
         var changedStatus = Assert.Single(DigestionStatusEvaluator.Evaluate(
-            BackfillInventoryLoader.Load(changedFiles[BackfillInventoryLoader.RelativePath]),
+            BackfillInventoryLoader.Load(changedFiles["Meta/BACKFILL.yaml"]),
             changedSnapshot,
             changedLean,
             verifiedScribeEmissions,

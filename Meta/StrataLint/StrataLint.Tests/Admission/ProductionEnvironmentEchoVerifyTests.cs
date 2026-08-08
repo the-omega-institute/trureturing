@@ -160,12 +160,19 @@ public sealed partial class ProductionEnvironmentTests
 
         if (changeResidualSummary)
         {
-            var backfillPath = Path.Combine(repository.Path, "Meta", "BACKFILL.yaml");
+            var relativeBackfillPath = SyntheticBackfillFixture.AtomPath(
+                fixture.Files["Meta/BACKFILL.yaml"]);
+            var backfillPath = Path.Combine(repository.Path,
+                relativeBackfillPath.Replace('/', Path.DirectorySeparatorChar));
             var backfill = File.ReadAllText(backfillPath, Encoding.UTF8).Replace(
-                "          unresolved_subitems: []",
-                "          unresolved_subitems:\n            - newly-open",
+                $"cas_ref: {GoldenCorpus.FixtureCasReference}\n",
+                $"cas_ref: {GoldenCorpus.FixtureCasReference}\nreceipts:\n"
+                + "  coverage: []\n  scribe: []\n  unresolved_subitems:\n    - newly-open\n",
                 StringComparison.Ordinal);
-            Assert.NotEqual(fixture.Files["Meta/BACKFILL.yaml"], backfill);
+            Assert.NotEqual(
+                SyntheticBackfillFixture.AtomText(
+                    fixture.Files["Meta/BACKFILL.yaml"], "fixture-atom"),
+                backfill);
             File.WriteAllText(backfillPath, backfill, new UTF8Encoding(false));
         }
         else
@@ -185,7 +192,7 @@ public sealed partial class ProductionEnvironmentTests
 
     private static void WriteFixture(string root, IReadOnlyDictionary<string, string> files)
     {
-        foreach (var (relativePath, content) in files)
+        foreach (var (relativePath, content) in SyntheticBackfillFixture.Expand(files))
         {
             var path = Path.Combine(root, relativePath);
             Directory.CreateDirectory(Path.GetDirectoryName(path)!);

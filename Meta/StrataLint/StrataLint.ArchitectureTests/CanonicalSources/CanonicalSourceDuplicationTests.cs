@@ -85,10 +85,14 @@ public sealed class CanonicalSourceDuplicationTests
             Directory.CreateDirectory(root);
             Git(root, "init", "--initial-branch=dev");
             Directory.CreateDirectory(Path.Combine(root, "Meta", "StrataLint"));
+            var sourceDirectory = Path.Combine(root, "Meta", "Digestion", "backfill", "synthetic-source");
+            Directory.CreateDirectory(sourceDirectory);
             File.WriteAllText(
-                Path.Combine(root, "Meta", "BACKFILL.yaml"),
-                "schema_version: 3\nledger: theory-digestion-v1\nsources: []\n"
-                + "ticket_index:\n  - case_id: SYNTHETIC-CASE\n    gid: synthetic/gid\n");
+                Path.Combine(sourceDirectory, "source.toml"),
+                "source_id = \"synthetic-source\"\npath = \"synthetic/source.md\"\natomizer = \"none\"\n");
+            File.WriteAllText(
+                Path.Combine(root, "Meta", "Digestion", "ticket-index.toml"),
+                "SYNTHETIC-CASE = \"synthetic/gid\"\n");
             var repositoryRoot = RepositoryLayout.FindRoot();
             File.Copy(
                 Path.Combine(repositoryRoot, "Meta", "registry.yaml"),
@@ -163,7 +167,7 @@ public sealed class CanonicalSourceDuplicationTests
             source,
             tickets));
 
-        Assert.Contains("Meta/BACKFILL.yaml", finding.Message, StringComparison.Ordinal);
+        Assert.Contains("digestion backfill", finding.Message, StringComparison.Ordinal);
     }
 
     [Fact]

@@ -8,7 +8,7 @@ internal static partial class RepositoryRules
     private static bool CapacityScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
         !artifact.Path.Value.StartsWith("docs/develop/", StringComparison.Ordinal)
         && artifact.Path.Value != "lake-manifest.json"
-        && artifact.Path.Value != BackfillInventoryLoader.RelativePath;
+        && !BackfillInventoryLoader.IsCanonicalPath(artifact.Path.Value);
 
     private static bool Formal(RepositoryFile artifact, RuleApplicabilityContext context) =>
         artifact.Path.Value.StartsWith("D5/", StringComparison.Ordinal)
@@ -50,7 +50,7 @@ internal static partial class RepositoryRules
     private static bool AllArtifacts(RepositoryFile artifact, RuleApplicabilityContext context) => true;
 
     private static bool BackfillScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
-        artifact.Path.Value == "Meta/BACKFILL.yaml";
+        BackfillInventoryLoader.IsCanonicalPath(artifact.Path.Value);
 
     private static bool LiteratureScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
         artifact.Path.Value == "Library/queries.yaml";
