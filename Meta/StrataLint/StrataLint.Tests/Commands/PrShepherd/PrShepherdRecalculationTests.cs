@@ -6,7 +6,7 @@ namespace StrataLint.Tests;
 public sealed partial class PrShepherdRecalculationTests
 {
     private static readonly string DerivedConflictPath =
-        string.Join('/', "Evidence", "D5", "values.json");
+        string.Join('/', "Meta", "StrataLint", "Golden", "Frozen", "events.jsonl");
     private const string ShepherdScriptPath = "Meta/StrataLint/scripts/pr-shepherd.sh";
     private const string ShepherdLeaseScriptPath =
         "Meta/StrataLint/scripts/shepherd/pr-shepherd-lease.sh";

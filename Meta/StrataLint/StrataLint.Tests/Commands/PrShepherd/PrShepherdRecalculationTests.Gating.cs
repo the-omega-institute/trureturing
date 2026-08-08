@@ -116,14 +116,17 @@ public sealed partial class PrShepherdRecalculationTests
     }
 
     [Fact]
-    public void DerivedConflictClassifierCoversOnlyRetainedBaseJudgeProjections()
+    public void DerivedConflictClassifierRetainsOnlyFrozenLedgerCompensation()
     {
         var script = ReadShepherdScripts();
 
         Assert.DoesNotContain("Meta/StrataLint/Generated/*", script, StringComparison.Ordinal);
-        Assert.Contains(string.Join('/', "Evidence", "D5", "values.json"), script, StringComparison.Ordinal);
-        Assert.Contains(string.Join('/', "Meta", "StrataLint", "Generated", "anchor-catalog.v1.json"), script, StringComparison.Ordinal);
-        Assert.Contains(string.Join('/', "Meta", "StrataLint", "Generated", "scribe-emissions.v1.json"), script, StringComparison.Ordinal);
+        var classifier = script[script.IndexOf("is_derived_conflict()", StringComparison.Ordinal)..];
+        classifier = classifier[..classifier.IndexOf("branch_slug()", StringComparison.Ordinal)];
+        Assert.DoesNotContain(string.Join('/', "Evidence", "D5", "values.json"), classifier, StringComparison.Ordinal);
+        Assert.DoesNotContain(string.Join('/', "Meta", "StrataLint", "Generated", "anchor-catalog.v1.json"), classifier, StringComparison.Ordinal);
+        Assert.DoesNotContain(string.Join('/', "Meta", "StrataLint", "Generated", "scribe-emissions.v1.json"), classifier, StringComparison.Ordinal);
+        Assert.Contains("$FROZEN_LEDGER_PATH", classifier, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -154,7 +157,7 @@ public sealed partial class PrShepherdRecalculationTests
         Assert.NotEqual(fixture.GithubBaseRefOid, fixture.BaseHead);
         Assert.NotEqual(fixture.OriginalHead, fixture.RemoteHead());
         Assert.Equal(
-            ["worktree", "lean-report", "emit", "ingest", "echo-verify", "ledger-append", "emit", "emit-check", "push"],
+            ["worktree", "lean-report", "ledger-append", "lean-report", "ledger-reattest", "emit", "ingest", "echo-verify", "emit", "emit-check", "push"],
             fixture.MutationCalls());
         Assert.Contains("RECALCULATE -> 本地 merge+regen+push 完成", result.Log);
     }

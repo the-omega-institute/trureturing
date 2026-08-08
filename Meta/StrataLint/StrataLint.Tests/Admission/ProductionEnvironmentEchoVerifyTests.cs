@@ -44,7 +44,7 @@ public sealed partial class ProductionEnvironmentTests
         using var temporary = new TemporaryDirectory();
         var candidatePath = Path.Combine(temporary.Path, "echo-review.md");
         var emitted = environment.EchoVerify(["--emit", "--base", "baseline"]);
-        Assert.Equal(0, emitted.ExitCode);
+        Assert.True(emitted.ExitCode == 0, emitted.Error);
 
         File.WriteAllText(candidatePath, emitted.Output, new UTF8Encoding(false));
         var exact = environment.EchoVerify(["--file", candidatePath, "--base", "baseline"]);
@@ -151,12 +151,13 @@ public sealed partial class ProductionEnvironmentTests
             repository.Path,
             new GitRepositoryGateway(repository.Path),
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
-            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty),
+            useRunLocalOverlay: false);
         var dirtyPath = Path.Combine(repository.Path, "echo-emit-sentinel.tmp");
         File.WriteAllText(dirtyPath, "emit against A\n", new UTF8Encoding(false));
         var emitted = environment.EchoVerify(["--emit", "--base", baseOid]);
         File.Delete(dirtyPath);
-        Assert.Equal(0, emitted.ExitCode);
+        Assert.True(emitted.ExitCode == 0, emitted.Error);
 
         if (changeResidualSummary)
         {
@@ -192,6 +193,7 @@ public sealed partial class ProductionEnvironmentTests
             File.WriteAllText(path, content, new UTF8Encoding(false));
         }
     }
+
 
     private sealed record RealGitEchoRoundTrip(
         string BaseOid,

@@ -21,14 +21,16 @@ public sealed partial class ProductionEnvironmentTests
         var environment = new ProductionCliEnvironment(
             candidate.Path,
             new GitRepositoryGateway(candidate.Path),
-            new FakeLeanReportSource(null));
+            new FakeLeanReportSource(null),
+            scribeEmissionVerifier: null,
+            useRunLocalOverlay: false);
 
         Assert.Throws<InvalidOperationException>(() =>
             new GitRepositoryGateway(candidate.Path).ResolveFrozenRevision(invocation.EvidenceCommit));
 
         var outcome = environment.Check(invocation.Arguments);
 
-        Assert.IsType<AdmissionOutcome.Admitted>(outcome);
+        Assert.True(outcome is AdmissionOutcome.Admitted, outcome.ToString());
     }
 
     [Fact]
@@ -45,10 +47,13 @@ public sealed partial class ProductionEnvironmentTests
         var environment = new ProductionCliEnvironment(
             candidate.Path,
             new GitRepositoryGateway(candidate.Path),
-            new FakeLeanReportSource(null));
+            new FakeLeanReportSource(null),
+            scribeEmissionVerifier: null,
+            useRunLocalOverlay: false);
 
         var outcome = environment.Check(invocation.Arguments);
 
+        Assert.True(outcome is AdmissionOutcome.RuleRejected, outcome.ToString());
         var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
         var diagnostic = Assert.Single(rejected.Diagnostics);
         Assert.Equal(RuleId.CreateKnown(8), diagnostic.RuleId);

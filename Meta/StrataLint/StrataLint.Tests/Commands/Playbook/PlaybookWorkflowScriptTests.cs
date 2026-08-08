@@ -18,9 +18,9 @@ public sealed class PlaybookWorkflowScriptTests
 
         Assert.DoesNotContain("Meta/StrataLint/Generated/*", classifier, StringComparison.Ordinal);
         Assert.DoesNotContain("Generated/*", classifier, StringComparison.Ordinal);
-        Assert.Contains(string.Join('/', "Evidence", "D5", "values.json"), classifier, StringComparison.Ordinal);
-        Assert.Contains(string.Join('/', "Meta", "StrataLint", "Generated", "anchor-catalog.v1.json"), classifier, StringComparison.Ordinal);
-        Assert.Contains(string.Join('/', "Meta", "StrataLint", "Generated", "scribe-emissions.v1.json"), classifier, StringComparison.Ordinal);
+        Assert.DoesNotContain(string.Join('/', "Evidence", "D5", "values.json"), classifier, StringComparison.Ordinal);
+        Assert.DoesNotContain(string.Join('/', "Meta", "StrataLint", "Generated", "anchor-catalog.v1.json"), classifier, StringComparison.Ordinal);
+        Assert.DoesNotContain(string.Join('/', "Meta", "StrataLint", "Generated", "scribe-emissions.v1.json"), classifier, StringComparison.Ordinal);
         Assert.Contains("$FROZEN_LEDGER_PATH", classifier, StringComparison.Ordinal);
     }
 

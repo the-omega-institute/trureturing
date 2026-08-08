@@ -12,7 +12,8 @@ internal static class EchoVerifyCommand
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
         IScribeEmissionVerifier scribeEmissionVerifier,
-        IReadOnlyList<string> arguments)
+        IReadOnlyList<string> arguments,
+        bool useRunLocalOverlay = true)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(repository);
@@ -29,10 +30,12 @@ internal static class EchoVerifyCommand
             }
 
             var summary = DigestStatusCommand.Run(
+                repositoryRoot,
                 repository,
                 leanReportSource,
                 scribeEmissionVerifier,
-                ["--residual-summary", "--base", prepared.Revision]);
+                ["--residual-summary", "--base", prepared.Revision],
+                useRunLocalOverlay);
             if (!summary.Success)
             {
                 return new ExplicitCommandResult(

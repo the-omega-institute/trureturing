@@ -111,11 +111,13 @@ public sealed partial class PrShepherdRecalculationTests
         AssertBounded(calls, "git", "fetch", "300");
         AssertBounded(calls, "git", "checkout", "300");
         AssertBounded(calls, "git", "merge", "300");
-        AssertBounded(calls, "build", "lean-report", "1800");
+        AssertBounded(calls, "build", "ledger-base-report", "1800");
+        AssertBounded(calls, "build", "ledger-candidate-report", "1800");
         AssertBounded(calls, "build", "emit", "1800");
         AssertBounded(calls, "build", "ingest", "1800");
         AssertBounded(calls, "build", "echo-verify", "1800");
         AssertBounded(calls, "build", "ledger-append", "1800");
+        AssertBounded(calls, "build", "ledger-reattest", "1800");
         AssertBounded(calls, "build", "emit-check", "1800");
         AssertBounded(calls, "git", "add", "300");
         AssertBounded(calls, "git", "commit", "300");

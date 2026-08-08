@@ -61,7 +61,7 @@ public sealed class FileMapPolicyTests
     }
 
     [Fact]
-    public void PraContractCutsOnlyEngineIndependentAggregates()
+    public void PraContractCutsAllReceiptBackedAggregates()
     {
         var root = RepositoryLayout.FindRoot();
         var manifest = FileMapLoader.LoadRepository(root);
@@ -76,22 +76,16 @@ public sealed class FileMapPolicyTests
             "Generated/FILEMAP.md",
             "Generated/echo-residual-summary.md",
             "Generated/truth-graph.v1.json",
+            "Evidence/D5/values.json",
+            "Meta/StrataLint/Generated/anchor-catalog.v1.json",
+            "Meta/StrataLint/Generated/scribe-emissions.v1.json",
         };
-        var kept = new[] { "A-VALUES", "A-ANCHOR", "A-SCRIBE" }
-            .Select(id => Assert.Single(manifest.Entries, entry => entry.ArtifactId == id).Pattern)
-            .ToArray();
 
         Assert.All(cut, path =>
         {
             Assert.Equal("run-local", Assert.Single(manifest.Match(path)).RuntimeDisposition);
             Assert.DoesNotContain(path, tracked);
             Assert.Contains('/' + path, ignores);
-        });
-        Assert.All(kept, path =>
-        {
-            Assert.Equal("committed-source", Assert.Single(manifest.Match(path)).RuntimeDisposition);
-            Assert.Contains(path, tracked);
-            Assert.DoesNotContain('/' + path, ignores);
         });
     }
 

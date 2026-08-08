@@ -51,6 +51,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
     private readonly IRepositoryGateway repository;
     private readonly ILeanReportSource leanReportSource;
     private readonly IScribeEmissionVerifier? scribeEmissionVerifier;
+    private readonly bool useRunLocalOverlay;
 
     internal ProductionCliEnvironment(string repositoryRoot)
         : this(
@@ -73,12 +74,14 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         string repositoryRoot,
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
-        IScribeEmissionVerifier? scribeEmissionVerifier)
+        IScribeEmissionVerifier? scribeEmissionVerifier,
+        bool useRunLocalOverlay = true)
     {
         this.repositoryRoot = Path.GetFullPath(repositoryRoot);
         this.repository = repository;
         this.leanReportSource = leanReportSource;
         this.scribeEmissionVerifier = scribeEmissionVerifier;
+        this.useRunLocalOverlay = useRunLocalOverlay;
     }
 
     public AdmissionOutcome Check(IReadOnlyList<string> arguments)
@@ -99,7 +102,10 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                     "check requires --candidate-lean-report FILE and --baseline-lean-report FILE");
             }
 
-            var current = Decode(repository.ReadCurrent());
+            var currentRaw = repository.ReadCurrent();
+            var current = Decode(useRunLocalOverlay && repository is GitRepositoryGateway
+                ? RunLocalSnapshotOverlay.ApplyFromEnvironment(currentRaw, repositoryRoot)
+                : currentRaw);
             var baseline = Decode(repository.ReadRevision(prepared.Revision));
             var candidateLeanReport = RawLeanReportArtifact.ReadFile(
                 options.CandidateLeanReport,
@@ -185,10 +191,12 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 string.Empty,
                 "DIGEST_STATUS_INVALID Scribe emission verifier is unavailable\n")
             : DigestStatusCommand.Run(
+                repositoryRoot,
                 repository,
                 leanReportSource,
                 scribeEmissionVerifier,
-                arguments);
+                arguments,
+                useRunLocalOverlay);
 
     public ExplicitCommandResult EchoVerify(IReadOnlyList<string> arguments) =>
         scribeEmissionVerifier is null
@@ -201,7 +209,8 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 repository,
                 leanReportSource,
                 scribeEmissionVerifier,
-                arguments);
+                arguments,
+                useRunLocalOverlay);
 
     public ExplicitCommandResult GateAuthority(IReadOnlyList<string> arguments) =>
         GateAuthorityCommand.Run(repositoryRoot, arguments);
@@ -211,6 +220,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
 
     public ExplicitCommandResult RunProduce(IReadOnlyList<string> arguments) => RunHandleCommand.Produce(repositoryRoot, arguments);
     public ExplicitCommandResult RunConsume(IReadOnlyList<string> arguments) => RunHandleCommand.Consume(repositoryRoot, arguments);
+    public ExplicitCommandResult RunRequest(IReadOnlyList<string> arguments) => RunHandleCommand.CreateRequest(repositoryRoot, arguments);
     public ExplicitCommandResult RefactorPrAVerify(IReadOnlyList<string> arguments) => RunHandleCommand.Verify(repositoryRoot, arguments);
     public ExplicitCommandResult RefactorQuotient(IReadOnlyList<string> arguments) => RefactorQuotientCommand.Run(repositoryRoot, arguments);
     public ExplicitCommandResult RefactorPrACanaryScope(IReadOnlyList<string> arguments) => RunHandleCommand.CanaryScope(arguments);

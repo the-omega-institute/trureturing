@@ -15,4 +15,7 @@
 /Generated/FILEMAP.md
 /Generated/echo-residual-summary.md
 /Generated/truth-graph.v1.json
+/Evidence/D5/values.json
+/Meta/StrataLint/Generated/anchor-catalog.v1.json
+/Meta/StrataLint/Generated/scribe-emissions.v1.json
 __pycache__/

@@ -15,10 +15,12 @@ internal static class DigestStatusCommand
     };
 
     internal static CommandResult Run(
+        string repositoryRoot,
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
         IScribeEmissionVerifier scribeEmissionVerifier,
-        IReadOnlyList<string> arguments)
+        IReadOnlyList<string> arguments,
+        bool useRunLocalOverlay = true)
     {
         ArgumentNullException.ThrowIfNull(repository);
         ArgumentNullException.ThrowIfNull(leanReportSource);
@@ -27,7 +29,10 @@ internal static class DigestStatusCommand
         try
         {
             var options = ParseArguments(arguments);
-            var snapshot = Decode(repository.ReadCurrent());
+            var current = repository.ReadCurrent();
+            var snapshot = Decode(useRunLocalOverlay && repository is GitRepositoryGateway
+                ? RunLocalSnapshotOverlay.ApplyFromEnvironment(current, repositoryRoot)
+                : current);
             if (!snapshot.TryGetFile(BackfillInventoryLoader.RelativePath, out var ledgerFile))
             {
                 throw new InvalidOperationException($"{BackfillInventoryLoader.RelativePath} is missing");

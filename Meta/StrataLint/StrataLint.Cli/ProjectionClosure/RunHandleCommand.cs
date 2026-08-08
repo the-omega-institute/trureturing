@@ -9,6 +9,37 @@ namespace StrataLint.Cli;
 
 internal static class RunHandleCommand
 {
+    internal static ExplicitCommandResult CreateRequest(
+        string repositoryRoot,
+        IReadOnlyList<string> arguments)
+    {
+        if (arguments.Count != 6)
+            return Usage("run-request --manifest SHA256 --run-id HEX32 --out FILE");
+        var values = arguments.Chunk(2).ToDictionary(static pair => pair[0], static pair => pair[1], StringComparer.Ordinal);
+        if (values.Count != 3
+            || !values.TryGetValue("--manifest", out var manifest)
+            || !values.TryGetValue("--run-id", out var runId)
+            || !values.TryGetValue("--out", out var output))
+            return Usage("run-request --manifest SHA256 --run-id HEX32 --out FILE");
+        try
+        {
+            RunRequest.RequireSha(manifest, "MANIFEST");
+            RunRequest.RequireRunId(runId);
+            var bytes = Request(
+                manifest,
+                runId,
+                RunHandleDigests.Inventory(Inventory(repositoryRoot)),
+                0);
+            File.WriteAllBytes(output, bytes);
+            return new(0, "RUN_REQUEST_WRITTEN\n", string.Empty);
+        }
+        catch (Exception exception) when (exception is IOException or UnauthorizedAccessException
+            or FormatException or ArgumentException)
+        {
+            return new(1, string.Empty, "RUN_REQUEST_INVALID " + exception.Message + "\n");
+        }
+    }
+
     internal static ExplicitCommandResult CanaryScope(IReadOnlyList<string> arguments)
     {
         if (arguments.Count != 2 || arguments[0] != "--out" || string.IsNullOrWhiteSpace(arguments[1]))

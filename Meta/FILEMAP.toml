@@ -134,7 +134,7 @@ consumed_by = ["ValuesProjectionLoader"]
 verified_by = ["emit-check"]
 authority = "value-kernel"
 artifact_id = "A-VALUES"
-runtime_disposition = "committed-source"
+runtime_disposition = "run-local"
 mode = "100644"
 history_requirement = "not-required"
 
@@ -404,7 +404,7 @@ consumed_by = ["AnchorCatalogLoader"]
 verified_by = ["emit-check"]
 authority = "anchor"
 artifact_id = "A-ANCHOR"
-runtime_disposition = "committed-source"
+runtime_disposition = "run-local"
 mode = "100644"
 history_requirement = "not-required"
 
@@ -416,7 +416,7 @@ consumed_by = ["DigestionStatusEvaluator"]
 verified_by = ["emit-check"]
 authority = "Scribe"
 artifact_id = "A-SCRIBE"
-runtime_disposition = "committed-source"
+runtime_disposition = "run-local"
 mode = "100644"
 history_requirement = "not-required"
 

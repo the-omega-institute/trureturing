@@ -118,7 +118,7 @@ public sealed partial class PrShepherdRecalculationTests
                     exit 97
                   fi
                   if [[ "${PR_TEST_DERIVED:-1}" == 1 ]]; then
-                    printf '%s/%s/%s\n' 'Evidence' 'D5' 'values.json'
+                    printf '%s/%s/%s/%s/%s\n' 'Meta' 'StrataLint' 'Golden' 'Frozen' 'events.jsonl'
                   else
                     printf '%s\n' 'Blueprint/input.scribe.cs'
                   fi
