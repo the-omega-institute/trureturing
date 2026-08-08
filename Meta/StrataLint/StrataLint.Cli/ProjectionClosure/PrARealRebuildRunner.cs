@@ -96,29 +96,30 @@ internal sealed class PrARealRebuildRunner : IDisposable
         if (generatorRan)
         {
             var generatorStopwatch = Stopwatch.StartNew();
-            RestoreCleanCheckout(checkout);
+            var phasePrefix = testCase.Checkout.Replace('-', '_');
+            Measure(phasePrefix + "_restore", () => RestoreCleanCheckout(checkout));
             checkoutMutation?.Invoke(testCase.Checkout, checkout);
             if (validateAfterMutation) RequireCleanTrackedTree(checkout);
-            _ = RunEnvironment(checkout, testCase,
-                ["/bin/bash", "Meta/StrataLint/scripts/scribe.sh", "bootstrap"]);
-            var bootstrapRoot = CreateBootstrapReceipt(
-                checkout, manifest, runId, inventorySha, producerBuildSha);
-            var echo = RunEnvironment(
+            Measure(phasePrefix + "_bootstrap", () => RunEnvironment(checkout, testCase,
+                ["/bin/bash", "Meta/StrataLint/scripts/scribe.sh", "bootstrap"]));
+            var bootstrapRoot = Measure(phasePrefix + "_receipt", () => CreateBootstrapReceipt(
+                checkout, manifest, runId, inventorySha, producerBuildSha));
+            var echo = Measure(phasePrefix + "_echo", () => RunEnvironment(
                 checkout,
                 testCase,
                 ["make", "--no-print-directory", "echo-residual-summary", $"BASE={pinnedCommit}^"],
-                bootstrapRoot);
+                bootstrapRoot));
             var echoPath = Path.Combine(checkout, "Generated", "echo-residual-summary.md");
             Directory.CreateDirectory(Path.GetDirectoryName(echoPath)!);
             File.WriteAllBytes(echoPath, echo.StandardOutput);
-            _ = RunEnvironment(checkout, testCase,
-                ["/bin/bash", "Meta/StrataLint/scripts/scribe.sh", "finalize"], bootstrapRoot);
-            artifacts = ReadArtifacts(checkout);
+            Measure(phasePrefix + "_finalize", () => RunEnvironment(checkout, testCase,
+                ["/bin/bash", "Meta/StrataLint/scripts/scribe.sh", "finalize"], bootstrapRoot));
+            artifacts = Measure(phasePrefix + "_artifact_read", () => ReadArtifacts(checkout));
             if (!generated.TryAdd(key, artifacts))
                 throw new InvalidOperationException($"PR_A_DUPLICATE_GENERATION key={key}");
             Directory.Delete(bootstrapRoot, recursive: true);
             generatorStopwatch.Stop();
-            phaseElapsedMilliseconds[$"{testCase.Checkout.Replace('-', '_')}_generator"] =
+            phaseElapsedMilliseconds[$"{phasePrefix}_generator"] =
                 generatorStopwatch.ElapsedMilliseconds;
         }
         else
