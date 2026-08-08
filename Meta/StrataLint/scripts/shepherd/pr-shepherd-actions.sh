@@ -22,6 +22,18 @@ run_credentialless_bounded() {
     GCM_INTERACTIVE=Never \
     "$@"
 }
+run_credentialless_bounded_to_file() {
+  local destination="$1" step="$2" isolated_home="$3"
+  shift 3
+  run_bounded_to_file "$destination" build "$step" "$BUILD_TIMEOUT_SECONDS" env \
+    -u GH_TOKEN -u GITHUB_TOKEN -u GITHUB_PAT -u SSH_AUTH_SOCK -u SSH_AGENT_PID \
+    -u GIT_ASKPASS HOME="$isolated_home" GH_CONFIG_DIR="$isolated_home/gh" \
+    XDG_CONFIG_HOME="$isolated_home/config" XDG_CACHE_HOME="$isolated_home/cache" \
+    DOTNET_CLI_HOME="$isolated_home/dotnet" \
+    NUGET_PACKAGES="${NUGET_PACKAGES:-$ORIGINAL_HOME/.nuget/packages}" \
+    ELAN_HOME="${ELAN_HOME:-$ORIGINAL_HOME/.elan}" GIT_CONFIG_GLOBAL=/dev/null \
+    GIT_CONFIG_NOSYSTEM=1 GIT_TERMINAL_PROMPT=0 GCM_INTERACTIVE=Never "$@"
+}
 run_git_bounded() {
   local step="$1" workspace="$2"
   shift 2
@@ -72,9 +84,7 @@ has_expiry_fingerprint() {
     log "SWEEP admission run=$run_id job=$job_id 失败日志不可读,按普通 BEHIND 处理"
     return 2
   fi
-  [[ "$out" == *"DIGEST_STATUS_INVALID"* \
-    && "$out" == *"scribe-emissions"* \
-    && "$out" == *"ECHO_VERIFY_INFRASTRUCTURE"* \
+  [[ "$out" == *"ECHO_VERIFY_INFRASTRUCTURE"* \
     && "$out" == *"residual"* ]]
 }
 # Conflicts a machine can settle by rebuilding rather than by reading intent. The frozen
@@ -85,7 +95,8 @@ has_expiry_fingerprint() {
 # first stalls as "needs a semantic merge" and waits for a human that this harness has none of.
 is_derived_conflict() {
   case "$1" in
-    Meta/StrataLint/Generated/*|Generated/*|Evidence/D5/values.json) return 0 ;;
+    Generated/*|Evidence/D5/values.json) return 0 ;;
+    Meta/StrataLint/Generated/anchor-catalog.v1.json) return 0 ;;
     "$FROZEN_LEDGER_PATH") return 0 ;;
     *) return 1 ;;
   esac
@@ -195,8 +206,8 @@ merge_dev() {
       return 1
     fi
     conflicts="$(mktemp "${TMPDIR:-/tmp}/pr-shepherd-conflicts.XXXXXXXX")" || return 1
-    if ! run_git_bounded conflict-list "$workspace" \
-        diff --name-only --diff-filter=U -z > "$conflicts"; then
+    if ! run_bounded_to_file "$conflicts" git conflict-list "$GIT_TIMEOUT_SECONDS" \
+        git -C "$workspace" diff --name-only --diff-filter=U -z; then
       rm -f "$conflicts"
       set_bounded_failure conflict-list
       abort_merge_if_present "$workspace" || true
@@ -287,11 +298,10 @@ run_derivation_chain() {
   fi
   mkdir -p "$workspace/Generated"
   projection="$(mktemp "${TMPDIR:-/tmp}/pr-shepherd-projection.XXXXXXXX")"
-  if ! run_credentialless_bounded echo-verify "$isolated_home" \
+  if ! run_credentialless_bounded_to_file "$projection" echo-verify "$isolated_home" \
     /bin/bash -c 'cd "$1"; shift; exec "$@"' pr-shepherd-workspace "$workspace" \
       dotnet run --project Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj \
-      --configuration Release -- echo-verify --emit --base "$REMOTE/dev" \
-      > "$projection"; then
+      --configuration Release -- echo-verify --emit --base "$REMOTE/dev"; then
     set_bounded_failure echo-verify
     rm -f "$projection"
     rm -rf "$isolated_home"

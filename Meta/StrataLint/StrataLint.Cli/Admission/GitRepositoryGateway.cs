@@ -58,10 +58,15 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
                 "clean checkout requires --protected-base; candidate HEAD cannot protect itself");
         }
 
+        // dev 前进会让 protected base 不再是候选祖先。那是常态,不是故障:
+        // 「分支必须跟上 base」已由 strict 分支保护在合并那一刻强制,
+        // 在飞途中再判一次是重复,且把常态误报成 INFRASTRUCTURE_FAILURE。
+        // 改取 merge-base 作旧侧——按定义永远是候选祖先,永不竞态,
+        // 且正是候选实际分出的那一点,保守性比较仍有定义。
         var ancestor = GitRaw(new[] { "merge-base", "--is-ancestor", revision, head }, allowNonzero: true);
         if (ancestor.ExitCode != 0)
         {
-            throw new InvalidOperationException("protected base is not an ancestor of candidate HEAD");
+            revision = GitText("merge-base", revision, head).Trim();
         }
 
         if (!dirty && revision == head)

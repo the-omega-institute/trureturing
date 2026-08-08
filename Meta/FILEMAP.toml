@@ -146,7 +146,7 @@ history_requirement = "not-required"
 kind = "generated"
 produced_by = "DagEmitter"
 consumed_by = ["reader"]
-runtime_disposition = "committed-source"
+runtime_disposition = "run-local"
 verified_by = ["emit-check"]
 authority = "Lean"
 
@@ -158,7 +158,7 @@ history_requirement = "not-required"
 kind = "generated"
 produced_by = "FileMapEmitter"
 consumed_by = ["reader"]
-runtime_disposition = "committed-source"
+runtime_disposition = "run-local"
 verified_by = ["emit-check"]
 authority = "FILEMAP"
 
@@ -182,7 +182,7 @@ consumed_by = ["TruthGraphJsonReader"]
 verified_by = ["emit-check"]
 authority = "Lean"
 artifact_id = "A-TRUTH"
-runtime_disposition = "committed-source"
+runtime_disposition = "run-local"
 mode = "100644"
 history_requirement = "not-required"
 
@@ -412,11 +412,11 @@ history_requirement = "not-required"
 pattern = "Meta/StrataLint/Generated/scribe-emissions.v1.json"
 kind = "generated"
 produced_by = "ScribeEmitter"
-consumed_by = ["DigestionStatusEvaluator"]
+consumed_by = ["ScribeEmitter"]
 verified_by = ["emit-check"]
 authority = "Scribe"
 artifact_id = "A-SCRIBE"
-runtime_disposition = "committed-source"
+runtime_disposition = "run-local"
 mode = "100644"
 history_requirement = "not-required"
 

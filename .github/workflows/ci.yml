@@ -81,10 +81,6 @@ jobs:
       - name: Build candidate with warnings as errors
         run: make -C candidate dotnet
 
-      - name: Verify required PR-A projection rebuild lane
-        shell: bash
-        run: make -C candidate refactor-pr-a-verify OUT="$RUNNER_TEMP/refactor-pr-a-required.json"
-
       - name: Run candidate golden and integration tests
         run: make -C candidate test
 

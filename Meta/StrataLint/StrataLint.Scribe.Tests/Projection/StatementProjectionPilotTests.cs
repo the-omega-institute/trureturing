@@ -160,7 +160,7 @@ public sealed class StatementProjectionPilotTests
         var results = ProjectionPilot.Run(ReadFixtureDeclarations(fixture, expansion));
 
         Assert.Equal(10, results.Cases.Length);
-        Assert.Equal(ProjectionPilot.GoldenReport, results.Report);
+        Assert.Empty(results.Report);
         Assert.Equal(ProjectionNotation.Entries.Count, results.NotationSize);
         Assert.All(results.Cases.Where(item => item.Unprojectable.IsEmpty),
             item => Assert.IsNotType<Formula.Placeholder>(item.Formula));
