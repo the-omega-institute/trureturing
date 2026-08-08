@@ -9,7 +9,7 @@ internal sealed class CHSHSpectrumDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
         Header(
             "D5/S3/QuantumBounds/CHSHSpectrum",
-            "The CHSH four-point spectrum determines an exact cubic coefficient."),
+            "A conditional CHSH spectral bound supports an exact cubic coefficient."),
         H("CHSH Spectrum and Cubic Coefficient"),
         Blocks(
             DocumentBlock.Describe.Theorem(
@@ -39,21 +39,24 @@ internal sealed class CHSHSpectrumDocument : IScribeDocumentDefinition
                 DescribeProvenance.RepoDerived(),
                 Blocks(
                     Paragraph(Text(
-                        "The Lean declaration takes four finite complex Hermitian involutions, "
-                        + "forms their CHSH matrix S and the negative Kronecker product C of the "
-                        + "two local commutators, and assumes that the real spectrum of C is "
-                        + "contained in {N, -N}. It reuses `landau_identity` for S squared equal "
-                        + "to 4I + C and proves S Hermitian from the four input observables. "
-                        + "Power spectral mapping sends each real eigenvalue of S to the spectrum "
-                        + "of S squared; scalar-shift transport and the two-point hypothesis then "
-                        + "give the four displayed square-root possibilities.")),
+                        "The formal theorem proves the algebraic kernel under an explicit spectral "
+                        + "hypothesis. It takes four finite complex Hermitian involutions, forms "
+                        + "their CHSH matrix S and the negative Kronecker product C of the two "
+                        + "local commutators, and assumes the two-point bound `hC`, namely that the "
+                        + "real spectrum of C is contained in {N, -N}. It reuses `landau_identity` "
+                        + "for S squared equal to 4I + C and proves S Hermitian from the four input "
+                        + "observables. Power spectral mapping sends each real eigenvalue of S to "
+                        + "the spectrum of S squared; scalar-shift transport and `hC` then yield "
+                        + "the displayed four-point spectral inclusion for S.")),
                     Paragraph(Text(
-                        "The conclusion is a spectral inclusion. It does not assert that all four "
-                        + "values occur, does not establish their multiplicities, and does not "
-                        + "derive N from an operator norm. The epsilon-cubed probability law and "
-                        + "its Dirichlet-volume argument are outside this module's scope; no "
-                        + "probability formula, volume coefficient, or limiting error term is "
-                        + "asserted here.")))))));
+                        "Accordingly, the conclusion is an inclusion rather than an equality: it "
+                        + "does not assert that all four values occur or establish their "
+                        + "multiplicities. Deriving `hC` from the norm identity N equal to the norm "
+                        + "of the tensor product of the two local commutators is an independent "
+                        + "tensor-commutator obligation and remains open beyond this module. The "
+                        + "epsilon-cubed probability law and its Dirichlet-volume argument are "
+                        + "likewise open beyond this module; no probability formula, volume "
+                        + "coefficient, or limiting error term is asserted here.")))))));
 
     private static Formula CubicCoefficientFormula() => Disp(Seq(
         D(0), Lt, F.Id("N"), Lt, D(4), Comma, Quad, Sp,
