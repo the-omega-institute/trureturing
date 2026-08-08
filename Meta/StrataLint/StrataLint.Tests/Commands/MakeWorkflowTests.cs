@@ -72,10 +72,6 @@ public sealed partial class MakeWorkflowTests
         "pr-watch-status",
         "refactor-p0-0-gate-authority",
         "refactor-p0-2",
-        "refactor-pr-a-verify",
-        "refactor-pr-a-audit",
-        "refactor-pr-a-canary-verify",
-        "refactor-pr-a-canary-scope",
     ];
 
     [Fact]
@@ -255,9 +251,6 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("lean-report-pair.sh", localGate, StringComparison.Ordinal);
         Assert.Contains("--skip-engineering", localGate, StringComparison.Ordinal);
         Assert.Contains("GATE_ARGS=\"--skip-engineering\"", preflight, StringComparison.Ordinal);
-        // PR-A 真重建已从 required 路径退役:确定性是生成程序的性质,程序本身受 harness,
-        // 在未触碰 emitter 的 PR 上重跑真重建是重新验证没变的东西(第 5/20 条)。
-        // 重活保留于按需的 refactor-pr-a-audit。
         Assert.DoesNotContain("refactor-pr-a-required", localGate, StringComparison.Ordinal);
         Assert.Contains("gate_stage_timing", localGate, StringComparison.Ordinal);
         Assert.Contains("gate_timing_summary", localGate, StringComparison.Ordinal);
