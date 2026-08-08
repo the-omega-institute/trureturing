@@ -14,7 +14,8 @@ case "$MODE" in
   emit) ;;
   check) ;;
   bootstrap) ;;
-  *) echo "usage: scribe.sh emit|check|bootstrap" >&2; exit 2 ;;
+  finalize) ;;
+  *) echo "usage: scribe.sh emit|check|bootstrap|finalize" >&2; exit 2 ;;
 esac
 
 [[ "$PARALLELISM" =~ ^(1|4)$ ]] \
@@ -22,7 +23,9 @@ esac
 
 run_scribe() {
   local command=(dotnet run --project "$PROJECT" --configuration Release -- "$1")
-  if [[ "${STRATALINT_PR_A_NO_BUILD:-0}" == "1" ]]; then
+  if [[ -n "${STRATALINT_PR_A_SCRIBE_DLL:-}" ]]; then
+    command=(dotnet "$STRATALINT_PR_A_SCRIBE_DLL" "$1")
+  elif [[ "${STRATALINT_PR_A_NO_BUILD:-0}" == "1" ]]; then
     command=(dotnet run --no-build --project "$PROJECT" --configuration Release -- "$1")
   fi
   if [[ "$MODE" == "check" ]]; then
@@ -39,7 +42,9 @@ run_scribe() {
 # RepositorySnapshot, which only the CLI's git gateway produces. Same emit/check contract.
 run_dag() {
   local command=(dotnet run --project "$CLI_PROJECT" --configuration Release -- dag-render)
-  if [[ "${STRATALINT_PR_A_NO_BUILD:-0}" == "1" ]]; then
+  if [[ -n "${STRATALINT_PR_A_CLI_DLL:-}" ]]; then
+    command=(dotnet "$STRATALINT_PR_A_CLI_DLL" dag-render)
+  elif [[ "${STRATALINT_PR_A_NO_BUILD:-0}" == "1" ]]; then
     command=(dotnet run --no-build --project "$CLI_PROJECT" --configuration Release -- dag-render)
   fi
   if [[ "$MODE" == "check" ]]; then
@@ -66,6 +71,8 @@ esac
 cd "$ROOT"
 if [[ "$MODE" == "bootstrap" ]]; then
   for generator in emit catalog emit-values filemap; do run_generator "$generator"; done
+elif [[ "$MODE" == "finalize" ]]; then
+  run_generator dag
 elif [[ "$PARALLELISM" == "1" ]]; then
   for generator in "${generators[@]}"; do run_generator "$generator"; done
 else

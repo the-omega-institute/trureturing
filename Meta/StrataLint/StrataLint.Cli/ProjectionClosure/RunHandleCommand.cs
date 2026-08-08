@@ -128,6 +128,7 @@ internal static class RunHandleCommand
             var stopwatch = Stopwatch.StartNew();
             using var rebuilds = new PrARealRebuildRunner(repositoryRoot, inventory);
             var verificationStopwatch = Stopwatch.StartNew();
+            rebuilds.PrepareRequiredRebuilds(manifest, runId, inventorySha, producerBuildSha);
             var result = PrAMetamorphicVerifier.VerifyRequired(testCase =>
                 rebuilds.Rebuild(testCase, manifest, runId, inventorySha, producerBuildSha));
             verificationStopwatch.Stop();

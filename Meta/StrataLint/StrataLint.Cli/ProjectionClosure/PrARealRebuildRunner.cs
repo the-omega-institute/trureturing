@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Text;
 using StrataLint.Engine;
@@ -14,8 +15,11 @@ internal sealed class PrARealRebuildRunner : IDisposable
     private readonly string pinnedCommit;
     private readonly string leanReport;
     private readonly Dictionary<string, string> checkouts = new(StringComparer.Ordinal);
-    private readonly Dictionary<string, ImmutableArray<PrAArtifact>> generated = new(StringComparer.Ordinal);
-    private readonly Dictionary<string, long> phaseElapsedMilliseconds = new(StringComparer.Ordinal);
+    private readonly ConcurrentDictionary<string, ImmutableArray<PrAArtifact>> generated = new(StringComparer.Ordinal);
+    private readonly ConcurrentDictionary<string, byte> reportedRebuilds = new(StringComparer.Ordinal);
+    private readonly ConcurrentDictionary<string, long> phaseElapsedMilliseconds = new(StringComparer.Ordinal);
+    private readonly string cliDll;
+    private readonly string scribeDll;
     private readonly Action<string, string>? checkoutMutation;
     private readonly bool validateAfterMutation;
     private readonly bool cacheByEnvironment;
@@ -32,6 +36,9 @@ internal sealed class PrARealRebuildRunner : IDisposable
         this.checkoutMutation = checkoutMutation;
         this.validateAfterMutation = validateAfterMutation;
         this.cacheByEnvironment = cacheByEnvironment;
+        cliDll = typeof(PrARealRebuildRunner).Assembly.Location;
+        scribeDll = Path.Combine(Path.GetDirectoryName(cliDll)!, "StrataLint.Scribe.dll");
+        if (!File.Exists(scribeDll)) throw new InvalidOperationException("PR_A_SHARED_HARNESS_MISSING StrataLint.Scribe.dll");
         scratchRoot = Path.Combine(Path.GetTempPath(), "stratalint-pr-a-rebuild-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(scratchRoot);
         pinnedCommit = Git(this.repositoryRoot, ["rev-parse", "--verify", "HEAD^{commit}"]).Trim();
@@ -42,6 +49,16 @@ internal sealed class PrARealRebuildRunner : IDisposable
 
     internal string PinnedCommit => pinnedCommit;
     internal IReadOnlyDictionary<string, long> PhaseElapsedMilliseconds => phaseElapsedMilliseconds;
+
+    internal void PrepareRequiredRebuilds(
+        string manifest,
+        string runId,
+        string inventorySha,
+        string producerBuildSha) => Task.WaitAll(
+            PrAMetamorphicVerifier.RequiredScope()
+                .Select(testCase => Task.Run(() => Rebuild(
+                    testCase, manifest, runId, inventorySha, producerBuildSha, reportRebuild: false)))
+                .ToArray());
 
     internal static T InPinnedCheckout<T>(string repositoryRoot, string commit, Func<string, T> action)
     {
@@ -67,7 +84,8 @@ internal sealed class PrARealRebuildRunner : IDisposable
         string manifest,
         string runId,
         string inventorySha,
-        string producerBuildSha)
+        string producerBuildSha,
+        bool reportRebuild = true)
     {
         if (!checkouts.TryGetValue(testCase.Checkout, out var checkout))
             throw new InvalidOperationException($"unknown checkout {testCase.Checkout}");
@@ -93,9 +111,11 @@ internal sealed class PrARealRebuildRunner : IDisposable
             var echoPath = Path.Combine(checkout, "Generated", "echo-residual-summary.md");
             Directory.CreateDirectory(Path.GetDirectoryName(echoPath)!);
             File.WriteAllBytes(echoPath, echo.StandardOutput);
-            _ = RunEnvironment(checkout, testCase, ["make", "--no-print-directory", "emit"], bootstrapRoot);
+            _ = RunEnvironment(checkout, testCase,
+                ["/bin/bash", "Meta/StrataLint/scripts/scribe.sh", "finalize"], bootstrapRoot);
             artifacts = ReadArtifacts(checkout);
-            generated.Add(key, artifacts);
+            if (!generated.TryAdd(key, artifacts))
+                throw new InvalidOperationException($"PR_A_DUPLICATE_GENERATION key={key}");
             Directory.Delete(bootstrapRoot, recursive: true);
             generatorStopwatch.Stop();
             phaseElapsedMilliseconds[$"{testCase.Checkout.Replace('-', '_')}_generator"] =
@@ -127,7 +147,8 @@ internal sealed class PrARealRebuildRunner : IDisposable
             if (produced.ExitCode != 0) throw new InvalidOperationException(produced.Diagnostic.Trim());
             var consumed = RunHandleConsumer.Consume(outputRoot, produced.RequestSha256, inventory);
             if (consumed.ExitCode != 0) throw new InvalidOperationException(consumed.Diagnostic.Trim());
-            return new PrARealRebuildOutcome(RunHandleCommand.Snapshot(outputRoot, runId), generatorRan);
+            var generatorReported = reportRebuild && reportedRebuilds.TryAdd(key, 0);
+            return new PrARealRebuildOutcome(RunHandleCommand.Snapshot(outputRoot, runId), generatorReported);
         }
         finally
         {
@@ -167,7 +188,6 @@ internal sealed class PrARealRebuildRunner : IDisposable
         Directory.CreateDirectory(Path.GetDirectoryName(report)!);
         foreach (var suffix in new[] { string.Empty, ".sha256", ".input.attestation", ".provenance.json" })
             File.Copy(leanReport + suffix, report + suffix, overwrite: true);
-        Run("make", ["--no-print-directory", "dotnet"], checkout, TimeSpan.FromMinutes(20));
         RequireCleanTrackedTree(checkout);
     }
 
@@ -214,6 +234,8 @@ internal sealed class PrARealRebuildRunner : IDisposable
             $"STRATALINT_PR_A_ORDER={testCase.Order}",
             $"STRATALINT_PR_A_PARALLELISM={testCase.Parallelism}",
             "STRATALINT_PR_A_NO_BUILD=1",
+            $"STRATALINT_PR_A_CLI_DLL={cliDll}",
+            $"STRATALINT_PR_A_SCRIBE_DLL={scribeDll}",
         };
         if (receiptRoot is not null) arguments.Add($"STRATALINT_RUN_RECEIPT_ROOT={receiptRoot}");
         arguments.AddRange(command);
