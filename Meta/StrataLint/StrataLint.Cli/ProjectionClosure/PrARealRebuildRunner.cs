@@ -1,8 +1,10 @@
 using System.Collections.Immutable;
 using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.Globalization;
 using System.Text;
 using StrataLint.Engine;
+using StrataLint.Scribe;
 
 namespace StrataLint.Cli;
 
@@ -54,11 +56,25 @@ internal sealed class PrARealRebuildRunner : IDisposable
         string manifest,
         string runId,
         string inventorySha,
-        string producerBuildSha) => Task.WaitAll(
-            PrAMetamorphicVerifier.RequiredScope()
+        string producerBuildSha)
+    {
+        var previousCulture = CultureInfo.DefaultThreadCurrentCulture;
+        var previousUiCulture = CultureInfo.DefaultThreadCurrentUICulture;
+        CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
+        CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
+        try
+        {
+            Task.WaitAll(PrAMetamorphicVerifier.RequiredScope()
                 .Select(testCase => Task.Run(() => Rebuild(
                     testCase, manifest, runId, inventorySha, producerBuildSha, reportRebuild: false)))
                 .ToArray());
+        }
+        finally
+        {
+            CultureInfo.DefaultThreadCurrentCulture = previousCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = previousUiCulture;
+        }
+    }
 
     internal static T InPinnedCheckout<T>(string repositoryRoot, string commit, Func<string, T> action)
     {
@@ -100,18 +116,15 @@ internal sealed class PrARealRebuildRunner : IDisposable
             Measure(phasePrefix + "_restore", () => RestoreCleanCheckout(checkout));
             checkoutMutation?.Invoke(testCase.Checkout, checkout);
             if (validateAfterMutation) RequireCleanTrackedTree(checkout);
-            Measure(phasePrefix + "_bootstrap", () => RunEnvironment(checkout, testCase,
-                ["/bin/bash", "Meta/StrataLint/scripts/scribe.sh", "bootstrap"]));
+            var verifiedScribe = Measure(phasePrefix + "_bootstrap", () =>
+                GenerateBootstrap(checkout, testCase));
             var bootstrapRoot = Measure(phasePrefix + "_receipt", () => CreateBootstrapReceipt(
                 checkout, manifest, runId, inventorySha, producerBuildSha));
-            var echo = Measure(phasePrefix + "_echo", () => RunEnvironment(
-                checkout,
-                testCase,
-                ["make", "--no-print-directory", "echo-residual-summary", $"BASE={pinnedCommit}^"],
-                bootstrapRoot));
+            var echo = Measure(phasePrefix + "_echo", () => GenerateEcho(
+                checkout, bootstrapRoot, verifiedScribe));
             var echoPath = Path.Combine(checkout, "Generated", "echo-residual-summary.md");
             Directory.CreateDirectory(Path.GetDirectoryName(echoPath)!);
-            File.WriteAllBytes(echoPath, echo.StandardOutput);
+            File.WriteAllBytes(echoPath, echo);
             Measure(phasePrefix + "_finalize", () => RunEnvironment(checkout, testCase,
                 ["/bin/bash", "Meta/StrataLint/scripts/scribe.sh", "finalize"], bootstrapRoot));
             artifacts = Measure(phasePrefix + "_artifact_read", () => ReadArtifacts(checkout));
@@ -267,6 +280,43 @@ internal sealed class PrARealRebuildRunner : IDisposable
         return outputRoot;
     }
 
+    private VerifiedScribeEmissions GenerateBootstrap(string checkout, PrAMatrixCase testCase)
+    {
+        var raw = new GitRepositoryGateway(checkout).ReadCurrent();
+        var snapshot = SnapshotDecoder.Decode(raw) switch
+        {
+            SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
+            SnapshotDecodeOutcome.InfrastructureFailure failure =>
+                throw new InvalidOperationException(failure.Message),
+        };
+        var report = new PrecomputedLeanReportSource(checkout).Load(snapshot);
+        var error = new StringWriter(CultureInfo.InvariantCulture);
+        var verified = ScribeEmitter.EmitAndVerify(checkout, TextWriter.Null, error, report)
+            ?? throw new InvalidOperationException(
+                "PR_A_GENERATOR_FAILED Scribe bootstrap: " + error.ToString().Trim());
+        _ = RunEnvironment(checkout, testCase,
+            ["/bin/bash", "Meta/StrataLint/scripts/scribe.sh", "bootstrap"]);
+        return verified;
+    }
+
+    private byte[] GenerateEcho(
+        string checkout,
+        string receiptRoot,
+        VerifiedScribeEmissions verifiedScribe)
+    {
+        var result = EchoVerifyCommand.Run(
+            checkout,
+            new GitRepositoryGateway(checkout),
+            new PrecomputedLeanReportSource(checkout),
+            new CachedScribeEmissionVerifier(verifiedScribe),
+            ["--emit", "--base", $"{pinnedCommit}^"],
+            useRunLocalOverlay: true,
+            runLocalReceiptRoot: receiptRoot);
+        if (result.ExitCode != 0)
+            throw new InvalidOperationException(result.Error.Trim());
+        return Encoding.UTF8.GetBytes(result.Output);
+    }
+
     private static void RequireCleanTrackedTree(string root)
     {
         var status = Git(root, ["status", "--porcelain", "--untracked-files=no"]);
@@ -313,4 +363,10 @@ internal sealed class PrARealRebuildRunner : IDisposable
         action();
         return true;
     });
+
+    private sealed class CachedScribeEmissionVerifier(VerifiedScribeEmissions verified)
+        : IScribeEmissionVerifier
+    {
+        public VerifiedScribeEmissions Verify(LeanAxiomReport report) => verified;
+    }
 }

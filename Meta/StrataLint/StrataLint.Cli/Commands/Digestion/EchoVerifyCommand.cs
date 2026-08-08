@@ -13,7 +13,8 @@ internal static class EchoVerifyCommand
         ILeanReportSource leanReportSource,
         IScribeEmissionVerifier scribeEmissionVerifier,
         IReadOnlyList<string> arguments,
-        bool useRunLocalOverlay = true)
+        bool useRunLocalOverlay = true,
+        string? runLocalReceiptRoot = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(repository);
@@ -35,7 +36,8 @@ internal static class EchoVerifyCommand
                 leanReportSource,
                 scribeEmissionVerifier,
                 ["--residual-summary", "--base", prepared.Revision],
-                useRunLocalOverlay);
+                useRunLocalOverlay,
+                runLocalReceiptRoot);
             if (!summary.Success)
             {
                 return new ExplicitCommandResult(

@@ -20,7 +20,8 @@ internal static class DigestStatusCommand
         ILeanReportSource leanReportSource,
         IScribeEmissionVerifier scribeEmissionVerifier,
         IReadOnlyList<string> arguments,
-        bool useRunLocalOverlay = true)
+        bool useRunLocalOverlay = true,
+        string? runLocalReceiptRoot = null)
     {
         ArgumentNullException.ThrowIfNull(repository);
         ArgumentNullException.ThrowIfNull(leanReportSource);
@@ -31,7 +32,9 @@ internal static class DigestStatusCommand
             var options = ParseArguments(arguments);
             var current = repository.ReadCurrent();
             var snapshot = Decode(useRunLocalOverlay && repository is GitRepositoryGateway
-                ? RunLocalSnapshotOverlay.ApplyFromEnvironment(current, repositoryRoot)
+                ? runLocalReceiptRoot is null
+                    ? RunLocalSnapshotOverlay.ApplyFromEnvironment(current, repositoryRoot)
+                    : RunLocalSnapshotOverlay.ApplyFromReceipt(current, repositoryRoot, runLocalReceiptRoot)
                 : current);
             if (!snapshot.TryGetFile(BackfillInventoryLoader.RelativePath, out var ledgerFile))
             {

@@ -70,7 +70,7 @@ esac
 
 cd "$ROOT"
 if [[ "$MODE" == "bootstrap" ]]; then
-  for generator in emit catalog emit-values filemap; do run_generator "$generator"; done
+  for generator in catalog emit-values filemap; do run_generator "$generator"; done
 elif [[ "$MODE" == "finalize" ]]; then
   run_generator dag
 elif [[ "$PARALLELISM" == "1" ]]; then

@@ -52,6 +52,20 @@ internal static class RunLocalSnapshotOverlay
         RawRepositorySnapshot snapshot,
         string repositoryRoot)
     {
+        var outputRoot = Environment.GetEnvironmentVariable("STRATALINT_RUN_RECEIPT_ROOT");
+        if (string.IsNullOrWhiteSpace(outputRoot) || !Path.IsPathFullyQualified(outputRoot))
+        {
+            throw new InvalidOperationException(
+                "RUN_LOCAL_RECEIPT_MISSING STRATALINT_RUN_RECEIPT_ROOT must name an absolute verified run-handle root");
+        }
+        return ApplyFromReceipt(snapshot, repositoryRoot, outputRoot);
+    }
+
+    internal static RawRepositorySnapshot ApplyFromReceipt(
+        RawRepositorySnapshot snapshot,
+        string repositoryRoot,
+        string outputRoot)
+    {
         var manifest = FileMapLoader.LoadRepository(repositoryRoot);
         var inventory = manifest.Entries
             .Where(static entry => entry.Kind is FileMapKind.Generated
@@ -66,7 +80,6 @@ internal static class RunLocalSnapshotOverlay
             return snapshot;
         }
 
-        var outputRoot = Environment.GetEnvironmentVariable("STRATALINT_RUN_RECEIPT_ROOT");
         if (string.IsNullOrWhiteSpace(outputRoot) || !Path.IsPathFullyQualified(outputRoot))
         {
             throw new InvalidOperationException(

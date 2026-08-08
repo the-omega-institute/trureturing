@@ -42,6 +42,19 @@ public static class ScribeEmitter
             tolerateAbsentDocuments: false).ExitCode;
     }
 
+    internal static VerifiedScribeEmissions? EmitAndVerify(
+        string repositoryRoot,
+        TextWriter output,
+        TextWriter error,
+        LeanAxiomReport leanReport) => Run(
+            repositoryRoot,
+            check: false,
+            output,
+            error,
+            _ => leanReport,
+            validateRepository: false,
+            tolerateAbsentDocuments: false).Verification;
+
     internal static int Emit(
         string repositoryRoot,
         bool check,
@@ -299,7 +312,7 @@ public static class ScribeEmitter
 
         return new ScribeEmissionRun(
             differences == 0 ? 0 : 1,
-            check && documentDifferences == 0
+            documentDifferences == 0
                 ? VerifiedScribeEmissions.Create(
                     attestations,
                     declarationReferences,
