@@ -146,8 +146,9 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 options.FrozenEvidenceRoot is null
                     ? null
                     : new GitRepositoryGateway(options.FrozenEvidenceRoot));
-            var sl022Diagnostics = bootstrap is BootstrapOutcome.HumanReviewRequired review
-                ? BootstrapGate.CreateSl022Diagnostics(review.ChangeSet)
+            var sl022Diagnostics = bootstrap is
+                BootstrapOutcome.ProtectedSurfaceVerificationRequired verification
+                ? BootstrapGate.CreateSl022Diagnostics(verification.ChangeSet)
                 : ImmutableArray<Diagnostic>.Empty;
             return ledgerOutcome is null
                 ? admission
@@ -455,7 +456,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             return verifier.Verify(report);
         }
         catch (InvalidOperationException) when (
-            bootstrap is BootstrapOutcome.HumanReviewRequired)
+            bootstrap is BootstrapOutcome.ProtectedSurfaceVerificationRequired)
         {
             return null;
         }
