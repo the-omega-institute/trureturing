@@ -71,6 +71,7 @@ internal static class FileMapPolicy
     {
         var manifest = FileMapLoader.LoadRepository(repositoryRoot);
         var paths = TrackedPaths(repositoryRoot);
+        var trackedModes = TrackedModes(repositoryRoot);
         var files = paths
             .Where(path => path.EndsWith(".lean", StringComparison.Ordinal)
                 || IsMachineDataCandidate(path, manifest))
@@ -99,10 +100,32 @@ internal static class FileMapPolicy
             .Concat(registryFindings)
             .Concat(InspectDataVerifiers(manifest, availableVerifiers))
             .Concat(InspectGeneratedInventory(manifest, paths, GeneratedArtifactInventory.All))
+            .Concat(InspectDeclaredModes(manifest, trackedModes))
             .Concat(InspectDirectoryKinds(manifest, paths))
             .Concat(InspectDependencies(manifest, files))
             .OrderBy(static finding => finding.Path, StringComparer.Ordinal)
             .ThenBy(static finding => finding.Code, StringComparer.Ordinal)
+            .ToArray();
+    }
+
+    internal static IReadOnlyList<FileMapFinding> InspectDeclaredModes(
+        FileMapManifest manifest,
+        IReadOnlyDictionary<string, string> trackedModes)
+    {
+        ArgumentNullException.ThrowIfNull(manifest);
+        ArgumentNullException.ThrowIfNull(trackedModes);
+        return manifest.Entries
+            .Where(static entry => entry.Kind is FileMapKind.Generated
+                && entry.ArtifactId != "none"
+                && entry.RuntimeDisposition == "committed-source")
+            .Where(entry => !trackedModes.TryGetValue(entry.Pattern, out var actual)
+                || !string.Equals(entry.Mode, actual, StringComparison.Ordinal))
+            .Select(entry => new FileMapFinding(
+                "FILEMAP-GENERATED-MODE",
+                entry.Pattern,
+                trackedModes.TryGetValue(entry.Pattern, out var actual)
+                    ? $"declared Git mode {entry.Mode} differs from index mode {actual}"
+                    : "declared committed artifact is absent from the Git index"))
             .ToArray();
     }
 
@@ -472,6 +495,36 @@ internal static class FileMapPolicy
         return output.Split('\0', StringSplitOptions.RemoveEmptyEntries)
             .Order(StringComparer.Ordinal)
             .ToArray();
+    }
+
+    private static IReadOnlyDictionary<string, string> TrackedModes(string repositoryRoot)
+    {
+        var startInfo = new ProcessStartInfo("git")
+        {
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            UseShellExecute = false,
+        };
+        startInfo.ArgumentList.Add("-C");
+        startInfo.ArgumentList.Add(repositoryRoot);
+        startInfo.ArgumentList.Add("ls-files");
+        startInfo.ArgumentList.Add("--stage");
+        startInfo.ArgumentList.Add("-z");
+        using var process = Process.Start(startInfo)
+            ?? throw new InvalidOperationException("could not start git ls-files --stage for FILEMAP");
+        var output = process.StandardOutput.ReadToEnd();
+        var error = process.StandardError.ReadToEnd();
+        process.WaitForExit();
+        if (process.ExitCode != 0)
+        {
+            throw new InvalidOperationException(
+                $"git ls-files --stage failed with exit {process.ExitCode}: {error}");
+        }
+
+        return output.Split('\0', StringSplitOptions.RemoveEmptyEntries)
+            .Select(static line => line.Split([' ', '\t'], 4, StringSplitOptions.RemoveEmptyEntries))
+            .Where(static fields => fields.Length == 4 && fields[2] == "0")
+            .ToDictionary(static fields => fields[3], static fields => fields[0], StringComparer.Ordinal);
     }
 
     private static string KindName(FileMapKind kind) => kind.ToString().ToLowerInvariant();
