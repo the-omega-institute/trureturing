@@ -58,6 +58,6 @@ A common positive golden power clears the negative exponents. Mathlib's golden-p
 
 - Truth anchor: `D5/S0/Tower/GoldenNames.GoldenName`
 - Truth anchor: `D5/S0/Tower/GoldenNames.golden_name_card`
-- Truth anchor: `D5/S0/Tower/GoldenNames.nameValue_injective`
 - Truth anchor: `D5/S0/Tower/GoldenNames.nameValue`
+- Truth anchor: `D5/S0/Tower/GoldenNames.nameValue_injective`
 - Dependency: [D5/S0/Conventions/WDigits](../Conventions/WDigits.md)

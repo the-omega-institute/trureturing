@@ -90,9 +90,9 @@ The coefficient Hilbert space and its zeta reproducing kernel are the classical 
 
 ## References
 
+- Truth anchor: `D5/S3/Weil/SpectralHilbert.labeled_zeta_inner`
+- Truth anchor: `D5/S3/Weil/SpectralHilbert.labeled_zeta_inner`
 - Truth anchor: `D5/S3/Weil/SpectralHilbert.labeled_zeta_kernel`
-- Truth anchor: `D5/S3/Weil/SpectralHilbert.labeled_zeta_inner`
-- Truth anchor: `D5/S3/Weil/SpectralHilbert.labeled_zeta_inner`
 - Truth anchor: `D5/S3/Weil/SpectralHilbert.labeled_zeta_mem_iff`
 - Truth anchor: `D5/S3/Weil/SpectralHilbert.labeled_zeta_norm_sq`
 - Truth anchor: `D5/S3/Weil/SpectralHilbert.resonance_partner_spec`

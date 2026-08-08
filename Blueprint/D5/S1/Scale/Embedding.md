@@ -88,6 +88,6 @@ $$
 
 - Truth anchor: `D5/S1/Scale/Embedding.abs_embedding_mul_abs_conj`
 - Truth anchor: `D5/S1/Scale/Embedding.embedding_apply`
-- Truth anchor: `D5/S1/Scale/Embedding.embedding_mul_conj`
 - Truth anchor: `D5/S1/Scale/Embedding.embedding_injective`
+- Truth anchor: `D5/S1/Scale/Embedding.embedding_mul_conj`
 - Dependency: [D5/S0/Carrier/Norm](../../S0/Carrier/Norm.md)

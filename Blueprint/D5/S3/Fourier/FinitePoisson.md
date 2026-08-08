@@ -32,5 +32,5 @@ Kernel-reduced membership checks prove that 2 belongs to H while 1 does not. The
 
 ## References
 
-- Truth anchor: `D5/S3/Fourier/FinitePoisson.finite_poisson_summation`
 - Truth anchor: `D5/S3/Fourier/FinitePoisson.finite_poisson_mod_four_even_delta`
+- Truth anchor: `D5/S3/Fourier/FinitePoisson.finite_poisson_summation`

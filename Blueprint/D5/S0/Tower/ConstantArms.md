@@ -53,5 +53,5 @@ The binary identity is obtained only by specializing the general reciprocal-poin
 ## References
 
 - Truth anchor: `D5/S0/Tower/ConstantArms.binary_arm`
-- Truth anchor: `D5/S0/Tower/ConstantArms.even_champion_arm`
 - Truth anchor: `D5/S0/Tower/ConstantArms.constant_arm`
+- Truth anchor: `D5/S0/Tower/ConstantArms.even_champion_arm`

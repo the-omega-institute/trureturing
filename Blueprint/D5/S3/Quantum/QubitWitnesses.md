@@ -42,7 +42,7 @@ For the standard real phase-damping map with retention coefficient c in [0,1], N
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product`
 - Truth anchor: `D5/S3/Quantum/QubitWitnesses.equal_superposition_phase_damping_certificate`
 - Truth anchor: `D5/S3/Quantum/QubitWitnesses.pauli_observables_have_no_common_eigenvector`
-- Truth anchor: `D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product`
 - Dependency: [D5/S3/Quantum/FiniteDimensional](FiniteDimensional.md)

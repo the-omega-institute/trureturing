@@ -68,6 +68,6 @@ Every regular finite Euler window is nonzero, so no finite set of local factors 
 
 - Truth anchor: `D5/S3/Weil/EulerProduct.finite_euler_zero_free_and_pole_locus`
 - Truth anchor: `D5/S3/Weil/EulerProduct.finite_euler_zero_free_and_pole_locus`
-- Truth anchor: `D5/S3/Weil/EulerProduct.single_address_reading_spec`
-- Truth anchor: `D5/S3/Weil/EulerProduct.single_address_reading_spec`
 - Truth anchor: `D5/S3/Weil/EulerProduct.single_address_heat_trace_eq_log_derivative`
+- Truth anchor: `D5/S3/Weil/EulerProduct.single_address_reading_spec`
+- Truth anchor: `D5/S3/Weil/EulerProduct.single_address_reading_spec`

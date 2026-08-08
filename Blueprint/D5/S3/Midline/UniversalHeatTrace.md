@@ -78,9 +78,9 @@ A separately supplied reflection s maps to c minus conjugate s has the universal
 
 ## References
 
-- Truth anchor: `D5/S3/Midline/UniversalHeatTrace.universal_heat_trace_midline_of_boundary_divergent`
 - Truth anchor: `D5/S3/Midline/UniversalHeatTrace.heat_coefficient_mem_iff`
+- Truth anchor: `D5/S3/Midline/UniversalHeatTrace.heat_vector_inner`
 - Truth anchor: `D5/S3/Midline/UniversalHeatTrace.heat_vector_norm_sq`
 - Truth anchor: `D5/S3/Midline/UniversalHeatTrace.reflection_center_eq_abscissa_iff`
 - Truth anchor: `D5/S3/Midline/UniversalHeatTrace.universal_heat_trace_midline`
-- Truth anchor: `D5/S3/Midline/UniversalHeatTrace.heat_vector_inner`
+- Truth anchor: `D5/S3/Midline/UniversalHeatTrace.universal_heat_trace_midline_of_boundary_divergent`

@@ -56,8 +56,8 @@ Nearest-integer distance is always at most one half, giving the global upper bou
 
 ## References
 
-- Truth anchor: `D5/S0/Tower/ChampionExtremality.one_step_exit`
 - Truth anchor: `D5/S0/Tower/ChampionExtremality.even_champion_sup`
 - Truth anchor: `D5/S0/Tower/ChampionExtremality.odd_champion`
 - Truth anchor: `D5/S0/Tower/ChampionExtremality.odd_half_arm`
+- Truth anchor: `D5/S0/Tower/ChampionExtremality.one_step_exit`
 - Dependency: [D5/S0/Tower/ConstantArms](ConstantArms.md)

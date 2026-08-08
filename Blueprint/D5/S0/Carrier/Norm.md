@@ -66,8 +66,8 @@ The golden norm is a monoid homomorphism from `GoldenInt` to the integers, packa
 
 ## References
 
-- Truth anchor: `D5/S0/Carrier/NormPowers.norm_pow`
 - Truth anchor: `D5/S0/Carrier/Euclidean.golden_division`
+- Truth anchor: `D5/S0/Carrier/NormPowers.norm_pow`
 - Truth anchor: `D5/S0/Carrier/PrincipalIdeal.golden_int_is_pid`
 - Dependency: [D5/S0/Carrier/Conj](Conj.md)
 - Dependency: [D5/S0/Carrier/Ring](Ring.md)

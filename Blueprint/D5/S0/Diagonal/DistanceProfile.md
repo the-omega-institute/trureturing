@@ -42,7 +42,7 @@ A listing is escaped exactly when every row has positive distance from the twist
 
 ## References
 
-- Truth anchor: `D5/S0/Diagonal/DistanceProfile.min_distance_tail`
 - Truth anchor: `D5/S0/Diagonal/DistanceProfile.distance_profile_card`
 - Truth anchor: `D5/S0/Diagonal/DistanceProfile.min_distance_one`
+- Truth anchor: `D5/S0/Diagonal/DistanceProfile.min_distance_tail`
 - Dependency: [D5/S0/Diagonal/EscapeCount](EscapeCount.md)
