@@ -15,13 +15,22 @@ internal sealed class PrARealRebuildRunner : IDisposable
     private readonly string leanReport;
     private readonly Dictionary<string, string> checkouts = new(StringComparer.Ordinal);
     private readonly Dictionary<string, ImmutableArray<PrAArtifact>> generated = new(StringComparer.Ordinal);
+    private readonly Action<string, string>? checkoutMutation;
+    private readonly bool validateAfterMutation;
+    private readonly bool cacheByEnvironment;
 
     internal PrARealRebuildRunner(
         string repositoryRoot,
-        ImmutableArray<RunArtifactInventoryItem> inventory)
+        ImmutableArray<RunArtifactInventoryItem> inventory,
+        Action<string, string>? checkoutMutation = null,
+        bool validateAfterMutation = false,
+        bool cacheByEnvironment = false)
     {
         this.repositoryRoot = Path.GetFullPath(repositoryRoot);
         this.inventory = inventory;
+        this.checkoutMutation = checkoutMutation;
+        this.validateAfterMutation = validateAfterMutation;
+        this.cacheByEnvironment = cacheByEnvironment;
         scratchRoot = Path.Combine(Path.GetTempPath(), "stratalint-pr-a-rebuild-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(scratchRoot);
         pinnedCommit = Git(this.repositoryRoot, ["rev-parse", "--verify", "HEAD^{commit}"]).Trim();
@@ -42,12 +51,14 @@ internal sealed class PrARealRebuildRunner : IDisposable
         if (!checkouts.TryGetValue(testCase.Checkout, out var checkout))
             throw new InvalidOperationException($"unknown checkout {testCase.Checkout}");
 
-        var key = EnvironmentKey(testCase);
+        var key = cacheByEnvironment ? EnvironmentKey(testCase) : testCase.Checkout;
         var generatorRan = !generated.TryGetValue(key, out var artifacts);
         var sourceRoot = checkout;
         if (generatorRan)
         {
             RestoreCleanCheckout(checkout);
+            checkoutMutation?.Invoke(testCase.Checkout, checkout);
+            if (validateAfterMutation) RequireCleanTrackedTree(checkout);
             var echo = RunEnvironment(
                 checkout,
                 testCase,

@@ -34,7 +34,10 @@ internal sealed record PrAMetamorphicResult(
     int ExitCode,
     ImmutableArray<string> Diagnostics,
     int CasesRun,
-    int RealRebuildsRun = 0);
+    int RealRebuildsRun = 0,
+    string Lane = "protocol",
+    int CanaryDeferredCount = 0,
+    ImmutableArray<string> DeferredEnvTuples = default);
 
 internal static class PrAMetamorphicVerifier
 {
@@ -49,16 +52,93 @@ internal static class PrAMetamorphicVerifier
     internal static PrAMetamorphicResult Verify(Func<PrAMatrixCase, PrARunSnapshot> produce)
         => VerifyCore(produce, realRebuild: false);
 
-    internal static PrAMetamorphicResult VerifyReal(Func<PrAMatrixCase, PrARealRebuildOutcome> produce)
+    internal static PrAMetamorphicResult VerifyRequired(Func<PrAMatrixCase, PrARealRebuildOutcome> produce)
     {
         var realRebuilds = 0;
         var result = VerifyCore(testCase =>
         {
-            var outcome = produce(testCase);
+            var canonical = testCase with
+            {
+                Locale = "C",
+                Timezone = "UTC",
+                Order = "canonical",
+                Parallelism = 1,
+                SourceDateEpoch = 0,
+            };
+            var outcome = produce(canonical);
             if (outcome.GeneratorRan) realRebuilds++;
             return outcome.Snapshot;
         }, realRebuild: false);
-        return result with { RealRebuildsRun = realRebuilds };
+        var deferred = CanaryScope().Select(DescribeEnvironment).ToImmutableArray();
+        if (realRebuilds != 2)
+        {
+            result = result with
+            {
+                Pass = false,
+                ExitCode = 1,
+                Diagnostics = result.Diagnostics.Add($"M-REBUILD-COUNT expected=2 actual={realRebuilds}"),
+            };
+        }
+        return result with
+        {
+            RealRebuildsRun = realRebuilds,
+            Lane = "required",
+            CanaryDeferredCount = deferred.Length,
+            DeferredEnvTuples = deferred,
+        };
+    }
+
+    internal static ImmutableArray<PrAMatrixCase> RequiredScope() =>
+    [
+        CanonicalEnvironment("checkout-a"),
+        CanonicalEnvironment("checkout-b"),
+    ];
+
+    internal static ImmutableArray<PrAMatrixCase> CanaryScope() => EnvironmentCases()
+        .Except(RequiredScope())
+        .ToImmutableArray();
+
+    internal static PrAMetamorphicResult VerifyCanary(Func<PrAMatrixCase, PrARealRebuildOutcome> produce)
+    {
+        ArgumentNullException.ThrowIfNull(produce);
+        var diagnostics = ImmutableArray.CreateBuilder<string>();
+        PrARunSnapshot? baseline = null;
+        byte[]? baselineReceiptProjection = null;
+        byte[]? baselineHandleProjection = null;
+        var rebuilds = 0;
+        var cases = 0;
+        foreach (var testCase in CanaryScope())
+        {
+            try
+            {
+                var outcome = produce(testCase);
+                if (outcome.GeneratorRan) rebuilds++;
+                ValidateSnapshot(outcome.Snapshot);
+                var receiptProjection = ClockReceiptProjection(outcome.Snapshot.Receipt);
+                var handleProjection = ClockHandleProjection(outcome.Snapshot.Handle);
+                if (baseline is null)
+                {
+                    baseline = outcome.Snapshot;
+                    baselineReceiptProjection = receiptProjection;
+                    baselineHandleProjection = handleProjection;
+                }
+                if (!ArtifactsEqual(baseline.Artifacts, outcome.Snapshot.Artifacts)
+                    || !VerifierResultsEqual(baseline.VerifierResults, outcome.Snapshot.VerifierResults)
+                    || !baselineReceiptProjection!.AsSpan().SequenceEqual(receiptProjection)
+                    || !baselineHandleProjection!.AsSpan().SequenceEqual(handleProjection))
+                    diagnostics.Add($"M-EMITTER-NONDETERMINISTIC case={Describe(testCase)} output differs from canary baseline");
+                cases++;
+            }
+            catch (Exception exception) when (exception is IOException or UnauthorizedAccessException
+                or JsonException or FormatException or InvalidOperationException or ArgumentException)
+            {
+                diagnostics.Add($"M-EMITTER-NONDETERMINISTIC case={Describe(testCase)} invalid={exception.Message}");
+                break;
+            }
+        }
+        if (rebuilds != 94) diagnostics.Add($"M-REBUILD-COUNT expected=94 actual={rebuilds}");
+        var pass = cases == 94 && rebuilds == 94 && diagnostics.Count == 0;
+        return new(pass, pass ? 0 : 1, diagnostics.ToImmutable(), cases, rebuilds, "canary", 0, []);
     }
 
     private static PrAMetamorphicResult VerifyCore(
@@ -84,7 +164,7 @@ internal static class PrAMetamorphicVerifier
                 or JsonException or FormatException or InvalidOperationException or ArgumentException)
             {
                 diagnostics.Add($"M-EMITTER-NONDETERMINISTIC case={Describe(testCase)} invalid={exception.Message}");
-                continue;
+                break;
             }
 
             casesRun++;
@@ -135,6 +215,20 @@ internal static class PrAMetamorphicVerifier
                 outputRoot, checkout, locale, timezone, order, parallelism, epoch);
         }
     }
+
+    private static IEnumerable<PrAMatrixCase> EnvironmentCases()
+    {
+        foreach (var checkout in Checkouts)
+        foreach (var locale in Locales)
+        foreach (var timezone in Timezones)
+        foreach (var order in Orders)
+        foreach (var parallelism in Parallelism)
+        foreach (var epoch in Epochs)
+            yield return new PrAMatrixCase("output-root-a", checkout, locale, timezone, order, parallelism, epoch);
+    }
+
+    private static PrAMatrixCase CanonicalEnvironment(string checkout) =>
+        new("output-root-a", checkout, "C", "UTC", "canonical", 1, 0);
 
     private static void ValidateSnapshot(PrARunSnapshot snapshot)
     {
@@ -218,4 +312,7 @@ internal static class PrAMetamorphicVerifier
 
     private static string Describe(PrAMatrixCase item) =>
         $"root={item.OutputRoot},checkout={item.Checkout},locale={item.Locale},timezone={item.Timezone},order={item.Order},parallel={item.Parallelism},epoch={item.SourceDateEpoch}";
+
+    internal static string DescribeEnvironment(PrAMatrixCase item) =>
+        $"checkout={item.Checkout},locale={item.Locale},timezone={item.Timezone},order={item.Order},parallel={item.Parallelism},epoch={item.SourceDateEpoch}";
 }
