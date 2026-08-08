@@ -86,6 +86,27 @@ public sealed class RunHandleProtocolTests
     }
 
     [Fact]
+    public void ConsumerRejectsArtifactBytesThatDisagreeWithReceipt()
+    {
+        using var fixture = new RunFixture();
+        var produced = RunHandleProducer.Produce(
+            fixture.SourceRoot, fixture.OutputRoot, fixture.Request, fixture.Inventory);
+        var artifact = Path.Combine(
+            fixture.OutputRoot,
+            "00000000000000000000000000000000",
+            "Generated",
+            "output.txt");
+        File.WriteAllText(artifact, "tampered\n");
+
+        var result = RunHandleConsumer.Consume(
+            fixture.OutputRoot, produced.RequestSha256, fixture.Inventory);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Contains("RUN_HANDLE_INVALID artifact bytes mismatch", result.Diagnostic,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void ConsumerRejectsCrossRunHandle()
     {
         using var fixture = new RunFixture();
