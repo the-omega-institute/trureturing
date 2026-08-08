@@ -7,6 +7,7 @@ SCRIPT_UNDER_TEST="$REPOSITORY_ROOT/Meta/StrataLint/scripts/pr-shepherd.sh"
 root="$(mktemp -d -t pr-shepherd-watch-freshness.XXXXXX)" || exit 1
 trap 'rm -rf "$root"' EXIT
 checkout="$root/checkout"
+remote="$root/origin.git"
 mkdir -p "$root/bin" "$root/home" "$root/state" "$root/cache" \
   "$checkout/Meta/StrataLint/scripts"
 script="$checkout/Meta/StrataLint/scripts/pr-shepherd.sh"
@@ -42,6 +43,9 @@ command git -C "$checkout" config user.name "PR Watch Fixture"
 command git -C "$checkout" config user.email "pr-watch@example.invalid"
 command git -C "$checkout" add Meta/StrataLint/scripts
 command git -C "$checkout" commit -m initial >/dev/null
+command git init --bare --initial-branch=dev "$remote" >/dev/null
+command git -C "$checkout" remote add origin "$remote"
+command git -C "$checkout" push -u origin dev >/dev/null 2>&1
 
 cat > "$root/bin/ps" <<'SH'
 #!/usr/bin/env bash
@@ -64,6 +68,7 @@ case "$*" in
         add Meta/StrataLint/scripts/pr-shepherd.sh
       /usr/bin/git -C "$PR_WATCH_TEST_CHECKOUT" \
         commit -m cycle-2-replacement >/dev/null
+      /usr/bin/git -C "$PR_WATCH_TEST_CHECKOUT" push origin dev >/dev/null 2>&1
       : > "$PR_WATCH_TEST_MARKER"
     fi
     ;;

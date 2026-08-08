@@ -13,7 +13,8 @@ run_ledger_cli() {
 install_revision_file() {
   local workspace="$1" revision="$2" path="$3" step="$4" temporary
   temporary="$(mktemp "${TMPDIR:-/tmp}/pr-shepherd-revision.XXXXXXXX")" || return 1
-  if ! run_git_bounded "$step" "$workspace" show "$revision:$path" > "$temporary"; then
+  if ! run_bounded_to_file "$temporary" git "$step" "$GIT_TIMEOUT_SECONDS" \
+      git -C "$workspace" show "$revision:$path"; then
     rm -f "$temporary"
     return 1
   fi
