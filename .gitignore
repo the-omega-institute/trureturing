@@ -12,3 +12,6 @@
 /Papers/build/
 /build/
 __pycache__/
+/Generated/truth-graph.v1.json
+/Generated/DAG.md
+/Generated/FILEMAP.md

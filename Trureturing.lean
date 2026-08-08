@@ -12,6 +12,7 @@ import D5.S0.Diagonal.EquivariantEscape
 import D5.S0.Naming.NamingSystem
 import D5.S0.Tower.ConstantArms
 import D5.S0.Tower.ChampionExtremality
+import D5.S0.Tower.GoldenGapFrequency
 import D5.S1.Digit.Raw
 import D5.S1.Digit.Carry
 import D5.S1.Scale.Embedding
@@ -28,6 +29,7 @@ import D5.S1.Phase.ZeroOrbitCongruence
 import D5.S3.Constants.MidslopeCurvature
 import D5.S3.Constants.MidslopeCurvatureValues
 import D5.S3.Constants.RecordEntropy
+import D5.S3.Divergence.LogDerivTrace
 import D5.S3.Quantum.EnvironmentRecords
 import D5.S3.Quantum.ObserverCommutator
 import D5.S3.Quantum.PointerBasis
