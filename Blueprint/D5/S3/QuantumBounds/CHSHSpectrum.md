@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The CHSH four-point spectrum determines an exact cubic coefficient.
+A conditional CHSH spectral bound supports an exact cubic coefficient.
 
 **Theorem 1.1 (The paired gap coefficient has a closed form).**
 
@@ -28,9 +28,9 @@ $$\begin{gathered} 0<N<4,\quad S^{2}=4I+C,\\ \operatorname{spectrum}_{\mathbb{R}
 
 *Commentary.*
 
-The Lean declaration takes four finite complex Hermitian involutions, forms their CHSH matrix S and the negative Kronecker product C of the two local commutators, and assumes that the real spectrum of C is contained in {N, -N}. It reuses `landau_identity` for S squared equal to 4I + C and proves S Hermitian from the four input observables. Power spectral mapping sends each real eigenvalue of S to the spectrum of S squared; scalar-shift transport and the two-point hypothesis then give the four displayed square-root possibilities.
+The formal theorem proves the algebraic kernel under an explicit spectral hypothesis. It takes four finite complex Hermitian involutions, forms their CHSH matrix S and the negative Kronecker product C of the two local commutators, and assumes the two-point bound `hC`, namely that the real spectrum of C is contained in {N, -N}. It reuses `landau_identity` for S squared equal to 4I + C and proves S Hermitian from the four input observables. Power spectral mapping sends each real eigenvalue of S to the spectrum of S squared; scalar-shift transport and `hC` then yield the displayed four-point spectral inclusion for S.
 
-The conclusion is a spectral inclusion. It does not assert that all four values occur, does not establish their multiplicities, and does not derive N from an operator norm. The epsilon-cubed probability law and its Dirichlet-volume argument are outside this module's scope; no probability formula, volume coefficient, or limiting error term is asserted here.
+Accordingly, the conclusion is an inclusion rather than an equality: it does not assert that all four values occur or establish their multiplicities. Deriving `hC` from the norm identity N equal to the norm of the tensor product of the two local commutators is an independent tensor-commutator obligation and remains open beyond this module. The epsilon-cubed probability law and its Dirichlet-volume argument are likewise open beyond this module; no probability formula, volume coefficient, or limiting error term is asserted here.
 
 ## References
 
