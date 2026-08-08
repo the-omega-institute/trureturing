@@ -275,8 +275,8 @@ internal static partial class GoldenCorpusMaterializer
             var meta = BootstrapGate.Evaluate(changes) switch
             {
                 BootstrapOutcome.Clear clear => MetaEvaluationProfile.ForClear(clear.Capability),
-                BootstrapOutcome.HumanReviewRequired review =>
-                    MetaEvaluationProfile.ForProtectedSurface(review.ChangeSet),
+                BootstrapOutcome.ProtectedSurfaceVerificationRequired verification =>
+                    MetaEvaluationProfile.ForProtectedSurface(verification.ChangeSet),
                 BootstrapOutcome.InfrastructureFailure failure =>
                     throw new InvalidOperationException(failure.Message),
             };

@@ -57,17 +57,17 @@ public sealed class TrustTopologyTests
 
     [Theory]
     [MemberData(nameof(ProtectedPaths))]
-    public void Sl022RequiresExternalHumanReviewForEveryProtectedSurface(string path)
+    public void Sl022RequiresBaseOwnedVerificationForEveryProtectedSurface(string path)
     {
         var changes = RawChangeSet.Create(new[] { path });
 
         var outcome = BootstrapGate.Evaluate(changes);
 
-        var required = Assert.IsType<BootstrapOutcome.HumanReviewRequired>(outcome);
-        Assert.Contains(required.ChangeSet.Paths, item => item.Value == path);
-        var profile = MetaEvaluationProfile.ForProtectedSurface(required.ChangeSet);
+        var verification = Assert.IsType<BootstrapOutcome.ProtectedSurfaceVerificationRequired>(outcome);
+        Assert.Contains(verification.ChangeSet.Paths, item => item.Value == path);
+        var profile = MetaEvaluationProfile.ForProtectedSurface(verification.ChangeSet);
         Assert.Null(profile.ClearCapability);
-        Assert.Same(required.ChangeSet, profile.ProtectedChangeSet);
+        Assert.Same(verification.ChangeSet, profile.ProtectedChangeSet);
     }
 
     [Fact]
@@ -77,7 +77,7 @@ public sealed class TrustTopologyTests
 
         var outcome = BootstrapGate.Evaluate(changes);
 
-        Assert.IsType<BootstrapOutcome.HumanReviewRequired>(outcome);
+        Assert.IsType<BootstrapOutcome.ProtectedSurfaceVerificationRequired>(outcome);
     }
 
     [Theory]

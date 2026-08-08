@@ -88,7 +88,7 @@ public partial record BootstrapOutcome
         public MetaClear Capability { get; }
     }
 
-    public partial record HumanReviewRequired(MetaChangeSet ChangeSet);
+    public partial record ProtectedSurfaceVerificationRequired(MetaChangeSet ChangeSet);
 
     public partial record InfrastructureFailure(string Message);
 }
@@ -107,7 +107,8 @@ public static class BootstrapGate
         var protectedPaths = changes.Paths.Where(IsProtected).ToImmutableArray();
         return protectedPaths.Length == 0
             ? new BootstrapOutcome.Clear(MetaClear.Create())
-            : new BootstrapOutcome.HumanReviewRequired(new MetaChangeSet(protectedPaths));
+            : new BootstrapOutcome.ProtectedSurfaceVerificationRequired(
+                new MetaChangeSet(protectedPaths));
     }
 
     internal static ImmutableArray<Diagnostic> CreateSl022Diagnostics(MetaChangeSet changeSet)

@@ -62,7 +62,8 @@ public partial record AdmissionOutcome
 
     public partial record InfrastructureFailure(string Message);
 
-    public partial record HumanReviewRequired(ImmutableArray<Diagnostic> Diagnostics);
+    public partial record ProtectedSurfaceVerificationRequired(
+        ImmutableArray<Diagnostic> Diagnostics);
 
     public partial record ProtectedSurfaceChange
     {
