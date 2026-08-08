@@ -189,7 +189,7 @@ public sealed class C0CeremonyTrustRootTests
     }
 
     [Fact]
-    public void TowerC0AddressesMatchTheCanonicalPolicyAndPreimage()
+    public void TowerC0TrustRootMatchesTheFrozenInauguralCertificate()
     {
         var root = RepositoryLayout.FindRoot();
         var snapshot = Repository(root);
@@ -205,11 +205,7 @@ public sealed class C0CeremonyTrustRootTests
         Assert.Equal("ASSUMED-UNVERIFIED", loaded.Syntax.Bootstrap.Verification);
 
         var records = component.Members.Skip(2).Select(ParseRecord).ToArray();
-        var anchors = C0CeremonyProjection.DiscoverAnchors(snapshot);
-        Assert.Equal(anchors.Length + 5, records.Length);
-        AssertAnchorPaths(records, anchors, C0AnchorKind.Controller, "c0/controller");
-        AssertAnchorPaths(records, anchors, C0AnchorKind.Corpus, "c0/corpus");
-        AssertAnchorPaths(records, anchors, C0AnchorKind.GateWiring, "c0/gate-wiring");
+        Assert.Equal(3, records.Length);
 
         var certificate = Assert.Single(records, static item =>
             item.Kind == "c0/inaugural-certificate");
@@ -218,15 +214,10 @@ public sealed class C0CeremonyTrustRootTests
             root,
             C0CeremonyProjection.CertificatePath));
 
-        var baseCommit = Assert.Single(records, static item => item.Kind == "c0/base-commit");
-        Assert.Null(baseCommit.Path);
         var ceremonyCommit = Assert.Single(records, static item =>
             item.Kind == "c0/ceremony-commit");
         Assert.Equal("convention/this-pr-merge-commit", ceremonyCommit.Address);
         Assert.Null(ceremonyCommit.Path);
-        var preimageCommit = Assert.Single(records, static item =>
-            item.Kind == "c0/preimage-commit");
-        Assert.Null(preimageCommit.Path);
         var preimageTree = Assert.Single(records, static item => item.Kind == "c0/preimage-tree");
         Assert.Null(preimageTree.Path);
 
@@ -237,53 +228,18 @@ public sealed class C0CeremonyTrustRootTests
             certificateRoot.GetProperty("schema").GetString());
         Assert.Equal("CORPUS_CONSERVATIVE", certificateRoot.GetProperty("status").GetString());
         Assert.Empty(certificateRoot.GetProperty("findings").EnumerateArray());
-        var goldenCorpus = TomlGoldenLoader.LoadRepository(root);
-        Assert.Equal(
-            goldenCorpus.Cases.Count,
-            certificateRoot.GetProperty("golden_case_count").GetInt32());
         var implication = certificateRoot.GetProperty("positive_implication");
         Assert.Equal(
             implication.GetProperty("baseline_admit_count").GetInt32(),
             implication.GetProperty("preserved_admit_count").GetInt32());
-        Assert.Equal(
-            "git-commit/" + certificateRoot.GetProperty("baseline")
-                .GetProperty("commit_oid").GetString(),
-            baseCommit.Address);
-        Assert.Equal(
-            certificateRoot.GetProperty("baseline").GetProperty("tree_oid").GetString(),
-            "git-sha1:" + Git(
-                root,
-                "rev-parse",
-                Untag(baseCommit.Address, "git-commit/") + "^{tree}"));
-
         var candidate = certificateRoot.GetProperty("candidate");
-        Assert.Equal(
-            "git-commit/" + candidate.GetProperty("commit_oid").GetString(),
-            preimageCommit.Address);
         Assert.Equal(
             "git-tree/" + Untag(candidate.GetProperty("tree_oid").GetString()!, "git-sha1:"),
             preimageTree.Address);
-        C0CeremonyTrustRootJudge.AssertPreimageBlobs(root, certificateBytes, records);
-    }
-
-    private static void AssertAnchorPaths(
-        IEnumerable<C0Record> records,
-        IEnumerable<C0Anchor> anchors,
-        C0AnchorKind anchorKind,
-        string recordKind)
-    {
-        var expected = anchors
-            .Where(item => item.Kind == anchorKind)
-            .Select(static item => item.Path)
-            .Order(StringComparer.Ordinal)
-            .ToArray();
-        var actual = records
-            .Where(item => item.Kind == recordKind)
-            .Select(item => item.Path
-                ?? throw new InvalidOperationException($"{recordKind} record has no path"))
-            .Order(StringComparer.Ordinal)
-            .ToArray();
-        Assert.Equal(expected, actual);
+        Assert.True(C0CeremonyProjection.TrustRootMatchesSnapshot(
+            component.Members,
+            snapshot,
+            out var reason), reason);
     }
 
     private static C0Record ParseRecord(string value)

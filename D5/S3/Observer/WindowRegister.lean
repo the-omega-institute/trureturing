@@ -76,7 +76,6 @@ private theorem shiftPerm_pow_apply (n : ℕ) (i : ZMod M) :
       simp only [shiftPerm, Equiv.subRight_apply, Nat.cast_succ]
       ring
 
-/- Provenance: `OBSERVER-QUANTUM.md` section 3, restricted to the fixed finite matrix window. -/
 /-- The clock and cyclic shift obey the finite Weyl relation. -/
 theorem window_weyl (M : ℕ) [NeZero M] :
     clockMatrix M * shiftMatrix M = windowRoot M • (shiftMatrix M * clockMatrix M) := by
@@ -135,7 +134,6 @@ theorem window_unitary :
     simpa [RCLike.star_def, hNorm] using
       (RCLike.conj_mul (windowRoot M ^ i.val))
 
-/- Provenance: `OBSERVER-QUANTUM.md` section 3, after fixing the winding account. -/
 /-- A matrix commuting with both finite-window generators is a scalar matrix. -/
 theorem window_commutant_eq_scalars (A : Matrix (ZMod M) (ZMod M) ℂ)
     (hC : Commute A (clockMatrix M)) (hS : Commute A (shiftMatrix M)) :
