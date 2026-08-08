@@ -574,7 +574,9 @@ sweep() {
     log "ALERT INFRA_DEV_OID_INVALID value=$(printf '%s' "$dev_line" | head -c 100)"
     return 1
   fi
-  script_blob="$(compute_shepherd_identity "$LOADED_SCRIPT_PATH" "$SHEPHERD_MODULE_DIR" 2>/dev/null || true)"
+  script_blob=""
+  compute_shepherd_identity "$LOADED_SCRIPT_PATH" "$SHEPHERD_MODULE_DIR" script_blob \
+    2>/dev/null || true
   if [[ ! "$script_blob" =~ ^[0-9a-f]{40}$ ]]; then
     record_infrastructure_failure \
       "script-blob.$([[ "${LAST_BOUNDED_RESULT:-exit}" == timeout ]] && printf timeout || printf exit)"
