@@ -9,6 +9,10 @@ public sealed partial class PrShepherdRecalculationTests
     {
         internal string WatchState() => File.ReadAllText(WatchStatePath);
 
+        internal string WatchStateField(string name) =>
+            File.ReadAllLines(WatchStatePath)
+                .Single(line => line.StartsWith(name + "=", StringComparison.Ordinal))[(name.Length + 1)..];
+
         internal void WaitForWatchPhase(string phase)
         {
             var expected = $"phase={phase}\n";
@@ -22,6 +26,46 @@ public sealed partial class PrShepherdRecalculationTests
                 Thread.Sleep(20);
             }
             Assert.Fail($"watch did not reach phase={phase}\n{(File.Exists(WatchStatePath) ? WatchState() : "state missing")}");
+        }
+
+        internal void WaitForWatchCycle(int cycle)
+        {
+            var expected = $"cycle={cycle}\n";
+            for (var attempt = 0; attempt < 2_000; attempt++)
+            {
+                if (File.Exists(WatchStatePath)
+                    && File.ReadAllText(WatchStatePath).Contains(expected, StringComparison.Ordinal))
+                {
+                    return;
+                }
+                Thread.Sleep(20);
+            }
+            Assert.Fail($"watch did not reach cycle={cycle}\n{(File.Exists(WatchStatePath) ? WatchState() : "state missing")}");
+        }
+
+        internal void WaitForChildOutput()
+        {
+            for (var attempt = 0; attempt < 750; attempt++)
+            {
+                if (AuditLog().Contains("fixture-child-stdout", StringComparison.Ordinal)
+                    || StepArtifactContents().Any(
+                        contents => contents.Contains("fixture-child-stdout", StringComparison.Ordinal)))
+                {
+                    return;
+                }
+                Thread.Sleep(20);
+            }
+            Assert.Fail($"child output did not arrive\n{AuditLog()}");
+        }
+
+        internal void WaitForAuditFragment(string fragment)
+        {
+            for (var attempt = 0; attempt < 250; attempt++)
+            {
+                if (AuditLog().Contains(fragment, StringComparison.Ordinal)) return;
+                Thread.Sleep(20);
+            }
+            Assert.Fail($"audit fragment did not arrive: {fragment}\n{AuditLog()}");
         }
 
         internal void ReplaceWatchStateField(string name, string value)
