@@ -22,6 +22,18 @@ run_credentialless_bounded() {
     GCM_INTERACTIVE=Never \
     "$@"
 }
+run_credentialless_bounded_to_file() {
+  local destination="$1" step="$2" isolated_home="$3"
+  shift 3
+  run_bounded_to_file "$destination" build "$step" "$BUILD_TIMEOUT_SECONDS" env \
+    -u GH_TOKEN -u GITHUB_TOKEN -u GITHUB_PAT -u SSH_AUTH_SOCK -u SSH_AGENT_PID \
+    -u GIT_ASKPASS HOME="$isolated_home" GH_CONFIG_DIR="$isolated_home/gh" \
+    XDG_CONFIG_HOME="$isolated_home/config" XDG_CACHE_HOME="$isolated_home/cache" \
+    DOTNET_CLI_HOME="$isolated_home/dotnet" \
+    NUGET_PACKAGES="${NUGET_PACKAGES:-$ORIGINAL_HOME/.nuget/packages}" \
+    ELAN_HOME="${ELAN_HOME:-$ORIGINAL_HOME/.elan}" GIT_CONFIG_GLOBAL=/dev/null \
+    GIT_CONFIG_NOSYSTEM=1 GIT_TERMINAL_PROMPT=0 GCM_INTERACTIVE=Never "$@"
+}
 run_git_bounded() {
   local step="$1" workspace="$2"
   shift 2
@@ -195,8 +207,8 @@ merge_dev() {
       return 1
     fi
     conflicts="$(mktemp "${TMPDIR:-/tmp}/pr-shepherd-conflicts.XXXXXXXX")" || return 1
-    if ! run_git_bounded conflict-list "$workspace" \
-        diff --name-only --diff-filter=U -z > "$conflicts"; then
+    if ! run_bounded_to_file "$conflicts" git conflict-list "$GIT_TIMEOUT_SECONDS" \
+        git -C "$workspace" diff --name-only --diff-filter=U -z; then
       rm -f "$conflicts"
       set_bounded_failure conflict-list
       abort_merge_if_present "$workspace" || true
@@ -287,11 +299,10 @@ run_derivation_chain() {
   fi
   mkdir -p "$workspace/Generated"
   projection="$(mktemp "${TMPDIR:-/tmp}/pr-shepherd-projection.XXXXXXXX")"
-  if ! run_credentialless_bounded echo-verify "$isolated_home" \
+  if ! run_credentialless_bounded_to_file "$projection" echo-verify "$isolated_home" \
     /bin/bash -c 'cd "$1"; shift; exec "$@"' pr-shepherd-workspace "$workspace" \
       dotnet run --project Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj \
-      --configuration Release -- echo-verify --emit --base "$REMOTE/dev" \
-      > "$projection"; then
+      --configuration Release -- echo-verify --emit --base "$REMOTE/dev"; then
     set_bounded_failure echo-verify
     rm -f "$projection"
     rm -rf "$isolated_home"
