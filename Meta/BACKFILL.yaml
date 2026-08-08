@@ -33068,6 +33068,70 @@ sources:
         status:
           migration: residual
           truth: open
+      - atom_id: pzg-residual-2379464543b02049d1785573d14b77030754b1f8bb7d58ac189cd47da698763e
+        ast_path: corollary/3.6/occurrence/1
+        fingerprints:
+          raw_sha256: sha256:2379464543b02049d1785573d14b77030754b1f8bb7d58ac189cd47da698763e
+          normalized_sha256: sha256:2379464543b02049d1785573d14b77030754b1f8bb7d58ac189cd47da698763e
+        cas_ref: sha256:2379464543b02049d1785573d14b77030754b1f8bb7d58ac189cd47da698763e
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-c5c287b312bdc7472e773122a959f90694baa798a18b4c030051705db43fff60
+        ast_path: theorem/3.9
+        fingerprints:
+          raw_sha256: sha256:c5c287b312bdc7472e773122a959f90694baa798a18b4c030051705db43fff60
+          normalized_sha256: sha256:c5c287b312bdc7472e773122a959f90694baa798a18b4c030051705db43fff60
+        cas_ref: sha256:c5c287b312bdc7472e773122a959f90694baa798a18b4c030051705db43fff60
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-2379464543b02049d1785573d14b77030754b1f8bb7d58ac189cd47da698763e-9b93ad7785515e384b902ebbf16c52b87d64eac77a37b8db322ac47182a5dc5b
+        ast_path: corollary/3.6/occurrence/2
+        fingerprints:
+          raw_sha256: sha256:2379464543b02049d1785573d14b77030754b1f8bb7d58ac189cd47da698763e
+          normalized_sha256: sha256:2379464543b02049d1785573d14b77030754b1f8bb7d58ac189cd47da698763e
+        cas_ref: sha256:2379464543b02049d1785573d14b77030754b1f8bb7d58ac189cd47da698763e
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
+      - atom_id: pzg-residual-fb628b740c13155e81b509989a3d90fac9be23a0833932aceb0e866039f3a033
+        ast_path: theorem/3.7/occurrence/2
+        fingerprints:
+          raw_sha256: sha256:fb628b740c13155e81b509989a3d90fac9be23a0833932aceb0e866039f3a033
+          normalized_sha256: sha256:fb628b740c13155e81b509989a3d90fac9be23a0833932aceb0e866039f3a033
+        cas_ref: sha256:fb628b740c13155e81b509989a3d90fac9be23a0833932aceb0e866039f3a033
+        coverage_gids: []
+        receipts:
+          coverage: []
+          scribe: []
+          unresolved_subitems: []
+          chain_atoms: []
+          tail_authorization: null
+        status:
+          migration: residual
+          truth: open
   - source_id: cone-v1
     path: docs/develop/theory/CONE_PROGRAM_FORMAL.md
     atomizer: cone-v1
