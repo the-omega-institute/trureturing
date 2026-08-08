@@ -178,14 +178,29 @@ acquire_derived_lease() {
 }
 release_derived_lease_token() {
   local token="$1" pr="$2" directory="$STATE_DIR/derived-fifo.lease"
+  local claimed="$STATE_DIR/derived-fifo.release.$$.$RANDOM"
   [[ "$DRYRUN" != "1" && -n "$token" ]] || return 0
   DERIVED_LEASE_OBSERVED_TOKEN=""
   load_derived_lease "$directory" 2>/dev/null || return 0
   [[ "$DERIVED_LEASE_OBSERVED_TOKEN" == "$token" ]] || return 0
-  rm -f "$directory/owner"
-  if ! rmdir "$directory" 2>/dev/null; then
-    log "FIFO LEASE release incomplete pr=#$pr path=$directory"
+  mv "$directory" "$claimed" 2>/dev/null || return 0
+  DERIVED_LEASE_OBSERVED_TOKEN=""
+  if load_derived_lease "$claimed" 2>/dev/null \
+      && [[ "$DERIVED_LEASE_OBSERVED_TOKEN" == "$token" ]]; then
+    rm -f "$claimed/owner" "$claimed"/owner.next.*
+    if ! rmdir "$claimed" 2>/dev/null; then
+      log "FIFO LEASE release incomplete pr=#$pr path=$claimed"
+    fi
+    return 0
   fi
+  if mkdir "$directory" 2>/dev/null \
+      && mv "$claimed/owner" "$directory/owner" 2>/dev/null \
+      && rmdir "$claimed" 2>/dev/null; then
+    load_derived_lease "$directory" 2>/dev/null || true
+    return 0
+  fi
+  log "FIFO LEASE release ownership changed pr=#$pr preserved=$claimed"
+  return 1
 }
 release_derived_lease() {
   local token="$DERIVED_LEASE_TOKEN" pr="$DERIVED_LEASE_PR"
