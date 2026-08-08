@@ -557,6 +557,24 @@ artifact_id = "<stable-id|none>"
 
 `Golden/refactor-v1/manifest.json` 只列 content-addressed fixture、old/new build identity、P0-0 authority digest 的审计副本与 mutation expectation；不得出现生产 `artifacts`、disposition、producer 或 consumer 清单，且 authority 的判词输入只能来自 base judge。
 
+## 12.5′ 减法收口(R9,三席一致 subtract;取代 12.5 的 PR-A 长期义务)
+
+**判据换向**:本部的成功不再以"建成多少验证机器"衡量,而以 **dev 净行数下降 + 合并与仪式耗时下降** 衡量。以下六项为三席隔离判词的收口,`delete` 项连同其 SPEC 条款一并撤销。
+
+**A · PR-A required lane —— 删除(三席一致)。** `refactor-pr-a-verify` 的 required 接线、192-case metamorphic 矩阵、两次 clean-checkout 真重建、94-tuple canary 及其专用命令/测试全部删除。理由是第一性原理的直接推论:**确定性是「生成程序」的性质,不是「某次内容变更」的性质**;生成程序本身受 harness,故在未触碰 emitter 的 PR 上重跑真重建,是重新验证一个没变的东西(第 5 条门槛律、第 20 条执法分级)。实测代价:该步在 `ubuntu-latest` 上 19.1 min 撞 20 min job 预算被 CANCELLED,并连带掐死 `interface-gold4`/`cone-subadd`/`shepherd-liveness2`/`shepherd-liveness3`/`cone-logderiv` 等无关分支;少数运行压线通过,即一个在 timeout 悬崖抛硬币的 required check。**替代覆盖**:非确定 emitter 由**触发条件为 producer/输入闭包变更**的定向双生成测试覆盖;日常 PR 的重建不覆盖任何独有故障。
+
+**B · `refactor-quotient` —— 作为长期命令删除。** 它是 cutover 的第二套 old/new 法庭,而 required 的 `Content-addressed dev baseline admission` 已 checkout 内容寻址的 dev baseline(`test "$actual" = baseline.sha`)并以 base-owned 判官判候选,**每个 PR 自动完成同一件事且候选不可篡改自己的法官**。允许在 cutover 那一个 PR 内运行一次并把结果作为内容寻址证据留存,随后连命令与测试一并删除;不得保留为常驻命令。
+
+**C · run-handle 收据 —— 收缩。** 承重的只有一句:**未跟踪投影在被 base judge 消费前必须逐字节绑定**。`run-handle-v1` 的 request/handle 双层 schema、随机 `run_id`、跨 run 防混协议、fsync/rename 发布礼仪与攻击矩阵**均非必要条件**,删除。保留一个最小 canonical artifact manifest:`{artifact_id, path, mode, sha256}` 加 manifest digest 与输入 digest,消费前逐项重算比对。它独占覆盖:生成后字节被替换、漏项/多项、mode/path/symlink 越界、跨输入复用。
+
+**D · 已验证 snapshot overlay —— 保留最薄形。** 七项出库后 base judge 的现有 consumer(values/anchor/scribe 等)在候选 checkout 中读不到这些 bytes。没有它,旧法官会因缺文件而失败,或退化为读取未经验证的工作树——后者是候选向法官注入输入的漏洞。其唯一职责是把**已按 C 验真**的 bytes 提供给 consumer,不得读未验证来源。
+
+**E · 投影冲突补偿面 —— 原子删除。** 七项停止跟踪后,projection conflict 这一故障类不存在。删除 `is_derived_conflict` 的投影分支、`derived-refresh` 重算链,以及仅为该类冲突存在的 FIFO lease/backoff/liveness 测试(约 2450 行)。保留与投影无关的 PR 观察与普通 BEHIND 处理。病因消除即删补偿面(第 6 条禁兼容垫层、§12.9)。
+
+**F · C0 保守重放 —— 记忆化,不再无条件重跑。** 保留不可逆信任根检查本身;删除"每次 controller 变更无条件重跑"的义务。保守重放结果是 `(判官/controller 闭包字节, 语料字节, 全部实际判词输入)` 的**纯函数**,而这些输入均已内容寻址:以其完整内容地址为唯一 cache key,命中则在校验既有 certificate/receipt digest 后复用,未命中才跑仪式。**禁以 commit 作 key**。实测依据:`C0RenewCommand.cs` 603 行内 `cache|memo|skip|reuse` 零命中,单次仪式约 25 min,一日内在几乎相同输入上重跑五次。
+
+**红线不变(第 20 条)**:以上每个 `delete` 均已点名接手其失效面的机制;不得在未点名替代覆盖的情况下删除任何检测。三项承重项——base-owned content-addressed admission、FILEMAP strict 分类与 producer/输入闭包、最小 manifest 校验 + 薄 overlay——**不可删除**。
+
 ## 12.5 PR 可执行契约
 
 ### PR-A：run-handle-v1
@@ -824,3 +842,4 @@ Blueprint markdown 已证有仓内语义 consumer，移出 PR-A；只有独立 P
 - **v7.14 R6**(2026-08-08):`PROJECTION-RESIDENCY` 以「治理须按语义权威、所有权、可再生性与可逆性，而非物理居所」统摄 R1/R2/R3 对该原则的三种已冻结实然偏离，保持三项既有判词与商映射不变；在 R1 下补 F1 投影不得住保护面、F6 投影不得依赖兄弟投影、F7 病因消除即按 §12.9 删除补偿面，并明确 F5 并入 F6。F1 分类引用 CLAUDE.md 第〇节四项合取并 fail-closed；P0-F1 收缩为仅迁 `truth-graph`，`scribe-emissions` 与 `anchor-catalog` 须先迁 base judge consumer。F2/F3 多驱动者调度收敛与失败隔离划为具验收契约、待 caller 回填号码的独立 issue，并纳入 CHANGELOG 版本计数器与 `events.jsonl sequence` 的同构争用；不改门级、`emit-check` 或禁兼容垫层条款。
 - **v7.14 R7**(2026-08-08):`PROJECTION-RESIDENCY` 补 §12.5 PR-A 的 `run-handle-v1` 落盘缺口。原文定义了 handle 的全部字段与发布顺序（temp 与最终 handle 位于 output root、`fsync` 后 rename），却从未给出最终 handle 的**文件名**；实施席据此无法写出 producer，也无法加顶层 `make refactor-pr-a-verify`，是 PR #931 将 §12.5 item ① 诚实标 deferred 而非声称完成的直接原因之一（另一为 producer 本身未实现）。本轮不新造约定，而由本节既有约束逼定：output root 预先为空 ∧ producer 拒绝已存在 `<run_id>` ⇒ 每个 output root 至多一个 run ⇒ 固定名 `handle.json` 无歧义，consumer 无须扫描目录或按 `run_id` 猜名；`run_id` 为 32 lowercase hex，与 `handle.json`/`.handle.json.tmp` 字符集上不可能碰撞。据此固定最终 handle 为 `<output-root>/handle.json`、temp 为 `<output-root>/.handle.json.tmp`，与既有 `receipt_path` 固定为 `receipt.json` 同形（唯一真源、无第二套命名协议）；补 producer 须拒绝已存在 handle/temp，consumer 须读该固定路径，并把 handle 缺失、多于一个 run directory、handle 的 `run_id` 无对应最终目录三种情形显式列为 fail-closed。本轮只补定义，零实现、零门级变更、零 `emit-check` 变更、零 disposition 变更；R6 的 F1 分类、P0-F1 范围与商映射均不动。
 - **v7.14 R8**(2026-08-08):`PROJECTION-RESIDENCY` 以实测把 §12.5 `refactor-pr-a-verify` 拆为 required/canary 两道。R7 关闭定义缺口后，实施席（codex-cli 隔离席）首次真正实现「两个独立 clean checkout 各调 canonical 生成器」，并测得**单次真重建 ≈ 165 s**；SPEC 字面要求的 96 次真重建下界 **≥ 4 h 24 min**。本仓 `dev` 平均前进间隔约 50 min，故完整矩阵作 required check **结构上不可满足**——分支必在检查跑完前 stale，须重 merge、重算派生物、重跑，永不收敛；这不是性能偏好而是可满足性问题。按第 20 条执法分级：required lane = 192 个零重建协议 case + **恰 2 次**唯一 canonical env（`C`/`UTC`/`canonical`/并发 1/`SOURCE_DATE_EPOCH=0`）真重建，承载「七项投影可从源确定性重建」这条出库所依赖的命题本身，fail-closed 且接入双 required checks；canary lane = 其余 94 次 env metamorphism 带外周期跑，不一致入案号追踪至闭合。**检测机制未降级，只按成本分层**：verifier JSON 必须显式记 `lane`/`real_rebuilds_run`/`canary_deferred_count` 与被推迟 env 元组（禁静默截断），取消 canary 即取消检测，属第 20 条红线禁止。本轮只改验收契约，不改 `run-handle-v1`/`receipt-v1`/`artifact-inventory-v1` 任何封闭字段、不改发布顺序与 fail-closed 语义、不改 disposition、不出库任何投影；R7 的 `handle.json` 定义与 R6 的 F1 分类均不动。
+- **v7.14 R9**(2026-08-08):`PROJECTION-RESIDENCY` 减法收口。本部原以"建验证机器"推进,实测结果是向 `dev` 净加 1623 行(#933 +796/#938 +622/#931 +275)而收益为零,且 #938 的 required lane 造成全仓自锁(19.1 min 撞 20 min 预算,连带掐死五个无关分支),已由 #954 拆除。经三席隔离思考面板(codex-cli,题面相同互不可见)一致判 `subtract`,立 §12.5′:A 删 PR-A required lane 与 192-case 矩阵/双重建/canary(替代覆盖=触发条件为 producer 闭包变更的定向双生成测试);B 删 `refactor-quotient` 长期命令(required 的 content-addressed baseline admission 每 PR 已自动做同一件事且候选不可篡改法官,允许 cutover 内跑一次留证后删除);C 收据缩为最小 canonical artifact manifest(`{artifact_id,path,mode,sha256}`+manifest/输入 digest),删双层 schema、随机 run_id、跨 run 协议与 fsync/rename 礼仪;D 保留最薄的已验证 snapshot overlay(否则旧 base judge 缺文件失败或退化读未验证工作树);E 原子删除仅为 projection conflict 存在的补偿面约 2450 行;F 保守重放按 `(controller 闭包字节, 语料字节, 全部判词输入)` 内容地址 memoize,禁以 commit 作 key,删"每次 controller 变更无条件重跑"义务。判据自此换向:成功以 **dev 净行数下降 + 合并/仪式耗时下降** 衡量,不以建成机器数量衡量。第 20 条红线不变:每个删除均点名接手其失效面的机制;base-owned content-addressed admission、FILEMAP strict 分类与 producer/输入闭包、最小 manifest+薄 overlay 三项承重,不可删。
