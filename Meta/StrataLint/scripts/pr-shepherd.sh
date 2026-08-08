@@ -355,6 +355,47 @@ run_bounded_to_file() {
   cp "$LAST_BOUNDED_STDOUT_ARTIFACT" "$destination" || return 70
   return "$rc"
 }
+publish_missing_modules_failure() {
+  local marker=exit-1-missing-modules temporary="$PIDFILE.next.$$.$RANDOM" now
+  [[ -n "$WATCH_LOADED_BLOB" && -n "$WATCH_PROCESS_START" \
+      && -r "$PIDFILE" && -r "$PIDFILE.lock" ]] || return 0
+  if ! awk -F= -v pid="$$" -v process="$WATCH_PROCESS_START" -v canonical="$SCRIPT_PATH" '
+      $1 == "schema" && $2 == "pr-watch-owner-v1" { schema++ }
+      $1 == "pid" && $2 == pid { owner++ }
+      $1 == "process_start" && $2 == process { process_start++ }
+      $1 == "canonical_script" && $2 == canonical { script++ }
+      END { exit !(NR == 4 && schema == 1 && owner == 1 && process_start == 1 && script == 1) }
+    ' "$PIDFILE.lock" >/dev/null; then
+    return 0
+  fi
+  now="$(date '+%s')"; [[ "$now" =~ ^[0-9]+$ ]] || now=0
+  if ! awk -F= -v pid="$$" -v process="$WATCH_PROCESS_START" -v canonical="$SCRIPT_PATH" \
+      -v loaded_script="$LOADED_SCRIPT_PATH" -v blob="$WATCH_LOADED_BLOB" -v now="$now" -v marker="$marker" '
+      $1 == "schema" && $2 == "pr-watch-state-v2" { schema++ }
+      $1 == "pid" && $2 == pid { owner++ }
+      $1 == "process_start" && $2 == process { process_start++ }
+      $1 == "canonical_script" && $2 == canonical { script++ }
+      $1 == "loaded_script" && $2 == loaded_script { loaded_script_match++ }
+      $1 == "loaded_blob" && $2 == blob { loaded++ }
+      $1 == "phase" { $0 = "phase=terminal"; phase++ }
+      $1 == "current_step" { $0 = "current_step=module-load"; step++ }
+      $1 == "step_started_at" { $0 = "step_started_at=" now; started++ }
+      $1 == "step_deadline_at" { $0 = "step_deadline_at=0"; deadline++ }
+      $1 == "last_progress_at" { $0 = "last_progress_at=" now; progress++ }
+      $1 == "last_outcome" { $0 = "last_outcome=" marker; outcome++ }
+      $1 == "terminal_exit" { $0 = "terminal_exit=1"; terminal++ }
+      { print }
+      END {
+        if (schema != 1 || owner != 1 || process_start != 1 || script != 1) exit 1
+        if (loaded_script_match != 1 || loaded != 1 || phase != 1 || step != 1) exit 1
+        if (started != 1 || deadline != 1 || progress != 1 || outcome != 1 || terminal != 1) exit 1
+      }
+    ' "$PIDFILE" > "$temporary" || ! mv "$temporary" "$PIDFILE"; then
+    rm -f "$temporary" 2>/dev/null || true
+    log "WATCH state publication failed last_outcome=$marker path=$PIDFILE" || true
+    return 1
+  fi
+}
 SHEPHERD_MODULE_DIR="$(cd "$(dirname "$LOADED_SCRIPT_PATH")" && pwd -P)/shepherd"
 SHEPHERD_MODULE_NAMES=()
 for shepherd_module_path in "$SHEPHERD_MODULE_DIR"/pr-shepherd-*.sh; do
@@ -362,7 +403,10 @@ for shepherd_module_path in "$SHEPHERD_MODULE_DIR"/pr-shepherd-*.sh; do
   SHEPHERD_MODULE_NAMES+=("${shepherd_module_path##*/}")
 done
 if [[ "${#SHEPHERD_MODULE_NAMES[@]}" -eq 0 ]]; then
-  printf 'pr-shepherd: no helper modules found path=%s\n' "$SHEPHERD_MODULE_DIR" >&2
+  missing_modules="reason=missing-modules path=$SHEPHERD_MODULE_DIR last_outcome=exit-1-missing-modules"
+  log "WATCH startup failed $missing_modules" || true
+  publish_missing_modules_failure || true
+  printf 'pr-shepherd: WATCH startup failed %s\n' "$missing_modules" >&2
   exit 1
 fi
 compute_shepherd_identity() {
