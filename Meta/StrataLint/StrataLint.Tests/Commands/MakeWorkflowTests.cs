@@ -72,6 +72,7 @@ public sealed partial class MakeWorkflowTests
         "pr-watch-status",
         "refactor-p0-0-gate-authority",
         "refactor-p0-2",
+        "refactor-pr-a-verify",
     ];
 
     [Fact]

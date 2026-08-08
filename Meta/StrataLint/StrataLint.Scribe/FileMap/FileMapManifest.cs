@@ -109,6 +109,7 @@ internal static class FileMapLoader
         ["artifact_id", "authority", "consumed_by", "kind", "pattern", "produced_by", "residence_violation", "runtime_disposition", "verified_by"];
     private static readonly string[] RunLocalEntryKeys =
         ["artifact_id", "authority", "consumed_by", "history_requirement", "kind", "mode", "pattern", "produced_by", "runtime_disposition", "verified_by"];
+    private static readonly string[] GeneratedArtifactEntryKeys = RunLocalEntryKeys;
 
     internal static FileMapManifest LoadRepository(string repositoryRoot)
     {
@@ -222,7 +223,13 @@ internal static class FileMapLoader
         var hasResidenceViolation = table.ContainsKey("residence_violation");
         var isRunLocal = table.TryGetValue("runtime_disposition", out var disposition)
             && disposition is "run-local";
-        RequireExactKeys(table, location, isRunLocal ? RunLocalEntryKeys : hasResidenceViolation ? ResidenceEntryKeys : EntryKeys);
+        var isGeneratedArtifact = table.TryGetValue("kind", out var rawKind)
+            && rawKind is "generated"
+            && table.TryGetValue("artifact_id", out var rawArtifactId)
+            && rawArtifactId is string artifactIdValue
+            && artifactIdValue != "none"
+            && disposition is "committed-source";
+        RequireExactKeys(table, location, isRunLocal ? RunLocalEntryKeys : isGeneratedArtifact ? GeneratedArtifactEntryKeys : hasResidenceViolation ? ResidenceEntryKeys : EntryKeys);
         var pattern = RequiredString(table, "pattern", location);
         _ = FileMapGlob.Create(pattern);
         var kind = RequiredString(table, "kind", location) switch
@@ -267,13 +274,15 @@ internal static class FileMapLoader
             "run-local" => runtimeDisposition,
             _ => throw Invalid(location, "runtime_disposition must be committed-source, committed-ledger, or run-local"),
         };
-        var mode = isRunLocal ? RequiredString(table, "mode", location) : null;
-        var historyRequirement = isRunLocal ? RequiredString(table, "history_requirement", location) : null;
-        if (runtimeDisposition == "run-local"
-            && (kind is not FileMapKind.Generated || artifactId == "none" || mode != "100644"
+        var hasProjectionFields = isRunLocal || isGeneratedArtifact;
+        var mode = hasProjectionFields ? RequiredString(table, "mode", location) : null;
+        var historyRequirement = hasProjectionFields ? RequiredString(table, "history_requirement", location) : null;
+        if (hasProjectionFields
+            && (kind is not FileMapKind.Generated || artifactId == "none"
+                || mode is null || mode.Length != 6 || mode.Any(static value => value is < '0' or > '7')
                 || historyRequirement != "not-required"))
         {
-            throw Invalid(location, "run-local projection fields are invalid");
+            throw Invalid(location, "generated artifact projection fields are invalid");
         }
         if (runtimeDisposition == "committed-ledger"
             && kind is not FileMapKind.Ledger)
