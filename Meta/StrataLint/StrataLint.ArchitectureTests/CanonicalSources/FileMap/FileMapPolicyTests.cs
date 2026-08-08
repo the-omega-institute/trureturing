@@ -369,6 +369,46 @@ public sealed class FileMapPolicyTests
     }
 
     [Fact]
+    public void TrackedRunLocalGeneratedArtifactMustBeRemovedFromTheIndex()
+    {
+        const string artifactPath = "SyntheticArtifacts/output.json";
+        var manifest = Parse(DispositionEntry(
+            artifactPath, "generated", "SyntheticEmitter", "reader", "emit-check",
+            "run-local", "A-SYNTHETIC-OUTPUT"));
+        var inventory = new GeneratedArtifactIdentity(
+            artifactPath, "SyntheticEmitter", "emit-check", "A-SYNTHETIC-OUTPUT");
+
+        var finding = Assert.Single(FileMapPolicy.InspectGeneratedInventory(
+            manifest, [artifactPath], [inventory]));
+
+        Assert.Equal("FILEMAP-RUN-LOCAL-TRACKED", finding.Code);
+        Assert.Contains("remove", finding.Message, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("index", finding.Message, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("must not be changed", finding.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Theory]
+    [InlineData("run-local", false)]
+    [InlineData("committed-source", true)]
+    public void ValidGeneratedDispositionDoesNotProduceDispositionFinding(
+        string runtimeDisposition,
+        bool isTracked)
+    {
+        const string artifactPath = "SyntheticArtifacts/output.json";
+        var manifest = Parse(DispositionEntry(
+            artifactPath, "generated", "SyntheticEmitter", "reader", "emit-check",
+            runtimeDisposition, "A-SYNTHETIC-OUTPUT"));
+        var inventory = new GeneratedArtifactIdentity(
+            artifactPath, "SyntheticEmitter", "emit-check", "A-SYNTHETIC-OUTPUT");
+        var trackedPaths = isTracked ? new[] { artifactPath } : [];
+
+        var findings = FileMapPolicy.InspectGeneratedInventory(manifest, trackedPaths, [inventory]);
+
+        Assert.DoesNotContain(findings, static finding =>
+            finding.Code is "FILEMAP-GENERATED-DISPOSITION" or "FILEMAP-RUN-LOCAL-TRACKED");
+    }
+
+    [Fact]
     public void UntrackedRunLocalWithWrongProducerIsRejectedByTheRedFixture()
     {
         var manifest = Parse(DispositionEntry(
