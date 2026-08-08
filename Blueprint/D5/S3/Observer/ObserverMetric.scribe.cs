@@ -134,7 +134,7 @@ internal sealed class ObserverMetricDocument : IScribeDocumentDefinition
         DeltaLower, Underscore, Grp(Tau), F.Id("f"), Eq, D(0),
         Sp, Leftrightarrow, Sp,
         Forall, Sp, F.Id("i"), InMacro, Sp, F.Id("I"), Comma, Esc,
-        F.Id("f"), Open, Tau, F.Id("i"), Close,
+        F.Id("f"), Open, Tau, Sp, F.Id("i"), Close,
         Eq, F.Id("f"), Open, F.Id("i"), Close, Dot));
 
     private static Formula CyclicWindowFormula() => Disp(Seq(
@@ -153,7 +153,7 @@ internal sealed class ObserverMetricDocument : IScribeDocumentDefinition
     private static Formula SeminormKernelFormula() => Disp(Seq(
         Begin, Grp(F.Id("gathered")), Sp,
         Forall, Sp, F.Id("I"), Comma, Esc,
-        D(0), Lt, Vert, F.Id("I"), Vert, Lt, Infty, Comma, Esc,
+        D(0), Lt, Vert, Sp, F.Id("I"), Vert, Lt, Infty, Comma, Esc,
         Forall, Sp, Tau, Sp, InMacro, Sp,
         Operatorname, Grp(F.Id("Perm")), Open, F.Id("I"), Close, Comma, Esc,
         Forall, Sp, F.Id("f"), Colon, Sp,
@@ -161,28 +161,28 @@ internal sealed class ObserverMetricDocument : IScribeDocumentDefinition
         F.Id("L"), Underscore, Grp(Tau), Open, F.Id("f"), Close, Eq, D(0),
         Sp, Leftrightarrow, Sp,
         Forall, Sp, F.Id("i"), InMacro, Sp, F.Id("I"), Comma, Esc,
-        F.Id("f"), Open, Tau, F.Id("i"), Close,
+        F.Id("f"), Open, Tau, Sp, F.Id("i"), Close,
         Eq, F.Id("f"), Open, F.Id("i"), Close, Dot,
         Sp, End, Grp(F.Id("gathered"))));
 
     private static Formula SeminormAddFormula() => Disp(Seq(
         Begin, Grp(F.Id("gathered")), Sp,
         Forall, Sp, F.Id("I"), Comma, Esc,
-        D(0), Lt, Vert, F.Id("I"), Vert, Lt, Infty, Comma, Esc,
+        D(0), Lt, Vert, Sp, F.Id("I"), Vert, Lt, Infty, Comma, Esc,
         Forall, Sp, Tau, Sp, InMacro, Sp,
         Operatorname, Grp(F.Id("Perm")), Open, F.Id("I"), Close, Comma, RowBreak, Sp,
         Forall, Sp, F.Id("f"), Comma, F.Id("g"), Colon, Sp,
         F.Id("I"), To, Sp, Mathbb, Grp(F.Id("C")), Comma, Esc,
         F.Id("L"), Underscore, Grp(Tau), Open,
         F.Id("f"), Plus, F.Id("g"), Close,
-        Leq, F.Id("L"), Underscore, Grp(Tau), Open, F.Id("f"), Close,
+        Leq, Sp, F.Id("L"), Underscore, Grp(Tau), Open, F.Id("f"), Close,
         Plus, F.Id("L"), Underscore, Grp(Tau), Open, F.Id("g"), Close, Dot,
         Sp, End, Grp(F.Id("gathered"))));
 
     private static Formula SeminormSmulFormula() => Disp(Seq(
         Begin, Grp(F.Id("gathered")), Sp,
         Forall, Sp, F.Id("I"), Comma, Esc,
-        D(0), Lt, Vert, F.Id("I"), Vert, Lt, Infty, Comma, Esc,
+        D(0), Lt, Vert, Sp, F.Id("I"), Vert, Lt, Infty, Comma, Esc,
         Forall, Sp, Tau, Sp, InMacro, Sp,
         Operatorname, Grp(F.Id("Perm")), Open, F.Id("I"), Close, Comma, RowBreak, Sp,
         Forall, Sp, F.Id("c"), InMacro, Sp, Mathbb, Grp(F.Id("C")), Comma, Esc,
@@ -190,7 +190,7 @@ internal sealed class ObserverMetricDocument : IScribeDocumentDefinition
         F.Id("I"), To, Sp, Mathbb, Grp(F.Id("C")), Comma, Esc,
         F.Id("L"), Underscore, Grp(Tau), Open,
         F.Id("c"), F.Id("f"), Close,
-        Eq, Vert, F.Id("c"), Vert, Sp,
+        Eq, Vert, Sp, F.Id("c"), Vert, Sp,
         F.Id("L"), Underscore, Grp(Tau), Open, F.Id("f"), Close, Dot,
         Sp, End, Grp(F.Id("gathered"))));
 }

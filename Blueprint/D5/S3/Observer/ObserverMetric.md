@@ -20,7 +20,7 @@ Provenance note: OBSERVER-QUANTUM.md, Section 3 motivates the observer metric th
 
 **Theorem 1.2 (Zero defect is equivalent to update invariance).**
 
-$$\forall I,\ \forall \tau \in \operatorname{Perm}(I),\ \forall f: I\to \mathbb{C},\ \delta_{\tau}f=0 \Leftrightarrow \forall i\in I,\ f(\taui)=f(i).$$
+$$\forall I,\ \forall \tau \in \operatorname{Perm}(I),\ \forall f: I\to \mathbb{C},\ \delta_{\tau}f=0 \Leftrightarrow \forall i\in I,\ f(\tau i)=f(i).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/ObserverMetric.updateDefect_eq_zero_iff_invariant` (`✓ std3`). ∎
 
@@ -44,7 +44,7 @@ On the nonempty cyclic window ZMod M, the update is addition by one. Zero defect
 
 **Theorem 1.4 (The perturbation seminorm vanishes exactly on invariants).**
 
-$$\begin{gathered} \forall I,\ 0<\VertI\Vert<\infty,\ \forall \tau \in \operatorname{Perm}(I),\ \forall f: I\to \mathbb{C},\\ L_{\tau}(f)=0 \Leftrightarrow \forall i\in I,\ f(\taui)=f(i). \end{gathered}$$
+$$\begin{gathered} \forall I,\ 0<\Vert I\Vert<\infty,\ \forall \tau \in \operatorname{Perm}(I),\ \forall f: I\to \mathbb{C},\\ L_{\tau}(f)=0 \Leftrightarrow \forall i\in I,\ f(\tau i)=f(i). \end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/ObserverMetric.perturbationSeminorm_eq_zero_iff` (`✓ std3`). ∎
 
@@ -56,7 +56,7 @@ For a finite nonempty index type, define L_tau(f) as the maximum of |delta_tau f
 
 **Theorem 1.5 (The perturbation seminorm is subadditive).**
 
-$$\begin{gathered} \forall I,\ 0<\VertI\Vert<\infty,\ \forall \tau \in \operatorname{Perm}(I),\\ \forall f,g: I\to \mathbb{C},\ L_{\tau}(f+g)\leqL_{\tau}(f)+L_{\tau}(g). \end{gathered}$$
+$$\begin{gathered} \forall I,\ 0<\Vert I\Vert<\infty,\ \forall \tau \in \operatorname{Perm}(I),\\ \forall f,g: I\to \mathbb{C},\ L_{\tau}(f+g)\leq L_{\tau}(f)+L_{\tau}(g). \end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/ObserverMetric.perturbationSeminorm_add_le` (`✓ std3`). ∎
 
@@ -68,7 +68,7 @@ The update defect is additive in the observable. At each index, the complex tria
 
 **Theorem 1.6 (The perturbation seminorm is absolutely homogeneous).**
 
-$$\begin{gathered} \forall I,\ 0<\VertI\Vert<\infty,\ \forall \tau \in \operatorname{Perm}(I),\\ \forall c\in \mathbb{C},\ \forall f: I\to \mathbb{C},\ L_{\tau}(cf)=\Vertc\Vert L_{\tau}(f). \end{gathered}$$
+$$\begin{gathered} \forall I,\ 0<\Vert I\Vert<\infty,\ \forall \tau \in \operatorname{Perm}(I),\\ \forall c\in \mathbb{C},\ \forall f: I\to \mathbb{C},\ L_{\tau}(cf)=\Vert c\Vert L_{\tau}(f). \end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/ObserverMetric.perturbationSeminorm_smul` (`✓ std3`). ∎
 
