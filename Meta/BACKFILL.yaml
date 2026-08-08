@@ -175,6 +175,11 @@ sources:
         coverage_gids:
           - D5/S3/Quantum/FiniteDimensional.qubit_matrix_algebra_has_no_character
           - D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product
+          - D5/S3/QuantumBounds/CHSHWitness.bell_chsh_value
+          - D5/S3/QuantumBounds/CHSHWitness.bell_density_is_state
+          - D5/S3/QuantumBounds/CHSHWitness.bob_observables_are_valid
+          - D5/S3/QuantumBounds/CHSHWitness.lifted_observables_form_chsh_tuple
+          - D5/S3/QuantumBounds/CHSHWitness.chsh_operator_eq_lifted_chsh
         receipts:
           coverage:
             - gid: D5/S3/Quantum/FiniteDimensional.qubit_matrix_algebra_has_no_character
@@ -187,7 +192,6 @@ sources:
           unresolved_subitems:
             - no-character-for-all-matrix-sizes-greater-than-one
             - kochen-specker-projection-valuation-obstruction
-            - chsh-quantum-maximum-certificate
             - classical-local-fiber-bound-certificate
             - hidden-address-local-variable-interpretation
             - classical-address-realism-exclusion

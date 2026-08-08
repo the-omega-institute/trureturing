@@ -1,7 +1,7 @@
-<!-- echo-residual-summary:v3 residual=sha256:aa49e677c816e6473a2bb57a6b4117e42112903ea918336df94b5867f60ccb4f -->
+<!-- echo-residual-summary:v3 residual=sha256:1440f81fa5a8a67f7b43eba89d89718c73516dae72845c12a0faf681ccf61a6a -->
 # Echo Residual Summary
 
-- unresolved_subitems: 520
+- unresolved_subitems: 519
 - mother_residual_atom_ids: 74
 
 ## `bedc-wm-v0.1`
@@ -172,13 +172,12 @@ Mother residual atoms: none.
 
 ## `observer-quantum-v1`
 
-- unresolved_subitems: 48
+- unresolved_subitems: 47
 - mother_residual_atom_ids: 9
 
 Mother residual atoms:
 
-- `observer-residual-101df483e71f9e23ee1ec13626abf3037d9a32e6f992d6b5b9485bf6c7976c77` (7)
-  - `chsh-quantum-maximum-certificate`
+- `observer-residual-101df483e71f9e23ee1ec13626abf3037d9a32e6f992d6b5b9485bf6c7976c77` (6)
   - `classical-address-realism-exclusion`
   - `classical-local-fiber-bound-certificate`
   - `hidden-address-local-variable-interpretation`
