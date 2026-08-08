@@ -170,7 +170,7 @@ consumed_by = ["harness-gate"]
 verified_by = ["echo-verify", "emit-check"]
 authority = "digestion"
 artifact_id = "A-ECHO"
-runtime_disposition = "run-local"
+runtime_disposition = "committed-source"
 mode = "100644"
 history_requirement = "not-required"
 
