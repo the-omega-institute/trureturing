@@ -113,7 +113,7 @@ internal sealed class WindowRegisterDocument : IScribeDocumentDefinition
         Forall, Sp, F.Id("M"), Sp, InMacro, Sp,
         Mathbb, Grp(F.Id("N")), Underscore, Grp(Gt, D(0)), Comma, Esc,
         Operatorname, Grp(F.Id("IsPrimitiveRoot")), Open,
-        Exp, Open, Frac, Grp(D(2), Pi, F.Id("i")), Grp(F.Id("M")), Close,
+        F.Id("e"), Caret, Grp(Frac, Grp(D(2), Pi, Sp, F.Id("i")), Grp(F.Id("M"))),
         Comma, Sp, F.Id("M"), Close));
 
     private static Formula WeylFormula() => Disp(Seq(
