@@ -574,9 +574,15 @@ sweep() {
     log "ALERT INFRA_DEV_OID_INVALID value=$(printf '%s' "$dev_line" | head -c 100)"
     return 1
   fi
-  script_blob="$(compute_shepherd_identity "$LOADED_SCRIPT_PATH" "$SHEPHERD_MODULE_DIR" 2>/dev/null || true)"
-  [[ "$script_blob" =~ ^[0-9a-f]{40}$ ]] \
-    || { record_infrastructure_failure script-blob.exit; log "ALERT INFRA_SCRIPT_BLOB_INVALID"; return 1; }
+  script_blob=""
+  compute_shepherd_identity "$LOADED_SCRIPT_PATH" "$SHEPHERD_MODULE_DIR" script_blob \
+    2>/dev/null || true
+  if [[ ! "$script_blob" =~ ^[0-9a-f]{40}$ ]]; then
+    record_infrastructure_failure \
+      "script-blob.$([[ "${LAST_BOUNDED_RESULT:-exit}" == timeout ]] && printf timeout || printf exit)"
+    log "ALERT INFRA_SCRIPT_BLOB_INVALID"
+    return 1
+  fi
   sorted_rows="$(printf '%s\n' "$rows" | LC_ALL=C sort -t $'\t' -k1,1n)"
   local recalculated=" " derived_queue_head="" derived="UNKNOWN" expired=0 marker expiry_rc
   while IFS=$'\t' read -r num mergeable mstate head head_oid base_oid checks admission_conclusion admission_url; do
