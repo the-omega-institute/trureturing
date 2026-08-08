@@ -41,7 +41,7 @@ def unreadState (P : kappa -> Matrix n n ℂ) (rho : Matrix n n ℂ) : Matrix n 
 /-- The trace weight of a record outcome. -/
 noncomputable def recordWeight (P : kappa -> Matrix n n ℂ) (rho : Matrix n n ℂ)
     (k : kappa) : ℂ :=
-  Matrix.trace (rho * P k)
+  bornProbability rho (P k)
 
 omit decEqKappa in
 /-- Record weights sum to the trace of the original matrix. -/
@@ -50,7 +50,7 @@ theorem recordWeight_sum (hP : IsRecordMeasurement P) (rho : Matrix n n ℂ) :
   classical
   calc
     ∑ k, recordWeight P rho k = Matrix.trace (∑ k, rho * P k) := by
-      simp [recordWeight, Matrix.trace_sum]
+      simp [recordWeight, bornProbability, Matrix.trace_sum]
     _ = Matrix.trace (rho * ∑ k, P k) := by rw [Matrix.mul_sum]
     _ = Matrix.trace rho := by rw [hP.complete, Matrix.mul_one]
 
@@ -71,7 +71,7 @@ theorem unreadState_trace (hP : IsRecordMeasurement P) (rho : Matrix n n ℂ) :
         _ = Matrix.trace (P k * rho) := by rw [hP.idempotent k]
         _ = Matrix.trace (rho * P k) := Matrix.trace_mul_comm (P k) rho
     _ = Matrix.trace rho := by
-      simpa [recordWeight] using recordWeight_sum hP rho
+      simpa [recordWeight, bornProbability] using recordWeight_sum hP rho
 
 omit decEqKappa in
 private theorem left_project_unread (hP : IsRecordMeasurement P)
@@ -168,9 +168,9 @@ theorem conditionalState_isState (hP : IsRecordMeasurement P) {rho : Matrix n n 
   · rw [conditionalState, Matrix.trace_smul, hTraceCompressed]
     exact inv_mul_cancel₀ hk
 
-omit decEqKappa in
+omit [DecidableEq n] decEqKappa in
 /-- With no zero-weight branches, the unread state is the weighted conditional ensemble. -/
-theorem unread_eq_weighted_ensemble (_hP : IsRecordMeasurement P) (rho : Matrix n n ℂ)
+theorem unread_eq_weighted_ensemble (rho : Matrix n n ℂ)
     (hpos : forall k, recordWeight P rho k ≠ 0) :
     unreadState P rho = ∑ k, recordWeight P rho k • conditionalState P rho k := by
   classical
