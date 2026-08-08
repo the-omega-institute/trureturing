@@ -33,6 +33,7 @@ import D5.S3.Divergence.LogDerivTrace
 import D5.S3.Quantum.EnvironmentRecords
 import D5.S3.Quantum.ObserverCommutator
 import D5.S3.Quantum.PointerBasis
+import D5.S3.Quantum.Pinching
 import D5.S3.Quantum.CloningMachine
 import D5.S3.Zeros.ZetaIdentities
 import D5.S3.Zeros.ZetaUpgrade
