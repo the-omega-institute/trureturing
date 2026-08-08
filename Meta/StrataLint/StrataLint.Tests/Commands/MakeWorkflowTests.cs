@@ -73,6 +73,8 @@ public sealed partial class MakeWorkflowTests
         "refactor-p0-0-gate-authority",
         "refactor-p0-2",
         "refactor-pr-a-verify",
+        "refactor-pr-a-canary-verify",
+        "refactor-pr-a-canary-scope",
     ];
 
     [Fact]
@@ -219,6 +221,7 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain("make echo-verify", preflight, StringComparison.Ordinal);
     }
 
+
     [Fact]
     public void EchoProjectionIsARegisteredGeneratedArtifactNotFlightScaffolding()
     {
@@ -246,11 +249,14 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("make -C candidate dotnet", workflow, StringComparison.Ordinal);
         Assert.Contains("make -C candidate test", workflow, StringComparison.Ordinal);
         Assert.Contains("make -C candidate selftest", workflow, StringComparison.Ordinal);
+        Assert.Contains("make -C candidate refactor-pr-a-verify", workflow, StringComparison.Ordinal);
         Assert.Contains("make -C \"$CANDIDATE_ROOT\" emit-check", localGate, StringComparison.Ordinal);
         Assert.Contains("emit-check BASE=\"$BASE_SHA\"", localGate, StringComparison.Ordinal);
         Assert.Contains("lean-report-pair.sh", localGate, StringComparison.Ordinal);
         Assert.Contains("--skip-engineering", localGate, StringComparison.Ordinal);
-        Assert.Contains("GATE_ARGS=--skip-engineering", preflight, StringComparison.Ordinal);
+        Assert.Contains("make refactor-pr-a-verify", preflight, StringComparison.Ordinal);
+        Assert.Contains("GATE_ARGS=\"--skip-engineering --skip-pr-a\"", preflight, StringComparison.Ordinal);
+        Assert.Contains("run_stage refactor-pr-a-required", localGate, StringComparison.Ordinal);
         Assert.Contains("gate_stage_timing", localGate, StringComparison.Ordinal);
         Assert.Contains("gate_timing_summary", localGate, StringComparison.Ordinal);
         Assert.Contains("STRATALINT_TIMING", sharedGate, StringComparison.Ordinal);
@@ -650,10 +656,9 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("scribe-consumer", script, StringComparison.Ordinal);
         Assert.Contains(".lake/build/stratalint/raw-lean-report.json", script, StringComparison.Ordinal);
         Assert.DoesNotContain("CHECK_ARGS=()", script, StringComparison.Ordinal);
-        Assert.Contains("run_scribe emit", script, StringComparison.Ordinal);
-        Assert.Contains("run_scribe catalog", script, StringComparison.Ordinal);
-        Assert.Contains("run_scribe emit-values", script, StringComparison.Ordinal);
-        Assert.Contains("run_scribe filemap", script, StringComparison.Ordinal);
+        Assert.Contains("emit|catalog|emit-values|filemap) run_scribe \"$1\"", script, StringComparison.Ordinal);
+        Assert.Contains("canonical) generators=(emit catalog emit-values filemap dag)", script, StringComparison.Ordinal);
+        Assert.Contains("for generator in \"${generators[@]}\"", script, StringComparison.Ordinal);
     }
 
     [Fact]
