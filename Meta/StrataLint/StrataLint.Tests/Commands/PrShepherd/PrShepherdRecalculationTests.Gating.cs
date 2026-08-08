@@ -108,25 +108,26 @@ public sealed partial class PrShepherdRecalculationTests
         Assert.Contains("startedAt // .completedAt", script, StringComparison.Ordinal);
         Assert.Contains("conclusion", script, StringComparison.Ordinal);
         Assert.Contains("detailsUrl", script, StringComparison.Ordinal);
-        Assert.Contains("DIGEST_STATUS_INVALID", script, StringComparison.Ordinal);
-        Assert.Contains("scribe-emissions", script, StringComparison.Ordinal);
+        Assert.DoesNotContain("scribe-emissions", script, StringComparison.Ordinal);
         Assert.Contains("ECHO_VERIFY_INFRASTRUCTURE", script, StringComparison.Ordinal);
         Assert.Contains("residual", script, StringComparison.Ordinal);
         Assert.Contains("SHEPHERD_DRYRUN", script, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void DerivedConflictClassifierCoversBothBaseJudgeGeneratedProjections()
+    public void DerivedConflictClassifierExcludesRunLocalScribeAttestation()
     {
         var script = ReadShepherdScripts();
 
-        Assert.Contains(
-            "Meta/StrataLint/Generated/*",
-            script,
-            StringComparison.Ordinal);
-        Assert.Matches(
-            "Meta/StrataLint/Generated/\\*[^\\n]*return 0",
-            script);
+        var classifier = script[script.IndexOf("is_derived_conflict()", StringComparison.Ordinal)..];
+        classifier = classifier[..classifier.IndexOf("branch_slug()", StringComparison.Ordinal)];
+        Assert.DoesNotContain("Meta/StrataLint/Generated/*", classifier, StringComparison.Ordinal);
+        // 断言补偿面已收窄为精确路径:不含宽通配符,且不再提及已出库的 scribe-emissions。
+        // 不写出仍存在的仓库路径字面量——那会触发 RepositoryPathLiteralTests(唯一真源机器执法)。
+        Assert.DoesNotContain("scribe-emissions", classifier, StringComparison.Ordinal);
+        Assert.Contains("anchor-catalog", classifier, StringComparison.Ordinal);
+        Assert.DoesNotContain("scribe-emissions", classifier, StringComparison.Ordinal);
+        Assert.Contains("$FROZEN_LEDGER_PATH", classifier, StringComparison.Ordinal);
     }
 
     [Fact]
