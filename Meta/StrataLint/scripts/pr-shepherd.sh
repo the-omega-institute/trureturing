@@ -26,6 +26,10 @@ PIDFILE_PARENT="$(cd "$(dirname "$PIDFILE")" 2>/dev/null && pwd -P)" \
 PIDFILE="$PIDFILE_PARENT/${PIDFILE##*/}"
 STATE_DIR="${PR_SHEPHERD_STATE:-$HOME/.pr-shepherd-state}"
 CACHE_ROOT="${PR_SHEPHERD_CACHE:-$HOME/.cache/trureturing-shepherd}"
+LOG_MAX_BYTES="${PR_SHEPHERD_LOG_MAX_BYTES:-10485760}"
+LOG_BACKUPS="${PR_SHEPHERD_LOG_BACKUPS:-5}"
+ARTIFACT_DIR="${PR_SHEPHERD_ARTIFACTS:-$HOME/.pr-shepherd-artifacts}"
+ARTIFACT_MAX_FILES="${PR_SHEPHERD_ARTIFACT_MAX_FILES:-200}"
 DRYRUN="${SHEPHERD_DRYRUN:-0}"
 DERIVED_LEASE_TTL="${PR_SHEPHERD_LEASE_TTL_SECONDS:-14400}"
 API_TIMEOUT_SECONDS="${PR_SHEPHERD_API_TIMEOUT_SECONDS:-120}"
@@ -71,12 +75,16 @@ WATCH_STATE_LAST_PROGRESS_AT=""
 WATCH_STATE_LAST_OUTCOME=""
 WATCH_STATE_CYCLE=""
 WATCH_STATE_TERMINAL_EXIT=""
+WATCH_STATE_CANONICAL_SCRIPT=""
 WATCH_SLEEP_PID=""
 ACTIVE_BOUNDED_PID=""
 ACTIVE_SWEEP_LEASE_RECEIPT=""
 TIMEOUT_COMMAND=""
 LAST_BOUNDED_RESULT=""
 LAST_BOUNDED_EXIT=""
+LAST_BOUNDED_STDOUT_ARTIFACT=""
+LAST_BOUNDED_STDERR_ARTIFACT=""
+AUDIT_LOG_BYTES=""
 LAST_FAILURE_CLASS=""
 LAST_FAILURE_EXIT=""
 LAST_FAILURE_DISPOSITION="poison"
@@ -117,6 +125,11 @@ validate_configuration() {
   validate_positive_config PR_SHEPHERD_SWEEP_TIMEOUT_SECONDS "$SWEEP_TIMEOUT_SECONDS" || return 2
   validate_positive_config PR_SHEPHERD_KILL_GRACE_SECONDS "$KILL_GRACE_SECONDS" || return 2
   validate_positive_config PR_SHEPHERD_FAILURE_BACKOFF_BASE_SECONDS "$FAILURE_BACKOFF_BASE_SECONDS" || return 2
+  validate_positive_config PR_SHEPHERD_LOG_MAX_BYTES "$LOG_MAX_BYTES" || return 2
+  validate_positive_config PR_SHEPHERD_LOG_BACKUPS "$LOG_BACKUPS" || return 2
+  validate_positive_config PR_SHEPHERD_ARTIFACT_MAX_FILES "$ARTIFACT_MAX_FILES" || return 2
+  [[ "$ARTIFACT_MAX_FILES" -ge 2 ]] \
+    || { configuration_error PR_SHEPHERD_ARTIFACT_MAX_FILES "$ARTIFACT_MAX_FILES"; return 2; }
   if [[ "$SWEEP_TIMEOUT_SECONDS" -le $((KILL_GRACE_SECONDS + 1)) ]]; then
     configuration_error PR_SHEPHERD_SWEEP_TIMEOUT_SECONDS "$SWEEP_TIMEOUT_SECONDS"
     return 2
@@ -146,6 +159,12 @@ run_bounded() {
     log "deadline_kind=$kind step=$step timeout_seconds=0 result=timeout deadline_at=$deadline exit_code=124"
     return 124
   fi
+  if ! create_step_artifacts "$step" "$now"; then
+    LAST_BOUNDED_RESULT=exit; LAST_BOUNDED_EXIT=70
+    log "deadline_kind=$kind step=$step result=exit exit_code=70 artifact=unavailable"
+    return 70
+  fi
+  log "COMMAND_STARTED deadline_kind=$kind step=$step timeout_seconds=$timeout_seconds deadline_at=$deadline stdout_artifact=$LAST_BOUNDED_STDOUT_ARTIFACT stderr_artifact=$LAST_BOUNDED_STDERR_ARTIFACT"
   child_deadline="$deadline"
   if [[ "$kind" == sweep && "$step" == sweep ]]; then
     child_deadline=$((deadline - KILL_GRACE_SECONDS - 1))
@@ -176,7 +195,8 @@ run_bounded() {
       printf "%s\n" "$rc" > "$temporary" && mv "$temporary" "$completion"
       exit "$rc"
     ' pr-shepherd-bounded "$completion" "$deadline" "$child_deadline" "$now" \
-      "$kind" "$step" "$timeout_seconds" "$CURRENT_PR" "$@" &
+      "$kind" "$step" "$timeout_seconds" "$CURRENT_PR" "$@" \
+      > "$LAST_BOUNDED_STDOUT_ARTIFACT" 2> "$LAST_BOUNDED_STDERR_ARTIFACT" &
   bounded_pid=$!
   ACTIVE_BOUNDED_PID="$bounded_pid"
   wait "$bounded_pid"
@@ -189,8 +209,8 @@ run_bounded() {
     if [[ "$completed_exit" =~ ^(0|[1-9][0-9]{0,2})$ ]]; then
       LAST_BOUNDED_RESULT="$([[ "$completed_exit" == 0 ]] && printf success || printf exit)"
       LAST_BOUNDED_EXIT="$completed_exit"
-      if [[ "$completed_exit" != 0 ]]; then
-        log "deadline_kind=$kind step=$step timeout_seconds=$timeout_seconds result=exit deadline_at=$deadline exit_code=$completed_exit"
+      if [[ "$kind" != sweep || "$step" != sweep || "$completed_exit" != 0 ]]; then
+        log "COMMAND_FINISHED deadline_kind=$kind step=$step timeout_seconds=$timeout_seconds result=$LAST_BOUNDED_RESULT deadline_at=$deadline exit_code=$completed_exit stdout_artifact=$LAST_BOUNDED_STDOUT_ARTIFACT stderr_artifact=$LAST_BOUNDED_STDERR_ARTIFACT"
       fi
       if declare -F watch_step_finished >/dev/null; then
         watch_step_finished "$step" "$LAST_BOUNDED_RESULT" \
@@ -200,13 +220,13 @@ run_bounded() {
     fi
     LAST_BOUNDED_RESULT=exit
     LAST_BOUNDED_EXIT=70
-    log "deadline_kind=$kind step=$step timeout_seconds=$timeout_seconds result=exit deadline_at=$deadline exit_code=70 completion=invalid"
+    log "COMMAND_FINISHED deadline_kind=$kind step=$step timeout_seconds=$timeout_seconds result=exit deadline_at=$deadline exit_code=70 completion=invalid stdout_artifact=$LAST_BOUNDED_STDOUT_ARTIFACT stderr_artifact=$LAST_BOUNDED_STDERR_ARTIFACT"
     return 70
   fi
   rm -f "$completion" "$completion".next.* 2>/dev/null || true
   LAST_BOUNDED_RESULT=timeout
   LAST_BOUNDED_EXIT=124
-  log "deadline_kind=$kind step=$step timeout_seconds=$timeout_seconds result=timeout deadline_at=$deadline exit_code=$rc"
+  log "COMMAND_FINISHED deadline_kind=$kind step=$step timeout_seconds=$timeout_seconds result=timeout deadline_at=$deadline exit_code=$rc stdout_artifact=$LAST_BOUNDED_STDOUT_ARTIFACT stderr_artifact=$LAST_BOUNDED_STDERR_ARTIFACT"
   if declare -F watch_step_finished >/dev/null; then
     watch_step_finished "$step" timeout \
       "$parent_step" "$parent_started_at" "$parent_deadline_at" || true
@@ -214,12 +234,11 @@ run_bounded() {
   return 124
 }
 run_bounded_capture() {
-  local variable="$1" kind="$2" step="$3" timeout="$4" output rc=0
+  local variable="$1" kind="$2" step="$3" timeout="$4" rc=0
   shift 4
-  output="$(mktemp "${TMPDIR:-/tmp}/pr-shepherd-output.XXXXXXXX")"
-  if run_bounded "$kind" "$step" "$timeout" "$@" > "$output"; then rc=0; else rc=$?; fi
-  printf -v "$variable" '%s' "$(<"$output")"
-  rm -f "$output"
+  if run_bounded "$kind" "$step" "$timeout" "$@"; then rc=0; else rc=$?; fi
+  [[ -f "$LAST_BOUNDED_STDOUT_ARTIFACT" ]] || return 70
+  printf -v "$variable" '%s' "$(<"$LAST_BOUNDED_STDOUT_ARTIFACT")"
   return "$rc"
 }
 GH() {
@@ -268,7 +287,74 @@ GIT_CAPTURE() {
   shift 2
   run_bounded_capture "$variable" git "$step" "$GIT_TIMEOUT_SECONDS" git "$@"
 }
-log() { printf '%s %s\n' "$(date '+%F %T')" "$*" | tee -a "$LOG" >&2; }
+log() {
+  local line line_bytes LC_ALL=C
+  line="$(printf '%s %s' "$(date '+%F %T')" "$*")"
+  if [[ ! "$AUDIT_LOG_BYTES" =~ ^[0-9]+$ ]]; then
+    AUDIT_LOG_BYTES="$(audit_log_size)" || return 1
+  fi
+  rotate_audit_log || return 1
+  printf '%s\n' "$line" >> "$LOG"
+  line_bytes="${#line}"
+  AUDIT_LOG_BYTES=$((AUDIT_LOG_BYTES + line_bytes + 1))
+}
+audit_log_size() {
+  local size
+  [[ -f "$LOG" ]] || { printf '0\n'; return 0; }
+  size="$(LC_ALL=C wc -c < "$LOG" 2>/dev/null)" || return 1
+  size="${size//[[:space:]]/}"
+  [[ "$size" =~ ^[0-9]+$ ]] || return 1
+  printf '%s\n' "$size"
+}
+rotate_audit_log() {
+  local index previous next
+  [[ "$AUDIT_LOG_BYTES" -lt "$LOG_MAX_BYTES" ]] || {
+    rm -f "$LOG.$LOG_BACKUPS" 2>/dev/null || return 1
+    index=$((LOG_BACKUPS - 1))
+    while [[ "$index" -ge 1 ]]; do
+      previous="$LOG.$index"; next="$LOG.$((index + 1))"
+      [[ ! -f "$previous" ]] || mv "$previous" "$next" || return 1
+      index=$((index - 1))
+    done
+    [[ ! -f "$LOG" ]] || mv "$LOG" "$LOG.1" || return 1
+    AUDIT_LOG_BYTES=0
+  }
+}
+prune_step_artifacts() {
+  local -a artifacts=("$ARTIFACT_DIR"/*)
+  local count=0 index=0
+  [[ -e "${artifacts[0]}" ]] || return 0
+  count="${#artifacts[@]}"
+  while [[ "$count" -gt "$ARTIFACT_MAX_FILES" ]]; do
+    rm -f "${artifacts[index]}" 2>/dev/null || return 1
+    index=$((index + 1)); count=$((count - 1))
+  done
+}
+create_step_artifacts() {
+  local step="$1" started_at="$2" safe base attempt
+  safe="${step//[^a-zA-Z0-9._-]/_}"
+  mkdir -p "$ARTIFACT_DIR" || return 1
+  for attempt in 1 2 3; do
+    base="$ARTIFACT_DIR/${started_at}-$$-$RANDOM-$safe"
+    LAST_BOUNDED_STDOUT_ARTIFACT="$base.stdout.log"
+    LAST_BOUNDED_STDERR_ARTIFACT="$base.stderr.log"
+    if (umask 077; set -o noclobber
+        : > "$LAST_BOUNDED_STDOUT_ARTIFACT" \
+          && : > "$LAST_BOUNDED_STDERR_ARTIFACT") 2>/dev/null; then
+      prune_step_artifacts; return
+    fi
+    rm -f "$LAST_BOUNDED_STDOUT_ARTIFACT" "$LAST_BOUNDED_STDERR_ARTIFACT" 2>/dev/null || true
+  done
+  return 1
+}
+run_bounded_to_file() {
+  local destination="$1" rc=0
+  shift
+  if run_bounded "$@"; then rc=0; else rc=$?; fi
+  [[ -f "$LAST_BOUNDED_STDOUT_ARTIFACT" ]] || return 70
+  cp "$LAST_BOUNDED_STDOUT_ARTIFACT" "$destination" || return 70
+  return "$rc"
+}
 SHEPHERD_MODULE_DIR="$(cd "$(dirname "$LOADED_SCRIPT_PATH")" && pwd -P)/shepherd"
 SHEPHERD_MODULE_NAMES=()
 for shepherd_module_path in "$SHEPHERD_MODULE_DIR"/pr-shepherd-*.sh; do
@@ -280,10 +366,17 @@ if [[ "${#SHEPHERD_MODULE_NAMES[@]}" -eq 0 ]]; then
   exit 1
 fi
 compute_shepherd_identity() {
-  local entrypoint="$1" module_directory="$2" name blob hashes material="" material_file
+  local entrypoint="$1" module_directory="$2" result_variable="${3:-}"
+  local name blob hashes material="" material_file
   local index=0
   local -a source_files=("$entrypoint")
-  for name in "${SHEPHERD_MODULE_NAMES[@]}"; do
+  local -a identity_module_names=()
+  for name in "$module_directory"/pr-shepherd-*.sh; do
+    [[ -f "$name" ]] || continue
+    identity_module_names+=("${name##*/}")
+  done
+  [[ "${#identity_module_names[@]}" -gt 0 ]] || return 1
+  for name in "${identity_module_names[@]}"; do
     source_files+=("$module_directory/$name")
   done
   GIT_CAPTURE hashes shepherd-source-hashes hash-object "${source_files[@]}" 2>/dev/null \
@@ -293,7 +386,7 @@ compute_shepherd_identity() {
     if [[ "$index" == 0 ]]; then
       material="pr-shepherd.sh $blob"
     else
-      name="${SHEPHERD_MODULE_NAMES[index - 1]}"
+      name="${identity_module_names[index - 1]}"
       material+=$'\n'"shepherd/$name $blob"
     fi
     index=$((index + 1))
@@ -306,12 +399,29 @@ compute_shepherd_identity() {
     return 1
   fi
   rm -f "$material_file"
-  printf '%s\n' "$blob"
+  if [[ -n "$result_variable" ]]; then
+    printf -v "$result_variable" '%s' "$blob"
+  else
+    printf '%s\n' "$blob"
+  fi
 }
+validate_configuration || exit $?
 if [[ "${1:-}" != watch || -n "$WATCH_LOADED_BLOB" ]]; then
   for shepherd_module_name in "${SHEPHERD_MODULE_NAMES[@]}"; do
     source "$SHEPHERD_MODULE_DIR/$shepherd_module_name"
   done
+else
+  bootstrap_module="$SHEPHERD_MODULE_DIR/pr-shepherd-bootstrap.sh"
+  GIT_CAPTURE bootstrap_repository watch-reload-root -C "$(dirname "$LOADED_SCRIPT_PATH")" \
+    rev-parse --show-toplevel || exit $?
+  GIT_CAPTURE bootstrap_relative watch-bootstrap-path -C "$bootstrap_repository" \
+    ls-files --full-name --error-unmatch -- "$bootstrap_module" || exit $?
+  GIT_CAPTURE bootstrap_tracked watch-bootstrap-blob -C "$bootstrap_repository" \
+    rev-parse "HEAD:$bootstrap_relative" || exit $?
+  GIT_CAPTURE bootstrap_actual watch-bootstrap-actual hash-object "$bootstrap_module" || exit $?
+  [[ "$bootstrap_actual" == "$bootstrap_tracked" ]] \
+    || { log "WATCH bootstrap blocked: module does not match tracked HEAD path=$bootstrap_module"; exit 1; }
+  source "$bootstrap_module"
 fi
 watch_process_start() {
   LC_ALL=C ps -p "$1" -o lstart= 2>/dev/null \
@@ -404,8 +514,8 @@ acquire_watch_reclaim_claim() {
     if GIT_CAPTURE observed_oid watch-reclaim-read -C "$repository" \
         rev-parse --verify --quiet "$WATCH_RECLAIM_REF" 2>/dev/null; then
       observed="$candidate.observed"
-      if ! GIT watch-reclaim-load -C "$repository" cat-file blob "$observed_oid" \
-          > "$observed" 2>/dev/null; then
+      if ! run_bounded_to_file "$observed" git watch-reclaim-load \
+          "$GIT_TIMEOUT_SECONDS" git -C "$repository" cat-file blob "$observed_oid"; then
         rm -f "$observed"
         log "WATCH lease unavailable: reclaim identity is unverifiable"
         return 1
@@ -563,14 +673,15 @@ write_watch_state() {
   fi
 }
 remove_watch_snapshot() {
-  local snapshot="$1" snapshot_root temporary_directory name
+  local snapshot="$1" snapshot_root temporary_directory module
   snapshot_root="$(cd "$(dirname "$snapshot")" 2>/dev/null && pwd -P)" || return 0
   [[ "${snapshot_root##*/}" == pr-shepherd-watch.* ]] || return 0
   temporary_directory="$(cd "${TMPDIR:-/tmp}" 2>/dev/null && pwd -P)" || return 0
   [[ "$(dirname "$snapshot_root")" == "$temporary_directory" ]] || return 0
   rm -f "$snapshot_root/pr-shepherd.sh" 2>/dev/null || true
-  for name in "${SHEPHERD_MODULE_NAMES[@]}"; do
-    rm -f "$snapshot_root/shepherd/$name" 2>/dev/null || true
+  for module in "$snapshot_root/shepherd"/pr-shepherd-*.sh; do
+    [[ -e "$module" ]] || continue
+    rm -f "$module" 2>/dev/null || true
   done
   rmdir "$snapshot_root/shepherd" "$snapshot_root" 2>/dev/null || true
 }
@@ -620,164 +731,11 @@ terminate_active_bounded_tree() {
   terminate_process_tree "$pid"
   ACTIVE_BOUNDED_PID=""
 }
-reload_watch() {
-  local interval="$1" max="$2" next_cycle="$3" snapshot_root snapshot blob rc
-  local script_repository canonical_directory source_file destination_file
-  local script_relative tracked_blob actual_blob name
-  if ! snapshot_root="$(mktemp -d "${TMPDIR:-/tmp}/pr-shepherd-watch.XXXXXXXX")"; then
-    log "WATCH reload unavailable: immutable snapshot cannot be allocated"
-    return 1
-  fi
-  snapshot="$snapshot_root/pr-shepherd.sh"
-  mkdir "$snapshot_root/shepherd" || { rmdir "$snapshot_root"; return 1; }
-  GIT_CAPTURE script_repository watch-reload-root -C "$(dirname "$SCRIPT_PATH")" \
-    rev-parse --show-toplevel 2>/dev/null || script_repository=""
-  canonical_directory="$(cd "$(dirname "$SCRIPT_PATH")" 2>/dev/null && pwd -P)"
-  for name in pr-shepherd.sh "${SHEPHERD_MODULE_NAMES[@]}"; do
-    if [[ "$name" == pr-shepherd.sh ]]; then
-      source_file="$SCRIPT_PATH"; destination_file="$snapshot"
-    else
-      source_file="$canonical_directory/shepherd/$name"
-      destination_file="$snapshot_root/shepherd/$name"
-    fi
-    GIT_CAPTURE script_relative watch-reload-tracked-path -C "$script_repository" \
-      ls-files --full-name --error-unmatch -- "$source_file" 2>/dev/null \
-      || script_relative=""
-    GIT_CAPTURE tracked_blob watch-reload-tracked-blob -C "$script_repository" \
-      rev-parse "HEAD:$script_relative" 2>/dev/null || tracked_blob=""
-    GIT_CAPTURE actual_blob watch-reload-actual-blob hash-object "$source_file" \
-      2>/dev/null || actual_blob=""
-    if [[ -z "$script_repository" || -z "$script_relative" \
-        || ! "$tracked_blob" =~ ^[0-9a-f]{40}$ || "$actual_blob" != "$tracked_blob" ]] \
-        || ! cp "$source_file" "$destination_file" 2>/dev/null \
-        || ! chmod 0400 "$destination_file" \
-        || ! /bin/bash -n "$destination_file"; then
-      remove_watch_snapshot "$snapshot"
-      log "WATCH reload blocked: canonical script or module does not match tracked HEAD path=$source_file"
-      return 1
-    fi
-  done
-  blob="$(compute_shepherd_identity "$snapshot" "$snapshot_root/shepherd" 2>/dev/null)" \
-    || blob=""
-  if [[ ! "$blob" =~ ^[0-9a-f]{40}$ ]]; then
-    remove_watch_snapshot "$snapshot"
-    log "WATCH reload unavailable path=$SCRIPT_PATH"
-    return 1
-  fi
-  if [[ -n "$WATCH_LOADED_BLOB" && "$WATCH_LOADED_BLOB" != "$blob" ]]; then
-    log "WATCH SCRIPT CHANGED previous_blob=$WATCH_LOADED_BLOB current_blob=$blob"
-  fi
-  export PR_SHEPHERD_CANONICAL_SCRIPT="$SCRIPT_PATH"
-  export PR_SHEPHERD_ROOT="$ROOT"
-  export PR_SHEPHERD_WATCH_LOADED_BLOB="$blob"
-  export PR_SHEPHERD_WATCH_PREVIOUS_SCRIPT="$LOADED_SCRIPT_PATH"
-  export PR_SHEPHERD_WATCH_PROCESS_START="$WATCH_PROCESS_START"
-  export PR_SHEPHERD_WATCH_CYCLE="$next_cycle"
-  export PR_SHEPHERD_WATCH_OWNER_PID="$$"
-  export PR_SHEPHERD_WATCH_OWNER_START="$WATCH_PROCESS_START"
-  export PR_SHEPHERD_WATCH_INTERVAL="$interval"
-  export PR_SHEPHERD_WATCH_MAX_CYCLES="$max"
-  if exec /bin/bash "$snapshot" watch "$interval" "$max"; then
-    return 0
-  else
-    rc=$?
-  fi
-  rm -f "$snapshot" 2>/dev/null || true
-  log "WATCH reload exec failed path=$snapshot exit=$rc"
-  return "$rc"
-}
-bootstrap_watch_exit_cleanup() {
-  local rc=$? now
-  terminate_active_bounded_tree
-  if [[ "$WATCH_OWNS_LEASE" == 1 ]]; then
-    WATCH_STATE_OWNER_PID="$$"
-    WATCH_STATE_OWNER_START="$WATCH_PROCESS_START"
-    WATCH_LOADED_BLOB=none
-    now="$(date '+%s')" || now=0
-    write_watch_state terminal none bootstrap "$now" 0 "$now" bootstrap-exit "$rc" 1 \
-      || log "WATCH bootstrap terminal state publication failed path=$PIDFILE exit=$rc"
-  fi
-  [[ -z "$WATCH_LOCK_CANDIDATE" ]] \
-    || rm -f "$WATCH_LOCK_CANDIDATE" 2>/dev/null || true
-  clear_watch_reclaim || true
-  remove_watch_snapshot "$LOADED_SCRIPT_PATH"
-  return "$rc"
-}
-bootstrap_interrupt_watch() {
-  local rc="$1"
-  terminate_active_bounded_tree
-  exit "$rc"
-}
-watch() {
-  local interval="${1:-60}" max="${2:-360}" cycle armed now sleep_deadline
-  [[ "$interval" =~ ^(0|[1-9][0-9]*)$ && "$max" =~ ^[1-9][0-9]*$ ]] \
-    || { log "WATCH invalid interval or max_cycles (interval=$interval max_cycles=$max)"; return 2; }
-  if [[ -z "$WATCH_LOADED_BLOB" ]]; then
-    WATCH_STATE_INTERVAL="$interval"
-    WATCH_STATE_MAX="$max"
-    trap bootstrap_watch_exit_cleanup EXIT
-    trap 'bootstrap_interrupt_watch 143' TERM
-    trap 'bootstrap_interrupt_watch 130' INT
-    acquire_watch_lease || return
-    reload_watch "$interval" "$max" 1
-    return
-  fi
-  WATCH_OWNS_LEASE=1
-  trap watch_exit_cleanup EXIT
-  trap 'interrupt_watch 143' TERM
-  trap 'interrupt_watch 130' INT
-  cycle="${PR_SHEPHERD_WATCH_CYCLE:-}"
-  [[ "$cycle" =~ ^[1-9][0-9]*$ && "$cycle" -le "$max" ]] \
-    || { log "WATCH reload rejected invalid cycle=${cycle:-missing}"; return 2; }
-  watch_lease_belongs_to_current_process \
-    || { log "WATCH reload rejected: verified lease is absent"; return 1; }
-  publish_watch_identity "$interval" "$max" "$cycle" || return
-  remove_watch_snapshot "$WATCH_PREVIOUS_SCRIPT"
-  WATCH_PREVIOUS_SCRIPT=""
-  if [[ "$cycle" == "1" ]]; then
-    log "WATCH start interval=${interval}s max_cycles=${max} pid=$$"
-  else
-    log "WATCH reloaded cycle=$cycle interval=${interval}s max_cycles=${max} pid=$$"
-  fi
-  local sweep_outcome=sweep-complete sweep_rc=0
-  if run_sweep_bounded; then
-    sweep_rc=0
-  else
-    sweep_rc=$?
-    sweep_outcome="sweep-${LAST_BOUNDED_RESULT:-exit}"
-    log "SWEEP cycle=$cycle error result=${LAST_BOUNDED_RESULT:-exit} exit=$sweep_rc (continuing)"
-  fi
-  now="$(date '+%s')"
-  sleep_deadline=$((now + interval))
-  write_watch_state waiting none sleep "$now" "$sleep_deadline" "$now" "$sweep_outcome" none "$cycle" \
-    || { log "WATCH progress publication failed step=sleep"; return 1; }
-  sleep "$interval" &
-  WATCH_SLEEP_PID=$!
-  wait "$WATCH_SLEEP_PID" || true
-  WATCH_SLEEP_PID=""
-  if [[ "$cycle" -lt "$max" ]]; then
-    reload_watch "$interval" "$max" "$((cycle + 1))"
-    return
-  fi
-  if ! armed="$(armed_pr_count)"; then
-    log "WATCH renew(${max} 轮耗尽,armed PR 状态不可判,保守重启计数)"
-    reload_watch "$interval" "$max" 1
-    return
-  fi
-  if [[ "$armed" -gt 0 ]]; then
-    log "WATCH renew(${max} 轮耗尽,仍有 open 且 auto-merge armed PR,重启计数)"
-    reload_watch "$interval" "$max" 1
-    return
-  fi
-  log "WATCH end(${max} 轮耗尽,无 open auto-merge armed PR)"
-}
-
-validate_configuration || exit $?
 case "${1:-}" in
   open)         shift; open_pr "$@" ;;
   start)        shift; start_watch "$@" ;;
   status)       watch_status ;;
-  watch)        shift; watch "$@" ;;
+  watch)        shift; if [[ -z "$WATCH_LOADED_BLOB" ]]; then bootstrap_watch "$@"; else watch "$@"; fi ;;
   sweep)        run_sweep_bounded ;;
   sweep-worker) sweep_worker ;;
   *) sed -n '2,15p' "$0"; exit 2 ;;

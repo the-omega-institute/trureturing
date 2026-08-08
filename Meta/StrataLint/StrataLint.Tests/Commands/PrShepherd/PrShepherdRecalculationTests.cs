@@ -241,9 +241,34 @@ public sealed partial class PrShepherdRecalculationTests
 
         internal string StateDirectory { get; }
 
+        internal string ArtifactDirectory => Path.Combine(temporary.Path, "home", ".pr-shepherd-artifacts");
+
         internal string WatchStatePath => Path.Combine(temporary.Path, "shepherd.pid");
 
         internal string WatchOwnerPath => WatchStatePath + ".lock";
+
+        internal string ReloadProbePath => Path.Combine(temporary.Path, "remote-reload-probe");
+
+        internal string AuditLog() => File.Exists(log) ? File.ReadAllText(log) : string.Empty;
+
+        internal string[] AuditLogLines() =>
+            AuditLog().Split('\n', StringSplitOptions.RemoveEmptyEntries);
+
+        internal string[] AuditLogFiles() =>
+            Directory.GetFiles(temporary.Path, "shepherd.log*")
+                .Where(path => !path.EndsWith(".lock", StringComparison.Ordinal))
+                .Order(StringComparer.Ordinal)
+                .ToArray();
+
+        internal string[] StepArtifactContents() =>
+            Directory.Exists(ArtifactDirectory)
+                ? Directory.GetFiles(
+                        ArtifactDirectory,
+                        "*",
+                        SearchOption.AllDirectories)
+                    .Select(File.ReadAllText)
+                    .ToArray()
+                : [];
 
         internal string RecalculationState(int pullRequest) =>
             File.ReadAllText(Path.Combine(StateDirectory, $"recalculate-{pullRequest}"));
@@ -392,16 +417,39 @@ public sealed partial class PrShepherdRecalculationTests
         internal ShepherdResult RunStatus() =>
             RunWatchCommand("status", [], noChecks: false, TimeSpan.FromSeconds(10));
 
+        internal ShepherdResult RunStatusFromAnotherSnapshot()
+        {
+            EnsureTrackedWatchScripts();
+            var snapshotRoot = Path.Combine(temporary.Path, "production-snapshot");
+            var snapshotScript = Path.Combine(snapshotRoot, "pr-shepherd.sh");
+            var snapshotModules = Path.Combine(snapshotRoot, "shepherd");
+            Directory.CreateDirectory(snapshotModules);
+            File.Copy(Path.Combine(repository, ShepherdScriptPath), snapshotScript, overwrite: true);
+            foreach (var module in Directory.EnumerateFiles(
+                         Path.Combine(repository, "Meta/StrataLint/scripts/shepherd"),
+                         "pr-shepherd-*.sh"))
+            {
+                File.Copy(module, Path.Combine(snapshotModules, Path.GetFileName(module)), overwrite: true);
+            }
+            return RunWatchCommand(
+                "status",
+                [],
+                noChecks: false,
+                TimeSpan.FromSeconds(10),
+                scriptOverride: snapshotScript);
+        }
+
         private ShepherdResult RunWatchCommand(
             string command,
             IReadOnlyCollection<string> commandArguments,
             bool noChecks,
             TimeSpan timeout,
             bool dryRun = true,
-            IReadOnlyDictionary<string, string>? environment = null)
+            IReadOnlyDictionary<string, string>? environment = null,
+            string? scriptOverride = null)
         {
             EnsureTrackedWatchScripts();
-            var script = Path.Combine(repository, ShepherdScriptPath);
+            var script = scriptOverride ?? Path.Combine(repository, ShepherdScriptPath);
             var home = Path.Combine(temporary.Path, "home");
             Directory.CreateDirectory(home);
             var arguments = new List<string>
@@ -487,6 +535,8 @@ public sealed partial class PrShepherdRecalculationTests
             }
             Git(repository, "add", "Meta/StrataLint/scripts");
             Git(repository, "commit", "-m", "track pr-shepherd fixture");
+            Git(repository, "push", "origin", "dev");
+            BaseHead = GitOutput(repository, "rev-parse", "HEAD");
         }
 
         internal ShepherdResult RunOpenDryRun()
@@ -579,6 +629,24 @@ public sealed partial class PrShepherdRecalculationTests
             Git(seed, "commit", "-m", $"advance dev {devAdvance}");
             BaseHead = GitOutput(seed, "rev-parse", "HEAD");
             Git(seed, "push", "origin", "dev");
+        }
+
+        internal void AdvanceRemoteDevWithNewShepherdModule()
+        {
+            Git(seed, "checkout", "dev");
+            Git(seed, "pull", "--ff-only", "origin", "dev");
+            const string module =
+                "Meta/StrataLint/scripts/shepherd/pr-shepherd-production-reload-probe.sh";
+            Write(
+                seed,
+                module,
+                "if [[ -n \"${PR_TEST_RELOAD_PROBE:-}\" ]]; then\n"
+                + "  printf 'loaded\\n' >> \"$PR_TEST_RELOAD_PROBE\"\n"
+                + "fi\n");
+            Git(seed, "add", module);
+            Git(seed, "commit", "-m", "advance remote shepherd module");
+            Git(seed, "push", "origin", "dev");
+            BaseHead = GitOutput(seed, "rev-parse", "HEAD");
         }
 
         internal void HoldBranchLock(string worktreeName) =>
