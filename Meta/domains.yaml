@@ -5,6 +5,9 @@ domains:
   Arith:
     stratum: S3
     definition: Elementary integer arithmetic — prime factorization, divisibility, and modular residue structure — used as foundations by the golden-integer and analytic strata.
+  ArithUnits:
+    stratum: S3
+    definition: Unit characterizations in modular arithmetic, including the nonzero units of prime residue rings.
   Axis:
     stratum: S3
     definition: Prime-axis escape arguments over the natural primes.
