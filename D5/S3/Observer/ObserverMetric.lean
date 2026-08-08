@@ -13,9 +13,6 @@ namespace D5.S3.Observer.ObserverMetric
 open D5.S3.Quantum.ObserverAlgebra
 open D5.S3.Quantum.ObserverCommutator
 
-/- Provenance: OBSERVER-QUANTUM.md, section 3, theorem
-   "Observer metric and two types of infinity" (v2). -/
-
 /-- The coefficient of the represented read-update commutator. -/
 def updateDefect {index : Type*} (tau : Equiv.Perm index) (f : index → ℂ) :
     index → ℂ :=
