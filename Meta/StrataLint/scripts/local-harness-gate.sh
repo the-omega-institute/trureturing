@@ -7,6 +7,7 @@ CANDIDATE_ROOT="$ROOT"
 BASE_REF="origin/dev"
 OBSERVED_BASE_REF=""
 SKIP_ENGINEERING=0
+SKIP_PR_A=0
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -24,6 +25,12 @@ while [[ $# -gt 0 ]]; do
       [[ "$SKIP_ENGINEERING" == "0" ]] \
         || { echo "local-harness-gate: duplicate --skip-engineering" >&2; exit 2; }
       SKIP_ENGINEERING=1
+      shift
+      ;;
+    --skip-pr-a)
+      [[ "$SKIP_PR_A" == "0" ]] \
+        || { echo "local-harness-gate: duplicate --skip-pr-a" >&2; exit 2; }
+      SKIP_PR_A=1
       shift
       ;;
     *)
@@ -206,6 +213,15 @@ prepare_judge() {
 }
 
 run_stage setup prepare_judge
+
+# Required PR-A is before the engineering conditional because preflight invokes
+# this gate with --skip-engineering, and protected-surface tests can stop later stages.
+if [[ "$SKIP_PR_A" == "1" ]]; then
+  record_timing local refactor-pr-a-required skipped 0
+else
+  run_stage refactor-pr-a-required \
+    make -C "$CANDIDATE_ROOT" refactor-pr-a-verify OUT="$TMP_ROOT/refactor-pr-a-required.json"
+fi
 
 if [[ "$SKIP_ENGINEERING" == "1" ]]; then
   record_timing local engineering-dotnet skipped 0
