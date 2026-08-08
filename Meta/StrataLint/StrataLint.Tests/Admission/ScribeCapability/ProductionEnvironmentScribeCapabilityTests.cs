@@ -10,6 +10,21 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
+    public void ProtectedSurfaceAdmissionCannotSkipProjectionReconciliationFailure()
+    {
+        var report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>());
+        var bootstrap = BootstrapGate.Evaluate(RawChangeSet.Create([
+            RuleFixture.SyntheticProtectedPath,
+        ]));
+
+        Assert.Throws<InvalidDataException>(() =>
+            ProductionCliEnvironment.VerifyScribeForAdmission(
+                new ProjectionReconciliationFailureVerifier(),
+                report,
+                bootstrap));
+    }
+
+    [Fact]
     public void CheckPreservesPriorCoverageWhenProtectedScribeGrowthOutrunsBaseEmitter()
     {
         var fixture = new RuleFixture();
@@ -166,4 +181,10 @@ public sealed partial class ProductionEnvironmentTests
         Assert.False(changedStatus.Deletable);
         Assert.Contains(changedStatus.Gaps, gap => gap.Code == "scribe-emission-unverified");
     }
+}
+
+internal sealed class ProjectionReconciliationFailureVerifier : IScribeEmissionVerifier
+{
+    public VerifiedScribeEmissions Verify(LeanAxiomReport report) =>
+        throw new InvalidDataException("projection fixture/live-report disagreement");
 }
