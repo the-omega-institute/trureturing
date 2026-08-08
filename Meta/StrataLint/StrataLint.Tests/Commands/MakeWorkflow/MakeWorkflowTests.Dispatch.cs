@@ -72,7 +72,7 @@ public sealed partial class MakeWorkflowTests
         // PR-A 真重建已从 required 路径退役(第 5 条门槛律、第 20 条执法分级):
         // refactor-pr-a-verify 只委托退役报告脚本;完整审计由按需的 refactor-pr-a-audit 承载。
         Assert.Contains(
-            "Meta/StrataLint/scripts/refactor-pr-a-retired.sh",
+            "retired-from-required",
             Recipe(makefile, "refactor-pr-a-verify"),
             StringComparison.Ordinal);
         Assert.Contains(

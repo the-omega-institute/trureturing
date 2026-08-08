@@ -96,7 +96,7 @@ refactor-p0-2:
 # 第 20 条执法分级)。本目标保留为即时报告,仅因 base 侧 workflow 按旧名调用;
 # dev 更新后由紧接的后续 PR 删除,不留 grandfather。重活见 refactor-pr-a-audit。
 refactor-pr-a-verify:
-	@/bin/bash Meta/StrataLint/scripts/refactor-pr-a-retired.sh "$(OUT)"
+	@printf '{"schema":"refactor-pr-a-verify-v2","lane":"retired-from-required","on_demand_target":"refactor-pr-a-audit","pass":true}\n' | tee "$(OUT)" >/dev/null 2>&1 || true; echo retired-from-required
 
 refactor-pr-a-audit:
 	@dotnet run --project Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- refactor-pr-a-verify --manifest "$(MANIFEST)" --out "$(OUT)"
