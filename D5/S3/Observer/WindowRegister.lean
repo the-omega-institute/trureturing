@@ -1,6 +1,6 @@
 /- GID: D5/S3/Observer/WindowRegister
    generality: G
-   mirror-B: D5/B/S3/Observer/WindowRegister
+   mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Prove finite cyclic window Weyl relations and scalar commutant rigidity. -/
