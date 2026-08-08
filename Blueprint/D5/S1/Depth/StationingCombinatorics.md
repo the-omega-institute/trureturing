@@ -65,3 +65,11 @@ $\forall n,k\in\mathbb{N},\ \operatorname{card}\{s\in\operatorname{Stationing}(n
 *Commentary.*
 
 The support equivalence identifies stationings with exactly k true coordinates and k-element subsets of the n labeled stations. Their exact count is the binomial coefficient; this does not prove either empirical zero-statistics law.
+
+## References
+
+- Truth anchor: `D5/S1/Depth/StationingCombinatorics.mirror_occupied_count`
+- Truth anchor: `D5/S1/Depth/StationingCombinatorics.mirror_stationing_ne_self`
+- Truth anchor: `D5/S1/Depth/StationingCombinatorics.occupied_count_stationing_count`
+- Truth anchor: `D5/S1/Depth/StationingCombinatorics.occupied_stations_mirror`
+- Truth anchor: `D5/S1/Depth/StationingCombinatorics.stationing_count`
