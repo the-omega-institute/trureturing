@@ -344,6 +344,73 @@ public sealed class FileMapPolicyTests
     }
 
     [Theory]
+    [InlineData("run-local", false)]
+    [InlineData("committed-source", true)]
+    public void UntrackedGeneratedInventoryRespectsRuntimeDisposition(
+        string runtimeDisposition,
+        bool expectsStaleFinding)
+    {
+        var manifest = Parse(DispositionEntry(
+            "Generated/output.json",
+            "generated",
+            "JsonEmitter",
+            "reader",
+            "emit-check",
+            runtimeDisposition,
+            "A-OUTPUT"));
+        var inventory = new GeneratedArtifactIdentity(
+            "Generated/output.json", "JsonEmitter", "emit-check", "A-OUTPUT");
+
+        var findings = FileMapPolicy.InspectGeneratedInventory(manifest, [], [inventory]);
+
+        Assert.Equal(
+            expectsStaleFinding,
+            findings.Any(static finding => finding.Code == "FILEMAP-GENERATED-STALE-INVENTORY"));
+    }
+
+    [Fact]
+    public void UntrackedRunLocalWithWrongProducerIsRejectedByTheRedFixture()
+    {
+        var manifest = Parse(DispositionEntry(
+            "Generated/output.json", "generated", "WrongEmitter", "reader", "emit-check",
+            "run-local", "A-OUTPUT"));
+        var inventory = new GeneratedArtifactIdentity(
+            "Generated/output.json", "JsonEmitter", "emit-check", "A-OUTPUT");
+
+        var findings = FileMapPolicy.InspectGeneratedInventory(manifest, [], [inventory]);
+
+        Assert.Contains(findings, static finding => finding.Code == "FILEMAP-GENERATED-PRODUCER");
+        Assert.Contains(findings, static finding => finding.Code == "FILEMAP-GENERATED-STALE-INVENTORY");
+    }
+
+    [Fact]
+    public void UntrackedRunLocalWithBroadGlobIsRejectedByTheRedFixture()
+    {
+        var manifest = Parse(DispositionEntry(
+            "Generated/*.json", "generated", "JsonEmitter", "reader", "emit-check",
+            "run-local", "A-OUTPUT"));
+        var inventory = new GeneratedArtifactIdentity(
+            "Generated/output.json", "JsonEmitter", "emit-check", "A-OUTPUT");
+
+        var findings = FileMapPolicy.InspectGeneratedInventory(manifest, [], [inventory]);
+
+        Assert.Contains(findings, static finding => finding.Code == "FILEMAP-GENERATED-LITERAL");
+        Assert.Contains(findings, static finding => finding.Code == "FILEMAP-GENERATED-STALE-INVENTORY");
+    }
+
+    [Fact]
+    public void RunLocalEntryMissingRequiredFieldIsRejectedByTheRedFixture()
+    {
+        var source = DispositionEntry(
+            "Generated/output.json", "generated", "JsonEmitter", "reader", "emit-check",
+            "run-local", "A-OUTPUT").Replace("mode = \"100644\"\n", string.Empty, StringComparison.Ordinal);
+
+        var exception = Assert.Throws<FormatException>(() => Parse(source));
+
+        Assert.Contains("mode", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Theory]
     [InlineData("Generated/manual.md", "data", "FILEMAP-DIRECTORY-KIND")]
     [InlineData("Meta/StrataLint/cases.toml", "data", "FILEMAP-DATA-RESIDENCE")]
     public void ClassDirectoryMixingIsRejectedByTheRedFixture(
@@ -386,7 +453,7 @@ public sealed class FileMapPolicyTests
         FileMapLoader.Parse(
             Encoding.UTF8.GetBytes(
                 $$"""
-                schema_version = 1
+                schema_version = 2
 
                 [residence_policy]
                 case_id = "RESIDENCE-EPOCH"
@@ -413,5 +480,28 @@ public sealed class FileMapPolicyTests
         produced_by = "{{producedBy}}"
         consumed_by = ["{{consumedBy}}"]
         verified_by = ["{{verifiedBy}}"]
+        authority = "self"
+        runtime_disposition = "committed-source"
+        artifact_id = "none"
+        """ + "\n";
+
+    private static string DispositionEntry(
+        string pattern,
+        string kind,
+        string producedBy,
+        string consumedBy,
+        string verifiedBy,
+        string runtimeDisposition,
+        string artifactId) => $$"""
+        [[files]]
+        pattern = "{{pattern}}"
+        kind = "{{kind}}"
+        produced_by = "{{producedBy}}"
+        consumed_by = ["{{consumedBy}}"]
+        verified_by = ["{{verifiedBy}}"]
+        authority = "self"
+        runtime_disposition = "{{runtimeDisposition}}"
+        artifact_id = "{{artifactId}}"
+        {{(runtimeDisposition == "run-local" ? "mode = \"100644\"\nhistory_requirement = \"not-required\"" : string.Empty)}}
         """ + "\n";
 }
