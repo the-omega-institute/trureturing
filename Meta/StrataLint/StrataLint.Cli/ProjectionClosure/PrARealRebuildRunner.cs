@@ -15,6 +15,7 @@ internal sealed class PrARealRebuildRunner : IDisposable
     private readonly ImmutableArray<RunArtifactInventoryItem> inventory;
     private readonly string scratchRoot;
     private readonly string pinnedCommit;
+    private readonly RawRepositorySnapshot baselineDigestSnapshot;
     private readonly string leanReport;
     private readonly Dictionary<string, string> checkouts = new(StringComparer.Ordinal);
     private readonly ConcurrentDictionary<string, ImmutableArray<PrAArtifact>> generated = new(StringComparer.Ordinal);
@@ -44,6 +45,7 @@ internal sealed class PrARealRebuildRunner : IDisposable
         scratchRoot = Path.Combine(Path.GetTempPath(), "stratalint-pr-a-rebuild-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(scratchRoot);
         pinnedCommit = Git(this.repositoryRoot, ["rev-parse", "--verify", "HEAD^{commit}"]).Trim();
+        baselineDigestSnapshot = PrepareBaselineDigestSnapshot();
         leanReport = Measure("lean_report", PrepareLeanReport);
         Measure("checkout_a_setup", () => PrepareCheckout("checkout-a"));
         Measure("checkout_b_setup", () => PrepareCheckout("checkout-b"));
@@ -307,7 +309,7 @@ internal sealed class PrARealRebuildRunner : IDisposable
         var overlaid = RunLocalSnapshotOverlay.ApplyFromReceipt(
             bootstrap.CurrentSnapshot, checkout, receiptRoot);
         var repository = new CachedCurrentRepositoryGateway(
-            new GitRepositoryGateway(checkout), overlaid);
+            new GitRepositoryGateway(checkout), overlaid, baselineDigestSnapshot);
         var result = EchoVerifyCommand.Run(
             checkout,
             repository,
@@ -350,6 +352,21 @@ internal sealed class PrARealRebuildRunner : IDisposable
             + (error.Length != 0 ? error : output));
     }
 
+    private RawRepositorySnapshot PrepareBaselineDigestSnapshot()
+    {
+        var output = Run(
+            "git",
+            ["show", $"{pinnedCommit}^:{BackfillInventoryLoader.RelativePath}"],
+            repositoryRoot,
+            TimeSpan.FromMinutes(2));
+        return RawRepositorySnapshot.Create(
+        [
+            new RawRepositoryEntry(
+                BackfillInventoryLoader.RelativePath,
+                ImmutableArray.CreateRange(output.StandardOutput)),
+        ]);
+    }
+
     private T Measure<T>(string phase, Func<T> action)
     {
         var stopwatch = Stopwatch.StartNew();
@@ -380,14 +397,15 @@ internal sealed class PrARealRebuildRunner : IDisposable
 
     private sealed class CachedCurrentRepositoryGateway(
         IRepositoryGateway inner,
-        RawRepositorySnapshot current) : IRepositoryGateway
+        RawRepositorySnapshot current,
+        RawRepositorySnapshot baseline) : IRepositoryGateway
     {
         public AdmissionTopologyOutcome InspectAdmissionTopology() => inner.InspectAdmissionTopology();
         public PreparedRepository Prepare(string? protectedBase) => inner.Prepare(protectedBase);
         public FrozenRevisionIdentity ResolveFrozenRevision(string revision) => inner.ResolveFrozenRevision(revision);
         public FrozenRevisionIdentity ResolveCurrentRevision() => inner.ResolveCurrentRevision();
         public RawRepositorySnapshot ReadCurrent() => current;
-        public RawRepositorySnapshot ReadRevision(string revision) => inner.ReadRevision(revision);
+        public RawRepositorySnapshot ReadRevision(string revision) => baseline;
         public RawRepositorySnapshot ReadFrozenRevision(string revision) => inner.ReadFrozenRevision(revision);
         public TrustedFrozenGitReferences ValidateFrozenReferences(FrozenLedgerReferenceSet references) =>
             inner.ValidateFrozenReferences(references);
