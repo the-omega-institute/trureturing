@@ -58,17 +58,17 @@ internal sealed class MeasurementMarginalDocument : IScribeDocumentDefinition
     private static Formula CopiedMarginalFormula() => Disp(Seq(
         Forall, Sp, Rho, Comma, Esc,
         Operatorname, Grp(F.Id("tr")), Underscore, Grp(F.Id("E")),
-        Open, Joint("copy"), Close, Eq,
+        Open, Joint(F.Id("copy")), Close, Eq,
         Sum, Underscore, Grp(F.Id("a"), InMacro, Operatorname, Grp(F.Id("Fin")), Open, D(2), Close),
-        F.Id("P"), Underscore, Grp(F.Id("a")), Rho,
+        F.Id("P"), Underscore, Grp(F.Id("a")), Sp, Rho, Sp,
         F.Id("P"), Underscore, Grp(F.Id("a")), Dot));
 
     private static Formula CopiedOffDiagonalFormula() => Disp(Seq(
         Forall, Sp, Rho, Comma, F.Id("i"), Comma, F.Id("j"), Comma, Esc,
         F.Id("i"), Neq, Sp, F.Id("j"), Sp, Rightarrow, Sp,
         Open, Operatorname, Grp(F.Id("tr")), Underscore, Grp(F.Id("E")),
-        Joint("copy"), Close, Underscore, Grp(F.Id("ij")), Eq, D(0), Dot));
+        Joint(F.Id("copy")), Close, Underscore, Grp(F.Id("ij")), Eq, D(0), Dot));
 
-    private static Formula Joint(string record) => Seq(
-        F.Id("J"), Underscore, Grp(F.Id(record)), Open, Rho, Close);
+    private static Formula Joint(Formula record) => Seq(
+        F.Id("J"), Underscore, Grp(record), Open, Rho, Close);
 }
