@@ -36,9 +36,17 @@ public sealed partial class AcyclicTruthDag
             .Where(static node => node.ModuleName is not null)
             .ToImmutableDictionary(static node => node.ModuleName!, static node => node.RepoPath, StringComparer.Ordinal);
 
-        // Module imports are a safe over-approximation of declaration dependencies. A declaration-level
-        // upgrade remains open until an olean freshness gate exists and DefinitionVal.all mutual groups
-        // are unioned before SCC condensation.
+        // Module imports over-approximate declaration dependencies ONLY while the loaded olean
+        // environment is fresh with respect to the sources. The imports come from that environment
+        // (lean-inspector Inspector.lean loads them via importModules at trustLevel 0), not from the
+        // source text, so a stale environment distorts the graph in both directions: a source-added
+        // import is absent from moduleData.imports, which UNDER-approximates by dropping a real edge;
+        // a source-removed import leaves a phantom edge that shifts depth and can fabricate a cycle,
+        // which the topological check below rejects outright. Freshness is therefore a load-bearing
+        // precondition of THIS layer, today guaranteed only implicitly by lake build running earlier
+        // in the same script, with no verifiable receipt. A declaration-level upgrade additionally
+        // requires an explicit freshness gate and unioning DefinitionVal.all mutual groups before
+        // SCC condensation.
         var edgeSet = new HashSet<TruthEdge>();
         var blockerSet = new HashSet<TruthDependencyBlocker>();
         foreach (var node in nodes.Where(static node => node.ModuleName is not null))

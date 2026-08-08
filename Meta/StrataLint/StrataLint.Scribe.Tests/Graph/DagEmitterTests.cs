@@ -102,6 +102,7 @@ public sealed class DagEmitterTests
             new DocumentGraphSection(
                 [new DocumentGraphNode("Blueprint/D5/S0/Carrier/Delta.md", "D5/S0/Carrier/Delta", "receipt-free")],
                 [],
+                [],
                 []),
             new TruthGraphJoinsSection([]));
         WithRoot(firstRoot => WithRoot(secondRoot =>

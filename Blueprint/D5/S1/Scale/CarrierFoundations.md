@@ -20,4 +20,5 @@ The statement is assembly-only: each clause is witnessed by its frozen proof —
 
 ## References
 
+- Truth anchor: `D5/S1/Scale/CarrierFoundations.golden_carrier_foundations`
 - Dependency: [D5/S0/Carrier/Norm](../../S0/Carrier/Norm.md)

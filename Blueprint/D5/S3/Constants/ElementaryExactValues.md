@@ -17,3 +17,7 @@ $$A_F=\kappa=\frac{1}{2\varphi}=\frac{\sqrt{5}-1}{4},\qquad \overline{h}=-\frac{
 Write A_F for the slope constant kappa. Its defining reciprocal golden-ratio expression rationalizes to (sqrt(5) - 1) / 4. The correction-fiber mean, dimension-reduction coefficient, h-side constant, and elementary shell are already given by their exact expressions in the same quadratic field.
 
 The proof unfolds the repository's canonical constant definitions. All clauses except the rationalized form of kappa are definitional; that clause follows by clearing the nonzero golden-ratio denominator and using the identity (sqrt(5))^2 = 5. Thus the theorem is an exact algebraic package and introduces no numerical approximation.
+
+## References
+
+- Truth anchor: `D5/S3/Constants/ElementaryExactValues.elementary_exact_values`
