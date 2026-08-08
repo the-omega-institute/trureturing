@@ -15,6 +15,7 @@ internal sealed class PrARealRebuildRunner : IDisposable
     private readonly string leanReport;
     private readonly Dictionary<string, string> checkouts = new(StringComparer.Ordinal);
     private readonly Dictionary<string, ImmutableArray<PrAArtifact>> generated = new(StringComparer.Ordinal);
+    private readonly Dictionary<string, long> phaseElapsedMilliseconds = new(StringComparer.Ordinal);
     private readonly Action<string, string>? checkoutMutation;
     private readonly bool validateAfterMutation;
     private readonly bool cacheByEnvironment;
@@ -34,12 +35,13 @@ internal sealed class PrARealRebuildRunner : IDisposable
         scratchRoot = Path.Combine(Path.GetTempPath(), "stratalint-pr-a-rebuild-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(scratchRoot);
         pinnedCommit = Git(this.repositoryRoot, ["rev-parse", "--verify", "HEAD^{commit}"]).Trim();
-        leanReport = PrepareLeanReport();
-        PrepareCheckout("checkout-a");
-        PrepareCheckout("checkout-b");
+        leanReport = Measure("lean_report", PrepareLeanReport);
+        Measure("checkout_a_setup", () => PrepareCheckout("checkout-a"));
+        Measure("checkout_b_setup", () => PrepareCheckout("checkout-b"));
     }
 
     internal string PinnedCommit => pinnedCommit;
+    internal IReadOnlyDictionary<string, long> PhaseElapsedMilliseconds => phaseElapsedMilliseconds;
 
     internal static T InPinnedCheckout<T>(string repositoryRoot, string commit, Func<string, T> action)
     {
@@ -75,6 +77,7 @@ internal sealed class PrARealRebuildRunner : IDisposable
         var sourceRoot = checkout;
         if (generatorRan)
         {
+            var generatorStopwatch = Stopwatch.StartNew();
             RestoreCleanCheckout(checkout);
             checkoutMutation?.Invoke(testCase.Checkout, checkout);
             if (validateAfterMutation) RequireCleanTrackedTree(checkout);
@@ -94,6 +97,9 @@ internal sealed class PrARealRebuildRunner : IDisposable
             artifacts = ReadArtifacts(checkout);
             generated.Add(key, artifacts);
             Directory.Delete(bootstrapRoot, recursive: true);
+            generatorStopwatch.Stop();
+            phaseElapsedMilliseconds[$"{testCase.Checkout.Replace('-', '_')}_generator"] =
+                generatorStopwatch.ElapsedMilliseconds;
         }
         else
         {
@@ -267,4 +273,21 @@ internal sealed class PrARealRebuildRunner : IDisposable
             $"PR_A_GENERATOR_FAILED command={fileName} exit={result.ExitCode} elapsed_ms={stopwatch.ElapsedMilliseconds} "
             + (error.Length != 0 ? error : output));
     }
+
+    private T Measure<T>(string phase, Func<T> action)
+    {
+        var stopwatch = Stopwatch.StartNew();
+        try { return action(); }
+        finally
+        {
+            stopwatch.Stop();
+            phaseElapsedMilliseconds[phase] = stopwatch.ElapsedMilliseconds;
+        }
+    }
+
+    private void Measure(string phase, Action action) => Measure(phase, () =>
+    {
+        action();
+        return true;
+    });
 }

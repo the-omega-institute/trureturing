@@ -127,8 +127,10 @@ internal static class RunHandleCommand
             var producerBuildSha = BuildSha();
             var stopwatch = Stopwatch.StartNew();
             using var rebuilds = new PrARealRebuildRunner(repositoryRoot, inventory);
+            var verificationStopwatch = Stopwatch.StartNew();
             var result = PrAMetamorphicVerifier.VerifyRequired(testCase =>
                 rebuilds.Rebuild(testCase, manifest, runId, inventorySha, producerBuildSha));
+            verificationStopwatch.Stop();
             stopwatch.Stop();
             var diagnostics = result.Diagnostics;
             var pass = result.Pass;
@@ -143,6 +145,10 @@ internal static class RunHandleCommand
                 ["canary_deferred_count"] = result.CanaryDeferredCount,
                 ["deferred_env_tuples"] = result.DeferredEnvTuples.ToArray(),
                 ["elapsed_milliseconds"] = stopwatch.ElapsedMilliseconds,
+                ["phase_elapsed_milliseconds"] = rebuilds.PhaseElapsedMilliseconds
+                    .Append(new KeyValuePair<string, long>("verification", verificationStopwatch.ElapsedMilliseconds))
+                    .OrderBy(static item => item.Key, StringComparer.Ordinal)
+                    .ToDictionary(static item => item.Key, static item => item.Value, StringComparer.Ordinal),
                 ["diagnostics"] = diagnostics.ToArray(),
                 ["spec_deviations"] = Array.Empty<string>(),
                 ["pass"] = pass,
