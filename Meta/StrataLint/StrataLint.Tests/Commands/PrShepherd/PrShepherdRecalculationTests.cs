@@ -55,15 +55,11 @@ public sealed partial class PrShepherdRecalculationTests
     private static string ReadShepherdScripts()
     {
         var root = FindRepositoryRoot();
-        return string.Join(
-            '\n',
-            File.ReadAllText(Path.Combine(root, ShepherdScriptPath)),
-            File.ReadAllText(Path.Combine(root, ShepherdActionsScriptPath)),
-            File.ReadAllText(Path.Combine(root, ShepherdLedgerScriptPath)),
-            File.ReadAllText(Path.Combine(root, ShepherdFixedPointScriptPath)),
-            File.ReadAllText(Path.Combine(root, ShepherdWatchScriptPath)),
-            File.ReadAllText(Path.Combine(root, ShepherdWakeScriptPath)),
-            File.ReadAllText(Path.Combine(root, ShepherdLeaseScriptPath)));
+        var moduleDirectory = Path.Combine(root, "Meta/StrataLint/scripts/shepherd");
+        var paths = new[] { Path.Combine(root, ShepherdScriptPath) }
+            .Concat(Directory.EnumerateFiles(moduleDirectory, "pr-shepherd-*.sh")
+                .Order(StringComparer.Ordinal));
+        return string.Join('\n', paths.Select(File.ReadAllText));
     }
 
     private sealed partial class ShepherdFixture : IDisposable
@@ -477,31 +473,19 @@ public sealed partial class PrShepherdRecalculationTests
         {
             var script = Path.Combine(repository, ShepherdScriptPath);
             if (File.Exists(script)) return;
-            var leaseScript = Path.Combine(repository, ShepherdLeaseScriptPath);
-            var actionsScript = Path.Combine(repository, ShepherdActionsScriptPath);
-            var ledgerScript = Path.Combine(repository, ShepherdLedgerScriptPath);
-            var fixedPointScript = Path.Combine(repository, ShepherdFixedPointScriptPath);
-            var watchScript = Path.Combine(repository, ShepherdWatchScriptPath);
-            var wakeScript = Path.Combine(repository, ShepherdWakeScriptPath);
+            var sourceRoot = FindRepositoryRoot();
+            var sourceModuleDirectory = Path.Combine(sourceRoot, "Meta/StrataLint/scripts/shepherd");
+            var fixtureModuleDirectory = Path.Combine(repository, "Meta/StrataLint/scripts/shepherd");
             Directory.CreateDirectory(Path.GetDirectoryName(script)!);
-            Directory.CreateDirectory(Path.GetDirectoryName(leaseScript)!);
-            File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdScriptPath), script);
-            File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdLeaseScriptPath), leaseScript);
-            File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdActionsScriptPath), actionsScript);
-            File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdLedgerScriptPath), ledgerScript);
-            File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdFixedPointScriptPath), fixedPointScript);
-            File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdWatchScriptPath), watchScript);
-            File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdWakeScriptPath), wakeScript);
-            Git(
-                repository,
-                "add",
-                ShepherdScriptPath,
-                ShepherdLeaseScriptPath,
-                ShepherdActionsScriptPath,
-                ShepherdLedgerScriptPath,
-                ShepherdFixedPointScriptPath,
-                ShepherdWatchScriptPath,
-                ShepherdWakeScriptPath);
+            Directory.CreateDirectory(fixtureModuleDirectory);
+            File.Copy(Path.Combine(sourceRoot, ShepherdScriptPath), script);
+            foreach (var sourceModule in Directory.EnumerateFiles(
+                         sourceModuleDirectory,
+                         "pr-shepherd-*.sh").Order(StringComparer.Ordinal))
+            {
+                File.Copy(sourceModule, Path.Combine(fixtureModuleDirectory, Path.GetFileName(sourceModule)));
+            }
+            Git(repository, "add", "Meta/StrataLint/scripts");
             Git(repository, "commit", "-m", "track pr-shepherd fixture");
         }
 
