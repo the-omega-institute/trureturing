@@ -168,15 +168,34 @@ theorem conditionalState_isState (hP : IsRecordMeasurement P) {rho : Matrix n n 
   · rw [conditionalState, Matrix.trace_smul, hTraceCompressed]
     exact inv_mul_cancel₀ hk
 
-omit [DecidableEq n] decEqKappa in
-/-- With no zero-weight branches, the unread state is the weighted conditional ensemble. -/
-theorem unread_eq_weighted_ensemble (rho : Matrix n n ℂ)
-    (hpos : forall k, recordWeight P rho k ≠ 0) :
+omit decEqKappa in
+private theorem compressed_eq_zero_of_recordWeight_eq_zero
+    (hP : IsRecordMeasurement P) {rho : Matrix n n ℂ} (hRho : rho.PosSemidef)
+    {k} (hk : recordWeight P rho k = 0) : P k * rho * P k = 0 := by
+  have hConjTranspose : Matrix.conjTranspose (P k) = P k := by
+    simpa only [Matrix.star_eq_conjTranspose] using hP.selfAdjoint k
+  have hCompressed : (P k * rho * P k).PosSemidef := by
+    simpa only [hConjTranspose] using hRho.mul_mul_conjTranspose_same (P k)
+  apply hCompressed.trace_eq_zero_iff.mp
+  rw [recordWeight] at hk
+  calc
+    Matrix.trace (P k * rho * P k) = Matrix.trace (P k * P k * rho) :=
+      Matrix.trace_mul_cycle (P k) rho (P k)
+    _ = Matrix.trace (P k * rho) := by rw [hP.idempotent k]
+    _ = Matrix.trace (rho * P k) := Matrix.trace_mul_comm (P k) rho
+    _ = 0 := hk
+
+omit decEqKappa in
+/-- The unread state of a positive matrix is its weighted conditional ensemble. -/
+theorem unread_eq_weighted_ensemble (hP : IsRecordMeasurement P)
+    {rho : Matrix n n ℂ} (hRho : rho.PosSemidef) :
     unreadState P rho = ∑ k, recordWeight P rho k • conditionalState P rho k := by
   classical
   unfold unreadState conditionalState
   apply Finset.sum_congr rfl
   intro k _
-  rw [smul_smul, mul_inv_cancel₀ (hpos k), one_smul]
+  by_cases hk : recordWeight P rho k = 0
+  · rw [hk, zero_smul, compressed_eq_zero_of_recordWeight_eq_zero hP hRho hk]
+  · rw [smul_smul, mul_inv_cancel₀ hk, one_smul]
 
 end D5.S3.Observer.Conditioning

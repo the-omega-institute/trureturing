@@ -94,13 +94,12 @@ internal sealed class ConditioningDocument : IScribeDocumentDefinition
                 WeightedEnsembleFormula(),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
-                    "If every record weight is nonzero, multiplying each normalized branch "
-                    + "rho_k by w_k(rho) cancels the inverse and recovers P_k rho P_k "
-                    + "term by term. Summing yields U_P(rho). This final identity is purely "
-                    + "definitional: its Lean declaration assumes neither the record-measurement "
-                    + "axioms nor positivity or trace normalization of rho. It does assume all "
-                    + "weights are nonzero and therefore does not state an unconditional "
-                    + "ensemble formula for zero-weight outcomes.")))
+                    "For a positive semidefinite rho, a zero record weight forces the corresponding "
+                    + "positive compressed block P_k rho P_k to have zero trace and hence vanish. "
+                    + "For every nonzero weight, multiplication by w_k(rho) cancels the inverse in "
+                    + "rho_k. Thus every term agrees with its unread compression and summing gives "
+                    + "U_P(rho), without excluding zero-weight outcomes or requiring trace-one "
+                    + "normalization.")))
             ))));
 
     private static Formula RecordWeightSumFormula() => Disp(Seq(
@@ -152,8 +151,9 @@ internal sealed class ConditioningDocument : IScribeDocumentDefinition
 
     private static Formula WeightedEnsembleFormula() => Disp(Seq(
         Ambient(),
-        Open, Forall, Sp, F.Id("k"), InMacro, Kappa, Comma, Esc,
-        Weight(), Neq, Sp, D(0), Close, Sp, Rightarrow, RowBreak,
+        RecordPremise(), Sp, Land, Sp,
+        Operatorname, Grp(F.Id("PosSemidef")), Open, Rho, Close,
+        Sp, Rightarrow, RowBreak,
         Unread(Rho), Eq,
         Sum, Underscore, Grp(F.Id("k"), InMacro, Kappa),
         Weight(), Cdot, Sp, Branch(),
