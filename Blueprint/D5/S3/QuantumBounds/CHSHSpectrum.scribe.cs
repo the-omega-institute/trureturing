@@ -55,7 +55,7 @@ internal sealed class CHSHSpectrumDocument : IScribeDocumentDefinition
                         + "of the tensor product of the two local commutators is an independent "
                         + "tensor-commutator obligation and remains open beyond this module. The "
                         + "epsilon-cubed probability law and its Dirichlet-volume argument are "
-                        + "likewise open beyond this module; no probability formula, volume "
+                        + "likewise outside this module's scope; no probability formula, volume "
                         + "coefficient, or limiting error term is asserted here.")))))));
 
     private static Formula CubicCoefficientFormula() => Disp(Seq(
