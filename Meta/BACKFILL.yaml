@@ -223,32 +223,48 @@ sources:
           raw_sha256: sha256:8bdb867fc051e5a905bf4a833e7613687d575322c0f5437ea92e2c33b1dec146
           normalized_sha256: sha256:8bdb867fc051e5a905bf4a833e7613687d575322c0f5437ea92e2c33b1dec146
         cas_ref: sha256:8bdb867fc051e5a905bf4a833e7613687d575322c0f5437ea92e2c33b1dec146
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Observer/Conditioning.recordWeight_sum
+          - D5/S3/Observer/Conditioning.unreadState_trace
+          - D5/S3/Observer/Conditioning.unreadState_idempotent
+          - D5/S3/Observer/Conditioning.unreadState_fixed_iff
+          - D5/S3/Observer/Conditioning.conditionalState_isState
+          - D5/S3/Observer/Conditioning.unread_eq_weighted_ensemble
         receipts:
           coverage: []
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - same-system-record-state-throughout-premise
+            - no-third-collapse-dynamics-interpretive-premise
+            - certificate-identity-zero-tolerance
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: observer-residual-a64c69d2b846d7fdf3c80468898e853257ad9a378bf7da6c74c3370ea865762c
         ast_path: measurement/forgetting
         fingerprints:
           raw_sha256: sha256:a64c69d2b846d7fdf3c80468898e853257ad9a378bf7da6c74c3370ea865762c
           normalized_sha256: sha256:a64c69d2b846d7fdf3c80468898e853257ad9a378bf7da6c74c3370ea865762c
         cas_ref: sha256:a64c69d2b846d7fdf3c80468898e853257ad9a378bf7da6c74c3370ea865762c
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_eq_address_blocks
+          - D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_offDiagonal_eq_zero
         receipts:
           coverage: []
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - know-forgot-two-time-relation
+            - six-state-finite-certificates
+            - forgetting-quantity-dpi-nonneg
+            - joint-coherent-reversal-of-all-copies
+            - multi-copy-erasure-quantifier
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: observer-residual-194bb519f752c947d46b5ae46f59a482c51c5d4facae660bb2fc903e29bc86ce
         ast_path: measurement/statistical-time
         fingerprints:
@@ -827,32 +843,50 @@ sources:
           raw_sha256: sha256:3a223e1e36f56665b3c0e9be99371b69a493873f7565ce0f32908c28b4663767
           normalized_sha256: sha256:3a223e1e36f56665b3c0e9be99371b69a493873f7565ce0f32908c28b4663767
         cas_ref: sha256:3a223e1e36f56665b3c0e9be99371b69a493873f7565ce0f32908c28b4663767
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Observer/Conditioning.recordWeight_sum
+          - D5/S3/Observer/Conditioning.unreadState_trace
+          - D5/S3/Observer/Conditioning.unreadState_idempotent
+          - D5/S3/Observer/Conditioning.unreadState_fixed_iff
+          - D5/S3/Observer/Conditioning.conditionalState_isState
+          - D5/S3/Observer/Conditioning.unread_eq_weighted_ensemble
         receipts:
           coverage: []
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - no-third-collapse-dynamics-interpretive-premise
+            - global-system-record-unitarity-premise
+            - objective-collapse-model-demarcation
+            - certificate-identity-zero-tolerance
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: observer-residual-b2dd3d2b2261d86b6e8b20f45ca56ef7b3da87d833f50e38279f562c2a1a66c9
         ast_path: measurement/forgetting
         fingerprints:
           raw_sha256: sha256:b2dd3d2b2261d86b6e8b20f45ca56ef7b3da87d833f50e38279f562c2a1a66c9
           normalized_sha256: sha256:b2dd3d2b2261d86b6e8b20f45ca56ef7b3da87d833f50e38279f562c2a1a66c9
         cas_ref: sha256:b2dd3d2b2261d86b6e8b20f45ca56ef7b3da87d833f50e38279f562c2a1a66c9
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_eq_address_blocks
+          - D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_offDiagonal_eq_zero
         receipts:
           coverage: []
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - know-forgot-two-time-relation
+            - six-state-finite-certificates
+            - forgetting-quantity-dpi-nonneg
+            - v2-entropy-monotone-capacity-decrease
+            - v3-revival-spectrum-diophantine-grading
+            - multi-copy-erasure-quantifier
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: observer-residual-b0c22d10f6734f7d53883257114130f96b4c1c2c8be320ab8f7064b49c9339db
         ast_path: measurement/statistical-time
         fingerprints:
