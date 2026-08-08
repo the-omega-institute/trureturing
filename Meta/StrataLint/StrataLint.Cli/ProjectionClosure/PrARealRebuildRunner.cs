@@ -82,7 +82,9 @@ internal sealed class PrARealRebuildRunner : IDisposable
                 checkout,
                 testCase,
                 ["make", "--no-print-directory", "echo-residual-summary", $"BASE={pinnedCommit}^"]);
-            File.WriteAllBytes(Path.Combine(checkout, "Generated", "echo-residual-summary.md"), echo.StandardOutput);
+            var echoPath = Path.Combine(checkout, "Generated", "echo-residual-summary.md");
+            Directory.CreateDirectory(Path.GetDirectoryName(echoPath)!);
+            File.WriteAllBytes(echoPath, echo.StandardOutput);
             _ = RunEnvironment(checkout, testCase, ["make", "--no-print-directory", "emit"]);
             artifacts = ReadArtifacts(checkout);
             generated.Add(key, artifacts);
