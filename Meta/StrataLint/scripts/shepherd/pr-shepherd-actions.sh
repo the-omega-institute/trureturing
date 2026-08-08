@@ -84,9 +84,7 @@ has_expiry_fingerprint() {
     log "SWEEP admission run=$run_id job=$job_id 失败日志不可读,按普通 BEHIND 处理"
     return 2
   fi
-  [[ "$out" == *"DIGEST_STATUS_INVALID"* \
-    && "$out" == *"scribe-emissions"* \
-    && "$out" == *"ECHO_VERIFY_INFRASTRUCTURE"* \
+  [[ "$out" == *"ECHO_VERIFY_INFRASTRUCTURE"* \
     && "$out" == *"residual"* ]]
 }
 # Conflicts a machine can settle by rebuilding rather than by reading intent. The frozen
@@ -97,7 +95,8 @@ has_expiry_fingerprint() {
 # first stalls as "needs a semantic merge" and waits for a human that this harness has none of.
 is_derived_conflict() {
   case "$1" in
-    Meta/StrataLint/Generated/*|Generated/*|Evidence/D5/values.json) return 0 ;;
+    Generated/*|Evidence/D5/values.json) return 0 ;;
+    Meta/StrataLint/Generated/anchor-catalog.v1.json) return 0 ;;
     "$FROZEN_LEDGER_PATH") return 0 ;;
     *) return 1 ;;
   esac

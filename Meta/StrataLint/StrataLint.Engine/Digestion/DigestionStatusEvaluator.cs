@@ -94,7 +94,7 @@ internal static class DigestionStatusEvaluator
                 snapshot,
                 emptyLeanReport,
                 emptyTruthNodes,
-                ScribeEmissionAttestation.Empty,
+                ScribeEmissionAttestation.FromSnapshot(snapshot),
                 verifiedScribeEmissions: null,
                 findings))
             .ToArray();
@@ -140,7 +140,7 @@ internal static class DigestionStatusEvaluator
                 "truth DAG is cyclic: " + string.Join(" -> ", rejected.Witness.Select(static path => path.Value))),
         };
         var nodes = dag.Nodes.ToDictionary(static node => node.RepoPath);
-        var scribeAttestation = ScribeEmissionAttestation.Load(snapshot, findings);
+        var scribeAttestation = ScribeEmissionAttestation.FromSnapshot(snapshot);
         var work = entries.Select(entry =>
             Inspect(
                 entry,
