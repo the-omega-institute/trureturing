@@ -57,10 +57,10 @@ public sealed class ConservativePolicySnapshotTests
     [InlineData(ProtectedAnchorCatalogPath)]
     public void BaseJudgeGeneratedInputsProduceSl022Diagnostics(string protectedPath)
     {
-        var review = Assert.IsType<BootstrapOutcome.HumanReviewRequired>(
+        var verification = Assert.IsType<BootstrapOutcome.ProtectedSurfaceVerificationRequired>(
             BootstrapGate.Evaluate(RawChangeSet.Create([protectedPath])));
 
-        var diagnostic = Assert.Single(BootstrapGate.CreateSl022Diagnostics(review.ChangeSet));
+        var diagnostic = Assert.Single(BootstrapGate.CreateSl022Diagnostics(verification.ChangeSet));
         Assert.Equal("SL-022", diagnostic.RuleId.Value);
         Assert.Equal(protectedPath, diagnostic.Path);
     }

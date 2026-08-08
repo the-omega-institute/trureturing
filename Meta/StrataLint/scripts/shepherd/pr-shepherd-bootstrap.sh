@@ -2,7 +2,7 @@
 # Verified bootstrap and atomic remote-dev reload for the canonical shepherd.
 
 reload_watch() {
-  local interval="$1" max="$2" next_cycle="$3" snapshot_root snapshot blob rc
+  local interval="$1" max="$2" next_cycle="$3" snapshot_root snapshot source_root source_snapshot blob rc
   local script_repository destination_file
   local script_relative tracked_blob actual_blob name relative source_oid remote_paths path
   local local_tracked_paths local_expected_paths=""
@@ -13,7 +13,11 @@ reload_watch() {
     log "WATCH reload unavailable: immutable snapshot cannot be allocated"; return 1
   fi
   snapshot="$snapshot_root/pr-shepherd.sh"
-  mkdir "$snapshot_root/shepherd" || { rmdir "$snapshot_root"; return 1; }
+  if ! source_root="$(mktemp -d "${TMPDIR:-/tmp}/pr-shepherd-watch.XXXXXXXX")"; then
+    rmdir "$snapshot_root"; log "WATCH reload unavailable: composite staging cannot be allocated"; return 1
+  fi
+  source_snapshot="$source_root/pr-shepherd.sh"
+  mkdir "$source_root/shepherd" || { rmdir "$source_root" "$snapshot_root"; return 1; }
   script_repository="${bootstrap_repository:-}"
   if [[ -z "$script_repository" ]]; then
     GIT_CAPTURE script_repository watch-reload-root -C "$(dirname "$SCRIPT_PATH")" \
@@ -34,7 +38,7 @@ reload_watch() {
     if [[ -z "$script_relative" || "$local_tracked_paths" != "$local_expected_paths" ]] \
         || ! GIT watch-reload-bootstrap-clean -C "$script_repository" diff --quiet HEAD -- \
           "$script_relative" "$module_relative"; then
-      remove_watch_snapshot "$snapshot"
+      remove_watch_snapshot "$source_snapshot"; remove_watch_snapshot "$snapshot"
       log "WATCH reload blocked: canonical script or module does not match tracked HEAD path=$SCRIPT_PATH"
       return 1
     fi
@@ -44,14 +48,14 @@ reload_watch() {
         "+refs/heads/dev:refs/remotes/$REMOTE/dev" \
       || ! GIT_CAPTURE source_oid watch-reload-source -C "$script_repository" \
         rev-parse "refs/remotes/$REMOTE/dev^{commit}"; then
-    remove_watch_snapshot "$snapshot"
+    remove_watch_snapshot "$source_snapshot"; remove_watch_snapshot "$snapshot"
     log "WATCH reload unavailable: remote dev source cannot be pinned remote=$REMOTE"
     return 1
   fi
   module_relative="${script_relative%/*}/shepherd"
   if ! GIT_CAPTURE remote_paths watch-reload-module-list -C "$script_repository" \
       ls-tree -r --name-only "$source_oid" -- "$module_relative"; then
-    remove_watch_snapshot "$snapshot"
+    remove_watch_snapshot "$source_snapshot"; remove_watch_snapshot "$snapshot"
     log "WATCH reload unavailable: module tree cannot be read source_commit=$source_oid"; return 1
   fi
   while IFS= read -r path || [[ -n "$path" ]]; do
@@ -60,15 +64,15 @@ reload_watch() {
     remote_module_names+=("$name")
   done <<< "$remote_paths"
   if [[ "${#remote_module_names[@]}" -eq 0 ]]; then
-    remove_watch_snapshot "$snapshot"
+    remove_watch_snapshot "$source_snapshot"; remove_watch_snapshot "$snapshot"
     log "WATCH reload unavailable: remote dev has no shepherd modules source_commit=$source_oid"
     return 1
   fi
   for name in pr-shepherd.sh "${remote_module_names[@]}"; do
     if [[ "$name" == pr-shepherd.sh ]]; then
-      relative="$script_relative"; destination_file="$snapshot"
+      relative="$script_relative"; destination_file="$source_snapshot"
     else
-      relative="$module_relative/$name"; destination_file="$snapshot_root/shepherd/$name"
+      relative="$module_relative/$name"; destination_file="$source_root/shepherd/$name"
     fi
     if ! run_bounded_to_file "$destination_file" git watch-reload-extract \
         "$GIT_TIMEOUT_SECONDS" git -C "$script_repository" cat-file blob "$source_oid:$relative" \
@@ -77,11 +81,17 @@ reload_watch() {
           rev-parse "$source_oid:$relative" \
         || ! GIT_CAPTURE actual_blob watch-reload-actual-blob hash-object "$destination_file" \
         || [[ "$actual_blob" != "$tracked_blob" ]]; then
-      remove_watch_snapshot "$snapshot"
+      remove_watch_snapshot "$source_snapshot"; remove_watch_snapshot "$snapshot"
       log "WATCH reload blocked: remote composite verification failed path=$relative source_commit=$source_oid"
       return 1
     fi
   done
+  if ! cp -R "$source_snapshot" "$source_root/shepherd" "$snapshot_root"; then
+    remove_watch_snapshot "$source_snapshot"; remove_watch_snapshot "$snapshot"
+    log "WATCH reload unavailable: verified composite snapshot cannot be copied source_commit=$source_oid"
+    return 1
+  fi
+  remove_watch_snapshot "$source_snapshot"
   blob="$(compute_shepherd_identity "$snapshot" "$snapshot_root/shepherd" 2>/dev/null)" || blob=""
   if [[ ! "$blob" =~ ^[0-9a-f]{40}$ ]]; then
     remove_watch_snapshot "$snapshot"

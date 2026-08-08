@@ -210,8 +210,8 @@ public sealed class TypeModelTests
 
         Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
         var outcome = BootstrapGate.Evaluate(RawChangeSet.Create(new[] { value }));
-        var required = Assert.IsType<BootstrapOutcome.HumanReviewRequired>(outcome);
-        Assert.Contains(required.ChangeSet.Paths, item => item == path);
+        var verification = Assert.IsType<BootstrapOutcome.ProtectedSurfaceVerificationRequired>(outcome);
+        Assert.Contains(verification.ChangeSet.Paths, item => item == path);
     }
 
     [Fact]
@@ -222,8 +222,8 @@ public sealed class TypeModelTests
 
         Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
         var outcome = BootstrapGate.Evaluate(RawChangeSet.Create([value]));
-        var required = Assert.IsType<BootstrapOutcome.HumanReviewRequired>(outcome);
-        Assert.Contains(required.ChangeSet.Paths, item => item == path);
+        var verification = Assert.IsType<BootstrapOutcome.ProtectedSurfaceVerificationRequired>(outcome);
+        Assert.Contains(verification.ChangeSet.Paths, item => item == path);
     }
 
     [Fact]

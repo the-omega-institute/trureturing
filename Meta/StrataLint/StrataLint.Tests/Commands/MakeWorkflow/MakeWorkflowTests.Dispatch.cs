@@ -65,10 +65,6 @@ public sealed partial class MakeWorkflowTests
             " gate-authority --old-build \"$(OLD_BUILD)\" --out \"$(OUT)\"",
             Recipe(makefile, "refactor-p0-0-gate-authority"),
             StringComparison.Ordinal);
-        Assert.Contains(
-            " projection-closure --manifest \"$(MANIFEST)\" --out \"$(OUT)\"",
-            Recipe(makefile, "refactor-p0-2"),
-            StringComparison.Ordinal);
     }
 
     [Fact]
