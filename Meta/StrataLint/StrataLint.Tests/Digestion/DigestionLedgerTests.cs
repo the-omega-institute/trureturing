@@ -606,9 +606,7 @@ public sealed partial class DigestionLedgerTests
             CasFile(atom),
             (targetPath, target),
             (ScribeEmissionAttestation.DefinitionPath(moduleGid), definition),
-            (ScribeEmissionAttestation.EmissionPath(moduleGid), emission),
-            (ScribeEmissionAttestation.RelativePath,
-                ScribeEmissionAttestation.Write([record]).ToArray()));
+            (ScribeEmissionAttestation.EmissionPath(moduleGid), emission));
 
         return Assert.Single(DigestionStatusEvaluator.Evaluate(
             BackfillInventoryLoader.Load(yaml),
