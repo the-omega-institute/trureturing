@@ -12,8 +12,9 @@
    * `D5.S3.Quantum.FiniteDimensional` supplies the Pauli matrices and their observable
      certificates. `D5.S3.Quantum.QubitWitnesses` supplies `bellCoefficients`.
    * `Matrix.posSemidef_vecMulVec_self_star` and `Matrix.trace_vecMulVec` supply the rank-one
-     positivity and trace interfaces. The remaining equalities are explicit two- and four-index
-     calculations.
+     positivity and trace interfaces. `Matrix.conjTranspose_kronecker`,
+     `Matrix.mul_kronecker_mul`, and `Matrix.one_kronecker_one` supply the lifted CHSH tuple
+     certificate. The remaining equalities are explicit two- and four-index calculations.
 -/
 
 import D5.S3.Quantum.QubitWitnesses
@@ -50,6 +51,48 @@ noncomputable def bobObservable1 : QubitMatrix :=
 noncomputable def chshOperator : TwoQubitMatrix :=
   qubitZ ⊗ₖ bobObservable0 + qubitZ ⊗ₖ bobObservable1 +
     qubitX ⊗ₖ bobObservable0 - qubitX ⊗ₖ bobObservable1
+
+/-- Alice's first observable lifted to the two-qubit algebra. -/
+noncomputable def liftA0 : TwoQubitMatrix :=
+  qubitZ ⊗ₖ (1 : QubitMatrix)
+
+/-- Alice's second observable lifted to the two-qubit algebra. -/
+noncomputable def liftA1 : TwoQubitMatrix :=
+  qubitX ⊗ₖ (1 : QubitMatrix)
+
+/-- Bob's first observable lifted to the two-qubit algebra. -/
+noncomputable def liftB0 : TwoQubitMatrix :=
+  (1 : QubitMatrix) ⊗ₖ bobObservable0
+
+/-- Bob's second observable lifted to the two-qubit algebra. -/
+noncomputable def liftB1 : TwoQubitMatrix :=
+  (1 : QubitMatrix) ⊗ₖ bobObservable1
+
+private theorem kronecker_involution (A B : QubitMatrix)
+    (hA : A ^ 2 = 1) (hB : B ^ 2 = 1) :
+    (A ⊗ₖ B : TwoQubitMatrix) ^ 2 = 1 := by
+  rw [pow_two, ← Matrix.mul_kronecker_mul, ← pow_two, ← pow_two, hA, hB,
+    Matrix.one_kronecker_one]
+
+private theorem kronecker_self_adjoint (A B : QubitMatrix)
+    (hA : star A = A) (hB : star B = B) :
+    star (A ⊗ₖ B : TwoQubitMatrix) = A ⊗ₖ B := by
+  rw [Matrix.star_eq_conjTranspose, Matrix.conjTranspose_kronecker,
+    ← Matrix.star_eq_conjTranspose, ← Matrix.star_eq_conjTranspose, hA, hB]
+
+private theorem lifted_observables_commute (A B : QubitMatrix) :
+    (A ⊗ₖ (1 : QubitMatrix)) * ((1 : QubitMatrix) ⊗ₖ B) =
+      ((1 : QubitMatrix) ⊗ₖ B) * (A ⊗ₖ (1 : QubitMatrix)) := by
+  rw [← Matrix.mul_kronecker_mul, ← Matrix.mul_kronecker_mul]
+  simp
+
+/-- The original Kronecker-product definition is the CHSH combination of the lifted tuple. -/
+theorem chsh_operator_eq_lifted_chsh :
+    chshOperator =
+      liftA0 * liftB0 + liftA0 * liftB1 + liftA1 * liftB0 - liftA1 * liftB1 := by
+  simp only [liftA0, liftA1, liftB0, liftB1, ← Matrix.mul_kronecker_mul,
+    mul_one, one_mul]
+  rfl
 
 private theorem complex_sqrt_two_sq : (Real.sqrt 2 : ℂ) ^ 2 = 2 := by
   rw [← Complex.ofReal_pow, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
@@ -97,6 +140,37 @@ theorem bob_observables_are_valid :
     fin_cases i <;> fin_cases j <;>
       norm_num [bobObservable1, qubitX, qubitZ, pow_two, Matrix.mul_apply,
         Fin.sum_univ_two, complex_sqrt_two_inv_mul_self]
+
+/-- The four lifted observables form a CHSH tuple in the two-qubit matrix algebra. -/
+theorem lifted_observables_form_chsh_tuple :
+    IsCHSHTuple liftA0 liftA1 liftB0 liftB1 := by
+  rcases qubit_weyl_star with ⟨_, hXsa, hZsa, hXinv, hZinv⟩
+  rcases bob_observables_are_valid with ⟨⟨hB0sa, hB0inv⟩, hB1sa, hB1inv⟩
+  refine
+    { A₀_inv := ?_
+      A₁_inv := ?_
+      B₀_inv := ?_
+      B₁_inv := ?_
+      A₀_sa := ?_
+      A₁_sa := ?_
+      B₀_sa := ?_
+      B₁_sa := ?_
+      A₀B₀_commutes := ?_
+      A₀B₁_commutes := ?_
+      A₁B₀_commutes := ?_
+      A₁B₁_commutes := ?_ }
+  · exact kronecker_involution qubitZ 1 hZinv (by simp)
+  · exact kronecker_involution qubitX 1 hXinv (by simp)
+  · exact kronecker_involution 1 bobObservable0 (by simp) hB0inv
+  · exact kronecker_involution 1 bobObservable1 (by simp) hB1inv
+  · exact kronecker_self_adjoint qubitZ 1 hZsa (by simp)
+  · exact kronecker_self_adjoint qubitX 1 hXsa (by simp)
+  · exact kronecker_self_adjoint 1 bobObservable0 (by simp) hB0sa
+  · exact kronecker_self_adjoint 1 bobObservable1 (by simp) hB1sa
+  · exact lifted_observables_commute qubitZ bobObservable0
+  · exact lifted_observables_commute qubitZ bobObservable1
+  · exact lifted_observables_commute qubitX bobObservable0
+  · exact lifted_observables_commute qubitX bobObservable1
 
 /-- The fixed Bell state attains the positive Tsirelson value `2 * sqrt 2`. -/
 theorem bell_chsh_value :
