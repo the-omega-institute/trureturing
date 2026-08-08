@@ -78,16 +78,22 @@ internal sealed class PrARealRebuildRunner : IDisposable
             RestoreCleanCheckout(checkout);
             checkoutMutation?.Invoke(testCase.Checkout, checkout);
             if (validateAfterMutation) RequireCleanTrackedTree(checkout);
+            _ = RunEnvironment(checkout, testCase,
+                ["/bin/bash", "Meta/StrataLint/scripts/scribe.sh", "bootstrap"]);
+            var bootstrapRoot = CreateBootstrapReceipt(
+                checkout, manifest, runId, inventorySha, producerBuildSha);
             var echo = RunEnvironment(
                 checkout,
                 testCase,
-                ["make", "--no-print-directory", "echo-residual-summary", $"BASE={pinnedCommit}^"]);
+                ["make", "--no-print-directory", "echo-residual-summary", $"BASE={pinnedCommit}^"],
+                bootstrapRoot);
             var echoPath = Path.Combine(checkout, "Generated", "echo-residual-summary.md");
             Directory.CreateDirectory(Path.GetDirectoryName(echoPath)!);
             File.WriteAllBytes(echoPath, echo.StandardOutput);
-            _ = RunEnvironment(checkout, testCase, ["make", "--no-print-directory", "emit"]);
+            _ = RunEnvironment(checkout, testCase, ["make", "--no-print-directory", "emit"], bootstrapRoot);
             artifacts = ReadArtifacts(checkout);
             generated.Add(key, artifacts);
+            Directory.Delete(bootstrapRoot, recursive: true);
         }
         else
         {
@@ -153,7 +159,8 @@ internal sealed class PrARealRebuildRunner : IDisposable
         checkouts.Add(name, checkout);
         var report = Path.Combine(checkout, ".lake", "build", "stratalint", "raw-lean-report.json");
         Directory.CreateDirectory(Path.GetDirectoryName(report)!);
-        File.Copy(leanReport, report, overwrite: true);
+        foreach (var suffix in new[] { string.Empty, ".sha256", ".input.attestation", ".provenance.json" })
+            File.Copy(leanReport + suffix, report + suffix, overwrite: true);
         Run("make", ["--no-print-directory", "dotnet"], checkout, TimeSpan.FromMinutes(20));
         RequireCleanTrackedTree(checkout);
     }
@@ -189,7 +196,8 @@ internal sealed class PrARealRebuildRunner : IDisposable
     private ProcessOutput RunEnvironment(
         string checkout,
         PrAMatrixCase testCase,
-        IReadOnlyList<string> command)
+        IReadOnlyList<string> command,
+        string? receiptRoot = null)
     {
         var arguments = new List<string>
         {
@@ -201,8 +209,33 @@ internal sealed class PrARealRebuildRunner : IDisposable
             $"STRATALINT_PR_A_PARALLELISM={testCase.Parallelism}",
             "STRATALINT_PR_A_NO_BUILD=1",
         };
+        if (receiptRoot is not null) arguments.Add($"STRATALINT_RUN_RECEIPT_ROOT={receiptRoot}");
         arguments.AddRange(command);
         return Run("/usr/bin/env", arguments, checkout, CommandTimeout);
+    }
+
+    private string CreateBootstrapReceipt(
+        string checkout,
+        string manifest,
+        string runId,
+        string inventorySha,
+        string producerBuildSha)
+    {
+        foreach (var item in inventory)
+        {
+            var path = Path.Combine(checkout, item.Path);
+            if (File.Exists(path)) continue;
+            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+            File.WriteAllBytes(path, []);
+        }
+        var outputRoot = Path.Combine(scratchRoot, "bootstrap-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(outputRoot);
+        var request = RunHandleCommand.Request(manifest, runId, inventorySha, 0, producerBuildSha);
+        var produced = RunHandleProducer.Produce(checkout, outputRoot, request, inventory);
+        if (produced.ExitCode != 0) throw new InvalidOperationException(produced.Diagnostic.Trim());
+        var consumed = RunHandleConsumer.Consume(outputRoot, produced.RequestSha256, inventory);
+        if (consumed.ExitCode != 0) throw new InvalidOperationException(consumed.Diagnostic.Trim());
+        return outputRoot;
     }
 
     private static void RequireCleanTrackedTree(string root)

@@ -13,7 +13,8 @@ PARALLELISM="${STRATALINT_PR_A_PARALLELISM:-1}"
 case "$MODE" in
   emit) ;;
   check) ;;
-  *) echo "usage: scribe.sh emit|check" >&2; exit 2 ;;
+  bootstrap) ;;
+  *) echo "usage: scribe.sh emit|check|bootstrap" >&2; exit 2 ;;
 esac
 
 [[ "$PARALLELISM" =~ ^(1|4)$ ]] \
@@ -63,7 +64,9 @@ case "$ORDER" in
 esac
 
 cd "$ROOT"
-if [[ "$PARALLELISM" == "1" ]]; then
+if [[ "$MODE" == "bootstrap" ]]; then
+  for generator in emit catalog emit-values filemap; do run_generator "$generator"; done
+elif [[ "$PARALLELISM" == "1" ]]; then
   for generator in "${generators[@]}"; do run_generator "$generator"; done
 else
   running=0

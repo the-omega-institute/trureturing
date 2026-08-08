@@ -71,6 +71,22 @@ public sealed class PrAMetamorphicVerifierTests
 
     [Fact]
     [Trait("Category", "PrAEffectiveness")]
+    public void RealCanonicalRebuildsPassWithRunLocalReceipts()
+    {
+        var root = FindRepositoryRoot();
+        var inventory = RunHandleCommand.Inventory(root);
+        using var runner = new PrARealRebuildRunner(root, inventory);
+        var manifest = new string('9', 64);
+        var result = PrAMetamorphicVerifier.VerifyRequired(testCase => runner.Rebuild(
+            testCase, manifest, manifest[..32], RunHandleDigests.Inventory(inventory), new string('8', 64)));
+
+        Assert.True(result.Pass, string.Join("\n", result.Diagnostics));
+        Assert.Equal(192, result.CasesRun);
+        Assert.Equal(2, result.RealRebuildsRun);
+    }
+
+    [Fact]
+    [Trait("Category", "PrAEffectiveness")]
     public void RealCanonicalGeneratorNondeterminismMakesRequiredLaneRed()
     {
         var root = FindRepositoryRoot();
