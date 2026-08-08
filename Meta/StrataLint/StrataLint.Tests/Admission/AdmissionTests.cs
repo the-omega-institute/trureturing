@@ -66,7 +66,7 @@ public sealed class AdmissionTests
     }
 
     [Fact]
-    public void NonSl022HumanGateIsAContentViolation()
+    public void NonSl022TrustGateIsAContentViolation()
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
@@ -85,7 +85,7 @@ public sealed class AdmissionTests
                 descriptor.DisplaySeverity,
                 descriptor.AdmissionEffect,
                 RuleFixture.BlueprintPath,
-                "fixture human gate")),
+                "fixture trust gate")),
             ImmutableArray<DeferredRule>.Empty,
             ImmutableArray.Create(descriptor.Id));
 
@@ -101,7 +101,7 @@ public sealed class AdmissionTests
     }
 
     [Fact]
-    public void ProtectedProfileRejectsOtherHumanGateAndPreservesSl022()
+    public void ProtectedProfileRejectsOtherTrustGateAndPreservesSl022()
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
@@ -112,38 +112,38 @@ public sealed class AdmissionTests
                 Encoding.UTF8.GetBytes(TestRegistry.Domains)));
         var canonical = Assert.IsType<CanonicalizationOutcome.Accepted>(
             RepositoryCanonicalizer.Validate(context.Current, registry.Policy));
-        var review = Assert.IsType<BootstrapOutcome.HumanReviewRequired>(
+        var verification = Assert.IsType<BootstrapOutcome.ProtectedSurfaceVerificationRequired>(
             BootstrapGate.Evaluate(RawChangeSet.Create(new[]
             {
                 RuleFixture.SyntheticProtectedPath,
             })));
-        var humanGate = RuleCatalog.Default.Descriptors[6];
-        var sl022 = Assert.Single(BootstrapGate.CreateSl022Diagnostics(review.ChangeSet));
+        var trustGate = RuleCatalog.Default.Descriptors[6];
+        var sl022 = Assert.Single(BootstrapGate.CreateSl022Diagnostics(verification.ChangeSet));
         Assert.Equal(
             "protected-surface change requires base-owned conservative-extension verification",
             sl022.Message);
         var completed = CompletedRuleSet.Create(
             ImmutableArray.Create(
                 new Diagnostic(
-                    humanGate.Id,
-                    humanGate.Title,
-                    humanGate.DisplaySeverity,
-                    humanGate.AdmissionEffect,
+                    trustGate.Id,
+                    trustGate.Title,
+                    trustGate.DisplaySeverity,
+                    trustGate.AdmissionEffect,
                     RuleFixture.BlueprintPath,
-                    "fixture human gate"),
+                    "fixture trust gate"),
                 sl022),
             ImmutableArray<DeferredRule>.Empty,
-            ImmutableArray.Create(humanGate.Id, sl022.RuleId));
+            ImmutableArray.Create(trustGate.Id, sl022.RuleId));
 
         var outcome = AdmissionEngine.Decide(
             registry.Policy,
             canonical.Capability,
             context.Lean,
             completed,
-            MetaEvaluationProfile.ForProtectedSurface(review.ChangeSet));
+            MetaEvaluationProfile.ForProtectedSurface(verification.ChangeSet));
 
         var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
-        Assert.Contains(rejected.Diagnostics, item => item.RuleId == humanGate.Id);
+        Assert.Contains(rejected.Diagnostics, item => item.RuleId == trustGate.Id);
         Assert.Contains(rejected.Diagnostics, item => item.RuleId == RuleId.CreateKnown(22));
     }
 
@@ -159,7 +159,7 @@ public sealed class AdmissionTests
                 Encoding.UTF8.GetBytes(TestRegistry.Domains)));
         var canonical = Assert.IsType<CanonicalizationOutcome.Accepted>(
             RepositoryCanonicalizer.Validate(context.Current, registry.Policy));
-        var review = Assert.IsType<BootstrapOutcome.HumanReviewRequired>(
+        var verification = Assert.IsType<BootstrapOutcome.ProtectedSurfaceVerificationRequired>(
             BootstrapGate.Evaluate(RawChangeSet.Create(new[]
             {
                 RuleFixture.SyntheticProtectedPath,
@@ -174,7 +174,7 @@ public sealed class AdmissionTests
             canonical.Capability,
             context.Lean,
             completed,
-            MetaEvaluationProfile.ForProtectedSurface(review.ChangeSet));
+            MetaEvaluationProfile.ForProtectedSurface(verification.ChangeSet));
 
         var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
         Assert.Contains("SL-022 routing evidence failed closed", failure.Message, StringComparison.Ordinal);

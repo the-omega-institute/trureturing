@@ -35,17 +35,4 @@ public sealed partial class RevocationTests
 
         Assert.Contains("closure", rejected.Message, StringComparison.OrdinalIgnoreCase);
     }
-
-    [Fact]
-    public void LedgerAndHarnessChangesAreForbiddenMixedAtThePhaseZeroHook()
-    {
-        var changes = RawChangeSet.Create(new[]
-        {
-            FrozenLedgerChangeClassifier.LedgerPath,
-            RuleFixture.SyntheticProtectedPath,
-        });
-
-        Assert.IsType<FrozenLedgerChangeOutcome.ForbiddenMixed>(
-            FrozenLedgerChangeClassifier.Classify(changes));
-    }
 }

@@ -162,7 +162,7 @@ internal sealed partial class RuleFixture
             Encoding.UTF8.GetBytes(TestRegistry.Domains));
         var policy = Assert.IsType<RegistryLoadOutcome.Accepted>(policyOutcome).Policy;
         var bootstrap = BootstrapGate.Evaluate(RawChangeSet.Create(Changes));
-        var meta = Assert.IsType<BootstrapOutcome.HumanReviewRequired>(bootstrap).ChangeSet;
+        var meta = Assert.IsType<BootstrapOutcome.ProtectedSurfaceVerificationRequired>(bootstrap).ChangeSet;
         return RuleEvaluationContext.Create(
             current,
             baseline,
