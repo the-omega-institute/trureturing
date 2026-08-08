@@ -20,5 +20,6 @@ The proof runs the normalization as a chain of local value-preserving carries an
 
 ## References
 
+- Truth anchor: `D5/S1/Deficit/DeficitInteger.deficit_integer`
 - Dependency: [D5/S0/Carrier/Conj](../../S0/Carrier/Conj.md)
 - Dependency: [D5/S1/Scale/Embedding](../Scale/Embedding.md)

@@ -14,7 +14,9 @@ internal sealed record ScribeDescribeLatexRecord(
     string NodeId,
     string DefinitionPath,
     string Kind,
-    bool HasValidLatex);
+    bool HasValidLatex,
+    string FormulaProvenance,
+    string? ProjectionFailureReason);
 
 internal sealed class VerifiedScribeEmissions
 {

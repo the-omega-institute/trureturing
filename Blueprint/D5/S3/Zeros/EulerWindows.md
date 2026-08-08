@@ -42,5 +42,8 @@ For a supplied finite set of natural numbers, a supplied proof that every member
 
 ## References
 
+- Truth anchor: `D5/S3/Zeros/EulerWindows.finite_euler_window_ne_zero`
+- Truth anchor: `D5/S3/Zeros/EulerWindows.primeAxisHeatTrace`
+- Truth anchor: `D5/S3/Zeros/EulerWindows.prime_axis_heat_trace_eq_zeta`
 - Dependency: [D5/S3/Weil/EulerProduct](../Weil/EulerProduct.md)
 - Dependency: [D5/S3/Weil/SpectralHilbert](../Weil/SpectralHilbert.md)
