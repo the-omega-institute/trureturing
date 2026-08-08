@@ -207,6 +207,43 @@ public sealed class TruthGraphJsonTests
         Assert.Equal(["first", "second"], model.Joins.TruthAnchors.Select(static anchor => anchor.DescribeId));
         var bytes = TruthGraphJsonWriter.Write(model);
         Assert.True(bytes.AsSpan().SequenceEqual(TruthGraphJsonWriter.Write(TruthGraphJsonReader.Read(bytes.AsSpan())).AsSpan()));
+
+        var danglingAnchor = model with
+        {
+            Joins = new TruthGraphJoinsSection(model.Joins.TruthAnchors
+                .Select(static anchor => anchor with { DescribeId = "missing" })
+                .ToImmutableArray()),
+        };
+        Assert.Throws<FormatException>(() =>
+            TruthGraphJsonReader.Read(TruthGraphJsonWriter.Write(danglingAnchor).AsSpan()));
+
+        var otherDocument = new DocumentGraphNode(
+            "Blueprint/D5/S0/Carrier/Other.md", "D5/S0/Carrier/Other", "receipt-free");
+        var misboundDocument = model with
+        {
+            Documents = model.Documents with
+            {
+                Nodes = model.Documents.Nodes.Add(otherDocument)
+                    .OrderBy(static node => node.RepoPath, StringComparer.Ordinal).ToImmutableArray(),
+                DescribeNodes = model.Documents.DescribeNodes
+                    .Select(static node => node with { DocumentGid = "D5/S0/Carrier/Other" })
+                    .ToImmutableArray(),
+            },
+        };
+        Assert.Throws<FormatException>(() =>
+            TruthGraphJsonReader.Read(TruthGraphJsonWriter.Write(misboundDocument).AsSpan()));
+
+        var retargetedDeclaration = model with
+        {
+            Documents = model.Documents with
+            {
+                DescribeNodes = model.Documents.DescribeNodes
+                    .Select(static node => node with { LeanDeclarationGid = "D5/S0/Carrier/Target.other" })
+                    .ToImmutableArray(),
+            },
+        };
+        Assert.Throws<FormatException>(() =>
+            TruthGraphJsonReader.Read(TruthGraphJsonWriter.Write(retargetedDeclaration).AsSpan()));
     }
 
     [Fact]

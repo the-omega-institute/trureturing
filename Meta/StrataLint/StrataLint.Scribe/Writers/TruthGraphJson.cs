@@ -620,6 +620,9 @@ public static class TruthGraphJsonReader
             static node => node.RepoPath,
             static node => node.Gid,
             StringComparer.Ordinal);
+        var describeIdentities = model.Documents.DescribeNodes
+            .GroupBy(static node => (node.RepoPath, node.DocumentGid, node.DescribeId))
+            .ToDictionary(static group => group.Key, static group => group.ToArray());
         if (model.Truth.Nodes.Any(node => node.Depth < 0 || node.State is not ("closed" or "open" or "tail" or "semantic"))
             || model.Truth.Edges.Any(edge => !paths.Contains(edge.Dependency) || !paths.Contains(edge.Dependent))
             || model.Truth.OpenBlockers.Any(blocker => !paths.Contains(blocker.Dependent))
@@ -632,6 +635,10 @@ public static class TruthGraphJsonReader
             || documentGids.Count != model.Documents.Nodes.Length
             || model.Documents.DescribeNodes.Any(node => !documentPaths.Contains(node.RepoPath)
                 || !documentGids.Contains(node.DocumentGid)
+                || !string.Equals(
+                    documentIdentities.GetValueOrDefault(node.RepoPath),
+                    node.DocumentGid,
+                    StringComparison.Ordinal)
                 || node.FormulaProvenance is not ("hand-authored" or "lean-derived"))
             || model.Documents.DependencyEdges.Any(edge =>
                 !documentPaths.Contains(edge.Dependency) || !documentPaths.Contains(edge.Dependent))
@@ -644,6 +651,15 @@ public static class TruthGraphJsonReader
                     documentIdentities.GetValueOrDefault(anchor.DocumentRepoPath),
                     anchor.DocumentGid,
                     StringComparison.Ordinal)
+                || (anchor.DescribeId is not null
+                    && (!describeIdentities.TryGetValue(
+                            (anchor.DocumentRepoPath, anchor.DocumentGid, anchor.DescribeId),
+                            out var matchingDescribes)
+                        || matchingDescribes.Length != 1
+                        || !string.Equals(
+                            matchingDescribes[0].LeanDeclarationGid,
+                            anchor.LeanDeclarationGid,
+                            StringComparison.Ordinal)))
                 || !paths.Contains(anchor.FormalTruthRepoPath))
             || !model.DeferredLayers.SequenceEqual(["digestion"], StringComparer.Ordinal))
         {

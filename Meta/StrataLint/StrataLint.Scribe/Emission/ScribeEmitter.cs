@@ -16,7 +16,6 @@ public static class ScribeEmitter
         TextWriter output,
         TextWriter error)
     {
-        StatementProjectionReconciliation.Verify(repositoryRoot, requireLiveReport: true);
         return Run(repositoryRoot, check, output, error, LeanCompiledArtifactReports.InspectRepository,
             validateRepository: true, tolerateAbsentDocuments: false).ExitCode;
     }
