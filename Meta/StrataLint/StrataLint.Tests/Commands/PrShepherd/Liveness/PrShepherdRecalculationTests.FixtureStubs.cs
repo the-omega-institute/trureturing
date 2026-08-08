@@ -299,7 +299,8 @@ public sealed partial class PrShepherdRecalculationTests
                 """
                 #!/usr/bin/env bash
                 set -euo pipefail
-                if [[ " $* " == *" fetch "* || " $* " == *" push "* \
+                if [[ -n "${PR_SHEPHERD_BOUND_STEP:-}" \
+                    || " $* " == *" fetch "* || " $* " == *" push "* \
                     || " $* " == *" ls-remote "* || " $* " == *" reset --hard "* \
                     || " $* " == *" clean -fd "* || " $* " == *" checkout --detach "* \
                     || " $* " == *" merge --no-commit "* || " $* " == *" add -A "* \

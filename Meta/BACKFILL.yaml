@@ -723,7 +723,13 @@ sources:
         receipts:
           coverage: []
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - universal-c-star-crossed-product-identification
+            - central-winding-unitary-over-torus
+            - noncommutative-algebra-bundle-over-torus
+            - prime-power-tensor-factor-decomposition
+            - general-robertson-variance-uncertainty
+            - exact-matrix-unit-zero-error-certificate
           chain_atoms: []
           tail_authorization: null
         status:

@@ -206,12 +206,27 @@ public sealed partial class PrShepherdRecalculationTests
             ["PR_TEST_PAUSE_GH_OPERATION"] = "pr list",
         };
 
-        await Task.WhenAll(
-            Task.Run(() => fixture.Run(environment: environment)),
-            Task.Run(() => fixture.Run(environment: environment)));
+        var probes = new[]
+        {
+            Task.Factory.StartNew(
+                () => fixture.Run(environment: environment),
+                CancellationToken.None,
+                TaskCreationOptions.LongRunning,
+                TaskScheduler.Default),
+            Task.Factory.StartNew(
+                () => fixture.Run(environment: environment),
+                CancellationToken.None,
+                TaskCreationOptions.LongRunning,
+                TaskScheduler.Default),
+        };
+        var results = await Task.WhenAll(probes);
 
-        Assert.Equal(
-            1,
-            fixture.BoundedCalls().Count(call => call.Contains("|pr-list|", StringComparison.Ordinal)));
+        var calls = fixture.BoundedCalls();
+        var probeCount = calls.Count(call => call.StartsWith("api|pr-list|", StringComparison.Ordinal));
+        Assert.True(
+            probeCount == 1,
+            $"expected one half-open probe, got {probeCount}\n"
+            + $"calls:\n{string.Join('\n', calls)}\n"
+            + $"logs:\n{string.Join("\n---\n", results.Select(result => result.Log))}");
     }
 }
