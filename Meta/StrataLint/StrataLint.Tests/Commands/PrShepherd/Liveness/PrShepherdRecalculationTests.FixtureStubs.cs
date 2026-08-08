@@ -310,7 +310,12 @@ public sealed partial class PrShepherdRecalculationTests
                   printf 'git|%s|%s|git %s\n' \
                     "${PR_SHEPHERD_BOUND_STEP-}" \
                     "${PR_SHEPHERD_BOUND_TIMEOUT_SECONDS-}" "$*" \
-                    >> "$PR_TEST_BOUNDED_CALLS"
+                      >> "$PR_TEST_BOUNDED_CALLS"
+                fi
+                if [[ "${PR_TEST_CHILD_OUTPUT:-0}" == 1 \
+                    && "${PR_SHEPHERD_BOUND_STEP:-}" == watch-reload-fetch ]]; then
+                  printf 'fixture-child-stdout\n'
+                  printf 'fixture-child-stderr\n' >&2
                 fi
                 if [[ " $* " == *" fetch --no-tags "* ]]; then
                   if [[ "$PR_TEST_MOVE_HEAD_DURING_FETCH" == 1 ]]; then

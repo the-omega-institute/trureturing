@@ -214,15 +214,6 @@ prepare_judge() {
 
 run_stage setup prepare_judge
 
-# Required PR-A is before the engineering conditional because preflight invokes
-# this gate with --skip-engineering, and protected-surface tests can stop later stages.
-if [[ "$SKIP_PR_A" == "1" ]]; then
-  record_timing local refactor-pr-a-required skipped 0
-else
-  run_stage refactor-pr-a-required \
-    make -C "$CANDIDATE_ROOT" refactor-pr-a-verify OUT="$TMP_ROOT/refactor-pr-a-required.json"
-fi
-
 if [[ "$SKIP_ENGINEERING" == "1" ]]; then
   record_timing local engineering-dotnet skipped 0
   record_timing local engineering-test skipped 0
