@@ -109,27 +109,29 @@ internal sealed class ScribeEmissionAttestation
 
     private const string Schema = "scribe-emission-attestation-v1";
 
-    private static readonly ImmutableHashSet<string> RootFields =
-        ImmutableHashSet.Create(StringComparer.Ordinal, "entries", "schema");
+    private readonly RepositorySnapshot snapshot;
 
-    private static readonly ImmutableHashSet<string> EntryFields = ImmutableHashSet.Create(
-        StringComparer.Ordinal,
-        "definition_path",
-        "definition_sha256",
-        "emission_path",
-        "emission_sha256",
-        "gid");
+    private ScribeEmissionAttestation(RepositorySnapshot snapshot) => this.snapshot = snapshot;
 
-    private readonly ImmutableDictionary<string, ScribeEmissionRecord> records;
+    internal bool TryGet(string gid, out ScribeEmissionRecord record)
+    {
+        var definitionPath = DefinitionPath(gid);
+        var emissionPath = EmissionPath(gid);
+        if (!snapshot.TryGetFile(definitionPath, out var definition)
+            || !snapshot.TryGetFile(emissionPath, out var emission))
+        {
+            record = null!;
+            return false;
+        }
 
-    private ScribeEmissionAttestation(ImmutableDictionary<string, ScribeEmissionRecord> records) =>
-        this.records = records;
-
-    internal static ScribeEmissionAttestation Empty { get; } = new(
-        ImmutableDictionary<string, ScribeEmissionRecord>.Empty.WithComparers(StringComparer.Ordinal));
-
-    internal bool TryGet(string gid, out ScribeEmissionRecord record) =>
-        records.TryGetValue(gid, out record!);
+        record = new ScribeEmissionRecord(
+            gid,
+            definitionPath,
+            DigestionFingerprint.Compute(definition.RawBytes.AsSpan()).RawSha256,
+            emissionPath,
+            DigestionFingerprint.Compute(emission.RawBytes.AsSpan()).RawSha256);
+        return true;
+    }
 
     internal static ImmutableArray<byte> Write(IEnumerable<ScribeEmissionRecord> values)
     {
@@ -153,60 +155,10 @@ internal sealed class ScribeEmissionAttestation
         return StructuredCanonicalWriter.WriteJson(JsonSerializer.SerializeToElement(material));
     }
 
-    internal static ScribeEmissionAttestation Load(
-        RepositorySnapshot snapshot,
-        ImmutableArray<string>.Builder findings)
+    internal static ScribeEmissionAttestation FromSnapshot(RepositorySnapshot snapshot)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
-        ArgumentNullException.ThrowIfNull(findings);
-        if (!snapshot.TryGetFile(RelativePath, out var file))
-        {
-            return Empty;
-        }
-
-        try
-        {
-            using var document = JsonDocument.Parse(file.Text);
-            if (!StructuredCanonicalWriter.WriteJson(document.RootElement).AsSpan()
-                    .SequenceEqual(file.RawBytes.AsSpan()))
-            {
-                throw new FormatException("attestation is not canonical JSON");
-            }
-
-            RequireFields(document.RootElement, RootFields, "root");
-            if (RequireString(document.RootElement, "schema") != Schema)
-            {
-                throw new FormatException($"schema must be {Schema}");
-            }
-
-            var entries = document.RootElement.GetProperty("entries");
-            if (entries.ValueKind != JsonValueKind.Array)
-            {
-                throw new FormatException("entries must be an array");
-            }
-
-            var records = entries.EnumerateArray().Select(ParseRecord).ToArray();
-            ValidateRecords(records);
-            return new ScribeEmissionAttestation(records.ToImmutableDictionary(
-                static item => item.Gid,
-                StringComparer.Ordinal));
-        }
-        catch (Exception exception) when (exception is JsonException or FormatException or InvalidOperationException)
-        {
-            findings.Add($"{RelativePath} is invalid: {exception.Message}");
-            return Empty;
-        }
-    }
-
-    private static ScribeEmissionRecord ParseRecord(JsonElement element)
-    {
-        RequireFields(element, EntryFields, "entry");
-        return new ScribeEmissionRecord(
-            RequireString(element, "gid"),
-            RequireString(element, "definition_path"),
-            RequireString(element, "definition_sha256"),
-            RequireString(element, "emission_path"),
-            RequireString(element, "emission_sha256"));
+        return new ScribeEmissionAttestation(snapshot);
     }
 
     internal static void ValidateRecords(IReadOnlyList<ScribeEmissionRecord> records)
@@ -238,33 +190,6 @@ internal sealed class ScribeEmissionAttestation
                 throw new FormatException($"noncanonical Scribe fingerprint for {record.Gid}");
             }
         }
-    }
-
-    private static void RequireFields(
-        JsonElement element,
-        ImmutableHashSet<string> expected,
-        string label)
-    {
-        if (element.ValueKind != JsonValueKind.Object)
-        {
-            throw new FormatException($"{label} must be an object");
-        }
-
-        var actual = element.EnumerateObject().Select(static property => property.Name).ToArray();
-        if (actual.Length != expected.Count
-            || actual.Distinct(StringComparer.Ordinal).Count() != actual.Length
-            || actual.Any(name => !expected.Contains(name)))
-        {
-            throw new FormatException($"{label} fields are not the closed schema");
-        }
-    }
-
-    private static string RequireString(JsonElement element, string property)
-    {
-        var value = element.GetProperty(property);
-        return value.ValueKind == JsonValueKind.String
-            ? value.GetString()!
-            : throw new FormatException($"{property} must be a string");
     }
 
     internal static string DefinitionPath(string gid) => $"Blueprint/{gid}.scribe.cs";
