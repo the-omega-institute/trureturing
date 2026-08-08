@@ -2,6 +2,8 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := help
 
 BASE ?= origin/dev
+MANIFEST ?= $(shell git rev-parse --verify HEAD^{commit} | shasum -a 256 | awk '{print $$1}')
+OUT ?= /tmp/stratalint-pr-a-verification.json
 WORKTREE_PATH = $(if $(filter command line,$(origin PATH)),$(PATH),$(abspath ../trureturing-$(NAME)))
 .PHONY: help dotnet test lean-cache-ensure lean lean-report build c0-renew clean-lanes emit emit-check ingest echo-residual-summary echo-verify record-golden selftest scratch-sweep gate perf-report deliver-check receipts-stage derived-refresh deposit cover worktree pr-watch pr-watch-status refactor-p0-0-gate-authority refactor-p0-2 refactor-pr-a-verify
 

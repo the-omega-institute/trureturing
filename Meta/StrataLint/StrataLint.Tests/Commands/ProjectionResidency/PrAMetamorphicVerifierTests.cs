@@ -28,6 +28,25 @@ public sealed class PrAMetamorphicVerifierTests
     }
 
     [Fact]
+    public void RealRebuildMatrixReportsEveryCanonicalGeneratorInvocation()
+    {
+        var rebuilds = new List<PrAMatrixCase>();
+
+        var result = PrAMetamorphicVerifier.VerifyReal(testCase =>
+        {
+            rebuilds.Add(testCase);
+            return new PrARealRebuildOutcome(
+                Snapshot(testCase, environmentSensitive: false),
+                testCase.OutputRoot == "output-root-a");
+        });
+
+        Assert.True(result.Pass, string.Join("\n", result.Diagnostics));
+        Assert.Equal(96, result.RealRebuildsRun);
+        Assert.Equal(192, rebuilds.Count);
+        Assert.Equal(2, rebuilds.Select(static item => item.Checkout).Distinct().Count());
+    }
+
+    [Fact]
     public void EnvironmentSensitiveProducerMakesTopLevelVerifierReject()
     {
         var result = PrAMetamorphicVerifier.Verify(testCase => Snapshot(testCase, environmentSensitive: true));

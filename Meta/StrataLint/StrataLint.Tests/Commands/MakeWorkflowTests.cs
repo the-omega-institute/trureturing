@@ -219,6 +219,7 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain("make echo-verify", preflight, StringComparison.Ordinal);
     }
 
+
     [Fact]
     public void EchoProjectionIsARegisteredGeneratedArtifactNotFlightScaffolding()
     {
@@ -650,10 +651,9 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("scribe-consumer", script, StringComparison.Ordinal);
         Assert.Contains(".lake/build/stratalint/raw-lean-report.json", script, StringComparison.Ordinal);
         Assert.DoesNotContain("CHECK_ARGS=()", script, StringComparison.Ordinal);
-        Assert.Contains("run_scribe emit", script, StringComparison.Ordinal);
-        Assert.Contains("run_scribe catalog", script, StringComparison.Ordinal);
-        Assert.Contains("run_scribe emit-values", script, StringComparison.Ordinal);
-        Assert.Contains("run_scribe filemap", script, StringComparison.Ordinal);
+        Assert.Contains("emit|catalog|emit-values|filemap) run_scribe \"$1\"", script, StringComparison.Ordinal);
+        Assert.Contains("canonical) generators=(emit catalog emit-values filemap dag)", script, StringComparison.Ordinal);
+        Assert.Contains("for generator in \"${generators[@]}\"", script, StringComparison.Ordinal);
     }
 
     [Fact]

@@ -27,11 +27,14 @@ internal sealed record PrARunSnapshot(
     string Handle,
     ImmutableDictionary<string, ImmutableArray<byte>> VerifierResults);
 
+internal sealed record PrARealRebuildOutcome(PrARunSnapshot Snapshot, bool GeneratorRan);
+
 internal sealed record PrAMetamorphicResult(
     bool Pass,
     int ExitCode,
     ImmutableArray<string> Diagnostics,
-    int CasesRun);
+    int CasesRun,
+    int RealRebuildsRun = 0);
 
 internal static class PrAMetamorphicVerifier
 {
@@ -44,6 +47,23 @@ internal static class PrAMetamorphicVerifier
     private static readonly string[] Checkouts = ["checkout-a", "checkout-b"];
 
     internal static PrAMetamorphicResult Verify(Func<PrAMatrixCase, PrARunSnapshot> produce)
+        => VerifyCore(produce, realRebuild: false);
+
+    internal static PrAMetamorphicResult VerifyReal(Func<PrAMatrixCase, PrARealRebuildOutcome> produce)
+    {
+        var realRebuilds = 0;
+        var result = VerifyCore(testCase =>
+        {
+            var outcome = produce(testCase);
+            if (outcome.GeneratorRan) realRebuilds++;
+            return outcome.Snapshot;
+        }, realRebuild: false);
+        return result with { RealRebuildsRun = realRebuilds };
+    }
+
+    private static PrAMetamorphicResult VerifyCore(
+        Func<PrAMatrixCase, PrARunSnapshot> produce,
+        bool realRebuild)
     {
         ArgumentNullException.ThrowIfNull(produce);
         var diagnostics = ImmutableArray.CreateBuilder<string>();
@@ -93,7 +113,12 @@ internal static class PrAMetamorphicVerifier
             diagnostics.Add($"M-EMITTER-NONDETERMINISTIC fixed matrix incomplete expected=192 actual={casesRun}");
         }
 
-        return new PrAMetamorphicResult(pass, pass ? 0 : 1, diagnostics.ToImmutable(), casesRun);
+        return new PrAMetamorphicResult(
+            pass,
+            pass ? 0 : 1,
+            diagnostics.ToImmutable(),
+            casesRun,
+            realRebuild ? casesRun : 0);
     }
 
     private static IEnumerable<PrAMatrixCase> Cases()
