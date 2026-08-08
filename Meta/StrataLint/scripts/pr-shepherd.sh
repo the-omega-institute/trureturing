@@ -366,7 +366,8 @@ if [[ "${#SHEPHERD_MODULE_NAMES[@]}" -eq 0 ]]; then
   exit 1
 fi
 compute_shepherd_identity() {
-  local entrypoint="$1" module_directory="$2" name blob hashes material="" material_file
+  local entrypoint="$1" module_directory="$2" result_variable="${3:-}"
+  local name blob hashes material="" material_file
   local index=0
   local -a source_files=("$entrypoint")
   local -a identity_module_names=()
@@ -398,7 +399,11 @@ compute_shepherd_identity() {
     return 1
   fi
   rm -f "$material_file"
-  printf '%s\n' "$blob"
+  if [[ -n "$result_variable" ]]; then
+    printf -v "$result_variable" '%s' "$blob"
+  else
+    printf '%s\n' "$blob"
+  fi
 }
 validate_configuration || exit $?
 if [[ "${1:-}" != watch || -n "$WATCH_LOADED_BLOB" ]]; then
