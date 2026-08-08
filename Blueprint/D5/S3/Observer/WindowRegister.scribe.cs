@@ -24,11 +24,7 @@ internal sealed class WindowRegisterDocument : IScribeDocumentDefinition
                         "For every positive natural window cardinality M, the standard phase " +
                         "omega_M = exp(2 pi i/M) is a primitive M-th root of unity. The positivity " +
                         "condition is the displayed form of the formal NeZero M instance; the " +
-                        "declaration makes no claim for a zero-cardinality window.")),
-                    Paragraph(Text(
-                        "Provenance note: OBSERVER-QUANTUM.md section 3 motivates the finite-window " +
-                        "interpretation. It is reference input only. The typed Lean declaration " +
-                        "above is the source of this theorem, and Scribe generates its number.")))
+                        "declaration makes no claim for a zero-cardinality window.")))
             ),
             DocumentBlock.Describe.Theorem(
                 DescribeId.Create("the-clock-and-shift-obey-the-finite-weyl-relation"),

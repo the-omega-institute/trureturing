@@ -3,6 +3,30 @@ namespace StrataLint.ArchitectureTests;
 public sealed class TheoryIsolationTests
 {
     [Fact]
+    public void BareTheoryBasenameIsRejectedButOrdinaryWordsAndSubstringsAreNot()
+    {
+        var repositoryRoot = RepositoryLayout.FindRoot();
+        var theoryRoot = Path.Combine(repositoryRoot, "docs", "develop", "theory");
+        var basename = Directory.EnumerateFiles(theoryRoot, "*", SearchOption.AllDirectories)
+            .Where(static path =>
+                (File.GetAttributes(path) & (FileAttributes.Directory | FileAttributes.ReparsePoint)) == 0)
+            .Select(Path.GetFileName)
+            .Order(StringComparer.Ordinal)
+            .First();
+
+        var finding = Assert.Single(TheoryIsolationPolicy.InspectSource(
+            "D5/S0/Carrier/Synthetic.lean",
+            $"/- Provenance: {basename}. -/",
+            repositoryRoot));
+
+        Assert.Contains("theory basename", finding.Message, StringComparison.Ordinal);
+        Assert.Empty(TheoryIsolationPolicy.InspectSource(
+            "D5/S0/Carrier/Synthetic.lean",
+            $"/- An observer uses prefix{basename}suffix as an unrelated identifier. -/",
+            repositoryRoot));
+    }
+
+    [Fact]
     public void RepositoryProgramAndFormalSourcesHaveNoInternalTheoryReferences()
     {
         var findings = TheoryIsolationPolicy.InspectRepository(RepositoryLayout.FindRoot());
