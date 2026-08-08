@@ -49,11 +49,13 @@ internal static class TheoryIsolationPolicy
     internal static IReadOnlyList<TheoryIsolationFinding> InspectRepository(string repositoryRoot)
     {
         var repositoryFiles = GitIndexRepositoryFiles.Enumerate(repositoryRoot);
+        var theoryBasenamePattern = CreateTheoryBasenamePattern(repositoryRoot);
         var findings = repositoryFiles
             .Where(static file => file.RelativePath.EndsWith(".cs", StringComparison.Ordinal))
             .SelectMany(source => InspectSource(
                 source.RelativePath,
-                File.ReadAllText(source.FullPath)))
+                File.ReadAllText(source.FullPath),
+                theoryBasenamePattern))
             .ToList();
 
         foreach (var source in repositoryFiles.Where(static file =>
@@ -61,7 +63,8 @@ internal static class TheoryIsolationPolicy
         {
             findings.AddRange(InspectSource(
                 source.RelativePath,
-                File.ReadAllText(source.FullPath)));
+                File.ReadAllText(source.FullPath),
+                theoryBasenamePattern));
         }
 
         var catalog = repositoryFiles.SingleOrDefault(file => string.Equals(
@@ -79,6 +82,18 @@ internal static class TheoryIsolationPolicy
     }
 
     internal static IReadOnlyList<TheoryIsolationFinding> InspectSource(string path, string source)
+        => InspectSource(path, source, theoryBasenamePattern: null);
+
+    internal static IReadOnlyList<TheoryIsolationFinding> InspectSource(
+        string path,
+        string source,
+        string repositoryRoot) =>
+        InspectSource(path, source, CreateTheoryBasenamePattern(repositoryRoot));
+
+    private static IReadOnlyList<TheoryIsolationFinding> InspectSource(
+        string path,
+        string source,
+        Regex? theoryBasenamePattern)
     {
         if (path.EndsWith(".cs", StringComparison.Ordinal) && IsAllowedCSharp(path))
         {
@@ -101,6 +116,13 @@ internal static class TheoryIsolationPolicy
             findings.Add(new TheoryIsolationFinding(
                 path,
                 "program or formal source contains an internal theory reference"));
+        }
+
+        if (theoryBasenamePattern?.IsMatch(inspectedSource) == true)
+        {
+            findings.Add(new TheoryIsolationFinding(
+                path,
+                "program or formal source contains an internal theory basename"));
         }
 
         return findings;
@@ -138,6 +160,28 @@ internal static class TheoryIsolationPolicy
     private static bool IsAllowedCSharp(string path) =>
         AllowedCSharpFiles.Contains(path)
         || AllowedCSharpPrefixes.Any(prefix => path.StartsWith(prefix, StringComparison.Ordinal));
+
+    private static Regex? CreateTheoryBasenamePattern(string repositoryRoot)
+    {
+        var theoryRoot = Path.Combine(repositoryRoot, "docs", "develop", "theory");
+        var basenames = Directory.EnumerateFiles(theoryRoot, "*", SearchOption.AllDirectories)
+            .Where(static path =>
+                (File.GetAttributes(path) & (FileAttributes.Directory | FileAttributes.ReparsePoint)) == 0)
+            .Select(static path => new FileInfo(path).Name)
+            .Distinct(StringComparer.Ordinal)
+            .OrderByDescending(static basename => basename.Length)
+            .ThenBy(static basename => basename, StringComparer.Ordinal)
+            .Select(Regex.Escape)
+            .ToArray();
+        if (basenames.Length == 0)
+        {
+            return null;
+        }
+
+        return new Regex(
+            $"(?<![A-Za-z0-9_-])(?:{string.Join('|', basenames)})(?![A-Za-z0-9_-])",
+            RegexOptions.CultureInvariant);
+    }
 
     private static string MaskTaskAutopsies(string source) =>
         LeanTaskPattern.Replace(source, static match =>
