@@ -29,8 +29,9 @@ internal static class SnapshotAdmissionCore
                 return Failure(bootstrapFailure.Message);
             }
 
-            var sl022Diagnostics = bootstrap is BootstrapOutcome.HumanReviewRequired review
-                ? BootstrapGate.CreateSl022Diagnostics(review.ChangeSet)
+            var sl022Diagnostics = bootstrap is
+                BootstrapOutcome.ProtectedSurfaceVerificationRequired bootstrapVerification
+                ? BootstrapGate.CreateSl022Diagnostics(bootstrapVerification.ChangeSet)
                 : ImmutableArray<Diagnostic>.Empty;
             if (!current.TryGetFile("Meta/registry.yaml", out var registryFile)
                 || !current.TryGetFile("Meta/domains.yaml", out var domainsFile))
@@ -79,7 +80,7 @@ internal static class SnapshotAdmissionCore
                     clear.Capability,
                     verifiedScribeEmissions,
                     valuesKernelDataPath),
-                BootstrapOutcome.HumanReviewRequired protectedReview =>
+                BootstrapOutcome.ProtectedSurfaceVerificationRequired protectedSurfaceVerification =>
                     AdmissionPipeline.EvaluateProtectedSurface(
                         current,
                         baseline,
@@ -87,7 +88,7 @@ internal static class SnapshotAdmissionCore
                         lean,
                         baselineLean,
                         changes,
-                        protectedReview.ChangeSet,
+                        protectedSurfaceVerification.ChangeSet,
                         verifiedScribeEmissions,
                         valuesKernelDataPath),
                 _ => throw new InvalidOperationException("unknown bootstrap outcome"),

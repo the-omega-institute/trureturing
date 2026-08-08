@@ -141,7 +141,8 @@ internal static class ConservativeActualTreeEvaluator
         var diagnostics = outcome switch
         {
             AdmissionOutcome.RuleRejected rejected => rejected.Diagnostics,
-            AdmissionOutcome.HumanReviewRequired required => required.Diagnostics,
+            AdmissionOutcome.ProtectedSurfaceVerificationRequired verification =>
+                verification.Diagnostics,
             AdmissionOutcome.ProtectedSurfaceChange protectedChange =>
                 protectedChange.Sl022Diagnostics,
             AdmissionOutcome.InfrastructureFailure failure =>

@@ -326,9 +326,9 @@ public sealed partial class ReviewRegressionTests
 
         Assert.Contains(prepared.Changes.Paths, path => path.Value == "Meta/StrataLint/Gate.txt");
         Assert.Contains(prepared.Changes.Paths, path => path.Value == "notes/Gate.txt");
-        var review = Assert.IsType<BootstrapOutcome.HumanReviewRequired>(
+        var verification = Assert.IsType<BootstrapOutcome.ProtectedSurfaceVerificationRequired>(
             BootstrapGate.Evaluate(prepared.Changes));
-        Assert.Contains(review.ChangeSet.Paths, path => path.Value == "Meta/StrataLint/Gate.txt");
+        Assert.Contains(verification.ChangeSet.Paths, path => path.Value == "Meta/StrataLint/Gate.txt");
     }
 
     [Theory]

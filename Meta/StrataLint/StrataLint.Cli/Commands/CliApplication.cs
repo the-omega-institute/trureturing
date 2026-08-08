@@ -177,7 +177,8 @@ internal static class CliApplication
         AdmissionOutcome.Admitted admitted => RenderAdmitted(admitted, console),
         AdmissionOutcome.RuleRejected rejected => RenderRejected(rejected, console),
         AdmissionOutcome.InfrastructureFailure failure => RenderInfrastructureFailure(failure, console),
-        AdmissionOutcome.HumanReviewRequired required => RenderHumanReview(required, console),
+        AdmissionOutcome.ProtectedSurfaceVerificationRequired verification =>
+            RenderProtectedSurfaceVerification(verification, console),
         AdmissionOutcome.ProtectedSurfaceChange protectedChange =>
             RenderProtectedSurfaceChange(protectedChange, console),
     };
@@ -217,16 +218,17 @@ internal static class CliApplication
         return 2;
     }
 
-    private static int RenderHumanReview(
-        AdmissionOutcome.HumanReviewRequired required,
+    private static int RenderProtectedSurfaceVerification(
+        AdmissionOutcome.ProtectedSurfaceVerificationRequired verification,
         ICliConsole console)
     {
-        foreach (var diagnostic in required.Diagnostics.OrderBy(static item => item.Path, StringComparer.Ordinal))
+        foreach (var diagnostic in verification.Diagnostics
+            .OrderBy(static item => item.Path, StringComparer.Ordinal))
         {
             console.WriteOutput(diagnostic.Render() + "\n");
         }
 
-        console.WriteOutput($"HUMAN_REVIEW_REQUIRED count={required.Diagnostics.Length}\n");
+        console.WriteOutput($"HUMAN_REVIEW_REQUIRED count={verification.Diagnostics.Length}\n");
         return 3;
     }
 
