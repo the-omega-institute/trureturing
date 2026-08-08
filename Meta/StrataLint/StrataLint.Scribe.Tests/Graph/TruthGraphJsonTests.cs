@@ -210,8 +210,14 @@ public sealed class TruthGraphJsonTests
 
         var danglingAnchor = model with
         {
+            // Dangle exactly ONE anchor. Mutating both would give the two co-declaration
+            // anchors an identical ordering key (DocumentRepoPath\0DescribeId\0LeanDeclarationGid),
+            // so RequireStrictOrder would reject before the referential check ever runs and the
+            // case would still pass with that check deleted. "first" < "missing" keeps the order
+            // strictly ascending, leaving the dangling describe_id as the only reason to reject.
             Joins = new TruthGraphJoinsSection(model.Joins.TruthAnchors
-                .Select(static anchor => anchor with { DescribeId = "missing" })
+                .Select(static (anchor, index) =>
+                    index == 1 ? anchor with { DescribeId = "missing" } : anchor)
                 .ToImmutableArray()),
         };
         Assert.Throws<FormatException>(() =>
