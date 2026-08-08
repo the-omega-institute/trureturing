@@ -14,9 +14,7 @@ $$\begin{gathered} \forall I,\ \forall \tau \in \operatorname{Perm}(I),\ \forall
 
 *Commentary.*
 
-Let a register on I be a complex-valued amplitude function. The read R_f multiplies amplitudes pointwise by f, while the permutation update U_tau acts by pullback. The update defect is delta_tau f(i) = f(tau^{-1} i) - f(i). The established read-update commutator formula identifies this defect as the coefficient of the represented commutator. If every register commutes, applying the identity to the constant-one register extracts each coefficient. Conversely, zero defect makes every coefficient times every predecessor amplitude vanish.
-
-Provenance note: OBSERVER-QUANTUM.md, Section 3 motivates the observer metric through read-update noncommutativity. The theorem here is the repository-derived finite-register statement. It asserts no universal C*-algebra, operator norm, Connes metric, or Rieffel structure.
+Let a register on I be a complex-valued amplitude function. The read R_f multiplies amplitudes pointwise by f, while the permutation update U_tau acts by pullback. The update defect is delta_tau f(i) = f(tau^{-1} i) - f(i). The established read-update commutator formula identifies this defect as the coefficient of the represented commutator. If every register commutes, applying the identity to the constant-one register extracts each coefficient. Conversely, zero defect makes every coefficient times every predecessor amplitude vanish. This finite-register theorem asserts no universal C*-algebra, operator norm, Connes metric, or Rieffel structure.
 
 **Theorem 1.2 (Zero defect is equivalent to update invariance).**
 
