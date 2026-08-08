@@ -230,7 +230,8 @@ internal static class ConservativeCorpusEvaluator
             AdmissionOutcome.ProtectedSurfaceChange protectedChange =>
                 protectedChange.Sl022Diagnostics,
             AdmissionOutcome.RuleRejected rejected => rejected.Diagnostics,
-            AdmissionOutcome.HumanReviewRequired required => required.Diagnostics,
+            AdmissionOutcome.ProtectedSurfaceVerificationRequired verification =>
+                verification.Diagnostics,
             AdmissionOutcome.InfrastructureFailure failure =>
                 throw new InvalidOperationException(
                     $"conservative corpus admission failed for {source.CaseId}: {failure.Message}"),
