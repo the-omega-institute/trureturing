@@ -10,7 +10,9 @@ public sealed partial class PrShepherdRecalculationTests
 
         var result = fixture.RunStart();
 
-        Assert.Equal(0, result.ExitCode);
+        Assert.True(
+            result.ExitCode == 0,
+            $"exit={result.ExitCode}\nstdout:\n{result.Output}\nstderr:\n{result.Error}\nlog:\n{result.Log}");
         Assert.StartsWith("state=", result.Output, StringComparison.Ordinal);
         Assert.Contains(" status_command=", result.Output, StringComparison.Ordinal);
         Assert.DoesNotContain("pid=", result.Output, StringComparison.Ordinal);

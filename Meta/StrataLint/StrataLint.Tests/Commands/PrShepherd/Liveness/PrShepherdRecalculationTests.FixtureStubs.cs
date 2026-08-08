@@ -9,6 +9,43 @@ public sealed partial class PrShepherdRecalculationTests
         private void InstallStubs()
         {
             WriteExecutable(
+                "ps",
+                """
+                #!/usr/bin/env bash
+                set -euo pipefail
+                if /bin/ps "$@" 2>/dev/null; then
+                  exit 0
+                fi
+                if [[ "${1:-}" == -p && "${3:-}" == -o && "${4:-}" == lstart= ]]; then
+                  /bin/kill -0 "$2" 2>/dev/null || exit 1
+                  printf 'fixture-process-%s\n' "$2"
+                elif [[ "${1:-}" == -p && "${3:-}" == -o && "${4:-}" == pgid= ]]; then
+                  /bin/kill -0 "$2" 2>/dev/null || exit 1
+                  /usr/bin/ruby -e 'puts Process.getpgid(Integer(ARGV.fetch(0)))' "$2"
+                elif [[ "${1:-}" == -axo && "${2:-}" == pid=,ppid= ]]; then
+                  /usr/bin/ruby -rfiddle/import <<'RUBY'
+                module LibProc
+                  extend Fiddle::Importer
+                  dlload '/usr/lib/libproc.dylib'
+                  extern 'int proc_listpids(unsigned int, unsigned int, void*, int)'
+                  extern 'int proc_pidinfo(int, int, unsigned long, void*, int)'
+                end
+                bytes = LibProc.proc_listpids(1, 0, nil, 0)
+                buffer = Fiddle::Pointer.malloc(bytes)
+                used = LibProc.proc_listpids(1, 0, buffer, bytes)
+                buffer[0, used].unpack('l*').each do |pid|
+                  next unless pid.positive?
+                  info = Fiddle::Pointer.malloc(136)
+                  next unless LibProc.proc_pidinfo(pid, 3, 0, info, 136) == 136
+                  fields = info[0, 136].unpack('L*')
+                  puts "#{fields[3]} #{fields[4]}"
+                end
+                RUBY
+                else
+                  exit 64
+                fi
+                """);
+            WriteExecutable(
                 "gh",
                 """
                 #!/usr/bin/env bash
@@ -171,13 +208,26 @@ public sealed partial class PrShepherdRecalculationTests
                     fi
                     ;;
                   emit)
+                    count=0
+                    [[ ! -f "$PR_TEST_CALLS.emit-count" ]] \
+                      || count="$(cat "$PR_TEST_CALLS.emit-count")"
+                    count=$((count + 1))
+                    printf '%s' "$count" > "$PR_TEST_CALLS.emit-count"
+                    round="$count"
+                    if (( round > PR_TEST_TRUTH_GRAPH_DIRTY_ROUNDS )); then
+                      round="$PR_TEST_TRUTH_GRAPH_DIRTY_ROUNDS"
+                    fi
+                    printf 'emit:%s:%s\n' "$count" "$(git -C "$root" rev-parse HEAD)" \
+                      >> "$PR_TEST_CALLS.fixed-point"
                     if [[ "${PR_TEST_LEDGER_CONFLICT:-0}" == 1 ]]; then
-                      cmp -s "$root/Generated/dev-choice.md" \
-                        <(git -C "$root" show origin/dev:Generated/dev-choice.md) || exit 81
-                      printf 'emit:dev-projection\n' >> "$PR_TEST_CALLS.ledger"
+                      if [[ "$count" == 1 ]]; then
+                        cmp -s "$root/Generated/dev-choice.md" \
+                          <(git -C "$root" show origin/dev:Generated/dev-choice.md) || exit 81
+                        printf 'emit:dev-projection\n' >> "$PR_TEST_CALLS.ledger"
+                      fi
                     fi
                     mkdir -p "$root/Generated"
-                    printf 'derived artifact\n' > "$root/Generated/artifact.md"
+                    printf 'truth graph round %s\n' "$round" > "$root/Generated/artifact.md"
                     if [[ -f "$root/Generated/dev-choice.md" ]]; then
                       printf 'reemitted choice\n' > "$root/Generated/dev-choice.md"
                     fi
@@ -253,7 +303,7 @@ public sealed partial class PrShepherdRecalculationTests
                     || " $* " == *" ls-remote "* || " $* " == *" reset --hard "* \
                     || " $* " == *" clean -fd "* || " $* " == *" checkout --detach "* \
                     || " $* " == *" merge --no-commit "* || " $* " == *" add -A "* \
-                    || " $* " == *" commit --allow-empty "* \
+                    || " $* " == *" commit -m "* \
                     || " $* " == *" rev-parse HEAD "* \
                     || "${PR_SHEPHERD_BOUND_STEP:-}" == ledger-* ]]; then
                   printf 'git|%s|%s|git %s\n' \

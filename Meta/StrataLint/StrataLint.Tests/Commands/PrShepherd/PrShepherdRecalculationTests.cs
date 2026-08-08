@@ -12,12 +12,13 @@ public sealed partial class PrShepherdRecalculationTests
         "Meta/StrataLint/scripts/shepherd/pr-shepherd-actions.sh";
     private const string ShepherdLedgerScriptPath =
         "Meta/StrataLint/scripts/shepherd/pr-shepherd-ledger.sh";
+    private const string ShepherdFixedPointScriptPath =
+        "Meta/StrataLint/scripts/shepherd/pr-shepherd-fixed-point.sh";
     private const string ShepherdWatchScriptPath =
         "Meta/StrataLint/scripts/shepherd/pr-shepherd-watch.sh";
     private const string ShepherdWakeScriptPath =
         "Meta/StrataLint/scripts/shepherd/pr-shepherd-wake.sh";
-    private const string CommitSubject =
-        "recompute derivations after dev advance (auto, pr-shepherd)";
+    private const string CommitSubject = "recompute the truth graph";
 
     private static void AssertInOrder(string text, params string[] fragments)
     {
@@ -59,6 +60,7 @@ public sealed partial class PrShepherdRecalculationTests
             File.ReadAllText(Path.Combine(root, ShepherdScriptPath)),
             File.ReadAllText(Path.Combine(root, ShepherdActionsScriptPath)),
             File.ReadAllText(Path.Combine(root, ShepherdLedgerScriptPath)),
+            File.ReadAllText(Path.Combine(root, ShepherdFixedPointScriptPath)),
             File.ReadAllText(Path.Combine(root, ShepherdWatchScriptPath)),
             File.ReadAllText(Path.Combine(root, ShepherdWakeScriptPath)),
             File.ReadAllText(Path.Combine(root, ShepherdLeaseScriptPath)));
@@ -93,6 +95,7 @@ public sealed partial class PrShepherdRecalculationTests
         private readonly bool staleBaseRefOid;
         private readonly bool moveHeadDuringFetch;
         private readonly bool moveBaseDuringFetch;
+        private readonly int truthGraphDirtyRounds;
         private int devAdvance;
         private int startedWatchPid;
 
@@ -114,7 +117,8 @@ public sealed partial class PrShepherdRecalculationTests
             int failingExitCode = 93,
             int failingPr = 0,
             string hangingTarget = "",
-            string failingGhOperation = "")
+            string failingGhOperation = "",
+            int truthGraphDirtyRounds = 1)
         {
             this.failingTarget = failingTarget;
             this.failingExitCode = failingExitCode;
@@ -132,6 +136,7 @@ public sealed partial class PrShepherdRecalculationTests
             this.staleBaseRefOid = staleBaseRefOid;
             this.moveHeadDuringFetch = moveHeadDuringFetch;
             this.moveBaseDuringFetch = moveBaseDuringFetch;
+            this.truthGraphDirtyRounds = truthGraphDirtyRounds;
             origin = Path.Combine(temporary.Path, "origin.git");
             repository = Path.Combine(temporary.Path, "repository");
             seed = Path.Combine(temporary.Path, "seed");
@@ -313,6 +318,7 @@ public sealed partial class PrShepherdRecalculationTests
                 $"PR_TEST_MOVE_HEAD_DURING_FETCH={(moveHeadDuringFetch ? "1" : "0")}",
                 $"PR_TEST_MOVE_BASE_DURING_FETCH={(moveBaseDuringFetch ? "1" : "0")}",
                 $"PR_TEST_MOVED_BASE={MovedBaseHead}",
+                $"PR_TEST_TRUTH_GRAPH_DIRTY_ROUNDS={truthGraphDirtyRounds}",
                 $"PR_TEST_LOCK_READ_MARKER={Path.Combine(temporary.Path, "lock-read-marker")}",
                 $"SHEPHERD_DRYRUN={(dryRun ? "1" : "0")}",
                 $"PR_TEST_GRAPHQL_REMAINING={graphqlRemaining}",
@@ -436,6 +442,7 @@ public sealed partial class PrShepherdRecalculationTests
                 "PR_TEST_MOVE_HEAD_DURING_FETCH=0",
                 "PR_TEST_MOVE_BASE_DURING_FETCH=0",
                 $"PR_TEST_MOVED_BASE={MovedBaseHead}",
+                $"PR_TEST_TRUTH_GRAPH_DIRTY_ROUNDS={truthGraphDirtyRounds}",
                 $"PR_TEST_LOCK_READ_MARKER={Path.Combine(temporary.Path, "lock-read-marker")}",
                 "PR_TEST_WATCH=1",
                 $"PR_TEST_NO_CHECKS={(noChecks ? "1" : "0")}",
@@ -473,6 +480,7 @@ public sealed partial class PrShepherdRecalculationTests
             var leaseScript = Path.Combine(repository, ShepherdLeaseScriptPath);
             var actionsScript = Path.Combine(repository, ShepherdActionsScriptPath);
             var ledgerScript = Path.Combine(repository, ShepherdLedgerScriptPath);
+            var fixedPointScript = Path.Combine(repository, ShepherdFixedPointScriptPath);
             var watchScript = Path.Combine(repository, ShepherdWatchScriptPath);
             var wakeScript = Path.Combine(repository, ShepherdWakeScriptPath);
             Directory.CreateDirectory(Path.GetDirectoryName(script)!);
@@ -481,6 +489,7 @@ public sealed partial class PrShepherdRecalculationTests
             File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdLeaseScriptPath), leaseScript);
             File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdActionsScriptPath), actionsScript);
             File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdLedgerScriptPath), ledgerScript);
+            File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdFixedPointScriptPath), fixedPointScript);
             File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdWatchScriptPath), watchScript);
             File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdWakeScriptPath), wakeScript);
             Git(
@@ -490,6 +499,7 @@ public sealed partial class PrShepherdRecalculationTests
                 ShepherdLeaseScriptPath,
                 ShepherdActionsScriptPath,
                 ShepherdLedgerScriptPath,
+                ShepherdFixedPointScriptPath,
                 ShepherdWatchScriptPath,
                 ShepherdWakeScriptPath);
             Git(repository, "commit", "-m", "track pr-shepherd fixture");
@@ -668,6 +678,11 @@ public sealed partial class PrShepherdRecalculationTests
 
         internal string[] LedgerObservations() =>
             File.Exists(calls + ".ledger") ? File.ReadAllLines(calls + ".ledger") : [];
+
+        internal string[] FixedPointObservations() =>
+            File.Exists(calls + ".fixed-point")
+                ? File.ReadAllLines(calls + ".fixed-point")
+                : [];
 
         internal int[] HangingProcessIds() =>
             File.Exists(hangingPids)

@@ -47,7 +47,7 @@ public sealed partial class PrShepherdRecalculationTests
         internal void ReplaceWatchOwner(int pid)
         {
             var processStart = BoundedProcessRunner.Run(
-                "/bin/ps",
+                Path.Combine(bin, "ps"),
                 ["-p", pid.ToString(), "-o", "lstart="],
                 repository,
                 TimeSpan.FromSeconds(2),
