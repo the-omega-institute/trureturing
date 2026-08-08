@@ -103,7 +103,7 @@ internal sealed class ConditioningDocument : IScribeDocumentDefinition
         RecordPremise(), Sp, Rightarrow, Sp,
         Sum, Underscore, Grp(F.Id("k"), InMacro, Kappa),
         Weight(), Eq, Operatorname, Grp(F.Id("tr")), Open, Rho, Close,
-        Comma, Quad,
+        Comma, Quad, Sp,
         Weight(), Colon, Eq,
         Operatorname, Grp(F.Id("tr")), Open, Rho, Sp, Projection(), Close, Dot));
 
@@ -115,7 +115,7 @@ internal sealed class ConditioningDocument : IScribeDocumentDefinition
         Comma, RowBreak,
         Unread(Rho), Colon, Eq,
         Sum, Underscore, Grp(F.Id("k"), InMacro, Kappa),
-        Projection(), Rho, Projection(), Dot));
+        Projection(), Sp, Rho, Sp, Projection(), Dot));
 
     private static Formula UnreadIdempotentFormula() => Disp(Seq(
         Ambient(),
@@ -128,7 +128,7 @@ internal sealed class ConditioningDocument : IScribeDocumentDefinition
         Unread(Rho), Eq, Rho, Sp, Leftrightarrow, Sp,
         Forall, Sp, F.Id("k"), Comma, F.Id("l"), InMacro, Kappa, Comma, Esc,
         F.Id("k"), Neq, Sp, F.Id("l"), Sp, Rightarrow, Sp,
-        Projection(), Rho, Projection("l"), Eq, D(0), Dot));
+        Projection(), Sp, Rho, Sp, ProjectionAt(F.Id("l")), Eq, D(0), Dot));
 
     private static Formula ConditionalStateFormula() => Disp(Seq(
         Ambient(),
@@ -143,7 +143,7 @@ internal sealed class ConditioningDocument : IScribeDocumentDefinition
         Operatorname, Grp(F.Id("tr")), Open, Branch(), Close, Eq, D(1),
         Comma, RowBreak,
         Branch(), Colon, Eq, Weight(), Caret, Grp(Minus, D(1)), Cdot, Sp,
-        Projection(), Rho, Projection(), Dot));
+        Projection(), Sp, Rho, Sp, Projection(), Dot));
 
     private static Formula WeightedEnsembleFormula() => Disp(Seq(
         Ambient(),
@@ -155,7 +155,7 @@ internal sealed class ConditioningDocument : IScribeDocumentDefinition
         Weight(), Cdot, Sp, Branch(),
         Comma, RowBreak,
         Branch(), Colon, Eq, Weight(), Caret, Grp(Minus, D(1)), Cdot, Sp,
-        Projection(), Rho, Projection(), Dot));
+        Projection(), Sp, Rho, Sp, Projection(), Dot));
 
     private static Formula Ambient() => Seq(
         Forall, Sp, F.Id("n"), Comma, Kappa, Esc,
@@ -176,8 +176,10 @@ internal sealed class ConditioningDocument : IScribeDocumentDefinition
     private static Formula Weight() => Seq(
         F.Id("w"), Underscore, Grp(F.Id("k")), Open, Rho, Close);
 
-    private static Formula Projection(string index = "k") => Seq(
-        F.Id("P"), Underscore, Grp(F.Id(index)));
+    private static Formula Projection() => ProjectionAt(F.Id("k"));
+
+    private static Formula ProjectionAt(Formula index) => Seq(
+        F.Id("P"), Underscore, Grp(index));
 
     private static Formula Branch() => Seq(
         Rho, Underscore, Grp(F.Id("k")));

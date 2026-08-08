@@ -6,7 +6,7 @@ Finite projective record measurements preserve trace and define idempotent unrea
 
 **Theorem 1.1 (Record weights sum to the original trace).**
 
-$$\forall n,\kappa\ [\operatorname{Fintype}(n)]\ [\operatorname{Fintype}(\kappa)],\\\forall P: \kappa\to M_{n}(\mathbb{C}),\ \rho\in M_{n}(\mathbb{C}),\\\operatorname{Record}(P) \Rightarrow \sum_{k\in\kappa}w_{k}(\rho)=\operatorname{tr}(\rho),\quadw_{k}(\rho):=\operatorname{tr}(\rho P_{k}).$$
+$$\forall n,\kappa\ [\operatorname{Fintype}(n)]\ [\operatorname{Fintype}(\kappa)],\\\forall P: \kappa\to M_{n}(\mathbb{C}),\ \rho\in M_{n}(\mathbb{C}),\\\operatorname{Record}(P) \Rightarrow \sum_{k\in\kappa}w_{k}(\rho)=\operatorname{tr}(\rho),\quad w_{k}(\rho):=\operatorname{tr}(\rho P_{k}).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/Conditioning.recordWeight_sum` (`✓ std3`). ∎
 
@@ -18,7 +18,7 @@ Let n and kappa be finite index types, let rho be an arbitrary complex n-by-n ma
 
 **Theorem 1.2 (Discarding the record preserves trace).**
 
-$$\forall n,\kappa\ [\operatorname{Fintype}(n)]\ [\operatorname{Fintype}(\kappa)],\\\forall P: \kappa\to M_{n}(\mathbb{C}),\ \rho\in M_{n}(\mathbb{C}),\\\operatorname{Record}(P) \Rightarrow \operatorname{tr}(U_{P}(\rho))=\operatorname{tr}(\rho),\\U_{P}(\rho):=\sum_{k\in\kappa}P_{k}\rhoP_{k}.$$
+$$\forall n,\kappa\ [\operatorname{Fintype}(n)]\ [\operatorname{Fintype}(\kappa)],\\\forall P: \kappa\to M_{n}(\mathbb{C}),\ \rho\in M_{n}(\mathbb{C}),\\\operatorname{Record}(P) \Rightarrow \operatorname{tr}(U_{P}(\rho))=\operatorname{tr}(\rho),\\U_{P}(\rho):=\sum_{k\in\kappa}P_{k} \rho P_{k}.$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/Conditioning.unreadState_trace` (`✓ std3`). ∎
 
@@ -42,7 +42,7 @@ Pairwise orthogonality removes every cross-record block when U_P is applied a se
 
 **Theorem 1.4 (Unread fixed points have no off-diagonal record blocks).**
 
-$$\forall n,\kappa\ [\operatorname{Fintype}(n)]\ [\operatorname{Fintype}(\kappa)],\\\forall P: \kappa\to M_{n}(\mathbb{C}),\ \rho\in M_{n}(\mathbb{C}),\\\operatorname{Record}(P) \Rightarrow U_{P}(\rho)=\rho \Leftrightarrow \forall k,l\in\kappa,\ k\neq l \Rightarrow P_{k}\rhoP_{l}=0.$$
+$$\forall n,\kappa\ [\operatorname{Fintype}(n)]\ [\operatorname{Fintype}(\kappa)],\\\forall P: \kappa\to M_{n}(\mathbb{C}),\ \rho\in M_{n}(\mathbb{C}),\\\operatorname{Record}(P) \Rightarrow U_{P}(\rho)=\rho \Leftrightarrow \forall k,l\in\kappa,\ k\neq l \Rightarrow P_{k} \rho P_{l}=0.$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/Conditioning.unreadState_fixed_iff` (`✓ std3`). ∎
 
@@ -54,7 +54,7 @@ A matrix is fixed by U_P exactly when every block P_k rho P_l with distinct reco
 
 **Theorem 1.5 (Nonzero conditional branches are states).**
 
-$$\forall n,\kappa\ [\operatorname{Fintype}(n)]\ [\operatorname{Fintype}(\kappa)],\\\forall P: \kappa\to M_{n}(\mathbb{C}),\ \rho\in M_{n}(\mathbb{C}),\\\forall k\in\kappa,\ \operatorname{Record}(P) \land \operatorname{PosSemidef}(\rho) \land \operatorname{tr}(\rho)=1 \land w_{k}(\rho)\neq 0 \Rightarrow\\\operatorname{PosSemidef}(\rho_{k}) \land \operatorname{tr}(\rho_{k})=1,\\\rho_{k}:=w_{k}(\rho)^{-1}\cdot P_{k}\rhoP_{k}.$$
+$$\forall n,\kappa\ [\operatorname{Fintype}(n)]\ [\operatorname{Fintype}(\kappa)],\\\forall P: \kappa\to M_{n}(\mathbb{C}),\ \rho\in M_{n}(\mathbb{C}),\\\forall k\in\kappa,\ \operatorname{Record}(P) \land \operatorname{PosSemidef}(\rho) \land \operatorname{tr}(\rho)=1 \land w_{k}(\rho)\neq 0 \Rightarrow\\\operatorname{PosSemidef}(\rho_{k}) \land \operatorname{tr}(\rho_{k})=1,\\\rho_{k}:=w_{k}(\rho)^{-1}\cdot P_{k} \rho P_{k}.$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/Conditioning.conditionalState_isState` (`✓ std3`). ∎
 
@@ -66,7 +66,7 @@ Assume rho is positive semidefinite with trace one and the selected record weigh
 
 **Theorem 1.6 (The unread matrix is the weighted conditional ensemble).**
 
-$$\forall n,\kappa\ [\operatorname{Fintype}(n)]\ [\operatorname{Fintype}(\kappa)],\\\forall P: \kappa\to M_{n}(\mathbb{C}),\ \rho\in M_{n}(\mathbb{C}),\\\operatorname{Record}(P) \land \operatorname{PosSemidef}(\rho) \Rightarrow\\U_{P}(\rho)=\sum_{k\in\kappa}w_{k}(\rho)\cdot \rho_{k},\\\rho_{k}:=w_{k}(\rho)^{-1}\cdot P_{k}\rhoP_{k}.$$
+$$\forall n,\kappa\ [\operatorname{Fintype}(n)]\ [\operatorname{Fintype}(\kappa)],\\\forall P: \kappa\to M_{n}(\mathbb{C}),\ \rho\in M_{n}(\mathbb{C}),\\\operatorname{Record}(P) \land \operatorname{PosSemidef}(\rho) \Rightarrow\\U_{P}(\rho)=\sum_{k\in\kappa}w_{k}(\rho)\cdot \rho_{k},\\\rho_{k}:=w_{k}(\rho)^{-1}\cdot P_{k} \rho P_{k}.$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/Conditioning.unread_eq_weighted_ensemble` (`✓ std3`). ∎
 
