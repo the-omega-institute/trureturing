@@ -37,16 +37,6 @@ def traceEnvironment (joint : JointQubitEnvironmentMatrix) : QubitMatrix :=
 def recordChannel (record : EnvironmentRecord) (rho : QubitMatrix) : QubitMatrix :=
   fun i j => recordOverlap record i j * rho i j
 
-/-- Tracing the environment of any controlled record gives its record channel. -/
-theorem trace_environment_controlled_record_eq_record_channel
-    (record : EnvironmentRecord) (rho : QubitMatrix) :
-    traceEnvironment (controlledRecordJointState record rho) = recordChannel record rho := by
-  ext i j
-  change (∑ a, record i a * star (record j a) * rho i j) =
-    recordOverlap record i j * rho i j
-  rw [← Finset.sum_mul]
-  rfl
-
 /-- A controlled environment record with constant off-diagonal overlap induces
 the repository's phase-damping channel after tracing out the environment. -/
 theorem trace_environment_controlled_record_eq_phase_damping
@@ -54,8 +44,9 @@ theorem trace_environment_controlled_record_eq_phase_damping
     (hGram : ∀ i j, recordOverlap record i j =
       if i = j then 1 else ((c : ℝ) : ℂ)) :
     traceEnvironment (controlledRecordJointState record rho) = phaseDamping c rho := by
-  rw [trace_environment_controlled_record_eq_record_channel]
   ext i j
+  change (∑ a, record i a * star (record j a) * rho i j) = _
+  rw [← Finset.sum_mul]
   change recordOverlap record i j * rho i j = _
   rw [hGram]
   by_cases h : i = j <;> simp [phaseDamping, h]

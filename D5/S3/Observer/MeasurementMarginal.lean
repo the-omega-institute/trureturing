@@ -38,6 +38,19 @@ def addressProjection (k : Fin 2) : QubitMatrix :=
 def copiedAddressRecord : EnvironmentRecord :=
   fun i a => if i = a then 1 else 0
 
+/-- Tracing the environment of any controlled record gives its record channel.
+    Local bridge only: the natural home is the frozen `EnvironmentRecords` module,
+    which cannot gain statements without a Reattest event; kept `private` here so it
+    is not a second public truth source. -/
+private theorem trace_environment_controlled_record_eq_record_channel
+    (record : EnvironmentRecord) (rho : QubitMatrix) :
+    traceEnvironment (controlledRecordJointState record rho) = recordChannel record rho := by
+  ext i j
+  change (∑ a, record i a * star (record j a) * rho i j) =
+    recordOverlap record i j * rho i j
+  rw [← Finset.sum_mul]
+  rfl
+
 /-- One copied address record leaves exactly the sum of the two diagonal address blocks. -/
 theorem copied_record_partial_trace_eq_address_blocks (rho : QubitMatrix) :
     traceEnvironment (controlledRecordJointState copiedAddressRecord rho) =
