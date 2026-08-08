@@ -59,12 +59,12 @@ public sealed partial class ProductionEnvironmentTests
         var ledgerPath = Path.Combine(
             temporary.Path,
             FrozenLedgerChangeClassifier.LedgerPath.Replace('/', Path.DirectorySeparatorChar));
-        var firstBytes = File.ReadAllBytes(ledgerPath);
+        var firstBytes = FrozenLedgerTestData.ReadLedgerDirectory(ledgerPath);
         var second = environment.GenerateLedger(new[] { "--revision", revision });
 
         Assert.True(first.Success, first.Error);
         Assert.True(second.Success, second.Error);
-        Assert.Equal(firstBytes, File.ReadAllBytes(ledgerPath));
+        Assert.Equal(firstBytes, FrozenLedgerTestData.ReadLedgerDirectory(ledgerPath));
         Assert.Contains("events=2", first.Output, StringComparison.Ordinal);
         Assert.Contains("closed_modules=1", first.Output, StringComparison.Ordinal);
         var genesis = Assert.IsType<DagLedgerLoadOutcome.Loaded>(

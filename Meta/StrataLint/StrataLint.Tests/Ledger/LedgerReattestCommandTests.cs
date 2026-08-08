@@ -47,7 +47,8 @@ public sealed class LedgerReattestCommandTests
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("appended_reattests=1", result.Output, StringComparison.Ordinal);
-        var appendedBytes = ImmutableArray.CreateRange(File.ReadAllBytes(fixture.LedgerPath));
+        var appendedBytes = ImmutableArray.CreateRange(
+            FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath));
         var appendedLines = FrozenLedgerTestData.Lines(appendedBytes);
         Assert.Equal(baselineLines.Length + 1, appendedLines.Length);
         for (var index = 0; index < baselineLines.Length; index++)
@@ -71,13 +72,13 @@ public sealed class LedgerReattestCommandTests
         var arguments = new[] { "--candidate-lean-report", fixture.ReportPath };
         var first = fixture.Environment.ReattestLedger(arguments);
         Assert.True(first.Success, first.Error);
-        var firstBytes = File.ReadAllBytes(fixture.LedgerPath);
+        var firstBytes = FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath);
 
         var second = fixture.Environment.ReattestLedger(arguments);
 
         Assert.True(second.Success, second.Error);
         Assert.Contains("no changed frozen modules", second.Output, StringComparison.Ordinal);
-        Assert.Equal(firstBytes, File.ReadAllBytes(fixture.LedgerPath));
+        Assert.Equal(firstBytes, FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath));
     }
 
     [Fact]
@@ -90,7 +91,9 @@ public sealed class LedgerReattestCommandTests
 
         Assert.False(result.Success);
         Assert.Contains("statement identity changed", result.Error, StringComparison.OrdinalIgnoreCase);
-        Assert.Equal(fixture.BaselineBytes.AsSpan().ToArray(), File.ReadAllBytes(fixture.LedgerPath));
+        Assert.Equal(
+            fixture.BaselineBytes.AsSpan().ToArray(),
+            FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath));
     }
 
     /// The preparation step marks an unusable raw report with its own exception type. Drop that
@@ -153,8 +156,8 @@ public sealed class LedgerReattestCommandTests
                 ["lean-toolchain"] = "leanprover/lean4:v4.24.0\n",
                 ["lake-manifest.json"] = "{}\n",
                 [FrozenLedgerTestData.PathFor("A")] = candidateSource,
-                [FrozenLedgerChangeClassifier.LedgerPath] = Encoding.UTF8.GetString(BaselineBytes.AsSpan()),
             };
+            FrozenLedgerTestData.AddLedgerFiles(files, BaselineBytes);
             var raw = RawRepositorySnapshot.Create(
                 files.Select(static item => RawRepositoryEntry.FromText(item.Key, item.Value)));
             var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
@@ -176,8 +179,7 @@ public sealed class LedgerReattestCommandTests
             LedgerPath = Path.Combine(
                 temporary.Path,
                 FrozenLedgerChangeClassifier.LedgerPath.Replace('/', Path.DirectorySeparatorChar));
-            Directory.CreateDirectory(Path.GetDirectoryName(LedgerPath)!);
-            File.WriteAllBytes(LedgerPath, BaselineBytes.AsSpan());
+            FrozenLedgerTestData.WriteLedgerDirectory(LedgerPath, BaselineBytes);
             ReportPath = Path.Combine(temporary.Path, "candidate-lean-report.json");
             File.WriteAllBytes(ReportPath, RawLeanReportArtifact.Write(snapshot, report).AsSpan());
             Environment = new ProductionCliEnvironment(

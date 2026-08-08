@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Security.Cryptography;
 using System.Text;
+using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -198,6 +199,32 @@ internal static class FrozenLedgerTestData
             FrozenLedger.ScanReferences(syntax) is FrozenLedgerReferenceScanOutcome.Accepted accepted
                 ? accepted.References.Inputs
                 : ImmutableArray<FrozenLedgerInput>.Empty);
+
+    internal static void AddLedgerFiles(
+        IDictionary<string, string> files,
+        ImmutableArray<byte> bytes)
+    {
+        var syntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(bytes.AsSpan())).Syntax;
+        foreach (var line in syntax.Lines)
+        {
+            var payload = line.Value.GetProperty("payload");
+            var identity = payload.TryGetProperty("frozen_node_id", out var nodeId)
+                ? nodeId.GetString()!
+                : line.Value.GetProperty("event_hash").GetString()!;
+            files[$"{FrozenLedgerChangeClassifier.LedgerPath}/{identity[7..]}.json"] =
+                Encoding.UTF8.GetString(line.RawBytes.AsSpan());
+        }
+    }
+
+    internal static void WriteLedgerDirectory(string directory, ImmutableArray<byte> bytes)
+    {
+        Directory.CreateDirectory(directory);
+        var syntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(bytes.AsSpan())).Syntax;
+        DagLedgerAppendWriter.WriteNewEvents(directory, syntax.Lines);
+    }
+
+    internal static byte[] ReadLedgerDirectory(string directory) =>
+        DagLedgerCommandPreparation.LoadLedgerDirectory(directory, "test frozen ledger").RawBytes.ToArray();
 
     private static string ModuleNameFor(string module) => $"D5.S0.Carrier.{module}";
 

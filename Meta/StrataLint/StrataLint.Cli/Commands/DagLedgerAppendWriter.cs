@@ -52,12 +52,13 @@ internal static class DagLedgerAppendWriter
                     "generated frozen ledger is invalid: " + rejected.Message),
                 _ => throw new InvalidOperationException("unknown ledger validation outcome"),
             };
-            if (!File.ReadAllBytes(context.LedgerPath).AsSpan().SequenceEqual(context.BaselineBytes))
+            if (!DagLedgerCommandPreparation.LoadLedgerDirectory(context.LedgerPath, "existing frozen ledger")
+                    .RawBytes.AsSpan().SequenceEqual(context.BaselineBytes))
             {
-                throw new InvalidOperationException("events.jsonl changed while ledger-append was validating it");
+                throw new InvalidOperationException("accepted event files changed while ledger-append was validating them");
             }
 
-            File.WriteAllBytes(context.LedgerPath, candidateBytes.AsSpan());
+            WriteNewEvents(context.LedgerPath, candidateSyntax.Lines.Skip(context.Baseline.Events.Length));
             var appended = candidate.Events
                 .Skip(context.Baseline.Events.Length)
                 .OfType<FrozenLedgerEvent.Freeze>()
@@ -84,6 +85,20 @@ internal static class DagLedgerAppendWriter
                 false,
                 string.Empty,
                 "LEDGER_APPEND_FAILED " + (exception.InnerException ?? exception).Message + "\n");
+        }
+    }
+
+    internal static void WriteNewEvents(string directory, IEnumerable<FrozenLedgerLineSyntax> lines)
+    {
+        foreach (var line in lines)
+        {
+            var payload = line.Value.GetProperty("payload");
+            var identity = payload.TryGetProperty("frozen_node_id", out var nodeId)
+                ? nodeId.GetString()!
+                : line.Value.GetProperty("event_hash").GetString()!;
+            var path = Path.Combine(directory, identity[7..] + ".json");
+            using var stream = new FileStream(path, FileMode.CreateNew, FileAccess.Write, FileShare.None);
+            stream.Write(line.RawBytes.AsSpan());
         }
     }
 

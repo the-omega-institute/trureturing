@@ -80,6 +80,7 @@ internal static partial class RepositoryRules
         || string.Equals(path, BackfillInventoryLoader.RelativePath, StringComparison.Ordinal)
         || string.Equals(path, TheoryAtomizerDataLoader.DataPath, StringComparison.Ordinal)
         || DigestionCasStore.IsCanonicalPath(path)
+        || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
         || path.StartsWith(DigestionFormalizationReceipt.RootPath, StringComparison.Ordinal)
         || (path.StartsWith("Blueprint/", StringComparison.Ordinal)
             && path.EndsWith(".md", StringComparison.Ordinal));

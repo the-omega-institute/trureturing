@@ -8,30 +8,6 @@ namespace StrataLint.Tests;
 public sealed partial class FrozenLedgerTests
 {
     [Fact]
-    public void ReorderingAnyBaselineLineFailsTheExactCandidatePrefix()
-    {
-        var catalog = BuildCatalog(Module("A"), Module("B"));
-        var bytes = FrozenLedgerGenerator.GenerateGenesis(
-            catalog,
-            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
-        var baseline = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
-            ValidateGenesis(
-                Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(bytes.AsSpan())).Syntax,
-                catalog)).Capability;
-        var lines = Lines(bytes);
-        (lines[1], lines[2]) = (lines[2], lines[1]);
-        var reordered = lines.SelectMany(static line => line).ToArray();
-
-        var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
-            ValidateCandidate(
-                Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(reordered)).Syntax,
-                baseline,
-                catalog));
-
-        Assert.Contains("prefix", rejected.Message, StringComparison.OrdinalIgnoreCase);
-    }
-
-    [Fact]
     public void FreezeOfAnOpenNodeFailsEvenWithAValidCaseAndEventHash()
     {
         const string pathText = "D5/X_Frontier/OpenCase.lean";
@@ -97,7 +73,7 @@ public sealed partial class FrozenLedgerTests
                 Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(forged)).Syntax,
                 catalog));
 
-        Assert.Contains("non-Closed", rejected.Message, StringComparison.Ordinal);
+        Assert.Contains("outside the current Closed catalog", rejected.Message, StringComparison.Ordinal);
     }
 
     [Fact]

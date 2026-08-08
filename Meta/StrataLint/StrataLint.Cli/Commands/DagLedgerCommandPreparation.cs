@@ -37,8 +37,8 @@ internal static class DagLedgerCommandPreparation
         var ledgerPath = Path.Combine(
             repositoryRoot,
             FrozenLedgerChangeClassifier.LedgerPath.Replace('/', Path.DirectorySeparatorChar));
-        var baselineBytes = File.ReadAllBytes(ledgerPath);
-        var baselineSyntax = LoadLedger(baselineBytes, "existing frozen ledger");
+        var baselineSyntax = LoadLedgerDirectory(ledgerPath, "existing frozen ledger");
+        var baselineBytes = baselineSyntax.RawBytes.ToArray();
         var truth = BuildTruth(repository, leanReportSource);
         var snapshot = truth.Snapshot;
         var report = truth.Report;
@@ -163,6 +163,16 @@ internal static class DagLedgerCommandPreparation
 
     internal static FrozenLedgerSyntax LoadLedger(ReadOnlySpan<byte> bytes, string label) =>
         DagLedgerLoader.Load(bytes) switch
+        {
+            DagLedgerLoadOutcome.Loaded loaded => loaded.Syntax,
+            DagLedgerLoadOutcome.Invalid invalid => throw new InvalidOperationException(
+                label + " syntax is invalid: " + invalid.Message),
+            _ => throw new InvalidOperationException("unknown ledger load outcome"),
+        };
+
+    internal static FrozenLedgerSyntax LoadLedgerDirectory(string directory, string label) =>
+        DagLedgerLoader.LoadFiles(Directory.EnumerateFiles(directory, "*.json")
+            .Select(path => (path, (ReadOnlyMemory<byte>)File.ReadAllBytes(path)))) switch
         {
             DagLedgerLoadOutcome.Loaded loaded => loaded.Syntax,
             DagLedgerLoadOutcome.Invalid invalid => throw new InvalidOperationException(

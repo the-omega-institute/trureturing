@@ -426,9 +426,7 @@ internal static class FrozenLedgerCanonicalWriter
         {
             event_type = eventType,
             payload,
-            previous_hash = previousHash,
             schema_version = 1,
-            sequence,
         });
         var hash = FrozenContentHash.Compute(
             FrozenHashDomains.FrozenEvent,
@@ -438,9 +436,7 @@ internal static class FrozenLedgerCanonicalWriter
             event_hash = hash,
             event_type = eventType,
             payload,
-            previous_hash = previousHash,
             schema_version = 1,
-            sequence,
         });
         return (StructuredCanonicalWriter.WriteJson(complete), hash);
     }

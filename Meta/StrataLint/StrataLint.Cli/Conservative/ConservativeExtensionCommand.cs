@@ -506,10 +506,16 @@ internal sealed class ProductionConservativeExtensionEnvironment : IConservative
                 "candidate object database does not contain the frozen baseline identity");
         }
 
-        var ledger = candidateRepository.ReadRevisionFile(
-            candidateIdentity.CommitOid,
-            FrozenLedgerChangeClassifier.LedgerPath);
-        var loaded = DagLedgerLoader.Load(ledger.Bytes.AsSpan()) switch
+        var candidateSnapshot = SnapshotDecoder.Decode(
+            candidateRepository.ReadRevision(candidateIdentity.CommitOid)) switch
+        {
+            SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
+            SnapshotDecodeOutcome.InfrastructureFailure failure =>
+                throw new InvalidOperationException(failure.Message),
+        };
+        var loaded = DagLedgerLoader.LoadFiles(candidateSnapshot.Files.Values
+            .Where(file => FrozenLedgerChangeClassifier.IsAcceptedEventPath(file.Path.Value))
+            .Select(file => (file.Path.Value, (ReadOnlyMemory<byte>)file.RawBytes.ToArray()))) switch
         {
             DagLedgerLoadOutcome.Loaded accepted => accepted.Syntax,
             DagLedgerLoadOutcome.Invalid invalid => throw new InvalidOperationException(

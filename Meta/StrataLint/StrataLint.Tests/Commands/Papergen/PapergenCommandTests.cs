@@ -230,7 +230,9 @@ public sealed partial class PapergenCommandTests
             FrozenCarrierA,
             ["D5/S0/Carrier/A.a"],
             "D5/B/S0/Carrier/A");
-        File.Delete(Path.Combine(repository.Path, FrozenLedgerChangeClassifier.LedgerPath));
+        Directory.Delete(
+            Path.Combine(repository.Path, FrozenLedgerChangeClassifier.LedgerPath),
+            recursive: true);
         var console = new BufferedConsole();
 
         var exit = CliApplication.Run(
@@ -254,7 +256,9 @@ public sealed partial class PapergenCommandTests
             FrozenCarrierA,
             ["D5/S0/Carrier/A.a"],
             "D5/B/S0/Carrier/A");
-        File.Delete(Path.Combine(repository.Path, FrozenLedgerChangeClassifier.LedgerPath));
+        Directory.Delete(
+            Path.Combine(repository.Path, FrozenLedgerChangeClassifier.LedgerPath),
+            recursive: true);
 
         var outcome = PaperRecipeValidator.Validate(
             repository.Path,
@@ -346,7 +350,9 @@ public sealed partial class PapergenCommandTests
             FrozenCarrierA,
             ["D5/S0/Carrier/A.a"],
             "D5/B/S0/Carrier/A");
-        Write(repository.Path, FrozenLedgerChangeClassifier.LedgerPath, "{\"not\": \"a ledger\"}\n");
+        var eventPath = Directory.EnumerateFiles(
+            Path.Combine(repository.Path, FrozenLedgerChangeClassifier.LedgerPath)).First();
+        File.WriteAllText(eventPath, "{\"not\": \"a ledger\"}\n", new UTF8Encoding(false));
 
         var outcome = PaperRecipeValidator.Validate(
             repository.Path,

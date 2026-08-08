@@ -44,7 +44,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.DoesNotContain(TransactionFixture.ReceiptRelativePath, phaseA);
 
         var phaseB = fixture.CommitPaths("HEAD");
-        Assert.Contains(TransactionFixture.LedgerPath, phaseB);
+        Assert.Contains(
+            phaseB,
+            path => path.StartsWith(TransactionFixture.LedgerPath + "/", StringComparison.Ordinal));
         Assert.Contains(TransactionFixture.ReceiptRelativePath, phaseB);
     }
 
@@ -119,8 +121,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
 
         var result = fixture.Run("deposit");
 
-        Assert.NotEqual(0, result.ExitCode);
+        Assert.True(result.ExitCode == 0, Diagnostics(result));
         Assert.Equal(1, fixture.CallKinds().Count(call => call == "dotnet:ledger-append"));
+        Assert.Equal(2, fixture.FreezeCount());
     }
 
     [Fact]
@@ -231,7 +234,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         internal const string DefinitionPath = "Blueprint/D5/S0/Carrier/Probe.scribe.cs";
         internal const string EmissionPath = "Blueprint/D5/S0/Carrier/Probe.md";
         internal const string EchoPath = "Generated/echo-residual-summary.md";
-        internal const string LedgerPath = "Meta/StrataLint/Golden/Frozen/events.jsonl";
+        internal const string LedgerPath = "Meta/StrataLint/Golden/Frozen/accepted";
         internal const string BackfillPath = "Meta/BACKFILL.yaml";
         internal const string ReceiptRelativePath = "Meta/Digestion/formalizations/atom-1.v1.json";
 
@@ -252,7 +255,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
             WriteFile(DefinitionPath, "definition baseline\n");
             WriteFile(EmissionPath, "emission: baseline\n");
             WriteFile(EchoPath, "echo: baseline\n");
-            WriteFile(LedgerPath, string.Empty);
+            Directory.CreateDirectory(Path.Combine(Root, LedgerPath));
             WriteFile(BackfillPath, $"atom_id: {AtomId}\ncoverage: false\naligned: false\n");
             WriteMakeStub();
             WriteDotnetStub();
@@ -306,7 +309,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                     affected_frozen_node_ids = new[] { frozenNodeId },
                 },
             });
-            WriteFile(LedgerPath, freeze + "\n" + revoke + "\n");
+            WriteLedger(freeze, revoke);
         }
 
         internal void WriteActiveFreeze(string descriptorBlobOid)
@@ -323,7 +326,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                     node_path = LeanPath,
                 },
             });
-            WriteFile(LedgerPath, freeze + "\n");
+            WriteLedger(freeze);
         }
 
         internal void LeaveInterruptedTemporaryFiles()
@@ -358,14 +361,27 @@ public sealed partial class DepositCoverWorkflowScriptTests
 
         internal int CommitCount() => int.Parse(Git("rev-list", "--count", "HEAD").Trim());
 
-        internal int FreezeCount() => File.ReadAllLines(Path.Combine(Root, LedgerPath))
-            .Count(line =>
+        internal int FreezeCount() => Directory.EnumerateFiles(Path.Combine(Root, LedgerPath), "*.json")
+            .Count(path =>
             {
-                using var document = JsonDocument.Parse(line);
+                using var document = JsonDocument.Parse(File.ReadAllText(path));
                 var root = document.RootElement;
                 return root.GetProperty("event_type").GetString() == "Freeze"
                     && root.GetProperty("payload").GetProperty("node_path").GetString() == LeanPath;
             });
+
+        private void WriteLedger(params string[] events)
+        {
+            var directory = Path.Combine(Root, LedgerPath);
+            foreach (var path in Directory.EnumerateFiles(directory, "*.json")) File.Delete(path);
+            for (var index = 0; index < events.Length; index++)
+            {
+                File.WriteAllText(
+                    Path.Combine(directory, $"fixture-{index}.json"),
+                    events[index] + "\n",
+                    new UTF8Encoding(false));
+            }
+        }
 
         internal string[] Status() => Git("status", "--porcelain=v1")
             .Split('\n', StringSplitOptions.RemoveEmptyEntries);

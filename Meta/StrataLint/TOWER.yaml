@@ -233,7 +233,7 @@ bootstrap:
   id: bootstrap-pr-1
   judge: open
   reason: "Godel boundary: the bootstrap trust root cannot prove its own consistency."
-  genesis_event: sha256:afba1cf5df4b821f8cdcfa89945832cac338c04f8ec3887c8b888d173fcc9149
+  genesis_event: sha256:a0f4e91ce6c37409991ba3a868234e86c56e96861d4ca80fd31ea1d372b6cc0e
   commit: f3f471846dd81cfcc39ecaa386966fcf0b058464
   pull_request: 1
   verification: ASSUMED-UNVERIFIED

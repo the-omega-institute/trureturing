@@ -52,13 +52,16 @@ internal static class DagLedgerReattestWriter
                     "generated frozen ledger is invalid: " + rejected.Message),
                 _ => throw new InvalidOperationException("unknown ledger validation outcome"),
             };
-            if (!File.ReadAllBytes(context.LedgerPath).AsSpan().SequenceEqual(context.BaselineBytes))
+            if (!DagLedgerCommandPreparation.LoadLedgerDirectory(context.LedgerPath, "existing frozen ledger")
+                    .RawBytes.AsSpan().SequenceEqual(context.BaselineBytes))
             {
                 throw new InvalidOperationException(
-                    "events.jsonl changed while ledger-reattest was validating it");
+                    "accepted event files changed while ledger-reattest was validating them");
             }
 
-            File.WriteAllBytes(context.LedgerPath, candidateBytes.AsSpan());
+            DagLedgerAppendWriter.WriteNewEvents(
+                context.LedgerPath,
+                candidateSyntax.Lines.Skip(context.Baseline.Events.Length));
             var appended = candidate.Events
                 .Skip(context.Baseline.Events.Length)
                 .OfType<FrozenLedgerEvent.Reattest>()

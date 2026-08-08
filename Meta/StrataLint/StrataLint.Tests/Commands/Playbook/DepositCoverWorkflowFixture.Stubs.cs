@@ -65,7 +65,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
               ledger-append)
                 descriptor_blob_oid="git-sha1:$(git hash-object -- D5/S0/Carrier/Probe.lean)"
                 printf '{"event_type": "Freeze", "payload": {"case_id": "active-frozen/current-probe", "frozen_node_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222", "input": {"descriptor_blob_oid": "%s"}, "node_path": "D5/S0/Carrier/Probe.lean"}}\n' \
-                  "$descriptor_blob_oid" >> Meta/StrataLint/Golden/Frozen/events.jsonl
+                  "$descriptor_blob_oid" > Meta/StrataLint/Golden/Frozen/accepted/2222222222222222222222222222222222222222222222222222222222222222.json
                 if [[ -f fail-ledger-once ]]; then
                   rm fail-ledger-once
                   echo 'LEDGER_APPEND_INTERRUPTED synthetic kill after append' >&2

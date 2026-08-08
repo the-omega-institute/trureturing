@@ -32,12 +32,6 @@ public static partial class FrozenLedger
         try
         {
             ValidateSyntaxEnvelope(syntax);
-            if (!syntax.RawBytes.AsSpan().StartsWith(baseline.RawBytes.AsSpan()))
-            {
-                throw new FormatException(
-                    "Candidate frozen ledger does not retain the exact baseline byte prefix.");
-            }
-
             if (syntax.Lines.Length < baseline.Events.Length)
             {
                 throw new FormatException("Candidate frozen ledger truncated the baseline event prefix.");
@@ -51,25 +45,25 @@ public static partial class FrozenLedger
                 static item => item.Material.RepoPath,
                 static item => item.Payload.CaseId);
             var previous = baseline.HeadHash;
-            for (var index = baseline.Events.Length; index < syntax.Lines.Length; index++)
+            var baselineHashes = baseline.Events.Select(EventHash).ToHashSet(StringComparer.Ordinal);
+            var candidateLines = syntax.Lines.Where(line =>
+                !baselineHashes.Contains(RequiredString(line.Value, "event_hash")));
+            foreach (var line in candidateLines)
             {
-                var line = syntax.Lines[index];
                 var root = line.Value;
                 RequireObjectFields(
                     root,
                     "event envelope",
-                    "event_hash", "event_type", "payload", "previous_hash", "schema_version", "sequence");
+                    "event_hash", "event_type", "payload", "schema_version");
                 RequireCanonicalLine(line);
-                var sequence = RequiredNonnegativeInteger(root, "sequence");
-                var previousHash = RequiredString(root, "previous_hash");
+                var sequence = events.Count;
+                var previousHash = previous;
                 var eventHash = RequiredString(root, "event_hash");
-                if (sequence != index
-                    || RequiredNonnegativeInteger(root, "schema_version") != 1
-                    || !string.Equals(previousHash, previous, StringComparison.Ordinal)
+                if (RequiredNonnegativeInteger(root, "schema_version") != 1
                     || !FrozenHashSyntax.IsSha256(eventHash)
                     || !string.Equals(eventHash, ComputeEventHash(root), StringComparison.Ordinal))
                 {
-                    throw new FormatException("Candidate suffix has an invalid sequence/hash chain.");
+                    throw new FormatException("Candidate suffix has an invalid schema/event hash.");
                 }
 
                 var eventType = RequiredString(root, "event_type");
@@ -218,6 +212,15 @@ public static partial class FrozenLedger
             return new FrozenLedgerValidationOutcome.Rejected(exception.Message);
         }
     }
+
+    private static string EventHash(FrozenLedgerEvent item) => item switch
+    {
+        FrozenLedgerEvent.Genesis value => value.EventHash,
+        FrozenLedgerEvent.Freeze value => value.EventHash,
+        FrozenLedgerEvent.Reattest value => value.EventHash,
+        FrozenLedgerEvent.Revoke value => value.EventHash,
+        _ => throw new InvalidOperationException("Unknown frozen event type."),
+    };
 
     private static FrozenReattestPayload ParseReattest(
         JsonElement payload,

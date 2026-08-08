@@ -96,19 +96,19 @@ internal static class DagLedgerGenesisWriter
             var outputPath = Path.Combine(
                 repositoryRoot,
                 FrozenLedgerChangeClassifier.LedgerPath.Replace('/', Path.DirectorySeparatorChar));
-            if (File.Exists(outputPath))
+            if (Directory.Exists(outputPath))
             {
-                if (!File.ReadAllBytes(outputPath).AsSpan().SequenceEqual(first.AsSpan()))
+                if (!DagLedgerCommandPreparation.LoadLedgerDirectory(outputPath, "existing frozen ledger")
+                        .RawBytes.AsSpan().SequenceEqual(first.AsSpan()))
                 {
                     throw new InvalidOperationException(
-                        "events.jsonl already exists with different bytes; Genesis is append-only");
+                        "accepted event directory already exists with different bytes; Genesis is append-only");
                 }
             }
             else
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(outputPath)
-                    ?? throw new InvalidOperationException("ledger output has no parent directory"));
-                File.WriteAllBytes(outputPath, first.AsSpan());
+                Directory.CreateDirectory(outputPath);
+                DagLedgerAppendWriter.WriteNewEvents(outputPath, syntax.Lines);
             }
 
             return new CommandResult(

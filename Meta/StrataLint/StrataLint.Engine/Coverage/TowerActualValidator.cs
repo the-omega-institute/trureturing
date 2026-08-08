@@ -301,9 +301,9 @@ internal static class TowerActualValidator
         ImmutableArray<TowerFinding>.Builder findings,
         ImmutableArray<TowerCheck>.Builder checks)
     {
-        const string path = "Meta/StrataLint/Golden/Frozen/events.jsonl";
-        var found = snapshot.TryGetFile(path, out var file)
-            && file.Text.Split('\n', StringSplitOptions.RemoveEmptyEntries).Any(line => IsGenesis(line, bootstrap.GenesisEvent));
+        var found = snapshot.Files.Values
+            .Where(file => FrozenLedgerChangeClassifier.IsAcceptedEventPath(file.Path.Value))
+            .Any(file => IsGenesis(file.Text, bootstrap.GenesisEvent));
         if (!found)
         {
             findings.Add(new TowerFinding("TOWER-GENESIS", bootstrap.Id, "declared genesis event is absent"));

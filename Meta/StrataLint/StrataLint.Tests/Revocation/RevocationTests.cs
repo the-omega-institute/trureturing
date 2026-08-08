@@ -247,7 +247,7 @@ public sealed partial class RevocationTests
         var resurrectBytes = FrozenLedgerGenerator.AppendMissingFreezes(revoked, baselineCatalog);
         var resurrected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
             ValidateCandidate(Load(resurrectBytes), baseline, baselineCatalog, receipts.Store));
-        Assert.Contains("reused", resurrected.Message, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("missing Freeze", resurrected.Message, StringComparison.OrdinalIgnoreCase);
 
         var correctedCatalog = BuildCatalog(Module(
             "A",

@@ -409,7 +409,8 @@ public sealed partial class PapergenCommandTests
         var console = new BufferedConsole();
 
         using (new FileStream(
-            Path.Combine(repository.Path, FrozenLedgerChangeClassifier.LedgerPath),
+            Directory.EnumerateFiles(
+                Path.Combine(repository.Path, FrozenLedgerChangeClassifier.LedgerPath)).First(),
             FileMode.Open,
             FileAccess.Read,
             FileShare.None))

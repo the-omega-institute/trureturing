@@ -70,7 +70,8 @@ public sealed class CoverageCommandTests
                 """,
             ["Meta/domains.yaml"] = TestRegistry.Domains,
             ["Meta/registry.yaml"] = TestRegistry.Canonical,
-            [FrozenLedgerChangeClassifier.LedgerPath] =
+            [FrozenLedgerChangeClassifier.LedgerPath
+                + "/fc2ee6be0dd3cabb9b6a9118592671c9d5a81f691b7b4ad07674d9c3037ce262.json"] =
                 "{\"event_hash\":\"sha256:fc2ee6be0dd3cabb9b6a9118592671c9d5a81f691b7b4ad07674d9c3037ce262\",\"event_type\":\"Genesis\",\"payload\":{}}\n",
             [RuleFixture.TowerManifestPath] = TowerYaml,
         };

@@ -71,40 +71,6 @@ public sealed class FrozenContentAddressTests
                 Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(forged)).Syntax,
                 catalog));
 
-        Assert.Contains("recomputed material", rejected.Message, StringComparison.OrdinalIgnoreCase);
-    }
-
-    [Fact]
-    public void RehashedGenesisFreezeReorderingFailsCanonicalEventOrder()
-    {
-        var catalog = BuildCatalog(Module("A"), Module("B"));
-        var bytes = FrozenLedgerGenerator.GenerateGenesis(
-            catalog,
-            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
-        var lines = Lines(bytes);
-        using var genesisDocument = JsonDocument.Parse(
-            lines[0].AsMemory(0, lines[0].Length - 1));
-        using var firstFreezeDocument = JsonDocument.Parse(
-            lines[1].AsMemory(0, lines[1].Length - 1));
-        using var secondFreezeDocument = JsonDocument.Parse(
-            lines[2].AsMemory(0, lines[2].Length - 1));
-        var first = FrozenLedgerCanonicalWriter.WriteEvent(
-            "Freeze",
-            secondFreezeDocument.RootElement.GetProperty("payload"),
-            genesisDocument.RootElement.GetProperty("event_hash").GetString()!,
-            1);
-        var second = FrozenLedgerCanonicalWriter.WriteEvent(
-            "Freeze",
-            firstFreezeDocument.RootElement.GetProperty("payload"),
-            first.Hash,
-            2);
-        var reordered = lines[0].Concat(first.Bytes).Concat(second.Bytes).ToArray();
-
-        var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
-            ValidateGenesis(
-                Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(reordered)).Syntax,
-                catalog));
-
-        Assert.Contains("order", rejected.Message, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("statement identity changed", rejected.Message, StringComparison.OrdinalIgnoreCase);
     }
 }

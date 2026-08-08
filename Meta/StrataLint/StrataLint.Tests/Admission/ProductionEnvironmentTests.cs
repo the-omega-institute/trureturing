@@ -349,11 +349,9 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
         fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
         AddFrozenLedger(fixture);
-        const string ledgerPath = FrozenLedgerChangeClassifier.LedgerPath;
-        fixture.Files[ledgerPath] = fixture.Files[ledgerPath].Replace(
-            "\"previous_hash\": \"sha256:",
-            "\"previous_hash\": \"sha256:f",
-            StringComparison.Ordinal);
+        var ledgerPath = fixture.Files.Keys.First(
+            FrozenLedgerChangeClassifier.IsAcceptedEventPath);
+        fixture.Files[ledgerPath] += " ";
         var gateway = new FakeRepositoryGateway(
             RawChangeSet.Create(new[]
             {
@@ -370,32 +368,6 @@ public sealed partial class ProductionEnvironmentTests
         var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
         Assert.Contains(rejected.Diagnostics, item => item.RuleId == RuleId.CreateKnown(8));
         Assert.Contains(rejected.Diagnostics, item => item.RuleId == RuleId.CreateKnown(22));
-    }
-
-    [Fact]
-    public void CheckMapsCanonicalLedgerWithMissingEnvelopeFieldsToSl008()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical;
-        fixture.Baseline["Meta/registry.yaml"] = TestRegistry.Canonical;
-        fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
-        fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
-        AddFrozenLedger(fixture);
-        fixture.Files[FrozenLedgerChangeClassifier.LedgerPath] = "{}\n";
-        var gateway = new FakeRepositoryGateway(
-            RawChangeSet.Create(new[] { RuleFixture.BlueprintPath }),
-            Snapshot(fixture.Files),
-            Snapshot(fixture.Baseline));
-        var source = new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports));
-        var environment = new ProductionCliEnvironment("/repo", gateway, source);
-
-        var outcome = CheckWithReports(environment, fixture);
-
-        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
-        Assert.All(rejected.Diagnostics, item => Assert.Equal(RuleId.CreateKnown(8), item.RuleId));
-        Assert.Contains(rejected.Diagnostics, item =>
-            item.Message.Contains("field", StringComparison.OrdinalIgnoreCase));
     }
 
     [Fact]
@@ -558,8 +530,8 @@ public sealed partial class ProductionEnvironmentTests
         var currentLedger = FrozenLedgerGenerator.AppendMissingFreezes(
             baselineCapability,
             currentCatalog);
-        fixture.Files[FrozenLedgerChangeClassifier.LedgerPath] = Encoding.UTF8.GetString(currentLedger.AsSpan());
-        fixture.Baseline[FrozenLedgerChangeClassifier.LedgerPath] = Encoding.UTF8.GetString(baselineLedger.AsSpan());
+        SetLedger(fixture.Files, Encoding.UTF8.GetString(currentLedger.AsSpan()));
+        SetLedger(fixture.Baseline, Encoding.UTF8.GetString(baselineLedger.AsSpan()));
 
         static FrozenMaterialCatalog Catalog(
             IReadOnlyDictionary<string, string> files,

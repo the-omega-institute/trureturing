@@ -54,7 +54,7 @@ public sealed partial class ProductionEnvironmentTests
             new FrozenGenesisDescriptor(
                 FrozenLedgerTestData.GitOid('e'),
                 RuleCatalog.Default.RootSha256)).AsSpan());
-        baselineFiles[FrozenLedgerChangeClassifier.LedgerPath] = ledger;
+        SetLedger(baselineFiles, ledger);
         return new FrozenValidatorFixture(
             baselineFiles,
             new Dictionary<string, string>(baselineFiles, StringComparer.Ordinal),
@@ -67,8 +67,7 @@ public sealed partial class ProductionEnvironmentTests
         const string receiptPath = "Evidence/D5/revocation-receipt.json";
         var fixture = CreateFrozenValidatorFixture();
         var baseline = BuildState(fixture.BaselineFiles, fixture.BaselineReports);
-        var syntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(
-            Encoding.UTF8.GetBytes(fixture.BaselineFiles[FrozenLedgerChangeClassifier.LedgerPath]))).Syntax;
+        var syntax = LoadLedger(fixture.BaselineFiles);
         var references = Assert.IsType<FrozenLedgerReferenceScanOutcome.Accepted>(
             FrozenLedger.ScanReferences(syntax)).References;
         var catalog = Assert.IsType<FrozenMaterialOutcome.Accepted>(FrozenLedgerMaterializer.Build(
@@ -118,8 +117,9 @@ public sealed partial class ProductionEnvironmentTests
         fixture.CurrentFiles["lean-toolchain"] = fixture.BaselineFiles["lean-toolchain"];
         fixture.CurrentFiles["lake-manifest.json"] = fixture.BaselineFiles["lake-manifest.json"];
         fixture.CurrentFiles[receiptPath] = receiptText;
-        fixture.CurrentFiles[FrozenLedgerChangeClassifier.LedgerPath] = Encoding.UTF8.GetString(
-            FrozenLedgerGenerator.AppendRevocation(genesis, plan).AsSpan());
+        SetLedger(
+            fixture.CurrentFiles,
+            Encoding.UTF8.GetString(FrozenLedgerGenerator.AppendRevocation(genesis, plan).AsSpan()));
         fixture.CurrentReports.Clear();
         return fixture with { ReceiptOid = receiptOid };
     }
@@ -127,9 +127,7 @@ public sealed partial class ProductionEnvironmentTests
     private static void AppendCurrentReattestation(FrozenValidatorFixture fixture)
     {
         var baseline = BuildState(fixture.BaselineFiles, fixture.BaselineReports);
-        var ledgerFile = fixture.BaselineFiles[FrozenLedgerChangeClassifier.LedgerPath];
-        var syntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
-            DagLedgerLoader.Load(Encoding.UTF8.GetBytes(ledgerFile))).Syntax;
+        var syntax = LoadLedger(fixture.BaselineFiles);
         var references = Assert.IsType<FrozenLedgerReferenceScanOutcome.Accepted>(
             FrozenLedger.ScanReferences(syntax)).References;
         var catalog = Assert.IsType<FrozenMaterialOutcome.Accepted>(FrozenLedgerMaterializer.Build(
@@ -141,11 +139,38 @@ public sealed partial class ProductionEnvironmentTests
             syntax,
             catalog,
             TrustedFrozenGitReferences.CreateForTrustedAdapter(references.Inputs))).Capability;
-        fixture.CurrentFiles[FrozenLedgerChangeClassifier.LedgerPath] = Encoding.UTF8.GetString(
-            FrozenLedgerGenerator.AppendReattestation(
+        SetLedger(
+            fixture.CurrentFiles,
+            Encoding.UTF8.GetString(FrozenLedgerGenerator.AppendReattestation(
                 history,
                 Assert.Single(history.ActiveEntries).Key,
-                Assert.Single(references.Inputs)).AsSpan());
+                Assert.Single(references.Inputs)).AsSpan()));
+    }
+
+    private static FrozenLedgerSyntax LoadLedger(Dictionary<string, string> files) =>
+        Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.LoadFiles(
+            files.Where(item => FrozenLedgerChangeClassifier.IsAcceptedEventPath(item.Key))
+                .Select(item => (item.Key, (ReadOnlyMemory<byte>)Encoding.UTF8.GetBytes(item.Value))))).Syntax;
+
+    private static void SetLedger(Dictionary<string, string> files, string ledger)
+    {
+        foreach (var path in files.Keys
+            .Where(FrozenLedgerChangeClassifier.IsAcceptedEventPath).ToArray())
+        {
+            files.Remove(path);
+        }
+
+        var syntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+            DagLedgerLoader.Load(Encoding.UTF8.GetBytes(ledger))).Syntax;
+        foreach (var line in syntax.Lines)
+        {
+            var payload = line.Value.GetProperty("payload");
+            var identity = payload.TryGetProperty("frozen_node_id", out var nodeId)
+                ? nodeId.GetString()!
+                : line.Value.GetProperty("event_hash").GetString()!;
+            files[$"{FrozenLedgerChangeClassifier.LedgerPath}/{identity[7..]}.json"] =
+                Encoding.UTF8.GetString(line.RawBytes.AsSpan());
+        }
     }
 
     private static FakeRepositoryGateway CreateGateway(

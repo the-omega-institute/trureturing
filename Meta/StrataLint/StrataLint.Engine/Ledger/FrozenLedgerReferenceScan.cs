@@ -157,7 +157,6 @@ public static partial class FrozenLedger
             var commits = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
             var trees = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
             var blobs = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
-            var previous = ZeroHash;
             for (var index = 0; index < syntax.Lines.Length; index++)
             {
                 var line = syntax.Lines[index];
@@ -165,18 +164,14 @@ public static partial class FrozenLedger
                 RequireObjectFields(
                     root,
                     "event envelope",
-                    "event_hash", "event_type", "payload", "previous_hash", "schema_version", "sequence");
+                    "event_hash", "event_type", "payload", "schema_version");
                 RequireCanonicalLine(line);
-                var sequence = RequiredNonnegativeInteger(root, "sequence");
-                var previousHash = RequiredString(root, "previous_hash");
                 var eventHash = RequiredString(root, "event_hash");
-                if (sequence != index
-                    || RequiredNonnegativeInteger(root, "schema_version") != 1
-                    || previousHash != previous
+                if (RequiredNonnegativeInteger(root, "schema_version") != 1
                     || !FrozenHashSyntax.IsSha256(eventHash)
                     || eventHash != ComputeEventHash(root))
                 {
-                    throw new FormatException("Frozen event sequence/hash chain is invalid.");
+                    throw new FormatException("Frozen event schema/hash is invalid.");
                 }
 
                 var eventType = RequiredString(root, "event_type");
@@ -256,7 +251,6 @@ public static partial class FrozenLedger
                     throw new FormatException($"Unknown frozen event type {eventType}.");
                 }
 
-                previous = eventHash;
             }
 
             return new FrozenLedgerReferenceScanOutcome.Accepted(FrozenLedgerReferenceSet.Create(

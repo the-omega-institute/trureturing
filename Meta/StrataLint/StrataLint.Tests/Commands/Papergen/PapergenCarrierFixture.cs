@@ -149,7 +149,14 @@ public sealed partial class PapergenCommandTests
                     FrozenLedgerTestData.Trust(tamperedSyntax)));
         }
 
-        Record(FrozenLedgerChangeClassifier.LedgerPath, ledgerText);
+        var ledgerFiles = new Dictionary<string, string>(StringComparer.Ordinal);
+        FrozenLedgerTestData.AddLedgerFiles(
+            ledgerFiles,
+            ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(ledgerText)));
+        foreach (var (path, content) in ledgerFiles)
+        {
+            Record(path, content);
+        }
         // currentSource models a working tree that moved on after the freeze: the ledger node
         // still records the declarations of the attested source, not of what is on disk now.
         Record(

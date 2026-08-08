@@ -17,5 +17,11 @@ public partial record FrozenLedgerChangeOutcome
 
 public static class FrozenLedgerChangeClassifier
 {
-    public const string LedgerPath = "Meta/StrataLint/Golden/Frozen/events.jsonl";
+    public const string LedgerPath = "Meta/StrataLint/Golden/Frozen/accepted";
+
+    public static bool IsAcceptedEventPath(string path) =>
+        path.StartsWith(LedgerPath + "/", StringComparison.Ordinal)
+        && path.EndsWith(".json", StringComparison.Ordinal)
+        && path.AsSpan(LedgerPath.Length + 1, path.Length - LedgerPath.Length - 6)
+            .IndexOf('/') < 0;
 }

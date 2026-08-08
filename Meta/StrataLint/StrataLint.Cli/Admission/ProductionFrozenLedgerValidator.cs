@@ -15,15 +15,32 @@ internal static class ProductionFrozenLedgerValidator
         IRepositoryGateway repository,
         IRepositoryGateway? frozenEvidenceRepository = null)
     {
-        const string path = FrozenLedgerChangeClassifier.LedgerPath;
-        if (!baseline.TryGetFile(path, out var baselineFile)
-            || !current.TryGetFile(path, out var currentFile))
+        var baselineFiles = baseline.Files.Values
+            .Where(file => FrozenLedgerChangeClassifier.IsAcceptedEventPath(file.Path.Value))
+            .OrderBy(file => file.Path.Value, StringComparer.Ordinal).ToArray();
+        var currentFiles = current.Files.Values
+            .Where(file => FrozenLedgerChangeClassifier.IsAcceptedEventPath(file.Path.Value))
+            .OrderBy(file => file.Path.Value, StringComparer.Ordinal).ToArray();
+        if (baselineFiles.Length == 0 || currentFiles.Length == 0)
         {
             return Reject("frozen ledger is missing from current or protected baseline");
         }
 
-        var baselineLoad = DagLedgerLoader.Load(baselineFile.RawBytes.AsSpan());
-        var currentLoad = DagLedgerLoader.Load(currentFile.RawBytes.AsSpan());
+        if (!FrozenLedger.RetainsBaselineFilesByteForByte(
+                baselineFiles.Select(file => (
+                    file.Path.Value,
+                    (ReadOnlyMemory<byte>)file.RawBytes.ToArray())),
+                currentFiles.Select(file => (
+                    file.Path.Value,
+                    (ReadOnlyMemory<byte>)file.RawBytes.ToArray()))))
+        {
+            return Reject("candidate frozen ledger does not retain every baseline path byte-for-byte");
+        }
+
+        var baselineLoad = DagLedgerLoader.LoadFiles(baselineFiles.Select(file =>
+            (file.Path.Value, (ReadOnlyMemory<byte>)file.RawBytes.ToArray())));
+        var currentLoad = DagLedgerLoader.LoadFiles(currentFiles.Select(file =>
+            (file.Path.Value, (ReadOnlyMemory<byte>)file.RawBytes.ToArray())));
         if (baselineLoad is DagLedgerLoadOutcome.Invalid invalidBaseline)
         {
             return Reject("protected baseline ledger syntax is invalid: " + invalidBaseline.Message);

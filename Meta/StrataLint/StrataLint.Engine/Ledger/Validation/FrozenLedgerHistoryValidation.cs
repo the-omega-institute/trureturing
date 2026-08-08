@@ -5,6 +5,21 @@ namespace StrataLint.Engine;
 
 public static partial class FrozenLedger
 {
+    public static bool RetainsBaselineFilesByteForByte(
+        IEnumerable<(string Path, ReadOnlyMemory<byte> Bytes)> baselineFiles,
+        IEnumerable<(string Path, ReadOnlyMemory<byte> Bytes)> candidateFiles)
+    {
+        ArgumentNullException.ThrowIfNull(baselineFiles);
+        ArgumentNullException.ThrowIfNull(candidateFiles);
+        var candidateByPath = candidateFiles.ToDictionary(
+            static file => file.Path,
+            static file => file.Bytes,
+            StringComparer.Ordinal);
+        return baselineFiles.All(file =>
+            candidateByPath.TryGetValue(file.Path, out var candidate)
+            && candidate.Span.SequenceEqual(file.Bytes.Span));
+    }
+
     public static FrozenLedgerValidationOutcome ValidateHistory(
         FrozenLedgerSyntax syntax,
         FrozenMaterialCatalog catalog,
@@ -50,7 +65,7 @@ public static partial class FrozenLedger
             var activePaths = new HashSet<RepoPath>();
             var allCaseIds = new HashSet<string>(StringComparer.Ordinal);
             var revoked = new HashSet<FrozenNodeId>();
-            var previous = ZeroHash;
+            var previous = FrozenLedgerCanonicalWriter.ZeroHash;
             for (var index = 0; index < syntax.Lines.Length; index++)
             {
                 var line = syntax.Lines[index];
@@ -58,18 +73,16 @@ public static partial class FrozenLedger
                 RequireObjectFields(
                     root,
                     "event envelope",
-                    "event_hash", "event_type", "payload", "previous_hash", "schema_version", "sequence");
+                    "event_hash", "event_type", "payload", "schema_version");
                 RequireCanonicalLine(line);
-                var sequence = RequiredNonnegativeInteger(root, "sequence");
-                var previousHash = RequiredString(root, "previous_hash");
+                var sequence = index;
+                var previousHash = previous;
                 var eventHash = RequiredString(root, "event_hash");
-                if (sequence != index
-                    || RequiredNonnegativeInteger(root, "schema_version") != 1
-                    || previousHash != previous
+                if (RequiredNonnegativeInteger(root, "schema_version") != 1
                     || !FrozenHashSyntax.IsSha256(eventHash)
                     || eventHash != ComputeEventHash(root))
                 {
-                    throw new FormatException("Frozen history has an invalid sequence/hash chain.");
+                    throw new FormatException("Frozen history has an invalid schema/event hash.");
                 }
 
                 var eventType = RequiredString(root, "event_type");

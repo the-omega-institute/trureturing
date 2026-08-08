@@ -5,6 +5,36 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
+    public void ProductionValidatorRejectsDeletingABaselineAcceptedEventFile()
+    {
+        var fixture = CreateFrozenValidatorFixture();
+        var path = fixture.BaselineFiles.Keys.First(
+            FrozenLedgerChangeClassifier.IsAcceptedEventPath);
+        fixture.CurrentFiles.Remove(path);
+
+        var outcome = Validate(fixture, CreateGateway(fixture));
+
+        AssertSl008Rejection(
+            outcome,
+            "candidate frozen ledger does not retain every baseline path byte-for-byte");
+    }
+
+    [Fact]
+    public void ProductionValidatorRejectsMutatingABaselineAcceptedEventFile()
+    {
+        var fixture = CreateFrozenValidatorFixture();
+        var path = fixture.BaselineFiles.Keys.First(
+            FrozenLedgerChangeClassifier.IsAcceptedEventPath);
+        fixture.CurrentFiles[path] += " ";
+
+        var outcome = Validate(fixture, CreateGateway(fixture));
+
+        AssertSl008Rejection(
+            outcome,
+            "candidate frozen ledger does not retain every baseline path byte-for-byte");
+    }
+
+    [Fact]
     public void ProductionValidatorAcceptsARevocationBackedByAProtectedTypedReceipt()
     {
         var fixture = CreateRevocationValidatorFixture(includeReceiptInBaseline: true);
