@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Observer/MeasurementMarginal
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Identify copied-record marginals with unread measurement states. -/
+   digest: Quantify coherence loss while any copied address record survives. -/
 
 import D5.S3.Quantum.EnvironmentRecords
 
@@ -15,85 +15,57 @@ open scoped BigOperators
 
 /- Library-search audit trail (2026-08-08):
    * Local mathlib and D5 searches for `partialTrace`, `partial trace`, `environment marginal`,
-     `unread state`, `pinching`, and `Lueders` found no theorem identifying this concrete
-     controlled-record marginal with an unread measurement map.
-   * The generic marginal calculation reuses `Finset.sum_mul` from mathlib and the joint-state,
+     `unread state`, `pinching`, `Lueders`, and projective measurement found no theorem for this
+     concrete copied-record marginal or its partially erased indexed-copy form.
+   * The proof reuses `Finset.sum_mul` and `Finset.prod_eq_zero` from mathlib, plus the joint-state,
      environment-trace, overlap, and channel definitions from `EnvironmentRecords`.
-   Deviation: `Conditioning` is not present on the `origin/dev` base used by this worktree.
-   The next two declarations reproduce only its `IsRecordMeasurement` and `unreadState`
-   interfaces, with identical signatures. After that module lands, this file must import it and
-   remove these local copies; no compatibility alias is intended.
+   Interface deviation: `Conditioning` is absent from this worktree's `origin/dev`. This module
+   therefore states the concrete address-block sum directly; it does not redeclare
+   `Conditioning.IsRecordMeasurement` or `Conditioning.unreadState`. Once `Conditioning` lands,
+   a downstream bridge may identify this sum with its canonical unread state.
+   Ownership note: the generic controlled-record trace identity lives in `EnvironmentRecords`;
+   only the concrete copied-address consequences remain here.
 -/
 
-variable {n kappa : Type*} [Fintype n] [DecidableEq n]
-    [Fintype kappa] [DecidableEq kappa]
-    {P : kappa -> Matrix n n ℂ}
-
-/-- A finite complete family of pairwise orthogonal self-adjoint projections.
-Temporary local interface matching `Conditioning.IsRecordMeasurement`. -/
-structure IsRecordMeasurement (P : kappa -> Matrix n n ℂ) : Prop where
-  selfAdjoint : forall k, star (P k) = P k
-  idempotent : forall k, P k * P k = P k
-  orthogonal : forall k l, k ≠ l -> P k * P l = 0
-  complete : ∑ k, P k = 1
-
-/-- The state obtained by measuring the record and then discarding its value.
-Temporary local interface matching `Conditioning.unreadState`. -/
-def unreadState (P : kappa -> Matrix n n ℂ) (rho : Matrix n n ℂ) : Matrix n n ℂ :=
-  ∑ k, P k * rho * P k
+variable {copyIndex : Type*} [Fintype copyIndex] [DecidableEq copyIndex]
 
 /-- The standard projector onto one address of the two-point system. -/
 def addressProjection (k : Fin 2) : QubitMatrix :=
   fun i j => if i = k ∧ j = k then 1 else 0
 
-/-- The standard address projections form a record measurement. -/
-theorem addressProjection_isRecordMeasurement : IsRecordMeasurement addressProjection := by
-  constructor
-  · intro k
-    ext i j
-    fin_cases k <;> fin_cases i <;> fin_cases j <;> simp [addressProjection]
-  · intro k
-    ext i j
-    fin_cases k <;> fin_cases i <;> fin_cases j <;>
-      simp [addressProjection, Matrix.mul_apply]
-  · intro k l hkl
-    ext i j
-    fin_cases k <;> fin_cases l <;> fin_cases i <;> fin_cases j <;>
-      simp_all [addressProjection, Matrix.mul_apply]
-  · ext i j
-    fin_cases i <;> fin_cases j <;>
-      simp [addressProjection, Fin.sum_univ_two]
-
 /-- The environment vector that copies each system address into the matching basis record. -/
 def copiedAddressRecord : EnvironmentRecord :=
   fun i a => if i = a then 1 else 0
 
-/-- Tracing the environment of any controlled record gives its record channel. -/
-theorem trace_environment_controlled_record_eq_record_channel
-    (record : EnvironmentRecord) (rho : QubitMatrix) :
-    traceEnvironment (controlledRecordJointState record rho) = recordChannel record rho := by
-  ext i j
-  change (∑ a, record i a * star (record j a) * rho i j) =
-    recordOverlap record i j * rho i j
-  rw [← Finset.sum_mul]
-  rfl
-
-/-- The system marginal left by one copied address record is the corresponding unread state. -/
-theorem copied_record_partial_trace_eq_unread (rho : QubitMatrix) :
+/-- One copied address record leaves exactly the sum of the two diagonal address blocks. -/
+theorem copied_record_partial_trace_eq_address_blocks (rho : QubitMatrix) :
     traceEnvironment (controlledRecordJointState copiedAddressRecord rho) =
-      unreadState addressProjection rho := by
+      ∑ k, addressProjection k * rho * addressProjection k := by
   rw [trace_environment_controlled_record_eq_record_channel]
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [recordChannel, recordOverlap, copiedAddressRecord, unreadState,
+    simp [recordChannel, recordOverlap, copiedAddressRecord,
       addressProjection, Matrix.mul_apply, Fin.sum_univ_two]
 
-/-- A surviving orthogonal address copy leaves every off-diagonal system entry zero. -/
-theorem copied_record_partial_trace_offDiagonal_eq_zero
-    (rho : QubitMatrix) (i j : Fin 2) (hij : i != j) :
-    traceEnvironment (controlledRecordJointState copiedAddressRecord rho) i j = 0 :=
-  by
+/-- The marginal after erasing indexed independent environment copies.
+Each retained copy contributes its Gram overlap; an erased index contributes no factor. -/
+def retainedCopiesMarginal (records : copyIndex -> EnvironmentRecord) (erased : Finset copyIndex)
+    (rho : QubitMatrix) : QubitMatrix :=
+  fun i j =>
+    (∏ k ∈ Finset.univ \ erased, recordOverlap (records k) i j) * rho i j
+
+/-- If any indexed address copy survives erasure, no off-diagonal entry is restored. -/
+theorem surviving_copied_record_offDiagonal_eq_zero
+    (records : copyIndex -> EnvironmentRecord) (erased : Finset copyIndex)
+    (rho : QubitMatrix) (i j : Fin 2) (hij : i ≠ j)
+    (hSurvives : ∃ k, k ∉ erased ∧ records k = copiedAddressRecord) :
+    retainedCopiesMarginal records erased rho i j = 0 := by
+  obtain ⟨k, hkErased, hkRecord⟩ := hSurvives
+  have hkRetained : k ∈ Finset.univ \ erased := by simp [hkErased]
+  have hkZero : recordOverlap (records k) i j = 0 := by
+    rw [hkRecord]
     fin_cases i <;> fin_cases j <;>
-      simp_all [traceEnvironment, controlledRecordJointState, copiedAddressRecord]
+      simp_all [recordOverlap, copiedAddressRecord]
+  rw [retainedCopiesMarginal, Finset.prod_eq_zero hkRetained hkZero, zero_mul]
 
 end D5.S3.Observer.MeasurementMarginal
