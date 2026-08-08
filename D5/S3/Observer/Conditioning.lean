@@ -13,7 +13,6 @@
      `Matrix.trace_mul_cycle`, `Matrix.sum_mul`, `Matrix.mul_sum`, and
      `Matrix.PosSemidef.mul_mul_conjTranspose_same` from mathlib, plus the projection-weight
      nonnegativity established in `FiniteDimensional.born_probability_skeleton`.
-   Provenance: OBSERVER-QUANTUM.md, section 4 (measurement, forgetting, and time's arrow).
 -/
 
 import D5.S3.Quantum.FiniteDimensional

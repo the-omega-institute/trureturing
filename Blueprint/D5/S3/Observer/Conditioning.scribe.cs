@@ -12,10 +12,6 @@ internal sealed class ConditioningDocument : IScribeDocumentDefinition
             "Finite projective record measurements preserve trace and define idempotent unread conditioning."),
         H("Finite Record Conditioning"),
         Blocks(
-            Paragraph(Text(
-                "Provenance note: OBSERVER-QUANTUM.md, Section 4 motivates measurement and "
-                + "forgetting. It is contextual provenance only; the typed Lean declarations "
-                + "below determine the claims and their generated numbering.")),
             DocumentBlock.Describe.Theorem(
                 DescribeId.Create("record-weights-sum-to-the-original-trace"),
                 H("Record weights sum to the original trace"),
