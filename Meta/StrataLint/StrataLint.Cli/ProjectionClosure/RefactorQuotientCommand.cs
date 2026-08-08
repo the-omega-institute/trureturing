@@ -130,8 +130,15 @@ internal static class RefactorQuotientCommand
 
     private static string Git(string root, params string[] args) =>
         Encoding.UTF8.GetString(Execute(root, ["git", .. args]).StandardOutput);
-    private static string BuildSha(string root) => Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(
-        Path.Combine(root, "Meta", "StrataLint", "StrataLint.Cli", "bin", "Release", "net10.0", "StrataLint.dll"))));
+    private static string BuildSha(string root)
+    {
+        var project = Path.Combine("Meta", "StrataLint", "StrataLint.Cli", "StrataLint.Cli.csproj");
+        var targetPath = Encoding.UTF8.GetString(Execute(root,
+            ["dotnet", "msbuild", project, "-getProperty:TargetPath", "-property:Configuration=Release"])
+            .StandardOutput).Trim();
+        if (!Path.IsPathFullyQualified(targetPath)) targetPath = Path.Combine(root, targetPath);
+        return Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(targetPath)));
+    }
     private static string[] Argv(JsonElement element)
     {
         var result = element.EnumerateArray().Select(static item => item.GetString() ?? string.Empty).ToArray();
