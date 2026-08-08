@@ -77,3 +77,12 @@ $$\forall f\in\mathbb{N},\ \operatorname{card}\{s\in\operatorname{Stationing}(f+
 *Commentary.*
 
 After fixing the distinguished coordinate, all remaining Boolean coordinates are free, giving exactly two to the free-count representatives. This finite model implies no measured density or asymptotic exponent.
+
+## References
+
+- Truth anchor: `D5/S1/Phase/SeatTowerCombinatorics.even_offset_skeleton_count`
+- Truth anchor: `D5/S1/Phase/SeatTowerCombinatorics.full_exponent_stationing_count`
+- Truth anchor: `D5/S1/Phase/SeatTowerCombinatorics.matching_rotation_offset_is_odd`
+- Truth anchor: `D5/S1/Phase/SeatTowerCombinatorics.mirror_normalization_is_unique`
+- Truth anchor: `D5/S1/Phase/SeatTowerCombinatorics.mirror_representative_count`
+- Truth anchor: `D5/S1/Phase/SeatTowerCombinatorics.reversal_swaps_parity`

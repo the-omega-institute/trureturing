@@ -97,12 +97,13 @@ internal static partial class RepositoryRules
         context.VerifiedScribeEmissions is null
             ? []
             : context.VerifiedScribeEmissions.DescribeLatexRecords
-                .Where(static item =>
-                    ScribeDescribeContract.RequiresLatex(item.Kind) && !item.HasValidLatex)
+                .Where(static item => ScribeDescribeContract.RequiresLatex(item.Kind)
+                    && item.ProjectionFailureReason is null
+                    && item.FormulaProvenance != "lean-derived")
                 .Select(static item => new RuleFinding(
                     item.DefinitionPath,
-                    $"SCRIBE-LATEX-EPOCH expand: theorem-class Describe {item.NodeId} lacks a valid LaTeX statement; migrate before contract",
-                    AdmissionEffect.Observe))
+                    $"theorem-class Describe {item.NodeId} is projectable and its formula must be Lean-derived",
+                    AdmissionEffect.Block))
                 .ToImmutableArray();
 
     private static ImmutableArray<RuleFinding> NoFindings(RuleEvaluationContext context) =>

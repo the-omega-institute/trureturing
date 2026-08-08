@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using StrataLint.Engine;
 
 namespace StrataLint.Scribe;
 
@@ -8,6 +9,8 @@ internal sealed record DescribeNodeRecord(
     string Kind,
     string Title,
     string StatementKind,
+    string FormulaProvenance,
+    string? ProjectionFailureReason,
     string Provenance,
     string? LiteratureGid);
 
@@ -28,6 +31,7 @@ internal sealed class DescribeReport
         ImmutableArray<DescribeNodeRecord> nodes,
         ImmutableArray<DescribeNodeRecord> suspectedNovel,
         ImmutableArray<DescribeNodeRecord> unassessed,
+        ImmutableArray<DescribeNodeRecord> unprojectable,
         ImmutableArray<DescribeRedFinding> redFindings,
         ImmutableArray<DescribeObservation> observations)
     {
@@ -35,6 +39,7 @@ internal sealed class DescribeReport
         Nodes = nodes;
         SuspectedNovel = suspectedNovel;
         Unassessed = unassessed;
+        Unprojectable = unprojectable;
         RedFindings = redFindings;
         Observations = observations;
     }
@@ -48,12 +53,15 @@ internal sealed class DescribeReport
     internal ImmutableArray<DescribeNodeRecord> SuspectedNovel { get; }
 
     internal ImmutableArray<DescribeNodeRecord> Unassessed { get; }
+    internal ImmutableArray<DescribeNodeRecord> Unprojectable { get; }
 
     internal ImmutableArray<DescribeRedFinding> RedFindings { get; }
 
     internal ImmutableArray<DescribeObservation> Observations { get; }
 
     internal int OpenCount => Unassessed.Length;
+
+    internal int ProjectionOpenCount => Unprojectable.Length;
 
     internal string Status => !RedFindings.IsEmpty
         ? "invalid"
@@ -123,6 +131,7 @@ internal sealed class DescribeReport
             orderedNodes,
             orderedNodes.Where(static node => node.Provenance == "suspected-novel").ToImmutableArray(),
             orderedNodes.Where(static node => node.Provenance == "unassessed").ToImmutableArray(),
+            orderedNodes.Where(static node => node.ProjectionFailureReason is not null).ToImmutableArray(),
             DescribeRepositoryValidator.Validate(
                 repositoryRoot,
                 material,
@@ -186,6 +195,8 @@ internal sealed class DescribeReport
                         describe.Statement is DescribeStatement.FormulaAst
                             ? "formula"
                             : "lean-declaration",
+                        describe.FormulaProvenance == StatementFormulaProvenance.LeanDerived ? "lean-derived" : "hand-authored",
+                        ProjectionFailure(describe),
                         DescribeVocabulary.CanonicalName(describe.Provenance.Kind),
                         describe.Provenance.LiteratureReference?.Value));
                     if (string.Equals(describe.Id.Value, PlainSlug(describe.Title.Value), StringComparison.Ordinal))
@@ -213,6 +224,14 @@ internal sealed class DescribeReport
                     break;
             }
         }
+    }
+
+    private static string? ProjectionFailure(DocumentBlock.Describe describe)
+    {
+        if (describe.Statement is not DescribeStatement.LeanDeclaration lean
+            || !ScribeDescribeContract.RequiresLatex(DescribeVocabulary.CanonicalName(describe.Kind))) return null;
+        return StatementProjectionFixtureLoader.Project(lean.Value) is ProjectionOutcome.Unprojectable failed
+            ? failed.Reason : null;
     }
 
     private static void ObserveText(

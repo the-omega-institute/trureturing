@@ -3,6 +3,12 @@ using StrataLint.Engine;
 
 namespace StrataLint.Scribe;
 
+public enum StatementFormulaProvenance
+{
+    HandAuthored,
+    LeanDerived,
+}
+
 public sealed record Heading
 {
     private Heading(string value) => Value = value;
@@ -120,6 +126,11 @@ public abstract record DocumentBlock
             Provenance = provenance ?? throw new ArgumentNullException(nameof(provenance));
             Content = content ?? throw new ArgumentNullException(nameof(content));
             StatementFormula = statementFormula;
+            FormulaProvenance = statementFormula is not null
+                && statement is DescribeStatement.LeanDeclaration lean
+                && StatementProjectionFixtureLoader.IsDerivedFrom(statementFormula, lean.Value)
+                ? StatementFormulaProvenance.LeanDerived
+                : StatementFormulaProvenance.HandAuthored;
             Kind = kind is DescribeKind.Definition
                 or DescribeKind.Theorem
                 or DescribeKind.Proposition
@@ -143,6 +154,8 @@ public abstract record DocumentBlock
         public BlockSequence Content { get; }
 
         public Formula? StatementFormula { get; }
+
+        public StatementFormulaProvenance FormulaProvenance { get; }
 
         public static Describe Theorem(
             DescribeId id,
