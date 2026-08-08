@@ -1,6 +1,6 @@
 /- GID: D5/S3/Observer/Conditioning
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/Observer/Conditioning
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Formalize finite record conditioning and unread measurement states. -/
