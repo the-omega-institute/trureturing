@@ -115,51 +115,107 @@ internal static class FileMapPolicy
         ArgumentNullException.ThrowIfNull(trackedPaths);
         ArgumentNullException.ThrowIfNull(inventory);
         var tracked = trackedPaths.ToHashSet(StringComparer.Ordinal);
-        var indexed = inventory.ToDictionary(
-            static artifact => artifact.Path,
-            StringComparer.Ordinal);
         var findings = new List<FileMapFinding>();
-        foreach (var path in tracked.Order(StringComparer.Ordinal))
+        var inventoryPaths = inventory.Select(static artifact => artifact.Path)
+            .ToHashSet(StringComparer.Ordinal);
+        foreach (var artifact in inventory.OrderBy(static item => item.Path, StringComparer.Ordinal))
         {
-            var matches = manifest.Match(path);
-            if (matches is not [{ Kind: FileMapKind.Generated } generated])
+            var artifactFindings = new List<FileMapFinding>();
+            var matches = manifest.Match(artifact.Path);
+            if (matches is not [var generated])
             {
+                artifactFindings.Add(new FileMapFinding(
+                    "FILEMAP-GENERATED-JOIN",
+                    artifact.Path,
+                    $"canonical producer inventory requires exactly one FILEMAP match, found {matches.Length}"));
+                findings.AddRange(artifactFindings);
                 continue;
             }
 
-            if (!indexed.TryGetValue(path, out var artifact))
+            if (generated.RuntimeDisposition == "run-local"
+                && !string.Equals(generated.Pattern, artifact.Path, StringComparison.Ordinal))
             {
-                findings.Add(new FileMapFinding(
-                    "FILEMAP-GENERATED-INVENTORY",
-                    path,
-                    "generated file is absent from the canonical producer inventory"));
-                continue;
+                artifactFindings.Add(new FileMapFinding(
+                    "FILEMAP-GENERATED-LITERAL",
+                    artifact.Path,
+                    $"canonical producer inventory requires a literal FILEMAP pattern, found {generated.Pattern}"));
+            }
+
+            if (generated.Kind is not FileMapKind.Generated)
+            {
+                artifactFindings.Add(new FileMapFinding(
+                    "FILEMAP-GENERATED-KIND",
+                    artifact.Path,
+                    $"canonical producer inventory requires generated kind, found {generated.Kind}"));
+            }
+
+            var isTracked = tracked.Contains(artifact.Path);
+            var expectedDisposition = isTracked ? "committed-source" : "run-local";
+            if (!string.Equals(generated.RuntimeDisposition, expectedDisposition, StringComparison.Ordinal))
+            {
+                artifactFindings.Add(new FileMapFinding(
+                    "FILEMAP-GENERATED-DISPOSITION",
+                    artifact.Path,
+                    $"inventory/tracking state requires {expectedDisposition}, found {generated.RuntimeDisposition}"));
+            }
+
+            if (generated.RuntimeDisposition == "run-local"
+                && (generated.ArtifactId == "none" || generated.Mode != "100644"
+                    || generated.HistoryRequirement != "not-required"))
+            {
+                artifactFindings.Add(new FileMapFinding(
+                    "FILEMAP-GENERATED-RUN-LOCAL",
+                    artifact.Path,
+                    "run-local join requires artifact_id, mode 100644, and history_requirement not-required"));
+            }
+
+            if (!string.Equals(generated.ArtifactId, artifact.ArtifactId, StringComparison.Ordinal))
+            {
+                artifactFindings.Add(new FileMapFinding(
+                    "FILEMAP-GENERATED-ARTIFACT-ID",
+                    artifact.Path,
+                    $"FILEMAP artifact_id {generated.ArtifactId} differs from inventory artifact_id {artifact.ArtifactId}"));
             }
 
             if (!string.Equals(generated.ProducedBy, artifact.Producer, StringComparison.Ordinal))
             {
-                findings.Add(new FileMapFinding(
+                artifactFindings.Add(new FileMapFinding(
                     "FILEMAP-GENERATED-PRODUCER",
-                    path,
+                    artifact.Path,
                     $"FILEMAP producer {generated.ProducedBy} differs from inventory producer {artifact.Producer}"));
             }
 
             if (artifact.VerifiedBy != "emit-check"
                 || !generated.VerifiedBy.Contains("emit-check", StringComparer.Ordinal))
             {
-                findings.Add(new FileMapFinding(
+                artifactFindings.Add(new FileMapFinding(
                     "FILEMAP-GENERATED-VERIFY",
-                    path,
+                    artifact.Path,
                     "generated file is outside the emit-check coverage set"));
             }
-        }
 
-        foreach (var artifact in inventory.Where(artifact => !tracked.Contains(artifact.Path)))
-        {
+            findings.AddRange(artifactFindings);
+            if (isTracked || (artifactFindings.Count == 0 && generated.RuntimeDisposition == "run-local"))
+            {
+                continue;
+            }
+
             findings.Add(new FileMapFinding(
                 "FILEMAP-GENERATED-STALE-INVENTORY",
                 artifact.Path,
                 "producer inventory output is absent from tracked repository files"));
+        }
+
+        foreach (var path in tracked.Order(StringComparer.Ordinal))
+        {
+            if (manifest.Match(path) is [{ Kind: FileMapKind.Generated }]
+                && !inventoryPaths.Contains(path))
+            {
+                findings.Add(new FileMapFinding(
+                    "FILEMAP-GENERATED-INVENTORY",
+                    path,
+                    "generated file is absent from the canonical producer inventory"));
+            }
         }
 
         return findings;

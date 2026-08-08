@@ -5,7 +5,8 @@ namespace StrataLint.Scribe;
 internal sealed record GeneratedArtifactIdentity(
     string Path,
     string Producer,
-    string VerifiedBy);
+    string VerifiedBy,
+    string ArtifactId = "none");
 
 internal static class GeneratedArtifactInventory
 {
@@ -25,31 +26,38 @@ internal static class GeneratedArtifactInventory
                 new GeneratedArtifactIdentity(
                     CanonicalAnchorCatalogWriter.RelativePath,
                     nameof(AnchorCatalogEmitter),
-                    "emit-check"),
+                    "emit-check",
+                    "A-ANCHOR"),
                 new GeneratedArtifactIdentity(
                     CanonicalValuesWriter.RelativePath,
                     nameof(ValuesEmitter),
-                    "emit-check"),
+                    "emit-check",
+                    "A-VALUES"),
                 new GeneratedArtifactIdentity(
                     DagEmitter.RelativePath,
                     nameof(DagEmitter),
-                    "emit-check"),
+                    "emit-check",
+                    "A-DAG"),
                 new GeneratedArtifactIdentity(
                     DagEmitter.TruthGraphRelativePath,
                     nameof(DagEmitter),
-                    "emit-check"),
+                    "emit-check",
+                    "A-TRUTH"),
                 new GeneratedArtifactIdentity(
                     EchoResidualSummaryPath,
                     "EchoVerifyCommand",
-                    "emit-check"),
+                    "emit-check",
+                    "A-ECHO"),
                 new GeneratedArtifactIdentity(
                     FileMapEmitter.RelativePath,
                     nameof(FileMapEmitter),
-                    "emit-check"),
+                    "emit-check",
+                    "A-FILEMAP"),
                 new GeneratedArtifactIdentity(
                     ScribeEmitter.AttestationRelativePath,
                     nameof(ScribeEmitter),
-                    "emit-check"),
+                    "emit-check",
+                    "A-SCRIBE"),
             ])
             .OrderBy(static artifact => artifact.Path, StringComparer.Ordinal)
             .ToImmutableArray();
