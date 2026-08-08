@@ -76,7 +76,9 @@ internal static class FileMapPolicy
             ["YamlSubsetParser"] = YamlSubsetParserPath,
         };
 
-    internal static IReadOnlyList<FileMapFinding> InspectRepository(string repositoryRoot)
+    internal static IReadOnlyList<FileMapFinding> InspectRepository(
+        string repositoryRoot,
+        string? runLocalReceiptRoot = null)
     {
         var manifest = FileMapLoader.LoadRepository(repositoryRoot);
         var paths = TrackedPaths(repositoryRoot);
@@ -105,7 +107,7 @@ internal static class FileMapPolicy
                 "Meta/registry.yaml",
                 "registry failed to load before FILEMAP alignment")];
 
-        var runLocalReceipts = LoadRunLocalReceipts(manifest);
+        var runLocalReceipts = LoadRunLocalReceipts(manifest, runLocalReceiptRoot);
         return InspectCoverage(manifest, paths)
             .Concat(registryFindings)
             .Concat(InspectDataVerifiers(manifest, availableVerifiers))
@@ -118,7 +120,9 @@ internal static class FileMapPolicy
             .ToArray();
     }
 
-    private static IReadOnlyList<RunLocalArtifactReceipt> LoadRunLocalReceipts(FileMapManifest manifest)
+    private static IReadOnlyList<RunLocalArtifactReceipt> LoadRunLocalReceipts(
+        FileMapManifest manifest,
+        string? outputRoot)
     {
         var runLocal = manifest.Entries
             .Where(static entry => entry.Kind is FileMapKind.Generated
@@ -127,7 +131,7 @@ internal static class FileMapPolicy
             .OrderBy(static entry => entry.Path, StringComparer.Ordinal)
             .ToArray();
         if (runLocal.Length == 0) return [];
-        var outputRoot = Environment.GetEnvironmentVariable("STRATALINT_RUN_RECEIPT_ROOT");
+        outputRoot ??= Environment.GetEnvironmentVariable("STRATALINT_RUN_RECEIPT_ROOT");
         if (string.IsNullOrWhiteSpace(outputRoot) || !Path.IsPathFullyQualified(outputRoot)) return [];
         try
         {

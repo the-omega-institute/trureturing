@@ -8,6 +8,23 @@ public sealed class PlaybookWorkflowScriptTests
     private const string ScriptPath = "Meta/StrataLint/scripts/workflow/playbook-workflows.sh";
 
     [Fact]
+    public void ShepherdConflictClassifierDropsOnlyCutProjectionCompensation()
+    {
+        var root = FindRepositoryRoot();
+        var script = File.ReadAllText(Path.Combine(root,
+            "Meta", "StrataLint", "scripts", "shepherd", "pr-shepherd-actions.sh"));
+        var classifier = script[script.IndexOf("is_derived_conflict()", StringComparison.Ordinal)..];
+        classifier = classifier[..classifier.IndexOf("branch_slug()", StringComparison.Ordinal)];
+
+        Assert.DoesNotContain("Meta/StrataLint/Generated/*", classifier, StringComparison.Ordinal);
+        Assert.DoesNotContain("Generated/*", classifier, StringComparison.Ordinal);
+        Assert.Contains(string.Join('/', "Evidence", "D5", "values.json"), classifier, StringComparison.Ordinal);
+        Assert.Contains(string.Join('/', "Meta", "StrataLint", "Generated", "anchor-catalog.v1.json"), classifier, StringComparison.Ordinal);
+        Assert.Contains(string.Join('/', "Meta", "StrataLint", "Generated", "scribe-emissions.v1.json"), classifier, StringComparison.Ordinal);
+        Assert.Contains("$FROZEN_LEDGER_PATH", classifier, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void DeliverCheckFreezesAfterReceiptsAndBeforeReadOnlyChecks()
     {
         if (OperatingSystem.IsWindows()) return;

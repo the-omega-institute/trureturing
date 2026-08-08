@@ -85,7 +85,9 @@ has_expiry_fingerprint() {
 # first stalls as "needs a semantic merge" and waits for a human that this harness has none of.
 is_derived_conflict() {
   case "$1" in
-    Meta/StrataLint/Generated/*|Generated/*|Evidence/D5/values.json) return 0 ;;
+    Evidence/D5/values.json) return 0 ;;
+    Meta/StrataLint/Generated/anchor-catalog.v1.json) return 0 ;;
+    Meta/StrataLint/Generated/scribe-emissions.v1.json) return 0 ;;
     "$FROZEN_LEDGER_PATH") return 0 ;;
     *) return 1 ;;
   esac

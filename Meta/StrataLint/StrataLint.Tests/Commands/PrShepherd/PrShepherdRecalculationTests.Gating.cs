@@ -116,17 +116,14 @@ public sealed partial class PrShepherdRecalculationTests
     }
 
     [Fact]
-    public void DerivedConflictClassifierCoversBothBaseJudgeGeneratedProjections()
+    public void DerivedConflictClassifierCoversOnlyRetainedBaseJudgeProjections()
     {
         var script = ReadShepherdScripts();
 
-        Assert.Contains(
-            "Meta/StrataLint/Generated/*",
-            script,
-            StringComparison.Ordinal);
-        Assert.Matches(
-            "Meta/StrataLint/Generated/\\*[^\\n]*return 0",
-            script);
+        Assert.DoesNotContain("Meta/StrataLint/Generated/*", script, StringComparison.Ordinal);
+        Assert.Contains(string.Join('/', "Evidence", "D5", "values.json"), script, StringComparison.Ordinal);
+        Assert.Contains(string.Join('/', "Meta", "StrataLint", "Generated", "anchor-catalog.v1.json"), script, StringComparison.Ordinal);
+        Assert.Contains(string.Join('/', "Meta", "StrataLint", "Generated", "scribe-emissions.v1.json"), script, StringComparison.Ordinal);
     }
 
     [Fact]

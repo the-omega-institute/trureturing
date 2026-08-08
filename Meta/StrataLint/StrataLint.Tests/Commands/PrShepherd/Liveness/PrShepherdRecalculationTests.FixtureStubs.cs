@@ -118,7 +118,7 @@ public sealed partial class PrShepherdRecalculationTests
                     exit 97
                   fi
                   if [[ "${PR_TEST_DERIVED:-1}" == 1 ]]; then
-                    printf '%s\n' 'Generated/artifact.md'
+                    printf '%s/%s/%s\n' 'Evidence' 'D5' 'values.json'
                   else
                     printf '%s\n' 'Blueprint/input.scribe.cs'
                   fi

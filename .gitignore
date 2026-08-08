@@ -11,4 +11,8 @@
 /.lake/
 /Papers/build/
 /build/
+/Generated/DAG.md
+/Generated/FILEMAP.md
+/Generated/echo-residual-summary.md
+/Generated/truth-graph.v1.json
 __pycache__/

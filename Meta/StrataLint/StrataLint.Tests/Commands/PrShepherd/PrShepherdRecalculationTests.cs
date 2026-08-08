@@ -5,6 +5,8 @@ namespace StrataLint.Tests;
 
 public sealed partial class PrShepherdRecalculationTests
 {
+    private static readonly string DerivedConflictPath =
+        string.Join('/', "Evidence", "D5", "values.json");
     private const string ShepherdScriptPath = "Meta/StrataLint/scripts/pr-shepherd.sh";
     private const string ShepherdLeaseScriptPath =
         "Meta/StrataLint/scripts/shepherd/pr-shepherd-lease.sh";
@@ -153,6 +155,7 @@ public sealed partial class PrShepherdRecalculationTests
             Write(seed, "Generated/artifact.md", "base artifact\n");
             Write(seed, "Generated/dev-choice.md", "base choice\n");
             Write(seed, "Generated/echo-residual-summary.md", "base echo\n");
+            Write(seed, DerivedConflictPath, "base values\n");
             Write(seed, FrozenLedgerChangeClassifier.LedgerPath, "{\"event\":\"base\"}\n");
             Write(seed, "Trureturing.lean", "base trureturing\n");
             Write(seed, "shared.txt", "base shared\n");
@@ -166,8 +169,7 @@ public sealed partial class PrShepherdRecalculationTests
 
             Git(seed, "checkout", "-b", headBranch);
             Write(seed, "Blueprint/input.scribe.cs", "feature input\n");
-            Write(seed, "Generated/artifact.md", "feature artifact\n");
-            Write(seed, "Generated/dev-choice.md", "feature choice\n");
+            Write(seed, DerivedConflictPath, "feature values\n");
             Write(seed, "Trureturing.lean", "candidate trureturing\n");
             if (sourceConflict) Write(seed, "shared.txt", "feature shared\n");
             if (ledgerConflict)
@@ -189,6 +191,7 @@ public sealed partial class PrShepherdRecalculationTests
 
             Git(seed, "checkout", "dev");
             Write(seed, "Generated/artifact.md", "dev artifact\n");
+            Write(seed, DerivedConflictPath, "dev values\n");
             if (devDeletesDerived)
                 File.Delete(Path.Combine(seed, "Generated", "dev-choice.md"));
             else

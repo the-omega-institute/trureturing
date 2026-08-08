@@ -10,14 +10,43 @@ public sealed class FileMapPolicyTests
     [Fact]
     public void RepositoryFilesConformToTheCanonicalFileMap()
     {
-        var findings = FileMapPolicy.InspectRepository(RepositoryLayout.FindRoot());
+        var root = RepositoryLayout.FindRoot();
+        var manifest = FileMapLoader.LoadRepository(root);
+        var inventory = manifest.Entries
+            .Where(static entry => entry.Kind is FileMapKind.Generated
+                && entry.RuntimeDisposition == "run-local")
+            .Select(static entry => new RunArtifactInventoryItem(
+                entry.ArtifactId, entry.Pattern, entry.Mode!))
+            .ToArray();
+        var outputRoot = Path.Combine(Path.GetTempPath(), "filemap-receipt-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(outputRoot);
+        try
+        {
+            var request = RunHandleJson.Write(new Dictionary<string, object?>
+            {
+                ["schema"] = "run-request-v1",
+                ["run_id"] = "00000000000000000000000000000000",
+                ["source_tree_sha256"] = new string('a', 64),
+                ["base_tree_sha256"] = new string('b', 64),
+                ["producer_build_sha256"] = new string('c', 64),
+                ["source_date_epoch"] = 0,
+                ["expected_artifact_inventory_sha256"] = RunHandleDigests.Inventory(inventory),
+            });
+            Assert.Equal(0, RunHandleProducer.Produce(root, outputRoot, request, inventory).ExitCode);
 
-        Assert.True(
-            findings.Count == 0,
-            string.Join(
-                Environment.NewLine,
-                findings.Select(static finding =>
-                    $"{finding.Code} {finding.Path}: {finding.Message}")));
+            var findings = FileMapPolicy.InspectRepository(root, outputRoot);
+
+            Assert.True(
+                findings.Count == 0,
+                string.Join(
+                    Environment.NewLine,
+                    findings.Select(static finding =>
+                        $"{finding.Code} {finding.Path}: {finding.Message}")));
+        }
+        finally
+        {
+            Directory.Delete(outputRoot, recursive: true);
+        }
     }
 
     [Fact]
@@ -29,6 +58,41 @@ public sealed class FileMapPolicyTests
         Assert.Contains(".caller-review-prompt.md", lines, StringComparer.Ordinal);
         Assert.Contains(".echo-review.md", lines, StringComparer.Ordinal);
         Assert.Contains(".sshx-*", lines, StringComparer.Ordinal);
+    }
+
+    [Fact]
+    public void PraContractCutsOnlyEngineIndependentAggregates()
+    {
+        var root = RepositoryLayout.FindRoot();
+        var manifest = FileMapLoader.LoadRepository(root);
+        var tracked = GitIndexRepositoryFiles.Enumerate(root)
+            .Select(static file => file.RelativePath)
+            .ToHashSet(StringComparer.Ordinal);
+        var ignores = File.ReadAllLines(Path.Combine(root, ".gitignore"))
+            .ToHashSet(StringComparer.Ordinal);
+        var cut = new[]
+        {
+            "Generated/DAG.md",
+            "Generated/FILEMAP.md",
+            "Generated/echo-residual-summary.md",
+            "Generated/truth-graph.v1.json",
+        };
+        var kept = new[] { "A-VALUES", "A-ANCHOR", "A-SCRIBE" }
+            .Select(id => Assert.Single(manifest.Entries, entry => entry.ArtifactId == id).Pattern)
+            .ToArray();
+
+        Assert.All(cut, path =>
+        {
+            Assert.Equal("run-local", Assert.Single(manifest.Match(path)).RuntimeDisposition);
+            Assert.DoesNotContain(path, tracked);
+            Assert.Contains('/' + path, ignores);
+        });
+        Assert.All(kept, path =>
+        {
+            Assert.Equal("committed-source", Assert.Single(manifest.Match(path)).RuntimeDisposition);
+            Assert.Contains(path, tracked);
+            Assert.DoesNotContain('/' + path, ignores);
+        });
     }
 
     [Fact]
