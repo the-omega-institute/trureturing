@@ -43,7 +43,7 @@ command git -C "$checkout" config user.name "PR Watch Fixture"
 command git -C "$checkout" config user.email "pr-watch@example.invalid"
 command git -C "$checkout" add Meta/StrataLint/scripts
 command git -C "$checkout" commit -m initial >/dev/null
-command git init --bare "$remote" >/dev/null
+command git init --bare --initial-branch=dev "$remote" >/dev/null
 command git -C "$checkout" remote add origin "$remote"
 command git -C "$checkout" push -u origin dev >/dev/null 2>&1
 
