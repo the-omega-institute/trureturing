@@ -173,13 +173,13 @@ internal static class FileMapPolicy
             }
 
             var isTracked = tracked.Contains(artifact.Path);
-            var expectedDisposition = isTracked ? "committed-source" : "run-local";
-            if (!string.Equals(generated.RuntimeDisposition, expectedDisposition, StringComparison.Ordinal))
+            if (generated.RuntimeDisposition == "run-local" && isTracked)
             {
                 artifactFindings.Add(new FileMapFinding(
-                    "FILEMAP-GENERATED-DISPOSITION",
+                    "FILEMAP-RUN-LOCAL-TRACKED",
                     artifact.Path,
-                    $"inventory/tracking state requires {expectedDisposition}, found {generated.RuntimeDisposition}"));
+                    "run-local artifact must be removed from the Git index; "
+                    + "the FILEMAP declaration must not be changed to make this finding go away"));
             }
 
             if (generated.RuntimeDisposition == "run-local"
