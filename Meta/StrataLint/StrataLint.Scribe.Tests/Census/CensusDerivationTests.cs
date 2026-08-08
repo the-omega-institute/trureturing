@@ -92,8 +92,6 @@ public sealed class CensusDerivationTests
                               definition_sha256: sha256:1111111111111111111111111111111111111111111111111111111111111111
                               emission_sha256: sha256:2222222222222222222222222222222222222222222222222222222222222222
                           unresolved_subitems: []
-                          chain_atoms: []
-                          tail_authorization: null
                         status:
                           migration: absorbed
                           truth: closed

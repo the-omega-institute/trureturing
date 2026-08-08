@@ -88,8 +88,6 @@ public sealed class BackfillInventoryLoaderTests
                       coverage: []
                       scribe: []
                       unresolved_subitems: []
-                      chain_atoms: []
-                      tail_authorization: null
                     status:
                       migration: residual
                       truth: open
@@ -133,8 +131,6 @@ public sealed class BackfillInventoryLoaderTests
                       coverage: []
                       scribe: []
                       unresolved_subitems: []
-                      chain_atoms: []
-                      tail_authorization: null
                     status:
                       migration: partial
                       truth: open
@@ -179,8 +175,6 @@ public sealed class BackfillInventoryLoaderTests
                       coverage: []
                       scribe: []
                       unresolved_subitems: []
-                      chain_atoms: []
-                      tail_authorization: null
                     status:
                       migration: residual
                       truth: open
@@ -193,7 +187,6 @@ public sealed class BackfillInventoryLoaderTests
 
         Assert.Equal(["synthetic-stale"], source.AcknowledgedStale.ToArray());
         Assert.Equal("theorem/1.1", entry.AstPath);
-        Assert.Null(entry.Boundary);
 
         var roundTripped = BackfillInventoryLoader.Load(
             System.Text.Encoding.UTF8.GetString(BackfillInventoryWriter.Write(inventory).AsSpan()));
@@ -235,8 +228,6 @@ public sealed class BackfillInventoryLoaderTests
                       coverage: []
                       scribe: []
                       unresolved_subitems: []
-                      chain_atoms: []
-                      tail_authorization: null
                     status:
                       migration: residual
                       truth: open
@@ -354,7 +345,7 @@ public sealed class BackfillInventoryLoaderTests
              current is not null;
              current = current.Parent)
         {
-            if (File.Exists(Path.Combine(current.FullName, BackfillInventoryLoader.RelativePath)))
+            if (Directory.Exists(Path.Combine(current.FullName, BackfillInventoryLoader.RootPath)))
             {
                 return current.FullName;
             }

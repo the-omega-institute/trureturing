@@ -331,71 +331,6 @@ public sealed partial class ProductionEnvironmentTests
             StringComparison.Ordinal);
     }
 
-    [Fact]
-    public void IngestMigratesLegacyBoundaryLedgerInOneStepAndIsIdempotent()
-    {
-        var fixture = new RuleFixture();
-        var atomizerId = SyntheticNumberedAtomizer.Id;
-        var oldBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。old。\n");
-        var currentBytes = Encoding.UTF8.GetBytes(
-            "# Synthetic\n\n**定理 1.1(A)**。rewritten。\n\n**定理 1.2(B)**。new。\n");
-        var oldAtom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, oldBytes, DigestionTestSupport.Rules).Claims);
-        var legacyLedger = LegacyIngestLedger(atomizerId, oldAtom);
-        fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
-        fixture.Baseline[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
-        InstallLedger(fixture, legacyLedger, oldAtom);
-        using var temporary = new TemporaryDirectory();
-        var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
-        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
-        File.WriteAllText(outputPath, legacyLedger, new UTF8Encoding(false));
-        var firstEnvironment = new ProductionCliEnvironment(
-            temporary.Path,
-            new FakeRepositoryGateway(
-                RawChangeSet.Create(Array.Empty<string>()),
-                Snapshot(fixture.Files),
-                Snapshot(fixture.Baseline)),
-            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
-            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
-
-        var first = firstEnvironment.Ingest(["--base", "baseline"]);
-
-        Assert.True(first.Success, first.Error);
-        Assert.Contains("stale_acknowledged=0", first.Output, StringComparison.Ordinal);
-        Assert.Contains("residual_open_added=2", first.Output, StringComparison.Ordinal);
-        Assert.Contains("ledger_changed=true", first.Output, StringComparison.Ordinal);
-        var migratedText = File.ReadAllText(outputPath);
-        Assert.DoesNotContain("boundary:", migratedText, StringComparison.Ordinal);
-        var migrated = BackfillInventoryLoader.Load(migratedText);
-        Assert.All(migrated.RequireDigestionEntries(), static entry => Assert.Null(entry.Boundary));
-        fixture.Files[BackfillInventoryLoader.RelativePath] = migratedText;
-        foreach (var entry in migrated.RequireDigestionEntries().Where(static entry =>
-                     entry.AtomId != "old-receipt"))
-        {
-            var relativePath = DigestionCasStore.RootPath
-                + entry.CasRef["sha256:".Length..];
-            fixture.Files[relativePath] = File.ReadAllText(Path.Combine(
-                temporary.Path,
-                relativePath.Replace('/', Path.DirectorySeparatorChar)));
-        }
-
-        var secondEnvironment = new ProductionCliEnvironment(
-            temporary.Path,
-            new FakeRepositoryGateway(
-                RawChangeSet.Create(Array.Empty<string>()),
-                Snapshot(fixture.Files),
-                Snapshot(fixture.Baseline)),
-            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
-            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
-
-        var second = secondEnvironment.Ingest(["--base", "baseline"]);
-
-        Assert.True(second.Success, second.Error);
-        Assert.Contains("stale_acknowledged=0", second.Output, StringComparison.Ordinal);
-        Assert.Contains("residual_open_added=0", second.Output, StringComparison.Ordinal);
-        Assert.Contains("cas_objects_written=0", second.Output, StringComparison.Ordinal);
-        Assert.Contains("ledger_changed=false", second.Output, StringComparison.Ordinal);
-        Assert.Equal(migratedText, File.ReadAllText(outputPath));
-    }
 
     private static string IngestLedger(string atomizerId, DigestionAtom atom) => $$"""
         schema_version: 3
@@ -417,8 +352,6 @@ public sealed partial class ProductionEnvironmentTests
                   coverage: []
                   scribe: []
                   unresolved_subitems: []
-                  chain_atoms: []
-                  tail_authorization: null
                 status:
                   migration: residual
                   truth: open
@@ -445,33 +378,10 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Baseline[captured.RelativePath] = text;
     }
 
-    private static string LegacyIngestLedger(string atomizerId, DigestionAtom atom) => $$"""
-        schema_version: 3
-        ledger: theory-digestion-v1
-        sources:
-          - source_id: fixture-source
-            path: {{GoldenCorpus.FixtureDigestionSourcePath}}
-            atomizer: {{atomizerId}}
-            entries:
-              - atom_id: old-receipt
-                boundary:
-                  ast_path: {{atom.AstPath}}
-                  start_byte: {{atom.StartByte}}
-                  end_byte: {{atom.EndByte}}
-                fingerprints:
-                  raw_sha256: {{atom.Fingerprints.RawSha256}}
-                  normalized_sha256: {{atom.Fingerprints.NormalizedSha256}}
-                cas_ref: {{atom.Fingerprints.RawSha256}}
-                coverage_gids: []
-                receipts:
-                  coverage: []
-                  scribe: []
-                  unresolved_subitems: []
-                  chain_atoms: []
-                  tail_authorization: null
-                status:
-                  migration: residual
-                  truth: open
-        ticket_index: []
-        """;
+    private static string LegacyIngestLedger(string atomizerId, DigestionAtom atom) =>
+        IngestLedger(atomizerId, atom).Replace(
+            $"                ast_path: {atom.AstPath}",
+            $"                boundary:\n                  ast_path: {atom.AstPath}\n                  start_byte: {atom.StartByte}\n                  end_byte: {atom.EndByte}",
+            StringComparison.Ordinal);
+
 }

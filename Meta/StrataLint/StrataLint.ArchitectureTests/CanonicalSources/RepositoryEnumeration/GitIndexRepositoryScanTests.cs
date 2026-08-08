@@ -61,10 +61,7 @@ public sealed class GitIndexRepositoryScanTests
 
     private static void WriteCanonicalSourceCopies(string repositoryRoot, string fixtureRoot)
     {
-        var inventory = BackfillInventoryLoader.Load(File.ReadAllText(Path.Combine(
-            repositoryRoot,
-            "Meta",
-            "BACKFILL.yaml")));
+        var inventory = BackfillInventoryLoader.LoadDirectory(repositoryRoot);
         var ticket = inventory.RequireTickets().First();
         var atomizer = inventory.RequireDigestionSources()
             .Select(static source => source.Atomizer)

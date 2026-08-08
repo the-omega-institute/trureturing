@@ -1,0 +1,21 @@
+ast_path: probability/Q2
+fingerprints:
+  raw_sha256: sha256:a6962d32cb2d5b0127bc20031cd895bdfb1d232901e5e21eb0a62b55e49930eb
+  normalized_sha256: sha256:a6962d32cb2d5b0127bc20031cd895bdfb1d232901e5e21eb0a62b55e49930eb
+cas_ref: sha256:a6962d32cb2d5b0127bc20031cd895bdfb1d232901e5e21eb0a62b55e49930eb
+coverage_gids:
+  - D5/S3/Quantum/FiniteDimensional.born_probability_skeleton
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/FiniteDimensional.born_probability_skeleton
+      source_sha256: sha256:a6962d32cb2d5b0127bc20031cd895bdfb1d232901e5e21eb0a62b55e49930eb
+      target_sha256: sha256:664b9ea50bca484513a28f5cd812e270f0c8da5394cdd768298b61b65e111844
+  scribe: []
+  unresolved_subitems:
+    - ledger-publicness-implies-noncontextual-additivity
+    - gleason-representation-and-uniqueness-dimension-at-least-three
+    - rank-one-pure-state-modulus-square-reduction
+    - complete-solution-space-characterization
+    - harmonic-spectral-pruning-certificate
+    - quartic-pricing-context-counterexample
+    - born-control-numerical-tolerance-certificate

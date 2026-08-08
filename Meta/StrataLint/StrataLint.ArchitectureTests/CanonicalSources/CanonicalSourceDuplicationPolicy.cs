@@ -16,8 +16,7 @@ internal static class CanonicalSourceDuplicationPolicy
 
     internal static IReadOnlyList<CanonicalSourceDuplicationFinding> InspectRepository(string repositoryRoot)
     {
-        var backfillPath = Path.Combine(repositoryRoot, "Meta", "BACKFILL.yaml");
-        var backfill = BackfillInventoryLoader.Load(File.ReadAllText(backfillPath));
+        var backfill = BackfillInventoryLoader.LoadDirectory(repositoryRoot);
         var tickets = backfill.RequireTickets()
             .Select(static ticket => (ticket.CaseId, ticket.Gid))
             .ToArray();

@@ -199,7 +199,6 @@ internal static class DigestionStatusEvaluator
         var evaluations = ImmutableArray.CreateBuilder<DigestionEntryEvaluation>(work.Count);
         foreach (var item in work)
         {
-            CompleteChainGaps(item, work);
             var truth = DeriveTruth(item, snapshot);
             var status = new DigestionStatus(item.Migration, truth);
             if (validateProjectedStatus && status != item.Entry.ProjectedStatus)
@@ -245,10 +244,7 @@ internal static class DigestionStatusEvaluator
         ImmutableArray<string>.Builder findings)
     {
         var gaps = new List<DigestionGap>();
-        var boundary = entry.Atomizer == AtomizerRegistry.NoAtomizerId
-            && entry.Boundary is not null
-                ? VerifyBoundary(entry, snapshot, gaps, findings)
-                : VerifyStructuredAlignment(entry, alignment, gaps, findings);
+        var boundary = VerifyStructuredAlignment(entry, alignment, gaps, findings);
         var targetStates = new List<(string Gid, TruthState State)>();
         var existingTargets = new Dictionary<string, RepositoryFile>(StringComparer.Ordinal);
         foreach (var gidText in entry.CoverageGids.Distinct(StringComparer.Ordinal))
@@ -362,118 +358,6 @@ internal static class DigestionStatusEvaluator
                 gaps.Add(new DigestionGap("structural-alignment-rejected", entry.AstPath));
                 return false;
         }
-    }
-
-    private static bool VerifyBoundary(
-        DigestionLedgerEntry entry,
-        RepositorySnapshot snapshot,
-        ICollection<DigestionGap> gaps,
-        ImmutableArray<string>.Builder findings)
-    {
-        var boundary = entry.Boundary;
-        if (boundary is null)
-        {
-            gaps.Add(new DigestionGap("boundary-not-reproducible", entry.AstPath));
-            return false;
-        }
-
-        if (Path.GetFileName(entry.SourcePath).Contains(' ', StringComparison.Ordinal))
-        {
-            findings.Add($"source {entry.SourceId} filename contains spaces: {entry.SourcePath}");
-        }
-
-        if (!DigestionFingerprint.IsCanonicalSha256(entry.Fingerprints.RawSha256)
-            || !DigestionFingerprint.IsCanonicalSha256(entry.Fingerprints.NormalizedSha256))
-        {
-            findings.Add($"entry {entry.AtomId} fingerprints must use canonical sha256:<64 lowercase hex>");
-            gaps.Add(new DigestionGap("fingerprint-invalid", entry.AtomId));
-            return false;
-        }
-
-        if (!snapshot.TryGetFile(entry.SourcePath, out var source))
-        {
-            gaps.Add(new DigestionGap("source-missing", entry.SourcePath));
-            return false;
-        }
-
-        if (boundary.StartByte < 0
-            || boundary.EndByte <= boundary.StartByte
-            || boundary.EndByte > source.RawBytes.Length)
-        {
-            findings.Add(
-                $"entry {entry.AtomId} byte span is outside {entry.SourcePath}; run make ingest");
-            gaps.Add(new DigestionGap("boundary-span-invalid", boundary.AstPath));
-            return false;
-        }
-
-        var storedSlice = source.RawBytes.AsSpan()[boundary.StartByte..boundary.EndByte];
-        DigestionFingerprints fingerprints;
-        try
-        {
-            fingerprints = DigestionFingerprint.Compute(storedSlice);
-        }
-        catch (DecoderFallbackException)
-        {
-            findings.Add(
-                $"entry {entry.AtomId} boundary cuts invalid UTF-8 in {entry.SourcePath}; "
-                + "run make ingest");
-            gaps.Add(new DigestionGap("boundary-not-reproducible", boundary.AstPath));
-            return false;
-        }
-
-        if (fingerprints != entry.Fingerprints)
-        {
-            findings.Add(
-                $"entry {entry.AtomId} fingerprint disagrees with its source byte span; "
-                + "run make ingest");
-            gaps.Add(new DigestionGap("boundary-fingerprint-mismatch", boundary.AstPath));
-            return false;
-        }
-
-        if (!TheoryAtomizerDataLoader.TryLoad(snapshot, out var atomizerRules))
-        {
-            // This tree predates the atomizer data surface, so the boundary cannot be re-derived
-            // against it. Recording a gap here would make a harness carrying this loader reject a
-            // tree the baseline harness admits, which conservative extension forbids. A tree that
-            // DOES carry the data file gets the full check below, and admission separately
-            // requires the file to exist (FILEMAP, registry, generated-artifact inventory), so
-            // this branch cannot be reached by deleting it from a current tree.
-            return true;
-        }
-
-        AtomizedTheoryDocument atomized;
-        try
-        {
-            atomized = AtomizerRegistry.Atomize(
-                entry.Atomizer,
-                source.RawBytes.AsSpan(),
-                atomizerRules);
-        }
-        catch (FormatException exception)
-        {
-            gaps.Add(new DigestionGap("boundary-not-reproducible", exception.Message));
-            return false;
-        }
-
-        DigestionAtom atom;
-        try
-        {
-            atom = atomized.ResolveClaim(boundary.AstPath);
-        }
-        catch (FormatException exception)
-        {
-            gaps.Add(new DigestionGap("boundary-not-reproducible", exception.Message));
-            return false;
-        }
-        if (atom.StartByte != boundary.StartByte
-            || atom.EndByte != boundary.EndByte
-            || atom.Fingerprints != entry.Fingerprints)
-        {
-            gaps.Add(new DigestionGap("boundary-fingerprint-mismatch", boundary.AstPath));
-            return false;
-        }
-
-        return true;
     }
 
     private static bool VerifyCoverageReceipts(
@@ -667,43 +551,13 @@ internal static class DigestionStatusEvaluator
     {
         foreach (var item in work)
         {
-            item.Migration = item.LocalComplete && item.Entry.Receipts.ChainAtoms.Length == 0
+            item.Migration = item.LocalComplete
                 ? DigestionMigrationState.Absorbed
                 : item.HasProgress
                     ? DigestionMigrationState.Partial
                     : DigestionMigrationState.Residual;
         }
 
-        var byId = work.ToDictionary(static item => item.Entry.AtomId, StringComparer.Ordinal);
-        var changed = true;
-        while (changed)
-        {
-            changed = false;
-            foreach (var item in work.Where(static item =>
-                         item.Migration != DigestionMigrationState.Absorbed && item.LocalComplete))
-            {
-                if (item.Entry.Receipts.ChainAtoms.All(atomId =>
-                        byId.TryGetValue(atomId, out var dependency)
-                        && dependency.Migration == DigestionMigrationState.Absorbed))
-                {
-                    item.Migration = DigestionMigrationState.Absorbed;
-                    changed = true;
-                }
-            }
-        }
-    }
-
-    private static void CompleteChainGaps(EntryWork item, IReadOnlyList<EntryWork> work)
-    {
-        var byId = work.ToDictionary(static candidate => candidate.Entry.AtomId, StringComparer.Ordinal);
-        foreach (var atomId in item.Entry.Receipts.ChainAtoms)
-        {
-            if (!byId.TryGetValue(atomId, out var dependency)
-                || dependency.Migration != DigestionMigrationState.Absorbed)
-            {
-                item.Gaps.Add(new DigestionGap("chain-migration-incomplete", atomId));
-            }
-        }
     }
 
     private static DigestionTruthState DeriveTruth(EntryWork item, RepositorySnapshot snapshot)
@@ -726,24 +580,8 @@ internal static class DigestionStatusEvaluator
                 .Where(static target => target.State == TruthState.Tail)
                 .Select(static target => target.Gid)
                 .ToArray();
-            if (item.Migration != DigestionMigrationState.Absorbed
-                || item.Entry.Receipts.TailAuthorization is null)
-            {
-                item.Gaps.Add(new DigestionGap(
-                    "tail-authorization-missing",
-                    string.Join(',', tailGids)));
-                return DigestionTruthState.Open;
-            }
-
-            if (!TailAuthorizationArtifact.Verify(item.Entry, tailGids, snapshot))
-            {
-                item.Gaps.Add(new DigestionGap(
-                    "tail-authorization-invalid",
-                    string.Join(',', tailGids)));
-                return DigestionTruthState.Open;
-            }
-
-            return DigestionTruthState.Tail;
+            item.Gaps.Add(new DigestionGap("lean-state-tail", string.Join(',', tailGids)));
+            return DigestionTruthState.Open;
         }
 
         return DigestionTruthState.Closed;

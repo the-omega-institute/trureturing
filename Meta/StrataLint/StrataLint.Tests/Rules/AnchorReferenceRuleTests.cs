@@ -166,7 +166,7 @@ public sealed class AnchorReferenceRuleTests
              current is not null;
              current = current.Parent)
         {
-            if (File.Exists(Path.Combine(current.FullName, "Meta", "BACKFILL.yaml")))
+            if (Directory.Exists(Path.Combine(current.FullName, "Meta", "Digestion", "backfill")))
             {
                 return current.FullName;
             }

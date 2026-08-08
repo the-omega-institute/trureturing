@@ -30,15 +30,10 @@ internal static class BackfillInventoryRule
 
     internal static ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context)
     {
-        if (!context.Current.TryGetFile(BackfillPath, out var file))
-        {
-            return [new RuleFinding(BackfillPath, "required governance document is missing")];
-        }
-
         BackfillInventoryDocument document;
         try
         {
-            document = BackfillInventoryLoader.Load(file.Text);
+            document = BackfillInventoryLoader.Load(context.Current);
         }
         catch (FormatException exception)
         {
@@ -249,14 +244,7 @@ internal static class BackfillInventoryRule
     }
 
     private static BackfillInventoryDocument LoadBaselineDocument(RepositorySnapshot baseline)
-    {
-        if (!baseline.TryGetFile(BackfillPath, out var baselineFile))
-        {
-            throw new FormatException("baseline digestion ledger is missing");
-        }
-
-        return BackfillInventoryLoader.Load(baselineFile.Text);
-    }
+        => BackfillInventoryLoader.Load(baseline, tolerateAbsent: true);
 
     private static void ValidateTicketIndex(
         RepositorySnapshot snapshot,

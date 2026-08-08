@@ -125,10 +125,7 @@ internal static partial class GoldenCorpus
             atomizer: none
             entries:
               - atom_id: fixture-atom
-                boundary:
-                  ast_path: manual/fixture
-                  start_byte: 0
-                  end_byte: 1
+                ast_path: manual/fixture
                 fingerprints:
                   raw_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
                   normalized_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
@@ -139,8 +136,6 @@ internal static partial class GoldenCorpus
                   coverage: []
                   scribe: []
                   unresolved_subitems: []
-                  chain_atoms: []
-                  tail_authorization: null
                 status:
                   migration: partial
                   truth: closed

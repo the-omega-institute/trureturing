@@ -75,7 +75,6 @@ internal static class DigestionCasStore
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
         var findings = ImmutableArray.CreateBuilder<string>();
-        var referencedPaths = new HashSet<string>(StringComparer.Ordinal);
         var validAtomIds = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
         foreach (var entry in document.RequireDigestionEntries())
         {
@@ -96,7 +95,6 @@ internal static class DigestionCasStore
             }
 
             var path = RootPath + reference["sha256:".Length..];
-            referencedPaths.Add(path);
             if (!snapshot.TryGetFile(path, out var blob))
             {
                 findings.Add($"entry {entry.AtomId} CAS blob is missing: {path}");
@@ -115,16 +113,6 @@ internal static class DigestionCasStore
             if (valid)
             {
                 validAtomIds.Add(entry.AtomId);
-            }
-        }
-
-        foreach (var path in snapshot.Files.Keys
-                     .Select(static path => path.Value)
-                     .Where(static path => path.StartsWith(RootPath, StringComparison.Ordinal)))
-        {
-            if (!referencedPaths.Contains(path))
-            {
-                findings.Add($"orphan CAS blob: {path}");
             }
         }
 

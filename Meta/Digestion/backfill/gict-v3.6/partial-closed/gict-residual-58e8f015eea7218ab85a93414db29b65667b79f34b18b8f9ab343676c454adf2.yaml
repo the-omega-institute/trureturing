@@ -1,0 +1,19 @@
+ast_path: theorem/1.3
+fingerprints:
+  raw_sha256: sha256:58e8f015eea7218ab85a93414db29b65667b79f34b18b8f9ab343676c454adf2
+  normalized_sha256: sha256:58e8f015eea7218ab85a93414db29b65667b79f34b18b8f9ab343676c454adf2
+cas_ref: sha256:58e8f015eea7218ab85a93414db29b65667b79f34b18b8f9ab343676c454adf2
+coverage_gids:
+  - D5/S1/Scale/CarrierFoundations.golden_carrier_foundations
+receipts:
+  coverage:
+    - gid: D5/S1/Scale/CarrierFoundations.golden_carrier_foundations
+      source_sha256: sha256:58e8f015eea7218ab85a93414db29b65667b79f34b18b8f9ab343676c454adf2
+      target_sha256: sha256:351b14e9a00f243b0d304094d2272f8f0648c9f79e4ddd3a566bf8007810dc50
+  scribe:
+    - gid: D5/S1/Scale/CarrierFoundations.golden_carrier_foundations
+      definition_sha256: sha256:a268022c9b907374e781a6b2d73d63c1107fa6b4e7945646d2fa12ba6b508821
+      emission_sha256: sha256:3e82b018a0847a9b13c4a842836bb0722107d39c73cf291c1c41313fc7f4850c
+  unresolved_subitems:
+    - conjugation-and-norm-random-scan-certificates
+    - additive-closure-random-scan-certificate

@@ -1,0 +1,5 @@
+ast_path: verdict/batch/occurrence/4
+fingerprints:
+  raw_sha256: sha256:205ceb1a5c666f5d820d182cde35a1c354dd61b637be7aeb77e4515f802c316a
+  normalized_sha256: sha256:205ceb1a5c666f5d820d182cde35a1c354dd61b637be7aeb77e4515f802c316a
+cas_ref: sha256:205ceb1a5c666f5d820d182cde35a1c354dd61b637be7aeb77e4515f802c316a

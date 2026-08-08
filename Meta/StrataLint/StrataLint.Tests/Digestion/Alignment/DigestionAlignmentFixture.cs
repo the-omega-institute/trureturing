@@ -38,8 +38,6 @@ public sealed partial class DigestionAlignmentTests
                   coverage: []
                   scribe: []
                   unresolved_subitems: []
-                  chain_atoms: []
-                  tail_authorization: null
                 status:
                   migration: residual
                   truth: open
@@ -47,10 +45,7 @@ public sealed partial class DigestionAlignmentTests
 
     private static string LegacyEntry(string atomId, DigestionAtom atom) => $$"""
                   - atom_id: {{atomId}}
-                    boundary:
-                      ast_path: {{atom.AstPath}}
-                      start_byte: {{atom.StartByte}}
-                      end_byte: {{atom.EndByte}}
+                    ast_path: {{atom.AstPath}}
                     fingerprints:
                       raw_sha256: {{atom.Fingerprints.RawSha256}}
                       normalized_sha256: {{atom.Fingerprints.NormalizedSha256}}
@@ -60,8 +55,6 @@ public sealed partial class DigestionAlignmentTests
                       coverage: []
                       scribe: []
                       unresolved_subitems: []
-                      chain_atoms: []
-                      tail_authorization: null
                     status:
                       migration: residual
                       truth: open
@@ -82,8 +75,6 @@ public sealed partial class DigestionAlignmentTests
                       coverage: []
                       scribe: []
                       unresolved_subitems: []
-                      chain_atoms: []
-                      tail_authorization: null
             """;
 
     private static string Entry(
@@ -101,8 +92,6 @@ public sealed partial class DigestionAlignmentTests
                       coverage: []
                       scribe: []
                       unresolved_subitems: []
-                      chain_atoms: []
-                      tail_authorization: null
                     status:
                       migration: residual
                       truth: open

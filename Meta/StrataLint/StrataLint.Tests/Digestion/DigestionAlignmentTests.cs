@@ -595,7 +595,6 @@ public sealed partial class DigestionAlignmentTests
         Assert.Equal(2, added.Length);
         Assert.All(added, entry =>
         {
-            Assert.Null(entry.Boundary);
             Assert.Empty(entry.CoverageGids);
             Assert.Empty(entry.Receipts.Coverage);
             Assert.Equal(DigestionMigrationState.Residual, entry.ProjectedStatus.Migration);
@@ -664,7 +663,6 @@ public sealed partial class DigestionAlignmentTests
         Assert.Equal(2, first.ResidualOpenAdded);
         var source = Assert.Single(first.Document.RequireDigestionSources());
         Assert.Empty(source.AcknowledgedStale);
-        Assert.All(source.Entries, static entry => Assert.Null(entry.Boundary));
         Assert.DoesNotContain("boundary:", Encoding.UTF8.GetString(firstBytes.AsSpan()), StringComparison.Ordinal);
         Assert.Equal(0, second.StaleAcknowledged);
         Assert.Equal(0, second.ResidualOpenAdded);

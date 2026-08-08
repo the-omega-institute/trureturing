@@ -20,9 +20,8 @@ internal static class DigestionIngestor
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(baselineDocument);
 
-        var migrationDocument = PrepareLegacyMigrations(document);
         var alignment = DigestionLedgerAligner.Evaluate(
-            migrationDocument,
+            document,
             snapshot,
             baselineDocument,
             DigestionAlignmentMode.Ingest);
@@ -36,31 +35,18 @@ internal static class DigestionIngestor
         var residualBySource = alignment.Residual
             .GroupBy(static item => item.SourceId, StringComparer.Ordinal)
             .ToDictionary(static group => group.Key, static group => group.ToArray(), StringComparer.Ordinal);
-        var atomIds = migrationDocument.RequireDigestionEntries()
+        var atomIds = document.RequireDigestionEntries()
             .Select(static entry => entry.AtomId)
             .ToHashSet(StringComparer.Ordinal);
         var sources = ImmutableArray.CreateBuilder<DigestionLedgerSource>();
         var casObjects = new Dictionary<string, DigestionCasObject>(StringComparer.Ordinal);
         var staleAcknowledged = 0;
         var residualOpenAdded = 0;
-        foreach (var source in migrationDocument.RequireDigestionSources())
+        foreach (var source in document.RequireDigestionSources())
         {
             if (!AtomizerRegistry.IsRegistered(source.Atomizer))
             {
-                if (source.Atomizer != AtomizerRegistry.NoAtomizerId)
-                {
-                    throw new FormatException($"ingest source {source.SourceId} has unknown atomizer {source.Atomizer}");
-                }
-
-                sources.Add(CaptureBoundarySource(source, snapshot, casObjects));
-                continue;
-            }
-
-            if (source.Entries.Length > 0
-                && !source.Entries.Any(static entry => entry.Boundary is null))
-            {
-                sources.Add(source);
-                continue;
+                throw new FormatException($"ingest source {source.SourceId} has unknown atomizer {source.Atomizer}");
             }
 
             var acknowledgments = source.Entries
@@ -89,10 +75,9 @@ internal static class DigestionIngestor
                         source.Atomizer,
                         item.SuggestedAtomId,
                         item.Atom.AstPath,
-                        Boundary: null,
                         item.Atom.Fingerprints,
                         CoverageGids: [],
-                        new DigestionReceipts([], [], [], [], null),
+                        new DigestionReceipts([], [], []),
                         item.ProjectedStatus,
                         ReceiptSyntax: null,
                         CasRef: captured.Reference));
@@ -108,85 +93,13 @@ internal static class DigestionIngestor
         }
 
         return new DigestionIngestPlan(
-            migrationDocument.WithDigestionSources(sources.ToImmutable()),
+            document.WithDigestionSources(sources.ToImmutable()),
             staleAcknowledged,
             residualOpenAdded,
             casObjects.Values
                 .OrderBy(static item => item.RelativePath, StringComparer.Ordinal)
                 .ToImmutableArray(),
             alignment.Fallbacks);
-    }
-
-    private static DigestionLedgerSource CaptureBoundarySource(
-        DigestionLedgerSource source,
-        RepositorySnapshot snapshot,
-        IDictionary<string, DigestionCasObject> casObjects)
-    {
-        if (!snapshot.TryGetFile(source.SourcePath, out var sourceFile))
-        {
-            throw new FormatException($"ingest source path is dangling: {source.SourcePath}");
-        }
-
-        return source with
-        {
-            Entries = source.Entries
-                .Select(entry => CaptureBoundaryEntry(
-                    entry,
-                    sourceFile.RawBytes,
-                    snapshot,
-                    casObjects))
-                .ToImmutableArray(),
-        };
-    }
-
-    private static DigestionLedgerEntry CaptureBoundaryEntry(
-        DigestionLedgerEntry entry,
-        ImmutableArray<byte> sourceBytes,
-        RepositorySnapshot snapshot,
-        IDictionary<string, DigestionCasObject> casObjects)
-    {
-        var existingBoundary = entry.Boundary
-            ?? throw new FormatException(
-                $"ingest no-atomizer entry {entry.AtomId} has no boundary");
-        var casPath = DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..];
-        if (!snapshot.TryGetFile(casPath, out var blob))
-        {
-            throw new FormatException(
-                $"ingest entry {entry.AtomId} CAS blob is missing: {casPath}");
-        }
-
-        var casObject = DigestionCasStore.Capture(blob.RawBytes.AsSpan());
-        if (casObject.Reference != entry.CasRef)
-        {
-            throw new FormatException(
-                $"ingest entry {entry.AtomId} CAS blob hash mismatch: {casPath}");
-        }
-
-        var receiptBytes = blob.RawBytes.AsSpan();
-        var start = receiptBytes.IsEmpty ? -1 : sourceBytes.AsSpan().IndexOf(receiptBytes);
-        if (start < 0)
-        {
-            throw new FormatException(
-                $"ingest entry {entry.AtomId} has no byte-exact match in {entry.SourcePath}");
-        }
-
-        if (sourceBytes.AsSpan()[(start + 1)..].IndexOf(receiptBytes) >= 0)
-        {
-            throw new FormatException(
-                $"ingest entry {entry.AtomId} has multiple byte-exact matches in {entry.SourcePath}");
-        }
-
-        var rebound = new DigestionBoundary(
-            existingBoundary.AstPath,
-            start,
-            start + receiptBytes.Length);
-        return rebound == existingBoundary
-            ? entry
-            : entry with
-            {
-                Boundary = rebound,
-                ReceiptSyntax = null,
-            };
     }
 
     private static DigestionCasObject AddCasObject(
@@ -208,22 +121,4 @@ internal static class DigestionIngestor
         return captured;
     }
 
-    private static BackfillInventoryDocument PrepareLegacyMigrations(
-        BackfillInventoryDocument document) =>
-        document.WithDigestionSources(document.RequireDigestionSources()
-            .Select(source => !AtomizerRegistry.IsRegistered(source.Atomizer)
-                ? source
-                : source with
-                {
-                    Entries = source.Entries
-                        .Select(static entry => entry.Boundary is null
-                            ? entry
-                            : entry with
-                            {
-                                Boundary = null,
-                                ReceiptSyntax = null,
-                            })
-                        .ToImmutableArray(),
-                })
-            .ToImmutableArray());
 }

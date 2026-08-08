@@ -434,7 +434,7 @@ internal sealed partial class RuleFixture
         var directory = new DirectoryInfo(AppContext.BaseDirectory);
         while (directory is not null)
         {
-            if (File.Exists(Path.Combine(directory.FullName, "Meta", "BACKFILL.yaml")))
+            if (Directory.Exists(Path.Combine(directory.FullName, "Meta", "Digestion", "backfill")))
             {
                 return directory.FullName;
             }

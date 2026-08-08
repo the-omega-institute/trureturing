@@ -1,0 +1,30 @@
+ast_path: remark/27.119
+fingerprints:
+  raw_sha256: sha256:735b1de95a92d627f7b786f4057931534c910317ef85684289e944e322cb4659
+  normalized_sha256: sha256:735b1de95a92d627f7b786f4057931534c910317ef85684289e944e322cb4659
+cas_ref: sha256:735b1de95a92d627f7b786f4057931534c910317ef85684289e944e322cb4659
+coverage_gids:
+  - D5/S3/Weil/EulerProduct.finite_euler_zero_free_and_pole_locus
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/EulerProduct.finite_euler_zero_free_and_pole_locus
+      source_sha256: sha256:735b1de95a92d627f7b786f4057931534c910317ef85684289e944e322cb4659
+      target_sha256: sha256:15cd001d32d1ff035dbe72f8066304f2aaf08d6f4eb95c8366c71635f022ba21
+  scribe:
+    - gid: D5/S3/Weil/EulerProduct.finite_euler_zero_free_and_pole_locus
+      definition_sha256: sha256:0978a97d691a6320b30512c7104f2a6f616213afc3ee3524998c848fd1822bc1
+      emission_sha256: sha256:e996c1d6f3fdfa4eb491bb2b3e86e4b7450755e62996a1b9e41f4995ca74c6a3
+  unresolved_subitems:
+    - finite-euler-window-at-first-zero-numerical-certificate
+    - prime-seven-deletion-preserves-nontrivial-zeta-zeros
+    - prime-deletion-numerical-invariance-certificate
+    - finite-prime-modification-preserves-global-zero-set
+    - log-prime-rational-independence-from-unique-factorization
+    - weyl-dense-winding-of-zero-prime-phases
+    - zero-as-infinite-dimensional-kronecker-torus-orbit
+    - zero-contribution-amplitude-x-beta-cos-gamma-log-x
+    - rh-equal-loudness-square-root-x-bound
+    - functional-equation-pairs-off-line-loudness-quartets
+    - dirichlet-l-functions-silence-ramified-primes
+    - zeta-has-no-silent-prime-address
+    - bragg-peaks-invariant-under-finite-modification

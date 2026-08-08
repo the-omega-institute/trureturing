@@ -1,0 +1,5 @@
+ast_path: observation/6.144
+fingerprints:
+  raw_sha256: sha256:c5bf8dea0fa3142ee74d1b5d1888c2f79d98f7218f5ec5d875013a37bb3fbbde
+  normalized_sha256: sha256:c5bf8dea0fa3142ee74d1b5d1888c2f79d98f7218f5ec5d875013a37bb3fbbde
+cas_ref: sha256:c5bf8dea0fa3142ee74d1b5d1888c2f79d98f7218f5ec5d875013a37bb3fbbde

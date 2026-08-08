@@ -545,12 +545,6 @@ internal static class CoverWorld
         string? tailAuthPath = null;
         string? tailAuthSha = null;
         var tailAuthBytes = ImmutableArray<byte>.Empty;
-        if (spec.TailAuthorized)
-        {
-            tailAuthBytes = TailAuthorizationArtifact.Write(spec.AtomId, [spec.Gid]);
-            tailAuthPath = TailAuthorizationArtifact.PathFor(spec.AtomId);
-            tailAuthSha = DigestionFingerprint.Compute(tailAuthBytes.AsSpan()).RawSha256;
-        }
 
         var ledger = BuildLedger(
             spec,

@@ -1,0 +1,31 @@
+ast_path: remark/27.29
+fingerprints:
+  raw_sha256: sha256:8ed66d6b839f82427bfca74e4dcd8e5684c06a56deaf0d7ec8e1b284f89adfec
+  normalized_sha256: sha256:8ed66d6b839f82427bfca74e4dcd8e5684c06a56deaf0d7ec8e1b284f89adfec
+cas_ref: sha256:8ed66d6b839f82427bfca74e4dcd8e5684c06a56deaf0d7ec8e1b284f89adfec
+coverage_gids:
+  - D5/S3/Weil/SpectralDynamics.critical_line_characterizations
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/SpectralDynamics.critical_line_characterizations
+      source_sha256: sha256:8ed66d6b839f82427bfca74e4dcd8e5684c06a56deaf0d7ec8e1b284f89adfec
+      target_sha256: sha256:a8edfa970f6658782b937e625f012faa0c0f890994cdb2ce249fe10a499ded1c
+  scribe:
+    - gid: D5/S3/Weil/SpectralDynamics.critical_line_characterizations
+      definition_sha256: sha256:2a1ce01b845c8198544488a2e16ebbf6b9cf8dc7bc90625e985080b5f5d11e26
+      emission_sha256: sha256:7113caf73db1e94703540e1be0acc6ab04d2e605d436b1cfae1a7dd852d9d9df
+  unresolved_subitems:
+    - off-line-zeros-preserve-listed-functional-identities
+    - off-line-zeros-violate-li-weil-qn-and-fluctuation-inequalities
+    - bohr-landau-measure-zero-interpretation
+    - integral-equalities-versus-pointwise-inequalities-dichotomy
+    - off-line-zero-as-virtual-vacuum-excitation
+    - rh-as-zero-vacuum-with-no-real-excitations
+    - bridge-conditional-variance-t-times-one-minus-t
+    - bridge-variance-five-point-numerical-certificate
+    - time-motion-as-product-of-distances-from-knowledge-endpoints
+    - xi-factor-s-times-s-minus-one-as-endpoint-debt-cancellation
+    - xi-zero-and-one-endpoint-values-equal-one-half
+    - completed-xi-as-pure-mid-interval-fluctuation-ledger
+    - phase-time-versus-irreversible-ledger-time
+    - finite-observer-motion-as-source-of-time-flow

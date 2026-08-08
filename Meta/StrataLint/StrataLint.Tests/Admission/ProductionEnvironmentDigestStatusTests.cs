@@ -40,8 +40,6 @@ public sealed partial class ProductionEnvironmentTests
                       coverage: []
                       scribe: []
                       unresolved_subitems: []
-                      chain_atoms: []
-                      tail_authorization: null
                     status:
                       migration: residual
                       truth: open

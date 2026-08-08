@@ -131,7 +131,8 @@ public sealed class CapacityPolicyTests
         Assert.Empty(findings);
     }
 
-    // The backfill inventory path, restated here only to exercise the exclusion;
+    // A synthetic backfill atom path, used only to exercise the exclusion;
     // the enforcement source is RepositoryRules.IsCapacityExcluded.
-    private const string BackfillInventoryRelativePath = "Meta/BACKFILL.yaml";
+    private const string BackfillInventoryRelativePath =
+        "Meta/Digestion/backfill/source/residual-open/atom.yaml";
 }
