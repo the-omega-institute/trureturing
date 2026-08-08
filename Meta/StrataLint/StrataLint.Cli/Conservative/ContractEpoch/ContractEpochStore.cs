@@ -127,7 +127,7 @@ internal sealed class ContractEpochStore
 
     private static ImmutableHashSet<string> LoadC0Anchors(RepositorySnapshot snapshot)
     {
-        return C0CeremonyProjection.TryCreateAnchorAddressRecords(snapshot, out var records)
+        return C0CeremonyProjection.TryCreateAnchorCustodianReferences(snapshot, out var records)
             ? records.ToImmutableHashSet(StringComparer.Ordinal)
             : ImmutableHashSet<string>.Empty.WithComparer(StringComparer.Ordinal);
     }
