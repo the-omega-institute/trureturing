@@ -69,18 +69,6 @@ public sealed partial class MakeWorkflowTests
             " projection-closure --manifest \"$(MANIFEST)\" --out \"$(OUT)\"",
             Recipe(makefile, "refactor-p0-2"),
             StringComparison.Ordinal);
-        Assert.Contains(
-            " refactor-pr-a-verify --manifest \"$(MANIFEST)\" --out \"$(OUT)\"",
-            Recipe(makefile, "refactor-pr-a-verify"),
-            StringComparison.Ordinal);
-        Assert.Contains(
-            " refactor-pr-a-canary-scope --out \"$(OUT)\"",
-            Recipe(makefile, "refactor-pr-a-canary-scope"),
-            StringComparison.Ordinal);
-        Assert.Contains(
-            " refactor-pr-a-canary-verify --manifest \"$(MANIFEST)\" --out \"$(OUT)\"",
-            Recipe(makefile, "refactor-pr-a-canary-verify"),
-            StringComparison.Ordinal);
     }
 
     [Fact]

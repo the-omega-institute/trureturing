@@ -18,6 +18,7 @@ internal static class DescribeReportWriter
             case_id = DescribeReport.CaseId,
             status = report.Status,
             open_count = report.OpenCount,
+            projection_open_count = report.ProjectionOpenCount,
             node_stats = new
             {
                 total = report.NodeStats.Total,
@@ -29,6 +30,7 @@ internal static class DescribeReportWriter
             },
             suspected_novel = report.SuspectedNovel.Select(Node),
             unassessed = report.Unassessed.Select(Node),
+            unprojectable = report.Unprojectable.Select(Node),
             nodes = report.Nodes.Select(Node),
             red_findings = report.RedFindings.Select(static finding => new
             {
@@ -65,6 +67,10 @@ internal static class DescribeReportWriter
         {
             writer.WriteLine($"UNASSESSED node={node.NodeId} title={JsonSerializer.Serialize(node.Title)}");
         }
+        foreach (var node in report.Unprojectable)
+        {
+            writer.WriteLine($"OPEN projection node={node.NodeId} reason={node.ProjectionFailureReason}");
+        }
         foreach (var finding in report.RedFindings)
         {
             writer.WriteLine(
@@ -86,6 +92,8 @@ internal static class DescribeReportWriter
         kind = node.Kind,
         title = node.Title,
         statement_kind = node.StatementKind,
+        formula_provenance = node.FormulaProvenance,
+        projection_failure_reason = node.ProjectionFailureReason,
         provenance = node.Provenance,
         literature_gid = node.LiteratureGid,
     };

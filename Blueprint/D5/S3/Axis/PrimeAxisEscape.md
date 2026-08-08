@@ -15,3 +15,7 @@ $$\forall S\subset_{\operatorname{fin}}\mathbb{N},\ (\forall p\in S,\ p\ \text{p
 *Commentary.*
 
 For a finite set S consisting only of natural primes, its product plus one is congruent to one modulo every prime in S. The same number has a prime divisor q outside S, supplied as an explicit existential witness together with primality, divisibility, and non-membership. This is the finite-set escape form of Euclid's classical argument; the formal theorem does not assert any later encoding or tail interpretation. The proof uses Mathlib's existence of a prime divisor for a natural different from one, then rules out membership in S because a common divisor of the product and the product plus one would divide one. No numerical certificate is asserted.
+
+## References
+
+- Truth anchor: `D5/S3/Axis/PrimeAxisEscape.prime_axis_escape`
