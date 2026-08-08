@@ -29,11 +29,7 @@ internal sealed class ObserverMetricDocument : IScribeDocumentDefinition
                         + "represented commutator. If every register commutes, applying the "
                         + "identity to the constant-one register extracts each coefficient. "
                         + "Conversely, zero defect makes every coefficient times every predecessor "
-                        + "amplitude vanish.")),
-                    Paragraph(Text(
-                        "Provenance note: OBSERVER-QUANTUM.md, Section 3 motivates the observer "
-                        + "metric through read-update noncommutativity. The theorem here is the "
-                        + "repository-derived finite-register statement. It asserts no universal "
+                        + "amplitude vanish. This finite-register theorem asserts no universal "
                         + "C*-algebra, operator norm, Connes metric, or Rieffel structure.")))
             ),
             DocumentBlock.Describe.Theorem(
