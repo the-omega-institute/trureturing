@@ -9,21 +9,25 @@ internal sealed class MeasurementMarginalDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
         Header(
             "D5/S3/Observer/MeasurementMarginal",
-            "Any surviving indexed address record keeps the system marginal off-diagonal-free."),
+            "A copied address record makes the traced system marginal off-diagonal-free."),
         H("Copied-Record Measurement Marginals"),
         Blocks(
             Paragraph(Text(
                 "Library-search note: local mathlib and D5 searches for partial trace, environment "
                 + "marginal, unread state, pinching, Lueders, and projective measurement found no theorem "
-                + "for this concrete copied-record marginal or its partially erased indexed-copy form. "
-                + "The proofs reuse the EnvironmentRecords definitions and the finite sum/product lemmas "
-                + "from mathlib.")),
+                + "identifying this concrete copied-record marginal with an unread measurement map. The "
+                + "proofs reuse the EnvironmentRecords definitions and finite-sum lemmas from mathlib.")),
             Paragraph(Text(
                 "Interface deviation: Conditioning is absent from this worktree's origin/dev base. This "
                 + "module does not duplicate IsRecordMeasurement or unreadState; it states the concrete "
                 + "address-block sum directly. The generic controlled-record trace identity is owned by "
                 + "EnvironmentRecords. Once Conditioning lands, a downstream bridge may identify the block "
                 + "sum with its canonical unread state.")),
+            Paragraph(Text(
+                "Unresolved: a multiple-environment statement requires a joint state over all copy "
+                + "factors, a subsystem partial trace, and an explicit erasure operation. Those generic "
+                + "quantum constructions are deferred to an environment-infrastructure round rather than "
+                + "postulated in this Observer module.")),
             DocumentBlock.Describe.Theorem(
                 DescribeId.Create("copied-record-marginal-is-the-address-block-sum"),
                 H("Copied-record marginal is the address-block sum"),
@@ -39,18 +43,16 @@ internal sealed class MeasurementMarginalDocument : IScribeDocumentDefinition
                     + "the sole owner of the unread-state definition.")))
             ),
             DocumentBlock.Describe.Theorem(
-                DescribeId.Create("any-surviving-address-copy-blocks-renewed-coherence"),
-                H("Any surviving address copy blocks renewed coherence"),
+                DescribeId.Create("one-copied-address-record-has-zero-off-diagonal-marginal"),
+                H("One copied address record has zero off-diagonal marginal"),
                 LeanTheorem(
-                    "D5/S3/Observer/MeasurementMarginal.surviving_copied_record_offDiagonal_eq_zero"),
-                SurvivingCopyFormula(),
+                    "D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_offDiagonal_eq_zero"),
+                CopiedOffDiagonalFormula(),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
-                    "Let R be a finite index family of independent environment records and let A be the "
-                    + "set of erased indices. The retained marginal multiplies rho_ij by the Gram overlap "
-                    + "from every index outside A. If any surviving index carries copiedAddressRecord, its "
-                    + "overlap is zero for i distinct from j, so the whole product and the marginal entry "
-                    + "are zero. Full erasure is deliberately outside the theorem's premise.")))
+                    "The theorem starts with the explicit controlledRecordJointState for the delta record "
+                    + "and applies traceEnvironment. The derived address-block identity leaves only diagonal "
+                    + "system entries, so every entry with i distinct from j is zero.")))
             ))));
 
     private static Formula CopiedMarginalFormula() => Disp(Seq(
@@ -61,20 +63,11 @@ internal sealed class MeasurementMarginalDocument : IScribeDocumentDefinition
         F.Id("P"), Underscore, Grp(F.Id("a")), Rho,
         F.Id("P"), Underscore, Grp(F.Id("a")), Dot));
 
-    private static Formula SurvivingCopyFormula() => Disp(Seq(
-        Forall, Sp, Kappa, Comma, Esc,
-        Forall, Sp, F.Id("R"), Colon, Sp, Kappa, To, Sp,
-        Operatorname, Grp(F.Id("EnvironmentRecord")), Comma, Esc,
-        Forall, Sp, F.Id("A"), Subset, Underscore, Grp(Operatorname, Grp(F.Id("fin"))),
-        Kappa, Comma, Rho, Comma,
-        F.Id("i"), Comma, F.Id("j"), Comma, Esc,
-        Open, Exists, Sp, F.Id("s"), InMacro, Sp, Kappa, Setminus, F.Id("A"), Comma, Esc,
-        F.Id("R"), Underscore, Grp(F.Id("s")), Eq, F.Id("copy"), Close,
-        Sp, Land, Sp, F.Id("i"), Neq, Sp, F.Id("j"), Sp, Rightarrow, Sp,
-        RetainedMarginal(), Underscore, Grp(F.Id("ij")), Eq, D(0), Dot));
-
-    private static Formula RetainedMarginal() => Seq(
-        F.Id("M"), Underscore, Grp(F.Id("R"), Comma, F.Id("A")), Open, Rho, Close);
+    private static Formula CopiedOffDiagonalFormula() => Disp(Seq(
+        Forall, Sp, Rho, Comma, F.Id("i"), Comma, F.Id("j"), Comma, Esc,
+        F.Id("i"), Neq, Sp, F.Id("j"), Sp, Rightarrow, Sp,
+        Open, Operatorname, Grp(F.Id("tr")), Underscore, Grp(F.Id("E")),
+        Joint("copy"), Close, Underscore, Grp(F.Id("ij")), Eq, D(0), Dot));
 
     private static Formula Joint(string record) => Seq(
         F.Id("J"), Underscore, Grp(F.Id(record)), Open, Rho, Close);
