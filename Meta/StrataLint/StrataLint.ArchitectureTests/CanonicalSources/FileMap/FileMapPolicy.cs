@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using System.Security.Cryptography;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using StrataLint.Cli;
 using StrataLint.Engine;
@@ -7,6 +9,13 @@ using StrataLint.Scribe;
 namespace StrataLint.ArchitectureTests;
 
 internal sealed record FileMapFinding(string Code, string Path, string Message);
+internal sealed record RunLocalArtifactReceipt(
+    string ArtifactId,
+    string Path,
+    string Mode,
+    string Sha256,
+    string VerifierId,
+    bool Verified);
 
 internal static class FileMapPolicy
 {
@@ -96,16 +105,58 @@ internal static class FileMapPolicy
                 "Meta/registry.yaml",
                 "registry failed to load before FILEMAP alignment")];
 
+        var runLocalReceipts = LoadRunLocalReceipts(manifest);
         return InspectCoverage(manifest, paths)
             .Concat(registryFindings)
             .Concat(InspectDataVerifiers(manifest, availableVerifiers))
-            .Concat(InspectGeneratedInventory(manifest, paths, GeneratedArtifactInventory.All))
+            .Concat(InspectGeneratedInventory(manifest, paths, GeneratedArtifactInventory.All, runLocalReceipts))
             .Concat(InspectDeclaredModes(manifest, trackedModes))
             .Concat(InspectDirectoryKinds(manifest, paths))
             .Concat(InspectDependencies(manifest, files))
             .OrderBy(static finding => finding.Path, StringComparer.Ordinal)
             .ThenBy(static finding => finding.Code, StringComparer.Ordinal)
             .ToArray();
+    }
+
+    private static IReadOnlyList<RunLocalArtifactReceipt> LoadRunLocalReceipts(FileMapManifest manifest)
+    {
+        var runLocal = manifest.Entries
+            .Where(static entry => entry.Kind is FileMapKind.Generated
+                && entry.RuntimeDisposition == "run-local" && entry.ArtifactId != "none")
+            .Select(static entry => new RunArtifactInventoryItem(entry.ArtifactId, entry.Pattern, entry.Mode!))
+            .OrderBy(static entry => entry.Path, StringComparer.Ordinal)
+            .ToArray();
+        if (runLocal.Length == 0) return [];
+        var outputRoot = Environment.GetEnvironmentVariable("STRATALINT_RUN_RECEIPT_ROOT");
+        if (string.IsNullOrWhiteSpace(outputRoot) || !Path.IsPathFullyQualified(outputRoot)) return [];
+        try
+        {
+            using var handle = RunHandleJson.ParseCanonical(File.ReadAllBytes(Path.Combine(outputRoot, "handle.json")));
+            var expectedRequest = handle.RootElement.GetProperty("request_sha256").GetString()!;
+            if (RunHandleConsumer.Consume(outputRoot, expectedRequest, runLocal).ExitCode != 0) return [];
+            var runId = handle.RootElement.GetProperty("run_id").GetString()!;
+            using var receipt = RunHandleJson.ParseCanonical(
+                File.ReadAllBytes(Path.Combine(outputRoot, runId, "receipt.json")));
+            var verifier = receipt.RootElement.GetProperty("verifiers").EnumerateArray().Single();
+            if (verifier.GetProperty("id").GetString() != "artifact-byte-verifier-v1"
+                || verifier.GetProperty("disposition").GetString() != "pass") return [];
+            return receipt.RootElement.GetProperty("artifacts").EnumerateArray().Select(item =>
+            {
+                var path = item.GetProperty("path").GetString()!;
+                var sha = item.GetProperty("sha256").GetString()!;
+                var actual = Convert.ToHexStringLower(SHA256.HashData(
+                    File.ReadAllBytes(Path.Combine(outputRoot, runId, path))));
+                return new RunLocalArtifactReceipt(
+                    item.GetProperty("artifact_id").GetString()!, path,
+                    item.GetProperty("mode").GetString()!, sha,
+                    "artifact-byte-verifier-v1", actual == sha);
+            }).ToArray();
+        }
+        catch (Exception exception) when (exception is IOException or UnauthorizedAccessException
+            or FormatException or JsonException or InvalidOperationException or CryptographicException)
+        {
+            return [];
+        }
     }
 
     internal static IReadOnlyList<FileMapFinding> InspectDeclaredModes(
@@ -132,7 +183,8 @@ internal static class FileMapPolicy
     internal static IReadOnlyList<FileMapFinding> InspectGeneratedInventory(
         FileMapManifest manifest,
         IEnumerable<string> trackedPaths,
-        IReadOnlyList<GeneratedArtifactIdentity> inventory)
+        IReadOnlyList<GeneratedArtifactIdentity> inventory,
+        IReadOnlyList<RunLocalArtifactReceipt>? receipts = null)
     {
         ArgumentNullException.ThrowIfNull(manifest);
         ArgumentNullException.ThrowIfNull(trackedPaths);
@@ -218,7 +270,16 @@ internal static class FileMapPolicy
             }
 
             findings.AddRange(artifactFindings);
-            if (isTracked || (artifactFindings.Count == 0 && generated.RuntimeDisposition == "run-local"))
+            var receiptMatches = receipts?.Where(receipt =>
+                receipt.Verified
+                && receipt.ArtifactId == artifact.ArtifactId
+                && receipt.Path == artifact.Path
+                && receipt.Mode == generated.Mode
+                && receipt.VerifierId == "artifact-byte-verifier-v1"
+                && Regex.IsMatch(receipt.Sha256, "^[0-9a-f]{64}$", RegexOptions.CultureInvariant))
+                .Count() == 1;
+            if (isTracked || (artifactFindings.Count == 0
+                && generated.RuntimeDisposition == "run-local" && receiptMatches))
             {
                 continue;
             }

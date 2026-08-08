@@ -26,6 +26,7 @@ internal interface ICliEnvironment
     ExplicitCommandResult RunProduce(IReadOnlyList<string> arguments) => new(2, string.Empty, "RUN_PRODUCER_INVALID environment unavailable\n");
     ExplicitCommandResult RunConsume(IReadOnlyList<string> arguments) => new(2, string.Empty, "RUN_CONSUMER_INVALID environment unavailable\n");
     ExplicitCommandResult RefactorPrAVerify(IReadOnlyList<string> arguments) => new(2, string.Empty, "PR_A_VERIFY_INVALID environment unavailable\n");
+    ExplicitCommandResult RefactorQuotient(IReadOnlyList<string> arguments) => new(2, string.Empty, "QUOTIENT_INVALID environment unavailable\n");
     ExplicitCommandResult RefactorPrACanaryScope(IReadOnlyList<string> arguments) => new(2, string.Empty, "PR_A_CANARY_INVALID environment unavailable\n");
     ExplicitCommandResult RefactorPrACanaryVerify(IReadOnlyList<string> arguments) => new(2, string.Empty, "PR_A_CANARY_INVALID environment unavailable\n");
 
@@ -152,6 +153,7 @@ internal static class CliApplication
             "run-produce" => RenderExplicit(environment.RunProduce(tail), console),
             "run-consume" => RenderExplicit(environment.RunConsume(tail), console),
             "refactor-pr-a-verify" => RenderExplicit(environment.RefactorPrAVerify(tail), console),
+            "refactor-quotient" => RenderExplicit(environment.RefactorQuotient(tail), console),
             "refactor-pr-a-canary-scope" => RenderExplicit(environment.RefactorPrACanaryScope(tail), console),
             "refactor-pr-a-canary-verify" => RenderExplicit(environment.RefactorPrACanaryVerify(tail), console),
             "perf-append" => RenderCommand(environment.AppendPerf(tail), console),

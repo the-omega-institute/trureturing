@@ -75,6 +75,7 @@ public sealed partial class MakeWorkflowTests
         "refactor-pr-a-verify",
         "refactor-pr-a-canary-verify",
         "refactor-pr-a-canary-scope",
+        "refactor-quotient",
     ];
 
     [Fact]

@@ -41,6 +41,25 @@ internal sealed class PrARealRebuildRunner : IDisposable
 
     internal string PinnedCommit => pinnedCommit;
 
+    internal static T InPinnedCheckout<T>(string repositoryRoot, string commit, Func<string, T> action)
+    {
+        var scratch = Path.Combine(Path.GetTempPath(), "stratalint-quotient-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(scratch);
+        var checkout = Path.Combine(scratch, "checkout");
+        try
+        {
+            Run("git", ["worktree", "add", "--detach", checkout, commit], repositoryRoot, TimeSpan.FromMinutes(2));
+            Run("make", ["--no-print-directory", "dotnet"], checkout, TimeSpan.FromMinutes(20));
+            return action(checkout);
+        }
+        finally
+        {
+            _ = BoundedProcessRunner.Run("git", ["worktree", "remove", "--force", checkout],
+                repositoryRoot, TimeSpan.FromMinutes(2), 1024 * 1024);
+            if (Directory.Exists(scratch)) Directory.Delete(scratch, recursive: true);
+        }
+    }
+
     internal PrARealRebuildOutcome Rebuild(
         PrAMatrixCase testCase,
         string manifest,

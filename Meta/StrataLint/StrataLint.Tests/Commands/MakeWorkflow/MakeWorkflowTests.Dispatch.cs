@@ -81,6 +81,10 @@ public sealed partial class MakeWorkflowTests
             " refactor-pr-a-canary-verify --manifest \"$(MANIFEST)\" --out \"$(OUT)\"",
             Recipe(makefile, "refactor-pr-a-canary-verify"),
             StringComparison.Ordinal);
+        Assert.Contains(
+            " refactor-quotient --case \"$(CASE)\" --out \"$(OUT)\"",
+            Recipe(makefile, "refactor-quotient"),
+            StringComparison.Ordinal);
     }
 
     [Fact]

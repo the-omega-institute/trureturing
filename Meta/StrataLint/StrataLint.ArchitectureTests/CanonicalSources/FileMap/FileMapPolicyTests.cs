@@ -343,12 +343,8 @@ public sealed class FileMapPolicyTests
         Assert.Equal("FILEMAP-GENERATED-PRODUCER", finding.Code);
     }
 
-    [Theory]
-    [InlineData("run-local", false)]
-    [InlineData("committed-source", true)]
-    public void UntrackedGeneratedInventoryRespectsRuntimeDisposition(
-        string runtimeDisposition,
-        bool expectsStaleFinding)
+    [Fact]
+    public void UntrackedRunLocalWithoutReceiptRemainsStale()
     {
         var manifest = Parse(DispositionEntry(
             "Generated/output.json",
@@ -356,16 +352,48 @@ public sealed class FileMapPolicyTests
             "JsonEmitter",
             "reader",
             "emit-check",
-            runtimeDisposition,
+            "run-local",
             "A-OUTPUT"));
         var inventory = new GeneratedArtifactIdentity(
             "Generated/output.json", "JsonEmitter", "emit-check", "A-OUTPUT");
 
         var findings = FileMapPolicy.InspectGeneratedInventory(manifest, [], [inventory]);
 
-        Assert.Equal(
-            expectsStaleFinding,
-            findings.Any(static finding => finding.Code == "FILEMAP-GENERATED-STALE-INVENTORY"));
+        Assert.Contains(findings, static finding => finding.Code == "FILEMAP-GENERATED-STALE-INVENTORY");
+    }
+
+    [Fact]
+    public void UntrackedRunLocalWithStaleReceiptRemainsStale()
+    {
+        var manifest = Parse(DispositionEntry(
+            "Generated/output.json", "generated", "JsonEmitter", "reader", "emit-check",
+            "run-local", "A-OUTPUT"));
+        var inventory = new GeneratedArtifactIdentity(
+            "Generated/output.json", "JsonEmitter", "emit-check", "A-OUTPUT");
+        var receipt = new RunLocalArtifactReceipt(
+            "A-OUTPUT", "Generated/output.json", "100644", new string('a', 64),
+            "artifact-byte-verifier-v1", false);
+
+        var findings = FileMapPolicy.InspectGeneratedInventory(manifest, [], [inventory], [receipt]);
+
+        Assert.Contains(findings, static finding => finding.Code == "FILEMAP-GENERATED-STALE-INVENTORY");
+    }
+
+    [Fact]
+    public void UntrackedRunLocalWithVerifiedMatchingReceiptIsExempt()
+    {
+        var manifest = Parse(DispositionEntry(
+            "Generated/output.json", "generated", "JsonEmitter", "reader", "emit-check",
+            "run-local", "A-OUTPUT"));
+        var inventory = new GeneratedArtifactIdentity(
+            "Generated/output.json", "JsonEmitter", "emit-check", "A-OUTPUT");
+        var receipt = new RunLocalArtifactReceipt(
+            "A-OUTPUT", "Generated/output.json", "100644", new string('a', 64),
+            "artifact-byte-verifier-v1", true);
+
+        var findings = FileMapPolicy.InspectGeneratedInventory(manifest, [], [inventory], [receipt]);
+
+        Assert.DoesNotContain(findings, static finding => finding.Code == "FILEMAP-GENERATED-STALE-INVENTORY");
     }
 
     [Fact]
