@@ -410,6 +410,35 @@ public sealed class FileMapPolicyTests
         Assert.Contains("mode", exception.Message, StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void CommittedGeneratedEntryMissingModeIsRejectedByTheRedFixture()
+    {
+        var source = DispositionEntry(
+            "Generated/output.json", "generated", "JsonEmitter", "reader", "emit-check",
+            "committed-source", "A-OUTPUT").Replace("mode = \"100644\"\n", string.Empty, StringComparison.Ordinal);
+
+        var exception = Assert.Throws<FormatException>(() => Parse(source));
+
+        Assert.Contains("mode", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void WrongDeclaredCommittedModeIsRejectedByTheRedFixture()
+    {
+        var manifest = Parse(DispositionEntry(
+            "Generated/output.json", "generated", "JsonEmitter", "reader", "emit-check",
+            "committed-source", "A-OUTPUT").Replace("100644", "100755", StringComparison.Ordinal));
+
+        var finding = Assert.Single(FileMapPolicy.InspectDeclaredModes(
+            manifest,
+            new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                ["Generated/output.json"] = "100644",
+            }));
+
+        Assert.Equal("FILEMAP-GENERATED-MODE", finding.Code);
+    }
+
     [Theory]
     [InlineData("Generated/manual.md", "data", "FILEMAP-DIRECTORY-KIND")]
     [InlineData("Meta/StrataLint/cases.toml", "data", "FILEMAP-DATA-RESIDENCE")]
@@ -502,6 +531,7 @@ public sealed class FileMapPolicyTests
         authority = "self"
         runtime_disposition = "{{runtimeDisposition}}"
         artifact_id = "{{artifactId}}"
-        {{(runtimeDisposition == "run-local" ? "mode = \"100644\"\nhistory_requirement = \"not-required\"" : string.Empty)}}
+        mode = "100644"
+        history_requirement = "not-required"
         """ + "\n";
 }
