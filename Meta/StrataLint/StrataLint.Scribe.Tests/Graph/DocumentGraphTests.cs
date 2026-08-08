@@ -142,7 +142,7 @@ public sealed class DocumentGraphTests
     }
 
     [Fact]
-    public void ReceiptBoundDocumentsKeepEdgeFreeEmissionBytes()
+    public void ReceiptBoundDocumentsStillCarryImplicitDescribeTruthAnchors()
     {
         var source = DocumentWithLeanAnchor(
             "D5/S0/Test/Source",
@@ -154,10 +154,20 @@ public sealed class DocumentGraphTests
             report,
             autoWireDocumentGids: new HashSet<string>(StringComparer.Ordinal));
 
-        Assert.Empty(graph.For(source));
-        var markdown = Encoding.UTF8.GetString(
-            CanonicalMarkdownWriter.Write(source, report, graph: graph).AsSpan());
-        Assert.DoesNotContain("## References", markdown, StringComparison.Ordinal);
+        var anchor = Assert.Single(graph.For(source).OfType<DocumentEdge.TruthAnchor>());
+        Assert.Equal("anchor", anchor.DescribeId?.Value);
+    }
+
+    [Fact]
+    public void CoDeclarationDescribesRemainDistinct()
+    {
+        var declaration = LeanDeclarationRef.Create("D5/S0/Test/Source.anchor");
+        var source = DocumentWithTwoLeanAnchors("D5/S0/Test/Source", declaration);
+        var graph = DocumentGraphAssembler.Assemble([source], LeanReport(declaration));
+
+        var anchors = graph.For(source).OfType<DocumentEdge.TruthAnchor>().ToArray();
+        Assert.Equal(2, anchors.Length);
+        Assert.Equal(["first", "second"], anchors.Select(anchor => anchor.DescribeId!.Value));
     }
 
     private static ScribeDocument Document(
@@ -211,6 +221,23 @@ public sealed class DocumentGraphTests
                         ])),
                     ])),
             ]));
+
+    private static ScribeDocument DocumentWithTwoLeanAnchors(string gid, LeanDeclarationRef declaration) =>
+        ScribeDocument.Create(
+            DocumentHeader.Create(GidRef.Create(gid), Generality.Instance,
+                GidRef.Create("D5/B/" + gid["D5/".Length..]),
+                new EvidenceMirror.Waiver(WaiverReason.Create("test-only")), [], Digest.Create("Test document.")),
+            Heading.Create(gid),
+            BlockSequence.Create([
+                DocumentBlock.Describe.Definition(DescribeId.Create("first"), Heading.Create("First"), declaration,
+                    DescribeProvenance.RepoDerived(), Body()),
+                DocumentBlock.Describe.Definition(DescribeId.Create("second"), Heading.Create("Second"), declaration,
+                    DescribeProvenance.RepoDerived(), Body()),
+            ]));
+
+    private static BlockSequence Body() => BlockSequence.Create([
+        new DocumentBlock.Paragraph(InlineSequence.Create([new Inline.Text(TextRun.Create("Body."))])),
+    ]);
 
     private static LeanAxiomReport LeanReport(LeanDeclarationRef reference) =>
         LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>

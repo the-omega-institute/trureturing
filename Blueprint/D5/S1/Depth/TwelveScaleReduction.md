@@ -56,5 +56,9 @@ Two normalized sample members that are each no greater than every member are equ
 
 ## References
 
+- Truth anchor: `D5/S1/Depth/TwelveScaleReduction.normalized_magnitude_eq_twelve_scale_iff`
+- Truth anchor: `D5/S1/Depth/TwelveScaleReduction.normalized_sample_minimum_unique`
+- Truth anchor: `D5/S1/Depth/TwelveScaleReduction.twelve_scale_is_normalized_sample_minimum`
+- Truth anchor: `D5/S1/Depth/TwelveScaleReduction.twelve_scale_le_normalized_magnitude`
 - Dependency: [D5/S1/Phase/SeatTowerArithmetic](../Phase/SeatTowerArithmetic.md)
 - Dependency: [D5/S1/Phase/ZeroOrbitCongruence](../Phase/ZeroOrbitCongruence.md)
