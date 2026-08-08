@@ -68,4 +68,9 @@ For a nonintegral rational q, every normalized sample member lies above twelve d
 
 ## References
 
+- Truth anchor: `D5/S1/Depth/PartialQuotientExtraction.aMax`
+- Truth anchor: `D5/S1/Depth/PartialQuotientExtraction.aMax_pos`
+- Truth anchor: `D5/S1/Depth/PartialQuotientExtraction.partialQuotients`
+- Truth anchor: `D5/S1/Depth/PartialQuotientExtraction.partialQuotients_nonempty`
+- Truth anchor: `D5/S1/Depth/PartialQuotientExtraction.twelve_scale_is_extracted_normalized_sample_minimum`
 - Dependency: [D5/S1/Depth/TwelveScaleReduction](TwelveScaleReduction.md)

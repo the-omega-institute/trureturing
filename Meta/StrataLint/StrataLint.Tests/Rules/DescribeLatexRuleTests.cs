@@ -5,7 +5,7 @@ namespace StrataLint.Tests;
 public sealed class DescribeLatexRuleTests
 {
     [Fact]
-    public void ObserveEpochFlagsTheoremClassDescribeWithoutLatex()
+    public void ProjectableHandAuthoredTheoremIsBlocked()
     {
         var capability = VerifiedScribeEmissions.Create(
             [],
@@ -15,7 +15,9 @@ public sealed class DescribeLatexRuleTests
                     "D5/S3/Weil/LatexFixture#describe/critical-line",
                     "Blueprint/D5/S3/Weil/LatexFixture.scribe.cs",
                     Kind: "theorem",
-                    HasValidLatex: false),
+                    HasValidLatex: true,
+                    FormulaProvenance: "hand-authored",
+                    ProjectionFailureReason: null),
             ]);
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
@@ -24,9 +26,9 @@ public sealed class DescribeLatexRuleTests
 
         var diagnostic = Assert.Single(evaluation.Diagnostics);
         Assert.Equal("SL-023", diagnostic.RuleId.Value);
-        Assert.Equal(DisplaySeverity.Warning, diagnostic.DisplaySeverity);
-        Assert.Equal(AdmissionEffect.Observe, diagnostic.AdmissionEffect);
-        Assert.Contains("SCRIBE-LATEX-EPOCH", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Equal(DisplaySeverity.Error, diagnostic.DisplaySeverity);
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Contains("must be Lean-derived", diagnostic.Message, StringComparison.Ordinal);
         Assert.Contains("critical-line", diagnostic.Message, StringComparison.Ordinal);
     }
 
@@ -41,12 +43,16 @@ public sealed class DescribeLatexRuleTests
                     "D5/S3/Weil/LatexFixture#describe/critical-line",
                     "Blueprint/D5/S3/Weil/LatexFixture.scribe.cs",
                     Kind: "theorem",
-                    HasValidLatex: true),
+                    HasValidLatex: true,
+                    FormulaProvenance: "lean-derived",
+                    ProjectionFailureReason: null),
                 new ScribeDescribeLatexRecord(
                     "D5/S3/Weil/LatexFixture#describe/context",
                     "Blueprint/D5/S3/Weil/LatexFixture.scribe.cs",
                     Kind: "remark",
-                    HasValidLatex: false),
+                    HasValidLatex: false,
+                    FormulaProvenance: "hand-authored",
+                    ProjectionFailureReason: null),
             ]);
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(

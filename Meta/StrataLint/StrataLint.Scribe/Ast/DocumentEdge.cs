@@ -32,15 +32,19 @@ public abstract class DocumentEdge
 
     public sealed class TruthAnchor : DocumentEdge
     {
-        private TruthAnchor(LeanDeclarationRef target) => Target = target;
+        private TruthAnchor(LeanDeclarationRef target, DescribeId? describeId) { Target = target; DescribeId = describeId; }
 
         public LeanDeclarationRef Target { get; }
+        public DescribeId? DescribeId { get; }
 
         public static TruthAnchor Create(LeanDeclarationRef target)
         {
             ArgumentNullException.ThrowIfNull(target);
-            return new TruthAnchor(target);
+            return new TruthAnchor(target, null);
         }
+
+        internal static TruthAnchor FromDescribe(LeanDeclarationRef target, DescribeId describeId) =>
+            new(target ?? throw new ArgumentNullException(nameof(target)), describeId ?? throw new ArgumentNullException(nameof(describeId)));
     }
 
     public sealed class Dependency : DocumentEdge

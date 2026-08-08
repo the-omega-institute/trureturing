@@ -29,3 +29,8 @@ $$\forall m \in \mathbb{N},\ \forall x,y \in \mathbb{Z}/3\mathbb{Z},\ ((m \opera
 *Commentary.*
 
 If the local computation leaves residues zero and eight modulo 36, and the represented residue is an Eisenstein norm modulo three, the residue eight branch is impossible. The result does not prove the local 432-case computation that supplies the candidate disjunction.
+
+## References
+
+- Truth anchor: `D5/S1/Phase/ZeroOrbitCongruence.eisenstein_norm_mod_three`
+- Truth anchor: `D5/S1/Phase/ZeroOrbitCongruence.thirty_six_dvd_of_local_candidates_and_eisenstein_norm`

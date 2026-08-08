@@ -185,6 +185,74 @@ public sealed class TruthGraphJsonTests
     }
 
     [Fact]
+    public void ExportPreservesCoDeclarationDescribeIdentitiesAndCanonicalRoundTrip()
+    {
+        var declaration = LeanDeclarationRef.Create("D5/S0/Carrier/Target.anchor");
+        var document = DocumentWithTwoDescribes("D5/S0/Carrier/Target", declaration);
+        var reportFiles = new Dictionary<string, LeanFileReport>
+        {
+            ["D5/S0/Carrier/Target.lean"] = new([], [new LeanDeclaration(declaration.Value.Replace('/', '.'), "theorem", "True", [])]),
+        };
+        var report = LeanAxiomReport.Create(reportFiles);
+        var projection = DocumentGraphExportProjection.Create(
+            [new DocumentGraphDocument("Blueprint/D5/S0/Carrier/Target.md", document, "receipt-bound")],
+            DocumentGraphAssembler.Assemble([document], report, new HashSet<string>(StringComparer.Ordinal)),
+            report,
+            new HashSet<string>(["D5/S0/Carrier/Target.lean"], StringComparer.Ordinal));
+        var model = TruthGraphExportModel.Create(Build(
+            new Dictionary<string, string> { ["D5/S0/Carrier/Target.lean"] = "theorem anchor : True := True.intro\n" },
+            reportFiles), Provenance, projection);
+
+        Assert.Equal(["first", "second"], model.Documents.DescribeNodes.Select(static node => node.DescribeId));
+        Assert.Equal(["first", "second"], model.Joins.TruthAnchors.Select(static anchor => anchor.DescribeId));
+        var bytes = TruthGraphJsonWriter.Write(model);
+        Assert.True(bytes.AsSpan().SequenceEqual(TruthGraphJsonWriter.Write(TruthGraphJsonReader.Read(bytes.AsSpan())).AsSpan()));
+
+        var danglingAnchor = model with
+        {
+            // Dangle exactly ONE anchor. Mutating both would give the two co-declaration
+            // anchors an identical ordering key (DocumentRepoPath\0DescribeId\0LeanDeclarationGid),
+            // so RequireStrictOrder would reject before the referential check ever runs and the
+            // case would still pass with that check deleted. "first" < "missing" keeps the order
+            // strictly ascending, leaving the dangling describe_id as the only reason to reject.
+            Joins = new TruthGraphJoinsSection(model.Joins.TruthAnchors
+                .Select(static (anchor, index) =>
+                    index == 1 ? anchor with { DescribeId = "missing" } : anchor)
+                .ToImmutableArray()),
+        };
+        Assert.Throws<FormatException>(() =>
+            TruthGraphJsonReader.Read(TruthGraphJsonWriter.Write(danglingAnchor).AsSpan()));
+
+        var otherDocument = new DocumentGraphNode(
+            "Blueprint/D5/S0/Carrier/Other.md", "D5/S0/Carrier/Other", "receipt-free");
+        var misboundDocument = model with
+        {
+            Documents = model.Documents with
+            {
+                Nodes = model.Documents.Nodes.Add(otherDocument)
+                    .OrderBy(static node => node.RepoPath, StringComparer.Ordinal).ToImmutableArray(),
+                DescribeNodes = model.Documents.DescribeNodes
+                    .Select(static node => node with { DocumentGid = "D5/S0/Carrier/Other" })
+                    .ToImmutableArray(),
+            },
+        };
+        Assert.Throws<FormatException>(() =>
+            TruthGraphJsonReader.Read(TruthGraphJsonWriter.Write(misboundDocument).AsSpan()));
+
+        var retargetedDeclaration = model with
+        {
+            Documents = model.Documents with
+            {
+                DescribeNodes = model.Documents.DescribeNodes
+                    .Select(static node => node with { LeanDeclarationGid = "D5/S0/Carrier/Target.other" })
+                    .ToImmutableArray(),
+            },
+        };
+        Assert.Throws<FormatException>(() =>
+            TruthGraphJsonReader.Read(TruthGraphJsonWriter.Write(retargetedDeclaration).AsSpan()));
+    }
+
+    [Fact]
     public void DocumentProjectionRejectsMissingOrAmbiguousAnchorResolutionAndMissingFormalNode()
     {
         var reference = LeanDeclarationRef.Create("D5/S0/Carrier/Target.anchor");
@@ -302,6 +370,23 @@ public sealed class TruthGraphJsonTests
                 ])),
             ]),
             edges ?? []);
+
+    private static ScribeDocument DocumentWithTwoDescribes(string gid, LeanDeclarationRef declaration) =>
+        ScribeDocument.Create(
+            DocumentHeader.Create(GidRef.Create(gid), Generality.Instance,
+                GidRef.Create("D5/B/" + gid["D5/".Length..]),
+                new EvidenceMirror.Waiver(WaiverReason.Create("test-only")), [], Digest.Create("Test document.")),
+            Heading.Create(gid),
+            BlockSequence.Create([
+                DocumentBlock.Describe.Definition(DescribeId.Create("first"), Heading.Create("First"), declaration,
+                    DescribeProvenance.RepoDerived(), Body()),
+                DocumentBlock.Describe.Definition(DescribeId.Create("second"), Heading.Create("Second"), declaration,
+                    DescribeProvenance.RepoDerived(), Body()),
+            ]));
+
+    private static BlockSequence Body() => BlockSequence.Create([
+        new DocumentBlock.Paragraph(InlineSequence.Create([new Inline.Text(TextRun.Create("Body."))])),
+    ]);
 
     private static RepositorySnapshot Snapshot(params (string Path, string Text)[] files) =>
         Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(RawRepositorySnapshot.Create(
