@@ -153,6 +153,11 @@ public sealed partial class PrShepherdRecalculationTests
             Write(seed, "Generated/artifact.md", "base artifact\n");
             Write(seed, "Generated/dev-choice.md", "base choice\n");
             Write(seed, "Generated/echo-residual-summary.md", "base echo\n");
+            Write(seed, "Meta/FILEMAP.toml", """
+                [[files]]
+                pattern = "Generated/**"
+                kind = "generated"
+                """);
             Write(seed, FrozenLedgerChangeClassifier.LedgerPath, "{\"event\":\"base\"}\n");
             Write(seed, "Trureturing.lean", "base trureturing\n");
             Write(seed, "shared.txt", "base shared\n");
