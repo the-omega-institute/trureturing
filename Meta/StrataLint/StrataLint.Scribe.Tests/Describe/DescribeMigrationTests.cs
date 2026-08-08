@@ -97,6 +97,25 @@ public sealed class DescribeMigrationTests
     }
 
     [Fact]
+    public void TheoremProjectionCensusIsCompleteAndEveryProjectableFormulaIsDerived()
+    {
+        var nodes = DocumentDefinitions.All
+            .SelectMany(static definition => EnumerateDescribe(definition.Document.Content))
+            .Where(static node => node.Kind is DescribeKind.Theorem or DescribeKind.Proposition or DescribeKind.Lemma)
+            .ToArray();
+        var derived = nodes.Where(static node => node.FormulaProvenance == StatementFormulaProvenance.LeanDerived).ToArray();
+        var handAuthored = nodes.Except(derived).ToArray();
+        var projectableHandAuthored = handAuthored.Where(static node =>
+            node.Statement is DescribeStatement.LeanDeclaration lean
+            && StatementProjectionFixtureLoader.Project(lean.Value) is ProjectionOutcome.Projected).ToArray();
+        var unprojectableHandAuthored = handAuthored.Except(projectableHandAuthored).ToArray();
+
+        Assert.Equal(nodes.Length, derived.Length + handAuthored.Length);
+        Assert.Equal(handAuthored.Length, projectableHandAuthored.Length + unprojectableHandAuthored.Length);
+        Assert.Empty(projectableHandAuthored);
+    }
+
+    [Fact]
     public void RepositoryReportMatchesAnIndependentAstInventory()
     {
         var root = FindRepositoryRoot();

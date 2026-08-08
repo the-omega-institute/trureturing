@@ -30,5 +30,5 @@ Mathlib's canonical Zeckendorf representation maps natural numbers to greatest-i
 
 ## References
 
-- Truth anchor: `D5/S1/Words/ZeckendorfOrder.isZeckendorfRep_lex_iff_sum_fib_lt`
 - Truth anchor: `D5/S1/Words/ZeckendorfOrder.zeckendorf_lex_iff_lt`
+- Truth anchor: `D5/S1/Words/ZeckendorfOrder.isZeckendorfRep_lex_iff_sum_fib_lt`

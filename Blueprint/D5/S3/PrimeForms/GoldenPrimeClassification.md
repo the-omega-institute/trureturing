@@ -54,7 +54,7 @@ In GoldenInt, five is exactly the square of the ramifying element -1 + 2 phi.
 
 ## References
 
-- Truth anchor: `D5/S3/PrimeForms/GoldenPrimeClassification.five_is_square_mod_prime_iff_mod_five_eq_one_or_four`
 - Truth anchor: `D5/S3/PrimeForms/GoldenPrimeClassification.golden_five_eq_ramified_square`
-- Truth anchor: `D5/S3/PrimeForms/GoldenPrimeClassification.golden_not_prime_iff_mod_five_eq_one_or_four`
 - Truth anchor: `D5/S3/PrimeForms/GoldenPrimeClassification.golden_prime_iff_mod_five_eq_two_or_three`
+- Truth anchor: `D5/S3/PrimeForms/GoldenPrimeClassification.five_is_square_mod_prime_iff_mod_five_eq_one_or_four`
+- Truth anchor: `D5/S3/PrimeForms/GoldenPrimeClassification.golden_not_prime_iff_mod_five_eq_one_or_four`

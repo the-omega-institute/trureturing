@@ -79,8 +79,8 @@ Subtracting the expanding golden component from the shifted Fibonacci weight lea
 ## References
 
 - Truth anchor: `D5/S1/Recurrence/BilateralLiftUniqueness.bilateral_lift_uniqueness`
-- Truth anchor: `D5/S1/Recurrence/BilateralLiftUniqueness.fibonacci_cyclic_span_minimal`
-- Truth anchor: `D5/S1/Recurrence/BilateralLiftUniqueness.fibonacci_solution_space_eq_span`
-- Truth anchor: `D5/S1/Recurrence/BilateralLiftUniqueness.fibonacci_weight_binet`
 - Truth anchor: `D5/S1/Recurrence/BilateralLiftUniqueness.fibonacci_weight_residual`
+- Truth anchor: `D5/S1/Recurrence/BilateralLiftUniqueness.fibonacci_cyclic_span_minimal`
 - Truth anchor: `D5/S1/Recurrence/BilateralLiftUniqueness.shift_golden_eigenvectors`
+- Truth anchor: `D5/S1/Recurrence/BilateralLiftUniqueness.fibonacci_weight_binet`
+- Truth anchor: `D5/S1/Recurrence/BilateralLiftUniqueness.fibonacci_solution_space_eq_span`

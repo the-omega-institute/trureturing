@@ -42,5 +42,6 @@ The checked declaration is only a real interval identity for a uniform parameter
 
 ## References
 
-- Truth anchor: `D5/S3/Constants/RecordEntropy.haar_record_entropy_bits`
 - Truth anchor: `D5/S3/Constants/RecordEntropy.neg_mul_log_integral`
+- Truth anchor: `D5/S3/Constants/RecordEntropy.haar_record_entropy_bits`
+- Truth anchor: `D5/S3/Constants/RecordEntropy.haar_record_entropy_bits`

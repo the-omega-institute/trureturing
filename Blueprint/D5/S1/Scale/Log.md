@@ -69,8 +69,8 @@ $$
 ## References
 
 - Truth anchor: `D5/S1/Scale/Log.embedding_phiUnitZPowMul`
-- Truth anchor: `D5/S1/Scale/Log.logScale_ne_zero`
 - Truth anchor: `D5/S1/Scale/Log.logScale_phiUnit_zpow_mul`
+- Truth anchor: `D5/S1/Scale/Log.logScale_ne_zero`
 - Truth anchor: `D5/S1/Scale/Log.logScale_zero`
 - Dependency: [D5/S0/Carrier/Units](../../S0/Carrier/Units.md)
 - Dependency: [D5/S1/Scale/Embedding](Embedding.md)

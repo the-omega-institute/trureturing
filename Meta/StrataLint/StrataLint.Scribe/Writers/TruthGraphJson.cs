@@ -84,14 +84,24 @@ public sealed record DocumentDependencyEdge(string Dependency, string Dependent)
 
 public sealed record DocumentNarrativeReferenceEdge(string Source, string Target);
 
+public sealed record DescribeGraphNode(
+    string RepoPath,
+    string DocumentGid,
+    string DescribeId,
+    string Kind,
+    string? LeanDeclarationGid,
+    string FormulaProvenance);
+
 public sealed record DocumentGraphSection(
     ImmutableArray<DocumentGraphNode> Nodes,
+    ImmutableArray<DescribeGraphNode> DescribeNodes,
     ImmutableArray<DocumentDependencyEdge> DependencyEdges,
     ImmutableArray<DocumentNarrativeReferenceEdge> NarrativeReferenceEdges);
 
 public sealed record TruthAnchorJoin(
     string DocumentRepoPath,
     string DocumentGid,
+    string? DescribeId,
     string LeanDeclarationGid,
     string FormalTruthRepoPath);
 
@@ -102,7 +112,7 @@ public sealed record DocumentGraphExportProjection(
     TruthGraphJoinsSection Joins)
 {
     public static DocumentGraphExportProjection Empty { get; } = new(
-        new DocumentGraphSection([], [], []),
+        new DocumentGraphSection([], [], [], []),
         new TruthGraphJoinsSection([]));
 
     public static DocumentGraphExportProjection Create(
@@ -144,6 +154,17 @@ public sealed record DocumentGraphExportProjection(
         var dependencies = ImmutableArray.CreateBuilder<DocumentDependencyEdge>();
         var narratives = ImmutableArray.CreateBuilder<DocumentNarrativeReferenceEdge>();
         var anchors = ImmutableArray.CreateBuilder<TruthAnchorJoin>();
+        var describeNodes = material.SelectMany(source => EnumerateDescribes(source.Document.Content)
+                .Select(describe => new DescribeGraphNode(
+                    source.RepoPath,
+                    source.Document.Header.Gid.Value,
+                    describe.Id.Value,
+                    DescribeVocabulary.CanonicalName(describe.Kind),
+                    describe.Statement is DescribeStatement.LeanDeclaration lean ? lean.Value.Value : null,
+                    describe.FormulaProvenance == StatementFormulaProvenance.LeanDerived ? "lean-derived" : "hand-authored")))
+            .OrderBy(static node => node.RepoPath, StringComparer.Ordinal)
+            .ThenBy(static node => node.DescribeId, StringComparer.Ordinal)
+            .ToImmutableArray();
         foreach (var source in material)
         {
             foreach (var edge in graph.For(source.Document))
@@ -180,6 +201,7 @@ public sealed record DocumentGraphExportProjection(
                         anchors.Add(new TruthAnchorJoin(
                             source.RepoPath,
                             source.Document.Header.Gid.Value,
+                            anchor.DescribeId?.Value,
                             anchor.Target.Value,
                             formalPath));
                         break;
@@ -190,14 +212,32 @@ public sealed record DocumentGraphExportProjection(
         return new DocumentGraphExportProjection(
             new DocumentGraphSection(
                 nodes,
+                describeNodes,
                 dependencies.OrderBy(static edge => edge.Dependency, StringComparer.Ordinal)
                     .ThenBy(static edge => edge.Dependent, StringComparer.Ordinal).ToImmutableArray(),
                 narratives.OrderBy(static edge => edge.Source, StringComparer.Ordinal)
                     .ThenBy(static edge => edge.Target, StringComparer.Ordinal).ToImmutableArray()),
             new TruthGraphJoinsSection(
                 anchors.OrderBy(static anchor => anchor.DocumentRepoPath, StringComparer.Ordinal)
+                    .ThenBy(static anchor => anchor.DescribeId, StringComparer.Ordinal)
                     .ThenBy(static anchor => anchor.LeanDeclarationGid, StringComparer.Ordinal)
                     .ToImmutableArray()));
+    }
+
+    private static IEnumerable<DocumentBlock.Describe> EnumerateDescribes(BlockSequence blocks)
+    {
+        foreach (var block in blocks.Items)
+        {
+            if (block is DocumentBlock.Describe describe)
+            {
+                yield return describe;
+                foreach (var nested in EnumerateDescribes(describe.Content)) yield return nested;
+            }
+            else if (block is DocumentBlock.Section section)
+            {
+                foreach (var nested in EnumerateDescribes(section.Content)) yield return nested;
+            }
+        }
     }
 
     public static DocumentGraphExportProjection AssembleRepository(
@@ -350,6 +390,15 @@ public static class TruthGraphJsonWriter
                     gid = node.Gid,
                     receipt = node.Receipt,
                 }),
+                describe_nodes = model.Documents.DescribeNodes.Select(static node => new
+                {
+                    repo_path = node.RepoPath,
+                    document_gid = node.DocumentGid,
+                    describe_id = node.DescribeId,
+                    kind = node.Kind,
+                    lean_declaration_gid = node.LeanDeclarationGid,
+                    formula_provenance = node.FormulaProvenance,
+                }),
                 document_edges = new
                 {
                     dependency = model.Documents.DependencyEdges.Select(static edge => new
@@ -370,6 +419,7 @@ public static class TruthGraphJsonWriter
                 {
                     document_repo_path = anchor.DocumentRepoPath,
                     document_gid = anchor.DocumentGid,
+                    describe_id = anchor.DescribeId,
                     lean_declaration_gid = anchor.LeanDeclarationGid,
                     formal_truth_repo_path = anchor.FormalTruthRepoPath,
                 }),
@@ -439,9 +489,11 @@ public static class TruthGraphJsonReader
                 Integer(countsElement, "semantic"));
 
             var documentsElement = Object(root, "documents");
-            RequireProperties(documentsElement, ["document_edges", "document_nodes"], "documents");
+            RequireProperties(documentsElement, ["describe_nodes", "document_edges", "document_nodes"], "documents");
             var documentNodes = Array(documentsElement, "document_nodes")
                 .EnumerateArray().Select(ReadDocumentNode).ToImmutableArray();
+            var describeNodes = Array(documentsElement, "describe_nodes")
+                .EnumerateArray().Select(ReadDescribeNode).ToImmutableArray();
             var documentEdges = Object(documentsElement, "document_edges");
             RequireProperties(documentEdges, ["dependency", "narrative_reference"], "document_edges");
             var dependencyEdges = Array(documentEdges, "dependency")
@@ -463,7 +515,7 @@ public static class TruthGraphJsonReader
                 version,
                 provenance,
                 new TruthGraphSection(nodes, edges, blockers, counts),
-                new DocumentGraphSection(documentNodes, dependencyEdges, narrativeEdges),
+                new DocumentGraphSection(documentNodes, describeNodes, dependencyEdges, narrativeEdges),
                 new TruthGraphJoinsSection(anchors),
                 deferredLayers);
             Validate(model);
@@ -516,6 +568,14 @@ public static class TruthGraphJsonReader
         return new DocumentDependencyEdge(String(element, "dependency"), String(element, "dependent"));
     }
 
+    private static DescribeGraphNode ReadDescribeNode(JsonElement element)
+    {
+        RequireProperties(element, ["describe_id", "document_gid", "formula_provenance", "kind", "lean_declaration_gid", "repo_path"], "describe node");
+        return new DescribeGraphNode(String(element, "repo_path"), String(element, "document_gid"),
+            String(element, "describe_id"), String(element, "kind"), NullableString(element, "lean_declaration_gid"),
+            String(element, "formula_provenance"));
+    }
+
     private static DocumentNarrativeReferenceEdge ReadDocumentNarrativeEdge(JsonElement element)
     {
         RequireProperties(element, ["source", "target"], "document narrative reference edge");
@@ -526,11 +586,12 @@ public static class TruthGraphJsonReader
     {
         RequireProperties(
             element,
-            ["document_gid", "document_repo_path", "formal_truth_repo_path", "lean_declaration_gid"],
+            ["describe_id", "document_gid", "document_repo_path", "formal_truth_repo_path", "lean_declaration_gid"],
             "truth anchor join");
         return new TruthAnchorJoin(
             String(element, "document_repo_path"),
             String(element, "document_gid"),
+            NullableString(element, "describe_id"),
             String(element, "lean_declaration_gid"),
             String(element, "formal_truth_repo_path"));
     }
@@ -541,6 +602,7 @@ public static class TruthGraphJsonReader
         RequireStrictOrder(model.Truth.Edges.Select(static edge => edge.Dependency + "\0" + edge.Dependent), "edges");
         RequireStrictOrder(model.Truth.OpenBlockers.Select(static blocker => blocker.Dependent + "\0" + blocker.DependencyModule), "open blockers");
         RequireStrictOrder(model.Documents.Nodes.Select(static node => node.RepoPath), "document nodes");
+        RequireStrictOrder(model.Documents.DescribeNodes.Select(static node => node.RepoPath + "\0" + node.DescribeId), "describe nodes");
         RequireStrictOrder(
             model.Documents.DependencyEdges.Select(static edge => edge.Dependency + "\0" + edge.Dependent),
             "document dependency edges");
@@ -549,7 +611,7 @@ public static class TruthGraphJsonReader
             "document narrative reference edges");
         RequireStrictOrder(
             model.Joins.TruthAnchors.Select(static anchor =>
-                anchor.DocumentRepoPath + "\0" + anchor.LeanDeclarationGid),
+                anchor.DocumentRepoPath + "\0" + anchor.DescribeId + "\0" + anchor.LeanDeclarationGid),
             "truth anchor joins");
         var paths = model.Truth.Nodes.Select(static node => node.RepoPath).ToHashSet(StringComparer.Ordinal);
         var documentPaths = model.Documents.Nodes.Select(static node => node.RepoPath).ToHashSet(StringComparer.Ordinal);
@@ -568,6 +630,9 @@ public static class TruthGraphJsonReader
             || model.Truth.StateCounts.Semantic != model.Truth.Nodes.Count(static node => node.State == "semantic")
             || model.Documents.Nodes.Any(node => node.Receipt is not ("receipt-free" or "receipt-bound"))
             || documentGids.Count != model.Documents.Nodes.Length
+            || model.Documents.DescribeNodes.Any(node => !documentPaths.Contains(node.RepoPath)
+                || !documentGids.Contains(node.DocumentGid)
+                || node.FormulaProvenance is not ("hand-authored" or "lean-derived"))
             || model.Documents.DependencyEdges.Any(edge =>
                 !documentPaths.Contains(edge.Dependency) || !documentPaths.Contains(edge.Dependent))
             || model.Documents.NarrativeReferenceEdges.Any(edge =>

@@ -84,10 +84,10 @@ This is the scalar joint-commutant statement for the two concrete finite generat
 
 ## References
 
+- Truth anchor: `D5/S3/Observer/WindowRegister.window_weyl`
 - Truth anchor: `D5/S3/Observer/WindowRegister.clockMatrix_pow_card`
 - Truth anchor: `D5/S3/Observer/WindowRegister.shiftMatrix_pow_card`
-- Truth anchor: `D5/S3/Observer/WindowRegister.windowRoot_isPrimitiveRoot`
-- Truth anchor: `D5/S3/Observer/WindowRegister.window_commutant_eq_scalars`
 - Truth anchor: `D5/S3/Observer/WindowRegister.window_unitary`
-- Truth anchor: `D5/S3/Observer/WindowRegister.window_weyl`
+- Truth anchor: `D5/S3/Observer/WindowRegister.window_commutant_eq_scalars`
+- Truth anchor: `D5/S3/Observer/WindowRegister.windowRoot_isPrimitiveRoot`
 - Dependency: [D5/S3/Fourier/FinitePoisson](../Fourier/FinitePoisson.md)

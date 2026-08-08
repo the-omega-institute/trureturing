@@ -30,6 +30,6 @@ For a retention coefficient in [0,1] whose real value is explicitly not one, an 
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Decoherence.phase_damping_composition`
 - Truth anchor: `D5/S3/Quantum/Decoherence.phase_damping_fixed_iff_diagonal`
+- Truth anchor: `D5/S3/Quantum/Decoherence.phase_damping_composition`
 - Dependency: [D5/S3/Quantum/QubitWitnesses](QubitWitnesses.md)

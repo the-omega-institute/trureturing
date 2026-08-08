@@ -30,6 +30,6 @@ Twice the arithmetic mean on the two half-scaled symmetric inputs is one. On the
 
 ## References
 
-- Truth anchor: `D5/S3/Constants/MidslopeCurvature.J_neg_one_eq_zero`
 - Truth anchor: `D5/S3/Constants/MidslopeCurvature.J_one_eq_neg_log_two`
+- Truth anchor: `D5/S3/Constants/MidslopeCurvature.J_neg_one_eq_zero`
 - Dependency: [D5/S3/Constants/PowerMeanKernel](PowerMeanKernel.md)

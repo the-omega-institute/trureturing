@@ -106,5 +106,13 @@ On the integer ledger, the cast-to-real length and the factor exp(pi i n) satisf
 
 ## References
 
+- Truth anchor: `D5/S3/Zeros/ScalingRegisterRigidity.applyRegister_ne_of_nontrivial`
+- Truth anchor: `D5/S3/Zeros/ScalingRegisterRigidity.scaling_register_not_address_independent`
+- Truth anchor: `D5/S3/Zeros/ScalingRegisterRigidity.applyRegister`
+- Truth anchor: `D5/S3/Zeros/ScalingRegisterRigidity.ScalingRegister`
+- Truth anchor: `D5/S3/Zeros/ScalingRegisterRigidity.RealizesAt`
+- Truth anchor: `D5/S3/Zeros/ScalingRegisterRigidity.realized_same_germ_same_total_code_excludes_scaling_register`
+- Truth anchor: `D5/S3/Zeros/ScalingRegisterRigidity.realized_same_germ_same_total_code_forces_trivial_register`
+- Truth anchor: `D5/S3/Zeros/ScalingRegisterRigidity.integer_scaling_register_exists`
 - Dependency: [D5/S0/Conventions/TotalCode](../../S0/Conventions/TotalCode.md)
 - Dependency: [D5/S3/Zeros/CompletedZeta](CompletedZeta.md)

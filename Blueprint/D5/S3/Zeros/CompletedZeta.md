@@ -90,4 +90,11 @@ For an arbitrary reading H, conjugation covariance and reflection invariance are
 
 ## References
 
+- Truth anchor: `D5/S3/Zeros/CompletedZeta.analytic_continuation_unique`
+- Truth anchor: `D5/S3/Zeros/CompletedZeta.xi_reading_eq_completed_zeta`
+- Truth anchor: `D5/S3/Zeros/CompletedZeta.zero_quartet_scaling_spec`
+- Truth anchor: `D5/S3/Zeros/CompletedZeta.completedZetaReading`
+- Truth anchor: `D5/S3/Zeros/CompletedZeta.xi_reading_differentiable`
+- Truth anchor: `D5/S3/Zeros/CompletedZeta.xi_reading_reflection`
+- Truth anchor: `D5/S3/Zeros/CompletedZeta.xiReading`
 - Dependency: [D5/S3/Weil/ReflectionLedger](../Weil/ReflectionLedger.md)

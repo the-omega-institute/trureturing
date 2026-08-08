@@ -90,11 +90,11 @@ Given one nonzero ledger-length coordinate, the local-balance conjunct of an ont
 
 ## References
 
-- Truth anchor: `D5/S3/Zeros/ZeroGeometry.IsOntologicalZero`
 - Truth anchor: `D5/S3/Zeros/ZeroGeometry.global_factor_clearing_forces_critical_line`
 - Truth anchor: `D5/S3/Zeros/ZeroGeometry.mirror_pair_distinct_iff_off_line_and_cancels`
-- Truth anchor: `D5/S3/Zeros/ZeroGeometry.off_line_scaling_entry_spec`
 - Truth anchor: `D5/S3/Zeros/ZeroGeometry.ontological_zero_re_eq_critical`
+- Truth anchor: `D5/S3/Zeros/ZeroGeometry.IsOntologicalZero`
+- Truth anchor: `D5/S3/Zeros/ZeroGeometry.off_line_scaling_entry_spec`
 - Truth anchor: `D5/S3/Zeros/ZeroGeometry.projection_zero_labeled_vector_spec`
 - Truth anchor: `D5/S3/Zeros/ZeroGeometry.zero_quartet_scaling_spec`
 - Dependency: [D5/S3/Weil/CriticalLine](../Weil/CriticalLine.md)

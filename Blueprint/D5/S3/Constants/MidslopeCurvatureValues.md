@@ -54,8 +54,8 @@ Substituting the exact half-power and geometric values together with the frozen 
 
 ## References
 
-- Truth anchor: `D5/S3/Constants/MidslopeCurvatureValues.J_half_eq`
-- Truth anchor: `D5/S3/Constants/MidslopeCurvatureValues.J_half_eq_affine`
-- Truth anchor: `D5/S3/Constants/MidslopeCurvatureValues.J_neg_half_eq_half_J_zero`
 - Truth anchor: `D5/S3/Constants/MidslopeCurvatureValues.J_zero_eq_one_sub_two_log_two`
+- Truth anchor: `D5/S3/Constants/MidslopeCurvatureValues.J_half_eq_affine`
+- Truth anchor: `D5/S3/Constants/MidslopeCurvatureValues.J_half_eq`
+- Truth anchor: `D5/S3/Constants/MidslopeCurvatureValues.J_neg_half_eq_half_J_zero`
 - Dependency: [D5/S3/Constants/MidslopeCurvature](MidslopeCurvature.md)

@@ -30,5 +30,5 @@ For finite address and value types, the number of listings whose twisted diagona
 
 ## References
 
-- Truth anchor: `D5/S0/Diagonal/EscapeCount.diagonal_landing_fixed`
 - Truth anchor: `D5/S0/Diagonal/EscapeCount.escaped_listing_card`
+- Truth anchor: `D5/S0/Diagonal/EscapeCount.diagonal_landing_fixed`

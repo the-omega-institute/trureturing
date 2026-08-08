@@ -42,7 +42,7 @@ The adjacent absolute-error ratios of the shifted Fibonacci convergents tend to 
 
 ## References
 
-- Truth anchor: `D5/S1/Scale/FibonacciErrorRatio.fibonacci_convergent_error_ratio`
 - Truth anchor: `D5/S1/Scale/FibonacciErrorRatio.fibonacci_convergent_error_ratio_tendsto`
+- Truth anchor: `D5/S1/Scale/FibonacciErrorRatio.fibonacci_convergent_error_ratio`
 - Truth anchor: `D5/S1/Scale/FibonacciErrorRatio.fibonacci_golden_residual`
 - Dependency: [D5/S1/Scale/FibonacciEigen](FibonacciEigen.md)

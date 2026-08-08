@@ -42,6 +42,6 @@ For a countable family of naming systems on an uncountable carrier with an atoml
 
 ## References
 
-- Truth anchor: `D5/S0/Naming/NamingSystem.NamingSystem`
 - Truth anchor: `D5/S0/Naming/NamingSystem.dark_side_conservation`
 - Truth anchor: `D5/S0/Naming/NamingSystem.name_layer_finite`
+- Truth anchor: `D5/S0/Naming/NamingSystem.NamingSystem`
