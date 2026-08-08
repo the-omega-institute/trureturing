@@ -106,6 +106,10 @@ dotnet restore Meta/StrataLint/CompileFailProof/CompileFailProof.csproj --locked
 dotnet restore Meta/StrataLint/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj --locked-mode >/dev/null
 record_timing restore-proofs
 
+PREFLIGHT_FAULT_CLASS="SEMANTIC"
+make refactor-pr-a-verify OUT="${TMPDIR:-/tmp}/stratalint-preflight-pr-a-${STRATALINT_PERF_RUN_ID}.json"
+record_timing refactor-pr-a-required
+
 PREFLIGHT_FAULT_CLASS="UNKNOWN"
 CI=true make dotnet
 record_timing dotnet
@@ -155,7 +159,7 @@ record_timing compile-fail-proofs
 
 PREFLIGHT_FAULT_CLASS="SEMANTIC"
 set +e
-make gate BASE="$BASE_SHA" GATE_ARGS=--skip-engineering
+make gate BASE="$BASE_SHA" GATE_ARGS="--skip-engineering --skip-pr-a"
 gate_rc=$?
 set -e
 record_timing gate
