@@ -7,6 +7,8 @@
 #
 # 用法:
 #   pr-shepherd.sh open <head-branch> <title> [body-file]   开 PR + 挂 auto-merge
+#   pr-shepherd.sh start [interval] [max_cycles]            后台启动并等待 ready
+#   pr-shepherd.sh status                                   单行报告 alive/stalled/dead
 #   pr-shepherd.sh watch [interval] [max_cycles]            轮询(默认 60s × 360)
 #   pr-shepherd.sh sweep                                    单轮扫描(供人工/调试)
 #
@@ -26,6 +28,15 @@ STATE_DIR="${PR_SHEPHERD_STATE:-$HOME/.pr-shepherd-state}"
 CACHE_ROOT="${PR_SHEPHERD_CACHE:-$HOME/.cache/trureturing-shepherd}"
 DRYRUN="${SHEPHERD_DRYRUN:-0}"
 DERIVED_LEASE_TTL="${PR_SHEPHERD_LEASE_TTL_SECONDS:-14400}"
+API_TIMEOUT_SECONDS="${PR_SHEPHERD_API_TIMEOUT_SECONDS:-120}"
+GIT_TIMEOUT_SECONDS="${PR_SHEPHERD_GIT_TIMEOUT_SECONDS:-300}"
+BUILD_TIMEOUT_SECONDS="${PR_SHEPHERD_BUILD_TIMEOUT_SECONDS:-1800}"
+SWEEP_TIMEOUT_SECONDS="${PR_SHEPHERD_SWEEP_TIMEOUT_SECONDS:-7200}"
+KILL_GRACE_SECONDS="${PR_SHEPHERD_KILL_GRACE_SECONDS:-15}"
+FAILURE_BACKOFF_BASE_SECONDS="${PR_SHEPHERD_FAILURE_BACKOFF_BASE_SECONDS:-120}"
+FAILURE_MAX_CLASS_ATTEMPTS=3
+FAILURE_MAX_TOTAL_ATTEMPTS=5
+INFRA_BACKOFF_MAX_EXPONENT=3
 WAKE_BACKOFF_BASE_SECONDS="${PR_SHEPHERD_WAKE_BACKOFF_BASE_SECONDS:-120}"
 WAKE_MAX_ATTEMPTS=3
 WAKE_SLEEP_SECONDS="${PR_SHEPHERD_WAKE_SLEEP_SECONDS:-3}"
@@ -33,10 +44,11 @@ WAKE_REOPEN_RETRY_SLEEP_SECONDS="${PR_SHEPHERD_WAKE_REOPEN_RETRY_SLEEP_SECONDS:-
 DERIVED_LEASE_TOKEN=""
 DERIVED_LEASE_PR=""
 DERIVED_LEASE_ACQUIRED_AT=""
+DERIVED_LEASE_OBSERVED_TOKEN=""
 FROZEN_LEDGER_CONFLICT=0
 FROZEN_LEDGER_PATH="Meta/StrataLint/Golden/Frozen/events.jsonl"
 TRURETURING_ROOT_PATH="Trureturing.lean"
-COMMIT_SUBJECT="recompute derivations after dev advance (auto, pr-shepherd)"
+COMMIT_SUBJECT="recompute the truth graph"
 ORIGINAL_HOME="${HOME:-/tmp}"
 WATCH_LOADED_BLOB="${PR_SHEPHERD_WATCH_LOADED_BLOB:-}"
 WATCH_PREVIOUS_SCRIPT="${PR_SHEPHERD_WATCH_PREVIOUS_SCRIPT:-}"
@@ -46,398 +58,229 @@ WATCH_LOCK_CANDIDATE=""
 WATCH_RECLAIM_REPOSITORY=""
 WATCH_RECLAIM_REF=""
 WATCH_RECLAIM_OID=""
-GH() { LEAN4_GUARDRAILS_BYPASS=1 gh "$@"; }
-GH_AS_APP() {
-  local token=""
-  if command -v gh-app >/dev/null 2>&1 && token="$(gh-app token --auto 2>/dev/null)" && [[ -n "$token" ]]; then GH_TOKEN="$token" LEAN4_GUARDRAILS_BYPASS=1 gh "$@"; else GH "$@"; fi
+WATCH_STATE_OWNER_PID="${PR_SHEPHERD_WATCH_OWNER_PID:-}"
+WATCH_STATE_OWNER_START="${PR_SHEPHERD_WATCH_OWNER_START:-}"
+WATCH_STATE_INTERVAL="${PR_SHEPHERD_WATCH_INTERVAL:-}"
+WATCH_STATE_MAX="${PR_SHEPHERD_WATCH_MAX_CYCLES:-}"
+WATCH_STATE_PHASE=""
+WATCH_STATE_CURRENT_PR=""
+WATCH_STATE_CURRENT_STEP=""
+WATCH_STATE_STEP_STARTED_AT=""
+WATCH_STATE_STEP_DEADLINE_AT=""
+WATCH_STATE_LAST_PROGRESS_AT=""
+WATCH_STATE_LAST_OUTCOME=""
+WATCH_STATE_CYCLE=""
+WATCH_STATE_TERMINAL_EXIT=""
+WATCH_SLEEP_PID=""
+ACTIVE_BOUNDED_PID=""
+ACTIVE_SWEEP_LEASE_RECEIPT=""
+TIMEOUT_COMMAND=""
+LAST_BOUNDED_RESULT=""
+LAST_BOUNDED_EXIT=""
+LAST_FAILURE_CLASS=""
+LAST_FAILURE_EXIT=""
+LAST_FAILURE_DISPOSITION="poison"
+CURRENT_PR="none"
+ACTIVE_BRANCH_LOCK=""
+
+configuration_error() {
+  printf 'pr-shepherd: CONFIG_INVALID field=%s value=%s\n' "$1" "$2" >&2
+  return 2
 }
-log() { printf '%s %s\n' "$(date '+%F %T')" "$*" | tee -a "$LOG" >&2; }
-credentialless() {
-  local isolated_home="$1"
-  shift
-  env \
-    -u GH_TOKEN \
-    -u GITHUB_TOKEN \
-    -u GITHUB_PAT \
-    -u SSH_AUTH_SOCK \
-    -u SSH_AGENT_PID \
-    -u GIT_ASKPASS \
-    HOME="$isolated_home" \
-    GH_CONFIG_DIR="$isolated_home/gh" \
-    XDG_CONFIG_HOME="$isolated_home/config" \
-    XDG_CACHE_HOME="$isolated_home/cache" \
-    DOTNET_CLI_HOME="$isolated_home/dotnet" \
-    NUGET_PACKAGES="${NUGET_PACKAGES:-$ORIGINAL_HOME/.nuget/packages}" \
-    ELAN_HOME="${ELAN_HOME:-$ORIGINAL_HOME/.elan}" \
-    GIT_CONFIG_GLOBAL=/dev/null \
-    GIT_CONFIG_NOSYSTEM=1 \
-    GIT_TERMINAL_PROMPT=0 \
-    GCM_INTERACTIVE=Never \
-    "$@"
+validate_positive_config() {
+  local name="$1" value="$2"
+  [[ "$value" =~ ^[1-9][0-9]*$ ]] || configuration_error "$name" "$value"
 }
-has_expiry_fingerprint() {
-  local conclusion="$1" details_url="$2" run_id job_id tail out
-  [[ "$conclusion" == "FAILURE" ]] || return 1
-  case "$details_url" in
-    */actions/runs/*/job/*)
-      tail="${details_url#*/actions/runs/}"
-      run_id="${tail%%/*}"
-      job_id="${tail#*/job/}"
-      job_id="${job_id%%\?*}"
-      job_id="${job_id%%\#*}"
-      ;;
-    *) return 1 ;;
-  esac
-  [[ "$run_id" =~ ^[1-9][0-9]*$ ]] || return 1
-  [[ "$job_id" =~ ^[1-9][0-9]*$ ]] || return 1
-  if ! out="$(GH run view "$run_id" --repo "$REPO" \
-    --job "$job_id" --log-failed 2>&1)"; then
-    log "SWEEP admission run=$run_id job=$job_id 失败日志不可读,按普通 BEHIND 处理"
-    return 1
+resolve_timeout_command() {
+  local configured="${PR_SHEPHERD_TIMEOUT_BIN:-}" candidate="" resolved=""
+  if [[ -n "$configured" ]]; then
+    case "${configured##*/}" in timeout|gtimeout) ;; *) configuration_error PR_SHEPHERD_TIMEOUT_BIN "$configured"; return 2 ;; esac
+    resolved="$(command -v "$configured" 2>/dev/null || true)"
+    [[ -n "$resolved" && -x "$resolved" ]] \
+      || { configuration_error PR_SHEPHERD_TIMEOUT_BIN "$configured"; return 2; }
+    TIMEOUT_COMMAND="$resolved"
+    return 0
   fi
-  [[ "$out" == *"DIGEST_STATUS_INVALID"* \
-    && "$out" == *"scribe-emissions"* \
-    && "$out" == *"ECHO_VERIFY_INFRASTRUCTURE"* \
-    && "$out" == *"residual"* ]]
-}
-# Conflicts a machine can settle by rebuilding rather than by reading intent. The frozen
-# ledger belongs here even though it is append-only source: two lanes that each freeze a
-# module always collide textually, yet the correct result is never a hand-merge of the two
-# tails. The dev bytes are the only valid history prefix; run_derivation_chain extends that
-# prefix through the canonical append/reattest protocol. Without this, every D5 delivery whose
-# sibling merges first stalls as "needs a semantic merge".
-is_derived_conflict() {
-  case "$1" in
-    Meta/StrataLint/Generated/*|Generated/*|Evidence/D5/values.json) return 0 ;;
-    "$FROZEN_LEDGER_PATH") return 0 ;;
-    *) return 1 ;;
-  esac
-}
-source "$(cd "$(dirname "$SCRIPT_PATH")" && pwd -P)/shepherd/pr-shepherd-lease.sh"
-source "$(cd "$(dirname "$SCRIPT_PATH")" && pwd -P)/shepherd/pr-shepherd-ledger.sh"
-branch_slug() {
-  local branch="$1" slug digest
-  slug="$(printf '%s' "$branch" | sed 's#[^A-Za-z0-9._-]#-#g')"
-  digest="$(printf '%s' "$branch" | git hash-object --stdin | cut -c 1-12)"
-  printf '%s-%s' "${slug:0:80}" "$digest"
-}
-dryrun_recalculation() {
-  local num="$1" head="$2" workspace="$3"
-  log "DRYRUN #$num RECALCULATE -> ensure worktree path=$workspace"
-  log "DRYRUN #$num fetch origin/dev and origin/$head; verify observed OIDs"
-  log "DRYRUN #$num checkout $head; merge origin/dev (derived conflicts take dev)"
-  log "DRYRUN #$num run make lean-report"
-  log "DRYRUN #$num if frozen ledger conflicted: git show base Trureturing; lean-report; ledger-append"
-  log "DRYRUN #$num if frozen ledger conflicted: git show candidate Trureturing; lean-report; ledger-reattest"
-  log "DRYRUN #$num run make emit"
-  log "DRYRUN #$num run make ingest BASE=origin/dev"
-  log "DRYRUN #$num run echo-verify --emit --base origin/dev (atomic install)"
-  log "DRYRUN #$num run make emit-check BASE=origin/dev"
-  log "DRYRUN #$num commit: $COMMIT_SUBJECT"
-  log "DRYRUN #$num push HEAD:refs/heads/$head (non-force)"
-}
-prepare_worktree() {
-  local num="$1" head="$2" expected_head="$3" workspace="$4" slug="$5"
-  if [[ ! -e "$workspace/.git" ]]; then
-    mkdir -p "$CACHE_ROOT"
-    if ! make -C "$ROOT" --no-print-directory worktree \
-      NAME="shepherd-$slug" PATH="$workspace" BASE="$REMOTE/dev"; then
-      log "SWEEP #$num worktree 首建失败 path=$workspace"
-      return 1
+  for candidate in timeout gtimeout /opt/homebrew/bin/timeout /opt/homebrew/bin/gtimeout; do
+    resolved="$(command -v "$candidate" 2>/dev/null || true)"
+    if [[ -n "$resolved" && -x "$resolved" ]]; then
+      TIMEOUT_COMMAND="$resolved"
+      return 0
     fi
-  fi
-  if [[ "$(git -C "$workspace" rev-parse --is-inside-work-tree 2>/dev/null || true)" != "true" ]]; then
-    log "SWEEP #$num cache path 不是已注册 worktree: $workspace"
-    return 1
-  fi
-  local observed_base
-  observed_base="$(git -C "$workspace" rev-parse "refs/remotes/$REMOTE/dev")"
-  git -C "$workspace" merge --abort >/dev/null 2>&1 || true
-  git -C "$workspace" reset --hard HEAD >/dev/null
-  git -C "$workspace" clean -fd >/dev/null
-  if ! git -C "$workspace" fetch --no-tags "$REMOTE" \
-    "+refs/heads/dev:refs/remotes/$REMOTE/dev" \
-    "+refs/heads/$head:refs/remotes/$REMOTE/$head"; then
-    log "SWEEP #$num fetch 失败,放弃本轮"
-    return 1
-  fi
-  local fetched_head fetched_base drifted=0
-  fetched_head="$(git -C "$workspace" rev-parse "refs/remotes/$REMOTE/$head")"
-  fetched_base="$(git -C "$workspace" rev-parse "refs/remotes/$REMOTE/dev")"
-  if [[ "$fetched_head" != "$expected_head" ]]; then
-    log "SWEEP #$num head 已漂移 expected=${expected_head:0:12} actual=${fetched_head:0:12},放弃本轮(下轮重试)"
-    drifted=1
-  fi
-  if [[ "$fetched_base" != "$observed_base" ]]; then
-    log "SWEEP #$num base 已漂移 expected=${observed_base:0:12} actual=${fetched_base:0:12},放弃本轮(下轮重试)"
-    drifted=1
-  fi
-  if [[ "$drifted" -ne 0 ]]; then
-    return 1
-  fi
-  git -C "$workspace" checkout --detach "$fetched_head" >/dev/null
+  done
+  configuration_error PR_SHEPHERD_TIMEOUT_BIN unavailable
 }
-merge_dev() {
-  local num="$1" head="$2" workspace="$3" merge_rc path source_conflict=0 conflict_count=0
-  FROZEN_LEDGER_CONFLICT=0
+validate_configuration() {
+  validate_positive_config PR_SHEPHERD_API_TIMEOUT_SECONDS "$API_TIMEOUT_SECONDS" || return 2
+  validate_positive_config PR_SHEPHERD_GIT_TIMEOUT_SECONDS "$GIT_TIMEOUT_SECONDS" || return 2
+  validate_positive_config PR_SHEPHERD_BUILD_TIMEOUT_SECONDS "$BUILD_TIMEOUT_SECONDS" || return 2
+  validate_positive_config PR_SHEPHERD_SWEEP_TIMEOUT_SECONDS "$SWEEP_TIMEOUT_SECONDS" || return 2
+  validate_positive_config PR_SHEPHERD_KILL_GRACE_SECONDS "$KILL_GRACE_SECONDS" || return 2
+  validate_positive_config PR_SHEPHERD_FAILURE_BACKOFF_BASE_SECONDS "$FAILURE_BACKOFF_BASE_SECONDS" || return 2
+  if [[ "$SWEEP_TIMEOUT_SECONDS" -le $((KILL_GRACE_SECONDS + 1)) ]]; then
+    configuration_error PR_SHEPHERD_SWEEP_TIMEOUT_SECONDS "$SWEEP_TIMEOUT_SECONDS"
+    return 2
+  fi
+  resolve_timeout_command
+}
+
+run_bounded() {
+  local kind="$1" step="$2" configured_timeout="$3"
+  shift 3
+  local now deadline child_deadline timeout_seconds completion rc completed_exit bounded_pid
+  local parent_step="${PR_SHEPHERD_BOUND_STEP:-}"
+  local parent_started_at="${PR_SHEPHERD_BOUND_STARTED_AT:-0}"
+  local parent_deadline_at="${PR_SHEPHERD_DEADLINE_AT:-0}"
+  now="$(date '+%s')"
+  [[ "$now" =~ ^[0-9]+$ ]] \
+    || { LAST_BOUNDED_RESULT=exit; LAST_BOUNDED_EXIT=70; return 70; }
+  deadline=$((now + configured_timeout))
+  if [[ "${PR_SHEPHERD_DEADLINE_AT:-}" =~ ^[0-9]+$ \
+      && "$PR_SHEPHERD_DEADLINE_AT" -lt "$deadline" ]]; then
+    deadline="$PR_SHEPHERD_DEADLINE_AT"
+  fi
+  timeout_seconds=$((deadline - now))
+  if [[ "$timeout_seconds" -le 0 ]]; then
+    LAST_BOUNDED_RESULT=timeout
+    LAST_BOUNDED_EXIT=124
+    log "deadline_kind=$kind step=$step timeout_seconds=0 result=timeout deadline_at=$deadline exit_code=124"
+    return 124
+  fi
+  child_deadline="$deadline"
+  if [[ "$kind" == sweep && "$step" == sweep ]]; then
+    child_deadline=$((deadline - KILL_GRACE_SECONDS - 1))
+  fi
+  if declare -F watch_step_started >/dev/null; then
+    watch_step_started "$step" "$deadline" || true
+  fi
+  completion="$(mktemp "${TMPDIR:-/tmp}/pr-shepherd-completion.XXXXXXXX")"
+  rm -f "$completion"
   set +e
-  git -C "$workspace" \
-    -c core.hooksPath=/dev/null \
-    -c user.name=pr-shepherd \
-    -c user.email=pr-shepherd@users.noreply.github.com \
-    merge --no-commit --no-ff "$REMOTE/dev"
-  merge_rc=$?
+  "$TIMEOUT_COMMAND" --signal=TERM --kill-after="${KILL_GRACE_SECONDS}s" \
+    "${timeout_seconds}s" /bin/bash -c '
+      completion="$1"; deadline="$2"; child_deadline="$3"; started_at="$4"
+      kind="$5"; step="$6"; timeout_seconds="$7"; current_pr="$8"
+      shift 8
+      export PR_SHEPHERD_DEADLINE_AT="$child_deadline"
+      export PR_SHEPHERD_BOUND_KIND="$kind"
+      export PR_SHEPHERD_BOUND_STEP="$step"
+      export PR_SHEPHERD_BOUND_STARTED_AT="$started_at"
+      export PR_SHEPHERD_BOUND_TIMEOUT_SECONDS="$timeout_seconds"
+      export PR_SHEPHERD_CURRENT_PR="$current_pr"
+      timed_out=0
+      trap "timed_out=1" TERM
+      "$@"
+      rc=$?
+      [[ "$timed_out" == 0 ]] || exit 143
+      temporary="$completion.next.$$"
+      printf "%s\n" "$rc" > "$temporary" && mv "$temporary" "$completion"
+      exit "$rc"
+    ' pr-shepherd-bounded "$completion" "$deadline" "$child_deadline" "$now" \
+      "$kind" "$step" "$timeout_seconds" "$CURRENT_PR" "$@" &
+  bounded_pid=$!
+  ACTIVE_BOUNDED_PID="$bounded_pid"
+  wait "$bounded_pid"
+  rc=$?
+  ACTIVE_BOUNDED_PID=""
   set -e
-  if [[ "$merge_rc" -ne 0 ]]; then
-    while IFS= read -r -d '' path; do
-      conflict_count=$((conflict_count + 1))
-      if is_derived_conflict "$path"; then
-        if [[ "$path" == "$FROZEN_LEDGER_PATH" ]]; then
-          FROZEN_LEDGER_CONFLICT=1
-        fi
-        if git -C "$workspace" cat-file -e ":3:$path" 2>/dev/null; then
-          git -C "$workspace" checkout --theirs -- "$path" \
-            && git -C "$workspace" add -- "$path" || {
-              git -C "$workspace" merge --abort >/dev/null 2>&1 || true
-              log "SWEEP #$num 派生物冲突取 dev 侧失败 path=$path,不 push"
-              return 1
-            }
-        elif ! git -C "$workspace" rm -f -- "$path"; then
-          git -C "$workspace" merge --abort >/dev/null 2>&1 || true
-          log "SWEEP #$num 派生物冲突取 dev 侧失败 path=$path,不 push"
-          return 1
-        fi
-      else
-        source_conflict=1
+  if [[ -f "$completion" ]]; then
+    completed_exit="$(<"$completion")"
+    rm -f "$completion"
+    if [[ "$completed_exit" =~ ^(0|[1-9][0-9]{0,2})$ ]]; then
+      LAST_BOUNDED_RESULT="$([[ "$completed_exit" == 0 ]] && printf success || printf exit)"
+      LAST_BOUNDED_EXIT="$completed_exit"
+      if [[ "$completed_exit" != 0 ]]; then
+        log "deadline_kind=$kind step=$step timeout_seconds=$timeout_seconds result=exit deadline_at=$deadline exit_code=$completed_exit"
       fi
-    done < <(git -C "$workspace" diff --name-only --diff-filter=U -z)
-    if [[ "$conflict_count" -eq 0 ]]; then
-      git -C "$workspace" merge --abort >/dev/null 2>&1 || true
-      log "SWEEP #$num merge $REMOTE/dev 失败,不 push"
-      return 1
+      if declare -F watch_step_finished >/dev/null; then
+        watch_step_finished "$step" "$LAST_BOUNDED_RESULT" \
+          "$parent_step" "$parent_started_at" "$parent_deadline_at" || true
+      fi
+      return "$completed_exit"
     fi
-    if [[ "$source_conflict" -ne 0 ]] \
-      || git -C "$workspace" diff --name-only --diff-filter=U | grep -q .; then
-      git -C "$workspace" merge --abort >/dev/null 2>&1 || true
-      log "ALERT #$num CONFLICTING head=$head 需语义合并(派 shepherd lane,本器不代解)"
-      return 1
-    fi
+    LAST_BOUNDED_RESULT=exit
+    LAST_BOUNDED_EXIT=70
+    log "deadline_kind=$kind step=$step timeout_seconds=$timeout_seconds result=exit deadline_at=$deadline exit_code=70 completion=invalid"
+    return 70
   fi
-  if git -C "$workspace" rev-parse -q --verify MERGE_HEAD >/dev/null; then
-    git -C "$workspace" \
-      -c core.hooksPath=/dev/null \
-      -c user.name=pr-shepherd \
-      -c user.email=pr-shepherd@users.noreply.github.com \
-      commit -m "Merge $REMOTE/dev into $head (pr-shepherd)" >/dev/null
+  rm -f "$completion" "$completion".next.* 2>/dev/null || true
+  LAST_BOUNDED_RESULT=timeout
+  LAST_BOUNDED_EXIT=124
+  log "deadline_kind=$kind step=$step timeout_seconds=$timeout_seconds result=timeout deadline_at=$deadline exit_code=$rc"
+  if declare -F watch_step_finished >/dev/null; then
+    watch_step_finished "$step" timeout \
+      "$parent_step" "$parent_started_at" "$parent_deadline_at" || true
   fi
+  return 124
 }
-install_revision_file() {
-  local workspace="$1" revision="$2" path="$3" temporary
-  temporary="$(mktemp "${TMPDIR:-/tmp}/pr-shepherd-revision.XXXXXXXX")" || return 1
-  if ! git -C "$workspace" show "$revision:$path" > "$temporary"; then
-    rm -f "$temporary"
-    return 1
-  fi
-  if ! mv "$temporary" "$workspace/$path"; then
-    rm -f "$temporary"
-    return 1
-  fi
-}
-run_derivation_chain() {
-  local num="$1" workspace="$2" projection isolated_home
-  isolated_home="$(mktemp -d "${TMPDIR:-/tmp}/pr-shepherd-derivation.XXXXXXXX")"
-  if [[ "$FROZEN_LEDGER_CONFLICT" -eq 1 ]]; then
-    if ! reconcile_frozen_ledger "$num" "$workspace" "$isolated_home"; then
-      rm -rf "$isolated_home"
-      return 1
-    fi
-  elif ! credentialless "$isolated_home" \
-      make -C "$workspace" --no-print-directory lean-report; then
-      rm -rf "$isolated_home"
-      log "SWEEP #$num lean-report 失败,不 push"; return 1
-  fi
-  if ! credentialless "$isolated_home" \
-    make -C "$workspace" --no-print-directory emit; then
-    rm -rf "$isolated_home"
-    log "SWEEP #$num emit 失败,不 push"; return 1
-  fi
-  if ! credentialless "$isolated_home" \
-    make -C "$workspace" --no-print-directory ingest BASE="$REMOTE/dev"; then
-    rm -rf "$isolated_home"
-    log "SWEEP #$num ingest 失败,不 push"; return 1
-  fi
-  mkdir -p "$workspace/Generated"
-  projection="$(mktemp "${TMPDIR:-/tmp}/pr-shepherd-projection.XXXXXXXX")"
-  if ! (cd "$workspace" && credentialless "$isolated_home" dotnet run \
-    --project Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj \
-    --configuration Release -- echo-verify --emit --base "$REMOTE/dev") > "$projection"; then
-    rm -f "$projection"
-    rm -rf "$isolated_home"
-    log "SWEEP #$num echo-verify --emit 失败,不 push"
-    return 1
-  fi
-  mv "$projection" "$workspace/Generated/echo-residual-summary.md"
-  # A non-conflicting lane freezes last. A conflicting ledger was already rebuilt from the
-  # dev prefix by reconcile_frozen_ledger and must not receive a second append here.
-  if [[ "$FROZEN_LEDGER_CONFLICT" -eq 0 ]] \
-      && ! run_ledger_cli "$workspace" "$isolated_home" ledger-append; then
-      rm -rf "$isolated_home"
-      log "SWEEP #$num ledger-append 失败,不 push"; return 1
-  fi
-  if ! credentialless "$isolated_home" \
-    make -C "$workspace" --no-print-directory emit-check BASE="$REMOTE/dev"; then
-    rm -rf "$isolated_home"
-    log "ALERT #$num emit-check 失败,不 push"; return 1
-  fi
-  rm -rf "$isolated_home"
-}
-acquire_branch_lock() {
-  local num="$1" lock="$2" owner="" reap="$2.reap" stale="$2.stale.$$"
-  if mkdir "$lock" 2>/dev/null; then
-    printf '%s' "$$" > "$lock/pid"
-    return 0
-  fi
-  if [[ -f "$lock/pid" ]]; then owner="$(cat "$lock/pid" 2>/dev/null || true)"; fi
-  if [[ "$owner" =~ ^[1-9][0-9]*$ ]] && kill -0 "$owner" 2>/dev/null; then
-    log "SWEEP #$num 已有重算实例,跳过本轮 pid=$owner"
-    return 1
-  fi
-  if [[ -z "$owner" ]]; then
-    log "SWEEP #$num 重算锁无有效 owner,跳过本轮 lock=$lock"
-    return 1
-  fi
-  if ! mkdir "$reap" 2>/dev/null; then
-    log "SWEEP #$num stale 重算锁已有回收实例,跳过本轮 lock=$lock"
-    return 1
-  fi
-  printf '%s' "$$" > "$reap/pid"
-  owner=""
-  if [[ -f "$lock/pid" ]]; then owner="$(cat "$lock/pid" 2>/dev/null || true)"; fi
-  if [[ "$owner" =~ ^[1-9][0-9]*$ ]] && kill -0 "$owner" 2>/dev/null; then
-    rm -f "$reap/pid"
-    rmdir "$reap" 2>/dev/null || true
-    log "SWEEP #$num 重算锁已被活跃实例接管,跳过本轮 pid=$owner"
-    return 1
-  fi
-  if [[ -z "$owner" ]] || ! mv "$lock" "$stale" 2>/dev/null; then
-    rm -f "$reap/pid"
-    rmdir "$reap" 2>/dev/null || true
-    log "SWEEP #$num stale 重算锁状态已变,跳过本轮 lock=$lock"
-    return 1
-  fi
-  if ! mkdir "$lock" 2>/dev/null; then
-    rm -f "$stale/pid" "$reap/pid"
-    rmdir "$stale" "$reap" 2>/dev/null || true
-    log "SWEEP #$num 重算锁已被另一实例接管,跳过本轮 lock=$lock"
-    return 1
-  fi
-  printf '%s' "$$" > "$lock/pid"
-  rm -f "$stale/pid" "$reap/pid"
-  rmdir "$stale" "$reap" 2>/dev/null \
-    || log "SWEEP #$num stale 重算锁留痕清理失败 stale=$stale reap=$reap"
-}
-release_branch_lock() {
-  local lock="$1" owner=""
-  if [[ -f "$lock/pid" ]]; then owner="$(cat "$lock/pid" 2>/dev/null || true)"; fi
-  [[ "$owner" == "$$" ]] || return 0
-  rm -f "$lock/pid"
-  rmdir "$lock" 2>/dev/null || true
-}
-recalculate_pr_locked() {
-  local num="$1" head="$2" expected_head="$3" workspace="$4" slug="$5"
-  prepare_worktree "$num" "$head" "$expected_head" "$workspace" "$slug" \
-    || return 1
-  merge_dev "$num" "$head" "$workspace" || return 1
-  run_derivation_chain "$num" "$workspace" || return 1
-  git -C "$workspace" add -A
-  if ! git -C "$workspace" \
-    -c core.hooksPath=/dev/null \
-    -c user.name=pr-shepherd \
-    -c user.email=pr-shepherd@users.noreply.github.com \
-    commit --allow-empty -m "$COMMIT_SUBJECT" >/dev/null; then
-    log "SWEEP #$num 派生物 commit 失败,不 push"
-    return 1
-  fi
-  if ! git -C "$workspace" -c core.hooksPath=/dev/null push \
-    "$REMOTE" "HEAD:refs/heads/$head"; then
-    log "SWEEP #$num push 非 FF 被拒,放弃本轮(下轮重试)"
-    return 1
-  fi
-  log "SWEEP #$num RECALCULATE -> 本地 merge+regen+push 完成 head=$head"
-}
-recalculate_pr() {
-  local num="$1" head="$2" expected_head="$3" slug workspace lock rc=0
-  git check-ref-format --branch "$head" >/dev/null \
-    || { log "SWEEP #$num 非法 head branch=$head,放弃本轮"; return 1; }
-  slug="$(branch_slug "$head")"
-  [[ -n "$slug" ]] || { log "SWEEP #$num head slug 为空,放弃本轮"; return 1; }
-  workspace="$CACHE_ROOT/wt-$slug"
-  if [[ "$DRYRUN" == "1" ]]; then
-    dryrun_recalculation "$num" "$head" "$workspace"
-    return 0
-  fi
-  mkdir -p "$CACHE_ROOT"
-  lock="$CACHE_ROOT/lock-$slug"
-  acquire_branch_lock "$num" "$lock" || return 1
-  recalculate_pr_locked \
-    "$num" "$head" "$expected_head" "$workspace" "$slug" || rc=$?
-  release_branch_lock "$lock"
+run_bounded_capture() {
+  local variable="$1" kind="$2" step="$3" timeout="$4" output rc=0
+  shift 4
+  output="$(mktemp "${TMPDIR:-/tmp}/pr-shepherd-output.XXXXXXXX")"
+  if run_bounded "$kind" "$step" "$timeout" "$@" > "$output"; then rc=0; else rc=$?; fi
+  printf -v "$variable" '%s' "$(<"$output")"
+  rm -f "$output"
   return "$rc"
 }
-open_pr() {
-  local head="$1" title="$2" body_file="${3:-}"
-  if [[ "$DRYRUN" == "1" ]]; then
-    log "DRYRUN OPEN head=$head title=$title -> create PR + arm auto-merge"
-    printf '%s\n' "dry-run"
-    return 0
-  fi
-  local args=(--repo "$REPO" --base dev --head "$head" --title "$title")
-  if [[ -n "$body_file" ]]; then args+=(--body-file "$body_file"); else args+=(--fill-first); fi
-  local url num
-  url="$(GH_AS_APP pr create "${args[@]}")"
-  num="${url##*/}"
-  GH pr merge "$num" --repo "$REPO" --auto --merge
-  log "OPEN #$num head=$head auto-merge=armed $url"
-  printf '%s\n' "$num"
+GH() {
+  local step="$1"
+  shift
+  run_bounded api "$step" "$API_TIMEOUT_SECONDS" \
+    env LEAN4_GUARDRAILS_BYPASS=1 gh "$@"
 }
-# 唤醒:armed 但 head 上无任何 check 的 PR(bot 以 GITHUB_TOKEN push 不触发
-# workflow 的防递归缺口,见 retire-auto-update 尸检)。本地身份 close→reopen
-# 重铸触发事件;close 会撤 auto-merge,故唤醒后必须重挂。
-wake_pr() {
-  local num="$1"
-  GH pr close "$num" --repo "$REPO" || { log "WAKE #$num close 失败"; return 1; }
-  sleep "$WAKE_SLEEP_SECONDS"
-  if ! GH pr reopen "$num" --repo "$REPO"; then
-    sleep "$WAKE_REOPEN_RETRY_SLEEP_SECONDS"
-    GH pr reopen "$num" --repo "$REPO" \
-      || { log "ALERT #$num reopen 两次失败,PR 留在 closed,须立即恢复"; return 1; }
-  fi
-  GH pr merge "$num" --repo "$REPO" --auto --merge \
-    || log "WAKE #$num re-arm auto-merge 失败(需会话补挂)"
-  log "WAKE #$num close/reopen 完成,auto-merge 重挂"
+GH_CAPTURE() {
+  local variable="$1" step="$2"
+  shift 2
+  run_bounded_capture "$variable" api "$step" "$API_TIMEOUT_SECONDS" \
+    env LEAN4_GUARDRAILS_BYPASS=1 gh "$@"
 }
-# GitHub's rate_limit endpoint is itself exempt from rate limiting, so reading the
-# remaining budget costs nothing. A sweep does not: the PR listing alone is a GraphQL
-# query over up to a thousand pull requests, and a long-running watch repeats it every
-# interval. Burning the last of the budget here starves the engine that shares this
-# account, which is how it died repeatedly on this host.
-graphql_remaining() {
-  gh api rate_limit --jq '.resources.graphql.remaining' 2>/dev/null
-}
-armed_pr_count() {
-  local out
-  if ! out="$(GH pr list --repo "$REPO" --state open --limit 1000 \
-    --json autoMergeRequest \
-    --jq '[.[] | select(.autoMergeRequest != null)] | length' 2>&1)"; then
-    log "WATCH open auto-merge armed PR 查询失败: $(printf '%s' "$out" | head -c 100)"
-    return 1
+GH_AS_APP() {
+  local step="$1" token=""
+  shift
+  if command -v gh-app >/dev/null 2>&1 \
+      && run_bounded_capture token api gh-app-token "$API_TIMEOUT_SECONDS" gh-app token --auto \
+      && [[ -n "$token" ]]; then
+    run_bounded api "$step" "$API_TIMEOUT_SECONDS" \
+      env GH_TOKEN="$token" LEAN4_GUARDRAILS_BYPASS=1 gh "$@"
+  else
+    GH "$step" "$@"
   fi
-  if [[ ! "$out" =~ ^[0-9]+$ ]]; then
-    log "WATCH open auto-merge armed PR 计数非法: $(printf '%s' "$out" | head -c 100)"
-    return 1
-  fi
-  printf '%s\n' "$out"
 }
+GH_AS_APP_CAPTURE() {
+  local variable="$1" step="$2" token=""
+  shift 2
+  if command -v gh-app >/dev/null 2>&1 \
+      && run_bounded_capture token api gh-app-token "$API_TIMEOUT_SECONDS" gh-app token --auto \
+      && [[ -n "$token" ]]; then
+    run_bounded_capture "$variable" api "$step" "$API_TIMEOUT_SECONDS" \
+      env GH_TOKEN="$token" LEAN4_GUARDRAILS_BYPASS=1 gh "$@"
+  else
+    GH_CAPTURE "$variable" "$step" "$@"
+  fi
+}
+log() { printf '%s %s\n' "$(date '+%F %T')" "$*" | tee -a "$LOG" >&2; }
+SHEPHERD_MODULE_NAMES=(pr-shepherd-actions.sh pr-shepherd-ledger.sh pr-shepherd-fixed-point.sh pr-shepherd-watch.sh pr-shepherd-wake.sh pr-shepherd-lease.sh)
+SHEPHERD_MODULE_DIR="$(cd "$(dirname "$LOADED_SCRIPT_PATH")" && pwd -P)/shepherd"
+compute_shepherd_identity() {
+  local entrypoint="$1" module_directory="$2" name blob material=""
+  blob="$(git hash-object "$entrypoint" 2>/dev/null)" || return 1
+  [[ "$blob" =~ ^[0-9a-f]{40}$ ]] || return 1
+  material="pr-shepherd.sh $blob"
+  for name in "${SHEPHERD_MODULE_NAMES[@]}"; do
+    blob="$(git hash-object "$module_directory/$name" 2>/dev/null)" || return 1
+    [[ "$blob" =~ ^[0-9a-f]{40}$ ]] || return 1
+    material+=$'\n'"shepherd/$name $blob"
+  done
+  printf '%s\n' "$material" | git hash-object --stdin
+}
+if [[ "${1:-}" != watch || -n "$WATCH_LOADED_BLOB" ]]; then
+  source "$SHEPHERD_MODULE_DIR/pr-shepherd-actions.sh"
+  source "$SHEPHERD_MODULE_DIR/pr-shepherd-ledger.sh"
+  source "$SHEPHERD_MODULE_DIR/pr-shepherd-fixed-point.sh"
+  source "$SHEPHERD_MODULE_DIR/pr-shepherd-watch.sh"
+  source "$SHEPHERD_MODULE_DIR/pr-shepherd-wake.sh"
+  source "$SHEPHERD_MODULE_DIR/pr-shepherd-lease.sh"
+fi
 watch_process_start() {
   LC_ALL=C ps -p "$1" -o lstart= 2>/dev/null \
     | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
@@ -629,8 +472,9 @@ watch_lease_belongs_to_current_process() {
       && "$WATCH_OWNER_CANONICAL_SCRIPT" == "$SCRIPT_PATH" ]]
 }
 publish_watch_identity() {
-  local interval="$1" max="$2" cycle="$3" actual_blob temporary
-  actual_blob="$(git hash-object "$LOADED_SCRIPT_PATH" 2>/dev/null)" || actual_blob=""
+  local interval="$1" max="$2" cycle="$3" actual_blob now
+  actual_blob="$(compute_shepherd_identity "$LOADED_SCRIPT_PATH" "$SHEPHERD_MODULE_DIR" 2>/dev/null)" \
+    || actual_blob=""
   if [[ ! "$WATCH_LOADED_BLOB" =~ ^[0-9a-f]{40}$ \
       || "$actual_blob" != "$WATCH_LOADED_BLOB" ]]; then
     log "WATCH identity mismatch expected=${WATCH_LOADED_BLOB:-missing} actual=${actual_blob:-unreadable}"
@@ -638,59 +482,226 @@ publish_watch_identity() {
   fi
   watch_lease_belongs_to_current_process \
     || { log "WATCH lease lost before identity publication"; return 1; }
-  temporary="$PIDFILE.next.$$.$RANDOM"
-  umask 077
-  if ! {
-      printf 'schema=pr-watch-state-v1\n'
-      printf 'pid=%s\n' "$$"
-      printf 'process_start=%s\n' "$WATCH_PROCESS_START"
+  WATCH_STATE_OWNER_PID="$$"
+  WATCH_STATE_OWNER_START="$WATCH_PROCESS_START"
+  WATCH_STATE_INTERVAL="$interval"
+  WATCH_STATE_MAX="$max"
+  now="$(date '+%s')"
+  write_watch_state ready none ready "$now" 0 "$now" ready none "$cycle" \
+    || { log "WATCH identity publication failed path=$PIDFILE"; return 1; }
+  log "WATCH cycle=$cycle loaded_script_blob=$WATCH_LOADED_BLOB"
+}
+write_watch_state() {
+  local phase="$1" current_pr="$2" current_step="$3" step_started_at="$4"
+  local step_deadline_at="$5" last_progress_at="$6" last_outcome="$7"
+  local terminal_exit="$8" cycle="$9" temporary="$PIDFILE.next.$$.$RANDOM"
+  [[ "$WATCH_STATE_OWNER_PID" =~ ^[1-9][0-9]*$ \
+      && -n "$WATCH_STATE_OWNER_START" \
+      && "$WATCH_STATE_INTERVAL" =~ ^(0|[1-9][0-9]*)$ \
+      && "$WATCH_STATE_MAX" =~ ^[1-9][0-9]*$ \
+      && "$WATCH_LOADED_BLOB" =~ ^[0-9a-f]{40}$ ]] || return 1
+  if ! watch_lease_owner_status "$PIDFILE.lock"; then return 1; fi
+  [[ "$WATCH_OWNER_PID" == "$WATCH_STATE_OWNER_PID" \
+      && "$WATCH_OWNER_PROCESS_START" == "$WATCH_STATE_OWNER_START" \
+      && "$WATCH_OWNER_CANONICAL_SCRIPT" == "$SCRIPT_PATH" ]] || return 1
+  if ! (umask 077; {
+      printf 'schema=pr-watch-state-v2\n'
+      printf 'pid=%s\n' "$WATCH_STATE_OWNER_PID"
+      printf 'process_start=%s\n' "$WATCH_STATE_OWNER_START"
       printf 'canonical_script=%s\n' "$SCRIPT_PATH"
       printf 'loaded_script=%s\n' "$LOADED_SCRIPT_PATH"
       printf 'loaded_blob=%s\n' "$WATCH_LOADED_BLOB"
-      printf 'interval=%s\n' "$interval"
-      printf 'max_cycles=%s\n' "$max"
+      printf 'interval=%s\n' "$WATCH_STATE_INTERVAL"
+      printf 'max_cycles=%s\n' "$WATCH_STATE_MAX"
+      printf 'phase=%s\n' "$phase"
+      printf 'current_pr=%s\n' "$current_pr"
+      printf 'current_step=%s\n' "$current_step"
+      printf 'step_started_at=%s\n' "$step_started_at"
+      printf 'step_deadline_at=%s\n' "$step_deadline_at"
+      printf 'last_progress_at=%s\n' "$last_progress_at"
+      printf 'last_outcome=%s\n' "$last_outcome"
       printf 'cycle=%s\n' "$cycle"
-    } > "$temporary" \
-      || ! mv "$temporary" "$PIDFILE"; then
+      printf 'terminal_exit=%s\n' "$terminal_exit"
+    } > "$temporary") || ! mv "$temporary" "$PIDFILE"; then
     rm -f "$temporary" 2>/dev/null || true
-    log "WATCH identity publication failed path=$PIDFILE"
     return 1
   fi
-  log "WATCH cycle=$cycle loaded_script_blob=$WATCH_LOADED_BLOB"
+}
+load_watch_state() {
+  local line key value seen=" " schema="" pid="" process_start="" canonical_script=""
+  local loaded_script="" loaded_blob="" interval="" max_cycles=""
+  WATCH_STATE_PHASE=""; WATCH_STATE_CURRENT_PR=""; WATCH_STATE_CURRENT_STEP=""
+  WATCH_STATE_STEP_STARTED_AT=""; WATCH_STATE_STEP_DEADLINE_AT=""
+  WATCH_STATE_LAST_PROGRESS_AT=""; WATCH_STATE_LAST_OUTCOME=""
+  WATCH_STATE_CYCLE=""; WATCH_STATE_TERMINAL_EXIT=""
+  [[ -f "$PIDFILE" && -r "$PIDFILE" ]] || return 1
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    key="${line%%=*}"; value="${line#*=}"
+    [[ "$line" == *=* && "$seen" != *" $key "* ]] || return 1
+    seen+="$key "
+    case "$key" in
+      schema) schema="$value" ;; pid) pid="$value" ;; process_start) process_start="$value" ;;
+      canonical_script) canonical_script="$value" ;; loaded_script) loaded_script="$value" ;;
+      loaded_blob) loaded_blob="$value" ;; interval) interval="$value" ;; max_cycles) max_cycles="$value" ;;
+      phase) WATCH_STATE_PHASE="$value" ;; current_pr) WATCH_STATE_CURRENT_PR="$value" ;;
+      current_step) WATCH_STATE_CURRENT_STEP="$value" ;; step_started_at) WATCH_STATE_STEP_STARTED_AT="$value" ;;
+      step_deadline_at) WATCH_STATE_STEP_DEADLINE_AT="$value" ;; last_progress_at) WATCH_STATE_LAST_PROGRESS_AT="$value" ;;
+      last_outcome) WATCH_STATE_LAST_OUTCOME="$value" ;; cycle) WATCH_STATE_CYCLE="$value" ;;
+      terminal_exit) WATCH_STATE_TERMINAL_EXIT="$value" ;; *) return 1 ;;
+    esac
+  done < "$PIDFILE"
+  [[ "$schema" == pr-watch-state-v2 \
+      && "$pid" =~ ^[1-9][0-9]*$ \
+      && -n "$process_start" \
+      && "$canonical_script" == /* \
+      && "$loaded_script" == /* \
+      && "$loaded_blob" =~ ^[0-9a-f]{40}$ \
+      && "$interval" =~ ^(0|[1-9][0-9]*)$ \
+      && "$max_cycles" =~ ^[1-9][0-9]*$ \
+      && -n "$WATCH_STATE_PHASE" \
+      && -n "$WATCH_STATE_CURRENT_PR" \
+      && -n "$WATCH_STATE_CURRENT_STEP" \
+      && "$WATCH_STATE_STEP_STARTED_AT" =~ ^(0|[1-9][0-9]*)$ \
+      && "$WATCH_STATE_STEP_DEADLINE_AT" =~ ^(0|[1-9][0-9]*)$ \
+      && "$WATCH_STATE_LAST_PROGRESS_AT" =~ ^(0|[1-9][0-9]*)$ \
+      && -n "$WATCH_STATE_LAST_OUTCOME" \
+      && "$WATCH_STATE_CYCLE" =~ ^[1-9][0-9]*$ \
+      && "$WATCH_STATE_TERMINAL_EXIT" =~ ^(none|0|[1-9][0-9]{0,2})$ ]] || return 1
+  WATCH_STATE_OWNER_PID="$pid"
+  WATCH_STATE_OWNER_START="$process_start"
+  WATCH_STATE_INTERVAL="$interval"
+  WATCH_STATE_MAX="$max_cycles"
+  [[ "$canonical_script" == "$SCRIPT_PATH" ]] || return 1
+}
+watch_step_started() {
+  local step="$1" deadline="$2" now
+  [[ -n "$WATCH_STATE_OWNER_PID" ]] || return 0
+  now="$(date '+%s')"
+  write_watch_state working "${CURRENT_PR:-none}" "$step" "$now" "$deadline" "$now" running none \
+    "${PR_SHEPHERD_WATCH_CYCLE:-1}"
+}
+watch_step_finished() {
+  local step="$1" outcome="$2" parent_step="${3:-}" parent_started_at="${4:-0}"
+  local parent_deadline_at="${5:-0}" now
+  [[ -n "$WATCH_STATE_OWNER_PID" ]] || return 0
+  now="$(date '+%s')"
+  if [[ -n "$parent_step" && "$parent_started_at" =~ ^[0-9]+$ \
+      && "$parent_deadline_at" =~ ^[1-9][0-9]*$ ]]; then
+    write_watch_state working "${CURRENT_PR:-none}" "$parent_step" \
+      "$parent_started_at" "$parent_deadline_at" "$now" "$step-$outcome" none \
+      "${PR_SHEPHERD_WATCH_CYCLE:-1}"
+    return
+  fi
+  write_watch_state working "${CURRENT_PR:-none}" "$step" "$now" 0 "$now" "$outcome" none \
+    "${PR_SHEPHERD_WATCH_CYCLE:-1}"
+}
+print_watch_status() {
+  local status="$1" reason="$2" state_valid="$3"
+  if [[ "$state_valid" == 1 ]]; then
+    printf 'status=%s reason=%s state=%s phase=%s current_pr=%s current_step=%s last_progress_at=%s step_deadline_at=%s cycle=%s terminal_exit=%s\n' \
+      "$status" "$reason" "$PIDFILE" "$WATCH_STATE_PHASE" "$WATCH_STATE_CURRENT_PR" \
+      "$WATCH_STATE_CURRENT_STEP" "$WATCH_STATE_LAST_PROGRESS_AT" \
+      "$WATCH_STATE_STEP_DEADLINE_AT" "$WATCH_STATE_CYCLE" "$WATCH_STATE_TERMINAL_EXIT"
+  else
+    printf 'status=%s reason=%s state=%s last_progress_at=unknown\n' \
+      "$status" "$reason" "$PIDFILE"
+  fi
+}
+watch_status() {
+  local state_valid=0 owner_status=2 now reason
+  if load_watch_state; then state_valid=1; fi
+  if [[ ! -f "$PIDFILE.lock" ]]; then
+    print_watch_status dead no-owner "$state_valid"
+    return 2
+  fi
+  if watch_lease_owner_status "$PIDFILE.lock"; then owner_status=0; else owner_status=$?; fi
+  if [[ "$owner_status" == 1 ]]; then
+    print_watch_status dead owner-gone "$state_valid"
+    return 2
+  fi
+  if [[ "$owner_status" == 2 ]]; then
+    print_watch_status stalled owner-unverifiable "$state_valid"
+    return 1
+  fi
+  if [[ "$state_valid" != 1 \
+      || "$WATCH_STATE_OWNER_PID" != "$WATCH_OWNER_PID" \
+      || "$WATCH_STATE_OWNER_START" != "$WATCH_OWNER_PROCESS_START" ]]; then
+    print_watch_status stalled state-unverifiable "$state_valid"
+    return 1
+  fi
+  if [[ "$WATCH_STATE_TERMINAL_EXIT" != none ]]; then
+    print_watch_status dead terminal "$state_valid"
+    return 2
+  fi
+  now="$(date '+%s')"
+  if [[ ! "$now" =~ ^[0-9]+$ ]]; then
+    printf 'status=stalled reason=clock-unavailable state=%s\n' "$PIDFILE"
+    return 1
+  fi
+  if [[ "$WATCH_STATE_STEP_DEADLINE_AT" -gt 0 \
+      && "$now" -gt "$WATCH_STATE_STEP_DEADLINE_AT" ]]; then
+    reason=deadline-exceeded
+    printf 'status=stalled reason=%s state=%s phase=%s current_pr=%s current_step=%s last_progress_at=%s step_deadline_at=%s cycle=%s terminal_exit=%s\n' \
+      "$reason" "$PIDFILE" "$WATCH_STATE_PHASE" "$WATCH_STATE_CURRENT_PR" "$WATCH_STATE_CURRENT_STEP" \
+      "$WATCH_STATE_LAST_PROGRESS_AT" "$WATCH_STATE_STEP_DEADLINE_AT" "$WATCH_STATE_CYCLE" "$WATCH_STATE_TERMINAL_EXIT"
+    return 1
+  fi
+  printf 'status=alive state=%s phase=%s current_pr=%s current_step=%s last_progress_at=%s step_deadline_at=%s cycle=%s terminal_exit=%s\n' \
+    "$PIDFILE" "$WATCH_STATE_PHASE" "$WATCH_STATE_CURRENT_PR" "$WATCH_STATE_CURRENT_STEP" \
+    "$WATCH_STATE_LAST_PROGRESS_AT" "$WATCH_STATE_STEP_DEADLINE_AT" "$WATCH_STATE_CYCLE" "$WATCH_STATE_TERMINAL_EXIT"
 }
 remove_watch_snapshot() {
-  local snapshot="$1" snapshot_directory temporary_directory
-  [[ "${snapshot##*/}" == pr-shepherd-watch.* ]] || return 0
-  snapshot_directory="$(cd "$(dirname "$snapshot")" 2>/dev/null && pwd -P)" || return 0
+  local snapshot="$1" snapshot_root temporary_directory name
+  snapshot_root="$(cd "$(dirname "$snapshot")" 2>/dev/null && pwd -P)" || return 0
+  [[ "${snapshot_root##*/}" == pr-shepherd-watch.* ]] || return 0
   temporary_directory="$(cd "${TMPDIR:-/tmp}" 2>/dev/null && pwd -P)" || return 0
-  [[ "$snapshot_directory" == "$temporary_directory" ]] \
-    && rm -f "$snapshot" 2>/dev/null || true
+  [[ "$(dirname "$snapshot_root")" == "$temporary_directory" ]] || return 0
+  rm -f "$snapshot_root/pr-shepherd.sh" 2>/dev/null || true
+  for name in "${SHEPHERD_MODULE_NAMES[@]}"; do
+    rm -f "$snapshot_root/shepherd/$name" 2>/dev/null || true
+  done
+  rmdir "$snapshot_root/shepherd" "$snapshot_root" 2>/dev/null || true
 }
 reload_watch() {
-  local interval="$1" max="$2" next_cycle="$3" snapshot blob rc
-  local script_repository script_relative tracked_blob
-  if ! snapshot="$(mktemp "${TMPDIR:-/tmp}/pr-shepherd-watch.XXXXXXXX")"; then
+  local interval="$1" max="$2" next_cycle="$3" snapshot_root snapshot blob rc
+  local script_repository canonical_directory source_file destination_file
+  local script_relative tracked_blob actual_blob name
+  if ! snapshot_root="$(mktemp -d "${TMPDIR:-/tmp}/pr-shepherd-watch.XXXXXXXX")"; then
     log "WATCH reload unavailable: immutable snapshot cannot be allocated"
     return 1
   fi
-  if ! cp "$SCRIPT_PATH" "$snapshot" 2>/dev/null \
-      || ! chmod 0400 "$snapshot" \
-      || ! /bin/bash -n "$snapshot" \
-      || ! blob="$(git hash-object "$snapshot" 2>/dev/null)"; then
-    rm -f "$snapshot" 2>/dev/null || true
-    log "WATCH reload unavailable path=$SCRIPT_PATH"
-    return 1
-  fi
+  snapshot="$snapshot_root/pr-shepherd.sh"
+  mkdir "$snapshot_root/shepherd" || { rmdir "$snapshot_root"; return 1; }
   script_repository="$(git -C "$(dirname "$SCRIPT_PATH")" rev-parse --show-toplevel 2>/dev/null)" \
     || script_repository=""
-  script_relative="$(git -C "$script_repository" ls-files --full-name \
-    --error-unmatch -- "$SCRIPT_PATH" 2>/dev/null)" || script_relative=""
-  tracked_blob="$(git -C "$script_repository" \
-    rev-parse "HEAD:$script_relative" 2>/dev/null)" || tracked_blob=""
-  if [[ -z "$script_repository" || -z "$script_relative" \
-      || ! "$tracked_blob" =~ ^[0-9a-f]{40}$ || "$blob" != "$tracked_blob" ]]; then
-    rm -f "$snapshot" 2>/dev/null || true
-    log "WATCH reload blocked: canonical script does not match tracked HEAD path=$SCRIPT_PATH"
+  canonical_directory="$(cd "$(dirname "$SCRIPT_PATH")" 2>/dev/null && pwd -P)"
+  for name in pr-shepherd.sh "${SHEPHERD_MODULE_NAMES[@]}"; do
+    if [[ "$name" == pr-shepherd.sh ]]; then
+      source_file="$SCRIPT_PATH"; destination_file="$snapshot"
+    else
+      source_file="$canonical_directory/shepherd/$name"
+      destination_file="$snapshot_root/shepherd/$name"
+    fi
+    script_relative="$(git -C "$script_repository" ls-files --full-name \
+      --error-unmatch -- "$source_file" 2>/dev/null)" || script_relative=""
+    tracked_blob="$(git -C "$script_repository" rev-parse "HEAD:$script_relative" 2>/dev/null)" \
+      || tracked_blob=""
+    actual_blob="$(git hash-object "$source_file" 2>/dev/null)" || actual_blob=""
+    if [[ -z "$script_repository" || -z "$script_relative" \
+        || ! "$tracked_blob" =~ ^[0-9a-f]{40}$ || "$actual_blob" != "$tracked_blob" ]] \
+        || ! cp "$source_file" "$destination_file" 2>/dev/null \
+        || ! chmod 0400 "$destination_file" \
+        || ! /bin/bash -n "$destination_file"; then
+      remove_watch_snapshot "$snapshot"
+      log "WATCH reload blocked: canonical script or module does not match tracked HEAD path=$source_file"
+      return 1
+    fi
+  done
+  blob="$(compute_shepherd_identity "$snapshot" "$snapshot_root/shepherd" 2>/dev/null)" \
+    || blob=""
+  if [[ ! "$blob" =~ ^[0-9a-f]{40}$ ]]; then
+    remove_watch_snapshot "$snapshot"
+    log "WATCH reload unavailable path=$SCRIPT_PATH"
     return 1
   fi
   if [[ -n "$WATCH_LOADED_BLOB" && "$WATCH_LOADED_BLOB" != "$blob" ]]; then
@@ -702,6 +713,10 @@ reload_watch() {
   export PR_SHEPHERD_WATCH_PREVIOUS_SCRIPT="$LOADED_SCRIPT_PATH"
   export PR_SHEPHERD_WATCH_PROCESS_START="$WATCH_PROCESS_START"
   export PR_SHEPHERD_WATCH_CYCLE="$next_cycle"
+  export PR_SHEPHERD_WATCH_OWNER_PID="$$"
+  export PR_SHEPHERD_WATCH_OWNER_START="$WATCH_PROCESS_START"
+  export PR_SHEPHERD_WATCH_INTERVAL="$interval"
+  export PR_SHEPHERD_WATCH_MAX_CYCLES="$max"
   if exec /bin/bash "$snapshot" watch "$interval" "$max"; then
     return 0
   else
@@ -711,28 +726,22 @@ reload_watch() {
   log "WATCH reload exec failed path=$snapshot exit=$rc"
   return "$rc"
 }
-cleanup_watch() {
-  [[ -z "$WATCH_LOCK_CANDIDATE" ]] \
-    || rm -f "$WATCH_LOCK_CANDIDATE" 2>/dev/null || true
-  clear_watch_reclaim || true
-  remove_watch_snapshot "$LOADED_SCRIPT_PATH"
-}
 watch() {
-  local interval="${1:-60}" max="${2:-360}" cycle armed
+  local interval="${1:-60}" max="${2:-360}" cycle armed now sleep_deadline
   [[ "$interval" =~ ^(0|[1-9][0-9]*)$ && "$max" =~ ^[1-9][0-9]*$ ]] \
     || { log "WATCH invalid interval or max_cycles (interval=$interval max_cycles=$max)"; return 2; }
   if [[ -z "$WATCH_LOADED_BLOB" ]]; then
-    trap cleanup_watch EXIT
-    trap 'exit 143' TERM
-    trap 'exit 130' INT
+    trap watch_exit_cleanup EXIT
+    trap 'interrupt_watch 143' TERM
+    trap 'interrupt_watch 130' INT
     acquire_watch_lease || return
     reload_watch "$interval" "$max" 1
     return
   fi
   WATCH_OWNS_LEASE=1
-  trap cleanup_watch EXIT
-  trap 'exit 143' TERM
-  trap 'exit 130' INT
+  trap watch_exit_cleanup EXIT
+  trap 'interrupt_watch 143' TERM
+  trap 'interrupt_watch 130' INT
   cycle="${PR_SHEPHERD_WATCH_CYCLE:-}"
   [[ "$cycle" =~ ^[1-9][0-9]*$ && "$cycle" -le "$max" ]] \
     || { log "WATCH reload rejected invalid cycle=${cycle:-missing}"; return 2; }
@@ -746,8 +755,22 @@ watch() {
   else
     log "WATCH reloaded cycle=$cycle interval=${interval}s max_cycles=${max} pid=$$"
   fi
-  sweep || log "SWEEP cycle=$cycle error (continuing)"
-  sleep "$interval"
+  local sweep_outcome=sweep-complete sweep_rc=0
+  if run_sweep_bounded; then
+    sweep_rc=0
+  else
+    sweep_rc=$?
+    sweep_outcome="sweep-${LAST_BOUNDED_RESULT:-exit}"
+    log "SWEEP cycle=$cycle error result=${LAST_BOUNDED_RESULT:-exit} exit=$sweep_rc (continuing)"
+  fi
+  now="$(date '+%s')"
+  sleep_deadline=$((now + interval))
+  write_watch_state waiting none sleep "$now" "$sleep_deadline" "$now" "$sweep_outcome" none "$cycle" \
+    || { log "WATCH progress publication failed step=sleep"; return 1; }
+  sleep "$interval" &
+  WATCH_SLEEP_PID=$!
+  wait "$WATCH_SLEEP_PID" || true
+  WATCH_SLEEP_PID=""
   if [[ "$cycle" -lt "$max" ]]; then
     reload_watch "$interval" "$max" "$((cycle + 1))"
     return
@@ -765,9 +788,13 @@ watch() {
   log "WATCH end(${max} 轮耗尽,无 open auto-merge armed PR)"
 }
 
+validate_configuration || exit $?
 case "${1:-}" in
-  open)  shift; open_pr "$@" ;;
-  watch) shift; watch "$@" ;;
-  sweep) sweep ;;
+  open)         shift; open_pr "$@" ;;
+  start)        shift; start_watch "$@" ;;
+  status)       watch_status ;;
+  watch)        shift; watch "$@" ;;
+  sweep)        run_sweep_bounded ;;
+  sweep-worker) sweep_worker ;;
   *) sed -n '2,15p' "$0"; exit 2 ;;
 esac

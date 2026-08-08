@@ -38,6 +38,8 @@ public sealed partial class MakeWorkflowTests
     private const string PrShepherdScriptPath = "Meta/StrataLint/scripts/pr-shepherd.sh";
     private const string PrShepherdLeaseScriptPath =
         "Meta/StrataLint/scripts/shepherd/pr-shepherd-lease.sh";
+    private const string PrShepherdActionsScriptPath =
+        "Meta/StrataLint/scripts/shepherd/pr-shepherd-actions.sh";
 
     private static readonly string[] Targets =
     [
@@ -67,6 +69,7 @@ public sealed partial class MakeWorkflowTests
         "cover",
         "worktree",
         "pr-watch",
+        "pr-watch-status",
         "refactor-p0-0-gate-authority",
         "refactor-p0-2",
     ];

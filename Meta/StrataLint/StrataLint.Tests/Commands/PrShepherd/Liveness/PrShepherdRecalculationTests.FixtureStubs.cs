@@ -9,10 +9,59 @@ public sealed partial class PrShepherdRecalculationTests
         private void InstallStubs()
         {
             WriteExecutable(
+                "ps",
+                """
+                #!/usr/bin/env bash
+                set -euo pipefail
+                if /bin/ps "$@" 2>/dev/null; then
+                  exit 0
+                fi
+                if [[ "${1:-}" == -p && "${3:-}" == -o && "${4:-}" == lstart= ]]; then
+                  /bin/kill -0 "$2" 2>/dev/null || exit 1
+                  printf 'fixture-process-%s\n' "$2"
+                elif [[ "${1:-}" == -p && "${3:-}" == -o && "${4:-}" == pgid= ]]; then
+                  /bin/kill -0 "$2" 2>/dev/null || exit 1
+                  /usr/bin/ruby -e 'puts Process.getpgid(Integer(ARGV.fetch(0)))' "$2"
+                elif [[ "${1:-}" == -axo && "${2:-}" == pid=,ppid= ]]; then
+                  /usr/bin/ruby -rfiddle/import <<'RUBY'
+                module LibProc
+                  extend Fiddle::Importer
+                  dlload '/usr/lib/libproc.dylib'
+                  extern 'int proc_listpids(unsigned int, unsigned int, void*, int)'
+                  extern 'int proc_pidinfo(int, int, unsigned long, void*, int)'
+                end
+                bytes = LibProc.proc_listpids(1, 0, nil, 0)
+                buffer = Fiddle::Pointer.malloc(bytes)
+                used = LibProc.proc_listpids(1, 0, buffer, bytes)
+                buffer[0, used].unpack('l*').each do |pid|
+                  next unless pid.positive?
+                  info = Fiddle::Pointer.malloc(136)
+                  next unless LibProc.proc_pidinfo(pid, 3, 0, info, 136) == 136
+                  fields = info[0, 136].unpack('L*')
+                  puts "#{fields[3]} #{fields[4]}"
+                end
+                RUBY
+                else
+                  exit 64
+                fi
+                """);
+            WriteExecutable(
                 "gh",
                 """
                 #!/usr/bin/env bash
                 set -euo pipefail
+                printf 'api|%s|%s|gh %s\n' \
+                  "${PR_SHEPHERD_BOUND_STEP-}" \
+                  "${PR_SHEPHERD_BOUND_TIMEOUT_SECONDS-}" "$*" \
+                  >> "$PR_TEST_BOUNDED_CALLS"
+                if [[ -n "${PR_TEST_FAIL_GH_OPERATION:-}" \
+                    && "$*" == *"$PR_TEST_FAIL_GH_OPERATION"* ]]; then
+                  exit 89
+                fi
+                if [[ -n "${PR_TEST_PAUSE_GH_OPERATION:-}" \
+                    && "$*" == *"$PR_TEST_PAUSE_GH_OPERATION"* ]]; then
+                  /bin/sleep 1
+                fi
                 if [[ "${1:-}" == pr && "${2:-}" == list ]]; then
                   [[ " $* " == *" --limit 1000 "* ]] || exit 97
                   if [[ "${PR_TEST_WATCH:-0}" == 1 && " $* " == *" --json autoMergeRequest "* ]]; then
@@ -113,6 +162,10 @@ public sealed partial class PrShepherdRecalculationTests
                 if [[ "${1:-}" == -C ]]; then root="$2"; shift 2; fi
                 [[ "${1:-}" != --no-print-directory ]] || shift
                 target="${1:-}"
+                printf 'build|%s|%s|make %s\n' \
+                  "${PR_SHEPHERD_BOUND_STEP-}" \
+                  "${PR_SHEPHERD_BOUND_TIMEOUT_SECONDS-}" "$target" \
+                  >> "$PR_TEST_BOUNDED_CALLS"
                 if [[ "$target" == worktree ]]; then
                   [[ "$PR_TEST_PAUSE_WORKTREE" != 1 ]] || sleep 2
                   name=''; path=''; base=''
@@ -128,7 +181,22 @@ public sealed partial class PrShepherdRecalculationTests
                   exit 0
                 fi
                 printf '%s\n' "$target" >> "$PR_TEST_CALLS"
-                [[ "$target" != "$PR_TEST_FAIL_TARGET" ]] || exit 93
+                if [[ "$target" == "${PR_TEST_HANG_TARGET:-}" ]]; then
+                  printf '%s\n' "$$" >> "$PR_TEST_HANGING_PIDS"
+                  (
+                    trap '' TERM
+                    while :; do /bin/sleep 1; done
+                  ) &
+                  child=$!
+                  printf '%s\n' "$child" >> "$PR_TEST_HANGING_PIDS"
+                  trap '' TERM
+                  while :; do wait "$child" || true; done
+                fi
+                if [[ "$target" == "$PR_TEST_FAIL_TARGET" \
+                    && ( "${PR_TEST_FAIL_PR:-0}" == 0 \
+                      || "${PR_SHEPHERD_CURRENT_PR:-0}" == "$PR_TEST_FAIL_PR" ) ]]; then
+                  exit "$PR_TEST_FAIL_EXIT"
+                fi
                 case "$target" in
                   lean-report)
                     mkdir -p "$root/.lake/build/stratalint"
@@ -140,13 +208,26 @@ public sealed partial class PrShepherdRecalculationTests
                     fi
                     ;;
                   emit)
+                    count=0
+                    [[ ! -f "$PR_TEST_CALLS.emit-count" ]] \
+                      || count="$(cat "$PR_TEST_CALLS.emit-count")"
+                    count=$((count + 1))
+                    printf '%s' "$count" > "$PR_TEST_CALLS.emit-count"
+                    round="$count"
+                    if (( round > PR_TEST_TRUTH_GRAPH_DIRTY_ROUNDS )); then
+                      round="$PR_TEST_TRUTH_GRAPH_DIRTY_ROUNDS"
+                    fi
+                    printf 'emit:%s:%s\n' "$count" "$(git -C "$root" rev-parse HEAD)" \
+                      >> "$PR_TEST_CALLS.fixed-point"
                     if [[ "${PR_TEST_LEDGER_CONFLICT:-0}" == 1 ]]; then
-                      cmp -s "$root/Generated/dev-choice.md" \
-                        <(git -C "$root" show origin/dev:Generated/dev-choice.md) || exit 81
-                      printf 'emit:dev-projection\n' >> "$PR_TEST_CALLS.ledger"
+                      if [[ "$count" == 1 ]]; then
+                        cmp -s "$root/Generated/dev-choice.md" \
+                          <(git -C "$root" show origin/dev:Generated/dev-choice.md) || exit 81
+                        printf 'emit:dev-projection\n' >> "$PR_TEST_CALLS.ledger"
+                      fi
                     fi
                     mkdir -p "$root/Generated"
-                    printf 'derived artifact\n' > "$root/Generated/artifact.md"
+                    printf 'truth graph round %s\n' "$round" > "$root/Generated/artifact.md"
                     if [[ -f "$root/Generated/dev-choice.md" ]]; then
                       printf 'reemitted choice\n' > "$root/Generated/dev-choice.md"
                     fi
@@ -175,6 +256,10 @@ public sealed partial class PrShepherdRecalculationTests
                 """
                 #!/usr/bin/env bash
                 set -euo pipefail
+                printf 'build|%s|%s|dotnet %s\n' \
+                  "${PR_SHEPHERD_BOUND_STEP-}" \
+                  "${PR_SHEPHERD_BOUND_TIMEOUT_SECONDS-}" "$*" \
+                  >> "$PR_TEST_BOUNDED_CALLS"
                 [[ -z "${GH_TOKEN+x}" ]] || exit 91
                 [[ -z "${GITHUB_TOKEN+x}" ]] || exit 92
                 if [[ "$*" == *"ledger-append --candidate-lean-report"* ]]; then
@@ -214,6 +299,18 @@ public sealed partial class PrShepherdRecalculationTests
                 """
                 #!/usr/bin/env bash
                 set -euo pipefail
+                if [[ " $* " == *" fetch "* || " $* " == *" push "* \
+                    || " $* " == *" ls-remote "* || " $* " == *" reset --hard "* \
+                    || " $* " == *" clean -fd "* || " $* " == *" checkout --detach "* \
+                    || " $* " == *" merge --no-commit "* || " $* " == *" add -A "* \
+                    || " $* " == *" commit -m "* \
+                    || " $* " == *" rev-parse HEAD "* \
+                    || "${PR_SHEPHERD_BOUND_STEP:-}" == ledger-* ]]; then
+                  printf 'git|%s|%s|git %s\n' \
+                    "${PR_SHEPHERD_BOUND_STEP-}" \
+                    "${PR_SHEPHERD_BOUND_TIMEOUT_SECONDS-}" "$*" \
+                    >> "$PR_TEST_BOUNDED_CALLS"
+                fi
                 if [[ " $* " == *" fetch --no-tags "* ]]; then
                   if [[ "$PR_TEST_MOVE_HEAD_DURING_FETCH" == 1 ]]; then
                     attacker="$(/usr/bin/git --git-dir "$PR_TEST_ORIGIN" rev-parse refs/heads/attacker)"
@@ -228,6 +325,18 @@ public sealed partial class PrShepherdRecalculationTests
                 if [[ "$PR_TEST_FAIL_MERGE" == 1 && " $* " == *" merge --no-commit "* ]]; then
                   exit 97
                 fi
+                if [[ -n "${PR_TEST_HANG_GIT_OPERATION:-}" \
+                    && " $* " == *" ${PR_TEST_HANG_GIT_OPERATION} "* ]]; then
+                  printf '%s\n' "$$" >> "$PR_TEST_HANGING_PIDS"
+                  (
+                    trap '' TERM
+                    while :; do /bin/sleep 1; done
+                  ) &
+                  child=$!
+                  printf '%s\n' "$child" >> "$PR_TEST_HANGING_PIDS"
+                  trap '' TERM
+                  while :; do wait "$child" || true; done
+                fi
                 if [[ "${PR_TEST_CONFLICTING:-0}" == 1 && " $* " == *" merge --no-commit "* ]]; then
                   printf 'local-merge\n' >> "$PR_TEST_CALLS"
                 fi
@@ -241,6 +350,10 @@ public sealed partial class PrShepherdRecalculationTests
                     esac
                   done
                   printf '%s\n' "$push_call" >> "$PR_TEST_CALLS"
+                  if [[ "${PR_TEST_FAIL_TARGET:-}" == push ]]; then
+                    printf '%s\n' 'remote: pre-receive hook declined' >&2
+                    exit "$PR_TEST_FAIL_EXIT"
+                  fi
                 fi
                 exec /usr/bin/git "$@"
                 """);

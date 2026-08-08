@@ -61,6 +61,7 @@ public sealed partial class PrShepherdRecalculationTests
                 "ingest",
                 "echo-verify",
                 "ledger-append",
+                "emit",
                 "emit-check",
                 "push",
             ],
@@ -123,6 +124,7 @@ public sealed partial class PrShepherdRecalculationTests
                 "emit",
                 "ingest",
                 "echo-verify",
+                "emit",
                 "emit-check",
                 "push",
             ],
@@ -170,6 +172,7 @@ public sealed partial class PrShepherdRecalculationTests
                 "emit",
                 "ingest",
                 "echo-verify",
+                "emit",
                 "emit-check",
             ],
             fixture.MutationCalls());
@@ -207,11 +210,52 @@ public sealed partial class PrShepherdRecalculationTests
     [Fact]
     public void SemanticConflictAlertHasOneSourceOfTruth()
     {
-        var root = FindRepositoryRoot();
-        var script = File.ReadAllText(Path.Combine(root, ShepherdScriptPath));
+        var script = ReadShepherdScripts();
         const string alert =
             "ALERT #$num CONFLICTING head=$head 需语义合并(派 shepherd lane,本器不代解)";
 
         Assert.Equal(1, script.Split(alert, StringSplitOptions.None).Length - 1);
+    }
+
+
+    [Fact]
+    public void DerivedLaneCommitsEmissionsUntilTheTruthGraphReachesAFixedPoint()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ShepherdFixture(
+            conflicting: true,
+            ledgerConflict: true,
+            truthGraphDirtyRounds: 2);
+
+        var result = fixture.Run();
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(2, fixture.CountCommitsWithSubject(CommitSubject));
+        Assert.Equal(3, fixture.MutationCalls().Count(call => call == "emit"));
+        Assert.Contains("emit-check", fixture.MutationCalls());
+        Assert.Contains("push", fixture.MutationCalls());
+
+        var observations = fixture.FixedPointObservations();
+        Assert.Equal(3, observations.Length);
+        Assert.Equal(3, observations.Select(line => line.Split(':')[2]).Distinct().Count());
+    }
+
+    [Fact]
+    public void DerivedLaneAlertsWithoutPushWhenThreeRoundsDoNotConverge()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ShepherdFixture(truthGraphDirtyRounds: 4);
+
+        var result = fixture.Run();
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(fixture.OriginalHead, fixture.RemoteHead());
+        Assert.Equal(3, fixture.MutationCalls().Count(call => call == "emit"));
+        Assert.DoesNotContain("emit-check", fixture.MutationCalls());
+        Assert.DoesNotContain("push", fixture.MutationCalls());
+        Assert.Contains(
+            "ALERT #1 truth graph 3 轮未收敛,不 push",
+            result.Log,
+            StringComparison.Ordinal);
     }
 }

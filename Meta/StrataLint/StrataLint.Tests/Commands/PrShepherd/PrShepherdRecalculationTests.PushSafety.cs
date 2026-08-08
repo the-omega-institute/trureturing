@@ -14,9 +14,9 @@ public sealed partial class PrShepherdRecalculationTests
         var firstHead = fixture.RemoteHead();
         Assert.NotEqual(fixture.OriginalHead, firstHead);
         Assert.True(fixture.IsAncestor(fixture.BaseHead, firstHead));
-        Assert.Equal("derived artifact\n", fixture.ShowRemote("Generated/artifact.md"));
+        Assert.Equal("truth graph round 1\n", fixture.ShowRemote("Generated/artifact.md"));
         Assert.Equal(
-            ["worktree", "lean-report", "emit", "ingest", "echo-verify", "ledger-append", "emit-check", "push"],
+            ["worktree", "lean-report", "emit", "ingest", "echo-verify", "ledger-append", "emit", "emit-check", "push"],
             fixture.MutationCalls());
         Assert.Equal(1, fixture.CountCommitsWithSubject(CommitSubject));
         Assert.True(Directory.Exists(fixture.CacheWorktree));
@@ -43,7 +43,7 @@ public sealed partial class PrShepherdRecalculationTests
         Assert.Equal(
             ["lean-report", "emit", "ingest", "echo-verify", "ledger-append", "emit-check", "push"],
             fixture.MutationCalls());
-        Assert.Equal(2, fixture.CountCommitsWithSubject(CommitSubject));
+        Assert.Equal(1, fixture.CountCommitsWithSubject(CommitSubject));
     }
 
     [Fact]
@@ -57,7 +57,7 @@ public sealed partial class PrShepherdRecalculationTests
         Assert.Equal(0, result.ExitCode);
         Assert.Equal(fixture.OriginalHead, fixture.RemoteHead());
         Assert.Equal(
-            ["worktree", "lean-report", "emit", "ingest", "echo-verify", "ledger-append", "emit-check"],
+            ["worktree", "lean-report", "emit", "ingest", "echo-verify", "ledger-append", "emit", "emit-check"],
             fixture.MutationCalls());
         Assert.Contains("emit-check 失败,不 push", result.Log, StringComparison.Ordinal);
     }
