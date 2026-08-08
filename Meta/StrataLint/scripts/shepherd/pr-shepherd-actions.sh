@@ -87,19 +87,48 @@ has_expiry_fingerprint() {
   [[ "$out" == *"ECHO_VERIFY_INFRASTRUCTURE"* \
     && "$out" == *"residual"* ]]
 }
-# Conflicts a machine can settle by rebuilding rather than by reading intent. The frozen
-# ledger belongs here even though it is append-only source: two lanes that each freeze a
-# module always collide textually, yet the correct result is never a hand-merge of the two
+# Conflicts a machine can settle by rebuilding rather than by reading intent. Generated
+# paths are classified by FILEMAP, the repository's typed ownership source. The frozen
+# ledger belongs here separately even though it is append-only source: two lanes that each
+# freeze a module always collide textually, yet the correct result is never a hand-merge of the two
 # tails -- it is the dev tail plus this branch's freeze re-attested from its own Lean report,
 # which run_derivation_chain does below. Without this, every D5 delivery whose sibling merges
 # first stalls as "needs a semantic merge" and waits for a human that this harness has none of.
+DERIVED_FILEMAP_PATTERNS_LOADED=0
+DERIVED_FILEMAP_PATTERNS=()
+load_derived_filemap_patterns() {
+  [[ "$DERIVED_FILEMAP_PATTERNS_LOADED" == 0 ]] || return 0
+  local file_map="${PR_SHEPHERD_FILEMAP_PATH:-$ROOT/Meta/FILEMAP.toml}"
+  [[ -r "$file_map" ]] || return 1
+  local pattern
+  while IFS= read -r pattern; do
+    DERIVED_FILEMAP_PATTERNS+=("$pattern")
+  done < <(
+    awk '
+      function emit() {
+        if (in_files && kind == "generated" && pattern != "") print pattern
+      }
+      /^\[\[files\]\]$/ { emit(); in_files=1; pattern=""; kind=""; next }
+      in_files && /^pattern = "[^"]+"$/ {
+        pattern=$0; sub(/^pattern = "/, "", pattern); sub(/"$/, "", pattern); next
+      }
+      in_files && /^kind = "[^"]+"$/ {
+        kind=$0; sub(/^kind = "/, "", kind); sub(/"$/, "", kind); next
+      }
+      END { emit() }
+    ' "$file_map"
+  )
+  [[ "${#DERIVED_FILEMAP_PATTERNS[@]}" -gt 0 ]] || return 1
+  DERIVED_FILEMAP_PATTERNS_LOADED=1
+}
 is_derived_conflict() {
-  case "$1" in
-    Generated/*|Evidence/D5/values.json) return 0 ;;
-    Meta/StrataLint/Generated/anchor-catalog.v1.json) return 0 ;;
-    "$FROZEN_LEDGER_PATH") return 0 ;;
-    *) return 1 ;;
-  esac
+  local path="$1" pattern
+  [[ "$path" == "$FROZEN_LEDGER_PATH" ]] && return 0
+  load_derived_filemap_patterns || return 1
+  for pattern in "${DERIVED_FILEMAP_PATTERNS[@]}"; do
+    [[ "$path" == $pattern ]] && return 0
+  done
+  return 1
 }
 branch_slug() {
   local branch="$1" slug digest
