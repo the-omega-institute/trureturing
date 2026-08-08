@@ -22,7 +22,12 @@ jobs:
   candidate-engineering:
     name: Candidate harness engineering checks
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # 实测(run 31242103753,2026-08-08):PR-A required lane 单步在 ubuntu-latest 上
+    # 跑满 19.1 min 仍未完成，被原 20 min job 预算掐断（cancelled），其后 test/selftest
+    # 全部 skipped。本机同一 lane 为 183 s，runner 约慢 6.4×。故 job 预算按实测上调，
+    # 不是猜测的余量。PR-A 仍留在本 required job 内——移入独立 job 会使其脱离 required
+    # check 集合而不再阻断合并，那是削弱（第 20 条红线：检测机制绝不降级）。
+    timeout-minutes: 45
     steps:
       - name: Check out candidate
         uses: actions/checkout@v4
