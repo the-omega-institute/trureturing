@@ -22,14 +22,16 @@ jobs:
   candidate-engineering:
     name: Candidate harness engineering checks
     runs-on: ubuntu-latest
-    # Transitional self-lock escape: the required PR-A lane measured 15m29s-19m+
-    # on runners; the old 20-minute job budget cancelled it and left every later
-    # test/selftest step skipped. The same lane is 306s with a warm local cache,
-    # which was the reference frame behind the old budget. Align this job with the
-    # 45-minute canonical Lean report job below. End state (separate follow-up):
-    # reuse that sibling job's report through PrARealRebuildRunner.cs:37 leanReport
-    # and :120-124 PrepareLeanReport(); this increase is only the transition.
-    timeout-minutes: 45
+    # Transitional self-lock escape. The required PR-A lane rebuilds a full Lean
+    # report inside this job; it measured 15m29s-19m+ on runners against 306s with
+    # a warm local cache, and the old 20-minute budget was set against that warm
+    # cache. Runner performance varies by machine class and the cancelled samples
+    # are truncated observations, so this budget is deliberately generous rather
+    # than fitted to the observed range: stop the bleeding first. End state is
+    # issue #952 -- reuse the sibling canonical Lean report job (3m52s measured)
+    # via PrARealRebuildRunner.cs:37 leanReport / :120-124 PrepareLeanReport(),
+    # after which this budget should be re-derived from measurement and lowered.
+    timeout-minutes: 90
     steps:
       - name: Check out candidate
         uses: actions/checkout@v4
