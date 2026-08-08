@@ -12,7 +12,7 @@ public sealed class CliOutcomeTests
         { "admitted", 0, "ADMITTED", false },
         { "rejected", 1, "RULE_REJECTED", false },
         { "infrastructure", 2, "INFRASTRUCTURE_FAILURE", true },
-        { "human", 3, "HUMAN_REVIEW_REQUIRED", false },
+        { "verification", 3, "HUMAN_REVIEW_REQUIRED", false },
         { "protected", 3, "PROTECTED_SURFACE_CHANGE", false },
     };
 
@@ -152,14 +152,14 @@ public sealed class CliOutcomeTests
                 RuleFixture.BlueprintPath,
                 "hand-written status badge is forbidden"))),
         "infrastructure" => new AdmissionOutcome.InfrastructureFailure("fixture tool failure"),
-        "human" => new AdmissionOutcome.HumanReviewRequired(ImmutableArray.Create(
+        "verification" => new AdmissionOutcome.ProtectedSurfaceVerificationRequired(ImmutableArray.Create(
             new Diagnostic(
                 RuleId.CreateKnown(7),
                 "Conflict-of-interest gate",
                 DisplaySeverity.Warning,
                 AdmissionEffect.HumanGate,
                 RuleFixture.BlueprintPath,
-                "legacy structured human-review outcome"))),
+                "protected-surface verification fixture outcome"))),
         "protected" => ProtectedSurfaceChange(),
         _ => throw new ArgumentOutOfRangeException(nameof(fixture)),
     };
@@ -168,7 +168,7 @@ public sealed class CliOutcomeTests
     {
         const string path = RuleFixture.SyntheticProtectedPath;
         var admitted = Assert.IsType<AdmissionOutcome.Admitted>(Admitted());
-        var bootstrap = Assert.IsType<BootstrapOutcome.HumanReviewRequired>(
+        var bootstrap = Assert.IsType<BootstrapOutcome.ProtectedSurfaceVerificationRequired>(
             BootstrapGate.Evaluate(RawChangeSet.Create(new[] { path })));
         var descriptor = RuleCatalog.Default.Descriptors[21];
         return new AdmissionOutcome.ProtectedSurfaceChange(
