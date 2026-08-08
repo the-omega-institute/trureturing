@@ -1,6 +1,7 @@
 using System.Text.RegularExpressions;
 using StrataLint.Cli;
 using StrataLint.Engine;
+using YamlDotNet.RepresentationModel;
 
 namespace StrataLint.Tests;
 
@@ -289,6 +290,38 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("|| true", localGate, StringComparison.Ordinal);
         Assert.Contains("|| true", preflight, StringComparison.Ordinal);
         Assert.Contains(">> \"$LOCAL_TIMING_FILE\" || true", localGate, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RequiredPrAProjectionRebuildLaneHasSufficientEngineeringBudget()
+    {
+        var root = FindRepositoryRoot();
+        using var reader = File.OpenText(Path.Combine(root, AdmissionWorkflowPath));
+        var yaml = new YamlStream();
+        yaml.Load(reader);
+
+        var document = Assert.IsType<YamlMappingNode>(Assert.Single(yaml.Documents).RootNode);
+        var jobs = MappingValue(document, "jobs");
+        var engineering = MappingValue(jobs, "candidate-engineering");
+        Assert.Equal(
+            "Candidate harness engineering checks",
+            ScalarValue(engineering, "name"));
+
+        var steps = Assert.IsType<YamlSequenceNode>(NodeValue(engineering, "steps"));
+        var rebuild = Assert.Single(
+            steps.Children
+                .OfType<YamlMappingNode>(),
+            static step =>
+                step.Children.TryGetValue(new YamlScalarNode("name"), out var name)
+                && name is YamlScalarNode scalar
+                && scalar.Value == "Verify required PR-A projection rebuild lane");
+
+        var timeout = int.Parse(ScalarValue(engineering, "timeout-minutes"));
+        // Runner observations span 15m29s-19m+; the 45-minute floor adds headroom
+        // above that observed upper range for the complete required engineering job.
+        Assert.True(timeout >= 45, $"required PR-A engineering budget is only {timeout} minutes");
+        Assert.False(rebuild.Children.ContainsKey(new YamlScalarNode("if")));
+        Assert.False(rebuild.Children.ContainsKey(new YamlScalarNode("continue-on-error")));
     }
 
     [Fact]
@@ -747,6 +780,19 @@ public sealed partial class MakeWorkflowTests
             .Where(static line => line.StartsWith('\t'))
             .ToArray();
     }
+
+    private static YamlNode NodeValue(YamlMappingNode mapping, string key)
+    {
+        Assert.True(mapping.Children.TryGetValue(new YamlScalarNode(key), out var value));
+        return value;
+    }
+
+    private static YamlMappingNode MappingValue(YamlMappingNode mapping, string key) =>
+        Assert.IsType<YamlMappingNode>(NodeValue(mapping, key));
+
+    private static string ScalarValue(YamlMappingNode mapping, string key) =>
+        Assert.IsType<YamlScalarNode>(NodeValue(mapping, key)).Value
+        ?? throw new InvalidDataException($"YAML scalar '{key}' has no value.");
 
     private static string FindRepositoryRoot()
     {
