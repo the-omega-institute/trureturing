@@ -15,14 +15,10 @@ public static class ScribeEmitter
         bool check,
         TextWriter output,
         TextWriter error)
-        => Run(
-            repositoryRoot,
-            check,
-            output,
-            error,
-            LeanCompiledArtifactReports.InspectRepository,
-            validateRepository: true,
-            tolerateAbsentDocuments: false).ExitCode;
+    {
+        return Run(repositoryRoot, check, output, error, LeanCompiledArtifactReports.InspectRepository,
+            validateRepository: true, tolerateAbsentDocuments: false).ExitCode;
+    }
 
     internal static int Emit(
         string repositoryRoot,
@@ -336,7 +332,12 @@ public static class ScribeEmitter
                         definitionPath,
                         DescribeVocabulary.CanonicalName(describe.Kind),
                         describe.Statement is DescribeStatement.FormulaAst
-                            || describe.StatementFormula is not null));
+                            || describe.StatementFormula is not null,
+                        describe.FormulaProvenance == StatementFormulaProvenance.LeanDerived
+                            ? "lean-derived" : "hand-authored",
+                        describe.Statement is DescribeStatement.LeanDeclaration lean
+                            && StatementProjectionFixtureLoader.Project(lean.Value) is ProjectionOutcome.Unprojectable failed
+                                ? failed.Reason : null));
                     CollectDescribeCapabilities(
                         documentGid,
                         definitionPath,

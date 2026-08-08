@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
+using System.Runtime.CompilerServices;
 
 namespace StrataLint.Scribe;
 
@@ -459,7 +460,8 @@ internal static class StatementProjector
                 ? new ProjectionOutcome.Projected(functionFormula)
                 : new ProjectionOutcome.Projected(new Formula.Apply(functionFormula, values.ToImmutableArray()));
         }
-        return new ProjectionOutcome.Unprojectable(expression.GetType().Name);
+        return new ProjectionOutcome.Unprojectable(
+            "unregistered-elaboration-shape:" + expression.GetType().Name);
     }
 
     private static (LeanExpr Head, ImmutableArray<LeanExpr> Arguments) Flatten(LeanExpr expression)
@@ -475,6 +477,7 @@ internal static class StatementProjectionFixtureLoader
     private static readonly AsyncLocal<string?> RepositoryRoot = new();
     private static readonly Dictionary<string, ImmutableDictionary<string, string>> StatementsByRoot =
         new(StringComparer.Ordinal);
+    private static readonly ConditionalWeakTable<Formula, LeanDeclarationRef> Derived = new();
 
     internal static Formula FromLean(LeanDeclarationRef declaration)
     {
@@ -492,13 +495,41 @@ internal static class StatementProjectionFixtureLoader
             encoded = matches[0];
         }
 
-        return StatementProjector.Project(StatementV1Decoder.Decode(encoded).Type) switch
+        var formula = StatementProjector.Project(StatementV1Decoder.Decode(encoded).Type) switch
         {
             ProjectionOutcome.Projected projected => projected.Formula,
             ProjectionOutcome.Unprojectable failed => throw new InvalidOperationException(
                 $"Pinned statement-v1 fixture is unprojectable for {declarationName}: {failed.Reason}"),
             _ => throw new InvalidOperationException("Unknown statement projection outcome.")
         };
+        Derived.Add(formula, declaration);
+        return formula;
+    }
+
+    internal static bool IsDerivedFrom(Formula formula, LeanDeclarationRef declaration) =>
+        Derived.TryGetValue(formula, out var source)
+        && string.Equals(source.Value, declaration.Value, StringComparison.Ordinal);
+
+    internal static ProjectionOutcome Project(LeanDeclarationRef declaration)
+    {
+        ArgumentNullException.ThrowIfNull(declaration);
+        var declarationName = declaration.Value.Replace('/', '.');
+        var statements = StatementsForCurrentRepository();
+        if (!statements.TryGetValue(declarationName, out var encoded))
+        {
+            var matches = statements.Where(pair => pair.Key.EndsWith('.' + declaration.DeclarationName, StringComparison.Ordinal)).ToArray();
+            if (matches.Length != 1) return new ProjectionOutcome.Unprojectable("constant:" + declarationName);
+            encoded = matches[0].Value;
+        }
+        try
+        {
+            return StatementProjector.Project(StatementV1Decoder.Decode(encoded).Type);
+        }
+        catch (FormatException exception)
+        {
+            return new ProjectionOutcome.Unprojectable(
+                "unregistered-elaboration-shape:statement-v1-decoder:" + exception.Message);
+        }
     }
 
     internal static string FixtureDirectory(string repositoryRoot) => Path.Combine(
@@ -567,6 +598,18 @@ internal static class StatementProjectionFixtureLoader
                     throw new FormatException($"Duplicate projection fixture declaration: {name}");
             }
         }
+        var reportPath = Path.Combine(repositoryRoot, ".lake", "build", "stratalint", "raw-lean-report.json");
+        if (File.Exists(reportPath))
+        {
+            using var report = JsonDocument.Parse(File.ReadAllBytes(reportPath));
+            foreach (var declaration in report.RootElement.GetProperty("modules").EnumerateArray()
+                         .SelectMany(static module => module.GetProperty("declarations").EnumerateArray()))
+            {
+                var name = declaration.GetProperty("name").GetString()!;
+                var statement = declaration.GetProperty("type").GetString()!;
+                declarations[name] = statement;
+            }
+        }
         return declarations.ToImmutable();
     }
 
@@ -590,36 +633,34 @@ internal sealed record ProjectionRun(ImmutableArray<ProjectionCase> Cases, strin
 
 internal static class ProjectionPilot
 {
-    private static readonly (string Name, string Difference)[] Specs =
+    private static readonly string[] Specs =
     [
-        ("D5.S3.Weil.CriticalLine.unitarity_line_iff", "faithful: equivalent quantified spelling"),
-        ("D5.S0.Conventions.TotalCode.no_hidden_register", "faithful: equivalent field-projection spelling"),
-        ("D5.S1.Solenoid.hiddenFiber_closed_compact_seqCompact", "faithful: topology instance pipeline denoised"),
-        ("D5.S3.Fourier.FinitePoisson.finite_poisson_summation", "faithful: finite sums and coercions denoised"),
-        ("D5.S3.Zeros.ScalingRegisterRigidity.realized_same_germ_same_total_code_excludes_scaling_register", "faithful: equivalent germ/filter spelling"),
-        ("D5.S3.Weil.CriticalLine.half_density_reading_norm", "faithful expansion"),
-        ("D5.S3.Zeros.ScalingRegisterRigidity.scaling_register_not_address_independent", "faithful expansion"),
-        ("D5.S3.Zeros.ScalingRegisterRigidity.integer_scaling_register_exists", "faithful expansion"),
-        ("D5.S0.Conventions.TotalCode.TotalCode.ext", "faithful expansion"),
-        ("D5.S3.Zeros.ScalingRegisterRigidity.applyRegister_ne_of_nontrivial", "faithful expansion"),
+        "D5.S3.Weil.CriticalLine.unitarity_line_iff",
+        "D5.S0.Conventions.TotalCode.no_hidden_register",
+        "D5.S1.Solenoid.hiddenFiber_closed_compact_seqCompact",
+        "D5.S3.Fourier.FinitePoisson.finite_poisson_summation",
+        "D5.S3.Zeros.ScalingRegisterRigidity.realized_same_germ_same_total_code_excludes_scaling_register",
+        "D5.S3.Weil.CriticalLine.half_density_reading_norm",
+        "D5.S3.Zeros.ScalingRegisterRigidity.scaling_register_not_address_independent",
+        "D5.S3.Zeros.ScalingRegisterRigidity.integer_scaling_register_exists",
+        "D5.S0.Conventions.TotalCode.TotalCode.ext",
+        "D5.S3.Zeros.ScalingRegisterRigidity.applyRegister_ne_of_nontrivial",
     ];
-
-    internal const string GoldenReport = "statement-v1 projection pilot final\nfaithful=10/10 (before=8/10); structural-unprojectable=0/10\n1 unitarity_line_iff: faithful-equivalent\n2 no_hidden_register: faithful-equivalent\n3 hiddenFiber_closed_compact_seqCompact: faithful-equivalent\n4 finite_poisson_summation: faithful-equivalent\n5 excludes_scaling_register: faithful-equivalent\n6 half_density_reading_norm: faithful-equivalent\n7 scaling_register_not_address_independent: faithful-equivalent\n8 integer_scaling_register_exists: faithful-equivalent\n9 TotalCode.ext: faithful-equivalent\n10 applyRegister_ne_of_nontrivial: faithful-equivalent";
 
     internal static ProjectionRun Run(Dictionary<string, JsonElement> declarations)
     {
         var cases = ImmutableArray.CreateBuilder<ProjectionCase>();
         foreach (var spec in Specs)
         {
-            if (!declarations.TryGetValue(spec.Name, out var declaration)) throw new InvalidOperationException($"Pilot declaration missing: {spec.Name}");
+            if (!declarations.TryGetValue(spec, out var declaration)) throw new InvalidOperationException($"Pilot declaration missing: {spec}");
             var statement = StatementV1Decoder.Decode(declaration.GetProperty("type").GetString()!);
             var outcome = StatementProjector.Project(statement.Type);
             var formula = outcome is ProjectionOutcome.Projected projected ? projected.Formula : new Formula.Placeholder();
             var residual = outcome is ProjectionOutcome.Unprojectable failed ? failed.Reason : "none";
-            cases.Add(new ProjectionCase(spec.Name, formula, spec.Difference,
+            cases.Add(new ProjectionCase(spec, formula, string.Empty,
                 residual == "none" ? [] : [residual]));
         }
-        return new ProjectionRun(cases.ToImmutable(), GoldenReport, ProjectionNotation.Entries.Count);
+        return new ProjectionRun(cases.ToImmutable(), string.Empty, ProjectionNotation.Entries.Count);
     }
 
 }
