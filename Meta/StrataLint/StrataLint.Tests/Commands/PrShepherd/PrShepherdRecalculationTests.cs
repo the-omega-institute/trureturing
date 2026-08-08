@@ -8,11 +8,17 @@ public sealed partial class PrShepherdRecalculationTests
     private const string ShepherdScriptPath = "Meta/StrataLint/scripts/pr-shepherd.sh";
     private const string ShepherdLeaseScriptPath =
         "Meta/StrataLint/scripts/shepherd/pr-shepherd-lease.sh";
-
+    private const string ShepherdActionsScriptPath =
+        "Meta/StrataLint/scripts/shepherd/pr-shepherd-actions.sh";
     private const string ShepherdLedgerScriptPath =
         "Meta/StrataLint/scripts/shepherd/pr-shepherd-ledger.sh";
-    private const string CommitSubject =
-        "recompute derivations after dev advance (auto, pr-shepherd)";
+    private const string ShepherdFixedPointScriptPath =
+        "Meta/StrataLint/scripts/shepherd/pr-shepherd-fixed-point.sh";
+    private const string ShepherdWatchScriptPath =
+        "Meta/StrataLint/scripts/shepherd/pr-shepherd-watch.sh";
+    private const string ShepherdWakeScriptPath =
+        "Meta/StrataLint/scripts/shepherd/pr-shepherd-wake.sh";
+    private const string CommitSubject = "recompute the truth graph";
 
     private static void AssertInOrder(string text, params string[] fragments)
     {
@@ -49,10 +55,11 @@ public sealed partial class PrShepherdRecalculationTests
     private static string ReadShepherdScripts()
     {
         var root = FindRepositoryRoot();
-        return string.Join(
-            '\n',
-            File.ReadAllText(Path.Combine(root, ShepherdScriptPath)),
-            File.ReadAllText(Path.Combine(root, ShepherdLeaseScriptPath)));
+        var moduleDirectory = Path.Combine(root, "Meta/StrataLint/scripts/shepherd");
+        var paths = new[] { Path.Combine(root, ShepherdScriptPath) }
+            .Concat(Directory.EnumerateFiles(moduleDirectory, "pr-shepherd-*.sh")
+                .Order(StringComparer.Ordinal));
+        return string.Join('\n', paths.Select(File.ReadAllText));
     }
 
     private sealed partial class ShepherdFixture : IDisposable
@@ -66,7 +73,13 @@ public sealed partial class PrShepherdRecalculationTests
         private readonly string bin;
         private readonly string log;
         private readonly string calls;
-        private readonly string failingTarget;
+        private readonly string boundedCalls;
+        private readonly string hangingPids;
+        private string failingTarget;
+        private readonly int failingExitCode;
+        private readonly int failingPr;
+        private readonly string hangingTarget;
+        private string failingGhOperation;
         private readonly bool moveHeadBeforePush;
         private readonly bool failMergeWithoutConflict;
         private readonly string headBranch;
@@ -78,7 +91,9 @@ public sealed partial class PrShepherdRecalculationTests
         private readonly bool staleBaseRefOid;
         private readonly bool moveHeadDuringFetch;
         private readonly bool moveBaseDuringFetch;
+        private readonly int truthGraphDirtyRounds;
         private int devAdvance;
+        private int startedWatchPid;
 
         internal ShepherdFixture(
             bool sourceConflict = false,
@@ -94,9 +109,18 @@ public sealed partial class PrShepherdRecalculationTests
             string graphqlRemaining = "5000",
             bool staleBaseRefOid = false,
             bool moveHeadDuringFetch = false,
-            bool moveBaseDuringFetch = false)
+            bool moveBaseDuringFetch = false,
+            int failingExitCode = 93,
+            int failingPr = 0,
+            string hangingTarget = "",
+            string failingGhOperation = "",
+            int truthGraphDirtyRounds = 1)
         {
             this.failingTarget = failingTarget;
+            this.failingExitCode = failingExitCode;
+            this.failingPr = failingPr;
+            this.hangingTarget = hangingTarget;
+            this.failingGhOperation = failingGhOperation;
             this.moveHeadBeforePush = moveHeadBeforePush;
             this.failMergeWithoutConflict = failMergeWithoutConflict;
             this.headBranch = headBranch;
@@ -108,12 +132,15 @@ public sealed partial class PrShepherdRecalculationTests
             this.staleBaseRefOid = staleBaseRefOid;
             this.moveHeadDuringFetch = moveHeadDuringFetch;
             this.moveBaseDuringFetch = moveBaseDuringFetch;
+            this.truthGraphDirtyRounds = truthGraphDirtyRounds;
             origin = Path.Combine(temporary.Path, "origin.git");
             repository = Path.Combine(temporary.Path, "repository");
             seed = Path.Combine(temporary.Path, "seed");
             bin = Path.Combine(temporary.Path, "bin");
             log = Path.Combine(temporary.Path, "shepherd.log");
             calls = Path.Combine(temporary.Path, "mutation-calls");
+            boundedCalls = Path.Combine(temporary.Path, "bounded-calls");
+            hangingPids = Path.Combine(temporary.Path, "hanging-pids");
             CacheRoot = Path.Combine(temporary.Path, "cache");
             StateDirectory = Path.Combine(temporary.Path, "state");
             Directory.CreateDirectory(bin);
@@ -167,6 +194,7 @@ public sealed partial class PrShepherdRecalculationTests
             else
                 Write(seed, "Generated/dev-choice.md", "dev choice\n");
             Write(seed, sourceConflict ? "shared.txt" : "dev-input.txt", "advanced dev\n");
+            Write(seed, "Trureturing.lean", "base trureturing\n");
             if (ledgerConflict)
                 Write(
                     seed,
@@ -213,6 +241,25 @@ public sealed partial class PrShepherdRecalculationTests
 
         internal string StateDirectory { get; }
 
+        internal string WatchStatePath => Path.Combine(temporary.Path, "shepherd.pid");
+
+        internal string WatchOwnerPath => WatchStatePath + ".lock";
+
+        internal string RecalculationState(int pullRequest) =>
+            File.ReadAllText(Path.Combine(StateDirectory, $"recalculate-{pullRequest}"));
+
+        internal bool InfrastructureStateExists =>
+            File.Exists(Path.Combine(StateDirectory, "infrastructure"));
+
+        internal string InfrastructureState() =>
+            File.ReadAllText(Path.Combine(StateDirectory, "infrastructure"));
+
+        internal bool RecalculationStateExists(int pullRequest) =>
+            File.Exists(Path.Combine(StateDirectory, $"recalculate-{pullRequest}"));
+
+        internal bool DerivedLeaseExists =>
+            Directory.Exists(Path.Combine(StateDirectory, "derived-fifo.lease"));
+
         internal ShepherdResult Run(
             bool dryRun = false,
             bool expiryFingerprint = true,
@@ -222,7 +269,9 @@ public sealed partial class PrShepherdRecalculationTests
             int? leaseTtlSeconds = null,
             bool derivedPr = true,
             bool diffFailure = false,
-            int? statusRollupCount = null)
+            int? statusRollupCount = null,
+            IReadOnlyDictionary<string, string>? environment = null,
+            bool noChecks = false)
         {
             var script = Path.Combine(FindRepositoryRoot(), ShepherdScriptPath);
             var home = Path.Combine(temporary.Path, "home");
@@ -241,6 +290,8 @@ public sealed partial class PrShepherdRecalculationTests
                 $"PR_TEST_HEAD={headBranch}",
                 $"PR_TEST_BASE_OID={GithubBaseRefOid}",
                 $"PR_TEST_CALLS={calls}",
+                $"PR_TEST_BOUNDED_CALLS={boundedCalls}",
+                $"PR_TEST_HANGING_PIDS={hangingPids}",
                 $"PR_TEST_EXPIRY={(expiryFingerprint ? "1" : "0")}",
                 $"PR_TEST_SPLIT={(splitFingerprintAcrossJobs ? "1" : "0")}",
                 $"PR_TEST_DUPLICATE={(duplicatePrRow ? "1" : "0")}",
@@ -248,7 +299,12 @@ public sealed partial class PrShepherdRecalculationTests
                 $"PR_TEST_DERIVED={(derivedPr ? "1" : "0")}",
                 $"PR_TEST_DIFF_FAILURE={(diffFailure ? "1" : "0")}",
                 $"PR_TEST_STATUS_ROLLUP_COUNT={statusRollupCount?.ToString() ?? string.Empty}",
+                $"PR_TEST_NO_CHECKS={(noChecks ? "1" : "0")}",
                 $"PR_TEST_FAIL_TARGET={failingTarget}",
+                $"PR_TEST_FAIL_EXIT={failingExitCode}",
+                $"PR_TEST_FAIL_PR={failingPr}",
+                $"PR_TEST_HANG_TARGET={hangingTarget}",
+                $"PR_TEST_FAIL_GH_OPERATION={failingGhOperation}",
                 $"PR_TEST_MOVE_HEAD={(moveHeadBeforePush ? "1" : "0")}",
                 $"PR_TEST_FAIL_MERGE={(failMergeWithoutConflict ? "1" : "0")}",
                 $"PR_TEST_PAUSE_WORKTREE={(pauseWorktreeCreation ? "1" : "0")}",
@@ -258,6 +314,7 @@ public sealed partial class PrShepherdRecalculationTests
                 $"PR_TEST_MOVE_HEAD_DURING_FETCH={(moveHeadDuringFetch ? "1" : "0")}",
                 $"PR_TEST_MOVE_BASE_DURING_FETCH={(moveBaseDuringFetch ? "1" : "0")}",
                 $"PR_TEST_MOVED_BASE={MovedBaseHead}",
+                $"PR_TEST_TRUTH_GRAPH_DIRTY_ROUNDS={truthGraphDirtyRounds}",
                 $"PR_TEST_LOCK_READ_MARKER={Path.Combine(temporary.Path, "lock-read-marker")}",
                 $"SHEPHERD_DRYRUN={(dryRun ? "1" : "0")}",
                 $"PR_TEST_GRAPHQL_REMAINING={graphqlRemaining}",
@@ -267,6 +324,13 @@ public sealed partial class PrShepherdRecalculationTests
                 script,
                 "sweep",
             };
+            if (environment is not null)
+            {
+                foreach (var (name, value) in environment)
+                {
+                    arguments.Insert(arguments.Count - 3, $"{name}={value}");
+                }
+            }
             if (leaseTtlSeconds is not null)
             {
                 arguments.Insert(
@@ -286,18 +350,58 @@ public sealed partial class PrShepherdRecalculationTests
                 File.Exists(log) ? File.ReadAllText(log) : string.Empty);
         }
 
-        internal ShepherdResult RunWatch(bool noChecks = false)
+        internal ShepherdResult RunWatch(
+            bool noChecks = false,
+            bool dryRun = true,
+            IReadOnlyDictionary<string, string>? environment = null) =>
+            RunWatchCommand(
+                "watch",
+                ["0", "1"],
+                noChecks,
+                TimeSpan.FromSeconds(30),
+                dryRun,
+                environment);
+
+        internal ShepherdResult RunStart(
+            int intervalSeconds = 30,
+            int maxCycles = 1,
+            bool dryRun = true,
+            IReadOnlyDictionary<string, string>? environment = null)
         {
+            var result = RunWatchCommand(
+                "start",
+                [intervalSeconds.ToString(), maxCycles.ToString()],
+                noChecks: false,
+                TimeSpan.FromSeconds(15),
+                dryRun,
+                environment);
+            if (File.Exists(WatchOwnerPath)) startedWatchPid = ReadOwnerPid();
+            return result;
+        }
+
+        internal ShepherdResult RunTrackedSweep(
+            IReadOnlyDictionary<string, string>? environment = null) =>
+            RunWatchCommand(
+                "sweep",
+                [],
+                noChecks: false,
+                TimeSpan.FromSeconds(30),
+                dryRun: false,
+                environment);
+
+        internal ShepherdResult RunStatus() =>
+            RunWatchCommand("status", [], noChecks: false, TimeSpan.FromSeconds(10));
+
+        private ShepherdResult RunWatchCommand(
+            string command,
+            IReadOnlyCollection<string> commandArguments,
+            bool noChecks,
+            TimeSpan timeout,
+            bool dryRun = true,
+            IReadOnlyDictionary<string, string>? environment = null)
+        {
+            EnsureTrackedWatchScripts();
             var script = Path.Combine(repository, ShepherdScriptPath);
-            var leaseScript = Path.Combine(repository, ShepherdLeaseScriptPath);
-            Directory.CreateDirectory(Path.GetDirectoryName(script)!);
-            Directory.CreateDirectory(Path.GetDirectoryName(leaseScript)!);
-            File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdScriptPath), script);
-            File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdLeaseScriptPath), leaseScript);
-            var ledgerScript = Path.Combine(repository, ShepherdLedgerScriptPath);
-            File.Copy(Path.Combine(FindRepositoryRoot(), ShepherdLedgerScriptPath), ledgerScript);
-            Git(repository, "add", ShepherdScriptPath, ShepherdLeaseScriptPath, ShepherdLedgerScriptPath);
-            Git(repository, "commit", "-m", "track pr-shepherd fixture");
             var home = Path.Combine(temporary.Path, "home");
             Directory.CreateDirectory(home);
             var arguments = new List<string>
@@ -308,43 +412,81 @@ public sealed partial class PrShepherdRecalculationTests
                 "PR_SHEPHERD_REMOTE=origin",
                 "PR_SHEPHERD_REPO=the-omega-institute/trureturing",
                 $"PR_SHEPHERD_LOG={log}",
-                $"PR_SHEPHERD_PID={Path.Combine(temporary.Path, "shepherd.pid")}",
+                $"PR_SHEPHERD_PID={WatchStatePath}",
                 $"PR_SHEPHERD_STATE={StateDirectory}",
                 $"PR_SHEPHERD_CACHE={CacheRoot}",
                 $"PR_TEST_ORIGIN={origin}",
                 $"PR_TEST_HEAD={headBranch}",
                 $"PR_TEST_BASE_OID={GithubBaseRefOid}",
                 $"PR_TEST_CALLS={calls}",
+                $"PR_TEST_BOUNDED_CALLS={boundedCalls}",
+                $"PR_TEST_HANGING_PIDS={hangingPids}",
                 $"PR_TEST_WATCH_STATE={Path.Combine(temporary.Path, "watch-state")}",
                 "PR_TEST_EXPIRY=1",
                 "PR_TEST_SPLIT=0",
                 "PR_TEST_DUPLICATE=0",
-                "PR_TEST_FAIL_TARGET=",
+                $"PR_TEST_FAIL_TARGET={failingTarget}",
+                $"PR_TEST_FAIL_EXIT={failingExitCode}",
+                $"PR_TEST_FAIL_PR={failingPr}",
+                $"PR_TEST_HANG_TARGET={hangingTarget}",
+                $"PR_TEST_FAIL_GH_OPERATION={failingGhOperation}",
                 "PR_TEST_MOVE_HEAD=0",
                 "PR_TEST_FAIL_MERGE=0",
                 "PR_TEST_PAUSE_WORKTREE=0",
                 "PR_TEST_DELAY_LOCK_READ=0",
+                $"PR_TEST_LEDGER_CONFLICT={(ledgerConflict ? "1" : "0")}",
+                "PR_TEST_MOVE_HEAD_DURING_FETCH=0",
+                "PR_TEST_MOVE_BASE_DURING_FETCH=0",
+                $"PR_TEST_MOVED_BASE={MovedBaseHead}",
+                $"PR_TEST_TRUTH_GRAPH_DIRTY_ROUNDS={truthGraphDirtyRounds}",
                 $"PR_TEST_LOCK_READ_MARKER={Path.Combine(temporary.Path, "lock-read-marker")}",
                 "PR_TEST_WATCH=1",
                 $"PR_TEST_NO_CHECKS={(noChecks ? "1" : "0")}",
-                "SHEPHERD_DRYRUN=1",
+                $"SHEPHERD_DRYRUN={(dryRun ? "1" : "0")}",
                 "/bin/bash",
                 script,
-                "watch",
-                "0",
-                "1",
+                command,
             };
+            if (environment is not null)
+            {
+                var commandIndex = arguments.IndexOf("/bin/bash");
+                foreach (var (name, value) in environment)
+                {
+                    arguments.Insert(commandIndex++, $"{name}={value}");
+                }
+            }
+            arguments.AddRange(commandArguments);
             var result = BoundedProcessRunner.Run(
                 "/usr/bin/env",
                 arguments,
                 repository,
-                TimeSpan.FromSeconds(30),
+                timeout,
                 256 * 1024);
             return new ShepherdResult(
                 result.ExitCode,
                 Encoding.UTF8.GetString(result.StandardOutput),
                 Encoding.UTF8.GetString(result.StandardError),
                 File.Exists(log) ? File.ReadAllText(log) : string.Empty);
+        }
+
+        private void EnsureTrackedWatchScripts()
+        {
+            var script = Path.Combine(repository, ShepherdScriptPath);
+            if (File.Exists(script)) return;
+            var sourceRoot = FindRepositoryRoot();
+            var sourceModuleDirectory = Path.Combine(sourceRoot, "Meta/StrataLint/scripts/shepherd");
+            var fixtureModuleDirectory = Path.Combine(repository, "Meta/StrataLint/scripts/shepherd");
+            Directory.CreateDirectory(Path.GetDirectoryName(script)!);
+            Directory.CreateDirectory(fixtureModuleDirectory);
+            File.Copy(Path.Combine(sourceRoot, ShepherdScriptPath), script);
+            foreach (var sourceModule in Directory.EnumerateFiles(
+                         sourceModuleDirectory,
+                         "pr-shepherd-*.sh").Order(StringComparer.Ordinal))
+            {
+                File.Copy(sourceModule, Path.Combine(fixtureModuleDirectory, Path.GetFileName(sourceModule)));
+            }
+            Git(repository, "add", "Meta/StrataLint/scripts");
+            Git(repository, "commit", "-m", "track pr-shepherd fixture");
         }
 
         internal ShepherdResult RunOpenDryRun()
@@ -386,6 +528,10 @@ public sealed partial class PrShepherdRecalculationTests
                     """
                     #!/usr/bin/env bash
                     set -euo pipefail
+                    printf 'api|%s|%s|gh-app %s\n' \
+                      "${PR_SHEPHERD_BOUND_STEP-}" \
+                      "${PR_SHEPHERD_BOUND_TIMEOUT_SECONDS-}" "$*" \
+                      >> "$PR_TEST_BOUNDED_CALLS"
                     [[ "$*" == "token --auto" ]] || exit 96
                     printf '%s\n' "$PR_TEST_GH_APP_TOKEN"
                     """);
@@ -401,11 +547,12 @@ public sealed partial class PrShepherdRecalculationTests
                     "GH_TOKEN",
                     "-u",
                     "GITHUB_TOKEN",
-                    $"PATH={bin}:/usr/bin:/bin",
+                    $"PATH={bin}:/opt/homebrew/bin:/usr/bin:/bin",
                     $"HOME={home}",
                     "PR_SHEPHERD_REPO=the-omega-institute/trureturing",
                     $"PR_SHEPHERD_LOG={log}",
                     $"PR_TEST_CALLS={calls}",
+                    $"PR_TEST_BOUNDED_CALLS={boundedCalls}",
                     $"PR_TEST_GH_APP_TOKEN={GhAppToken}",
                     "/bin/bash",
                     script,
@@ -510,84 +657,56 @@ public sealed partial class PrShepherdRecalculationTests
         internal string[] MutationCalls() =>
             File.Exists(calls) ? File.ReadAllLines(calls) : [];
 
+        internal string[] BoundedCalls() =>
+            File.Exists(boundedCalls) ? File.ReadAllLines(boundedCalls) : [];
+
         internal string[] LedgerObservations() =>
             File.Exists(calls + ".ledger") ? File.ReadAllLines(calls + ".ledger") : [];
 
+        internal string[] FixedPointObservations() =>
+            File.Exists(calls + ".fixed-point")
+                ? File.ReadAllLines(calls + ".fixed-point")
+                : [];
+
+        internal int[] HangingProcessIds() =>
+            File.Exists(hangingPids)
+                ? File.ReadAllLines(hangingPids).Select(int.Parse).ToArray()
+                : [];
+
+        internal bool IsProcessAlive(int pid) =>
+            BoundedProcessRunner.Run(
+                "/bin/kill",
+                ["-0", pid.ToString()],
+                repository,
+                TimeSpan.FromSeconds(2),
+                4 * 1024).ExitCode == 0;
+
         internal void ClearMutationCalls() => File.Delete(calls);
 
-        internal string RemoteHead() =>
-            GitOutput(temporary.Path, "--git-dir", origin, "rev-parse", $"refs/heads/{headBranch}");
+        internal void ClearBoundedCalls() => File.Delete(boundedCalls);
 
-        internal bool IsAncestor(string ancestor, string descendant) =>
-            GitResult(repository, "merge-base", "--is-ancestor", ancestor, descendant).ExitCode == 0;
+        internal void SetFailingTarget(string target) => failingTarget = target;
 
-        internal string ShowRemote(string path) =>
-            GitResult(
-                temporary.Path,
-                "--git-dir",
-                origin,
-                "show",
-                $"refs/heads/{headBranch}:{path}").Output;
+        internal void SetFailingGhOperation(string operation) => failingGhOperation = operation;
 
-        internal bool RemoteContains(string path) =>
-            GitResult(
-                temporary.Path,
-                "--git-dir",
-                origin,
-                "cat-file",
-                "-e",
-                $"refs/heads/{headBranch}:{path}").ExitCode == 0;
-
-        internal int CountCommitsWithSubject(string subject, string? revision = null) =>
-            GitOutput(
-                    temporary.Path,
-                    "--git-dir",
-                    origin,
-                    "log",
-                    "--format=%s",
-                    revision ?? $"refs/heads/{headBranch}")
-                .Split('\n', StringSplitOptions.RemoveEmptyEntries)
-                .Count(line => string.Equals(line, subject, StringComparison.Ordinal));
-
-        public void Dispose() => temporary.Dispose();
-
-        private static void Write(string root, string relativePath, string contents)
+        internal void CommitTrackedHelperChange(string marker)
         {
-            var path = Path.Combine(root, relativePath);
-            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-            File.WriteAllText(path, contents, new UTF8Encoding(false));
+            EnsureTrackedWatchScripts();
+            var helper = Path.Combine(repository, ShepherdActionsScriptPath);
+            File.AppendAllText(helper, $"\n# {marker}\n", new UTF8Encoding(false));
+            Git(repository, "add", ShepherdActionsScriptPath);
+            Git(repository, "commit", "-m", marker);
         }
 
-        private static void Git(string workingDirectory, params string[] arguments)
+        internal void CommitTrackedLedgerHelperChange(string marker)
         {
-            var result = GitResult(workingDirectory, arguments);
-            Assert.True(
-                result.ExitCode == 0,
-                $"git {string.Join(' ', arguments)} failed ({result.ExitCode}): {result.Error}");
+            EnsureTrackedWatchScripts();
+            var helper = Path.Combine(repository, ShepherdLedgerScriptPath);
+            File.AppendAllText(helper, $"\n# {marker}\n", new UTF8Encoding(false));
+            Git(repository, "add", ShepherdLedgerScriptPath);
+            Git(repository, "commit", "-m", marker);
         }
 
-        private static string GitOutput(string workingDirectory, params string[] arguments)
-        {
-            var result = GitResult(workingDirectory, arguments);
-            Assert.True(
-                result.ExitCode == 0,
-                $"git {string.Join(' ', arguments)} failed ({result.ExitCode}): {result.Error}");
-            return result.Output.TrimEnd();
-        }
-
-        private static CommandResult GitResult(string workingDirectory, params string[] arguments)
-        {
-            var result = BoundedProcessRunner.Run(
-                "/usr/bin/git",
-                arguments,
-                workingDirectory,
-                TimeSpan.FromSeconds(15),
-                64 * 1024);
-            return new CommandResult(
-                result.ExitCode,
-                Encoding.UTF8.GetString(result.StandardOutput),
-                Encoding.UTF8.GetString(result.StandardError));
-        }
     }
 
     private sealed record ShepherdResult(int ExitCode, string Output, string Error, string Log);

@@ -51,10 +51,16 @@ public sealed partial class PrShepherdRecalculationTests
         Assert.Equal(0, result.ExitCode);
         Assert.Equal(fixture.OriginalHead, fixture.RemoteHead());
         Assert.Empty(fixture.MutationCalls());
+        Assert.True(fixture.DerivedLeaseExists);
         Assert.Contains(
             $"SWEEP #1 derived FIFO waiting lease_pr=#99 acquired_at={acquiredAt}",
             result.Log,
             StringComparison.Ordinal);
+
+        var second = fixture.Run(leaseTtlSeconds: 3_600);
+        Assert.Equal(0, second.ExitCode);
+        Assert.True(fixture.DerivedLeaseExists);
+        Assert.Equal(fixture.OriginalHead, fixture.RemoteHead());
     }
 
     [Fact]

@@ -23,6 +23,10 @@ internal interface ICliEnvironment
     ExplicitCommandResult ProjectionClosure(IReadOnlyList<string> arguments) =>
         new(2, string.Empty, "P0_2_INVALID environment unavailable\n");
 
+    ExplicitCommandResult RunProduce(IReadOnlyList<string> arguments) => new(2, string.Empty, "RUN_PRODUCER_INVALID environment unavailable\n");
+    ExplicitCommandResult RunConsume(IReadOnlyList<string> arguments) => new(2, string.Empty, "RUN_CONSUMER_INVALID environment unavailable\n");
+    ExplicitCommandResult RefactorPrAVerify(IReadOnlyList<string> arguments) => new(2, string.Empty, "PR_A_VERIFY_INVALID environment unavailable\n");
+
     CommandResult Ingest(IReadOnlyList<string> arguments);
 
     CommandResult CoverAtom(IReadOnlyList<string> arguments);
@@ -143,6 +147,9 @@ internal static class CliApplication
             "ledger-reattest" => RenderCommand(environment.ReattestLedger(tail), console),
             "papergen" => RenderExplicit(environment.Papergen(tail), console),
             "projection-closure" => RenderExplicit(environment.ProjectionClosure(tail), console),
+            "run-produce" => RenderExplicit(environment.RunProduce(tail), console),
+            "run-consume" => RenderExplicit(environment.RunConsume(tail), console),
+            "refactor-pr-a-verify" => RenderExplicit(environment.RefactorPrAVerify(tail), console),
             "perf-append" => RenderCommand(environment.AppendPerf(tail), console),
             "perf-report" => RenderCommand(environment.PerfReport(tail), console),
             "route" => RenderCommand(environment.Route(tail), console),

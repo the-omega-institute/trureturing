@@ -14,8 +14,10 @@ root_files:
   - "lean-toolchain"
 governance_documents:
   - "Generated/FILEMAP.md"
+  - "Generated/truth-graph.v1.json"
   - "Meta/Digestion/atomizers.toml"
   - "Meta/FILEMAP.toml"
+  - "Meta/StrataLint/Generated/scribe-emissions.v1.json"
   - "docs/CONTRIBUTING.md"
   - "docs/GOVERNANCE.md"
   - "docs/develop/spec/golden-ledger-repo-spec.md"
