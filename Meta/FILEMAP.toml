@@ -182,7 +182,7 @@ consumed_by = ["TruthGraphJsonReader"]
 verified_by = ["emit-check"]
 authority = "Lean"
 artifact_id = "A-TRUTH"
-runtime_disposition = "committed-source"
+runtime_disposition = "run-local"
 mode = "100644"
 history_requirement = "not-required"
 
