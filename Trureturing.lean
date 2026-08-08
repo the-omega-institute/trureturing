@@ -12,6 +12,7 @@ import D5.S0.Diagonal.EquivariantEscape
 import D5.S0.Naming.NamingSystem
 import D5.S0.Tower.ConstantArms
 import D5.S0.Tower.ChampionExtremality
+import D5.S0.Tower.GoldenGapFrequency
 import D5.S1.Digit.Raw
 import D5.S1.Digit.Carry
 import D5.S1.Scale.Embedding
