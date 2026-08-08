@@ -18,4 +18,5 @@ With the theta kernel supplied by mathlib's even Hurwitz kernel at parameter zer
 
 ## References
 
+- Truth anchor: `D5/S3/Analytic/CompletedZetaMellinReconstruction.completed_zeta_mellin_reconstruction`
 - Dependency: [D5/S3/Zeros/CompletedZeta](../Zeros/CompletedZeta.md)

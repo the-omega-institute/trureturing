@@ -74,7 +74,8 @@ public static class DocumentGraphAssembler
                         .OrderBy(RoleOrder)
                         .ThenBy(CanonicalKey, StringComparer.Ordinal)
                         .ToImmutableArray()
-                    : document.Edges
+                    : document.Edges.Concat(ImplicitEdges(document.Content))
+                        .DistinctBy(CanonicalKey, StringComparer.Ordinal)
                         .OrderBy(RoleOrder)
                         .ThenBy(CanonicalKey, StringComparer.Ordinal)
                         .ToImmutableArray();
@@ -115,7 +116,15 @@ public static class DocumentGraphAssembler
 
     internal static string CanonicalKey(DocumentEdge edge) => edge switch
     {
-        DocumentEdge.TruthAnchor truth => $"truth:{truth.Target.Value}",
+        // The canonical key is BOTH the dedup key and the ordering key (see .DistinctBy/.ThenBy
+        // in Assemble). DescribeId must therefore come AFTER the declaration: putting it first
+        // reorders anchors across declarations, which rewrites every emitted References section
+        // and invalidates the digestion coverage GIDs that point at them. Keeping the explicit
+        // anchor's key byte-identical preserves the previous ordering exactly, while the
+        // "#<describe-id>" suffix still keeps two Describes on one declaration distinct.
+        DocumentEdge.TruthAnchor truth => truth.DescribeId is null
+            ? $"truth:{truth.Target.Value}"
+            : $"truth:{truth.Target.Value}#{truth.DescribeId.Value}",
         DocumentEdge.Dependency dependency => $"dependency:{dependency.Target.Value}",
         DocumentEdge.NarrativeReference { Target: NarrativeTarget.Document document } =>
             $"narrative:{document.DocumentGid.Value}",
@@ -199,7 +208,7 @@ public static class DocumentGraphAssembler
                 case DocumentBlock.Describe describe:
                     if (describe.Statement is DescribeStatement.LeanDeclaration lean)
                     {
-                        yield return DocumentEdge.TruthAnchor.Create(lean.Value);
+                        yield return DocumentEdge.TruthAnchor.FromDescribe(lean.Value, describe.Id);
                     }
                     foreach (var edge in ImplicitEdges(describe.Content))
                     {
