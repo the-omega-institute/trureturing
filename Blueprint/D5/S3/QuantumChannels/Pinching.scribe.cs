@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum;
+namespace StrataLint.Scribe.Blueprint.D5.S3.QuantumChannels;
 
 internal sealed class PinchingDocument : IScribeDocumentDefinition
 {
@@ -14,14 +14,14 @@ internal sealed class PinchingDocument : IScribeDocumentDefinition
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
         Header(
-            "D5/S3/Quantum/Pinching",
+            "D5/S3/QuantumChannels/Pinching",
             "Standard-basis qubit pinching is an idempotent Hilbert-Schmidt projection with exact forcing tests."),
         H("Standard-Basis Qubit Pinching"),
         Blocks(
             DocumentBlock.Describe.Definition(
                 DescribeId.Create("standard-basis-pinching-is-zero-retention-phase-damping"),
                 H("Standard-basis pinching is zero-retention phase damping"),
-                LeanDefinition("D5/S3/Quantum/Pinching.pinching"),
+                LeanDefinition("D5/S3/QuantumChannels/Pinching.pinching"),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "For an arbitrary complex two-by-two matrix rho, pinching is exactly the existing phaseDamping map at coherence-retention coefficient zero. Thus diagonal entries are preserved and all off-diagonal entries are annihilated. No parallel channel definition, positivity premise, Hermiticity premise, or trace-one premise is introduced."))),
@@ -32,7 +32,7 @@ internal sealed class PinchingDocument : IScribeDocumentDefinition
             DocumentBlock.Describe.Definition(
                 DescribeId.Create("the-hilbert-schmidt-pairing-is-the-trace-pairing"),
                 H("The Hilbert-Schmidt pairing is the trace pairing"),
-                LeanDefinition("D5/S3/Quantum/Pinching.hilbertSchmidtInner"),
+                LeanDefinition("D5/S3/QuantumChannels/Pinching.hilbertSchmidtInner"),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
                     "For qubit matrices A and B, the scalar pairing is trace of the conjugate transpose of A times B. Mathlib supplies matrix trace and conjugate transpose, but its Frobenius matrix scope does not install an Inner instance for Matrix, so this declaration is the minimal formula-level wrapper rather than a competing inner-product-space structure."))),
@@ -45,7 +45,7 @@ internal sealed class PinchingDocument : IScribeDocumentDefinition
             DocumentBlock.Describe.Theorem(
                 DescribeId.Create("pinching-is-idempotent"),
                 H("Pinching is idempotent"),
-                LeanTheorem("D5/S3/Quantum/Pinching.pinching_idempotent"),
+                LeanTheorem("D5/S3/QuantumChannels/Pinching.pinching_idempotent"),
                 Disp(Seq(F.Id("P"), Sp, Circ, Sp, F.Id("P"), Eq, F.Id("P"))),
                 DescribeProvenance.RepoDerived(),
                 Blocks(Paragraph(Text(
@@ -55,7 +55,7 @@ internal sealed class PinchingDocument : IScribeDocumentDefinition
                 DescribeId.Create("pinching-is-hilbert-schmidt-self-adjoint"),
                 H("Pinching is Hilbert-Schmidt self-adjoint"),
                 LeanTheorem(
-                    "D5/S3/Quantum/Pinching.pinching_hilbert_schmidt_self_adjoint"),
+                    "D5/S3/QuantumChannels/Pinching.pinching_hilbert_schmidt_self_adjoint"),
                 Disp(Seq(
                     Forall, Sp, F.Id("A"), Comma, F.Id("B"), Sp, InMacro, Sp,
                     F.Id("M"), Underscore, Grp(D(2)), Open, Mathbb, Grp(F.Id("C")), Close,
@@ -71,7 +71,7 @@ internal sealed class PinchingDocument : IScribeDocumentDefinition
             DocumentBlock.Describe.Theorem(
                 DescribeId.Create("zero-entries-force-complete-off-diagonal-elimination"),
                 H("Zero entries force complete off-diagonal elimination"),
-                LeanTheorem("D5/S3/Quantum/Pinching.pinching_entry_eq_zero_iff"),
+                LeanTheorem("D5/S3/QuantumChannels/Pinching.pinching_entry_eq_zero_iff"),
                 Disp(Seq(
                     Forall, Sp, Rho, Comma, F.Id("i"), Comma, F.Id("j"), Comma, Esc,
                     Open, F.Id("P"), Open, Rho, Close, Close,
@@ -86,7 +86,7 @@ internal sealed class PinchingDocument : IScribeDocumentDefinition
                 DescribeId.Create("pinching-annihilates-the-purely-off-diagonal-pauli-x"),
                 H("Pinching annihilates the purely off-diagonal Pauli X"),
                 LeanTheorem(
-                    "D5/S3/Quantum/Pinching.pinching_annihilates_offdiagonal"),
+                    "D5/S3/QuantumChannels/Pinching.pinching_annihilates_offdiagonal"),
                 Disp(Seq(
                     Langle, Sp, F.Id("P"), Open, F.Id("X"), Close, Comma, Sp, F.Id("X"),
                     Rangle, Underscore, Grp(F.Id("HS")), Eq, D(0), Sp, Land, Sp,

@@ -8,7 +8,7 @@ Standard-basis qubit pinching is an idempotent Hilbert-Schmidt projection with e
 
 $$P(\rho)=\operatorname{phaseDamping}(0,\rho)$$
 
-*Formalization.* `D5/S3/Quantum/Pinching.pinching` (`✓ std3`).
+*Formalization.* `D5/S3/QuantumChannels/Pinching.pinching` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -20,7 +20,7 @@ For an arbitrary complex two-by-two matrix rho, pinching is exactly the existing
 
 $$\langle A, B\rangle_{HS}=\operatorname{Tr}(A^{*}B)$$
 
-*Formalization.* `D5/S3/Quantum/Pinching.hilbertSchmidtInner` (`✓ std3`).
+*Formalization.* `D5/S3/QuantumChannels/Pinching.hilbertSchmidtInner` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -32,7 +32,7 @@ For qubit matrices A and B, the scalar pairing is trace of the conjugate transpo
 
 $$P \circ P=P$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Pinching.pinching_idempotent` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/Pinching.pinching_idempotent` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -44,7 +44,7 @@ Applying standard-basis pinching twice is the same function as applying it once.
 
 $$\forall A,B \in M_{2}(\mathbb{C}),\ \langle P(A), B\rangle_{HS}=\langle A, P(B)\rangle_{HS}$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Pinching.pinching_hilbert_schmidt_self_adjoint` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/Pinching.pinching_hilbert_schmidt_self_adjoint` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -56,7 +56,7 @@ The Hilbert-Schmidt pairing is unchanged when pinching is moved from the first a
 
 $$\forall \rho,i,j,\ (P(\rho))_{ij}=0 \Leftrightarrow i\neq j \lor \rho_{ij}=0$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Pinching.pinching_entry_eq_zero_iff` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/Pinching.pinching_entry_eq_zero_iff` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -68,7 +68,7 @@ For every matrix and every pair of standard-basis indices, a pinched entry is ze
 
 $$\langle P(X), X\rangle_{HS}=0 \land \langle X, X\rangle_{HS}\neq 0$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Pinching.pinching_annihilates_offdiagonal` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/Pinching.pinching_annihilates_offdiagonal` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -78,10 +78,10 @@ The Pauli X matrix is purely off diagonal, so pinching sends it to zero while it
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Pinching.hilbertSchmidtInner`
-- Truth anchor: `D5/S3/Quantum/Pinching.pinching`
-- Truth anchor: `D5/S3/Quantum/Pinching.pinching_annihilates_offdiagonal`
-- Truth anchor: `D5/S3/Quantum/Pinching.pinching_entry_eq_zero_iff`
-- Truth anchor: `D5/S3/Quantum/Pinching.pinching_hilbert_schmidt_self_adjoint`
-- Truth anchor: `D5/S3/Quantum/Pinching.pinching_idempotent`
-- Dependency: [D5/S3/Quantum/QubitWitnesses](QubitWitnesses.md)
+- Truth anchor: `D5/S3/QuantumChannels/Pinching.hilbertSchmidtInner`
+- Truth anchor: `D5/S3/QuantumChannels/Pinching.pinching`
+- Truth anchor: `D5/S3/QuantumChannels/Pinching.pinching_annihilates_offdiagonal`
+- Truth anchor: `D5/S3/QuantumChannels/Pinching.pinching_entry_eq_zero_iff`
+- Truth anchor: `D5/S3/QuantumChannels/Pinching.pinching_hilbert_schmidt_self_adjoint`
+- Truth anchor: `D5/S3/QuantumChannels/Pinching.pinching_idempotent`
+- Dependency: [D5/S3/Quantum/QubitWitnesses](../Quantum/QubitWitnesses.md)

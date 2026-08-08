@@ -1,13 +1,13 @@
-/- GID: D5/S3/Quantum/Pinching
+/- GID: D5/S3/QuantumChannels/Pinching
    generality: G
-   mirror-B: D5/B/S3/Quantum/Pinching
+   mirror-B: D5/B/S3/QuantumChannels/Pinching
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Realize standard-basis qubit pinching as zero-retention phase damping. -/
 
 import D5.S3.Quantum.QubitWitnesses
 
-namespace D5.S3.Quantum.Pinching
+namespace D5.S3.QuantumChannels.Pinching
 
 open D5.S3.Quantum.FiniteDimensional
 open D5.S3.Quantum.QubitWitnesses
@@ -57,4 +57,4 @@ theorem pinching_annihilates_offdiagonal :
   · simp [hilbertSchmidtInner, Matrix.trace, Matrix.mul_apply, Matrix.conjTranspose_apply,
       Fin.sum_univ_two, qubitX]
 
-end D5.S3.Quantum.Pinching
+end D5.S3.QuantumChannels.Pinching

@@ -62,6 +62,9 @@ domains:
   Quantum:
     stratum: S3
     definition: Finite-dimensional complex operator-algebra and probability structures.
+  QuantumChannels:
+    stratum: S3
+    definition: Finite-dimensional quantum channels and their fixed structures, including standard-basis pinching as zero-retention phase damping and its Hilbert-Schmidt mirror.
   QuantumBounds:
     stratum: S3
     definition: Finite-dimensional quantum correlation and uncertainty bounds derived from Gram positivity, including Robertson-Schrodinger and CHSH/Tsirelson.
