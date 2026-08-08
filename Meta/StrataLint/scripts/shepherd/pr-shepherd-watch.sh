@@ -8,6 +8,7 @@ load_watch_state() {
   WATCH_STATE_STEP_STARTED_AT=""; WATCH_STATE_STEP_DEADLINE_AT=""
   WATCH_STATE_LAST_PROGRESS_AT=""; WATCH_STATE_LAST_OUTCOME=""
   WATCH_STATE_CYCLE=""; WATCH_STATE_TERMINAL_EXIT=""
+  WATCH_STATE_CANONICAL_SCRIPT=""
   [[ -f "$PIDFILE" && -r "$PIDFILE" ]] || return 1
   while IFS= read -r line || [[ -n "$line" ]]; do
     key="${line%%=*}"; value="${line#*=}"
@@ -46,7 +47,7 @@ load_watch_state() {
   WATCH_STATE_OWNER_START="$process_start"
   WATCH_STATE_INTERVAL="$interval"
   WATCH_STATE_MAX="$max_cycles"
-  [[ "$canonical_script" == "$SCRIPT_PATH" ]] || return 1
+  WATCH_STATE_CANONICAL_SCRIPT="$canonical_script"
 }
 watch_step_started() {
   local step="$1" deadline="$2" now
@@ -100,7 +101,8 @@ watch_status() {
   fi
   if [[ "$state_valid" != 1 \
       || "$WATCH_STATE_OWNER_PID" != "$WATCH_OWNER_PID" \
-      || "$WATCH_STATE_OWNER_START" != "$WATCH_OWNER_PROCESS_START" ]]; then
+      || "$WATCH_STATE_OWNER_START" != "$WATCH_OWNER_PROCESS_START" \
+      || "$WATCH_STATE_CANONICAL_SCRIPT" != "$WATCH_OWNER_CANONICAL_SCRIPT" ]]; then
     print_watch_status stalled state-unverifiable "$state_valid"
     return 1
   fi
@@ -152,6 +154,45 @@ interrupt_watch() {
   cleanup_supervised_sweep
   exit "$rc"
 }
+watch() {
+  local interval="${1:-60}" max="${2:-360}" cycle armed now sleep_deadline
+  [[ "$interval" =~ ^(0|[1-9][0-9]*)$ && "$max" =~ ^[1-9][0-9]*$ ]] \
+    || { log "WATCH invalid interval or max_cycles (interval=$interval max_cycles=$max)"; return 2; }
+  WATCH_OWNS_LEASE=1
+  trap watch_exit_cleanup EXIT
+  trap 'interrupt_watch 143' TERM
+  trap 'interrupt_watch 130' INT
+  cycle="${PR_SHEPHERD_WATCH_CYCLE:-}"
+  [[ "$cycle" =~ ^[1-9][0-9]*$ && "$cycle" -le "$max" ]] \
+    || { log "WATCH reload rejected invalid cycle=${cycle:-missing}"; return 2; }
+  watch_lease_belongs_to_current_process \
+    || { log "WATCH reload rejected: verified lease is absent"; return 1; }
+  publish_watch_identity "$interval" "$max" "$cycle" || return
+  remove_watch_snapshot "$WATCH_PREVIOUS_SCRIPT"; WATCH_PREVIOUS_SCRIPT=""
+  if [[ "$cycle" == 1 ]]; then log "WATCH start interval=${interval}s max_cycles=${max} pid=$$"
+  else log "WATCH reloaded cycle=$cycle interval=${interval}s max_cycles=${max} pid=$$"; fi
+  local sweep_outcome=sweep-complete sweep_rc=0
+  if run_sweep_bounded; then sweep_rc=0
+  else
+    sweep_rc=$?; sweep_outcome="sweep-${LAST_BOUNDED_RESULT:-exit}"
+    log "SWEEP cycle=$cycle error result=${LAST_BOUNDED_RESULT:-exit} exit=$sweep_rc (continuing)"
+  fi
+  now="$(date '+%s')"; sleep_deadline=$((now + interval))
+  write_watch_state waiting none sleep "$now" "$sleep_deadline" "$now" "$sweep_outcome" none "$cycle" \
+    || { log "WATCH progress publication failed step=sleep"; return 1; }
+  sleep "$interval" & WATCH_SLEEP_PID=$!
+  wait "$WATCH_SLEEP_PID" || true; WATCH_SLEEP_PID=""
+  if [[ "$cycle" -lt "$max" ]]; then reload_watch "$interval" "$max" "$((cycle + 1))"; return; fi
+  if ! armed="$(armed_pr_count)"; then
+    log "WATCH renew(${max} 轮耗尽,armed PR 状态不可判,保守重启计数)"
+    reload_watch "$interval" "$max" 1; return
+  fi
+  if [[ "$armed" -gt 0 ]]; then
+    log "WATCH renew(${max} 轮耗尽,仍有 open 且 auto-merge armed PR,重启计数)"
+    reload_watch "$interval" "$max" 1; return
+  fi
+  log "WATCH end(${max} 轮耗尽,无 open auto-merge armed PR)"
+}
 sweep_worker() {
   trap cleanup_lease_scope EXIT
   trap 'exit 143' TERM
@@ -186,6 +227,7 @@ run_sweep_bounded() {
 }
 start_watch() {
   local interval="${1:-60}" max="${2:-360}" launched_pid deadline now status_rc
+  local runtime_stdout runtime_stderr
   [[ "$interval" =~ ^(0|[1-9][0-9]*)$ && "$max" =~ ^[1-9][0-9]*$ ]] \
     || { log "WATCH invalid interval or max_cycles (interval=$interval max_cycles=$max)"; return 2; }
   if watch_status >/dev/null 2>&1; then
@@ -198,8 +240,13 @@ start_watch() {
     log "WATCH start rejected: existing worker is stalled"
     return 1
   fi
+  now="$(date '+%s')"
+  create_step_artifacts watch-runtime "$now" \
+    || { log "WATCH start failed: runtime artifact unavailable"; return 1; }
+  runtime_stdout="$LAST_BOUNDED_STDOUT_ARTIFACT"; runtime_stderr="$LAST_BOUNDED_STDERR_ARTIFACT"
+  log "WATCH_BACKGROUND stdout_artifact=$runtime_stdout stderr_artifact=$runtime_stderr"
   nohup /bin/bash "$SCRIPT_PATH" watch "$interval" "$max" \
-    >> "$LOG" 2>&1 </dev/null &
+    > "$runtime_stdout" 2> "$runtime_stderr" </dev/null &
   launched_pid=$!
   now="$(date '+%s')"
   deadline=$((now + API_TIMEOUT_SECONDS))
