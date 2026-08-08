@@ -16,8 +16,6 @@ $$\forall M \in \mathbb{N}_{>0},\ \operatorname{IsPrimitiveRoot}(e^{\frac{2\pi i
 
 For every positive natural window cardinality M, the standard phase omega_M = exp(2 pi i/M) is a primitive M-th root of unity. The positivity condition is the displayed form of the formal NeZero M instance; the declaration makes no claim for a zero-cardinality window.
 
-Provenance note: OBSERVER-QUANTUM.md section 3 motivates the finite-window interpretation. It is reference input only. The typed Lean declaration above is the source of this theorem, and Scribe generates its number.
-
 **Theorem 1.2 (The clock and shift obey the finite Weyl relation).**
 
 $$\forall M \in \mathbb{N}_{>0},\ V_{M}U_{M} = \omega_{M}\cdot (U_{M}V_{M})$$
