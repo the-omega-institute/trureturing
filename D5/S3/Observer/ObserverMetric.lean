@@ -1,6 +1,6 @@
 /- GID: D5/S3/Observer/ObserverMetric
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/Observer/ObserverMetric
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Characterize observer update defects and their finite perturbation seminorm. -/
