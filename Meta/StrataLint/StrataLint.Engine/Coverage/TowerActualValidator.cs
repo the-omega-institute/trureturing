@@ -130,18 +130,18 @@ internal static class TowerActualValidator
             findings.Add(new TowerFinding(
                 "TOWER-C0-CEREMONY",
                 component.Id,
-                "phased gate must record canonical controller, corpus, gate, certificate, base, merge, and preimage addresses"));
+                "phased gate must record the canonical frozen ceremony trust root"));
         }
 
-        if (!C0CeremonyProjection.AddressesMatchSnapshot(
+        if (!C0CeremonyProjection.TrustRootMatchesSnapshot(
                 component.Members,
                 snapshot,
-                out var addressReason))
+                out var trustRootReason))
         {
             findings.Add(new TowerFinding(
-                "TOWER-C0-ADDRESS",
+                "TOWER-C0-CEREMONY",
                 component.Id,
-                addressReason));
+                trustRootReason));
         }
 
         if (!findings.Any(item => item.Component == component.Id))

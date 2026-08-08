@@ -1,7 +1,6 @@
 using System.Collections.Immutable;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.Json;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -9,19 +8,12 @@ namespace StrataLint.Cli;
 internal sealed record C0RenewState(
     FrozenRevisionIdentity Base,
     FrozenRevisionIdentity Preimage,
-    RepositorySnapshot PreimageSnapshot,
-    ImmutableArray<string> ChangedPaths,
-    ImmutableArray<byte> CurrentTower,
-    ImmutableArray<byte> CurrentCertificate);
+    ImmutableArray<string> ChangedPaths);
 
 internal sealed record C0RenewGateResult(
     int ExitCode,
     ImmutableArray<byte> Output,
     ImmutableArray<byte> Error);
-
-internal sealed record C0RenewOutput(
-    ImmutableArray<byte> TowerBytes,
-    ImmutableArray<byte> CertificateBytes);
 
 internal interface IC0RenewEnvironment
 {
@@ -31,20 +23,11 @@ internal interface IC0RenewEnvironment
         string exactBaseCommit,
         string exactPreimageCommit);
 
-    IDisposable AcquireInstallLock();
-
-    void Install(C0RenewOutput output);
 }
 
 internal static class C0RenewCommand
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
-    private static readonly ImmutableHashSet<string> OutputPaths =
-        ImmutableHashSet.Create(
-            StringComparer.Ordinal,
-            RepositoryRules.TowerManifestPath,
-            C0CeremonyProjection.CertificatePath);
-
     internal static CommandResult Run(string repositoryRoot, IReadOnlyList<string> arguments) =>
         Run(arguments, new ProductionC0RenewEnvironment(repositoryRoot));
 
@@ -59,11 +42,10 @@ internal static class C0RenewCommand
             var baseReference = Parse(arguments);
             var initial = environment.ReadState(baseReference);
             RequireSha1(initial);
-            var dirty = initial.ChangedPaths.ToImmutableHashSet(StringComparer.Ordinal);
-            if (!dirty.IsSubsetOf(OutputPaths))
+            if (!initial.ChangedPaths.IsEmpty)
             {
                 throw new InvalidOperationException(
-                    "C0 renewal requires a clean committed preimage; only prior C0 outputs may differ");
+                    "C0 verification requires a clean committed preimage");
             }
 
             var gate = environment.RunConservativeGate(
@@ -76,24 +58,7 @@ internal static class C0RenewCommand
                     + GateDetail(gate));
             }
 
-            var certificate = ExtractCertificate(gate.Output, initial);
-            var output = Materialize(initial, certificate);
-            using var installLock = environment.AcquireInstallLock();
-            var confirmed = environment.ReadState(initial.Base.Revision);
-            RequireUnchanged(initial, confirmed);
-            var changedFiles = 0;
-            if (!output.CertificateBytes.AsSpan().SequenceEqual(initial.CurrentCertificate.AsSpan()))
-            {
-                changedFiles++;
-            }
-
-            if (!output.TowerBytes.AsSpan().SequenceEqual(initial.CurrentTower.AsSpan()))
-            {
-                changedFiles++;
-            }
-
-            if (changedFiles > 0) environment.Install(output);
-            return Success(changedFiles);
+            return Success();
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
@@ -104,105 +69,6 @@ internal static class C0RenewCommand
                 + (exception.InnerException is { } inner
                     ? $"C0_RENEW_FAILED_INNER [{inner.GetType().Name}] {inner.Message}\n"
                     : string.Empty));
-        }
-    }
-
-    private static C0RenewOutput Materialize(
-        C0RenewState state,
-        ImmutableArray<byte> certificate)
-    {
-        ValidateCertificate(certificate, state);
-        if (!state.PreimageSnapshot.TryGetFile(RepositoryRules.TowerManifestPath, out var tower))
-        {
-            throw new InvalidOperationException(
-                $"committed preimage is missing {RepositoryRules.TowerManifestPath}");
-        }
-
-        var identity = new C0CeremonyIdentity(
-            state.Base.Revision,
-            state.Preimage.Revision,
-            Untag(state.Preimage.TreeOid, "git-sha1:"));
-        var members = C0CeremonyProjection.CreateMembers(
-            state.PreimageSnapshot,
-            certificate.AsSpan(),
-            identity);
-        var towerBytes = C0TowerProjection.Write(tower.RawBytes.AsSpan(), members);
-        return new C0RenewOutput(towerBytes, certificate);
-    }
-
-    private static ImmutableArray<byte> ExtractCertificate(
-        ImmutableArray<byte> gateOutput,
-        C0RenewState state)
-    {
-        var text = StrictUtf8.GetString(gateOutput.AsSpan());
-        var matches = new List<ImmutableArray<byte>>();
-        foreach (var line in text.Split('\n'))
-        {
-            if (!line.StartsWith('{')) continue;
-            try
-            {
-                using var document = JsonDocument.Parse(line);
-                if (document.RootElement.TryGetProperty("schema", out var schema)
-                    && schema.GetString() == ConservativeExtensionVerifier.CertificateSchema)
-                {
-                    matches.Add(ImmutableArray.CreateRange(StrictUtf8.GetBytes(line + "\n")));
-                }
-            }
-            catch (JsonException)
-            {
-                // Other gate output remains diagnostics, not a certificate candidate.
-            }
-        }
-
-        if (matches.Count != 1)
-        {
-            throw new InvalidOperationException(
-                $"conservative gate emitted {matches.Count} certificate candidates");
-        }
-
-        var certificate = matches[0];
-        ValidateCertificate(certificate, state);
-        return certificate;
-    }
-
-    private static void ValidateCertificate(
-        ImmutableArray<byte> certificate,
-        C0RenewState state)
-    {
-        using var document = JsonDocument.Parse(certificate.ToArray());
-        var root = document.RootElement;
-        if (root.GetProperty("schema").GetString()
-                != ConservativeExtensionVerifier.CertificateSchema
-            || root.GetProperty("status").GetString() != "CORPUS_CONSERVATIVE"
-            || root.GetProperty("findings").GetArrayLength() != 0)
-        {
-            throw new InvalidOperationException(
-                "the conservative gate did not produce a renewable certificate");
-        }
-
-        var baseline = root.GetProperty("baseline");
-        var candidate = root.GetProperty("candidate");
-        if (baseline.GetProperty("commit_oid").GetString() != state.Base.Revision
-            || baseline.GetProperty("tree_oid").GetString() != state.Base.TreeOid
-            || candidate.GetProperty("commit_oid").GetString() != state.Preimage.Revision
-            || candidate.GetProperty("tree_oid").GetString() != state.Preimage.TreeOid)
-        {
-            throw new InvalidOperationException(
-                "conservative certificate identities do not match the frozen renewal inputs");
-        }
-
-        var implication = root.GetProperty("positive_implication");
-        if (implication.GetProperty("baseline_admit_count").GetInt32()
-            != implication.GetProperty("preserved_admit_count").GetInt32())
-        {
-            throw new InvalidOperationException(
-                "conservative certificate does not preserve every baseline admit");
-        }
-
-        var canonical = StructuredCanonicalWriter.WriteJson(root);
-        if (!canonical.AsSpan().SequenceEqual(certificate.AsSpan()))
-        {
-            throw new InvalidOperationException("conservative certificate bytes are not canonical");
         }
     }
 
@@ -220,21 +86,6 @@ internal static class C0RenewCommand
         }
     }
 
-    private static void RequireUnchanged(C0RenewState initial, C0RenewState confirmed)
-    {
-        if (confirmed.Base != initial.Base
-            || confirmed.Preimage != initial.Preimage
-            || !confirmed.ChangedPaths.SequenceEqual(
-                initial.ChangedPaths,
-                StringComparer.Ordinal)
-            || !confirmed.CurrentTower.AsSpan().SequenceEqual(initial.CurrentTower.AsSpan())
-            || !confirmed.CurrentCertificate.AsSpan().SequenceEqual(
-                initial.CurrentCertificate.AsSpan()))
-        {
-            throw new InvalidOperationException("C0 renewal inputs changed while the gate was running");
-        }
-    }
-
     private static string Parse(IReadOnlyList<string> arguments)
     {
         if (arguments.Count != 2
@@ -247,25 +98,15 @@ internal static class C0RenewCommand
         return arguments[1];
     }
 
-    private static string Untag(string value, string prefix)
-    {
-        if (!value.StartsWith(prefix, StringComparison.Ordinal))
-        {
-            throw new InvalidOperationException($"C0 identity is missing {prefix}");
-        }
-
-        return value[prefix.Length..];
-    }
-
     private static string GateDetail(C0RenewGateResult gate)
     {
         var error = StrictUtf8.GetString(gate.Error.AsSpan()).Trim();
         return error.Length == 0 ? $" (exit {gate.ExitCode})" : $" (exit {gate.ExitCode}: {error})";
     }
 
-    private static CommandResult Success(int changedFiles) => new(
+    private static CommandResult Success() => new(
         true,
-        $"C0_RENEWED changed_files={changedFiles} admission=not-evaluated\n",
+        "C0_VERIFIED changed_files=0 admission=not-evaluated\n",
         string.Empty);
 }
 
@@ -288,19 +129,10 @@ internal sealed class ProductionC0RenewEnvironment : IC0RenewEnvironment
         var @base = repository.ResolveReference(baseReference);
         var preimage = repository.ResolveCurrentRevision();
         repository.RequireStrictAncestor(@base.Revision, preimage.Revision);
-        var snapshot = SnapshotDecoder.Decode(repository.ReadRevision(preimage.Revision)) switch
-        {
-            SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
-            SnapshotDecodeOutcome.InfrastructureFailure failure =>
-                throw new InvalidOperationException(failure.Message),
-        };
         return new C0RenewState(
             @base,
             preimage,
-            snapshot,
-            repository.WorkingTreeChanges(),
-            Read(RepositoryRules.TowerManifestPath),
-            Read(C0CeremonyProjection.CertificatePath));
+            repository.WorkingTreeChanges());
     }
 
     public C0RenewGateResult RunConservativeGate(
@@ -363,47 +195,6 @@ internal sealed class ProductionC0RenewEnvironment : IC0RenewEnvironment
             result.ExitCode == 3 ? 0 : result.ExitCode,
             ImmutableArray.CreateRange(result.StandardOutput),
             ImmutableArray.CreateRange(result.StandardError));
-    }
-
-    public IDisposable AcquireInstallLock() => C0RenewInstallLock.Acquire(
-        root,
-        TimeSpan.FromSeconds(30));
-
-    public void Install(C0RenewOutput output)
-    {
-        var towerPath = Absolute(RepositoryRules.TowerManifestPath);
-        var certificatePath = Absolute(C0CeremonyProjection.CertificatePath);
-        var previousCertificate = File.ReadAllBytes(certificatePath);
-        IngestCommand.ReplaceLedgerAtomically(
-            certificatePath,
-            output.CertificateBytes.AsSpan());
-        try
-        {
-            IngestCommand.ReplaceLedgerAtomically(towerPath, output.TowerBytes.AsSpan());
-        }
-        catch (Exception writeFailure) when (writeFailure is not OutOfMemoryException)
-        {
-            try
-            {
-                IngestCommand.ReplaceLedgerAtomically(certificatePath, previousCertificate);
-            }
-            catch (Exception rollbackFailure) when (rollbackFailure is not OutOfMemoryException)
-            {
-                throw new AggregateException(
-                    "C0 TOWER install failed and certificate rollback also failed",
-                    writeFailure,
-                    rollbackFailure);
-            }
-
-            throw;
-        }
-    }
-
-    private ImmutableArray<byte> Read(string path)
-    {
-        var absolute = Absolute(path);
-        if (!File.Exists(absolute)) throw new FileNotFoundException("C0 output is missing", absolute);
-        return ImmutableArray.CreateRange(File.ReadAllBytes(absolute));
     }
 
     private string Absolute(string path) =>

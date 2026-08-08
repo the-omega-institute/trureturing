@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 
 namespace StrataLint.Engine;
 
@@ -12,11 +13,6 @@ internal enum C0AnchorKind
 }
 
 internal sealed record C0Anchor(C0AnchorKind Kind, string Path);
-
-internal sealed record C0CeremonyIdentity(
-    string BaseCommitOid,
-    string PreimageCommitOid,
-    string PreimageTreeOid);
 
 internal static class C0CeremonyProjection
 {
@@ -111,25 +107,6 @@ internal static class C0CeremonyProjection
         return anchors;
     }
 
-    internal static ImmutableArray<string> CreateMembers(
-        RepositorySnapshot snapshot,
-        ReadOnlySpan<byte> certificateBytes,
-        C0CeremonyIdentity identity)
-    {
-        ArgumentNullException.ThrowIfNull(identity);
-        RequireLowerHex(identity.BaseCommitOid, 40, "base commit");
-        RequireLowerHex(identity.PreimageCommitOid, 40, "preimage commit");
-        RequireLowerHex(identity.PreimageTreeOid, 40, "preimage tree");
-        var records = CreateAddressRecords(snapshot, certificateBytes)
-            .Add("c0/base-commit git-commit/" + identity.BaseCommitOid)
-            .Add("c0/ceremony-commit convention/this-pr-merge-commit")
-            .Add("c0/preimage-commit git-commit/" + identity.PreimageCommitOid)
-            .Add("c0/preimage-tree git-tree/" + identity.PreimageTreeOid)
-            .Order(StringComparer.Ordinal)
-            .ToImmutableArray();
-        return Phases.AddRange(records);
-    }
-
     internal static bool HasCanonicalShape(IReadOnlyList<string> members)
     {
         if (!HasCanonicalPhases(members))
@@ -144,24 +121,16 @@ internal static class C0CeremonyProjection
         }
 
         var counts = new Dictionary<string, int>(StringComparer.Ordinal);
-        var addressedPaths = new HashSet<string>(StringComparer.Ordinal);
         foreach (var record in records)
         {
             var fields = record.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             var kind = fields[0];
             var valid = fields switch
             {
-                ["c0/base-commit", var oid] => IsTaggedLowerHex(oid, "git-commit/", 40),
                 ["c0/ceremony-commit", "convention/this-pr-merge-commit"] => true,
-                ["c0/controller" or "c0/corpus" or "c0/gate-wiring", var oid, var path] =>
-                    IsTaggedLowerHex(oid, "git-sha1/", 40)
-                    && IsRepositoryPath(path)
-                    && addressedPaths.Add(kind + " " + path),
                 ["c0/inaugural-certificate", var digest, var path] =>
                     IsTaggedLowerHex(digest, "sha256/", 64)
-                    && IsRepositoryPath(path)
-                    && addressedPaths.Add(kind + " " + path),
-                ["c0/preimage-commit", var oid] => IsTaggedLowerHex(oid, "git-commit/", 40),
+                    && path == CertificatePath,
                 ["c0/preimage-tree", var oid] => IsTaggedLowerHex(oid, "git-tree/", 40),
                 _ => false,
             };
@@ -169,13 +138,9 @@ internal static class C0CeremonyProjection
             counts[kind] = counts.GetValueOrDefault(kind) + 1;
         }
 
-        return Count(counts, "c0/base-commit") == 1
+        return records.Length == 3
             && Count(counts, "c0/ceremony-commit") == 1
-            && Count(counts, "c0/controller") > 0
-            && Count(counts, "c0/corpus") > 0
-            && Count(counts, "c0/gate-wiring") == 1
             && Count(counts, "c0/inaugural-certificate") == 1
-            && Count(counts, "c0/preimage-commit") == 1
             && Count(counts, "c0/preimage-tree") == 1;
     }
 
@@ -183,7 +148,7 @@ internal static class C0CeremonyProjection
         members.Count >= Phases.Length
         && members.Take(Phases.Length).SequenceEqual(Phases, StringComparer.Ordinal);
 
-    internal static bool AddressesMatchSnapshot(
+    internal static bool TrustRootMatchesSnapshot(
         IReadOnlyList<string> members,
         RepositorySnapshot snapshot,
         out string reason)
@@ -196,50 +161,42 @@ internal static class C0CeremonyProjection
                 return false;
             }
 
-            var expected = CreateAddressRecords(snapshot, certificate.RawBytes.AsSpan());
-            var actual = members
-                .Skip(Phases.Length)
-                .Where(static member => member.StartsWith("c0/controller ", StringComparison.Ordinal)
-                    || member.StartsWith("c0/corpus ", StringComparison.Ordinal)
-                    || member.StartsWith("c0/gate-wiring ", StringComparison.Ordinal)
-                    || member.StartsWith("c0/inaugural-certificate ", StringComparison.Ordinal))
-                .Order(StringComparer.Ordinal)
-                .ToImmutableArray();
-            if (!actual.SequenceEqual(expected, StringComparer.Ordinal))
+            var records = members.Skip(Phases.Length).ToArray();
+            var certificateRecord = records.Single(static member =>
+                member.StartsWith("c0/inaugural-certificate ", StringComparison.Ordinal));
+            var expectedCertificate = "c0/inaugural-certificate sha256/"
+                + Convert.ToHexStringLower(SHA256.HashData(certificate.RawBytes.AsSpan()))
+                + " " + CertificatePath;
+            if (certificateRecord != expectedCertificate)
             {
-                reason = $"declared {actual.Length} addressed records but canonical policy produced {expected.Length}";
+                reason = "inaugural certificate address does not match its frozen bytes";
+                return false;
+            }
+
+            using var document = JsonDocument.Parse(certificate.RawBytes.ToArray());
+            var treeOid = document.RootElement.GetProperty("candidate").GetProperty("tree_oid").GetString();
+            var expectedTree = "c0/preimage-tree git-tree/"
+                + Untag(treeOid, "git-sha1:");
+            if (!records.Contains(expectedTree, StringComparer.Ordinal))
+            {
+                reason = "preimage tree does not match the inaugural certificate";
                 return false;
             }
 
             reason = string.Empty;
             return true;
         }
-        catch (Exception exception) when (exception is InvalidOperationException or FormatException)
+        catch (Exception exception) when (exception is InvalidOperationException
+            or FormatException
+            or JsonException
+            or KeyNotFoundException)
         {
             reason = exception.Message;
             return false;
         }
     }
 
-    private static ImmutableArray<string> CreateAddressRecords(
-        RepositorySnapshot snapshot,
-        ReadOnlySpan<byte> certificateBytes)
-    {
-        if (!TryCreateAnchorAddressRecords(snapshot, out var anchorRecords))
-        {
-            var missing = DiscoverAnchors(snapshot).First(anchor =>
-                !snapshot.TryGetFile(anchor.Path, out _));
-            throw new InvalidOperationException($"C0 anchor is missing: {missing.Path}");
-        }
-
-        var records = anchorRecords.ToBuilder();
-        var certificateAddress = "sha256/"
-            + Convert.ToHexStringLower(SHA256.HashData(certificateBytes));
-        records.Add($"c0/inaugural-certificate {certificateAddress} {CertificatePath}");
-        return records.Order(StringComparer.Ordinal).ToImmutableArray();
-    }
-
-    internal static bool TryCreateAnchorAddressRecords(
+    internal static bool TryCreateAnchorCustodianReferences(
         RepositorySnapshot snapshot,
         out ImmutableArray<string> records)
     {
@@ -283,13 +240,21 @@ internal static class C0CeremonyProjection
     private static int Count(IReadOnlyDictionary<string, int> counts, string kind) =>
         counts.GetValueOrDefault(kind);
 
-    private static void RequireLowerHex(string value, int digits, string label)
+    private static string Untag(string? value, string prefix)
     {
-        if (value.Length != digits || value.Any(static character =>
+        if (value is null || !value.StartsWith(prefix, StringComparison.Ordinal))
+        {
+            throw new FormatException($"C0 certificate tree must start with {prefix}");
+        }
+
+        var untagged = value[prefix.Length..];
+        if (untagged.Length != 40 || untagged.Any(static character =>
                 character is not (>= '0' and <= '9' or >= 'a' and <= 'f')))
         {
-            throw new FormatException($"C0 {label} must be {digits} lowercase hexadecimal digits");
+            throw new FormatException("C0 certificate tree must be 40 lowercase hexadecimal digits");
         }
+
+        return untagged;
     }
 
     private static bool IsTaggedLowerHex(string value, string prefix, int digits) =>
@@ -298,11 +263,6 @@ internal static class C0CeremonyProjection
         && value[prefix.Length..].All(static character =>
             character is >= '0' and <= '9' or >= 'a' and <= 'f');
 
-    private static bool IsRepositoryPath(string value) =>
-        value.Length > 0
-        && !value.StartsWith('/')
-        && !value.Contains('\\')
-        && value.Split('/').All(static segment => segment is not ("" or "." or ".."));
 }
 
 internal static class C0TowerProjection
