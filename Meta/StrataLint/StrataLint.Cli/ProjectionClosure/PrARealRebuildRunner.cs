@@ -116,12 +116,12 @@ internal sealed class PrARealRebuildRunner : IDisposable
             Measure(phasePrefix + "_restore", () => RestoreCleanCheckout(checkout));
             checkoutMutation?.Invoke(testCase.Checkout, checkout);
             if (validateAfterMutation) RequireCleanTrackedTree(checkout);
-            var verifiedScribe = Measure(phasePrefix + "_bootstrap", () =>
+            var bootstrap = Measure(phasePrefix + "_bootstrap", () =>
                 GenerateBootstrap(checkout, testCase));
             var bootstrapRoot = Measure(phasePrefix + "_receipt", () => CreateBootstrapReceipt(
                 checkout, manifest, runId, inventorySha, producerBuildSha));
             var echo = Measure(phasePrefix + "_echo", () => GenerateEcho(
-                checkout, bootstrapRoot, verifiedScribe));
+                checkout, bootstrapRoot, bootstrap));
             var echoPath = Path.Combine(checkout, "Generated", "echo-residual-summary.md");
             Directory.CreateDirectory(Path.GetDirectoryName(echoPath)!);
             File.WriteAllBytes(echoPath, echo);
@@ -280,7 +280,7 @@ internal sealed class PrARealRebuildRunner : IDisposable
         return outputRoot;
     }
 
-    private VerifiedScribeEmissions GenerateBootstrap(string checkout, PrAMatrixCase testCase)
+    private BootstrapCapabilities GenerateBootstrap(string checkout, PrAMatrixCase testCase)
     {
         var raw = new GitRepositoryGateway(checkout).ReadCurrent();
         var snapshot = SnapshotDecoder.Decode(raw) switch
@@ -296,22 +296,25 @@ internal sealed class PrARealRebuildRunner : IDisposable
                 "PR_A_GENERATOR_FAILED Scribe bootstrap: " + error.ToString().Trim());
         _ = RunEnvironment(checkout, testCase,
             ["/bin/bash", "Meta/StrataLint/scripts/scribe.sh", "bootstrap"]);
-        return verified;
+        return new BootstrapCapabilities(raw, report, verified);
     }
 
     private byte[] GenerateEcho(
         string checkout,
         string receiptRoot,
-        VerifiedScribeEmissions verifiedScribe)
+        BootstrapCapabilities bootstrap)
     {
+        var overlaid = RunLocalSnapshotOverlay.ApplyFromReceipt(
+            bootstrap.CurrentSnapshot, checkout, receiptRoot);
+        var repository = new CachedCurrentRepositoryGateway(
+            new GitRepositoryGateway(checkout), overlaid);
         var result = EchoVerifyCommand.Run(
             checkout,
-            new GitRepositoryGateway(checkout),
-            new PrecomputedLeanReportSource(checkout),
-            new CachedScribeEmissionVerifier(verifiedScribe),
+            repository,
+            new CachedLeanReportSource(bootstrap.LeanReport),
+            new CachedScribeEmissionVerifier(bootstrap.VerifiedScribe),
             ["--emit", "--base", $"{pinnedCommit}^"],
-            useRunLocalOverlay: true,
-            runLocalReceiptRoot: receiptRoot);
+            useRunLocalOverlay: false);
         if (result.ExitCode != 0)
             throw new InvalidOperationException(result.Error.Trim());
         return Encoding.UTF8.GetBytes(result.Output);
@@ -369,4 +372,29 @@ internal sealed class PrARealRebuildRunner : IDisposable
     {
         public VerifiedScribeEmissions Verify(LeanAxiomReport report) => verified;
     }
+
+    private sealed class CachedLeanReportSource(LeanAxiomReport report) : ILeanReportSource
+    {
+        public LeanAxiomReport Load(RepositorySnapshot snapshot) => report;
+    }
+
+    private sealed class CachedCurrentRepositoryGateway(
+        IRepositoryGateway inner,
+        RawRepositorySnapshot current) : IRepositoryGateway
+    {
+        public AdmissionTopologyOutcome InspectAdmissionTopology() => inner.InspectAdmissionTopology();
+        public PreparedRepository Prepare(string? protectedBase) => inner.Prepare(protectedBase);
+        public FrozenRevisionIdentity ResolveFrozenRevision(string revision) => inner.ResolveFrozenRevision(revision);
+        public FrozenRevisionIdentity ResolveCurrentRevision() => inner.ResolveCurrentRevision();
+        public RawRepositorySnapshot ReadCurrent() => current;
+        public RawRepositorySnapshot ReadRevision(string revision) => inner.ReadRevision(revision);
+        public RawRepositorySnapshot ReadFrozenRevision(string revision) => inner.ReadFrozenRevision(revision);
+        public TrustedFrozenGitReferences ValidateFrozenReferences(FrozenLedgerReferenceSet references) =>
+            inner.ValidateFrozenReferences(references);
+    }
+
+    private sealed record BootstrapCapabilities(
+        RawRepositorySnapshot CurrentSnapshot,
+        LeanAxiomReport LeanReport,
+        VerifiedScribeEmissions VerifiedScribe);
 }
