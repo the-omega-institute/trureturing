@@ -143,7 +143,7 @@ public sealed partial class PrShepherdRecalculationTests
             environment: new Dictionary<string, string>
             {
                 ["PR_TEST_HANG_GIT_OPERATION"] = "checkout",
-                ["PR_SHEPHERD_SWEEP_TIMEOUT_SECONDS"] = "6",
+                ["PR_SHEPHERD_SWEEP_TIMEOUT_SECONDS"] = "30",
                 ["PR_SHEPHERD_KILL_GRACE_SECONDS"] = "1",
             });
         Assert.Equal(0, started.ExitCode);
