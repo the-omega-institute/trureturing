@@ -158,9 +158,15 @@ internal sealed class PrARealRebuildRunner : IDisposable
 
     private void RestoreCleanCheckout(string checkout)
     {
-        var arguments = new List<string> { "restore", "--source=HEAD", "--" };
-        arguments.AddRange(inventory.Select(static item => item.Path));
-        Run("git", arguments, checkout, TimeSpan.FromMinutes(2));
+        Run("git", ["restore", "--source=HEAD", "--", "."], checkout, TimeSpan.FromMinutes(2));
+        var tracked = Git(checkout, ["ls-files", "-z"])
+            .Split('\0', StringSplitOptions.RemoveEmptyEntries)
+            .ToHashSet(StringComparer.Ordinal);
+        foreach (var item in inventory.Where(item => !tracked.Contains(item.Path)))
+        {
+            var path = Path.Combine(checkout, item.Path);
+            if (File.Exists(path)) File.Delete(path);
+        }
         RequireCleanTrackedTree(checkout);
     }
 
