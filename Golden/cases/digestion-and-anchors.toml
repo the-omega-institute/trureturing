@@ -110,7 +110,7 @@ name = "empty-protected-backfill-inventory"
 changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
 baseline_mutations = []
 mutations = [{ op = "write", path = "Meta/BACKFILL.yaml", content = "schema_version: 3\nledger: theory-digestion-v1\nsources: []\nticket_index: []\n" }, { op = "delete", path = "D5/X_Frontier/BackfillTasks.lean" }]
-expected_diagnostics = [{ rule = 16, path = "Meta/Digestion/ticket-index.toml", message = "digestion backfill directory is missing: Meta/Digestion/backfill/" }]
+expected_diagnostics = [{ rule = 16, path = "Meta/Digestion/ticket-index.toml", message = "required governance document is missing" }]
 
 [[cases]]
 name = "missing-backfill-disposition"
