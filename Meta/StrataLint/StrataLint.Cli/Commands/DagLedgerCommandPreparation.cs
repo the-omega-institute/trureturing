@@ -36,7 +36,7 @@ internal static class DagLedgerCommandPreparation
     {
         var ledgerPath = Path.Combine(
             repositoryRoot,
-            FrozenLedgerChangeClassifier.LedgerPath.Replace('/', Path.DirectorySeparatorChar));
+            FrozenLedgerChangeClassifier.AcceptedRoot.Replace('/', Path.DirectorySeparatorChar));
         var baselineSyntax = LoadLedgerDirectory(ledgerPath, "existing frozen ledger");
         var baselineBytes = baselineSyntax.RawBytes.ToArray();
         var truth = BuildTruth(repository, leanReportSource);

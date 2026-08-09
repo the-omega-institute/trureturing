@@ -211,7 +211,7 @@ internal static class FrozenLedgerTestData
             var identity = payload.TryGetProperty("frozen_node_id", out var nodeId)
                 ? nodeId.GetString()!
                 : line.Value.GetProperty("event_hash").GetString()!;
-            files[$"{FrozenLedgerChangeClassifier.LedgerPath}/{identity[7..]}.json"] =
+            files[$"{FrozenLedgerChangeClassifier.AcceptedRoot}/{identity[7..]}.json"] =
                 Encoding.UTF8.GetString(line.RawBytes.AsSpan());
         }
     }

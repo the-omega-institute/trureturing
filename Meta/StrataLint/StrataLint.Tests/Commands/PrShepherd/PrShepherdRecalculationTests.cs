@@ -153,7 +153,7 @@ public sealed partial class PrShepherdRecalculationTests
                 pattern = "Generated/**"
                 kind = "generated"
                 """);
-            Write(seed, FrozenLedgerChangeClassifier.LedgerPath, "{\"event\":\"base\"}\n");
+            Write(seed, FrozenLedgerChangeClassifier.AcceptedRoot, "{\"event\":\"base\"}\n");
             Write(seed, "Trureturing.lean", "base trureturing\n");
             Write(seed, "shared.txt", "base shared\n");
             Git(seed, "add", ".");

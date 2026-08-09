@@ -140,7 +140,7 @@ internal static class ProductionFrozenLedgerValidator
             descriptor.Title,
             descriptor.DisplaySeverity,
             descriptor.AdmissionEffect,
-            FrozenLedgerChangeClassifier.LedgerPath,
+            FrozenLedgerChangeClassifier.AcceptedRoot,
             message)));
     }
 }

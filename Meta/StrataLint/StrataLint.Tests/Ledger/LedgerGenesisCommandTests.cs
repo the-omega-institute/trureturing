@@ -58,7 +58,7 @@ public sealed partial class ProductionEnvironmentTests
         var first = environment.GenerateLedger(new[] { "--revision", revision });
         var ledgerPath = Path.Combine(
             temporary.Path,
-            FrozenLedgerChangeClassifier.LedgerPath.Replace('/', Path.DirectorySeparatorChar));
+            FrozenLedgerChangeClassifier.AcceptedRoot.Replace('/', Path.DirectorySeparatorChar));
         var firstBytes = FrozenLedgerTestData.ReadLedgerDirectory(ledgerPath);
         var second = environment.GenerateLedger(new[] { "--revision", revision });
 

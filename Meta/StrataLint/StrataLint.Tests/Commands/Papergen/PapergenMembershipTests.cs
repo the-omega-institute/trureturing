@@ -154,7 +154,7 @@ public sealed partial class PapergenCommandTests
             "D5-P001");
 
         var invalid = Assert.IsType<PaperRecipeValidationOutcome.Invalid>(outcome);
-        Assert.Contains(FrozenLedgerChangeClassifier.LedgerPath, invalid.Message, StringComparison.Ordinal);
+        Assert.Contains(FrozenLedgerChangeClassifier.AcceptedRoot, invalid.Message, StringComparison.Ordinal);
     }
 
     /// Reattestation replaces the node id while admission holds the declaration set constant.
@@ -316,7 +316,7 @@ public sealed partial class PapergenCommandTests
             "D5-P001");
 
         var invalid = Assert.IsType<PaperRecipeValidationOutcome.Invalid>(outcome);
-        Assert.Contains(FrozenLedgerChangeClassifier.LedgerPath, invalid.Message, StringComparison.Ordinal);
+        Assert.Contains(FrozenLedgerChangeClassifier.AcceptedRoot, invalid.Message, StringComparison.Ordinal);
     }
 
     /// The module carries `hidden` and it is in the Lean report, so ResolveSignature finds it --
@@ -410,7 +410,7 @@ public sealed partial class PapergenCommandTests
 
         using (new FileStream(
             Directory.EnumerateFiles(
-                Path.Combine(repository.Path, FrozenLedgerChangeClassifier.LedgerPath)).First(),
+                Path.Combine(repository.Path, FrozenLedgerChangeClassifier.AcceptedRoot)).First(),
             FileMode.Open,
             FileAccess.Read,
             FileShare.None))

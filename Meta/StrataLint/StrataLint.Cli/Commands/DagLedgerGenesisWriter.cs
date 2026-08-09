@@ -95,7 +95,7 @@ internal static class DagLedgerGenesisWriter
             };
             var outputPath = Path.Combine(
                 repositoryRoot,
-                FrozenLedgerChangeClassifier.LedgerPath.Replace('/', Path.DirectorySeparatorChar));
+                FrozenLedgerChangeClassifier.AcceptedRoot.Replace('/', Path.DirectorySeparatorChar));
             if (Directory.Exists(outputPath))
             {
                 if (!DagLedgerCommandPreparation.LoadLedgerDirectory(outputPath, "existing frozen ledger")

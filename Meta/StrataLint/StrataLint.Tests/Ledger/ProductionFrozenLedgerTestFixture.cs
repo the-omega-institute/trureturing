@@ -168,7 +168,7 @@ public sealed partial class ProductionEnvironmentTests
             var identity = payload.TryGetProperty("frozen_node_id", out var nodeId)
                 ? nodeId.GetString()!
                 : line.Value.GetProperty("event_hash").GetString()!;
-            files[$"{FrozenLedgerChangeClassifier.LedgerPath}/{identity[7..]}.json"] =
+            files[$"{FrozenLedgerChangeClassifier.AcceptedRoot}/{identity[7..]}.json"] =
                 Encoding.UTF8.GetString(line.RawBytes.AsSpan());
         }
     }
@@ -206,9 +206,9 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal("Frozen Hearts semantics", diagnostic.Title);
         Assert.Equal(DisplaySeverity.Error, diagnostic.DisplaySeverity);
         Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
-        Assert.Equal(FrozenLedgerChangeClassifier.LedgerPath, diagnostic.Path);
+        Assert.Equal(FrozenLedgerChangeClassifier.AcceptedRoot, diagnostic.Path);
         Assert.Equal(expectedMessage, diagnostic.Message);
-        Assert.Equal($"SL-008 {FrozenLedgerChangeClassifier.LedgerPath}: {expectedMessage}", diagnostic.Render());
+        Assert.Equal($"SL-008 {FrozenLedgerChangeClassifier.AcceptedRoot}: {expectedMessage}", diagnostic.Render());
     }
 
     private sealed record FrozenValidatorFixture(
