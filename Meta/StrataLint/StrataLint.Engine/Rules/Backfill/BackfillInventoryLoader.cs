@@ -388,6 +388,9 @@ internal sealed class BackfillInventoryDocument
 
 internal static class BackfillInventoryLoader
 {
+    private const string CoexistingStorageMessage =
+        "legacy and directory digestion ledgers cannot coexist";
+
     internal const string RelativePath = "Meta/BACKFILL.yaml";
     internal const int SchemaVersion = 3;
     internal const string LedgerName = "theory-digestion-v1";
@@ -444,7 +447,7 @@ internal static class BackfillInventoryLoader
 
         if (hasLegacy && hasDirectory)
         {
-            throw new FormatException("legacy and directory digestion ledgers cannot coexist");
+            throw new FormatException(CoexistingStorageMessage);
         }
 
         if (hasLegacy)
@@ -474,10 +477,29 @@ internal static class BackfillInventoryLoader
     internal static BackfillInventoryDocument LoadRoot(string repositoryRoot)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
+        var root = Path.GetFullPath(repositoryRoot);
         var legacyPath = Path.Combine(
-            Path.GetFullPath(repositoryRoot),
+            root,
             RelativePath.Replace('/', Path.DirectorySeparatorChar));
-        return File.Exists(legacyPath)
+        var directoryPath = Path.Combine(
+            root,
+            RootPath.Replace('/', Path.DirectorySeparatorChar));
+        var ticketIndexPath = Path.Combine(
+            root,
+            TicketIndexPath.Replace('/', Path.DirectorySeparatorChar));
+        var hasLegacy = File.Exists(legacyPath);
+        var hasDirectory = File.Exists(ticketIndexPath)
+            || Directory.Exists(directoryPath)
+            && Directory.EnumerateFiles(directoryPath, "*", SearchOption.AllDirectories)
+                .Select(path => Path.GetRelativePath(root, path)
+                    .Replace(Path.DirectorySeparatorChar, '/'))
+                .Any(IsCanonicalPath);
+        if (hasLegacy && hasDirectory)
+        {
+            throw new FormatException(CoexistingStorageMessage);
+        }
+
+        return hasLegacy
             ? Load(File.ReadAllText(legacyPath))
             : LoadDirectory(repositoryRoot);
     }
