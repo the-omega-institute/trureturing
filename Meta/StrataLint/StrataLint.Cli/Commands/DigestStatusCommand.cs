@@ -28,18 +28,26 @@ internal static class DigestStatusCommand
         {
             var options = ParseArguments(arguments);
             var snapshot = Decode(repository.ReadCurrent());
-            var document = BackfillInventoryLoader.Load(snapshot);
-            var ledgerSha256 = DirectoryDigest(snapshot);
+            if (!snapshot.TryGetFile(BackfillInventoryLoader.RelativePath, out var ledgerFile))
+            {
+                throw new InvalidOperationException($"{BackfillInventoryLoader.RelativePath} is missing");
+            }
 
             if (options.FormalizeCandidates)
             {
                 var formalizeLeanReport = leanReportSource.Load(snapshot);
-                var formalizeDocument = document;
+                var formalizeDocument = BackfillInventoryLoader.Load(ledgerFile.Text);
                 BackfillInventoryDocument? formalizeBaselineDocument = null;
                 if (options.BaselineRevision is not null)
                 {
                     var baseline = Decode(repository.ReadRevision(options.BaselineRevision));
-                    formalizeBaselineDocument = BackfillInventoryLoader.Load(baseline, tolerateAbsent: true);
+                    if (!baseline.TryGetFile(BackfillInventoryLoader.RelativePath, out var baselineLedger))
+                    {
+                        throw new InvalidOperationException(
+                            $"baseline {BackfillInventoryLoader.RelativePath} is missing");
+                    }
+
+                    formalizeBaselineDocument = BackfillInventoryLoader.Load(baselineLedger.Text);
                 }
 
                 var formalizeEvaluation = DigestionStatusEvaluator.EvaluateUncovered(
@@ -56,7 +64,7 @@ internal static class DigestStatusCommand
                     RenderFormalizeCandidates(
                         formalizeEvaluation,
                         snapshot,
-                        ledgerSha256,
+                        ledgerFile,
                         formalizeLeanReport),
                     string.Empty);
             }
@@ -64,11 +72,18 @@ internal static class DigestStatusCommand
             var leanReport = leanReportSource.Load(snapshot);
             var lean = ValidateLean(snapshot, leanReport);
             var verifiedScribeEmissions = scribeEmissionVerifier.Verify(leanReport);
+            var document = BackfillInventoryLoader.Load(ledgerFile.Text);
             BackfillInventoryDocument? baselineDocument = null;
             if (options.BaselineRevision is not null)
             {
                 var baseline = Decode(repository.ReadRevision(options.BaselineRevision));
-                baselineDocument = BackfillInventoryLoader.Load(baseline, tolerateAbsent: true);
+                if (!baseline.TryGetFile(BackfillInventoryLoader.RelativePath, out var baselineLedger))
+                {
+                    throw new InvalidOperationException(
+                        $"baseline {BackfillInventoryLoader.RelativePath} is missing");
+                }
+
+                baselineDocument = BackfillInventoryLoader.Load(baselineLedger.Text);
             }
 
             var evaluation = DigestionStatusEvaluator.Evaluate(
@@ -192,7 +207,7 @@ internal static class DigestStatusCommand
     private static string RenderFormalizeCandidates(
         DigestionLedgerEvaluation evaluation,
         RepositorySnapshot snapshot,
-        string ledgerSha256,
+        RepositoryFile ledgerFile,
         LeanAxiomReport leanReport)
     {
         var projections = evaluation.Entries
@@ -210,7 +225,7 @@ internal static class DigestStatusCommand
         var material = new
         {
             schema = "stratalint-formalize-candidates-v3",
-            ledger_sha256 = ledgerSha256,
+            ledger_sha256 = DigestionFingerprint.ComputeOpaque(ledgerFile.RawBytes.AsSpan()).RawSha256,
             candidates = projections
                 .Where(static item => item.Candidate is not null)
                 .Select(static item => item.Candidate!),
@@ -222,18 +237,6 @@ internal static class DigestStatusCommand
                 .Select(static item => item.Withheld!),
         };
         return JsonSerializer.Serialize(material, JsonOptions) + "\n";
-    }
-
-    private static string DirectoryDigest(RepositorySnapshot snapshot)
-    {
-        var bytes = snapshot.Files
-            .Where(static pair => pair.Key.Value.StartsWith(
-                BackfillInventoryLoader.RootPath, StringComparison.Ordinal))
-            .OrderBy(static pair => pair.Key.Value, StringComparer.Ordinal)
-            .SelectMany(static pair => Encoding.UTF8.GetBytes(pair.Key.Value + "\n")
-                .Concat(pair.Value.RawBytes))
-            .ToArray();
-        return DigestionFingerprint.ComputeOpaque(bytes).RawSha256;
     }
 
     private static FormalizeProjection? Projection(

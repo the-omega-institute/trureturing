@@ -160,18 +160,12 @@ public sealed partial class ProductionEnvironmentTests
 
         if (changeResidualSummary)
         {
-            var relativeBackfillPath = SyntheticBackfillFixture.AtomPath(
-                fixture.Files["Meta/BACKFILL.yaml"]);
-            var backfillPath = Path.Combine(repository.Path,
-                relativeBackfillPath.Replace('/', Path.DirectorySeparatorChar));
+            var backfillPath = Path.Combine(repository.Path, "Meta", "BACKFILL.yaml");
             var backfill = File.ReadAllText(backfillPath, Encoding.UTF8).Replace(
-                "  unresolved_subitems: []\n",
-                "  unresolved_subitems:\n    - newly-open\n",
+                "          unresolved_subitems: []",
+                "          unresolved_subitems:\n            - newly-open",
                 StringComparison.Ordinal);
-            Assert.NotEqual(
-                SyntheticBackfillFixture.AtomText(
-                    fixture.Files["Meta/BACKFILL.yaml"], "fixture-atom"),
-                backfill);
+            Assert.NotEqual(fixture.Files["Meta/BACKFILL.yaml"], backfill);
             File.WriteAllText(backfillPath, backfill, new UTF8Encoding(false));
         }
         else
@@ -191,7 +185,7 @@ public sealed partial class ProductionEnvironmentTests
 
     private static void WriteFixture(string root, IReadOnlyDictionary<string, string> files)
     {
-        foreach (var (relativePath, content) in SyntheticBackfillFixture.Expand(files))
+        foreach (var (relativePath, content) in files)
         {
             var path = Path.Combine(root, relativePath);
             Directory.CreateDirectory(Path.GetDirectoryName(path)!);

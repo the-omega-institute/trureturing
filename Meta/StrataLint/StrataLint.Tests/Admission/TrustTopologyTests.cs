@@ -47,7 +47,7 @@ public sealed class TrustTopologyTests
 
     public static TheoryData<string> DataPaths => new()
     {
-        BackfillInventoryLoader.RootPath + "synthetic-source/residual-open/synthetic-atom.yaml",
+        "Meta/BACKFILL.yaml",
         "Meta/FILEMAP.toml",
         RuleFixture.GoldenDataSourcePath,
         ValuesProjectionLoader.KernelDataPath,

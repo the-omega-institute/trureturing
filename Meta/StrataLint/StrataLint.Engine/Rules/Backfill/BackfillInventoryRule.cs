@@ -12,7 +12,7 @@ internal sealed record BackfillInventoryValidationContext(
 
 internal static class BackfillInventoryRule
 {
-    private const string BackfillPath = BackfillInventoryLoader.TicketIndexPath;
+    private const string BackfillPath = BackfillInventoryLoader.RelativePath;
 
     private static readonly Regex CasePattern = new(
         "^D5-T[0-9]{4}$",
@@ -244,7 +244,22 @@ internal static class BackfillInventoryRule
     }
 
     private static BackfillInventoryDocument LoadBaselineDocument(RepositorySnapshot baseline)
-        => BackfillInventoryLoader.Load(baseline, tolerateAbsent: true);
+    {
+        try
+        {
+            return BackfillInventoryLoader.Load(baseline);
+        }
+        catch (FormatException exception) when (
+            string.Equals(exception.Message, "required governance document is missing", StringComparison.Ordinal))
+        {
+            throw new FormatException("baseline digestion ledger is missing");
+        }
+    }
+
+    // Contract the compatibility branch when this protected-baseline condition becomes true:
+    // !snapshot.TryGetFile(RelativePath, out _)
+    // && snapshot.Files.Keys.Any(path => IsCanonicalPath(path.Value)). Then remove the legacy
+    // Load(string), RelativePath, dispatch branch, and legacy tests together.
 
     private static void ValidateTicketIndex(
         RepositorySnapshot snapshot,

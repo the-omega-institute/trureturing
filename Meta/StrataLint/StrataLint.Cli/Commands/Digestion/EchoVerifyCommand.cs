@@ -94,7 +94,7 @@ internal static class EchoVerifyCommand
             path.Value.StartsWith("D5/", StringComparison.Ordinal)
             || (path.Value.StartsWith("Blueprint/", StringComparison.Ordinal)
                 && path.Value.EndsWith(".scribe.cs", StringComparison.Ordinal))
-            || BackfillInventoryLoader.IsCanonicalPath(path.Value)
+            || path.Value == BackfillInventoryLoader.RelativePath
             || path.Value == EchoResidualBlock.RelativePath
             || DigestionOpaquePathPolicy.IsOpaque(path));
     }

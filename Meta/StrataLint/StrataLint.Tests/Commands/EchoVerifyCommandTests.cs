@@ -91,7 +91,7 @@ public sealed class EchoVerifyCommandTests
     [Theory]
     [InlineData("D5/Synthetic/EchoInput.lean", true)]
     [InlineData("Blueprint/Synthetic/EchoInput.scribe.cs", true)]
-    [InlineData(BackfillInventoryLoader.RootPath + "synthetic-source/residual-open/synthetic-atom.yaml", true)]
+    [InlineData("Meta/BACKFILL.yaml", true)]
     [InlineData("Meta/Digestion/atoms/sha256/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", true)]
     [InlineData("docs/develop/" + "theory/SYNTHETIC.md", true)]
     [InlineData("Generated/echo-residual-summary.md", true)]

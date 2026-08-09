@@ -72,9 +72,10 @@ public sealed class DigestResidualSummaryTests
             "synthetic-v1",
             atomId,
             "synthetic/path",
+            null,
             new DigestionFingerprints("sha256:synthetic", "sha256:synthetic"),
             [],
-            new DigestionReceipts([], [], []),
+            new DigestionReceipts([], [], [], [], null),
             status,
             null,
             "sha256:synthetic");

@@ -90,7 +90,9 @@ public sealed class EmitFormalizationReceiptTests
         {
             [relativeOut] = receiptText,
         };
-        SyntheticBackfillFixture.WriteDirectory(temporary.Path, inputs.Ledger);
+        var ledgerPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
+        Directory.CreateDirectory(Path.GetDirectoryName(ledgerPath)!);
+        File.WriteAllText(ledgerPath, inputs.Ledger, new UTF8Encoding(false));
         var coverEnvironment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(
@@ -107,7 +109,7 @@ public sealed class EmitFormalizationReceiptTests
         Assert.True(cover.Success, cover.Error);
         Assert.Contains("ledger_changed=true", cover.Output, StringComparison.Ordinal);
         var entry = Assert.Single(
-            BackfillInventoryLoader.LoadDirectory(temporary.Path).RequireDigestionEntries(),
+            BackfillInventoryLoader.Load(File.ReadAllText(ledgerPath)).RequireDigestionEntries(),
             candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
         Assert.Equal([inputs.Gid], entry.CoverageGids.ToArray());
         Assert.Equal(DigestionTruthState.Closed, entry.ProjectedStatus.Truth);

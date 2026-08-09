@@ -7,8 +7,6 @@ namespace StrataLint.Tests;
 
 internal sealed partial class RuleFixture
 {
-    private const string LegacyBackfillPath = "Meta/BACKFILL.yaml";
-
     internal const string RingPath = GoldenCorpus.RingPath;
     internal const string BlueprintPath = GoldenCorpus.BlueprintPath;
     internal const string NotationPath = GoldenCorpus.NotationPath;
@@ -46,7 +44,7 @@ internal sealed partial class RuleFixture
         Files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             ["Meta/domains.yaml"] = TestRegistry.Domains,
-            [LegacyBackfillPath] = GoldenCorpus.FixtureBackfill,
+            ["Meta/BACKFILL.yaml"] = GoldenCorpus.FixtureBackfill,
             [TheoryAtomizerDataLoader.DataPath] = File.ReadAllText(
                 Path.Combine(repositoryRoot, TheoryAtomizerDataLoader.DataPath), Encoding.UTF8),
             ["Meta/registry.yaml"] = TestRegistry.Canonical,
@@ -82,11 +80,14 @@ internal sealed partial class RuleFixture
 
     internal void UseSyntheticDirectoryBackfill(string ticketIndex)
     {
-        Files.Remove(LegacyBackfillPath);
+        Files.Remove(BackfillInventoryLoader.RelativePath);
         Files[$"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml"] =
             $"source_id = \"delta-v0.1\"\npath = \"{GoldenCorpus.FixtureDigestionSourcePath}\"\natomizer = \"none\"\n";
         Files[$"{BackfillInventoryLoader.RootPath}delta-v0.1/residual-open/delta-atom.yaml"] = """
-            ast_path: manual/delta
+            boundary:
+              ast_path: manual/delta
+              start_byte: 0
+              end_byte: 1
             fingerprints:
               raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
               normalized_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
@@ -96,20 +97,25 @@ internal sealed partial class RuleFixture
               coverage: []
               scribe: []
               unresolved_subitems: []
+              chain_atoms: []
+              tail_authorization: null
             """ + "\n";
         Files[BackfillInventoryLoader.TicketIndexPath] = ticketIndex;
     }
 
     internal void UseValidDirectoryBackfill()
     {
-        var document = BackfillInventoryLoader.Load(GoldenCorpus.FixtureBackfill);
+        var document = BackfillInventoryLoader.Load(Files[BackfillInventoryLoader.RelativePath]);
         var ticketIndex = string.Concat(document.RequireTickets().Select(static ticket =>
             $"{ticket.CaseId} = \"{ticket.Gid}\"\n"));
         const string sourcePath = "delta-v0.1/source.toml";
         const string atomPath = "delta-v0.1/partial-closed/delta-atom.yaml";
         var source = $"source_id = \"delta-v0.1\"\npath = \"{GoldenCorpus.FixtureDigestionSourcePath}\"\natomizer = \"none\"\n";
         var atom = $"""
-            ast_path: manual/fixture
+            boundary:
+              ast_path: manual/fixture
+              start_byte: 0
+              end_byte: 1
             fingerprints:
               raw_sha256: {GoldenCorpus.FixtureCasReference}
               normalized_sha256: {GoldenCorpus.FixtureCasReference}
@@ -120,11 +126,13 @@ internal sealed partial class RuleFixture
               coverage: []
               scribe: []
               unresolved_subitems: []
+              chain_atoms: []
+              tail_authorization: null
             """ + "\n";
 
         foreach (var files in new[] { Files, Baseline })
         {
-            files.Remove(LegacyBackfillPath);
+            files.Remove(BackfillInventoryLoader.RelativePath);
             files[BackfillInventoryLoader.RootPath + sourcePath] = source;
             files[BackfillInventoryLoader.RootPath + atomPath] = atom;
             files[BackfillInventoryLoader.TicketIndexPath] = ticketIndex;
@@ -155,11 +163,7 @@ internal sealed partial class RuleFixture
             case "header": Files[RingPath] = "def noHeader : Nat := 0\n"; break;
             case "task": AddMalformedTask(); break;
             case "formula": AddIllegalFormula(); break;
-            case "backfill":
-                SyntheticBackfillFixture.ExpandInPlace(Files);
-                var sourceMetadata = Files.Keys.Single(static path => path.EndsWith("/source.toml", StringComparison.Ordinal));
-                Files[sourceMetadata] = "schema_version = \"2\"\n";
-                break;
+            case "backfill": Files["Meta/BACKFILL.yaml"] = Files["Meta/BACKFILL.yaml"].Replace("schema_version: 3", "schema_version: 2", StringComparison.Ordinal); break;
             case "query": Files["Library/queries.yaml"] = "schema_version: 1\nqueries:\n  - id: D5-Q0099\n    target_gid: D5/S0/Carrier/Ring\n"; break;
             case "values": Files["Evidence/D5/values.result.json"] = "{\"D5/sample\": {\"status\": \"verified\"}}\n"; break;
             case "anomaly": Files["Evidence/D5/S0/Carrier/Result.run.json"] = "{\"anomaly\": \"fixture drift\"}\n"; break;
@@ -343,7 +347,7 @@ internal sealed partial class RuleFixture
 
     internal void AddBackfillTargets()
     {
-        var inventory = BackfillInventoryLoader.Load(Files[LegacyBackfillPath]);
+        var inventory = BackfillInventoryLoader.Load(Files["Meta/BACKFILL.yaml"]);
         var ticketsByGid = inventory.RequireTickets()
             .GroupBy(static ticket => ticket.Gid, StringComparer.Ordinal)
             .ToDictionary(
@@ -465,8 +469,7 @@ internal sealed partial class RuleFixture
 
     private static RepositorySnapshot Decode(IReadOnlyDictionary<string, string> files)
     {
-        var raw = RawRepositorySnapshot.Create(SyntheticBackfillFixture.Expand(files)
-            .Select(pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
+        var raw = RawRepositorySnapshot.Create(files.Select(pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
         return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
     }
 
@@ -500,7 +503,7 @@ internal sealed partial class RuleFixture
         var directory = new DirectoryInfo(AppContext.BaseDirectory);
         while (directory is not null)
         {
-            if (Directory.Exists(Path.Combine(directory.FullName, "Meta", "Digestion", "backfill")))
+            if (File.Exists(Path.Combine(directory.FullName, "Meta", "BACKFILL.yaml")))
             {
                 return directory.FullName;
             }

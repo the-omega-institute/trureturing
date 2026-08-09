@@ -16,7 +16,8 @@ internal static class CanonicalSourceDuplicationPolicy
 
     internal static IReadOnlyList<CanonicalSourceDuplicationFinding> InspectRepository(string repositoryRoot)
     {
-        var backfill = BackfillInventoryLoader.LoadDirectory(repositoryRoot);
+        var backfillPath = Path.Combine(repositoryRoot, "Meta", "BACKFILL.yaml");
+        var backfill = BackfillInventoryLoader.Load(File.ReadAllText(backfillPath));
         var tickets = backfill.RequireTickets()
             .Select(static ticket => (ticket.CaseId, ticket.Gid))
             .ToArray();
@@ -97,7 +98,7 @@ internal static class CanonicalSourceDuplicationPolicy
                     TimeSpan.FromSeconds(1))
                 select new CanonicalSourceDuplicationFinding(
                     path,
-                    $"C# atomizer id literal {id} duplicates the digestion backfill; dispatch through AtomizerRegistry"))
+                    $"C# atomizer id literal {id} duplicates Meta/BACKFILL.yaml; dispatch through AtomizerRegistry"))
             .ToArray();
     }
 
@@ -131,7 +132,7 @@ internal static class CanonicalSourceDuplicationPolicy
 
             findings.Add(new CanonicalSourceDuplicationFinding(
                 path,
-                $"C# literal mapping {ticket.CaseId} <-> {ticket.Gid} duplicates the digestion backfill; use BackfillInventoryLoader"));
+                $"C# literal mapping {ticket.CaseId} <-> {ticket.Gid} duplicates Meta/BACKFILL.yaml; use BackfillInventoryLoader"));
         }
 
         return findings;

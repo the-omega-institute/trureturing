@@ -12,7 +12,7 @@ public sealed partial class TheoryAtomizerTests
              current is not null;
              current = current.Parent)
         {
-            if (Directory.Exists(Path.Combine(current.FullName, "Meta", "Digestion", "backfill")))
+            if (File.Exists(Path.Combine(current.FullName, "Meta", "BACKFILL.yaml")))
             {
                 return current.FullName;
             }
@@ -30,9 +30,10 @@ public sealed partial class TheoryAtomizerTests
         atomizer,
         atomId,
         atom.AstPath,
+        new DigestionBoundary(atom.AstPath, atom.StartByte, atom.EndByte),
         atom.Fingerprints,
         [],
-        new DigestionReceipts([], [], []),
+        new DigestionReceipts([], [], [], [], null),
         new DigestionStatus(DigestionMigrationState.Residual, DigestionTruthState.Open),
         ReceiptSyntax: null,
         CasRef: atom.Fingerprints.RawSha256);

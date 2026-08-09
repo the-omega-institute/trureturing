@@ -57,7 +57,7 @@ internal static partial class RepositoryPathPolicy
                 : Sl000(value, "unknown agent charter artifact");
         }
 
-        if (value is "Meta/domains.yaml" or "Meta/registry.yaml"
+        if (value is "Meta/domains.yaml" or "Meta/BACKFILL.yaml" or "Meta/registry.yaml"
             or LibraryMapPath or "Library/queries.yaml" or AssumptionRegistryPath
             or "Meta/split.py" or "Meta/papergen"
             or "Golden/fixture-registry.yaml" or "Golden/values-kernels.toml"

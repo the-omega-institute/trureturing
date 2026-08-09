@@ -13,6 +13,7 @@ internal enum DigestionAlignmentMode
 
 internal enum DigestionReceiptAlignment
 {
+    LegacyBoundary,
     Seen,
     Stale,
     Rejected,
@@ -22,6 +23,7 @@ internal static class DigestionReceiptAlignmentNames
 {
     internal static string Render(DigestionReceiptAlignment value) => value switch
     {
+        DigestionReceiptAlignment.LegacyBoundary => "legacy-boundary",
         DigestionReceiptAlignment.Seen => "seen",
         DigestionReceiptAlignment.Stale => "stale",
         DigestionReceiptAlignment.Rejected => "rejected",
@@ -164,7 +166,10 @@ internal static class DigestionLedgerAligner
             {
                 alignments[entry.AtomId] = rejectedCoarseClones.Contains(entry.AtomId)
                     ? DigestionReceiptAlignment.Rejected
-                    : cas.ValidAtomIds.Contains(entry.AtomId)
+                    : source.Atomizer == AtomizerRegistry.NoAtomizerId
+                        && entry.Boundary is not null
+                            ? DigestionReceiptAlignment.LegacyBoundary
+                            : cas.ValidAtomIds.Contains(entry.AtomId)
                                 && inheritedEntries.Contains(CanonicalEntry(entry))
                                 ? DigestionReceiptAlignment.Seen
                                 : DigestionReceiptAlignment.Rejected;
@@ -339,6 +344,18 @@ internal static class DigestionLedgerAligner
                     alignments[entry.AtomId] = DigestionReceiptAlignment.Stale;
                     sourceStale.Add(entry.AtomId);
                     actualStale.Add(entry.AtomId);
+                }
+            }
+
+            foreach (var legacy in source.Entries.Where(static entry => entry.Boundary is not null))
+            {
+                if (claims.TryGetValue(legacy.AstPath, out var atom)
+                    && (atom.Fingerprints.RawSha256 == legacy.Fingerprints.RawSha256
+                        || atom.Fingerprints.NormalizedSha256
+                        == legacy.Fingerprints.NormalizedSha256))
+                {
+                    matchedAstPaths.Add(atom.AstPath);
+                    matchedAtoms[legacy.AtomId] = atom;
                 }
             }
 
@@ -569,6 +586,7 @@ internal static class DigestionLedgerAligner
         DigestionLedgerEntry baseline) =>
         candidate.AstPath == "coarse/source"
         && baseline.AstPath == "coarse/source"
+        && candidate.Boundary == baseline.Boundary
         && candidate.CasRef == baseline.CasRef
         && EntryIdentityEqual(candidate, baseline);
 

@@ -7,6 +7,21 @@ namespace StrataLint.Tests;
 public sealed class BackfillInventoryLoaderTests
 {
     [Fact]
+    public void SnapshotLegacyShapeDelegatesByteIdenticallyToTextLoader()
+    {
+        var fields = LoaderEntryFields().ToHashSet(StringComparer.Ordinal);
+        fields.Remove("boundary");
+        var text = EntryFixture(fields);
+
+        var direct = BackfillInventoryLoader.Load(text);
+        var dispatched = BackfillInventoryLoader.Load(Snapshot((BackfillInventoryLoader.RelativePath, text)));
+
+        Assert.Equal(
+            BackfillInventoryWriter.Write(direct).ToArray(),
+            BackfillInventoryWriter.Write(dispatched).ToArray());
+    }
+
+    [Fact]
     public void DirectoryShapeProjectsTwoSourcesAtomsAndTicketIndex()
     {
         var snapshot = Snapshot(
@@ -40,31 +55,33 @@ public sealed class BackfillInventoryLoaderTests
     }
 
     [Fact]
+    public void BothStorageShapesAreRejected()
+    {
+        var text = EntryFixture(LoaderEntryFields().ToHashSet(StringComparer.Ordinal));
+        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
+            (BackfillInventoryLoader.RelativePath, text),
+            Source("delta-v0.1", "docs/delta.md", "none"),
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"),
+            (BackfillInventoryLoader.TicketIndexPath, ""))));
+
+        Assert.Equal("legacy and directory digestion ledgers cannot coexist", exception.Message);
+    }
+
+    [Fact]
+    public void NeitherStorageShapeUsesExistingMissingMessage()
+    {
+        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot()));
+
+        Assert.Equal("required governance document is missing", exception.Message);
+    }
+
+    [Fact]
     public void DirectoryAtomWithNoncanonicalEntryKeyIsRejected()
     {
         var atom = Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta");
         var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
             Source("delta-v0.1", "docs/delta.md", "none"),
             (atom.Path, atom.Text + "unexpected: value\n"),
-            (BackfillInventoryLoader.TicketIndexPath, ""))));
-
-        Assert.Equal("source delta-v0.1 entry keys are not canonical", exception.Message);
-    }
-
-    [Theory]
-    [InlineData("ast_path")]
-    [InlineData("fingerprints")]
-    [InlineData("cas_ref")]
-    [InlineData("coverage_gids")]
-    [InlineData("receipts")]
-    public void DirectoryAtomMissingCanonicalKeyIsRejected(string missingKey)
-    {
-        var atom = Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta");
-        var text = RemoveTopLevelField(atom.Text, missingKey);
-
-        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
-            Source("delta-v0.1", "docs/delta.md", "none"),
-            (atom.Path, text),
             (BackfillInventoryLoader.TicketIndexPath, ""))));
 
         Assert.Equal("source delta-v0.1 entry keys are not canonical", exception.Message);
@@ -175,17 +192,13 @@ public sealed class BackfillInventoryLoaderTests
     }
 
     [Theory]
+    [InlineData("Meta/Digestion/ticket-index.toml")]
     [InlineData("Meta/Digestion/backfill/delta-v0.1/source.toml")]
     [InlineData("Meta/Digestion/backfill/delta-v0.1/residual-open/atom-0dca.yaml")]
     [InlineData("Meta/Digestion/backfill/delta-v0.1/partial-closed/atom-0f28.yaml")]
     [InlineData("Meta/Digestion/backfill/epsilon-v0.1/absorbed-tail/atom.yaml")]
     public void CanonicalDigestionLedgerPathsAreRecognized(string path)
         => Assert.True(BackfillInventoryLoader.IsCanonicalPath(path));
-
-    // 工单索引路径用常量而非字面量:它在树上真实存在,抄写会触发 RepositoryPathLiteralTests。
-    [Fact]
-    public void TicketIndexPathIsRecognized()
-        => Assert.True(BackfillInventoryLoader.IsCanonicalPath(BackfillInventoryLoader.TicketIndexPath));
 
     [Theory]
     [InlineData("Meta/Digestion/backfill/delta-v0.1/residual-open/atom.txt")]
@@ -215,6 +228,7 @@ public sealed class BackfillInventoryLoaderTests
     {
         var fields = LoaderEntryFields().ToHashSet(StringComparer.Ordinal);
         fields.Remove("cas_ref");
+        fields.Remove("boundary");
 
         var exception = Assert.Throws<FormatException>(() =>
             BackfillInventoryLoader.Load(EntryFixture(fields)).RequireDigestionEntries());
@@ -238,11 +252,23 @@ public sealed class BackfillInventoryLoaderTests
             .Where(field => accepted.All(fields => fields.Contains(field)))
             .Order(StringComparer.Ordinal)
             .ToArray();
+        var exclusivePair = Assert.Single(
+            entryFields.SelectMany((left, index) => entryFields[(index + 1)..]
+                .Select(right => (Left: left, Right: right))),
+            pair =>
+                accepted.All(fields => fields.Contains(pair.Left) ^ fields.Contains(pair.Right))
+                && accepted.Any(fields => fields.Contains(pair.Left))
+                && accepted.Any(fields => fields.Contains(pair.Right)));
+        var exclusive = new[] { exclusivePair.Left, exclusivePair.Right }
+            .Order(StringComparer.Ordinal)
+            .ToArray();
         var optional = entryFields
             .Except(required, StringComparer.Ordinal)
+            .Except(exclusive, StringComparer.Ordinal)
             .Order(StringComparer.Ordinal)
             .ToArray();
         var actual = $"required={string.Join(',', required)};"
+            + $"exactly_one={string.Join('|', exclusive)};"
             + $"optional={(optional.Length == 0 ? "-" : string.Join(',', optional))}";
 
         var root = FindRepositoryRoot();
@@ -279,6 +305,8 @@ public sealed class BackfillInventoryLoaderTests
                       coverage: []
                       scribe: []
                       unresolved_subitems: []
+                      chain_atoms: []
+                      tail_authorization: null
                     status:
                       migration: residual
                       truth: open
@@ -308,7 +336,10 @@ public sealed class BackfillInventoryLoaderTests
                 atomizer: none
                 entries:
                   - atom_id: synthetic-atom
-                    ast_path: manual/synthetic
+                    boundary:
+                      ast_path: manual/synthetic
+                      start_byte: 0
+                      end_byte: 1
                     fingerprints:
                       raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
                       normalized_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
@@ -319,6 +350,8 @@ public sealed class BackfillInventoryLoaderTests
                       coverage: []
                       scribe: []
                       unresolved_subitems: []
+                      chain_atoms: []
+                      tail_authorization: null
                     status:
                       migration: partial
                       truth: open
@@ -363,6 +396,8 @@ public sealed class BackfillInventoryLoaderTests
                       coverage: []
                       scribe: []
                       unresolved_subitems: []
+                      chain_atoms: []
+                      tail_authorization: null
                     status:
                       migration: residual
                       truth: open
@@ -375,6 +410,7 @@ public sealed class BackfillInventoryLoaderTests
 
         Assert.Equal(["synthetic-stale"], source.AcknowledgedStale.ToArray());
         Assert.Equal("theorem/1.1", entry.AstPath);
+        Assert.Null(entry.Boundary);
 
         var roundTripped = BackfillInventoryLoader.Load(
             System.Text.Encoding.UTF8.GetString(BackfillInventoryWriter.Write(inventory).AsSpan()));
@@ -416,6 +452,8 @@ public sealed class BackfillInventoryLoaderTests
                       coverage: []
                       scribe: []
                       unresolved_subitems: []
+                      chain_atoms: []
+                      tail_authorization: null
                     status:
                       migration: residual
                       truth: open
@@ -436,43 +474,28 @@ public sealed class BackfillInventoryLoaderTests
     public void CanonicalWriterRoundTripsTheCurrentLedgerByteExact()
     {
         var root = FindRepositoryRoot();
-        var document = BackfillInventoryLoader.LoadDirectory(root);
-        foreach (var entry in BackfillInventoryWriter.WriteDirectory(document))
-        {
-            var path = Path.Combine(root, entry.Path.Replace('/', Path.DirectorySeparatorChar));
-            Assert.Equal(File.ReadAllBytes(path), entry.Bytes.ToArray());
-        }
-    }
+        var path = Path.Combine(root, BackfillInventoryLoader.RelativePath);
+        var expected = File.ReadAllBytes(path);
 
-    [Fact]
-    public void DirectoryWriterEmitsCanonicalEmptyCollectionKeys()
-    {
-        var document = BackfillInventoryLoader.Load(Snapshot(
-            Source("epsilon-v0.1", "docs/epsilon.md", "none"),
-            Atom("epsilon-v0.1", "residual-open", "epsilon-atom", "theorem/epsilon"),
-            (BackfillInventoryLoader.TicketIndexPath, "")));
+        var actual = BackfillInventoryWriter.Write(
+            BackfillInventoryLoader.Load(File.ReadAllText(path)));
 
-        var atom = BackfillInventoryWriter.WriteDirectory(document)
-            .Single(static entry => entry.Path.EndsWith("/epsilon-atom.yaml", StringComparison.Ordinal));
-        var text = Encoding.UTF8.GetString(atom.Bytes.AsSpan());
-
-        Assert.Contains("coverage_gids: []\n", text, StringComparison.Ordinal);
-        Assert.Contains(
-            "receipts:\n  coverage: []\n  scribe: []\n  unresolved_subitems: []\n",
-            text,
-            StringComparison.Ordinal);
+        Assert.Equal(expected, actual.ToArray());
     }
 
     [Fact]
     public void CanonicalLedgerE2StoresEveryReceiptPreimageInCas()
     {
         var root = FindRepositoryRoot();
-        var document = BackfillInventoryLoader.LoadDirectory(root);
+        var ledgerPath = Path.Combine(root, BackfillInventoryLoader.RelativePath);
+        var document = BackfillInventoryLoader.Load(File.ReadAllText(ledgerPath));
         var entries = document.RequireDigestionEntries();
 
         Assert.NotEmpty(entries);
         Assert.Contains(document.RequireDigestionSources(), static source =>
             AtomizerRegistry.IsRegistered(source.Atomizer));
+        Assert.Contains(document.RequireDigestionSources(), static source =>
+            source.Atomizer == AtomizerRegistry.NoAtomizerId);
         Assert.Empty(entries
             .Select(entry => (
                 Entry: entry,
@@ -499,7 +522,8 @@ public sealed class BackfillInventoryLoaderTests
     public void RemarkBatchUpgradeCandidatesRemainResidualWithNamedUnresolvedClaims()
     {
         var root = FindRepositoryRoot();
-        var entries = BackfillInventoryLoader.LoadDirectory(root)
+        var ledgerPath = Path.Combine(root, BackfillInventoryLoader.RelativePath);
+        var entries = BackfillInventoryLoader.Load(File.ReadAllText(ledgerPath))
             .RequireDigestionEntries();
         string[] expectedPaths =
         [
@@ -547,7 +571,7 @@ public sealed class BackfillInventoryLoaderTests
              current is not null;
              current = current.Parent)
         {
-            if (Directory.Exists(Path.Combine(current.FullName, BackfillInventoryLoader.RootPath)))
+            if (File.Exists(Path.Combine(current.FullName, BackfillInventoryLoader.RelativePath)))
             {
                 return current.FullName;
             }
@@ -568,38 +592,6 @@ public sealed class BackfillInventoryLoaderTests
             return false;
         }
     }
-
-    // 迁移窗口:保守扩展律要求候选 harness 仍准入基线树,而基线树上台账仍是单文件形态。
-    // 少了这条回落,判基线树会 CONSERVATIVE-ADMIT-FLIPPED(SL-000/003/016 齐红)。
-    // contract PR 拆除回落时,本测试应与之一同删除 —— 它是窗口的具名守卫。
-    [Fact]
-    public void LegacySingleFileLedgerIsReadWhenTheDirectoryFormIsAbsent()
-    {
-        var document = BackfillInventoryLoader.Load(Snapshot(
-            (BackfillInventoryLoader.LegacyLedgerPath, LegacyLedgerText)));
-
-        Assert.Empty(document.RequireDigestionSources());
-    }
-
-    // 两种形态同时在场是歧义态:哪一个是真源无从判定,fail-closed 而非猜。
-    [Fact]
-    public void LedgerPresentInBothFormsIsRejected()
-    {
-        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
-            (BackfillInventoryLoader.LegacyLedgerPath, LegacyLedgerText),
-            Source("delta-v0.1", "docs/delta.md", "none"),
-            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"),
-            (BackfillInventoryLoader.TicketIndexPath, ""))));
-
-        Assert.Equal("legacy and directory digestion ledgers cannot coexist", exception.Message);
-    }
-
-    private const string LegacyLedgerText = """
-        schema_version: 3
-        ledger: theory-digestion-v1
-        sources: []
-        ticket_index: []
-        """;
 
     private static RepositorySnapshot Snapshot(params (string Path, string Text)[] files)
     {
@@ -628,25 +620,12 @@ public sealed class BackfillInventoryLoaderTests
               coverage: []
               scribe: []
               unresolved_subitems: []
+              chain_atoms: []
+              tail_authorization: null
             """ + "\n");
 
     private static string[] LoaderEntryFields() =>
         BackfillInventoryDocument.EntryFieldUniverse.ToArray();
-
-    private static string RemoveTopLevelField(string yaml, string key)
-    {
-        var lines = yaml.Split('\n').ToList();
-        var start = lines.FindIndex(line => line.StartsWith(key + ":", StringComparison.Ordinal));
-        Assert.True(start >= 0);
-        var end = start + 1;
-        while (end < lines.Count
-               && (lines[end].Length == 0 || char.IsWhiteSpace(lines[end][0])))
-        {
-            end++;
-        }
-        lines.RemoveRange(start, end - start);
-        return string.Join('\n', lines);
-    }
 
     private static string EntryFixture(IReadOnlySet<string> fields)
     {
@@ -663,6 +642,14 @@ public sealed class BackfillInventoryLoaderTests
         if (fields.Contains("ast_path"))
         {
             entry.AppendLine("        ast_path: theorem/1.1");
+        }
+
+        if (fields.Contains("boundary"))
+        {
+            entry.AppendLine("        boundary:");
+            entry.AppendLine("          ast_path: theorem/1.1");
+            entry.AppendLine("          start_byte: 0");
+            entry.AppendLine("          end_byte: 1");
         }
 
         if (fields.Contains("fingerprints"))
@@ -688,6 +675,8 @@ public sealed class BackfillInventoryLoaderTests
             entry.AppendLine("          coverage: []");
             entry.AppendLine("          scribe: []");
             entry.AppendLine("          unresolved_subitems: []");
+            entry.AppendLine("          chain_atoms: []");
+            entry.AppendLine("          tail_authorization: null");
         }
 
         if (fields.Contains("status"))

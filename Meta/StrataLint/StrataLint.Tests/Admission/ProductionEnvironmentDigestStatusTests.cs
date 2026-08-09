@@ -40,6 +40,8 @@ public sealed partial class ProductionEnvironmentTests
                       coverage: []
                       scribe: []
                       unresolved_subitems: []
+                      chain_atoms: []
+                      tail_authorization: null
                     status:
                       migration: residual
                       truth: open
@@ -82,6 +84,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains("\"entries_total\": 1", result.Output, StringComparison.Ordinal);
         Assert.Contains("\"deletable_now\": 0", result.Output, StringComparison.Ordinal);
         Assert.Contains("\"atom_id\": \"fixture-atom\"", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"code\": \"boundary-not-reproducible\"", result.Output, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -89,7 +92,7 @@ public sealed partial class ProductionEnvironmentTests
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        fixture.Files["Meta/BACKFILL.yaml"] = fixture.Files["Meta/BACKFILL.yaml"]
+        fixture.Files[BackfillInventoryLoader.RelativePath] = fixture.Files[BackfillInventoryLoader.RelativePath]
             .Replace(
                 "          unresolved_subitems: []",
                 "          unresolved_subitems:\n            - zeta-residual\n            - alpha-residual",
@@ -137,8 +140,8 @@ public sealed partial class ProductionEnvironmentTests
             BackfillInventoryWriter.Write(plan.Document).AsSpan());
         fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
         fixture.Baseline[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
-        fixture.Files["Meta/BACKFILL.yaml"] = candidateLedger;
-        fixture.Baseline["Meta/BACKFILL.yaml"] = baselineLedger;
+        fixture.Files[BackfillInventoryLoader.RelativePath] = candidateLedger;
+        fixture.Baseline[BackfillInventoryLoader.RelativePath] = baselineLedger;
         fixture.Files.Remove(GoldenCorpus.FixtureCasPath);
         fixture.Baseline.Remove(GoldenCorpus.FixtureCasPath);
         fixture.Files[oldCapture.RelativePath] = Encoding.UTF8.GetString(oldCapture.Bytes.AsSpan());

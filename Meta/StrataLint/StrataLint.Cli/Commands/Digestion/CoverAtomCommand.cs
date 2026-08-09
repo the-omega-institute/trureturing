@@ -7,9 +7,13 @@ namespace StrataLint.Cli;
 // existing open residual atom by writing coverage_gids + coverage/scribe
 // receipts. cover is the narrow sibling of ingest — it reuses
 // DigestionStatusEvaluator for the structural gates and never adds residual
-// atoms or rebinds boundaries. Every gate passes before the command writes or
-// moves the target atom file. All other atom files remain structurally absent
-// from the replacement set.
+// atoms or rebinds boundaries. The write is all-or-nothing with a fail-closed
+// check-then-act guard: every gate must pass and the on-disk ledger must still
+// exist and be unchanged before ReplaceLedgerAtomically touches disk, otherwise
+// BACKFILL.yaml is byte-unchanged. This is not a true CAS/lock — a residual
+// sub-millisecond TOCTOU window remains between the reread and the atomic rename
+// (serialized manual/CI invocation makes it sufficient; an OS file lock for a
+// hard guarantee is deferred).
 //
 // Gate ②(c) (§4a, implemented): cover pins the deposit against a pre-committed
 // digestion-formalization-v1 receipt supplied by --envelope. The receipt is loaded
@@ -147,8 +151,8 @@ internal static class CoverAtomCommand
                     })
                     .ToImmutableArray());
 
-            var finalEntry = AtomEntry(refreshed, options.AtomId);
-            var finalRaw = ReplaceAtom(currentRaw, options.AtomId, finalEntry);
+            var finalBytes = BackfillInventoryWriter.WriteForIngest(refreshed);
+            var finalRaw = ReplaceLedger(currentRaw, finalBytes);
             var finalSnapshot = Decode(finalRaw);
             var finalDocument = LoadDocument(finalSnapshot, "final");
             var evaluation = DigestionStatusEvaluator.Evaluate(
@@ -205,10 +209,10 @@ internal static class CoverAtomCommand
             RequireEnvelopeBinding(receipt, options, target);
             RequireSignatureMatch(receipt, gid, report);
 
-            var currentEntry = FindAtomEntry(currentRaw, options.AtomId);
-            var changed = currentEntry.Path != finalEntry.Path
-                || !currentEntry.Bytes.AsSpan().SequenceEqual(finalEntry.Bytes.AsSpan());
-            WriteAtomIfChanged(repositoryRoot, currentEntry, finalEntry, changed);
+            var currentLedger = currentRaw.Entries.Single(static entry =>
+                entry.Path == BackfillInventoryLoader.RelativePath);
+            var changed = !currentLedger.Bytes.AsSpan().SequenceEqual(finalBytes.AsSpan());
+            WriteLedgerIfChanged(repositoryRoot, currentLedger, finalBytes, changed);
 
             return new CommandResult(
                 true,
@@ -307,8 +311,8 @@ internal static class CoverAtomCommand
             baselineDocument: null,
             validateProjectedStatus: false);
         RequireAlignedScribeReceipt(EvaluationFor(derived, options.AtomId), options.Gid);
-        var finalEntry = AtomEntry(planned, options.AtomId);
-        var finalRaw = ReplaceAtom(currentRaw, options.AtomId, finalEntry);
+        var finalBytes = BackfillInventoryWriter.WriteForIngest(planned);
+        var finalRaw = ReplaceLedger(currentRaw, finalBytes);
         var finalSnapshot = Decode(finalRaw);
         var finalDocument = LoadDocument(finalSnapshot, "final");
         var finalEvaluation = DigestionStatusEvaluator.Evaluate(
@@ -319,10 +323,10 @@ internal static class CoverAtomCommand
             baselineDocument: null);
         RequireAlignedScribeReceipt(EvaluationFor(finalEvaluation, options.AtomId), options.Gid);
 
-        var currentEntry = FindAtomEntry(currentRaw, options.AtomId);
-        var changed = currentEntry.Path != finalEntry.Path
-            || !currentEntry.Bytes.AsSpan().SequenceEqual(finalEntry.Bytes.AsSpan());
-        WriteAtomIfChanged(repositoryRoot, currentEntry, finalEntry, changed);
+        var currentLedger = currentRaw.Entries.Single(static entry =>
+            entry.Path == BackfillInventoryLoader.RelativePath);
+        var changed = !currentLedger.Bytes.AsSpan().SequenceEqual(finalBytes.AsSpan());
+        WriteLedgerIfChanged(repositoryRoot, currentLedger, finalBytes, changed);
 
         return new CommandResult(
             true,
@@ -335,10 +339,10 @@ internal static class CoverAtomCommand
             string.Empty);
     }
 
-    private static void WriteAtomIfChanged(
+    private static void WriteLedgerIfChanged(
         string repositoryRoot,
-        RawRepositoryEntry currentEntry,
-        RawRepositoryEntry finalEntry,
+        RawRepositoryEntry currentLedger,
+        ImmutableArray<byte> finalBytes,
         bool changed)
     {
         if (!changed)
@@ -346,14 +350,22 @@ internal static class CoverAtomCommand
             return;
         }
 
-        var root = Path.GetFullPath(repositoryRoot);
-        var outputPath = Path.Combine(root, finalEntry.Path.Replace('/', Path.DirectorySeparatorChar));
-        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
-        IngestCommand.ReplaceLedgerAtomically(outputPath, finalEntry.Bytes.AsSpan());
-        if (currentEntry.Path != finalEntry.Path)
+        var outputPath = Path.Combine(
+            Path.GetFullPath(repositoryRoot),
+            BackfillInventoryLoader.RelativePath.Replace('/', Path.DirectorySeparatorChar));
+        if (!File.Exists(outputPath))
         {
-            File.Delete(Path.Combine(root, currentEntry.Path.Replace('/', Path.DirectorySeparatorChar)));
+            throw new InvalidOperationException(
+                "ledger went missing between read and write; aborting to avoid a lost update");
         }
+
+        if (!File.ReadAllBytes(outputPath).AsSpan().SequenceEqual(currentLedger.Bytes.AsSpan()))
+        {
+            throw new InvalidOperationException(
+                "ledger changed under us between read and write; aborting to avoid a lost update");
+        }
+
+        IngestCommand.ReplaceLedgerAtomically(outputPath, finalBytes.AsSpan());
     }
 
     private static DigestionLedgerEntry LocateTarget(
@@ -635,45 +647,31 @@ internal static class CoverAtomCommand
 
     private static BackfillInventoryDocument LoadDocument(RepositorySnapshot snapshot, string side)
     {
-        try
+        if (!snapshot.TryGetFile(BackfillInventoryLoader.RelativePath, out var file))
         {
-            return BackfillInventoryLoader.Load(snapshot);
+            throw new InvalidOperationException(
+                $"{side} {BackfillInventoryLoader.RelativePath} is missing");
         }
-        catch (FormatException exception)
-        {
-            throw new InvalidOperationException($"{side} backfill is invalid: {exception.Message}");
-        }
+
+        return BackfillInventoryLoader.Load(file.Text);
     }
 
-    private static RawRepositorySnapshot ReplaceAtom(
+    private static RawRepositorySnapshot ReplaceLedger(
         RawRepositorySnapshot snapshot,
-        string atomId,
-        RawRepositoryEntry replacement)
+        ImmutableArray<byte> bytes)
     {
-        var current = FindAtomEntry(snapshot, atomId);
-        return RawRepositorySnapshot.Create(snapshot.Entries
-            .Where(entry => entry.Path != current.Path)
-            .Append(replacement));
-    }
+        var matches = snapshot.Entries.Count(static entry =>
+            entry.Path == BackfillInventoryLoader.RelativePath);
+        if (matches != 1)
+        {
+            throw new InvalidOperationException(
+                $"snapshot must contain exactly one {BackfillInventoryLoader.RelativePath}");
+        }
 
-    private static RawRepositoryEntry FindAtomEntry(RawRepositorySnapshot snapshot, string atomId)
-    {
-        var suffix = "/" + atomId + ".yaml";
-        var matches = snapshot.Entries.Where(entry =>
-            entry.Path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal)
-            && entry.Path.EndsWith(suffix, StringComparison.Ordinal)).ToArray();
-        return matches.Length == 1
-            ? matches[0]
-            : throw new InvalidOperationException(
-                $"snapshot must contain exactly one atom file for {atomId}");
-    }
-
-    private static RawRepositoryEntry AtomEntry(BackfillInventoryDocument document, string atomId)
-    {
-        var suffix = "/" + atomId + ".yaml";
-        return BackfillInventoryWriter.WriteDirectory(document).Single(entry =>
-            entry.Path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal)
-            && entry.Path.EndsWith(suffix, StringComparison.Ordinal));
+        return RawRepositorySnapshot.Create(snapshot.Entries.Select(entry =>
+            entry.Path == BackfillInventoryLoader.RelativePath
+                ? new RawRepositoryEntry(entry.Path, bytes)
+                : entry));
     }
 
     private static void RequireNoFindings(DigestionLedgerEvaluation evaluation)

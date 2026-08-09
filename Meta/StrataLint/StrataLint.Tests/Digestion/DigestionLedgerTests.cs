@@ -8,6 +8,114 @@ namespace StrataLint.Tests;
 public sealed partial class DigestionLedgerTests
 {
     [Fact]
+    public void CasBackedLegacyBoundaryDoesNotContributeSourceOrBoundaryGaps()
+    {
+        var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
+        var atom = Assert.Single(GictAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);
+        var captured = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
+        var yaml = LedgerYaml(
+            atom,
+            migration: "partial",
+            truth: "open",
+            coverageReceipts: "[]",
+            scribeReceipts: "[]");
+        var document = BackfillInventoryLoader.Load(yaml);
+        var snapshot = Snapshot((captured.RelativePath, captured.Bytes.ToArray()));
+
+        var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
+            document,
+            snapshot,
+            AcceptedLean(Array.Empty<string>()),
+            baselineDocument: document).Entries);
+
+        Assert.Equal(DigestionReceiptAlignment.Seen, status.Alignment);
+        Assert.DoesNotContain(status.Gaps, static gap =>
+            gap.Code == "source-missing" || gap.Code.Contains("boundary", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void CasBackedNoAtomizerBoundaryStillRequiresItsSpecificationSource()
+    {
+        var source = Encoding.UTF8.GetBytes("manual specification receipt\n");
+        var atom = new DigestionAtom(
+            "manual/receipt",
+            0,
+            source.Length,
+            ImmutableArray.CreateRange(source),
+            DigestionFingerprint.Compute(source),
+            ImmutableArray<DigestionContext>.Empty);
+        var captured = DigestionCasStore.Capture(source);
+        var yaml = LedgerYaml(
+                atom,
+                migration: "partial",
+                truth: "open",
+                coverageReceipts: "[]",
+                scribeReceipts: "[]")
+            .Replace(
+                $"atomizer: {AtomizerRegistry.GictId}",
+                $"atomizer: {AtomizerRegistry.NoAtomizerId}",
+                StringComparison.Ordinal);
+        var document = BackfillInventoryLoader.Load(yaml);
+        var snapshot = Snapshot((captured.RelativePath, captured.Bytes.ToArray()));
+
+        var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
+            document,
+            snapshot,
+            AcceptedLean(Array.Empty<string>()),
+            baselineDocument: document).Entries);
+
+        Assert.Equal(DigestionReceiptAlignment.LegacyBoundary, status.Alignment);
+        Assert.Contains(status.Gaps, static gap => gap.Code == "source-missing");
+    }
+
+    [Fact]
+    public void IngestRebindsCasBackedNoAtomizerBoundaryAndRemainsByteIdempotent()
+    {
+        var sourceBytes = Encoding.UTF8.GetBytes("manual specification receipt\n");
+        var atom = new DigestionAtom(
+            "manual/receipt",
+            0,
+            sourceBytes.Length,
+            ImmutableArray.CreateRange(sourceBytes),
+            DigestionFingerprint.Compute(sourceBytes),
+            ImmutableArray<DigestionContext>.Empty);
+        var ledgerText = LedgerYaml(
+                atom,
+                migration: "partial",
+                truth: "open",
+                coverageReceipts: "[]",
+                scribeReceipts: "[]")
+            .Replace(
+                $"atomizer: {AtomizerRegistry.GictId}",
+                $"atomizer: {AtomizerRegistry.NoAtomizerId}",
+                StringComparison.Ordinal);
+        var ledger = BackfillInventoryLoader.Load(ledgerText);
+
+        var first = DigestionIngestor.Plan(
+            ledger,
+            Snapshot(("docs/source.md", sourceBytes), CasFile(atom)),
+            ledger);
+        var firstBytes = BackfillInventoryWriter.WriteForIngest(first.Document);
+        var migrated = BackfillInventoryLoader.Load(Encoding.UTF8.GetString(firstBytes.AsSpan()));
+
+        var migratedEntry = Assert.Single(migrated.RequireDigestionEntries());
+        Assert.NotNull(migratedEntry.Boundary);
+        Assert.Equal(atom.Fingerprints.RawSha256, migratedEntry.CasRef);
+        Assert.Empty(first.CasObjects);
+
+        var second = DigestionIngestor.Plan(
+            migrated,
+            Snapshot(
+                ("docs/source.md", sourceBytes),
+                CasFile(atom)),
+            ledger);
+        var secondBytes = BackfillInventoryWriter.WriteForIngest(second.Document);
+
+        Assert.Empty(second.CasObjects);
+        Assert.Equal(firstBytes.ToArray(), secondBytes.ToArray());
+    }
+
+    [Fact]
     public void IngestOnboardsRegisteredEmptySourceAndRemainsByteIdempotent()
     {
         var atomizerId = SyntheticNumberedAtomizer.Id;
@@ -30,6 +138,7 @@ public sealed partial class DigestionLedgerTests
         Assert.Empty(first.Fallbacks);
         Assert.All(entries, static entry =>
         {
+            Assert.Null(entry.Boundary);
             Assert.Equal(entry.Fingerprints.RawSha256, entry.CasRef);
             Assert.Empty(entry.CoverageGids);
             Assert.Empty(entry.Receipts.Coverage);
@@ -107,6 +216,7 @@ public sealed partial class DigestionLedgerTests
         Assert.Equal(3, document.Root["schema_version"]);
         Assert.Equal("gict-1.1", entry.AtomId);
         Assert.Equal("theorem/1.1", entry.AstPath);
+        Assert.NotNull(entry.Boundary);
         Assert.Equal(["D5/X_Frontier/Probe"], document.RequireReferencedGids().ToArray());
     }
 
@@ -359,6 +469,64 @@ public sealed partial class DigestionLedgerTests
     }
 
     [Fact]
+    public void TailCannotAppearBeforeAbsorptionAndExternalAuthorizationReceipt()
+    {
+        var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
+        var atom = Assert.Single(GictAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);
+        var targetPath = "D5/X_Assumptions/Probe.lean";
+        var target = Encoding.UTF8.GetBytes(Lean("D5/X_Assumptions/Probe"));
+        var snapshot = Snapshot(("docs/source.md", source), CasFile(atom), (targetPath, target));
+        var report = new LeanFileReport(
+            ImmutableArray<string>.Empty,
+            [new LeanDeclaration("tailProbe", "axiom", "True", ["tailProbe"])]);
+        var lean = AcceptedLean((targetPath, report));
+        var yaml = LedgerYaml(
+            atom,
+            migration: "partial",
+            truth: "open",
+            coverageReceipts: "[]",
+            scribeReceipts: "[]",
+            coverageGid: "D5/X_Assumptions/Probe");
+
+        var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
+            BackfillInventoryLoader.Load(yaml),
+            snapshot,
+            lean).Entries);
+
+        Assert.Equal(DigestionTruthState.Open, status.DerivedStatus.Truth);
+        Assert.Contains(status.Gaps, gap => gap.Code == "tail-authorization-missing");
+        Assert.DoesNotContain("partial-tail", status.Render(), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ArbitraryHashedRepositoryFileCannotAuthorizeTailDeletion()
+    {
+        var arbitraryAuthorization = Encoding.UTF8.GetBytes("repository readme\n");
+        var status = EvaluateCompleteTail("README.md", arbitraryAuthorization);
+
+        Assert.Equal(DigestionTruthState.Open, status.DerivedStatus.Truth);
+        Assert.False(status.Deletable);
+        Assert.Contains(status.Gaps, gap => gap.Code == "tail-authorization-invalid");
+    }
+
+    [Fact]
+    public void CanonicalAtomAndGidBoundAuthorizationPermitsAbsorbedTail()
+    {
+        const string atomId = "gict-1.1";
+        const string gid = "D5/X_Assumptions/Probe";
+        var authorization = TailAuthorizationArtifact.Write(atomId, [gid]).ToArray();
+
+        var status = EvaluateCompleteTail(
+            TailAuthorizationArtifact.PathFor(atomId),
+            authorization);
+
+        Assert.Equal(DigestionMigrationState.Absorbed, status.DerivedStatus.Migration);
+        Assert.Equal(DigestionTruthState.Tail, status.DerivedStatus.Truth);
+        Assert.True(status.Deletable);
+        Assert.Empty(status.Gaps);
+    }
+
+    [Fact]
     public void SourceWithoutAdapterStillRejectsAValidlyFormattedButFalseRawFingerprint()
     {
         var source = Encoding.UTF8.GetBytes("# manual source\n\nclaim\n");
@@ -380,8 +548,8 @@ public sealed partial class DigestionLedgerTests
                 $"atomizer: {AtomizerRegistry.NoAtomizerId}",
                 StringComparison.Ordinal)
             .Replace(
-                $"raw_sha256: {syntheticAtom.Fingerprints.RawSha256}",
-                $"raw_sha256: sha256:{new string('0', 64)}",
+                syntheticAtom.Fingerprints.RawSha256,
+                "sha256:" + new string('0', 64),
                 StringComparison.Ordinal);
         var snapshot = Snapshot(
             ("docs/source.md", source),
@@ -533,7 +701,10 @@ public sealed partial class DigestionLedgerTests
             atomizer: {{AtomizerRegistry.GictId}}
             entries:
               - atom_id: gict-1.1
-                ast_path: {{atom.AstPath}}
+                boundary:
+                  ast_path: {{atom.AstPath}}
+                  start_byte: {{atom.StartByte}}
+                  end_byte: {{atom.EndByte}}
                 fingerprints:
                   raw_sha256: {{atom.Fingerprints.RawSha256}}
                   normalized_sha256: {{atom.Fingerprints.NormalizedSha256}}
@@ -544,6 +715,8 @@ public sealed partial class DigestionLedgerTests
         {{ReceiptList("coverage", coverageReceipts, 10)}}
         {{ReceiptList("scribe", scribeReceipts, 10)}}
                   unresolved_subitems: []
+                  chain_atoms: []
+                  tail_authorization: null
                 status:
                   migration: {{migration}}
                   truth: {{truth}}

@@ -26,7 +26,8 @@ public sealed class CensusDerivationTests
         var census = ReceiptFreeDocumentCatalog.Load(
             repositoryRoot,
             documents);
-        var receiptBoundDocumentGids = BackfillInventoryLoader.LoadDirectory(repositoryRoot)
+        var receiptBoundDocumentGids = BackfillInventoryLoader.Load(File.ReadAllText(
+                Path.Combine(repositoryRoot, BackfillInventoryLoader.RelativePath)))
             .RequireDigestionEntries()
             .SelectMany(static entry => entry.Receipts.Scribe)
             .Select(static receipt => ScribeEmissionAttestation.DocumentGid(receipt.Gid))
@@ -67,7 +68,9 @@ public sealed class CensusDerivationTests
         Directory.CreateDirectory(Path.Combine(repositoryRoot, "Meta"));
         try
         {
-            WriteBackfillDirectory(repositoryRoot, $$"""
+            File.WriteAllText(
+                Path.Combine(repositoryRoot, BackfillInventoryLoader.RelativePath),
+                $$"""
                 schema_version: 3
                 ledger: theory-digestion-v1
                 sources:
@@ -89,6 +92,8 @@ public sealed class CensusDerivationTests
                               definition_sha256: sha256:1111111111111111111111111111111111111111111111111111111111111111
                               emission_sha256: sha256:2222222222222222222222222222222222222222222222222222222222222222
                           unresolved_subitems: []
+                          chain_atoms: []
+                          tail_authorization: null
                         status:
                           migration: absorbed
                           truth: closed
@@ -104,16 +109,6 @@ public sealed class CensusDerivationTests
         finally
         {
             Directory.Delete(repositoryRoot, recursive: true);
-        }
-    }
-
-    private static void WriteBackfillDirectory(string repositoryRoot, string legacy)
-    {
-        foreach (var entry in BackfillInventoryWriter.WriteDirectory(BackfillInventoryLoader.Load(legacy)))
-        {
-            var path = Path.Combine(repositoryRoot, entry.Path.Replace('/', Path.DirectorySeparatorChar));
-            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-            File.WriteAllBytes(path, entry.Bytes.AsSpan().ToArray());
         }
     }
 

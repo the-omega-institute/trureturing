@@ -507,7 +507,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("HEAD_SHA: ${{ github.event.pull_request.head.sha }}", boundary, StringComparison.Ordinal);
         Assert.Contains(
             theoryDataPattern
-                + "|Meta/Digestion/backfill/*|Meta/Digestion/ticket-index.toml|Meta/Digestion/atoms/*|"
+                + "|Meta/BACKFILL.yaml|Meta/Digestion/atoms/*|"
                 + EchoResidualSummaryPath,
             boundary,
             StringComparison.Ordinal);
@@ -628,7 +628,7 @@ public sealed partial class MakeWorkflowTests
 
         var commit = workflow[commitIndex..];
         Assert.Contains(EchoResidualSummaryPath, commit, StringComparison.Ordinal);
-        Assert.Contains($"git add Meta/Digestion/backfill Meta/Digestion/ticket-index.toml Meta/Digestion/atoms {EchoResidualSummaryPath}", commit, StringComparison.Ordinal);
+        Assert.Contains($"git add Meta/BACKFILL.yaml Meta/Digestion/atoms {EchoResidualSummaryPath}", commit, StringComparison.Ordinal);
     }
 
     [Fact]

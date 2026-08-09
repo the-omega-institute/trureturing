@@ -32,9 +32,9 @@ internal static class IngestCommand
                 plan.Document,
                 current,
                 baseline);
-            var plannedFiles = BackfillInventoryWriter.WriteDirectory(plan.Document);
+            var plannedBytes = BackfillInventoryWriter.WriteForIngest(plan.Document);
             var plannedRaw = AddCasObjects(
-                ReplaceLedger(currentRaw, plannedFiles),
+                ReplaceLedger(currentRaw, plannedBytes),
                 plan.CasObjects);
             var plannedSnapshot = Decode(plannedRaw);
             var plannedDocument = LoadDocument(plannedSnapshot, "planned");
@@ -66,9 +66,9 @@ internal static class IngestCommand
                             .ToImmutableArray(),
                     })
                     .ToImmutableArray());
-            var finalFiles = BackfillInventoryWriter.WriteDirectory(refreshed);
+            var finalBytes = BackfillInventoryWriter.WriteForIngest(refreshed);
             var finalRaw = AddCasObjects(
-                ReplaceLedger(currentRaw, finalFiles),
+                ReplaceLedger(currentRaw, finalBytes),
                 plan.CasObjects);
             var finalSnapshot = Decode(finalRaw);
             var finalDocument = LoadDocument(finalSnapshot, "final");
@@ -87,19 +87,18 @@ internal static class IngestCommand
                 lean,
                 verifiedScribeEmissions);
 
-            var currentLedger = currentRaw.Entries
-                .Where(static entry => entry.Path.StartsWith(
-                    BackfillInventoryLoader.RootPath, StringComparison.Ordinal)
-                    || entry.Path == BackfillInventoryLoader.TicketIndexPath)
-                .OrderBy(static entry => entry.Path, StringComparer.Ordinal)
-                .ToArray();
-            var changed = !currentLedger.SequenceEqual(finalFiles, RawEntryComparer.Instance);
+            var currentLedger = currentRaw.Entries.Single(static entry =>
+                entry.Path == BackfillInventoryLoader.RelativePath);
+            var changed = !currentLedger.Bytes.AsSpan().SequenceEqual(finalBytes.AsSpan());
             var createdCasPaths = WriteCasObjects(repositoryRoot, plan.CasObjects);
             try
             {
                 if (changed)
                 {
-                    WriteLedgerDirectory(repositoryRoot, finalFiles);
+                    var outputPath = Path.Combine(
+                        Path.GetFullPath(repositoryRoot),
+                        BackfillInventoryLoader.RelativePath.Replace('/', Path.DirectorySeparatorChar));
+                    ReplaceLedgerAtomically(outputPath, finalBytes.AsSpan());
                 }
             }
             catch (Exception exception) when (exception is not OutOfMemoryException)
@@ -163,56 +162,31 @@ internal static class IngestCommand
         RepositorySnapshot snapshot,
         string side)
     {
-        return BackfillInventoryLoader.Load(snapshot, tolerateAbsent: side == "baseline");
+        if (!snapshot.TryGetFile(BackfillInventoryLoader.RelativePath, out var file))
+        {
+            throw new InvalidOperationException(
+                $"{side} {BackfillInventoryLoader.RelativePath} is missing");
+        }
+
+        return BackfillInventoryLoader.Load(file.Text);
     }
 
     private static RawRepositorySnapshot ReplaceLedger(
         RawRepositorySnapshot snapshot,
-        ImmutableArray<RawRepositoryEntry> files)
+        ImmutableArray<byte> bytes)
     {
-        return RawRepositorySnapshot.Create(snapshot.Entries
-            .Where(static entry => !entry.Path.StartsWith(
-                    BackfillInventoryLoader.RootPath, StringComparison.Ordinal)
-                && entry.Path != BackfillInventoryLoader.TicketIndexPath)
-            .Concat(files));
-    }
-
-    private static void WriteLedgerDirectory(
-        string repositoryRoot,
-        ImmutableArray<RawRepositoryEntry> files)
-    {
-        var root = Path.GetFullPath(repositoryRoot);
-        var desired = files.ToDictionary(static entry => entry.Path, StringComparer.Ordinal);
-        var backfillRoot = Path.Combine(root, BackfillInventoryLoader.RootPath
-            .Replace('/', Path.DirectorySeparatorChar));
-        foreach (var existing in Directory.EnumerateFiles(backfillRoot, "*", SearchOption.AllDirectories))
+        var matches = snapshot.Entries.Count(static entry =>
+            entry.Path == BackfillInventoryLoader.RelativePath);
+        if (matches != 1)
         {
-            var relative = Path.GetRelativePath(root, existing)
-                .Replace(Path.DirectorySeparatorChar, '/');
-            if (!desired.ContainsKey(relative))
-            {
-                File.Delete(existing);
-            }
+            throw new InvalidOperationException(
+                $"snapshot must contain exactly one {BackfillInventoryLoader.RelativePath}");
         }
-        foreach (var entry in files)
-        {
-            var target = Path.Combine(root, entry.Path.Replace('/', Path.DirectorySeparatorChar));
-            Directory.CreateDirectory(Path.GetDirectoryName(target)!);
-            if (!File.Exists(target)
-                || !File.ReadAllBytes(target).AsSpan().SequenceEqual(entry.Bytes.AsSpan()))
-            {
-                ReplaceLedgerAtomically(target, entry.Bytes.AsSpan());
-            }
-        }
-    }
 
-    private sealed class RawEntryComparer : IEqualityComparer<RawRepositoryEntry>
-    {
-        internal static RawEntryComparer Instance { get; } = new();
-        public bool Equals(RawRepositoryEntry? x, RawRepositoryEntry? y) =>
-            x is not null && y is not null && x.Path == y.Path
-            && x.Bytes.AsSpan().SequenceEqual(y.Bytes.AsSpan());
-        public int GetHashCode(RawRepositoryEntry obj) => obj.Path.GetHashCode(StringComparison.Ordinal);
+        return RawRepositorySnapshot.Create(snapshot.Entries.Select(entry =>
+            entry.Path == BackfillInventoryLoader.RelativePath
+                ? new RawRepositoryEntry(entry.Path, bytes)
+                : entry));
     }
 
     private static RawRepositorySnapshot AddCasObjects(

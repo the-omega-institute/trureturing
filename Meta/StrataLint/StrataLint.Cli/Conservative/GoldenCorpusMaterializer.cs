@@ -131,13 +131,9 @@ internal static partial class GoldenCorpusMaterializer
         state.Apply(source.Name, source.BaselineMutations, baseline: true);
         state.Apply(source.Name, source.BaselineMutations, baseline: false);
         state.Apply(source.Name, source.Mutations, baseline: false);
-        // 语料 fixture 一律保持 base 侧形态,候选代码不得改写它。
-        // 曾在此把每个 fixture 从单文件展开成目录形态,结果是 37 个与消化无关的
-        // golden 案(canonical-json / capacity / chronicle / contract …)集体
-        // CONSERVATIVE-ADMIT-FLIPPED —— 因为被改写的是判词赖以成立的输入本身。
-        // 目录形态的覆盖属于单元测试,不属于保守扩展基准。
         return state;
     }
+
     private static ImmutableArray<ConservativeCorpusFile> Files(
         IReadOnlyDictionary<string, string> files,
         IDictionary<string, ConservativeCorpusObject> objects)
@@ -236,6 +232,7 @@ internal static partial class GoldenCorpusMaterializer
             JsonSerializer.SerializeToElement(CanonicalCase(item, includeRoot: false)));
         return ContentRoot(bytes.AsSpan());
     }
+
     private sealed class GoldenFixtureState
     {
         private GoldenFixtureState(

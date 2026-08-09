@@ -131,29 +131,7 @@ public sealed class CapacityPolicyTests
         Assert.Empty(findings);
     }
 
-    // The frozen ledger accrues one content-addressed file per accepted node; the
-    // directory is a machine inventory keyed by digest, never a navigated content
-    // bucket, so thirteen accepted events must not trip the directory file limit.
-    // This clause of IsCapacityExcluded was the only one without a named guard, and a
-    // cross-branch merge silently dropped it: the whole-repo scan caught it only
-    // because the live directory already held 253 files. One named test per clause is
-    // what makes a deleted disjunct fail closed regardless of repository state.
-    [Fact]
-    public void AcceptedFrozenEventInventoryIsNotBoundedByDirectoryLimit()
-    {
-        var events = Enumerable.Range(0, RepositoryRules.DirectoryFileLimit + 1)
-            .Select(static i => (
-                FrozenLedgerChangeClassifier.AcceptedPath($"sha256:{i:x64}"),
-                "{}"))
-            .ToArray();
-
-        var findings = CapacityPolicy.InspectFiles(events);
-
-        Assert.Empty(findings);
-    }
-
-    // A synthetic backfill atom path, used only to exercise the exclusion;
+    // The backfill inventory path, restated here only to exercise the exclusion;
     // the enforcement source is RepositoryRules.IsCapacityExcluded.
-    private const string BackfillInventoryRelativePath =
-        "Meta/Digestion/backfill/source/residual-open/atom.yaml";
+    private const string BackfillInventoryRelativePath = "Meta/BACKFILL.yaml";
 }

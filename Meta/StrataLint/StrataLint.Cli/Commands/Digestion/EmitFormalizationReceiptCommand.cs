@@ -151,7 +151,15 @@ internal static class EmitFormalizationReceiptCommand
         + "[--out RECEIPT_PATH]");
 
     private static BackfillInventoryDocument LoadDocument(RepositorySnapshot snapshot)
-        => BackfillInventoryLoader.Load(snapshot);
+    {
+        if (!snapshot.TryGetFile(BackfillInventoryLoader.RelativePath, out var file))
+        {
+            throw new InvalidOperationException(
+                $"{BackfillInventoryLoader.RelativePath} is missing");
+        }
+
+        return BackfillInventoryLoader.Load(file.Text);
+    }
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         SnapshotDecoder.Decode(raw) switch
