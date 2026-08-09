@@ -140,6 +140,50 @@ freeze_exists() {
       ([.[]
         | select(.event_type == "Revoke")
         | .payload.affected_frozen_node_ids[]] | unique) as $revoked_ids
+      | . as $events
+      | (reduce $events[] as $event ({};
+          ($event.event_hash // null) as $event_hash
+          | if (($event_hash | type) == "string") then .[$event_hash] = $event else . end
+        )) as $events_by_hash
+      | def replay_rank:
+          if . == "Genesis" then 0
+          elif . == "Freeze" then 1
+          elif . == "Reattest" then 2
+          elif . == "Revoke" then 3
+          else 4
+          end;
+      def attestation_depth($event; $visited):
+          if $event.event_type == "Freeze" then
+            0
+          elif $event.event_type == "Reattest" then
+            ($event.event_hash // null) as $event_hash
+            | if (($event_hash | type) != "string") then
+                error("Reattest is missing its event hash")
+              elif ($visited[$event_hash] // false) then
+                error("Reattest chain contains a cycle")
+              else
+                ($event.payload.previous_attestation_event_hash // null) as $previous_hash
+                | if (($previous_hash | type) != "string") then
+                    error("Reattest references an unknown previous attestation")
+                  else
+                    ($events_by_hash[$previous_hash] // null) as $previous
+                    | if (($previous | type) != "object") then
+                        error("Reattest references an unknown previous attestation")
+                      else
+                        1 + attestation_depth($previous; $visited + {($event_hash): true})
+                      end
+                  end
+              end
+          else
+            error("Reattest chain does not terminate at Freeze")
+          end;
+      to_entries
+      | sort_by([
+          (.value.event_type | replay_rank),
+          (if .value.event_type == "Reattest" then attestation_depth(.value; {}) else 0 end),
+          .key
+        ])
+      | map(.value)
       | reduce .[] as $event ({};
         if $event.event_type == "Genesis" then
           .
