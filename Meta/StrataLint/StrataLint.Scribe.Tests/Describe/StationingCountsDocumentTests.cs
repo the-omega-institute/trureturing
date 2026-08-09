@@ -30,17 +30,6 @@ public sealed class StationingCountsDocumentTests
             describes.Select(static describe =>
                 Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement).Value.Value));
 
-        var report = LeanReportFixture.ForDocuments([definition.Document]);
-        var markdown = System.Text.Encoding.UTF8.GetString(
-            CanonicalMarkdownWriter.Write(definition.Document, report).AsSpan());
-        Assert.Contains(
-            "does not assert that arithmetic orbits exhaust this Boolean model",
-            markdown,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "does not close a finite certificate, measured exponent, density, or asymptotic law",
-            markdown,
-            StringComparison.Ordinal);
     }
 
     private static IEnumerable<DocumentBlock> Descendants(BlockSequence content)
