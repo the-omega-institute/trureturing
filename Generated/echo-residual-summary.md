@@ -1,4 +1,4 @@
-<!-- echo-residual-summary:v3 residual=sha256:f35c5c53e49e76fcbd0e6d65abf89e886eb33bdacacd696065ef308461b77e95 -->
+<!-- echo-residual-summary:v3 residual=sha256:d7c7fb31471ea01a117545a1c450d9b7bc8292bc60b66651b36a5b111f667b01 -->
 # Echo Residual Summary
 
 - unresolved_subitems: 550
@@ -201,7 +201,7 @@ Mother residual atoms:
 - `observer-residual-3fd76409f8ea3cfe2c3722c92b767875991a4572f1d62575f6ded1a5150b92c6` (1)
   - `monogamy-unique-classical-pairing`
 - `observer-residual-41d280b2ed3f2dea88b5349db0a8180037ef5cc783f6668adeeccd6a93c4b2b8` (1)
-  - `streamline-theorem-constant-hidden-offset`
+  - `streamline-decomposition-existence-and-canonicity`
 - `observer-residual-52f4218f9195e554aad17c30ebe5b0a7b5f4474beaea97b1bdb87dc9a415a303` (1)
   - `center-equals-continuous-torus-functions-crossed-product-form`
 - `observer-residual-5867fe5155d445a54dc3abe86aaecf7829c9f60988ea7e0d76bdf18e0ed085d6` (3)
