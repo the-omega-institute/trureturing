@@ -12,19 +12,23 @@ public sealed record RuleDescriptor(
     RuleLifecycle Lifecycle,
     CaseId? DeferredCase);
 
+internal sealed record RuleRegistration(
+    RuleDescriptor Descriptor,
+    IRepositoryRule Rule);
+
 public sealed class RuleCatalog
 {
     private static readonly Lazy<RuleCatalog> DefaultCatalog = new(CreateDefault);
 
-    private readonly ImmutableArray<IRepositoryRule> rules;
+    private readonly ImmutableArray<RuleRegistration> registrations;
 
-    private RuleCatalog(
-        ImmutableArray<RuleDescriptor> descriptors,
-        ImmutableArray<IRepositoryRule> rules)
+    private RuleCatalog(ImmutableArray<RuleRegistration> registrations)
     {
-        Descriptors = descriptors;
-        this.rules = rules;
-        var material = JsonSerializer.SerializeToElement(descriptors.Select(static descriptor => new
+        this.registrations = registrations;
+        Descriptors = registrations
+            .Select(static registration => registration.Descriptor)
+            .ToImmutableArray();
+        var material = JsonSerializer.SerializeToElement(Descriptors.Select(static descriptor => new
         {
             admission_effect = descriptor.AdmissionEffect.ToString(),
             category = descriptor.Category,
@@ -45,34 +49,19 @@ public sealed class RuleCatalog
 
     public string RootSha256 { get; }
 
-    internal static RuleCatalog CreateForTesting(
-        ImmutableArray<RuleDescriptor> descriptors,
-        ImmutableArray<IRepositoryRule> rules) =>
-        new(descriptors, rules);
+    internal static RuleCatalog CreateForTesting(ImmutableArray<RuleRegistration> registrations) =>
+        new(registrations);
 
     internal SingleRuleEvaluation EvaluateSingle(RuleId id, RuleEvaluationContext context)
     {
-        var index = -1;
-        for (var candidate = 0; candidate < Descriptors.Length; candidate++)
-        {
-            if (Descriptors[candidate].Id == id)
-            {
-                index = candidate;
-                break;
-            }
-        }
-        if (index < 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(id));
-        }
-
-        var descriptor = Descriptors[index];
+        var registration = RegistrationFor(id);
+        var descriptor = registration.Descriptor;
         if (descriptor.Lifecycle is RuleLifecycle.Deferred)
         {
             return new SingleRuleEvaluation(ImmutableArray<Diagnostic>.Empty, descriptor.DeferredCase);
         }
 
-        return new SingleRuleEvaluation(Stamp(descriptor, rules[index].Evaluate(context)), null);
+        return new SingleRuleEvaluation(Stamp(descriptor, registration.Rule.Evaluate(context)), null);
     }
 
     internal ImmutableArray<RuleDescriptor> ApplicableTo(
@@ -81,10 +70,9 @@ public sealed class RuleCatalog
     {
         ArgumentNullException.ThrowIfNull(artifact);
         ArgumentNullException.ThrowIfNull(context);
-        return rules
-            .Select((rule, index) => (Rule: rule, Descriptor: Descriptors[index]))
-            .Where(item => item.Rule.AppliesTo(artifact, context))
-            .Select(static item => item.Descriptor)
+        return registrations
+            .Where(registration => registration.Rule.AppliesTo(artifact, context))
+            .Select(static registration => registration.Descriptor)
             .ToImmutableArray();
     }
 
@@ -93,8 +81,7 @@ public sealed class RuleCatalog
         try
         {
             var expected = Enumerable.Range(1, 23).Select(RuleId.CreateKnown).ToImmutableArray();
-            if (Descriptors.Length != 23
-                || rules.Length != 23
+            if (registrations.Length != 23
                 || !Descriptors.Select(item => item.Id).SequenceEqual(expected))
             {
                 throw new InvalidOperationException("Rule catalog is incomplete, duplicated, or out of order.");
@@ -104,10 +91,11 @@ public sealed class RuleCatalog
             diagnostics.AddRange(RepositoryPathPolicy.Evaluate(
                 context.Current,
                 context.Policy,
-                Descriptors[14]));
+                RegistrationFor(RuleId.CreateKnown(15)).Descriptor));
             var deferred = ImmutableArray.CreateBuilder<DeferredRule>();
-            foreach (var (descriptor, index) in Descriptors.Select((value, index) => (value, index)))
+            foreach (var registration in registrations)
             {
+                var descriptor = registration.Descriptor;
                 if (descriptor.Lifecycle is RuleLifecycle.Deferred)
                 {
                     if (descriptor.DeferredCase is null)
@@ -119,7 +107,7 @@ public sealed class RuleCatalog
                     continue;
                 }
 
-                diagnostics.AddRange(Stamp(descriptor, rules[index].Evaluate(context)));
+                diagnostics.AddRange(Stamp(descriptor, registration.Rule.Evaluate(context)));
             }
 
             return new RuleExecutionOutcome.Completed(CompletedRuleSet.Create(
@@ -159,63 +147,18 @@ public sealed class RuleCatalog
             })
             .ToImmutableArray();
 
-    private static RuleCatalog CreateDefault()
+    private RuleRegistration RegistrationFor(RuleId id)
     {
-        var titles = new[]
+        foreach (var registration in registrations)
         {
-            "Stratum import closure",
-            "Sorry closure",
-            "Capacity pressure",
-            "Mirror completeness",
-            "Chronicle append only",
-            "Generated status",
-            "Conflict-of-interest gate",
-            "Frozen Hearts semantics",
-            "Provenance gate",
-            "Generality closure",
-            "Controlled domains",
-            "Six-line Lean header",
-            "Permanent task ledger",
-            "Toolchain upgrade compatibility",
-            "Machine field and GID grammar",
-            "Digestion ledger",
-            "Typed anchor membership",
-            "Machine-produced values",
-            "Balanced anomaly ledger",
-            "Lean axiom closure",
-            "Instantiated coordinate gate",
-            "Meta bootstrap gate",
-            "Describe LaTeX statement",
-        };
-        var builder = ImmutableArray.CreateBuilder<RuleDescriptor>(23);
-        for (var number = 1; number <= 23; number++)
-        {
-            var deferredCase = number switch
+            if (registration.Descriptor.Id == id)
             {
-                7 => CaseId.CreateKnown("D5-T0011"),
-                9 => CaseId.CreateKnown("D5-T0012"),
-                14 => CaseId.CreateKnown("D5-T0010"),
-                _ => null,
-            };
-            var lifecycle = deferredCase is null ? RuleLifecycle.Active : RuleLifecycle.Deferred;
-            var effect = number switch
-            {
-                7 or 9 or 22 => AdmissionEffect.HumanGate,
-                23 => AdmissionEffect.Observe,
-                _ => AdmissionEffect.Block,
-            };
-            builder.Add(new RuleDescriptor(
-                RuleId.CreateKnown(number),
-                titles[number - 1],
-                effect is AdmissionEffect.Block ? DisplaySeverity.Error : DisplaySeverity.Warning,
-                number is 7 or 9 or 22 ? "trust" : "repository",
-                effect,
-                lifecycle,
-                deferredCase));
+                return registration;
+            }
         }
 
-        return new RuleCatalog(
-            builder.MoveToImmutable(),
-            RepositoryRules.CreateRuleSet());
+        throw new ArgumentOutOfRangeException(nameof(id));
     }
+
+    private static RuleCatalog CreateDefault() => new(RepositoryRules.CreateRegistrations());
 }
