@@ -591,10 +591,7 @@ public sealed class BackfillInventoryLoaderTests
             Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"),
             (BackfillInventoryLoader.TicketIndexPath, ""))));
 
-        Assert.Equal(
-            "digestion ledger is present in both forms: "
-            + $"{BackfillInventoryLoader.LegacyLedgerPath} and {BackfillInventoryLoader.RootPath}",
-            exception.Message);
+        Assert.Equal("legacy and directory digestion ledgers cannot coexist", exception.Message);
     }
 
     private const string LegacyLedgerText = """

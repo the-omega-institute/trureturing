@@ -433,15 +433,17 @@ internal static class BackfillInventoryLoader
                 return Load(legacy.Text);
             }
 
+            // 措辞与 dev 逐字相同,不是巧合:规则把异常消息原样变成判词,
+            // 改一个字就是改判词,基线 harness 准入过的 golden 案会随之翻转
+            // (实测 37 例 CONSERVATIVE-ADMIT-FLIPPED)。
             return tolerateAbsent
                 ? BackfillInventoryDocument.Create([], [])
-                : throw new FormatException($"digestion backfill directory is missing: {RootPath}");
+                : throw new FormatException("required governance document is missing");
         }
 
         if (snapshot.TryGetFile(LegacyLedgerPath, out _))
         {
-            throw new FormatException(
-                $"digestion ledger is present in both forms: {LegacyLedgerPath} and {RootPath}");
+            throw new FormatException("legacy and directory digestion ledgers cannot coexist");
         }
 
         var sources = ImmutableArray.CreateBuilder<DigestionLedgerSource>();
