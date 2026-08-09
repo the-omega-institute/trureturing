@@ -55,6 +55,35 @@ public sealed class BackfillInventoryLoaderTests
     }
 
     [Fact]
+    public void DirectoryAtomWriterPreservesLiveOptionalReceipts()
+    {
+        var atom = Atom("delta-v0.1", "absorbed-tail", "delta-atom", "theorem/delta");
+        var authorizationPath = "Meta/Digestion/tail-authorizations/delta-atom.json";
+        var authorizationSha = "sha256:1111111111111111111111111111111111111111111111111111111111111111";
+        var liveAtom = atom.Text.Replace(
+            "  chain_atoms: []\n  tail_authorization: null",
+            "  chain_atoms:\n    - predecessor-atom\n"
+            + $"  tail_authorization:\n    path: {authorizationPath}\n    sha256: {authorizationSha}",
+            StringComparison.Ordinal);
+        var document = BackfillInventoryLoader.Load(Snapshot(
+            Source("delta-v0.1", "docs/delta.md", "none"),
+            (atom.Path, liveAtom),
+            (BackfillInventoryLoader.TicketIndexPath, "")));
+
+        var written = Encoding.UTF8.GetString(BackfillInventoryWriter.WriteAtom(
+            Assert.Single(document.RequireDigestionEntries())).AsSpan());
+        var roundTripped = BackfillInventoryLoader.Load(Snapshot(
+            Source("delta-v0.1", "docs/delta.md", "none"),
+            (atom.Path, written),
+            (BackfillInventoryLoader.TicketIndexPath, "")));
+
+        var receipts = Assert.Single(roundTripped.RequireDigestionEntries()).Receipts;
+        Assert.Equal(["predecessor-atom"], receipts.ChainAtoms.ToArray());
+        Assert.Equal(authorizationPath, receipts.TailAuthorization?.Path);
+        Assert.Equal(authorizationSha, receipts.TailAuthorization?.Sha256);
+    }
+
+    [Fact]
     public void BothStorageShapesAreRejected()
     {
         var text = EntryFixture(LoaderEntryFields().ToHashSet(StringComparer.Ordinal));
@@ -63,6 +92,33 @@ public sealed class BackfillInventoryLoaderTests
             Source("delta-v0.1", "docs/delta.md", "none"),
             Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"),
             (BackfillInventoryLoader.TicketIndexPath, ""))));
+
+        Assert.Equal("legacy and directory digestion ledgers cannot coexist", exception.Message);
+    }
+
+    [Fact]
+    public void DiskRootRejectsBothStorageShapesWithSnapshotMessage()
+    {
+        using var temporary = new TemporaryDirectory();
+        var legacyPath = Path.Combine(
+            temporary.Path,
+            BackfillInventoryLoader.RelativePath.Replace('/', Path.DirectorySeparatorChar));
+        Directory.CreateDirectory(Path.GetDirectoryName(legacyPath)!);
+        File.WriteAllText(
+            legacyPath,
+            EntryFixture(LoaderEntryFields().ToHashSet(StringComparer.Ordinal)),
+            new UTF8Encoding(false));
+        var source = Source("delta-v0.1", "docs/delta.md", "none");
+        var atom = Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta");
+        DirectoryLedgerTestSupport.Write(temporary.Path, new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            [source.Path] = source.Text,
+            [atom.Path] = atom.Text,
+            [BackfillInventoryLoader.TicketIndexPath] = string.Empty,
+        });
+
+        var exception = Assert.Throws<FormatException>(() =>
+            BackfillInventoryLoader.LoadRoot(temporary.Path));
 
         Assert.Equal("legacy and directory digestion ledgers cannot coexist", exception.Message);
     }
@@ -211,9 +267,8 @@ public sealed class BackfillInventoryLoaderTests
     public void NoncanonicalDigestionLedgerPathsAreRejected(string path)
         => Assert.False(BackfillInventoryLoader.IsCanonicalPath(path));
 
-    // chain_atoms / tail_authorization 是 legacy 字段:dev 现有 2,030 条记录里
-    // 100% 为 [] 与 null,从未装过内容。降为可选,但在场时必须为空 ——
-    // 新形态表达不了它们,静默丢弃即是第1条禁止的静默。
+    // chain_atoms / tail_authorization 在 dev 现有记录里均为空,故目录形态允许省略;
+    // 活值仍由 loader 与 writer 完整保留,不得静默丢弃。
     [Fact]
     public void ReceiptsWithoutRetiredLegacyKeysAreAccepted()
     {

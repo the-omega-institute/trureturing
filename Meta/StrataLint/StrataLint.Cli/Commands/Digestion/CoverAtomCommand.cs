@@ -68,8 +68,8 @@ internal static class CoverAtomCommand
             var baselineRaw = repository.ReadRevision(options.BaselineRevision);
             var current = Decode(currentRaw);
             var baseline = Decode(baselineRaw);
-            var document = LoadDocument(current, "candidate");
-            var baselineDocument = LoadDocument(baseline, "baseline");
+            var document = LoadDocument(current);
+            var baselineDocument = LoadDocument(baseline);
 
             // Gate ②(a): the cover GID must select a Lean declaration, not just a
             // module (module-level coverage is ingest's residual boundary, not a
@@ -152,9 +152,13 @@ internal static class CoverAtomCommand
                     .ToImmutableArray());
 
             var finalBytes = BackfillInventoryWriter.WriteForIngest(refreshed);
-            var finalRaw = ReplaceLedger(currentRaw, finalBytes);
+            var finalRaw = IngestCommand.ReplaceLedger(
+                currentRaw,
+                document,
+                refreshed,
+                finalBytes);
             var finalSnapshot = Decode(finalRaw);
-            var finalDocument = LoadDocument(finalSnapshot, "final");
+            var finalDocument = LoadDocument(finalSnapshot);
             var evaluation = DigestionStatusEvaluator.Evaluate(
                 finalDocument,
                 finalSnapshot,
@@ -209,10 +213,9 @@ internal static class CoverAtomCommand
             RequireEnvelopeBinding(receipt, options, target);
             RequireSignatureMatch(receipt, gid, report);
 
-            var currentLedger = currentRaw.Entries.Single(static entry =>
-                entry.Path == BackfillInventoryLoader.RelativePath);
-            var changed = !currentLedger.Bytes.AsSpan().SequenceEqual(finalBytes.AsSpan());
-            WriteLedgerIfChanged(repositoryRoot, currentLedger, finalBytes, changed);
+            var ledgerUpdates = IngestCommand.LedgerUpdates(currentRaw, finalRaw);
+            var changed = ledgerUpdates.Length > 0;
+            IngestCommand.ApplyLedgerUpdatesAtomically(repositoryRoot, currentRaw, ledgerUpdates);
 
             return new CommandResult(
                 true,
@@ -237,7 +240,7 @@ internal static class CoverAtomCommand
         var options = ParseAlignArguments(arguments);
         var currentRaw = repository.ReadCurrent();
         var current = Decode(currentRaw);
-        var document = LoadDocument(current, "candidate");
+        var document = LoadDocument(current);
         var matches = document.RequireDigestionEntries()
             .Where(entry => string.Equals(entry.AtomId, options.AtomId, StringComparison.Ordinal))
             .ToArray();
@@ -312,9 +315,13 @@ internal static class CoverAtomCommand
             validateProjectedStatus: false);
         RequireAlignedScribeReceipt(EvaluationFor(derived, options.AtomId), options.Gid);
         var finalBytes = BackfillInventoryWriter.WriteForIngest(planned);
-        var finalRaw = ReplaceLedger(currentRaw, finalBytes);
+        var finalRaw = IngestCommand.ReplaceLedger(
+            currentRaw,
+            document,
+            planned,
+            finalBytes);
         var finalSnapshot = Decode(finalRaw);
-        var finalDocument = LoadDocument(finalSnapshot, "final");
+        var finalDocument = LoadDocument(finalSnapshot);
         var finalEvaluation = DigestionStatusEvaluator.Evaluate(
             finalDocument,
             finalSnapshot,
@@ -323,10 +330,9 @@ internal static class CoverAtomCommand
             baselineDocument: null);
         RequireAlignedScribeReceipt(EvaluationFor(finalEvaluation, options.AtomId), options.Gid);
 
-        var currentLedger = currentRaw.Entries.Single(static entry =>
-            entry.Path == BackfillInventoryLoader.RelativePath);
-        var changed = !currentLedger.Bytes.AsSpan().SequenceEqual(finalBytes.AsSpan());
-        WriteLedgerIfChanged(repositoryRoot, currentLedger, finalBytes, changed);
+        var ledgerUpdates = IngestCommand.LedgerUpdates(currentRaw, finalRaw);
+        var changed = ledgerUpdates.Length > 0;
+        IngestCommand.ApplyLedgerUpdatesAtomically(repositoryRoot, currentRaw, ledgerUpdates);
 
         return new CommandResult(
             true,
@@ -337,35 +343,6 @@ internal static class CoverAtomCommand
             + $"new_emission_sha256={newReceipt.EmissionSha256} "
             + $"ledger_changed={changed.ToString().ToLowerInvariant()}\n",
             string.Empty);
-    }
-
-    private static void WriteLedgerIfChanged(
-        string repositoryRoot,
-        RawRepositoryEntry currentLedger,
-        ImmutableArray<byte> finalBytes,
-        bool changed)
-    {
-        if (!changed)
-        {
-            return;
-        }
-
-        var outputPath = Path.Combine(
-            Path.GetFullPath(repositoryRoot),
-            BackfillInventoryLoader.RelativePath.Replace('/', Path.DirectorySeparatorChar));
-        if (!File.Exists(outputPath))
-        {
-            throw new InvalidOperationException(
-                "ledger went missing between read and write; aborting to avoid a lost update");
-        }
-
-        if (!File.ReadAllBytes(outputPath).AsSpan().SequenceEqual(currentLedger.Bytes.AsSpan()))
-        {
-            throw new InvalidOperationException(
-                "ledger changed under us between read and write; aborting to avoid a lost update");
-        }
-
-        IngestCommand.ReplaceLedgerAtomically(outputPath, finalBytes.AsSpan());
     }
 
     private static DigestionLedgerEntry LocateTarget(
@@ -645,34 +622,8 @@ internal static class CoverAtomCommand
         "USAGE: StrataLint cover-atom --cover-atom ATOM_ID --gid DECL_GID --base REV "
         + "--envelope RECEIPT_PATH");
 
-    private static BackfillInventoryDocument LoadDocument(RepositorySnapshot snapshot, string side)
-    {
-        if (!snapshot.TryGetFile(BackfillInventoryLoader.RelativePath, out var file))
-        {
-            throw new InvalidOperationException(
-                $"{side} {BackfillInventoryLoader.RelativePath} is missing");
-        }
-
-        return BackfillInventoryLoader.Load(file.Text);
-    }
-
-    private static RawRepositorySnapshot ReplaceLedger(
-        RawRepositorySnapshot snapshot,
-        ImmutableArray<byte> bytes)
-    {
-        var matches = snapshot.Entries.Count(static entry =>
-            entry.Path == BackfillInventoryLoader.RelativePath);
-        if (matches != 1)
-        {
-            throw new InvalidOperationException(
-                $"snapshot must contain exactly one {BackfillInventoryLoader.RelativePath}");
-        }
-
-        return RawRepositorySnapshot.Create(snapshot.Entries.Select(entry =>
-            entry.Path == BackfillInventoryLoader.RelativePath
-                ? new RawRepositoryEntry(entry.Path, bytes)
-                : entry));
-    }
+    private static BackfillInventoryDocument LoadDocument(RepositorySnapshot snapshot) =>
+        BackfillInventoryLoader.Load(snapshot);
 
     private static void RequireNoFindings(DigestionLedgerEvaluation evaluation)
     {
