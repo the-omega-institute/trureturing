@@ -40,7 +40,7 @@ public sealed class FrozenGitReferenceAdapterTests
             ImmutableArray.Create(missing),
             ImmutableArray<string>.Empty);
 
-        var exception = Assert.Throws<InvalidOperationException>(() =>
+        var exception = Assert.Throws<FrozenReferenceRejectionException>(() =>
             FrozenEvidenceResolver.Validate(
                 references,
                 new GitRepositoryGateway(baseline.Path),
@@ -66,7 +66,7 @@ public sealed class FrozenGitReferenceAdapterTests
                 .Append(input.DescriptorBlobOid)
                 .Append(missingGenerator));
 
-        var exception = Assert.Throws<InvalidOperationException>(() =>
+        var exception = Assert.Throws<FrozenReferenceRejectionException>(() =>
             FrozenEvidenceResolver.Validate(
                 references,
                 new GitRepositoryGateway(baseline.Path),
@@ -74,6 +74,41 @@ public sealed class FrozenGitReferenceAdapterTests
 
         Assert.Contains(missingGenerator, exception.Message, StringComparison.Ordinal);
         Assert.Contains("blob", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void FrozenEvidenceResolverDoesNotProbeAnotherRepositoryAfterInfrastructureFailure()
+    {
+        var references = FrozenLedgerReferenceSet.Create(
+            ImmutableArray<FrozenLedgerInput>.Empty,
+            ImmutableArray<string>.Empty,
+            ["git-sha1:" + new string('f', 40)],
+            Array.Empty<string>(),
+            Array.Empty<string>());
+        var failure = new GitCommandFailure(
+            GitCommandFailureKind.Io,
+            "git",
+            ImmutableArray.Create("cat-file", "-t", new string('f', 40)),
+            null,
+            null,
+            string.Empty,
+            "synthetic resolver IO failure");
+        var first = new FakeRepositoryGateway(
+            RawChangeSet.Create(Array.Empty<string>()),
+            null,
+            null,
+            _ => throw new GitInfrastructureException(failure));
+        var second = new FakeRepositoryGateway(
+            RawChangeSet.Create(Array.Empty<string>()),
+            null,
+            null);
+
+        var exception = Assert.Throws<GitInfrastructureException>(() =>
+            FrozenEvidenceResolver.Validate(references, first, second));
+
+        Assert.Same(failure, exception.Failure);
+        Assert.Equal(1, first.FrozenReferenceValidationCount);
+        Assert.Equal(0, second.FrozenReferenceValidationCount);
     }
 
     [Fact]
@@ -134,10 +169,11 @@ public sealed class FrozenGitReferenceAdapterTests
             System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public));
         Assert.NotNull(capability);
         var forged = input with { DescriptorBlobOid = "git-sha1:" + toolchain };
-        Assert.Throws<InvalidOperationException>(() => gateway.ValidateFrozenReferences(
-            FrozenLedgerReferenceSet.Create(
+        var exception = Assert.Throws<FrozenReferenceRejectionException>(() =>
+            gateway.ValidateFrozenReferences(FrozenLedgerReferenceSet.Create(
                 ImmutableArray.Create(forged),
                 ImmutableArray<string>.Empty)));
+        Assert.Equal(FrozenReferenceRejectionKind.InvalidReference, exception.Kind);
     }
 
     private static FrozenLedgerInput CreateFrozenInput(

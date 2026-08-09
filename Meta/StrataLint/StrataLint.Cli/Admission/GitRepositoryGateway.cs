@@ -1,15 +1,62 @@
 using System.Collections.Immutable;
+using System.ComponentModel;
 using System.Text;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
+internal interface IGitProcessRunner
+{
+    ProcessOutput Run(
+        string fileName,
+        IReadOnlyList<string> arguments,
+        string workingDirectory,
+        TimeSpan timeout);
+}
+
+internal sealed class ProductionGitProcessRunner : IGitProcessRunner
+{
+    public ProcessOutput Run(
+        string fileName,
+        IReadOnlyList<string> arguments,
+        string workingDirectory,
+        TimeSpan timeout) =>
+        BoundedProcessRunner.Run(
+            fileName,
+            arguments,
+            workingDirectory,
+            timeout,
+            64 * 1024 * 1024);
+}
+
 internal sealed partial class GitRepositoryGateway : IRepositoryGateway
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     private readonly string root;
+    private readonly IGitProcessRunner processRunner;
+    private readonly string gitExecutable;
+    private readonly TimeSpan gitTimeout;
 
-    internal GitRepositoryGateway(string root) => this.root = Path.GetFullPath(root);
+    internal GitRepositoryGateway(string root)
+        : this(root, new ProductionGitProcessRunner(), "git", TimeSpan.FromSeconds(120))
+    {
+    }
+
+    internal GitRepositoryGateway(
+        string root,
+        IGitProcessRunner processRunner,
+        string gitExecutable,
+        TimeSpan gitTimeout)
+    {
+        this.root = Path.GetFullPath(root);
+        this.processRunner = processRunner ?? throw new ArgumentNullException(nameof(processRunner));
+        this.gitExecutable = string.IsNullOrWhiteSpace(gitExecutable)
+            ? throw new ArgumentException("Git executable is required", nameof(gitExecutable))
+            : gitExecutable;
+        this.gitTimeout = gitTimeout > TimeSpan.Zero
+            ? gitTimeout
+            : throw new ArgumentOutOfRangeException(nameof(gitTimeout));
+    }
 
     public AdmissionTopologyOutcome InspectAdmissionTopology()
     {
@@ -142,7 +189,9 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
     {
         if (!IsObjectId(revision))
         {
-            throw new InvalidOperationException("revision file read requires an exact commit OID");
+            throw new FrozenReferenceRejectionException(
+                FrozenReferenceRejectionKind.InvalidReference,
+                "revision file read requires an exact commit OID");
         }
         RequireObjectType(revision, "commit");
 
@@ -154,13 +203,16 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
         var matches = ParseTree(GitBytes("ls-tree", "-z", revision, "--", path)).ToArray();
         if (matches.Length != 1 || !string.Equals(matches[0].Path, path, StringComparison.Ordinal))
         {
-            throw new InvalidOperationException($"revision file is missing: {path}");
+            throw new FrozenReferenceRejectionException(
+                FrozenReferenceRejectionKind.MissingObject,
+                $"revision file is missing: {path}");
         }
 
         var entry = matches[0];
         if (entry.Mode is not ("100644" or "100755") || entry.ObjectType != "blob")
         {
-            throw new InvalidOperationException(
+            throw new FrozenReferenceRejectionException(
+                FrozenReferenceRejectionKind.WrongObjectType,
                 $"revision file is not regular: {path} ({entry.Mode} {entry.ObjectType})");
         }
 
@@ -196,22 +248,89 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
 
     private ProcessOutput GitRaw(IEnumerable<string> arguments, bool allowNonzero)
     {
-        var result = BoundedProcessRunner.Run(
-            "git",
-            arguments,
-            root,
-            TimeSpan.FromSeconds(120),
-            64 * 1024 * 1024);
+        var commandArguments = arguments.ToArray();
+        ProcessOutput result;
+        try
+        {
+            result = processRunner.Run(gitExecutable, commandArguments, root, gitTimeout);
+        }
+        catch (TimeoutException exception)
+        {
+            throw InfrastructureFailure(
+                GitCommandFailureKind.Timeout,
+                commandArguments,
+                detail: exception.Message,
+                exception: exception);
+        }
+        catch (Win32Exception exception)
+        {
+            throw InfrastructureFailure(
+                exception.NativeErrorCode is 2 or 3
+                    ? GitCommandFailureKind.ExecutableNotFound
+                    : GitCommandFailureKind.Process,
+                commandArguments,
+                nativeErrorCode: exception.NativeErrorCode,
+                detail: exception.Message,
+                exception: exception);
+        }
+        catch (IOException exception)
+        {
+            throw InfrastructureFailure(
+                GitCommandFailureKind.Io,
+                commandArguments,
+                detail: exception.Message,
+                exception: exception);
+        }
+        catch (UnauthorizedAccessException exception)
+        {
+            throw InfrastructureFailure(
+                GitCommandFailureKind.Io,
+                commandArguments,
+                detail: exception.Message,
+                exception: exception);
+        }
+        catch (InvalidOperationException exception)
+        {
+            throw InfrastructureFailure(
+                GitCommandFailureKind.Process,
+                commandArguments,
+                detail: exception.Message,
+                exception: exception);
+        }
+
         if (!allowNonzero && result.ExitCode != 0)
         {
-            throw new InvalidOperationException(
-                StrictUtf8.GetString(result.StandardError).Trim() is { Length: > 0 } error
-                    ? error
-                    : "git command failed");
+            throw InfrastructureFailure(
+                GitCommandFailureKind.NonzeroExit,
+                commandArguments,
+                exitCode: result.ExitCode,
+                standardError: DecodeFailureText(result.StandardError));
         }
 
         return result;
     }
+
+    private GitInfrastructureException InfrastructureFailure(
+        GitCommandFailureKind kind,
+        IReadOnlyList<string> arguments,
+        int? exitCode = null,
+        int? nativeErrorCode = null,
+        string standardError = "",
+        string detail = "",
+        Exception? exception = null) =>
+        new(
+            new GitCommandFailure(
+                kind,
+                gitExecutable,
+                arguments.ToImmutableArray(),
+                exitCode,
+                nativeErrorCode,
+                standardError,
+                detail),
+            exception);
+
+    private static string DecodeFailureText(byte[] bytes) =>
+        Encoding.UTF8.GetString(bytes).Trim();
 
     private static IEnumerable<string> ParseNulStrings(byte[] bytes) =>
         SplitNul(bytes).Select(static item => StrictUtf8.GetString(item));
