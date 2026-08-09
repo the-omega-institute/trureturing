@@ -300,12 +300,12 @@ internal static class PaperRecipeValidator
         catch (Exception exception) when (exception is FileNotFoundException or DirectoryNotFoundException)
         {
             return new FrozenLedgerResolution.Failed(
-                Invalid($"frozen ledger is missing: {FrozenLedgerChangeClassifier.LedgerPath}: {exception.Message}"));
+                Invalid($"frozen ledger is missing: {FrozenLedgerChangeClassifier.AcceptedRoot}: {exception.Message}"));
         }
         catch (Exception exception) when (exception is InvalidOperationException or FormatException)
         {
             return new FrozenLedgerResolution.Failed(
-                Invalid($"frozen ledger is not usable: {FrozenLedgerChangeClassifier.LedgerPath}: {exception.Message}"));
+                Invalid($"frozen ledger is not usable: {FrozenLedgerChangeClassifier.AcceptedRoot}: {exception.Message}"));
         }
     }
 

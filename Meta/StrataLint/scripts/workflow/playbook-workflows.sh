@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../../.." && pwd -P)"
 PROJECT="Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj"
 REPORT=".lake/build/stratalint/raw-lean-report.json"
-FROZEN_LEDGER="Meta/StrataLint/Golden/Frozen/events.jsonl"
+FROZEN_LEDGER="Meta/StrataLint/Golden/Frozen/accepted"
 ECHO_PROJECTION="Generated/echo-residual-summary.md"
 COMMAND="${1:-}"
 BASE="${2:-origin/dev}"
@@ -105,16 +105,20 @@ commit_all_if_needed() {
 
 freeze_exists() {
   local active_state current_blob current_identity
+  local ledger_files=()
   if ! command -v jq >/dev/null 2>&1; then
     echo "PLAYBOOK_INVALID jq is required to inspect $FROZEN_LEDGER" >&2
     return 2
   fi
-  if [[ ! -f "$FROZEN_LEDGER" ]]; then
+  if [[ ! -d "$FROZEN_LEDGER" ]]; then
     echo "PLAYBOOK_INVALID frozen ledger is missing: $FROZEN_LEDGER" >&2
     return 2
   fi
-  if ! jq empty "$FROZEN_LEDGER" >/dev/null; then
-    echo "PLAYBOOK_INVALID frozen ledger is not valid JSONL: $FROZEN_LEDGER" >&2
+  while IFS= read -r ledger_file; do
+    ledger_files+=("$ledger_file")
+  done < <(compgen -G "$FROZEN_LEDGER/*.json" || true)
+  if [[ "${#ledger_files[@]}" -gt 0 ]] && ! jq empty "${ledger_files[@]}" >/dev/null; then
+    echo "PLAYBOOK_INVALID frozen ledger contains invalid JSON: $FROZEN_LEDGER" >&2
     return 2
   fi
 
@@ -130,9 +134,13 @@ freeze_exists() {
       return 2
       ;;
   esac
+  [[ "${#ledger_files[@]}" -gt 0 ]] || return 1
 
   if ! active_state="$(jq -sc --arg node "$MODULE_PATH" --arg identity "$current_identity" '
-      reduce .[] as $event ({};
+      ([.[]
+        | select(.event_type == "Revoke")
+        | .payload.affected_frozen_node_ids[]] | unique) as $revoked_ids
+      | reduce .[] as $event ({};
         if $event.event_type == "Genesis" then
           .
         elif $event.event_type == "Freeze" then
@@ -145,8 +153,8 @@ freeze_exists() {
               or ($path | type) != "string"
               or ($blob | type) != "string") then
               error("Freeze is missing replay identity fields")
-            elif has($case) or any(.[]; .node_path == $path) then
-              error("Freeze reuses an active case or module path")
+            elif has($case) then
+              error("Freeze reuses an active case")
             else
               .[$case] = {
                 frozen_node_id: $frozen_id,
@@ -171,18 +179,15 @@ freeze_exists() {
           | if (($cases | type) != "array" or ($frozen_ids | type) != "array") then
               error("Revoke is missing affected active identities")
             else
-              reduce $frozen_ids[] as $frozen_id (.;
-                ([to_entries[]
-                  | select(.value.frozen_node_id == $frozen_id)
-                  | .key]) as $matching_cases
-                | if ($matching_cases | length) == 1 then del(.[$matching_cases[0]])
-                  else error("Revoke targets no unique active frozen node") end)
+              .
             end
         else
           error("unknown frozen ledger event type")
         end)
+      | with_entries(
+          select(.value.frozen_node_id as $id | ($revoked_ids | index($id) | not)))
       | any(.[]; .node_path == $node and .descriptor_blob_oid == $identity)
-    ' "$FROZEN_LEDGER" 2>&1)"; then
+    ' "${ledger_files[@]}" 2>&1)"; then
     echo "PLAYBOOK_INVALID failed to replay frozen ledger $FROZEN_LEDGER: $active_state" >&2
     return 2
   fi

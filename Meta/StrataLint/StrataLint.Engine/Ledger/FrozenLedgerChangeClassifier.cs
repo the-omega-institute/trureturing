@@ -19,9 +19,7 @@ public static class FrozenLedgerChangeClassifier
 {
     public const string LedgerPath = "Meta/StrataLint/Golden/Frozen/events.jsonl";
 
-    // 一节点一文件的冻结账本落位。此谓词先行加入 base 侧,使后续迁移 PR 的
-    // baseline admission 能对 accepted/ 目录豁免 SL-003 容量阈 —— 否则
-    // 「要豁免才能放文件,而放文件那次 PR 的法官还没有豁免」形成引导死结。
+    // 一节点一文件的冻结账本落位:目录即账本,文件名即节点身份。
     public const string AcceptedRoot = "Meta/StrataLint/Golden/Frozen/accepted";
 
     public static bool IsAcceptedEventPath(string path) =>

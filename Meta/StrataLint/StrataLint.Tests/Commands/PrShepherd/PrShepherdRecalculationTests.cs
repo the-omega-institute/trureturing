@@ -10,8 +10,6 @@ public sealed partial class PrShepherdRecalculationTests
         "Meta/StrataLint/scripts/shepherd/pr-shepherd-lease.sh";
     private const string ShepherdActionsScriptPath =
         "Meta/StrataLint/scripts/shepherd/pr-shepherd-actions.sh";
-    private const string ShepherdLedgerScriptPath =
-        "Meta/StrataLint/scripts/shepherd/pr-shepherd-ledger.sh";
     private const string ShepherdFixedPointScriptPath =
         "Meta/StrataLint/scripts/shepherd/pr-shepherd-fixed-point.sh";
     private const string ShepherdWatchScriptPath =
@@ -86,7 +84,6 @@ public sealed partial class PrShepherdRecalculationTests
         private readonly bool pauseWorktreeCreation;
         private readonly bool delayFirstLockOwnerRead;
         private readonly bool conflicting;
-        private readonly bool ledgerConflict;
         private readonly string graphqlRemaining;
         private readonly bool staleBaseRefOid;
         private readonly bool moveHeadDuringFetch;
@@ -105,7 +102,6 @@ public sealed partial class PrShepherdRecalculationTests
             bool pauseWorktreeCreation = false,
             bool delayFirstLockOwnerRead = false,
             bool conflicting = false,
-            bool ledgerConflict = false,
             string graphqlRemaining = "5000",
             bool staleBaseRefOid = false,
             bool moveHeadDuringFetch = false,
@@ -127,7 +123,6 @@ public sealed partial class PrShepherdRecalculationTests
             this.pauseWorktreeCreation = pauseWorktreeCreation;
             this.delayFirstLockOwnerRead = delayFirstLockOwnerRead;
             this.conflicting = conflicting;
-            this.ledgerConflict = ledgerConflict;
             this.graphqlRemaining = graphqlRemaining;
             this.staleBaseRefOid = staleBaseRefOid;
             this.moveHeadDuringFetch = moveHeadDuringFetch;
@@ -158,7 +153,7 @@ public sealed partial class PrShepherdRecalculationTests
                 pattern = "Generated/**"
                 kind = "generated"
                 """);
-            Write(seed, FrozenLedgerChangeClassifier.LedgerPath, "{\"event\":\"base\"}\n");
+            Write(seed, FrozenLedgerChangeClassifier.AcceptedRoot, "{\"event\":\"base\"}\n");
             Write(seed, "Trureturing.lean", "base trureturing\n");
             Write(seed, "shared.txt", "base shared\n");
             Git(seed, "add", ".");
@@ -175,11 +170,6 @@ public sealed partial class PrShepherdRecalculationTests
             Write(seed, "Generated/dev-choice.md", "feature choice\n");
             Write(seed, "Trureturing.lean", "candidate trureturing\n");
             if (sourceConflict) Write(seed, "shared.txt", "feature shared\n");
-            if (ledgerConflict)
-                Write(
-                    seed,
-                    FrozenLedgerChangeClassifier.LedgerPath,
-                    "{\"event\":\"base\"}\n{\"event\":\"feature-freeze\"}\n");
             Git(seed, "add", ".");
             Git(seed, "commit", "-m", "feature content");
             OriginalHead = GitOutput(seed, "rev-parse", "HEAD");
@@ -200,11 +190,6 @@ public sealed partial class PrShepherdRecalculationTests
                 Write(seed, "Generated/dev-choice.md", "dev choice\n");
             Write(seed, sourceConflict ? "shared.txt" : "dev-input.txt", "advanced dev\n");
             Write(seed, "Trureturing.lean", "base trureturing\n");
-            if (ledgerConflict)
-                Write(
-                    seed,
-                    FrozenLedgerChangeClassifier.LedgerPath,
-                    "{\"event\":\"base\"}\n{\"event\":\"dev-freeze\"}\n");
             Git(seed, "add", "-A");
             Git(seed, "commit", "-m", "advance dev");
             BaseHead = GitOutput(seed, "rev-parse", "HEAD");
@@ -340,7 +325,6 @@ public sealed partial class PrShepherdRecalculationTests
                 $"PR_TEST_PAUSE_WORKTREE={(pauseWorktreeCreation ? "1" : "0")}",
                 $"PR_TEST_DELAY_LOCK_READ={(delayFirstLockOwnerRead ? "1" : "0")}",
                 $"PR_TEST_CONFLICTING={(conflicting ? "1" : "0")}",
-                $"PR_TEST_LEDGER_CONFLICT={(ledgerConflict ? "1" : "0")}",
                 $"PR_TEST_MOVE_HEAD_DURING_FETCH={(moveHeadDuringFetch ? "1" : "0")}",
                 $"PR_TEST_MOVE_BASE_DURING_FETCH={(moveBaseDuringFetch ? "1" : "0")}",
                 $"PR_TEST_MOVED_BASE={MovedBaseHead}",
@@ -487,7 +471,6 @@ public sealed partial class PrShepherdRecalculationTests
                 "PR_TEST_FAIL_MERGE=0",
                 "PR_TEST_PAUSE_WORKTREE=0",
                 "PR_TEST_DELAY_LOCK_READ=0",
-                $"PR_TEST_LEDGER_CONFLICT={(ledgerConflict ? "1" : "0")}",
                 "PR_TEST_MOVE_HEAD_DURING_FETCH=0",
                 "PR_TEST_MOVE_BASE_DURING_FETCH=0",
                 $"PR_TEST_MOVED_BASE={MovedBaseHead}",
@@ -733,9 +716,6 @@ public sealed partial class PrShepherdRecalculationTests
         internal string[] BoundedCalls() =>
             File.Exists(boundedCalls) ? File.ReadAllLines(boundedCalls) : [];
 
-        internal string[] LedgerObservations() =>
-            File.Exists(calls + ".ledger") ? File.ReadAllLines(calls + ".ledger") : [];
-
         internal string[] FixedPointObservations() =>
             File.Exists(calls + ".fixed-point")
                 ? File.ReadAllLines(calls + ".fixed-point")
@@ -768,15 +748,6 @@ public sealed partial class PrShepherdRecalculationTests
             var helper = Path.Combine(repository, ShepherdActionsScriptPath);
             File.AppendAllText(helper, $"\n# {marker}\n", new UTF8Encoding(false));
             Git(repository, "add", ShepherdActionsScriptPath);
-            Git(repository, "commit", "-m", marker);
-        }
-
-        internal void CommitTrackedLedgerHelperChange(string marker)
-        {
-            EnsureTrackedWatchScripts();
-            var helper = Path.Combine(repository, ShepherdLedgerScriptPath);
-            File.AppendAllText(helper, $"\n# {marker}\n", new UTF8Encoding(false));
-            Git(repository, "add", ShepherdLedgerScriptPath);
             Git(repository, "commit", "-m", marker);
         }
 

@@ -358,11 +358,33 @@ public sealed partial class ProductionEnvironmentTests
     private static FrozenValidatorFixture MigratedFixture(bool withLegacyReattest = false)
     {
         var fixture = CreateFrozenValidatorFixture();
+        var legacyLedger = Encoding.UTF8.GetString(LoadLedger(fixture.BaselineFiles).RawBytes.AsSpan());
+        foreach (var files in new[] { fixture.BaselineFiles, fixture.CurrentFiles })
+        {
+            foreach (var path in files.Keys
+                .Where(FrozenLedgerChangeClassifier.IsAcceptedEventPath)
+                .ToArray())
+            {
+                files.Remove(path);
+            }
+
+            files[FrozenLedgerChangeClassifier.LedgerPath] = legacyLedger;
+        }
+
         if (withLegacyReattest)
         {
             AppendCurrentReattestation(fixture);
-            fixture.BaselineFiles[FrozenLedgerChangeClassifier.LedgerPath] =
-                fixture.CurrentFiles[FrozenLedgerChangeClassifier.LedgerPath];
+            var updatedLegacy = Encoding.UTF8.GetString(
+                LoadLedger(fixture.CurrentFiles).RawBytes.AsSpan());
+            foreach (var path in fixture.CurrentFiles.Keys
+                .Where(FrozenLedgerChangeClassifier.IsAcceptedEventPath)
+                .ToArray())
+            {
+                fixture.CurrentFiles.Remove(path);
+            }
+
+            fixture.CurrentFiles[FrozenLedgerChangeClassifier.LedgerPath] = updatedLegacy;
+            fixture.BaselineFiles[FrozenLedgerChangeClassifier.LedgerPath] = updatedLegacy;
         }
 
         var legacy = LegacyLines(fixture);
