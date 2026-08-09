@@ -382,6 +382,7 @@ internal sealed class C0RenewCandidateWorkspace : IDisposable
         string exactPreimageCommit,
         string candidateRoot)
     {
+        var clock = System.Diagnostics.Stopwatch.StartNew();
         try
         {
             var runner = new ProductionWorktreeProcessRunner();
@@ -389,13 +390,49 @@ internal sealed class C0RenewCandidateWorkspace : IDisposable
             var donor = GitWorktreeInventory.SelectDonor(sourceRoot, pins, runner);
             var provisioned = LeanCacheProvisioner.Provision(donor, candidateRoot, runner);
             var warning = provisioned.Warning is null ? string.Empty : $" warning={provisioned.Warning}";
+            // cache_state distinguishes the two regimes #972 asks to be recorded as D5 grows:
+            // "donor" reused an existing .lake, anything else started from an empty one. Emitting
+            // it alongside the elapsed seconds and the free disk is what turns "c0-renew felt
+            // slow" into a series that can be compared across commits; without the state the
+            // timings are two populations averaged into one meaningless number.
             Console.Out.WriteLine(
-                $"C0_RENEW_LEAN_CACHE root={candidateRoot} strategy={provisioned.Strategy} method={provisioned.Method}{warning}");
+                $"C0_RENEW_LEAN_CACHE root={candidateRoot} strategy={provisioned.Strategy} " +
+                $"method={provisioned.Method} cache_state={CacheState(provisioned.Strategy)} " +
+                $"elapsed_seconds={clock.Elapsed.TotalSeconds:F1} " +
+                $"disk_free_gb={DiskFreeGb(candidateRoot)}{warning}");
         }
         catch (Exception failure) when (failure is not OutOfMemoryException)
         {
             Console.Out.WriteLine(
-                $"C0_RENEW_LEAN_CACHE root={candidateRoot} status=unavailable detail={failure.Message}");
+                $"C0_RENEW_LEAN_CACHE root={candidateRoot} strategy=unavailable cache_state=cold " +
+                $"elapsed_seconds={clock.Elapsed.TotalSeconds:F1} " +
+                $"disk_free_gb={DiskFreeGb(candidateRoot)} detail={failure.Message}");
+        }
+    }
+
+    /// "warm" only when an existing .lake was reused; every other strategy -- cache-get, or a
+    /// failure that leaves the tree bare -- starts the Lean build from nothing and belongs to
+    /// the cold population. Keeping the two apart is the point of recording at all.
+    private static string CacheState(string strategy) =>
+        string.Equals(strategy, "donor", StringComparison.Ordinal) ? "warm" : "cold";
+
+    /// Free space on the volume holding the workspace. #972's failure mode was disk, not time:
+    /// two cache-empty materializations once exhausted it and took the live Lean report down
+    /// with them, so the series needs the headroom next to the duration.
+    private static string DiskFreeGb(string path)
+    {
+        try
+        {
+            var root = Path.GetPathRoot(Path.GetFullPath(path));
+            if (string.IsNullOrEmpty(root)) return "unknown";
+            var drive = new DriveInfo(root);
+            return (drive.AvailableFreeSpace / 1024d / 1024d / 1024d).ToString(
+                "F1",
+                System.Globalization.CultureInfo.InvariantCulture);
+        }
+        catch (Exception failure) when (failure is ArgumentException or IOException or UnauthorizedAccessException)
+        {
+            return "unknown";
         }
     }
 
