@@ -179,14 +179,22 @@ internal sealed class BackfillInventoryDocument
         BackfillReceiptSyntax? receiptSyntax)
     {
         var entry = Mapping(rawEntry, $"source {sourceId} entries must be mappings");
-        var expectedKeys = EntryFieldUniverse.ToArray();
+        // 迁移窗口:旧形态把 ast_path 包在 boundary 里(其 start_byte/end_byte 已随位置锚一同废除),
+        // 目录形态直接写顶层 ast_path。两者在窗口内都读,contract 时只留后者。
+        var hasBoundary = entry.ContainsKey("boundary");
         ExactKeys(
             entry,
-            expectedKeys,
+            EntryFieldUniverse.Where(field => !hasBoundary || field != "ast_path").ToArray(),
+            hasBoundary ? ["boundary"] : [],
             $"source {sourceId} entry");
         var atomId = Scalar(entry, "atom_id", $"source {sourceId} atom_id");
 
-        var astPath = Scalar(entry, "ast_path", $"entry {atomId} ast_path");
+        var astPath = hasBoundary
+            ? Scalar(
+                Mapping(entry.GetValueOrDefault("boundary"), $"entry {atomId} boundary must be a mapping"),
+                "ast_path",
+                $"entry {atomId} ast_path")
+            : Scalar(entry, "ast_path", $"entry {atomId} ast_path");
 
         var fingerprints = Mapping(
             entry.GetValueOrDefault("fingerprints"),
@@ -222,9 +230,14 @@ internal sealed class BackfillInventoryDocument
     private static DigestionReceipts ParseReceipts(string atomId, object? rawReceipts)
     {
         var receipts = Mapping(rawReceipts, $"entry {atomId} receipts must be a mapping");
+        // 迁移窗口:旧形态每条都写 chain_atoms 与 tail_authorization(实测 dev 的 2,030 条
+        // 记录里 100% 为 `[]` 与 `null`),目录形态不再写出。窗口内接受但不建模 ——
+        // 代价是旧形态树上不跑 absorbed-tail 授权检查,而基线数据里本就无可检之物;
+        // 目录形态(候选树)的这条能力由 DigestionLedgerTests 的既有用例照常守着。
         ExactKeys(
             receipts,
             ["coverage", "scribe", "unresolved_subitems"],
+            ["chain_atoms", "tail_authorization"],
             $"entry {atomId} receipts");
         var coverage = ImmutableArray.CreateBuilder<DigestionCoverageReceipt>();
         foreach (var rawCoverage in List(receipts, "coverage", $"entry {atomId} coverage receipts must be a list"))
@@ -319,6 +332,23 @@ internal sealed class BackfillInventoryDocument
         string context)
     {
         if (!mapping.Keys.ToHashSet(StringComparer.Ordinal).SetEquals(expected))
+        {
+            throw new FormatException($"{context} keys are not canonical");
+        }
+    }
+
+    // 必需键必须全在;可选键可有可无,但除此以外一个多余键都不许有。
+    // 迁移窗口专用:旧单文件形态带着 boundary / chain_atoms / tail_authorization,
+    // 目录形态不再写出它们。窗口关闭时(contract PR)本重载与其调用方一同删除。
+    private static void ExactKeys(
+        IReadOnlyDictionary<string, object?> mapping,
+        IReadOnlyCollection<string> required,
+        IReadOnlyCollection<string> optional,
+        string context)
+    {
+        var keys = mapping.Keys.ToHashSet(StringComparer.Ordinal);
+        if (!keys.IsSupersetOf(required)
+            || !keys.IsSubsetOf(required.Concat(optional).ToHashSet(StringComparer.Ordinal)))
         {
             throw new FormatException($"{context} keys are not canonical");
         }
