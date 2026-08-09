@@ -1,7 +1,7 @@
-<!-- echo-residual-summary:v3 residual=sha256:4818a2499159bed095291f3679b6985c5def655fd0558713516f8dd4f07b90ba -->
+<!-- echo-residual-summary:v3 residual=sha256:d298d5e5bf878a674fead026450ba6f80d4ebd5f5b7a6587802b6265cbab2fa9 -->
 # Echo Residual Summary
 
-- unresolved_subitems: 549
+- unresolved_subitems: 547
 - mother_residual_atom_ids: 88
 
 ## `bedc-wm-v0.1`
@@ -175,7 +175,7 @@ Mother residual atoms: none.
 
 ## `observer-quantum-v1`
 
-- unresolved_subitems: 76
+- unresolved_subitems: 74
 - mother_residual_atom_ids: 22
 
 Mother residual atoms:
@@ -185,14 +185,13 @@ Mother residual atoms:
   - `hidden-address-local-variable-interpretation`
   - `kochen-specker-projection-valuation-obstruction`
   - `probability-not-ignorance-conclusion`
-- `observer-residual-17d6f34c071aedeee910eb7ef184769f34ff9379405f985d36503a18f485b73e` (7)
+- `observer-residual-17d6f34c071aedeee910eb7ef184769f34ff9379405f985d36503a18f485b73e` (6)
   - `born-control-numerical-tolerance-certificate`
   - `complete-solution-space-characterization`
   - `gleason-representation-and-uniqueness-dimension-at-least-three`
   - `harmonic-spectral-pruning-certificate`
   - `ledger-publicness-implies-noncontextual-additivity`
   - `quartic-pricing-context-counterexample`
-  - `rank-one-pure-state-modulus-square-reduction`
 - `observer-residual-39801f81b23d4fe1d4823f4470f961be3f2fc21445bfec13de1574cb9fd368bc` (2)
   - `bookkeeping-is-decoherence-identification`
   - `ledger-is-environment-identification`
@@ -255,14 +254,13 @@ Mother residual atoms:
   - `know-forgot-two-time-relation`
   - `multi-copy-erasure-quantifier`
   - `six-state-finite-certificates`
-- `observer-residual-a6962d32cb2d5b0127bc20031cd895bdfb1d232901e5e21eb0a62b55e49930eb` (7)
+- `observer-residual-a6962d32cb2d5b0127bc20031cd895bdfb1d232901e5e21eb0a62b55e49930eb` (6)
   - `born-control-numerical-tolerance-certificate`
   - `complete-solution-space-characterization`
   - `gleason-representation-and-uniqueness-dimension-at-least-three`
   - `harmonic-spectral-pruning-certificate`
   - `ledger-publicness-implies-noncontextual-additivity`
   - `quartic-pricing-context-counterexample`
-  - `rank-one-pure-state-modulus-square-reduction`
 - `observer-residual-a9e4073c36dcdc04163974b80a47d7884f470463b0b0bdd112c4c552bc29a607` (5)
   - `abstract-crossed-product-commutator-formula-beyond-register-representation`
   - `continuous-hidden-flow-rigidity-exclusion`
