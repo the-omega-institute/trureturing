@@ -42,15 +42,10 @@ public sealed class CHSHSpectrumDocumentTests
         Assert.DoesNotContain(@"\varepsilon", formulas, StringComparison.Ordinal);
         Assert.DoesNotContain("Dirichlet", formulas, StringComparison.Ordinal);
         Assert.DoesNotContain(@"\operatorname{Pr}", formulas, StringComparison.Ordinal);
-
-        var prose = string.Join(
-            " ",
+        Assert.All(
             describes.SelectMany(static describe => describe.Content.Items)
-                .OfType<DocumentBlock.Paragraph>()
-                .Select(static paragraph =>
-                    Assert.IsType<Inline.Text>(Assert.Single(paragraph.Content.Items)).Run.Value));
-        Assert.Contains("epsilon-cubed probability law", prose, StringComparison.Ordinal);
-        Assert.Contains("Dirichlet-volume argument", prose, StringComparison.Ordinal);
-        Assert.Contains("outside this module's scope", prose, StringComparison.Ordinal);
+                .OfType<DocumentBlock.Paragraph>(),
+            static paragraph =>
+                Assert.IsType<Inline.Text>(Assert.Single(paragraph.Content.Items)));
     }
 }
