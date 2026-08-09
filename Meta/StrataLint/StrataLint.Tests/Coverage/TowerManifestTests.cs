@@ -212,16 +212,17 @@ public sealed class TowerManifestTests
 
     private static RuleCatalog Catalog(params RuleId[] ids)
     {
-        var descriptors = ids.Select(id => new RuleDescriptor(
-            id,
-            "fixture",
-            DisplaySeverity.Error,
-            "fixture",
-            AdmissionEffect.Block,
-            RuleLifecycle.Active,
-            null)).ToImmutableArray();
-        var rules = ids.Select(static _ => (IRepositoryRule)new TowerRule()).ToImmutableArray();
-        return RuleCatalog.CreateForTesting(descriptors, rules);
+        var registrations = ids.Select(id => new RuleRegistration(
+            new RuleDescriptor(
+                id,
+                "fixture",
+                DisplaySeverity.Error,
+                "fixture",
+                AdmissionEffect.Block,
+                RuleLifecycle.Active,
+                null),
+            new TowerRule())).ToImmutableArray();
+        return RuleCatalog.CreateForTesting(registrations);
     }
 
     private static RepositorySnapshot Snapshot(params (string Path, string Text)[] files)
