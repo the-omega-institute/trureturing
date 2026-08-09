@@ -181,6 +181,12 @@ internal sealed class ProductionC0RenewEnvironment : IC0RenewEnvironment
         var baselineReport = Absolute(
             @base.Root,
             ".lake/build/stratalint/raw-lean-report.json");
+        // One ceremony budget spans both children, not one budget each. Handing
+        // LeanReportBudgetMinutes to the report producer and again to the gate lets a slow
+        // first child leave the second with a full fresh allowance, so the pair can run to
+        // twice the budget the ceremony is supposed to have. Start the clock here and give
+        // the second child only what is left.
+        var reportBudgetClock = System.Diagnostics.Stopwatch.StartNew();
         RunRequired(
             "/bin/bash",
             [
@@ -219,12 +225,34 @@ internal sealed class ProductionC0RenewEnvironment : IC0RenewEnvironment
                 baselineReport,
             ],
             @base.Root,
-            TimeSpan.FromMinutes(LeanReportBudgetMinutes),
+            RemainingReportBudget(reportBudgetClock),
             64 * 1024 * 1024);
         return new C0RenewGateResult(
             result.ExitCode == 3 ? 0 : result.ExitCode,
             ImmutableArray.CreateRange(result.StandardOutput),
             ImmutableArray.CreateRange(result.StandardError));
+    }
+
+    /// Unlike the Lean cache, which is an optimisation and degrades to a cold build, an
+    /// exhausted budget is a real outcome: continuing would mean the ceremony ran past the
+    /// window it was granted. Fail closed, and name the budget that ran out -- otherwise the
+    /// eventual timeout surfaces as whichever inner step happened to be running, pointing at
+    /// the symptom instead of at the ceremony budget (the shape #993 records).
+    /// Elapsed time comes from a Stopwatch rather than a wall clock: this measures how much
+    /// of the budget the first child consumed, and a monotonic source keeps that measurement
+    /// correct across a clock adjustment mid-ceremony. DateTimeOffset.UtcNow is also a banned
+    /// symbol here (RS0030, "inject a clock or pass an explicit deterministic timestamp").
+    private static TimeSpan RemainingReportBudget(System.Diagnostics.Stopwatch elapsed)
+    {
+        var remaining = TimeSpan.FromMinutes(LeanReportBudgetMinutes) - elapsed.Elapsed;
+        if (remaining <= TimeSpan.Zero)
+        {
+            throw new InvalidOperationException(
+                "C0_RENEW_BUDGET_EXHAUSTED owner=lean-report-budget stage=gate-wiring " +
+                $"budget_minutes={LeanReportBudgetMinutes}");
+        }
+
+        return remaining;
     }
 
     private string Absolute(string path) =>
@@ -320,12 +348,54 @@ internal sealed class C0RenewCandidateWorkspace : IDisposable
                     "materialized C0 gate candidate is not clean");
             }
 
+            // Seed the Lean build cache from a donor tree instead of starting empty. Both
+            // workspaces this method produces otherwise rebuild mathlib and D5 from nothing,
+            // which is the pair of cache-empty materializations #972 records; each .lake is
+            // roughly the size of a worktree, and two of them once exhausted the disk and
+            // took the live Lean report with them (#971).
+            //
+            // Placed after the revision and working-tree checks on purpose: clean-preimage is
+            // a Git-level property (ChangedPaths, ResolveCurrentRevision, WorkingTreeChanges)
+            // and .lake is gitignored, so seeding it afterwards is invisible to all three.
+            // make worktree already copies a donor .lake for every lane in this repository.
+            //
+            // Provision falls back to `lake exe cache get` when no donor qualifies, so a
+            // missing or mismatched donor degrades to the previous behaviour rather than failing.
+            SeedLeanCache(source, exactPreimageCommit, candidate);
+
             return new C0RenewCandidateWorkspace(temporary, candidate);
         }
         catch
         {
             Directory.Delete(temporary, recursive: true);
             throw;
+        }
+    }
+
+    /// The cache is an optimisation, never a correctness input: the ceremony's verdict comes
+    /// from the frozen preimage and the reports built inside it, not from where the build
+    /// artifacts came from. So a failure here must not abort a renew that would otherwise
+    /// succeed -- it costs a cold build, which is exactly the status quo before this seeding
+    /// existed. Any other choice would make an optimisation able to fail a trust-root ceremony.
+    private static void SeedLeanCache(
+        string sourceRoot,
+        string exactPreimageCommit,
+        string candidateRoot)
+    {
+        try
+        {
+            var runner = new ProductionWorktreeProcessRunner();
+            var pins = LeanPinSet.ReadBase(sourceRoot, exactPreimageCommit, runner);
+            var donor = GitWorktreeInventory.SelectDonor(sourceRoot, pins, runner);
+            var provisioned = LeanCacheProvisioner.Provision(donor, candidateRoot, runner);
+            var warning = provisioned.Warning is null ? string.Empty : $" warning={provisioned.Warning}";
+            Console.Out.WriteLine(
+                $"C0_RENEW_LEAN_CACHE root={candidateRoot} strategy={provisioned.Strategy} method={provisioned.Method}{warning}");
+        }
+        catch (Exception failure) when (failure is not OutOfMemoryException)
+        {
+            Console.Out.WriteLine(
+                $"C0_RENEW_LEAN_CACHE root={candidateRoot} status=unavailable detail={failure.Message}");
         }
     }
 

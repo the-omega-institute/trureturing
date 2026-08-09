@@ -14,6 +14,21 @@ BASE_REF="${BASE:-origin/dev}"
 BASE_SHA=""
 STRATALINT_PERF_RUN_ID=""
 
+# Remaining seconds of the outer deadline, or empty when nothing bounds this run.
+# PR_SHEPHERD_DEADLINE_AT is the existing contract (pr-shepherd.sh:145-152): an absolute
+# epoch second that every nested step must respect. preflight sat outside that chain, so
+# it chose report budgets knowing nothing about how much wall clock the caller had left,
+# and a run could exhaust the outer deadline inside an inner step that still believed it
+# had time. Reading it here rather than inventing a second budget keeps one contract.
+remaining_deadline_seconds() {
+  local deadline="${PR_SHEPHERD_DEADLINE_AT:-}"
+  [[ "$deadline" =~ ^[0-9]+$ ]] || return 1
+  local now
+  now="$(date +%s)"
+  [[ "$now" =~ ^[0-9]+$ ]] || return 1
+  printf '%s\n' "$(( deadline - now ))"
+}
+
 structured_gate_failure() {
   local semantic="$PREFLIGHT_GATE_OUTCOME_DIR/gate-outcome-v1.semantic-violation"
   local infrastructure="$PREFLIGHT_GATE_OUTCOME_DIR/gate-outcome-v1.infrastructure-failure"
@@ -180,6 +195,22 @@ record_timing compile-fail-proofs
 
 PREFLIGHT_FAULT_CLASS="INFRASTRUCTURE"
 PREFLIGHT_GATE_OUTCOME_DIR="$(mktemp -d "${TMPDIR:-/tmp}/stratalint-gate-outcome.XXXXXXXX")"
+
+# Measure what is left of the outer deadline before entering the most expensive stage,
+# and name the owner when it is already spent. Without this the gate starts, runs its
+# own report production against an inner budget, and the eventual timeout is reported as
+# whatever inner step happened to be running -- pointing at the symptom rather than at
+# the budget that actually ran out.
+if gate_remaining="$(remaining_deadline_seconds)"; then
+  if [[ "$gate_remaining" -le 0 ]]; then
+    printf 'PREFLIGHT_BUDGET_EXHAUSTED owner=outer-deadline stage=gate remaining_seconds=%s deadline_at=%s\n' \
+      "$gate_remaining" "$PR_SHEPHERD_DEADLINE_AT" >&2
+    PREFLIGHT_FAULT_CLASS="INFRASTRUCTURE"
+    exit 124
+  fi
+  printf 'PREFLIGHT_BUDGET owner=outer-deadline stage=gate remaining_seconds=%s\n' "$gate_remaining"
+fi
+
 PREFLIGHT_FAULT_CLASS="SEMANTIC"
 set +e
 STRATALINT_GATE_OUTCOME_DIR="$PREFLIGHT_GATE_OUTCOME_DIR" \
