@@ -1,0 +1,10 @@
+ast_path: appendix/E.52
+fingerprints:
+  raw_sha256: sha256:d94e3e0eb73e161aa996b6db40ed210897b81d2611007e21386adfb53b617f29
+  normalized_sha256: sha256:d94e3e0eb73e161aa996b6db40ed210897b81d2611007e21386adfb53b617f29
+cas_ref: sha256:d94e3e0eb73e161aa996b6db40ed210897b81d2611007e21386adfb53b617f29
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

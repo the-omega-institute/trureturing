@@ -1,0 +1,28 @@
+ast_path: remark/27.36
+fingerprints:
+  raw_sha256: sha256:8b4ec2189a8c6772eb3aae47e8c078cf4ff32b28b5b72df589dd5b31afb1535d
+  normalized_sha256: sha256:8b4ec2189a8c6772eb3aae47e8c078cf4ff32b28b5b72df589dd5b31afb1535d
+cas_ref: sha256:8b4ec2189a8c6772eb3aae47e8c078cf4ff32b28b5b72df589dd5b31afb1535d
+coverage_gids:
+  - D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec
+      source_sha256: sha256:8b4ec2189a8c6772eb3aae47e8c078cf4ff32b28b5b72df589dd5b31afb1535d
+      target_sha256: sha256:a8edfa970f6658782b937e625f012faa0c0f890994cdb2ce249fe10a499ded1c
+  scribe:
+    - gid: D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec
+      definition_sha256: sha256:2a1ce01b845c8198544488a2e16ebbf6b9cf8dc7bc90625e985080b5f5d11e26
+      emission_sha256: sha256:7113caf73db1e94703540e1be0acc6ab04d2e605d436b1cfae1a7dd852d9d9df
+  unresolved_subitems:
+    - off-line-zero-existence-as-omniscient-truth-versus-priced-uncertainty
+    - detection-radius-logarithmic-law
+    - detection-radius-ten-to-the-1200-certificate
+    - off-line-zero-causes-prime-counting-fluctuations
+    - off-line-zero-exists-only-at-heat-time-zero
+    - any-positive-heat-flow-immediately-restores-line
+    - thermal-lifetime-versus-resonance-width
+    - moving-one-zero-changes-prime-counting-at-all-scales
+    - all-scale-holographic-locking-numerical-certificate
+    - off-line-zero-as-collective-prime-encoded-structure
+    - D5-T0011--pointwise-conservation-breakdown-with-window-leakage

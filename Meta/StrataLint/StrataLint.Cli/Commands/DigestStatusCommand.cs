@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
@@ -28,26 +29,20 @@ internal static class DigestStatusCommand
         {
             var options = ParseArguments(arguments);
             var snapshot = Decode(repository.ReadCurrent());
-            if (!snapshot.TryGetFile(BackfillInventoryLoader.RelativePath, out var ledgerFile))
-            {
-                throw new InvalidOperationException($"{BackfillInventoryLoader.RelativePath} is missing");
-            }
+            // 双形态:旧单文件在则台账指纹沿用其原始字节(逐字节兼容既有收据);
+            // 目录形态以 canonical writer 的输出字节定义指纹。
+            var hasLegacyLedger =
+                snapshot.TryGetFile(BackfillInventoryLoader.RelativePath, out var ledgerFile);
 
             if (options.FormalizeCandidates)
             {
                 var formalizeLeanReport = leanReportSource.Load(snapshot);
-                var formalizeDocument = BackfillInventoryLoader.Load(ledgerFile.Text);
+                var formalizeDocument = BackfillInventoryLoader.Load(snapshot);
                 BackfillInventoryDocument? formalizeBaselineDocument = null;
                 if (options.BaselineRevision is not null)
                 {
-                    var baseline = Decode(repository.ReadRevision(options.BaselineRevision));
-                    if (!baseline.TryGetFile(BackfillInventoryLoader.RelativePath, out var baselineLedger))
-                    {
-                        throw new InvalidOperationException(
-                            $"baseline {BackfillInventoryLoader.RelativePath} is missing");
-                    }
-
-                    formalizeBaselineDocument = BackfillInventoryLoader.Load(baselineLedger.Text);
+                    formalizeBaselineDocument = BackfillInventoryLoader.Load(
+                        Decode(repository.ReadRevision(options.BaselineRevision)));
                 }
 
                 var formalizeEvaluation = DigestionStatusEvaluator.EvaluateUncovered(
@@ -64,7 +59,9 @@ internal static class DigestStatusCommand
                     RenderFormalizeCandidates(
                         formalizeEvaluation,
                         snapshot,
-                        ledgerFile,
+                        hasLegacyLedger
+                            ? ledgerFile!.RawBytes
+                            : BackfillInventoryWriter.Write(formalizeDocument),
                         formalizeLeanReport),
                     string.Empty);
             }
@@ -72,18 +69,12 @@ internal static class DigestStatusCommand
             var leanReport = leanReportSource.Load(snapshot);
             var lean = ValidateLean(snapshot, leanReport);
             var verifiedScribeEmissions = scribeEmissionVerifier.Verify(leanReport);
-            var document = BackfillInventoryLoader.Load(ledgerFile.Text);
+            var document = BackfillInventoryLoader.Load(snapshot);
             BackfillInventoryDocument? baselineDocument = null;
             if (options.BaselineRevision is not null)
             {
-                var baseline = Decode(repository.ReadRevision(options.BaselineRevision));
-                if (!baseline.TryGetFile(BackfillInventoryLoader.RelativePath, out var baselineLedger))
-                {
-                    throw new InvalidOperationException(
-                        $"baseline {BackfillInventoryLoader.RelativePath} is missing");
-                }
-
-                baselineDocument = BackfillInventoryLoader.Load(baselineLedger.Text);
+                baselineDocument = BackfillInventoryLoader.Load(
+                    Decode(repository.ReadRevision(options.BaselineRevision)));
             }
 
             var evaluation = DigestionStatusEvaluator.Evaluate(
@@ -207,7 +198,7 @@ internal static class DigestStatusCommand
     private static string RenderFormalizeCandidates(
         DigestionLedgerEvaluation evaluation,
         RepositorySnapshot snapshot,
-        RepositoryFile ledgerFile,
+        ImmutableArray<byte> ledgerBytes,
         LeanAxiomReport leanReport)
     {
         var projections = evaluation.Entries
@@ -225,7 +216,7 @@ internal static class DigestStatusCommand
         var material = new
         {
             schema = "stratalint-formalize-candidates-v3",
-            ledger_sha256 = DigestionFingerprint.ComputeOpaque(ledgerFile.RawBytes.AsSpan()).RawSha256,
+            ledger_sha256 = DigestionFingerprint.ComputeOpaque(ledgerBytes.AsSpan()).RawSha256,
             candidates = projections
                 .Where(static item => item.Candidate is not null)
                 .Select(static item => item.Candidate!),

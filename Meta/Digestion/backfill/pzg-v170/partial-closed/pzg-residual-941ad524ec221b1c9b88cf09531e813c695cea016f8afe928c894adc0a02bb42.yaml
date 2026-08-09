@@ -1,0 +1,23 @@
+ast_path: corollary/24.12
+fingerprints:
+  raw_sha256: sha256:941ad524ec221b1c9b88cf09531e813c695cea016f8afe928c894adc0a02bb42
+  normalized_sha256: sha256:941ad524ec221b1c9b88cf09531e813c695cea016f8afe928c894adc0a02bb42
+cas_ref: sha256:941ad524ec221b1c9b88cf09531e813c695cea016f8afe928c894adc0a02bb42
+coverage_gids:
+  - D5/S3/Zeros/EulerWindows.finite_euler_window_ne_zero
+receipts:
+  coverage:
+    - gid: D5/S3/Zeros/EulerWindows.finite_euler_window_ne_zero
+      source_sha256: sha256:941ad524ec221b1c9b88cf09531e813c695cea016f8afe928c894adc0a02bb42
+      target_sha256: sha256:b93cbfd5915a7afb81096c609720e034fa22e7e5e7bbf23e6d9a51cb640fa4cf
+  scribe:
+    - gid: D5/S3/Zeros/EulerWindows.finite_euler_window_ne_zero
+      definition_sha256: sha256:72d7b5d8dbd26af1c3ef49969e3c9e2f870296684d178c2b76f93a102f658ade
+      emission_sha256: sha256:04f11a17f4ad46a59b40536368a46dc933995818155ee06b48e4a7d3d389afc2
+  unresolved_subitems:
+    - full-plane-zero-freeness-and-pole-lattice
+    - all-prime-axis-tail-participation
+    - critical-strip-euler-product-divergence-and-nonapproximation
+    - epsilon-window-event-necessity
+    - euclid-zero-window-escape-pair
+    - completion-contract-and-correlation-continuation-clauses

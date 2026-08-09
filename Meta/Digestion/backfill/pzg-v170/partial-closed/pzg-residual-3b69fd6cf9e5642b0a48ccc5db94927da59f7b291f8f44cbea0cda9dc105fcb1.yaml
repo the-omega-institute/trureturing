@@ -1,0 +1,24 @@
+ast_path: remark/25.15
+fingerprints:
+  raw_sha256: sha256:3b69fd6cf9e5642b0a48ccc5db94927da59f7b291f8f44cbea0cda9dc105fcb1
+  normalized_sha256: sha256:3b69fd6cf9e5642b0a48ccc5db94927da59f7b291f8f44cbea0cda9dc105fcb1
+cas_ref: sha256:3b69fd6cf9e5642b0a48ccc5db94927da59f7b291f8f44cbea0cda9dc105fcb1
+coverage_gids:
+  - D5/S3/Weil/SpectralDynamics.critical_line_characterizations
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/SpectralDynamics.critical_line_characterizations
+      source_sha256: sha256:3b69fd6cf9e5642b0a48ccc5db94927da59f7b291f8f44cbea0cda9dc105fcb1
+      target_sha256: sha256:a8edfa970f6658782b937e625f012faa0c0f890994cdb2ce249fe10a499ded1c
+  scribe:
+    - gid: D5/S3/Weil/SpectralDynamics.critical_line_characterizations
+      definition_sha256: sha256:2a1ce01b845c8198544488a2e16ebbf6b9cf8dc7bc90625e985080b5f5d11e26
+      emission_sha256: sha256:7113caf73db1e94703540e1be0acc6ab04d2e605d436b1cfae1a7dd852d9d9df
+  unresolved_subitems:
+    - labeled-zeta-normalization-and-horizontal-dissipative-compression
+    - left-half-plane-mirror-phase-with-continuation-only
+    - xi-functional-equation-intertranslates-the-two-phases
+    - critical-line-as-phase-transition-via-lee-yang-and-t-duality
+    - irreversible-ledger-time-from-strictly-monotone-cost
+    - zeros-as-phase-time-cancellation-events
+    - rh-as-all-cancellations-on-one-unitary-time-line

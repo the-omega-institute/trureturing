@@ -1,0 +1,22 @@
+ast_path: remark/25.14
+fingerprints:
+  raw_sha256: sha256:79a9167842a2fdbb7eddc754d6af9c39b648fb57496175fd0df605e16979a017
+  normalized_sha256: sha256:79a9167842a2fdbb7eddc754d6af9c39b648fb57496175fd0df605e16979a017
+cas_ref: sha256:79a9167842a2fdbb7eddc754d6af9c39b648fb57496175fd0df605e16979a017
+coverage_gids:
+  - D5/S1/Scale/MinkowskiModelSet.minkowski_model_set_spec
+receipts:
+  coverage:
+    - gid: D5/S1/Scale/MinkowskiModelSet.minkowski_model_set_spec
+      source_sha256: sha256:79a9167842a2fdbb7eddc754d6af9c39b648fb57496175fd0df605e16979a017
+      target_sha256: sha256:17c9cf3ca266daee964ca1511d0c12fb2c6889f4e6d57bebb38719cbecf0840a
+  scribe:
+    - gid: D5/S1/Scale/MinkowskiModelSet.minkowski_model_set_spec
+      definition_sha256: sha256:d5343cb038f2f14682c5a9cd5188257fb10918c2553da3fb82cf255380337812
+      emission_sha256: sha256:d81b501cf524f6a084956ee5419ce0ab2a01b23ce4579a14bd82894d1dbb2fe1
+  unresolved_subitems:
+    - value-layer-free-lattice-bloch-wave-and-brillouin-torus
+    - value-layer-dense-zeta-line
+    - lambda-embeddings-as-physical-and-internal-spaces
+    - D5-T0011--noncongruence-equivalent-to-bloch-breakdown
+    - no-periodic-character-classifies-code-observables

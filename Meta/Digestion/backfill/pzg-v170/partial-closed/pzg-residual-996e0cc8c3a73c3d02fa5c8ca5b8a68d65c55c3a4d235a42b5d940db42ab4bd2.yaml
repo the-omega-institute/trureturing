@@ -1,0 +1,22 @@
+ast_path: theorem/25.4
+fingerprints:
+  raw_sha256: sha256:996e0cc8c3a73c3d02fa5c8ca5b8a68d65c55c3a4d235a42b5d940db42ab4bd2
+  normalized_sha256: sha256:996e0cc8c3a73c3d02fa5c8ca5b8a68d65c55c3a4d235a42b5d940db42ab4bd2
+cas_ref: sha256:996e0cc8c3a73c3d02fa5c8ca5b8a68d65c55c3a4d235a42b5d940db42ab4bd2
+coverage_gids:
+  - D5/S3/Weil/SpectralDynamics.vertical_evolution_unitary_group
+  - D5/S3/Weil/SpectralDynamics.horizontal_evolution_contraction_semigroup
+  - D5/S3/Weil/SpectralDynamics.labeled_zeta_evolution_spec
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/SpectralDynamics.vertical_evolution_unitary_group
+      source_sha256: sha256:996e0cc8c3a73c3d02fa5c8ca5b8a68d65c55c3a4d235a42b5d940db42ab4bd2
+      target_sha256: sha256:a8edfa970f6658782b937e625f012faa0c0f890994cdb2ce249fe10a499ded1c
+    - gid: D5/S3/Weil/SpectralDynamics.horizontal_evolution_contraction_semigroup
+      source_sha256: sha256:996e0cc8c3a73c3d02fa5c8ca5b8a68d65c55c3a4d235a42b5d940db42ab4bd2
+      target_sha256: sha256:a8edfa970f6658782b937e625f012faa0c0f890994cdb2ce249fe10a499ded1c
+    - gid: D5/S3/Weil/SpectralDynamics.labeled_zeta_evolution_spec
+      source_sha256: sha256:996e0cc8c3a73c3d02fa5c8ca5b8a68d65c55c3a4d235a42b5d940db42ab4bd2
+      target_sha256: sha256:a8edfa970f6658782b937e625f012faa0c0f890994cdb2ce249fe10a499ded1c
+  scribe: []
+  unresolved_subitems: []

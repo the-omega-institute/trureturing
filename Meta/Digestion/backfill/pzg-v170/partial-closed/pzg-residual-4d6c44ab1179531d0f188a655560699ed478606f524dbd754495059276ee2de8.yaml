@@ -1,0 +1,14 @@
+ast_path: definition/26.1
+fingerprints:
+  raw_sha256: sha256:4d6c44ab1179531d0f188a655560699ed478606f524dbd754495059276ee2de8
+  normalized_sha256: sha256:4d6c44ab1179531d0f188a655560699ed478606f524dbd754495059276ee2de8
+cas_ref: sha256:4d6c44ab1179531d0f188a655560699ed478606f524dbd754495059276ee2de8
+coverage_gids:
+  - D5/S3/Weil/EulerProduct.single_address_reading_spec
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/EulerProduct.single_address_reading_spec
+      source_sha256: sha256:4d6c44ab1179531d0f188a655560699ed478606f524dbd754495059276ee2de8
+      target_sha256: sha256:15cd001d32d1ff035dbe72f8066304f2aaf08d6f4eb95c8366c71635f022ba21
+  scribe: []
+  unresolved_subitems: []

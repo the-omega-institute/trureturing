@@ -1,0 +1,14 @@
+ast_path: definition/22.1
+fingerprints:
+  raw_sha256: sha256:9c3574bdde0296174bd8e5fe94614f4131090c6e2621eb941ae5551515ff9454
+  normalized_sha256: sha256:9c3574bdde0296174bd8e5fe94614f4131090c6e2621eb941ae5551515ff9454
+cas_ref: sha256:9c3574bdde0296174bd8e5fe94614f4131090c6e2621eb941ae5551515ff9454
+coverage_gids:
+  - D5/S3/Zeros/EulerWindows.prime_axis_heat_trace_eq_zeta
+receipts:
+  coverage:
+    - gid: D5/S3/Zeros/EulerWindows.prime_axis_heat_trace_eq_zeta
+      source_sha256: sha256:9c3574bdde0296174bd8e5fe94614f4131090c6e2621eb941ae5551515ff9454
+      target_sha256: sha256:b93cbfd5915a7afb81096c609720e034fa22e7e5e7bbf23e6d9a51cb640fa4cf
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: lemma/3.2
+fingerprints:
+  raw_sha256: sha256:0ad32f2c7ce4a2a5cad5b4e99ed16faeec08d1dadb27a2eb20c9c8861028d4b2
+  normalized_sha256: sha256:0ad32f2c7ce4a2a5cad5b4e99ed16faeec08d1dadb27a2eb20c9c8861028d4b2
+cas_ref: sha256:0ad32f2c7ce4a2a5cad5b4e99ed16faeec08d1dadb27a2eb20c9c8861028d4b2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

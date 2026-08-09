@@ -1,0 +1,28 @@
+ast_path: theorem/observer-algebra
+fingerprints:
+  raw_sha256: sha256:7c9486a5ed7ca3264cd32d9aaaa07bb8af9e81a547a163dd202042efa51b920c
+  normalized_sha256: sha256:7c9486a5ed7ca3264cd32d9aaaa07bb8af9e81a547a163dd202042efa51b920c
+cas_ref: sha256:7c9486a5ed7ca3264cd32d9aaaa07bb8af9e81a547a163dd202042efa51b920c
+coverage_gids:
+  - D5/S3/Quantum/ObserverCommutator.observer_read_update_commutator_formula
+  - D5/S3/Quantum/ObserverAlgebra.observer_read_update_noncommutative
+  - D5/S3/Quantum/ObserverAlgebra.observer_update_covariant_group_skeleton
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/ObserverCommutator.observer_read_update_commutator_formula
+      source_sha256: sha256:7c9486a5ed7ca3264cd32d9aaaa07bb8af9e81a547a163dd202042efa51b920c
+      target_sha256: sha256:63d5dce8abbb796cbb96c45d34b583f8ece4e6b0861cd20e8bfd0f8c202f909e
+    - gid: D5/S3/Quantum/ObserverAlgebra.observer_read_update_noncommutative
+      source_sha256: sha256:7c9486a5ed7ca3264cd32d9aaaa07bb8af9e81a547a163dd202042efa51b920c
+      target_sha256: sha256:95f2bcbc8550ac25b6ae6a4ebf3c417dd714226946db591b4c98c1be03fafc06
+    - gid: D5/S3/Quantum/ObserverAlgebra.observer_update_covariant_group_skeleton
+      source_sha256: sha256:7c9486a5ed7ca3264cd32d9aaaa07bb8af9e81a547a163dd202042efa51b920c
+      target_sha256: sha256:95f2bcbc8550ac25b6ae6a4ebf3c417dd714226946db591b4c98c1be03fafc06
+  scribe: []
+  unresolved_subitems:
+    - universal-c-star-crossed-product-identification
+    - continuous-hidden-flow-rigidity-exclusion
+    - discreteness-forced-by-rigidity
+    - integer-action-selected-by-observer-premise
+    - observer-read-write-forces-structure
+    - abstract-crossed-product-commutator-formula-beyond-register-representation

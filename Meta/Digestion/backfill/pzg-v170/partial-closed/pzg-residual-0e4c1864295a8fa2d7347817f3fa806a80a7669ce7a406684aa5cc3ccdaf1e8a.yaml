@@ -1,0 +1,19 @@
+ast_path: remark/25.8
+fingerprints:
+  raw_sha256: sha256:0e4c1864295a8fa2d7347817f3fa806a80a7669ce7a406684aa5cc3ccdaf1e8a
+  normalized_sha256: sha256:0e4c1864295a8fa2d7347817f3fa806a80a7669ce7a406684aa5cc3ccdaf1e8a
+cas_ref: sha256:0e4c1864295a8fa2d7347817f3fa806a80a7669ce7a406684aa5cc3ccdaf1e8a
+coverage_gids:
+  - D5/S3/Weil/SpectralDynamics.vertical_evolution_unitary_group
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/SpectralDynamics.vertical_evolution_unitary_group
+      source_sha256: sha256:0e4c1864295a8fa2d7347817f3fa806a80a7669ce7a406684aa5cc3ccdaf1e8a
+      target_sha256: sha256:a8edfa970f6658782b937e625f012faa0c0f890994cdb2ce249fe10a499ded1c
+  scribe:
+    - gid: D5/S3/Weil/SpectralDynamics.vertical_evolution_unitary_group
+      definition_sha256: sha256:2a1ce01b845c8198544488a2e16ebbf6b9cf8dc7bc90625e985080b5f5d11e26
+      emission_sha256: sha256:7113caf73db1e94703540e1be0acc6ab04d2e605d436b1cfae1a7dd852d9d9df
+  unresolved_subitems:
+    - diagonal-length-operator-spectrum-equals-log-natural-numbers
+    - known-channel-from-length-spectrum-to-zero-spectrum

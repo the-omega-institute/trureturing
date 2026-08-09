@@ -1,0 +1,30 @@
+ast_path: remark/27.374-27.375
+fingerprints:
+  raw_sha256: sha256:96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb
+  normalized_sha256: sha256:96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb
+cas_ref: sha256:96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb
+coverage_gids:
+  - D5/S1/Phase/SeatTowerConsequences.cosecant_peak_identity
+  - D5/S1/Phase/SeatTowerConsequences.dominant_term_gap_bound
+receipts:
+  coverage:
+    - gid: D5/S1/Phase/SeatTowerConsequences.cosecant_peak_identity
+      source_sha256: sha256:96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb
+      target_sha256: sha256:520db05df3f4606150d67b80c6b51ac763a71c485b93b0acff8561afa686d853
+    - gid: D5/S1/Phase/SeatTowerConsequences.dominant_term_gap_bound
+      source_sha256: sha256:96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb
+      target_sha256: sha256:520db05df3f4606150d67b80c6b51ac763a71c485b93b0acff8561afa686d853
+  scribe: []
+  unresolved_subitems:
+    - pythagorean-input-validator-clause
+    - pin-angle-formula
+    - numerical-double-check-certificate
+    - fabricated-input-rejection-certificate
+    - cosecant-peak-equation-from-pin-data
+    - cosecant-peak-identity
+    - zero-family-pin-ledger
+    - station-flip-angle-jump
+    - hecke-angle-literature-program
+    - dominant-partial-quotient-gap-lemma
+    - dominant-partial-quotient-identification
+    - sixty-six-case-certificate

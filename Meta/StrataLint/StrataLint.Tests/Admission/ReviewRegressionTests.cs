@@ -204,9 +204,7 @@ public sealed partial class ReviewRegressionTests
         var fixture = new RuleFixture();
         var fixtureInventory = BackfillInventoryLoader.Load(
             fixture.Files[BackfillInventoryLoader.RelativePath]);
-        var repositoryInventory = BackfillInventoryLoader.Load(File.ReadAllText(
-            Path.Combine(repositoryRoot, BackfillInventoryLoader.RelativePath),
-            Encoding.UTF8));
+        var repositoryInventory = BackfillInventoryLoader.LoadRoot(repositoryRoot);
         fixture.Files[BackfillInventoryLoader.RelativePath] = Encoding.UTF8.GetString(
             BackfillInventoryWriter.Write(fixtureInventory.WithTickets(
                 repositoryInventory.RequireTickets())).AsSpan());

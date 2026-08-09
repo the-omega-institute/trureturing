@@ -1,0 +1,14 @@
+ast_path: theorem/19.3
+fingerprints:
+  raw_sha256: sha256:987f9480a55c5e4895bff04336cbbd3ae9aec9411a0cae5c944f48b727089fc0
+  normalized_sha256: sha256:987f9480a55c5e4895bff04336cbbd3ae9aec9411a0cae5c944f48b727089fc0
+cas_ref: sha256:987f9480a55c5e4895bff04336cbbd3ae9aec9411a0cae5c944f48b727089fc0
+coverage_gids:
+  - D5/S3/Weil/CriticalLine.unitarity_line_iff
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/CriticalLine.unitarity_line_iff
+      source_sha256: sha256:987f9480a55c5e4895bff04336cbbd3ae9aec9411a0cae5c944f48b727089fc0
+      target_sha256: sha256:7b72300093e9a801e544c48fb92c4c651a5eeacd3dab9b32fd28c8da28b76a34
+  scribe: []
+  unresolved_subitems: []

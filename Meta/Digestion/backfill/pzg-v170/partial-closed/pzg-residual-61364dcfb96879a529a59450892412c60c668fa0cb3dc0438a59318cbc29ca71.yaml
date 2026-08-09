@@ -1,0 +1,19 @@
+ast_path: theorem/23.4
+fingerprints:
+  raw_sha256: sha256:61364dcfb96879a529a59450892412c60c668fa0cb3dc0438a59318cbc29ca71
+  normalized_sha256: sha256:61364dcfb96879a529a59450892412c60c668fa0cb3dc0438a59318cbc29ca71
+cas_ref: sha256:61364dcfb96879a529a59450892412c60c668fa0cb3dc0438a59318cbc29ca71
+coverage_gids:
+  - D5/S3/Zeros/ScalingRegisterRigidity.realized_same_germ_same_total_code_excludes_scaling_register
+receipts:
+  coverage:
+    - gid: D5/S3/Zeros/ScalingRegisterRigidity.realized_same_germ_same_total_code_excludes_scaling_register
+      source_sha256: sha256:61364dcfb96879a529a59450892412c60c668fa0cb3dc0438a59318cbc29ca71
+      target_sha256: sha256:5bce9e185c5957fcab648acb7664c51f6c1b1230f9fccef479f560c57d8da7d7
+  scribe:
+    - gid: D5/S3/Zeros/ScalingRegisterRigidity.realized_same_germ_same_total_code_excludes_scaling_register
+      definition_sha256: sha256:b06d75fa4979884af2764e93f428a83958f9ec972ba03d94449081ce62bf7002
+      emission_sha256: sha256:4229d1f2c6ae9b9f5fd24027153ba754a7ce42eafa6b880bdc9ab005a0e61b87
+  unresolved_subitems:
+    - c3b-local-scaling-ledger-zero-qualification
+    - c3b-positive-functional-o6-bridge

@@ -1,0 +1,14 @@
+ast_path: theorem/24.8
+fingerprints:
+  raw_sha256: sha256:87c55470652b1345ccab17e277a2c8ee8b896ac753b18c995ea31417a813ee29
+  normalized_sha256: sha256:87c55470652b1345ccab17e277a2c8ee8b896ac753b18c995ea31417a813ee29
+cas_ref: sha256:87c55470652b1345ccab17e277a2c8ee8b896ac753b18c995ea31417a813ee29
+coverage_gids:
+  - D5/S3/Zeros/ZeroGeometry.ontological_zero_re_eq_critical
+receipts:
+  coverage:
+    - gid: D5/S3/Zeros/ZeroGeometry.ontological_zero_re_eq_critical
+      source_sha256: sha256:87c55470652b1345ccab17e277a2c8ee8b896ac753b18c995ea31417a813ee29
+      target_sha256: sha256:f5fa23f5e88014c485cf5f1fd4dac3bd2998ca1d5c31bb1af635abf0c3602cb9
+  scribe: []
+  unresolved_subitems: []
