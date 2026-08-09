@@ -24,8 +24,7 @@ internal static class ReceiptFreeDocumentCatalog
             throw new InvalidOperationException("Scribe document corpus must not be empty.");
         }
 
-        var backfillPath = Path.Combine(repositoryRoot, BackfillInventoryLoader.RelativePath);
-        var inventory = BackfillInventoryLoader.Load(File.ReadAllText(backfillPath));
+        var inventory = BackfillInventoryLoader.LoadRoot(repositoryRoot);
         var receiptBound = inventory.RequireDigestionEntries()
             .SelectMany(static entry => entry.Receipts.Scribe)
             .Select(static receipt => ScribeEmissionAttestation.DocumentGid(receipt.Gid))
