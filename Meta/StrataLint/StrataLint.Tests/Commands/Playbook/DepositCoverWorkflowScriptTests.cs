@@ -31,6 +31,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 "dotnet:ledger-append",
                 "make:lean-report",
                 "make:echo-residual-summary BASE=synthetic-base",
+                "make:emit",
                 "make:emit-check BASE=synthetic-base",
             ],
             fixture.CallKinds());
@@ -48,6 +49,33 @@ public sealed partial class DepositCoverWorkflowScriptTests
             phaseB,
             path => path.StartsWith(TransactionFixture.LedgerPath + "/", StringComparison.Ordinal));
         Assert.Contains(TransactionFixture.ReceiptRelativePath, phaseB);
+    }
+
+    [Fact]
+    public void DepositEmitsAfterInstallingReceiptAndRefreshingSummaryBeforeFinalCheck()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TransactionFixture();
+        fixture.ChangeFormalization();
+
+        var result = fixture.Run("deposit");
+
+        Assert.True(result.ExitCode == 0, Diagnostics(result));
+        var stderr = Encoding.UTF8.GetString(result.StandardError);
+        var receipt = stderr.IndexOf(
+            $"PLAYBOOK_WRITE path={TransactionFixture.ReceiptRelativePath}",
+            StringComparison.Ordinal);
+        var summary = stderr.IndexOf(
+            "detail=echo-residual-summary-atomic",
+            receipt,
+            StringComparison.Ordinal);
+        var emit = stderr.IndexOf("detail=emit-post-receipt", receipt, StringComparison.Ordinal);
+        var finalCheck = stderr.IndexOf("detail=emit-check-final", receipt, StringComparison.Ordinal);
+
+        Assert.True(receipt >= 0, Diagnostics(result));
+        Assert.True(summary > receipt, Diagnostics(result));
+        Assert.True(emit > summary, Diagnostics(result));
+        Assert.True(finalCheck > emit, Diagnostics(result));
     }
 
     [Fact]
