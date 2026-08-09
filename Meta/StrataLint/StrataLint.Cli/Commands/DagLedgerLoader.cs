@@ -131,8 +131,14 @@ public static class DagLedgerLoader
                     throw new FormatException("Content-addressed frozen event identity is duplicated.");
                 }
 
+                // 文件名承载裸摘要,不含 "sha256:" 前缀:冒号在 Windows 上是保留字符,
+                // 带冒号的路径无法 check out;仓内既有内容寻址先例 Meta/Digestion/atoms/sha256/<64hex>
+                // 也是「目录名承载算法、文件名是裸摘要」。
                 var fileName = file.Path.Value[(file.Path.Value.LastIndexOf('/') + 1)..];
-                if (!string.Equals(fileName, identity + ".json", StringComparison.Ordinal))
+                if (!string.Equals(
+                        fileName,
+                        FrozenLedgerChangeClassifier.AcceptedFileName(identity),
+                        StringComparison.Ordinal))
                 {
                     throw new FormatException("Content-addressed frozen event file name does not match event identity.");
                 }
