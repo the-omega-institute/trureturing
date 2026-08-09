@@ -155,31 +155,20 @@ internal static class C0CeremonyProjection
     {
         try
         {
-            if (!snapshot.TryGetFile(CertificatePath, out var certificate))
-            {
-                reason = $"certificate is missing: {CertificatePath}";
-                return false;
-            }
-
             var records = members.Skip(Phases.Length).ToArray();
-            var certificateRecord = records.Single(static member =>
+            var expected = CreateTrustRootMembers(snapshot).Skip(Phases.Length).ToArray();
+            var expectedCertificate = expected.Single(static member =>
                 member.StartsWith("c0/inaugural-certificate ", StringComparison.Ordinal));
-            var expectedCertificate = "c0/inaugural-certificate sha256/"
-                + Convert.ToHexStringLower(SHA256.HashData(certificate.RawBytes.AsSpan()))
-                + " " + CertificatePath;
-            if (certificateRecord != expectedCertificate)
+            var expectedTree = expected.Single(static member =>
+                member.StartsWith("c0/preimage-tree ", StringComparison.Ordinal));
+            var actualCertificate = records.SingleOrDefault(static member =>
+                member.StartsWith("c0/inaugural-certificate ", StringComparison.Ordinal)) ?? "<missing>";
+            var actualTree = records.SingleOrDefault(static member =>
+                member.StartsWith("c0/preimage-tree ", StringComparison.Ordinal)) ?? "<missing>";
+            if (actualCertificate != expectedCertificate || actualTree != expectedTree)
             {
-                reason = "inaugural certificate address does not match its frozen bytes";
-                return false;
-            }
-
-            using var document = JsonDocument.Parse(certificate.RawBytes.ToArray());
-            var treeOid = document.RootElement.GetProperty("candidate").GetProperty("tree_oid").GetString();
-            var expectedTree = "c0/preimage-tree git-tree/"
-                + Untag(treeOid, "git-sha1:");
-            if (!records.Contains(expectedTree, StringComparer.Ordinal))
-            {
-                reason = "preimage tree does not match the inaugural certificate";
+                reason = $"trust root mismatch: expected {expectedCertificate}; actual {actualCertificate}; "
+                    + $"expected {expectedTree}; actual {actualTree}";
                 return false;
             }
 
@@ -195,6 +184,55 @@ internal static class C0CeremonyProjection
             return false;
         }
     }
+
+    internal static ImmutableArray<string> CreateTrustRootMembers(RepositorySnapshot snapshot)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        if (!snapshot.TryGetFile(CertificatePath, out var certificate))
+        {
+            throw new FormatException($"certificate is missing: {CertificatePath}");
+        }
+
+        using var document = JsonDocument.Parse(certificate.RawBytes.ToArray());
+        var root = document.RootElement;
+        if (root.GetProperty("schema").GetString() != "stratalint-conservative-certificate-v1")
+        {
+            throw new FormatException("C0 certificate schema is not canonical");
+        }
+
+        if (root.GetProperty("status").GetString() != "CORPUS_CONSERVATIVE")
+        {
+            throw new FormatException("C0 certificate status is not CORPUS_CONSERVATIVE");
+        }
+
+        if (root.GetProperty("findings").GetArrayLength() != 0)
+        {
+            throw new FormatException("C0 certificate has conservative findings");
+        }
+
+        var implication = root.GetProperty("positive_implication");
+        if (implication.GetProperty("baseline_admit_count").GetInt32()
+            != implication.GetProperty("preserved_admit_count").GetInt32())
+        {
+            throw new FormatException("C0 certificate does not preserve every baseline admit");
+        }
+
+        var treeOid = root.GetProperty("candidate").GetProperty("tree_oid").GetString();
+        var records = new[]
+        {
+            "c0/ceremony-commit convention/this-pr-merge-commit",
+            "c0/inaugural-certificate sha256/"
+                + Convert.ToHexStringLower(SHA256.HashData(certificate.RawBytes.AsSpan()))
+                + " " + CertificatePath,
+            "c0/preimage-tree git-tree/" + Untag(treeOid, "git-sha1:"),
+        };
+        return Phases.Concat(records.Order(StringComparer.Ordinal)).ToImmutableArray();
+    }
+
+    internal static ImmutableArray<byte> ReconcileTrustRoot(
+        ReadOnlySpan<byte> towerBytes,
+        RepositorySnapshot snapshot) =>
+        C0TowerProjection.Write(towerBytes, CreateTrustRootMembers(snapshot));
 
     internal static bool TryCreateAnchorCustodianReferences(
         RepositorySnapshot snapshot,
@@ -340,6 +378,18 @@ internal static class C0TowerProjection
         }
 
         return bytes;
+    }
+
+    internal static ImmutableArray<string> ReadMembers(ReadOnlySpan<byte> towerBytes)
+    {
+        var parsed = TowerManifestParser.Parse(towerBytes) switch
+        {
+            TowerManifestParseOutcome.Loaded loaded => loaded.Syntax,
+            TowerManifestParseOutcome.Invalid invalid =>
+                throw new FormatException($"TOWER is invalid: {invalid.Message}"),
+        };
+        return parsed.Components.Single(static item =>
+            item.Id == C0CeremonyProjection.ComponentId).Members;
     }
 
     private static int UniqueIndexOf(string text, string value, string label)

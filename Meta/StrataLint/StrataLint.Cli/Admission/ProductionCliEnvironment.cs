@@ -490,8 +490,11 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
     public CommandResult Worktree(IReadOnlyList<string> arguments) =>
         WorktreeCommand.Run(repositoryRoot, arguments);
 
-    public CommandResult RenewC0(IReadOnlyList<string> arguments) =>
+    public CommandResult VerifyC0(IReadOnlyList<string> arguments) =>
         C0RenewCommand.Run(repositoryRoot, arguments);
+
+    public CommandResult ReconcileC0TrustRoot(IReadOnlyList<string> arguments) =>
+        C0TrustRootReconcileCommand.Run(repositoryRoot, arguments);
 
     public ExplicitCommandResult VerifyConservative(IReadOnlyList<string> arguments) =>
         ConservativeExtensionCommand.Run(arguments);
