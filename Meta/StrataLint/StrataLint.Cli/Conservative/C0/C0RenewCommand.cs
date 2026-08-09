@@ -113,8 +113,16 @@ internal static class C0RenewCommand
 
     private static string GateDetail(C0RenewGateResult gate)
     {
-        var error = StrictUtf8.GetString(gate.Error.AsSpan()).Trim();
-        return error.Length == 0 ? $" (exit {gate.ExitCode})" : $" (exit {gate.ExitCode}: {error})";
+        var error = StrictUtf8.GetString(gate.Error.AsSpan());
+        var output = StrictUtf8.GetString(gate.Output.AsSpan());
+        if (error.Length == 0 && output.Length == 0) return $" (exit {gate.ExitCode})";
+
+        var separator = error.Length > 0
+            && output.Length > 0
+            && error[^1] != '\n'
+                ? "\n"
+                : string.Empty;
+        return $" (exit {gate.ExitCode}: {error}{separator}{output})";
     }
 
     private static CommandResult Success() => new(
