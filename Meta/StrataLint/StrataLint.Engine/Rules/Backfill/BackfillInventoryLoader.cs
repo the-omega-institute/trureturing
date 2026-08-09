@@ -329,6 +329,13 @@ internal static class BackfillInventoryLoader
 {
     internal const string RootPath = "Meta/Digestion/backfill/";
     internal const string RelativePath = RootPath;
+
+    // 迁移窗口(expand→migrate→contract 的中段)。保守扩展律要求候选 harness 仍然
+    // 准入基线 harness 准入过的树,而基线树上台账还是单文件形态 —— 若候选 harness
+    // 只认目录形态,判基线树就会 CONSERVATIVE-ADMIT-FLIPPED(SL-000/003/016)。
+    // 故本常量与其三处容忍(此处的回落读取、IsCapacityExcluded 的行数豁免、
+    // FILEMAP 的 data 登记)在窗口内保留,由 contract PR 一次性拆除。
+    internal const string LegacyLedgerPath = "Meta/BACKFILL.yaml";
     internal const string TicketIndexPath = "Meta/Digestion/ticket-index.toml";
     internal const int SchemaVersion = 3;
     internal const string LedgerName = "theory-digestion-v1";
@@ -389,9 +396,22 @@ internal static class BackfillInventoryLoader
             .ToArray();
         if (metadata.Length == 0)
         {
+            // 迁移窗口:目录形态缺席而单文件台账在场 = 基线树形态,按旧形态读取。
+            // 两者同时在场是歧义态,fail-closed(不猜哪个是真源)。
+            if (snapshot.TryGetFile(LegacyLedgerPath, out var legacy))
+            {
+                return Load(legacy.Text);
+            }
+
             return tolerateAbsent
                 ? BackfillInventoryDocument.Create([], [])
                 : throw new FormatException($"digestion backfill directory is missing: {RootPath}");
+        }
+
+        if (snapshot.TryGetFile(LegacyLedgerPath, out _))
+        {
+            throw new FormatException(
+                $"digestion ledger is present in both forms: {LegacyLedgerPath} and {RootPath}");
         }
 
         var sources = ImmutableArray.CreateBuilder<DigestionLedgerSource>();

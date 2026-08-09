@@ -569,6 +569,41 @@ public sealed class BackfillInventoryLoaderTests
         }
     }
 
+    // 迁移窗口:保守扩展律要求候选 harness 仍准入基线树,而基线树上台账仍是单文件形态。
+    // 少了这条回落,判基线树会 CONSERVATIVE-ADMIT-FLIPPED(SL-000/003/016 齐红)。
+    // contract PR 拆除回落时,本测试应与之一同删除 —— 它是窗口的具名守卫。
+    [Fact]
+    public void LegacySingleFileLedgerIsReadWhenTheDirectoryFormIsAbsent()
+    {
+        var document = BackfillInventoryLoader.Load(Snapshot(
+            (BackfillInventoryLoader.LegacyLedgerPath, LegacyLedgerText)));
+
+        Assert.Empty(document.RequireDigestionSources());
+    }
+
+    // 两种形态同时在场是歧义态:哪一个是真源无从判定,fail-closed 而非猜。
+    [Fact]
+    public void LedgerPresentInBothFormsIsRejected()
+    {
+        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
+            (BackfillInventoryLoader.LegacyLedgerPath, LegacyLedgerText),
+            Source("delta-v0.1", "docs/delta.md", "none"),
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"),
+            (BackfillInventoryLoader.TicketIndexPath, ""))));
+
+        Assert.Equal(
+            "digestion ledger is present in both forms: "
+            + $"{BackfillInventoryLoader.LegacyLedgerPath} and {BackfillInventoryLoader.RootPath}",
+            exception.Message);
+    }
+
+    private const string LegacyLedgerText = """
+        schema_version: 3
+        ledger: theory-digestion-v1
+        sources: []
+        ticket_index: []
+        """;
+
     private static RepositorySnapshot Snapshot(params (string Path, string Text)[] files)
     {
         var raw = RawRepositorySnapshot.Create(
