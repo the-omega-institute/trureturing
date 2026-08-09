@@ -1,3 +1,3 @@
-source_id = "golden-ledger-spec-v7.11"
+source_id = "golden-ledger-spec"
 path = "docs/develop/spec/golden-ledger-repo-spec.md"
 atomizer = "none"
