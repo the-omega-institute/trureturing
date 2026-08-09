@@ -184,6 +184,9 @@ sources:
           - D5/S3/QuantumBounds/CHSHWitness.lifted_observables_form_chsh_tuple
           - D5/S3/QuantumBounds/CHSHWitness.chsh_operator_eq_lifted_chsh
           - D5/S3/Observer/WindowCharacter.window_algebra_has_no_character
+          - D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_abs_le_two
+          - D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_eq_two_exists
+          - D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_bound_is_exact
         receipts:
           coverage:
             - gid: D5/S3/Quantum/FiniteDimensional.qubit_matrix_algebra_has_no_character
@@ -195,7 +198,6 @@ sources:
           scribe: []
           unresolved_subitems:
             - kochen-specker-projection-valuation-obstruction
-            - classical-local-fiber-bound-certificate
             - hidden-address-local-variable-interpretation
             - classical-address-realism-exclusion
             - probability-not-ignorance-conclusion
@@ -393,11 +395,13 @@ sources:
           - D5/S3/QuantumBounds/CHSHWitness.bob_observables_are_valid
           - D5/S3/QuantumBounds/CHSHWitness.lifted_observables_form_chsh_tuple
           - D5/S3/QuantumBounds/CHSHWitness.chsh_operator_eq_lifted_chsh
+          - D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_abs_le_two
+          - D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_eq_two_exists
+          - D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_bound_is_exact
         receipts:
           coverage: []
           scribe: []
           unresolved_subitems:
-            - classical-local-fiber-bound-certificate
             - monogamy-unique-classical-pairing
           chain_atoms: []
           tail_authorization: null
@@ -794,11 +798,13 @@ sources:
           - D5/S3/QuantumBounds/CHSHWitness.bob_observables_are_valid
           - D5/S3/QuantumBounds/CHSHWitness.lifted_observables_form_chsh_tuple
           - D5/S3/QuantumBounds/CHSHWitness.chsh_operator_eq_lifted_chsh
+          - D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_abs_le_two
+          - D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_eq_two_exists
+          - D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_bound_is_exact
         receipts:
           coverage: []
           scribe: []
           unresolved_subitems:
-            - classical-local-fiber-bound-certificate
             - noncontextual-and-local-double-exclusion-synthesis
           chain_atoms: []
           tail_authorization: null
@@ -1063,11 +1069,13 @@ sources:
           - D5/S3/QuantumBounds/CHSHWitness.bob_observables_are_valid
           - D5/S3/QuantumBounds/CHSHWitness.lifted_observables_form_chsh_tuple
           - D5/S3/QuantumBounds/CHSHWitness.chsh_operator_eq_lifted_chsh
+          - D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_abs_le_two
+          - D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_eq_two_exists
+          - D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_bound_is_exact
         receipts:
           coverage: []
           scribe: []
           unresolved_subitems:
-            - classical-local-fiber-bound-certificate
             - monogamy-unique-classical-pairing
           chain_atoms: []
           tail_authorization: null
