@@ -59,6 +59,74 @@ public sealed class RuleEngineTests
     }
 
     [Fact]
+    public void DirectoryBackfillRejectsDanglingTicketGid()
+    {
+        var fixture = new RuleFixture();
+        fixture.UseSyntheticDirectoryBackfill("D5-T0098 = \"D5/X_Frontier/SyntheticDelta\"\n");
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build()).Diagnostics;
+
+        Assert.Contains(diagnostics, diagnostic =>
+            diagnostic.Message == "dangling ticket D5-T0098: ticket target Lean file is absent");
+    }
+
+    [Fact]
+    public void DirectoryBackfillRejectsDuplicateTicketCaseId()
+    {
+        var fixture = new RuleFixture();
+        fixture.UseSyntheticDirectoryBackfill(
+            $"D5-T0098 = \"{RuleFixture.RingPath[..^".lean".Length]}\"\n"
+            + $"D5-T0098 = \"{RuleFixture.RingPath[..^".lean".Length]}\"\n");
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build()).Diagnostics;
+
+        Assert.Contains(diagnostics, diagnostic => diagnostic.Message == "duplicate ticket case: D5-T0098");
+    }
+
+    [Fact]
+    public void DirectoryBackfillRejectsUnregisteredFrontierTask()
+    {
+        var fixture = new RuleFixture();
+        fixture.UseSyntheticDirectoryBackfill("");
+        fixture.AddSyntheticUnregisteredFrontierTask("D5-T0097");
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build()).Diagnostics;
+
+        Assert.Contains(diagnostics, diagnostic =>
+            diagnostic.Message == "frontier TASK cases are missing from ticket_index: D5-T0097");
+    }
+
+    [Fact]
+    public void DirectoryBackfillReachesSharedDownstreamValidationWithoutFormatDiagnostics()
+    {
+        var fixture = new RuleFixture();
+        fixture.UseSyntheticDirectoryBackfill("");
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build()).Diagnostics;
+
+        Assert.DoesNotContain(diagnostics, diagnostic =>
+            diagnostic.Message.Contains("canonical", StringComparison.Ordinal)
+            || diagnostic.Message.Contains("metadata", StringComparison.Ordinal)
+            || diagnostic.Message.Contains("ticket index", StringComparison.Ordinal)
+            || diagnostic.Message.Contains("directory", StringComparison.Ordinal));
+        Assert.Contains(diagnostics, diagnostic =>
+            diagnostic.Message.Contains("fingerprint", StringComparison.Ordinal)
+            || diagnostic.Message.Contains("CAS", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void ValidDirectoryBackfillIsGreenWithDirectoryBaseline()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.UseValidDirectoryBackfill();
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build()).Diagnostics;
+
+        Assert.Empty(diagnostics);
+    }
+
+    [Fact]
     public void Sl001AllowsContentToImportTheAssumptionFoundationButNotTheReverse()
     {
         // Stratum content -> X_Assumptions (carrying a registered classical debt): allowed.
