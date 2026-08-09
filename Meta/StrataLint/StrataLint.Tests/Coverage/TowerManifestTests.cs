@@ -24,6 +24,32 @@ public sealed class TowerManifestTests
         Assert.Contains(rejected.Findings, item => item.Code == "TOWER-CI-JOB");
     }
 
+    /// An equal-sized swap is the case counts cannot report: both sides have one member,
+    /// so a count-based message renders "declared 1 ... contains 1" and reads as a broken
+    /// tool rather than a mismatch. The finding must name the ids that actually differ.
+    /// Fails if the message ever goes back to reporting cardinality (#993).
+    [Fact]
+    public void RuleCatalogMismatchNamesTheDifferingIdsNotJustTheCount()
+    {
+        var syntax = Syntax(
+            Component("rules", "rule-catalog", ["SL-002"], "bootstrap-pr-1"),
+            Component("baseline", "ci-jobs", ["baseline-admission"], "bootstrap-pr-1"));
+        var snapshot = Snapshot(
+            (RuleFixture.WorkflowPath, "jobs:\n  baseline-admission:\n    name: Baseline\n"),
+            GenesisFile());
+        var catalog = Catalog(RuleId.CreateKnown(1));
+
+        var outcome = TowerManifestValidator.Validate(syntax, snapshot, catalog);
+
+        var rejected = Assert.IsType<TowerValidationOutcome.Rejected>(outcome);
+        var finding = Assert.Single(
+            rejected.Findings.Where(item => item.Code == "TOWER-RULE-CATALOG"));
+
+        Assert.Contains("SL-002", finding.Message, StringComparison.Ordinal);
+        Assert.Contains("SL-001", finding.Message, StringComparison.Ordinal);
+        Assert.DoesNotContain("declared 1 rules but", finding.Message, StringComparison.Ordinal);
+    }
+
     [Fact]
     public void ActualCrossChecksReportVerifiedAndAssumedEvidenceSeparately()
     {
