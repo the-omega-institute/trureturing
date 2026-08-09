@@ -75,8 +75,7 @@ public sealed class CoverageAnalyzerTests
             lifecycle,
             deferred);
         var catalog = RuleCatalog.CreateForTesting(
-            [descriptor],
-            [new PredicateRule(applies)]);
+            [new RuleRegistration(descriptor, new PredicateRule(applies))]);
         return CoverageAnalyzer.Analyze(
             snapshot,
             Policy(),

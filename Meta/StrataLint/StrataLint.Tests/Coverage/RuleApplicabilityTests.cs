@@ -14,8 +14,11 @@ public sealed class RuleApplicabilityTests
         var context = RuleApplicabilityContext.Create(snapshot, Policy());
         var descriptor = Descriptor(1);
         var catalog = RuleCatalog.CreateForTesting(
-            [descriptor],
-            [new PredicateRule(static file => file.Path.Value == "probe.txt")]);
+            [
+                new RuleRegistration(
+                    descriptor,
+                    new PredicateRule(static file => file.Path.Value == "probe.txt")),
+            ]);
 
         var applicable = catalog.ApplicableTo(snapshot.Files.Values.Single(), context);
 
