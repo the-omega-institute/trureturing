@@ -110,63 +110,63 @@ name = "empty-protected-backfill-inventory"
 changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
 baseline_mutations = []
 mutations = [{ op = "write", path = "Meta/BACKFILL.yaml", content = "schema_version: 3\nledger: theory-digestion-v1\nsources: []\nticket_index: []\n" }, { op = "delete", path = "D5/X_Frontier/BackfillTasks.lean" }]
-expected_diagnostics = [{ rule = 16, path = "Meta/Digestion/ticket-index.toml", message = "required governance document is missing" }]
+expected_diagnostics = [{ rule = 16, path = "Meta/BACKFILL.yaml", message = "digestion ledger must contain at least one source" }]
 
 [[cases]]
 name = "missing-backfill-disposition"
 changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
 baseline_mutations = []
-mutations = [{ op = "write", path = "Meta/Digestion/backfill/fixture-source/partial-closed/fixture-atom.yaml", content = "ast_path: manual/fixture\nfingerprints:\n  raw_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881\n  normalized_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881\ncas_ref: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881\ncoverage_gids:\nreceipts:\n  coverage: []\n  scribe: []\n  unresolved_subitems: []\n" }]
-expected_diagnostics = [{ rule = 16, path = "Meta/Digestion/ticket-index.toml", message = "entry fixture-atom coverage_gids must be a list" }]
+mutations = [{ op = "replace_backfill", old_value = "          - D5/S0/Carrier/BackfillTarget\n", new_value = "" }]
+expected_diagnostics = [{ rule = 16, path = "Meta/BACKFILL.yaml", message = "entry fixture-atom coverage_gids must be a list" }]
 
 [[cases]]
-name = "missing-protected-backfill-cas-reference"
+name = "duplicate-protected-backfill-entry"
 changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
 baseline_mutations = []
-mutations = [{ op = "write", path = "Meta/Digestion/backfill/fixture-source/partial-closed/fixture-atom.yaml", content = "ast_path: manual/fixture\nfingerprints:\n  raw_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881\n  normalized_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881\ncoverage_gids:\n  - D5/S0/Carrier/BackfillTarget\nreceipts:\n  coverage: []\n  scribe: []\n  unresolved_subitems: []\n" }]
-expected_diagnostics = [{ rule = 16, path = "Meta/Digestion/ticket-index.toml", message = "source fixture-source entry keys are not canonical" }]
+mutations = [{ op = "mutate_backfill_anchor", anchor = "fixture-atom", duplicate = true }]
+expected_diagnostics = [{ rule = 16, path = "Meta/BACKFILL.yaml", message = "duplicate atom_id: fixture-atom" }]
 
 [[cases]]
 name = "dangling-backfill-entry"
 changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
 baseline_mutations = []
 mutations = [{ op = "replace_first_backfill_disposition", raw_gid = "D5/S0/Carrier/Missing" }]
-expected_diagnostics = [{ rule = 16, path = "Meta/Digestion/ticket-index.toml", message = "entry fixture-atom coverage target is absent: D5/S0/Carrier/Missing" }]
+expected_diagnostics = [{ rule = 16, path = "Meta/BACKFILL.yaml", message = "entry fixture-atom coverage target is absent: D5/S0/Carrier/Missing" }]
 
 [[cases]]
 name = "invalid-protected-backfill-schema"
 changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
 baseline_mutations = []
-mutations = [{ op = "write", path = "Meta/Digestion/backfill/fixture-source/source.toml", content = "schema_version = \"2\"\n" }]
-expected_diagnostics = [{ rule = 16, path = "Meta/Digestion/ticket-index.toml", message = "source metadata keys are not canonical: Meta/Digestion/backfill/fixture-source/source.toml" }]
+mutations = [{ op = "replace_backfill", old_value = "schema_version: 3", new_value = "schema_version: 2" }]
+expected_diagnostics = [{ rule = 16, path = "Meta/BACKFILL.yaml", message = "BACKFILL must use schema_version 3; legacy schemas are not read" }]
 
 [[cases]]
 name = "changed-protected-source-path"
 changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
 baseline_mutations = []
 mutations = [{ op = "replace_backfill", old_value = "path: docs/GOVERNANCE.md", new_value = "path: Library/queries.yaml" }]
-expected_diagnostics = [{ rule = 16, path = "Meta/Digestion/ticket-index.toml", message = "source fixture-source has an invalid governance path" }]
+expected_diagnostics = [{ rule = 16, path = "Meta/BACKFILL.yaml", message = "source fixture-source has an invalid governance path" }]
 
 [[cases]]
 name = "new-boundaryless-fake-fingerprint"
 changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
 baseline_mutations = []
-mutations = [{ op = "write", path = "docs/GOVERNANCE.md", content = "# GICT\n\n**定理 1.1(Fake fingerprint)**。claim。\n" }, { op = "replace_backfill", old_value = "    atomizer: none\n    entries:\n      - atom_id: fixture-atom\n        ast_path: manual/fixture\n        fingerprints:\n          raw_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881\n          normalized_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881\n", new_value = "    atomizer: gict-v1\n    acknowledged_stale:\n      - fake-receipt\n    entries:\n      - atom_id: fake-receipt\n        ast_path: theorem/1.1\n        fingerprints:\n          raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000\n          normalized_sha256: sha256:1111111111111111111111111111111111111111111111111111111111111111\n" }]
-expected_diagnostics = [{ rule = 16, path = "Meta/Digestion/ticket-index.toml", message = "entry fake-receipt cas_ref sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881 differs from raw fingerprint sha256:0000000000000000000000000000000000000000000000000000000000000000" }]
+mutations = [{ op = "write", path = "docs/GOVERNANCE.md", content = "# GICT\n\n**定理 1.1(Fake fingerprint)**。claim。\n" }, { op = "replace_backfill", old_value = "    atomizer: none\n    entries:\n      - atom_id: fixture-atom\n        boundary:\n          ast_path: manual/fixture\n          start_byte: 0\n          end_byte: 1\n        fingerprints:\n          raw_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881\n          normalized_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881\n", new_value = "    atomizer: gict-v1\n    acknowledged_stale:\n      - fake-receipt\n    entries:\n      - atom_id: fake-receipt\n        ast_path: theorem/1.1\n        fingerprints:\n          raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000\n          normalized_sha256: sha256:1111111111111111111111111111111111111111111111111111111111111111\n" }]
+expected_diagnostics = [{ rule = 16, path = "Meta/BACKFILL.yaml", message = "entry fake-receipt cas_ref sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881 differs from raw fingerprint sha256:0000000000000000000000000000000000000000000000000000000000000000" }]
 
 [[cases]]
 name = "ticket-target-task-mismatch"
 changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
 baseline_mutations = []
 mutations = [{ op = "replace_backfill", old_value = "  - case_id: D5-T0018\n    gid: D5/X_Frontier/BackfillTasks\n", new_value = "  - case_id: D5-T0018\n    gid: D5/S0/Carrier/Ring\n" }]
-expected_diagnostics = [{ rule = 16, path = "Meta/Digestion/ticket-index.toml", message = "ticket D5-T0018 target does not declare TASK D5-T0018: D5/S0/Carrier/Ring.lean" }]
+expected_diagnostics = [{ rule = 16, path = "Meta/BACKFILL.yaml", message = "ticket D5-T0018 target does not declare TASK D5-T0018: D5/S0/Carrier/Ring.lean" }]
 
 [[cases]]
 name = "frontier-task-missing-ticket-index"
 changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
 baseline_mutations = []
 mutations = [{ op = "add_task", path = "D5/X_Frontier/UnindexedTask.lean", raw_gid = "D5/X_Frontier/UnindexedTask", raw_case_id = "D5-T0099" }]
-expected_diagnostics = [{ rule = 16, path = "Meta/Digestion/ticket-index.toml", message = "frontier TASK cases are missing from ticket_index: D5-T0099" }]
+expected_diagnostics = [{ rule = 16, path = "Meta/BACKFILL.yaml", message = "frontier TASK cases are missing from ticket_index: D5-T0099" }]
 
 [[cases]]
 name = "valid-pending-query-anchor"
@@ -186,15 +186,15 @@ expected_diagnostics = [{ rule = 17, path = "Library/queries.yaml", message = "q
 name = "gict-v3-30-appendix-e5-atomization"
 changes = ["docs/GOVERNANCE.md"]
 baseline_mutations = []
-mutations = [{ op = "write", path = "docs/GOVERNANCE.md", content = "# GICT\n\n> **谱系**:v3.29 → **v3.30:附录 E 增订五〔站队塔·行走公式·统计弧终局·城同余定理与 Rademacher 同余闭式〕**\n\n## 附录 E 增订五(v3.30):站队塔·行走公式·统计弧终局·城同余定理\n\n**E.22 零轨道弧一:36-定理与镜像条款**〔定理·两层证 + 修正条款〕。正文。\n\n**E.23 站队塔**〔定理群 + 判负 + 预言制度〕。正文。\n\n**E.24 BHK–W3 与三走一体**〔锚 + 恒等 + 条款〕。正文。\n\n**E.25 钉-辐角与余割恒等**〔定理 + 册卷〕。正文。\n\n**E.26 统计弧终局:六判负、网格伪影案与还原定理**〔判负册重案〕。正文。\n\n**E.27 城同余定理与 Rademacher 同余闭式(定理 A/B)**〔本卷压轴,自足证明〕。正文。\n\n**E.28 开放问题定位与仪器铁款**。正文。\n" }, { op = "replace_backfill", old_value = "    atomizer: none\n    entries:\n      - atom_id: fixture-atom\n        ast_path: manual/fixture\n        fingerprints:\n          raw_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881\n          normalized_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881\n", new_value = "    atomizer: gict-v1\n    entries:\n      - atom_id: dialect-probe\n        ast_path: probe/missing\n        fingerprints:\n          raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000\n          normalized_sha256: sha256:1111111111111111111111111111111111111111111111111111111111111111\n" }]
-expected_diagnostics = [{ rule = 16, path = "Meta/Digestion/ticket-index.toml", message = "entry dialect-probe cas_ref sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881 differs from raw fingerprint sha256:0000000000000000000000000000000000000000000000000000000000000000" }]
+mutations = [{ op = "write", path = "docs/GOVERNANCE.md", content = "# GICT\n\n> **谱系**:v3.29 → **v3.30:附录 E 增订五〔站队塔·行走公式·统计弧终局·城同余定理与 Rademacher 同余闭式〕**\n\n## 附录 E 增订五(v3.30):站队塔·行走公式·统计弧终局·城同余定理\n\n**E.22 零轨道弧一:36-定理与镜像条款**〔定理·两层证 + 修正条款〕。正文。\n\n**E.23 站队塔**〔定理群 + 判负 + 预言制度〕。正文。\n\n**E.24 BHK–W3 与三走一体**〔锚 + 恒等 + 条款〕。正文。\n\n**E.25 钉-辐角与余割恒等**〔定理 + 册卷〕。正文。\n\n**E.26 统计弧终局:六判负、网格伪影案与还原定理**〔判负册重案〕。正文。\n\n**E.27 城同余定理与 Rademacher 同余闭式(定理 A/B)**〔本卷压轴,自足证明〕。正文。\n\n**E.28 开放问题定位与仪器铁款**。正文。\n" }, { op = "replace_backfill", old_value = "    atomizer: none\n    entries:\n      - atom_id: fixture-atom\n        boundary:\n          ast_path: manual/fixture\n          start_byte: 0\n          end_byte: 1\n        fingerprints:\n          raw_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881\n          normalized_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881\n", new_value = "    atomizer: gict-v1\n    entries:\n      - atom_id: dialect-probe\n        ast_path: probe/missing\n        fingerprints:\n          raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000\n          normalized_sha256: sha256:1111111111111111111111111111111111111111111111111111111111111111\n" }]
+expected_diagnostics = [{ rule = 16, path = "Meta/BACKFILL.yaml", message = "entry dialect-probe cas_ref sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881 differs from raw fingerprint sha256:0000000000000000000000000000000000000000000000000000000000000000" }]
 
 [[cases]]
 name = "pzg-v3-30-supplement-sections-atomization"
 changes = ["docs/GOVERNANCE.md"]
 baseline_mutations = []
-mutations = [{ op = "write", path = "docs/GOVERNANCE.md", content = "# PZG_BEDC 增补册:第 330 版记事(轮 471–527;2026-07-18)\n本批主题:零轨道刻画全弧。\n\n## 评注 27.363–27.365(36-定理与镜像条款)\n正文。\n\n## 评注 27.366–27.371(站队塔)\n正文。\n\n## 评注 27.372–27.373(BHK–W3 与三走一体)\n正文。\n\n## 评注 27.374–27.375(钉-辐角与余割)\n正文。\n\n## 评注 27.376–27.378(统计弧终局与网格伪影案)\n正文。\n\n## 评注 27.379–27.380(城同余定理与定理 A/B)\n正文。\n\n## 评注 27.381(定位答问与铁款汇总)\n正文。\n\n## 判负册本批\n正文。\n\n## 候查清单变动\n正文。\n\n## 本批收束五判\n正文。\n" }, { op = "replace_backfill", old_value = "    atomizer: none\n    entries:\n      - atom_id: fixture-atom\n        ast_path: manual/fixture\n        fingerprints:\n          raw_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881\n          normalized_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881\n", new_value = "    atomizer: pzg-v1\n    entries:\n      - atom_id: dialect-probe\n        ast_path: probe/missing\n        fingerprints:\n          raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000\n          normalized_sha256: sha256:1111111111111111111111111111111111111111111111111111111111111111\n" }]
-expected_diagnostics = [{ rule = 16, path = "Meta/Digestion/ticket-index.toml", message = "entry dialect-probe cas_ref sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881 differs from raw fingerprint sha256:0000000000000000000000000000000000000000000000000000000000000000" }]
+mutations = [{ op = "write", path = "docs/GOVERNANCE.md", content = "# PZG_BEDC 增补册:第 330 版记事(轮 471–527;2026-07-18)\n本批主题:零轨道刻画全弧。\n\n## 评注 27.363–27.365(36-定理与镜像条款)\n正文。\n\n## 评注 27.366–27.371(站队塔)\n正文。\n\n## 评注 27.372–27.373(BHK–W3 与三走一体)\n正文。\n\n## 评注 27.374–27.375(钉-辐角与余割)\n正文。\n\n## 评注 27.376–27.378(统计弧终局与网格伪影案)\n正文。\n\n## 评注 27.379–27.380(城同余定理与定理 A/B)\n正文。\n\n## 评注 27.381(定位答问与铁款汇总)\n正文。\n\n## 判负册本批\n正文。\n\n## 候查清单变动\n正文。\n\n## 本批收束五判\n正文。\n" }, { op = "replace_backfill", old_value = "    atomizer: none\n    entries:\n      - atom_id: fixture-atom\n        boundary:\n          ast_path: manual/fixture\n          start_byte: 0\n          end_byte: 1\n        fingerprints:\n          raw_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881\n          normalized_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881\n", new_value = "    atomizer: pzg-v1\n    entries:\n      - atom_id: dialect-probe\n        ast_path: probe/missing\n        fingerprints:\n          raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000\n          normalized_sha256: sha256:1111111111111111111111111111111111111111111111111111111111111111\n" }]
+expected_diagnostics = [{ rule = 16, path = "Meta/BACKFILL.yaml", message = "entry dialect-probe cas_ref sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881 differs from raw fingerprint sha256:0000000000000000000000000000000000000000000000000000000000000000" }]
 
 [[cases]]
 name = "resolved-query-target-gid-must-exist"
