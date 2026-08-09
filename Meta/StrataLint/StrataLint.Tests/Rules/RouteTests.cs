@@ -84,7 +84,7 @@ public sealed class RouteTests
     }
 
     private static ValidatedPolicy Policy() =>
-        Assert.IsType<RegistryLoadOutcome.Accepted>(
+        RegistryLoadAssert.Accepted(
             RegistryLoader.Load(
                 Encoding.UTF8.GetBytes(TestRegistry.Canonical),
                 Encoding.UTF8.GetBytes(TestRegistry.Domains))).Policy;
