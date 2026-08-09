@@ -19,7 +19,7 @@ internal sealed class ClassicalFiberBoundDocument : IScribeDocumentDefinition
                     "D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_bound_is_exact"),
                 Disp(Seq(
                     Max, Underscore, Grp(Mathrm, Grp(F.Id("local"))), Sp,
-                    Vert, F.Id("S"), Underscore, Grp(Mathrm, Grp(F.Id("cl"))),
+                    Vert, Sp, F.Id("S"), Underscore, Grp(Mathrm, Grp(F.Id("cl"))),
                     Open, Mu, Close, Vert, Eq, D(2), Dot)),
                 DescribeProvenance.RepoDerived(),
                 Blocks(
