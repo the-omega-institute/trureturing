@@ -25,6 +25,65 @@ internal static class BackfillInventoryWriter
         return ImmutableArray.CreateRange(StrictUtf8.GetBytes(builder.ToString()));
     }
 
+    internal static ImmutableArray<byte> WriteAtom(DigestionLedgerEntry entry)
+    {
+        ArgumentNullException.ThrowIfNull(entry);
+        var builder = new StringBuilder();
+        if (entry.Boundary is { } boundary)
+        {
+            Line(builder, "boundary:");
+            Line(builder, $"  ast_path: {Scalar(boundary.AstPath)}");
+            Line(builder, $"  start_byte: {boundary.StartByte}");
+            Line(builder, $"  end_byte: {boundary.EndByte}");
+        }
+        else
+        {
+            Line(builder, $"ast_path: {Scalar(entry.AstPath)}");
+        }
+
+        Line(builder, "fingerprints:");
+        Line(builder, $"  raw_sha256: {Scalar(entry.Fingerprints.RawSha256)}");
+        Line(builder, $"  normalized_sha256: {Scalar(entry.Fingerprints.NormalizedSha256)}");
+        Line(builder, $"cas_ref: {Scalar(entry.CasRef)}");
+        Strings(builder, "coverage_gids", entry.CoverageGids, 2);
+        Line(builder, "receipts:");
+        AtomCoverageReceipts(builder, entry.Receipts.Coverage);
+        AtomScribeReceipts(builder, entry.Receipts.Scribe);
+        Strings(builder, "  unresolved_subitems", entry.Receipts.UnresolvedSubitems, 4);
+        if (entry.Receipts.ChainAtoms.Length > 0)
+        {
+            Strings(builder, "  chain_atoms", entry.Receipts.ChainAtoms, 4);
+        }
+
+        if (entry.Receipts.TailAuthorization is { } tail)
+        {
+            Line(builder, "  tail_authorization:");
+            Line(builder, $"    path: {Scalar(tail.Path)}");
+            Line(builder, $"    sha256: {Scalar(tail.Sha256)}");
+        }
+
+        return ImmutableArray.CreateRange(StrictUtf8.GetBytes(builder.ToString()));
+    }
+
+    internal static ImmutableArray<byte> WriteSourceMetadata(DigestionLedgerSource source)
+    {
+        ArgumentNullException.ThrowIfNull(source);
+        var builder = new StringBuilder();
+        Line(builder, $"source_id = {TomlScalar(source.SourceId)}");
+        Line(builder, $"path = {TomlScalar(source.SourcePath)}");
+        Line(builder, $"atomizer = {TomlScalar(source.Atomizer)}");
+        if (source.AcknowledgedStale.Length > 0)
+        {
+            Line(
+                builder,
+                "acknowledged_stale = ["
+                + string.Join(", ", source.AcknowledgedStale.Select(TomlScalar))
+                + "]");
+        }
+
+        return ImmutableArray.CreateRange(StrictUtf8.GetBytes(builder.ToString()));
+    }
+
     private static ImmutableArray<byte> Write(
         BackfillInventoryDocument document,
         bool preserveReceiptSyntax)
@@ -155,6 +214,44 @@ internal static class BackfillInventoryWriter
         }
     }
 
+    private static void AtomCoverageReceipts(
+        StringBuilder builder,
+        ImmutableArray<DigestionCoverageReceipt> receipts)
+    {
+        if (receipts.Length == 0)
+        {
+            Line(builder, "  coverage: []");
+            return;
+        }
+
+        Line(builder, "  coverage:");
+        foreach (var receipt in receipts)
+        {
+            Line(builder, $"    - gid: {Scalar(receipt.Gid)}");
+            Line(builder, $"      source_sha256: {Scalar(receipt.SourceSha256)}");
+            Line(builder, $"      target_sha256: {Scalar(receipt.TargetSha256)}");
+        }
+    }
+
+    private static void AtomScribeReceipts(
+        StringBuilder builder,
+        ImmutableArray<DigestionScribeReceipt> receipts)
+    {
+        if (receipts.Length == 0)
+        {
+            Line(builder, "  scribe: []");
+            return;
+        }
+
+        Line(builder, "  scribe:");
+        foreach (var receipt in receipts)
+        {
+            Line(builder, $"    - gid: {Scalar(receipt.Gid)}");
+            Line(builder, $"      definition_sha256: {Scalar(receipt.DefinitionSha256)}");
+            Line(builder, $"      emission_sha256: {Scalar(receipt.EmissionSha256)}");
+        }
+    }
+
     private static void Strings(
         StringBuilder builder,
         string key,
@@ -194,6 +291,19 @@ internal static class BackfillInventoryWriter
         }
 
         return value;
+    }
+
+    private static string TomlScalar(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value)
+            || value.Contains('"', StringComparison.Ordinal)
+            || value.Contains('\r', StringComparison.Ordinal)
+            || value.Contains('\n', StringComparison.Ordinal))
+        {
+            throw new FormatException($"digestion source metadata scalar cannot be emitted canonically: {value}");
+        }
+
+        return $"\"{value}\"";
     }
 
     private static bool RequiresStringQuotes(string value) =>
