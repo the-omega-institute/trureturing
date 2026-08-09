@@ -1,12 +1,55 @@
 #!/usr/bin/env bash
 # Verified bootstrap and atomic remote-dev reload for the canonical shepherd.
 
+WATCH_RELOAD_FETCH_MAX_ATTEMPTS=3
+WATCH_RELOAD_FETCH_BACKOFF_BASE_SECONDS=1
+
+watch_reload_stderr_summary() {
+  local artifact="${LAST_BOUNDED_STDERR_ARTIFACT:-}" summary encoded
+  if [[ ! -r "$artifact" ]]; then
+    printf 'unavailable'
+    return
+  fi
+  if summary="$(LC_ALL=C head -c 240 "$artifact" | LC_ALL=C tr '\r\n\t' '   ')"; then
+    :
+  else
+    printf 'unavailable'
+    return
+  fi
+  while [[ "$summary" == *" " ]]; do summary="${summary% }"; done
+  [[ -n "$summary" ]] || summary=empty
+  printf -v encoded '%q' "$summary"
+  printf '%s' "$encoded"
+}
+watch_reload_fetch_remote_dev() {
+  local repository="$1" attempt rc delay summary
+  for ((attempt = 1; attempt <= WATCH_RELOAD_FETCH_MAX_ATTEMPTS; attempt++)); do
+    if GIT watch-reload-fetch -C "$repository" fetch --no-tags "$REMOTE" \
+        "+refs/heads/dev:refs/remotes/$REMOTE/dev"; then
+      if [[ "$attempt" -gt 1 ]]; then
+        log "WATCH reload recovered step=fetch attempt=$attempt/$WATCH_RELOAD_FETCH_MAX_ATTEMPTS"
+      fi
+      return 0
+    else
+      rc=$?
+    fi
+    summary="$(watch_reload_stderr_summary)"
+    if [[ "$attempt" -eq "$WATCH_RELOAD_FETCH_MAX_ATTEMPTS" ]]; then
+      WATCH_TERMINAL_OUTCOME=watch-reload-fetch-retries-exhausted
+      log "WATCH reload exhausted class=retryable step=fetch attempt=$attempt/$WATCH_RELOAD_FETCH_MAX_ATTEMPTS git_exit=$rc stderr_summary=$summary"
+      return 1
+    fi
+    delay=$((WATCH_RELOAD_FETCH_BACKOFF_BASE_SECONDS * (1 << (attempt - 1))))
+    log "WATCH reload retryable step=fetch attempt=$attempt/$WATCH_RELOAD_FETCH_MAX_ATTEMPTS git_exit=$rc stderr_summary=$summary retry_in_seconds=$delay"
+    sleep "$delay"
+  done
+}
 reload_watch() {
   local interval="$1" max="$2" next_cycle="$3" snapshot_root snapshot source_root source_snapshot blob rc
   local script_repository destination_file
   local script_relative tracked_blob actual_blob name relative source_oid remote_paths path
   local local_tracked_paths local_expected_paths=""
-  local module_relative bootstrap="${WATCH_LOADED_BLOB:+0}"
+  local module_relative bootstrap="${WATCH_LOADED_BLOB:+0}" root_rc=not-run summary=not-applicable
   local -a remote_module_names=()
   [[ -n "$bootstrap" ]] || bootstrap=1
   if ! snapshot_root="$(mktemp -d "${TMPDIR:-/tmp}/pr-shepherd-watch.XXXXXXXX")"; then
@@ -20,13 +63,29 @@ reload_watch() {
   mkdir "$source_root/shepherd" || { rmdir "$source_root" "$snapshot_root"; return 1; }
   script_repository="${bootstrap_repository:-}"
   if [[ -z "$script_repository" ]]; then
-    GIT_CAPTURE script_repository watch-reload-root -C "$(dirname "$SCRIPT_PATH")" \
-      rev-parse --show-toplevel 2>/dev/null || script_repository=""
+    if GIT_CAPTURE script_repository watch-reload-root -C "$(dirname "$SCRIPT_PATH")" \
+        rev-parse --show-toplevel; then
+      root_rc=0
+    else
+      root_rc=$?; script_repository=""; summary="$(watch_reload_stderr_summary)"
+    fi
+  fi
+  if [[ -z "$script_repository" ]]; then
+    remove_watch_snapshot "$source_snapshot"; remove_watch_snapshot "$snapshot"
+    WATCH_TERMINAL_OUTCOME=watch-reload-configuration-error
+    log "WATCH reload terminal class=configuration step=resolve-script-repository reason=script-repository-empty git_exit=$root_rc stderr_summary=$summary"
+    return 1
   fi
   if [[ "$SCRIPT_PATH" == "$script_repository/"* ]]; then
     script_relative="${SCRIPT_PATH#"$script_repository/"}"
   else
     script_relative=""
+  fi
+  if [[ -z "$script_relative" ]]; then
+    remove_watch_snapshot "$source_snapshot"; remove_watch_snapshot "$snapshot"
+    WATCH_TERMINAL_OUTCOME=watch-reload-configuration-error
+    log "WATCH reload terminal class=configuration step=resolve-script-path reason=script-relative-empty git_exit=not-run stderr_summary=not-applicable"
+    return 1
   fi
   if [[ "$bootstrap" == 1 ]]; then
     module_relative="${script_relative%/*}/shepherd"
@@ -43,13 +102,18 @@ reload_watch() {
       return 1
     fi
   fi
-  if [[ -z "$script_repository" || -z "$script_relative" ]] \
-      || ! GIT watch-reload-fetch -C "$script_repository" fetch --no-tags "$REMOTE" \
-        "+refs/heads/dev:refs/remotes/$REMOTE/dev" \
-      || ! GIT_CAPTURE source_oid watch-reload-source -C "$script_repository" \
-        rev-parse "refs/remotes/$REMOTE/dev^{commit}"; then
+  if ! watch_reload_fetch_remote_dev "$script_repository"; then
     remove_watch_snapshot "$source_snapshot"; remove_watch_snapshot "$snapshot"
-    log "WATCH reload unavailable: remote dev source cannot be pinned remote=$REMOTE"
+    return 1
+  fi
+  if GIT_CAPTURE source_oid watch-reload-source -C "$script_repository" \
+      rev-parse "refs/remotes/$REMOTE/dev^{commit}"; then
+    :
+  else
+    rc=$?; summary="$(watch_reload_stderr_summary)"
+    remove_watch_snapshot "$source_snapshot"; remove_watch_snapshot "$snapshot"
+    WATCH_TERMINAL_OUTCOME=watch-reload-source-state-error
+    log "WATCH reload terminal class=repository-state step=rev-parse reason=remote-dev-ref-unresolvable git_exit=$rc stderr_summary=$summary remote=$REMOTE"
     return 1
   fi
   module_relative="${script_relative%/*}/shepherd"
@@ -110,12 +174,13 @@ reload_watch() {
   log "WATCH reload exec failed path=$snapshot exit=$rc"; return "$rc"
 }
 bootstrap_watch_exit_cleanup() {
-  local rc=$? now
+  local rc=$? now marker="${WATCH_TERMINAL_OUTCOME:-}"
   terminate_active_bounded_tree
   if [[ "$WATCH_OWNS_LEASE" == 1 ]]; then
     WATCH_STATE_OWNER_PID="$$"; WATCH_STATE_OWNER_START="$WATCH_PROCESS_START"
     WATCH_LOADED_BLOB=none; now="$(date '+%s')" || now=0
-    write_watch_state terminal none bootstrap "$now" 0 "$now" bootstrap-exit "$rc" 1 \
+    [[ -n "$marker" ]] || marker=bootstrap-exit
+    write_watch_state terminal none bootstrap "$now" 0 "$now" "$marker" "$rc" 1 \
       || log "WATCH bootstrap terminal state publication failed path=$PIDFILE exit=$rc"
   fi
   [[ -z "$WATCH_LOCK_CANDIDATE" ]] || rm -f "$WATCH_LOCK_CANDIDATE" 2>/dev/null || true
