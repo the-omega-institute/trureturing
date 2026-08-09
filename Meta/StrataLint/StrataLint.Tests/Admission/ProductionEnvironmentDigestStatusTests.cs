@@ -65,6 +65,52 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void DigestStatusReadsTheDirectoryFormDigestionLedger()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        var legacy = BackfillInventoryLoader.Load(fixture.Files["Meta/BACKFILL.yaml"]);
+        fixture.Files.Remove("Meta/BACKFILL.yaml");
+        fixture.Files["Meta/Digestion/backfill/fixture-source/source.toml"] =
+            "source_id = \"fixture-source\"\npath = \"docs/GOVERNANCE.md\"\natomizer = \"none\"\n";
+        fixture.Files["Meta/Digestion/backfill/fixture-source/partial-closed/fixture-atom.yaml"] =
+            """
+            boundary:
+              ast_path: manual/fixture
+              start_byte: 0
+              end_byte: 1
+            fingerprints:
+              raw_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
+              normalized_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
+            cas_ref: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
+            coverage_gids:
+              - D5/S0/Carrier/BackfillTarget
+            receipts:
+              coverage: []
+              scribe: []
+              unresolved_subitems: []
+              chain_atoms: []
+              tail_authorization: null
+            """;
+        fixture.Files[BackfillInventoryLoader.TicketIndexPath] = string.Concat(
+            legacy.RequireTickets().Select(static ticket => $"{ticket.CaseId} = \"{ticket.Gid}\"\n"));
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(Array.Empty<string>()),
+                Snapshot(fixture.Files),
+                null),
+            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+
+        var result = environment.DigestStatus(["--json"]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("\"entries_total\": 1", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"atom_id\": \"fixture-atom\"", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void DigestStatusReportsEveryEntryAndZeroCurrentlyDeletable()
     {
         var fixture = new RuleFixture();
