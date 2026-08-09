@@ -189,7 +189,9 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
     {
         if (!IsObjectId(revision))
         {
-            throw new InvalidOperationException("revision file read requires an exact commit OID");
+            throw new FrozenReferenceRejectionException(
+                FrozenReferenceRejectionKind.InvalidReference,
+                "revision file read requires an exact commit OID");
         }
         RequireObjectType(revision, "commit");
 
@@ -201,13 +203,16 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
         var matches = ParseTree(GitBytes("ls-tree", "-z", revision, "--", path)).ToArray();
         if (matches.Length != 1 || !string.Equals(matches[0].Path, path, StringComparison.Ordinal))
         {
-            throw new InvalidOperationException($"revision file is missing: {path}");
+            throw new FrozenReferenceRejectionException(
+                FrozenReferenceRejectionKind.MissingObject,
+                $"revision file is missing: {path}");
         }
 
         var entry = matches[0];
         if (entry.Mode is not ("100644" or "100755") || entry.ObjectType != "blob")
         {
-            throw new InvalidOperationException(
+            throw new FrozenReferenceRejectionException(
+                FrozenReferenceRejectionKind.WrongObjectType,
                 $"revision file is not regular: {path} ({entry.Mode} {entry.ObjectType})");
         }
 
