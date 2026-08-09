@@ -46,7 +46,17 @@ internal static class DigestionIngestor
         {
             if (!AtomizerRegistry.IsRegistered(source.Atomizer))
             {
-                throw new FormatException($"ingest source {source.SourceId} has unknown atomizer {source.Atomizer}");
+                if (source.Atomizer != AtomizerRegistry.NoAtomizerId)
+                {
+                    throw new FormatException($"ingest source {source.SourceId} has unknown atomizer {source.Atomizer}");
+                }
+
+                // 无 atomizer 的源(手工编写的条目)没有可再派生的东西:原样透传。
+                // 字节偏移废除前,这里要 CaptureBoundarySource 把 boundary 折成 CAS;
+                // 现在条目已自带 cas_ref,透传即可 —— 但**不能没有这条分支**:
+                // 缺了它,整个 golden-ledger-spec-v7.11 源(12 条有覆盖的条目)会被静默丢弃。
+                sources.Add(source);
+                continue;
             }
 
             var acknowledgments = source.Entries
