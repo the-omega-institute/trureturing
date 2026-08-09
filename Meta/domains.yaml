@@ -35,6 +35,9 @@ domains:
   Dynamics:
     stratum: S1
     definition: Visible-hidden dynamics of phase trajectories, throat transitions, and jump cocycles.
+  Entropy:
+    stratum: S3
+    definition: Finite Shannon entropy in nats and its information-theoretic identities and inequalities, including maximum-entropy bounds, mutual information and its independence characterization, subadditivity, and conditional-entropy chain rules.
   Fourier:
     stratum: S3
     definition: Fourier analysis for the kernel, including finite and discrete Poisson summation and entire analytic extensions of the Weil Fourier-Laplace transform.
