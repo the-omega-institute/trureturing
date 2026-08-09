@@ -54,7 +54,7 @@ jobs:
           bad=()
           while IFS= read -r -d '' path; do
             case "$path" in
-              docs/develop/theory/*|Meta/BACKFILL.yaml|Meta/Digestion/atoms/*|Generated/echo-residual-summary.md) ;;
+              docs/develop/theory/*|Meta/Digestion/atoms/*|Generated/echo-residual-summary.md) ;;
               *) bad+=("$path") ;;
             esac
           done < <(git -C candidate diff --name-only --no-renames -z "$BASE_SHA...$HEAD_SHA")
@@ -96,61 +96,72 @@ jobs:
           [[ "$address" =~ ^[0-9a-f]{64}$ ]]
           echo "address=$address" >> "$GITHUB_OUTPUT"
 
-      # 缓存由 ci.yml 的 Canonical Lean report production 生产(约 10 分钟),与本
-      # workflow 并行触发;缓存被 LRU 逐出后的首个 theory PR 会竞态 miss(先例:
-      # PR #290/#320,ingest 11:12 失败,缓存 12:58 才产出)。故以 lookup-only 探测
-      # + 条件等待重试,全程无凭据;最终 restore 仍 fail-closed——等待不降级检测。
-      # 诚实边界(对抗评审注):12 分钟重试只盖"生产者正在跑"的窗口;生产者自身
-      # 失败/被取消(如上述先例的 106 分钟空窗)不在此列,届时仍诚实红,由重跑
-      # 或 shepherd 唤醒兜底——缩窗而非闭窗。
-      - name: Probe base canonical Lean report cache
-        id: lean-report-probe-1
-        uses: actions/cache/restore@v4
-        with:
-          path: .canonical-lean-report-cache
-          key: stratalint-canonical-lean-report-v1-${{ steps.lean-report-input.outputs.address }}
-          lookup-only: true
-
-      - name: Wait for cache production (first retry)
-        if: steps.lean-report-probe-1.outputs.cache-hit != 'true'
-        shell: bash
-        run: sleep 360
-
-      - name: Re-probe base canonical Lean report cache
-        id: lean-report-probe-2
-        if: steps.lean-report-probe-1.outputs.cache-hit != 'true'
-        uses: actions/cache/restore@v4
-        with:
-          path: .canonical-lean-report-cache
-          key: stratalint-canonical-lean-report-v1-${{ steps.lean-report-input.outputs.address }}
-          lookup-only: true
-
-      - name: Wait for cache production (final retry)
-        if: |
-          steps.lean-report-probe-1.outputs.cache-hit != 'true'
-            && steps.lean-report-probe-2.outputs.cache-hit != 'true'
-        shell: bash
-        run: sleep 360
-
       - name: Restore base canonical Lean report
         id: lean-report-cache
         uses: actions/cache/restore@v4
         with:
           path: .canonical-lean-report-cache
           key: stratalint-canonical-lean-report-v1-${{ steps.lean-report-input.outputs.address }}
-          fail-on-cache-miss: true
+
+      - name: Restore elan and pinned Lean toolchain cache on cache miss
+        if: steps.lean-report-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.elan
+          key: ${{ runner.os }}-${{ runner.arch }}-elan-${{ hashFiles('candidate/lean-toolchain') }}
+
+      - name: Install pinned Lean toolchain on cache miss
+        if: steps.lean-report-cache.outputs.cache-hit != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ ! -x "$HOME/.elan/bin/elan" ]]; then
+            curl --proto '=https' --tlsv1.2 -sSf https://elan.lean-lang.org/elan-init.sh \
+              | sh -s -- -y --default-toolchain none
+          fi
+          toolchain="$(tr -d '\r\n' < candidate/lean-toolchain)"
+          test -n "$toolchain"
+          if ! "$HOME/.elan/bin/elan" toolchain list 2>/dev/null | grep -qF "$toolchain"; then
+            "$HOME/.elan/bin/elan" toolchain install "$toolchain"
+          fi
+          "$HOME/.elan/bin/elan" default "$toolchain"
+          "$HOME/.elan/bin/lake" --version
+
+      - name: Restore candidate Lean build artifacts on cache miss
+        if: steps.lean-report-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            candidate/.lake
+            ~/.cache/mathlib
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json', 'candidate/lean-toolchain') }}-${{ github.event.pull_request.head.sha }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json', 'candidate/lean-toolchain') }}-
+
+      - name: Produce base canonical Lean report on cache miss
+        if: steps.lean-report-cache.outputs.cache-hit != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd candidate
+          export PATH="$HOME/.elan/bin:$PATH"
+          make lean-report
 
       - name: Install and verify base canonical Lean report
         shell: bash
         run: |
           set -euo pipefail
-          test "${{ steps.lean-report-cache.outputs.cache-hit }}" = "true"
           source="$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json"
           report="$GITHUB_WORKSPACE/candidate/.lake/build/stratalint/raw-lean-report.json"
-          mkdir -p "$(dirname "$report")"
+          if [[ "${{ steps.lean-report-cache.outputs.cache-hit }}" == "true" ]]; then
+            mkdir -p "$(dirname "$report")"
+            for suffix in '' .sha256 .input.attestation .provenance.json; do
+              test -s "${source}${suffix}"
+              cp "${source}${suffix}" "${report}${suffix}"
+            done
+          fi
           for suffix in '' .sha256 .input.attestation .provenance.json; do
-            test -s "${source}${suffix}"
-            cp "${source}${suffix}" "${report}${suffix}"
+            test -s "${report}${suffix}"
           done
           "$GITHUB_WORKSPACE/candidate/Meta/StrataLint/scripts/report/lean-report-input.sh" verify \
             --repository "$GITHUB_WORKSPACE/candidate" \
@@ -198,7 +209,7 @@ jobs:
           fi
           git config user.name "theory-ingest-bot"
           git config user.email "theory-ingest-bot@users.noreply.github.com"
-          git add Meta/BACKFILL.yaml Meta/Digestion/atoms Generated/echo-residual-summary.md
+          git add Meta/Digestion/atoms Generated/echo-residual-summary.md
           git commit -m "chore(digestion): auto-ingest theory update [theory-ingest-bot]"
           gh auth setup-git
           git push origin HEAD:${{ github.event.pull_request.head.ref }}
