@@ -9,7 +9,6 @@ import D5.S0.Diagonal.CaptureCount
 import D5.S0.Diagonal.DistanceProfile
 import D5.S0.Diagonal.MarginBound
 import D5.S0.Diagonal.MarginVanishing
-import D5.S0.Diagonal.TypicalDensity
 import D5.S0.Diagonal.EscapeAsymptotics
 import D5.S0.Diagonal.EquivariantEscape
 import D5.S0.Naming.NamingSystem
