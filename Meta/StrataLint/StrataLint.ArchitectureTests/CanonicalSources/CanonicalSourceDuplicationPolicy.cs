@@ -8,9 +8,13 @@ using StrataLint.Engine;
 namespace StrataLint.ArchitectureTests;
 
 internal sealed record CanonicalSourceDuplicationFinding(string Path, string Message);
+internal sealed record CanonicalBlueprintPassage(string Path, string Text);
 
 internal static class CanonicalSourceDuplicationPolicy
 {
+    internal const int MinimumBlueprintPassageLength = 96;
+    internal const int MinimumBlueprintWordCount = 14;
+
     internal const string AtomizerRegistryPath =
         "Meta/StrataLint/StrataLint.Engine/Digestion/AtomizerRegistry.cs";
 
@@ -29,14 +33,24 @@ internal static class CanonicalSourceDuplicationPolicy
             repositoryRoot,
             BootstrapGate.SpecificationPath));
         var domains = LoadDomains(repositoryRoot);
+        var csharpSources = CSharpRepositorySources.Enumerate(repositoryRoot)
+            .Select(static file => (
+                Path: file.RelativePath,
+                Source: File.ReadAllText(file.FullPath)))
+            .ToArray();
+        var blueprintPassages = ExtractBlueprintPassages(csharpSources.Where(
+            static file => IsBlueprintSource(file.Path)));
         var findings = new List<CanonicalSourceDuplicationFinding>();
-        foreach (var (relativePath, path) in CSharpRepositorySources.Enumerate(repositoryRoot))
+        foreach (var (relativePath, source) in csharpSources)
         {
-            var source = File.ReadAllText(path);
             findings.AddRange(InspectSource(relativePath, source, tickets));
             findings.AddRange(InspectDomainMappings(relativePath, source, domains));
             findings.AddRange(InspectAtomizerIdLiterals(relativePath, source, atomizerIds));
             findings.AddRange(InspectSpecificationCopies(relativePath, source, specification));
+            findings.AddRange(InspectBlueprintCopies(
+                relativePath,
+                source,
+                blueprintPassages));
         }
 
         foreach (var (relativePath, path) in EnumerateToml(repositoryRoot))
@@ -72,6 +86,32 @@ internal static class CanonicalSourceDuplicationPolicy
             .Select(passage => new CanonicalSourceDuplicationFinding(
                 path,
                 $"fixture copies a {passage.Length}-character passage from the canonical specification; use neutral synthetic text"))
+            .ToArray();
+    }
+
+    internal static IReadOnlyList<CanonicalSourceDuplicationFinding> InspectBlueprintCopies(
+        string path,
+        string source,
+        IEnumerable<(string Path, string Source)> blueprintSources) =>
+        InspectBlueprintCopies(path, source, ExtractBlueprintPassages(blueprintSources));
+
+    private static IReadOnlyList<CanonicalSourceDuplicationFinding> InspectBlueprintCopies(
+        string path,
+        string source,
+        IReadOnlyList<CanonicalBlueprintPassage> blueprintPassages)
+    {
+        if (IsBlueprintSource(path))
+        {
+            return [];
+        }
+
+        var literals = ExtractConstantStrings(source);
+        return blueprintPassages
+            .Where(passage => literals.Any(literal =>
+                literal.Contains(passage.Text, StringComparison.Ordinal)))
+            .Select(passage => new CanonicalSourceDuplicationFinding(
+                path,
+                $"C# literal copies a {passage.Text.Length}-character authored passage from {passage.Path}; reference the canonical Blueprint source instead"))
             .ToArray();
     }
 
@@ -188,6 +228,68 @@ internal static class CanonicalSourceDuplicationPolicy
             .Select(static domain => (domain.Key.Value, domain.Value.ToString()))
             .ToArray();
     }
+
+    private static IReadOnlyList<CanonicalBlueprintPassage> ExtractBlueprintPassages(
+        IEnumerable<(string Path, string Source)> blueprintSources) => blueprintSources
+        .SelectMany(source => ExtractConstantStrings(source.Source)
+            .SelectMany(SplitSentences)
+            .Where(IsAuthoredEnglishPassage)
+            .Select(passage => new CanonicalBlueprintPassage(source.Path, passage)))
+        .DistinctBy(static passage => passage.Text, StringComparer.Ordinal)
+        .ToArray();
+
+    private static IReadOnlyList<string> ExtractConstantStrings(string source)
+    {
+        var root = CSharpSyntaxTree.ParseText(source).GetRoot();
+        return root.DescendantNodes()
+            .OfType<ExpressionSyntax>()
+            .Where(static expression => expression.Parent switch
+            {
+                ParenthesizedExpressionSyntax => false,
+                BinaryExpressionSyntax binary when binary.IsKind(SyntaxKind.AddExpression) => false,
+                _ => true,
+            })
+            .Select(TryEvaluateConstantString)
+            .Where(static value => value is not null)
+            .Select(static value => value!)
+            .Distinct(StringComparer.Ordinal)
+            .ToArray();
+    }
+
+    private static string? TryEvaluateConstantString(ExpressionSyntax expression) => expression switch
+    {
+        LiteralExpressionSyntax literal when literal.IsKind(SyntaxKind.StringLiteralExpression) =>
+            literal.Token.ValueText,
+        ParenthesizedExpressionSyntax parenthesized =>
+            TryEvaluateConstantString(parenthesized.Expression),
+        BinaryExpressionSyntax binary when binary.IsKind(SyntaxKind.AddExpression) =>
+            TryEvaluateConstantString(binary.Left) is { } left
+            && TryEvaluateConstantString(binary.Right) is { } right
+                ? left + right
+                : null,
+        _ => null,
+    };
+
+    private static IEnumerable<string> SplitSentences(string value) => Regex.Split(
+            value,
+            "(?<=[.!?])(?=\\s|$)",
+            RegexOptions.CultureInvariant,
+            TimeSpan.FromSeconds(1))
+        .Select(static passage => passage.Trim())
+        .Where(static passage => passage.Length > 0);
+
+    private static bool IsAuthoredEnglishPassage(string passage) =>
+        passage.Length >= MinimumBlueprintPassageLength
+        && passage[^1] is '.' or '!' or '?'
+        && Regex.Matches(
+            passage,
+            "[A-Za-z]+(?:['-][A-Za-z]+)*",
+            RegexOptions.CultureInvariant,
+            TimeSpan.FromSeconds(1)).Count >= MinimumBlueprintWordCount;
+
+    private static bool IsBlueprintSource(string path) =>
+        path.StartsWith("Blueprint/", StringComparison.Ordinal)
+        && path.EndsWith(".scribe.cs", StringComparison.Ordinal);
 
     private static int CountCjk(string value) => value.Count(static character =>
         character is >= '\u3400' and <= '\u4dbf'

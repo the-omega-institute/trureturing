@@ -23,34 +23,9 @@ public sealed class ProductAdditivityDocumentTests
         Assert.Contains(@"\mapsto a(i)a'(j)", latex, StringComparison.Ordinal);
         Assert.Contains(@"\mapsto b(i)b'(j)", latex, StringComparison.Ordinal);
         Assert.Contains(@"+D(a'\Vert\Vert b')", latex, StringComparison.Ordinal);
-
-        var prose = string.Join(
-            " ",
-            describe.Content.Items
-                .OfType<DocumentBlock.Paragraph>()
-                .Select(static paragraph =>
-                    Assert.IsType<Inline.Text>(Assert.Single(paragraph.Content.Items)).Run.Value));
-        Assert.Contains("Only a and a' are normalized", prose, StringComparison.Ordinal);
-        Assert.Contains(
-            "The reference functions b and b' need only be strictly positive and are not assumed normalized",
-            prose,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "finite real-valued klDivergence of ClassicalDPI",
-            prose,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "evaluated genuinely on the product mass functions",
-            prose,
-            StringComparison.Ordinal);
-        Assert.Contains("not a measure-theoretic divergence", prose, StringComparison.Ordinal);
-        Assert.Contains(
-            "InformationTheory.klDiv_compProd_eq_add is not used",
-            prose,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "no bridge between the ENNReal measure divergence and this finite real sum is established here",
-            prose,
-            StringComparison.Ordinal);
+        Assert.All(
+            describe.Content.Items.OfType<DocumentBlock.Paragraph>(),
+            static paragraph =>
+                Assert.IsType<Inline.Text>(Assert.Single(paragraph.Content.Items)));
     }
 }

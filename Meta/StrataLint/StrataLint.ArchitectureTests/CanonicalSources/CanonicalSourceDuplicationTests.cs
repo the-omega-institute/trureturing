@@ -75,6 +75,57 @@ public sealed class CanonicalSourceDuplicationTests
     }
 
     [Fact]
+    public void LongExactBlueprintPassageIsRejectedByTheRedFixture()
+    {
+        const string blueprint = """
+            var document = Paragraph(Text(
+                "The synthetic Blueprint records an authored explanation whose exact wording " +
+                "belongs only in the canonical document source and nowhere else."));
+            """;
+        const string source = """
+            Assert.Contains(
+                "The synthetic Blueprint records an authored explanation whose exact wording belongs only in the canonical document source and nowhere else.",
+                rendered,
+                StringComparison.Ordinal);
+            """;
+
+        var finding = Assert.Single(CanonicalSourceDuplicationPolicy.InspectBlueprintCopies(
+            "Meta/StrataLint/SyntheticTests.cs",
+            source,
+            [("Blueprint/D5/S0/Synthetic.scribe.cs", blueprint)]));
+
+        Assert.Contains(
+            "Blueprint/D5/S0/Synthetic.scribe.cs",
+            finding.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ShortOrRewrittenBlueprintTextIsNotRejected()
+    {
+        const string blueprint = """
+            var document = Blocks(
+                Paragraph(Text("An exact Blueprint phrase stays short.")),
+                Paragraph(Text(
+                    "The synthetic Blueprint records an authored explanation whose exact wording " +
+                    "belongs only in the canonical document source and nowhere else.")));
+            """;
+        const string source = """
+            const string shortCopy = "An exact Blueprint phrase stays short.";
+            const string rewritten =
+                "This independently written explanation resembles the canonical document's meaning, " +
+                "but it deliberately uses different words and therefore is not a verbatim copy.";
+            const string identifier = "D5/S0/Synthetic.synthetic_declaration";
+            const string latex = @"\operatorname{Synthetic}(x) = x";
+            """;
+
+        Assert.Empty(CanonicalSourceDuplicationPolicy.InspectBlueprintCopies(
+            "Meta/StrataLint/SyntheticTests.cs",
+            source,
+            [("Blueprint/D5/S0/Synthetic.scribe.cs", blueprint)]));
+    }
+
+    [Fact]
     public void RepositoryScanIncludesCSharpOutsideTheHarnessTree()
     {
         var root = Path.Combine(
