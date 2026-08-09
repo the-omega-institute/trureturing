@@ -263,6 +263,8 @@ public sealed class LeanReportPairScriptTests
             printf '{"source_sha256":"%s"}\n' "$source_hash" > "$output"
             report_hash="$(openssl dgst -sha256 "$output" | awk '{print $NF}')"
             printf '%s  %s\n' "$report_hash" "$(basename "$output")" > "${output}.sha256"
+            mkdir -p "${output}.logs"
+            printf '%s\n' "$source_hash" > "${output}.logs/producer.log"
             """;
     }
 }
