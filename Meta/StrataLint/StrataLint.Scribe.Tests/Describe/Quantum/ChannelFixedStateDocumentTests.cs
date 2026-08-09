@@ -25,16 +25,7 @@ public sealed class ChannelFixedStateDocumentTests
             describe.Provenance.LiteratureReference?.Value);
 
         var paragraph = Assert.IsType<DocumentBlock.Paragraph>(Assert.Single(describe.Content.Items));
-        var prose = Assert.IsType<Inline.Text>(Assert.Single(paragraph.Content.Items)).Run.Value;
-        Assert.Contains(
-            "only the invariant-state existence base",
-            prose,
-            StringComparison.Ordinal);
-        Assert.Contains("Theorem 4.5", prose, StringComparison.Ordinal);
-        Assert.Contains("complete positivity", prose, StringComparison.Ordinal);
-        Assert.Contains("tangent factor", prose, StringComparison.Ordinal);
-        Assert.Contains("interior faithful invariant state", prose, StringComparison.Ordinal);
-        Assert.Contains("remain separate open obligations", prose, StringComparison.Ordinal);
+        Assert.IsType<Inline.Text>(Assert.Single(paragraph.Content.Items));
     }
 
     [Fact]

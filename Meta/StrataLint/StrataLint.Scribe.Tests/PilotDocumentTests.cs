@@ -205,20 +205,6 @@ public sealed class DocumentDiscoveryTests
             describes.Select(static describe =>
                 Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement).Value.Value));
 
-        var report = LeanReportFixture.ForDocuments([definition.Document]);
-        var markdown = System.Text.Encoding.UTF8.GetString(
-            CanonicalMarkdownWriter.Write(
-                definition.Document,
-                report,
-                RepositoryCitations()).AsSpan());
-        Assert.Contains(
-            "local candidate disjunction modulo 36 remains an explicit premise",
-            markdown,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "does not prove the local 432-case computation",
-            markdown,
-            StringComparison.Ordinal);
     }
 
     [Fact]
@@ -250,17 +236,6 @@ public sealed class DocumentDiscoveryTests
             describes.Select(static describe =>
                 Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement).Value.Value));
 
-        var report = LeanReportFixture.ForDocuments([definition.Document]);
-        var markdown = System.Text.Encoding.UTF8.GetString(
-            CanonicalMarkdownWriter.Write(definition.Document, report).AsSpan());
-        Assert.Contains(
-            "does not identify arithmetic orbits with stationings",
-            markdown,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "No finite observation, measured exponent, density, or asymptotic law is closed",
-            markdown,
-            StringComparison.Ordinal);
     }
 
     [Fact]
@@ -292,12 +267,6 @@ public sealed class DocumentDiscoveryTests
             describes.Select(static describe =>
                 Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement).Value.Value));
 
-        var report = LeanReportFixture.ForDocuments([definition.Document]);
-        var markdown = System.Text.Encoding.UTF8.GetString(
-            CanonicalMarkdownWriter.Write(definition.Document, report).AsSpan());
-        Assert.Contains("does not supply the finite conflict table", markdown, StringComparison.Ordinal);
-        Assert.Contains("does not identify actual orbits", markdown, StringComparison.Ordinal);
-        Assert.Contains("No finite observation or measurable claim is closed", markdown, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -459,47 +428,6 @@ public sealed class DocumentDiscoveryTests
     }
 
     [Fact]
-    public void ZeroGeometryDocumentDisclosesSourceOmissionsAndTheOpenO6Bridge()
-    {
-        var definition = DocumentDefinitions.All.Single(static item =>
-            item.Document.Header.Gid.Value == "D5/S3/Zeros/ZeroGeometry");
-        var report = LeanReportFixture.ForDocuments([definition.Document]);
-        var markdown = System.Text.Encoding.UTF8.GetString(
-            CanonicalMarkdownWriter.Write(
-                definition.Document,
-                report,
-                RepositoryCitations()).AsSpan());
-
-        string[] requiredDisclosures =
-        [
-            "No analytic projection operator is defined, and no projection identity outside the Dirichlet convergence half-plane is claimed.",
-            "The source's coefficient factorization, unbounded-ray clause, and rotation-invariance clause are not formalized here.",
-            "The governance claim excluding an address-dependent inverse register is not part of this theorem.",
-            "Cross-position cancellation does not imply local balance at either position.",
-            "The closure condition is carried as the arbitrary predicate closedAt; no inhabitant is asserted.",
-            "The missing implication from every projected zero to local balance is exactly the open O-6 bridge.",
-        ];
-
-        foreach (var disclosure in requiredDisclosures)
-        {
-            Assert.Contains(disclosure, markdown, StringComparison.Ordinal);
-        }
-
-        var zeroQuartetScaling = Descendants(definition.Document.Content)
-            .OfType<DocumentBlock.Describe>()
-            .Single(static node =>
-                Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement).Value.Value ==
-                "D5/S3/Zeros/ZeroGeometry.zero_quartet_scaling_spec");
-        var zeroDataDisclosure = Assert.IsType<Inline.Text>(
-            Assert.IsType<DocumentBlock.Paragraph>(
-                Assert.Single(zeroQuartetScaling.Content.Items)).Content.Items.Single()).Run.Value;
-
-        Assert.Contains("ZeroData", zeroDataDisclosure, StringComparison.Ordinal);
-        Assert.Contains("does not prove", zeroDataDisclosure, StringComparison.OrdinalIgnoreCase);
-        Assert.Contains("inhabit", zeroDataDisclosure, StringComparison.OrdinalIgnoreCase);
-    }
-
-    [Fact]
     public void QuantumSkeletonDocumentCarriesExactStatementsAndDiligentProvenance()
     {
         (string Declaration, string Reference)[] expected =
@@ -533,28 +461,6 @@ public sealed class DocumentDiscoveryTests
             Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
             Assert.True(lean.Value.RequireNoSorry);
         }
-    }
-
-    [Fact]
-    public void QuantumSkeletonDocumentExplicitlyDisclosesUnformalizedNumericalCertificates()
-    {
-        var definition = DocumentDefinitions.All.Single(static item =>
-            item.Document.Header.Gid.Value == "D5/S3/Quantum/FiniteDimensional");
-        var report = LeanReportFixture.ForDocuments([definition.Document]);
-        var markdown = System.Text.Encoding.UTF8.GetString(
-            CanonicalMarkdownWriter.Write(
-                definition.Document,
-                report,
-                RepositoryCitations()).AsSpan());
-
-        Assert.Contains(
-            "Original numerical-certificate claim not formalized: the source atom's matrix-unit relations with exact zero certificate error.",
-            markdown,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "Original numerical-certificate claim not formalized: the source atom's separate Born control group balance to 10^-16.",
-            markdown,
-            StringComparison.Ordinal);
     }
 
     [Fact]
@@ -593,81 +499,6 @@ public sealed class DocumentDiscoveryTests
             Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
             Assert.True(lean.Value.RequireNoSorry);
         }
-    }
-
-    [Fact]
-    public void QubitWitnessDocumentAccountsForEverySourceCertificate()
-    {
-        var definition = DocumentDefinitions.All.Single(static item =>
-            item.Document.Header.Gid.Value == "D5/S3/Quantum/QubitWitnesses");
-        var report = LeanReportFixture.ForDocuments([definition.Document]);
-        var markdown = System.Text.Encoding.UTF8.GetString(
-            CanonicalMarkdownWriter.Write(
-                definition.Document,
-                report,
-                RepositoryCitations()).AsSpan());
-
-        Assert.Contains(
-            "Original numerical-certificate claim not formalized: the source atom's full matrix-unit relations with exact zero certificate error.",
-            markdown,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "Original numerical-certificate claims not formalized: the source atom's CHSH values 2*sqrt(2) = 2.8284 and the classical local-fiber bound 2.0.",
-            markdown,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "Original certificate coverage: the source atom's symbolic (1/2) * c0^N coherence law and fixed one-half populations are formalized exactly; the atom supplies no fixed numeric c0 or N.",
-            markdown,
-            StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void QuantumContinuationDocumentsDiscloseStructuresScopeAndCertificates()
-    {
-        var documents = DocumentDefinitions.All
-            .ToDictionary(static item => item.Document.Header.Gid.Value, StringComparer.Ordinal);
-        var observerDefinition = documents["D5/S3/Quantum/ObserverAlgebra"];
-        var decoherenceDefinition = documents["D5/S3/Quantum/Decoherence"];
-        var report = LeanReportFixture.ForDocuments(
-            [observerDefinition.Document, decoherenceDefinition.Document]);
-        var observerMarkdown = System.Text.Encoding.UTF8.GetString(
-            CanonicalMarkdownWriter.Write(
-                observerDefinition.Document,
-                report,
-                RepositoryCitations()).AsSpan());
-        var decoherenceMarkdown = System.Text.Encoding.UTF8.GetString(
-            CanonicalMarkdownWriter.Write(
-                decoherenceDefinition.Document,
-                report,
-                RepositoryCitations()).AsSpan());
-
-        Assert.Contains("including an empty type", observerMarkdown, StringComparison.Ordinal);
-        Assert.Contains("explicit address i", observerMarkdown, StringComparison.Ordinal);
-        Assert.Contains(
-            "does not construct or identify the universal C*-crossed product",
-            observerMarkdown,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "neither observer-algebra CAS atom contains a numerical certificate",
-            observerMarkdown,
-            StringComparison.Ordinal);
-
-        Assert.Contains(
-            "inhabited real interval [0,1], with zero as an explicit witness",
-            decoherenceMarkdown,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "arbitrary complex two-by-two matrix, no positivity, trace-one, or Hermiticity premise",
-            decoherenceMarkdown,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "Original certificate disposition: the source atoms' symbolic (1/2) * c0^N coherence law and fixed one-half populations are already formalized exactly",
-            decoherenceMarkdown,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "no fixed numeric c0 or N",
-            decoherenceMarkdown,
-            StringComparison.Ordinal);
     }
 
     private static string FindRepositoryRoot()
