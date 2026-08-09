@@ -7,21 +7,6 @@ namespace StrataLint.Tests;
 public sealed class BackfillInventoryLoaderTests
 {
     [Fact]
-    public void SnapshotLegacyShapeDelegatesByteIdenticallyToTextLoader()
-    {
-        var fields = LoaderEntryFields().ToHashSet(StringComparer.Ordinal);
-        fields.Remove("boundary");
-        var text = EntryFixture(fields);
-
-        var direct = BackfillInventoryLoader.Load(text);
-        var dispatched = BackfillInventoryLoader.Load(Snapshot((BackfillInventoryLoader.RelativePath, text)));
-
-        Assert.Equal(
-            BackfillInventoryWriter.Write(direct).ToArray(),
-            BackfillInventoryWriter.Write(dispatched).ToArray());
-    }
-
-    [Fact]
     public void DirectoryShapeProjectsTwoSourcesAtomsAndTicketIndex()
     {
         var snapshot = Snapshot(
@@ -52,27 +37,6 @@ public sealed class BackfillInventoryLoaderTests
                 Assert.Equal(DigestionMigrationState.Partial, entry.ProjectedStatus.Migration);
                 Assert.Equal(DigestionTruthState.Closed, entry.ProjectedStatus.Truth);
             });
-    }
-
-    [Fact]
-    public void BothStorageShapesAreRejected()
-    {
-        var text = EntryFixture(LoaderEntryFields().ToHashSet(StringComparer.Ordinal));
-        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
-            (BackfillInventoryLoader.RelativePath, text),
-            Source("delta-v0.1", "docs/delta.md", "none"),
-            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"),
-            (BackfillInventoryLoader.TicketIndexPath, ""))));
-
-        Assert.Equal("legacy and directory digestion ledgers cannot coexist", exception.Message);
-    }
-
-    [Fact]
-    public void NeitherStorageShapeUsesExistingMissingMessage()
-    {
-        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot()));
-
-        Assert.Equal("required governance document is missing", exception.Message);
     }
 
     [Fact]
@@ -582,8 +546,6 @@ public sealed class BackfillInventoryLoaderTests
               coverage: []
               scribe: []
               unresolved_subitems: []
-              chain_atoms: []
-              tail_authorization: null
             """ + "\n");
 
     private static string[] LoaderEntryFields() =>

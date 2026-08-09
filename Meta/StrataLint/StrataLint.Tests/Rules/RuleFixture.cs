@@ -7,6 +7,8 @@ namespace StrataLint.Tests;
 
 internal sealed partial class RuleFixture
 {
+    private const string LegacyBackfillPath = "Meta/BACKFILL.yaml";
+
     internal const string RingPath = GoldenCorpus.RingPath;
     internal const string BlueprintPath = GoldenCorpus.BlueprintPath;
     internal const string NotationPath = GoldenCorpus.NotationPath;
@@ -44,7 +46,7 @@ internal sealed partial class RuleFixture
         Files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             ["Meta/domains.yaml"] = TestRegistry.Domains,
-            ["Meta/BACKFILL.yaml"] = GoldenCorpus.FixtureBackfill,
+            [LegacyBackfillPath] = GoldenCorpus.FixtureBackfill,
             [TheoryAtomizerDataLoader.DataPath] = File.ReadAllText(
                 Path.Combine(repositoryRoot, TheoryAtomizerDataLoader.DataPath), Encoding.UTF8),
             ["Meta/registry.yaml"] = TestRegistry.Canonical,
@@ -80,14 +82,11 @@ internal sealed partial class RuleFixture
 
     internal void UseSyntheticDirectoryBackfill(string ticketIndex)
     {
-        Files.Remove(BackfillInventoryLoader.RelativePath);
+        Files.Remove(LegacyBackfillPath);
         Files[$"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml"] =
             $"source_id = \"delta-v0.1\"\npath = \"{GoldenCorpus.FixtureDigestionSourcePath}\"\natomizer = \"none\"\n";
         Files[$"{BackfillInventoryLoader.RootPath}delta-v0.1/residual-open/delta-atom.yaml"] = """
-            boundary:
-              ast_path: manual/delta
-              start_byte: 0
-              end_byte: 1
+            ast_path: manual/delta
             fingerprints:
               raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
               normalized_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
@@ -97,25 +96,20 @@ internal sealed partial class RuleFixture
               coverage: []
               scribe: []
               unresolved_subitems: []
-              chain_atoms: []
-              tail_authorization: null
             """ + "\n";
         Files[BackfillInventoryLoader.TicketIndexPath] = ticketIndex;
     }
 
     internal void UseValidDirectoryBackfill()
     {
-        var document = BackfillInventoryLoader.Load(Files[BackfillInventoryLoader.RelativePath]);
+        var document = BackfillInventoryLoader.Load(GoldenCorpus.FixtureBackfill);
         var ticketIndex = string.Concat(document.RequireTickets().Select(static ticket =>
             $"{ticket.CaseId} = \"{ticket.Gid}\"\n"));
         const string sourcePath = "delta-v0.1/source.toml";
         const string atomPath = "delta-v0.1/partial-closed/delta-atom.yaml";
         var source = $"source_id = \"delta-v0.1\"\npath = \"{GoldenCorpus.FixtureDigestionSourcePath}\"\natomizer = \"none\"\n";
         var atom = $"""
-            boundary:
-              ast_path: manual/fixture
-              start_byte: 0
-              end_byte: 1
+            ast_path: manual/fixture
             fingerprints:
               raw_sha256: {GoldenCorpus.FixtureCasReference}
               normalized_sha256: {GoldenCorpus.FixtureCasReference}
@@ -126,13 +120,11 @@ internal sealed partial class RuleFixture
               coverage: []
               scribe: []
               unresolved_subitems: []
-              chain_atoms: []
-              tail_authorization: null
             """ + "\n";
 
         foreach (var files in new[] { Files, Baseline })
         {
-            files.Remove(BackfillInventoryLoader.RelativePath);
+            files.Remove(LegacyBackfillPath);
             files[BackfillInventoryLoader.RootPath + sourcePath] = source;
             files[BackfillInventoryLoader.RootPath + atomPath] = atom;
             files[BackfillInventoryLoader.TicketIndexPath] = ticketIndex;
@@ -351,7 +343,7 @@ internal sealed partial class RuleFixture
 
     internal void AddBackfillTargets()
     {
-        var inventory = BackfillInventoryLoader.Load(Files["Meta/BACKFILL.yaml"]);
+        var inventory = BackfillInventoryLoader.Load(Files[LegacyBackfillPath]);
         var ticketsByGid = inventory.RequireTickets()
             .GroupBy(static ticket => ticket.Gid, StringComparer.Ordinal)
             .ToDictionary(

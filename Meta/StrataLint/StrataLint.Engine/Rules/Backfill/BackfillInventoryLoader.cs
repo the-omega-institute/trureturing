@@ -372,6 +372,16 @@ internal static class BackfillInventoryLoader
         bool tolerateAbsent = false)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
+        foreach (var path in snapshot.Files.Keys
+                     .Select(static path => path.Value)
+                     .Where(static path => path.StartsWith(RootPath, StringComparison.Ordinal)))
+        {
+            if (!IsCanonicalPath(path))
+            {
+                throw new FormatException($"noncanonical digestion ledger path: {path}");
+            }
+        }
+
         var metadata = snapshot.Files
             .Where(static pair => pair.Key.Value.StartsWith(RootPath, StringComparison.Ordinal)
                 && pair.Key.Value.EndsWith("/source.toml", StringComparison.Ordinal))
@@ -385,6 +395,7 @@ internal static class BackfillInventoryLoader
         }
 
         var sources = ImmutableArray.CreateBuilder<DigestionLedgerSource>();
+        var ownedAtomPaths = new HashSet<string>(StringComparer.Ordinal);
         foreach (var (metadataPath, metadataFile) in metadata)
         {
             var sourceRoot = metadataPath.Value[..^"source.toml".Length];
@@ -401,6 +412,7 @@ internal static class BackfillInventoryLoader
                              && pair.Key.Value.EndsWith(".yaml", StringComparison.Ordinal))
                          .OrderBy(static pair => pair.Key.Value, StringComparer.Ordinal))
             {
+                ownedAtomPaths.Add(path.Value);
                 var suffix = path.Value[sourceRoot.Length..];
                 var slash = suffix.IndexOf('/');
                 if (slash <= 0 || suffix.IndexOf('/', slash + 1) >= 0)
@@ -449,6 +461,17 @@ internal static class BackfillInventoryLoader
                 entries.ToImmutable()));
         }
 
+        foreach (var atomPath in snapshot.Files.Keys
+                     .Select(static path => path.Value)
+                     .Where(static path => path.StartsWith(RootPath, StringComparison.Ordinal)
+                         && path.EndsWith(".yaml", StringComparison.Ordinal)))
+        {
+            if (!ownedAtomPaths.Contains(atomPath))
+            {
+                throw new FormatException($"backfill atom is not owned by exactly one source: {atomPath}");
+            }
+        }
+
         var tickets = snapshot.TryGetFile(TicketIndexPath, out var ticketFile)
             ? ParseTickets(ticketFile.Text)
             : throw new FormatException($"digestion ticket index is missing: {TicketIndexPath}");
@@ -479,10 +502,18 @@ internal static class BackfillInventoryLoader
         foreach (var rawLine in text.Split('\n', StringSplitOptions.RemoveEmptyEntries))
         {
             var split = rawLine.Split(" = ", 2, StringSplitOptions.None);
-            if (split.Length != 2 || !result.TryAdd(split[0], ParseTomlValues(split[1])))
+            if (split.Length != 2 || !result.TryAdd(split[0], []))
             {
                 throw new FormatException($"invalid source metadata: {path}");
             }
+
+            result[split[0]] = split[0] == "acknowledged_stale"
+                ? ParseTomlStringArray(
+                    split[1],
+                    $"acknowledged_stale must be a quoted string array without blank elements: {path}")
+                : [ParseTomlQuotedScalar(
+                    split[1],
+                    $"source metadata identity fields must be single quoted strings: {path}")];
         }
 
         if (!result.Keys.ToHashSet(StringComparer.Ordinal).SetEquals(
@@ -495,22 +526,77 @@ internal static class BackfillInventoryLoader
         return result;
     }
 
-    private static List<string> ParseTomlValues(string encoded)
+    private static string ParseTomlQuotedScalar(string encoded, string message)
     {
-        var values = encoded.StartsWith('[') && encoded.EndsWith(']')
-            ? encoded[1..^1].Split(", ", StringSplitOptions.RemoveEmptyEntries)
-            : [encoded];
-        return values.Select(value => value.Length >= 2 && value[0] == '"' && value[^1] == '"'
-                ? value[1..^1]
-                : throw new FormatException("source metadata values must be quoted strings"))
-            .ToList();
+        var index = 0;
+        var value = ParseTomlQuotedString(encoded, ref index, message);
+        if (index != encoded.Length)
+        {
+            throw new FormatException(message);
+        }
+        return value;
+    }
+
+    private static List<string> ParseTomlStringArray(string encoded, string message)
+    {
+        if (encoded.Length < 2 || encoded[0] != '[' || encoded[^1] != ']')
+        {
+            throw new FormatException(message);
+        }
+
+        var values = new List<string>();
+        var index = 1;
+        if (index == encoded.Length - 1) return values;
+        while (index < encoded.Length - 1)
+        {
+            var value = ParseTomlQuotedString(encoded, ref index, message);
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new FormatException(message);
+            }
+            values.Add(value);
+            if (index == encoded.Length - 1) return values;
+            if (index + 2 > encoded.Length - 1 || encoded[index] != ',' || encoded[index + 1] != ' ')
+            {
+                throw new FormatException(message);
+            }
+            index += 2;
+        }
+        throw new FormatException(message);
+    }
+
+    private static string ParseTomlQuotedString(string encoded, ref int index, string message)
+    {
+        if (index >= encoded.Length || encoded[index++] != '"')
+        {
+            throw new FormatException(message);
+        }
+
+        var value = new System.Text.StringBuilder();
+        while (index < encoded.Length)
+        {
+            var character = encoded[index++];
+            if (character == '"') return value.ToString();
+            if (character == '\\')
+            {
+                if (index >= encoded.Length || encoded[index] is not ('\\' or '"'))
+                {
+                    throw new FormatException(message);
+                }
+                character = encoded[index++];
+            }
+            value.Append(character);
+        }
+        throw new FormatException(message);
     }
 
     private static ImmutableArray<BackfillTicketReference> ParseTickets(string text) =>
         text.Split('\n', StringSplitOptions.RemoveEmptyEntries)
             .Select(line => line.Split(" = ", 2, StringSplitOptions.None))
             .Select(parts => parts.Length == 2
-                ? new BackfillTicketReference(parts[0], ParseTomlValues(parts[1]).Single())
+                ? new BackfillTicketReference(
+                    parts[0],
+                    ParseTomlQuotedScalar(parts[1], "invalid digestion ticket index"))
                 : throw new FormatException("invalid digestion ticket index"))
             .ToImmutableArray();
 }
