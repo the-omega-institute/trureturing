@@ -245,9 +245,16 @@ internal sealed class BackfillInventoryDocument
     private static DigestionReceipts ParseReceipts(string atomId, object? rawReceipts)
     {
         var receipts = Mapping(rawReceipts, $"entry {atomId} receipts must be a mapping");
+
+        // chain_atoms 与 tail_authorization 降为**可选键**:一节点一文件的目录形态不再写出
+        // 它们(实测 dev 现有 2,030 条记录里 100% 为 `[]` 与 `null`)。
+        // 但**在场时校验一字不减** —— tail_authorization 是活的能力(absorbed-tail 授权删除,
+        // 见 DigestionLedgerTests 的 ArbitraryHashedRepositoryFileCannotAuthorizeTailDeletion),
+        // 只是尚无实例;把「当前没有实例」当成「机制已死」会削掉一条真能力。
         ExactKeys(
             receipts,
-            ["coverage", "scribe", "unresolved_subitems", "chain_atoms", "tail_authorization"],
+            ["coverage", "scribe", "unresolved_subitems"],
+            ["chain_atoms", "tail_authorization"],
             $"entry {atomId} receipts");
         var coverage = ImmutableArray.CreateBuilder<DigestionCoverageReceipt>();
         foreach (var rawCoverage in List(receipts, "coverage", $"entry {atomId} coverage receipts must be a list"))
@@ -287,9 +294,11 @@ internal sealed class BackfillInventoryDocument
             Strings(
                 List(receipts, "unresolved_subitems", $"entry {atomId} unresolved_subitems must be a list"),
                 $"entry {atomId} unresolved_subitems"),
-            Strings(
-                List(receipts, "chain_atoms", $"entry {atomId} chain_atoms must be a list"),
-                $"entry {atomId} chain_atoms"),
+            receipts.ContainsKey("chain_atoms")
+                ? Strings(
+                    List(receipts, "chain_atoms", $"entry {atomId} chain_atoms must be a list"),
+                    $"entry {atomId} chain_atoms")
+                : [],
             tailAuthorization);
     }
 
@@ -356,6 +365,21 @@ internal sealed class BackfillInventoryDocument
         string context)
     {
         if (!mapping.Keys.ToHashSet(StringComparer.Ordinal).SetEquals(expected))
+        {
+            throw new FormatException($"{context} keys are not canonical");
+        }
+    }
+
+    // 必需键必须全在;可选键可有可无,但除此以外一个多余键都不许有。
+    private static void ExactKeys(
+        IReadOnlyDictionary<string, object?> mapping,
+        IReadOnlyCollection<string> required,
+        IReadOnlyCollection<string> optional,
+        string context)
+    {
+        var keys = mapping.Keys.ToHashSet(StringComparer.Ordinal);
+        if (!keys.IsSupersetOf(required)
+            || !keys.IsSubsetOf(required.Concat(optional).ToHashSet(StringComparer.Ordinal)))
         {
             throw new FormatException($"{context} keys are not canonical");
         }
