@@ -1,10 +1,58 @@
 using System.Text;
 using StrataLint.Engine;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Tests;
 
 public sealed class MarkdownWriterTests
 {
+    [Theory]
+    [InlineData(FormulaLatexMacro.Circ, "P", "circP")]
+    [InlineData(FormulaLatexMacro.Langle, "A", "langleA")]
+    [InlineData(FormulaLatexMacro.Vert, "q", "Vertq")]
+    [InlineData(FormulaLatexMacro.Leq, "u", "lequ")]
+    [InlineData(FormulaLatexMacro.In, "S", "inS")]
+    [InlineData(FormulaLatexMacro.Mid, "E", "midE")]
+    public void WriterRejectsControlWordsAdjacentToIdentifiersWithSource(
+        FormulaLatexMacro macro,
+        string identifier,
+        string mergedMacro)
+    {
+        var adjacent = F.Seq(new Formula.LatexMacro(macro), F.Id(identifier));
+        var formula = macro == FormulaLatexMacro.Circ
+            ? F.Seq(F.Id("P"), adjacent)
+            : adjacent;
+        var document = ScribeDocument.Create(
+            CreateHeader(),
+            Heading.Create("Boundary sample"),
+            BlockSequence.Create(
+            [
+                DocumentBlock.Describe.Example(
+                    DescribeId.Create("control-word-boundary"),
+                    Heading.Create("Control word boundary"),
+                    formula,
+                    DescribeProvenance.RepoDerived(),
+                    BlockSequence.Create([Paragraph(new Inline.Text(TextRun.Create("Stable.")))])),
+            ]));
+
+        var exception = Assert.Throws<InvalidOperationException>(
+            () => CanonicalMarkdownWriter.Write(document));
+
+        Assert.Contains(macro.ToString(), exception.Message, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains(identifier, exception.Message, StringComparison.Ordinal);
+        Assert.Contains(mergedMacro, exception.Message, StringComparison.Ordinal);
+        Assert.Contains("D5/S1/Scale/Embedding", exception.Message, StringComparison.Ordinal);
+        Assert.Contains("control-word-boundary", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void WriterPreservesSafeControlWordBoundaries()
+    {
+        Assert.Equal("{\\sigma\\circ\\tau}", LatexWriter.Write(F.Grp(F.SigmaLower, F.Circ, F.Tau)));
+        Assert.Equal("P \\circ P", LatexWriter.Write(F.Seq(F.Id("P"), F.Sp, F.Circ, F.Sp, F.Id("P"))));
+        Assert.Equal("\\\\k", LatexWriter.Write(F.Seq(F.RowBreak, F.Id("k"))));
+    }
+
     [Fact]
     public void EdgeFreeDocumentPreservesLegacyEmissionBytes()
     {
