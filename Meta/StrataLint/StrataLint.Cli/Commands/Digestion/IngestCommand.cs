@@ -24,20 +24,20 @@ internal static class IngestCommand
             var baselineRaw = repository.ReadRevision(baselineRevision);
             var current = Decode(currentRaw);
             var baseline = Decode(baselineRaw);
-            var document = LoadDocument(current, "candidate");
-            var baselineDocument = LoadDocument(baseline, "baseline");
+            var document = LoadDocument(current);
+            var baselineDocument = LoadDocument(baseline);
             var plan = DigestionIngestor.Plan(document, current, baselineDocument);
             var silentZeroWarnings = SilentZeroExtractionWarnings(
                 document,
                 plan.Document,
                 current,
                 baseline);
-            var plannedBytes = BackfillInventoryWriter.WriteForIngest(plan.Document);
+            var plannedFiles = BackfillInventoryWriter.WriteDirectory(plan.Document);
             var plannedRaw = AddCasObjects(
-                ReplaceLedger(currentRaw, plannedBytes),
+                ReplaceLedger(currentRaw, plannedFiles),
                 plan.CasObjects);
             var plannedSnapshot = Decode(plannedRaw);
-            var plannedDocument = LoadDocument(plannedSnapshot, "planned");
+            var plannedDocument = LoadDocument(plannedSnapshot);
             var report = leanReportSource.Load(current);
             var lean = ValidateLean(plannedSnapshot, report);
             var verifiedScribeEmissions = scribeEmissionVerifier.Verify(report);
@@ -66,12 +66,12 @@ internal static class IngestCommand
                             .ToImmutableArray(),
                     })
                     .ToImmutableArray());
-            var finalBytes = BackfillInventoryWriter.WriteForIngest(refreshed);
+            var finalFiles = BackfillInventoryWriter.WriteDirectory(refreshed);
             var finalRaw = AddCasObjects(
-                ReplaceLedger(currentRaw, finalBytes),
+                ReplaceLedger(currentRaw, finalFiles),
                 plan.CasObjects);
             var finalSnapshot = Decode(finalRaw);
-            var finalDocument = LoadDocument(finalSnapshot, "final");
+            var finalDocument = LoadDocument(finalSnapshot);
             var evaluation = DigestionStatusEvaluator.Evaluate(
                 finalDocument,
                 finalSnapshot,
@@ -87,18 +87,19 @@ internal static class IngestCommand
                 lean,
                 verifiedScribeEmissions);
 
-            var currentLedger = currentRaw.Entries.Single(static entry =>
-                entry.Path == BackfillInventoryLoader.RelativePath);
-            var changed = !currentLedger.Bytes.AsSpan().SequenceEqual(finalBytes.AsSpan());
+            var currentLedger = currentRaw.Entries
+                .Where(static entry => BackfillInventoryLoader.IsCanonicalPath(entry.Path))
+                .OrderBy(static entry => entry.Path, StringComparer.Ordinal)
+                .ToArray();
+            var changed = !currentLedger.SequenceEqual(
+                finalFiles.OrderBy(static entry => entry.Path, StringComparer.Ordinal),
+                RawEntryComparer.Instance);
             var createdCasPaths = WriteCasObjects(repositoryRoot, plan.CasObjects);
             try
             {
                 if (changed)
                 {
-                    var outputPath = Path.Combine(
-                        Path.GetFullPath(repositoryRoot),
-                        BackfillInventoryLoader.RelativePath.Replace('/', Path.DirectorySeparatorChar));
-                    ReplaceLedgerAtomically(outputPath, finalBytes.AsSpan());
+                    WriteLedgerDirectory(repositoryRoot, finalFiles);
                 }
             }
             catch (Exception exception) when (exception is not OutOfMemoryException)
@@ -158,35 +159,72 @@ internal static class IngestCommand
         throw new InvalidOperationException("USAGE: StrataLint ingest --base REV");
     }
 
-    private static BackfillInventoryDocument LoadDocument(
-        RepositorySnapshot snapshot,
-        string side)
-    {
-        if (!snapshot.TryGetFile(BackfillInventoryLoader.RelativePath, out var file))
-        {
-            throw new InvalidOperationException(
-                $"{side} {BackfillInventoryLoader.RelativePath} is missing");
-        }
-
-        return BackfillInventoryLoader.Load(file.Text);
-    }
+    private static BackfillInventoryDocument LoadDocument(RepositorySnapshot snapshot) =>
+        BackfillInventoryLoader.Load(snapshot);
 
     private static RawRepositorySnapshot ReplaceLedger(
         RawRepositorySnapshot snapshot,
-        ImmutableArray<byte> bytes)
+        ImmutableArray<RawRepositoryEntry> files)
     {
-        var matches = snapshot.Entries.Count(static entry =>
-            entry.Path == BackfillInventoryLoader.RelativePath);
-        if (matches != 1)
+        return RawRepositorySnapshot.Create(snapshot.Entries
+            .Where(static entry => !BackfillInventoryLoader.IsCanonicalPath(entry.Path)
+                && entry.Path != BackfillInventoryLoader.RelativePath)
+            .Concat(files));
+    }
+
+    private static void WriteLedgerDirectory(
+        string repositoryRoot,
+        ImmutableArray<RawRepositoryEntry> files)
+    {
+        var root = Path.GetFullPath(repositoryRoot);
+        var desired = files.ToDictionary(static entry => entry.Path, StringComparer.Ordinal);
+        var backfillRoot = Path.Combine(
+            root,
+            BackfillInventoryLoader.RootPath.Replace('/', Path.DirectorySeparatorChar));
+        if (Directory.Exists(backfillRoot))
         {
-            throw new InvalidOperationException(
-                $"snapshot must contain exactly one {BackfillInventoryLoader.RelativePath}");
+            foreach (var existing in Directory.EnumerateFiles(
+                         backfillRoot,
+                         "*",
+                         SearchOption.AllDirectories))
+            {
+                var relative = Path.GetRelativePath(root, existing)
+                    .Replace(Path.DirectorySeparatorChar, '/');
+                if (!desired.ContainsKey(relative))
+                {
+                    File.Delete(existing);
+                }
+            }
         }
 
-        return RawRepositorySnapshot.Create(snapshot.Entries.Select(entry =>
-            entry.Path == BackfillInventoryLoader.RelativePath
-                ? new RawRepositoryEntry(entry.Path, bytes)
-                : entry));
+        foreach (var entry in files)
+        {
+            var target = Path.Combine(
+                root,
+                entry.Path.Replace('/', Path.DirectorySeparatorChar));
+            Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+            if (!File.Exists(target)
+                || !File.ReadAllBytes(target).AsSpan().SequenceEqual(entry.Bytes.AsSpan()))
+            {
+                ReplaceLedgerAtomically(target, entry.Bytes.AsSpan());
+            }
+        }
+
+        File.Delete(Path.Combine(
+            root,
+            BackfillInventoryLoader.RelativePath.Replace('/', Path.DirectorySeparatorChar)));
+    }
+
+    private sealed class RawEntryComparer : IEqualityComparer<RawRepositoryEntry>
+    {
+        internal static RawEntryComparer Instance { get; } = new();
+
+        public bool Equals(RawRepositoryEntry? x, RawRepositoryEntry? y) =>
+            x is not null && y is not null && x.Path == y.Path
+            && x.Bytes.AsSpan().SequenceEqual(y.Bytes.AsSpan());
+
+        public int GetHashCode(RawRepositoryEntry obj) =>
+            obj.Path.GetHashCode(StringComparison.Ordinal);
     }
 
     private static RawRepositorySnapshot AddCasObjects(

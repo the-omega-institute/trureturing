@@ -52,7 +52,10 @@ internal static class DigestionIngestor
                     throw new FormatException($"ingest source {source.SourceId} has unknown atomizer {source.Atomizer}");
                 }
 
-                sources.Add(CaptureBoundarySource(source, snapshot, casObjects));
+                // Directory entries already carry cas_ref and no longer retain byte boundaries.
+                sources.Add(source.Entries.All(static entry => entry.Boundary is null)
+                    ? source
+                    : CaptureBoundarySource(source, snapshot, casObjects));
                 continue;
             }
 

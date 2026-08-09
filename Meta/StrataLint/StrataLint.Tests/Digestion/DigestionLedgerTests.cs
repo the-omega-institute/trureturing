@@ -116,6 +116,47 @@ public sealed partial class DigestionLedgerTests
     }
 
     [Fact]
+    public void IngestPassesThroughDirectoryNoAtomizerEntryWithoutBoundary()
+    {
+        var sourceBytes = Encoding.UTF8.GetBytes("manual specification receipt\n");
+        var captured = DigestionCasStore.Capture(sourceBytes);
+        var sourceId = "manual-specification";
+        var atomId = "manual-receipt";
+        var sourceMetadata = $$"""
+            source_id = "{{sourceId}}"
+            path = "docs/source.md"
+            atomizer = "{{AtomizerRegistry.NoAtomizerId}}"
+            """ + "\n";
+        var atom = $$"""
+            ast_path: manual/receipt
+            fingerprints:
+              raw_sha256: {{captured.Reference}}
+              normalized_sha256: {{captured.Reference}}
+            cas_ref: {{captured.Reference}}
+            coverage_gids: []
+            receipts:
+              coverage: []
+              scribe: []
+              unresolved_subitems: []
+            """ + "\n";
+        var snapshot = Snapshot(
+            ("docs/source.md", sourceBytes),
+            (captured.RelativePath, captured.Bytes.ToArray()),
+            ($"{BackfillInventoryLoader.RootPath}{sourceId}/source.toml",
+                Encoding.UTF8.GetBytes(sourceMetadata)),
+            ($"{BackfillInventoryLoader.RootPath}{sourceId}/partial-open/{atomId}.yaml",
+                Encoding.UTF8.GetBytes(atom)),
+            (BackfillInventoryLoader.TicketIndexPath, []));
+        var ledger = BackfillInventoryLoader.Load(snapshot);
+        var expected = Assert.Single(ledger.RequireDigestionEntries());
+
+        var plan = DigestionIngestor.Plan(ledger, snapshot, ledger);
+
+        Assert.Equal(expected, Assert.Single(plan.Document.RequireDigestionEntries()));
+        Assert.Empty(plan.CasObjects);
+    }
+
+    [Fact]
     public void IngestOnboardsRegisteredEmptySourceAndRemainsByteIdempotent()
     {
         var atomizerId = SyntheticNumberedAtomizer.Id;
