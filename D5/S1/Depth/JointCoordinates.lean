@@ -120,16 +120,7 @@ noncomputable def depth (q0 : ℤ) (n : ℕ+) : DepthValue q0 n :=
       finitePhase (phaseResolution q0 n) (phaseResolution_pos q0 n)
         (goldenPhase (n : ℤ)) := rfl
 
-/-- A `Fin` structural bound, not a metric fact. The phase component of `depth` is an
-element of `Fin (phaseResolution q0 n)`, and every element of a `Fin k` carries `k` as
-its own bound; the proof below is that element's `.isLt` and nothing else. What the
-statement records is that the depth interface exposes the declared resolution.
-
-WHAT IT IS NOT EVIDENCE OF. It says nothing about how far apart two phases are: it holds
-for every inhabitant of the type, so it cannot separate one phase from another, cannot
-order them, and has no triangle content. Any distance between phases has to be defined
-and proved elsewhere -- see `D5/S1/Depth/FiniteMetric`, where `phaseDist_eq_zero_iff`
-carries separation and `phaseDist_triangle` carries the triangle inequality. -/
+/-- The phase component is structurally confined to the declared finite resolution. -/
 theorem depth_phase_lt_resolution (q0 : ℤ) (n : ℕ+) :
     (depth q0 n).2.2.val < phaseResolution q0 n :=
   (depth q0 n).2.2.isLt
