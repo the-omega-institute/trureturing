@@ -221,6 +221,129 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Null(outcome);
     }
 
+    [Fact]
+    public void ProductionValidatorAcceptsAcceptedOnlyLedgerOnTheDayAfterMigration()
+    {
+        var fixture = SteadyStateFixture();
+
+        var outcome = Validate(fixture, CreateGateway(fixture));
+
+        Assert.True(outcome is null, PositiveFailureMessage(outcome));
+        Assert.Null(outcome);
+    }
+
+    [Fact]
+    public void ProductionValidatorAcceptsAppendOnlyAcceptedEventAfterMigration()
+    {
+        var fixture = SteadyStateFixture(withAppendedReattest: true);
+
+        var outcome = Validate(fixture, CreateGateway(fixture));
+
+        Assert.True(outcome is null, PositiveFailureMessage(outcome));
+        Assert.Null(outcome);
+    }
+
+    [Fact]
+    public void ProductionValidatorRejectsDeletedAcceptedBaselineEvent()
+    {
+        var fixture = SteadyStateFixture(withAppendedReattest: true);
+        fixture.CurrentFiles.Remove(fixture.CurrentFiles.Keys.Single(path =>
+            path.StartsWith(AcceptedPrefix, StringComparison.Ordinal)
+            && EventType(fixture.CurrentFiles[path]) == "Genesis"));
+
+        AssertTransitionRejected(fixture, "does not retain protected baseline file byte-for-byte");
+    }
+
+    [Fact]
+    public void ProductionValidatorRejectsModifiedAcceptedBaselineEventBytes()
+    {
+        var fixture = SteadyStateFixture();
+        var path = fixture.CurrentFiles.Keys.Single(path =>
+            path.StartsWith(AcceptedPrefix, StringComparison.Ordinal)
+            && EventType(fixture.CurrentFiles[path]) == "Genesis");
+        fixture.CurrentFiles[path] = fixture.CurrentFiles[path][..^1] + " \n";
+
+        AssertTransitionRejected(fixture, "does not retain protected baseline file byte-for-byte");
+    }
+
+    [Fact]
+    public void ProductionValidatorRejectsForgedAppendedAcceptedEventHash()
+    {
+        var fixture = SteadyStateFixture(withAppendedReattest: true);
+        var path = fixture.CurrentFiles.Keys.Single(path =>
+            path.StartsWith(AcceptedPrefix, StringComparison.Ordinal)
+            && EventType(fixture.CurrentFiles[path]) == "Reattest");
+        var node = JsonNode.Parse(fixture.CurrentFiles[path])!.AsObject();
+        node["event_hash"] = FrozenLedgerTestData.Sha256("forged-unique-hash");
+        fixture.CurrentFiles[path] = node.ToJsonString() + "\n";
+
+        AssertTransitionRejected(fixture, "event_hash does not match canonical content");
+    }
+
+    [Fact]
+    public void ProductionValidatorRejectsAppendedAcceptedEventWithMissingPrerequisite()
+    {
+        var fixture = SteadyStateFixture();
+        var source = fixture.CurrentFiles.Single(static item =>
+            item.Key.StartsWith(AcceptedPrefix, StringComparison.Ordinal)
+            && EventType(item.Value) == "Genesis").Value;
+        var node = JsonNode.Parse(source)!.AsObject();
+        node["event_type"] = "Freeze";
+        node["payload"] = new JsonObject
+        {
+            ["frozen_node_id"] = "zeta",
+            ["prerequisite_frozen_node_ids"] = new JsonArray("epsilon"),
+        };
+        AddV2(fixture, "zeta", node);
+
+        AssertTransitionRejected(fixture, "closed dependency DAG");
+    }
+
+    [Fact]
+    public void ProductionValidatorRejectsAcceptedOnlyBaselineReturningToLegacy()
+    {
+        var fixture = MigratedFixture();
+        var legacy = fixture.BaselineFiles[FrozenLedgerChangeClassifier.LedgerPath];
+        ReplaceBaselineWithCurrentAcceptedFiles(fixture);
+        fixture.CurrentFiles.Clear();
+        foreach (var item in fixture.BaselineFiles.Where(static item =>
+            !item.Key.StartsWith(AcceptedPrefix, StringComparison.Ordinal)))
+        {
+            fixture.CurrentFiles[item.Key] = item.Value;
+        }
+
+        fixture.CurrentFiles[FrozenLedgerChangeClassifier.LedgerPath] = legacy;
+
+        AssertTransitionRejected(fixture, "frozen ledger shape is invalid");
+    }
+
+    [Theory]
+    [InlineData("dual")]
+    [InlineData("absent")]
+    [InlineData("invalid")]
+    public void ProductionValidatorRejectsInvalidAcceptedOnlySteadyStateShape(string shape)
+    {
+        var fixture = SteadyStateFixture();
+        if (shape == "dual")
+        {
+            fixture.CurrentFiles[FrozenLedgerChangeClassifier.LedgerPath] = "{}\n";
+        }
+        else if (shape == "absent")
+        {
+            foreach (var path in fixture.CurrentFiles.Keys
+                .Where(static path => path.StartsWith(AcceptedPrefix, StringComparison.Ordinal)).ToArray())
+            {
+                fixture.CurrentFiles.Remove(path);
+            }
+        }
+        else
+        {
+            fixture.CurrentFiles[AcceptedPrefix + "epsilon.txt"] = "{}\n";
+        }
+
+        AssertTransitionRejected(fixture, "frozen ledger shape is invalid");
+    }
+
     private static FrozenValidatorFixture MigratedFixture(bool withLegacyReattest = false)
     {
         var fixture = CreateFrozenValidatorFixture();
@@ -252,6 +375,28 @@ public sealed partial class ProductionEnvironmentTests
         }
 
         return fixture;
+    }
+
+    private static FrozenValidatorFixture SteadyStateFixture(bool withAppendedReattest = false)
+    {
+        var fixture = MigratedFixture(withAppendedReattest);
+        var baseline = MigratedFixture();
+        fixture.BaselineFiles.Clear();
+        foreach (var item in baseline.CurrentFiles)
+        {
+            fixture.BaselineFiles[item.Key] = item.Value;
+        }
+
+        return fixture;
+    }
+
+    private static void ReplaceBaselineWithCurrentAcceptedFiles(FrozenValidatorFixture fixture)
+    {
+        fixture.BaselineFiles.Clear();
+        foreach (var item in fixture.CurrentFiles)
+        {
+            fixture.BaselineFiles[item.Key] = item.Value;
+        }
     }
 
     private static JsonObject[] LegacyLines(FrozenValidatorFixture fixture) =>

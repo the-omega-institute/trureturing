@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -23,6 +24,12 @@ internal static class ProductionFrozenLedgerValidator
         var currentAccepted = AcceptedFiles(current);
         var baselineHasInvalidAcceptedFiles = HasInvalidAcceptedFiles(baseline);
         var currentHasInvalidAcceptedFiles = HasInvalidAcceptedFiles(current);
+
+        // Frozen-ledger shape timeline:
+        // Before migration: legacy -> legacy validates the byte-stream ledger.
+        // During migration: legacy -> accepted validates the one-time bijection.
+        // After migration: accepted -> accepted validates append-only steady state.
+        // Invalid: every dual, absent, mixed, or backwards shape fails closed.
         if (baselineHasLegacy && currentHasLegacy
             && baselineAccepted.Length == 0 && currentAccepted.Length == 0
             && !baselineHasInvalidAcceptedFiles && !currentHasInvalidAcceptedFiles)
@@ -54,6 +61,23 @@ internal static class ProductionFrozenLedgerValidator
                 currentAccepted);
         }
 
+        if (!baselineHasLegacy && baselineAccepted.Length > 0
+            && !currentHasLegacy && currentAccepted.Length > 0
+            && !baselineHasInvalidAcceptedFiles && !currentHasInvalidAcceptedFiles)
+        {
+            return ValidateSteadyState(
+                current,
+                baseline,
+                lean,
+                baselineLean,
+                dag,
+                baselineDag,
+                repository,
+                frozenEvidenceRepository,
+                baselineAccepted,
+                currentAccepted);
+        }
+
         if (baselineAccepted.Length == 0 && currentAccepted.Length == 0
             && (!baselineHasLegacy || !currentHasLegacy)
             && !baselineHasInvalidAcceptedFiles && !currentHasInvalidAcceptedFiles)
@@ -63,8 +87,9 @@ internal static class ProductionFrozenLedgerValidator
 
         // TRANSITION_REMOVAL_PREDICATE:
         // baselineAccepted.Length > 0 && !baselineHasLegacy
-        // When this protected-baseline predicate is true, delete the transition branch, LedgerPath,
-        // Load(bytes), the v1 writer, and transition-only tests; admission becomes accepted-only.
+        // When this protected-baseline predicate is true, delete the legacy and transition branches,
+        // LedgerPath, Load(bytes), the v1 writer, and transition-only tests. Keep the steady-state
+        // branch as the sole accepted-only admission shape.
         return Reject("frozen ledger shape is invalid");
     }
 
@@ -94,6 +119,93 @@ internal static class ProductionFrozenLedgerValidator
 
         var baselineSyntax = ((DagLedgerLoadOutcome.Loaded)baselineLoad).Syntax;
         var currentSyntax = ((DagLedgerLoadOutcome.Loaded)currentLoad).Syntax;
+        return ValidateLoaded(
+            current,
+            baseline,
+            lean,
+            baselineLean,
+            dag,
+            baselineDag,
+            repository,
+            frozenEvidenceRepository,
+            baselineSyntax,
+            currentSyntax);
+    }
+
+    private static AdmissionOutcome? ValidateSteadyState(
+        RepositorySnapshot current,
+        RepositorySnapshot baseline,
+        AcceptedLeanClosure lean,
+        AcceptedLeanClosure baselineLean,
+        AcyclicTruthDag dag,
+        AcyclicTruthDag baselineDag,
+        IRepositoryGateway repository,
+        IRepositoryGateway? frozenEvidenceRepository,
+        ImmutableArray<RepositoryFile> baselineFiles,
+        ImmutableArray<RepositoryFile> currentFiles)
+    {
+        if (!RetainsBaselineFilesByteForByte(baselineFiles, current))
+        {
+            return Reject("candidate content-addressed ledger does not retain protected baseline file byte-for-byte");
+        }
+
+        var baselineLoad = DagLedgerLoader.LoadFiles(baselineFiles);
+        if (baselineLoad is DagLedgerFilesLoadOutcome.Invalid invalidBaseline)
+        {
+            return Reject("protected baseline content-addressed ledger is invalid: " + invalidBaseline.Message);
+        }
+
+        var currentLoad = DagLedgerLoader.LoadFiles(currentFiles);
+        if (currentLoad is DagLedgerFilesLoadOutcome.Invalid invalidCurrent)
+        {
+            return Reject("candidate content-addressed ledger is invalid: " + invalidCurrent.Message);
+        }
+
+        var baselineEvents = ((DagLedgerFilesLoadOutcome.Loaded)baselineLoad).Events;
+        var currentEvents = ((DagLedgerFilesLoadOutcome.Loaded)currentLoad).Events;
+        var baselineDagFailure = DagLedgerLoader.ValidateClosedDag(baselineEvents);
+        if (baselineDagFailure is not null)
+        {
+            return Reject("protected baseline content-addressed ledger is invalid: " + baselineDagFailure);
+        }
+
+        var currentDagFailure = DagLedgerLoader.ValidateClosedDag(currentEvents);
+        if (currentDagFailure is not null)
+        {
+            return Reject("candidate content-addressed ledger is invalid: " + currentDagFailure);
+        }
+
+        _ = DagLedgerLoader.TryOrderClosedDag(
+            baselineEvents,
+            ImmutableArray<string>.Empty,
+            out var orderedBaseline);
+        var baselineIdentityPrefix = orderedBaseline.Select(static item => item.Identity).ToImmutableArray();
+        _ = DagLedgerLoader.TryOrderClosedDag(currentEvents, baselineIdentityPrefix, out var orderedCurrent);
+        return ValidateLoaded(
+            current,
+            baseline,
+            lean,
+            baselineLean,
+            dag,
+            baselineDag,
+            repository,
+            frozenEvidenceRepository,
+            ToSyntax(orderedBaseline),
+            ToSyntax(orderedCurrent));
+    }
+
+    private static AdmissionOutcome? ValidateLoaded(
+        RepositorySnapshot current,
+        RepositorySnapshot baseline,
+        AcceptedLeanClosure lean,
+        AcceptedLeanClosure baselineLean,
+        AcyclicTruthDag dag,
+        AcyclicTruthDag baselineDag,
+        IRepositoryGateway repository,
+        IRepositoryGateway? frozenEvidenceRepository,
+        FrozenLedgerSyntax baselineSyntax,
+        FrozenLedgerSyntax currentSyntax)
+    {
         var baselineReferences = FrozenLedger.ScanReferences(baselineSyntax);
         var currentReferences = FrozenLedger.ScanReferences(currentSyntax);
         if (baselineReferences is FrozenLedgerReferenceScanOutcome.Rejected invalidBaselineReferences)
@@ -171,6 +283,46 @@ internal static class ProductionFrozenLedgerValidator
         return validatedCandidate is FrozenLedgerValidationOutcome.Rejected candidateFailure
             ? Reject("candidate ledger is invalid: " + candidateFailure.Message)
             : null;
+    }
+
+    private static bool RetainsBaselineFilesByteForByte(
+        ImmutableArray<RepositoryFile> baselineFiles,
+        RepositorySnapshot current) =>
+        baselineFiles.All(baselineFile =>
+            current.TryGetFile(baselineFile.Path.Value, out var currentFile)
+            && currentFile!.RawBytes.AsSpan().SequenceEqual(baselineFile.RawBytes.AsSpan()));
+
+    private static FrozenLedgerSyntax ToSyntax(ImmutableArray<DagLedgerFileEvent> events)
+    {
+        var raw = ImmutableArray.CreateBuilder<byte>();
+        var lines = ImmutableArray.CreateBuilder<FrozenLedgerLineSyntax>();
+        var previous = FrozenLedgerCanonicalWriter.ZeroHash;
+        var dagToLinearHash = new Dictionary<string, string>(StringComparer.Ordinal);
+        for (var sequence = 0; sequence < events.Length; sequence++)
+        {
+            var item = events[sequence];
+            var payload = item.Payload;
+            if (payload.TryGetProperty("previous_attestation_event_hash", out var dagPrevious))
+            {
+                var rewritten = JsonNode.Parse(payload.GetRawText())!.AsObject();
+                rewritten["previous_attestation_event_hash"] = dagToLinearHash[dagPrevious.GetString()!];
+                payload = JsonSerializer.SerializeToElement(rewritten);
+            }
+
+            var encoded = FrozenLedgerCanonicalWriter.WriteEvent(
+                item.EventType,
+                payload,
+                previous,
+                sequence);
+            using var document = JsonDocument.Parse(encoded.Bytes.AsSpan()[..^1].ToArray());
+            var line = new FrozenLedgerLineSyntax(encoded.Bytes, document.RootElement.Clone());
+            raw.AddRange(encoded.Bytes);
+            lines.Add(line);
+            dagToLinearHash.Add(item.EventHash, encoded.Hash);
+            previous = encoded.Hash;
+        }
+
+        return new FrozenLedgerSyntax(raw.ToImmutable(), lines.ToImmutable());
     }
 
     private static AdmissionOutcome? ValidateTransition(
