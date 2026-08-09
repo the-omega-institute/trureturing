@@ -1,0 +1,168 @@
+ast_path: remark/27.376-27.378
+fingerprints:
+  raw_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+  normalized_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+cas_ref: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+coverage_gids:
+  - D5/S1/Phase/SeatTowerArithmetic.twelve_le_abs_of_dvd_of_ne_zero
+  - D5/S1/Depth/StationingCombinatorics.stationing_count
+  - D5/S1/Depth/StationingCombinatorics.occupied_stations_mirror
+  - D5/S1/Depth/StationingCombinatorics.mirror_occupied_count
+  - D5/S1/Depth/StationingCombinatorics.mirror_stationing_ne_self
+  - D5/S1/Depth/StationingCombinatorics.occupied_count_stationing_count
+  - D5/S1/Phase/SeatTowerCombinatorics.mirror_normalization_is_unique
+  - D5/S1/Phase/SeatTowerCombinatorics.mirror_representative_count
+  - D5/S1/Phase/SeatTowerConsequences.singleton_stationing_choice_count
+  - D5/S1/Depth/TwelveScaleReduction.twelve_scale_le_normalized_magnitude
+  - D5/S1/Depth/TwelveScaleReduction.normalized_magnitude_eq_twelve_scale_iff
+  - D5/S1/Depth/TwelveScaleReduction.twelve_scale_is_normalized_sample_minimum
+  - D5/S1/Depth/TwelveScaleReduction.normalized_sample_minimum_unique
+  - D5/S1/Depth/PartialQuotientExtraction.partialQuotients
+  - D5/S1/Depth/PartialQuotientExtraction.aMax
+  - D5/S1/Depth/PartialQuotientExtraction.partialQuotients_nonempty
+  - D5/S1/Depth/PartialQuotientExtraction.aMax_pos
+  - D5/S1/Depth/PartialQuotientExtraction.twelve_scale_is_extracted_normalized_sample_minimum
+receipts:
+  coverage:
+    - gid: D5/S1/Phase/SeatTowerArithmetic.twelve_le_abs_of_dvd_of_ne_zero
+      source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+      target_sha256: sha256:90dfce608e61ee4b6d61b442ed9e5fd1b894f916fd1678e62954a517c32898e6
+    - gid: D5/S1/Depth/StationingCombinatorics.stationing_count
+      source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+      target_sha256: sha256:893642c6d9ab9fd04c668d410a09bb00e0a54a93e3af56ad03625f9f45b1ab51
+    - gid: D5/S1/Depth/StationingCombinatorics.occupied_stations_mirror
+      source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+      target_sha256: sha256:893642c6d9ab9fd04c668d410a09bb00e0a54a93e3af56ad03625f9f45b1ab51
+    - gid: D5/S1/Depth/StationingCombinatorics.mirror_occupied_count
+      source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+      target_sha256: sha256:893642c6d9ab9fd04c668d410a09bb00e0a54a93e3af56ad03625f9f45b1ab51
+    - gid: D5/S1/Depth/StationingCombinatorics.mirror_stationing_ne_self
+      source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+      target_sha256: sha256:893642c6d9ab9fd04c668d410a09bb00e0a54a93e3af56ad03625f9f45b1ab51
+    - gid: D5/S1/Depth/StationingCombinatorics.occupied_count_stationing_count
+      source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+      target_sha256: sha256:893642c6d9ab9fd04c668d410a09bb00e0a54a93e3af56ad03625f9f45b1ab51
+    - gid: D5/S1/Phase/SeatTowerCombinatorics.mirror_normalization_is_unique
+      source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+      target_sha256: sha256:96070d8daaad89aeab17050aeaf70fc1cc1954c2538f0a5ce1685cc157ea01e7
+    - gid: D5/S1/Phase/SeatTowerCombinatorics.mirror_representative_count
+      source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+      target_sha256: sha256:96070d8daaad89aeab17050aeaf70fc1cc1954c2538f0a5ce1685cc157ea01e7
+    - gid: D5/S1/Phase/SeatTowerConsequences.singleton_stationing_choice_count
+      source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+      target_sha256: sha256:520db05df3f4606150d67b80c6b51ac763a71c485b93b0acff8561afa686d853
+    - gid: D5/S1/Depth/TwelveScaleReduction.twelve_scale_le_normalized_magnitude
+      source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+      target_sha256: sha256:1e0b3901146974128383d7eee95ffb8711b5302478fbacc6a54cd5060e466b05
+    - gid: D5/S1/Depth/TwelveScaleReduction.normalized_magnitude_eq_twelve_scale_iff
+      source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+      target_sha256: sha256:1e0b3901146974128383d7eee95ffb8711b5302478fbacc6a54cd5060e466b05
+    - gid: D5/S1/Depth/TwelveScaleReduction.twelve_scale_is_normalized_sample_minimum
+      source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+      target_sha256: sha256:1e0b3901146974128383d7eee95ffb8711b5302478fbacc6a54cd5060e466b05
+    - gid: D5/S1/Depth/TwelveScaleReduction.normalized_sample_minimum_unique
+      source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+      target_sha256: sha256:1e0b3901146974128383d7eee95ffb8711b5302478fbacc6a54cd5060e466b05
+    - gid: D5/S1/Depth/PartialQuotientExtraction.partialQuotients
+      source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+      target_sha256: sha256:e061d1c0158f1e01909e5f408f69dd07b829c2d1ec87842fbfa79b818251be31
+    - gid: D5/S1/Depth/PartialQuotientExtraction.aMax
+      source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+      target_sha256: sha256:e061d1c0158f1e01909e5f408f69dd07b829c2d1ec87842fbfa79b818251be31
+    - gid: D5/S1/Depth/PartialQuotientExtraction.partialQuotients_nonempty
+      source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+      target_sha256: sha256:e061d1c0158f1e01909e5f408f69dd07b829c2d1ec87842fbfa79b818251be31
+    - gid: D5/S1/Depth/PartialQuotientExtraction.aMax_pos
+      source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+      target_sha256: sha256:e061d1c0158f1e01909e5f408f69dd07b829c2d1ec87842fbfa79b818251be31
+    - gid: D5/S1/Depth/PartialQuotientExtraction.twelve_scale_is_extracted_normalized_sample_minimum
+      source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
+      target_sha256: sha256:e061d1c0158f1e01909e5f408f69dd07b829c2d1ec87842fbfa79b818251be31
+  scribe:
+    - gid: D5/S1/Depth/TwelveScaleReduction.twelve_scale_le_normalized_magnitude
+      definition_sha256: sha256:3ae78477c3b1bcb016cefc4798277789b993f7d52adc8e8eaeb51c9d7b8db0b8
+      emission_sha256: sha256:6e9416ca9833b65e1f993bb2fd47e822e6579789550608b493b8cf95df60d5af
+    - gid: D5/S1/Depth/TwelveScaleReduction.normalized_magnitude_eq_twelve_scale_iff
+      definition_sha256: sha256:3ae78477c3b1bcb016cefc4798277789b993f7d52adc8e8eaeb51c9d7b8db0b8
+      emission_sha256: sha256:6e9416ca9833b65e1f993bb2fd47e822e6579789550608b493b8cf95df60d5af
+    - gid: D5/S1/Depth/TwelveScaleReduction.twelve_scale_is_normalized_sample_minimum
+      definition_sha256: sha256:3ae78477c3b1bcb016cefc4798277789b993f7d52adc8e8eaeb51c9d7b8db0b8
+      emission_sha256: sha256:6e9416ca9833b65e1f993bb2fd47e822e6579789550608b493b8cf95df60d5af
+    - gid: D5/S1/Depth/TwelveScaleReduction.normalized_sample_minimum_unique
+      definition_sha256: sha256:3ae78477c3b1bcb016cefc4798277789b993f7d52adc8e8eaeb51c9d7b8db0b8
+      emission_sha256: sha256:6e9416ca9833b65e1f993bb2fd47e822e6579789550608b493b8cf95df60d5af
+    - gid: D5/S1/Depth/PartialQuotientExtraction.partialQuotients
+      definition_sha256: sha256:5ae5cfbcce7c851ecf3c42d77a95d287247a354a07d63a9ef21c4ed3f6b9da2d
+      emission_sha256: sha256:78f06ca8ff59af445b2ccabdb3c76555236a8bc08f8c7bb87ed21024af3cb6b9
+    - gid: D5/S1/Depth/PartialQuotientExtraction.aMax
+      definition_sha256: sha256:5ae5cfbcce7c851ecf3c42d77a95d287247a354a07d63a9ef21c4ed3f6b9da2d
+      emission_sha256: sha256:78f06ca8ff59af445b2ccabdb3c76555236a8bc08f8c7bb87ed21024af3cb6b9
+    - gid: D5/S1/Depth/PartialQuotientExtraction.partialQuotients_nonempty
+      definition_sha256: sha256:5ae5cfbcce7c851ecf3c42d77a95d287247a354a07d63a9ef21c4ed3f6b9da2d
+      emission_sha256: sha256:78f06ca8ff59af445b2ccabdb3c76555236a8bc08f8c7bb87ed21024af3cb6b9
+    - gid: D5/S1/Depth/PartialQuotientExtraction.aMax_pos
+      definition_sha256: sha256:5ae5cfbcce7c851ecf3c42d77a95d287247a354a07d63a9ef21c4ed3f6b9da2d
+      emission_sha256: sha256:78f06ca8ff59af445b2ccabdb3c76555236a8bc08f8c7bb87ed21024af3cb6b9
+    - gid: D5/S1/Depth/PartialQuotientExtraction.twelve_scale_is_extracted_normalized_sample_minimum
+      definition_sha256: sha256:5ae5cfbcce7c851ecf3c42d77a95d287247a354a07d63a9ef21c4ed3f6b9da2d
+      emission_sha256: sha256:78f06ca8ff59af445b2ccabdb3c76555236a8bc08f8c7bb87ed21024af3cb6b9
+    - gid: D5/S1/Phase/SeatTowerArithmetic.twelve_le_abs_of_dvd_of_ne_zero
+      definition_sha256: sha256:135c5768d17b17a2216cb275c7e44977f8ae3975f845d94732a7dcb317ebfa92
+      emission_sha256: sha256:f6b2cc020d9663fa6579ad32eebd9345b310ceac44333db64ea6f7167923c0ab
+    - gid: D5/S1/Depth/StationingCombinatorics.stationing_count
+      definition_sha256: sha256:bdfe1e0097e224e630e6ab81340373da2ccf9ccf2fdfcaa1338bbc4b266d6b43
+      emission_sha256: sha256:a829ddfb8b7da4c38eacc5ccb8b1674b772b7552a12a89f393f22e0b44ca75de
+    - gid: D5/S1/Depth/StationingCombinatorics.occupied_stations_mirror
+      definition_sha256: sha256:bdfe1e0097e224e630e6ab81340373da2ccf9ccf2fdfcaa1338bbc4b266d6b43
+      emission_sha256: sha256:a829ddfb8b7da4c38eacc5ccb8b1674b772b7552a12a89f393f22e0b44ca75de
+    - gid: D5/S1/Depth/StationingCombinatorics.mirror_occupied_count
+      definition_sha256: sha256:bdfe1e0097e224e630e6ab81340373da2ccf9ccf2fdfcaa1338bbc4b266d6b43
+      emission_sha256: sha256:a829ddfb8b7da4c38eacc5ccb8b1674b772b7552a12a89f393f22e0b44ca75de
+    - gid: D5/S1/Depth/StationingCombinatorics.mirror_stationing_ne_self
+      definition_sha256: sha256:bdfe1e0097e224e630e6ab81340373da2ccf9ccf2fdfcaa1338bbc4b266d6b43
+      emission_sha256: sha256:a829ddfb8b7da4c38eacc5ccb8b1674b772b7552a12a89f393f22e0b44ca75de
+    - gid: D5/S1/Depth/StationingCombinatorics.occupied_count_stationing_count
+      definition_sha256: sha256:bdfe1e0097e224e630e6ab81340373da2ccf9ccf2fdfcaa1338bbc4b266d6b43
+      emission_sha256: sha256:a829ddfb8b7da4c38eacc5ccb8b1674b772b7552a12a89f393f22e0b44ca75de
+    - gid: D5/S1/Phase/SeatTowerCombinatorics.mirror_normalization_is_unique
+      definition_sha256: sha256:ef5a049c29ad3d1f938c015fa50f7c4d2deef0f9d56b6e5bf4940e4608d064cd
+      emission_sha256: sha256:bfd787c2c4378c22e7c8d60a1a23fbf1cd2fb3a8c47df37851a828f78ff796ef
+    - gid: D5/S1/Phase/SeatTowerCombinatorics.mirror_representative_count
+      definition_sha256: sha256:ef5a049c29ad3d1f938c015fa50f7c4d2deef0f9d56b6e5bf4940e4608d064cd
+      emission_sha256: sha256:bfd787c2c4378c22e7c8d60a1a23fbf1cd2fb3a8c47df37851a828f78ff796ef
+    - gid: D5/S1/Phase/SeatTowerConsequences.singleton_stationing_choice_count
+      definition_sha256: sha256:b998797a81195ed6fd20300c323ff3b99d1bb858bad40ac175027d9cae6b33aa
+      emission_sha256: sha256:23fa79c9edddf0ab2cddaf5edfad908fc5d9cb02d4c2a570cb814fc80608f356
+  unresolved_subitems:
+    - empty-bin-fingerprint-rejection
+    - half-margin-rejection
+    - silver-edge-rejection
+    - freiman-edge-rejection
+    - interior-forbidden-window-rejection
+    - absolute-angle-gap-rejection
+    - slow-closure-fit
+    - cubic-repulsion-fit
+    - gap-edge-envelope
+    - small-angle-2958-congruence-enumeration
+    - twelve-over-amax-four-concept-reduction
+    - sampling-grid-leak-postmortem
+    - small-angle-causal-forcing-rejection
+    - sampling-grid-declaration-rule
+    - zero-statistics-two-laws-survival
+    - zero-statistics-combination-counting-transition
+    - inner-forbidden-window-rejection
+    - slow-closure-exponent-measurement
+    - cubic-repulsion-exponent-measurement
+    - m-independent-gap-envelope-measurement
+    - small-angle-2958-congruence-certificate
+    - minimum-nonzero-psi-twelve-certificate
+    - moat-twelve-over-amax-reduction
+    - envelope-twelve-over-amax-reduction
+    - diffusion-twelve-over-amax-reduction
+    - sampling-grid-disclosure
+    - grid-leakage-causal-diagnosis
+    - small-angle-causal-reading-rejection
+    - zero-statistic-kappa-three
+    - zero-statistic-m-minus-quarter
+    - orbit-to-mirror-pair-combinatorial-bridge
+    - continuous-statistics-congruence-meta-law

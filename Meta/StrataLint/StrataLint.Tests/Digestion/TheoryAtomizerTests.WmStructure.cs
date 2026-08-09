@@ -12,7 +12,8 @@ public sealed partial class TheoryAtomizerTests
              current is not null;
              current = current.Parent)
         {
-            if (File.Exists(Path.Combine(current.FullName, "Meta", "BACKFILL.yaml")))
+            if (File.Exists(Path.Combine(current.FullName, "global.json"))
+                && Directory.Exists(Path.Combine(current.FullName, "Blueprint")))
             {
                 return current.FullName;
             }

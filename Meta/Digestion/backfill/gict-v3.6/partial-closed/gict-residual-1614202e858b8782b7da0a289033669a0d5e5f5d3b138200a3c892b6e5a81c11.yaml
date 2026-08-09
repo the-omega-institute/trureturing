@@ -1,0 +1,17 @@
+ast_path: theorem/6.13
+fingerprints:
+  raw_sha256: sha256:1614202e858b8782b7da0a289033669a0d5e5f5d3b138200a3c892b6e5a81c11
+  normalized_sha256: sha256:1614202e858b8782b7da0a289033669a0d5e5f5d3b138200a3c892b6e5a81c11
+cas_ref: sha256:1614202e858b8782b7da0a289033669a0d5e5f5d3b138200a3c892b6e5a81c11
+coverage_gids:
+  - D5/S3/Analytic/LiCausalTrichotomy.causal_iff_integer_iff_monodromy
+receipts:
+  coverage:
+    - gid: D5/S3/Analytic/LiCausalTrichotomy.causal_iff_integer_iff_monodromy
+      source_sha256: sha256:1614202e858b8782b7da0a289033669a0d5e5f5d3b138200a3c892b6e5a81c11
+      target_sha256: sha256:2fd22301f5414f5466b60b1b87ab4b032f98b144c9759976ed92a35523168bdb
+  scribe:
+    - gid: D5/S3/Analytic/LiCausalTrichotomy.causal_iff_integer_iff_monodromy
+      definition_sha256: sha256:afc1a2dcc698daa30dad8ef496cc920b118685d773011b01586de8c0b05066fc
+      emission_sha256: sha256:eb8cdfc089758e3dabf2e05b3e3977d223e9dbf224a4201975ad85402c8f45d7
+  unresolved_subitems: []

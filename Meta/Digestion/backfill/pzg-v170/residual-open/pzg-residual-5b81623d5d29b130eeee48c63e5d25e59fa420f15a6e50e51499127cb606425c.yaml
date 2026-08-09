@@ -1,0 +1,10 @@
+ast_path: remark/27.446
+fingerprints:
+  raw_sha256: sha256:5b81623d5d29b130eeee48c63e5d25e59fa420f15a6e50e51499127cb606425c
+  normalized_sha256: sha256:5b81623d5d29b130eeee48c63e5d25e59fa420f15a6e50e51499127cb606425c
+cas_ref: sha256:5b81623d5d29b130eeee48c63e5d25e59fa420f15a6e50e51499127cb606425c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

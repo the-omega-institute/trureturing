@@ -1,0 +1,79 @@
+ast_path: appendix/E.23
+fingerprints:
+  raw_sha256: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
+  normalized_sha256: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
+cas_ref: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
+coverage_gids:
+  - D5/S1/Phase/SeatTowerArithmetic.mod_twenty_four_eq_zero_or_twelve
+  - D5/S1/Phase/SeatTowerArithmetic.twenty_four_dvd_iff_even_quotient
+  - D5/S1/Phase/SeatTowerCombinatorics.full_exponent_stationing_count
+  - D5/S1/Phase/SeatTowerConsequences.mod_ninety_six_refines_twenty_four_and_forty_eight
+  - D5/S1/Phase/SeatTowerConsequences.jacobi_factorization_of_selector_numerator
+  - D5/S1/Phase/SeatTowerConsequences.singleton_stationing_choice_count
+  - D5/S1/Phase/SeatTowerConsequences.three_split_primes_have_three_singleton_choices
+receipts:
+  coverage:
+    - gid: D5/S1/Phase/SeatTowerArithmetic.mod_twenty_four_eq_zero_or_twelve
+      source_sha256: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
+      target_sha256: sha256:90dfce608e61ee4b6d61b442ed9e5fd1b894f916fd1678e62954a517c32898e6
+    - gid: D5/S1/Phase/SeatTowerArithmetic.twenty_four_dvd_iff_even_quotient
+      source_sha256: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
+      target_sha256: sha256:90dfce608e61ee4b6d61b442ed9e5fd1b894f916fd1678e62954a517c32898e6
+    - gid: D5/S1/Phase/SeatTowerCombinatorics.full_exponent_stationing_count
+      source_sha256: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
+      target_sha256: sha256:96070d8daaad89aeab17050aeaf70fc1cc1954c2538f0a5ce1685cc157ea01e7
+    - gid: D5/S1/Phase/SeatTowerConsequences.mod_ninety_six_refines_twenty_four_and_forty_eight
+      source_sha256: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
+      target_sha256: sha256:520db05df3f4606150d67b80c6b51ac763a71c485b93b0acff8561afa686d853
+    - gid: D5/S1/Phase/SeatTowerConsequences.jacobi_factorization_of_selector_numerator
+      source_sha256: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
+      target_sha256: sha256:520db05df3f4606150d67b80c6b51ac763a71c485b93b0acff8561afa686d853
+    - gid: D5/S1/Phase/SeatTowerConsequences.singleton_stationing_choice_count
+      source_sha256: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
+      target_sha256: sha256:520db05df3f4606150d67b80c6b51ac763a71c485b93b0acff8561afa686d853
+    - gid: D5/S1/Phase/SeatTowerConsequences.three_split_primes_have_three_singleton_choices
+      source_sha256: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
+      target_sha256: sha256:520db05df3f4606150d67b80c6b51ac763a71c485b93b0acff8561afa686d853
+  scribe:
+    - gid: D5/S1/Phase/SeatTowerCombinatorics.full_exponent_stationing_count
+      definition_sha256: sha256:ef5a049c29ad3d1f938c015fa50f7c4d2deef0f9d56b6e5bf4940e4608d064cd
+      emission_sha256: sha256:bfd787c2c4378c22e7c8d60a1a23fbf1cd2fb3a8c47df37851a828f78ff796ef
+  unresolved_subitems:
+    - jacobi-selector-identification
+    - mod-24-joint-locality-certificate
+    - mod-48-boundary-counterexample
+    - mod-96-conflict-enumeration
+    - mod-96-conflict-resolution
+    - m1728-minus-forty-eight-countershot
+    - m468-twenty-four-member-table
+    - m468-split-prime-side-selector-equivalence
+    - m-side-prime-observer-clause
+    - zero-only-prime-equivalence
+    - three-prime-orbit-singleton-bijection
+    - three-prime-three-orbit-count
+    - m4788-second-floor-classification
+    - m4788-opposite-direction-clause
+    - twenty-two-city-separation-certificate
+    - direction-law-counterexamples
+    - full-exponent-encoding-clause
+    - prediction-trial-postmortem
+    - prediction-three-trial-certificate
+    - zolotarev-congruence-to-selector-numerator
+    - zolotarev-jacobi-factorization
+    - zolotarev-144-case-certificate
+    - fixed-ray-character-counterexample
+    - fixed-ray-nineteen-witness-certificate
+    - jacobi-no-modular-locality-claim
+    - nonlocal-reciprocity-walk
+    - mod24-j-locality-certificate
+    - mod48-boundary-counterexample-certificate
+    - mod96-j-conflict-absorption-certificate
+    - m468-orbit-table-certificate
+    - m469-side-selector-equivalence
+    - prime-city-zero-only-equivalence
+    - m1729-three-orbit-bijection
+    - full-exponent-orbit-encoding-bridge
+    - prediction-record-certificate
+    - zolotarev-selector-congruence
+    - jacobi-no-modular-locality-certificate
+    - reciprocity-walk-identification

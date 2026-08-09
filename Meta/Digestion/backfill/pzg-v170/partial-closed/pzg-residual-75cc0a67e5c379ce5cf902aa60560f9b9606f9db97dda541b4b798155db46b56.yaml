@@ -1,0 +1,14 @@
+ast_path: theorem/23.3
+fingerprints:
+  raw_sha256: sha256:75cc0a67e5c379ce5cf902aa60560f9b9606f9db97dda541b4b798155db46b56
+  normalized_sha256: sha256:75cc0a67e5c379ce5cf902aa60560f9b9606f9db97dda541b4b798155db46b56
+cas_ref: sha256:75cc0a67e5c379ce5cf902aa60560f9b9606f9db97dda541b4b798155db46b56
+coverage_gids:
+  - D5/S3/Zeros/CompletedZeta.analytic_continuation_unique
+receipts:
+  coverage:
+    - gid: D5/S3/Zeros/CompletedZeta.analytic_continuation_unique
+      source_sha256: sha256:75cc0a67e5c379ce5cf902aa60560f9b9606f9db97dda541b4b798155db46b56
+      target_sha256: sha256:51e9ac062d8281e341170f2059134974fa4f755b4e88e8ff9bb56f7bc5b6d2cc
+  scribe: []
+  unresolved_subitems: []

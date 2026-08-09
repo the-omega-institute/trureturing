@@ -1,0 +1,10 @@
+ast_path: measurement/conditioning
+fingerprints:
+  raw_sha256: sha256:8bdb867fc051e5a905bf4a833e7613687d575322c0f5437ea92e2c33b1dec146
+  normalized_sha256: sha256:8bdb867fc051e5a905bf4a833e7613687d575322c0f5437ea92e2c33b1dec146
+cas_ref: sha256:8bdb867fc051e5a905bf4a833e7613687d575322c0f5437ea92e2c33b1dec146
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
