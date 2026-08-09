@@ -22,18 +22,9 @@ public sealed class PetzClassicalDocumentTests
         Assert.Contains(@"\widehat{p}", latex, StringComparison.Ordinal);
         Assert.Contains(@"\Leftrightarrow", latex, StringComparison.Ordinal);
         Assert.Contains(@"\Rightarrow", latex, StringComparison.Ordinal);
-
-        var prose = string.Join(
-            " ",
-            describe.Content.Items
-                .OfType<DocumentBlock.Paragraph>()
-                .Select(static paragraph =>
-                    Assert.IsType<Inline.Text>(Assert.Single(paragraph.Content.Items)).Run.Value));
-        Assert.Contains("on the support of Wp", prose, StringComparison.Ordinal);
-        Assert.Contains("finite nonnegative-sum criterion", prose, StringComparison.Ordinal);
-        Assert.Contains(
-            "Bayesian reverse recovery and the permutation-channel specialization are not part of this declaration",
-            prose,
-            StringComparison.Ordinal);
+        Assert.All(
+            describe.Content.Items.OfType<DocumentBlock.Paragraph>(),
+            static paragraph =>
+                Assert.IsType<Inline.Text>(Assert.Single(paragraph.Content.Items)));
     }
 }

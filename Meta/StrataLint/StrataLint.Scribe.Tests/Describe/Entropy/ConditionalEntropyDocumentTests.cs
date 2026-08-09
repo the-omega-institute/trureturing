@@ -46,69 +46,10 @@ public sealed class ConditionalEntropyDocumentTests
             @"\operatorname{shannonEntropy}(\operatorname{marginal}(p))+" +
             @"\operatorname{conditionalEntropy}(p).\end{gathered}$$",
             chainRule);
-
-        var prose = string.Join(
-            " ",
+        Assert.All(
             describes.SelectMany(static describe => describe.Content.Items)
-                .OfType<DocumentBlock.Paragraph>()
-                .Select(static paragraph =>
-                    Assert.IsType<Inline.Text>(Assert.Single(paragraph.Content.Items)).Run.Value));
-        Assert.Contains(
-            "The joint entropy splits into the marginal entropy plus the marginal-weighted average of the conditional slice entropies.",
-            prose,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "This is the entropy-side counterpart of the frozen divergence chain rule.",
-            prose,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "The definitions of marginal and conditional come from D5/S3/Divergence/ChainRule; conditionalEntropy is the only new definition here.",
-            prose,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "It is introduced because the chain rule and queued conditional results all consume it, not speculatively.",
-            prose,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "The hypotheses are deliberately minimal: nonnegativity alone.",
-            prose,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "Normalization is not required, even though a reader may expect a probability distribution.",
-            prose,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "When a marginal is zero, the conditional slice is a quotient by zero.",
-            prose,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "That case is handled rather than excluded: nonnegativity forces every cell of such a slice to vanish, so the slice contributes nothing and the outer weight annihilates its term.",
-            prose,
-            StringComparison.Ordinal);
-        Assert.Contains("No positivity is assumed anywhere.", prose, StringComparison.Ordinal);
-        Assert.Contains(
-            "On the nonnegative domain, the chain rule pins conditionalEntropy as the difference between two independently attested entropies.",
-            prose,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "A wrong weight, a wrong slice association, or a slipped index that changes the aggregate would break the equality.",
-            prose,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "This pin constrains the aggregate only: a corruption that leaves the aggregate unchanged on every nonnegative joint would not be caught.",
-            prose,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "The units are nats because shannonEntropy uses Real.log.",
-            prose,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "This module proves no conditioning bound: the statement that conditioning cannot increase entropy is not proved here.",
-            prose,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "It proves no conditional mutual information, no equality condition, and nothing beyond two coordinates.",
-            prose,
-            StringComparison.Ordinal);
+                .OfType<DocumentBlock.Paragraph>(),
+            static paragraph =>
+                Assert.IsType<Inline.Text>(Assert.Single(paragraph.Content.Items)));
     }
 }

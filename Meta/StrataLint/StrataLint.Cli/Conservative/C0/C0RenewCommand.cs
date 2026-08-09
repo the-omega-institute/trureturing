@@ -320,12 +320,54 @@ internal sealed class C0RenewCandidateWorkspace : IDisposable
                     "materialized C0 gate candidate is not clean");
             }
 
+            // Seed the Lean build cache from a donor tree instead of starting empty. Both
+            // workspaces this method produces otherwise rebuild mathlib and D5 from nothing,
+            // which is the pair of cache-empty materializations #972 records; each .lake is
+            // roughly the size of a worktree, and two of them once exhausted the disk and
+            // took the live Lean report with them (#971).
+            //
+            // Placed after the revision and working-tree checks on purpose: clean-preimage is
+            // a Git-level property (ChangedPaths, ResolveCurrentRevision, WorkingTreeChanges)
+            // and .lake is gitignored, so seeding it afterwards is invisible to all three.
+            // make worktree already copies a donor .lake for every lane in this repository.
+            //
+            // Provision falls back to `lake exe cache get` when no donor qualifies, so a
+            // missing or mismatched donor degrades to the previous behaviour rather than failing.
+            SeedLeanCache(source, exactPreimageCommit, candidate);
+
             return new C0RenewCandidateWorkspace(temporary, candidate);
         }
         catch
         {
             Directory.Delete(temporary, recursive: true);
             throw;
+        }
+    }
+
+    /// The cache is an optimisation, never a correctness input: the ceremony's verdict comes
+    /// from the frozen preimage and the reports built inside it, not from where the build
+    /// artifacts came from. So a failure here must not abort a renew that would otherwise
+    /// succeed -- it costs a cold build, which is exactly the status quo before this seeding
+    /// existed. Any other choice would make an optimisation able to fail a trust-root ceremony.
+    private static void SeedLeanCache(
+        string sourceRoot,
+        string exactPreimageCommit,
+        string candidateRoot)
+    {
+        try
+        {
+            var runner = new ProductionWorktreeProcessRunner();
+            var pins = LeanPinSet.ReadBase(sourceRoot, exactPreimageCommit, runner);
+            var donor = GitWorktreeInventory.SelectDonor(sourceRoot, pins, runner);
+            var provisioned = LeanCacheProvisioner.Provision(donor, candidateRoot, runner);
+            var warning = provisioned.Warning is null ? string.Empty : $" warning={provisioned.Warning}";
+            Console.Out.WriteLine(
+                $"C0_RENEW_LEAN_CACHE root={candidateRoot} strategy={provisioned.Strategy} method={provisioned.Method}{warning}");
+        }
+        catch (Exception failure) when (failure is not OutOfMemoryException)
+        {
+            Console.Out.WriteLine(
+                $"C0_RENEW_LEAN_CACHE root={candidateRoot} status=unavailable detail={failure.Message}");
         }
     }
 

@@ -163,10 +163,13 @@ internal static class TowerActualValidator
         var declared = component.Members.Order(StringComparer.Ordinal).ToArray();
         if (!declared.SequenceEqual(actual, StringComparer.Ordinal))
         {
+            // The comparison is over the id sets, so the message has to be too: a
+            // reordering or a swap leaves both counts equal and "declared N but contains N"
+            // then reads as a broken tool rather than a real mismatch. See #993.
             findings.Add(new TowerFinding(
                 "TOWER-RULE-CATALOG",
                 component.Id,
-                $"declared {declared.Length} rules but RuleCatalog contains {actual.Length}"));
+                DescribeSetMismatch("rules", declared, actual)));
             return;
         }
 
@@ -335,6 +338,42 @@ internal static class TowerActualValidator
                 "ASSUMED-UNVERIFIED",
                 $"external PR#{bootstrap.PullRequest} commit={bootstrap.Commit}"));
         }
+    }
+
+    /// Renders the symmetric difference of two ordered id sets, capped so a wholesale
+    /// divergence stays readable. Counts alone are not a faithful report of a set
+    /// comparison: they coincide under reordering and under equal-sized swaps, and the
+    /// reader then sees two identical numbers in a message announcing a mismatch.
+    private static string DescribeSetMismatch(
+        string subject,
+        IReadOnlyCollection<string> declared,
+        IReadOnlyCollection<string> actual)
+    {
+        const int Cap = 5;
+        var missing = declared.Except(actual, StringComparer.Ordinal).Order(StringComparer.Ordinal).ToArray();
+        var unexpected = actual.Except(declared, StringComparer.Ordinal).Order(StringComparer.Ordinal).ToArray();
+        var parts = new List<string>(3) { $"declared {subject} do not match actual" };
+        if (missing.Length > 0)
+        {
+            parts.Add($"declared but absent: {Render(missing)}");
+        }
+
+        if (unexpected.Length > 0)
+        {
+            parts.Add($"present but undeclared: {Render(unexpected)}");
+        }
+
+        if (missing.Length == 0 && unexpected.Length == 0)
+        {
+            parts.Add($"same members in a different order (count={declared.Count})");
+        }
+
+        return string.Join("; ", parts);
+
+        static string Render(string[] values) =>
+            values.Length <= Cap
+                ? string.Join(", ", values)
+                : string.Join(", ", values.Take(Cap)) + $", … (+{values.Length - Cap} more)";
     }
 
     private static bool IsGenesis(string line, string expectedHash)
