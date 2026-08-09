@@ -287,6 +287,16 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
+pattern = "Meta/BACKFILL.yaml"
+kind = "data"
+produced_by = "none"
+consumed_by = ["BackfillInventoryLoader"]
+verified_by = ["BackfillInventoryLoader"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
 pattern = "Meta/Digestion/atomizers.toml"
 kind = "data"
 produced_by = "none"
@@ -305,16 +315,6 @@ verified_by = ["DigestionCasStore"]
 authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-ledger"
-
-[[files]]
-pattern = "Meta/BACKFILL.yaml"
-kind = "data"
-produced_by = "none"
-consumed_by = ["BackfillInventoryLoader"]
-verified_by = ["BackfillInventoryLoader"]
-authority = "self"
-artifact_id = "none"
-runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Meta/Digestion/backfill/**"
