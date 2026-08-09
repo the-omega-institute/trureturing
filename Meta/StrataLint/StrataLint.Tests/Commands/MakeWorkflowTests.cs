@@ -379,7 +379,7 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Fact]
-    public void TheoryIngestRestoresBaseCanonicalReportWithoutCandidateLeanBuild()
+    public void TheoryIngestRestoresOrProducesBaseCanonicalReportInOneJob()
     {
         var root = FindRepositoryRoot();
         var admission = File.ReadAllText(Path.Combine(root, AdmissionWorkflowPath));
@@ -420,35 +420,26 @@ public sealed partial class MakeWorkflowTests
                 .Distinct());
         Assert.Equal(admissionCacheKey.Trim(), ingestCacheKey);
 
-        // 竞态防护契约:缓存由 ci.yml 并行生产,ingest 须以 lookup-only 探测 + 无凭据
-        // 等待重试盖住生产窗口;最终 restore 保持 fail-closed,等待不降级检测。
-        var probeIndex = workflow.IndexOf(
-            "- name: Probe base canonical Lean report cache",
+        var producerIndex = workflow.IndexOf(
+            "- name: Produce base canonical Lean report on cache miss",
             StringComparison.Ordinal);
-        var reprobeIndex = workflow.IndexOf(
-            "- name: Re-probe base canonical Lean report cache",
+        var producerEndIndex = workflow.IndexOf(
+            "      - name: ",
+            producerIndex + "      - name: ".Length,
             StringComparison.Ordinal);
-        var finalRestoreIndex = workflow.IndexOf(
-            "- name: Restore base canonical Lean report",
+        Assert.True(producerIndex > restoreIndex, "a cache miss must produce in the ingest job");
+        Assert.True(producerEndIndex > producerIndex, "the cache-miss producer must be a bounded step");
+        Assert.True(verifyIndex > producerIndex, "both restored and fresh reports must be verified");
+        Assert.Contains(
+            "timeout-minutes: 15",
+            workflow[producerIndex..producerEndIndex],
             StringComparison.Ordinal);
-        Assert.True(probeIndex >= 0, "cache production race must be probed before restore");
-        Assert.True(reprobeIndex > probeIndex, "the probe must retry across the production window");
-        Assert.True(finalRestoreIndex > reprobeIndex, "the fail-closed restore must come after all probes");
-        Assert.Contains("lookup-only: true", workflow[probeIndex..finalRestoreIndex], StringComparison.Ordinal);
-        Assert.Contains("fail-on-cache-miss: true", workflow[finalRestoreIndex..], StringComparison.Ordinal);
-
-        // 等待方向契约:等待/重探必须挂在"未命中"上(cache-hit 在 miss 时为空串,
-        // 故唯一正确谓词是 != 'true');挂反(== 'true')会使正常路径空等、竞态路径
-        // 直接失败——修复整体失效。
-        var waitRegion = workflow[probeIndex..finalRestoreIndex];
-        Assert.Contains("outputs.cache-hit != 'true'", waitRegion, StringComparison.Ordinal);
-        Assert.DoesNotContain("outputs.cache-hit == 'true'", waitRegion, StringComparison.Ordinal);
-
-        // 等待实体契约(对抗评审实证:sleep 拔成 0 曾不亮红):两次等待必须真实存在
-        // 且量级足以盖住约 10 分钟的生产窗口——锁"芯"而不只锁"壳"。
-        Assert.Equal(
-            2,
-            Regex.Matches(waitRegion, Regex.Escape("run: sleep 360")).Count);
+        Assert.Single(Regex.Matches(workflow, "id: lean-report-cache"));
+        Assert.Single(Regex.Matches(workflow, "key: stratalint-canonical-lean-report-v1-"));
+        Assert.Contains("steps.lean-report-cache.outputs.cache-hit != 'true'", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("sleep " + "360", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("lookup-only: true", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("fail-on-cache-miss: true", workflow, StringComparison.Ordinal);
         Assert.Contains("steps.lean-report-input.outputs.address", admissionCacheKey, StringComparison.Ordinal);
         Assert.Contains(
             "$(basename \"$target\")\" > \"${target}.sha256\"",
@@ -461,9 +452,9 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("timeout-minutes: 30", workflow, StringComparison.Ordinal);
         Assert.Contains("actions: read", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("          make lean\n", workflow, StringComparison.Ordinal);
-        Assert.DoesNotContain("          make lean-report\n", workflow, StringComparison.Ordinal);
-        Assert.DoesNotContain("Install pinned Lean toolchain", workflow, StringComparison.Ordinal);
-        Assert.DoesNotContain("Restore candidate Lean build artifacts", workflow, StringComparison.Ordinal);
+        Assert.Contains("          make lean-report\n", workflow, StringComparison.Ordinal);
+        Assert.Contains("Install pinned Lean toolchain on cache miss", workflow, StringComparison.Ordinal);
+        Assert.Contains("Restore candidate Lean build artifacts on cache miss", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("uses: actions/cache@v4", workflow, StringComparison.Ordinal);
     }
 
@@ -507,7 +498,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("HEAD_SHA: ${{ github.event.pull_request.head.sha }}", boundary, StringComparison.Ordinal);
         Assert.Contains(
             theoryDataPattern
-                + "|Meta/BACKFILL.yaml|Meta/Digestion/atoms/*|"
+                + "|Meta/Digestion/atoms/*|"
                 + EchoResidualSummaryPath,
             boundary,
             StringComparison.Ordinal);
@@ -516,12 +507,18 @@ public sealed partial class MakeWorkflowTests
         var reportInstallIndex = workflow.IndexOf(
             "- name: Install and verify base canonical Lean report",
             StringComparison.Ordinal);
-        var cache = workflow[reportRestoreIndex..reportInstallIndex];
+        var reportRestoreEnd = workflow.IndexOf(
+            "      - name: ",
+            reportRestoreIndex + "      - name: ".Length,
+            StringComparison.Ordinal);
+        Assert.True(reportRestoreEnd < reportInstallIndex, "report restore must be a single bounded step");
+        var cache = workflow[reportRestoreIndex..reportRestoreEnd];
         Assert.DoesNotContain("restore-keys:", cache, StringComparison.Ordinal);
         Assert.DoesNotContain("GH_TOKEN:", workflow[..commitIndex], StringComparison.Ordinal);
 
         var commit = workflow[commitIndex..];
         Assert.Contains("GH_TOKEN: ${{ github.token }}", commit, StringComparison.Ordinal);
+        Assert.DoesNotContain("BACKFILL", commit, StringComparison.Ordinal);
         Assert.Contains("gh auth setup-git", commit, StringComparison.Ordinal);
         var restoreOverlayIndex = commit.IndexOf(
             "git restore --source=HEAD -- Meta/StrataLint Makefile global.json",
@@ -628,7 +625,7 @@ public sealed partial class MakeWorkflowTests
 
         var commit = workflow[commitIndex..];
         Assert.Contains(EchoResidualSummaryPath, commit, StringComparison.Ordinal);
-        Assert.Contains($"git add Meta/BACKFILL.yaml Meta/Digestion/atoms {EchoResidualSummaryPath}", commit, StringComparison.Ordinal);
+        Assert.Contains($"git add Meta/Digestion/atoms {EchoResidualSummaryPath}", commit, StringComparison.Ordinal);
     }
 
     [Fact]
