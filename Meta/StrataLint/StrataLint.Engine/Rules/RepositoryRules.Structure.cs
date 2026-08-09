@@ -78,8 +78,10 @@ internal static partial class RepositoryRules
         path.StartsWith("docs/develop/", StringComparison.Ordinal)
         || string.Equals(path, "lake-manifest.json", StringComparison.Ordinal)
         || string.Equals(path, BackfillInventoryLoader.RelativePath, StringComparison.Ordinal)
+        || path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal)
         || string.Equals(path, TheoryAtomizerDataLoader.DataPath, StringComparison.Ordinal)
         || DigestionCasStore.IsCanonicalPath(path)
+        || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
         || path.StartsWith(DigestionFormalizationReceipt.RootPath, StringComparison.Ordinal)
         || (path.StartsWith("Blueprint/", StringComparison.Ordinal)
             && path.EndsWith(".md", StringComparison.Ordinal));
