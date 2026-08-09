@@ -9,3 +9,7 @@ coverage_gids:
   - D5/S3/Weil/ZeroSum
   - D5/S3/Weil/WeilIdentity
   - D5/X_Frontier/Hearts
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

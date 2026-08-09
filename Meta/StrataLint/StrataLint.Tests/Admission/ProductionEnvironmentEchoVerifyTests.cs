@@ -165,9 +165,8 @@ public sealed partial class ProductionEnvironmentTests
             var backfillPath = Path.Combine(repository.Path,
                 relativeBackfillPath.Replace('/', Path.DirectorySeparatorChar));
             var backfill = File.ReadAllText(backfillPath, Encoding.UTF8).Replace(
-                $"cas_ref: {GoldenCorpus.FixtureCasReference}\n",
-                $"cas_ref: {GoldenCorpus.FixtureCasReference}\nreceipts:\n"
-                + "  coverage: []\n  scribe: []\n  unresolved_subitems:\n    - newly-open\n",
+                "  unresolved_subitems: []\n",
+                "  unresolved_subitems:\n    - newly-open\n",
                 StringComparison.Ordinal);
             Assert.NotEqual(
                 SyntheticBackfillFixture.AtomText(

@@ -72,19 +72,11 @@ internal static class BackfillInventoryWriter
         Line(builder, $"  raw_sha256: {Scalar(entry.Fingerprints.RawSha256)}");
         Line(builder, $"  normalized_sha256: {Scalar(entry.Fingerprints.NormalizedSha256)}");
         Line(builder, $"cas_ref: {Scalar(entry.CasRef)}");
-        if (entry.CoverageGids.Length > 0)
-        {
-            Strings(builder, "coverage_gids", entry.CoverageGids, 2);
-        }
-        if (entry.Receipts.Coverage.Length > 0
-            || entry.Receipts.Scribe.Length > 0
-            || entry.Receipts.UnresolvedSubitems.Length > 0)
-        {
-            Line(builder, "receipts:");
-            CoverageReceiptsAt(builder, entry.Receipts.Coverage, 2);
-            ScribeReceiptsAt(builder, entry.Receipts.Scribe, 2);
-            Strings(builder, "  unresolved_subitems", entry.Receipts.UnresolvedSubitems, 4);
-        }
+        Strings(builder, "coverage_gids", entry.CoverageGids, 2);
+        Line(builder, "receipts:");
+        CoverageReceiptsAt(builder, entry.Receipts.Coverage, 2);
+        ScribeReceiptsAt(builder, entry.Receipts.Scribe, 2);
+        Strings(builder, "  unresolved_subitems", entry.Receipts.UnresolvedSubitems, 4);
         return builder.ToString();
     }
 

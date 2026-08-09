@@ -433,13 +433,6 @@ internal static class BackfillInventoryLoader
 
                 var atomId = suffix[(slash + 1)..^".yaml".Length];
                 entry.Add("atom_id", atomId);
-                entry.TryAdd("coverage_gids", new List<object?>());
-                entry.TryAdd("receipts", new Dictionary<string, object?>(StringComparer.Ordinal)
-                {
-                    ["coverage"] = new List<object?>(),
-                    ["scribe"] = new List<object?>(),
-                    ["unresolved_subitems"] = new List<object?>(),
-                });
                 entry.Add("status", new Dictionary<string, object?>(StringComparer.Ordinal)
                 {
                     ["migration"] = state[0],

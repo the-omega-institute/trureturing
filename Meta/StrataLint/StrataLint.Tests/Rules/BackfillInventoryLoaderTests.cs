@@ -51,6 +51,25 @@ public sealed class BackfillInventoryLoaderTests
         Assert.Equal("source delta-v0.1 entry keys are not canonical", exception.Message);
     }
 
+    [Theory]
+    [InlineData("ast_path")]
+    [InlineData("fingerprints")]
+    [InlineData("cas_ref")]
+    [InlineData("coverage_gids")]
+    [InlineData("receipts")]
+    public void DirectoryAtomMissingCanonicalKeyIsRejected(string missingKey)
+    {
+        var atom = Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta");
+        var text = RemoveTopLevelField(atom.Text, missingKey);
+
+        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
+            Source("delta-v0.1", "docs/delta.md", "none"),
+            (atom.Path, text),
+            (BackfillInventoryLoader.TicketIndexPath, ""))));
+
+        Assert.Equal("source delta-v0.1 entry keys are not canonical", exception.Message);
+    }
+
     [Fact]
     public void CanonicalAtomWithoutOwningSourceMetadataIsRejected()
     {
@@ -414,6 +433,25 @@ public sealed class BackfillInventoryLoaderTests
     }
 
     [Fact]
+    public void DirectoryWriterEmitsCanonicalEmptyCollectionKeys()
+    {
+        var document = BackfillInventoryLoader.Load(Snapshot(
+            Source("epsilon-v0.1", "docs/epsilon.md", "none"),
+            Atom("epsilon-v0.1", "residual-open", "epsilon-atom", "theorem/epsilon"),
+            (BackfillInventoryLoader.TicketIndexPath, "")));
+
+        var atom = BackfillInventoryWriter.WriteDirectory(document)
+            .Single(static entry => entry.Path.EndsWith("/epsilon-atom.yaml", StringComparison.Ordinal));
+        var text = Encoding.UTF8.GetString(atom.Bytes.AsSpan());
+
+        Assert.Contains("coverage_gids: []\n", text, StringComparison.Ordinal);
+        Assert.Contains(
+            "receipts:\n  coverage: []\n  scribe: []\n  unresolved_subitems: []\n",
+            text,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void CanonicalLedgerE2StoresEveryReceiptPreimageInCas()
     {
         var root = FindRepositoryRoot();
@@ -550,6 +588,21 @@ public sealed class BackfillInventoryLoaderTests
 
     private static string[] LoaderEntryFields() =>
         BackfillInventoryDocument.EntryFieldUniverse.ToArray();
+
+    private static string RemoveTopLevelField(string yaml, string key)
+    {
+        var lines = yaml.Split('\n').ToList();
+        var start = lines.FindIndex(line => line.StartsWith(key + ":", StringComparison.Ordinal));
+        Assert.True(start >= 0);
+        var end = start + 1;
+        while (end < lines.Count
+               && (lines[end].Length == 0 || char.IsWhiteSpace(lines[end][0])))
+        {
+            end++;
+        }
+        lines.RemoveRange(start, end - start);
+        return string.Join('\n', lines);
+    }
 
     private static string EntryFixture(IReadOnlySet<string> fields)
     {
