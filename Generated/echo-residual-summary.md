@@ -1,8 +1,8 @@
-<!-- echo-residual-summary:v3 residual=sha256:d298d5e5bf878a674fead026450ba6f80d4ebd5f5b7a6587802b6265cbab2fa9 -->
+<!-- echo-residual-summary:v3 residual=sha256:40effb0bb3a2567d30b8351fe7261081ebd297fcb2c843daed38a045a3e2549e -->
 # Echo Residual Summary
 
-- unresolved_subitems: 547
-- mother_residual_atom_ids: 88
+- unresolved_subitems: 546
+- mother_residual_atom_ids: 87
 
 ## `bedc-wm-v0.1`
 
@@ -13,13 +13,10 @@ Mother residual atoms: none.
 
 ## `cone-v1`
 
-- unresolved_subitems: 1
-- mother_residual_atom_ids: 1
+- unresolved_subitems: 0
+- mother_residual_atom_ids: 0
 
-Mother residual atoms:
-
-- `cone-residual-50f4e3d952443c7a0c5851f7f06145c29e437c41813c0a7217c23c768e12cbed` (1)
-  - `classical-dpi-identity-zero-support-extension`
+Mother residual atoms: none.
 
 ## `gict-v3.6`
 
