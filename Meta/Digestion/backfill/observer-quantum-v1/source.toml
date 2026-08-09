@@ -1,3 +1,4 @@
 source_id = "observer-quantum-v1"
 path = "docs/develop/theory/OBSERVER-QUANTUM.md"
 atomizer = "observer-v1"
+acknowledged_stale = ["gict-coarse-c74925a3c3098b691503837f567abdaf6ff527a9a36934061c90a00fa7732a91"]
