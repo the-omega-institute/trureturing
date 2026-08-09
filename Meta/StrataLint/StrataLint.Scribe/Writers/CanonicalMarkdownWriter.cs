@@ -28,6 +28,7 @@ public static class CanonicalMarkdownWriter
             builder,
             document.Content,
             2,
+            $"document '{document.Header.Gid.Value}'",
             leanReport,
             citations,
             referencedDescribeIds,
@@ -46,6 +47,7 @@ public static class CanonicalMarkdownWriter
         StringBuilder builder,
         BlockSequence content,
         int headingLevel,
+        string source,
         LeanAxiomReport? leanReport,
         IReadOnlyDictionary<string, LiteratureCitation>? citations,
         IReadOnlySet<string> referencedDescribeIds,
@@ -62,6 +64,7 @@ public static class CanonicalMarkdownWriter
                 builder,
                 content.Items[index],
                 headingLevel,
+                $"{source}, block {index + 1}",
                 leanReport,
                 citations,
                 referencedDescribeIds,
@@ -73,6 +76,7 @@ public static class CanonicalMarkdownWriter
         StringBuilder builder,
         DocumentBlock block,
         int headingLevel,
+        string source,
         LeanAxiomReport? leanReport,
         IReadOnlyDictionary<string, LiteratureCitation>? citations,
         IReadOnlySet<string> referencedDescribeIds,
@@ -81,11 +85,11 @@ public static class CanonicalMarkdownWriter
         switch (block)
         {
             case DocumentBlock.Paragraph paragraph:
-                WriteParagraph(builder, paragraph.Content);
+                WriteParagraph(builder, paragraph.Content, $"{source}, paragraph");
                 break;
             case DocumentBlock.DisplayFormula display:
                 builder.Append("$$\n")
-                    .Append(LatexWriter.Write(display.Value))
+                    .Append(LatexWriter.Write(display.Value, $"{source}, display formula"))
                     .Append("\n$$");
                 break;
             case DocumentBlock.Section section:
@@ -95,6 +99,7 @@ public static class CanonicalMarkdownWriter
                     builder,
                     section.Content,
                     headingLevel + 1,
+                    $"{source}, section '{section.Title.Value}'",
                     leanReport,
                     citations,
                     referencedDescribeIds,
@@ -105,6 +110,7 @@ public static class CanonicalMarkdownWriter
                     builder,
                     describe,
                     headingLevel,
+                    source,
                     leanReport,
                     citations,
                     referencedDescribeIds,
@@ -115,7 +121,10 @@ public static class CanonicalMarkdownWriter
         }
     }
 
-    private static void WriteParagraph(StringBuilder builder, InlineSequence content)
+    private static void WriteParagraph(
+        StringBuilder builder,
+        InlineSequence content,
+        string source)
     {
         foreach (var inline in content.Items)
         {
@@ -126,7 +135,7 @@ public static class CanonicalMarkdownWriter
                     break;
                 case Inline.InlineFormula formula:
                     builder.Append('$')
-                        .Append(LatexWriter.Write(formula.Value))
+                        .Append(LatexWriter.Write(formula.Value, $"{source}, inline formula"))
                         .Append('$');
                     break;
                 case Inline.GidReference reference:
@@ -142,6 +151,7 @@ public static class CanonicalMarkdownWriter
         StringBuilder builder,
         DocumentBlock.Describe describe,
         int headingLevel,
+        string source,
         LeanAxiomReport? leanReport,
         IReadOnlyDictionary<string, LiteratureCitation>? citations,
         IReadOnlySet<string> referencedDescribeIds,
@@ -165,7 +175,9 @@ public static class CanonicalMarkdownWriter
         {
             case DescribeStatement.FormulaAst formula:
                 builder.Append("\n\n$$\n")
-                    .Append(LatexWriter.Write(formula.Value))
+                    .Append(LatexWriter.Write(
+                        formula.Value,
+                        $"{source}, describe '{describe.Id.Value}' ('{describe.Title.Value}') statement"))
                     .Append("\n$$");
                 break;
             case DescribeStatement.LeanDeclaration lean:
@@ -173,7 +185,9 @@ public static class CanonicalMarkdownWriter
                 if (describe.StatementFormula is { } statementFormula)
                 {
                     builder.Append("\n\n")
-                        .Append(LatexWriter.WriteStatement(statementFormula));
+                        .Append(LatexWriter.WriteStatement(
+                            statementFormula,
+                            $"{source}, describe '{describe.Id.Value}' ('{describe.Title.Value}') statement"));
                 }
                 else
                 {
@@ -241,6 +255,7 @@ public static class CanonicalMarkdownWriter
             builder,
             describe.Content,
             headingLevel + 1,
+            $"{source}, describe '{describe.Id.Value}' ('{describe.Title.Value}') commentary",
             leanReport,
             citations,
             referencedDescribeIds,
