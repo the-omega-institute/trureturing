@@ -20,6 +20,8 @@ internal sealed class StreamlineTheoremDocument : IScribeDocumentDefinition
                         "D5/S1/Solenoid/StreamlineTheorem."
                         + "streamline_offset_continuous_iff_constant"),
                     Disp(Seq(
+                        Operatorname, Grp(F.Id("IsPreconnected")), Open, F.Id("I"), Close, Sp, Land, Sp,
+                        F.Id("t"), Underscore, D(0), Sp, InMacro, Sp, F.Id("I"), Sp, Rightarrow, Esc,
                         Operatorname, Grp(F.Id("ContinuousOn")),
                         Open, F.Id("c"), Underscore, F.Id("d"), Comma, Sp,
                         F.Id("I"), Close, Sp, Leftrightarrow, Sp,
@@ -56,6 +58,7 @@ internal sealed class StreamlineTheoremDocument : IScribeDocumentDefinition
                         "D5/S1/Solenoid/StreamlineTheorem."
                         + "nonconstant_offset_not_continuous"),
                     Disp(Seq(
+                        Operatorname, Grp(F.Id("IsPreconnected")), Open, F.Id("I"), Close, Sp, Land, Sp,
                         F.Id("x"), Comma, Sp, F.Id("y"), InMacro, Sp, F.Id("I"),
                         Comma, Quad, Sp, F.Id("k"), Open, F.Id("x"), Close, Sp, Neq, Sp,
                         F.Id("k"), Open, F.Id("y"), Close, Sp, Rightarrow, Sp, Neg,
