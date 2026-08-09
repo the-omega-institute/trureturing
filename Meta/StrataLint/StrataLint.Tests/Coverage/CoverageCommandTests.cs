@@ -26,8 +26,8 @@ public sealed class CoverageCommandTests
         var firstExit = CliApplication.Run(arguments, environment, first);
         var secondExit = CliApplication.Run(arguments, environment, second);
 
-        Assert.Equal(0, firstExit);
-        Assert.Equal(0, secondExit);
+        Assert.True(firstExit == 0, first.Error);
+        Assert.True(secondExit == 0, second.Error);
         Assert.Equal(string.Empty, first.Error);
         Assert.Equal(string.Empty, second.Error);
         Assert.Equal(first.Output, second.Output);
@@ -61,6 +61,9 @@ public sealed class CoverageCommandTests
 
     private static RawRepositorySnapshot Snapshot()
     {
+        var genesis = FrozenLedgerCanonicalWriter.WriteDagEvent(
+            "Genesis",
+            JsonSerializer.SerializeToElement(new { }));
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             [RuleFixture.WorkflowPath] = """
@@ -70,9 +73,12 @@ public sealed class CoverageCommandTests
                 """,
             ["Meta/domains.yaml"] = TestRegistry.Domains,
             ["Meta/registry.yaml"] = TestRegistry.Canonical,
-            [FrozenLedgerChangeClassifier.LedgerPath] =
-                "{\"event_hash\":\"sha256:fc2ee6be0dd3cabb9b6a9118592671c9d5a81f691b7b4ad07674d9c3037ce262\",\"event_type\":\"Genesis\",\"payload\":{}}\n",
-            [RuleFixture.TowerManifestPath] = TowerYaml,
+            [FrozenLedgerChangeClassifier.AcceptedRoot
+                + "/" + genesis.Hash[7..] + ".json"] = Encoding.UTF8.GetString(genesis.Bytes.AsSpan()),
+            [RuleFixture.TowerManifestPath] = TowerYaml.Replace(
+                "sha256:fc2ee6be0dd3cabb9b6a9118592671c9d5a81f691b7b4ad07674d9c3037ce262",
+                genesis.Hash,
+                StringComparison.Ordinal),
         };
         return RawRepositorySnapshot.Create(
             files.Select(static item => RawRepositoryEntry.FromText(item.Key, item.Value)));

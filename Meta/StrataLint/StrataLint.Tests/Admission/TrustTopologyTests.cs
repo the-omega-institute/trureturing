@@ -30,7 +30,7 @@ public sealed class TrustTopologyTests
         RuleFixture.HeartsPath,
         RepositoryPathPolicy.AssumptionRegistryPath,
         "Meta/StrataLint/Golden/rules.json",
-        FrozenLedgerChangeClassifier.LedgerPath,
+        FrozenLedgerChangeClassifier.AcceptedRoot,
         C0CertificatePath,
         SolutionPath,
         EngineProjectPath,
