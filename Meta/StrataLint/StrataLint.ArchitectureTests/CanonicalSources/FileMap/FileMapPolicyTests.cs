@@ -2,6 +2,7 @@ using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
 using StrataLint.Scribe;
+using StrataLint.Tests;
 
 namespace StrataLint.ArchitectureTests;
 
@@ -59,7 +60,7 @@ public sealed class FileMapPolicyTests
             StringComparer.Ordinal);
         var root = RepositoryLayout.FindRoot();
         var manifest = FileMapLoader.LoadRepository(root);
-        var registry = Assert.IsType<RegistryLoadOutcome.Accepted>(
+        var registry = RegistryLoadAssert.Accepted(
             RegistryLoader.Load(
                 File.ReadAllBytes(Path.Combine(root, "Meta", "registry.yaml")),
                 File.ReadAllBytes(Path.Combine(root, "Meta", "domains.yaml"))));
@@ -99,7 +100,7 @@ public sealed class FileMapPolicyTests
         const string value = "Golden/perf-budgets.toml";
         var root = RepositoryLayout.FindRoot();
         var manifest = FileMapLoader.LoadRepository(root);
-        var registry = Assert.IsType<RegistryLoadOutcome.Accepted>(
+        var registry = RegistryLoadAssert.Accepted(
             RegistryLoader.Load(
                 File.ReadAllBytes(Path.Combine(root, "Meta", "registry.yaml")),
                 File.ReadAllBytes(Path.Combine(root, "Meta", "domains.yaml"))));
@@ -125,7 +126,7 @@ public sealed class FileMapPolicyTests
         // not reject dynamically generated plans as unknown top-level artifacts.
         const string value = "docs/devloop/plans/synthetic-prove-task-plan.md";
         var root = RepositoryLayout.FindRoot();
-        var registry = Assert.IsType<RegistryLoadOutcome.Accepted>(
+        var registry = RegistryLoadAssert.Accepted(
             RegistryLoader.Load(
                 File.ReadAllBytes(Path.Combine(root, "Meta", "registry.yaml")),
                 File.ReadAllBytes(Path.Combine(root, "Meta", "domains.yaml"))));

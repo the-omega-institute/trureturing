@@ -20,20 +20,39 @@ public sealed partial class FormulaCorpusInventoryTests
         Assert.Empty(residuals);
     }
 
-    private static readonly string[] ExpectedMacros =
+    /// Macros the emitter can produce, derived rather than listed. Every FormulaLatexMacro
+    /// member is rendered and its control words collected, plus the macros LatexWriter emits
+    /// from string literals for AST nodes that are not LatexMacro. Both sources are program,
+    /// so the alphabet moves when the emitter moves.
+    ///
+    /// The corpus check below asserts containment, not equality: a Describe node that starts
+    /// using an existing capability is legitimate growth and must not turn the suite red,
+    /// while a macro outside this set means the emitter cannot produce it. The equality
+    /// against a hand-written list this replaces conflated the two -- see #967, where the
+    /// list was classified as a corpus observation wired as a reject-outside-set gate with
+    /// no source of truth behind it.
+    private static IReadOnlyCollection<string> EmitterMacroAlphabet()
+    {
+        var alphabet = Enum.GetValues<FormulaLatexMacro>()
+            .SelectMany(static macro => MacroPattern()
+                .Matches(LatexWriter.WriteStatement(new Formula.LatexMacro(macro)))
+                .Select(static match => match.Groups[1].Value))
+            .ToHashSet(StringComparer.Ordinal);
+        foreach (var literal in LiteralEmittedMacros)
+        {
+            alphabet.Add(literal);
+        }
+
+        return alphabet;
+    }
+
+    /// Emitted by LatexWriter from string literals rather than through FormulaLatexMacro,
+    /// for AST nodes that carry no macro member: Placeholder, Norm, Modulo, NotEqual, and
+    /// the non-function branch of FunctionCall/Apply. Named here because they have no
+    /// enum to enumerate; each one is a literal in LatexWriter.
+    private static readonly string[] LiteralEmittedMacros =
     [
-        "Delta", "Gamma", "Lambda", "Leftrightarrow", "Re", "Rightarrow",
-        "Vert", "alpha", "begin", "beta", "cdot", "circ", "delta", "ell",
-        "emptyset", "end", "equiv", "exists", "forall", "frac", "gamma",
-        "gcd", "ge", "geq", "iff", "implies", "in", "infty", "int", "iota",
-        "kappa", "lVert", "lambda", "land", "langle", "le", "left", "leq",
-        "lfloor", "lim", "log", "lor", "lvert", "mapsto",
-        "mathbb", "mathbf", "mathcal", "mathit", "mathord", "mathrm", "max", "mid", "min",
-        "mu", "ne", "neg", "neq", "nu", "omega", "operatorname", "overline", "perp",
-        "phi", "pi", "pm", "prod", "psi", "qquad", "quad", "rVert", "rangle", "rfloor",
-        "rho", "right", "rvert", "setminus", "sigma", "sim", "sin", "sqrt",
-        "subset", "subseteq", "sum", "tau", "text", "theta", "times", "to",
-        "varepsilon", "varnothing", "varphi", "widehat", "widetilde", "xi", "zeta",
+        "bmod", "lVert", "mathit", "mathord", "ne", "rVert",
     ];
 
     [Fact]
@@ -57,7 +76,12 @@ public sealed partial class FormulaCorpusInventoryTests
 
         Assert.NotEmpty(entries);
         Assert.All(entries, static entry => Assert.NotEmpty(entry.Value));
-        Assert.Equal(ExpectedMacros, macros);
+        var beyondEmitter = macros.Except(EmitterMacroAlphabet(), StringComparer.Ordinal)
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+        Assert.True(
+            beyondEmitter.Length == 0,
+            $"corpus uses macros the emitter cannot produce: {string.Join(", ", beyondEmitter)}");
         AssertSyntaxFamily(corpus, "quantifier", "\\forall", "\\exists");
         AssertSyntaxFamily(corpus, "logic", "\\land", "\\lor", "\\neg", "\\Rightarrow");
         AssertSyntaxFamily(corpus, "relation", "=", "<", "\\le", "\\ge", "\\in", "\\mid");

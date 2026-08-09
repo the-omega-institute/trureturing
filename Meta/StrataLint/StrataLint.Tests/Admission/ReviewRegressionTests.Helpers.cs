@@ -11,9 +11,9 @@ namespace StrataLint.Tests;
 /// Assert.IsType discards it, leaving a reader with "expected Accepted, got
 /// InfrastructureFailure" and no path to the cause except reading RegistryPolicy.
 /// See #993: the judgement is right, the reported material is not the one judged.
-internal static class RegistryLoadAssert
+public static class RegistryLoadAssert
 {
-    internal static RegistryLoadOutcome.Accepted Accepted(RegistryLoadOutcome outcome) =>
+    public static RegistryLoadOutcome.Accepted Accepted(RegistryLoadOutcome outcome) =>
         outcome as RegistryLoadOutcome.Accepted
         ?? throw new Xunit.Sdk.XunitException(
             outcome is RegistryLoadOutcome.InfrastructureFailure failure
