@@ -11,8 +11,9 @@ public sealed class FaultInjectionTests
     public void MissingCatalogEntryCannotProduceCompletedRuleSet()
     {
         var catalog = RuleCatalog.CreateForTesting(
-            RuleCatalog.Default.Descriptors[..^1],
-            Enumerable.Range(1, 22).Select(static _ => (IRepositoryRule)new NoOpRule()).ToImmutableArray());
+            RuleCatalog.Default.Descriptors[..^1]
+                .Select(static descriptor => new RuleRegistration(descriptor, new NoOpRule()))
+                .ToImmutableArray());
 
         var outcome = catalog.Execute(new RuleFixture().Build());
 
@@ -22,12 +23,14 @@ public sealed class FaultInjectionTests
     [Fact]
     public void ThrowingRuleCannotProduceCompletedRuleSet()
     {
-        var rules = Enumerable.Range(1, 23)
-            .Select(number => number == 6
-                ? (IRepositoryRule)new ThrowingRule()
-                : new NoOpRule())
+        var registrations = RuleCatalog.Default.Descriptors
+            .Select(descriptor => new RuleRegistration(
+                descriptor,
+                descriptor.Id == RuleId.CreateKnown(6)
+                    ? new ThrowingRule()
+                    : new NoOpRule()))
             .ToImmutableArray();
-        var catalog = RuleCatalog.CreateForTesting(RuleCatalog.Default.Descriptors, rules);
+        var catalog = RuleCatalog.CreateForTesting(registrations);
 
         var outcome = catalog.Execute(new RuleFixture().Build());
 
