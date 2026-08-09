@@ -57,7 +57,61 @@ public sealed class C0CeremonyProjectionTests
         var members = Members(new string('f', 64), new string('a', 40));
 
         Assert.False(C0CeremonyProjection.TrustRootMatchesSnapshot(members, snapshot, out var reason));
-        Assert.Contains("certificate address", reason, StringComparison.Ordinal);
+        Assert.Contains("expected c0/inaugural-certificate", reason, StringComparison.Ordinal);
+        Assert.Contains("actual c0/inaugural-certificate", reason, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ReconcileRestoresTrustRootFromAValidCertificate()
+    {
+        var snapshot = Snapshot();
+        var tower = ProductionTowerBytes();
+
+        var reconciled = C0CeremonyProjection.ReconcileTrustRoot(tower.AsSpan(), snapshot);
+        var members = C0TowerProjection.ReadMembers(reconciled.AsSpan());
+
+        Assert.True(C0CeremonyProjection.CreateTrustRootMembers(snapshot)
+            .SequenceEqual(members, StringComparer.Ordinal));
+        Assert.True(C0CeremonyProjection.TrustRootMatchesSnapshot(members, snapshot, out var reason), reason);
+    }
+
+    [Fact]
+    public void ReconcileIsByteIdenticalWhenTrustRootIsAlreadyConsistent()
+    {
+        var snapshot = Snapshot();
+        var once = C0CeremonyProjection.ReconcileTrustRoot(ProductionTowerBytes().AsSpan(), snapshot);
+
+        var twice = C0CeremonyProjection.ReconcileTrustRoot(once.AsSpan(), snapshot);
+
+        Assert.True(once.SequenceEqual(twice));
+    }
+
+    [Theory]
+    [InlineData("bad-schema", "CORPUS_CONSERVATIVE", false, 1, 1)]
+    [InlineData("stratalint-conservative-certificate-v1", "CONSERVATIVE_VIOLATION", false, 1, 1)]
+    [InlineData("stratalint-conservative-certificate-v1", "CORPUS_CONSERVATIVE", true, 1, 1)]
+    [InlineData("stratalint-conservative-certificate-v1", "CORPUS_CONSERVATIVE", false, 2, 1)]
+    public void ReconcileRejectsInvalidCertificates(
+        string schema,
+        string status,
+        bool hasFinding,
+        int baselineAdmits,
+        int preservedAdmits)
+    {
+        var snapshot = Snapshot(Certificate(schema, status, hasFinding, baselineAdmits, preservedAdmits));
+
+        Assert.ThrowsAny<Exception>(() =>
+            C0CeremonyProjection.ReconcileTrustRoot(ProductionTowerBytes().AsSpan(), snapshot));
+    }
+
+    [Fact]
+    public void TrustRootCheckerAcceptsTheSingleCanonicalDerivation()
+    {
+        var snapshot = Snapshot();
+
+        var members = C0CeremonyProjection.CreateTrustRootMembers(snapshot);
+
+        Assert.True(C0CeremonyProjection.TrustRootMatchesSnapshot(members, snapshot, out var reason), reason);
     }
 
     private static ImmutableArray<string> Members(string digest, string tree) =>
@@ -69,13 +123,13 @@ public sealed class C0CeremonyProjectionTests
         $"c0/preimage-tree git-tree/{tree}",
     ];
 
-    private static RepositorySnapshot Snapshot(bool includeGate = true)
+    private static RepositorySnapshot Snapshot(bool includeGate = true) =>
+        Snapshot(Certificate(), includeGate);
+
+    private static RepositorySnapshot Snapshot(
+        ImmutableArray<byte> certificate,
+        bool includeGate = true)
     {
-        var certificate = StructuredCanonicalWriter.WriteJson(JsonSerializer.SerializeToElement(new
-        {
-            candidate = new { tree_oid = "git-sha1:" + new string('a', 40) },
-            schema = "stratalint-conservative-certificate-v1",
-        }));
         var files = new Dictionary<string, ImmutableArray<byte>>(StringComparer.Ordinal)
         {
             [C0CeremonyProjection.CliApplicationPath] = Bytes("// cli\n"),
@@ -101,6 +155,38 @@ public sealed class C0CeremonyProjectionTests
         var raw = RawRepositorySnapshot.Create(files.Select(static item =>
             new RawRepositoryEntry(item.Key, item.Value)));
         return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+    }
+
+    private static ImmutableArray<byte> Certificate(
+        string schema = "stratalint-conservative-certificate-v1",
+        string status = "CORPUS_CONSERVATIVE",
+        bool hasFinding = false,
+        int baselineAdmits = 1,
+        int preservedAdmits = 1) =>
+        StructuredCanonicalWriter.WriteJson(JsonSerializer.SerializeToElement(new
+        {
+            candidate = new { tree_oid = "git-sha1:" + new string('a', 40) },
+            findings = hasFinding ? new[] { new { code = "TEST" } } : Array.Empty<object>(),
+            positive_implication = new
+            {
+                baseline_admit_count = baselineAdmits,
+                preserved_admit_count = preservedAdmits,
+            },
+            schema,
+            status,
+        }));
+
+    private static ImmutableArray<byte> ProductionTowerBytes()
+    {
+        var directory = new DirectoryInfo(AppContext.BaseDirectory);
+        while (directory is not null && !File.Exists(Path.Combine(directory.FullName, "CLAUDE.md")))
+        {
+            directory = directory.Parent;
+        }
+
+        Assert.NotNull(directory);
+        return ImmutableArray.CreateRange(File.ReadAllBytes(
+            Path.Combine(directory.FullName, RepositoryRules.TowerManifestPath)));
     }
 
     private static ImmutableArray<byte> Bytes(string value) =>

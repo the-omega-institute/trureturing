@@ -148,14 +148,12 @@ jobs:
         with:
           global-json-file: candidate/global.json
 
-      - name: Renew projections with candidate tooling
+      - name: Reconcile trust root with candidate tooling
         shell: bash
-        env:
-          BASE_SHA: ${{ steps.merge-base.outputs.sha }}
         run: |
           set -euo pipefail
           cd candidate
-          make c0-renew BASE="$BASE_SHA"
+          make c0-reconcile-trust-root
 
       - name: Enforce write-path whitelist
         shell: bash
@@ -177,7 +175,7 @@ jobs:
             esac
           done
           if [[ "${#bad[@]}" -ne 0 ]]; then
-            echo "::error::c0-renew touched paths outside the whitelist"
+            echo "::error::c0-reconcile-trust-root touched paths outside the whitelist"
             printf '%s\n' "${bad[@]}"
             exit 1
           fi
@@ -193,7 +191,7 @@ jobs:
       - name: Upload renewed projections
         uses: actions/upload-artifact@v4
         with:
-          name: c0-renewed-${{ steps.pr.outputs.head_sha }}
+          name: c0-reconciled-${{ steps.pr.outputs.head_sha }}
           path: ${{ runner.temp }}/c0-output
           if-no-files-found: error
           retention-days: 1
@@ -232,7 +230,7 @@ jobs:
       - name: Download renewed projections
         uses: actions/download-artifact@v4
         with:
-          name: c0-renewed-${{ needs.renew.outputs.head_sha }}
+          name: c0-reconciled-${{ needs.renew.outputs.head_sha }}
           path: renewed
 
       - name: Commit back to PR branch
@@ -263,9 +261,15 @@ jobs:
             Meta/StrataLint/TOWER.yaml \
             Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json
           if git diff --cached --quiet; then
+            make c0-reconcile-trust-root
+            git add -- Meta/StrataLint/TOWER.yaml
+            git diff --cached --quiet || {
+              echo "::error::no-op artifact did not contain a consistent C0 trust root"
+              exit 1
+            }
             echo "C0 ceremony is a byte-exact no-op"
             exit 0
           fi
           git -c core.hooksPath=/dev/null commit \
-            -m "chore(c0): renew ceremony projections [c0-ceremony-bot]"
+            -m "chore(c0): reconcile TOWER trust root [c0-ceremony-bot]"
           git push origin "HEAD:refs/heads/$HEAD_REF"
