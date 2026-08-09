@@ -1,7 +1,7 @@
-<!-- echo-residual-summary:v3 residual=sha256:a6395465ef89ed9130e1d450bda6b56704c2cefc8caf44394537adbb41ba5ab6 -->
+<!-- echo-residual-summary:v3 residual=sha256:4818a2499159bed095291f3679b6985c5def655fd0558713516f8dd4f07b90ba -->
 # Echo Residual Summary
 
-- unresolved_subitems: 551
+- unresolved_subitems: 549
 - mother_residual_atom_ids: 88
 
 ## `bedc-wm-v0.1`
@@ -175,7 +175,7 @@ Mother residual atoms: none.
 
 ## `observer-quantum-v1`
 
-- unresolved_subitems: 78
+- unresolved_subitems: 76
 - mother_residual_atom_ids: 22
 
 Mother residual atoms:
@@ -196,8 +196,7 @@ Mother residual atoms:
 - `observer-residual-39801f81b23d4fe1d4823f4470f961be3f2fc21445bfec13de1574cb9fd368bc` (2)
   - `bookkeeping-is-decoherence-identification`
   - `ledger-is-environment-identification`
-- `observer-residual-3a223e1e36f56665b3c0e9be99371b69a493873f7565ce0f32908c28b4663767` (4)
-  - `certificate-identity-zero-tolerance`
+- `observer-residual-3a223e1e36f56665b3c0e9be99371b69a493873f7565ce0f32908c28b4663767` (3)
   - `global-system-record-unitarity-premise`
   - `no-third-collapse-dynamics-interpretive-premise`
   - `objective-collapse-model-demarcation`
@@ -231,8 +230,7 @@ Mother residual atoms:
   - `integer-action-selected-by-observer-premise`
   - `observer-read-write-forces-structure`
   - `universal-c-star-crossed-product-identification`
-- `observer-residual-8bdb867fc051e5a905bf4a833e7613687d575322c0f5437ea92e2c33b1dec146` (3)
-  - `certificate-identity-zero-tolerance`
+- `observer-residual-8bdb867fc051e5a905bf4a833e7613687d575322c0f5437ea92e2c33b1dec146` (2)
   - `no-third-collapse-dynamics-interpretive-premise`
   - `same-system-record-state-throughout-premise`
 - `observer-residual-8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490` (6)

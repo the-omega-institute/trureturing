@@ -241,13 +241,13 @@ sources:
           - D5/S3/Observer/Conditioning.unreadState_fixed_iff
           - D5/S3/Observer/Conditioning.conditionalState_isState
           - D5/S3/Observer/Conditioning.unread_eq_weighted_ensemble
+          - D5/S3/Observer/ConditioningCertificate.certificate_identity_zero_tolerance
         receipts:
           coverage: []
           scribe: []
           unresolved_subitems:
             - same-system-record-state-throughout-premise
             - no-third-collapse-dynamics-interpretive-premise
-            - certificate-identity-zero-tolerance
           chain_atoms: []
           tail_authorization: null
         status:
@@ -890,6 +890,7 @@ sources:
           - D5/S3/Observer/Conditioning.unreadState_fixed_iff
           - D5/S3/Observer/Conditioning.conditionalState_isState
           - D5/S3/Observer/Conditioning.unread_eq_weighted_ensemble
+          - D5/S3/Observer/ConditioningCertificate.certificate_identity_zero_tolerance
         receipts:
           coverage: []
           scribe: []
@@ -897,7 +898,6 @@ sources:
             - no-third-collapse-dynamics-interpretive-premise
             - global-system-record-unitarity-premise
             - objective-collapse-model-demarcation
-            - certificate-identity-zero-tolerance
           chain_atoms: []
           tail_authorization: null
         status:
