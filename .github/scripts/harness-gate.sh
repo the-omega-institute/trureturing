@@ -8,6 +8,23 @@ JUDGE_ROOT=""
 BASE_REF=""
 CANDIDATE_LEAN_REPORT=""
 BASELINE_LEAN_REPORT=""
+GATE_OUTCOME_DIR="${STRATALINT_GATE_OUTCOME_DIR:-}"
+
+exit_with_gate_outcome() {
+  local kind="$1"
+  local rc="$2"
+  local marker=""
+  case "$kind" in
+    admitted|semantic-violation|infrastructure-failure|conservative-certificate) ;;
+    *) echo "harness-gate: invalid structured outcome '$kind'" >&2; exit 2 ;;
+  esac
+  if [[ -n "$GATE_OUTCOME_DIR" ]]; then
+    marker="$GATE_OUTCOME_DIR/gate-outcome-v1.$kind"
+    (umask 077; : > "$marker") \
+      || { echo "harness-gate: could not publish structured outcome '$marker'" >&2; exit 2; }
+  fi
+  exit "$rc"
+}
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -34,6 +51,10 @@ done
   || { echo "harness-gate: candidate Lean report '$CANDIDATE_LEAN_REPORT' is absent" >&2; exit 2; }
 [[ -f "$BASELINE_LEAN_REPORT" ]] \
   || { echo "harness-gate: baseline Lean report '$BASELINE_LEAN_REPORT' is absent" >&2; exit 2; }
+if [[ -n "$GATE_OUTCOME_DIR" ]]; then
+  [[ "$GATE_OUTCOME_DIR" == /* && -d "$GATE_OUTCOME_DIR" ]] \
+    || { echo "harness-gate: STRATALINT_GATE_OUTCOME_DIR must name an existing absolute directory" >&2; exit 2; }
+fi
 
 CANDIDATE_ROOT="$(cd "$CANDIDATE_ROOT" && pwd -P)"
 JUDGE_ROOT="$(cd "$JUDGE_ROOT" && pwd -P)"
@@ -144,7 +165,7 @@ fi
 
 if [[ $rc -eq 0 ]]; then
   summary "### Admission: content fully validated, no protected-surface change"
-  exit 0
+  exit_with_gate_outcome admitted 0
 fi
 
 if [[ $rc -eq 3 ]]; then
@@ -170,21 +191,25 @@ if [[ $rc -eq 3 ]]; then
   case "$conservative_rc" in
     0)
       summary "### SL-022 protected-surface change: conservative-extension certificate emitted"
-      exit 3
+      exit_with_gate_outcome conservative-certificate 3
       ;;
     1)
       summary "### SL-022 protected-surface change: conservative-extension violation"
-      exit 1
+      exit_with_gate_outcome semantic-violation 1
       ;;
     2)
       summary "### SL-022 protected-surface change: conservative-extension infrastructure failure"
-      exit 2
+      exit_with_gate_outcome infrastructure-failure 2
       ;;
     *)
       echo "harness-gate: verify-conservative returned invalid rc=$conservative_rc" >&2
-      exit 2
+      exit_with_gate_outcome infrastructure-failure 2
       ;;
   esac
 fi
 
-exit "$rc"
+case "$rc" in
+  1) exit_with_gate_outcome semantic-violation 1 ;;
+  2) exit_with_gate_outcome infrastructure-failure 2 ;;
+  *) exit "$rc" ;;
+esac

@@ -5,19 +5,22 @@ namespace StrataLint.Tests;
 public sealed partial class MakeWorkflowTests
 {
     [Theory]
-    [InlineData("pass", 0)]
-    [InlineData("semantic-test", 41)]
-    [InlineData("semantic-gate", 42)]
-    [InlineData("configuration", 78)]
-    [InlineData("toolchain-missing", 127)]
-    [InlineData("timeout", 124)]
-    [InlineData("signal-term", 143)]
-    [InlineData("exit-126", 126)]
-    [InlineData("exit-127", 127)]
-    [InlineData("unknown-dotnet", 73)]
-    [InlineData("unknown", 73)]
-    [InlineData("starved-lean-slot", 2)]
-    public void PreflightPreservesExitCode(string scenario, int expectedExitCode)
+    [InlineData("pass", 0, "PASS:NONE")]
+    [InlineData("semantic-test", 41, "FAIL:SEMANTIC")]
+    [InlineData("semantic-gate", 42, "FAIL:SEMANTIC")]
+    [InlineData("configuration", 78, "FAIL:CONFIGURATION")]
+    [InlineData("toolchain-missing", 127, "FAIL:TOOLCHAIN")]
+    [InlineData("timeout", 124, "FAIL:INFRASTRUCTURE")]
+    [InlineData("signal-term", 143, "FAIL:INFRASTRUCTURE")]
+    [InlineData("exit-126", 126, "FAIL:TOOLCHAIN")]
+    [InlineData("exit-127", 127, "FAIL:TOOLCHAIN")]
+    [InlineData("unknown-dotnet", 73, "UNKNOWN:UNKNOWN")]
+    [InlineData("unknown", 73, "UNKNOWN:UNKNOWN")]
+    [InlineData("starved-lean-slot", 2, "UNKNOWN:UNKNOWN")]
+    public void PreflightPreservesExitCode(
+        string scenario,
+        int expectedExitCode,
+        string expectedDeclaration)
     {
         if (OperatingSystem.IsWindows()) return;
 
@@ -87,6 +90,10 @@ public sealed partial class MakeWorkflowTests
             64 * 1024);
 
         Assert.Equal(expectedExitCode, result.ExitCode);
+        Assert.EndsWith(
+            $"FKST_LOCAL_ITERATION_RESULT:v2:{expectedDeclaration}\n",
+            System.Text.Encoding.UTF8.GetString(result.StandardOutput),
+            StringComparison.Ordinal);
     }
 
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
