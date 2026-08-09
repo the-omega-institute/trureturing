@@ -1,0 +1,10 @@
+ast_path: theorem/6.62
+fingerprints:
+  raw_sha256: sha256:0f4158bbe7f9a601bfd6c541604320be0657d4093f76c79e6d5dc0bd12a650e3
+  normalized_sha256: sha256:0f4158bbe7f9a601bfd6c541604320be0657d4093f76c79e6d5dc0bd12a650e3
+cas_ref: sha256:0f4158bbe7f9a601bfd6c541604320be0657d4093f76c79e6d5dc0bd12a650e3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

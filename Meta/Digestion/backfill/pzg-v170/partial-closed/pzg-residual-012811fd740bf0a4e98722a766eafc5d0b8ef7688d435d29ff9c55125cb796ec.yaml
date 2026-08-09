@@ -1,0 +1,27 @@
+ast_path: remark/27.23
+fingerprints:
+  raw_sha256: sha256:012811fd740bf0a4e98722a766eafc5d0b8ef7688d435d29ff9c55125cb796ec
+  normalized_sha256: sha256:012811fd740bf0a4e98722a766eafc5d0b8ef7688d435d29ff9c55125cb796ec
+cas_ref: sha256:012811fd740bf0a4e98722a766eafc5d0b8ef7688d435d29ff9c55125cb796ec
+coverage_gids:
+  - D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
+      source_sha256: sha256:012811fd740bf0a4e98722a766eafc5d0b8ef7688d435d29ff9c55125cb796ec
+      target_sha256: sha256:eadb8ba77aa7d9d1648ae398d680d11c525bca2e60ec090ae38e35d7f5e738e5
+  scribe:
+    - gid: D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
+      definition_sha256: sha256:2227a3b6e764a7cc4f7ac9ec4a18c4f3e7a8b41605ae2b3cf0b42ce64214e66f
+      emission_sha256: sha256:b55ff89324eabc4d1d004776405cc56133f4f335342c40bc512c7b99695d7296
+  unresolved_subitems:
+    - pointwise-genesis-terminal-information-increments-plus-minus-one
+    - genesis-plus-terminal-information-equals-total-knowledge
+    - numeric-symmetry-and-information-antisymmetry-coexist
+    - wigner-unitary-or-antiunitary-dichotomy
+    - information-flow-reversal-forces-antiunitary-time-reversal
+    - real-zeta-coefficients-imply-conjugation-covariance
+    - completed-lambda-antiunitary-covariance
+    - lambda-antiunitary-covariance-numerical-certificate
+    - critical-line-existence-from-information-reversal
+    - rh-as-zero-set-subset-of-antilinear-fixed-line

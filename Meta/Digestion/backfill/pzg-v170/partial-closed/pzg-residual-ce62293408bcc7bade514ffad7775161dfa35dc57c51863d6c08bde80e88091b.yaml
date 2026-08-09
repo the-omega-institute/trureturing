@@ -1,0 +1,14 @@
+ast_path: remark/6.63
+fingerprints:
+  raw_sha256: sha256:ce62293408bcc7bade514ffad7775161dfa35dc57c51863d6c08bde80e88091b
+  normalized_sha256: sha256:ce62293408bcc7bade514ffad7775161dfa35dc57c51863d6c08bde80e88091b
+cas_ref: sha256:ce62293408bcc7bade514ffad7775161dfa35dc57c51863d6c08bde80e88091b
+coverage_gids:
+  - D5/S1/Scale/MinkowskiModelSet
+receipts:
+  coverage:
+    - gid: D5/S1/Scale/MinkowskiModelSet
+      source_sha256: sha256:ce62293408bcc7bade514ffad7775161dfa35dc57c51863d6c08bde80e88091b
+      target_sha256: sha256:17c9cf3ca266daee964ca1511d0c12fb2c6889f4e6d57bebb38719cbecf0840a
+  scribe: []
+  unresolved_subitems: []

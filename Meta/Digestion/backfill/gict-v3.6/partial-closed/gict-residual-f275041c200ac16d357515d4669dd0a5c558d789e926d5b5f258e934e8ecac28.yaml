@@ -1,0 +1,20 @@
+ast_path: theorem/4.2
+fingerprints:
+  raw_sha256: sha256:f275041c200ac16d357515d4669dd0a5c558d789e926d5b5f258e934e8ecac28
+  normalized_sha256: sha256:f275041c200ac16d357515d4669dd0a5c558d789e926d5b5f258e934e8ecac28
+cas_ref: sha256:f275041c200ac16d357515d4669dd0a5c558d789e926d5b5f258e934e8ecac28
+coverage_gids:
+  - D5/S1/Scale/FibonacciEigen.fibonacci_substitution_spec
+receipts:
+  coverage:
+    - gid: D5/S1/Scale/FibonacciEigen.fibonacci_substitution_spec
+      source_sha256: sha256:f275041c200ac16d357515d4669dd0a5c558d789e926d5b5f258e934e8ecac28
+      target_sha256: sha256:eafed4784601bcc1d9358af0a441539fa1e63154aeeb3b92bc85f3b5e7a9b351
+  scribe:
+    - gid: D5/S1/Scale/FibonacciEigen.fibonacci_substitution_spec
+      definition_sha256: sha256:d0496d5397e50e63b8b77caa4a968c9f72103d74da4601e698b37c363e6bfe5c
+      emission_sha256: sha256:b5e58ba9631a89e30dfb7b804075a099ec37c410c28397c185299ec51d2a2e5a
+  unresolved_subitems:
+    - scaling-phenomena-assignment-to-expanding-axis
+    - sign-reversal-phenomena-assignment-to-contracting-axis
+    - global-logarithmic-spiral-projection-verdict

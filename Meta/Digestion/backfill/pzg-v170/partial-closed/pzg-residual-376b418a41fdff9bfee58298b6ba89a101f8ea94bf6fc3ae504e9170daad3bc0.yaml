@@ -1,0 +1,29 @@
+ast_path: remark/27.21
+fingerprints:
+  raw_sha256: sha256:376b418a41fdff9bfee58298b6ba89a101f8ea94bf6fc3ae504e9170daad3bc0
+  normalized_sha256: sha256:376b418a41fdff9bfee58298b6ba89a101f8ea94bf6fc3ae504e9170daad3bc0
+cas_ref: sha256:376b418a41fdff9bfee58298b6ba89a101f8ea94bf6fc3ae504e9170daad3bc0
+coverage_gids:
+  - D5/S3/Weil/EulerProduct.single_address_reading_spec
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/EulerProduct.single_address_reading_spec
+      source_sha256: sha256:376b418a41fdff9bfee58298b6ba89a101f8ea94bf6fc3ae504e9170daad3bc0
+      target_sha256: sha256:15cd001d32d1ff035dbe72f8066304f2aaf08d6f4eb95c8366c71635f022ba21
+  scribe:
+    - gid: D5/S3/Weil/EulerProduct.single_address_reading_spec
+      definition_sha256: sha256:0978a97d691a6320b30512c7104f2a6f616213afc3ee3524998c848fd1822bc1
+      emission_sha256: sha256:e996c1d6f3fdfa4eb491bb2b3e86e4b7450755e62996a1b9e41f4995ca74c6a3
+  unresolved_subitems:
+    - dirichlet-series-time-foliation-versus-euler-product-space-foliation
+    - euler-product-as-journal-ledger-trial-balance
+    - theta-as-heat-kernel-trace
+    - theta-small-time-and-large-time-asymptotics
+    - theta-asymptotic-numerical-certificates
+    - theta-modular-inversion-identity
+    - theta-time-inversion-genesis-heat-death-reading
+    - theta-fixed-time-one-corresponds-to-critical-half-line
+    - completed-zeta-parameter-as-history-sampling-bias
+    - folded-slit-mass-ratio-values-and-half-weight-certificate
+    - zeta-pole-at-one-as-genesis-divergence
+    - pole-subtraction-required-before-functional-symmetry

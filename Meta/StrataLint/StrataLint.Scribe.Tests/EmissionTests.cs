@@ -610,10 +610,20 @@ public sealed class EmissionTests
     private static void CopyRepositoryLibrary(string destinationRoot)
     {
         var repositoryRoot = FindRepositoryRoot();
-        var backfillSource = Path.Combine(repositoryRoot, "Meta", "BACKFILL.yaml");
-        var backfillDestination = Path.Combine(destinationRoot, "Meta", "BACKFILL.yaml");
-        Directory.CreateDirectory(Path.GetDirectoryName(backfillDestination)!);
-        File.Copy(backfillSource, backfillDestination);
+        var ledgerSources = Directory.EnumerateFiles(
+                Path.Combine(repositoryRoot, "Meta", "Digestion", "backfill"),
+                "*",
+                SearchOption.AllDirectories)
+            .Append(Path.Combine(repositoryRoot, "Meta", "Digestion", "ticket-index.toml"));
+        foreach (var source in ledgerSources)
+        {
+            var destination = Path.Combine(
+                destinationRoot,
+                Path.GetRelativePath(repositoryRoot, source));
+            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+            File.Copy(source, destination);
+        }
+
         foreach (var source in Directory.EnumerateFiles(
                      Path.Combine(repositoryRoot, "Library"),
                      "*.md",

@@ -1,0 +1,19 @@
+ast_path: theorem/7.1
+fingerprints:
+  raw_sha256: sha256:922b0bff9129a59885f446f0858e25f6a580f81f77f5dec77a657fb7404fcad4
+  normalized_sha256: sha256:922b0bff9129a59885f446f0858e25f6a580f81f77f5dec77a657fb7404fcad4
+cas_ref: sha256:922b0bff9129a59885f446f0858e25f6a580f81f77f5dec77a657fb7404fcad4
+coverage_gids:
+  - D5/S1/Dynamics/KnasterTarskiWitness.knaster_tarski_with_three_cycle_instance
+receipts:
+  coverage:
+    - gid: D5/S1/Dynamics/KnasterTarskiWitness.knaster_tarski_with_three_cycle_instance
+      source_sha256: sha256:922b0bff9129a59885f446f0858e25f6a580f81f77f5dec77a657fb7404fcad4
+      target_sha256: sha256:d5c55a94a02a20940b9a39180d91ff8d4180244c73d535be428c8bf55a4a45f2
+  scribe:
+    - gid: D5/S1/Dynamics/KnasterTarskiWitness.knaster_tarski_with_three_cycle_instance
+      definition_sha256: sha256:97d82041b97f21814cd3e565c17cf0c8f6bf78709b0a9251c34e5e070d2c236d
+      emission_sha256: sha256:67a530d247d5e4b04f5c4548af25c70155c41ab5bd3ae8509e92d84345a731c3
+  unresolved_subitems:
+    - induction-coinduction-reachability-interpretation
+    - self-reference-gap-identification

@@ -1,0 +1,26 @@
+ast_path: theorem/24.5
+fingerprints:
+  raw_sha256: sha256:7de29f3405ccdbc2c1589a2c5c920f082cb315e5a04d741b93ff716018191994
+  normalized_sha256: sha256:7de29f3405ccdbc2c1589a2c5c920f082cb315e5a04d741b93ff716018191994
+cas_ref: sha256:7de29f3405ccdbc2c1589a2c5c920f082cb315e5a04d741b93ff716018191994
+coverage_gids:
+  - D5/S3/Zeros/CompletedZeta.zero_quartet_scaling_spec
+receipts:
+  coverage:
+    - gid: D5/S3/Zeros/CompletedZeta.zero_quartet_scaling_spec
+      source_sha256: sha256:7de29f3405ccdbc2c1589a2c5c920f082cb315e5a04d741b93ff716018191994
+      target_sha256: sha256:51e9ac062d8281e341170f2059134974fa4f755b4e88e8ff9bb56f7bc5b6d2cc
+  scribe:
+    - gid: D5/S3/Zeros/CompletedZeta.zero_quartet_scaling_spec
+      definition_sha256: sha256:a7b8090bab17ff5f42ee308bcbb307d63744db0df18e3c991f141141d90dd671
+      emission_sha256: sha256:82c32c63eb78912d650ee4e7c1e0523ce8f39f9af7b1ade68ea0fd762fced39b
+  unresolved_subitems:
+    - zero-data-symmetry-fields-assume-source-conclusion
+    - arbitrary-completed-reading-to-zero-data-domain-bridge
+    - zero-data-inhabitance-not-proved
+    - real-coefficient-conjugation-symmetry-via-analytic-continuation
+    - reflection-functional-equation-symmetry-derivation
+    - pairwise-distinct-off-line-zero-quartet
+    - scaling-ledger-alone-does-not-exclude-off-line-zeros
+    - nonmultiplicative-periodic-dirichlet-reading-instrument
+    - off-line-zero-window-values-and-residual-certificate

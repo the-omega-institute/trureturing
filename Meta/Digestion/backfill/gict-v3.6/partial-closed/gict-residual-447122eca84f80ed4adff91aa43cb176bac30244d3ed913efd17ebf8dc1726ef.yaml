@@ -1,0 +1,50 @@
+ast_path: appendix/E.22
+fingerprints:
+  raw_sha256: sha256:447122eca84f80ed4adff91aa43cb176bac30244d3ed913efd17ebf8dc1726ef
+  normalized_sha256: sha256:447122eca84f80ed4adff91aa43cb176bac30244d3ed913efd17ebf8dc1726ef
+cas_ref: sha256:447122eca84f80ed4adff91aa43cb176bac30244d3ed913efd17ebf8dc1726ef
+coverage_gids:
+  - D5/S1/Phase/ZeroOrbitCongruence.eisenstein_norm_mod_three
+  - D5/S1/Phase/ZeroOrbitCongruence.thirty_six_dvd_of_local_candidates_and_eisenstein_norm
+  - D5/S1/Phase/SeatTowerCombinatorics.reversal_swaps_parity
+  - D5/S1/Phase/SeatTowerCombinatorics.matching_rotation_offset_is_odd
+  - D5/S1/Phase/SeatTowerCombinatorics.even_offset_skeleton_count
+receipts:
+  coverage:
+    - gid: D5/S1/Phase/ZeroOrbitCongruence.eisenstein_norm_mod_three
+      source_sha256: sha256:447122eca84f80ed4adff91aa43cb176bac30244d3ed913efd17ebf8dc1726ef
+      target_sha256: sha256:6b00638f950465c622f2834e59e2007dd3ca4ba88c7035050646851e72f7e656
+    - gid: D5/S1/Phase/ZeroOrbitCongruence.thirty_six_dvd_of_local_candidates_and_eisenstein_norm
+      source_sha256: sha256:447122eca84f80ed4adff91aa43cb176bac30244d3ed913efd17ebf8dc1726ef
+      target_sha256: sha256:6b00638f950465c622f2834e59e2007dd3ca4ba88c7035050646851e72f7e656
+    - gid: D5/S1/Phase/SeatTowerCombinatorics.reversal_swaps_parity
+      source_sha256: sha256:447122eca84f80ed4adff91aa43cb176bac30244d3ed913efd17ebf8dc1726ef
+      target_sha256: sha256:96070d8daaad89aeab17050aeaf70fc1cc1954c2538f0a5ce1685cc157ea01e7
+    - gid: D5/S1/Phase/SeatTowerCombinatorics.matching_rotation_offset_is_odd
+      source_sha256: sha256:447122eca84f80ed4adff91aa43cb176bac30244d3ed913efd17ebf8dc1726ef
+      target_sha256: sha256:96070d8daaad89aeab17050aeaf70fc1cc1954c2538f0a5ce1685cc157ea01e7
+    - gid: D5/S1/Phase/SeatTowerCombinatorics.even_offset_skeleton_count
+      source_sha256: sha256:447122eca84f80ed4adff91aa43cb176bac30244d3ed913efd17ebf8dc1726ef
+      target_sha256: sha256:96070d8daaad89aeab17050aeaf70fc1cc1954c2538f0a5ce1685cc157ea01e7
+  scribe:
+    - gid: D5/S1/Phase/ZeroOrbitCongruence.eisenstein_norm_mod_three
+      definition_sha256: sha256:88d4929db9871e903bcddd9290bd78a9a83722976ed2f4c4a52e44deeaa288b2
+      emission_sha256: sha256:46d6166e6fc75c556c15c009119ffa2f2a5fe7c4eed83e85923e30af154956ce
+    - gid: D5/S1/Phase/ZeroOrbitCongruence.thirty_six_dvd_of_local_candidates_and_eisenstein_norm
+      definition_sha256: sha256:88d4929db9871e903bcddd9290bd78a9a83722976ed2f4c4a52e44deeaa288b2
+      emission_sha256: sha256:46d6166e6fc75c556c15c009119ffa2f2a5fe7c4eed83e85923e30af154956ce
+    - gid: D5/S1/Phase/SeatTowerCombinatorics.reversal_swaps_parity
+      definition_sha256: sha256:ef5a049c29ad3d1f938c015fa50f7c4d2deef0f9d56b6e5bf4940e4608d064cd
+      emission_sha256: sha256:bfd787c2c4378c22e7c8d60a1a23fbf1cd2fb3a8c47df37851a828f78ff796ef
+    - gid: D5/S1/Phase/SeatTowerCombinatorics.matching_rotation_offset_is_odd
+      definition_sha256: sha256:ef5a049c29ad3d1f938c015fa50f7c4d2deef0f9d56b6e5bf4940e4608d064cd
+      emission_sha256: sha256:bfd787c2c4378c22e7c8d60a1a23fbf1cd2fb3a8c47df37851a828f78ff796ef
+    - gid: D5/S1/Phase/SeatTowerCombinatorics.even_offset_skeleton_count
+      definition_sha256: sha256:ef5a049c29ad3d1f938c015fa50f7c4d2deef0f9d56b6e5bf4940e4608d064cd
+      emission_sha256: sha256:bfd787c2c4378c22e7c8d60a1a23fbf1cd2fb3a8c47df37851a828f78ff796ef
+  unresolved_subitems:
+    - local-432-norm-congruence-residue-enumeration
+    - mirror-even-word-odd-offset-rotation
+    - mirror-conjugate-determinant-minus-one
+    - mirror-pgl-not-reciprocal
+    - mirror-second-order-nonintersection-certificate

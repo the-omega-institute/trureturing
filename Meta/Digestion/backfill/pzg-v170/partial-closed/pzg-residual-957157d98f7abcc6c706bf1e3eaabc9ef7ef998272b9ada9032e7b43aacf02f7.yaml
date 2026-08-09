@@ -1,0 +1,22 @@
+ast_path: remark/26.6
+fingerprints:
+  raw_sha256: sha256:957157d98f7abcc6c706bf1e3eaabc9ef7ef998272b9ada9032e7b43aacf02f7
+  normalized_sha256: sha256:957157d98f7abcc6c706bf1e3eaabc9ef7ef998272b9ada9032e7b43aacf02f7
+cas_ref: sha256:957157d98f7abcc6c706bf1e3eaabc9ef7ef998272b9ada9032e7b43aacf02f7
+coverage_gids:
+  - D5/S3/Weil/SpectralDynamics.vertical_evolution_unitary_group
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/SpectralDynamics.vertical_evolution_unitary_group
+      source_sha256: sha256:957157d98f7abcc6c706bf1e3eaabc9ef7ef998272b9ada9032e7b43aacf02f7
+      target_sha256: sha256:a8edfa970f6658782b937e625f012faa0c0f890994cdb2ce249fe10a499ded1c
+  scribe:
+    - gid: D5/S3/Weil/SpectralDynamics.vertical_evolution_unitary_group
+      definition_sha256: sha256:2a1ce01b845c8198544488a2e16ebbf6b9cf8dc7bc90625e985080b5f5d11e26
+      emission_sha256: sha256:7113caf73db1e94703540e1be0acc6ab04d2e605d436b1cfae1a7dd852d9d9df
+  unresolved_subitems:
+    - address-delay-as-crt-step-count
+    - phase-delay-as-wigner-phase-accumulation
+    - crt-delay-log-prime-spectral-bridge
+    - single-time-generator-shared-by-parallel-flows
+    - delay-localizes-to-resonance-and-address-walk

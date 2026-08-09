@@ -1,0 +1,28 @@
+ast_path: remark/27.26
+fingerprints:
+  raw_sha256: sha256:dfa8cbc5532c250f57ba344fbdcc65c9ded052720cb72fdaf8aa9088363932b3
+  normalized_sha256: sha256:dfa8cbc5532c250f57ba344fbdcc65c9ded052720cb72fdaf8aa9088363932b3
+cas_ref: sha256:dfa8cbc5532c250f57ba344fbdcc65c9ded052720cb72fdaf8aa9088363932b3
+coverage_gids:
+  - D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec
+      source_sha256: sha256:dfa8cbc5532c250f57ba344fbdcc65c9ded052720cb72fdaf8aa9088363932b3
+      target_sha256: sha256:a8edfa970f6658782b937e625f012faa0c0f890994cdb2ce249fe10a499ded1c
+  scribe:
+    - gid: D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec
+      definition_sha256: sha256:2a1ce01b845c8198544488a2e16ebbf6b9cf8dc7bc90625e985080b5f5d11e26
+      emission_sha256: sha256:7113caf73db1e94703540e1be0acc6ab04d2e605d436b1cfae1a7dd852d9d9df
+  unresolved_subitems:
+    - off-line-zero-as-two-element-antilinear-orbit
+    - off-line-exp-beta-minus-half-clock-envelope
+    - off-line-clock-as-probability-leak
+    - off-line-zero-as-complex-eigenvalue-gamow-resonance
+    - online-eternal-versus-offline-finite-lifetime
+    - off-line-zero-as-diffraction-cosh-fog
+    - off-line-zero-as-unbalanced-ledger-entry
+    - mirror-pair-envelope-two-cosh-formula
+    - mirror-pair-envelope-monotonicity-and-numerical-certificate
+    - pairing-preserves-symmetry-but-not-pointwise-conservation
+    - off-line-zeros-allowed-by-symmetry-excluded-by-conservation
