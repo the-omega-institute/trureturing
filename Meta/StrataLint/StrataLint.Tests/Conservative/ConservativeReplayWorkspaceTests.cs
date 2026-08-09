@@ -142,11 +142,15 @@ public sealed class ConservativeReplayWorkspaceTests
 
         Assert.Equal(ValuesProjectionLoader.KernelDataPath, entry.Path);
         Assert.Equal("kernel data\n", Encoding.UTF8.GetString(entry.Bytes.AsSpan()));
+        // A non-commit revision and a missing path are ledger rejections, not Git
+        // infrastructure failures. Asserting the exact rejection type is what makes that
+        // distinction machine-checkable; InvalidOperationException would also match a
+        // GitInfrastructureException regression through the base type.
         Assert.All(
             new[] { tree, blob, tag },
-            nonCommit => Assert.Throws<InvalidOperationException>(() =>
+            nonCommit => Assert.Throws<FrozenReferenceRejectionException>(() =>
                 gateway.ReadRevisionFile(nonCommit, ValuesProjectionLoader.KernelDataPath)));
-        Assert.Throws<InvalidOperationException>(() =>
+        Assert.Throws<FrozenReferenceRejectionException>(() =>
             gateway.ReadRevisionFile(candidate.Revision, "Golden/missing.toml"));
     }
 
