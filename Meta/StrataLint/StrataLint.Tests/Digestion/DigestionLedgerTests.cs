@@ -594,6 +594,24 @@ public sealed partial class DigestionLedgerTests
         ticket_index: []
         """;
 
+    private static string LedgerYamlWithAtomizer(
+        DigestionAtom atom,
+        string migration,
+        string truth,
+        string coverageReceipts,
+        string scribeReceipts,
+        string atomizer) =>
+        LedgerYaml(
+                atom,
+                migration,
+                truth,
+                coverageReceipts,
+                scribeReceipts)
+            .Replace(
+                $"atomizer: {AtomizerRegistry.GictId}",
+                $"atomizer: {atomizer}",
+                StringComparison.Ordinal);
+
     private static string StructuralLedgerYaml(DigestionAtom atom) =>
         LedgerYaml(
                 atom,

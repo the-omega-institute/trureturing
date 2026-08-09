@@ -18,16 +18,13 @@ public sealed partial class DigestionLedgerTests
             ImmutableArray.CreateRange(sourceBytes),
             DigestionFingerprint.Compute(sourceBytes),
             ImmutableArray<DigestionContext>.Empty);
-        var ledgerText = LedgerYaml(
-                atom,
-                migration: "partial",
-                truth: "open",
-                coverageReceipts: "[]",
-                scribeReceipts: "[]")
-            .Replace(
-                $"atomizer: {AtomizerRegistry.GictId}",
-                $"atomizer: {AtomizerRegistry.NoAtomizerId}",
-                StringComparison.Ordinal);
+        var ledgerText = LedgerYamlWithAtomizer(
+            atom,
+            migration: "partial",
+            truth: "open",
+            coverageReceipts: "[]",
+            scribeReceipts: "[]",
+            atomizer: AtomizerRegistry.NoAtomizerId);
         var ledger = BackfillInventoryLoader.Load(ledgerText);
 
         var first = DigestionIngestor.Plan(
