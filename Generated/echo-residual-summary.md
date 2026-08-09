@@ -1,16 +1,8 @@
-<<<<<<< HEAD
 <!-- echo-residual-summary:v3 residual=sha256:1440f81fa5a8a67f7b43eba89d89718c73516dae72845c12a0faf681ccf61a6a -->
 # Echo Residual Summary
 
 - unresolved_subitems: 519
 - mother_residual_atom_ids: 74
-=======
-<!-- echo-residual-summary:v3 residual=sha256:d7c7fb31471ea01a117545a1c450d9b7bc8292bc60b66651b36a5b111f667b01 -->
-# Echo Residual Summary
-
-- unresolved_subitems: 550
-- mother_residual_atom_ids: 87
->>>>>>> dcb83b39f697783f8f6a55e4c022401b0f6b3348
 
 ## `bedc-wm-v0.1`
 
@@ -180,22 +172,14 @@ Mother residual atoms: none.
 
 ## `observer-quantum-v1`
 
-<<<<<<< HEAD
 - unresolved_subitems: 47
 - mother_residual_atom_ids: 9
 
 Mother residual atoms:
 
 - `observer-residual-101df483e71f9e23ee1ec13626abf3037d9a32e6f992d6b5b9485bf6c7976c77` (6)
-=======
-- unresolved_subitems: 78
-- mother_residual_atom_ids: 22
-
-Mother residual atoms:
-
-- `observer-residual-101df483e71f9e23ee1ec13626abf3037d9a32e6f992d6b5b9485bf6c7976c77` (4)
->>>>>>> dcb83b39f697783f8f6a55e4c022401b0f6b3348
   - `classical-address-realism-exclusion`
+  - `classical-local-fiber-bound-certificate`
   - `hidden-address-local-variable-interpretation`
   - `kochen-specker-projection-valuation-obstruction`
   - `no-character-for-all-matrix-sizes-greater-than-one`
@@ -203,20 +187,6 @@ Mother residual atoms:
 - `observer-residual-39801f81b23d4fe1d4823f4470f961be3f2fc21445bfec13de1574cb9fd368bc` (2)
   - `bookkeeping-is-decoherence-identification`
   - `ledger-is-environment-identification`
-<<<<<<< HEAD
-=======
-- `observer-residual-3a223e1e36f56665b3c0e9be99371b69a493873f7565ce0f32908c28b4663767` (4)
-  - `certificate-identity-zero-tolerance`
-  - `global-system-record-unitarity-premise`
-  - `no-third-collapse-dynamics-interpretive-premise`
-  - `objective-collapse-model-demarcation`
-- `observer-residual-3fd76409f8ea3cfe2c3722c92b767875991a4572f1d62575f6ded1a5150b92c6` (1)
-  - `monogamy-unique-classical-pairing`
-- `observer-residual-41d280b2ed3f2dea88b5349db0a8180037ef5cc783f6668adeeccd6a93c4b2b8` (1)
-  - `streamline-decomposition-existence-and-canonicity`
-- `observer-residual-52f4218f9195e554aad17c30ebe5b0a7b5f4474beaea97b1bdb87dc9a415a303` (1)
-  - `center-equals-continuous-torus-functions-crossed-product-form`
->>>>>>> dcb83b39f697783f8f6a55e4c022401b0f6b3348
 - `observer-residual-5867fe5155d445a54dc3abe86aaecf7829c9f60988ea7e0d76bdf18e0ed085d6` (3)
   - `bookkeeping-is-decoherence-identification`
   - `ledger-is-environment-identification`
@@ -228,15 +198,6 @@ Mother residual atoms:
   - `rieffel-metric-bundle-over-torus`
   - `streamline-infinity-at-nonintegral-fiber-offset`
   - `type-II-infinity-classification`
-<<<<<<< HEAD
-=======
-- `observer-residual-5caee6c1c0969f146242d6f7444a71d30e04dc9fb7ae8b941bc5f04d36a23ee0` (1)
-  - `monogamy-unique-classical-pairing`
-- `observer-residual-7232ebf337ed10c1fb71b90c1f3b3438d2dbddf1261035e4a757c3f8b6124511` (1)
-  - `noncontextual-and-local-double-exclusion-synthesis`
-- `observer-residual-7957064151dd9375db6308e290488a9d7836e42e1d2151f8dc586a21a6bb9995` (1)
-  - `center-equals-continuous-torus-functions-crossed-product-form`
->>>>>>> dcb83b39f697783f8f6a55e4c022401b0f6b3348
 - `observer-residual-7c9486a5ed7ca3264cd32d9aaaa07bb8af9e81a547a163dd202042efa51b920c` (6)
   - `abstract-crossed-product-commutator-formula-beyond-register-representation`
   - `continuous-hidden-flow-rigidity-exclusion`
