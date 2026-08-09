@@ -1,24 +1,24 @@
-<!-- echo-residual-summary:v3 residual=sha256:2a41cc833c412efb9c2057651180f963223bd6e0c8cf6e131da06627e394bbe7 -->
+<!-- echo-residual-summary:v3 residual=sha256:1440f81fa5a8a67f7b43eba89d89718c73516dae72845c12a0faf681ccf61a6a -->
 # Echo Residual Summary
 
 - unresolved_subitems: 519
 - mother_residual_atom_ids: 74
 
-## `bedc-wm`
+## `bedc-wm-v0.1`
 
 - unresolved_subitems: 0
 - mother_residual_atom_ids: 0
 
 Mother residual atoms: none.
 
-## `cone`
+## `cone-v1`
 
 - unresolved_subitems: 0
 - mother_residual_atom_ids: 0
 
 Mother residual atoms: none.
 
-## `gict`
+## `gict-v3.6`
 
 - unresolved_subitems: 118
 - mother_residual_atom_ids: 12
@@ -156,21 +156,21 @@ Mother residual atoms:
   - `scaling-phenomena-assignment-to-expanding-axis`
   - `sign-reversal-phenomena-assignment-to-contracting-axis`
 
-## `golden-ledger-spec`
+## `golden-ledger-spec-v7.11`
 
 - unresolved_subitems: 0
 - mother_residual_atom_ids: 0
 
 Mother residual atoms: none.
 
-## `interface`
+## `interface-v1`
 
 - unresolved_subitems: 0
 - mother_residual_atom_ids: 0
 
 Mother residual atoms: none.
 
-## `observer-quantum`
+## `observer-quantum-v1`
 
 - unresolved_subitems: 47
 - mother_residual_atom_ids: 9
@@ -234,7 +234,7 @@ Mother residual atoms:
   - `full-crossed-product-identification`
   - `observer-read-write-forces-structure`
 
-## `pzg`
+## `pzg-v170`
 
 - unresolved_subitems: 354
 - mother_residual_atom_ids: 53
