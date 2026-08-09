@@ -349,6 +349,26 @@ internal static class BackfillInventoryLoader
     internal const int SchemaVersion = 3;
     internal const string LedgerName = "theory-digestion-v1";
 
+    // 一原子一文件的消化台账落位。这三个成员先行加入 base 侧,使后续迁移 PR 的
+    // baseline admission 能识别 Meta/Digestion/backfill/** —— 否则「要认识这片路径
+    // 才能往里放文件,而放文件那次 PR 的法官还不认识它」形成引导死结。
+    // 今天树里还没有这些路径,故本谓词对当前 dev 恒为 false。
+    internal const string RootPath = "Meta/Digestion/backfill/";
+    internal const string TicketIndexPath = "Meta/Digestion/ticket-index.toml";
+
+    internal static bool IsCanonicalPath(string path)
+    {
+        if (string.Equals(path, TicketIndexPath, StringComparison.Ordinal)) return true;
+        if (!path.StartsWith(RootPath, StringComparison.Ordinal)) return false;
+        var parts = path[RootPath.Length..].Split('/');
+        if (parts.Length == 2 && parts[1] == "source.toml") return true;
+        if (parts.Length != 3 || !parts[2].EndsWith(".yaml", StringComparison.Ordinal)) return false;
+        var state = parts[1].Split('-');
+        return state.Length == 2
+            && state[0] is "residual" or "partial" or "absorbed"
+            && state[1] is "closed" or "tail" or "open";
+    }
+
     internal static BackfillInventoryDocument Load(string text)
     {
         if (YamlSubsetParser.Parse(text) is not Dictionary<string, object?> root)
