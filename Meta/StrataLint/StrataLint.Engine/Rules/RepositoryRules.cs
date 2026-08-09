@@ -31,6 +31,10 @@ internal static partial class RepositoryRules
         + "\\s+提示:[^\\n]+\\n\\s+尸检:(?<autopsy>[^\\n]+) -/",
         RegexOptions.CultureInvariant);
 
+    private static readonly Regex CodexLogReferencePattern = new(
+        "\\[codex-log:(?<path>[^\\]\\s]+)\\]",
+        RegexOptions.CultureInvariant);
+
     private static readonly Regex SafeFieldPattern = new(
         "^[A-Za-z0-9_/.-]+$",
         RegexOptions.CultureInvariant);
@@ -66,32 +70,90 @@ internal static partial class RepositoryRules
             "failure", "failures", "kind", "record_type", "resolution", "state", "tension",
             "tensions", "type", "unresolved");
 
-    internal static ImmutableArray<IRepositoryRule> CreateRuleSet() =>
+    internal static ImmutableArray<RuleRegistration> CreateRegistrations() =>
     [
-        new RepositoryRule(ManagedLean, Imports),
-        new RepositoryRule(ManagedLean, Sorry),
-        new RepositoryRule(CapacityScoped, Capacity),
-        new RepositoryRule(Formal, Mirrors),
-        new RepositoryRule(ChronicleScoped, Chronicle),
-        new RepositoryRule(StatusScoped, Badges),
-        new RepositoryRule(RepositoryScoped, NoFindings),
-        new RepositoryRule(HeartsScoped, Hearts),
-        new RepositoryRule(RepositoryScoped, NoFindings),
-        new RepositoryRule(GeneralSource, Generality),
-        new RepositoryRule(DomainScoped, Domains),
-        new RepositoryRule(Formal, Headers),
-        new RepositoryRule(Formal, Tasks),
-        new RepositoryRule(ToolchainScoped, NoFindings),
-        new RepositoryRule(AllArtifacts, AddressesAndFormulas),
-        new RepositoryRule(BackfillScoped, BackfillInventoryRule.Evaluate),
-        new RepositoryRule(AnchorReferenceScoped, ResolvableAnchors),
-        new RepositoryRule(ValuesScoped, Values),
-        new RepositoryRule(StructuredOrChronicle, Ledger),
-        new RepositoryRule(ManagedLean, Axioms),
-        new RepositoryRule(InstantiationScoped, Instantiation),
-        new RepositoryRule(BootstrapScoped, Bootstrap),
-        new RepositoryRule(ScribeDefinitionScoped, DescribeLatex),
+        Register(1, "Stratum import closure", new RepositoryRule(ManagedLean, Imports)),
+        Register(2, "Sorry closure", new RepositoryRule(ManagedLean, Sorry)),
+        Register(3, "Capacity pressure", new RepositoryRule(CapacityScoped, Capacity)),
+        Register(4, "Mirror completeness", new RepositoryRule(Formal, Mirrors)),
+        Register(5, "Chronicle append only", new RepositoryRule(ChronicleScoped, Chronicle)),
+        Register(6, "Generated status", new RepositoryRule(StatusScoped, Badges)),
+        Register(
+            7,
+            "Conflict-of-interest gate",
+            new RepositoryRule(RepositoryScoped, NoFindings),
+            AdmissionEffect.HumanGate,
+            CaseId.CreateKnown("D5-T0011"),
+            "trust"),
+        Register(8, "Frozen Hearts semantics", new RepositoryRule(HeartsScoped, Hearts)),
+        Register(
+            9,
+            "Provenance gate",
+            new RepositoryRule(RepositoryScoped, NoFindings),
+            AdmissionEffect.HumanGate,
+            CaseId.CreateKnown("D5-T0012"),
+            "trust"),
+        Register(10, "Generality closure", new RepositoryRule(GeneralSource, Generality)),
+        Register(11, "Controlled domains", new RepositoryRule(DomainScoped, Domains)),
+        Register(12, "Six-line Lean header", new RepositoryRule(Formal, Headers)),
+        Register(13, "Permanent task ledger", new RepositoryRule(Formal, Tasks)),
+        Register(
+            14,
+            "Toolchain upgrade compatibility",
+            new RepositoryRule(ToolchainScoped, NoFindings),
+            deferredCase: CaseId.CreateKnown("D5-T0010")),
+        Register(
+            15,
+            "Machine field and GID grammar",
+            new RepositoryRule(AllArtifacts, AddressesAndFormulas)),
+        Register(
+            16,
+            "Digestion ledger",
+            new RepositoryRule(BackfillScoped, BackfillInventoryRule.Evaluate)),
+        Register(
+            17,
+            "Typed anchor membership",
+            new RepositoryRule(AnchorReferenceScoped, ResolvableAnchors)),
+        Register(18, "Machine-produced values", new RepositoryRule(ValuesScoped, Values)),
+        Register(
+            19,
+            "Balanced anomaly ledger",
+            new RepositoryRule(StructuredOrChronicle, Ledger)),
+        Register(20, "Lean axiom closure", new RepositoryRule(ManagedLean, Axioms)),
+        Register(
+            21,
+            "Instantiated coordinate gate",
+            new RepositoryRule(InstantiationScoped, Instantiation)),
+        Register(
+            22,
+            "Meta bootstrap gate",
+            new RepositoryRule(BootstrapScoped, Bootstrap),
+            AdmissionEffect.HumanGate,
+            category: "trust"),
+        Register(
+            23,
+            "Describe LaTeX statement",
+            new RepositoryRule(ScribeDefinitionScoped, DescribeLatex),
+            AdmissionEffect.Observe),
     ];
+
+    private static RuleRegistration Register(
+        int number,
+        string title,
+        IRepositoryRule rule,
+        AdmissionEffect effect = AdmissionEffect.Block,
+        CaseId? deferredCase = null,
+        string category = "repository") =>
+        new(
+            new RuleDescriptor(
+                RuleId.CreateKnown(number),
+                title,
+                effect is AdmissionEffect.Block ? DisplaySeverity.Error : DisplaySeverity.Warning,
+                category,
+                effect,
+                deferredCase is null ? RuleLifecycle.Active : RuleLifecycle.Deferred,
+                deferredCase),
+            rule);
 
     private static ImmutableArray<RuleFinding> DescribeLatex(RuleEvaluationContext context) =>
         context.VerifiedScribeEmissions is null

@@ -459,6 +459,7 @@ public sealed partial class PrShepherdRecalculationTests
                 $"PR_TEST_BOUNDED_CALLS={boundedCalls}",
                 $"PR_TEST_HANGING_PIDS={hangingPids}",
                 $"PR_TEST_WATCH_STATE={Path.Combine(temporary.Path, "watch-state")}",
+                $"PR_TEST_FETCH_STATE={Path.Combine(temporary.Path, "fetch-state")}",
                 "PR_TEST_EXPIRY=1",
                 "PR_TEST_SPLIT=0",
                 "PR_TEST_DUPLICATE=0",

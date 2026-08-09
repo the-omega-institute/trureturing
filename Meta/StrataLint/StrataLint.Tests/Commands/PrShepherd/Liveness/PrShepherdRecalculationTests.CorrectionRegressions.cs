@@ -120,6 +120,89 @@ public sealed partial class PrShepherdRecalculationTests
         Assert.Contains("terminal_exit=1\n", fixture.WatchState());
     }
 
+    [Fact]
+    public void WatchReloadRetriesATransientFetchFailureWithoutExiting()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ShepherdFixture();
+
+        var result = fixture.RunWatch(
+            environment: new Dictionary<string, string>
+            {
+                ["PR_TEST_FETCH_FAILURES"] = "1",
+            });
+
+        Assert.True(
+            result.ExitCode == 0,
+            $"exit={result.ExitCode}\nlog:\n{result.Log}\nartifacts:\n{string.Join("\n---\n", fixture.StepArtifactContents())}");
+        var fetchCalls = fixture.BoundedCalls()
+            .Count(call => call.StartsWith("git|watch-reload-fetch|", StringComparison.Ordinal));
+        Assert.True(fetchCalls >= 2, $"expected a fetch retry, observed {fetchCalls} fetch calls");
+        Assert.Contains(
+            "WATCH reload retryable step=fetch attempt=1/3 git_exit=88",
+            result.Log,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "stderr_summary=synthetic\\ transient\\ fetch\\ failure\\ attempt=1",
+            result.Log,
+            StringComparison.Ordinal);
+        Assert.Contains("retry_in_seconds=1", result.Log, StringComparison.Ordinal);
+        Assert.Contains("WATCH reload recovered step=fetch attempt=2/3", result.Log, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void WatchReloadConfigurationFailureExitsImmediatelyWithoutFetch()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ShepherdFixture();
+        var outsideRepository = Path.Combine(
+            Path.GetDirectoryName(fixture.WatchStatePath)!,
+            "outside",
+            "pr-shepherd.sh");
+
+        var result = fixture.RunWatch(
+            environment: new Dictionary<string, string>
+            {
+                ["PR_SHEPHERD_CANONICAL_SCRIPT"] = outsideRepository,
+            });
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.DoesNotContain(
+            fixture.BoundedCalls(),
+            call => call.StartsWith("git|watch-reload-fetch|", StringComparison.Ordinal));
+        Assert.Contains(
+            "WATCH reload terminal class=configuration step=resolve-script-path "
+            + "reason=script-relative-empty git_exit=not-run stderr_summary=not-applicable",
+            result.Log,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void WatchReloadFetchExhaustionPublishesADistinctDeadStatus()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ShepherdFixture();
+
+        var result = fixture.RunWatch(
+            environment: new Dictionary<string, string>
+            {
+                ["PR_TEST_FETCH_FAILURES"] = "3",
+            });
+        var status = fixture.RunStatus();
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Equal(
+            3,
+            fixture.BoundedCalls().Count(
+                call => call.StartsWith("git|watch-reload-fetch|", StringComparison.Ordinal)));
+        Assert.Contains("last_outcome=watch-reload-fetch-retries-exhausted\n", fixture.WatchState());
+        Assert.Equal(2, status.ExitCode);
+        Assert.StartsWith(
+            "status=dead reason=reload-fetch-retries-exhausted ",
+            status.Output,
+            StringComparison.Ordinal);
+    }
+
     private sealed partial class ShepherdFixture
     {
         private const string ExtraHelperPath =

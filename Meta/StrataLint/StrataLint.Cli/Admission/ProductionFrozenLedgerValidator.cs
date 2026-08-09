@@ -233,9 +233,13 @@ internal static class ProductionFrozenLedgerValidator
                 ((FrozenLedgerReferenceScanOutcome.Accepted)currentReferences).References,
                 evidenceRepositories);
         }
-        catch (InvalidOperationException exception)
+        catch (FrozenReferenceRejectionException exception)
         {
             return Reject("frozen ledger Git references are invalid: " + exception.Message);
+        }
+        catch (GitInfrastructureException exception)
+        {
+            return InfrastructureFailure(exception);
         }
 
         var baselineMaterials = FrozenLedgerMaterializer.Build(
@@ -324,9 +328,13 @@ internal static class ProductionFrozenLedgerValidator
                 ((FrozenLedgerReferenceScanOutcome.Accepted)baselineReferences).References,
                 evidenceRepositories);
         }
-        catch (InvalidOperationException exception)
+        catch (FrozenReferenceRejectionException exception)
         {
             return Reject("frozen ledger Git references are invalid: " + exception.Message);
+        }
+        catch (GitInfrastructureException exception)
+        {
+            return InfrastructureFailure(exception);
         }
 
         var baselineMaterials = FrozenLedgerMaterializer.Build(
@@ -500,4 +508,8 @@ internal static class ProductionFrozenLedgerValidator
             FrozenLedgerChangeClassifier.LedgerPath,
             message)));
     }
+
+    private static AdmissionOutcome InfrastructureFailure(GitInfrastructureException exception) =>
+        new AdmissionOutcome.InfrastructureFailure(
+            "frozen ledger Git infrastructure failed: " + exception.Message);
 }

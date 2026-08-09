@@ -23,7 +23,7 @@ public sealed partial class ProductionEnvironmentTests
             new GitRepositoryGateway(candidate.Path),
             new FakeLeanReportSource(null));
 
-        Assert.Throws<InvalidOperationException>(() =>
+        Assert.ThrowsAny<InvalidOperationException>(() =>
             new GitRepositoryGateway(candidate.Path).ResolveFrozenRevision(invocation.EvidenceCommit));
 
         var outcome = environment.Check(invocation.Arguments);
@@ -54,11 +54,13 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(RuleId.CreateKnown(8), diagnostic.RuleId);
         Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
         Assert.Equal(FrozenLedgerChangeClassifier.LedgerPath, diagnostic.Path);
-        Assert.Equal(
+        Assert.StartsWith(
             "frozen ledger Git references are invalid: frozen Git object git-sha1:"
             + new string('f', 40)
-            + " is not a reachable commit",
-            diagnostic.Message);
+            + " is not a reachable commit; git cat-file -t ",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+        Assert.Contains("nonzero-exit, exit 128", diagnostic.Message, StringComparison.Ordinal);
     }
 
     private static RealFrozenEvidenceInvocation CreateRealFrozenEvidenceInvocation(

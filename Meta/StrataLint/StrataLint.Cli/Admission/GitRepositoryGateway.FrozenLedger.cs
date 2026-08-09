@@ -85,7 +85,10 @@ internal sealed partial class GitRepositoryGateway
         {
             "sha1" => "git-sha1:",
             "sha256" => "git-sha256:",
-            _ => throw new InvalidOperationException($"unsupported Git object format {objectFormat}"),
+            _ => throw InfrastructureFailure(
+                GitCommandFailureKind.InvalidOutput,
+                ["rev-parse", "--show-object-format"],
+                detail: $"unsupported Git object format {objectFormat}"),
         };
         foreach (var oid in references.CommitOids)
         {
@@ -108,7 +111,8 @@ internal sealed partial class GitRepositoryGateway
             if (input.Materializer != "repository-snapshot-v1"
                 || !RepoPath.TryCreate(input.DescriptorSelector, out var descriptorPath))
             {
-                throw new InvalidOperationException("unsupported frozen Git materializer or descriptor selector");
+                throw SemanticRejection(
+                    "unsupported frozen Git materializer or descriptor selector");
             }
 
             var inputPrefix = input.BaseCommitOid.StartsWith("git-sha1:", StringComparison.Ordinal)
@@ -122,7 +126,7 @@ internal sealed partial class GitRepositoryGateway
             }.Concat(input.SupportingBlobOids).ToArray();
             if (allOids.Any(oid => !oid.StartsWith(inputPrefix, StringComparison.Ordinal)))
             {
-                throw new InvalidOperationException("frozen Git references mix object hash algorithms");
+                throw SemanticRejection("frozen Git references mix object hash algorithms");
             }
 
             var commit = Untag(input.BaseCommitOid);
@@ -130,7 +134,8 @@ internal sealed partial class GitRepositoryGateway
             var commitTree = GitText("rev-parse", "--verify", $"{commit}^{{tree}}").Trim();
             if (commitTree != tree)
             {
-                throw new InvalidOperationException("frozen base_commit_oid does not resolve to base_tree_oid");
+                throw SemanticRejection(
+                    "frozen base_commit_oid does not resolve to base_tree_oid");
             }
 
             if (!trees.TryGetValue(tree, out var entries))
@@ -145,7 +150,7 @@ internal sealed partial class GitRepositoryGateway
                 || descriptor.Mode is not ("100644" or "100755")
                 || descriptor.ObjectId != Untag(input.DescriptorBlobOid))
             {
-                throw new InvalidOperationException(
+                throw SemanticRejection(
                     "frozen descriptor selector does not resolve to descriptor_blob_oid in base_tree_oid");
             }
 
@@ -155,7 +160,8 @@ internal sealed partial class GitRepositoryGateway
                 .ToHashSet(StringComparer.Ordinal);
             if (input.SupportingBlobOids.Any(oid => !treeBlobIds.Contains(Untag(oid))))
             {
-                throw new InvalidOperationException("frozen supporting blob is not reachable from base_tree_oid");
+                throw SemanticRejection(
+                    "frozen supporting blob is not reachable from base_tree_oid");
             }
         }
 
@@ -166,7 +172,7 @@ internal sealed partial class GitRepositoryGateway
     {
         if (!oid.StartsWith(repositoryPrefix, StringComparison.Ordinal))
         {
-            throw new InvalidOperationException(
+            throw SemanticRejection(
                 $"frozen Git object {oid} does not use repository object format {repositoryPrefix[..^1]}");
         }
 
@@ -175,16 +181,50 @@ internal sealed partial class GitRepositoryGateway
 
     private void RequireObjectType(string objectId, string expected, string? display = null)
     {
-        var result = GitRaw(new[] { "cat-file", "-t", objectId }, allowNonzero: true);
-        var actual = result.ExitCode == 0
-            ? StrictUtf8.GetString(result.StandardOutput).Trim()
-            : string.Empty;
+        var arguments = new[] { "cat-file", "-t", objectId };
+        var result = GitRaw(arguments, allowNonzero: true);
+        if (result.ExitCode != 0)
+        {
+            var infrastructure = InfrastructureFailure(
+                GitCommandFailureKind.NonzeroExit,
+                arguments,
+                exitCode: result.ExitCode,
+                standardError: DecodeFailureText(result.StandardError));
+            if (result.ExitCode == 128)
+            {
+                throw new FrozenReferenceRejectionException(
+                    FrozenReferenceRejectionKind.MissingObject,
+                    $"frozen Git object {display ?? objectId} is not a reachable {expected}",
+                    infrastructure.Failure);
+            }
+
+            throw infrastructure;
+        }
+
+        string actual;
+        try
+        {
+            actual = StrictUtf8.GetString(result.StandardOutput).Trim();
+        }
+        catch (System.Text.DecoderFallbackException exception)
+        {
+            throw InfrastructureFailure(
+                GitCommandFailureKind.InvalidOutput,
+                arguments,
+                detail: exception.Message,
+                exception: exception);
+        }
+
         if (actual != expected)
         {
-            throw new InvalidOperationException(
-                $"frozen Git object {display ?? objectId} is not a reachable {expected}");
+            throw new FrozenReferenceRejectionException(
+                FrozenReferenceRejectionKind.WrongObjectType,
+                $"frozen Git object {display ?? objectId} has type {actual}; expected {expected}");
         }
     }
+
+    private static FrozenReferenceRejectionException SemanticRejection(string message) =>
+        new(FrozenReferenceRejectionKind.InvalidReference, message);
 
     private static string Untag(string oid) => oid[(oid.IndexOf(':') + 1)..];
 }

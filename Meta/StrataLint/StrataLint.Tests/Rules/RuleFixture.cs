@@ -331,12 +331,12 @@ internal sealed partial class RuleFixture
     internal void AddFutureTheory() =>
         Files["D8/S0/Carrier/Ring.lean"] = "future\n";
 
-    internal void AddTask(string path, string gid, string code)
+    internal void AddTask(string path, string gid, string code, string autopsy = "none")
     {
         Files[path] = HeaderFor(gid, "E")
             + $"/-- TASK {code} | 难度:3 | 依赖:就绪 | 尝试:0\n"
             + "    提示:Fixture task.\n"
-            + "    尸检:none -/\n"
+            + $"    尸检:{autopsy} -/\n"
             + "def fixtureTask : Unit := ()\n";
         Reports[path] = Report();
     }

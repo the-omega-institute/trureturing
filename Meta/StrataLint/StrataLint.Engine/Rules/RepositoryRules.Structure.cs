@@ -370,6 +370,18 @@ internal static partial class RepositoryRules
             findings.Add(new RuleFinding(duplicate.Value[0].Path, $"task code {duplicate.Key} is duplicated"));
         }
 
+        foreach (var (code, entries) in current)
+        {
+            foreach (var entry in entries.Where(static entry =>
+                entry.Autopsy.Contains("[codex-failed]", StringComparison.Ordinal)
+                && !HasValidCodexLogReference(entry.Autopsy)))
+            {
+                findings.Add(new RuleFinding(
+                    entry.Path,
+                    $"codex-failed autopsy for {code} requires a valid [codex-log:<rooted-path>] reference"));
+            }
+        }
+
         foreach (var (code, entries) in baseline)
         {
             if (!current.TryGetValue(code, out var currentEntries))
@@ -384,5 +396,41 @@ internal static partial class RepositoryRules
         }
 
         return findings.ToImmutable();
+    }
+
+    private static bool HasValidCodexLogReference(string autopsy) =>
+        CodexLogReferencePattern.Matches(autopsy)
+            .Select(static match => match.Groups["path"].Value)
+            .Any(IsValidCodexLogPath);
+
+    private static bool IsValidCodexLogPath(string path)
+    {
+        string relative;
+        if (path.StartsWith("<RT>/", StringComparison.Ordinal))
+        {
+            relative = path[5..];
+        }
+        else if (path.StartsWith("~/", StringComparison.Ordinal))
+        {
+            relative = path[2..];
+        }
+        else if (path.StartsWith("/", StringComparison.Ordinal))
+        {
+            relative = path[1..];
+        }
+        else
+        {
+            return false;
+        }
+
+        // This walking skeleton validates portable citation syntax only. Codex logs and
+        // receipts are host/runtime-local, so checking path existence would reject valid
+        // citations on CI runners that cannot share the originating filesystem (#707).
+        var segments = relative.Split('/');
+        return segments.Length > 0 && segments.All(static segment =>
+            segment.Length > 0
+            && segment is not "." and not ".."
+            && segment.All(static character =>
+                char.IsAsciiLetterOrDigit(character) || character is '.' or '_' or '-'));
     }
 }
