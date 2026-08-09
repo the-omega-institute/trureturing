@@ -7,13 +7,17 @@ namespace StrataLint.Tests;
 public sealed class BackfillInventoryLoaderTests
 {
     [Theory]
-    [InlineData("Meta/Digestion/ticket-index.toml")]
     [InlineData("Meta/Digestion/backfill/delta-v0.1/source.toml")]
     [InlineData("Meta/Digestion/backfill/delta-v0.1/residual-open/atom-0dca.yaml")]
     [InlineData("Meta/Digestion/backfill/delta-v0.1/partial-closed/atom-0f28.yaml")]
     [InlineData("Meta/Digestion/backfill/epsilon-v0.1/absorbed-tail/atom.yaml")]
     public void CanonicalDigestionLedgerPathsAreRecognized(string path)
         => Assert.True(BackfillInventoryLoader.IsCanonicalPath(path));
+
+    // 工单索引路径用常量而非字面量:它在树上真实存在,抄写会触发 RepositoryPathLiteralTests。
+    [Fact]
+    public void TicketIndexPathIsRecognized()
+        => Assert.True(BackfillInventoryLoader.IsCanonicalPath(BackfillInventoryLoader.TicketIndexPath));
 
     [Theory]
     [InlineData("Meta/Digestion/backfill/delta-v0.1/residual-open/atom.txt")]
