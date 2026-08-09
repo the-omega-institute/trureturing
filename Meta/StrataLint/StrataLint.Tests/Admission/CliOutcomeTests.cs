@@ -74,24 +74,24 @@ public sealed class CliOutcomeTests
     }
 
     [Fact]
-    public void C0RenewDelegatesToTheCanonicalAuthoringEnvironment()
+    public void C0VerifyDelegatesToTheCanonicalVerificationEnvironment()
     {
         var console = new BufferedConsole();
         var environment = new StubCliEnvironment(
             Admitted(),
-            renewC0: new CommandResult(
+            verifyC0: new CommandResult(
                 true,
-                "C0_RENEWED changed_files=2 admission=not-evaluated\n",
+                "C0_VERIFIED changed_files=0 admission=not-evaluated\n",
                 string.Empty));
 
         var exitCode = CliApplication.Run(
-            ["c0-renew", "--base", new string('a', 40)],
+            ["c0-verify", "--base", new string('a', 40)],
             environment,
             console);
 
         Assert.Equal(0, exitCode);
         Assert.Equal(
-            "C0_RENEWED changed_files=2 admission=not-evaluated\n",
+            "C0_VERIFIED changed_files=0 admission=not-evaluated\n",
             console.Output);
         Assert.Equal(string.Empty, console.Error);
     }
@@ -209,7 +209,8 @@ internal sealed class StubCliEnvironment(
     AdmissionOutcome outcome,
     ExplicitCommandResult? conservative = null,
     CommandResult? recordGolden = null,
-    CommandResult? renewC0 = null,
+    CommandResult? verifyC0 = null,
+    CommandResult? reconcileC0 = null,
     ExplicitCommandResult? echoVerify = null,
     ExplicitCommandResult? blueprintPins = null) : ICliEnvironment
 {
@@ -254,8 +255,11 @@ internal sealed class StubCliEnvironment(
     public CommandResult RecordGolden(IReadOnlyList<string> arguments) =>
         recordGolden ?? new(false, string.Empty, "golden record is not configured in this fixture");
 
-    public CommandResult RenewC0(IReadOnlyList<string> arguments) =>
-        renewC0 ?? new(false, string.Empty, "C0 renewal is not configured in this fixture");
+    public CommandResult VerifyC0(IReadOnlyList<string> arguments) =>
+        verifyC0 ?? new(false, string.Empty, "C0 verification is not configured in this fixture");
+
+    public CommandResult ReconcileC0TrustRoot(IReadOnlyList<string> arguments) =>
+        reconcileC0 ?? new(false, string.Empty, "C0 reconciliation is not configured in this fixture");
 
     public CommandResult SelfTest(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "selftest is not configured in this fixture");
