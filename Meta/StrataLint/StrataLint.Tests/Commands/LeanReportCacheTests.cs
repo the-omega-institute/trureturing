@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using StrataLint.Engine;
@@ -197,6 +198,50 @@ public sealed class LeanReportCacheTests
         Assert.Empty(world.CommittedCacheEntries());
     }
 
+    [Theory]
+    [InlineData("producer")]
+    [InlineData("supervisor")]
+    [InlineData("verification")]
+    [InlineData("sidecar")]
+    [InlineData("cache-restore")]
+    public void FailedReplacementPreservesEveryPriorBundleByte(string stage)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var world = new CacheWorld();
+        var cacheEnabled = stage == "cache-restore";
+        var first = world.RunPair(cacheEnabled: cacheEnabled, reportVersion: 1);
+        Assert.Equal(0, first.ExitCode);
+        var prior = world.SnapshotLiveBundle();
+
+        var failed = world.RunPair(
+            cacheEnabled: cacheEnabled,
+            failureStage: stage,
+            reportVersion: 2);
+
+        Assert.NotEqual(0, failed.ExitCode);
+        Assert.Equal(prior, world.SnapshotLiveBundle());
+    }
+
+    [Fact]
+    public void SuccessfulReplacementPublishesTheCompleteNewBundle()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var world = new CacheWorld();
+        Assert.Equal(0, world.RunPair(cacheEnabled: false, reportVersion: 1).ExitCode);
+        var prior = world.SnapshotLiveBundle();
+
+        var replaced = world.RunPair(cacheEnabled: false, reportVersion: 2);
+
+        Assert.Equal(0, replaced.ExitCode);
+        Assert.NotEqual(prior, world.SnapshotLiveBundle());
+        Assert.Equal(
+            "{\"schema\":\"stub-lean-report\",\"v\":2}\n",
+            File.ReadAllText(world.Output));
+        Assert.Equal(
+            "{\"schema\":\"stub-lean-report\",\"v\":2}\n",
+            File.ReadAllText(Path.Combine(world.Output + ".logs", "producer.log")));
+    }
+
     private sealed class CacheWorld : IDisposable
     {
         private readonly TemporaryDirectory _tmp = new();
@@ -209,6 +254,7 @@ public sealed class LeanReportCacheTests
             SlotLog = Path.Combine(_tmp.Path, "slot.log");
             ProducerLog = Path.Combine(_tmp.Path, "producer.log");
             Output = Path.Combine(_tmp.Path, "out", "raw-lean-report.json");
+            var bin = Path.Combine(_tmp.Path, "bin");
 
             var inspectorDir = Path.Combine(Repo, "Meta", "StrataLint", "lean-inspector");
             var scriptsDir = Path.Combine(Repo, "Meta", "StrataLint", "scripts");
@@ -216,6 +262,7 @@ public sealed class LeanReportCacheTests
             Directory.CreateDirectory(inspectorDir);
             Directory.CreateDirectory(reportDir);
             Directory.CreateDirectory(Path.Combine(Repo, "D5"));
+            Directory.CreateDirectory(bin);
 
             // Minimal repository inputs that lean-report-input.sh hashes into the address.
             File.WriteAllText(Path.Combine(Repo, "Trureturing.lean"), "-- stub\n");
@@ -230,6 +277,8 @@ public sealed class LeanReportCacheTests
             WriteExecutable(
                 Path.Combine(reportDir, "report-supervisor.sh"),
                 StubSupervisor);
+            CopyWrapper = Path.Combine(bin, "cp");
+            WriteExecutable(CopyWrapper, StubCopy);
 
             // The real scripts under test, copied verbatim from the repository.
             PairScript = Path.Combine(scriptsDir, "lean-report-pair.sh");
@@ -257,6 +306,8 @@ public sealed class LeanReportCacheTests
 
         internal string PairScript { get; }
 
+        internal string CopyWrapper { get; }
+
         internal int ProducerRunCount => CountLines(ProducerLog);
 
         internal int SlotAcquireCount => CountLines(SlotLog);
@@ -268,7 +319,11 @@ public sealed class LeanReportCacheTests
                     .ToArray()
                 : [];
 
-        internal ProcessOutput RunPair(bool cacheEnabled = true, bool producerFails = false)
+        internal ProcessOutput RunPair(
+            bool cacheEnabled = true,
+            bool producerFails = false,
+            string? failureStage = null,
+            int reportVersion = 1)
         {
             var arguments = new List<string>();
             if (!cacheEnabled)
@@ -280,9 +335,16 @@ public sealed class LeanReportCacheTests
             }
             arguments.Add($"STUB_SLOT_LOG={SlotLog}");
             arguments.Add($"STUB_PRODUCER_LOG={ProducerLog}");
-            arguments.Add("STUB_REPORT_CONTENT={\"schema\":\"stub-lean-report\",\"v\":1}");
-            if (producerFails) arguments.Add("STUB_PRODUCER_FAIL=1");
+            arguments.Add($"STUB_REPORT_CONTENT={{\"schema\":\"stub-lean-report\",\"v\":{reportVersion}}}");
+            if (producerFails || failureStage == "producer") arguments.Add("STUB_PRODUCER_FAIL=1");
+            if (failureStage == "supervisor") arguments.Add("STUB_SUPERVISOR_FAIL=1");
+            if (failureStage == "verification") arguments.Add("STUB_BAD_SHA=1");
+            if (failureStage == "sidecar") arguments.Add("STUB_SIDECAR_FAIL=1");
+            if (failureStage == "cache-restore") arguments.Add("STUB_CACHE_COPY_FAIL=1");
             if (cacheEnabled) arguments.Add($"STRATALINT_REPORT_CACHE_ROOT={CacheRoot}");
+            arguments.Add($"STUB_CACHE_ROOT={CacheRoot}");
+            arguments.Add(
+                $"PATH={Path.GetDirectoryName(CopyWrapper)}:{Environment.GetEnvironmentVariable("PATH")}");
             arguments.AddRange(
             [
                 PairScript,
@@ -299,6 +361,27 @@ public sealed class LeanReportCacheTests
                 Repo,
                 TimeSpan.FromSeconds(60),
                 1024 * 1024);
+        }
+
+        internal string[] SnapshotLiveBundle()
+        {
+            var entries = new SortedDictionary<string, string>(StringComparer.Ordinal);
+            foreach (var suffix in new[] { "", ".sha256", ".input.attestation", ".provenance.json" })
+            {
+                var path = Output + suffix;
+                Assert.True(File.Exists(path), $"bundle member is missing: {path}");
+                entries[suffix] = HashFile(path);
+            }
+
+            var logs = Output + ".logs";
+            Assert.True(Directory.Exists(logs), $"bundle log sidecar is missing: {logs}");
+            foreach (var path in Directory.EnumerateFiles(logs, "*", SearchOption.AllDirectories)
+                         .Order(StringComparer.Ordinal))
+            {
+                entries[".logs/" + Path.GetRelativePath(logs, path)] = HashFile(path);
+            }
+
+            return entries.Select(static pair => $"{pair.Key}={pair.Value}").ToArray();
         }
 
         internal string AddressFrom(ProcessOutput output)
@@ -318,6 +401,9 @@ public sealed class LeanReportCacheTests
             File.Exists(path)
                 ? File.ReadAllLines(path).Count(static line => line.Length > 0)
                 : 0;
+
+        private static string HashFile(string path) =>
+            Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(path))).ToLowerInvariant();
 
         private static void WriteExecutable(string path, string content)
         {
@@ -376,7 +462,14 @@ public sealed class LeanReportCacheTests
             else
               h="$(shasum -a 256 "$output" | awk '{print $1}')"
             fi
+            if [[ -n "${STUB_BAD_SHA:-}" ]]; then h="$(printf '0%.0s' {1..64})"; fi
             printf '%s  %s\n' "$h" "$(basename "$output")" > "${output}.sha256"
+            rm -rf -- "${output}.logs"
+            mkdir -p "${output}.logs"
+            printf '%s\n' "$STUB_REPORT_CONTENT" > "${output}.logs/producer.log"
+            if [[ -n "${STUB_SIDECAR_FAIL:-}" ]]; then
+              mkdir "${output}.provenance.json"
+            fi
             """;
 
         // Records each slot acquisition, then execs the wrapped worker. A cache hit
@@ -385,9 +478,27 @@ public sealed class LeanReportCacheTests
             #!/usr/bin/env bash
             set -euo pipefail
             printf 'slot\n' >> "$STUB_SLOT_LOG"
+            if [[ -n "${STUB_SUPERVISOR_FAIL:-}" ]]; then
+              echo "stub-supervisor: forced failure" >&2
+              exit 71
+            fi
             while [[ $# -gt 0 && "$1" != "--" ]]; do shift; done
             [[ "${1:-}" == "--" ]] && shift
             exec "$@"
+            """;
+
+        private const string StubCopy = """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            if [[ -n "${STUB_CACHE_COPY_FAIL:-}" ]]; then
+              for argument in "$@"; do
+                if [[ "$argument" == "$STUB_CACHE_ROOT/"* ]]; then
+                  echo "stub-cp: forced cache restore failure" >&2
+                  exit 86
+                fi
+              done
+            fi
+            exec /bin/cp "$@"
             """;
     }
 }

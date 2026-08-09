@@ -57,7 +57,12 @@ INSPECTOR="$(dirname "$PRODUCER")/Inspector.lean"
   || { echo "lean-report-pair: producer Inspector.lean is absent" >&2; exit 2; }
 
 TMP_ROOT="$(mktemp -d)"
-cleanup() { rm -rf -- "$TMP_ROOT"; }
+STAGING_DIRS=()
+cleanup() {
+  local directory
+  for directory in "${STAGING_DIRS[@]}"; do rm -rf -- "$directory"; done
+  rm -rf -- "$TMP_ROOT"
+}
 trap cleanup EXIT
 trap 'exit 129' HUP
 trap 'exit 130' INT
@@ -130,7 +135,7 @@ verify_report() {
 # stratalint-canonical-lean-report-v1-<address>). Enabled only when
 # STRATALINT_REPORT_CACHE_ROOT is set; CI never sets it. A cache entry is a
 # directory named by the report's full content address holding the complete
-# bundle (report + .sha256 + .input.attestation + .provenance.json).
+# bundle (report + three validation sidecars + producer logs).
 #
 # SECURITY MODEL (honest): the re-verification below anchors only PUBLIC
 # repository-tree inputs (Trureturing.lean, D5, toolchain, manifest) — it is NOT a
@@ -172,10 +177,11 @@ cache_evict() {
   rm -rf -- "$CACHE_ROOT/$address" 2>/dev/null || true
 }
 
-# Serve $output (report + .sha256 + .input.attestation) from the cache entry for
+# Serve the complete bundle at $output from the cache entry for
 # content address $address, re-verified against repository $root. Sets
 # LAST_REPORT_SHA256 and returns 0 on a verified hit; returns 1 on miss/anomaly
-# (any partial output removed, offending entry evicted). Never acquires a slot.
+# (any partial output removed, offending entry evicted), or 2 on destination I/O
+# failure. Never acquires a slot or touches a live bundle.
 cache_try_restore() {
   local address="$1"
   local root="$2"
@@ -187,25 +193,32 @@ cache_try_restore() {
   local report="$entry/raw-lean-report.json"
   # Completeness: the whole stored bundle must be present before we trust it.
   [[ -s "$report" && -s "${report}.sha256" \
-    && -s "${report}.input.attestation" && -s "${report}.provenance.json" ]] \
-    || return 1
+    && -s "${report}.input.attestation" && -s "${report}.provenance.json" \
+    && -d "${report}.logs" ]] \
+    || { cache_evict "$address"; return 1; }
   local declared="" declared_name=""
   read -r declared declared_name < "${report}.sha256" || true
-  [[ "$declared" =~ ^[0-9a-f]{64}$ ]] || { cache_evict "$address"; return 1; }
-  rm -f -- "$output" "${output}.sha256" "${output}.provenance.json" \
-    "${output}.input.attestation"
+  [[ "$declared" =~ ^[0-9a-f]{64}$ \
+    && "$declared_name" == "raw-lean-report.json" \
+    && "$(awk 'END {print NR}' "${report}.sha256")" == "1" ]] \
+    || { cache_evict "$address"; return 1; }
+  rm -rf -- "$output" "${output}.sha256" "${output}.provenance.json" \
+    "${output}.input.attestation" "${output}.logs"
   mkdir -p "$(dirname "$output")"
   if ! { cp "$report" "$output" \
-    && cp "${report}.input.attestation" "${output}.input.attestation"; }; then
-    cache_evict "$address"
-    rm -f -- "$output" "${output}.input.attestation"
-    return 1
+    && cp "${report}.input.attestation" "${output}.input.attestation" \
+    && cp "${report}.provenance.json" "${output}.provenance.json" \
+    && cp -R "${report}.logs" "${output}.logs"; }; then
+    rm -rf -- "$output" "${output}.sha256" "${output}.provenance.json" \
+      "${output}.input.attestation" "${output}.logs"
+    return 2
   fi
   local actual
   actual="$(hash_file "$output")"
   if [[ "$actual" != "$declared" ]]; then
     cache_evict "$address"
-    rm -f -- "$output" "${output}.input.attestation"
+    rm -rf -- "$output" "${output}.provenance.json" \
+      "${output}.input.attestation" "${output}.logs"
     return 1
   fi
   # Re-stamp the sidecar for this output's basename so it is self-consistent.
@@ -214,7 +227,8 @@ cache_try_restore() {
   # the stored attestation; rejects any key skew or collision. Fail-closed.
   if ! "$INPUT_HELPER" verify --repository "$root" --report "$output" >/dev/null 2>&1; then
     cache_evict "$address"
-    rm -f -- "$output" "${output}.sha256" "${output}.input.attestation"
+    rm -rf -- "$output" "${output}.sha256" "${output}.provenance.json" \
+      "${output}.input.attestation" "${output}.logs"
     return 1
   fi
   LAST_REPORT_SHA256="$actual"
@@ -229,7 +243,8 @@ cache_store() {
   local output="$2"
   [[ -n "$CACHE_ROOT" && "$address" =~ ^[0-9a-f]{64}$ ]] || return 0
   [[ -s "$output" && -s "${output}.sha256" \
-    && -s "${output}.input.attestation" && -s "${output}.provenance.json" ]] \
+    && -s "${output}.input.attestation" && -s "${output}.provenance.json" \
+    && -d "${output}.logs" ]] \
     || return 0
   local entry="$CACHE_ROOT/$address"
   [[ -e "$entry" ]] && return 0
@@ -247,6 +262,7 @@ cache_store() {
   if ! { cp "$output" "$report" \
     && cp "${output}.input.attestation" "${report}.input.attestation" \
     && cp "${output}.provenance.json" "${report}.provenance.json" \
+    && cp -R "${output}.logs" "${report}.logs" \
     && printf '%s  raw-lean-report.json\n' "$(hash_file "$report")" > "${report}.sha256"; }; then
     rm -rf -- "$tmp"
     return 0
@@ -257,18 +273,18 @@ cache_store() {
   return 0
 }
 
-produce_report() {
+materialize_report() {
   local side="$1"
   local root="$2"
   local output="$3"
   local address="$4"
-  rm -f -- "$output" "${output}.sha256" "${output}.provenance.json" \
-    "${output}.input.attestation"
-  mkdir -p "$(dirname "$output")"
   # Cache lookup precedes any slot acquisition or producer run.
   if cache_try_restore "$address" "$root" "$output"; then
     LAST_REPORT_MODE="cached"
     return 0
+  else
+    local cache_rc=$?
+    [[ "$cache_rc" == "1" ]] || return "$cache_rc"
   fi
   "$SUPERVISOR" --role "lean-producer-$side" --lean-slot -- \
     env LAKE_BIN="$LAKE_BIN" "$PRODUCER" --repository "$root" --output "$output"
@@ -297,9 +313,6 @@ write_provenance() {
     "$side" "$mode" "$source_side" "$input_address" "$producer_sha256" \
     "$resident_sha256" "$sources_sha256" "$config_sha256" "$report_sha256" \
     > "${output}.provenance.json"
-  printf 'LEAN_REPORT_PROVENANCE side=%s mode=%s source_side=%s input_address=sha256:%s report_sha256=%s attestation=%s\n' \
-    "$side" "$mode" "$source_side" "$input_address" "$report_sha256" \
-    "${output}.provenance.json"
 }
 
 write_input_attestation() {
@@ -315,25 +328,247 @@ write_input_attestation() {
   } > "${output}.input.attestation"
 }
 
+verify_bundle() {
+  local side="$1"
+  local root="$2"
+  local output="$3"
+  local mode="$4"
+  local source_side="$5"
+  local input_address="$6"
+  local producer_sha256="$7"
+  local resident_sha256="$8"
+  local sources_sha256="$9"
+  local config_sha256="${10}"
+  local repository_sha256="${11}"
+  local report_sha256="${12}"
+  local expected_provenance="$TMP_ROOT/$side-expected.provenance.json"
+  local expected_attestation="$TMP_ROOT/$side-expected.input.attestation"
+
+  verify_report "$output"
+  [[ "$LAST_REPORT_SHA256" == "$report_sha256" ]] \
+    || { echo "lean-report-pair: verified report address changed: $output" >&2; return 2; }
+  [[ -d "${output}.logs" && -n "$(find "${output}.logs" -type f -print -quit)" ]] \
+    || { echo "lean-report-pair: producer left no log sidecar: $output" >&2; return 2; }
+  "$INPUT_HELPER" verify --repository "$root" --report "$output" >/dev/null
+
+  printf '{"schema":"stratalint-lean-report-provenance-v1","side":"%s","mode":"%s","source_side":"%s","input_address":"sha256:%s","producer_sha256":"%s","repository_inspector_sha256":"%s","lean_sources_sha256":"%s","lean_config_sha256":"%s","report_sha256":"%s"}\n' \
+    "$side" "$mode" "$source_side" "$input_address" "$producer_sha256" \
+    "$resident_sha256" "$sources_sha256" "$config_sha256" "$report_sha256" \
+    > "$expected_provenance"
+  cmp -s "$expected_provenance" "${output}.provenance.json" \
+    || { echo "lean-report-pair: provenance sidecar mismatch: $output" >&2; return 2; }
+  {
+    printf '%s\n' "schema=stratalint-lean-report-input-attestation-v1"
+    printf 'repository_input_sha256=%s\n' "$repository_sha256"
+    printf 'producer_sha256=%s\n' "$producer_sha256"
+    printf 'report_sha256=%s\n' "$report_sha256"
+  } > "$expected_attestation"
+  cmp -s "$expected_attestation" "${output}.input.attestation" \
+    || { echo "lean-report-pair: input attestation mismatch: $output" >&2; return 2; }
+}
+
+create_staging_output() {
+  local live_output="$1"
+  local parent
+  local directory
+  parent="$(dirname "$live_output")"
+  mkdir -p "$parent"
+  directory="$(mktemp -d "$parent/.lean-report-bundle.XXXXXXXX")"
+  STAGING_DIRS+=("$directory")
+  LAST_STAGING_OUTPUT="$directory/$(basename "$live_output")"
+}
+
+prepare_bundle() {
+  local side="$1"
+  local root="$2"
+  local live_output="$3"
+  local input_address="$4"
+  local producer_sha256="$5"
+  local resident_sha256="$6"
+  local sources_sha256="$7"
+  local config_sha256="$8"
+  local repository_sha256="$9"
+
+  create_staging_output "$live_output"
+  local staged_output="$LAST_STAGING_OUTPUT"
+  materialize_report "$side" "$root" "$staged_output" "$input_address"
+  local mode="$LAST_REPORT_MODE"
+  local report_sha256="$LAST_REPORT_SHA256"
+  write_provenance \
+    "$side" "$staged_output" "$mode" "$side" "$input_address" \
+    "$producer_sha256" "$resident_sha256" "$sources_sha256" \
+    "$config_sha256" "$report_sha256"
+  write_input_attestation \
+    "$staged_output" "$repository_sha256" "$producer_sha256" "$report_sha256"
+  verify_bundle \
+    "$side" "$root" "$staged_output" "$mode" "$side" "$input_address" \
+    "$producer_sha256" "$resident_sha256" "$sources_sha256" \
+    "$config_sha256" "$repository_sha256" "$report_sha256"
+  LAST_BUNDLE_OUTPUT="$staged_output"
+  LAST_BUNDLE_MODE="$mode"
+  LAST_BUNDLE_SHA256="$report_sha256"
+}
+
+prepare_reused_bundle() {
+  local root="$1"
+  local live_output="$2"
+  local source_output="$3"
+  local input_address="$4"
+  local producer_sha256="$5"
+  local resident_sha256="$6"
+  local sources_sha256="$7"
+  local config_sha256="$8"
+  local repository_sha256="$9"
+  local report_sha256="${10}"
+
+  create_staging_output "$live_output"
+  local staged_output="$LAST_STAGING_OUTPUT"
+  cp "$source_output" "$staged_output"
+  cp -R "${source_output}.logs" "${staged_output}.logs"
+  [[ "$(hash_file "$staged_output")" == "$report_sha256" ]] \
+    || { echo "lean-report-pair: reused report copy changed bytes" >&2; return 2; }
+  write_sidecar "$staged_output" "$report_sha256"
+  write_provenance \
+    baseline "$staged_output" reused candidate "$input_address" \
+    "$producer_sha256" "$resident_sha256" "$sources_sha256" \
+    "$config_sha256" "$report_sha256"
+  write_input_attestation \
+    "$staged_output" "$repository_sha256" "$producer_sha256" "$report_sha256"
+  verify_bundle \
+    baseline "$root" "$staged_output" reused candidate "$input_address" \
+    "$producer_sha256" "$resident_sha256" "$sources_sha256" \
+    "$config_sha256" "$repository_sha256" "$report_sha256"
+  LAST_BUNDLE_OUTPUT="$staged_output"
+  LAST_BUNDLE_MODE="reused"
+  LAST_BUNDLE_SHA256="$report_sha256"
+}
+
+publish_bundles() {
+  [[ "$#" -ge 2 && $(( $# % 2 )) == 0 ]] \
+    || { echo "lean-report-pair: internal publish argument mismatch" >&2; return 2; }
+  local -a staged_outputs=()
+  local -a live_outputs=()
+  local -a backups=()
+  local -a existed=()
+  local -a suffixes=("" ".sha256" ".input.attestation" ".provenance.json" ".logs")
+  local staged live backup suffix source target
+  local bundle_index member_index flat_index
+
+  while [[ "$#" -gt 0 ]]; do
+    staged_outputs+=("$1")
+    live_outputs+=("$2")
+    shift 2
+  done
+
+  for ((bundle_index = 0; bundle_index < ${#live_outputs[@]}; bundle_index++)); do
+    live="${live_outputs[$bundle_index]}"
+    if ! backup="$(mktemp -d "$(dirname "$live")/.lean-report-backup.XXXXXXXX")"; then
+      rm -rf -- "${backups[@]}"
+      return 2
+    fi
+    backups+=("$backup")
+    for ((member_index = 0; member_index < ${#suffixes[@]}; member_index++)); do
+      flat_index=$((bundle_index * ${#suffixes[@]} + member_index))
+      source="${live}${suffixes[$member_index]}"
+      target="$backup/member-$member_index"
+      if [[ -e "$source" ]]; then
+        existed[$flat_index]=1
+        if [[ -d "$source" ]]; then
+          cp -R "$source" "$target" || { rm -rf -- "${backups[@]}"; return 2; }
+        else
+          cp "$source" "$target" || { rm -rf -- "${backups[@]}"; return 2; }
+        fi
+      else
+        existed[$flat_index]=0
+      fi
+    done
+  done
+
+  local publish_failed=0
+  trap '' HUP INT TERM
+  for ((bundle_index = 0; bundle_index < ${#live_outputs[@]}; bundle_index++)); do
+    staged="${staged_outputs[$bundle_index]}"
+    live="${live_outputs[$bundle_index]}"
+    for suffix in "${suffixes[@]}"; do
+      if [[ "$suffix" == ".logs" ]] && ! rm -rf -- "${live}${suffix}"; then
+        publish_failed=1
+        break 2
+      fi
+      if ! mv -f "${staged}${suffix}" "${live}${suffix}"; then
+        publish_failed=1
+        break 2
+      fi
+    done
+  done
+
+  if [[ "$publish_failed" == "1" ]]; then
+    local rollback_failed=0
+    for ((bundle_index = 0; bundle_index < ${#live_outputs[@]}; bundle_index++)); do
+      live="${live_outputs[$bundle_index]}"
+      backup="${backups[$bundle_index]}"
+      for ((member_index = 0; member_index < ${#suffixes[@]}; member_index++)); do
+        flat_index=$((bundle_index * ${#suffixes[@]} + member_index))
+        target="${live}${suffixes[$member_index]}"
+        if ! rm -rf -- "$target"; then
+          rollback_failed=1
+          continue
+        fi
+        if [[ "${existed[$flat_index]}" == "1" ]]; then
+          mv "$backup/member-$member_index" "$target" || rollback_failed=1
+        fi
+      done
+    done
+    rm -rf -- "${backups[@]}" || true
+    trap 'exit 129' HUP
+    trap 'exit 130' INT
+    trap 'exit 143' TERM
+    [[ "$rollback_failed" == "0" ]] \
+      || { echo "lean-report-pair: bundle publish rollback failed" >&2; return 2; }
+    echo "lean-report-pair: bundle publish failed; prior bundle restored" >&2
+    return 2
+  fi
+
+  rm -rf -- "${backups[@]}" || true
+  trap 'exit 129' HUP
+  trap 'exit 130' INT
+  trap 'exit 143' TERM
+}
+
+emit_provenance_receipt() {
+  local side="$1"
+  local output="$2"
+  local mode="$3"
+  local source_side="$4"
+  local input_address="$5"
+  local report_sha256="$6"
+  printf 'LEAN_REPORT_PROVENANCE side=%s mode=%s source_side=%s input_address=sha256:%s report_sha256=%s attestation=%s\n' \
+    "$side" "$mode" "$source_side" "$input_address" "$report_sha256" \
+    "${output}.provenance.json"
+}
+
 read -r candidate_address candidate_producer candidate_resident candidate_sources candidate_config candidate_repository \
   <<< "$(fingerprint "$CANDIDATE_ROOT" candidate)"
 printf 'LEAN_REPORT_INPUT side=candidate content_address=sha256:%s producer_sha256=%s repository_inspector_sha256=%s lean_sources_sha256=%s lean_config_sha256=%s\n' \
   "$candidate_address" "$candidate_producer" "$candidate_resident" "$candidate_sources" "$candidate_config"
 
-produce_report candidate "$CANDIDATE_ROOT" "$CANDIDATE_OUTPUT" "$candidate_address"
-candidate_report_sha256="$LAST_REPORT_SHA256"
-candidate_mode="$LAST_REPORT_MODE"
-write_provenance \
-  candidate "$CANDIDATE_OUTPUT" "$candidate_mode" candidate \
-  "$candidate_address" "$candidate_producer" "$candidate_resident" \
-  "$candidate_sources" "$candidate_config" "$candidate_report_sha256"
-write_input_attestation \
-  "$CANDIDATE_OUTPUT" "$candidate_repository" "$candidate_producer" "$candidate_report_sha256"
-if [[ "$candidate_mode" == "produced" ]]; then
-  cache_store "$candidate_address" "$CANDIDATE_OUTPUT"
-fi
+prepare_bundle \
+  candidate "$CANDIDATE_ROOT" "$CANDIDATE_OUTPUT" "$candidate_address" \
+  "$candidate_producer" "$candidate_resident" "$candidate_sources" \
+  "$candidate_config" "$candidate_repository"
+candidate_staged_output="$LAST_BUNDLE_OUTPUT"
+candidate_report_sha256="$LAST_BUNDLE_SHA256"
+candidate_mode="$LAST_BUNDLE_MODE"
 
-if [[ "$SINGLE" == "1" ]]; then exit 0; fi
+if [[ "$SINGLE" == "1" ]]; then
+  publish_bundles "$candidate_staged_output" "$CANDIDATE_OUTPUT"
+  emit_provenance_receipt \
+    candidate "$CANDIDATE_OUTPUT" "$candidate_mode" candidate \
+    "$candidate_address" "$candidate_report_sha256"
+  if [[ "$candidate_mode" == "produced" ]]; then
+    cache_store "$candidate_address" "$CANDIDATE_OUTPUT"
+  fi
+  exit 0
+fi
 
 read -r baseline_address baseline_producer baseline_resident baseline_sources baseline_config baseline_repository \
   <<< "$(fingerprint "$BASELINE_ROOT" baseline)"
@@ -341,32 +576,35 @@ printf 'LEAN_REPORT_INPUT side=baseline content_address=sha256:%s producer_sha25
   "$baseline_address" "$baseline_producer" "$baseline_resident" "$baseline_sources" "$baseline_config"
 
 if [[ "$candidate_address" == "$baseline_address" ]]; then
-  rm -f -- "$BASELINE_OUTPUT" "${BASELINE_OUTPUT}.sha256" \
-    "${BASELINE_OUTPUT}.provenance.json" "${BASELINE_OUTPUT}.input.attestation"
-  rm -rf -- "${BASELINE_OUTPUT}.logs"
-  mkdir -p "$(dirname "$BASELINE_OUTPUT")"
-  cp "$CANDIDATE_OUTPUT" "$BASELINE_OUTPUT"
-  verify_report_copy_sha256="$(hash_file "$BASELINE_OUTPUT")"
-  [[ "$verify_report_copy_sha256" == "$candidate_report_sha256" ]] \
-    || { echo "lean-report-pair: reused report copy changed bytes" >&2; exit 2; }
-  write_sidecar "$BASELINE_OUTPUT" "$verify_report_copy_sha256"
-  write_provenance \
-    baseline "$BASELINE_OUTPUT" reused candidate \
+  prepare_reused_bundle \
+    "$BASELINE_ROOT" "$BASELINE_OUTPUT" "$candidate_staged_output" \
     "$baseline_address" "$baseline_producer" "$baseline_resident" \
-    "$baseline_sources" "$baseline_config" "$verify_report_copy_sha256"
-  write_input_attestation \
-    "$BASELINE_OUTPUT" "$baseline_repository" "$baseline_producer" "$verify_report_copy_sha256"
+    "$baseline_sources" "$baseline_config" "$baseline_repository" \
+    "$candidate_report_sha256"
 else
-  produce_report baseline "$BASELINE_ROOT" "$BASELINE_OUTPUT" "$baseline_address"
-  baseline_report_sha256="$LAST_REPORT_SHA256"
-  baseline_mode="$LAST_REPORT_MODE"
-  write_provenance \
-    baseline "$BASELINE_OUTPUT" "$baseline_mode" baseline \
-    "$baseline_address" "$baseline_producer" "$baseline_resident" \
-    "$baseline_sources" "$baseline_config" "$baseline_report_sha256"
-  write_input_attestation \
-    "$BASELINE_OUTPUT" "$baseline_repository" "$baseline_producer" "$baseline_report_sha256"
-  if [[ "$baseline_mode" == "produced" ]]; then
-    cache_store "$baseline_address" "$BASELINE_OUTPUT"
-  fi
+  prepare_bundle \
+    baseline "$BASELINE_ROOT" "$BASELINE_OUTPUT" "$baseline_address" \
+    "$baseline_producer" "$baseline_resident" "$baseline_sources" \
+    "$baseline_config" "$baseline_repository"
+fi
+baseline_staged_output="$LAST_BUNDLE_OUTPUT"
+baseline_report_sha256="$LAST_BUNDLE_SHA256"
+baseline_mode="$LAST_BUNDLE_MODE"
+
+publish_bundles \
+  "$candidate_staged_output" "$CANDIDATE_OUTPUT" \
+  "$baseline_staged_output" "$BASELINE_OUTPUT"
+emit_provenance_receipt \
+  candidate "$CANDIDATE_OUTPUT" "$candidate_mode" candidate \
+  "$candidate_address" "$candidate_report_sha256"
+baseline_source_side="baseline"
+if [[ "$baseline_mode" == "reused" ]]; then baseline_source_side="candidate"; fi
+emit_provenance_receipt \
+  baseline "$BASELINE_OUTPUT" "$baseline_mode" "$baseline_source_side" \
+  "$baseline_address" "$baseline_report_sha256"
+if [[ "$candidate_mode" == "produced" ]]; then
+  cache_store "$candidate_address" "$CANDIDATE_OUTPUT"
+fi
+if [[ "$baseline_mode" == "produced" ]]; then
+  cache_store "$baseline_address" "$BASELINE_OUTPUT"
 fi
