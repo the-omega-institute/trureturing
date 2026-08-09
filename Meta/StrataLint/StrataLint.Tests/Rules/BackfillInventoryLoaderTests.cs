@@ -192,7 +192,7 @@ public sealed class BackfillInventoryLoaderTests
     }
 
     [Theory]
-    [InlineData("Meta/Digestion/ticket-index.toml")]
+    [InlineData(BackfillInventoryLoader.TicketIndexPath)]
     [InlineData("Meta/Digestion/backfill/delta-v0.1/source.toml")]
     [InlineData("Meta/Digestion/backfill/delta-v0.1/residual-open/atom-0dca.yaml")]
     [InlineData("Meta/Digestion/backfill/delta-v0.1/partial-closed/atom-0f28.yaml")]
@@ -475,20 +475,31 @@ public sealed class BackfillInventoryLoaderTests
     {
         var root = FindRepositoryRoot();
         var path = Path.Combine(root, BackfillInventoryLoader.RelativePath);
-        var expected = File.ReadAllBytes(path);
+        if (File.Exists(path))
+        {
+            var expected = File.ReadAllBytes(path);
 
-        var actual = BackfillInventoryWriter.Write(
-            BackfillInventoryLoader.Load(File.ReadAllText(path)));
+            var actual = BackfillInventoryWriter.Write(
+                BackfillInventoryLoader.Load(File.ReadAllText(path)));
 
-        Assert.Equal(expected, actual.ToArray());
+            Assert.Equal(expected, actual.ToArray());
+            return;
+        }
+
+        // 目录形态没有单文件字节可对照;互逆契约改为当前台账在 Write∘Load
+        // 上的字节不动点。
+        var first = BackfillInventoryWriter.Write(BackfillInventoryLoader.LoadRoot(root));
+        var second = BackfillInventoryWriter.Write(
+            BackfillInventoryLoader.Load(System.Text.Encoding.UTF8.GetString(first.AsSpan())));
+
+        Assert.Equal(first.ToArray(), second.ToArray());
     }
 
     [Fact]
     public void CanonicalLedgerE2StoresEveryReceiptPreimageInCas()
     {
         var root = FindRepositoryRoot();
-        var ledgerPath = Path.Combine(root, BackfillInventoryLoader.RelativePath);
-        var document = BackfillInventoryLoader.Load(File.ReadAllText(ledgerPath));
+        var document = BackfillInventoryLoader.LoadRoot(root);
         var entries = document.RequireDigestionEntries();
 
         Assert.NotEmpty(entries);
@@ -522,8 +533,7 @@ public sealed class BackfillInventoryLoaderTests
     public void RemarkBatchUpgradeCandidatesRemainResidualWithNamedUnresolvedClaims()
     {
         var root = FindRepositoryRoot();
-        var ledgerPath = Path.Combine(root, BackfillInventoryLoader.RelativePath);
-        var entries = BackfillInventoryLoader.Load(File.ReadAllText(ledgerPath))
+        var entries = BackfillInventoryLoader.LoadRoot(root)
             .RequireDigestionEntries();
         string[] expectedPaths =
         [
@@ -571,7 +581,8 @@ public sealed class BackfillInventoryLoaderTests
              current is not null;
              current = current.Parent)
         {
-            if (File.Exists(Path.Combine(current.FullName, BackfillInventoryLoader.RelativePath)))
+            if (File.Exists(Path.Combine(current.FullName, "global.json"))
+                && Directory.Exists(Path.Combine(current.FullName, "Blueprint")))
             {
                 return current.FullName;
             }

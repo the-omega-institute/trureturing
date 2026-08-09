@@ -1,0 +1,29 @@
+ast_path: remark/27.27
+fingerprints:
+  raw_sha256: sha256:df5fb8e33f6d6d19b72635ef1038798cf41031f12ddd4430d39e987c561cef98
+  normalized_sha256: sha256:df5fb8e33f6d6d19b72635ef1038798cf41031f12ddd4430d39e987c561cef98
+cas_ref: sha256:df5fb8e33f6d6d19b72635ef1038798cf41031f12ddd4430d39e987c561cef98
+coverage_gids:
+  - D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec
+      source_sha256: sha256:df5fb8e33f6d6d19b72635ef1038798cf41031f12ddd4430d39e987c561cef98
+      target_sha256: sha256:a8edfa970f6658782b937e625f012faa0c0f890994cdb2ce249fe10a499ded1c
+  scribe:
+    - gid: D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec
+      definition_sha256: sha256:2a1ce01b845c8198544488a2e16ebbf6b9cf8dc7bc90625e985080b5f5d11e26
+      emission_sha256: sha256:7113caf73db1e94703540e1be0acc6ab04d2e605d436b1cfae1a7dd852d9d9df
+  unresolved_subitems:
+    - argument-principle-zero-count-is-horizontal-coordinate-blind
+    - online-offline-toy-spectra-have-equal-contour-count-certificate
+    - gamma-factor-supplies-smooth-zero-count-main-term
+    - zero-count-at-height-one-hundred-numerical-certificate
+    - prime-interference-s-of-t-supplies-height-correction
+    - positivity-or-selfadjointness-required-for-real-coordinate
+    - de-bruijn-newman-heat-flow-conserves-moving-zero-count
+    - online-zero-collision-produces-off-line-conjugate-pair
+    - quadratic-collision-model-certificate
+    - off-line-zeros-born-in-pairs-not-created
+    - rh-as-no-zero-collision-in-heat-flow
+    - de-bruijn-newman-constant-zero-criticality-claim

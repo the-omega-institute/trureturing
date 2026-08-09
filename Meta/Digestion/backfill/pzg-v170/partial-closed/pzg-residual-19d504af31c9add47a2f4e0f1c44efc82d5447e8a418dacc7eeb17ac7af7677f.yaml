@@ -1,0 +1,17 @@
+ast_path: theorem/20.3
+fingerprints:
+  raw_sha256: sha256:19d504af31c9add47a2f4e0f1c44efc82d5447e8a418dacc7eeb17ac7af7677f
+  normalized_sha256: sha256:19d504af31c9add47a2f4e0f1c44efc82d5447e8a418dacc7eeb17ac7af7677f
+cas_ref: sha256:19d504af31c9add47a2f4e0f1c44efc82d5447e8a418dacc7eeb17ac7af7677f
+coverage_gids:
+  - D5/S3/Arith/HiddenFiberRigidity.hidden_fiber_rigidity
+receipts:
+  coverage:
+    - gid: D5/S3/Arith/HiddenFiberRigidity.hidden_fiber_rigidity
+      source_sha256: sha256:19d504af31c9add47a2f4e0f1c44efc82d5447e8a418dacc7eeb17ac7af7677f
+      target_sha256: sha256:ca6b448393c8b3a2fa0f33ec59a1106f9114f2550ea096ad58956b13f2c02546
+  scribe:
+    - gid: D5/S3/Arith/HiddenFiberRigidity.hidden_fiber_rigidity
+      definition_sha256: sha256:41c293c3ceaf357efc4738f910055299f1f5f1601c8ab5e2d95b403e988e884a
+      emission_sha256: sha256:ad5fb85604780a3c0d5af4a1936099c2665a94b4224631e76cc8dbe921981556
+  unresolved_subitems: []

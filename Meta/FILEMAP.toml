@@ -317,6 +317,16 @@ artifact_id = "none"
 runtime_disposition = "committed-ledger"
 
 [[files]]
+pattern = "Meta/Digestion/backfill/**"
+kind = "data"
+produced_by = "IngestCommand"
+consumed_by = ["BackfillInventoryLoader"]
+verified_by = ["BackfillInventoryLoader"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
 pattern = "Meta/Digestion/formalizations/*.v1.json"
 kind = "ledger"
 produced_by = "EmitFormalizationReceiptCommand"
@@ -325,6 +335,16 @@ verified_by = ["DigestionFormalizationReceipt"]
 authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-ledger"
+
+[[files]]
+pattern = "Meta/Digestion/ticket-index.toml"
+kind = "data"
+produced_by = "none"
+consumed_by = ["BackfillInventoryLoader"]
+verified_by = ["BackfillInventoryLoader"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
 
 [[files]]
 pattern = "Meta/FILEMAP.toml"

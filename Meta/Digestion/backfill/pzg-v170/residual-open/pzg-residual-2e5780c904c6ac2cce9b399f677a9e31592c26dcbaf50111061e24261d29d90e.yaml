@@ -1,0 +1,10 @@
+ast_path: research-queue/batch/occurrence/24
+fingerprints:
+  raw_sha256: sha256:2e5780c904c6ac2cce9b399f677a9e31592c26dcbaf50111061e24261d29d90e
+  normalized_sha256: sha256:2e5780c904c6ac2cce9b399f677a9e31592c26dcbaf50111061e24261d29d90e
+cas_ref: sha256:2e5780c904c6ac2cce9b399f677a9e31592c26dcbaf50111061e24261d29d90e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

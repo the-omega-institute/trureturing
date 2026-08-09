@@ -1,0 +1,24 @@
+ast_path: theorem/finite-window-register
+fingerprints:
+  raw_sha256: sha256:8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490
+  normalized_sha256: sha256:8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490
+cas_ref: sha256:8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490
+coverage_gids:
+  - D5/S3/Quantum/FiniteDimensional.qubit_weyl_star
+  - D5/S3/Quantum/QubitWitnesses.pauli_observables_have_no_common_eigenvector
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/FiniteDimensional.qubit_weyl_star
+      source_sha256: sha256:8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490
+      target_sha256: sha256:664b9ea50bca484513a28f5cd812e270f0c8da5394cdd768298b61b65e111844
+    - gid: D5/S3/Quantum/QubitWitnesses.pauli_observables_have_no_common_eigenvector
+      source_sha256: sha256:8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490
+      target_sha256: sha256:89457799a8e0362f3113889e39ef6eeadabe40f2c9e3228af2bffe7d66acda31
+  scribe: []
+  unresolved_subitems:
+    - arbitrary-observer-window-full-matrix-identification
+    - prime-power-tensor-factor-decomposition
+    - general-prime-qudit-weyl-relations
+    - observer-window-generated-structure-claim
+    - general-robertson-variance-uncertainty
+    - exact-matrix-unit-zero-error-certificate

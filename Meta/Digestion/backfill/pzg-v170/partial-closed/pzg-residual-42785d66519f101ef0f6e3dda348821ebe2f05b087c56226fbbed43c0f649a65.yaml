@@ -1,0 +1,23 @@
+ast_path: theorem/25.12
+fingerprints:
+  raw_sha256: sha256:42785d66519f101ef0f6e3dda348821ebe2f05b087c56226fbbed43c0f649a65
+  normalized_sha256: sha256:42785d66519f101ef0f6e3dda348821ebe2f05b087c56226fbbed43c0f649a65
+cas_ref: sha256:42785d66519f101ef0f6e3dda348821ebe2f05b087c56226fbbed43c0f649a65
+coverage_gids:
+  - D5/S3/Zeros/SpectralShift.labeled_zeta_vector_backward_shift_eigen
+receipts:
+  coverage:
+    - gid: D5/S3/Zeros/SpectralShift.labeled_zeta_vector_backward_shift_eigen
+      source_sha256: sha256:42785d66519f101ef0f6e3dda348821ebe2f05b087c56226fbbed43c0f649a65
+      target_sha256: sha256:d321a4dbb32f7d67f235f44f2304a6d1703b07c3844f2b224f6a0b9a06fb925e
+  scribe:
+    - gid: D5/S3/Zeros/SpectralShift.labeled_zeta_vector_backward_shift_eigen
+      definition_sha256: sha256:9de200465b262bca9952f8df550a62f2ff3ca2e29ebabc5c9031c790412118ed
+      emission_sha256: sha256:0df12b95339c238ac883f6050ffb14cd2e5077d8b9820ba59c092d907d584ecf
+  unresolved_subitems:
+    - bounded-adjoint-operator-construction
+    - basis-subtraction-and-truncation-action
+    - joint-operator-eigenvector-statement
+    - bloch-wave-and-brillouin-phase-interpretation
+    - bost-connes-identification
+    - numerical-window-certificate

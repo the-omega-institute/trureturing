@@ -1,0 +1,19 @@
+ast_path: theorem/7.4
+fingerprints:
+  raw_sha256: sha256:9b7a3ffc25dbae19ef334f68bbfdc9182d64e32492f99436316099057780b1da
+  normalized_sha256: sha256:9b7a3ffc25dbae19ef334f68bbfdc9182d64e32492f99436316099057780b1da
+cas_ref: sha256:9b7a3ffc25dbae19ef334f68bbfdc9182d64e32492f99436316099057780b1da
+coverage_gids:
+  - D5/S1/Dynamics/RecursiveDefinition.is_recursive_definition_iff_fixed_point
+receipts:
+  coverage:
+    - gid: D5/S1/Dynamics/RecursiveDefinition.is_recursive_definition_iff_fixed_point
+      source_sha256: sha256:9b7a3ffc25dbae19ef334f68bbfdc9182d64e32492f99436316099057780b1da
+      target_sha256: sha256:b1e01c10f2d6c4dd59c845865f66719b63dbc0ce9536f0898733a0588d51e307
+  scribe:
+    - gid: D5/S1/Dynamics/RecursiveDefinition.is_recursive_definition_iff_fixed_point
+      definition_sha256: sha256:3021da8fafaf8200ce1a15fae6cb8a6afd4133c0dcc93c3d1ea996fe224143ca
+      emission_sha256: sha256:9c1cdae8f7352bdfe9555e8e3848617a10f7898131e353c1a521de4295a6f2c1
+  unresolved_subitems:
+    - extremal-fixed-point-selection-principle
+    - unique-fixed-point-selection-collapse

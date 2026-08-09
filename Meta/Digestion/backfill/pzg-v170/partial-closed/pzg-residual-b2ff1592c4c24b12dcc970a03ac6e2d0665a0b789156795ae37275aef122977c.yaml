@@ -1,0 +1,19 @@
+ast_path: theorem/10.10
+fingerprints:
+  raw_sha256: sha256:b2ff1592c4c24b12dcc970a03ac6e2d0665a0b789156795ae37275aef122977c
+  normalized_sha256: sha256:b2ff1592c4c24b12dcc970a03ac6e2d0665a0b789156795ae37275aef122977c
+cas_ref: sha256:b2ff1592c4c24b12dcc970a03ac6e2d0665a0b789156795ae37275aef122977c
+coverage_gids:
+  - D5/S3/Fourier/FinitePoisson.finite_poisson_summation
+receipts:
+  coverage:
+    - gid: D5/S3/Fourier/FinitePoisson.finite_poisson_summation
+      source_sha256: sha256:b2ff1592c4c24b12dcc970a03ac6e2d0665a0b789156795ae37275aef122977c
+      target_sha256: sha256:f84f54241ab57e89ad70448f03c112e69abf149c5e104cca590b883521a06dd1
+  scribe:
+    - gid: D5/S3/Fourier/FinitePoisson.finite_poisson_summation
+      definition_sha256: sha256:e030765581beb15885c40d3a61ffcf64e0c3048259252243ab9318ad9c135466
+      emission_sha256: sha256:b42858e364fc8706b06e3c63f4f3cb263d769a7d8706d4b87df988dd948f8602
+  unresolved_subitems:
+    - character-shape-theorem-10-6-binding
+    - annihilator-orthogonality-and-cardinality-proof-chain

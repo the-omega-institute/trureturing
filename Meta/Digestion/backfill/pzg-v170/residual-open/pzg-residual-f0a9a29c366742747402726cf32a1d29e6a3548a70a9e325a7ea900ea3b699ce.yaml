@@ -1,0 +1,10 @@
+ast_path: verdict/batch/occurrence/45
+fingerprints:
+  raw_sha256: sha256:f0a9a29c366742747402726cf32a1d29e6a3548a70a9e325a7ea900ea3b699ce
+  normalized_sha256: sha256:f0a9a29c366742747402726cf32a1d29e6a3548a70a9e325a7ea900ea3b699ce
+cas_ref: sha256:f0a9a29c366742747402726cf32a1d29e6a3548a70a9e325a7ea900ea3b699ce
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,14 @@
+ast_path: remark/20.15
+fingerprints:
+  raw_sha256: sha256:fbec18eb20decb837ee81472c809eb9876bb829623cb8cc9b313714fe1a1c569
+  normalized_sha256: sha256:fbec18eb20decb837ee81472c809eb9876bb829623cb8cc9b313714fe1a1c569
+cas_ref: sha256:fbec18eb20decb837ee81472c809eb9876bb829623cb8cc9b313714fe1a1c569
+coverage_gids:
+  - D5/S1/Phase/Basic
+receipts:
+  coverage:
+    - gid: D5/S1/Phase/Basic
+      source_sha256: sha256:fbec18eb20decb837ee81472c809eb9876bb829623cb8cc9b313714fe1a1c569
+      target_sha256: sha256:37ba6a539502b682b05a2e78ae0eff9f701f4dbfa9154661d6774bd33c88886b
+  scribe: []
+  unresolved_subitems: []

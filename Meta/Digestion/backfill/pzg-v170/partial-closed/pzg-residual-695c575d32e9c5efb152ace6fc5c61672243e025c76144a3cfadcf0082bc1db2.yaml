@@ -1,0 +1,14 @@
+ast_path: theorem/25.10
+fingerprints:
+  raw_sha256: sha256:695c575d32e9c5efb152ace6fc5c61672243e025c76144a3cfadcf0082bc1db2
+  normalized_sha256: sha256:695c575d32e9c5efb152ace6fc5c61672243e025c76144a3cfadcf0082bc1db2
+cas_ref: sha256:695c575d32e9c5efb152ace6fc5c61672243e025c76144a3cfadcf0082bc1db2
+coverage_gids:
+  - D5/S3/Midline/UniversalHeatTrace.universal_heat_trace_midline
+receipts:
+  coverage:
+    - gid: D5/S3/Midline/UniversalHeatTrace.universal_heat_trace_midline
+      source_sha256: sha256:695c575d32e9c5efb152ace6fc5c61672243e025c76144a3cfadcf0082bc1db2
+      target_sha256: sha256:b7707a1da106632439eda980bb6a2a719b5892de105cc586076b13e2415cb87c
+  scribe: []
+  unresolved_subitems: []

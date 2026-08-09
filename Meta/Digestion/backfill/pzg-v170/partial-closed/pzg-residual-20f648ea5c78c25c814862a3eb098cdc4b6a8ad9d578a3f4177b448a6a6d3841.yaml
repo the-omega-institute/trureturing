@@ -1,0 +1,17 @@
+ast_path: theorem/8.3
+fingerprints:
+  raw_sha256: sha256:20f648ea5c78c25c814862a3eb098cdc4b6a8ad9d578a3f4177b448a6a6d3841
+  normalized_sha256: sha256:20f648ea5c78c25c814862a3eb098cdc4b6a8ad9d578a3f4177b448a6a6d3841
+cas_ref: sha256:20f648ea5c78c25c814862a3eb098cdc4b6a8ad9d578a3f4177b448a6a6d3841
+coverage_gids:
+  - D5/S3/Arith/ResidueSeparation.residue_separation
+receipts:
+  coverage:
+    - gid: D5/S3/Arith/ResidueSeparation.residue_separation
+      source_sha256: sha256:20f648ea5c78c25c814862a3eb098cdc4b6a8ad9d578a3f4177b448a6a6d3841
+      target_sha256: sha256:9059d951457c0196457f830f43d7bebcf6468419498fe0379125088b1e8cad54
+  scribe:
+    - gid: D5/S3/Arith/ResidueSeparation.residue_separation
+      definition_sha256: sha256:504db0205babf1dab4421a07bf29afd905fc9c32600123e7613d248eb4f4f152
+      emission_sha256: sha256:3fa22d2aa38f21512aaadc52f60ec4b08f0d692c28d4d37f6f43165030b00fd2
+  unresolved_subitems: []
