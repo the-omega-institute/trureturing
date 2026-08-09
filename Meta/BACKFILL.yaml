@@ -77,16 +77,19 @@ sources:
           raw_sha256: sha256:41d280b2ed3f2dea88b5349db0a8180037ef5cc783f6668adeeccd6a93c4b2b8
           normalized_sha256: sha256:41d280b2ed3f2dea88b5349db0a8180037ef5cc783f6668adeeccd6a93c4b2b8
         cas_ref: sha256:41d280b2ed3f2dea88b5349db0a8180037ef5cc783f6668adeeccd6a93c4b2b8
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Arith/HiddenFiberRigidity.hidden_fiber_rigidity
+          - D5/S1/Dynamics/JumpCocycle.jump_cocycle
         receipts:
           coverage: []
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - streamline-theorem-constant-hidden-offset
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: observer-residual-8f460e43ae778708e043aa97a9e40265c6633c742b3f863928c20b993c099659
         ast_path: premise/ledger-discipline
         fingerprints:
@@ -254,13 +257,14 @@ sources:
         coverage_gids:
           - D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_eq_address_blocks
           - D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_offDiagonal_eq_zero
+          - D5/S3/Divergence/DpiDefect.dpi_defect_nonneg
         receipts:
           coverage: []
           scribe: []
           unresolved_subitems:
             - know-forgot-two-time-relation
             - six-state-finite-certificates
-            - forgetting-quantity-dpi-nonneg
+            - forgetting-quantity-dpi-nonneg-beyond-finite-classical-strict-positive
             - joint-coherent-reversal-of-all-copies
             - multi-copy-erasure-quantifier
           chain_atoms: []
@@ -381,16 +385,25 @@ sources:
           raw_sha256: sha256:3fd76409f8ea3cfe2c3722c92b767875991a4572f1d62575f6ded1a5150b92c6
           normalized_sha256: sha256:3fd76409f8ea3cfe2c3722c92b767875991a4572f1d62575f6ded1a5150b92c6
         cas_ref: sha256:3fd76409f8ea3cfe2c3722c92b767875991a4572f1d62575f6ded1a5150b92c6
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Observer/WindowCharacter.window_algebra_has_no_character
+          - D5/S3/Quantum/FiniteDimensional.qubit_matrix_algebra_has_no_character
+          - D5/S3/QuantumBounds/CHSHWitness.bell_chsh_value
+          - D5/S3/QuantumBounds/CHSHWitness.bell_density_is_state
+          - D5/S3/QuantumBounds/CHSHWitness.bob_observables_are_valid
+          - D5/S3/QuantumBounds/CHSHWitness.lifted_observables_form_chsh_tuple
+          - D5/S3/QuantumBounds/CHSHWitness.chsh_operator_eq_lifted_chsh
         receipts:
           coverage: []
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - classical-local-fiber-bound-certificate
+            - monogamy-unique-classical-pairing
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: observer-residual-a6962d32cb2d5b0127bc20031cd895bdfb1d232901e5e21eb0a62b55e49930eb
         ast_path: probability/Q2
         fingerprints:
@@ -890,13 +903,14 @@ sources:
         coverage_gids:
           - D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_eq_address_blocks
           - D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_offDiagonal_eq_zero
+          - D5/S3/Divergence/DpiDefect.dpi_defect_nonneg
         receipts:
           coverage: []
           scribe: []
           unresolved_subitems:
             - know-forgot-two-time-relation
             - six-state-finite-certificates
-            - forgetting-quantity-dpi-nonneg
+            - forgetting-quantity-dpi-nonneg-beyond-finite-classical-strict-positive
             - v2-entropy-monotone-capacity-decrease
             - v3-revival-spectrum-diophantine-grading
             - multi-copy-erasure-quantifier
@@ -1041,32 +1055,49 @@ sources:
           raw_sha256: sha256:5caee6c1c0969f146242d6f7444a71d30e04dc9fb7ae8b941bc5f04d36a23ee0
           normalized_sha256: sha256:5caee6c1c0969f146242d6f7444a71d30e04dc9fb7ae8b941bc5f04d36a23ee0
         cas_ref: sha256:5caee6c1c0969f146242d6f7444a71d30e04dc9fb7ae8b941bc5f04d36a23ee0
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Observer/WindowCharacter.window_algebra_has_no_character
+          - D5/S3/Quantum/FiniteDimensional.qubit_matrix_algebra_has_no_character
+          - D5/S3/QuantumBounds/CHSHWitness.bell_chsh_value
+          - D5/S3/QuantumBounds/CHSHWitness.bell_density_is_state
+          - D5/S3/QuantumBounds/CHSHWitness.bob_observables_are_valid
+          - D5/S3/QuantumBounds/CHSHWitness.lifted_observables_form_chsh_tuple
+          - D5/S3/QuantumBounds/CHSHWitness.chsh_operator_eq_lifted_chsh
         receipts:
           coverage: []
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - classical-local-fiber-bound-certificate
+            - monogamy-unique-classical-pairing
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: observer-residual-17d6f34c071aedeee910eb7ef184769f34ff9379405f985d36503a18f485b73e
         ast_path: probability/Q2
         fingerprints:
           raw_sha256: sha256:17d6f34c071aedeee910eb7ef184769f34ff9379405f985d36503a18f485b73e
           normalized_sha256: sha256:17d6f34c071aedeee910eb7ef184769f34ff9379405f985d36503a18f485b73e
         cas_ref: sha256:17d6f34c071aedeee910eb7ef184769f34ff9379405f985d36503a18f485b73e
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Quantum/FiniteDimensional.born_probability_skeleton
         receipts:
           coverage: []
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - ledger-publicness-implies-noncontextual-additivity
+            - gleason-representation-and-uniqueness-dimension-at-least-three
+            - rank-one-pure-state-modulus-square-reduction
+            - complete-solution-space-characterization
+            - harmonic-spectral-pruning-certificate
+            - quartic-pricing-context-counterexample
+            - born-control-numerical-tolerance-certificate
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: observer-residual-ab0d216b0df23f172faa5d9d5a9d77883665c37c4861911d651120b69da85cef
         ast_path: probability/Q3
         fingerprints:
