@@ -1,3 +1,5 @@
+using System.Collections.Immutable;
+using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -60,7 +62,9 @@ public sealed partial class ProductionEnvironmentTests
             calls++;
             if (calls == failingCall)
             {
-                throw new InvalidOperationException("synthetic invalid reference");
+                throw new FrozenReferenceRejectionException(
+                    FrozenReferenceRejectionKind.InvalidReference,
+                    "synthetic invalid reference");
             }
 
             return TrustedFrozenGitReferences.CreateForTrustedAdapter(references.Inputs);
@@ -72,6 +76,40 @@ public sealed partial class ProductionEnvironmentTests
             outcome,
             "frozen ledger Git references are invalid: synthetic invalid reference");
         Assert.Equal(failingCall, gateway.FrozenReferenceValidationCount);
+        Assert.Equal(1, CheckExitCode(outcome!));
+    }
+
+    [Fact]
+    public void ProductionValidatorMapsGitInfrastructureFailuresToExitTwo()
+    {
+        foreach (var kind in new[]
+        {
+            GitCommandFailureKind.ExecutableNotFound,
+            GitCommandFailureKind.Timeout,
+            GitCommandFailureKind.Io,
+        })
+        {
+            var fixture = CreateFrozenValidatorFixture();
+            var failure = new GitCommandFailure(
+                kind,
+                "git",
+                ImmutableArray.Create("cat-file", "-t", new string('f', 40)),
+                null,
+                kind is GitCommandFailureKind.ExecutableNotFound ? 2 : null,
+                string.Empty,
+                $"synthetic {kind} failure");
+            var gateway = CreateGateway(
+                fixture,
+                _ => throw new GitInfrastructureException(failure));
+
+            var outcome = Validate(fixture, gateway);
+
+            var infrastructure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
+            Assert.Contains("frozen ledger Git infrastructure failed", infrastructure.Message, StringComparison.Ordinal);
+            Assert.Contains(failure.Render(), infrastructure.Message, StringComparison.Ordinal);
+            Assert.Equal(2, CheckExitCode(infrastructure));
+            Assert.Equal(1, gateway.FrozenReferenceValidationCount);
+        }
     }
 
     [Fact]
@@ -165,4 +203,7 @@ public sealed partial class ProductionEnvironmentTests
             references => Assert.Single(references.Inputs),
             references => Assert.Equal(2, references.Inputs.Length));
     }
+
+    private static int CheckExitCode(AdmissionOutcome outcome) =>
+        CliApplication.Run(["check"], new StubCliEnvironment(outcome), new BufferedConsole());
 }
