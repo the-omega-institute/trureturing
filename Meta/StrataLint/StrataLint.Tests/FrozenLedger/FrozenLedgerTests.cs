@@ -143,6 +143,56 @@ public sealed partial class FrozenLedgerTests
     }
 
     [Fact]
+    public void ForgedPreviousHashFailsEvenWhenTheLineRemainsCanonicalJson()
+    {
+        var catalog = BuildCatalog(Module("A"));
+        var complete = FrozenLedgerGenerator.GenerateGenesis(
+            catalog,
+            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
+        var lines = Lines(complete);
+        var second = Encoding.UTF8.GetString(lines[1]);
+        var previous = Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(lines[0])).Syntax;
+        var genesis = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
+            ValidateGenesis(previous, catalog));
+        Assert.Contains("missing Freeze", genesis.Message, StringComparison.Ordinal);
+        var priorHash = Encoding.UTF8.GetString(lines[0]);
+        var hashStart = priorHash.IndexOf("\"event_hash\": \"", StringComparison.Ordinal) + 15;
+        var priorEventHash = priorHash.Substring(hashStart, 71);
+        var forgedHash = priorEventHash[..^1] + (priorEventHash[^1] == '0' ? '1' : '0');
+        var forgedSecond = Encoding.UTF8.GetBytes(second.Replace(priorEventHash, forgedHash, StringComparison.Ordinal));
+        var forged = lines[0].Concat(forgedSecond).ToArray();
+        var syntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(forged)).Syntax;
+
+        var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
+            ValidateGenesis(syntax, catalog));
+
+        Assert.Contains("chain", rejected.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void CandidateLedgerMustRetainTheExactValidatedBaselineBytesAsPrefix()
+    {
+        var catalog = BuildCatalog(Module("A"));
+        var baselineBytes = FrozenLedgerGenerator.GenerateGenesis(
+            catalog,
+            new FrozenGenesisDescriptor(GitOid('e'), RuleCatalog.Default.RootSha256));
+        var baselineSyntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+            DagLedgerLoader.Load(baselineBytes.AsSpan())).Syntax;
+        var baseline = Assert.IsType<FrozenLedgerValidationOutcome.Accepted>(
+            ValidateGenesis(baselineSyntax, catalog)).Capability;
+        var rewrittenBytes = FrozenLedgerGenerator.GenerateGenesis(
+            catalog,
+            new FrozenGenesisDescriptor(GitOid('f'), RuleCatalog.Default.RootSha256));
+        var rewritten = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+            DagLedgerLoader.Load(rewrittenBytes.AsSpan())).Syntax;
+
+        var rejected = Assert.IsType<FrozenLedgerValidationOutcome.Rejected>(
+            ValidateCandidate(rewritten, baseline, catalog));
+
+        Assert.Contains("prefix", rejected.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
     public void OpenModuleWithoutAPermanentCaseIdCannotEnterFrozenLedgerMaterial()
     {
         const string path = "D5/X_Frontier/UnregisteredOpen.lean";
@@ -345,7 +395,7 @@ public sealed partial class FrozenLedgerTests
         var rewritten = FrozenLedgerCanonicalWriter.WriteEvent(
             target.GetProperty("event_type").GetString()!,
             JsonSerializer.SerializeToElement(payload),
-            FrozenLedgerCanonicalWriter.ZeroHash,
+            target.GetProperty("previous_hash").GetString()!,
             eventIndex).Bytes;
         var rejected = Assert.IsType<FrozenLedgerReferenceScanOutcome.Rejected>(
             FrozenLedger.ScanReferences(Loaded(prefix.Concat(rewritten).ToArray())));

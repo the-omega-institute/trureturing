@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -58,7 +59,10 @@ internal static class DagLedgerAppendWriter
                 throw new InvalidOperationException("accepted event files changed while ledger-append was validating them");
             }
 
-            WriteNewEvents(context.LedgerPath, candidateSyntax.Lines.Skip(context.Baseline.Events.Length));
+            WriteNewEvents(
+                context.LedgerPath,
+                candidateSyntax.Lines,
+                context.Baseline.Events.Length);
             var appended = candidate.Events
                 .Skip(context.Baseline.Events.Length)
                 .OfType<FrozenLedgerEvent.Freeze>()
@@ -88,17 +92,38 @@ internal static class DagLedgerAppendWriter
         }
     }
 
-    internal static void WriteNewEvents(string directory, IEnumerable<FrozenLedgerLineSyntax> lines)
+    internal static void WriteNewEvents(
+        string directory,
+        IEnumerable<FrozenLedgerLineSyntax> lines,
+        int skip = 0)
     {
+        var linearToDagHash = new Dictionary<string, string>(StringComparer.Ordinal);
+        var sequence = 0;
         foreach (var line in lines)
         {
             var payload = line.Value.GetProperty("payload");
+            if (payload.TryGetProperty("previous_attestation_event_hash", out var previous))
+            {
+                var rewritten = JsonNode.Parse(payload.GetRawText())!.AsObject();
+                rewritten["previous_attestation_event_hash"] = linearToDagHash[previous.GetString()!];
+                payload = JsonSerializer.SerializeToElement(rewritten);
+            }
+
+            var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(
+                line.Value.GetProperty("event_type").GetString()!,
+                payload);
+            linearToDagHash.Add(line.Value.GetProperty("event_hash").GetString()!, encoded.Hash);
+            if (sequence++ < skip)
+            {
+                continue;
+            }
+
             var identity = payload.TryGetProperty("frozen_node_id", out var nodeId)
                 ? nodeId.GetString()!
-                : line.Value.GetProperty("event_hash").GetString()!;
+                : encoded.Hash;
             var path = Path.Combine(directory, identity[7..] + ".json");
             using var stream = new FileStream(path, FileMode.CreateNew, FileAccess.Write, FileShare.None);
-            stream.Write(line.RawBytes.AsSpan());
+            stream.Write(encoded.Bytes.AsSpan());
         }
     }
 

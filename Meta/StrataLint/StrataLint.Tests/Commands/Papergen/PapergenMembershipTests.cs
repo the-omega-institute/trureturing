@@ -154,7 +154,7 @@ public sealed partial class PapergenCommandTests
             "D5-P001");
 
         var invalid = Assert.IsType<PaperRecipeValidationOutcome.Invalid>(outcome);
-        Assert.Contains(FrozenLedgerChangeClassifier.AcceptedRoot, invalid.Message, StringComparison.Ordinal);
+        Assert.Contains("not an active frozen declaration", invalid.Message, StringComparison.Ordinal);
     }
 
     /// Reattestation replaces the node id while admission holds the declaration set constant.
@@ -175,7 +175,7 @@ public sealed partial class PapergenCommandTests
             repository.Reports,
             "D5-P001");
 
-        Assert.IsType<PaperRecipeValidationOutcome.Valid>(outcome);
+        Assert.True(outcome is PaperRecipeValidationOutcome.Valid, outcome.ToString());
     }
 
     /// The mirror image: revocation lands on the reattested node, so an implementation checking
@@ -246,7 +246,7 @@ public sealed partial class PapergenCommandTests
             repository.Reports,
             "D5-P001");
 
-        Assert.IsType<PaperRecipeValidationOutcome.Valid>(outcome);
+        Assert.True(outcome is PaperRecipeValidationOutcome.Valid, outcome.ToString());
     }
 
     /// Membership must be decided against the Lean report, not by replaying the ledger alone.

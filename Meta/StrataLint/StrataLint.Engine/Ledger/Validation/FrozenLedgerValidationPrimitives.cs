@@ -20,7 +20,7 @@ public static partial class FrozenLedger
         var canonical = StructuredCanonicalWriter.WriteJson(line.Value);
         if (!line.RawBytes.AsSpan().SequenceEqual(canonical.AsSpan()))
         {
-            throw new FormatException("Frozen event bytes are not canonical JSON.");
+            throw new FormatException("Frozen event bytes are not canonical JSONL.");
         }
     }
 
@@ -249,7 +249,9 @@ public static partial class FrozenLedger
         {
             event_type = RequiredString(root, "event_type"),
             payload = root.GetProperty("payload"),
+            previous_hash = RequiredString(root, "previous_hash"),
             schema_version = RequiredNonnegativeInteger(root, "schema_version"),
+            sequence = RequiredNonnegativeInteger(root, "sequence"),
         });
         return FrozenContentHash.Compute(
             FrozenHashDomains.FrozenEvent,

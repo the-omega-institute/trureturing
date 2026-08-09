@@ -513,15 +513,10 @@ internal sealed class ProductionConservativeExtensionEnvironment : IConservative
             SnapshotDecodeOutcome.InfrastructureFailure failure =>
                 throw new InvalidOperationException(failure.Message),
         };
-        var loaded = DagLedgerLoader.LoadFiles(candidateSnapshot.Files.Values
-            .Where(file => FrozenLedgerChangeClassifier.IsAcceptedEventPath(file.Path.Value))
-            .Select(file => (file.Path.Value, (ReadOnlyMemory<byte>)file.RawBytes.ToArray()))) switch
-        {
-            DagLedgerLoadOutcome.Loaded accepted => accepted.Syntax,
-            DagLedgerLoadOutcome.Invalid invalid => throw new InvalidOperationException(
-                "candidate frozen ledger syntax is invalid: " + invalid.Message),
-            _ => throw new InvalidOperationException("unknown frozen ledger load outcome"),
-        };
+        var loaded = DagLedgerCommandPreparation.LoadLedgerFiles(
+            candidateSnapshot.Files.Values.Where(file =>
+                FrozenLedgerChangeClassifier.IsAcceptedEventPath(file.Path.Value)),
+            "candidate frozen ledger");
         var references = FrozenLedger.ScanReferences(loaded) switch
         {
             FrozenLedgerReferenceScanOutcome.Accepted accepted => accepted.References,

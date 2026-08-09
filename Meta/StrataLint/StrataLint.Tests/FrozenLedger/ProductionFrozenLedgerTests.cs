@@ -23,7 +23,7 @@ public sealed partial class ProductionEnvironmentTests
 
         AssertSl008Rejection(
             outcome,
-            "frozen ledger is missing from current or protected baseline");
+            "frozen ledger shape is invalid");
         Assert.Equal(0, gateway.FrozenReferenceValidationCount);
     }
 

@@ -147,30 +147,33 @@ public sealed partial class ProductionEnvironmentTests
                 Assert.Single(references.Inputs)).AsSpan()));
     }
 
-    private static FrozenLedgerSyntax LoadLedger(Dictionary<string, string> files) =>
-        Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.LoadFiles(
-            files.Where(item => FrozenLedgerChangeClassifier.IsAcceptedEventPath(item.Key))
-                .Select(item => (item.Key, (ReadOnlyMemory<byte>)Encoding.UTF8.GetBytes(item.Value))))).Syntax;
-
     private static void SetLedger(Dictionary<string, string> files, string ledger)
     {
+        files.Remove(FrozenLedgerChangeClassifier.LedgerPath);
         foreach (var path in files.Keys
-            .Where(FrozenLedgerChangeClassifier.IsAcceptedEventPath).ToArray())
+            .Where(FrozenLedgerChangeClassifier.IsAcceptedEventPath)
+            .ToArray())
         {
             files.Remove(path);
         }
 
-        var syntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(
-            DagLedgerLoader.Load(Encoding.UTF8.GetBytes(ledger))).Syntax;
-        foreach (var line in syntax.Lines)
+        FrozenLedgerTestData.AddLedgerFiles(files, ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(ledger)));
+    }
+
+    private static FrozenLedgerSyntax LoadLedger(Dictionary<string, string> files)
+    {
+        if (files.TryGetValue(FrozenLedgerChangeClassifier.LedgerPath, out var legacy))
         {
-            var payload = line.Value.GetProperty("payload");
-            var identity = payload.TryGetProperty("frozen_node_id", out var nodeId)
-                ? nodeId.GetString()!
-                : line.Value.GetProperty("event_hash").GetString()!;
-            files[$"{FrozenLedgerChangeClassifier.AcceptedRoot}/{identity[7..]}.json"] =
-                Encoding.UTF8.GetString(line.RawBytes.AsSpan());
+            return Assert.IsType<DagLedgerLoadOutcome.Loaded>(
+                DagLedgerLoader.Load(Encoding.UTF8.GetBytes(legacy))).Syntax;
         }
+
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(Snapshot(files))).Snapshot;
+        return DagLedgerCommandPreparation.LoadLedgerFiles(
+            snapshot.Files.Values.Where(file =>
+                FrozenLedgerChangeClassifier.IsAcceptedEventPath(file.Path.Value)),
+            "test frozen ledger");
     }
 
     private static FakeRepositoryGateway CreateGateway(
@@ -189,8 +192,8 @@ public sealed partial class ProductionEnvironmentTests
         var current = BuildState(fixture.CurrentFiles, fixture.CurrentReports);
         var baseline = BuildState(fixture.BaselineFiles, fixture.BaselineReports);
         return ProductionFrozenLedgerValidator.Validate(
-            current.Snapshot,
-            baseline.Snapshot,
+            DagLedgerCommandPreparation.WithLoaderIdentityPaths(current.Snapshot),
+            DagLedgerCommandPreparation.WithLoaderIdentityPaths(baseline.Snapshot),
             current.Lean,
             baseline.Lean,
             current.Dag,
@@ -206,9 +209,9 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal("Frozen Hearts semantics", diagnostic.Title);
         Assert.Equal(DisplaySeverity.Error, diagnostic.DisplaySeverity);
         Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
-        Assert.Equal(FrozenLedgerChangeClassifier.AcceptedRoot, diagnostic.Path);
+        Assert.Equal(FrozenLedgerChangeClassifier.LedgerPath, diagnostic.Path);
         Assert.Equal(expectedMessage, diagnostic.Message);
-        Assert.Equal($"SL-008 {FrozenLedgerChangeClassifier.AcceptedRoot}: {expectedMessage}", diagnostic.Render());
+        Assert.Equal($"SL-008 {FrozenLedgerChangeClassifier.LedgerPath}: {expectedMessage}", diagnostic.Render());
     }
 
     private sealed record FrozenValidatorFixture(

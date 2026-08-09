@@ -1,6 +1,8 @@
 using System.Collections.Immutable;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
@@ -205,14 +207,26 @@ internal static class FrozenLedgerTestData
         ImmutableArray<byte> bytes)
     {
         var syntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(bytes.AsSpan())).Syntax;
+        var linearToDagHash = new Dictionary<string, string>(StringComparer.Ordinal);
         foreach (var line in syntax.Lines)
         {
             var payload = line.Value.GetProperty("payload");
+            if (payload.TryGetProperty("previous_attestation_event_hash", out var previous))
+            {
+                var rewritten = JsonNode.Parse(payload.GetRawText())!.AsObject();
+                rewritten["previous_attestation_event_hash"] = linearToDagHash[previous.GetString()!];
+                payload = JsonSerializer.SerializeToElement(rewritten);
+            }
+
+            var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(
+                line.Value.GetProperty("event_type").GetString()!,
+                payload);
+            linearToDagHash.Add(line.Value.GetProperty("event_hash").GetString()!, encoded.Hash);
             var identity = payload.TryGetProperty("frozen_node_id", out var nodeId)
                 ? nodeId.GetString()!
-                : line.Value.GetProperty("event_hash").GetString()!;
+                : encoded.Hash;
             files[$"{FrozenLedgerChangeClassifier.AcceptedRoot}/{identity[7..]}.json"] =
-                Encoding.UTF8.GetString(line.RawBytes.AsSpan());
+                Encoding.UTF8.GetString(encoded.Bytes.AsSpan());
         }
     }
 

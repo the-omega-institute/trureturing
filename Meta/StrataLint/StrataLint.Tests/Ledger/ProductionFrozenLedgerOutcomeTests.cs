@@ -16,7 +16,7 @@ public sealed partial class ProductionEnvironmentTests
 
         AssertSl008Rejection(
             outcome,
-            "candidate frozen ledger does not retain every baseline path byte-for-byte");
+            "candidate content-addressed ledger does not retain protected baseline file byte-for-byte");
     }
 
     [Fact]
@@ -31,7 +31,7 @@ public sealed partial class ProductionEnvironmentTests
 
         AssertSl008Rejection(
             outcome,
-            "candidate frozen ledger does not retain every baseline path byte-for-byte");
+            "candidate content-addressed ledger does not retain protected baseline file byte-for-byte");
     }
 
     [Fact]

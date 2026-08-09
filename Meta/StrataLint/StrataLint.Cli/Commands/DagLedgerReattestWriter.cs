@@ -61,7 +61,8 @@ internal static class DagLedgerReattestWriter
 
             DagLedgerAppendWriter.WriteNewEvents(
                 context.LedgerPath,
-                candidateSyntax.Lines.Skip(context.Baseline.Events.Length));
+                candidateSyntax.Lines,
+                context.Baseline.Events.Length);
             var appended = candidate.Events
                 .Skip(context.Baseline.Events.Length)
                 .OfType<FrozenLedgerEvent.Reattest>()

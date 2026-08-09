@@ -153,6 +153,10 @@ public sealed partial class PapergenCommandTests
         FrozenLedgerTestData.AddLedgerFiles(
             ledgerFiles,
             ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(ledgerText)));
+        if (tamperLedgerChain)
+        {
+            ledgerFiles.Remove(ledgerFiles.Keys.Order(StringComparer.Ordinal).Last());
+        }
         foreach (var (path, content) in ledgerFiles)
         {
             Record(path, content);

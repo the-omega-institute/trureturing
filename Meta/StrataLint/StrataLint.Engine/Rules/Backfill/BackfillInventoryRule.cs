@@ -30,15 +30,10 @@ internal static class BackfillInventoryRule
 
     internal static ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context)
     {
-        if (!context.Current.TryGetFile(BackfillPath, out var file))
-        {
-            return [new RuleFinding(BackfillPath, "required governance document is missing")];
-        }
-
         BackfillInventoryDocument document;
         try
         {
-            document = BackfillInventoryLoader.Load(file.Text);
+            document = BackfillInventoryLoader.Load(context.Current);
         }
         catch (FormatException exception)
         {
@@ -250,13 +245,21 @@ internal static class BackfillInventoryRule
 
     private static BackfillInventoryDocument LoadBaselineDocument(RepositorySnapshot baseline)
     {
-        if (!baseline.TryGetFile(BackfillPath, out var baselineFile))
+        try
+        {
+            return BackfillInventoryLoader.Load(baseline);
+        }
+        catch (FormatException exception) when (
+            string.Equals(exception.Message, "required governance document is missing", StringComparison.Ordinal))
         {
             throw new FormatException("baseline digestion ledger is missing");
         }
-
-        return BackfillInventoryLoader.Load(baselineFile.Text);
     }
+
+    // Contract the compatibility branch when this protected-baseline condition becomes true:
+    // !snapshot.TryGetFile(RelativePath, out _)
+    // && snapshot.Files.Keys.Any(path => IsCanonicalPath(path.Value)). Then remove the legacy
+    // Load(string), RelativePath, dispatch branch, and legacy tests together.
 
     private static void ValidateTicketIndex(
         RepositorySnapshot snapshot,

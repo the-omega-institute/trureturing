@@ -53,7 +53,7 @@ public sealed partial class ProductionEnvironmentTests
         var diagnostic = Assert.Single(rejected.Diagnostics);
         Assert.Equal(RuleId.CreateKnown(8), diagnostic.RuleId);
         Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
-        Assert.Equal(FrozenLedgerChangeClassifier.AcceptedRoot, diagnostic.Path);
+        Assert.Equal(FrozenLedgerChangeClassifier.LedgerPath, diagnostic.Path);
         Assert.Equal(
             "frozen ledger Git references are invalid: frozen Git object git-sha1:"
             + new string('f', 40)

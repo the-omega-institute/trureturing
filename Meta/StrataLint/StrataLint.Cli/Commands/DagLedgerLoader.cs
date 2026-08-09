@@ -14,6 +14,23 @@ public abstract record DagLedgerLoadOutcome
     public sealed record Invalid(string Message) : DagLedgerLoadOutcome;
 }
 
+public sealed record DagLedgerFileEvent(
+    string Identity,
+    string EventHash,
+    string EventType,
+    JsonElement Payload,
+    int SchemaVersion,
+    FrozenLedgerLineSyntax Syntax);
+
+public abstract record DagLedgerFilesLoadOutcome
+{
+    private DagLedgerFilesLoadOutcome() { }
+
+    public sealed record Loaded(ImmutableArray<DagLedgerFileEvent> Events) : DagLedgerFilesLoadOutcome;
+
+    public sealed record Invalid(string Message) : DagLedgerFilesLoadOutcome;
+}
+
 public static class DagLedgerLoader
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
@@ -73,112 +90,182 @@ public static class DagLedgerLoader
         }
     }
 
-    public static DagLedgerLoadOutcome LoadFiles(
-        IEnumerable<(string Path, ReadOnlyMemory<byte> Bytes)> files)
+    public static DagLedgerFilesLoadOutcome LoadFiles(IEnumerable<RepositoryFile> files)
     {
+        ArgumentNullException.ThrowIfNull(files);
         try
         {
-            var pending = files.Select(file => ParseFile(file.Path, file.Bytes)).ToList();
-            var ordered = ImmutableArray.CreateBuilder<FrozenLedgerLineSyntax>(pending.Count);
+            var events = ImmutableArray.CreateBuilder<DagLedgerFileEvent>();
+            var identities = new HashSet<string>(StringComparer.Ordinal);
             var hashes = new HashSet<string>(StringComparer.Ordinal);
-            var nodeIds = new HashSet<string>(StringComparer.Ordinal);
-            while (pending.Count > 0)
+            foreach (var file in files.OrderBy(static file => file.Path.Value, StringComparer.Ordinal))
             {
-                var eligible = pending
-                    .Where(item => IsEligible(item.Value, ordered.Count == 0, hashes, nodeIds))
-                    .OrderBy(item => item.Value.GetProperty("event_hash").GetString(), StringComparer.Ordinal)
-                    .FirstOrDefault();
-                if (eligible is null)
+                var bytes = file.RawBytes.AsSpan();
+                _ = StrictUtf8.GetString(bytes);
+                if (bytes.Length < 2
+                    || bytes[^1] != (byte)'\n'
+                    || bytes[..^1].Contains((byte)'\n')
+                    || bytes.Contains((byte)'\r'))
                 {
-                    throw new FormatException("Frozen event files do not form a closed dependency DAG.");
+                    throw new FormatException(
+                        "Content-addressed frozen event file must contain exactly one LF-terminated JSON object.");
                 }
 
-                pending.Remove(eligible);
-                ordered.Add(eligible);
-                hashes.Add(eligible.Value.GetProperty("event_hash").GetString()!);
-                if (eligible.Value.GetProperty("payload").TryGetProperty("frozen_node_id", out var id))
+                using var document = JsonDocument.Parse(bytes[..^1].ToArray());
+                if (!FrozenLedgerCanonicalWriter.ValidateDagEvent(
+                    document.RootElement,
+                    out var identity,
+                    out var eventHash,
+                    out var validationMessage))
                 {
-                    nodeIds.Add(id.GetString()!);
+                    throw new FormatException(validationMessage);
                 }
+
+                if (!hashes.Add(eventHash))
+                {
+                    throw new FormatException("Content-addressed frozen event event_hash is duplicated.");
+                }
+
+                if (!identities.Add(identity))
+                {
+                    throw new FormatException("Content-addressed frozen event identity is duplicated.");
+                }
+
+                var fileName = file.Path.Value[(file.Path.Value.LastIndexOf('/') + 1)..];
+                if (!string.Equals(fileName, identity + ".json", StringComparison.Ordinal))
+                {
+                    throw new FormatException("Content-addressed frozen event file name does not match event identity.");
+                }
+
+                var value = document.RootElement.Clone();
+                events.Add(new DagLedgerFileEvent(
+                    identity,
+                    eventHash,
+                    value.GetProperty("event_type").GetString()!,
+                    value.GetProperty("payload").Clone(),
+                    value.GetProperty("schema_version").GetInt32(),
+                    new FrozenLedgerLineSyntax(ImmutableArray.CreateRange(bytes.ToArray()), value)));
             }
 
-            var lines = ordered.ToImmutable();
-            return new DagLedgerLoadOutcome.Loaded(new FrozenLedgerSyntax(
-                lines.SelectMany(static line => line.RawBytes).ToImmutableArray(),
-                lines));
+            return new DagLedgerFilesLoadOutcome.Loaded(events.ToImmutable());
         }
         catch (Exception exception) when (exception is DecoderFallbackException or JsonException or FormatException)
         {
-            return new DagLedgerLoadOutcome.Invalid(exception.Message);
+            return new DagLedgerFilesLoadOutcome.Invalid(exception.Message);
         }
     }
 
-    private static FrozenLedgerLineSyntax ParseFile(string path, ReadOnlyMemory<byte> bytes)
+    public static string? ValidateClosedDag(ImmutableArray<DagLedgerFileEvent> events)
     {
-        _ = StrictUtf8.GetString(bytes.Span);
-        if (bytes.IsEmpty || bytes.Span[^1] != (byte)'\n' || bytes.Span.Contains((byte)'\r'))
+        var genesis = events.Where(static item => item.EventType == "Genesis").ToArray();
+        if (genesis.Length != 1)
         {
-            throw new FormatException($"Frozen event file {path} must have one LF-terminated JSON object.");
+            return "Content-addressed frozen ledger must contain exactly one Genesis.";
         }
 
-        using var document = JsonDocument.Parse(bytes[..^1]);
-        var root = document.RootElement;
-        if (root.ValueKind != JsonValueKind.Object)
-        {
-            throw new FormatException($"Frozen event file {path} must contain a JSON object.");
-        }
-
-        if (!root.TryGetProperty("payload", out var payload)
-            || payload.ValueKind != JsonValueKind.Object
-            || !root.TryGetProperty("event_hash", out var eventHash)
-            || eventHash.ValueKind != JsonValueKind.String)
-        {
-            throw new FormatException($"Frozen event file {path} is missing its payload or event_hash.");
-        }
-
-        var identity = payload.TryGetProperty("frozen_node_id", out var nodeId)
-            ? nodeId.GetString()
-            : eventHash.GetString();
-        if (identity is null || !identity.StartsWith("sha256:", StringComparison.Ordinal))
-        {
-            throw new FormatException($"Frozen event file {path} has a malformed node identity.");
-        }
-
-        var expected = identity?[7..] + ".json";
-        if (!string.Equals(Path.GetFileName(path), expected, StringComparison.Ordinal))
-        {
-            throw new FormatException($"Frozen event filename does not match its node identity: {path}.");
-        }
-
-        return new FrozenLedgerLineSyntax(
-            ImmutableArray.CreateRange(bytes.ToArray()),
-            root.Clone());
+        return TryOrderClosedDag(events, ImmutableArray<string>.Empty, out _)
+            ? null
+            : "Frozen event files do not form a closed dependency DAG.";
     }
 
-    private static bool IsEligible(
-        JsonElement root,
-        bool first,
-        HashSet<string> hashes,
-        HashSet<string> nodeIds)
+    public static bool TryOrderClosedDag(
+        ImmutableArray<DagLedgerFileEvent> events,
+        ImmutableArray<string> preferredIdentityPrefix,
+        out ImmutableArray<DagLedgerFileEvent> ordered)
     {
-        var type = root.GetProperty("event_type").GetString();
-        var payload = root.GetProperty("payload");
-        if (type == "Genesis") return first;
-        if (first) return false;
-        if (type == "Freeze")
+        var byIdentity = events.ToDictionary(static item => item.Identity, StringComparer.Ordinal);
+        var remaining = events.OrderBy(static item => item.Identity, StringComparer.Ordinal).ToList();
+        var result = ImmutableArray.CreateBuilder<DagLedgerFileEvent>(events.Length);
+        var placedIdentities = new HashSet<string>(StringComparer.Ordinal);
+        var placedHashes = new HashSet<string>(StringComparer.Ordinal);
+        if (preferredIdentityPrefix.IsEmpty)
         {
-            return payload.GetProperty("prerequisite_frozen_node_ids")
-                .EnumerateArray().All(item => nodeIds.Contains(item.GetString()!));
+            var genesis = events.Where(static item => item.EventType == "Genesis").ToArray();
+            if (genesis.Length != 1)
+            {
+                ordered = ImmutableArray<DagLedgerFileEvent>.Empty;
+                return false;
+            }
+
+            Place(genesis[0], remaining, result, placedIdentities, placedHashes);
         }
-        if (type == "Reattest")
+
+        foreach (var identity in preferredIdentityPrefix)
         {
-            return hashes.Contains(payload.GetProperty("previous_attestation_event_hash").GetString()!);
+            if (!byIdentity.TryGetValue(identity, out var item)
+                || !CanPlace(item, result.Count, placedIdentities, placedHashes))
+            {
+                ordered = ImmutableArray<DagLedgerFileEvent>.Empty;
+                return false;
+            }
+
+            Place(item, remaining, result, placedIdentities, placedHashes);
         }
-        if (type == "Revoke")
+
+        while (remaining.Count > 0)
         {
-            return payload.GetProperty("root_frozen_node_ids")
-                .EnumerateArray().All(item => nodeIds.Contains(item.GetString()!));
+            var index = remaining.FindIndex(item =>
+                CanPlace(item, result.Count, placedIdentities, placedHashes));
+            if (index < 0)
+            {
+                ordered = ImmutableArray<DagLedgerFileEvent>.Empty;
+                return false;
+            }
+
+            Place(remaining[index], remaining, result, placedIdentities, placedHashes);
         }
+
+        ordered = result.MoveToImmutable();
+        return true;
+    }
+
+    private static bool CanPlace(
+        DagLedgerFileEvent item,
+        int placedCount,
+        HashSet<string> placedIdentities,
+        HashSet<string> placedHashes) =>
+        item.EventType == "Genesis"
+            ? placedCount == 0
+            : DependenciesPlaced(item, placedIdentities, placedHashes);
+
+    private static void Place(
+        DagLedgerFileEvent item,
+        List<DagLedgerFileEvent> remaining,
+        ImmutableArray<DagLedgerFileEvent>.Builder ordered,
+        HashSet<string> placedIdentities,
+        HashSet<string> placedHashes)
+    {
+        remaining.Remove(item);
+        ordered.Add(item);
+        placedIdentities.Add(item.Identity);
+        placedHashes.Add(item.EventHash);
+    }
+
+    private static bool DependenciesPlaced(
+        DagLedgerFileEvent item,
+        HashSet<string> placedIdentities,
+        HashSet<string> placedHashes)
+    {
+        if (item.EventType == "Freeze")
+        {
+            if (!item.Payload.TryGetProperty("prerequisite_frozen_node_ids", out var prerequisites)
+                || prerequisites.ValueKind != JsonValueKind.Array)
+            {
+                return false;
+            }
+
+            return prerequisites.EnumerateArray().All(prerequisite =>
+                prerequisite.ValueKind == JsonValueKind.String
+                && placedIdentities.Contains(prerequisite.GetString()!));
+        }
+
+        if (item.EventType == "Reattest")
+        {
+            return item.Payload.TryGetProperty("previous_attestation_event_hash", out var previous)
+                && previous.ValueKind == JsonValueKind.String
+                && placedHashes.Contains(previous.GetString()!);
+        }
+
         return true;
     }
 }

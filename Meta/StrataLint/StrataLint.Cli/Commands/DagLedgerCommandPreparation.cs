@@ -1,6 +1,8 @@
 using System.Collections.Immutable;
 using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -171,14 +173,152 @@ internal static class DagLedgerCommandPreparation
         };
 
     internal static FrozenLedgerSyntax LoadLedgerDirectory(string directory, string label) =>
-        DagLedgerLoader.LoadFiles(Directory.EnumerateFiles(directory, "*.json")
-            .Select(path => (path, (ReadOnlyMemory<byte>)File.ReadAllBytes(path)))) switch
+        LoadLedgerFiles(
+            Directory.EnumerateFiles(directory, "*.json").Select(path =>
+            {
+                var bytes = File.ReadAllBytes(path);
+                var repositoryPath = RepoPath.CreateKnown(
+                    $"{FrozenLedgerChangeClassifier.AcceptedRoot}/{Path.GetFileName(path)}");
+                return new RepositoryFile(
+                    repositoryPath,
+                    ImmutableArray.CreateRange(bytes),
+                    Encoding.UTF8.GetString(bytes));
+            }),
+            label);
+
+    internal static FrozenLedgerSyntax LoadLedgerFiles(
+        IEnumerable<RepositoryFile> files,
+        string label)
+    {
+        var events = DagLedgerLoader.LoadFiles(files.Select(WithLoaderIdentityPath)) switch
         {
-            DagLedgerLoadOutcome.Loaded loaded => loaded.Syntax,
-            DagLedgerLoadOutcome.Invalid invalid => throw new InvalidOperationException(
+            DagLedgerFilesLoadOutcome.Loaded loaded => loaded.Events,
+            DagLedgerFilesLoadOutcome.Invalid invalid => throw new InvalidOperationException(
                 label + " syntax is invalid: " + invalid.Message),
-            _ => throw new InvalidOperationException("unknown ledger load outcome"),
+            _ => throw new InvalidOperationException("unknown ledger files load outcome"),
         };
+        if (!DagLedgerLoader.TryOrderClosedDag(
+                events,
+                ImmutableArray<string>.Empty,
+                out var ordered))
+        {
+            throw new InvalidOperationException(label + " does not form a closed dependency DAG");
+        }
+
+        return ToLinearSyntax(OrderForReplay(ordered));
+    }
+
+    internal static RepositorySnapshot WithLoaderIdentityPaths(RepositorySnapshot snapshot)
+    {
+        var files = snapshot.Files.Values
+            .Select(file => FrozenLedgerChangeClassifier.IsAcceptedEventPath(file.Path.Value)
+                ? WithLoaderIdentityPath(file)
+                : file)
+            .ToImmutableDictionary(static file => file.Path);
+        return RepositorySnapshot.Create(files);
+    }
+
+    private static ImmutableArray<DagLedgerFileEvent> OrderForReplay(
+        ImmutableArray<DagLedgerFileEvent> events)
+    {
+        var remaining = events.ToList();
+        var result = ImmutableArray.CreateBuilder<DagLedgerFileEvent>(events.Length);
+        var identities = new HashSet<string>(StringComparer.Ordinal);
+        var hashes = new HashSet<string>(StringComparer.Ordinal);
+        while (remaining.Count > 0)
+        {
+            var index = remaining.FindIndex(item => item.EventType switch
+            {
+                "Genesis" => result.Count == 0,
+                "Freeze" => DependenciesPresent(item.Payload, "prerequisite_frozen_node_ids", identities),
+                "Reattest" => item.Payload.TryGetProperty("previous_attestation_event_hash", out var previous)
+                    && hashes.Contains(previous.GetString()!),
+                "Revoke" => DependenciesPresent(item.Payload, "root_frozen_node_ids", identities),
+                _ => true,
+            });
+            if (index < 0)
+            {
+                throw new InvalidOperationException("frozen ledger has no valid linear replay order");
+            }
+
+            var item = remaining[index];
+            remaining.RemoveAt(index);
+            result.Add(item);
+            identities.Add(item.Identity);
+            hashes.Add(item.EventHash);
+        }
+
+        return result.MoveToImmutable();
+    }
+
+    private static bool DependenciesPresent(
+        JsonElement payload,
+        string property,
+        HashSet<string> identities) =>
+        payload.TryGetProperty(property, out var dependencies)
+        && dependencies.ValueKind == JsonValueKind.Array
+        && dependencies.EnumerateArray().All(item =>
+            item.ValueKind == JsonValueKind.String && identities.Contains(item.GetString()!));
+
+    private static RepositoryFile WithLoaderIdentityPath(RepositoryFile file)
+    {
+        try
+        {
+            using var document = JsonDocument.Parse(file.RawBytes.AsSpan()[..^1].ToArray());
+            var root = document.RootElement;
+            var payload = root.GetProperty("payload");
+            var identity = payload.TryGetProperty("frozen_node_id", out var frozenNodeId)
+                ? frozenNodeId.GetString()!
+                : root.GetProperty("event_hash").GetString()!;
+            var fileName = file.Path.Value[(file.Path.Value.LastIndexOf('/') + 1)..];
+            if (identity.Length <= 7
+                || !string.Equals(fileName, identity[7..] + ".json", StringComparison.Ordinal))
+            {
+                return file;
+            }
+
+            return new RepositoryFile(
+                RepoPath.CreateKnown($"{FrozenLedgerChangeClassifier.AcceptedRoot}/{identity}.json"),
+                file.RawBytes,
+                file.Text);
+        }
+        catch (Exception exception) when (exception is JsonException or KeyNotFoundException or ArgumentOutOfRangeException)
+        {
+            return file;
+        }
+    }
+
+    private static FrozenLedgerSyntax ToLinearSyntax(ImmutableArray<DagLedgerFileEvent> events)
+    {
+        var raw = ImmutableArray.CreateBuilder<byte>();
+        var lines = ImmutableArray.CreateBuilder<FrozenLedgerLineSyntax>();
+        var previous = FrozenLedgerCanonicalWriter.ZeroHash;
+        var dagToLinearHash = new Dictionary<string, string>(StringComparer.Ordinal);
+        for (var sequence = 0; sequence < events.Length; sequence++)
+        {
+            var item = events[sequence];
+            var payload = item.Payload;
+            if (payload.TryGetProperty("previous_attestation_event_hash", out var dagPrevious))
+            {
+                var rewritten = JsonNode.Parse(payload.GetRawText())!.AsObject();
+                rewritten["previous_attestation_event_hash"] = dagToLinearHash[dagPrevious.GetString()!];
+                payload = JsonSerializer.SerializeToElement(rewritten);
+            }
+
+            var encoded = FrozenLedgerCanonicalWriter.WriteEvent(
+                item.EventType,
+                payload,
+                previous,
+                sequence);
+            using var document = JsonDocument.Parse(encoded.Bytes.AsSpan()[..^1].ToArray());
+            raw.AddRange(encoded.Bytes);
+            lines.Add(new FrozenLedgerLineSyntax(encoded.Bytes, document.RootElement.Clone()));
+            dagToLinearHash.Add(item.EventHash, encoded.Hash);
+            previous = encoded.Hash;
+        }
+
+        return new FrozenLedgerSyntax(raw.ToImmutable(), lines.ToImmutable());
+    }
 
     internal static FrozenLedgerReferenceSet ScanReferences(
         FrozenLedgerSyntax syntax,

@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace StrataLint.Engine;
 
@@ -221,6 +222,24 @@ public static class FrozenLedgerGenerator
 
 internal static class FrozenLedgerCanonicalWriter
 {
+    private sealed record EnvelopeField(string Name, bool InV1, bool InV2);
+
+    private static readonly EnvelopeField[] EnvelopeFieldTable =
+    {
+        new("event_hash", InV1: true, InV2: true),
+        new("event_type", InV1: true, InV2: true),
+        new("payload", InV1: true, InV2: true),
+        new("previous_hash", InV1: true, InV2: false),
+        new("schema_version", InV1: true, InV2: true),
+        new("sequence", InV1: true, InV2: false),
+    };
+
+    private static readonly string[] V1EnvelopeFields = EnvelopeFieldTable
+        .Where(static field => field.InV1).Select(static field => field.Name).ToArray();
+
+    private static readonly string[] V2EnvelopeFields = EnvelopeFieldTable
+        .Where(static field => field.InV2).Select(static field => field.Name).ToArray();
+
     internal const string ZeroHash = "sha256:0000000000000000000000000000000000000000000000000000000000000000";
 
     internal static string CaseId(FrozenNodeId id) => "active-frozen/" + id.Value[7..];
@@ -420,24 +439,114 @@ internal static class FrozenLedgerCanonicalWriter
         string eventType,
         JsonElement payload,
         string previousHash,
-        int sequence)
+        int sequence) =>
+        WriteEnvelope(eventType, payload, 1, previousHash, sequence);
+
+    internal static (ImmutableArray<byte> Bytes, string Hash) WriteDagEvent(
+        string eventType,
+        JsonElement payload) =>
+        WriteEnvelope(eventType, payload, 2, null, null);
+
+    internal static bool ValidateDagEvent(
+        JsonElement value,
+        out string identity,
+        out string eventHash,
+        out string message)
     {
-        var withoutHash = JsonSerializer.SerializeToElement(new
+        identity = string.Empty;
+        eventHash = string.Empty;
+        message = string.Empty;
+        if (value.ValueKind != JsonValueKind.Object
+            || !HasExactFields(value, V2EnvelopeFields))
         {
-            event_type = eventType,
-            payload,
-            schema_version = 1,
-        });
+            message = "content-addressed event envelope has unknown, missing, or duplicate fields.";
+            return false;
+        }
+
+        var eventType = value.GetProperty("event_type");
+        var payload = value.GetProperty("payload");
+        var schemaVersion = value.GetProperty("schema_version");
+        var claimedHash = value.GetProperty("event_hash");
+        if (eventType.ValueKind != JsonValueKind.String
+            || payload.ValueKind != JsonValueKind.Object
+            || !schemaVersion.TryGetInt32(out var version)
+            || claimedHash.ValueKind != JsonValueKind.String)
+        {
+            message = "content-addressed event envelope has invalid field types.";
+            return false;
+        }
+
+        if (version != 2)
+        {
+            message = "content-addressed event schema_version must be 2.";
+            return false;
+        }
+
+        var encoded = WriteDagEvent(eventType.GetString()!, payload);
+        eventHash = claimedHash.GetString()!;
+        if (!string.Equals(encoded.Hash, eventHash, StringComparison.Ordinal))
+        {
+            message = "event_hash does not match canonical content.";
+            return false;
+        }
+
+        identity = payload.TryGetProperty("frozen_node_id", out var frozenNodeId)
+            && frozenNodeId.ValueKind == JsonValueKind.String
+            ? frozenNodeId.GetString()!
+            : eventHash;
+        return true;
+    }
+
+    private static (ImmutableArray<byte> Bytes, string Hash) WriteEnvelope(
+        string eventType,
+        JsonElement payload,
+        int schemaVersion,
+        string? previousHash,
+        int? sequence)
+    {
+        var withoutHash = Envelope(eventType, payload, schemaVersion, previousHash, sequence, null);
         var hash = FrozenContentHash.Compute(
             FrozenHashDomains.FrozenEvent,
             StructuredCanonicalWriter.WriteJson(withoutHash).AsSpan());
-        var complete = JsonSerializer.SerializeToElement(new
-        {
-            event_hash = hash,
-            event_type = eventType,
-            payload,
-            schema_version = 1,
-        });
+        var complete = Envelope(eventType, payload, schemaVersion, previousHash, sequence, hash);
         return (StructuredCanonicalWriter.WriteJson(complete), hash);
+    }
+
+    private static JsonElement Envelope(
+        string eventType,
+        JsonElement payload,
+        int schemaVersion,
+        string? previousHash,
+        int? sequence,
+        string? eventHash)
+    {
+        var fields = schemaVersion == 1 ? V1EnvelopeFields : V2EnvelopeFields;
+        var envelope = new JsonObject();
+        foreach (var field in fields)
+        {
+            JsonNode? value = field switch
+            {
+                "event_hash" => eventHash,
+                "event_type" => eventType,
+                "payload" => JsonNode.Parse(payload.GetRawText()),
+                "previous_hash" => previousHash,
+                "schema_version" => schemaVersion,
+                "sequence" => sequence,
+                _ => throw new InvalidOperationException("unknown frozen ledger envelope field"),
+            };
+            if (value is not null)
+            {
+                envelope.Add(field, value);
+            }
+        }
+
+        return JsonSerializer.SerializeToElement(envelope);
+    }
+
+    private static bool HasExactFields(JsonElement value, IEnumerable<string> expected)
+    {
+        var actual = value.EnumerateObject().Select(static property => property.Name).ToArray();
+        return actual.Length == actual.Distinct(StringComparer.Ordinal).Count()
+            && actual.Order(StringComparer.Ordinal).SequenceEqual(expected.Order(StringComparer.Ordinal));
     }
 }

@@ -42,6 +42,25 @@ internal sealed class BackfillInventoryDocument
 
     internal IReadOnlyDictionary<string, object?> Root => root;
 
+    internal static BackfillInventoryDocument Create(
+        ImmutableArray<DigestionLedgerSource> sources,
+        ImmutableArray<BackfillTicketReference> tickets)
+    {
+        var ticketIndex = tickets.Select(static ticket => (object?)new Dictionary<string, object?>(StringComparer.Ordinal)
+        {
+            ["case_id"] = ticket.CaseId,
+            ["gid"] = ticket.Gid,
+        }).ToList();
+        var root = new Dictionary<string, object?>(StringComparer.Ordinal)
+        {
+            ["schema_version"] = BackfillInventoryLoader.SchemaVersion,
+            ["ledger"] = BackfillInventoryLoader.LedgerName,
+            ["sources"] = new List<object?>(),
+            ["ticket_index"] = ticketIndex,
+        };
+        return new BackfillInventoryDocument(root, tickets, sources, []);
+    }
+
     internal ImmutableArray<BackfillTicketReference> RequireTickets()
     {
         if (!projectedTickets.IsDefault)
@@ -153,12 +172,12 @@ internal sealed class BackfillInventoryDocument
         return gids.ToImmutable();
     }
 
-    private static DigestionLedgerEntry ParseEntry(
+    internal static DigestionLedgerEntry ParseEntry(
         string sourceId,
         string sourcePath,
         string atomizer,
         object? rawEntry,
-        BackfillReceiptSyntax receiptSyntax)
+        BackfillReceiptSyntax? receiptSyntax)
     {
         var entry = Mapping(rawEntry, $"source {sourceId} entries must be mappings");
         var hasBoundary = entry.ContainsKey("boundary");
@@ -349,6 +368,26 @@ internal static class BackfillInventoryLoader
     internal const int SchemaVersion = 3;
     internal const string LedgerName = "theory-digestion-v1";
 
+    // 一原子一文件的消化台账落位。这三个成员先行加入 base 侧,使后续迁移 PR 的
+    // baseline admission 能识别 Meta/Digestion/backfill/** —— 否则「要认识这片路径
+    // 才能往里放文件,而放文件那次 PR 的法官还不认识它」形成引导死结。
+    // 今天树里还没有这些路径,故本谓词对当前 dev 恒为 false。
+    internal const string RootPath = "Meta/Digestion/backfill/";
+    internal const string TicketIndexPath = "Meta/Digestion/ticket-index.toml";
+
+    internal static bool IsCanonicalPath(string path)
+    {
+        if (string.Equals(path, TicketIndexPath, StringComparison.Ordinal)) return true;
+        if (!path.StartsWith(RootPath, StringComparison.Ordinal)) return false;
+        var parts = path[RootPath.Length..].Split('/');
+        if (parts.Length == 2 && parts[1] == "source.toml") return true;
+        if (parts.Length != 3 || !parts[2].EndsWith(".yaml", StringComparison.Ordinal)) return false;
+        var state = parts[1].Split('-');
+        return state.Length == 2
+            && state[0] is "residual" or "partial" or "absorbed"
+            && state[1] is "closed" or "tail" or "open";
+    }
+
     internal static BackfillInventoryDocument Load(string text)
     {
         if (YamlSubsetParser.Parse(text) is not Dictionary<string, object?> root)
@@ -368,5 +407,273 @@ internal static class BackfillInventoryLoader
         }
 
         return new BackfillInventoryDocument(root, BackfillReceiptPreimage.Extract(text));
+    }
+
+    internal static BackfillInventoryDocument Load(RepositorySnapshot snapshot)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        var hasLegacy = snapshot.TryGetFile(RelativePath, out var legacyFile);
+        var canonicalDirectoryPaths = snapshot.Files.Keys
+            .Where(path => IsCanonicalPath(path.Value))
+            .ToArray();
+        var hasDirectory = canonicalDirectoryPaths.Length > 0;
+
+        if (hasLegacy && hasDirectory)
+        {
+            throw new FormatException("legacy and directory digestion ledgers cannot coexist");
+        }
+
+        if (hasLegacy)
+        {
+            return Load(legacyFile!.Text);
+        }
+
+        if (!hasDirectory)
+        {
+            throw new FormatException("required governance document is missing");
+        }
+
+        foreach (var path in snapshot.Files.Keys
+                     .Where(static path => path.Value.StartsWith(RootPath, StringComparison.Ordinal)))
+        {
+            if (!IsCanonicalPath(path.Value))
+            {
+                throw new FormatException($"noncanonical digestion ledger path: {path.Value}");
+            }
+        }
+
+        return LoadDirectorySnapshot(snapshot);
+    }
+
+    internal static BackfillInventoryDocument LoadDirectory(string repositoryRoot)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
+        var root = Path.GetFullPath(repositoryRoot);
+        var directory = Path.Combine(root, RootPath.Replace('/', Path.DirectorySeparatorChar));
+        var paths = Directory.EnumerateFiles(directory, "*", SearchOption.AllDirectories)
+            .Append(Path.Combine(root, TicketIndexPath.Replace('/', Path.DirectorySeparatorChar)));
+        var raw = RawRepositorySnapshot.Create(paths.Select(path => new RawRepositoryEntry(
+            Path.GetRelativePath(root, path).Replace(Path.DirectorySeparatorChar, '/'),
+            ImmutableArray.CreateRange(File.ReadAllBytes(path)))));
+        return SnapshotDecoder.Decode(raw) switch
+        {
+            SnapshotDecodeOutcome.Decoded decoded => Load(decoded.Snapshot),
+            SnapshotDecodeOutcome.InfrastructureFailure failure =>
+                throw new FormatException(failure.Message),
+        };
+    }
+
+    private static BackfillInventoryDocument LoadDirectorySnapshot(RepositorySnapshot snapshot)
+    {
+        var metadata = snapshot.Files
+            .Where(static pair => pair.Key.Value.StartsWith(RootPath, StringComparison.Ordinal)
+                && pair.Key.Value.EndsWith("/source.toml", StringComparison.Ordinal))
+            .OrderBy(static pair => pair.Key.Value, StringComparer.Ordinal)
+            .ToArray();
+        if (metadata.Length == 0)
+        {
+            throw new FormatException($"digestion backfill directory is missing: {RootPath}");
+        }
+
+        var sources = ImmutableArray.CreateBuilder<DigestionLedgerSource>();
+        foreach (var (metadataPath, metadataFile) in metadata)
+        {
+            var sourceRoot = metadataPath.Value[..^"source.toml".Length];
+            var fields = ParseSourceMetadata(metadataFile.Text, metadataPath.Value);
+            var sourceId = fields["source_id"].Single();
+            if (!string.Equals(sourceRoot, $"{RootPath}{sourceId}/", StringComparison.Ordinal))
+            {
+                throw new FormatException($"source metadata path disagrees with source_id: {metadataPath.Value}");
+            }
+
+            var entries = ImmutableArray.CreateBuilder<DigestionLedgerEntry>();
+            foreach (var (path, file) in snapshot.Files
+                         .Where(pair => pair.Key.Value.StartsWith(sourceRoot, StringComparison.Ordinal)
+                             && pair.Key.Value.EndsWith(".yaml", StringComparison.Ordinal))
+                         .OrderBy(static pair => pair.Key.Value, StringComparer.Ordinal))
+            {
+                var suffix = path.Value[sourceRoot.Length..];
+                var slash = suffix.IndexOf('/');
+                var state = suffix[..slash].Split('-');
+                if (YamlSubsetParser.Parse(file.Text) is not Dictionary<string, object?> entry)
+                {
+                    throw new FormatException($"backfill atom must be a mapping: {path.Value}");
+                }
+
+                var atomId = suffix[(slash + 1)..^".yaml".Length];
+                if (!entry.TryAdd("atom_id", atomId) || !entry.TryAdd("status", new Dictionary<string, object?>(StringComparer.Ordinal)
+                    {
+                        ["migration"] = state[0],
+                        ["truth"] = state[1],
+                    }))
+                {
+                    throw new FormatException($"backfill atom contains path-derived fields: {path.Value}");
+                }
+
+                entries.Add(BackfillInventoryDocument.ParseEntry(
+                    sourceId,
+                    fields["path"].Single(),
+                    fields["atomizer"].Single(),
+                    entry,
+                    null));
+            }
+
+            sources.Add(new DigestionLedgerSource(
+                sourceId,
+                fields["path"].Single(),
+                fields["atomizer"].Single(),
+                fields.GetValueOrDefault("acknowledged_stale", []).ToImmutableArray(),
+                entries.ToImmutable()));
+        }
+
+        var sourceRoots = metadata
+            .Select(static pair => pair.Key.Value[..^"source.toml".Length])
+            .ToArray();
+        foreach (var atomPath in snapshot.Files.Keys
+                     .Where(static path => path.Value.StartsWith(RootPath, StringComparison.Ordinal)
+                         && path.Value.EndsWith(".yaml", StringComparison.Ordinal)))
+        {
+            if (sourceRoots.Count(root => atomPath.Value.StartsWith(root, StringComparison.Ordinal)) != 1)
+            {
+                throw new FormatException(
+                    $"backfill atom is not owned by exactly one source: {atomPath.Value}");
+            }
+        }
+
+        var tickets = snapshot.TryGetFile(TicketIndexPath, out var ticketFile)
+            ? ParseTickets(ticketFile.Text)
+            : throw new FormatException($"digestion ticket index is missing: {TicketIndexPath}");
+        return BackfillInventoryDocument.Create(sources.ToImmutable(), tickets);
+    }
+
+    private static Dictionary<string, List<string>> ParseSourceMetadata(string text, string path)
+    {
+        var result = new Dictionary<string, List<string>>(StringComparer.Ordinal);
+        foreach (var rawLine in text.Split('\n', StringSplitOptions.RemoveEmptyEntries))
+        {
+            var split = rawLine.Split(" = ", 2, StringSplitOptions.None);
+            if (split.Length != 2)
+            {
+                throw new FormatException($"invalid source metadata: {path}");
+            }
+
+            List<string> values;
+            try
+            {
+                values = ParseTomlValues(split[1]);
+            }
+            catch (FormatException) when (split[0] is "source_id" or "path" or "atomizer")
+            {
+                throw new FormatException(
+                    $"source metadata identity fields must be single quoted strings: {path}");
+            }
+
+            if (split[0] is "source_id" or "path" or "atomizer"
+                && split[1].StartsWith('['))
+            {
+                throw new FormatException(
+                    $"source metadata identity fields must be single quoted strings: {path}");
+            }
+
+            if (split[0] == "acknowledged_stale"
+                && (!split[1].StartsWith('[')
+                    || !split[1].EndsWith(']')
+                    || values.Any(string.IsNullOrWhiteSpace)))
+            {
+                throw new FormatException(
+                    $"acknowledged_stale must be a quoted string array without blank elements: {path}");
+            }
+
+            if (!result.TryAdd(split[0], values))
+            {
+                throw new FormatException($"invalid source metadata: {path}");
+            }
+        }
+
+        if (!result.Keys.ToHashSet(StringComparer.Ordinal).SetEquals(
+                result.ContainsKey("acknowledged_stale")
+                    ? ["source_id", "path", "atomizer", "acknowledged_stale"]
+                    : ["source_id", "path", "atomizer"]))
+        {
+            throw new FormatException($"source metadata keys are not canonical: {path}");
+        }
+
+
+        if (result["source_id"].Count != 1
+            || result["path"].Count != 1
+            || result["atomizer"].Count != 1
+            || string.IsNullOrWhiteSpace(result["source_id"][0])
+            || string.IsNullOrWhiteSpace(result["path"][0])
+            || string.IsNullOrWhiteSpace(result["atomizer"][0]))
+        {
+            throw new FormatException(
+                $"source metadata identity fields must be single quoted strings: {path}");
+        }
+
+        return result;
+    }
+
+    private static List<string> ParseTomlValues(string encoded)
+    {
+        if (encoded.StartsWith('[') || encoded.EndsWith(']'))
+        {
+            if (!encoded.StartsWith('[') || !encoded.EndsWith(']'))
+            {
+                throw new FormatException("source metadata values must be quoted strings");
+            }
+
+            var body = encoded[1..^1];
+            if (body.Length == 0) return [];
+            return body.Split(", ", StringSplitOptions.None)
+                .Select(ParseQuotedTomlScalar)
+                .ToList();
+        }
+
+        return [ParseQuotedTomlScalar(encoded)];
+    }
+
+    private static string ParseQuotedTomlScalar(string encoded)
+    {
+        if (encoded.Length < 2
+            || encoded[0] != '"'
+            || encoded[^1] != '"'
+            || encoded.AsSpan(1, encoded.Length - 2).Contains('"'))
+        {
+            throw new FormatException("source metadata values must be quoted strings");
+        }
+
+        return encoded[1..^1];
+    }
+
+    internal static ImmutableArray<BackfillTicketReference> ParseTickets(string text)
+    {
+        var tickets = ImmutableArray.CreateBuilder<BackfillTicketReference>();
+        foreach (var line in text.Split('\n', StringSplitOptions.RemoveEmptyEntries))
+        {
+            var parts = line.Split(" = ", 2, StringSplitOptions.None);
+            if (parts.Length != 2)
+            {
+                throw new FormatException("invalid digestion ticket index");
+            }
+
+            List<string> values;
+            try
+            {
+                values = ParseTomlValues(parts[1]);
+            }
+            catch (FormatException)
+            {
+                throw new FormatException("invalid digestion ticket index");
+            }
+
+            if (values.Count != 1)
+            {
+                throw new FormatException("invalid digestion ticket index");
+            }
+
+            tickets.Add(new BackfillTicketReference(parts[0], values[0]));
+        }
+
+        return tickets.ToImmutable();
     }
 }
