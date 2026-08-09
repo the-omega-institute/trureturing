@@ -371,6 +371,7 @@ case "$COMMAND" in
     install_prepared_formalization_receipt
     step lean-report-refresh make lean-report
     refresh_echo_projection
+    step emit-post-receipt make emit
     step emit-check-final make emit-check BASE="$BASE"
     commit_all_if_needed "formalize: record deposit receipt for $GID"
     ;;
