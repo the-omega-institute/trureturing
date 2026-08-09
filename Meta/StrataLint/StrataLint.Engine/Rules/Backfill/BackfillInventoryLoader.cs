@@ -469,6 +469,19 @@ internal static class BackfillInventoryLoader
         return LoadDirectorySnapshot(snapshot);
     }
 
+    // 磁盘树的双形态入口:与 Load(RepositorySnapshot) 同语义——旧单文件与新目录
+    // 台账二选一;两形态并存由快照路径 Load(RepositorySnapshot) 在规则层拒绝。
+    internal static BackfillInventoryDocument LoadRoot(string repositoryRoot)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
+        var legacyPath = Path.Combine(
+            Path.GetFullPath(repositoryRoot),
+            RelativePath.Replace('/', Path.DirectorySeparatorChar));
+        return File.Exists(legacyPath)
+            ? Load(File.ReadAllText(legacyPath))
+            : LoadDirectory(repositoryRoot);
+    }
+
     internal static BackfillInventoryDocument LoadDirectory(string repositoryRoot)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
