@@ -224,8 +224,8 @@ components:
       - phase1-protected-content-admission
       - phase2-dual-harness-conservative-extension
       - "c0/ceremony-commit convention/this-pr-merge-commit"
-      - "c0/inaugural-certificate sha256/51237ff6d19222cca32f23a863c66dddb128bf0b246bb6c2764010204087920e Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json"
-      - "c0/preimage-tree git-tree/8fb7502377d23fb8811810c88fa68550b2d3c133"
+      - "c0/inaugural-certificate sha256/872c2efefb26d339383c2356cd537e918aae5ee82a41d54ac0a84f95498df845 Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json"
+      - "c0/preimage-tree git-tree/0e715656ea213ab040980c42dcb308ed0d9f54f3"
     judged_by:
       - bootstrap-pr-1
     verification: verified

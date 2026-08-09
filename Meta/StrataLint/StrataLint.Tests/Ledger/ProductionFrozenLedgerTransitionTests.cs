@@ -10,6 +10,17 @@ public sealed partial class ProductionEnvironmentTests
 {
     private const string AcceptedPrefix = FrozenLedgerChangeClassifier.AcceptedRoot + "/";
 
+    // 文件名约定:裸摘要,不含 "sha256:" 前缀。冒号在 Windows 上是保留字符,
+    // 且仓内 CAS 先例 Meta/Digestion/atoms/sha256/<64hex> 同样是裸摘要。
+    [Fact]
+    public void AcceptedFileNameCarriesTheBareDigestWithoutTheAlgorithmPrefix()
+    {
+        var digest = new string('a', 64);
+        var identity = "sha256:" + digest;
+        Assert.Equal(digest + ".json", FrozenLedgerChangeClassifier.AcceptedFileName(identity));
+        Assert.DoesNotContain(':', FrozenLedgerChangeClassifier.AcceptedPath(identity));
+    }
+
     [Fact]
     public void ProductionValidatorAcceptsContentAddressedLedgerMigration()
     {
@@ -392,7 +403,7 @@ public sealed partial class ProductionEnvironmentTests
                 JsonSerializer.SerializeToElement(payload));
             oldToNew.Add(item["event_hash"]!.GetValue<string>(), encoded.Hash);
             var identity = payload["frozen_node_id"]?.GetValue<string>() ?? encoded.Hash;
-            fixture.CurrentFiles[AcceptedPrefix + identity + ".json"] =
+            fixture.CurrentFiles[FrozenLedgerChangeClassifier.AcceptedPath(identity)] =
                 Encoding.UTF8.GetString(encoded.Bytes.AsSpan());
         }
 
@@ -436,7 +447,7 @@ public sealed partial class ProductionEnvironmentTests
         if (node["payload"]!["frozen_node_id"] is null)
         {
             fixture.CurrentFiles.Remove(path);
-            fixture.CurrentFiles[AcceptedPrefix + encoded.Hash + ".json"] = text;
+            fixture.CurrentFiles[FrozenLedgerChangeClassifier.AcceptedPath(encoded.Hash)] = text;
         }
         else
         {
@@ -449,7 +460,7 @@ public sealed partial class ProductionEnvironmentTests
         var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(
             node["event_type"]!.GetValue<string>(),
             JsonSerializer.SerializeToElement(node["payload"]));
-        fixture.CurrentFiles[AcceptedPrefix + identity + ".json"] =
+        fixture.CurrentFiles[FrozenLedgerChangeClassifier.AcceptedPath(identity)] =
             Encoding.UTF8.GetString(encoded.Bytes.AsSpan());
     }
 
