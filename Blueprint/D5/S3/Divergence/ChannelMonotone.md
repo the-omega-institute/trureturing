@@ -14,11 +14,11 @@ $$\begin{gathered}\forall X, Y\ [\operatorname{Fintype}(X)] [\operatorname{Nonem
 
 *Commentary.*
 
-Let X and Y be finite types, with X nonempty. Let p and q be strictly positive normalized real mass functions on X, and let W be a strictly positive stochastic kernel from X to Y, meaning that every row sums to one. These are exactly the hypotheses required by the wave-3 identity; nothing beyond them is assumed.
+Let X and Y be finite types, with X nonempty. Let p and q be strictly positive normalized real mass functions on X, and let W be a strictly positive stochastic kernel from X to Y, meaning that every row sums to one. These are exactly the hypotheses required by D5/S3/Divergence/DpiDefect.dpi_defect_nonneg; nothing beyond them is assumed.
 
-This theorem is a composition of repository results, not new divergence machinery. The wave-3 identity D5/S3/Divergence/ClassicalDPI.classical_dpi_identity supplies the exact decomposition of input divergence into output divergence plus an output-weighted sum of posterior divergences. The Grandmother theorem D5/S3/Divergence/GrandmotherTheorem.kl_divergence_nonneg supplies nonnegativity of each posterior divergence, and Finset.sum_nonneg combines those pointwise bounds.
+This module restates D5/S3/Divergence/DpiDefect.dpi_defect_nonneg in inequality form. The proof of the mathematical content lives in DpiDefect. ChannelMonotone only converts its nonnegative defect conclusion into the equivalent output-at-most-input inequality.
 
-The Grandmother theorem's premises are discharged, not assumed: each posterior is strictly positive and sums to one, proved directly from the definitions and positivity of the output mass. Its absolute-continuity premise is trivial because the second posterior is strictly positive.
+This module is a redundant re-proof: the same proposition was already frozen as D5/S3/Divergence/DpiDefect.dpi_defect_nonneg before this module was deposited. The theorem remains true and machine-verified; the redundancy lies in this module, not in the mathematics. It is retained, rather than removed, only because the frozen ledger currently has no revoke writer (issue #1030); removal is the resolution that CLAUDE.md 第6条 would require. Therefore, this module is a documented compromise and does not by itself satisfy 唯一真源 / single source of truth. Readers and downstream work should depend on D5/S3/Divergence/DpiDefect.dpi_defect_nonneg, not on this module.
 
 This is the data-processing inequality that wave 11's D5/S3/Divergence/MarginalMonotone module explicitly did not claim. At the level of the data-processing operation, wave 11's first-coordinate marginalization is the special case of forgetting a coordinate. Its deterministic forgetting kernel has zero transition probabilities, so the wave-11 theorem is proved separately rather than by instantiating this theorem.
 
@@ -29,5 +29,4 @@ The remaining limits are full-support requirements: strict positivity of the ker
 ## References
 
 - Truth anchor: `D5/S3/Divergence/ChannelMonotone.kl_divergence_channel_le`
-- Dependency: [D5/S3/Divergence/ClassicalDPI](ClassicalDPI.md)
-- Dependency: [D5/S3/Divergence/GrandmotherTheorem](GrandmotherTheorem.md)
+- Dependency: [D5/S3/Divergence/DpiDefect](DpiDefect.md)
