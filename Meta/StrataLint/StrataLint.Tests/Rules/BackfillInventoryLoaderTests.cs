@@ -6,6 +6,26 @@ namespace StrataLint.Tests;
 
 public sealed class BackfillInventoryLoaderTests
 {
+    [Theory]
+    [InlineData("Meta/Digestion/ticket-index.toml")]
+    [InlineData("Meta/Digestion/backfill/delta-v0.1/source.toml")]
+    [InlineData("Meta/Digestion/backfill/delta-v0.1/residual-open/atom-0dca.yaml")]
+    [InlineData("Meta/Digestion/backfill/delta-v0.1/partial-closed/atom-0f28.yaml")]
+    [InlineData("Meta/Digestion/backfill/epsilon-v0.1/absorbed-tail/atom.yaml")]
+    public void CanonicalDigestionLedgerPathsAreRecognized(string path)
+        => Assert.True(BackfillInventoryLoader.IsCanonicalPath(path));
+
+    [Theory]
+    [InlineData("Meta/Digestion/backfill/delta-v0.1/residual-open/atom.txt")]
+    [InlineData("Meta/Digestion/backfill/delta-v0.1/pending-open/atom.yaml")]
+    [InlineData("Meta/Digestion/backfill/delta-v0.1/residual-frozen/atom.yaml")]
+    [InlineData("Meta/Digestion/backfill/delta-v0.1/residual-open/nested/atom.yaml")]
+    [InlineData("Meta/Digestion/backfill/delta-v0.1/notes.toml")]
+    [InlineData("Meta/Digestion/ticket-index.yaml")]
+    [InlineData("Meta/BACKFILL.yaml")]
+    public void NoncanonicalDigestionLedgerPathsAreRejected(string path)
+        => Assert.False(BackfillInventoryLoader.IsCanonicalPath(path));
+
     [Fact]
     public void MissingCasRefIsRejected()
     {
