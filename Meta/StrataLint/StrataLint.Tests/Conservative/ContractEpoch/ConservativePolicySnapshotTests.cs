@@ -92,6 +92,31 @@ public sealed class ConservativePolicySnapshotTests
     }
 
     [Fact]
+    public void FrozenLedgerStorageMigrationPreservesSl008DescriptorRoot()
+    {
+        var sl008 = Assert.Single(
+            ConservativePolicySnapshot.Current().RuleObligations,
+            item => item.RuleId == "SL-008");
+
+        Assert.Equal(
+            "sha256:1dcf5e1f74a961aa05f68a2332edd8de824de10a58875f9cde05589d947ed7f1",
+            sl008.DescriptorRoot);
+    }
+
+    [Fact]
+    public void FrozenLedgerStorageMigrationHasNoContractPolicyDelta()
+    {
+        var before = ConservativePolicySnapshot.Current();
+        var after = ConservativePolicySnapshot.Current();
+
+        var delta = ContractEpochVerifier.ComputePolicyDelta(before, after);
+
+        Assert.Empty(delta.RetiredExactPaths);
+        Assert.Empty(delta.RetiredRuleObligations);
+        Assert.Empty(delta.OpaqueRetirements);
+    }
+
+    [Fact]
     public void Sl023IsAnActiveObserveObligationDuringTheExpandEpoch()
     {
         var current = ConservativePolicySnapshot.Current();
