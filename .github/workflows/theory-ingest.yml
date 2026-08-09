@@ -140,6 +140,7 @@ jobs:
 
       - name: Produce base canonical Lean report on cache miss
         if: steps.lean-report-cache.outputs.cache-hit != 'true'
+        timeout-minutes: 15
         shell: bash
         run: |
           set -euo pipefail
@@ -203,7 +204,7 @@ jobs:
           git clean -fd -- Meta/StrataLint
           changed="$(git status --porcelain)"
           if [ -z "$changed" ]; then echo "ingest no-op"; exit 0; fi
-          bad="$(git status --porcelain | grep -vE '^.. (Meta/BACKFILL\.yaml|Meta/Digestion/atoms/.*|Generated/echo-residual-summary\.md)$' || true)"
+          bad="$(git status --porcelain | grep -vE '^.. (Meta/Digestion/atoms/.*|Generated/echo-residual-summary\.md)$' || true)"
           if [ -n "$bad" ]; then
             echo "::error::ingest touched paths outside whitelist:"; echo "$bad"; exit 1
           fi

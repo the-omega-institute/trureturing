@@ -423,12 +423,21 @@ public sealed partial class MakeWorkflowTests
         var producerIndex = workflow.IndexOf(
             "- name: Produce base canonical Lean report on cache miss",
             StringComparison.Ordinal);
+        var producerEndIndex = workflow.IndexOf(
+            "      - name: ",
+            producerIndex + "      - name: ".Length,
+            StringComparison.Ordinal);
         Assert.True(producerIndex > restoreIndex, "a cache miss must produce in the ingest job");
+        Assert.True(producerEndIndex > producerIndex, "the cache-miss producer must be a bounded step");
         Assert.True(verifyIndex > producerIndex, "both restored and fresh reports must be verified");
+        Assert.Contains(
+            "timeout-minutes: 15",
+            workflow[producerIndex..producerEndIndex],
+            StringComparison.Ordinal);
         Assert.Single(Regex.Matches(workflow, "id: lean-report-cache"));
         Assert.Single(Regex.Matches(workflow, "key: stratalint-canonical-lean-report-v1-"));
         Assert.Contains("steps.lean-report-cache.outputs.cache-hit != 'true'", workflow, StringComparison.Ordinal);
-        Assert.DoesNotContain("sleep 360", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("sleep " + "360", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("lookup-only: true", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("fail-on-cache-miss: true", workflow, StringComparison.Ordinal);
         Assert.Contains("steps.lean-report-input.outputs.address", admissionCacheKey, StringComparison.Ordinal);
@@ -509,6 +518,7 @@ public sealed partial class MakeWorkflowTests
 
         var commit = workflow[commitIndex..];
         Assert.Contains("GH_TOKEN: ${{ github.token }}", commit, StringComparison.Ordinal);
+        Assert.DoesNotContain("BACKFILL", commit, StringComparison.Ordinal);
         Assert.Contains("gh auth setup-git", commit, StringComparison.Ordinal);
         var restoreOverlayIndex = commit.IndexOf(
             "git restore --source=HEAD -- Meta/StrataLint Makefile global.json",
