@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 # Watch supervision runtime, sourced only by the canonical pr-shepherd entrypoint.
 
+WATCH_RESTART_MAX_ATTEMPTS="${WATCH_RELOAD_FETCH_MAX_ATTEMPTS:-3}"
+WATCH_RESTART_BACKOFF_BASE_SECONDS="${WATCH_RELOAD_FETCH_BACKOFF_BASE_SECONDS:-1}"
+WATCH_RESTART_DECISION_ARTIFACT="$STATE_DIR/watch-restart-decisions.jsonl"
+WATCH_START_OUTCOME=not-run
+
 load_watch_state() {
   local line key value seen=" " schema="" pid="" process_start="" canonical_script=""
   local loaded_script="" loaded_blob="" interval="" max_cycles=""
@@ -141,6 +146,121 @@ watch_status() {
     "$WATCH_STATE_LAST_PROGRESS_AT" "$WATCH_STATE_STEP_DEADLINE_AT" "$WATCH_STATE_CYCLE" "$WATCH_STATE_TERMINAL_EXIT"
 }
 
+watch_status_reason() {
+  local line="${1%%$'\n'*}" reason
+  if [[ "$line" == *" reason="* ]]; then
+    reason="${line#* reason=}"
+    reason="${reason%% *}"
+  elif [[ "$line" == status=alive\ * ]]; then
+    reason=alive
+  else
+    reason=unparseable
+  fi
+  [[ "$reason" =~ ^[a-z0-9-]+$ ]] || reason=unparseable
+  printf '%s\n' "$reason"
+}
+
+# 0=owner is absent or provably gone, 1=owner is live, 2=owner is unverifiable.
+watch_restart_owner_status() {
+  local rc
+  if [[ ! -e "$PIDFILE.lock" ]]; then
+    WATCH_RESTART_OWNER_STATUS=no-owner
+    return 0
+  fi
+  if watch_lease_owner_status "$PIDFILE.lock"; then rc=0; else rc=$?; fi
+  case "$rc" in
+    0) WATCH_RESTART_OWNER_STATUS=live; return 1 ;;
+    1) WATCH_RESTART_OWNER_STATUS=owner-gone; return 0 ;;
+    *) WATCH_RESTART_OWNER_STATUS=unverifiable; return 2 ;;
+  esac
+}
+
+record_watch_restart_decision() {
+  local action="$1" decision_reason="$2" status_exit="$3" status_reason="$4"
+  local owner_status="$5" attempt="$6" now value
+  for value in "$action" "$decision_reason" "$status_reason" "$owner_status"; do
+    [[ "$value" =~ ^[a-z0-9-]+$ ]] || return 1
+  done
+  [[ "$status_exit" =~ ^[0-9]+$ && "$attempt" =~ ^[1-9][0-9]*$ \
+      && "$WATCH_RESTART_MAX_ATTEMPTS" =~ ^[1-9][0-9]*$ ]] || return 1
+  now="$(date '+%s')" || return 1
+  [[ "$now" =~ ^[0-9]+$ ]] || return 1
+  mkdir -p "$STATE_DIR" || return 1
+  if ! (umask 077; printf \
+      '{"schema":"pr-watch-restart-decision-v1","at":%s,"action":"%s","decision_reason":"%s","status_exit":%s,"status_reason":"%s","owner_status":"%s","attempt":%s,"max_attempts":%s}\n' \
+      "$now" "$action" "$decision_reason" "$status_exit" "$status_reason" \
+      "$owner_status" "$attempt" "$WATCH_RESTART_MAX_ATTEMPTS" \
+      >> "$WATCH_RESTART_DECISION_ARTIFACT"); then
+    return 1
+  fi
+  log "WATCH_SUPERVISOR_DECISION artifact=$WATCH_RESTART_DECISION_ARTIFACT action=$action reason=$decision_reason status_exit=$status_exit status_reason=$status_reason owner_status=$owner_status attempt=$attempt/$WATCH_RESTART_MAX_ATTEMPTS"
+}
+
+supervise_watch() {
+  local interval="${1:-60}" max="${2:-360}" attempt status_output status_rc
+  local status_reason owner_rc owner_status decision_reason start_rc delay
+  [[ "$interval" =~ ^(0|[1-9][0-9]*)$ && "$max" =~ ^[1-9][0-9]*$ ]] \
+    || { log "WATCH invalid interval or max_cycles (interval=$interval max_cycles=$max)"; return 2; }
+  for ((attempt = 1; attempt <= WATCH_RESTART_MAX_ATTEMPTS; attempt++)); do
+    if status_output="$(watch_status)"; then status_rc=0; else status_rc=$?; fi
+    status_reason="$(watch_status_reason "$status_output")"
+    case "$status_rc" in
+      0)
+        record_watch_restart_decision refuse already-alive "$status_rc" \
+          "$status_reason" live "$attempt" \
+          || { log "WATCH supervisor refused: decision artifact unavailable"; return 1; }
+        log "WATCH supervisor no restart status=alive"
+        return 0
+        ;;
+      1)
+        owner_status=live
+        [[ "$status_reason" == owner-unverifiable ]] && owner_status=unverifiable
+        record_watch_restart_decision refuse stalled "$status_rc" \
+          "$status_reason" "$owner_status" "$attempt" \
+          || { log "WATCH supervisor refused: decision artifact unavailable"; return 1; }
+        log "WATCH supervisor refused status=stalled reason=$status_reason owner_status=$owner_status"
+        return 1
+        ;;
+      2)
+        if watch_restart_owner_status; then owner_rc=0; else owner_rc=$?; fi
+        owner_status="$WATCH_RESTART_OWNER_STATUS"
+        if [[ "$owner_rc" != 0 ]]; then
+          if [[ "$owner_rc" == 1 ]]; then decision_reason=owner-live
+          else decision_reason=owner-unverifiable
+          fi
+          record_watch_restart_decision refuse "$decision_reason" "$status_rc" \
+            "$status_reason" "$owner_status" "$attempt" \
+            || { log "WATCH supervisor refused: decision artifact unavailable"; return 1; }
+          log "WATCH supervisor refused status=dead reason=$status_reason owner_status=$owner_status"
+          return 1
+        fi
+        record_watch_restart_decision restart verified-owner-gone "$status_rc" \
+          "$status_reason" "$owner_status" "$attempt" \
+          || { log "WATCH supervisor refused: decision artifact unavailable"; return 1; }
+        if start_watch "$interval" "$max"; then
+          log "WATCH supervisor restart complete attempt=$attempt/$WATCH_RESTART_MAX_ATTEMPTS outcome=$WATCH_START_OUTCOME"
+          return 0
+        else
+          start_rc=$?
+        fi
+        if [[ "$attempt" -eq "$WATCH_RESTART_MAX_ATTEMPTS" ]]; then
+          log "WATCH supervisor exhausted class=retryable step=start attempt=$attempt/$WATCH_RESTART_MAX_ATTEMPTS start_exit=$start_rc"
+          return 1
+        fi
+        delay=$((WATCH_RESTART_BACKOFF_BASE_SECONDS * (1 << (attempt - 1))))
+        log "WATCH supervisor retryable step=start attempt=$attempt/$WATCH_RESTART_MAX_ATTEMPTS start_exit=$start_rc retry_in_seconds=$delay"
+        sleep "$delay"
+        ;;
+      *)
+        record_watch_restart_decision refuse status-exit-unrecognized "$status_rc" \
+          "$status_reason" unverifiable "$attempt" \
+          || log "WATCH supervisor refused: decision artifact unavailable"
+        return 1
+        ;;
+    esac
+  done
+}
+
 cleanup_watch() {
   [[ -z "$WATCH_LOCK_CANDIDATE" ]] \
     || rm -f "$WATCH_LOCK_CANDIDATE" 2>/dev/null || true
@@ -242,15 +362,18 @@ run_sweep_bounded() {
 start_watch() {
   local interval="${1:-60}" max="${2:-360}" launched_pid deadline now status_rc
   local runtime_stdout runtime_stderr
+  WATCH_START_OUTCOME=not-run
   [[ "$interval" =~ ^(0|[1-9][0-9]*)$ && "$max" =~ ^[1-9][0-9]*$ ]] \
     || { log "WATCH invalid interval or max_cycles (interval=$interval max_cycles=$max)"; return 2; }
   if watch_status >/dev/null 2>&1; then
+    WATCH_START_OUTCOME=already-alive
     printf 'state=%s status_command=/bin/bash %s status\n' "$PIDFILE" "$SCRIPT_PATH"
     return 0
   else
     status_rc=$?
   fi
   if [[ "$status_rc" == 1 ]]; then
+    WATCH_START_OUTCOME=stalled
     log "WATCH start rejected: existing worker is stalled"
     return 1
   fi
@@ -266,6 +389,7 @@ start_watch() {
   deadline=$((now + API_TIMEOUT_SECONDS))
   while [[ "$now" -le "$deadline" ]]; do
     if watch_status >/dev/null 2>&1; then
+      WATCH_START_OUTCOME=started
       disown "$launched_pid" 2>/dev/null || true
       printf 'state=%s status_command=/bin/bash %s status\n' "$PIDFILE" "$SCRIPT_PATH"
       return 0
@@ -273,12 +397,14 @@ start_watch() {
     if ! kill -0 "$launched_pid" 2>/dev/null; then
       wait "$launched_pid" 2>/dev/null || true
       log "WATCH start failed before ready state=$PIDFILE"
+      WATCH_START_OUTCOME=failed-before-ready
       return 1
     fi
     sleep 0.1
     now="$(date '+%s')"
   done
   terminate_process_tree "$launched_pid"
+  WATCH_START_OUTCOME=readiness-timeout
   log "WATCH start timeout_seconds=$API_TIMEOUT_SECONDS state=$PIDFILE"
   return 1
 }
