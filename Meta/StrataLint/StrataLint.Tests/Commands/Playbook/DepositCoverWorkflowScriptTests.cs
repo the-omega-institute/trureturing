@@ -44,7 +44,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.DoesNotContain(TransactionFixture.ReceiptRelativePath, phaseA);
 
         var phaseB = fixture.CommitPaths("HEAD");
-        Assert.Contains(TransactionFixture.LedgerPath, phaseB);
+        Assert.Contains(
+            phaseB,
+            path => path.StartsWith(TransactionFixture.LedgerPath + "/", StringComparison.Ordinal));
         Assert.Contains(TransactionFixture.ReceiptRelativePath, phaseB);
     }
 
@@ -119,8 +121,44 @@ public sealed partial class DepositCoverWorkflowScriptTests
 
         var result = fixture.Run("deposit");
 
-        Assert.NotEqual(0, result.ExitCode);
+        Assert.True(result.ExitCode == 0, Diagnostics(result));
         Assert.Equal(1, fixture.CallKinds().Count(call => call == "dotnet:ledger-append"));
+        Assert.Equal(2, fixture.FreezeCount());
+    }
+
+    [Fact]
+    public void DepositReplaysReattestationsInCausalOrderInsteadOfFileNameOrder()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TransactionFixture();
+        fixture.WriteActiveReattestationChainInReverseFileNameOrder();
+
+        var result = fixture.Run("deposit");
+
+        Assert.True(result.ExitCode == 0, Diagnostics(result));
+        Assert.Contains(
+            "module-already-frozen",
+            Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.Ordinal);
+        Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
+        Assert.Equal(1, fixture.FreezeCount());
+    }
+
+    [Fact]
+    public void DepositRejectsCyclicReattestationChainWithoutHanging()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TransactionFixture();
+        fixture.WriteCyclicReattestationChain();
+
+        var result = fixture.Run("deposit", timeout: TimeSpan.FromSeconds(1));
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains(
+            "Reattest chain contains a cycle",
+            Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.Ordinal);
+        Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
     }
 
     [Fact]
@@ -231,7 +269,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         internal const string DefinitionPath = "Blueprint/D5/S0/Carrier/Probe.scribe.cs";
         internal const string EmissionPath = "Blueprint/D5/S0/Carrier/Probe.md";
         internal const string EchoPath = "Generated/echo-residual-summary.md";
-        internal const string LedgerPath = "Meta/StrataLint/Golden/Frozen/events.jsonl";
+        internal const string LedgerPath = "Meta/StrataLint/Golden/Frozen/accepted";
         internal const string BackfillPath = "Meta/BACKFILL.yaml";
         internal const string ReceiptRelativePath = "Meta/Digestion/formalizations/atom-1.v1.json";
 
@@ -252,7 +290,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
             WriteFile(DefinitionPath, "definition baseline\n");
             WriteFile(EmissionPath, "emission: baseline\n");
             WriteFile(EchoPath, "echo: baseline\n");
-            WriteFile(LedgerPath, string.Empty);
+            Directory.CreateDirectory(Path.Combine(Root, LedgerPath));
             WriteFile(BackfillPath, $"atom_id: {AtomId}\ncoverage: false\naligned: false\n");
             WriteMakeStub();
             WriteDotnetStub();
@@ -306,7 +344,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                     affected_frozen_node_ids = new[] { frozenNodeId },
                 },
             });
-            WriteFile(LedgerPath, freeze + "\n" + revoke + "\n");
+            WriteLedger(freeze, revoke);
         }
 
         internal void WriteActiveFreeze(string descriptorBlobOid)
@@ -323,7 +361,74 @@ public sealed partial class DepositCoverWorkflowScriptTests
                     node_path = LeanPath,
                 },
             });
-            WriteFile(LedgerPath, freeze + "\n");
+            WriteLedger(freeze);
+        }
+
+        internal void WriteActiveReattestationChainInReverseFileNameOrder()
+        {
+            const string caseId = "active-frozen/replayed-probe";
+            const string freezeHash =
+                "sha256:1111111111111111111111111111111111111111111111111111111111111111";
+            const string earlierReattestHash =
+                "sha256:2222222222222222222222222222222222222222222222222222222222222222";
+            var currentDescriptorBlobOid = "git-sha1:" + Git("hash-object", "--", LeanPath).Trim();
+            var freeze = JsonSerializer.Serialize(new
+            {
+                event_hash = freezeHash,
+                event_type = "Freeze",
+                payload = new
+                {
+                    case_id = caseId,
+                    frozen_node_id =
+                        "sha256:f000000000000000000000000000000000000000000000000000000000000000",
+                    input = new
+                    {
+                        descriptor_blob_oid =
+                            "git-sha1:0000000000000000000000000000000000000000",
+                    },
+                    node_path = LeanPath,
+                },
+            });
+            var earlierReattest = ReattestEvent(
+                caseId,
+                earlierReattestHash,
+                freezeHash,
+                "sha256:2000000000000000000000000000000000000000000000000000000000000000",
+                "git-sha1:1111111111111111111111111111111111111111");
+            var latestReattest = ReattestEvent(
+                caseId,
+                "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+                earlierReattestHash,
+                "sha256:1000000000000000000000000000000000000000000000000000000000000000",
+                currentDescriptorBlobOid);
+            WriteLedger(
+                ("1000000000000000000000000000000000000000000000000000000000000000.json", latestReattest),
+                ("2000000000000000000000000000000000000000000000000000000000000000.json", earlierReattest),
+                ("f000000000000000000000000000000000000000000000000000000000000000.json", freeze));
+        }
+
+        internal void WriteCyclicReattestationChain()
+        {
+            const string firstHash =
+                "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            const string secondHash =
+                "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
+            const string caseId = "active-frozen/cyclic-probe";
+            var first = ReattestEvent(
+                caseId,
+                firstHash,
+                secondHash,
+                firstHash,
+                "git-sha1:0000000000000000000000000000000000000000");
+            var second = ReattestEvent(
+                caseId,
+                secondHash,
+                firstHash,
+                secondHash,
+                "git-sha1:1111111111111111111111111111111111111111");
+            WriteLedger(
+                ("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json", first),
+                ("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.json", second));
         }
 
         internal void LeaveInterruptedTemporaryFiles()
@@ -336,7 +441,8 @@ public sealed partial class DepositCoverWorkflowScriptTests
             string command,
             bool failEcho = false,
             bool staleReport = false,
-            bool invalidReceipt = false) =>
+            bool invalidReceipt = false,
+            TimeSpan? timeout = null) =>
             BoundedProcessRunner.Run(
                 "/usr/bin/env",
                 [
@@ -353,19 +459,56 @@ public sealed partial class DepositCoverWorkflowScriptTests
                     Gid,
                 ],
                 Root,
-                TimeSpan.FromSeconds(30),
+                timeout ?? TimeSpan.FromSeconds(30),
                 128 * 1024);
 
         internal int CommitCount() => int.Parse(Git("rev-list", "--count", "HEAD").Trim());
 
-        internal int FreezeCount() => File.ReadAllLines(Path.Combine(Root, LedgerPath))
-            .Count(line =>
+        internal int FreezeCount() => Directory.EnumerateFiles(Path.Combine(Root, LedgerPath), "*.json")
+            .Count(path =>
             {
-                using var document = JsonDocument.Parse(line);
+                using var document = JsonDocument.Parse(File.ReadAllText(path));
                 var root = document.RootElement;
                 return root.GetProperty("event_type").GetString() == "Freeze"
                     && root.GetProperty("payload").GetProperty("node_path").GetString() == LeanPath;
             });
+
+        private static string ReattestEvent(
+            string caseId,
+            string eventHash,
+            string previousHash,
+            string frozenNodeId,
+            string descriptorBlobOid) =>
+            JsonSerializer.Serialize(new
+            {
+                event_hash = eventHash,
+                event_type = "Reattest",
+                payload = new
+                {
+                    case_id = caseId,
+                    frozen_node_id = frozenNodeId,
+                    input = new { descriptor_blob_oid = descriptorBlobOid },
+                    previous_attestation_event_hash = previousHash,
+                },
+            });
+
+        private void WriteLedger(params string[] events)
+        {
+            WriteLedger(events.Select(static (json, index) => ($"fixture-{index}.json", json)).ToArray());
+        }
+
+        private void WriteLedger(params (string FileName, string Json)[] events)
+        {
+            var directory = Path.Combine(Root, LedgerPath);
+            foreach (var path in Directory.EnumerateFiles(directory, "*.json")) File.Delete(path);
+            foreach (var (fileName, json) in events)
+            {
+                File.WriteAllText(
+                    Path.Combine(directory, fileName),
+                    json + "\n",
+                    new UTF8Encoding(false));
+            }
+        }
 
         internal string[] Status() => Git("status", "--porcelain=v1")
             .Split('\n', StringSplitOptions.RemoveEmptyEntries);

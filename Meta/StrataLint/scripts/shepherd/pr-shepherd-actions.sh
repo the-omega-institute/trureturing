@@ -1,4 +1,12 @@
 # PR open/recalculation actions sourced only by the canonical pr-shepherd entrypoint.
+run_ledger_cli() {
+  local workspace="$1" isolated_home="$2" command="$3"
+  run_credentialless_bounded "$command" "$isolated_home" \
+    /bin/bash -c 'cd "$1"; shift; exec "$@"' pr-shepherd-workspace "$workspace" \
+      dotnet run --project Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj \
+      --configuration Release -- "$command" \
+      --candidate-lean-report .lake/build/stratalint/raw-lean-report.json
+}
 run_credentialless_bounded() {
   local step="$1" isolated_home="$2"
   shift 2
@@ -88,12 +96,7 @@ has_expiry_fingerprint() {
     && "$out" == *"residual"* ]]
 }
 # Conflicts a machine can settle by rebuilding rather than by reading intent. Generated
-# paths are classified by FILEMAP, the repository's typed ownership source. The frozen
-# ledger belongs here separately even though it is append-only source: two lanes that each
-# freeze a module always collide textually, yet the correct result is never a hand-merge of the two
-# tails -- it is the dev tail plus this branch's freeze re-attested from its own Lean report,
-# which run_derivation_chain does below. Without this, every D5 delivery whose sibling merges
-# first stalls as "needs a semantic merge" and waits for a human that this harness has none of.
+# paths are classified by FILEMAP, the repository's typed ownership source.
 DERIVED_FILEMAP_PATTERNS_LOADED=0
 DERIVED_FILEMAP_PATTERNS=()
 load_derived_filemap_patterns() {
@@ -123,7 +126,6 @@ load_derived_filemap_patterns() {
 }
 is_derived_conflict() {
   local path="$1" pattern
-  [[ "$path" == "$FROZEN_LEDGER_PATH" ]] && return 0
   load_derived_filemap_patterns || return 1
   for pattern in "${DERIVED_FILEMAP_PATTERNS[@]}"; do
     [[ "$path" == $pattern ]] && return 0
@@ -219,7 +221,6 @@ prepare_worktree() {
 merge_dev() {
   local num="$1" head="$2" workspace="$3" merge_rc path source_conflict=0 conflict_count=0
   local conflicts unresolved merge_head
-  FROZEN_LEDGER_CONFLICT=0
   set +e
   run_git_bounded merge "$workspace" \
     -c core.hooksPath=/dev/null \
@@ -245,9 +246,6 @@ merge_dev() {
     while IFS= read -r -d '' path; do
       conflict_count=$((conflict_count + 1))
       if is_derived_conflict "$path"; then
-        if [[ "$path" == "$FROZEN_LEDGER_PATH" ]]; then
-          FROZEN_LEDGER_CONFLICT=1
-        fi
         if run_git_bounded conflict-stage "$workspace" cat-file -e ":3:$path" 2>/dev/null; then
           run_git_bounded conflict-checkout "$workspace" checkout --theirs -- "$path" \
             && run_git_bounded conflict-add "$workspace" add -- "$path" || {
@@ -302,12 +300,7 @@ merge_dev() {
 run_derivation_chain() {
   local num="$1" workspace="$2" projection isolated_home
   isolated_home="$(mktemp -d "${TMPDIR:-/tmp}/pr-shepherd-derivation.XXXXXXXX")"
-  if [[ "$FROZEN_LEDGER_CONFLICT" -eq 1 ]]; then
-    if ! reconcile_frozen_ledger "$num" "$workspace" "$isolated_home"; then
-      rm -rf "$isolated_home"
-      return 1
-    fi
-  elif ! run_credentialless_bounded lean-report "$isolated_home" \
+  if ! run_credentialless_bounded lean-report "$isolated_home" \
       make -C "$workspace" --no-print-directory lean-report; then
       set_bounded_failure lean-report
       rm -rf "$isolated_home"
@@ -338,10 +331,7 @@ run_derivation_chain() {
     return 1
   fi
   mv "$projection" "$workspace/Generated/echo-residual-summary.md"
-  # A non-conflicting lane freezes last. A conflicting ledger was already rebuilt from the
-  # dev prefix and re-attested by reconcile_frozen_ledger.
-  if [[ "$FROZEN_LEDGER_CONFLICT" -eq 0 ]] \
-      && ! run_ledger_cli "$workspace" "$isolated_home" ledger-append; then
+  if ! run_ledger_cli "$workspace" "$isolated_home" ledger-append; then
     set_bounded_failure ledger-append
     rm -rf "$isolated_home"
     log "SWEEP #$num ledger-append 失败,不 push"; return 1

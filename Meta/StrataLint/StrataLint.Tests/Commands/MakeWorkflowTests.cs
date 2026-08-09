@@ -34,12 +34,31 @@ public sealed partial class MakeWorkflowTests
     private const string PerfEventScriptPath = "Meta/StrataLint/scripts/perf-event-lib.sh";
     private const string AdmissionWorkflowPath = ".github/workflows/ci.yml";
     private const string TheoryIngestWorkflowPath = ".github/workflows/theory-ingest.yml";
+    private const string C0CeremonyWorkflowPath = ".github/workflows/c0-ceremony.yml";
     private const string EchoResidualSummaryPath = "Generated/echo-residual-summary.md";
     private const string PrShepherdScriptPath = "Meta/StrataLint/scripts/pr-shepherd.sh";
     private const string PrShepherdLeaseScriptPath =
         "Meta/StrataLint/scripts/shepherd/pr-shepherd-lease.sh";
     private const string PrShepherdActionsScriptPath =
         "Meta/StrataLint/scripts/shepherd/pr-shepherd-actions.sh";
+
+    [Fact]
+    public void C0CeremonyReconcilesAndRechecksBeforeAcceptingANoOp()
+    {
+        var root = FindRepositoryRoot();
+        var workflow = File.ReadAllText(Path.Combine(root, C0CeremonyWorkflowPath));
+        var reconcile = "make c0-reconcile-trust-root";
+        var noOp = workflow.IndexOf("if git diff --cached --quiet; then", StringComparison.Ordinal);
+
+        Assert.DoesNotContain("make c0-renew", workflow, StringComparison.Ordinal);
+        Assert.Equal(2, Regex.Matches(workflow, Regex.Escape(reconcile)).Count);
+        Assert.True(noOp >= 0);
+        Assert.Contains(reconcile, workflow[noOp..], StringComparison.Ordinal);
+        Assert.Contains(
+            "no-op artifact did not contain a consistent C0 trust root",
+            workflow[noOp..],
+            StringComparison.Ordinal);
+    }
 
     private static readonly string[] Targets =
     [
@@ -50,7 +69,8 @@ public sealed partial class MakeWorkflowTests
         "lean",
         "lean-report",
         "build",
-        "c0-renew",
+        "c0-verify",
+        "c0-reconcile-trust-root",
         "clean-lanes",
         "emit",
         "emit-check",

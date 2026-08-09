@@ -111,6 +111,33 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
         return RawRepositorySnapshot.Create(entries);
     }
 
+    // 冻结账本切换成一节点一文件后,它不再是单个 blob 而是一个目录。
+    // 与 ReadRevisionFile 同样的严格性:只接受常规 blob,路径必须落在给定前缀下。
+    internal ImmutableArray<RawRepositoryEntry> ReadRevisionFilesUnder(string revision, string prefix)
+    {
+        if (!IsObjectId(revision))
+        {
+            throw new InvalidOperationException("revision tree read requires an exact commit OID");
+        }
+
+        RequireObjectType(revision, "commit");
+        var entries = ImmutableArray.CreateBuilder<RawRepositoryEntry>();
+        foreach (var entry in ParseTree(GitBytes("ls-tree", "-r", "-z", revision, "--", prefix)))
+        {
+            if (entry.Mode is not ("100644" or "100755") || entry.ObjectType != "blob")
+            {
+                throw new InvalidOperationException(
+                    $"revision file is not regular: {entry.Path} ({entry.Mode} {entry.ObjectType})");
+            }
+
+            entries.Add(new RawRepositoryEntry(
+                entry.Path,
+                ImmutableArray.CreateRange(GitBytes("show", $"{revision}:{entry.Path}"))));
+        }
+
+        return entries.ToImmutable();
+    }
+
     internal RawRepositoryEntry ReadRevisionFile(string revision, string path)
     {
         if (!IsObjectId(revision))
