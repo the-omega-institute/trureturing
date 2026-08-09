@@ -117,19 +117,15 @@ public sealed class ConservativePolicySnapshotTests
     }
 
     [Fact]
-    public void Sl023AndSl024AreActiveObligationsDuringTheExpandEpoch()
+    public void Sl023IsAnActiveObserveObligationDuringTheExpandEpoch()
     {
         var current = ConservativePolicySnapshot.Current();
         var sl023 = Assert.Single(current.RuleObligations, item => item.RuleId == "SL-023");
-        var sl024 = Assert.Single(current.RuleObligations, item => item.RuleId == "SL-024");
         Assert.Equal(AdmissionEffect.Observe.ToString(), sl023.AdmissionEffect);
         Assert.StartsWith("sha256:", sl023.DescriptorRoot, StringComparison.Ordinal);
         Assert.Equal(71, sl023.DescriptorRoot.Length);
-        Assert.Equal(AdmissionEffect.Block.ToString(), sl024.AdmissionEffect);
-        Assert.StartsWith("sha256:", sl024.DescriptorRoot, StringComparison.Ordinal);
-        Assert.Equal(71, sl024.DescriptorRoot.Length);
         Assert.Equal(
-            "sha256:b610352dd551e20e27f89b8b878bef5e9ac5ea4e13b49a3a389667b579daca0b",
+            "sha256:3cf6dbb7d64c99791db2145cc072c914a63bbe2e0c7acf9c9bc7aca5b0ad95ee",
             current.Root);
     }
 
@@ -139,8 +135,8 @@ public sealed class ConservativePolicySnapshotTests
         var current = ConservativePolicySnapshot.Current();
 
         var exception = Assert.Throws<ArgumentException>(() =>
-            current.WithRuleObligations(["SL-025"]));
-        Assert.Contains("unknown active rules: SL-025", exception.Message, StringComparison.Ordinal);
+            current.WithRuleObligations(["SL-024"]));
+        Assert.Contains("unknown active rules: SL-024", exception.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -150,7 +146,7 @@ public sealed class ConservativePolicySnapshotTests
 
         Assert.Equal(ResidenceEpochRetiredPaths, current.ExactExclusions);
         Assert.Equal(
-            "sha256:b610352dd551e20e27f89b8b878bef5e9ac5ea4e13b49a3a389667b579daca0b",
+            "sha256:3cf6dbb7d64c99791db2145cc072c914a63bbe2e0c7acf9c9bc7aca5b0ad95ee",
             current.Root);
         Assert.All(ResidenceEpochRetiredPaths, path => Assert.False(current.IsProtected(path)));
     }
