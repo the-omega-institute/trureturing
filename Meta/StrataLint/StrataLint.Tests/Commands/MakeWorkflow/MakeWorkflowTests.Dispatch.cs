@@ -25,8 +25,12 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("build: lean-cache-ensure dotnet lean", makefile, StringComparison.Ordinal);
         Assert.Equal(0, RecipeCount(makefile, "build"));
         Assert.Contains(
-            " c0-renew --base \"$(BASE)\"",
-            Recipe(makefile, "c0-renew"),
+            " c0-verify --base \"$(BASE)\"",
+            Recipe(makefile, "c0-verify"),
+            StringComparison.Ordinal);
+        Assert.Contains(
+            " c0-reconcile-trust-root",
+            Recipe(makefile, "c0-reconcile-trust-root"),
             StringComparison.Ordinal);
         Assert.Contains(CleanLanesScriptPath, Recipe(makefile, "clean-lanes"), StringComparison.Ordinal);
         Assert.Contains(DotnetBuildScriptPath, Recipe(makefile, "dotnet"), StringComparison.Ordinal);
