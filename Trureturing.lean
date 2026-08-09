@@ -15,6 +15,7 @@ import D5.S0.Naming.NamingSystem
 import D5.S0.Tower.ConstantArms
 import D5.S0.Tower.ChampionExtremality
 import D5.S0.Tower.GoldenGapFrequency
+import D5.S0.Tower.GoldenGapWord
 import D5.S1.Digit.Raw
 import D5.S1.Digit.Carry
 import D5.S1.Scale.Embedding
@@ -28,6 +29,7 @@ import D5.S1.Depth.TwelveScaleReduction
 import D5.S1.Depth.PartialQuotientExtraction
 import D5.S1.Phase.WalkFormula
 import D5.S1.Phase.ZeroOrbitCongruence
+import D5.S3.Analytic.ZetaGibbs
 import D5.S3.Constants.MidslopeCurvature
 import D5.S3.Constants.MidslopeCurvatureValues
 import D5.S3.Constants.RecordEntropy
