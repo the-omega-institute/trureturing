@@ -181,6 +181,12 @@ internal sealed class ProductionC0RenewEnvironment : IC0RenewEnvironment
         var baselineReport = Absolute(
             @base.Root,
             ".lake/build/stratalint/raw-lean-report.json");
+        // One ceremony budget spans both children, not one budget each. Handing
+        // LeanReportBudgetMinutes to the report producer and again to the gate lets a slow
+        // first child leave the second with a full fresh allowance, so the pair can run to
+        // twice the budget the ceremony is supposed to have. Start the clock here and give
+        // the second child only what is left.
+        var reportBudgetClock = System.Diagnostics.Stopwatch.StartNew();
         RunRequired(
             "/bin/bash",
             [
@@ -219,12 +225,34 @@ internal sealed class ProductionC0RenewEnvironment : IC0RenewEnvironment
                 baselineReport,
             ],
             @base.Root,
-            TimeSpan.FromMinutes(LeanReportBudgetMinutes),
+            RemainingReportBudget(reportBudgetClock),
             64 * 1024 * 1024);
         return new C0RenewGateResult(
             result.ExitCode == 3 ? 0 : result.ExitCode,
             ImmutableArray.CreateRange(result.StandardOutput),
             ImmutableArray.CreateRange(result.StandardError));
+    }
+
+    /// Unlike the Lean cache, which is an optimisation and degrades to a cold build, an
+    /// exhausted budget is a real outcome: continuing would mean the ceremony ran past the
+    /// window it was granted. Fail closed, and name the budget that ran out -- otherwise the
+    /// eventual timeout surfaces as whichever inner step happened to be running, pointing at
+    /// the symptom instead of at the ceremony budget (the shape #993 records).
+    /// Elapsed time comes from a Stopwatch rather than a wall clock: this measures how much
+    /// of the budget the first child consumed, and a monotonic source keeps that measurement
+    /// correct across a clock adjustment mid-ceremony. DateTimeOffset.UtcNow is also a banned
+    /// symbol here (RS0030, "inject a clock or pass an explicit deterministic timestamp").
+    private static TimeSpan RemainingReportBudget(System.Diagnostics.Stopwatch elapsed)
+    {
+        var remaining = TimeSpan.FromMinutes(LeanReportBudgetMinutes) - elapsed.Elapsed;
+        if (remaining <= TimeSpan.Zero)
+        {
+            throw new InvalidOperationException(
+                "C0_RENEW_BUDGET_EXHAUSTED owner=lean-report-budget stage=gate-wiring " +
+                $"budget_minutes={LeanReportBudgetMinutes}");
+        }
+
+        return remaining;
     }
 
     private string Absolute(string path) =>
