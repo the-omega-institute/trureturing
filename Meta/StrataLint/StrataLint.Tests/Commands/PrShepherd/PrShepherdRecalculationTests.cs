@@ -406,6 +406,17 @@ public sealed partial class PrShepherdRecalculationTests
         internal ShepherdResult RunStatus() =>
             RunWatchCommand("status", [], noChecks: false, TimeSpan.FromSeconds(10));
 
+        internal ShepherdResult RunSupervisor()
+        {
+            var result = RunWatchCommand(
+                "supervise",
+                ["30", "1"],
+                noChecks: false,
+                TimeSpan.FromSeconds(15));
+            if (result.ExitCode == 0 && File.Exists(WatchOwnerPath)) startedWatchPid = ReadOwnerPid();
+            return result;
+        }
+
         internal ShepherdResult RunStatusFromAnotherSnapshot()
         {
             EnsureTrackedWatchScripts();
