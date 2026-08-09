@@ -6,6 +6,29 @@ namespace StrataLint.Tests;
 public sealed class RuleCatalogAssociationTests
 {
     [Fact]
+    public void CatalogStoresEachDescriptorAndRuleInOneTypedRegistration()
+    {
+        var fields = typeof(RuleCatalog).GetFields(
+            System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+
+        Assert.DoesNotContain(
+            fields,
+            field => field.FieldType == typeof(ImmutableArray<IRepositoryRule>));
+        Assert.Single(fields, static field =>
+        {
+            if (!field.FieldType.IsGenericType
+                || field.FieldType.GetGenericTypeDefinition() != typeof(ImmutableArray<>))
+            {
+                return false;
+            }
+
+            var elementType = field.FieldType.GetGenericArguments()[0];
+            return elementType.GetProperty("Descriptor")?.PropertyType == typeof(RuleDescriptor)
+                && elementType.GetProperty("Rule")?.PropertyType == typeof(IRepositoryRule);
+        });
+    }
+
+    [Fact]
     public void EvaluateSingleStampsFindingsWithTheDescriptorPairedToTheSelectedRule()
     {
         var firstDescriptor = Descriptor(
@@ -19,10 +42,13 @@ public sealed class RuleCatalogAssociationTests
             DisplaySeverity.Error,
             AdmissionEffect.Block);
         var catalog = RuleCatalog.CreateForTesting(
-            [firstDescriptor, secondDescriptor],
             [
-                FindingRule("first/path.txt", "finding from first rule"),
-                FindingRule("second/path.txt", "finding from second rule"),
+                Registration(
+                    firstDescriptor,
+                    FindingRule("first/path.txt", "finding from first rule")),
+                Registration(
+                    secondDescriptor,
+                    FindingRule("second/path.txt", "finding from second rule")),
             ]);
         var context = new RuleFixture().Build();
 
@@ -52,22 +78,24 @@ public sealed class RuleCatalogAssociationTests
     [Fact]
     public void ExecuteStampsAUniqueFindingWithItsPairedDescriptorAcrossACompleteCatalog()
     {
-        var descriptors = Enumerable.Range(1, 23)
-            .Select(number => Descriptor(
-                number,
-                $"descriptor {number}",
-                number == 17 ? DisplaySeverity.Warning : DisplaySeverity.Error,
-                number == 17 ? AdmissionEffect.Observe : AdmissionEffect.Block))
-            .ToImmutableArray();
         var uniqueFinding = new RuleFinding("unique/path.txt", "finding from rule seventeen");
-        var rules = Enumerable.Range(1, 23)
-            .Select(number => (IRepositoryRule)new FakeRule(
-                static _ => false,
-                number == 17
-                    ? ImmutableArray.Create(uniqueFinding)
-                    : ImmutableArray<RuleFinding>.Empty))
+        var registrations = Enumerable.Range(1, 23)
+            .Select(number => new RuleRegistration(
+                Descriptor(
+                    number,
+                    $"descriptor {number}",
+                    number == 17 ? DisplaySeverity.Warning : DisplaySeverity.Error,
+                    number == 17 ? AdmissionEffect.Observe : AdmissionEffect.Block),
+                new FakeRule(
+                    static _ => false,
+                    number == 17
+                        ? ImmutableArray.Create(uniqueFinding)
+                        : ImmutableArray<RuleFinding>.Empty)))
             .ToImmutableArray();
-        var catalog = RuleCatalog.CreateForTesting(descriptors, rules);
+        var descriptors = registrations
+            .Select(static registration => registration.Descriptor)
+            .ToImmutableArray();
+        var catalog = RuleCatalog.CreateForTesting(registrations);
 
         var outcome = catalog.Execute(new RuleFixture().Build());
 
@@ -112,11 +140,9 @@ public sealed class RuleCatalogAssociationTests
         var firstRule = PredicateRule(path => path is firstPath or sharedPath);
         var secondRule = PredicateRule(path => path is secondPath or sharedPath);
         var forward = RuleCatalog.CreateForTesting(
-            [firstDescriptor, secondDescriptor],
-            [firstRule, secondRule]);
+            [Registration(firstDescriptor, firstRule), Registration(secondDescriptor, secondRule)]);
         var reordered = RuleCatalog.CreateForTesting(
-            [secondDescriptor, firstDescriptor],
-            [secondRule, firstRule]);
+            [Registration(secondDescriptor, secondRule), Registration(firstDescriptor, firstRule)]);
 
         Assert.Equal(
             new[] { firstDescriptor },
@@ -154,15 +180,24 @@ public sealed class RuleCatalogAssociationTests
             AdmissionEffect.Block);
         var descriptors = ImmutableArray.Create(firstDescriptor, secondDescriptor);
         var first = RuleCatalog.CreateForTesting(
-            descriptors,
-            [PredicateRule(static _ => true), PredicateRule(static _ => false)]);
+            [
+                Registration(firstDescriptor, PredicateRule(static _ => true)),
+                Registration(secondDescriptor, PredicateRule(static _ => false)),
+            ]);
         var differentRules = RuleCatalog.CreateForTesting(
-            descriptors,
-            [FindingRule("different/first.txt", "different first finding"),
-                FindingRule("different/second.txt", "different second finding")]);
+            [
+                Registration(
+                    firstDescriptor,
+                    FindingRule("different/first.txt", "different first finding")),
+                Registration(
+                    secondDescriptor,
+                    FindingRule("different/second.txt", "different second finding")),
+            ]);
         var reordered = RuleCatalog.CreateForTesting(
-            [secondDescriptor, firstDescriptor],
-            [PredicateRule(static _ => false), PredicateRule(static _ => true)]);
+            [
+                Registration(secondDescriptor, PredicateRule(static _ => false)),
+                Registration(firstDescriptor, PredicateRule(static _ => true)),
+            ]);
 
         Assert.Equal(new[] { firstDescriptor, secondDescriptor }, first.Descriptors);
         Assert.Equal(first.RootSha256, differentRules.RootSha256);
@@ -194,6 +229,11 @@ public sealed class RuleCatalogAssociationTests
 
     private static IRepositoryRule FindingRule(string path, string message) =>
         new FakeRule(static _ => false, [new RuleFinding(path, message)]);
+
+    private static RuleRegistration Registration(
+        RuleDescriptor descriptor,
+        IRepositoryRule rule) =>
+        new(descriptor, rule);
 
     private static IRepositoryRule PredicateRule(Func<string, bool> predicate) =>
         new FakeRule(file => predicate(file.Path.Value), ImmutableArray<RuleFinding>.Empty);
