@@ -80,11 +80,14 @@ sources:
         coverage_gids:
           - D5/S3/Arith/HiddenFiberRigidity.hidden_fiber_rigidity
           - D5/S1/Dynamics/JumpCocycle.jump_cocycle
+          - D5/S3/Observer/StreamlineTheorem.path_decomposition
+          - D5/S3/Observer/StreamlineTheorem.streamline_offset_continuous_iff_constant
+          - D5/S3/Observer/StreamlineTheorem.nonconstant_offset_not_continuous
         receipts:
           coverage: []
           scribe: []
           unresolved_subitems:
-            - streamline-theorem-constant-hidden-offset
+            - streamline-decomposition-existence-and-canonicity
           chain_atoms: []
           tail_authorization: null
         status:
