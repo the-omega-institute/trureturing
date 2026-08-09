@@ -1,0 +1,14 @@
+ast_path: theorem/1.8
+fingerprints:
+  raw_sha256: sha256:6ade320007ff03163fd22af955a6a0ca8d4b371ef23def697929153f626d621e
+  normalized_sha256: sha256:6ade320007ff03163fd22af955a6a0ca8d4b371ef23def697929153f626d621e
+cas_ref: sha256:6ade320007ff03163fd22af955a6a0ca8d4b371ef23def697929153f626d621e
+coverage_gids:
+  - D5/S1/Digit/PrimeAxisAddition.prime_axis_addition_spec
+receipts:
+  coverage:
+    - gid: D5/S1/Digit/PrimeAxisAddition.prime_axis_addition_spec
+      source_sha256: sha256:6ade320007ff03163fd22af955a6a0ca8d4b371ef23def697929153f626d621e
+      target_sha256: sha256:00557dc5c6b8352bc93b89b3e0932c7316483cd7b3e11f2d2561d761206b6d8e
+  scribe: []
+  unresolved_subitems: []

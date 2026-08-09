@@ -1,0 +1,27 @@
+ast_path: theorem/23.6
+fingerprints:
+  raw_sha256: sha256:fe4adef0cf6c80fefd3a661f3b6e4e2d37cf286267037147459af5c1a85bed4f
+  normalized_sha256: sha256:fe4adef0cf6c80fefd3a661f3b6e4e2d37cf286267037147459af5c1a85bed4f
+cas_ref: sha256:fe4adef0cf6c80fefd3a661f3b6e4e2d37cf286267037147459af5c1a85bed4f
+coverage_gids:
+  - D5/S3/Zeros/CompletedZeta.xi_reading_differentiable
+  - D5/S3/Zeros/CompletedZeta.xi_reading_reflection
+receipts:
+  coverage:
+    - gid: D5/S3/Zeros/CompletedZeta.xi_reading_differentiable
+      source_sha256: sha256:fe4adef0cf6c80fefd3a661f3b6e4e2d37cf286267037147459af5c1a85bed4f
+      target_sha256: sha256:51e9ac062d8281e341170f2059134974fa4f755b4e88e8ff9bb56f7bc5b6d2cc
+    - gid: D5/S3/Zeros/CompletedZeta.xi_reading_reflection
+      source_sha256: sha256:fe4adef0cf6c80fefd3a661f3b6e4e2d37cf286267037147459af5c1a85bed4f
+      target_sha256: sha256:51e9ac062d8281e341170f2059134974fa4f755b4e88e8ff9bb56f7bc5b6d2cc
+  scribe:
+    - gid: D5/S3/Zeros/CompletedZeta.xi_reading_differentiable
+      definition_sha256: sha256:a7b8090bab17ff5f42ee308bcbb307d63744db0df18e3c991f141141d90dd671
+      emission_sha256: sha256:82c32c63eb78912d650ee4e7c1e0523ce8f39f9af7b1ade68ea0fd762fced39b
+    - gid: D5/S3/Zeros/CompletedZeta.xi_reading_reflection
+      definition_sha256: sha256:a7b8090bab17ff5f42ee308bcbb307d63744db0df18e3c991f141141d90dd671
+      emission_sha256: sha256:82c32c63eb78912d650ee4e7c1e0523ce8f39f9af7b1ade68ea0fd762fced39b
+  unresolved_subitems:
+    - pzg-completed-reading-identification
+    - jacobi-theta-poisson-mellin-derivation
+    - source-theorems-23-9-and-23-10-component-chain

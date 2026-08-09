@@ -26,8 +26,7 @@ public sealed class CensusDerivationTests
         var census = ReceiptFreeDocumentCatalog.Load(
             repositoryRoot,
             documents);
-        var receiptBoundDocumentGids = BackfillInventoryLoader.Load(File.ReadAllText(
-                Path.Combine(repositoryRoot, BackfillInventoryLoader.RelativePath)))
+        var receiptBoundDocumentGids = BackfillInventoryLoader.LoadRoot(repositoryRoot)
             .RequireDigestionEntries()
             .SelectMany(static entry => entry.Receipts.Scribe)
             .Select(static receipt => ScribeEmissionAttestation.DocumentGid(receipt.Gid))
@@ -99,6 +98,62 @@ public sealed class CensusDerivationTests
                           truth: closed
                 ticket_index: []
                 """);
+            var census = ReceiptFreeDocumentCatalog.Load(
+                repositoryRoot,
+                [Document(receiptBoundGid), Document(receiptFreeGid)]);
+
+            Assert.Equal([receiptBoundGid], census.ReceiptBoundDocumentGids);
+            Assert.Equal([receiptFreeGid], census.ReceiptFreeDocumentGids);
+        }
+        finally
+        {
+            Directory.Delete(repositoryRoot, recursive: true);
+        }
+    }
+
+    [Fact]
+    public void SyntheticDirectoryLedgerDeterminesCensusDirection()
+    {
+        const string receiptBoundGid = "D5/S0/Test/ReceiptBound";
+        const string receiptFreeGid = "D5/S0/Test/ReceiptFree";
+        var repositoryRoot = Path.Combine(
+            Path.GetTempPath(),
+            "stratalint-census-" + Guid.NewGuid().ToString("N"));
+        var sourceRoot = Path.Combine(
+            repositoryRoot,
+            "Meta", "Digestion", "backfill", "synthetic-source");
+        Directory.CreateDirectory(Path.Combine(sourceRoot, "absorbed-closed"));
+        try
+        {
+            File.WriteAllText(
+                Path.Combine(sourceRoot, "source.toml"),
+                """
+                source_id = "synthetic-source"
+                path = "docs/synthetic.md"
+                atomizer = "synthetic-v1"
+                """);
+            File.WriteAllText(
+                Path.Combine(sourceRoot, "absorbed-closed", "synthetic-atom.yaml"),
+                $$"""
+                ast_path: theorem/synthetic
+                fingerprints:
+                  raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
+                  normalized_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
+                cas_ref: sha256:0000000000000000000000000000000000000000000000000000000000000000
+                coverage_gids: []
+                receipts:
+                  coverage: []
+                  scribe:
+                    - gid: {{receiptBoundGid}}.formalized
+                      definition_sha256: sha256:1111111111111111111111111111111111111111111111111111111111111111
+                      emission_sha256: sha256:2222222222222222222222222222222222222222222222222222222222222222
+                  unresolved_subitems: []
+                  chain_atoms: []
+                  tail_authorization: null
+                """);
+            File.WriteAllText(
+                Path.Combine(repositoryRoot, "Meta", "Digestion", "ticket-index.toml"),
+                string.Empty);
             var census = ReceiptFreeDocumentCatalog.Load(
                 repositoryRoot,
                 [Document(receiptBoundGid), Document(receiptFreeGid)]);

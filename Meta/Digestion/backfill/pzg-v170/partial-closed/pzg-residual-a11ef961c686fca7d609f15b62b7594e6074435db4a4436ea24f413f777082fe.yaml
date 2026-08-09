@@ -1,0 +1,14 @@
+ast_path: theorem/25.2
+fingerprints:
+  raw_sha256: sha256:a11ef961c686fca7d609f15b62b7594e6074435db4a4436ea24f413f777082fe
+  normalized_sha256: sha256:a11ef961c686fca7d609f15b62b7594e6074435db4a4436ea24f413f777082fe
+cas_ref: sha256:a11ef961c686fca7d609f15b62b7594e6074435db4a4436ea24f413f777082fe
+coverage_gids:
+  - D5/S3/Weil/SpectralHilbert.labeled_zeta_norm_sq
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/SpectralHilbert.labeled_zeta_norm_sq
+      source_sha256: sha256:a11ef961c686fca7d609f15b62b7594e6074435db4a4436ea24f413f777082fe
+      target_sha256: sha256:9bd6f6d9aaff6d0e63a1e6ac8035b64a2e5aef3b3c7a958ad7fbcfebec1d43ae
+  scribe: []
+  unresolved_subitems: []

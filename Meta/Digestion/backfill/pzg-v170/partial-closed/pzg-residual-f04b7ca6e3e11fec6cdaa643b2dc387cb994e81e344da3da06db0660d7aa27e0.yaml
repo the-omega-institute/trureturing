@@ -1,0 +1,22 @@
+ast_path: remark/26.8
+fingerprints:
+  raw_sha256: sha256:f04b7ca6e3e11fec6cdaa643b2dc387cb994e81e344da3da06db0660d7aa27e0
+  normalized_sha256: sha256:f04b7ca6e3e11fec6cdaa643b2dc387cb994e81e344da3da06db0660d7aa27e0
+cas_ref: sha256:f04b7ca6e3e11fec6cdaa643b2dc387cb994e81e344da3da06db0660d7aa27e0
+coverage_gids:
+  - D5/S3/Weil/ReflectionLedger.mirror_fixed_re_eq
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/ReflectionLedger.mirror_fixed_re_eq
+      source_sha256: sha256:f04b7ca6e3e11fec6cdaa643b2dc387cb994e81e344da3da06db0660d7aa27e0
+      target_sha256: sha256:eadb8ba77aa7d9d1648ae398d680d11c525bca2e60ec090ae38e35d7f5e738e5
+  scribe:
+    - gid: D5/S3/Weil/ReflectionLedger.mirror_fixed_re_eq
+      definition_sha256: sha256:2227a3b6e764a7cc4f7ac9ec4a18c4f3e7a8b41605ae2b3cf0b42ce64214e66f
+      emission_sha256: sha256:b55ff89324eabc4d1d004776405cc56133f4f335342c40bc512c7b99695d7296
+  unresolved_subitems:
+    - rh-implies-quasicrystalline-zero-set-not-converse
+    - quasicrystal-diffraction-and-positivity-as-rh-equivalent-readings
+    - equivalent-formulation-cannot-serve-as-mechanism
+    - lee-yang-body-to-boundary-localization-requires-positivity
+    - explicit-formula-as-diffraction-duality-channel

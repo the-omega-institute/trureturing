@@ -1,0 +1,10 @@
+ast_path: criterion/7.2
+fingerprints:
+  raw_sha256: sha256:d9765543f340d9e20116e375417cb729f2856dd332078464cceb1f41ac518a6e
+  normalized_sha256: sha256:d9765543f340d9e20116e375417cb729f2856dd332078464cceb1f41ac518a6e
+cas_ref: sha256:d9765543f340d9e20116e375417cb729f2856dd332078464cceb1f41ac518a6e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

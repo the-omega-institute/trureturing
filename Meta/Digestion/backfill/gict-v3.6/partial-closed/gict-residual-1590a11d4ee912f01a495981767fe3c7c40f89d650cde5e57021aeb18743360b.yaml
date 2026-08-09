@@ -1,0 +1,14 @@
+ast_path: definition/1.2
+fingerprints:
+  raw_sha256: sha256:1590a11d4ee912f01a495981767fe3c7c40f89d650cde5e57021aeb18743360b
+  normalized_sha256: sha256:1590a11d4ee912f01a495981767fe3c7c40f89d650cde5e57021aeb18743360b
+cas_ref: sha256:1590a11d4ee912f01a495981767fe3c7c40f89d650cde5e57021aeb18743360b
+coverage_gids:
+  - D5/S0/Carrier/AlgebraicModel.golden_algebraic_model_spec
+receipts:
+  coverage:
+    - gid: D5/S0/Carrier/AlgebraicModel.golden_algebraic_model_spec
+      source_sha256: sha256:1590a11d4ee912f01a495981767fe3c7c40f89d650cde5e57021aeb18743360b
+      target_sha256: sha256:7fb489a1140934f9aae18903fd316321504018f40616777a7ca249793910b6f1
+  scribe: []
+  unresolved_subitems: []

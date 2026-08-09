@@ -9,6 +9,7 @@
 #   pr-shepherd.sh open <head-branch> <title> [body-file]   开 PR + 挂 auto-merge
 #   pr-shepherd.sh start [interval] [max_cycles]            后台启动并等待 ready
 #   pr-shepherd.sh status                                   单行报告 alive/stalled/dead
+#   pr-shepherd.sh supervise [interval] [max_cycles]         仅重启 owner 已消失的 dead watcher
 #   pr-shepherd.sh watch [interval] [max_cycles]            轮询(默认 60s × 360)
 #   pr-shepherd.sh sweep                                    单轮扫描(供人工/调试)
 #
@@ -777,6 +778,7 @@ case "${1:-}" in
   open)         shift; open_pr "$@" ;;
   start)        shift; start_watch "$@" ;;
   status)       watch_status ;;
+  supervise)    shift; supervise_watch "$@" ;;
   watch)        shift; if [[ -z "$WATCH_LOADED_BLOB" ]]; then bootstrap_watch "$@"; else watch "$@"; fi ;;
   sweep)        run_sweep_bounded ;;
   sweep-worker) sweep_worker ;;

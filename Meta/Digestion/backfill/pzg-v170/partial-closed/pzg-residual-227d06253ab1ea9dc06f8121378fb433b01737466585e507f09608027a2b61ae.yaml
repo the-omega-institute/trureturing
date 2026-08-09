@@ -1,0 +1,20 @@
+ast_path: theorem/6.22
+fingerprints:
+  raw_sha256: sha256:227d06253ab1ea9dc06f8121378fb433b01737466585e507f09608027a2b61ae
+  normalized_sha256: sha256:227d06253ab1ea9dc06f8121378fb433b01737466585e507f09608027a2b61ae
+cas_ref: sha256:227d06253ab1ea9dc06f8121378fb433b01737466585e507f09608027a2b61ae
+coverage_gids:
+  - D5/S1/Deficit/DeficitInteger.deficit_integer
+receipts:
+  coverage:
+    - gid: D5/S1/Deficit/DeficitInteger.deficit_integer
+      source_sha256: sha256:227d06253ab1ea9dc06f8121378fb433b01737466585e507f09608027a2b61ae
+      target_sha256: sha256:cb940eeeffa60a0409c89b80b03f9ac2d9a48746d92cb4bf5a8176802309e75f
+  scribe:
+    - gid: D5/S1/Deficit/DeficitInteger.deficit_integer
+      definition_sha256: sha256:547c8b8ad6a9f151d929e4d2cdc601b1933dd9855faeb521787647eea7e71371
+      emission_sha256: sha256:bc3b855343a3a7f4a2fc53e6111b4816096588f675ec87df39ffc944e828cc7b
+  unresolved_subitems:
+    - triangular-window-45150-pair-scan-certificate
+    - exact-deficit-value-distribution
+    - global-absolute-deficit-at-most-one-conjecture

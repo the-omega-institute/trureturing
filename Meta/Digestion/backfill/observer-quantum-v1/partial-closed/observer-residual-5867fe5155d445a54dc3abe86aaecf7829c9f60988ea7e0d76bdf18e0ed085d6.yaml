@@ -1,0 +1,33 @@
+ast_path: classical/pointer-basis
+fingerprints:
+  raw_sha256: sha256:5867fe5155d445a54dc3abe86aaecf7829c9f60988ea7e0d76bdf18e0ed085d6
+  normalized_sha256: sha256:5867fe5155d445a54dc3abe86aaecf7829c9f60988ea7e0d76bdf18e0ed085d6
+cas_ref: sha256:5867fe5155d445a54dc3abe86aaecf7829c9f60988ea7e0d76bdf18e0ed085d6
+coverage_gids:
+  - D5/S3/Quantum/Decoherence.phase_damping_composition
+  - D5/S3/Quantum/Decoherence.phase_damping_fixed_iff_diagonal
+  - D5/S3/Quantum/EnvironmentRecords.trace_environment_controlled_record_eq_phase_damping
+  - D5/S3/Quantum/PointerBasis.phase_damping_in_basis_fixed_iff
+  - D5/S3/Quantum/QubitWitnesses.equal_superposition_phase_damping_certificate
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Decoherence.phase_damping_composition
+      source_sha256: sha256:5867fe5155d445a54dc3abe86aaecf7829c9f60988ea7e0d76bdf18e0ed085d6
+      target_sha256: sha256:b8f188e3e53e0ca825a4d035a59fe18039015498f5a456e9cf56d6b372cfcf02
+    - gid: D5/S3/Quantum/Decoherence.phase_damping_fixed_iff_diagonal
+      source_sha256: sha256:5867fe5155d445a54dc3abe86aaecf7829c9f60988ea7e0d76bdf18e0ed085d6
+      target_sha256: sha256:b8f188e3e53e0ca825a4d035a59fe18039015498f5a456e9cf56d6b372cfcf02
+    - gid: D5/S3/Quantum/EnvironmentRecords.trace_environment_controlled_record_eq_phase_damping
+      source_sha256: sha256:5867fe5155d445a54dc3abe86aaecf7829c9f60988ea7e0d76bdf18e0ed085d6
+      target_sha256: sha256:544d2a1d743de8b8a88243ad4a2779a6f2861f11fa9d1107f331aeecc845e25c
+    - gid: D5/S3/Quantum/PointerBasis.phase_damping_in_basis_fixed_iff
+      source_sha256: sha256:5867fe5155d445a54dc3abe86aaecf7829c9f60988ea7e0d76bdf18e0ed085d6
+      target_sha256: sha256:8b9cf024458502300d5a19eff202f94bd5116ae5b8b4b54557761867961f5d9d
+    - gid: D5/S3/Quantum/QubitWitnesses.equal_superposition_phase_damping_certificate
+      source_sha256: sha256:5867fe5155d445a54dc3abe86aaecf7829c9f60988ea7e0d76bdf18e0ed085d6
+      target_sha256: sha256:89457799a8e0362f3113889e39ef6eeadabe40f2c9e3228af2bffe7d66acda31
+  scribe: []
+  unresolved_subitems:
+    - ledger-is-environment-identification
+    - bookkeeping-is-decoherence-identification
+    - physical-address-principle-einselection-beyond-transported-damping-model
