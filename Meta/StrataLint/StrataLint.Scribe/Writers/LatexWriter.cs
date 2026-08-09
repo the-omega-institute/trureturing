@@ -17,33 +17,41 @@ public static class LatexWriter
 
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
-    public static string Write(Formula formula)
+    public static string Write(Formula formula) => Write(formula, "standalone formula");
+
+    internal static string Write(Formula formula, string source)
     {
         ArgumentNullException.ThrowIfNull(formula);
+        ArgumentException.ThrowIfNullOrWhiteSpace(source);
         var builder = new StringBuilder();
-        WriteFormula(builder, formula, 0);
+        WriteFormula(builder, formula, 0, source);
         return builder.ToString();
     }
 
     public static ImmutableArray<byte> WriteUtf8(Formula formula) =>
         ImmutableArray.CreateRange(StrictUtf8.GetBytes(Write(formula)));
 
-    public static string WriteStatement(Formula formula)
+    public static string WriteStatement(Formula formula) =>
+        WriteStatement(formula, "standalone formula");
+
+    internal static string WriteStatement(Formula formula, string source)
     {
         ArgumentNullException.ThrowIfNull(formula);
+        ArgumentException.ThrowIfNullOrWhiteSpace(source);
         if (formula is not Formula.Layout layout)
         {
-            return "$$" + Write(formula) + "$$";
+            return "$$" + Write(formula, source) + "$$";
         }
 
         var delimiter = layout.Mode == FormulaLayoutMode.Display ? "$$" : "$";
-        return delimiter + Write(layout.Content) + delimiter;
+        return delimiter + Write(layout.Content, source) + delimiter;
     }
 
     private static void WriteFormula(
         StringBuilder builder,
         Formula formula,
-        int parentPrecedence)
+        int parentPrecedence,
+        string source)
     {
         var precedence = GetPrecedence(formula);
         var needsParentheses = precedence < parentPrecedence;
@@ -77,22 +85,16 @@ public static class LatexWriter
                     {
                         builder.Append("\\\\");
                     }
-                    WriteFormula(builder, aligned.Rows[index], 0);
+                    WriteFormula(builder, aligned.Rows[index], 0, source);
                 }
                 builder.Append("\\end{aligned}");
                 break;
             case Formula.LatexSequence sequence:
-                foreach (var item in sequence.Items)
-                {
-                    WriteFormula(builder, item, 0);
-                }
+                WriteLatexItems(builder, sequence.Items, source);
                 break;
             case Formula.LatexGroup group:
                 builder.Append('{');
-                foreach (var item in group.Items)
-                {
-                    WriteFormula(builder, item, 0);
-                }
+                WriteLatexItems(builder, group.Items, source);
                 builder.Append('}');
                 break;
             case Formula.LatexMacro macro:
@@ -130,7 +132,7 @@ public static class LatexWriter
                 }
                 break;
             case Formula.Layout layout:
-                WriteFormula(builder, layout.Content, 0);
+                WriteFormula(builder, layout.Content, 0, source);
                 break;
             case Formula.Symbol symbol:
                 WriteIdentifier(builder, symbol.Name, false);
@@ -155,26 +157,26 @@ public static class LatexWriter
                 break;
             case Formula.Negate negate:
                 builder.Append('-');
-                WriteFormula(builder, negate.Operand, PrefixPrecedence);
+                WriteFormula(builder, negate.Operand, PrefixPrecedence, source);
                 break;
             case Formula.Absolute absolute:
                 builder.Append("\\left|");
-                WriteFormula(builder, absolute.Operand, 0);
+                WriteFormula(builder, absolute.Operand, 0, source);
                 builder.Append("\\right|");
                 break;
             case Formula.Norm norm:
                 builder.Append("\\left\\lVert ");
-                WriteFormula(builder, norm.Operand, 0);
+                WriteFormula(builder, norm.Operand, 0, source);
                 builder.Append(" \\right\\rVert");
                 break;
             case Formula.Binary binary:
-                WriteBinary(builder, binary);
+                WriteBinary(builder, binary, source);
                 break;
             case Formula.Fraction fraction:
                 builder.Append("\\frac{");
-                WriteFormula(builder, fraction.Numerator, 0);
+                WriteFormula(builder, fraction.Numerator, 0, source);
                 builder.Append("}{");
-                WriteFormula(builder, fraction.Denominator, 0);
+                WriteFormula(builder, fraction.Denominator, 0, source);
                 builder.Append('}');
                 break;
             case Formula.Subscript subscript:
@@ -183,9 +185,10 @@ public static class LatexWriter
                     subscript.Base,
                     ProducesScript(subscript.Base)
                         ? AtomPrecedence + 1
-                        : ScriptPrecedence);
+                        : ScriptPrecedence,
+                    source);
                 builder.Append("_{");
-                WriteFormula(builder, subscript.Index, 0);
+                WriteFormula(builder, subscript.Index, 0, source);
                 builder.Append('}');
                 break;
             case Formula.Power power:
@@ -194,89 +197,90 @@ public static class LatexWriter
                     power.Base,
                     ProducesScript(power.Base)
                         ? AtomPrecedence + 1
-                        : ScriptPrecedence);
+                        : ScriptPrecedence,
+                    source);
                 builder.Append("^{");
-                WriteFormula(builder, power.Exponent, 0);
+                WriteFormula(builder, power.Exponent, 0, source);
                 builder.Append('}');
                 break;
             case Formula.Floor floor:
                 builder.Append("\\left\\lfloor");
-                WriteFormula(builder, floor.Operand, 0);
+                WriteFormula(builder, floor.Operand, 0, source);
                 builder.Append("\\right\\rfloor");
                 break;
             case Formula.Log log:
                 builder.Append("\\log_{");
-                WriteFormula(builder, log.Base, 0);
+                WriteFormula(builder, log.Base, 0, source);
                 builder.Append("}\\left(");
-                WriteFormula(builder, log.Argument, 0);
+                WriteFormula(builder, log.Argument, 0, source);
                 builder.Append("\\right)");
                 break;
             case Formula.Modulo modulo:
-                WriteFormula(builder, modulo.Value, MultiplicativePrecedence);
+                WriteFormula(builder, modulo.Value, MultiplicativePrecedence, source);
                 builder.Append(" \\bmod ");
-                WriteFormula(builder, modulo.Modulus, MultiplicativePrecedence + 1);
+                WriteFormula(builder, modulo.Modulus, MultiplicativePrecedence + 1, source);
                 break;
             case Formula.Sequence sequence:
                 builder.Append("\\left(");
-                WriteFormula(builder, sequence.Element, 0);
+                WriteFormula(builder, sequence.Element, 0, source);
                 builder.Append("\\right)_{");
-                WriteFormula(builder, sequence.Index, 0);
+                WriteFormula(builder, sequence.Index, 0, source);
                 builder.Append(" \\in ");
-                WriteFormula(builder, sequence.Domain, 0);
+                WriteFormula(builder, sequence.Domain, 0, source);
                 builder.Append('}');
                 break;
             case Formula.SetLiteral set:
                 builder.Append("\\left\\{");
-                WriteList(builder, set.Elements);
+                WriteList(builder, set.Elements, source);
                 builder.Append("\\right\\}");
                 break;
             case Formula.SetBuilder setBuilder:
                 builder.Append("\\left\\{");
-                WriteFormula(builder, setBuilder.Element, 0);
+                WriteFormula(builder, setBuilder.Element, 0, source);
                 builder.Append(" \\mid ");
-                WriteFormula(builder, setBuilder.Variable, 0);
+                WriteFormula(builder, setBuilder.Variable, 0, source);
                 builder.Append(" \\in ");
-                WriteFormula(builder, setBuilder.Domain, 0);
+                WriteFormula(builder, setBuilder.Domain, 0, source);
                 builder.Append("\\right\\}");
                 break;
             case Formula.FunctionCall function:
                 WriteIdentifier(builder, function.Name, true);
                 builder.Append("\\left(");
-                WriteList(builder, function.Arguments);
+                WriteList(builder, function.Arguments, source);
                 builder.Append("\\right)");
                 break;
             case Formula.Apply application:
-                WriteFormula(builder, application.Function, AtomPrecedence);
+                WriteFormula(builder, application.Function, AtomPrecedence, source);
                 builder.Append("\\left(");
-                WriteList(builder, application.Arguments);
+                WriteList(builder, application.Arguments, source);
                 builder.Append("\\right)");
                 break;
             case Formula.TypeArrow arrow:
-                WriteFormula(builder, arrow.Domain, RelationPrecedence + 1);
+                WriteFormula(builder, arrow.Domain, RelationPrecedence + 1, source);
                 builder.Append(" \\to ");
-                WriteFormula(builder, arrow.Codomain, RelationPrecedence + 1);
+                WriteFormula(builder, arrow.Codomain, RelationPrecedence + 1, source);
                 break;
             case Formula.Relation relation:
-                WriteRelation(builder, relation);
+                WriteRelation(builder, relation, source);
                 break;
             case Formula.RelationChain relationChain:
-                WriteRelationChain(builder, relationChain);
+                WriteRelationChain(builder, relationChain, source);
                 break;
             case Formula.Logic logic:
-                WriteLogic(builder, logic);
+                WriteLogic(builder, logic, source);
                 break;
             case Formula.Not not:
                 builder.Append("\\neg ");
-                WriteFormula(builder, not.Operand, LogicPrecedence + 1);
+                WriteFormula(builder, not.Operand, LogicPrecedence + 1, source);
                 break;
             case Formula.Bind bind:
                 builder.Append(bind.Quantifier == FormulaQuantifier.ForAll
                     ? "\\forall "
                     : "\\exists ");
                 builder.Append(bind.Variable.Value).Append(" \\in ");
-                WriteFormula(builder, bind.Domain, LogicPrecedence + 1);
+                WriteFormula(builder, bind.Domain, LogicPrecedence + 1, source);
                 builder.Append(",\\; ");
-                WriteFormula(builder, bind.Body, LogicPrecedence);
+                WriteFormula(builder, bind.Body, LogicPrecedence, source);
                 break;
             case Formula.BindMany bind:
                 builder.Append(bind.Quantifier == FormulaQuantifier.ForAll
@@ -289,10 +293,14 @@ public static class LatexWriter
                         builder.Append(", ");
                     }
                     builder.Append(bind.Variables[index].Name.Value).Append(" \\in ");
-                    WriteFormula(builder, bind.Variables[index].Domain, LogicPrecedence + 1);
+                    WriteFormula(
+                        builder,
+                        bind.Variables[index].Domain,
+                        LogicPrecedence + 1,
+                        source);
                 }
                 builder.Append(",\\; ");
-                WriteFormula(builder, bind.Body, LogicPrecedence);
+                WriteFormula(builder, bind.Body, LogicPrecedence, source);
                 break;
             default:
                 throw new UnreachableException("Unknown formula node.");
@@ -304,39 +312,107 @@ public static class LatexWriter
         }
     }
 
-    private static void WriteLatexMacro(StringBuilder builder, FormulaLatexMacro macro)
+    private static void WriteLatexItems(
+        StringBuilder builder,
+        ImmutableArray<Formula> items,
+        string source)
     {
-        var name = macro switch
+        foreach (var item in items)
         {
-            FormulaLatexMacro.Delta => "Delta",
-            FormulaLatexMacro.Gamma => "Gamma",
-            FormulaLatexMacro.Lambda => "Lambda",
-            FormulaLatexMacro.Leftrightarrow => "Leftrightarrow",
-            FormulaLatexMacro.Re => "Re",
-            FormulaLatexMacro.Rightarrow => "Rightarrow",
-            FormulaLatexMacro.Sigma => "Sigma",
-            FormulaLatexMacro.Vert => "Vert",
-            FormulaLatexMacro.Alpha => "alpha",
-            FormulaLatexMacro.DeltaLower => "delta",
-            FormulaLatexMacro.GammaLower => "gamma",
-            FormulaLatexMacro.LambdaLower => "lambda",
-            FormulaLatexMacro.SigmaLower => "sigma",
-            FormulaLatexMacro.EscapedSpace => " ",
-            FormulaLatexMacro.NegativeThinSpace => "!",
-            FormulaLatexMacro.ThinSpace => ",",
-            FormulaLatexMacro.SemicolonSpace => ";",
-            FormulaLatexMacro.RowBreak => "\\",
-            FormulaLatexMacro.OpenBrace => "{",
-            FormulaLatexMacro.CloseBrace => "}",
-            _ => macro.ToString().ToLowerInvariant(),
-        };
-        builder.Append('\\').Append(name);
+            var boundary = builder.Length;
+            WriteFormula(builder, item, 0, source);
+            ValidateControlWordBoundary(builder, boundary, source);
+        }
     }
 
-    private static void WriteBinary(StringBuilder builder, Formula.Binary binary)
+    private static void ValidateControlWordBoundary(
+        StringBuilder builder,
+        int boundary,
+        string source)
+    {
+        if (boundary == 0
+            || boundary == builder.Length
+            || !IsAsciiLetter(builder[boundary]))
+        {
+            return;
+        }
+
+        var controlWordStart = boundary;
+        while (controlWordStart > 0 && IsAsciiLetter(builder[controlWordStart - 1]))
+        {
+            controlWordStart--;
+        }
+        if (controlWordStart == boundary
+            || controlWordStart == 0
+            || builder[controlWordStart - 1] != '\\')
+        {
+            return;
+        }
+
+        var successorEnd = boundary;
+        while (successorEnd < builder.Length
+            && IsAsciiLetterOrDigit(builder[successorEnd]))
+        {
+            successorEnd++;
+        }
+        var mergedMacroEnd = boundary;
+        while (mergedMacroEnd < builder.Length && IsAsciiLetter(builder[mergedMacroEnd]))
+        {
+            mergedMacroEnd++;
+        }
+
+        var controlWord = builder.ToString(controlWordStart, boundary - controlWordStart);
+        var successor = builder.ToString(boundary, successorEnd - boundary);
+        var mergedMacro = builder.ToString(
+            controlWordStart - 1,
+            mergedMacroEnd - controlWordStart + 1);
+        throw new InvalidOperationException(
+            $"Formula emission rejected at {source}: control word '{controlWord}' is immediately "
+            + $"followed by identifier '{successor}'; emitted bytes would form invalid LaTeX "
+            + $"macro '{mergedMacro}'. Insert FormulaDsl.Sp to state the intended boundary.");
+    }
+
+    private static bool IsAsciiLetter(char value) =>
+        value is >= 'A' and <= 'Z' or >= 'a' and <= 'z';
+
+    private static bool IsAsciiLetterOrDigit(char value) =>
+        IsAsciiLetter(value) || value is >= '0' and <= '9';
+
+    private static void WriteLatexMacro(StringBuilder builder, FormulaLatexMacro macro) =>
+        builder.Append('\\').Append(LatexMacroName(macro));
+
+    private static string LatexMacroName(FormulaLatexMacro macro) => macro switch
+    {
+        FormulaLatexMacro.Delta => "Delta",
+        FormulaLatexMacro.Gamma => "Gamma",
+        FormulaLatexMacro.Lambda => "Lambda",
+        FormulaLatexMacro.Leftrightarrow => "Leftrightarrow",
+        FormulaLatexMacro.Re => "Re",
+        FormulaLatexMacro.Rightarrow => "Rightarrow",
+        FormulaLatexMacro.Sigma => "Sigma",
+        FormulaLatexMacro.Vert => "Vert",
+        FormulaLatexMacro.Alpha => "alpha",
+        FormulaLatexMacro.DeltaLower => "delta",
+        FormulaLatexMacro.GammaLower => "gamma",
+        FormulaLatexMacro.LambdaLower => "lambda",
+        FormulaLatexMacro.SigmaLower => "sigma",
+        FormulaLatexMacro.EscapedSpace => " ",
+        FormulaLatexMacro.NegativeThinSpace => "!",
+        FormulaLatexMacro.ThinSpace => ",",
+        FormulaLatexMacro.SemicolonSpace => ";",
+        FormulaLatexMacro.RowBreak => "\\",
+        FormulaLatexMacro.OpenBrace => "{",
+        FormulaLatexMacro.CloseBrace => "}",
+        _ => macro.ToString().ToLowerInvariant(),
+    };
+
+    private static void WriteBinary(
+        StringBuilder builder,
+        Formula.Binary binary,
+        string source)
     {
         var precedence = GetPrecedence(binary);
-        WriteFormula(builder, binary.Left, precedence);
+        WriteFormula(builder, binary.Left, precedence, source);
         builder.Append(binary.Operator switch
         {
             FormulaBinaryOperator.Add => " + ",
@@ -351,12 +427,15 @@ public static class LatexWriter
                 GetPrecedence(binary.Right) + 1,
             _ => precedence,
         };
-        WriteFormula(builder, binary.Right, rightPrecedence);
+        WriteFormula(builder, binary.Right, rightPrecedence, source);
     }
 
-    private static void WriteRelation(StringBuilder builder, Formula.Relation relation)
+    private static void WriteRelation(
+        StringBuilder builder,
+        Formula.Relation relation,
+        string source)
     {
-        WriteFormula(builder, relation.Left, RelationPrecedence + 1);
+        WriteFormula(builder, relation.Left, RelationPrecedence + 1, source);
         builder.Append(relation.Operator switch
         {
             FormulaRelationOperator.Equal => " = ",
@@ -371,12 +450,13 @@ public static class LatexWriter
             FormulaRelationOperator.Equivalent => " \\equiv ",
             _ => throw new UnreachableException("Unknown relation operator."),
         });
-        WriteFormula(builder, relation.Right, RelationPrecedence + 1);
+        WriteFormula(builder, relation.Right, RelationPrecedence + 1, source);
     }
 
     private static void WriteRelationChain(
         StringBuilder builder,
-        Formula.RelationChain relation)
+        Formula.RelationChain relation,
+        string source)
     {
         for (var index = 0; index < relation.Operands.Length; index++)
         {
@@ -398,13 +478,16 @@ public static class LatexWriter
                 });
             }
 
-            WriteFormula(builder, relation.Operands[index], RelationPrecedence + 1);
+            WriteFormula(builder, relation.Operands[index], RelationPrecedence + 1, source);
         }
     }
 
-    private static void WriteLogic(StringBuilder builder, Formula.Logic logic)
+    private static void WriteLogic(
+        StringBuilder builder,
+        Formula.Logic logic,
+        string source)
     {
-        WriteFormula(builder, logic.Left, LogicPrecedence + 1);
+        WriteFormula(builder, logic.Left, LogicPrecedence + 1, source);
         builder.Append(logic.Operator switch
         {
             FormulaLogicOperator.And => " \\land ",
@@ -413,7 +496,7 @@ public static class LatexWriter
             FormulaLogicOperator.Iff => " \\Leftrightarrow ",
             _ => throw new UnreachableException("Unknown logic operator."),
         });
-        WriteFormula(builder, logic.Right, LogicPrecedence + 1);
+        WriteFormula(builder, logic.Right, LogicPrecedence + 1, source);
     }
 
     private static void WriteIdentifier(
@@ -431,7 +514,10 @@ public static class LatexWriter
         builder.Append(identifier.Value).Append('}');
     }
 
-    private static void WriteList(StringBuilder builder, ImmutableArray<Formula> values)
+    private static void WriteList(
+        StringBuilder builder,
+        ImmutableArray<Formula> values,
+        string source)
     {
         for (var index = 0; index < values.Length; index++)
         {
@@ -440,7 +526,7 @@ public static class LatexWriter
                 builder.Append(", ");
             }
 
-            WriteFormula(builder, values[index], 0);
+            WriteFormula(builder, values[index], 0, source);
         }
     }
 

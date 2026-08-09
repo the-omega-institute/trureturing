@@ -52,6 +52,7 @@ public static class QuestPdfWriter
                         column,
                         document.Content,
                         2,
+                        $"document '{document.Header.Gid.Value}'",
                         leanReport,
                         citations,
                         ref describeNumber);
@@ -75,22 +76,25 @@ public static class QuestPdfWriter
         ColumnDescriptor column,
         BlockSequence content,
         int headingLevel,
+        string source,
         LeanAxiomReport? leanReport,
         IReadOnlyDictionary<string, LiteratureCitation>? citations,
         ref int describeNumber)
     {
-        foreach (var block in content.Items)
+        for (var index = 0; index < content.Items.Length; index++)
         {
+            var block = content.Items[index];
+            var blockSource = $"{source}, block {index + 1}";
             switch (block)
             {
                 case DocumentBlock.Paragraph paragraph:
-                    WriteParagraph(column, paragraph.Content);
+                    WriteParagraph(column, paragraph.Content, $"{blockSource}, paragraph");
                     break;
                 case DocumentBlock.DisplayFormula display:
                     column.Item()
                         .Padding(6)
                         .Background(Colors.Grey.Lighten4)
-                        .Text(LatexWriter.Write(display.Value))
+                        .Text(LatexWriter.Write(display.Value, $"{blockSource}, display formula"))
                         .FontFamily(MonospaceFonts)
                         .FontSize(9);
                     break;
@@ -100,6 +104,7 @@ public static class QuestPdfWriter
                         column,
                         section.Content,
                         headingLevel + 1,
+                        $"{blockSource}, section '{section.Title.Value}'",
                         leanReport,
                         citations,
                         ref describeNumber);
@@ -109,6 +114,7 @@ public static class QuestPdfWriter
                         column,
                         describe,
                         headingLevel,
+                        blockSource,
                         leanReport,
                         citations,
                         ref describeNumber);
@@ -119,7 +125,10 @@ public static class QuestPdfWriter
         }
     }
 
-    private static void WriteParagraph(ColumnDescriptor column, InlineSequence content)
+    private static void WriteParagraph(
+        ColumnDescriptor column,
+        InlineSequence content,
+        string source)
     {
         column.Item().Text(text =>
         {
@@ -131,7 +140,7 @@ public static class QuestPdfWriter
                         text.Span(run.Run.Value);
                         break;
                     case Inline.InlineFormula formula:
-                        text.Span($"${LatexWriter.Write(formula.Value)}$")
+                        text.Span($"${LatexWriter.Write(formula.Value, $"{source}, inline formula")}$")
                             .FontFamily(MonospaceFonts);
                         break;
                     case Inline.GidReference reference:
@@ -149,6 +158,7 @@ public static class QuestPdfWriter
         ColumnDescriptor column,
         DocumentBlock.Describe describe,
         int headingLevel,
+        string source,
         LeanAxiomReport? leanReport,
         IReadOnlyDictionary<string, LiteratureCitation>? citations,
         ref int describeNumber)
@@ -165,7 +175,9 @@ public static class QuestPdfWriter
                 column.Item()
                     .Padding(6)
                     .Background(Colors.Grey.Lighten4)
-                    .Text(LatexWriter.Write(formula.Value))
+                    .Text(LatexWriter.Write(
+                        formula.Value,
+                        $"{source}, describe '{describe.Id.Value}' ('{describe.Title.Value}') statement"))
                     .FontFamily(MonospaceFonts)
                     .FontSize(9);
                 break;
@@ -176,7 +188,9 @@ public static class QuestPdfWriter
                     column.Item()
                         .Padding(6)
                         .Background(Colors.Grey.Lighten4)
-                        .Text(LatexWriter.WriteStatement(statementFormula))
+                        .Text(LatexWriter.WriteStatement(
+                            statementFormula,
+                            $"{source}, describe '{describe.Id.Value}' ('{describe.Title.Value}') statement"))
                         .FontFamily(MonospaceFonts)
                         .FontSize(9);
                 }
@@ -239,6 +253,7 @@ public static class QuestPdfWriter
             column,
             describe.Content,
             headingLevel + 1,
+            $"{source}, describe '{describe.Id.Value}' ('{describe.Title.Value}') commentary",
             leanReport,
             citations,
             ref describeNumber);
