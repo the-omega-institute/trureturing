@@ -3,7 +3,7 @@ namespace StrataLint.Scribe.Tests;
 public sealed class ChannelMonotoneDocumentTests
 {
     [Fact]
-    public void ChannelMonotonicityStatesTheCompositionAndItsHonestScope()
+    public void ChannelMonotonicityStatesTheRestatementAndItsHonestScope()
     {
         var definition = DocumentDefinitions.All.Single(static item =>
             item.Document.Header.Gid.Value == "D5/S3/Divergence/ChannelMonotone");
@@ -46,32 +46,39 @@ public sealed class ChannelMonotoneDocumentTests
         Assert.Contains("strictly positive stochastic kernel", prose, StringComparison.Ordinal);
         Assert.Contains("every row sums to one", prose, StringComparison.Ordinal);
         Assert.Contains(
-            "exactly the hypotheses required by the wave-3 identity; nothing beyond them is assumed",
+            "exactly the hypotheses required by D5/S3/Divergence/DpiDefect.dpi_defect_nonneg; nothing beyond them is assumed",
             prose,
             StringComparison.Ordinal);
         Assert.Contains(
-            "composition of repository results, not new divergence machinery",
+            "This module restates D5/S3/Divergence/DpiDefect.dpi_defect_nonneg in inequality form",
             prose,
             StringComparison.Ordinal);
         Assert.Contains(
-            "D5/S3/Divergence/ClassicalDPI.classical_dpi_identity supplies the exact decomposition",
+            "The proof of the mathematical content lives in DpiDefect",
             prose,
             StringComparison.Ordinal);
         Assert.Contains(
-            "D5/S3/Divergence/GrandmotherTheorem.kl_divergence_nonneg supplies nonnegativity of each posterior divergence",
+            "ChannelMonotone only converts its nonnegative defect conclusion into the equivalent output-at-most-input inequality",
             prose,
             StringComparison.Ordinal);
         Assert.Contains(
-            "Finset.sum_nonneg combines those pointwise bounds",
-            prose,
-            StringComparison.Ordinal);
-        Assert.Contains("premises are discharged, not assumed", prose, StringComparison.Ordinal);
-        Assert.Contains(
-            "each posterior is strictly positive and sums to one, proved directly from the definitions",
+            "This module is a redundant re-proof: the same proposition was already frozen as D5/S3/Divergence/DpiDefect.dpi_defect_nonneg before this module was deposited.",
             prose,
             StringComparison.Ordinal);
         Assert.Contains(
-            "absolute-continuity premise is trivial because the second posterior is strictly positive",
+            "The theorem remains true and machine-verified; the redundancy lies in this module, not in the mathematics.",
+            prose,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "It is retained, rather than removed, only because the frozen ledger currently has no revoke writer (issue #1030); removal is the resolution that CLAUDE.md 第6条 would require.",
+            prose,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "Therefore, this module is a documented compromise and does not by itself satisfy 唯一真源 / single source of truth.",
+            prose,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "Readers and downstream work should depend on D5/S3/Divergence/DpiDefect.dpi_defect_nonneg, not on this module.",
             prose,
             StringComparison.Ordinal);
         Assert.Contains(
