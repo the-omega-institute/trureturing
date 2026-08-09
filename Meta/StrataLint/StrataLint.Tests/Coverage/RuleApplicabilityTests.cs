@@ -75,7 +75,7 @@ public sealed class RuleApplicabilityTests
         return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
     }
 
-    private static ValidatedPolicy Policy() => Assert.IsType<RegistryLoadOutcome.Accepted>(
+    private static ValidatedPolicy Policy() => RegistryLoadAssert.Accepted(
         RegistryLoader.Load(
             Encoding.UTF8.GetBytes(TestRegistry.Canonical),
             Encoding.UTF8.GetBytes(TestRegistry.Domains))).Policy;
