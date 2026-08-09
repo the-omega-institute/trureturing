@@ -198,6 +198,18 @@ public sealed class BackfillInventoryLoaderTests
     public void NoncanonicalDigestionLedgerPathsAreRejected(string path)
         => Assert.False(BackfillInventoryLoader.IsCanonicalPath(path));
 
+    // chain_atoms / tail_authorization 是 legacy 字段:dev 现有 2,030 条记录里
+    // 100% 为 [] 与 null,从未装过内容。降为可选,但在场时必须为空 ——
+    // 新形态表达不了它们,静默丢弃即是第1条禁止的静默。
+    [Fact]
+    public void ReceiptsWithoutRetiredLegacyKeysAreAccepted()
+    {
+        var fields = LoaderEntryFields().ToHashSet(StringComparer.Ordinal);
+        fields.Remove("boundary");
+        Assert.True(TryLoadEntry(EntryFixture(fields).Replace(
+            "              chain_atoms: []\n              tail_authorization: null\n", string.Empty)));
+    }
+
     [Fact]
     public void MissingCasRefIsRejected()
     {
