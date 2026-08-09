@@ -317,6 +317,19 @@ public sealed partial class PrShepherdRecalculationTests
                   printf 'fixture-child-stdout\n'
                   printf 'fixture-child-stderr\n' >&2
                 fi
+                if [[ "${PR_SHEPHERD_BOUND_STEP:-}" == watch-reload-fetch \
+                    && "${PR_TEST_FETCH_FAILURES:-0}" =~ ^[0-9]+$ \
+                    && "${PR_TEST_FETCH_FAILURES:-0}" -gt 0 ]]; then
+                  fetch_attempt=0
+                  [[ ! -f "$PR_TEST_FETCH_STATE" ]] \
+                    || fetch_attempt="$(/bin/cat "$PR_TEST_FETCH_STATE")"
+                  fetch_attempt=$((fetch_attempt + 1))
+                  printf '%s\n' "$fetch_attempt" > "$PR_TEST_FETCH_STATE"
+                  if [[ "$fetch_attempt" -le "$PR_TEST_FETCH_FAILURES" ]]; then
+                    printf 'synthetic transient fetch failure attempt=%s\n' "$fetch_attempt" >&2
+                    exit 88
+                  fi
+                fi
                 if [[ " $* " == *" fetch --no-tags "* ]]; then
                   if [[ "$PR_TEST_MOVE_HEAD_DURING_FETCH" == 1 ]]; then
                     attacker="$(/usr/bin/git --git-dir "$PR_TEST_ORIGIN" rev-parse refs/heads/attacker)"

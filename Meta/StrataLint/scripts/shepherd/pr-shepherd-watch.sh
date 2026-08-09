@@ -83,16 +83,28 @@ print_watch_status() {
       "$status" "$reason" "$PIDFILE"
   fi
 }
+watch_dead_reason() {
+  local state_valid="$1" fallback="$2"
+  if [[ "$state_valid" == 1 \
+      && "$WATCH_STATE_TERMINAL_EXIT" != none \
+      && "$WATCH_STATE_LAST_OUTCOME" == watch-reload-fetch-retries-exhausted ]]; then
+    printf 'reload-fetch-retries-exhausted'
+  else
+    printf '%s' "$fallback"
+  fi
+}
 watch_status() {
   local state_valid=0 owner_status=2 now reason
   if load_watch_state; then state_valid=1; fi
   if [[ ! -f "$PIDFILE.lock" ]]; then
-    print_watch_status dead no-owner "$state_valid"
+    reason="$(watch_dead_reason "$state_valid" no-owner)"
+    print_watch_status dead "$reason" "$state_valid"
     return 2
   fi
   if watch_lease_owner_status "$PIDFILE.lock"; then owner_status=0; else owner_status=$?; fi
   if [[ "$owner_status" == 1 ]]; then
-    print_watch_status dead owner-gone "$state_valid"
+    reason="$(watch_dead_reason "$state_valid" owner-gone)"
+    print_watch_status dead "$reason" "$state_valid"
     return 2
   fi
   if [[ "$owner_status" == 2 ]]; then
@@ -107,7 +119,8 @@ watch_status() {
     return 1
   fi
   if [[ "$WATCH_STATE_TERMINAL_EXIT" != none ]]; then
-    print_watch_status dead terminal "$state_valid"
+    reason="$(watch_dead_reason "$state_valid" terminal)"
+    print_watch_status dead "$reason" "$state_valid"
     return 2
   fi
   now="$(date '+%s')"
@@ -135,13 +148,14 @@ cleanup_watch() {
   remove_watch_snapshot "$LOADED_SCRIPT_PATH"
 }
 watch_exit_cleanup() {
-  local rc=$? now
+  local rc=$? now marker="${WATCH_TERMINAL_OUTCOME:-}"
   [[ -z "$WATCH_SLEEP_PID" ]] || kill -TERM "$WATCH_SLEEP_PID" 2>/dev/null || true
   terminate_active_bounded_tree
   cleanup_supervised_sweep
   if [[ "$WATCH_OWNS_LEASE" == 1 && -n "$WATCH_LOADED_BLOB" ]]; then
     now="$(date '+%s')"
-    write_watch_state terminal none exit "$now" 0 "$now" "exit-$rc" "$rc" \
+    [[ -n "$marker" ]] || marker="exit-$rc"
+    write_watch_state terminal none exit "$now" 0 "$now" "$marker" "$rc" \
       "${PR_SHEPHERD_WATCH_CYCLE:-1}" || true
   fi
   cleanup_watch
