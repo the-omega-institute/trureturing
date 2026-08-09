@@ -190,8 +190,8 @@ internal static class ProductionFrozenLedgerValidator
             baselineDag,
             repository,
             frozenEvidenceRepository,
-            ToSyntax(orderedBaseline),
-            ToSyntax(orderedCurrent));
+            DagLedgerLoader.ToLinearSyntax(orderedBaseline),
+            DagLedgerLoader.ToLinearSyntax(orderedCurrent));
     }
 
     private static AdmissionOutcome? ValidateLoaded(
@@ -291,39 +291,6 @@ internal static class ProductionFrozenLedgerValidator
         baselineFiles.All(baselineFile =>
             current.TryGetFile(baselineFile.Path.Value, out var currentFile)
             && currentFile!.RawBytes.AsSpan().SequenceEqual(baselineFile.RawBytes.AsSpan()));
-
-    private static FrozenLedgerSyntax ToSyntax(ImmutableArray<DagLedgerFileEvent> events)
-    {
-        var raw = ImmutableArray.CreateBuilder<byte>();
-        var lines = ImmutableArray.CreateBuilder<FrozenLedgerLineSyntax>();
-        var previous = FrozenLedgerCanonicalWriter.ZeroHash;
-        var dagToLinearHash = new Dictionary<string, string>(StringComparer.Ordinal);
-        for (var sequence = 0; sequence < events.Length; sequence++)
-        {
-            var item = events[sequence];
-            var payload = item.Payload;
-            if (payload.TryGetProperty("previous_attestation_event_hash", out var dagPrevious))
-            {
-                var rewritten = JsonNode.Parse(payload.GetRawText())!.AsObject();
-                rewritten["previous_attestation_event_hash"] = dagToLinearHash[dagPrevious.GetString()!];
-                payload = JsonSerializer.SerializeToElement(rewritten);
-            }
-
-            var encoded = FrozenLedgerCanonicalWriter.WriteEvent(
-                item.EventType,
-                payload,
-                previous,
-                sequence);
-            using var document = JsonDocument.Parse(encoded.Bytes.AsSpan()[..^1].ToArray());
-            var line = new FrozenLedgerLineSyntax(encoded.Bytes, document.RootElement.Clone());
-            raw.AddRange(encoded.Bytes);
-            lines.Add(line);
-            dagToLinearHash.Add(item.EventHash, encoded.Hash);
-            previous = encoded.Hash;
-        }
-
-        return new FrozenLedgerSyntax(raw.ToImmutable(), lines.ToImmutable());
-    }
 
     private static AdmissionOutcome? ValidateTransition(
         RepositorySnapshot baseline,

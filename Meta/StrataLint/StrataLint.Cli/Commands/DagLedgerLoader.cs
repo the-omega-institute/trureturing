@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -131,8 +132,14 @@ public static class DagLedgerLoader
                     throw new FormatException("Content-addressed frozen event identity is duplicated.");
                 }
 
+                // 文件名承载裸摘要,不含 "sha256:" 前缀:冒号在 Windows 上是保留字符,
+                // 带冒号的路径无法 check out;仓内既有内容寻址先例 Meta/Digestion/atoms/sha256/<64hex>
+                // 也是「目录名承载算法、文件名是裸摘要」。
                 var fileName = file.Path.Value[(file.Path.Value.LastIndexOf('/') + 1)..];
-                if (!string.Equals(fileName, identity + ".json", StringComparison.Ordinal))
+                if (!string.Equals(
+                        fileName,
+                        FrozenLedgerChangeClassifier.AcceptedFileName(identity),
+                        StringComparison.Ordinal))
                 {
                     throw new FormatException("Content-addressed frozen event file name does not match event identity.");
                 }
@@ -268,4 +275,40 @@ public static class DagLedgerLoader
 
         return true;
     }
+
+    // v2 目录事件 → v1 线性 syntax 的唯一转换处。稳态校验与保守扩展都经由它,
+    // 不得各自再抄一份(否则两处对 previous_attestation_event_hash 的重映射会分叉)。
+    internal static FrozenLedgerSyntax ToLinearSyntax(ImmutableArray<DagLedgerFileEvent> events)
+    {
+        var raw = ImmutableArray.CreateBuilder<byte>();
+        var lines = ImmutableArray.CreateBuilder<FrozenLedgerLineSyntax>();
+        var previous = FrozenLedgerCanonicalWriter.ZeroHash;
+        var dagToLinearHash = new Dictionary<string, string>(StringComparer.Ordinal);
+        for (var sequence = 0; sequence < events.Length; sequence++)
+        {
+            var item = events[sequence];
+            var payload = item.Payload;
+            if (payload.TryGetProperty("previous_attestation_event_hash", out var dagPrevious))
+            {
+                var rewritten = JsonNode.Parse(payload.GetRawText())!.AsObject();
+                rewritten["previous_attestation_event_hash"] = dagToLinearHash[dagPrevious.GetString()!];
+                payload = JsonSerializer.SerializeToElement(rewritten);
+            }
+
+            var encoded = FrozenLedgerCanonicalWriter.WriteEvent(
+                item.EventType,
+                payload,
+                previous,
+                sequence);
+            using var document = JsonDocument.Parse(encoded.Bytes.AsSpan()[..^1].ToArray());
+            var line = new FrozenLedgerLineSyntax(encoded.Bytes, document.RootElement.Clone());
+            raw.AddRange(encoded.Bytes);
+            lines.Add(line);
+            dagToLinearHash.Add(item.EventHash, encoded.Hash);
+            previous = encoded.Hash;
+        }
+
+        return new FrozenLedgerSyntax(raw.ToImmutable(), lines.ToImmutable());
+    }
+
 }

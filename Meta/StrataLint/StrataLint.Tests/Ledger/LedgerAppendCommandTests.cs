@@ -47,7 +47,7 @@ public sealed class LedgerAppendCommandTests
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("appended_freezes=2", result.Output, StringComparison.Ordinal);
-        var appendedBytes = File.ReadAllBytes(fixture.LedgerPath);
+        var appendedBytes = FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath);
         var appendedLines = FrozenLedgerTestData.Lines(ImmutableArray.CreateRange(appendedBytes));
         Assert.Equal(baselineLines.Length + 2, appendedLines.Length);
         for (var index = 0; index < baselineLines.Length; index++)
@@ -80,14 +80,14 @@ public sealed class LedgerAppendCommandTests
         var first = fixture.Environment.AppendLedger(
             new[] { "--candidate-lean-report", fixture.ReportPath });
         Assert.True(first.Success, first.Error);
-        var appendedBytes = File.ReadAllBytes(fixture.LedgerPath);
+        var appendedBytes = FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath);
 
         var second = fixture.Environment.AppendLedger(
             new[] { "--candidate-lean-report", fixture.ReportPath });
 
         Assert.True(second.Success, second.Error);
         Assert.Contains("no missing freezes", second.Output, StringComparison.Ordinal);
-        Assert.Equal(appendedBytes, File.ReadAllBytes(fixture.LedgerPath));
+        Assert.Equal(appendedBytes, FrozenLedgerTestData.ReadLedgerDirectory(fixture.LedgerPath));
     }
 
     /// The preparation step marks an unusable raw report with its own exception type. Drop that
@@ -165,8 +165,8 @@ public sealed class LedgerAppendCommandTests
                 [FrozenLedgerTestData.PathFor("A")] = a.Source,
                 [FrozenLedgerTestData.PathFor("B")] = b.Source,
                 [FrozenLedgerTestData.PathFor("C")] = c.Source,
-                [FrozenLedgerChangeClassifier.LedgerPath] = Encoding.UTF8.GetString(BaselineBytes.AsSpan()),
             };
+            FrozenLedgerTestData.AddLedgerFiles(files, BaselineBytes);
             var raw = RawRepositorySnapshot.Create(
                 files.Select(static item => RawRepositoryEntry.FromText(item.Key, item.Value)));
             var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
@@ -180,9 +180,8 @@ public sealed class LedgerAppendCommandTests
 
             LedgerPath = Path.Combine(
                 temporary.Path,
-                FrozenLedgerChangeClassifier.LedgerPath.Replace('/', Path.DirectorySeparatorChar));
-            Directory.CreateDirectory(Path.GetDirectoryName(LedgerPath)!);
-            File.WriteAllBytes(LedgerPath, BaselineBytes.AsSpan());
+                FrozenLedgerChangeClassifier.AcceptedRoot.Replace('/', Path.DirectorySeparatorChar));
+            FrozenLedgerTestData.WriteLedgerDirectory(LedgerPath, BaselineBytes);
             ReportPath = Path.Combine(temporary.Path, "candidate-lean-report.json");
             File.WriteAllBytes(ReportPath, RawLeanReportArtifact.Write(snapshot, report).AsSpan());
             Environment = new ProductionCliEnvironment(

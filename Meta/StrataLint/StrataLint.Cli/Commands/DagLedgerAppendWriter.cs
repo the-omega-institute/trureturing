@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -52,12 +53,16 @@ internal static class DagLedgerAppendWriter
                     "generated frozen ledger is invalid: " + rejected.Message),
                 _ => throw new InvalidOperationException("unknown ledger validation outcome"),
             };
-            if (!File.ReadAllBytes(context.LedgerPath).AsSpan().SequenceEqual(context.BaselineBytes))
+            if (!DagLedgerCommandPreparation.LoadLedgerDirectory(context.LedgerPath, "existing frozen ledger")
+                    .RawBytes.AsSpan().SequenceEqual(context.BaselineBytes))
             {
-                throw new InvalidOperationException("events.jsonl changed while ledger-append was validating it");
+                throw new InvalidOperationException("accepted event files changed while ledger-append was validating them");
             }
 
-            File.WriteAllBytes(context.LedgerPath, candidateBytes.AsSpan());
+            WriteNewEvents(
+                context.LedgerPath,
+                candidateSyntax.Lines,
+                context.Baseline.Events.Length);
             var appended = candidate.Events
                 .Skip(context.Baseline.Events.Length)
                 .OfType<FrozenLedgerEvent.Freeze>()
@@ -84,6 +89,41 @@ internal static class DagLedgerAppendWriter
                 false,
                 string.Empty,
                 "LEDGER_APPEND_FAILED " + (exception.InnerException ?? exception).Message + "\n");
+        }
+    }
+
+    internal static void WriteNewEvents(
+        string directory,
+        IEnumerable<FrozenLedgerLineSyntax> lines,
+        int skip = 0)
+    {
+        var linearToDagHash = new Dictionary<string, string>(StringComparer.Ordinal);
+        var sequence = 0;
+        foreach (var line in lines)
+        {
+            var payload = line.Value.GetProperty("payload");
+            if (payload.TryGetProperty("previous_attestation_event_hash", out var previous))
+            {
+                var rewritten = JsonNode.Parse(payload.GetRawText())!.AsObject();
+                rewritten["previous_attestation_event_hash"] = linearToDagHash[previous.GetString()!];
+                payload = JsonSerializer.SerializeToElement(rewritten);
+            }
+
+            var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(
+                line.Value.GetProperty("event_type").GetString()!,
+                payload);
+            linearToDagHash.Add(line.Value.GetProperty("event_hash").GetString()!, encoded.Hash);
+            if (sequence++ < skip)
+            {
+                continue;
+            }
+
+            var identity = payload.TryGetProperty("frozen_node_id", out var nodeId)
+                ? nodeId.GetString()!
+                : encoded.Hash;
+            var path = Path.Combine(directory, identity[7..] + ".json");
+            using var stream = new FileStream(path, FileMode.CreateNew, FileAccess.Write, FileShare.None);
+            stream.Write(encoded.Bytes.AsSpan());
         }
     }
 

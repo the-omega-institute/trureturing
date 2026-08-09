@@ -10,6 +10,17 @@ public sealed partial class ProductionEnvironmentTests
 {
     private const string AcceptedPrefix = FrozenLedgerChangeClassifier.AcceptedRoot + "/";
 
+    // 文件名约定:裸摘要,不含 "sha256:" 前缀。冒号在 Windows 上是保留字符,
+    // 且仓内 CAS 先例 Meta/Digestion/atoms/sha256/<64hex> 同样是裸摘要。
+    [Fact]
+    public void AcceptedFileNameCarriesTheBareDigestWithoutTheAlgorithmPrefix()
+    {
+        var digest = new string('a', 64);
+        var identity = "sha256:" + digest;
+        Assert.Equal(digest + ".json", FrozenLedgerChangeClassifier.AcceptedFileName(identity));
+        Assert.DoesNotContain(':', FrozenLedgerChangeClassifier.AcceptedPath(identity));
+    }
+
     [Fact]
     public void ProductionValidatorAcceptsContentAddressedLedgerMigration()
     {
@@ -347,11 +358,33 @@ public sealed partial class ProductionEnvironmentTests
     private static FrozenValidatorFixture MigratedFixture(bool withLegacyReattest = false)
     {
         var fixture = CreateFrozenValidatorFixture();
+        var legacyLedger = Encoding.UTF8.GetString(LoadLedger(fixture.BaselineFiles).RawBytes.AsSpan());
+        foreach (var files in new[] { fixture.BaselineFiles, fixture.CurrentFiles })
+        {
+            foreach (var path in files.Keys
+                .Where(FrozenLedgerChangeClassifier.IsAcceptedEventPath)
+                .ToArray())
+            {
+                files.Remove(path);
+            }
+
+            files[FrozenLedgerChangeClassifier.LedgerPath] = legacyLedger;
+        }
+
         if (withLegacyReattest)
         {
             AppendCurrentReattestation(fixture);
-            fixture.BaselineFiles[FrozenLedgerChangeClassifier.LedgerPath] =
-                fixture.CurrentFiles[FrozenLedgerChangeClassifier.LedgerPath];
+            var updatedLegacy = Encoding.UTF8.GetString(
+                LoadLedger(fixture.CurrentFiles).RawBytes.AsSpan());
+            foreach (var path in fixture.CurrentFiles.Keys
+                .Where(FrozenLedgerChangeClassifier.IsAcceptedEventPath)
+                .ToArray())
+            {
+                fixture.CurrentFiles.Remove(path);
+            }
+
+            fixture.CurrentFiles[FrozenLedgerChangeClassifier.LedgerPath] = updatedLegacy;
+            fixture.BaselineFiles[FrozenLedgerChangeClassifier.LedgerPath] = updatedLegacy;
         }
 
         var legacy = LegacyLines(fixture);
@@ -370,7 +403,7 @@ public sealed partial class ProductionEnvironmentTests
                 JsonSerializer.SerializeToElement(payload));
             oldToNew.Add(item["event_hash"]!.GetValue<string>(), encoded.Hash);
             var identity = payload["frozen_node_id"]?.GetValue<string>() ?? encoded.Hash;
-            fixture.CurrentFiles[AcceptedPrefix + identity + ".json"] =
+            fixture.CurrentFiles[FrozenLedgerChangeClassifier.AcceptedPath(identity)] =
                 Encoding.UTF8.GetString(encoded.Bytes.AsSpan());
         }
 
@@ -414,7 +447,7 @@ public sealed partial class ProductionEnvironmentTests
         if (node["payload"]!["frozen_node_id"] is null)
         {
             fixture.CurrentFiles.Remove(path);
-            fixture.CurrentFiles[AcceptedPrefix + encoded.Hash + ".json"] = text;
+            fixture.CurrentFiles[FrozenLedgerChangeClassifier.AcceptedPath(encoded.Hash)] = text;
         }
         else
         {
@@ -427,7 +460,7 @@ public sealed partial class ProductionEnvironmentTests
         var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(
             node["event_type"]!.GetValue<string>(),
             JsonSerializer.SerializeToElement(node["payload"]));
-        fixture.CurrentFiles[AcceptedPrefix + identity + ".json"] =
+        fixture.CurrentFiles[FrozenLedgerChangeClassifier.AcceptedPath(identity)] =
             Encoding.UTF8.GetString(encoded.Bytes.AsSpan());
     }
 
