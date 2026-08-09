@@ -1,24 +1,24 @@
-<!-- echo-residual-summary:v3 residual=sha256:5b81aee6c33437b6e1e59ccf3eb2a69585c7b49d1a8fbb8ef8c7ee61165bc0b7 -->
+<!-- echo-residual-summary:v3 residual=sha256:2a41cc833c412efb9c2057651180f963223bd6e0c8cf6e131da06627e394bbe7 -->
 # Echo Residual Summary
 
-- unresolved_subitems: 554
-- mother_residual_atom_ids: 87
+- unresolved_subitems: 519
+- mother_residual_atom_ids: 74
 
-## `bedc-wm-v0.1`
-
-- unresolved_subitems: 0
-- mother_residual_atom_ids: 0
-
-Mother residual atoms: none.
-
-## `cone-v1`
+## `bedc-wm`
 
 - unresolved_subitems: 0
 - mother_residual_atom_ids: 0
 
 Mother residual atoms: none.
 
-## `gict-v3.6`
+## `cone`
+
+- unresolved_subitems: 0
+- mother_residual_atom_ids: 0
+
+Mother residual atoms: none.
+
+## `gict`
 
 - unresolved_subitems: 118
 - mother_residual_atom_ids: 12
@@ -156,56 +156,37 @@ Mother residual atoms:
   - `scaling-phenomena-assignment-to-expanding-axis`
   - `sign-reversal-phenomena-assignment-to-contracting-axis`
 
-## `golden-ledger-spec-v7.11`
+## `golden-ledger-spec`
 
 - unresolved_subitems: 0
 - mother_residual_atom_ids: 0
 
 Mother residual atoms: none.
 
-## `interface-v1`
+## `interface`
 
 - unresolved_subitems: 0
 - mother_residual_atom_ids: 0
 
 Mother residual atoms: none.
 
-## `observer-quantum-v1`
+## `observer-quantum`
 
-- unresolved_subitems: 82
-- mother_residual_atom_ids: 22
+- unresolved_subitems: 47
+- mother_residual_atom_ids: 9
 
 Mother residual atoms:
 
-- `observer-residual-101df483e71f9e23ee1ec13626abf3037d9a32e6f992d6b5b9485bf6c7976c77` (5)
+- `observer-residual-101df483e71f9e23ee1ec13626abf3037d9a32e6f992d6b5b9485bf6c7976c77` (6)
   - `classical-address-realism-exclusion`
   - `classical-local-fiber-bound-certificate`
   - `hidden-address-local-variable-interpretation`
   - `kochen-specker-projection-valuation-obstruction`
+  - `no-character-for-all-matrix-sizes-greater-than-one`
   - `probability-not-ignorance-conclusion`
-- `observer-residual-17d6f34c071aedeee910eb7ef184769f34ff9379405f985d36503a18f485b73e` (7)
-  - `born-control-numerical-tolerance-certificate`
-  - `complete-solution-space-characterization`
-  - `gleason-representation-and-uniqueness-dimension-at-least-three`
-  - `harmonic-spectral-pruning-certificate`
-  - `ledger-publicness-implies-noncontextual-additivity`
-  - `quartic-pricing-context-counterexample`
-  - `rank-one-pure-state-modulus-square-reduction`
 - `observer-residual-39801f81b23d4fe1d4823f4470f961be3f2fc21445bfec13de1574cb9fd368bc` (2)
   - `bookkeeping-is-decoherence-identification`
   - `ledger-is-environment-identification`
-- `observer-residual-3a223e1e36f56665b3c0e9be99371b69a493873f7565ce0f32908c28b4663767` (4)
-  - `certificate-identity-zero-tolerance`
-  - `global-system-record-unitarity-premise`
-  - `no-third-collapse-dynamics-interpretive-premise`
-  - `objective-collapse-model-demarcation`
-- `observer-residual-3fd76409f8ea3cfe2c3722c92b767875991a4572f1d62575f6ded1a5150b92c6` (2)
-  - `classical-local-fiber-bound-certificate`
-  - `monogamy-unique-classical-pairing`
-- `observer-residual-41d280b2ed3f2dea88b5349db0a8180037ef5cc783f6668adeeccd6a93c4b2b8` (1)
-  - `streamline-theorem-constant-hidden-offset`
-- `observer-residual-52f4218f9195e554aad17c30ebe5b0a7b5f4474beaea97b1bdb87dc9a415a303` (1)
-  - `center-equals-continuous-torus-functions-crossed-product-form`
 - `observer-residual-5867fe5155d445a54dc3abe86aaecf7829c9f60988ea7e0d76bdf18e0ed085d6` (3)
   - `bookkeeping-is-decoherence-identification`
   - `ledger-is-environment-identification`
@@ -217,14 +198,6 @@ Mother residual atoms:
   - `rieffel-metric-bundle-over-torus`
   - `streamline-infinity-at-nonintegral-fiber-offset`
   - `type-II-infinity-classification`
-- `observer-residual-5caee6c1c0969f146242d6f7444a71d30e04dc9fb7ae8b941bc5f04d36a23ee0` (2)
-  - `classical-local-fiber-bound-certificate`
-  - `monogamy-unique-classical-pairing`
-- `observer-residual-7232ebf337ed10c1fb71b90c1f3b3438d2dbddf1261035e4a757c3f8b6124511` (2)
-  - `classical-local-fiber-bound-certificate`
-  - `noncontextual-and-local-double-exclusion-synthesis`
-- `observer-residual-7957064151dd9375db6308e290488a9d7836e42e1d2151f8dc586a21a6bb9995` (1)
-  - `center-equals-continuous-torus-functions-crossed-product-form`
 - `observer-residual-7c9486a5ed7ca3264cd32d9aaaa07bb8af9e81a547a163dd202042efa51b920c` (6)
   - `abstract-crossed-product-commutator-formula-beyond-register-representation`
   - `continuous-hidden-flow-rigidity-exclusion`
@@ -232,10 +205,6 @@ Mother residual atoms:
   - `integer-action-selected-by-observer-premise`
   - `observer-read-write-forces-structure`
   - `universal-c-star-crossed-product-identification`
-- `observer-residual-8bdb867fc051e5a905bf4a833e7613687d575322c0f5437ea92e2c33b1dec146` (3)
-  - `certificate-identity-zero-tolerance`
-  - `no-third-collapse-dynamics-interpretive-premise`
-  - `same-system-record-state-throughout-premise`
 - `observer-residual-8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490` (6)
   - `arbitrary-observer-window-full-matrix-identification`
   - `exact-matrix-unit-zero-error-certificate`
@@ -243,8 +212,6 @@ Mother residual atoms:
   - `general-robertson-variance-uncertainty`
   - `observer-window-generated-structure-claim`
   - `prime-power-tensor-factor-decomposition`
-- `observer-residual-8d5c4162772d2b6674b2c46ab17550880a2670b134d5893a353659610617b8fe` (1)
-  - `two-hundred-channel-numeric-certificate-prose`
 - `observer-residual-92312c5c0791ca42042265d47e65559acb1efa5a59e9e7db7f6e9fa6786b1a38` (6)
   - `central-winding-unitary-over-torus`
   - `exact-matrix-unit-zero-error-certificate`
@@ -252,12 +219,6 @@ Mother residual atoms:
   - `noncommutative-algebra-bundle-over-torus`
   - `prime-power-tensor-factor-decomposition`
   - `universal-c-star-crossed-product-identification`
-- `observer-residual-a64c69d2b846d7fdf3c80468898e853257ad9a378bf7da6c74c3370ea865762c` (5)
-  - `forgetting-quantity-dpi-nonneg-beyond-finite-classical-strict-positive`
-  - `joint-coherent-reversal-of-all-copies`
-  - `know-forgot-two-time-relation`
-  - `multi-copy-erasure-quantifier`
-  - `six-state-finite-certificates`
 - `observer-residual-a6962d32cb2d5b0127bc20031cd895bdfb1d232901e5e21eb0a62b55e49930eb` (7)
   - `born-control-numerical-tolerance-certificate`
   - `complete-solution-space-characterization`
@@ -272,17 +233,8 @@ Mother residual atoms:
   - `discrete-crossed-product-uniqueness`
   - `full-crossed-product-identification`
   - `observer-read-write-forces-structure`
-- `observer-residual-b2dd3d2b2261d86b6e8b20f45ca56ef7b3da87d833f50e38279f562c2a1a66c9` (6)
-  - `forgetting-quantity-dpi-nonneg-beyond-finite-classical-strict-positive`
-  - `know-forgot-two-time-relation`
-  - `multi-copy-erasure-quantifier`
-  - `six-state-finite-certificates`
-  - `v2-entropy-monotone-capacity-decrease`
-  - `v3-revival-spectrum-diophantine-grading`
-- `observer-residual-d35e7e61edd9bb9519b7f604eedded2838b8b003cdb46b4234deb3c279cb987c` (1)
-  - `two-hundred-channel-numeric-certificate-prose`
 
-## `pzg-v170`
+## `pzg`
 
 - unresolved_subitems: 354
 - mother_residual_atom_ids: 53
