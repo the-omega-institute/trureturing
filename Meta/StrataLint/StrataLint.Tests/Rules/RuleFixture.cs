@@ -185,7 +185,7 @@ internal sealed partial class RuleFixture
             var policyOutcome = RegistryLoader.Load(
                 Encoding.UTF8.GetBytes(TestRegistry.Canonical),
                 Encoding.UTF8.GetBytes(TestRegistry.Domains));
-            policy = Assert.IsType<RegistryLoadOutcome.Accepted>(policyOutcome).Policy;
+            policy = RegistryLoadAssert.Accepted(policyOutcome).Policy;
         }
         var lean = AcceptLean(current, Reports);
         var baselineLean = AcceptLean(baseline, BaselineReports);
@@ -209,7 +209,7 @@ internal sealed partial class RuleFixture
         var policyOutcome = RegistryLoader.Load(
             Encoding.UTF8.GetBytes(TestRegistry.Canonical),
             Encoding.UTF8.GetBytes(TestRegistry.Domains));
-        var policy = Assert.IsType<RegistryLoadOutcome.Accepted>(policyOutcome).Policy;
+        var policy = RegistryLoadAssert.Accepted(policyOutcome).Policy;
         var bootstrap = BootstrapGate.Evaluate(RawChangeSet.Create(Changes));
         var meta = Assert.IsType<BootstrapOutcome.Clear>(bootstrap).Capability;
         return RuleEvaluationContext.Create(
@@ -229,7 +229,7 @@ internal sealed partial class RuleFixture
         var policyOutcome = RegistryLoader.Load(
             Encoding.UTF8.GetBytes(TestRegistry.Canonical),
             Encoding.UTF8.GetBytes(TestRegistry.Domains));
-        var policy = Assert.IsType<RegistryLoadOutcome.Accepted>(policyOutcome).Policy;
+        var policy = RegistryLoadAssert.Accepted(policyOutcome).Policy;
         var bootstrap = BootstrapGate.Evaluate(RawChangeSet.Create(Changes));
         var meta = Assert.IsType<BootstrapOutcome.ProtectedSurfaceVerificationRequired>(bootstrap).ChangeSet;
         return RuleEvaluationContext.Create(
