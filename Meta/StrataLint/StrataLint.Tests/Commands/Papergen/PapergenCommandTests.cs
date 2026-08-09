@@ -230,7 +230,9 @@ public sealed partial class PapergenCommandTests
             FrozenCarrierA,
             ["D5/S0/Carrier/A.a"],
             "D5/B/S0/Carrier/A");
-        File.Delete(Path.Combine(repository.Path, FrozenLedgerChangeClassifier.LedgerPath));
+        Directory.Delete(
+            Path.Combine(repository.Path, FrozenLedgerChangeClassifier.AcceptedRoot),
+            recursive: true);
         var console = new BufferedConsole();
 
         var exit = CliApplication.Run(
@@ -241,7 +243,7 @@ public sealed partial class PapergenCommandTests
         Assert.Equal(1, exit);
         Assert.Equal(string.Empty, console.Output);
         Assert.Contains("PAPERGEN_VALIDATE_INVALID", console.Error, StringComparison.Ordinal);
-        Assert.Contains(FrozenLedgerChangeClassifier.LedgerPath, console.Error, StringComparison.Ordinal);
+        Assert.Contains(FrozenLedgerChangeClassifier.AcceptedRoot, console.Error, StringComparison.Ordinal);
     }
 
     /// The same floor at the validator boundary. Pinning it only through the CLI would leave the
@@ -254,7 +256,9 @@ public sealed partial class PapergenCommandTests
             FrozenCarrierA,
             ["D5/S0/Carrier/A.a"],
             "D5/B/S0/Carrier/A");
-        File.Delete(Path.Combine(repository.Path, FrozenLedgerChangeClassifier.LedgerPath));
+        Directory.Delete(
+            Path.Combine(repository.Path, FrozenLedgerChangeClassifier.AcceptedRoot),
+            recursive: true);
 
         var outcome = PaperRecipeValidator.Validate(
             repository.Path,
@@ -263,7 +267,7 @@ public sealed partial class PapergenCommandTests
             "D5-P001");
 
         var invalid = Assert.IsType<PaperRecipeValidationOutcome.Invalid>(outcome);
-        Assert.Contains(FrozenLedgerChangeClassifier.LedgerPath, invalid.Message, StringComparison.Ordinal);
+        Assert.Contains(FrozenLedgerChangeClassifier.AcceptedRoot, invalid.Message, StringComparison.Ordinal);
     }
 
     /// Reversed pairing of the mixed-recipe case. With only one ordering an implementation that
@@ -346,7 +350,9 @@ public sealed partial class PapergenCommandTests
             FrozenCarrierA,
             ["D5/S0/Carrier/A.a"],
             "D5/B/S0/Carrier/A");
-        Write(repository.Path, FrozenLedgerChangeClassifier.LedgerPath, "{\"not\": \"a ledger\"}\n");
+        var eventPath = Directory.EnumerateFiles(
+            Path.Combine(repository.Path, FrozenLedgerChangeClassifier.AcceptedRoot)).First();
+        File.WriteAllText(eventPath, "{\"not\": \"a ledger\"}\n", new UTF8Encoding(false));
 
         var outcome = PaperRecipeValidator.Validate(
             repository.Path,
@@ -355,7 +361,7 @@ public sealed partial class PapergenCommandTests
             "D5-P001");
 
         var invalid = Assert.IsType<PaperRecipeValidationOutcome.Invalid>(outcome);
-        Assert.Contains(FrozenLedgerChangeClassifier.LedgerPath, invalid.Message, StringComparison.Ordinal);
+        Assert.Contains(FrozenLedgerChangeClassifier.AcceptedRoot, invalid.Message, StringComparison.Ordinal);
     }
 
     [Fact]
