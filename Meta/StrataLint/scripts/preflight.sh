@@ -9,15 +9,31 @@ PREFLIGHT_FAULT_CLASS="CONFIGURATION"
 PERF_TMP=""
 PERF_EVENT_SPOOL=""
 PERF_BASE="unknown"
+PREFLIGHT_GATE_OUTCOME_DIR=""
 BASE_REF="${BASE:-origin/dev}"
 BASE_SHA=""
 STRATALINT_PERF_RUN_ID=""
+
+structured_gate_failure() {
+  local semantic="$PREFLIGHT_GATE_OUTCOME_DIR/gate-outcome-v1.semantic-violation"
+  local infrastructure="$PREFLIGHT_GATE_OUTCOME_DIR/gate-outcome-v1.infrastructure-failure"
+  if [[ -f "$semantic" && ! -e "$infrastructure" ]]; then
+    printf 'FAIL:SEMANTIC\n'
+    return 0
+  fi
+  if [[ -f "$infrastructure" && ! -e "$semantic" ]]; then
+    printf 'FAIL:INFRASTRUCTURE\n'
+    return 0
+  fi
+  return 1
+}
 
 finish_preflight() {
   local rc="$1"
   local declaration="UNKNOWN:UNKNOWN"
   local status="failed"
   local finished_at="$PREFLIGHT_STARTED"
+  local gate_declaration=""
   trap - EXIT
   trap '' INT TERM
   set +e
@@ -31,11 +47,16 @@ finish_preflight() {
       124|130|143) declaration="FAIL:INFRASTRUCTURE" ;;
       126|127) declaration="FAIL:TOOLCHAIN" ;;
       *)
-        case "$PREFLIGHT_FAULT_CLASS" in
-          SEMANTIC|CONFIGURATION|TOOLCHAIN|INFRASTRUCTURE)
-            declaration="FAIL:$PREFLIGHT_FAULT_CLASS"
-            ;;
-        esac
+        if [[ -n "$PREFLIGHT_GATE_OUTCOME_DIR" ]] \
+          && gate_declaration="$(structured_gate_failure)"; then
+          declaration="$gate_declaration"
+        else
+          case "$PREFLIGHT_FAULT_CLASS" in
+            SEMANTIC|CONFIGURATION|TOOLCHAIN|INFRASTRUCTURE)
+              declaration="FAIL:$PREFLIGHT_FAULT_CLASS"
+              ;;
+          esac
+        fi
         ;;
     esac
   fi
@@ -48,6 +69,9 @@ finish_preflight() {
     perf_flush_events "$ROOT" "$PERF_EVENT_SPOOL" >/dev/null 2>&1 || true
   fi
   if [[ -n "$PERF_TMP" ]]; then rm -rf -- "$PERF_TMP"; fi
+  if [[ -n "$PREFLIGHT_GATE_OUTCOME_DIR" ]]; then
+    rm -rf -- "$PREFLIGHT_GATE_OUTCOME_DIR"
+  fi
   printf 'FKST_LOCAL_ITERATION_RESULT:v2:%s\n' "$declaration"
   exit "$rc"
 }
@@ -154,9 +178,12 @@ expect_compile_failure \
   "禁 API 证明失效"
 record_timing compile-fail-proofs
 
+PREFLIGHT_FAULT_CLASS="INFRASTRUCTURE"
+PREFLIGHT_GATE_OUTCOME_DIR="$(mktemp -d "${TMPDIR:-/tmp}/stratalint-gate-outcome.XXXXXXXX")"
 PREFLIGHT_FAULT_CLASS="SEMANTIC"
 set +e
-make gate BASE="$BASE_SHA" GATE_ARGS="--skip-engineering"
+STRATALINT_GATE_OUTCOME_DIR="$PREFLIGHT_GATE_OUTCOME_DIR" \
+  make gate BASE="$BASE_SHA" GATE_ARGS="--skip-engineering"
 gate_rc=$?
 set -e
 record_timing gate
