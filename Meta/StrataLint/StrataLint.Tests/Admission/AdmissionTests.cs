@@ -13,7 +13,7 @@ public sealed class AdmissionTests
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         var context = fixture.Build();
-        var registry = Assert.IsType<RegistryLoadOutcome.Accepted>(
+        var registry = RegistryLoadAssert.Accepted(
             RegistryLoader.Load(
                 Encoding.UTF8.GetBytes(TestRegistry.Canonical),
                 Encoding.UTF8.GetBytes(TestRegistry.Domains)));
@@ -45,7 +45,7 @@ public sealed class AdmissionTests
         var fixture = new RuleFixture();
         fixture.Apply("badge");
         var context = fixture.Build();
-        var registry = Assert.IsType<RegistryLoadOutcome.Accepted>(
+        var registry = RegistryLoadAssert.Accepted(
             RegistryLoader.Load(
                 Encoding.UTF8.GetBytes(TestRegistry.Canonical),
                 Encoding.UTF8.GetBytes(TestRegistry.Domains)));
@@ -71,7 +71,7 @@ public sealed class AdmissionTests
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         var context = fixture.Build();
-        var registry = Assert.IsType<RegistryLoadOutcome.Accepted>(
+        var registry = RegistryLoadAssert.Accepted(
             RegistryLoader.Load(
                 Encoding.UTF8.GetBytes(TestRegistry.Canonical),
                 Encoding.UTF8.GetBytes(TestRegistry.Domains)));
@@ -106,7 +106,7 @@ public sealed class AdmissionTests
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         var context = fixture.Build();
-        var registry = Assert.IsType<RegistryLoadOutcome.Accepted>(
+        var registry = RegistryLoadAssert.Accepted(
             RegistryLoader.Load(
                 Encoding.UTF8.GetBytes(TestRegistry.Canonical),
                 Encoding.UTF8.GetBytes(TestRegistry.Domains)));
@@ -153,7 +153,7 @@ public sealed class AdmissionTests
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         var context = fixture.Build();
-        var registry = Assert.IsType<RegistryLoadOutcome.Accepted>(
+        var registry = RegistryLoadAssert.Accepted(
             RegistryLoader.Load(
                 Encoding.UTF8.GetBytes(TestRegistry.Canonical),
                 Encoding.UTF8.GetBytes(TestRegistry.Domains)));

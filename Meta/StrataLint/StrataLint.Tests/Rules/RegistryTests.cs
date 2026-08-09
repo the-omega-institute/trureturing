@@ -23,8 +23,8 @@ public sealed class RegistryTests
         Assert.True(
             first is RegistryLoadOutcome.Accepted,
             first is RegistryLoadOutcome.InfrastructureFailure failure ? failure.Message : first.ToString());
-        var firstAccepted = Assert.IsType<RegistryLoadOutcome.Accepted>(first);
-        var secondAccepted = Assert.IsType<RegistryLoadOutcome.Accepted>(second);
+        var firstAccepted = RegistryLoadAssert.Accepted(first);
+        var secondAccepted = RegistryLoadAssert.Accepted(second);
         Assert.Empty(typeof(ValidatedPolicy).GetConstructors());
         Assert.Equal(raw, firstAccepted.Policy.CanonicalRegistryBytes.ToArray());
         Assert.Equal(domainRaw, firstAccepted.Policy.CanonicalDomainsBytes.ToArray());
@@ -59,5 +59,25 @@ public sealed class RegistryTests
 
         var failure = Assert.IsType<RegistryLoadOutcome.InfrastructureFailure>(outcome);
         Assert.Contains(marker, failure.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    /// The point of RegistryLoadAssert is what a reader sees when it fails, so the failure
+    /// path needs its own check: a green run never reaches the throw. Asserting only the
+    /// outcome type would report "expected Accepted, got InfrastructureFailure" and drop
+    /// the reason, which is the defect #993 records. This fails if the helper ever goes
+    /// back to reporting the type alone.
+    [Theory]
+    [MemberData(nameof(InvalidDocuments))]
+    public void RegistryLoadAssertCarriesTheFailureReasonNotJustTheOutcomeType(
+        string document,
+        string marker)
+    {
+        var outcome = RegistryLoader.Load(
+            Encoding.UTF8.GetBytes(document),
+            Encoding.UTF8.GetBytes(TestRegistry.Domains));
+
+        var thrown = Assert.ThrowsAny<Exception>(() => RegistryLoadAssert.Accepted(outcome));
+
+        Assert.Contains(marker, thrown.Message, StringComparison.OrdinalIgnoreCase);
     }
 }

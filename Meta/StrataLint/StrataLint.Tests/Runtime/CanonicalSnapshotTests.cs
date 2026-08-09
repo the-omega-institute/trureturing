@@ -11,7 +11,7 @@ public sealed class CanonicalSnapshotTests
     {
         var fixture = new RuleFixture();
         var context = fixture.Build();
-        var policy = Assert.IsType<RegistryLoadOutcome.Accepted>(
+        var policy = RegistryLoadAssert.Accepted(
             RegistryLoader.Load(
                 Encoding.UTF8.GetBytes(TestRegistry.Canonical),
                 Encoding.UTF8.GetBytes(TestRegistry.Domains))).Policy;
@@ -33,7 +33,7 @@ public sealed class CanonicalSnapshotTests
         var fixture = new RuleFixture();
         fixture.Files["Evidence/D5/S0/Carrier/Result.run.json"] = "{\"omega\":2,\"alpha\":1}\n";
         var context = fixture.Build();
-        var policy = Assert.IsType<RegistryLoadOutcome.Accepted>(
+        var policy = RegistryLoadAssert.Accepted(
             RegistryLoader.Load(
                 Encoding.UTF8.GetBytes(TestRegistry.Canonical),
                 Encoding.UTF8.GetBytes(TestRegistry.Domains))).Policy;
