@@ -54,8 +54,8 @@ internal static class ConservativeActualTreeEvaluator
             }
 
             admission = ProductionFrozenLedgerValidator.Validate(
-                    DagLedgerCommandPreparation.WithLoaderIdentityPaths(snapshot),
-                    DagLedgerCommandPreparation.WithLoaderIdentityPaths(snapshot),
+                    snapshot,
+                    snapshot,
                     lean,
                     baselineLean,
                     dag,

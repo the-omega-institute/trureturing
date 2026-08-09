@@ -190,7 +190,7 @@ internal static class DagLedgerCommandPreparation
         IEnumerable<RepositoryFile> files,
         string label)
     {
-        var events = DagLedgerLoader.LoadFiles(files.Select(WithLoaderIdentityPath)) switch
+        var events = DagLedgerLoader.LoadFiles(files) switch
         {
             DagLedgerFilesLoadOutcome.Loaded loaded => loaded.Events,
             DagLedgerFilesLoadOutcome.Invalid invalid => throw new InvalidOperationException(
@@ -206,16 +206,6 @@ internal static class DagLedgerCommandPreparation
         }
 
         return ToLinearSyntax(OrderForReplay(ordered));
-    }
-
-    internal static RepositorySnapshot WithLoaderIdentityPaths(RepositorySnapshot snapshot)
-    {
-        var files = snapshot.Files.Values
-            .Select(file => FrozenLedgerChangeClassifier.IsAcceptedEventPath(file.Path.Value)
-                ? WithLoaderIdentityPath(file)
-                : file)
-            .ToImmutableDictionary(static file => file.Path);
-        return RepositorySnapshot.Create(files);
     }
 
     private static ImmutableArray<DagLedgerFileEvent> OrderForReplay(
@@ -259,34 +249,6 @@ internal static class DagLedgerCommandPreparation
         && dependencies.ValueKind == JsonValueKind.Array
         && dependencies.EnumerateArray().All(item =>
             item.ValueKind == JsonValueKind.String && identities.Contains(item.GetString()!));
-
-    private static RepositoryFile WithLoaderIdentityPath(RepositoryFile file)
-    {
-        try
-        {
-            using var document = JsonDocument.Parse(file.RawBytes.AsSpan()[..^1].ToArray());
-            var root = document.RootElement;
-            var payload = root.GetProperty("payload");
-            var identity = payload.TryGetProperty("frozen_node_id", out var frozenNodeId)
-                ? frozenNodeId.GetString()!
-                : root.GetProperty("event_hash").GetString()!;
-            var fileName = file.Path.Value[(file.Path.Value.LastIndexOf('/') + 1)..];
-            if (identity.Length <= 7
-                || !string.Equals(fileName, identity[7..] + ".json", StringComparison.Ordinal))
-            {
-                return file;
-            }
-
-            return new RepositoryFile(
-                RepoPath.CreateKnown($"{FrozenLedgerChangeClassifier.AcceptedRoot}/{identity}.json"),
-                file.RawBytes,
-                file.Text);
-        }
-        catch (Exception exception) when (exception is JsonException or KeyNotFoundException or ArgumentOutOfRangeException)
-        {
-            return file;
-        }
-    }
 
     private static FrozenLedgerSyntax ToLinearSyntax(ImmutableArray<DagLedgerFileEvent> events)
     {

@@ -136,8 +136,8 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             }
 
             var ledgerOutcome = ProductionFrozenLedgerValidator.Validate(
-                DagLedgerCommandPreparation.WithLoaderIdentityPaths(current),
-                DagLedgerCommandPreparation.WithLoaderIdentityPaths(baseline),
+                current,
+                baseline,
                 lean,
                 baselineLean,
                 dag,

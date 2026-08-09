@@ -192,8 +192,8 @@ public sealed partial class ProductionEnvironmentTests
         var current = BuildState(fixture.CurrentFiles, fixture.CurrentReports);
         var baseline = BuildState(fixture.BaselineFiles, fixture.BaselineReports);
         return ProductionFrozenLedgerValidator.Validate(
-            DagLedgerCommandPreparation.WithLoaderIdentityPaths(current.Snapshot),
-            DagLedgerCommandPreparation.WithLoaderIdentityPaths(baseline.Snapshot),
+            current.Snapshot,
+            baseline.Snapshot,
             current.Lean,
             baseline.Lean,
             current.Dag,
