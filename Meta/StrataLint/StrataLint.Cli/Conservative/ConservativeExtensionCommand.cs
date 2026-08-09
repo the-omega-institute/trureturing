@@ -506,16 +506,51 @@ internal sealed class ProductionConservativeExtensionEnvironment : IConservative
                 "candidate object database does not contain the frozen baseline identity");
         }
 
-        var ledger = candidateRepository.ReadRevisionFile(
+        // 冻结账本的两种落位:legacy 单文件与一节点一文件的 accepted/ 目录。
+        // 谁在场读谁;两形皆缺时沿用 ReadRevisionFile 的既有诊断。切换落地后删除 legacy 分支。
+        var acceptedEntries = candidateRepository.ReadRevisionFilesUnder(
             candidateIdentity.CommitOid,
-            FrozenLedgerChangeClassifier.LedgerPath);
-        var loaded = DagLedgerLoader.Load(ledger.Bytes.AsSpan()) switch
+            FrozenLedgerChangeClassifier.AcceptedRoot + "/");
+        FrozenLedgerSyntax loaded;
+        if (acceptedEntries.Length > 0)
         {
-            DagLedgerLoadOutcome.Loaded accepted => accepted.Syntax,
-            DagLedgerLoadOutcome.Invalid invalid => throw new InvalidOperationException(
-                "candidate frozen ledger syntax is invalid: " + invalid.Message),
-            _ => throw new InvalidOperationException("unknown frozen ledger load outcome"),
-        };
+            var acceptedSnapshot = SnapshotDecoder.Decode(RawRepositorySnapshot.Create(
+                acceptedEntries.Where(entry =>
+                    FrozenLedgerChangeClassifier.IsAcceptedEventPath(entry.Path)))) switch
+            {
+                SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
+                SnapshotDecodeOutcome.InfrastructureFailure failure => throw new InvalidOperationException(
+                    "candidate frozen ledger is undecodable: " + failure.Message),
+                _ => throw new InvalidOperationException("unknown snapshot decode outcome"),
+            };
+            var events = DagLedgerLoader.LoadFiles(acceptedSnapshot.Files.Values) switch
+            {
+                DagLedgerFilesLoadOutcome.Loaded accepted => accepted.Events,
+                DagLedgerFilesLoadOutcome.Invalid invalid => throw new InvalidOperationException(
+                    "candidate frozen ledger syntax is invalid: " + invalid.Message),
+                _ => throw new InvalidOperationException("unknown frozen ledger load outcome"),
+            };
+            if (!DagLedgerLoader.TryOrderClosedDag(events, ImmutableArray<string>.Empty, out var ordered))
+            {
+                throw new InvalidOperationException(
+                    "candidate frozen ledger does not form a closed dependency DAG");
+            }
+
+            loaded = DagLedgerLoader.ToLinearSyntax(ordered);
+        }
+        else
+        {
+            var ledger = candidateRepository.ReadRevisionFile(
+                candidateIdentity.CommitOid,
+                FrozenLedgerChangeClassifier.LedgerPath);
+            loaded = DagLedgerLoader.Load(ledger.Bytes.AsSpan()) switch
+            {
+                DagLedgerLoadOutcome.Loaded accepted => accepted.Syntax,
+                DagLedgerLoadOutcome.Invalid invalid => throw new InvalidOperationException(
+                    "candidate frozen ledger syntax is invalid: " + invalid.Message),
+                _ => throw new InvalidOperationException("unknown frozen ledger load outcome"),
+            };
+        }
         var references = FrozenLedger.ScanReferences(loaded) switch
         {
             FrozenLedgerReferenceScanOutcome.Accepted accepted => accepted.References,
