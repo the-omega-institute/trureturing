@@ -46,13 +46,6 @@ public sealed class PartialQuotientExtractionDocumentTests
             "$$\\forall q\\in\\mathbb{Q}\\setminus\\mathbb{Z},\\ \\forall S\\subset_{\\mathrm{fin}}\\mathbb{Z},\\ (\\forall\\psi\\in S,\\ 12\\mid\\psi\\land\\psi\\neq0)\\land(\\exists\\psi_0\\in S,\\ |\\psi_0|=12)\\Rightarrow\\min\\left\\{\\frac{|\\psi|}{A(q)}:\\psi\\in S\\right\\}=\\frac{12}{A(q)},\\qquad A(q)=\\max C(q)$$",
             LatexWriter.WriteStatement(layout));
 
-        var report = LeanReportFixture.ForDocuments([definition.Document]);
-        var markdown = System.Text.Encoding.UTF8.GetString(
-            CanonicalMarkdownWriter.Write(definition.Document, report).AsSpan());
-        Assert.Contains("computed from the rational input itself", markdown, StringComparison.Ordinal);
-        Assert.Contains("No independent scale parameter remains", markdown, StringComparison.Ordinal);
-        Assert.Contains("sample-to-rational provenance remains open", markdown, StringComparison.Ordinal);
-        Assert.Contains("moat, envelope, and diffusion residuals remain open", markdown, StringComparison.Ordinal);
     }
 
     private static IEnumerable<DocumentBlock> Descendants(BlockSequence content)

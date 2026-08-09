@@ -333,11 +333,11 @@ public sealed class RuleEngineTests
     public void CoverageManifestNamesEveryRuleWithARealRedOrDeferredBranch()
     {
         var exercised = BlockingCases.Select(item => (int)item[0])
-            .Concat(new[] { 7, 9, 14, 22, 23 })
+            .Concat(new[] { 7, 9, 14, 22, 23, 24 })
             .Order()
             .ToArray();
 
-        Assert.Equal(Enumerable.Range(1, 23), exercised);
+        Assert.Equal(Enumerable.Range(1, 24), exercised);
     }
 
     [Fact]

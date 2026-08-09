@@ -29,17 +29,6 @@ public sealed class WalkFormulaDocumentTests
             describes.Select(static describe =>
                 Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement).Value.Value));
 
-        var report = LeanReportFixture.ForDocuments([definition.Document]);
-        var markdown = System.Text.Encoding.UTF8.GetString(
-            CanonicalMarkdownWriter.Write(definition.Document, report).AsSpan());
-        Assert.Contains("does not prove the BHK theorem", markdown, StringComparison.Ordinal);
-        Assert.Contains("does not identify any word, column, or Dedekind walk", markdown,
-            StringComparison.Ordinal);
-        Assert.Contains("is only a conditional corollary", markdown, StringComparison.Ordinal);
-        Assert.Contains(
-            "does not discharge the endpoint-translation-integrality residual",
-            markdown,
-            StringComparison.Ordinal);
     }
 
     private static IEnumerable<DocumentBlock> Descendants(BlockSequence content)

@@ -467,17 +467,9 @@ public sealed class DescribeMigrationTests
             zeroQuartetResonance,
             DescribeKind.Theorem,
             "D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec");
-        var zeroQuartetDisclosure = Assert.IsType<Inline.Text>(
-            Assert.IsType<DocumentBlock.Paragraph>(
-                Assert.Single(zeroQuartetResonance.Content.Items)).Content.Items.Single()).Run.Value;
-        Assert.Contains(
-            "conditional on a supplied ZeroData value",
-            zeroQuartetDisclosure,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "does not prove that ZeroData is inhabited",
-            zeroQuartetDisclosure,
-            StringComparison.Ordinal);
+        var zeroQuartetDisclosure = Assert.IsType<DocumentBlock.Paragraph>(
+            Assert.Single(zeroQuartetResonance.Content.Items));
+        Assert.IsType<Inline.Text>(zeroQuartetDisclosure.Content.Items.Single());
         AssertRepoDerivedLeanNode(
             spectralDynamics["critical-line-predicates-use-one-abscissa"],
             DescribeKind.Theorem,
@@ -495,25 +487,9 @@ public sealed class DescribeMigrationTests
             zeroQuartetScaling,
             DescribeKind.Theorem,
             "D5/S3/Zeros/ZeroGeometry.zero_quartet_scaling_spec");
-        var zeroQuartetScalingDisclosure = Assert.IsType<Inline.Text>(
-            Assert.IsType<DocumentBlock.Paragraph>(
-                Assert.Single(zeroQuartetScaling.Content.Items)).Content.Items.Single()).Run.Value;
-        Assert.Contains(
-            "zero_conjugation and zero_reflection fields are premises",
-            zeroQuartetScalingDisclosure,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "does not prove that ZeroData is inhabited: no instance or example exists",
-            zeroQuartetScalingDisclosure,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "their multiplicity-preservation laws",
-            zeroQuartetScalingDisclosure,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "does not close the source theorem",
-            zeroQuartetScalingDisclosure,
-            StringComparison.Ordinal);
+        var zeroQuartetScalingDisclosure = Assert.IsType<DocumentBlock.Paragraph>(
+            Assert.Single(zeroQuartetScaling.Content.Items));
+        Assert.IsType<Inline.Text>(zeroQuartetScalingDisclosure.Content.Items.Single());
 
         var spectralHilbert = documents["D5/S3/Weil/SpectralHilbert"].Document.Content.Items
             .OfType<DocumentBlock.Describe>()

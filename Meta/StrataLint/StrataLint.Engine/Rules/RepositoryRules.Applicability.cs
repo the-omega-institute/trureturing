@@ -94,4 +94,12 @@ internal static partial class RepositoryRules
         RuleApplicabilityContext context) =>
         artifact.Path.Value.StartsWith("Blueprint/", StringComparison.Ordinal)
         && artifact.Path.Value.EndsWith(".scribe.cs", StringComparison.Ordinal);
+
+    private static bool ScribeTestSourceScoped(
+        RepositoryFile artifact,
+        RuleApplicabilityContext context) =>
+        artifact.Path.Value.StartsWith(
+            "Meta/StrataLint/StrataLint.Scribe.Tests/",
+            StringComparison.Ordinal)
+        && artifact.Path.Value.EndsWith(".cs", StringComparison.Ordinal);
 }

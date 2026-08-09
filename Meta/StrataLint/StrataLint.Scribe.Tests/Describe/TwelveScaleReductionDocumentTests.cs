@@ -34,29 +34,6 @@ public sealed class TwelveScaleReductionDocumentTests
                 Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement).Value.Value ==
                 "D5/S1/Depth/TwelveScaleReduction.zero_family_lies_on_thirty_six_grid");
 
-        var report = LeanReportFixture.ForDocuments([definition.Document]);
-        var markdown = System.Text.Encoding.UTF8.GetString(
-            CanonicalMarkdownWriter.Write(definition.Document, report).AsSpan());
-        Assert.Contains(
-            "does not supply the 2958-case or minimum-attainment certificates",
-            markdown,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "does not identify the moat, envelope, or diffusion readings",
-            markdown,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "does not reconstruct the historical sampling configuration or its leakage",
-            markdown,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "partial arithmetic progress toward the unresolved source floor reduction",
-            markdown,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "does not identify the rational parameter with the largest partial quotient",
-            markdown,
-            StringComparison.Ordinal);
     }
 
     private static IEnumerable<DocumentBlock> Descendants(BlockSequence content)

@@ -80,8 +80,8 @@ public sealed class RuleCatalog
     {
         try
         {
-            var expected = Enumerable.Range(1, 23).Select(RuleId.CreateKnown).ToImmutableArray();
-            if (registrations.Length != 23
+            var expected = Enumerable.Range(1, 24).Select(RuleId.CreateKnown).ToImmutableArray();
+            if (registrations.Length != 24
                 || !Descriptors.Select(item => item.Id).SequenceEqual(expected))
             {
                 throw new InvalidOperationException("Rule catalog is incomplete, duplicated, or out of order.");

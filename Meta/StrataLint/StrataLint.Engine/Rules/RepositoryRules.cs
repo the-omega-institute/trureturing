@@ -135,6 +135,10 @@ internal static partial class RepositoryRules
             "Describe LaTeX statement",
             new RepositoryRule(ScribeDefinitionScoped, DescribeLatex),
             AdmissionEffect.Observe),
+        Register(
+            24,
+            "Scribe prose assertion single source",
+            new RepositoryRule(ScribeTestSourceScoped, ScribeProseAssertionRule.Evaluate)),
     ];
 
     private static RuleRegistration Register(

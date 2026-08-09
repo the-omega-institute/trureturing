@@ -44,6 +44,7 @@ components:
       - SL-021
       - SL-022
       - SL-023
+      - SL-024
     judged_by:
       - rule-catalog-selfcheck
       - rule-fixtures

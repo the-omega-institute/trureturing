@@ -42,6 +42,9 @@ public sealed class RuleApplicabilityTests
         "Blueprint/D5/S1/Digit/LatexFixture.scribe.cs",
         "SL-003,SL-006,SL-011,SL-015,SL-022,SL-023")]
     [InlineData(
+        "Meta/StrataLint/StrataLint.Scribe.Tests/Describe/SyntheticDocumentTests.cs",
+        "SL-003,SL-015,SL-022,SL-024")]
+    [InlineData(
         "Golden/cases/CapacityExtra00.toml",
         "SL-003,SL-015")]
     public void DefaultCatalogApplicabilityMatchesTheRulesActualScanSurface(
