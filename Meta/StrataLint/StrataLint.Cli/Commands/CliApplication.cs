@@ -54,7 +54,9 @@ internal interface ICliEnvironment
 
     CommandResult Worktree(IReadOnlyList<string> arguments);
 
-    CommandResult RenewC0(IReadOnlyList<string> arguments);
+    CommandResult VerifyC0(IReadOnlyList<string> arguments);
+
+    CommandResult ReconcileC0TrustRoot(IReadOnlyList<string> arguments);
 
     ExplicitCommandResult VerifyConservative(IReadOnlyList<string> arguments);
 
@@ -112,7 +114,7 @@ internal static class CliApplication
         if (arguments.Count == 0)
         {
             console.WriteError(
-                "USAGE: StrataLint align-scribe-receipt|c0-renew|check|clean-lanes|coverage|cover-atom|digest-status|echo-verify|emit-formalization-receipt|ingest|golden-record|ledger-genesis|papergen|route|selftest|topology|validate-blueprint-pins|worktree|ledger-append|ledger-reattest|perf-append|perf-report|verify-conservative|evaluate-conservative-corpus|gate-authority\n");
+                "USAGE: StrataLint align-scribe-receipt|c0-reconcile-trust-root|c0-verify|check|clean-lanes|coverage|cover-atom|digest-status|echo-verify|emit-formalization-receipt|ingest|golden-record|ledger-genesis|papergen|route|selftest|topology|validate-blueprint-pins|worktree|ledger-append|ledger-reattest|perf-append|perf-report|verify-conservative|evaluate-conservative-corpus|gate-authority\n");
             return 2;
         }
 
@@ -120,7 +122,9 @@ internal static class CliApplication
         return arguments[0] switch
         {
             "align-scribe-receipt" => RenderCommand(environment.AlignScribeReceipt(tail), console),
-            "c0-renew" => RenderCommand(environment.RenewC0(tail), console),
+            "c0-reconcile-trust-root" =>
+                RenderCommand(environment.ReconcileC0TrustRoot(tail), console),
+            "c0-verify" => RenderCommand(environment.VerifyC0(tail), console),
             "check" => RenderAdmission(environment.Check(tail), console),
             "clean-lanes" => RenderCommand(environment.CleanLanes(tail), console),
             "coverage" => RenderCommand(environment.Coverage(tail), console),
