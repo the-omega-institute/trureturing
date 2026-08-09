@@ -31,6 +31,10 @@ internal static partial class RepositoryRules
         + "\\s+提示:[^\\n]+\\n\\s+尸检:(?<autopsy>[^\\n]+) -/",
         RegexOptions.CultureInvariant);
 
+    private static readonly Regex CodexLogReferencePattern = new(
+        "\\[codex-log:(?<path>[^\\]\\s]+)\\]",
+        RegexOptions.CultureInvariant);
+
     private static readonly Regex SafeFieldPattern = new(
         "^[A-Za-z0-9_/.-]+$",
         RegexOptions.CultureInvariant);
