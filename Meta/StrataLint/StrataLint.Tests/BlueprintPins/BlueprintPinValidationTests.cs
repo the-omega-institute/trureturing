@@ -242,7 +242,7 @@ public sealed class BlueprintPinValidationTests
         var outcome = RegistryLoader.Load(
             File.ReadAllBytes(Path.Combine(root, "Meta", "registry.yaml")),
             File.ReadAllBytes(Path.Combine(root, "Meta", "domains.yaml")));
-        return Assert.IsType<RegistryLoadOutcome.Accepted>(outcome).Policy;
+        return RegistryLoadAssert.Accepted(outcome).Policy;
     }
 
     private static RepositorySnapshot Snapshot(IReadOnlyDictionary<string, string> files)
