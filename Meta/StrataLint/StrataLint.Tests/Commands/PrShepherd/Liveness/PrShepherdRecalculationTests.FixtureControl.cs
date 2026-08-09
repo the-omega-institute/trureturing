@@ -9,6 +9,9 @@ public sealed partial class PrShepherdRecalculationTests
     {
         internal string WatchState() => File.ReadAllText(WatchStatePath);
 
+        internal string WatchRestartDecisions() =>
+            File.ReadAllText(Path.Combine(StateDirectory, "watch-restart-decisions.jsonl"));
+
         internal string WatchStateField(string name) =>
             File.ReadAllLines(WatchStatePath)
                 .Single(line => line.StartsWith(name + "=", StringComparison.Ordinal))[(name.Length + 1)..];
