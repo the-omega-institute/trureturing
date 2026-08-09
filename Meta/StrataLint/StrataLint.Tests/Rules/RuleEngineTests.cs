@@ -59,6 +59,74 @@ public sealed class RuleEngineTests
     }
 
     [Fact]
+    public void DirectoryBackfillRejectsDanglingTicketGid()
+    {
+        var fixture = new RuleFixture();
+        fixture.UseSyntheticDirectoryBackfill("D5-T0098 = \"D5/X_Frontier/SyntheticDelta\"\n");
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build()).Diagnostics;
+
+        Assert.Contains(diagnostics, diagnostic =>
+            diagnostic.Message == "dangling ticket D5-T0098: ticket target Lean file is absent");
+    }
+
+    [Fact]
+    public void DirectoryBackfillRejectsDuplicateTicketCaseId()
+    {
+        var fixture = new RuleFixture();
+        fixture.UseSyntheticDirectoryBackfill(
+            $"D5-T0098 = \"{RuleFixture.RingPath[..^".lean".Length]}\"\n"
+            + $"D5-T0098 = \"{RuleFixture.RingPath[..^".lean".Length]}\"\n");
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build()).Diagnostics;
+
+        Assert.Contains(diagnostics, diagnostic => diagnostic.Message == "duplicate ticket case: D5-T0098");
+    }
+
+    [Fact]
+    public void DirectoryBackfillRejectsUnregisteredFrontierTask()
+    {
+        var fixture = new RuleFixture();
+        fixture.UseSyntheticDirectoryBackfill("");
+        fixture.AddSyntheticUnregisteredFrontierTask("D5-T0097");
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build()).Diagnostics;
+
+        Assert.Contains(diagnostics, diagnostic =>
+            diagnostic.Message == "frontier TASK cases are missing from ticket_index: D5-T0097");
+    }
+
+    [Fact]
+    public void DirectoryBackfillReachesSharedDownstreamValidationWithoutFormatDiagnostics()
+    {
+        var fixture = new RuleFixture();
+        fixture.UseSyntheticDirectoryBackfill("");
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build()).Diagnostics;
+
+        Assert.DoesNotContain(diagnostics, diagnostic =>
+            diagnostic.Message.Contains("canonical", StringComparison.Ordinal)
+            || diagnostic.Message.Contains("metadata", StringComparison.Ordinal)
+            || diagnostic.Message.Contains("ticket index", StringComparison.Ordinal)
+            || diagnostic.Message.Contains("directory", StringComparison.Ordinal));
+        Assert.Contains(diagnostics, diagnostic =>
+            diagnostic.Message.Contains("fingerprint", StringComparison.Ordinal)
+            || diagnostic.Message.Contains("CAS", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void ValidDirectoryBackfillIsGreenWithDirectoryBaseline()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        fixture.UseValidDirectoryBackfill();
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build()).Diagnostics;
+
+        Assert.Empty(diagnostics);
+    }
+
+    [Fact]
     public void Sl001AllowsContentToImportTheAssumptionFoundationButNotTheReverse()
     {
         // Stratum content -> X_Assumptions (carrying a registered classical debt): allowed.
@@ -127,6 +195,97 @@ public sealed class RuleEngineTests
         Assert.DoesNotContain(diagnostics, diagnostic =>
             diagnostic.Path.StartsWith(DigestionCasStore.RootPath, StringComparison.Ordinal)
             || diagnostic.Path == DigestionCasStore.RootPath.TrimEnd('/'));
+    }
+
+    [Fact]
+    public void Sl013RejectsCodexFailedAttributionWithoutReference()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddTask(
+            "D5/X_Frontier/CodexFailure.lean",
+            "D5/X_Frontier/CodexFailure",
+            "D5-T0090",
+            "[codex-failed] candidate returned no result");
+
+        var diagnostic = Assert.Single(
+            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(13), fixture.Build()).Diagnostics);
+
+        Assert.Equal(
+            "codex-failed autopsy for D5-T0090 requires a valid [codex-log:<rooted-path>] reference",
+            diagnostic.Message);
+    }
+
+    [Fact]
+    public void Sl013RejectsCodexFailedAttributionWithMalformedReference()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddTask(
+            "D5/X_Frontier/CodexFailure.lean",
+            "D5/X_Frontier/CodexFailure",
+            "D5-T0091",
+            "[codex-failed] [codex-log:logs/latest.txt]");
+
+        var diagnostic = Assert.Single(
+            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(13), fixture.Build()).Diagnostics);
+
+        Assert.Equal(
+            "codex-failed autopsy for D5-T0091 requires a valid [codex-log:<rooted-path>] reference",
+            diagnostic.Message);
+    }
+
+    [Theory]
+    [InlineData("~/.codex/sessions/2026/08/09/rollout-fixture.jsonl")]
+    [InlineData("<RT>/logs/codex-adoption/fixture/result.json")]
+    [InlineData("~/Library/Logs/fkst/codex/worktree-fixture.log")]
+    public void Sl013AcceptsCodexFailedAttributionWithValidReference(string logPath)
+    {
+        var fixture = new RuleFixture();
+        fixture.AddTask(
+            "D5/X_Frontier/CodexFailure.lean",
+            "D5/X_Frontier/CodexFailure",
+            "D5-T0092",
+            $"[codex-failed] [codex-log:{logPath}]");
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(13),
+            fixture.Build()).Diagnostics;
+
+        Assert.Empty(diagnostics);
+    }
+
+    [Fact]
+    public void Sl013StillRejectsShortenedAutopsy()
+    {
+        const string path = "D5/X_Frontier/AutopsyHistory.lean";
+        var fixture = new RuleFixture();
+        fixture.AddTask(path, "D5/X_Frontier/AutopsyHistory", "D5-T0093", "first attempt");
+        fixture.Baseline[path] = fixture.Files[path].Replace(
+            "尸检:first attempt",
+            "尸检:first attempt; second attempt",
+            StringComparison.Ordinal);
+        fixture.BaselineReports[path] = fixture.Reports[path];
+
+        var diagnostic = Assert.Single(
+            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(13), fixture.Build()).Diagnostics);
+
+        Assert.Equal("autopsy for D5-T0093 was shortened", diagnostic.Message);
+    }
+
+    [Fact]
+    public void Sl013DoesNotTreatUnstructuredCodexFailedTextAsAttribution()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddTask(
+            "D5/X_Frontier/OrdinaryAutopsy.lean",
+            "D5/X_Frontier/OrdinaryAutopsy",
+            "D5-T0094",
+            "ordinary text mentions codex-failed without the attribution marker");
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(13),
+            fixture.Build()).Diagnostics;
+
+        Assert.Empty(diagnostics);
     }
 
     [Fact]

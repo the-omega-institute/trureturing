@@ -5,6 +5,9 @@ domains:
   Arith:
     stratum: S3
     definition: Elementary integer arithmetic — prime factorization, divisibility, and modular residue structure — used as foundations by the golden-integer and analytic strata.
+  ArithUnits:
+    stratum: S3
+    definition: Finite-dimensional unit and coprimality structures over prime and composite moduli.
   Axis:
     stratum: S3
     definition: Prime-axis escape arguments over the natural primes.
@@ -35,6 +38,9 @@ domains:
   Dynamics:
     stratum: S1
     definition: Visible-hidden dynamics of phase trajectories, throat transitions, and jump cocycles.
+  Entropy:
+    stratum: S3
+    definition: Finite Shannon entropy in nats and its information-theoretic identities and inequalities, including maximum-entropy bounds, mutual information and its independence characterization, subadditivity, and conditional-entropy chain rules.
   Fourier:
     stratum: S3
     definition: Fourier analysis for the kernel, including finite and discrete Poisson summation and entire analytic extensions of the Weil Fourier-Laplace transform.

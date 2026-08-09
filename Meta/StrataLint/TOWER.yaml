@@ -224,8 +224,8 @@ components:
       - phase1-protected-content-admission
       - phase2-dual-harness-conservative-extension
       - "c0/ceremony-commit convention/this-pr-merge-commit"
-      - "c0/inaugural-certificate sha256/51237ff6d19222cca32f23a863c66dddb128bf0b246bb6c2764010204087920e Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json"
-      - "c0/preimage-tree git-tree/8fb7502377d23fb8811810c88fa68550b2d3c133"
+      - "c0/inaugural-certificate sha256/872c2efefb26d339383c2356cd537e918aae5ee82a41d54ac0a84f95498df845 Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json"
+      - "c0/preimage-tree git-tree/0e715656ea213ab040980c42dcb308ed0d9f54f3"
     judged_by:
       - bootstrap-pr-1
     verification: verified
@@ -233,7 +233,7 @@ bootstrap:
   id: bootstrap-pr-1
   judge: open
   reason: "Godel boundary: the bootstrap trust root cannot prove its own consistency."
-  genesis_event: sha256:afba1cf5df4b821f8cdcfa89945832cac338c04f8ec3887c8b888d173fcc9149
+  genesis_event: sha256:80bdd2d2a8604d3e563ca20c6fcd2c27983d920af5e2a249a55c776112f575d0
   commit: f3f471846dd81cfcc39ecaa386966fcf0b058464
   pull_request: 1
   verification: ASSUMED-UNVERIFIED

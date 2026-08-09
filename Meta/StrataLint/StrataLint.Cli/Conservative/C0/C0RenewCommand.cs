@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using System.Security.Cryptography;
 using System.Text;
 using StrataLint.Engine;
 
@@ -8,7 +7,8 @@ namespace StrataLint.Cli;
 internal sealed record C0RenewState(
     FrozenRevisionIdentity Base,
     FrozenRevisionIdentity Preimage,
-    ImmutableArray<string> ChangedPaths);
+    ImmutableArray<string> ChangedPaths,
+    RepositorySnapshot Snapshot);
 
 internal sealed record C0RenewGateResult(
     int ExitCode,
@@ -48,6 +48,19 @@ internal static class C0RenewCommand
                     "C0 verification requires a clean committed preimage");
             }
 
+            if (!initial.Snapshot.TryGetFile(RepositoryRules.TowerManifestPath, out var tower))
+            {
+                throw new InvalidOperationException("TOWER is missing");
+            }
+            var members = C0TowerProjection.ReadMembers(tower.RawBytes.AsSpan());
+            if (!C0CeremonyProjection.TrustRootMatchesSnapshot(
+                    members,
+                    initial.Snapshot,
+                    out var mismatch))
+            {
+                throw new InvalidOperationException(mismatch);
+            }
+
             var gate = environment.RunConservativeGate(
                 initial.Base.Revision,
                 initial.Preimage.Revision);
@@ -65,9 +78,9 @@ internal static class C0RenewCommand
             return new CommandResult(
                 false,
                 string.Empty,
-                $"C0_RENEW_FAILED [{exception.GetType().Name}] {exception.Message}\n"
+                $"C0_VERIFY_FAILED [{exception.GetType().Name}] {exception.Message}\n"
                 + (exception.InnerException is { } inner
-                    ? $"C0_RENEW_FAILED_INNER [{inner.GetType().Name}] {inner.Message}\n"
+                    ? $"C0_VERIFY_FAILED_INNER [{inner.GetType().Name}] {inner.Message}\n"
                     : string.Empty));
         }
     }
@@ -92,7 +105,7 @@ internal static class C0RenewCommand
             || arguments[0] != "--base"
             || string.IsNullOrWhiteSpace(arguments[1]))
         {
-            throw new ArgumentException("USAGE: StrataLint c0-renew --base REV");
+            throw new ArgumentException("USAGE: StrataLint c0-verify --base REV");
         }
 
         return arguments[1];
@@ -100,8 +113,16 @@ internal static class C0RenewCommand
 
     private static string GateDetail(C0RenewGateResult gate)
     {
-        var error = StrictUtf8.GetString(gate.Error.AsSpan()).Trim();
-        return error.Length == 0 ? $" (exit {gate.ExitCode})" : $" (exit {gate.ExitCode}: {error})";
+        var error = StrictUtf8.GetString(gate.Error.AsSpan());
+        var output = StrictUtf8.GetString(gate.Output.AsSpan());
+        if (error.Length == 0 && output.Length == 0) return $" (exit {gate.ExitCode})";
+
+        var separator = error.Length > 0
+            && output.Length > 0
+            && error[^1] != '\n'
+                ? "\n"
+                : string.Empty;
+        return $" (exit {gate.ExitCode}: {error}{separator}{output})";
     }
 
     private static CommandResult Success() => new(
@@ -132,8 +153,17 @@ internal sealed class ProductionC0RenewEnvironment : IC0RenewEnvironment
         return new C0RenewState(
             @base,
             preimage,
-            repository.WorkingTreeChanges());
+            repository.WorkingTreeChanges(),
+            Decode(repository.ReadCurrent()));
     }
+
+    private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
+        SnapshotDecoder.Decode(raw) switch
+        {
+            SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
+            SnapshotDecodeOutcome.InfrastructureFailure failure =>
+                throw new InvalidOperationException(failure.Message),
+        };
 
     public C0RenewGateResult RunConservativeGate(
         string exactBaseCommit,
@@ -238,71 +268,6 @@ internal sealed class ProductionC0RenewEnvironment : IC0RenewEnvironment
         }
 
         throw new InvalidOperationException("an absolute lake executable is required");
-    }
-}
-
-internal sealed class C0RenewInstallLock : IDisposable
-{
-    private readonly Mutex mutex;
-    private bool ownsMutex;
-
-    private C0RenewInstallLock(Mutex mutex)
-    {
-        this.mutex = mutex;
-        ownsMutex = true;
-    }
-
-    internal static C0RenewInstallLock Acquire(string repositoryRoot, TimeSpan timeout)
-    {
-        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
-        if (timeout <= TimeSpan.Zero)
-        {
-            throw new ArgumentOutOfRangeException(nameof(timeout));
-        }
-
-        var identity = SHA256.HashData(
-            Encoding.UTF8.GetBytes(Path.GetFullPath(repositoryRoot)));
-        var mutex = new Mutex(
-            initiallyOwned: false,
-            "StrataLint.C0Renew." + Convert.ToHexStringLower(identity));
-        try
-        {
-            bool acquired;
-            try
-            {
-                acquired = mutex.WaitOne(timeout);
-            }
-            catch (AbandonedMutexException)
-            {
-                acquired = true;
-            }
-
-            if (!acquired)
-            {
-                throw new TimeoutException("timed out waiting for the C0 renewal install lock");
-            }
-
-            return new C0RenewInstallLock(mutex);
-        }
-        catch
-        {
-            mutex.Dispose();
-            throw;
-        }
-    }
-
-    public void Dispose()
-    {
-        if (!ownsMutex) return;
-        ownsMutex = false;
-        try
-        {
-            mutex.ReleaseMutex();
-        }
-        finally
-        {
-            mutex.Dispose();
-        }
     }
 }
 

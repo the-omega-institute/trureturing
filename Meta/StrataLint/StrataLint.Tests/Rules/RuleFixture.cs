@@ -78,6 +78,75 @@ internal sealed partial class RuleFixture
 
     internal List<string> Changes { get; }
 
+    internal void UseSyntheticDirectoryBackfill(string ticketIndex)
+    {
+        Files.Remove(BackfillInventoryLoader.RelativePath);
+        Files[$"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml"] =
+            $"source_id = \"delta-v0.1\"\npath = \"{GoldenCorpus.FixtureDigestionSourcePath}\"\natomizer = \"none\"\n";
+        Files[$"{BackfillInventoryLoader.RootPath}delta-v0.1/residual-open/delta-atom.yaml"] = """
+            boundary:
+              ast_path: manual/delta
+              start_byte: 0
+              end_byte: 1
+            fingerprints:
+              raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
+              normalized_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
+            cas_ref: sha256:0000000000000000000000000000000000000000000000000000000000000000
+            coverage_gids: []
+            receipts:
+              coverage: []
+              scribe: []
+              unresolved_subitems: []
+              chain_atoms: []
+              tail_authorization: null
+            """ + "\n";
+        Files[BackfillInventoryLoader.TicketIndexPath] = ticketIndex;
+    }
+
+    internal void UseValidDirectoryBackfill()
+    {
+        var document = BackfillInventoryLoader.Load(Files[BackfillInventoryLoader.RelativePath]);
+        var ticketIndex = string.Concat(document.RequireTickets().Select(static ticket =>
+            $"{ticket.CaseId} = \"{ticket.Gid}\"\n"));
+        const string sourcePath = "delta-v0.1/source.toml";
+        const string atomPath = "delta-v0.1/partial-closed/delta-atom.yaml";
+        var source = $"source_id = \"delta-v0.1\"\npath = \"{GoldenCorpus.FixtureDigestionSourcePath}\"\natomizer = \"none\"\n";
+        var atom = $"""
+            boundary:
+              ast_path: manual/fixture
+              start_byte: 0
+              end_byte: 1
+            fingerprints:
+              raw_sha256: {GoldenCorpus.FixtureCasReference}
+              normalized_sha256: {GoldenCorpus.FixtureCasReference}
+            cas_ref: {GoldenCorpus.FixtureCasReference}
+            coverage_gids:
+              - D5/S0/Carrier/BackfillTarget
+            receipts:
+              coverage: []
+              scribe: []
+              unresolved_subitems: []
+              chain_atoms: []
+              tail_authorization: null
+            """ + "\n";
+
+        foreach (var files in new[] { Files, Baseline })
+        {
+            files.Remove(BackfillInventoryLoader.RelativePath);
+            files[BackfillInventoryLoader.RootPath + sourcePath] = source;
+            files[BackfillInventoryLoader.RootPath + atomPath] = atom;
+            files[BackfillInventoryLoader.TicketIndexPath] = ticketIndex;
+        }
+    }
+
+    internal void AddSyntheticUnregisteredFrontierTask(string caseId)
+    {
+        var path = $"D5/X_Frontier/Synthetic{caseId}.lean";
+        Files[path] = $"/-- TASK {caseId} | fixture -/\ndef synthetic{caseId.Replace("-", "", StringComparison.Ordinal)} : Unit := ()\n";
+        Reports[path] = Report(declarations:
+            [new LeanDeclaration($"synthetic{caseId.Replace("-", "", StringComparison.Ordinal)}", "def", "Unit", [])]);
+    }
+
     internal void Apply(string mutation)
     {
         switch (mutation)
@@ -266,12 +335,12 @@ internal sealed partial class RuleFixture
     internal void AddFutureTheory() =>
         Files["D8/S0/Carrier/Ring.lean"] = "future\n";
 
-    internal void AddTask(string path, string gid, string code)
+    internal void AddTask(string path, string gid, string code, string autopsy = "none")
     {
         Files[path] = HeaderFor(gid, "E")
             + $"/-- TASK {code} | 难度:3 | 依赖:就绪 | 尝试:0\n"
             + "    提示:Fixture task.\n"
-            + "    尸检:none -/\n"
+            + $"    尸检:{autopsy} -/\n"
             + "def fixtureTask : Unit := ()\n";
         Reports[path] = Report();
     }

@@ -103,8 +103,8 @@ public sealed partial class ProductionEnvironmentTests
         var ledger = Encoding.UTF8.GetString(FrozenLedgerGenerator.GenerateGenesis(
             catalog,
             new FrozenGenesisDescriptor(generatorBlob, RuleCatalog.Default.RootSha256)).AsSpan());
-        fixture.Baseline[FrozenLedgerChangeClassifier.LedgerPath] = ledger;
-        fixture.Files[FrozenLedgerChangeClassifier.LedgerPath] = ledger;
+        SetLedger(fixture.Baseline, ledger);
+        SetLedger(fixture.Files, ledger);
 
         InitializeRepository(candidateRoot);
         WriteFiles(candidateRoot, fixture.Baseline);

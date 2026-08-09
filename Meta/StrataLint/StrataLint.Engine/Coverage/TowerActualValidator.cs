@@ -301,9 +301,14 @@ internal static class TowerActualValidator
         ImmutableArray<TowerFinding>.Builder findings,
         ImmutableArray<TowerCheck>.Builder checks)
     {
-        const string path = "Meta/StrataLint/Golden/Frozen/events.jsonl";
-        var found = snapshot.TryGetFile(path, out var file)
-            && file.Text.Split('\n', StringSplitOptions.RemoveEmptyEntries).Any(line => IsGenesis(line, bootstrap.GenesisEvent));
+        // 冻结账本有两种落位:legacy 单文件 events.jsonl,与一节点一文件的 accepted/ 目录。
+        // 两侧都扫,谁在场用谁;切换落地后 legacy 分支随 LedgerPath 一并删除。
+        var found = (snapshot.TryGetFile(FrozenLedgerChangeClassifier.LedgerPath, out var file)
+                && file.Text.Split('\n', StringSplitOptions.RemoveEmptyEntries)
+                    .Any(line => IsGenesis(line, bootstrap.GenesisEvent)))
+            || snapshot.Files.Values
+                .Where(item => FrozenLedgerChangeClassifier.IsAcceptedEventPath(item.Path.Value))
+                .Any(item => IsGenesis(item.Text.TrimEnd('\n'), bootstrap.GenesisEvent));
         if (!found)
         {
             findings.Add(new TowerFinding("TOWER-GENESIS", bootstrap.Id, "declared genesis event is absent"));

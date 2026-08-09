@@ -1,6 +1,9 @@
 using System.Collections.Immutable;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -198,6 +201,44 @@ internal static class FrozenLedgerTestData
             FrozenLedger.ScanReferences(syntax) is FrozenLedgerReferenceScanOutcome.Accepted accepted
                 ? accepted.References.Inputs
                 : ImmutableArray<FrozenLedgerInput>.Empty);
+
+    internal static void AddLedgerFiles(
+        IDictionary<string, string> files,
+        ImmutableArray<byte> bytes)
+    {
+        var syntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(bytes.AsSpan())).Syntax;
+        var linearToDagHash = new Dictionary<string, string>(StringComparer.Ordinal);
+        foreach (var line in syntax.Lines)
+        {
+            var payload = line.Value.GetProperty("payload");
+            if (payload.TryGetProperty("previous_attestation_event_hash", out var previous))
+            {
+                var rewritten = JsonNode.Parse(payload.GetRawText())!.AsObject();
+                rewritten["previous_attestation_event_hash"] = linearToDagHash[previous.GetString()!];
+                payload = JsonSerializer.SerializeToElement(rewritten);
+            }
+
+            var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent(
+                line.Value.GetProperty("event_type").GetString()!,
+                payload);
+            linearToDagHash.Add(line.Value.GetProperty("event_hash").GetString()!, encoded.Hash);
+            var identity = payload.TryGetProperty("frozen_node_id", out var nodeId)
+                ? nodeId.GetString()!
+                : encoded.Hash;
+            files[$"{FrozenLedgerChangeClassifier.AcceptedRoot}/{identity[7..]}.json"] =
+                Encoding.UTF8.GetString(encoded.Bytes.AsSpan());
+        }
+    }
+
+    internal static void WriteLedgerDirectory(string directory, ImmutableArray<byte> bytes)
+    {
+        Directory.CreateDirectory(directory);
+        var syntax = Assert.IsType<DagLedgerLoadOutcome.Loaded>(DagLedgerLoader.Load(bytes.AsSpan())).Syntax;
+        DagLedgerAppendWriter.WriteNewEvents(directory, syntax.Lines);
+    }
+
+    internal static byte[] ReadLedgerDirectory(string directory) =>
+        DagLedgerCommandPreparation.LoadLedgerDirectory(directory, "test frozen ledger").RawBytes.ToArray();
 
     private static string ModuleNameFor(string module) => $"D5.S0.Carrier.{module}";
 

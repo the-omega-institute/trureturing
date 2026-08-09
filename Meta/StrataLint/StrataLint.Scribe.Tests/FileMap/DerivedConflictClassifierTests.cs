@@ -5,9 +5,6 @@ namespace StrataLint.Scribe.Tests;
 
 public sealed class DerivedConflictClassifierTests
 {
-    private static readonly string FrozenLedgerPath =
-        "Meta/StrataLint/Golden/Frozen/" + "events.jsonl";
-
     public static TheoryData<string> TrustRootPaths => new()
     {
         "Meta/StrataLint/" + "TOWER.yaml",
@@ -15,7 +12,7 @@ public sealed class DerivedConflictClassifierTests
     };
 
     [Fact]
-    public void ClassifierEqualsFileMapGeneratedPathsPlusFrozenLedger()
+    public void ClassifierEqualsFileMapGeneratedPaths()
     {
         if (OperatingSystem.IsWindows()) return;
         var root = FindRepositoryRoot();
@@ -24,7 +21,6 @@ public sealed class DerivedConflictClassifierTests
         var paths = Lines(tracked.StandardOutput);
         var expected = paths
             .Where(path => manifest.Match(path) is [{ Kind: FileMapKind.Generated }])
-            .Append(FrozenLedgerPath)
             .ToHashSet(StringComparer.Ordinal);
 
         var actual = RunClassifier(root, Path.Combine(root, "Meta", "FILEMAP.toml"), paths);
@@ -70,15 +66,14 @@ public sealed class DerivedConflictClassifierTests
             set -euo pipefail
             ROOT="$1"
             PR_SHEPHERD_FILEMAP_PATH="$2"
-            FROZEN_LEDGER_PATH="$3"
             source "$ROOT/Meta/StrataLint/scripts/shepherd/pr-shepherd-actions.sh"
-            shift 3
+            shift 2
             for path in "$@"; do
               if is_derived_conflict "$path"; then printf '%s\n' "$path"; fi
             done
             """;
         var result = Run(root, "/bin/bash",
-            ["-c", probe, "derived-classifier", root, fileMap, FrozenLedgerPath, .. paths]);
+            ["-c", probe, "derived-classifier", root, fileMap, .. paths]);
         return Lines(result.StandardOutput);
     }
 
