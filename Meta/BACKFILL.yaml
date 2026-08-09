@@ -33401,16 +33401,19 @@ sources:
           raw_sha256: sha256:50f4e3d952443c7a0c5851f7f06145c29e437c41813c0a7217c23c768e12cbed
           normalized_sha256: sha256:50f4e3d952443c7a0c5851f7f06145c29e437c41813c0a7217c23c768e12cbed
         cas_ref: sha256:50f4e3d952443c7a0c5851f7f06145c29e437c41813c0a7217c23c768e12cbed
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Divergence/ClassicalDPI.classical_dpi_identity
+          - D5/S3/Divergence/DpiDefect.dpi_defect_nonneg
         receipts:
           coverage: []
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - classical-dpi-identity-zero-support-extension
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: cone-residual-11b1a5fd861ba4cdfeb6d0b960c829985e5e82c2cfffa878ed9f945fb22bc574
         ast_path: corollary/2.2
         fingerprints:
