@@ -503,7 +503,8 @@ internal sealed partial class RuleFixture
         var directory = new DirectoryInfo(AppContext.BaseDirectory);
         while (directory is not null)
         {
-            if (File.Exists(Path.Combine(directory.FullName, "Meta", "BACKFILL.yaml")))
+            if (File.Exists(Path.Combine(directory.FullName, "global.json"))
+                && Directory.Exists(Path.Combine(directory.FullName, "Blueprint")))
             {
                 return directory.FullName;
             }

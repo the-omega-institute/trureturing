@@ -192,7 +192,7 @@ public sealed class BackfillInventoryLoaderTests
     }
 
     [Theory]
-    [InlineData("Meta/Digestion/ticket-index.toml")]
+    [InlineData(BackfillInventoryLoader.TicketIndexPath)]
     [InlineData("Meta/Digestion/backfill/delta-v0.1/source.toml")]
     [InlineData("Meta/Digestion/backfill/delta-v0.1/residual-open/atom-0dca.yaml")]
     [InlineData("Meta/Digestion/backfill/delta-v0.1/partial-closed/atom-0f28.yaml")]
