@@ -1,6 +1,6 @@
-/- GID: D5/S1/Solenoid/StreamlineTheorem
+/- GID: D5/S3/Observer/StreamlineTheorem
    generality: I
-   mirror-B: D5/B/S1/Solenoid/StreamlineTheorem
+   mirror-B: D5/B/S3/Observer/StreamlineTheorem
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: A supplied decomposition has a continuous throat offset iff that offset is constant. -/
@@ -8,7 +8,7 @@
 import D5.S1.Dynamics.UniversalSolenoid
 import D5.S3.Arith.HiddenFiberRigidity
 
-namespace D5.S1.Solenoid.StreamlineTheorem
+namespace D5.S3.Observer.StreamlineTheorem
 
 open Set
 open D5.S1.Dynamics
@@ -78,4 +78,4 @@ theorem nonconstant_offset_not_continuous {s : Set ℝ} (hs : IsPreconnected s)
   exact hxy (D5.S3.Arith.HiddenFiberRigidity.hidden_fiber_rigidity
     hs offset hoffset x hx y hy)
 
-end D5.S1.Solenoid.StreamlineTheorem
+end D5.S3.Observer.StreamlineTheorem

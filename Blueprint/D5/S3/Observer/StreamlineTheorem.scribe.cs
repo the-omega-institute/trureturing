@@ -9,7 +9,7 @@ internal sealed class StreamlineTheoremDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() =>
         DocumentDefinition.Create(ScribeDocument.Create(
             Header(
-                "D5/S1/Solenoid/StreamlineTheorem",
+                "D5/S3/Observer/StreamlineTheorem",
                 "For a supplied solenoid decomposition, the throat offset is continuous exactly when it is constant."),
             H("Conditional Streamline Rigidity"),
             Blocks(
@@ -17,7 +17,7 @@ internal sealed class StreamlineTheoremDocument : IScribeDocumentDefinition
                     DescribeId.Create("a-supplied-decomposition-has-a-rigid-throat-offset"),
                     H("A supplied decomposition has a rigid throat offset"),
                     LeanTheorem(
-                        "D5/S1/Solenoid/StreamlineTheorem."
+                        "D5/S3/Observer/StreamlineTheorem."
                         + "streamline_offset_continuous_iff_constant"),
                     Disp(Seq(
                         Operatorname, Grp(F.Id("IsPreconnected")), Open, F.Id("I"), Close, Sp, Land, Sp,
@@ -55,7 +55,7 @@ internal sealed class StreamlineTheoremDocument : IScribeDocumentDefinition
                     DescribeId.Create("a-nonconstant-hidden-history-is-not-continuous"),
                     H("A changing hidden address is not continuous"),
                     LeanTheorem(
-                        "D5/S1/Solenoid/StreamlineTheorem."
+                        "D5/S3/Observer/StreamlineTheorem."
                         + "nonconstant_offset_not_continuous"),
                     Disp(Seq(
                         Operatorname, Grp(F.Id("IsPreconnected")), Open, F.Id("I"), Close, Sp, Land, Sp,
