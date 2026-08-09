@@ -43,6 +43,24 @@ public sealed class C0RenewCommandTests
     }
 
     [Fact]
+    public void RedGateReportsRuleRejectedOutputVerbatimAlongsideError()
+    {
+        const string ruleRejected = "RULE_REJECTED SL-001 first violation\n"
+            + "RULE_REJECTED SL-022 second violation\n";
+        const string gateError = "unrelated gate summary\n";
+        var environment = new SyntheticRenewEnvironment(
+            gateExitCode: 1,
+            gateOutput: ruleRejected,
+            gateError: gateError);
+
+        var result = C0RenewCommand.Run(["--base", BaseCommit], environment);
+
+        Assert.False(result.Success);
+        Assert.Contains(ruleRejected, result.Error, StringComparison.Ordinal);
+        Assert.Contains(gateError, result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void DirtyPreimageCannotEnterTheCeremony()
     {
         var environment = new SyntheticRenewEnvironment(changedPaths: ["changed.cs"]);
@@ -72,6 +90,8 @@ public sealed class C0RenewCommandTests
     private sealed class SyntheticRenewEnvironment(
         int gateExitCode = 0,
         ImmutableArray<string> changedPaths = default,
+        string gateOutput = "",
+        string gateError = "",
         bool mismatchedTrustRoot = false) : IC0RenewEnvironment
     {
         internal int GateRuns { get; private set; }
@@ -95,8 +115,8 @@ public sealed class C0RenewCommandTests
             GateRuns++;
             return new C0RenewGateResult(
                 gateExitCode,
-                ImmutableArray<byte>.Empty,
-                ImmutableArray<byte>.Empty);
+                ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(gateOutput)),
+                ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(gateError)));
         }
 
         private static RepositorySnapshot Snapshot(bool mismatched)
