@@ -180,6 +180,7 @@ sources:
           - D5/S3/QuantumBounds/CHSHWitness.bob_observables_are_valid
           - D5/S3/QuantumBounds/CHSHWitness.lifted_observables_form_chsh_tuple
           - D5/S3/QuantumBounds/CHSHWitness.chsh_operator_eq_lifted_chsh
+          - D5/S3/Observer/WindowCharacter.window_algebra_has_no_character
         receipts:
           coverage:
             - gid: D5/S3/Quantum/FiniteDimensional.qubit_matrix_algebra_has_no_character
@@ -190,7 +191,6 @@ sources:
               target_sha256: sha256:89457799a8e0362f3113889e39ef6eeadabe40f2c9e3228af2bffe7d66acda31
           scribe: []
           unresolved_subitems:
-            - no-character-for-all-matrix-sizes-greater-than-one
             - kochen-specker-projection-valuation-obstruction
             - classical-local-fiber-bound-certificate
             - hidden-address-local-variable-interpretation
@@ -207,16 +207,19 @@ sources:
           raw_sha256: sha256:8d5c4162772d2b6674b2c46ab17550880a2670b134d5893a353659610617b8fe
           normalized_sha256: sha256:8d5c4162772d2b6674b2c46ab17550880a2670b134d5893a353659610617b8fe
         cas_ref: sha256:8d5c4162772d2b6674b2c46ab17550880a2670b134d5893a353659610617b8fe
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Observer/StateNotPath.classical_diagonal_iterates_off_diag_eq_zero
+          - D5/S3/Observer/StateNotPath.hadamard_basis_zero_off_diag_certificate
         receipts:
           coverage: []
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - two-hundred-channel-numeric-certificate-prose
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: observer-residual-8bdb867fc051e5a905bf4a833e7613687d575322c0f5437ea92e2c33b1dec146
         ast_path: measurement/conditioning
         fingerprints:
@@ -287,16 +290,20 @@ sources:
           raw_sha256: sha256:52f4218f9195e554aad17c30ebe5b0a7b5f4474beaea97b1bdb87dc9a415a303
           normalized_sha256: sha256:52f4218f9195e554aad17c30ebe5b0a7b5f4474beaea97b1bdb87dc9a415a303
         cas_ref: sha256:52f4218f9195e554aad17c30ebe5b0a7b5f4474beaea97b1bdb87dc9a415a303
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Observer/CenterOperational.center_iff_const
+          - D5/S3/Observer/ObserverMetric.perturbationSeminorm_eq_zero_iff
+          - D5/S3/Observer/ObserverMetric.invariant_iff_const_on_cyclic_window
         receipts:
           coverage: []
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - center-equals-continuous-torus-functions-crossed-product-form
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: observer-residual-5867fe5155d445a54dc3abe86aaecf7829c9f60988ea7e0d76bdf18e0ed085d6
         ast_path: classical/pointer-basis
         fingerprints:
@@ -767,32 +774,43 @@ sources:
           raw_sha256: sha256:7232ebf337ed10c1fb71b90c1f3b3438d2dbddf1261035e4a757c3f8b6124511
           normalized_sha256: sha256:7232ebf337ed10c1fb71b90c1f3b3438d2dbddf1261035e4a757c3f8b6124511
         cas_ref: sha256:7232ebf337ed10c1fb71b90c1f3b3438d2dbddf1261035e4a757c3f8b6124511
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Observer/WindowCharacter.window_algebra_has_no_character
+          - D5/S3/QuantumBounds/CHSHWitness.bell_chsh_value
+          - D5/S3/QuantumBounds/CHSHWitness.bell_density_is_state
+          - D5/S3/QuantumBounds/CHSHWitness.bob_observables_are_valid
+          - D5/S3/QuantumBounds/CHSHWitness.lifted_observables_form_chsh_tuple
+          - D5/S3/QuantumBounds/CHSHWitness.chsh_operator_eq_lifted_chsh
         receipts:
           coverage: []
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - classical-local-fiber-bound-certificate
+            - noncontextual-and-local-double-exclusion-synthesis
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: observer-residual-d35e7e61edd9bb9519b7f604eedded2838b8b003cdb46b4234deb3c279cb987c
         ast_path: theorem/state-not-path
         fingerprints:
           raw_sha256: sha256:d35e7e61edd9bb9519b7f604eedded2838b8b003cdb46b4234deb3c279cb987c
           normalized_sha256: sha256:d35e7e61edd9bb9519b7f604eedded2838b8b003cdb46b4234deb3c279cb987c
         cas_ref: sha256:d35e7e61edd9bb9519b7f604eedded2838b8b003cdb46b4234deb3c279cb987c
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Observer/StateNotPath.classical_diagonal_iterates_off_diag_eq_zero
+          - D5/S3/Observer/StateNotPath.hadamard_basis_zero_off_diag_certificate
         receipts:
           coverage: []
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - two-hundred-channel-numeric-certificate-prose
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: observer-residual-5ba0d7e5fa0080c7cbd5971f1564d1c28aba63d28da751a43eb2612111802f65
         ast_path: theorem/observer-metric
         fingerprints:
@@ -909,16 +927,20 @@ sources:
           raw_sha256: sha256:7957064151dd9375db6308e290488a9d7836e42e1d2151f8dc586a21a6bb9995
           normalized_sha256: sha256:7957064151dd9375db6308e290488a9d7836e42e1d2151f8dc586a21a6bb9995
         cas_ref: sha256:7957064151dd9375db6308e290488a9d7836e42e1d2151f8dc586a21a6bb9995
-        coverage_gids: []
+        coverage_gids:
+          - D5/S3/Observer/CenterOperational.center_iff_const
+          - D5/S3/Observer/ObserverMetric.perturbationSeminorm_eq_zero_iff
+          - D5/S3/Observer/ObserverMetric.invariant_iff_const_on_cyclic_window
         receipts:
           coverage: []
           scribe: []
-          unresolved_subitems: []
+          unresolved_subitems:
+            - center-equals-continuous-torus-functions-crossed-product-form
           chain_atoms: []
           tail_authorization: null
         status:
-          migration: residual
-          truth: open
+          migration: partial
+          truth: closed
       - atom_id: observer-residual-39801f81b23d4fe1d4823f4470f961be3f2fc21445bfec13de1574cb9fd368bc
         ast_path: classical/pointer-basis
         fingerprints:
