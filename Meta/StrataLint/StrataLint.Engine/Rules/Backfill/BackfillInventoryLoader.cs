@@ -8,7 +8,6 @@ internal sealed class BackfillInventoryDocument
     [
         "atom_id",
         "ast_path",
-        "boundary",
         "fingerprints",
         "cas_ref",
         "coverage_gids",
@@ -41,25 +40,6 @@ internal sealed class BackfillInventoryDocument
     }
 
     internal IReadOnlyDictionary<string, object?> Root => root;
-
-    internal static BackfillInventoryDocument Create(
-        ImmutableArray<DigestionLedgerSource> sources,
-        ImmutableArray<BackfillTicketReference> tickets)
-    {
-        var ticketIndex = tickets.Select(static ticket => (object?)new Dictionary<string, object?>(StringComparer.Ordinal)
-        {
-            ["case_id"] = ticket.CaseId,
-            ["gid"] = ticket.Gid,
-        }).ToList();
-        var root = new Dictionary<string, object?>(StringComparer.Ordinal)
-        {
-            ["schema_version"] = BackfillInventoryLoader.SchemaVersion,
-            ["ledger"] = BackfillInventoryLoader.LedgerName,
-            ["sources"] = new List<object?>(),
-            ["ticket_index"] = ticketIndex,
-        };
-        return new BackfillInventoryDocument(root, tickets, sources, []);
-    }
 
     internal ImmutableArray<BackfillTicketReference> RequireTickets()
     {
@@ -152,6 +132,25 @@ internal sealed class BackfillInventoryDocument
         ImmutableArray<BackfillTicketReference> tickets) =>
         new(root, tickets, RequireDigestionSources(), receiptSyntaxes);
 
+    internal static BackfillInventoryDocument Create(
+        ImmutableArray<DigestionLedgerSource> sources,
+        ImmutableArray<BackfillTicketReference> tickets)
+    {
+        var ticketIndex = tickets.Select(ticket => (object?)new Dictionary<string, object?>(StringComparer.Ordinal)
+        {
+            ["case_id"] = ticket.CaseId,
+            ["gid"] = ticket.Gid,
+        }).ToList();
+        var root = new Dictionary<string, object?>(StringComparer.Ordinal)
+        {
+            ["schema_version"] = BackfillInventoryLoader.SchemaVersion,
+            ["ledger"] = BackfillInventoryLoader.LedgerName,
+            ["sources"] = new List<object?>(),
+            ["ticket_index"] = ticketIndex,
+        };
+        return new BackfillInventoryDocument(root, tickets, sources, []);
+    }
+
     internal ImmutableArray<string> RequireReferencedGids()
     {
         var gids = ImmutableArray.CreateBuilder<string>();
@@ -180,35 +179,14 @@ internal sealed class BackfillInventoryDocument
         BackfillReceiptSyntax? receiptSyntax)
     {
         var entry = Mapping(rawEntry, $"source {sourceId} entries must be mappings");
-        var hasBoundary = entry.ContainsKey("boundary");
-        var excludedBoundaryField = hasBoundary ? "ast_path" : "boundary";
-        var expectedKeys = EntryFieldUniverse
-            .Where(field => !string.Equals(field, excludedBoundaryField, StringComparison.Ordinal))
-            .ToArray();
+        var expectedKeys = EntryFieldUniverse.ToArray();
         ExactKeys(
             entry,
             expectedKeys,
             $"source {sourceId} entry");
         var atomId = Scalar(entry, "atom_id", $"source {sourceId} atom_id");
 
-        DigestionBoundary? parsedBoundary = null;
-        string astPath;
-        if (hasBoundary)
-        {
-            var boundary = Mapping(
-                entry.GetValueOrDefault("boundary"),
-                $"entry {atomId} boundary must be a mapping");
-            ExactKeys(boundary, ["ast_path", "start_byte", "end_byte"], $"entry {atomId} boundary");
-            parsedBoundary = new DigestionBoundary(
-                Scalar(boundary, "ast_path", $"entry {atomId} ast_path"),
-                Integer(boundary, "start_byte", $"entry {atomId} start_byte"),
-                Integer(boundary, "end_byte", $"entry {atomId} end_byte"));
-            astPath = parsedBoundary.AstPath;
-        }
-        else
-        {
-            astPath = Scalar(entry, "ast_path", $"entry {atomId} ast_path");
-        }
+        var astPath = Scalar(entry, "ast_path", $"entry {atomId} ast_path");
 
         var fingerprints = Mapping(
             entry.GetValueOrDefault("fingerprints"),
@@ -231,7 +209,6 @@ internal sealed class BackfillInventoryDocument
             atomizer,
             atomId,
             astPath,
-            parsedBoundary,
             parsedFingerprints,
             coverageGids,
             receipts,
@@ -247,7 +224,7 @@ internal sealed class BackfillInventoryDocument
         var receipts = Mapping(rawReceipts, $"entry {atomId} receipts must be a mapping");
         ExactKeys(
             receipts,
-            ["coverage", "scribe", "unresolved_subitems", "chain_atoms", "tail_authorization"],
+            ["coverage", "scribe", "unresolved_subitems"],
             $"entry {atomId} receipts");
         var coverage = ImmutableArray.CreateBuilder<DigestionCoverageReceipt>();
         foreach (var rawCoverage in List(receipts, "coverage", $"entry {atomId} coverage receipts must be a list"))
@@ -271,26 +248,12 @@ internal sealed class BackfillInventoryDocument
                 Scalar(item, "emission_sha256", $"entry {atomId} emission_sha256")));
         }
 
-        DigestionExternalReceipt? tailAuthorization = null;
-        if (receipts.GetValueOrDefault("tail_authorization") is { } rawTail)
-        {
-            var tail = Mapping(rawTail, $"entry {atomId} tail_authorization must be null or a mapping");
-            ExactKeys(tail, ["path", "sha256"], $"entry {atomId} tail_authorization");
-            tailAuthorization = new DigestionExternalReceipt(
-                Scalar(tail, "path", $"entry {atomId} tail authorization path"),
-                Scalar(tail, "sha256", $"entry {atomId} tail authorization sha256"));
-        }
-
         return new DigestionReceipts(
             coverage.ToImmutable(),
             scribe.ToImmutable(),
             Strings(
                 List(receipts, "unresolved_subitems", $"entry {atomId} unresolved_subitems must be a list"),
-                $"entry {atomId} unresolved_subitems"),
-            Strings(
-                List(receipts, "chain_atoms", $"entry {atomId} chain_atoms must be a list"),
-                $"entry {atomId} chain_atoms"),
-            tailAuthorization);
+                $"entry {atomId} unresolved_subitems"));
     }
 
     private static DigestionMigrationState ParseMigration(string value) => value switch
@@ -364,16 +327,11 @@ internal sealed class BackfillInventoryDocument
 
 internal static class BackfillInventoryLoader
 {
-    internal const string RelativePath = "Meta/BACKFILL.yaml";
+    internal const string RootPath = "Meta/Digestion/backfill/";
+    internal const string RelativePath = RootPath;
+    internal const string TicketIndexPath = "Meta/Digestion/ticket-index.toml";
     internal const int SchemaVersion = 3;
     internal const string LedgerName = "theory-digestion-v1";
-
-    // 一原子一文件的消化台账落位。这三个成员先行加入 base 侧,使后续迁移 PR 的
-    // baseline admission 能识别 Meta/Digestion/backfill/** —— 否则「要认识这片路径
-    // 才能往里放文件,而放文件那次 PR 的法官还不认识它」形成引导死结。
-    // 今天树里还没有这些路径,故本谓词对当前 dev 恒为 false。
-    internal const string RootPath = "Meta/Digestion/backfill/";
-    internal const string TicketIndexPath = "Meta/Digestion/ticket-index.toml";
 
     internal static bool IsCanonicalPath(string path)
     {
@@ -409,62 +367,11 @@ internal static class BackfillInventoryLoader
         return new BackfillInventoryDocument(root, BackfillReceiptPreimage.Extract(text));
     }
 
-    internal static BackfillInventoryDocument Load(RepositorySnapshot snapshot)
+    internal static BackfillInventoryDocument Load(
+        RepositorySnapshot snapshot,
+        bool tolerateAbsent = false)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
-        var hasLegacy = snapshot.TryGetFile(RelativePath, out var legacyFile);
-        var canonicalDirectoryPaths = snapshot.Files.Keys
-            .Where(path => IsCanonicalPath(path.Value))
-            .ToArray();
-        var hasDirectory = canonicalDirectoryPaths.Length > 0;
-
-        if (hasLegacy && hasDirectory)
-        {
-            throw new FormatException("legacy and directory digestion ledgers cannot coexist");
-        }
-
-        if (hasLegacy)
-        {
-            return Load(legacyFile!.Text);
-        }
-
-        if (!hasDirectory)
-        {
-            throw new FormatException("required governance document is missing");
-        }
-
-        foreach (var path in snapshot.Files.Keys
-                     .Where(static path => path.Value.StartsWith(RootPath, StringComparison.Ordinal)))
-        {
-            if (!IsCanonicalPath(path.Value))
-            {
-                throw new FormatException($"noncanonical digestion ledger path: {path.Value}");
-            }
-        }
-
-        return LoadDirectorySnapshot(snapshot);
-    }
-
-    internal static BackfillInventoryDocument LoadDirectory(string repositoryRoot)
-    {
-        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
-        var root = Path.GetFullPath(repositoryRoot);
-        var directory = Path.Combine(root, RootPath.Replace('/', Path.DirectorySeparatorChar));
-        var paths = Directory.EnumerateFiles(directory, "*", SearchOption.AllDirectories)
-            .Append(Path.Combine(root, TicketIndexPath.Replace('/', Path.DirectorySeparatorChar)));
-        var raw = RawRepositorySnapshot.Create(paths.Select(path => new RawRepositoryEntry(
-            Path.GetRelativePath(root, path).Replace(Path.DirectorySeparatorChar, '/'),
-            ImmutableArray.CreateRange(File.ReadAllBytes(path)))));
-        return SnapshotDecoder.Decode(raw) switch
-        {
-            SnapshotDecodeOutcome.Decoded decoded => Load(decoded.Snapshot),
-            SnapshotDecodeOutcome.InfrastructureFailure failure =>
-                throw new FormatException(failure.Message),
-        };
-    }
-
-    private static BackfillInventoryDocument LoadDirectorySnapshot(RepositorySnapshot snapshot)
-    {
         var metadata = snapshot.Files
             .Where(static pair => pair.Key.Value.StartsWith(RootPath, StringComparison.Ordinal)
                 && pair.Key.Value.EndsWith("/source.toml", StringComparison.Ordinal))
@@ -472,7 +379,9 @@ internal static class BackfillInventoryLoader
             .ToArray();
         if (metadata.Length == 0)
         {
-            throw new FormatException($"digestion backfill directory is missing: {RootPath}");
+            return tolerateAbsent
+                ? BackfillInventoryDocument.Create([], [])
+                : throw new FormatException($"digestion backfill directory is missing: {RootPath}");
         }
 
         var sources = ImmutableArray.CreateBuilder<DigestionLedgerSource>();
@@ -494,22 +403,36 @@ internal static class BackfillInventoryLoader
             {
                 var suffix = path.Value[sourceRoot.Length..];
                 var slash = suffix.IndexOf('/');
+                if (slash <= 0 || suffix.IndexOf('/', slash + 1) >= 0)
+                {
+                    throw new FormatException($"invalid backfill atom path: {path.Value}");
+                }
+
                 var state = suffix[..slash].Split('-');
+                if (state.Length != 2)
+                {
+                    throw new FormatException($"invalid backfill state directory: {path.Value}");
+                }
+
                 if (YamlSubsetParser.Parse(file.Text) is not Dictionary<string, object?> entry)
                 {
                     throw new FormatException($"backfill atom must be a mapping: {path.Value}");
                 }
 
                 var atomId = suffix[(slash + 1)..^".yaml".Length];
-                if (!entry.TryAdd("atom_id", atomId) || !entry.TryAdd("status", new Dictionary<string, object?>(StringComparer.Ordinal)
-                    {
-                        ["migration"] = state[0],
-                        ["truth"] = state[1],
-                    }))
+                entry.Add("atom_id", atomId);
+                entry.TryAdd("coverage_gids", new List<object?>());
+                entry.TryAdd("receipts", new Dictionary<string, object?>(StringComparer.Ordinal)
                 {
-                    throw new FormatException($"backfill atom contains path-derived fields: {path.Value}");
-                }
-
+                    ["coverage"] = new List<object?>(),
+                    ["scribe"] = new List<object?>(),
+                    ["unresolved_subitems"] = new List<object?>(),
+                });
+                entry.Add("status", new Dictionary<string, object?>(StringComparer.Ordinal)
+                {
+                    ["migration"] = state[0],
+                    ["truth"] = state[1],
+                });
                 entries.Add(BackfillInventoryDocument.ParseEntry(
                     sourceId,
                     fields["path"].Single(),
@@ -526,24 +449,28 @@ internal static class BackfillInventoryLoader
                 entries.ToImmutable()));
         }
 
-        var sourceRoots = metadata
-            .Select(static pair => pair.Key.Value[..^"source.toml".Length])
-            .ToArray();
-        foreach (var atomPath in snapshot.Files.Keys
-                     .Where(static path => path.Value.StartsWith(RootPath, StringComparison.Ordinal)
-                         && path.Value.EndsWith(".yaml", StringComparison.Ordinal)))
-        {
-            if (sourceRoots.Count(root => atomPath.Value.StartsWith(root, StringComparison.Ordinal)) != 1)
-            {
-                throw new FormatException(
-                    $"backfill atom is not owned by exactly one source: {atomPath.Value}");
-            }
-        }
-
         var tickets = snapshot.TryGetFile(TicketIndexPath, out var ticketFile)
             ? ParseTickets(ticketFile.Text)
             : throw new FormatException($"digestion ticket index is missing: {TicketIndexPath}");
         return BackfillInventoryDocument.Create(sources.ToImmutable(), tickets);
+    }
+
+    internal static BackfillInventoryDocument LoadDirectory(string repositoryRoot)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
+        var root = Path.GetFullPath(repositoryRoot);
+        var directory = Path.Combine(root, RootPath.Replace('/', Path.DirectorySeparatorChar));
+        var paths = Directory.EnumerateFiles(directory, "*", SearchOption.AllDirectories)
+            .Append(Path.Combine(root, TicketIndexPath.Replace('/', Path.DirectorySeparatorChar)));
+        var raw = RawRepositorySnapshot.Create(paths.Select(path => new RawRepositoryEntry(
+            Path.GetRelativePath(root, path).Replace(Path.DirectorySeparatorChar, '/'),
+            ImmutableArray.CreateRange(File.ReadAllBytes(path)))));
+        return SnapshotDecoder.Decode(raw) switch
+        {
+            SnapshotDecodeOutcome.Decoded decoded => Load(decoded.Snapshot),
+            SnapshotDecodeOutcome.InfrastructureFailure failure =>
+                throw new FormatException(failure.Message),
+        };
     }
 
     private static Dictionary<string, List<string>> ParseSourceMetadata(string text, string path)
@@ -552,39 +479,7 @@ internal static class BackfillInventoryLoader
         foreach (var rawLine in text.Split('\n', StringSplitOptions.RemoveEmptyEntries))
         {
             var split = rawLine.Split(" = ", 2, StringSplitOptions.None);
-            if (split.Length != 2)
-            {
-                throw new FormatException($"invalid source metadata: {path}");
-            }
-
-            List<string> values;
-            try
-            {
-                values = ParseTomlValues(split[1]);
-            }
-            catch (FormatException) when (split[0] is "source_id" or "path" or "atomizer")
-            {
-                throw new FormatException(
-                    $"source metadata identity fields must be single quoted strings: {path}");
-            }
-
-            if (split[0] is "source_id" or "path" or "atomizer"
-                && split[1].StartsWith('['))
-            {
-                throw new FormatException(
-                    $"source metadata identity fields must be single quoted strings: {path}");
-            }
-
-            if (split[0] == "acknowledged_stale"
-                && (!split[1].StartsWith('[')
-                    || !split[1].EndsWith(']')
-                    || values.Any(string.IsNullOrWhiteSpace)))
-            {
-                throw new FormatException(
-                    $"acknowledged_stale must be a quoted string array without blank elements: {path}");
-            }
-
-            if (!result.TryAdd(split[0], values))
+            if (split.Length != 2 || !result.TryAdd(split[0], ParseTomlValues(split[1])))
             {
                 throw new FormatException($"invalid source metadata: {path}");
             }
@@ -597,83 +492,25 @@ internal static class BackfillInventoryLoader
         {
             throw new FormatException($"source metadata keys are not canonical: {path}");
         }
-
-
-        if (result["source_id"].Count != 1
-            || result["path"].Count != 1
-            || result["atomizer"].Count != 1
-            || string.IsNullOrWhiteSpace(result["source_id"][0])
-            || string.IsNullOrWhiteSpace(result["path"][0])
-            || string.IsNullOrWhiteSpace(result["atomizer"][0]))
-        {
-            throw new FormatException(
-                $"source metadata identity fields must be single quoted strings: {path}");
-        }
-
         return result;
     }
 
     private static List<string> ParseTomlValues(string encoded)
     {
-        if (encoded.StartsWith('[') || encoded.EndsWith(']'))
-        {
-            if (!encoded.StartsWith('[') || !encoded.EndsWith(']'))
-            {
-                throw new FormatException("source metadata values must be quoted strings");
-            }
-
-            var body = encoded[1..^1];
-            if (body.Length == 0) return [];
-            return body.Split(", ", StringSplitOptions.None)
-                .Select(ParseQuotedTomlScalar)
-                .ToList();
-        }
-
-        return [ParseQuotedTomlScalar(encoded)];
+        var values = encoded.StartsWith('[') && encoded.EndsWith(']')
+            ? encoded[1..^1].Split(", ", StringSplitOptions.RemoveEmptyEntries)
+            : [encoded];
+        return values.Select(value => value.Length >= 2 && value[0] == '"' && value[^1] == '"'
+                ? value[1..^1]
+                : throw new FormatException("source metadata values must be quoted strings"))
+            .ToList();
     }
 
-    private static string ParseQuotedTomlScalar(string encoded)
-    {
-        if (encoded.Length < 2
-            || encoded[0] != '"'
-            || encoded[^1] != '"'
-            || encoded.AsSpan(1, encoded.Length - 2).Contains('"'))
-        {
-            throw new FormatException("source metadata values must be quoted strings");
-        }
-
-        return encoded[1..^1];
-    }
-
-    internal static ImmutableArray<BackfillTicketReference> ParseTickets(string text)
-    {
-        var tickets = ImmutableArray.CreateBuilder<BackfillTicketReference>();
-        foreach (var line in text.Split('\n', StringSplitOptions.RemoveEmptyEntries))
-        {
-            var parts = line.Split(" = ", 2, StringSplitOptions.None);
-            if (parts.Length != 2)
-            {
-                throw new FormatException("invalid digestion ticket index");
-            }
-
-            List<string> values;
-            try
-            {
-                values = ParseTomlValues(parts[1]);
-            }
-            catch (FormatException)
-            {
-                throw new FormatException("invalid digestion ticket index");
-            }
-
-            if (values.Count != 1)
-            {
-                throw new FormatException("invalid digestion ticket index");
-            }
-
-            tickets.Add(new BackfillTicketReference(parts[0], values[0]));
-        }
-
-        return tickets.ToImmutable();
-    }
+    private static ImmutableArray<BackfillTicketReference> ParseTickets(string text) =>
+        text.Split('\n', StringSplitOptions.RemoveEmptyEntries)
+            .Select(line => line.Split(" = ", 2, StringSplitOptions.None))
+            .Select(parts => parts.Length == 2
+                ? new BackfillTicketReference(parts[0], ParseTomlValues(parts[1]).Single())
+                : throw new FormatException("invalid digestion ticket index"))
+            .ToImmutableArray();
 }
