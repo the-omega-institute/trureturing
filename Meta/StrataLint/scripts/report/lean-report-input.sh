@@ -15,12 +15,12 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-[[ "$COMMAND" == "address" || "$COMMAND" == "verify" ]] \
-  || { echo "usage: lean-report-input.sh address|verify --repository DIR [--report FILE]" >&2; exit 2; }
+[[ "$COMMAND" == "address" || "$COMMAND" == "verify" || "$COMMAND" == "modules" || "$COMMAND" == "manifest" ]] \
+  || { echo "usage: lean-report-input.sh address|verify|modules|manifest --repository DIR [--report FILE]" >&2; exit 2; }
 [[ -n "$REPOSITORY" && "$REPOSITORY" == /* && -d "$REPOSITORY" ]] \
   || { echo "lean-report-input: --repository requires an absolute directory" >&2; exit 2; }
 REPOSITORY="$(cd "$REPOSITORY" && pwd -P)"
-if [[ "$COMMAND" != "address" ]]; then
+if [[ "$COMMAND" == "verify" ]]; then
   [[ -n "$REPORT" && "$REPORT" == /* && -s "$REPORT" ]] \
     || { echo "lean-report-input: raw Lean report is missing; run make lean-report first" >&2; exit 2; }
 fi
@@ -46,6 +46,93 @@ append_manifest_entry() {
   [[ -f "$path" ]] \
     || { echo "lean-report-input: repository input is absent: $path" >&2; return 2; }
   printf '%s  %s\n' "$(hash_file "$path")" "$relative" >> "$manifest"
+}
+
+managed_modules() {
+  [[ -f "$REPOSITORY/Trureturing.lean" && -d "$REPOSITORY/D5" ]] \
+    || { echo "lean-report-input: managed Lean roots are absent" >&2; return 2; }
+  printf 'Trureturing\tTrureturing.lean\n'
+  find "$REPOSITORY/D5" -type f -name '*.lean' -print \
+    | sed "s#^$REPOSITORY/##" \
+    | sort \
+    | while IFS= read -r path; do
+        module="${path%.lean}"
+        printf '%s\t%s\n' "${module//\//.}" "$path"
+      done
+}
+
+component_hashes() {
+  local producer_manifest="$TMP_ROOT/producer.manifest"
+  local config_manifest="$TMP_ROOT/config.manifest"
+  local lakefile lakefile_count=0
+  : > "$producer_manifest"
+  append_manifest_entry "$producer_manifest" "Meta/StrataLint/lean-inspector/inspect.sh"
+  append_manifest_entry "$producer_manifest" "Meta/StrataLint/lean-inspector/Inspector.lean"
+  PRODUCER_SHA256="$(hash_file "$producer_manifest")"
+  : > "$config_manifest"
+  append_manifest_entry "$config_manifest" "lean-toolchain"
+  append_manifest_entry "$config_manifest" "lake-manifest.json"
+  for lakefile in lakefile.toml lakefile.lean; do
+    if [[ -f "$REPOSITORY/$lakefile" ]]; then
+      append_manifest_entry "$config_manifest" "$lakefile"
+      lakefile_count=$((lakefile_count + 1))
+    fi
+  done
+  [[ "$lakefile_count" -gt 0 ]] || { echo "lean-report-input: repository has no lakefile" >&2; return 2; }
+  CONFIG_SHA256="$(hash_file "$config_manifest")"
+}
+
+module_manifest() {
+  local modules="$TMP_ROOT/modules.tsv"
+  managed_modules > "$modules"
+  component_hashes
+  python3 - "$REPOSITORY" "$modules" "$PRODUCER_SHA256" "$CONFIG_SHA256" <<'PY'
+import hashlib
+import pathlib
+import re
+import sys
+
+root, modules_file, producer, config = sys.argv[1:]
+root = pathlib.Path(root)
+entries = [line.rstrip("\n").split("\t") for line in pathlib.Path(modules_file).read_text().splitlines()]
+paths = dict(entries)
+imports = {}
+pattern = re.compile(r"^import[ \t]+([A-Za-z0-9_.]+)[ \t]*$")
+for module, relative in entries:
+    managed = []
+    for line in (root / relative).read_text(encoding="utf-8").splitlines():
+        if not line.startswith("import"):
+            continue
+        match = pattern.fullmatch(line)
+        if match is None:
+            raise SystemExit(f"lean-report-input: unparseable import in {relative}: {line}")
+        imported = match.group(1)
+        if imported == "Trureturing" or imported.startswith("D5."):
+            if imported not in paths:
+                raise SystemExit(f"lean-report-input: managed import is absent: {imported} (from {relative})")
+            managed.append(imported)
+    imports[module] = managed
+
+memo = {}
+def closure(module, visiting=()):
+    if module in visiting:
+        raise SystemExit(f"lean-report-input: managed import cycle at {module}")
+    if module not in memo:
+        result = {module}
+        for dependency in imports[module]:
+            result.update(closure(dependency, visiting + (module,)))
+        memo[module] = result
+    return memo[module]
+
+for module, relative in entries:
+    preimage = ["schema=stratalint-lean-report-module-input-v1", f"module={module}",
+                f"producer_sha256={producer}", f"config_sha256={config}"]
+    for dependency in sorted(closure(module)):
+        digest = hashlib.sha256((root / paths[dependency]).read_bytes()).hexdigest()
+        preimage.append(f"{digest}  {dependency}")
+    key = hashlib.sha256(("\n".join(preimage) + "\n").encode()).hexdigest()
+    print(f"{module}\t{relative}\t{key}")
+PY
 }
 
 repository_address() {
@@ -112,6 +199,12 @@ verify_report_sha() {
 case "$COMMAND" in
   address)
     repository_address
+    ;;
+  modules)
+    managed_modules
+    ;;
+  manifest)
+    module_manifest
     ;;
   verify)
     verify_report_sha
