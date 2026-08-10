@@ -76,6 +76,85 @@ public sealed partial class ProductionEnvironmentTests
         Assert.DoesNotContain("Carrier=", result.Error, StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void RouteCapacityHintForThreeSegmentFormalBucketIncludesSubdomainExit()
+    {
+        using var temporary = RouteRepository();
+        var environment = RouteEnvironment(
+            temporary.Path,
+            LeanBucketFiles(RepositoryRules.DirectoryFileLimit));
+
+        var result = environment.Route(["manifest.json"]);
+
+        Assert.Contains(
+            "choose a sibling domain or new domain, or create a subdomain in this domain",
+            result.Error,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RouteCapacityHintForFourSegmentFormalBucketAllowsOnlySiblingOrNewSubdomain()
+    {
+        using var temporary = RouteRepository(Manifest(
+            "F", "Carrier", "CapacityHintProbe", "", "lean", "", subdomain: "SyntheticCapacity"));
+        var files = Enumerable.Range(0, RepositoryRules.DirectoryFileLimit).ToDictionary(
+            index => $"D5/S0/Carrier/SyntheticCapacity/Fixture{index:D2}.lean",
+            static _ => "-- fixture\n",
+            StringComparer.Ordinal);
+        var environment = RouteEnvironment(temporary.Path, files);
+
+        var result = environment.Route(["manifest.json"]);
+
+        Assert.Contains(
+            "choose a sibling subdomain or new subdomain; nesting is limited to one subdomain level",
+            result.Error,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain(
+            "create a subdomain in this domain",
+            result.Error,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RouteCapacityHintForThreeSegmentBlueprintBucketIncludesSubdomainExit()
+    {
+        using var temporary = RouteRepository(Manifest(
+            "B", "Carrier", "CapacityHintProbe", "", "markdown", ""));
+        var environment = RouteEnvironment(
+            temporary.Path,
+            BlueprintBucketFiles(RepositoryRules.DirectoryFileLimit));
+
+        var result = environment.Route(["manifest.json"]);
+
+        Assert.Contains(
+            "choose a sibling domain or new domain, or create a subdomain in this domain",
+            result.Error,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RouteCapacityHintForFourSegmentBlueprintBucketAllowsOnlySiblingOrNewSubdomain()
+    {
+        using var temporary = RouteRepository(Manifest(
+            "B", "Carrier", "CapacityHintProbe", "", "markdown", "", subdomain: "SyntheticCapacity"));
+        var files = Enumerable.Range(0, RepositoryRules.DirectoryFileLimit).ToDictionary(
+            index => $"Blueprint/D5/S0/Carrier/SyntheticCapacity/Fixture{index:D2}.scribe.cs",
+            static _ => "// fixture\n",
+            StringComparer.Ordinal);
+        var environment = RouteEnvironment(temporary.Path, files);
+
+        var result = environment.Route(["manifest.json"]);
+
+        Assert.Contains(
+            "choose a sibling subdomain or new subdomain; nesting is limited to one subdomain level",
+            result.Error,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain(
+            "create a subdomain in this domain",
+            result.Error,
+            StringComparison.Ordinal);
+    }
+
     [Theory]
     [InlineData("E", "Carrier", "Probe", "result", "json", "", "Evidence/D5/S0/Carrier")]
     [InlineData("C", "2026-07-11", "round-168", "", "markdown", "", "Chronicle/2026/07")]
