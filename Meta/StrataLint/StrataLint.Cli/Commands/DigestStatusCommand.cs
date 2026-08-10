@@ -452,6 +452,7 @@ internal static class DigestResidualSummary
             .Select(static group => new SourceResiduals(
                 group.Key,
                 group
+                    .Where(static item => item.Entry.Receipts.Quarantine is null)
                     .Select(static item => new AtomResiduals(
                         item.Entry.AtomId,
                         item.Gaps
@@ -478,11 +479,52 @@ internal static class DigestResidualSummary
                 .Count() > 1)
             .OrderBy(static residue => residue.Name, StringComparer.Ordinal)
             .ToArray();
+        var quarantined = evaluation.Entries
+            .Where(static item => item.Entry.Receipts.Quarantine is not null)
+            .Select(static item => new QuarantinedResiduals(
+                item.Entry.SourceId,
+                item.Entry.AtomId,
+                item.Entry.Receipts.Quarantine!,
+                item.Gaps
+                    .Where(static gap => gap.Code == ResidualGapCode)
+                    .Select(static gap => gap.Detail)
+                    .OrderBy(static detail => detail, StringComparer.Ordinal)
+                    .ToArray()))
+            .Where(static item => item.Subitems.Length > 0)
+            .OrderBy(static item => item.SourceId, StringComparer.Ordinal)
+            .ThenBy(static item => item.AtomId, StringComparer.Ordinal)
+            .ToArray();
         var writer = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
         writer.WriteLine("# Echo Residual Summary");
         writer.WriteLine();
         writer.WriteLine($"- unresolved_subitems: {sources.Sum(static source => source.SubitemCount)}");
         writer.WriteLine($"- mother_residual_atom_ids: {sources.Sum(static source => source.Atoms.Length)}");
+        writer.WriteLine();
+        writer.WriteLine("## quarantined residuals");
+        writer.WriteLine();
+        writer.WriteLine($"- quarantined_subitems: {quarantined.Sum(static item => item.Subitems.Length)}");
+        writer.WriteLine($"- mother_quarantined_atom_ids: {quarantined.Length}");
+        writer.WriteLine();
+        if (quarantined.Length == 0)
+        {
+            writer.WriteLine("Quarantined residual atoms: none.");
+        }
+        else
+        {
+            writer.WriteLine("Quarantined residual atoms:");
+            writer.WriteLine();
+            foreach (var item in quarantined)
+            {
+                writer.WriteLine($"- `{item.SourceId}/{item.AtomId}` ({item.Subitems.Length})");
+                writer.WriteLine($"  - justification: `{item.Quarantine.Justification}`");
+                writer.WriteLine($"  - reentry_condition: `{item.Quarantine.ReentryCondition}`");
+                foreach (var subitem in item.Subitems)
+                {
+                    writer.WriteLine($"  - `{subitem}`");
+                }
+            }
+        }
+
         writer.WriteLine();
         writer.WriteLine("## cross-volume shared residues");
         writer.WriteLine();
@@ -545,6 +587,12 @@ internal static class DigestResidualSummary
     private sealed record ResidueHost(string Residue, string SourceId, string AtomId);
 
     private sealed record SharedResidue(string Name, ResidueHost[] Hosts);
+
+    private sealed record QuarantinedResiduals(
+        string SourceId,
+        string AtomId,
+        DigestionQuarantine Quarantine,
+        string[] Subitems);
 
     private sealed record SourceResiduals(string SourceId, AtomResiduals[] Atoms)
     {
