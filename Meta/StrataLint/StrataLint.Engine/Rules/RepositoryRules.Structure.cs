@@ -157,7 +157,7 @@ internal static partial class RepositoryRules
     }
 
     private static ImmutableArray<RuleFinding> Chronicle(RuleEvaluationContext context) =>
-        context.Baseline.Files
+        context.ForkPoint.Files
             .Where(static item => item.Key.Value.StartsWith("Chronicle/", StringComparison.Ordinal))
             .Where(item => !context.Current.TryGetFile(item.Key.Value, out var current)
                 || !current.RawBytes.AsSpan().SequenceEqual(item.Value.RawBytes.AsSpan()))
@@ -178,7 +178,7 @@ internal static partial class RepositoryRules
         {
             authorizations = HeartsAuthorizationLedger.ReadAppendOnly(
                 context.Current,
-                context.Baseline);
+                context.ForkPoint);
         }
         catch (FormatException exception)
         {
@@ -186,7 +186,7 @@ internal static partial class RepositoryRules
                 new RuleFinding(HeartsAuthorizationLedger.Path, exception.Message));
         }
 
-        var hadBaseline = context.Baseline.TryGetFile(path, out _);
+        var hadBaseline = context.ForkPoint.TryGetFile(path, out _);
         var hasCurrent = context.Current.TryGetFile(path, out _);
         if (hadBaseline && !hasCurrent)
         {
@@ -376,7 +376,7 @@ internal static partial class RepositoryRules
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         var current = CollectTasks(context.Current, findings);
-        var baseline = CollectTasks(context.Baseline, null);
+        var baseline = CollectTasks(context.ForkPoint, null);
         foreach (var duplicate in current.Where(static item => item.Value.Count > 1))
         {
             findings.Add(new RuleFinding(duplicate.Value[0].Path, $"task code {duplicate.Key} is duplicated"));

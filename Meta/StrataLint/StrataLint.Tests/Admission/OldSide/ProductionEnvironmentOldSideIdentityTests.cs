@@ -88,4 +88,90 @@ public sealed partial class ProductionEnvironmentTests
                 + failure.Message);
         }
     }
+
+    // 「旧侧」有两个不同的语义,#1146 只修好了一个。
+    //   保守/Lean 配对问「候选在扩展哪个受保护状态」→ protected base(#1146 已改对);
+    //   append-only 保留性问「候选是否删了它出发时就有的东西」→ **fork point(merge-base)**。
+    // 二者被同一个 `baseline` 快照回答,于是 #1146 之后,dev 在候选分叉之后追加的任何
+    // append-only 条目(Chronicle、尸检、冻结账本证书、Digestion CAS)都会被读成
+    // 「候选删除了受保护之物」。
+    //
+    // 生产实证:PR #1150 撞上
+    //   `SL-008 Golden/Frozen/events.jsonl: candidate content-addressed ledger does not
+    //    retain protected baseline file byte-for-byte`
+    // ——其分支点到 dev tip 之间,`Golden/Frozen/accepted/` 新增 4 个由保守扩展仪式产出的证书。
+    // 实测近 60 次 dev 合并中 38 次(63%)追加此类证书,故这是常态而非边角。
+    //
+    // 本测试取 Chronicle 作最小复现(同一缺陷类,装置最简)。
+    [Fact]
+    public void CheckDoesNotBlameTheCandidateForAppendOnlyEntriesAddedToTheProtectedBaseAfterTheFork()
+    {
+        using var candidate = new TemporaryDirectory();
+        using var reports = new TemporaryDirectory();
+        var fixture = new RuleFixture();
+        const string forkChronicle = "Chronicle/2026/08/10-fork-point.md";
+        const string devChronicle = "Chronicle/2026/08/11-dev-appended-after-the-fork.md";
+        fixture.Baseline[forkChronicle] = "# fork point entry\n";
+        fixture.Files[forkChronicle] = fixture.Baseline[forkChronicle];
+
+        // A —— 分叉点。
+        InitializeRepository(candidate.Path);
+        WriteFiles(candidate.Path, fixture.Baseline);
+        ReviewRegressionTests.RunGit(candidate.Path, "add", ".");
+        ReviewRegressionTests.RunGit(candidate.Path, "commit", "-m", "fork point");
+
+        // C —— 候选自 A 分出,完整保留了分叉点的全部 append-only 条目。
+        ReviewRegressionTests.RunGit(candidate.Path, "checkout", "-b", "candidate");
+        fixture.Files[RuleFixture.BlueprintPath] += "\n";
+        WriteFiles(candidate.Path, fixture.Files);
+        ReviewRegressionTests.RunGit(candidate.Path, "add", ".");
+        ReviewRegressionTests.RunGit(candidate.Path, "commit", "-m", "candidate ordinary change");
+
+        // B —— dev 在候选在飞期间追加了一条 Chronicle。候选当然没有它。
+        ReviewRegressionTests.RunGit(candidate.Path, "checkout", "dev");
+        var protectedFiles = new Dictionary<string, string>(fixture.Baseline, StringComparer.Ordinal)
+        {
+            [devChronicle] = "# appended on dev while the candidate was in flight\n",
+        };
+        WriteFiles(candidate.Path, protectedFiles);
+        ReviewRegressionTests.RunGit(candidate.Path, "add", ".");
+        ReviewRegressionTests.RunGit(candidate.Path, "commit", "-m", "dev appends a Chronicle entry");
+        var protectedBase = GitText(candidate.Path, "rev-parse", "HEAD");
+
+        ReviewRegressionTests.RunGit(candidate.Path, "checkout", "candidate");
+
+        var candidateReport = Path.Combine(reports.Path, "candidate.json");
+        var baselineReport = Path.Combine(reports.Path, "baseline.json");
+        File.WriteAllBytes(
+            candidateReport,
+            RawLeanReportArtifact.Write(
+                Decode(Snapshot(fixture.Files)),
+                LeanAxiomReport.Create(fixture.Reports)).AsSpan());
+        File.WriteAllBytes(
+            baselineReport,
+            RawLeanReportArtifact.Write(
+                Decode(Snapshot(protectedFiles)),
+                LeanAxiomReport.Create(fixture.BaselineReports)).AsSpan());
+
+        var environment = new ProductionCliEnvironment(
+            candidate.Path,
+            new GitRepositoryGateway(candidate.Path),
+            new FakeLeanReportSource(null));
+
+        var outcome = environment.Check(
+        [
+            "--protected-base", protectedBase,
+            "--candidate-lean-report", candidateReport,
+            "--baseline-lean-report", baselineReport,
+        ]);
+
+        var appendOnlyBlame = outcome is AdmissionOutcome.RuleRejected rejected
+            ? rejected.Diagnostics
+                .Where(static item => item.Message.Contains("append-only", StringComparison.Ordinal))
+                .Select(static item => $"{item.RuleId} {item.Path}: {item.Message}")
+                .ToArray()
+            : [];
+
+        Assert.Empty(appendOnlyBlame);
+    }
 }

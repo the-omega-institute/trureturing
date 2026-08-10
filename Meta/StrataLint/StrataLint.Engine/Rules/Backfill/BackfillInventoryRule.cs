@@ -43,7 +43,7 @@ internal static class BackfillInventoryRule
         return EvaluateDocument(
             new BackfillInventoryValidationContext(
                 context.Current,
-                context.Baseline,
+                context.ForkPoint,
                 context.Policy,
                 context.Lean,
                 context.VerifiedScribeEmissions),
