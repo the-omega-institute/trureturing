@@ -37,18 +37,36 @@ public sealed class CapacityPolicyTests
         Assert.Contains("hard limit", finding.Message, StringComparison.Ordinal);
     }
 
-    // RED: a directory one file past the limit must be flagged.
+    // RED: a directory past the repository tolerance must be flagged. The admission rule
+    // still refuses at DirectoryFileLimit; this net exists so that a union produced by two
+    // concurrent additions - which admission cannot see, because strict is forbidden (19)
+    // and each PR judges its own tree - does not turn the whole repository red and block
+    // every unrelated PR. Inside the band the bucket is over pressure and must be split,
+    // and the next change touching it is refused at admission, which is where the split
+    // pressure belongs.
     [Fact]
-    public void OverfullDirectoryIsRejectedByRedFixture()
+    public void DirectoryPastToleranceIsRejectedByRedFixture()
     {
-        var files = Enumerable.Range(0, RepositoryRules.DirectoryFileLimit + 1)
+        var files = Enumerable.Range(0, RepositoryRules.DirectoryToleranceLimit + 1)
             .Select(static i => ($"Synthetic/Bucket/File{i}.cs", "x"))
             .ToArray();
 
         var finding = Assert.Single(CapacityPolicy.InspectFiles(files));
 
         Assert.Equal("Synthetic/Bucket", finding.Path);
-        Assert.Contains("maximum", finding.Message, StringComparison.Ordinal);
+        Assert.Contains("tolerance", finding.Message, StringComparison.Ordinal);
+    }
+
+    // The band itself: a union one past the admission limit is tolerated repository-wide,
+    // which is the whole point - otherwise two concurrent merges red the repository.
+    [Fact]
+    public void UnionOneFilePastAdmissionLimitIsToleratedRepositoryWide()
+    {
+        var files = Enumerable.Range(0, RepositoryRules.DirectoryFileLimit + 1)
+            .Select(static i => ($"Synthetic/Bucket/File{i}.cs", "x"))
+            .ToArray();
+
+        Assert.Empty(CapacityPolicy.InspectFiles(files));
     }
 
     // The exclusion set (theory inputs, Lake manifest, backfill inventory, CAS
@@ -104,14 +122,14 @@ public sealed class CapacityPolicyTests
     [Fact]
     public void BlueprintDefinitionSourcesRemainBounded()
     {
-        var files = Enumerable.Range(0, RepositoryRules.DirectoryFileLimit + 1)
+        var files = Enumerable.Range(0, RepositoryRules.DirectoryToleranceLimit + 1)
             .Select(static i => ($"Blueprint/D5/S1/Synthetic/File{i}.scribe.cs", "x"))
             .ToArray();
 
         var finding = Assert.Single(CapacityPolicy.InspectFiles(files));
 
         Assert.Equal("Blueprint/D5/S1/Synthetic", finding.Path);
-        Assert.Contains("maximum", finding.Message, StringComparison.Ordinal);
+        Assert.Contains("tolerance", finding.Message, StringComparison.Ordinal);
     }
 
     // Formalization receipts accrue one file per admitted unit; the directory is a
