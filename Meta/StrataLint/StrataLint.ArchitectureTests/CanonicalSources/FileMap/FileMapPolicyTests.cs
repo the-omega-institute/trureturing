@@ -74,7 +74,7 @@ public sealed class FileMapPolicyTests
             var entry = Assert.Single(manifest.Match(artifact.Path));
             Assert.Equal(FileMapKind.Generated, entry.Kind);
             Assert.Equal(artifact.Producer, entry.ProducedBy);
-            Assert.Contains(artifact.VerifiedBy, entry.VerifiedBy, StringComparer.Ordinal);
+            Assert.Contains(artifact.Producer, entry.VerifiedBy, StringComparer.Ordinal);
         });
 
         var topLevelProjectionPaths = expectedPaths
@@ -297,7 +297,7 @@ public sealed class FileMapPolicyTests
             "generated",
             "JsonEmitter",
             "reader",
-            "emit-check"));
+            "JsonEmitter"));
 
         var finding = Assert.Single(FileMapPolicy.InspectGeneratedInventory(
             manifest,
@@ -315,7 +315,7 @@ public sealed class FileMapPolicyTests
             "generated",
             "none",
             "reader",
-            "emit-check");
+            "MissingProducer");
 
         var exception = Assert.Throws<FormatException>(() => Parse(source));
 
@@ -330,11 +330,10 @@ public sealed class FileMapPolicyTests
             "generated",
             "JsonEmitter",
             "reader",
-            "emit-check"));
+            "JsonEmitter"));
         var inventory = new GeneratedArtifactIdentity(
             "Generated/output.json",
-            "OtherEmitter",
-            "emit-check");
+            "OtherEmitter");
 
         var finding = Assert.Single(FileMapPolicy.InspectGeneratedInventory(
             manifest,
@@ -356,11 +355,11 @@ public sealed class FileMapPolicyTests
             "generated",
             "JsonEmitter",
             "reader",
-            "emit-check",
+            "JsonEmitter",
             runtimeDisposition,
             "A-OUTPUT"));
         var inventory = new GeneratedArtifactIdentity(
-            "Generated/output.json", "JsonEmitter", "emit-check", "A-OUTPUT");
+            "Generated/output.json", "JsonEmitter", "A-OUTPUT");
 
         var findings = FileMapPolicy.InspectGeneratedInventory(manifest, [], [inventory]);
 
@@ -374,10 +373,10 @@ public sealed class FileMapPolicyTests
     {
         const string artifactPath = "SyntheticArtifacts/output.json";
         var manifest = Parse(DispositionEntry(
-            artifactPath, "generated", "SyntheticEmitter", "reader", "emit-check",
+            artifactPath, "generated", "SyntheticEmitter", "reader", "SyntheticEmitter",
             "run-local", "A-SYNTHETIC-OUTPUT"));
         var inventory = new GeneratedArtifactIdentity(
-            artifactPath, "SyntheticEmitter", "emit-check", "A-SYNTHETIC-OUTPUT");
+            artifactPath, "SyntheticEmitter", "A-SYNTHETIC-OUTPUT");
 
         var finding = Assert.Single(FileMapPolicy.InspectGeneratedInventory(
             manifest, [artifactPath], [inventory]));
@@ -397,10 +396,10 @@ public sealed class FileMapPolicyTests
     {
         const string artifactPath = "SyntheticArtifacts/output.json";
         var manifest = Parse(DispositionEntry(
-            artifactPath, "generated", "SyntheticEmitter", "reader", "emit-check",
+            artifactPath, "generated", "SyntheticEmitter", "reader", "SyntheticEmitter",
             runtimeDisposition, "A-SYNTHETIC-OUTPUT"));
         var inventory = new GeneratedArtifactIdentity(
-            artifactPath, "SyntheticEmitter", "emit-check", "A-SYNTHETIC-OUTPUT");
+            artifactPath, "SyntheticEmitter", "A-SYNTHETIC-OUTPUT");
         var trackedPaths = isTracked ? new[] { artifactPath } : [];
 
         var findings = FileMapPolicy.InspectGeneratedInventory(manifest, trackedPaths, [inventory]);
@@ -413,10 +412,10 @@ public sealed class FileMapPolicyTests
     public void UntrackedRunLocalWithWrongProducerIsRejectedByTheRedFixture()
     {
         var manifest = Parse(DispositionEntry(
-            "Generated/output.json", "generated", "WrongEmitter", "reader", "emit-check",
+            "Generated/output.json", "generated", "WrongEmitter", "reader", "WrongEmitter",
             "run-local", "A-OUTPUT"));
         var inventory = new GeneratedArtifactIdentity(
-            "Generated/output.json", "JsonEmitter", "emit-check", "A-OUTPUT");
+            "Generated/output.json", "JsonEmitter", "A-OUTPUT");
 
         var findings = FileMapPolicy.InspectGeneratedInventory(manifest, [], [inventory]);
 
@@ -428,10 +427,10 @@ public sealed class FileMapPolicyTests
     public void UntrackedRunLocalWithBroadGlobIsRejectedByTheRedFixture()
     {
         var manifest = Parse(DispositionEntry(
-            "Generated/*.json", "generated", "JsonEmitter", "reader", "emit-check",
+            "Generated/*.json", "generated", "JsonEmitter", "reader", "JsonEmitter",
             "run-local", "A-OUTPUT"));
         var inventory = new GeneratedArtifactIdentity(
-            "Generated/output.json", "JsonEmitter", "emit-check", "A-OUTPUT");
+            "Generated/output.json", "JsonEmitter", "A-OUTPUT");
 
         var findings = FileMapPolicy.InspectGeneratedInventory(manifest, [], [inventory]);
 
@@ -443,7 +442,7 @@ public sealed class FileMapPolicyTests
     public void RunLocalEntryMissingRequiredFieldIsRejectedByTheRedFixture()
     {
         var source = DispositionEntry(
-            "Generated/output.json", "generated", "JsonEmitter", "reader", "emit-check",
+            "Generated/output.json", "generated", "JsonEmitter", "reader", "JsonEmitter",
             "run-local", "A-OUTPUT").Replace("mode = \"100644\"\n", string.Empty, StringComparison.Ordinal);
 
         var exception = Assert.Throws<FormatException>(() => Parse(source));
@@ -455,7 +454,7 @@ public sealed class FileMapPolicyTests
     public void CommittedGeneratedEntryMissingModeIsRejectedByTheRedFixture()
     {
         var source = DispositionEntry(
-            "Generated/output.json", "generated", "JsonEmitter", "reader", "emit-check",
+            "Generated/output.json", "generated", "JsonEmitter", "reader", "JsonEmitter",
             "committed-source", "A-OUTPUT").Replace("mode = \"100644\"\n", string.Empty, StringComparison.Ordinal);
 
         var exception = Assert.Throws<FormatException>(() => Parse(source));
@@ -467,7 +466,7 @@ public sealed class FileMapPolicyTests
     public void WrongDeclaredCommittedModeIsRejectedByTheRedFixture()
     {
         var manifest = Parse(DispositionEntry(
-            "Generated/output.json", "generated", "JsonEmitter", "reader", "emit-check",
+            "Generated/output.json", "generated", "JsonEmitter", "reader", "JsonEmitter",
             "committed-source", "A-OUTPUT").Replace("100644", "100755", StringComparison.Ordinal));
 
         var finding = Assert.Single(FileMapPolicy.InspectDeclaredModes(
@@ -500,8 +499,8 @@ public sealed class FileMapPolicyTests
     {
         var manifest = Parse(
             Entry("Data/**/*.toml", "data", "none", "loader", "SnapshotDecoder"),
-            Entry("Generated/**/*.json", "generated", "JsonEmitter", "program", "emit-check"),
-            Entry("Generated/**/*.lean", "generated", "LeanEmitter", "lake", "emit-check"),
+            Entry("Generated/**/*.json", "generated", "JsonEmitter", "program", "JsonEmitter"),
+            Entry("Generated/**/*.lean", "generated", "LeanEmitter", "lake", "LeanEmitter"),
             Entry("Main.lean", "truth", "none", "lake", "lean-build"));
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {

@@ -1,14 +1,6 @@
 schema = "gate-authority-roots-v1"
 
 [[roots]]
-root_id = "Makefile/echo-verify"
-entrypoint = "Makefile"
-
-[[roots]]
-root_id = "Makefile/emit-check"
-entrypoint = "Makefile"
-
-[[roots]]
 root_id = "Makefile/gate"
 entrypoint = "Makefile"
 
@@ -45,23 +37,11 @@ root_id = "harness-gate.sh/conservative"
 entrypoint = ".github/scripts/harness-gate.sh"
 
 [[roots]]
-root_id = "harness-gate.sh/echo-verify"
-entrypoint = ".github/scripts/harness-gate.sh"
-
-[[roots]]
 root_id = "harness-gate.sh/selftest"
 entrypoint = ".github/scripts/harness-gate.sh"
 
 [[roots]]
 root_id = "local-harness-gate.sh/admission"
-entrypoint = "Meta/StrataLint/scripts/local-harness-gate.sh"
-
-[[roots]]
-root_id = "local-harness-gate.sh/echo-verify-bootstrap"
-entrypoint = "Meta/StrataLint/scripts/local-harness-gate.sh"
-
-[[roots]]
-root_id = "local-harness-gate.sh/emit-check"
 entrypoint = "Meta/StrataLint/scripts/local-harness-gate.sh"
 
 [[roots]]

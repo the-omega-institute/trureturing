@@ -84,7 +84,7 @@ public sealed class CapacityPolicyTests
     }
 
     // Emitted Blueprint projections (FILEMAP kind=generated, produced by
-    // ScribeEmitter, verified by emit-check) are photographs of the graph, not
+    // ScribeEmitter) are photographs of the graph, not
     // skeleton: each document already pays its structural slot through its
     // .scribe.cs source. Bounding the projections halves the effective bucket:
     // the document GID must name an existing Lean module and the definition

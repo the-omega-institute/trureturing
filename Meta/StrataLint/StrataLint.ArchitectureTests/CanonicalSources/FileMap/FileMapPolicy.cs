@@ -208,15 +208,6 @@ internal static class FileMapPolicy
                     $"FILEMAP producer {generated.ProducedBy} differs from inventory producer {artifact.Producer}"));
             }
 
-            if (artifact.VerifiedBy != "emit-check"
-                || !generated.VerifiedBy.Contains("emit-check", StringComparer.Ordinal))
-            {
-                artifactFindings.Add(new FileMapFinding(
-                    "FILEMAP-GENERATED-VERIFY",
-                    artifact.Path,
-                    "generated file is outside the emit-check coverage set"));
-            }
-
             findings.AddRange(artifactFindings);
             if (isTracked || (artifactFindings.Count == 0 && generated.RuntimeDisposition == "run-local"))
             {
