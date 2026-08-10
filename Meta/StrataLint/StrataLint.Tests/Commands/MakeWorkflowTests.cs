@@ -275,6 +275,35 @@ public sealed partial class MakeWorkflowTests
         }
     }
 
+    // 报告地址的 producer 分量取自**候选**树,而实际执行的 producer 取自**基线**树
+    // (base-owned 判官拓扑要求如此)。push 事件下 baseline = github.event.before,
+    // 即上一个 dev tip,故一次改动 lean-inspector 的合并会让两者不同:报告由旧 producer
+    // 产出却按新 producer 的地址归档 —— 地址声称的输入闭包与实际闭包不符。
+    // `verify` 只重算地址不重跑 producer,RawLeanReportArtifact 只核模块集与 source_sha256,
+    // 二者都拦不住「同一份源、不同 producer 语义」。故缓存的读与写都必须带 producer 一致性守卫。
+    [Fact]
+    public void CanonicalLeanReportCacheIsGatedOnProducerIdentityOnBothReadAndWrite()
+    {
+        var admission = File.ReadAllText(Path.Combine(FindRepositoryRoot(), AdmissionWorkflowPath));
+
+        var guarded = admission.Split('\n')
+            .Where(static line => line.TrimStart().StartsWith("if:", StringComparison.Ordinal)
+                && line.Contains("producer-consistent == 'true'", StringComparison.Ordinal))
+            .ToArray();
+
+        Assert.Equal(2, guarded.Length);
+        Assert.Contains(
+            guarded,
+            static line => line.Contains("pair-reusable == 'true'", StringComparison.Ordinal));
+        Assert.Contains(
+            guarded,
+            static line => line.Contains("refs/heads/dev", StringComparison.Ordinal));
+        Assert.Contains(
+            "echo \"producer-consistent=",
+            admission,
+            StringComparison.Ordinal);
+    }
+
     [Fact]
     public void TheoryIngestRestoresOrProducesBaseCanonicalReportInOneJob()
     {
@@ -303,11 +332,17 @@ public sealed partial class MakeWorkflowTests
 
         Assert.Contains("uses: actions/cache/save@v4", admission, StringComparison.Ordinal);
         Assert.Contains("uses: actions/cache/restore@v4", workflow, StringComparison.Ordinal);
+        // 不变量是「两个 workflow 共用**同一个** key 字符串」,不是「只出现一次」——
+        // 证据:ingest 侧本来就带 .Distinct(),因为它 restore 与其它步骤可共用同一 key。
+        // admission 侧此前只有 save 一处,故省了 Distinct;现在它也 restore 同一个 key
+        // (关键路径复用报告),两侧遂对称。保留的判据仍是「distinct key 恰好一个且两侧相等」。
         var admissionCacheKey = Assert.Single(
-            admission.Split('\n'),
-            static line => line.TrimStart().StartsWith(
-                "key: stratalint-canonical-lean-report-v1-",
-                StringComparison.Ordinal));
+            admission.Split('\n')
+                .Where(static line => line.TrimStart().StartsWith(
+                    "key: stratalint-canonical-lean-report-v1-",
+                    StringComparison.Ordinal))
+                .Select(static line => line.Trim())
+                .Distinct());
         var ingestCacheKey = Assert.Single(
             workflow.Split('\n')
                 .Where(static line => line.TrimStart().StartsWith(
@@ -315,7 +350,7 @@ public sealed partial class MakeWorkflowTests
                     StringComparison.Ordinal))
                 .Select(static line => line.Trim())
                 .Distinct());
-        Assert.Equal(admissionCacheKey.Trim(), ingestCacheKey);
+        Assert.Equal(admissionCacheKey, ingestCacheKey);
 
         var producerIndex = workflow.IndexOf(
             "- name: Produce base canonical Lean report on cache miss",

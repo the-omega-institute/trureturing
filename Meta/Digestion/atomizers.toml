@@ -677,16 +677,36 @@ name = "κ"
 locator = "constant/kappa"
 
 [[pzg.genres]]
+token = "复审降级注"
+kind = "ledger"
+
+[[pzg.genres]]
 token = "前沿引注"
 kind = "frontier-note"
+
+[[pzg.genres]]
+token = "勘误正案"
+kind = "ledger"
 
 [[pzg.genres]]
 token = "负向证据"
 kind = "observation"
 
 [[pzg.genres]]
+token = "勘正注"
+kind = "ledger"
+
+[[pzg.genres]]
+token = "勘误注"
+kind = "ledger"
+
+[[pzg.genres]]
 token = "定理形"
 kind = "theorem-form"
+
+[[pzg.genres]]
+token = "事实"
+kind = "note"
 
 [[pzg.genres]]
 token = "公理"
@@ -737,6 +757,14 @@ token = "条目"
 kind = "entry"
 
 [[pzg.genres]]
+token = "案卷"
+kind = "ledger"
+
+[[pzg.genres]]
+token = "注记"
+kind = "remark"
+
+[[pzg.genres]]
 token = "猜想"
 kind = "observation"
 
@@ -750,6 +778,10 @@ kind = "observation"
 
 [[pzg.genres]]
 token = "规格"
+kind = "specification"
+
+[[pzg.genres]]
+token = "设置"
 kind = "specification"
 
 [[pzg.genres]]
@@ -771,6 +803,10 @@ kind = "example"
 [[pzg.genres]]
 token = "注"
 kind = "remark"
+
+[[pzg.genres]]
+token = "系"
+kind = "corollary"
 
 [[pzg.markers]]
 role = "trace-note"

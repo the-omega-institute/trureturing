@@ -319,12 +319,14 @@ internal static class PzgAtomizer
             return "metadata/supplement/" + supplement.Groups["version"].Value;
         }
 
-        var remarkToken = rules.PzgGenres.FirstOrDefault(item => item.Value == "remark")?.Token;
-        var remark = remarkToken is null ? null : Regex.Match(
-            heading,
-            "^" + Regex.Escape(remarkToken)
-                + "\\s+(?<range>[0-9]+\\.[0-9]+(?:[–—-][0-9]+\\.[0-9]+)?)",
-            RegexOptions.CultureInvariant);
+        var remark = rules.PzgGenres
+            .Where(static item => item.Value == "remark")
+            .Select(item => Regex.Match(
+                heading,
+                "^" + Regex.Escape(item.Token)
+                    + "\\s+(?<range>[0-9]+\\.[0-9]+(?:[–—-][0-9]+\\.[0-9]+)?)",
+                RegexOptions.CultureInvariant))
+            .FirstOrDefault(static match => match.Success);
         if (remark is { Success: true })
         {
             return "remark/" + remark.Groups["range"].Value
@@ -339,7 +341,7 @@ internal static class PzgAtomizer
 
     private static Regex ClaimPattern(TheoryAtomizerRules rules) => new(
         "^\\*\\*(?<kind>" + string.Join('|', rules.PzgGenres.Select(static item => Regex.Escape(item.Token)))
-        + ")\\s*(?<number>[0-9]+\\.[0-9]+[′″]*)",
+        + ")\\s*(?<number>[0-9]+\\.[0-9]+(?:\\.[0-9]+)?[′″]*)",
         RegexOptions.CultureInvariant);
 
     internal static bool RecognizesGenre(string token, TheoryAtomizerRules rules) =>
