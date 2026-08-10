@@ -12,6 +12,16 @@ internal sealed record CanonicalBlueprintPassage(string Path, string Text);
 
 internal static class CanonicalSourceDuplicationPolicy
 {
+    // 正则的超时按**壁钟**计,所以它同时在量两件事:模式是否跑飞,以及本机此刻有多忙。
+    // 原值 1 秒把后者也放进了判词——2026-08-11 一夜三次 RegexMatchTimeoutException 假红,
+    // 两次直接掐掉整轮 gate,而同样的输入隔离重跑全绿。
+    //
+    // 不删超时:本文件的模式若真跑飞,无超时就是挂死,在 20 分钟 job 预算下比假红更糟。
+    // 改为把预算放到负载碰不到、又仍能兜住真跑飞的量级。这些模式都是线性形状
+    // (转义字面量加简单前后瞻),正常耗时在微秒级,30 秒与 1 秒对「是否跑飞」的判别力相同,
+    // 对「本机是否繁忙」的敏感度则相差三十倍。
+    private static readonly TimeSpan RegexRunawayBudget = TimeSpan.FromSeconds(30);
+
     internal const int MinimumBlueprintPassageLength = 96;
     internal const int MinimumBlueprintWordCount = 14;
 
@@ -78,7 +88,7 @@ internal static class CanonicalSourceDuplicationPolicy
                 specification,
                 "(?<=[。！？])|(?:\\r?\\n){2,}",
                 RegexOptions.CultureInvariant,
-                TimeSpan.FromSeconds(1))
+                RegexRunawayBudget)
             .Select(static passage => passage.Trim())
             .Where(static passage => passage.Length >= 64 && CountCjk(passage) >= 24)
             .Distinct(StringComparer.Ordinal)
@@ -130,15 +140,39 @@ internal static class CanonicalSourceDuplicationPolicy
         return (from literal in root.DescendantNodes().OfType<LiteralExpressionSyntax>()
                 where literal.IsKind(SyntaxKind.StringLiteralExpression)
                 from id in ids
-                where Regex.IsMatch(
-                    literal.Token.ValueText,
-                    $"(?<![A-Za-z0-9.-]){Regex.Escape(id)}(?![A-Za-z0-9.-])",
-                    RegexOptions.CultureInvariant,
-                    TimeSpan.FromSeconds(1))
+                where ContainsWholeToken(literal.Token.ValueText, id)
                 select new CanonicalSourceDuplicationFinding(
                     path,
                     $"C# atomizer id literal {id} duplicates Meta/BACKFILL.yaml; dispatch through AtomizerRegistry"))
             .ToArray();
+    }
+
+    // 原先这里对每个 (字符串字面量 × atomizer id) 组合内插一个新模式调用静态
+    // Regex.IsMatch。静态重载按模式串缓存,而默认缓存只有 15 条 —— 模式随 id 变化,
+    // 于是几乎每次调用都重新编译一遍;这既是该测试单跑就要 48s 的原因,也是它那
+    // 1 秒**壁钟**超时的暴露面:满载时微秒级的匹配也能超时,同一棵树时绿时红
+    // (2026-08-11 一夜三次假红,两次直接掐掉整轮 gate)。
+    //
+    // 判定本身不需要正则:「该字面量是否整词包含此 id」= 一次序数扫描加边界字符检查。
+    // 无模式缓存、无回溯、无壁钟依赖 —— 判词只由输入决定(器律④:修产生处,产好原材料)。
+    private static bool ContainsWholeToken(string text, string token)
+    {
+        for (var index = text.IndexOf(token, StringComparison.Ordinal);
+             index >= 0;
+             index = text.IndexOf(token, index + 1, StringComparison.Ordinal))
+        {
+            if (!IsTokenCharacter(index - 1) && !IsTokenCharacter(index + token.Length))
+            {
+                return true;
+            }
+        }
+
+        return false;
+
+        bool IsTokenCharacter(int at) =>
+            at >= 0
+            && at < text.Length
+            && (char.IsAsciiLetterOrDigit(text[at]) || text[at] is '.' or '-');
     }
 
     internal static IReadOnlyList<CanonicalSourceDuplicationFinding> InspectSource(
@@ -160,11 +194,19 @@ internal static class CanonicalSourceDuplicationPolicy
                 $"\\(\\s*\"{caseId}\"\\s*,\\s*\"{gid}\"\\s*\\)",
                 $"\\(\\s*\"{gid}\"\\s*,\\s*\"{caseId}\"\\s*\\)",
             };
+            // 同上:模式随 ticket 内插,静态缓存必然抖动。绝大多数源文件两个串一个都不含,
+            // 故先用序数 Contains 预筛,把正则调用降到实际可能命中的极少数文件上。
+            if (!source.Contains(ticket.CaseId, StringComparison.Ordinal)
+                || !source.Contains(ticket.Gid, StringComparison.Ordinal))
+            {
+                continue;
+            }
+
             if (!patterns.Any(pattern => Regex.IsMatch(
                     source,
                     pattern,
                     RegexOptions.CultureInvariant | RegexOptions.Singleline,
-                    TimeSpan.FromSeconds(1))))
+                    RegexRunawayBudget)))
             {
                 continue;
             }
@@ -201,7 +243,7 @@ internal static class CanonicalSourceDuplicationPolicy
                     value.Token.ValueText,
                     "^S[0-4]$",
                     RegexOptions.CultureInvariant,
-                    TimeSpan.FromSeconds(1)))
+                    RegexRunawayBudget))
             {
                 continue;
             }
@@ -274,7 +316,7 @@ internal static class CanonicalSourceDuplicationPolicy
             value,
             "(?<=[.!?])(?=\\s|$)",
             RegexOptions.CultureInvariant,
-            TimeSpan.FromSeconds(1))
+            RegexRunawayBudget)
         .Select(static passage => passage.Trim())
         .Where(static passage => passage.Length > 0);
 
@@ -285,7 +327,7 @@ internal static class CanonicalSourceDuplicationPolicy
             passage,
             "[A-Za-z]+(?:['-][A-Za-z]+)*",
             RegexOptions.CultureInvariant,
-            TimeSpan.FromSeconds(1)).Count >= MinimumBlueprintWordCount;
+            RegexRunawayBudget).Count >= MinimumBlueprintWordCount;
 
     private static bool IsBlueprintSource(string path) =>
         path.StartsWith("Blueprint/", StringComparison.Ordinal)
