@@ -11,9 +11,13 @@ BASE="${2:-origin/dev}"
 ATOM_ID="${3:-}"
 GID="${4:-}"
 PREPARED_RECEIPT_PATH=""
+PREPARED_RECEIPT_ORIGINAL_PATH=""
+PREPARED_RECEIPT_REPLACES_EXISTING=0
 
 cleanup_prepared_receipt() {
   [[ -z "$PREPARED_RECEIPT_PATH" ]] || rm -f -- "$PREPARED_RECEIPT_PATH"
+  [[ -z "$PREPARED_RECEIPT_ORIGINAL_PATH" ]] \
+    || rm -f -- "$PREPARED_RECEIPT_ORIGINAL_PATH"
 }
 trap cleanup_prepared_receipt EXIT
 
@@ -265,28 +269,73 @@ freeze_module_if_needed() {
 }
 
 prepare_formalization_receipt() {
-  local temporary
+  local receipt_gid="$GID" temporary original="" receipt_existed=0
+  if [[ -f "$RECEIPT_PATH" ]]; then
+    receipt_existed=1
+    if ! receipt_gid="$(jq -er \
+        '.primary_gid | select(type == "string" and length > 0)' "$RECEIPT_PATH")"; then
+      echo "PLAYBOOK_INVALID formalization receipt has no primary_gid: $RECEIPT_PATH" >&2
+      return 2
+    fi
+
+    original="$(mktemp "${RECEIPT_PATH}.tmp.original.XXXXXX")"
+    if ! cp -- "$RECEIPT_PATH" "$original"; then
+      rm -f -- "$original"
+      echo "PLAYBOOK_INVALID failed to snapshot formalization receipt: $RECEIPT_PATH" >&2
+      return 1
+    fi
+  fi
+
   mkdir -p "$(dirname "$RECEIPT_PATH")"
   temporary="$(mktemp "${RECEIPT_PATH}.tmp.XXXXXX")"
+  local receipt_arguments=(
+    emit-formalization-receipt
+    --atom-id "$ATOM_ID"
+    --gid "$receipt_gid"
+    --out "$temporary"
+  )
+  if [[ "$GID" != "$receipt_gid" ]]; then
+    receipt_arguments+=(--gid "$GID" --require-existing-coverage true)
+  fi
+
   printf 'PLAYBOOK_STEP command=deposit detail=validate-formalization-receipt\n' >&2
-  if run_cli emit-formalization-receipt \
-      --atom-id "$ATOM_ID" --gid "$GID" --out "$temporary"; then
+  if run_cli "${receipt_arguments[@]}"; then
     :
   else
     local status=$?
-    rm -f "$temporary"
+    rm -f -- "$temporary" "$original"
     return "$status"
   fi
 
-  if [[ -f "$RECEIPT_PATH" ]]; then
+  if [[ "$receipt_existed" -eq 1 ]]; then
+    if [[ ! -f "$RECEIPT_PATH" ]]; then
+      rm -f -- "$temporary" "$original"
+      echo "PLAYBOOK_INVALID formalization receipt disappeared during extension validation: $RECEIPT_PATH" >&2
+      return 1
+    fi
+    if ! cmp -s "$original" "$RECEIPT_PATH"; then
+      rm -f -- "$temporary" "$original"
+      echo "PLAYBOOK_INVALID formalization receipt changed during extension validation: $RECEIPT_PATH" >&2
+      return 1
+    fi
+
     if cmp -s "$temporary" "$RECEIPT_PATH"; then
-      rm -f "$temporary"
-      printf 'PLAYBOOK_SKIP command=deposit detail=receipt-already-aligned path=%s\n' \
-        "$RECEIPT_PATH" >&2
+      rm -f -- "$temporary" "$original"
+      printf 'PLAYBOOK_HOST path=%s atom_id=%s gid=%s mode=existing-atom-receipt\n' \
+        "$RECEIPT_PATH" "$ATOM_ID" "$receipt_gid" >&2
       return
     fi
 
-    rm -f "$temporary"
+    if [[ "$GID" != "$receipt_gid" ]]; then
+      PREPARED_RECEIPT_PATH="$temporary"
+      PREPARED_RECEIPT_ORIGINAL_PATH="$original"
+      PREPARED_RECEIPT_REPLACES_EXISTING=1
+      printf 'PLAYBOOK_PREPARED path=%s mode=hosted-extension gid=%s\n' \
+        "$RECEIPT_PATH" "$GID" >&2
+      return
+    fi
+
+    rm -f -- "$temporary" "$original"
     echo "PLAYBOOK_INVALID existing formalization receipt conflicts with current atom/GID: $RECEIPT_PATH" >&2
     return 1
   fi
@@ -297,6 +346,30 @@ prepare_formalization_receipt() {
 
 install_prepared_formalization_receipt() {
   [[ -n "$PREPARED_RECEIPT_PATH" ]] || return 0
+  if [[ "$PREPARED_RECEIPT_REPLACES_EXISTING" -eq 1 ]]; then
+    if [[ ! -f "$RECEIPT_PATH" ]]; then
+      echo "PLAYBOOK_INVALID formalization receipt disappeared after extension validation: $RECEIPT_PATH" >&2
+      return 1
+    fi
+    if [[ -z "$PREPARED_RECEIPT_ORIGINAL_PATH" \
+        || ! -f "$PREPARED_RECEIPT_ORIGINAL_PATH" ]]; then
+      echo "PLAYBOOK_INVALID formalization receipt validation snapshot is missing: $RECEIPT_PATH" >&2
+      return 1
+    fi
+    if ! cmp -s "$PREPARED_RECEIPT_ORIGINAL_PATH" "$RECEIPT_PATH"; then
+      echo "PLAYBOOK_INVALID formalization receipt changed after extension validation: $RECEIPT_PATH" >&2
+      return 1
+    fi
+
+    mv "$PREPARED_RECEIPT_PATH" "$RECEIPT_PATH"
+    rm -f -- "$PREPARED_RECEIPT_ORIGINAL_PATH"
+    PREPARED_RECEIPT_PATH=""
+    PREPARED_RECEIPT_ORIGINAL_PATH=""
+    PREPARED_RECEIPT_REPLACES_EXISTING=0
+    printf 'PLAYBOOK_WRITE path=%s mode=hosted-extension\n' "$RECEIPT_PATH" >&2
+    return
+  fi
+
   if [[ -e "$RECEIPT_PATH" ]]; then
     echo "PLAYBOOK_INVALID formalization receipt appeared after canonical validation: $RECEIPT_PATH" >&2
     return 1
@@ -308,15 +381,26 @@ install_prepared_formalization_receipt() {
 }
 
 cover_atom_or_resume() {
-  local output
-  if output="$(run_cli cover-atom --cover-atom "$ATOM_ID" --gid "$GID" \
+  local output primary_gid
+  if ! primary_gid="$(jq -er \
+      '.primary_gid | select(type == "string" and length > 0)' "$RECEIPT_PATH")"; then
+    echo "PLAYBOOK_INVALID formalization receipt has no primary_gid: $RECEIPT_PATH" >&2
+    return 2
+  fi
+
+  local gid_arguments=(--gid "$primary_gid")
+  if [[ "$GID" != "$primary_gid" ]]; then
+    gid_arguments+=(--gid "$GID")
+  fi
+
+  if output="$(run_cli cover-atom --cover-atom "$ATOM_ID" "${gid_arguments[@]}" \
       --base "$BASE" --envelope "$RECEIPT_PATH" 2>&1)"; then
     [[ -z "$output" ]] || printf '%s\n' "$output"
     return
   else
     local status=$?
     printf '%s\n' "$output" >&2
-    if grep -Fq "cover atom $ATOM_ID already has coverage: $GID" <<<"$output"; then
+    if grep -Fq "cover atom $ATOM_ID already has coverage:" <<<"$output"; then
       printf 'PLAYBOOK_SKIP command=cover detail=coverage-already-applied atom_id=%s gid=%s\n' \
         "$ATOM_ID" "$GID" >&2
       return
@@ -356,10 +440,6 @@ case "$COMMAND" in
     else
       status=$?
       [[ "$status" -eq 1 ]] || exit "$status"
-      if [[ -f "$RECEIPT_PATH" ]]; then
-        echo "PLAYBOOK_INVALID formalization receipt exists before target Freeze: $RECEIPT_PATH" >&2
-        exit 1
-      fi
       step lean-report make lean-report
       step emit make emit
       refresh_echo_projection
