@@ -128,15 +128,17 @@ public sealed class DocumentDiscoveryTests
             Assert.Contains(anchor.FormalTruthRepoPath, report.Files.Keys.Select(static path => path.Value));
         });
 
+        // 只验生产者确定性,不比对提交树。`Blueprint/**/*.md` 四项合取全真(producer
+        // ScribeEmitter 受治理;输入闭包 = 编入 Scribe 程序集的 *.scribe.cs 与 Lean report,
+        // 皆受治理;逐字节可重建;FILEMAP `consumed_by = ["reader"]`,无机器消费者、无独立
+        // 权威)⇒ 它是投影,而投影的字节钉定按 CLAUDE.md 第〇节必须删除:f 与真源都已被守,
+        // 再守一遍不增加任何信息。提交的 md 是人读快照,陈旧无害于任何判决。
         foreach (var definition in DocumentDefinitions.All)
         {
             var first = CanonicalMarkdownWriter.Write(definition.Document, report, citations, graph);
             var second = CanonicalMarkdownWriter.Write(definition.Document, report, citations, graph);
-            var committed = File.ReadAllBytes(
-                Path.Combine(repositoryRoot, definition.RelativePath.Value));
 
             Assert.Equal(first.ToArray(), second.ToArray());
-            Assert.Equal(committed, first.ToArray());
         }
     }
 
