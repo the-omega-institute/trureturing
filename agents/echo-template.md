@@ -12,6 +12,6 @@
 
 ## Residual Accounting (Required)
 
-- Immediately before publishing a theory batch, run `make echo-residual-summary BASE=origin/dev` from its worktree and replace `Generated/echo-residual-summary.md` with the complete output bytes.
+- When a human-readable refresh is useful, run the producer to generate `Generated/echo-residuals/<source_id>.md` shards. Tracked snapshots may be stale and do not block publication; never require writing a global aggregate file.
 - Residual counts, mother residual `atom_id` lists, and `unresolved-subitem` lists must never be counted, written, edited, or reordered by hand. They are projections of `digest-status --residual-summary`, which uses the same evaluation as `digest-status --json`.
-- After any Lean, Scribe, theory-source, or `Meta/Digestion/backfill/**` change, discard the earlier projection and rerun the target. A stale or manually reconciled block is not publication evidence.
+- Residual projections are human-readable snapshots, not publication evidence or a freshness gate.

@@ -7,6 +7,95 @@ namespace StrataLint.Tests;
 public sealed class DigestResidualSummaryTests
 {
     [Fact]
+    public void RenderShardsChangesOnlyTheSourceWhoseEntriesChanged()
+    {
+        var baseline = new DigestionLedgerEvaluation([
+            Entry("source-a", "atom-a", ("unresolved-subitem", "a-one")),
+            Entry("source-b", "atom-b", ("unresolved-subitem", "b-one")),
+        ], []);
+        var changedA = new DigestionLedgerEvaluation([
+            Entry("source-a", "atom-a", ("unresolved-subitem", "a-two")),
+            Entry("source-b", "atom-b", ("unresolved-subitem", "b-one")),
+        ], []);
+        var changedB = new DigestionLedgerEvaluation([
+            Entry("source-a", "atom-a", ("unresolved-subitem", "a-one")),
+            Entry("source-b", "atom-b", ("unresolved-subitem", "b-two")),
+        ], []);
+
+        var original = DigestResidualSummary.RenderShards(baseline);
+        var aPaths = ChangedPaths(original, DigestResidualSummary.RenderShards(changedA));
+        var bPaths = ChangedPaths(original, DigestResidualSummary.RenderShards(changedB));
+
+        Assert.Equal(["Generated/echo-residuals/source-a.md"], aPaths);
+        Assert.Equal(["Generated/echo-residuals/source-b.md"], bPaths);
+        Assert.Empty(aPaths.Intersect(bPaths, StringComparer.Ordinal));
+    }
+
+    [Fact]
+    public void RenderShardsEmitsSettledSourcesAndKeepsQuarantineInItsSource()
+    {
+        var quarantined = Entry("source-a", "atom-q", ("unresolved-subitem", "held"));
+        quarantined = quarantined with
+        {
+            Entry = quarantined.Entry with
+            {
+                Receipts = quarantined.Entry.Receipts with
+                {
+                    Quarantine = new DigestionQuarantine("because", "when-ready")
+                }
+            }
+        };
+        var shards = DigestResidualSummary.RenderShards(new DigestionLedgerEvaluation([
+            quarantined,
+            Entry("source-b", "atom-settled", ("other-gap", "ignored")),
+        ], []));
+
+        Assert.Equal(2, shards.Count);
+        Assert.Contains("`atom-q` (1)", shards["Generated/echo-residuals/source-a.md"], StringComparison.Ordinal);
+        Assert.Contains("`held`", shards["Generated/echo-residuals/source-a.md"], StringComparison.Ordinal);
+        Assert.Contains("Mother residual atoms: none.", shards["Generated/echo-residuals/source-b.md"], StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RenderShardsAddingSourceChangesOnlyItsNewShard()
+    {
+        var before = DigestResidualSummary.RenderShards(new DigestionLedgerEvaluation([
+            Entry("source-a", "atom-a", ("unresolved-subitem", "a-one")),
+        ], []));
+        var after = DigestResidualSummary.RenderShards(new DigestionLedgerEvaluation([
+            Entry("source-a", "atom-a", ("unresolved-subitem", "a-one")),
+            Entry("source-b", "atom-b", ("unresolved-subitem", "b-one")),
+        ], []));
+
+        Assert.Equal(["Generated/echo-residuals/source-b.md"], ChangedPaths(before, after));
+    }
+
+    [Fact]
+    public void RenderShardsRemovingSourcesLastEntryChangesOnlyItsShard()
+    {
+        var before = DigestResidualSummary.RenderShards(new DigestionLedgerEvaluation([
+            Entry("source-a", "atom-a", ("unresolved-subitem", "a-one")),
+            Entry("source-b", "atom-b", ("unresolved-subitem", "b-one")),
+        ], []));
+        var after = DigestResidualSummary.RenderShards(new DigestionLedgerEvaluation([
+            Entry("source-a", "atom-a", ("unresolved-subitem", "a-one")),
+        ], []));
+
+        Assert.Equal(["Generated/echo-residuals/source-b.md"], ChangedPaths(before, after));
+    }
+
+    private static string[] ChangedPaths(
+        IReadOnlyDictionary<string, string> before,
+        IReadOnlyDictionary<string, string> after) => before.Keys
+        .Union(after.Keys, StringComparer.Ordinal)
+        .Where(path =>
+            !before.TryGetValue(path, out var beforeContent)
+            || !after.TryGetValue(path, out var afterContent)
+            || !string.Equals(beforeContent, afterContent, StringComparison.Ordinal))
+        .Order(StringComparer.Ordinal)
+        .ToArray();
+
+    [Fact]
     public void RenderDerivesExactPerSourceCountsAndMotherAtomsDeterministically()
     {
         var entries = new[]
