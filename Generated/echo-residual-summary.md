@@ -1,7 +1,7 @@
-<!-- echo-residual-summary:v3 residual=sha256:791ebb98cf3d5ee245e72cc0842b4c88a7933bc514286791a97223dcf5a02854 -->
+<!-- echo-residual-summary:v3 residual=sha256:bc89b3674ebde884f5c3000e27be6b7548c595daae8b956997787f92b120cc55 -->
 # Echo Residual Summary
 
-- unresolved_subitems: 542
+- unresolved_subitems: 540
 - mother_residual_atom_ids: 87
 
 ## cross-volume shared residues
@@ -266,7 +266,7 @@ Mother residual atoms: none.
 
 ## `observer-quantum-v1`
 
-- unresolved_subitems: 70
+- unresolved_subitems: 68
 - mother_residual_atom_ids: 22
 
 Mother residual atoms:
@@ -323,17 +323,15 @@ Mother residual atoms:
 - `observer-residual-8bdb867fc051e5a905bf4a833e7613687d575322c0f5437ea92e2c33b1dec146` (2)
   - `no-third-collapse-dynamics-interpretive-premise`
   - `same-system-record-state-throughout-premise`
-- `observer-residual-8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490` (5)
+- `observer-residual-8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490` (4)
   - `arbitrary-observer-window-full-matrix-identification`
   - `general-prime-qudit-weyl-relations`
-  - `general-robertson-variance-uncertainty`
   - `observer-window-generated-structure-claim`
   - `prime-power-tensor-factor-decomposition`
 - `observer-residual-8d5c4162772d2b6674b2c46ab17550880a2670b134d5893a353659610617b8fe` (1)
   - `two-hundred-channel-numeric-certificate-prose`
-- `observer-residual-92312c5c0791ca42042265d47e65559acb1efa5a59e9e7db7f6e9fa6786b1a38` (5)
+- `observer-residual-92312c5c0791ca42042265d47e65559acb1efa5a59e9e7db7f6e9fa6786b1a38` (4)
   - `central-winding-unitary-over-torus`
-  - `general-robertson-variance-uncertainty`
   - `noncommutative-algebra-bundle-over-torus`
   - `prime-power-tensor-factor-decomposition`
   - `universal-c-star-crossed-product-identification`
