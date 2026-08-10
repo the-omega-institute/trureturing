@@ -64,21 +64,16 @@ public static class DocumentGraphAssembler
 
         foreach (var document in material.OrderBy(static item => item.Header.Gid.Value, StringComparer.Ordinal))
         {
-            var assembled = autoWireDocumentGids is null
-                ? Extract(document)
-                : autoWireDocumentGids.Contains(document.Header.Gid.Value)
-                    ? Extract(document)
-                        .Where(edge => !IsSelfNarrativeReference(document, edge))
-                        .Concat(ProjectLeanImports(document, leanReport, byLeanModule))
-                        .DistinctBy(CanonicalKey, StringComparer.Ordinal)
-                        .OrderBy(RoleOrder)
-                        .ThenBy(CanonicalKey, StringComparer.Ordinal)
-                        .ToImmutableArray()
-                    : document.Edges.Concat(ImplicitEdges(document.Content))
-                        .DistinctBy(CanonicalKey, StringComparer.Ordinal)
-                        .OrderBy(RoleOrder)
-                        .ThenBy(CanonicalKey, StringComparer.Ordinal)
-                        .ToImmutableArray();
+            var assembled = Extract(document);
+            if (autoWireDocumentGids?.Contains(document.Header.Gid.Value) == true)
+            {
+                assembled = assembled
+                    .Concat(ProjectLeanImports(document, leanReport, byLeanModule))
+                    .DistinctBy(CanonicalKey, StringComparer.Ordinal)
+                    .OrderBy(RoleOrder)
+                    .ThenBy(CanonicalKey, StringComparer.Ordinal)
+                    .ToImmutableArray();
+            }
             edges.Add(document.Header.Gid.Value, assembled);
             explicitEdges.Add(document.Header.Gid.Value, document.Edges);
             foreach (var edge in assembled)
@@ -138,6 +133,7 @@ public static class DocumentGraphAssembler
         ArgumentNullException.ThrowIfNull(document);
         return document.Edges
             .Concat(ImplicitEdges(document.Content))
+            .Where(edge => !IsSelfNarrativeReference(document, edge))
             .DistinctBy(CanonicalKey, StringComparer.Ordinal)
             .OrderBy(RoleOrder)
             .ThenBy(CanonicalKey, StringComparer.Ordinal)
