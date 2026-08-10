@@ -34,11 +34,8 @@ public sealed partial class MakeWorkflowTests
     private const string TheoryIngestWorkflowPath = ".github/workflows/theory-ingest.yml";
     private const string C0CeremonyWorkflowPath = ".github/workflows/c0-ceremony.yml";
     private const string EchoResidualSummaryPath = "Generated/echo-residual-summary.md";
-    private const string PrShepherdScriptPath = "Meta/StrataLint/scripts/pr-shepherd.sh";
-    private const string PrShepherdLeaseScriptPath =
-        "Meta/StrataLint/scripts/shepherd/pr-shepherd-lease.sh";
-    private const string PrShepherdActionsScriptPath =
-        "Meta/StrataLint/scripts/shepherd/pr-shepherd-actions.sh";
+    private const string PrOpenScriptPath = "Meta/StrataLint/scripts/pr.sh open";
+    private const string PrUpdateScriptPath = "Meta/StrataLint/scripts/pr.sh update";
 
     [Fact]
     public void C0CeremonyReconcilesAndRechecksBeforeAcceptingANoOp()
@@ -84,8 +81,8 @@ public sealed partial class MakeWorkflowTests
         "deposit",
         "cover",
         "worktree",
-        "pr-watch",
-        "pr-watch-status",
+        "pr-open",
+        "pr-update",
         "refactor-p0-0-gate-authority",
     ];
 
