@@ -17,6 +17,7 @@ import D5.S0.Tower.ChampionExtremality
 import D5.S0.Tower.GoldenGapFrequency
 import D5.S1.Digit.Raw
 import D5.S1.Digit.Carry
+import D5.S1.Words.GoldenGapPrefix
 import D5.S1.Scale.Embedding
 import D5.S1.Scale.Log
 import D5.S1.Phase.Basic

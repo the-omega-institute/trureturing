@@ -255,13 +255,13 @@ internal static class FileMapLoader
         }
 
         if (kind is FileMapKind.Generated
-            && (producedBy == "none" || !verifiedBy.Contains("emit-check", StringComparer.Ordinal)))
+            && (producedBy == "none" || !verifiedBy.Contains(producedBy, StringComparer.Ordinal)))
         {
             throw Invalid(
                 location,
                 producedBy == "none"
                     ? "generated produced_by must name a producer"
-                    : "generated verified_by must include emit-check");
+                    : "generated verified_by must include its producer");
         }
 
         var authority = RequiredName(table, "authority", location, allowNone: false);

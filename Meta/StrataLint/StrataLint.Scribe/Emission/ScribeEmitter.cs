@@ -91,7 +91,7 @@ public static class ScribeEmitter
         {
             var leanReport = loadLeanReport(repositoryRoot);
 
-            // Emission (make emit / emit-check) runs against the binary's own tree, where every document's
+            // Emission runs against the binary's own tree, where every document's
             // .scribe.cs source must be present; a missing source there is a real fault, so the strict path
             // keeps the full DocumentDefinitions.All (an absent source dangling-fails or "emit failed").
             //

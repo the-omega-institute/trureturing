@@ -222,6 +222,12 @@ internal sealed class BackfillInventoryDocument
             List(entry, "coverage_gids", $"entry {atomId} coverage_gids must be a list"),
             $"entry {atomId} coverage_gids");
         var receipts = ParseReceipts(atomId, entry.GetValueOrDefault("receipts"));
+        if (receipts.Quarantine is not null && coverageGids.Length > 0)
+        {
+            throw new FormatException(
+                $"entry {atomId} cannot be quarantined because coverage_gids provides a machine-form statement");
+        }
+
         var status = Mapping(entry.GetValueOrDefault("status"), $"entry {atomId} status must be a mapping");
         ExactKeys(status, ["migration", "truth"], $"entry {atomId} status");
 
@@ -254,7 +260,7 @@ internal sealed class BackfillInventoryDocument
         ExactKeys(
             receipts,
             ["coverage", "scribe", "unresolved_subitems"],
-            ["chain_atoms", "tail_authorization"],
+            ["chain_atoms", "tail_authorization", "quarantine"],
             $"entry {atomId} receipts");
         var coverage = ImmutableArray.CreateBuilder<DigestionCoverageReceipt>();
         foreach (var rawCoverage in List(receipts, "coverage", $"entry {atomId} coverage receipts must be a list"))
@@ -288,6 +294,33 @@ internal sealed class BackfillInventoryDocument
                 Scalar(tail, "sha256", $"entry {atomId} tail authorization sha256"));
         }
 
+        DigestionQuarantine? quarantine = null;
+        if (receipts.ContainsKey("quarantine"))
+        {
+            var rawQuarantine = Mapping(
+                receipts.GetValueOrDefault("quarantine"),
+                $"entry {atomId} quarantine must be a mapping");
+            if (!rawQuarantine.ContainsKey("justification"))
+            {
+                throw new FormatException(
+                    $"entry {atomId} quarantine justification is required");
+            }
+
+            if (!rawQuarantine.ContainsKey("reentry_condition"))
+            {
+                throw new FormatException(
+                    $"entry {atomId} quarantine reentry_condition is required");
+            }
+
+            ExactKeys(
+                rawQuarantine,
+                ["justification", "reentry_condition"],
+                $"entry {atomId} quarantine");
+            quarantine = new DigestionQuarantine(
+                Scalar(rawQuarantine, "justification", $"entry {atomId} quarantine justification"),
+                Scalar(rawQuarantine, "reentry_condition", $"entry {atomId} quarantine reentry_condition"));
+        }
+
         return new DigestionReceipts(
             coverage.ToImmutable(),
             scribe.ToImmutable(),
@@ -299,7 +332,8 @@ internal sealed class BackfillInventoryDocument
                     List(receipts, "chain_atoms", $"entry {atomId} chain_atoms must be a list"),
                     $"entry {atomId} chain_atoms")
                 : [],
-            tailAuthorization);
+            tailAuthorization,
+            quarantine);
     }
 
     private static DigestionMigrationState ParseMigration(string value) => value switch
@@ -386,7 +420,7 @@ internal sealed class BackfillInventoryDocument
     }
 }
 
-internal static class BackfillInventoryLoader
+internal static partial class BackfillInventoryLoader
 {
     private const string CoexistingStorageMessage =
         "legacy and directory digestion ledgers cannot coexist";
@@ -452,7 +486,9 @@ internal static class BackfillInventoryLoader
 
         if (hasLegacy)
         {
-            return Load(legacyFile!.Text);
+            var document = Load(legacyFile!.Text);
+            ValidateQuarantineMachineFormMarkers(snapshot, document);
+            return document;
         }
 
         if (!hasDirectory)
@@ -469,7 +505,9 @@ internal static class BackfillInventoryLoader
             }
         }
 
-        return LoadDirectorySnapshot(snapshot);
+        var directoryDocument = LoadDirectorySnapshot(snapshot);
+        ValidateQuarantineMachineFormMarkers(snapshot, directoryDocument);
+        return directoryDocument;
     }
 
     // 磁盘树的双形态入口:与 Load(RepositorySnapshot) 同语义——旧单文件与新目录
@@ -500,7 +538,9 @@ internal static class BackfillInventoryLoader
         }
 
         return hasLegacy
-            ? Load(File.ReadAllText(legacyPath))
+            ? LoadRootSnapshot(
+                root,
+                EnumerateFormalizationReceiptPaths(root).Prepend(legacyPath))
             : LoadDirectory(repositoryRoot);
     }
 
@@ -510,7 +550,15 @@ internal static class BackfillInventoryLoader
         var root = Path.GetFullPath(repositoryRoot);
         var directory = Path.Combine(root, RootPath.Replace('/', Path.DirectorySeparatorChar));
         var paths = Directory.EnumerateFiles(directory, "*", SearchOption.AllDirectories)
-            .Append(Path.Combine(root, TicketIndexPath.Replace('/', Path.DirectorySeparatorChar)));
+            .Append(Path.Combine(root, TicketIndexPath.Replace('/', Path.DirectorySeparatorChar)))
+            .Concat(EnumerateFormalizationReceiptPaths(root));
+        return LoadRootSnapshot(root, paths);
+    }
+
+    private static BackfillInventoryDocument LoadRootSnapshot(
+        string root,
+        IEnumerable<string> paths)
+    {
         var raw = RawRepositorySnapshot.Create(paths.Select(path => new RawRepositoryEntry(
             Path.GetRelativePath(root, path).Replace(Path.DirectorySeparatorChar, '/'),
             ImmutableArray.CreateRange(File.ReadAllBytes(path)))));
@@ -569,12 +617,13 @@ internal static class BackfillInventoryLoader
                     throw new FormatException($"backfill atom contains path-derived fields: {path.Value}");
                 }
 
-                entries.Add(BackfillInventoryDocument.ParseEntry(
+                var parsedEntry = BackfillInventoryDocument.ParseEntry(
                     sourceId,
                     fields["path"].Single(),
                     fields["atomizer"].Single(),
                     entry,
-                    null));
+                    null);
+                entries.Add(parsedEntry);
             }
 
             sources.Add(new DigestionLedgerSource(
