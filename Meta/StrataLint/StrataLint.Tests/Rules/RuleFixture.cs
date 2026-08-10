@@ -14,7 +14,7 @@ internal sealed partial class RuleFixture
     internal const string HeartsPath = GoldenCorpus.HeartsPath;
     internal const string HeartsDraftPath = "D5/X_Frontier/HeartsDraft.lean";
     internal const string ThreeDistancePath = "D5/S1/Phase/ThreeDistance.lean";
-    internal const string AnchorCatalogPath = AnchorCatalogLoader.RelativePath;
+    internal const string AnchorCatalogPath = RepositoryPathPolicy.AnchorCatalogPath;
     internal const string TowerManifestPath = RepositoryRules.TowerManifestPath;
     internal const string ValuesProjectionPath = RepositoryPathPolicy.ValuesProjectionPath;
     internal const string WorkflowPath = RepositoryPathPolicy.WorkflowPath;
