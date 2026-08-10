@@ -1,7 +1,7 @@
-<!-- echo-residual-summary:v3 residual=sha256:40effb0bb3a2567d30b8351fe7261081ebd297fcb2c843daed38a045a3e2549e -->
+<!-- echo-residual-summary:v3 residual=sha256:4a65c4af8272016784347bafec23825a672b6f46aad4ff89f50adf4318f7c4ba -->
 # Echo Residual Summary
 
-- unresolved_subitems: 546
+- unresolved_subitems: 544
 - mother_residual_atom_ids: 87
 
 ## `bedc-wm-v0.1`
@@ -172,7 +172,7 @@ Mother residual atoms: none.
 
 ## `observer-quantum-v1`
 
-- unresolved_subitems: 74
+- unresolved_subitems: 72
 - mother_residual_atom_ids: 22
 
 Mother residual atoms:
@@ -245,8 +245,7 @@ Mother residual atoms:
   - `noncommutative-algebra-bundle-over-torus`
   - `prime-power-tensor-factor-decomposition`
   - `universal-c-star-crossed-product-identification`
-- `observer-residual-a64c69d2b846d7fdf3c80468898e853257ad9a378bf7da6c74c3370ea865762c` (5)
-  - `forgetting-quantity-dpi-nonneg-beyond-finite-classical-strict-positive`
+- `observer-residual-a64c69d2b846d7fdf3c80468898e853257ad9a378bf7da6c74c3370ea865762c` (4)
   - `joint-coherent-reversal-of-all-copies`
   - `know-forgot-two-time-relation`
   - `multi-copy-erasure-quantifier`
@@ -264,8 +263,7 @@ Mother residual atoms:
   - `discrete-crossed-product-uniqueness`
   - `full-crossed-product-identification`
   - `observer-read-write-forces-structure`
-- `observer-residual-b2dd3d2b2261d86b6e8b20f45ca56ef7b3da87d833f50e38279f562c2a1a66c9` (6)
-  - `forgetting-quantity-dpi-nonneg-beyond-finite-classical-strict-positive`
+- `observer-residual-b2dd3d2b2261d86b6e8b20f45ca56ef7b3da87d833f50e38279f562c2a1a66c9` (5)
   - `know-forgot-two-time-relation`
   - `multi-copy-erasure-quantifier`
   - `six-state-finite-certificates`
