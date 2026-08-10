@@ -65,6 +65,9 @@ domains:
   Observer:
     stratum: S3
     definition: Observer read-write structures on finite windows from the observer-ledger reconstruction - update-defect metrics, window registers, and record conditioning.
+  ObserverMemory:
+    stratum: S3
+    definition: Finite epistemic-state and forgetting-ledger certificate structures of the observer program.
   Phase:
     stratum: S1
     definition: Additive golden-ratio phases modulo one.
