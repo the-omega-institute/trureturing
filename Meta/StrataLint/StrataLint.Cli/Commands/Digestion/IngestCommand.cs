@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Text.Json;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -29,6 +30,9 @@ internal static class IngestCommand
             var document = LoadDocument(current);
             var baselineDocument = LoadDocument(baseline);
             var plan = DigestionIngestor.Plan(document, current, baselineDocument);
+            var crossVolumeClearanceGaps = RenderCrossVolumeClearanceGaps(
+                plan.Document,
+                baselineDocument);
             var silentZeroWarnings = SilentZeroExtractionWarnings(
                 document,
                 plan.Document,
@@ -114,6 +118,7 @@ internal static class IngestCommand
                 + string.Concat(silentZeroWarnings.Select(static warning =>
                     $"WARNING silent-zero-extraction source={warning.SourceId} "
                     + $"path={warning.SourcePath}\n"))
+                + crossVolumeClearanceGaps
                 + DigestStatusCommand.RenderText(evaluation),
                 string.Empty);
         }
@@ -140,6 +145,66 @@ internal static class IngestCommand
             .OrderBy(static source => source.SourceId, StringComparer.Ordinal)
             .ToImmutableArray();
     }
+
+    private static string RenderCrossVolumeClearanceGaps(
+        BackfillInventoryDocument currentDocument,
+        BackfillInventoryDocument baselineDocument)
+    {
+        var currentHosts = ResidualHosts(currentDocument)
+            .Distinct()
+            .ToArray();
+        var currentVotes = currentHosts
+            .Select(static host => new ResidueSourceVote(host.Residue, host.SourceId))
+            .ToHashSet();
+        var currentByName = currentHosts.ToLookup(static host => host.Residue, StringComparer.Ordinal);
+        var cleared = ResidualHosts(baselineDocument)
+            .GroupBy(static host => new ResidueSourceVote(host.Residue, host.SourceId))
+            .Where(group => !currentVotes.Contains(group.Key))
+            .Select(static group => group
+                .OrderBy(static host => host.AtomId, StringComparer.Ordinal)
+                .First())
+            .OrderBy(static host => host.Residue, StringComparer.Ordinal)
+            .ThenBy(static host => host.SourceId, StringComparer.Ordinal)
+            .ThenBy(static host => host.AtomId, StringComparer.Ordinal);
+        var writer = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
+        foreach (var host in cleared)
+        {
+            var hangingHosts = currentByName[host.Residue]
+                .Where(candidate => !string.Equals(
+                    candidate.SourceId,
+                    host.SourceId,
+                    StringComparison.Ordinal))
+                .OrderBy(static candidate => candidate.SourceId, StringComparer.Ordinal)
+                .ThenBy(static candidate => candidate.AtomId, StringComparer.Ordinal)
+                .Select(static candidate => $"{candidate.SourceId}/{candidate.AtomId}")
+                .ToArray();
+            if (hangingHosts.Length == 0)
+            {
+                continue;
+            }
+
+            var detail = JsonSerializer.Serialize(new
+            {
+                residue = host.Residue,
+                cleared_source = host.SourceId,
+                hanging_hosts = hangingHosts,
+            });
+            writer.WriteLine(
+                $"GAP atom={host.AtomId} code=cross-volume-shared-residue-half-cleared "
+                + $"severity=warn detail={detail}");
+        }
+
+        return writer.ToString();
+    }
+
+    private static IEnumerable<ResidualHost> ResidualHosts(BackfillInventoryDocument document) =>
+        document.RequireDigestionEntries().SelectMany(static entry =>
+            entry.Receipts.UnresolvedSubitems.Select(residue =>
+                new ResidualHost(residue, entry.SourceId, entry.AtomId)));
+
+    private sealed record ResidualHost(string Residue, string SourceId, string AtomId);
+
+    private sealed record ResidueSourceVote(string Residue, string SourceId);
 
     private static string ParseArguments(IReadOnlyList<string> arguments)
     {
