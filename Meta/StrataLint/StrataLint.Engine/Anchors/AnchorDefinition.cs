@@ -1,4 +1,4 @@
-namespace StrataLint.Scribe;
+namespace StrataLint.Engine;
 
 public sealed record AnchorDefinition
 {

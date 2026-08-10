@@ -196,17 +196,7 @@ public sealed class BlueprintPinValidationTests
     private static BlueprintPinValidationOutcome Validate(BlueprintPinManifest pins) =>
         BlueprintPinValidator.Validate(
             Policy(),
-            Snapshot(new Dictionary<string, string>(StringComparer.Ordinal)
-            {
-                [AnchorCatalogLoader.RelativePath] = File.ReadAllText(
-                    Path.Combine(
-                        FindRepositoryRoot(),
-                        "Meta",
-                        "StrataLint",
-                        "Generated",
-                        "anchor-catalog.v1.json"),
-                    Encoding.UTF8),
-            }),
+            Snapshot(new Dictionary<string, string>(StringComparer.Ordinal)),
             pins);
 
     private static BlueprintPinManifest Pins(

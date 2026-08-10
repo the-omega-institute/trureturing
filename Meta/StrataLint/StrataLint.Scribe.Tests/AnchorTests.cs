@@ -1,4 +1,4 @@
-using StrataLint.Scribe;
+using StrataLint.Engine;
 
 namespace StrataLint.Scribe.Tests;
 

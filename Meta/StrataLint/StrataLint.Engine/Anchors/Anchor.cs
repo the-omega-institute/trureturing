@@ -1,4 +1,4 @@
-namespace StrataLint.Scribe;
+namespace StrataLint.Engine;
 
 public abstract record Anchor
 {
@@ -7,6 +7,14 @@ public abstract record Anchor
     public abstract AnchorScheme Scheme { get; }
 
     public abstract string CanonicalString { get; }
+
+    // The external schemes are named here and nowhere else. A caller asking "is this
+    // string in the external family?" must not re-spell the prefixes: that is how the
+    // duplicated anchor grammar (the deleted ExternalAnchorSyntax) came about.
+    public static bool IsExternalFamily(string? value) =>
+        value is not null
+        && (value.StartsWith("lit/", StringComparison.Ordinal)
+            || value.StartsWith("mathlib/", StringComparison.Ordinal));
 
     public static AnchorParseResult TryParseCanonical(string? value)
     {

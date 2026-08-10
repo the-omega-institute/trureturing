@@ -406,6 +406,17 @@ internal sealed record CoverInputs(
     string EnvelopePath,
     string Ledger);
 
+internal sealed record CoverHostedSiblingSpec(
+    string AtomId,
+    string ReceiptPrimaryGid,
+    ImmutableArray<string> CurrentCoverage,
+    ImmutableArray<string> BaselineCoverage,
+    ImmutableArray<string> UnresolvedSubitems,
+    bool IncludeReceipt = true,
+    string? ReceiptAtomId = null,
+    string? ReceiptCasRef = null,
+    string? ReceiptRawSha256 = null);
+
 // Declarative fixture for the cover gate matrix. Defaults produce a clean happy
 // path (an open, CAS-backed residual atom whose target declaration is proven
 // closed and Scribe-emitted); each gate test flips exactly one field.
@@ -426,6 +437,8 @@ internal sealed record CoverSpec
     internal string Migration { get; init; } = "residual";
 
     internal string Truth { get; init; } = "open";
+
+    internal ImmutableArray<string> InitialUnresolvedSubitems { get; init; } = [];
 
     internal bool IncludeCasBlob { get; init; } = true;
 
@@ -487,12 +500,22 @@ internal sealed record CoverSpec
     // relative to the baseline (absent), which is the ordinary cover case.
     internal bool BaselineTargetIdentical { get; init; }
 
+    internal (string ModuleGid, string Declaration)? SecondaryTarget { get; init; }
+
+    internal bool IncludeSecondaryPrecommittedSignature { get; init; } = true;
+
+    internal DigestionFormalizationSignature? SecondaryPrecommittedSignature { get; init; }
+
+    internal ImmutableArray<DigestionFormalizationExtension> AdditionalHostedExtensions { get; init; } = [];
+
+    internal CoverHostedSiblingSpec? HostedSibling { get; init; }
+
     internal string Gid => Declaration is null ? ModuleGid : ModuleGid + "." + Declaration;
 
     internal CoverInputs Materialize() => CoverWorld.Materialize(this);
 }
 
-internal static class CoverWorld
+internal static partial class CoverWorld
 {
     internal const string DefaultAtomId = "cover-1";
 
@@ -530,6 +553,15 @@ internal static class CoverWorld
             "# Synthetic\n\n**定理 1.1(A)**。cover fixture atom body。\n");
         var atom = Assert.Single(
             AtomizerRegistry.Atomize(SyntheticNumberedAtomizer.Id, sourceBytes, DigestionTestSupport.Rules).Claims);
+        const string hostedSourcePath = "docs/CONTRIBUTING.md";
+        var hostedSourceBytes = Encoding.UTF8.GetBytes(
+            "# Synthetic\n\n**定理 1.1(A)**。hosted sibling atom body。\n");
+        var hostedAtom = spec.HostedSibling is null
+            ? null
+            : Assert.Single(AtomizerRegistry.Atomize(
+                SyntheticNumberedAtomizer.Id,
+                hostedSourceBytes,
+                DigestionTestSupport.Rules).Claims);
         var targetPath = spec.ModuleGid + ".lean";
         var targetBytes = Encoding.UTF8.GetBytes(DigestionTestSupport.Lean(spec.ModuleGid));
         var definition = Encoding.UTF8.GetBytes("scribe definition\n");
@@ -540,7 +572,8 @@ internal static class CoverWorld
             DigestionFingerprint.Compute(definition).RawSha256,
             ScribeEmissionAttestation.EmissionPath(spec.ModuleGid),
             DigestionFingerprint.Compute(emission).RawSha256);
-        var attestation = ScribeEmissionAttestation.Write([record]);
+        var records = MaterializeScribeRecords(spec, record);
+        var attestation = ScribeEmissionAttestation.Write(records);
 
         string? tailAuthPath = null;
         string? tailAuthSha = null;
@@ -559,7 +592,10 @@ internal static class CoverWorld
             includeOtherAtom: true,
             tailAuthPath,
             tailAuthSha,
-            DigestionFingerprint.Compute(targetBytes).RawSha256);
+            DigestionFingerprint.Compute(targetBytes).RawSha256,
+            hostedAtom,
+            hostedSourcePath,
+            useHostedBaselineCoverage: false);
         var envelopePath = "Meta/Digestion/formalizations/" + spec.AtomId + ".v1.json";
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
@@ -572,9 +608,31 @@ internal static class CoverWorld
             [ScribeEmissionAttestation.EmissionPath(spec.ModuleGid)] = Encoding.UTF8.GetString(emission),
             [ScribeEmissionAttestation.RelativePath] = Encoding.UTF8.GetString(attestation.AsSpan()),
         };
+        if (hostedAtom is not null)
+        {
+            files[hostedSourcePath] = Encoding.UTF8.GetString(hostedSourceBytes);
+            var (hostedCasPath, hostedCasBytes) = DigestionTestSupport.CasFile(hostedAtom);
+            files[hostedCasPath] = Encoding.UTF8.GetString(hostedCasBytes);
+        }
+        MaterializeSecondaryFiles(spec, files);
         if (spec.IncludeEnvelope)
         {
             files[envelopePath] = Encoding.UTF8.GetString(Envelope(spec, atom).AsSpan());
+        }
+        if (spec.HostedSibling is { IncludeReceipt: true } hostedSibling && hostedAtom is not null)
+        {
+            var hostedEnvelopePath = "Meta/Digestion/formalizations/" + hostedSibling.AtomId + ".v1.json";
+            files[hostedEnvelopePath] = Encoding.UTF8.GetString(
+                DigestionFormalizationReceipt.Write(new DigestionFormalizationReceipt(
+                    hostedSibling.ReceiptAtomId ?? hostedSibling.AtomId,
+                    hostedSibling.ReceiptPrimaryGid,
+                    new DigestionFormalizationSignature(
+                        spec.Declaration ?? "probe",
+                        spec.ReportKind,
+                        spec.ReportType),
+                    hostedSibling.ReceiptCasRef ?? hostedAtom.Fingerprints.RawSha256,
+                    hostedSibling.ReceiptRawSha256 ?? hostedAtom.Fingerprints.RawSha256,
+                    HostedExtensions(spec, hostedSibling.ReceiptPrimaryGid))).AsSpan());
         }
 
         if (spec.IncludeCasBlob)
@@ -588,16 +646,25 @@ internal static class CoverWorld
             files[tailAuthPath] = Encoding.UTF8.GetString(tailAuthBytes.AsSpan());
         }
 
-        // The baseline is always sibling-free: cross-atom binding (gate ⑤) is a
-        // candidate-only conflict, so the sibling entry must not appear at base
-        // (otherwise gate ②(b) would fire first).
+        // Ordinary cross-atom gate fixtures remain candidate-only. A hosted sibling
+        // models a legacy duplicate residual and is therefore present in both the
+        // baseline and candidate, with only its candidate coverage extended.
         var baselineCoverage = spec.BaselineCoverageGid is not null
             ? ImmutableArray.Create(spec.BaselineCoverageGid)
             : spec.InitialCoverage;
         var baseline = new Dictionary<string, string>(files, StringComparer.Ordinal)
         {
             [BackfillInventoryLoader.RelativePath] =
-                BuildLedger(spec, atom, baselineCoverage, includeOtherAtom: false, null, null),
+                BuildLedger(
+                    spec,
+                    atom,
+                    baselineCoverage,
+                    includeOtherAtom: false,
+                    null,
+                    null,
+                    hostedAtom: hostedAtom,
+                    hostedSourcePath: hostedSourcePath,
+                    useHostedBaselineCoverage: true),
         };
 
         // File-level declaration newness (gate ②c): by default the covered Lean
@@ -629,15 +696,10 @@ internal static class CoverWorld
         var declarations = spec.ReportDeclarations
             .Select(name => new LeanDeclaration(name, spec.ReportKind, spec.ReportType, spec.TargetAxioms))
             .ToImmutableArray();
-        var report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
-        {
-            [targetPath] = new LeanFileReport(ImmutableArray<string>.Empty, declarations),
-        });
+        var report = MaterializeReport(spec, targetPath, declarations);
 
         var verified = spec.VerifyScribe
-            ? VerifiedScribeEmissions.Create(
-                [record],
-                spec.Declaration is null ? [] : [spec.Gid])
+            ? VerifiedScribeEmissions.Create(records, MaterializeVerifiedGids(spec))
             : VerifiedScribeEmissions.Empty;
 
         return new CoverInputs(files, baseline, report, verified, spec.Gid, envelopePath, ledger);
@@ -664,133 +726,36 @@ internal static class CoverWorld
             primaryGid,
             signature,
             spec.EnvelopeCasRef ?? atom.Fingerprints.RawSha256,
-            spec.EnvelopeRawSha256 ?? atom.Fingerprints.RawSha256));
+            spec.EnvelopeRawSha256 ?? atom.Fingerprints.RawSha256,
+            HostedExtensions(spec, primaryGid)));
     }
 
-    private static string BuildLedger(
+    private static ImmutableArray<DigestionFormalizationExtension> HostedExtensions(
         CoverSpec spec,
-        DigestionAtom atom,
-        ImmutableArray<string> coverage,
-        bool includeOtherAtom,
-        string? tailAuthPath,
-        string? tailAuthSha,
-        string? targetSha256 = null)
+        string primaryGid)
     {
-        var builder = new StringBuilder();
-        builder.Append("schema_version: 3\n");
-        builder.Append("ledger: theory-digestion-v1\n");
-        builder.Append("sources:\n");
-        builder.Append("  - source_id: fixture-source\n");
-        builder.Append($"    path: {GoldenCorpus.FixtureDigestionSourcePath}\n");
-        builder.Append($"    atomizer: {SyntheticNumberedAtomizer.Id}\n");
-        builder.Append("    acknowledged_stale: []\n");
-        builder.Append("    entries:\n");
-        AppendEntry(
-            builder,
-            spec.AtomId,
-            atom.AstPath,
-            atom.Fingerprints,
-            coverage,
-            spec.Migration,
-            spec.Truth,
-            tailAuthPath,
-            tailAuthSha,
-            targetSha256,
-            spec.InitialDefinitionSha256,
-            spec.InitialEmissionSha256);
-        if (includeOtherAtom && spec.OtherAtomBinding is { } other)
+        var extensions = spec.AdditionalHostedExtensions
+            .Where(extension => !string.Equals(extension.Gid, primaryGid, StringComparison.Ordinal))
+            .ToList();
+        if (spec.IncludeSecondaryPrecommittedSignature
+            && spec.SecondaryTarget is { } secondary)
         {
-            AppendEntry(
-                builder,
-                other.AtomId,
-                "theorem/sibling",
-                atom.Fingerprints,
-                ImmutableArray.Create(other.Gid),
-                "partial",
-                "closed",
-                null,
-                null,
-                null,
-                null,
-                null);
-        }
-
-        builder.Append("ticket_index: []\n");
-        return builder.ToString();
-    }
-
-    private static void AppendEntry(
-        StringBuilder builder,
-        string atomId,
-        string astPath,
-        DigestionFingerprints fingerprints,
-        ImmutableArray<string> coverage,
-        string migration,
-        string truth,
-        string? tailAuthPath,
-        string? tailAuthSha,
-        string? targetSha256,
-        string? definitionSha256,
-        string? emissionSha256)
-    {
-        builder.Append($"      - atom_id: {atomId}\n");
-        builder.Append($"        ast_path: {astPath}\n");
-        builder.Append("        fingerprints:\n");
-        builder.Append($"          raw_sha256: {fingerprints.RawSha256}\n");
-        builder.Append($"          normalized_sha256: {fingerprints.NormalizedSha256}\n");
-        builder.Append($"        cas_ref: {fingerprints.RawSha256}\n");
-        if (coverage.Length == 0)
-        {
-            builder.Append("        coverage_gids: []\n");
-        }
-        else
-        {
-            builder.Append("        coverage_gids:\n");
-            foreach (var gid in coverage)
+            var extension = new DigestionFormalizationExtension(
+                secondary.ModuleGid + "." + secondary.Declaration,
+                spec.SecondaryPrecommittedSignature
+                    ?? new DigestionFormalizationSignature(
+                        secondary.Declaration,
+                        spec.ReportKind,
+                        spec.ReportType));
+            if (!string.Equals(extension.Gid, primaryGid, StringComparison.Ordinal))
             {
-                builder.Append($"          - {gid}\n");
+                extensions.Add(extension);
             }
         }
 
-        builder.Append("        receipts:\n");
-        if (coverage.Length == 1 && targetSha256 is not null)
-        {
-            builder.Append("          coverage:\n");
-            builder.Append($"            - gid: {coverage[0]}\n");
-            builder.Append($"              source_sha256: {fingerprints.RawSha256}\n");
-            builder.Append($"              target_sha256: {targetSha256}\n");
-        }
-        else
-        {
-            builder.Append("          coverage: []\n");
-        }
-
-        if (coverage.Length == 1 && definitionSha256 is not null && emissionSha256 is not null)
-        {
-            builder.Append("          scribe:\n");
-            builder.Append($"            - gid: {coverage[0]}\n");
-            builder.Append($"              definition_sha256: {definitionSha256}\n");
-            builder.Append($"              emission_sha256: {emissionSha256}\n");
-        }
-        else
-        {
-            builder.Append("          scribe: []\n");
-        }
-        builder.Append("          unresolved_subitems: []\n");
-        builder.Append("          chain_atoms: []\n");
-        if (tailAuthPath is not null && tailAuthSha is not null)
-        {
-            builder.Append("          tail_authorization:\n");
-            builder.Append($"            path: {tailAuthPath}\n");
-            builder.Append($"            sha256: {tailAuthSha}\n");
-        }
-        else
-        {
-            builder.Append("          tail_authorization: null\n");
-        }
-
-        builder.Append("        status:\n");
-        builder.Append($"          migration: {migration}\n");
-        builder.Append($"          truth: {truth}\n");
+        return extensions
+            .OrderBy(static extension => extension.Gid, StringComparer.Ordinal)
+            .ToImmutableArray();
     }
+
 }

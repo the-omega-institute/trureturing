@@ -395,6 +395,16 @@ internal static class DigestStatusCommand
                 return null;
             }
 
+            foreach (var extension in receipt.HostedExtensions)
+            {
+                if (!Gid.TryParse(extension.Gid, out var extensionGid)
+                    || extension.Signature
+                        != DigestionFormalizationReceipt.ResolveSignature(extensionGid, leanReport))
+                {
+                    return null;
+                }
+            }
+
             return new RecordedFormalization(
                 entry.SourceId,
                 entry.AtomId,

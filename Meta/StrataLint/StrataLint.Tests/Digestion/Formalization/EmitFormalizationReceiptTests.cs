@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Text;
+using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
@@ -65,6 +66,41 @@ public sealed class EmitFormalizationReceiptTests
         Assert.Equal("theorem", receipt.Signature.Kind);
         Assert.Equal("True", receipt.Signature.Type);
         Assert.True(DigestionFormalizationReceipt.Write(receipt).AsSpan().SequenceEqual(bytes));
+    }
+
+    [Fact]
+    public void EmitExtendsAnExistingReceiptWithARecomputedSecondarySignature()
+    {
+        const string secondaryModule = "D5/S3/Observer/WindowRegisterCRT";
+        const string secondaryDeclaration = "window_register_crt_decomposition";
+        var secondaryGid = secondaryModule + "." + secondaryDeclaration;
+        var inputs = CoverWorld.Materialize(new CoverSpec
+        {
+            InitialCoverage = ImmutableArray.Create("D5/S0/Carrier/Probe.probe"),
+            IncludeEnvelope = true,
+            SecondaryTarget = (secondaryModule, secondaryDeclaration),
+            IncludeSecondaryPrecommittedSignature = false,
+        });
+        using var temporary = new TemporaryDirectory();
+        var environment = BuildEmitEnvironment(temporary.Path, inputs);
+
+        var result = environment.EmitFormalizationReceipt(
+            ["--atom-id", CoverWorld.DefaultAtomId,
+                "--gid", inputs.Gid,
+                "--gid", secondaryGid,
+                "--require-existing-coverage", "true"]);
+
+        Assert.True(result.Success, result.Error);
+        var relativeOut = "Meta/Digestion/formalizations/" + CoverWorld.DefaultAtomId + ".v1.json";
+        using var document = JsonDocument.Parse(File.ReadAllBytes(Path.Combine(temporary.Path, relativeOut)));
+        var root = document.RootElement;
+        Assert.Equal(inputs.Gid, root.GetProperty("primary_gid").GetString());
+        var extension = Assert.Single(root.GetProperty("hosted_extensions").EnumerateArray());
+        Assert.Equal(secondaryGid, extension.GetProperty("gid").GetString());
+        var signature = extension.GetProperty("precommitted_signature");
+        Assert.Equal(secondaryDeclaration, signature.GetProperty("name_key").GetString());
+        Assert.Equal("theorem", signature.GetProperty("kind").GetString());
+        Assert.Equal("True", signature.GetProperty("type").GetString());
     }
 
     [Fact]
@@ -150,6 +186,22 @@ public sealed class EmitFormalizationReceiptTests
         Assert.False(result.Success);
         Assert.Contains("FORMALIZATION_RECEIPT_INVALID", result.Error, StringComparison.Ordinal);
         Assert.Contains("is absent from the ledger", result.Error, StringComparison.Ordinal);
+        Assert.False(Directory.Exists(Path.Combine(temporary.Path, "Meta/Digestion")));
+    }
+
+    [Fact]
+    public void EmitRejectsAReceiptPrimaryThatIsNotAlreadyBoundWhenCoverageIsRequired()
+    {
+        var inputs = CoverWorld.Materialize(new CoverSpec { IncludeEnvelope = false });
+        using var temporary = new TemporaryDirectory();
+        var environment = BuildEmitEnvironment(temporary.Path, inputs);
+
+        var result = environment.EmitFormalizationReceipt(
+            ["--atom-id", CoverWorld.DefaultAtomId, "--gid", inputs.Gid,
+                "--require-existing-coverage", "true"]);
+
+        Assert.False(result.Success);
+        Assert.Contains("is not already bound", result.Error, StringComparison.Ordinal);
         Assert.False(Directory.Exists(Path.Combine(temporary.Path, "Meta/Digestion")));
     }
 
