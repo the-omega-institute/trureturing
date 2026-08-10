@@ -188,8 +188,7 @@ public static class AdmissionPipeline
             baselineLean,
             changes,
             MetaEvaluationProfile.ForClear(metaClear),
-            verifiedScribeEmissions: null,
-            valuesKernelDataPath: null);
+            verifiedScribeEmissions: null);
 
     internal static AdmissionOutcome EvaluateWithScribe(
         RepositorySnapshot current,
@@ -199,8 +198,7 @@ public static class AdmissionPipeline
         AcceptedLeanClosure baselineLean,
         RawChangeSet changes,
         MetaClear metaClear,
-        VerifiedScribeEmissions? verifiedScribeEmissions,
-        string? valuesKernelDataPath = null)
+        VerifiedScribeEmissions? verifiedScribeEmissions)
         => Evaluate(
             current,
             baseline,
@@ -209,8 +207,7 @@ public static class AdmissionPipeline
             baselineLean,
             changes,
             MetaEvaluationProfile.ForClear(metaClear),
-            verifiedScribeEmissions,
-            valuesKernelDataPath);
+            verifiedScribeEmissions);
 
     internal static AdmissionOutcome EvaluateProtectedSurface(
         RepositorySnapshot current,
@@ -220,8 +217,7 @@ public static class AdmissionPipeline
         AcceptedLeanClosure baselineLean,
         RawChangeSet changes,
         MetaChangeSet protectedChanges,
-        VerifiedScribeEmissions? verifiedScribeEmissions = null,
-        string? valuesKernelDataPath = null)
+        VerifiedScribeEmissions? verifiedScribeEmissions = null)
         => Evaluate(
             current,
             baseline,
@@ -230,8 +226,7 @@ public static class AdmissionPipeline
             baselineLean,
             changes,
             MetaEvaluationProfile.ForProtectedSurface(protectedChanges),
-            verifiedScribeEmissions,
-            valuesKernelDataPath);
+            verifiedScribeEmissions);
 
     private static AdmissionOutcome Evaluate(
         RepositorySnapshot current,
@@ -241,8 +236,7 @@ public static class AdmissionPipeline
         AcceptedLeanClosure baselineLean,
         RawChangeSet changes,
         MetaEvaluationProfile metaEvaluation,
-        VerifiedScribeEmissions? verifiedScribeEmissions,
-        string? valuesKernelDataPath)
+        VerifiedScribeEmissions? verifiedScribeEmissions)
     {
         var context = RuleEvaluationContext.Create(
             current,
@@ -252,8 +246,7 @@ public static class AdmissionPipeline
             baselineLean,
             changes,
             metaEvaluation,
-            verifiedScribeEmissions,
-            valuesKernelDataPath);
+            verifiedScribeEmissions);
         return RuleCatalog.Default.Execute(context) switch
         {
             RuleExecutionOutcome.Completed completed => Complete(
