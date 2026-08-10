@@ -499,7 +499,16 @@ public sealed partial class MakeWorkflowTests
 
         Assert.True(commitIndex >= 0, "theory ingest writeback must remain");
         var commit = workflow[commitIndex..];
-        Assert.DoesNotContain("echo-residual", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("Generated/echo-residuals", commit, StringComparison.Ordinal);
+        Assert.DoesNotMatch(
+            new Regex(
+                "(?m)^\\s*(?:mv|git add)\\b[^\\n]*echo-residual",
+                RegexOptions.CultureInvariant | RegexOptions.NonBacktracking),
+            commit);
+        Assert.Contains(
+            "grep -vE '^.. Meta/Digestion/atoms/.*$'",
+            commit,
+            StringComparison.Ordinal);
         Assert.Contains("git add Meta/Digestion/atoms", commit, StringComparison.Ordinal);
     }
 

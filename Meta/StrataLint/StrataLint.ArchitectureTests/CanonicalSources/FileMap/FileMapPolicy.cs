@@ -222,7 +222,14 @@ internal static class FileMapPolicy
 
         foreach (var path in tracked.Order(StringComparer.Ordinal))
         {
-            if (manifest.Match(path) is [{ Kind: FileMapKind.Generated }]
+            if (manifest.Match(path) is [var generated]
+                && generated.Kind is FileMapKind.Generated
+                // The canonical inventory enumerates products whose paths are known at compile time.
+                // A glob set without an aggregate identity derives its member keys from governed data,
+                // so its members cannot be enumerated by the program. FILEMAP already declares producer
+                // ownership, and RepositoryPathPolicy enforces the directory-closure path predicate;
+                // repeating the per-member inventory join would add no information.
+                && !IsDataKeyedGeneratedSet(generated)
                 && !inventoryPaths.Contains(path))
             {
                 findings.Add(new FileMapFinding(
@@ -234,6 +241,10 @@ internal static class FileMapPolicy
 
         return findings;
     }
+
+    private static bool IsDataKeyedGeneratedSet(FileMapEntry entry) =>
+        string.Equals(entry.ArtifactId, "none", StringComparison.Ordinal)
+        && (entry.Pattern.Contains('*') || entry.Pattern.Contains('?'));
 
     internal static IReadOnlyList<FileMapFinding> InspectRegistryRootAlignment(
         IEnumerable<string> registryRootFiles,
