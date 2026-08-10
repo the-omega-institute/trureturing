@@ -60,7 +60,7 @@ internal static partial class RepositoryRules
         RuleApplicabilityContext context) =>
         Formal(artifact, context)
         || LiteratureScoped(artifact, context)
-        || artifact.Path.Value == AnchorCatalogLoader.RelativePath;
+        || artifact.Path.Value == RepositoryPathPolicy.AnchorCatalogPath;
 
     private static bool ValuesScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
         artifact.Path.Value.StartsWith("Evidence/D5/values.", StringComparison.Ordinal);
