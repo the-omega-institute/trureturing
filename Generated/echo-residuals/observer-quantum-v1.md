@@ -1,8 +1,8 @@
-<!-- echo-residual-summary:v4 source=observer-quantum-v1 residual=sha256:089784431632c49f471ca83819dd0cacf2816143b29a6445aef90910956deb17 -->
+<!-- echo-residual-summary:v4 source=observer-quantum-v1 residual=sha256:e2279e2bb938900c8c4805bc0d103efa4897dfe82f6eef5bdeb7a282ad1b58fc -->
 # Echo Residual Summary — `observer-quantum-v1`
 
-- unresolved_subitems: 66
-- mother_residual_atom_ids: 22
+- unresolved_subitems: 63
+- mother_residual_atom_ids: 21
 
 Mother residual atoms:
 
@@ -43,8 +43,6 @@ Mother residual atoms:
   - `type-II-infinity-classification`
 - `observer-residual-5caee6c1c0969f146242d6f7444a71d30e04dc9fb7ae8b941bc5f04d36a23ee0` (1)
   - `monogamy-unique-classical-pairing`
-- `observer-residual-7232ebf337ed10c1fb71b90c1f3b3438d2dbddf1261035e4a757c3f8b6124511` (1)
-  - `noncontextual-and-local-double-exclusion-synthesis`
 - `observer-residual-7957064151dd9375db6308e290488a9d7836e42e1d2151f8dc586a21a6bb9995` (1)
   - `center-equals-continuous-torus-functions-crossed-product-form`
 - `observer-residual-7c9486a5ed7ca3264cd32d9aaaa07bb8af9e81a547a163dd202042efa51b920c` (6)
@@ -69,11 +67,10 @@ Mother residual atoms:
   - `noncommutative-algebra-bundle-over-torus`
   - `prime-power-tensor-factor-decomposition`
   - `universal-c-star-crossed-product-identification`
-- `observer-residual-a64c69d2b846d7fdf3c80468898e853257ad9a378bf7da6c74c3370ea865762c` (4)
+- `observer-residual-a64c69d2b846d7fdf3c80468898e853257ad9a378bf7da6c74c3370ea865762c` (3)
   - `joint-coherent-reversal-of-all-copies`
   - `know-forgot-two-time-relation`
   - `multi-copy-erasure-quantifier`
-  - `six-state-finite-certificates`
 - `observer-residual-a6962d32cb2d5b0127bc20031cd895bdfb1d232901e5e21eb0a62b55e49930eb` (5)
   - `born-control-numerical-tolerance-certificate`
   - `complete-solution-space-characterization`
@@ -86,10 +83,9 @@ Mother residual atoms:
   - `discrete-crossed-product-uniqueness`
   - `full-crossed-product-identification`
   - `observer-read-write-forces-structure`
-- `observer-residual-b2dd3d2b2261d86b6e8b20f45ca56ef7b3da87d833f50e38279f562c2a1a66c9` (5)
+- `observer-residual-b2dd3d2b2261d86b6e8b20f45ca56ef7b3da87d833f50e38279f562c2a1a66c9` (4)
   - `know-forgot-two-time-relation`
   - `multi-copy-erasure-quantifier`
-  - `six-state-finite-certificates`
   - `v2-entropy-monotone-capacity-decrease`
   - `v3-revival-spectrum-diophantine-grading`
 - `observer-residual-d35e7e61edd9bb9519b7f604eedded2838b8b003cdb46b4234deb3c279cb987c` (1)
