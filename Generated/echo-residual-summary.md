@@ -1,8 +1,8 @@
-<!-- echo-residual-summary:v3 residual=sha256:49904d6f4a2c0bc86a1fcb378577f0d2093ed45f93a3cc58afad268115933e0f -->
+<!-- echo-residual-summary:v3 residual=sha256:aec525876e484d34047dcf6e1fea4155ca2277596f4dcb95d5df11483fadb4ce -->
 # Echo Residual Summary
 
-- unresolved_subitems: 536
-- mother_residual_atom_ids: 87
+- unresolved_subitems: 535
+- mother_residual_atom_ids: 86
 
 ## quarantined residuals
 
@@ -273,8 +273,8 @@ Mother residual atoms: none.
 
 ## `observer-quantum-v1`
 
-- unresolved_subitems: 64
-- mother_residual_atom_ids: 22
+- unresolved_subitems: 63
+- mother_residual_atom_ids: 21
 
 Mother residual atoms:
 
@@ -315,8 +315,6 @@ Mother residual atoms:
   - `type-II-infinity-classification`
 - `observer-residual-5caee6c1c0969f146242d6f7444a71d30e04dc9fb7ae8b941bc5f04d36a23ee0` (1)
   - `monogamy-unique-classical-pairing`
-- `observer-residual-7232ebf337ed10c1fb71b90c1f3b3438d2dbddf1261035e4a757c3f8b6124511` (1)
-  - `noncontextual-and-local-double-exclusion-synthesis`
 - `observer-residual-7957064151dd9375db6308e290488a9d7836e42e1d2151f8dc586a21a6bb9995` (1)
   - `center-equals-continuous-torus-functions-crossed-product-form`
 - `observer-residual-7c9486a5ed7ca3264cd32d9aaaa07bb8af9e81a547a163dd202042efa51b920c` (6)

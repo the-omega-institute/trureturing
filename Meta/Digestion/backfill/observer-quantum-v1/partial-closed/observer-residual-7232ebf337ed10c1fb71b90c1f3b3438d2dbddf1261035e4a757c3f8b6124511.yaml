@@ -4,6 +4,7 @@ fingerprints:
   normalized_sha256: sha256:7232ebf337ed10c1fb71b90c1f3b3438d2dbddf1261035e4a757c3f8b6124511
 cas_ref: sha256:7232ebf337ed10c1fb71b90c1f3b3438d2dbddf1261035e4a757c3f8b6124511
 coverage_gids:
+  - D5/S3/Observer/ClassicalAnswerTableExclusion.noncontextual_and_local_double_exclusion
   - D5/S3/Observer/WindowCharacter.window_algebra_has_no_character
   - D5/S3/QuantumBounds/CHSHWitness.bell_chsh_value
   - D5/S3/QuantumBounds/CHSHWitness.bell_density_is_state
@@ -16,7 +17,6 @@ coverage_gids:
 receipts:
   coverage: []
   scribe: []
-  unresolved_subitems:
-    - noncontextual-and-local-double-exclusion-synthesis
+  unresolved_subitems: []
   chain_atoms: []
   tail_authorization: null
