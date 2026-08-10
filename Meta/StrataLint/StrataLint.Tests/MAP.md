@@ -24,7 +24,7 @@
 - `Authorization/`: Hearts ledger format, append-only history, and exact SL-008 delta behavior.
 - `Commands/`: command parsing and end-to-end command behavior;
   `Commands/Papergen/` holds paper recipe validation and
-  `Commands/PrShepherd/` holds the focused PR shepherd recalculation suite.
+  `Commands/PrOpenScriptTests.cs` holds the focused one-shot PR open/update script contract.
 - `Conservative/`: base-owned replay, policy roots, contract-epoch schemas/stores,
   obligation comparison, and conservative certificate behavior;
   `Conservative/ContractEpoch/` holds the focused contract-epoch suite.
