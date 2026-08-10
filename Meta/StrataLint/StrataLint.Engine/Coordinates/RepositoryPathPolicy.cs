@@ -69,6 +69,7 @@ internal static partial class RepositoryPathPolicy
             || DigestionCasStore.IsCanonicalPath(value)
             || BackfillInventoryLoader.IsCanonicalPath(value)
             || DigestionFormalizationReceipt.IsCanonicalPath(value)
+            || IsEchoResidualShardPath(value)
             || value.StartsWith(".fkst/", StringComparison.Ordinal)
             || value.StartsWith("packages/", StringComparison.Ordinal)
             || value.StartsWith(".claude/skills/", StringComparison.Ordinal)
@@ -111,6 +112,15 @@ internal static partial class RepositoryPathPolicy
             "Meta" => Sl000(value, "unknown Meta artifact"),
             _ => Sl000(value, "unknown top-level artifact"),
         };
+    }
+
+    internal static bool IsEchoResidualShardPath(string value)
+    {
+        const string prefix = "Generated/echo-residuals/";
+        if (!value.StartsWith(prefix, StringComparison.Ordinal)
+            || !value.EndsWith(".md", StringComparison.Ordinal)) return false;
+        var relative = value[prefix.Length..];
+        return relative.Length > ".md".Length && !relative.Contains('/', StringComparison.Ordinal);
     }
 
     internal static bool TryResolve(RepoPath path, ValidatedPolicy policy, out Gid? gid)
