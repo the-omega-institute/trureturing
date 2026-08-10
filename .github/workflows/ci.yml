@@ -291,7 +291,13 @@ jobs:
             --repository "$GITHUB_WORKSPACE/candidate" \
             --report "$target"
 
-      - name: Save candidate canonical Lean report
+      # pull_request_target runs get a token without cache-write scope, so this save
+      # can only ever fail there: run 31389667812 logged "cache write denied: token has
+      # no writable scopes". The two saves below already carry this exact guard; this
+      # one was missing it, so every PR attempted a write it could not perform. dev-push
+      # runs do write it successfully (run 31389340892).
+      - name: Save candidate canonical Lean report (dev push only)
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/dev'
         uses: actions/cache/save@v4
         with:
           path: .canonical-lean-report-cache

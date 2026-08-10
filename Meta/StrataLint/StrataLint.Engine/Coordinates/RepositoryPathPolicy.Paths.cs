@@ -9,6 +9,12 @@ internal static partial class RepositoryPathPolicy
     // copy of this literal would be a second source of truth for the same address.
     internal const string ValuesProjectionPath = "Evidence/D5/values.json";
 
+    // The canonical anchor catalog address, here for the same reason as the values
+    // address: Engine is the lowest layer that names it, and Scribe and Cli reference
+    // Engine rather than the reverse. Until #1122 this literal was owned by
+    // AnchorCatalogLoader, whose only surviving purpose had become holding it.
+    internal const string AnchorCatalogPath = "Meta/StrataLint/Generated/anchor-catalog.v1.json";
+
     private static readonly Regex CamelPattern = new(
         "^[A-Z][A-Za-z0-9]*$",
         RegexOptions.CultureInvariant);
