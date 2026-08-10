@@ -19,4 +19,3 @@ For any additive ledger with at least one nonzero length, the set of conjugate-r
 ## References
 
 - Truth anchor: `D5/S3/Midline/DualCharacterization.midline_dual_characterization`
-- Dependency: [D5/S3/Weil/SpectralDynamics](../Weil/SpectralDynamics.md)
