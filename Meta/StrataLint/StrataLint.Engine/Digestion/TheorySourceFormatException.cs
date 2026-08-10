@@ -3,13 +3,17 @@ using System.Text.RegularExpressions;
 
 namespace StrataLint.Engine;
 
+/// <summary>A claim lead the dialect does not recognise, and the line it was found on.</summary>
+internal sealed record UnrecognisedLead(string Cause, int Line);
+
 internal sealed class TheorySourceFormatException(string message) : FormatException(message)
 {
     internal static string? IdentifyAt(
         Func<string, string?> identify,
         string value,
         int characterOffset,
-        string source)
+        string source,
+        List<UnrecognisedLead>? failures = null)
     {
         try
         {
@@ -17,10 +21,35 @@ internal sealed class TheorySourceFormatException(string message) : FormatExcept
         }
         catch (TheorySourceFormatException exception)
         {
-            throw new TheorySourceFormatException(
-                $"{exception.Message} at line {LineNumber(source, characterOffset)}");
+            var line = LineNumber(source, characterOffset);
+            if (failures is null)
+            {
+                throw new TheorySourceFormatException($"{exception.Message} at line {line}");
+            }
+
+            // One run per unknown lead makes registering a new volume's dialect an
+            // O(number of unknown leads) sequence of ingest runs. Collect instead, so the
+            // single failure names every lead the source would need registered.
+            failures.Add(new UnrecognisedLead(exception.Message, line));
+            return null;
         }
     }
+
+    /// <summary>Renders one line per distinct cause, with its first line and occurrence count.</summary>
+    internal static string Summarise(IEnumerable<UnrecognisedLead> failures) =>
+        string.Join(
+            "; ",
+            failures
+                // Distinct first: a paragraph whose lead is unknown is offered to identify
+                // twice, once as its own source line and once as the whole paragraph, and
+                // both carry the same line. Counting before that doubles every occurrence.
+                .Distinct()
+                .GroupBy(static failure => failure.Cause, StringComparer.Ordinal)
+                .Select(static group => (Cause: group.Key, Line: group.Min(static item => item.Line), Count: group.Count()))
+                .OrderBy(static item => item.Line)
+                .Select(static item => item.Count == 1
+                    ? $"{item.Cause} at line {item.Line}"
+                    : $"{item.Cause} at line {item.Line} ({item.Count} occurrences)"));
 
     internal static string ClaimLead(string paragraph)
     {
