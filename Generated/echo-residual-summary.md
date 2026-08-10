@@ -1,8 +1,15 @@
-<!-- echo-residual-summary:v3 residual=sha256:bc89b3674ebde884f5c3000e27be6b7548c595daae8b956997787f92b120cc55 -->
+<!-- echo-residual-summary:v3 residual=sha256:5f3c476cd440fd7abcf731d5fea359d7e0708f5fadb81d4d77666030006c3919 -->
 # Echo Residual Summary
 
 - unresolved_subitems: 540
 - mother_residual_atom_ids: 87
+
+## quarantined residuals
+
+- quarantined_subitems: 0
+- mother_quarantined_atom_ids: 0
+
+Quarantined residual atoms: none.
 
 ## cross-volume shared residues
 
