@@ -79,6 +79,15 @@ internal static class FileMapPolicy
     private static readonly ImmutableHashSet<string> GeneratedActorWords =
         ["reader", "harness-gate", "none"];
 
+    // kind=data 的 verified_by 曾只被「至少有一个真 verifier」检查(InspectDataVerifiers),
+    // 所以一个名字死掉后,只要同条目还留着另一个活的,就永远查不出来:#1116 删掉 emit-check
+    // 目标之后,`Library/*/*.md` 仍写着它,而 LibraryNoteCatalog 还在,于是 `.Any(...)` 放行。
+    // 这里补上逐名检查——每个名字要么是已知的 loader/schema 实现,要么是规则号那种刻意的
+    // 非类型名。规则号形如 SL-017,由 RuleId 的封闭字母表背书,不是自由文本。
+    private static readonly Regex DataVerifierRuleName = new(
+        @"^SL-\d{3}$",
+        RegexOptions.CultureInvariant);
+
     private static readonly Regex TypeDeclarationPattern = new(
         @"\b(?:class|record|interface|struct)\s+([A-Za-z_][A-Za-z0-9_]*)",
         RegexOptions.CultureInvariant);
@@ -153,6 +162,7 @@ internal static class FileMapPolicy
             .Concat(registryFindings)
             .Concat(InspectDeclaredActors(manifest, DeclaredTypeNames(repositoryRoot, paths)))
             .Concat(InspectDataVerifiers(manifest, availableVerifiers))
+            .Concat(InspectDataVerifierNames(manifest, availableVerifiers))
             .Concat(InspectGeneratedInventory(manifest, paths, GeneratedArtifactInventory.All))
             .Concat(InspectDeclaredModes(manifest, trackedModes))
             .Concat(InspectDirectoryKinds(manifest, paths))
@@ -368,6 +378,25 @@ internal static class FileMapPolicy
                 "FILEMAP-DATA-VERIFIER",
                 entry.Pattern,
                 "data pattern names no existing loader/schema verifier"))
+            .ToArray();
+    }
+
+    internal static IReadOnlyList<FileMapFinding> InspectDataVerifierNames(
+        FileMapManifest manifest,
+        IReadOnlySet<string> availableVerifierNames)
+    {
+        ArgumentNullException.ThrowIfNull(manifest);
+        ArgumentNullException.ThrowIfNull(availableVerifierNames);
+        return manifest.Entries
+            .Where(static entry => entry.Kind is FileMapKind.Data)
+            .SelectMany(entry => entry.VerifiedBy
+                .Where(name => !availableVerifierNames.Contains(name)
+                    && !DataVerifierRuleName.IsMatch(name))
+                .Select(name => new FileMapFinding(
+                    "FILEMAP-DATA-VERIFIER-DANGLING",
+                    entry.Pattern,
+                    $"verified_by names {name}, which is neither a known "
+                    + "loader/schema verifier nor a rule id")))
             .ToArray();
     }
 

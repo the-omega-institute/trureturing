@@ -289,6 +289,38 @@ public sealed class FileMapPolicyTests
         Assert.Equal("FILEMAP-DATA-VERIFIER", finding.Code);
     }
 
+    // 存量证据:#1116 删掉 emit-check 之后,`Library/*/*.md` 仍写着它,而
+    // InspectDataVerifiers 的 `.Any(...)` 因同条目还留着 LibraryNoteCatalog 而放行。
+    [Fact]
+    public void DataVerifierNameThatIsNeitherALoaderNorARuleIdIsRejectedByTheRedFixture()
+    {
+        var manifest = Parse(DataEntryVerifiedBy(
+            "Library/*/*.md",
+            "LibraryNoteCatalog",
+            "emit-check"));
+
+        var finding = Assert.Single(FileMapPolicy.InspectDataVerifierNames(
+            manifest,
+            new HashSet<string>(StringComparer.Ordinal) { "LibraryNoteCatalog" }));
+
+        Assert.Equal("FILEMAP-DATA-VERIFIER-DANGLING", finding.Code);
+        Assert.Contains("emit-check", finding.Message, StringComparison.Ordinal);
+    }
+
+    // 反证:规则号是刻意的非类型名,不得被这条新检查误伤。
+    [Fact]
+    public void DataVerifierNamedByARuleIdIsAccepted()
+    {
+        var manifest = Parse(DataEntryVerifiedBy(
+            "Library/**/*.yaml",
+            "SL-017",
+            "YamlSubsetParser"));
+
+        Assert.Empty(FileMapPolicy.InspectDataVerifierNames(
+            manifest,
+            new HashSet<string>(StringComparer.Ordinal) { "YamlSubsetParser" }));
+    }
+
     [Fact]
     public void GeneratedFileWithoutProducerInventoryIsRejectedByTheRedFixture()
     {
@@ -629,6 +661,18 @@ public sealed class FileMapPolicyTests
     private static string ResidenceEntry(string pattern) =>
         Entry(pattern, "data", "none", "reader", "SnapshotDecoder")
         + "residence_violation = true\n";
+
+    private static string DataEntryVerifiedBy(string pattern, params string[] verifiedBy) => $$"""
+        [[files]]
+        pattern = "{{pattern}}"
+        kind = "data"
+        produced_by = "none"
+        consumed_by = ["reader"]
+        verified_by = [{{string.Join(", ", verifiedBy.Select(static name => $"\"{name}\""))}}]
+        authority = "self"
+        runtime_disposition = "committed-source"
+        artifact_id = "none"
+        """ + "\n";
 
     private static string Entry(
         string pattern,
