@@ -1,0 +1,10 @@
+ast_path: corollary/3.3.1
+fingerprints:
+  raw_sha256: sha256:51fc797a08995981cd55c93a1b87c96aa5d79bc953ab471734c59a0ed6e8fa54
+  normalized_sha256: sha256:51fc797a08995981cd55c93a1b87c96aa5d79bc953ab471734c59a0ed6e8fa54
+cas_ref: sha256:51fc797a08995981cd55c93a1b87c96aa5d79bc953ab471734c59a0ed6e8fa54
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

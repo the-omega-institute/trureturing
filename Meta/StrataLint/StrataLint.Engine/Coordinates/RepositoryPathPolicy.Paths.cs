@@ -183,7 +183,7 @@ internal static partial class RepositoryPathPolicy
 
         if (label is "formal" or "Blueprint")
         {
-            return "formal address must be Sn/Domain/Module or X_Zone/Module";
+            return "formal address must be Sn/Domain[/SubDomain]/Module or X_Zone/Module";
         }
 
         return "path is not a canonical semantic artifact";
