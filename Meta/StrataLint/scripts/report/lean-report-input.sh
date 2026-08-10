@@ -7,20 +7,22 @@ COMMAND="${1:-}"
 if [[ -n "$COMMAND" ]]; then shift; fi
 REPOSITORY=""
 REPORT=""
+MANIFEST=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --repository) REPOSITORY="$2"; shift 2 ;;
     --report) REPORT="$2"; shift 2 ;;
+    --manifest) MANIFEST="$2"; shift 2 ;;
     *) echo "lean-report-input: unknown argument '$1'" >&2; exit 2 ;;
   esac
 done
 
-[[ "$COMMAND" == "address" || "$COMMAND" == "verify" || "$COMMAND" == "modules" || "$COMMAND" == "manifest" ]] \
-  || { echo "usage: lean-report-input.sh address|verify|modules|manifest --repository DIR [--report FILE]" >&2; exit 2; }
+[[ "$COMMAND" == "address" || "$COMMAND" == "verify" || "$COMMAND" == "modules" || "$COMMAND" == "manifest" || "$COMMAND" == "verify-manifest" ]] \
+  || { echo "usage: lean-report-input.sh address|verify|modules|manifest|verify-manifest --repository DIR [--report FILE] [--manifest FILE]" >&2; exit 2; }
 [[ -n "$REPOSITORY" && "$REPOSITORY" == /* && -d "$REPOSITORY" ]] \
   || { echo "lean-report-input: --repository requires an absolute directory" >&2; exit 2; }
 REPOSITORY="$(cd "$REPOSITORY" && pwd -P)"
-if [[ "$COMMAND" == "verify" ]]; then
+if [[ "$COMMAND" == "verify" || "$COMMAND" == "verify-manifest" ]]; then
   [[ -n "$REPORT" && "$REPORT" == /* && -s "$REPORT" ]] \
     || { echo "lean-report-input: raw Lean report is missing; run make lean-report first" >&2; exit 2; }
 fi
@@ -90,6 +92,12 @@ module_manifest() {
   local modules="$TMP_ROOT/modules.tsv"
   managed_modules > "$modules"
   component_hashes
+  if [[ -n "$REPORT" ]]; then
+    printf '#report_sha256\t%s\n' "$(hash_file "$REPORT")"
+  else
+    printf '#report_sha256\t-\n'
+  fi
+  printf '#producer_sha256\t%s\n' "$PRODUCER_SHA256"
   python3 - "$REPOSITORY" "$modules" "$PRODUCER_SHA256" "$CONFIG_SHA256" <<'PY'
 import hashlib
 import pathlib
@@ -142,6 +150,20 @@ for module, relative in entries:
     prefix = "unparseable:" if dependencies & unparseable else ""
     print(f"{module}\t{relative}\t{prefix}{key}")
 PY
+}
+
+verify_module_manifest() {
+  [[ -n "$MANIFEST" && "$MANIFEST" == /* && -s "$MANIFEST" ]] \
+    || { echo "lean-report-input: module manifest is missing" >&2; return 2; }
+  local declared_report declared_producer actual_report attested_producer
+  declared_report="$(awk -F '\t' '$1 == "#report_sha256" { print $2 }' "$MANIFEST")"
+  declared_producer="$(awk -F '\t' '$1 == "#producer_sha256" { print $2 }' "$MANIFEST")"
+  actual_report="$(hash_file "$REPORT")"
+  attested_producer="$(awk -F '=' '$1 == "producer_sha256" { print $2 }' "${REPORT}.input.attestation" 2>/dev/null || true)"
+  [[ "$declared_report" =~ ^[0-9a-f]{64}$ && "$declared_report" == "$actual_report" ]] \
+    || { echo "lean-report-input: module manifest report SHA mismatch" >&2; return 2; }
+  [[ "$declared_producer" =~ ^[0-9a-f]{64}$ && "$declared_producer" == "$attested_producer" ]] \
+    || { echo "lean-report-input: module manifest producer mismatch" >&2; return 2; }
 }
 
 repository_address() {
@@ -218,6 +240,9 @@ case "$COMMAND" in
     ;;
   manifest)
     module_manifest
+    ;;
+  verify-manifest)
+    verify_module_manifest
     ;;
   verify)
     verify_report_sha

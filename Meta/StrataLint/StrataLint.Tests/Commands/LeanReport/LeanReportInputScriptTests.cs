@@ -37,7 +37,7 @@ public sealed class LeanReportInputScriptTests
         Assert.Equal(0, manifest.ExitCode);
         Assert.Equal(
             Lines(modules).Select(static line => line.Split('\t')[0]),
-            Lines(manifest).Select(static line => line.Split('\t')[0]));
+            Lines(manifest).Where(static line => !line.StartsWith('#')).Select(static line => line.Split('\t')[0]));
     }
 
     [Fact]
@@ -50,6 +50,34 @@ public sealed class LeanReportInputScriptTests
         var manifest = fixture.Manifest();
 
         Assert.StartsWith("unparseable:", manifest["D5.Probe"].Key, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ManifestRejectsReportShaMismatchBeforeReuse()
+    {
+        using var fixture = new LeanReportInputFixture();
+        fixture.CaptureProductionInput();
+        var manifest = fixture.WriteBoundManifest();
+        fixture.AppendToReport("tampered\n");
+
+        var result = fixture.VerifyManifest(manifest);
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains("report SHA mismatch", Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ManifestRejectsReportFromDifferentProducerBeforeReuse()
+    {
+        using var fixture = new LeanReportInputFixture();
+        fixture.CaptureProductionInput();
+        var manifest = fixture.WriteBoundManifest();
+        fixture.ReplaceAttestedProducer(new string('f', 64));
+
+        var result = fixture.VerifyManifest(manifest);
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains("producer mismatch", Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
     }
 
     [Theory]
@@ -124,20 +152,48 @@ public sealed class LeanReportInputScriptTests
         {
             var result = Run("address");
             if (result.ExitCode != 0) return result;
-            var address = Encoding.UTF8.GetString(result.StandardOutput)
-                .Split(' ', StringSplitOptions.RemoveEmptyEntries)[0];
+            var addressParts = Encoding.UTF8.GetString(result.StandardOutput)
+                .Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            var address = addressParts[0];
+            var producer = addressParts[1];
             var reportSha = Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(report)));
             File.WriteAllText(
                 report + ".input.attestation",
                 "schema=stratalint-lean-report-input-attestation-v1\n"
                 + $"repository_input_sha256={address}\n"
-                + $"producer_sha256={new string('0', 64)}\n"
+                + $"producer_sha256={producer}\n"
                 + $"report_sha256={reportSha}\n",
                 new UTF8Encoding(false));
             return result;
         }
 
         internal ProcessOutput Verify() => Run("verify");
+
+        internal string WriteBoundManifest()
+        {
+            var path = Path.Combine(temporary.Path, "modules.tsv");
+            var result = Run("manifest");
+            Assert.Equal(0, result.ExitCode);
+            File.WriteAllBytes(path, result.StandardOutput);
+            return path;
+        }
+
+        internal ProcessOutput VerifyManifest(string manifest) => BoundedProcessRunner.Run(
+            "bash",
+            [script, "verify-manifest", "--repository", repository, "--report", report, "--manifest", manifest],
+            temporary.Path,
+            TimeSpan.FromSeconds(30),
+            1024 * 1024);
+
+        internal void AppendToReport(string contents) =>
+            File.AppendAllText(report, contents, new UTF8Encoding(false));
+
+        internal void ReplaceAttestedProducer(string producer)
+        {
+            var lines = File.ReadAllLines(report + ".input.attestation");
+            lines[2] = $"producer_sha256={producer}";
+            File.WriteAllLines(report + ".input.attestation", lines, new UTF8Encoding(false));
+        }
 
         internal void Mutate(string mutation)
         {
@@ -164,7 +220,7 @@ public sealed class LeanReportInputScriptTests
         {
             var result = Run("manifest");
             Assert.Equal(0, result.ExitCode);
-            return Lines(result).ToDictionary(
+            return Lines(result).Where(static line => !line.StartsWith('#')).ToDictionary(
                 static line => line.Split('\t')[0],
                 static line => (line.Split('\t')[1], line.Split('\t')[2]),
                 StringComparer.Ordinal);

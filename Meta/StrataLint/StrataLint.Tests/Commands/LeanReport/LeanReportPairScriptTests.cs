@@ -91,6 +91,28 @@ public sealed class LeanReportPairScriptTests
         Assert.Equal("lean-producer-candidate", metric.GetProperty("role").GetString());
     }
 
+    [Fact]
+    public void InvalidModuleManifestFallsThroughToFullProduction()
+    {
+        var script = File.ReadAllText(Path.Combine(
+            FindRepositoryRoot(), "Meta", "StrataLint", "scripts", "lean-report-pair.sh"));
+
+        Assert.Contains("&& \"$INPUT_HELPER\" verify-manifest", script, StringComparison.Ordinal);
+        Assert.Contains("else\n    \"$SUPERVISOR\" --role \"lean-producer-$side\"", script, StringComparison.Ordinal);
+    }
+
+    private static string FindRepositoryRoot()
+    {
+        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
+             current is not null;
+             current = current.Parent)
+        {
+            if (File.Exists(Path.Combine(current.FullName, "CLAUDE.md"))) return current.FullName;
+        }
+
+        throw new DirectoryNotFoundException("Could not locate repository root.");
+    }
+
     private sealed class LeanReportPairFixture : IDisposable
     {
         private readonly TemporaryDirectory temporary = new();

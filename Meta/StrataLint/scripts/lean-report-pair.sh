@@ -292,14 +292,14 @@ materialize_report() {
     local cache_rc=$?
     [[ "$cache_rc" == "1" ]] || return "$cache_rc"
   fi
-  if [[ -s "$MODULE_CACHE_REPORT" && -s "$MODULE_CACHE_MANIFEST" ]]; then
-    [[ -f "$STRATALINT_DLL" ]] \
-      || { echo "lean-report-pair: per-module cache requires --stratalint-dll" >&2; exit 2; }
-    local current_manifest="$TMP_ROOT/$side-modules.tsv"
+  local current_manifest="$TMP_ROOT/$side-modules.tsv"
+  if [[ -s "$MODULE_CACHE_REPORT" && -s "$MODULE_CACHE_MANIFEST" && -f "$STRATALINT_DLL" ]] \
+    && "$INPUT_HELPER" verify-manifest --repository "$root" \
+      --report "$MODULE_CACHE_REPORT" --manifest "$MODULE_CACHE_MANIFEST" \
+    && "$INPUT_HELPER" manifest --repository "$root" > "$current_manifest"; then
     local reusable="$TMP_ROOT/$side-reusable.modules"
     local stale="$TMP_ROOT/$side-stale.modules"
     local fresh="$TMP_ROOT/$side-fresh.json"
-    "$INPUT_HELPER" manifest --repository "$root" > "$current_manifest"
     python3 - "$current_manifest" "$MODULE_CACHE_MANIFEST" "$MODULE_CACHE_REPORT" "$reusable" "$stale" <<'PY'
 import json, pathlib, sys
 current, cached, report, reusable, stale = map(pathlib.Path, sys.argv[1:])
