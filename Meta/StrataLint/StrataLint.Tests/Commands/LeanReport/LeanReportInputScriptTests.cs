@@ -90,8 +90,11 @@ public sealed class LeanReportInputScriptTests
     [InlineData("lakefile")]
     [InlineData("manifest")]
     [InlineData("inspector")]
+    [InlineData("inspector-script")]
     [InlineData("input-helper")]
     [InlineData("merge-cli")]
+    [InlineData("raw-report")]
+    [InlineData("canonical-writer")]
     public void RepositoryInputDriftMakesAnExistingReportStale(string mutation)
     {
         using var fixture = new LeanReportInputFixture();
@@ -208,8 +211,11 @@ public sealed class LeanReportInputScriptTests
                 "lakefile" => "lakefile.toml",
                 "manifest" => "lake-manifest.json",
                 "inspector" => inspectorSourcePath,
+                "inspector-script" => inspectorScriptPath,
                 "input-helper" => InputHelperPath,
                 "merge-cli" => MergeCommandPath,
+                "raw-report" => RawReportPath,
+                "canonical-writer" => CanonicalWriterPath,
                 _ => throw new InvalidOperationException($"unknown mutation {mutation}"),
             };
             File.AppendAllText(
