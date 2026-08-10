@@ -1,3 +1,5 @@
+using System.Collections.Immutable;
+using System.Reflection;
 using System.Text;
 using StrataLint.Engine;
 
@@ -5,6 +7,40 @@ namespace StrataLint.Tests;
 
 public sealed partial class TheoryAtomizerTests
 {
+    public static TheoryData<string> PrefixMatchedTables => new()
+    {
+        nameof(TheoryAtomizerRules.ObserverClaimPrefixes),
+        nameof(TheoryAtomizerRules.GictClaimPrefixes),
+        nameof(TheoryAtomizerRules.PzgHeadingPrefixes),
+    };
+
+    [Theory]
+    [MemberData(nameof(PrefixMatchedTables))]
+    public void NoPrefixMatchedEntryIsSwallowedByAShorterOne(string table)
+    {
+        // These tables are consumed with FirstOrDefault(text.StartsWith(token)) but are
+        // ordered ordinally, not longest-first, so an entry that starts with another entry
+        // can never be reached: the shorter one always matches first. Nothing in the volume
+        // dialects trips this today; the assertion exists because the same shape — taking a
+        // representative out of an ordered table — silently dropped PZG_BEDC's
+        // remark/27.363-27.365 section atoms when 注记 was registered ahead of 评注.
+        var tokens = typeof(TheoryAtomizerRules)
+            .GetProperty(table, BindingFlags.NonPublic | BindingFlags.Instance)!
+            .GetValue(DigestionTestSupport.Rules) is ImmutableArray<AtomizerMapping> mappings
+            ? mappings.Select(static mapping => mapping.Token).ToArray()
+            : throw new InvalidOperationException($"{table} is not a mapping table");
+
+        var swallowed = tokens
+            .SelectMany(shorter => tokens
+                .Where(longer => longer != shorter
+                    && longer.StartsWith(shorter, StringComparison.Ordinal))
+                .Select(longer => $"{shorter} swallows {longer}"))
+            .ToArray();
+
+        Assert.Empty(swallowed);
+        Assert.NotEmpty(tokens);
+    }
+
     [Fact]
     public void UnknownClaimLeadsAreReportedAllAtOnceNotOneRunPerLead()
     {
