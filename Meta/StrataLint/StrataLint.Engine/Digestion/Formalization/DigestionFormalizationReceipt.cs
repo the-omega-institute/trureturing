@@ -12,6 +12,10 @@ internal sealed record DigestionFormalizationSignature(
     string Kind,
     string Type);
 
+internal sealed record DigestionFormalizationExtension(
+    string Gid,
+    DigestionFormalizationSignature Signature);
+
 // digestion-formalization-v1 receipt (spec §4a "pre-committed signature"). The
 // formalizer (workflow step 1, or a manual PR-1) produces this receipt at
 // delivery time — before/while proving — pinning atom_id -> primary declaration
@@ -32,7 +36,8 @@ internal sealed record DigestionFormalizationReceipt(
     string PrimaryGid,
     DigestionFormalizationSignature Signature,
     string CasRef,
-    string RawSha256)
+    string RawSha256,
+    ImmutableArray<DigestionFormalizationExtension> HostedExtensions = default)
 {
     internal const string Schema = "digestion-formalization-v1";
 
@@ -75,6 +80,14 @@ internal sealed record DigestionFormalizationReceipt(
         "raw_sha256",
         "schema");
 
+    private static readonly ImmutableHashSet<string> ExtendedRootFields =
+        RootFields.Add("hosted_extensions");
+
+    private static readonly ImmutableHashSet<string> ExtensionFields = ImmutableHashSet.Create(
+        StringComparer.Ordinal,
+        "gid",
+        "precommitted_signature");
+
     private static readonly ImmutableHashSet<string> SignatureFields = ImmutableHashSet.Create(
         StringComparer.Ordinal,
         "kind",
@@ -85,21 +98,36 @@ internal sealed record DigestionFormalizationReceipt(
     {
         ArgumentNullException.ThrowIfNull(receipt);
         Validate(receipt);
-        var material = new
+        var hostedExtensions = Extensions(receipt);
+        if (hostedExtensions.IsEmpty)
+        {
+            var material = new
+            {
+                atom_id = receipt.AtomId,
+                cas_ref = receipt.CasRef,
+                precommitted_signature = SignatureMaterial(receipt.Signature),
+                primary_gid = receipt.PrimaryGid,
+                raw_sha256 = receipt.RawSha256,
+                schema = Schema,
+            };
+            return StructuredCanonicalWriter.WriteJson(JsonSerializer.SerializeToElement(material));
+        }
+
+        var extendedMaterial = new
         {
             atom_id = receipt.AtomId,
             cas_ref = receipt.CasRef,
-            precommitted_signature = new
+            hosted_extensions = hostedExtensions.Select(extension => new
             {
-                kind = receipt.Signature.Kind,
-                name_key = receipt.Signature.NameKey,
-                type = receipt.Signature.Type,
-            },
+                gid = extension.Gid,
+                precommitted_signature = SignatureMaterial(extension.Signature),
+            }).ToArray(),
+            precommitted_signature = SignatureMaterial(receipt.Signature),
             primary_gid = receipt.PrimaryGid,
             raw_sha256 = receipt.RawSha256,
             schema = Schema,
         };
-        return StructuredCanonicalWriter.WriteJson(JsonSerializer.SerializeToElement(material));
+        return StructuredCanonicalWriter.WriteJson(JsonSerializer.SerializeToElement(extendedMaterial));
     }
 
     // Fail-closed loader: a missing file, non-canonical JSON, a wrong schema tag,
@@ -122,7 +150,11 @@ internal sealed record DigestionFormalizationReceipt(
             throw new FormatException($"{relativePath} is not canonical JSON");
         }
 
-        RequireFields(document.RootElement, RootFields, "root");
+        var hasHostedExtensions = document.RootElement.TryGetProperty("hosted_extensions", out var extensionsElement);
+        RequireFields(
+            document.RootElement,
+            hasHostedExtensions ? ExtendedRootFields : RootFields,
+            "root");
         if (RequireString(document.RootElement, "schema") != Schema)
         {
             throw new FormatException($"schema must be {Schema}");
@@ -130,15 +162,36 @@ internal sealed record DigestionFormalizationReceipt(
 
         var signatureElement = document.RootElement.GetProperty("precommitted_signature");
         RequireFields(signatureElement, SignatureFields, "precommitted_signature");
+        var hostedExtensions = ImmutableArray.CreateBuilder<DigestionFormalizationExtension>();
+        if (hasHostedExtensions)
+        {
+            if (extensionsElement.ValueKind != JsonValueKind.Array
+                || extensionsElement.GetArrayLength() == 0)
+            {
+                throw new FormatException("hosted_extensions must be a non-empty array");
+            }
+
+            foreach (var extensionElement in extensionsElement.EnumerateArray())
+            {
+                RequireFields(extensionElement, ExtensionFields, "hosted extension");
+                var extensionSignature = extensionElement.GetProperty("precommitted_signature");
+                RequireFields(
+                    extensionSignature,
+                    SignatureFields,
+                    "hosted extension precommitted_signature");
+                hostedExtensions.Add(new DigestionFormalizationExtension(
+                    RequireString(extensionElement, "gid"),
+                    ReadSignature(extensionSignature)));
+            }
+        }
+
         var receipt = new DigestionFormalizationReceipt(
             RequireString(document.RootElement, "atom_id"),
             RequireString(document.RootElement, "primary_gid"),
-            new DigestionFormalizationSignature(
-                RequireString(signatureElement, "name_key"),
-                RequireString(signatureElement, "kind"),
-                RequireString(signatureElement, "type")),
+            ReadSignature(signatureElement),
             RequireString(document.RootElement, "cas_ref"),
-            RequireString(document.RootElement, "raw_sha256"));
+            RequireString(document.RootElement, "raw_sha256"),
+            hostedExtensions.ToImmutable());
         Validate(receipt);
         return receipt;
     }
@@ -183,19 +236,41 @@ internal sealed record DigestionFormalizationReceipt(
     private static void Validate(DigestionFormalizationReceipt receipt)
     {
         if (string.IsNullOrWhiteSpace(receipt.AtomId)
-            || string.IsNullOrWhiteSpace(receipt.PrimaryGid)
-            || string.IsNullOrWhiteSpace(receipt.Signature.NameKey)
-            || string.IsNullOrWhiteSpace(receipt.Signature.Kind)
-            || string.IsNullOrWhiteSpace(receipt.Signature.Type))
+            || string.IsNullOrWhiteSpace(receipt.PrimaryGid))
         {
             throw new FormatException("digestion formalization receipt has an empty required field");
         }
 
-        if (!Gid.TryParse(receipt.PrimaryGid, out var gid)
-            || gid.ToTarget() is not Target.Formal { Declaration: not null })
+        ValidateSignature(receipt.Signature);
+
+        if (!SelectsDeclaration(receipt.PrimaryGid))
         {
             throw new FormatException(
                 $"digestion formalization primary_gid must select a Lean declaration: {receipt.PrimaryGid}");
+        }
+
+        var extensions = Extensions(receipt);
+        if (extensions.Select(static extension => extension.Gid)
+                .Distinct(StringComparer.Ordinal).Count() != extensions.Length)
+        {
+            throw new FormatException("digestion formalization hosted extension GIDs must be unique");
+        }
+
+        if (!extensions.SequenceEqual(extensions.OrderBy(static extension => extension.Gid, StringComparer.Ordinal)))
+        {
+            throw new FormatException("digestion formalization hosted extensions must be ordered by GID");
+        }
+
+        foreach (var extension in extensions)
+        {
+            if (string.Equals(extension.Gid, receipt.PrimaryGid, StringComparison.Ordinal)
+                || !SelectsDeclaration(extension.Gid))
+            {
+                throw new FormatException(
+                    $"digestion formalization hosted extension must select a secondary declaration: {extension.Gid}");
+            }
+
+            ValidateSignature(extension.Signature);
         }
 
         if (!DigestionFingerprint.IsCanonicalSha256(receipt.CasRef)
@@ -205,6 +280,36 @@ internal sealed record DigestionFormalizationReceipt(
                 "digestion formalization receipt fingerprints must be canonical sha256:<64 lowercase hex>");
         }
     }
+
+    private static ImmutableArray<DigestionFormalizationExtension> Extensions(
+        DigestionFormalizationReceipt receipt) =>
+        receipt.HostedExtensions.IsDefault ? [] : receipt.HostedExtensions;
+
+    private static object SignatureMaterial(DigestionFormalizationSignature signature) => new
+    {
+        kind = signature.Kind,
+        name_key = signature.NameKey,
+        type = signature.Type,
+    };
+
+    private static DigestionFormalizationSignature ReadSignature(JsonElement element) => new(
+        RequireString(element, "name_key"),
+        RequireString(element, "kind"),
+        RequireString(element, "type"));
+
+    private static void ValidateSignature(DigestionFormalizationSignature signature)
+    {
+        if (string.IsNullOrWhiteSpace(signature.NameKey)
+            || string.IsNullOrWhiteSpace(signature.Kind)
+            || string.IsNullOrWhiteSpace(signature.Type))
+        {
+            throw new FormatException("digestion formalization receipt has an empty required field");
+        }
+    }
+
+    private static bool SelectsDeclaration(string gidText) =>
+        Gid.TryParse(gidText, out var gid)
+        && gid.ToTarget() is Target.Formal { Declaration: not null };
 
     private static void RequireFields(
         JsonElement element,

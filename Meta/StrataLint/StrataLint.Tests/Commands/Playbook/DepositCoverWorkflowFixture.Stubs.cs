@@ -47,9 +47,20 @@ public sealed partial class DepositCoverWorkflowScriptTests
             read -r -a parts <<< "$command"
             case "${parts[0]:-}" in
               ledger-append)
-                descriptor_blob_oid="git-sha1:$(git hash-object -- D5/S0/Carrier/Probe.lean)"
-                printf '{"event_type": "Freeze", "payload": {"case_id": "active-frozen/current-probe", "frozen_node_id": "sha256:2222222222222222222222222222222222222222222222222222222222222222", "input": {"descriptor_blob_oid": "%s"}, "node_path": "D5/S0/Carrier/Probe.lean"}}\n' \
-                  "$descriptor_blob_oid" > Meta/StrataLint/Golden/Frozen/accepted/2222222222222222222222222222222222222222222222222222222222222222.json
+                target_module=${PLAYBOOK_TARGET_MODULE:-D5/S0/Carrier/Probe.lean}
+                descriptor_blob_oid="git-sha1:$(git hash-object -- "$target_module")"
+                if [[ $target_module == D5/S0/Carrier/Probe.lean ]]; then
+                  event_id=2222222222222222222222222222222222222222222222222222222222222222
+                else
+                  event_id=3333333333333333333333333333333333333333333333333333333333333333
+                fi
+                printf '{"event_type": "Freeze", "payload": {"case_id": "active-frozen/%s", "frozen_node_id": "sha256:%s", "input": {"descriptor_blob_oid": "%s"}, "node_path": "%s"}}\n' \
+                  "$event_id" "$event_id" "$descriptor_blob_oid" "$target_module" \
+                  > "Meta/StrataLint/Golden/Frozen/accepted/${event_id}.json"
+                if [[ -n ${PLAYBOOK_MUTATE_RECEIPT_AFTER_PREPARE:-} ]]; then
+                  printf '%s' "$PLAYBOOK_MUTATE_RECEIPT_AFTER_PREPARE" \
+                    > Meta/Digestion/formalizations/atom-1.v1.json
+                fi
                 if [[ -f fail-ledger-once ]]; then
                   rm fail-ledger-once
                   echo 'LEDGER_APPEND_INTERRUPTED synthetic kill after append' >&2
@@ -62,23 +73,49 @@ public sealed partial class DepositCoverWorkflowScriptTests
                   exit 45
                 fi
                 atom=''
-                gid=''
+                gids=()
                 out=''
+                require_existing_coverage=false
                 for ((index=1; index<${#parts[@]}; index+=2)); do
                   case "${parts[index]}" in
                     --atom-id) atom=${parts[index+1]} ;;
-                    --gid) gid=${parts[index+1]} ;;
+                    --gid) gids+=("${parts[index+1]}") ;;
                     --out) out=${parts[index+1]} ;;
+                    --require-existing-coverage) require_existing_coverage=${parts[index+1]} ;;
                   esac
                 done
+                primary_gid=${gids[0]:-}
+                if [[ $require_existing_coverage == true \
+                    && $primary_gid != D5/S0/Carrier/Probe.probe ]]; then
+                  echo "FORMALIZATION_RECEIPT_INVALID receipt primary GID $primary_gid is not already bound to atom $atom" >&2
+                  exit 46
+                fi
                 [[ -n $out ]] || out="Meta/Digestion/formalizations/${atom}.v1.json"
                 mkdir -p "$(dirname "$out")"
-                printf '{"atom_id":"%s","primary_gid":"%s"}\n' "$atom" "$gid" > "$out"
+                existing="Meta/Digestion/formalizations/${atom}.v1.json"
+                if [[ ${#gids[@]} -gt 1 && -f $existing ]]; then
+                  existing_atom=$(jq -r '.atom_id // ""' "$existing")
+                  existing_primary=$(jq -r '.primary_gid // ""' "$existing")
+                  if [[ $existing_atom != "$atom" || $existing_primary != "$primary_gid" ]]; then
+                    echo "FORMALIZATION_RECEIPT_INVALID existing formalization receipt conflicts with atom/GID: $atom" >&2
+                    exit 47
+                  fi
+                fi
+                if [[ ${#gids[@]} -gt 1 ]]; then
+                  secondary_gid=${gids[1]}
+                  secondary_name=${secondary_gid##*.}
+                  printf '{"atom_id":"%s","hosted_extensions":[{"gid":"%s","precommitted_signature":{"kind":"theorem","name_key":"%s","type":"True"}}],"primary_gid":"%s"}\n' \
+                    "$atom" "$secondary_gid" "$secondary_name" "$primary_gid" > "$out"
+                else
+                  printf '{"atom_id":"%s","primary_gid":"%s"}\n' "$atom" "$primary_gid" > "$out"
+                fi
                 ;;
               cover-atom)
                 if grep -q '^coverage: true$' Meta/BACKFILL.yaml; then
-                  echo 'COVER_INVALID cover atom atom-1 already has coverage: D5/S0/Carrier/Probe.probe' >&2
-                  exit 1
+                  [[ $command == *'--gid D5/S0/Carrier/Probe.probe --gid D5/S3/Observer/WindowRegisterCRT.window_register_crt_decomposition'* ]] || {
+                    echo 'COVER_INVALID hosted cover omitted the primary GID' >&2
+                    exit 1
+                  }
                 fi
                 printf 'atom_id: atom-1\ncoverage: true\naligned: false\n' > Meta/BACKFILL.yaml
                 ;;
