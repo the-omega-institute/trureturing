@@ -1,4 +1,4 @@
-<!-- echo-residual-summary:v3 residual=sha256:e26d98402f66a996f474182ef7f10cabaa5610bd362d2097eadf0ea22566dd6a -->
+<!-- echo-residual-summary:v3 residual=sha256:4a65c4af8272016784347bafec23825a672b6f46aad4ff89f50adf4318f7c4ba -->
 # Echo Residual Summary
 
 - unresolved_subitems: 544
@@ -229,22 +229,23 @@ Mother residual atoms:
 - `observer-residual-8bdb867fc051e5a905bf4a833e7613687d575322c0f5437ea92e2c33b1dec146` (2)
   - `no-third-collapse-dynamics-interpretive-premise`
   - `same-system-record-state-throughout-premise`
-- `observer-residual-8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490` (5)
+- `observer-residual-8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490` (6)
   - `arbitrary-observer-window-full-matrix-identification`
+  - `exact-matrix-unit-zero-error-certificate`
   - `general-prime-qudit-weyl-relations`
   - `general-robertson-variance-uncertainty`
   - `observer-window-generated-structure-claim`
   - `prime-power-tensor-factor-decomposition`
 - `observer-residual-8d5c4162772d2b6674b2c46ab17550880a2670b134d5893a353659610617b8fe` (1)
   - `two-hundred-channel-numeric-certificate-prose`
-- `observer-residual-92312c5c0791ca42042265d47e65559acb1efa5a59e9e7db7f6e9fa6786b1a38` (5)
+- `observer-residual-92312c5c0791ca42042265d47e65559acb1efa5a59e9e7db7f6e9fa6786b1a38` (6)
   - `central-winding-unitary-over-torus`
+  - `exact-matrix-unit-zero-error-certificate`
   - `general-robertson-variance-uncertainty`
   - `noncommutative-algebra-bundle-over-torus`
   - `prime-power-tensor-factor-decomposition`
   - `universal-c-star-crossed-product-identification`
-- `observer-residual-a64c69d2b846d7fdf3c80468898e853257ad9a378bf7da6c74c3370ea865762c` (5)
-  - `forgetting-quantity-dpi-nonneg-beyond-finite-classical-strict-positive`
+- `observer-residual-a64c69d2b846d7fdf3c80468898e853257ad9a378bf7da6c74c3370ea865762c` (4)
   - `joint-coherent-reversal-of-all-copies`
   - `know-forgot-two-time-relation`
   - `multi-copy-erasure-quantifier`
@@ -262,8 +263,7 @@ Mother residual atoms:
   - `discrete-crossed-product-uniqueness`
   - `full-crossed-product-identification`
   - `observer-read-write-forces-structure`
-- `observer-residual-b2dd3d2b2261d86b6e8b20f45ca56ef7b3da87d833f50e38279f562c2a1a66c9` (6)
-  - `forgetting-quantity-dpi-nonneg-beyond-finite-classical-strict-positive`
+- `observer-residual-b2dd3d2b2261d86b6e8b20f45ca56ef7b3da87d833f50e38279f562c2a1a66c9` (5)
   - `know-forgot-two-time-relation`
   - `multi-copy-erasure-quantifier`
   - `six-state-finite-certificates`
