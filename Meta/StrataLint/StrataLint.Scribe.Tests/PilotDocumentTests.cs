@@ -128,11 +128,20 @@ public sealed class DocumentDiscoveryTests
             Assert.Contains(anchor.FormalTruthRepoPath, report.Files.Keys.Select(static path => path.Value));
         });
 
-        // 只验生产者确定性,不比对提交树。`Blueprint/**/*.md` 四项合取全真(producer
-        // ScribeEmitter 受治理;输入闭包 = 编入 Scribe 程序集的 *.scribe.cs 与 Lean report,
-        // 皆受治理;逐字节可重建;FILEMAP `consumed_by = ["reader"]`,无机器消费者、无独立
-        // 权威)⇒ 它是投影,而投影的字节钉定按 CLAUDE.md 第〇节必须删除:f 与真源都已被守,
-        // 再守一遍不增加任何信息。提交的 md 是人读快照,陈旧无害于任何判决。
+        // 只验生产者确定性,不在**这里**比对提交树。
+        //
+        // 【2026-08-11 勘误】本注释原写「提交的 md 是人读快照,陈旧无害于任何判决」——**那是假的**,
+        // 由第十一轮面板证伪。committed `Blueprint/**/*.md` 的字节**仍在准入路径上承重**:
+        //   `Engine/Digestion/DigestionStatusEvaluator.cs:587` 从候选快照读该 md,
+        //   `:591-594` 断言 `receipt.EmissionSha256 == Compute(emission.RawBytes)`,不等即
+        //   `scribe-emission-mismatch`;调用链 `Rules/RepositoryRules.cs:112`
+        //   → `Rules/Backfill/BackfillInventoryRule.cs:229` → 该 evaluator。
+        //   生产测试 `StrataLint.Tests/Admission/ProductionEnvironmentCoverTests.cs:127-129`
+        //   钉死其为红。此外 `Scribe/Emission/ScribeEmitter.cs:233-242` 也仍对提交树逐字节比对。
+        // 亦即 FILEMAP 的 `consumed_by = ["reader"]` 并未反映实情:它有机器消费者。
+        //
+        // 故删这一行**不等于**「Blueprint 的投影守卫已清除」。它只是移除了**测试侧的一份副本**;
+        // 准入侧那两处仍在,是否该删须另行按四项合取裁决(裁决时不得再以 FILEMAP 自声明字段为据)。
         foreach (var definition in DocumentDefinitions.All)
         {
             var first = CanonicalMarkdownWriter.Write(definition.Document, report, citations, graph);
