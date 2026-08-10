@@ -3,7 +3,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
-// Phase 1 cover transaction: bind one already-proven Lean declaration to an
+// Phase 1 cover transaction: bind one or more already-proven Lean declarations to an
 // existing open residual atom by writing coverage_gids + coverage/scribe
 // receipts. cover is the narrow sibling of ingest — it reuses
 // DigestionStatusEvaluator for the structural gates and never adds residual
@@ -47,7 +47,7 @@ namespace StrataLint.Cli;
 //    command only consumes it. Receipt lifecycle (deletion after absorption) is a
 //    workflow concern.
 //  - kind exclusion gate (spec §5): a producer responsibility, not cover's.
-internal static class CoverAtomCommand
+internal static partial class CoverAtomCommand
 {
     internal static CommandResult Run(
         string repositoryRoot,
@@ -71,59 +71,83 @@ internal static class CoverAtomCommand
             var document = LoadDocument(current);
             var baselineDocument = LoadDocument(baseline);
 
-            // Gate ②(a): the cover GID must select a Lean declaration, not just a
+            // Gate ②(a): every cover GID must select a Lean declaration, not just a
             // module (module-level coverage is ingest's residual boundary, not a
             // single truth atom).
-            if (!Gid.TryParse(options.Gid, out var gid)
-                || gid.ToTarget() is not Target.Formal { Declaration: not null })
+            var gids = options.Gids.Select(gidText =>
             {
-                throw new InvalidOperationException(
-                    $"cover GID must select a Lean declaration: {options.Gid}");
-            }
+                if (!Gid.TryParse(gidText, out var gid)
+                    || gid.ToTarget() is not Target.Formal { Declaration: not null })
+                {
+                    throw new InvalidOperationException(
+                        $"cover GID must select a Lean declaration: {gidText}");
+                }
 
-            // Gate ①: locate the single open, still-uncovered target atom.
+                return gid;
+            }).ToImmutableArray();
+
+            // Gate ①: locate the single target atom. An initial cover requires an
+            // open atom; a hosted extension adds at least one declaration while
+            // retaining all existing coverage.
             var sources = document.RequireDigestionSources();
-            var target = LocateTarget(sources, options.AtomId);
+            var target = LocateTarget(sources, options.AtomId, options.Gids);
+            var existingGids = target.CoverageGids.ToImmutableHashSet(StringComparer.Ordinal);
+            var addedGids = options.Gids.Where(gid => !existingGids.Contains(gid)).ToImmutableArray();
+            var report = leanReportSource.Load(current);
+            var lean = ValidateLean(current, report);
+            var verifiedScribeEmissions = scribeEmissionVerifier.Verify(report);
+            var beforeEvaluation = DigestionStatusEvaluator.Evaluate(
+                document,
+                current,
+                lean,
+                verifiedScribeEmissions,
+                baselineDocument);
+            RequireNoFindings(beforeEvaluation);
 
             // Gate ②(b): anti-Goodhart — cover may only deposit a declaration that
             // the baseline ledger did not already bind.
-            if (BaselineCoverageGids(baselineDocument).Contains(options.Gid))
+            var baselineGids = BaselineCoverageGids(baselineDocument);
+            if (addedGids.FirstOrDefault(baselineGids.Contains) is { } baselineConflict)
             {
                 throw new InvalidOperationException(
-                    $"cover GID {options.Gid} is already bound in the baseline ledger");
+                    $"cover GID {baselineConflict} is already bound in the baseline ledger");
             }
 
-            // Gate ②(c) is now a declaration-signature match against the base-owned
-            // pre-committed formalization receipt (spec §4a); it runs after the
-            // Closed-deletable gate below so that a genuinely missing/ambiguous
-            // declaration reports through the standard gap path first. See the
-            // `DigestionFormalizationReceipt.Load(baseline, …)` + RequireEnvelopeBinding
-            // + RequireSignatureMatch block near the end of the transaction.
-
-            // Gate ⑤: the declaration may not already be bound to any other atom in
-            // the candidate ledger (unique GID -> atom mapping).
-            if (FindCrossAtomBinding(sources, options.AtomId, options.Gid) is { } conflict)
+            // Gate ⑤: the old unique GID -> atom rejection remains unchanged except
+            // for legacy duplicate hosts of the same residual. That narrow path is
+            // available only when both atoms have base-owned, fully validated v1
+            // receipts whose primary GIDs are already bound.
+            foreach (var gidText in options.Gids)
             {
-                throw new InvalidOperationException(
-                    $"cover GID {options.Gid} is already bound to atom {conflict}");
+                foreach (var conflict in FindCrossAtomBindings(sources, options.AtomId, gidText))
+                {
+                    RequireSharedResidualHost(
+                        target,
+                        conflict,
+                        baselineDocument,
+                        baseline,
+                        report,
+                        gidText);
+                }
             }
 
-            var receipts = BuildReceipts(target, gid, current);
+            var addedReceipts = gids
+                .Where(gid => !existingGids.Contains(gid.Value))
+                .Select(gid => BuildReceipts(target, gid, current))
+                .ToImmutableArray();
             var covered = target with
             {
-                CoverageGids = ImmutableArray.Create(options.Gid),
+                CoverageGids = target.CoverageGids.AddRange(addedGids),
                 Receipts = target.Receipts with
                 {
-                    Coverage = ImmutableArray.Create(receipts.Coverage),
-                    Scribe = ImmutableArray.Create(receipts.Scribe),
+                    Coverage = target.Receipts.Coverage.AddRange(
+                        addedReceipts.Select(static receipt => receipt.Coverage)),
+                    Scribe = target.Receipts.Scribe.AddRange(
+                        addedReceipts.Select(static receipt => receipt.Scribe)),
                 },
                 ReceiptSyntax = null,
             };
             var plannedDocument = ReplaceEntry(document, options.AtomId, covered);
-
-            var report = leanReportSource.Load(current);
-            var lean = ValidateLean(current, report);
-            var verifiedScribeEmissions = scribeEmissionVerifier.Verify(report);
 
             var derived = DigestionStatusEvaluator.Evaluate(
                 plannedDocument,
@@ -174,13 +198,43 @@ internal static class CoverAtomCommand
                 lean,
                 verifiedScribeEmissions);
 
-            // Gate ③/④/⑥: the covered atom must reach a deletable *Closed* state
-            // with zero gaps — spec §3.4 ③ requires TruthDag=Closed and no
-            // sorry/private/unregistered axiom, so an absorbed-tail (any
-            // non-standard axiom present) is rejected, not written. Anything short
-            // of Closed — a missing/sorry-only declaration, an unverified Scribe
-            // emission, a drifted receipt — is refused.
-            RequireClosedDeletable(EvaluationFor(evaluation, options.AtomId));
+            var finalTarget = EvaluationFor(evaluation, options.AtomId);
+            if (target.CoverageGids.Length == 0)
+            {
+                // Initial cover keeps the old semantics exactly: the atom must become
+                // deletable Closed with no residual gap.
+                RequireClosedDeletable(finalTarget);
+            }
+            else
+            {
+                // A validated receipt host may append Closed declarations without
+                // pretending that its remaining semantic residuals were discharged.
+                // Its migration/truth projection and gap set may only stay equal or
+                // improve.
+                RequireHostedExtension(
+                    EvaluationFor(beforeEvaluation, options.AtomId),
+                    finalTarget,
+                    addedGids,
+                    finalSnapshot,
+                    lean);
+            }
+
+            var receipt = DigestionFormalizationReceipt.Load(baseline, options.EnvelopePath);
+            RequireEnvelopeBinding(receipt, options, target);
+            RequireSignatureMatch(
+                receipt,
+                gids.Single(gid => string.Equals(gid.Value, receipt.PrimaryGid, StringComparison.Ordinal)),
+                report);
+            var hostedGids = target.CoverageGids.Length == 0
+                ? []
+                : receipt.HostedExtensions
+                    .Select(static extension => extension.Gid)
+                    .Concat(addedGids)
+                    .Distinct(StringComparer.Ordinal);
+            foreach (var hostedGid in hostedGids)
+            {
+                RequireHostedExtensionSignature(receipt, hostedGid, report);
+            }
 
             // Gate ②(c): base-owned pre-committed formalization receipt +
             // declaration-signature match (spec §4a). Replaces the old file-level
@@ -209,17 +263,13 @@ internal static class CoverAtomCommand
             // still passes signature-match. That is the separate
             // digestion-fidelity-attestation-v1 / multi-model consensus gate, out of
             // scope for this block.
-            var receipt = DigestionFormalizationReceipt.Load(baseline, options.EnvelopePath);
-            RequireEnvelopeBinding(receipt, options, target);
-            RequireSignatureMatch(receipt, gid, report);
-
             var ledgerUpdates = IngestCommand.LedgerUpdates(currentRaw, finalRaw);
             var changed = ledgerUpdates.Length > 0;
             IngestCommand.ApplyLedgerUpdatesAtomically(repositoryRoot, currentRaw, ledgerUpdates);
 
             return new CommandResult(
                 true,
-                $"COVER atom_id={options.AtomId} gid={options.Gid} "
+                $"COVER atom_id={options.AtomId} gid={string.Join(',', options.Gids)} "
                 + $"ledger_changed={changed.ToString().ToLowerInvariant()}\n"
                 + DigestStatusCommand.RenderText(evaluation),
                 string.Empty);
@@ -347,7 +397,8 @@ internal static class CoverAtomCommand
 
     private static DigestionLedgerEntry LocateTarget(
         ImmutableArray<DigestionLedgerSource> sources,
-        string atomId)
+        string atomId,
+        ImmutableArray<string> requestedGids)
     {
         var matches = sources
             .SelectMany(static source => source.Entries)
@@ -364,18 +415,26 @@ internal static class CoverAtomCommand
         }
 
         var entry = matches[0];
-        if (entry.CoverageGids.Length > 0)
+        if (entry.CoverageGids.Length == 0 && requestedGids.Length != 1)
         {
             throw new InvalidOperationException(
-                $"cover atom {atomId} already has coverage: "
-                + string.Join(", ", entry.CoverageGids));
+                $"initial cover requires exactly one --gid for open atom {atomId}");
         }
 
-        if (entry.ProjectedStatus.Truth != DigestionTruthState.Open)
+        if (entry.CoverageGids.Length == 0
+            && entry.ProjectedStatus.Truth != DigestionTruthState.Open)
         {
             throw new InvalidOperationException(
                 $"cover atom {atomId} is not open "
                 + $"(truth={DigestionStatusNames.Truth(entry.ProjectedStatus.Truth)})");
+        }
+
+        var existing = entry.CoverageGids.ToImmutableHashSet(StringComparer.Ordinal);
+        if (entry.CoverageGids.Length > 0 && requestedGids.All(existing.Contains))
+        {
+            throw new InvalidOperationException(
+                $"cover atom {atomId} already has coverage: "
+                + string.Join(", ", entry.CoverageGids));
         }
 
         return entry;
@@ -386,17 +445,6 @@ internal static class CoverAtomCommand
         baselineDocument.RequireDigestionEntries()
             .SelectMany(static entry => entry.CoverageGids)
             .ToImmutableHashSet(StringComparer.Ordinal);
-
-    private static string? FindCrossAtomBinding(
-        ImmutableArray<DigestionLedgerSource> sources,
-        string atomId,
-        string gid) =>
-        sources
-            .SelectMany(static source => source.Entries)
-            .Where(entry => !string.Equals(entry.AtomId, atomId, StringComparison.Ordinal))
-            .Where(entry => entry.CoverageGids.Contains(gid, StringComparer.Ordinal))
-            .Select(static entry => entry.AtomId)
-            .FirstOrDefault();
 
     private static (DigestionCoverageReceipt Coverage, DigestionScribeReceipt Scribe) BuildReceipts(
         DigestionLedgerEntry entry,
@@ -497,10 +545,18 @@ internal static class CoverAtomCommand
                 $"cover envelope atom_id {receipt.AtomId} does not match --cover-atom {options.AtomId}");
         }
 
-        if (!string.Equals(receipt.PrimaryGid, options.Gid, StringComparison.Ordinal))
+        if (target.CoverageGids.Length > 0
+            && !target.CoverageGids.Contains(receipt.PrimaryGid, StringComparer.Ordinal))
         {
             throw new InvalidOperationException(
-                $"cover envelope primary_gid {receipt.PrimaryGid} does not match --gid {options.Gid}");
+                $"cover envelope primary_gid {receipt.PrimaryGid} does not match existing coverage "
+                + $"for atom {options.AtomId}");
+        }
+
+        if (!options.Gids.Contains(receipt.PrimaryGid, StringComparer.Ordinal))
+        {
+            throw new InvalidOperationException(
+                $"cover envelope primary_gid {receipt.PrimaryGid} does not match --gid values");
         }
 
         if (!string.Equals(receipt.CasRef, target.Fingerprints.RawSha256, StringComparison.Ordinal)
@@ -515,23 +571,56 @@ internal static class CoverAtomCommand
     private static void RequireSignatureMatch(
         DigestionFormalizationReceipt receipt,
         Gid gid,
+        LeanAxiomReport report) =>
+        RequireSignatureMatch(gid, report, receipt.Signature);
+
+    private static void RequireHostedExtensionSignature(
+        DigestionFormalizationReceipt receipt,
+        string gidText,
         LeanAxiomReport report)
+    {
+        var matches = receipt.HostedExtensions
+            .Where(extension => string.Equals(extension.Gid, gidText, StringComparison.Ordinal))
+            .ToArray();
+        if (matches.Length != 1)
+        {
+            throw new InvalidOperationException(
+                $"cover hosted extension {gidText} has no base-owned pre-committed signature");
+        }
+
+        if (!Gid.TryParse(gidText, out var gid))
+        {
+            throw new InvalidOperationException(
+                $"cover hosted extension GID is invalid: {gidText}");
+        }
+
+        RequireSignatureMatch(gid, report, matches[0].Signature);
+    }
+
+    private static void RequireSignatureMatch(
+        Gid gid,
+        LeanAxiomReport report,
+        DigestionFormalizationSignature pinned)
     {
         // By the time this runs the Closed-deletable gate has already established the
         // declaration exists and is unique, so ResolveSignature is expected to
         // succeed; its fail-closed throw remains a defensive invariant guard.
         var deposited = DigestionFormalizationReceipt.ResolveSignature(gid, report);
-        if (deposited != receipt.Signature)
+        if (deposited != pinned)
         {
             throw new InvalidOperationException(
                 $"cover declaration {gid.Value} signature "
                 + $"({deposited.NameKey}, {deposited.Kind}, {deposited.Type}) "
                 + "does not match the pre-committed signature "
-                + $"({receipt.Signature.NameKey}, {receipt.Signature.Kind}, {receipt.Signature.Type})");
+                + $"({pinned.NameKey}, {pinned.Kind}, {pinned.Type})");
         }
     }
 
-    private sealed record CoverArguments(string AtomId, string Gid, string BaselineRevision, string EnvelopePath);
+    private sealed record CoverArguments(
+        string AtomId,
+        ImmutableArray<string> Gids,
+        string BaselineRevision,
+        string EnvelopePath);
 
     private sealed record AlignArguments(string AtomId, string Gid);
 
@@ -578,7 +667,7 @@ internal static class CoverAtomCommand
     private static CoverArguments ParseArguments(IReadOnlyList<string> arguments)
     {
         string? atomId = null;
-        string? gid = null;
+        var gids = ImmutableArray.CreateBuilder<string>();
         string? baselineRevision = null;
         string? envelopePath = null;
         for (var index = 0; index < arguments.Count; index += 2)
@@ -593,8 +682,8 @@ internal static class CoverAtomCommand
                 case "--cover-atom" when atomId is null:
                     atomId = arguments[index + 1];
                     break;
-                case "--gid" when gid is null:
-                    gid = arguments[index + 1];
+                case "--gid":
+                    gids.Add(arguments[index + 1]);
                     break;
                 case "--base" when baselineRevision is null:
                     baselineRevision = arguments[index + 1];
@@ -608,18 +697,20 @@ internal static class CoverAtomCommand
         }
 
         if (string.IsNullOrWhiteSpace(atomId)
-            || string.IsNullOrWhiteSpace(gid)
+            || gids.Count == 0
+            || gids.Any(string.IsNullOrWhiteSpace)
+            || gids.Distinct(StringComparer.Ordinal).Count() != gids.Count
             || string.IsNullOrWhiteSpace(baselineRevision)
             || string.IsNullOrWhiteSpace(envelopePath))
         {
             throw Usage();
         }
 
-        return new CoverArguments(atomId, gid, baselineRevision, envelopePath);
+        return new CoverArguments(atomId, gids.ToImmutable(), baselineRevision, envelopePath);
     }
 
     private static InvalidOperationException Usage() => new(
-        "USAGE: StrataLint cover-atom --cover-atom ATOM_ID --gid DECL_GID --base REV "
+        "USAGE: StrataLint cover-atom --cover-atom ATOM_ID --gid DECL_GID [--gid DECL_GID ...] --base REV "
         + "--envelope RECEIPT_PATH");
 
     private static BackfillInventoryDocument LoadDocument(RepositorySnapshot snapshot) =>

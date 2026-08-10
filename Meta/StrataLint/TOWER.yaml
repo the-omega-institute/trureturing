@@ -60,11 +60,11 @@ components:
   - id: anchor-vocabulary
     kind: repository-files
     members:
-      - Meta/StrataLint/StrataLint.Scribe/Anchors/Anchor.cs
-      - Meta/StrataLint/StrataLint.Scribe/Anchors/AnchorSchemes.cs
-      - Meta/StrataLint/StrataLint.Scribe/Anchors/AnchorDefinition.cs
-      - Meta/StrataLint/StrataLint.Scribe/Catalog/AnchorCatalogDefinitions.cs
-      - Meta/StrataLint/StrataLint.Scribe/Catalog/ExternalAnchorManifest.cs
+      - Meta/StrataLint/StrataLint.Engine/Anchors/Anchor.cs
+      - Meta/StrataLint/StrataLint.Engine/Anchors/AnchorSchemes.cs
+      - Meta/StrataLint/StrataLint.Engine/Anchors/AnchorDefinition.cs
+      - Meta/StrataLint/StrataLint.Engine/Anchors/AnchorCatalogDefinitions.cs
+      - Meta/StrataLint/StrataLint.Engine/Anchors/ExternalAnchorManifest.cs
     judged_by:
       - anchor-catalog-projection
       - anchor-scribe-tests
@@ -82,9 +82,12 @@ components:
   - id: anchor-reference-rule
     kind: repository-files
     members:
-      - Meta/StrataLint/StrataLint.Engine/Rules/Anchors/AnchorCatalogLoader.cs
+      - Meta/StrataLint/StrataLint.Engine/Anchors/Anchor.cs
+      - Meta/StrataLint/StrataLint.Engine/Anchors/AnchorCatalogDefinitions.cs
+      - Meta/StrataLint/StrataLint.Engine/Anchors/AnchorDefinition.cs
+      - Meta/StrataLint/StrataLint.Engine/Anchors/AnchorSchemes.cs
+      - Meta/StrataLint/StrataLint.Engine/Anchors/ExternalAnchorManifest.cs
       - Meta/StrataLint/StrataLint.Engine/Rules/Anchors/AnchorReferenceRule.cs
-      - Meta/StrataLint/StrataLint.Engine/Rules/Anchors/ExternalAnchorSyntax.cs
       - Meta/StrataLint/StrataLint.Engine/Rules/RepositoryRules.Applicability.cs
       - Meta/StrataLint/StrataLint.Engine/Rules/RepositoryRules.Content.cs
       - Meta/StrataLint/StrataLint.Engine/Rules/RepositoryRules.cs
@@ -208,6 +211,13 @@ components:
     kind: ci-jobs
     members:
       - candidate-engineering
+    judged_by:
+      - dev-baseline
+    verification: verified
+  - id: report-ci
+    kind: ci-jobs
+    members:
+      - lean-inspect
     judged_by:
       - dev-baseline
     verification: verified
