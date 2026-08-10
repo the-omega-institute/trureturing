@@ -454,9 +454,15 @@ internal static class RouteCapacityPreflight
             .Select(domain => $"{domain}={currentPaths.Count(path =>
                 DirectoryOf(path) == bucketPrefix + domain
                 && !RepositoryRules.IsCapacityExcluded(path))}");
+        var coordinateDirectory = targetDirectory.StartsWith("Blueprint/", StringComparison.Ordinal)
+            ? targetDirectory["Blueprint/".Length..]
+            : targetDirectory;
+        var exits = coordinateDirectory.Count(static character => character == '/') == 3
+            ? "choose a sibling subdomain or new subdomain; nesting is limited to one subdomain level"
+            : "choose a sibling domain or new domain, or create a subdomain in this domain";
 
         return $"bucket at capacity — 只裂不迁: {targetDirectory} projected occupancy {projectedOccupancy} "
-            + $"exceeds maximum {RepositoryRules.DirectoryFileLimit}; split only, choose a sibling domain or new domain. "
+            + $"exceeds maximum {RepositoryRules.DirectoryFileLimit}; split only, {exits}. "
             + $"Same-stratum buckets: {string.Join(", ", bucketCounts)}";
     }
 
