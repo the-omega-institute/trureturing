@@ -6,7 +6,7 @@ Forms in V at discriminant 4k are in bijection with the Eisenstein representatio
 
 **Theorem 1.1 (Forms at discriminant 4k biject with Eisenstein representations).**
 
-$$\left\{(A,B,C)\in\mathbb{Z}^{3}\mid B=-2(A+C), B^{2}-4AC=4k\}\right \to \left\{(A,C)\in\mathbb{Z}^{2}\mid A^{2}+AC+C^{2}=k\}\right,\quad(A,B,C)\mapsto(A,C)\quad\text{ is bijective}.$$
+$$\left\{(A,B,C)\in\mathbb{Z}^{3}\mid B=-2(A+C), B^{2}-4AC=4k\right\} \to \left\{(A,C)\in\mathbb{Z}^{2}\mid A^{2}+AC+C^{2}=k\right\},\quad(A,B,C)\mapsto(A,C)\quad\text{ is bijective}.$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/PrimeForms/EisensteinDiscriminant.forms_biject_eisenstein_representations` (`✓ std3`). ∎
 
