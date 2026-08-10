@@ -4,6 +4,7 @@ fingerprints:
   normalized_sha256: sha256:b2dd3d2b2261d86b6e8b20f45ca56ef7b3da87d833f50e38279f562c2a1a66c9
 cas_ref: sha256:b2dd3d2b2261d86b6e8b20f45ca56ef7b3da87d833f50e38279f562c2a1a66c9
 coverage_gids:
+  - D5/S3/DivergenceSupport/ZeroSupportDefect.dpi_defect_nonneg_zero_support
   - D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_eq_address_blocks
   - D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_offDiagonal_eq_zero
   - D5/S3/Divergence/DpiDefect.dpi_defect_nonneg
@@ -13,7 +14,6 @@ receipts:
   unresolved_subitems:
     - know-forgot-two-time-relation
     - six-state-finite-certificates
-    - forgetting-quantity-dpi-nonneg-beyond-finite-classical-strict-positive
     - v2-entropy-monotone-capacity-decrease
     - v3-revival-spectrum-diophantine-grading
     - multi-copy-erasure-quantifier
