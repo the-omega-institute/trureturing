@@ -160,6 +160,7 @@ public sealed partial class MakeWorkflowTests
         var preflight = File.ReadAllText(Path.Combine(root, PreflightScriptPath));
         var sharedGate = File.ReadAllText(Path.Combine(root, ".github", "scripts", "harness-gate.sh"));
         var perfEvents = File.ReadAllText(Path.Combine(root, PerfEventScriptPath));
+        var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
 
         Assert.Contains("make -C candidate dotnet", workflow, StringComparison.Ordinal);
         Assert.Contains("make -C candidate test", workflow, StringComparison.Ordinal);
@@ -172,6 +173,9 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("gate_timing_summary", localGate, StringComparison.Ordinal);
         Assert.Contains("STRATALINT_TIMING", sharedGate, StringComparison.Ordinal);
         Assert.Contains("gate_stage_timing", sharedGate, StringComparison.Ordinal);
+        Assert.Contains("mark restore-judge", sharedGate, StringComparison.Ordinal);
+        Assert.Contains("mark build-judge", sharedGate, StringComparison.Ordinal);
+        Assert.DoesNotContain("PrAEffectiveness", makefile, StringComparison.Ordinal);
         Assert.DoesNotContain("STRATALINT_TIMING:-1", sharedGate, StringComparison.Ordinal);
         Assert.Contains("$JUDGE_ROOT/.github/scripts/harness-gate.sh", localGate, StringComparison.Ordinal);
         Assert.Contains("--candidate-lean-report", localGate, StringComparison.Ordinal);
