@@ -198,7 +198,8 @@ public static class AdmissionPipeline
         AcceptedLeanClosure baselineLean,
         RawChangeSet changes,
         MetaClear metaClear,
-        VerifiedScribeEmissions? verifiedScribeEmissions)
+        VerifiedScribeEmissions? verifiedScribeEmissions,
+        RepositorySnapshot? forkPoint = null)
         => Evaluate(
             current,
             baseline,
@@ -207,7 +208,8 @@ public static class AdmissionPipeline
             baselineLean,
             changes,
             MetaEvaluationProfile.ForClear(metaClear),
-            verifiedScribeEmissions);
+            verifiedScribeEmissions,
+            forkPoint);
 
     internal static AdmissionOutcome EvaluateProtectedSurface(
         RepositorySnapshot current,
@@ -217,7 +219,8 @@ public static class AdmissionPipeline
         AcceptedLeanClosure baselineLean,
         RawChangeSet changes,
         MetaChangeSet protectedChanges,
-        VerifiedScribeEmissions? verifiedScribeEmissions = null)
+        VerifiedScribeEmissions? verifiedScribeEmissions = null,
+        RepositorySnapshot? forkPoint = null)
         => Evaluate(
             current,
             baseline,
@@ -226,7 +229,8 @@ public static class AdmissionPipeline
             baselineLean,
             changes,
             MetaEvaluationProfile.ForProtectedSurface(protectedChanges),
-            verifiedScribeEmissions);
+            verifiedScribeEmissions,
+            forkPoint);
 
     private static AdmissionOutcome Evaluate(
         RepositorySnapshot current,
@@ -236,7 +240,8 @@ public static class AdmissionPipeline
         AcceptedLeanClosure baselineLean,
         RawChangeSet changes,
         MetaEvaluationProfile metaEvaluation,
-        VerifiedScribeEmissions? verifiedScribeEmissions)
+        VerifiedScribeEmissions? verifiedScribeEmissions,
+        RepositorySnapshot? forkPoint = null)
     {
         var context = RuleEvaluationContext.Create(
             current,
@@ -246,7 +251,8 @@ public static class AdmissionPipeline
             baselineLean,
             changes,
             metaEvaluation,
-            verifiedScribeEmissions);
+            verifiedScribeEmissions,
+            forkPoint);
         return RuleCatalog.Default.Execute(context) switch
         {
             RuleExecutionOutcome.Completed completed => Complete(
