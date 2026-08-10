@@ -55,12 +55,10 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains(PerfReportScriptPath, Recipe(makefile, "perf-report"), StringComparison.Ordinal);
         Assert.Contains("Golden/perf-budgets.toml", Recipe(makefile, "perf-report"), StringComparison.Ordinal);
         Assert.Contains(WorktreeInitScriptPath, Recipe(makefile, "worktree"), StringComparison.Ordinal);
-        Assert.Equal(
-            $"\t@/bin/bash {PrShepherdScriptPath} start $(INTERVAL) $(CYCLES)",
-            Recipe(makefile, "pr-watch"));
-        Assert.Equal(
-            $"\t@/bin/bash {PrShepherdScriptPath} status",
-            Recipe(makefile, "pr-watch-status"));
+        Assert.Contains(PrOpenScriptPath, Recipe(makefile, "pr-open"), StringComparison.Ordinal);
+        Assert.Contains("--head \"$(HEAD)\"", Recipe(makefile, "pr-open"), StringComparison.Ordinal);
+        Assert.Contains(PrUpdateScriptPath, Recipe(makefile, "pr-update"), StringComparison.Ordinal);
+        Assert.Contains("--pr \"$(PR)\"", Recipe(makefile, "pr-update"), StringComparison.Ordinal);
         Assert.Contains(
             " gate-authority --old-build \"$(OLD_BUILD)\" --out \"$(OUT)\"",
             Recipe(makefile, "refactor-p0-0-gate-authority"),
@@ -84,47 +82,11 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("dry-run", output, StringComparison.Ordinal);
         Assert.Contains("FORCE=1", output, StringComparison.Ordinal);
         Assert.Contains("values", output, StringComparison.OrdinalIgnoreCase);
-        var prWatchHelp = Assert.Single(
+        var prUpdateHelp = Assert.Single(
             output.Split('\n'),
-            static line => line.StartsWith("make pr-watch ", StringComparison.Ordinal));
-        var policyClauses = prWatchHelp.Split(
-            ';',
-            StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
-        var stalePolicyClause = Assert.Single(
-            policyClauses,
-            static clause => Regex.IsMatch(
-                clause,
-                @"\bstale\b",
-                RegexOptions.CultureInvariant));
-        Assert.All(
-            new[]
-            {
-                @"\bstale\b",
-                @"\bBEHIND\b",
-                @"\bCONFLICTING\b",
-                @"\bpersistent-worktree\b",
-                @"\bpath classification\b",
-                @"\b(?:regen|recompute)\b",
-                @"\b(?:alert|warn)\b",
-            },
-            pattern => Assert.Matches(
-                new Regex(pattern, RegexOptions.CultureInvariant),
-                stalePolicyClause));
-        var updateBranchClause = Assert.Single(
-            policyClauses,
-            static clause => Regex.IsMatch(
-                clause,
-                @"\bother\s+BEHIND\b",
-                RegexOptions.CultureInvariant));
-        Assert.All(
-            new[] { @"\bother\s+BEHIND\b", @"\bupdate-branch\b" },
-            pattern => Assert.Matches(
-                new Regex(pattern, RegexOptions.CultureInvariant),
-                updateBranchClause));
-        Assert.DoesNotMatch(
-            new Regex(
-                @"\b(?:do\s+not|never|excludes|disables|prevents)\b",
-                RegexOptions.CultureInvariant | RegexOptions.IgnoreCase),
-            prWatchHelp);
+            static line => line.StartsWith("make pr-update ", StringComparison.Ordinal));
+        Assert.Contains("BEHIND", prUpdateHelp, StringComparison.Ordinal);
+        Assert.Contains("auto-merge armed", prUpdateHelp, StringComparison.Ordinal);
+        Assert.Contains("once", prUpdateHelp, StringComparison.Ordinal);
     }
 }
