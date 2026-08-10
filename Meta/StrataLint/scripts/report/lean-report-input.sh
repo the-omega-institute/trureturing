@@ -9,12 +9,16 @@ REPOSITORY=""
 REPORT=""
 MANIFEST=""
 BASELINE=0
+PRODUCER_OVERRIDE=""
+INSPECTOR_OVERRIDE=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --repository) REPOSITORY="$2"; shift 2 ;;
     --report) REPORT="$2"; shift 2 ;;
     --manifest) MANIFEST="$2"; shift 2 ;;
     --baseline) BASELINE=1; shift ;;
+    --producer) PRODUCER_OVERRIDE="$2"; shift 2 ;;
+    --inspector) INSPECTOR_OVERRIDE="$2"; shift 2 ;;
     *) echo "lean-report-input: unknown argument '$1'" >&2; exit 2 ;;
   esac
 done
@@ -23,6 +27,10 @@ done
   || { echo "usage: lean-report-input.sh address|verify|modules|manifest|verify-manifest --repository DIR [--report FILE] [--manifest FILE]" >&2; exit 2; }
 [[ -n "$REPOSITORY" && "$REPOSITORY" == /* && -d "$REPOSITORY" ]] \
   || { echo "lean-report-input: --repository requires an absolute directory" >&2; exit 2; }
+[[ -z "$PRODUCER_OVERRIDE" || ( "$PRODUCER_OVERRIDE" == /* && -f "$PRODUCER_OVERRIDE" ) ]] \
+  || { echo "lean-report-input: --producer requires an absolute file" >&2; exit 2; }
+[[ -z "$INSPECTOR_OVERRIDE" || ( "$INSPECTOR_OVERRIDE" == /* && -f "$INSPECTOR_OVERRIDE" ) ]] \
+  || { echo "lean-report-input: --inspector requires an absolute file" >&2; exit 2; }
 REPOSITORY="$(cd "$REPOSITORY" && pwd -P)"
 if [[ "$COMMAND" == "verify" || "$COMMAND" == "verify-manifest" ]]; then
   [[ -n "$REPORT" && "$REPORT" == /* && -s "$REPORT" ]] \
@@ -56,11 +64,38 @@ append_producer_manifest_entry() {
   local manifest="$1"
   local relative="$2"
   local path="$REPOSITORY/$relative"
+  if [[ "$relative" == "Meta/StrataLint/lean-inspector/inspect.sh" && -n "$PRODUCER_OVERRIDE" ]]; then
+    path="$PRODUCER_OVERRIDE"
+  elif [[ "$relative" == "Meta/StrataLint/lean-inspector/Inspector.lean" && -n "$INSPECTOR_OVERRIDE" ]]; then
+    path="$INSPECTOR_OVERRIDE"
+  fi
   if [[ ! -f "$path" && "$BASELINE" == "1" ]]; then
     printf 'MISSING  %s\n' "$relative" >> "$manifest"
     return 0
   fi
-  append_manifest_entry "$manifest" "$relative"
+  [[ -f "$path" ]] \
+    || { echo "lean-report-input: repository input is absent: $path" >&2; return 2; }
+  printf '%s  %s\n' "$(hash_file "$path")" "$relative" >> "$manifest"
+}
+
+producer_paths() {
+  printf '%s\n' \
+    "Meta/StrataLint/lean-inspector/inspect.sh" \
+    "Meta/StrataLint/lean-inspector/Inspector.lean" \
+    "Meta/StrataLint/scripts/report/lean-report-input.sh" \
+    "Meta/StrataLint/StrataLint.Cli/Commands/LeanReportMergeCommand.cs" \
+    "Meta/StrataLint/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs" \
+    "Meta/StrataLint/StrataLint.Engine/Snapshot/StructuredCanonicalWriter.cs"
+}
+
+producer_sha256() {
+  local manifest="$1"
+  local relative
+  : > "$manifest"
+  while IFS= read -r relative; do
+    append_producer_manifest_entry "$manifest" "$relative" || return 2
+  done < <(producer_paths)
+  hash_file "$manifest"
 }
 
 managed_modules() {
@@ -80,14 +115,7 @@ component_hashes() {
   local producer_manifest="$TMP_ROOT/producer.manifest"
   local config_manifest="$TMP_ROOT/config.manifest"
   local lakefile lakefile_count=0
-  : > "$producer_manifest"
-  append_producer_manifest_entry "$producer_manifest" "Meta/StrataLint/lean-inspector/inspect.sh"
-  append_producer_manifest_entry "$producer_manifest" "Meta/StrataLint/lean-inspector/Inspector.lean"
-  append_producer_manifest_entry "$producer_manifest" "Meta/StrataLint/scripts/report/lean-report-input.sh"
-  append_producer_manifest_entry "$producer_manifest" "Meta/StrataLint/StrataLint.Cli/Commands/LeanReportMergeCommand.cs"
-  append_producer_manifest_entry "$producer_manifest" "Meta/StrataLint/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs"
-  append_producer_manifest_entry "$producer_manifest" "Meta/StrataLint/StrataLint.Engine/Snapshot/StructuredCanonicalWriter.cs"
-  PRODUCER_SHA256="$(hash_file "$producer_manifest")"
+  PRODUCER_SHA256="$(producer_sha256 "$producer_manifest")"
   : > "$config_manifest"
   append_manifest_entry "$config_manifest" "lean-toolchain"
   append_manifest_entry "$config_manifest" "lake-manifest.json"
@@ -185,17 +213,9 @@ repository_address() {
   local sources_list="$TMP_ROOT/sources.list"
   local config_manifest="$TMP_ROOT/config.manifest"
   local preimage="$TMP_ROOT/repository-input.preimage"
-  local resident_root="Meta/StrataLint/lean-inspector"
   local resident_sha256 sources_sha256 config_sha256 lakefile_count=0 lakefile
 
-  : > "$resident_manifest"
-  append_producer_manifest_entry "$resident_manifest" "$resident_root/inspect.sh"
-  append_producer_manifest_entry "$resident_manifest" "$resident_root/Inspector.lean"
-  append_producer_manifest_entry "$resident_manifest" "Meta/StrataLint/scripts/report/lean-report-input.sh"
-  append_producer_manifest_entry "$resident_manifest" "Meta/StrataLint/StrataLint.Cli/Commands/LeanReportMergeCommand.cs"
-  append_producer_manifest_entry "$resident_manifest" "Meta/StrataLint/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs"
-  append_producer_manifest_entry "$resident_manifest" "Meta/StrataLint/StrataLint.Engine/Snapshot/StructuredCanonicalWriter.cs"
-  resident_sha256="$(hash_file "$resident_manifest")"
+  resident_sha256="$(producer_sha256 "$resident_manifest")"
 
   : > "$sources_manifest"
   append_manifest_entry "$sources_manifest" "Trureturing.lean"

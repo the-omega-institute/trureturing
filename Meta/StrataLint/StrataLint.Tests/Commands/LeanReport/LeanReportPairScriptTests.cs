@@ -43,7 +43,6 @@ public sealed class LeanReportPairScriptTests
     [InlineData("toolchain")]
     [InlineData("lakefile")]
     [InlineData("manifest")]
-    [InlineData("inspector")]
     public void AnyRepositoryInputMismatchRunsBothProducers(string mutation)
     {
         using var fixture = new LeanReportPairFixture();
@@ -138,6 +137,17 @@ public sealed class LeanReportPairScriptTests
         Assert.Contains("else\n    \"$SUPERVISOR\" --role \"lean-producer-$side\"", script, StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void ManifestAcceptsABundleProducedByThePairScript()
+    {
+        using var fixture = new LeanReportPairFixture();
+        Assert.Equal(0, fixture.Run().ExitCode);
+
+        var result = fixture.VerifyCandidateManifest();
+
+        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+    }
+
     private static string FindRepositoryRoot()
     {
         for (var current = new DirectoryInfo(AppContext.BaseDirectory);
@@ -183,6 +193,14 @@ public sealed class LeanReportPairScriptTests
                 "def producerFixture : True := by trivial\n",
                 new UTF8Encoding(false));
             File.WriteAllText(producer, FakeProducer, new UTF8Encoding(false));
+            foreach (var root in new[] { candidateRoot, baselineRoot })
+            {
+                File.WriteAllText(Path.Combine(root, "Meta", "StrataLint", "lean-inspector", "inspect.sh"), FakeProducer, new UTF8Encoding(false));
+                File.WriteAllText(
+                    Path.Combine(root, "Meta", "StrataLint", "lean-inspector", "Inspector.lean"),
+                    "def producerFixture : True := by trivial\n",
+                    new UTF8Encoding(false));
+            }
             var chmod = BoundedProcessRunner.Run(
                 "chmod",
                 ["+x", producer],
@@ -258,6 +276,26 @@ public sealed class LeanReportPairScriptTests
         internal IReadOnlyList<JsonElement> ReadMetrics() => File.ReadAllLines(metricsLog)
             .Select(line => JsonDocument.Parse(line).RootElement.Clone())
             .ToArray();
+
+        internal ProcessOutput VerifyCandidateManifest()
+        {
+            var helper = Path.Combine(FindRepositoryRoot(), InputHelperPath);
+            var manifest = Path.Combine(temporary.Path, "candidate-modules.tsv");
+            var generated = BoundedProcessRunner.Run(
+                "bash",
+                [helper, "manifest", "--repository", candidateRoot, "--report", candidateReport],
+                temporary.Path,
+                TimeSpan.FromSeconds(30),
+                1024 * 1024);
+            Assert.Equal(0, generated.ExitCode);
+            File.WriteAllBytes(manifest, generated.StandardOutput);
+            return BoundedProcessRunner.Run(
+                "bash",
+                [helper, "verify-manifest", "--repository", candidateRoot, "--report", candidateReport, "--manifest", manifest],
+                temporary.Path,
+                TimeSpan.FromSeconds(30),
+                1024 * 1024);
+        }
 
         public void Dispose() => temporary.Dispose();
 
