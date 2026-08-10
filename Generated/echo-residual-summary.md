@@ -1,8 +1,15 @@
-<!-- echo-residual-summary:v3 residual=sha256:14b4c66b82bbb09446f3426eaef453b75d0edaff28bdaf7f48e4ffbe51e0a219 -->
+<!-- echo-residual-summary:v3 residual=sha256:5f3c476cd440fd7abcf731d5fea359d7e0708f5fadb81d4d77666030006c3919 -->
 # Echo Residual Summary
 
-- unresolved_subitems: 538
+- unresolved_subitems: 540
 - mother_residual_atom_ids: 87
+
+## quarantined residuals
+
+- quarantined_subitems: 0
+- mother_quarantined_atom_ids: 0
+
+Quarantined residual atoms: none.
 
 ## cross-volume shared residues
 
@@ -266,7 +273,7 @@ Mother residual atoms: none.
 
 ## `observer-quantum-v1`
 
-- unresolved_subitems: 66
+- unresolved_subitems: 68
 - mother_residual_atom_ids: 22
 
 Mother residual atoms:
@@ -276,12 +283,13 @@ Mother residual atoms:
   - `hidden-address-local-variable-interpretation`
   - `kochen-specker-projection-valuation-obstruction`
   - `probability-not-ignorance-conclusion`
-- `observer-residual-17d6f34c071aedeee910eb7ef184769f34ff9379405f985d36503a18f485b73e` (5)
+- `observer-residual-17d6f34c071aedeee910eb7ef184769f34ff9379405f985d36503a18f485b73e` (6)
   - `born-control-numerical-tolerance-certificate`
   - `complete-solution-space-characterization`
   - `gleason-representation-and-uniqueness-dimension-at-least-three`
   - `harmonic-spectral-pruning-certificate`
   - `ledger-publicness-implies-noncontextual-additivity`
+  - `quartic-pricing-context-counterexample`
 - `observer-residual-39801f81b23d4fe1d4823f4470f961be3f2fc21445bfec13de1574cb9fd368bc` (2)
   - `bookkeeping-is-decoherence-identification`
   - `ledger-is-environment-identification`
@@ -339,12 +347,13 @@ Mother residual atoms:
   - `know-forgot-two-time-relation`
   - `multi-copy-erasure-quantifier`
   - `six-state-finite-certificates`
-- `observer-residual-a6962d32cb2d5b0127bc20031cd895bdfb1d232901e5e21eb0a62b55e49930eb` (5)
+- `observer-residual-a6962d32cb2d5b0127bc20031cd895bdfb1d232901e5e21eb0a62b55e49930eb` (6)
   - `born-control-numerical-tolerance-certificate`
   - `complete-solution-space-characterization`
   - `gleason-representation-and-uniqueness-dimension-at-least-three`
   - `harmonic-spectral-pruning-certificate`
   - `ledger-publicness-implies-noncontextual-additivity`
+  - `quartic-pricing-context-counterexample`
 - `observer-residual-a9e4073c36dcdc04163974b80a47d7884f470463b0b0bdd112c4c552bc29a607` (5)
   - `abstract-crossed-product-commutator-formula-beyond-register-representation`
   - `continuous-hidden-flow-rigidity-exclusion`
