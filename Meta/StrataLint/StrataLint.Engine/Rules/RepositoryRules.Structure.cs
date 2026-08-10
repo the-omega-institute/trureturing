@@ -70,7 +70,7 @@ internal static partial class RepositoryRules
     // is one canonical strict-loader input, not a content artifact to split. A
     // Blueprint document's structural slot is its .scribe.cs source (FILEMAP
     // kind=generated for the .md, produced by ScribeEmitter and verified by
-    // emit-check); its GID must name an existing Lean module and the definition path
+    // its producer); its GID must name an existing Lean module and the definition path
     // is bijective with that GID, so bounding the projections would cap a lawful
     // twelve-module Lean bucket at six blueprinted modules. Single source shared with
     // the CapacityPolicy dotnet-test net.
