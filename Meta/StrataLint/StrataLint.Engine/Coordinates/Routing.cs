@@ -12,7 +12,8 @@ public sealed record ManifestSyntax(
     string Generality,
     string Selector,
     string Artifact,
-    string Tag);
+    string Tag,
+    string? SubDomain = null);
 
 public sealed class ValidatedManifest
 {
@@ -85,6 +86,8 @@ public static class RouteEngine
                 throw new FormatException("generality must be G, I, or E");
             }
 
+            ValidateSubDomainApplicability(syntax);
+
             var (gidText, stratum) = syntax.Plane switch
             {
                 "F" => Formal(policy, syntax, blueprint: false),
@@ -123,7 +126,7 @@ public static class RouteEngine
         ManifestSyntax syntax,
         bool blueprint)
     {
-        var coordinates = Coordinates(policy, syntax.Domain, syntax.Module);
+        var coordinates = Coordinates(policy, syntax.Domain, syntax.SubDomain, syntax.Module);
         if (!blueprint)
         {
             if (syntax.Artifact != "lean" || syntax.Tag.Length != 0)
@@ -191,7 +194,7 @@ public static class RouteEngine
         }
         else
         {
-            var routed = Coordinates(policy, syntax.Domain, syntax.Module);
+            var routed = Coordinates(policy, syntax.Domain, syntax.SubDomain, syntax.Module);
             scope = syntax.Domain.StartsWith("X_", StringComparison.Ordinal) ? "special" : "formal";
             coordinates = string.Join('/', routed.Parts);
             stratum = routed.Stratum;
@@ -264,6 +267,7 @@ public static class RouteEngine
     private static (ImmutableArray<string> Parts, Stratum? Stratum) Coordinates(
         ValidatedPolicy policy,
         string domain,
+        string? subDomain,
         string module)
     {
         if (!CamelPattern.IsMatch(module))
@@ -273,7 +277,22 @@ public static class RouteEngine
 
         if (domain is "X_Assumptions" or "X_Certificates" or "X_Frontier")
         {
+            if (subDomain is not null)
+            {
+                throw new FormatException("special-zone route cannot have a subdomain");
+            }
+
             return (ImmutableArray.Create(domain, module), null);
+        }
+
+        if (subDomain is not null && !CamelPattern.IsMatch(subDomain))
+        {
+            throw new FormatException("subdomain must be CamelCase");
+        }
+
+        if (string.Equals(subDomain, domain, StringComparison.Ordinal))
+        {
+            throw new FormatException("subdomain must differ from domain");
         }
 
         var match = policy.Domains.FirstOrDefault(
@@ -283,7 +302,30 @@ public static class RouteEngine
             throw new FormatException("formal route requires a controlled domain");
         }
 
-        return (ImmutableArray.Create(match.Value.ToString(), domain, module), match.Value);
+        return subDomain is null
+            ? (ImmutableArray.Create(match.Value.ToString(), domain, module), match.Value)
+            : (ImmutableArray.Create(match.Value.ToString(), domain, subDomain, module), match.Value);
+    }
+
+    internal static void ValidateSubDomainApplicability(ManifestSyntax syntax)
+    {
+        if (syntax.SubDomain is null)
+        {
+            return;
+        }
+
+        if (syntax.SubDomain.Length == 0)
+        {
+            throw new FormatException("subdomain must not be empty");
+        }
+
+        if (syntax.Plane is "F" or "B"
+            || syntax.Plane == "E" && syntax.Domain is not ("values" or "experiments" or "kernels"))
+        {
+            return;
+        }
+
+        throw new FormatException("subdomain is only allowed for F, B, or formal E manifests");
     }
 
     private static ImmutableArray<string> Skeleton(ManifestSyntax syntax, Gid gid) => syntax.Plane switch
@@ -397,11 +439,15 @@ internal static class RouteCapacityPreflight
 
         var stratumRoot = DirectoryOf(targetDirectory);
         var bucketPrefix = stratumRoot == "." ? string.Empty : stratumRoot + "/";
+        var targetBucket = targetDirectory[(targetDirectory.LastIndexOf('/') + 1)..];
+        var policySiblings = stratumDomains.Contains(targetBucket, StringComparer.Ordinal)
+            ? stratumDomains
+            : [];
         var presentDomains = currentPaths
             .Select(DirectoryOf)
             .Where(directory => DirectoryOf(directory) == stratumRoot)
             .Select(directory => directory[bucketPrefix.Length..]);
-        var bucketCounts = stratumDomains
+        var bucketCounts = policySiblings
             .Concat(presentDomains)
             .Distinct(StringComparer.Ordinal)
             .OrderBy(static domain => domain, StringComparer.Ordinal)

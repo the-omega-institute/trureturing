@@ -27,6 +27,8 @@ internal static class BlueprintPinManifestLoader
         "selector", "tag", "theory",
     };
 
+    private const string OptionalSubdomainKey = "subdomain";
+
     internal static BlueprintPinManifestLoadOutcome Load(ReadOnlySpan<byte> bytes)
     {
         try
@@ -48,7 +50,8 @@ internal static class BlueprintPinManifestLoader
             }
 
             var expected = RequiredKeys.ToHashSet(StringComparer.Ordinal);
-            if (properties.Count != expected.Count || properties.Keys.Any(key => !expected.Contains(key)))
+            if (properties.Keys.Any(key => !expected.Contains(key) && key != OptionalSubdomainKey)
+                || expected.Any(key => !properties.ContainsKey(key)))
             {
                 throw new FormatException(
                     "pin manifest keys must be exactly: " + string.Join(", ", RequiredKeys));
@@ -62,7 +65,11 @@ internal static class BlueprintPinManifestLoader
                 String(properties, "generality"),
                 String(properties, "selector"),
                 String(properties, "artifact"),
-                String(properties, "tag"));
+                String(properties, "tag"),
+                properties.ContainsKey(OptionalSubdomainKey)
+                    ? String(properties, OptionalSubdomainKey)
+                    : null);
+            RouteEngine.ValidateSubDomainApplicability(route);
             return new BlueprintPinManifestLoadOutcome.Loaded(new BlueprintPinManifest(
                 route,
                 Strings(properties, "anchors"),
