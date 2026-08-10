@@ -4,6 +4,8 @@ fingerprints:
   normalized_sha256: sha256:8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490
 cas_ref: sha256:8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490
 coverage_gids:
+  - D5/S3/Observer/MatrixUnitCertificate.matrix_units_sum_diagonal
+  - D5/S3/Observer/MatrixUnitCertificate.matrix_unit_eq_single
   - D5/S3/QuantumBounds/RobertsonSchrodinger.robertson_schrodinger
   - D5/S3/Observer/MatrixUnitCertificate.matrix_unit_mul
   - D5/S3/Quantum/FiniteDimensional.qubit_weyl_star
@@ -18,7 +20,6 @@ receipts:
       target_sha256: sha256:89457799a8e0362f3113889e39ef6eeadabe40f2c9e3228af2bffe7d66acda31
   scribe: []
   unresolved_subitems:
-    - arbitrary-observer-window-full-matrix-identification
     - prime-power-tensor-factor-decomposition
     - general-prime-qudit-weyl-relations
     - observer-window-generated-structure-claim
