@@ -138,7 +138,7 @@ name = "unknown-blueprint-nesting"
 changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
 baseline_mutations = []
 mutations = [{ op = "write", path = "Blueprint/D5/S0/Carrier/Ring/Extra.md", content = "noncanonical nesting\n" }]
-expected_diagnostics = [{ rule = 0, path = "Blueprint/D5/S0/Carrier/Ring/Extra.md", message = "noncanonical Blueprint artifact: formal address must be Sn/Domain/Module or X_Zone/Module" }]
+expected_diagnostics = []
 
 [[cases]]
 name = "missing-six-line-header"

@@ -34,6 +34,115 @@ public sealed class BlueprintPinValidationTests
     }
 
     [Fact]
+    public void PinManifestLoaderAcceptsOptionalSubdomain()
+    {
+        var json = JsonSerializer.Serialize(new
+        {
+            artifact = "lean",
+            anchors = Array.Empty<string>(),
+            domain = "Carrier",
+            generality = "G",
+            imports = Array.Empty<string>(),
+            module = "Probe",
+            plane = "F",
+            selector = "",
+            subdomain = "Algebra",
+            tag = "",
+            theory = "D5",
+        });
+
+        var loaded = Assert.IsType<BlueprintPinManifestLoadOutcome.Loaded>(
+            BlueprintPinManifestLoader.Load(Encoding.UTF8.GetBytes(json)));
+
+        Assert.Equal("Algebra", loaded.Manifest.RouteManifest.SubDomain);
+        var validated = Assert.IsType<BlueprintPinValidationOutcome.Accepted>(
+            Validate(loaded.Manifest));
+        Assert.Equal("D5/S0/Carrier/Algebra/Probe", validated.TargetGid);
+    }
+
+    [Fact]
+    public void PinManifestLoaderRejectsPresentButEmptySubdomain()
+    {
+        var json = JsonSerializer.Serialize(new
+        {
+            artifact = "lean",
+            anchors = Array.Empty<string>(),
+            domain = "Carrier",
+            generality = "G",
+            imports = Array.Empty<string>(),
+            module = "Probe",
+            plane = "F",
+            selector = "",
+            subdomain = "",
+            tag = "",
+            theory = "D5",
+        });
+
+        var rejected = Assert.IsType<BlueprintPinManifestLoadOutcome.Rejected>(
+            BlueprintPinManifestLoader.Load(Encoding.UTF8.GetBytes(json)));
+
+        Assert.Equal("subdomain must not be empty", rejected.Message);
+    }
+
+    [Fact]
+    public void PinManifestLoaderRejectsSubdomainForNonFormalManifestShape()
+    {
+        var json = JsonSerializer.Serialize(new
+        {
+            artifact = "json",
+            anchors = Array.Empty<string>(),
+            domain = "values",
+            generality = "G",
+            imports = Array.Empty<string>(),
+            module = "values",
+            plane = "E",
+            selector = "result",
+            subdomain = "Algebra",
+            tag = "",
+            theory = "D5",
+        });
+
+        var rejected = Assert.IsType<BlueprintPinManifestLoadOutcome.Rejected>(
+            BlueprintPinManifestLoader.Load(Encoding.UTF8.GetBytes(json)));
+
+        Assert.Equal("subdomain is only allowed for F, B, or formal E manifests", rejected.Message);
+    }
+
+    [Theory]
+    [InlineData("extra", true)]
+    [InlineData("theory", false)]
+    public void PinManifestOptionalSubdomainDoesNotWeakenStrictKeys(string key, bool add)
+    {
+        var fields = new Dictionary<string, object?>
+        {
+            ["artifact"] = "lean",
+            ["anchors"] = Array.Empty<string>(),
+            ["domain"] = "Carrier",
+            ["generality"] = "G",
+            ["imports"] = Array.Empty<string>(),
+            ["module"] = "Probe",
+            ["plane"] = "F",
+            ["selector"] = "",
+            ["subdomain"] = "Algebra",
+            ["tag"] = "",
+            ["theory"] = "D5",
+        };
+        if (add)
+        {
+            fields[key] = "forbidden";
+        }
+        else
+        {
+            fields.Remove(key);
+        }
+
+        var rejected = Assert.IsType<BlueprintPinManifestLoadOutcome.Rejected>(
+            BlueprintPinManifestLoader.Load(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(fields))));
+
+        Assert.Contains("keys must be exactly", rejected.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void UnsupportedRetiredTheoryAnchorRejectsIssue460Pins()
     {
         var unsupportedAnchor = string.Concat("pz", "g/proposition/9.2");
