@@ -125,12 +125,77 @@ public sealed class LeanReportPerModuleScriptTests
         Assert.Equal(expected.AsSpan().ToArray(), File.ReadAllBytes(output));
     }
 
-    private static byte[] PartialReport(JsonElement module) =>
+    [Fact]
+    public void FullCachedReportIgnoresUnselectedChangedAndDeletedModules()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var temporary = new TemporaryDirectory();
+        var cached = Path.Combine(temporary.Path, "cached.json");
+        var fresh = Path.Combine(temporary.Path, "fresh.json");
+        var output = Path.Combine(temporary.Path, "output.json");
+        var modulesFile = Path.Combine(temporary.Path, "modules.txt");
+        const string unicodeSource = "def term : Nat := 1\n";
+        const string changedSource = "def changed : Nat := 2\n";
+        const string rootSource = "import D5.Changed\nimport D5.Unicode\n";
+        Write(temporary.Path, "D5/Changed.lean", changedSource);
+        Write(temporary.Path, "D5/Unicode.lean", unicodeSource);
+        Write(temporary.Path, "Trureturing.lean", rootSource);
+        Assert.Equal(0, Run("git", ["init", "-q"], temporary.Path).ExitCode);
+        Assert.Equal(0, Run("git", ["add", "D5/Changed.lean", "D5/Unicode.lean", "Trureturing.lean"], temporary.Path).ExitCode);
+
+        var currentSnapshot = DecodeSnapshot(
+            ("D5/Changed.lean", changedSource),
+            ("D5/Unicode.lean", unicodeSource),
+            ("Trureturing.lean", rootSource));
+        var oldSnapshot = DecodeSnapshot(
+            ("D5/Changed.lean", "def changed : Nat := 1\n"),
+            ("D5/Deleted.lean", "def deleted : Nat := 1\n"),
+            ("D5/Unicode.lean", unicodeSource),
+            ("Trureturing.lean", rootSource));
+        var reused = new LeanFileReport([], [new LeanDeclaration("Golden.term", "declaration", "Nat", [])]);
+        var expectedReport = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>
+        {
+            ["D5/Changed.lean"] = new([], []),
+            ["D5/Unicode.lean"] = reused,
+            ["Trureturing.lean"] = new(["D5.Changed", "D5.Unicode"], []),
+        });
+        var cachedReport = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>
+        {
+            ["D5/Changed.lean"] = new([], []),
+            ["D5/Deleted.lean"] = new([], []),
+            ["D5/Unicode.lean"] = reused,
+            ["Trureturing.lean"] = new(["D5.Changed", "D5.Unicode"], []),
+        });
+        File.WriteAllBytes(cached, RawLeanReportArtifact.Write(oldSnapshot, cachedReport).AsSpan().ToArray());
+        var fullCurrent = RawLeanReportArtifact.Write(currentSnapshot, expectedReport);
+        using var currentDocument = JsonDocument.Parse(fullCurrent.AsSpan().ToArray());
+        var currentModules = currentDocument.RootElement.GetProperty("modules").EnumerateArray().ToArray();
+        File.WriteAllBytes(fresh, PartialReport(currentModules[0], currentModules[2]));
+        File.WriteAllText(modulesFile, "D5.Unicode\n", new UTF8Encoding(false));
+
+        var result = LeanReportMergeCommand.Run([
+            "--repository", temporary.Path,
+            "--cached", cached,
+            "--fresh", fresh,
+            "--cached-modules-file", modulesFile,
+            "--output", output,
+        ]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Equal(fullCurrent.AsSpan().ToArray(), File.ReadAllBytes(output));
+    }
+
+    private static byte[] PartialReport(params JsonElement[] modules) =>
         StructuredCanonicalWriter.WriteJson(JsonSerializer.SerializeToElement(new
         {
-            modules = new[] { module },
+            modules,
             schema = RawLeanReportArtifact.Schema,
         })).AsSpan().ToArray();
+
+    private static RepositorySnapshot DecodeSnapshot(params (string Path, string Contents)[] entries) =>
+        Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            RawRepositorySnapshot.Create(entries.Select(static entry =>
+                RawRepositoryEntry.FromText(entry.Path, entry.Contents))))).Snapshot;
 
     private static ProcessOutput Run(string command, IReadOnlyList<string> arguments, string cwd) =>
         BoundedProcessRunner.Run(command, arguments, cwd, TimeSpan.FromSeconds(30), 1024 * 1024);

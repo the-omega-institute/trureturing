@@ -11,16 +11,16 @@ internal static class LeanReportMergeCommand
         var snapshot = decoded is SnapshotDecodeOutcome.Decoded success
             ? success.Snapshot
             : throw new FormatException(((SnapshotDecodeOutcome.InfrastructureFailure)decoded).Message);
-        var cached = RawLeanReportArtifact.ReadPartialFile(options.Cached, snapshot);
-        var fresh = RawLeanReportArtifact.ReadPartialFile(options.Fresh, snapshot);
         var selectedPaths = File.ReadAllLines(options.CachedModulesFile)
             .Where(static line => !string.IsNullOrWhiteSpace(line))
             .Select(ModulePath)
             .ToHashSet(StringComparer.Ordinal);
+        var cached = RawLeanReportArtifact.ReadPartialFile(options.Cached, snapshot, selectedPaths);
+        var fresh = RawLeanReportArtifact.ReadPartialFile(options.Fresh, snapshot);
         var merged = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal);
         foreach (var (path, report) in cached.Files)
         {
-            if (selectedPaths.Contains(path.Value)) merged.Add(path.Value, report);
+            merged.Add(path.Value, report);
         }
 
         if (merged.Count != selectedPaths.Count)
