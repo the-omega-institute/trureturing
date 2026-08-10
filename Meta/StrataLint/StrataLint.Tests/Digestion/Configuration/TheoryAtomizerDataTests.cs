@@ -81,7 +81,6 @@ public sealed class TheoryAtomizerDataTests
         { Minimal.Replace("[[" + FirstScheme + ".genres]]\ntoken = \"定理\"\nkind = \"theorem\"", "[[" + FirstScheme + ".genres]]\ntoken = \"定理\"\nkind = \"theorem\"\n\n[[" + FirstScheme + ".genres]]\ntoken = \"定理\"\nkind = \"theorem\"", StringComparison.Ordinal), "duplicate open key" },
         { Minimal.Replace("[[observer.claim_prefixes]]\nprefix = \"**Known**\"\nlocator = \"theorem/known\"", "[[observer.claim_prefixes]]\nprefix = \"**A**\"\nlocator = \"theorem/known\"\n\n[[observer.claim_prefixes]]\nprefix = \"**B**\"\nlocator = \"theorem/known\"", StringComparison.Ordinal), "duplicate locator without alias" },
         { Minimal.Replace("prefix = \"定理\"\nlocator = \"theorem/{number}|theorem-form/{number}\"", "prefix = \"定理|定理\"\nlocator = \"theorem/{number}|theorem-form/{number}\"", StringComparison.Ordinal), "duplicate cone prefix" },
-        { Minimal.Replace("token = \"定理\"\nkind = \"theorem\"", "token = \"短\"\nkind = \"theorem\"\n\n[[" + SecondScheme + ".genres]]\ntoken = \"更长\"\nkind = \"definition\"", StringComparison.Ordinal), "non-canonical order" },
     };
 
     [Theory]
@@ -118,6 +117,47 @@ public sealed class TheoryAtomizerDataTests
         Assert.Equal("constant/new-c", Assert.Single(AtomizerRegistry.Atomize(FirstScheme + "-v1",
             Encoding.UTF8.GetBytes("| Constant | Value |\n|---|---|\n| NEW_C | value |\n"), data).Claims).AstPath);
         Assert.Equal("negative-register/batch", Assert.Single(AtomizerRegistry.Atomize(SecondScheme + "-v1", Encoding.UTF8.GetBytes("## 新标题 batch"), data).Claims).AstPath);
+    }
+
+    [Fact]
+    public void GenreMatchOrderIsDerivedSoAVolumeCanAppendItsWordsAnywhere()
+    {
+        // Shorter token first, i.e. not the canonical order. Registering a new volume's
+        // dialect must not require hand-sorting the table; the loader derives the order
+        // that makes matching longest-first.
+        var section = "[[" + SecondScheme + ".genres]]\n";
+        var data = Load(Minimal.Replace(
+            section + "token = \"定理\"\nkind = \"theorem\"",
+            section + "token = \"定\"\nkind = \"theorem\"\n\n"
+            + section + "token = \"定理\"\nkind = \"definition\"",
+            StringComparison.Ordinal));
+
+        var atom = Assert.Single(AtomizerRegistry.Atomize(
+            SecondScheme + "-v1",
+            Encoding.UTF8.GetBytes("**定理 1.1** body"),
+            data).Claims);
+
+        Assert.Equal("definition/1.1", atom.AstPath);
+    }
+
+    [Fact]
+    public void AnUnknownKindNamesItselfAndTheKindsThatAreAccepted()
+    {
+        var data = Minimal.Replace(
+            "kind = \"theorem\"",
+            "kind = \"errata\"",
+            StringComparison.Ordinal);
+        var snapshot = DigestionTestSupport.Snapshot(
+            (TheoryAtomizerDataLoader.DataPath, Encoding.UTF8.GetBytes(data)));
+
+        var error = Assert.Throws<FormatException>(() => TheoryAtomizerDataLoader.Load(snapshot));
+
+        Assert.Contains("errata", error.Message, StringComparison.Ordinal);
+        Assert.Contains("定理", error.Message, StringComparison.Ordinal);
+        foreach (var known in TheoryAtomizerRules.AllowedKinds)
+        {
+            Assert.Contains(known, error.Message, StringComparison.Ordinal);
+        }
     }
 
     [Fact]
