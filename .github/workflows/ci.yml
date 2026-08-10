@@ -256,9 +256,6 @@ jobs:
           source="$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json"
           reports="$RUNNER_TEMP/raw-lean-reports"
           mkdir -p "$reports"
-          dotnet build baseline/Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release
-          stratalint_dll="$(dotnet msbuild baseline/Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj \
-            --getProperty:TargetPath --property:Configuration=Release)"
           # verify 需要 .sha256 旁文件(lean-report-input.sh:100),故一并要求存在。
           for suffix in '' .sha256 .input.attestation .provenance.json; do
             test -s "${source}${suffix}"
@@ -348,6 +345,18 @@ jobs:
           fi
           reports="$RUNNER_TEMP/raw-lean-reports"
           mkdir -p "$reports"
+          stratalint_project="$GITHUB_WORKSPACE/baseline/Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj"
+          dotnet build "$stratalint_project" --configuration Release
+          stratalint_dll="$(dotnet msbuild "$stratalint_project" \
+            --getProperty:TargetPath --property:Configuration=Release \
+            --verbosity:quiet 2>/dev/null)" || {
+              printf '%s\n' "failed to resolve the StrataLint CLI target path" >&2
+              exit 1
+            }
+          [[ -n "$stratalint_dll" && "$stratalint_dll" == /* && -f "$stratalint_dll" ]] || {
+            printf 'invalid StrataLint CLI target path: %s\n' "$stratalint_dll" >&2
+            exit 1
+          }
           module_cache_args=()
           cache_report="$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json"
           cache_manifest="$GITHUB_WORKSPACE/.canonical-lean-report-cache/modules.tsv"
