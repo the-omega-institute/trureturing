@@ -1,0 +1,13 @@
+{
+  "conclusion": {
+    "verdict": "approve",
+    "findings": [
+      "blocker 已解除：D5/S3/Observer/MatrixUnitCertificate.matrix_unit_mul 逐字给出 E_ij E_kl = (if j = k then 1 else 0) • E_il，非匹配支是矩阵零，且无范数界、容差或近似参数；这正是两个 partial-closed residual 中 exact-matrix-unit-zero-error-certificate 以及理论原句“矩阵单位关系全程精确(证书误差恰 0)”的忠实 exact-matrix-unit 形，而非前轮仅证 Born 对角 delta 的替代命题。",
+      "eq_single 桥不空洞：matrixUnit 在第 120-124 行由冻结 WindowRegister.clockMatrix/shiftMatrix 的归一化 Fourier 和定义；真正承重定理是 matrix_unit_eq_single（第 127-176 行），其中 sum_character（第 100-111 行）经 FinitePoisson.characterEquiv 与 AddChar.sum_apply_eq_ite 证明全角色正交，hProjector（第 129-164 行）把 Fourier 投影证成 (i,i) 单点，随后 shift_matrix_pow_apply 与第 164-176 行把列精确移到 j。matrix_unit_mul 第 183-188 行再退化为 mathlib 单矩阵乘法，是已完成构造识别后的合法代数推论，不是把待证关系预置进定义。",
+      "销残 coverage GID 应指 D5/S3/Observer/MatrixUnitCertificate.matrix_unit_mul；matrix_unit_eq_single 是承重桥而非残项所点名的关系证书，matrix_units_sum_diagonal 则是同族完备性的补充 GID。该证书针对 WindowRegister 中冻结的具体 Weyl 对；证明使用其 clockMatrix/shiftMatrix 定义而不需要把 window_weyl 定理本身当作重写引理，这不削弱原文要求的具体有限窗口证书。",
+      "MatrixUnitCertificate.scribe.cs 忠实：第 24-32 行准确叙述 Fourier 正交与 single-entry 识别，第 34-37 行准确叙述 delta 乘法律和零误差，第 47-49 行准确叙述对角完备性；第 51-89 行公式与 Lean 的归一化 Fourier 定义、乘法律及完备性一致，未外推抽象 crossed-product、中心绕行相位或数值误差结论。",
+      "独立验证通过：lake env lean D5/S3/Observer/MatrixUnitCertificate.lean 退出码 0、无诊断；FormulaCorpusInventoryTests 退出码 0，3 passed、0 failed、0 skipped。"
+    ]
+  },
+  "log_ref": "inline"
+}
