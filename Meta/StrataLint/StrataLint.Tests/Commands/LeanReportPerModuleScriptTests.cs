@@ -6,6 +6,8 @@ namespace StrataLint.Tests;
 public sealed class LeanReportPerModuleScriptTests
 {
     private const string InspectorScript = "Meta/StrataLint/lean-inspector/inspect.sh";
+    private const string InspectorSource = "Meta/StrataLint/lean-inspector/Inspector.lean";
+    private const string InputScript = "Meta/StrataLint/scripts/report/lean-report-input.sh";
     private const string MergeScript = "Meta/StrataLint/scripts/report/lean-report-merge.sh";
 
     [Fact]
@@ -20,7 +22,7 @@ public sealed class LeanReportPerModuleScriptTests
         Directory.CreateDirectory(Path.Combine(repository, "Meta", "StrataLint", "scripts", "report"));
         Write(repository, "Trureturing.lean", "import D5.Probe\n");
         Write(repository, "D5/Probe.lean", "def probe : Nat := 1\n");
-        foreach (var relative in new[] { InspectorScript, "Meta/StrataLint/lean-inspector/Inspector.lean", "Meta/StrataLint/scripts/report/lean-report-input.sh" })
+        foreach (var relative in new[] { InspectorScript, InspectorSource, InputScript })
         {
             File.Copy(Path.Combine(root, relative), Path.Combine(repository, relative));
         }
