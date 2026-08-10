@@ -1,7 +1,7 @@
-<!-- echo-residual-summary:v3 residual=sha256:1f4794e21ce8f102778ab971b2e4f03a570cd0dfb9d300fe49cd9d0c471be5fa -->
+<!-- echo-residual-summary:v3 residual=sha256:49904d6f4a2c0bc86a1fcb378577f0d2093ed45f93a3cc58afad268115933e0f -->
 # Echo Residual Summary
 
-- unresolved_subitems: 538
+- unresolved_subitems: 536
 - mother_residual_atom_ids: 87
 
 ## quarantined residuals
@@ -273,7 +273,7 @@ Mother residual atoms: none.
 
 ## `observer-quantum-v1`
 
-- unresolved_subitems: 66
+- unresolved_subitems: 64
 - mother_residual_atom_ids: 22
 
 Mother residual atoms:
@@ -341,11 +341,10 @@ Mother residual atoms:
   - `noncommutative-algebra-bundle-over-torus`
   - `prime-power-tensor-factor-decomposition`
   - `universal-c-star-crossed-product-identification`
-- `observer-residual-a64c69d2b846d7fdf3c80468898e853257ad9a378bf7da6c74c3370ea865762c` (4)
+- `observer-residual-a64c69d2b846d7fdf3c80468898e853257ad9a378bf7da6c74c3370ea865762c` (3)
   - `joint-coherent-reversal-of-all-copies`
   - `know-forgot-two-time-relation`
   - `multi-copy-erasure-quantifier`
-  - `six-state-finite-certificates`
 - `observer-residual-a6962d32cb2d5b0127bc20031cd895bdfb1d232901e5e21eb0a62b55e49930eb` (5)
   - `born-control-numerical-tolerance-certificate`
   - `complete-solution-space-characterization`
@@ -358,10 +357,9 @@ Mother residual atoms:
   - `discrete-crossed-product-uniqueness`
   - `full-crossed-product-identification`
   - `observer-read-write-forces-structure`
-- `observer-residual-b2dd3d2b2261d86b6e8b20f45ca56ef7b3da87d833f50e38279f562c2a1a66c9` (5)
+- `observer-residual-b2dd3d2b2261d86b6e8b20f45ca56ef7b3da87d833f50e38279f562c2a1a66c9` (4)
   - `know-forgot-two-time-relation`
   - `multi-copy-erasure-quantifier`
-  - `six-state-finite-certificates`
   - `v2-entropy-monotone-capacity-decrease`
   - `v3-revival-spectrum-diophantine-grading`
 - `observer-residual-d35e7e61edd9bb9519b7f604eedded2838b8b003cdb46b4234deb3c279cb987c` (1)
