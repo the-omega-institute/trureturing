@@ -145,7 +145,7 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
             .Distinct(StringComparer.Ordinal)
             .Order(StringComparer.Ordinal)
             .ToArray();
-        return new PreparedRepository(revision, RawChangeSet.Create(paths));
+        return new PreparedRepository(revision, changeBase, RawChangeSet.Create(paths));
     }
 
     public RawRepositorySnapshot ReadCurrent() => GitRepositorySnapshotReader.ReadCurrent(root);

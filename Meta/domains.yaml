@@ -14,6 +14,9 @@ domains:
   Carrier:
     stratum: S0
     definition: The golden integer carrier, conjugation, norm, and units.
+  Computability:
+    stratum: S0
+    definition: Partial recursive codes with universal evaluation and the recursion-theoretic fixed points of computable code transformations.
   Constants:
     stratum: S3
     definition: Canonical real constants and registered reference centers used by audited projections.
@@ -44,6 +47,9 @@ domains:
   Entropy:
     stratum: S3
     definition: Finite Shannon entropy in nats and its information-theoretic identities and inequalities, including maximum-entropy bounds, mutual information and its independence characterization, subadditivity, and conditional-entropy chain rules.
+  Estimation:
+    stratum: S3
+    definition: Finite estimation-theoretic bounds relating error probability to conditional entropy, including Fano-type inequalities.
   Factorization:
     stratum: S3
     definition: The multiplicative monoid of positive naturals as the free commutative monoid on the primes, with additive prime-exponent readouts.
