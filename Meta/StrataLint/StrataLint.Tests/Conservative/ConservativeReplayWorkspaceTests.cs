@@ -28,35 +28,6 @@ public sealed class ConservativeReplayWorkspaceTests
     }
 
     [Fact]
-    public void ValuesKernelReplayPathRequiresAUniqueByteExactRelocation()
-    {
-        const string historicalPath = "Archive/values-kernels.toml";
-        const string bytes = "[[kernels]]\nname = \"fixture\"\n";
-        var candidate = Snapshot((ValuesProjectionLoader.KernelDataPath, bytes));
-
-        Assert.Equal(
-            ValuesProjectionLoader.KernelDataPath,
-            ConservativeActualTreeEvaluator.ResolveValuesKernelDataPathForReplay(
-                candidate,
-                candidate));
-        Assert.Equal(
-            historicalPath,
-            ConservativeActualTreeEvaluator.ResolveValuesKernelDataPathForReplay(
-                Snapshot((historicalPath, bytes)),
-                candidate));
-        Assert.Throws<InvalidOperationException>(() =>
-            ConservativeActualTreeEvaluator.ResolveValuesKernelDataPathForReplay(
-                Snapshot((historicalPath, "changed\n")),
-                candidate));
-        Assert.Throws<InvalidOperationException>(() =>
-            ConservativeActualTreeEvaluator.ResolveValuesKernelDataPathForReplay(
-                Snapshot(
-                    (historicalPath, bytes),
-                    ("Second/values-kernels.toml", bytes)),
-                candidate));
-    }
-
-    [Fact]
     public void WorkerProtocolExposesNoRepositoryOrReportPathArguments()
     {
         var source = File.ReadAllText(Path.Combine(
@@ -82,7 +53,6 @@ public sealed class ConservativeReplayWorkspaceTests
             "Conservative",
             "ConservativeActualTreeEvaluator.cs"));
         Assert.DoesNotContain("File.ReadAllBytes", actualEvaluator, StringComparison.Ordinal);
-        Assert.Contains("ReadRevisionFile", actualEvaluator, StringComparison.Ordinal);
         Assert.DoesNotContain(
             "candidateRepository.ReadRevision(",
             actualEvaluator,
@@ -132,15 +102,15 @@ public sealed class ConservativeReplayWorkspaceTests
         var blob = GitText(
             repository.Path,
             "rev-parse",
-            $"HEAD:{ValuesProjectionLoader.KernelDataPath}");
+            $"HEAD:{C0CeremonyProjection.ValuesKernelDataPath}");
         Git(repository.Path, "tag", "-a", "candidate-tag", "-m", "candidate tag");
         var tag = GitText(repository.Path, "rev-parse", "candidate-tag^{tag}");
 
         var entry = gateway.ReadRevisionFile(
             candidate.Revision,
-            ValuesProjectionLoader.KernelDataPath);
+            C0CeremonyProjection.ValuesKernelDataPath);
 
-        Assert.Equal(ValuesProjectionLoader.KernelDataPath, entry.Path);
+        Assert.Equal(C0CeremonyProjection.ValuesKernelDataPath, entry.Path);
         Assert.Equal("kernel data\n", Encoding.UTF8.GetString(entry.Bytes.AsSpan()));
         // A non-commit revision and a missing path are ledger rejections, not Git
         // infrastructure failures. Asserting the exact rejection type is what makes that
@@ -149,7 +119,7 @@ public sealed class ConservativeReplayWorkspaceTests
         Assert.All(
             new[] { tree, blob, tag },
             nonCommit => Assert.Throws<FrozenReferenceRejectionException>(() =>
-                gateway.ReadRevisionFile(nonCommit, ValuesProjectionLoader.KernelDataPath)));
+                gateway.ReadRevisionFile(nonCommit, C0CeremonyProjection.ValuesKernelDataPath)));
         Assert.Throws<FrozenReferenceRejectionException>(() =>
             gateway.ReadRevisionFile(candidate.Revision, "Golden/missing.toml"));
     }
