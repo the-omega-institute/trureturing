@@ -12,15 +12,15 @@ public sealed class DefinitionsRetirementTests
     private const string TomlGoldenWriterPath =
         "Meta/StrataLint/StrataLint.Cli/Golden/TomlGoldenWriter.cs";
     private const string AnchorPath =
-        "Meta/StrataLint/StrataLint.Scribe/Anchors/Anchor.cs";
+        "Meta/StrataLint/StrataLint.Engine/Anchors/Anchor.cs";
     private const string AnchorDefinitionPath =
-        "Meta/StrataLint/StrataLint.Scribe/Anchors/AnchorDefinition.cs";
+        "Meta/StrataLint/StrataLint.Engine/Anchors/AnchorDefinition.cs";
     private const string AnchorSchemesPath =
-        "Meta/StrataLint/StrataLint.Scribe/Anchors/AnchorSchemes.cs";
+        "Meta/StrataLint/StrataLint.Engine/Anchors/AnchorSchemes.cs";
     private const string AnchorCatalogDefinitionsPath =
-        "Meta/StrataLint/StrataLint.Scribe/Catalog/AnchorCatalogDefinitions.cs";
+        "Meta/StrataLint/StrataLint.Engine/Anchors/AnchorCatalogDefinitions.cs";
     private const string ExternalAnchorManifestPath =
-        "Meta/StrataLint/StrataLint.Scribe/Catalog/ExternalAnchorManifest.cs";
+        "Meta/StrataLint/StrataLint.Engine/Anchors/ExternalAnchorManifest.cs";
     private const string SolutionPath = "Meta/StrataLint/StrataLint.sln";
     private const string CliProjectPath =
         "Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj";
