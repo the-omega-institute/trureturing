@@ -275,6 +275,35 @@ public sealed partial class MakeWorkflowTests
         }
     }
 
+    // 报告地址的 producer 分量取自**候选**树,而实际执行的 producer 取自**基线**树
+    // (base-owned 判官拓扑要求如此)。push 事件下 baseline = github.event.before,
+    // 即上一个 dev tip,故一次改动 lean-inspector 的合并会让两者不同:报告由旧 producer
+    // 产出却按新 producer 的地址归档 —— 地址声称的输入闭包与实际闭包不符。
+    // `verify` 只重算地址不重跑 producer,RawLeanReportArtifact 只核模块集与 source_sha256,
+    // 二者都拦不住「同一份源、不同 producer 语义」。故缓存的读与写都必须带 producer 一致性守卫。
+    [Fact]
+    public void CanonicalLeanReportCacheIsGatedOnProducerIdentityOnBothReadAndWrite()
+    {
+        var admission = File.ReadAllText(Path.Combine(FindRepositoryRoot(), AdmissionWorkflowPath));
+
+        var guarded = admission.Split('\n')
+            .Where(static line => line.TrimStart().StartsWith("if:", StringComparison.Ordinal)
+                && line.Contains("producer-consistent == 'true'", StringComparison.Ordinal))
+            .ToArray();
+
+        Assert.Equal(2, guarded.Length);
+        Assert.Contains(
+            guarded,
+            static line => line.Contains("pair-reusable == 'true'", StringComparison.Ordinal));
+        Assert.Contains(
+            guarded,
+            static line => line.Contains("refs/heads/dev", StringComparison.Ordinal));
+        Assert.Contains(
+            "echo \"producer-consistent=",
+            admission,
+            StringComparison.Ordinal);
+    }
+
     [Fact]
     public void TheoryIngestRestoresOrProducesBaseCanonicalReportInOneJob()
     {

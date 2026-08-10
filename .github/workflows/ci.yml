@@ -189,15 +189,33 @@ jobs:
           set -euo pipefail
           helper="$GITHUB_WORKSPACE/baseline/Meta/StrataLint/scripts/report/lean-report-input.sh"
           test -x "$helper"
-          read -r address _ <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/candidate")"
+          read -r address candidateProducer _ \
+            <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/candidate")"
           [[ "$address" =~ ^[0-9a-f]{64}$ ]]
           echo "address=$address" >> "$GITHUB_OUTPUT"
           # 报告地址的原像是 producer(lean-inspector/{inspect.sh,Inspector.lean})、
           # Lean 源(Trureturing.lean + D5/**/*.lean)与 config(toolchain/lake-manifest/lakefile)
           # 三者的清单哈希(lean-report-input.sh:51-97),即该报告的完整声明输入闭包。
           # 两侧同址 ⇒ 两份报告按定义逐字节相同,一份缓存可同时充当两份;不同址则不复用。
-          read -r baselineAddress _ <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/baseline")"
+          read -r baselineAddress baselineProducer _ \
+            <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/baseline")"
           [[ "$baselineAddress" =~ ^[0-9a-f]{64}$ ]]
+          # 地址的 producer 分量取自**候选**树,而实际执行的 producer 取自**基线**树
+          # (base-owned 判官拓扑要求如此)。push 事件下 baseline = github.event.before,
+          # 即上一个 dev tip(见 `Resolve dev baseline content address`),故一次改动了
+          # lean-inspector 的合并会让两者不同:报告由**旧** producer 产出,却按**新** producer
+          # 的地址归档 —— 地址声称的输入闭包与实际闭包不符,即第〇节合取②的违反。
+          # `lean-report-input.sh verify` 只重算地址、不重跑 producer;`RawLeanReportArtifact`
+          # 只核模块集与 source_sha256。二者都拦不住「同一份源、不同 producer 语义」。
+          # 故 producer 不一致时既不写也不读该缓存,回落完整生产路径。
+          # lean-inspector/ 全史仅改 2 次,其一(953733cb)正是改变 axiom 闭包收集方式的
+          # 语义改动 —— 频次低不构成豁免(第 20 条:检测机制绝不降级)。
+          if [[ "$candidateProducer" == "$baselineProducer" ]]; then
+            echo "producer-consistent=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "producer-consistent=false" >> "$GITHUB_OUTPUT"
+            printf '%s\n' "canonical Lean report cache disabled: candidate producer ${candidateProducer:0:12} != executed baseline producer ${baselineProducer:0:12}" >> "$GITHUB_STEP_SUMMARY"
+          fi
           if [[ "$address" == "$baselineAddress" ]]; then
             echo "pair-reusable=true" >> "$GITHUB_OUTPUT"
           else
@@ -214,7 +232,7 @@ jobs:
       # 报告不可能被静默接受,最坏是红,不是假绿。
       - name: Restore canonical Lean report by input address
         id: report-cache
-        if: steps.lean-report-input.outputs.pair-reusable == 'true'
+        if: steps.lean-report-input.outputs.pair-reusable == 'true' && steps.lean-report-input.outputs.producer-consistent == 'true'
         uses: actions/cache/restore@v4
         with:
           path: .canonical-lean-report-cache
@@ -372,7 +390,7 @@ jobs:
       # 命中缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;
       # 报告 key 也已存在,重写无意义。三个 save 一律只在真正跑过生产路径时执行。
       - name: Save candidate canonical Lean report (dev push only)
-        if: success() && steps.report-reuse.outcome != 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        if: success() && steps.report-reuse.outcome != 'success' && steps.lean-report-input.outputs.producer-consistent == 'true' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
         uses: actions/cache/save@v4
         with:
           path: .canonical-lean-report-cache
