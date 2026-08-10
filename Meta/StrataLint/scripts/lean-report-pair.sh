@@ -307,7 +307,9 @@ def read_manifest(path):
     return {parts[0]: parts[2] for line in path.read_text().splitlines() if len(parts := line.split("\t")) == 3}
 current_keys, cached_keys = read_manifest(current), read_manifest(cached)
 reported = {entry.get("module") for entry in json.loads(report.read_text()).get("modules", [])}
-hits = [module for module in current_keys if cached_keys.get(module) == current_keys[module] and module in reported]
+hits = [module for module in current_keys
+        if not current_keys[module].startswith("unparseable:")
+        and cached_keys.get(module) == current_keys[module] and module in reported]
 misses = [module for module in current_keys if module not in hits]
 reusable.write_text("".join(module + "\n" for module in hits))
 stale.write_text("".join(module + "\n" for module in misses))

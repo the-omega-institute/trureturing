@@ -101,15 +101,18 @@ root = pathlib.Path(root)
 entries = [line.rstrip("\n").split("\t") for line in pathlib.Path(modules_file).read_text().splitlines()]
 paths = dict(entries)
 imports = {}
+unparseable = set()
 pattern = re.compile(r"^import[ \t]+([A-Za-z0-9_.]+)[ \t]*$")
+import_token = re.compile(r"(?:^|[ \t])import(?:[ \t]|$)")
 for module, relative in entries:
     managed = []
     for line in (root / relative).read_text(encoding="utf-8").splitlines():
-        if not line.startswith("import"):
+        if line.lstrip().startswith("--") or import_token.search(line) is None:
             continue
         match = pattern.fullmatch(line)
         if match is None:
-            raise SystemExit(f"lean-report-input: unparseable import in {relative}: {line}")
+            unparseable.add(module)
+            continue
         imported = match.group(1)
         if imported == "Trureturing" or imported.startswith("D5."):
             if imported not in paths:
@@ -131,11 +134,13 @@ def closure(module, visiting=()):
 for module, relative in entries:
     preimage = ["schema=stratalint-lean-report-module-input-v1", f"module={module}",
                 f"producer_sha256={producer}", f"config_sha256={config}"]
-    for dependency in sorted(closure(module)):
+    dependencies = closure(module)
+    for dependency in sorted(dependencies):
         digest = hashlib.sha256((root / paths[dependency]).read_bytes()).hexdigest()
         preimage.append(f"{digest}  {dependency}")
     key = hashlib.sha256(("\n".join(preimage) + "\n").encode()).hexdigest()
-    print(f"{module}\t{relative}\t{key}")
+    prefix = "unparseable:" if dependencies & unparseable else ""
+    print(f"{module}\t{relative}\t{prefix}{key}")
 PY
 }
 

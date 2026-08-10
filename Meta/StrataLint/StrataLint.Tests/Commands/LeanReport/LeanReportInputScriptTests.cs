@@ -40,6 +40,18 @@ public sealed class LeanReportInputScriptTests
             Lines(manifest).Select(static line => line.Split('\t')[0]));
     }
 
+    [Fact]
+    public void LeadingWhitespaceImportIsMarkedUnparseableForConservativeRecomputation()
+    {
+        using var fixture = new LeanReportInputFixture();
+        fixture.WriteSource("D5/Probe.lean", "  import D5.Upstream\ntheorem probe : True := by trivial\n");
+        fixture.WriteSource("D5/Upstream.lean", "def upstream : Nat := 1\n");
+
+        var manifest = fixture.Manifest();
+
+        Assert.StartsWith("unparseable:", manifest["D5.Probe"].Key, StringComparison.Ordinal);
+    }
+
     [Theory]
     [InlineData("source")]
     [InlineData("toolchain")]
