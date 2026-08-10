@@ -44,6 +44,9 @@ domains:
   Entropy:
     stratum: S3
     definition: Finite Shannon entropy in nats and its information-theoretic identities and inequalities, including maximum-entropy bounds, mutual information and its independence characterization, subadditivity, and conditional-entropy chain rules.
+  Estimation:
+    stratum: S3
+    definition: Finite estimation-theoretic bounds relating error probability to conditional entropy, including Fano-type inequalities.
   Factorization:
     stratum: S3
     definition: The multiplicative monoid of positive naturals as the free commutative monoid on the primes, with additive prime-exponent readouts.
