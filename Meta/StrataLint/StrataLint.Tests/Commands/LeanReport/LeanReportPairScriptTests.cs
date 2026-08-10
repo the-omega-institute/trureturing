@@ -250,6 +250,17 @@ public sealed class LeanReportPairScriptTests
                 Path.Combine(root, "Meta", "StrataLint", "lean-inspector", "Inspector.lean"),
                 "def residentFixture : True := by trivial\n",
                 new UTF8Encoding(false));
+            WriteProducerInput(root, "Meta/StrataLint/scripts/report/lean-report-input.sh");
+            WriteProducerInput(root, "Meta/StrataLint/StrataLint.Cli/Commands/LeanReportMergeCommand.cs");
+            WriteProducerInput(root, "Meta/StrataLint/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs");
+            WriteProducerInput(root, "Meta/StrataLint/StrataLint.Engine/Snapshot/StructuredCanonicalWriter.cs");
+        }
+
+        private static void WriteProducerInput(string root, string relative)
+        {
+            var path = Path.Combine(root, relative.Replace('/', Path.DirectorySeparatorChar));
+            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+            File.WriteAllText(path, "fixture\n", new UTF8Encoding(false));
         }
 
         private static string FindRepositoryRoot()

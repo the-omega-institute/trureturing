@@ -288,6 +288,17 @@ public sealed class LeanReportCacheTests
             File.Copy(
                 Path.Combine(repositoryRoot, "Meta", "StrataLint", "scripts", "report", "lean-report-input.sh"),
                 Path.Combine(reportDir, "lean-report-input.sh"));
+            foreach (var relative in new[]
+            {
+                "Meta/StrataLint/StrataLint.Cli/Commands/LeanReportMergeCommand.cs",
+                "Meta/StrataLint/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs",
+                "Meta/StrataLint/StrataLint.Engine/Snapshot/StructuredCanonicalWriter.cs",
+            })
+            {
+                var path = Path.Combine(Repo, relative.Replace('/', Path.DirectorySeparatorChar));
+                Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+                File.WriteAllText(path, "fixture\n");
+            }
             MakeExecutable(PairScript);
             MakeExecutable(Path.Combine(reportDir, "lean-report-input.sh"));
         }
