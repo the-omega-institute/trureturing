@@ -31,6 +31,26 @@ public sealed class CanonicalSourceDuplicationTests
         Assert.Contains("AtomizerRegistry", finding.Message, StringComparison.Ordinal);
     }
 
+    // 边界语义由 ContainsWholeToken 承担(此前是内插正则的前后瞻)。这三条把它钉住,
+    // 使那次「正则换扫描」不是靠肉眼比对而是靠机器判等。
+    [Theory]
+    [InlineData("var x = \"synthetic-v1\";", true)]                    // 整词
+    [InlineData("var x = \"atomizer: synthetic-v1 end\";", true)]      // 两侧皆非 token 字符
+    [InlineData("var x = \"presynthetic-v1\";", false)]                // 左侧粘连字母
+    [InlineData("var x = \"synthetic-v10\";", false)]                  // 右侧粘连数字
+    [InlineData("var x = \"synthetic-v1.beta\";", false)]              // 右侧粘连点
+    [InlineData("var x = \"a-synthetic-v1\";", false)]                 // 左侧粘连连字符
+    [InlineData("var x = \"xsynthetic-v1 and synthetic-v1\";", true)]  // 先粘连后整词:须继续搜完
+    public void AtomizerIdLiteralMatchesOnlyOnWholeTokenBoundaries(string source, bool expectFinding)
+    {
+        var findings = CanonicalSourceDuplicationPolicy.InspectAtomizerIdLiterals(
+            "Meta/StrataLint/Synthetic.cs",
+            source,
+            ["synthetic-v1"]);
+
+        Assert.Equal(expectFinding, findings.Count > 0);
+    }
+
     [Fact]
     public void RegistryOwnsItsAtomizerIdLiterals()
     {
