@@ -55,6 +55,106 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains("Carrier=12", result.Error, StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void RouteReportsSubdomainSiblingCountsAtTheActualSplitLocation()
+    {
+        using var temporary = RouteRepository(Manifest(
+            "F", "Carrier", "Probe", "", "lean", "", subdomain: "Algebra"));
+        var files = Enumerable.Range(0, RepositoryRules.DirectoryFileLimit).ToDictionary(
+            index => $"D5/S0/Carrier/Algebra/Existing{index:D2}.lean",
+            static _ => "-- fixture\n",
+            StringComparer.Ordinal);
+        files["D5/S0/Carrier/Geometry/Existing.lean"] = "-- fixture\n";
+        var environment = RouteEnvironment(temporary.Path, files);
+
+        var result = environment.Route(["manifest.json"]);
+
+        Assert.False(result.Success);
+        Assert.Contains("D5/S0/Carrier/Algebra projected occupancy 13", result.Error, StringComparison.Ordinal);
+        Assert.Contains("Algebra=12", result.Error, StringComparison.Ordinal);
+        Assert.Contains("Geometry=1", result.Error, StringComparison.Ordinal);
+        Assert.DoesNotContain("Carrier=", result.Error, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RouteCapacityHintForThreeSegmentFormalBucketIncludesSubdomainExit()
+    {
+        using var temporary = RouteRepository();
+        var environment = RouteEnvironment(
+            temporary.Path,
+            LeanBucketFiles(RepositoryRules.DirectoryFileLimit));
+
+        var result = environment.Route(["manifest.json"]);
+
+        Assert.Contains(
+            "choose a sibling domain or new domain, or create a subdomain in this domain",
+            result.Error,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RouteCapacityHintForFourSegmentFormalBucketAllowsOnlySiblingOrNewSubdomain()
+    {
+        using var temporary = RouteRepository(Manifest(
+            "F", "Carrier", "CapacityHintProbe", "", "lean", "", subdomain: "SyntheticCapacity"));
+        var files = Enumerable.Range(0, RepositoryRules.DirectoryFileLimit).ToDictionary(
+            index => $"D5/S0/Carrier/SyntheticCapacity/Fixture{index:D2}.lean",
+            static _ => "-- fixture\n",
+            StringComparer.Ordinal);
+        var environment = RouteEnvironment(temporary.Path, files);
+
+        var result = environment.Route(["manifest.json"]);
+
+        Assert.Contains(
+            "choose a sibling subdomain or new subdomain; nesting is limited to one subdomain level",
+            result.Error,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain(
+            "create a subdomain in this domain",
+            result.Error,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RouteCapacityHintForThreeSegmentBlueprintBucketIncludesSubdomainExit()
+    {
+        using var temporary = RouteRepository(Manifest(
+            "B", "Carrier", "CapacityHintProbe", "", "markdown", ""));
+        var environment = RouteEnvironment(
+            temporary.Path,
+            BlueprintBucketFiles(RepositoryRules.DirectoryFileLimit));
+
+        var result = environment.Route(["manifest.json"]);
+
+        Assert.Contains(
+            "choose a sibling domain or new domain, or create a subdomain in this domain",
+            result.Error,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RouteCapacityHintForFourSegmentBlueprintBucketAllowsOnlySiblingOrNewSubdomain()
+    {
+        using var temporary = RouteRepository(Manifest(
+            "B", "Carrier", "CapacityHintProbe", "", "markdown", "", subdomain: "SyntheticCapacity"));
+        var files = Enumerable.Range(0, RepositoryRules.DirectoryFileLimit).ToDictionary(
+            index => $"Blueprint/D5/S0/Carrier/SyntheticCapacity/Fixture{index:D2}.scribe.cs",
+            static _ => "// fixture\n",
+            StringComparer.Ordinal);
+        var environment = RouteEnvironment(temporary.Path, files);
+
+        var result = environment.Route(["manifest.json"]);
+
+        Assert.Contains(
+            "choose a sibling subdomain or new subdomain; nesting is limited to one subdomain level",
+            result.Error,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain(
+            "create a subdomain in this domain",
+            result.Error,
+            StringComparison.Ordinal);
+    }
+
     [Theory]
     [InlineData("E", "Carrier", "Probe", "result", "json", "", "Evidence/D5/S0/Carrier")]
     [InlineData("C", "2026-07-11", "round-168", "", "markdown", "", "Chronicle/2026/07")]
@@ -208,10 +308,15 @@ public sealed partial class ProductionEnvironmentTests
         string module,
         string selector,
         string artifact,
-        string tag) =>
+        string tag,
+        string? subdomain = null)
+    {
+        var subdomainProperty = subdomain is null ? string.Empty : $",\"subdomain\":\"{subdomain}\"";
+        return
         $$"""
-        {"artifact":"{{artifact}}","domain":"{{domain}}","generality":"G","module":"{{module}}","plane":"{{plane}}","selector":"{{selector}}","tag":"{{tag}}","theory":"D5"}
+        {"artifact":"{{artifact}}","domain":"{{domain}}","generality":"G","module":"{{module}}","plane":"{{plane}}","selector":"{{selector}}"{{subdomainProperty}},"tag":"{{tag}}","theory":"D5"}
         """;
+    }
 
     private static ProductionCliEnvironment RouteEnvironment(
         string repositoryRoot,

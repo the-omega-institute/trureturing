@@ -315,9 +315,10 @@ public sealed class Gid : IEquatable<Gid>
     private static (CoordinatePath Coordinates, string Module, string? Declaration)
         ParseFormalCoordinates(string[] parts)
     {
-        var ordinary = parts.Length == 3
+        var ordinary = parts.Length is 3 or 4
             && IsStratum(parts[0])
-            && CamelPattern.IsMatch(parts[1]);
+            && parts[1..^1].All(CamelPattern.IsMatch)
+            && (parts.Length == 3 || !string.Equals(parts[1], parts[2], StringComparison.Ordinal));
         var special = parts.Length == 2 && IsSpecialZone(parts[0]);
         if (!ordinary && !special)
         {
