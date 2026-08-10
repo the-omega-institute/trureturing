@@ -9,8 +9,8 @@ namespace StrataLint.Scribe;
 
 internal static class ValuesKernelDataLoader
 {
-    internal const string RelativePath = ValuesProjectionLoader.KernelDataPath;
-    internal const string LeanModulePath = ValuesProjectionLoader.LeanModulePath;
+    internal const string RelativePath = "Golden/values-kernels.toml";
+    internal const string LeanModulePath = "D5/S3/Constants/Values.lean";
 
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     private static readonly Regex Sha256Pattern = new(
