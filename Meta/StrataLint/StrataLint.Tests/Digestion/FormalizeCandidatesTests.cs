@@ -240,6 +240,48 @@ public sealed class FormalizeCandidatesTests
         Assert.Empty(json.RootElement.GetProperty("recorded_formalizations").EnumerateArray());
     }
 
+    [Fact]
+    public void FormalizeCandidatesDoesNotTreatDriftedHostedSignatureAsCurrentFormalization()
+    {
+        var entry = Entry("source", "hosted-signature-drift", "定理", "5.6");
+        const string hostedGid = "D5/S0/Synthetic/Receipt.hosted_secondary";
+        var receipt = DigestionFormalizationReceipt.Write(new DigestionFormalizationReceipt(
+            entry.AtomId,
+            "D5/S0/Synthetic/Receipt.hosted_signature_drift",
+            new DigestionFormalizationSignature(
+                "hosted_signature_drift", "theorem", "statement-v1"),
+            entry.Atom.Fingerprints.RawSha256,
+            entry.Atom.Fingerprints.RawSha256,
+            [
+                new DigestionFormalizationExtension(
+                    hostedGid,
+                    new DigestionFormalizationSignature(
+                        "hosted_secondary", "theorem", "hosted-statement-v1")),
+            ])).ToArray();
+        var report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>
+        {
+            ["D5/S0/Synthetic/Receipt.lean"] = new LeanFileReport(
+                [],
+                [
+                    new LeanDeclaration(
+                        "hosted_signature_drift", "theorem", "statement-v1", []),
+                    new LeanDeclaration(
+                        "hosted_secondary", "theorem", "hosted-statement-v2", []),
+                ]),
+        });
+
+        var result = Run([entry], formalizationReceipt: receipt, leanReport: report);
+
+        Assert.True(result.Success, result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        Assert.Equal(
+            entry.AtomId,
+            Assert.Single(json.RootElement.GetProperty("candidates").EnumerateArray())
+                .GetProperty("atom_id")
+                .GetString());
+        Assert.Empty(json.RootElement.GetProperty("recorded_formalizations").EnumerateArray());
+    }
+
     [Theory]
     [InlineData("{not-json}\n")]
     [InlineData("{}\n")]
