@@ -6,6 +6,40 @@ namespace StrataLint.Tests;
 
 public sealed class LeanReportInputScriptTests
 {
+    [Fact]
+    public void ManifestKeysIncludeTheTransitiveManagedImportClosure()
+    {
+        using var fixture = new LeanReportInputFixture();
+        fixture.WriteSource("D5/Upstream.lean", "def upstream : Nat := 1\n");
+        fixture.WriteSource("D5/Probe.lean", "import D5.Upstream\ntheorem probe : True := by trivial\n");
+        fixture.WriteSource("Trureturing.lean", "import D5.Probe\n");
+        var before = fixture.Manifest();
+
+        fixture.WriteSource("D5/Upstream.lean", "def upstream : Nat := 2\n");
+        var after = fixture.Manifest();
+
+        Assert.Equal(before["D5.Upstream"].Path, after["D5.Upstream"].Path);
+        Assert.NotEqual(before["D5.Upstream"].Key, after["D5.Upstream"].Key);
+        Assert.NotEqual(before["D5.Probe"].Key, after["D5.Probe"].Key);
+        Assert.NotEqual(before["Trureturing"].Key, after["Trureturing"].Key);
+    }
+
+    [Fact]
+    public void ModulesAndManifestUseTheSameCanonicalEnumeration()
+    {
+        using var fixture = new LeanReportInputFixture();
+        fixture.WriteSource("D5/Nested/Second.lean", "def second : Nat := 2\n");
+
+        var modules = fixture.RunCommand("modules");
+        var manifest = fixture.RunCommand("manifest");
+
+        Assert.Equal(0, modules.ExitCode);
+        Assert.Equal(0, manifest.ExitCode);
+        Assert.Equal(
+            Lines(modules).Select(static line => line.Split('\t')[0]),
+            Lines(manifest).Select(static line => line.Split('\t')[0]));
+    }
+
     [Theory]
     [InlineData("source")]
     [InlineData("toolchain")]
@@ -104,6 +138,20 @@ public sealed class LeanReportInputScriptTests
                 new UTF8Encoding(false));
         }
 
+        internal ProcessOutput RunCommand(string command) => Run(command);
+
+        internal Dictionary<string, (string Path, string Key)> Manifest()
+        {
+            var result = Run("manifest");
+            Assert.Equal(0, result.ExitCode);
+            return Lines(result).ToDictionary(
+                static line => line.Split('\t')[0],
+                static line => (line.Split('\t')[1], line.Split('\t')[2]),
+                StringComparer.Ordinal);
+        }
+
+        internal void WriteSource(string relativePath, string contents) => Write(relativePath, contents);
+
         private ProcessOutput Run(string command) => BoundedProcessRunner.Run(
             "bash",
             [script, command, "--repository", repository, "--report", report],
@@ -111,10 +159,12 @@ public sealed class LeanReportInputScriptTests
             TimeSpan.FromSeconds(30),
             1024 * 1024);
 
-        private void Write(string relativePath, string contents) => File.WriteAllText(
-            Path.Combine(repository, relativePath.Replace('/', Path.DirectorySeparatorChar)),
-            contents,
-            new UTF8Encoding(false));
+        private void Write(string relativePath, string contents)
+        {
+            var path = Path.Combine(repository, relativePath.Replace('/', Path.DirectorySeparatorChar));
+            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+            File.WriteAllText(path, contents, new UTF8Encoding(false));
+        }
 
         public void Dispose() => temporary.Dispose();
 
@@ -130,4 +180,7 @@ public sealed class LeanReportInputScriptTests
             throw new DirectoryNotFoundException("Could not locate repository root.");
         }
     }
+
+    private static string[] Lines(ProcessOutput output) => Encoding.UTF8.GetString(output.StandardOutput)
+        .Split('\n', StringSplitOptions.RemoveEmptyEntries);
 }
