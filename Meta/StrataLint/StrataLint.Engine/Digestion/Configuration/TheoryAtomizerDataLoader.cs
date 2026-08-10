@@ -264,9 +264,18 @@ internal static class TheoryAtomizerDataLoader
             var key = row[keyName];
             var value = row[valueName];
             var firstValue = values.Add(value);
+            if (kind && !TheoryAtomizerRules.AllowedKinds.Contains(value))
+            {
+                // The kind alphabet is closed by design, but naming it here is what turns a
+                // rejected registration into a one-step fix instead of a guessing game.
+                throw new FormatException(
+                    $"Unknown {valueName} '{value}' for {keyName} '{key}'. Accepted {valueName}s: "
+                    + string.Join(", ", TheoryAtomizerRules.AllowedKinds.Order(StringComparer.Ordinal))
+                    + ".");
+            }
+
             if (!keys.Add(key) || locator && !firstValue && !isAlias || isAlias && firstValue
-                || locator && !LocatorPattern.IsMatch(value)
-                || kind && !TheoryAtomizerRules.AllowedKinds.Contains(value))
+                || locator && !LocatorPattern.IsMatch(value))
             {
                 throw new FormatException($"Invalid or duplicate mapping in {keyName}/{valueName}.");
             }
@@ -274,14 +283,17 @@ internal static class TheoryAtomizerDataLoader
         }
         if (!ordered)
         {
-            var canonical = longestFirst
-                ? result.OrderByDescending(static item => item.Token.Length).ThenBy(static item => item.Token, StringComparer.Ordinal)
-                : result.OrderBy(static item => item.Token, StringComparer.Ordinal);
-            if (!result.SequenceEqual(canonical))
-            {
-                throw new FormatException($"Entries for {keyName}/{valueName} are not canonical.");
-            }
+            // Match order is derived, not a maintenance obligation. Longest-first is what
+            // makes a longer token win over a shorter one that prefixes it (注记 over 注);
+            // requiring the file to already be in that order only meant that registering a
+            // new volume's genres could fail on placement rather than on content.
+            return (longestFirst
+                ? result.OrderByDescending(static item => item.Token.Length)
+                    .ThenBy(static item => item.Token, StringComparer.Ordinal)
+                : result.OrderBy(static item => item.Token, StringComparer.Ordinal))
+                .ToImmutableArray();
         }
+
         return result.ToImmutable();
     }
 
