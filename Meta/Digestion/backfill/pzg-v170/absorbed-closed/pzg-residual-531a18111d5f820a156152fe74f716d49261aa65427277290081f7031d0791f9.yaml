@@ -1,0 +1,17 @@
+ast_path: theorem/6.2
+fingerprints:
+  raw_sha256: sha256:531a18111d5f820a156152fe74f716d49261aa65427277290081f7031d0791f9
+  normalized_sha256: sha256:531a18111d5f820a156152fe74f716d49261aa65427277290081f7031d0791f9
+cas_ref: sha256:531a18111d5f820a156152fe74f716d49261aa65427277290081f7031d0791f9
+coverage_gids:
+  - D5/S0/Conventions/GeometricWeights.no_geometric_weights_match_zeckendorf_singletons
+receipts:
+  coverage:
+    - gid: D5/S0/Conventions/GeometricWeights.no_geometric_weights_match_zeckendorf_singletons
+      source_sha256: sha256:531a18111d5f820a156152fe74f716d49261aa65427277290081f7031d0791f9
+      target_sha256: sha256:30ccb203247941c3c194f3637d4b2ae7411c3028de52b9c42ecfad7ed26dcd7e
+  scribe:
+    - gid: D5/S0/Conventions/GeometricWeights.no_geometric_weights_match_zeckendorf_singletons
+      definition_sha256: sha256:7c003cd900c3619c7105cbd58c702de8047a0063cd6c9b886d99e5970e292f2a
+      emission_sha256: sha256:9b4ade532c86e1a3f6fa5bbcc6694d39dcb549dd3c958fd2e8521ecbf60f9f17
+  unresolved_subitems: []
