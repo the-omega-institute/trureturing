@@ -1,0 +1,17 @@
+ast_path: theorem/4.4
+fingerprints:
+  raw_sha256: sha256:a30948900dc208a2a3689e5c1155fa4e157677a88f481ee26c3aca7ba1590ee3
+  normalized_sha256: sha256:a30948900dc208a2a3689e5c1155fa4e157677a88f481ee26c3aca7ba1590ee3
+cas_ref: sha256:a30948900dc208a2a3689e5c1155fa4e157677a88f481ee26c3aca7ba1590ee3
+coverage_gids:
+  - D5/S3/Factorization/FreeCommMonoid.pnat_free_comm_monoid_on_primes
+receipts:
+  coverage:
+    - gid: D5/S3/Factorization/FreeCommMonoid.pnat_free_comm_monoid_on_primes
+      source_sha256: sha256:a30948900dc208a2a3689e5c1155fa4e157677a88f481ee26c3aca7ba1590ee3
+      target_sha256: sha256:f31eba4c056b8faf416d7ca63947b7298151495d3473fc2163683eac06d70d8c
+  scribe:
+    - gid: D5/S3/Factorization/FreeCommMonoid.pnat_free_comm_monoid_on_primes
+      definition_sha256: sha256:64fd83b14eafc22d35ea5bbc10aac4dcd67065d1b52e0e337bded94795e45fd1
+      emission_sha256: sha256:ab48b30eabd77335eff5b837b8bd1ccced166c70cb2a3b8a7dbff11f580958a7
+  unresolved_subitems: []
