@@ -125,28 +125,6 @@ def vi5ObserverPtAuditReport : Unit := ()
 def strataLintLeanEnvironmentTicket : Unit := ()
 
 /-- TASK D5-T0031 | 难度:3 | 依赖:欠(observed-partition-pressure) | 尝试:0
-    提示:Evidence/D5/values.json violates the projection-partition law (merge unit > mutation unit)
-    and is deferred as an open nonconformance, not an exemption. Authoritative input
-    Golden/values-kernels.toml carries 14 [[constants]] records, each with its own id, lean_gid,
-    lean_statement_sha256 and status (8 emitted, 6 registered-open; methods span exact-quadratic,
-    cphi and none), so |mutation keys| > 1. The records are not 14 isolated leaves: c1.refs={T0}
-    and c2.refs={Bh,T0,T1} form a local dependency closure. No evidence was found that any batch
-    of them originates from one fit, so the single-file form is not justified by cross-key atomicity.
-    A second violation lives in the producer: CanonicalValuesWriter binds one global attestation
-    and input_sha256 over the whole input closure, so any input byte rewrites the entire projection.
-    Deferred because the pressure the law defends against has not occurred: 60-day churn is 10
-    commits, all attributable to SDK pins, canonical-data residence moves and producer/schema
-    migrations, none to two constants being maintained in parallel. Migration would also have to
-    move SL-018's single-address verdict and its golden negatives, RepositoryPathPolicy's
-    ValuesProjectionPath, the Evidence GID mapping, the A-VALUES aggregate identity named in the
-    spec, and the writer's shared attestation - splitting the JSON mechanically without redesigning
-    that attestation would be a split in name only.
-    Re-open on any of these facts, not on a guessed threshold: the first source change touching a
-    proper subset of constants; the first merge conflict attributable to this path; or SL-018 or
-    A-VALUES being touched by another authorized migration. Close only by migrating to
-    per-mutation-unit shards that pass a single-key change fixture; low churn must never be
-    recorded as compliance.
-    尸检:2026-08-11:this file's own law text first recorded values.json as an exemption on the
-    ground that its producer reads a single toml - conflating input file count with input partition
-    count. The erratum is in CLAUDE.md section 0. -/
+    提示:Evidence/D5/values.json violates the projection-partition law as an open nonconformance, not an exemption: Golden/values-kernels.toml carries 14 constants with distinct id, lean_gid, statement hash and status, c1 and c2 add a local dependency closure, and CanonicalValuesWriter binds one attestation over the whole input closure, so any input byte rewrites the projection; deferred because 60-day churn is 10 commits all attributable to SDK pins, residence moves and producer migrations rather than parallel constant maintenance, and migration must also move SL-018's single-address verdict, ValuesProjectionPath, the Evidence GID mapping and the A-VALUES aggregate identity; re-open on the first source change touching a proper subset of constants, the first merge conflict attributable to this path, or SL-018 or A-VALUES being touched by another authorized migration; close only by sharding per mutation unit against a single-key change fixture, never by low churn.
+    尸检:2026-08-11:the law's own clause first recorded this path as an exemption because its producer reads a single toml, conflating input file count with input partition count; the erratum is in CLAUDE.md section 0. -/
 def valuesProjectionPartitionDeferral : Unit := ()
