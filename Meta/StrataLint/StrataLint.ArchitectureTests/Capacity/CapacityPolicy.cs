@@ -60,11 +60,13 @@ internal static class CapacityPolicy
         }
 
         findings.AddRange(directories
-            .Where(item => item.Value > RepositoryRules.DirectoryFileLimit)
+            .Where(item => item.Value > RepositoryRules.DirectoryToleranceLimit)
             .OrderBy(static item => item.Key, StringComparer.Ordinal)
             .Select(static item => new CapacityFinding(
                 item.Key,
-                $"directory contains {item.Value} files (maximum {RepositoryRules.DirectoryFileLimit})")));
+                $"directory contains {item.Value} files (admission limit "
+                    + $"{RepositoryRules.DirectoryFileLimit}, repository tolerance "
+                    + $"{RepositoryRules.DirectoryToleranceLimit}; split per CLAUDE.md 8)")));
         return findings;
     }
 

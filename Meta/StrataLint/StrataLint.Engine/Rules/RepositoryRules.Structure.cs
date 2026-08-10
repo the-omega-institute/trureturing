@@ -62,6 +62,17 @@ internal static partial class RepositoryRules
 
     internal const int DirectoryFileLimit = 12;
 
+    // The repository-wide capacity net tolerates a band above the admission limit.
+    // Capacity is pressure, not correctness: an overfull bucket is a signal to split
+    // (CLAUDE.md 8), and by the tiers of 20 a reversible content-level fact belongs in
+    // detect-and-correct. Without the band, two PRs branched from the same base can each
+    // add one file to a bucket holding eleven, each see twelve and admit, and their union
+    // of thirteen turns the repository-wide scan red - blocking every unrelated PR until
+    // someone splits. That is what made strict (now forbidden, 19) load-bearing. The
+    // admission rule keeps the unbanded limit, so the next change touching that bucket is
+    // still refused and the split pressure lands exactly where it belongs.
+    internal const int DirectoryToleranceLimit = 24;
+
     // SL-003 capacity exclusions: theory inputs, the Lake manifest, the backfill
     // inventory, atomizer dialect registry, canonical CAS blobs, per-atom
     // formalization receipts, and emitted Blueprint projections are not artifacts
