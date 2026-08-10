@@ -17,6 +17,9 @@ namespace StrataLint.Tests;
 // logic is exercised in isolation and in well under a second.
 public sealed class LeanReportCacheTests
 {
+    private const string MergeCommandPath = "Meta/StrataLint/StrataLint.Cli/Commands/LeanReportMergeCommand.cs";
+    private const string RawReportPath = "Meta/StrataLint/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs";
+    private const string CanonicalWriterPath = "Meta/StrataLint/StrataLint.Engine/Snapshot/StructuredCanonicalWriter.cs";
     [Fact]
     public void SecondProductionOfTheSameAddressIsServedFromCacheWithoutSlotOrProducer()
     {
@@ -290,9 +293,9 @@ public sealed class LeanReportCacheTests
                 Path.Combine(reportDir, "lean-report-input.sh"));
             foreach (var relative in new[]
             {
-                "Meta/StrataLint/StrataLint.Cli/Commands/LeanReportMergeCommand.cs",
-                "Meta/StrataLint/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs",
-                "Meta/StrataLint/StrataLint.Engine/Snapshot/StructuredCanonicalWriter.cs",
+                MergeCommandPath,
+                RawReportPath,
+                CanonicalWriterPath,
             })
             {
                 var path = Path.Combine(Repo, relative.Replace('/', Path.DirectorySeparatorChar));

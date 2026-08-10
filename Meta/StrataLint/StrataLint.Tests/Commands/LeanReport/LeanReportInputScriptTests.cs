@@ -6,6 +6,10 @@ namespace StrataLint.Tests;
 
 public sealed class LeanReportInputScriptTests
 {
+    private const string InputHelperPath = "Meta/StrataLint/scripts/report/lean-report-input.sh";
+    private const string MergeCommandPath = "Meta/StrataLint/StrataLint.Cli/Commands/LeanReportMergeCommand.cs";
+    private const string RawReportPath = "Meta/StrataLint/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs";
+    private const string CanonicalWriterPath = "Meta/StrataLint/StrataLint.Engine/Snapshot/StructuredCanonicalWriter.cs";
     [Fact]
     public void ManifestKeysIncludeTheTransitiveManagedImportClosure()
     {
@@ -132,10 +136,10 @@ public sealed class LeanReportInputScriptTests
             Write("lake-manifest.json", "{\"version\":\"1.1.0\"}\n");
             Write(inspectorScriptPath, "#!/usr/bin/env bash\n");
             Write(inspectorSourcePath, "def fixture : True := by trivial\n");
-            Write("Meta/StrataLint/scripts/report/lean-report-input.sh", "#!/usr/bin/env bash\n");
-            Write("Meta/StrataLint/StrataLint.Cli/Commands/LeanReportMergeCommand.cs", "// fixture\n");
-            Write("Meta/StrataLint/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs", "// fixture\n");
-            Write("Meta/StrataLint/StrataLint.Engine/Snapshot/StructuredCanonicalWriter.cs", "// fixture\n");
+            Write(InputHelperPath, "#!/usr/bin/env bash\n");
+            Write(MergeCommandPath, "// fixture\n");
+            Write(RawReportPath, "// fixture\n");
+            Write(CanonicalWriterPath, "// fixture\n");
             File.WriteAllText(report, "{}\n", new UTF8Encoding(false));
             var digest = Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(report)));
             File.WriteAllText(
@@ -204,8 +208,8 @@ public sealed class LeanReportInputScriptTests
                 "lakefile" => "lakefile.toml",
                 "manifest" => "lake-manifest.json",
                 "inspector" => inspectorSourcePath,
-                "input-helper" => "Meta/StrataLint/scripts/report/lean-report-input.sh",
-                "merge-cli" => "Meta/StrataLint/StrataLint.Cli/Commands/LeanReportMergeCommand.cs",
+                "input-helper" => InputHelperPath,
+                "merge-cli" => MergeCommandPath,
                 _ => throw new InvalidOperationException($"unknown mutation {mutation}"),
             };
             File.AppendAllText(

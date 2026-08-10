@@ -6,6 +6,10 @@ namespace StrataLint.Tests;
 
 public sealed class LeanReportPairScriptTests
 {
+    private const string InputHelperPath = "Meta/StrataLint/scripts/report/lean-report-input.sh";
+    private const string MergeCommandPath = "Meta/StrataLint/StrataLint.Cli/Commands/LeanReportMergeCommand.cs";
+    private const string RawReportPath = "Meta/StrataLint/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs";
+    private const string CanonicalWriterPath = "Meta/StrataLint/StrataLint.Engine/Snapshot/StructuredCanonicalWriter.cs";
     [Fact]
     public void EqualInputsRunProducerOnceAndAttestBaselineReuse()
     {
@@ -250,10 +254,10 @@ public sealed class LeanReportPairScriptTests
                 Path.Combine(root, "Meta", "StrataLint", "lean-inspector", "Inspector.lean"),
                 "def residentFixture : True := by trivial\n",
                 new UTF8Encoding(false));
-            WriteProducerInput(root, "Meta/StrataLint/scripts/report/lean-report-input.sh");
-            WriteProducerInput(root, "Meta/StrataLint/StrataLint.Cli/Commands/LeanReportMergeCommand.cs");
-            WriteProducerInput(root, "Meta/StrataLint/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs");
-            WriteProducerInput(root, "Meta/StrataLint/StrataLint.Engine/Snapshot/StructuredCanonicalWriter.cs");
+            WriteProducerInput(root, InputHelperPath);
+            WriteProducerInput(root, MergeCommandPath);
+            WriteProducerInput(root, RawReportPath);
+            WriteProducerInput(root, CanonicalWriterPath);
         }
 
         private static void WriteProducerInput(string root, string relative)

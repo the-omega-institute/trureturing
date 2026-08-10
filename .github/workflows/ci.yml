@@ -257,7 +257,8 @@ jobs:
           reports="$RUNNER_TEMP/raw-lean-reports"
           mkdir -p "$reports"
           dotnet build baseline/Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release
-          stratalint_dll="$GITHUB_WORKSPACE/baseline/Meta/StrataLint/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll"
+          stratalint_dll="$(dotnet msbuild baseline/Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj \
+            --getProperty:TargetPath --property:Configuration=Release)"
           # verify 需要 .sha256 旁文件(lean-report-input.sh:100),故一并要求存在。
           for suffix in '' .sha256 .input.attestation .provenance.json; do
             test -s "${source}${suffix}"
