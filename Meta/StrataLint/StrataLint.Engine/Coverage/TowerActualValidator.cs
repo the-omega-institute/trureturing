@@ -14,6 +14,12 @@ internal static class TowerActualValidator
         {
             ["candidate-engineering"] = "Candidate harness engineering checks",
             ["baseline-admission"] = "Content-addressed dev baseline admission",
+            // Branch protection requires three contexts and matches them to jobs by
+            // display name, so a renamed job silently stops reporting: the PR then sits
+            // BLOCKED with nothing to point at, and the obvious repair is to drop the
+            // context, which quietly removes a required check. Two of the three names
+            // were pinned here; this is the third.
+            ["lean-inspect"] = "Canonical Lean report production",
         }.ToImmutableDictionary(StringComparer.Ordinal);
 
     internal static TowerActualValidation Validate(
