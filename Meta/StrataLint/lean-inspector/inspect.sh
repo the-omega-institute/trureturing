@@ -116,7 +116,8 @@ run_phase() {
 run_phase cache-get "$LAKE" exe cache get
 run_phase build "$LAKE" build
 
-INPUT_HELPER="$REPOSITORY/Meta/StrataLint/scripts/report/lean-report-input.sh"
+INSPECTOR_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+INPUT_HELPER="$INSPECTOR_DIR/../scripts/report/lean-report-input.sh"
 [[ -x "$INPUT_HELPER" ]] || { echo "inspect.sh: module enumerator is absent: $INPUT_HELPER" >&2; exit 2; }
 MODULE_TABLE="$(mktemp "${TMPDIR:-/tmp}/stratalint-modules.XXXXXXXX")"
 trap 'rm -f -- "$MODULE_TABLE"' EXIT

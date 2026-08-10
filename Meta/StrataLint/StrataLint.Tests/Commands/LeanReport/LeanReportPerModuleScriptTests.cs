@@ -51,6 +51,34 @@ public sealed class LeanReportPerModuleScriptTests
     }
 
     [Fact]
+    public void ProducerDoesNotExecuteCandidateModuleEnumerator()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var temporary = new TemporaryDirectory();
+        var root = FindRepositoryRoot();
+        var repository = Path.Combine(temporary.Path, "repo");
+        Directory.CreateDirectory(Path.Combine(repository, "D5"));
+        Write(repository, "Trureturing.lean", "import D5.Probe\n");
+        Write(repository, "D5/Probe.lean", "def probe : Nat := 1\n");
+        var marker = Path.Combine(temporary.Path, "candidate-helper-ran");
+        var poisoned = Path.Combine(repository, InputScript);
+        Directory.CreateDirectory(Path.GetDirectoryName(poisoned)!);
+        File.WriteAllText(
+            poisoned,
+            $"#!/usr/bin/env bash\ntouch '{marker}'\nprintf 'Trureturing\\tTrureturing.lean\\n'\n",
+            new UTF8Encoding(false));
+        File.SetUnixFileMode(poisoned, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        var lake = Path.Combine(temporary.Path, "lake");
+        File.WriteAllText(lake, "#!/usr/bin/env bash\nif [[ \"$*\" == *' --output '* ]]; then while [[ $# -gt 0 ]]; do [[ $1 == --output ]] && { printf '{\"modules\": [], \"schema\": \"stratalint-raw-lean-report-v1\"}\\n' > \"$2\"; break; }; shift; done; fi\n", new UTF8Encoding(false));
+        File.SetUnixFileMode(lake, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+
+        var result = Run("env", [$"LAKE_BIN={lake}", Path.Combine(root, InspectorScript), "--repository", repository, "--output", Path.Combine(temporary.Path, "report.json")], repository);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.False(File.Exists(marker), "producer executed the candidate-owned module enumerator");
+    }
+
+    [Fact]
     public void ReusedAndFreshEntriesAssembleByteIdenticallyToAFullReport()
     {
         if (OperatingSystem.IsWindows()) return;
