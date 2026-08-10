@@ -24,7 +24,7 @@ public sealed class FileMapManifestTests
             kind = "generated"
             produced_by = "OutputEmitter"
             consumed_by = ["reader"]
-            verified_by = ["emit-check"]
+            verified_by = ["OutputEmitter"]
             authority = "self"
             artifact_id = "A-OUTPUT"
             {{dispositionLine}}
@@ -53,7 +53,7 @@ public sealed class FileMapManifestTests
             kind = "generated"
             produced_by = "OutputEmitter"
             consumed_by = ["reader"]
-            verified_by = ["emit-check"]
+            verified_by = ["OutputEmitter"]
             authority = "self"
             runtime_disposition = "run-local"
             artifact_id = "A-OUTPUT"
@@ -65,7 +65,7 @@ public sealed class FileMapManifestTests
             kind = "generated"
             produced_by = "OutputEmitter"
             consumed_by = ["reader"]
-            verified_by = ["emit-check"]
+            verified_by = ["OutputEmitter"]
             authority = "self"
             runtime_disposition = "run-local"
             artifact_id = "A-OUTPUT"
@@ -116,7 +116,7 @@ public sealed class FileMapManifestTests
             kind = "generated"
             produced_by = "ScribeEmitter"
             consumed_by = ["reader"]
-            verified_by = ["emit-check"]
+            verified_by = ["ScribeEmitter"]
             authority = "self"
             runtime_disposition = "committed-source"
             artifact_id = "none"
@@ -207,7 +207,7 @@ public sealed class FileMapManifestTests
             kind = "generated"
             produced_by = "{{producedBy}}"
             consumed_by = ["reader"]
-            verified_by = ["emit-check"]
+            verified_by = ["ScribeEmitter"]
             authority = "self"
             runtime_disposition = "committed-source"
             artifact_id = "none"
@@ -220,7 +220,7 @@ public sealed class FileMapManifestTests
     }
 
     [Fact]
-    public void GeneratedDeclarationMustNameEmitCheck()
+    public void GeneratedDeclarationMustNameItsProducer()
     {
         var source = """
             schema_version = 2
@@ -245,7 +245,7 @@ public sealed class FileMapManifestTests
         var exception = Assert.Throws<FormatException>(() =>
             FileMapLoader.Parse(Encoding.UTF8.GetBytes(source), "fixture.toml"));
 
-        Assert.Contains("emit-check", exception.Message, StringComparison.Ordinal);
+        Assert.Contains("its producer", exception.Message, StringComparison.Ordinal);
     }
 
     [Theory]

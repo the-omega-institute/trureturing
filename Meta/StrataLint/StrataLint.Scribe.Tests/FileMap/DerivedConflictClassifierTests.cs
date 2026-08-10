@@ -124,7 +124,7 @@ public sealed class DerivedConflictClassifierTests
         kind = "generated"
         produced_by = "SyntheticEmitter"
         consumed_by = ["reader"]
-        verified_by = ["emit-check"]
+        verified_by = ["SyntheticEmitter"]
         authority = "synthetic"
         artifact_id = "none"
         runtime_disposition = "committed-source"

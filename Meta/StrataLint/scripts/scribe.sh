@@ -12,8 +12,7 @@ PARALLELISM="${STRATALINT_PR_A_PARALLELISM:-1}"
 
 case "$MODE" in
   emit) ;;
-  check) ;;
-  *) echo "usage: scribe.sh emit|check" >&2; exit 2 ;;
+  *) echo "usage: scribe.sh emit" >&2; exit 2 ;;
 esac
 
 [[ "$PARALLELISM" =~ ^(1|4)$ ]] \
@@ -24,9 +23,6 @@ run_scribe() {
   if [[ "${STRATALINT_PR_A_NO_BUILD:-0}" == "1" ]]; then
     command=(dotnet run --no-build --project "$PROJECT" --configuration Release -- "$1")
   fi
-  if [[ "$MODE" == "check" ]]; then
-    command+=(--check)
-  fi
   if [[ "$1" == "emit" ]]; then
     "$CONSUMER" --role scribe-consumer --report "$LEAN_REPORT" -- "${command[@]}"
   else
@@ -35,14 +31,11 @@ run_scribe() {
 }
 
 # The truth DAG projection lives here rather than in the Scribe binary: building the graph needs a
-# RepositorySnapshot, which only the CLI's git gateway produces. Same emit/check contract.
+# RepositorySnapshot, which only the CLI's git gateway produces.
 run_dag() {
   local command=(dotnet run --project "$CLI_PROJECT" --configuration Release -- dag-render)
   if [[ "${STRATALINT_PR_A_NO_BUILD:-0}" == "1" ]]; then
     command=(dotnet run --no-build --project "$CLI_PROJECT" --configuration Release -- dag-render)
-  fi
-  if [[ "$MODE" == "check" ]]; then
-    command+=(--check)
   fi
   "${command[@]}"
 }

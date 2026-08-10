@@ -38,7 +38,7 @@ The root contains only shared repository discovery, test metadata, and this map.
   the explicit `S0` through `S4` five-member alphabet.
 - FILEMAP: every tracked or unignored file matches exactly one `Meta/FILEMAP.toml`
   pattern; registry root membership is equal to tracked root files; generated artifacts
-  match the canonical producer inventory and `emit-check`; every data verifier resolves
+  match the canonical producer inventory; every data verifier resolves
   to an existing program file; generated and Golden class directories remain pure.
   The closed `RESIDENCE-EPOCH` sentinel requires the protected-surface residence
   violation inventory to remain empty.

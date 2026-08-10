@@ -37,22 +37,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
                   printf 'echo: open\n'
                 fi
                 ;;
-              emit-check)
-                expected='echo: open'
-                if grep -q '^coverage: true$' Meta/BACKFILL.yaml; then
-                  expected='echo: covered'
-                  grep -q '^aligned: covered$' Meta/BACKFILL.yaml || {
-                    echo 'EMIT_CHECK_FAILED receipt is not aligned' >&2
-                    exit 43
-                  }
-                elif [[ -f Meta/Digestion/formalizations/atom-1.v1.json ]]; then
-                  expected='echo: receipt'
-                fi
-                [[ $(cat Generated/echo-residual-summary.md) == "$expected" ]] || {
-                  echo 'EMIT_CHECK_FAILED echo projection differs' >&2
-                  exit 44
-                }
-                ;;
             esac
             """);
 

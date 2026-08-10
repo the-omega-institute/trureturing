@@ -26,13 +26,11 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 "make:lean-report",
                 "make:emit",
                 "make:echo-residual-summary BASE=synthetic-base",
-                "make:emit-check BASE=synthetic-base",
                 "dotnet:emit-formalization-receipt",
                 "dotnet:ledger-append",
                 "make:lean-report",
                 "make:echo-residual-summary BASE=synthetic-base",
                 "make:emit",
-                "make:emit-check BASE=synthetic-base",
             ],
             fixture.CallKinds());
 
@@ -52,7 +50,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
     }
 
     [Fact]
-    public void DepositEmitsAfterInstallingReceiptAndRefreshingSummaryBeforeFinalCheck()
+    public void DepositEmitsAfterInstallingReceiptAndRefreshingSummary()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -70,12 +68,10 @@ public sealed partial class DepositCoverWorkflowScriptTests
             receipt,
             StringComparison.Ordinal);
         var emit = stderr.IndexOf("detail=emit-post-receipt", receipt, StringComparison.Ordinal);
-        var finalCheck = stderr.IndexOf("detail=emit-check-final", receipt, StringComparison.Ordinal);
 
         Assert.True(receipt >= 0, Diagnostics(result));
         Assert.True(summary > receipt, Diagnostics(result));
         Assert.True(emit > summary, Diagnostics(result));
-        Assert.True(finalCheck > emit, Diagnostics(result));
     }
 
     [Fact]
@@ -277,7 +273,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 "dotnet:align-scribe-receipt",
                 "make:emit",
                 "make:echo-residual-summary BASE=synthetic-base",
-                "make:emit-check BASE=synthetic-base",
             ],
             fixture.CallKinds());
         Assert.Contains("aligned: covered", File.ReadAllText(
