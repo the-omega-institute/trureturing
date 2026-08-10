@@ -1,7 +1,7 @@
-<!-- echo-residual-summary:v4 source=observer-quantum-v1 residual=sha256:e2279e2bb938900c8c4805bc0d103efa4897dfe82f6eef5bdeb7a282ad1b58fc -->
+<!-- echo-residual-summary:v4 source=observer-quantum-v1 residual=sha256:416f136011ff62087553f7cc1e45cbc4057ab3a6da8024c91e4687a50d647aac -->
 # Echo Residual Summary — `observer-quantum-v1`
 
-- unresolved_subitems: 63
+- unresolved_subitems: 62
 - mother_residual_atom_ids: 21
 
 Mother residual atoms:
@@ -55,8 +55,7 @@ Mother residual atoms:
 - `observer-residual-8bdb867fc051e5a905bf4a833e7613687d575322c0f5437ea92e2c33b1dec146` (2)
   - `no-third-collapse-dynamics-interpretive-premise`
   - `same-system-record-state-throughout-premise`
-- `observer-residual-8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490` (4)
-  - `arbitrary-observer-window-full-matrix-identification`
+- `observer-residual-8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490` (3)
   - `general-prime-qudit-weyl-relations`
   - `observer-window-generated-structure-claim`
   - `prime-power-tensor-factor-decomposition`
