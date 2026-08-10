@@ -77,6 +77,9 @@ domains:
   QuantumChannels:
     stratum: S3
     definition: Finite-dimensional quantum channels and their fixed structures, including standard-basis pinching as zero-retention phase damping and its Hilbert-Schmidt mirror.
+  QuantumContext:
+    stratum: S3
+    definition: Finite-dimensional quantum contextuality witnesses and context-dependent quantities.
   Recurrence:
     stratum: S1
     definition: Linear recurrence solution spaces, shift eigenstructure, and self-similar weight lifts.
@@ -92,6 +95,9 @@ domains:
   Solenoid:
     stratum: S1
     definition: The universal solenoid carrier, its visible projection, and hidden fiber structure.
+  TotalVariation:
+    stratum: S3
+    definition: Finite total-variation distance between mass functions and its comparison inequalities against the classical divergence, including Pinsker-type bounds.
   Tower:
     stratum: S0
     definition: Radix name towers and their normalized approximation arms.

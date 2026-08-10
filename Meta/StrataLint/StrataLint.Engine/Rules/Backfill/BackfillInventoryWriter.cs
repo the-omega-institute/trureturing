@@ -50,6 +50,7 @@ internal static class BackfillInventoryWriter
         AtomCoverageReceipts(builder, entry.Receipts.Coverage);
         AtomScribeReceipts(builder, entry.Receipts.Scribe);
         Strings(builder, "  unresolved_subitems", entry.Receipts.UnresolvedSubitems, 4);
+        AtomQuarantine(builder, entry.Receipts.Quarantine);
         if (entry.Receipts.ChainAtoms.Length > 0)
         {
             Strings(builder, "  chain_atoms", entry.Receipts.ChainAtoms, 4);
@@ -157,6 +158,7 @@ internal static class BackfillInventoryWriter
         CoverageReceipts(builder, entry.Receipts.Coverage);
         ScribeReceipts(builder, entry.Receipts.Scribe);
         Strings(builder, "          unresolved_subitems", entry.Receipts.UnresolvedSubitems, 12);
+        Quarantine(builder, entry.Receipts.Quarantine);
         Strings(builder, "          chain_atoms", entry.Receipts.ChainAtoms, 12);
         if (entry.Receipts.TailAuthorization is { } tail)
         {
@@ -250,6 +252,30 @@ internal static class BackfillInventoryWriter
             Line(builder, $"      definition_sha256: {Scalar(receipt.DefinitionSha256)}");
             Line(builder, $"      emission_sha256: {Scalar(receipt.EmissionSha256)}");
         }
+    }
+
+    private static void AtomQuarantine(StringBuilder builder, DigestionQuarantine? quarantine)
+    {
+        if (quarantine is null)
+        {
+            return;
+        }
+
+        Line(builder, "  quarantine:");
+        Line(builder, $"    justification: {Scalar(quarantine.Justification)}");
+        Line(builder, $"    reentry_condition: {Scalar(quarantine.ReentryCondition)}");
+    }
+
+    private static void Quarantine(StringBuilder builder, DigestionQuarantine? quarantine)
+    {
+        if (quarantine is null)
+        {
+            return;
+        }
+
+        Line(builder, "          quarantine:");
+        Line(builder, $"            justification: {Scalar(quarantine.Justification)}");
+        Line(builder, $"            reentry_condition: {Scalar(quarantine.ReentryCondition)}");
     }
 
     private static void Strings(
