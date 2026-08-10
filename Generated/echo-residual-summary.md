@@ -1,8 +1,102 @@
-<!-- echo-residual-summary:v3 residual=sha256:4818a2499159bed095291f3679b6985c5def655fd0558713516f8dd4f07b90ba -->
+<!-- echo-residual-summary:v3 residual=sha256:bc89b3674ebde884f5c3000e27be6b7548c595daae8b956997787f92b120cc55 -->
 # Echo Residual Summary
 
-- unresolved_subitems: 549
-- mother_residual_atom_ids: 88
+- unresolved_subitems: 540
+- mother_residual_atom_ids: 87
+
+## cross-volume shared residues
+
+- shared_residue_names: 86
+- host_atoms: 172
+
+Shared residue hosts:
+
+- `absolute-angle-gap-rejection` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3`, `pzg-v170/pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b`
+- `bhk-1755-enumeration-certificate` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26`, `pzg-v170/pzg-residual-04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb`
+- `bhk-continued-fraction-theorem` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26`, `pzg-v170/pzg-residual-04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb`
+- `continuous-statistics-congruence-meta-law` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3`, `pzg-v170/pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b`
+- `cosecant-peak-equation-from-pin-data` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f`, `pzg-v170/pzg-residual-96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb`
+- `cosecant-peak-identity` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f`, `pzg-v170/pzg-residual-96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb`
+- `cubic-repulsion-exponent-measurement` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3`, `pzg-v170/pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b`
+- `cubic-repulsion-fit` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3`, `pzg-v170/pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b`
+- `dedekind-orientation-canonical-ledger-clause` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26`, `pzg-v170/pzg-residual-04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb`
+- `diffusion-twelve-over-amax-reduction` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3`, `pzg-v170/pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b`
+- `direction-law-counterexamples` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `dominant-partial-quotient-gap-lemma` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f`, `pzg-v170/pzg-residual-96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb`
+- `dominant-partial-quotient-identification` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f`, `pzg-v170/pzg-residual-96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb`
+- `empty-bin-fingerprint-rejection` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3`, `pzg-v170/pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b`
+- `endpoint-translation-integrality` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26`, `pzg-v170/pzg-residual-04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb`
+- `envelope-twelve-over-amax-reduction` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3`, `pzg-v170/pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b`
+- `fabricated-input-rejection-certificate` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f`, `pzg-v170/pzg-residual-96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb`
+- `fixed-ray-character-counterexample` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `fixed-ray-nineteen-witness-certificate` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `freiman-edge-rejection` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3`, `pzg-v170/pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b`
+- `full-exponent-encoding-clause` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `full-exponent-orbit-encoding-bridge` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `full-vote-enforcement-clause` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26`, `pzg-v170/pzg-residual-04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb`
+- `gap-edge-envelope` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3`, `pzg-v170/pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b`
+- `grid-leakage-causal-diagnosis` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3`, `pzg-v170/pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b`
+- `half-margin-rejection` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3`, `pzg-v170/pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b`
+- `hecke-angle-literature-program` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f`, `pzg-v170/pzg-residual-96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb`
+- `inner-forbidden-window-rejection` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3`, `pzg-v170/pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b`
+- `interior-forbidden-window-rejection` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3`, `pzg-v170/pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b`
+- `jacobi-no-modular-locality-certificate` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `jacobi-no-modular-locality-claim` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `jacobi-selector-identification` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `m-independent-gap-envelope-measurement` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3`, `pzg-v170/pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b`
+- `m-side-prime-observer-clause` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `m1728-minus-forty-eight-countershot` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `m1729-three-orbit-bijection` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `m468-orbit-table-certificate` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `m468-split-prime-side-selector-equivalence` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `m468-twenty-four-member-table` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `m469-side-selector-equivalence` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `m4788-opposite-direction-clause` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `m4788-second-floor-classification` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `minimum-nonzero-psi-twelve-certificate` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3`, `pzg-v170/pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b`
+- `moat-twelve-over-amax-reduction` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3`, `pzg-v170/pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b`
+- `mod-48-boundary-counterexample` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `mod24-j-locality-certificate` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `mod48-boundary-counterexample-certificate` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `mod96-j-conflict-absorption-certificate` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `nonlocal-reciprocity-walk` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `numerical-double-check-certificate` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f`, `pzg-v170/pzg-residual-96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb`
+- `orbit-to-mirror-pair-combinatorial-bridge` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3`, `pzg-v170/pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b`
+- `orientation-branch-clause` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26`, `pzg-v170/pzg-residual-04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb`
+- `pin-angle-formula` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f`, `pzg-v170/pzg-residual-96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb`
+- `prediction-record-certificate` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `prediction-three-trial-certificate` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `prediction-trial-postmortem` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `prime-city-zero-only-equivalence` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `pythagorean-input-validator-clause` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f`, `pzg-v170/pzg-residual-96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb`
+- `reciprocity-walk-identification` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `sampling-grid-declaration-rule` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3`, `pzg-v170/pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b`
+- `sampling-grid-disclosure` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3`, `pzg-v170/pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b`
+- `sampling-grid-leak-postmortem` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3`, `pzg-v170/pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b`
+- `silver-edge-rejection` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3`, `pzg-v170/pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b`
+- `sixty-six-case-certificate` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f`, `pzg-v170/pzg-residual-96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb`
+- `slow-closure-exponent-measurement` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3`, `pzg-v170/pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b`
+- `slow-closure-fit` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3`, `pzg-v170/pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b`
+- `small-angle-2958-congruence-certificate` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3`, `pzg-v170/pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b`
+- `small-angle-2958-congruence-enumeration` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3`, `pzg-v170/pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b`
+- `small-angle-causal-forcing-rejection` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3`, `pzg-v170/pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b`
+- `small-angle-causal-reading-rejection` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3`, `pzg-v170/pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b`
+- `station-flip-angle-jump` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f`, `pzg-v170/pzg-residual-96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb`
+- `three-prime-orbit-singleton-bijection` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `three-prime-three-orbit-count` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `three-walk-identification` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26`, `pzg-v170/pzg-residual-04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb`
+- `twelve-over-amax-four-concept-reduction` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3`, `pzg-v170/pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b`
+- `twenty-two-city-separation-certificate` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `w3-440-enumeration-certificate` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26`, `pzg-v170/pzg-residual-04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb`
+- `w3-sign-reversal-postmortem` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26`, `pzg-v170/pzg-residual-04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb`
+- `zero-family-pin-ledger` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f`, `pzg-v170/pzg-residual-96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb`
+- `zero-only-prime-equivalence` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `zero-statistic-kappa-three` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3`, `pzg-v170/pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b`
+- `zero-statistic-m-minus-quarter` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-db0ef6cbf26026b06619b0a71bbc684035ce9d6bf5d21410f51963ed908b2dd3`, `pzg-v170/pzg-residual-c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b`
+- `zolotarev-144-case-certificate` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `zolotarev-congruence-to-selector-numerator` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `zolotarev-jacobi-factorization` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
+- `zolotarev-selector-congruence` (2 volumes, 2 host atoms): `gict-v3.6/gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226`, `pzg-v170/pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b`
 
 ## `bedc-wm-v0.1`
 
@@ -13,13 +107,10 @@ Mother residual atoms: none.
 
 ## `cone-v1`
 
-- unresolved_subitems: 1
-- mother_residual_atom_ids: 1
+- unresolved_subitems: 0
+- mother_residual_atom_ids: 0
 
-Mother residual atoms:
-
-- `cone-residual-50f4e3d952443c7a0c5851f7f06145c29e437c41813c0a7217c23c768e12cbed` (1)
-  - `classical-dpi-identity-zero-support-extension`
+Mother residual atoms: none.
 
 ## `gict-v3.6`
 
@@ -175,7 +266,7 @@ Mother residual atoms: none.
 
 ## `observer-quantum-v1`
 
-- unresolved_subitems: 76
+- unresolved_subitems: 68
 - mother_residual_atom_ids: 22
 
 Mother residual atoms:
@@ -185,14 +276,13 @@ Mother residual atoms:
   - `hidden-address-local-variable-interpretation`
   - `kochen-specker-projection-valuation-obstruction`
   - `probability-not-ignorance-conclusion`
-- `observer-residual-17d6f34c071aedeee910eb7ef184769f34ff9379405f985d36503a18f485b73e` (7)
+- `observer-residual-17d6f34c071aedeee910eb7ef184769f34ff9379405f985d36503a18f485b73e` (6)
   - `born-control-numerical-tolerance-certificate`
   - `complete-solution-space-characterization`
   - `gleason-representation-and-uniqueness-dimension-at-least-three`
   - `harmonic-spectral-pruning-certificate`
   - `ledger-publicness-implies-noncontextual-additivity`
   - `quartic-pricing-context-counterexample`
-  - `rank-one-pure-state-modulus-square-reduction`
 - `observer-residual-39801f81b23d4fe1d4823f4470f961be3f2fc21445bfec13de1574cb9fd368bc` (2)
   - `bookkeeping-is-decoherence-identification`
   - `ledger-is-environment-identification`
@@ -233,44 +323,37 @@ Mother residual atoms:
 - `observer-residual-8bdb867fc051e5a905bf4a833e7613687d575322c0f5437ea92e2c33b1dec146` (2)
   - `no-third-collapse-dynamics-interpretive-premise`
   - `same-system-record-state-throughout-premise`
-- `observer-residual-8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490` (6)
+- `observer-residual-8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490` (4)
   - `arbitrary-observer-window-full-matrix-identification`
-  - `exact-matrix-unit-zero-error-certificate`
   - `general-prime-qudit-weyl-relations`
-  - `general-robertson-variance-uncertainty`
   - `observer-window-generated-structure-claim`
   - `prime-power-tensor-factor-decomposition`
 - `observer-residual-8d5c4162772d2b6674b2c46ab17550880a2670b134d5893a353659610617b8fe` (1)
   - `two-hundred-channel-numeric-certificate-prose`
-- `observer-residual-92312c5c0791ca42042265d47e65559acb1efa5a59e9e7db7f6e9fa6786b1a38` (6)
+- `observer-residual-92312c5c0791ca42042265d47e65559acb1efa5a59e9e7db7f6e9fa6786b1a38` (4)
   - `central-winding-unitary-over-torus`
-  - `exact-matrix-unit-zero-error-certificate`
-  - `general-robertson-variance-uncertainty`
   - `noncommutative-algebra-bundle-over-torus`
   - `prime-power-tensor-factor-decomposition`
   - `universal-c-star-crossed-product-identification`
-- `observer-residual-a64c69d2b846d7fdf3c80468898e853257ad9a378bf7da6c74c3370ea865762c` (5)
-  - `forgetting-quantity-dpi-nonneg-beyond-finite-classical-strict-positive`
+- `observer-residual-a64c69d2b846d7fdf3c80468898e853257ad9a378bf7da6c74c3370ea865762c` (4)
   - `joint-coherent-reversal-of-all-copies`
   - `know-forgot-two-time-relation`
   - `multi-copy-erasure-quantifier`
   - `six-state-finite-certificates`
-- `observer-residual-a6962d32cb2d5b0127bc20031cd895bdfb1d232901e5e21eb0a62b55e49930eb` (7)
+- `observer-residual-a6962d32cb2d5b0127bc20031cd895bdfb1d232901e5e21eb0a62b55e49930eb` (6)
   - `born-control-numerical-tolerance-certificate`
   - `complete-solution-space-characterization`
   - `gleason-representation-and-uniqueness-dimension-at-least-three`
   - `harmonic-spectral-pruning-certificate`
   - `ledger-publicness-implies-noncontextual-additivity`
   - `quartic-pricing-context-counterexample`
-  - `rank-one-pure-state-modulus-square-reduction`
 - `observer-residual-a9e4073c36dcdc04163974b80a47d7884f470463b0b0bdd112c4c552bc29a607` (5)
   - `abstract-crossed-product-commutator-formula-beyond-register-representation`
   - `continuous-hidden-flow-rigidity-exclusion`
   - `discrete-crossed-product-uniqueness`
   - `full-crossed-product-identification`
   - `observer-read-write-forces-structure`
-- `observer-residual-b2dd3d2b2261d86b6e8b20f45ca56ef7b3da87d833f50e38279f562c2a1a66c9` (6)
-  - `forgetting-quantity-dpi-nonneg-beyond-finite-classical-strict-positive`
+- `observer-residual-b2dd3d2b2261d86b6e8b20f45ca56ef7b3da87d833f50e38279f562c2a1a66c9` (5)
   - `know-forgot-two-time-relation`
   - `multi-copy-erasure-quantifier`
   - `six-state-finite-certificates`

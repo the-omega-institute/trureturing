@@ -150,16 +150,8 @@ internal static class EmitFormalizationReceiptCommand
         "USAGE: StrataLint emit-formalization-receipt --atom-id ATOM_ID --gid DECL_GID "
         + "[--out RECEIPT_PATH]");
 
-    private static BackfillInventoryDocument LoadDocument(RepositorySnapshot snapshot)
-    {
-        if (!snapshot.TryGetFile(BackfillInventoryLoader.RelativePath, out var file))
-        {
-            throw new InvalidOperationException(
-                $"{BackfillInventoryLoader.RelativePath} is missing");
-        }
-
-        return BackfillInventoryLoader.Load(file.Text);
-    }
+    private static BackfillInventoryDocument LoadDocument(RepositorySnapshot snapshot) =>
+        BackfillInventoryLoader.Load(snapshot);
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         SnapshotDecoder.Decode(raw) switch

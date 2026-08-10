@@ -1,10 +1,13 @@
 using System.Collections.Immutable;
+using System.Text.Json;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
 internal static class IngestCommand
 {
+    internal sealed record LedgerUpdate(string Path, ImmutableArray<byte>? Bytes);
+
     internal static CommandResult Run(
         string repositoryRoot,
         IRepositoryGateway repository,
@@ -24,9 +27,12 @@ internal static class IngestCommand
             var baselineRaw = repository.ReadRevision(baselineRevision);
             var current = Decode(currentRaw);
             var baseline = Decode(baselineRaw);
-            var document = LoadDocument(current, "candidate");
-            var baselineDocument = LoadDocument(baseline, "baseline");
+            var document = LoadDocument(current);
+            var baselineDocument = LoadDocument(baseline);
             var plan = DigestionIngestor.Plan(document, current, baselineDocument);
+            var crossVolumeClearanceGaps = RenderCrossVolumeClearanceGaps(
+                plan.Document,
+                baselineDocument);
             var silentZeroWarnings = SilentZeroExtractionWarnings(
                 document,
                 plan.Document,
@@ -34,10 +40,10 @@ internal static class IngestCommand
                 baseline);
             var plannedBytes = BackfillInventoryWriter.WriteForIngest(plan.Document);
             var plannedRaw = AddCasObjects(
-                ReplaceLedger(currentRaw, plannedBytes),
+                ReplaceLedger(currentRaw, document, plan.Document, plannedBytes),
                 plan.CasObjects);
             var plannedSnapshot = Decode(plannedRaw);
-            var plannedDocument = LoadDocument(plannedSnapshot, "planned");
+            var plannedDocument = LoadDocument(plannedSnapshot);
             var report = leanReportSource.Load(current);
             var lean = ValidateLean(plannedSnapshot, report);
             var verifiedScribeEmissions = scribeEmissionVerifier.Verify(report);
@@ -68,10 +74,10 @@ internal static class IngestCommand
                     .ToImmutableArray());
             var finalBytes = BackfillInventoryWriter.WriteForIngest(refreshed);
             var finalRaw = AddCasObjects(
-                ReplaceLedger(currentRaw, finalBytes),
+                ReplaceLedger(currentRaw, document, refreshed, finalBytes),
                 plan.CasObjects);
             var finalSnapshot = Decode(finalRaw);
-            var finalDocument = LoadDocument(finalSnapshot, "final");
+            var finalDocument = LoadDocument(finalSnapshot);
             var evaluation = DigestionStatusEvaluator.Evaluate(
                 finalDocument,
                 finalSnapshot,
@@ -87,19 +93,12 @@ internal static class IngestCommand
                 lean,
                 verifiedScribeEmissions);
 
-            var currentLedger = currentRaw.Entries.Single(static entry =>
-                entry.Path == BackfillInventoryLoader.RelativePath);
-            var changed = !currentLedger.Bytes.AsSpan().SequenceEqual(finalBytes.AsSpan());
+            var ledgerUpdates = LedgerUpdates(currentRaw, finalRaw);
+            var changed = ledgerUpdates.Length > 0;
             var createdCasPaths = WriteCasObjects(repositoryRoot, plan.CasObjects);
             try
             {
-                if (changed)
-                {
-                    var outputPath = Path.Combine(
-                        Path.GetFullPath(repositoryRoot),
-                        BackfillInventoryLoader.RelativePath.Replace('/', Path.DirectorySeparatorChar));
-                    ReplaceLedgerAtomically(outputPath, finalBytes.AsSpan());
-                }
+                ApplyLedgerUpdatesAtomically(repositoryRoot, currentRaw, ledgerUpdates);
             }
             catch (Exception exception) when (exception is not OutOfMemoryException)
             {
@@ -119,6 +118,7 @@ internal static class IngestCommand
                 + string.Concat(silentZeroWarnings.Select(static warning =>
                     $"WARNING silent-zero-extraction source={warning.SourceId} "
                     + $"path={warning.SourcePath}\n"))
+                + crossVolumeClearanceGaps
                 + DigestStatusCommand.RenderText(evaluation),
                 string.Empty);
         }
@@ -146,6 +146,66 @@ internal static class IngestCommand
             .ToImmutableArray();
     }
 
+    private static string RenderCrossVolumeClearanceGaps(
+        BackfillInventoryDocument currentDocument,
+        BackfillInventoryDocument baselineDocument)
+    {
+        var currentHosts = ResidualHosts(currentDocument)
+            .Distinct()
+            .ToArray();
+        var currentVotes = currentHosts
+            .Select(static host => new ResidueSourceVote(host.Residue, host.SourceId))
+            .ToHashSet();
+        var currentByName = currentHosts.ToLookup(static host => host.Residue, StringComparer.Ordinal);
+        var cleared = ResidualHosts(baselineDocument)
+            .GroupBy(static host => new ResidueSourceVote(host.Residue, host.SourceId))
+            .Where(group => !currentVotes.Contains(group.Key))
+            .Select(static group => group
+                .OrderBy(static host => host.AtomId, StringComparer.Ordinal)
+                .First())
+            .OrderBy(static host => host.Residue, StringComparer.Ordinal)
+            .ThenBy(static host => host.SourceId, StringComparer.Ordinal)
+            .ThenBy(static host => host.AtomId, StringComparer.Ordinal);
+        var writer = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
+        foreach (var host in cleared)
+        {
+            var hangingHosts = currentByName[host.Residue]
+                .Where(candidate => !string.Equals(
+                    candidate.SourceId,
+                    host.SourceId,
+                    StringComparison.Ordinal))
+                .OrderBy(static candidate => candidate.SourceId, StringComparer.Ordinal)
+                .ThenBy(static candidate => candidate.AtomId, StringComparer.Ordinal)
+                .Select(static candidate => $"{candidate.SourceId}/{candidate.AtomId}")
+                .ToArray();
+            if (hangingHosts.Length == 0)
+            {
+                continue;
+            }
+
+            var detail = JsonSerializer.Serialize(new
+            {
+                residue = host.Residue,
+                cleared_source = host.SourceId,
+                hanging_hosts = hangingHosts,
+            });
+            writer.WriteLine(
+                $"GAP atom={host.AtomId} code=cross-volume-shared-residue-half-cleared "
+                + $"severity=warn detail={detail}");
+        }
+
+        return writer.ToString();
+    }
+
+    private static IEnumerable<ResidualHost> ResidualHosts(BackfillInventoryDocument document) =>
+        document.RequireDigestionEntries().SelectMany(static entry =>
+            entry.Receipts.UnresolvedSubitems.Select(residue =>
+                new ResidualHost(residue, entry.SourceId, entry.AtomId)));
+
+    private sealed record ResidualHost(string Residue, string SourceId, string AtomId);
+
+    private sealed record ResidueSourceVote(string Residue, string SourceId);
+
     private static string ParseArguments(IReadOnlyList<string> arguments)
     {
         if (arguments.Count == 2
@@ -158,35 +218,296 @@ internal static class IngestCommand
         throw new InvalidOperationException("USAGE: StrataLint ingest --base REV");
     }
 
-    private static BackfillInventoryDocument LoadDocument(
-        RepositorySnapshot snapshot,
-        string side)
-    {
-        if (!snapshot.TryGetFile(BackfillInventoryLoader.RelativePath, out var file))
-        {
-            throw new InvalidOperationException(
-                $"{side} {BackfillInventoryLoader.RelativePath} is missing");
-        }
+    private static BackfillInventoryDocument LoadDocument(RepositorySnapshot snapshot) =>
+        BackfillInventoryLoader.Load(snapshot);
 
-        return BackfillInventoryLoader.Load(file.Text);
-    }
-
-    private static RawRepositorySnapshot ReplaceLedger(
+    internal static RawRepositorySnapshot ReplaceLedger(
         RawRepositorySnapshot snapshot,
+        BackfillInventoryDocument current,
+        BackfillInventoryDocument replacement,
         ImmutableArray<byte> bytes)
     {
         var matches = snapshot.Entries.Count(static entry =>
             entry.Path == BackfillInventoryLoader.RelativePath);
-        if (matches != 1)
+        if (matches == 1)
         {
-            throw new InvalidOperationException(
-                $"snapshot must contain exactly one {BackfillInventoryLoader.RelativePath}");
+            return RawRepositorySnapshot.Create(snapshot.Entries.Select(entry =>
+                entry.Path == BackfillInventoryLoader.RelativePath
+                    ? new RawRepositoryEntry(entry.Path, bytes)
+                    : entry));
         }
 
-        return RawRepositorySnapshot.Create(snapshot.Entries.Select(entry =>
-            entry.Path == BackfillInventoryLoader.RelativePath
-                ? new RawRepositoryEntry(entry.Path, bytes)
-                : entry));
+        if (matches != 0)
+        {
+            throw new InvalidOperationException(
+                $"snapshot contains duplicate {BackfillInventoryLoader.RelativePath} entries");
+        }
+
+        var entries = snapshot.Entries.ToDictionary(static entry => entry.Path, StringComparer.Ordinal);
+        var currentSources = current.RequireDigestionSources().ToDictionary(
+            static source => source.SourceId,
+            StringComparer.Ordinal);
+        var replacementSources = replacement.RequireDigestionSources().ToDictionary(
+            static source => source.SourceId,
+            StringComparer.Ordinal);
+        if (!currentSources.Keys.ToHashSet(StringComparer.Ordinal).SetEquals(replacementSources.Keys))
+        {
+            throw new InvalidOperationException("ingest cannot add or remove directory ledger sources");
+        }
+
+        foreach (var (sourceId, replacementSource) in replacementSources)
+        {
+            var currentSource = currentSources[sourceId];
+            if (SourceMetadataEquals(currentSource, replacementSource))
+            {
+                continue;
+            }
+
+            var metadataPath = $"{BackfillInventoryLoader.RootPath}{sourceId}/source.toml";
+            entries[metadataPath] = new RawRepositoryEntry(
+                metadataPath,
+                BackfillInventoryWriter.WriteSourceMetadata(replacementSource));
+        }
+
+        var currentEntries = current.RequireDigestionEntries().ToDictionary(
+            static entry => (entry.SourceId, entry.AtomId));
+        var replacementEntries = replacement.RequireDigestionEntries().ToDictionary(
+            static entry => (entry.SourceId, entry.AtomId));
+        foreach (var key in currentEntries.Keys.Except(replacementEntries.Keys))
+        {
+            throw new InvalidOperationException(
+                $"ingest cannot remove directory ledger atom {key.AtomId}");
+        }
+
+        foreach (var (key, replacementEntry) in replacementEntries)
+        {
+            if (currentEntries.TryGetValue(key, out var currentEntry))
+            {
+                var currentBytes = BackfillInventoryWriter.WriteAtom(currentEntry);
+                var replacementBytes = BackfillInventoryWriter.WriteAtom(replacementEntry);
+                var currentPath = ExistingAtomPath(entries.Keys, key.SourceId, key.AtomId);
+                var replacementPath = NewAtomPath(replacementEntry);
+                if (currentPath == replacementPath
+                    && currentBytes.AsSpan().SequenceEqual(replacementBytes.AsSpan()))
+                {
+                    continue;
+                }
+
+                entries.Remove(currentPath);
+                if (!entries.TryAdd(
+                        replacementPath,
+                        new RawRepositoryEntry(replacementPath, replacementBytes)))
+                {
+                    throw new InvalidOperationException(
+                        $"directory ledger atom path already exists: {replacementPath}");
+                }
+
+                continue;
+            }
+
+            var path = NewAtomPath(replacementEntry);
+            if (!entries.TryAdd(
+                    path,
+                    new RawRepositoryEntry(path, BackfillInventoryWriter.WriteAtom(replacementEntry))))
+            {
+                throw new InvalidOperationException($"directory ledger atom path already exists: {path}");
+            }
+        }
+
+        return RawRepositorySnapshot.Create(entries.Values.OrderBy(
+            static entry => entry.Path,
+            StringComparer.Ordinal));
+    }
+
+    private static bool SourceMetadataEquals(
+        DigestionLedgerSource current,
+        DigestionLedgerSource replacement) =>
+        string.Equals(current.SourcePath, replacement.SourcePath, StringComparison.Ordinal)
+        && string.Equals(current.Atomizer, replacement.Atomizer, StringComparison.Ordinal)
+        && current.AcknowledgedStale.SequenceEqual(replacement.AcknowledgedStale);
+
+    private static string ExistingAtomPath(
+        IEnumerable<string> paths,
+        string sourceId,
+        string atomId)
+    {
+        var sourceRoot = $"{BackfillInventoryLoader.RootPath}{sourceId}/";
+        var suffix = $"/{atomId}.yaml";
+        var matches = paths.Where(path =>
+                path.StartsWith(sourceRoot, StringComparison.Ordinal)
+                && path.EndsWith(suffix, StringComparison.Ordinal))
+            .ToArray();
+        return matches.Length == 1
+            ? matches[0]
+            : throw new InvalidOperationException(
+                $"directory ledger atom {sourceId}/{atomId} does not have exactly one canonical path");
+    }
+
+    private static string NewAtomPath(DigestionLedgerEntry entry) =>
+        $"{BackfillInventoryLoader.RootPath}{entry.SourceId}/"
+        + $"{DigestionStatusNames.Migration(entry.ProjectedStatus.Migration)}-"
+        + $"{DigestionStatusNames.Truth(entry.ProjectedStatus.Truth)}/{entry.AtomId}.yaml";
+
+    internal static ImmutableArray<LedgerUpdate> LedgerUpdates(
+        RawRepositorySnapshot current,
+        RawRepositorySnapshot final)
+    {
+        var currentEntries = current.Entries.ToDictionary(static entry => entry.Path, StringComparer.Ordinal);
+        var finalEntries = final.Entries.ToDictionary(static entry => entry.Path, StringComparer.Ordinal);
+        var updates = final.Entries
+            .Where(static entry => entry.Path == BackfillInventoryLoader.RelativePath
+                || BackfillInventoryLoader.IsCanonicalPath(entry.Path))
+            .Where(entry => !currentEntries.TryGetValue(entry.Path, out var existing)
+                || !existing.Bytes.AsSpan().SequenceEqual(entry.Bytes.AsSpan()))
+            .Select(static entry => new LedgerUpdate(entry.Path, entry.Bytes))
+            .Concat(current.Entries
+                .Where(static entry => entry.Path == BackfillInventoryLoader.RelativePath
+                    || BackfillInventoryLoader.IsCanonicalPath(entry.Path))
+                .Where(entry => !finalEntries.ContainsKey(entry.Path))
+                .Select(static entry => new LedgerUpdate(entry.Path, null)))
+            .OrderBy(static update => update.Bytes is null ? 1 : 0)
+            .ThenBy(static update => update.Path, StringComparer.Ordinal)
+            .ToImmutableArray();
+        return updates;
+    }
+
+    internal static void ApplyLedgerUpdatesAtomically(
+        string repositoryRoot,
+        RawRepositorySnapshot current,
+        ImmutableArray<LedgerUpdate> updates,
+        Action<string, string>? commit = null)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
+        ArgumentNullException.ThrowIfNull(current);
+        if (updates.Length == 0)
+        {
+            return;
+        }
+
+        var root = Path.GetFullPath(repositoryRoot);
+        var expected = current.Entries
+            .Where(static entry => IsLedgerPath(entry.Path))
+            .ToDictionary(static entry => entry.Path, StringComparer.Ordinal);
+        var actual = ReadLedgerFiles(root);
+        if (expected.Keys.Except(actual.Keys, StringComparer.Ordinal).Any())
+        {
+            throw new InvalidOperationException(
+                "ledger went missing between read and write; aborting to avoid a lost update");
+        }
+
+        if (actual.Keys.Except(expected.Keys, StringComparer.Ordinal).Any()
+            || expected.Any(pair => !pair.Value.Bytes.AsSpan().SequenceEqual(
+                actual[pair.Key].AsSpan())))
+        {
+            throw new InvalidOperationException(
+                "ledger changed under us between read and write; aborting to avoid a lost update");
+        }
+
+        var originals = updates.ToDictionary(
+            static update => update.Path,
+            update => actual.TryGetValue(update.Path, out var bytes)
+                ? (ImmutableArray<byte>?)bytes
+                : null,
+            StringComparer.Ordinal);
+        var touched = new List<string>(updates.Length);
+        try
+        {
+            foreach (var update in updates)
+            {
+                touched.Add(update.Path);
+                var outputPath = Path.Combine(
+                    root,
+                    update.Path.Replace('/', Path.DirectorySeparatorChar));
+                if (update.Bytes is null)
+                {
+                    File.Delete(outputPath);
+                    continue;
+                }
+
+                Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+                ReplaceLedgerAtomically(outputPath, update.Bytes.Value.AsSpan(), commit);
+            }
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+            RollbackLedgerUpdates(root, touched, originals, exception);
+            throw;
+        }
+    }
+
+    private static bool IsLedgerPath(string path) =>
+        string.Equals(path, BackfillInventoryLoader.RelativePath, StringComparison.Ordinal)
+        || BackfillInventoryLoader.IsCanonicalPath(path);
+
+    private static Dictionary<string, ImmutableArray<byte>> ReadLedgerFiles(string root)
+    {
+        var result = new Dictionary<string, ImmutableArray<byte>>(StringComparer.Ordinal);
+        AddIfFile(BackfillInventoryLoader.RelativePath);
+        var directory = Path.Combine(
+            root,
+            BackfillInventoryLoader.RootPath.Replace('/', Path.DirectorySeparatorChar));
+        if (Directory.Exists(directory))
+        {
+            foreach (var path in Directory.EnumerateFiles(directory, "*", SearchOption.AllDirectories))
+            {
+                Add(Path.GetRelativePath(root, path).Replace(Path.DirectorySeparatorChar, '/'), path);
+            }
+        }
+
+        AddIfFile(BackfillInventoryLoader.TicketIndexPath);
+        return result;
+
+        void AddIfFile(string relativePath)
+        {
+            var fullPath = Path.Combine(
+                root,
+                relativePath.Replace('/', Path.DirectorySeparatorChar));
+            if (File.Exists(fullPath))
+            {
+                Add(relativePath, fullPath);
+            }
+        }
+
+        void Add(string relativePath, string fullPath) =>
+            result.Add(relativePath, ImmutableArray.CreateRange(File.ReadAllBytes(fullPath)));
+    }
+
+    private static void RollbackLedgerUpdates(
+        string root,
+        IEnumerable<string> touched,
+        IReadOnlyDictionary<string, ImmutableArray<byte>?> originals,
+        Exception writeFailure)
+    {
+        var rollbackFailures = new List<Exception>();
+        foreach (var path in touched.Reverse())
+        {
+            var outputPath = Path.Combine(
+                root,
+                path.Replace('/', Path.DirectorySeparatorChar));
+            try
+            {
+                if (originals[path] is { } bytes)
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+                    ReplaceLedgerAtomically(outputPath, bytes.AsSpan());
+                }
+                else
+                {
+                    File.Delete(outputPath);
+                }
+            }
+            catch (Exception exception) when (exception is not OutOfMemoryException)
+            {
+                rollbackFailures.Add(exception);
+            }
+        }
+
+        if (rollbackFailures.Count > 0)
+        {
+            throw new AggregateException(
+                "ledger write failed and rollback was incomplete",
+                new[] { writeFailure }.Concat(rollbackFailures));
+        }
     }
 
     private static RawRepositorySnapshot AddCasObjects(

@@ -181,6 +181,12 @@ internal sealed class ProductionC0RenewEnvironment : IC0RenewEnvironment
         var baselineReport = Absolute(
             @base.Root,
             ".lake/build/stratalint/raw-lean-report.json");
+        // One ceremony budget spans both children, not one budget each. Handing
+        // LeanReportBudgetMinutes to the report producer and again to the gate lets a slow
+        // first child leave the second with a full fresh allowance, so the pair can run to
+        // twice the budget the ceremony is supposed to have. Start the clock here and give
+        // the second child only what is left.
+        var reportBudgetClock = System.Diagnostics.Stopwatch.StartNew();
         RunRequired(
             "/bin/bash",
             [
@@ -219,12 +225,34 @@ internal sealed class ProductionC0RenewEnvironment : IC0RenewEnvironment
                 baselineReport,
             ],
             @base.Root,
-            TimeSpan.FromMinutes(LeanReportBudgetMinutes),
+            RemainingReportBudget(reportBudgetClock),
             64 * 1024 * 1024);
         return new C0RenewGateResult(
             result.ExitCode == 3 ? 0 : result.ExitCode,
             ImmutableArray.CreateRange(result.StandardOutput),
             ImmutableArray.CreateRange(result.StandardError));
+    }
+
+    /// Unlike the Lean cache, which is an optimisation and degrades to a cold build, an
+    /// exhausted budget is a real outcome: continuing would mean the ceremony ran past the
+    /// window it was granted. Fail closed, and name the budget that ran out -- otherwise the
+    /// eventual timeout surfaces as whichever inner step happened to be running, pointing at
+    /// the symptom instead of at the ceremony budget (the shape #993 records).
+    /// Elapsed time comes from a Stopwatch rather than a wall clock: this measures how much
+    /// of the budget the first child consumed, and a monotonic source keeps that measurement
+    /// correct across a clock adjustment mid-ceremony. DateTimeOffset.UtcNow is also a banned
+    /// symbol here (RS0030, "inject a clock or pass an explicit deterministic timestamp").
+    private static TimeSpan RemainingReportBudget(System.Diagnostics.Stopwatch elapsed)
+    {
+        var remaining = TimeSpan.FromMinutes(LeanReportBudgetMinutes) - elapsed.Elapsed;
+        if (remaining <= TimeSpan.Zero)
+        {
+            throw new InvalidOperationException(
+                "C0_RENEW_BUDGET_EXHAUSTED owner=lean-report-budget stage=gate-wiring " +
+                $"budget_minutes={LeanReportBudgetMinutes}");
+        }
+
+        return remaining;
     }
 
     private string Absolute(string path) =>
@@ -354,6 +382,7 @@ internal sealed class C0RenewCandidateWorkspace : IDisposable
         string exactPreimageCommit,
         string candidateRoot)
     {
+        var clock = System.Diagnostics.Stopwatch.StartNew();
         try
         {
             var runner = new ProductionWorktreeProcessRunner();
@@ -361,13 +390,49 @@ internal sealed class C0RenewCandidateWorkspace : IDisposable
             var donor = GitWorktreeInventory.SelectDonor(sourceRoot, pins, runner);
             var provisioned = LeanCacheProvisioner.Provision(donor, candidateRoot, runner);
             var warning = provisioned.Warning is null ? string.Empty : $" warning={provisioned.Warning}";
+            // cache_state distinguishes the two regimes #972 asks to be recorded as D5 grows:
+            // "donor" reused an existing .lake, anything else started from an empty one. Emitting
+            // it alongside the elapsed seconds and the free disk is what turns "c0-renew felt
+            // slow" into a series that can be compared across commits; without the state the
+            // timings are two populations averaged into one meaningless number.
             Console.Out.WriteLine(
-                $"C0_RENEW_LEAN_CACHE root={candidateRoot} strategy={provisioned.Strategy} method={provisioned.Method}{warning}");
+                $"C0_RENEW_LEAN_CACHE root={candidateRoot} strategy={provisioned.Strategy} " +
+                $"method={provisioned.Method} cache_state={CacheState(provisioned.Strategy)} " +
+                $"elapsed_seconds={clock.Elapsed.TotalSeconds:F1} " +
+                $"disk_free_gb={DiskFreeGb(candidateRoot)}{warning}");
         }
         catch (Exception failure) when (failure is not OutOfMemoryException)
         {
             Console.Out.WriteLine(
-                $"C0_RENEW_LEAN_CACHE root={candidateRoot} status=unavailable detail={failure.Message}");
+                $"C0_RENEW_LEAN_CACHE root={candidateRoot} strategy=unavailable cache_state=cold " +
+                $"elapsed_seconds={clock.Elapsed.TotalSeconds:F1} " +
+                $"disk_free_gb={DiskFreeGb(candidateRoot)} detail={failure.Message}");
+        }
+    }
+
+    /// "warm" only when an existing .lake was reused; every other strategy -- cache-get, or a
+    /// failure that leaves the tree bare -- starts the Lean build from nothing and belongs to
+    /// the cold population. Keeping the two apart is the point of recording at all.
+    private static string CacheState(string strategy) =>
+        string.Equals(strategy, "donor", StringComparison.Ordinal) ? "warm" : "cold";
+
+    /// Free space on the volume holding the workspace. #972's failure mode was disk, not time:
+    /// two cache-empty materializations once exhausted it and took the live Lean report down
+    /// with them, so the series needs the headroom next to the duration.
+    private static string DiskFreeGb(string path)
+    {
+        try
+        {
+            var root = Path.GetPathRoot(Path.GetFullPath(path));
+            if (string.IsNullOrEmpty(root)) return "unknown";
+            var drive = new DriveInfo(root);
+            return (drive.AvailableFreeSpace / 1024d / 1024d / 1024d).ToString(
+                "F1",
+                System.Globalization.CultureInfo.InvariantCulture);
+        }
+        catch (Exception failure) when (failure is ArgumentException or IOException or UnauthorizedAccessException)
+        {
+            return "unknown";
         }
     }
 

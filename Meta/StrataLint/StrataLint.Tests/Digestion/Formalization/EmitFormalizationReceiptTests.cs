@@ -15,6 +15,28 @@ namespace StrataLint.Tests;
 public sealed class EmitFormalizationReceiptTests
 {
     [Fact]
+    public void EmitReadsTheDirectoryFormDigestionLedger()
+    {
+        var inputs = CoverWorld.Materialize(new CoverSpec { IncludeEnvelope = false });
+        var directoryInputs = inputs with
+        {
+            Files = DirectoryLedgerTestSupport.Project(inputs.Files),
+            Baseline = DirectoryLedgerTestSupport.Project(inputs.Baseline),
+        };
+        using var temporary = new TemporaryDirectory();
+        var environment = BuildEmitEnvironment(temporary.Path, directoryInputs);
+
+        var result = environment.EmitFormalizationReceipt(
+            ["--atom-id", CoverWorld.DefaultAtomId, "--gid", inputs.Gid]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("FORMALIZATION_RECEIPT", result.Output, StringComparison.Ordinal);
+        Assert.False(File.Exists(Path.Combine(
+            temporary.Path,
+            BackfillInventoryLoader.RelativePath.Replace('/', Path.DirectorySeparatorChar))));
+    }
+
+    [Fact]
     public void EmitWritesCanonicalReceiptTheLoaderAcceptsAndReWriteIsByteIdentical()
     {
         var inputs = CoverWorld.Materialize(new CoverSpec { IncludeEnvelope = false });

@@ -7,6 +7,79 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
+    public void CoverAtomReadsAndMovesTheDirectoryFormDigestionLedgerAtom()
+    {
+        var inputs = CoverWorld.Materialize(new CoverSpec());
+        var directoryInputs = inputs with
+        {
+            Files = DirectoryLedgerTestSupport.Project(inputs.Files),
+            Baseline = DirectoryLedgerTestSupport.Project(inputs.Baseline),
+        };
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, directoryInputs.Files);
+        var environment = BuildCoverEnvironment(
+            temporary.Path,
+            directoryInputs,
+            directoryInputs.Files);
+
+        var result = environment.CoverAtom(CoverArgs(directoryInputs));
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
+        var oldPath = Path.Combine(
+            temporary.Path,
+            BackfillInventoryLoader.RootPath.Replace('/', Path.DirectorySeparatorChar),
+            "fixture-source",
+            "residual-open",
+            CoverWorld.DefaultAtomId + ".yaml");
+        var newPath = Path.Combine(
+            temporary.Path,
+            BackfillInventoryLoader.RootPath.Replace('/', Path.DirectorySeparatorChar),
+            "fixture-source",
+            "absorbed-closed",
+            CoverWorld.DefaultAtomId + ".yaml");
+        Assert.False(File.Exists(oldPath));
+        Assert.True(File.Exists(newPath));
+        var entry = Assert.Single(
+            BackfillInventoryLoader.LoadRoot(temporary.Path).RequireDigestionEntries(),
+            candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
+        Assert.Equal([inputs.Gid], entry.CoverageGids.ToArray());
+        Assert.False(File.Exists(Path.Combine(
+            temporary.Path,
+            BackfillInventoryLoader.RelativePath.Replace('/', Path.DirectorySeparatorChar))));
+    }
+
+    [Fact]
+    public void CoverAtomRejectsDriftInUnchangedDirectoryLedgerMetadata()
+    {
+        var inputs = CoverWorld.Materialize(new CoverSpec());
+        var directoryInputs = inputs with
+        {
+            Files = DirectoryLedgerTestSupport.Project(inputs.Files),
+            Baseline = DirectoryLedgerTestSupport.Project(inputs.Baseline),
+        };
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, directoryInputs.Files);
+        var metadata = Assert.Single(directoryInputs.Files, static pair =>
+            pair.Key.EndsWith("/source.toml", StringComparison.Ordinal));
+        var metadataPath = Path.Combine(
+            temporary.Path,
+            metadata.Key.Replace('/', Path.DirectorySeparatorChar));
+        var concurrent = metadata.Value + "\n";
+        File.WriteAllText(metadataPath, concurrent, new UTF8Encoding(false));
+        var environment = BuildCoverEnvironment(
+            temporary.Path,
+            directoryInputs,
+            directoryInputs.Files);
+
+        var result = environment.CoverAtom(CoverArgs(directoryInputs));
+
+        Assert.False(result.Success);
+        Assert.Contains("changed under us", result.Error, StringComparison.Ordinal);
+        Assert.Equal(concurrent, File.ReadAllText(metadataPath));
+    }
+
+    [Fact]
     public void AlignScribeReceiptIsReachableThroughProductionCliDispatch()
     {
         var inputs = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec());

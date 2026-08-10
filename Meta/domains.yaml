@@ -35,6 +35,9 @@ domains:
   Divergence:
     stratum: S3
     definition: Classical and quantum relative-entropy and data-processing identities of the cone program.
+  DivergenceSupport:
+    stratum: S3
+    definition: Finite classical-divergence identities and bounds under general-support and absolute-continuity conventions.
   Dynamics:
     stratum: S1
     definition: Visible-hidden dynamics of phase trajectories, throat transitions, and jump cocycles.
@@ -89,6 +92,9 @@ domains:
   Solenoid:
     stratum: S1
     definition: The universal solenoid carrier, its visible projection, and hidden fiber structure.
+  TotalVariation:
+    stratum: S3
+    definition: Finite total-variation distance between mass functions and its comparison inequalities against the classical divergence, including Pinsker-type bounds.
   Tower:
     stratum: S0
     definition: Radix name towers and their normalized approximation arms.
