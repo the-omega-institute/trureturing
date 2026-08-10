@@ -21,6 +21,43 @@ public sealed partial class ProductionEnvironmentTests
             "candidate content-addressed ledger does not retain protected baseline file byte-for-byte");
     }
 
+    // 冻结账本验证器**不是**只比文件字节:它还要拿账本去佐证 baselineDag 里的 Closed 模块。
+    // 所以账本旧侧不能单独迁到 fork point —— 账本取一棵树、其佐证目标取另一棵,就会把 dev
+    // 在分叉后闭合的模块报成「Closed module ... has no Freeze attestation」(#1166 实测)。
+    // 这条守卫钉住那个刻意的选择:传入一个与 baseline 不同的 fork point,判词必须不变。
+    // 若有人把账本旧侧改读 fork point 而不同时把 Lean report 与 DAG 一并迁过去,本测试转红。
+    [Fact]
+    public void FrozenLedgerOldSideIgnoresTheForkPointUntilItsLeanAndDagMoveTogether()
+    {
+        var fixture = CreateFrozenValidatorFixture();
+        var dropped = fixture.BaselineFiles.Keys.First(
+            FrozenLedgerChangeClassifier.IsAcceptedEventPath);
+        var forkPointFiles = new Dictionary<string, string>(
+            fixture.BaselineFiles,
+            StringComparer.Ordinal);
+        forkPointFiles.Remove(dropped);
+
+        var current = BuildState(fixture.CurrentFiles, fixture.CurrentReports);
+        var baseline = BuildState(fixture.BaselineFiles, fixture.BaselineReports);
+        var outcome = ProductionFrozenLedgerValidator.Validate(
+            current.Snapshot,
+            baseline.Snapshot,
+            current.Lean,
+            baseline.Lean,
+            current.Dag,
+            baseline.Dag,
+            CreateGateway(fixture),
+            frozenEvidenceRepository: null,
+            forkPoint: BuildState(forkPointFiles, fixture.BaselineReports).Snapshot);
+
+        Assert.True(
+            outcome is null,
+            "fork point 不得改变冻结账本判词,除非其 Lean report 与 DAG 一并迁移。实际: "
+            + (outcome is AdmissionOutcome.RuleRejected rejected
+                ? string.Join(" | ", rejected.Diagnostics.Select(static item => item.Message))
+                : outcome?.ToString()));
+    }
+
     [Fact]
     public void ProductionValidatorRejectsMutatingABaselineAcceptedEventFile()
     {
