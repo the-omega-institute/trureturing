@@ -19,4 +19,3 @@ The W-digit convention defines wValue k as fib(k+2), so singleton bits have weig
 ## References
 
 - Truth anchor: `D5/S0/Conventions/GeometricWeights.no_geometric_weights_match_zeckendorf_singletons`
-- Dependency: [D5/S0/Conventions/WDigits](WDigits.md)

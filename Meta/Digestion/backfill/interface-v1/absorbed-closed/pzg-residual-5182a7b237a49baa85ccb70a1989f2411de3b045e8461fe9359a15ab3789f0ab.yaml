@@ -1,0 +1,17 @@
+ast_path: theorem/3.4′
+fingerprints:
+  raw_sha256: sha256:5182a7b237a49baa85ccb70a1989f2411de3b045e8461fe9359a15ab3789f0ab
+  normalized_sha256: sha256:5182a7b237a49baa85ccb70a1989f2411de3b045e8461fe9359a15ab3789f0ab
+cas_ref: sha256:5182a7b237a49baa85ccb70a1989f2411de3b045e8461fe9359a15ab3789f0ab
+coverage_gids:
+  - D5/S0/Diagonal/CaptureCount.capture_independent
+receipts:
+  coverage:
+    - gid: D5/S0/Diagonal/CaptureCount.capture_independent
+      source_sha256: sha256:5182a7b237a49baa85ccb70a1989f2411de3b045e8461fe9359a15ab3789f0ab
+      target_sha256: sha256:1fcfc62a6836843755fe7e3561ea3fff66c021742849f33f1964cd03cb6aea29
+  scribe:
+    - gid: D5/S0/Diagonal/CaptureCount.capture_independent
+      definition_sha256: sha256:32540dd12ea413ceb798fa5016d5793bce16278f7341eacb4f76af7ab4c727c6
+      emission_sha256: sha256:688c17c5d03ac2485f86add399312c2783803dfd5946edf320f936fd73c02f1f
+  unresolved_subitems: []
