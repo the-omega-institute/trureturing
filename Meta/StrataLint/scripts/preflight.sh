@@ -13,15 +13,11 @@ PREFLIGHT_GATE_OUTCOME_DIR=""
 BASE_REF="${BASE:-origin/dev}"
 BASE_SHA=""
 STRATALINT_PERF_RUN_ID=""
+PREFLIGHT_DEADLINE_AT="${PREFLIGHT_DEADLINE_AT:-}"
 
-# Remaining seconds of the outer deadline, or empty when nothing bounds this run.
-# PR_SHEPHERD_DEADLINE_AT is the existing contract (pr-shepherd.sh:145-152): an absolute
-# epoch second that every nested step must respect. preflight sat outside that chain, so
-# it chose report budgets knowing nothing about how much wall clock the caller had left,
-# and a run could exhaust the outer deadline inside an inner step that still believed it
-# had time. Reading it here rather than inventing a second budget keeps one contract.
+# Remaining seconds of preflight's optional absolute deadline, or empty when unbounded.
 remaining_deadline_seconds() {
-  local deadline="${PR_SHEPHERD_DEADLINE_AT:-}"
+  local deadline="$PREFLIGHT_DEADLINE_AT"
   [[ "$deadline" =~ ^[0-9]+$ ]] || return 1
   local now
   now="$(date +%s)"
@@ -204,7 +200,7 @@ PREFLIGHT_GATE_OUTCOME_DIR="$(mktemp -d "${TMPDIR:-/tmp}/stratalint-gate-outcome
 if gate_remaining="$(remaining_deadline_seconds)"; then
   if [[ "$gate_remaining" -le 0 ]]; then
     printf 'PREFLIGHT_BUDGET_EXHAUSTED owner=outer-deadline stage=gate remaining_seconds=%s deadline_at=%s\n' \
-      "$gate_remaining" "$PR_SHEPHERD_DEADLINE_AT" >&2
+      "$gate_remaining" "$PREFLIGHT_DEADLINE_AT" >&2
     PREFLIGHT_FAULT_CLASS="INFRASTRUCTURE"
     exit 124
   fi
