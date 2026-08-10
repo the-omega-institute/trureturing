@@ -15,14 +15,19 @@ internal static class ProductionFrozenLedgerValidator
         AcyclicTruthDag dag,
         AcyclicTruthDag baselineDag,
         IRepositoryGateway repository,
-        IRepositoryGateway? frozenEvidenceRepository = null)
+        IRepositoryGateway? frozenEvidenceRepository = null,
+        RepositorySnapshot? forkPoint = null)
     {
         const string path = FrozenLedgerChangeClassifier.LedgerPath;
-        var baselineHasLegacy = baseline.TryGetFile(path, out var baselineFile);
+        // 账本是 append-only 的,故其「旧侧」问的是「候选出发时账本长什么样」——那是
+        // fork point(merge-base),不是 protected base。取 protected base 会把 dev 在候选
+        // 分叉之后追加的证书读成候选的删除(PR #1150 实测)。Lean/DAG 佐证侧仍用 baseline。
+        var ledgerBaseline = forkPoint ?? baseline;
+        var baselineHasLegacy = ledgerBaseline.TryGetFile(path, out var baselineFile);
         var currentHasLegacy = current.TryGetFile(path, out var currentFile);
-        var baselineAccepted = AcceptedFiles(baseline);
+        var baselineAccepted = AcceptedFiles(ledgerBaseline);
         var currentAccepted = AcceptedFiles(current);
-        var baselineHasInvalidAcceptedFiles = HasInvalidAcceptedFiles(baseline);
+        var baselineHasInvalidAcceptedFiles = HasInvalidAcceptedFiles(ledgerBaseline);
         var currentHasInvalidAcceptedFiles = HasInvalidAcceptedFiles(current);
 
         // Frozen-ledger shape timeline:
