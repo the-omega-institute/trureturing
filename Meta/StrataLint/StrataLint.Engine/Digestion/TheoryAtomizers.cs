@@ -369,6 +369,7 @@ internal static class MarkdownAstAtomizer
         var headings = new List<DigestionContext>();
         var candidates = new List<Candidate>();
         var headingStarts = new List<int>();
+        var failures = new List<UnrecognisedLead>();
         foreach (var block in blocks)
         {
             if (block is MarkdownHeading heading)
@@ -398,11 +399,11 @@ internal static class MarkdownAstAtomizer
             {
                 var tableAstPath = identifyFirstTableCellSource is not null
                     ? TheorySourceFormatException.IdentifyAt(
-                        identifyFirstTableCellSource, row.FirstCellSourceText, row.Start, text)
+                        identifyFirstTableCellSource, row.FirstCellSourceText, row.Start, text, failures)
                     : identifyFirstTableCell is not null
                     ? TheorySourceFormatException.IdentifyAt(
-                        identifyFirstTableCell, row.FirstCellText, row.Start, text)
-                    : TheorySourceFormatException.IdentifyAt(identify, row.Text, row.Start, text);
+                        identifyFirstTableCell, row.FirstCellText, row.Start, text, failures)
+                    : TheorySourceFormatException.IdentifyAt(identify, row.Text, row.Start, text, failures);
                 if (tableAstPath is not null)
                 {
                     candidates.Add(new Candidate(
@@ -423,7 +424,7 @@ internal static class MarkdownAstAtomizer
 
             var lineClaims = SourceLines(paragraph.Text, paragraph.Start)
                 .Select(line => (Line: line, AstPath: TheorySourceFormatException.IdentifyAt(
-                    identify, line.Text, line.Start, text)))
+                    identify, line.Text, line.Start, text, failures)))
                 .Where(static item => item.AstPath is not null)
                 .ToArray();
             if (lineClaims.Length > 1)
@@ -442,7 +443,7 @@ internal static class MarkdownAstAtomizer
             }
 
             var astPath = TheorySourceFormatException.IdentifyAt(
-                identify, paragraph.Text, paragraph.Start, text);
+                identify, paragraph.Text, paragraph.Start, text, failures);
             if (astPath is null)
             {
                 continue;
@@ -454,6 +455,16 @@ internal static class MarkdownAstAtomizer
                 text.Length,
                 headings.ToImmutableArray(),
                 Extend: true));
+        }
+
+        if (failures.Count > 0)
+        {
+            // Grouped by cause because one unknown lead is reported many times: once per
+            // source line, once again as the whole paragraph, and once per repetition in
+            // the volume. Naming each cause once, with its first line and how often it
+            // occurs, is what a reader needs to register the dialect in a single pass.
+            throw new TheorySourceFormatException(
+                TheorySourceFormatException.Summarise(failures));
         }
 
         var boundaries = candidates.Select(static candidate => candidate.StartCharacter)
