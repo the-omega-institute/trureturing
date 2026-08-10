@@ -5,7 +5,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
-internal sealed record PreparedRepository(string Revision, RawChangeSet Changes);
+internal sealed record PreparedRepository(string Revision, string ChangeBase, RawChangeSet Changes);
 
 internal sealed record FrozenRevisionIdentity(string Revision, string CommitOid, string TreeOid);
 
@@ -101,6 +101,10 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
 
             var current = Decode(repository.ReadCurrent());
             var baseline = Decode(repository.ReadRevision(prepared.Revision));
+            // fork point 只需树,不需要 Lean report:append-only 保留性检查比的是文件字节。
+            var forkPoint = string.Equals(prepared.ChangeBase, prepared.Revision, StringComparison.Ordinal)
+                ? baseline
+                : Decode(repository.ReadRevision(prepared.ChangeBase));
             var candidateLeanReport = RawLeanReportArtifact.ReadFile(
                 options.CandidateLeanReport,
                 current);
@@ -115,7 +119,8 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 RawLeanReportArtifact.ReadFile(options.BaselineLeanReport, baseline),
                 prepared.Changes,
                 bootstrap,
-                verifiedScribeEmissions);
+                verifiedScribeEmissions,
+                forkPoint);
             var admission = evaluation.Outcome;
             if (admission is not AdmissionOutcome.Admitted
                 && admission is not AdmissionOutcome.ProtectedSurfaceChange)
@@ -145,7 +150,8 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 repository,
                 options.FrozenEvidenceRoot is null
                     ? null
-                    : new GitRepositoryGateway(options.FrozenEvidenceRoot));
+                    : new GitRepositoryGateway(options.FrozenEvidenceRoot),
+                forkPoint);
             var sl022Diagnostics = bootstrap is
                 BootstrapOutcome.ProtectedSurfaceVerificationRequired verification
                 ? BootstrapGate.CreateSl022Diagnostics(verification.ChangeSet)
