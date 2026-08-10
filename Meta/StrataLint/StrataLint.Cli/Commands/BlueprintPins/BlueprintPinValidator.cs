@@ -48,7 +48,7 @@ internal static class BlueprintPinValidator
 
         var routed = (RouteOutcome.Routed)route;
         var diagnostics = ImmutableArray.CreateBuilder<string>();
-        ValidateAnchors(repository, manifest.Anchors, diagnostics);
+        ValidateAnchors(manifest.Anchors, diagnostics);
         ValidateImports(repository, manifest, diagnostics);
         if (diagnostics.Count > 0)
         {
@@ -69,7 +69,6 @@ internal static class BlueprintPinValidator
     }
 
     private static void ValidateAnchors(
-        RepositorySnapshot repository,
         ImmutableArray<string> anchors,
         ImmutableArray<string>.Builder diagnostics)
     {
@@ -86,10 +85,9 @@ internal static class BlueprintPinValidator
             return;
         }
 
-        var catalog = AnchorCatalogLoader.Load(repository);
         foreach (var anchor in anchors)
         {
-            if (!catalog.Definitions.ContainsKey(anchor))
+            if (!AnchorCatalogDefinitions.TryGet(anchor, out _))
             {
                 diagnostics.Add($"anchor '{anchor}' is unregistered in the typed catalog");
             }
