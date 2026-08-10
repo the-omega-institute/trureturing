@@ -169,6 +169,38 @@ public sealed class C0CeremonyTrustRootTests
                     $"{item.Code} {item.Component}: {item.Message}")));
     }
 
+    // TOWER declares what the trust root is made of: which files each component holds,
+    // which rules the catalog contains, which CI jobs carry which names. A validator for
+    // all of that exists and is exercised against synthetic fixtures, but nothing ran it
+    // against the real repository: CoverageCommand is its only production caller and no
+    // gate invokes coverage, CanonicalTowerJudgeGraphIsClosed checks structure only, and
+    // the C0 evidence test below filters findings down to the C0 component. So a TOWER
+    // member naming a deleted file, a rule-catalog list drifting from the real catalog,
+    // or a CI job renamed out from under branch protection would all have passed. This
+    // asserts the whole actual-tree validation, which is what makes the validator
+    // load-bearing rather than available.
+    [Fact]
+    public void CanonicalTowerMatchesTheActualRepository()
+    {
+        var root = RepositoryLayout.FindRoot();
+        var snapshot = Repository(root);
+        var loaded = Assert.IsType<TowerManifestParseOutcome.Loaded>(
+            TowerManifestParser.Parse(File.ReadAllBytes(Absolute(root, TowerPath))));
+
+        var outcome = TowerManifestValidator.Validate(
+            loaded.Syntax,
+            snapshot,
+            RuleCatalog.Default);
+
+        var rejected = outcome as TowerValidationOutcome.Rejected;
+        Assert.True(
+            outcome is TowerValidationOutcome.Accepted,
+            rejected is null
+                ? "canonical TOWER returned an unknown validation outcome"
+                : string.Join("; ", rejected.Findings.Select(static item =>
+                    $"{item.Code} {item.Component}: {item.Message}")));
+    }
+
     [Fact]
     public void CanonicalTowerC0EvidenceIsCanonical()
     {
