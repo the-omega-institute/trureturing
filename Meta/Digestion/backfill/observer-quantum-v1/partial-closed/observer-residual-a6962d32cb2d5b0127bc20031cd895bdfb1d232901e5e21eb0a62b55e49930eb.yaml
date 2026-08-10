@@ -4,6 +4,7 @@ fingerprints:
   normalized_sha256: sha256:a6962d32cb2d5b0127bc20031cd895bdfb1d232901e5e21eb0a62b55e49930eb
 cas_ref: sha256:a6962d32cb2d5b0127bc20031cd895bdfb1d232901e5e21eb0a62b55e49930eb
 coverage_gids:
+  - D5/S3/QuantumContext/QuarticContextWitness.quartic_pricing_context_counterexample
   - D5/S3/Observer/BornReduction.rank_one_pure_state_modulus_square_reduction
   - D5/S3/Quantum/FiniteDimensional.born_probability_skeleton
 receipts:
@@ -17,5 +18,4 @@ receipts:
     - gleason-representation-and-uniqueness-dimension-at-least-three
     - complete-solution-space-characterization
     - harmonic-spectral-pruning-certificate
-    - quartic-pricing-context-counterexample
     - born-control-numerical-tolerance-certificate
