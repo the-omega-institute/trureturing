@@ -23,4 +23,3 @@ Library search used pinned Mathlib revision fabf563a7c95a166b8d7b6efca11c8b4dc9d
 ## References
 
 - Truth anchor: `D5/S3/ArithUnits/HalfFactorial.half_factorial_mod_prime`
-- Dependency: [D5/S3/Arith/Wilson](../Arith/Wilson.md)
