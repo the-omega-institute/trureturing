@@ -83,6 +83,9 @@ domains:
   Recurrence:
     stratum: S1
     definition: Linear recurrence solution spaces, shift eigenstructure, and self-similar weight lifts.
+  RenyiDivergence:
+    stratum: S3
+    definition: Finite Renyi divergences of order alpha, their pinning identities against the Bhattacharyya coefficient and the classical divergence, and their monotonicity in the order.
   Resource:
     stratum: S3
     definition: Resource-theoretic functionals defined as infima over tensor-closed strategy classes and their subadditivity.
