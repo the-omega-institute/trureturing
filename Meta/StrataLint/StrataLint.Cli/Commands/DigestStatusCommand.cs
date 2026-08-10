@@ -463,11 +463,53 @@ internal static class DigestResidualSummary
                     .OrderBy(static item => item.AtomId, StringComparer.Ordinal)
                     .ToArray()))
             .ToArray();
+        var sharedResidues = sources
+            .SelectMany(static source => source.Atoms.SelectMany(atom =>
+                atom.Subitems.Select(residue => new ResidueHost(residue, source.SourceId, atom.AtomId))))
+            .GroupBy(static host => host.Residue, StringComparer.Ordinal)
+            .Select(static group => new SharedResidue(
+                group.Key,
+                group.Distinct().OrderBy(static host => host.SourceId, StringComparer.Ordinal)
+                    .ThenBy(static host => host.AtomId, StringComparer.Ordinal)
+                    .ToArray()))
+            .Where(static residue => residue.Hosts
+                .Select(static host => host.SourceId)
+                .Distinct(StringComparer.Ordinal)
+                .Count() > 1)
+            .OrderBy(static residue => residue.Name, StringComparer.Ordinal)
+            .ToArray();
         var writer = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
         writer.WriteLine("# Echo Residual Summary");
         writer.WriteLine();
         writer.WriteLine($"- unresolved_subitems: {sources.Sum(static source => source.SubitemCount)}");
         writer.WriteLine($"- mother_residual_atom_ids: {sources.Sum(static source => source.Atoms.Length)}");
+        writer.WriteLine();
+        writer.WriteLine("## cross-volume shared residues");
+        writer.WriteLine();
+        writer.WriteLine($"- shared_residue_names: {sharedResidues.Length}");
+        writer.WriteLine($"- host_atoms: {sharedResidues.Sum(static residue => residue.Hosts.Length)}");
+        writer.WriteLine();
+        if (sharedResidues.Length == 0)
+        {
+            writer.WriteLine("Shared residue hosts: none.");
+        }
+        else
+        {
+            writer.WriteLine("Shared residue hosts:");
+            writer.WriteLine();
+            foreach (var residue in sharedResidues)
+            {
+                var volumeCount = residue.Hosts
+                    .Select(static host => host.SourceId)
+                    .Distinct(StringComparer.Ordinal)
+                    .Count();
+                var hosts = string.Join(
+                    ", ",
+                    residue.Hosts.Select(static host => $"`{host.SourceId}/{host.AtomId}`"));
+                writer.WriteLine(
+                    $"- `{residue.Name}` ({volumeCount} volumes, {residue.Hosts.Length} host atoms): {hosts}");
+            }
+        }
 
         foreach (var source in sources)
         {
@@ -499,6 +541,10 @@ internal static class DigestResidualSummary
     }
 
     private sealed record AtomResiduals(string AtomId, string[] Subitems);
+
+    private sealed record ResidueHost(string Residue, string SourceId, string AtomId);
+
+    private sealed record SharedResidue(string Name, ResidueHost[] Hosts);
 
     private sealed record SourceResiduals(string SourceId, AtomResiduals[] Atoms)
     {
