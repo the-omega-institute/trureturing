@@ -202,7 +202,7 @@ jobs:
           # 三者的清单哈希(lean-report-input.sh:51-97),即该报告的完整声明输入闭包。
           # 两侧同址 ⇒ 两份报告按定义逐字节相同,一份缓存可同时充当两份;不同址则不复用。
           read -r baselineAddress baselineProducer _ \
-            <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/baseline")"
+            <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/baseline" --baseline)"
           [[ "$baselineAddress" =~ ^[0-9a-f]{64}$ ]]
           # 地址的 producer 分量取自**候选**树,而实际执行的 producer 取自**基线**树
           # (base-owned 判官拓扑要求如此)。push 事件下 baseline = github.event.before,

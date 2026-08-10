@@ -8,11 +8,13 @@ if [[ -n "$COMMAND" ]]; then shift; fi
 REPOSITORY=""
 REPORT=""
 MANIFEST=""
+BASELINE=0
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --repository) REPOSITORY="$2"; shift 2 ;;
     --report) REPORT="$2"; shift 2 ;;
     --manifest) MANIFEST="$2"; shift 2 ;;
+    --baseline) BASELINE=1; shift ;;
     *) echo "lean-report-input: unknown argument '$1'" >&2; exit 2 ;;
   esac
 done
@@ -50,6 +52,17 @@ append_manifest_entry() {
   printf '%s  %s\n' "$(hash_file "$path")" "$relative" >> "$manifest"
 }
 
+append_producer_manifest_entry() {
+  local manifest="$1"
+  local relative="$2"
+  local path="$REPOSITORY/$relative"
+  if [[ ! -f "$path" && "$BASELINE" == "1" ]]; then
+    printf 'MISSING  %s\n' "$relative" >> "$manifest"
+    return 0
+  fi
+  append_manifest_entry "$manifest" "$relative"
+}
+
 managed_modules() {
   [[ -f "$REPOSITORY/Trureturing.lean" && -d "$REPOSITORY/D5" ]] \
     || { echo "lean-report-input: managed Lean roots are absent" >&2; return 2; }
@@ -68,12 +81,12 @@ component_hashes() {
   local config_manifest="$TMP_ROOT/config.manifest"
   local lakefile lakefile_count=0
   : > "$producer_manifest"
-  append_manifest_entry "$producer_manifest" "Meta/StrataLint/lean-inspector/inspect.sh"
-  append_manifest_entry "$producer_manifest" "Meta/StrataLint/lean-inspector/Inspector.lean"
-  append_manifest_entry "$producer_manifest" "Meta/StrataLint/scripts/report/lean-report-input.sh"
-  append_manifest_entry "$producer_manifest" "Meta/StrataLint/StrataLint.Cli/Commands/LeanReportMergeCommand.cs"
-  append_manifest_entry "$producer_manifest" "Meta/StrataLint/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs"
-  append_manifest_entry "$producer_manifest" "Meta/StrataLint/StrataLint.Engine/Snapshot/StructuredCanonicalWriter.cs"
+  append_producer_manifest_entry "$producer_manifest" "Meta/StrataLint/lean-inspector/inspect.sh"
+  append_producer_manifest_entry "$producer_manifest" "Meta/StrataLint/lean-inspector/Inspector.lean"
+  append_producer_manifest_entry "$producer_manifest" "Meta/StrataLint/scripts/report/lean-report-input.sh"
+  append_producer_manifest_entry "$producer_manifest" "Meta/StrataLint/StrataLint.Cli/Commands/LeanReportMergeCommand.cs"
+  append_producer_manifest_entry "$producer_manifest" "Meta/StrataLint/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs"
+  append_producer_manifest_entry "$producer_manifest" "Meta/StrataLint/StrataLint.Engine/Snapshot/StructuredCanonicalWriter.cs"
   PRODUCER_SHA256="$(hash_file "$producer_manifest")"
   : > "$config_manifest"
   append_manifest_entry "$config_manifest" "lean-toolchain"
@@ -176,12 +189,12 @@ repository_address() {
   local resident_sha256 sources_sha256 config_sha256 lakefile_count=0 lakefile
 
   : > "$resident_manifest"
-  append_manifest_entry "$resident_manifest" "$resident_root/inspect.sh"
-  append_manifest_entry "$resident_manifest" "$resident_root/Inspector.lean"
-  append_manifest_entry "$resident_manifest" "Meta/StrataLint/scripts/report/lean-report-input.sh"
-  append_manifest_entry "$resident_manifest" "Meta/StrataLint/StrataLint.Cli/Commands/LeanReportMergeCommand.cs"
-  append_manifest_entry "$resident_manifest" "Meta/StrataLint/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs"
-  append_manifest_entry "$resident_manifest" "Meta/StrataLint/StrataLint.Engine/Snapshot/StructuredCanonicalWriter.cs"
+  append_producer_manifest_entry "$resident_manifest" "$resident_root/inspect.sh"
+  append_producer_manifest_entry "$resident_manifest" "$resident_root/Inspector.lean"
+  append_producer_manifest_entry "$resident_manifest" "Meta/StrataLint/scripts/report/lean-report-input.sh"
+  append_producer_manifest_entry "$resident_manifest" "Meta/StrataLint/StrataLint.Cli/Commands/LeanReportMergeCommand.cs"
+  append_producer_manifest_entry "$resident_manifest" "Meta/StrataLint/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs"
+  append_producer_manifest_entry "$resident_manifest" "Meta/StrataLint/StrataLint.Engine/Snapshot/StructuredCanonicalWriter.cs"
   resident_sha256="$(hash_file "$resident_manifest")"
 
   : > "$sources_manifest"

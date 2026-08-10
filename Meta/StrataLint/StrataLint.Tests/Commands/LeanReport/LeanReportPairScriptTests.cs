@@ -52,7 +52,9 @@ public sealed class LeanReportPairScriptTests
         var result = fixture.Run();
 
         Assert.Equal(0, result.ExitCode);
-        Assert.Equal(2, fixture.ProducerInvocationCount);
+        Assert.True(
+            fixture.ProducerInvocationCount == 2,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
         using var candidate = fixture.ReadCandidateProvenance();
         using var baseline = fixture.ReadBaselineProvenance();
         Assert.Equal("produced", baseline.RootElement.GetProperty("mode").GetString());
@@ -60,6 +62,37 @@ public sealed class LeanReportPairScriptTests
         Assert.NotEqual(
             candidate.RootElement.GetProperty("input_address").GetString(),
             baseline.RootElement.GetProperty("input_address").GetString());
+    }
+
+    [Fact]
+    public void BaselineMissingProducerInputDisablesReuseWithoutFailingProduction()
+    {
+        using var fixture = new LeanReportPairFixture();
+        fixture.RemoveBaselineProducerInput(MergeCommandPath);
+
+        var result = fixture.Run();
+
+        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+        Assert.True(
+            fixture.ProducerInvocationCount == 2,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+        using var candidate = fixture.ReadCandidateProvenance();
+        using var baseline = fixture.ReadBaselineProvenance();
+        Assert.NotEqual(
+            candidate.RootElement.GetProperty("input_address").GetString(),
+            baseline.RootElement.GetProperty("input_address").GetString());
+    }
+
+    [Fact]
+    public void CandidateMissingProducerInputRemainsAHardFailure()
+    {
+        using var fixture = new LeanReportPairFixture();
+        fixture.RemoveCandidateProducerInput(MergeCommandPath);
+
+        var result = fixture.Run();
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Contains("repository input is absent", Encoding.UTF8.GetString(result.StandardError));
     }
 
     [Fact]
@@ -209,6 +242,12 @@ public sealed class LeanReportPairScriptTests
 
         internal void AppendProducerComment() =>
             File.AppendAllText(producer, "\n# producer mutation\n", new UTF8Encoding(false));
+
+        internal void RemoveBaselineProducerInput(string relative) =>
+            File.Delete(Path.Combine(baselineRoot, relative.Replace('/', Path.DirectorySeparatorChar)));
+
+        internal void RemoveCandidateProducerInput(string relative) =>
+            File.Delete(Path.Combine(candidateRoot, relative.Replace('/', Path.DirectorySeparatorChar)));
 
         internal JsonDocument ReadCandidateProvenance() =>
             JsonDocument.Parse(File.ReadAllBytes(candidateReport + ".provenance.json"));
