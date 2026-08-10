@@ -11,8 +11,19 @@ on:
 permissions:
   contents: read
 
+# PR 侧按 PR 号分组并取消在途:同一 PR 连续推送时,旧 run 的结论已无意义。
+#
+# dev push 侧不同:它的必查早已在 PR 上跑过,这一趟**存在的理由就是把缓存写进去**
+# (elan、lake build artifacts、canonical Lean report),而三个 save 都在 job 末尾。
+# 用 github.ref 分组意味着所有 dev push 共用一个组,于是下一次合并会取消上一次 ——
+# 2026-08-11 实测:近 30 次 dev push **23 次 cancelled、仅 6 次 success(20%)**,
+# 被取消的 run 永远走不到 save。缓存因此几乎从来没被写进去过,
+# 而每个 PR 都在关键路径上重付一次报告生产(实测 92s 恢复 + 83s 生产)。
+#
+# 改用 github.sha:每次 dev push 自成一组,彼此既不取消也不排队。
+# 代价是这些 run 会跑完而不是中途被杀 —— 它们本来就已启动,增量是其尾段。
 concurrency:
-  group: ci-${{ github.event.pull_request.number || github.ref }}
+  group: ci-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: true
 
 # Trust topology: the pull_request_target workflow, Lean producer, and .NET judge
