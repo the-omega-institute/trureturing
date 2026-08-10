@@ -44,6 +44,9 @@ domains:
   Entropy:
     stratum: S3
     definition: Finite Shannon entropy in nats and its information-theoretic identities and inequalities, including maximum-entropy bounds, mutual information and its independence characterization, subadditivity, and conditional-entropy chain rules.
+  Estimation:
+    stratum: S3
+    definition: Finite estimation-theoretic bounds relating error probability to conditional entropy, including Fano-type inequalities.
   Factorization:
     stratum: S3
     definition: The multiplicative monoid of positive naturals as the free commutative monoid on the primes, with additive prime-exponent readouts.
@@ -62,6 +65,9 @@ domains:
   Observer:
     stratum: S3
     definition: Observer read-write structures on finite windows from the observer-ledger reconstruction - update-defect metrics, window registers, and record conditioning.
+  ObserverMemory:
+    stratum: S3
+    definition: Finite epistemic-state and forgetting-ledger certificate structures of the observer program.
   Phase:
     stratum: S1
     definition: Additive golden-ratio phases modulo one.
