@@ -23,7 +23,6 @@ public sealed class PlaybookWorkflowScriptTests
                 "make:ingest BASE=synthetic-base",
                 "dotnet:digest-status --base synthetic-base",
                 "dotnet:ledger-append --candidate-lean-report .lake/build/stratalint/raw-lean-report.json",
-                "make:emit-check BASE=synthetic-base",
                 "dotnet:digest-status --base synthetic-base",
                 "make:preflight BASE=synthetic-base",
             ],
@@ -87,7 +86,6 @@ public sealed class PlaybookWorkflowScriptTests
                 "make:emit",
                 "make:ingest BASE=synthetic-base",
                 "dotnet:digest-status --base synthetic-base",
-                "make:emit-check BASE=synthetic-base",
             ],
             fixture.Calls());
     }

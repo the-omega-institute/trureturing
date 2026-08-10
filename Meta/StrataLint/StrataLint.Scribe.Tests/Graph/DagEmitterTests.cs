@@ -129,12 +129,10 @@ public sealed class DagEmitterTests
             GeneratedArtifactInventory.All.Where(static item => item.Path == DagEmitter.RelativePath));
 
         Assert.Equal(nameof(DagEmitter), artifact.Producer);
-        Assert.Equal("emit-check", artifact.VerifiedBy);
 
         var truthArtifact = Assert.Single(
             GeneratedArtifactInventory.All.Where(static item => item.Path == DagEmitter.TruthGraphRelativePath));
         Assert.Equal(nameof(DagEmitter), truthArtifact.Producer);
-        Assert.Equal("emit-check", truthArtifact.VerifiedBy);
     }
 
     private static void WithRoot(Action<string> body)

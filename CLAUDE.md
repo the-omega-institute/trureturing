@@ -316,5 +316,5 @@ harness 的本质,就是**给各类事定义"这类该怎么处理"**——先�
 - **完整律法**:`docs/develop/spec/golden-ledger-repo-spec.md`(单一 spec,原位演进)
 - **理论源**(只读):`docs/develop/theory/`(PZG–BEDC 内核卷、GICT 卷)
 - **八官宪章**:`agents/{scout,prover,numericist,librarian,adversary,scribe,theorist,gate}.md`
-- **PR 器(一门)**:`Meta/StrataLint/scripts/pr-shepherd.sh`——开 PR 一律经 `make pr-open`(建 PR+挂 auto-merge);`make pr-watch` 挂后台 job 每分钟轮询在飞 PR,派生物过期指纹的 BEHIND 与 CONFLICTING 在持久 worktree 合并 dev,由本地逐路径分类器判定后重算或告警;其余 BEHIND 以本地 gh 身份 update-branch(触发 checks 正常;GITHUB_TOKEN 自动化因防递归规则判负撤役,勿复建)。
+- **PR 器(一门)**:`make pr-open HEAD=branch TITLE=t [BODY=file]` 一次性建 PR、以 App token 隔离 create、挂 auto-merge,并在 BEHIND 时用本地 gh 身份 update-branch;已有 armed PR 由 `make pr-update [PR=n]` 一次性扫描更新。二者是同一器 `Meta/StrataLint/scripts/pr.sh` 的两个动词,均有界执行并发结构化收据;无常驻进程、租约、重算链或冲突分类器,需要重复由调用方 shell 循环。
 - **多模型对抗共识**:`/sshx` skill(`consensus-rnd:sshx`)——派 codex-cli / nyxid-oracle 隔离工作席做设计/实施/评审(第13/14条的落地机制)。**codex 调用务必把 prompt 经文件从 stdin 喂入(`codex exec [flags] < promptfile`),不作位置参数**:巨型 prompt 里的 `$`、反引号、`<>`、引号、换行会被 shell 转义损坏 → codex 收到空 prompt → 回退读 stdin → 后台无输入而挂起(本轮先例)。
