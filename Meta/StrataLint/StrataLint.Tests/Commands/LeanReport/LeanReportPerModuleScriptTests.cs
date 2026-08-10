@@ -1,4 +1,7 @@
+using System.Collections.Immutable;
 using System.Text;
+using System.Text.Json;
+using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -8,7 +11,6 @@ public sealed class LeanReportPerModuleScriptTests
     private const string InspectorScript = "Meta/StrataLint/lean-inspector/inspect.sh";
     private const string InspectorSource = "Meta/StrataLint/lean-inspector/Inspector.lean";
     private const string InputScript = "Meta/StrataLint/scripts/report/lean-report-input.sh";
-    private const string MergeScript = "Meta/StrataLint/scripts/report/lean-report-merge.sh";
 
     [Fact]
     public void ProducerDefaultsToAllModulesAndAcceptsACanonicalSubset()
@@ -53,21 +55,54 @@ public sealed class LeanReportPerModuleScriptTests
     {
         if (OperatingSystem.IsWindows()) return;
         using var temporary = new TemporaryDirectory();
-        var full = Path.Combine(temporary.Path, "full.json");
         var cached = Path.Combine(temporary.Path, "cached.json");
         var fresh = Path.Combine(temporary.Path, "fresh.json");
         var output = Path.Combine(temporary.Path, "output.json");
-        var moduleA = "{\"declarations\": [], \"imports\": [], \"module\": \"A\", \"source_path\": \"A.lean\", \"source_sha256\": \"sha256:" + new string('a', 64) + "\"}";
-        var moduleB = "{\"declarations\": [], \"imports\": [], \"module\": \"B\", \"source_path\": \"B.lean\", \"source_sha256\": \"sha256:" + new string('b', 64) + "\"}";
-        File.WriteAllText(full, $"{{\"modules\": [{moduleA}, {moduleB}], \"schema\": \"stratalint-raw-lean-report-v1\"}}\n", new UTF8Encoding(false));
-        File.WriteAllText(cached, $"{{\"modules\": [{moduleA}], \"schema\": \"stratalint-raw-lean-report-v1\"}}\n", new UTF8Encoding(false));
-        File.WriteAllText(fresh, $"{{\"modules\": [{moduleB}], \"schema\": \"stratalint-raw-lean-report-v1\"}}\n", new UTF8Encoding(false));
+        var modulesFile = Path.Combine(temporary.Path, "modules.txt");
+        Write(temporary.Path, "D5/Unicode.lean", "def term : Nat := 1\n");
+        Write(temporary.Path, "Trureturing.lean", "import D5.Unicode\n");
+        Assert.Equal(0, Run("git", ["init", "-q"], temporary.Path).ExitCode);
+        Assert.Equal(0, Run("git", ["add", "D5/Unicode.lean", "Trureturing.lean"], temporary.Path).ExitCode);
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            RawRepositorySnapshot.Create([
+                RawRepositoryEntry.FromText("D5/Unicode.lean", "def term : Nat := 1\n"),
+                RawRepositoryEntry.FromText("Trureturing.lean", "import D5.Unicode\n"),
+            ]))).Snapshot;
+        var unicodeDeclaration = new LeanDeclaration(
+            "Golden.term𝒪φ",
+            "declaration",
+            "Nat ≤ Nat",
+            ImmutableArray<string>.Empty);
+        var report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>
+        {
+            ["D5/Unicode.lean"] = new([], [unicodeDeclaration]),
+            ["Trureturing.lean"] = new(["D5.Unicode"], []),
+        });
+        var expected = RawLeanReportArtifact.Write(snapshot, report);
+        using var document = JsonDocument.Parse(expected.AsSpan().ToArray());
+        var modules = document.RootElement.GetProperty("modules").EnumerateArray().ToArray();
+        File.WriteAllBytes(cached, PartialReport(modules[0]));
+        File.WriteAllBytes(fresh, PartialReport(modules[1]));
+        File.WriteAllText(modulesFile, "D5.Unicode\n", new UTF8Encoding(false));
 
-        var result = Run("bash", [Path.Combine(FindRepositoryRoot(), MergeScript), "--cached", cached, "--fresh", fresh, "--output", output], temporary.Path);
+        var result = LeanReportMergeCommand.Run([
+            "--repository", temporary.Path,
+            "--cached", cached,
+            "--fresh", fresh,
+            "--cached-modules-file", modulesFile,
+            "--output", output,
+        ]);
 
-        Assert.Equal(0, result.ExitCode);
-        Assert.Equal(File.ReadAllBytes(full), File.ReadAllBytes(output));
+        Assert.True(result.Success, result.Error);
+        Assert.Equal(expected.AsSpan().ToArray(), File.ReadAllBytes(output));
     }
+
+    private static byte[] PartialReport(JsonElement module) =>
+        StructuredCanonicalWriter.WriteJson(JsonSerializer.SerializeToElement(new
+        {
+            modules = new[] { module },
+            schema = RawLeanReportArtifact.Schema,
+        })).AsSpan().ToArray();
 
     private static ProcessOutput Run(string command, IReadOnlyList<string> arguments, string cwd) =>
         BoundedProcessRunner.Run(command, arguments, cwd, TimeSpan.FromSeconds(30), 1024 * 1024);
