@@ -15,9 +15,25 @@ internal static class ProductionFrozenLedgerValidator
         AcyclicTruthDag dag,
         AcyclicTruthDag baselineDag,
         IRepositoryGateway repository,
-        IRepositoryGateway? frozenEvidenceRepository = null)
+        IRepositoryGateway? frozenEvidenceRepository = null,
+        RepositorySnapshot? forkPoint = null)
     {
         const string path = FrozenLedgerChangeClassifier.LedgerPath;
+        // #1159 曾把账本旧侧改取 fork point(理由:账本 append-only,其旧侧应是「候选出发时
+        // 的账本」)。**那是半截迁移,已退回。** 本验证器不像 Chronicle/Tasks/Hearts 那样只比
+        // 文件字节:它还要拿账本去佐证 baselineDag 里的 Closed 模块。账本取 fork point 而其
+        // 佐证目标取 protected base,二者不同侧 —— dev 在分叉后闭合的任何模块,在 fork-point
+        // 账本里当然没有 Freeze,于是报
+        //   `protected baseline ledger material is invalid: Closed module ... has no Freeze attestation`
+        // (2026-08-11 PR #1166 实测)。换来的误拒频次与换掉的一样(现行冻结形态
+        // `Golden/Frozen/accepted/*.json` 在近 60 次 dev 合并中 37 次被追加,62%),
+        // 只是换了一条判词,却多了一份不自洽。
+        //
+        // 要真正修好,账本旧侧必须**整侧**自洽 —— 树、Lean report、DAG 一并取 fork point,
+        // 即六席原方案的第三份 Lean report(`--oldside-lean-report`)。在那之前保持
+        // protected base:失败形态是已知且有案可查的那一个,不引入新的。
+        // 参数保留是为了那次迁移落地时不必再动签名;当前刻意不消费。
+        _ = forkPoint;
         var baselineHasLegacy = baseline.TryGetFile(path, out var baselineFile);
         var currentHasLegacy = current.TryGetFile(path, out var currentFile);
         var baselineAccepted = AcceptedFiles(baseline);

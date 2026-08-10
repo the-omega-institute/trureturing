@@ -1,7 +1,7 @@
-<!-- echo-residual-summary:v4 source=pzg-v170 residual=sha256:836b2f095a764967049765d73102d8e54fe11068ccaccb12669a680d85ef5fa8 -->
+<!-- echo-residual-summary:v4 source=pzg-v170 residual=sha256:4500327a8fe8c80d65178c8b1ba37033941d4b2fe04d24eef52deecf2e3e15b7 -->
 # Echo Residual Summary — `pzg-v170`
 
-- unresolved_subitems: 354
+- unresolved_subitems: 353
 - mother_residual_atom_ids: 53
 
 Mother residual atoms:
@@ -266,9 +266,8 @@ Mother residual atoms:
   - `delay-localizes-to-resonance-and-address-walk`
   - `phase-delay-as-wigner-phase-accumulation`
   - `single-time-generator-shared-by-parallel-flows`
-- `pzg-residual-96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb` (12)
+- `pzg-residual-96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb` (11)
   - `cosecant-peak-equation-from-pin-data`
-  - `cosecant-peak-identity`
   - `dominant-partial-quotient-gap-lemma`
   - `dominant-partial-quotient-identification`
   - `fabricated-input-rejection-certificate`
