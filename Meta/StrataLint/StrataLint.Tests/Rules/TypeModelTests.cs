@@ -108,11 +108,11 @@ public sealed class TypeModelTests
     [Fact]
     public void ThreeSegmentFormalGidRetainsItsExactBytes()
     {
-        const string text = "D5/S0/Carrier/Ring";
+        const string text = "D5/S0/Carrier/Probe";
 
         Assert.True(Gid.TryParse(text, out var gid));
         Assert.Equal(text, gid.Value);
-        Assert.Equal("D5/S0/Carrier/Ring.lean", gid.Path.Value);
+        Assert.Equal("D5/S0/Carrier/Probe.lean", gid.Path.Value);
     }
 
     [Theory]
