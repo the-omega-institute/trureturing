@@ -6,7 +6,6 @@ internal static class AnchorReferenceRule
 {
     internal static ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context)
     {
-        var catalog = AnchorCatalogLoader.Load(context.Current);
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         foreach (var (path, file) in RepositoryRules.FormalFiles(context.Current)
             .OrderBy(static item => item.Path.Value, StringComparer.Ordinal))
@@ -18,8 +17,8 @@ internal static class AnchorReferenceRule
 
             foreach (var anchor in header.Anchors)
             {
-                if (ExternalAnchorSyntax.IsCanonical(anchor)
-                    && !catalog.Definitions.ContainsKey(anchor))
+                if (Anchor.TryParseCanonical(anchor) is AnchorParseResult.Parsed
+                    && !AnchorCatalogDefinitions.TryGet(anchor, out _))
                 {
                     findings.Add(new RuleFinding(
                         path.Value,

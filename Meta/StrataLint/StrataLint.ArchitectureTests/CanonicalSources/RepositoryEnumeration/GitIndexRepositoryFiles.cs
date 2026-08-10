@@ -14,6 +14,7 @@ internal static class GitIndexRepositoryFiles
             FullPath: Path.Combine(
                 repositoryRoot,
                 path.Replace('/', Path.DirectorySeparatorChar))))
+        .Where(static file => File.Exists(file.FullPath))
         .ToArray();
 
     private static IReadOnlyList<string> ReadPaths(string repositoryRoot)

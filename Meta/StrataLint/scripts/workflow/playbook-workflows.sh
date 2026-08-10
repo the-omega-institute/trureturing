@@ -417,7 +417,6 @@ case "$COMMAND" in
     receipts_stage
     # Freeze last among all mutating derivations so the receipt binds committed source bytes.
     run_cli ledger-append --candidate-lean-report "$REPORT"
-    make emit-check BASE="$BASE"
     run_digest_status
     make preflight BASE="$BASE"
     ;;
@@ -429,7 +428,6 @@ case "$COMMAND" in
     make lean-report
     make emit
     receipts_stage
-    make emit-check BASE="$BASE"
     ;;
   deposit)
     require_transaction_arguments
@@ -443,7 +441,6 @@ case "$COMMAND" in
       step lean-report make lean-report
       step emit make emit
       refresh_echo_projection
-      step emit-check make emit-check BASE="$BASE"
       commit_phase_a_if_needed
     fi
     prepare_formalization_receipt
@@ -452,7 +449,6 @@ case "$COMMAND" in
     step lean-report-refresh make lean-report
     refresh_echo_projection
     step emit-post-receipt make emit
-    step emit-check-final make emit-check BASE="$BASE"
     commit_all_if_needed "formalize: record deposit receipt for $GID"
     ;;
   cover)
@@ -465,7 +461,6 @@ case "$COMMAND" in
       align-scribe-receipt --atom-id "$ATOM_ID" --gid "$GID"
     step emit-post-alignment make emit
     refresh_echo_projection
-    step emit-check make emit-check BASE="$BASE"
     commit_all_if_needed "formalize: cover $ATOM_ID with $GID"
     ;;
   *)

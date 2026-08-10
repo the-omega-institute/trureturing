@@ -110,7 +110,7 @@ public sealed class CliOutcomeTests
             Admitted(),
             echoVerify: new ExplicitCommandResult(expectedExit, output, error));
 
-        var exitCode = CliApplication.Run(["echo-verify", "--file", "review.md"], environment, console);
+        var exitCode = CliApplication.Run(["echo-verify", "--emit", "--base", "baseline"], environment, console);
 
         Assert.Equal(expectedExit, exitCode);
         Assert.Equal(output, console.Output);
