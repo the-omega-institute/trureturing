@@ -1,6 +1,6 @@
 using System.Collections.Immutable;
 
-namespace StrataLint.Scribe;
+namespace StrataLint.Engine;
 
 public static class AnchorCatalogDefinitions
 {
@@ -16,7 +16,7 @@ public static class AnchorCatalogDefinitions
 
     public static ImmutableArray<AnchorDefinition> All => AllDefinitions.Value;
 
-    internal static bool TryGet(string canonical, out AnchorDefinition? definition)
+    public static bool TryGet(string canonical, out AnchorDefinition? definition)
     {
         definition = All.FirstOrDefault(item =>
             string.Equals(item.Anchor.CanonicalString, canonical, StringComparison.Ordinal));

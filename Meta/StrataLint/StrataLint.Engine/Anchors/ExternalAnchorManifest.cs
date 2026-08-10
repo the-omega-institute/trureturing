@@ -1,6 +1,6 @@
 using System.Collections.Immutable;
 
-namespace StrataLint.Scribe;
+namespace StrataLint.Engine;
 
 public static class ExternalAnchorManifest
 {

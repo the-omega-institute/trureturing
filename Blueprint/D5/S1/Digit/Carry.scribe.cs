@@ -1,3 +1,4 @@
+using StrataLint.Engine;
 using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Digit;

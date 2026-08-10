@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace StrataLint.Scribe;
+namespace StrataLint.Engine;
 
 public enum AnchorScheme
 {
