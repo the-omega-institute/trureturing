@@ -1,0 +1,17 @@
+ast_path: theorem/9.5
+fingerprints:
+  raw_sha256: sha256:fe1799f3eeffa957753be33a35278649c3bfdc282e8b97678f2e28a0851f0efe
+  normalized_sha256: sha256:fe1799f3eeffa957753be33a35278649c3bfdc282e8b97678f2e28a0851f0efe
+cas_ref: sha256:fe1799f3eeffa957753be33a35278649c3bfdc282e8b97678f2e28a0851f0efe
+coverage_gids:
+  - D5/S3/ArithUnits/HalfFactorial.half_factorial_mod_prime
+receipts:
+  coverage:
+    - gid: D5/S3/ArithUnits/HalfFactorial.half_factorial_mod_prime
+      source_sha256: sha256:fe1799f3eeffa957753be33a35278649c3bfdc282e8b97678f2e28a0851f0efe
+      target_sha256: sha256:a648838f02c6441cec4904b26c5692f4c7800508a8c6cb1b9b2266f322dd6c0d
+  scribe:
+    - gid: D5/S3/ArithUnits/HalfFactorial.half_factorial_mod_prime
+      definition_sha256: sha256:c6fe1be4512cb7f037954b8b2eba6f7cf91d541855dfd9b00518df238eb98938
+      emission_sha256: sha256:466041040678ea120c57ac641e7d0e929a803ef1bd9dc09813eb1fad732daf82
+  unresolved_subitems: []

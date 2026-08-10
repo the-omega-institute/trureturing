@@ -11,8 +11,19 @@ on:
 permissions:
   contents: read
 
+# PR 侧按 PR 号分组并取消在途:同一 PR 连续推送时,旧 run 的结论已无意义。
+#
+# dev push 侧不同:它的必查早已在 PR 上跑过,这一趟**存在的理由就是把缓存写进去**
+# (elan、lake build artifacts、canonical Lean report),而三个 save 都在 job 末尾。
+# 用 github.ref 分组意味着所有 dev push 共用一个组,于是下一次合并会取消上一次 ——
+# 2026-08-11 实测:近 30 次 dev push **23 次 cancelled、仅 6 次 success(20%)**,
+# 被取消的 run 永远走不到 save。缓存因此几乎从来没被写进去过,
+# 而每个 PR 都在关键路径上重付一次报告生产(实测 92s 恢复 + 83s 生产)。
+#
+# 改用 github.sha:每次 dev push 自成一组,彼此既不取消也不排队。
+# 代价是这些 run 会跑完而不是中途被杀 —— 它们本来就已启动,增量是其尾段。
 concurrency:
-  group: ci-${{ github.event.pull_request.number || github.ref }}
+  group: ci-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: true
 
 # Trust topology: the pull_request_target workflow, Lean producer, and .NET judge
@@ -181,14 +192,73 @@ jobs:
           read -r address _ <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/candidate")"
           [[ "$address" =~ ^[0-9a-f]{64}$ ]]
           echo "address=$address" >> "$GITHUB_OUTPUT"
+          # 报告地址的原像是 producer(lean-inspector/{inspect.sh,Inspector.lean})、
+          # Lean 源(Trureturing.lean + D5/**/*.lean)与 config(toolchain/lake-manifest/lakefile)
+          # 三者的清单哈希(lean-report-input.sh:51-97),即该报告的完整声明输入闭包。
+          # 两侧同址 ⇒ 两份报告按定义逐字节相同,一份缓存可同时充当两份;不同址则不复用。
+          read -r baselineAddress _ <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/baseline")"
+          [[ "$baselineAddress" =~ ^[0-9a-f]{64}$ ]]
+          if [[ "$address" == "$baselineAddress" ]]; then
+            echo "pair-reusable=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "pair-reusable=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      # 一事不再理:报告是其输入闭包的纯函数,而该闭包已被内容寻址(上一步)。
+      # dev push 早已把结果按同一 key 存下(下方 Save 步),theory-ingest 也已在读它;
+      # 只有 CI 自己的关键路径从不读 —— 于是每个 PR 重付一次 lake 恢复 + 报告生产
+      # (2026-08-11 实测 92s + 83s),哪怕闭包逐字节未变。
+      #
+      # 安全性不靠这一步:下游 `RawLeanReportArtifact.ReadFile` 会把报告里每个模块的
+      # source_sha256 与树逐一对账,不符即抛 INFRASTRUCTURE_FAILURE。一份错的或陈旧的
+      # 报告不可能被静默接受,最坏是红,不是假绿。
+      - name: Restore canonical Lean report by input address
+        id: report-cache
+        if: steps.lean-report-input.outputs.pair-reusable == 'true'
+        uses: actions/cache/restore@v4
+        with:
+          path: .canonical-lean-report-cache
+          key: stratalint-canonical-lean-report-v1-${{ steps.lean-report-input.outputs.address }}
+
+      - name: Serve both canonical Lean reports from the cached address
+        id: report-reuse
+        if: steps.report-cache.outputs.cache-hit == 'true'
+        # 这一步失败必须**回落**到完整生产路径,而不是让整个 job 红:缓存是加速,不是权威。
+        # 下面四个重活步骤的守卫是 `outcome != 'success'`,故失败与跳过都会走原路。
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          source="$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json"
+          reports="$RUNNER_TEMP/raw-lean-reports"
+          mkdir -p "$reports"
+          # verify 需要 .sha256 旁文件(lean-report-input.sh:100),故一并要求存在。
+          for suffix in '' .sha256 .input.attestation .provenance.json; do
+            test -s "${source}${suffix}"
+          done
+          helper="$GITHUB_WORKSPACE/baseline/Meta/StrataLint/scripts/report/lean-report-input.sh"
+          # 缓存条目对候选树重新验一次地址与报告哈希;不符即整体回落,不静默使用。
+          "$helper" verify --repository "$GITHUB_WORKSPACE/candidate" --report "$source"
+          "$helper" verify --repository "$GITHUB_WORKSPACE/baseline" --report "$source"
+          for side in candidate baseline; do
+            for suffix in '' .input.attestation .provenance.json; do
+              cp "${source}${suffix}" "$reports/${side}-lean-report.json${suffix}"
+            done
+            printf '%s  %s\n' \
+              "$(sha256sum "$reports/${side}-lean-report.json" | cut -d ' ' -f 1)" \
+              "${side}-lean-report.json" > "$reports/${side}-lean-report.json.sha256"
+          done
+          printf '%s\n' "canonical Lean reports served from cached input address" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Restore elan and pinned Lean toolchains
+        if: steps.report-reuse.outcome != 'success'
         uses: actions/cache/restore@v4
         with:
           path: ~/.elan
           key: ${{ runner.os }}-${{ runner.arch }}-elan-${{ hashFiles('candidate/lean-toolchain', 'baseline/lean-toolchain') }}
 
       - name: Install pinned Lean toolchains
+        if: steps.report-reuse.outcome != 'success'
         shell: bash
         run: |
           set -euo pipefail
@@ -214,6 +284,8 @@ jobs:
           global-json-file: candidate/global.json
 
       - name: Restore candidate and baseline Lean build artifacts
+        if: steps.report-reuse.outcome != 'success'
+
         uses: actions/cache/restore@v4
         with:
           path: |
@@ -225,6 +297,7 @@ jobs:
             ${{ runner.os }}-${{ runner.arch }}-lake-${{ hashFiles('candidate/lake-manifest.json', 'baseline/lake-manifest.json') }}-${{ hashFiles('candidate/lean-toolchain', 'baseline/lean-toolchain') }}-
 
       - name: Produce source-bound canonical Lean reports
+        if: steps.report-reuse.outcome != 'success'
         shell: bash
         run: |
           set -euo pipefail
@@ -296,8 +369,10 @@ jobs:
       # no writable scopes". The two saves below already carry this exact guard; this
       # one was missing it, so every PR attempted a write it could not perform. dev-push
       # runs do write it successfully (run 31389340892).
+      # 命中缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;
+      # 报告 key 也已存在,重写无意义。三个 save 一律只在真正跑过生产路径时执行。
       - name: Save candidate canonical Lean report (dev push only)
-        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        if: success() && steps.report-reuse.outcome != 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
         uses: actions/cache/save@v4
         with:
           path: .canonical-lean-report-cache
@@ -312,15 +387,19 @@ jobs:
           if-no-files-found: warn
           retention-days: 7
 
+      # 命中缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;
+      # 报告 key 也已存在,重写无意义。三个 save 一律只在真正跑过生产路径时执行。
       - name: Save elan toolchains (dev push only)
-        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        if: success() && steps.report-reuse.outcome != 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
         uses: actions/cache/save@v4
         with:
           path: ~/.elan
           key: ${{ runner.os }}-${{ runner.arch }}-elan-${{ hashFiles('candidate/lean-toolchain', 'baseline/lean-toolchain') }}
 
+      # 命中缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;
+      # 报告 key 也已存在,重写无意义。三个 save 一律只在真正跑过生产路径时执行。
       - name: Save Lean build artifacts (dev push only)
-        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        if: success() && steps.report-reuse.outcome != 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
         continue-on-error: true
         timeout-minutes: 12
         uses: actions/cache/save@v4
