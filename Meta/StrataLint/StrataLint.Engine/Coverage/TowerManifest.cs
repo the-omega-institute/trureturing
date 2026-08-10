@@ -97,13 +97,14 @@ public static class TowerManifestValidator
                     "component must declare judged_by"));
             }
 
-            if (component.Members.Any(string.IsNullOrWhiteSpace)
+            if (component.Members.IsDefaultOrEmpty
+                || component.Members.Any(string.IsNullOrWhiteSpace)
                 || component.Members.Distinct(StringComparer.Ordinal).Count() != component.Members.Length)
             {
                 findings.Add(new TowerFinding(
                     "TOWER-MEMBER",
                     component.Id,
-                    "component members must be nonempty and unique"));
+                    "component members must be a nonempty list of nonempty unique entries"));
             }
         }
 
