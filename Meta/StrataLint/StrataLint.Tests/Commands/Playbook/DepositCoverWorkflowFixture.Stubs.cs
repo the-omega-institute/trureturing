@@ -23,20 +23,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
                   printf 'emission: open\n' > Blueprint/D5/S0/Carrier/Probe.md
                 fi
                 ;;
-              echo-residual-summary)
-                if [[ ${PLAYBOOK_FAIL_ECHO:-0} == 1 ]]; then
-                  printf 'partial projection'
-                  echo 'ECHO_PROJECTION_FAILED synthetic interruption' >&2
-                  exit 42
-                fi
-                if grep -q '^coverage: true$' Meta/BACKFILL.yaml; then
-                  printf 'echo: covered\n'
-                elif [[ -f Meta/Digestion/formalizations/atom-1.v1.json ]]; then
-                  printf 'echo: receipt\n'
-                else
-                  printf 'echo: open\n'
-                fi
-                ;;
             esac
             """);
 

@@ -6,6 +6,17 @@ namespace StrataLint.Tests;
 
 public sealed class TypeModelTests
 {
+    [Theory]
+    [InlineData("Generated/echo-residuals/source-a.md", true)]
+    [InlineData("Generated/echo-residuals/a/b.md", false)]
+    [InlineData("Generated/echo-residuals/a.txt", false)]
+    [InlineData("Generated/echo-residuals/.md", false)]
+    [InlineData("Generated/echo-residualsX/a.md", false)]
+    public void EchoResidualShardPathPredicateIsClosed(string value, bool expected)
+    {
+        Assert.Equal(expected, RepositoryPathPolicy.IsEchoResidualShardPath(value));
+    }
+
     private const string PaperRecipePath = "Papers/recipes/D5-P001.yaml";
 
     [Fact]

@@ -33,7 +33,6 @@ public sealed partial class MakeWorkflowTests
     private const string AdmissionWorkflowPath = ".github/workflows/ci.yml";
     private const string TheoryIngestWorkflowPath = ".github/workflows/theory-ingest.yml";
     private const string C0CeremonyWorkflowPath = ".github/workflows/c0-ceremony.yml";
-    private const string EchoResidualSummaryPath = "Generated/echo-residual-summary.md";
     private const string PrOpenScriptPath = "Meta/StrataLint/scripts/pr.sh open";
     private const string PrUpdateScriptPath = "Meta/StrataLint/scripts/pr.sh update";
 
@@ -139,15 +138,15 @@ public sealed partial class MakeWorkflowTests
 
 
     [Fact]
-    public void EchoProjectionIsARegisteredGeneratedArtifactNotFlightScaffolding()
+    public void EchoProjectionUsesTheFileMapShardGlobNotRegistryInstances()
     {
         var root = FindRepositoryRoot();
         var registry = File.ReadAllText(Path.Combine(root, "Meta", "registry.yaml"));
         var fileMap = File.ReadAllText(Path.Combine(root, "Meta", "FILEMAP.toml"));
         var gitignore = File.ReadAllText(Path.Combine(root, ".gitignore"));
 
-        Assert.Contains($"  - \"{EchoResidualBlock.RelativePath}\"", registry, StringComparison.Ordinal);
-        Assert.Contains($"pattern = \"{EchoResidualBlock.RelativePath}\"", fileMap, StringComparison.Ordinal);
+        Assert.DoesNotContain("Generated/echo-residual", registry, StringComparison.Ordinal);
+        Assert.Contains("pattern = \"Generated/echo-residuals/*.md\"", fileMap, StringComparison.Ordinal);
         Assert.Contains(".echo-review.md", gitignore, StringComparison.Ordinal);
         Assert.Contains(".sshx-*", gitignore, StringComparison.Ordinal);
     }
@@ -394,12 +393,8 @@ public sealed partial class MakeWorkflowTests
         var theoryDataPattern = string.Concat("docs/develop/", "theory/*");
         Assert.Contains("BASE_SHA: ${{ github.event.pull_request.base.sha }}", boundary, StringComparison.Ordinal);
         Assert.Contains("HEAD_SHA: ${{ github.event.pull_request.head.sha }}", boundary, StringComparison.Ordinal);
-        Assert.Contains(
-            theoryDataPattern
-                + "|Meta/Digestion/atoms/*|"
-                + EchoResidualSummaryPath,
-            boundary,
-            StringComparison.Ordinal);
+        Assert.Contains(theoryDataPattern + "|Meta/Digestion/atoms/*", boundary, StringComparison.Ordinal);
+        Assert.DoesNotContain("echo-residual", boundary, StringComparison.Ordinal);
         Assert.Contains("diff --name-only --no-renames -z", boundary, StringComparison.Ordinal);
 
         var reportInstallIndex = workflow.IndexOf(
@@ -494,36 +489,18 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Fact]
-    public void TheoryIngestReemitsContentAddressedEchoProjectionBeforeWriteback()
+    public void TheoryIngestDoesNotRewriteEchoProjection()
     {
         var root = FindRepositoryRoot();
         var workflow = File.ReadAllText(Path.Combine(root, TheoryIngestWorkflowPath));
-        var ingestIndex = workflow.IndexOf("          make ingest BASE=HEAD\n", StringComparison.Ordinal);
-        var emitIndex = workflow.IndexOf(
-            "- name: Re-emit content-addressed echo projection",
-            StringComparison.Ordinal);
         var commitIndex = workflow.IndexOf(
             "- name: Enforce write-path whitelist and commit back",
             StringComparison.Ordinal);
 
-        Assert.True(ingestIndex >= 0, "theory ingest must update the digestion ledger first");
-        Assert.True(emitIndex > ingestIndex, "echo projection must be derived from the updated ledger");
-        Assert.True(commitIndex > emitIndex, "echo projection must be emitted before writeback");
-
-        var emission = workflow[emitIndex..commitIndex];
-        Assert.Contains(
-            "BASE_SHA: ${{ github.event.pull_request.base.sha }}",
-            emission,
-            StringComparison.Ordinal);
-        Assert.Contains("echo-verify --emit --base \"$BASE_SHA\"", emission, StringComparison.Ordinal);
-        Assert.Contains("> \"$projection\"", emission, StringComparison.Ordinal);
-        Assert.Contains($"mv \"$projection\" {EchoResidualSummaryPath}", emission, StringComparison.Ordinal);
-        Assert.DoesNotContain("make echo-residual-summary", emission, StringComparison.Ordinal);
-        Assert.DoesNotContain("echo-verify --emit --base HEAD", emission, StringComparison.Ordinal);
-
+        Assert.True(commitIndex >= 0, "theory ingest writeback must remain");
         var commit = workflow[commitIndex..];
-        Assert.Contains(EchoResidualSummaryPath, commit, StringComparison.Ordinal);
-        Assert.Contains($"git add Meta/Digestion/atoms {EchoResidualSummaryPath}", commit, StringComparison.Ordinal);
+        Assert.DoesNotContain("echo-residual", workflow, StringComparison.Ordinal);
+        Assert.Contains("git add Meta/Digestion/atoms", commit, StringComparison.Ordinal);
     }
 
     [Fact]
