@@ -77,6 +77,38 @@ public sealed class GateAuthorityTests
         }
     }
 
+    // The entrypoint check above proves the FILE is there, which is the easy half: when
+    // #1116 deleted the emit-check target and the echo-verify gate step, all three
+    // entrypoints (Makefile, harness-gate.sh, local-harness-gate.sh) still existed and
+    // five root_ids kept naming targets that were gone. gate-authority does not fail
+    // closed on such a root - it hashes the entrypoint blob and emits the root_id
+    // verbatim - so the catalog silently described five things that no longer existed
+    // and had to be cleaned up by hand. A root_id names a target inside its entrypoint,
+    // so requiring the name to still appear there is the cheapest signal that the target
+    // survives. Counter-checked before it was written: all five retired suffixes occur
+    // zero times in their entrypoints today, and all sixteen surviving roots pass.
+    [Fact]
+    public void EveryRootIdNamesSomethingItsEntrypointStillMentions()
+    {
+        var root = FindRepositoryRoot();
+        var roots = GateAuthorityRootCatalogLoader.LoadRepository(root);
+
+        foreach (var item in roots)
+        {
+            var separator = item.RootId.IndexOf('/', StringComparison.Ordinal);
+            Assert.True(separator > 0, $"root id {item.RootId} has no target segment");
+            var target = item.RootId[(separator + 1)..];
+            var body = File.ReadAllText(
+                Path.Combine(root, item.Entrypoint.Replace('/', Path.DirectorySeparatorChar)),
+                Encoding.UTF8);
+
+            Assert.True(
+                body.Contains(target, StringComparison.Ordinal),
+                $"root {item.RootId} names a target its entrypoint {item.Entrypoint} "
+                    + "no longer mentions; the root is stale or the target was renamed");
+        }
+    }
+
     [Fact]
     public void StrictReaderRejectsExtraMissingReorderedAndDuplicateFields()
     {
