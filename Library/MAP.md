@@ -14,6 +14,10 @@
   deposit added the `watrous2018theory` note. That pressure-causing note opened
   the controlled `Quantum/` bucket; all 12 paths already present before the
   overflow remain in `notes/`.
+- 2026-08-11 (SL-003): `notes/` was at its 12-file limit when the two-squares
+  classification deposit added the `grosswald1985representations` note. That
+  pressure-causing note opened the controlled `Arith/` bucket; all 12 paths
+  already present before the overflow remain in `notes/`.
 
 ## Buckets
 
@@ -21,3 +25,5 @@
 - `Zeros/`: literature specific to completed zeta and zero geometry.
 - `Diagonal/`: literature specific to diagonal arguments and escape counts.
 - `Quantum/`: literature specific to finite-dimensional quantum information.
+- `Arith/`: literature specific to classical arithmetic and quadratic
+  representations.
