@@ -58,4 +58,3 @@ The full escape count equals the size of the ambient listing type, so any unesca
 - Truth anchor: `D5/S0/Diagonal/CaptureCount.capture_inter_card`
 - Truth anchor: `D5/S0/Diagonal/CaptureCount.escape_all_of_fixfree`
 - Truth anchor: `D5/S0/Diagonal/CaptureCount.escaped_card_of_fixfree`
-- Dependency: [D5/S0/Diagonal/EscapeCount](EscapeCount.md)
