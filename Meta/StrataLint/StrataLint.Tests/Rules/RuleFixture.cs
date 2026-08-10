@@ -16,7 +16,7 @@ internal sealed partial class RuleFixture
     internal const string ThreeDistancePath = "D5/S1/Phase/ThreeDistance.lean";
     internal const string AnchorCatalogPath = AnchorCatalogLoader.RelativePath;
     internal const string TowerManifestPath = RepositoryRules.TowerManifestPath;
-    internal const string ValuesProjectionPath = ValuesProjectionLoader.RelativePath;
+    internal const string ValuesProjectionPath = RepositoryPathPolicy.ValuesProjectionPath;
     internal const string WorkflowPath = RepositoryPathPolicy.WorkflowPath;
     internal const string HarnessGatePath = RepositoryPathPolicy.HarnessGatePath;
     internal const string SpecificationPath = BootstrapGate.SpecificationPath;
@@ -364,7 +364,7 @@ internal sealed partial class RuleFixture
             var path = gid.Path.Value;
             if (!path.EndsWith(".lean", StringComparison.Ordinal))
             {
-                if (path == ValuesProjectionLoader.RelativePath)
+                if (path == ValuesProjectionPath)
                 {
                     AddValuesProjection();
                 }
@@ -433,25 +433,9 @@ internal sealed partial class RuleFixture
     internal void AddValuesProjection()
     {
         var repositoryRoot = FindRepositoryRoot();
-        Files[ValuesProjectionLoader.RelativePath] = File.ReadAllText(
-            Path.Combine(repositoryRoot, ValuesProjectionLoader.RelativePath),
+        Files[ValuesProjectionPath] = File.ReadAllText(
+            Path.Combine(repositoryRoot, ValuesProjectionPath),
             Encoding.UTF8);
-        foreach (var inputPath in ValuesProjectionLoader.InputPaths)
-        {
-            Files[inputPath] = File.ReadAllText(
-                Path.Combine(repositoryRoot, inputPath),
-                Encoding.UTF8);
-        }
-
-        Reports[ValuesProjectionLoader.LeanModulePath] = Report();
-        Reports[ValuesProjectionLoader.InputPath] = Report(declarations:
-        [
-            new LeanDeclaration(
-                "valuesProducerTicket",
-                "def",
-                "Unit",
-                ImmutableArray<string>.Empty),
-        ]);
     }
 
     internal void AddNormalizedBackfillTicketTarget()

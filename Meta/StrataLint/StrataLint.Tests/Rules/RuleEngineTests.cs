@@ -289,7 +289,7 @@ public sealed class RuleEngineTests
     }
 
     [Fact]
-    public void Sl018RejectsValuesWithoutMachineProducerAttestation()
+    public void Sl018RejectsValuesOutsideTheCanonicalProjectionAddress()
     {
         var fixture = new RuleFixture();
         fixture.Files["Evidence/D5/values.result.json"] =
@@ -302,18 +302,15 @@ public sealed class RuleEngineTests
     }
 
     [Fact]
-    public void Sl018RejectsAttestedValuesWhenTheLeanInputDrifts()
+    public void Sl018AcceptsTheCanonicalProjectionWithoutReverifyingItsBytes()
     {
         var fixture = new RuleFixture();
         fixture.AddValuesProjection();
-        fixture.Files[ValuesProjectionLoader.InputPath] += "-- drift\n";
+        fixture.Files[RuleFixture.ValuesProjectionPath] += "\n";
 
-        var diagnostic = Assert.Single(
+        Assert.Empty(
             RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(18), fixture.Build()).Diagnostics);
-
-        Assert.Contains("input SHA-256", diagnostic.Message, StringComparison.Ordinal);
     }
-
 
     [Theory]
     [InlineData(7, "D5-T0011")]

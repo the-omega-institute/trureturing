@@ -4,6 +4,11 @@ namespace StrataLint.Engine;
 
 internal static partial class RepositoryPathPolicy
 {
+    // The canonical values projection address. It stays here rather than with the
+    // producer because Scribe references Engine and not the other way round; a second
+    // copy of this literal would be a second source of truth for the same address.
+    internal const string ValuesProjectionPath = "Evidence/D5/values.json";
+
     private static readonly Regex CamelPattern = new(
         "^[A-Z][A-Za-z0-9]*$",
         RegexOptions.CultureInvariant);
@@ -52,7 +57,7 @@ internal static partial class RepositoryPathPolicy
                 return true;
             }
 
-            if (string.Equals(path, ValuesProjectionLoader.RelativePath, StringComparison.Ordinal))
+            if (string.Equals(path, ValuesProjectionPath, StringComparison.Ordinal))
             {
                 gid = "D5/E/values--json";
                 return true;

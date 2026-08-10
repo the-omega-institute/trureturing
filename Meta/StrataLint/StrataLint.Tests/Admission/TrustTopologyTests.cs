@@ -50,7 +50,7 @@ public sealed class TrustTopologyTests
         "Meta/BACKFILL.yaml",
         "Meta/FILEMAP.toml",
         RuleFixture.GoldenDataSourcePath,
-        ValuesProjectionLoader.KernelDataPath,
+        C0CeremonyProjection.ValuesKernelDataPath,
         GoldenFixtureRegistryLoader.RelativePath,
         "Library/queries.yaml",
     };

@@ -1,7 +1,6 @@
 using System.Collections.Immutable;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace StrataLint.Engine;
@@ -224,36 +223,20 @@ internal static partial class RepositoryRules
         }
     }
 
-    private static ImmutableArray<RuleFinding> Values(RuleEvaluationContext context)
-    {
-        var paths = context.Current.Files.Keys
-            .Where(static path => path.Value.StartsWith("Evidence/D5/values.", StringComparison.Ordinal))
+    // Section-zero boundary. The canonical *address* of the values projection is a
+    // skeletal claim about where a machine-produced artifact lives, so it stays
+    // enforced here. Re-deriving the projection's own bytes from a recomputed producer
+    // attestation was guarding the projection itself, and once the producer and its
+    // declared input closure are governed that check adds no information; the producer
+    // chain (Golden/values-kernels.toml -> CanonicalValuesWriter) now carries it alone.
+    private static ImmutableArray<RuleFinding> Values(RuleEvaluationContext context) =>
+        context.Current.Files.Keys
+            .Where(static path =>
+                path.Value.StartsWith("Evidence/D5/values.", StringComparison.Ordinal)
+                && path.Value != RepositoryPathPolicy.ValuesProjectionPath)
             .OrderBy(static path => path.Value, StringComparer.Ordinal)
-            .ToArray();
-        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        foreach (var path in paths.Where(static path => path.Value != ValuesProjectionLoader.RelativePath))
-        {
-            findings.Add(new RuleFinding(
+            .Select(static path => new RuleFinding(
                 path.Value,
-                "canonical values projection must be Evidence/D5/values.json"));
-        }
-
-        if (!paths.Any(static path => path.Value == ValuesProjectionLoader.RelativePath))
-        {
-            return findings.ToImmutable();
-        }
-
-        try
-        {
-            _ = ValuesProjectionLoader.Load(context.Current, context.ValuesKernelDataPath);
-        }
-        catch (Exception exception) when (exception is FormatException or JsonException)
-        {
-            findings.Add(new RuleFinding(
-                ValuesProjectionLoader.RelativePath,
-                "values producer attestation is invalid: " + exception.Message));
-        }
-
-        return findings.ToImmutable();
-    }
+                "canonical values projection must be Evidence/D5/values.json"))
+            .ToImmutableArray();
 }
