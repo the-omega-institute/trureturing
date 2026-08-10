@@ -306,6 +306,10 @@ public sealed partial class MakeWorkflowTests
             "echo \"producer-consistent=",
             admission,
             StringComparison.Ordinal);
+
+        var reuseStep = admission.Split("      - name: Serve both canonical Lean reports from the cached address\n", StringSplitOptions.None)[1]
+            .Split("      - name: ", StringSplitOptions.None)[0];
+        Assert.Contains("pair-reusable == 'true'", reuseStep, StringComparison.Ordinal);
     }
 
     [Fact]
