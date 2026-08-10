@@ -1,0 +1,17 @@
+ast_path: theorem/9.4
+fingerprints:
+  raw_sha256: sha256:2dd5249366f868554d4c0aa47bd0f1ae183990fb25ad3016ccf2abdc42039512
+  normalized_sha256: sha256:2dd5249366f868554d4c0aa47bd0f1ae183990fb25ad3016ccf2abdc42039512
+cas_ref: sha256:2dd5249366f868554d4c0aa47bd0f1ae183990fb25ad3016ccf2abdc42039512
+coverage_gids:
+  - D5/S3/Arith/Wilson.wilson_theorem
+receipts:
+  coverage:
+    - gid: D5/S3/Arith/Wilson.wilson_theorem
+      source_sha256: sha256:2dd5249366f868554d4c0aa47bd0f1ae183990fb25ad3016ccf2abdc42039512
+      target_sha256: sha256:75c1cc30e8dbb4c839c13d4b6525a420760748b9a203c4d2efcd0aa37e8bcd99
+  scribe:
+    - gid: D5/S3/Arith/Wilson.wilson_theorem
+      definition_sha256: sha256:70d1ddb0115988166b9bf8de571547b635e64245b873688b9b49ac9ce79ba71d
+      emission_sha256: sha256:d97f0b5e40dbb0bf64d75e83be3f94bb042e8ebc3624c05e61335c08cc7e8203
+  unresolved_subitems: []
