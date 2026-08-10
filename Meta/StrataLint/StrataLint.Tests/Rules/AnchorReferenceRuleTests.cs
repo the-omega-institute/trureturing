@@ -1,6 +1,5 @@
 using System.Collections.Immutable;
 using System.Text;
-using System.Text.Json;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -45,26 +44,22 @@ public sealed class AnchorReferenceRuleTests
     }
 
     [Fact]
-    public void CatalogedOpaqueLegacyAnchorIsCompatibilityDataNotAnExternalAnchor()
+    public void RuleDecisionUsesTypedCatalogInsteadOfCommittedProjection()
     {
         var fixture = new RuleFixture();
-        const string anchor = "legacy/v1/claim";
-        SetCurrentAnchors(fixture, anchor);
-        fixture.Files[CatalogPath] = Encoding.UTF8.GetString(
-            StructuredCanonicalWriter.WriteJson(JsonSerializer.SerializeToElement(new
-            {
-                definitions = new[]
-                {
-                    new { anchor, provenance = "compatibility fixture" },
-                },
-                schema_version = 1,
-            })).AsSpan());
+        SetCurrentAnchors(fixture, "mathlib/module/Mathlib.Data.Nat.Fib.Zeckendorf");
+        fixture.Files[CatalogPath] = fixture.Files[CatalogPath].Replace(
+            "Mathlib.Data.Nat.Fib.Zeckendorf",
+            "Mathlib.Data.Nat.Fib.Basic",
+            StringComparison.Ordinal);
 
-        var format = EvaluateFormat(fixture);
-        var membership = EvaluateMembership(fixture);
+        Assert.Empty(EvaluateFormat(fixture).Diagnostics);
+        Assert.Empty(EvaluateMembership(fixture).Diagnostics);
 
-        Assert.Empty(format.Diagnostics);
-        Assert.Empty(membership.Diagnostics);
+        fixture.Files.Remove(CatalogPath);
+
+        Assert.Empty(EvaluateFormat(fixture).Diagnostics);
+        Assert.Empty(EvaluateMembership(fixture).Diagnostics);
     }
 
     [Fact]
@@ -119,30 +114,6 @@ public sealed class AnchorReferenceRuleTests
         var result = EvaluateMembership(fixture);
 
         Assert.Empty(result.Diagnostics);
-    }
-
-    [Fact]
-    public void MissingCatalogFailsClosedAsInfrastructure()
-    {
-        var fixture = new RuleFixture();
-        fixture.Files.Remove(CatalogPath);
-
-        var outcome = RuleCatalog.Default.Execute(fixture.Build());
-
-        var failure = Assert.IsType<RuleExecutionOutcome.InfrastructureFailure>(outcome);
-        Assert.Contains("anchor catalog", failure.Message, StringComparison.OrdinalIgnoreCase);
-    }
-
-    [Fact]
-    public void NoncanonicalCatalogBytesFailClosedAsInfrastructure()
-    {
-        var fixture = new RuleFixture();
-        fixture.Files[CatalogPath] += " ";
-
-        var outcome = RuleCatalog.Default.Execute(fixture.Build());
-
-        var failure = Assert.IsType<RuleExecutionOutcome.InfrastructureFailure>(outcome);
-        Assert.Contains("canonical", failure.Message, StringComparison.OrdinalIgnoreCase);
     }
 
     private static SingleRuleEvaluation EvaluateFormat(RuleFixture fixture) =>
