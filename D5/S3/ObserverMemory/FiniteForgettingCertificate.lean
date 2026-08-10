@@ -1,6 +1,6 @@
-/- GID: D5/S3/Observer/FiniteForgettingCertificate
+/- GID: D5/S3/ObserverMemory/FiniteForgettingCertificate
    generality: G
-   mirror-B: D5/B/S3/Observer/FiniteForgettingCertificate
+   mirror-B: D5/B/S3/ObserverMemory/FiniteForgettingCertificate
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Certify finite forgetting and recall dynamics over six named cognitive states. -/
@@ -14,7 +14,7 @@ import Mathlib.Data.Fintype.Card
 import Mathlib.Logic.Relation
 import Mathlib.Tactic
 
-namespace D5.S3.Observer.FiniteForgettingCertificate
+namespace D5.S3.ObserverMemory.FiniteForgettingCertificate
 
 /-- The six cognitive states, named by their epistemic meanings rather than coordinates. -/
 inductive CognitiveState where
@@ -273,4 +273,4 @@ theorem finite_history_certificate {source target : CertificateState Reason}
           exact hrevoked
         exact (hone.2.2.1 hmiddleRevoked).trans hmiddleReason
 
-end D5.S3.Observer.FiniteForgettingCertificate
+end D5.S3.ObserverMemory.FiniteForgettingCertificate

@@ -2,15 +2,15 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Observer;
+namespace StrataLint.Scribe.Blueprint.D5.S3.ObserverMemory;
 
 internal sealed class FiniteForgettingCertificateDocument : IScribeDocumentDefinition
 {
-    private const string LeanPrefix = "D5/S3/Observer/FiniteForgettingCertificate.";
+    private const string LeanPrefix = "D5/S3/ObserverMemory/FiniteForgettingCertificate.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
         Header(
-            "D5/S3/Observer/FiniteForgettingCertificate",
+            "D5/S3/ObserverMemory/FiniteForgettingCertificate",
             "Finite forgetting and recall histories preserve irreversible ledger marks and incompatible-claim separation."),
         H("Named Cognitive-State Forgetting Certificate"),
         Blocks(
