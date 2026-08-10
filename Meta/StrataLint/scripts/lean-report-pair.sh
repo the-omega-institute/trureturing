@@ -12,6 +12,7 @@ BASELINE_OUTPUT=""
 SINGLE=0
 MODULE_CACHE_REPORT=""
 MODULE_CACHE_MANIFEST=""
+STRATALINT_DLL=""
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 SUPERVISOR="$SCRIPT_DIR/report/report-supervisor.sh"
 INPUT_HELPER="$SCRIPT_DIR/report/lean-report-input.sh"
@@ -30,6 +31,7 @@ while [[ $# -gt 0 ]]; do
     --single) SINGLE=1; shift ;;
     --module-cache-report) MODULE_CACHE_REPORT="$2"; shift 2 ;;
     --module-cache-manifest) MODULE_CACHE_MANIFEST="$2"; shift 2 ;;
+    --stratalint-dll) STRATALINT_DLL="$2"; shift 2 ;;
     *) echo "lean-report-pair: unknown argument '$1'" >&2; exit 2 ;;
   esac
 done
@@ -291,6 +293,8 @@ materialize_report() {
     [[ "$cache_rc" == "1" ]] || return "$cache_rc"
   fi
   if [[ -s "$MODULE_CACHE_REPORT" && -s "$MODULE_CACHE_MANIFEST" ]]; then
+    [[ -f "$STRATALINT_DLL" ]] \
+      || { echo "lean-report-pair: per-module cache requires --stratalint-dll" >&2; exit 2; }
     local current_manifest="$TMP_ROOT/$side-modules.tsv"
     local reusable="$TMP_ROOT/$side-reusable.modules"
     local stale="$TMP_ROOT/$side-stale.modules"
@@ -315,7 +319,8 @@ PY
       mkdir -p "${fresh}.logs"
       printf '%s\n' '{"modules": [], "schema": "stratalint-raw-lean-report-v1"}' > "$fresh"
     fi
-    "$SCRIPT_DIR/report/lean-report-merge.sh" --cached "$MODULE_CACHE_REPORT" --fresh "$fresh" \
+    dotnet "$STRATALINT_DLL" lean-report-merge --repository "$root" \
+      --cached "$MODULE_CACHE_REPORT" --fresh "$fresh" \
       --cached-modules-file "$reusable" --output "$output"
     rm -rf "${output}.logs"
     if [[ -d "${fresh}.logs" ]]; then cp -R "${fresh}.logs" "${output}.logs"; else mkdir -p "${output}.logs"; fi

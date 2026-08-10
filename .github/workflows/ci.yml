@@ -256,6 +256,8 @@ jobs:
           source="$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json"
           reports="$RUNNER_TEMP/raw-lean-reports"
           mkdir -p "$reports"
+          dotnet build baseline/Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release
+          stratalint_dll="$GITHUB_WORKSPACE/baseline/Meta/StrataLint/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll"
           # verify 需要 .sha256 旁文件(lean-report-input.sh:100),故一并要求存在。
           for suffix in '' .sha256 .input.attestation .provenance.json; do
             test -s "${source}${suffix}"
@@ -358,6 +360,7 @@ jobs:
             --candidate-output "$reports/candidate-lean-report.json" \
             --baseline-root "$GITHUB_WORKSPACE/baseline" \
             --baseline-output "$reports/baseline-lean-report.json" \
+            --stratalint-dll "$stratalint_dll" \
             "${module_cache_args[@]}"
 
       - name: Reconcile pinned statement projections with live Lean report

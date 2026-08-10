@@ -114,7 +114,7 @@ internal static class CliApplication
         if (arguments.Count == 0)
         {
             console.WriteError(
-                "USAGE: StrataLint align-scribe-receipt|c0-reconcile-trust-root|c0-verify|check|clean-lanes|coverage|cover-atom|digest-status|echo-verify|emit-formalization-receipt|ingest|golden-record|ledger-genesis|papergen|route|selftest|topology|validate-blueprint-pins|worktree|ledger-append|ledger-reattest|perf-append|perf-report|verify-conservative|evaluate-conservative-corpus|gate-authority\n");
+                "USAGE: StrataLint align-scribe-receipt|c0-reconcile-trust-root|c0-verify|check|clean-lanes|coverage|cover-atom|digest-status|echo-verify|emit-formalization-receipt|ingest|golden-record|lean-report-merge|ledger-genesis|papergen|route|selftest|topology|validate-blueprint-pins|worktree|ledger-append|ledger-reattest|perf-append|perf-report|verify-conservative|evaluate-conservative-corpus|gate-authority\n");
             return 2;
         }
 
@@ -142,6 +142,7 @@ internal static class CliApplication
             "ledger-genesis" => RenderCommand(environment.GenerateLedger(tail), console),
             "ledger-append" => RenderCommand(environment.AppendLedger(tail), console),
             "ledger-reattest" => RenderCommand(environment.ReattestLedger(tail), console),
+            "lean-report-merge" => RenderCommand(LeanReportMergeCommand.Run(tail), console),
             "papergen" => RenderExplicit(environment.Papergen(tail), console),
             "perf-append" => RenderCommand(environment.AppendPerf(tail), console),
             "perf-report" => RenderCommand(environment.PerfReport(tail), console),

@@ -15,10 +15,22 @@ internal static class RawLeanReportArtifact
     internal static LeanAxiomReport ReadFile(string path, RepositorySnapshot snapshot)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(path);
-        return Read(File.ReadAllBytes(path), snapshot);
+        return Read(File.ReadAllBytes(path), snapshot, requireComplete: true);
     }
 
     internal static LeanAxiomReport Read(ReadOnlySpan<byte> bytes, RepositorySnapshot snapshot)
+        => Read(bytes, snapshot, requireComplete: true);
+
+    internal static LeanAxiomReport ReadPartialFile(string path, RepositorySnapshot snapshot)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(path);
+        return Read(File.ReadAllBytes(path), snapshot, requireComplete: false);
+    }
+
+    private static LeanAxiomReport Read(
+        ReadOnlySpan<byte> bytes,
+        RepositorySnapshot snapshot,
+        bool requireComplete)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         var text = StrictUtf8.GetString(bytes);
@@ -92,7 +104,7 @@ internal static class RawLeanReportArtifact
             .Where(path => !reports.ContainsKey(path))
             .Order(StringComparer.Ordinal)
             .ToArray();
-        if (missing.Length > 0)
+        if (requireComplete && missing.Length > 0)
         {
             throw new FormatException(
                 "Raw Lean report is missing modules: " + string.Join(", ", missing));
