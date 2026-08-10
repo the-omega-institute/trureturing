@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
@@ -59,6 +60,7 @@ public sealed class RouteTests
     [Theory]
     [InlineData("algebra", "subdomain must be CamelCase")]
     [InlineData("Carrier", "subdomain must differ from domain")]
+    [InlineData("", "subdomain must not be empty")]
     public void RouteRejectsInvalidSubDomainAtTheCoordinateAssertion(string subDomain, string expectedMessage)
     {
         var manifest = new ManifestSyntax(
@@ -68,6 +70,43 @@ public sealed class RouteTests
 
         Assert.Equal(RuleId.CreateKnown(15), rejected.RuleId);
         Assert.Equal(expectedMessage, rejected.Message);
+    }
+
+    [Theory]
+    [InlineData("X_Assumptions")]
+    [InlineData("X_Certificates")]
+    [InlineData("X_Frontier")]
+    public void SpecialZoneRouteRejectsSubDomainAtItsOwningAssertion(string specialZone)
+    {
+        var manifest = new ManifestSyntax(
+            "D5", "F", specialZone, "Probe", "G", "", "lean", "", SubDomain: "Algebra");
+
+        var rejected = Assert.IsType<RouteOutcome.Rejected>(RouteEngine.Route(Policy(), manifest));
+
+        Assert.Equal(RuleId.CreateKnown(15), rejected.RuleId);
+        Assert.Equal("special-zone route cannot have a subdomain", rejected.Message);
+    }
+
+    [Theory]
+    [InlineData("C", "2026-07-11", "round-168", "", "markdown", "")]
+    [InlineData("L", "Notes", "sample2026paper", "", "markdown", "")]
+    [InlineData("P", "Papers", "D5-P001", "", "recipe", "")]
+    [InlineData("E", "values", "values", "result", "json", "")]
+    public void RouteRejectsSubDomainForNonFormalManifestShapes(
+        string plane,
+        string domain,
+        string module,
+        string selector,
+        string artifact,
+        string tag)
+    {
+        var manifest = new ManifestSyntax(
+            "D5", plane, domain, module, "G", selector, artifact, tag, SubDomain: "Algebra");
+
+        var rejected = Assert.IsType<RouteOutcome.Rejected>(RouteEngine.Route(Policy(), manifest));
+
+        Assert.Equal(RuleId.CreateKnown(15), rejected.RuleId);
+        Assert.Equal("subdomain is only allowed for F, B, or formal E manifests", rejected.Message);
     }
 
     [Theory]
@@ -84,6 +123,73 @@ public sealed class RouteTests
         Assert.Equal(
             includeSubdomain ? "D5/S0/Carrier/Algebra/Probe" : "D5/S0/Carrier/Probe",
             Assert.IsType<RouteOutcome.Routed>(RouteEngine.Route(Policy(), loaded.Syntax)).Result.Gid.Value);
+    }
+
+    [Fact]
+    public void ManifestLoaderAcceptsOptionalSubdomainFromYamlAndRoutesIt()
+    {
+        const string yaml = """
+            artifact: lean
+            domain: Carrier
+            generality: G
+            module: Probe
+            plane: F
+            selector: ''
+            subdomain: Algebra
+            tag: ''
+            theory: D5
+            """;
+
+        var loaded = Assert.IsType<ManifestLoadOutcome.Loaded>(
+            ManifestLoader.Load(Encoding.UTF8.GetBytes(yaml)));
+
+        Assert.Equal("Algebra", loaded.Syntax.SubDomain);
+        Assert.Equal(
+            "D5/S0/Carrier/Algebra/Probe",
+            Assert.IsType<RouteOutcome.Routed>(RouteEngine.Route(Policy(), loaded.Syntax)).Result.Gid.Value);
+    }
+
+    [Theory]
+    [InlineData("json", "{\"artifact\":\"lean\",\"domain\":\"Carrier\",\"generality\":\"G\",\"module\":\"Probe\",\"plane\":\"F\",\"selector\":\"\",\"subdomain\":\"\",\"tag\":\"\",\"theory\":\"D5\"}")]
+    [InlineData("yaml", "artifact: lean\ndomain: Carrier\ngenerality: G\nmodule: Probe\nplane: F\nselector: ''\nsubdomain: ''\ntag: ''\ntheory: D5\n")]
+    public void ManifestLoaderRejectsPresentButEmptySubdomain(string _, string manifest)
+    {
+        var failure = Assert.IsType<ManifestLoadOutcome.InfrastructureFailure>(
+            ManifestLoader.Load(Encoding.UTF8.GetBytes(manifest)));
+
+        Assert.Equal("subdomain must not be empty", failure.Message);
+    }
+
+    [Theory]
+    [InlineData("C", "2026-07-11", "round-168", "", "markdown", "")]
+    [InlineData("L", "Notes", "sample2026paper", "", "markdown", "")]
+    [InlineData("P", "Papers", "D5-P001", "", "recipe", "")]
+    [InlineData("E", "values", "values", "result", "json", "")]
+    public void ManifestLoaderRejectsSubdomainForNonFormalManifestShapes(
+        string plane,
+        string domain,
+        string module,
+        string selector,
+        string artifact,
+        string tag)
+    {
+        var json = JsonSerializer.Serialize(new
+        {
+            artifact,
+            domain,
+            generality = "G",
+            module,
+            plane,
+            selector,
+            subdomain = "Algebra",
+            tag,
+            theory = "D5",
+        });
+
+        var failure = Assert.IsType<ManifestLoadOutcome.InfrastructureFailure>(
+            ManifestLoader.Load(Encoding.UTF8.GetBytes(json)));
+
+        Assert.Equal("subdomain is only allowed for F, B, or formal E manifests", failure.Message);
     }
 
     [Fact]

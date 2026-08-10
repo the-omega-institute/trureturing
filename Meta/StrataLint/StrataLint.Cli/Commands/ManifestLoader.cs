@@ -29,7 +29,7 @@ public static class ManifestLoader
                 throw new FormatException("manifest keys must be exactly: " + string.Join(", ", RequiredKeys));
             }
 
-            return new ManifestLoadOutcome.Loaded(new ManifestSyntax(
+            var syntax = new ManifestSyntax(
                 fields["theory"],
                 fields["plane"],
                 fields["domain"],
@@ -38,7 +38,9 @@ public static class ManifestLoader
                 fields["selector"],
                 fields["artifact"],
                 fields["tag"],
-                fields.GetValueOrDefault(OptionalSubdomainKey)));
+                fields.GetValueOrDefault(OptionalSubdomainKey));
+            RouteEngine.ValidateSubDomainApplicability(syntax);
+            return new ManifestLoadOutcome.Loaded(syntax);
         }
         catch (Exception exception) when (exception is DecoderFallbackException or JsonException or YamlException or FormatException)
         {

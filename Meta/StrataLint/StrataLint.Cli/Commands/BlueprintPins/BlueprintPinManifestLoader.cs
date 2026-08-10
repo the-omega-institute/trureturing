@@ -69,6 +69,7 @@ internal static class BlueprintPinManifestLoader
                 properties.ContainsKey(OptionalSubdomainKey)
                     ? String(properties, OptionalSubdomainKey)
                     : null);
+            RouteEngine.ValidateSubDomainApplicability(route);
             return new BlueprintPinManifestLoadOutcome.Loaded(new BlueprintPinManifest(
                 route,
                 Strings(properties, "anchors"),

@@ -86,6 +86,8 @@ public static class RouteEngine
                 throw new FormatException("generality must be G, I, or E");
             }
 
+            ValidateSubDomainApplicability(syntax);
+
             var (gidText, stratum) = syntax.Plane switch
             {
                 "F" => Formal(policy, syntax, blueprint: false),
@@ -275,7 +277,7 @@ public static class RouteEngine
 
         if (domain is "X_Assumptions" or "X_Certificates" or "X_Frontier")
         {
-            if (!string.IsNullOrEmpty(subDomain))
+            if (subDomain is not null)
             {
                 throw new FormatException("special-zone route cannot have a subdomain");
             }
@@ -283,7 +285,7 @@ public static class RouteEngine
             return (ImmutableArray.Create(domain, module), null);
         }
 
-        if (!string.IsNullOrEmpty(subDomain) && !CamelPattern.IsMatch(subDomain))
+        if (subDomain is not null && !CamelPattern.IsMatch(subDomain))
         {
             throw new FormatException("subdomain must be CamelCase");
         }
@@ -300,9 +302,30 @@ public static class RouteEngine
             throw new FormatException("formal route requires a controlled domain");
         }
 
-        return string.IsNullOrEmpty(subDomain)
+        return subDomain is null
             ? (ImmutableArray.Create(match.Value.ToString(), domain, module), match.Value)
             : (ImmutableArray.Create(match.Value.ToString(), domain, subDomain, module), match.Value);
+    }
+
+    internal static void ValidateSubDomainApplicability(ManifestSyntax syntax)
+    {
+        if (syntax.SubDomain is null)
+        {
+            return;
+        }
+
+        if (syntax.SubDomain.Length == 0)
+        {
+            throw new FormatException("subdomain must not be empty");
+        }
+
+        if (syntax.Plane is "F" or "B"
+            || syntax.Plane == "E" && syntax.Domain is not ("values" or "experiments" or "kernels"))
+        {
+            return;
+        }
+
+        throw new FormatException("subdomain is only allowed for F, B, or formal E manifests");
     }
 
     private static ImmutableArray<string> Skeleton(ManifestSyntax syntax, Gid gid) => syntax.Plane switch
@@ -416,11 +439,15 @@ internal static class RouteCapacityPreflight
 
         var stratumRoot = DirectoryOf(targetDirectory);
         var bucketPrefix = stratumRoot == "." ? string.Empty : stratumRoot + "/";
+        var targetBucket = targetDirectory[(targetDirectory.LastIndexOf('/') + 1)..];
+        var policySiblings = stratumDomains.Contains(targetBucket, StringComparer.Ordinal)
+            ? stratumDomains
+            : [];
         var presentDomains = currentPaths
             .Select(DirectoryOf)
             .Where(directory => DirectoryOf(directory) == stratumRoot)
             .Select(directory => directory[bucketPrefix.Length..]);
-        var bucketCounts = stratumDomains
+        var bucketCounts = policySiblings
             .Concat(presentDomains)
             .Distinct(StringComparer.Ordinal)
             .OrderBy(static domain => domain, StringComparer.Ordinal)
