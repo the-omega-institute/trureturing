@@ -1,4 +1,5 @@
 using System.Text.Json;
+using StrataLint.Engine;
 using StrataLint.Scribe;
 
 namespace StrataLint.Scribe.Tests;

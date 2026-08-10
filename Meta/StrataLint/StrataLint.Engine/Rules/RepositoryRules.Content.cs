@@ -9,7 +9,6 @@ internal static partial class RepositoryRules
 {
     private static ImmutableArray<RuleFinding> AddressesAndFormulas(RuleEvaluationContext context)
     {
-        var anchorCatalog = AnchorCatalogLoader.Load(context.Current);
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         var evidence = new Dictionary<(string Coordinates, string Selector), List<string>>();
         var seenGids = new Dictionary<string, List<string>>(StringComparer.Ordinal);
@@ -65,9 +64,9 @@ internal static partial class RepositoryRules
 
                 foreach (var anchor in header.Anchors)
                 {
-                    if (ExternalAnchorSyntax.IsExternalFamily(anchor)
-                        ? !ExternalAnchorSyntax.IsCanonical(anchor)
-                        : !anchorCatalog.Definitions.ContainsKey(anchor))
+                    if (Anchor.IsExternalFamily(anchor)
+                        ? Anchor.TryParseCanonical(anchor) is AnchorParseResult.Invalid
+                        : !AnchorCatalogDefinitions.TryGet(anchor, out _))
                     {
                         findings.Add(new RuleFinding(
                             path.Value,

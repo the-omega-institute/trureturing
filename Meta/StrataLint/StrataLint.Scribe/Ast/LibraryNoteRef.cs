@@ -1,3 +1,5 @@
+using StrataLint.Engine;
+
 namespace StrataLint.Scribe;
 
 public sealed record LibraryNoteRef
