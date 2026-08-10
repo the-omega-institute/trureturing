@@ -38,10 +38,6 @@ public sealed class TheoryAtomizerDataTests
         kind = "theorem"
 
         [[second.markers]]
-        role = "section-remark"
-        text = "评注"
-
-        [[second.markers]]
         role = "trace-note"
         text = "追注"
 

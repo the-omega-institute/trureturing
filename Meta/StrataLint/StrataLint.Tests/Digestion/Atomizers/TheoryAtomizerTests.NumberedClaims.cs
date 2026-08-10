@@ -5,14 +5,19 @@ namespace StrataLint.Tests;
 
 public sealed partial class TheoryAtomizerTests
 {
-    [Fact]
-    public void PzgSectionRemarkHeadingTokenIsDeclaredNotDerivedFromGenreOrder()
+    [Theory]
+    [InlineData("评注 27.363–27.365", "remark/27.363-27.365")]
+    [InlineData("注记 1.1–1.2", "remark/1.1-1.2")]
+    public void EveryRemarkGenreOpensASectionNotOnlyTheFirstOneListed(
+        string heading,
+        string expectedAstPath)
     {
-        var rules = DigestionTestSupport.Rules;
-        var firstRemarkGenre = rules.PzgGenres.First(static item => item.Value == "remark").Token;
+        var bytes = Encoding.UTF8.GetBytes($"# PZG\n\n## {heading}\n\n正文。\n");
 
-        Assert.Equal("评注", rules.PzgMarkers["section-remark"]);
-        Assert.NotEqual(rules.PzgMarkers["section-remark"], firstRemarkGenre);
+        var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
+
+        Assert.Equal(expectedAstPath, Assert.Single(document.Claims).AstPath);
+        Assert.Equal(bytes, document.Reassemble().ToArray());
     }
 
     [Fact]

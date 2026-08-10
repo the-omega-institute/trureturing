@@ -68,10 +68,6 @@ public sealed partial class TheoryAtomizerTests
                 kind = "theorem"
 
                 [[pzg.markers]]
-                role = "section-remark"
-                text = "评注"
-
-                [[pzg.markers]]
                 role = "trace-note"
                 text = "追注"
 

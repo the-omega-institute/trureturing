@@ -196,7 +196,7 @@ internal static class TheoryAtomizerDataLoader
         var gictClaims = ParseMappings(entries["gict.claim_prefixes"], "prefix", "locator", locator: true);
         var gictConstants = ParseMappings(entries["gict.constants"], "name", "locator", locator: true);
         var pzgGenres = ParseMappings(entries["pzg.genres"], "token", "kind", kind: true, longestFirst: true);
-        var pzgMarkers = ParseNamedLiterals(entries["pzg.markers"], ["section-remark", "trace-note"]);
+        var pzgMarkers = ParseNamedLiterals(entries["pzg.markers"], ["trace-note"]);
         var pzgHeadings = ParseMappings(entries["pzg.heading_prefixes"], "prefix", "locator", locator: true);
         var wm = ParseWm(entries["wm.headings"]);
         return new TheoryAtomizerRules(

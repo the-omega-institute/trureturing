@@ -319,11 +319,14 @@ internal static class PzgAtomizer
             return "metadata/supplement/" + supplement.Groups["version"].Value;
         }
 
-        var remark = Regex.Match(
-            heading,
-            "^" + Regex.Escape(rules.PzgMarkers["section-remark"])
-                + "\\s+(?<range>[0-9]+\\.[0-9]+(?:[–—-][0-9]+\\.[0-9]+)?)",
-            RegexOptions.CultureInvariant);
+        var remark = rules.PzgGenres
+            .Where(static item => item.Value == "remark")
+            .Select(item => Regex.Match(
+                heading,
+                "^" + Regex.Escape(item.Token)
+                    + "\\s+(?<range>[0-9]+\\.[0-9]+(?:[–—-][0-9]+\\.[0-9]+)?)",
+                RegexOptions.CultureInvariant))
+            .FirstOrDefault(static match => match.Success);
         if (remark is { Success: true })
         {
             return "remark/" + remark.Groups["range"].Value
