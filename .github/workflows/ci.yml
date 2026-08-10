@@ -373,8 +373,14 @@ jobs:
           target="$GITHUB_WORKSPACE/candidate/.lake/build/stratalint/raw-lean-report.json"
           mkdir -p "$(dirname "$target")"
           mkdir -p "$GITHUB_WORKSPACE/.canonical-lean-report-cache"
-          "$GITHUB_WORKSPACE/baseline/Meta/StrataLint/scripts/report/lean-report-input.sh" manifest \
-            --repository "$GITHUB_WORKSPACE/candidate" > "$GITHUB_WORKSPACE/.canonical-lean-report-cache/modules.tsv"
+          manifest="$GITHUB_WORKSPACE/.canonical-lean-report-cache/modules.tsv"
+          if ! "$GITHUB_WORKSPACE/baseline/Meta/StrataLint/scripts/report/lean-report-input.sh" manifest \
+            --repository "$GITHUB_WORKSPACE/candidate" --report "$report" > "${manifest}.tmp"; then
+            rm -f -- "${manifest}.tmp" "$manifest"
+            echo "::warning title=Lean per-module cache disabled::Module manifest generation failed; full report remains authoritative."
+          else
+            mv "${manifest}.tmp" "$manifest"
+          fi
           cp "$report" "$target"
           dotnet test candidate/Meta/StrataLint/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj \
             --configuration Release \
