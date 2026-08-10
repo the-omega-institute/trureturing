@@ -22,6 +22,13 @@ public sealed class DigestResidualSummaryTests
             - unresolved_subitems: 5
             - mother_residual_atom_ids: 3
 
+            ## quarantined residuals
+
+            - quarantined_subitems: 0
+            - mother_quarantined_atom_ids: 0
+
+            Quarantined residual atoms: none.
+
             ## cross-volume shared residues
 
             - shared_residue_names: 1

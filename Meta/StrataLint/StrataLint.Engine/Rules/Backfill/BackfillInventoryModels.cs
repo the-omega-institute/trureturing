@@ -18,12 +18,17 @@ internal sealed record DigestionScribeReceipt(
 
 internal sealed record DigestionExternalReceipt(string Path, string Sha256);
 
+internal sealed record DigestionQuarantine(
+    string Justification,
+    string ReentryCondition);
+
 internal sealed record DigestionReceipts(
     ImmutableArray<DigestionCoverageReceipt> Coverage,
     ImmutableArray<DigestionScribeReceipt> Scribe,
     ImmutableArray<string> UnresolvedSubitems,
     ImmutableArray<string> ChainAtoms,
-    DigestionExternalReceipt? TailAuthorization);
+    DigestionExternalReceipt? TailAuthorization,
+    DigestionQuarantine? Quarantine = null);
 
 internal enum DigestionMigrationState
 {
