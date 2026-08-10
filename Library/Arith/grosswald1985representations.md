@@ -7,6 +7,7 @@ doi: 10.1007/978-1-4613-8566-0
 claim: The classical characterization of the natural numbers representable as sums of two squares by the parity of the exponents of their prime factors congruent to three modulo four.
 strata_touched:
   - D5/S3/PrimeForms/SumTwoSquaresClassification
+  - D5/S3/PrimeForms/ThreeModFourDescent
 license: citation-only
 triage: anchor
 ---
@@ -26,6 +27,11 @@ literature through this anchor. The repository proof discharges the statement
 through Mathlib's `Nat.eq_sq_add_sq_iff`, so the source's proof route (descent
 at primes congruent to three modulo four, representation of primes congruent
 to one modulo four, and multiplicative composition) is not attributed. The
+anchor also attributes the statement of the descent step itself, formalized
+separately in `D5/S3/PrimeForms/ThreeModFourDescent`: a prime congruent to
+three modulo four dividing a sum of two squares divides both bases. Only that
+statement is attributed; the repository proof of it goes through Mathlib's
+quadratic-residue machinery, not through the chapter's argument. The
 full chapter text is paywalled, so the theorem numbering inside the chapter
 was not verified; the attribution rests on the verified chapter title, page
 range, and DOI together with the standard identification of this result as
