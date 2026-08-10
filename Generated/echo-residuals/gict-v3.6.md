@@ -1,11 +1,18 @@
-<!-- echo-residual-summary:v4 source=gict-v3.6 residual=sha256:7d546b4b35d69266947395eff94a0d55a05265e5917307e3b0c2e4605651ba48 -->
+<!-- echo-residual-summary:v4 source=gict-v3.6 residual=sha256:28121720c3bffd0eea8c91eed30e8451c693e3fe7e53a598df452235f4982a67 -->
 # Echo Residual Summary — `gict-v3.6`
 
-- unresolved_subitems: 118
-- mother_residual_atom_ids: 12
+- unresolved_subitems: 123
+- mother_residual_atom_ids: 13
 
 Mother residual atoms:
 
+- `gict-residual-00b88fe9cb6743819d177963ec1fa55bd8e9f514e4aca99c09f3285447a92e30` (6)
+  - `forgetting-budget-monotonicity-sharpness-dpi-and-capacity-drop`
+  - `mixed-end-qubit-saturation-and-fourth-order-expansion`
+  - `mu-star-definition-and-left-total-variation-bound`
+  - `pure-end-rank-bound`
+  - `quantum-state-spectrum-entropy-identification`
+  - `random-spectrum-and-high-precision-numerical-certificates`
 - `gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226` (38)
   - `direction-law-counterexamples`
   - `fixed-ray-character-counterexample`
@@ -58,9 +65,8 @@ Mother residual atoms:
   - `mirror-second-order-nonintersection-certificate`
 - `gict-residual-4f569da66804d560bc53e6c1ac7d74ce201d944db708780a8f72b39b930112b8` (1)
   - `quadratic-residue-equivalence-as-written-for-p-equals-two-is-false-and-requires-an-odd-prime-hypothesis`
-- `gict-residual-4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f` (13)
+- `gict-residual-4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f` (12)
   - `cosecant-peak-equation-from-pin-data`
-  - `cosecant-peak-identity`
   - `dominant-partial-quotient-gap-lemma`
   - `dominant-partial-quotient-identification`
   - `fabricated-input-rejection-certificate`
