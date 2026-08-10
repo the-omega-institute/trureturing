@@ -25,11 +25,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
             [
                 "make:lean-report",
                 "make:emit",
-                "make:echo-residual-summary BASE=synthetic-base",
                 "dotnet:emit-formalization-receipt",
                 "dotnet:ledger-append",
                 "make:lean-report",
-                "make:echo-residual-summary BASE=synthetic-base",
                 "make:emit",
             ],
             fixture.CallKinds());
@@ -38,7 +36,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Contains(TransactionFixture.LeanPath, phaseA);
         Assert.Contains(TransactionFixture.DefinitionPath, phaseA);
         Assert.Contains(TransactionFixture.EmissionPath, phaseA);
-        Assert.Contains(TransactionFixture.EchoPath, phaseA);
         Assert.DoesNotContain(TransactionFixture.LedgerPath, phaseA);
         Assert.DoesNotContain(TransactionFixture.ReceiptRelativePath, phaseA);
 
@@ -50,7 +47,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
     }
 
     [Fact]
-    public void DepositEmitsAfterInstallingReceiptAndRefreshingSummary()
+    public void DepositEmitsAfterInstallingReceipt()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -63,15 +60,10 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var receipt = stderr.IndexOf(
             $"PLAYBOOK_WRITE path={TransactionFixture.ReceiptRelativePath}",
             StringComparison.Ordinal);
-        var summary = stderr.IndexOf(
-            "detail=echo-residual-summary-atomic",
-            receipt,
-            StringComparison.Ordinal);
         var emit = stderr.IndexOf("detail=emit-post-receipt", receipt, StringComparison.Ordinal);
 
         Assert.True(receipt >= 0, Diagnostics(result));
-        Assert.True(summary > receipt, Diagnostics(result));
-        Assert.True(emit > summary, Diagnostics(result));
+        Assert.True(emit > receipt, Diagnostics(result));
     }
 
     [Fact]
@@ -199,22 +191,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.DoesNotContain(fixture.TrackedPaths(), path =>
             path.Contains(".tmp.", StringComparison.Ordinal));
         Assert.Empty(fixture.Status());
-    }
-
-    [Fact]
-    public void DepositPreservesCanonicalEchoWhenProjectionFailsMidWrite()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new TransactionFixture();
-        fixture.ChangeFormalization();
-        var before = File.ReadAllBytes(Path.Combine(fixture.Root, TransactionFixture.EchoPath));
-
-        var result = fixture.Run("deposit", failEcho: true);
-
-        Assert.NotEqual(0, result.ExitCode);
-        Assert.Equal(before, File.ReadAllBytes(Path.Combine(fixture.Root, TransactionFixture.EchoPath)));
-        Assert.Equal(0, fixture.FreezeCount());
-        Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
     }
 
     [Fact]
@@ -405,7 +381,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 "make:emit",
                 "dotnet:align-scribe-receipt",
                 "make:emit",
-                "make:echo-residual-summary BASE=synthetic-base",
             ],
             fixture.CallKinds());
         Assert.Contains("aligned: covered", File.ReadAllText(
@@ -427,7 +402,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
         internal const string SecondaryLeanPath = "D5/S3/Observer/WindowRegisterCRT.lean";
         internal const string DefinitionPath = "Blueprint/D5/S0/Carrier/Probe.scribe.cs";
         internal const string EmissionPath = "Blueprint/D5/S0/Carrier/Probe.md";
-        internal const string EchoPath = "Generated/echo-residual-summary.md";
         internal const string LedgerPath = "Meta/StrataLint/Golden/Frozen/accepted";
         internal const string BackfillPath = "Meta/BACKFILL.yaml";
         internal const string ReceiptRelativePath = "Meta/Digestion/formalizations/atom-1.v1.json";
@@ -448,7 +422,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
             WriteFile(LeanPath, "theorem probe : True := by trivial\n");
             WriteFile(DefinitionPath, "definition baseline\n");
             WriteFile(EmissionPath, "emission: baseline\n");
-            WriteFile(EchoPath, "echo: baseline\n");
             Directory.CreateDirectory(Path.Combine(Root, LedgerPath));
             WriteFile(BackfillPath, $"atom_id: {AtomId}\ncoverage: false\naligned: false\n");
             WriteMakeStub();
@@ -608,14 +581,12 @@ public sealed partial class DepositCoverWorkflowScriptTests
 
         internal void LeaveInterruptedTemporaryFiles()
         {
-            WriteFile(EchoPath + ".tmp.abandoned", "partial echo\n");
             WriteFile(ReceiptRelativePath + ".tmp.abandoned", "partial receipt\n");
         }
 
         internal ProcessOutput Run(
             string command,
             string gid = Gid,
-            bool failEcho = false,
             bool staleReport = false,
             bool invalidReceipt = false,
             string? mutateReceiptAfterPrepare = null,
@@ -625,7 +596,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 [
                     $"PATH={binPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}",
                     $"PLAYBOOK_TEST_CALLS={callsPath}",
-                    $"PLAYBOOK_FAIL_ECHO={(failEcho ? "1" : "0")}",
                     $"PLAYBOOK_STALE_REPORT={(staleReport ? "1" : "0")}",
                     $"PLAYBOOK_INVALID_RECEIPT={(invalidReceipt ? "1" : "0")}",
                     $"PLAYBOOK_MUTATE_RECEIPT_AFTER_PREPARE={mutateReceiptAfterPrepare ?? string.Empty}",

@@ -478,13 +478,13 @@ canonical command 只有在返回 `0` 且 `OUT` 是满足指定 schema 的单个
 
 ## 12.1 摘要与实施顺序
 
-已证根因是三类共享可写地址：七个可再生 aggregate、测试程序中的全语料快照、frozen ledger 的全局线性尾。问题在状态居所与写入协议，不在 Git 合并算法。
+已证根因是三类共享可写地址：可再生 aggregate、测试程序中的全语料快照、frozen ledger 的全局线性尾。问题在状态居所与写入协议，不在 Git 合并算法。
 
 本轮完成定义缩为 `P0-0 -> P0-2 -> P0-F1 -> PR-A -> P0-B classification receipt -> 独立 PR-B SPEC -> PR-C`。`P0-0` 必须先在完全未改的 old/base admission judge 下独立获准，PR-A、PR-C 及其候选 manifest 均不得参与其生成：
 
 1. P0-0 冻结 old gate 的固定顶层 authority roots 与完整 pinned entrypoint digests，作为后续候选 verdict 的 base-judge 输入。
 2. P0-F1 仅把 `Meta/StrataLint/Generated/truth-graph.v1.json` 这一项 `disposable-projection` 迁出保护面前缀；它是 PR-A 的单对象止血前哨与居所子集，收益立即且不依赖 P0-2 的任何前置，完成后不替代 PR-A 的七项 run-local protocol。`scribe-emissions`（`Engine/Digestion/ScribeEmissionAttestation.cs`）与 `anchor-catalog`（`Engine/Rules/`，经 `AnchorCatalogLoader`）因 base judge consumer 依赖留在原址；迁移它们必须先以 bootstrap PR 迁 consumer，不得以当前全绿冒充完成。
-3. PR-A 把七个 aggregate 改为 invocation-local projection；artifact disposition 只在 `Meta/FILEMAP.toml` 声明。
+3. PR-A 把六个受守 aggregate 改为 invocation-local projection；echo residual 则按 `source_id` 分片为允许陈旧的人读投影；artifact disposition 只在 `Meta/FILEMAP.toml` 声明。
 4. 本 SPEC 不在未知分类上实现 PR-B。P0-B 只产生真实、内容寻址的 classification receipt；随后另写绑定该 receipt 的单架构 SPEC。当前 `ExpectedMacros` 在此之前保持不变。
 5. PR-C 把 lane command 与 accepted state 分开：lane 只提交 intent；base-owned writer 机器串行化同 case 写入，先通过者接纳，后续 stale intent 拒绝。全局 stream/head 仅为派生物。
 
@@ -496,7 +496,7 @@ canonical command 只有在返回 `0` 且 `OUT` 是满足指定 schema 的单个
 
 | 读数 | 定位 |
 |---|---|
-| 七个普通 aggregate 合计 712,230 bytes | evidence head `4e1cc098`；GoalArtifact E1；路径见 `Meta/FILEMAP.toml:93-119,261-280` |
+| 六个受守 aggregate 与 echo residual 人读分片 | evidence head `4e1cc098`；GoalArtifact E1；路径见 `Meta/FILEMAP.toml` |
 | `truth-graph.v1.json` 与 `scribe-emissions.v1.json` 各一行；`Generated/DAG.md` 550 行 | GoalArtifact E1 的 `wc -l` |
 | frozen ledger 885,607 bytes、211 行 | GoalArtifact E1 |
 | `ExpectedMacros` 位于测试程序且随全 Blueprint corpus 比较 | `Meta/StrataLint/StrataLint.Scribe.Tests/Describe/FormulaCorpusInventoryTests.cs:23-60` |
@@ -551,7 +551,7 @@ runtime_disposition = "committed-source|committed-ledger|run-local"
 artifact_id = "<stable-id|none>"
 ```
 
-现有 `kind`、`produced_by`、`consumed_by`、`verified_by` 继续表达 kind、producer、consumer、verifier。七个 aggregate 的既有精确 path entry 分别取得 `A-DAG/A-TRUTH/A-SCRIBE/A-ANCHOR/A-VALUES/A-FILEMAP/A-ECHO`，`runtime_disposition="run-local"`；authority 分别指向现有 Lean/Scribe/anchor/value-kernel/FILEMAP/digestion source。Blueprint markdown 与 BACKFILL 的唯一现状均标 `committed-source`，frozen accepted event 路径标 `committed-ledger`。P0-BLUEPRINT 若通过，只能在其原子 PR 内直接改为最终 disposition；不得预埋迁移态。glob 匹配必须仍唯一；缺字段、未知枚举、重复 artifact_id 或 run-local path 无 producer/verifier均 schema reject。
+现有 `kind`、`produced_by`、`consumed_by`、`verified_by` 继续表达 kind、producer、consumer、verifier。六个受守 aggregate 的既有精确 path entry 分别取得 `A-DAG/A-TRUTH/A-SCRIBE/A-ANCHOR/A-VALUES/A-FILEMAP`，`runtime_disposition="run-local"`；authority 分别指向现有 Lean/Scribe/anchor/value-kernel/FILEMAP source。echo residual 以 `Generated/echo-residuals/*.md` 单条 glob 登记，按 `source_id` 分片，是允许陈旧的人读投影，不取得 artifact ID。Blueprint markdown 与 BACKFILL 的唯一现状均标 `committed-source`，frozen accepted event 路径标 `committed-ledger`。P0-BLUEPRINT 若通过，只能在其原子 PR 内直接改为最终 disposition；不得预埋迁移态。glob 匹配必须仍唯一；缺字段、未知枚举、重复 artifact_id 或 run-local path 无 producer/verifier均 schema reject。
 
 §4 的人读表由 `make filemap --disposition-table` 从 FILEMAP 生成；P0-2 的 `artifacts` 数组由同一已解析对象生成。verifier 对生成表 bytes、数组 JCS digest 与 `filemap_sha256` 重算比对。不得维护 companion、硬编码 artifact 数组或让 `GeneratedArtifactInventory.All` 再声明 disposition；现有 inventory 若继续提供 producer dispatch，只能按 FILEMAP artifact_id join 并由 policy 断言集合相等。
 
@@ -648,7 +648,7 @@ mandatory mutations 为：`M-GATE-AUTHORITY-SYNCHRONIZED-DELETE`、`M-GATE-ROOT-
 
 `make refactor-p0-2 MANIFEST=<path> OUT=<json>` 从 FILEMAP 生成 artifacts。仓内扫描域固定为 tracked source、tests、shell/make、GitHub Actions、artifact upload、release assets、package manifests 与 docs links；分别使用 `git ls-files -z` 加语言 parser，`rg` 仅作漏检交叉检查。
 
-外部 consumer 不能由候选 FILEMAP 自己封闭。manifest 另绑定 base-owned `external-scope-authority-v1` blob digest；其封闭 schema 为 `{schema:"external-scope-authority-v1",scopes:[{scope_id,artifact_id,namespace,query_adapter,query_adapter_sha256}]}`，按 `(artifact_id,scope_id)` 排序。本轮固定完整 scope ID/artifact 集为 `scope-a-dag/A-DAG`、`scope-a-truth/A-TRUTH`、`scope-a-scribe/A-SCRIBE`、`scope-a-anchor/A-ANCHOR`、`scope-a-values/A-VALUES`、`scope-a-filemap/A-FILEMAP`、`scope-a-echo/A-ECHO`，不得增删；各自真实 namespace/query adapter/authority/key 尚未测，状态为 `ASSUMED-UNVERIFIED AU-EXT-1`，P0-2 必须由 base-owned authority blob 固定并成功查询这七项，否则 PR-A 阻断。FILEMAP `[[external_scopes]]` 只是该 authority blob 的 byte-exact projection，且所有 `external:<scope_id>` 引用集合、projection 集合、authority 集合三者必须完全相等；缺失或额外均 exit `3`。`M-EXTERNAL-SCOPE-DELETE` 对每个 scope 逐项删除并要求 exit `3`。未注册的仓外 consumer 明确不属于受支持契约；世界闭包不可证明，registry 完备性持续标 `ASSUMED-UNVERIFIED AU-EXT-1`，不得冒称“世界上不存在”。
+外部 consumer 不能由候选 FILEMAP 自己封闭。manifest 另绑定 base-owned `external-scope-authority-v1` blob digest；其封闭 schema 为 `{schema:"external-scope-authority-v1",scopes:[{scope_id,artifact_id,namespace,query_adapter,query_adapter_sha256}]}`，按 `(artifact_id,scope_id)` 排序。本轮固定完整 scope ID/artifact 集为 `scope-a-dag/A-DAG`、`scope-a-truth/A-TRUTH`、`scope-a-scribe/A-SCRIBE`、`scope-a-anchor/A-ANCHOR`、`scope-a-values/A-VALUES`、`scope-a-filemap/A-FILEMAP`，不得增删；各自真实 namespace/query adapter/authority/key 尚未测，状态为 `ASSUMED-UNVERIFIED AU-EXT-1`，P0-2 必须由 base-owned authority blob 固定并成功查询这六项，否则 PR-A 阻断。FILEMAP `[[external_scopes]]` 只是该 authority blob 的 byte-exact projection，且所有 `external:<scope_id>` 引用集合、projection 集合、authority 集合三者必须完全相等；缺失或额外均 exit `3`。`M-EXTERNAL-SCOPE-DELETE` 对每个 scope 逐项删除并要求 exit `3`。未注册的仓外 consumer 明确不属于受支持契约；世界闭包不可证明，registry 完备性持续标 `ASSUMED-UNVERIFIED AU-EXT-1`，不得冒称“世界上不存在”。
 
 external scope 的判词权威来自 base judge,不来自密码学签名。签名只能证明某方签过字,不能证明签名者独立于实施者;本仓不存在独立于实施者的第三方 authority,持私钥者即执行 P0-2 者时,签名只是自证套壳,保证为零(用户 2026-08-07 裁决;另见本仓 2026-07-30 退役 App 私钥路线之先例)。防自证的承重结构是「判词输入来自 base 侧且候选不可覆写」,即 12.6.1 已用的形态,不得为同一问题另造第二套更弱机制。attestation 封闭 schema 为 `{schema:"external-scope-attestation-v1",scope_id,query_adapter_sha256,query_result_sha256,observed_consumers,issued_at,expires_at}`,其 `attestation_sha256=sha256(UTF8("external-scope-attestation-v1") || 0x00 || JCS(object))`。查询由 base 侧执行;七项的封闭聚合 `sha256(UTF8("external-scope-results-v1") || 0x00 || JCS({results:[{scope_id,attestation_sha256}]}))`(按 `scope_id` UTF-8 排序)由 base judge 通过独立、不可由 candidate 覆写的 verdict input `EXPECTED_EXTERNAL_SCOPE_RESULT_SHA256` 注入,与 12.6.1 的 `EXPECTED_GATE_AUTHORITY_SHA256` 同形;candidate manifest 可记录同值作审计,但不是判词输入。注入值与 base 侧重算值不等、query nonzero、result digest 不符或 attestation 过期,均 `unknown`/exit `3`。空 observed_consumers 仍须有效 base 侧 query 与注入,实施者不能自证。本条不要求 `Meta/registry.yaml` 新增 authority/key 结构(`RegistryLoader` 为 exact-key strict loader,该负担随签名一并消失)。删除签名不损失任何保证:`AU-EXT-1` 的世界闭包本就不可证,签名从来不能证明它。
 
@@ -693,7 +693,7 @@ REMOVED：未封闭的 P0-1 command 与 LOG_MANIFEST/event 分类协议。效果
 ## 12.7 禁区
 
 1. 禁 merge driver、union、rerere 与 ledger 文本 union。
-2. 禁继续提交七个全局 projection；禁通用 CAS/emitter 平台。
+2. 禁继续提交跨 source 的全局 projection；六个受守 aggregate 维持其各自职责，echo residual 只提交按 `source_id` 分片的人读快照；禁通用 CAS/emitter 平台。
 3. 禁把 Blueprint/BACKFILL 一刀切出库；二者不在 PR-A。
 4. 禁削弱 C0、baseline admission、双 required checks 或 semantic obligation。
 5. 禁 CI 回写 disposable projection；source/ledger 只能走各自协议。
