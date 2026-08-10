@@ -292,6 +292,64 @@ public sealed class FileMapPolicyTests
     [Fact]
     public void GeneratedFileWithoutProducerInventoryIsRejectedByTheRedFixture()
     {
+        var manifest = Parse(DispositionEntry(
+            "Generated/output.json",
+            "generated",
+            "JsonEmitter",
+            "reader",
+            "JsonEmitter",
+            "committed-source",
+            "A-OUTPUT"));
+
+        var finding = Assert.Single(FileMapPolicy.InspectGeneratedInventory(
+            manifest,
+            ["Generated/output.json"],
+            []));
+
+        Assert.Equal("FILEMAP-GENERATED-INVENTORY", finding.Code);
+    }
+
+    [Fact]
+    public void DataKeyedGeneratedGlobWithoutProducerInventoryIsAccepted()
+    {
+        var manifest = Parse(Entry(
+            "Generated/partitions/*.json",
+            "generated",
+            "PartitionEmitter",
+            "reader",
+            "PartitionEmitter"));
+
+        var findings = FileMapPolicy.InspectGeneratedInventory(
+            manifest,
+            ["Generated/partitions/source-a.json"],
+            []);
+
+        Assert.Empty(findings);
+    }
+
+    [Fact]
+    public void GeneratedGlobWithArtifactIdStillRequiresProducerInventory()
+    {
+        var manifest = Parse(DispositionEntry(
+            "Generated/partitions/*.json",
+            "generated",
+            "PartitionEmitter",
+            "reader",
+            "PartitionEmitter",
+            "committed-source",
+            "A-PARTITION"));
+
+        var finding = Assert.Single(FileMapPolicy.InspectGeneratedInventory(
+            manifest,
+            ["Generated/partitions/source-a.json"],
+            []));
+
+        Assert.Equal("FILEMAP-GENERATED-INVENTORY", finding.Code);
+    }
+
+    [Fact]
+    public void GeneratedLiteralWithoutArtifactIdStillRequiresProducerInventory()
+    {
         var manifest = Parse(Entry(
             "Generated/output.json",
             "generated",
@@ -305,6 +363,41 @@ public sealed class FileMapPolicyTests
             []));
 
         Assert.Equal("FILEMAP-GENERATED-INVENTORY", finding.Code);
+    }
+
+    [Fact]
+    public void InventoryBackedBlueprintGlobAndAggregateRemainAccepted()
+    {
+        var blueprintManifest = Parse(Entry(
+            "Blueprint/**/*.md",
+            "generated",
+            "ScribeEmitter",
+            "reader",
+            "ScribeEmitter"));
+        var blueprint = new GeneratedArtifactIdentity(
+            "Blueprint/Foundations/example.md",
+            "ScribeEmitter");
+        var aggregateManifest = Parse(DispositionEntry(
+            "Generated/summary.json",
+            "generated",
+            "SummaryEmitter",
+            "reader",
+            "SummaryEmitter",
+            "committed-source",
+            "A-SUMMARY"));
+        var aggregate = new GeneratedArtifactIdentity(
+            "Generated/summary.json",
+            "SummaryEmitter",
+            "A-SUMMARY");
+
+        Assert.Empty(FileMapPolicy.InspectGeneratedInventory(
+            blueprintManifest,
+            [blueprint.Path],
+            [blueprint]));
+        Assert.Empty(FileMapPolicy.InspectGeneratedInventory(
+            aggregateManifest,
+            [aggregate.Path],
+            [aggregate]));
     }
 
     [Fact]

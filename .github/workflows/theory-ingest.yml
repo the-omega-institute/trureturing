@@ -1,5 +1,7 @@
 # 理论卷自动摄入:PR 触碰 docs/develop/theory/** 时,以 base 侧法官跑 make ingest,
-# 产生的账本对齐与 content-addressed echo 投影 bot-commit 回 PR 分支。
+# 产生的账本对齐 bot-commit 回 PR 分支。
+# 不回写 echo residual 投影:它是允许陈旧的人读快照(CLAUDE.md 第〇节),按需由
+# `make echo-residual-summary` 重发,消费者应调 producer 现算而非读仓内分片。
 # 信任拓扑:代码=base 侧(pull_request_target),PR 侧仅理论卷数据输入;写路径白名单硬校验。
 name: theory-ingest
 
@@ -54,7 +56,7 @@ jobs:
           bad=()
           while IFS= read -r -d '' path; do
             case "$path" in
-              docs/develop/theory/*|Meta/Digestion/atoms/*|Generated/echo-residual-summary.md) ;;
+              docs/develop/theory/*|Meta/Digestion/atoms/*) ;;
               *) bad+=("$path") ;;
             esac
           done < <(git -C candidate diff --name-only --no-renames -z "$BASE_SHA...$HEAD_SHA")
@@ -178,21 +180,6 @@ jobs:
           cd candidate
           make ingest BASE=HEAD
 
-      - name: Re-emit content-addressed echo projection
-        shell: bash
-        env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
-        run: |
-          set -euo pipefail
-          cd candidate
-          projection="$(mktemp)"
-          trap 'rm -f "$projection"' EXIT
-          dotnet run --project Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- \
-            echo-verify --emit --base "$BASE_SHA" \
-            > "$projection"
-          mv "$projection" Generated/echo-residual-summary.md
-          trap - EXIT
-
       - name: Enforce write-path whitelist and commit back
         shell: bash
         env:
@@ -204,13 +191,13 @@ jobs:
           git clean -fd -- Meta/StrataLint
           changed="$(git status --porcelain)"
           if [ -z "$changed" ]; then echo "ingest no-op"; exit 0; fi
-          bad="$(git status --porcelain | grep -vE '^.. (Meta/Digestion/atoms/.*|Generated/echo-residual-summary\.md)$' || true)"
+          bad="$(git status --porcelain | grep -vE '^.. Meta/Digestion/atoms/.*$' || true)"
           if [ -n "$bad" ]; then
             echo "::error::ingest touched paths outside whitelist:"; echo "$bad"; exit 1
           fi
           git config user.name "theory-ingest-bot"
           git config user.email "theory-ingest-bot@users.noreply.github.com"
-          git add Meta/Digestion/atoms Generated/echo-residual-summary.md
+          git add Meta/Digestion/atoms
           git commit -m "chore(digestion): auto-ingest theory update [theory-ingest-bot]"
           gh auth setup-git
           git push origin HEAD:${{ github.event.pull_request.head.ref }}

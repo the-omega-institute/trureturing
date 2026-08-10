@@ -107,6 +107,38 @@ internal static class DigestStatusCommand
         }
     }
 
+    internal static IReadOnlyDictionary<string, string> RenderShards(
+        IRepositoryGateway repository,
+        ILeanReportSource leanReportSource,
+        IScribeEmissionVerifier scribeEmissionVerifier,
+        string baselineRevision)
+    {
+        var snapshot = Decode(repository.ReadCurrent());
+        var leanReport = leanReportSource.Load(snapshot);
+        var evaluation = DigestionStatusEvaluator.Evaluate(
+            BackfillInventoryLoader.Load(snapshot),
+            snapshot,
+            ValidateLean(snapshot, leanReport),
+            scribeEmissionVerifier.Verify(leanReport),
+            BackfillInventoryLoader.Load(Decode(repository.ReadRevision(baselineRevision))));
+        if (evaluation.Findings.Length > 0)
+        {
+            throw new InvalidOperationException(InvalidEvaluation(evaluation).Error.TrimEnd());
+        }
+
+        return DigestResidualSummary.RenderShards(evaluation);
+    }
+
+    internal static IReadOnlyList<string> CurrentSourceIds(IRepositoryGateway repository)
+    {
+        ArgumentNullException.ThrowIfNull(repository);
+        return BackfillInventoryLoader.Load(Decode(repository.ReadCurrent()))
+            .RequireDigestionSources()
+            .Select(static source => source.SourceId)
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+    }
+
     private static DigestStatusOptions ParseArguments(IReadOnlyList<string> arguments)
     {
         var json = false;
@@ -452,6 +484,59 @@ internal static class DigestStatusCommand
 internal static class DigestResidualSummary
 {
     private const string ResidualGapCode = "unresolved-subitem";
+    private const string ShardDirectory = "Generated/echo-residuals/";
+
+    internal static IReadOnlyDictionary<string, string> RenderShards(
+        DigestionLedgerEvaluation evaluation)
+    {
+        ArgumentNullException.ThrowIfNull(evaluation);
+        var shards = new SortedDictionary<string, string>(StringComparer.Ordinal);
+        foreach (var source in evaluation.Entries
+                     .GroupBy(static item => item.Entry.SourceId, StringComparer.Ordinal)
+                     .OrderBy(static group => group.Key, StringComparer.Ordinal))
+        {
+            var atoms = source
+                .Select(static item => new AtomResiduals(
+                    item.Entry.AtomId,
+                    item.Gaps
+                        .Where(static gap => gap.Code == ResidualGapCode)
+                        .Select(static gap => gap.Detail)
+                        .OrderBy(static detail => detail, StringComparer.Ordinal)
+                        .ToArray()))
+                .Where(static atom => atom.Subitems.Length > 0)
+                .OrderBy(static atom => atom.AtomId, StringComparer.Ordinal)
+                .ToArray();
+            var writer = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
+            writer.WriteLine($"# Echo Residual Summary — `{source.Key}`");
+            writer.WriteLine();
+            writer.WriteLine($"- unresolved_subitems: {atoms.Sum(static atom => atom.Subitems.Length)}");
+            writer.WriteLine($"- mother_residual_atom_ids: {atoms.Length}");
+            writer.WriteLine();
+            if (atoms.Length == 0)
+            {
+                writer.WriteLine("Mother residual atoms: none.");
+            }
+            else
+            {
+                writer.WriteLine("Mother residual atoms:");
+                writer.WriteLine();
+                foreach (var atom in atoms)
+                {
+                    writer.WriteLine($"- `{atom.AtomId}` ({atom.Subitems.Length})");
+                    foreach (var subitem in atom.Subitems)
+                    {
+                        writer.WriteLine($"  - `{subitem}`");
+                    }
+                }
+            }
+
+            shards.Add(
+                $"{ShardDirectory}{source.Key}.md",
+                EchoResidualBlock.RenderShard(source.Key, writer.ToString()));
+        }
+
+        return shards;
+    }
 
     internal static string Render(DigestionLedgerEvaluation evaluation)
     {
