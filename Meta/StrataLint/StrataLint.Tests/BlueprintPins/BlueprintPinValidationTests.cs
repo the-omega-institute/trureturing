@@ -34,6 +34,30 @@ public sealed class BlueprintPinValidationTests
     }
 
     [Fact]
+    public void PinManifestLoaderAcceptsOptionalSubdomain()
+    {
+        var json = JsonSerializer.Serialize(new
+        {
+            artifact = "lean",
+            anchors = Array.Empty<string>(),
+            domain = "Carrier",
+            generality = "G",
+            imports = Array.Empty<string>(),
+            module = "Probe",
+            plane = "F",
+            selector = "",
+            subdomain = "Algebra",
+            tag = "",
+            theory = "D5",
+        });
+
+        var loaded = Assert.IsType<BlueprintPinManifestLoadOutcome.Loaded>(
+            BlueprintPinManifestLoader.Load(Encoding.UTF8.GetBytes(json)));
+
+        Assert.Equal("Algebra", loaded.Manifest.RouteManifest.SubDomain);
+    }
+
+    [Fact]
     public void UnsupportedRetiredTheoryAnchorRejectsIssue460Pins()
     {
         var unsupportedAnchor = string.Concat("pz", "g/proposition/9.2");

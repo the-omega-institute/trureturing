@@ -317,7 +317,8 @@ public sealed class Gid : IEquatable<Gid>
     {
         var ordinary = parts.Length is 3 or 4
             && IsStratum(parts[0])
-            && parts[1..^1].All(CamelPattern.IsMatch);
+            && parts[1..^1].All(CamelPattern.IsMatch)
+            && (parts.Length == 3 || !string.Equals(parts[1], parts[2], StringComparison.Ordinal));
         var special = parts.Length == 2 && IsSpecialZone(parts[0]);
         if (!ordinary && !special)
         {

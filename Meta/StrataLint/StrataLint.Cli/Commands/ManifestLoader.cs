@@ -14,6 +14,8 @@ public static class ManifestLoader
         "artifact", "domain", "generality", "module", "plane", "selector", "tag", "theory",
     };
 
+    private const string OptionalSubdomainKey = "subdomain";
+
     public static ManifestLoadOutcome Load(ReadOnlySpan<byte> bytes)
     {
         try
@@ -21,7 +23,8 @@ public static class ManifestLoader
             var text = new UTF8Encoding(false, true).GetString(bytes);
             var fields = text.TrimStart().StartsWith('{') ? JsonFields(text) : YamlFields(text);
             var expected = RequiredKeys.ToHashSet(StringComparer.Ordinal);
-            if (fields.Count != expected.Count || fields.Keys.Any(key => !expected.Contains(key)))
+            if (fields.Keys.Any(key => !expected.Contains(key) && key != OptionalSubdomainKey)
+                || expected.Any(key => !fields.ContainsKey(key)))
             {
                 throw new FormatException("manifest keys must be exactly: " + string.Join(", ", RequiredKeys));
             }
@@ -34,7 +37,8 @@ public static class ManifestLoader
                 fields["generality"],
                 fields["selector"],
                 fields["artifact"],
-                fields["tag"]));
+                fields["tag"],
+                fields.GetValueOrDefault(OptionalSubdomainKey)));
         }
         catch (Exception exception) when (exception is DecoderFallbackException or JsonException or YamlException or FormatException)
         {

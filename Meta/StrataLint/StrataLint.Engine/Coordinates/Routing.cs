@@ -12,7 +12,8 @@ public sealed record ManifestSyntax(
     string Generality,
     string Selector,
     string Artifact,
-    string Tag);
+    string Tag,
+    string? SubDomain = null);
 
 public sealed class ValidatedManifest
 {
@@ -123,7 +124,7 @@ public static class RouteEngine
         ManifestSyntax syntax,
         bool blueprint)
     {
-        var coordinates = Coordinates(policy, syntax.Domain, syntax.Module);
+        var coordinates = Coordinates(policy, syntax.Domain, syntax.SubDomain, syntax.Module);
         if (!blueprint)
         {
             if (syntax.Artifact != "lean" || syntax.Tag.Length != 0)
@@ -191,7 +192,7 @@ public static class RouteEngine
         }
         else
         {
-            var routed = Coordinates(policy, syntax.Domain, syntax.Module);
+            var routed = Coordinates(policy, syntax.Domain, syntax.SubDomain, syntax.Module);
             scope = syntax.Domain.StartsWith("X_", StringComparison.Ordinal) ? "special" : "formal";
             coordinates = string.Join('/', routed.Parts);
             stratum = routed.Stratum;
@@ -264,6 +265,7 @@ public static class RouteEngine
     private static (ImmutableArray<string> Parts, Stratum? Stratum) Coordinates(
         ValidatedPolicy policy,
         string domain,
+        string? subDomain,
         string module)
     {
         if (!CamelPattern.IsMatch(module))
@@ -273,7 +275,22 @@ public static class RouteEngine
 
         if (domain is "X_Assumptions" or "X_Certificates" or "X_Frontier")
         {
+            if (!string.IsNullOrEmpty(subDomain))
+            {
+                throw new FormatException("special-zone route cannot have a subdomain");
+            }
+
             return (ImmutableArray.Create(domain, module), null);
+        }
+
+        if (!string.IsNullOrEmpty(subDomain) && !CamelPattern.IsMatch(subDomain))
+        {
+            throw new FormatException("subdomain must be CamelCase");
+        }
+
+        if (string.Equals(subDomain, domain, StringComparison.Ordinal))
+        {
+            throw new FormatException("subdomain must differ from domain");
         }
 
         var match = policy.Domains.FirstOrDefault(
@@ -283,7 +300,9 @@ public static class RouteEngine
             throw new FormatException("formal route requires a controlled domain");
         }
 
-        return (ImmutableArray.Create(match.Value.ToString(), domain, module), match.Value);
+        return string.IsNullOrEmpty(subDomain)
+            ? (ImmutableArray.Create(match.Value.ToString(), domain, module), match.Value)
+            : (ImmutableArray.Create(match.Value.ToString(), domain, subDomain, module), match.Value);
     }
 
     private static ImmutableArray<string> Skeleton(ManifestSyntax syntax, Gid gid) => syntax.Plane switch
