@@ -13,23 +13,33 @@ public sealed class DigestResidualSummaryTests
         {
             Entry("source-b", "atom-b", ("unresolved-subitem", "zeta"), ("other-gap", "ignored"), ("unresolved-subitem", "alpha")),
             Entry("spec-v1", "spec-settled", ("other-gap", "ignored")),
-            Entry("source-a", "atom-z", ("unresolved-subitem", "source-a-only")),
+            Entry("source-a", "atom-z", ("unresolved-subitem", "source-a-only"), ("unresolved-subitem", "alpha")),
             Entry("source-b", "atom-a", ("unresolved-subitem", "alpha")),
         };
         var expected = """
             # Echo Residual Summary
 
-            - unresolved_subitems: 4
+            - unresolved_subitems: 5
             - mother_residual_atom_ids: 3
+
+            ## cross-volume shared residues
+
+            - shared_residue_names: 1
+            - host_atoms: 3
+
+            Shared residue hosts:
+
+            - `alpha` (2 volumes, 3 host atoms): `source-a/atom-z`, `source-b/atom-a`, `source-b/atom-b`
 
             ## `source-a`
 
-            - unresolved_subitems: 1
+            - unresolved_subitems: 2
             - mother_residual_atom_ids: 1
 
             Mother residual atoms:
 
-            - `atom-z` (1)
+            - `atom-z` (2)
+              - `alpha`
               - `source-a-only`
 
             ## `source-b`
@@ -58,6 +68,30 @@ public sealed class DigestResidualSummaryTests
 
         Assert.Equal(expected, forward);
         Assert.Equal(expected, reverse);
+    }
+
+    [Fact]
+    public void RenderStatesWhenNoResidueIsSharedAcrossVolumes()
+    {
+        var entries = new[]
+        {
+            Entry("source-a", "atom-a", ("unresolved-subitem", "source-a-only")),
+            Entry("source-b", "atom-b", ("unresolved-subitem", "source-b-only")),
+        };
+
+        var summary = DigestResidualSummary.Render(new DigestionLedgerEvaluation([.. entries], []));
+
+        Assert.Contains(
+            """
+            ## cross-volume shared residues
+
+            - shared_residue_names: 0
+            - host_atoms: 0
+
+            Shared residue hosts: none.
+            """,
+            summary,
+            StringComparison.Ordinal);
     }
 
     private static DigestionEntryEvaluation Entry(
