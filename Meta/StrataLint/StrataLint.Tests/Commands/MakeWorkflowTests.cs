@@ -303,11 +303,17 @@ public sealed partial class MakeWorkflowTests
 
         Assert.Contains("uses: actions/cache/save@v4", admission, StringComparison.Ordinal);
         Assert.Contains("uses: actions/cache/restore@v4", workflow, StringComparison.Ordinal);
+        // 不变量是「两个 workflow 共用**同一个** key 字符串」,不是「只出现一次」——
+        // 证据:ingest 侧本来就带 .Distinct(),因为它 restore 与其它步骤可共用同一 key。
+        // admission 侧此前只有 save 一处,故省了 Distinct;现在它也 restore 同一个 key
+        // (关键路径复用报告),两侧遂对称。保留的判据仍是「distinct key 恰好一个且两侧相等」。
         var admissionCacheKey = Assert.Single(
-            admission.Split('\n'),
-            static line => line.TrimStart().StartsWith(
-                "key: stratalint-canonical-lean-report-v1-",
-                StringComparison.Ordinal));
+            admission.Split('\n')
+                .Where(static line => line.TrimStart().StartsWith(
+                    "key: stratalint-canonical-lean-report-v1-",
+                    StringComparison.Ordinal))
+                .Select(static line => line.Trim())
+                .Distinct());
         var ingestCacheKey = Assert.Single(
             workflow.Split('\n')
                 .Where(static line => line.TrimStart().StartsWith(
@@ -315,7 +321,7 @@ public sealed partial class MakeWorkflowTests
                     StringComparison.Ordinal))
                 .Select(static line => line.Trim())
                 .Distinct());
-        Assert.Equal(admissionCacheKey.Trim(), ingestCacheKey);
+        Assert.Equal(admissionCacheKey, ingestCacheKey);
 
         var producerIndex = workflow.IndexOf(
             "- name: Produce base canonical Lean report on cache miss",

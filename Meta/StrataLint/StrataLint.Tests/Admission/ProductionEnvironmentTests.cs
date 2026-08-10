@@ -570,7 +570,7 @@ internal sealed class FakeRepositoryGateway(
     public AdmissionTopologyOutcome InspectAdmissionTopology() =>
         throw new InvalidOperationException("topology should not be inspected");
 
-    public PreparedRepository Prepare(string? protectedBase) => new("baseline", changes);
+    public PreparedRepository Prepare(string? protectedBase) => new("baseline", "baseline", changes);
 
     public FrozenRevisionIdentity ResolveFrozenRevision(string revision)
     {

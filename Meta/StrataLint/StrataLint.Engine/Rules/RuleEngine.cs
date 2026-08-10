@@ -91,6 +91,7 @@ internal sealed class RuleEvaluationContext
     private RuleEvaluationContext(
         RepositorySnapshot current,
         RepositorySnapshot baseline,
+        RepositorySnapshot forkPoint,
         ValidatedPolicy policy,
         AcceptedLeanClosure lean,
         AcceptedLeanClosure baselineLean,
@@ -100,6 +101,7 @@ internal sealed class RuleEvaluationContext
     {
         Current = current;
         Baseline = baseline;
+        ForkPoint = forkPoint;
         Policy = policy;
         Lean = lean;
         BaselineLean = baselineLean;
@@ -111,6 +113,16 @@ internal sealed class RuleEvaluationContext
     internal RepositorySnapshot Current { get; }
 
     internal RepositorySnapshot Baseline { get; }
+
+    // 「旧侧」有两个语义,不可共用一棵树:
+    //   Baseline  —— 候选在扩展哪个**受保护状态**(= protected base);保守比较与 Lean
+    //                report 配对用它,因为 CI 正是从 pull_request.base.sha 产那份 report。
+    //   ForkPoint —— 候选**自己出发的那一点**(= merge-base);append-only 保留性检查用它,
+    //                问的是「候选有没有删掉它出发时就有的东西」。
+    // 用 Baseline 回答第二个问题,会把 dev 在候选分叉之后追加的条目读成候选的删除
+    // (PR #1150 实测:`Golden/Frozen/accepted/` 的 4 个证书;近 60 次合并中 63% 会追加)。
+    // 默认等于 Baseline —— 那正是引入本字段之前的行为,故对既有调用点零语义变化。
+    internal RepositorySnapshot ForkPoint { get; }
 
     internal ValidatedPolicy Policy { get; }
 
@@ -132,7 +144,8 @@ internal sealed class RuleEvaluationContext
         AcceptedLeanClosure baselineLean,
         RawChangeSet changes,
         MetaClear metaClear,
-        VerifiedScribeEmissions? verifiedScribeEmissions = null) =>
+        VerifiedScribeEmissions? verifiedScribeEmissions = null,
+        RepositorySnapshot? forkPoint = null) =>
         Create(
             current,
             baseline,
@@ -141,7 +154,8 @@ internal sealed class RuleEvaluationContext
             baselineLean,
             changes,
             MetaEvaluationProfile.ForClear(metaClear),
-            verifiedScribeEmissions);
+            verifiedScribeEmissions,
+            forkPoint);
 
     internal static RuleEvaluationContext Create(
         RepositorySnapshot current,
@@ -151,10 +165,12 @@ internal sealed class RuleEvaluationContext
         AcceptedLeanClosure baselineLean,
         RawChangeSet changes,
         MetaEvaluationProfile metaEvaluation,
-        VerifiedScribeEmissions? verifiedScribeEmissions = null) =>
+        VerifiedScribeEmissions? verifiedScribeEmissions = null,
+        RepositorySnapshot? forkPoint = null) =>
         new(
             current,
             baseline,
+            forkPoint ?? baseline,
             policy,
             lean,
             baselineLean,
