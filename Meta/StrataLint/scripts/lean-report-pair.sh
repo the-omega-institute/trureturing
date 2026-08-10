@@ -10,6 +10,8 @@ CANDIDATE_OUTPUT=""
 BASELINE_ROOT=""
 BASELINE_OUTPUT=""
 SINGLE=0
+MODULE_CACHE_REPORT=""
+MODULE_CACHE_MANIFEST=""
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 SUPERVISOR="$SCRIPT_DIR/report/report-supervisor.sh"
 INPUT_HELPER="$SCRIPT_DIR/report/lean-report-input.sh"
@@ -26,6 +28,8 @@ while [[ $# -gt 0 ]]; do
     --baseline-root) BASELINE_ROOT="$2"; shift 2 ;;
     --baseline-output) BASELINE_OUTPUT="$2"; shift 2 ;;
     --single) SINGLE=1; shift ;;
+    --module-cache-report) MODULE_CACHE_REPORT="$2"; shift 2 ;;
+    --module-cache-manifest) MODULE_CACHE_MANIFEST="$2"; shift 2 ;;
     *) echo "lean-report-pair: unknown argument '$1'" >&2; exit 2 ;;
   esac
 done
@@ -286,8 +290,41 @@ materialize_report() {
     local cache_rc=$?
     [[ "$cache_rc" == "1" ]] || return "$cache_rc"
   fi
-  "$SUPERVISOR" --role "lean-producer-$side" --lean-slot -- \
-    env LAKE_BIN="$LAKE_BIN" "$PRODUCER" --repository "$root" --output "$output"
+  if [[ -s "$MODULE_CACHE_REPORT" && -s "$MODULE_CACHE_MANIFEST" ]]; then
+    local current_manifest="$TMP_ROOT/$side-modules.tsv"
+    local reusable="$TMP_ROOT/$side-reusable.modules"
+    local stale="$TMP_ROOT/$side-stale.modules"
+    local fresh="$TMP_ROOT/$side-fresh.json"
+    "$INPUT_HELPER" manifest --repository "$root" > "$current_manifest"
+    python3 - "$current_manifest" "$MODULE_CACHE_MANIFEST" "$MODULE_CACHE_REPORT" "$reusable" "$stale" <<'PY'
+import json, pathlib, sys
+current, cached, report, reusable, stale = map(pathlib.Path, sys.argv[1:])
+def read_manifest(path):
+    return {parts[0]: parts[2] for line in path.read_text().splitlines() if len(parts := line.split("\t")) == 3}
+current_keys, cached_keys = read_manifest(current), read_manifest(cached)
+reported = {entry.get("module") for entry in json.loads(report.read_text()).get("modules", [])}
+hits = [module for module in current_keys if cached_keys.get(module) == current_keys[module] and module in reported]
+misses = [module for module in current_keys if module not in hits]
+reusable.write_text("".join(module + "\n" for module in hits))
+stale.write_text("".join(module + "\n" for module in misses))
+PY
+    if [[ -s "$stale" ]]; then
+      "$SUPERVISOR" --role "lean-producer-$side" --lean-slot -- \
+        env LAKE_BIN="$LAKE_BIN" "$PRODUCER" --repository "$root" --output "$fresh" --modules-file "$stale"
+    else
+      mkdir -p "${fresh}.logs"
+      printf '%s\n' '{"modules": [], "schema": "stratalint-raw-lean-report-v1"}' > "$fresh"
+    fi
+    "$SCRIPT_DIR/report/lean-report-merge.sh" --cached "$MODULE_CACHE_REPORT" --fresh "$fresh" \
+      --cached-modules-file "$reusable" --output "$output"
+    rm -rf "${output}.logs"
+    if [[ -d "${fresh}.logs" ]]; then cp -R "${fresh}.logs" "${output}.logs"; else mkdir -p "${output}.logs"; fi
+    printf 'per-module cache reused=%s produced=%s\n' "$(awk 'END {print NR}' "$reusable")" "$(awk 'END {print NR}' "$stale")" > "${output}.logs/per-module-cache.log"
+    write_sidecar "$output" "$(hash_file "$output")"
+  else
+    "$SUPERVISOR" --role "lean-producer-$side" --lean-slot -- \
+      env LAKE_BIN="$LAKE_BIN" "$PRODUCER" --repository "$root" --output "$output"
+  fi
   verify_report "$output"
   LAST_REPORT_MODE="produced"
 }

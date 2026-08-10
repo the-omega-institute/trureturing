@@ -234,17 +234,19 @@ jobs:
       # 安全性不靠这一步:下游 `RawLeanReportArtifact.ReadFile` 会把报告里每个模块的
       # source_sha256 与树逐一对账,不符即抛 INFRASTRUCTURE_FAILURE。一份错的或陈旧的
       # 报告不可能被静默接受,最坏是红,不是假绿。
-      - name: Restore canonical Lean report by input address
+      - name: Restore canonical Lean report modules
         id: report-cache
-        if: steps.lean-report-input.outputs.pair-reusable == 'true' && steps.lean-report-input.outputs.producer-consistent == 'true'
+        if: steps.lean-report-input.outputs.producer-consistent == 'true'
         uses: actions/cache/restore@v4
         with:
           path: .canonical-lean-report-cache
-          key: stratalint-canonical-lean-report-v1-${{ steps.lean-report-input.outputs.address }}
+          key: stratalint-canonical-lean-report-v2-${{ steps.lean-report-input.outputs.address }}
+          restore-keys: |
+            stratalint-canonical-lean-report-v2-
 
       - name: Serve both canonical Lean reports from the cached address
         id: report-reuse
-        if: steps.report-cache.outputs.cache-hit == 'true'
+        if: steps.report-cache.outputs.cache-hit == 'true' && steps.lean-report-input.outputs.pair-reusable == 'true'
         # 这一步失败必须**回落**到完整生产路径,而不是让整个 job 红:缓存是加速,不是权威。
         # 下面四个重活步骤的守卫是 `outcome != 'success'`,故失败与跳过都会走原路。
         continue-on-error: true
@@ -343,13 +345,20 @@ jobs:
           fi
           reports="$RUNNER_TEMP/raw-lean-reports"
           mkdir -p "$reports"
+          module_cache_args=()
+          cache_report="$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json"
+          cache_manifest="$GITHUB_WORKSPACE/.canonical-lean-report-cache/modules.tsv"
+          if [[ -s "$cache_report" && -s "$cache_manifest" ]]; then
+            module_cache_args+=(--module-cache-report "$cache_report" --module-cache-manifest "$cache_manifest")
+          fi
           "$pair_producer" \
             --producer "$producer" \
             --lake-bin "$HOME/.elan/bin/lake" \
             --candidate-root "$GITHUB_WORKSPACE/candidate" \
             --candidate-output "$reports/candidate-lean-report.json" \
             --baseline-root "$GITHUB_WORKSPACE/baseline" \
-            --baseline-output "$reports/baseline-lean-report.json"
+            --baseline-output "$reports/baseline-lean-report.json" \
+            "${module_cache_args[@]}"
 
       - name: Reconcile pinned statement projections with live Lean report
         shell: bash
@@ -360,6 +369,9 @@ jobs:
           report="$RUNNER_TEMP/raw-lean-reports/candidate-lean-report.json"
           target="$GITHUB_WORKSPACE/candidate/.lake/build/stratalint/raw-lean-report.json"
           mkdir -p "$(dirname "$target")"
+          mkdir -p "$GITHUB_WORKSPACE/.canonical-lean-report-cache"
+          "$GITHUB_WORKSPACE/baseline/Meta/StrataLint/scripts/report/lean-report-input.sh" manifest \
+            --repository "$GITHUB_WORKSPACE/candidate" > "$GITHUB_WORKSPACE/.canonical-lean-report-cache/modules.tsv"
           cp "$report" "$target"
           dotnet test candidate/Meta/StrataLint/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj \
             --configuration Release \
@@ -398,7 +410,7 @@ jobs:
         uses: actions/cache/save@v4
         with:
           path: .canonical-lean-report-cache
-          key: stratalint-canonical-lean-report-v1-${{ steps.lean-report-input.outputs.address }}
+          key: stratalint-canonical-lean-report-v2-${{ steps.lean-report-input.outputs.address }}
 
       - name: Upload raw Lean reports and producer logs
         if: always()

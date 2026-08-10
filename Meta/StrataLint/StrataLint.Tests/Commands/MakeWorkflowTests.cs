@@ -294,7 +294,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(2, guarded.Length);
         Assert.Contains(
             guarded,
-            static line => line.Contains("pair-reusable == 'true'", StringComparison.Ordinal));
+            static line => !line.Contains("refs/heads/dev", StringComparison.Ordinal));
         Assert.Contains(
             guarded,
             static line => line.Contains("refs/heads/dev", StringComparison.Ordinal));
@@ -339,14 +339,14 @@ public sealed partial class MakeWorkflowTests
         var admissionCacheKey = Assert.Single(
             admission.Split('\n')
                 .Where(static line => line.TrimStart().StartsWith(
-                    "key: stratalint-canonical-lean-report-v1-",
+                    "key: stratalint-canonical-lean-report-v2-",
                     StringComparison.Ordinal))
                 .Select(static line => line.Trim())
                 .Distinct());
         var ingestCacheKey = Assert.Single(
             workflow.Split('\n')
                 .Where(static line => line.TrimStart().StartsWith(
-                    "key: stratalint-canonical-lean-report-v1-",
+                    "key: stratalint-canonical-lean-report-v2-",
                     StringComparison.Ordinal))
                 .Select(static line => line.Trim())
                 .Distinct());
@@ -367,7 +367,7 @@ public sealed partial class MakeWorkflowTests
             workflow[producerIndex..producerEndIndex],
             StringComparison.Ordinal);
         Assert.Single(Regex.Matches(workflow, "id: lean-report-cache"));
-        Assert.Single(Regex.Matches(workflow, "key: stratalint-canonical-lean-report-v1-"));
+        Assert.Single(Regex.Matches(workflow, "key: stratalint-canonical-lean-report-v2-"));
         Assert.Contains("steps.lean-report-cache.outputs.cache-hit != 'true'", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("sleep " + "360", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("lookup-only: true", workflow, StringComparison.Ordinal);
