@@ -6,12 +6,19 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
-    public void EchoVerifyEmitsTheResidualProjection()
+    public void EchoVerifyWritesOnlyCanonicalShardDirectoryAndConvergesMarkdownFiles()
     {
+        using var temporary = new TemporaryDirectory();
+        var outside = Path.Combine(temporary.Path, "outside.md");
+        File.WriteAllText(outside, "keep");
+        var output = Path.Combine(temporary.Path, "Generated", "echo-residuals");
+        Directory.CreateDirectory(output);
+        File.WriteAllText(Path.Combine(output, "stale.md"), "remove");
+        File.WriteAllText(Path.Combine(output, "keep.txt"), "keep");
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         var environment = new ProductionCliEnvironment(
-            "/repo",
+            temporary.Path,
             new FakeRepositoryGateway(
                 RawChangeSet.Create([RuleFixture.RingPath]),
                 Snapshot(fixture.Files),
@@ -26,5 +33,18 @@ public sealed partial class ProductionEnvironmentTests
             "<!-- echo-residual-summary:v3 residual=sha256:",
             emitted.Output,
             StringComparison.Ordinal);
+        Assert.True(File.Exists(outside));
+        Assert.True(File.Exists(Path.Combine(output, "keep.txt")));
+        Assert.False(File.Exists(Path.Combine(output, "stale.md")));
+        var expectedFileNames = BackfillInventoryLoader.Load(fixture.Files["Meta/BACKFILL.yaml"])
+            .RequireDigestionSources()
+            .Select(static source => source.SourceId + ".md")
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+        var actualFileNames = Directory.GetFiles(output, "*.md", SearchOption.TopDirectoryOnly)
+            .Select(Path.GetFileName)
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+        Assert.Equal(expectedFileNames, actualFileNames);
     }
 }

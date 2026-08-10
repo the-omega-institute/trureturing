@@ -8,4 +8,4 @@ Prohibitions: do not cross the assumptions gate or claim novelty before source s
 
 Output: motivation GIDs, exact statement, falsifier, evidence, source search, and triage class.
 
-Method requirement: before publishing a theory batch, run `make echo-residual-summary BASE=origin/dev` and replace `Generated/echo-residual-summary.md` with its complete output bytes. Never hand-count or hand-edit residual totals, mother residual `atom_id` lists, or `unresolved-subitem` lists; rerun the machine projection after every Lean, Scribe, theory-source, or digestion-ledger change.
+Method: when a human-readable refresh is useful, run the producer to generate `Generated/echo-residuals/<source_id>.md` shards. Tracked snapshots may be stale and do not block publication; never require writing a global aggregate file or hand-edit generated residual data.

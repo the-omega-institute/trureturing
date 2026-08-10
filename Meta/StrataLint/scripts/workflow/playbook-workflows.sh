@@ -5,7 +5,6 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../../.." && pwd -P)"
 PROJECT="Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj"
 REPORT=".lake/build/stratalint/raw-lean-report.json"
 FROZEN_LEDGER="Meta/StrataLint/Golden/Frozen/accepted"
-ECHO_PROJECTION="Generated/echo-residual-summary.md"
 COMMAND="${1:-}"
 BASE="${2:-origin/dev}"
 ATOM_ID="${3:-}"
@@ -56,26 +55,9 @@ require_transaction_arguments() {
   fi
 }
 
-refresh_echo_projection() {
-  local temporary
-  mkdir -p "$(dirname "$ECHO_PROJECTION")"
-  temporary="$(mktemp "${ECHO_PROJECTION}.tmp.XXXXXX")"
-  printf 'PLAYBOOK_STEP command=%s detail=echo-residual-summary-atomic\n' "$COMMAND" >&2
-  if make echo-residual-summary BASE="$BASE" >"$temporary"; then
-    mv "$temporary" "$ECHO_PROJECTION"
-    printf 'PLAYBOOK_WRITE path=%s mode=temporary-move\n' "$ECHO_PROJECTION" >&2
-  else
-    local status=$?
-    rm -f "$temporary"
-    printf 'PLAYBOOK_FAILED step=echo-residual-summary target-preserved=%s exit=%d\n' \
-      "$ECHO_PROJECTION" "$status" >&2
-    return "$status"
-  fi
-}
-
 cleanup_transaction_temporaries() {
   local temporary
-  for temporary in "${ECHO_PROJECTION}.tmp."* "${RECEIPT_PATH}.tmp."*; do
+  for temporary in "${RECEIPT_PATH}.tmp."*; do
     [[ -e "$temporary" ]] || continue
     printf 'PLAYBOOK_CLEANUP command=%s path=%s reason=interrupted-transaction\n' \
       "$COMMAND" "$temporary" >&2
@@ -440,14 +422,12 @@ case "$COMMAND" in
       [[ "$status" -eq 1 ]] || exit "$status"
       step lean-report make lean-report
       step emit make emit
-      refresh_echo_projection
       commit_phase_a_if_needed
     fi
     prepare_formalization_receipt
     freeze_module_if_needed
     install_prepared_formalization_receipt
     step lean-report-refresh make lean-report
-    refresh_echo_projection
     step emit-post-receipt make emit
     commit_all_if_needed "formalize: record deposit receipt for $GID"
     ;;
@@ -460,7 +440,6 @@ case "$COMMAND" in
     step align-scribe-receipt run_cli \
       align-scribe-receipt --atom-id "$ATOM_ID" --gid "$GID"
     step emit-post-alignment make emit
-    refresh_echo_projection
     commit_all_if_needed "formalize: cover $ATOM_ID with $GID"
     ;;
   *)
