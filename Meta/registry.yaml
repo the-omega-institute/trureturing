@@ -40,6 +40,7 @@ governance_documents:
   - "docs/develop/theory/OBSERVER-QUANTUM.md"
   - "docs/develop/theory/PERIODIC_TREE.md"
   - "docs/develop/theory/PERIODIC_TREE_registry.jsonl"
+  - "docs/develop/theory/PRICED_INTERFACE_PAPER.md"
   - "docs/develop/theory/PZG_BEDC.md"
 agent_files:
   - "CONTEXT.md"
