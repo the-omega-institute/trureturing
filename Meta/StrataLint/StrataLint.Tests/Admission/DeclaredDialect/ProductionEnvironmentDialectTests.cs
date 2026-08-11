@@ -32,8 +32,8 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal("proposition/1.1", oldAtom.AstPath);
 
         var ledger = IngestLedger(atomizerId, oldAtom);
-        fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
-        fixture.Baseline[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
+        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
+        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
         fixture.Baseline[TheoryAtomizerDataLoader.DataPath] =
             fixture.Files[TheoryAtomizerDataLoader.DataPath];
         InstallLedger(fixture, ledger, oldAtom);

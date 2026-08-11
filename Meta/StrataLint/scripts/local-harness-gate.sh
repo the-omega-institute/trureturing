@@ -267,7 +267,7 @@ if [[ "$gate_rc" -ne 0 && "$gate_rc" -ne 3 ]]; then admission_status="failed"; f
 record_timing local admission "$admission_status" "$(( $(date +%s) - admission_started ))"
 
 if [[ $gate_rc -eq 3 ]]; then
-  printf '%s\n' "local-harness-gate: certified SL-022 conservative extension" >&2
+  printf '%s\n' "local-harness-gate: protected-surface change (SL-022)" >&2
   exit 0
 fi
 exit "$gate_rc"

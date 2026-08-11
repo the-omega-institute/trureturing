@@ -14,6 +14,8 @@ internal static class FileMapPolicy
     private const string RunLocalTrackedMessage =
         "run-local artifact must be removed from the Git index; "
         + "the FILEMAP declaration must not be changed to make this finding go away";
+    private const string TestRegistryPath =
+        "Meta/StrataLint/StrataLint.Tests/Rules/TestRegistry.cs";
     private const string BackfillLoaderPath =
         "Meta/StrataLint/StrataLint.Engine/Rules/Backfill/BackfillInventoryLoader.cs";
     private const string FileMapLoaderPath =
@@ -30,12 +32,8 @@ internal static class FileMapPolicy
         "Meta/StrataLint/StrataLint.Engine/Snapshot/RepositorySnapshot.cs";
     private const string StatementProjectionFixtureLoaderPath =
         "Meta/StrataLint/StrataLint.Scribe/Projection/StatementProjection.cs";
-    private const string TomlGoldenLoaderPath =
-        "Meta/StrataLint/StrataLint.Cli/Golden/TomlGoldenLoader.cs";
     private const string TheoryAtomizerDataLoaderPath =
         "Meta/StrataLint/StrataLint.Engine/Digestion/Configuration/TheoryAtomizerDataLoader.cs";
-    private const string GoldenFixtureRegistryLoaderPath =
-        "Meta/StrataLint/StrataLint.Cli/Golden/GoldenFixtureRegistryLoader.cs";
     private const string GateAuthorityRootCatalogLoaderPath =
         "Meta/StrataLint/StrataLint.Cli/GateAuthority/GateAuthorityRootCatalogLoader.cs";
     private const string PerfBudgetLoaderPath =
@@ -56,7 +54,6 @@ internal static class FileMapPolicy
         {
             ["BackfillInventoryLoader"] = BackfillLoaderPath,
             ["FileMapLoader"] = FileMapLoaderPath,
-            ["GoldenFixtureRegistryLoader"] = GoldenFixtureRegistryLoaderPath,
             ["GateAuthorityRootCatalogLoader"] = GateAuthorityRootCatalogLoaderPath,
             ["LibraryNoteCatalog"] = LibraryNoteCatalogPath,
             ["PapergenCommand"] = PapergenCommandPath,
@@ -65,7 +62,7 @@ internal static class FileMapPolicy
             ["ScribeCompiler"] = ScribeProjectPath,
             ["SnapshotDecoder"] = SnapshotDecoderPath,
             ["StatementProjectionFixtureLoader"] = StatementProjectionFixtureLoaderPath,
-            ["TomlGoldenLoader"] = TomlGoldenLoaderPath,
+            ["TestRegistry"] = TestRegistryPath,
             ["TheoryAtomizerDataLoader"] = TheoryAtomizerDataLoaderPath,
             ["ValuesKernelDataLoader"] = ValuesKernelLoaderPath,
             ["YamlSubsetParser"] = YamlSubsetParserPath,

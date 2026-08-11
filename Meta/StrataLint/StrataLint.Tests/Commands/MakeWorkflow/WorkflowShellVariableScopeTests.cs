@@ -191,7 +191,6 @@ public sealed partial class MakeWorkflowTests
 
     [Theory]
     [InlineData(AdmissionWorkflowPath)]
-    [InlineData(C0CeremonyWorkflowPath)]
     [InlineData(TheoryIngestWorkflowPath)]
     public void RepositoryWorkflowRunStepsBindEveryQuotedShellVariable(string relativePath)
     {

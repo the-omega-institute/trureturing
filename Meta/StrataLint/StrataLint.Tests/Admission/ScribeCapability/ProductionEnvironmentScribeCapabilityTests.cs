@@ -81,10 +81,10 @@ public sealed partial class ProductionEnvironmentTests
         var attestation = Encoding.UTF8.GetString(ScribeEmissionAttestation.Write([record]).AsSpan());
         var source = Encoding.UTF8.GetString(sourceBytes);
         var cas = Encoding.UTF8.GetString(captured.Bytes.AsSpan());
-        fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = source;
-        fixture.Baseline[GoldenCorpus.FixtureDigestionSourcePath] = source;
-        fixture.Files.Remove(GoldenCorpus.FixtureCasPath);
-        fixture.Baseline.Remove(GoldenCorpus.FixtureCasPath);
+        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = source;
+        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = source;
+        fixture.Files.Remove(RuleFixture.FixtureCasPath);
+        fixture.Baseline.Remove(RuleFixture.FixtureCasPath);
         fixture.Files[captured.RelativePath] = cas;
         fixture.Baseline[captured.RelativePath] = cas;
         fixture.Files[BackfillInventoryLoader.RelativePath] = ledger;

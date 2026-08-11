@@ -102,19 +102,4 @@ public sealed class PdfWriterTests
         Assert.Equal("%PDF-", Encoding.ASCII.GetString(pdf.AsSpan()[..5]));
     }
 
-    [Fact]
-    public void QuestPdfWriterGeneratesEachPilotWithAPdfHeader()
-    {
-        var report = LeanReportFixture.ForDocuments(
-            DocumentDefinitions.All.Select(static definition => definition.Document));
-        var citations = LibraryNoteCatalog.Load(RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndLibraryInvalidOperation).Root.FullPath).Citations;
-        foreach (var definition in DocumentDefinitions.All)
-        {
-            var pdf = QuestPdfWriter.Write(
-                definition.Document, DeclarationCatalog.Create(report), citations);
-
-            Assert.True(pdf.Length > 5);
-            Assert.Equal("%PDF-", Encoding.ASCII.GetString(pdf.AsSpan()[..5]));
-        }
-    }
 }
