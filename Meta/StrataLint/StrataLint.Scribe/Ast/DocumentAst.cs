@@ -150,8 +150,13 @@ public abstract record DocumentBlock
 
         public DescribeId Id { get; }
 
-        public DescribeKind Kind => kind ?? throw new InvalidOperationException(
-            "A report-derived Describe has no narrative kind until its declaration catalog is resolved.");
+        public DescribeKind Kind => kind ?? throw new InvalidOperationException(KindSource switch
+        {
+            DescribeKindSource.ReportDerived derived =>
+                $"Report-derived Describe '{Id.Value}' for declaration '{derived.Handle.Value}' "
+                + "has no narrative kind until its declaration catalog is resolved.",
+            _ => $"Describe '{Id.Value}' has no narrative kind.",
+        });
 
         internal DescribeKindSource KindSource { get; }
 

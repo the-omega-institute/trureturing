@@ -180,22 +180,58 @@ public sealed class ReportDerivedDeclarationTests
     }
 
     [Fact]
-    public void Writers_accept_a_catalog_but_never_a_lean_report()
+    public void Unresolved_kind_error_identifies_the_describe_and_declaration()
     {
-        var writerMethods = typeof(CanonicalMarkdownWriter).Assembly.ExportedTypes
-            .SelectMany(static type => type.GetMethods(BindingFlags.Public | BindingFlags.Static))
-            .Where(static method => method.DeclaringType == typeof(DocumentGraphExportProjection)
-                || method.DeclaringType?.Name.EndsWith("Writer", StringComparison.Ordinal) == true)
+        var describe = Describe.Lean(
+            DescribeId.Create("claim"), DeclarationHandle.Create(Gid),
+            DefinitionDsl.H("Claim"), AssessedProvenance.FromRepo(),
+            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("Narrative"))));
+
+        var exception = Assert.Throws<InvalidOperationException>(() => describe.Kind);
+
+        Assert.Contains("Describe 'claim'", exception.Message, StringComparison.Ordinal);
+        Assert.Contains(Gid, exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Only_explicit_report_parsing_boundaries_accept_a_lean_report()
+    {
+        var scribeAssembly = typeof(DeclarationCatalog).Assembly;
+        var publicMembers = scribeAssembly.ExportedTypes
+            .SelectMany(static type => type
+                .GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance)
+                .Cast<MethodBase>()
+                .Concat(type.GetConstructors(BindingFlags.Public | BindingFlags.Instance)))
+            .Distinct()
+            .Where(static member => MemberTouchesLeanReport(member))
             .ToArray();
 
-        Assert.NotEmpty(writerMethods);
-        foreach (var writerMethod in writerMethods)
+        var parsingBoundaries = new MethodBase[]
         {
-            var parameters = writerMethod.GetParameters()
-                .Select(static parameter => parameter.ParameterType).ToArray();
-            Assert.DoesNotContain(typeof(LeanAxiomReport), parameters);
-        }
+            // Converts the raw compiled-artifact report into the governed declaration catalog.
+            typeof(DeclarationCatalog).GetMethod(nameof(DeclarationCatalog.Create))!,
+            // Legacy reference resolution turns one report entry into a verified declaration.
+            typeof(LeanReferenceResolver).GetMethod(nameof(LeanReferenceResolver.Resolve))!,
+            // Graph construction alone needs raw module imports as well as declaration resolution.
+            typeof(DocumentGraphAssembler).GetMethod(nameof(DocumentGraphAssembler.Assemble))!,
+        };
+
+        Assert.Equal(
+            parsingBoundaries.OrderBy(MemberSignature),
+            publicMembers.OrderBy(MemberSignature));
     }
+
+    private static bool MemberTouchesLeanReport(MethodBase member) =>
+        member.GetParameters().Any(static parameter => TypeTouchesLeanReport(parameter.ParameterType))
+        || member is MethodInfo method && TypeTouchesLeanReport(method.ReturnType);
+
+    private static bool TypeTouchesLeanReport(Type type) =>
+        type == typeof(LeanAxiomReport)
+        || type.HasElementType && TypeTouchesLeanReport(type.GetElementType()!)
+        || type.IsGenericType && type.GetGenericArguments().Any(TypeTouchesLeanReport);
+
+    private static string MemberSignature(MethodBase member) =>
+        $"{member.DeclaringType!.FullName}.{member.Name}({string.Join(",", member.GetParameters().Select(static parameter => parameter.ParameterType.FullName))})";
 
     [Fact]
     public void Migrated_joint_coordinates_markdown_matches_frozen_utf8_bytes()

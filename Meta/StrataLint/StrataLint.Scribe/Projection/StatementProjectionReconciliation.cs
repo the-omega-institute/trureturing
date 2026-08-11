@@ -30,10 +30,11 @@ public static class StatementProjectionReconciliation
                 [])));
     }
 
-    public static void Verify(string repositoryRoot, LeanAxiomReport report)
+    public static void Verify(string repositoryRoot, DeclarationCatalog catalog)
     {
-        ArgumentNullException.ThrowIfNull(report);
-        Verify(repositoryRoot, report.Files.Values.SelectMany(static file => file.Declarations));
+        ArgumentNullException.ThrowIfNull(catalog);
+        Verify(repositoryRoot, catalog.SourceReport.Files.Values
+            .SelectMany(static file => file.Declarations));
     }
 
     private static void Verify(string repositoryRoot, IEnumerable<LeanDeclaration> declarations)
