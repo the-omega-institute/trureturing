@@ -6,22 +6,19 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Dynamics;
 internal sealed class ProfiniteCharacterDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() =>
-        DocumentDefinition.Create(ScribeDocument.Create(
-            Header(
-                "D5/S1/Dynamics/ProfiniteCharacter",
-                "Continuous profinite-integer characters factor through a finite residue coordinate."),
+        DocumentDefinition.Create(ScribeNode.Create(
+            "Continuous profinite-integer characters factor through a finite residue coordinate.",
             H("Continuous Characters of the Profinite Integers"),
             Blocks(
-                DocumentBlock.Describe.Theorem(
+                                Describe.Lean(
                     DescribeId.Create("continuous-character-factors-through-residue"),
+                    DeclarationHandle.Create(
+                        "D5/S1/Dynamics/ProfiniteCharacter.continuous_character_factors_through_residue"),
                     H("Every continuous character has finite level"),
-                    LeanTheorem(
-                        "D5/S1/Dynamics/ProfiniteCharacter."
-                        + "continuous_character_factors_through_residue"),
-                    Call(
+                    StatementSource.FromAuthor(Call(
                         "FactorsThroughFiniteResidue",
-                        StrataLint.Scribe.FormulaDsl.Id("chi")),
-                    DescribeProvenance.RepoDerived(),
+                        StrataLint.Scribe.FormulaDsl.Id("chi"))),
+                    AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text(
                             "A basic neighborhood of zero constrains finitely many residue "
@@ -35,5 +32,6 @@ internal sealed class ProfiniteCharacterDocument : IScribeDocumentDefinition
                             + "one. The pinned library supplies the no-small-subgroup lemma for "
                             + "the circle, the classification of finite-order circle points, "
                             + "and standard finite cyclic characters. It does not supply the "
-                            + "profinite finite-level factorization proved here.")))))));
+                            + "profinite finite-level factorization proved here."))),
+                    DescribeRole.Theorem))));
 }

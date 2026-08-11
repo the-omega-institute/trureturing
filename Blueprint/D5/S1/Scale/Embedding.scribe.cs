@@ -15,10 +15,8 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
         var embedded = Call("embedding", x);
         var conjugate = Call("conj", x);
 
-        return DocumentDefinition.Create(ScribeDocument.Create(
-            Header(
-                "D5/S1/Scale/Embedding",
-                "The real embedding of golden integers is an injective ring homomorphism."),
+        return DocumentDefinition.Create(ScribeNode.Create(
+            "The real embedding of golden integers is an injective ring homomorphism.",
             H("Golden Real Embedding"),
             Blocks(
                 Paragraph(
@@ -26,16 +24,16 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
                     Text(" sends the golden integer "),
                     Math(coordinates),
                     Text(" to the real number with the same coordinate formula.")),
-                DocumentBlock.Describe.Proposition(
+                                Describe.Lean(
                     DescribeId.Create("coordinate-formula"),
+                    DeclarationHandle.Create(
+                        "D5/S1/Scale/Embedding.embedding_apply"),
                     H("Coordinate formula"),
-
-                        LeanTheorem("D5/S1/Scale/Embedding.embedding_apply"),
-                    In(Seq(Forall, Sp, F.Id("x"), Sp, InMacro, Sp, Operatorname, Grp(F.Id("GoldenInt")), Comma, Esc, Operatorname, Grp(F.Id("embedding")), Open, F.Id("x"), Close, Eq, F.Id("x"), Dot, F.Id("a"), Plus, F.Id("x"), Dot, F.Id("b"), Varphi)),
-                    DescribeProvenance.RepoDerived(),
+                    StatementSource.FromAuthor(In(Seq(Forall, Sp, F.Id("x"), Sp, InMacro, Sp, Operatorname, Grp(F.Id("GoldenInt")), Comma, Esc, Operatorname, Grp(F.Id("embedding")), Open, F.Id("x"), Close, Eq, F.Id("x"), Dot, F.Id("a"), Plus, F.Id("x"), Dot, F.Id("b"), Varphi))),
+                    AssessedProvenance.FromRepo(),
                     Blocks(new DocumentBlock.DisplayFormula(
-                        Equal(Call("embedding", coordinates), coordinates)))
-                ),
+                        Equal(Call("embedding", coordinates), coordinates))),
+                    DescribeRole.Proposition),
                 new DocumentBlock.Section(
                     H("Quadratic relation"),
                     Blocks(
@@ -53,13 +51,13 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
                                 Subtract(Num(1), new Formula.Phi()))),
                         new DocumentBlock.DisplayFormula(
                             new Formula.SetLiteral([new Formula.Phi(), new Formula.Psi()])))),
-                DocumentBlock.Describe.Theorem(
+                                Describe.Lean(
                     DescribeId.Create("injectivity"),
+                    DeclarationHandle.Create(
+                        "D5/S1/Scale/Embedding.embedding_injective"),
                     H("Injectivity"),
-
-                        LeanTheorem("D5/S1/Scale/Embedding.embedding_injective"),
-                    In(Seq(Forall, Sp, F.Id("x"), Comma, F.Id("y"), Sp, InMacro, Sp, Operatorname, Grp(F.Id("GoldenInt")), Comma, Esc, Operatorname, Grp(F.Id("embedding")), Open, F.Id("x"), Close, Eq, Operatorname, Grp(F.Id("embedding")), Open, F.Id("y"), Close, Sp, Rightarrow, Sp, F.Id("x"), Eq, F.Id("y"))),
-                    DescribeProvenance.RepoDerived(),
+                    StatementSource.FromAuthor(In(Seq(Forall, Sp, F.Id("x"), Comma, F.Id("y"), Sp, InMacro, Sp, Operatorname, Grp(F.Id("GoldenInt")), Comma, Esc, Operatorname, Grp(F.Id("embedding")), Open, F.Id("x"), Close, Eq, Operatorname, Grp(F.Id("embedding")), Open, F.Id("y"), Close, Sp, Rightarrow, Sp, F.Id("x"), Eq, F.Id("y")))),
+                    AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(
                             Text("A coordinate collision with "),
@@ -68,30 +66,30 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
                         new DocumentBlock.DisplayFormula(
                             Equal(
                                 new Formula.Phi(),
-                                new Formula.Fraction(new Formula.Negate(a), b))))
-                ),
+                                new Formula.Fraction(new Formula.Negate(a), b)))),
+                    DescribeRole.Theorem),
                 new DocumentBlock.Section(
                     H("Norm recovery"),
                     Blocks(
-                        DocumentBlock.Describe.Theorem(
+                                                Describe.Lean(
                             DescribeId.Create("embedding-times-conjugate"),
-                            H("Embedding times conjugate"),
-                            LeanTheorem(
+                            DeclarationHandle.Create(
                                 "D5/S1/Scale/Embedding.embedding_mul_conj"),
-                            In(Seq(Forall, Sp, F.Id("x"), Sp, InMacro, Sp, Operatorname, Grp(F.Id("GoldenInt")), Comma, Esc, Operatorname, Grp(F.Id("embedding")), Open, F.Id("x"), Close, Operatorname, Grp(F.Id("embedding")), Open, Operatorname, Grp(F.Id("conj")), Open, F.Id("x"), Close, Close, Eq, Operatorname, Grp(F.Id("norm")), Open, F.Id("x"), Close)),
-                            DescribeProvenance.RepoDerived(),
+                            H("Embedding times conjugate"),
+                            StatementSource.FromAuthor(In(Seq(Forall, Sp, F.Id("x"), Sp, InMacro, Sp, Operatorname, Grp(F.Id("GoldenInt")), Comma, Esc, Operatorname, Grp(F.Id("embedding")), Open, F.Id("x"), Close, Operatorname, Grp(F.Id("embedding")), Open, Operatorname, Grp(F.Id("conj")), Open, F.Id("x"), Close, Close, Eq, Operatorname, Grp(F.Id("norm")), Open, F.Id("x"), Close))),
+                            AssessedProvenance.FromRepo(),
                             Blocks(new DocumentBlock.DisplayFormula(
                                 Equal(
                                     Multiply(embedded, Call("embedding", conjugate)),
-                                    Call("norm", x))))
-                        ),
-                        DocumentBlock.Describe.Theorem(
+                                    Call("norm", x)))),
+                            DescribeRole.Theorem),
+                                                Describe.Lean(
                             DescribeId.Create("absolute-norm-relation"),
-                            H("Absolute norm relation"),
-                            LeanTheorem(
+                            DeclarationHandle.Create(
                                 "D5/S1/Scale/Embedding.abs_embedding_mul_abs_conj"),
-                            In(Seq(Forall, Sp, F.Id("x"), Sp, InMacro, Sp, Operatorname, Grp(F.Id("GoldenInt")), Comma, Esc, Lvert, Operatorname, Grp(F.Id("embedding")), Open, F.Id("x"), Close, Rvert, Thin, Lvert, Operatorname, Grp(F.Id("embedding")), Open, Operatorname, Grp(F.Id("conj")), Open, F.Id("x"), Close, Close, Rvert, Eq, Lvert, Operatorname, Grp(F.Id("norm")), Open, F.Id("x"), Close, Rvert)),
-                            DescribeProvenance.RepoDerived(),
+                            H("Absolute norm relation"),
+                            StatementSource.FromAuthor(In(Seq(Forall, Sp, F.Id("x"), Sp, InMacro, Sp, Operatorname, Grp(F.Id("GoldenInt")), Comma, Esc, Lvert, Operatorname, Grp(F.Id("embedding")), Open, F.Id("x"), Close, Rvert, Thin, Lvert, Operatorname, Grp(F.Id("embedding")), Open, Operatorname, Grp(F.Id("conj")), Open, F.Id("x"), Close, Close, Rvert, Eq, Lvert, Operatorname, Grp(F.Id("norm")), Open, F.Id("x"), Close, Rvert))),
+                            AssessedProvenance.FromRepo(),
                             Blocks(
                                 Paragraph(
                                     Text("Taking absolute values gives the corresponding multiplicative relation.")),
@@ -100,7 +98,7 @@ internal sealed class EmbeddingDocument : IScribeDocumentDefinition
                                         Multiply(
                                             new Formula.Absolute(embedded),
                                             new Formula.Absolute(Call("embedding", conjugate))),
-                                        new Formula.Absolute(Call("norm", x)))))
-                        ))))));
+                                        new Formula.Absolute(Call("norm", x))))),
+                            DescribeRole.Theorem))))));
     }
 }
