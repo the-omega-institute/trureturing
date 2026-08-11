@@ -155,17 +155,22 @@ internal static class DigestionFingerprint
     internal static DigestionFingerprints Compute(ReadOnlySpan<byte> rawBytes)
     {
         var raw = Sha256(rawBytes);
+        var normalized = NormalizeText(rawBytes);
+        return new DigestionFingerprints(raw, Sha256(StrictUtf8.GetBytes(normalized)));
+    }
+
+    internal static string NormalizeText(ReadOnlySpan<byte> rawBytes)
+    {
         var text = StrictUtf8.GetString(rawBytes);
         if (text.StartsWith('\uFEFF'))
         {
             text = text[1..];
         }
 
-        var normalized = text
+        return text
             .Replace("\r\n", "\n", StringComparison.Ordinal)
             .Replace('\r', '\n')
             .Normalize(NormalizationForm.FormC);
-        return new DigestionFingerprints(raw, Sha256(StrictUtf8.GetBytes(normalized)));
     }
 
     internal static bool IsCanonicalSha256(string value) =>
@@ -183,11 +188,58 @@ internal static class DigestionFingerprint
         "sha256:" + Convert.ToHexStringLower(SHA256.HashData(bytes));
 }
 
-internal static class GictAtomizer
+/// <summary>The lead shape both numbered dialects share: <c>**&lt;genre&gt; &lt;number&gt;</c>.</summary>
+internal sealed class NumberedClaims
 {
-    private static readonly Regex UnknownNumberedClaimPattern = new(
+    private static readonly Regex AnyNumberedLead = new(
         "^\\*\\*(?<kind>\\p{L}+)\\s*[0-9]+\\.[0-9]+",
         RegexOptions.CultureInvariant);
+
+    private readonly string dialect;
+    private readonly ImmutableArray<AtomizerMapping> genres;
+    private readonly Regex registered;
+
+    internal NumberedClaims(
+        string dialect,
+        ImmutableArray<AtomizerMapping> genres,
+        string numberPattern)
+    {
+        this.dialect = dialect;
+        this.genres = genres;
+        registered = new Regex(
+            "^\\*\\*(?<kind>"
+            + string.Join('|', genres.Select(static item => Regex.Escape(item.Token)))
+            + ")\\s*(?<number>" + numberPattern + ")",
+            RegexOptions.CultureInvariant);
+    }
+
+    internal string? Identify(string paragraph)
+    {
+        var match = registered.Match(paragraph);
+        return match.Success
+            ? Kind(match.Groups["kind"].Value) + "/" + match.Groups["number"].Value
+            : null;
+    }
+
+    /// <summary>Fails closed on a lead that is numbered but names no registered genre.</summary>
+    internal void RejectUnregistered(string paragraph)
+    {
+        var unknown = AnyNumberedLead.Match(paragraph);
+        if (unknown.Success)
+        {
+            throw new TheorySourceFormatException(
+                $"unknown {dialect} numbered claim kind {unknown.Groups["kind"].Value}");
+        }
+    }
+
+    private string Kind(string value) =>
+        genres.FirstOrDefault(item => item.Token == value)?.Value
+        ?? throw new InvalidOperationException($"unknown {dialect} claim kind {value}");
+}
+
+internal static class GictAtomizer
+{
+    private const string NumberPattern = "[0-9]+\\.[0-9]+";
     private static readonly Regex AppendixClaimPattern = new(
         "^\\*\\*(?<number>E\\.[0-9]+)\\s+[^\\r\\n*]+\\*\\*",
         RegexOptions.CultureInvariant);
@@ -200,10 +252,10 @@ internal static class GictAtomizer
 
     private static string? Identify(string paragraph, TheoryAtomizerRules rules)
     {
-        var match = ClaimPattern(rules).Match(paragraph);
-        if (match.Success)
+        var claims = new NumberedClaims("GICT", rules.GictGenres, NumberPattern);
+        if (claims.Identify(paragraph) is { } locator)
         {
-            return Kind(match.Groups["kind"].Value, rules.GictGenres) + "/" + match.Groups["number"].Value;
+            return locator;
         }
 
         var appendix = AppendixClaimPattern.Match(paragraph);
@@ -212,33 +264,16 @@ internal static class GictAtomizer
             return "appendix/" + appendix.Groups["number"].Value;
         }
 
-        var unknown = UnknownNumberedClaimPattern.Match(paragraph);
-        if (unknown.Success)
-        {
-            throw new TheorySourceFormatException(
-                $"unknown GICT numbered claim kind {unknown.Groups["kind"].Value}");
-        }
+        claims.RejectUnregistered(paragraph);
 
-        var special = rules.GictClaimPrefixes
-            .FirstOrDefault(item => paragraph.StartsWith(item.Token, StringComparison.Ordinal));
-        if (special is not null)
-        {
-            return special.Value;
-        }
-        return null;
+        return rules.GictClaimPrefixes
+            .FirstOrDefault(item => paragraph.StartsWith(item.Token, StringComparison.Ordinal))
+            ?.Value;
     }
-
-    private static string Kind(string value, ImmutableArray<AtomizerMapping> genres) =>
-        genres.FirstOrDefault(item => item.Token == value)?.Value
-        ?? throw new InvalidOperationException($"unknown GICT claim kind {value}");
 
     private static string? IdentifyConstant(string value, TheoryAtomizerRules rules) =>
         rules.GictConstants.FirstOrDefault(item => item.Token == value)?.Value;
 
-    private static Regex ClaimPattern(TheoryAtomizerRules rules) => new(
-        "^\\*\\*(?<kind>" + string.Join('|', rules.GictGenres.Select(static item => Regex.Escape(item.Token)))
-        + ")\\s*(?<number>[0-9]+\\.[0-9]+)",
-        RegexOptions.CultureInvariant);
 }
 
 internal static class PeriodicTreeAtomizer
@@ -259,9 +294,7 @@ internal static class PeriodicTreeAtomizer
 
 internal static class PzgAtomizer
 {
-    private static readonly Regex UnknownNumberedClaimPattern = new(
-        "^\\*\\*(?<kind>\\p{L}+)\\s*[0-9]+\\.[0-9]+",
-        RegexOptions.CultureInvariant);
+    private const string NumberPattern = "[0-9]+\\.[0-9]+(?:\\.[0-9]+)?[′″]*";
     private static readonly Regex OpenPattern = new(
         "^\\*\\*(?<id>O-[0-9]+)\\*\\*",
         RegexOptions.CultureInvariant);
@@ -274,10 +307,10 @@ internal static class PzgAtomizer
 
     private static string? Identify(string paragraph, TheoryAtomizerRules rules)
     {
-        var match = ClaimPattern(rules).Match(paragraph);
-        if (match.Success)
+        var claims = new NumberedClaims("PZG", rules.PzgGenres, NumberPattern);
+        if (claims.Identify(paragraph) is { } locator)
         {
-            return Kind(match.Groups["kind"].Value, rules.PzgGenres) + "/" + match.Groups["number"].Value;
+            return locator;
         }
 
         var trace = Regex.Match(
@@ -296,12 +329,7 @@ internal static class PzgAtomizer
             return "open/" + open.Groups["id"].Value;
         }
 
-        var unknown = UnknownNumberedClaimPattern.Match(paragraph);
-        if (unknown.Success)
-        {
-            throw new TheorySourceFormatException(
-                $"unknown PZG numbered claim kind {unknown.Groups["kind"].Value}");
-        }
+        claims.RejectUnregistered(paragraph);
 
         return null;
     }
@@ -338,18 +366,6 @@ internal static class PzgAtomizer
             .Where(static item => item.Value != "metadata/supplement")
             .FirstOrDefault(item => heading.StartsWith(item.Token, StringComparison.Ordinal))?.Value;
     }
-
-    private static Regex ClaimPattern(TheoryAtomizerRules rules) => new(
-        "^\\*\\*(?<kind>" + string.Join('|', rules.PzgGenres.Select(static item => Regex.Escape(item.Token)))
-        + ")\\s*(?<number>[0-9]+\\.[0-9]+(?:\\.[0-9]+)?[′″]*)",
-        RegexOptions.CultureInvariant);
-
-    internal static bool RecognizesGenre(string token, TheoryAtomizerRules rules) =>
-        ClaimPattern(rules).IsMatch($"**{token} 1.1**");
-
-    private static string Kind(string value, ImmutableArray<AtomizerMapping> genres) =>
-        genres.FirstOrDefault(item => item.Token == value)?.Value
-        ?? throw new InvalidOperationException($"unknown PZG claim kind {value}");
 }
 
 internal static class MarkdownAstAtomizer
@@ -369,6 +385,7 @@ internal static class MarkdownAstAtomizer
         var headings = new List<DigestionContext>();
         var candidates = new List<Candidate>();
         var headingStarts = new List<int>();
+        var failures = new List<UnrecognisedLead>();
         foreach (var block in blocks)
         {
             if (block is MarkdownHeading heading)
@@ -398,11 +415,11 @@ internal static class MarkdownAstAtomizer
             {
                 var tableAstPath = identifyFirstTableCellSource is not null
                     ? TheorySourceFormatException.IdentifyAt(
-                        identifyFirstTableCellSource, row.FirstCellSourceText, row.Start, text)
+                        identifyFirstTableCellSource, row.FirstCellSourceText, row.Start, text, failures)
                     : identifyFirstTableCell is not null
                     ? TheorySourceFormatException.IdentifyAt(
-                        identifyFirstTableCell, row.FirstCellText, row.Start, text)
-                    : TheorySourceFormatException.IdentifyAt(identify, row.Text, row.Start, text);
+                        identifyFirstTableCell, row.FirstCellText, row.Start, text, failures)
+                    : TheorySourceFormatException.IdentifyAt(identify, row.Text, row.Start, text, failures);
                 if (tableAstPath is not null)
                 {
                     candidates.Add(new Candidate(
@@ -423,7 +440,7 @@ internal static class MarkdownAstAtomizer
 
             var lineClaims = SourceLines(paragraph.Text, paragraph.Start)
                 .Select(line => (Line: line, AstPath: TheorySourceFormatException.IdentifyAt(
-                    identify, line.Text, line.Start, text)))
+                    identify, line.Text, line.Start, text, failures)))
                 .Where(static item => item.AstPath is not null)
                 .ToArray();
             if (lineClaims.Length > 1)
@@ -442,7 +459,7 @@ internal static class MarkdownAstAtomizer
             }
 
             var astPath = TheorySourceFormatException.IdentifyAt(
-                identify, paragraph.Text, paragraph.Start, text);
+                identify, paragraph.Text, paragraph.Start, text, failures);
             if (astPath is null)
             {
                 continue;
@@ -454,6 +471,16 @@ internal static class MarkdownAstAtomizer
                 text.Length,
                 headings.ToImmutableArray(),
                 Extend: true));
+        }
+
+        if (failures.Count > 0)
+        {
+            // Grouped by cause because one unknown lead is reported many times: once per
+            // source line, once again as the whole paragraph, and once per repetition in
+            // the volume. Naming each cause once, with its first line and how often it
+            // occurs, is what a reader needs to register the dialect in a single pass.
+            throw new TheorySourceFormatException(
+                TheorySourceFormatException.Summarise(failures));
         }
 
         var boundaries = candidates.Select(static candidate => candidate.StartCharacter)

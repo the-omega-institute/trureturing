@@ -138,6 +138,28 @@ public sealed class TowerManifestTests
     }
 
     [Fact]
+    public void AComponentThatProtectsNothingIsRejectedRatherThanReportedVerified()
+    {
+        var syntax = Syntax(new TowerComponentSyntax(
+            "hollow",
+            "repository-files",
+            ImmutableArray<string>.Empty,
+            ["bootstrap-pr-1"],
+            "verified"));
+
+        var rejected = Assert.IsType<TowerValidationOutcome.Rejected>(
+            TowerManifestValidator.ValidateStructure(syntax));
+        Assert.Contains(
+            rejected.Findings,
+            item => item is { Code: "TOWER-MEMBER", Component: "hollow" });
+
+        // Without the structural rejection the actual pass reports
+        // "verified: repository files=0" for a component that guards nothing.
+        Assert.IsType<TowerValidationOutcome.Rejected>(
+            TowerManifestValidator.Validate(syntax, Snapshot(GenesisFile()), Catalog()));
+    }
+
+    [Fact]
     public void BootstrapTopMustBeExplicitlyOpen()
     {
         var syntax = Syntax(Component("leaf", "bootstrap-pr-1")) with

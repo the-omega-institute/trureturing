@@ -1,0 +1,17 @@
+ast_path: theorem/8.5
+fingerprints:
+  raw_sha256: sha256:194b851cb41f7e61e4d2fad73ac570a7d8d43874318d41819259b5e023a1bf67
+  normalized_sha256: sha256:194b851cb41f7e61e4d2fad73ac570a7d8d43874318d41819259b5e023a1bf67
+cas_ref: sha256:194b851cb41f7e61e4d2fad73ac570a7d8d43874318d41819259b5e023a1bf67
+coverage_gids:
+  - D5/S0/Diagonal/PigeonholeFiber.finite_reading_has_fiber
+receipts:
+  coverage:
+    - gid: D5/S0/Diagonal/PigeonholeFiber.finite_reading_has_fiber
+      source_sha256: sha256:194b851cb41f7e61e4d2fad73ac570a7d8d43874318d41819259b5e023a1bf67
+      target_sha256: sha256:e39ed439518df37d03a49789c644662cc10efd1277fcdcd1c569a56e53d51443
+  scribe:
+    - gid: D5/S0/Diagonal/PigeonholeFiber.finite_reading_has_fiber
+      definition_sha256: sha256:841f8056142050a560fcb85bf4f07f4e11e93d9df2a084bf8f6638f9787757a0
+      emission_sha256: sha256:7d3b083e1dbddc82667ca0ee081ecabd2c813979f50c1411c899284e8c41966b
+  unresolved_subitems: []
