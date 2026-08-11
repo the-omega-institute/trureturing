@@ -11,16 +11,34 @@ internal static class RepositoryIoAccessPolicy
 {
     internal const string ScribeTestsProject = "StrataLint.Scribe.Tests";
     internal const string ScribeTestsPrefix = "Meta/StrataLint/StrataLint.Scribe.Tests/";
+    internal const string TemporaryFileSystemPath =
+        ScribeTestsPrefix + "Support/TemporaryFileSystem.cs";
 
     private static readonly IReadOnlySet<string> AuthorizedGatewayPaths =
         new HashSet<string>(StringComparer.Ordinal)
         {
             ScribeTestsPrefix + "Support/RepositoryAccessor.cs",
-            ScribeTestsPrefix + "Support/TemporaryFileSystem.cs",
         };
 
-    // These named project exemptions shrink one migration slice at a time. Only after
-    // this list is empty may repository-I/O based test selection be considered.
+    private static readonly IReadOnlySet<string> TemporaryGatewayApis =
+        new HashSet<string>(StringComparer.Ordinal)
+        {
+            "System.IO.File.Exists",
+            "System.IO.File.ReadAllText",
+            "System.IO.File.ReadAllBytes",
+            "System.IO.File.WriteAllText",
+            "System.IO.File.WriteAllBytes",
+            "System.IO.File.AppendAllText",
+            "System.IO.File.Delete",
+            "System.IO.Directory.CreateDirectory",
+            "System.IO.Directory.CreateTempSubdirectory",
+            "System.IO.Directory.Exists",
+            "System.IO.Directory.GetCurrentDirectory",
+            "System.IO.Directory.Delete",
+        };
+
+    // InspectRepository scans every test project except these named migration deferrals.
+    // The pinned test makes additions review-visible; migration may only remove entries.
     internal static readonly IReadOnlySet<string> DeferredProjectExemptions =
         new HashSet<string>(StringComparer.Ordinal)
         {
@@ -28,13 +46,34 @@ internal static class RepositoryIoAccessPolicy
             "StrataLint.ArchitectureTests",
         };
 
+    // This syntax policy judges direct calls to the listed repository-I/O primitives in
+    // active test projects. It does not judge indirect reads through production loaders,
+    // path-shaped reader APIs not listed here, reflection shapes not listed here, or
+    // cross-project behavior. Those remain a declared gap, not accessor uniqueness.
     internal static IReadOnlyList<RepositoryIoAccessFinding> InspectRepository(
-        string repositoryRoot) => GitIndexRepositoryFiles.Enumerate(repositoryRoot)
-        .Where(file => file.RelativePath.StartsWith(ScribeTestsPrefix, StringComparison.Ordinal)
-            && file.RelativePath.EndsWith(".cs", StringComparison.Ordinal)
-            && !AuthorizedGatewayPaths.Contains(file.RelativePath))
-        .SelectMany(file => InspectSource(file.RelativePath, File.ReadAllText(file.FullPath)))
-        .ToArray();
+        string repositoryRoot)
+    {
+        var files = GitIndexRepositoryFiles.Enumerate(repositoryRoot);
+        var activePrefixes = files
+            .Where(static file => file.RelativePath.EndsWith(".csproj", StringComparison.Ordinal))
+            .Select(static file => new
+            {
+                Project = Path.GetFileNameWithoutExtension(file.RelativePath),
+                Prefix = file.RelativePath[..(file.RelativePath.LastIndexOf('/') + 1)],
+            })
+            .Where(project => project.Project.EndsWith("Tests", StringComparison.Ordinal)
+                && !DeferredProjectExemptions.Contains(project.Project))
+            .Select(static project => project.Prefix)
+            .ToArray();
+
+        return files
+            .Where(file => activePrefixes.Any(prefix =>
+                    file.RelativePath.StartsWith(prefix, StringComparison.Ordinal))
+                && file.RelativePath.EndsWith(".cs", StringComparison.Ordinal)
+                && !AuthorizedGatewayPaths.Contains(file.RelativePath))
+            .SelectMany(file => InspectSource(file.RelativePath, File.ReadAllText(file.FullPath)))
+            .ToArray();
+    }
 
     internal static IReadOnlyList<RepositoryIoAccessFinding> InspectSource(
         string path,
@@ -55,6 +94,12 @@ internal static class RepositoryIoAccessPolicy
                          && directive.Name?.ToString() is "System.IO.File"
                              or "System.IO.Directory"
                              or "System.IO.FileStream"
+                             or "System.IO.StreamReader"
+                             or "System.IO.StreamWriter"
+                             or "System.Xml.Linq.XDocument"
+                             or "System.Xml.Linq.XElement"
+                             or "System.Xml.XmlReader"
+                             or "System.Text.Json.JsonDocument"
                              or "System.AppContext"))
         {
             findings.Add(new RepositoryIoAccessFinding(
@@ -68,15 +113,33 @@ internal static class RepositoryIoAccessPolicy
             if (invocation.Expression is MemberAccessExpressionSyntax member
                 && TryForbiddenStaticApi(member, out var api))
             {
+                if (path != TemporaryFileSystemPath || !TemporaryGatewayApis.Contains(api))
+                {
+                    findings.Add(Finding(path, api, invocation.GetLocation().GetLineSpan().StartLinePosition.Line + 1));
+                }
+            }
+            else if (invocation.Expression is MemberAccessExpressionSyntax reader
+                     && TryForbiddenPathReader(reader, invocation, out api))
+            {
                 findings.Add(Finding(path, api, invocation.GetLocation().GetLineSpan().StartLinePosition.Line + 1));
             }
         }
 
+        foreach (var typeOf in root.DescendantNodes().OfType<TypeOfExpressionSyntax>()
+                     .Where(static expression => RightmostName(expression.Type) is "File" or "Directory"))
+        {
+            findings.Add(Finding(
+                path,
+                $"System.Reflection:System.IO.{RightmostName(typeOf.Type)}",
+                typeOf.GetLocation().GetLineSpan().StartLinePosition.Line + 1));
+        }
+
         foreach (var creation in root.DescendantNodes().OfType<ObjectCreationExpressionSyntax>())
         {
-            if (RightmostName(creation.Type) == "FileStream")
+            var type = RightmostName(creation.Type);
+            if (type is "FileStream" or "StreamReader" or "StreamWriter")
             {
-                findings.Add(Finding(path, "System.IO.FileStream", creation.GetLocation().GetLineSpan().StartLinePosition.Line + 1));
+                findings.Add(Finding(path, $"System.IO.{type}", creation.GetLocation().GetLineSpan().StartLinePosition.Line + 1));
             }
         }
 
@@ -94,11 +157,50 @@ internal static class RepositoryIoAccessPolicy
 
     private static bool TryForbiddenStaticApi(MemberAccessExpressionSyntax member, out string api)
     {
-        var expression = member.Expression.ToString();
+        var expression = member.Expression.ToString().Replace("global::", string.Empty, StringComparison.Ordinal);
         var owner = RightmostName(member.Expression);
         if (expression is "File" or "Directory" or "System.IO.File" or "System.IO.Directory")
         {
             api = $"System.IO.{owner}.{member.Name.Identifier.ValueText}";
+            return true;
+        }
+
+        api = string.Empty;
+        return false;
+    }
+
+    private static bool TryForbiddenPathReader(
+        MemberAccessExpressionSyntax member,
+        InvocationExpressionSyntax invocation,
+        out string api)
+    {
+        var owner = member.Expression.ToString().Replace("global::", string.Empty, StringComparison.Ordinal);
+        var method = member.Name.Identifier.ValueText;
+        if (owner is "XDocument" or "System.Xml.Linq.XDocument" && method == "Load")
+        {
+            api = "System.Xml.Linq.XDocument.Load";
+            return true;
+        }
+
+        if (owner is "XElement" or "System.Xml.Linq.XElement" && method == "Load")
+        {
+            api = "System.Xml.Linq.XElement.Load";
+            return true;
+        }
+
+        if (owner is "XmlReader" or "System.Xml.XmlReader" && method == "Create")
+        {
+            api = "System.Xml.XmlReader.Create";
+            return true;
+        }
+
+        if (owner is "JsonDocument" or "System.Text.Json.JsonDocument"
+            && method == "Parse"
+            && invocation.ArgumentList.Arguments.FirstOrDefault()?.Expression
+                is LiteralExpressionSyntax literal
+            && literal.IsKind(SyntaxKind.StringLiteralExpression))
+        {
+            api = "System.Text.Json.JsonDocument.Parse";
             return true;
         }
 

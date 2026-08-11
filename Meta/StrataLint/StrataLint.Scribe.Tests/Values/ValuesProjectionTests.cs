@@ -65,14 +65,15 @@ public sealed class ValuesProjectionTests
     [Fact]
     public void ValuesWriterIsByteStableAndCarriesTheCompleteAttestation()
     {
-        var root = RepositoryAccessor.Discover(RepositoryRootCriterion.ValuesProducerDirectoryNotFound).Root.FullPath;
+        var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.ValuesProducerDirectoryNotFound);
+        var root = repository.Root.FullPath;
 
         var first = CanonicalValuesWriter.Write(root);
         var second = CanonicalValuesWriter.Write(root);
 
         Assert.True(first.AsSpan().SequenceEqual(second.AsSpan()));
-        Assert.True(first.AsSpan().SequenceEqual(TemporaryFileSystem.File.ReadAllBytes(
-            Path.Combine(root, CanonicalValuesWriter.RelativePath))));
+        Assert.True(first.AsSpan().SequenceEqual(repository.ReadAllBytes(
+            RepositoryRelativePath.Create(CanonicalValuesWriter.RelativePath))));
         Assert.Equal((byte)'\n', first[^1]);
         using var document = JsonDocument.Parse(first.ToArray());
         var attestation = document.RootElement.GetProperty("attestation");

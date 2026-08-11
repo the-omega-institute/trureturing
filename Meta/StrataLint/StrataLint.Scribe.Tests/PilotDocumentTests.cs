@@ -72,14 +72,11 @@ public sealed class DocumentDiscoveryTests
     [Fact]
     public void GeneratedMarkdownIsDeterministicAndMatchesTheCommittedTree()
     {
-        var repositoryRoot = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound).Root.FullPath;
-        var rawLeanReport = Path.Combine(
-            repositoryRoot,
-            ".lake",
-            "build",
-            "stratalint",
-            "raw-lean-report.json");
-        if (!TemporaryFileSystem.File.Exists(rawLeanReport))
+        var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound);
+        var repositoryRoot = repository.Root.FullPath;
+        var rawLeanReport = RepositoryRelativePath.Create(
+            ".lake/build/stratalint/raw-lean-report.json");
+        if (!repository.FileExists(rawLeanReport))
         {
             var error = new StringWriter();
             var exit = ScribeEmitter.Emit(

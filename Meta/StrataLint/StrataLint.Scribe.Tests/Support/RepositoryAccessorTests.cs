@@ -92,4 +92,13 @@ public sealed class RepositoryAccessorTests
 
         Assert.NotEmpty(repository.ReadAllText(path));
     }
+
+    [Fact]
+    public void TemporaryFileSystemRejectsRepositoryPaths()
+    {
+        var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.ClaudeDirectoryNotFound);
+        var repositoryPath = repository.GetFullPath(RepositoryRelativePath.Create(RootMarkerPath));
+
+        Assert.Throws<ArgumentException>(() => TemporaryFileSystem.File.ReadAllText(repositoryPath));
+    }
 }
