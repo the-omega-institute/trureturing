@@ -609,7 +609,7 @@ public sealed class EmissionTests
         var repository = RepositoryAccessor.Discover();
         var ledgerSources = repository.EnumerateFiles(
                 RepositoryRelativePath.Create("Meta/Digestion/backfill"), "*")
-            .Append(RepositoryRelativePath.Create("Meta/Digestion/ticket-index.toml"));
+            .Append(RepositoryRelativePath.Create(BackfillInventoryLoader.TicketIndexPath));
         foreach (var source in ledgerSources)
         {
             var destination = Path.Combine(destinationRoot, source.Value);
