@@ -159,250 +159,258 @@ internal static class DigestionLedgerAligner
             }
         }
 
-        foreach (var source in sources)
+        // One source at a time. Every early exit below is a decision about *this*
+        // source only, which is why they read as returns: the pass either finishes
+        // aligning the source or declines it, and the caller moves on to the next.
+        void AlignSource(DigestionLedgerSource source)
         {
-            baselineSources.TryGetValue(source.SourceId, out var baselineSource);
-            foreach (var entry in source.Entries)
-            {
-                alignments[entry.AtomId] = rejectedCoarseClones.Contains(entry.AtomId)
-                    ? DigestionReceiptAlignment.Rejected
-                    : source.Atomizer == AtomizerRegistry.NoAtomizerId
-                        && entry.Boundary is not null
-                            ? DigestionReceiptAlignment.LegacyBoundary
-                            : cas.ValidAtomIds.Contains(entry.AtomId)
-                                && inheritedEntries.Contains(CanonicalEntry(entry))
-                                ? DigestionReceiptAlignment.Seen
-                                : DigestionReceiptAlignment.Rejected;
-            }
-
-            var registeredAtomizer = AtomizerRegistry.IsRegistered(source.Atomizer);
-            var coarseReplacementObligations =
-                coarseReplacementObligationsBySource.GetValueOrDefault(source.SourceId, []);
-            var unprovenCasEntries = source.Entries.Where(entry =>
-                cas.ValidAtomIds.Contains(entry.AtomId)
-                && !inheritedEntries.Contains(CanonicalEntry(entry))).ToArray();
-            if (((mode == DigestionAlignmentMode.Admission && unprovenCasEntries.Length == 0)
-                    || !registeredAtomizer)
-                && coarseReplacementObligations.Length == 0)
-            {
-                continue;
-            }
-
-            if (!registeredAtomizer)
-            {
-                if (coarseReplacementObligations.Any(entry =>
-                        baselineSource?.AcknowledgedStale.Contains(
-                            entry.AtomId,
-                            StringComparer.Ordinal) == true))
+                baselineSources.TryGetValue(source.SourceId, out var baselineSource);
+                foreach (var entry in source.Entries)
                 {
-                    findings.Add(
-                        "settled coarse replacement requires a registered atomizer: "
-                        + source.SourceId);
+                    alignments[entry.AtomId] = rejectedCoarseClones.Contains(entry.AtomId)
+                        ? DigestionReceiptAlignment.Rejected
+                        : source.Atomizer == AtomizerRegistry.NoAtomizerId
+                            && entry.Boundary is not null
+                                ? DigestionReceiptAlignment.LegacyBoundary
+                                : cas.ValidAtomIds.Contains(entry.AtomId)
+                                    && inheritedEntries.Contains(CanonicalEntry(entry))
+                                    ? DigestionReceiptAlignment.Seen
+                                    : DigestionReceiptAlignment.Rejected;
                 }
 
-                findings.Add(
-                    $"source {source.SourceId} boundaryless receipts require a registered atomizer");
-                continue;
-            }
-
-            if (!snapshot.TryGetFile(source.SourcePath, out var sourceFile))
-            {
-                findings.Add($"source path is dangling: {source.SourcePath}");
-                continue;
-            }
-
-            var opaqueFingerprints = DigestionFingerprint.ComputeOpaque(sourceFile.RawBytes.AsSpan());
-            foreach (var entry in unprovenCasEntries.Where(static entry =>
-                         entry.AstPath == "coarse/source"))
-            {
-                if (rejectedCoarseClones.Contains(entry.AtomId)
-                    || entry.Fingerprints != opaqueFingerprints)
+                var registeredAtomizer = AtomizerRegistry.IsRegistered(source.Atomizer);
+                var coarseReplacementObligations =
+                    coarseReplacementObligationsBySource.GetValueOrDefault(source.SourceId, []);
+                var unprovenCasEntries = source.Entries.Where(entry =>
+                    cas.ValidAtomIds.Contains(entry.AtomId)
+                    && !inheritedEntries.Contains(CanonicalEntry(entry))).ToArray();
+                if (((mode == DigestionAlignmentMode.Admission && unprovenCasEntries.Length == 0)
+                        || !registeredAtomizer)
+                    && coarseReplacementObligations.Length == 0)
                 {
-                    continue;
+                    return;
                 }
 
-                matchedAtoms[entry.AtomId] = new DigestionAtom(
-                    entry.AstPath,
-                    0,
-                    sourceFile.RawBytes.Length,
-                    sourceFile.RawBytes,
-                    opaqueFingerprints,
-                    []);
-                alignments[entry.AtomId] = DigestionReceiptAlignment.Seen;
-            }
-
-            if (mode == DigestionAlignmentMode.Admission
-                && coarseReplacementObligations.Length == 0
-                && unprovenCasEntries.All(entry => matchedAtoms.ContainsKey(entry.AtomId)))
-            {
-                continue;
-            }
-
-            if (atomizerRules is null)
-            {
-                // Tree predates the atomizer data surface: it cannot be re-atomized here, and
-                // reporting that as a finding would reject a tree the baseline harness admits.
-                continue;
-            }
-
-            AtomizedTheoryDocument atomized;
-            try
-            {
-                var atomize = atomizerResolver(source.Atomizer);
-                atomized = atomize(sourceFile.RawBytes.AsSpan(), atomizerRules);
-            }
-            catch (Exception exception) when (
-                exception is TheorySourceFormatException or DecoderFallbackException)
-            {
-                if (mode == DigestionAlignmentMode.Ingest)
+                if (!registeredAtomizer)
                 {
-                    AddCoarseFallback(
-                        source,
-                        sourceFile.RawBytes,
-                        exception.Message,
-                        cas.ValidAtomIds,
-                        suggestedAtomIds,
-                        residual,
-                        fallbacks);
-                    continue;
-                }
-
-                findings.Add($"source {source.SourceId} atomization failed: {exception.Message}");
-                continue;
-            }
-
-            var integrityFailure = AtomizerIntegrityFailure(
-                atomized,
-                sourceFile.RawBytes.AsSpan());
-            if (integrityFailure is not null)
-            {
-                findings.Add(
-                    $"source {source.SourceId} atomizer integrity failed: {integrityFailure}");
-                continue;
-            }
-
-            if (atomized.Claims.Length == 0)
-            {
-                if (mode == DigestionAlignmentMode.Ingest)
-                {
-                    AddCoarseFallback(
-                        source,
-                        sourceFile.RawBytes,
-                        "atomizer recognition is incomplete or empty",
-                        cas.ValidAtomIds,
-                        suggestedAtomIds,
-                        residual,
-                        fallbacks);
-                    continue;
-                }
-
-                findings.Add($"source {source.SourceId} atomizer recognition is incomplete or empty");
-                continue;
-            }
-
-            var claims = new Dictionary<string, DigestionAtom>(StringComparer.Ordinal);
-            var duplicateAstPath = false;
-            foreach (var atom in atomized.Claims)
-            {
-                if (claims.TryAdd(atom.AstPath, atom))
-                {
-                    continue;
-                }
-
-                findings.Add($"source {source.SourceId} duplicate atomized ast_path: {atom.AstPath}");
-                duplicateAstPath = true;
-            }
-
-            if (duplicateAstPath)
-            {
-                continue;
-            }
-
-            var matchedAstPaths = new HashSet<string>(StringComparer.Ordinal);
-            var sourceStale = new List<string>();
-            if (coarseReplacementObligations.Length > 0 && !claims.ContainsKey("coarse/source"))
-            {
-                foreach (var baselineEntry in coarseReplacementObligations)
-                {
-                    var exact = source.Entries
-                        .Where(entry => CoarseReplacementIdentityEqual(entry, baselineEntry))
-                        .ToArray();
-                    if (exact.Length != 1)
+                    if (coarseReplacementObligations.Any(entry =>
+                            baselineSource?.AcknowledgedStale.Contains(
+                                entry.AtomId,
+                                StringComparer.Ordinal) == true))
                     {
                         findings.Add(
-                            $"source {source.SourceId} coarse replacement receipt identity changed "
-                            + $"or disappeared: {baselineEntry.AtomId}");
-                        continue;
+                            "settled coarse replacement requires a registered atomizer: "
+                            + source.SourceId);
                     }
 
-                    var entry = exact[0];
-                    if (!cas.ValidAtomIds.Contains(entry.AtomId))
+                    findings.Add(
+                        $"source {source.SourceId} boundaryless receipts require a registered atomizer");
+                    return;
+                }
+
+                if (!snapshot.TryGetFile(source.SourcePath, out var sourceFile))
+                {
+                    findings.Add($"source path is dangling: {source.SourcePath}");
+                    return;
+                }
+
+                var opaqueFingerprints = DigestionFingerprint.ComputeOpaque(sourceFile.RawBytes.AsSpan());
+                foreach (var entry in unprovenCasEntries.Where(static entry =>
+                             entry.AstPath == "coarse/source"))
+                {
+                    if (rejectedCoarseClones.Contains(entry.AtomId)
+                        || entry.Fingerprints != opaqueFingerprints)
                     {
                         continue;
                     }
 
-                    alignments[entry.AtomId] = DigestionReceiptAlignment.Stale;
-                    sourceStale.Add(entry.AtomId);
-                    actualStale.Add(entry.AtomId);
-                }
-            }
-
-            foreach (var legacy in source.Entries.Where(static entry => entry.Boundary is not null))
-            {
-                if (claims.TryGetValue(legacy.AstPath, out var atom)
-                    && (atom.Fingerprints.RawSha256 == legacy.Fingerprints.RawSha256
-                        || atom.Fingerprints.NormalizedSha256
-                        == legacy.Fingerprints.NormalizedSha256))
-                {
-                    matchedAstPaths.Add(atom.AstPath);
-                    matchedAtoms[legacy.AtomId] = atom;
-                }
-            }
-
-            foreach (var entry in source.Entries.Where(entry => cas.ValidAtomIds.Contains(entry.AtomId)))
-            {
-                if (claims.TryGetValue(entry.AstPath, out var atom)
-                    && (atom.Fingerprints.RawSha256 == entry.Fingerprints.RawSha256
-                        || atom.Fingerprints.NormalizedSha256 == entry.Fingerprints.NormalizedSha256))
-                {
-                    matchedAstPaths.Add(atom.AstPath);
-                    matchedAtoms[entry.AtomId] = atom;
+                    matchedAtoms[entry.AtomId] = new DigestionAtom(
+                        entry.AstPath,
+                        0,
+                        sourceFile.RawBytes.Length,
+                        sourceFile.RawBytes,
+                        opaqueFingerprints,
+                        []);
                     alignments[entry.AtomId] = DigestionReceiptAlignment.Seen;
                 }
-            }
 
-            var registration = AtomizerRegistry.Require(source.Atomizer);
-            foreach (var atom in atomized.Claims.Where(atom => !matchedAstPaths.Contains(atom.AstPath)))
-            {
-                residual.Add(new StructuredResidualAdmission(
-                    source.SourceId,
-                    source.SourcePath,
-                    source.Atomizer,
-                    atom,
-                    SuggestedAtomId(
-                        source,
-                        registration,
-                        atom,
-                        "residual",
-                        suggestedAtomIds),
-                    new DigestionStatus(
-                        DigestionMigrationState.Residual,
-                        DigestionTruthState.Open)));
-            }
+                if (mode == DigestionAlignmentMode.Admission
+                    && coarseReplacementObligations.Length == 0
+                    && unprovenCasEntries.All(entry => matchedAtoms.ContainsKey(entry.AtomId)))
+                {
+                    return;
+                }
 
-            if (mode == DigestionAlignmentMode.Admission)
-            {
-                var unacknowledged = sourceStale
-                    .Except(source.AcknowledgedStale, StringComparer.Ordinal)
-                    .Order(StringComparer.Ordinal)
-                    .ToArray();
-                if (unacknowledged.Length > 0)
+                if (atomizerRules is null)
+                {
+                    // Tree predates the atomizer data surface: it cannot be re-atomized here, and
+                    // reporting that as a finding would reject a tree the baseline harness admits.
+                    return;
+                }
+
+                AtomizedTheoryDocument atomized;
+                try
+                {
+                    var atomize = atomizerResolver(source.Atomizer);
+                    atomized = atomize(sourceFile.RawBytes.AsSpan(), atomizerRules);
+                }
+                catch (Exception exception) when (
+                    exception is TheorySourceFormatException or DecoderFallbackException)
+                {
+                    if (mode == DigestionAlignmentMode.Ingest)
+                    {
+                        AddCoarseFallback(
+                            source,
+                            sourceFile.RawBytes,
+                            exception.Message,
+                            cas.ValidAtomIds,
+                            suggestedAtomIds,
+                            residual,
+                            fallbacks);
+                        return;
+                    }
+
+                    findings.Add($"source {source.SourceId} atomization failed: {exception.Message}");
+                    return;
+                }
+
+                var integrityFailure = AtomizerIntegrityFailure(
+                    atomized,
+                    sourceFile.RawBytes.AsSpan());
+                if (integrityFailure is not null)
                 {
                     findings.Add(
-                        $"source {source.SourceId} stale receipts are not acknowledged: "
-                        + string.Join(", ", unacknowledged));
+                        $"source {source.SourceId} atomizer integrity failed: {integrityFailure}");
+                    return;
                 }
-            }
+
+                if (atomized.Claims.Length == 0)
+                {
+                    if (mode == DigestionAlignmentMode.Ingest)
+                    {
+                        AddCoarseFallback(
+                            source,
+                            sourceFile.RawBytes,
+                            "atomizer recognition is incomplete or empty",
+                            cas.ValidAtomIds,
+                            suggestedAtomIds,
+                            residual,
+                            fallbacks);
+                        return;
+                    }
+
+                    findings.Add($"source {source.SourceId} atomizer recognition is incomplete or empty");
+                    return;
+                }
+
+                var claims = new Dictionary<string, DigestionAtom>(StringComparer.Ordinal);
+                var duplicateAstPath = false;
+                foreach (var atom in atomized.Claims)
+                {
+                    if (claims.TryAdd(atom.AstPath, atom))
+                    {
+                        continue;
+                    }
+
+                    findings.Add($"source {source.SourceId} duplicate atomized ast_path: {atom.AstPath}");
+                    duplicateAstPath = true;
+                }
+
+                if (duplicateAstPath)
+                {
+                    return;
+                }
+
+                var matchedAstPaths = new HashSet<string>(StringComparer.Ordinal);
+                var sourceStale = new List<string>();
+                if (coarseReplacementObligations.Length > 0 && !claims.ContainsKey("coarse/source"))
+                {
+                    foreach (var baselineEntry in coarseReplacementObligations)
+                    {
+                        var exact = source.Entries
+                            .Where(entry => CoarseReplacementIdentityEqual(entry, baselineEntry))
+                            .ToArray();
+                        if (exact.Length != 1)
+                        {
+                            findings.Add(
+                                $"source {source.SourceId} coarse replacement receipt identity changed "
+                                + $"or disappeared: {baselineEntry.AtomId}");
+                            continue;
+                        }
+
+                        var entry = exact[0];
+                        if (!cas.ValidAtomIds.Contains(entry.AtomId))
+                        {
+                            continue;
+                        }
+
+                        alignments[entry.AtomId] = DigestionReceiptAlignment.Stale;
+                        sourceStale.Add(entry.AtomId);
+                        actualStale.Add(entry.AtomId);
+                    }
+                }
+
+                foreach (var legacy in source.Entries.Where(static entry => entry.Boundary is not null))
+                {
+                    if (claims.TryGetValue(legacy.AstPath, out var atom)
+                        && (atom.Fingerprints.RawSha256 == legacy.Fingerprints.RawSha256
+                            || atom.Fingerprints.NormalizedSha256
+                            == legacy.Fingerprints.NormalizedSha256))
+                    {
+                        matchedAstPaths.Add(atom.AstPath);
+                        matchedAtoms[legacy.AtomId] = atom;
+                    }
+                }
+
+                foreach (var entry in source.Entries.Where(entry => cas.ValidAtomIds.Contains(entry.AtomId)))
+                {
+                    if (claims.TryGetValue(entry.AstPath, out var atom)
+                        && (atom.Fingerprints.RawSha256 == entry.Fingerprints.RawSha256
+                            || atom.Fingerprints.NormalizedSha256 == entry.Fingerprints.NormalizedSha256))
+                    {
+                        matchedAstPaths.Add(atom.AstPath);
+                        matchedAtoms[entry.AtomId] = atom;
+                        alignments[entry.AtomId] = DigestionReceiptAlignment.Seen;
+                    }
+                }
+
+                var registration = AtomizerRegistry.Require(source.Atomizer);
+                foreach (var atom in atomized.Claims.Where(atom => !matchedAstPaths.Contains(atom.AstPath)))
+                {
+                    residual.Add(new StructuredResidualAdmission(
+                        source.SourceId,
+                        source.SourcePath,
+                        source.Atomizer,
+                        atom,
+                        SuggestedAtomId(
+                            source,
+                            registration,
+                            atom,
+                            "residual",
+                            suggestedAtomIds),
+                        new DigestionStatus(
+                            DigestionMigrationState.Residual,
+                            DigestionTruthState.Open)));
+                }
+
+                if (mode == DigestionAlignmentMode.Admission)
+                {
+                    var unacknowledged = sourceStale
+                        .Except(source.AcknowledgedStale, StringComparer.Ordinal)
+                        .Order(StringComparer.Ordinal)
+                        .ToArray();
+                    if (unacknowledged.Length > 0)
+                    {
+                        findings.Add(
+                            $"source {source.SourceId} stale receipts are not acknowledged: "
+                            + string.Join(", ", unacknowledged));
+                    }
+                }
+        }
+
+        foreach (var source in sources)
+        {
+            AlignSource(source);
         }
 
         if (mode == DigestionAlignmentMode.Admission)
