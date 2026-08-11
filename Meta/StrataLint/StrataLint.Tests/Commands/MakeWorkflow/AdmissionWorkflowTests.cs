@@ -1,3 +1,5 @@
+using YamlDotNet.RepresentationModel;
+
 namespace StrataLint.Tests;
 
 public sealed class AdmissionWorkflowTests
@@ -7,25 +9,42 @@ public sealed class AdmissionWorkflowTests
     {
         var root = FindRepositoryRoot();
         var workflow = File.ReadAllText(Path.Combine(root, ".github", "workflows", "ci.yml"));
-
-        var reportIndex = workflow.IndexOf(
-            "name: Produce source-bound canonical Lean reports",
-            StringComparison.Ordinal);
-        var reconciliationIndex = workflow.IndexOf(
-            "name: Reconcile pinned statement projections with live Lean report",
-            StringComparison.Ordinal);
-
+        var stream = new YamlStream();
+        stream.Load(new StringReader(workflow));
+        var document = Assert.IsType<YamlMappingNode>(stream.Documents[0].RootNode);
+        var jobs = Assert.IsType<YamlMappingNode>(document.Children[new YamlScalarNode("jobs")]);
+        var leanInspect = Assert.IsType<YamlMappingNode>(jobs.Children[new YamlScalarNode("lean-inspect")]);
+        var steps = Assert.IsType<YamlSequenceNode>(leanInspect.Children[new YamlScalarNode("steps")]);
+        var namedSteps = steps.Children.OfType<YamlMappingNode>()
+            .Select(static step => new
+            {
+                Node = step,
+                Name = Assert.IsType<YamlScalarNode>(step.Children[new YamlScalarNode("name")]).Value,
+            })
+            .ToArray();
+        var reportIndex = Array.FindIndex(namedSteps, static step =>
+            step.Name == "Produce source-bound canonical Lean reports");
+        var reconciliationIndex = Array.FindIndex(namedSteps, static step =>
+            step.Name == "Reconcile pinned statement projections with live Lean report");
         Assert.True(reportIndex >= 0, "admission must produce the canonical live Lean report");
         Assert.True(reconciliationIndex > reportIndex, "reconciliation must run after report production");
-        Assert.Contains("STRATALINT_REQUIRE_LIVE_REPORT: \"1\"", workflow, StringComparison.Ordinal);
+
+        var reconciliation = namedSteps[reconciliationIndex].Node;
+        var environment = Assert.IsType<YamlMappingNode>(reconciliation.Children[new YamlScalarNode("env")]);
+        Assert.Equal("1", Assert.IsType<YamlScalarNode>(
+            environment.Children[new YamlScalarNode("STRATALINT_REQUIRE_LIVE_REPORT")]).Value);
+        var run = Assert.IsType<YamlScalarNode>(reconciliation.Children[new YamlScalarNode("run")]).Value!;
         Assert.Contains(
-            "FullyQualifiedName~LiveReportMatchesPinnedFixtureWhenAvailable",
-            workflow,
+            "FullyQualifiedName=StrataLint.Scribe.Tests.StatementProjectionPilotTests.LiveReportMatchesPinnedFixtureWhenAvailable",
+            run,
             StringComparison.Ordinal);
         Assert.Contains(
-            "FullyQualifiedName~GeneratedMarkdownIsDeterministicAndMatchesTheCommittedTree",
-            workflow,
+            "FullyQualifiedName=StrataLint.Scribe.Tests.DocumentDiscoveryTests.GeneratedMarkdownIsDeterministicAndMatchesTheCommittedTree",
+            run,
             StringComparison.Ordinal);
+        Assert.Contains("--logger \"trx;LogFileName=$results\"", run, StringComparison.Ordinal);
+        Assert.Contains("len(results) != 2", run, StringComparison.Ordinal);
+        Assert.Contains("set(names) != expected", run, StringComparison.Ordinal);
     }
 
     private static string FindRepositoryRoot()
