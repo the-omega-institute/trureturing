@@ -82,6 +82,7 @@ public sealed class RuleCatalog
         {
             var expected = Enumerable.Range(1, 23)
                 .Append(25)
+                .Append(26)
                 .Select(RuleId.CreateKnown)
                 .ToImmutableArray();
             if (registrations.Length != expected.Length
