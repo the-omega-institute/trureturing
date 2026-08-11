@@ -6,26 +6,22 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Recurrence;
 
 internal sealed class BivariateWordSeriesDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S1/Recurrence/BivariateWordSeries",
-            "Admissible-word bookkeeping obeys its bivariate self-substitution equation."),
-        H("The Bivariate Admissible-Word Equation"),
-        Blocks(
-            DocumentBlock.Describe.Theorem(
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Admissible-word bookkeeping obeys its bivariate self-substitution equation.",
+H("The Bivariate Admissible-Word Equation"),
+Blocks(
+            Describe.Lean(
                 DescribeId.Create("bivariate-admissible-word-self-equation"),
+                DeclarationHandle.Create("D5/S1/Recurrence/BivariateWordSeries.bookkeeping_series_self_functional_equation"),
                 H("The word series splits into its two substituted branches"),
-                LeanTheorem(
-                    "D5/S1/Recurrence/BivariateWordSeries.bookkeeping_series_self_functional_equation"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     F.Id("F"), Open, F.Id("u"), Comma, Sp, F.Id("v"), Close,
                     Sp, Eq, Sp,
                     F.Id("F"), Open, F.Id("v"), Comma, Sp,
                     F.Id("u"), F.Id("v"), Close,
                     Sp, Plus, Sp, F.Id("u"), Cdot, Sp,
                     F.Id("F"), Open, F.Id("u"), F.Id("v"), Comma, Sp,
-                    F.Id("u"), F.Id("v"), Caret, Grp(D(2)), Close)),
-                DescribeProvenance.RepoDerived(),
+                    F.Id("u"), F.Id("v"), Caret, Grp(D(2)), Close))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The coefficients count finite binary words with no adjacent occupied "
@@ -43,6 +39,6 @@ internal sealed class BivariateWordSeriesDocument : IScribeDocumentDefinition
                         + "uses pinned Mathlib's cardinality-of-equivalence and cardinality-of-sum "
                         + "declarations. Mathlib supplies that general machinery but has no "
                         + "declaration for this admissible-word equation, so the combinatorial "
-                        + "bijection is new proof content rather than a wrapper.")))
-            ))));
+                        + "bijection is new proof content rather than a wrapper."))),
+                DescribeRole.Theorem))));
 }

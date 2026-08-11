@@ -6,29 +6,24 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Deficit;
 
 internal sealed class GoldenPhaseDistributionDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S1/Deficit/GoldenPhaseDistribution",
-            "Uniform golden phases give the exact three-valued deficit frequencies and mean."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Uniform golden phases give the exact three-valued deficit frequencies and mean.",
         H("Golden Phase Deficit Distribution"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
-                DescribeId.Create("golden-phase-deficit-distribution"),
+            Describe.Lean(DescribeId.Create("golden-phase-deficit-distribution"),
+                DeclarationHandle.Create("D5/S1/Deficit/GoldenPhaseDistribution.limiting_deficit_distribution"),
                 H("Uniform golden phase sampling has exact deficit frequencies"),
-                LeanTheorem(
-                    "D5/S1/Deficit/GoldenPhaseDistribution.limiting_deficit_distribution"),
-                DistributionFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(DistributionFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text(
-                        "The positive and negative events are the two corner triangles cut "
-                        + "from the unit phase square by the deficit thresholds. Their legs "
-                        + "have lengths inverse golden ratio and inverse golden ratio squared. "
-                        + "Integrating the vertical cross sections gives one half times the "
-                        + "square of each leg. The signed expectation is the positive area "
-                        + "minus the negative area, which simplifies by the golden quadratic "
-                        + "identity to one over twice the golden ratio cubed.")))
-            )),
+                                    Paragraph(Text(
+                                        "The positive and negative events are the two corner triangles cut "
+                                        + "from the unit phase square by the deficit thresholds. Their legs "
+                                        + "have lengths inverse golden ratio and inverse golden ratio squared. "
+                                        + "Integrating the vertical cross sections gives one half times the "
+                                        + "square of each leg. The signed expectation is the positive area "
+                                        + "minus the negative area, which simplifies by the golden quadratic "
+                                        + "identity to one over twice the golden ratio cubed."))),
+                DescribeRole.Theorem)),
         []));
 
     private static Formula DistributionFormula() =>
