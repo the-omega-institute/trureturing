@@ -183,11 +183,58 @@ internal static class DigestionFingerprint
         "sha256:" + Convert.ToHexStringLower(SHA256.HashData(bytes));
 }
 
-internal static class GictAtomizer
+/// <summary>The lead shape both numbered dialects share: <c>**&lt;genre&gt; &lt;number&gt;</c>.</summary>
+internal sealed class NumberedClaims
 {
-    private static readonly Regex UnknownNumberedClaimPattern = new(
+    private static readonly Regex AnyNumberedLead = new(
         "^\\*\\*(?<kind>\\p{L}+)\\s*[0-9]+\\.[0-9]+",
         RegexOptions.CultureInvariant);
+
+    private readonly string dialect;
+    private readonly ImmutableArray<AtomizerMapping> genres;
+    private readonly Regex registered;
+
+    internal NumberedClaims(
+        string dialect,
+        ImmutableArray<AtomizerMapping> genres,
+        string numberPattern)
+    {
+        this.dialect = dialect;
+        this.genres = genres;
+        registered = new Regex(
+            "^\\*\\*(?<kind>"
+            + string.Join('|', genres.Select(static item => Regex.Escape(item.Token)))
+            + ")\\s*(?<number>" + numberPattern + ")",
+            RegexOptions.CultureInvariant);
+    }
+
+    internal string? Identify(string paragraph)
+    {
+        var match = registered.Match(paragraph);
+        return match.Success
+            ? Kind(match.Groups["kind"].Value) + "/" + match.Groups["number"].Value
+            : null;
+    }
+
+    /// <summary>Fails closed on a lead that is numbered but names no registered genre.</summary>
+    internal void RejectUnregistered(string paragraph)
+    {
+        var unknown = AnyNumberedLead.Match(paragraph);
+        if (unknown.Success)
+        {
+            throw new TheorySourceFormatException(
+                $"unknown {dialect} numbered claim kind {unknown.Groups["kind"].Value}");
+        }
+    }
+
+    private string Kind(string value) =>
+        genres.FirstOrDefault(item => item.Token == value)?.Value
+        ?? throw new InvalidOperationException($"unknown {dialect} claim kind {value}");
+}
+
+internal static class GictAtomizer
+{
+    private const string NumberPattern = "[0-9]+\\.[0-9]+";
     private static readonly Regex AppendixClaimPattern = new(
         "^\\*\\*(?<number>E\\.[0-9]+)\\s+[^\\r\\n*]+\\*\\*",
         RegexOptions.CultureInvariant);
@@ -200,10 +247,10 @@ internal static class GictAtomizer
 
     private static string? Identify(string paragraph, TheoryAtomizerRules rules)
     {
-        var match = ClaimPattern(rules).Match(paragraph);
-        if (match.Success)
+        var claims = new NumberedClaims("GICT", rules.GictGenres, NumberPattern);
+        if (claims.Identify(paragraph) is { } locator)
         {
-            return Kind(match.Groups["kind"].Value, rules.GictGenres) + "/" + match.Groups["number"].Value;
+            return locator;
         }
 
         var appendix = AppendixClaimPattern.Match(paragraph);
@@ -212,33 +259,16 @@ internal static class GictAtomizer
             return "appendix/" + appendix.Groups["number"].Value;
         }
 
-        var unknown = UnknownNumberedClaimPattern.Match(paragraph);
-        if (unknown.Success)
-        {
-            throw new TheorySourceFormatException(
-                $"unknown GICT numbered claim kind {unknown.Groups["kind"].Value}");
-        }
+        claims.RejectUnregistered(paragraph);
 
-        var special = rules.GictClaimPrefixes
-            .FirstOrDefault(item => paragraph.StartsWith(item.Token, StringComparison.Ordinal));
-        if (special is not null)
-        {
-            return special.Value;
-        }
-        return null;
+        return rules.GictClaimPrefixes
+            .FirstOrDefault(item => paragraph.StartsWith(item.Token, StringComparison.Ordinal))
+            ?.Value;
     }
-
-    private static string Kind(string value, ImmutableArray<AtomizerMapping> genres) =>
-        genres.FirstOrDefault(item => item.Token == value)?.Value
-        ?? throw new InvalidOperationException($"unknown GICT claim kind {value}");
 
     private static string? IdentifyConstant(string value, TheoryAtomizerRules rules) =>
         rules.GictConstants.FirstOrDefault(item => item.Token == value)?.Value;
 
-    private static Regex ClaimPattern(TheoryAtomizerRules rules) => new(
-        "^\\*\\*(?<kind>" + string.Join('|', rules.GictGenres.Select(static item => Regex.Escape(item.Token)))
-        + ")\\s*(?<number>[0-9]+\\.[0-9]+)",
-        RegexOptions.CultureInvariant);
 }
 
 internal static class PeriodicTreeAtomizer
@@ -259,9 +289,7 @@ internal static class PeriodicTreeAtomizer
 
 internal static class PzgAtomizer
 {
-    private static readonly Regex UnknownNumberedClaimPattern = new(
-        "^\\*\\*(?<kind>\\p{L}+)\\s*[0-9]+\\.[0-9]+",
-        RegexOptions.CultureInvariant);
+    private const string NumberPattern = "[0-9]+\\.[0-9]+(?:\\.[0-9]+)?[′″]*";
     private static readonly Regex OpenPattern = new(
         "^\\*\\*(?<id>O-[0-9]+)\\*\\*",
         RegexOptions.CultureInvariant);
@@ -274,10 +302,10 @@ internal static class PzgAtomizer
 
     private static string? Identify(string paragraph, TheoryAtomizerRules rules)
     {
-        var match = ClaimPattern(rules).Match(paragraph);
-        if (match.Success)
+        var claims = new NumberedClaims("PZG", rules.PzgGenres, NumberPattern);
+        if (claims.Identify(paragraph) is { } locator)
         {
-            return Kind(match.Groups["kind"].Value, rules.PzgGenres) + "/" + match.Groups["number"].Value;
+            return locator;
         }
 
         var trace = Regex.Match(
@@ -296,12 +324,7 @@ internal static class PzgAtomizer
             return "open/" + open.Groups["id"].Value;
         }
 
-        var unknown = UnknownNumberedClaimPattern.Match(paragraph);
-        if (unknown.Success)
-        {
-            throw new TheorySourceFormatException(
-                $"unknown PZG numbered claim kind {unknown.Groups["kind"].Value}");
-        }
+        claims.RejectUnregistered(paragraph);
 
         return null;
     }
@@ -338,18 +361,6 @@ internal static class PzgAtomizer
             .Where(static item => item.Value != "metadata/supplement")
             .FirstOrDefault(item => heading.StartsWith(item.Token, StringComparison.Ordinal))?.Value;
     }
-
-    private static Regex ClaimPattern(TheoryAtomizerRules rules) => new(
-        "^\\*\\*(?<kind>" + string.Join('|', rules.PzgGenres.Select(static item => Regex.Escape(item.Token)))
-        + ")\\s*(?<number>[0-9]+\\.[0-9]+(?:\\.[0-9]+)?[′″]*)",
-        RegexOptions.CultureInvariant);
-
-    internal static bool RecognizesGenre(string token, TheoryAtomizerRules rules) =>
-        ClaimPattern(rules).IsMatch($"**{token} 1.1**");
-
-    private static string Kind(string value, ImmutableArray<AtomizerMapping> genres) =>
-        genres.FirstOrDefault(item => item.Token == value)?.Value
-        ?? throw new InvalidOperationException($"unknown PZG claim kind {value}");
 }
 
 internal static class MarkdownAstAtomizer
