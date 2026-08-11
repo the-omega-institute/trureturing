@@ -107,7 +107,7 @@ Before creating the new module, set `lean_dir` to its target directory and `blue
 lean_count=$(git ls-files "$lean_dir" | awk 'END { print NR+0 }'); blueprint_count=$(git ls-files "$blueprint_dir" | awk '!/\.md$/ { n++ } END { print n+0 }'); printf '%s %s\n%s %s\n' "$lean_dir" "$lean_count" "$blueprint_dir" "$blueprint_count"; test $((lean_count + 1)) -le 12 && test $((blueprint_count + 1)) -le 12
 ```
 
-Blueprint `.md` projections are excluded from capacity, but `.scribe.cs` sources count. If the natural target directory is full, do not place the module in a semantically wrong directory to evade the limit: the bucket must be split, a repository-level decision that touches the domain registry. End `open`, naming the full directory and its measured count.
+Blueprint `.md` projections are excluded from capacity, but `.scribe.cs` sources count. If the natural target directory is full, do not place the module in a semantically wrong directory to evade the limit: split the bucket, register the new domain in `Meta/domains.yaml`, place the module in the new directory, and carry the protected-surface cost for the conservative-extension gate to judge. A protected-surface change is priced work, not a stopping condition. Reserve `open` for what is genuinely unresolvable, such as an ambiguity that cannot be settled without weakening the claim or a proof that will not close, never for work that merely costs more.
 
 Run:
 
@@ -158,11 +158,20 @@ Recheck the live history and report what it actually shows; do not turn this obs
 
 Postcondition: deposit and preflight exited 0, and cover either exited 0 or its failure is captured as an `open` outcome with diagnostics.
 
-### 8. Report one of two outcomes
+### 8. Push and open the pull request, or report `open`
 
-Report `success` with touched paths, the commit subjects produced by the doors, every relevant exit code, and the completed fidelity-gate answers with their evidence so an independent reviewer can consume them afterwards. Or report `open`, naming the step at which the task ended and carrying every evidence class reached by that step; record each unreached class explicitly as not run and why, without requiring evidence from steps that never executed. There is no third outcome.
+After `make deposit` and `make preflight` both exit 0 and Step 7 completes, push the current branch and use the repository door:
 
-Postcondition: the report is evidence-complete and says exactly `success` or `open`.
+```sh
+git push -u origin <branch>
+make pr-open HEAD=<branch> TITLE='<title>' [BODY=<file>]
+```
+
+The door arms auto-merge. After it opens the pull request, do not push further changes to that branch: the pull request may already have merged, in which case a later successful push does not put that commit on `dev`. Any further change requires a new branch and a new pull request.
+
+If the dispatched sandbox forbids git writes, state that constraint explicitly and hand the exact `git push` and `make pr-open` invocations above, with substituted arguments, to the caller; do not report `success` as though the work landed. Otherwise report `success` only with the opened pull request, touched paths, door-produced commit subjects, every relevant exit code, and completed fidelity-gate evidence. Or report `open`, naming the stopping step and carrying every evidence class reached; mark each unreached class not run and explain why. There is no third outcome.
+
+Postcondition: the task ends with an opened pull request, or with evidence-complete `open`.
 
 ## Fidelity and non-hollowness gate
 
