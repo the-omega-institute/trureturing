@@ -1,1 +1,0 @@
-{"custodian": {"kind": "loader", "reference": "Meta/StrataLint/StrataLint.Scribe/Values/ValuesKernelDataLoader.cs"}, "exact_paths": ["Meta/StrataLint/Golden/values-kernels.toml"], "kind": "custody", "policy_root": "sha256:0daa1a195c3ff86a2da019f267933c40e4402fe54bde1203b9123adbb6e957ec", "schema": "stratalint-contract-evidence-v1"}

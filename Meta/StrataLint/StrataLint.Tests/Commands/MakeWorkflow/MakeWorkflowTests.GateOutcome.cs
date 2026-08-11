@@ -6,10 +6,12 @@ namespace StrataLint.Tests;
 public sealed partial class MakeWorkflowTests
 {
     [Theory]
-    [InlineData(1, "FAIL:SEMANTIC")]
-    [InlineData(2, "FAIL:INFRASTRUCTURE")]
+    [InlineData(1, 1, "FAIL:SEMANTIC")]
+    [InlineData(2, 2, "FAIL:INFRASTRUCTURE")]
+    [InlineData(3, 0, "PASS:NONE")]
     public void PreflightConsumesHarnessGateOutcomeAcrossTheFullChain(
-        int conservativeExitCode,
+        int admissionExitCode,
+        int expectedExitCode,
         string expectedDeclaration)
     {
         if (OperatingSystem.IsWindows()) return;
@@ -42,12 +44,12 @@ public sealed partial class MakeWorkflowTests
             "/bin/bash",
             [
                 "-c",
-                "PREFLIGHT_CONSERVATIVE_RC=\"$1\" PREFLIGHT_CANDIDATE_ROOT=\"$2\" "
+                "PREFLIGHT_ADMISSION_RC=\"$1\" PREFLIGHT_CANDIDATE_ROOT=\"$2\" "
                 + "PREFLIGHT_GATE=\"$3\" PREFLIGHT_LOCAL_GATE=\"$4\" "
                 + "HOME=\"$5\" BASE=base PATH=\"$6:/usr/bin:/bin\" "
                 + "exec /bin/bash \"$7\"",
                 "preflight-gate-outcome",
-                conservativeExitCode.ToString(System.Globalization.CultureInfo.InvariantCulture),
+                admissionExitCode.ToString(System.Globalization.CultureInfo.InvariantCulture),
                 candidateRoot,
                 Path.Combine(root, ".github", "scripts", "harness-gate.sh"),
                 Path.Combine(root, LocalHarnessGateScriptPath),
@@ -62,8 +64,8 @@ public sealed partial class MakeWorkflowTests
         var output = Encoding.UTF8.GetString(result.StandardOutput);
         var error = Encoding.UTF8.GetString(result.StandardError);
         Assert.True(
-            conservativeExitCode == result.ExitCode,
-            $"expected exit {conservativeExitCode}, actual {result.ExitCode}\nstdout:\n{output}\nstderr:\n{error}");
+            expectedExitCode == result.ExitCode,
+            $"expected exit {expectedExitCode}, actual {result.ExitCode}\nstdout:\n{output}\nstderr:\n{error}");
         Assert.EndsWith(
             $"FKST_LOCAL_ITERATION_RESULT:v2:{expectedDeclaration}\n",
             output,
@@ -120,10 +122,7 @@ public sealed partial class MakeWorkflowTests
                 ;;
             esac
             if [[ "${2:-}" == selftest ]]; then printf 'selftest\n'; exit 0; fi
-            if [[ "${2:-}" == check ]]; then exit 3; fi
-            if [[ "${2:-}" == verify-conservative ]]; then
-              exit "$PREFLIGHT_CONSERVATIVE_RC"
-            fi
+            if [[ "${2:-}" == check ]]; then exit "$PREFLIGHT_ADMISSION_RC"; fi
             echo "unexpected dotnet invocation: $*" >&2
             exit 91
             """);

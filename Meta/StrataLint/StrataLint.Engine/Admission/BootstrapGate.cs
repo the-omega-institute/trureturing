@@ -96,7 +96,7 @@ public partial record BootstrapOutcome
 public static class BootstrapGate
 {
     internal const string ProtectedSurfaceMessage =
-        "protected-surface change requires base-owned conservative-extension verification";
+        "protected-surface change detected (SL-022)";
     internal const string SpecificationPath = "docs/develop/spec/golden-ledger-repo-spec.md";
     internal const string DefinitionsPathPrefix =
         "Meta/StrataLint/StrataLint.Definitions/";

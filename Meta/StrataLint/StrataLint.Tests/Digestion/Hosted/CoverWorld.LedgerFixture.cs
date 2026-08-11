@@ -24,7 +24,7 @@ internal static partial class CoverWorld
         builder.Append("ledger: theory-digestion-v1\n");
         builder.Append("sources:\n");
         builder.Append("  - source_id: fixture-source\n");
-        builder.Append($"    path: {GoldenCorpus.FixtureDigestionSourcePath}\n");
+        builder.Append($"    path: {RuleFixture.FixtureDigestionSourcePath}\n");
         builder.Append($"    atomizer: {SyntheticNumberedAtomizer.Id}\n");
         builder.Append("    acknowledged_stale: []\n");
         builder.Append("    entries:\n");

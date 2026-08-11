@@ -12,11 +12,11 @@ public sealed class GateAuthorityTests
         "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef";
 
     [Fact]
-    public void RepositoryCatalogHasSixteenUniqueUtf8SortedRoots()
+    public void RepositoryCatalogHasFourteenUniqueUtf8SortedRoots()
     {
         var roots = GateAuthorityRootCatalogLoader.LoadRepository(FindRepositoryRoot());
 
-        Assert.Equal(16, roots.Length);
+        Assert.Equal(14, roots.Length);
         Assert.Equal(
             roots.Length,
             roots.Select(root => root.RootId).Distinct().Count());
