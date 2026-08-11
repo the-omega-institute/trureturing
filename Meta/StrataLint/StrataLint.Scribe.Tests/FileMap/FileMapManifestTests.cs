@@ -4,6 +4,58 @@ namespace StrataLint.Scribe.Tests;
 
 public sealed class FileMapManifestTests
 {
+    [Fact]
+    public void DataKeyedGeneratedRunLocalSetUsesTheEightKeyShape()
+    {
+        var manifest = FileMapLoader.Parse(Encoding.UTF8.GetBytes(DataKeyedRunLocalEntry()), "fixture.toml");
+
+        Assert.Equal("run-local", Assert.Single(manifest.Entries).RuntimeDisposition);
+    }
+
+    [Fact]
+    public void DataKeyedGeneratedRunLocalSetRejectsProjectionFields()
+    {
+        var source = DataKeyedRunLocalEntry().Replace(
+            "runtime_disposition = \"run-local\"\n",
+            "runtime_disposition = \"run-local\"\nmode = \"100644\"\n",
+            StringComparison.Ordinal);
+
+        var exception = Assert.Throws<FormatException>(() =>
+            FileMapLoader.Parse(Encoding.UTF8.GetBytes(source), "fixture.toml"));
+
+        Assert.Contains("unknown keys", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void LiteralGeneratedRunLocalEntryWithoutArtifactIdRemainsRejected()
+    {
+        var source = DataKeyedRunLocalEntry().Replace(
+            "Generated/partitions/*.md",
+            "Generated/partitions/source-a.md",
+            StringComparison.Ordinal);
+
+        var exception = Assert.Throws<FormatException>(() =>
+            FileMapLoader.Parse(Encoding.UTF8.GetBytes(source), "fixture.toml"));
+
+        Assert.Contains("mode", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void InventoryBackedRunLocalEntryRetainsTheTenKeyShape()
+    {
+        var source = DataKeyedRunLocalEntry()
+            .Replace("Generated/partitions/*.md", "Generated/output.md", StringComparison.Ordinal)
+            .Replace("artifact_id = \"none\"", "artifact_id = \"A-OUTPUT\"", StringComparison.Ordinal)
+            .Replace(
+                "runtime_disposition = \"run-local\"\n",
+                "runtime_disposition = \"run-local\"\nmode = \"100644\"\nhistory_requirement = \"not-required\"\n",
+                StringComparison.Ordinal);
+
+        var manifest = FileMapLoader.Parse(Encoding.UTF8.GetBytes(source), "fixture.toml");
+
+        Assert.Equal("run-local", Assert.Single(manifest.Entries).RuntimeDisposition);
+    }
+
     [Theory]
     [InlineData("extra = true\n", "unknown keys")]
     [InlineData("", "runtime_disposition")]
@@ -184,6 +236,26 @@ public sealed class FileMapManifestTests
             manifest.Match(RuleCatalogPath)).Kind);
         Assert.Empty(manifest.Match("unclassified.bin"));
     }
+
+    private static string DataKeyedRunLocalEntry() => """
+        schema_version = 2
+
+        [residence_policy]
+        case_id = "RESIDENCE-EPOCH"
+        desired = "data-must-live-outside-Meta/StrataLint"
+        known_violation_count = 0
+        status = "closed"
+
+        [[files]]
+        pattern = "Generated/partitions/*.md"
+        kind = "generated"
+        produced_by = "PartitionEmitter"
+        consumed_by = ["reader"]
+        verified_by = ["PartitionEmitter"]
+        authority = "self"
+        artifact_id = "none"
+        runtime_disposition = "run-local"
+        """ + "\n";
 
     [Theory]
     [InlineData("extra = true\n", "unknown keys")]

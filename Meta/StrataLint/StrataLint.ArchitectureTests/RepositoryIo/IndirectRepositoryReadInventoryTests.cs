@@ -5,9 +5,9 @@ public sealed class IndirectRepositoryReadInventoryTests
     private static readonly IReadOnlySet<string> PinnedBaseline = new HashSet<string>(StringComparer.Ordinal)
     {
         "Meta/StrataLint/StrataLint.Scribe.Tests/Describe/Quantum/ChannelFixedStateDocumentTests.cs:36",
-        "Meta/StrataLint/StrataLint.Scribe.Tests/FileMap/FileMapManifestTests.cs:85",
+        "Meta/StrataLint/StrataLint.Scribe.Tests/FileMap/FileMapManifestTests.cs:137",
         "Meta/StrataLint/StrataLint.Scribe.Tests/PdfWriterTests.cs:109",
-        "Meta/StrataLint/StrataLint.Scribe.Tests/PilotDocumentTests.cs:510",
+        "Meta/StrataLint/StrataLint.Scribe.Tests/PilotDocumentTests.cs:518",
         "Meta/StrataLint/StrataLint.Scribe.Tests/Values/ValuesDefinitionTests.cs:49",
         "Meta/StrataLint/StrataLint.Scribe.Tests/Values/ValuesDefinitionTests.cs:84",
         "Meta/StrataLint/StrataLint.Scribe.Tests/Values/ValuesProjectionTests.cs:11",

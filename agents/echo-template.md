@@ -12,6 +12,6 @@
 
 ## Residual Accounting (Required)
 
-- When a human-readable refresh is useful, run the producer to generate `Generated/echo-residuals/<source_id>.md` shards. Tracked snapshots may be stale and do not block publication; never require writing a global aggregate file.
+- When a human-readable refresh is useful, run the producer to generate the run-local `Generated/echo-residuals/<source_id>.md` projections on demand; they are not in the Git index. Never require writing a global aggregate file or hand-edit generated residual data.
 - Residual counts, mother residual `atom_id` lists, and `unresolved-subitem` lists must never be counted, written, edited, or reordered by hand. They are projections of `digest-status --residual-summary`, which uses the same evaluation as `digest-status --json`.
 - Residual projections are human-readable snapshots, not publication evidence or a freshness gate.

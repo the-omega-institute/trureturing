@@ -170,7 +170,7 @@ consumed_by = ["reader"]
 verified_by = ["EchoVerifyCommand"]
 authority = "digestion"
 artifact_id = "none"
-runtime_disposition = "committed-source"
+runtime_disposition = "run-local"
 
 [[files]]
 pattern = "Generated/truth-graph.v1.json"
@@ -614,6 +614,16 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["Lean"]
 verified_by = ["make-gate"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "skills/**"
+kind = "program"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
 authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
