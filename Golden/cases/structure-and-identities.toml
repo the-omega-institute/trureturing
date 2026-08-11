@@ -188,3 +188,10 @@ changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
 baseline_mutations = []
 mutations = [{ op = "lean", path = "D5/S0/Carrier/Ring.lean", raw_gid = "D5/S0/Carrier/Ring@bad", generality = "General", body = "def illegal : Nat := 0\n" }]
 expected_diagnostics = [{ rule = 15, path = "D5/S0/Carrier/Ring.lean", message = "GID violates the machine-field character set" }]
+
+[[cases]]
+name = "new-scribe-definition-adds-a-legacy-constructor"
+changes = ["Blueprint/D5/S0/Carrier/Ring.scribe.cs"]
+baseline_mutations = []
+mutations = [{ op = "write", path = "Blueprint/D5/S0/Carrier/Ring.scribe.cs", content = "internal static class RingDocument\n{\n    private static object Use() => DefinitionDsl.LeanTheorem(\"D5/S0/Carrier/Ring.ring_spec\");\n}\n" }]
+expected_diagnostics = [{ rule = 22, path = "Blueprint/D5/S0/Carrier/Ring.scribe.cs", message = "protected-surface change requires base-owned conservative-extension verification" }, { rule = 26, path = "Blueprint/D5/S0/Carrier/Ring.scribe.cs", message = "legacy Scribe constructor LeanTheorem increased from 0 to 1; remaining=1" }]
