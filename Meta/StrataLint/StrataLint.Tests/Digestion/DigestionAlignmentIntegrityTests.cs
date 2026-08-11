@@ -138,6 +138,52 @@ public sealed partial class DigestionAlignmentTests
         Assert.Equal(currentAtom.Fingerprints, result.AtomFor("live-receipt")?.Fingerprints);
     }
 
+    [Fact]
+    public void IngestCarriesCoverageAndUnresolvedSubitemsForwardAcrossAtomGenerations()
+    {
+        var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
+        var currentBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。rewritten。\n");
+        var oldAtom = Assert.Single(GictAtomizer.Atomize(oldBytes, DigestionTestSupport.Rules).Claims);
+        var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
+        var loaded = BackfillInventoryLoader.Load(Ledger(
+            [],
+            CasEntry("old-receipt", oldAtom, oldCapture.Reference)));
+        var source = Assert.Single(loaded.RequireDigestionSources());
+        var oldEntry = Assert.Single(source.Entries) with
+        {
+            CoverageGids =
+            [
+                "D5/S3/Observer/WindowCharacter.window_algebra_has_no_character",
+                "D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product",
+            ],
+            Receipts = Assert.Single(source.Entries).Receipts with
+            {
+                UnresolvedSubitems =
+                [
+                    "kochen-specker-projection-valuation-obstruction",
+                    "hidden-address-local-variable-interpretation",
+                    "classical-address-realism-exclusion",
+                    "probability-not-ignorance-conclusion",
+                ],
+            },
+        };
+        var ledger = loaded.WithDigestionSources(
+            [source with { Entries = [oldEntry] }]);
+
+        var plan = DigestionIngestor.Plan(
+            ledger,
+            Snapshot(currentBytes, [oldCapture]),
+            ledger);
+        var nextGeneration = Assert.Single(
+            Assert.Single(plan.Document.RequireDigestionSources()).Entries,
+            static entry => entry.AtomId != "old-receipt");
+
+        Assert.Empty(oldEntry.CoverageGids.Except(nextGeneration.CoverageGids, StringComparer.Ordinal));
+        Assert.Empty(oldEntry.Receipts.UnresolvedSubitems.Except(
+            nextGeneration.Receipts.UnresolvedSubitems,
+            StringComparer.Ordinal));
+    }
+
     private static DigestionAtom Atom(string astPath, byte[] bytes) => new(
         astPath,
         0,
