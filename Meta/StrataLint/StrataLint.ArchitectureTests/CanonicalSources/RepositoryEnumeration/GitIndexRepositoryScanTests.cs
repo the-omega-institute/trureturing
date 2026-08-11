@@ -32,11 +32,8 @@ public sealed class GitIndexRepositoryScanTests
                     nameof(RepositoryPathLiteralTests.RepositoryCSharpDoesNotCopyExistingRepositoryFilePaths),
                     new RepositoryPathLiteralTests().RepositoryCSharpDoesNotCopyExistingRepositoryFilePaths),
                 (
-                    nameof(CanonicalSourceDuplicationTests.RepositoryCSharpDoesNotCopyLedgerAtomizerIdsOutsideTheRegistry),
-                    new CanonicalSourceDuplicationTests().RepositoryCSharpDoesNotCopyLedgerAtomizerIdsOutsideTheRegistry),
-                (
-                    nameof(CanonicalSourceDuplicationTests.RepositoryCSharpDoesNotCopyCanonicalBackfillTicketMappings),
-                    new CanonicalSourceDuplicationTests().RepositoryCSharpDoesNotCopyCanonicalBackfillTicketMappings),
+                    nameof(CanonicalSourceDuplicationTests.RepositoryCSharpDoesNotCopyCanonicalTicketMappingsOrAtomizerIds),
+                    new CanonicalSourceDuplicationTests().RepositoryCSharpDoesNotCopyCanonicalTicketMappingsOrAtomizerIds),
             };
             var failures = repositoryTests
                 .Select(test => (test.Name, Exception: Record.Exception(test.Run)))
