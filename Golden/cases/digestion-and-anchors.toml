@@ -145,7 +145,7 @@ name = "changed-protected-source-path"
 changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
 baseline_mutations = []
 mutations = [{ op = "replace_backfill", old_value = "path: docs/GOVERNANCE.md", new_value = "path: Library/queries.yaml" }]
-expected_diagnostics = [{ rule = 16, path = "Meta/BACKFILL.yaml", message = "source fixture-source has an invalid governance path" }]
+expected_diagnostics = [{ rule = 16, path = "Meta/BACKFILL.yaml", message = "source fixture-source has an invalid governance path 'Library/queries.yaml': add it to governance_documents in Meta/registry.yaml" }]
 
 [[cases]]
 name = "new-boundaryless-fake-fingerprint"

@@ -537,11 +537,16 @@ public sealed partial class ReviewRegressionTests
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build(policy));
 
-        Assert.Contains(
+        // Registering a new theory volume hits this before anything else, so the verdict
+        // has to name the file and field that fix it, not only what is wrong.
+        var diagnostic = Assert.Single(
             evaluation.Diagnostics,
             item => item.Message.Contains(
                 $"source {source.SourceId} has an invalid governance path",
                 StringComparison.Ordinal));
+        Assert.Contains(source.SourcePath, diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains("Meta/registry.yaml", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains("governance_documents", diagnostic.Message, StringComparison.Ordinal);
         var enginePath = Directory.EnumerateFiles(
             Path.Combine(FindRepositoryRoot(), "Meta", "StrataLint", "StrataLint.Engine"),
             "BackfillInventoryRule.cs",
