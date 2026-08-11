@@ -8,7 +8,7 @@ public sealed class StatementProjectionPilotTests
     [Fact]
     public void DocumentDefinitionsLoadFromExplicitRepositoryRoot()
     {
-        var repositoryRoot = FindRepositoryRoot();
+        var repositoryRoot = RepositoryAccessor.Discover().Root.FullPath;
         var definitions = DocumentDefinitions.Discover(
             typeof(DocumentDefinitions).Assembly,
             repositoryRoot);
@@ -19,7 +19,7 @@ public sealed class StatementProjectionPilotTests
     [Fact]
     public void DocumentDefinitionsFailClosedWithFixturePathForExplicitRepository()
     {
-        var repositoryRoot = Directory.CreateTempSubdirectory("stratalint-scribe-missing-");
+        var repositoryRoot = TemporaryFileSystem.Directory.CreateTempSubdirectory("stratalint-scribe-missing-");
         try
         {
             var exception = Assert.Throws<FileNotFoundException>(() =>
@@ -176,9 +176,9 @@ public sealed class StatementProjectionPilotTests
         using var fixture = LoadPinnedFixture("statement-projection-pilot-v1.json");
         using var expansion = LoadPinnedFixture("statement-projection-expansion-v1.json");
         var names = ReadFixtureDeclarations(fixture, expansion).Keys.ToArray();
-        var blueprintRoot = Path.Combine(FindRepositoryRoot(), "Blueprint");
-        var sources = Directory.EnumerateFiles(blueprintRoot, "*.scribe.cs", SearchOption.AllDirectories)
-            .Select(File.ReadAllText).ToArray();
+        var repository = RepositoryAccessor.Discover();
+        var sources = repository.EnumerateFiles(RepositoryRelativePath.Create("Blueprint"), "*.scribe.cs")
+            .Select(repository.ReadAllText).ToArray();
 
         var projected = sources.Sum(source => source.Split(
             "StatementProjectionFixtureLoader.FromLean(", StringSplitOptions.None).Length - 1);
@@ -190,7 +190,7 @@ public sealed class StatementProjectionPilotTests
     public void LiveReportMatchesPinnedFixtureWhenAvailable()
     {
         StatementProjectionReconciliation.Verify(
-            FindRepositoryRoot(),
+            RepositoryAccessor.Discover().Root.FullPath,
             requireLiveReport: Environment.GetEnvironmentVariable("STRATALINT_REQUIRE_LIVE_REPORT") == "1");
     }
 
@@ -220,8 +220,9 @@ public sealed class StatementProjectionPilotTests
             StatementProjectionReconciliation.Verify(repository.Path, requireLiveReport: true));
     }
 
-    private static JsonDocument LoadPinnedFixture(string name) => JsonDocument.Parse(File.ReadAllBytes(Path.Combine(
-        FindRepositoryRoot(), "Golden", "Projection", name)));
+    private static JsonDocument LoadPinnedFixture(string name) => JsonDocument.Parse(
+        RepositoryAccessor.Discover().ReadAllBytes(RepositoryRelativePath.Create(
+            $"Golden/Projection/{name}")));
 
     private static Dictionary<string, JsonElement> ReadFixtureDeclarations(params JsonDocument[] fixtures)
     {
@@ -231,48 +232,36 @@ public sealed class StatementProjectionPilotTests
             .ToDictionary(item => item.GetProperty("name").GetString()!, StringComparer.Ordinal);
     }
 
-    private static string FindRepositoryRoot()
-    {
-        for (var directory = new DirectoryInfo(AppContext.BaseDirectory); directory is not null; directory = directory.Parent)
-        {
-            if (File.Exists(Path.Combine(directory.FullName, "lakefile.toml"))) return directory.FullName;
-        }
-
-        throw new InvalidOperationException("Repository root was not found.");
-    }
-
     private sealed class LiveReportFactAttribute : FactAttribute
     {
         public LiveReportFactAttribute()
         {
-            var directory = new DirectoryInfo(AppContext.BaseDirectory);
-            while (directory is not null && !File.Exists(Path.Combine(directory.FullName, "lakefile.toml")))
-                directory = directory.Parent;
+            var repository = RepositoryAccessor.Discover();
             var requireLiveReport = Environment.GetEnvironmentVariable("STRATALINT_REQUIRE_LIVE_REPORT") == "1";
-            if (!requireLiveReport && (directory is null || !File.Exists(Path.Combine(
-                    directory.FullName, ".lake/build/stratalint/raw-lean-report.json"))))
+            if (!requireLiveReport && !repository.FileExists(RepositoryRelativePath.Create(
+                    ".lake/build/stratalint/raw-lean-report.json")))
                 Skip = "Live raw Lean report is absent; pinned statement-v1 fixture remains the self-contained verifier asset.";
         }
     }
 
     private sealed class TemporaryRepository : IDisposable
     {
-        private readonly DirectoryInfo root = Directory.CreateTempSubdirectory("stratalint-statement-reconciliation-");
+        private readonly DirectoryInfo root = TemporaryFileSystem.Directory.CreateTempSubdirectory("stratalint-statement-reconciliation-");
 
         public string Path => root.FullName;
 
         public static TemporaryRepository WithReport(string type)
         {
             var repository = new TemporaryRepository();
-            Directory.CreateDirectory(System.IO.Path.Combine(repository.Path, "Golden", "Projection"));
-            Directory.CreateDirectory(System.IO.Path.Combine(repository.Path, ".lake", "build", "stratalint"));
-            File.WriteAllText(
+            TemporaryFileSystem.Directory.CreateDirectory(System.IO.Path.Combine(repository.Path, "Golden", "Projection"));
+            TemporaryFileSystem.Directory.CreateDirectory(System.IO.Path.Combine(repository.Path, ".lake", "build", "stratalint"));
+            TemporaryFileSystem.File.WriteAllText(
                 System.IO.Path.Combine(repository.Path, "Golden", "Projection", "statement-projection-pilot-v1.json"),
                 $$"""{"schema":"statement-projection-pilot-fixture-v1","declarations":[{"name":"D5.Test.declaration","type":"{{type}}"}]}""");
-            File.WriteAllText(
+            TemporaryFileSystem.File.WriteAllText(
                 System.IO.Path.Combine(repository.Path, "Golden", "Projection", "statement-projection-expansion-v1.json"),
                 """{"schema":"statement-projection-expansion-fixture-v1","declarations":[]}""");
-            File.WriteAllText(
+            TemporaryFileSystem.File.WriteAllText(
                 System.IO.Path.Combine(repository.Path, ".lake", "build", "stratalint", "raw-lean-report.json"),
                 """{"modules":[{"declarations":[{"name":"D5.Test.declaration","type":"statement-v1(uparams=[],type=es(l0))"}]}]}""");
             return repository;

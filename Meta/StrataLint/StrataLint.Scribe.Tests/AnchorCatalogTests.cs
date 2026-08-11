@@ -64,8 +64,7 @@ public sealed class AnchorCatalogTests
     {
         var first = CanonicalAnchorCatalogWriter.Write();
         var second = CanonicalAnchorCatalogWriter.Write();
-        var committed = File.ReadAllBytes(Path.Combine(
-            FindRepositoryRoot(),
+        var committed = RepositoryAccessor.Discover().ReadAllBytes(RepositoryRelativePath.Create(
             CanonicalAnchorCatalogWriter.RelativePath));
 
         Assert.True(first.AsSpan().SequenceEqual(second.AsSpan()));
@@ -77,7 +76,7 @@ public sealed class AnchorCatalogTests
     public void CatalogEmitterWritesAndChecksTheExactProjection()
     {
         var root = Path.Combine(Path.GetTempPath(), "stratalint-catalog-" + Guid.NewGuid().ToString("N"));
-        Directory.CreateDirectory(root);
+        TemporaryFileSystem.Directory.CreateDirectory(root);
         try
         {
             using var output = new StringWriter();
@@ -88,30 +87,14 @@ public sealed class AnchorCatalogTests
             Assert.Equal(string.Empty, error.ToString());
 
             var path = Path.Combine(root, CanonicalAnchorCatalogWriter.RelativePath);
-            File.AppendAllText(path, " ");
+            TemporaryFileSystem.File.AppendAllText(path, " ");
 
             Assert.Equal(1, AnchorCatalogEmitter.Emit(root, check: true, output, error));
             Assert.Contains("out of date", error.ToString(), StringComparison.Ordinal);
         }
         finally
         {
-            Directory.Delete(root, recursive: true);
+            TemporaryFileSystem.Directory.Delete(root, recursive: true);
         }
-    }
-
-    private static string FindRepositoryRoot()
-    {
-        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
-             current is not null;
-             current = current.Parent)
-        {
-            if (File.Exists(Path.Combine(current.FullName, "global.json"))
-                && Directory.Exists(Path.Combine(current.FullName, "Blueprint")))
-            {
-                return current.FullName;
-            }
-        }
-
-        throw new DirectoryNotFoundException("Could not locate repository root.");
     }
 }

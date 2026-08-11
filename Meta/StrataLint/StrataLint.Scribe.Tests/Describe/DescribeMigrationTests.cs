@@ -118,7 +118,7 @@ public sealed class DescribeMigrationTests
     [Fact]
     public void RepositoryReportMatchesAnIndependentAstInventory()
     {
-        var root = FindRepositoryRoot();
+        var root = RepositoryAccessor.Discover().Root.FullPath;
         var expected = DeriveContentInventory();
         var report = DescribeReport.Build(
             root,
@@ -595,7 +595,7 @@ public sealed class DescribeMigrationTests
 
         var exit = ScribeCli.Run(
             ["describe-report", "--json"],
-            FindRepositoryRoot(),
+            RepositoryAccessor.Discover().Root.FullPath,
             output,
             error,
             LeanReportFixture.ForDocuments(
@@ -743,20 +743,4 @@ public sealed class DescribeMigrationTests
         IReadOnlyDictionary<string, int> ByProvenance,
         int Unassessed,
         int SuspectedNovel);
-
-    private static string FindRepositoryRoot()
-    {
-        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
-             current is not null;
-             current = current.Parent)
-        {
-            if (File.Exists(Path.Combine(current.FullName, "global.json"))
-                && Directory.Exists(Path.Combine(current.FullName, "Blueprint")))
-            {
-                return current.FullName;
-            }
-        }
-
-        throw new DirectoryNotFoundException("Could not locate repository root.");
-    }
 }

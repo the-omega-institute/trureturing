@@ -10,13 +10,10 @@ public sealed class DocumentDiscoveryTests
     [Fact]
     public void FilesystemAndRegisteredDefinitionsFormACanonicalBijection()
     {
-        var repositoryRoot = FindRepositoryRoot();
-        var filesystemSources = Directory
-            .EnumerateFiles(
-                Path.Combine(repositoryRoot, "Blueprint"),
-                "*.scribe.cs",
-                SearchOption.AllDirectories)
-            .Select(path => Path.GetRelativePath(repositoryRoot, path).Replace('\\', '/'))
+        var repository = RepositoryAccessor.Discover();
+        var filesystemSources = repository
+            .EnumerateFiles(RepositoryRelativePath.Create("Blueprint"), "*.scribe.cs")
+            .Select(static path => path.Value)
             .Order(StringComparer.Ordinal)
             .ToArray();
         var registrations = DocumentDefinitions.All
@@ -75,14 +72,14 @@ public sealed class DocumentDiscoveryTests
     [Fact]
     public void GeneratedMarkdownIsDeterministicAndMatchesTheCommittedTree()
     {
-        var repositoryRoot = FindRepositoryRoot();
+        var repositoryRoot = RepositoryAccessor.Discover().Root.FullPath;
         var rawLeanReport = Path.Combine(
             repositoryRoot,
             ".lake",
             "build",
             "stratalint",
             "raw-lean-report.json");
-        if (!File.Exists(rawLeanReport))
+        if (!TemporaryFileSystem.File.Exists(rawLeanReport))
         {
             var error = new StringWriter();
             var exit = ScribeEmitter.Emit(
@@ -512,24 +509,8 @@ public sealed class DocumentDiscoveryTests
         }
     }
 
-    private static string FindRepositoryRoot()
-    {
-        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
-             current is not null;
-             current = current.Parent)
-        {
-            if (File.Exists(Path.Combine(current.FullName, "global.json"))
-                && Directory.Exists(Path.Combine(current.FullName, "Blueprint")))
-            {
-                return current.FullName;
-            }
-        }
-
-        throw new DirectoryNotFoundException("Could not locate the repository root.");
-    }
-
     private static IReadOnlyDictionary<string, LiteratureCitation> RepositoryCitations() =>
-        LibraryNoteCatalog.Load(FindRepositoryRoot()).Citations;
+        LibraryNoteCatalog.Load(RepositoryAccessor.Discover().Root.FullPath).Citations;
 
     private static string CanonicalSourcePath(string sourcePath)
     {

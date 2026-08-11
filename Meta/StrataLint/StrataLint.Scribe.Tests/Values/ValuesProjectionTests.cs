@@ -8,7 +8,7 @@ public sealed class ValuesProjectionTests
     [Fact]
     public void ExactQuadraticEvaluationUsesAControlledDecimalInterval()
     {
-        var definition = ValuesKernelDataLoader.LoadRepository(FindRepositoryRoot())
+        var definition = ValuesKernelDataLoader.LoadRepository(RepositoryAccessor.Discover().Root.FullPath)
             .Single(static item => item.Id == "D5/kappa");
 
         var result = ValuesEvaluator.Evaluate(definition);
@@ -25,7 +25,7 @@ public sealed class ValuesProjectionTests
     [Fact]
     public void CphiEvaluationQuantizesPlatformDependentFloatingOutput()
     {
-        var definition = ValuesKernelDataLoader.LoadRepository(FindRepositoryRoot())
+        var definition = ValuesKernelDataLoader.LoadRepository(RepositoryAccessor.Discover().Root.FullPath)
             .Single(static item => item.Id == "D5/Cphi");
 
         var result = ValuesEvaluator.Evaluate(definition);
@@ -47,7 +47,7 @@ public sealed class ValuesProjectionTests
     [Fact]
     public void CphiProjectionRequiresFourWindowsForItsSpreadEstimate()
     {
-        var definition = ValuesKernelDataLoader.LoadRepository(FindRepositoryRoot())
+        var definition = ValuesKernelDataLoader.LoadRepository(RepositoryAccessor.Discover().Root.FullPath)
             .Single(static item => item.Id == "D5/Cphi") with
         {
             Computation = new ValueComputation.Cphi(new CphiKernelSpec(
@@ -65,13 +65,13 @@ public sealed class ValuesProjectionTests
     [Fact]
     public void ValuesWriterIsByteStableAndCarriesTheCompleteAttestation()
     {
-        var root = FindRepositoryRoot();
+        var root = RepositoryAccessor.Discover().Root.FullPath;
 
         var first = CanonicalValuesWriter.Write(root);
         var second = CanonicalValuesWriter.Write(root);
 
         Assert.True(first.AsSpan().SequenceEqual(second.AsSpan()));
-        Assert.True(first.AsSpan().SequenceEqual(File.ReadAllBytes(
+        Assert.True(first.AsSpan().SequenceEqual(TemporaryFileSystem.File.ReadAllBytes(
             Path.Combine(root, CanonicalValuesWriter.RelativePath))));
         Assert.Equal((byte)'\n', first[^1]);
         using var document = JsonDocument.Parse(first.ToArray());
@@ -137,18 +137,18 @@ public sealed class ValuesProjectionTests
     [Fact]
     public void EmitValuesCliWritesAndChecksWithoutOverwritingDrift()
     {
-        var sourceRoot = FindRepositoryRoot();
+        var repository = RepositoryAccessor.Discover();
         var root = Path.Combine(Path.GetTempPath(), "stratalint-values-" + Guid.NewGuid().ToString("N"));
         foreach (var inputPath in CanonicalValuesWriter.InputPaths)
         {
             var destination = Path.Combine(root, inputPath);
-            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
-            File.Copy(Path.Combine(sourceRoot, inputPath), destination);
+            TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+            repository.CopyTo(RepositoryRelativePath.Create(inputPath), destination);
         }
 
-        Directory.CreateDirectory(Path.Combine(root, "Blueprint"));
+        TemporaryFileSystem.Directory.CreateDirectory(Path.Combine(root, "Blueprint"));
         var working = Path.Combine(root, "Meta", "StrataLint");
-        Directory.CreateDirectory(working);
+        TemporaryFileSystem.Directory.CreateDirectory(working);
 
         try
         {
@@ -160,31 +160,16 @@ public sealed class ValuesProjectionTests
             Assert.Equal(string.Empty, error.ToString());
 
             var path = Path.Combine(root, CanonicalValuesWriter.RelativePath);
-            File.AppendAllText(path, " ", new UTF8Encoding(false, true));
-            var drifted = File.ReadAllBytes(path);
+            TemporaryFileSystem.File.AppendAllText(path, " ", new UTF8Encoding(false, true));
+            var drifted = TemporaryFileSystem.File.ReadAllBytes(path);
 
             Assert.Equal(1, ScribeCli.Run(["emit-values", "--check"], working, output, error));
-            Assert.Equal(drifted, File.ReadAllBytes(path));
+            Assert.Equal(drifted, TemporaryFileSystem.File.ReadAllBytes(path));
             Assert.Contains("out of date", error.ToString(), StringComparison.Ordinal);
         }
         finally
         {
-            Directory.Delete(root, recursive: true);
+            TemporaryFileSystem.Directory.Delete(root, recursive: true);
         }
-    }
-
-    private static string FindRepositoryRoot()
-    {
-        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
-             current is not null;
-             current = current.Parent)
-        {
-            if (File.Exists(Path.Combine(current.FullName, "D5", "X_Frontier", "ValuesProducer.lean")))
-            {
-                return current.FullName;
-            }
-        }
-
-        throw new DirectoryNotFoundException("Could not locate the repository root.");
     }
 }

@@ -12,7 +12,7 @@ public sealed class EmissionTests
         var root = Path.Combine(
             Path.GetTempPath(),
             "stratalint-scribe-validation-" + Guid.NewGuid().ToString("N"));
-        Directory.CreateDirectory(root);
+        TemporaryFileSystem.Directory.CreateDirectory(root);
         CopyProjectionFixtures(root);
         try
         {
@@ -30,13 +30,13 @@ public sealed class EmissionTests
 
             Assert.Equal(1, exit);
             Assert.Contains("dangling-gid", error.ToString(), StringComparison.Ordinal);
-            Assert.False(File.Exists(Path.Combine(
+            Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(
                 root,
                 DocumentDefinitions.All[0].RelativePath.Value)));
         }
         finally
         {
-            Directory.Delete(root, recursive: true);
+            TemporaryFileSystem.Directory.Delete(root, recursive: true);
         }
     }
 
@@ -47,11 +47,11 @@ public sealed class EmissionTests
             Path.GetTempPath(),
             "stratalint-scribe-library-" + Guid.NewGuid().ToString("N"));
         var notes = Path.Combine(root, "Library", "notes");
-        Directory.CreateDirectory(notes);
+        TemporaryFileSystem.Directory.CreateDirectory(notes);
         CopyProjectionFixtures(root);
         try
         {
-            File.WriteAllText(
+            TemporaryFileSystem.File.WriteAllText(
                 Path.Combine(notes, "sos1957threegap.md"),
                 "---\nbibkey: sos1957threegap\nauthors: Vera T. Sos\nyear: 1957\n"
                 + "title: Invalid\ndoi: not-a-doi\n"
@@ -75,7 +75,7 @@ public sealed class EmissionTests
         }
         finally
         {
-            Directory.Delete(root, recursive: true);
+            TemporaryFileSystem.Directory.Delete(root, recursive: true);
         }
     }
 
@@ -85,7 +85,7 @@ public sealed class EmissionTests
         var root = Path.Combine(
             Path.GetTempPath(),
             "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
-        Directory.CreateDirectory(root);
+        TemporaryFileSystem.Directory.CreateDirectory(root);
         CopyProjectionFixtures(root);
 
         try
@@ -98,10 +98,11 @@ public sealed class EmissionTests
             {
                 var relativeSource = definition.RelativePath.Value[..^3] + ".scribe.cs";
                 var destination = Path.Combine(root, relativeSource);
-                Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+                TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
                 // Deterministic CI builds map [CallerFilePath] to the /_/ source root,
                 // so fixture copies must resolve through the runtime repository root.
-                File.Copy(Path.Combine(FindRepositoryRoot(), relativeSource), destination);
+                RepositoryAccessor.Discover().CopyTo(
+                    RepositoryRelativePath.Create(relativeSource), destination);
             }
             CopyRepositoryLibrary(root);
 
@@ -109,7 +110,7 @@ public sealed class EmissionTests
 
             Assert.Equal(0, emitExit);
             Assert.Empty(error.ToString());
-            Assert.True(File.Exists(Path.Combine(
+            Assert.True(TemporaryFileSystem.File.Exists(Path.Combine(
                 root,
                 ScribeEmitter.AttestationRelativePath)));
             var firstEmission = new Dictionary<string, byte[]>(StringComparer.Ordinal);
@@ -125,14 +126,14 @@ public sealed class EmissionTests
             foreach (var definition in DocumentDefinitions.All)
             {
                 var path = Path.Combine(root, definition.RelativePath.Value);
-                firstEmission.Add(definition.RelativePath.Value, File.ReadAllBytes(path));
+                firstEmission.Add(definition.RelativePath.Value, TemporaryFileSystem.File.ReadAllBytes(path));
                 Assert.Equal(
                     CanonicalMarkdownWriter.Write(
                         definition.Document,
                         report,
                         citations,
                         graph).ToArray(),
-                    File.ReadAllBytes(path));
+                    TemporaryFileSystem.File.ReadAllBytes(path));
             }
 
             output.GetStringBuilder().Clear();
@@ -144,15 +145,15 @@ public sealed class EmissionTests
             {
                 Assert.Equal(
                     firstEmission[definition.RelativePath.Value],
-                    File.ReadAllBytes(Path.Combine(root, definition.RelativePath.Value)));
+                    TemporaryFileSystem.File.ReadAllBytes(Path.Combine(root, definition.RelativePath.Value)));
             }
 
-            File.WriteAllText(
+            TemporaryFileSystem.File.WriteAllText(
                 Path.Combine(root, "global.json"),
                 "{}\n",
                 new UTF8Encoding(false, true));
             var nestedDirectory = Path.Combine(root, "Meta", "StrataLint");
-            Directory.CreateDirectory(nestedDirectory);
+            TemporaryFileSystem.Directory.CreateDirectory(nestedDirectory);
             var cliCheckExit = ScribeCli.Run(
                 ["emit", "--check"],
                 nestedDirectory,
@@ -162,19 +163,19 @@ public sealed class EmissionTests
             Assert.Equal(0, cliCheckExit);
 
             var driftedPath = Path.Combine(root, DocumentDefinitions.All[0].RelativePath.Value);
-            File.WriteAllText(driftedPath, "drift\n", new UTF8Encoding(false, true));
+            TemporaryFileSystem.File.WriteAllText(driftedPath, "drift\n", new UTF8Encoding(false, true));
 
             var checkExit = ScribeEmitter.Emit(root, check: true, output, error, report);
 
             Assert.Equal(1, checkExit);
-            Assert.Equal("drift\n", File.ReadAllText(driftedPath));
+            Assert.Equal("drift\n", TemporaryFileSystem.File.ReadAllText(driftedPath));
             Assert.Contains("out of date", error.ToString(), StringComparison.Ordinal);
 
-            File.WriteAllBytes(
+            TemporaryFileSystem.File.WriteAllBytes(
                 driftedPath,
                 firstEmission[DocumentDefinitions.All[0].RelativePath.Value]);
             var attestationPath = Path.Combine(root, ScribeEmitter.AttestationRelativePath);
-            File.WriteAllText(attestationPath, "drift\n", new UTF8Encoding(false, true));
+            TemporaryFileSystem.File.WriteAllText(attestationPath, "drift\n", new UTF8Encoding(false, true));
             error.GetStringBuilder().Clear();
 
             var attestationCheckExit = ScribeEmitter.Emit(
@@ -189,7 +190,7 @@ public sealed class EmissionTests
         }
         finally
         {
-            Directory.Delete(root, recursive: true);
+            TemporaryFileSystem.Directory.Delete(root, recursive: true);
         }
     }
 
@@ -199,14 +200,14 @@ public sealed class EmissionTests
         var root = Path.Combine(
             Path.GetTempPath(),
             "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
-        Directory.CreateDirectory(root);
+        TemporaryFileSystem.Directory.CreateDirectory(root);
         CopyProjectionFixtures(root);
 
         try
         {
             var firstPath = Path.Combine(root, DocumentDefinitions.All[0].RelativePath.Value);
-            Directory.CreateDirectory(Path.GetDirectoryName(firstPath)!);
-            File.WriteAllText(firstPath, "sentinel\n", new UTF8Encoding(false, true));
+            TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(firstPath)!);
+            TemporaryFileSystem.File.WriteAllText(firstPath, "sentinel\n", new UTF8Encoding(false, true));
             var error = new StringWriter();
 
             var exit = ScribeEmitter.Emit(
@@ -219,13 +220,13 @@ public sealed class EmissionTests
 
             Assert.Equal(1, exit);
             Assert.Contains("emit failed", error.ToString(), StringComparison.Ordinal);
-            Assert.Equal("sentinel\n", File.ReadAllText(firstPath));
-            Assert.False(File.Exists(
+            Assert.Equal("sentinel\n", TemporaryFileSystem.File.ReadAllText(firstPath));
+            Assert.False(TemporaryFileSystem.File.Exists(
                 Path.Combine(root, DocumentDefinitions.All[^1].RelativePath.Value)));
         }
         finally
         {
-            Directory.Delete(root, recursive: true);
+            TemporaryFileSystem.Directory.Delete(root, recursive: true);
         }
     }
 
@@ -235,7 +236,7 @@ public sealed class EmissionTests
         var root = Path.Combine(
             Path.GetTempPath(),
             "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
-        Directory.CreateDirectory(root);
+        TemporaryFileSystem.Directory.CreateDirectory(root);
         CopyProjectionFixtures(root);
 
         try
@@ -246,21 +247,19 @@ public sealed class EmissionTests
             {
                 var relativeSource = definition.RelativePath.Value[..^3] + ".scribe.cs";
                 var destination = Path.Combine(root, relativeSource);
-                Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+                TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
                 // Deterministic CI builds map [CallerFilePath] to the /_/ source root,
                 // so fixture copies must resolve through the runtime repository root.
-                File.Copy(Path.Combine(FindRepositoryRoot(), relativeSource), destination);
+                RepositoryAccessor.Discover().CopyTo(
+                    RepositoryRelativePath.Create(relativeSource), destination);
             }
-            var repositoryRoot = FindRepositoryRoot();
-            foreach (var source in Directory.EnumerateFiles(
-                         Path.Combine(repositoryRoot, "D5"),
-                         "*.lean",
-                         SearchOption.AllDirectories))
+            var repository = RepositoryAccessor.Discover();
+            foreach (var source in repository.EnumerateFiles(
+                         RepositoryRelativePath.Create("D5"), "*.lean"))
             {
-                var relative = Path.GetRelativePath(repositoryRoot, source);
-                var destination = Path.Combine(root, relative);
-                Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
-                File.Copy(source, destination);
+                var destination = Path.Combine(root, source.Value);
+                TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+                repository.CopyTo(source, destination);
             }
             CopyRepositoryLibrary(root);
 
@@ -278,13 +277,13 @@ public sealed class EmissionTests
                 "D5/S1/Scale/FibonacciEigen.fibonacci_substitution_spec"));
 
             var emissionPath = Path.Combine(root, DocumentDefinitions.All[0].RelativePath.Value);
-            var originalEmission = File.ReadAllBytes(emissionPath);
+            var originalEmission = TemporaryFileSystem.File.ReadAllBytes(emissionPath);
             var forgedEmission = Encoding.UTF8.GetBytes("# forged emission\n");
-            File.WriteAllBytes(emissionPath, forgedEmission);
+            TemporaryFileSystem.File.WriteAllBytes(emissionPath, forgedEmission);
             var attestationPath = Path.Combine(root, ScribeEmitter.AttestationRelativePath);
-            var attestation = File.ReadAllText(attestationPath, Encoding.UTF8)
+            var attestation = TemporaryFileSystem.File.ReadAllText(attestationPath, Encoding.UTF8)
                 .Replace(Sha256(originalEmission), Sha256(forgedEmission), StringComparison.Ordinal);
-            File.WriteAllText(attestationPath, attestation, new UTF8Encoding(false));
+            TemporaryFileSystem.File.WriteAllText(attestationPath, attestation, new UTF8Encoding(false));
             var error = new StringWriter();
 
             var verification = ScribeEmitter.Verify(root, error, report);
@@ -294,7 +293,7 @@ public sealed class EmissionTests
         }
         finally
         {
-            Directory.Delete(root, recursive: true);
+            TemporaryFileSystem.Directory.Delete(root, recursive: true);
         }
     }
 
@@ -304,7 +303,7 @@ public sealed class EmissionTests
         var root = Path.Combine(
             Path.GetTempPath(),
             "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
-        Directory.CreateDirectory(root);
+        TemporaryFileSystem.Directory.CreateDirectory(root);
         CopyProjectionFixtures(root);
 
         try
@@ -323,10 +322,10 @@ public sealed class EmissionTests
             // emission remains byte-identical, so the capability must still vouch for the base-owned
             // documents rather than collapse to null (which would un-absorb every base-owned atom).
             var attestationPath = Path.Combine(root, ScribeEmitter.AttestationRelativePath);
-            var original = File.ReadAllText(attestationPath, Encoding.UTF8);
+            var original = TemporaryFileSystem.File.ReadAllText(attestationPath, Encoding.UTF8);
             var injected = InjectCandidateOnlyAttestationEntry(original);
             Assert.NotEqual(original, injected);
-            File.WriteAllText(attestationPath, injected, new UTF8Encoding(false));
+            TemporaryFileSystem.File.WriteAllText(attestationPath, injected, new UTF8Encoding(false));
 
             var error = new StringWriter();
             var verification = ScribeEmitter.Verify(root, error, report);
@@ -339,7 +338,7 @@ public sealed class EmissionTests
         }
         finally
         {
-            Directory.Delete(root, recursive: true);
+            TemporaryFileSystem.Directory.Delete(root, recursive: true);
         }
     }
 
@@ -349,7 +348,7 @@ public sealed class EmissionTests
         var root = Path.Combine(
             Path.GetTempPath(),
             "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
-        Directory.CreateDirectory(root);
+        TemporaryFileSystem.Directory.CreateDirectory(root);
         CopyProjectionFixtures(root);
 
         try
@@ -373,17 +372,17 @@ public sealed class EmissionTests
             var victimEmissionPath = Path.Combine(root, victim.RelativePath.Value);
             var victimEntry =
                 "{\"definition_path\": \"Blueprint/D5/S1/Scale/FibonacciEigen.scribe.cs\", "
-                + "\"definition_sha256\": \"" + Sha256(File.ReadAllBytes(victimSourcePath)) + "\", "
+                + "\"definition_sha256\": \"" + Sha256(TemporaryFileSystem.File.ReadAllBytes(victimSourcePath)) + "\", "
                 + "\"emission_path\": \"Blueprint/D5/S1/Scale/FibonacciEigen.md\", "
-                + "\"emission_sha256\": \"" + Sha256(File.ReadAllBytes(victimEmissionPath)) + "\", "
+                + "\"emission_sha256\": \"" + Sha256(TemporaryFileSystem.File.ReadAllBytes(victimEmissionPath)) + "\", "
                 + "\"gid\": \"D5/S1/Scale/FibonacciEigen\"}";
-            File.Delete(victimSourcePath);
-            File.Delete(victimEmissionPath);
+            TemporaryFileSystem.File.Delete(victimSourcePath);
+            TemporaryFileSystem.File.Delete(victimEmissionPath);
             var attestationPath = Path.Combine(root, ScribeEmitter.AttestationRelativePath);
-            var original = File.ReadAllText(attestationPath, Encoding.UTF8);
+            var original = TemporaryFileSystem.File.ReadAllText(attestationPath, Encoding.UTF8);
             var pruned = original.Replace(victimEntry + ", ", string.Empty, StringComparison.Ordinal);
             Assert.NotEqual(original, pruned);
-            File.WriteAllText(attestationPath, pruned, new UTF8Encoding(false));
+            TemporaryFileSystem.File.WriteAllText(attestationPath, pruned, new UTF8Encoding(false));
 
             var error = new StringWriter();
             var verification = ScribeEmitter.Verify(root, error, report);
@@ -398,7 +397,7 @@ public sealed class EmissionTests
         }
         finally
         {
-            Directory.Delete(root, recursive: true);
+            TemporaryFileSystem.Directory.Delete(root, recursive: true);
         }
     }
 
@@ -408,7 +407,7 @@ public sealed class EmissionTests
         var root = Path.Combine(
             Path.GetTempPath(),
             "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
-        Directory.CreateDirectory(root);
+        TemporaryFileSystem.Directory.CreateDirectory(root);
         CopyProjectionFixtures(root);
 
         try
@@ -423,14 +422,14 @@ public sealed class EmissionTests
             // so per-document rendering must catch the corruption and refuse the whole capability;
             // base-owned corruption must never be laundered through the candidate-only tolerance.
             var emissionPath = Path.Combine(root, DocumentDefinitions.All[0].RelativePath.Value);
-            var originalEmission = File.ReadAllBytes(emissionPath);
+            var originalEmission = TemporaryFileSystem.File.ReadAllBytes(emissionPath);
             var forgedEmission = Encoding.UTF8.GetBytes("# forged emission\n");
-            File.WriteAllBytes(emissionPath, forgedEmission);
+            TemporaryFileSystem.File.WriteAllBytes(emissionPath, forgedEmission);
             var attestationPath = Path.Combine(root, ScribeEmitter.AttestationRelativePath);
-            var attestation = File.ReadAllText(attestationPath, Encoding.UTF8)
+            var attestation = TemporaryFileSystem.File.ReadAllText(attestationPath, Encoding.UTF8)
                 .Replace(Sha256(originalEmission), Sha256(forgedEmission), StringComparison.Ordinal);
             attestation = InjectCandidateOnlyAttestationEntry(attestation);
-            File.WriteAllText(attestationPath, attestation, new UTF8Encoding(false));
+            TemporaryFileSystem.File.WriteAllText(attestationPath, attestation, new UTF8Encoding(false));
 
             var error = new StringWriter();
             var verification = ScribeEmitter.Verify(root, error, report);
@@ -440,7 +439,7 @@ public sealed class EmissionTests
         }
         finally
         {
-            Directory.Delete(root, recursive: true);
+            TemporaryFileSystem.Directory.Delete(root, recursive: true);
         }
     }
 
@@ -450,7 +449,7 @@ public sealed class EmissionTests
         var root = Path.Combine(
             Path.GetTempPath(),
             "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
-        Directory.CreateDirectory(root);
+        TemporaryFileSystem.Directory.CreateDirectory(root);
         CopyProjectionFixtures(root);
 
         try
@@ -468,8 +467,8 @@ public sealed class EmissionTests
                 definition.Document.Header.Gid.Value == "D5/S1/Scale/CarrierFoundations");
             Assert.NotEqual("D5/S0/Carrier/GoldenRatio", absent.Document.Header.Gid.Value);
             Assert.NotEqual("D5/S1/Scale/FibonacciEigen", absent.Document.Header.Gid.Value);
-            File.Delete(Path.Combine(root, absent.RelativePath.Value));
-            File.Delete(Path.Combine(root, absent.RelativePath.Value[..^3] + ".scribe.cs"));
+            TemporaryFileSystem.File.Delete(Path.Combine(root, absent.RelativePath.Value));
+            TemporaryFileSystem.File.Delete(Path.Combine(root, absent.RelativePath.Value[..^3] + ".scribe.cs"));
 
             var reportWithoutAbsent = LeanReportFixture.ForDocuments(
                 DocumentDefinitions.All
@@ -487,7 +486,7 @@ public sealed class EmissionTests
         }
         finally
         {
-            Directory.Delete(root, recursive: true);
+            TemporaryFileSystem.Directory.Delete(root, recursive: true);
         }
     }
 
@@ -497,7 +496,7 @@ public sealed class EmissionTests
         var root = Path.Combine(
             Path.GetTempPath(),
             "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
-        Directory.CreateDirectory(root);
+        TemporaryFileSystem.Directory.CreateDirectory(root);
 
         try
         {
@@ -509,7 +508,7 @@ public sealed class EmissionTests
             // then a deleted or out-of-date base-owned emission, not a candidate-only addition. It must
             // still void the capability locally, never be laundered through the not-materialized skip.
             var target = DocumentDefinitions.All[0];
-            File.Delete(Path.Combine(root, target.RelativePath.Value));
+            TemporaryFileSystem.File.Delete(Path.Combine(root, target.RelativePath.Value));
 
             var error = new StringWriter();
             var verification = ScribeEmitter.Verify(root, error, report);
@@ -519,7 +518,7 @@ public sealed class EmissionTests
         }
         finally
         {
-            Directory.Delete(root, recursive: true);
+            TemporaryFileSystem.Directory.Delete(root, recursive: true);
         }
     }
 
@@ -530,7 +529,7 @@ public sealed class EmissionTests
 
         var exit = ScribeCli.Run(
             ["emit", "--write-somewhere"],
-            Directory.GetCurrentDirectory(),
+            TemporaryFileSystem.Directory.GetCurrentDirectory(),
             TextWriter.Null,
             error);
 
@@ -541,10 +540,10 @@ public sealed class EmissionTests
     [Fact]
     public void EveryBlueprintMarkdownHasExactlyOneDiscoveredScribeDefinition()
     {
-        var root = FindRepositoryRoot();
-        var markdownPaths = Directory
-            .EnumerateFiles(Path.Combine(root, "Blueprint"), "*.md", SearchOption.AllDirectories)
-            .Select(path => Path.GetRelativePath(root, path).Replace('\\', '/'))
+        var repository = RepositoryAccessor.Discover();
+        var markdownPaths = repository
+            .EnumerateFiles(RepositoryRelativePath.Create("Blueprint"), "*.md")
+            .Select(static path => path.Value)
             .Order(StringComparer.Ordinal)
             .ToArray();
         var definitionPaths = DocumentDefinitions.All
@@ -554,7 +553,8 @@ public sealed class EmissionTests
 
         Assert.Equal(markdownPaths, definitionPaths);
         Assert.All(markdownPaths, path => Assert.True(
-            File.Exists(Path.Combine(root, path[..^".md".Length] + ".scribe.cs")),
+            repository.FileExists(RepositoryRelativePath.Create(
+                path[..^".md".Length] + ".scribe.cs")),
             $"missing Scribe definition for {path}"));
     }
 
@@ -565,27 +565,24 @@ public sealed class EmissionTests
 
     private static void PrepareEmittedRepository(string root, LeanAxiomReport report)
     {
-        var repositoryRoot = FindRepositoryRoot();
+        var repository = RepositoryAccessor.Discover();
         CopyProjectionFixtures(root);
         foreach (var definition in DocumentDefinitions.All)
         {
             var relativeSource = definition.RelativePath.Value[..^3] + ".scribe.cs";
             var destination = Path.Combine(root, relativeSource);
-            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+            TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
             // Deterministic CI builds map [CallerFilePath] to the /_/ source root,
             // so fixture copies must resolve through the runtime repository root.
-            File.Copy(Path.Combine(repositoryRoot, relativeSource), destination);
+            repository.CopyTo(RepositoryRelativePath.Create(relativeSource), destination);
         }
 
-        foreach (var source in Directory.EnumerateFiles(
-                     Path.Combine(repositoryRoot, "D5"),
-                     "*.lean",
-                     SearchOption.AllDirectories))
+        foreach (var source in repository.EnumerateFiles(
+                     RepositoryRelativePath.Create("D5"), "*.lean"))
         {
-            var relative = Path.GetRelativePath(repositoryRoot, source);
-            var destination = Path.Combine(root, relative);
-            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
-            File.Copy(source, destination);
+            var destination = Path.Combine(root, source.Value);
+            TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+            repository.CopyTo(source, destination);
         }
 
         CopyRepositoryLibrary(root);
@@ -609,61 +606,38 @@ public sealed class EmissionTests
 
     private static void CopyRepositoryLibrary(string destinationRoot)
     {
-        var repositoryRoot = FindRepositoryRoot();
-        var ledgerSources = Directory.EnumerateFiles(
-                Path.Combine(repositoryRoot, "Meta", "Digestion", "backfill"),
-                "*",
-                SearchOption.AllDirectories)
-            .Append(Path.Combine(repositoryRoot, "Meta", "Digestion", "ticket-index.toml"));
+        var repository = RepositoryAccessor.Discover();
+        var ledgerSources = repository.EnumerateFiles(
+                RepositoryRelativePath.Create("Meta/Digestion/backfill"), "*")
+            .Append(RepositoryRelativePath.Create("Meta/Digestion/ticket-index.toml"));
         foreach (var source in ledgerSources)
         {
-            var destination = Path.Combine(
-                destinationRoot,
-                Path.GetRelativePath(repositoryRoot, source));
-            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
-            File.Copy(source, destination);
+            var destination = Path.Combine(destinationRoot, source.Value);
+            TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+            repository.CopyTo(source, destination);
         }
 
-        foreach (var source in Directory.EnumerateFiles(
-                     Path.Combine(repositoryRoot, "Library"),
-                     "*.md",
-                     SearchOption.AllDirectories))
+        foreach (var source in repository.EnumerateFiles(
+                     RepositoryRelativePath.Create("Library"), "*.md"))
         {
-            var relative = Path.GetRelativePath(repositoryRoot, source);
-            var destination = Path.Combine(destinationRoot, relative);
-            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
-            File.Copy(source, destination);
+            var destination = Path.Combine(destinationRoot, source.Value);
+            TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+            repository.CopyTo(source, destination);
         }
     }
 
     private static void CopyProjectionFixtures(string destinationRoot)
     {
-        var repositoryRoot = FindRepositoryRoot();
-        var sourceDirectory = Path.Combine(repositoryRoot, "Golden", "Projection");
+        var repository = RepositoryAccessor.Discover();
         var destinationDirectory = Path.Combine(destinationRoot, "Golden", "Projection");
-        Directory.CreateDirectory(destinationDirectory);
-        foreach (var source in Directory.EnumerateFiles(sourceDirectory, "*.json"))
+        TemporaryFileSystem.Directory.CreateDirectory(destinationDirectory);
+        foreach (var source in repository.EnumerateFiles(
+                     RepositoryRelativePath.Create("Golden/Projection"), "*.json"))
         {
-            File.Copy(
+            repository.CopyTo(
                 source,
-                Path.Combine(destinationDirectory, Path.GetFileName(source)),
+                Path.Combine(destinationDirectory, Path.GetFileName(source.Value)),
                 overwrite: true);
         }
-    }
-
-    private static string FindRepositoryRoot()
-    {
-        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
-             current is not null;
-             current = current.Parent)
-        {
-            if (File.Exists(Path.Combine(current.FullName, "global.json"))
-                && Directory.Exists(Path.Combine(current.FullName, "Blueprint")))
-            {
-                return current.FullName;
-            }
-        }
-
-        throw new InvalidOperationException("repository root was not found above the test base directory");
     }
 }

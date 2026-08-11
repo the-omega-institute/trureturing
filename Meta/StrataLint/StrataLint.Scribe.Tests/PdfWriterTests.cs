@@ -106,7 +106,7 @@ public sealed class PdfWriterTests
     {
         var report = LeanReportFixture.ForDocuments(
             DocumentDefinitions.All.Select(static definition => definition.Document));
-        var citations = LibraryNoteCatalog.Load(FindRepositoryRoot()).Citations;
+        var citations = LibraryNoteCatalog.Load(RepositoryAccessor.Discover().Root.FullPath).Citations;
         foreach (var definition in DocumentDefinitions.All)
         {
             var pdf = QuestPdfWriter.Write(definition.Document, report, citations);
@@ -114,21 +114,5 @@ public sealed class PdfWriterTests
             Assert.True(pdf.Length > 5);
             Assert.Equal("%PDF-", Encoding.ASCII.GetString(pdf.AsSpan()[..5]));
         }
-    }
-
-    private static string FindRepositoryRoot()
-    {
-        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
-             current is not null;
-             current = current.Parent)
-        {
-            if (File.Exists(Path.Combine(current.FullName, "global.json"))
-                && Directory.Exists(Path.Combine(current.FullName, "Library")))
-            {
-                return current.FullName;
-            }
-        }
-
-        throw new InvalidOperationException("repository root was not found above the test base directory");
     }
 }

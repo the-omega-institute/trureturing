@@ -31,11 +31,11 @@ public sealed class ChannelFixedStateDocumentTests
     [Fact]
     public void WatrousNotePinsTheVerifiedLocatorWithoutInventingATheoremNumber()
     {
-        var root = FindRepositoryRoot();
+        var repository = RepositoryAccessor.Discover();
         var note = Assert.Single(
-            LibraryNoteCatalog.Load(root).Notes,
+            LibraryNoteCatalog.Load(repository.Root.FullPath).Notes,
             static item => item.BibKey.Value == "watrous2018theory");
-        var text = File.ReadAllText(Path.Combine(root, note.RelativePath));
+        var text = repository.ReadAllText(RepositoryRelativePath.Create(note.RelativePath));
 
         Assert.Equal("10.1017/9781316848142", note.Doi?.Value);
         Assert.Equal(2018, note.Year);
@@ -44,17 +44,5 @@ public sealed class ChannelFixedStateDocumentTests
             "No specific theorem number is attributed",
             text,
             StringComparison.Ordinal);
-    }
-
-    private static string FindRepositoryRoot()
-    {
-        var directory = new DirectoryInfo(AppContext.BaseDirectory);
-        while (directory is not null && !File.Exists(Path.Combine(directory.FullName, "CLAUDE.md")))
-        {
-            directory = directory.Parent;
-        }
-
-        return directory?.FullName
-            ?? throw new DirectoryNotFoundException("Repository root was not found.");
     }
 }
