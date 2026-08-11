@@ -14,7 +14,7 @@ public sealed class RepositoryRootCriterionMappingTests
             ["FileMap/FileMapEmitterTests.cs"] = "FileMapDirectoryNotFound",
             ["FileMap/FileMapManifestTests.cs"] = "FileMapDirectoryNotFound",
             ["PdfWriterTests.cs"] = "GlobalJsonAndLibraryInvalidOperation",
-            ["PilotDocumentTests.cs"] = "GlobalJsonAndBlueprintDirectoryNotFound,GlobalJsonAndBlueprintDirectoryNotFound,GlobalJsonAndBlueprintDirectoryNotFound",
+            ["PilotDocumentTests.cs"] = "GlobalJsonAndBlueprintDirectoryNotFound,GlobalJsonAndBlueprintDirectoryNotFound,GlobalJsonAndBlueprintDirectoryNotFound,GlobalJsonAndBlueprintDirectoryNotFound",
             ["Projection/StatementProjectionPilotTests.cs"] = "LakefileInvalidOperation,LakefileInvalidOperation,LakefileInvalidOperation,LakefileInvalidOperation,LakefileInvalidOperation",
             ["Support/RepositoryAccessorTests.cs"] = "GlobalJsonAndBlueprintDirectoryNotFound,LakefileInvalidOperation,ClaudeDirectoryNotFound,ClaudeDirectoryNotFound,ClaudeDirectoryNotFound,ClaudeDirectoryNotFound",
             ["V3/LeanCompiledArtifactReportsTests.cs"] = "ClaudeDirectoryNotFound",
