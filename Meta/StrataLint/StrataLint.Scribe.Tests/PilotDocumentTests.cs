@@ -69,29 +69,20 @@ public sealed class DocumentDiscoveryTests
             StringComparison.Ordinal);
     }
 
-    [Fact]
+    [LiveReportFact]
     public void GeneratedMarkdownIsDeterministicAndMatchesTheCommittedTree()
     {
         var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound);
         var repositoryRoot = repository.Root.FullPath;
         var rawLeanReport = RepositoryRelativePath.Create(
             ".lake/build/stratalint/raw-lean-report.json");
-        if (!repository.FileExists(rawLeanReport))
-        {
-            var error = new StringWriter();
-            var exit = ScribeEmitter.Emit(
-                repositoryRoot,
-                check: true,
-                TextWriter.Null,
-                error);
-
-            Assert.Equal(1, exit);
-            Assert.Contains("inspect.sh", error.ToString(), StringComparison.Ordinal);
-            return;
-        }
+        Assert.True(
+            repository.FileExists(rawLeanReport),
+            "STRATALINT_REQUIRE_LIVE_REPORT=1 requires .lake/build/stratalint/raw-lean-report.json");
 
         var report = LeanCompiledArtifactReports.InspectRepository(repositoryRoot);
         var citations = LibraryNoteCatalog.Load(repositoryRoot).Citations;
+        Assert.NotEmpty(DocumentDefinitions.All);
         var documents = DocumentDefinitions.All
             .Select(static definition => definition.Document)
             .ToArray();
@@ -122,7 +113,7 @@ public sealed class DocumentDiscoveryTests
             Assert.Contains(anchor.FormalTruthRepoPath, report.Files.Keys.Select(static path => path.Value));
         });
 
-        // 只验生产者确定性,不在**这里**比对提交树。
+        // 既验生产者确定性,也在下方比对提交树。
         //
         // 【2026-08-11 勘误】本注释原写「提交的 md 是人读快照,陈旧无害于任何判决」——**那是假的**,
         // 由第十一轮面板证伪。committed `Blueprint/**/*.md` 的字节**仍在准入路径上承重**:
@@ -134,14 +125,31 @@ public sealed class DocumentDiscoveryTests
         //   钉死其为红。此外 `Scribe/Emission/ScribeEmitter.cs:233-242` 也仍对提交树逐字节比对。
         // 亦即 FILEMAP 的 `consumed_by = ["reader"]` 并未反映实情:它有机器消费者。
         //
-        // 故删这一行**不等于**「Blueprint 的投影守卫已清除」。它只是移除了**测试侧的一份副本**;
-        // 准入侧那两处仍在,是否该删须另行按四项合取裁决(裁决时不得再以 FILEMAP 自声明字段为据)。
+        // 本测试与 admission 侧 ScribeEmitter.Verify 仅在逐文档 committed-byte 比对上部分等价;
+        // 它不等价于 admission 的完整验证。准入侧两处保持不动,
+        // 是否该删须另行按四项合取裁决(裁决时不得再以 FILEMAP 自声明字段为据)。
+        Assert.NotEmpty(DocumentDefinitions.All);
         foreach (var definition in DocumentDefinitions.All)
         {
             var first = CanonicalMarkdownWriter.Write(definition.Document, report, citations, graph);
             var second = CanonicalMarkdownWriter.Write(definition.Document, report, citations, graph);
+            var committed = repository.ReadAllBytes(
+                RepositoryRelativePath.Create(definition.RelativePath.Value));
 
             Assert.Equal(first.ToArray(), second.ToArray());
+            Assert.Equal(committed, first.ToArray());
+        }
+    }
+
+    private sealed class LiveReportFactAttribute : FactAttribute
+    {
+        public LiveReportFactAttribute()
+        {
+            var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound);
+            var requireLiveReport = Environment.GetEnvironmentVariable("STRATALINT_REQUIRE_LIVE_REPORT") == "1";
+            if (!requireLiveReport && !repository.FileExists(RepositoryRelativePath.Create(
+                    ".lake/build/stratalint/raw-lean-report.json")))
+                Skip = "Live raw Lean report is absent; committed markdown replay requires that report.";
         }
     }
 
