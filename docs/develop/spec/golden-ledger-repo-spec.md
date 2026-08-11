@@ -527,7 +527,7 @@ canonical command 只有在返回 `0` 且 `OUT` 是满足指定 schema 的单个
 
 R1：可再生全局 aggregate 入库，令独立 source change 争用相同路径。其字面强化实例是 `docs/develop/spec/golden-ledger-repo-spec.md` 为 `Meta/BACKFILL.yaml:32218-32219` 的消化 source，而 atom 边界以绝对 `start_byte`/`end_byte` 保存（首项 `32223-32226`，后续项如 `32243-32246`）：在 spec 中间插入 bytes 会使其后所有边界整体位移，即“派生数据入库”与脆弱位置锚合流。PR #806 的 merge `48194acd39767b418a7938181d81546a97f2eebb` 同时改 spec 与 BACKFILL；评审提供的“插入 1052 bytes 导致 24 对边界各移 1052、fingerprints 不变”本轮未从 merge diff 独立复算，标 `ASSUMED-UNVERIFIED AU-BACKFILL-OFFSET-806`；测法是对该 merge 的正确 first-parent 做逐 atom boundary/fingerprint 差分。无论该历史数字是否成立，当前 schema 的绝对 byte 边界已由上述行号直接证实。凡修改该 spec 的 PR 必须在同 PR 运行 `make ingest BASE=origin/dev` 重算 BACKFILL/CAS 派生项，禁止手改。
 
-**F1 居所不变量：**`disposable-projection` 不得住于保护面前缀之下；分类严格引用 `CLAUDE.md` 第〇节的四项合取与未知/外部依赖 fail-closed 条款，不在本 SPEC 另写定义。P0-F1 当前只迁 `truth-graph`；`scribe-emissions` 与 `anchor-catalog` 的 base judge consumer 边界及 bootstrap 前置见 §12.1，不得以双次重建或当前全绿冒充完整依赖闭包。实测该类计算物因住 `Meta/StrataLint/` 前缀下而触发 `conservative 529s`，同类的 `Generated/DAG.md` 住顶层则从不触发。
+**F1 居所不变量：**`disposable-projection` 不得住于保护面前缀之下；分类严格引用 `CLAUDE.md` 第〇节的四项合取与未知/外部依赖 fail-closed 条款，不在本 SPEC 另写定义。P0-F1 当前只迁 `truth-graph`；`scribe-emissions` 的 base judge consumer 边界及 bootstrap 前置见 §12.1，不得以双次重建或当前全绿冒充完整依赖闭包（`anchor-catalog` 已整体退役，无 consumer 可迁）。实测该类计算物因住 `Meta/StrataLint/` 前缀下而触发 `conservative 529s`，同类的 `Generated/DAG.md` 住顶层则从不触发。
 
 **F6 叶节点依赖：**投影不得把兄弟投影计入自身身份/provenance；实测 `TruthGraphJson.cs:28-36` 的 snapshot 规范化了自身却 hash `Generated/DAG.md`，导致 emit 重写自己刚算出的图的输入，deposit 链首跑必红（3/3 复现），F5 由此合并为该结构性真因而不另立条目。
 
