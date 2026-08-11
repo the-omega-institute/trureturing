@@ -243,8 +243,8 @@ public sealed class ReportSupervisorScriptTests
         using var fixture = new ReportSupervisorFixture();
         var ownerlessLock = Path.Combine(fixture.StateRoot, "slots", "slot-1.lock");
         Directory.CreateDirectory(ownerlessLock);
+        // Decades, not minutes, of margin; not wall-clock-free. Hermetic requires injecting the script clock.
         Directory.SetLastWriteTimeUtc(ownerlessLock, new DateTime(2100, 1, 1, 0, 0, 0, DateTimeKind.Utc));
-
         var result = fixture.RunWithEnvironment(
             "lean-producer",
             leanSlot: true,
@@ -293,6 +293,7 @@ public sealed class ReportSupervisorScriptTests
         using var fixture = new ReportSupervisorFixture();
         var abandonedLock = Path.Combine(fixture.StateRoot, "slots", "slot-1.lock");
         Directory.CreateDirectory(abandonedLock);
+        // Decades, not minutes, of margin; not wall-clock-free. Hermetic requires injecting the script clock.
         Directory.SetLastWriteTimeUtc(
             abandonedLock,
             new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc));
@@ -315,6 +316,7 @@ public sealed class ReportSupervisorScriptTests
             Path.Combine(liveLock, "owner"),
             $"{ownerPid}|{ownerStart}\n",
             new UTF8Encoding(false));
+        // Decades, not minutes, of margin; not wall-clock-free. Hermetic requires injecting the script clock.
         Directory.SetLastWriteTimeUtc(
             liveLock,
             new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc));
