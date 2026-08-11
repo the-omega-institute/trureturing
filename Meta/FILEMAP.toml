@@ -195,16 +195,6 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
-pattern = "Golden/cases/**/*.toml"
-kind = "data"
-produced_by = "none"
-consumed_by = ["TomlGoldenLoader"]
-verified_by = ["TomlGoldenLoader"]
-authority = "self"
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
 pattern = "Golden/fixture-registry.yaml"
 kind = "data"
 produced_by = "none"
@@ -451,9 +441,9 @@ runtime_disposition = "committed-ledger"
 [[files]]
 pattern = "Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json"
 kind = "ledger"
-produced_by = "ConservativeExtensionVerifier"
-consumed_by = ["C0CeremonyTrustRootTests"]
-verified_by = ["C0CeremonyTrustRootTests"]
+produced_by = "none"
+consumed_by = ["reader"]
+verified_by = ["repository-policy"]
 authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-ledger"
@@ -507,26 +497,6 @@ verified_by = ["make-gate"]
 authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "Meta/contract-epoch/events.jsonl"
-kind = "ledger"
-produced_by = "ContractEpochLedgerCodec"
-consumed_by = ["ContractEpochStore"]
-verified_by = ["ContractEpochStore"]
-authority = "self"
-artifact_id = "none"
-runtime_disposition = "committed-ledger"
-
-[[files]]
-pattern = "Meta/contract-epoch/evidence/sha256/*.json"
-kind = "ledger"
-produced_by = "ContractEpochEvidenceReceipt"
-consumed_by = ["ContractEpochStore"]
-verified_by = ["ContractEpochStore"]
-authority = "self"
-artifact_id = "none"
-runtime_disposition = "committed-ledger"
 
 [[files]]
 pattern = "Meta/domains.yaml"

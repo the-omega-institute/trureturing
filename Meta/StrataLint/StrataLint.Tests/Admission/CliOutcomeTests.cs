@@ -35,68 +35,6 @@ public sealed class CliOutcomeTests
     }
 
     [Theory]
-    [InlineData(0, "certificate\n", "")]
-    [InlineData(1, "violation\n", "")]
-    [InlineData(2, "", "infrastructure\n")]
-    public void VerifyConservativePreservesItsThreeWayExitContract(
-        int expectedExit,
-        string output,
-        string error)
-    {
-        var console = new BufferedConsole();
-        var environment = new StubCliEnvironment(
-            Admitted(),
-            new ExplicitCommandResult(expectedExit, output, error));
-
-        var exitCode = CliApplication.Run(
-            new[] { "verify-conservative" },
-            environment,
-            console);
-
-        Assert.Equal(expectedExit, exitCode);
-        Assert.Equal(output, console.Output);
-        Assert.Equal(error, console.Error);
-    }
-
-    [Fact]
-    public void GoldenRecordDelegatesToTheAuthoringEnvironment()
-    {
-        var console = new BufferedConsole();
-        var environment = new StubCliEnvironment(
-            Admitted(),
-            recordGolden: new CommandResult(true, "GOLDEN_RECORDED cases=110 changed_files=0\n", string.Empty));
-
-        var exitCode = CliApplication.Run(["golden-record"], environment, console);
-
-        Assert.Equal(0, exitCode);
-        Assert.Equal("GOLDEN_RECORDED cases=110 changed_files=0\n", console.Output);
-        Assert.Equal(string.Empty, console.Error);
-    }
-
-    [Fact]
-    public void C0VerifyDelegatesToTheCanonicalVerificationEnvironment()
-    {
-        var console = new BufferedConsole();
-        var environment = new StubCliEnvironment(
-            Admitted(),
-            verifyC0: new CommandResult(
-                true,
-                "C0_VERIFIED changed_files=0 admission=not-evaluated\n",
-                string.Empty));
-
-        var exitCode = CliApplication.Run(
-            ["c0-verify", "--base", new string('a', 40)],
-            environment,
-            console);
-
-        Assert.Equal(0, exitCode);
-        Assert.Equal(
-            "C0_VERIFIED changed_files=0 admission=not-evaluated\n",
-            console.Output);
-        Assert.Equal(string.Empty, console.Error);
-    }
-
-    [Theory]
     [InlineData(0, "ECHO_VERIFY_OK\n", "")]
     [InlineData(2, "", "ECHO_VERIFY_INFRASTRUCTURE report unavailable\n")]
     public void EchoVerifyPreservesProducerAndInfrastructureExitCodes(
@@ -206,10 +144,6 @@ public sealed class CliOutcomeTests
 
 internal sealed class StubCliEnvironment(
     AdmissionOutcome outcome,
-    ExplicitCommandResult? conservative = null,
-    CommandResult? recordGolden = null,
-    CommandResult? verifyC0 = null,
-    CommandResult? reconcileC0 = null,
     ExplicitCommandResult? echoVerify = null,
     ExplicitCommandResult? blueprintPins = null) : ICliEnvironment
 {
@@ -254,15 +188,6 @@ internal sealed class StubCliEnvironment(
     public ExplicitCommandResult ValidateBlueprintPins(IReadOnlyList<string> arguments) =>
         blueprintPins ?? new(2, string.Empty, "blueprint pin validation is not configured in this fixture");
 
-    public CommandResult RecordGolden(IReadOnlyList<string> arguments) =>
-        recordGolden ?? new(false, string.Empty, "golden record is not configured in this fixture");
-
-    public CommandResult VerifyC0(IReadOnlyList<string> arguments) =>
-        verifyC0 ?? new(false, string.Empty, "C0 verification is not configured in this fixture");
-
-    public CommandResult ReconcileC0TrustRoot(IReadOnlyList<string> arguments) =>
-        reconcileC0 ?? new(false, string.Empty, "C0 reconciliation is not configured in this fixture");
-
     public CommandResult SelfTest(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "selftest is not configured in this fixture");
 
@@ -289,15 +214,6 @@ internal sealed class StubCliEnvironment(
 
     public CommandResult Worktree(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "worktree is not configured in this fixture");
-
-    public ExplicitCommandResult VerifyConservative(IReadOnlyList<string> arguments) =>
-        conservative ?? new ExplicitCommandResult(
-            2,
-            string.Empty,
-            "verify-conservative is not configured in this fixture");
-
-    public ExplicitCommandResult EvaluateConservativeCorpus(IReadOnlyList<string> arguments) =>
-        new(2, string.Empty, "evaluate-conservative-corpus is not configured in this fixture");
 }
 
 internal sealed class BufferedConsole : ICliConsole

@@ -136,12 +136,12 @@ public sealed partial class ProductionEnvironmentTests
             $"atomizer: {AtomizerRegistry.NoAtomizerId}",
             StringComparison.Ordinal);
         var captured = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
-        fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
-        fixture.Baseline[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(baselineBytes);
+        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
+        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(baselineBytes);
         fixture.Files[BackfillInventoryLoader.RelativePath] = ledger;
         fixture.Baseline[BackfillInventoryLoader.RelativePath] = ledger;
-        fixture.Files.Remove(GoldenCorpus.FixtureCasPath);
-        fixture.Baseline.Remove(GoldenCorpus.FixtureCasPath);
+        fixture.Files.Remove(RuleFixture.FixtureCasPath);
+        fixture.Baseline.Remove(RuleFixture.FixtureCasPath);
         fixture.Files[captured.RelativePath] = Encoding.UTF8.GetString(captured.Bytes.AsSpan());
         fixture.Baseline[captured.RelativePath] = Encoding.UTF8.GetString(captured.Bytes.AsSpan());
         var currentRaw = Snapshot(fixture.Files);
@@ -161,7 +161,7 @@ public sealed partial class ProductionEnvironmentTests
         var environment = new ProductionCliEnvironment(
             "/repo",
             new FakeRepositoryGateway(
-                RawChangeSet.Create([GoldenCorpus.FixtureDigestionSourcePath]),
+                RawChangeSet.Create([RuleFixture.FixtureDigestionSourcePath]),
                 currentRaw,
                 baselineRaw),
             new FakeLeanReportSource(null));

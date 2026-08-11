@@ -36,14 +36,8 @@ public sealed class RuleApplicabilityTests
     [InlineData(RuleFixture.ValuesProjectionPath, "SL-003,SL-006,SL-015,SL-018,SL-019")]
     [InlineData(RuleFixture.TowerManifestPath, "SL-003,SL-015,SL-019,SL-022")]
     [InlineData(
-        RuleFixture.GoldenDataSourcePath,
-        "SL-003,SL-015")]
-    [InlineData(
         "Blueprint/D5/S1/Digit/LatexFixture.scribe.cs",
         "SL-003,SL-006,SL-011,SL-015,SL-022,SL-023")]
-    [InlineData(
-        "Golden/cases/CapacityExtra00.toml",
-        "SL-003,SL-015")]
     public void DefaultCatalogApplicabilityMatchesTheRulesActualScanSurface(
         string path,
         string expected)

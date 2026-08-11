@@ -7,11 +7,90 @@ namespace StrataLint.Tests;
 
 internal sealed partial class RuleFixture
 {
-    internal const string RingPath = GoldenCorpus.RingPath;
-    internal const string BlueprintPath = GoldenCorpus.BlueprintPath;
-    internal const string NotationPath = GoldenCorpus.NotationPath;
-    internal const string AssumptionDebtPath = GoldenCorpus.AssumptionDebtPath;
-    internal const string HeartsPath = GoldenCorpus.HeartsPath;
+    internal const string FixtureDigestionSourcePath = "docs/GOVERNANCE.md";
+    internal const string FixtureDigestionSource = "x";
+    internal const string FixtureAtomId = "fixture-atom";
+    internal const string FixtureCasReference =
+        "sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881";
+    internal const string FixtureCasPath =
+        "Meta/Digestion/atoms/sha256/2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881";
+    internal const string FixtureSpecification = """
+        # Synthetic harness specification
+
+        This neutral fixture exercises governance-document presence and protected-path routing.
+        """ + "\n";
+    internal const string FixtureBackfill = """
+        schema_version: 3
+        ledger: theory-digestion-v1
+        sources:
+          - source_id: fixture-source
+            path: docs/GOVERNANCE.md
+            atomizer: none
+            entries:
+              - atom_id: fixture-atom
+                boundary:
+                  ast_path: manual/fixture
+                  start_byte: 0
+                  end_byte: 1
+                fingerprints:
+                  raw_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
+                  normalized_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
+                cas_ref: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
+                coverage_gids:
+                  - D5/S0/Carrier/BackfillTarget
+                receipts:
+                  coverage: []
+                  scribe: []
+                  unresolved_subitems: []
+                  chain_atoms: []
+                  tail_authorization: null
+                status:
+                  migration: partial
+                  truth: closed
+        ticket_index:
+          - case_id: D5-T0001
+            gid: D5/X_Frontier/HeartsDraft
+          - case_id: D5-T0002
+            gid: D5/X_Frontier/StrataLintLeanEnvironment
+          - case_id: D5-T0003
+            gid: D5/X_Frontier/ValuesProducer
+          - case_id: D5-T0004
+            gid: D5/X_Frontier/SplitTool
+          - case_id: D5-T0005
+            gid: D5/X_Frontier/PaperGenerator
+          - case_id: D5-T0006
+            gid: D5/X_Frontier/D5P001
+          - case_id: D5-T0007
+            gid: D5/X_Frontier/RequiredChecks
+          - case_id: D5-T0008
+            gid: D5/X_Frontier/GoldenUnitsUFD
+          - case_id: D5-T0009
+            gid: D5/X_Frontier/FutureInstances
+          - case_id: D5-T0010
+            gid: D5/X_Frontier/ToolchainUpgrade
+          - case_id: D5-T0011
+            gid: D5/X_Frontier/GovernanceDeferrals
+          - case_id: D5-T0012
+            gid: D5/X_Frontier/GovernanceDeferrals
+          - case_id: D5-T0013
+            gid: D5/X_Frontier/GovernanceDeferrals
+          - case_id: D5-T0014
+            gid: D5/X_Frontier/GovernanceDeferrals
+          - case_id: D5-T0015
+            gid: D5/X_Frontier/GovernanceDeferrals
+          - case_id: D5-T0016
+            gid: D5/X_Frontier/GovernanceDeferrals
+          - case_id: D5-T0017
+            gid: D5/X_Frontier/RequiredChecks
+          - case_id: D5-T0018
+            gid: D5/X_Frontier/HeartsDraft
+        """ + "\n";
+
+    internal const string RingPath = "D5/S0/Carrier/Ring.lean";
+    internal const string BlueprintPath = "Blueprint/D5/S0/Carrier/Ring.md";
+    internal const string NotationPath = "D5/S0/Conventions/Notation.lean";
+    internal const string AssumptionDebtPath = "D5/X_Assumptions/AxiomDebt.lean";
+    internal const string HeartsPath = "D5/X_Frontier/Hearts.lean";
     internal const string HeartsDraftPath = "D5/X_Frontier/HeartsDraft.lean";
     internal const string ThreeDistancePath = "D5/S1/Phase/ThreeDistance.lean";
     internal const string AnchorCatalogPath = RepositoryPathPolicy.AnchorCatalogPath;
@@ -22,8 +101,6 @@ internal sealed partial class RuleFixture
     internal const string SpecificationPath = BootstrapGate.SpecificationPath;
     internal const string SyntheticProtectedPath =
         "Meta/StrataLint/StrataLint.Engine/SyntheticProtected.cs";
-    internal const string GoldenDataSourcePath =
-        "Golden/cases/structure-and-identities.toml";
     internal const string DefinitionsProjectPath =
         "Meta/StrataLint/StrataLint.Definitions/StrataLint.Definitions.csproj";
     internal const string DefinitionsLockPath =
@@ -44,7 +121,7 @@ internal sealed partial class RuleFixture
         Files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             ["Meta/domains.yaml"] = TestRegistry.Domains,
-            ["Meta/BACKFILL.yaml"] = GoldenCorpus.FixtureBackfill,
+            ["Meta/BACKFILL.yaml"] = FixtureBackfill,
             [TheoryAtomizerDataLoader.DataPath] = File.ReadAllText(
                 Path.Combine(repositoryRoot, TheoryAtomizerDataLoader.DataPath), Encoding.UTF8),
             ["Meta/registry.yaml"] = TestRegistry.Canonical,
@@ -54,10 +131,10 @@ internal sealed partial class RuleFixture
             ["Library/queries.yaml"] = "schema_version: 1\nqueries: []\n",
             [RingPath] = Header + "def goldenRing : Nat := 0\n",
             [BlueprintPath] = "# Golden ring\n",
-            [GoldenCorpus.FixtureDigestionSourcePath] = GoldenCorpus.FixtureDigestionSource,
-            [GoldenCorpus.FixtureCasPath] = GoldenCorpus.FixtureDigestionSource,
+            [FixtureDigestionSourcePath] = FixtureDigestionSource,
+            [FixtureCasPath] = FixtureDigestionSource,
         };
-        Files[SpecificationPath] = GoldenCorpus.FixtureSpecification;
+        Files[SpecificationPath] = FixtureSpecification;
         Baseline = new Dictionary<string, string>(Files, StringComparer.Ordinal);
         Reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
         {
@@ -82,7 +159,7 @@ internal sealed partial class RuleFixture
     {
         Files.Remove(BackfillInventoryLoader.RelativePath);
         Files[$"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml"] =
-            $"source_id = \"delta-v0.1\"\npath = \"{GoldenCorpus.FixtureDigestionSourcePath}\"\natomizer = \"none\"\n";
+            $"source_id = \"delta-v0.1\"\npath = \"{FixtureDigestionSourcePath}\"\natomizer = \"none\"\n";
         Files[$"{BackfillInventoryLoader.RootPath}delta-v0.1/residual-open/delta-atom.yaml"] = """
             boundary:
               ast_path: manual/delta
@@ -110,16 +187,16 @@ internal sealed partial class RuleFixture
             $"{ticket.CaseId} = \"{ticket.Gid}\"\n"));
         const string sourcePath = "delta-v0.1/source.toml";
         const string atomPath = "delta-v0.1/partial-closed/delta-atom.yaml";
-        var source = $"source_id = \"delta-v0.1\"\npath = \"{GoldenCorpus.FixtureDigestionSourcePath}\"\natomizer = \"none\"\n";
+        var source = $"source_id = \"delta-v0.1\"\npath = \"{FixtureDigestionSourcePath}\"\natomizer = \"none\"\n";
         var atom = $"""
             boundary:
               ast_path: manual/fixture
               start_byte: 0
               end_byte: 1
             fingerprints:
-              raw_sha256: {GoldenCorpus.FixtureCasReference}
-              normalized_sha256: {GoldenCorpus.FixtureCasReference}
-            cas_ref: {GoldenCorpus.FixtureCasReference}
+              raw_sha256: {FixtureCasReference}
+              normalized_sha256: {FixtureCasReference}
+            cas_ref: {FixtureCasReference}
             coverage_gids:
               - D5/S0/Carrier/BackfillTarget
             receipts:

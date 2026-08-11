@@ -6,13 +6,7 @@ namespace StrataLint.ArchitectureTests;
 public sealed class CanonicalSourceDuplicationTests
 {
     [Fact]
-    public void RepositoryCSharpDoesNotCopyCanonicalBackfillTicketMappings()
-    {
-        Assert.Empty(CanonicalSourceDuplicationPolicy.InspectRepository(RepositoryLayout.FindRoot()));
-    }
-
-    [Fact]
-    public void RepositoryCSharpDoesNotCopyLedgerAtomizerIdsOutsideTheRegistry()
+    public void RepositoryCSharpDoesNotCopyCanonicalTicketMappingsOrAtomizerIds()
     {
         Assert.Empty(CanonicalSourceDuplicationPolicy.InspectRepository(RepositoryLayout.FindRoot()));
     }

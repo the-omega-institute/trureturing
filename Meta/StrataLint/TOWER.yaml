@@ -227,19 +227,17 @@ components:
     members:
       - baseline-admission
     judged_by:
-      - conservative-extension-gate-c
+      - bootstrap-pr-1
     verification: verified
-  - id: conservative-extension-gate-c
-    kind: phased-gate
+  - id: c0-history
+    kind: historical-ledger
     members:
-      - phase1-protected-content-admission
-      - phase2-dual-harness-conservative-extension
       - "c0/ceremony-commit convention/this-pr-merge-commit"
       - "c0/inaugural-certificate sha256/872c2efefb26d339383c2356cd537e918aae5ee82a41d54ac0a84f95498df845 Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json"
       - "c0/preimage-tree git-tree/0e715656ea213ab040980c42dcb308ed0d9f54f3"
     judged_by:
       - bootstrap-pr-1
-    verification: verified
+    verification: archived
 bootstrap:
   id: bootstrap-pr-1
   judge: open
