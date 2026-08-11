@@ -82,6 +82,9 @@ public sealed class FrozenGitInfrastructureFixtureTests
     [Fact]
     public void GitTimeoutIsInfrastructureWithTimeoutClassification()
     {
+        // This covers GitRaw translating TimeoutException into the domain Timeout failure.
+        // ASSUMED-UNVERIFIED: it does not cover ProductionGitProcessRunner process startup,
+        // timeout cancellation, WaitForExitAsync, process-tree kill, or gitTimeout forwarding.
         using var repository = new TemporaryDirectory();
         var gateway = new GitRepositoryGateway(
             repository.Path,
