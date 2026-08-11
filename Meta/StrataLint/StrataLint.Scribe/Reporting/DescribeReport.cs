@@ -197,8 +197,8 @@ internal sealed class DescribeReport
                             : "lean-declaration",
                         describe.FormulaProvenance == StatementFormulaProvenance.LeanDerived ? "lean-derived" : "hand-authored",
                         ProjectionFailure(describe),
-                        DescribeVocabulary.CanonicalName(describe.Provenance.Kind),
-                        describe.Provenance.LiteratureReference?.Value));
+                        DescribeVocabulary.CanonicalName(describe.ProvenanceKind),
+                        describe.LiteratureReference?.Value));
                     if (string.Equals(describe.Id.Value, PlainSlug(describe.Title.Value), StringComparison.Ordinal))
                     {
                         observations.Add(new DescribeObservation(
