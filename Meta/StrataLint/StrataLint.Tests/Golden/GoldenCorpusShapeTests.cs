@@ -5,7 +5,7 @@ namespace StrataLint.Tests;
 
 public sealed class GoldenCorpusShapeTests
 {
-    public const int ExpectedCaseCount = 120;
+    public const int ExpectedCaseCount = 121;
 
     [Fact]
     public void CorpusContainsEveryTomlCaseExactlyOnce()
