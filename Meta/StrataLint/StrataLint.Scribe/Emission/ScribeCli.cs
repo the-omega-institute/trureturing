@@ -63,7 +63,7 @@ public static class ScribeCli
         var check = arguments.Count == 2
             && string.Equals(arguments[1], "--check", StringComparison.Ordinal);
         if (arguments.Count is < 1 or > 2
-            || command is not ("emit" or "catalog" or "emit-values" or "filemap")
+            || command is not ("emit" or "emit-values" or "filemap")
             || (arguments.Count == 2 && !check))
         {
             error.WriteLine(Usage);
@@ -73,11 +73,6 @@ public static class ScribeCli
         try
         {
             var repositoryRoot = FindRepositoryRoot(workingDirectory);
-            if (command == "catalog")
-            {
-                return AnchorCatalogEmitter.Emit(repositoryRoot, check, output, error);
-            }
-
             if (command == "emit-values")
             {
                 return ValuesEmitter.Emit(repositoryRoot, check, output, error);
@@ -102,7 +97,7 @@ public static class ScribeCli
 
     private const string Usage =
         "usage: dotnet run --project Meta/StrataLint/StrataLint.Scribe -- "
-        + "emit|catalog|emit-values|filemap [--check] | describe-report [--json]";
+        + "emit|emit-values|filemap [--check] | describe-report [--json]";
 
     private static string FindRepositoryRoot(string workingDirectory)
     {

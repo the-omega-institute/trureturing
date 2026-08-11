@@ -51,7 +51,8 @@ public sealed class PdfWriterTests
                 ),
             ]));
 
-        var pdf = QuestPdfWriter.Write(document, LeanReportFixture.ForDocuments([document]));
+        var pdf = QuestPdfWriter.Write(
+            document, DeclarationCatalog.Create(LeanReportFixture.ForDocuments([document])));
 
         Assert.True(pdf.Length > 5);
         Assert.Equal("%PDF-", Encoding.ASCII.GetString(pdf.AsSpan()[..5]));

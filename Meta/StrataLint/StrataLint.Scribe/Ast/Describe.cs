@@ -30,6 +30,15 @@ public enum DescribeKind
     Remark,
 }
 
+public enum DescribeRole { Definition, Theorem, Proposition, Lemma }
+
+internal abstract record DescribeKindSource
+{
+    private DescribeKindSource() { }
+    internal sealed record Authored(DescribeKind Value) : DescribeKindSource;
+    internal sealed record ReportDerived(DeclarationHandle Handle, DescribeRole? Role) : DescribeKindSource;
+}
+
 public enum DescribeProvenanceKind
 {
     LiteratureAttested,
@@ -107,6 +116,44 @@ public sealed record DescribeProvenance
         new(DescribeProvenanceKind.Unassessed, null);
 }
 
+public abstract record AssessedProvenance
+{
+    private AssessedProvenance() { }
+    public sealed record RepoDerived : AssessedProvenance;
+    public sealed record LiteratureAttested(LibraryNoteRef NoteRef) : AssessedProvenance;
+    public sealed record SuspectedNovel(GidRef SearchReceipt) : AssessedProvenance;
+
+    public static AssessedProvenance FromRepo() => new RepoDerived();
+    public static AssessedProvenance FromLiterature(LibraryNoteRef noteRef) =>
+        new LiteratureAttested(noteRef ?? throw new ArgumentNullException(nameof(noteRef)));
+    public static AssessedProvenance NovelAfterSearch(GidRef searchReceipt) =>
+        new SuspectedNovel(searchReceipt ?? throw new ArgumentNullException(nameof(searchReceipt)));
+
+}
+
+internal abstract record DescribeProvenanceSource
+{
+    private DescribeProvenanceSource() { }
+
+    internal sealed record Legacy(DescribeProvenance Value) : DescribeProvenanceSource;
+    internal sealed record Assessed(AssessedProvenance Value) : DescribeProvenanceSource;
+}
+
+public static class Describe
+{
+    public static DocumentBlock.Describe Lean(
+        DescribeId id,
+        DeclarationHandle handle,
+        Heading title,
+        AssessedProvenance provenance,
+        BlockSequence narrative,
+        DescribeRole? role = null) =>
+        DocumentBlock.Describe.ReportDerived(
+            id, title, handle,
+            provenance ?? throw new ArgumentNullException(nameof(provenance)),
+            narrative, role);
+}
+
 internal static class DescribeVocabulary
 {
     internal static string HeadingName(DescribeKind kind) => kind switch
@@ -138,5 +185,13 @@ internal static class DescribeVocabulary
         DescribeProvenanceKind.SuspectedNovel => "suspected-novel",
         DescribeProvenanceKind.Unassessed => "unassessed",
         _ => throw new ArgumentOutOfRangeException(nameof(provenance)),
+    };
+
+    internal static DescribeProvenanceKind Kind(AssessedProvenance provenance) => provenance switch
+    {
+        AssessedProvenance.LiteratureAttested => DescribeProvenanceKind.LiteratureAttested,
+        AssessedProvenance.RepoDerived => DescribeProvenanceKind.RepoDerived,
+        AssessedProvenance.SuspectedNovel => DescribeProvenanceKind.SuspectedNovel,
+        _ => throw new InvalidOperationException("Unknown assessed provenance."),
     };
 }

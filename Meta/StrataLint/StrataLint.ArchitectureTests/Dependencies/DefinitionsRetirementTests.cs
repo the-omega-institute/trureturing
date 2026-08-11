@@ -7,14 +7,8 @@ public sealed class DefinitionsRetirementTests
         "Meta/StrataLint/" + RetiredAssemblyName;
     private const string AnchorPath =
         "Meta/StrataLint/StrataLint.Engine/Anchors/Anchor.cs";
-    private const string AnchorDefinitionPath =
-        "Meta/StrataLint/StrataLint.Engine/Anchors/AnchorDefinition.cs";
     private const string AnchorSchemesPath =
         "Meta/StrataLint/StrataLint.Engine/Anchors/AnchorSchemes.cs";
-    private const string AnchorCatalogDefinitionsPath =
-        "Meta/StrataLint/StrataLint.Engine/Anchors/AnchorCatalogDefinitions.cs";
-    private const string ExternalAnchorManifestPath =
-        "Meta/StrataLint/StrataLint.Engine/Anchors/ExternalAnchorManifest.cs";
     private const string SolutionPath = "Meta/StrataLint/StrataLint.sln";
     private const string CliProjectPath =
         "Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj";
@@ -30,10 +24,7 @@ public sealed class DefinitionsRetirementTests
     public static TheoryData<string> FinalSourceOwners => new()
     {
         AnchorPath,
-        AnchorDefinitionPath,
         AnchorSchemesPath,
-        AnchorCatalogDefinitionsPath,
-        ExternalAnchorManifestPath,
     };
 
     public static TheoryData<string> ProjectAndSolutionFiles => new()
