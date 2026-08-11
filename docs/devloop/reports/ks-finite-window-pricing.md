@@ -1,6 +1,6 @@
 # M >= 3 Kochen-Specker 有限窗立项定价
 
-> **REPORT-ONLY / 估价席产物。** 本文不是 Lean 真值源，不声明任何新定理，不把参考理论卷、mathlib API 或搜索输出写成仓内已拥有能力。本轮未写 `.lean`、未运行证书搜索、未提交。
+> **REPORT-ONLY / 估价席产物。** 本文不是 Lean 真值源，不声明任何新定理，不把参考理论卷、mathlib API 或搜索输出写成仓内已拥有能力。本轮未写 `.lean`、未运行证书搜索，也不再创建或改写提交。最终核验时发现报告已由并行的外部流程落入提交 `5e333a6d`；这是对“不得提交”要求的状态偏差，本文不把它隐去。
 
 ## 0. 终局摘要
 
@@ -9,7 +9,7 @@
 - **推荐路线：显式有限 qutrit 证书 + exact geometry checker + CNF/LRAT kernel proof + 坐标化 `M >= 3` 提升。** 在精确、可再分发的机器可读证书已经提供时，估价为 **82-172 人时**；若还要取得、转录并双源核对证书，估价为 **98-220 人时**。这是约 **3-6 个单人日历周**的月度级项目，不是一个常规单引理车道。
 - **本轮只建议一个 8-12 人时的解锁 spike。** spike 的产物必须是固定 statement contract、带 provenance 的一小段真实数据、至少一个 exact context 校验和一条从数据约束到 kernel-checked UNSAT 的端到端微型链；缺任一项即继续 DEFER。
 
-估价基线是 worktree `harness/oqm-r15-c15v2` 的 `HEAD=1fad2b44c5d9f1a6813cd250b5ab62bb9232224a`。调查开始时该值等于 `origin/dev`；调查期间 `origin/dev` 前进到 `96855375e99cc4f6e4935e0c21b52c758f0224e1`。新增四个提交只涉及 `D5/S3/Arith/Congruence/QuarticThirtySix` 及其账本工件；对本报告核查的 Quantum/Observer/KS 路径，`git diff HEAD..origin/dev` 为空。因此下列能力判断在该移动窗口内未变。
+调查取证快照是 worktree `harness/oqm-r15-c15v2` 当时的 `HEAD=1fad2b44c5d9f1a6813cd250b5ab62bb9232224a`，调查开始时该值等于 `origin/dev`。最终核验时，分支已由外部流程推进到 `HEAD=ea64936ab18339da90ce26146d46df38d2d902d7`，跟踪 `origin/harness/oqm-r15-c15v2`；该 HEAD 合并了 `origin/dev=fc5476ade70d711401dc05ccd36c2e519c5fb787`，并包含报告提交 `5e333a6d`。相对取证快照，除本报告外的新增内容位于 `D5/S1/Words/ReturnWords`、`D5/S3/Arith/Congruence/QuarticThirtySix`、Blueprint、账本及聚合导入；本报告核查的 Quantum/Observer/KS 路径差异为空。因此下列能力判断在该移动窗口内未变。
 
 ## 1. 目标分层与验收边界
 

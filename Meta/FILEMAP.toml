@@ -589,16 +589,6 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
-pattern = "docs/develop/reports/**"
-kind = "program"
-produced_by = "none"
-consumed_by = ["agent"]
-verified_by = ["repository-policy"]
-authority = "self"
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
 pattern = "docs/develop/spec/**"
 kind = "program"
 produced_by = "none"
@@ -614,6 +604,16 @@ kind = "data"
 produced_by = "none"
 consumed_by = ["TheoryIngestion"]
 verified_by = ["SnapshotDecoder"]
+authority = "self"
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "docs/devloop/**"
+kind = "program"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
 authority = "self"
 artifact_id = "none"
 runtime_disposition = "committed-source"
