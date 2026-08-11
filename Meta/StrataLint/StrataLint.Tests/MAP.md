@@ -20,14 +20,16 @@
 
 ## Buckets
 
-- `Admission/`: CLI outcomes, production admission, topology, and review regressions.
+- `Admission/`: CLI outcomes, production admission, topology, review regressions, and the
+  current single-tree protected-surface gate contract.
 - `Authorization/`: Hearts ledger format, append-only history, and exact SL-008 delta behavior.
 - `Commands/`: command parsing and end-to-end command behavior;
   `Commands/Papergen/` holds paper recipe validation and
   `Commands/PrOpenScriptTests.cs` holds the focused one-shot PR open/update script contract.
-- `Conservative/`: base-owned replay, policy roots, contract-epoch schemas/stores,
-  obligation comparison, and conservative certificate behavior;
-  `Conservative/ContractEpoch/` holds the focused contract-epoch suite.
+- `Conservative/`: compatibility coverage for base-owned replay, policy roots,
+  contract-epoch schemas/stores, obligation comparison, and conservative certificate
+  behavior retained for predecessor baselines; it no longer defines the current shared
+  baseline gate contract. `Conservative/ContractEpoch/` holds the focused contract-epoch suite.
 - `Coverage/`: applicability, UNGOVERNED, tower, ledger-state, and canonical coverage behavior.
 - `Dag/`: truth DAG behavior.
 - `Golden/`: fail-closed loader fixtures, current-Engine snapshot checks, record-mode

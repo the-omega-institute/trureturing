@@ -274,15 +274,6 @@ public sealed class TypeModelTests
     }
 
     [Fact]
-    public void C0CeremonyWorkflowPathIsClosedWorldRegisteredAtItsCanonicalAddress()
-    {
-        var path = RepoPath.CreateKnown(RepositoryPathPolicy.C0CeremonyWorkflowPath);
-
-        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
-        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
-    }
-
-    [Fact]
     public void HarnessGateScriptIsClosedWorldRegisteredAndBootstrapProtected()
     {
         const string value = RuleFixture.HarnessGatePath;

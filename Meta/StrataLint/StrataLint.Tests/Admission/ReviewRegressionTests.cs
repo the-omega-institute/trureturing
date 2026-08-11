@@ -122,15 +122,15 @@ public sealed partial class ReviewRegressionTests
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         var captured = DigestionCasStore.Capture(Encoding.UTF8.GetBytes(
-            GoldenCorpus.FixtureDigestionSource));
+            RuleFixture.FixtureDigestionSource));
         fixture.Files[BackfillInventoryLoader.RelativePath] = fixture.Files[
                 BackfillInventoryLoader.RelativePath]
             .Replace(
                 $"atomizer: {AtomizerRegistry.NoAtomizerId}",
                 $"atomizer: {SyntheticNumberedAtomizer.Id}",
                 StringComparison.Ordinal);
-        fixture.Files[captured.RelativePath] = GoldenCorpus.FixtureDigestionSource;
-        fixture.Files.Remove(GoldenCorpus.FixtureDigestionSourcePath);
+        fixture.Files[captured.RelativePath] = RuleFixture.FixtureDigestionSource;
+        fixture.Files.Remove(RuleFixture.FixtureDigestionSourcePath);
         Assert.Equal(
             captured.Reference,
             Assert.Single(BackfillInventoryLoader.Load(
@@ -149,14 +149,14 @@ public sealed partial class ReviewRegressionTests
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        fixture.Files.Remove(GoldenCorpus.FixtureDigestionSourcePath);
+        fixture.Files.Remove(RuleFixture.FixtureDigestionSourcePath);
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(16),
             fixture.Build());
 
         Assert.Contains(evaluation.Diagnostics, diagnostic => diagnostic.Message.Contains(
-            $"source path is dangling: {GoldenCorpus.FixtureDigestionSourcePath}",
+            $"source path is dangling: {RuleFixture.FixtureDigestionSourcePath}",
             StringComparison.Ordinal));
     }
 
@@ -168,7 +168,7 @@ public sealed partial class ReviewRegressionTests
         fixture.Files[BackfillInventoryLoader.RelativePath] = fixture.Files[
                 BackfillInventoryLoader.RelativePath]
             .Replace(
-                $"        cas_ref: {GoldenCorpus.FixtureCasReference}\n",
+                $"        cas_ref: {RuleFixture.FixtureCasReference}\n",
                 string.Empty,
                 StringComparison.Ordinal);
 
@@ -186,14 +186,14 @@ public sealed partial class ReviewRegressionTests
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        fixture.Files.Remove(GoldenCorpus.FixtureCasPath);
+        fixture.Files.Remove(RuleFixture.FixtureCasPath);
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(16),
             fixture.Build());
 
         Assert.Contains(evaluation.Diagnostics, diagnostic => diagnostic.Message.Contains(
-            $"baseline CAS blob was deleted: {GoldenCorpus.FixtureCasPath}",
+            $"baseline CAS blob was deleted: {RuleFixture.FixtureCasPath}",
             StringComparison.Ordinal));
     }
 
@@ -617,7 +617,11 @@ public sealed partial class ReviewRegressionTests
         Assert.Contains("--candidate-lean-report", gate, StringComparison.Ordinal);
         Assert.Contains("--baseline-lean-report", gate, StringComparison.Ordinal);
         Assert.DoesNotContain("--legacy-bootstrap", gate, StringComparison.Ordinal);
-        Assert.Contains("verify-conservative", gate, StringComparison.Ordinal);
+        Assert.DoesNotContain("verify-conservative", gate, StringComparison.Ordinal);
+        Assert.Contains(
+            "protected-surface change (SL-022); content checks passed",
+            gate,
+            StringComparison.Ordinal);
         Assert.True(Count(gate, " selftest") >= 2, "selftest must run twice in the shared gate");
         Assert.Contains("cmp", gate, StringComparison.Ordinal);
         Assert.DoesNotContain("LAKE", gate, StringComparison.Ordinal);

@@ -542,6 +542,6 @@ jobs:
             exit "$rc"
           fi
           if [[ "$rc" -eq 3 ]]; then
-            printf '%s\n' "### harness gate emitted an SL-022 conservativity certificate" >> "$GITHUB_STEP_SUMMARY"
+            printf '%s\n' "### protected-surface change (SL-022); content checks passed" >> "$GITHUB_STEP_SUMMARY"
           fi
           exit 0
