@@ -66,6 +66,8 @@ public static class ScribeNode
         string digest,
         Heading title,
         BlockSequence content,
+        IEnumerable<DocumentEdge>? edges = null,
+        IEnumerable<Anchor>? anchors = null,
         [System.Runtime.CompilerServices.CallerFilePath] string sourcePath = "")
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(sourcePath);
@@ -83,6 +85,9 @@ public static class ScribeNode
             throw new ArgumentException("Scribe source path must end in .scribe.cs.", nameof(sourcePath));
         }
         return ScribeDocument.Create(
-            DefinitionDsl.Header(relative[..^suffix.Length], digest), title, content);
+            DefinitionDsl.Header(relative[..^suffix.Length], digest, [.. anchors ?? []]),
+            title,
+            content,
+            edges);
     }
 }
