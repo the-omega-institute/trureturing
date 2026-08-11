@@ -143,7 +143,7 @@ public sealed partial class DigestionAlignmentTests
     {
         var oldBytes = Encoding.UTF8.GetBytes("# SYNTH-VOL\n\n**定理 1.1(A)**。old。\n");
         var currentBytes = Encoding.UTF8.GetBytes("# SYNTH-VOL\n\n**定理 1.1(A)**。rewritten。\n");
-        var oldAtom = Assert.Single(GictAtomizer.Atomize(oldBytes, DigestionTestSupport.Rules).Claims);
+        var oldAtom = Assert.Single(AtomizerRegistry.Atomize(AtomizerRegistry.GictId, oldBytes, DigestionTestSupport.Rules).Claims);
         var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
         var loaded = BackfillInventoryLoader.Load(Ledger(
             [],
