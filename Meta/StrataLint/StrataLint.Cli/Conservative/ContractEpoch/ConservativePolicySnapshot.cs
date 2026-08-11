@@ -24,6 +24,14 @@ internal sealed class ConservativePolicySnapshot
             AdmissionEffect.Observe,
             RuleLifecycle.Active,
             null)),
+        RuleObligation(new RuleDescriptor(
+            RuleId.CreateKnown(25),
+            "Blueprint projection source",
+            DisplaySeverity.Error,
+            "repository",
+            AdmissionEffect.Block,
+            RuleLifecycle.Active,
+            null)),
     ];
 
     private ConservativePolicySnapshot(
