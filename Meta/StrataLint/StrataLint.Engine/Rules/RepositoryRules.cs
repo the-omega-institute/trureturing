@@ -135,6 +135,10 @@ internal static partial class RepositoryRules
             "Describe LaTeX statement",
             new RepositoryRule(ScribeDefinitionScoped, DescribeLatex),
             AdmissionEffect.Observe),
+        Register(
+            25,
+            "Blueprint projection source",
+            new RepositoryRule(RepositoryScoped, BlueprintProjectionSource)),
     ];
 
     private static RuleRegistration Register(
