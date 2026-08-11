@@ -131,6 +131,71 @@ public abstract record AssessedProvenance
 
 }
 
+public sealed record ProjectionGap
+{
+    internal ProjectionGap(
+        string reasonCode,
+        string offendingSubject,
+        string projectorEpoch,
+        string declarationContentDigest)
+    {
+        ReasonCode = reasonCode;
+        OffendingSubject = offendingSubject;
+        ProjectorEpoch = projectorEpoch;
+        DeclarationContentDigest = declarationContentDigest;
+    }
+
+    public string ReasonCode { get; }
+    public string OffendingSubject { get; }
+    public string ProjectorEpoch { get; }
+    public string DeclarationContentDigest { get; }
+}
+
+public abstract record StatementSource
+{
+    private StatementSource() { }
+
+    public sealed record LeanDerived : StatementSource;
+
+    public sealed record Authored : StatementSource
+    {
+        internal Authored(Formula presentation, ProjectionGap? projectionGap)
+        {
+            Presentation = presentation ?? throw new ArgumentNullException(nameof(presentation));
+            ProjectionGap = projectionGap;
+        }
+
+        public Formula Presentation { get; }
+        public ProjectionGap? ProjectionGap { get; }
+    }
+
+    public static StatementSource FromLean() => new LeanDerived();
+    public static StatementSource FromAuthor(Formula presentation) => new Authored(presentation, null);
+
+    internal static (StatementSource Source, Formula Formula) Materialize(
+        StatementSource source,
+        LeanDeclarationRef declaration)
+    {
+        ArgumentNullException.ThrowIfNull(source);
+        var assessment = StatementProjectionFixtureLoader.Assess(declaration);
+        return (source, assessment.Outcome) switch
+        {
+            (LeanDerived, ProjectionOutcome.Projected projected) => (source, projected.Formula),
+            (LeanDerived, ProjectionOutcome.Unprojectable failed) => throw new InvalidOperationException(
+                $"Lean-derived statement is unavailable for {declaration.Value}: {failed.Reason}"),
+            (Authored, ProjectionOutcome.Projected) => throw new InvalidOperationException(
+                $"Authored statement is illegal because Lean projection is available for {declaration.Value}."),
+            (Authored authored, ProjectionOutcome.Unprojectable failed) =>
+                (new Authored(authored.Presentation, new ProjectionGap(
+                    StatementProjectionFixtureLoader.ReasonCode(failed.Reason),
+                    StatementProjectionFixtureLoader.OffendingSubject(failed.Reason),
+                    StatementProjectionFixtureLoader.ProjectorEpoch,
+                    assessment.DeclarationContentDigest)), authored.Presentation),
+            _ => throw new InvalidOperationException("Unknown statement source or projection outcome."),
+        };
+    }
+}
+
 internal abstract record DescribeProvenanceSource
 {
     private DescribeProvenanceSource() { }
@@ -145,11 +210,12 @@ public static class Describe
         DescribeId id,
         DeclarationHandle handle,
         Heading title,
+        StatementSource statementSource,
         AssessedProvenance provenance,
         BlockSequence narrative,
         DescribeRole? role = null) =>
         DocumentBlock.Describe.ReportDerived(
-            id, title, handle,
+            id, title, handle, statementSource,
             provenance ?? throw new ArgumentNullException(nameof(provenance)),
             narrative, role);
 }

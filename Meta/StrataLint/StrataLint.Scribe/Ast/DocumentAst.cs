@@ -119,7 +119,8 @@ public abstract record DocumentBlock
             DescribeProvenanceSource provenanceSource,
             BlockSequence content,
             Formula? statementFormula = null,
-            DescribeKindSource? kindSource = null)
+            DescribeKindSource? kindSource = null,
+            StatementSource? statementSource = null)
         {
             Id = id ?? throw new ArgumentNullException(nameof(id));
             Title = title ?? throw new ArgumentNullException(nameof(title));
@@ -127,11 +128,13 @@ public abstract record DocumentBlock
             ProvenanceSource = provenanceSource ?? throw new ArgumentNullException(nameof(provenanceSource));
             Content = content ?? throw new ArgumentNullException(nameof(content));
             StatementFormula = statementFormula;
-            FormulaProvenance = statementFormula is not null
-                && statement is DescribeStatement.LeanDeclaration lean
-                && StatementProjectionFixtureLoader.IsDerivedFrom(statementFormula, lean.Value)
-                ? StatementFormulaProvenance.LeanDerived
-                : StatementFormulaProvenance.HandAuthored;
+            StatementSource = statementSource;
+            FormulaProvenance = statementSource is StatementSource.LeanDerived
+                || statementSource is null
+                    && statementFormula is not null
+                    && statement is DescribeStatement.LeanDeclaration lean
+                    && StatementProjectionFixtureLoader.IsDerivedFrom(statementFormula, lean.Value)
+                ? StatementFormulaProvenance.LeanDerived : StatementFormulaProvenance.HandAuthored;
             this.kind = kind is DescribeKind.Definition
                 or DescribeKind.Theorem
                 or DescribeKind.Proposition
@@ -172,7 +175,8 @@ public abstract record DocumentBlock
                 Statement,
                 ProvenanceSource,
                 resolvedContent,
-                StatementFormula);
+                StatementFormula,
+                statementSource: StatementSource);
         }
 
         public Heading Title { get; }
@@ -206,6 +210,8 @@ public abstract record DocumentBlock
         public BlockSequence Content { get; }
 
         public Formula? StatementFormula { get; }
+
+        public StatementSource? StatementSource { get; }
 
         public StatementFormulaProvenance FormulaProvenance { get; }
 
@@ -273,10 +279,14 @@ public abstract record DocumentBlock
             DescribeId id,
             Heading title,
             DeclarationHandle handle,
+            StatementSource statementSource,
             AssessedProvenance provenance,
             BlockSequence content,
-            DescribeRole? role) =>
-            new(
+            DescribeRole? role)
+        {
+            var declaration = LeanDeclarationRef.Create(handle.Value);
+            var materialized = StatementSource.Materialize(statementSource, declaration);
+            return new(
                 id,
                 role switch
                 {
@@ -288,11 +298,15 @@ public abstract record DocumentBlock
                     _ => throw new ArgumentOutOfRangeException(nameof(role)),
                 },
                 title,
-                DescribeStatement.FromLean(LeanDeclarationRef.Create(handle.Value)),
+                DescribeStatement.FromLean(declaration),
                 new DescribeProvenanceSource.Assessed(
                     provenance ?? throw new ArgumentNullException(nameof(provenance))),
                 content,
-                kindSource: new DescribeKindSource.ReportDerived(handle, role));
+                role is DescribeRole.Theorem or DescribeRole.Proposition or DescribeRole.Lemma
+                    ? materialized.Formula : null,
+                new DescribeKindSource.ReportDerived(handle, role),
+                materialized.Source);
+        }
 
         private static Describe LeanDescribe(
             DescribeId id,
