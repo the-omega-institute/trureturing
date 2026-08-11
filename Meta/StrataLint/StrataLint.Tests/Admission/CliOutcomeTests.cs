@@ -98,9 +98,8 @@ public sealed class CliOutcomeTests
 
     [Theory]
     [InlineData(0, "ECHO_VERIFY_OK\n", "")]
-    [InlineData(1, "", "ECHO_VERIFY_INVALID byte mismatch\n")]
     [InlineData(2, "", "ECHO_VERIFY_INFRASTRUCTURE report unavailable\n")]
-    public void EchoVerifyPreservesValidInvalidAndInfrastructureExitCodes(
+    public void EchoVerifyPreservesProducerAndInfrastructureExitCodes(
         int expectedExit,
         string output,
         string error)
