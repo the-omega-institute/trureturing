@@ -13,7 +13,7 @@ public sealed class MaxEntropyDocumentTests
         Assert.Equal(
             "D5/S3/Entropy/MaxEntropy.entropy_le_log_card",
             Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement).Value.Value);
-        Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.Provenance.Kind);
+        Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.ProvenanceKind);
 
         var latex = LatexWriter.WriteStatement(
             describe.StatementFormula

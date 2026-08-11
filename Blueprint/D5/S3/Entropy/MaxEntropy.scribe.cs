@@ -6,18 +6,15 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Entropy;
 
 internal sealed class MaxEntropyDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Entropy/MaxEntropy",
-            "Finite Shannon entropy in nats is at most the natural logarithm of the alphabet cardinality."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Finite Shannon entropy in nats is at most the natural logarithm of the alphabet cardinality.",
         H("Maximum Entropy on a Finite Alphabet"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("finite-shannon-entropy-is-at-most-log-cardinality"),
+                DeclarationHandle.Create("D5/S3/Entropy/MaxEntropy.entropy_le_log_card"),
                 H("Finite Shannon entropy is at most log-cardinality"),
-                LeanTheorem(
-                    "D5/S3/Entropy/MaxEntropy.entropy_le_log_card"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Esc,
                     OpenBracket,
@@ -42,8 +39,8 @@ internal sealed class MaxEntropyDocument : IScribeDocumentDefinition
                     Log, Open,
                     Operatorname, Grp(F.Id("card")), Open, Iota, Close,
                     Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The units are nats: Real.log is the natural logarithm, consistent " +
@@ -73,5 +70,6 @@ internal sealed class MaxEntropyDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "This module proves the upper bound only. It does not characterize the " +
                         "equality case that the maximum is attained exactly at the uniform " +
-                        "distribution. It introduces no conditional or joint entropy.")))))));
+                        "distribution. It introduces no conditional or joint entropy."))),
+                DescribeRole.Theorem))));
 }

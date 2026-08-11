@@ -207,7 +207,7 @@ public sealed class DocumentDiscoveryTests
         Assert.All(describes, static describe =>
         {
             Assert.Equal(DescribeKind.Theorem, describe.Kind);
-            Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.Provenance.Kind);
+            Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.ProvenanceKind);
             var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
             Assert.True(lean.Value.RequireNoSorry);
         });
@@ -234,7 +234,7 @@ public sealed class DocumentDiscoveryTests
         Assert.All(describes, static describe =>
         {
             Assert.Equal(DescribeKind.Theorem, describe.Kind);
-            Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.Provenance.Kind);
+            Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.ProvenanceKind);
             var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
             Assert.True(lean.Value.RequireNoSorry);
         });
@@ -265,7 +265,7 @@ public sealed class DocumentDiscoveryTests
         Assert.All(describes, static describe =>
         {
             Assert.Equal(DescribeKind.Theorem, describe.Kind);
-            Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.Provenance.Kind);
+            Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.ProvenanceKind);
             var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
             Assert.True(lean.Value.RequireNoSorry);
         });
@@ -294,8 +294,8 @@ public sealed class DocumentDiscoveryTests
         var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
 
         Assert.Equal(DescribeKind.Theorem, describe.Kind);
-        Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.Provenance.Kind);
-        Assert.Null(describe.Provenance.LiteratureReference);
+        Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.ProvenanceKind);
+        Assert.Null(describe.LiteratureReference);
         Assert.Equal(
             "D5/S1/Digit/PrimeAxisTable.prime_axis_table_spec",
             lean.Value.Value);
@@ -344,8 +344,8 @@ public sealed class DocumentDiscoveryTests
             var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
 
             Assert.Equal(item.Kind, describe.Kind);
-            Assert.Equal(item.Provenance, describe.Provenance.Kind);
-            Assert.Equal(item.Reference, describe.Provenance.LiteratureReference?.Value);
+            Assert.Equal(item.Provenance, describe.ProvenanceKind);
+            Assert.Equal(item.Reference, describe.LiteratureReference?.Value);
             Assert.Equal(item.Declaration, lean.Value.Value);
             Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
             Assert.True(lean.Value.RequireNoSorry);
@@ -389,8 +389,8 @@ public sealed class DocumentDiscoveryTests
             var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
 
             Assert.Equal(item.Kind, describe.Kind);
-            Assert.Equal(item.Provenance, describe.Provenance.Kind);
-            Assert.Equal(item.Reference, describe.Provenance.LiteratureReference?.Value);
+            Assert.Equal(item.Provenance, describe.ProvenanceKind);
+            Assert.Equal(item.Reference, describe.LiteratureReference?.Value);
             Assert.Equal(item.Declaration, lean.Value.Value);
             Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
             Assert.True(lean.Value.RequireNoSorry);
@@ -433,8 +433,8 @@ public sealed class DocumentDiscoveryTests
             var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement);
 
             Assert.Equal(item.Kind, node.Kind);
-            Assert.Equal(DescribeProvenanceKind.RepoDerived, node.Provenance.Kind);
-            Assert.Null(node.Provenance.LiteratureReference);
+            Assert.Equal(DescribeProvenanceKind.RepoDerived, node.ProvenanceKind);
+            Assert.Null(node.LiteratureReference);
             Assert.Equal(item.Declaration, lean.Value.Value);
             Assert.Equal(item.LeanKind, lean.Value.ExpectedKind);
             Assert.True(lean.Value.RequireNoSorry);
@@ -469,8 +469,8 @@ public sealed class DocumentDiscoveryTests
             var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement);
 
             Assert.Equal(DescribeKind.Theorem, node.Kind);
-            Assert.Equal(DescribeProvenanceKind.LiteratureAttested, node.Provenance.Kind);
-            Assert.Equal(item.Reference, node.Provenance.LiteratureReference?.Value);
+            Assert.Equal(DescribeProvenanceKind.LiteratureAttested, node.ProvenanceKind);
+            Assert.Equal(item.Reference, node.LiteratureReference?.Value);
             Assert.Equal(item.Declaration, lean.Value.Value);
             Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
             Assert.True(lean.Value.RequireNoSorry);
@@ -507,8 +507,8 @@ public sealed class DocumentDiscoveryTests
             var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement);
 
             Assert.Equal(DescribeKind.Theorem, node.Kind);
-            Assert.Equal(item.Provenance, node.Provenance.Kind);
-            Assert.Equal(item.Reference, node.Provenance.LiteratureReference?.Value);
+            Assert.Equal(item.Provenance, node.ProvenanceKind);
+            Assert.Equal(item.Reference, node.LiteratureReference?.Value);
             Assert.Equal(item.Declaration, lean.Value.Value);
             Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
             Assert.True(lean.Value.RequireNoSorry);
