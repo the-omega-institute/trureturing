@@ -134,9 +134,13 @@ internal static class BackfillInventoryRule
             if (!RepoPath.TryCreate(source.SourcePath, out var sourcePath)
                 || !context.Policy.GovernanceDocuments.Contains(sourcePath))
             {
+                // First thing a new volume hits, so the verdict carries its own remedy
+                // rather than leaving the reader to find which registry field is meant.
                 findings.Add(new RuleFinding(
                     BackfillPath,
-                    $"source {source.SourceId} has an invalid governance path"));
+                    $"source {source.SourceId} has an invalid governance path "
+                    + $"'{source.SourcePath}': add it to governance_documents in "
+                    + "Meta/registry.yaml"));
             }
             else
             {
