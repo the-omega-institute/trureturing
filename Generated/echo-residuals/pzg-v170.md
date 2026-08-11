@@ -1,7 +1,7 @@
-<!-- echo-residual-summary:v4 source=pzg-v170 residual=sha256:c1396b405abf4868d85fa36be72036d5139f34c0543fd9f1571319de1d0e5411 -->
+<!-- echo-residual-summary:v4 source=pzg-v170 residual=sha256:668469c485e5a0376e312970f0bf41ff25092408a8bc5e59b9c39b2b1c3669b1 -->
 # Echo Residual Summary — `pzg-v170`
 
-- unresolved_subitems: 352
+- unresolved_subitems: 351
 - mother_residual_atom_ids: 53
 
 Mother residual atoms:
@@ -265,9 +265,8 @@ Mother residual atoms:
   - `delay-localizes-to-resonance-and-address-walk`
   - `phase-delay-as-wigner-phase-accumulation`
   - `single-time-generator-shared-by-parallel-flows`
-- `pzg-residual-96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb` (11)
+- `pzg-residual-96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb` (10)
   - `cosecant-peak-equation-from-pin-data`
-  - `dominant-partial-quotient-gap-lemma`
   - `dominant-partial-quotient-identification`
   - `fabricated-input-rejection-certificate`
   - `hecke-angle-literature-program`
