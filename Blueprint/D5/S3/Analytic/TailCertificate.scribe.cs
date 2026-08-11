@@ -6,19 +6,17 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic;
 
 internal sealed class TailCertificateDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Analytic/TailCertificate",
-            "Finite tail certificates add with summed budgets and enclose the exact sum at every window."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Finite tail certificates add with summed budgets and enclose the exact sum at every window.",
         H("Finite Sums of Tail Certificates"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("finite-tail-certificates-sum-and-enclose"),
-                H("Finite tail certificates sum and enclose"),
-                LeanTheorem(
+                DeclarationHandle.Create(
                     "D5/S3/Analytic/TailCertificate."
                     + "finite_tail_certificates_sum_and_enclose"),
-                Disp(Seq(
+                H("Finite tail certificates sum and enclose"),
+                StatementSource.FromAuthor(Disp(Seq(
                     Operatorname, Grp(F.Id("Controlled")), Open,
                     Sum, Underscore, Grp(F.Id("i"), Sp, InMacro, Sp, F.Id("s")),
                     F.Id("b"), Underscore, Grp(F.Id("i")), Close,
@@ -46,14 +44,14 @@ internal sealed class TailCertificateDocument : IScribeDocumentDefinition
                     F.Id("r"), Underscore, Grp(F.Id("i")), Open, F.Id("W"), Close,
                     Plus,
                     Sum, Underscore, Grp(F.Id("i"), Sp, InMacro, Sp, F.Id("s")),
-                    F.Id("b"), Underscore, Grp(F.Id("i")), Open, F.Id("W"), Close)),
-                DescribeProvenance.RepoDerived(),
+                    F.Id("b"), Underscore, Grp(F.Id("i")), Open, F.Id("W"), Close))),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For a finite family of certificates, the pointwise sum of their budget "
                     + "functions remains controlled. At every window W, the absolute difference "
                     + "between the sum of the exact values and the sum of the window readings is "
                     + "at most the sum of the window budgets. Equivalently, the exact sum lies in "
                     + "the closed interval from the summed reading minus the summed budget to the "
-                    + "summed reading plus the summed budget.")))
-            ))));
+                    + "summed reading plus the summed budget."))),
+                DescribeRole.Theorem))));
 }

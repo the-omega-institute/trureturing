@@ -9,19 +9,17 @@ internal sealed class CompletedZetaMellinReconstructionDocument : IScribeDocumen
     private static readonly LibraryNoteRef CoffeyXi =
         LibraryNoteRef.Create("D5/L/Zeros/coffey2007theta");
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Analytic/CompletedZetaMellinReconstruction",
-            "Completed zeta is reconstructed from its symmetric theta-tail Mellin integral."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Completed zeta is reconstructed from its symmetric theta-tail Mellin integral.",
         H("Mellin Reconstruction of the Completed Zeta"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("completed-zeta-is-reconstructed-from-the-symmetric-theta-tail"),
-                H("Completed zeta is reconstructed from the symmetric theta tail"),
-                LeanTheorem(
+                DeclarationHandle.Create(
                     "D5/S3/Analytic/CompletedZetaMellinReconstruction.completed_zeta_mellin_reconstruction"),
-                Disp(Seq(F.Text, Grp(F.Id("Let"), Sp), Sp, Theta, Open, F.Id("t"), Close, Eq, Theta, Underscore, Grp(Mathrm, Grp(F.Id("even"))), Open, D(0), Comma, F.Id("t"), Close, Comma, Esc, Omega, Eq, Frac, Grp(Theta, Minus, D(1)), Grp(D(2)), Comma, Esc, F.Id("M"), Open, F.Id("s"), Close, Eq, Int, Underscore, Grp(D(1)), Caret, Grp(Infty), Omega, Open, F.Id("t"), Close, Thin, Left, Open, F.Id("t"), Caret, Grp(F.Id("s"), Slash, D(2)), Plus, F.Id("t"), Caret, Grp(Open, D(1), Minus, F.Id("s"), Close, Slash, D(2)), Right, Close, Thin, Frac, Grp(F.Id("dt")), Grp(F.Id("t")), Dot, Esc, F.Text, Grp(F.Id("Then"), Sp), Sp, Open, Forall, Sp, F.Id("s"), Comma, Esc, Re, Sp, F.Id("s"), Gt, D(1), Sp, Rightarrow, Sp, Lambda, Open, F.Id("s"), Close, Eq, Pi, Caret, Grp(Minus, F.Id("s"), Slash, D(2)), Thin, Gamma, Open, Frac, Grp(F.Id("s")), Grp(D(2)), Close, Thin, Zeta, Open, F.Id("s"), Close, Close, Sp, Land, Sp, Open, Forall, Sp, F.Id("s"), Comma, Esc, Lambda, Open, F.Id("s"), Close, Eq, F.Id("M"), Open, F.Id("s"), Close, Minus, Frac, Grp(D(1)), Grp(F.Id("s")), Minus, Frac, Grp(D(1)), Grp(D(1), Minus, F.Id("s")), Close, Sp, Land, Sp, Operatorname, Grp(F.Id("Differentiable")), Underscore, Grp(Mathbb, Grp(F.Id("C"))), Open, F.Id("M"), Close, Sp, Land, Sp, Open, Forall, Sp, F.Id("s"), Comma, Esc, F.Id("M"), Open, D(1), Minus, F.Id("s"), Close, Eq, F.Id("M"), Open, F.Id("s"), Close, Close, Sp, Land, Sp, Open, Forall, Sp, F.Id("s"), Comma, Esc, F.Id("s"), Neq, Sp, D(0), Sp, Land, Sp, F.Id("s"), Neq, Sp, D(1), Sp, Rightarrow, Sp, Operatorname, Grp(F.Id("DifferentiableAt")), Underscore, Grp(Mathbb, Grp(F.Id("C"))), Open, Lambda, Comma, F.Id("s"), Close, Close, Sp, Land, Sp, Lim, Underscore, Grp(F.Id("s"), To, Sp, D(0)), F.Id("s"), Thin, Lambda, Open, F.Id("s"), Close, Eq, Minus, D(1), Sp, Land, Sp, Lim, Underscore, Grp(F.Id("s"), To, Sp, D(1)), Open, F.Id("s"), Minus, D(1), Close, Thin, Lambda, Open, F.Id("s"), Close, Eq, D(1), Sp, Land, Sp, Open, Forall, Sp, F.Id("s"), Comma, Esc, Xi, Open, D(1), Minus, F.Id("s"), Close, Eq, Xi, Open, F.Id("s"), Close, Close)),
-                DescribeProvenance.LiteratureAttested(CoffeyXi),
+                H("Completed zeta is reconstructed from the symmetric theta tail"),
+                StatementSource.FromAuthor(Disp(Seq(F.Text, Grp(F.Id("Let"), Sp), Sp, Theta, Open, F.Id("t"), Close, Eq, Theta, Underscore, Grp(Mathrm, Grp(F.Id("even"))), Open, D(0), Comma, F.Id("t"), Close, Comma, Esc, Omega, Eq, Frac, Grp(Theta, Minus, D(1)), Grp(D(2)), Comma, Esc, F.Id("M"), Open, F.Id("s"), Close, Eq, Int, Underscore, Grp(D(1)), Caret, Grp(Infty), Omega, Open, F.Id("t"), Close, Thin, Left, Open, F.Id("t"), Caret, Grp(F.Id("s"), Slash, D(2)), Plus, F.Id("t"), Caret, Grp(Open, D(1), Minus, F.Id("s"), Close, Slash, D(2)), Right, Close, Thin, Frac, Grp(F.Id("dt")), Grp(F.Id("t")), Dot, Esc, F.Text, Grp(F.Id("Then"), Sp), Sp, Open, Forall, Sp, F.Id("s"), Comma, Esc, Re, Sp, F.Id("s"), Gt, D(1), Sp, Rightarrow, Sp, Lambda, Open, F.Id("s"), Close, Eq, Pi, Caret, Grp(Minus, F.Id("s"), Slash, D(2)), Thin, Gamma, Open, Frac, Grp(F.Id("s")), Grp(D(2)), Close, Thin, Zeta, Open, F.Id("s"), Close, Close, Sp, Land, Sp, Open, Forall, Sp, F.Id("s"), Comma, Esc, Lambda, Open, F.Id("s"), Close, Eq, F.Id("M"), Open, F.Id("s"), Close, Minus, Frac, Grp(D(1)), Grp(F.Id("s")), Minus, Frac, Grp(D(1)), Grp(D(1), Minus, F.Id("s")), Close, Sp, Land, Sp, Operatorname, Grp(F.Id("Differentiable")), Underscore, Grp(Mathbb, Grp(F.Id("C"))), Open, F.Id("M"), Close, Sp, Land, Sp, Open, Forall, Sp, F.Id("s"), Comma, Esc, F.Id("M"), Open, D(1), Minus, F.Id("s"), Close, Eq, F.Id("M"), Open, F.Id("s"), Close, Close, Sp, Land, Sp, Open, Forall, Sp, F.Id("s"), Comma, Esc, F.Id("s"), Neq, Sp, D(0), Sp, Land, Sp, F.Id("s"), Neq, Sp, D(1), Sp, Rightarrow, Sp, Operatorname, Grp(F.Id("DifferentiableAt")), Underscore, Grp(Mathbb, Grp(F.Id("C"))), Open, Lambda, Comma, F.Id("s"), Close, Close, Sp, Land, Sp, Lim, Underscore, Grp(F.Id("s"), To, Sp, D(0)), F.Id("s"), Thin, Lambda, Open, F.Id("s"), Close, Eq, Minus, D(1), Sp, Land, Sp, Lim, Underscore, Grp(F.Id("s"), To, Sp, D(1)), Open, F.Id("s"), Minus, D(1), Close, Thin, Lambda, Open, F.Id("s"), Close, Eq, D(1), Sp, Land, Sp, Open, Forall, Sp, F.Id("s"), Comma, Esc, Xi, Open, D(1), Minus, F.Id("s"), Close, Eq, Xi, Open, F.Id("s"), Close, Close))),
+                AssessedProvenance.FromLiterature(CoffeyXi),
                 Blocks(Paragraph(Text(
                     "With the theta kernel supplied by mathlib's even Hurwitz kernel at parameter zero, its "
                     + "halved tail omega, and the literal Mellin-type integral M over the ray beyond one, the "
@@ -37,8 +35,8 @@ internal sealed class CompletedZetaMellinReconstructionDocument : IScribeDocumen
                     + "profile at one and algebraizing the inversion substitution through the unconditional "
                     + "pointwise Mellin composition identities. The theorem introduces no public concept "
                     + "beyond its selector and supplies the reconstruction bridge between the theta tail and "
-                    + "the pole ledger that the zero-symmetry route below O-6 consumes.")))
-            )),
+                    + "the pole ledger that the zero-symmetry route below O-6 consumes."))),
+                DescribeRole.Theorem)),
 [
                         DocumentEdge.Dependency.Create(
                             GidRef.Create("D5/S3/Zeros/CompletedZeta")),

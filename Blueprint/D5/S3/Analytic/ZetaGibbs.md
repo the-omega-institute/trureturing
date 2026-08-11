@@ -6,7 +6,7 @@ The zeta distribution is the Gibbs measure for logarithmic integer energy.
 
 **Definition 1.1 (Logarithmic energy has zeta Boltzmann weight).**
 
-$$w_{s}(n)=\operatorname{ofReal}(n^{-s})$$
+Lean statement: `D5/S3/Analytic/ZetaGibbs.weight`
 
 *Formalization.* `D5/S3/Analytic/ZetaGibbs.weight` (`✓ std3`).
 
@@ -18,7 +18,7 @@ For a natural-number state n and real inverse temperature s, the weight is the e
 
 **Definition 1.2 (The partition function is the total zeta weight).**
 
-$$Z(s)=\sum_{n\in \mathbb{N}}w_{s}(n)$$
+Lean statement: `D5/S3/Analytic/ZetaGibbs.partitionFunction`
 
 *Formalization.* `D5/S3/Analytic/ZetaGibbs.partitionFunction` (`✓ std3`).
 
@@ -54,7 +54,7 @@ The n = 1 summand is exactly one, so the full partition function is strictly pos
 
 **Definition 1.5 (Normalization produces the zeta PMF).**
 
-$$P_{s}=\operatorname{normalize}(w_{s}),\quad1<s$$
+Lean statement: `D5/S3/Analytic/ZetaGibbs.zetaDist`
 
 *Formalization.* `D5/S3/Analytic/ZetaGibbs.zetaDist` (`✓ std3`).
 

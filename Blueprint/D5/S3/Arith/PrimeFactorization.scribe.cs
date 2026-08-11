@@ -9,19 +9,17 @@ internal sealed class PrimeFactorizationDocument : IScribeDocumentDefinition
     private static readonly LibraryNoteRef Apostol =
         LibraryNoteRef.Create("D5/L/apostol1976introduction");
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Arith/PrimeFactorization",
-            "Every natural number greater than one is a product of finitely many primes."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Every natural number greater than one is a product of finitely many primes.",
         H("Existence of Prime Factorization"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("every-natural-above-one-is-a-product-of-primes"),
-                H("Every natural number above one is a product of primes"),
-                LeanTheorem(
+                DeclarationHandle.Create(
                     "D5/S3/Arith/PrimeFactorization.exists_prime_factorization"),
-                Disp(Seq(Forall, Sp, F.Id("n"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Esc, F.Id("n"), Gt, D(1), Sp, Rightarrow, Sp, Exists, Thin, Sp, F.Id("l"), Comma, Esc, Open, Forall, Sp, F.Id("p"), InMacro, Sp, F.Id("l"), Comma, Esc, F.Id("p"), Esc, F.Text, Grp(F.Id("prime")), Close, Sp, Land, Sp, Prod, Sp, F.Id("l"), Sp, Eq, Sp, F.Id("n"))),
-                DescribeProvenance.LiteratureAttested(Apostol),
+                H("Every natural number above one is a product of primes"),
+                StatementSource.FromAuthor(Disp(Seq(Forall, Sp, F.Id("n"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Esc, F.Id("n"), Gt, D(1), Sp, Rightarrow, Sp, Exists, Thin, Sp, F.Id("l"), Comma, Esc, Open, Forall, Sp, F.Id("p"), InMacro, Sp, F.Id("l"), Comma, Esc, F.Id("p"), Esc, F.Text, Grp(F.Id("prime")), Close, Sp, Land, Sp, Prod, Sp, F.Id("l"), Sp, Eq, Sp, F.Id("n")))),
+                AssessedProvenance.FromLiterature(Apostol),
                 Blocks(Paragraph(Text(
                     "Every natural number greater than one factors as a product of finitely "
                     + "many prime numbers. This is the existence half of the fundamental theorem "
@@ -36,6 +34,6 @@ internal sealed class PrimeFactorizationDocument : IScribeDocumentDefinition
                     + "truth of the statement, and the proof route may differ from the source's "
                     + "minimal-counterexample argument. Original numerical-certificate disposition: "
                     + "the source theorem is a purely existential factorization statement and "
-                    + "contains no numerical certificate.")))
-            ))));
+                    + "contains no numerical certificate."))),
+                DescribeRole.Theorem))));
 }

@@ -6,7 +6,7 @@ The cumulative logarithmic length of a signed prime-event stream strictly increa
 
 **Definition 1.1 (Event length is logarithmic prime-weighted variation).**
 
-$$\operatorname{eventLength}(u)=\sum_{p\in\operatorname{support}(u)}\Vert u_{p}\Vert \operatorname{log}(p)$$
+Lean statement: `D5/S3/Analytic/PrimeCashflowCost.eventLength`
 
 *Formalization.* `D5/S3/Analytic/PrimeCashflowCost.eventLength` (`✓ std3`).
 
@@ -18,7 +18,7 @@ An event is a finitely supported integer-valued function on the primes. Its leng
 
 **Definition 1.2 (Cashflow cost is cumulative event length).**
 
-$$\operatorname{cashflowCost}(events,t)=\sum_{tau<t}\operatorname{eventLength}(events(tau))$$
+Lean statement: `D5/S3/Analytic/PrimeCashflowCost.cashflowCost`
 
 *Formalization.* `D5/S3/Analytic/PrimeCashflowCost.cashflowCost` (`✓ std3`).
 
