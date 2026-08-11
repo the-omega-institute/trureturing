@@ -155,17 +155,22 @@ internal static class DigestionFingerprint
     internal static DigestionFingerprints Compute(ReadOnlySpan<byte> rawBytes)
     {
         var raw = Sha256(rawBytes);
+        var normalized = NormalizeText(rawBytes);
+        return new DigestionFingerprints(raw, Sha256(StrictUtf8.GetBytes(normalized)));
+    }
+
+    internal static string NormalizeText(ReadOnlySpan<byte> rawBytes)
+    {
         var text = StrictUtf8.GetString(rawBytes);
         if (text.StartsWith('\uFEFF'))
         {
             text = text[1..];
         }
 
-        var normalized = text
+        return text
             .Replace("\r\n", "\n", StringComparison.Ordinal)
             .Replace('\r', '\n')
             .Normalize(NormalizationForm.FormC);
-        return new DigestionFingerprints(raw, Sha256(StrictUtf8.GetBytes(normalized)));
     }
 
     internal static bool IsCanonicalSha256(string value) =>
