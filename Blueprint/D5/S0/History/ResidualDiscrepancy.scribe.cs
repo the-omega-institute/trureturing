@@ -6,24 +6,20 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.History;
 
 internal sealed class ResidualDiscrepancyDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S0/History/ResidualDiscrepancy",
-            "A discrepancy is residual exactly when observed and expected readings differ."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A discrepancy is residual exactly when observed and expected readings differ.",
         H("Residual Discrepancies"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("a-residual-discrepancy-is-a-nonzero-difference"),
+                DeclarationHandle.Create("D5/S0/History/ResidualDiscrepancy.residual_iff_observed_ne_expected"),
                 H("A residual discrepancy is a nonzero difference"),
-                LeanTheorem(
-                    "D5/S0/History/ResidualDiscrepancy."
-                    + "residual_iff_observed_ne_expected"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Operatorname, Grp(F.Id("IsResidual")),
                     Open, F.Id("expected"), Comma, Sp, F.Id("observed"), Close,
                     Sp, Iff, Sp,
-                    F.Id("observed"), Sp, Neq, Sp, F.Id("expected"))),
-                DescribeProvenance.RepoDerived(),
+                    F.Id("observed"), Sp, Neq, Sp, F.Id("expected")))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "For readings in any additive group, the residual discrepancy is "
@@ -38,6 +34,6 @@ internal sealed class ResidualDiscrepancyDocument : IScribeDocumentDefinition
                         + "honest wrapper that unfolds the residual vocabulary and applies "
                         + "that theorem. Searches for an existing residual-discrepancy "
                         + "abstraction were negative. The source atom is definitional and "
-                        + "contains no numerical certificate.")))
-            ))));
+                        + "contains no numerical certificate."))),
+                DescribeRole.Theorem))));
 }

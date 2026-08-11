@@ -6,19 +6,15 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.Computability;
 
 internal sealed class FiniteCounterexampleCertificateDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S0/Computability/FiniteCounterexampleCertificate",
-            "A false universal finite readout has exactly a bounded counterexample certificate."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A false universal finite readout has exactly a bounded counterexample certificate.",
         H("Finite Counterexample Certificates"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("finite-readout-counterexample-certificate"),
+                DeclarationHandle.Create("D5/S0/Computability/FiniteCounterexampleCertificate.finite_readout_counterexample_certificate"),
                 H("A false universal finite readout has a bounded certificate"),
-                LeanTheorem(
-                    "D5/S0/Computability/FiniteCounterexampleCertificate."
-                    + "finite_readout_counterexample_certificate"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Neg, Open, Forall, Sp, F.Id("h"), Comma, Sp,
                     F.Id("D"), Open, F.Id("h"), Close, Sp, Eq, Sp,
                     F.Id("true"), Close, Sp, Iff, Sp,
@@ -28,8 +24,8 @@ internal sealed class FiniteCounterexampleCertificateDocument : IScribeDocumentD
                     Sp, Eq, Sp, Operatorname, Grp(F.Id("some")),
                     Open, F.Id("h"), Close, Sp, Land, Sp,
                     F.Id("D"), Open, F.Id("h"), Close, Sp, Eq, Sp,
-                    F.Id("false"), Dot)),
-                DescribeProvenance.RepoDerived(),
+                    F.Id("false"), Dot))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "A finite readout is an executable function from finite marker "
@@ -51,8 +47,8 @@ internal sealed class FiniteCounterexampleCertificateDocument : IScribeDocumentD
                         + "declaration about this marker-history search. The repository's "
                         + "`findCounterexample_complete` and `findCounterexample_sound` "
                         + "supply the executable core, so the new result is an honest "
-                        + "composition rather than a reproof of either dependency.")))
-            )),
+                        + "composition rather than a reproof of either dependency."))),
+                DescribeRole.Theorem)),
         [DocumentEdge.Dependency.Create(
             GidRef.Create("D5/S0/History/MarkerHistorySearch"))]));
 }

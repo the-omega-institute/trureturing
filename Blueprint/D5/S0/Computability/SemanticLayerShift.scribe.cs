@@ -6,22 +6,18 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.Computability;
 
 internal sealed class SemanticLayerShiftDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S0/Computability/SemanticLayerShift",
-            "A traceable semantic entry shifts losslessly to an open entry at the next layer."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A traceable semantic entry shifts losslessly to an open entry at the next layer.",
         H("Semantic Entries Reopen at the Next Layer"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("semantic-layer-shift-is-bijective"),
+                DeclarationHandle.Create("D5/S0/Computability/SemanticLayerShift.semantic_layer_shift_bijective"),
                 H("The semantic layer shift is bijective"),
-                LeanTheorem(
-                    "D5/S0/Computability/SemanticLayerShift."
-                    + "semantic_layer_shift_bijective"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Operatorname, Grp(F.Id("Bijective")), Open,
-                    F.Id("semanticLayerShiftEquiv"), Close)),
-                DescribeProvenance.RepoDerived(),
+                    F.Id("semanticLayerShiftEquiv"), Close))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "A current-layer ledger entry whose detector has a semantic type "
@@ -40,6 +36,6 @@ internal sealed class SemanticLayerShiftDocument : IScribeDocumentDefinition
                         + "this ledger-specific semantic-to-open transition, so the Lean "
                         + "module constructs only that local equivalence and delegates its "
                         + "bijectivity to Mathlib. The claim is structural and carries no "
-                        + "numerical certificate.")))
-            ))));
+                        + "numerical certificate."))),
+                DescribeRole.Theorem))));
 }
