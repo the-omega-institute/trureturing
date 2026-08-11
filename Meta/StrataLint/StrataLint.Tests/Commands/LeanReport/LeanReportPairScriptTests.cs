@@ -83,15 +83,20 @@ public sealed class LeanReportPairScriptTests
     }
 
     [Fact]
-    public void CandidateMissingProducerInputRemainsAHardFailure()
+    public void CandidateSourceSetChangeDisablesReuseWithoutFailingProduction()
     {
         using var fixture = new LeanReportPairFixture();
         fixture.RemoveCandidateProducerInput(MergeCommandPath);
 
         var result = fixture.Run();
 
-        Assert.NotEqual(0, result.ExitCode);
-        Assert.Contains("repository input is absent", Encoding.UTF8.GetString(result.StandardError));
+        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+        Assert.Equal(2, fixture.ProducerInvocationCount);
+        using var candidate = fixture.ReadCandidateProvenance();
+        using var baseline = fixture.ReadBaselineProvenance();
+        Assert.NotEqual(
+            candidate.RootElement.GetProperty("input_address").GetString(),
+            baseline.RootElement.GetProperty("input_address").GetString());
     }
 
     [Fact]

@@ -10,6 +10,40 @@ public sealed class LeanReportInputScriptTests
     private const string MergeCommandPath = "Meta/StrataLint/StrataLint.Cli/Commands/LeanReportMergeCommand.cs";
     private const string RawReportPath = "Meta/StrataLint/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs";
     private const string CanonicalWriterPath = "Meta/StrataLint/StrataLint.Engine/Snapshot/StructuredCanonicalWriter.cs";
+    private const string LeanModelsPath = "Meta/StrataLint/StrataLint.Engine/Snapshot/LeanModels.cs";
+    private const string TestSourcePath = "Meta/StrataLint/StrataLint.Tests/Snapshot/LeanModelsTests.cs";
+    private static readonly string PairScriptPath = string.Join(
+        '/', "Meta", "StrataLint", "scripts", "lean-report-pair.sh");
+    private static readonly string EngineLockPath = string.Join(
+        '/', "Meta", "StrataLint", "StrataLint.Engine", "packages.lock.json");
+    private static readonly string CliLockPath = string.Join(
+        '/', "Meta", "StrataLint", "StrataLint.Cli", "packages.lock.json");
+    private static readonly string ScribeLockPath = string.Join(
+        '/', "Meta", "StrataLint", "StrataLint.Scribe", "packages.lock.json");
+
+    [Fact]
+    public void ProductionSourceClosureChangesProducerAndModuleKey()
+    {
+        using var fixture = new LeanReportInputFixture();
+        var producerBefore = fixture.Producer();
+        var keyBefore = fixture.Manifest()["D5.Probe"].Key;
+
+        fixture.Append(LeanModelsPath, "// mutation\n");
+
+        Assert.NotEqual(producerBefore, fixture.Producer());
+        Assert.NotEqual(keyBefore, fixture.Manifest()["D5.Probe"].Key);
+    }
+
+    [Fact]
+    public void TestProjectSourceDoesNotChangeProducer()
+    {
+        using var fixture = new LeanReportInputFixture();
+        var before = fixture.Producer();
+
+        fixture.Append(TestSourcePath, "// mutation\n");
+
+        Assert.Equal(before, fixture.Producer());
+    }
     [Fact]
     public void ManifestKeysIncludeTheTransitiveManagedImportClosure()
     {
@@ -143,6 +177,13 @@ public sealed class LeanReportInputScriptTests
             Write(MergeCommandPath, "// fixture\n");
             Write(RawReportPath, "// fixture\n");
             Write(CanonicalWriterPath, "// fixture\n");
+            Write(LeanModelsPath, "// fixture\n");
+            Write(TestSourcePath, "// fixture\n");
+            Write(PairScriptPath, "#!/usr/bin/env bash\n");
+            Write(EngineLockPath, "{}\n");
+            Write(CliLockPath, "{}\n");
+            Write(ScribeLockPath, "{}\n");
+            Write("global.json", "{}\n");
             File.WriteAllText(report, "{}\n", new UTF8Encoding(false));
             var digest = Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(report)));
             File.WriteAllText(
@@ -237,6 +278,19 @@ public sealed class LeanReportInputScriptTests
         }
 
         internal void WriteSource(string relativePath, string contents) => Write(relativePath, contents);
+
+        internal string Producer()
+        {
+            var result = Run("address");
+            Assert.Equal(0, result.ExitCode);
+            return Encoding.UTF8.GetString(result.StandardOutput)
+                .Split(' ', StringSplitOptions.RemoveEmptyEntries)[1];
+        }
+
+        internal void Append(string relativePath, string contents) => File.AppendAllText(
+            Path.Combine(repository, relativePath.Replace('/', Path.DirectorySeparatorChar)),
+            contents,
+            new UTF8Encoding(false));
 
         private ProcessOutput Run(string command) => BoundedProcessRunner.Run(
             "bash",

@@ -8,7 +8,6 @@ if [[ -n "$COMMAND" ]]; then shift; fi
 REPOSITORY=""
 REPORT=""
 MANIFEST=""
-BASELINE=0
 PRODUCER_OVERRIDE=""
 INSPECTOR_OVERRIDE=""
 while [[ $# -gt 0 ]]; do
@@ -16,7 +15,7 @@ while [[ $# -gt 0 ]]; do
     --repository) REPOSITORY="$2"; shift 2 ;;
     --report) REPORT="$2"; shift 2 ;;
     --manifest) MANIFEST="$2"; shift 2 ;;
-    --baseline) BASELINE=1; shift ;;
+    --baseline) shift ;;
     --producer) PRODUCER_OVERRIDE="$2"; shift 2 ;;
     --inspector) INSPECTOR_OVERRIDE="$2"; shift 2 ;;
     *) echo "lean-report-input: unknown argument '$1'" >&2; exit 2 ;;
@@ -69,32 +68,49 @@ append_producer_manifest_entry() {
   elif [[ "$relative" == "Meta/StrataLint/lean-inspector/Inspector.lean" && -n "$INSPECTOR_OVERRIDE" ]]; then
     path="$INSPECTOR_OVERRIDE"
   fi
-  if [[ ! -f "$path" && "$BASELINE" == "1" ]]; then
-    printf 'MISSING  %s\n' "$relative" >> "$manifest"
-    return 0
-  fi
   [[ -f "$path" ]] \
     || { echo "lean-report-input: repository input is absent: $path" >&2; return 2; }
   printf '%s  %s\n' "$(hash_file "$path")" "$relative" >> "$manifest"
 }
 
 producer_paths() {
-  printf '%s\n' \
-    "Meta/StrataLint/lean-inspector/inspect.sh" \
-    "Meta/StrataLint/lean-inspector/Inspector.lean" \
-    "Meta/StrataLint/scripts/report/lean-report-input.sh" \
-    "Meta/StrataLint/StrataLint.Cli/Commands/LeanReportMergeCommand.cs" \
-    "Meta/StrataLint/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs" \
-    "Meta/StrataLint/StrataLint.Engine/Snapshot/StructuredCanonicalWriter.cs"
+  local directory relative
+  for directory in \
+    Meta/StrataLint/StrataLint.Engine \
+    Meta/StrataLint/StrataLint.Cli \
+    Meta/StrataLint/StrataLint.Scribe; do
+    if [[ -d "$REPOSITORY/$directory" ]]; then
+      find "$REPOSITORY/$directory" -type f -name '*.cs' \
+        ! -path '*/bin/*' ! -path '*/obj/*' -print
+    fi
+  done | sed "s#^$REPOSITORY/##"
+  for relative in \
+    Meta/StrataLint/lean-inspector/inspect.sh \
+    Meta/StrataLint/lean-inspector/Inspector.lean \
+    Meta/StrataLint/scripts/report/lean-report-input.sh \
+    Meta/StrataLint/scripts/lean-report-pair.sh \
+    Meta/StrataLint/StrataLint.Engine/packages.lock.json \
+    Meta/StrataLint/StrataLint.Cli/packages.lock.json \
+    Meta/StrataLint/StrataLint.Scribe/packages.lock.json \
+    global.json; do
+    if [[ -f "$REPOSITORY/$relative" \
+      || ( "$relative" == "Meta/StrataLint/lean-inspector/inspect.sh" && -n "$PRODUCER_OVERRIDE" ) \
+      || ( "$relative" == "Meta/StrataLint/lean-inspector/Inspector.lean" && -n "$INSPECTOR_OVERRIDE" ) ]]; then
+      printf '%s\n' "$relative"
+    fi
+  done
 }
 
 producer_sha256() {
   local manifest="$1"
   local relative
   : > "$manifest"
+  : > "${manifest}.unsorted"
   while IFS= read -r relative; do
-    append_producer_manifest_entry "$manifest" "$relative" || return 2
-  done < <(producer_paths)
+    append_producer_manifest_entry "${manifest}.unsorted" "$relative" || return 2
+  done < <(producer_paths | sort -u)
+  sort "${manifest}.unsorted" > "$manifest"
+  rm -f -- "${manifest}.unsorted"
   hash_file "$manifest"
 }
 
