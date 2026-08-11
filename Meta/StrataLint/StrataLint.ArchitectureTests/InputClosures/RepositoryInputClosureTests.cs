@@ -3,30 +3,32 @@ namespace StrataLint.ArchitectureTests;
 public sealed class RepositoryInputClosureTests
 {
     [Fact]
-    public void EveryTestHasANonEmptyParseableDerivedEffectAndArtifactIsCurrent()
+    public void EveryFactAndTheoryHasANonEmptyDerivedEffect()
     {
         var root = RepositoryLayout.FindRoot();
         var result = RepositoryInputClosureDeriver.DeriveRepositoryTests(root);
 
         Assert.NotEmpty(result);
-        Assert.All(result, effect => Assert.NotEmpty(effect.Patterns));
-        Assert.Empty(result.DeclarationFindings);
+        var missing = result.Where(static effect => effect.Patterns.Count == 0).ToArray();
+        Assert.True(missing.Length == 0, RepositoryInputClosureReadout.Render(result));
+    }
 
-        var rendered = RepositoryInputClosureArtifact.Render(result);
-        if (Environment.GetEnvironmentVariable("STRATALINT_UPDATE_INPUT_CLOSURES") == "1")
-        {
-            RepositoryInputClosureArtifact.Write(root, rendered);
-        }
+    [Fact]
+    public void EveryRepositoryReadDeclarationHasAParseableKindAndPath()
+    {
+        var result = RepositoryInputClosureDeriver.DeriveRepositoryTests(RepositoryLayout.FindRoot());
 
-        var directory = Path.Combine(root, RepositoryInputClosureArtifact.RelativeDirectory);
-        var actualNames = Directory.Exists(directory)
-            ? Directory.EnumerateFiles(directory, "*.tsv").Select(Path.GetFileName).Order().ToArray()
-            : [];
-        Assert.Equal(rendered.Keys.Order().ToArray(), actualNames);
-        foreach (var (name, expected) in rendered)
-        {
-            Assert.Equal(expected, File.ReadAllText(Path.Combine(directory, name)));
-        }
+        Assert.True(result.DeclarationFindings.Count == 0, RepositoryInputClosureReadout.Render(result));
+    }
+
+    [Fact]
+    public void DerivedInputClosureAggregatesAreNotTracked()
+    {
+        var root = RepositoryLayout.FindRoot();
+        var directory = Path.Combine(root,
+            "Meta/StrataLint/StrataLint.ArchitectureTests/InputClosures/Derived");
+
+        Assert.False(Directory.Exists(directory), $"derived aggregate must not be stored at {directory}");
     }
 
     [Fact]
@@ -87,6 +89,25 @@ public sealed class RepositoryInputClosureTests
         Assert.Equal(["All"], result.Single().Patterns);
         Assert.Contains(result.DeclarationFindings, finding =>
             finding.Contains("cannot prove Exact", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void ViolationReadoutNamesTestDerivedEffectAndAllReason()
+    {
+        const string source = """
+            using Xunit;
+            public static class DiagnosticCase
+            {
+                [Fact]
+                public static void Test() => MissingAssembly.Loader.Read();
+            }
+            """;
+
+        var readout = RepositoryInputClosureReadout.Render(
+            RepositoryInputClosureDeriver.DeriveSynthetic(source));
+
+        Assert.Contains("DiagnosticCase.Test", readout, StringComparison.Ordinal);
+        Assert.Contains("\tAll\tfail-closed:", readout, StringComparison.Ordinal);
     }
 
     [Fact]
