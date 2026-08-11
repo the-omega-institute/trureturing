@@ -161,7 +161,7 @@ public sealed class DocumentGraphTests
     }
 
     [Fact]
-    public void AssemblerRejectsSameSuffixWithDifferentCanonicalDeclarationName()
+    public void AssemblerResolvesShortNameWhenNamespaceDiffersFromModulePath()
     {
         var source = DocumentWithLeanAnchor(
             "D5/S0/Test/Source",
@@ -179,9 +179,9 @@ public sealed class DocumentGraphTests
 
         var graph = DocumentGraphAssembler.Assemble([source], DeclarationCatalog.Create(report));
 
-        var finding = Assert.Single(graph.Findings);
-        Assert.Equal("dangling-gid", finding.Code);
-        Assert.Contains("D5/S0/Test/Source.anchor", finding.Message, StringComparison.Ordinal);
+        Assert.Empty(graph.Findings);
+        var anchor = Assert.Single(graph.For(source).OfType<DocumentEdge.TruthAnchor>());
+        Assert.Equal("D5/S0/Test/Source.anchor", anchor.Target.Value);
     }
 
     [Fact]

@@ -20,14 +20,14 @@ public sealed class ReportDerivedDeclarationTests
     }
 
     [Fact]
-    public void Catalog_fails_closed_when_exact_declaration_is_missing()
+    public void Catalog_fails_closed_when_declaration_is_missing()
     {
         var missing = DeclarationCatalog.Create(Report());
         Assert.Throws<InvalidOperationException>(() => missing.Resolve(DeclarationHandle.Create(Gid)));
     }
 
     [Fact]
-    public void Catalog_fails_closed_when_exact_declaration_is_ambiguous()
+    public void Catalog_fails_closed_when_same_module_short_name_is_ambiguous()
     {
         var ambiguous = DeclarationCatalog.Create(Report(
             Declaration(CanonicalName, "theorem"),
@@ -42,6 +42,34 @@ public sealed class ReportDerivedDeclarationTests
             Declaration("One.claim", "theorem"),
             Declaration("Two.claim", "theorem")));
         Assert.Throws<InvalidOperationException>(() => catalog.Resolve(DeclarationHandle.Create(Gid)));
+    }
+
+    [Fact]
+    public void Catalog_resolves_when_namespace_differs_from_module_path()
+    {
+        var catalog = DeclarationCatalog.Create(LeanAxiomReport.Create(
+            new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
+            {
+                ["D5/S0/A/B/C.lean"] = new([], [Declaration("D5.S0.A.B.decl", "theorem")]),
+            }));
+
+        var resolved = catalog.Resolve(DeclarationHandle.Create("D5/S0/A/B/C.decl"));
+
+        Assert.Equal("D5.S0.A.B.decl", resolved.Declaration.Name);
+    }
+
+    [Fact]
+    public void Catalog_does_not_match_the_same_short_name_across_modules()
+    {
+        var catalog = DeclarationCatalog.Create(LeanAxiomReport.Create(
+            new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
+            {
+                ["D5/S0/Test/X.lean"] = new([], []),
+                ["D5/S0/Test/Y.lean"] = new([], [Declaration("D5.S0.Test.Y.decl", "theorem")]),
+            }));
+
+        Assert.Throws<InvalidOperationException>(
+            () => catalog.Resolve(DeclarationHandle.Create("D5/S0/Test/X.decl")));
     }
 
     [Fact]

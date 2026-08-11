@@ -59,8 +59,15 @@ public sealed class DeclarationCatalog
             throw new InvalidOperationException(
                 $"Lean compiled-artifact report does not contain module {path.Value} for {handle.Value}.");
         }
-        var name = handle.Value.Replace('/', '.');
-        if (!declarations.TryGetValue(name, out var matches))
+        var declarationName = handle.Value[(handle.Value.LastIndexOf('.') + 1)..];
+        var suffix = "." + declarationName;
+        var matches = declarations
+            .Where(entry =>
+                string.Equals(entry.Key, declarationName, StringComparison.Ordinal)
+                || entry.Key.EndsWith(suffix, StringComparison.Ordinal))
+            .SelectMany(static entry => entry.Value)
+            .ToArray();
+        if (matches.Length == 0)
         {
             throw new InvalidOperationException(
                 $"Lean compiled-artifact report for {path.Value} does not contain {handle.Value}.");
