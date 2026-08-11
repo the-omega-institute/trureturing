@@ -6,18 +6,16 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Factorization;
 
 internal sealed class PrimeLogIndependenceDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Factorization/PrimeLogIndependence",
-            "The logarithms of the primes are linearly independent over the integers."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The logarithms of the primes are linearly independent over the integers.",
         H("Integer Linear Independence of Prime Logarithms"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("prime-logarithms-are-integer-linearly-independent"),
-                H("Prime logarithms are integer-linearly independent"),
-                LeanTheorem(
+                DeclarationHandle.Create(
                     "D5/S3/Factorization/PrimeLogIndependence.prime_log_indep"),
-                Disp(Seq(
+                H("Prime logarithms are integer-linearly independent"),
+                StatementSource.FromAuthor(Disp(Seq(
                     Forall, Sp, F.Id("S"), Comma, F.Id("k"), Comma, Sp,
                     Open, Forall, Sp, F.Id("p"), Sp, InMacro, Sp, F.Id("S"), Comma, Sp,
                     Operatorname, Grp(F.Id("Prime")), Open, F.Id("p"), Close, Close, Sp,
@@ -26,8 +24,8 @@ internal sealed class PrimeLogIndependenceDocument : IScribeDocumentDefinition
                     F.Id("k"), Open, F.Id("p"), Close, Sp, Log, Sp, F.Id("p"), Eq, D(0), Sp,
                     Rightarrow, RowBreak,
                     Forall, Sp, F.Id("p"), Sp, InMacro, Sp, F.Id("S"), Comma, Sp,
-                    F.Id("k"), Open, F.Id("p"), Close, Eq, D(0))),
-                DescribeProvenance.RepoDerived(),
+                    F.Id("k"), Open, F.Id("p"), Close, Eq, D(0)))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "For a finite set S of prime numbers and integer coefficients k, if the weighted "
@@ -47,5 +45,6 @@ internal sealed class PrimeLogIndependenceDocument : IScribeDocumentDefinition
                         + "but no linear independence of prime logarithms. The statement is the "
                         + "arithmetic core behind the dense winding of the zeta phase line on the torus of "
                         + "per-axis phases; only that independence is claimed here, not the topological "
-                        + "density it implies.")))))));
+                        + "density it implies."))),
+                DescribeRole.Theorem))));
 }
