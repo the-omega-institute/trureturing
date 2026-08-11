@@ -18,10 +18,14 @@ public static class QuestPdfWriter
 
     public static ImmutableArray<byte> Write(
         ScribeDocument document,
-        LeanAxiomReport? leanReport = null,
+        DeclarationCatalog? declarations = null,
         IReadOnlyDictionary<string, LiteratureCitation>? citations = null)
     {
         ArgumentNullException.ThrowIfNull(document);
+        if (declarations is not null)
+        {
+            document = document.ResolveDeclarations(declarations);
+        }
         QuestPDF.Settings.License = LicenseType.Community;
 
         var pdf = QuestPDF.Fluent.Document.Create(container =>
@@ -53,7 +57,7 @@ public static class QuestPdfWriter
                         document.Content,
                         2,
                         $"document '{document.Header.Gid.Value}'",
-                        leanReport,
+                        declarations,
                         citations,
                         ref describeNumber);
                 });
@@ -77,7 +81,7 @@ public static class QuestPdfWriter
         BlockSequence content,
         int headingLevel,
         string source,
-        LeanAxiomReport? leanReport,
+        DeclarationCatalog? declarations,
         IReadOnlyDictionary<string, LiteratureCitation>? citations,
         ref int describeNumber)
     {
@@ -105,7 +109,7 @@ public static class QuestPdfWriter
                         section.Content,
                         headingLevel + 1,
                         $"{blockSource}, section '{section.Title.Value}'",
-                        leanReport,
+                        declarations,
                         citations,
                         ref describeNumber);
                     break;
@@ -115,7 +119,7 @@ public static class QuestPdfWriter
                         describe,
                         headingLevel,
                         blockSource,
-                        leanReport,
+                        declarations,
                         citations,
                         ref describeNumber);
                     break;
@@ -159,7 +163,7 @@ public static class QuestPdfWriter
         DocumentBlock.Describe describe,
         int headingLevel,
         string source,
-        LeanAxiomReport? leanReport,
+        DeclarationCatalog? declarations,
         IReadOnlyDictionary<string, LiteratureCitation>? citations,
         ref int describeNumber)
     {
@@ -182,7 +186,7 @@ public static class QuestPdfWriter
                     .FontSize(9);
                 break;
             case DescribeStatement.LeanDeclaration lean:
-                var verified = Resolve(lean.Value, leanReport);
+                var verified = Resolve(lean.Value, declarations);
                 if (describe.StatementFormula is { } statementFormula)
                 {
                     column.Item()
@@ -223,7 +227,7 @@ public static class QuestPdfWriter
                 throw new UnreachableException("Unknown Describe statement.");
         }
 
-        if (describe.Provenance.LiteratureReference is { } literature)
+        if (describe.LiteratureReference is { } literature)
         {
             if (citations is null
                 || !citations.TryGetValue(literature.BibKey.Value, out var citation))
@@ -239,7 +243,7 @@ public static class QuestPdfWriter
         else
         {
             column.Item().Text(
-                DescribeVocabulary.CanonicalName(describe.Provenance.Kind) switch
+                DescribeVocabulary.CanonicalName(describe.ProvenanceKind) switch
                 {
                     "repo-derived" => "Source. Repository-derived.",
                     "suspected-novel" => "Source. Suspected novel.",
@@ -254,7 +258,7 @@ public static class QuestPdfWriter
             describe.Content,
             headingLevel + 1,
             $"{source}, describe '{describe.Id.Value}' ('{describe.Title.Value}') commentary",
-            leanReport,
+            declarations,
             citations,
             ref describeNumber);
     }
@@ -262,13 +266,12 @@ public static class QuestPdfWriter
     private static bool IsTheoremClass(DescribeKind kind) =>
         kind is DescribeKind.Theorem or DescribeKind.Proposition or DescribeKind.Lemma;
 
-    private static VerifiedLeanDeclaration Resolve(
+    private static ResolvedDeclaration Resolve(
         LeanDeclarationRef declaration,
-        LeanAxiomReport? leanReport) =>
-        LeanReferenceResolver.Resolve(
-            declaration,
-            leanReport ?? throw new InvalidOperationException(
-                $"Lean compiled-artifact report is required for {declaration.Value}."));
+        DeclarationCatalog? declarations) =>
+        (declarations ?? throw new InvalidOperationException(
+            $"A declaration catalog is required for {declaration.Value}."))
+        .Resolve(DeclarationHandle.Create(declaration.Value));
 
     private static void WriteHeading(
         ColumnDescriptor column,
