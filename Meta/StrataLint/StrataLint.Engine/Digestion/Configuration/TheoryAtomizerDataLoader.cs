@@ -6,6 +6,15 @@ namespace StrataLint.Engine;
 
 internal sealed record AtomizerMapping(string Token, string Value);
 
+/// <summary>
+/// A dialect declared entirely in data: one claim pattern plus the genres it may name.
+/// A volume in a new shape is digested by adding one of these, not by writing an atomizer.
+/// </summary>
+internal sealed record DeclaredDialect(
+    string Id,
+    string ClaimPattern,
+    ImmutableArray<AtomizerMapping> Genres);
+
 internal sealed class TheoryAtomizerRules
 {
     internal static readonly ImmutableHashSet<string> AllowedKinds = ImmutableHashSet.Create(
@@ -23,7 +32,8 @@ internal sealed class TheoryAtomizerRules
         ImmutableArray<AtomizerMapping> pzgGenres,
         ImmutableDictionary<string, string> pzgMarkers,
         ImmutableArray<AtomizerMapping> pzgHeadingPrefixes,
-        ImmutableDictionary<string, string> wmHeadings)
+        ImmutableDictionary<string, string> wmHeadings,
+        ImmutableDictionary<string, DeclaredDialect> dialects)
     {
         ObserverClaimPrefixes = observerClaimPrefixes;
         ConeClaimPrefixes = coneClaimPrefixes;
@@ -34,8 +44,10 @@ internal sealed class TheoryAtomizerRules
         PzgMarkers = pzgMarkers;
         PzgHeadingPrefixes = pzgHeadingPrefixes;
         WmHeadings = wmHeadings;
+        Dialects = dialects;
     }
 
+    internal ImmutableDictionary<string, DeclaredDialect> Dialects { get; }
     internal ImmutableArray<AtomizerMapping> ObserverClaimPrefixes { get; }
     internal ImmutableArray<AtomizerMapping> ConeClaimPrefixes { get; }
     internal ImmutableArray<AtomizerMapping> GictGenres { get; }
@@ -62,8 +74,15 @@ internal static class TheoryAtomizerDataLoader
     [
         "observer.claim_prefixes", "cone.claim_prefixes", "gict.genres",
         "gict.claim_prefixes", "gict.constants", "pzg.genres", "pzg.markers",
-        "pzg.heading_prefixes", "wm.headings",
+        "pzg.heading_prefixes", "wm.headings", "dialect", "dialect.genre",
     ];
+
+    /// <summary>
+    /// Sections a valid file may leave empty. Dialects are declared per volume, so a
+    /// repository that has not needed one yet is not thereby malformed.
+    /// </summary>
+    private static readonly ImmutableHashSet<string> OptionalSections = ImmutableHashSet.Create(
+        StringComparer.Ordinal, "cone.claim_prefixes", "dialect", "dialect.genre");
 
     internal static TheoryAtomizerRules Load(RepositorySnapshot snapshot)
     {
@@ -173,7 +192,7 @@ internal static class TheoryAtomizerDataLoader
         }
 
         if (!sawSchema || entries.Any(static pair =>
-                pair.Key != "cone.claim_prefixes" && pair.Value.Count == 0))
+                !OptionalSections.Contains(pair.Key) && pair.Value.Count == 0))
         {
             throw new FormatException("Atomizer data is missing schema_version or a required section.");
         }
@@ -199,9 +218,89 @@ internal static class TheoryAtomizerDataLoader
         var pzgMarkers = ParseNamedLiterals(entries["pzg.markers"], ["trace-note"]);
         var pzgHeadings = ParseMappings(entries["pzg.heading_prefixes"], "prefix", "locator", locator: true);
         var wm = ParseWm(entries["wm.headings"]);
+        var dialects = ParseDialects(entries["dialect"], entries["dialect.genre"]);
         return new TheoryAtomizerRules(
             observer, coneClaims, gictGenres, gictClaims, gictConstants,
-            pzgGenres, pzgMarkers, pzgHeadings, wm);
+            pzgGenres, pzgMarkers, pzgHeadings, wm, dialects);
+    }
+
+    /// <summary>
+    /// Assembles dialects declared in data. Everything is checked here rather than at use:
+    /// an uncompilable pattern, an unaccepted kind, a duplicate id or a genre bound to no
+    /// declared dialect all refuse the file, so a volume never reaches atomization on a
+    /// dialect that cannot work.
+    /// </summary>
+    private static ImmutableDictionary<string, DeclaredDialect> ParseDialects(
+        List<Dictionary<string, string>> declarations,
+        List<Dictionary<string, string>> genreRows)
+    {
+        var genresById = new Dictionary<string, ImmutableArray<AtomizerMapping>.Builder>(
+            StringComparer.Ordinal);
+        var ids = new HashSet<string>(StringComparer.Ordinal);
+        var builder = ImmutableDictionary.CreateBuilder<string, DeclaredDialect>(StringComparer.Ordinal);
+        foreach (var row in declarations)
+        {
+            RequireFields(row, "id", "claim");
+            if (!ids.Add(row["id"]))
+            {
+                throw new FormatException($"Duplicate dialect id '{row["id"]}'.");
+            }
+
+            try
+            {
+                _ = new Regex(row["claim"], RegexOptions.CultureInvariant);
+            }
+            catch (ArgumentException exception)
+            {
+                throw new FormatException(
+                    $"Dialect '{row["id"]}' claim pattern does not compile: {exception.Message}");
+            }
+
+            genresById[row["id"]] = ImmutableArray.CreateBuilder<AtomizerMapping>();
+        }
+
+        foreach (var row in genreRows)
+        {
+            RequireFields(row, "dialect", "token", "kind");
+            if (!genresById.TryGetValue(row["dialect"], out var genres))
+            {
+                throw new FormatException(
+                    $"Genre '{row["token"]}' names dialect '{row["dialect"]}', which is not declared. "
+                    + "Declared dialects: "
+                    + (ids.Count == 0 ? "(none)" : string.Join(", ", ids.Order(StringComparer.Ordinal)))
+                    + ".");
+            }
+
+            if (!TheoryAtomizerRules.AllowedKinds.Contains(row["kind"]))
+            {
+                throw new FormatException(
+                    $"Unknown kind '{row["kind"]}' for dialect '{row["dialect"]}' genre '{row["token"]}'. "
+                    + "Accepted kinds: "
+                    + string.Join(", ", TheoryAtomizerRules.AllowedKinds.Order(StringComparer.Ordinal))
+                    + ".");
+            }
+
+            if (genres.Any(item => item.Token == row["token"]))
+            {
+                throw new FormatException(
+                    $"Duplicate genre '{row["token"]}' in dialect '{row["dialect"]}'.");
+            }
+
+            genres.Add(new AtomizerMapping(row["token"], row["kind"]));
+        }
+
+        foreach (var row in declarations)
+        {
+            // Longest first so a longer token wins over a shorter one that prefixes it,
+            // exactly as the built-in dialects resolve their genres.
+            var genres = genresById[row["id"]].ToImmutable()
+                .OrderByDescending(static item => item.Token.Length)
+                .ThenBy(static item => item.Token, StringComparer.Ordinal)
+                .ToImmutableArray();
+            builder.Add(row["id"], new DeclaredDialect(row["id"], row["claim"], genres));
+        }
+
+        return builder.ToImmutable();
     }
 
     private static void ValidateConeClaims(ImmutableArray<AtomizerMapping> claims)

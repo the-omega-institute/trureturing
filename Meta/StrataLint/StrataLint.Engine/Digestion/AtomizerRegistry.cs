@@ -49,12 +49,26 @@ internal static class AtomizerRegistry
         return Require(id).Atomize(bytes, rules);
     }
 
-    internal static bool IsRegistered(string id) => Atomizers.ContainsKey(id);
+    /// <summary>
+    /// A dialect declared in atomizer data rather than registered in code. Its identity is
+    /// resolved against the loaded rules at use, so a new volume needs data, not a build.
+    /// </summary>
+    internal static bool IsDeclaredDialect(string id) =>
+        id.StartsWith(DeclaredDialectAtomizer.IdPrefix, StringComparison.Ordinal);
+
+    internal static bool IsRegistered(string id) =>
+        Atomizers.ContainsKey(id) || IsDeclaredDialect(id);
 
     internal static AtomizerRegistration Require(string id) =>
         Atomizers.TryGetValue(id, out var registration)
             ? registration
-            : throw Unknown(id);
+            : IsDeclaredDialect(id)
+                // A declared dialect resolves its rules at atomization, not here: the
+                // registration only needs the residual stem, which the id already carries.
+                ? new AtomizerRegistration(
+                    (bytes, rules) => DeclaredDialectAtomizer.Atomize(id, bytes, rules),
+                    id[DeclaredDialectAtomizer.IdPrefix.Length..])
+                : throw Unknown(id);
 
     private static FormatException Unknown(string id) => new(
         $"Unknown atomizer id '{id}'. Registered atomizers: "

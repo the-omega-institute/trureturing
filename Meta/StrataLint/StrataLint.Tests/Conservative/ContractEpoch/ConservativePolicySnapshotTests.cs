@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
@@ -127,6 +129,38 @@ public sealed class ConservativePolicySnapshotTests
         Assert.Equal(
             "sha256:eaa7a43742593a86ce1bba656175455bf3965d3c1da8de6005a3c614f7762529",
             current.Root);
+    }
+
+    [Fact]
+    public void Sl026IsPreRegisteredWithRepositoryRuleDefaults()
+    {
+        var current = ConservativePolicySnapshot.Current();
+        var sl026 = Assert.Single(
+            current.WithRuleObligations(["SL-026"]).RuleObligations,
+            item => item.RuleId == "SL-026");
+        var descriptor = new RuleDescriptor(
+            RuleId.CreateKnown(26),
+            "Scribe legacy constructor budget",
+            DisplaySeverity.Error,
+            "repository",
+            AdmissionEffect.Block,
+            RuleLifecycle.Active,
+            null);
+        var material = JsonSerializer.SerializeToElement(new
+        {
+            admission_effect = descriptor.AdmissionEffect.ToString(),
+            category = descriptor.Category,
+            deferred_case = descriptor.DeferredCase?.Value,
+            display_severity = descriptor.DisplaySeverity.ToString(),
+            id = descriptor.Id.Value,
+            lifecycle = descriptor.Lifecycle.ToString(),
+            title = descriptor.Title,
+        });
+        var descriptorRoot = "sha256:" + Convert.ToHexStringLower(
+            SHA256.HashData(StructuredCanonicalWriter.WriteJson(material).AsSpan()));
+
+        Assert.Equal(AdmissionEffect.Block.ToString(), sl026.AdmissionEffect);
+        Assert.Equal(descriptorRoot, sl026.DescriptorRoot);
     }
 
     [Fact]
