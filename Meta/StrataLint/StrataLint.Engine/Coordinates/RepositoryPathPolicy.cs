@@ -73,6 +73,7 @@ internal static partial class RepositoryPathPolicy
             || value.StartsWith(".fkst/", StringComparison.Ordinal)
             || value.StartsWith("packages/", StringComparison.Ordinal)
             || value.StartsWith(".claude/skills/", StringComparison.Ordinal)
+            || value.StartsWith(".codex/skills/", StringComparison.Ordinal)
             || value.StartsWith("docs/devloop/", StringComparison.Ordinal)
             || IsGoldenCaseData(value)
             || IsGoldenProjectionData(value)
