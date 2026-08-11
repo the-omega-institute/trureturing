@@ -11,11 +11,11 @@ public sealed class ValuesDefinitionTests
     [Fact]
     public void CatalogSizeIsDefinedByTomlRows()
     {
-        var directory = Directory.CreateTempSubdirectory("stratalint-values-catalog-");
+        var directory = TemporaryFileSystem.Directory.CreateTempSubdirectory("stratalint-values-catalog-");
         try
         {
             var path = Path.Combine(directory.FullName, "values-kernels.toml");
-            File.WriteAllText(path, """
+            TemporaryFileSystem.File.WriteAllText(path, """
                 schema_version = 1
 
                 [[constants]]
@@ -45,7 +45,8 @@ public sealed class ValuesDefinitionTests
     [Fact]
     public void CatalogDefinesAllFourteenConstantsAndKeepsUntranslatedInputsOpen()
     {
-        var definitions = ValuesKernelDataLoader.LoadRepository(FindRepositoryRoot());
+        // TODO(#1264): Known cross-project indirect repository read; cover it in the second slice with the loader boolean declaration.
+        var definitions = ValuesKernelDataLoader.LoadRepository(RepositoryAccessor.Discover(RepositoryRootCriterion.ValuesDataDirectoryNotFound).Root.FullPath);
 
         Assert.Equal(14, definitions.Length);
         Assert.Equal(
@@ -80,7 +81,7 @@ public sealed class ValuesDefinitionTests
     [Fact]
     public void CanonicalCphiSpecRecordsTheReferenceMismatchWithoutTuning()
     {
-        var definition = ValuesKernelDataLoader.LoadRepository(FindRepositoryRoot())
+        var definition = ValuesKernelDataLoader.LoadRepository(RepositoryAccessor.Discover(RepositoryRootCriterion.ValuesDataDirectoryNotFound).Root.FullPath)
             .Single(static item => item.Id == "D5/Cphi");
         var computation = Assert.IsType<ValueComputation.Cphi>(definition.Computation);
 
@@ -91,20 +92,5 @@ public sealed class ValuesDefinitionTests
         Assert.Equal(0.04576252043707622, result.Value, precision: 14);
         Assert.True(Math.Abs(result.Value - 0.045759332) > 1.1e-8);
         Assert.Equal(3_524_577, result.TermCount);
-    }
-
-    private static string FindRepositoryRoot()
-    {
-        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
-             current is not null;
-             current = current.Parent)
-        {
-            if (File.Exists(Path.Combine(current.FullName, ValuesKernelDataLoader.RelativePath)))
-            {
-                return current.FullName;
-            }
-        }
-
-        throw new DirectoryNotFoundException("Could not locate the repository root.");
     }
 }
