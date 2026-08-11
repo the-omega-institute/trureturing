@@ -6,10 +6,10 @@ namespace StrataLint.ArchitectureTests;
 public sealed class DependencyDirectionTests
 {
     [Fact]
-    public void EngineReferencesExactlyBclDunetAndPidgin()
+    public void EngineReferencesExactlyBclDunetPidginAndRoslyn()
     {
         Assert.Equal(
-            ["Dunet", "Pidgin"],
+            ["Dunet", "Microsoft.CodeAnalysis", "Microsoft.CodeAnalysis.CSharp", "Pidgin"],
             AssemblyReferencePolicy.NonPlatformReferences(typeof(AdmissionPipeline).Assembly));
     }
 
