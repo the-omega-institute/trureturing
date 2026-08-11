@@ -23,6 +23,9 @@ domains:
   Conventions:
     stratum: S0
     definition: Canonical W-digit and notation conventions used by later strata.
+  ContinuousObservables:
+    stratum: S3
+    definition: Continuous matrix-valued observables over phase spaces and their pointwise operator-algebraic structure.
   Deficit:
     stratum: S1
     definition: Normalized beta deficits and signed carry accounting of golden addition.
