@@ -68,6 +68,25 @@ public sealed class TypeModelTests
         Assert.True(CaseId.TryCreate("D5-T0016", out _));
     }
 
+    [Theory]
+    [InlineData(23, true)]
+    [InlineData(24, false)]
+    [InlineData(25, true)]
+    [InlineData(26, true)]
+    [InlineData(27, false)]
+    public void RuleIdKnownDomainPreservesTheIntentionalGapAndUpperBoundary(
+        int number,
+        bool expected)
+    {
+        if (expected)
+        {
+            Assert.Equal($"SL-{number:000}", RuleId.CreateKnown(number).Value);
+            return;
+        }
+
+        Assert.Throws<ArgumentOutOfRangeException>(() => RuleId.CreateKnown(number));
+    }
+
     [Fact]
     public void ValidationProfilesAreAClosedUnion()
     {
