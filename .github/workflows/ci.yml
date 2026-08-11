@@ -96,8 +96,41 @@ jobs:
       - name: Build candidate with warnings as errors
         run: make -C candidate dotnet
 
+      - name: Decide whether process-spawning tests are in scope
+        id: script-scope
+        shell: bash
+        working-directory: candidate
+        run: |
+          set -euo pipefail
+          base='${{ github.event.pull_request.base.sha }}'
+          # push 事件没有 PR base：无从比较，一律跑（fail-closed）。
+          if [[ -z "$base" ]] || ! git cat-file -e "$base^{commit}" 2>/dev/null; then
+            echo 'in-scope=true' >> "$GITHUB_OUTPUT"
+            echo 'reason=no base to diff against' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          changed="$(git diff --name-only "$base"...HEAD)"
+          # 这些路径下的改动，会改变 Category=Script 测试所启动的那些进程。
+          if printf '%s\n' "$changed" | grep -qE '^(Meta/StrataLint/scripts/|\.github/scripts/|\.github/workflows/|Makefile$|Meta/StrataLint/lean-inspector/)'; then
+            echo 'in-scope=true' >> "$GITHUB_OUTPUT"
+            echo 'reason=a spawned entrypoint changed' >> "$GITHUB_OUTPUT"
+          else
+            echo 'in-scope=false' >> "$GITHUB_OUTPUT"
+            echo 'reason=no spawned entrypoint changed' >> "$GITHUB_OUTPUT"
+          fi
+          printf '%s\n' "$changed" | head -40
+
       - name: Run candidate golden and integration tests
         run: make -C candidate test
+
+      - name: Run process-spawning tests
+        if: steps.script-scope.outputs.in-scope == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf 'reason: %s\n' '${{ steps.script-scope.outputs.reason }}'
+          dotnet test candidate/Meta/StrataLint/StrataLint.sln \
+            --configuration Release --verbosity normal --filter 'Category=Script'
 
       - name: Run candidate selftest twice and compare bytes
         shell: bash
