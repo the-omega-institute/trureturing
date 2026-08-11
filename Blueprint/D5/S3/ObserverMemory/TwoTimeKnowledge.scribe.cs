@@ -8,18 +8,16 @@ internal sealed class TwoTimeKnowledgeDocument : IScribeDocumentDefinition
 {
     private const string LeanPrefix = "D5/S3/ObserverMemory/TwoTimeKnowledge.";
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/ObserverMemory/TwoTimeKnowledge",
-            "The finite forgetting certificate instantiates semantic loss of observer-fiber constancy."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The finite forgetting certificate instantiates semantic loss of observer-fiber constancy.",
         H("Two-Time Knowledge and Forgetting"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("finite-certificate-instantiates-two-time-forgetting"),
+                DeclarationHandle.Create(LeanPrefix + "finite_certificate_instantiates_forgot"),
                 H("The finite certificate instantiates two-time forgetting"),
-                LeanTheorem(LeanPrefix + "finite_certificate_instantiates_forgot"),
-                CertificateBridgeFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(CertificateBridgeFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "Let s0 be the imported initial Remember certificate and s1 the imported "
@@ -32,14 +30,14 @@ internal sealed class TwoTimeKnowledgeDocument : IScribeDocumentDefinition
                         + "ledger, the same concrete state pair therefore satisfies Forgot. The "
                         + "target certificate also computes to ForgottenLogged. This is a derived "
                         + "model-satisfies-semantics bridge; it does not define Forgot as a cognitive "
-                        + "state label or as an audit bit.")))
-            ),
-            DocumentBlock.Describe.Theorem(
+                        + "state label or as an audit bit."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("forgot-normalizes-to-a-later-fiber-counterexample"),
+                DeclarationHandle.Create(LeanPrefix + "forgot_iff_later_fiber_counterexample"),
                 H("Forgot normalizes to a later-fiber counterexample"),
-                LeanTheorem(LeanPrefix + "forgot_iff_later_fiber_counterexample"),
-                ForgettingFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(ForgettingFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "Forgot is defined by strict time order, persistence in the complete ledger, "
@@ -57,23 +55,22 @@ internal sealed class TwoTimeKnowledgeDocument : IScribeDocumentDefinition
                         "The equivalence exposes the quantifiers already present in the definitions; "
                         + "it is not an independent characterization of forgetting. In particular, "
                         + "it does not identify forgetting with a state label, ledger deletion, "
-                        + "physical erasure, or a recall transition.")))
-            ),
-            DocumentBlock.Describe.Theorem(
+                        + "physical erasure, or a recall transition."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("later-knowledge-pulls-back-along-readout-factorization"),
+                DeclarationHandle.Create(LeanPrefix + "knows_of_later_readout_factors_through_earlier"),
                 H("Later knowledge pulls back along readout factorization"),
-                LeanTheorem(
-                    LeanPrefix + "knows_of_later_readout_factors_through_earlier"),
-                TransportFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(TransportFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Suppose the later readout is constant on every earlier readout fiber, so the "
                     + "later readout factors through the earlier one. Worlds equal under the "
                     + "earlier readout are then equal under the later readout. If the event value "
                     + "is constant on every later fiber, it is consequently constant on every "
                     + "earlier fiber. The implication runs from later knowledge to earlier "
-                    + "knowledge under this stated direction of factorization.")))
-            ))));
+                    + "knowledge under this stated direction of factorization."))),
+                DescribeRole.Theorem))));
 
     private static Formula Readout(Formula time, Formula world) => Seq(
         F.Id("r"), Underscore, Grp(time), Open, world, Close);
