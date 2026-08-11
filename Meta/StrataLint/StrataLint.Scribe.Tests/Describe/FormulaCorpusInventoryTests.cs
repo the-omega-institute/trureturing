@@ -7,7 +7,7 @@ public sealed partial class FormulaCorpusInventoryTests
     [Fact]
     public void BlueprintAuthorSurfaceContainsNoLinearFormulaTokenTrees()
     {
-        var repository = RepositoryAccessor.Discover();
+        var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.ClaudeDirectoryNotFound);
         var forbidden = new[] { "FormulaTokens", "Formula.TokenTree", "FormulaToken", "FormulaMark", "FormulaSpace" };
 
         var residuals = repository.EnumerateFiles(RepositoryRelativePath.Create("Blueprint"), "*.scribe.cs")

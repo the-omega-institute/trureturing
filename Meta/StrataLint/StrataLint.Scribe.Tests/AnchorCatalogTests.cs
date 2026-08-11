@@ -64,7 +64,7 @@ public sealed class AnchorCatalogTests
     {
         var first = CanonicalAnchorCatalogWriter.Write();
         var second = CanonicalAnchorCatalogWriter.Write();
-        var committed = RepositoryAccessor.Discover().ReadAllBytes(RepositoryRelativePath.Create(
+        var committed = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound).ReadAllBytes(RepositoryRelativePath.Create(
             CanonicalAnchorCatalogWriter.RelativePath));
 
         Assert.True(first.AsSpan().SequenceEqual(second.AsSpan()));

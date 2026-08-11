@@ -8,7 +8,7 @@ public sealed class ValuesProjectionTests
     [Fact]
     public void ExactQuadraticEvaluationUsesAControlledDecimalInterval()
     {
-        var definition = ValuesKernelDataLoader.LoadRepository(RepositoryAccessor.Discover().Root.FullPath)
+        var definition = ValuesKernelDataLoader.LoadRepository(RepositoryAccessor.Discover(RepositoryRootCriterion.ValuesProducerDirectoryNotFound).Root.FullPath)
             .Single(static item => item.Id == "D5/kappa");
 
         var result = ValuesEvaluator.Evaluate(definition);
@@ -25,7 +25,7 @@ public sealed class ValuesProjectionTests
     [Fact]
     public void CphiEvaluationQuantizesPlatformDependentFloatingOutput()
     {
-        var definition = ValuesKernelDataLoader.LoadRepository(RepositoryAccessor.Discover().Root.FullPath)
+        var definition = ValuesKernelDataLoader.LoadRepository(RepositoryAccessor.Discover(RepositoryRootCriterion.ValuesProducerDirectoryNotFound).Root.FullPath)
             .Single(static item => item.Id == "D5/Cphi");
 
         var result = ValuesEvaluator.Evaluate(definition);
@@ -47,7 +47,7 @@ public sealed class ValuesProjectionTests
     [Fact]
     public void CphiProjectionRequiresFourWindowsForItsSpreadEstimate()
     {
-        var definition = ValuesKernelDataLoader.LoadRepository(RepositoryAccessor.Discover().Root.FullPath)
+        var definition = ValuesKernelDataLoader.LoadRepository(RepositoryAccessor.Discover(RepositoryRootCriterion.ValuesProducerDirectoryNotFound).Root.FullPath)
             .Single(static item => item.Id == "D5/Cphi") with
         {
             Computation = new ValueComputation.Cphi(new CphiKernelSpec(
@@ -65,7 +65,7 @@ public sealed class ValuesProjectionTests
     [Fact]
     public void ValuesWriterIsByteStableAndCarriesTheCompleteAttestation()
     {
-        var root = RepositoryAccessor.Discover().Root.FullPath;
+        var root = RepositoryAccessor.Discover(RepositoryRootCriterion.ValuesProducerDirectoryNotFound).Root.FullPath;
 
         var first = CanonicalValuesWriter.Write(root);
         var second = CanonicalValuesWriter.Write(root);
@@ -137,7 +137,7 @@ public sealed class ValuesProjectionTests
     [Fact]
     public void EmitValuesCliWritesAndChecksWithoutOverwritingDrift()
     {
-        var repository = RepositoryAccessor.Discover();
+        var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.ValuesProducerDirectoryNotFound);
         var root = Path.Combine(Path.GetTempPath(), "stratalint-values-" + Guid.NewGuid().ToString("N"));
         foreach (var inputPath in CanonicalValuesWriter.InputPaths)
         {

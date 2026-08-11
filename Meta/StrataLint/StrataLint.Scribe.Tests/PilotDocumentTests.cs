@@ -10,7 +10,7 @@ public sealed class DocumentDiscoveryTests
     [Fact]
     public void FilesystemAndRegisteredDefinitionsFormACanonicalBijection()
     {
-        var repository = RepositoryAccessor.Discover();
+        var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound);
         var filesystemSources = repository
             .EnumerateFiles(RepositoryRelativePath.Create("Blueprint"), "*.scribe.cs")
             .Select(static path => path.Value)
@@ -72,7 +72,7 @@ public sealed class DocumentDiscoveryTests
     [Fact]
     public void GeneratedMarkdownIsDeterministicAndMatchesTheCommittedTree()
     {
-        var repositoryRoot = RepositoryAccessor.Discover().Root.FullPath;
+        var repositoryRoot = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound).Root.FullPath;
         var rawLeanReport = Path.Combine(
             repositoryRoot,
             ".lake",
@@ -510,7 +510,7 @@ public sealed class DocumentDiscoveryTests
     }
 
     private static IReadOnlyDictionary<string, LiteratureCitation> RepositoryCitations() =>
-        LibraryNoteCatalog.Load(RepositoryAccessor.Discover().Root.FullPath).Citations;
+        LibraryNoteCatalog.Load(RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound).Root.FullPath).Citations;
 
     private static string CanonicalSourcePath(string sourcePath)
     {

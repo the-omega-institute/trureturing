@@ -8,7 +8,7 @@ public sealed class StatementProjectionPilotTests
     [Fact]
     public void DocumentDefinitionsLoadFromExplicitRepositoryRoot()
     {
-        var repositoryRoot = RepositoryAccessor.Discover().Root.FullPath;
+        var repositoryRoot = RepositoryAccessor.Discover(RepositoryRootCriterion.LakefileInvalidOperation).Root.FullPath;
         var definitions = DocumentDefinitions.Discover(
             typeof(DocumentDefinitions).Assembly,
             repositoryRoot);
@@ -176,7 +176,7 @@ public sealed class StatementProjectionPilotTests
         using var fixture = LoadPinnedFixture("statement-projection-pilot-v1.json");
         using var expansion = LoadPinnedFixture("statement-projection-expansion-v1.json");
         var names = ReadFixtureDeclarations(fixture, expansion).Keys.ToArray();
-        var repository = RepositoryAccessor.Discover();
+        var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.LakefileInvalidOperation);
         var sources = repository.EnumerateFiles(RepositoryRelativePath.Create("Blueprint"), "*.scribe.cs")
             .Select(repository.ReadAllText).ToArray();
 
@@ -190,7 +190,7 @@ public sealed class StatementProjectionPilotTests
     public void LiveReportMatchesPinnedFixtureWhenAvailable()
     {
         StatementProjectionReconciliation.Verify(
-            RepositoryAccessor.Discover().Root.FullPath,
+            RepositoryAccessor.Discover(RepositoryRootCriterion.LakefileInvalidOperation).Root.FullPath,
             requireLiveReport: Environment.GetEnvironmentVariable("STRATALINT_REQUIRE_LIVE_REPORT") == "1");
     }
 
@@ -221,7 +221,7 @@ public sealed class StatementProjectionPilotTests
     }
 
     private static JsonDocument LoadPinnedFixture(string name) => JsonDocument.Parse(
-        RepositoryAccessor.Discover().ReadAllBytes(RepositoryRelativePath.Create(
+        RepositoryAccessor.Discover(RepositoryRootCriterion.LakefileInvalidOperation).ReadAllBytes(RepositoryRelativePath.Create(
             $"Golden/Projection/{name}")));
 
     private static Dictionary<string, JsonElement> ReadFixtureDeclarations(params JsonDocument[] fixtures)
@@ -236,7 +236,7 @@ public sealed class StatementProjectionPilotTests
     {
         public LiveReportFactAttribute()
         {
-            var repository = RepositoryAccessor.Discover();
+            var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.LakefileInvalidOperation);
             var requireLiveReport = Environment.GetEnvironmentVariable("STRATALINT_REQUIRE_LIVE_REPORT") == "1";
             if (!requireLiveReport && !repository.FileExists(RepositoryRelativePath.Create(
                     ".lake/build/stratalint/raw-lean-report.json")))

@@ -106,7 +106,7 @@ public sealed class PdfWriterTests
     {
         var report = LeanReportFixture.ForDocuments(
             DocumentDefinitions.All.Select(static definition => definition.Document));
-        var citations = LibraryNoteCatalog.Load(RepositoryAccessor.Discover().Root.FullPath).Citations;
+        var citations = LibraryNoteCatalog.Load(RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndLibraryInvalidOperation).Root.FullPath).Citations;
         foreach (var definition in DocumentDefinitions.All)
         {
             var pdf = QuestPdfWriter.Write(definition.Document, report, citations);

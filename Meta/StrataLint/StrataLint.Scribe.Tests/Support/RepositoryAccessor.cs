@@ -1,6 +1,16 @@
-using StrataLint.Engine;
-
 namespace StrataLint.Scribe.Tests;
+
+internal enum RepositoryRootCriterion
+{
+    GlobalJsonAndBlueprintDirectoryNotFound,
+    GlobalJsonAndBlueprintInvalidOperation,
+    GlobalJsonAndLibraryInvalidOperation,
+    ClaudeDirectoryNotFound,
+    LakefileInvalidOperation,
+    FileMapDirectoryNotFound,
+    ValuesDataDirectoryNotFound,
+    ValuesProducerDirectoryNotFound,
+}
 
 internal readonly record struct RepositoryRoot
 {
@@ -32,7 +42,6 @@ internal readonly record struct RepositoryRelativePath
 
 internal sealed class RepositoryAccessor
 {
-    private const string RootMarkerPath = "CLAUDE.md";
     private readonly HashSet<RepositoryRelativePath> accessedPaths = [];
 
     private RepositoryAccessor(RepositoryRoot root) => Root = root;
@@ -41,19 +50,24 @@ internal sealed class RepositoryAccessor
 
     internal IReadOnlySet<RepositoryRelativePath> AccessedPaths => accessedPaths;
 
-    internal static RepositoryAccessor Discover()
+    internal static RepositoryAccessor Discover(RepositoryRootCriterion criterion) =>
+        Discover(AppContext.BaseDirectory, criterion);
+
+    internal static RepositoryAccessor Discover(
+        string startDirectory,
+        RepositoryRootCriterion criterion)
     {
-        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
+        for (var current = new DirectoryInfo(startDirectory);
              current is not null;
              current = current.Parent)
         {
-            if (File.Exists(Path.Combine(current.FullName, RootMarkerPath)))
+            if (Matches(current.FullName, criterion))
             {
                 return new RepositoryAccessor(new RepositoryRoot(current.FullName));
             }
         }
 
-        throw new InvalidOperationException("repository root not found");
+        throw CreateFailure(criterion);
     }
 
     internal string ReadAllText(RepositoryRelativePath path) =>
@@ -77,30 +91,49 @@ internal sealed class RepositoryAccessor
         string searchPattern)
     {
         accessedPaths.Add(directory);
-        var prefix = directory.Value + "/";
-        return GitIndexRepositoryFiles.Enumerate(Root.FullPath)
-            .Where(file => file.RelativePath.StartsWith(prefix, StringComparison.Ordinal)
-                && Path.GetFileName(file.RelativePath).MatchesSimplePattern(searchPattern))
-            .Select(file => RepositoryRelativePath.Create(file.RelativePath))
+        return Directory
+            .EnumerateFiles(Resolve(directory), searchPattern, SearchOption.AllDirectories)
+            .Select(path => RepositoryRelativePath.Create(Path.GetRelativePath(Root.FullPath, path)))
             .ToArray();
     }
+
+    private string Resolve(RepositoryRelativePath path) =>
+        Path.Combine(Root.FullPath, path.Value.Replace('/', Path.DirectorySeparatorChar));
 
     private string RecordAndResolve(RepositoryRelativePath path)
     {
         accessedPaths.Add(path);
-        return Path.Combine(Root.FullPath, path.Value.Replace('/', Path.DirectorySeparatorChar));
+        return Resolve(path);
     }
-}
 
-internal static class SimplePatternExtensions
-{
-    internal static bool MatchesSimplePattern(this string fileName, string pattern)
+    private static bool Matches(string root, RepositoryRootCriterion criterion) => criterion switch
     {
-        if (pattern.StartsWith('*') && pattern.IndexOf('*', 1) < 0)
-        {
-            return fileName.EndsWith(pattern[1..], StringComparison.Ordinal);
-        }
+        RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound
+            or RepositoryRootCriterion.GlobalJsonAndBlueprintInvalidOperation =>
+            File.Exists(Path.Combine(root, "global.json"))
+            && Directory.Exists(Path.Combine(root, "Blueprint")),
+        RepositoryRootCriterion.GlobalJsonAndLibraryInvalidOperation =>
+            File.Exists(Path.Combine(root, "global.json"))
+            && Directory.Exists(Path.Combine(root, "Library")),
+        RepositoryRootCriterion.ClaudeDirectoryNotFound =>
+            File.Exists(Path.Combine(root, "CLAUDE.md")),
+        RepositoryRootCriterion.LakefileInvalidOperation =>
+            File.Exists(Path.Combine(root, "lakefile.toml")),
+        RepositoryRootCriterion.FileMapDirectoryNotFound =>
+            File.Exists(Path.Combine(root, "Meta", "FILEMAP.toml")),
+        RepositoryRootCriterion.ValuesDataDirectoryNotFound =>
+            File.Exists(Path.Combine(root, "Golden", "values-kernels.toml")),
+        RepositoryRootCriterion.ValuesProducerDirectoryNotFound =>
+            File.Exists(Path.Combine(root, "D5", "X_Frontier", "ValuesProducer.lean")),
+        _ => throw new ArgumentOutOfRangeException(nameof(criterion)),
+    };
 
-        return string.Equals(fileName, pattern, StringComparison.Ordinal);
-    }
+    private static Exception CreateFailure(RepositoryRootCriterion criterion) => criterion switch
+    {
+        RepositoryRootCriterion.GlobalJsonAndBlueprintInvalidOperation
+            or RepositoryRootCriterion.GlobalJsonAndLibraryInvalidOperation
+            or RepositoryRootCriterion.LakefileInvalidOperation =>
+            new InvalidOperationException("repository root was not found above the test base directory"),
+        _ => new DirectoryNotFoundException("Could not locate the repository root."),
+    };
 }

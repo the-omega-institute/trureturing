@@ -82,7 +82,7 @@ public sealed class FileMapManifestTests
     [Fact]
     public void RepositoryManifestClassifiesDigestionCasAsAnAppendOnlyLedger()
     {
-        var manifest = FileMapLoader.LoadRepository(RepositoryAccessor.Discover().Root.FullPath);
+        var manifest = FileMapLoader.LoadRepository(RepositoryAccessor.Discover(RepositoryRootCriterion.FileMapDirectoryNotFound).Root.FullPath);
         var entry = Assert.Single(manifest.Match(
             "Meta/Digestion/atoms/sha256/" + new string('a', 64)));
 

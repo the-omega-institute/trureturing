@@ -101,7 +101,7 @@ public sealed class EmissionTests
                 TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
                 // Deterministic CI builds map [CallerFilePath] to the /_/ source root,
                 // so fixture copies must resolve through the runtime repository root.
-                RepositoryAccessor.Discover().CopyTo(
+                RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintInvalidOperation).CopyTo(
                     RepositoryRelativePath.Create(relativeSource), destination);
             }
             CopyRepositoryLibrary(root);
@@ -250,10 +250,10 @@ public sealed class EmissionTests
                 TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
                 // Deterministic CI builds map [CallerFilePath] to the /_/ source root,
                 // so fixture copies must resolve through the runtime repository root.
-                RepositoryAccessor.Discover().CopyTo(
+                RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintInvalidOperation).CopyTo(
                     RepositoryRelativePath.Create(relativeSource), destination);
             }
-            var repository = RepositoryAccessor.Discover();
+            var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintInvalidOperation);
             foreach (var source in repository.EnumerateFiles(
                          RepositoryRelativePath.Create("D5"), "*.lean"))
             {
@@ -540,7 +540,7 @@ public sealed class EmissionTests
     [Fact]
     public void EveryBlueprintMarkdownHasExactlyOneDiscoveredScribeDefinition()
     {
-        var repository = RepositoryAccessor.Discover();
+        var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintInvalidOperation);
         var markdownPaths = repository
             .EnumerateFiles(RepositoryRelativePath.Create("Blueprint"), "*.md")
             .Select(static path => path.Value)
@@ -565,7 +565,7 @@ public sealed class EmissionTests
 
     private static void PrepareEmittedRepository(string root, LeanAxiomReport report)
     {
-        var repository = RepositoryAccessor.Discover();
+        var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintInvalidOperation);
         CopyProjectionFixtures(root);
         foreach (var definition in DocumentDefinitions.All)
         {
@@ -606,7 +606,7 @@ public sealed class EmissionTests
 
     private static void CopyRepositoryLibrary(string destinationRoot)
     {
-        var repository = RepositoryAccessor.Discover();
+        var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintInvalidOperation);
         var ledgerSources = repository.EnumerateFiles(
                 RepositoryRelativePath.Create("Meta/Digestion/backfill"), "*")
             .Append(RepositoryRelativePath.Create(BackfillInventoryLoader.TicketIndexPath));
@@ -628,7 +628,7 @@ public sealed class EmissionTests
 
     private static void CopyProjectionFixtures(string destinationRoot)
     {
-        var repository = RepositoryAccessor.Discover();
+        var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintInvalidOperation);
         var destinationDirectory = Path.Combine(destinationRoot, "Golden", "Projection");
         TemporaryFileSystem.Directory.CreateDirectory(destinationDirectory);
         foreach (var source in repository.EnumerateFiles(

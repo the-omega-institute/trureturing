@@ -45,7 +45,7 @@ public sealed class ValuesDefinitionTests
     [Fact]
     public void CatalogDefinesAllFourteenConstantsAndKeepsUntranslatedInputsOpen()
     {
-        var definitions = ValuesKernelDataLoader.LoadRepository(RepositoryAccessor.Discover().Root.FullPath);
+        var definitions = ValuesKernelDataLoader.LoadRepository(RepositoryAccessor.Discover(RepositoryRootCriterion.ValuesDataDirectoryNotFound).Root.FullPath);
 
         Assert.Equal(14, definitions.Length);
         Assert.Equal(
@@ -80,7 +80,7 @@ public sealed class ValuesDefinitionTests
     [Fact]
     public void CanonicalCphiSpecRecordsTheReferenceMismatchWithoutTuning()
     {
-        var definition = ValuesKernelDataLoader.LoadRepository(RepositoryAccessor.Discover().Root.FullPath)
+        var definition = ValuesKernelDataLoader.LoadRepository(RepositoryAccessor.Discover(RepositoryRootCriterion.ValuesDataDirectoryNotFound).Root.FullPath)
             .Single(static item => item.Id == "D5/Cphi");
         var computation = Assert.IsType<ValueComputation.Cphi>(definition.Computation);
 

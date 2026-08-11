@@ -74,7 +74,7 @@ public sealed class FileMapEmitterTests
     [Fact]
     public void FileMapEmitterCheckRejectsCommittedByteDrift()
     {
-        var repository = RepositoryAccessor.Discover();
+        var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.FileMapDirectoryNotFound);
         var root = Path.Combine(Path.GetTempPath(), "stratalint-filemap-" + Guid.NewGuid().ToString("N"));
         try
         {

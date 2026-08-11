@@ -118,7 +118,7 @@ public sealed class DescribeMigrationTests
     [Fact]
     public void RepositoryReportMatchesAnIndependentAstInventory()
     {
-        var root = RepositoryAccessor.Discover().Root.FullPath;
+        var root = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound).Root.FullPath;
         var expected = DeriveContentInventory();
         var report = DescribeReport.Build(
             root,
@@ -595,7 +595,7 @@ public sealed class DescribeMigrationTests
 
         var exit = ScribeCli.Run(
             ["describe-report", "--json"],
-            RepositoryAccessor.Discover().Root.FullPath,
+            RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound).Root.FullPath,
             output,
             error,
             LeanReportFixture.ForDocuments(

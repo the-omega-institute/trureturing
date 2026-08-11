@@ -30,7 +30,7 @@ public sealed class LeanCompiledArtifactReportsTests
     [Fact]
     public void ConfiguredReportPathOverridesTheCanonicalArtifact()
     {
-        var repositoryRoot = RepositoryAccessor.Discover().Root.FullPath;
+        var repositoryRoot = RepositoryAccessor.Discover(RepositoryRootCriterion.ClaudeDirectoryNotFound).Root.FullPath;
         var configured = Path.Combine(
             Path.GetTempPath(),
             "stratalint-configured-report-" + Guid.NewGuid().ToString("N") + ".json");

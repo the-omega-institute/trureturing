@@ -16,7 +16,7 @@ public sealed class CensusDerivationTests
     [Fact]
     public void ProductionReceiptClassificationIsDisjointAndComplete()
     {
-        var repositoryRoot = RepositoryAccessor.Discover().Root.FullPath;
+        var repositoryRoot = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound).Root.FullPath;
         var documents = DocumentDefinitions.Discover(typeof(DocumentDefinitions).Assembly)
             .Select(static definition => definition.Document)
             .ToArray();

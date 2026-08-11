@@ -31,7 +31,7 @@ public sealed class ChannelFixedStateDocumentTests
     [Fact]
     public void WatrousNotePinsTheVerifiedLocatorWithoutInventingATheoremNumber()
     {
-        var repository = RepositoryAccessor.Discover();
+        var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.ClaudeDirectoryNotFound);
         var note = Assert.Single(
             LibraryNoteCatalog.Load(repository.Root.FullPath).Notes,
             static item => item.BibKey.Value == "watrous2018theory");
