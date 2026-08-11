@@ -23,4 +23,3 @@ The module delegates the canonical algorithm and proof to mathlib's Zeckendorf d
 ## References
 
 - Truth anchor: `D5/S0/Conventions/WDigits.wEncoding`
-- Narrative reference: [D5/S0/Conventions/WDigits](WDigits.md)
