@@ -32,6 +32,14 @@ internal sealed class ConservativePolicySnapshot
             AdmissionEffect.Block,
             RuleLifecycle.Active,
             null)),
+        RuleObligation(new RuleDescriptor(
+            RuleId.CreateKnown(26),
+            "Scribe legacy constructor budget",
+            DisplaySeverity.Error,
+            "repository",
+            AdmissionEffect.Block,
+            RuleLifecycle.Active,
+            null)),
     ];
 
     private ConservativePolicySnapshot(
