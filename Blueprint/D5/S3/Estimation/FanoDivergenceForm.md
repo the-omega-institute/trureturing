@@ -1,42 +1,65 @@
-# Reference-Divergence and Hypothesis-Counting Forms of Finite Fano
+# Counting Hypotheses with Uniform Finite Fano
 
 ## Abstract
 
-Positive normalized observation references bound finite mutual information by product-reference divergence; a positive observation marginal attains the family, and Fano yields hypothesis-counting forms.
+Uniform finite Fano bounds hypothesis count in a side-condition-free product form and a quotient form valid below unit error.
 
-**Theorem 1.1 (Every positive normalized observation reference upper-bounds mutual information).**
+**Theorem 1.1 (The product form bounds the resolvable hypothesis count).**
 
-$$\begin{gathered}\forall Y, X\ [\operatorname{Fintype}(Y)] [\operatorname{Fintype}(X)],\\\forall p: Y\times X\to \mathbb{R}, u: Y\to \mathbb{R},\\((\forall z, 0\le p(z)) \land \sum _{z} p(z)=1) \land (\forall y, 0< u(y)) \land \sum _{y} u(y)=1) \Rightarrow \\\operatorname{mutualInformation}(p)\le \operatorname{klDivergence}(p, ((y, x)\mapsto u(y) \cdot \operatorname{marginal}((x, y)\mapsto p(y, x))(x)).\end{gathered}$$
+Lean statement: `D5/S3/Estimation/FanoDivergenceForm.fano_hypothesis_count_product_bound_uniform`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Estimation/FanoDivergenceForm.mutual_information_le_product_reference_divergence` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Estimation/FanoDivergenceForm.fano_hypothesis_count_product_bound_uniform` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-The preceding Fano error floor is stated in terms of mutual information, which may be awkward to evaluate directly. The already frozen theorem demon_average_divergence_eq writes the displayed joint-to-product-reference divergence as mutualInformation p plus klDivergence (marginal p) u. Discarding the latter term gives the displayed upper bound while leaving the observation reference u free. This step is a one-line consequence of that frozen identity and Gibbs nonnegativity; it is not presented as a new information inequality.
+This general module was split from the arbitrary-reference material because an artifact's generality is bounded above by its dependency closure. The instance-level frozen DemonIdentity cannot be imported by a general artifact under SL-010. An independent walk of this module's transitive import closure found fourteen modules, all general, with DemonIdentity absent. The split therefore follows the dependency layer rather than merely dividing the exposition.
 
-The inequality has a strictly stronger hypothesis than the identity from which it is derived. The identity requires u only to be strictly positive. Discarding klDivergence (marginal p) u additionally requires that term to be nonnegative, and Gibbs nonnegativity applies only when both arguments are distributions. Consequently u must also have total mass one. Strict positivity supplies discrete absolute continuity for free, but it does not supply normalization.
+Let X and Y be finite, let p be a nonnegative mass function on Y x X with total mass one, and let g from Y to X be arbitrary. Assume that the X-marginal obtained from the swapped law is the constant mass 1/card X and that the p-mass on pairs with g(y) unequal to x is at most epsilon. With no cardinality restriction and no condition on epsilon, the theorem gives
 
-Normalization is necessary rather than cosmetic. On the one-point space, the divergence of the unit mass from the constant reference 2 is -log 2, which is negative. Thus a merely positive, nonnormalized reference can make the remainder in the frozen decomposition negative; discarding it would reverse the intended comparison. The compiled counterexample records exactly D(1 || 2) = -log 2.
+$$
+(1-\varepsilon) \cdot \log \lvert X \rvert \le I(X; Y)+ \log 2
+$$
 
-The companion exists_observation_marginal_reference_attaining shows that this family of upper bounds is attained. If the observation marginal of p is strictly positive at every point, take u to be that marginal. Its total mass is one because p is a joint distribution, and the discarded divergence is then the divergence of a distribution from itself, hence zero. The resulting product-reference divergence equals mutualInformation p. The positivity assumption is genuine: if the marginal has zeros, the equality still holds, but this witness does not belong to the admissible strictly-positive reference family.
+The previous wave used the already-frozen Fano relation to lower-bound error. This theorem changes the direction of use and solves the same relation for the number of candidates. It is not a new information inequality. In operational terms, at error below one an observation carrying I nats cannot reliably resolve substantially more than exp((I + log 2)/(1 - epsilon)) candidates.
 
-The theorem fano_error_probability_lower_bound_divergence makes the corresponding short monotone substitution in the previous uniform-prior Fano floor. It assumes that p is a nonnegative law of total mass one, that u is strictly positive and normalized, that 2 <= card X, and that the hidden-coordinate marginal is the constant law 1/card X. For every estimator g, its error mass is at least 1 minus the sum of the displayed product-reference divergence and log 2, divided by log(card X). The passage from mutual information to divergence is a short corollary, not an independently weighted result.
+The product form is primary because it has no epsilon < 1 side condition. At epsilon equal to one and zero mutual information, its left side vanishes for every finite X and the statement reduces to
 
-The change of direction is expressed first by fano_hypothesis_count_product_bound_uniform. Under the same law and uniform-hidden-marginal assumptions, if the error mass of an arbitrary estimator is at most epsilon, then (1-epsilon) log(card X) is at most mutualInformation p + log 2. This product form is primary and has no epsilon < 1 hypothesis. Its companion fano_hypothesis_count_bound_uniform adds exactly epsilon < 1 and divides to obtain log(card X) at most (mutualInformation p + log 2)/(1-epsilon).
+$$
+0\le \log 2
+$$
 
-The declarations fano_hypothesis_count_product_bound_divergence and fano_hypothesis_count_bound_divergence enlarge the same two information budgets to the product-reference divergence. Both retain the law, uniform-hidden-marginal, error, strict-positivity, and normalization hypotheses. The divergence product form again has no epsilon < 1 side condition; only its quotient companion assumes epsilon < 1, because only that statement divides by 1-epsilon.
+This is true for every candidate count and therefore imposes no ceiling. That vacuity is required: an estimator permitted to be wrong with probability one constrains nothing.
 
-This orientation counts resolvable hypotheses rather than bounding error: for epsilon < 1, an observation carrying I nats cannot reliably distinguish more than approximately exp((I + log 2)/(1-epsilon)) candidates at target error epsilon. In the compiled informative regime I = 0 and epsilon = 1/2, so the logarithmic budget is log 2 divided by 1/2, namely log 4. For M >= 1, the exact implication log M <= log 4 therefore gives M <= 4. The ceiling binds and permits at most four candidates.
+**Theorem 1.2 (The quotient form isolates the logarithmic candidate budget).**
 
-At the opposite endpoint, I = 0 and epsilon = 1 make the product form read 0 <= log 2 for every M, so it imposes no cardinality ceiling. This is the correct vacuous regime: an estimator permitted always to be wrong constrains nothing. Exhibiting both regimes is necessary. A ceiling that binds nowhere would be worthless, while one that remained binding at error one would be false to the estimation problem.
+Lean statement: `D5/S3/Estimation/FanoDivergenceForm.fano_hypothesis_count_bound_uniform`
 
-The first inequality is a one-line corollary of a frozen decomposition, and the divergence-form error floor is a short monotone substitution. The content of this module is instead the normalization hypothesis and its concrete negative-divergence counterexample, the admissible attainment witness, and the hypothesis-counting orientation with its side-condition-free product forms. All seven declarations are finite and nats-valued. The module introduces no definition and claims no new information identity, estimator construction, minimax theorem, sample-complexity theorem, or measure-theoretic analogue.
+*Proof.* Machine-checked in Lean as `D5/S3/Estimation/FanoDivergenceForm.fano_hypothesis_count_bound_uniform` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under the same finite-space, probability-law, uniform hidden-marginal, arbitrary-estimator, and error-at-most-epsilon hypotheses as the product theorem, add exactly the condition epsilon < 1. The conclusion is
+
+$$
+\log \lvert X \rvert \le \frac{I(X; Y)+ \log 2}{(1-\varepsilon)}
+$$
+
+The extra hypothesis appears only because the proof divides by 1 - epsilon and needs that quantity positive to preserve the order. It is absent from the product theorem rather than silently inherited by it.
+
+The informative compiled illustration takes zero mutual information and epsilon equal to one half. The budget is log 2 divided by one half, which equals log 4. For a natural candidate count M, the source checks that M at least one together with log M at most log 4 forces M at most four:
+
+$$
+I=0, \varepsilon=\frac{1}{2}, M\ge 1, \log M\le \log 4 \Rightarrow M\le 4
+$$
+
+Exhibiting both the four-candidate ceiling and the epsilon-equals-one vacuous regime is substantive. A ceiling that binds in no regime would be worthless, while a ceiling that never becomes vacuous would be wrong. Together the two examples show that the rearranged bound both constrains and releases the hypothesis count in the regimes where it should.
 
 ## References
 
-- Truth anchor: `D5/S3/Estimation/FanoDivergenceForm.mutual_information_le_product_reference_divergence`
-- Dependency: [D5/S3/Divergence/GrandmotherTheorem](../Divergence/GrandmotherTheorem.md)
-- Dependency: [D5/S3/Entropy/Feedback/DemonIdentity](../Entropy/Feedback/DemonIdentity.md)
+- Truth anchor: `D5/S3/Estimation/FanoDivergenceForm.fano_hypothesis_count_bound_uniform`
+- Truth anchor: `D5/S3/Estimation/FanoDivergenceForm.fano_hypothesis_count_product_bound_uniform`
 - Dependency: [D5/S3/Estimation/FanoErrorBound](FanoErrorBound.md)
