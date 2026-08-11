@@ -22,6 +22,10 @@ public sealed class AdmissionWorkflowTests
             "FullyQualifiedName~LiveReportMatchesPinnedFixtureWhenAvailable",
             workflow,
             StringComparison.Ordinal);
+        Assert.Contains(
+            "FullyQualifiedName~GeneratedMarkdownIsDeterministicAndMatchesTheCommittedTree",
+            workflow,
+            StringComparison.Ordinal);
     }
 
     private static string FindRepositoryRoot()

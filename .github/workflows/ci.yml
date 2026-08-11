@@ -379,7 +379,7 @@ jobs:
           cp "$report" "$target"
           dotnet test candidate/Meta/StrataLint/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj \
             --configuration Release \
-            --filter 'FullyQualifiedName~LiveReportMatchesPinnedFixtureWhenAvailable' \
+            --filter 'FullyQualifiedName~LiveReportMatchesPinnedFixtureWhenAvailable|FullyQualifiedName~GeneratedMarkdownIsDeterministicAndMatchesTheCommittedTree' \
             --verbosity normal
 
       - name: Stage candidate canonical Lean report cache
