@@ -8,7 +8,7 @@ internal sealed record WallClockAssertionFinding(string Path, int Line, string M
 
 internal static class WallClockAssertionPolicy
 {
-    private static readonly string[] TestProjectPrefixes =
+    internal static readonly string[] TestProjectPrefixes =
     [
         "Meta/StrataLint/StrataLint.Tests/",
         "Meta/StrataLint/StrataLint.Scribe.Tests/",
@@ -17,6 +17,8 @@ internal static class WallClockAssertionPolicy
 
     // This syntax policy follows direct expressions and local-variable assignments within one
     // callable. Recognized flows that escape that boundary fail closed with this marker.
+    // ASSUMED-UNVERIFIED gap: syntax alone cannot identify TimeProvider, ITimeProvider, or custom
+    // IClock implementations whose names and APIs do not expose their wall-clock semantics.
     internal const string CoverageGap =
         "ASSUMED-UNVERIFIED: wall-clock flow escapes local assertion analysis";
 
@@ -94,8 +96,25 @@ internal static class WallClockAssertionPolicy
             .Where(argument => argument.RefKindKeyword.Kind() is SyntaxKind.RefKeyword or SyntaxKind.OutKeyword
                 && ContainsWallClock(argument.Expression, taintedLocals))
             .Cast<SyntaxNode>();
+        var valueArguments = callable.DescendantNodes().OfType<InvocationExpressionSyntax>()
+            .Where(invocation => !IsAssertionRoot(invocation)
+                && !IsDiagnosticOutput(invocation)
+                && (invocation.ArgumentList.Arguments.Any(argument =>
+                        ContainsWallClock(argument.Expression, taintedLocals))
+                    || invocation.Expression is MemberAccessExpressionSyntax member
+                    && member.Expression is not IdentifierNameSyntax
+                    && ContainsWallClock(member.Expression, taintedLocals)))
+            .Cast<SyntaxNode>();
+        var expressionBodyReturns = GetExpressionBody(callable)
+            .Where(expression => ContainsWallClock(expression, taintedLocals))
+            .Cast<SyntaxNode>();
 
-        foreach (var node in returns.Concat(nonlocalAssignments).Concat(refParameterAssignments).Concat(refOrOutArguments))
+        foreach (var node in returns
+                     .Concat(nonlocalAssignments)
+                     .Concat(refParameterAssignments)
+                     .Concat(refOrOutArguments)
+                     .Concat(valueArguments)
+                     .Concat(expressionBodyReturns))
         {
             var line = node.GetLocation().GetLineSpan().StartLinePosition.Line + 1;
             yield return new WallClockAssertionFinding(path, line, $"{path}:{line}: {CoverageGap}");
@@ -134,17 +153,48 @@ internal static class WallClockAssertionPolicy
     private static bool IsAssertionRoot(InvocationExpressionSyntax invocation) =>
         IsXunitAssertion(invocation) || IsShouldInvocation(invocation);
 
-    private static bool IsXunitAssertion(InvocationExpressionSyntax invocation) =>
-        invocation.Expression is MemberAccessExpressionSyntax
+    private static bool IsXunitAssertion(InvocationExpressionSyntax invocation)
+    {
+        if (invocation.Expression is not MemberAccessExpressionSyntax member) return false;
+        var receiverName = member.Expression switch
         {
-            Expression: IdentifierNameSyntax { Identifier.ValueText: "Assert" },
+            IdentifierNameSyntax identifier => identifier.Identifier.ValueText,
+            MemberAccessExpressionSyntax qualified => qualified.Name.Identifier.ValueText,
+            _ => string.Empty,
         };
+        if (receiverName is "Assert" or "ClassicAssert") return true;
+
+        var root = invocation.SyntaxTree.GetRoot();
+        return root.DescendantNodes().OfType<UsingDirectiveSyntax>().Any(usingDirective =>
+            usingDirective.Alias?.Name.Identifier.ValueText == receiverName
+            && usingDirective.Name?.ToString() is { } target
+            && (target.EndsWith(".Assert", StringComparison.Ordinal)
+                || target.EndsWith(".ClassicAssert", StringComparison.Ordinal)));
+    }
 
     private static bool IsShouldInvocation(InvocationExpressionSyntax invocation) =>
         invocation.Expression is MemberAccessExpressionSyntax
         {
             Name.Identifier.ValueText: "Should",
         };
+
+    private static bool IsDiagnosticOutput(InvocationExpressionSyntax invocation) =>
+        invocation.Expression is MemberAccessExpressionSyntax
+        {
+            Expression: IdentifierNameSyntax { Identifier.ValueText: "Console" },
+            Name.Identifier.ValueText: "Write" or "WriteLine",
+        };
+
+    private static IEnumerable<ExpressionSyntax> GetExpressionBody(SyntaxNode callable)
+    {
+        var expression = callable switch
+        {
+            MethodDeclarationSyntax method => method.ExpressionBody?.Expression,
+            LocalFunctionStatementSyntax localFunction => localFunction.ExpressionBody?.Expression,
+            _ => null,
+        };
+        if (expression is not null) yield return expression;
+    }
 
     private static bool ContainsWallClock(SyntaxNode node, IReadOnlySet<string> taintedLocals) =>
         node.DescendantNodesAndSelf().Any(candidate =>
@@ -170,7 +220,7 @@ internal static class WallClockAssertionPolicy
             && (member.Name.Identifier.ValueText is "Elapsed" or "ElapsedTicks"
                 || member is
                 {
-                    Expression: IdentifierNameSyntax { Identifier.ValueText: "DateTime" },
+                    Expression: IdentifierNameSyntax { Identifier.ValueText: "DateTime" or "DateTimeOffset" },
                     Name.Identifier.ValueText: "Now" or "UtcNow",
                 }
                 || member is
