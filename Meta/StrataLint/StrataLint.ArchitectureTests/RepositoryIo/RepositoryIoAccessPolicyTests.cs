@@ -61,6 +61,10 @@ public sealed class RepositoryIoAccessPolicyTests
     [InlineData("class C { object Read() { var type = typeof(File); return type.GetMethod(\"ReadAllText\"); } }", "System.Reflection:System.IO.File")]
     [InlineData("class C { string Read() => global::System.IO.File.ReadAllText(\"x\"); }", "System.IO.File.ReadAllText")]
     [InlineData("class C { object Read() => new DirectoryInfo(AppContext.BaseDirectory).Parent; }", "System.AppContext.BaseDirectory")]
+    [InlineData("class C { object Read(string path) => new FileInfo(path).OpenRead(); }", "System.IO.FileInfo.OpenRead")]
+    [InlineData("class C { object Read(string path) => new DirectoryInfo(path).EnumerateFiles(); }", "System.IO.DirectoryInfo.EnumerateFiles")]
+    [InlineData("class C { object Read(IFileSystem fileSystem, string path) => fileSystem.File.ReadAllText(path); }", "System.IO.Abstractions.IFileSystem")]
+    [InlineData("class C { object Read(string path) => new FileSystem().File.ReadAllText(path); }", "System.IO.Abstractions.FileSystem")]
     [InlineData("class C { string Read() => Helper(); string Helper() => File.ReadAllText(\"x\"); }", "System.IO.File.ReadAllText")]
     public void DirectRepositoryIoShapesAreRejected(string source, string expectedApi)
     {
@@ -97,6 +101,28 @@ public sealed class RepositoryIoAccessPolicyTests
             source));
 
         Assert.Equal("System.IO.File.OpenRead", finding.Api);
+    }
+
+    [Fact]
+    public void AllowedTemporaryGatewayMemberWithoutPathGuardIsRejected()
+    {
+        const string source = "static class TemporaryFileSystem { static string Escape(string path) => System.IO.File.ReadAllText(path); }";
+
+        var finding = Assert.Single(RepositoryIoAccessPolicy.InspectSource(
+            RepositoryIoAccessPolicy.TemporaryFileSystemPath,
+            source));
+
+        Assert.Equal("System.IO.File.ReadAllText", finding.Api);
+    }
+
+    [Fact]
+    public void AllowedTemporaryGatewayMemberWithPathGuardIsAccepted()
+    {
+        const string source = "static class TemporaryFileSystem { static string Read(string path) => System.IO.File.ReadAllText(EnsureTemporaryPath(path)); static string EnsureTemporaryPath(string path) => path; }";
+
+        Assert.Empty(RepositoryIoAccessPolicy.InspectSource(
+            RepositoryIoAccessPolicy.TemporaryFileSystemPath,
+            source));
     }
 
     [Fact]

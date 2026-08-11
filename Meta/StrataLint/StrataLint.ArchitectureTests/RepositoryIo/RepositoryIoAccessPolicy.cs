@@ -112,6 +112,7 @@ internal static class RepositoryIoAccessPolicy
     {
         var tree = CSharpSyntaxTree.ParseText(source);
         var root = tree.GetRoot();
+        var typedReceivers = TypedIoReceivers(root);
         var findings = tree.GetDiagnostics()
             .Where(static diagnostic => diagnostic.Severity == DiagnosticSeverity.Error)
             .Select(diagnostic => new RepositoryIoAccessFinding(
@@ -144,13 +145,20 @@ internal static class RepositoryIoAccessPolicy
             if (invocation.Expression is MemberAccessExpressionSyntax member
                 && TryForbiddenStaticApi(member, out var api))
             {
-                if (path != TemporaryFileSystemPath || !TemporaryGatewayApis.Contains(api))
+                if (path != TemporaryFileSystemPath
+                    || !TemporaryGatewayApis.Contains(api)
+                    || RequiresGuardedPath(api) && !HasGuardedFirstArgument(invocation))
                 {
                     findings.Add(Finding(path, api, invocation.GetLocation().GetLineSpan().StartLinePosition.Line + 1));
                 }
             }
             else if (invocation.Expression is MemberAccessExpressionSyntax reader
                      && TryForbiddenPathReader(reader, invocation, out api))
+            {
+                findings.Add(Finding(path, api, invocation.GetLocation().GetLineSpan().StartLinePosition.Line + 1));
+            }
+            else if (invocation.Expression is MemberAccessExpressionSyntax instance
+                     && TryForbiddenInstanceApi(instance, typedReceivers, out api))
             {
                 findings.Add(Finding(path, api, invocation.GetLocation().GetLineSpan().StartLinePosition.Line + 1));
             }
@@ -198,6 +206,100 @@ internal static class RepositoryIoAccessPolicy
 
         api = string.Empty;
         return false;
+    }
+
+    private static bool RequiresGuardedPath(string api) => api is not
+        "System.IO.Directory.CreateTempSubdirectory" and not
+        "System.IO.Directory.GetCurrentDirectory";
+
+    private static bool HasGuardedFirstArgument(InvocationExpressionSyntax invocation) =>
+        invocation.ArgumentList.Arguments.FirstOrDefault()?.Expression is InvocationExpressionSyntax guard
+        && guard.Expression is IdentifierNameSyntax identifier
+        && identifier.Identifier.ValueText == "EnsureTemporaryPath";
+
+    private static bool TryForbiddenInstanceApi(
+        MemberAccessExpressionSyntax member,
+        IReadOnlyDictionary<string, string> typedReceivers,
+        out string api)
+    {
+        var method = member.Name.Identifier.ValueText;
+        var receiverType = member.Expression switch
+        {
+            ObjectCreationExpressionSyntax creation => RightmostName(creation.Type),
+            IdentifierNameSyntax identifier when typedReceivers.TryGetValue(identifier.Identifier.ValueText, out var type) => type,
+            _ => string.Empty,
+        };
+
+        if (receiverType == "FileInfo" && FileInfoIoMembers.Contains(method))
+        {
+            api = $"System.IO.FileInfo.{method}";
+            return true;
+        }
+
+        if (receiverType == "DirectoryInfo" && DirectoryInfoIoMembers.Contains(method))
+        {
+            api = $"System.IO.DirectoryInfo.{method}";
+            return true;
+        }
+
+        var rootReceiver = member.DescendantNodesAndSelf().OfType<IdentifierNameSyntax>().FirstOrDefault();
+        if (rootReceiver is not null
+            && typedReceivers.TryGetValue(rootReceiver.Identifier.ValueText, out receiverType)
+            && receiverType is "IFileSystem" or "FileSystem")
+        {
+            api = $"System.IO.Abstractions.{receiverType}";
+            return true;
+        }
+
+        var facadeCreation = member.DescendantNodesAndSelf().OfType<ObjectCreationExpressionSyntax>()
+            .FirstOrDefault(static creation => RightmostName(creation.Type) == "FileSystem");
+        if (facadeCreation is not null)
+        {
+            api = "System.IO.Abstractions.FileSystem";
+            return true;
+        }
+
+        api = string.Empty;
+        return false;
+    }
+
+    private static readonly IReadOnlySet<string> FileInfoIoMembers =
+        new HashSet<string>(StringComparer.Ordinal)
+        {
+            "OpenRead", "OpenText", "CopyTo",
+        };
+
+    private static readonly IReadOnlySet<string> DirectoryInfoIoMembers =
+        new HashSet<string>(StringComparer.Ordinal)
+        {
+            "EnumerateFiles", "GetFiles", "EnumerateFileSystemInfos",
+        };
+
+    private static IReadOnlyDictionary<string, string> TypedIoReceivers(SyntaxNode root)
+    {
+        var receivers = new Dictionary<string, string>(StringComparer.Ordinal);
+        foreach (var parameter in root.DescendantNodes().OfType<ParameterSyntax>())
+        {
+            var type = parameter.Type is null ? string.Empty : RightmostName(parameter.Type);
+            if (type is "FileInfo" or "DirectoryInfo" or "IFileSystem" or "FileSystem")
+            {
+                receivers[parameter.Identifier.ValueText] = type;
+            }
+        }
+
+        foreach (var declaration in root.DescendantNodes().OfType<VariableDeclarationSyntax>())
+        {
+            var type = RightmostName(declaration.Type);
+            if (type is "FileInfo" or "DirectoryInfo" or "IFileSystem" or "FileSystem")
+            {
+                foreach (var variable in declaration.Variables)
+                {
+                    receivers[variable.Identifier.ValueText] = type;
+                }
+            }
+        }
+
+        return receivers;
     }
 
     private static bool TryForbiddenPathReader(
