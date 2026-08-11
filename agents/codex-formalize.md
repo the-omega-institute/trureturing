@@ -93,6 +93,22 @@ Postcondition: the chosen template SHA and its touched paths are recorded, and t
 
 Write the Lean module and its `.scribe.cs` mirror using the live template. Discover the current path-to-GID rule from that template and the live path-policy owner; do not rely on a remembered grammar.
 
+A new theorem must go in a new Lean module. Before writing into an existing module, check whether it has an active Freeze event:
+
+```sh
+module_path='D5/path/Module.lean'; grep -l -F "$module_path" Meta/StrataLint/Golden/Frozen/accepted/*.json
+```
+
+Exit 0 with an accepted-record path means frozen; exit 1 with no output means not frozen (any other result is a failed check). The frozen ledger pins the module's declaration set, not just its bytes, so it refuses adding a declaration to a frozen module. Reattest covers changed bytes with an unchanged declaration set; it is not an escape hatch for adding a declaration. If the atom genuinely belongs inside an existing frozen module, do not edit it: end `open`, naming that module and the frozen-ledger constraint.
+
+Before creating the new module, set `lean_dir` to its target directory and `blueprint_dir` to the corresponding `Blueprint/` mirror directory, then measure both and confirm that adding one counted file to each stays within the limit:
+
+```sh
+lean_count=$(git ls-files "$lean_dir" | awk 'END { print NR+0 }'); blueprint_count=$(git ls-files "$blueprint_dir" | awk '!/\.md$/ { n++ } END { print n+0 }'); printf '%s %s\n%s %s\n' "$lean_dir" "$lean_count" "$blueprint_dir" "$blueprint_count"; test $((lean_count + 1)) -le 12 && test $((blueprint_count + 1)) -le 12
+```
+
+Blueprint `.md` projections are excluded from capacity, but `.scribe.cs` sources count. If the natural target directory is full, do not place the module in a semantically wrong directory to evade the limit: the bucket must be split, a repository-level decision that touches the domain registry. End `open`, naming the full directory and its measured count.
+
 Run:
 
 ```sh
@@ -168,6 +184,8 @@ Any item without evidence blocks deposit. Mark an unverified fact exactly `ASSUM
 - Never hand-write a status field; `agents/CONTEXT.md` and status derivation own it.
 - Never hand-edit generated projections; their canonical producers own them.
 - Never hand-edit the frozen ledger; the deposit door owns it.
+- Never add a declaration to a module with an active Freeze event; the frozen ledger owns this constraint.
+- Never exceed directory capacity; `Meta/StrataLint/StrataLint.Engine/Rules/RepositoryRules.Structure.cs` owns this rule.
 - Never hand-edit formalization receipts; the deposit and cover doors own them.
 - Never weaken the echoed statement to make a proof close; the statement echo and this fidelity gate own that obligation.
 - Never invent a "needs human review" outcome; `CLAUDE.md` 22 forbids human-review gates outright.
