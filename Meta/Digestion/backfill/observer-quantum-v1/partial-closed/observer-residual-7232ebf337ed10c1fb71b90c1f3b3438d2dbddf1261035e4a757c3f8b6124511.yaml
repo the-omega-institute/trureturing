@@ -17,6 +17,7 @@ coverage_gids:
 receipts:
   coverage: []
   scribe: []
-  unresolved_subitems: []
+  unresolved_subitems:
+    - kochen-specker-projection-valuation-obstruction
   chain_atoms: []
   tail_authorization: null
