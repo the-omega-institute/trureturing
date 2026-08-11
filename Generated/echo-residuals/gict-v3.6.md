@@ -1,7 +1,7 @@
-<!-- echo-residual-summary:v4 source=gict-v3.6 residual=sha256:730b57c3209f9ebfa29d1f73afc87b24a3a4bb49f94e2b3b482c2feab23d2741 -->
+<!-- echo-residual-summary:v4 source=gict-v3.6 residual=sha256:cbb8eaa2a6a425848e8e54fad512b5f8c222008333eb0126d674daab87cc9428 -->
 # Echo Residual Summary — `gict-v3.6`
 
-- unresolved_subitems: 122
+- unresolved_subitems: 120
 - mother_residual_atom_ids: 13
 
 Mother residual atoms:
@@ -64,9 +64,8 @@ Mother residual atoms:
   - `mirror-second-order-nonintersection-certificate`
 - `gict-residual-4f569da66804d560bc53e6c1ac7d74ce201d944db708780a8f72b39b930112b8` (1)
   - `quadratic-residue-equivalence-as-written-for-p-equals-two-is-false-and-requires-an-odd-prime-hypothesis`
-- `gict-residual-4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f` (12)
+- `gict-residual-4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f` (11)
   - `cosecant-peak-equation-from-pin-data`
-  - `dominant-partial-quotient-gap-lemma`
   - `dominant-partial-quotient-identification`
   - `fabricated-input-rejection-certificate`
   - `hecke-angle-literature-program`
@@ -83,12 +82,11 @@ Mother residual atoms:
 - `gict-residual-6e1053eef77278dd897b092fcb456d24c310e0f3556bfed13449ff25a1fc297c` (2)
   - `ah-exact-value-delta-certificate`
   - `phi-derivative-at-zero-identification`
-- `gict-residual-78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26` (11)
+- `gict-residual-78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26` (10)
   - `bhk-1755-enumeration-certificate`
   - `bhk-continued-fraction-theorem`
   - `dedekind-family-split-identity`
   - `dedekind-orientation-canonical-ledger-clause`
-  - `endpoint-translation-integrality`
   - `full-vote-enforcement-clause`
   - `orientation-branch-clause`
   - `three-walk-identification`
