@@ -36,10 +36,8 @@ internal sealed class ChampionExtremalityDocument : IScribeDocumentDefinition
             FormulaLogicOperator.And,
             Call(parity, b));
 
-        return DocumentDefinition.Create(ScribeDocument.Create(
-            Header(
-                "D5/S0/Tower/ChampionExtremality",
-                "Integer radix towers have exact odd and even champion arms."),
+        return DocumentDefinition.Create(ScribeNode.Create(
+            "Integer radix towers have exact odd and even champion arms.",
             H("Radix Champion Extremality"),
             Blocks(
                 Paragraph(Text(
@@ -49,11 +47,11 @@ internal sealed class ChampionExtremalityDocument : IScribeDocumentDefinition
                     + "radixDistance(b,Q,x). Its supremum is the supremum over points of the "
                     + "liminf normalized distance, written in the equivalent eventual-tail "
                     + "form used by the Lean declarations.")),
-                DocumentBlock.Describe.Lemma(
+                Describe.Lean(
                     DescribeId.Create("one-even-radix-step-exits-the-forbidden-band"),
+                    DeclarationHandle.Create("D5/S0/Tower/ChampionExtremality.one_step_exit"),
                     H("One even-radix step exits the forbidden band"),
-                    LeanTheorem("D5/S0/Tower/ChampionExtremality.one_step_exit"),
-                    ForBase(
+                    StatementSource.FromAuthor(ForBase(
                         BaseParityAssumptions("Even"),
                         new Formula.Bind(
                             FormulaQuantifier.ForAll,
@@ -68,34 +66,34 @@ internal sealed class ChampionExtremalityDocument : IScribeDocumentDefinition
                                 new Formula.Relation(
                                     Call("radixDistance", b, Num(0), Multiply(b, y)),
                                     FormulaRelationOperator.LessThan,
-                                    evenThreshold)))),
-                    DescribeProvenance.RepoDerived(),
+                                    evenThreshold))))),
+                    AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                         "If the nearest-integer distance of y is strictly above the even "
                         + "threshold, multiplying y once by b puts its nearest-integer "
                         + "distance strictly below that threshold. The proof compares to the "
                         + "explicit integers plus or minus b over two and uses the identity "
-                        + "b times the threshold equals b over two minus the threshold.")))
-                ),
-                DocumentBlock.Describe.Theorem(
+                        + "b times the threshold equals b over two minus the threshold."))),
+                    DescribeRole.Lemma),
+                Describe.Lean(
                     DescribeId.Create("the-even-radix-champion-is-the-half-radix-arm"),
+                    DeclarationHandle.Create("D5/S0/Tower/ChampionExtremality.even_champion_sup"),
                     H("The even-radix champion is the half-radix arm"),
-                    LeanTheorem("D5/S0/Tower/ChampionExtremality.even_champion_sup"),
-                    ForBase(
+                    StatementSource.FromAuthor(ForBase(
                         BaseParityAssumptions("Even"),
-                        Equal(Call("sSup", eventualLowerBounds), evenThreshold)),
-                    DescribeProvenance.RepoDerived(),
+                        Equal(Call("sSup", eventualLowerBounds), evenThreshold))),
+                    AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                         "The frozen half-radix arm supplies the lower bound. Any eventual "
                         + "uniform lower bound strictly above it contradicts one-step exit "
                         + "between a tail level and its successor, so the supremum is exactly "
-                        + "b divided by two times b plus one.")))
-                ),
-                DocumentBlock.Describe.Theorem(
+                        + "b divided by two times b plus one."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(
                     DescribeId.Create("the-odd-radix-half-point-has-a-constant-half-arm"),
+                    DeclarationHandle.Create("D5/S0/Tower/ChampionExtremality.odd_half_arm"),
                     H("The odd-radix half point has a constant half arm"),
-                    LeanTheorem("D5/S0/Tower/ChampionExtremality.odd_half_arm"),
-                    new Formula.BindMany(
+                    StatementSource.FromAuthor(new Formula.BindMany(
                         FormulaQuantifier.ForAll,
                         [
                             new Formula.BoundVariable(FormulaIdentifier.Create("b"), naturals),
@@ -104,27 +102,27 @@ internal sealed class ChampionExtremalityDocument : IScribeDocumentDefinition
                         new Formula.Logic(
                             BaseParityAssumptions("Odd"),
                             FormulaLogicOperator.Implies,
-                            Equal(Arm(q, halfPoint), half))),
-                    DescribeProvenance.RepoDerived(),
+                            Equal(Arm(q, halfPoint), half)))),
+                    AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                         "Every power of an odd radix is odd. After scaling the half point, "
                         + "the numerator is therefore one modulo two, so nearest-integer "
                         + "rounding leaves exactly one half at every level, including level "
-                        + "zero.")))
-                ),
-                DocumentBlock.Describe.Theorem(
+                        + "zero."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(
                     DescribeId.Create("the-odd-radix-champion-is-one-half"),
+                    DeclarationHandle.Create("D5/S0/Tower/ChampionExtremality.odd_champion"),
                     H("The odd-radix champion is one half"),
-                    LeanTheorem("D5/S0/Tower/ChampionExtremality.odd_champion"),
-                    ForBase(
+                    StatementSource.FromAuthor(ForBase(
                         BaseParityAssumptions("Odd"),
-                        Equal(Call("sSup", eventualLowerBounds), half)),
-                    DescribeProvenance.RepoDerived(),
+                        Equal(Call("sSup", eventualLowerBounds), half))),
+                    AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                         "Nearest-integer distance is always at most one half, giving the "
                         + "global upper bound. The constant half arm at x equal to one half "
-                        + "belongs to the eventual-lower-bound set and attains the bound.")))
-                )),
+                        + "belongs to the eventual-lower-bound set and attains the bound."))),
+                    DescribeRole.Theorem)),
             [
                 DocumentEdge.Dependency.Create(
                     GidRef.Create("D5/S0/Tower/ConstantArms")),

@@ -19,53 +19,48 @@ internal sealed class DistanceProfileDocument : IScribeDocumentDefinition
             Subtract(new Formula.Power(cardY, cardA), fixedPoints),
             cardA);
 
-        return DocumentDefinition.Create(ScribeDocument.Create(
-            Header(
-                "D5/S0/Diagonal/DistanceProfile",
-                "Diagonal Hamming-distance profiles and lower tails have exact finite counts."),
+        return DocumentDefinition.Create(ScribeNode.Create(
+            "Diagonal Hamming-distance profiles and lower tails have exact finite counts.",
             H("Diagonal Distance Profiles"),
             Blocks(
-                DocumentBlock.Describe.Theorem(
+                Describe.Lean(
                     DescribeId.Create("exact-distance-profiles-factor-rowwise"),
+                    DeclarationHandle.Create("D5/S0/Diagonal/DistanceProfile.distance_profile_card"),
                     H("Exact distance profiles factor rowwise"),
-                    LeanTheorem(
-                        "D5/S0/Diagonal/DistanceProfile.distance_profile_card"),
-                    FormulaDsl.Disp(Equal(profileCount, profileProduct)),
-                    DescribeProvenance.RepoDerived(),
+                    StatementSource.FromAuthor(FormulaDsl.Disp(Equal(profileCount, profileProduct))),
+                    AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                         "For each row, the diagonal entry contributes either zero or one to "
                         + "the distance. The remaining coordinates form a finite Hamming "
                         + "sphere, whose choice count is a binomial coefficient times a power "
                         + "of one fewer than the value-set cardinality. Summing the fixed and "
                         + "nonfixed diagonal cases gives the explicit rowDistanceCount, and "
-                        + "the rows then multiply independently.")))
-                ),
-                DocumentBlock.Describe.Theorem(
+                        + "the rows then multiply independently."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(
                     DescribeId.Create("common-distance-lower-tails-are-row-powers"),
+                    DeclarationHandle.Create("D5/S0/Diagonal/DistanceProfile.min_distance_tail"),
                     H("Common distance lower tails are row powers"),
-                    LeanTheorem(
-                        "D5/S0/Diagonal/DistanceProfile.min_distance_tail"),
-                    FormulaDsl.Disp(Equal(
+                    StatementSource.FromAuthor(FormulaDsl.Disp(Equal(
                         tailCount,
-                        new Formula.Power(rowTail, cardA))),
-                    DescribeProvenance.RepoDerived(),
+                        new Formula.Power(rowTail, cardA)))),
+                    AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                         "Every row distance lies between zero and the address cardinality. "
                         + "Summing the exact row counts over the closed lower-tail interval and "
-                        + "then multiplying over all rows yields the stated finite count.")))
-                ),
-                DocumentBlock.Describe.Theorem(
+                        + "then multiplying over all rows yields the stated finite count."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(
                     DescribeId.Create("positive-distance-recovers-the-escape-count"),
+                    DeclarationHandle.Create("D5/S0/Diagonal/DistanceProfile.min_distance_one"),
                     H("Positive distance recovers the escape count"),
-                    LeanTheorem(
-                        "D5/S0/Diagonal/DistanceProfile.min_distance_one"),
-                    FormulaDsl.Disp(Equal(escapedCount, escapeFormula)),
-                    DescribeProvenance.RepoDerived(),
+                    StatementSource.FromAuthor(FormulaDsl.Disp(Equal(escapedCount, escapeFormula))),
+                    AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                         "A listing is escaped exactly when every row has positive distance from "
                         + "the twisted diagonal. The lower-tail formula at one is identified "
                         + "with the previously frozen exact escape count through that "
-                        + "equivalence, without recounting escaped listings.")))
-                ))));
+                        + "equivalence, without recounting escaped listings."))),
+                    DescribeRole.Theorem))));
     }
 }

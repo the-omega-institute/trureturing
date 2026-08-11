@@ -6,21 +6,18 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.History;
 
 internal sealed class PrimeSequenceCodeDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S0/History/PrimeSequenceCode",
-            "Shifted prime-power products injectively encode finite natural sequences."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Shifted prime-power products injectively encode finite natural sequences.",
         H("Prime-Power Codes for Finite Sequences"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("shifted-prime-power-coding-is-injective"),
+                DeclarationHandle.Create("D5/S0/History/PrimeSequenceCode.prime_sequence_code_injective"),
                 H("Shifted prime-power coding is injective"),
-                LeanTheorem(
-                    "D5/S0/History/PrimeSequenceCode.prime_sequence_code_injective"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Operatorname, Grp(F.Id("Injective")), Open,
-                    Operatorname, Grp(F.Id("primeSequenceCode")), Close)),
-                DescribeProvenance.RepoDerived(),
+                    Operatorname, Grp(F.Id("primeSequenceCode")), Close))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "A finite sequence of natural numbers is encoded as a finite "
@@ -40,6 +37,6 @@ internal sealed class PrimeSequenceCodeDocument : IScribeDocumentDefinition
                         + "No direct declaration packages the shifted finite-sequence "
                         + "injection, so the Lean theorem is a new assembly of those library "
                         + "facts rather than a direct wrapper. The source atom contains no "
-                        + "numerical certificate.")))
-            ))));
+                        + "numerical certificate."))),
+                DescribeRole.Theorem))));
 }
