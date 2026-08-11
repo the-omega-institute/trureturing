@@ -191,8 +191,7 @@ public sealed class DocumentDiscoveryTests
         Assert.Equal(
             "D5/S1/Phase/Basic.goldenPhase_injective",
             lean.Value.Value);
-        Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
-        Assert.True(lean.Value.RequireNoSorry);
+        DocumentFactAssertions.Declaration(statement, LeanDeclarationKind.Theorem);
     }
 
     [Fact]
@@ -208,9 +207,8 @@ public sealed class DocumentDiscoveryTests
         Assert.All(describes, static describe =>
         {
             Assert.Equal(DescribeKind.Theorem, describe.Kind);
-            Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.ProvenanceKind);
-            var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
-            Assert.True(lean.Value.RequireNoSorry);
+            DocumentFactAssertions.RepoDerived(describe);
+            DocumentFactAssertions.Declaration(describe, LeanDeclarationKind.Theorem);
         });
         Assert.Equal(
             [
@@ -235,9 +233,8 @@ public sealed class DocumentDiscoveryTests
         Assert.All(describes, static describe =>
         {
             Assert.Equal(DescribeKind.Theorem, describe.Kind);
-            Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.ProvenanceKind);
-            var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
-            Assert.True(lean.Value.RequireNoSorry);
+            DocumentFactAssertions.RepoDerived(describe);
+            DocumentFactAssertions.Declaration(describe, LeanDeclarationKind.Theorem);
         });
         Assert.Equal(
             [
@@ -266,9 +263,8 @@ public sealed class DocumentDiscoveryTests
         Assert.All(describes, static describe =>
         {
             Assert.Equal(DescribeKind.Theorem, describe.Kind);
-            Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.ProvenanceKind);
-            var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
-            Assert.True(lean.Value.RequireNoSorry);
+            DocumentFactAssertions.RepoDerived(describe);
+            DocumentFactAssertions.Declaration(describe, LeanDeclarationKind.Theorem);
         });
         Assert.Equal(
             [
@@ -295,13 +291,12 @@ public sealed class DocumentDiscoveryTests
         var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
 
         Assert.Equal(DescribeKind.Theorem, describe.Kind);
-        Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.ProvenanceKind);
+        DocumentFactAssertions.RepoDerived(describe);
         Assert.Null(describe.LiteratureReference);
         Assert.Equal(
             "D5/S1/Digit/PrimeAxisTable.prime_axis_table_spec",
             lean.Value.Value);
-        Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
-        Assert.True(lean.Value.RequireNoSorry);
+        DocumentFactAssertions.Declaration(describe, LeanDeclarationKind.Theorem);
     }
 
     [Fact]
@@ -385,26 +380,22 @@ public sealed class DocumentDiscoveryTests
     public void O6LoadBearingDocumentsCarryExactStatementsAndDiligentProvenance()
     {
         (string Document, string Id, DescribeKind Kind, string Declaration,
-            DescribeProvenanceKind Provenance, string? Reference)[] expected =
+            string? Reference)[] expected =
         [
             ("D5/S3/Weil/CriticalLine", "half-density-unitarity-characterizes-the-critical-line",
                 DescribeKind.Theorem,
-                "D5/S3/Weil/CriticalLine.unitarity_line_iff",
-                DescribeProvenanceKind.RepoDerived, null),
+                "D5/S3/Weil/CriticalLine.unitarity_line_iff", null),
             ("D5/S3/Weil/EulerProduct", "finite-euler-windows-have-only-the-local-lattice",
                 DescribeKind.Theorem,
                 "D5/S3/Weil/EulerProduct.finite_euler_zero_free_and_pole_locus",
-                DescribeProvenanceKind.LiteratureAttested,
                 "D5/L/apostol1976introduction"),
             ("D5/S3/Weil/EulerProduct", "single-address-reading-is-the-von-mangoldt-weight",
                 DescribeKind.Definition,
                 "D5/S3/Weil/EulerProduct.single_address_reading_spec",
-                DescribeProvenanceKind.LiteratureAttested,
                 "D5/L/apostol1976introduction"),
             ("D5/S3/Weil/EulerProduct", "the-logarithmic-derivative-is-the-single-address-heat-trace",
                 DescribeKind.Proposition,
                 "D5/S3/Weil/EulerProduct.single_address_heat_trace_eq_log_derivative",
-                DescribeProvenanceKind.LiteratureAttested,
                 "D5/L/apostol1976introduction"),
         ];
 
@@ -418,11 +409,12 @@ public sealed class DocumentDiscoveryTests
             var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
 
             Assert.Equal(item.Kind, describe.Kind);
-            Assert.Equal(item.Provenance, describe.ProvenanceKind);
-            Assert.Equal(item.Reference, describe.LiteratureReference?.Value);
+            if (item.Reference is null)
+                DocumentFactAssertions.RepoDerived(describe);
+            else
+                DocumentFactAssertions.LiteratureAttested(describe, item.Reference!);
             Assert.Equal(item.Declaration, lean.Value.Value);
-            Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
-            Assert.True(lean.Value.RequireNoSorry);
+            DocumentFactAssertions.Declaration(describe, LeanDeclarationKind.Theorem);
         }
     }
 
@@ -462,11 +454,10 @@ public sealed class DocumentDiscoveryTests
             var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement);
 
             Assert.Equal(item.Kind, node.Kind);
-            Assert.Equal(DescribeProvenanceKind.RepoDerived, node.ProvenanceKind);
+            DocumentFactAssertions.RepoDerived(node);
             Assert.Null(node.LiteratureReference);
             Assert.Equal(item.Declaration, lean.Value.Value);
-            Assert.Equal(item.LeanKind, lean.Value.ExpectedKind);
-            Assert.True(lean.Value.RequireNoSorry);
+            DocumentFactAssertions.Declaration(node, item.LeanKind);
         }
     }
 
@@ -498,26 +489,21 @@ public sealed class DocumentDiscoveryTests
             var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement);
 
             Assert.Equal(DescribeKind.Theorem, node.Kind);
-            Assert.Equal(DescribeProvenanceKind.LiteratureAttested, node.ProvenanceKind);
-            Assert.Equal(item.Reference, node.LiteratureReference?.Value);
+            DocumentFactAssertions.LiteratureAttested(node, item.Reference);
             Assert.Equal(item.Declaration, lean.Value.Value);
-            Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
-            Assert.True(lean.Value.RequireNoSorry);
+            DocumentFactAssertions.Declaration(node, LeanDeclarationKind.Theorem);
         }
     }
 
     [Fact]
     public void QubitWitnessDocumentCarriesExactStatementsAndDiligentProvenance()
     {
-        (string Declaration, DescribeProvenanceKind Provenance, string? Reference)[] expected =
+        (string Declaration, string? Reference)[] expected =
         [
             ("D5/S3/Quantum/QubitWitnesses.pauli_observables_have_no_common_eigenvector",
-                DescribeProvenanceKind.LiteratureAttested,
                 "D5/L/schwinger1960unitary"),
-            ("D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product",
-                DescribeProvenanceKind.RepoDerived, null),
+            ("D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product", null),
             ("D5/S3/Quantum/QubitWitnesses.equal_superposition_phase_damping_certificate",
-                DescribeProvenanceKind.LiteratureAttested,
                 "D5/L/zurek2003decoherence"),
         ];
         var definition = DocumentDefinitions.All.Single(static item =>
@@ -536,11 +522,12 @@ public sealed class DocumentDiscoveryTests
             var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(node.Statement);
 
             Assert.Equal(DescribeKind.Theorem, node.Kind);
-            Assert.Equal(item.Provenance, node.ProvenanceKind);
-            Assert.Equal(item.Reference, node.LiteratureReference?.Value);
+            if (item.Reference is null)
+                DocumentFactAssertions.RepoDerived(node);
+            else
+                DocumentFactAssertions.LiteratureAttested(node, item.Reference!);
             Assert.Equal(item.Declaration, lean.Value.Value);
-            Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
-            Assert.True(lean.Value.RequireNoSorry);
+            DocumentFactAssertions.Declaration(node, LeanDeclarationKind.Theorem);
         }
     }
 
