@@ -170,7 +170,7 @@ consumed_by = ["reader"]
 verified_by = ["EchoVerifyCommand"]
 authority = "digestion"
 artifact_id = "none"
-runtime_disposition = "committed-source"
+runtime_disposition = "run-local"
 
 [[files]]
 pattern = "Generated/truth-graph.v1.json"

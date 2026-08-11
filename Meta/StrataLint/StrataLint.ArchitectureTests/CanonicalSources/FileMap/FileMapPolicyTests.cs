@@ -22,6 +22,15 @@ public sealed class FileMapPolicyTests
     }
 
     [Fact]
+    public void RepositoryHasNoTrackedRunLocalArtifacts()
+    {
+        var findings = FileMapPolicy.InspectRepository(RepositoryLayout.FindRoot());
+
+        Assert.DoesNotContain(findings, static finding =>
+            finding.Code == "FILEMAP-RUN-LOCAL-TRACKED");
+    }
+
+    [Fact]
     public void ReviewScaffoldPatternsRemainInTheRepositoryGitignore()
     {
         var root = RepositoryLayout.FindRoot();
@@ -357,6 +366,55 @@ public sealed class FileMapPolicyTests
             []);
 
         Assert.Empty(findings);
+    }
+
+    [Fact]
+    public void TrackedDataKeyedRunLocalMemberMustBeRemovedFromTheIndex()
+    {
+        const string path = "Generated/partitions/source-a.md";
+        var manifest = Parse(DataKeyedRunLocalEntry());
+
+        var finding = Assert.Single(FileMapPolicy.InspectGeneratedInventory(manifest, [path], []));
+
+        Assert.Equal("FILEMAP-RUN-LOCAL-TRACKED", finding.Code);
+        Assert.Equal(path, finding.Path);
+        Assert.Equal(
+            "run-local artifact must be removed from the Git index; "
+            + "the FILEMAP declaration must not be changed to make this finding go away",
+            finding.Message);
+    }
+
+    [Fact]
+    public void UntrackedDataKeyedRunLocalSetHasNoTrackedFinding()
+    {
+        var manifest = Parse(DataKeyedRunLocalEntry());
+
+        var findings = FileMapPolicy.InspectGeneratedInventory(
+            manifest,
+            ["Generated/unrelated.md"],
+            []);
+
+        Assert.DoesNotContain(findings, static finding =>
+            finding.Code == "FILEMAP-RUN-LOCAL-TRACKED");
+    }
+
+    [Fact]
+    public void TrackedDataKeyedCommittedSourceSetHasNoRunLocalFinding()
+    {
+        var manifest = Parse(Entry(
+            "Blueprint/**/*.md",
+            "generated",
+            "ScribeEmitter",
+            "reader",
+            "ScribeEmitter"));
+
+        var findings = FileMapPolicy.InspectGeneratedInventory(
+            manifest,
+            ["Blueprint/D5/S0/Carrier/Synthetic.md"],
+            []);
+
+        Assert.DoesNotContain(findings, static finding =>
+            finding.Code == "FILEMAP-RUN-LOCAL-TRACKED");
     }
 
     [Fact]
@@ -710,5 +768,17 @@ public sealed class FileMapPolicyTests
         artifact_id = "{{artifactId}}"
         mode = "100644"
         history_requirement = "not-required"
+        """ + "\n";
+
+    private static string DataKeyedRunLocalEntry() => """
+        [[files]]
+        pattern = "Generated/partitions/*.md"
+        kind = "generated"
+        produced_by = "PartitionEmitter"
+        consumed_by = ["reader"]
+        verified_by = ["PartitionEmitter"]
+        authority = "self"
+        artifact_id = "none"
+        runtime_disposition = "run-local"
         """ + "\n";
 }

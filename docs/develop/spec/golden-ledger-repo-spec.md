@@ -551,7 +551,7 @@ runtime_disposition = "committed-source|committed-ledger|run-local"
 artifact_id = "<stable-id|none>"
 ```
 
-现有 `kind`、`produced_by`、`consumed_by`、`verified_by` 继续表达 kind、producer、consumer、verifier。六个受守 aggregate 的既有精确 path entry 分别取得 `A-DAG/A-TRUTH/A-SCRIBE/A-ANCHOR/A-VALUES/A-FILEMAP`，`runtime_disposition="run-local"`；authority 分别指向现有 Lean/Scribe/anchor/value-kernel/FILEMAP source。echo residual 以 `Generated/echo-residuals/*.md` 单条 glob 登记，按 `source_id` 分片，是允许陈旧的人读投影，不取得 artifact ID。Blueprint markdown 与 BACKFILL 的唯一现状均标 `committed-source`，frozen accepted event 路径标 `committed-ledger`。P0-BLUEPRINT 若通过，只能在其原子 PR 内直接改为最终 disposition；不得预埋迁移态。glob 匹配必须仍唯一；缺字段、未知枚举、重复 artifact_id 或 run-local path 无 producer/verifier均 schema reject。
+现有 `kind`、`produced_by`、`consumed_by`、`verified_by` 继续表达 kind、producer、consumer、verifier。六个受守 aggregate 的既有精确 path entry 分别取得 `A-DAG/A-TRUTH/A-SCRIBE/A-ANCHOR/A-VALUES/A-FILEMAP`，`runtime_disposition="run-local"`；authority 分别指向现有 Lean/Scribe/anchor/value-kernel/FILEMAP source。echo residual 以 `Generated/echo-residuals/*.md` 单条 glob 登记，按 `source_id` 分片，是不入 Git 索引、按需由 producer 现算的 run-local 人读投影，不取得 artifact ID。Blueprint markdown 与 BACKFILL 的唯一现状均标 `committed-source`，frozen accepted event 路径标 `committed-ledger`。P0-BLUEPRINT 若通过，只能在其原子 PR 内直接改为最终 disposition；不得预埋迁移态。glob 匹配必须仍唯一；缺字段、未知枚举、重复 artifact_id 或 run-local path 无 producer/verifier均 schema reject。
 
 §4 的人读表由 `make filemap --disposition-table` 从 FILEMAP 生成；P0-2 的 `artifacts` 数组由同一已解析对象生成。verifier 对生成表 bytes、数组 JCS digest 与 `filemap_sha256` 重算比对。不得维护 companion、硬编码 artifact 数组或让 `GeneratedArtifactInventory.All` 再声明 disposition；现有 inventory 若继续提供 producer dispatch，只能按 FILEMAP artifact_id join 并由 policy 断言集合相等。
 

@@ -223,13 +223,21 @@ internal static class FileMapLoader
         var hasResidenceViolation = table.ContainsKey("residence_violation");
         var isRunLocal = table.TryGetValue("runtime_disposition", out var disposition)
             && disposition is "run-local";
+        var isDataKeyedGeneratedSet = table.TryGetValue("kind", out var dataKeyedKind)
+            && dataKeyedKind is "generated"
+            && table.TryGetValue("artifact_id", out var dataKeyedArtifactId)
+            && dataKeyedArtifactId is "none"
+            && table.TryGetValue("pattern", out var dataKeyedPattern)
+            && dataKeyedPattern is string patternValue
+            && (patternValue.Contains('*') || patternValue.Contains('?'));
+        var isDataKeyedRunLocal = isRunLocal && isDataKeyedGeneratedSet;
         var isGeneratedArtifact = table.TryGetValue("kind", out var rawKind)
             && rawKind is "generated"
             && table.TryGetValue("artifact_id", out var rawArtifactId)
             && rawArtifactId is string artifactIdValue
             && artifactIdValue != "none"
             && disposition is "committed-source";
-        RequireExactKeys(table, location, isRunLocal ? RunLocalEntryKeys : isGeneratedArtifact ? GeneratedArtifactEntryKeys : hasResidenceViolation ? ResidenceEntryKeys : EntryKeys);
+        RequireExactKeys(table, location, isDataKeyedRunLocal ? EntryKeys : isRunLocal ? RunLocalEntryKeys : isGeneratedArtifact ? GeneratedArtifactEntryKeys : hasResidenceViolation ? ResidenceEntryKeys : EntryKeys);
         var pattern = RequiredString(table, "pattern", location);
         _ = FileMapGlob.Create(pattern);
         var kind = RequiredString(table, "kind", location) switch
@@ -274,7 +282,7 @@ internal static class FileMapLoader
             "run-local" => runtimeDisposition,
             _ => throw Invalid(location, "runtime_disposition must be committed-source, committed-ledger, or run-local"),
         };
-        var hasProjectionFields = isRunLocal || isGeneratedArtifact;
+        var hasProjectionFields = (isRunLocal && !isDataKeyedGeneratedSet) || isGeneratedArtifact;
         var mode = hasProjectionFields ? RequiredString(table, "mode", location) : null;
         var historyRequirement = hasProjectionFields ? RequiredString(table, "history_requirement", location) : null;
         if (hasProjectionFields
