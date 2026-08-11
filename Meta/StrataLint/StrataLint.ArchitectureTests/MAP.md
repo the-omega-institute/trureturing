@@ -52,13 +52,13 @@ The root contains only shared repository discovery, test metadata, and this map.
   version owned by `Directory.Packages.props`.
 - .NET SDK workflow pin: parsed `actions/setup-dotnet@*` steps must use
   `global-json-file` and may not copy a `dotnet-version` value.
-- Theory isolation: scans all Lean files, every non-ingestion C# source, and the
-  generated anchor catalog; rejects internal theory paths, retired internal theory
-  family tokens, and retired catalog schemes. The whitelist is limited to the
-  atomizers, digestion status, ledger/schema validation, and their focused tests.
-- External anchor catalog: Scribe definitions and the generated catalog contain only
-  literature bibkeys and mathlib modules or declarations, and the catalog definitions
-  must exactly equal the external manifest.
+- Theory isolation: scans all Lean files and every non-ingestion C# source; rejects
+  internal theory paths and retired internal theory family tokens. The whitelist is
+  limited to the atomizers, digestion status, ledger/schema validation, and their
+  focused tests.
+- External anchor reference: a `mathlib/module` anchor declared in a Lean header must
+  be reachable through that file's repository import closure; an anchor shape the
+  import graph cannot decide is rejected.
 - Anchor definition names: every public typed anchor property is checked by reflection
   against a fixed scheme-specific transform. Literature uses a Pascal-cased bibkey;
   mathlib uses the Pascal-cased terminal qualified name followed by target kind.

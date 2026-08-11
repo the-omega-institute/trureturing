@@ -42,16 +42,16 @@ run_dag() {
 
 run_generator() {
   case "$1" in
-    emit|catalog|emit-values|filemap) run_scribe "$1" ;;
+    emit|emit-values|filemap) run_scribe "$1" ;;
     dag) run_dag ;;
     *) echo "scribe: unknown generator '$1'" >&2; return 2 ;;
   esac
 }
 
 case "$ORDER" in
-  canonical) generators=(emit catalog emit-values filemap dag) ;;
-  reverse) generators=(dag filemap emit-values catalog emit) ;;
-  seeded-shuffle) generators=(emit-values dag emit filemap catalog) ;;
+  canonical) generators=(emit emit-values filemap dag) ;;
+  reverse) generators=(dag filemap emit-values emit) ;;
+  seeded-shuffle) generators=(emit-values dag emit filemap) ;;
   *) echo "scribe: STRATALINT_PR_A_ORDER must be canonical, reverse, or seeded-shuffle" >&2; exit 2 ;;
 esac
 

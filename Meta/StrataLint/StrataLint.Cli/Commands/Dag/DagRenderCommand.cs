@@ -68,7 +68,7 @@ internal static class DagRenderCommand
         {
             documentProjection = DocumentGraphExportProjection.AssembleRepository(
                 repositoryRoot,
-                truth.Report,
+                DeclarationCatalog.Create(truth.Report),
                 truth.Dag.Nodes.Select(static node => node.RepoPath.Value).ToHashSet(StringComparer.Ordinal));
         }
         catch (Exception exception) when (

@@ -97,7 +97,7 @@ public sealed class LeanReferenceTests
 
         var markdown = CanonicalMarkdownWriter.Write(
             document,
-            Report(Declaration(typeRepresentation: typeRepresentation)));
+            DeclarationCatalog.Create(Report(Declaration(typeRepresentation: typeRepresentation))));
         var text = Encoding.UTF8.GetString(markdown.AsSpan());
         Assert.Contains("$x = x$", text, StringComparison.Ordinal);
         Assert.Contains(
@@ -118,7 +118,7 @@ public sealed class LeanReferenceTests
         string typeRepresentation = "statement-v1(fixture)",
         string[]? axioms = null) =>
         new(
-            "D5.S1.Phase.goldenPhase_injective",
+            Gid.Replace('/', '.'),
             kind,
             typeRepresentation,
             axioms is null ? [] : [.. axioms]);

@@ -130,7 +130,8 @@ public sealed class MarkdownWriterTests
             ]));
 
         var report = LeanReportFixture.ForDocuments([document]);
-        var text = Encoding.UTF8.GetString(CanonicalMarkdownWriter.Write(document, report).AsSpan());
+        var text = Encoding.UTF8.GetString(CanonicalMarkdownWriter.Write(
+            document, DeclarationCatalog.Create(report)).AsSpan());
 
         Assert.Equal(
             "# Sample\n\n"
@@ -235,7 +236,8 @@ public sealed class MarkdownWriterTests
             ]));
 
         var report = LeanReportFixture.ForDocuments([document]);
-        var text = Encoding.UTF8.GetString(CanonicalMarkdownWriter.Write(document, report).AsSpan());
+        var text = Encoding.UTF8.GetString(CanonicalMarkdownWriter.Write(
+            document, DeclarationCatalog.Create(report)).AsSpan());
 
         Assert.Contains("**Theorem 1.1 (Critical line).**\n\n" + latex + "\n\n", text, StringComparison.Ordinal);
         Assert.Contains(
