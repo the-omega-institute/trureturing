@@ -418,7 +418,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             }
 
             var registry = LoadRegistry();
-            var probe = new ManifestSyntax("D5", "F", "Carrier", "Probe", "G", string.Empty, "lean", string.Empty);
+            var probe = new ManifestSyntax("D5", "F", "Carrier", "Probe", "G", string.Empty, "lean", string.Empty, null);
             var route = RouteEngine.Route(registry.Policy, probe);
             if (route is not RouteOutcome.Routed routed
                 || routed.Result.Gid.Value != "D5/S0/Carrier/Probe"

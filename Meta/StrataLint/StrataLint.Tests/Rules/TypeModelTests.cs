@@ -80,6 +80,7 @@ public sealed class TypeModelTests
 
     [Theory]
     [InlineData("D5/S0/Carrier/Ring", RuleFixture.RingPath)]
+    [InlineData("D5/S0/Carrier/Algebra/Ring", "D5/S0/Carrier/Algebra/Ring.lean")]
     [InlineData("D5/S0/Carrier/Ring.norm_mul", RuleFixture.RingPath)]
     [InlineData("D5/B/S0/Carrier/Ring", RuleFixture.BlueprintPath)]
     [InlineData("D5/E/S0/Carrier/Ring.result--json", "Evidence/D5/S0/Carrier/Ring.result.json")]
@@ -104,6 +105,16 @@ public sealed class TypeModelTests
         Assert.Equal(text, printed.Value);
     }
 
+    [Fact]
+    public void ThreeSegmentFormalGidRetainsItsExactBytes()
+    {
+        const string text = "D5/S0/Carrier/Probe";
+
+        Assert.True(Gid.TryParse(text, out var gid));
+        Assert.Equal(text, gid.Value);
+        Assert.Equal("D5/S0/Carrier/Probe.lean", gid.Path.Value);
+    }
+
     [Theory]
     [InlineData("D5/E/../Ring.result--json")]
     [InlineData("D5/E/./Ring.result--json")]
@@ -115,9 +126,47 @@ public sealed class TypeModelTests
     [InlineData("D5/L/zeros/sample2026paper")]
     [InlineData("D5/L/Weil/sample2026paper/extra")]
     [InlineData("D8/S0/Carrier/Ring")]
+    [InlineData("D5/S0/Carrier/Algebra/Extra/Ring")]
+    [InlineData("D5/S0/Carrier/Carrier/Ring")]
     public void GidRejectsUnsafeOrNoncanonicalNeighbors(string text)
     {
         Assert.False(Gid.TryParse(text, out _));
+    }
+
+    [Theory]
+    [InlineData("D5/S0/Carrier/Algebra/Ring.lean", "D5/S0/Carrier/Algebra/Ring")]
+    [InlineData("Evidence/D5/S0/Carrier/Algebra/Ring.result.json", "D5/E/S0/Carrier/Algebra/Ring.result--json")]
+    public void RepositoryPathPolicyAdmitsFourCoordinateFormalScopeRoundTrips(string value, string expectedGid)
+    {
+        var path = RepoPath.CreateKnown(value);
+
+        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
+        Assert.True(RepositoryPathPolicy.TryResolve(path, Policy(), out var gid));
+        Assert.NotNull(gid);
+        Assert.Equal(expectedGid, gid.Value);
+        Assert.Equal(path, gid.Path);
+    }
+
+    [Fact]
+    public void RepositoryPathPolicyAdmitsFourCoordinateBlueprintDefinitionSource()
+    {
+        var path = RepoPath.CreateKnown("Blueprint/D5/S0/Carrier/Algebra/Ring.scribe.cs");
+
+        Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));
+        Assert.False(RepositoryPathPolicy.TryResolve(path, Policy(), out _));
+    }
+
+    [Fact]
+    public void RepositoryPathPolicyRejectsFiveCoordinateFormalPathAsAddressShape()
+    {
+        var path = RepoPath.CreateKnown("D5/S0/Carrier/Algebra/Extra/Ring.lean");
+
+        var issue = Assert.IsType<RepositoryPathIssue>(RepositoryPathPolicy.Validate(path, Policy()));
+        Assert.Equal("SL-000", issue.RuleId.Value);
+        Assert.Equal(
+            "noncanonical formal artifact: formal address must be Sn/Domain[/SubDomain]/Module or X_Zone/Module",
+            issue.Message);
+        Assert.False(RepositoryPathPolicy.TryResolve(path, Policy(), out _));
     }
 
     [Fact]

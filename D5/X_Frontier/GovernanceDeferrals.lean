@@ -123,3 +123,8 @@ def vi5ObserverPtAuditReport : Unit := ()
     提示:Keep collectAxioms, sorryAx, protected-axiom, comment/string, and semantic Hearts-signature fixtures green.
     尸检:M0 bootstrap regex recognized only bare/private axiom and treated comment text as sorry; replaced by Lean ConstantInfo types and transitive collectAxioms reports. -/
 def strataLintLeanEnvironmentTicket : Unit := ()
+
+/-- TASK D5-T0031 | 难度:3 | 依赖:欠(observed-partition-pressure) | 尝试:0
+    提示:Evidence/D5/values.json violates the projection-partition law as an open nonconformance, not an exemption: Golden/values-kernels.toml carries 14 constants with distinct id, lean_gid, statement hash and status, c1 and c2 add a local dependency closure, and CanonicalValuesWriter binds one attestation over the whole input closure, so any input byte rewrites the projection; deferred because 60-day churn is 10 commits all attributable to SDK pins, residence moves and producer migrations rather than parallel constant maintenance, and migration must also move SL-018's single-address verdict, ValuesProjectionPath, the Evidence GID mapping and the A-VALUES aggregate identity; re-open on the first source change touching a proper subset of constants, the first merge conflict attributable to this path, or SL-018 or A-VALUES being touched by another authorized migration; close only by sharding per mutation unit against a single-key change fixture, never by low churn.
+    尸检:2026-08-11:the law's own clause first recorded this path as an exemption because its producer reads a single toml, conflating input file count with input partition count; the erratum is in CLAUDE.md section 0. -/
+def valuesProjectionPartitionDeferral : Unit := ()
