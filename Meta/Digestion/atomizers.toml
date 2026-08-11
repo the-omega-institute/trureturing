@@ -769,6 +769,10 @@ token = "猜想"
 kind = "observation"
 
 [[pzg.genres]]
+token = "约定"
+kind = "specification"
+
+[[pzg.genres]]
 token = "范例"
 kind = "example"
 
@@ -803,6 +807,10 @@ kind = "example"
 [[pzg.genres]]
 token = "注"
 kind = "remark"
+
+[[pzg.genres]]
+token = "窗"
+kind = "observation"
 
 [[pzg.genres]]
 token = "系"
