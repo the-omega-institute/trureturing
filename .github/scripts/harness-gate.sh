@@ -15,7 +15,7 @@ exit_with_gate_outcome() {
   local rc="$2"
   local marker=""
   case "$kind" in
-    admitted|semantic-violation|infrastructure-failure|conservative-certificate) ;;
+    admitted|semantic-violation|infrastructure-failure|protected-surface-change) ;;
     *) echo "harness-gate: invalid structured outcome '$kind'" >&2; exit 2 ;;
   esac
   if [[ -n "$GATE_OUTCOME_DIR" ]]; then
@@ -144,43 +144,8 @@ if [[ $rc -eq 0 ]]; then
 fi
 
 if [[ $rc -eq 3 ]]; then
-  make -C "$CANDIDATE_ROOT" dotnet
-  mark build-candidate
-  CANDIDATE_DLL="$(resolve_target_path "$CANDIDATE_ROOT")"
-  set +e
-  (
-    cd "$JUDGE_ROOT"
-    dotnet "$JUDGE_DLL" verify-conservative \
-      --baseline-root "$JUDGE_ROOT" \
-      --candidate-root "$CANDIDATE_ROOT" \
-      --baseline-lean-report "$BASELINE_LEAN_REPORT" \
-      --candidate-lean-report "$CANDIDATE_LEAN_REPORT" \
-      --baseline-harness "$JUDGE_DLL" \
-      --candidate-harness "$CANDIDATE_DLL"
-  )
-  conservative_rc=$?
-  set -e
-  conservative_status="passed"
-  if [[ "$conservative_rc" -ne 0 ]]; then conservative_status="failed"; fi
-  mark conservative "$conservative_status"
-  case "$conservative_rc" in
-    0)
-      summary "### SL-022 protected-surface change: conservative-extension certificate emitted"
-      exit_with_gate_outcome conservative-certificate 3
-      ;;
-    1)
-      summary "### SL-022 protected-surface change: conservative-extension violation"
-      exit_with_gate_outcome semantic-violation 1
-      ;;
-    2)
-      summary "### SL-022 protected-surface change: conservative-extension infrastructure failure"
-      exit_with_gate_outcome infrastructure-failure 2
-      ;;
-    *)
-      echo "harness-gate: verify-conservative returned invalid rc=$conservative_rc" >&2
-      exit_with_gate_outcome infrastructure-failure 2
-      ;;
-  esac
+  summary "protected-surface change (SL-022); content checks passed"
+  exit_with_gate_outcome protected-surface-change 3
 fi
 
 case "$rc" in

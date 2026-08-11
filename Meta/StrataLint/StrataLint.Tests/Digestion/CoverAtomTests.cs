@@ -602,7 +602,7 @@ internal static partial class CoverWorld
             [BackfillInventoryLoader.RelativePath] = ledger,
             ["Meta/registry.yaml"] = TestRegistry.Canonical,
             ["Meta/domains.yaml"] = TestRegistry.Domains,
-            [GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes),
+            [RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes),
             [targetPath] = Encoding.UTF8.GetString(targetBytes),
             [ScribeEmissionAttestation.DefinitionPath(spec.ModuleGid)] = Encoding.UTF8.GetString(definition),
             [ScribeEmissionAttestation.EmissionPath(spec.ModuleGid)] = Encoding.UTF8.GetString(emission),

@@ -6,6 +6,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
+[Trait("Category", "Script")]
 public sealed class LeanReportPerModuleScriptTests
 {
     private const string InspectorScript = "Meta/StrataLint/lean-inspector/inspect.sh";

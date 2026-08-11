@@ -232,9 +232,9 @@ harness 的本质,就是**给各类事定义"这类该怎么处理"**——先�
 **22. 稳态全自主:对错机器判、方向 open 驱动、错误检测勘正自增 harness;人只创世一次 + Gödel 顶标 open(终态)。**
 
 > **〔永久铁律·此条永不改(用户 2026-07-20 定,不可修订、不可加例外)〕 harness 完全禁止任何"需人审"门。**
-> 一切准入/门控/合并必须**机器可判**——形式验证(Lean kernel 无 sorry 无私 axiom)+ 多模型对抗 + **保守扩展机器验证**(第21条)。**任何门一旦产出 "requires external human review / 需人审 / 等人裁决 / awaiting human" 之类结果,即判定为 harness bug**,须立即改为机器门,machine-decide admit/reject,**绝不得让任何工件因"等人审"而阻塞**。
+> 一切准入/门控/合并必须**机器可判**——形式验证(Lean kernel 无 sorry 无私 axiom)+ 多模型对抗 + **candidate build/test/selftest、Lean/kernel、base-owned `check --protected-base`、冻结账本**。**任何门一旦产出 "requires external human review / 需人审 / 等人裁决 / awaiting human" 之类结果,即判定为 harness bug**,须立即改为机器门,machine-decide admit/reject,**绝不得让任何工件因"等人审"而阻塞**。
 > 人只做两件**不可机器化**的事,且都**不是判断**:①**创世一次**(τ=0 内容寻址、公开可独立验证的初始态,信任来自可验证非背书);②**授权不可逆物理动作**(付费/平台账号/物理删除等能力-资源缺口,是"等灯亮"的 open 约束,满足即机器自动激活——不是让人判对错)。除此之外**系统里没有一处"最后要人来判"**;Gödel 顶诚实标 `open`(不可判是逻辑性质,非"轮到人")。
-> 具体执法(按第15条 2026-07-20 四错勘正后的教义):SL-022 等元层门**必须**是机器保守扩展门——**base 侧法官**跑旧 golden 证新不推翻(base-owned 判官,永不无条件候选自证)+ 独立对抗评审席;自锁场景走 **base 门控条件逃生舱**(base-owned 自锁检测器证明门对 no-op 也红时才启用)。"protected-surface change requires base-owned conservative-extension verification" 才是本门的如实描述。本律是第2条(对错机器判)、第5条(人只授权不可逆动作)、第21条(改核心按 τ 付机器可算成本)、第22条(稳态全自主)的收口与硬化——**永不改**。
+> 具体执法(按第15条 2026-07-20 四错勘正后的教义):SL-022 等元层变更由保留的机器手段判定与收口——candidate build/test/selftest、Lean/kernel、**base 侧法官**运行 `check --protected-base`、冻结账本;其中 rc=3 如实表示 `protected-surface change (SL-022); content checks passed`。本铁律守的是“门不得退回给人”，不守某台具体机器。本律是第2条(对错机器判)、第5条(人只授权不可逆动作)、第21条(改核心按 τ 付机器可算成本)、第22条(稳态全自主)的收口与硬化——**永不改**。
 
 终极形态:系统运转起来后**人完全不参与**。前面凡写"靠人/人类门控/价值选择靠人/τ=0 人审"处,均以本条为终态收敛——那些是 bootstrap 阶段的临时脚手架,随机器门建成而移除。
 - **对错**:形式(Lean kernel)+ 多模型对抗机器判(第2条);

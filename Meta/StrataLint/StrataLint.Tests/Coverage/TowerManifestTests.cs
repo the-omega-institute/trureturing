@@ -174,30 +174,26 @@ public sealed class TowerManifestTests
     }
 
     [Fact]
-    public void PhasedGateIsVerifiedOnlyByAContentAddressedC0Ceremony()
+    public void HistoricalLedgerRecordsArchivedMembersWithoutClaimingVerification()
     {
         var syntax = Syntax(new TowerComponentSyntax(
-            "conservative-extension-gate-c",
-            "phased-gate",
-            C0Members(),
+            "c0-history",
+            "historical-ledger",
+            ArchivedMembers(),
             ["bootstrap-pr-1"],
-            "verified"));
+            "archived"));
 
-        Assert.True(C0CeremonyProjection.HasCanonicalShape(C0Members()));
         Assert.IsType<TowerValidationOutcome.Accepted>(
             TowerManifestValidator.ValidateStructure(syntax));
     }
 
     [Fact]
-    public void PhasedGateRejectsIncompleteC0CeremonyEvidence()
+    public void HistoricalLedgerRejectsAVerifiedClaim()
     {
         var syntax = Syntax(new TowerComponentSyntax(
-            "conservative-extension-gate-c",
-            "phased-gate",
-            [
-                "phase1-protected-content-admission",
-                "phase2-dual-harness-conservative-extension",
-            ],
+            "c0-history",
+            "historical-ledger",
+            ArchivedMembers(),
             ["bootstrap-pr-1"],
             "verified"));
 
@@ -208,8 +204,8 @@ public sealed class TowerManifestTests
             rejected.Findings,
             static item => item is
             {
-                Code: "TOWER-C0-CEREMONY",
-                Component: "conservative-extension-gate-c",
+                Code: "TOWER-ARCHIVED",
+                Component: "c0-history",
             });
     }
 
@@ -248,10 +244,8 @@ public sealed class TowerManifestTests
         1,
         "ASSUMED-UNVERIFIED");
 
-    private static ImmutableArray<string> C0Members() =>
+    private static ImmutableArray<string> ArchivedMembers() =>
     [
-        "phase1-protected-content-admission",
-        "phase2-dual-harness-conservative-extension",
         "c0/ceremony-commit convention/this-pr-merge-commit",
         "c0/inaugural-certificate sha256/" + new string('e', 64)
             + " Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json",

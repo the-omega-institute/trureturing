@@ -5,12 +5,6 @@ public sealed class DefinitionsRetirementTests
     private static readonly string RetiredAssemblyName = "StrataLint." + "Definitions";
     private static readonly string RetiredRoot =
         "Meta/StrataLint/" + RetiredAssemblyName;
-    private const string GoldenCorpusPath =
-        "Meta/StrataLint/StrataLint.Cli/Golden/GoldenCorpus.cs";
-    private const string TomlGoldenLoaderPath =
-        "Meta/StrataLint/StrataLint.Cli/Golden/TomlGoldenLoader.cs";
-    private const string TomlGoldenWriterPath =
-        "Meta/StrataLint/StrataLint.Cli/Golden/TomlGoldenWriter.cs";
     private const string AnchorPath =
         "Meta/StrataLint/StrataLint.Engine/Anchors/Anchor.cs";
     private const string AnchorSchemesPath =
@@ -29,9 +23,6 @@ public sealed class DefinitionsRetirementTests
 
     public static TheoryData<string> FinalSourceOwners => new()
     {
-        GoldenCorpusPath,
-        TomlGoldenLoaderPath,
-        TomlGoldenWriterPath,
         AnchorPath,
         AnchorSchemesPath,
     };

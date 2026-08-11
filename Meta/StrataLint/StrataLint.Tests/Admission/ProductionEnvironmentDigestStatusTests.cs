@@ -17,15 +17,15 @@ public sealed partial class ProductionEnvironmentTests
             "# Synthetic\n\n**定理 1.1(Test)**。claim。\n");
         var atom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, ledgerBytes, DigestionTestSupport.Rules).Claims);
         var captured = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
-        fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
-        fixture.Files.Remove(GoldenCorpus.FixtureCasPath);
+        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
+        fixture.Files.Remove(RuleFixture.FixtureCasPath);
         fixture.Files[captured.RelativePath] = Encoding.UTF8.GetString(captured.Bytes.AsSpan());
         fixture.Files["Meta/BACKFILL.yaml"] = $$"""
             schema_version: 3
             ledger: theory-digestion-v1
             sources:
               - source_id: fixture-source
-                path: {{GoldenCorpus.FixtureDigestionSourcePath}}
+                path: {{RuleFixture.FixtureDigestionSourcePath}}
                 atomizer: {{atomizerId}}
                 acknowledged_stale: []
                 entries:
@@ -178,18 +178,18 @@ public sealed partial class ProductionEnvironmentTests
         var planningSnapshot = Decode(Snapshot(new Dictionary<string, string>(StringComparer.Ordinal)
         {
             [TheoryAtomizerDataLoader.DataPath] = Encoding.UTF8.GetString(DigestionTestSupport.RulesBytes),
-            [GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes),
+            [RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes),
             [oldCapture.RelativePath] = Encoding.UTF8.GetString(oldCapture.Bytes.AsSpan()),
         }));
         var plan = DigestionIngestor.Plan(baselineDocument, planningSnapshot, baselineDocument);
         var candidateLedger = Encoding.UTF8.GetString(
             BackfillInventoryWriter.Write(plan.Document).AsSpan());
-        fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
-        fixture.Baseline[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
+        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
+        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
         fixture.Files[BackfillInventoryLoader.RelativePath] = candidateLedger;
         fixture.Baseline[BackfillInventoryLoader.RelativePath] = baselineLedger;
-        fixture.Files.Remove(GoldenCorpus.FixtureCasPath);
-        fixture.Baseline.Remove(GoldenCorpus.FixtureCasPath);
+        fixture.Files.Remove(RuleFixture.FixtureCasPath);
+        fixture.Baseline.Remove(RuleFixture.FixtureCasPath);
         fixture.Files[oldCapture.RelativePath] = Encoding.UTF8.GetString(oldCapture.Bytes.AsSpan());
         fixture.Baseline[oldCapture.RelativePath] = Encoding.UTF8.GetString(oldCapture.Bytes.AsSpan());
         foreach (var item in plan.CasObjects)

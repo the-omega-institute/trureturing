@@ -35,12 +35,14 @@ public sealed partial class ProductionEnvironmentTests
             });
         var protectedChange = (AdmissionOutcome.ProtectedSurfaceChange)outcome;
         Assert.Equal(
-            Enumerable.Range(1, 23).Select(RuleId.CreateKnown).Append(RuleId.CreateKnown(25)),
+            Enumerable.Range(1, 23).Select(RuleId.CreateKnown).Append(RuleId.CreateKnown(25)).Append(RuleId.CreateKnown(26)),
             protectedChange.ContentCertificate.ExecutedRules);
         Assert.Contains(protectedChange.ChangeSet.Paths, item => item.Value == protectedPath);
         Assert.Contains(
             protectedChange.Sl022Diagnostics,
-            item => item.RuleId == RuleId.CreateKnown(22) && item.Path == protectedPath);
+            item => item.RuleId == RuleId.CreateKnown(22)
+                && item.Path == protectedPath
+                && item.Message == "protected-surface change detected (SL-022)");
         Assert.Equal(2, gateway.ReadCount);
         Assert.Equal(2, gateway.FrozenReferenceValidationCount);
         Assert.Equal(0, source.CallCount);
@@ -110,7 +112,7 @@ public sealed partial class ProductionEnvironmentTests
 
         var admitted = Assert.IsType<AdmissionOutcome.Admitted>(outcome);
         Assert.Equal(
-            Enumerable.Range(1, 23).Select(RuleId.CreateKnown).Append(RuleId.CreateKnown(25)),
+            Enumerable.Range(1, 23).Select(RuleId.CreateKnown).Append(RuleId.CreateKnown(25)).Append(RuleId.CreateKnown(26)),
             admitted.Certificate.ExecutedRules);
         Assert.Equal(2, gateway.ReadCount);
         Assert.Equal(0, source.CallCount);
@@ -134,12 +136,12 @@ public sealed partial class ProductionEnvironmentTests
             $"atomizer: {AtomizerRegistry.NoAtomizerId}",
             StringComparison.Ordinal);
         var captured = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
-        fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
-        fixture.Baseline[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(baselineBytes);
+        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
+        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(baselineBytes);
         fixture.Files[BackfillInventoryLoader.RelativePath] = ledger;
         fixture.Baseline[BackfillInventoryLoader.RelativePath] = ledger;
-        fixture.Files.Remove(GoldenCorpus.FixtureCasPath);
-        fixture.Baseline.Remove(GoldenCorpus.FixtureCasPath);
+        fixture.Files.Remove(RuleFixture.FixtureCasPath);
+        fixture.Baseline.Remove(RuleFixture.FixtureCasPath);
         fixture.Files[captured.RelativePath] = Encoding.UTF8.GetString(captured.Bytes.AsSpan());
         fixture.Baseline[captured.RelativePath] = Encoding.UTF8.GetString(captured.Bytes.AsSpan());
         var currentRaw = Snapshot(fixture.Files);
@@ -159,7 +161,7 @@ public sealed partial class ProductionEnvironmentTests
         var environment = new ProductionCliEnvironment(
             "/repo",
             new FakeRepositoryGateway(
-                RawChangeSet.Create([GoldenCorpus.FixtureDigestionSourcePath]),
+                RawChangeSet.Create([RuleFixture.FixtureDigestionSourcePath]),
                 currentRaw,
                 baselineRaw),
             new FakeLeanReportSource(null));

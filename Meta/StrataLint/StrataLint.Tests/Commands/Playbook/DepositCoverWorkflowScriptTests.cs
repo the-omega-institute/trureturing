@@ -4,6 +4,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
+[Trait("Category", "Script")]
 public sealed partial class DepositCoverWorkflowScriptTests
 {
     [Fact]

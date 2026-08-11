@@ -18,6 +18,16 @@ public sealed class TrustTopologyTests
     private const string RawDefinitionSourcePath = "Blueprint/D5/S1/Digit/Raw.scribe.cs";
     private const string C0CertificatePath =
         "Meta/StrataLint/Golden/c0-inaugural-conservative-certificate.json";
+    private const string BootstrapGatePath =
+        "Meta/StrataLint/StrataLint.Engine/Admission/BootstrapGate.cs";
+    private const string BlueprintSourcePath = "Blueprint/D5/S0/Carrier/Ring.scribe.cs";
+    private const string BlueprintProjectionPath = "Blueprint/D5/S0/Carrier/Ring.md";
+    private const string ValuesKernelPath = "Meta/StrataLint/Golden/values-kernels.toml";
+    private const string UnprotectedTruthGraphPath = "Generated/truth-graph.v1.json";
+    private const string ProtectedScribeEmissionsPath =
+        "Meta/StrataLint/Generated/scribe-emissions.v1.json";
+    private const string ProtectedAnchorCatalogPath =
+        "Meta/StrataLint/Generated/anchor-catalog.v1.json";
 
     public static TheoryData<string> ProtectedPaths => new()
     {
@@ -49,11 +59,48 @@ public sealed class TrustTopologyTests
     {
         "Meta/BACKFILL.yaml",
         "Meta/FILEMAP.toml",
-        RuleFixture.GoldenDataSourcePath,
-        C0CeremonyProjection.ValuesKernelDataPath,
-        GoldenFixtureRegistryLoader.RelativePath,
+        "Golden/values-kernels.toml",
+        TestRegistry.RelativePath,
         "Library/queries.yaml",
     };
+
+    [Theory]
+    [InlineData(BootstrapGatePath, true)]
+    [InlineData(RuleFixture.SpecificationPath, true)]
+    [InlineData(BlueprintSourcePath, true)]
+    [InlineData(ValuesKernelPath, false)]
+    [InlineData("Meta/StrataLint/StrataLint.Definitions/Retired.cs", false)]
+    [InlineData(BlueprintProjectionPath, false)]
+    public void DeclarativeProtectionPolicyPreservesTheExistingPredicate(
+        string rawPath,
+        bool expected)
+    {
+        var path = Assert.IsType<RepoPath>(RepoPath.TryCreate(rawPath, out var parsed) ? parsed : null);
+
+        Assert.Equal(expected, BootstrapProtectionPolicy.IsProtected(path));
+        Assert.Equal(expected, BootstrapGate.IsProtected(path));
+    }
+
+    [Fact]
+    public void TopLevelTruthGraphChangeDoesNotProduceSl022Diagnostics()
+    {
+        var clear = Assert.IsType<BootstrapOutcome.Clear>(
+            BootstrapGate.Evaluate(RawChangeSet.Create([UnprotectedTruthGraphPath])));
+
+        Assert.NotNull(clear.Capability);
+    }
+
+    [Fact]
+    public void BaseJudgeScribeEmissionsInputProducesExactSl022Diagnostic()
+    {
+        AssertExactSl022Diagnostic(ProtectedScribeEmissionsPath);
+    }
+
+    [Fact]
+    public void BaseJudgeAnchorCatalogInputProducesExactSl022Diagnostic()
+    {
+        AssertExactSl022Diagnostic(ProtectedAnchorCatalogPath);
+    }
 
     [Theory]
     [MemberData(nameof(ProtectedPaths))]
@@ -110,10 +157,10 @@ public sealed class TrustTopologyTests
     {
         var descriptors = RuleCatalog.Default.Descriptors;
 
-        Assert.Equal(24, descriptors.Length);
-        Assert.Equal(24, descriptors.Select(item => item.Id).Distinct().Count());
+        Assert.Equal(25, descriptors.Length);
+        Assert.Equal(25, descriptors.Select(item => item.Id).Distinct().Count());
         Assert.Equal(
-            Enumerable.Range(1, 23).Select(RuleId.CreateKnown).Append(RuleId.CreateKnown(25)),
+            Enumerable.Range(1, 23).Select(RuleId.CreateKnown).Append(RuleId.CreateKnown(25)).Append(RuleId.CreateKnown(26)),
             descriptors.Select(item => item.Id));
         Assert.Equal(AdmissionEffect.HumanGate, descriptors[21].AdmissionEffect);
         Assert.All(
@@ -123,5 +170,15 @@ public sealed class TrustTopologyTests
         Assert.All(
             descriptors.Where(item => item.Id.Value is "SL-007" or "SL-009" or "SL-014"),
             item => Assert.Equal(RuleLifecycle.Deferred, item.Lifecycle));
+    }
+
+    private static void AssertExactSl022Diagnostic(string protectedPath)
+    {
+        var verification = Assert.IsType<BootstrapOutcome.ProtectedSurfaceVerificationRequired>(
+            BootstrapGate.Evaluate(RawChangeSet.Create([protectedPath])));
+
+        var diagnostic = Assert.Single(BootstrapGate.CreateSl022Diagnostics(verification.ChangeSet));
+        Assert.Equal("SL-022", diagnostic.RuleId.Value);
+        Assert.Equal(protectedPath, diagnostic.Path);
     }
 }
