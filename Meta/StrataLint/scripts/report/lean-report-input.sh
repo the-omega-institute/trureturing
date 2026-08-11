@@ -10,12 +10,13 @@ REPORT=""
 MANIFEST=""
 PRODUCER_OVERRIDE=""
 INSPECTOR_OVERRIDE=""
+ADDRESS_SIDE="candidate"
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --repository) REPOSITORY="$2"; shift 2 ;;
     --report) REPORT="$2"; shift 2 ;;
     --manifest) MANIFEST="$2"; shift 2 ;;
-    --baseline) shift ;;
+    --baseline) ADDRESS_SIDE="baseline"; shift ;;
     --producer) PRODUCER_OVERRIDE="$2"; shift 2 ;;
     --inspector) INSPECTOR_OVERRIDE="$2"; shift 2 ;;
     *) echo "lean-report-input: unknown argument '$1'" >&2; exit 2 ;;
@@ -101,6 +102,18 @@ producer_paths() {
   done
 }
 
+producer_closure_complete() {
+  local directory
+  for directory in \
+    Meta/StrataLint/StrataLint.Engine \
+    Meta/StrataLint/StrataLint.Cli \
+    Meta/StrataLint/StrataLint.Scribe; do
+    [[ -d "$REPOSITORY/$directory" ]] || return 1
+    find "$REPOSITORY/$directory" -type f -name '*.cs' \
+      ! -path '*/bin/*' ! -path '*/obj/*' -print -quit | grep -q . || return 1
+  done
+}
+
 producer_sha256() {
   local manifest="$1"
   local relative
@@ -109,6 +122,9 @@ producer_sha256() {
   while IFS= read -r relative; do
     append_producer_manifest_entry "${manifest}.unsorted" "$relative" || return 2
   done < <(producer_paths | sort -u)
+  if ! producer_closure_complete; then
+    printf '%s\n' "unavailable:$ADDRESS_SIDE" >> "${manifest}.unsorted"
+  fi
   sort "${manifest}.unsorted" > "$manifest"
   rm -f -- "${manifest}.unsorted"
   hash_file "$manifest"

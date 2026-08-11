@@ -10,6 +10,7 @@ public sealed class LeanReportPairScriptTests
     private const string MergeCommandPath = "Meta/StrataLint/StrataLint.Cli/Commands/LeanReportMergeCommand.cs";
     private const string RawReportPath = "Meta/StrataLint/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs";
     private const string CanonicalWriterPath = "Meta/StrataLint/StrataLint.Engine/Snapshot/StructuredCanonicalWriter.cs";
+    private const string ScribeProgramPath = "Meta/StrataLint/StrataLint.Scribe/ScribeProgram.cs";
     [Fact]
     public void EqualInputsRunProducerOnceAndAttestBaselineReuse()
     {
@@ -92,6 +93,27 @@ public sealed class LeanReportPairScriptTests
 
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
         Assert.Equal(2, fixture.ProducerInvocationCount);
+        using var candidate = fixture.ReadCandidateProvenance();
+        using var baseline = fixture.ReadBaselineProvenance();
+        Assert.NotEqual(
+            candidate.RootElement.GetProperty("input_address").GetString(),
+            baseline.RootElement.GetProperty("input_address").GetString());
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void IncompleteProducerClosureOnBothSidesDisablesReuseWithoutFailingProduction(bool leaveEmptyDirectory)
+    {
+        using var fixture = new LeanReportPairFixture();
+        fixture.RemoveProducerClosureDirectoryFromBothSides(leaveEmptyDirectory);
+
+        var result = fixture.Run();
+
+        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+        Assert.True(
+            fixture.ProducerInvocationCount == 2,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
         using var candidate = fixture.ReadCandidateProvenance();
         using var baseline = fixture.ReadBaselineProvenance();
         Assert.NotEqual(
@@ -272,6 +294,16 @@ public sealed class LeanReportPairScriptTests
         internal void RemoveCandidateProducerInput(string relative) =>
             File.Delete(Path.Combine(candidateRoot, relative.Replace('/', Path.DirectorySeparatorChar)));
 
+        internal void RemoveProducerClosureDirectoryFromBothSides(bool leaveEmptyDirectory)
+        {
+            foreach (var root in new[] { candidateRoot, baselineRoot })
+            {
+                var directory = Path.Combine(root, "Meta", "StrataLint", "StrataLint.Cli");
+                Directory.Delete(directory, recursive: true);
+                if (leaveEmptyDirectory) Directory.CreateDirectory(directory);
+            }
+        }
+
         internal JsonDocument ReadCandidateProvenance() =>
             JsonDocument.Parse(File.ReadAllBytes(candidateReport + ".provenance.json"));
 
@@ -340,6 +372,7 @@ public sealed class LeanReportPairScriptTests
             WriteProducerInput(root, MergeCommandPath);
             WriteProducerInput(root, RawReportPath);
             WriteProducerInput(root, CanonicalWriterPath);
+            WriteProducerInput(root, ScribeProgramPath);
         }
 
         private static void WriteProducerInput(string root, string relative)
