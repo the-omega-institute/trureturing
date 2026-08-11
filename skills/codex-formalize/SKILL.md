@@ -7,7 +7,7 @@ description: Use when asked to formalize and close an open digestion atom in thi
 
 ## Install
 
-Codex auto-discovers skills only from `$CODEX_HOME/skills` (default `~/.codex/skills`). Use this file either by copying it to `$CODEX_HOME/skills/codex-formalize/SKILL.md`, or by reading it at this repository path when a dispatcher names that path. This repository copy is the single source of truth; any installed copy is a projection of it.
+This is a Codex skill package. Install it by copying the `skills/codex-formalize/` directory into `$CODEX_HOME/skills/` (default `~/.codex/skills`), or load it by naming this `SKILL.md` path directly in a dispatcher. This repository copy is the single source of truth; any installed copy is a projection of it.
 
 ## Scope and authority
 
