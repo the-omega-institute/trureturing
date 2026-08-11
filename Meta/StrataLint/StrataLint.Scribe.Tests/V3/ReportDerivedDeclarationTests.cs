@@ -1,9 +1,10 @@
 using System.Collections.Immutable;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 using StrataLint.Engine;
 
-namespace StrataLint.Scribe.Tests.V3;
+namespace StrataLint.Scribe.Tests;
 
 public sealed class ReportDerivedDeclarationTests
 {
@@ -262,8 +263,7 @@ public sealed class ReportDerivedDeclarationTests
     [Fact]
     public void Migrated_joint_coordinates_markdown_matches_frozen_utf8_bytes()
     {
-        var root = FindRepositoryRoot();
-        var definitions = DocumentDefinitions.Discover(typeof(DocumentDefinitions).Assembly, root);
+        var definitions = DocumentDefinitions.All;
         var migrated = definitions
             .Single(definition => definition.Document.Header.Gid.Value ==
                 "D5/S1/Depth/JointCoordinates").Document;
@@ -277,26 +277,28 @@ public sealed class ReportDerivedDeclarationTests
             ImmutableArray.Create("propext", "Classical.choice", "Quot.sound"));
         var report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
         {
-            ["D5/S1/Depth/JointCoordinates.lean"] = new(
+            [JointCoordinatesLeanPath] = new(
                 ImmutableArray.Create("D5.S1.Phase.Basic", "D5.S1.Scale.Log"),
                 ImmutableArray.Create(declaration)),
         });
         var catalog = DeclarationCatalog.Create(report);
-        var census = ReceiptFreeDocumentCatalog.Load(root, documents);
         var graph = DocumentGraphAssembler.Assemble(
-            documents, catalog, census.ReceiptFreeDocumentGids);
+            documents,
+            catalog,
+            documents.Select(static document => document.Header.Gid.Value)
+                .ToHashSet(StringComparer.Ordinal));
 
-        var expected = File.ReadAllBytes(Path.Combine(
-            AppContext.BaseDirectory, "Fixtures", "JointCoordinates.before-migration.md"));
         var actual = CanonicalMarkdownWriter.Write(
             migrated, catalog, graph: graph).ToArray();
-        Assert.True(
-            expected.AsSpan().SequenceEqual(actual),
-            Encoding.UTF8.GetString(actual));
+        Assert.Equal(FrozenJointCoordinatesSha256, Convert.ToHexString(SHA256.HashData(actual)).ToLowerInvariant());
     }
 
     private const string Gid = "D5/S0/Computability/SemanticLayerShift.claim";
     private const string CanonicalName = "D5.S0.Computability.SemanticLayerShift.claim";
+    private const string JointCoordinatesLeanPath = "D5/S1/Depth/JointCoordinates.lean";
+    private const string SemanticLayerShiftLeanPath = "D5/S0/Computability/SemanticLayerShift.lean";
+    private const string FrozenJointCoordinatesSha256 =
+        "6e23be1f770de6f348478e9e57360a3abc7f33800db30634c786e00f33f2de61";
 
     private static LeanDeclaration Declaration(string name, string kind) =>
         new(name, kind, "Nat = Nat", ImmutableArray<string>.Empty);
@@ -305,21 +307,10 @@ public sealed class ReportDerivedDeclarationTests
         LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
         {
             [declarations.Any(static declaration => declaration.Name.Contains("JointCoordinates", StringComparison.Ordinal))
-                ? "D5/S1/Depth/JointCoordinates.lean"
-                : "D5/S0/Computability/SemanticLayerShift.lean"] = new(
+                ? JointCoordinatesLeanPath
+                : SemanticLayerShiftLeanPath] = new(
                 ImmutableArray<string>.Empty,
                 declarations.ToImmutableArray()),
         });
-
-    private static string FindRepositoryRoot()
-    {
-        var directory = new DirectoryInfo(AppContext.BaseDirectory);
-        while (directory is not null && !Directory.Exists(Path.Combine(directory.FullName, "Blueprint")))
-        {
-            directory = directory.Parent;
-        }
-        return directory?.FullName
-            ?? throw new InvalidOperationException("Repository root is unavailable.");
-    }
 
 }
