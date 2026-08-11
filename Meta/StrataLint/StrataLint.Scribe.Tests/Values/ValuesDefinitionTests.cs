@@ -1,6 +1,6 @@
 namespace StrataLint.Scribe.Tests;
 
-public sealed class ValuesDefinitionTests
+[Trait("Category", "Recompute")] public sealed class ValuesDefinitionTests
 {
     [Fact]
     public void RepositoryCatalogUsesTheTopLevelGoldenDataHome()

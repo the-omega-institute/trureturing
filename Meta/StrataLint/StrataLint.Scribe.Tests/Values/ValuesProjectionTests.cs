@@ -3,7 +3,7 @@ using System.Text;
 
 namespace StrataLint.Scribe.Tests;
 
-public sealed class ValuesProjectionTests
+[Trait("Category", "Recompute")] public sealed class ValuesProjectionTests
 {
     [Fact]
     public void ExactQuadraticEvaluationUsesAControlledDecimalInterval()

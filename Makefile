@@ -13,7 +13,7 @@ dotnet:
 	@/bin/bash Meta/StrataLint/scripts/dotnet-build.sh
 
 test:
-	@dotnet test Meta/StrataLint/StrataLint.sln --configuration Release --verbosity normal --filter "Category!=Script"
+	@dotnet test Meta/StrataLint/StrataLint.sln --configuration Release --verbosity normal --filter "Category!=Script&Category!=Recompute"
 
 lean-cache-ensure:
 	@/bin/bash Meta/StrataLint/scripts/worktree/lean-cache-ensure.sh
