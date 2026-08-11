@@ -23,19 +23,17 @@ internal sealed class GoldenFiberCoordinatesDocument : IScribeDocumentDefinition
                 FormulaLogicOperator.And,
                 Equal(Add(coordinateA, coordinateB), firstReading)));
 
-        return DocumentDefinition.Create(ScribeDocument.Create(
-            Header(
-                "D5/S1/Words/GoldenFiberCoordinates",
-                "Golden fiber coordinates are explicit differences of two Beatty readings."),
+        return DocumentDefinition.Create(ScribeNode.Create(
+            "Golden fiber coordinates are explicit differences of two Beatty readings.",
             H("Golden Fiber Coordinates"),
             Blocks(
-                DocumentBlock.Describe.Theorem(
+                                Describe.Lean(
                     DescribeId.Create("golden-fiber-coordinates-as-beatty-readings"),
-                    H("Fiber coordinates are golden Beatty readings"),
-                    LeanTheorem(
+                    DeclarationHandle.Create(
                         "D5/S1/Words/GoldenFiberCoordinates.golden_fiber_coordinates"),
-                    identities,
-                    DescribeProvenance.RepoDerived(),
+                    H("Fiber coordinates are golden Beatty readings"),
+                    StatementSource.FromAuthor(identities),
+                    AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text(
                             "For every positive index v, begin with the shifted reading "
@@ -53,6 +51,7 @@ internal sealed class GoldenFiberCoordinatesDocument : IScribeDocumentDefinition
                             + "formulas. The proof is therefore new assembly: it rewrites "
                             + "1/phi as phi-1 and 1/phi^2 as 2-phi, then uses irrationality to turn "
                             + "the ceiling of a positive integer multiple of phi into its floor "
-                            + "plus one.")))))));
+                            + "plus one."))),
+                    DescribeRole.Theorem))));
     }
 }

@@ -7,33 +7,33 @@ internal sealed class ProfiniteIntegersDocument : IScribeDocumentDefinition
     private static readonly LibraryNoteRef RibesZalesskii =
         LibraryNoteRef.Create("D5/L/Dynamics/ribeszalesskii2010profinite");
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S1/Dynamics/ProfiniteIntegers",
-            "Natural numbers embed injectively and densely in the compatible-residue model of the profinite integers."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Natural numbers embed injectively and densely in the compatible-residue model of the profinite integers.",
         H("Natural Numbers in the Profinite Integers"),
         Blocks(
-            DocumentBlock.Describe.Definition(
+                        Describe.Lean(
                 DescribeId.Create("profinite-integers-as-compatible-residue-readings"),
+                DeclarationHandle.Create(
+                    "D5/S1/Dynamics/ProfiniteIntegers.ProfiniteIntegers"),
                 H("Profinite integers are compatible residue readings"),
-                LeanDefinition("D5/S1/Dynamics/ProfiniteIntegers.ProfiniteIntegers"),
-                DescribeProvenance.LiteratureAttested(RibesZalesskii),
+                StatementSource.FromAuthor(FormulaDsl.Disp(FormulaDsl.Id("ProfiniteIntegers"))),
+                AssessedProvenance.FromLiterature(RibesZalesskii),
                 Blocks(Paragraph(Text(
                     "A point assigns a residue modulo every positive integer. Whenever one "
                     + "modulus divides another, reduction of the finer reading equals the "
                     + "coarser reading. Positive moduli are indexed canonically by m + 1, "
-                    + "so the formal product contains no zero-modulus coordinate.")))
-            ),
-            DocumentBlock.Describe.Theorem(
+                    + "so the formal product contains no zero-modulus coordinate."))),
+                DescribeRole.Definition),
+                        Describe.Lean(
                 DescribeId.Create("natural-numbers-embed-injectively-and-densely"),
-                H("Natural numbers embed injectively and densely"),
-                LeanTheorem(
+                DeclarationHandle.Create(
                     "D5/S1/Dynamics/ProfiniteIntegers.nat_embedding_injective_and_dense"),
-                new Formula.Logic(
+                H("Natural numbers embed injectively and densely"),
+                StatementSource.FromAuthor(new Formula.Logic(
                     Call("Injective", Id("natEmbedding")),
                     FormulaLogicOperator.And,
-                    Call("DenseRange", Id("natEmbedding"))),
-                DescribeProvenance.RepoDerived(),
+                    Call("DenseRange", Id("natEmbedding")))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "Distinct natural numbers are separated by the coordinate whose "
@@ -48,7 +48,8 @@ internal sealed class ProfiniteIntegersDocument : IScribeDocumentDefinition
                         + "profinite completion, but no theorem that the natural numbers are "
                         + "dense in the profinite completion of the integers. The repository "
                         + "therefore proves the finite-window representative directly rather "
-                        + "than restating the upstream integer-image theorem.")))))));
+                        + "than restating the upstream integer-image theorem."))),
+                DescribeRole.Theorem))));
 
     private static LeanDeclarationRef LeanDefinition(string value) =>
         LeanDeclarationRef.Create(
