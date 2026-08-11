@@ -10,19 +10,16 @@ internal sealed class NewmanDocument : IScribeDocumentDefinition
         LibraryNoteRef.Create("D5/L/Rewriting/newman1942theories");
 
     public DocumentDefinition Create() =>
-        DocumentDefinition.Create(ScribeDocument.Create(
-            Header(
-                "D5/S0/Rewriting/Newman",
-                "Terminating locally confluent rewrite systems have unique reachable normal forms."),
+        DocumentDefinition.Create(ScribeNode.Create(
+            "Terminating locally confluent rewrite systems have unique reachable normal forms.",
             H("Newman Normal Forms"),
             Blocks(
-                DocumentBlock.Describe.Theorem(
+                Describe.Lean(
                     DescribeId.Create(
                         "terminating-locally-confluent-relations-have-unique-normal-forms"),
+                    DeclarationHandle.Create("D5/S0/Rewriting/Newman.newman_unique_normal_form"),
                     H("Unique reachable normal forms"),
-                    LeanTheorem(
-                        "D5/S0/Rewriting/Newman.newman_unique_normal_form"),
-                    Disp(Seq(
+                    StatementSource.FromAuthor(Disp(Seq(
                         Operatorname, Grp(F.Id("WellFounded")), Open,
                         Operatorname, Grp(F.Id("swap")), Open, F.Id("r"), Close, Close,
                         Sp, Land, Sp,
@@ -45,8 +42,8 @@ internal sealed class NewmanDocument : IScribeDocumentDefinition
                         Open, F.Id("h"), Comma, Sp, F.Id("n"), Close,
                         Sp, Land, Sp,
                         Neg, Exists, Sp, F.Id("x"), Comma, Sp,
-                        F.Id("r"), Open, F.Id("n"), Comma, Sp, F.Id("x"), Close, Dot)),
-                    DescribeProvenance.LiteratureAttested(Newman),
+                        F.Id("r"), Open, F.Id("n"), Comma, Sp, F.Id("x"), Close, Dot))),
+                    AssessedProvenance.FromLiterature(Newman),
                     Blocks(
                         Paragraph(Text(
                             "For every terminating and locally confluent rewrite relation, "
@@ -55,6 +52,6 @@ internal sealed class NewmanDocument : IScribeDocumentDefinition
                         Paragraph(Text(
                             "Newman 1942, literature-attested; this repository gives a direct "
                             + "proof because the pinned Mathlib version does not provide this "
-                            + "lemma.")))
-                ))));
+                            + "lemma."))),
+                    DescribeRole.Theorem))));
 }
