@@ -47,6 +47,24 @@ public sealed class RepositoryInputClosureTests
     }
 
     [Fact]
+    public void ExternalAssemblyCallEdgeFailsClosedToAll()
+    {
+        const string source = """
+            using System;
+            using Xunit;
+            public static class ExternalEdgeCase
+            {
+                [Fact]
+                public static void Test() => Console.WriteLine("external");
+            }
+            """;
+
+        var result = RepositoryInputClosureDeriver.DeriveSynthetic(source);
+
+        Assert.Equal(["All"], result.Single().Patterns);
+    }
+
+    [Fact]
     public void DynamicPathCannotClaimAnExactEffect()
     {
         const string source = """

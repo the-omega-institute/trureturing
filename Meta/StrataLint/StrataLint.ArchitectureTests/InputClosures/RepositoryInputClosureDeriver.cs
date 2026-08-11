@@ -257,7 +257,8 @@ internal static class RepositoryInputClosureDeriver
     private static bool IsUnknownExternal(IMethodSymbol method)
     {
         var type = method.ContainingType.ToDisplayString();
-        return type is "System.Diagnostics.Process" or "System.Reflection.Assembly"
+        return method.DeclaringSyntaxReferences.Length == 0
+            || type is "System.Diagnostics.Process" or "System.Reflection.Assembly"
             || method.ContainingType.TypeKind == TypeKind.Dynamic;
     }
 
