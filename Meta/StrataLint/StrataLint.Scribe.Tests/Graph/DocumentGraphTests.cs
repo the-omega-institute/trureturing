@@ -159,6 +159,74 @@ public sealed class DocumentGraphTests
     }
 
     [Fact]
+    public void ReceiptBoundDocumentsFilterSelfNarrativeReferences()
+    {
+        var source = Document(
+            "D5/S0/Test/Source",
+            [DocumentEdge.NarrativeReference.ToDocument(GidRef.Create("D5/S0/Test/Source"))]);
+
+        var graph = DocumentGraphAssembler.Assemble(
+            [source],
+            EmptyLeanReport(),
+            autoWireDocumentGids: new HashSet<string>(StringComparer.Ordinal));
+
+        Assert.Empty(graph.For(source).OfType<DocumentEdge.NarrativeReference>());
+    }
+
+    [Fact]
+    public void DefaultAssemblyFiltersSelfNarrativeReferences()
+    {
+        var source = Document(
+            "D5/S0/Test/Source",
+            [DocumentEdge.NarrativeReference.ToDocument(GidRef.Create("D5/S0/Test/Source"))]);
+
+        var graph = DocumentGraphAssembler.Assemble(
+            [source],
+            EmptyLeanReport(),
+            autoWireDocumentGids: null);
+
+        Assert.Empty(graph.For(source).OfType<DocumentEdge.NarrativeReference>());
+    }
+
+    [Fact]
+    public void ReceiptBoundDocumentsPreserveNarrativeReferencesToOtherDocuments()
+    {
+        var source = Document(
+            "D5/S0/Test/Source",
+            [DocumentEdge.NarrativeReference.ToDocument(GidRef.Create("D5/S0/Test/Target"))]);
+        var target = Document("D5/S0/Test/Target");
+
+        var graph = DocumentGraphAssembler.Assemble(
+            [source, target],
+            EmptyLeanReport(),
+            autoWireDocumentGids: new HashSet<string>(StringComparer.Ordinal));
+
+        var narrative = Assert.Single(graph.For(source).OfType<DocumentEdge.NarrativeReference>());
+        var documentTarget = Assert.IsType<NarrativeTarget.Document>(narrative.Target);
+        Assert.Equal(target.Header.Gid.Value, documentTarget.DocumentGid.Value);
+    }
+
+    [Fact]
+    public void ReceiptBoundDocumentsPreserveSelfDescribeNarrativeReferences()
+    {
+        var source = Document(
+            "D5/S0/Test/Source",
+            [DocumentEdge.NarrativeReference.ToDescribe(
+                GidRef.Create("D5/S0/Test/Source"),
+                DescribeId.Create("target"))]);
+
+        var graph = DocumentGraphAssembler.Assemble(
+            [source],
+            EmptyLeanReport(),
+            autoWireDocumentGids: new HashSet<string>(StringComparer.Ordinal));
+
+        var narrative = Assert.Single(graph.For(source).OfType<DocumentEdge.NarrativeReference>());
+        var describeTarget = Assert.IsType<NarrativeTarget.Describe>(narrative.Target);
+        Assert.Equal(source.Header.Gid.Value, describeTarget.DocumentGid.Value);
+        Assert.Equal("target", describeTarget.DescribeId.Value);
+    }
+
+    [Fact]
     public void CoDeclarationDescribesRemainDistinct()
     {
         var declaration = LeanDeclarationRef.Create("D5/S0/Test/Source.anchor");

@@ -79,6 +79,7 @@ public sealed partial class MakeWorkflowTests
         "derived-refresh",
         "deposit",
         "cover",
+        "show-atom",
         "worktree",
         "pr-open",
         "pr-update",
