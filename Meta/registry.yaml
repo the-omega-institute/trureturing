@@ -44,7 +44,6 @@ governance_documents:
 agent_files:
   - "CONTEXT.md"
   - "adversary.md"
-  - "codex-formalize.md"
   - "echo-template.md"
   - "gate.md"
   - "librarian.md"
