@@ -1,7 +1,12 @@
+using StrataLint.Cli;
+
 namespace StrataLint.ArchitectureTests;
 
 public sealed class TestSelectionPolicyTests
 {
+    private const string ScribeDefinition = "Blueprint/D5/S0/Carrier/Ring.scribe.cs";
+    private const string ScribeProjection = "Blueprint/D5/S0/Carrier/Ring.md";
+
     private static readonly string[] FullSuite =
     [
         TestSelectionPolicy.ArchitectureTests,
@@ -24,7 +29,7 @@ public sealed class TestSelectionPolicyTests
     {
         var selected = TestSelectionPolicy.Select(
             TestSelectionEvent.PullRequest,
-            ["Blueprint/D5/S0/Carrier/Ring.scribe.cs"]);
+            [ScribeDefinition]);
 
         Assert.Equal(
             [TestSelectionPolicy.ArchitectureTests, TestSelectionPolicy.ScribeTests],
@@ -33,7 +38,7 @@ public sealed class TestSelectionPolicyTests
 
     [Theory]
     [InlineData("Meta/StrataLint/Golden/Frozen/events.jsonl")]
-    [InlineData("Blueprint/D5/S0/Carrier/Ring.md")]
+    [InlineData(ScribeProjection)]
     [InlineData("README.md")]
     public void PullRequestOutsideEitherFamilyRunsFullSuite(string path)
     {
@@ -55,7 +60,7 @@ public sealed class TestSelectionPolicyTests
 
     [Theory]
     [InlineData("Meta/StrataLint/Golden/Frozen/accepted/example.json")]
-    [InlineData("Blueprint/D5/S0/Carrier/Ring.scribe.cs")]
+    [InlineData(ScribeDefinition)]
     public void DevPushAlwaysRunsFullSuite(string otherwiseSelectablePath)
     {
         Assert.Equal(
