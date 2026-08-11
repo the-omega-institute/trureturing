@@ -141,3 +141,23 @@ public enum LeanDeclarationKind
     Recursor,
     Inductive,
 }
+
+public readonly record struct DeclarationHandle
+{
+    private DeclarationHandle(GidRef reference) => Reference = reference;
+    internal GidRef Reference { get; }
+    public string Value => Reference?.Value
+        ?? throw new InvalidOperationException("An uninitialized declaration handle is invalid.");
+
+    public static DeclarationHandle Create(string value)
+    {
+        var reference = GidRef.Create(value);
+        if (!reference.IsFormalDeclaration)
+        {
+            throw new ArgumentException("Value must select a Lean declaration.", nameof(value));
+        }
+        return new DeclarationHandle(reference);
+    }
+
+    public override string ToString() => Value;
+}

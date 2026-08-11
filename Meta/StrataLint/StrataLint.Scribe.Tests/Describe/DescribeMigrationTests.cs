@@ -65,14 +65,14 @@ public sealed class DescribeMigrationTests
                 throw new ArgumentOutOfRangeException(nameof(node.Kind));
         }
 
-        Assert.NotEqual(DescribeProvenanceKind.Unassessed, node.Provenance.Kind);
-        if (node.Provenance.Kind == DescribeProvenanceKind.LiteratureAttested)
+        Assert.NotEqual(DescribeProvenanceKind.Unassessed, node.ProvenanceKind);
+        if (node.ProvenanceKind == DescribeProvenanceKind.LiteratureAttested)
         {
-            Assert.NotNull(node.Provenance.LiteratureReference);
+            Assert.NotNull(node.LiteratureReference);
         }
         else
         {
-            Assert.Null(node.Provenance.LiteratureReference);
+            Assert.Null(node.LiteratureReference);
         }
     }
 
@@ -262,8 +262,8 @@ public sealed class DescribeMigrationTests
             Assert.Equal(item.Declaration, statement.Value.Value);
             Assert.Equal(LeanDeclarationKind.Theorem, statement.Value.ExpectedKind);
             Assert.True(statement.Value.RequireNoSorry);
-            Assert.Equal(item.Provenance, node.Provenance.Kind);
-            Assert.Equal(item.Reference, node.Provenance.LiteratureReference?.Value);
+            Assert.Equal(item.Provenance, node.ProvenanceKind);
+            Assert.Equal(item.Reference, node.LiteratureReference?.Value);
         }
 
         foreach (var item in formulaExpected)
@@ -271,8 +271,8 @@ public sealed class DescribeMigrationTests
             var node = actual[$"{item.Document}#{item.Id}"].Node;
 
             Assert.IsType<DescribeStatement.FormulaAst>(node.Statement);
-            Assert.Equal(DescribeProvenanceKind.RepoDerived, node.Provenance.Kind);
-            Assert.Null(node.Provenance.LiteratureReference);
+            Assert.Equal(DescribeProvenanceKind.RepoDerived, node.ProvenanceKind);
+            Assert.Null(node.LiteratureReference);
         }
     }
 
@@ -569,8 +569,8 @@ public sealed class DescribeMigrationTests
             var statement = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
 
             Assert.Equal(item.Declaration, statement.Value.Value);
-            Assert.Equal(DescribeProvenanceKind.LiteratureAttested, describe.Provenance.Kind);
-            Assert.Equal(item.Reference, describe.Provenance.LiteratureReference?.Value);
+            Assert.Equal(DescribeProvenanceKind.LiteratureAttested, describe.ProvenanceKind);
+            Assert.Equal(item.Reference, describe.LiteratureReference?.Value);
         }
     }
 
@@ -645,8 +645,8 @@ public sealed class DescribeMigrationTests
 
         Assert.Equal(kind, node.Kind);
         Assert.Equal(declaration, statement.Value.Value);
-        Assert.Equal(DescribeProvenanceKind.RepoDerived, node.Provenance.Kind);
-        Assert.Null(node.Provenance.LiteratureReference);
+        Assert.Equal(DescribeProvenanceKind.RepoDerived, node.ProvenanceKind);
+        Assert.Null(node.LiteratureReference);
     }
 
     private static void AssertLiteratureAttestedLeanNode(
@@ -659,8 +659,8 @@ public sealed class DescribeMigrationTests
 
         Assert.Equal(kind, node.Kind);
         Assert.Equal(declaration, statement.Value.Value);
-        Assert.Equal(DescribeProvenanceKind.LiteratureAttested, node.Provenance.Kind);
-        Assert.Equal(reference, node.Provenance.LiteratureReference?.Value);
+        Assert.Equal(DescribeProvenanceKind.LiteratureAttested, node.ProvenanceKind);
+        Assert.Equal(reference, node.LiteratureReference?.Value);
     }
 
     private static ContentInventory DeriveContentInventory()
@@ -674,7 +674,7 @@ public sealed class DescribeMigrationTests
                 .ToDictionary(static group => group.Key, static group => group.Count()),
             StringComparer.Ordinal);
         var byProvenance = new SortedDictionary<string, int>(
-            nodes.GroupBy(static node => ProvenanceName(node.Provenance.Kind), StringComparer.Ordinal)
+            nodes.GroupBy(static node => ProvenanceName(node.ProvenanceKind), StringComparer.Ordinal)
                 .ToDictionary(static group => group.Key, static group => group.Count()),
             StringComparer.Ordinal);
 
@@ -687,8 +687,8 @@ public sealed class DescribeMigrationTests
             nodes.Count(static node => node.Statement is DescribeStatement.LeanDeclaration),
             byKind,
             byProvenance,
-            nodes.Count(static node => node.Provenance.Kind == DescribeProvenanceKind.Unassessed),
-            nodes.Count(static node => node.Provenance.Kind == DescribeProvenanceKind.SuspectedNovel));
+            nodes.Count(static node => node.ProvenanceKind == DescribeProvenanceKind.Unassessed),
+            nodes.Count(static node => node.ProvenanceKind == DescribeProvenanceKind.SuspectedNovel));
     }
 
     private static IEnumerable<DocumentBlock> EnumerateBlocks(BlockSequence blocks)
