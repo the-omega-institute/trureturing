@@ -1,0 +1,17 @@
+ast_path: lemma/3.1
+fingerprints:
+  raw_sha256: sha256:9d52e41b062f81b1ce93cf241bf4ef9806f6e6de3fe9d6d10b5dc2de6d1f929a
+  normalized_sha256: sha256:9d52e41b062f81b1ce93cf241bf4ef9806f6e6de3fe9d6d10b5dc2de6d1f929a
+cas_ref: sha256:9d52e41b062f81b1ce93cf241bf4ef9806f6e6de3fe9d6d10b5dc2de6d1f929a
+coverage_gids:
+  - D5/S0/Diagonal/EscapeCount.diagonal_landing_fixed
+receipts:
+  coverage:
+    - gid: D5/S0/Diagonal/EscapeCount.diagonal_landing_fixed
+      source_sha256: sha256:9d52e41b062f81b1ce93cf241bf4ef9806f6e6de3fe9d6d10b5dc2de6d1f929a
+      target_sha256: sha256:12db89f8d0e76b5857f06cc48954e934cfb9c73d81e021f5d0be397beb553720
+  scribe:
+    - gid: D5/S0/Diagonal/EscapeCount.diagonal_landing_fixed
+      definition_sha256: sha256:4d5a5bc9244d6f19f6096cf07b48780cb5b97ff0bba78a9551fbd57067b54721
+      emission_sha256: sha256:c19fa9c9ae754d899d1c9594b497bcc7acdf4f938417e3dbe443490e48d7d381
+  unresolved_subitems: []
