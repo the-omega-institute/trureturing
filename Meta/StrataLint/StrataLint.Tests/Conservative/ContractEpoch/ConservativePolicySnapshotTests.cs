@@ -10,8 +10,6 @@ public sealed class ConservativePolicySnapshotTests
     private const string UnprotectedTruthGraphPath = "Generated/truth-graph.v1.json";
     private const string ProtectedScribeEmissionsPath =
         "Meta/StrataLint/Generated/scribe-emissions.v1.json";
-    private const string ProtectedAnchorCatalogPath =
-        "Meta/StrataLint/Generated/anchor-catalog.v1.json";
 
     private const string BootstrapGatePath =
         "Meta/StrataLint/StrataLint.Engine/Admission/BootstrapGate.cs";
@@ -56,7 +54,6 @@ public sealed class ConservativePolicySnapshotTests
 
     [Theory]
     [InlineData(ProtectedScribeEmissionsPath)]
-    [InlineData(ProtectedAnchorCatalogPath)]
     public void BaseJudgeGeneratedInputsProduceSl022Diagnostics(string protectedPath)
     {
         var verification = Assert.IsType<BootstrapOutcome.ProtectedSurfaceVerificationRequired>(
@@ -127,7 +124,7 @@ public sealed class ConservativePolicySnapshotTests
         Assert.StartsWith("sha256:", sl023.DescriptorRoot, StringComparison.Ordinal);
         Assert.Equal(71, sl023.DescriptorRoot.Length);
         Assert.Equal(
-            "sha256:eaa7a43742593a86ce1bba656175455bf3965d3c1da8de6005a3c614f7762529",
+            "sha256:859fa8e16c1ca28771a8d2165f89580d5b54ae34dfe487d38450fd350ffff9df",
             current.Root);
     }
 
@@ -180,7 +177,7 @@ public sealed class ConservativePolicySnapshotTests
 
         Assert.Equal(ResidenceEpochRetiredPaths, current.ExactExclusions);
         Assert.Equal(
-            "sha256:eaa7a43742593a86ce1bba656175455bf3965d3c1da8de6005a3c614f7762529",
+            "sha256:859fa8e16c1ca28771a8d2165f89580d5b54ae34dfe487d38450fd350ffff9df",
             current.Root);
         Assert.All(ResidenceEpochRetiredPaths, path => Assert.False(current.IsProtected(path)));
     }

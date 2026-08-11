@@ -55,7 +55,6 @@ public sealed class FileMapPolicyTests
             [
                 ScribeEmitter.AttestationRelativePath,
                 "Generated/truth-graph.v1.json",
-                CanonicalAnchorCatalogWriter.RelativePath,
             ],
             StringComparer.Ordinal);
         var root = RepositoryLayout.FindRoot();
@@ -84,14 +83,6 @@ public sealed class FileMapPolicyTests
         Assert.All(topLevelProjectionPaths, path =>
             Assert.Contains(path, registry.Policy.GovernanceDocuments));
 
-        var anchorCatalog = Assert.Single(
-            artifacts,
-            static artifact => Path.GetFileName(artifact.Path) == "anchor-catalog.v1.json");
-        Assert.DoesNotContain(
-            RepoPath.CreateKnown(anchorCatalog.Path),
-            registry.Policy.GovernanceDocuments);
-        var tower = File.ReadAllText(Path.Combine(root, "Meta", "StrataLint", "TOWER.yaml"));
-        Assert.Contains("      - " + anchorCatalog.Path, tower, StringComparison.Ordinal);
     }
 
     [Fact]

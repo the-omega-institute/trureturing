@@ -64,9 +64,8 @@ internal static partial class RepositoryRules
 
                 foreach (var anchor in header.Anchors)
                 {
-                    if (Anchor.IsExternalFamily(anchor)
-                        ? Anchor.TryParseCanonical(anchor) is AnchorParseResult.Invalid
-                        : !AnchorCatalogDefinitions.TryGet(anchor, out _))
+                    if (!Anchor.IsExternalFamily(anchor)
+                        || Anchor.TryParseCanonical(anchor) is AnchorParseResult.Invalid)
                     {
                         findings.Add(new RuleFinding(
                             path.Value,

@@ -106,21 +106,6 @@ public sealed class TheoryIsolationTests
     }
 
     [Fact]
-    public void CatalogTheorySchemeIsRejectedByTheRedFixture()
-    {
-        var retiredAnchor = string.Concat("pz", "g/v9/1.0");
-        var catalog = $$"""
-            {"definitions":[{"anchor":"{{retiredAnchor}}","provenance":"fixture"}],"schema_version":1}
-            """;
-
-        var finding = Assert.Single(TheoryIsolationPolicy.InspectCatalog(
-            TheoryIsolationPolicy.AnchorCatalogPath,
-            catalog));
-
-        Assert.Contains("internal theory scheme", finding.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
     public void DigestionMachineIsTheOnlyCSharpException()
     {
         var sourcePath = string.Concat("docs/develop/", "theory/source.md");

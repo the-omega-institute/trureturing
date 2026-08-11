@@ -20,10 +20,6 @@ internal static class GeneratedArtifactInventory
             .Concat(
             [
                 new GeneratedArtifactIdentity(
-                    CanonicalAnchorCatalogWriter.RelativePath,
-                    nameof(AnchorCatalogEmitter),
-                    "A-ANCHOR"),
-                new GeneratedArtifactIdentity(
                     CanonicalValuesWriter.RelativePath,
                     nameof(ValuesEmitter),
                     "A-VALUES"),

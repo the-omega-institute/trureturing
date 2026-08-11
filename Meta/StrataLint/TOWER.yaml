@@ -45,6 +45,7 @@ components:
       - SL-022
       - SL-023
       - SL-025
+      - SL-026
     judged_by:
       - rule-catalog-selfcheck
       - rule-fixtures
@@ -63,31 +64,15 @@ components:
     members:
       - Meta/StrataLint/StrataLint.Engine/Anchors/Anchor.cs
       - Meta/StrataLint/StrataLint.Engine/Anchors/AnchorSchemes.cs
-      - Meta/StrataLint/StrataLint.Engine/Anchors/AnchorDefinition.cs
-      - Meta/StrataLint/StrataLint.Engine/Anchors/AnchorCatalogDefinitions.cs
-      - Meta/StrataLint/StrataLint.Engine/Anchors/ExternalAnchorManifest.cs
     judged_by:
-      - anchor-catalog-projection
-      - anchor-scribe-tests
-    verification: verified
-  - id: anchor-catalog-projection
-    kind: repository-files
-    members:
-      - Meta/StrataLint/Generated/anchor-catalog.v1.json
-      - Meta/StrataLint/StrataLint.Scribe/Emission/AnchorCatalogEmitter.cs
-      - Meta/StrataLint/StrataLint.Scribe/Writers/CanonicalAnchorCatalogWriter.cs
-    judged_by:
-      - anchor-reference-rule
       - anchor-scribe-tests
     verification: verified
   - id: anchor-reference-rule
     kind: repository-files
     members:
       - Meta/StrataLint/StrataLint.Engine/Anchors/Anchor.cs
-      - Meta/StrataLint/StrataLint.Engine/Anchors/AnchorCatalogDefinitions.cs
-      - Meta/StrataLint/StrataLint.Engine/Anchors/AnchorDefinition.cs
+      - Meta/StrataLint/StrataLint.Engine/Anchors/LeanImportClosure.cs
       - Meta/StrataLint/StrataLint.Engine/Anchors/AnchorSchemes.cs
-      - Meta/StrataLint/StrataLint.Engine/Anchors/ExternalAnchorManifest.cs
       - Meta/StrataLint/StrataLint.Engine/Rules/Anchors/AnchorReferenceRule.cs
       - Meta/StrataLint/StrataLint.Engine/Rules/RepositoryRules.Applicability.cs
       - Meta/StrataLint/StrataLint.Engine/Rules/RepositoryRules.Content.cs
@@ -100,7 +85,6 @@ components:
   - id: anchor-scribe-tests
     kind: repository-files
     members:
-      - Meta/StrataLint/StrataLint.Scribe.Tests/AnchorCatalogTests.cs
       - Meta/StrataLint/StrataLint.Scribe.Tests/AnchorTests.cs
     judged_by:
       - engineering-ci
