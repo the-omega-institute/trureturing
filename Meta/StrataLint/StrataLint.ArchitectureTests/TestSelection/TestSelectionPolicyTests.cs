@@ -7,6 +7,8 @@ public sealed class TestSelectionPolicyTests
     private const string ScribeDefinition = "Blueprint/D5/S0/Carrier/Ring.scribe.cs";
     private const string ScribeProjection = "Blueprint/D5/S0/Carrier/Ring.md";
     private const string AcceptedPrefix = "Meta/StrataLint/Golden/Frozen/accepted";
+    private const string ScribeProject =
+        "Meta/StrataLint/StrataLint.Scribe/StrataLint.Scribe.csproj";
 
     private static readonly string[] FullSuite =
     [
@@ -98,7 +100,7 @@ public sealed class TestSelectionPolicyTests
             root, TestSelectionPolicy.EngineTests));
 
         Assert.Contains(
-            Path.Combine(root, "Meta/StrataLint/StrataLint.Scribe/StrataLint.Scribe.csproj"),
+            Path.Combine(root, ScribeProject),
             closure);
     }
 

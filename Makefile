@@ -16,10 +16,7 @@ test:
 	@dotnet test Meta/StrataLint/StrataLint.sln --configuration Release --verbosity normal
 
 test-select:
-	@test -n "$(EVENT)" && test -f "$(CHANGED_PATHS_FILE)"
-	@mapfile -t changed_paths < "$(CHANGED_PATHS_FILE)"; \
-	mapfile -t projects < <(dotnet run --no-build --project Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- select-tests --event "$(EVENT)" "$${changed_paths[@]}"); \
-	for project in "$${projects[@]}"; do dotnet test "$$project" --no-build --configuration Release --verbosity normal || exit $$?; done
+	@/bin/bash Meta/StrataLint/scripts/test-selection/run-tests.sh "$(CURDIR)" "$(EVENT)" "$(CHANGED_PATHS_FILE)"
 
 lean-cache-ensure:
 	@/bin/bash Meta/StrataLint/scripts/worktree/lean-cache-ensure.sh

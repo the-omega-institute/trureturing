@@ -59,6 +59,7 @@ public sealed partial class MakeWorkflowTests
         "help",
         "dotnet",
         "test",
+        "test-select",
         "lean-cache-ensure",
         "lean",
         "lean-report",
