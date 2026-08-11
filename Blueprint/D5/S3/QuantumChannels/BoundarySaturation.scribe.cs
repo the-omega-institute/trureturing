@@ -18,7 +18,7 @@ internal sealed class BoundarySaturationDocument : IScribeDocumentDefinition
                 LeanTheorem(
                     "D5/S3/QuantumChannels/BoundarySaturation.cp_boundary_ratio_le_one"),
                 Disp(Seq(
-                    Lvert, F.Id("z"), Rvert, Caret, Grp(D(2)), Sp, Le, Sp, F.Id("p"))),
+                    Lvert, Sp, F.Id("z"), Sp, Rvert, Caret, Grp(D(2)), Sp, Le, Sp, F.Id("p"))),
                 DescribeProvenance.RepoDerived(),
                 Blocks(
                     Paragraph(Text(
