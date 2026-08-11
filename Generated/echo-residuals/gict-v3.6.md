@@ -1,7 +1,7 @@
-<!-- echo-residual-summary:v4 source=gict-v3.6 residual=sha256:28121720c3bffd0eea8c91eed30e8451c693e3fe7e53a598df452235f4982a67 -->
+<!-- echo-residual-summary:v4 source=gict-v3.6 residual=sha256:730b57c3209f9ebfa29d1f73afc87b24a3a4bb49f94e2b3b482c2feab23d2741 -->
 # Echo Residual Summary — `gict-v3.6`
 
-- unresolved_subitems: 123
+- unresolved_subitems: 122
 - mother_residual_atom_ids: 13
 
 Mother residual atoms:
@@ -13,7 +13,7 @@ Mother residual atoms:
   - `pure-end-rank-bound`
   - `quantum-state-spectrum-entropy-identification`
   - `random-spectrum-and-high-precision-numerical-certificates`
-- `gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226` (38)
+- `gict-residual-088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226` (37)
   - `direction-law-counterexamples`
   - `fixed-ray-character-counterexample`
   - `fixed-ray-nineteen-witness-certificate`
@@ -50,7 +50,6 @@ Mother residual atoms:
   - `zero-only-prime-equivalence`
   - `zolotarev-144-case-certificate`
   - `zolotarev-congruence-to-selector-numerator`
-  - `zolotarev-jacobi-factorization`
   - `zolotarev-selector-congruence`
 - `gict-residual-1a97f6a7c25c71dca7998827b2e39cdac856ea83936e81a645ba01e088c6a4b4` (4)
   - `comparison-claim-stronger-than-cyclic-branch-gleason-conditions`
