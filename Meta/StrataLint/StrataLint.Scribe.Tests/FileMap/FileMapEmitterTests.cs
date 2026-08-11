@@ -22,7 +22,6 @@ public sealed class FileMapEmitterTests
             produced_by = "ScribeEmitter"
             consumed_by = ["reader"]
             verified_by = ["ScribeEmitter"]
-            authority = "self"
             runtime_disposition = "committed-source"
             artifact_id = "none"
 
@@ -32,7 +31,6 @@ public sealed class FileMapEmitterTests
             produced_by = "none"
             consumed_by = ["Lean"]
             verified_by = ["lean-build"]
-            authority = "self"
             runtime_disposition = "committed-source"
             artifact_id = "none"
 
@@ -43,7 +41,6 @@ public sealed class FileMapEmitterTests
             consumed_by = ["TomlGoldenLoader"]
             verified_by = ["TomlGoldenLoader"]
             residence_violation = true
-            authority = "self"
             runtime_disposition = "committed-source"
             artifact_id = "none"
             """ + "\n"), "fixture.toml");

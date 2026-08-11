@@ -77,7 +77,6 @@ public sealed class FileMapManifestTests
             produced_by = "OutputEmitter"
             consumed_by = ["reader"]
             verified_by = ["OutputEmitter"]
-            authority = "self"
             artifact_id = "A-OUTPUT"
             {{dispositionLine}}
             """ + "\n";
@@ -106,7 +105,6 @@ public sealed class FileMapManifestTests
             produced_by = "OutputEmitter"
             consumed_by = ["reader"]
             verified_by = ["OutputEmitter"]
-            authority = "self"
             runtime_disposition = "run-local"
             artifact_id = "A-OUTPUT"
             mode = "100644"
@@ -118,7 +116,6 @@ public sealed class FileMapManifestTests
             produced_by = "OutputEmitter"
             consumed_by = ["reader"]
             verified_by = ["OutputEmitter"]
-            authority = "self"
             runtime_disposition = "run-local"
             artifact_id = "A-OUTPUT"
             mode = "100644"
@@ -169,7 +166,6 @@ public sealed class FileMapManifestTests
             produced_by = "ScribeEmitter"
             consumed_by = ["reader"]
             verified_by = ["ScribeEmitter"]
-            authority = "self"
             runtime_disposition = "committed-source"
             artifact_id = "none"
 
@@ -179,7 +175,6 @@ public sealed class FileMapManifestTests
             produced_by = "none"
             consumed_by = ["lake"]
             verified_by = ["lean-build"]
-            authority = "self"
             runtime_disposition = "committed-source"
             artifact_id = "none"
 
@@ -189,7 +184,6 @@ public sealed class FileMapManifestTests
             produced_by = "FrozenLedgerCanonicalWriter"
             consumed_by = ["FrozenLedger"]
             verified_by = ["SL-008"]
-            authority = "self"
             runtime_disposition = "committed-ledger"
             artifact_id = "none"
 
@@ -200,7 +194,6 @@ public sealed class FileMapManifestTests
             consumed_by = ["TomlGoldenLoader"]
             verified_by = ["TomlGoldenLoader"]
             residence_violation = true
-            authority = "self"
             runtime_disposition = "committed-source"
             artifact_id = "none"
 
@@ -210,7 +203,6 @@ public sealed class FileMapManifestTests
             produced_by = "none"
             consumed_by = ["dotnet"]
             verified_by = ["dotnet-test"]
-            authority = "self"
             runtime_disposition = "committed-source"
             artifact_id = "none"
             """ + "\n"), "fixture.toml");
@@ -252,7 +244,6 @@ public sealed class FileMapManifestTests
         produced_by = "PartitionEmitter"
         consumed_by = ["reader"]
         verified_by = ["PartitionEmitter"]
-        authority = "self"
         artifact_id = "none"
         runtime_disposition = "run-local"
         """ + "\n";
@@ -280,7 +271,6 @@ public sealed class FileMapManifestTests
             produced_by = "{{producedBy}}"
             consumed_by = ["reader"]
             verified_by = ["ScribeEmitter"]
-            authority = "self"
             runtime_disposition = "committed-source"
             artifact_id = "none"
             """ + "\n";
@@ -309,7 +299,6 @@ public sealed class FileMapManifestTests
             produced_by = "FileMapEmitter"
             consumed_by = ["reader"]
             verified_by = ["dotnet-test"]
-            authority = "self"
             runtime_disposition = "committed-source"
             artifact_id = "none"
             """ + "\n";
@@ -344,7 +333,6 @@ public sealed class FileMapManifestTests
             produced_by = "none"
             consumed_by = ["reader"]
             verified_by = ["SnapshotDecoder"]
-            authority = "self"
             runtime_disposition = "committed-source"
             artifact_id = "none"
             """ + "\n";
@@ -376,7 +364,6 @@ public sealed class FileMapManifestTests
             produced_by = "none"
             consumed_by = ["lake"]
             verified_by = ["lean-build"]
-            authority = "self"
             runtime_disposition = "committed-source"
             artifact_id = "none"
             """ + "\n";
