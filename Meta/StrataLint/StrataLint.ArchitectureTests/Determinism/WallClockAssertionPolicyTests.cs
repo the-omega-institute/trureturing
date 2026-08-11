@@ -62,6 +62,19 @@ public sealed class WallClockAssertionPolicyTests
     }
 
     [Theory]
+    [InlineData("System.Console.WriteLine(clock.Elapsed);")]
+    [InlineData("Console.Error.Write(clock.Elapsed);")]
+    [InlineData("Console.Error.WriteLine(clock.Elapsed);")]
+    [InlineData("ITestOutputHelper output = null!; output.WriteLine(clock.Elapsed);")]
+    [InlineData("ILogger logger = null!; logger.LogInformation(\"elapsed {Elapsed}\", clock.Elapsed);")]
+    public void NamedDiagnosticSinksAreAllowed(string diagnostic)
+    {
+        var source = $"class C {{ void M() {{ var clock = Stopwatch.StartNew(); {diagnostic} }} }}";
+
+        Assert.Empty(WallClockAssertionPolicy.InspectSource("Synthetic.Tests/GuardTests.cs", source));
+    }
+
+    [Theory]
     [InlineData("class C { TimeSpan Value; void M() { var clock = Stopwatch.StartNew(); Value = clock.Elapsed; } }")]
     [InlineData("class C { TimeSpan M() { var clock = Stopwatch.StartNew(); return clock.Elapsed; } }")]
     [InlineData("class C { void M(ref TimeSpan value) { var clock = Stopwatch.StartNew(); value = clock.Elapsed; } }")]
@@ -77,5 +90,25 @@ public sealed class WallClockAssertionPolicyTests
             source));
 
         Assert.Contains("ASSUMED-UNVERIFIED", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void TaintedReceiverMemberCallFailsClosed()
+    {
+        const string source = "class C { void M() { var clock = Stopwatch.StartNew(); clock.CheckElapsed(); } }";
+
+        var finding = Assert.Single(WallClockAssertionPolicy.InspectSource(
+            "Synthetic.Tests/UnsupportedFlowTests.cs",
+            source));
+
+        Assert.Contains("ASSUMED-UNVERIFIED", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void StopwatchStopControlOperationIsAllowed()
+    {
+        const string source = "class C { void M() { var stopwatch = Stopwatch.StartNew(); stopwatch.Stop(); } }";
+
+        Assert.Empty(WallClockAssertionPolicy.InspectSource("Synthetic.Tests/GuardTests.cs", source));
     }
 }

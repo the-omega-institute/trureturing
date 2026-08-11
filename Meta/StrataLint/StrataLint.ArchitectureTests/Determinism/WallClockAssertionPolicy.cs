@@ -8,6 +8,24 @@ internal sealed record WallClockAssertionFinding(string Path, int Line, string M
 
 internal static class WallClockAssertionPolicy
 {
+    private static readonly HashSet<string> SafeTaintedReceiverCalls =
+    [
+        "Stopwatch.Stop",
+        "Stopwatch.Start",
+        "Stopwatch.Restart",
+        "Stopwatch.Reset",
+    ];
+
+    private static readonly HashSet<string> LoggerDiagnosticMethods =
+    [
+        "ILogger.LogTrace",
+        "ILogger.LogDebug",
+        "ILogger.LogInformation",
+        "ILogger.LogWarning",
+        "ILogger.LogError",
+        "ILogger.LogCritical",
+    ];
+
     internal static readonly string[] TestProjectPrefixes =
     [
         "Meta/StrataLint/StrataLint.Tests/",
@@ -102,8 +120,8 @@ internal static class WallClockAssertionPolicy
                 && (invocation.ArgumentList.Arguments.Any(argument =>
                         ContainsWallClock(argument.Expression, taintedLocals))
                     || invocation.Expression is MemberAccessExpressionSyntax member
-                    && member.Expression is not IdentifierNameSyntax
-                    && ContainsWallClock(member.Expression, taintedLocals)))
+                    && ContainsWallClock(member.Expression, taintedLocals)
+                    && !IsSafeTaintedReceiverCall(invocation, taintedLocals)))
             .Cast<SyntaxNode>();
         var expressionBodyReturns = GetExpressionBody(callable)
             .Where(expression => ContainsWallClock(expression, taintedLocals))
@@ -178,11 +196,71 @@ internal static class WallClockAssertionPolicy
             Name.Identifier.ValueText: "Should",
         };
 
-    private static bool IsDiagnosticOutput(InvocationExpressionSyntax invocation) =>
+    private static bool IsSafeTaintedReceiverCall(
+        InvocationExpressionSyntax invocation,
+        IReadOnlySet<string> taintedLocals) =>
         invocation.Expression is MemberAccessExpressionSyntax
         {
-            Expression: IdentifierNameSyntax { Identifier.ValueText: "Console" },
-            Name.Identifier.ValueText: "Write" or "WriteLine",
+            Expression: IdentifierNameSyntax receiver,
+            Name.Identifier.ValueText: var method,
+        }
+        && taintedLocals.Contains(receiver.Identifier.ValueText)
+        && IsStopwatchIdentifier(invocation, receiver.Identifier.ValueText)
+        && SafeTaintedReceiverCalls.Contains($"Stopwatch.{method}");
+
+    private static bool IsStopwatchIdentifier(SyntaxNode node, string identifier) =>
+        node.SyntaxTree.GetRoot().DescendantNodes().OfType<VariableDeclarationSyntax>()
+            .Where(declaration => declaration.Variables.Any(variable =>
+                variable.Identifier.ValueText == identifier))
+            .Any(declaration => SimpleTypeName(declaration.Type) == "Stopwatch"
+                || declaration.Variables.Any(variable => variable.Initializer?.Value is InvocationExpressionSyntax
+                {
+                    Expression: MemberAccessExpressionSyntax
+                    {
+                        Expression: IdentifierNameSyntax { Identifier.ValueText: "Stopwatch" },
+                        Name.Identifier.ValueText: "StartNew",
+                    },
+                }));
+
+    private static bool IsDiagnosticOutput(InvocationExpressionSyntax invocation)
+    {
+        if (invocation.Expression is not MemberAccessExpressionSyntax member) return false;
+
+        var method = member.Name.Identifier.ValueText;
+        var receiver = member.Expression.ToString().Replace("global::", string.Empty, StringComparison.Ordinal);
+        if (method is "Write" or "WriteLine"
+            && receiver is "Console" or "System.Console" or "Console.Error" or "System.Console.Error")
+        {
+            return true;
+        }
+
+        if (member.Expression is not IdentifierNameSyntax identifier) return false;
+        var receiverType = FindDeclaredType(invocation, identifier.Identifier.ValueText);
+        if (receiverType == "ITestOutputHelper" && method == "WriteLine") return true;
+
+        return receiverType is not null
+            && (receiverType == "ILogger" || receiverType.StartsWith("ILogger<", StringComparison.Ordinal))
+            && LoggerDiagnosticMethods.Contains($"ILogger.{method}");
+    }
+
+    private static string? FindDeclaredType(SyntaxNode node, string identifier)
+    {
+        var root = node.SyntaxTree.GetRoot();
+        var parameter = root.DescendantNodes().OfType<ParameterSyntax>()
+            .FirstOrDefault(candidate => candidate.Identifier.ValueText == identifier);
+        if (parameter?.Type is not null) return SimpleTypeName(parameter.Type);
+
+        var variable = root.DescendantNodes().OfType<VariableDeclarationSyntax>()
+            .FirstOrDefault(candidate => candidate.Variables.Any(declarator =>
+                declarator.Identifier.ValueText == identifier));
+        return variable is null ? null : SimpleTypeName(variable.Type);
+    }
+
+    private static string SimpleTypeName(TypeSyntax type) =>
+        type.ToString().Replace("global::", string.Empty, StringComparison.Ordinal) switch
+        {
+            var name when name.Contains('.') => name[(name.LastIndexOf('.') + 1)..],
+            var name => name,
         };
 
     private static IEnumerable<ExpressionSyntax> GetExpressionBody(SyntaxNode callable)
