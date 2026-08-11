@@ -199,12 +199,11 @@ jobs:
             <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/candidate")"
           [[ "$address" =~ ^[0-9a-f]{64}$ ]]
           echo "address=$address" >> "$GITHUB_OUTPUT"
-          # 报告地址的原像是 producer(lean-inspector/{inspect.sh,Inspector.lean})、
-          # Lean 源(Trureturing.lean + D5/**/*.lean)与 config(toolchain/lake-manifest/lakefile)
-          # 三者的清单哈希(lean-report-input.sh:51-97),即该报告的完整声明输入闭包。
+          # 报告地址的原像是 producer(MSBuild 求值的 Cli/Engine Compile 集 + 声明的
+          # project/build/lock/global 输入 + inspector)、Lean 源(Trureturing.lean +
+          # D5/**/*.lean)与 config(toolchain/lake-manifest/lakefile)三者的清单哈希。
           # 两侧同址 ⇒ 两份报告按定义逐字节相同,一份缓存可同时充当两份;不同址则不复用。
           if grep -Fq -- '--baseline)' "$helper" 2>/dev/null; then
-            echo "per-module-compatible=true" >> "$GITHUB_OUTPUT"
             read -r baselineAddress baselineProducer _ \
               <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/baseline" --baseline)"
             [[ "$baselineAddress" =~ ^[0-9a-f]{64}$ ]]
@@ -214,10 +213,9 @@ jobs:
             read -r baselineAddress baselineProducer _ \
               <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/baseline")"
             [[ "$baselineAddress" =~ ^[0-9a-f]{64}$ ]]
-            echo "per-module-compatible=false" >> "$GITHUB_OUTPUT"
             echo "producer-consistent=false" >> "$GITHUB_OUTPUT"
             echo "pair-reusable=false" >> "$GITHUB_OUTPUT"
-            printf '%s\n' "canonical Lean report cache disabled: baseline helper predates per-module arguments; using full production" >> "$GITHUB_STEP_SUMMARY"
+            printf '%s\n' "canonical Lean report cache disabled: baseline helper predates expanded producer identity; using full production" >> "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
           # 地址的 producer 分量取自**候选**树,而实际执行的 producer 取自**基线**树
@@ -252,19 +250,17 @@ jobs:
       # 安全性不靠这一步:下游 `RawLeanReportArtifact.ReadFile` 会把报告里每个模块的
       # source_sha256 与树逐一对账,不符即抛 INFRASTRUCTURE_FAILURE。一份错的或陈旧的
       # 报告不可能被静默接受,最坏是红,不是假绿。
-      - name: Restore canonical Lean report modules
+      - name: Restore canonical Lean report by input address
         id: report-cache
-        if: steps.lean-report-input.outputs.producer-consistent == 'true'
+        if: steps.lean-report-input.outputs.pair-reusable == 'true' && steps.lean-report-input.outputs.producer-consistent == 'true'
         uses: actions/cache/restore@v4
         with:
           path: .canonical-lean-report-cache
           key: stratalint-canonical-lean-report-v2-${{ steps.lean-report-input.outputs.address }}
-          restore-keys: |
-            stratalint-canonical-lean-report-v2-
 
       - name: Serve both canonical Lean reports from the cached address
         id: report-reuse
-        if: steps.report-cache.outputs.cache-hit == 'true' && steps.lean-report-input.outputs.pair-reusable == 'true'
+        if: steps.report-cache.outputs.cache-hit == 'true'
         # 这一步失败必须**回落**到完整生产路径,而不是让整个 job 红:缓存是加速,不是权威。
         # 下面四个重活步骤的守卫是 `outcome != 'success'`,故失败与跳过都会走原路。
         continue-on-error: true
@@ -363,39 +359,13 @@ jobs:
           fi
           reports="$RUNNER_TEMP/raw-lean-reports"
           mkdir -p "$reports"
-          stratalint_project="$GITHUB_WORKSPACE/baseline/Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj"
-          dotnet build "$stratalint_project" --configuration Release
-          stratalint_dll="$(dotnet msbuild "$stratalint_project" \
-            --getProperty:TargetPath --property:Configuration=Release \
-            --verbosity:quiet 2>/dev/null)" || {
-              printf '%s\n' "failed to resolve the StrataLint CLI target path" >&2
-              exit 1
-            }
-          [[ -n "$stratalint_dll" && "$stratalint_dll" == /* && -f "$stratalint_dll" ]] || {
-            printf 'invalid StrataLint CLI target path: %s\n' "$stratalint_dll" >&2
-            exit 1
-          }
-          module_cache_args=()
-          cache_report="$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json"
-          cache_manifest="$GITHUB_WORKSPACE/.canonical-lean-report-cache/modules.tsv"
-          if [[ -s "$cache_report" && -s "$cache_manifest" ]]; then
-            module_cache_args+=(--module-cache-report "$cache_report" --module-cache-manifest "$cache_manifest")
-          fi
-          pair_args=(
-            --producer "$producer"
-            --lake-bin "$HOME/.elan/bin/lake"
-            --candidate-root "$GITHUB_WORKSPACE/candidate"
-            --candidate-output "$reports/candidate-lean-report.json"
-            --baseline-root "$GITHUB_WORKSPACE/baseline"
+          "$pair_producer" \
+            --producer "$producer" \
+            --lake-bin "$HOME/.elan/bin/lake" \
+            --candidate-root "$GITHUB_WORKSPACE/candidate" \
+            --candidate-output "$reports/candidate-lean-report.json" \
+            --baseline-root "$GITHUB_WORKSPACE/baseline" \
             --baseline-output "$reports/baseline-lean-report.json"
-          )
-          if grep -Fq -- '--module-cache-report)' "$pair_producer" 2>/dev/null \
-            && grep -Fq -- '--stratalint-dll)' "$pair_producer" 2>/dev/null; then
-            "$pair_producer" "${pair_args[@]}" --stratalint-dll "$stratalint_dll" "${module_cache_args[@]}"
-          else
-            echo "::warning title=Lean per-module cache disabled::The baseline pair helper predates per-module arguments; using full production."
-            "$pair_producer" "${pair_args[@]}"
-          fi
 
       - name: Reconcile pinned statement projections with live Lean report
         shell: bash
@@ -406,15 +376,6 @@ jobs:
           report="$RUNNER_TEMP/raw-lean-reports/candidate-lean-report.json"
           target="$GITHUB_WORKSPACE/candidate/.lake/build/stratalint/raw-lean-report.json"
           mkdir -p "$(dirname "$target")"
-          mkdir -p "$GITHUB_WORKSPACE/.canonical-lean-report-cache"
-          manifest="$GITHUB_WORKSPACE/.canonical-lean-report-cache/modules.tsv"
-          if ! "$GITHUB_WORKSPACE/baseline/Meta/StrataLint/scripts/report/lean-report-input.sh" manifest \
-            --repository "$GITHUB_WORKSPACE/candidate" --report "$report" > "${manifest}.tmp"; then
-            rm -f -- "${manifest}.tmp" "$manifest"
-            echo "::warning title=Lean per-module cache disabled::Module manifest generation failed; full report remains authoritative."
-          else
-            mv "${manifest}.tmp" "$manifest"
-          fi
           cp "$report" "$target"
           dotnet test candidate/Meta/StrataLint/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj \
             --configuration Release \

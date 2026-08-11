@@ -160,13 +160,15 @@ public sealed class LeanReportPairScriptTests
     }
 
     [Fact]
-    public void InvalidModuleManifestFallsThroughToFullProduction()
+    public void PairScriptPinsPerModuleReuseOff()
     {
         var script = File.ReadAllText(Path.Combine(
             FindRepositoryRoot(), "Meta", "StrataLint", "scripts", "lean-report-pair.sh"));
 
-        Assert.Contains("&& \"$INPUT_HELPER\" verify-manifest", script, StringComparison.Ordinal);
-        Assert.Contains("else\n    \"$SUPERVISOR\" --role \"lean-producer-$side\"", script, StringComparison.Ordinal);
+        Assert.Contains("Per-module reuse is disabled", script, StringComparison.Ordinal);
+        Assert.DoesNotContain("--module-cache-report", script, StringComparison.Ordinal);
+        Assert.DoesNotContain("--module-cache-manifest", script, StringComparison.Ordinal);
+        Assert.DoesNotContain("--modules-file", script, StringComparison.Ordinal);
     }
 
     [Fact]

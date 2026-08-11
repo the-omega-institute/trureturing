@@ -129,6 +129,12 @@ PY
 }
 
 producer_sha256() {
+  # Per-module reuse is disabled. Before enabling it, producer identity must cover
+  # the actually selected MSBuild SDK and dotnet runtime plus the bytes of every
+  # actually loaded NuGet package, analyzer, and source generator (or hash the DLL
+  # that is actually executed). global.json latestMinor can make 10.0.103 select
+  # SDK 10.0.201, so one producer SHA can otherwise execute code built by different
+  # toolchains. The derived keys remain diagnostic evidence only for now.
   local manifest="$1"
   local relative
   : > "$manifest"

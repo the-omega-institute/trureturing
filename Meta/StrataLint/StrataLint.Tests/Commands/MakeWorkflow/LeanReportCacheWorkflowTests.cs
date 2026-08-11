@@ -7,15 +7,24 @@ public sealed class LeanReportCacheWorkflowTests
     private const string AdmissionWorkflowPath = ".github/workflows/ci.yml";
 
     [Fact]
-    public void PerModuleManifestFailureDisablesOnlyTheCacheOptimization()
+    public void PerModuleReuseIsDisabledUntilProducerIdentityCoversTheExecutedToolchain()
     {
-        var workflow = File.ReadAllText(Path.Combine(FindRepositoryRoot(), AdmissionWorkflowPath));
-        var step = workflow.Split("      - name: Reconcile pinned statement projections with live Lean report\n", StringSplitOptions.None)[1]
+        var root = FindRepositoryRoot();
+        var workflow = File.ReadAllText(Path.Combine(root, AdmissionWorkflowPath));
+        var restoreStep = workflow.Split("      - name: Restore canonical Lean report by input address\n", StringSplitOptions.None)[1]
             .Split("      - name: ", StringSplitOptions.None)[0];
+        var productionStep = workflow.Split("      - name: Produce source-bound canonical Lean reports\n", StringSplitOptions.None)[1]
+            .Split("      - name: ", StringSplitOptions.None)[0];
+        var pair = File.ReadAllText(Path.Combine(root, "Meta/StrataLint/scripts/lean-report-pair.sh"));
 
-        Assert.Contains("if ! \"$GITHUB_WORKSPACE/baseline/Meta/StrataLint/scripts/report/lean-report-input.sh\" manifest", step, StringComparison.Ordinal);
-        Assert.Contains("rm -f -- \"${manifest}.tmp\" \"$manifest\"", step, StringComparison.Ordinal);
-        Assert.Contains("full report remains authoritative", step, StringComparison.Ordinal);
+        Assert.Contains("pair-reusable == 'true'", restoreStep, StringComparison.Ordinal);
+        Assert.DoesNotContain("restore-keys:", restoreStep, StringComparison.Ordinal);
+        Assert.DoesNotContain("modules.tsv", workflow, StringComparison.Ordinal);
+        Assert.DoesNotContain("--module-cache-report", productionStep, StringComparison.Ordinal);
+        Assert.DoesNotContain("--module-cache-manifest", productionStep, StringComparison.Ordinal);
+        Assert.DoesNotContain("--module-cache-report", pair, StringComparison.Ordinal);
+        Assert.DoesNotContain("--module-cache-manifest", pair, StringComparison.Ordinal);
+        Assert.DoesNotContain("--modules-file", pair, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -57,8 +66,8 @@ public sealed class LeanReportCacheWorkflowTests
 
         Assert.True(result.ExitCode == 0, System.Text.Encoding.UTF8.GetString(result.StandardError));
         var outputs = File.ReadAllText(output);
-        Assert.Contains("per-module-compatible=false", outputs, StringComparison.Ordinal);
         Assert.Contains("producer-consistent=false", outputs, StringComparison.Ordinal);
+        Assert.Contains("pair-reusable=false", outputs, StringComparison.Ordinal);
     }
 
     private static string FindRepositoryRoot()
