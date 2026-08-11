@@ -179,7 +179,7 @@ public sealed class CliOutcomeTests
                 descriptor.DisplaySeverity,
                 descriptor.AdmissionEffect,
                 path,
-                "protected-surface change requires base-owned conservative-extension verification")));
+                "protected-surface change detected (SL-022)")));
     }
 
     private static AdmissionOutcome Admitted()

@@ -120,7 +120,7 @@ public sealed class AdmissionTests
         var trustGate = RuleCatalog.Default.Descriptors[6];
         var sl022 = Assert.Single(BootstrapGate.CreateSl022Diagnostics(verification.ChangeSet));
         Assert.Equal(
-            "protected-surface change requires base-owned conservative-extension verification",
+            "protected-surface change detected (SL-022)",
             sl022.Message);
         var completed = CompletedRuleSet.Create(
             ImmutableArray.Create(

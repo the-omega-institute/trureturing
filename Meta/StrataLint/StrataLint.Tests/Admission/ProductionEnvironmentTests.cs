@@ -40,7 +40,9 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains(protectedChange.ChangeSet.Paths, item => item.Value == protectedPath);
         Assert.Contains(
             protectedChange.Sl022Diagnostics,
-            item => item.RuleId == RuleId.CreateKnown(22) && item.Path == protectedPath);
+            item => item.RuleId == RuleId.CreateKnown(22)
+                && item.Path == protectedPath
+                && item.Message == "protected-surface change detected (SL-022)");
         Assert.Equal(2, gateway.ReadCount);
         Assert.Equal(2, gateway.FrozenReferenceValidationCount);
         Assert.Equal(0, source.CallCount);

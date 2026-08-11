@@ -617,7 +617,11 @@ public sealed partial class ReviewRegressionTests
         Assert.Contains("--candidate-lean-report", gate, StringComparison.Ordinal);
         Assert.Contains("--baseline-lean-report", gate, StringComparison.Ordinal);
         Assert.DoesNotContain("--legacy-bootstrap", gate, StringComparison.Ordinal);
-        Assert.Contains("verify-conservative", gate, StringComparison.Ordinal);
+        Assert.DoesNotContain("verify-conservative", gate, StringComparison.Ordinal);
+        Assert.Contains(
+            "protected-surface change (SL-022); content checks passed",
+            gate,
+            StringComparison.Ordinal);
         Assert.True(Count(gate, " selftest") >= 2, "selftest must run twice in the shared gate");
         Assert.Contains("cmp", gate, StringComparison.Ordinal);
         Assert.DoesNotContain("LAKE", gate, StringComparison.Ordinal);
