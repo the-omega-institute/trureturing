@@ -56,7 +56,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
         LongRunningWorker = WriteExecutable("long-running-worker.sh", """
             #!/usr/bin/env bash
             set -euo pipefail
-            sleep 60 &
+            while :; do sleep 60; done &
             printf '%s\n' "$!" > "$1"
             wait
             """);

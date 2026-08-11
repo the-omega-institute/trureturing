@@ -485,6 +485,15 @@ public sealed class ReportSupervisorScriptTests
             "exceeded",
             Encoding.UTF8.GetString(result.StandardError),
             StringComparison.OrdinalIgnoreCase);
+        var grandchild = int.Parse(
+            File.ReadAllText(fixture.ScratchRecord).Trim(),
+            System.Globalization.CultureInfo.InvariantCulture);
+        fixture.WaitUntil(
+            () => !ProcessExists(grandchild),
+            "timed-out worker process tree survived supervisor termination");
+        Assert.False(
+            ProcessExists(grandchild),
+            $"timed-out worker grandchild {grandchild} is still running");
 
         // The lean slot lock must be released so subsequent builds are not starved.
         var slots = Path.Combine(fixture.StateRoot, "slots");
