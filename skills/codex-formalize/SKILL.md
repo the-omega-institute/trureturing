@@ -7,7 +7,7 @@ description: Use when asked to formalize and close an open digestion atom in thi
 
 ## Install
 
-Codex auto-discovers skills only from `$CODEX_HOME/skills` (default `~/.codex/skills`). Use this file either by copying it to `$CODEX_HOME/skills/codex-formalize/SKILL.md`, or by reading it at this repository path when a dispatcher names that path. This repository copy is the single source of truth; any installed copy is a projection of it.
+This is a Codex skill package. Install it by copying the `skills/codex-formalize/` directory into `$CODEX_HOME/skills/` (default `~/.codex/skills`), or load it by naming this `SKILL.md` path directly in a dispatcher. This repository copy is the single source of truth; any installed copy is a projection of it.
 
 ## Scope and authority
 
@@ -174,6 +174,9 @@ Before Step 7, the producing seat must answer every item with concrete evidence.
 - Proof substance: show that the statement carries content beyond unfolding a definition the producing seat itself introduced, whatever tactic closes it.
 - Duplicate search: cite the Step 3 trace showing this is not a renamed duplicate of a mathlib or `D5/` declaration.
 - Clause fidelity: place the authoritative atom clauses beside the Lean clauses one-to-one, mapping every clause to an exact Lean binder, hypothesis, or conclusion. The dropped-or-weakened set must be empty; any weakening, omission, or unresolved ambiguity forces `open` before deposit.
+- Rendered-statement fidelity: read the emitted Blueprint `.md` for this document and compare its displayed statement against the Lean declaration symbol by symbol; use a neighbouring landed mirror as a shape check.
+  The formula DSL and writer own tokens that can be valid LaTeX and structurally accepted yet mean something different from the theorem, so `emit` exiting 0 is not evidence that the rendering is faithful.
+  A mismatch blocks deposit; resolve it against `Meta/StrataLint/StrataLint.Scribe/Ast/FormulaDsl.cs` and `Meta/StrataLint/StrataLint.Scribe/Writers/LatexWriter.cs`, or end the task `open`.
 
 Any item without evidence blocks deposit. Mark an unverified fact exactly `ASSUMED-UNVERIFIED`; never replace measurement with hedging language. The repository's current signature-match test explicitly leaves this gap open: `CoverAtomEnvelopeTests.cs` says an unchanged pre-committed `theorem t : True` would pass, so compilation, deposit, and cover do not certify fidelity.
 
