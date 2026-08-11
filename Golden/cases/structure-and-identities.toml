@@ -68,7 +68,7 @@ name = "missing-blueprint-mirror"
 changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
 baseline_mutations = []
 mutations = [{ op = "delete", path = "Blueprint/D5/S0/Carrier/Ring.md" }]
-expected_diagnostics = [{ rule = 4, path = "D5/S0/Carrier/Ring.lean", message = "missing mirror Blueprint/D5/S0/Carrier/Ring.md" }]
+expected_diagnostics = [{ rule = 4, path = "D5/S0/Carrier/Ring.lean", message = "missing mirror Blueprint/D5/S0/Carrier/Ring.md" }, { rule = 25, path = "Blueprint/D5/S0/Carrier/Ring.md", message = "Blueprint markdown is a projection: emit it from a .scribe.cs change" }]
 
 [[cases]]
 name = "chronicle-rewrite"
@@ -89,7 +89,7 @@ name = "manual-status-badge"
 changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
 baseline_mutations = []
 mutations = [{ op = "write", path = "Blueprint/D5/S0/Carrier/Ring.md", content = "status: proven\n" }]
-expected_diagnostics = [{ rule = 6, path = "Blueprint/D5/S0/Carrier/Ring.md", message = "hand-written status badge is forbidden" }]
+expected_diagnostics = [{ rule = 6, path = "Blueprint/D5/S0/Carrier/Ring.md", message = "hand-written status badge is forbidden" }, { rule = 25, path = "Blueprint/D5/S0/Carrier/Ring.md", message = "Blueprint markdown is a projection: emit it from a .scribe.cs change" }]
 
 [[cases]]
 name = "hearts-signature-frozen"
