@@ -132,8 +132,10 @@ jobs:
           test "${#expected_lines[@]}" -gt 0
           test "${#actual_lines[@]}" -eq "${#expected_lines[@]}"
           test -z "$(grep -F ': error ' <<<"$output" | grep -vF ': error RS0030:' || true)"
-          for index in "${!expected_lines[@]}"; do
-            test "${actual_lines[$index]}" = "${expected_lines[$index]}"
+          index=0
+          for expected_line in "${expected_lines[@]}"; do
+            test "${actual_lines[$index]}" = "$expected_line"
+            ((index += 1))
           done
 
   lean-inspect:
@@ -197,13 +199,25 @@ jobs:
             <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/candidate")"
           [[ "$address" =~ ^[0-9a-f]{64}$ ]]
           echo "address=$address" >> "$GITHUB_OUTPUT"
-          # 报告地址的原像是 producer(lean-inspector/{inspect.sh,Inspector.lean})、
-          # Lean 源(Trureturing.lean + D5/**/*.lean)与 config(toolchain/lake-manifest/lakefile)
-          # 三者的清单哈希(lean-report-input.sh:51-97),即该报告的完整声明输入闭包。
+          # 报告地址的原像是 producer(MSBuild 求值的 Cli/Engine Compile 集 + 声明的
+          # project/build/lock/global 输入 + inspector)、Lean 源(Trureturing.lean +
+          # D5/**/*.lean)与 config(toolchain/lake-manifest/lakefile)三者的清单哈希。
           # 两侧同址 ⇒ 两份报告按定义逐字节相同,一份缓存可同时充当两份;不同址则不复用。
-          read -r baselineAddress baselineProducer _ \
-            <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/baseline")"
-          [[ "$baselineAddress" =~ ^[0-9a-f]{64}$ ]]
+          if grep -Fq -- '--baseline)' "$helper" 2>/dev/null; then
+            read -r baselineAddress baselineProducer _ \
+              <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/baseline" --baseline)"
+            [[ "$baselineAddress" =~ ^[0-9a-f]{64}$ ]]
+          else
+            # The first dev push after this workflow lands executes the predecessor's
+            # helper. Preserve that helper's old call shape and disable all reuse.
+            read -r baselineAddress baselineProducer _ \
+              <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/baseline")"
+            [[ "$baselineAddress" =~ ^[0-9a-f]{64}$ ]]
+            echo "producer-consistent=false" >> "$GITHUB_OUTPUT"
+            echo "pair-reusable=false" >> "$GITHUB_OUTPUT"
+            printf '%s\n' "canonical Lean report cache disabled: baseline helper predates expanded producer identity; using full production" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
           # 地址的 producer 分量取自**候选**树,而实际执行的 producer 取自**基线**树
           # (base-owned 判官拓扑要求如此)。push 事件下 baseline = github.event.before,
           # 即上一个 dev tip(见 `Resolve dev baseline content address`),故一次改动了
@@ -218,7 +232,9 @@ jobs:
             echo "producer-consistent=true" >> "$GITHUB_OUTPUT"
           else
             echo "producer-consistent=false" >> "$GITHUB_OUTPUT"
-            printf '%s\n' "canonical Lean report cache disabled: candidate producer ${candidateProducer:0:12} != executed baseline producer ${baselineProducer:0:12}" >> "$GITHUB_STEP_SUMMARY"
+            candidate_prefix="$(printf '%s' "$candidateProducer" | cut -c1-12)"
+            baseline_prefix="$(printf '%s' "$baselineProducer" | cut -c1-12)"
+            printf '%s\n' "canonical Lean report cache disabled: candidate producer $candidate_prefix != executed baseline producer $baseline_prefix" >> "$GITHUB_STEP_SUMMARY"
           fi
           if [[ "$address" == "$baselineAddress" ]]; then
             echo "pair-reusable=true" >> "$GITHUB_OUTPUT"
@@ -240,7 +256,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: .canonical-lean-report-cache
-          key: stratalint-canonical-lean-report-v1-${{ steps.lean-report-input.outputs.address }}
+          key: stratalint-canonical-lean-report-v2-${{ steps.lean-report-input.outputs.address }}
 
       - name: Serve both canonical Lean reports from the cached address
         id: report-reuse
@@ -398,7 +414,7 @@ jobs:
         uses: actions/cache/save@v4
         with:
           path: .canonical-lean-report-cache
-          key: stratalint-canonical-lean-report-v1-${{ steps.lean-report-input.outputs.address }}
+          key: stratalint-canonical-lean-report-v2-${{ steps.lean-report-input.outputs.address }}
 
       - name: Upload raw Lean reports and producer logs
         if: always()

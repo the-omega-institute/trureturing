@@ -86,6 +86,36 @@ public sealed class RawLeanReportArtifactTests
     }
 
     [Fact]
+    public void ReaderRejectsAPoisonedCachedModuleWhoseKeyWasIncorrectlyReused()
+    {
+        var poisoned = CanonicalReport.Replace(
+            "da33f5efbd5a92bd6c18a7a11a36dfbcd0ac00fbe05c267a85dec98370deadd4",
+            "0a33f5efbd5a92bd6c18a7a11a36dfbcd0ac00fbe05c267a85dec98370deadd4",
+            StringComparison.Ordinal);
+
+        var exception = Assert.Throws<FormatException>(() =>
+            RawLeanReportArtifact.Read(Encoding.UTF8.GetBytes(poisoned), Snapshot()));
+
+        Assert.Contains("source hash", exception.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void ReaderRejectsACachedReportMissingAManagedModule()
+    {
+        var raw = RawRepositorySnapshot.Create(new[]
+        {
+            RawRepositoryEntry.FromText("Trureturing.lean", Source),
+            RawRepositoryEntry.FromText("D5/Extra.lean", "def extra : Nat := 1\n"),
+        });
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+
+        var exception = Assert.Throws<FormatException>(() =>
+            RawLeanReportArtifact.Read(Encoding.UTF8.GetBytes(CanonicalReport), snapshot));
+
+        Assert.Contains("module", exception.Message, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
     public void StandaloneLeanInspectorWritesAConsumerAcceptedArtifact()
     {
         const string unicodeSource = "def term𝒪φ : Nat := 1\n";

@@ -15,10 +15,26 @@ internal static class RawLeanReportArtifact
     internal static LeanAxiomReport ReadFile(string path, RepositorySnapshot snapshot)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(path);
-        return Read(File.ReadAllBytes(path), snapshot);
+        return Read(File.ReadAllBytes(path), snapshot, requireComplete: true);
     }
 
     internal static LeanAxiomReport Read(ReadOnlySpan<byte> bytes, RepositorySnapshot snapshot)
+        => Read(bytes, snapshot, requireComplete: true);
+
+    internal static LeanAxiomReport ReadPartialFile(
+        string path,
+        RepositorySnapshot snapshot,
+        IReadOnlySet<string>? selectedPaths = null)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(path);
+        return Read(File.ReadAllBytes(path), snapshot, requireComplete: false, selectedPaths);
+    }
+
+    private static LeanAxiomReport Read(
+        ReadOnlySpan<byte> bytes,
+        RepositorySnapshot snapshot,
+        bool requireComplete,
+        IReadOnlySet<string>? selectedPaths = null)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         var text = StrictUtf8.GetString(bytes);
@@ -61,12 +77,13 @@ internal static class RawLeanReportArtifact
             var module = RequiredString(moduleElement, "module");
             RequireStrictOrder(previousModule, module, "modules");
             previousModule = module;
+            var sourcePath = RequiredString(moduleElement, "source_path");
+            if (selectedPaths is not null && !selectedPaths.Contains(sourcePath)) continue;
             if (!expected.TryGetValue(module, out var source))
             {
                 throw new FormatException($"Raw Lean report contains unknown module {module}.");
             }
 
-            var sourcePath = RequiredString(moduleElement, "source_path");
             if (!string.Equals(source.Path.Value, sourcePath, StringComparison.Ordinal))
             {
                 throw new FormatException($"Raw Lean report maps {module} to unexpected path {sourcePath}.");
@@ -92,7 +109,7 @@ internal static class RawLeanReportArtifact
             .Where(path => !reports.ContainsKey(path))
             .Order(StringComparer.Ordinal)
             .ToArray();
-        if (missing.Length > 0)
+        if (requireComplete && missing.Length > 0)
         {
             throw new FormatException(
                 "Raw Lean report is missing modules: " + string.Join(", ", missing));
