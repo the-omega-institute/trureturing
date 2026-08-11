@@ -7,6 +7,7 @@ public sealed class TestSelectionPolicyTests
     private const string ScribeDefinition = "Blueprint/D5/S0/Carrier/Ring.scribe.cs";
     private const string ScribeProjection = "Blueprint/D5/S0/Carrier/Ring.md";
     private const string AcceptedPrefix = "Meta/StrataLint/Golden/Frozen/accepted";
+    private const string DigestionPrefix = "Meta/Digestion/";
     private const string ScribeProject =
         "Meta/StrataLint/StrataLint.Scribe/StrataLint.Scribe.csproj";
 
@@ -47,7 +48,7 @@ public sealed class TestSelectionPolicyTests
     }
 
     [Fact]
-    public void PullRequestMixedChangesRunFullSuiteInsteadOfPartiallyMatching()
+    public void PullRequestMixedChangesIncludingUnknownPathRunFullSuite()
     {
         Assert.Equal(
             FullSuite,
@@ -57,6 +58,29 @@ public sealed class TestSelectionPolicyTests
                     "Meta/StrataLint/Golden/Frozen/accepted/example.json",
                     "README.md",
                 ]));
+    }
+
+    [Fact]
+    public void PullRequestMixedChangesInProvenFamiliesUnionAffectedProjects()
+    {
+        Assert.Equal(
+            [TestSelectionPolicy.ArchitectureTests, TestSelectionPolicy.EngineTests],
+            TestSelectionPolicy.Select(
+                TestSelectionEvent.PullRequest,
+                [
+                    "Meta/StrataLint/Golden/Frozen/accepted/example.json",
+                    "Meta/Digestion/example.toml",
+                ]));
+    }
+
+    [Fact]
+    public void PullRequestDigestionOnlySkipsScribeTests()
+    {
+        Assert.Equal(
+            [TestSelectionPolicy.ArchitectureTests, TestSelectionPolicy.EngineTests],
+            TestSelectionPolicy.Select(
+                TestSelectionEvent.PullRequest,
+                ["Meta/Digestion/atoms/sha256/example"]));
     }
 
     [Theory]
@@ -93,6 +117,15 @@ public sealed class TestSelectionPolicyTests
     }
 
     [Fact]
+    public void DigestionFamilyDoesNotReachScribeTestsThroughRepositoryReads()
+    {
+        var root = RepositoryLayout.FindRoot();
+
+        Assert.Empty(TestSelectionSafetyPolicy.InspectProjectSources(
+            root, "Meta/StrataLint/StrataLint.Scribe.Tests", DigestionPrefix));
+    }
+
+    [Fact]
     public void RuleBIsDeferredBecauseEngineTestReferenceClosureContainsScribe()
     {
         var root = RepositoryLayout.FindRoot();
@@ -106,6 +139,7 @@ public sealed class TestSelectionPolicyTests
 
     [Theory]
     [InlineData("File.ReadAllText(\"Meta/StrataLint/Golden/Frozen/accepted/a.json\");")]
+    [InlineData("File.ReadAllText(\"Meta/Digestion/probe.toml\");")]
     [InlineData("const string AcceptedRoot = \"Meta/StrataLint/Golden/Frozen/accepted\"; File.ReadAllText(AcceptedRoot);")]
     [InlineData("Path.Combine(AppContext.BaseDirectory, \"Blueprint/D5/Probe.scribe.cs\");")]
     public void RepositoryReadsAreRejectedAcrossSupportedShapes(string statement)
@@ -114,8 +148,11 @@ public sealed class TestSelectionPolicyTests
         var constants = new HashSet<string>(StringComparer.Ordinal) { "AcceptedRoot" };
 
         Assert.Single(TestSelectionSafetyPolicy.InspectSource(
-            "Probe.cs", source, statement.Contains("Blueprint/", StringComparison.Ordinal)
-                ? "Blueprint/" : AcceptedPrefix, constants));
+            "Probe.cs", source,
+            statement.Contains("Blueprint/", StringComparison.Ordinal) ? "Blueprint/"
+                : statement.Contains("Meta/Digestion/", StringComparison.Ordinal) ? DigestionPrefix
+                : AcceptedPrefix,
+            constants));
     }
 
     [Fact]

@@ -16,6 +16,7 @@ internal static class TestSelectionPolicy
         "Meta/StrataLint/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj";
 
     private const string AcceptedEvidencePrefix = "Meta/StrataLint/Golden/Frozen/accepted/";
+    private const string DigestionPrefix = "Meta/Digestion/";
 
     internal static IReadOnlyList<string> Select(
         TestSelectionEvent eventKind,
@@ -32,14 +33,33 @@ internal static class TestSelectionPolicy
             return FullSuite();
         }
 
-        // R-A is deliberately a named code branch. Adding a rule requires
-        // editing this policy and extending its architecture proof.
-        if (changedPaths.All(IsAcceptedEvidence))
+        var includeEngine = false;
+        var includeScribe = false;
+        foreach (var path in changedPaths)
         {
-            return [ArchitectureTests];
+            // Each proven family contributes its affected projects. Unknown
+            // paths contribute the full suite, preserving fail-closed union.
+            if (IsAcceptedEvidence(path))
+            {
+                continue;
+            }
+
+            if (IsDigestion(path))
+            {
+                includeEngine = true;
+                continue;
+            }
+
+            includeEngine = true;
+            includeScribe = true;
+            break;
         }
 
-        return FullSuite();
+        return FullSuite()
+            .Where(project => project == ArchitectureTests
+                || (includeEngine && project == EngineTests)
+                || (includeScribe && project == ScribeTests))
+            .ToArray();
     }
 
     internal static ExplicitCommandResult Run(IReadOnlyList<string> arguments)
@@ -69,6 +89,9 @@ internal static class TestSelectionPolicy
 
     private static bool IsAcceptedEvidence(string path) =>
         path.StartsWith(AcceptedEvidencePrefix, StringComparison.Ordinal);
+
+    private static bool IsDigestion(string path) =>
+        path.StartsWith(DigestionPrefix, StringComparison.Ordinal);
 
     private static bool AreCanonical(IReadOnlyList<string> paths) =>
         paths.Count > 0
