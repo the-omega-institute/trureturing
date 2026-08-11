@@ -80,18 +80,6 @@ internal static class BlueprintPinValidator
             }
         }
 
-        if (diagnostics.Count > 0 || anchors.IsEmpty)
-        {
-            return;
-        }
-
-        foreach (var anchor in anchors)
-        {
-            if (!AnchorCatalogDefinitions.TryGet(anchor, out _))
-            {
-                diagnostics.Add($"anchor '{anchor}' is unregistered in the typed catalog");
-            }
-        }
     }
 
     private static void ValidateImports(

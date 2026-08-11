@@ -19,10 +19,6 @@ internal static class TheoryIsolationPolicy
         "/-- TASK D5-T[0-9]{4} \\| 难度:[1-5] \\| 依赖:[^\\n|]+ \\| 尝试:[0-9]+\\n"
         + "\\s+提示:[^\\n]+\\n\\s+尸检:(?<autopsy>[^\\n]+) -/",
         RegexOptions.CultureInvariant);
-    private static readonly HashSet<string> RetiredCatalogSchemes = new(
-        [FirstRetiredToken, SecondRetiredToken],
-        StringComparer.OrdinalIgnoreCase);
-
     private static readonly string[] AllowedCSharpPrefixes =
     [
         "Meta/StrataLint/StrataLint.Engine/Digestion/",
@@ -44,10 +40,6 @@ internal static class TheoryIsolationPolicy
         ],
         StringComparer.Ordinal);
 
-    internal static readonly string AnchorCatalogPath = string.Concat(
-        "Meta/StrataLint/Generated/",
-        "anchor-catalog.v1.json");
-
     internal static IReadOnlyList<TheoryIsolationFinding> InspectRepository(string repositoryRoot)
     {
         var repositoryFiles = GitIndexRepositoryFiles.Enumerate(repositoryRoot);
@@ -67,17 +59,6 @@ internal static class TheoryIsolationPolicy
                 source.RelativePath,
                 File.ReadAllText(source.FullPath),
                 theoryBasenamePattern));
-        }
-
-        var catalog = repositoryFiles.SingleOrDefault(file => string.Equals(
-            file.RelativePath,
-            AnchorCatalogPath,
-            StringComparison.Ordinal));
-        if (catalog != default)
-        {
-            findings.AddRange(InspectCatalog(
-                AnchorCatalogPath,
-                File.ReadAllText(catalog.FullPath)));
         }
 
         return findings;
@@ -128,35 +109,6 @@ internal static class TheoryIsolationPolicy
         }
 
         return findings;
-    }
-
-    internal static IReadOnlyList<TheoryIsolationFinding> InspectCatalog(string path, string source)
-    {
-        try
-        {
-            using var document = JsonDocument.Parse(source);
-            if (!document.RootElement.TryGetProperty("definitions", out var definitions)
-                || definitions.ValueKind != JsonValueKind.Array)
-            {
-                return [];
-            }
-
-            return definitions.EnumerateArray()
-                .Where(static definition => definition.TryGetProperty("anchor", out _))
-                .Select(static definition => definition.GetProperty("anchor"))
-                .Where(static anchor => anchor.ValueKind == JsonValueKind.String)
-                .Select(static anchor => anchor.GetString())
-                .Where(static anchor => anchor is not null)
-                .Where(anchor => RetiredCatalogSchemes.Contains(anchor!.Split('/')[0]))
-                .Select(_ => new TheoryIsolationFinding(
-                    path,
-                    "anchor catalog contains an internal theory scheme"))
-                .ToArray();
-        }
-        catch (JsonException)
-        {
-            return [];
-        }
     }
 
     private static bool IsAllowedCSharp(string path) =>

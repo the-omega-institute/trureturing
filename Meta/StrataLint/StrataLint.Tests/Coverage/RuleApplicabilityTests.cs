@@ -30,9 +30,6 @@ public sealed class RuleApplicabilityTests
         RuleFixture.RingPath,
         "SL-001,SL-002,SL-003,SL-004,SL-006,SL-010,SL-011,SL-012,SL-013,SL-015,SL-017,SL-020")]
     [InlineData("Library/queries.yaml", "SL-003,SL-006,SL-015,SL-017,SL-019")]
-    [InlineData(
-        RuleFixture.AnchorCatalogPath,
-        "SL-003,SL-015,SL-017,SL-019,SL-022")]
     [InlineData(RuleFixture.ValuesProjectionPath, "SL-003,SL-006,SL-015,SL-018,SL-019")]
     [InlineData(RuleFixture.TowerManifestPath, "SL-003,SL-015,SL-019,SL-022")]
     [InlineData(

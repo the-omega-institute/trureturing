@@ -5,7 +5,6 @@ public sealed class RepositoryRootCriterionMappingTests
     private static readonly IReadOnlyDictionary<string, string> HistoricalCriteria =
         new Dictionary<string, string>(StringComparer.Ordinal)
         {
-            ["AnchorCatalogTests.cs"] = "GlobalJsonAndBlueprintDirectoryNotFound",
             ["Census/CensusDerivationTests.cs"] = "GlobalJsonAndBlueprintDirectoryNotFound",
             ["Describe/DescribeMigrationTests.cs"] = "GlobalJsonAndBlueprintDirectoryNotFound,GlobalJsonAndBlueprintDirectoryNotFound",
             ["Describe/FormulaCorpusInventoryTests.cs"] = "ClaudeDirectoryNotFound",
