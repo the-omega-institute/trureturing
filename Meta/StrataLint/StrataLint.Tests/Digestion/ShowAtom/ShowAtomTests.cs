@@ -197,6 +197,68 @@ public sealed class ShowAtomTests
     }
 
     [Fact]
+    public void SupersededGenerationReadsStrictlyVerifiedHistoricalCasAndMarksItStale()
+    {
+        const string sourcePath = "fixtures/show-atom/adapter.md";
+        var oldBytes = Encoding.UTF8.GetBytes(
+            "## 1. Synthetic section\n\nOld synthetic content.\n");
+        var currentBytes = Encoding.UTF8.GetBytes(
+            "## 1. Synthetic section\n\nCurrent synthetic content.\n");
+        var oldFingerprints = DigestionFingerprint.Compute(oldBytes);
+        var currentFingerprints = DigestionFingerprint.Compute(currentBytes);
+        var files = AdapterGenerationFixtureFiles(
+            AdapterGenerationLedger(sourcePath, oldFingerprints, currentFingerprints),
+            sourcePath,
+            currentBytes,
+            (oldFingerprints.RawSha256, oldBytes),
+            (currentFingerprints.RawSha256, currentBytes));
+
+        var result = Environment("/repo", files).ShowAtom(["--atom-id", AdapterAtomId]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("STALE_READ status=stale source=cas\n", result.Output, StringComparison.Ordinal);
+        Assert.Contains(
+            "BEGIN_RAW_TEXT\n## 1. Synthetic section\n\nOld synthetic content.\nEND_RAW_TEXT\n",
+            result.Output,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain("Current synthetic content", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void AcknowledgedStaleEntryReadsStrictlyVerifiedHistoricalCasAndMarksItStale()
+    {
+        const string sourcePath = "fixtures/show-atom/adapter.md";
+        var oldBytes = Encoding.UTF8.GetBytes(
+            "## 1. Synthetic section\n\nOld synthetic content.\n");
+        var currentBytes = Encoding.UTF8.GetBytes(
+            "## 1. Synthetic section\n\nCurrent synthetic content.\n");
+        var oldFingerprints = DigestionFingerprint.Compute(oldBytes);
+        var ledger = AdapterLedger(
+                sourcePath,
+                oldFingerprints.RawSha256,
+                oldFingerprints.NormalizedSha256)
+            .Replace(
+                $"    atomizer: {AdapterAtomizerId}\n",
+                $"    atomizer: {AdapterAtomizerId}\n"
+                    + "    acknowledged_stale:\n"
+                    + $"      - {AdapterAtomId}\n",
+                StringComparison.Ordinal);
+        var files = FixtureFiles(
+            ledger,
+            sourcePath,
+            currentBytes,
+            oldFingerprints.RawSha256,
+            oldBytes);
+
+        var result = Environment("/repo", files).ShowAtom(["--atom-id", AdapterAtomId]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("STALE_READ status=stale source=cas\n", result.Output, StringComparison.Ordinal);
+        Assert.Contains("Old synthetic content", result.Output, StringComparison.Ordinal);
+        Assert.DoesNotContain("Current synthetic content", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void CliDispatchesShowAtomToTheReadOnlyEnvironmentCommand()
     {
         const string sourcePath = "fixtures/show-atom/boundary.md";
@@ -246,6 +308,22 @@ public sealed class ShowAtomTests
             new RawRepositoryEntry(
                 DigestionCasStore.RootPath + casRef["sha256:".Length..],
                 ImmutableArray.CreateRange(casBytes)),
+        ]);
+
+    private static RawRepositorySnapshot AdapterGenerationFixtureFiles(
+        string ledger,
+        string sourcePath,
+        byte[] sourceBytes,
+        params (string Reference, byte[] Bytes)[] casObjects) => RawRepositorySnapshot.Create(
+        [
+            RawRepositoryEntry.FromText(BackfillInventoryLoader.RelativePath, ledger),
+            RawRepositoryEntry.FromText(
+                TheoryAtomizerDataLoader.DataPath,
+                SyntheticAtomizerData),
+            new RawRepositoryEntry(sourcePath, ImmutableArray.CreateRange(sourceBytes)),
+            .. casObjects.Select(static item => new RawRepositoryEntry(
+                DigestionCasStore.RootPath + item.Reference["sha256:".Length..],
+                ImmutableArray.CreateRange(item.Bytes))),
         ]);
 
     private static string BoundaryLedger(
@@ -298,6 +376,48 @@ public sealed class ShowAtomTests
                   raw_sha256: {{rawSha256}}
                   normalized_sha256: {{normalizedSha256}}
                 cas_ref: {{rawSha256}}
+                coverage_gids: []
+                receipts:
+                  coverage: []
+                  scribe: []
+                  unresolved_subitems: []
+                status:
+                  migration: partial
+                  truth: open
+        ticket_index: []
+        """;
+
+    private static string AdapterGenerationLedger(
+        string sourcePath,
+        DigestionFingerprints oldFingerprints,
+        DigestionFingerprints currentFingerprints) => $$"""
+        schema_version: 3
+        ledger: theory-digestion-v1
+        sources:
+          - source_id: adapter-source
+            path: {{sourcePath}}
+            atomizer: {{AdapterAtomizerId}}
+            entries:
+              - atom_id: {{AdapterAtomId}}
+                ast_path: {{AdapterAstPath}}
+                fingerprints:
+                  raw_sha256: {{oldFingerprints.RawSha256}}
+                  normalized_sha256: {{oldFingerprints.NormalizedSha256}}
+                cas_ref: {{oldFingerprints.RawSha256}}
+                coverage_gids: []
+                receipts:
+                  coverage: []
+                  scribe: []
+                  unresolved_subitems: []
+                status:
+                  migration: partial
+                  truth: open
+              - atom_id: adapter-current
+                ast_path: {{AdapterAstPath}}
+                fingerprints:
+                  raw_sha256: {{currentFingerprints.RawSha256}}
+                  normalized_sha256: {{currentFingerprints.NormalizedSha256}}
+                cas_ref: {{currentFingerprints.RawSha256}}
                 coverage_gids: []
                 receipts:
                   coverage: []
