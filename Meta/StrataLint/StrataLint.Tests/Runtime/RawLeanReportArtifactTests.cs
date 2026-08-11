@@ -4,7 +4,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-public sealed class RawLeanReportArtifactTests
+[Trait("Category", "Script")] public sealed class RawLeanReportArtifactTests
 {
     private const string Source = "axiom probe : False\n";
 
