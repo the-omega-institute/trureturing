@@ -1,7 +1,7 @@
-<!-- echo-residual-summary:v4 source=pzg-v170 residual=sha256:668469c485e5a0376e312970f0bf41ff25092408a8bc5e59b9c39b2b1c3669b1 -->
+<!-- echo-residual-summary:v4 source=pzg-v170 residual=sha256:3f64585e2eb366cedc13b7b0f3b175eac82b1b710c1f0cd8c4b7b950ded404f5 -->
 # Echo Residual Summary — `pzg-v170`
 
-- unresolved_subitems: 351
+- unresolved_subitems: 350
 - mother_residual_atom_ids: 53
 
 Mother residual atoms:
@@ -17,11 +17,10 @@ Mother residual atoms:
   - `real-zeta-coefficients-imply-conjugation-covariance`
   - `rh-as-zero-set-subset-of-antilinear-fixed-line`
   - `wigner-unitary-or-antiunitary-dichotomy`
-- `pzg-residual-04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb` (9)
+- `pzg-residual-04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb` (8)
   - `bhk-1755-enumeration-certificate`
   - `bhk-continued-fraction-theorem`
   - `dedekind-orientation-canonical-ledger-clause`
-  - `endpoint-translation-integrality`
   - `full-vote-enforcement-clause`
   - `orientation-branch-clause`
   - `three-walk-identification`

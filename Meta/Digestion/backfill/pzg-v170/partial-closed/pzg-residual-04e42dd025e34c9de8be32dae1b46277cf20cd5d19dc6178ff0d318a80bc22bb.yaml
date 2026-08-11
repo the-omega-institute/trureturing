@@ -49,6 +49,5 @@ receipts:
     - w3-sign-reversal-postmortem
     - full-vote-enforcement-clause
     - three-walk-identification
-    - endpoint-translation-integrality
     - orientation-branch-clause
     - dedekind-orientation-canonical-ledger-clause
