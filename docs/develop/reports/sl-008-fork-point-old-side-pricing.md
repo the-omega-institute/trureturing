@@ -1,6 +1,6 @@
 # SL-008 fork-point 旧侧迁移离线定价
 
-> **REPORT-ONLY / 测量 worker 产物。** 本轮不修改 harness、CI、admission 或 SL-008。测量窗口固定锚定在 `55a4369ce4962d8c979d4418b62555c69c1ec09b`（#1358）及其之前 40 个 merge PR；报告修订时 `origin/dev` 已前进至 `73bfa63ddbbf9069df55e8814ff26dd6bdbfff42`（含 #1359/#1360/#1361），本轮没有把锚点后的提交混入固定窗口，也没有重做全部测量。
+> **REPORT-ONLY / 测量 worker 产物。** 本轮不修改 harness、CI、admission 或 SL-008。测量窗口固定锚定在 `55a4369ce4962d8c979d4418b62555c69c1ec09b`（#1358）及其之前 40 个 merge PR；报告修订前先执行 `git fetch origin dev`（`EXIT=0`）与 `git merge origin/dev`（`EXIT=0`，`ort`，无冲突），合并后的真实 `origin/dev` tip 为 `0d1af2471f4ac8b05ae79ca4af2215501c591920`（#1362；相对上次记录的 `73bfa63d` 又前进 4 个提交）。本轮没有把锚点后的提交混入固定窗口，也没有重做全部测量。
 
 ## 0. 一句话结论
 
@@ -23,6 +23,8 @@ git log --first-parent --format='%H%x09%P%x09%s' origin/dev \
   --grep='^Merge pull request' -n 40
 # 40 lines; #1358 through #1313
 ```
+
+这个离线窗口的选择口径是 **first-parent 上标题匹配 `^Merge pull request` 的 merge commit**，不是“所有 PR”。它会漏掉以 squash commit 或直接提交形式进入 `dev`、因而没有该标题/双亲形状的 PR，例如 #1337。故下文 `37/40` 只对这 40 个 merge-commit 样本成立，不能冒充全体 PR 的抽样比例。该漏样不改变本窗口的命中结论：窗口成员和 80 个已测地址均未变化，按同一既定样本重算仍是 `37/40 = 92.5%`；**未测**被漏 PR 的离线地址，所以不对窗口外命中率作外推。
 
 每个 merge 均按以下原命令取父与 fork point：
 
@@ -84,7 +86,7 @@ cold_root=$(mktemp -d /tmp/oldside-cold-report-cache.XXXXXXXX)
 # COLD_REPORT_EXIT=0
 ```
 
-生产输入地址为 `8e7706516aac42673a60f54e87e18bd3c4dba3c977de6af61528e78527078fea`，report SHA 为 `41757118fea1ceb37ed180effb87f27c9c7ee05dacd2f3b700717c193630726a`。以 `3/40` miss 率折算，`149.71 * 3/40 = 11.23s/PR`。该读数不能与并行 `candidate-engineering=184s` 比较后推出“可吸收”：`.github/workflows/ci.yml:467-469` 的 `baseline-admission needs: lean-inspect` 使 report miss 落在 admission 前置关键路径。**未测：本轮明令不改 CI，因此没有实测 cache-hit/miss 分层的 `lean-inspect` 完成时间，也没有实测三 report CI DAG 的端到端 P95 增量；吸收条件未达标。**
+生产输入地址为 `8e7706516aac42673a60f54e87e18bd3c4dba3c977de6af61528e78527078fea`，report SHA 为 `41757118fea1ceb37ed180effb87f27c9c7ee05dacd2f3b700717c193630726a`。以 `3/40` miss 率折算，`149.71 * 3/40 = 11.23s/PR`。该读数不能与并行 `candidate-engineering=184s` 比较后推出“可吸收”：`.github/workflows/ci.yml:467-469` 的 `baseline-admission needs: lean-inspect` 使 report miss 落在 admission 前置关键路径。**未测：本轮明令不改 CI，因此没有实测在线 restore 命中率和在线 miss 墙钟。后续门槛不再依赖端到端 P95：同 SHA 的无影子反事实不存在，跨 PR 历史对照会混入工作量、runner/queue 与 CI 漂移；既然 P95 已从判据删除，本报告不再需要为它选择 quantile 定义、最小尾部样本或失败样本插补规则。**
 
 ## 6. 已知退回与本方案差别
 
@@ -94,7 +96,17 @@ cold_root=$(mktemp -d /tmp/oldside-cold-report-cache.XXXXXXXX)
 
 ## 7. 只授权影子测量与后续共识骨架
 
-本报告现在只授权六席共识的步骤 1：在真实 CI 中增加一个**不供 admission 判决**的影子测量，记录 old-side report 的在线 restore/verify 命中与 miss，并按 cache-hit / miss 分层记录 `lean-inspect` 完成时间及从 workflow 起点到 `baseline-admission` 完成的端到端时间。至少观察 40 个真实 PR；机器放行判据为可验证的在线命中率 `>= 80%`，且相对未加影子步骤的现行 workflow，端到端 P95 增量 `<= 30s`。任一读数不达标、样本不足或 provenance/verify 失败，立即停案并移除影子步骤，保持现行 admission，不得进入整侧迁移。
+本报告现在只授权六席共识的步骤 1：在真实 CI 中增加一个**不供 admission 判决的独立 shadow job**。拓扑写死为：该 job 不得放进 `lean-inspect` 的串行步骤，且 job id **不得出现在 `baseline-admission.needs` 中**；它可以读取/恢复/验证或在 miss 时生产 old-side report，但产物不得供本次 admission 使用。这样影子期内它在依赖图上没有通向 `baseline-admission` 的前置边，结构上不可能延后 admission，测量本身不会改变被测 admission。把它串入 `lean-inspect` 前置链的实现不在本授权内。
+
+在线样本统计**所有触发该 workflow 的真实 PR**，包括最终未 merge、workflow 其它 job 失败或后来关闭的 PR，不以 merge 成功为入样条件，避免成功者偏差。每次 shadow job 运行都发出结构化的 restore `hit=1,miss=0` 或 `hit=0,miss=1`；只有 restore 后 provenance/verify 成功才可记 hit，provenance/verify 失败不是 miss 插补而是直接停案。放行窗口须覆盖至少 40 个不同真实 PR；重跑仍保留为运行记录，但不得冒充新增的不同 PR 样本。
+
+机器放行判据全部由该观测窗口自身读数计算，三项须同时成立：
+
+1. **拓扑判据：**shadow job 为独立 job，且静态 workflow DAG 中不存在 `shadow -> baseline-admission` 的 `needs` 路径，尤其不得出现在 `baseline-admission.needs`；不满足即停案。
+2. **在线命中率：**令 `N = hit_count + miss_count`，以窗口内 shadow job 的结构化计数计算 `hit_count / N >= 80%`，并要求覆盖 `>= 40` 个不同真实 PR；样本不足即不放行。
+3. **miss 生产预算：**每个 miss 在 job 内以同一 monotonic clock 记录从开始生产到 report 产出且 provenance/verify 成功的墙钟秒数 `t_i`。令 `mean_miss_wall = sum(t_i) / miss_count`，迁移预算为 `miss_count / N * mean_miss_wall`（等价于 `sum(t_i) / N`）。若未来迁移把这份 report 移入 `lean-inspect` 串行链，则按该拓扑端到端增量预算就是 **miss 率 x miss 平均生产墙钟**；进入迁移的明确门槛为该预算 `<= 30.0s/PR`。`miss_count = 0` 时预算定义为 `0s/PR`，但仍须满足 `N` 与不同 PR 数要求。
+
+三项分别只读当前 workflow 文件、同一窗口的 hit/miss 计数和同一次 miss 运行的 monotonic-clock 墙钟；没有任何一项需要“同 SHA 未加影子”的运行，也不与别的 PR 历史 P95 相减。任一读数不达标、样本不足、计数不守恒（每次运行非恰好一个 hit/miss）或 provenance/verify 失败，立即停案并移除影子 job，保持现行 admission，不得进入整侧迁移。
 
 若且仅若上述吸收条件实测达标，后续方案仍只保留六席共识骨架：树 + report + DAG + ledger 作为不可拆 old-side 能力包整侧同迁；类型上拒绝混侧；迁移必须分步；每一步都须预先给出机器判据与回退点。本报告不决定影子双跑、旧入口 Contract 删除等具体实施设计。
 
