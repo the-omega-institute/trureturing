@@ -82,18 +82,14 @@ hash_file() {
 fingerprint() {
   local root="$1"
   local side="$2"
-  local producer_manifest="$TMP_ROOT/$side-producer.manifest"
   local preimage="$TMP_ROOT/$side-input.preimage"
 
-  : > "$producer_manifest"
-  printf '%s  inspect.sh\n' "$(hash_file "$PRODUCER")" >> "$producer_manifest"
-  printf '%s  Inspector.lean\n' "$(hash_file "$INSPECTOR")" >> "$producer_manifest"
-  local producer_sha256
-  producer_sha256="$(hash_file "$producer_manifest")"
-
-  local repository_address resident_sha256 sources_sha256 config_sha256
-  read -r repository_address resident_sha256 sources_sha256 config_sha256 \
-    <<< "$("$INPUT_HELPER" address --repository "$root")"
+  local repository_address resident_sha256 sources_sha256 config_sha256 address_output
+  local -a address_args=(address --repository "$root" --producer "$PRODUCER" --inspector "$INSPECTOR")
+  if [[ "$side" == "baseline" ]]; then address_args+=(--baseline); fi
+  address_output="$("$INPUT_HELPER" "${address_args[@]}")" || return 2
+  read -r repository_address resident_sha256 sources_sha256 config_sha256 <<< "$address_output"
+  local producer_sha256="$resident_sha256"
 
   {
     printf '%s\n' "schema=stratalint-lean-report-input-v1"
@@ -225,7 +221,8 @@ cache_try_restore() {
   write_sidecar "$output" "$actual"
   # Re-derive the repository address from the CURRENT tree and confirm it matches
   # the stored attestation; rejects any key skew or collision. Fail-closed.
-  if ! "$INPUT_HELPER" verify --repository "$root" --report "$output" >/dev/null 2>&1; then
+  if ! "$INPUT_HELPER" verify --repository "$root" --report "$output" \
+    --producer "$PRODUCER" --inspector "$INSPECTOR" >/dev/null 2>&1; then
     cache_evict "$address"
     rm -rf -- "$output" "${output}.sha256" "${output}.provenance.json" \
       "${output}.input.attestation" "${output}.logs"
@@ -286,6 +283,12 @@ materialize_report() {
     local cache_rc=$?
     [[ "$cache_rc" == "1" ]] || return "$cache_rc"
   fi
+  # Per-module reuse is disabled. Before enabling it, producer identity must cover
+  # the actually selected MSBuild SDK and dotnet runtime plus the bytes of every
+  # actually loaded NuGet package, analyzer, and source generator (or hash the DLL
+  # that is actually executed). global.json latestMinor can make 10.0.103 select
+  # SDK 10.0.201, so one producer SHA can otherwise execute code built by different
+  # toolchains. Keep production on the complete-report path until that is solved.
   "$SUPERVISOR" --role "lean-producer-$side" --lean-slot -- \
     env LAKE_BIN="$LAKE_BIN" "$PRODUCER" --repository "$root" --output "$output"
   verify_report "$output"
@@ -349,7 +352,13 @@ verify_bundle() {
     || { echo "lean-report-pair: verified report address changed: $output" >&2; return 2; }
   [[ -d "${output}.logs" && -n "$(find "${output}.logs" -type f -print -quit)" ]] \
     || { echo "lean-report-pair: producer left no log sidecar: $output" >&2; return 2; }
-  "$INPUT_HELPER" verify --repository "$root" --report "$output" >/dev/null
+  if [[ "$side" == "baseline" ]]; then
+    "$INPUT_HELPER" verify --repository "$root" --report "$output" --baseline \
+      --producer "$PRODUCER" --inspector "$INSPECTOR" >/dev/null
+  else
+    "$INPUT_HELPER" verify --repository "$root" --report "$output" \
+      --producer "$PRODUCER" --inspector "$INSPECTOR" >/dev/null
+  fi
 
   printf '{"schema":"stratalint-lean-report-provenance-v1","side":"%s","mode":"%s","source_side":"%s","input_address":"sha256:%s","producer_sha256":"%s","repository_inspector_sha256":"%s","lean_sources_sha256":"%s","lean_config_sha256":"%s","report_sha256":"%s"}\n' \
     "$side" "$mode" "$source_side" "$input_address" "$producer_sha256" \
