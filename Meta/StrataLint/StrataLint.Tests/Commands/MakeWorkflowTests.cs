@@ -161,6 +161,7 @@ public sealed partial class MakeWorkflowTests
         var preflight = File.ReadAllText(Path.Combine(root, PreflightScriptPath));
         var sharedGate = File.ReadAllText(Path.Combine(root, ".github", "scripts", "harness-gate.sh"));
         var perfEvents = File.ReadAllText(Path.Combine(root, PerfEventScriptPath));
+        var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
 
         Assert.Contains("make -C candidate dotnet", workflow, StringComparison.Ordinal);
         Assert.Contains("make -C candidate test", workflow, StringComparison.Ordinal);
@@ -173,6 +174,9 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("gate_timing_summary", localGate, StringComparison.Ordinal);
         Assert.Contains("STRATALINT_TIMING", sharedGate, StringComparison.Ordinal);
         Assert.Contains("gate_stage_timing", sharedGate, StringComparison.Ordinal);
+        Assert.Contains("mark restore-judge", sharedGate, StringComparison.Ordinal);
+        Assert.Contains("mark build-judge", sharedGate, StringComparison.Ordinal);
+        Assert.DoesNotContain("PrAEffectiveness", makefile, StringComparison.Ordinal);
         Assert.DoesNotContain("STRATALINT_TIMING:-1", sharedGate, StringComparison.Ordinal);
         Assert.Contains("$JUDGE_ROOT/.github/scripts/harness-gate.sh", localGate, StringComparison.Ordinal);
         Assert.Contains("--candidate-lean-report", localGate, StringComparison.Ordinal);
@@ -295,7 +299,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(2, guarded.Length);
         Assert.Contains(
             guarded,
-            static line => line.Contains("pair-reusable == 'true'", StringComparison.Ordinal));
+            static line => !line.Contains("refs/heads/dev", StringComparison.Ordinal));
         Assert.Contains(
             guarded,
             static line => line.Contains("refs/heads/dev", StringComparison.Ordinal));
@@ -303,6 +307,10 @@ public sealed partial class MakeWorkflowTests
             "echo \"producer-consistent=",
             admission,
             StringComparison.Ordinal);
+
+        var reuseStep = admission.Split("      - name: Restore canonical Lean report by input address\n", StringSplitOptions.None)[1]
+            .Split("      - name: ", StringSplitOptions.None)[0];
+        Assert.Contains("pair-reusable == 'true'", reuseStep, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -340,14 +348,14 @@ public sealed partial class MakeWorkflowTests
         var admissionCacheKey = Assert.Single(
             admission.Split('\n')
                 .Where(static line => line.TrimStart().StartsWith(
-                    "key: stratalint-canonical-lean-report-v1-",
+                    "key: stratalint-canonical-lean-report-v2-",
                     StringComparison.Ordinal))
                 .Select(static line => line.Trim())
                 .Distinct());
         var ingestCacheKey = Assert.Single(
             workflow.Split('\n')
                 .Where(static line => line.TrimStart().StartsWith(
-                    "key: stratalint-canonical-lean-report-v1-",
+                    "key: stratalint-canonical-lean-report-v2-",
                     StringComparison.Ordinal))
                 .Select(static line => line.Trim())
                 .Distinct());
@@ -368,7 +376,7 @@ public sealed partial class MakeWorkflowTests
             workflow[producerIndex..producerEndIndex],
             StringComparison.Ordinal);
         Assert.Single(Regex.Matches(workflow, "id: lean-report-cache"));
-        Assert.Single(Regex.Matches(workflow, "key: stratalint-canonical-lean-report-v1-"));
+        Assert.Single(Regex.Matches(workflow, "key: stratalint-canonical-lean-report-v2-"));
         Assert.Contains("steps.lean-report-cache.outputs.cache-hit != 'true'", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("sleep " + "360", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("lookup-only: true", workflow, StringComparison.Ordinal);
