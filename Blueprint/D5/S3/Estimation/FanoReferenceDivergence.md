@@ -6,7 +6,7 @@ A positive normalized observation reference gives computable divergence forms of
 
 **Theorem 1.1 (Reference divergence upper-bounds mutual information).**
 
-Lean statement: `D5/S3/Estimation/FanoReferenceDivergence.mutual_information_le_product_reference_divergence`
+$$I(X; Y) \le D(p \Vert u \cdot m_{X})$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Estimation/FanoReferenceDivergence.mutual_information_le_product_reference_divergence` (`✓ std3`). ∎
 
@@ -40,7 +40,7 @@ Numerically this is 1 times log(1/2), or -0.693147, so discarding that term woul
 
 **Theorem 1.2 (The observation marginal attains the reference bound).**
 
-Lean statement: `D5/S3/Estimation/FanoReferenceDivergence.exists_observation_marginal_reference_attaining`
+$$\exists u: Y \to \mathbb{R}, (\forall y, 0<u(y)) \land \sum_{y} u(y)=1 \land D(p \Vert u \cdot m_{X})=I(X; Y)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Estimation/FanoReferenceDivergence.exists_observation_marginal_reference_attaining` (`✓ std3`). ∎
 
@@ -58,7 +58,7 @@ For this choice the discarded term is the divergence of m_Y from itself and is z
 
 **Theorem 1.3 (Reference divergence gives the finite Fano error floor).**
 
-Lean statement: `D5/S3/Estimation/FanoReferenceDivergence.fano_error_probability_lower_bound_divergence`
+$$1-\frac{D(p \Vert u \cdot m_{X})+ \log 2}{\log \lvert X \rvert} \le P(g(Y)\neq X)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Estimation/FanoReferenceDivergence.fano_error_probability_lower_bound_divergence` (`✓ std3`). ∎
 
@@ -76,7 +76,7 @@ This is the uniform finite Fano floor with the mutual-information budget enlarge
 
 **Theorem 1.4 (The reference-divergence product form bounds hypothesis count).**
 
-Lean statement: `D5/S3/Estimation/FanoReferenceDivergence.fano_hypothesis_count_product_bound_divergence`
+$$(1-\varepsilon) \cdot \log \lvert X \rvert \le D(p \Vert u \cdot m_{X})+ \log 2$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Estimation/FanoReferenceDivergence.fano_hypothesis_count_product_bound_divergence` (`✓ std3`). ∎
 
@@ -94,7 +94,7 @@ Like its mutual-information counterpart, this product form is primary because it
 
 **Theorem 1.5 (The reference-divergence quotient isolates the candidate budget).**
 
-Lean statement: `D5/S3/Estimation/FanoReferenceDivergence.fano_hypothesis_count_bound_divergence`
+$$\log \lvert X \rvert \le \frac{D(p \Vert u \cdot m_{X})+ \log 2}{(1-\varepsilon)}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Estimation/FanoReferenceDivergence.fano_hypothesis_count_bound_divergence` (`✓ std3`). ∎
 

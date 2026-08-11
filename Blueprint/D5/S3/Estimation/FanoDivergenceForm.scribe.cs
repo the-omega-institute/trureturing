@@ -15,6 +15,12 @@ internal sealed class FanoDivergenceFormDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(
                     "D5/S3/Estimation/FanoDivergenceForm.fano_hypothesis_count_product_bound_uniform"),
                 H("The product form bounds the resolvable hypothesis count"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Open, D(1), Minus, Varepsilon, Close, Sp, Cdot, Sp,
+                    Log, Sp, Lvert, Sp, F.Id("X"), Sp, Rvert,
+                    Sp, Le, Sp,
+                    F.Id("I"), Open, F.Id("X"), Semi, Sp, F.Id("Y"), Close,
+                    Plus, Sp, Log, Sp, D(2)))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -62,6 +68,14 @@ internal sealed class FanoDivergenceFormDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(
                     "D5/S3/Estimation/FanoDivergenceForm.fano_hypothesis_count_bound_uniform"),
                 H("The quotient form isolates the logarithmic candidate budget"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Log, Sp, Lvert, Sp, F.Id("X"), Sp, Rvert,
+                    Sp, Le, Sp,
+                    Frac,
+                    Grp(
+                        F.Id("I"), Open, F.Id("X"), Semi, Sp, F.Id("Y"), Close,
+                        Plus, Sp, Log, Sp, D(2)),
+                    Grp(Open, D(1), Minus, Varepsilon, Close)))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(

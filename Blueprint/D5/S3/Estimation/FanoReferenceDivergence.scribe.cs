@@ -15,6 +15,13 @@ internal sealed class FanoReferenceDivergenceDocument : IScribeDocumentDefinitio
                 DeclarationHandle.Create(
                     "D5/S3/Estimation/FanoReferenceDivergence.mutual_information_le_product_reference_divergence"),
                 H("Reference divergence upper-bounds mutual information"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    F.Id("I"), Open, F.Id("X"), Semi, Sp, F.Id("Y"), Close,
+                    Sp, Le, Sp,
+                    F.Id("D"), Open,
+                    F.Id("p"), Sp, Vert, Sp,
+                    F.Id("u"), Sp, Cdot, Sp,
+                    F.Id("m"), Underscore, Grp(F.Id("X")), Close))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -79,6 +86,21 @@ internal sealed class FanoReferenceDivergenceDocument : IScribeDocumentDefinitio
                 DeclarationHandle.Create(
                     "D5/S3/Estimation/FanoReferenceDivergence.exists_observation_marginal_reference_attaining"),
                 H("The observation marginal attains the reference bound"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Exists, Sp, F.Id("u"), Colon, Sp,
+                    F.Id("Y"), Sp, To, Sp, Mathbb, Grp(F.Id("R")), Comma, Sp,
+                    Open, Forall, Sp, F.Id("y"), Comma, Sp,
+                    D(0), Lt, F.Id("u"), Open, F.Id("y"), Close, Close,
+                    Sp, Land, Sp,
+                    Sum, Underscore, Grp(F.Id("y")), Sp,
+                    F.Id("u"), Open, F.Id("y"), Close, Eq, D(1),
+                    Sp, Land, Sp,
+                    F.Id("D"), Open,
+                    F.Id("p"), Sp, Vert, Sp,
+                    F.Id("u"), Sp, Cdot, Sp,
+                    F.Id("m"), Underscore, Grp(F.Id("X")), Close,
+                    Eq,
+                    F.Id("I"), Open, F.Id("X"), Semi, Sp, F.Id("Y"), Close))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -111,6 +133,20 @@ internal sealed class FanoReferenceDivergenceDocument : IScribeDocumentDefinitio
                 DeclarationHandle.Create(
                     "D5/S3/Estimation/FanoReferenceDivergence.fano_error_probability_lower_bound_divergence"),
                 H("Reference divergence gives the finite Fano error floor"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    D(1), Minus,
+                    Frac,
+                    Grp(
+                        F.Id("D"), Open,
+                        F.Id("p"), Sp, Vert, Sp,
+                        F.Id("u"), Sp, Cdot, Sp,
+                        F.Id("m"), Underscore, Grp(F.Id("X")), Close,
+                        Plus, Sp, Log, Sp, D(2)),
+                    Grp(Log, Sp, Lvert, Sp, F.Id("X"), Sp, Rvert),
+                    Sp, Le, Sp,
+                    F.Id("P"), Open,
+                    F.Id("g"), Open, F.Id("Y"), Close,
+                    Neq, Sp, F.Id("X"), Close))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -144,6 +180,15 @@ internal sealed class FanoReferenceDivergenceDocument : IScribeDocumentDefinitio
                 DeclarationHandle.Create(
                     "D5/S3/Estimation/FanoReferenceDivergence.fano_hypothesis_count_product_bound_divergence"),
                 H("The reference-divergence product form bounds hypothesis count"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Open, D(1), Minus, Varepsilon, Close, Sp, Cdot, Sp,
+                    Log, Sp, Lvert, Sp, F.Id("X"), Sp, Rvert,
+                    Sp, Le, Sp,
+                    F.Id("D"), Open,
+                    F.Id("p"), Sp, Vert, Sp,
+                    F.Id("u"), Sp, Cdot, Sp,
+                    F.Id("m"), Underscore, Grp(F.Id("X")), Close,
+                    Plus, Sp, Log, Sp, D(2)))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -172,6 +217,17 @@ internal sealed class FanoReferenceDivergenceDocument : IScribeDocumentDefinitio
                 DeclarationHandle.Create(
                     "D5/S3/Estimation/FanoReferenceDivergence.fano_hypothesis_count_bound_divergence"),
                 H("The reference-divergence quotient isolates the candidate budget"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Log, Sp, Lvert, Sp, F.Id("X"), Sp, Rvert,
+                    Sp, Le, Sp,
+                    Frac,
+                    Grp(
+                        F.Id("D"), Open,
+                        F.Id("p"), Sp, Vert, Sp,
+                        F.Id("u"), Sp, Cdot, Sp,
+                        F.Id("m"), Underscore, Grp(F.Id("X")), Close,
+                        Plus, Sp, Log, Sp, D(2)),
+                    Grp(Open, D(1), Minus, Varepsilon, Close)))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(

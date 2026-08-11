@@ -6,7 +6,7 @@ Uniform finite Fano bounds hypothesis count in a side-condition-free product for
 
 **Theorem 1.1 (The product form bounds the resolvable hypothesis count).**
 
-Lean statement: `D5/S3/Estimation/FanoDivergenceForm.fano_hypothesis_count_product_bound_uniform`
+$$(1-\varepsilon) \cdot \log \lvert X \rvert \le I(X; Y)+ \log 2$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Estimation/FanoDivergenceForm.fano_hypothesis_count_product_bound_uniform` (`✓ std3`). ∎
 
@@ -34,7 +34,7 @@ This is true for every candidate count and therefore imposes no ceiling. That va
 
 **Theorem 1.2 (The quotient form isolates the logarithmic candidate budget).**
 
-Lean statement: `D5/S3/Estimation/FanoDivergenceForm.fano_hypothesis_count_bound_uniform`
+$$\log \lvert X \rvert \le \frac{I(X; Y)+ \log 2}{(1-\varepsilon)}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Estimation/FanoDivergenceForm.fano_hypothesis_count_bound_uniform` (`✓ std3`). ∎
 
