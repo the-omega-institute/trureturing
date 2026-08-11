@@ -88,7 +88,7 @@ $$w\in\operatorname{goldenFactorSet}(1) \Rightarrow \operatorname{encard}(\opera
 
 Every member of goldenFactorSet 1 has length one, hence is T or F. The two explicit set equalities give extended cardinality two.
 
-No exactly-two theorem is claimed here for general n. It is deferred until a cylinder first-return theorem or a load-bearing Rauzy-graph development is available. Kernel computations for n=2 check TF, FT, and TT, but those bounded checks are not promoted to a global theorem.
+The length-two occurrence-gap spectra are global: TF and FT have {2,3}, while TT has {3,5}; each therefore has encard two. This does not claim the all-n theorem. That theorem remains deferred until admissible_rotation_gap_first_returns_two is proved without new axioms.
 
 **Theorem 1.8 (Seed substitution preserves return membership at synchronized markers).**
 
