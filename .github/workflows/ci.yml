@@ -132,8 +132,10 @@ jobs:
           test "${#expected_lines[@]}" -gt 0
           test "${#actual_lines[@]}" -eq "${#expected_lines[@]}"
           test -z "$(grep -F ': error ' <<<"$output" | grep -vF ': error RS0030:' || true)"
-          for index in "${!expected_lines[@]}"; do
-            test "${actual_lines[$index]}" = "${expected_lines[$index]}"
+          index=0
+          for expected_line in "${expected_lines[@]}"; do
+            test "${actual_lines[$index]}" = "$expected_line"
+            ((index += 1))
           done
 
   lean-inspect:
@@ -232,7 +234,9 @@ jobs:
             echo "producer-consistent=true" >> "$GITHUB_OUTPUT"
           else
             echo "producer-consistent=false" >> "$GITHUB_OUTPUT"
-            printf '%s\n' "canonical Lean report cache disabled: candidate producer ${candidateProducer:0:12} != executed baseline producer ${baselineProducer:0:12}" >> "$GITHUB_STEP_SUMMARY"
+            candidate_prefix="$(printf '%s' "$candidateProducer" | cut -c1-12)"
+            baseline_prefix="$(printf '%s' "$baselineProducer" | cut -c1-12)"
+            printf '%s\n' "canonical Lean report cache disabled: candidate producer $candidate_prefix != executed baseline producer $baseline_prefix" >> "$GITHUB_STEP_SUMMARY"
           fi
           if [[ "$address" == "$baselineAddress" ]]; then
             echo "pair-reusable=true" >> "$GITHUB_OUTPUT"

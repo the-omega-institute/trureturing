@@ -247,8 +247,10 @@ jobs:
             renewed/Meta/StrataLint/TOWER.yaml
           )
           [[ "${#artifact_paths[@]}" -eq "${#expected[@]}" ]]
-          for index in "${!expected[@]}"; do
-            [[ "${artifact_paths[$index]}" == "${expected[$index]}" ]]
+          index=0
+          for expected_path in "${expected[@]}"; do
+            [[ "${artifact_paths[$index]}" == "$expected_path" ]]
+            ((index += 1))
           done
           cp renewed/Meta/StrataLint/TOWER.yaml \
             candidate/Meta/StrataLint/TOWER.yaml

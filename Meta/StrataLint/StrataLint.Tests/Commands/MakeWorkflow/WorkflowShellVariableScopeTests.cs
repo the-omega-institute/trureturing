@@ -29,6 +29,27 @@ public sealed partial class MakeWorkflowTests
     private static readonly Regex NestedCommandSubstitution = new(
         @"\$\([^()\r\n]*\$\(",
         RegexOptions.CultureInvariant);
+    private static readonly Regex ArithmeticExpansion = new(
+        @"\$\(\(",
+        RegexOptions.CultureInvariant);
+    private static readonly Regex ShellBracedExpansion = new(
+        @"\$\{(?!\{)(?<body>[^}\r\n]*)\}",
+        RegexOptions.CultureInvariant);
+    private static readonly Regex SimpleBracedVariable = new(
+        @"^[A-Za-z_][A-Za-z0-9_]*$",
+        RegexOptions.CultureInvariant);
+    private static readonly Regex SupportedArrayExpansion = new(
+        @"^(?:#?[A-Za-z_][A-Za-z0-9_]*\[(?:@|\*)\]|[A-Za-z_][A-Za-z0-9_]*\[(?:[0-9]+|\$[A-Za-z_][A-Za-z0-9_]*)\])$",
+        RegexOptions.CultureInvariant);
+    private static readonly Regex ArraySubscriptReference = new(
+        @"\$\{[A-Za-z_][A-Za-z0-9_]*\[\$(?<name>[A-Za-z_][A-Za-z0-9_]*)\]\}",
+        RegexOptions.CultureInvariant);
+    private static readonly Regex ArrayLengthReference = new(
+        @"\$\{#(?<name>[A-Za-z_][A-Za-z0-9_]*)\[(?:@|\*)\]\}",
+        RegexOptions.CultureInvariant);
+    private static readonly Regex UnclosedShellBracedExpansion = new(
+        @"\$\{(?!\{)[^}\r\n]*(?:\r?\n|$)",
+        RegexOptions.CultureInvariant);
 
     // GitHub Actions default environment variables:
     // https://docs.github.com/actions/reference/workflows-and-actions/variables#default-environment-variables
@@ -112,6 +133,27 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("nested command substitution", violation, StringComparison.OrdinalIgnoreCase);
     }
 
+    [Theory]
+    [InlineData("echo ${value:-fallback}", "parameter expansion")]
+    [InlineData("echo $((1 + 2))", "arithmetic expansion")]
+    [InlineData("echo ${!name}", "indirect expansion")]
+    public void UnsupportedDollarConstructIsReportedAsUnrecognized(string run, string construct)
+    {
+        var workflow = $"jobs:\n  check:\n    steps:\n      - name: Unsupported\n        run: {run}\n";
+
+        var violation = Assert.Single(FindViolations(workflow));
+        Assert.Contains("unrecognized construct", violation, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains(construct, violation, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void SimpleBoundReferencesRemainAccepted()
+    {
+        const string workflow = "jobs:\n  check:\n    steps:\n      - name: Simple\n        run: |\n          value=one\n          echo \"$value ${value}\"\n";
+
+        Assert.Empty(FindViolations(workflow));
+    }
+
     [Fact]
     public void UnboundReferenceInsideCommandSubstitutionIsRejected()
     {
@@ -189,10 +231,13 @@ public sealed partial class MakeWorkflowTests
                     violations.Add($"step '{name}' contains unrecognized construct: {unrecognized}");
                     continue;
                 }
-                foreach (var variable in ShellReference.Matches(run)
+                var references = ShellReference.Matches(run)
                     .Select(static match => match.Groups["braced"].Success
                         ? match.Groups["braced"].Value
                         : match.Groups["simple"].Value)
+                    .Concat(ArraySubscriptReference.Matches(run).Select(static match => match.Groups["name"].Value))
+                    .Concat(ArrayLengthReference.Matches(run).Select(static match => match.Groups["name"].Value));
+                foreach (var variable in references
                     .Distinct(StringComparer.Ordinal))
                 {
                     if (available.Contains(variable) || IsRunnerProvided(variable)) continue;
@@ -209,6 +254,15 @@ public sealed partial class MakeWorkflowTests
     {
         if (Heredoc.IsMatch(run)) return "heredoc";
         if (NestedCommandSubstitution.IsMatch(run)) return "nested command substitution";
+        if (ArithmeticExpansion.IsMatch(run)) return "arithmetic expansion";
+        foreach (Match match in ShellBracedExpansion.Matches(run))
+        {
+            var body = match.Groups["body"].Value;
+            if (body.StartsWith('!')) return "indirect expansion";
+            if (!SimpleBracedVariable.IsMatch(body) && !SupportedArrayExpansion.IsMatch(body))
+                return "parameter expansion";
+        }
+        if (UnclosedShellBracedExpansion.IsMatch(run)) return "malformed parameter expansion";
         return null;
     }
 
