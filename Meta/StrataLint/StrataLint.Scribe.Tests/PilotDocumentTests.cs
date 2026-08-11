@@ -69,29 +69,20 @@ public sealed class DocumentDiscoveryTests
             StringComparison.Ordinal);
     }
 
-    [Fact]
+    [LiveReportFact]
     public void GeneratedMarkdownIsDeterministicAndMatchesTheCommittedTree()
     {
         var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound);
         var repositoryRoot = repository.Root.FullPath;
         var rawLeanReport = RepositoryRelativePath.Create(
             ".lake/build/stratalint/raw-lean-report.json");
-        if (!repository.FileExists(rawLeanReport))
-        {
-            var error = new StringWriter();
-            var exit = ScribeEmitter.Emit(
-                repositoryRoot,
-                check: true,
-                TextWriter.Null,
-                error);
-
-            Assert.Equal(1, exit);
-            Assert.Contains("inspect.sh", error.ToString(), StringComparison.Ordinal);
-            return;
-        }
+        Assert.True(
+            repository.FileExists(rawLeanReport),
+            "STRATALINT_REQUIRE_LIVE_REPORT=1 requires .lake/build/stratalint/raw-lean-report.json");
 
         var report = LeanCompiledArtifactReports.InspectRepository(repositoryRoot);
         var citations = LibraryNoteCatalog.Load(repositoryRoot).Citations;
+        Assert.NotEmpty(DocumentDefinitions.All);
         var documents = DocumentDefinitions.All
             .Select(static definition => definition.Document)
             .ToArray();
@@ -136,6 +127,7 @@ public sealed class DocumentDiscoveryTests
         //
         // 本测试恢复的字节断言让 CI 在 admission 之外执行同一道重放;准入侧两处保持不动,
         // 是否该删须另行按四项合取裁决(裁决时不得再以 FILEMAP 自声明字段为据)。
+        Assert.NotEmpty(DocumentDefinitions.All);
         foreach (var definition in DocumentDefinitions.All)
         {
             var first = CanonicalMarkdownWriter.Write(definition.Document, report, citations, graph);
@@ -145,6 +137,18 @@ public sealed class DocumentDiscoveryTests
 
             Assert.Equal(first.ToArray(), second.ToArray());
             Assert.Equal(committed, first.ToArray());
+        }
+    }
+
+    private sealed class LiveReportFactAttribute : FactAttribute
+    {
+        public LiveReportFactAttribute()
+        {
+            var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound);
+            var requireLiveReport = Environment.GetEnvironmentVariable("STRATALINT_REQUIRE_LIVE_REPORT") == "1";
+            if (!requireLiveReport && !repository.FileExists(RepositoryRelativePath.Create(
+                    ".lake/build/stratalint/raw-lean-report.json")))
+                Skip = "Live raw Lean report is absent; committed markdown replay requires that report.";
         }
     }
 
