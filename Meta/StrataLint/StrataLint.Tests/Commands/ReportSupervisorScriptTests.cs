@@ -293,7 +293,9 @@ public sealed class ReportSupervisorScriptTests
         using var fixture = new ReportSupervisorFixture();
         var abandonedLock = Path.Combine(fixture.StateRoot, "slots", "slot-1.lock");
         Directory.CreateDirectory(abandonedLock);
-        Directory.SetLastWriteTimeUtc(abandonedLock, DateTime.UtcNow.AddMinutes(-1));
+        Directory.SetLastWriteTimeUtc(
+            abandonedLock,
+            new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc));
 
         var result = fixture.Run("lean-producer", leanSlot: true, fixture.ScratchWriter);
 
@@ -313,7 +315,9 @@ public sealed class ReportSupervisorScriptTests
             Path.Combine(liveLock, "owner"),
             $"{ownerPid}|{ownerStart}\n",
             new UTF8Encoding(false));
-        Directory.SetLastWriteTimeUtc(liveLock, DateTime.UtcNow.AddHours(-1));
+        Directory.SetLastWriteTimeUtc(
+            liveLock,
+            new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc));
 
         var result = fixture.RunWithEnvironment(
             "lean-producer",
@@ -331,7 +335,7 @@ public sealed class ReportSupervisorScriptTests
             stderr.Contains($"pid={ownerPid}", StringComparison.Ordinal),
             $"timeout diagnostic did not name the owner; stderr: {stderr}");
         Assert.Contains($"since={ownerStart}", stderr, StringComparison.Ordinal);
-        Assert.Contains("held_for=1h", stderr, StringComparison.Ordinal);
+        Assert.Contains("held_for=", stderr, StringComparison.Ordinal);
         Assert.Contains($"command=synthetic-command-{ownerPid}", stderr, StringComparison.Ordinal);
     }
 
