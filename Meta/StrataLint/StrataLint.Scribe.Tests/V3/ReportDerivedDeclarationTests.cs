@@ -183,6 +183,30 @@ public sealed class ReportDerivedDeclarationTests
     }
 
     [Fact]
+    public void ScribeNode_preserves_edges_and_external_anchors()
+    {
+        const string path = "/repo/Blueprint/D5/S0/Computability/SemanticLayerShift.scribe.cs";
+        var edge = DocumentEdge.Dependency.Create(GidRef.Create("D5/S0/Carrier/Ring"));
+        var anchor = Anchor.ParseCanonical(
+            "mathlib/module/Mathlib.Data.Nat.Fib.Zeckendorf");
+
+        var document = ScribeNode.Create(
+            "Digest",
+            DefinitionDsl.H("Title"),
+            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("Content"))),
+            edges: [edge],
+            anchors: [anchor],
+            sourcePath: path);
+
+        var dependency = Assert.IsType<DocumentEdge.Dependency>(Assert.Single(document.Edges));
+        Assert.Equal("D5/S0/Carrier/Ring", dependency.Target.Value);
+        Assert.Equal(
+            "mathlib/module/Mathlib.Data.Nat.Fib.Zeckendorf",
+            Assert.Single(document.Header.Anchors).CanonicalString);
+        Assert.Equal("D5/S0/Computability/SemanticLayerShift", document.Header.Gid.Value);
+    }
+
+    [Fact]
     public void Lean_describe_signature_has_no_repeated_formal_fields()
     {
         var method = typeof(Describe).GetMethod(nameof(Describe.Lean), BindingFlags.Public | BindingFlags.Static);

@@ -12,17 +12,17 @@ internal sealed class LogDerivTraceDocument : IScribeDocumentDefinition
         var m = F.Id("m");
         var x = F.Id("X");
 
-        return DocumentDefinition.Create(ScribeDocument.Create(
-            Header(
-                "D5/S3/Divergence/LogDerivTrace",
-                "The trace identity for the integral logarithmic directional derivative."),
+        return DocumentDefinition.Create(ScribeNode.Create(
+            "The trace identity for the integral logarithmic directional derivative.",
             H("Logarithmic Derivative Trace Identity"),
             Blocks(
-                DocumentBlock.Describe.Definition(
+                                Describe.Lean(
                     DescribeId.Create("integral-logarithmic-directional-derivative"),
+                    DeclarationHandle.Create(
+                        "D5/S3/Divergence/LogDerivTrace.logDeriv"),
                     H("Integral logarithmic directional derivative"),
-                    LeanDefinition("D5/S3/Divergence/LogDerivTrace.logDeriv"),
-                    DescribeProvenance.RepoDerived(),
+                    StatementSource.FromAuthor(FormulaDsl.Disp(FormulaDsl.Id("logDeriv"))),
+                    AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text(
                             "For a complex square matrix m and direction X, logDeriv m X is " +
@@ -31,12 +31,14 @@ internal sealed class LogDerivTraceDocument : IScribeDocumentDefinition
                             "paper denotes this integral. This formal statement does not claim " +
                             "that logDeriv is the Frechet derivative of mathlib's Matrix.log; " +
                             "that identification remains outside the available mathlib API " +
-                            "tracked by issue #924.")))),
-                DocumentBlock.Describe.Theorem(
+                            "tracked by issue #924."))),
+                    DescribeRole.Definition),
+                                Describe.Lean(
                     DescribeId.Create("positive-definite-log-derivative-has-direction-trace"),
+                    DeclarationHandle.Create(
+                        "D5/S3/Divergence/LogDerivTrace.trace_mul_logDeriv"),
                     H("Positive definite logarithmic derivative has the direction trace"),
-                    LeanTheorem("D5/S3/Divergence/LogDerivTrace.trace_mul_logDeriv"),
-                    new Formula.Bind(
+                    StatementSource.FromAuthor(new Formula.Bind(
                         FormulaQuantifier.ForAll,
                         FormulaIdentifier.Create("m"),
                         Call("PositiveDefinite", matrix),
@@ -46,8 +48,8 @@ internal sealed class LogDerivTraceDocument : IScribeDocumentDefinition
                             Call("Hermitian", matrix),
                             Equal(
                                 Call("trace", Call("multiply", m, Call("logDeriv", m, x))),
-                                Call("trace", x)))),
-                    DescribeProvenance.RepoDerived(),
+                                Call("trace", x))))),
+                    AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text(
                             "Let m be positive definite and X Hermitian. Unitary spectral " +
@@ -60,7 +62,8 @@ internal sealed class LogDerivTraceDocument : IScribeDocumentDefinition
                             "integral of this kernel over positive t is one, leaving the trace " +
                             "of the unitary conjugate of X, hence the trace of X. The Hermitian " +
                             "hypothesis is retained to state the identity on the paper's " +
-                            "declared domain.")))))));
+                            "declared domain."))),
+                    DescribeRole.Theorem))));
     }
 
     private static LeanDeclarationRef LeanDefinition(string value) =>

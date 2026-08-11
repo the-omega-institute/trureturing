@@ -4,6 +4,7 @@ fingerprints:
   normalized_sha256: sha256:101df483e71f9e23ee1ec13626abf3037d9a32e6f992d6b5b9485bf6c7976c77
 cas_ref: sha256:101df483e71f9e23ee1ec13626abf3037d9a32e6f992d6b5b9485bf6c7976c77
 coverage_gids:
+  - D5/S3/QuantumContext/ProjectionValuationObstruction.projection_valuation_obstruction
   - D5/S3/Quantum/FiniteDimensional.qubit_matrix_algebra_has_no_character
   - D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product
   - D5/S3/QuantumBounds/CHSHWitness.bell_chsh_value
