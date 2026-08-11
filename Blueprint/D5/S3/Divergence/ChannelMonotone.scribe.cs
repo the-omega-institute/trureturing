@@ -6,18 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Divergence;
 
 internal sealed class ChannelMonotoneDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Divergence/ChannelMonotone",
-            "A strictly positive finite channel cannot increase finite real-valued classical KL divergence."),
-        H("Channel Monotonicity of Finite Classical KL Divergence"),
-        Blocks(
-            DocumentBlock.Describe.Theorem(
-                DescribeId.Create("a-strictly-positive-finite-channel-does-not-increase-classical-kl-divergence"),
-                H("A strictly positive finite channel does not increase classical KL divergence"),
-                LeanTheorem(
-                    "D5/S3/Divergence/ChannelMonotone.kl_divergence_channel_le"),
-                Disp(Seq(
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("A strictly positive finite channel cannot increase finite real-valued classical KL divergence.", H("Channel Monotonicity of Finite Classical KL Divergence"), Blocks(
+            Describe.Lean(DescribeId.Create("a-strictly-positive-finite-channel-does-not-increase-classical-kl-divergence"), DeclarationHandle.Create("D5/S3/Divergence/ChannelMonotone.kl_divergence_channel_le"), H("A strictly positive finite channel does not increase classical KL divergence"), StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, F.Id("X"), Comma, Sp, F.Id("Y"), Esc,
                     OpenBracket,
@@ -67,9 +57,7 @@ internal sealed class ChannelMonotoneDocument : IScribeDocumentDefinition
                     Sp, Le, Sp,
                     F.Id("D"), Open,
                     F.Id("p"), Vert, Vert, Sp, F.Id("q"), Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
-                Blocks(
+                    End, Grp(F.Id("gathered"))))), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text(
                         "Let X and Y be finite types, with X nonempty. Let p and q be strictly " +
                         "positive normalized real mass functions on X, and let W be a strictly " +
@@ -109,5 +97,5 @@ internal sealed class ChannelMonotoneDocument : IScribeDocumentDefinition
                         "The remaining limits are full-support requirements: strict positivity " +
                         "of the kernel and of both input distributions is required. Channels " +
                         "with zero transition probabilities and distributions with zero mass " +
-                        "are outside this module's scope.")))))));
+                        "are outside this module's scope."))), DescribeRole.Theorem))));
 }

@@ -12,12 +12,7 @@ public sealed class PartialQuotientExtractionDocumentTests
             .ToArray();
 
         Assert.Equal(5, describes.Length);
-        Assert.All(describes, static describe =>
-        {
-            Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.Provenance.Kind);
-            var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
-            Assert.True(lean.Value.RequireNoSorry);
-        });
+        Assert.All(describes, DocumentFactAssertions.RepoDerived);
         Assert.Equal(
             [
                 "D5/S1/Depth/PartialQuotientExtraction.partialQuotients",
@@ -37,6 +32,13 @@ public sealed class PartialQuotientExtractionDocumentTests
                 DescribeKind.Theorem,
             ],
             describes.Select(static describe => describe.Kind));
+        Assert.Collection(
+            describes,
+            describe => DocumentFactAssertions.Declaration(describe, LeanDeclarationKind.Definition),
+            describe => DocumentFactAssertions.Declaration(describe, LeanDeclarationKind.Definition),
+            describe => DocumentFactAssertions.Declaration(describe, LeanDeclarationKind.Theorem),
+            describe => DocumentFactAssertions.Declaration(describe, LeanDeclarationKind.Theorem),
+            describe => DocumentFactAssertions.Declaration(describe, LeanDeclarationKind.Theorem));
 
         var floor = Assert.Single(describes, static describe =>
             describe.Id.Value == "continued-fraction-twelve-floor");

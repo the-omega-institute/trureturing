@@ -13,7 +13,8 @@ public sealed class ChainRuleDocumentTests
         Assert.Equal(
             "D5/S3/Divergence/ChainRule.kl_divergence_chain_rule",
             Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement).Value.Value);
-        Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.Provenance.Kind);
+        DocumentFactAssertions.RepoDerived(describe);
+        DocumentFactAssertions.Declaration(describe, LeanDeclarationKind.Theorem);
 
         var latex = LatexWriter.WriteStatement(
             describe.StatementFormula

@@ -18,10 +18,11 @@ public sealed class MutualInformationEntropyDocumentTests
         Assert.Equal(
             "D5/S3/Entropy/MutualInformationEntropy.entropy_subadditive",
             Assert.IsType<DescribeStatement.LeanDeclaration>(describes[1].Statement).Value.Value);
-        Assert.All(
-            describes,
-            static describe =>
-                Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.Provenance.Kind));
+        Assert.All(describes, static describe =>
+        {
+            DocumentFactAssertions.RepoDerived(describe);
+            DocumentFactAssertions.Declaration(describe, LeanDeclarationKind.Theorem);
+        });
 
         var decomposition = LatexWriter.WriteStatement(
             describes[0].StatementFormula
