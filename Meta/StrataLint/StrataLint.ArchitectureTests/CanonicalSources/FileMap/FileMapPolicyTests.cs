@@ -145,6 +145,39 @@ public sealed class FileMapPolicyTests
     }
 
     [Fact]
+    public void CodexSkillPackagesAreAdmittedByRepositoryPathPolicy()
+    {
+        // A Codex skill package is a directory containing SKILL.md, whose file
+        // names cannot be enumerated individually in registry.yaml.
+        const string value = ".codex/skills/synthetic-skill/SKILL.md";
+        var root = RepositoryLayout.FindRoot();
+        var registry = RegistryLoadAssert.Accepted(
+            RegistryLoader.Load(
+                File.ReadAllBytes(Path.Combine(root, "Meta", "registry.yaml")),
+                File.ReadAllBytes(Path.Combine(root, "Meta", "domains.yaml"))));
+        var path = RepoPath.CreateKnown(value);
+
+        Assert.Null(RepositoryPathPolicy.Validate(path, registry.Policy));
+    }
+
+    [Fact]
+    public void CodexArtifactsOutsideSkillsAreRefusedByRepositoryPathPolicy()
+    {
+        const string value = ".codex/settings.toml";
+        var root = RepositoryLayout.FindRoot();
+        var registry = RegistryLoadAssert.Accepted(
+            RegistryLoader.Load(
+                File.ReadAllBytes(Path.Combine(root, "Meta", "registry.yaml")),
+                File.ReadAllBytes(Path.Combine(root, "Meta", "domains.yaml"))));
+        var path = RepoPath.CreateKnown(value);
+
+        var issue = Assert.IsType<RepositoryPathIssue>(
+            RepositoryPathPolicy.Validate(path, registry.Policy));
+        Assert.Equal("SL-000", issue.RuleId.Value);
+        Assert.Equal("unknown top-level artifact", issue.Message);
+    }
+
+    [Fact]
     public void LibrarySplitBucketsAreClassifiedAsData()
     {
         var manifest = FileMapLoader.LoadRepository(RepositoryLayout.FindRoot());
