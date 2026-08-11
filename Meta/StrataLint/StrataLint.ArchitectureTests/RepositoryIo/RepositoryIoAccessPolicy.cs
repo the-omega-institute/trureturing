@@ -2,10 +2,12 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using StrataLint.Engine;
+using System.Xml.Linq;
 
 namespace StrataLint.ArchitectureTests;
 
 internal sealed record RepositoryIoAccessFinding(string Path, string Api, string Message);
+internal sealed record RepositoryIoTestProject(string Project, string Prefix, bool IsExempt);
 
 internal static class RepositoryIoAccessPolicy
 {
@@ -46,6 +48,13 @@ internal static class RepositoryIoAccessPolicy
             "StrataLint.ArchitectureTests",
         };
 
+    private static readonly IReadOnlySet<string> PinnedDeferredProjectExemptionBaseline =
+        new HashSet<string>(StringComparer.Ordinal)
+        {
+            "StrataLint.Tests",
+            "StrataLint.ArchitectureTests",
+        };
+
     // This syntax policy judges direct calls to the listed repository-I/O primitives in
     // active test projects. It does not judge indirect reads through production loaders,
     // path-shaped reader APIs not listed here, reflection shapes not listed here, or
@@ -54,17 +63,12 @@ internal static class RepositoryIoAccessPolicy
         string repositoryRoot)
     {
         var files = GitIndexRepositoryFiles.Enumerate(repositoryRoot);
-        var activePrefixes = files
+        var projects = ClassifyTestProjects(files
             .Where(static file => file.RelativePath.EndsWith(".csproj", StringComparison.Ordinal))
-            .Select(static file => new
-            {
-                Project = Path.GetFileNameWithoutExtension(file.RelativePath),
-                Prefix = file.RelativePath[..(file.RelativePath.LastIndexOf('/') + 1)],
-            })
-            .Where(project => project.Project.EndsWith("Tests", StringComparison.Ordinal)
-                && !DeferredProjectExemptions.Contains(project.Project))
-            .Select(static project => project.Prefix)
-            .ToArray();
+            .Select(file => (file.RelativePath, File.ReadAllText(file.FullPath))),
+            DeferredProjectExemptions);
+        var activePrefixes = projects.Where(static project => !project.IsExempt)
+            .Select(static project => project.Prefix).ToArray();
 
         return files
             .Where(file => activePrefixes.Any(prefix =>
@@ -73,6 +77,33 @@ internal static class RepositoryIoAccessPolicy
                 && !AuthorizedGatewayPaths.Contains(file.RelativePath))
             .SelectMany(file => InspectSource(file.RelativePath, File.ReadAllText(file.FullPath)))
             .ToArray();
+    }
+
+    internal static IReadOnlyList<string> FindAddedExemptions(IEnumerable<string> exemptions) =>
+        exemptions.Except(PinnedDeferredProjectExemptionBaseline, StringComparer.Ordinal)
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+
+    internal static IReadOnlyList<RepositoryIoTestProject> ClassifyTestProjects(
+        IEnumerable<(string RelativePath, string Content)> projects,
+        IReadOnlySet<string> exemptions) => projects
+        .Where(static project => IsXunitProject(project.Content))
+        .Select(project =>
+        {
+            var name = Path.GetFileNameWithoutExtension(project.RelativePath);
+            return new RepositoryIoTestProject(
+                name,
+                project.RelativePath[..(project.RelativePath.LastIndexOf('/') + 1)],
+                exemptions.Contains(name));
+        })
+        .ToArray();
+
+    private static bool IsXunitProject(string content)
+    {
+        var document = XDocument.Parse(content, LoadOptions.None);
+        return document.Descendants().Any(static element =>
+            element.Name.LocalName == "PackageReference"
+            && string.Equals((string?)element.Attribute("Include"), "xunit", StringComparison.OrdinalIgnoreCase));
     }
 
     internal static IReadOnlyList<RepositoryIoAccessFinding> InspectSource(

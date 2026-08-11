@@ -11,11 +11,42 @@ public sealed class RepositoryIoAccessPolicyTests
     }
 
     [Fact]
-    public void DeferredProjectExemptionsArePinnedAndMayOnlyShrink()
+    public void RemovingDeferredProjectExemptionIsAccepted()
     {
-        Assert.Equal(
-            ["StrataLint.ArchitectureTests", "StrataLint.Tests"],
-            RepositoryIoAccessPolicy.DeferredProjectExemptions.Order(StringComparer.Ordinal));
+        var current = new HashSet<string>(StringComparer.Ordinal) { "StrataLint.Tests" };
+
+        Assert.Empty(RepositoryIoAccessPolicy.FindAddedExemptions(current));
+    }
+
+    [Fact]
+    public void AddingDeferredProjectExemptionIsRejected()
+    {
+        Assert.Empty(RepositoryIoAccessPolicy.FindAddedExemptions(
+            RepositoryIoAccessPolicy.DeferredProjectExemptions));
+
+        var current = new HashSet<string>(RepositoryIoAccessPolicy.DeferredProjectExemptions, StringComparer.Ordinal)
+        {
+            "WidgetChecks",
+        };
+
+        Assert.Equal(["WidgetChecks"], RepositoryIoAccessPolicy.FindAddedExemptions(current));
+    }
+
+    [Fact]
+    public void XunitProjectWithoutTestsSuffixIsActive()
+    {
+        const string project = """
+            <Project Sdk="Microsoft.NET.Sdk">
+              <ItemGroup><PackageReference Include="xunit" /></ItemGroup>
+            </Project>
+            """;
+
+        var classification = Assert.Single(RepositoryIoAccessPolicy.ClassifyTestProjects(
+            [("Meta/WidgetChecks/WidgetChecks.csproj", project)],
+            new HashSet<string>(StringComparer.Ordinal)));
+
+        Assert.Equal("WidgetChecks", classification.Project);
+        Assert.False(classification.IsExempt);
     }
 
     [Theory]
