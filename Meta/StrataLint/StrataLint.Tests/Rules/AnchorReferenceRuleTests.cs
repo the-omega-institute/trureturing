@@ -1,134 +1,171 @@
 using System.Collections.Immutable;
 using System.Text;
+using System.Text.Json;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
 public sealed class AnchorReferenceRuleTests
 {
-    private const string CatalogPath = "Meta/StrataLint/Generated/anchor-catalog.v1.json";
+    private const string Target = "Mathlib.Data.Nat.Fib.Zeckendorf";
 
     [Fact]
-    public void CanonicalRegisteredMathlibAnchorPasses()
+    public void ImportClosureAcceptsDirectImport() =>
+        Assert.True(IsReachable(("D5/A.lean", [Target])));
+
+    [Fact]
+    public void ImportClosureAcceptsTwoHopImport() =>
+        Assert.True(IsReachable(
+            ("D5/A.lean", ["D5.B"]),
+            ("D5/B.lean", [Target])));
+
+    [Fact]
+    public void ImportClosureAcceptsThreeHopImport() =>
+        Assert.True(IsReachable(
+            ("D5/A.lean", ["D5.B"]),
+            ("D5/B.lean", ["D5.C"]),
+            ("D5/C.lean", [Target])));
+
+    [Fact]
+    public void ImportClosureRejectsUnreachableTarget() =>
+        Assert.False(IsReachable(("D5/A.lean", ["Mathlib.Data.Nat.Fib.Basic"])));
+
+    [Fact]
+    public void ImportClosureTerminatesOnCycle() =>
+        Assert.False(IsReachable(
+            ("D5/A.lean", ["D5.B"]),
+            ("D5/B.lean", ["D5.A"])));
+
+    [Fact]
+    public void ImportClosureRejectsMissingStartModule() =>
+        Assert.False(LeanImportClosure.ImportsExternalModule(
+            Report(("D5/B.lean", [Target])),
+            "D5.Missing",
+            Target));
+
+    [Fact]
+    public void DeclaredDirectMathlibImportPasses()
     {
-        var fixture = new RuleFixture();
-        SetCurrentAnchors(fixture, "mathlib/module/Mathlib.Data.Nat.Fib.Zeckendorf");
+        var fixture = FixtureWithAnchor("mathlib/module/" + Target);
+        fixture.Reports[RuleFixture.RingPath] = LeanReport([Target]);
 
-        var result = EvaluateMembership(fixture);
-
-        Assert.Empty(result.Diagnostics);
+        Assert.Empty(EvaluateMembership(fixture).Diagnostics);
     }
 
     [Fact]
-    public void CanonicalUnregisteredLiteratureAnchorBlocks()
+    public void DeclaredTransitiveMathlibImportPasses()
     {
-        var fixture = new RuleFixture();
-        SetCurrentAnchors(fixture, "lit/sos1957threegap");
+        var fixture = FixtureWithAnchor("mathlib/module/" + Target);
+        fixture.Reports[RuleFixture.RingPath] = LeanReport(["D5.S0.Carrier.Helper"]);
+        fixture.Files["D5/S0/Carrier/Helper.lean"] = "def helper : Nat := 0\n";
+        fixture.Reports["D5/S0/Carrier/Helper.lean"] = LeanReport([Target]);
+
+        Assert.Empty(EvaluateMembership(fixture).Diagnostics);
+    }
+
+    [Fact]
+    public void DeclaredUnreachableMathlibImportBlocksWithPathAndCriterion()
+    {
+        var fixture = FixtureWithAnchor("mathlib/module/" + Target);
 
         var diagnostic = Assert.Single(EvaluateMembership(fixture).Diagnostics);
 
-        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
-        Assert.Contains("unregistered", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Equal(RuleFixture.RingPath, diagnostic.Path);
+        Assert.Contains("mathlib/module/" + Target, diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains("repository import closure", diagnostic.Message, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void MalformedExternalAnchorBlocksUnderFormatRule()
+    public void EmptyAnchorsPass()
     {
         var fixture = new RuleFixture();
-        SetCurrentAnchors(fixture, "mathlib/symbol/Nat.zeckendorf");
 
-        var diagnostic = Assert.Single(EvaluateFormat(fixture).Diagnostics);
-
-        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
-        Assert.Contains("canonical external anchor", diagnostic.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void RuleDecisionUsesTypedCatalogInsteadOfCommittedProjection()
-    {
-        var fixture = new RuleFixture();
-        SetCurrentAnchors(fixture, "mathlib/module/Mathlib.Data.Nat.Fib.Zeckendorf");
-        fixture.Files[CatalogPath] = fixture.Files[CatalogPath].Replace(
-            "Mathlib.Data.Nat.Fib.Zeckendorf",
-            "Mathlib.Data.Nat.Fib.Basic",
-            StringComparison.Ordinal);
-
-        Assert.Empty(EvaluateFormat(fixture).Diagnostics);
-        Assert.Empty(EvaluateMembership(fixture).Diagnostics);
-
-        fixture.Files.Remove(CatalogPath);
-
-        Assert.Empty(EvaluateFormat(fixture).Diagnostics);
         Assert.Empty(EvaluateMembership(fixture).Diagnostics);
     }
 
+    // The retired registry held exactly one anchor, so it rejected every literature and declaration
+    // anchor as unregistered. The import graph cannot decide those shapes either, so they stay
+    // rejected — replacing the authority must not quietly widen what a header may claim.
     [Fact]
-    public void UncatalogedOpaqueAnchorBlocksUnderFormatRule()
+    public void LiteratureAnchorIsRejectedAsUndecidable()
     {
-        var fixture = new RuleFixture();
-        SetCurrentAnchors(fixture, "legacy/v1/missing");
+        var fixture = FixtureWithAnchor("lit/sos1957threegap");
 
-        var diagnostic = Assert.Single(EvaluateFormat(fixture).Diagnostics);
+        var diagnostic = Assert.Single(EvaluateMembership(fixture).Diagnostics);
 
-        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
-        Assert.Contains("canonical external anchor", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Equal(RuleFixture.RingPath, diagnostic.Path);
+        Assert.Contains("lit/sos1957threegap", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains("cannot be decided", diagnostic.Message, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void ExistingCorpusUsesOnlyCanonicalRegisteredExternalAnchors()
+    public void MathlibDeclarationAnchorIsRejectedAsUndecidable()
+    {
+        var fixture = FixtureWithAnchor("mathlib/decl/Nat.zeckendorf");
+        fixture.Reports[RuleFixture.RingPath] = LeanReport([Target]);
+
+        var diagnostic = Assert.Single(EvaluateMembership(fixture).Diagnostics);
+
+        Assert.Equal(RuleFixture.RingPath, diagnostic.Path);
+        Assert.Contains("mathlib/decl/Nat.zeckendorf", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains("cannot be decided", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void CurrentRepositoryAnchorsAreReachableThroughTheLeanImportGraph()
     {
         var fixture = new RuleFixture();
         var root = FindRepositoryRoot();
-        foreach (var path in Directory.EnumerateFiles(
-            Path.Combine(root, "D5"),
-            "*.lean",
-            SearchOption.AllDirectories))
+        var reports = ReadRawReport(Path.Combine(
+            root,
+            ".lake",
+            "build",
+            "stratalint",
+            "raw-lean-report.json"));
+        foreach (var (relative, report) in reports)
         {
-            var relative = Path.GetRelativePath(root, path)
-                .Replace(Path.DirectorySeparatorChar, '/');
-            var text = File.ReadAllText(path, Encoding.UTF8);
-            var report = new LeanFileReport(
-                ImmutableArray<string>.Empty,
-                ImmutableArray<LeanDeclaration>.Empty);
+            var text = File.ReadAllText(Path.Combine(root, relative), Encoding.UTF8);
             fixture.Files[relative] = text;
-            fixture.Baseline[relative] = text;
             fixture.Reports[relative] = report;
-            fixture.BaselineReports[relative] = report;
         }
 
-        var format = EvaluateFormat(fixture);
-        var membership = EvaluateMembership(fixture);
-
-        Assert.Empty(format.Diagnostics);
-        Assert.Empty(membership.Diagnostics);
+        Assert.Empty(EvaluateMembership(fixture).Diagnostics);
     }
 
-    [Fact]
-    public void ExternalCatalogMemberNeedsNoRuntimeReceipt()
+    private static bool IsReachable(params (string Path, string[] Imports)[] files) =>
+        LeanImportClosure.ImportsExternalModule(Report(files), "D5.A", Target);
+
+    private static LeanAxiomReport Report(params (string Path, string[] Imports)[] files) =>
+        LeanAxiomReport.Create(files.ToDictionary(
+            static file => file.Path,
+            static file => LeanReport(file.Imports),
+            StringComparer.Ordinal));
+
+    private static LeanFileReport LeanReport(IEnumerable<string> imports) =>
+        new(imports.ToImmutableArray(), ImmutableArray<LeanDeclaration>.Empty);
+
+    private static RuleFixture FixtureWithAnchor(string anchor)
     {
         var fixture = new RuleFixture();
-        SetCurrentAnchors(fixture, "mathlib/module/Mathlib.Data.Nat.Fib.Zeckendorf");
-        fixture.Files.Remove("lake-manifest.json");
-        fixture.Baseline.Remove("lake-manifest.json");
-
-        var result = EvaluateMembership(fixture);
-
-        Assert.Empty(result.Diagnostics);
+        fixture.Files[RuleFixture.RingPath] = fixture.Files[RuleFixture.RingPath].Replace(
+            "anchors: []",
+            $"anchors: [{anchor}]",
+            StringComparison.Ordinal);
+        fixture.Changes.Add(RuleFixture.RingPath);
+        return fixture;
     }
-
-    private static SingleRuleEvaluation EvaluateFormat(RuleFixture fixture) =>
-        RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(15), fixture.Build());
 
     private static SingleRuleEvaluation EvaluateMembership(RuleFixture fixture) =>
         RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(17), fixture.Build());
 
-    private static void SetCurrentAnchors(RuleFixture fixture, params string[] anchors)
+    private static Dictionary<string, LeanFileReport> ReadRawReport(string path)
     {
-        fixture.Files[RuleFixture.RingPath] = fixture.Files[RuleFixture.RingPath].Replace(
-            "anchors: []",
-            "anchors: [" + string.Join(", ", anchors) + "]",
-            StringComparison.Ordinal);
-        fixture.Changes.Add(RuleFixture.RingPath);
+        using var document = JsonDocument.Parse(File.ReadAllBytes(path));
+        return document.RootElement.GetProperty("modules").EnumerateArray().ToDictionary(
+            static module => module.GetProperty("source_path").GetString()!,
+            static module => LeanReport(module.GetProperty("imports").EnumerateArray()
+                .Select(static import => import.GetString()!)),
+            StringComparer.Ordinal);
     }
 
     private static string FindRepositoryRoot()

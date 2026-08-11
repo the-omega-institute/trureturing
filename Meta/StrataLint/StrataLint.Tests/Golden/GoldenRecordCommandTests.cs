@@ -8,7 +8,6 @@ public sealed class GoldenRecordCommandTests
 {
     private static readonly string[] RequiredFixturePaths =
     [
-        RuleFixture.AnchorCatalogPath,
         RuleFixture.SpecificationPath,
         TheoryAtomizerDataLoader.DataPath,
         GoldenFixtureRegistryLoader.RelativePath,

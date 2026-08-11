@@ -222,23 +222,6 @@ public sealed class BlueprintPinValidationTests
     }
 
     [Fact]
-    public void Issue411PinsRejectAnUnregisteredAnchorFromAnAcceptedScheme()
-    {
-        var outcome = Validate(Pins(
-            domain: "Scale",
-            module: "FibonacciPowers",
-            generality: "I",
-            anchors: ["mathlib/module/Mathlib.Data.Nat.Fib.Basic"]));
-
-        var rejected = Assert.IsType<BlueprintPinValidationOutcome.Rejected>(outcome);
-        Assert.Contains(
-            rejected.Diagnostics,
-            static diagnostic => diagnostic.Contains(
-                "unregistered in the typed catalog",
-                StringComparison.Ordinal));
-    }
-
-    [Fact]
     public void GeneralPinRejectsAnInstanceImportLikeSl010()
     {
         var instanceFact = FormalGid("D5/S0/Carrier/InstanceFact");

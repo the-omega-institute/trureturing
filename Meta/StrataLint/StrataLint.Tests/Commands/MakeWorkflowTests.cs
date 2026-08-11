@@ -600,8 +600,8 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("scribe-consumer", script, StringComparison.Ordinal);
         Assert.Contains(".lake/build/stratalint/raw-lean-report.json", script, StringComparison.Ordinal);
         Assert.DoesNotContain("CHECK_ARGS=()", script, StringComparison.Ordinal);
-        Assert.Contains("emit|catalog|emit-values|filemap) run_scribe \"$1\"", script, StringComparison.Ordinal);
-        Assert.Contains("canonical) generators=(emit catalog emit-values filemap dag)", script, StringComparison.Ordinal);
+        Assert.Contains("emit|emit-values|filemap) run_scribe \"$1\"", script, StringComparison.Ordinal);
+        Assert.Contains("canonical) generators=(emit emit-values filemap dag)", script, StringComparison.Ordinal);
         Assert.Contains("for generator in \"${generators[@]}\"", script, StringComparison.Ordinal);
     }
 

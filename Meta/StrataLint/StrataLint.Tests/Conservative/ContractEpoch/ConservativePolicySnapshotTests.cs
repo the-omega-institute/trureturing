@@ -10,8 +10,6 @@ public sealed class ConservativePolicySnapshotTests
     private const string UnprotectedTruthGraphPath = "Generated/truth-graph.v1.json";
     private const string ProtectedScribeEmissionsPath =
         "Meta/StrataLint/Generated/scribe-emissions.v1.json";
-    private const string ProtectedAnchorCatalogPath =
-        "Meta/StrataLint/Generated/anchor-catalog.v1.json";
 
     private const string BootstrapGatePath =
         "Meta/StrataLint/StrataLint.Engine/Admission/BootstrapGate.cs";
@@ -56,7 +54,6 @@ public sealed class ConservativePolicySnapshotTests
 
     [Theory]
     [InlineData(ProtectedScribeEmissionsPath)]
-    [InlineData(ProtectedAnchorCatalogPath)]
     public void BaseJudgeGeneratedInputsProduceSl022Diagnostics(string protectedPath)
     {
         var verification = Assert.IsType<BootstrapOutcome.ProtectedSurfaceVerificationRequired>(

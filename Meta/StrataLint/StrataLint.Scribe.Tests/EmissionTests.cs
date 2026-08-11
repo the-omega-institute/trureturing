@@ -534,7 +534,7 @@ public sealed class EmissionTests
             error);
 
         Assert.Equal(2, exit);
-        Assert.Contains("emit|catalog|emit-values|filemap [--check]", error.ToString(), StringComparison.Ordinal);
+        Assert.Contains("emit|emit-values|filemap [--check]", error.ToString(), StringComparison.Ordinal);
     }
 
     [Fact]
