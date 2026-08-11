@@ -115,6 +115,10 @@ public static class ScribeEmitter
                         ScribeEmissionAttestation.DefinitionPath(definition.Document.Header.Gid.Value))))
                     .ToArray()
                 : [.. repositoryDefinitions];
+            var declarationCatalog = DeclarationCatalog.Create(leanReport);
+            definitions = definitions
+                .Select(definition => definition.ResolveDeclarations(declarationCatalog))
+                .ToArray();
             if (tolerateAbsentDocuments && definitions.Length == 0 && !repositoryDefinitions.IsEmpty)
             {
                 // A tree owning zero of this binary's documents is not an older world of this
@@ -128,7 +132,8 @@ public static class ScribeEmitter
                 var findings = DescribeRepositoryValidator.Validate(
                     repositoryRoot,
                     definitions.Select(static definition => definition.Document),
-                    leanReport);
+                    leanReport,
+                    declarationCatalog: declarationCatalog);
                 if (!findings.IsEmpty)
                 {
                     foreach (var finding in findings)
@@ -148,7 +153,7 @@ public static class ScribeEmitter
                 tolerateAbsentDocuments);
             var graph = DocumentGraphAssembler.Assemble(
                 documents,
-                leanReport,
+                declarationCatalog,
                 census.ReceiptFreeDocumentGids);
             var wired = documents.Count(document => graph.For(document).Length > 0);
             var graphEdges = documents.SelectMany(document => graph.For(document)).ToArray();
@@ -158,7 +163,9 @@ public static class ScribeEmitter
                 + $"truth-anchor={graphEdges.OfType<DocumentEdge.TruthAnchor>().Count()} "
                 + $"dependency={graphEdges.OfType<DocumentEdge.Dependency>().Count()} "
                 + $"narrative={graphEdges.OfType<DocumentEdge.NarrativeReference>().Count()}");
-            return EmitVerified(repositoryRoot, check, output, error, leanReport, definitions, graph);
+            return EmitVerified(
+                repositoryRoot, check, output, error,
+                declarationCatalog, definitions, graph);
         }
         catch (Exception exception) when (
             exception is InvalidOperationException
@@ -177,7 +184,7 @@ public static class ScribeEmitter
         bool check,
         TextWriter output,
         TextWriter error,
-        LeanAxiomReport leanReport,
+        DeclarationCatalog declarationCatalog,
         IReadOnlyList<DocumentDefinition> definitions,
         DocumentGraph graph)
     {
@@ -190,12 +197,12 @@ public static class ScribeEmitter
         {
             var first = CanonicalMarkdownWriter.Write(
                 definition.Document,
-                leanReport,
+                declarationCatalog,
                 citations,
                 graph).ToArray();
             var second = CanonicalMarkdownWriter.Write(
                 definition.Document,
-                leanReport,
+                declarationCatalog,
                 citations,
                 graph).ToArray();
             if (!first.AsSpan().SequenceEqual(second))

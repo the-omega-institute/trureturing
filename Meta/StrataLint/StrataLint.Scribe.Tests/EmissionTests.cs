@@ -121,7 +121,7 @@ public sealed class EmissionTests
             var census = ReceiptFreeDocumentCatalog.Load(root, documents);
             var graph = DocumentGraphAssembler.Assemble(
                 documents,
-                report,
+                DeclarationCatalog.Create(report),
                 census.ReceiptFreeDocumentGids);
             foreach (var definition in DocumentDefinitions.All)
             {
@@ -130,7 +130,7 @@ public sealed class EmissionTests
                 Assert.Equal(
                     CanonicalMarkdownWriter.Write(
                         definition.Document,
-                        report,
+                        DeclarationCatalog.Create(report),
                         citations,
                         graph).ToArray(),
                     TemporaryFileSystem.File.ReadAllBytes(path));

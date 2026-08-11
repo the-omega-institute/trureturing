@@ -118,12 +118,12 @@ public sealed record DocumentGraphExportProjection(
     public static DocumentGraphExportProjection Create(
         IEnumerable<DocumentGraphDocument> documents,
         DocumentGraph graph,
-        LeanAxiomReport leanReport,
+        DeclarationCatalog catalog,
         IReadOnlySet<string> formalTruthRepoPaths)
     {
         ArgumentNullException.ThrowIfNull(documents);
         ArgumentNullException.ThrowIfNull(graph);
-        ArgumentNullException.ThrowIfNull(leanReport);
+        ArgumentNullException.ThrowIfNull(catalog);
         ArgumentNullException.ThrowIfNull(formalTruthRepoPaths);
         if (!graph.Findings.IsEmpty)
         {
@@ -131,7 +131,9 @@ public sealed record DocumentGraphExportProjection(
                 $"Document graph is invalid: {graph.Findings[0].Code} {graph.Findings[0].Message}");
         }
 
-        var material = documents.ToImmutableArray();
+        var material = documents
+            .Select(item => item with { Document = item.Document.ResolveDeclarations(catalog) })
+            .ToImmutableArray();
         var byGid = material.ToDictionary(
             static item => item.Document.Header.Gid.Value,
             StringComparer.Ordinal);
@@ -191,7 +193,7 @@ public sealed record DocumentGraphExportProjection(
                             byGid[targetGid].RepoPath + fragment));
                         break;
                     case DocumentEdge.TruthAnchor anchor:
-                        _ = LeanReferenceResolver.Resolve(anchor.Target, leanReport);
+                        _ = catalog.Resolve(DeclarationHandle.Create(anchor.Target.Value));
                         var formalPath = anchor.Target.Reference.Path.Value;
                         if (!formalTruthRepoPaths.Contains(formalPath))
                         {
@@ -242,18 +244,18 @@ public sealed record DocumentGraphExportProjection(
 
     public static DocumentGraphExportProjection AssembleRepository(
         string repositoryRoot,
-        LeanAxiomReport leanReport,
+        DeclarationCatalog catalog,
         IReadOnlySet<string> formalTruthRepoPaths)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
-        ArgumentNullException.ThrowIfNull(leanReport);
+        ArgumentNullException.ThrowIfNull(catalog);
         ArgumentNullException.ThrowIfNull(formalTruthRepoPaths);
         var definitions = DocumentDefinitions.Discover(typeof(DocumentDefinitions).Assembly, repositoryRoot);
-        var documents = definitions.Select(static definition => definition.Document).ToArray();
+        var documents = definitions.Select(definition => definition.Document.ResolveDeclarations(catalog)).ToArray();
         var census = ReceiptFreeDocumentCatalog.Load(repositoryRoot, documents);
         var graph = DocumentGraphAssembler.Assemble(
             documents,
-            leanReport,
+            catalog,
             census.ReceiptFreeDocumentGids);
         var sources = definitions.Select(definition => new DocumentGraphDocument(
             definition.RelativePath.Value,
@@ -261,7 +263,7 @@ public sealed record DocumentGraphExportProjection(
             census.ReceiptFreeDocumentGids.Contains(definition.Document.Header.Gid.Value)
                 ? "receipt-free"
                 : "receipt-bound"));
-        return Create(sources, graph, leanReport, formalTruthRepoPaths);
+        return Create(sources, graph, catalog, formalTruthRepoPaths);
     }
 }
 

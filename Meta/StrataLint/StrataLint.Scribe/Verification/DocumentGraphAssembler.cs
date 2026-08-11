@@ -44,7 +44,7 @@ public static class DocumentGraphAssembler
 {
     public static DocumentGraph Assemble(
         IEnumerable<ScribeDocument> documents,
-        LeanAxiomReport? leanReport,
+        DeclarationCatalog? catalog,
         IReadOnlySet<string>? autoWireDocumentGids = null)
     {
         ArgumentNullException.ThrowIfNull(documents);
@@ -68,7 +68,7 @@ public static class DocumentGraphAssembler
             if (autoWireDocumentGids?.Contains(document.Header.Gid.Value) == true)
             {
                 assembled = assembled
-                    .Concat(ProjectLeanImports(document, leanReport, byLeanModule))
+                    .Concat(ProjectLeanImports(document, catalog, byLeanModule))
                     .DistinctBy(CanonicalKey, StringComparer.Ordinal)
                     .OrderBy(RoleOrder)
                     .ThenBy(CanonicalKey, StringComparer.Ordinal)
@@ -85,7 +85,7 @@ public static class DocumentGraphAssembler
                     edge,
                     isExplicit,
                     byGid,
-                    leanReport,
+                    catalog,
                     findings);
             }
         }
@@ -142,17 +142,20 @@ public static class DocumentGraphAssembler
 
     private static IEnumerable<DocumentEdge> ProjectLeanImports(
         ScribeDocument document,
-        LeanAxiomReport? leanReport,
+        DeclarationCatalog? catalog,
         IReadOnlyDictionary<string, string> documentsByLeanModule)
     {
-        if (leanReport is null
-            || !RepoPath.TryCreate(document.Header.Gid.Value + ".lean", out var sourcePath)
-            || !leanReport.Files.TryGetValue(sourcePath, out var sourceReport))
+        if (!RepoPath.TryCreate(document.Header.Gid.Value + ".lean", out var sourcePath))
         {
             yield break;
         }
 
-        foreach (var importedModule in sourceReport.Imports
+        if (catalog is null)
+        {
+            yield break;
+        }
+
+        foreach (var importedModule in catalog.ImportsFor(sourcePath)
                      .Distinct(StringComparer.Ordinal)
                      .Order(StringComparer.Ordinal))
         {
@@ -220,18 +223,18 @@ public static class DocumentGraphAssembler
         DocumentEdge edge,
         bool isExplicit,
         IReadOnlyDictionary<string, ScribeDocument> documents,
-        LeanAxiomReport? leanReport,
+        DeclarationCatalog? catalog,
         ImmutableArray<DocumentGraphFinding>.Builder findings)
     {
         if (edge is DocumentEdge.TruthAnchor truth)
         {
-            if (leanReport is null)
+            if (catalog is null)
             {
                 return;
             }
             try
             {
-                _ = LeanReferenceResolver.Resolve(truth.Target, leanReport);
+                _ = catalog.Resolve(DeclarationHandle.Create(truth.Target.Value));
             }
             catch (InvalidOperationException exception)
             {

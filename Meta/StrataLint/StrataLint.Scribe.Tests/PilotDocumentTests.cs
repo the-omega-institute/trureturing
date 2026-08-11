@@ -89,7 +89,7 @@ public sealed class DocumentDiscoveryTests
         var census = ReceiptFreeDocumentCatalog.Load(repositoryRoot, documents);
         var graph = DocumentGraphAssembler.Assemble(
             documents,
-            report,
+            DeclarationCatalog.Create(report),
             census.ReceiptFreeDocumentGids);
         var projection = DocumentGraphExportProjection.Create(
             DocumentDefinitions.All.Select(definition => new DocumentGraphDocument(
@@ -99,7 +99,7 @@ public sealed class DocumentDiscoveryTests
                     ? "receipt-free"
                     : "receipt-bound")),
             graph,
-            report,
+            DeclarationCatalog.Create(report),
             report.Files.Keys.Select(static path => path.Value).ToHashSet(StringComparer.Ordinal));
 
         Assert.Equal(DocumentDefinitions.All.Length, projection.Documents.Nodes.Length);
@@ -131,8 +131,9 @@ public sealed class DocumentDiscoveryTests
         Assert.NotEmpty(DocumentDefinitions.All);
         foreach (var definition in DocumentDefinitions.All)
         {
-            var first = CanonicalMarkdownWriter.Write(definition.Document, report, citations, graph);
-            var second = CanonicalMarkdownWriter.Write(definition.Document, report, citations, graph);
+            var catalog = DeclarationCatalog.Create(report);
+            var first = CanonicalMarkdownWriter.Write(definition.Document, catalog, citations, graph);
+            var second = CanonicalMarkdownWriter.Write(definition.Document, catalog, citations, graph);
             var committed = repository.ReadAllBytes(
                 RepositoryRelativePath.Create(definition.RelativePath.Value));
 
@@ -163,7 +164,7 @@ public sealed class DocumentDiscoveryTests
         var markdown = System.Text.Encoding.UTF8.GetString(
             CanonicalMarkdownWriter.Write(
                 definition.Document,
-                report,
+                DeclarationCatalog.Create(report),
                 RepositoryCitations()).AsSpan());
 
         Assert.Contains(
