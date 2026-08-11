@@ -13,5 +13,5 @@ receipts:
   scribe:
     - gid: D5/S0/Conventions/WDigits.wEncoding
       definition_sha256: sha256:97f0568e2e3c2ce4086d6a0b30c1ebc360523d4132df81bc9ac1b84b62f22ced
-      emission_sha256: sha256:a96748c067c94bc9020b984b6727c12cea39867999934e3ec627d8d619210664
+      emission_sha256: sha256:c1c03cba7b1e43e4b36e888a44032ea5eec7cbf3f63a451ce05a4f9934fef31b
   unresolved_subitems: []
