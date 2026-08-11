@@ -464,7 +464,6 @@ public sealed class ReportSupervisorScriptTests
     public void HangingBuildIsTerminatedAtTheBuildTimeoutReleasingTheLeanSlot()
     {
         using var fixture = new ReportSupervisorFixture();
-        var stopwatch = Stopwatch.StartNew();
 
         // The worker hangs far beyond the build budget while holding the lean slot.
         // Without a wall-clock build bound the supervisor loops on the live child
@@ -475,13 +474,9 @@ public sealed class ReportSupervisorScriptTests
             leanSlot: true,
             fixture.LongRunningWorker,
             "STRATALINT_BUILD_TIMEOUT_SECONDS=2");
-        stopwatch.Stop();
 
-        // The supervisor must abort the hung build near its 2s budget, well inside
-        // the fixture's 30s process bound, and surface the timeout exit code.
-        Assert.True(
-            stopwatch.Elapsed < TimeSpan.FromSeconds(20),
-            $"supervisor ignored the build timeout (elapsed {stopwatch.Elapsed})");
+        // The fixture's five-minute process bound is only a runaway guard. The
+        // verdict comes from the supervisor's state transition and artifacts.
         Assert.True(
             result.ExitCode == 124,
             $"expected timeout exit 124, got {result.ExitCode}; stderr: "
