@@ -4,6 +4,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
+[Collection("Lean report environment")]
 public sealed class LeanReportInputScriptTests
 {
     private const string InputHelperPath = "Meta/StrataLint/scripts/report/lean-report-input.sh";
@@ -12,8 +13,13 @@ public sealed class LeanReportInputScriptTests
     private const string CanonicalWriterPath = "Meta/StrataLint/StrataLint.Engine/Snapshot/StructuredCanonicalWriter.cs";
     private const string LeanModelsPath = "Meta/StrataLint/StrataLint.Engine/Snapshot/LeanModels.cs";
     private const string TestSourcePath = "Meta/StrataLint/StrataLint.Tests/Snapshot/LeanModelsTests.cs";
+    private const string BlueprintSourcePath = "Blueprint/D5/Probe.scribe.cs";
     private static readonly string PairScriptPath = string.Join(
         '/', "Meta", "StrataLint", "scripts", "lean-report-pair.sh");
+    private static readonly string CliProjectPath = string.Join(
+        '/', "Meta", "StrataLint", "StrataLint.Cli", "StrataLint.Cli.csproj");
+    private static readonly string EngineProjectPath = string.Join(
+        '/', "Meta", "StrataLint", "StrataLint.Engine", "StrataLint.Engine.csproj");
     private static readonly string EngineLockPath = string.Join(
         '/', "Meta", "StrataLint", "StrataLint.Engine", "packages.lock.json");
     private static readonly string CliLockPath = string.Join(
@@ -43,6 +49,28 @@ public sealed class LeanReportInputScriptTests
         fixture.Append(TestSourcePath, "// mutation\n");
 
         Assert.Equal(before, fixture.Producer());
+    }
+
+    [Fact]
+    public void BlueprintScribeSourceDoesNotChangeProducer()
+    {
+        using var fixture = new LeanReportInputFixture();
+        var before = fixture.Producer();
+
+        fixture.Append(BlueprintSourcePath, "// mutation\n");
+
+        Assert.Equal(before, fixture.Producer());
+    }
+
+    [Fact]
+    public void DirectoryBuildPropsChangesProducer()
+    {
+        using var fixture = new LeanReportInputFixture();
+        var before = fixture.Producer();
+
+        fixture.Append("Directory.Build.props", "<!-- mutation -->\n");
+
+        Assert.NotEqual(before, fixture.Producer());
     }
     [Fact]
     public void ManifestKeysIncludeTheTransitiveManagedImportClosure()
@@ -179,7 +207,12 @@ public sealed class LeanReportInputScriptTests
             Write(CanonicalWriterPath, "// fixture\n");
             Write(LeanModelsPath, "// fixture\n");
             Write(TestSourcePath, "// fixture\n");
+            Write(BlueprintSourcePath, "// fixture\n");
             Write(PairScriptPath, "#!/usr/bin/env bash\n");
+            Write("Directory.Build.props", "<Project />\n");
+            Write("Directory.Packages.props", "<Project />\n");
+            Write(CliProjectPath, "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
+            Write(EngineProjectPath, "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
             Write(EngineLockPath, "{}\n");
             Write(CliLockPath, "{}\n");
             Write(ScribeLockPath, "{}\n");

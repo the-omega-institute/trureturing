@@ -74,25 +74,20 @@ append_producer_manifest_entry() {
   printf '%s  %s\n' "$(hash_file "$path")" "$relative" >> "$manifest"
 }
 
-producer_paths() {
-  local directory relative
-  for directory in \
-    Meta/StrataLint/StrataLint.Engine \
-    Meta/StrataLint/StrataLint.Cli \
-    Meta/StrataLint/StrataLint.Scribe; do
-    if [[ -d "$REPOSITORY/$directory" ]]; then
-      find "$REPOSITORY/$directory" -type f -name '*.cs' \
-        ! -path '*/bin/*' ! -path '*/obj/*' -print
-    fi
-  done | sed "s#^$REPOSITORY/##"
+producer_declared_paths() {
+  local relative
   for relative in \
+    Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj \
+    Meta/StrataLint/StrataLint.Engine/StrataLint.Engine.csproj \
+    Directory.Build.props \
+    Directory.Build.targets \
+    Directory.Packages.props \
     Meta/StrataLint/lean-inspector/inspect.sh \
     Meta/StrataLint/lean-inspector/Inspector.lean \
     Meta/StrataLint/scripts/report/lean-report-input.sh \
     Meta/StrataLint/scripts/lean-report-pair.sh \
     Meta/StrataLint/StrataLint.Engine/packages.lock.json \
     Meta/StrataLint/StrataLint.Cli/packages.lock.json \
-    Meta/StrataLint/StrataLint.Scribe/packages.lock.json \
     global.json; do
     if [[ -f "$REPOSITORY/$relative" \
       || ( "$relative" == "Meta/StrataLint/lean-inspector/inspect.sh" && -n "$PRODUCER_OVERRIDE" ) \
@@ -102,15 +97,34 @@ producer_paths() {
   done
 }
 
-producer_closure_complete() {
-  local directory
-  for directory in \
-    Meta/StrataLint/StrataLint.Engine \
-    Meta/StrataLint/StrataLint.Cli \
-    Meta/StrataLint/StrataLint.Scribe; do
-    [[ -d "$REPOSITORY/$directory" ]] || return 1
-    find "$REPOSITORY/$directory" -type f -name '*.cs' \
-      ! -path '*/bin/*' ! -path '*/obj/*' -print -quit | grep -q . || return 1
+producer_compile_paths() {
+  local project json
+  for project in \
+    Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj \
+    Meta/StrataLint/StrataLint.Engine/StrataLint.Engine.csproj; do
+    [[ -f "$REPOSITORY/$project" ]] || return 1
+    json="$TMP_ROOT/$(basename "$project").compile.json"
+    dotnet msbuild "$REPOSITORY/$project" -getItem:Compile \
+      -verbosity:quiet -nologo > "$json" 2>/dev/null || return 1
+    python3 - "$REPOSITORY" "$json" <<'PY' || return 1
+import json
+import pathlib
+import sys
+
+root = pathlib.Path(sys.argv[1]).resolve()
+items = json.loads(pathlib.Path(sys.argv[2]).read_text(encoding="utf-8"))["Items"]["Compile"]
+if not items:
+    raise SystemExit(1)
+for item in items:
+    path = pathlib.Path(item["FullPath"]).resolve()
+    try:
+        relative = path.relative_to(root)
+    except ValueError:
+        raise SystemExit(1)
+    if not path.is_file():
+        raise SystemExit(1)
+    print(relative.as_posix())
+PY
   done
 }
 
@@ -119,10 +133,16 @@ producer_sha256() {
   local relative
   : > "$manifest"
   : > "${manifest}.unsorted"
+  local compile_paths="$TMP_ROOT/producer-compile-paths"
+  local closure_complete=1
+  if ! producer_compile_paths > "$compile_paths"; then
+    closure_complete=0
+    : > "$compile_paths"
+  fi
   while IFS= read -r relative; do
     append_producer_manifest_entry "${manifest}.unsorted" "$relative" || return 2
-  done < <(producer_paths | sort -u)
-  if ! producer_closure_complete; then
+  done < <({ cat "$compile_paths"; producer_declared_paths; } | sort -u)
+  if [[ "$closure_complete" == "0" ]]; then
     printf '%s\n' "unavailable:$ADDRESS_SIDE" >> "${manifest}.unsorted"
   fi
   sort "${manifest}.unsorted" > "$manifest"

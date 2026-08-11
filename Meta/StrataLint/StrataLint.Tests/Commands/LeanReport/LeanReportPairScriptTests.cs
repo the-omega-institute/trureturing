@@ -4,6 +4,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
+[Collection("Lean report environment")]
 public sealed class LeanReportPairScriptTests
 {
     private const string InputHelperPath = "Meta/StrataLint/scripts/report/lean-report-input.sh";
@@ -11,6 +12,10 @@ public sealed class LeanReportPairScriptTests
     private const string RawReportPath = "Meta/StrataLint/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs";
     private const string CanonicalWriterPath = "Meta/StrataLint/StrataLint.Engine/Snapshot/StructuredCanonicalWriter.cs";
     private const string ScribeProgramPath = "Meta/StrataLint/StrataLint.Scribe/ScribeProgram.cs";
+    private static readonly string CliProjectPath = string.Join(
+        '/', "Meta", "StrataLint", "StrataLint.Cli", "StrataLint.Cli.csproj");
+    private static readonly string EngineProjectPath = string.Join(
+        '/', "Meta", "StrataLint", "StrataLint.Engine", "StrataLint.Engine.csproj");
     [Fact]
     public void EqualInputsRunProducerOnceAndAttestBaselineReuse()
     {
@@ -373,13 +378,21 @@ public sealed class LeanReportPairScriptTests
             WriteProducerInput(root, RawReportPath);
             WriteProducerInput(root, CanonicalWriterPath);
             WriteProducerInput(root, ScribeProgramPath);
+            WriteProducerInput(root, CliProjectPath);
+            WriteProducerInput(root, EngineProjectPath);
+            WriteProducerInput(root, "Directory.Build.props");
         }
 
         private static void WriteProducerInput(string root, string relative)
         {
             var path = Path.Combine(root, relative.Replace('/', Path.DirectorySeparatorChar));
             Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-            File.WriteAllText(path, "fixture\n", new UTF8Encoding(false));
+            var contents = relative.EndsWith(".csproj", StringComparison.Ordinal)
+                ? "<Project Sdk=\"Microsoft.NET.Sdk\" />\n"
+                : relative.EndsWith(".props", StringComparison.Ordinal)
+                    ? "<Project />\n"
+                    : "fixture\n";
+            File.WriteAllText(path, contents, new UTF8Encoding(false));
         }
 
         private static string FindRepositoryRoot()
