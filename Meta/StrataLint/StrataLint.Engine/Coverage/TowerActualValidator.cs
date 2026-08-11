@@ -53,9 +53,9 @@ internal static class TowerActualValidator
         ImmutableArray<TowerFinding>.Builder findings,
         ImmutableArray<TowerCheck>.Builder checks)
     {
-        if (component.Kind == "phased-gate")
+        if (component.Kind == "historical-ledger")
         {
-            ValidatePhasedGate(component, snapshot, findings, checks);
+            ValidateHistoricalLedger(component, findings, checks);
             return;
         }
 
@@ -109,45 +109,28 @@ internal static class TowerActualValidator
         }
     }
 
-    private static void ValidatePhasedGate(
+    // A historical ledger records what a retired ceremony once established. It is a
+    // structured description, not a live consumer: the shape is checked, the members
+    // are not opened, no digest is recomputed, and no phase is claimed to be running.
+    private static void ValidateHistoricalLedger(
         TowerComponentSyntax component,
-        RepositorySnapshot snapshot,
         ImmutableArray<TowerFinding>.Builder findings,
         ImmutableArray<TowerCheck>.Builder checks)
     {
-        if (component.Verification != "verified")
+        if (component.Verification != "archived")
         {
             findings.Add(new TowerFinding(
-                "TOWER-C0-CEREMONY",
+                "TOWER-ARCHIVED",
                 component.Id,
-                "phased gate must be verified by its content-addressed C0 ceremony"));
+                "historical ledger must be marked archived, not verified"));
         }
 
-        if (!C0CeremonyProjection.HasCanonicalPhases(component.Members))
+        if (component.Members.IsDefaultOrEmpty)
         {
             findings.Add(new TowerFinding(
-                "TOWER-PHASES",
+                "TOWER-ARCHIVED",
                 component.Id,
-                "phased gate must begin with both implemented phases"));
-        }
-
-        if (!C0CeremonyProjection.HasCanonicalShape(component.Members))
-        {
-            findings.Add(new TowerFinding(
-                "TOWER-C0-CEREMONY",
-                component.Id,
-                "phased gate must record the canonical frozen ceremony trust root"));
-        }
-
-        if (!C0CeremonyProjection.TrustRootMatchesSnapshot(
-                component.Members,
-                snapshot,
-                out var trustRootReason))
-        {
-            findings.Add(new TowerFinding(
-                "TOWER-C0-CEREMONY",
-                component.Id,
-                trustRootReason));
+                "historical ledger must record at least one archived member"));
         }
 
         if (!findings.Any(item => item.Component == component.Id))
@@ -155,7 +138,7 @@ internal static class TowerActualValidator
             checks.Add(new TowerCheck(
                 component.Id,
                 component.Verification,
-                "Phase1 content admission implemented; Phase2 dual-harness gate implemented; verified by content-addressed C0 ceremony"));
+                "Archived history; no live producer, consumer, or verification claim"));
         }
     }
 

@@ -16,8 +16,8 @@ public sealed partial class ProductionEnvironmentTests
             atomizerId,
             sourceBytes,
             DigestionTestSupport.Rules).Claims);
-        fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
-        fixture.Baseline[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
+        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
+        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
         InstallDirectoryLedger(fixture, atomizerId, atom);
         using var temporary = new TemporaryDirectory();
         var atomPath = DirectoryAtomPath("old-receipt", "residual-open");
@@ -55,8 +55,8 @@ public sealed partial class ProductionEnvironmentTests
             atomizerId,
             sourceBytes,
             DigestionTestSupport.Rules).Claims);
-        fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
-        fixture.Baseline[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
+        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
+        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
         InstallDirectoryLedger(fixture, atomizerId, atom);
         var oldPath = DirectoryAtomPath("old-receipt", "residual-open");
         var atomText = DirectoryAtom(atom).Replace(
@@ -107,8 +107,8 @@ public sealed partial class ProductionEnvironmentTests
             atomizerId,
             oldBytes,
             DigestionTestSupport.Rules).Claims);
-        fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
-        fixture.Baseline[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
+        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
+        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
         InstallDirectoryLedger(fixture, atomizerId, oldAtom);
         using var temporary = new TemporaryDirectory();
         WriteDirectoryLedger(temporary.Path, fixture.Files);
@@ -193,8 +193,8 @@ public sealed partial class ProductionEnvironmentTests
         var ledger = IngestLedger(atomizerId, oldAtom)
             .Replace("atom_id: old-receipt", "atom_id: '123'", StringComparison.Ordinal)
             .Replace("migration: residual", "migration: absorbed", StringComparison.Ordinal);
-        fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
-        fixture.Baseline[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
+        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
+        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
         InstallLedger(fixture, ledger, oldAtom);
         using var temporary = new TemporaryDirectory();
         var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
@@ -251,8 +251,8 @@ public sealed partial class ProductionEnvironmentTests
             "source_id: fixture-source",
             "source_id: INVALID",
             StringComparison.Ordinal);
-        fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
-        fixture.Baseline[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
+        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
+        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
         InstallLedger(fixture, ledger, atom);
         using var temporary = new TemporaryDirectory();
         var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
@@ -285,13 +285,13 @@ public sealed partial class ProductionEnvironmentTests
             ledger: theory-digestion-v1
             sources:
               - source_id: fixture-source
-                path: {{GoldenCorpus.FixtureDigestionSourcePath}}
+                path: {{RuleFixture.FixtureDigestionSourcePath}}
                 atomizer: {{atomizerId}}
                 entries: []
             ticket_index: []
             """;
-        fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = sourceText;
-        fixture.Baseline[GoldenCorpus.FixtureDigestionSourcePath] = sourceText;
+        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = sourceText;
+        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = sourceText;
         InstallLedger(fixture, ledger, existingAtom: null);
         using var temporary = new TemporaryDirectory();
         var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
@@ -325,8 +325,8 @@ public sealed partial class ProductionEnvironmentTests
         var oldBytes = Encoding.UTF8.GetBytes(oldText);
         var oldAtom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, oldBytes, DigestionTestSupport.Rules).Claims);
         var ledger = IngestLedger(atomizerId, oldAtom);
-        fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = currentText;
-        fixture.Baseline[GoldenCorpus.FixtureDigestionSourcePath] = oldText;
+        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = currentText;
+        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = oldText;
         InstallLedger(fixture, ledger, oldAtom);
         using var temporary = new TemporaryDirectory();
         var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
@@ -362,8 +362,8 @@ public sealed partial class ProductionEnvironmentTests
             "# Synthetic\n\n**未知 1.2(B)**。free-form source。\n");
         var malformedText = Encoding.UTF8.GetString(malformedBytes);
         var ledger = IngestLedger(atomizerId, oldAtom);
-        fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = malformedText;
-        fixture.Baseline[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
+        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = malformedText;
+        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
         fixture.Files[oldCapture.RelativePath] = Encoding.UTF8.GetString(oldCapture.Bytes.AsSpan());
         fixture.Baseline[oldCapture.RelativePath] = Encoding.UTF8.GetString(oldCapture.Bytes.AsSpan());
         InstallLedger(fixture, ledger, oldAtom);
@@ -423,8 +423,8 @@ public sealed partial class ProductionEnvironmentTests
             "# Synthetic\n\n**定理 1.1(A)**。rewritten。\n\n**定理 1.2(B)**。new。\n");
         var oldAtom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, oldBytes, DigestionTestSupport.Rules).Claims);
         var ledger = IngestLedger(atomizerId, oldAtom);
-        fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
-        fixture.Baseline[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
+        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
+        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
         InstallLedger(fixture, ledger, oldAtom);
         using var temporary = new TemporaryDirectory();
         var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
@@ -538,8 +538,8 @@ public sealed partial class ProductionEnvironmentTests
             "atom_id: old-receipt",
             "atom_id: \"old-receipt\"",
             StringComparison.Ordinal);
-        fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
-        fixture.Baseline[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
+        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
+        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
         InstallLedger(fixture, ledger, oldAtom);
         using var temporary = new TemporaryDirectory();
         var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
@@ -573,8 +573,8 @@ public sealed partial class ProductionEnvironmentTests
             "# Synthetic\n\n**定理 1.1(A)**。rewritten。\n\n**定理 1.2(B)**。new。\n");
         var oldAtom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, oldBytes, DigestionTestSupport.Rules).Claims);
         var legacyLedger = LegacyIngestLedger(atomizerId, oldAtom);
-        fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
-        fixture.Baseline[GoldenCorpus.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
+        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
+        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
         InstallLedger(fixture, legacyLedger, oldAtom);
         using var temporary = new TemporaryDirectory();
         var outputPath = Path.Combine(temporary.Path, BackfillInventoryLoader.RelativePath);
@@ -634,7 +634,7 @@ public sealed partial class ProductionEnvironmentTests
         ledger: theory-digestion-v1
         sources:
           - source_id: fixture-source
-            path: {{GoldenCorpus.FixtureDigestionSourcePath}}
+            path: {{RuleFixture.FixtureDigestionSourcePath}}
             atomizer: {{atomizerId}}
             acknowledged_stale: []
             entries:
@@ -664,8 +664,8 @@ public sealed partial class ProductionEnvironmentTests
     {
         fixture.Files[BackfillInventoryLoader.RelativePath] = ledger;
         fixture.Baseline[BackfillInventoryLoader.RelativePath] = ledger;
-        fixture.Files.Remove(GoldenCorpus.FixtureCasPath);
-        fixture.Baseline.Remove(GoldenCorpus.FixtureCasPath);
+        fixture.Files.Remove(RuleFixture.FixtureCasPath);
+        fixture.Baseline.Remove(RuleFixture.FixtureCasPath);
         if (existingAtom is null)
         {
             return;
@@ -686,7 +686,7 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Files.Remove(BackfillInventoryLoader.RelativePath);
         fixture.Baseline.Remove(BackfillInventoryLoader.RelativePath);
         var sourceMetadata = $"source_id = \"fixture-source\"\n"
-            + $"path = \"{GoldenCorpus.FixtureDigestionSourcePath}\"\n"
+            + $"path = \"{RuleFixture.FixtureDigestionSourcePath}\"\n"
             + $"atomizer = \"{atomizerId}\"\n";
         var atomText = DirectoryAtom(atom);
         foreach (var files in new[] { fixture.Files, fixture.Baseline })
@@ -733,7 +733,7 @@ public sealed partial class ProductionEnvironmentTests
         ledger: theory-digestion-v1
         sources:
           - source_id: fixture-source
-            path: {{GoldenCorpus.FixtureDigestionSourcePath}}
+            path: {{RuleFixture.FixtureDigestionSourcePath}}
             atomizer: {{atomizerId}}
             entries:
               - atom_id: old-receipt

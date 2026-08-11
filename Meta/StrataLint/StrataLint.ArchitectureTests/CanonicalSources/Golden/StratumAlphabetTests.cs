@@ -11,13 +11,9 @@ public sealed class StratumAlphabetTests
     [Fact]
     public void EveryClosedStratumTouchpointMatchesTheFiveMemberAlphabet()
     {
-        var goldenStratum = typeof(StrataLint.Cli.Program).Assembly.GetType(
-            "StrataLint.Cli.GoldenStratum",
-            throwOnError: true)!;
         var candidates = Expected.Concat(["", "S5", "S10", "s0", "X_Assumptions"]);
         var sets = new Dictionary<string, IEnumerable<string>>(StringComparer.Ordinal)
         {
-            ["GoldenStratum"] = Enum.GetNames(goldenStratum),
             ["Engine.Stratum"] = Enum.GetNames<Stratum>(),
             ["RepositoryRules.IsStratum"] = AcceptedBy(
                 typeof(RepositoryRules),
