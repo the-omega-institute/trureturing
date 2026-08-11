@@ -1,7 +1,7 @@
-<!-- echo-residual-summary:v4 source=gict-v3.6 residual=sha256:c332d0670ccb9fc0fb83da7a0d1c367c1046efe4b930e16ce72637cfa8bc7f00 -->
+<!-- echo-residual-summary:v4 source=gict-v3.6 residual=sha256:cbb8eaa2a6a425848e8e54fad512b5f8c222008333eb0126d674daab87cc9428 -->
 # Echo Residual Summary — `gict-v3.6`
 
-- unresolved_subitems: 121
+- unresolved_subitems: 120
 - mother_residual_atom_ids: 13
 
 Mother residual atoms:
@@ -82,12 +82,11 @@ Mother residual atoms:
 - `gict-residual-6e1053eef77278dd897b092fcb456d24c310e0f3556bfed13449ff25a1fc297c` (2)
   - `ah-exact-value-delta-certificate`
   - `phi-derivative-at-zero-identification`
-- `gict-residual-78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26` (11)
+- `gict-residual-78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26` (10)
   - `bhk-1755-enumeration-certificate`
   - `bhk-continued-fraction-theorem`
   - `dedekind-family-split-identity`
   - `dedekind-orientation-canonical-ledger-clause`
-  - `endpoint-translation-integrality`
   - `full-vote-enforcement-clause`
   - `orientation-branch-clause`
   - `three-walk-identification`
