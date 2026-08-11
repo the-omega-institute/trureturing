@@ -7,13 +7,13 @@ public sealed partial class FormulaCorpusInventoryTests
     [Fact]
     public void BlueprintAuthorSurfaceContainsNoLinearFormulaTokenTrees()
     {
-        var blueprint = Path.Combine(FindRepositoryRoot(), "Blueprint");
+        var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.ClaudeDirectoryNotFound);
         var forbidden = new[] { "FormulaTokens", "Formula.TokenTree", "FormulaToken", "FormulaMark", "FormulaSpace" };
 
-        var residuals = Directory.EnumerateFiles(blueprint, "*.scribe.cs", SearchOption.AllDirectories)
+        var residuals = repository.EnumerateFiles(RepositoryRelativePath.Create("Blueprint"), "*.scribe.cs")
             .SelectMany(path => forbidden
-                .Where(name => File.ReadAllText(path).Contains(name, StringComparison.Ordinal))
-                .Select(name => $"{Path.GetRelativePath(blueprint, path)}:{name}"))
+                .Where(name => repository.ReadAllText(path).Contains(name, StringComparison.Ordinal))
+                .Select(name => $"{path.Value}:{name}"))
             .Order(StringComparer.Ordinal)
             .ToArray();
 
@@ -140,18 +140,6 @@ public sealed partial class FormulaCorpusInventoryTests
                 }
             }
         }
-    }
-
-    private static string FindRepositoryRoot()
-    {
-        var directory = new DirectoryInfo(AppContext.BaseDirectory);
-        while (directory is not null && !File.Exists(Path.Combine(directory.FullName, "CLAUDE.md")))
-        {
-            directory = directory.Parent;
-        }
-
-        return directory?.FullName
-            ?? throw new DirectoryNotFoundException("Repository root was not found.");
     }
 
     private static string CanonicalBlueprintPath(string sourcePath)
