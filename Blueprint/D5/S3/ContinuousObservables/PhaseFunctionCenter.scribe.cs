@@ -16,19 +16,19 @@ internal sealed class PhaseFunctionCenterDocument : IScribeDocumentDefinition
                     "D5/S3/ContinuousObservables/PhaseFunctionCenter."
                     + "continuous_window_center_eq_phase_functions"),
                 H("The continuous window center is the phase-function algebra"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Forall, Sp, F.Id("M"), InMacro, Sp,
+                    Mathbb, Grp(F.Id("N")), Underscore, Grp(Gt, D(0)), Comma, Sp,
+                    F.Id("Z"), Open,
+                    F.Id("C"), Open, Mathbb, Grp(F.Id("T")), Comma, Sp,
+                    F.Id("M"), Underscore, F.Id("M"),
+                    Open, Mathbb, Grp(F.Id("C")), Close,
+                    Close, Close, Sp, Eq, Sp,
+                    Operatorname, Grp(F.Id("range")), Open,
+                    Operatorname, Grp(F.Id("phaseScalarObservable")),
+                    Underscore, F.Id("M"), Close, Dot))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
-                    new DocumentBlock.DisplayFormula(Seq(
-                        Forall, Sp, F.Id("M"), InMacro, Sp,
-                        Mathbb, Grp(F.Id("N")), Underscore, Grp(Gt, D(0)), Comma, Sp,
-                        F.Id("Z"), Open,
-                        F.Id("C"), Open, Mathbb, Grp(F.Id("T")), Comma, Sp,
-                        F.Id("M"), Underscore, F.Id("M"),
-                        Open, Mathbb, Grp(F.Id("C")), Close,
-                        Close, Close, Sp, Eq, Sp,
-                        Operatorname, Grp(F.Id("range")), Open,
-                        Operatorname, Grp(F.Id("phaseScalarObservable")),
-                        Underscore, F.Id("M"), Close, Dot)),
                     Paragraph(Text(
                         "For every nonempty cyclic window, the center of the algebra of " +
                         "continuous matrix fields over the visible phase circle is exactly " +
