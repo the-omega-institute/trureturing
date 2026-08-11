@@ -1,4 +1,5 @@
 using YamlDotNet.RepresentationModel;
+using System.Text.RegularExpressions;
 
 namespace StrataLint.Tests;
 
@@ -34,14 +35,26 @@ public sealed class AdmissionWorkflowTests
         Assert.Equal("1", Assert.IsType<YamlScalarNode>(
             environment.Children[new YamlScalarNode("STRATALINT_REQUIRE_LIVE_REPORT")]).Value);
         var run = Assert.IsType<YamlScalarNode>(reconciliation.Children[new YamlScalarNode("run")]).Value!;
-        Assert.Contains(
-            "FullyQualifiedName=StrataLint.Scribe.Tests.StatementProjectionPilotTests.LiveReportMatchesPinnedFixtureWhenAvailable",
+        var expectedTests = new HashSet<string>(StringComparer.Ordinal)
+        {
+            "StrataLint.Scribe.Tests.StatementProjectionPilotTests.LiveReportMatchesPinnedFixtureWhenAvailable",
+            "StrataLint.Scribe.Tests.DocumentDiscoveryTests.GeneratedMarkdownIsDeterministicAndMatchesTheCommittedTree",
+        };
+        var filterTests = Regex.Matches(run, @"FullyQualifiedName=([^|'\s]+)")
+            .Select(static match => match.Groups[1].Value)
+            .ToHashSet(StringComparer.Ordinal);
+        var pythonExpectedBlock = Regex.Match(
             run,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "FullyQualifiedName=StrataLint.Scribe.Tests.DocumentDiscoveryTests.GeneratedMarkdownIsDeterministicAndMatchesTheCommittedTree",
-            run,
-            StringComparison.Ordinal);
+            @"(?s)expected\s*=\s*\{(?<body>.*?)\}",
+            RegexOptions.CultureInvariant);
+        Assert.True(pythonExpectedBlock.Success, "the TRX validator must declare its expected test-name set");
+        var validatorTests = Regex.Matches(pythonExpectedBlock.Groups["body"].Value, "[\"'](?<name>[^\"']+)[\"']")
+            .Select(static match => match.Groups["name"].Value)
+            .ToHashSet(StringComparer.Ordinal);
+
+        Assert.Equal(expectedTests.Order(), filterTests.Order());
+        Assert.Equal(expectedTests.Order(), validatorTests.Order());
+        Assert.Equal(filterTests.Order(), validatorTests.Order());
         Assert.Contains("--logger \"trx;LogFileName=$results\"", run, StringComparison.Ordinal);
         Assert.Contains("len(results) != 2", run, StringComparison.Ordinal);
         Assert.Contains("set(names) != expected", run, StringComparison.Ordinal);
