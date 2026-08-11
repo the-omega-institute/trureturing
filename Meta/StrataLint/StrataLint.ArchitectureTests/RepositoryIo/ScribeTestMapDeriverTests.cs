@@ -75,8 +75,9 @@ public sealed class ScribeTestMapDeriverTests
         Assert.Equal(["B.json", "CLAUDE.md"], map.Methods.Single(method => method.Id.EndsWith(".B", StringComparison.Ordinal)).Paths);
         Assert.Equal(["C.json", "CLAUDE.md"], map.Methods.Single(method => method.Id.EndsWith(".C", StringComparison.Ordinal)).Paths);
         Assert.Equal(["CLAUDE.md", "D.json"], map.Methods.Single(method => method.Id.EndsWith(".D", StringComparison.Ordinal)).Paths);
-        Assert.Equal(TestMapUnknownReason.DirectoryEnumeration,
-            Assert.Single(map.Methods.Single(method => method.Id.EndsWith(".E", StringComparison.Ordinal)).UnknownReasons));
+        var enumerating = map.Methods.Single(method => method.Id.EndsWith(".E", StringComparison.Ordinal));
+        Assert.Equal(["CLAUDE.md", "E"], enumerating.Paths);
+        Assert.Equal(TestMapUnknownReason.DirectoryEnumeration, Assert.Single(enumerating.UnknownReasons));
     }
 
     private static ScribeTestMap Derive(string path)

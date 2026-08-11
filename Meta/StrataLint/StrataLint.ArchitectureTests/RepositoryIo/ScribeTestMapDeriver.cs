@@ -122,6 +122,7 @@ internal static class ScribeTestMapDeriver
             if (IsAccessorCall(invocation, "EnumerateFiles"))
             {
                 reasons.Add(TestMapUnknownReason.DirectoryEnumeration);
+                AddLiteralCreatePath(invocation.ArgumentList.Arguments.FirstOrDefault()?.Expression, paths, reasons);
                 continue;
             }
 
@@ -130,23 +131,32 @@ internal static class ScribeTestMapDeriver
                 continue;
             }
 
-            var create = invocation.ArgumentList.Arguments.FirstOrDefault()?.Expression
-                .DescendantNodesAndSelf().OfType<InvocationExpressionSyntax>()
-                .FirstOrDefault(static candidate => candidate.Expression is MemberAccessExpressionSyntax
-                {
-                    Expression: IdentifierNameSyntax { Identifier.ValueText: "RepositoryRelativePath" },
-                    Name.Identifier.ValueText: "Create",
-                });
-            var expression = create?.ArgumentList.Arguments.SingleOrDefault()?.Expression;
-            if (expression is LiteralExpressionSyntax literal
-                && literal.IsKind(SyntaxKind.StringLiteralExpression))
+            AddLiteralCreatePath(invocation.ArgumentList.Arguments.FirstOrDefault()?.Expression, paths, reasons);
+        }
+    }
+
+    private static void AddLiteralCreatePath(
+        ExpressionSyntax? argument,
+        HashSet<string> paths,
+        HashSet<TestMapUnknownReason> reasons)
+    {
+        var create = argument
+            ?
+            .DescendantNodesAndSelf().OfType<InvocationExpressionSyntax>()
+            .FirstOrDefault(static candidate => candidate.Expression is MemberAccessExpressionSyntax
             {
-                paths.Add(literal.Token.ValueText.Replace('\\', '/'));
-            }
-            else
-            {
-                reasons.Add(TestMapUnknownReason.VariablePath);
-            }
+                Expression: IdentifierNameSyntax { Identifier.ValueText: "RepositoryRelativePath" },
+                Name.Identifier.ValueText: "Create",
+            });
+        var expression = create?.ArgumentList.Arguments.SingleOrDefault()?.Expression;
+        if (expression is LiteralExpressionSyntax literal
+            && literal.IsKind(SyntaxKind.StringLiteralExpression))
+        {
+            paths.Add(literal.Token.ValueText.Replace('\\', '/'));
+        }
+        else
+        {
+            reasons.Add(TestMapUnknownReason.VariablePath);
         }
     }
 
