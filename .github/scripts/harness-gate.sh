@@ -106,6 +106,7 @@ mark() {
 }
 
 dotnet restore "$JUDGE_ROOT/Meta/StrataLint/StrataLint.sln" --locked-mode
+mark restore-judge
 dotnet build \
   "$JUDGE_ROOT/Meta/StrataLint/StrataLint.sln" \
   --no-restore \

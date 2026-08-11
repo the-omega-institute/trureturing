@@ -4,8 +4,18 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
+[Collection("Lean report environment")]
 public sealed class LeanReportPairScriptTests
 {
+    private const string InputHelperPath = "Meta/StrataLint/scripts/report/lean-report-input.sh";
+    private const string MergeCommandPath = "Meta/StrataLint/StrataLint.Cli/Commands/LeanReport/LeanReportMergeCommand.cs";
+    private const string RawReportPath = "Meta/StrataLint/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs";
+    private const string CanonicalWriterPath = "Meta/StrataLint/StrataLint.Engine/Snapshot/StructuredCanonicalWriter.cs";
+    private const string ScribeProgramPath = "Meta/StrataLint/StrataLint.Scribe/ScribeProgram.cs";
+    private static readonly string CliProjectPath = string.Join(
+        '/', "Meta", "StrataLint", "StrataLint.Cli", "StrataLint.Cli.csproj");
+    private static readonly string EngineProjectPath = string.Join(
+        '/', "Meta", "StrataLint", "StrataLint.Engine", "StrataLint.Engine.csproj");
     [Fact]
     public void EqualInputsRunProducerOnceAndAttestBaselineReuse()
     {
@@ -39,7 +49,6 @@ public sealed class LeanReportPairScriptTests
     [InlineData("toolchain")]
     [InlineData("lakefile")]
     [InlineData("manifest")]
-    [InlineData("inspector")]
     public void AnyRepositoryInputMismatchRunsBothProducers(string mutation)
     {
         using var fixture = new LeanReportPairFixture();
@@ -48,11 +57,70 @@ public sealed class LeanReportPairScriptTests
         var result = fixture.Run();
 
         Assert.Equal(0, result.ExitCode);
-        Assert.Equal(2, fixture.ProducerInvocationCount);
+        Assert.True(
+            fixture.ProducerInvocationCount == 2,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
         using var candidate = fixture.ReadCandidateProvenance();
         using var baseline = fixture.ReadBaselineProvenance();
         Assert.Equal("produced", baseline.RootElement.GetProperty("mode").GetString());
         Assert.Equal("baseline", baseline.RootElement.GetProperty("source_side").GetString());
+        Assert.NotEqual(
+            candidate.RootElement.GetProperty("input_address").GetString(),
+            baseline.RootElement.GetProperty("input_address").GetString());
+    }
+
+    [Fact]
+    public void BaselineMissingProducerInputDisablesReuseWithoutFailingProduction()
+    {
+        using var fixture = new LeanReportPairFixture();
+        fixture.RemoveBaselineProducerInput(MergeCommandPath);
+
+        var result = fixture.Run();
+
+        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+        Assert.True(
+            fixture.ProducerInvocationCount == 2,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+        using var candidate = fixture.ReadCandidateProvenance();
+        using var baseline = fixture.ReadBaselineProvenance();
+        Assert.NotEqual(
+            candidate.RootElement.GetProperty("input_address").GetString(),
+            baseline.RootElement.GetProperty("input_address").GetString());
+    }
+
+    [Fact]
+    public void CandidateSourceSetChangeDisablesReuseWithoutFailingProduction()
+    {
+        using var fixture = new LeanReportPairFixture();
+        fixture.RemoveCandidateProducerInput(MergeCommandPath);
+
+        var result = fixture.Run();
+
+        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+        Assert.Equal(2, fixture.ProducerInvocationCount);
+        using var candidate = fixture.ReadCandidateProvenance();
+        using var baseline = fixture.ReadBaselineProvenance();
+        Assert.NotEqual(
+            candidate.RootElement.GetProperty("input_address").GetString(),
+            baseline.RootElement.GetProperty("input_address").GetString());
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void IncompleteProducerClosureOnBothSidesDisablesReuseWithoutFailingProduction(bool leaveEmptyDirectory)
+    {
+        using var fixture = new LeanReportPairFixture();
+        fixture.RemoveProducerClosureDirectoryFromBothSides(leaveEmptyDirectory);
+
+        var result = fixture.Run();
+
+        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+        Assert.True(
+            fixture.ProducerInvocationCount == 2,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+        using var candidate = fixture.ReadCandidateProvenance();
+        using var baseline = fixture.ReadBaselineProvenance();
         Assert.NotEqual(
             candidate.RootElement.GetProperty("input_address").GetString(),
             baseline.RootElement.GetProperty("input_address").GetString());
@@ -91,6 +159,41 @@ public sealed class LeanReportPairScriptTests
         Assert.Equal("lean-producer-candidate", metric.GetProperty("role").GetString());
     }
 
+    [Fact]
+    public void PairScriptPinsPerModuleReuseOff()
+    {
+        var script = File.ReadAllText(Path.Combine(
+            FindRepositoryRoot(), "Meta", "StrataLint", "scripts", "lean-report-pair.sh"));
+
+        Assert.Contains("Per-module reuse is disabled", script, StringComparison.Ordinal);
+        Assert.DoesNotContain("--module-cache-report", script, StringComparison.Ordinal);
+        Assert.DoesNotContain("--module-cache-manifest", script, StringComparison.Ordinal);
+        Assert.DoesNotContain("--modules-file", script, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ManifestAcceptsABundleProducedByThePairScript()
+    {
+        using var fixture = new LeanReportPairFixture();
+        Assert.Equal(0, fixture.Run().ExitCode);
+
+        var result = fixture.VerifyCandidateManifest();
+
+        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    private static string FindRepositoryRoot()
+    {
+        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
+             current is not null;
+             current = current.Parent)
+        {
+            if (File.Exists(Path.Combine(current.FullName, "CLAUDE.md"))) return current.FullName;
+        }
+
+        throw new DirectoryNotFoundException("Could not locate repository root.");
+    }
+
     private sealed class LeanReportPairFixture : IDisposable
     {
         private readonly TemporaryDirectory temporary = new();
@@ -124,6 +227,14 @@ public sealed class LeanReportPairScriptTests
                 "def producerFixture : True := by trivial\n",
                 new UTF8Encoding(false));
             File.WriteAllText(producer, FakeProducer, new UTF8Encoding(false));
+            foreach (var root in new[] { candidateRoot, baselineRoot })
+            {
+                File.WriteAllText(Path.Combine(root, "Meta", "StrataLint", "lean-inspector", "inspect.sh"), FakeProducer, new UTF8Encoding(false));
+                File.WriteAllText(
+                    Path.Combine(root, "Meta", "StrataLint", "lean-inspector", "Inspector.lean"),
+                    "def producerFixture : True := by trivial\n",
+                    new UTF8Encoding(false));
+            }
             var chmod = BoundedProcessRunner.Run(
                 "chmod",
                 ["+x", producer],
@@ -184,6 +295,22 @@ public sealed class LeanReportPairScriptTests
         internal void AppendProducerComment() =>
             File.AppendAllText(producer, "\n# producer mutation\n", new UTF8Encoding(false));
 
+        internal void RemoveBaselineProducerInput(string relative) =>
+            File.Delete(Path.Combine(baselineRoot, relative.Replace('/', Path.DirectorySeparatorChar)));
+
+        internal void RemoveCandidateProducerInput(string relative) =>
+            File.Delete(Path.Combine(candidateRoot, relative.Replace('/', Path.DirectorySeparatorChar)));
+
+        internal void RemoveProducerClosureDirectoryFromBothSides(bool leaveEmptyDirectory)
+        {
+            foreach (var root in new[] { candidateRoot, baselineRoot })
+            {
+                var directory = Path.Combine(root, "Meta", "StrataLint", "StrataLint.Cli");
+                Directory.Delete(directory, recursive: true);
+                if (leaveEmptyDirectory) Directory.CreateDirectory(directory);
+            }
+        }
+
         internal JsonDocument ReadCandidateProvenance() =>
             JsonDocument.Parse(File.ReadAllBytes(candidateReport + ".provenance.json"));
 
@@ -193,6 +320,26 @@ public sealed class LeanReportPairScriptTests
         internal IReadOnlyList<JsonElement> ReadMetrics() => File.ReadAllLines(metricsLog)
             .Select(line => JsonDocument.Parse(line).RootElement.Clone())
             .ToArray();
+
+        internal ProcessOutput VerifyCandidateManifest()
+        {
+            var helper = Path.Combine(FindRepositoryRoot(), InputHelperPath);
+            var manifest = Path.Combine(temporary.Path, "candidate-modules.tsv");
+            var generated = BoundedProcessRunner.Run(
+                "bash",
+                [helper, "manifest", "--repository", candidateRoot, "--report", candidateReport],
+                temporary.Path,
+                TimeSpan.FromSeconds(30),
+                1024 * 1024);
+            Assert.Equal(0, generated.ExitCode);
+            File.WriteAllBytes(manifest, generated.StandardOutput);
+            return BoundedProcessRunner.Run(
+                "bash",
+                [helper, "verify-manifest", "--repository", candidateRoot, "--report", candidateReport, "--manifest", manifest],
+                temporary.Path,
+                TimeSpan.FromSeconds(30),
+                1024 * 1024);
+        }
 
         public void Dispose() => temporary.Dispose();
 
@@ -228,6 +375,26 @@ public sealed class LeanReportPairScriptTests
                 Path.Combine(root, "Meta", "StrataLint", "lean-inspector", "Inspector.lean"),
                 "def residentFixture : True := by trivial\n",
                 new UTF8Encoding(false));
+            WriteProducerInput(root, InputHelperPath);
+            WriteProducerInput(root, MergeCommandPath);
+            WriteProducerInput(root, RawReportPath);
+            WriteProducerInput(root, CanonicalWriterPath);
+            WriteProducerInput(root, ScribeProgramPath);
+            WriteProducerInput(root, CliProjectPath);
+            WriteProducerInput(root, EngineProjectPath);
+            WriteProducerInput(root, "Directory.Build.props");
+        }
+
+        private static void WriteProducerInput(string root, string relative)
+        {
+            var path = Path.Combine(root, relative.Replace('/', Path.DirectorySeparatorChar));
+            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+            var contents = relative.EndsWith(".csproj", StringComparison.Ordinal)
+                ? "<Project Sdk=\"Microsoft.NET.Sdk\" />\n"
+                : relative.EndsWith(".props", StringComparison.Ordinal)
+                    ? "<Project />\n"
+                    : "fixture\n";
+            File.WriteAllText(path, contents, new UTF8Encoding(false));
         }
 
         private static string FindRepositoryRoot()
