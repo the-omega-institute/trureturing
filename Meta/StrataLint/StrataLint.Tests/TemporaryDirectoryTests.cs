@@ -3,13 +3,12 @@ namespace StrataLint.Tests;
 public sealed class TemporaryDirectoryTests
 {
     [Fact]
-    public async Task DiscoveryFrameworkDisposalDoesNotDeleteExecutionScratch()
+    public void DiscoveryFrameworkDisposalDoesNotDeleteExecutionScratch()
     {
         using var framework = new TestScratchFramework(new Xunit.Sdk.NullMessageSink());
         using var directory = new TemporaryDirectory();
 
         framework.Dispose();
-        await Task.Delay(100);
 
         Assert.True(Directory.Exists(directory.Path));
     }

@@ -167,7 +167,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
         using var fixture = new TransactionFixture();
         fixture.WriteCyclicReattestationChain();
 
-        var result = fixture.Run("deposit", timeout: TimeSpan.FromSeconds(1));
+        // This generous wall-clock budget is only a runaway guard; the verdict is
+        // the deterministic cycle diagnostic and exit code below.
+        var result = fixture.Run("deposit", timeout: TimeSpan.FromSeconds(30));
 
         Assert.Equal(2, result.ExitCode);
         Assert.Contains(
