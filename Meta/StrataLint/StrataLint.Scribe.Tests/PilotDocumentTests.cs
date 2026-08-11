@@ -125,7 +125,8 @@ public sealed class DocumentDiscoveryTests
         //   钉死其为红。此外 `Scribe/Emission/ScribeEmitter.cs:233-242` 也仍对提交树逐字节比对。
         // 亦即 FILEMAP 的 `consumed_by = ["reader"]` 并未反映实情:它有机器消费者。
         //
-        // 本测试恢复的字节断言让 CI 在 admission 之外执行同一道重放;准入侧两处保持不动,
+        // 本测试与 admission 侧 ScribeEmitter.Verify 仅在逐文档 committed-byte 比对上部分等价;
+        // 它不等价于 admission 的完整验证。准入侧两处保持不动,
         // 是否该删须另行按四项合取裁决(裁决时不得再以 FILEMAP 自声明字段为据)。
         Assert.NotEmpty(DocumentDefinitions.All);
         foreach (var definition in DocumentDefinitions.All)
