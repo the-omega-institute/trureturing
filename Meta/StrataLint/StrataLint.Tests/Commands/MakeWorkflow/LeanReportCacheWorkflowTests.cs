@@ -5,6 +5,8 @@ namespace StrataLint.Tests;
 public sealed class LeanReportCacheWorkflowTests
 {
     private const string AdmissionWorkflowPath = ".github/workflows/ci.yml";
+    private static readonly string PairScriptPath = string.Join(
+        '/', "Meta", "StrataLint", "scripts", "lean-report-pair.sh");
 
     [Fact]
     public void PerModuleReuseIsDisabledUntilProducerIdentityCoversTheExecutedToolchain()
@@ -15,7 +17,7 @@ public sealed class LeanReportCacheWorkflowTests
             .Split("      - name: ", StringSplitOptions.None)[0];
         var productionStep = workflow.Split("      - name: Produce source-bound canonical Lean reports\n", StringSplitOptions.None)[1]
             .Split("      - name: ", StringSplitOptions.None)[0];
-        var pair = File.ReadAllText(Path.Combine(root, "Meta/StrataLint/scripts/lean-report-pair.sh"));
+        var pair = File.ReadAllText(Path.Combine(root, PairScriptPath));
 
         Assert.Contains("pair-reusable == 'true'", restoreStep, StringComparison.Ordinal);
         Assert.DoesNotContain("restore-keys:", restoreStep, StringComparison.Ordinal);
