@@ -42,13 +42,9 @@ internal readonly record struct RepositoryRelativePath
 
 internal sealed class RepositoryAccessor
 {
-    private readonly HashSet<RepositoryRelativePath> accessedPaths = [];
-
     private RepositoryAccessor(RepositoryRoot root) => Root = root;
 
     internal RepositoryRoot Root { get; }
-
-    internal IReadOnlySet<RepositoryRelativePath> AccessedPaths => accessedPaths;
 
     internal static RepositoryAccessor Discover(RepositoryRootCriterion criterion) =>
         Discover(AppContext.BaseDirectory, criterion);
@@ -71,40 +67,30 @@ internal sealed class RepositoryAccessor
     }
 
     internal string ReadAllText(RepositoryRelativePath path) =>
-        File.ReadAllText(RecordAndResolve(path));
+        File.ReadAllText(Resolve(path));
 
     internal byte[] ReadAllBytes(RepositoryRelativePath path) =>
-        File.ReadAllBytes(RecordAndResolve(path));
+        File.ReadAllBytes(Resolve(path));
 
-    internal bool FileExists(RepositoryRelativePath path) => File.Exists(RecordAndResolve(path));
+    internal bool FileExists(RepositoryRelativePath path) => File.Exists(Resolve(path));
 
-    internal string GetFullPath(RepositoryRelativePath path) => RecordAndResolve(path);
+    internal string GetFullPath(RepositoryRelativePath path) => Resolve(path);
 
     internal void CopyTo(
         RepositoryRelativePath source,
         string destination,
         bool overwrite = false) =>
-        File.Copy(RecordAndResolve(source), destination, overwrite);
+        File.Copy(Resolve(source), destination, overwrite);
 
     internal IReadOnlyList<RepositoryRelativePath> EnumerateFiles(
         RepositoryRelativePath directory,
-        string searchPattern)
-    {
-        accessedPaths.Add(directory);
-        return Directory
-            .EnumerateFiles(Resolve(directory), searchPattern, SearchOption.AllDirectories)
-            .Select(path => RepositoryRelativePath.Create(Path.GetRelativePath(Root.FullPath, path)))
-            .ToArray();
-    }
+        string searchPattern) => Directory
+        .EnumerateFiles(Resolve(directory), searchPattern, SearchOption.AllDirectories)
+        .Select(path => RepositoryRelativePath.Create(Path.GetRelativePath(Root.FullPath, path)))
+        .ToArray();
 
     private string Resolve(RepositoryRelativePath path) =>
         Path.Combine(Root.FullPath, path.Value.Replace('/', Path.DirectorySeparatorChar));
-
-    private string RecordAndResolve(RepositoryRelativePath path)
-    {
-        accessedPaths.Add(path);
-        return Resolve(path);
-    }
 
     private static bool Matches(string root, RepositoryRootCriterion criterion) => criterion switch
     {

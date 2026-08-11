@@ -91,6 +91,5 @@ public sealed class RepositoryAccessorTests
         var path = RepositoryRelativePath.Create(RootMarkerPath);
 
         Assert.NotEmpty(repository.ReadAllText(path));
-        Assert.Contains(path, repository.AccessedPaths);
     }
 }
