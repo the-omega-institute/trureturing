@@ -403,6 +403,14 @@ public sealed partial class ProductionEnvironmentTests
             DigestionCasStore.RootPath.Replace('/', Path.DirectorySeparatorChar),
             coarse.CasRef["sha256:".Length..]);
         Assert.Equal(malformedBytes, File.ReadAllBytes(coarsePath));
+
+        // The per-source line above is emitted before the status table, which runs to
+        // thousands of lines, so on a terminal it is off-screen by the time the command
+        // returns. A run that degraded a volume has to say so where a reader lands.
+        var trailer = result.Output.TrimEnd('\n').Split('\n')[^1];
+        Assert.Equal(
+            "INGEST_INCOMPLETE 1 source registered without being atomised: fixture-source",
+            trailer);
     }
 
     [Fact]
