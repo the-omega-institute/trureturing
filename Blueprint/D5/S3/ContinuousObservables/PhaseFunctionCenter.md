@@ -6,13 +6,17 @@ The center of continuous cyclic-window matrix observables is the phase-function 
 
 **Theorem 1.1 (The continuous window center is the phase-function algebra).**
 
-$$\forall M\in \mathbb{N}_{>0}, Z(C(\mathbb{T}, M_M(\mathbb{C}))) = \operatorname{range}(\operatorname{phaseScalarObservable}_M).$$
+Lean statement: `D5/S3/ContinuousObservables/PhaseFunctionCenter.continuous_window_center_eq_phase_functions`
 
 *Proof.* Machine-checked in Lean as `D5/S3/ContinuousObservables/PhaseFunctionCenter.continuous_window_center_eq_phase_functions` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
+
+$$
+\forall M\in \mathbb{N}_{>0}, Z(C(\mathbb{T}, M_M(\mathbb{C}))) = \operatorname{range}(\operatorname{phaseScalarObservable}_M).
+$$
 
 For every nonempty cyclic window, the center of the algebra of continuous matrix fields over the visible phase circle is exactly the range of scalar continuous fields. This identifies the center with the classical phase-function algebra C(T).
 
