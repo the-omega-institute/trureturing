@@ -115,6 +115,10 @@ public static class ScribeEmitter
                         ScribeEmissionAttestation.DefinitionPath(definition.Document.Header.Gid.Value))))
                     .ToArray()
                 : [.. repositoryDefinitions];
+            var declarationCatalog = DeclarationCatalog.Create(leanReport);
+            definitions = definitions
+                .Select(definition => definition.ResolveDeclarations(declarationCatalog))
+                .ToArray();
             if (tolerateAbsentDocuments && definitions.Length == 0 && !repositoryDefinitions.IsEmpty)
             {
                 // A tree owning zero of this binary's documents is not an older world of this

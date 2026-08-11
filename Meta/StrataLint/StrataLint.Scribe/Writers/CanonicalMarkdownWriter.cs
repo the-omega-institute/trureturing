@@ -16,6 +16,10 @@ public static class CanonicalMarkdownWriter
         DocumentGraph? graph = null)
     {
         ArgumentNullException.ThrowIfNull(document);
+        if (leanReport is not null && document.HasReportDerivedDeclarations)
+        {
+            document = document.ResolveDeclarations(DeclarationCatalog.Create(leanReport));
+        }
         var builder = new StringBuilder();
         builder.Append("# ").Append(document.Title.Value).Append("\n\n");
         builder.Append("## Abstract\n\n")

@@ -131,7 +131,10 @@ public sealed record DocumentGraphExportProjection(
                 $"Document graph is invalid: {graph.Findings[0].Code} {graph.Findings[0].Message}");
         }
 
-        var material = documents.ToImmutableArray();
+        var catalog = DeclarationCatalog.Create(leanReport);
+        var material = documents
+            .Select(item => item with { Document = item.Document.ResolveDeclarations(catalog) })
+            .ToImmutableArray();
         var byGid = material.ToDictionary(
             static item => item.Document.Header.Gid.Value,
             StringComparer.Ordinal);

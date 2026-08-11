@@ -118,7 +118,8 @@ public abstract record DocumentBlock
             DescribeStatement statement,
             DescribeProvenance provenance,
             BlockSequence content,
-            Formula? statementFormula = null)
+            Formula? statementFormula = null,
+            DescribeKindSource? kindSource = null)
         {
             Id = id ?? throw new ArgumentNullException(nameof(id));
             Title = title ?? throw new ArgumentNullException(nameof(title));
@@ -139,11 +140,29 @@ public abstract record DocumentBlock
                 or DescribeKind.Remark
                     ? kind
                     : throw new ArgumentOutOfRangeException(nameof(kind));
+            KindSource = kindSource ?? new DescribeKindSource.Authored(kind);
         }
 
         public DescribeId Id { get; }
 
         public DescribeKind Kind { get; }
+
+        internal DescribeKindSource KindSource { get; }
+
+        internal Describe Resolve(DeclarationCatalog catalog)
+        {
+            ArgumentNullException.ThrowIfNull(catalog);
+            var resolvedContent = ResolveBlocks(Content, catalog);
+            var resolvedKind = catalog.ResolveKind(this);
+            return new Describe(
+                Id,
+                resolvedKind,
+                Title,
+                Statement,
+                Provenance,
+                resolvedContent,
+                StatementFormula);
+        }
 
         public Heading Title { get; }
 
@@ -215,6 +234,28 @@ public abstract record DocumentBlock
             BlockSequence content) =>
             new(id, DescribeKind.Remark, title, statement, provenance, content);
 
+        internal static Describe ReportDerived(
+            DescribeId id,
+            Heading title,
+            DeclarationHandle handle,
+            DescribeProvenance provenance,
+            BlockSequence content,
+            DescribeRole? role) =>
+            new(
+                id,
+                role switch
+                {
+                    DescribeRole.Definition => DescribeKind.Definition,
+                    DescribeRole.Proposition => DescribeKind.Proposition,
+                    DescribeRole.Lemma => DescribeKind.Lemma,
+                    _ => DescribeKind.Theorem,
+                },
+                title,
+                DescribeStatement.FromLean(LeanDeclarationRef.Create(handle.Value)),
+                provenance,
+                content,
+                kindSource: new DescribeKindSource.ReportDerived(handle, role));
+
         private static Describe LeanDescribe(
             DescribeId id,
             DescribeKind kind,
@@ -240,6 +281,22 @@ public abstract record DocumentBlock
                 formula);
         }
     }
+
+    internal static BlockSequence ResolveBlocks(BlockSequence content, DeclarationCatalog catalog) =>
+        BlockSequence.Create(content.Items.Select(block => block switch
+        {
+            Section section => new Section(section.Title, ResolveBlocks(section.Content, catalog)),
+            Describe describe => describe.Resolve(catalog),
+            _ => block,
+        }));
+
+    internal static bool HasReportDerived(BlockSequence content) => content.Items.Any(block => block switch
+    {
+        Section section => HasReportDerived(section.Content),
+        Describe describe => describe.KindSource is DescribeKindSource.ReportDerived
+            || HasReportDerived(describe.Content),
+        _ => false,
+    });
 
 }
 
@@ -282,6 +339,11 @@ public sealed class ScribeDocument
         RequireUniqueDescribeIds(content);
         return new ScribeDocument(header, title, content, edgeArray);
     }
+
+    internal ScribeDocument ResolveDeclarations(DeclarationCatalog catalog) =>
+        new(Header, Title, DocumentBlock.ResolveBlocks(Content, catalog), Edges);
+
+    internal bool HasReportDerivedDeclarations => DocumentBlock.HasReportDerived(Content);
 
     private static void RequireUniqueDescribeIds(BlockSequence content)
     {

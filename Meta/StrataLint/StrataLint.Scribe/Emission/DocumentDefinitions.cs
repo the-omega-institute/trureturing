@@ -32,6 +32,9 @@ public sealed record DocumentDefinition
         ArgumentException.ThrowIfNullOrWhiteSpace(sourcePath);
         return new DocumentDefinition(document, sourcePath);
     }
+
+    internal DocumentDefinition ResolveDeclarations(DeclarationCatalog catalog) =>
+        new(Document.ResolveDeclarations(catalog), SourcePath);
 }
 
 public static class DocumentDefinitions
