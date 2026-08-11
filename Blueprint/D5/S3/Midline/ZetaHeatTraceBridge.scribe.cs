@@ -6,19 +6,18 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Midline;
 
 internal sealed class ZetaHeatTraceBridgeDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Midline/ZetaHeatTraceBridge",
-            "Prime-axis logarithmic length derives the labeled-zeta Hilbert criterion from the universal heat-abscissa theorem."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Prime-axis logarithmic length derives the labeled-zeta Hilbert criterion from the universal heat-abscissa theorem.",
         H("The Labeled-Zeta Heat-Trace Bridge"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+                        Describe.Lean(
                 DescribeId.Create("labeled-zeta-is-the-prime-axis-specialization"),
-                H("Labeled zeta is the prime-axis specialization"),
-                LeanTheorem(
+                DeclarationHandle.Create(
                     "D5/S3/Midline/ZetaHeatTraceBridge.zeta_mem_iff_from_universal_heat_trace"),
-                In(Seq(Forall, Sp, F.Id("s"), InMacro, Mathbb, Grp(F.Id("C")), Comma, Esc, Operatorname, Grp(F.Id("MemLp")), Open, Operatorname, Grp(F.Id("labeledZetaCoefficient")), Open, F.Id("s"), Close, Comma, D(2), Close, Leftrightarrow, Frac, D(1, 2), Lt, Re, Open, F.Id("s"), Close)),
-                DescribeProvenance.RepoDerived(),
+                H("Labeled zeta is the prime-axis specialization"),
+                StatementSource.FromAuthor(In(Seq(Forall, Sp, F.Id("s"), InMacro, Mathbb, Grp(F.Id("C")), Comma, Esc, Operatorname, Grp(F.Id("MemLp")), Open, Operatorname, Grp(F.Id("labeledZetaCoefficient")), Open, F.Id("s"), Close, Comma, D(2), Close, Leftrightarrow, Frac, D(1, 2), Lt, Re, Open, F.Id("s"), Close))),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "The bridge identifies the universal heat coefficient with the labeled-zeta coefficient, proves boundary-divergent abscissa one by transporting to the p-series on natural addresses, and then applies the universal strict theorem.")))))));
+                    "The bridge identifies the universal heat coefficient with the labeled-zeta coefficient, proves boundary-divergent abscissa one by transporting to the p-series on natural addresses, and then applies the universal strict theorem."))),
+                DescribeRole.Theorem))));
 }
