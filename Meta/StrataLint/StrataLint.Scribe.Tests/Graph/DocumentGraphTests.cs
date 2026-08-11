@@ -40,7 +40,7 @@ public sealed class DocumentGraphTests
             "D5/S0/Test/Source",
             [DocumentEdge.Dependency.Create(GidRef.Create("D5/S0/Test/Missing"))]);
 
-        var result = DocumentGraphAssembler.Assemble([source], EmptyLeanReport());
+        var result = DocumentGraphAssembler.Assemble([source], EmptyCatalog());
 
         var finding = Assert.Single(result.Findings);
         Assert.Equal("dangling-document-edge", finding.Code);
@@ -58,7 +58,7 @@ public sealed class DocumentGraphTests
             [DocumentEdge.Dependency.Create(GidRef.Create("D5/S0/Test/A"))]);
 
         var dependencyResult = DocumentGraphAssembler.Assemble(
-            [dependencyA, dependencyB], EmptyLeanReport());
+            [dependencyA, dependencyB], EmptyCatalog());
         var cycle = Assert.Single(dependencyResult.Findings);
         Assert.Equal("dependency-cycle", cycle.Code);
         Assert.Contains("D5/S0/Test/A -> D5/S0/Test/B -> D5/S0/Test/A", cycle.Message, StringComparison.Ordinal);
@@ -71,7 +71,7 @@ public sealed class DocumentGraphTests
             [DocumentEdge.NarrativeReference.ToDocument(GidRef.Create("D5/S0/Test/A"))]);
 
         Assert.Empty(DocumentGraphAssembler.Assemble(
-            [narrativeA, narrativeB], EmptyLeanReport()).Findings);
+            [narrativeA, narrativeB], EmptyCatalog()).Findings);
     }
 
     [Fact]
@@ -88,10 +88,10 @@ public sealed class DocumentGraphTests
                 DocumentEdge.Dependency.Create(GidRef.Create("D5/S0/Test/Target")),
             ]);
         var report = LeanReport(lean);
-        var graph = DocumentGraphAssembler.Assemble([source, target], report);
+        var catalog = DeclarationCatalog.Create(report);
+        var graph = DocumentGraphAssembler.Assemble([source, target], catalog);
         Assert.Empty(graph.Findings);
 
-        var catalog = DeclarationCatalog.Create(report);
         var first = CanonicalMarkdownWriter.Write(source, catalog, graph: graph);
         var second = CanonicalMarkdownWriter.Write(source, catalog, graph: graph);
         Assert.True(first.AsSpan().SequenceEqual(second.AsSpan()));
@@ -125,7 +125,7 @@ public sealed class DocumentGraphTests
 
         var graph = DocumentGraphAssembler.Assemble(
             [source, target],
-            report,
+            DeclarationCatalog.Create(report),
             autoWireDocumentGids: new HashSet<string>(StringComparer.Ordinal)
             {
                 source.Header.Gid.Value,
@@ -153,11 +153,35 @@ public sealed class DocumentGraphTests
 
         var graph = DocumentGraphAssembler.Assemble(
             [source],
-            report,
+            DeclarationCatalog.Create(report),
             autoWireDocumentGids: new HashSet<string>(StringComparer.Ordinal));
 
         var anchor = Assert.Single(graph.For(source).OfType<DocumentEdge.TruthAnchor>());
         Assert.Equal("anchor", anchor.DescribeId?.Value);
+    }
+
+    [Fact]
+    public void AssemblerRejectsSameSuffixWithDifferentCanonicalDeclarationName()
+    {
+        var source = DocumentWithLeanAnchor(
+            "D5/S0/Test/Source",
+            "D5/S0/Test/Source.anchor");
+        var report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>
+        {
+            ["D5/S0/Test/Source.lean"] = new(
+                [],
+                [new LeanDeclaration(
+                    "Other.Namespace.anchor",
+                    "theorem",
+                    "True",
+                    ["propext", "Quot.sound", "Classical.choice"])])
+        });
+
+        var graph = DocumentGraphAssembler.Assemble([source], DeclarationCatalog.Create(report));
+
+        var finding = Assert.Single(graph.Findings);
+        Assert.Equal("dangling-gid", finding.Code);
+        Assert.Contains("D5/S0/Test/Source.anchor", finding.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -169,7 +193,7 @@ public sealed class DocumentGraphTests
 
         var graph = DocumentGraphAssembler.Assemble(
             [source],
-            EmptyLeanReport(),
+            EmptyCatalog(),
             autoWireDocumentGids: new HashSet<string>(StringComparer.Ordinal));
 
         Assert.Empty(graph.For(source).OfType<DocumentEdge.NarrativeReference>());
@@ -184,7 +208,7 @@ public sealed class DocumentGraphTests
 
         var graph = DocumentGraphAssembler.Assemble(
             [source],
-            EmptyLeanReport(),
+            EmptyCatalog(),
             autoWireDocumentGids: null);
 
         Assert.Empty(graph.For(source).OfType<DocumentEdge.NarrativeReference>());
@@ -200,7 +224,7 @@ public sealed class DocumentGraphTests
 
         var graph = DocumentGraphAssembler.Assemble(
             [source, target],
-            EmptyLeanReport(),
+            EmptyCatalog(),
             autoWireDocumentGids: new HashSet<string>(StringComparer.Ordinal));
 
         var narrative = Assert.Single(graph.For(source).OfType<DocumentEdge.NarrativeReference>());
@@ -219,7 +243,7 @@ public sealed class DocumentGraphTests
 
         var graph = DocumentGraphAssembler.Assemble(
             [source],
-            EmptyLeanReport(),
+            EmptyCatalog(),
             autoWireDocumentGids: new HashSet<string>(StringComparer.Ordinal));
 
         var narrative = Assert.Single(graph.For(source).OfType<DocumentEdge.NarrativeReference>());
@@ -233,7 +257,8 @@ public sealed class DocumentGraphTests
     {
         var declaration = LeanDeclarationRef.Create("D5/S0/Test/Source.anchor");
         var source = DocumentWithTwoLeanAnchors("D5/S0/Test/Source", declaration);
-        var graph = DocumentGraphAssembler.Assemble([source], LeanReport(declaration));
+        var graph = DocumentGraphAssembler.Assemble(
+            [source], DeclarationCatalog.Create(LeanReport(declaration)));
 
         var anchors = graph.For(source).OfType<DocumentEdge.TruthAnchor>().ToArray();
         Assert.Equal(2, anchors.Length);
@@ -266,8 +291,8 @@ public sealed class DocumentGraphTests
             ]),
             edges ?? []);
 
-    private static LeanAxiomReport EmptyLeanReport() =>
-        LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>());
+    private static DeclarationCatalog EmptyCatalog() => DeclarationCatalog.Create(
+        LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>()));
 
     private static ScribeDocument DocumentWithLeanAnchor(string gid, string declaration) =>
         ScribeDocument.Create(
@@ -315,7 +340,7 @@ public sealed class DocumentGraphTests
             [reference.Reference.Path.Value] = new(
                 [],
                 [new LeanDeclaration(
-                    reference.Value,
+                    reference.Value.Replace('/', '.'),
                     "theorem",
                     "True",
                     ["propext", "Quot.sound", "Classical.choice"])])

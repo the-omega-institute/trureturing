@@ -121,7 +121,7 @@ public sealed class EmissionTests
             var census = ReceiptFreeDocumentCatalog.Load(root, documents);
             var graph = DocumentGraphAssembler.Assemble(
                 documents,
-                report,
+                DeclarationCatalog.Create(report),
                 census.ReceiptFreeDocumentGids);
             foreach (var definition in DocumentDefinitions.All)
             {

@@ -89,7 +89,7 @@ public sealed class DocumentDiscoveryTests
         var census = ReceiptFreeDocumentCatalog.Load(repositoryRoot, documents);
         var graph = DocumentGraphAssembler.Assemble(
             documents,
-            report,
+            DeclarationCatalog.Create(report),
             census.ReceiptFreeDocumentGids);
         var projection = DocumentGraphExportProjection.Create(
             DocumentDefinitions.All.Select(definition => new DocumentGraphDocument(

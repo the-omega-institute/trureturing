@@ -194,7 +194,7 @@ public sealed class ReportDerivedDeclarationTests
     }
 
     [Fact]
-    public void Only_explicit_report_parsing_boundaries_accept_a_lean_report()
+    public void LeanAxiomReportTypeBoundaryHasOnlyExplicitPublicParsingEntrypoints()
     {
         var scribeAssembly = typeof(DeclarationCatalog).Assembly;
         var publicMembers = scribeAssembly.ExportedTypes
@@ -212,8 +212,6 @@ public sealed class ReportDerivedDeclarationTests
             typeof(DeclarationCatalog).GetMethod(nameof(DeclarationCatalog.Create))!,
             // Legacy reference resolution turns one report entry into a verified declaration.
             typeof(LeanReferenceResolver).GetMethod(nameof(LeanReferenceResolver.Resolve))!,
-            // Graph construction alone needs raw module imports as well as declaration resolution.
-            typeof(DocumentGraphAssembler).GetMethod(nameof(DocumentGraphAssembler.Assemble))!,
         };
 
         Assert.Equal(
@@ -258,7 +256,7 @@ public sealed class ReportDerivedDeclarationTests
         var catalog = DeclarationCatalog.Create(report);
         var census = ReceiptFreeDocumentCatalog.Load(root, documents);
         var graph = DocumentGraphAssembler.Assemble(
-            documents, report, census.ReceiptFreeDocumentGids);
+            documents, catalog, census.ReceiptFreeDocumentGids);
 
         var expected = File.ReadAllBytes(Path.Combine(
             AppContext.BaseDirectory, "Fixtures", "JointCoordinates.before-migration.md"));

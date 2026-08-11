@@ -11,7 +11,8 @@ internal static class DescribeRepositoryValidator
         string repositoryRoot,
         IEnumerable<ScribeDocument> documents,
         LeanAxiomReport? leanReport = null,
-        LibraryNoteCatalogInspection? libraryInspection = null)
+        LibraryNoteCatalogInspection? libraryInspection = null,
+        DeclarationCatalog? declarationCatalog = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(documents);
@@ -29,7 +30,9 @@ internal static class DescribeRepositoryValidator
         var findings = ImmutableArray.CreateBuilder<DescribeRedFinding>();
         findings.AddRange(inspectedLibrary.Findings.Select(static finding =>
             new DescribeRedFinding(finding.Code, finding.Path, finding.Message)));
-        var graph = DocumentGraphAssembler.Assemble(material, leanReport);
+        var graph = DocumentGraphAssembler.Assemble(
+            material,
+            declarationCatalog ?? (leanReport is null ? null : DeclarationCatalog.Create(leanReport)));
         findings.AddRange(graph.Findings.Select(static finding =>
             new DescribeRedFinding(finding.Code, finding.Path, finding.Message)));
 

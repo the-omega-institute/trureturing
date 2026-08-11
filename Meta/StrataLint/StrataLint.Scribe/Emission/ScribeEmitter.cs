@@ -132,7 +132,8 @@ public static class ScribeEmitter
                 var findings = DescribeRepositoryValidator.Validate(
                     repositoryRoot,
                     definitions.Select(static definition => definition.Document),
-                    leanReport);
+                    leanReport,
+                    declarationCatalog: declarationCatalog);
                 if (!findings.IsEmpty)
                 {
                     foreach (var finding in findings)
@@ -152,7 +153,7 @@ public static class ScribeEmitter
                 tolerateAbsentDocuments);
             var graph = DocumentGraphAssembler.Assemble(
                 documents,
-                leanReport,
+                declarationCatalog,
                 census.ReceiptFreeDocumentGids);
             var wired = documents.Count(document => graph.For(document).Length > 0);
             var graphEdges = documents.SelectMany(document => graph.For(document)).ToArray();

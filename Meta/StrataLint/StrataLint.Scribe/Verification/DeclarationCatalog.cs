@@ -13,22 +13,22 @@ public sealed record ResolvedDeclaration(
 
 public sealed class DeclarationCatalog
 {
-    internal LeanAxiomReport SourceReport { get; }
-
     private readonly ImmutableDictionary<RepoPath,
         ImmutableDictionary<string, ImmutableArray<IndexedDeclaration>>> modules;
+    private readonly ImmutableDictionary<RepoPath, ImmutableArray<string>> imports;
 
     private DeclarationCatalog(
-        LeanAxiomReport sourceReport,
         ImmutableDictionary<RepoPath,
-            ImmutableDictionary<string, ImmutableArray<IndexedDeclaration>>> modules) =>
-        (SourceReport, this.modules) = (sourceReport, modules);
+            ImmutableDictionary<string, ImmutableArray<IndexedDeclaration>>> modules,
+        ImmutableDictionary<RepoPath, ImmutableArray<string>> imports) =>
+        (this.modules, this.imports) = (modules, imports);
 
     public static DeclarationCatalog Create(LeanAxiomReport report)
     {
         ArgumentNullException.ThrowIfNull(report);
         var modules = ImmutableDictionary.CreateBuilder<RepoPath,
             ImmutableDictionary<string, ImmutableArray<IndexedDeclaration>>>();
+        var imports = ImmutableDictionary.CreateBuilder<RepoPath, ImmutableArray<string>>();
         foreach (var (path, module) in report.Files)
         {
             if (!string.IsNullOrEmpty(module.Error))
@@ -45,8 +45,9 @@ public sealed class DeclarationCatalog
                         static group => group.Key,
                         static group => group.ToImmutableArray(),
                         StringComparer.Ordinal));
+            imports.Add(path, module.Imports);
         }
-        return new DeclarationCatalog(report, modules.ToImmutable());
+        return new DeclarationCatalog(modules.ToImmutable(), imports.ToImmutable());
     }
 
     public ResolvedDeclaration Resolve(DeclarationHandle handle)
@@ -85,6 +86,14 @@ public sealed class DeclarationCatalog
         DescribeKindSource.ReportDerived derived => ResolveNarrativeKind(Resolve(derived.Handle).Kind, derived.Role),
         _ => throw new InvalidOperationException("Unknown Describe kind source."),
     };
+
+    internal ImmutableArray<string> ImportsFor(RepoPath modulePath) =>
+        imports.TryGetValue(modulePath, out var moduleImports) ? moduleImports : [];
+
+    internal IEnumerable<LeanDeclaration> Declarations => modules.Values
+        .SelectMany(static module => module.Values)
+        .SelectMany(static declarations => declarations)
+        .Select(static declaration => declaration.Declaration);
 
     private static IndexedDeclaration Index(RepoPath path, LeanDeclaration declaration)
     {

@@ -5,36 +5,10 @@ namespace StrataLint.Scribe;
 
 public static class StatementProjectionReconciliation
 {
-    private const string ReportRelativePath = ".lake/build/stratalint/raw-lean-report.json";
-
-    public static void Verify(string repositoryRoot, bool requireLiveReport)
-    {
-        var reportPath = Path.Combine(repositoryRoot, ReportRelativePath);
-        if (!File.Exists(reportPath))
-        {
-            if (requireLiveReport)
-                throw new FileNotFoundException(
-                    $"Required live raw Lean report is absent at '{reportPath}'.",
-                    reportPath);
-            return;
-        }
-
-        using var report = JsonDocument.Parse(File.ReadAllBytes(reportPath));
-        Verify(repositoryRoot, report.RootElement.GetProperty("modules")
-            .EnumerateArray()
-            .SelectMany(module => module.GetProperty("declarations").EnumerateArray())
-            .Select(item => new LeanDeclaration(
-                item.GetProperty("name").GetString()!,
-                item.TryGetProperty("kind", out var kind) ? kind.GetString()! : "theorem",
-                item.GetProperty("type").GetString()!,
-                [])));
-    }
-
     public static void Verify(string repositoryRoot, DeclarationCatalog catalog)
     {
         ArgumentNullException.ThrowIfNull(catalog);
-        Verify(repositoryRoot, catalog.SourceReport.Files.Values
-            .SelectMany(static file => file.Declarations));
+        Verify(repositoryRoot, catalog.Declarations);
     }
 
     private static void Verify(string repositoryRoot, IEnumerable<LeanDeclaration> declarations)

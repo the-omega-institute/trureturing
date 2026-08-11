@@ -255,7 +255,7 @@ public sealed record DocumentGraphExportProjection(
         var census = ReceiptFreeDocumentCatalog.Load(repositoryRoot, documents);
         var graph = DocumentGraphAssembler.Assemble(
             documents,
-            catalog.SourceReport,
+            catalog,
             census.ReceiptFreeDocumentGids);
         var sources = definitions.Select(definition => new DocumentGraphDocument(
             definition.RelativePath.Value,
