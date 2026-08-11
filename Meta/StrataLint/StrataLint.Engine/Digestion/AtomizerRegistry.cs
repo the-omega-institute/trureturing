@@ -46,9 +46,7 @@ internal static class AtomizerRegistry
                 + ".");
         }
 
-        return IsDeclaredDialect(id)
-            ? DeclaredDialectAtomizer.Atomize(id, bytes, rules)
-            : Require(id).Atomize(bytes, rules);
+        return Require(id).Atomize(bytes, rules);
     }
 
     /// <summary>
@@ -64,7 +62,13 @@ internal static class AtomizerRegistry
     internal static AtomizerRegistration Require(string id) =>
         Atomizers.TryGetValue(id, out var registration)
             ? registration
-            : throw Unknown(id);
+            : IsDeclaredDialect(id)
+                // A declared dialect resolves its rules at atomization, not here: the
+                // registration only needs the residual stem, which the id already carries.
+                ? new AtomizerRegistration(
+                    (bytes, rules) => DeclaredDialectAtomizer.Atomize(id, bytes, rules),
+                    id[DeclaredDialectAtomizer.IdPrefix.Length..])
+                : throw Unknown(id);
 
     private static FormatException Unknown(string id) => new(
         $"Unknown atomizer id '{id}'. Registered atomizers: "
