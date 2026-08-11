@@ -97,7 +97,21 @@ jobs:
         run: make -C candidate dotnet
 
       - name: Run candidate golden and integration tests
-        run: make -C candidate test
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
+            event=pull-request
+            base="${{ github.event.pull_request.base.sha }}"
+          elif [[ "$GITHUB_EVENT_NAME" == "push" && "$GITHUB_REF" == "refs/heads/dev" ]]; then
+            event=dev-push
+            base="${{ github.event.before }}"
+          else
+            printf '%s\n' "unrecognized test-selection event: $GITHUB_EVENT_NAME $GITHUB_REF" >&2
+            exit 1
+          fi
+          git -C candidate diff --name-only "$base" HEAD > "$RUNNER_TEMP/changed-paths.txt"
+          make -C candidate test-select EVENT="$event" CHANGED_PATHS_FILE="$RUNNER_TEMP/changed-paths.txt"
 
       - name: Run candidate selftest twice and compare bytes
         shell: bash
