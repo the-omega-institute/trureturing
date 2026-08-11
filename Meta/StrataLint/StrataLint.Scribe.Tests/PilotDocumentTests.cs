@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Reflection;
 using StrataLint.Engine;
 
@@ -307,32 +308,59 @@ public sealed class DocumentDiscoveryTests
     public void SelectedResidualDocumentsCarryExactStatementsAndDiligentProvenance()
     {
         (string Document, string Id, DescribeKind Kind, string Declaration,
+            LeanDeclarationKind FormalKind,
             DescribeProvenanceKind Provenance, string? Reference)[] expected =
         [
             ("D5/S0/Carrier/AlgebraicModel", "quadratic-quotient-conjugation-trace-and-norm",
                 DescribeKind.Definition,
                 "D5/S0/Carrier/AlgebraicModel.golden_algebraic_model_spec",
+                LeanDeclarationKind.Theorem,
                 DescribeProvenanceKind.LiteratureAttested,
                 "D5/L/stewarttall2025algebraic"),
             ("D5/S0/Carrier/Norm", "norm-euclidean-division",
                 DescribeKind.Theorem,
                 "D5/S0/Carrier/Euclidean.golden_division",
+                LeanDeclarationKind.Theorem,
                 DescribeProvenanceKind.LiteratureAttested,
                 "D5/L/Carrier/chatland1949euclidean"),
             ("D5/S1/Depth/JointDepth", "admissible-joint-scale-digit-phase-depth",
                 DescribeKind.Definition,
                 "D5/S1/Depth/JointDepth.joint_depth_spec",
+                LeanDeclarationKind.Theorem,
                 DescribeProvenanceKind.RepoDerived, null),
             ("D5/S1/Digit/PrimeAxisAddition", "prime-axis-rowwise-normalization-product",
                 DescribeKind.Theorem,
                 "D5/S1/Digit/PrimeAxisAddition.prime_axis_addition_spec",
+                LeanDeclarationKind.Theorem,
                 DescribeProvenanceKind.RepoDerived, null),
             ("D5/S1/Scale/MinkowskiModelSet", "minkowski-lattice-window-and-labeled-model-set",
                 DescribeKind.Definition,
                 "D5/S1/Scale/MinkowskiModelSet.minkowski_model_set_spec",
+                LeanDeclarationKind.Theorem,
                 DescribeProvenanceKind.LiteratureAttested,
                 "D5/L/baakefrankgrimm2021three"),
         ];
+        var report = LeanAxiomReport.Create(expected
+            .GroupBy(item => DeclarationHandle.Create(item.Declaration).Reference!.Path.Value,
+                StringComparer.Ordinal)
+            .ToDictionary(
+                static group => group.Key,
+                static group => new LeanFileReport(
+                    [],
+                    group.Select(static item => new LeanDeclaration(
+                            item.Declaration.Replace('/', '.'),
+                            item.FormalKind switch
+                            {
+                                LeanDeclarationKind.Theorem => "theorem",
+                                LeanDeclarationKind.Definition => "def",
+                                _ => throw new InvalidOperationException(
+                                    $"Unsupported fixture declaration kind {item.FormalKind}."),
+                            },
+                            $"statement-v1(source={item.Declaration})",
+                            ImmutableArray.Create("propext", "Classical.choice", "Quot.sound")))
+                        .ToImmutableArray()),
+                StringComparer.Ordinal));
+        var catalog = DeclarationCatalog.Create(report);
 
         foreach (var item in expected)
         {
@@ -347,8 +375,9 @@ public sealed class DocumentDiscoveryTests
             Assert.Equal(item.Provenance, describe.ProvenanceKind);
             Assert.Equal(item.Reference, describe.LiteratureReference?.Value);
             Assert.Equal(item.Declaration, lean.Value.Value);
-            Assert.Equal(LeanDeclarationKind.Theorem, lean.Value.ExpectedKind);
-            Assert.True(lean.Value.RequireNoSorry);
+            var resolved = catalog.Resolve(DeclarationHandle.Create(item.Declaration));
+            Assert.Equal(item.FormalKind, resolved.FormalKind);
+            Assert.True(resolved.IsSorryFree);
         }
     }
 
