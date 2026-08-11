@@ -145,7 +145,7 @@ public sealed class TruthGraphJsonTests
                 new DocumentGraphDocument("Blueprint/D5/S0/Carrier/Source.md", source, "receipt-free"),
             ],
             graph,
-            report,
+            DeclarationCatalog.Create(report),
             new HashSet<string>(["D5/S0/Carrier/Target.lean"], StringComparer.Ordinal));
         var model = TruthGraphExportModel.Create(Build(
             new Dictionary<string, string> { ["D5/S0/Carrier/Target.lean"] = "theorem anchor : True := True.intro\n" },
@@ -156,7 +156,7 @@ public sealed class TruthGraphJsonTests
                 new DocumentGraphDocument("Blueprint/D5/S0/Carrier/Target.md", target, "receipt-bound"),
             ],
             DocumentGraphAssembler.Assemble([source, target], report),
-            report,
+            DeclarationCatalog.Create(report),
             new HashSet<string>(["D5/S0/Carrier/Target.lean"], StringComparer.Ordinal));
         var reorderedModel = TruthGraphExportModel.Create(Build(
             new Dictionary<string, string> { ["D5/S0/Carrier/Target.lean"] = "theorem anchor : True := True.intro\n" },
@@ -197,7 +197,7 @@ public sealed class TruthGraphJsonTests
         var projection = DocumentGraphExportProjection.Create(
             [new DocumentGraphDocument("Blueprint/D5/S0/Carrier/Target.md", document, "receipt-bound")],
             DocumentGraphAssembler.Assemble([document], report, new HashSet<string>(StringComparer.Ordinal)),
-            report,
+            DeclarationCatalog.Create(report),
             new HashSet<string>(["D5/S0/Carrier/Target.lean"], StringComparer.Ordinal));
         var model = TruthGraphExportModel.Create(Build(
             new Dictionary<string, string> { ["D5/S0/Carrier/Target.lean"] = "theorem anchor : True := True.intro\n" },
@@ -262,7 +262,7 @@ public sealed class TruthGraphJsonTests
         Assert.Throws<InvalidOperationException>(() => DocumentGraphExportProjection.Create(
             [source],
             DocumentGraphAssembler.Assemble([document], null),
-            LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>()),
+            DeclarationCatalog.Create(LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>())),
             new HashSet<string>(["D5/S0/Carrier/Target.lean"], StringComparer.Ordinal)));
 
         var ambiguous = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>
@@ -273,7 +273,7 @@ public sealed class TruthGraphJsonTests
             ]),
         });
         Assert.Throws<InvalidOperationException>(() => DocumentGraphExportProjection.Create(
-            [source], DocumentGraphAssembler.Assemble([document], null), ambiguous,
+            [source], DocumentGraphAssembler.Assemble([document], null), DeclarationCatalog.Create(ambiguous),
             new HashSet<string>(["D5/S0/Carrier/Target.lean"], StringComparer.Ordinal)));
 
         var resolved = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>
@@ -281,7 +281,7 @@ public sealed class TruthGraphJsonTests
             ["D5/S0/Carrier/Target.lean"] = new([], [new LeanDeclaration("anchor", "theorem", "True", [])]),
         });
         Assert.Throws<InvalidOperationException>(() => DocumentGraphExportProjection.Create(
-            [source], DocumentGraphAssembler.Assemble([document], resolved), resolved,
+            [source], DocumentGraphAssembler.Assemble([document], resolved), DeclarationCatalog.Create(resolved),
             new HashSet<string>(StringComparer.Ordinal)));
     }
 

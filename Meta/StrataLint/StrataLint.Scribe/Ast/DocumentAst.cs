@@ -116,7 +116,7 @@ public abstract record DocumentBlock
             DescribeKind kind,
             Heading title,
             DescribeStatement statement,
-            DescribeProvenance provenance,
+            DescribeProvenanceSource provenanceSource,
             BlockSequence content,
             Formula? statementFormula = null,
             DescribeKindSource? kindSource = null)
@@ -124,7 +124,7 @@ public abstract record DocumentBlock
             Id = id ?? throw new ArgumentNullException(nameof(id));
             Title = title ?? throw new ArgumentNullException(nameof(title));
             Statement = statement ?? throw new ArgumentNullException(nameof(statement));
-            Provenance = provenance ?? throw new ArgumentNullException(nameof(provenance));
+            ProvenanceSource = provenanceSource ?? throw new ArgumentNullException(nameof(provenanceSource));
             Content = content ?? throw new ArgumentNullException(nameof(content));
             StatementFormula = statementFormula;
             FormulaProvenance = statementFormula is not null
@@ -159,7 +159,7 @@ public abstract record DocumentBlock
                 resolvedKind,
                 Title,
                 Statement,
-                Provenance,
+                ProvenanceSource,
                 resolvedContent,
                 StatementFormula);
         }
@@ -168,7 +168,29 @@ public abstract record DocumentBlock
 
         public DescribeStatement Statement { get; }
 
-        public DescribeProvenance Provenance { get; }
+        internal DescribeProvenanceSource ProvenanceSource { get; }
+
+        public DescribeProvenance Provenance => ProvenanceSource is DescribeProvenanceSource.Legacy legacy
+            ? legacy.Value
+            : throw new InvalidOperationException("Assessed provenance is not legacy provenance.");
+
+        public AssessedProvenance? AssessedProvenance =>
+            (ProvenanceSource as DescribeProvenanceSource.Assessed)?.Value;
+
+        public DescribeProvenanceKind ProvenanceKind => ProvenanceSource switch
+        {
+            DescribeProvenanceSource.Legacy legacy => legacy.Value.Kind,
+            DescribeProvenanceSource.Assessed assessed => DescribeVocabulary.Kind(assessed.Value),
+            _ => throw new InvalidOperationException("Unknown Describe provenance source."),
+        };
+
+        public LibraryNoteRef? LiteratureReference => ProvenanceSource switch
+        {
+            DescribeProvenanceSource.Legacy legacy => legacy.Value.LiteratureReference,
+            DescribeProvenanceSource.Assessed { Value: AssessedProvenance.LiteratureAttested literature } => literature.NoteRef,
+            DescribeProvenanceSource.Assessed => null,
+            _ => throw new InvalidOperationException("Unknown Describe provenance source."),
+        };
 
         public BlockSequence Content { get; }
 
@@ -223,7 +245,7 @@ public abstract record DocumentBlock
                 DescribeKind.Example,
                 title,
                 DescribeStatement.FromFormula(formula),
-                provenance,
+                Legacy(provenance),
                 content);
 
         public static Describe Remark(
@@ -232,13 +254,15 @@ public abstract record DocumentBlock
             DescribeStatement statement,
             DescribeProvenance provenance,
             BlockSequence content) =>
-            new(id, DescribeKind.Remark, title, statement, provenance, content);
+            new(
+                id, DescribeKind.Remark, title, statement,
+                Legacy(provenance), content);
 
         internal static Describe ReportDerived(
             DescribeId id,
             Heading title,
             DeclarationHandle handle,
-            DescribeProvenance provenance,
+            AssessedProvenance provenance,
             BlockSequence content,
             DescribeRole? role) =>
             new(
@@ -252,7 +276,8 @@ public abstract record DocumentBlock
                 },
                 title,
                 DescribeStatement.FromLean(LeanDeclarationRef.Create(handle.Value)),
-                provenance,
+                new DescribeProvenanceSource.Assessed(
+                    provenance ?? throw new ArgumentNullException(nameof(provenance))),
                 content,
                 kindSource: new DescribeKindSource.ReportDerived(handle, role));
 
@@ -276,10 +301,14 @@ public abstract record DocumentBlock
                 kind,
                 title,
                 DescribeStatement.FromLean(leanRef),
-                provenance,
+                Legacy(provenance),
                 content,
                 formula);
         }
+
+        private static DescribeProvenanceSource Legacy(DescribeProvenance provenance) =>
+            new DescribeProvenanceSource.Legacy(
+                provenance ?? throw new ArgumentNullException(nameof(provenance)));
     }
 
     internal static BlockSequence ResolveBlocks(BlockSequence content, DeclarationCatalog catalog) =>

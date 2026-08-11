@@ -51,7 +51,8 @@ public sealed class PdfWriterTests
                 ),
             ]));
 
-        var pdf = QuestPdfWriter.Write(document, LeanReportFixture.ForDocuments([document]));
+        var pdf = QuestPdfWriter.Write(
+            document, DeclarationCatalog.Create(LeanReportFixture.ForDocuments([document])));
 
         Assert.True(pdf.Length > 5);
         Assert.Equal("%PDF-", Encoding.ASCII.GetString(pdf.AsSpan()[..5]));
@@ -109,7 +110,8 @@ public sealed class PdfWriterTests
         var citations = LibraryNoteCatalog.Load(RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndLibraryInvalidOperation).Root.FullPath).Citations;
         foreach (var definition in DocumentDefinitions.All)
         {
-            var pdf = QuestPdfWriter.Write(definition.Document, report, citations);
+            var pdf = QuestPdfWriter.Write(
+                definition.Document, DeclarationCatalog.Create(report), citations);
 
             Assert.True(pdf.Length > 5);
             Assert.Equal("%PDF-", Encoding.ASCII.GetString(pdf.AsSpan()[..5]));

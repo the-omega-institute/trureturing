@@ -162,7 +162,9 @@ public static class ScribeEmitter
                 + $"truth-anchor={graphEdges.OfType<DocumentEdge.TruthAnchor>().Count()} "
                 + $"dependency={graphEdges.OfType<DocumentEdge.Dependency>().Count()} "
                 + $"narrative={graphEdges.OfType<DocumentEdge.NarrativeReference>().Count()}");
-            return EmitVerified(repositoryRoot, check, output, error, leanReport, definitions, graph);
+            return EmitVerified(
+                repositoryRoot, check, output, error,
+                declarationCatalog, definitions, graph);
         }
         catch (Exception exception) when (
             exception is InvalidOperationException
@@ -181,7 +183,7 @@ public static class ScribeEmitter
         bool check,
         TextWriter output,
         TextWriter error,
-        LeanAxiomReport leanReport,
+        DeclarationCatalog declarationCatalog,
         IReadOnlyList<DocumentDefinition> definitions,
         DocumentGraph graph)
     {
@@ -194,12 +196,12 @@ public static class ScribeEmitter
         {
             var first = CanonicalMarkdownWriter.Write(
                 definition.Document,
-                leanReport,
+                declarationCatalog,
                 citations,
                 graph).ToArray();
             var second = CanonicalMarkdownWriter.Write(
                 definition.Document,
-                leanReport,
+                declarationCatalog,
                 citations,
                 graph).ToArray();
             if (!first.AsSpan().SequenceEqual(second))

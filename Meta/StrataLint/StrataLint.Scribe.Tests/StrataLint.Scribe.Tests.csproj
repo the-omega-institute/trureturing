@@ -14,4 +14,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="V3/Fixtures/JointCoordinates.before-migration.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>Fixtures/JointCoordinates.before-migration.md</Link>
+    </Content>
+  </ItemGroup>
 </Project>

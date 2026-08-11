@@ -130,7 +130,7 @@ public sealed class EmissionTests
                 Assert.Equal(
                     CanonicalMarkdownWriter.Write(
                         definition.Document,
-                        report,
+                        DeclarationCatalog.Create(report),
                         citations,
                         graph).ToArray(),
                     TemporaryFileSystem.File.ReadAllBytes(path));

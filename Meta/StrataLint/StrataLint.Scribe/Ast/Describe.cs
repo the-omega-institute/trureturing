@@ -129,13 +129,14 @@ public abstract record AssessedProvenance
     public static AssessedProvenance NovelAfterSearch(GidRef searchReceipt) =>
         new SuspectedNovel(searchReceipt ?? throw new ArgumentNullException(nameof(searchReceipt)));
 
-    internal DescribeProvenance ToLegacy() => this switch
-    {
-        RepoDerived => DescribeProvenance.RepoDerived(),
-        LiteratureAttested value => DescribeProvenance.LiteratureAttested(value.NoteRef),
-        SuspectedNovel => DescribeProvenance.SuspectedNovel(),
-        _ => throw new InvalidOperationException("Unknown assessed provenance."),
-    };
+}
+
+internal abstract record DescribeProvenanceSource
+{
+    private DescribeProvenanceSource() { }
+
+    internal sealed record Legacy(DescribeProvenance Value) : DescribeProvenanceSource;
+    internal sealed record Assessed(AssessedProvenance Value) : DescribeProvenanceSource;
 }
 
 public static class Describe
@@ -149,7 +150,7 @@ public static class Describe
         DescribeRole? role = null) =>
         DocumentBlock.Describe.ReportDerived(
             id, title, handle,
-            (provenance ?? throw new ArgumentNullException(nameof(provenance))).ToLegacy(),
+            provenance ?? throw new ArgumentNullException(nameof(provenance)),
             narrative, role);
 }
 
@@ -184,5 +185,13 @@ internal static class DescribeVocabulary
         DescribeProvenanceKind.SuspectedNovel => "suspected-novel",
         DescribeProvenanceKind.Unassessed => "unassessed",
         _ => throw new ArgumentOutOfRangeException(nameof(provenance)),
+    };
+
+    internal static DescribeProvenanceKind Kind(AssessedProvenance provenance) => provenance switch
+    {
+        AssessedProvenance.LiteratureAttested => DescribeProvenanceKind.LiteratureAttested,
+        AssessedProvenance.RepoDerived => DescribeProvenanceKind.RepoDerived,
+        AssessedProvenance.SuspectedNovel => DescribeProvenanceKind.SuspectedNovel,
+        _ => throw new InvalidOperationException("Unknown assessed provenance."),
     };
 }

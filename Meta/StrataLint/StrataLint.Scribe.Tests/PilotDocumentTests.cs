@@ -108,7 +108,7 @@ public sealed class DocumentDiscoveryTests
                     ? "receipt-free"
                     : "receipt-bound")),
             graph,
-            report,
+            DeclarationCatalog.Create(report),
             report.Files.Keys.Select(static path => path.Value).ToHashSet(StringComparer.Ordinal));
 
         Assert.Equal(DocumentDefinitions.All.Length, projection.Documents.Nodes.Length);
@@ -138,8 +138,9 @@ public sealed class DocumentDiscoveryTests
         // 准入侧那两处仍在,是否该删须另行按四项合取裁决(裁决时不得再以 FILEMAP 自声明字段为据)。
         foreach (var definition in DocumentDefinitions.All)
         {
-            var first = CanonicalMarkdownWriter.Write(definition.Document, report, citations, graph);
-            var second = CanonicalMarkdownWriter.Write(definition.Document, report, citations, graph);
+            var catalog = DeclarationCatalog.Create(report);
+            var first = CanonicalMarkdownWriter.Write(definition.Document, catalog, citations, graph);
+            var second = CanonicalMarkdownWriter.Write(definition.Document, catalog, citations, graph);
 
             Assert.Equal(first.ToArray(), second.ToArray());
         }
@@ -155,7 +156,7 @@ public sealed class DocumentDiscoveryTests
         var markdown = System.Text.Encoding.UTF8.GetString(
             CanonicalMarkdownWriter.Write(
                 definition.Document,
-                report,
+                DeclarationCatalog.Create(report),
                 RepositoryCitations()).AsSpan());
 
         Assert.Contains(

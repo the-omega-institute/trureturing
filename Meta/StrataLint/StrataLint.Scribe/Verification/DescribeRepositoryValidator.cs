@@ -148,7 +148,7 @@ internal static class DescribeRepositoryValidator
                         findings);
                     break;
                 case DocumentBlock.Describe describe:
-                    if (describe.Provenance.LiteratureReference is { } literature)
+                    if (describe.LiteratureReference is { } literature)
                     {
                         ValidateLiterature(documentGid, literature, notes, findings);
                     }

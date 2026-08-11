@@ -7,7 +7,7 @@ public sealed record ResolvedDeclaration(
     DeclarationHandle Handle,
     LeanDeclaration Declaration,
     LeanDeclarationKind FormalKind,
-    DescribeKind Kind,
+    DescribeKind? Kind,
     bool IsSorryFree,
     string AxiomBadge);
 
@@ -37,7 +37,7 @@ public sealed class DeclarationCatalog
                 path,
                 module.Declarations
                     .Select(declaration => Index(path, declaration))
-                    .GroupBy(static declaration => Selector(declaration.Declaration.Name), StringComparer.Ordinal)
+                    .GroupBy(static declaration => declaration.Declaration.Name, StringComparer.Ordinal)
                     .ToImmutableDictionary(
                         static group => group.Key,
                         static group => group.ToImmutableArray(),
@@ -55,7 +55,7 @@ public sealed class DeclarationCatalog
             throw new InvalidOperationException(
                 $"Lean compiled-artifact report does not contain module {path.Value} for {handle.Value}.");
         }
-        var name = handle.Value[(handle.Value.LastIndexOf('.') + 1)..];
+        var name = handle.Value.Replace('/', '.');
         if (!declarations.TryGetValue(name, out var matches))
         {
             throw new InvalidOperationException(
@@ -67,27 +67,19 @@ public sealed class DeclarationCatalog
                 $"Lean compiled-artifact report resolves {handle.Value} ambiguously.");
         }
         var item = matches[0];
-        if (item.FormalKind is null || item.Kind is null)
-        {
-            throw new InvalidOperationException(
-                $"Lean declaration {item.Declaration.Name} has unsupported kind {item.Declaration.Kind}.");
-        }
         if (item.Declaration.Axioms.Contains("sorryAx", StringComparer.Ordinal))
         {
             throw new InvalidOperationException(
                 $"Lean declaration {handle.Value} is not sorry-free according to the compiled report.");
         }
         return new ResolvedDeclaration(
-            handle, item.Declaration, item.FormalKind.Value, item.Kind.Value, true, item.AxiomBadge);
+            handle, item.Declaration, item.FormalKind, item.Kind, true, item.AxiomBadge);
     }
-
-    private static string Selector(string declarationName) =>
-        declarationName[(declarationName.LastIndexOf('.') + 1)..];
 
     internal DescribeKind ResolveKind(DocumentBlock.Describe describe) => describe.KindSource switch
     {
         DescribeKindSource.Authored authored => authored.Value,
-        DescribeKindSource.ReportDerived derived => ResolveRole(Resolve(derived.Handle).Kind, derived.Role),
+        DescribeKindSource.ReportDerived derived => ResolveNarrativeKind(Resolve(derived.Handle).Kind, derived.Role),
         _ => throw new InvalidOperationException("Unknown Describe kind source."),
     };
 
@@ -104,7 +96,7 @@ public sealed class DeclarationCatalog
         }
         var (formalKind, kind) = declaration.Kind switch
         {
-            "def" => ((LeanDeclarationKind?)LeanDeclarationKind.Definition, (DescribeKind?)DescribeKind.Definition),
+            "def" => (LeanDeclarationKind.Definition, (DescribeKind?)DescribeKind.Definition),
             "theorem" => (LeanDeclarationKind.Theorem, DescribeKind.Theorem),
             "axiom" => (LeanDeclarationKind.Axiom, null),
             "opaque" => (LeanDeclarationKind.Opaque, null),
@@ -122,9 +114,10 @@ public sealed class DeclarationCatalog
             nonstandard.Length == 0 ? "✓ std3" : "⚠ " + string.Join(", ", nonstandard));
     }
 
-    private static DescribeKind ResolveRole(DescribeKind reportKind, DescribeRole? role) => role switch
+    private static DescribeKind ResolveNarrativeKind(DescribeKind? reportKind, DescribeRole? role) => role switch
     {
-        null => reportKind,
+        null => reportKind ?? throw new InvalidOperationException(
+            "The resolved Lean declaration kind cannot be projected to a Describe kind without an explicit role."),
         DescribeRole.Definition => DescribeKind.Definition,
         DescribeRole.Theorem => DescribeKind.Theorem,
         DescribeRole.Proposition => DescribeKind.Proposition,
@@ -134,7 +127,7 @@ public sealed class DeclarationCatalog
 
     private sealed record IndexedDeclaration(
         LeanDeclaration Declaration,
-        LeanDeclarationKind? FormalKind,
+        LeanDeclarationKind FormalKind,
         DescribeKind? Kind,
         string AxiomBadge);
 }

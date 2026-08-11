@@ -118,12 +118,12 @@ public sealed record DocumentGraphExportProjection(
     public static DocumentGraphExportProjection Create(
         IEnumerable<DocumentGraphDocument> documents,
         DocumentGraph graph,
-        LeanAxiomReport leanReport,
+        DeclarationCatalog catalog,
         IReadOnlySet<string> formalTruthRepoPaths)
     {
         ArgumentNullException.ThrowIfNull(documents);
         ArgumentNullException.ThrowIfNull(graph);
-        ArgumentNullException.ThrowIfNull(leanReport);
+        ArgumentNullException.ThrowIfNull(catalog);
         ArgumentNullException.ThrowIfNull(formalTruthRepoPaths);
         if (!graph.Findings.IsEmpty)
         {
@@ -131,7 +131,6 @@ public sealed record DocumentGraphExportProjection(
                 $"Document graph is invalid: {graph.Findings[0].Code} {graph.Findings[0].Message}");
         }
 
-        var catalog = DeclarationCatalog.Create(leanReport);
         var material = documents
             .Select(item => item with { Document = item.Document.ResolveDeclarations(catalog) })
             .ToImmutableArray();
@@ -194,7 +193,7 @@ public sealed record DocumentGraphExportProjection(
                             byGid[targetGid].RepoPath + fragment));
                         break;
                     case DocumentEdge.TruthAnchor anchor:
-                        _ = LeanReferenceResolver.Resolve(anchor.Target, leanReport);
+                        _ = catalog.Resolve(DeclarationHandle.Create(anchor.Target.Value));
                         var formalPath = anchor.Target.Reference.Path.Value;
                         if (!formalTruthRepoPaths.Contains(formalPath))
                         {
@@ -264,7 +263,8 @@ public sealed record DocumentGraphExportProjection(
             census.ReceiptFreeDocumentGids.Contains(definition.Document.Header.Gid.Value)
                 ? "receipt-free"
                 : "receipt-bound"));
-        return Create(sources, graph, leanReport, formalTruthRepoPaths);
+        return Create(
+            sources, graph, DeclarationCatalog.Create(leanReport), formalTruthRepoPaths);
     }
 }
 

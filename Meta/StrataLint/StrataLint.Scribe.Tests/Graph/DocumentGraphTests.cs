@@ -91,12 +91,13 @@ public sealed class DocumentGraphTests
         var graph = DocumentGraphAssembler.Assemble([source, target], report);
         Assert.Empty(graph.Findings);
 
-        var first = CanonicalMarkdownWriter.Write(source, report, graph: graph);
-        var second = CanonicalMarkdownWriter.Write(source, report, graph: graph);
+        var catalog = DeclarationCatalog.Create(report);
+        var first = CanonicalMarkdownWriter.Write(source, catalog, graph: graph);
+        var second = CanonicalMarkdownWriter.Write(source, catalog, graph: graph);
         Assert.True(first.AsSpan().SequenceEqual(second.AsSpan()));
         var markdown = Encoding.UTF8.GetString(first.AsSpan());
         var targetMarkdown = Encoding.UTF8.GetString(
-            CanonicalMarkdownWriter.Write(target, report, graph: graph).AsSpan());
+            CanonicalMarkdownWriter.Write(target, catalog, graph: graph).AsSpan());
         var truthIndex = markdown.IndexOf(
             "- Truth anchor: `D5/S0/Test/Target.anchor`", StringComparison.Ordinal);
         var dependencyIndex = markdown.IndexOf(
@@ -134,7 +135,8 @@ public sealed class DocumentGraphTests
         var dependency = Assert.Single(graph.For(source).OfType<DocumentEdge.Dependency>());
         Assert.Equal(target.Header.Gid.Value, dependency.Target.Value);
         var markdown = Encoding.UTF8.GetString(
-            CanonicalMarkdownWriter.Write(source, report, graph: graph).AsSpan());
+            CanonicalMarkdownWriter.Write(
+                source, DeclarationCatalog.Create(report), graph: graph).AsSpan());
         Assert.Contains(
             "- Dependency: [D5/S0/Test/Target](Target.md)",
             markdown,
