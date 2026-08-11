@@ -201,9 +201,23 @@ jobs:
           # Lean 源(Trureturing.lean + D5/**/*.lean)与 config(toolchain/lake-manifest/lakefile)
           # 三者的清单哈希(lean-report-input.sh:51-97),即该报告的完整声明输入闭包。
           # 两侧同址 ⇒ 两份报告按定义逐字节相同,一份缓存可同时充当两份;不同址则不复用。
-          read -r baselineAddress baselineProducer _ \
-            <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/baseline" --baseline)"
-          [[ "$baselineAddress" =~ ^[0-9a-f]{64}$ ]]
+          if grep -Fq -- '--baseline)' "$helper" 2>/dev/null; then
+            echo "per-module-compatible=true" >> "$GITHUB_OUTPUT"
+            read -r baselineAddress baselineProducer _ \
+              <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/baseline" --baseline)"
+            [[ "$baselineAddress" =~ ^[0-9a-f]{64}$ ]]
+          else
+            # The first dev push after this workflow lands executes the predecessor's
+            # helper. Preserve that helper's old call shape and disable all reuse.
+            read -r baselineAddress baselineProducer _ \
+              <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/baseline")"
+            [[ "$baselineAddress" =~ ^[0-9a-f]{64}$ ]]
+            echo "per-module-compatible=false" >> "$GITHUB_OUTPUT"
+            echo "producer-consistent=false" >> "$GITHUB_OUTPUT"
+            echo "pair-reusable=false" >> "$GITHUB_OUTPUT"
+            printf '%s\n' "canonical Lean report cache disabled: baseline helper predates per-module arguments; using full production" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
           # 地址的 producer 分量取自**候选**树,而实际执行的 producer 取自**基线**树
           # (base-owned 判官拓扑要求如此)。push 事件下 baseline = github.event.before,
           # 即上一个 dev tip(见 `Resolve dev baseline content address`),故一次改动了
@@ -363,15 +377,21 @@ jobs:
           if [[ -s "$cache_report" && -s "$cache_manifest" ]]; then
             module_cache_args+=(--module-cache-report "$cache_report" --module-cache-manifest "$cache_manifest")
           fi
-          "$pair_producer" \
-            --producer "$producer" \
-            --lake-bin "$HOME/.elan/bin/lake" \
-            --candidate-root "$GITHUB_WORKSPACE/candidate" \
-            --candidate-output "$reports/candidate-lean-report.json" \
-            --baseline-root "$GITHUB_WORKSPACE/baseline" \
-            --baseline-output "$reports/baseline-lean-report.json" \
-            --stratalint-dll "$stratalint_dll" \
-            "${module_cache_args[@]}"
+          pair_args=(
+            --producer "$producer"
+            --lake-bin "$HOME/.elan/bin/lake"
+            --candidate-root "$GITHUB_WORKSPACE/candidate"
+            --candidate-output "$reports/candidate-lean-report.json"
+            --baseline-root "$GITHUB_WORKSPACE/baseline"
+            --baseline-output "$reports/baseline-lean-report.json"
+          )
+          if grep -Fq -- '--module-cache-report)' "$pair_producer" 2>/dev/null \
+            && grep -Fq -- '--stratalint-dll)' "$pair_producer" 2>/dev/null; then
+            "$pair_producer" "${pair_args[@]}" --stratalint-dll "$stratalint_dll" "${module_cache_args[@]}"
+          else
+            echo "::warning title=Lean per-module cache disabled::The baseline pair helper predates per-module arguments; using full production."
+            "$pair_producer" "${pair_args[@]}"
+          fi
 
       - name: Reconcile pinned statement projections with live Lean report
         shell: bash
