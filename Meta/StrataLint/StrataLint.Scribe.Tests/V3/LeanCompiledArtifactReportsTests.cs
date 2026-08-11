@@ -11,7 +11,7 @@ public sealed class LeanCompiledArtifactReportsTests
         var root = Path.Combine(
             Path.GetTempPath(),
             "stratalint-scribe-" + Guid.NewGuid().ToString("N"));
-        Directory.CreateDirectory(root);
+        TemporaryFileSystem.Directory.CreateDirectory(root);
 
         try
         {
@@ -23,14 +23,14 @@ public sealed class LeanCompiledArtifactReportsTests
         }
         finally
         {
-            Directory.Delete(root, recursive: true);
+            TemporaryFileSystem.Directory.Delete(root, recursive: true);
         }
     }
 
     [Fact]
     public void ConfiguredReportPathOverridesTheCanonicalArtifact()
     {
-        var repositoryRoot = FindRepositoryRoot();
+        var repositoryRoot = RepositoryAccessor.Discover(RepositoryRootCriterion.ClaudeDirectoryNotFound).Root.FullPath;
         var configured = Path.Combine(
             Path.GetTempPath(),
             "stratalint-configured-report-" + Guid.NewGuid().ToString("N") + ".json");
@@ -48,18 +48,6 @@ public sealed class LeanCompiledArtifactReportsTests
         {
             Environment.SetEnvironmentVariable("STRATALINT_LEAN_REPORT", previous);
         }
-    }
-
-    private static string FindRepositoryRoot()
-    {
-        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
-             current is not null;
-             current = current.Parent)
-        {
-            if (File.Exists(Path.Combine(current.FullName, "CLAUDE.md"))) return current.FullName;
-        }
-
-        throw new DirectoryNotFoundException("Could not locate repository root.");
     }
 }
 
