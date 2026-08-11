@@ -74,8 +74,7 @@ internal static class FileMapPolicy
     // FILEMAP names the producer, consumers and verifiers of every generated artifact,
     // but those names were free text that nothing checked, so they went stale the moment
     // the named type was deleted: #1112 removed ValuesProjectionLoader and its FILEMAP
-    // consumer entry kept naming it, and anchor-catalog kept naming AnchorCatalogLoader
-    // after #1122 left it with no Load call. A declaration nobody verifies is a claim
+    // consumer entry kept naming it. A declaration nobody verifies is a claim
     // about the system that can quietly stop being true. This resolves each name as a
     // rule rather than a hand-kept table: it must be a declared type in the tracked C#
     // sources, or one of the few deliberate non-type words.

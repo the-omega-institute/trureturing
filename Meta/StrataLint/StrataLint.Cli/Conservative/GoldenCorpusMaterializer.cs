@@ -49,7 +49,6 @@ internal sealed record MaterializedConservativeCorpus(
 internal static partial class GoldenCorpusMaterializer
 {
     private const string Schema = "stratalint-conservative-corpus-v1";
-    private const string AnchorCatalogPath = RepositoryPathPolicy.AnchorCatalogPath;
     private const string BackfillPath = "Meta/BACKFILL.yaml";
     private const string SpecificationPath = "docs/develop/spec/golden-ledger-repo-spec.md";
 
@@ -298,7 +297,6 @@ internal static partial class GoldenCorpusMaterializer
                 [BackfillPath] = GoldenCorpus.FixtureBackfill,
                 [TheoryAtomizerDataLoader.DataPath] = Read(root, TheoryAtomizerDataLoader.DataPath),
                 ["Meta/registry.yaml"] = GoldenFixtureRegistryLoader.LoadRepository(root),
-                [AnchorCatalogPath] = Read(root, AnchorCatalogPath),
                 ["Library/queries.yaml"] = "schema_version: 1\nqueries: []\n",
                 [GoldenCorpus.RingPath] = GoldenHeader(
                     "D5/S0/Carrier/Ring",
