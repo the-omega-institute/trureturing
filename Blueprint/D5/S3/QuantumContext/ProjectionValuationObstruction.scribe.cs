@@ -6,25 +6,22 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.QuantumContext;
 
 internal sealed class ProjectionValuationObstructionDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/QuantumContext/ProjectionValuationObstruction",
-            "An exact eighteen-ray parity configuration obstructs binary projection valuations."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "An exact eighteen-ray parity configuration obstructs binary projection valuations.",
         H("An Eighteen-Ray Projection-Valuation Obstruction"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("nine-complete-contexts-have-no-binary-projection-valuation"),
+                DeclarationHandle.Create("D5/S3/QuantumContext/ProjectionValuationObstruction.projection_valuation_obstruction"),
                 H("Nine complete contexts have no binary projection valuation"),
-                LeanTheorem(
-                    "D5/S3/QuantumContext/ProjectionValuationObstruction.projection_valuation_obstruction"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Neg, Sp, Exists, Sp, F.Id("v"), Colon, Sp, F.Id("P"), To, Sp,
                     OpenBrace, D(0), Comma, D(1), CloseBrace, Comma, Esc,
                     Forall, Sp, F.Id("c"), InMacro, Sp, F.Id("C"), Comma, Esc,
                     Sum, Underscore, Grp(F.Id("p"), Sp, InMacro, Sp, F.Id("C"),
                         Underscore, Grp(F.Id("c"))), Sp,
-                    F.Id("v"), Open, Sp, F.Id("p"), Close, Eq, D(1), Dot)),
-                DescribeProvenance.RepoDerived(),
+                    F.Id("v"), Open, Sp, F.Id("p"), Close, Eq, D(1), Dot))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The configuration consists of eighteen explicit integer ray "
@@ -60,13 +57,13 @@ internal sealed class ProjectionValuationObstructionDocument : IScribeDocumentDe
                             + "obstruction on valuations of these actual projections. It does "
                             + "not assert the full "
                             + "classification in every dimension at least three, a Gleason "
-                            + "representation theorem, or a qubit projection obstruction.")))),
-            DocumentBlock.Describe.Theorem(
+                            + "representation theorem, or a qubit projection obstruction."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("the-first-eight-contexts-have-an-explicit-valuation"),
+                DeclarationHandle.Create("D5/S3/QuantumContext/ProjectionValuationObstruction.eight_contexts_satisfiable"),
                 H("The first eight contexts have an explicit valuation"),
-                LeanTheorem(
-                    "D5/S3/QuantumContext/ProjectionValuationObstruction.eight_contexts_satisfiable"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     F.Id("eightContextValuation"), Eq, Open,
                     D(0), Comma, D(1), Comma, D(0), Comma, D(0), Comma,
                     D(1), Comma, D(0), Comma, D(0), Comma, D(0), Comma,
@@ -77,8 +74,8 @@ internal sealed class ProjectionValuationObstructionDocument : IScribeDocumentDe
                     Sum, Underscore, Grp(F.Id("r"), Sp, InMacro, Sp, F.Id("C"),
                         Underscore, Grp(F.Id("c"))), Sp,
                     F.Id("eightContextValuation"), Open, Sp, F.Id("r"), Close,
-                    Eq, D(1), Dot)),
-                DescribeProvenance.RepoDerived(),
+                    Eq, D(1), Dot))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The explicit valuation selecting zero-based ray labels 1, 4, 9, "
@@ -86,5 +83,6 @@ internal sealed class ProjectionValuationObstructionDocument : IScribeDocumentDe
                         + "total in the ninth context is zero. Thus the local constraints "
                         + "are nonempty and remain jointly satisfiable until the final "
                         + "tetrad closes the odd parity cycle; the obstruction is not a "
-                        + "consequence of an empty index family or malformed context data.")))))));
+                        + "consequence of an empty index family or malformed context data."))),
+                DescribeRole.Theorem))));
 }
