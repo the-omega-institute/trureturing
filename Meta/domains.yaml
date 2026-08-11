@@ -20,6 +20,9 @@ domains:
   Constants:
     stratum: S3
     definition: Canonical real constants and registered reference centers used by audited projections.
+  ContinuousObservables:
+    stratum: S3
+    definition: Continuous matrix-valued observables over phase spaces and their pointwise operator-algebraic structure.
   Conventions:
     stratum: S0
     definition: Canonical W-digit and notation conventions used by later strata.
