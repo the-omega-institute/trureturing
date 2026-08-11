@@ -1,10 +1,10 @@
 # SL-008 fork-point 旧侧迁移离线定价
 
-> **REPORT-ONLY / 测量 worker 产物。** 本轮不修改 harness、CI、admission 或 SL-008；只对本地 `origin/dev=55a4369ce4962d8c979d4418b62555c69c1ec09b` 的历史和生产 helper 做离线测量。
+> **REPORT-ONLY / 测量 worker 产物。** 本轮不修改 harness、CI、admission 或 SL-008。测量窗口固定锚定在 `55a4369ce4962d8c979d4418b62555c69c1ec09b`（#1358）及其之前 40 个 merge PR；报告修订时 `origin/dev` 已前进至 `73bfa63ddbbf9069df55e8814ff26dd6bdbfff42`（含 #1359/#1360/#1361），本轮没有把锚点后的提交混入固定窗口，也没有重做全部测量。
 
 ## 0. 一句话结论
 
-**PROCEED：40 个样本中估计 cache 命中 `37/40 = 92.5%`，超过 80% 门槛；一次空 report cache 实产为 `real 149.71s`、`EXIT=0`，低于现有并行 `candidate-engineering=184s`，按 `3/40` miss 率折算的期望产出负担为 `11.23s/PR`。** 这不是“最坏端到端增量为零”的声明：admission 仍依赖 Lean reports，单次 miss 可能延后 admission 起跑；这里只按 brief 指定的命中率和现有并行吸收判据立项。
+**PROCEED TO SHADOW MEASUREMENT：命中率条件已达标，固定窗口的离线估计为 `37/40 = 92.5%`，超过 80% 门槛；吸收条件未测，故这里只授权在 CI 增加一个不供判决的影子测量步骤，不授权实施整侧迁移。** `.github/workflows/ci.yml:467-469` 明确 `baseline-admission` 的 `needs: lean-inspect`；cache miss 多产的 report 位于 admission 前置关键路径，不能由另一个并行 job 的总时长吸收。一次本地空 report cache 实产 `real 149.71s`、`EXIT=0` 只证明局部生产成本，不证明三 report CI DAG 的端到端增量。
 
 ## 1. 病灶与税
 
@@ -42,18 +42,19 @@ fork=$(git merge-base "$base" "$head")
 
 helper `address` 的原始输出是四列：`repository_address producer_sha lean_sources_sha config_sha`；CI cache key 使用第一列 `repository_address`。80 次调用（40 base + 40 fork）全部 `EXIT=0`。
 
-“跨 PR 命中”严格排除当前样本自身：若同一 PR 的 fork/base 相同，它只计入第一行；只有另一个 PR 的 `addr_base` 相同才计跨 PR。并集是两谓词的逻辑或。
+“跨 PR 命中”有两个口径。`cross-other` 严格排除当前样本自身，但允许命中固定窗口内时间上更晚（对该 PR 而言尚属未来）的 PR 的 `addr_base`；`cross-prior-only` 还施加时间方向，只允许命中该 PR 当时已经产过的、更旧 PR 的 `addr_base`。并集是 same-PR 与严格 `cross-prior-only` 的逻辑或。
 
 ## 3. 命中率读数
 
 | 判据 | 原始计数 | 比例 |
 |---|---:|---:|
 | 同 PR：`addr_fork == addr_base` | 23/40 | 57.5% |
-| 跨 PR：`addr_fork` 命中其它 PR 的 `addr_base` | 34/40 | 85.0% |
-| 两者并集（估计命中率） | **37/40** | **92.5%** |
+| `cross-other`：命中窗口内其它 PR 的 `addr_base`（允许未来 PR） | 34/40 | 85.0% |
+| `cross-prior-only`：只命中当时已产过的更旧 PR 的 `addr_base` | **27/40** | **67.5%** |
+| 同 PR与 `cross-prior-only` 并集（估计命中率） | **37/40** | **92.5%** |
 | 并集 miss | 3/40 | 7.5% |
 
-这个 92.5% 是固定 40-PR 窗口内的离线估计，不是 GitHub Actions cache 的在线命中遥测；窗口外已有 base cache 只可能把这里的有限窗口 miss 进一步变成 hit，本报告没有测该在线集合。
+`cross-other=34/40` 是窗口内地址复用上界，`cross-prior-only=27/40` 才表达“该 PR 当时已经被产过”的严格历史时点含义。加入 same-PR 后，严格口径的 union 仍为 `37/40 = 92.5%`，所以决定性命中率数字不变。这个 92.5% 是固定 40-PR 窗口内的离线估计，不是 GitHub Actions cache 的在线命中遥测；本报告没有测在线集合。
 
 ## 4. Miss 与原因
 
@@ -83,7 +84,7 @@ cold_root=$(mktemp -d /tmp/oldside-cold-report-cache.XXXXXXXX)
 # COLD_REPORT_EXIT=0
 ```
 
-生产输入地址为 `8e7706516aac42673a60f54e87e18bd3c4dba3c977de6af61528e78527078fea`，report SHA 为 `41757118fea1ceb37ed180effb87f27c9c7ee05dacd2f3b700717c193630726a`。以 `3/40` miss 率折算，`149.71 * 3/40 = 11.23s/PR`。单次 149.71s 小于共享上下文实测的并行 candidate-engineering 184s；但由于 admission 等待 reports，最坏端到端增量仍取决于实施后的 job/依赖编排，**ASSUMED-UNVERIFIED：本轮没有改 CI，故没有实测三 report CI DAG 的端到端时间。**
+生产输入地址为 `8e7706516aac42673a60f54e87e18bd3c4dba3c977de6af61528e78527078fea`，report SHA 为 `41757118fea1ceb37ed180effb87f27c9c7ee05dacd2f3b700717c193630726a`。以 `3/40` miss 率折算，`149.71 * 3/40 = 11.23s/PR`。该读数不能与并行 `candidate-engineering=184s` 比较后推出“可吸收”：`.github/workflows/ci.yml:467-469` 的 `baseline-admission needs: lean-inspect` 使 report miss 落在 admission 前置关键路径。**未测：本轮明令不改 CI，因此没有实测 cache-hit/miss 分层的 `lean-inspect` 完成时间，也没有实测三 report CI DAG 的端到端 P95 增量；吸收条件未达标。**
 
 ## 6. 已知退回与本方案差别
 
@@ -91,15 +92,11 @@ cold_root=$(mktemp -d /tmp/oldside-cold-report-cache.XXXXXXXX)
 - #1166 实测后，原误拒只换成 `Closed module ... has no Freeze attestation`；误拒频次没有消失，半迁移被退回。#1169 同族亦退回。
 - 本方案的区别是**整侧同迁**：fork-point tree、第三份 fork-point Lean report、由其得到的 DAG、fork-point ledger 同属一个 old-side 值；类型上不允许把 protected-base DAG 与 fork-point ledger 混装。它不是 #1159 的路径替换重演。
 
-## 7. PROCEED 的分步骨架
+## 7. 只授权影子测量与后续共识骨架
 
-以下只提炼共享上下文与 brief 的六席一致方向，不另造方案。
+本报告现在只授权六席共识的步骤 1：在真实 CI 中增加一个**不供 admission 判决**的影子测量，记录 old-side report 的在线 restore/verify 命中与 miss，并按 cache-hit / miss 分层记录 `lean-inspect` 完成时间及从 workflow 起点到 `baseline-admission` 完成的端到端时间。至少观察 40 个真实 PR；机器放行判据为可验证的在线命中率 `>= 80%`，且相对未加影子步骤的现行 workflow，端到端 P95 增量 `<= 30s`。任一读数不达标、样本不足或 provenance/verify 失败，立即停案并移除影子步骤，保持现行 admission，不得进入整侧迁移。
 
-1. **Expand：增加第三份 fork-point report，不切换判词。** 机器判据：helper 地址、report attestation/provenance 与 merge-base tree 一致，既有 baseline/candidate 两份仍逐字节维持。回退点：删除新增的独立产出/传递，不影响当前 admission。
-2. **封装 old-side 能力包。** 将 tree identity、Lean report、DAG、ledger 绑定为一个显式 old-side 类型。机器判据：构造器只接受同一 fork-point 身份，混入 protected-base report/DAG/ledger 的负例编译失败或测试判红。回退点：旧 `Baseline` 通路仍是唯一消费方。
-3. **双跑但不改 admission 结果。** 新路径计算 fork-point 整侧判词，旧路径继续承权。机器判据：历史 admit 不能被新路径 reject；覆盖分叉后 dev 新增 Freeze/Closed module、无 dev 同步、以及 #1159/#1166 的混侧回归夹具。回退点：停止影子计算。
-4. **切换 SL-008 的旧侧消费。** 树、report、DAG、ledger 在同一提交一起切到 fork-point 包。机器判据：旧 harness admit 的 corpus 全部仍 admit（保守扩展），base 追平夹具不再误拒，真实删除 fork-point 冻结分片仍 reject。回退点：整包切回 protected-base，禁止单字段回退。
-5. **Contract：删除可表达混侧的旧入口。** 机器判据：代码搜索与类型测试证明不存在 ledger/report/DAG 分侧注入路径；CI 三份 report 的 cache key/attestation 均可复核。回退点：只回退 contract 提交，保留已验证的显式能力包。
+若且仅若上述吸收条件实测达标，后续方案仍只保留六席共识骨架：树 + report + DAG + ledger 作为不可拆 old-side 能力包整侧同迁；类型上拒绝混侧；迁移必须分步；每一步都须预先给出机器判据与回退点。本报告不决定影子双跑、旧入口 Contract 删除等具体实施设计。
 
 ## 8. 40 个样本的原始地址
 
@@ -151,5 +148,5 @@ SHA 列为 8 位展示，两个 address 为 helper 第一列的完整 64 hex。`
 ## 9. 范围与偏差
 
 - 未修改 `.github/workflows/**`、admission、SL-008 或任何 harness 行为。
-- 本地 `origin/dev` 没有 brief 所称的 `docs/develop/reports/**` FILEMAP 声明；该声明存在于历史提交 `6481c5f94591cb2c165addc505aaae0f91704da1`，但不在本地 `origin/dev` 可达历史中。本提交按该先例新增同一声明；FILEMAP policy 定向测试 44/44 通过。
+- `git branch -a --contains 6481c5f9`（`EXIT=0`）列出 `remotes/origin/dev`，所以提交 `6481c5f94591cb2c165addc505aaae0f91704da1` 可达；但当前 `origin/dev` tip 的 `Meta/FILEMAP.toml` 已不含 `docs/develop/reports/**` 声明，因为该目录当时被清空，零匹配的 glob 条目必须一并删除。本分支恢复报告时按该可达先例恢复声明；FILEMAP policy 定向测试 44/44 通过。
 - 未测 GitHub Actions 在线 cache inventory；所有命中率均来自指定 40 个 base address 的集合。
