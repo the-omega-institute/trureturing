@@ -122,7 +122,7 @@ public sealed class DocumentDiscoveryTests
             Assert.Contains(anchor.FormalTruthRepoPath, report.Files.Keys.Select(static path => path.Value));
         });
 
-        // 只验生产者确定性,不在**这里**比对提交树。
+        // 既验生产者确定性,也在下方比对提交树。
         //
         // 【2026-08-11 勘误】本注释原写「提交的 md 是人读快照,陈旧无害于任何判决」——**那是假的**,
         // 由第十一轮面板证伪。committed `Blueprint/**/*.md` 的字节**仍在准入路径上承重**:
@@ -134,14 +134,17 @@ public sealed class DocumentDiscoveryTests
         //   钉死其为红。此外 `Scribe/Emission/ScribeEmitter.cs:233-242` 也仍对提交树逐字节比对。
         // 亦即 FILEMAP 的 `consumed_by = ["reader"]` 并未反映实情:它有机器消费者。
         //
-        // 故删这一行**不等于**「Blueprint 的投影守卫已清除」。它只是移除了**测试侧的一份副本**;
-        // 准入侧那两处仍在,是否该删须另行按四项合取裁决(裁决时不得再以 FILEMAP 自声明字段为据)。
+        // 本测试恢复的字节断言让 CI 在 admission 之外执行同一道重放;准入侧两处保持不动,
+        // 是否该删须另行按四项合取裁决(裁决时不得再以 FILEMAP 自声明字段为据)。
         foreach (var definition in DocumentDefinitions.All)
         {
             var first = CanonicalMarkdownWriter.Write(definition.Document, report, citations, graph);
             var second = CanonicalMarkdownWriter.Write(definition.Document, report, citations, graph);
+            var committed = repository.ReadAllBytes(
+                RepositoryRelativePath.Create(definition.RelativePath.Value));
 
             Assert.Equal(first.ToArray(), second.ToArray());
+            Assert.Equal(committed, first.ToArray());
         }
     }
 
