@@ -17,7 +17,7 @@ namespace StrataLint.Tests;
 // logic is exercised in isolation and in well under a second.
 public sealed class LeanReportCacheTests
 {
-    private const string MergeCommandPath = "Meta/StrataLint/StrataLint.Cli/Commands/LeanReportMergeCommand.cs";
+    private const string MergeCommandPath = "Meta/StrataLint/StrataLint.Cli/Commands/LeanReport/LeanReportMergeCommand.cs";
     private const string RawReportPath = "Meta/StrataLint/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs";
     private const string CanonicalWriterPath = "Meta/StrataLint/StrataLint.Engine/Snapshot/StructuredCanonicalWriter.cs";
     [Fact]

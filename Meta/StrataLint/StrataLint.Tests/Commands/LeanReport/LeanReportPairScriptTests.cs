@@ -8,7 +8,7 @@ namespace StrataLint.Tests;
 public sealed class LeanReportPairScriptTests
 {
     private const string InputHelperPath = "Meta/StrataLint/scripts/report/lean-report-input.sh";
-    private const string MergeCommandPath = "Meta/StrataLint/StrataLint.Cli/Commands/LeanReportMergeCommand.cs";
+    private const string MergeCommandPath = "Meta/StrataLint/StrataLint.Cli/Commands/LeanReport/LeanReportMergeCommand.cs";
     private const string RawReportPath = "Meta/StrataLint/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs";
     private const string CanonicalWriterPath = "Meta/StrataLint/StrataLint.Engine/Snapshot/StructuredCanonicalWriter.cs";
     private const string ScribeProgramPath = "Meta/StrataLint/StrataLint.Scribe/ScribeProgram.cs";
