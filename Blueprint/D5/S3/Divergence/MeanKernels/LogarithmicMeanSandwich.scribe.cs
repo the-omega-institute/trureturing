@@ -39,9 +39,9 @@ internal sealed class LogarithmicMeanSandwichDocument : IScribeDocumentDefinitio
                     Paragraph(Text(
                         "The proof reduces each bound to a one-variable inequality in the ratio t = a/b "
                         + "(taken at least one by symmetry of the three kernels under exchanging a and b). "
-                        + "The upper bound is 2(t − 1)/(t + 1) ≤ log t, obtained from the monotonicity of "
+                        + "The lower bound on log t is 2(t − 1)/(t + 1) ≤ log t, obtained from the monotonicity of "
                         + "s ↦ log s − 2(s − 1)/(s + 1) on the ray from one, whose derivative "
-                        + "(s − 1)²/(s(s + 1)²) is nonnegative. The lower bound is log t ≤ (t − 1/t)/2, "
+                        + "(s − 1)²/(s(s + 1)²) is nonnegative. The upper bound on log t is log t ≤ (t − 1/t)/2, "
                         + "which is the statement that a real number is at most its hyperbolic sine, applied "
                         + "at log t ≥ 0.")),
                     Paragraph(Text(
