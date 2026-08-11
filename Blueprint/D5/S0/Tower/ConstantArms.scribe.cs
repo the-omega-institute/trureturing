@@ -32,10 +32,8 @@ internal sealed class ConstantArmsDocument : IScribeDocumentDefinition
                 ],
                 new Formula.Logic(assumptions, FormulaLogicOperator.Implies, equation));
 
-        return DocumentDefinition.Create(ScribeDocument.Create(
-            Header(
-                "D5/S0/Tower/ConstantArms",
-                "Radix name towers have exact normalized approximation arms at canonical rational points."),
+        return DocumentDefinition.Create(ScribeNode.Create(
+            "Radix name towers have exact normalized approximation arms at canonical rational points.",
             H("Radix Constant Arms"),
             Blocks(
                 Paragraph(Text(
@@ -52,45 +50,45 @@ internal sealed class ConstantArmsDocument : IScribeDocumentDefinition
                             Multiply(scale, Id("x")),
                             Call("round", Multiply(scale, Id("x"))))),
                         scale))),
-                DocumentBlock.Describe.Theorem(
+                Describe.Lean(
                     DescribeId.Create("reciprocal-point-has-a-constant-arm"),
+                    DeclarationHandle.Create("D5/S0/Tower/ConstantArms.constant_arm"),
                     H("The reciprocal point has a constant arm"),
-                    LeanTheorem("D5/S0/Tower/ConstantArms.constant_arm"),
-                    FormulaDsl.Disp(ForBases(
+                    StatementSource.FromAuthor(FormulaDsl.Disp(ForBases(
                         baseAssumptions,
-                        ArmEquation(unitPoint, unitPoint))),
-                    DescribeProvenance.RepoDerived(),
+                        ArmEquation(unitPoint, unitPoint)))),
+                    AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                         "For every radix b at least two and every level Q at least one, the "
                         + "normalized distance from 1 divided by b plus one to the radix grid is "
                         + "exactly 1 divided by b plus one. The proof uses the power congruence "
                         + "b congruent to minus one modulo b plus one and mathlib's exact nearest "
-                        + "integer rounding formula.")))
-                ),
-                DocumentBlock.Describe.Theorem(
+                        + "integer rounding formula."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(
                     DescribeId.Create("even-half-radix-point-has-a-constant-arm"),
+                    DeclarationHandle.Create("D5/S0/Tower/ConstantArms.even_champion_arm"),
                     H("The even half-radix point has a constant arm"),
-                    LeanTheorem("D5/S0/Tower/ConstantArms.even_champion_arm"),
-                    FormulaDsl.Disp(ForBases(
+                    StatementSource.FromAuthor(FormulaDsl.Disp(ForBases(
                         new Formula.Logic(
                             baseAssumptions,
                             FormulaLogicOperator.And,
                             Call("Even", b)),
                         ArmEquation(
                             evenPoint,
-                            new Formula.Fraction(b, Multiply(Num(2), denominator))))),
-                    DescribeProvenance.RepoDerived(),
+                            new Formula.Fraction(b, Multiply(Num(2), denominator)))))),
+                    AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                         "When b is even, the point b over two times b plus one has normalized "
                         + "distance b over two times b plus one at every positive level. Its two "
                         + "possible residues are the two central residues around half the odd "
-                        + "modulus b plus one.")))
-                ),
-                DocumentBlock.Describe.Theorem(
+                        + "modulus b plus one."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(
                     DescribeId.Create("binary-one-third-is-the-radix-two-specialization"),
+                    DeclarationHandle.Create("D5/S0/Tower/ConstantArms.binary_arm"),
                     H("Binary one-third is the radix-two specialization"),
-                    LeanTheorem("D5/S0/Tower/ConstantArms.binary_arm"),
-                    FormulaDsl.Disp(new Formula.Bind(
+                    StatementSource.FromAuthor(FormulaDsl.Disp(new Formula.Bind(
                         FormulaQuantifier.ForAll,
                         FormulaIdentifier.Create("Q"),
                         naturals,
@@ -108,11 +106,11 @@ internal sealed class ConstantArmsDocument : IScribeDocumentDefinition
                                         Num(2),
                                         q,
                                         new Formula.Fraction(Num(1), Num(3)))),
-                                new Formula.Fraction(Num(1), Num(3)))))),
-                    DescribeProvenance.RepoDerived(),
+                                new Formula.Fraction(Num(1), Num(3))))))),
+                    AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                         "The binary identity is obtained only by specializing the general "
-                        + "reciprocal-point theorem to radix two; it has no independent proof.")))
-                ))));
+                        + "reciprocal-point theorem to radix two; it has no independent proof."))),
+                    DescribeRole.Theorem))));
     }
 }

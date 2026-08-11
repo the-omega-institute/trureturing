@@ -10,25 +10,22 @@ internal sealed class ClosureUndecidableDocument : IScribeDocumentDefinition
         LibraryNoteRef.Create("D5/L/Diagonal/rice1953classes");
 
     public DocumentDefinition Create() =>
-        DocumentDefinition.Create(ScribeDocument.Create(
-            Header(
-                "D5/S0/Computability/ClosureUndecidable",
-                "No computable total reading decides a nontrivial behavior-level closure predicate."),
+        DocumentDefinition.Create(ScribeNode.Create(
+            "No computable total reading decides a nontrivial behavior-level closure predicate.",
             H("Closure Readings Are Unreachable"),
             Blocks(
-                DocumentBlock.Describe.Theorem(
+                Describe.Lean(
                     DescribeId.Create("no-same-layer-reading-decides-closure"),
+                    DeclarationHandle.Create("D5/S0/Computability/ClosureUndecidable.closure_reading_unreachable"),
                     H("No same-layer reading decides closure"),
-                    LeanTheorem(
-                        "D5/S0/Computability/ClosureUndecidable.closure_reading_unreachable"),
-                    Disp(Seq(
+                    StatementSource.FromAuthor(Disp(Seq(
                         Neg, Exists, Sp, Esc, F.Text, Grp(Seq(
                             F.Id("computable"), Sp, F.Id("total"))), Sp, F.Id("C"),
                         Comma, Sp, Forall, Sp, F.Id("c"), Comma, Sp,
                         F.Id("C"), Open, F.Id("c"), Close, Sp, Eq, Sp, D(1),
                         Sp, Iff, Sp, F.Id("c"), InMacro, Sp,
-                        Operatorname, Grp(F.Id("Closed")), Dot)),
-                    DescribeProvenance.LiteratureAttested(Rice),
+                        Operatorname, Grp(F.Id("Closed")), Dot))),
+                    AssessedProvenance.FromLiterature(Rice),
                     Blocks(
                         Paragraph(Text(
                             "Let a closure predicate on partial recursive codes be taken at "
@@ -53,22 +50,21 @@ internal sealed class ClosureUndecidableDocument : IScribeDocumentDefinition
                             + "the nontriviality witnesses. The scope is honest - the "
                             + "statement formalizes the same-layer clause of the source "
                             + "theorem; its cross-layer relativization is a separate "
-                            + "frontier item.")))
-                ),
-                DocumentBlock.Describe.Theorem(
+                            + "frontier item."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(
                     DescribeId.Create("the-empty-ledger-reading-is-unreachable"),
+                    DeclarationHandle.Create("D5/S0/Computability/ClosureUndecidable.empty_ledger_reading_unreachable"),
                     H("The empty-ledger reading is unreachable"),
-                    LeanTheorem(
-                        "D5/S0/Computability/ClosureUndecidable.empty_ledger_reading_unreachable"),
-                    Disp(Seq(
+                    StatementSource.FromAuthor(Disp(Seq(
                         Neg, Exists, Sp, Esc, F.Text, Grp(Seq(
                             F.Id("computable"), Sp, F.Id("total"))), Sp, F.Id("C"),
                         Comma, Sp, Forall, Sp, F.Id("c"), Comma, Sp,
                         F.Id("C"), Open, F.Id("c"), Close, Sp, Eq, Sp, D(1),
                         Sp, Iff, Sp,
                         Operatorname, Grp(F.Id("eval")), Open, F.Id("c"), Close,
-                        Sp, Eq, Sp, Varnothing, Dot)),
-                    DescribeProvenance.RepoDerived(),
+                        Sp, Eq, Sp, Varnothing, Dot))),
+                    AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text(
                             "The wrapper is instantiated at the concrete closure predicate "
@@ -83,6 +79,6 @@ internal sealed class ClosureUndecidableDocument : IScribeDocumentDefinition
                             + "closure predicates, and this witness exercises it on the one "
                             + "the diagonal argument toggles against. The statement is "
                             + "assembled in the repository from the wrapped theorem, so it "
-                            + "is conservatively recorded as repository-derived.")))
-                ))));
+                            + "is conservatively recorded as repository-derived."))),
+                    DescribeRole.Theorem))));
 }
