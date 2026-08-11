@@ -108,11 +108,11 @@ internal sealed class GoldenReturnWordsDocument : IScribeDocumentDefinition
                         "Every member of goldenFactorSet 1 has length one, hence is T or F. "
                         + "The two explicit set equalities give extended cardinality two.")),
                     Paragraph(Text(
-                        "No exactly-two theorem is claimed here for general n. It is deferred "
-                        + "until a cylinder first-return theorem or a load-bearing Rauzy-graph "
-                        + "development is available. Kernel computations for n=2 check TF, "
-                        + "FT, and TT, but those bounded checks are not promoted to a global "
-                        + "theorem.")))),
+                        "The length-two occurrence-gap spectra are global: TF and FT have "
+                        + "{2,3}, while TT has {3,5}; each therefore has encard two. This does "
+                        + "not claim the all-n theorem. That theorem remains deferred until "
+                        + "admissible_rotation_gap_first_returns_two is proved without new "
+                        + "axioms.")))),
             DocumentBlock.Describe.Theorem(
                 DescribeId.Create("seed-substitution-preserves-synchronized-return-membership"),
                 H("Seed substitution preserves return membership at synchronized markers"),

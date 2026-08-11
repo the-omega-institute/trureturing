@@ -14,8 +14,8 @@ public sealed class DescribeReportTests
         WithRepository(root =>
         {
             var targetDirectory = Path.Combine(root, "D5", "S1", "Scale");
-            Directory.CreateDirectory(targetDirectory);
-            File.WriteAllText(
+            TemporaryFileSystem.Directory.CreateDirectory(targetDirectory);
+            TemporaryFileSystem.File.WriteAllText(
                 Path.Combine(targetDirectory, "Embedding.lean"),
                 "namespace D5.S1.Scale.Embedding\n");
             var document = ScribeDocument.Create(
@@ -290,11 +290,11 @@ public sealed class DescribeReportTests
         var root = Path.Combine(Path.GetTempPath(), "stratalint-report-" + Guid.NewGuid().ToString("N"));
         var formalPath = Path.Combine(root, "D5", "S1", "Phase", "Basic.lean");
         var notes = Path.Combine(root, "Library", "notes");
-        Directory.CreateDirectory(Path.GetDirectoryName(formalPath)!);
-        Directory.CreateDirectory(notes);
-        Directory.CreateDirectory(Path.Combine(root, "Blueprint"));
-        File.WriteAllText(Path.Combine(root, "global.json"), "{}\n", new UTF8Encoding(false, true));
-        File.WriteAllText(
+        TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(formalPath)!);
+        TemporaryFileSystem.Directory.CreateDirectory(notes);
+        TemporaryFileSystem.Directory.CreateDirectory(Path.Combine(root, "Blueprint"));
+        TemporaryFileSystem.File.WriteAllText(Path.Combine(root, "global.json"), "{}\n", new UTF8Encoding(false, true));
+        TemporaryFileSystem.File.WriteAllText(
             formalPath,
             "/-- Formula x = y in a Lean docstring. -/\nnamespace D5.S1.Phase\n",
             new UTF8Encoding(false, true));
@@ -309,7 +309,7 @@ public sealed class DescribeReportTests
         }
         finally
         {
-            Directory.Delete(root, recursive: true);
+            TemporaryFileSystem.Directory.Delete(root, recursive: true);
         }
     }
 
@@ -320,8 +320,8 @@ public sealed class DescribeReportTests
         string doi)
     {
         var notes = Path.Combine(root, "Library", "notes");
-        Directory.CreateDirectory(notes);
-        File.WriteAllText(
+        TemporaryFileSystem.Directory.CreateDirectory(notes);
+        TemporaryFileSystem.File.WriteAllText(
             Path.Combine(notes, bibkey + ".md"),
             "---\n"
             + $"bibkey: {bibkey}\n"
