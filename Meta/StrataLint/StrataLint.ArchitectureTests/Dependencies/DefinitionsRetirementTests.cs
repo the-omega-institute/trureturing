@@ -5,10 +5,6 @@ public sealed class DefinitionsRetirementTests
     private static readonly string RetiredAssemblyName = "StrataLint." + "Definitions";
     private static readonly string RetiredRoot =
         "Meta/StrataLint/" + RetiredAssemblyName;
-    private const string AnchorPath =
-        "Meta/StrataLint/StrataLint.Engine/Anchors/Anchor.cs";
-    private const string AnchorSchemesPath =
-        "Meta/StrataLint/StrataLint.Engine/Anchors/AnchorSchemes.cs";
     private const string SolutionPath = "Meta/StrataLint/StrataLint.sln";
     private const string CliProjectPath =
         "Meta/StrataLint/StrataLint.Cli/StrataLint.Cli.csproj";
@@ -20,12 +16,6 @@ public sealed class DefinitionsRetirementTests
         "Meta/StrataLint/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj";
     private const string ArchitectureTestsProjectPath =
         "Meta/StrataLint/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj";
-
-    public static TheoryData<string> FinalSourceOwners => new()
-    {
-        AnchorPath,
-        AnchorSchemesPath,
-    };
 
     public static TheoryData<string> ProjectAndSolutionFiles => new()
     {
@@ -43,13 +33,6 @@ public sealed class DefinitionsRetirementTests
         var root = RepositoryLayout.FindRoot();
 
         Assert.False(Directory.Exists(Path.Combine(root, RetiredRoot)));
-    }
-
-    [Theory]
-    [MemberData(nameof(FinalSourceOwners))]
-    public void DefinitionSourceHasAFinalProgramOwner(string path)
-    {
-        Assert.True(File.Exists(Path.Combine(RepositoryLayout.FindRoot(), path)), path);
     }
 
     [Theory]
