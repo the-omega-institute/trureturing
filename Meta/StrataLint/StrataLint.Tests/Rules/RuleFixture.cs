@@ -14,7 +14,6 @@ internal sealed partial class RuleFixture
     internal const string HeartsPath = GoldenCorpus.HeartsPath;
     internal const string HeartsDraftPath = "D5/X_Frontier/HeartsDraft.lean";
     internal const string ThreeDistancePath = "D5/S1/Phase/ThreeDistance.lean";
-    internal const string AnchorCatalogPath = RepositoryPathPolicy.AnchorCatalogPath;
     internal const string TowerManifestPath = RepositoryRules.TowerManifestPath;
     internal const string ValuesProjectionPath = RepositoryPathPolicy.ValuesProjectionPath;
     internal const string WorkflowPath = RepositoryPathPolicy.WorkflowPath;
@@ -48,9 +47,6 @@ internal sealed partial class RuleFixture
             [TheoryAtomizerDataLoader.DataPath] = File.ReadAllText(
                 Path.Combine(repositoryRoot, TheoryAtomizerDataLoader.DataPath), Encoding.UTF8),
             ["Meta/registry.yaml"] = TestRegistry.Canonical,
-            [AnchorCatalogPath] = File.ReadAllText(
-                Path.Combine(repositoryRoot, "Meta", "StrataLint", "Generated", "anchor-catalog.v1.json"),
-                Encoding.UTF8),
             ["Library/queries.yaml"] = "schema_version: 1\nqueries: []\n",
             [RingPath] = Header + "def goldenRing : Nat := 0\n",
             [BlueprintPath] = "# Golden ring\n",

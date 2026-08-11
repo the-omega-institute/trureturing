@@ -46,7 +46,7 @@ internal static class LeanReportFixture
     }
 
     private static string Selector(LeanDeclarationRef reference) =>
-        reference.Value[(reference.Value.LastIndexOf('.') + 1)..];
+        reference.Value.Replace('/', '.');
 
     private static string ReportKind(LeanDeclarationKind? kind) => kind switch
     {

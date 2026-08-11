@@ -16,7 +16,7 @@ internal sealed class ProductionScribeEmissionVerifier(string repositoryRoot)
     public VerifiedScribeEmissions Verify(LeanAxiomReport report)
     {
         ArgumentNullException.ThrowIfNull(report);
-        StatementProjectionReconciliation.Verify(repositoryRoot, report);
+        StatementProjectionReconciliation.Verify(repositoryRoot, DeclarationCatalog.Create(report));
         var error = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
         return ScribeEmitter.Verify(repositoryRoot, error, report)
             ?? throw new InvalidOperationException(

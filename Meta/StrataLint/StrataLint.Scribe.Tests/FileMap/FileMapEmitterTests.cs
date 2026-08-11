@@ -113,7 +113,6 @@ public sealed class FileMapEmitterTests
             .Select(static definition => definition.RelativePath.Value)
             .Concat(
             [
-                CanonicalAnchorCatalogWriter.RelativePath,
                 CanonicalValuesWriter.RelativePath,
                 DagEmitter.RelativePath,
                 DagEmitter.TruthGraphRelativePath,
