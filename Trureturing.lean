@@ -20,6 +20,7 @@ import D5.S1.Digit.Carry
 import D5.S1.Words.GoldenGapPrefix
 import D5.S1.Words.GoldenWord
 import D5.S1.Words.GoldenBalance
+import D5.S1.Words.GoldenDensity
 import D5.S1.Scale.Embedding
 import D5.S1.Scale.Log
 import D5.S1.Phase.Basic
