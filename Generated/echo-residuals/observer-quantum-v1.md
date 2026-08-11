@@ -1,8 +1,8 @@
-<!-- echo-residual-summary:v4 source=observer-quantum-v1 residual=sha256:643ae322ca177847127a1510a96294ef0aaedee4b9a7238a740159b3ac052a92 -->
+<!-- echo-residual-summary:v4 source=observer-quantum-v1 residual=sha256:a7a3703936c70437d34da450c4898501615d181f81de671e1f08c2066f78613a -->
 # Echo Residual Summary — `observer-quantum-v1`
 
-- unresolved_subitems: 58
-- mother_residual_atom_ids: 19
+- unresolved_subitems: 59
+- mother_residual_atom_ids: 20
 
 Mother residual atoms:
 
@@ -39,6 +39,8 @@ Mother residual atoms:
   - `rieffel-metric-bundle-over-torus`
   - `streamline-infinity-at-nonintegral-fiber-offset`
   - `type-II-infinity-classification`
+- `observer-residual-7232ebf337ed10c1fb71b90c1f3b3438d2dbddf1261035e4a757c3f8b6124511` (1)
+  - `kochen-specker-projection-valuation-obstruction`
 - `observer-residual-7957064151dd9375db6308e290488a9d7836e42e1d2151f8dc586a21a6bb9995` (1)
   - `center-equals-continuous-torus-functions-crossed-product-form`
 - `observer-residual-7c9486a5ed7ca3264cd32d9aaaa07bb8af9e81a547a163dd202042efa51b920c` (6)
