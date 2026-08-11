@@ -119,7 +119,18 @@ internal static class IngestCommand
                     $"WARNING silent-zero-extraction source={warning.SourceId} "
                     + $"path={warning.SourcePath}\n"))
                 + crossVolumeClearanceGaps
-                + DigestStatusCommand.RenderText(evaluation),
+                + DigestStatusCommand.RenderText(evaluation)
+                // A coarse fallback registers the volume without atomising it, which is a
+                // legitimate outcome but not the one the caller asked for. The per-source
+                // lines above sit ahead of a status table thousands of lines long, so the
+                // run restates the outcome where a reader actually lands.
+                + (plan.Fallbacks.Length == 0
+                    ? string.Empty
+                    : $"INGEST_INCOMPLETE {plan.Fallbacks.Length} source"
+                        + (plan.Fallbacks.Length == 1 ? string.Empty : "s")
+                        + " registered without being atomised: "
+                        + string.Join(", ", plan.Fallbacks.Select(static item => item.SourceId))
+                        + "\n"),
                 string.Empty);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
