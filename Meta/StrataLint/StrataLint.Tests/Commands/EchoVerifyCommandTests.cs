@@ -28,8 +28,6 @@ public sealed class EchoVerifyCommandTests
         var sourceB = EchoResidualBlock.RenderShard("source-b", body);
 
         Assert.NotEqual(sourceA, sourceB);
-        Assert.True(EchoResidualBlock.VerifyShard("source-a", sourceA));
-        Assert.False(EchoResidualBlock.VerifyShard("source-b", sourceA));
     }
 
     [Fact]
@@ -57,84 +55,6 @@ public sealed class EchoVerifyCommandTests
         Assert.Equal(1, CountOccurrences(shards["Generated/echo-residuals/source-b.md"], "  - `shared`"));
     }
 
-    [Fact]
-    public void StructureCheckAcceptsCompleteShardSet()
-    {
-        using var temporary = new TemporaryDirectory();
-        WriteShard(temporary.Path, "source-a", "# stale a\n");
-        WriteShard(temporary.Path, "source-b", "# stale b\n");
-
-        var result = EchoVerifyCommand.CheckStructure(temporary.Path, ["source-a", "source-b"]);
-
-        Assert.Equal(0, result.ExitCode);
-    }
-
-    [Fact]
-    public void StructureCheckRejectsMissingShard()
-    {
-        using var temporary = new TemporaryDirectory();
-        WriteShard(temporary.Path, "source-a", "# stale a\n");
-
-        var result = EchoVerifyCommand.CheckStructure(temporary.Path, ["source-a", "source-b"]);
-
-        Assert.Equal(1, result.ExitCode);
-        Assert.Contains("missing=source-b.md", result.Error, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void StructureCheckRejectsExtraShard()
-    {
-        using var temporary = new TemporaryDirectory();
-        WriteShard(temporary.Path, "source-a", "# stale a\n");
-        WriteShard(temporary.Path, "extra", "# stale extra\n");
-
-        var result = EchoVerifyCommand.CheckStructure(temporary.Path, ["source-a"]);
-
-        Assert.Equal(1, result.ExitCode);
-        Assert.Contains("extra=extra.md", result.Error, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void StructureCheckRejectsLegacyAggregateAlongsideShards()
-    {
-        using var temporary = new TemporaryDirectory();
-        WriteShard(temporary.Path, "source-a", "# stale a\n");
-        Directory.CreateDirectory(Path.Combine(temporary.Path, "Generated"));
-        File.WriteAllText(Path.Combine(temporary.Path, "Generated", "echo-residual-summary.md"), "legacy");
-
-        var result = EchoVerifyCommand.CheckStructure(temporary.Path, ["source-a"]);
-
-        Assert.Equal(1, result.ExitCode);
-        Assert.Contains("legacy aggregate exists", result.Error, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void StructureCheckRejectsShardReplayedAtDifferentSourcePath()
-    {
-        using var temporary = new TemporaryDirectory();
-        var directory = Path.Combine(temporary.Path, "Generated", "echo-residuals");
-        Directory.CreateDirectory(directory);
-        File.WriteAllText(
-            Path.Combine(directory, "source-b.md"),
-            EchoResidualBlock.RenderShard("source-a", "# stale a\n"));
-
-        var result = EchoVerifyCommand.CheckStructure(temporary.Path, ["source-b"]);
-
-        Assert.Equal(1, result.ExitCode);
-        Assert.Contains("invalid shard source-b.md", result.Error, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void StructureCheckRejectsMissingShardDirectory()
-    {
-        using var temporary = new TemporaryDirectory();
-
-        var result = EchoVerifyCommand.CheckStructure(temporary.Path, ["source-a"]);
-
-        Assert.Equal(1, result.ExitCode);
-        Assert.Contains("shard directory does not exist", result.Error, StringComparison.Ordinal);
-    }
-
     private static int Metric(string content, string name)
     {
         var line = content.Split('\n').First(candidate =>
@@ -144,15 +64,6 @@ public sealed class EchoVerifyCommandTests
 
     private static int CountOccurrences(string content, string value) =>
         content.Split(value, StringSplitOptions.None).Length - 1;
-
-    private static void WriteShard(string root, string sourceId, string body)
-    {
-        var directory = Path.Combine(root, "Generated", "echo-residuals");
-        Directory.CreateDirectory(directory);
-        File.WriteAllText(
-            Path.Combine(directory, sourceId + ".md"),
-            EchoResidualBlock.RenderShard(sourceId, body));
-    }
 
     private static DigestionEntryEvaluation Entry(
         string sourceId,

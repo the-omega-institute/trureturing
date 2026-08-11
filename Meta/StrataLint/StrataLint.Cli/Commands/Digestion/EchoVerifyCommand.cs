@@ -21,15 +21,8 @@ internal static class EchoVerifyCommand
         ArgumentNullException.ThrowIfNull(arguments);
         try
         {
-            var options = Parse(arguments);
-            if (options.CheckStructure)
-            {
-                // This is an opt-in read-only diagnostic. It is not an admission check,
-                // required check, freshness check, or automatic write-back step.
-                return CheckStructure(repositoryRoot, DigestStatusCommand.CurrentSourceIds(repository));
-            }
-
-            var prepared = repository.Prepare(options.BaseRevision!);
+            var baseRevision = Parse(arguments);
+            var prepared = repository.Prepare(baseRevision);
             var summary = DigestStatusCommand.Run(
                 repository,
                 leanReportSource,
@@ -66,65 +59,6 @@ internal static class EchoVerifyCommand
         }
     }
 
-    internal static ExplicitCommandResult CheckStructure(
-        string repositoryRoot,
-        IReadOnlyCollection<string> expectedSourceIds)
-    {
-        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
-        ArgumentNullException.ThrowIfNull(expectedSourceIds);
-        var legacyPath = Path.Combine(repositoryRoot, "Generated", "echo-residual-summary.md");
-        if (File.Exists(legacyPath))
-        {
-            return StructureInvalid("legacy aggregate exists: Generated/echo-residual-summary.md");
-        }
-
-        var directory = Path.Combine(repositoryRoot, "Generated", "echo-residuals");
-        if (!Directory.Exists(directory))
-        {
-            return StructureInvalid("shard directory does not exist: Generated/echo-residuals");
-        }
-
-        var expected = expectedSourceIds
-            .Select(static sourceId => sourceId + ".md")
-            .ToHashSet(StringComparer.Ordinal);
-        var actualPaths = Directory.GetFiles(directory, "*.md", SearchOption.TopDirectoryOnly);
-        var actual = actualPaths
-            .Select(static path => Path.GetFileName(path))
-            .ToHashSet(StringComparer.Ordinal);
-        var missing = expected.Except(actual, StringComparer.Ordinal).Order(StringComparer.Ordinal).ToArray();
-        var extra = actual.Except(expected, StringComparer.Ordinal).Order(StringComparer.Ordinal).ToArray();
-        if (missing.Length > 0 || extra.Length > 0)
-        {
-            var details = new List<string>();
-            if (missing.Length > 0) details.Add("missing=" + string.Join(',', missing));
-            if (extra.Length > 0) details.Add("extra=" + string.Join(',', extra));
-            return StructureInvalid(string.Join(" ", details));
-        }
-
-        foreach (var path in actualPaths.Order(StringComparer.Ordinal))
-        {
-            var fileName = Path.GetFileName(path);
-            var sourceId = Path.GetFileNameWithoutExtension(path);
-            var content = File.ReadAllText(path, Encoding.UTF8);
-            bool valid;
-            try
-            {
-                valid = EchoResidualBlock.VerifyShard(sourceId, content);
-            }
-            catch (ArgumentException)
-            {
-                valid = false;
-            }
-
-            if (!valid) return StructureInvalid($"invalid shard {fileName}");
-        }
-
-        return new ExplicitCommandResult(0, "ECHO_STRUCTURE_VALID\n", string.Empty);
-    }
-
-    private static ExplicitCommandResult StructureInvalid(string reason) =>
-        new(1, string.Empty, $"ECHO_STRUCTURE_INVALID {reason}\n");
-
     private static void WriteShards(
         string repositoryRoot,
         IReadOnlyDictionary<string, string> shards)
@@ -156,10 +90,9 @@ internal static class EchoVerifyCommand
         }
     }
 
-    private static EchoVerifyOptions Parse(IReadOnlyList<string> arguments)
+    private static string Parse(IReadOnlyList<string> arguments)
     {
         var emit = false;
-        var checkStructure = false;
         string? baseRevision = null;
         for (var index = 0; index < arguments.Count; index++)
         {
@@ -167,9 +100,6 @@ internal static class EchoVerifyCommand
             {
                 case "--emit" when !emit:
                     emit = true;
-                    break;
-                case "--check-structure" when !checkStructure:
-                    checkStructure = true;
                     break;
                 case "--base" when baseRevision is null && index + 1 < arguments.Count:
                     baseRevision = arguments[++index];
@@ -180,19 +110,16 @@ internal static class EchoVerifyCommand
             }
         }
 
-        if (emit == checkStructure || (emit && baseRevision is null) || (checkStructure && baseRevision is not null))
+        if (!emit || baseRevision is null)
         {
             throw Usage();
         }
 
-        return new EchoVerifyOptions(emit, checkStructure, baseRevision);
+        return baseRevision;
     }
 
     private static InvalidOperationException Usage() => new(
-        "USAGE: StrataLint echo-verify (--emit --base REV | --check-structure); "
-        + "--check-structure is an opt-in read-only diagnostic, not an admission or required check");
-
-    private sealed record EchoVerifyOptions(bool Emit, bool CheckStructure, string? BaseRevision);
+        "USAGE: StrataLint echo-verify --emit --base REV");
 }
 
 internal static class EchoResidualBlock
@@ -224,13 +151,6 @@ internal static class EchoResidualBlock
         var preimage = Encoding.UTF8.GetBytes(ShardDigestDomain + sourceId + "\0" + body);
         var digest = Convert.ToHexStringLower(SHA256.HashData(preimage));
         return $"{ShardStartPrefix}{sourceId} residual=sha256:{digest}{HeaderSuffix}\n{body}";
-    }
-
-    internal static bool VerifyShard(string sourceId, string content)
-    {
-        var newline = content.IndexOf('\n');
-        return newline >= 0
-            && string.Equals(RenderShard(sourceId, content[(newline + 1)..]), content, StringComparison.Ordinal);
     }
 
     private static string ComputeDigest(ReadOnlySpan<byte> residualSummary)

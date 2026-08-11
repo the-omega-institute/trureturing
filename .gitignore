@@ -15,4 +15,5 @@ __pycache__/
 /Generated/truth-graph.v1.json
 /Generated/DAG.md
 /Generated/FILEMAP.md
+/Generated/echo-residuals/
 /Meta/StrataLint/Generated/scribe-emissions.v1.json

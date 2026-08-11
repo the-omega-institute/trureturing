@@ -11,6 +11,9 @@ internal sealed record FileMapFinding(string Code, string Path, string Message);
 
 internal static class FileMapPolicy
 {
+    private const string RunLocalTrackedMessage =
+        "run-local artifact must be removed from the Git index; "
+        + "the FILEMAP declaration must not be changed to make this finding go away";
     private const string BackfillLoaderPath =
         "Meta/StrataLint/StrataLint.Engine/Rules/Backfill/BackfillInventoryLoader.cs";
     private const string FileMapLoaderPath =
@@ -242,8 +245,7 @@ internal static class FileMapPolicy
                 artifactFindings.Add(new FileMapFinding(
                     "FILEMAP-RUN-LOCAL-TRACKED",
                     artifact.Path,
-                    "run-local artifact must be removed from the Git index; "
-                    + "the FILEMAP declaration must not be changed to make this finding go away"));
+                    RunLocalTrackedMessage));
             }
 
             if (generated.RuntimeDisposition == "run-local"
@@ -286,14 +288,29 @@ internal static class FileMapPolicy
 
         foreach (var path in tracked.Order(StringComparer.Ordinal))
         {
-            if (manifest.Match(path) is [var generated]
-                && generated.Kind is FileMapKind.Generated
+            if (manifest.Match(path) is not [var generated]
+                || generated.Kind is not FileMapKind.Generated)
+            {
+                continue;
+            }
+
+            if (generated.RuntimeDisposition == "run-local"
+                && IsDataKeyedGeneratedSet(generated))
+            {
+                findings.Add(new FileMapFinding(
+                    "FILEMAP-RUN-LOCAL-TRACKED",
+                    path,
+                    RunLocalTrackedMessage));
+                continue;
+            }
+
+            if (
                 // The canonical inventory enumerates products whose paths are known at compile time.
                 // A glob set without an aggregate identity derives its member keys from governed data,
                 // so its members cannot be enumerated by the program. FILEMAP already declares producer
                 // ownership, and RepositoryPathPolicy enforces the directory-closure path predicate;
                 // repeating the per-member inventory join would add no information.
-                && !IsDataKeyedGeneratedSet(generated)
+                !IsDataKeyedGeneratedSet(generated)
                 && !inventoryPaths.Contains(path))
             {
                 findings.Add(new FileMapFinding(
