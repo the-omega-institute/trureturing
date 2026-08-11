@@ -225,6 +225,9 @@ internal sealed class StubCliEnvironment(
     public CommandResult DigestStatus(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "digest status is not configured in this fixture");
 
+    public CommandResult ShowAtom(IReadOnlyList<string> arguments) =>
+        new(false, string.Empty, "show atom is not configured in this fixture");
+
     public ExplicitCommandResult EchoVerify(IReadOnlyList<string> arguments) =>
         echoVerify ?? new(2, string.Empty, "echo verify is not configured in this fixture");
 
