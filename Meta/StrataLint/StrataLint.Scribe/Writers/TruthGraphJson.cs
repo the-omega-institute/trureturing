@@ -244,18 +244,18 @@ public sealed record DocumentGraphExportProjection(
 
     public static DocumentGraphExportProjection AssembleRepository(
         string repositoryRoot,
-        LeanAxiomReport leanReport,
+        DeclarationCatalog catalog,
         IReadOnlySet<string> formalTruthRepoPaths)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
-        ArgumentNullException.ThrowIfNull(leanReport);
+        ArgumentNullException.ThrowIfNull(catalog);
         ArgumentNullException.ThrowIfNull(formalTruthRepoPaths);
         var definitions = DocumentDefinitions.Discover(typeof(DocumentDefinitions).Assembly, repositoryRoot);
-        var documents = definitions.Select(static definition => definition.Document).ToArray();
+        var documents = definitions.Select(definition => definition.Document.ResolveDeclarations(catalog)).ToArray();
         var census = ReceiptFreeDocumentCatalog.Load(repositoryRoot, documents);
         var graph = DocumentGraphAssembler.Assemble(
             documents,
-            leanReport,
+            catalog.SourceReport,
             census.ReceiptFreeDocumentGids);
         var sources = definitions.Select(definition => new DocumentGraphDocument(
             definition.RelativePath.Value,
@@ -263,8 +263,7 @@ public sealed record DocumentGraphExportProjection(
             census.ReceiptFreeDocumentGids.Contains(definition.Document.Header.Gid.Value)
                 ? "receipt-free"
                 : "receipt-bound"));
-        return Create(
-            sources, graph, DeclarationCatalog.Create(leanReport), formalTruthRepoPaths);
+        return Create(sources, graph, catalog, formalTruthRepoPaths);
     }
 }
 

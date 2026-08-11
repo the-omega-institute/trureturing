@@ -113,7 +113,7 @@ public abstract record DocumentBlock
     {
         private Describe(
             DescribeId id,
-            DescribeKind kind,
+            DescribeKind? kind,
             Heading title,
             DescribeStatement statement,
             DescribeProvenanceSource provenanceSource,
@@ -132,20 +132,26 @@ public abstract record DocumentBlock
                 && StatementProjectionFixtureLoader.IsDerivedFrom(statementFormula, lean.Value)
                 ? StatementFormulaProvenance.LeanDerived
                 : StatementFormulaProvenance.HandAuthored;
-            Kind = kind is DescribeKind.Definition
+            this.kind = kind is DescribeKind.Definition
                 or DescribeKind.Theorem
                 or DescribeKind.Proposition
                 or DescribeKind.Lemma
                 or DescribeKind.Example
                 or DescribeKind.Remark
                     ? kind
+                    : kind is null
+                        ? null
                     : throw new ArgumentOutOfRangeException(nameof(kind));
-            KindSource = kindSource ?? new DescribeKindSource.Authored(kind);
+            KindSource = kindSource ?? new DescribeKindSource.Authored(
+                this.kind ?? throw new InvalidOperationException("An authored Describe requires a kind."));
         }
+
+        private readonly DescribeKind? kind;
 
         public DescribeId Id { get; }
 
-        public DescribeKind Kind { get; }
+        public DescribeKind Kind => kind ?? throw new InvalidOperationException(
+            "A report-derived Describe has no narrative kind until its declaration catalog is resolved.");
 
         internal DescribeKindSource KindSource { get; }
 
@@ -270,9 +276,11 @@ public abstract record DocumentBlock
                 role switch
                 {
                     DescribeRole.Definition => DescribeKind.Definition,
+                    DescribeRole.Theorem => DescribeKind.Theorem,
                     DescribeRole.Proposition => DescribeKind.Proposition,
                     DescribeRole.Lemma => DescribeKind.Lemma,
-                    _ => DescribeKind.Theorem,
+                    null => null,
+                    _ => throw new ArgumentOutOfRangeException(nameof(role)),
                 },
                 title,
                 DescribeStatement.FromLean(LeanDeclarationRef.Create(handle.Value)),

@@ -22,6 +22,10 @@ public static class QuestPdfWriter
         IReadOnlyDictionary<string, LiteratureCitation>? citations = null)
     {
         ArgumentNullException.ThrowIfNull(document);
+        if (declarations is not null)
+        {
+            document = document.ResolveDeclarations(declarations);
+        }
         QuestPDF.Settings.License = LicenseType.Community;
 
         var pdf = QuestPDF.Fluent.Document.Create(container =>

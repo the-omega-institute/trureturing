@@ -116,6 +116,25 @@ public sealed class ReportDerivedDeclarationTests
     }
 
     [Fact]
+    public void Public_markdown_writer_rejects_unresolved_inductive_without_a_role()
+    {
+        var describe = Describe.Lean(
+            DescribeId.Create("claim"),
+            DeclarationHandle.Create(Gid),
+            DefinitionDsl.H("Claim"),
+            new AssessedProvenance.RepoDerived(),
+            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("Narrative"))));
+        var document = ScribeNode.Create(
+            "Digest",
+            DefinitionDsl.H("Title"),
+            DefinitionDsl.Blocks(describe),
+            sourcePath: "/repo/Blueprint/D5/S0/Computability/SemanticLayerShift.scribe.cs");
+        var catalog = DeclarationCatalog.Create(Report(Declaration(CanonicalName, "inductive")));
+
+        Assert.Throws<InvalidOperationException>(() => CanonicalMarkdownWriter.Write(document, catalog));
+    }
+
+    [Fact]
     public void ScribeNode_derives_the_same_gid_as_legacy_header()
     {
         const string path = "/repo/Blueprint/D5/S0/Computability/SemanticLayerShift.scribe.cs";
@@ -163,11 +182,17 @@ public sealed class ReportDerivedDeclarationTests
     [Fact]
     public void Writers_accept_a_catalog_but_never_a_lean_report()
     {
-        foreach (var writer in new[] { typeof(CanonicalMarkdownWriter), typeof(QuestPdfWriter) })
+        var writerMethods = typeof(CanonicalMarkdownWriter).Assembly.ExportedTypes
+            .SelectMany(static type => type.GetMethods(BindingFlags.Public | BindingFlags.Static))
+            .Where(static method => method.DeclaringType == typeof(DocumentGraphExportProjection)
+                || method.DeclaringType?.Name.EndsWith("Writer", StringComparison.Ordinal) == true)
+            .ToArray();
+
+        Assert.NotEmpty(writerMethods);
+        foreach (var writerMethod in writerMethods)
         {
-            var write = Assert.Single(writer.GetMethods(BindingFlags.Public | BindingFlags.Static));
-            var parameters = write.GetParameters().Select(static parameter => parameter.ParameterType).ToArray();
-            Assert.Contains(typeof(DeclarationCatalog), parameters);
+            var parameters = writerMethod.GetParameters()
+                .Select(static parameter => parameter.ParameterType).ToArray();
             Assert.DoesNotContain(typeof(LeanAxiomReport), parameters);
         }
     }

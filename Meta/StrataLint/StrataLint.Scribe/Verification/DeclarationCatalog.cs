@@ -13,13 +13,16 @@ public sealed record ResolvedDeclaration(
 
 public sealed class DeclarationCatalog
 {
+    internal LeanAxiomReport SourceReport { get; }
+
     private readonly ImmutableDictionary<RepoPath,
         ImmutableDictionary<string, ImmutableArray<IndexedDeclaration>>> modules;
 
     private DeclarationCatalog(
+        LeanAxiomReport sourceReport,
         ImmutableDictionary<RepoPath,
             ImmutableDictionary<string, ImmutableArray<IndexedDeclaration>>> modules) =>
-        this.modules = modules;
+        (SourceReport, this.modules) = (sourceReport, modules);
 
     public static DeclarationCatalog Create(LeanAxiomReport report)
     {
@@ -43,7 +46,7 @@ public sealed class DeclarationCatalog
                         static group => group.ToImmutableArray(),
                         StringComparer.Ordinal));
         }
-        return new DeclarationCatalog(modules.ToImmutable());
+        return new DeclarationCatalog(report, modules.ToImmutable());
     }
 
     public ResolvedDeclaration Resolve(DeclarationHandle handle)

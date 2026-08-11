@@ -16,6 +16,10 @@ public static class CanonicalMarkdownWriter
         DocumentGraph? graph = null)
     {
         ArgumentNullException.ThrowIfNull(document);
+        if (declarations is not null)
+        {
+            document = document.ResolveDeclarations(declarations);
+        }
         var builder = new StringBuilder();
         builder.Append("# ").Append(document.Title.Value).Append("\n\n");
         builder.Append("## Abstract\n\n")
