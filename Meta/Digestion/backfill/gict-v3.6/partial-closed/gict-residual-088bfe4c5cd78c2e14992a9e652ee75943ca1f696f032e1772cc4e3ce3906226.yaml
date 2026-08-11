@@ -4,6 +4,7 @@ fingerprints:
   normalized_sha256: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
 cas_ref: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
 coverage_gids:
+  - D5/S1/Phase/Interference/ZolotarevSelector.zolotarev_selector_congruence
   - D5/S1/Phase/SeatTowerArithmetic.mod_twenty_four_eq_zero_or_twelve
   - D5/S1/Phase/SeatTowerArithmetic.twenty_four_dvd_iff_even_quotient
   - D5/S1/Phase/SeatTowerCombinatorics.full_exponent_stationing_count
@@ -73,6 +74,5 @@ receipts:
     - m1729-three-orbit-bijection
     - full-exponent-orbit-encoding-bridge
     - prediction-record-certificate
-    - zolotarev-selector-congruence
     - jacobi-no-modular-locality-certificate
     - reciprocity-walk-identification
