@@ -97,6 +97,51 @@ public sealed class DescribeMigrationTests
     }
 
     [Fact]
+    public void ReportDerivedTheoremAcquiresProjectedStatementFormulaAfterResolution()
+    {
+        var repositoryRoot = RepositoryAccessor
+            .Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound).Root.FullPath;
+        var declaration = StatementProjectionFixtureLoader.WithRepositoryRoot(
+            repositoryRoot,
+            () => DocumentDefinitions.All
+                .SelectMany(static definition => EnumerateDescribe(definition.Document.Content))
+                .Where(static node => node.Kind is
+                    DescribeKind.Theorem or DescribeKind.Proposition or DescribeKind.Lemma)
+                .Select(static node => node.Statement)
+                .OfType<DescribeStatement.LeanDeclaration>()
+                .Select(static statement => statement.Value)
+                .First(static lean =>
+                    StatementProjectionFixtureLoader.Project(lean) is ProjectionOutcome.Projected));
+        var describe = Describe.Lean(
+            DescribeId.Create("report-derived-projection"),
+            DeclarationHandle.Create(declaration.Value),
+            DefinitionDsl.H("Report-derived projection"),
+            AssessedProvenance.FromRepo(),
+            DefinitionDsl.Blocks(
+                DefinitionDsl.Paragraph(DefinitionDsl.Text("Narrative"))),
+            DescribeRole.Theorem);
+        var sourcePath = "Blueprint/"
+            + declaration.Reference.Path.Value[..^".lean".Length]
+            + ".scribe.cs";
+        var document = ScribeNode.Create(
+            "Report-derived projection",
+            DefinitionDsl.H("Projection contract"),
+            DefinitionDsl.Blocks(describe),
+            sourcePath);
+        var catalog = DeclarationCatalog.Create(LeanReportFixture.ForDocuments([document]));
+
+        var resolvedDocument = StatementProjectionFixtureLoader.WithRepositoryRoot(
+            repositoryRoot,
+            () => document.ResolveDeclarations(catalog));
+        var resolved = Assert.IsType<DocumentBlock.Describe>(
+            Assert.Single(resolvedDocument.Content.Items));
+
+        Assert.NotNull(resolved.StatementFormula);
+        Assert.Equal(StatementFormulaProvenance.LeanDerived, resolved.FormulaProvenance);
+        AssertDescribeContract(resolved);
+    }
+
+    [Fact]
     public void TheoremProjectionCensusIsCompleteAndEveryProjectableFormulaIsDerived()
     {
         var nodes = DocumentDefinitions.All

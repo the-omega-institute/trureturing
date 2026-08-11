@@ -523,7 +523,12 @@ internal static class StatementProjectionFixtureLoader
         }
         try
         {
-            return StatementProjector.Project(StatementV1Decoder.Decode(encoded).Type);
+            var outcome = StatementProjector.Project(StatementV1Decoder.Decode(encoded).Type);
+            if (outcome is ProjectionOutcome.Projected projected)
+            {
+                Derived.Add(projected.Formula, declaration);
+            }
+            return outcome;
         }
         catch (FormatException exception)
         {

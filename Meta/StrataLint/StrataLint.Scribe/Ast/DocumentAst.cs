@@ -165,6 +165,17 @@ public abstract record DocumentBlock
             ArgumentNullException.ThrowIfNull(catalog);
             var resolvedContent = ResolveBlocks(Content, catalog);
             var resolvedKind = catalog.ResolveKind(this);
+            var resolvedFormula = StatementFormula;
+            if (resolvedFormula is null
+                && Statement is DescribeStatement.LeanDeclaration lean
+                && resolvedKind is DescribeKind.Definition
+                    or DescribeKind.Theorem
+                    or DescribeKind.Proposition
+                    or DescribeKind.Lemma
+                && StatementProjectionFixtureLoader.Project(lean.Value) is ProjectionOutcome.Projected projected)
+            {
+                resolvedFormula = projected.Formula;
+            }
             return new Describe(
                 Id,
                 resolvedKind,
@@ -172,7 +183,7 @@ public abstract record DocumentBlock
                 Statement,
                 ProvenanceSource,
                 resolvedContent,
-                StatementFormula);
+                resolvedFormula);
         }
 
         public Heading Title { get; }
