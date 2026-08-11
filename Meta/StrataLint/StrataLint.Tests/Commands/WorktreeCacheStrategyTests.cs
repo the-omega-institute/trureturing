@@ -5,7 +5,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-public sealed class WorktreeCacheStrategyTests
+[Trait("Category", "Script")] public sealed class WorktreeCacheStrategyTests
 {
     [Fact]
     public void MatchingDonorCanComeFromAnotherRegisteredWorktree()

@@ -7,6 +7,64 @@ namespace StrataLint.Scribe.Tests;
 public sealed class StatementProjectionPilotTests
 {
     [Fact]
+    public void Authored_is_rejected_when_LeanDerived_is_available_exclusively()
+    {
+        var declaration = LeanDeclarationRef.Create(
+            "D5/S1/Solenoid/HiddenFiberCompact.hiddenFiber_closed_compact_seqCompact");
+
+        var error = Assert.Throws<InvalidOperationException>(() => StatementSource.Materialize(
+            StatementSource.FromAuthor(FormulaDsl.Disp(FormulaDsl.D(1))), declaration));
+
+        Assert.Contains("projection is available", error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Authored_is_legal_when_projection_is_unavailable()
+    {
+        var declaration = LeanDeclarationRef.Create("D5/S0/Test/Missing.claim");
+
+        var materialized = StatementSource.Materialize(
+            StatementSource.FromAuthor(FormulaDsl.Disp(FormulaDsl.D(1))), declaration);
+
+        Assert.IsType<StatementSource.Authored>(materialized.Source);
+    }
+
+    [Fact]
+    public void Authored_never_impersonates_LeanDerived_provenance()
+    {
+        var declaration = LeanDeclarationRef.Create("D5/S0/Test/Missing.claim");
+        var materialized = StatementSource.Materialize(
+            StatementSource.FromAuthor(FormulaDsl.Disp(FormulaDsl.D(1))), declaration);
+
+        Assert.IsType<StatementSource.Authored>(materialized.Source);
+        Assert.IsNotType<StatementSource.LeanDerived>(materialized.Source);
+    }
+
+    [Fact]
+    public void ProjectionGap_is_recomputed_from_current_declaration_content()
+    {
+        var declaration = LeanDeclarationRef.Create("D5/S0/Test/Missing.claim");
+
+        var first = Assert.IsType<StatementSource.Authored>(StatementSource.Materialize(
+            StatementSource.FromAuthor(FormulaDsl.Disp(FormulaDsl.D(1))), declaration).Source);
+        var second = Assert.IsType<StatementSource.Authored>(StatementSource.Materialize(
+            StatementSource.FromAuthor(FormulaDsl.Disp(FormulaDsl.D(2))), declaration).Source);
+
+        Assert.NotNull(first.ProjectionGap);
+        Assert.Equal(first.ProjectionGap, second.ProjectionGap);
+        Assert.Equal(StatementProjectionFixtureLoader.ProjectorEpoch, first.ProjectionGap!.ProjectorEpoch);
+        Assert.Equal(64, first.ProjectionGap.DeclarationContentDigest.Length);
+    }
+
+    [Fact]
+    public void Author_cannot_self_fill_or_freeze_a_ProjectionGap()
+    {
+        Assert.Empty(typeof(ProjectionGap).GetConstructors());
+        var authoredFactory = typeof(StatementSource).GetMethod(nameof(StatementSource.FromAuthor));
+        Assert.Equal([typeof(Formula)], authoredFactory!.GetParameters().Select(p => p.ParameterType));
+    }
+
+    [Fact]
     public void DocumentDefinitionsLoadFromExplicitRepositoryRoot()
     {
         var repositoryRoot = RepositoryAccessor.Discover(RepositoryRootCriterion.LakefileInvalidOperation).Root.FullPath;

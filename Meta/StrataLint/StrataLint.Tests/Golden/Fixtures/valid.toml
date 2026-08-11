@@ -1,8 +1,0 @@
-# 输入=spec 场景采样(人);期望=Engine 输出快照(机器录制);此文件是行为时间锁
-# canonical: UTF-8 without BOM; LF; case keys=name,changes,baseline_mutations,mutations,expected_diagnostics,contract_epoch?; nested keys follow schema order.
-[[cases]]
-name = "valid"
-changes = ["Blueprint/D5/S0/Carrier/Ring.md"]
-baseline_mutations = []
-mutations = []
-expected_diagnostics = []

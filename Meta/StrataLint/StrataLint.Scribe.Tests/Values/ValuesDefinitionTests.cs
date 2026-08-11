@@ -45,7 +45,6 @@ public sealed class ValuesDefinitionTests
     [Fact]
     public void CatalogDefinesAllFourteenConstantsAndKeepsUntranslatedInputsOpen()
     {
-        // TODO(#1264): Machine-inventoried by IndirectRepositoryReadInventoryTests; migrate this baseline entry away.
         var definitions = ValuesKernelDataLoader.LoadRepository(RepositoryAccessor.Discover(RepositoryRootCriterion.ValuesDataDirectoryNotFound).Root.FullPath);
 
         Assert.Equal(14, definitions.Length);
