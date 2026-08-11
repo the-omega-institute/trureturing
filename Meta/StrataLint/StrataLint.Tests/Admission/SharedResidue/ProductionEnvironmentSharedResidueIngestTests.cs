@@ -76,7 +76,7 @@ public sealed partial class ProductionEnvironmentTests
         ledger: theory-digestion-v1
         sources:
           - source_id: source-a
-            path: {{GoldenCorpus.FixtureDigestionSourcePath}}
+            path: {{RuleFixture.FixtureDigestionSourcePath}}
             atomizer: {{atomizerId}}
             acknowledged_stale: []
             entries:
@@ -167,14 +167,14 @@ public sealed partial class ProductionEnvironmentTests
             clearSecond,
             includeSecondFirstSourceAtom,
             clearSecondFirstSourceAtom);
-        fixture.Files[GoldenCorpus.FixtureDigestionSourcePath] = sourceText;
+        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = sourceText;
         fixture.Files["docs/CONTRIBUTING.md"] = sourceText;
-        fixture.Baseline[GoldenCorpus.FixtureDigestionSourcePath] = sourceText;
+        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = sourceText;
         fixture.Baseline["docs/CONTRIBUTING.md"] = sourceText;
         fixture.Files[BackfillInventoryLoader.RelativePath] = currentLedger;
         fixture.Baseline[BackfillInventoryLoader.RelativePath] = baselineLedger;
-        fixture.Files.Remove(GoldenCorpus.FixtureCasPath);
-        fixture.Baseline.Remove(GoldenCorpus.FixtureCasPath);
+        fixture.Files.Remove(RuleFixture.FixtureCasPath);
+        fixture.Baseline.Remove(RuleFixture.FixtureCasPath);
         fixture.Files[captured.RelativePath] = Encoding.UTF8.GetString(captured.Bytes.AsSpan());
         fixture.Baseline[captured.RelativePath] = Encoding.UTF8.GetString(captured.Bytes.AsSpan());
         using var temporary = new TemporaryDirectory();

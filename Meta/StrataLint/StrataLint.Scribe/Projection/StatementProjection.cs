@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 
 namespace StrataLint.Scribe;
 
@@ -474,6 +475,8 @@ internal static class StatementProjector
 
 internal static class StatementProjectionFixtureLoader
 {
+    internal const string ProjectorEpoch = "statement-projector-v1";
+    internal sealed record Assessment(ProjectionOutcome Outcome, string DeclarationContentDigest);
     private static readonly AsyncLocal<string?> RepositoryRoot = new();
     private static readonly Dictionary<string, ImmutableDictionary<string, string>> StatementsByRoot =
         new(StringComparer.Ordinal);
@@ -511,6 +514,9 @@ internal static class StatementProjectionFixtureLoader
         && string.Equals(source.Value, declaration.Value, StringComparison.Ordinal);
 
     internal static ProjectionOutcome Project(LeanDeclarationRef declaration)
+        => Assess(declaration).Outcome;
+
+    internal static Assessment Assess(LeanDeclarationRef declaration)
     {
         ArgumentNullException.ThrowIfNull(declaration);
         var declarationName = declaration.Value.Replace('/', '.');
@@ -518,19 +524,30 @@ internal static class StatementProjectionFixtureLoader
         if (!statements.TryGetValue(declarationName, out var encoded))
         {
             var matches = statements.Where(pair => pair.Key.EndsWith('.' + declaration.DeclarationName, StringComparison.Ordinal)).ToArray();
-            if (matches.Length != 1) return new ProjectionOutcome.Unprojectable("constant:" + declarationName);
+            if (matches.Length != 1)
+            {
+                var missing = "missing:" + declarationName;
+                return new Assessment(
+                    new ProjectionOutcome.Unprojectable(missing),
+                    Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(missing))).ToLowerInvariant());
+            }
             encoded = matches[0].Value;
         }
+        var digest = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(encoded))).ToLowerInvariant();
         try
         {
-            return StatementProjector.Project(StatementV1Decoder.Decode(encoded).Type);
+            return new Assessment(StatementProjector.Project(StatementV1Decoder.Decode(encoded).Type), digest);
         }
         catch (FormatException exception)
         {
-            return new ProjectionOutcome.Unprojectable(
-                "unregistered-elaboration-shape:statement-v1-decoder:" + exception.Message);
+            return new Assessment(new ProjectionOutcome.Unprojectable(
+                "unregistered-elaboration-shape:statement-v1-decoder:" + exception.Message), digest);
         }
     }
+
+    internal static string ReasonCode(string reason) => reason.Split(':', 2)[0];
+    internal static string OffendingSubject(string reason) =>
+        reason.Contains(':', StringComparison.Ordinal) ? reason[(reason.IndexOf(':') + 1)..] : reason;
 
     internal static string FixtureDirectory(string repositoryRoot) => Path.Combine(
         repositoryRoot, "Golden", "Projection");

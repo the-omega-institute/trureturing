@@ -113,47 +113,105 @@ public abstract record DocumentBlock
     {
         private Describe(
             DescribeId id,
-            DescribeKind kind,
+            DescribeKind? kind,
             Heading title,
             DescribeStatement statement,
-            DescribeProvenance provenance,
+            DescribeProvenanceSource provenanceSource,
             BlockSequence content,
-            Formula? statementFormula = null)
+            Formula? statementFormula = null,
+            DescribeKindSource? kindSource = null,
+            StatementSource? statementSource = null)
         {
             Id = id ?? throw new ArgumentNullException(nameof(id));
             Title = title ?? throw new ArgumentNullException(nameof(title));
             Statement = statement ?? throw new ArgumentNullException(nameof(statement));
-            Provenance = provenance ?? throw new ArgumentNullException(nameof(provenance));
+            ProvenanceSource = provenanceSource ?? throw new ArgumentNullException(nameof(provenanceSource));
             Content = content ?? throw new ArgumentNullException(nameof(content));
             StatementFormula = statementFormula;
-            FormulaProvenance = statementFormula is not null
-                && statement is DescribeStatement.LeanDeclaration lean
-                && StatementProjectionFixtureLoader.IsDerivedFrom(statementFormula, lean.Value)
-                ? StatementFormulaProvenance.LeanDerived
-                : StatementFormulaProvenance.HandAuthored;
-            Kind = kind is DescribeKind.Definition
+            StatementSource = statementSource;
+            FormulaProvenance = statementSource is StatementSource.LeanDerived
+                || statementSource is null
+                    && statementFormula is not null
+                    && statement is DescribeStatement.LeanDeclaration lean
+                    && StatementProjectionFixtureLoader.IsDerivedFrom(statementFormula, lean.Value)
+                ? StatementFormulaProvenance.LeanDerived : StatementFormulaProvenance.HandAuthored;
+            this.kind = kind is DescribeKind.Definition
                 or DescribeKind.Theorem
                 or DescribeKind.Proposition
                 or DescribeKind.Lemma
                 or DescribeKind.Example
                 or DescribeKind.Remark
                     ? kind
+                    : kind is null
+                        ? null
                     : throw new ArgumentOutOfRangeException(nameof(kind));
+            KindSource = kindSource ?? new DescribeKindSource.Authored(
+                this.kind ?? throw new InvalidOperationException("An authored Describe requires a kind."));
         }
+
+        private readonly DescribeKind? kind;
 
         public DescribeId Id { get; }
 
-        public DescribeKind Kind { get; }
+        public DescribeKind Kind => kind ?? throw new InvalidOperationException(KindSource switch
+        {
+            DescribeKindSource.ReportDerived derived =>
+                $"Report-derived Describe '{Id.Value}' for declaration '{derived.Handle.Value}' "
+                + "has no narrative kind until its declaration catalog is resolved.",
+            _ => $"Describe '{Id.Value}' has no narrative kind.",
+        });
+
+        internal DescribeKindSource KindSource { get; }
+
+        internal Describe Resolve(DeclarationCatalog catalog)
+        {
+            ArgumentNullException.ThrowIfNull(catalog);
+            var resolvedContent = ResolveBlocks(Content, catalog);
+            var resolvedKind = catalog.ResolveKind(this);
+            return new Describe(
+                Id,
+                resolvedKind,
+                Title,
+                Statement,
+                ProvenanceSource,
+                resolvedContent,
+                StatementFormula,
+                statementSource: StatementSource);
+        }
 
         public Heading Title { get; }
 
         public DescribeStatement Statement { get; }
 
-        public DescribeProvenance Provenance { get; }
+        internal DescribeProvenanceSource ProvenanceSource { get; }
+
+        public DescribeProvenance Provenance => ProvenanceSource is DescribeProvenanceSource.Legacy legacy
+            ? legacy.Value
+            : throw new InvalidOperationException("Assessed provenance is not legacy provenance.");
+
+        public AssessedProvenance? AssessedProvenance =>
+            (ProvenanceSource as DescribeProvenanceSource.Assessed)?.Value;
+
+        public DescribeProvenanceKind ProvenanceKind => ProvenanceSource switch
+        {
+            DescribeProvenanceSource.Legacy legacy => legacy.Value.Kind,
+            DescribeProvenanceSource.Assessed assessed => DescribeVocabulary.Kind(assessed.Value),
+            _ => throw new InvalidOperationException("Unknown Describe provenance source."),
+        };
+
+        public LibraryNoteRef? LiteratureReference => ProvenanceSource switch
+        {
+            DescribeProvenanceSource.Legacy legacy => legacy.Value.LiteratureReference,
+            DescribeProvenanceSource.Assessed { Value: AssessedProvenance.LiteratureAttested literature } => literature.NoteRef,
+            DescribeProvenanceSource.Assessed => null,
+            _ => throw new InvalidOperationException("Unknown Describe provenance source."),
+        };
 
         public BlockSequence Content { get; }
 
         public Formula? StatementFormula { get; }
+
+        public StatementSource? StatementSource { get; }
 
         public StatementFormulaProvenance FormulaProvenance { get; }
 
@@ -204,7 +262,7 @@ public abstract record DocumentBlock
                 DescribeKind.Example,
                 title,
                 DescribeStatement.FromFormula(formula),
-                provenance,
+                Legacy(provenance),
                 content);
 
         public static Describe Remark(
@@ -213,7 +271,42 @@ public abstract record DocumentBlock
             DescribeStatement statement,
             DescribeProvenance provenance,
             BlockSequence content) =>
-            new(id, DescribeKind.Remark, title, statement, provenance, content);
+            new(
+                id, DescribeKind.Remark, title, statement,
+                Legacy(provenance), content);
+
+        internal static Describe ReportDerived(
+            DescribeId id,
+            Heading title,
+            DeclarationHandle handle,
+            StatementSource statementSource,
+            AssessedProvenance provenance,
+            BlockSequence content,
+            DescribeRole? role)
+        {
+            var declaration = LeanDeclarationRef.Create(handle.Value);
+            var materialized = StatementSource.Materialize(statementSource, declaration);
+            return new(
+                id,
+                role switch
+                {
+                    DescribeRole.Definition => DescribeKind.Definition,
+                    DescribeRole.Theorem => DescribeKind.Theorem,
+                    DescribeRole.Proposition => DescribeKind.Proposition,
+                    DescribeRole.Lemma => DescribeKind.Lemma,
+                    null => null,
+                    _ => throw new ArgumentOutOfRangeException(nameof(role)),
+                },
+                title,
+                DescribeStatement.FromLean(declaration),
+                new DescribeProvenanceSource.Assessed(
+                    provenance ?? throw new ArgumentNullException(nameof(provenance))),
+                content,
+                role is DescribeRole.Theorem or DescribeRole.Proposition or DescribeRole.Lemma
+                    ? materialized.Formula : null,
+                new DescribeKindSource.ReportDerived(handle, role),
+                materialized.Source);
+        }
 
         private static Describe LeanDescribe(
             DescribeId id,
@@ -235,11 +328,31 @@ public abstract record DocumentBlock
                 kind,
                 title,
                 DescribeStatement.FromLean(leanRef),
-                provenance,
+                Legacy(provenance),
                 content,
                 formula);
         }
+
+        private static DescribeProvenanceSource Legacy(DescribeProvenance provenance) =>
+            new DescribeProvenanceSource.Legacy(
+                provenance ?? throw new ArgumentNullException(nameof(provenance)));
     }
+
+    internal static BlockSequence ResolveBlocks(BlockSequence content, DeclarationCatalog catalog) =>
+        BlockSequence.Create(content.Items.Select(block => block switch
+        {
+            Section section => new Section(section.Title, ResolveBlocks(section.Content, catalog)),
+            Describe describe => describe.Resolve(catalog),
+            _ => block,
+        }));
+
+    internal static bool HasReportDerived(BlockSequence content) => content.Items.Any(block => block switch
+    {
+        Section section => HasReportDerived(section.Content),
+        Describe describe => describe.KindSource is DescribeKindSource.ReportDerived
+            || HasReportDerived(describe.Content),
+        _ => false,
+    });
 
 }
 
@@ -282,6 +395,11 @@ public sealed class ScribeDocument
         RequireUniqueDescribeIds(content);
         return new ScribeDocument(header, title, content, edgeArray);
     }
+
+    internal ScribeDocument ResolveDeclarations(DeclarationCatalog catalog) =>
+        new(Header, Title, DocumentBlock.ResolveBlocks(Content, catalog), Edges);
+
+    internal bool HasReportDerivedDeclarations => DocumentBlock.HasReportDerived(Content);
 
     private static void RequireUniqueDescribeIds(BlockSequence content)
     {

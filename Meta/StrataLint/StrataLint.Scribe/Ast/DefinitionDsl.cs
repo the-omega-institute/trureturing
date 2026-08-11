@@ -59,3 +59,30 @@ public static class DefinitionDsl
         new Formula.Relation(left, FormulaRelationOperator.NotEqual, right);
 
 }
+
+public static class ScribeNode
+{
+    public static ScribeDocument Create(
+        string digest,
+        Heading title,
+        BlockSequence content,
+        [System.Runtime.CompilerServices.CallerFilePath] string sourcePath = "")
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(sourcePath);
+        var normalized = sourcePath.Replace('\\', '/');
+        const string markerText = "/Blueprint/";
+        var marker = normalized.LastIndexOf(markerText, StringComparison.Ordinal);
+        var relative = marker >= 0
+            ? normalized[(marker + markerText.Length)..]
+            : normalized.StartsWith("Blueprint/", StringComparison.Ordinal)
+                ? normalized["Blueprint/".Length..]
+                : throw new ArgumentException("Scribe source path must be under Blueprint/.", nameof(sourcePath));
+        const string suffix = ".scribe.cs";
+        if (!relative.EndsWith(suffix, StringComparison.Ordinal))
+        {
+            throw new ArgumentException("Scribe source path must end in .scribe.cs.", nameof(sourcePath));
+        }
+        return ScribeDocument.Create(
+            DefinitionDsl.Header(relative[..^suffix.Length], digest), title, content);
+    }
+}

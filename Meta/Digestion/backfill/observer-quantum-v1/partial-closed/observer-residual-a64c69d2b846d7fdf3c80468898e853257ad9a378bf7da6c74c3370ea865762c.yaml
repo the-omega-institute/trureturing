@@ -4,6 +4,9 @@ fingerprints:
   normalized_sha256: sha256:a64c69d2b846d7fdf3c80468898e853257ad9a378bf7da6c74c3370ea865762c
 cas_ref: sha256:a64c69d2b846d7fdf3c80468898e853257ad9a378bf7da6c74c3370ea865762c
 coverage_gids:
+  - D5/S3/ObserverMemory/TwoTimeKnowledge.knows_of_later_readout_factors_through_earlier
+  - D5/S3/ObserverMemory/TwoTimeKnowledge.finite_certificate_instantiates_forgot
+  - D5/S3/ObserverMemory/MultiCopyErasure.multi_copy_erasure_quantifier
   - D5/S3/ObserverMemory/FiniteForgettingCertificate.finite_history_certificate
   - D5/S3/DivergenceSupport/ZeroSupportDefect.dpi_defect_nonneg_zero_support
   - D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_eq_address_blocks
@@ -13,8 +16,6 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems:
-    - know-forgot-two-time-relation
     - joint-coherent-reversal-of-all-copies
-    - multi-copy-erasure-quantifier
   chain_atoms: []
   tail_authorization: null

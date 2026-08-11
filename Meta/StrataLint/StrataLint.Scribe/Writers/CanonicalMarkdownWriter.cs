@@ -11,11 +11,15 @@ public static class CanonicalMarkdownWriter
 
     public static ImmutableArray<byte> Write(
         ScribeDocument document,
-        LeanAxiomReport? leanReport = null,
+        DeclarationCatalog? declarations = null,
         IReadOnlyDictionary<string, LiteratureCitation>? citations = null,
         DocumentGraph? graph = null)
     {
         ArgumentNullException.ThrowIfNull(document);
+        if (declarations is not null)
+        {
+            document = document.ResolveDeclarations(declarations);
+        }
         var builder = new StringBuilder();
         builder.Append("# ").Append(document.Title.Value).Append("\n\n");
         builder.Append("## Abstract\n\n")
@@ -29,7 +33,7 @@ public static class CanonicalMarkdownWriter
             document.Content,
             2,
             $"document '{document.Header.Gid.Value}'",
-            leanReport,
+            declarations,
             citations,
             referencedDescribeIds,
             ref describeNumber);
@@ -48,7 +52,7 @@ public static class CanonicalMarkdownWriter
         BlockSequence content,
         int headingLevel,
         string source,
-        LeanAxiomReport? leanReport,
+        DeclarationCatalog? declarations,
         IReadOnlyDictionary<string, LiteratureCitation>? citations,
         IReadOnlySet<string> referencedDescribeIds,
         ref int describeNumber)
@@ -65,7 +69,7 @@ public static class CanonicalMarkdownWriter
                 content.Items[index],
                 headingLevel,
                 $"{source}, block {index + 1}",
-                leanReport,
+                declarations,
                 citations,
                 referencedDescribeIds,
                 ref describeNumber);
@@ -77,7 +81,7 @@ public static class CanonicalMarkdownWriter
         DocumentBlock block,
         int headingLevel,
         string source,
-        LeanAxiomReport? leanReport,
+        DeclarationCatalog? declarations,
         IReadOnlyDictionary<string, LiteratureCitation>? citations,
         IReadOnlySet<string> referencedDescribeIds,
         ref int describeNumber)
@@ -100,7 +104,7 @@ public static class CanonicalMarkdownWriter
                     section.Content,
                     headingLevel + 1,
                     $"{source}, section '{section.Title.Value}'",
-                    leanReport,
+                    declarations,
                     citations,
                     referencedDescribeIds,
                     ref describeNumber);
@@ -111,7 +115,7 @@ public static class CanonicalMarkdownWriter
                     describe,
                     headingLevel,
                     source,
-                    leanReport,
+                    declarations,
                     citations,
                     referencedDescribeIds,
                     ref describeNumber);
@@ -152,7 +156,7 @@ public static class CanonicalMarkdownWriter
         DocumentBlock.Describe describe,
         int headingLevel,
         string source,
-        LeanAxiomReport? leanReport,
+        DeclarationCatalog? declarations,
         IReadOnlyDictionary<string, LiteratureCitation>? citations,
         IReadOnlySet<string> referencedDescribeIds,
         ref int describeNumber)
@@ -181,7 +185,7 @@ public static class CanonicalMarkdownWriter
                     .Append("\n$$");
                 break;
             case DescribeStatement.LeanDeclaration lean:
-                var verified = Resolve(lean.Value, leanReport);
+                var verified = Resolve(lean.Value, declarations);
                 if (describe.StatementFormula is { } statementFormula)
                 {
                     builder.Append("\n\n")
@@ -217,7 +221,7 @@ public static class CanonicalMarkdownWriter
                 throw new UnreachableException("Unknown Describe statement.");
         }
 
-        if (describe.Provenance.LiteratureReference is { } literature)
+        if (describe.LiteratureReference is { } literature)
         {
             if (citations is null
                 || !citations.TryGetValue(literature.BibKey.Value, out var citation))
@@ -241,7 +245,7 @@ public static class CanonicalMarkdownWriter
         else
         {
             builder.Append("\n\n*Source.* ");
-            builder.Append(DescribeVocabulary.CanonicalName(describe.Provenance.Kind) switch
+            builder.Append(DescribeVocabulary.CanonicalName(describe.ProvenanceKind) switch
             {
                 "repo-derived" => "Repository-derived.",
                 "suspected-novel" => "Suspected novel.",
@@ -256,7 +260,7 @@ public static class CanonicalMarkdownWriter
             describe.Content,
             headingLevel + 1,
             $"{source}, describe '{describe.Id.Value}' ('{describe.Title.Value}') commentary",
-            leanReport,
+            declarations,
             citations,
             referencedDescribeIds,
             ref describeNumber);
@@ -279,13 +283,12 @@ public static class CanonicalMarkdownWriter
     private static bool IsTheoremClass(DescribeKind kind) =>
         kind is DescribeKind.Theorem or DescribeKind.Proposition or DescribeKind.Lemma;
 
-    private static VerifiedLeanDeclaration Resolve(
+    private static ResolvedDeclaration Resolve(
         LeanDeclarationRef declaration,
-        LeanAxiomReport? leanReport) =>
-        LeanReferenceResolver.Resolve(
-            declaration,
-            leanReport ?? throw new InvalidOperationException(
-                $"Lean compiled-artifact report is required for {declaration.Value}."));
+        DeclarationCatalog? declarations) =>
+        (declarations ?? throw new InvalidOperationException(
+            $"A declaration catalog is required for {declaration.Value}."))
+        .Resolve(DeclarationHandle.Create(declaration.Value));
 
     private static void WriteHeading(
         StringBuilder builder,

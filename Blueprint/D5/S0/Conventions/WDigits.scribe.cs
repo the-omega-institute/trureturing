@@ -9,7 +9,7 @@ internal sealed class WDigitsDocument : IScribeDocumentDefinition
         Header(
             "D5/S0/Conventions/WDigits",
             "W digits use shifted Fibonacci weights and the canonical Zeckendorf representation.",
-            AnchorCatalogDefinitions.MathlibZeckendorfModule),
+            Anchor.ParseCanonical("mathlib/module/Mathlib.Data.Nat.Fib.Zeckendorf")),
         H("W-Digit Convention"),
         Blocks(
             DocumentBlock.Describe.Definition(

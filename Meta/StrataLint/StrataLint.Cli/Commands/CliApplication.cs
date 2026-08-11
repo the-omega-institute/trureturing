@@ -36,8 +36,6 @@ internal interface ICliEnvironment
 
     ExplicitCommandResult ValidateBlueprintPins(IReadOnlyList<string> arguments);
 
-    CommandResult RecordGolden(IReadOnlyList<string> arguments);
-
     CommandResult SelfTest(IReadOnlyList<string> arguments);
 
     CommandResult RenderDag(IReadOnlyList<string> arguments);
@@ -56,13 +54,6 @@ internal interface ICliEnvironment
 
     CommandResult Worktree(IReadOnlyList<string> arguments);
 
-    CommandResult VerifyC0(IReadOnlyList<string> arguments);
-
-    CommandResult ReconcileC0TrustRoot(IReadOnlyList<string> arguments);
-
-    ExplicitCommandResult VerifyConservative(IReadOnlyList<string> arguments);
-
-    ExplicitCommandResult EvaluateConservativeCorpus(IReadOnlyList<string> arguments);
 }
 
 internal interface ICliConsole
@@ -124,9 +115,6 @@ internal static class CliApplication
         return arguments[0] switch
         {
             "align-scribe-receipt" => RenderCommand(environment.AlignScribeReceipt(tail), console),
-            "c0-reconcile-trust-root" =>
-                RenderCommand(environment.ReconcileC0TrustRoot(tail), console),
-            "c0-verify" => RenderCommand(environment.VerifyC0(tail), console),
             "check" => RenderAdmission(environment.Check(tail), console),
             "clean-lanes" => RenderCommand(environment.CleanLanes(tail), console),
             "coverage" => RenderCommand(environment.Coverage(tail), console),
@@ -138,9 +126,6 @@ internal static class CliApplication
             "echo-verify" => RenderExplicit(environment.EchoVerify(tail), console),
             "gate-authority" => RenderExplicit(environment.GateAuthority(tail), console),
             "ingest" => RenderCommand(environment.Ingest(tail), console),
-            "evaluate-conservative-corpus" =>
-                RenderExplicit(environment.EvaluateConservativeCorpus(tail), console),
-            "golden-record" => RenderCommand(environment.RecordGolden(tail), console),
             "ledger-genesis" => RenderCommand(environment.GenerateLedger(tail), console),
             "ledger-append" => RenderCommand(environment.AppendLedger(tail), console),
             "ledger-reattest" => RenderCommand(environment.ReattestLedger(tail), console),
@@ -154,7 +139,6 @@ internal static class CliApplication
             "topology" => RenderTopology(environment.Topology(tail), console),
             "validate-blueprint-pins" =>
                 RenderExplicit(environment.ValidateBlueprintPins(tail), console),
-            "verify-conservative" => RenderExplicit(environment.VerifyConservative(tail), console),
             "worktree" => RenderCommand(environment.Worktree(tail), console),
             _ => UnknownCommand(arguments[0], console),
         };

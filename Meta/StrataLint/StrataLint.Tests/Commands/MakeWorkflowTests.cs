@@ -4,7 +4,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-public sealed partial class MakeWorkflowTests
+[Trait("Category", "Script")] public sealed partial class MakeWorkflowTests
 {
     private const string DotnetBuildScriptPath = "Meta/StrataLint/scripts/dotnet-build.sh";
     private const string ScribeScriptPath = "Meta/StrataLint/scripts/scribe.sh";
@@ -32,27 +32,8 @@ public sealed partial class MakeWorkflowTests
     private const string PerfEventScriptPath = "Meta/StrataLint/scripts/perf-event-lib.sh";
     private const string AdmissionWorkflowPath = ".github/workflows/ci.yml";
     private const string TheoryIngestWorkflowPath = ".github/workflows/theory-ingest.yml";
-    private const string C0CeremonyWorkflowPath = ".github/workflows/c0-ceremony.yml";
     private const string PrOpenScriptPath = "Meta/StrataLint/scripts/pr.sh open";
     private const string PrUpdateScriptPath = "Meta/StrataLint/scripts/pr.sh update";
-
-    [Fact]
-    public void C0CeremonyReconcilesAndRechecksBeforeAcceptingANoOp()
-    {
-        var root = FindRepositoryRoot();
-        var workflow = File.ReadAllText(Path.Combine(root, C0CeremonyWorkflowPath));
-        var reconcile = "make c0-reconcile-trust-root";
-        var noOp = workflow.IndexOf("if git diff --cached --quiet; then", StringComparison.Ordinal);
-
-        Assert.DoesNotContain("make c0-renew", workflow, StringComparison.Ordinal);
-        Assert.Equal(2, Regex.Matches(workflow, Regex.Escape(reconcile)).Count);
-        Assert.True(noOp >= 0);
-        Assert.Contains(reconcile, workflow[noOp..], StringComparison.Ordinal);
-        Assert.Contains(
-            "no-op artifact did not contain a consistent C0 trust root",
-            workflow[noOp..],
-            StringComparison.Ordinal);
-    }
 
     private static readonly string[] Targets =
     [
@@ -181,20 +162,30 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("$JUDGE_ROOT/.github/scripts/harness-gate.sh", localGate, StringComparison.Ordinal);
         Assert.Contains("--candidate-lean-report", localGate, StringComparison.Ordinal);
         Assert.Contains("--baseline-lean-report", localGate, StringComparison.Ordinal);
-        Assert.Contains("verify-conservative", sharedGate, StringComparison.Ordinal);
+        Assert.DoesNotContain("verify-conservative", sharedGate, StringComparison.Ordinal);
         Assert.Contains("STRATALINT_GATE_OUTCOME_DIR", sharedGate + preflight, StringComparison.Ordinal);
         Assert.Contains("gate-outcome-v1", sharedGate + preflight, StringComparison.Ordinal);
-        Assert.Contains("make -C \"$CANDIDATE_ROOT\" dotnet", sharedGate, StringComparison.Ordinal);
+        Assert.DoesNotContain("make -C \"$CANDIDATE_ROOT\" dotnet", sharedGate, StringComparison.Ordinal);
         Assert.Contains("-getProperty:TargetPath", sharedGate, StringComparison.Ordinal);
-        Assert.Contains("--baseline-harness", sharedGate, StringComparison.Ordinal);
-        Assert.Contains("--candidate-harness", sharedGate, StringComparison.Ordinal);
+        Assert.DoesNotContain("--baseline-harness", sharedGate, StringComparison.Ordinal);
+        Assert.DoesNotContain("--candidate-harness", sharedGate, StringComparison.Ordinal);
         Assert.Contains(
-            "exit_with_gate_outcome conservative-certificate 3",
+            "exit_with_gate_outcome protected-surface-change 3",
+            sharedGate,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain("conservative-certificate", sharedGate, StringComparison.Ordinal);
+        Assert.Contains(
+            "protected-surface change (SL-022); content checks passed",
             sharedGate,
             StringComparison.Ordinal);
         Assert.DoesNotContain("Bootstrap scaffold path", sharedGate, StringComparison.Ordinal);
         Assert.Contains("gate_rc", localGate, StringComparison.Ordinal);
         Assert.Contains("$gate_rc -eq 3", localGate, StringComparison.Ordinal);
+        Assert.Contains(
+            "local-harness-gate: protected-surface change (SL-022)",
+            localGate,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain("certified SL-022", localGate, StringComparison.Ordinal);
         Assert.Contains("$rc\" -ne 0 && \"$rc\" -ne 3", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("conservative extension", workflow, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain("golden-record", workflow, StringComparison.Ordinal);
@@ -600,8 +591,8 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("scribe-consumer", script, StringComparison.Ordinal);
         Assert.Contains(".lake/build/stratalint/raw-lean-report.json", script, StringComparison.Ordinal);
         Assert.DoesNotContain("CHECK_ARGS=()", script, StringComparison.Ordinal);
-        Assert.Contains("emit|catalog|emit-values|filemap) run_scribe \"$1\"", script, StringComparison.Ordinal);
-        Assert.Contains("canonical) generators=(emit catalog emit-values filemap dag)", script, StringComparison.Ordinal);
+        Assert.Contains("emit|emit-values|filemap) run_scribe \"$1\"", script, StringComparison.Ordinal);
+        Assert.Contains("canonical) generators=(emit emit-values filemap dag)", script, StringComparison.Ordinal);
         Assert.Contains("for generator in \"${generators[@]}\"", script, StringComparison.Ordinal);
     }
 

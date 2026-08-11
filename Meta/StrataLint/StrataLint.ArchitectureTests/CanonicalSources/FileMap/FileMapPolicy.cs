@@ -14,6 +14,8 @@ internal static class FileMapPolicy
     private const string RunLocalTrackedMessage =
         "run-local artifact must be removed from the Git index; "
         + "the FILEMAP declaration must not be changed to make this finding go away";
+    private const string TestRegistryPath =
+        "Meta/StrataLint/StrataLint.Tests/Rules/TestRegistry.cs";
     private const string BackfillLoaderPath =
         "Meta/StrataLint/StrataLint.Engine/Rules/Backfill/BackfillInventoryLoader.cs";
     private const string FileMapLoaderPath =
@@ -30,12 +32,8 @@ internal static class FileMapPolicy
         "Meta/StrataLint/StrataLint.Engine/Snapshot/RepositorySnapshot.cs";
     private const string StatementProjectionFixtureLoaderPath =
         "Meta/StrataLint/StrataLint.Scribe/Projection/StatementProjection.cs";
-    private const string TomlGoldenLoaderPath =
-        "Meta/StrataLint/StrataLint.Cli/Golden/TomlGoldenLoader.cs";
     private const string TheoryAtomizerDataLoaderPath =
         "Meta/StrataLint/StrataLint.Engine/Digestion/Configuration/TheoryAtomizerDataLoader.cs";
-    private const string GoldenFixtureRegistryLoaderPath =
-        "Meta/StrataLint/StrataLint.Cli/Golden/GoldenFixtureRegistryLoader.cs";
     private const string GateAuthorityRootCatalogLoaderPath =
         "Meta/StrataLint/StrataLint.Cli/GateAuthority/GateAuthorityRootCatalogLoader.cs";
     private const string PerfBudgetLoaderPath =
@@ -56,7 +54,6 @@ internal static class FileMapPolicy
         {
             ["BackfillInventoryLoader"] = BackfillLoaderPath,
             ["FileMapLoader"] = FileMapLoaderPath,
-            ["GoldenFixtureRegistryLoader"] = GoldenFixtureRegistryLoaderPath,
             ["GateAuthorityRootCatalogLoader"] = GateAuthorityRootCatalogLoaderPath,
             ["LibraryNoteCatalog"] = LibraryNoteCatalogPath,
             ["PapergenCommand"] = PapergenCommandPath,
@@ -65,7 +62,7 @@ internal static class FileMapPolicy
             ["ScribeCompiler"] = ScribeProjectPath,
             ["SnapshotDecoder"] = SnapshotDecoderPath,
             ["StatementProjectionFixtureLoader"] = StatementProjectionFixtureLoaderPath,
-            ["TomlGoldenLoader"] = TomlGoldenLoaderPath,
+            ["TestRegistry"] = TestRegistryPath,
             ["TheoryAtomizerDataLoader"] = TheoryAtomizerDataLoaderPath,
             ["ValuesKernelDataLoader"] = ValuesKernelLoaderPath,
             ["YamlSubsetParser"] = YamlSubsetParserPath,
@@ -74,8 +71,7 @@ internal static class FileMapPolicy
     // FILEMAP names the producer, consumers and verifiers of every generated artifact,
     // but those names were free text that nothing checked, so they went stale the moment
     // the named type was deleted: #1112 removed ValuesProjectionLoader and its FILEMAP
-    // consumer entry kept naming it, and anchor-catalog kept naming AnchorCatalogLoader
-    // after #1122 left it with no Load call. A declaration nobody verifies is a claim
+    // consumer entry kept naming it. A declaration nobody verifies is a claim
     // about the system that can quietly stop being true. This resolves each name as a
     // rule rather than a hand-kept table: it must be a declared type in the tracked C#
     // sources, or one of the few deliberate non-type words.

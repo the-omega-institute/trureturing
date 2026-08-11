@@ -1,10 +1,69 @@
 using System.Text.Json;
+using StrataLint.Engine;
 using Xunit;
 
 namespace StrataLint.Scribe.Tests;
 
 public sealed class StatementProjectionPilotTests
 {
+    [Fact]
+    public void Authored_is_rejected_when_LeanDerived_is_available_exclusively()
+    {
+        var declaration = LeanDeclarationRef.Create(
+            "D5/S1/Solenoid/HiddenFiberCompact.hiddenFiber_closed_compact_seqCompact");
+
+        var error = Assert.Throws<InvalidOperationException>(() => StatementSource.Materialize(
+            StatementSource.FromAuthor(FormulaDsl.Disp(FormulaDsl.D(1))), declaration));
+
+        Assert.Contains("projection is available", error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Authored_is_legal_when_projection_is_unavailable()
+    {
+        var declaration = LeanDeclarationRef.Create("D5/S0/Test/Missing.claim");
+
+        var materialized = StatementSource.Materialize(
+            StatementSource.FromAuthor(FormulaDsl.Disp(FormulaDsl.D(1))), declaration);
+
+        Assert.IsType<StatementSource.Authored>(materialized.Source);
+    }
+
+    [Fact]
+    public void Authored_never_impersonates_LeanDerived_provenance()
+    {
+        var declaration = LeanDeclarationRef.Create("D5/S0/Test/Missing.claim");
+        var materialized = StatementSource.Materialize(
+            StatementSource.FromAuthor(FormulaDsl.Disp(FormulaDsl.D(1))), declaration);
+
+        Assert.IsType<StatementSource.Authored>(materialized.Source);
+        Assert.IsNotType<StatementSource.LeanDerived>(materialized.Source);
+    }
+
+    [Fact]
+    public void ProjectionGap_is_recomputed_from_current_declaration_content()
+    {
+        var declaration = LeanDeclarationRef.Create("D5/S0/Test/Missing.claim");
+
+        var first = Assert.IsType<StatementSource.Authored>(StatementSource.Materialize(
+            StatementSource.FromAuthor(FormulaDsl.Disp(FormulaDsl.D(1))), declaration).Source);
+        var second = Assert.IsType<StatementSource.Authored>(StatementSource.Materialize(
+            StatementSource.FromAuthor(FormulaDsl.Disp(FormulaDsl.D(2))), declaration).Source);
+
+        Assert.NotNull(first.ProjectionGap);
+        Assert.Equal(first.ProjectionGap, second.ProjectionGap);
+        Assert.Equal(StatementProjectionFixtureLoader.ProjectorEpoch, first.ProjectionGap!.ProjectorEpoch);
+        Assert.Equal(64, first.ProjectionGap.DeclarationContentDigest.Length);
+    }
+
+    [Fact]
+    public void Author_cannot_self_fill_or_freeze_a_ProjectionGap()
+    {
+        Assert.Empty(typeof(ProjectionGap).GetConstructors());
+        var authoredFactory = typeof(StatementSource).GetMethod(nameof(StatementSource.FromAuthor));
+        Assert.Equal([typeof(Formula)], authoredFactory!.GetParameters().Select(p => p.ParameterType));
+    }
+
     [Fact]
     public void DocumentDefinitionsLoadFromExplicitRepositoryRoot()
     {
@@ -189,18 +248,20 @@ public sealed class StatementProjectionPilotTests
     [LiveReportFact]
     public void LiveReportMatchesPinnedFixtureWhenAvailable()
     {
+        var repositoryRoot = RepositoryAccessor
+            .Discover(RepositoryRootCriterion.LakefileInvalidOperation).Root.FullPath;
         StatementProjectionReconciliation.Verify(
-            RepositoryAccessor.Discover(RepositoryRootCriterion.LakefileInvalidOperation).Root.FullPath,
-            requireLiveReport: Environment.GetEnvironmentVariable("STRATALINT_REQUIRE_LIVE_REPORT") == "1");
+            repositoryRoot,
+            DeclarationCatalog.Create(LeanCompiledArtifactReports.InspectRepository(repositoryRoot)));
     }
 
     [Fact]
-    public void RequiredLiveReportFailsWhenReportIsAbsent()
+    public void ReconciliationCatalogFailsClosedWhenDeclarationKindIsMissing()
     {
-        using var repository = new TemporaryRepository();
+        using var repository = TemporaryRepository.WithReport(
+            type: "statement-v1(uparams=[],type=es(l0))");
 
-        Assert.Throws<FileNotFoundException>(() =>
-            StatementProjectionReconciliation.Verify(repository.Path, requireLiveReport: true));
+        Assert.Throws<InvalidOperationException>(() => repository.Catalog(kind: ""));
     }
 
     [Fact]
@@ -208,7 +269,7 @@ public sealed class StatementProjectionPilotTests
     {
         using var repository = TemporaryRepository.WithReport(type: "statement-v1(uparams=[],type=es(l0))");
 
-        StatementProjectionReconciliation.Verify(repository.Path, requireLiveReport: true);
+        StatementProjectionReconciliation.Verify(repository.Path, repository.Catalog());
     }
 
     [Fact]
@@ -217,7 +278,7 @@ public sealed class StatementProjectionPilotTests
         using var repository = TemporaryRepository.WithReport(type: "statement-v1(uparams=[],type=es(l1))");
 
         Assert.Throws<InvalidDataException>(() =>
-            StatementProjectionReconciliation.Verify(repository.Path, requireLiveReport: true));
+            StatementProjectionReconciliation.Verify(repository.Path, repository.Catalog()));
     }
 
     private static JsonDocument LoadPinnedFixture(string name) => JsonDocument.Parse(
@@ -240,7 +301,21 @@ public sealed class StatementProjectionPilotTests
             var requireLiveReport = Environment.GetEnvironmentVariable("STRATALINT_REQUIRE_LIVE_REPORT") == "1";
             if (!requireLiveReport && !repository.FileExists(RepositoryRelativePath.Create(
                     ".lake/build/stratalint/raw-lean-report.json")))
+            {
                 Skip = "Live raw Lean report is absent; pinned statement-v1 fixture remains the self-contained verifier asset.";
+                return;
+            }
+            if (!requireLiveReport)
+            {
+                try
+                {
+                    _ = LeanCompiledArtifactReports.InspectRepository(repository.Root.FullPath);
+                }
+                catch (FormatException)
+                {
+                    Skip = "Live raw Lean report is stale; pinned statement-v1 fixture remains the self-contained verifier asset.";
+                }
+            }
         }
     }
 
@@ -266,6 +341,18 @@ public sealed class StatementProjectionPilotTests
                 """{"modules":[{"declarations":[{"name":"D5.Test.declaration","type":"statement-v1(uparams=[],type=es(l0))"}]}]}""");
             return repository;
         }
+
+        public DeclarationCatalog Catalog(string kind = "theorem") => DeclarationCatalog.Create(
+            LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>
+            {
+                ["D5/Test.lean"] = new(
+                    [],
+                    [new LeanDeclaration(
+                        "D5.Test.declaration",
+                        kind,
+                        "statement-v1(uparams=[],type=es(l0))",
+                        [])]),
+            }));
 
         public void Dispose() => root.Delete(recursive: true);
     }
