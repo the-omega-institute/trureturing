@@ -4,6 +4,7 @@ fingerprints:
   normalized_sha256: sha256:3fd76409f8ea3cfe2c3722c92b767875991a4572f1d62575f6ded1a5150b92c6
 cas_ref: sha256:3fd76409f8ea3cfe2c3722c92b767875991a4572f1d62575f6ded1a5150b92c6
 coverage_gids:
+  - D5/S3/ObserverMemory/RecordCorrelationMonogamy.record_correlation_monogamy
   - D5/S3/Observer/WindowCharacter.window_algebra_has_no_character
   - D5/S3/Quantum/FiniteDimensional.qubit_matrix_algebra_has_no_character
   - D5/S3/QuantumBounds/CHSHWitness.bell_chsh_value
@@ -17,7 +18,6 @@ coverage_gids:
 receipts:
   coverage: []
   scribe: []
-  unresolved_subitems:
-    - monogamy-unique-classical-pairing
+  unresolved_subitems: []
   chain_atoms: []
   tail_authorization: null
