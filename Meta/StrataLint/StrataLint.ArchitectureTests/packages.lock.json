@@ -22,6 +22,12 @@
           "Microsoft.TestPlatform.TestHost": "18.0.1"
         }
       },
+      "Tomlyn": {
+        "type": "Direct",
+        "requested": "[2.10.1, )",
+        "resolved": "2.10.1",
+        "contentHash": "ykjOY3IpYmC4SpPcAZRTl/w2jTmhPMDydHq8xcV7tTBAQ22nKBsOkPqauIrZlMjHm03cmKfV23UOPscKp+J4Og=="
+      },
       "xunit": {
         "type": "Direct",
         "requested": "[2.9.3, )",
@@ -135,6 +141,7 @@
         "type": "Project",
         "dependencies": {
           "Dunet": "[1.16.2, )",
+          "Microsoft.CodeAnalysis.CSharp": "[5.0.0, )",
           "Pidgin": "[3.5.1, )"
         }
       },
@@ -180,12 +187,6 @@
         "requested": "[2026.7.1, 2026.7.1]",
         "resolved": "2026.7.1",
         "contentHash": "GsBxQb48dFAGmvI1eP3SHyz0Pua4uH6aUHX7f0ywTin6hordAviZRAiTiIQiKMLwq6hN1FmgS+qLjfh2v7vhOg=="
-      },
-      "Tomlyn": {
-        "type": "Direct",
-        "requested": "[2.10.1, )",
-        "resolved": "2.10.1",
-        "contentHash": "ykjOY3IpYmC4SpPcAZRTl/w2jTmhPMDydHq8xcV7tTBAQ22nKBsOkPqauIrZlMjHm03cmKfV23UOPscKp+J4Og=="
       }
     }
   }

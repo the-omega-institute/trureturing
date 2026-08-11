@@ -139,6 +139,10 @@ internal static partial class RepositoryRules
             25,
             "Blueprint projection source",
             new RepositoryRule(RepositoryScoped, BlueprintProjectionSource)),
+        Register(
+            26,
+            "Scribe legacy constructor budget",
+            new RepositoryRule(RepositoryScoped, ScribeLegacyConstructorBudget)),
     ];
 
     private static RuleRegistration Register(
