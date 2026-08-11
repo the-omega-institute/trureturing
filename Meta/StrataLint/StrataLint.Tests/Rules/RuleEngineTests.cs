@@ -312,6 +312,63 @@ public sealed class RuleEngineTests
             RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(18), fixture.Build()).Diagnostics);
     }
 
+    [Fact]
+    public void Sl025RejectsChangedBlueprintMarkdownWithoutChangedScribeSource()
+    {
+        var fixture = new RuleFixture();
+        fixture.Files[RuleFixture.BlueprintPath] = "# Changed golden ring\n";
+
+        var diagnostic = Assert.Single(EvaluateSl025(fixture));
+
+        Assert.Equal(RuleFixture.BlueprintPath, diagnostic.Path);
+        Assert.Equal(
+            "Blueprint markdown is a projection: emit it from a .scribe.cs change",
+            diagnostic.Message);
+    }
+
+    [Fact]
+    public void Sl025AcceptsChangedBlueprintMarkdownWithChangedScribeSource()
+    {
+        const string sourcePath = "Blueprint/D5/S0/Carrier/Ring.scribe.cs";
+        var fixture = new RuleFixture();
+        fixture.Files[RuleFixture.BlueprintPath] = "# Changed golden ring\n";
+        fixture.Files[sourcePath] = "// changed source\n";
+        fixture.Baseline[sourcePath] = "// baseline source\n";
+        fixture.Changes.Add(sourcePath);
+
+        Assert.Empty(EvaluateSl025(fixture));
+    }
+
+    [Fact]
+    public void Sl025AcceptsUnchangedBlueprintMarkdownListedInChanges()
+    {
+        var fixture = new RuleFixture();
+
+        Assert.Empty(EvaluateSl025(fixture));
+    }
+
+    [Fact]
+    public void Sl025AcceptsChangedScribeSourceWithoutBlueprintMarkdown()
+    {
+        const string sourcePath = "Blueprint/D5/S0/Carrier/Ring.scribe.cs";
+        var fixture = new RuleFixture();
+        fixture.Changes.Clear();
+        fixture.Changes.Add(sourcePath);
+        fixture.Files[sourcePath] = "// changed source\n";
+        fixture.Baseline[sourcePath] = "// baseline source\n";
+
+        Assert.Empty(EvaluateSl025(fixture));
+    }
+
+    private static ImmutableArray<Diagnostic> EvaluateSl025(RuleFixture fixture)
+    {
+        Assert.True(RuleId.TryCreate("SL-025", out var ruleId));
+        var context = fixture.Changes.Any(path => path.EndsWith(".scribe.cs", StringComparison.Ordinal))
+            ? fixture.BuildForProtectedRuleCompatibility()
+            : fixture.Build();
+        return RuleCatalog.Default.EvaluateSingle(ruleId!, context).Diagnostics;
+    }
+
     [Theory]
     [InlineData(7, "D5-T0011")]
     [InlineData(9, "D5-T0012")]
@@ -330,11 +387,11 @@ public sealed class RuleEngineTests
     public void CoverageManifestNamesEveryRuleWithARealRedOrDeferredBranch()
     {
         var exercised = BlockingCases.Select(item => (int)item[0])
-            .Concat(new[] { 7, 9, 14, 22, 23 })
+            .Concat(new[] { 7, 9, 14, 22, 23, 25 })
             .Order()
             .ToArray();
 
-        Assert.Equal(Enumerable.Range(1, 23), exercised);
+        Assert.Equal(Enumerable.Range(1, 23).Append(25), exercised);
     }
 
     [Fact]

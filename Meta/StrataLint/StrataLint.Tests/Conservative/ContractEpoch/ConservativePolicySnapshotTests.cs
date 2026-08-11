@@ -125,7 +125,7 @@ public sealed class ConservativePolicySnapshotTests
         Assert.StartsWith("sha256:", sl023.DescriptorRoot, StringComparison.Ordinal);
         Assert.Equal(71, sl023.DescriptorRoot.Length);
         Assert.Equal(
-            "sha256:3cf6dbb7d64c99791db2145cc072c914a63bbe2e0c7acf9c9bc7aca5b0ad95ee",
+            "sha256:eaa7a43742593a86ce1bba656175455bf3965d3c1da8de6005a3c614f7762529",
             current.Root);
     }
 
@@ -146,7 +146,7 @@ public sealed class ConservativePolicySnapshotTests
 
         Assert.Equal(ResidenceEpochRetiredPaths, current.ExactExclusions);
         Assert.Equal(
-            "sha256:3cf6dbb7d64c99791db2145cc072c914a63bbe2e0c7acf9c9bc7aca5b0ad95ee",
+            "sha256:eaa7a43742593a86ce1bba656175455bf3965d3c1da8de6005a3c614f7762529",
             current.Root);
         Assert.All(ResidenceEpochRetiredPaths, path => Assert.False(current.IsProtected(path)));
     }
