@@ -38,6 +38,8 @@ internal sealed partial class RuleFixture
            digest: StrataLint fixture. -/
         """;
 
+    [RepositoryReadPattern(RepositoryReadPatternKind.Exact, TheoryAtomizerDataLoader.DataPath)]
+    [RepositoryReadPattern(RepositoryReadPatternKind.Exact, AnchorCatalogPath)]
     internal RuleFixture()
     {
         var repositoryRoot = FindRepositoryRoot();
@@ -49,7 +51,7 @@ internal sealed partial class RuleFixture
                 Path.Combine(repositoryRoot, TheoryAtomizerDataLoader.DataPath), Encoding.UTF8),
             ["Meta/registry.yaml"] = TestRegistry.Canonical,
             [AnchorCatalogPath] = File.ReadAllText(
-                Path.Combine(repositoryRoot, "Meta", "StrataLint", "Generated", "anchor-catalog.v1.json"),
+                Path.Combine(repositoryRoot, AnchorCatalogPath),
                 Encoding.UTF8),
             ["Library/queries.yaml"] = "schema_version: 1\nqueries: []\n",
             [RingPath] = Header + "def goldenRing : Nat := 0\n",
@@ -430,6 +432,7 @@ internal sealed partial class RuleFixture
         }
     }
 
+    [RepositoryReadPattern(RepositoryReadPatternKind.Exact, ValuesProjectionPath)]
     internal void AddValuesProjection()
     {
         var repositoryRoot = FindRepositoryRoot();

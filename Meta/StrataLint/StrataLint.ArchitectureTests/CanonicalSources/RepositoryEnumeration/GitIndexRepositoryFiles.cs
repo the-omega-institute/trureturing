@@ -7,6 +7,7 @@ internal static class GitIndexRepositoryFiles
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
+    [RepositoryReadPattern(RepositoryReadPatternKind.All)]
     internal static IReadOnlyList<(string RelativePath, string FullPath)> Enumerate(
         string repositoryRoot) => ReadPaths(repositoryRoot)
         .Select(path => (

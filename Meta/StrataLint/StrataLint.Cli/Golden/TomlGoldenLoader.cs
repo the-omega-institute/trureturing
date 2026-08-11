@@ -1,4 +1,5 @@
 using System.Text;
+using StrataLint.Engine;
 using Tomlyn;
 using Tomlyn.Model;
 
@@ -10,6 +11,7 @@ internal static class TomlGoldenLoader
 
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
+    [RepositoryReadPattern(RepositoryReadPatternKind.Subtree, RelativeDirectory)]
     internal static GoldenCorpusSet LoadRepository(string repositoryRoot)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
