@@ -375,12 +375,28 @@ jobs:
           set -euo pipefail
           report="$RUNNER_TEMP/raw-lean-reports/candidate-lean-report.json"
           target="$GITHUB_WORKSPACE/candidate/.lake/build/stratalint/raw-lean-report.json"
+          results="$RUNNER_TEMP/scribe-live-report-reconciliation.trx"
           mkdir -p "$(dirname "$target")"
           cp "$report" "$target"
           dotnet test candidate/Meta/StrataLint/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj \
             --configuration Release \
-            --filter 'FullyQualifiedName~LiveReportMatchesPinnedFixtureWhenAvailable|FullyQualifiedName~GeneratedMarkdownIsDeterministicAndMatchesTheCommittedTree' \
+            --filter 'FullyQualifiedName=StrataLint.Scribe.Tests.StatementProjectionPilotTests.LiveReportMatchesPinnedFixtureWhenAvailable|FullyQualifiedName=StrataLint.Scribe.Tests.DocumentDiscoveryTests.GeneratedMarkdownIsDeterministicAndMatchesTheCommittedTree' \
+            --logger "trx;LogFileName=$results" \
             --verbosity normal
+          python3 -c '
+          import sys
+          import xml.etree.ElementTree as ET
+
+          expected = {
+              "StrataLint.Scribe.Tests.StatementProjectionPilotTests.LiveReportMatchesPinnedFixtureWhenAvailable",
+              "StrataLint.Scribe.Tests.DocumentDiscoveryTests.GeneratedMarkdownIsDeterministicAndMatchesTheCommittedTree",
+          }
+          results = ET.parse(sys.argv[1]).getroot().findall(".//{*}UnitTestResult")
+          names = [result.attrib.get("testName") for result in results]
+          outcomes = [result.attrib.get("outcome") for result in results]
+          if len(results) != 2 or set(names) != expected or outcomes != ["Passed", "Passed"]:
+              raise SystemExit(f"expected exactly two passing reconciliation tests {sorted(expected)}; got {list(zip(names, outcomes))}")
+          ' "$results"
 
       - name: Stage candidate canonical Lean report cache
         shell: bash
