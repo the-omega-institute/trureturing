@@ -9,6 +9,7 @@ internal enum TestMapUnknownReason
     VariablePath,
     DirectoryEnumeration,
     IndirectViaProductionLoader,
+    RepositoryRootMarker,
     Other,
 }
 
@@ -57,6 +58,7 @@ internal static class ScribeTestMapDeriver
         IEnumerable<(string Path, int Line)> indirectProductionSites)
     {
         var parsed = sourceFiles.Select(Parse).ToArray();
+        var discoveryPaths = ExtractDiscoveryPaths(parsed);
         var methods = parsed.SelectMany(static source => source.Methods).ToArray();
         var methodsByTypeAndName = methods.GroupBy(static method => (method.TypeName, method.Name))
             .ToDictionary(static group => group.Key, static group => group.ToArray());
@@ -77,7 +79,7 @@ internal static class ScribeTestMapDeriver
                     continue;
                 }
 
-                InspectMethod(method, paths, reasons);
+                InspectMethod(method, discoveryPaths, paths, reasons);
                 if (indirect.Any(site => site.Path == method.Path
                     && site.Line >= method.StartLine && site.Line <= method.EndLine))
                 {
@@ -109,6 +111,7 @@ internal static class ScribeTestMapDeriver
 
     private static void InspectMethod(
         ParsedMethod method,
+        IReadOnlyDictionary<string, IReadOnlyList<string>?> discoveryPaths,
         HashSet<string> paths,
         HashSet<TestMapUnknownReason> reasons)
     {
@@ -116,7 +119,7 @@ internal static class ScribeTestMapDeriver
         {
             if (IsAccessorCall(invocation, "Discover"))
             {
-                AddDiscoveryPaths(invocation, paths, reasons);
+                AddDiscoveryPaths(invocation, discoveryPaths, paths, reasons);
             }
 
             if (IsAccessorCall(invocation, "EnumerateFiles"))
@@ -162,29 +165,92 @@ internal static class ScribeTestMapDeriver
 
     private static void AddDiscoveryPaths(
         InvocationExpressionSyntax invocation,
+        IReadOnlyDictionary<string, IReadOnlyList<string>?> discoveryPaths,
         HashSet<string> paths,
         HashSet<TestMapUnknownReason> reasons)
     {
-        var criterion = invocation.ArgumentList.Arguments.LastOrDefault()?.Expression
-            as MemberAccessExpressionSyntax;
-        switch (criterion?.Name.Identifier.ValueText)
+        var criterion = (invocation.ArgumentList.Arguments.LastOrDefault()?.Expression
+            as MemberAccessExpressionSyntax)?.Name.Identifier.ValueText;
+        if (criterion is not null
+            && discoveryPaths.TryGetValue(criterion, out var markerPaths)
+            && markerPaths is not null)
         {
-            case "GlobalJsonAndBlueprintDirectoryNotFound":
-            case "GlobalJsonAndBlueprintInvalidOperation":
-                paths.Add("global.json");
-                paths.Add("Blueprint");
-                break;
-            case "GlobalJsonAndLibraryInvalidOperation":
-                paths.Add("global.json");
-                paths.Add("Library");
-                break;
-            case "ClaudeDirectoryNotFound": paths.Add("CLAUDE.md"); break;
-            case "LakefileInvalidOperation": paths.Add("lakefile.toml"); break;
-            case "FileMapDirectoryNotFound": paths.Add("Meta/FILEMAP.toml"); break;
-            case "ValuesDataDirectoryNotFound": paths.Add("Golden/values-kernels.toml"); break;
-            case "ValuesProducerDirectoryNotFound": paths.Add("D5/X_Frontier/ValuesProducer.lean"); break;
-            default: reasons.Add(TestMapUnknownReason.Other); break;
+            paths.UnionWith(markerPaths);
+            return;
         }
+
+        reasons.Add(TestMapUnknownReason.RepositoryRootMarker);
+    }
+
+    private static IReadOnlyDictionary<string, IReadOnlyList<string>?> ExtractDiscoveryPaths(
+        IEnumerable<ParsedSource> sources)
+    {
+        var result = new Dictionary<string, IReadOnlyList<string>?>(StringComparer.Ordinal);
+        var matches = sources.SelectMany(static source => source.Root.DescendantNodes()
+            .OfType<MethodDeclarationSyntax>())
+            .Where(static method => method.Identifier.ValueText == "Matches");
+        foreach (var arm in matches.SelectMany(static method => method.DescendantNodes()
+                     .OfType<SwitchExpressionArmSyntax>()))
+        {
+            var criteria = arm.Pattern.DescendantNodesAndSelf()
+                .OfType<MemberAccessExpressionSyntax>()
+                .Where(static member => member.Expression is IdentifierNameSyntax
+                {
+                    Identifier.ValueText: "RepositoryRootCriterion",
+                })
+                .Select(static member => member.Name.Identifier.ValueText)
+                .Distinct(StringComparer.Ordinal)
+                .ToArray();
+            if (criteria.Length == 0)
+            {
+                continue;
+            }
+
+            var markerPaths = TryExtractMarkerPaths(arm.Expression);
+            foreach (var criterion in criteria)
+            {
+                result[criterion] = markerPaths;
+            }
+        }
+
+        return result;
+    }
+
+    private static IReadOnlyList<string>? TryExtractMarkerPaths(ExpressionSyntax expression)
+    {
+        var combines = expression.DescendantNodesAndSelf().OfType<InvocationExpressionSyntax>()
+            .Where(static invocation => invocation.Expression is MemberAccessExpressionSyntax
+            {
+                Expression: IdentifierNameSyntax { Identifier.ValueText: "Path" },
+                Name.Identifier.ValueText: "Combine",
+            })
+            .ToArray();
+        var paths = new List<string>();
+        foreach (var combine in combines)
+        {
+            var arguments = combine.ArgumentList.Arguments;
+            if (arguments.Count < 2
+                || arguments[0].Expression is not IdentifierNameSyntax { Identifier.ValueText: "root" })
+            {
+                return null;
+            }
+
+            var segments = new List<string>();
+            foreach (var argument in arguments.Skip(1))
+            {
+                if (argument.Expression is not LiteralExpressionSyntax literal
+                    || !literal.IsKind(SyntaxKind.StringLiteralExpression))
+                {
+                    return null;
+                }
+
+                segments.Add(literal.Token.ValueText);
+            }
+
+            paths.Add(string.Join('/', segments));
+        }
+
+        return paths.Count == 0 ? null : paths.Distinct(StringComparer.Ordinal).ToArray();
     }
 
     private static bool IsAccessorCall(InvocationExpressionSyntax invocation, params string[] names) =>
@@ -222,10 +288,10 @@ internal static class ScribeTestMapDeriver
                 span.EndLinePosition.Line + 1,
                 method);
         }).ToArray();
-        return new ParsedSource(methods);
+        return new ParsedSource(root, methods);
     }
 
-    private sealed record ParsedSource(IReadOnlyList<ParsedMethod> Methods);
+    private sealed record ParsedSource(SyntaxNode Root, IReadOnlyList<ParsedMethod> Methods);
     private sealed record ParsedMethod(
         string Path,
         string TypeName,

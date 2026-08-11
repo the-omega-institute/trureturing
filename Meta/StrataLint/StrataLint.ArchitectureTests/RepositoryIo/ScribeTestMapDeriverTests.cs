@@ -3,6 +3,24 @@ namespace StrataLint.ArchitectureTests;
 public sealed class ScribeTestMapDeriverTests
 {
     [Fact]
+    public void DiscoveryMarkerFollowsRepositoryAccessorSource()
+    {
+        var map = DeriveDiscoveryWithAccessorMarker("File.Exists(Path.Combine(root, \"PROJECT.md\"))");
+
+        Assert.Equal(["PROJECT.md"], Assert.Single(map.Methods).Paths);
+    }
+
+    [Fact]
+    public void UnparseableDiscoveryMarkerIsUnknownAndSelectedForEveryChange()
+    {
+        var map = DeriveDiscoveryWithAccessorMarker("File.Exists(Path.Combine(root, markerPath))");
+
+        var method = Assert.Single(map.Methods);
+        Assert.True(method.IsUnknown);
+        Assert.Contains(method, map.Select(["unrelated.txt"]));
+    }
+
+    [Fact]
     public void SensitivityFollowsRepositoryPathLiteralInSource()
     {
         var first = Derive("Golden/one.json");
@@ -26,7 +44,7 @@ public sealed class ScribeTestMapDeriverTests
             }
             """;
 
-        var map = ScribeTestMapDeriver.DeriveSources([new("VariableTests.cs", source)], []);
+        var map = DeriveSources([new("VariableTests.cs", source)]);
 
         var method = Assert.Single(map.Methods);
         Assert.Equal(TestMapUnknownReason.VariablePath, Assert.Single(method.UnknownReasons));
@@ -50,7 +68,7 @@ public sealed class ScribeTestMapDeriverTests
               [Fact] public void Discovers() => RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound);
             }
             """;
-        var map = ScribeTestMapDeriver.DeriveSources([new("DirectoryTests.cs", source)], []);
+        var map = DeriveSources([new("DirectoryTests.cs", source)]);
 
         Assert.Single(map.Select(["Blueprint/Nested/document.scribe.cs"]));
     }
@@ -69,7 +87,7 @@ public sealed class ScribeTestMapDeriverTests
             }
             """;
 
-        var map = ScribeTestMapDeriver.DeriveSources([new("SampleTests.cs", source)], []);
+        var map = DeriveSources([new("SampleTests.cs", source)]);
 
         Assert.Equal(["A.json", "CLAUDE.md"], map.Methods.Single(method => method.Id.EndsWith(".A", StringComparison.Ordinal)).Paths);
         Assert.Equal(["B.json", "CLAUDE.md"], map.Methods.Single(method => method.Id.EndsWith(".B", StringComparison.Ordinal)).Paths);
@@ -88,6 +106,44 @@ public sealed class ScribeTestMapDeriverTests
                 .ReadAllText(RepositoryRelativePath.Create("{{path}}"));
             }
             """;
-        return ScribeTestMapDeriver.DeriveSources([new("LiteralTests.cs", source)], []);
+        return DeriveSources([new("LiteralTests.cs", source)]);
+    }
+
+    private static ScribeTestMap DeriveDiscoveryWithAccessorMarker(string markerExpression)
+    {
+        const string testSource = """
+            class DiscoveryTests {
+              [Fact] public void Discovers() => RepositoryAccessor.Discover(RepositoryRootCriterion.ClaudeDirectoryNotFound);
+            }
+            """;
+        var accessorSource = $$"""
+            class RepositoryAccessor {
+              private static bool Matches(string root, RepositoryRootCriterion criterion) => criterion switch {
+                RepositoryRootCriterion.ClaudeDirectoryNotFound => {{markerExpression}},
+                _ => false,
+              };
+            }
+            """;
+
+        return ScribeTestMapDeriver.DeriveSources(
+            [new("DiscoveryTests.cs", testSource), new("Support/RepositoryAccessor.cs", accessorSource)],
+            []);
+    }
+
+    private static ScribeTestMap DeriveSources(IEnumerable<TestMapSource> sources)
+    {
+        const string accessorSource = """
+            class RepositoryAccessor {
+              private static bool Matches(string root, RepositoryRootCriterion criterion) => criterion switch {
+                RepositoryRootCriterion.ClaudeDirectoryNotFound => File.Exists(Path.Combine(root, "CLAUDE.md")),
+                RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound =>
+                  File.Exists(Path.Combine(root, "global.json")) && Directory.Exists(Path.Combine(root, "Blueprint")),
+                _ => false,
+              };
+            }
+            """;
+        return ScribeTestMapDeriver.DeriveSources(
+            sources.Append(new("Support/RepositoryAccessor.cs", accessorSource)),
+            []);
     }
 }
