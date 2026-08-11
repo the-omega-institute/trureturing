@@ -16,7 +16,7 @@ public sealed class CensusDerivationTests
     [Fact]
     public void ProductionReceiptClassificationIsDisjointAndComplete()
     {
-        var repositoryRoot = FindRepositoryRoot();
+        var repositoryRoot = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound).Root.FullPath;
         var documents = DocumentDefinitions.Discover(typeof(DocumentDefinitions).Assembly)
             .Select(static definition => definition.Document)
             .ToArray();
@@ -64,10 +64,10 @@ public sealed class CensusDerivationTests
         var repositoryRoot = Path.Combine(
             Path.GetTempPath(),
             "stratalint-census-" + Guid.NewGuid().ToString("N"));
-        Directory.CreateDirectory(Path.Combine(repositoryRoot, "Meta"));
+        TemporaryFileSystem.Directory.CreateDirectory(Path.Combine(repositoryRoot, "Meta"));
         try
         {
-            File.WriteAllText(
+            TemporaryFileSystem.File.WriteAllText(
                 Path.Combine(repositoryRoot, BackfillInventoryLoader.RelativePath),
                 $$"""
                 schema_version: 3
@@ -107,7 +107,7 @@ public sealed class CensusDerivationTests
         }
         finally
         {
-            Directory.Delete(repositoryRoot, recursive: true);
+            TemporaryFileSystem.Directory.Delete(repositoryRoot, recursive: true);
         }
     }
 
@@ -122,17 +122,17 @@ public sealed class CensusDerivationTests
         var sourceRoot = Path.Combine(
             repositoryRoot,
             "Meta", "Digestion", "backfill", "synthetic-source");
-        Directory.CreateDirectory(Path.Combine(sourceRoot, "absorbed-closed"));
+        TemporaryFileSystem.Directory.CreateDirectory(Path.Combine(sourceRoot, "absorbed-closed"));
         try
         {
-            File.WriteAllText(
+            TemporaryFileSystem.File.WriteAllText(
                 Path.Combine(sourceRoot, "source.toml"),
                 """
                 source_id = "synthetic-source"
                 path = "docs/synthetic.md"
                 atomizer = "synthetic-v1"
                 """);
-            File.WriteAllText(
+            TemporaryFileSystem.File.WriteAllText(
                 Path.Combine(sourceRoot, "absorbed-closed", "synthetic-atom.yaml"),
                 $$"""
                 ast_path: theorem/synthetic
@@ -151,7 +151,7 @@ public sealed class CensusDerivationTests
                   chain_atoms: []
                   tail_authorization: null
                 """);
-            File.WriteAllText(
+            TemporaryFileSystem.File.WriteAllText(
                 Path.Combine(repositoryRoot, "Meta", "Digestion", "ticket-index.toml"),
                 string.Empty);
             var census = ReceiptFreeDocumentCatalog.Load(
@@ -163,24 +163,8 @@ public sealed class CensusDerivationTests
         }
         finally
         {
-            Directory.Delete(repositoryRoot, recursive: true);
+            TemporaryFileSystem.Directory.Delete(repositoryRoot, recursive: true);
         }
-    }
-
-    private static string FindRepositoryRoot()
-    {
-        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
-             current is not null;
-             current = current.Parent)
-        {
-            if (File.Exists(Path.Combine(current.FullName, "global.json"))
-                && Directory.Exists(Path.Combine(current.FullName, "Blueprint")))
-            {
-                return current.FullName;
-            }
-        }
-
-        throw new DirectoryNotFoundException("Could not locate the repository root.");
     }
 
     private static ScribeDocument Document(string gid) =>
