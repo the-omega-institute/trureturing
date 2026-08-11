@@ -117,7 +117,7 @@ public sealed class FaultInjectionTests
             "/bin/sleep",
             new[] { "2" },
             "/tmp",
-            TimeSpan.FromMilliseconds(20),
+            TimeSpan.Zero,
             1024));
     }
 

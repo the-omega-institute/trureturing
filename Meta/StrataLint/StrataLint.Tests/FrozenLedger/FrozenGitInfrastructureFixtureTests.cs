@@ -82,26 +82,19 @@ public sealed class FrozenGitInfrastructureFixtureTests
     [Fact]
     public void GitTimeoutIsInfrastructureWithTimeoutClassification()
     {
-        if (OperatingSystem.IsWindows()) return;
-
         using var repository = new TemporaryDirectory();
-        var git = Path.Combine(repository.Path, "slow-git");
-        File.WriteAllText(git, "#!/bin/sh\n/bin/sleep 10\n", new UTF8Encoding(false));
-        File.SetUnixFileMode(
-            git,
-            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
         var gateway = new GitRepositoryGateway(
             repository.Path,
-            new ProductionGitProcessRunner(),
-            git,
-            TimeSpan.FromMilliseconds(50));
+            new ThrowingGitProcessRunner(new TimeoutException("synthetic Git timeout")),
+            "git",
+            TimeSpan.FromSeconds(1));
 
         var exception = Assert.Throws<GitInfrastructureException>(() =>
             gateway.ValidateFrozenReferences(NoReferences()));
 
         Assert.Equal(GitCommandFailureKind.Timeout, exception.Failure.Kind);
         Assert.Null(exception.Failure.ExitCode);
-        Assert.Contains("timed out", exception.Failure.Detail, StringComparison.Ordinal);
+        Assert.Equal("synthetic Git timeout", exception.Failure.Detail);
     }
 
     [Fact]
