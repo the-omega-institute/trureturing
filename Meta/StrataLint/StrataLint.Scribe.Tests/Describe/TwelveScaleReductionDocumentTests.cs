@@ -15,9 +15,8 @@ public sealed class TwelveScaleReductionDocumentTests
         Assert.All(describes, static describe =>
         {
             Assert.Equal(DescribeKind.Theorem, describe.Kind);
-            Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.Provenance.Kind);
-            var lean = Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement);
-            Assert.True(lean.Value.RequireNoSorry);
+            DocumentFactAssertions.RepoDerived(describe);
+            DocumentFactAssertions.Declaration(describe, LeanDeclarationKind.Theorem);
         });
         Assert.Equal(
             [

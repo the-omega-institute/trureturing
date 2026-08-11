@@ -24,51 +24,45 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
             Math(phaseValue),
             Text(" in the additive circle. The map preserves zero, addition, and negation."));
 
-        return DocumentDefinition.Create(ScribeDocument.Create(
-            Header(
-                "D5/S1/Phase/Basic",
-                "Integer golden-ratio phases form an injective additive orbit on the unit circle."),
-            H("Golden Phase"),
-            Blocks(
+        return DocumentDefinition.Create(ScribeNode.Create("Integer golden-ratio phases form an injective additive orbit on the unit circle.",
+H("Golden Phase"),
+Blocks(
                 opening,
                 new DocumentBlock.DisplayFormula(Equal(phaseN, phaseValue)),
                 new DocumentBlock.Section(
                     H("Additive laws"),
                     Blocks(
-                        DocumentBlock.Describe.Proposition(
+                        Describe.Lean(
                             DescribeId.Create("zero"),
+                            DeclarationHandle.Create("D5/S1/Phase/Basic.goldenPhase_zero"),
                             H("Zero"),
-
-                                LeanTheorem("D5/S1/Phase/Basic.goldenPhase_zero"),
-                            In(Seq(Operatorname, Grp(F.Id("goldenPhase")), Open, D(0), Close, Eq, D(0))),
-                            DescribeProvenance.RepoDerived(),
+                            StatementSource.FromAuthor(In(Seq(Operatorname, Grp(F.Id("goldenPhase")), Open, D(0), Close, Eq, D(0)))),
+                            AssessedProvenance.FromRepo(),
                             Blocks(new DocumentBlock.DisplayFormula(
-                                Equal(Call("goldenPhase", Num(0)), Num(0))))
-                        ),
-                        DocumentBlock.Describe.Proposition(
+                                Equal(Call("goldenPhase", Num(0)), Num(0)))),
+                            DescribeRole.Proposition),
+                        Describe.Lean(
                             DescribeId.Create("addition"),
+                            DeclarationHandle.Create("D5/S1/Phase/Basic.goldenPhase_add"),
                             H("Addition"),
-
-                                LeanTheorem("D5/S1/Phase/Basic.goldenPhase_add"),
-                            In(Seq(Forall, Sp, F.Id("n"), Comma, F.Id("m"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("Z")), Comma, Esc, Operatorname, Grp(F.Id("goldenPhase")), Open, F.Id("n"), Plus, F.Id("m"), Close, Eq, Operatorname, Grp(F.Id("goldenPhase")), Open, F.Id("n"), Close, Plus, Operatorname, Grp(F.Id("goldenPhase")), Open, F.Id("m"), Close)),
-                            DescribeProvenance.RepoDerived(),
+                            StatementSource.FromAuthor(In(Seq(Forall, Sp, F.Id("n"), Comma, F.Id("m"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("Z")), Comma, Esc, Operatorname, Grp(F.Id("goldenPhase")), Open, F.Id("n"), Plus, F.Id("m"), Close, Eq, Operatorname, Grp(F.Id("goldenPhase")), Open, F.Id("n"), Close, Plus, Operatorname, Grp(F.Id("goldenPhase")), Open, F.Id("m"), Close))),
+                            AssessedProvenance.FromRepo(),
                             Blocks(new DocumentBlock.DisplayFormula(
                                 Equal(
                                     Call("goldenPhase", Add(n, m)),
-                                    Add(phaseN, Call("goldenPhase", m)))))
-                        ),
-                        DocumentBlock.Describe.Proposition(
+                                    Add(phaseN, Call("goldenPhase", m))))),
+                            DescribeRole.Proposition),
+                        Describe.Lean(
                             DescribeId.Create("negation"),
+                            DeclarationHandle.Create("D5/S1/Phase/Basic.goldenPhase_neg"),
                             H("Negation"),
-
-                                LeanTheorem("D5/S1/Phase/Basic.goldenPhase_neg"),
-                            In(Seq(Forall, Sp, F.Id("n"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("Z")), Comma, Esc, Operatorname, Grp(F.Id("goldenPhase")), Open, Minus, F.Id("n"), Close, Eq, Minus, Operatorname, Grp(F.Id("goldenPhase")), Open, F.Id("n"), Close)),
-                            DescribeProvenance.RepoDerived(),
+                            StatementSource.FromAuthor(In(Seq(Forall, Sp, F.Id("n"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("Z")), Comma, Esc, Operatorname, Grp(F.Id("goldenPhase")), Open, Minus, F.Id("n"), Close, Eq, Minus, Operatorname, Grp(F.Id("goldenPhase")), Open, F.Id("n"), Close))),
+                            AssessedProvenance.FromRepo(),
                             Blocks(new DocumentBlock.DisplayFormula(
                                 Equal(
                                     Call("goldenPhase", new Formula.Negate(n)),
-                                    new Formula.Negate(phaseN))))
-                        ))),
+                                    new Formula.Negate(phaseN)))),
+                            DescribeRole.Proposition))),
                 new DocumentBlock.Section(
                     H("Orbit notation"),
                     Blocks(
@@ -80,18 +74,18 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                             new Formula.Sequence(phaseValue, n, new Formula.Integers())),
                         new DocumentBlock.DisplayFormula(
                             new Formula.SetBuilder(phaseValue, n, new Formula.Integers())))),
-                DocumentBlock.Describe.Theorem(
+                Describe.Lean(
                     DescribeId.Create("injectivity"),
+                    DeclarationHandle.Create((injectivity).Value),
                     H("Injectivity"),
-                    injectivity,
-                    In(Seq(Forall, Sp, F.Id("n"), Comma, F.Id("m"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("Z")), Comma, Esc, Operatorname, Grp(F.Id("goldenPhase")), Open, F.Id("n"), Close, Eq, Operatorname, Grp(F.Id("goldenPhase")), Open, F.Id("m"), Close, Sp, Rightarrow, Sp, F.Id("n"), Eq, F.Id("m"))),
-                    DescribeProvenance.RepoDerived(),
+                    StatementSource.FromAuthor(In(Seq(Forall, Sp, F.Id("n"), Comma, F.Id("m"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("Z")), Comma, Esc, Operatorname, Grp(F.Id("goldenPhase")), Open, F.Id("n"), Close, Eq, Operatorname, Grp(F.Id("goldenPhase")), Open, F.Id("m"), Close, Sp, Rightarrow, Sp, F.Id("n"), Eq, F.Id("m")))),
+                    AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(
                             Text("Two phases could coincide only if a nonzero integer multiple of "),
                             Math(new Formula.Phi()),
-                            Text(" were an integer. Irrationality excludes this. No three-distance theorem is asserted here.")))
-                ),
+                            Text(" were an integer. Irrationality excludes this. No three-distance theorem is asserted here."))),
+                    DescribeRole.Theorem),
                 DocumentBlock.Describe.Remark(
                     DescribeId.Create("visible-phase-and-hidden-prime-fiber"),
                     H("Visible phase and hidden prime fiber"),

@@ -18,10 +18,11 @@ public sealed class CHSHSpectrumDocumentTests
         Assert.Equal(
             "D5/S3/QuantumBounds/CHSHSpectrum.chsh_spectrum",
             Assert.IsType<DescribeStatement.LeanDeclaration>(describes[1].Statement).Value.Value);
-        Assert.All(
-            describes,
-            static describe =>
-                Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.Provenance.Kind));
+        Assert.All(describes, static describe =>
+        {
+            DocumentFactAssertions.RepoDerived(describe);
+            DocumentFactAssertions.Declaration(describe, LeanDeclarationKind.Theorem);
+        });
 
         var coefficient = LatexWriter.WriteStatement(describes[0].StatementFormula!);
         Assert.Contains(@"\frac{2}{16N^{2}a^{2}}", coefficient, StringComparison.Ordinal);

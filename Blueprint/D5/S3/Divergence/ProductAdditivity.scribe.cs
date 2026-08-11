@@ -6,18 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Divergence;
 
 internal sealed class ProductAdditivityDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Divergence/ProductAdditivity",
-            "Finite real-valued classical KL divergence is additive on product mass functions."),
-        H("Product Additivity of Finite Classical KL Divergence"),
-        Blocks(
-            DocumentBlock.Describe.Theorem(
-                DescribeId.Create("finite-classical-kl-divergence-is-additive-on-products"),
-                H("Finite classical KL divergence is additive on products"),
-                LeanTheorem(
-                    "D5/S3/Divergence/ProductAdditivity.kl_divergence_product_additive"),
-                Disp(Seq(
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Finite real-valued classical KL divergence is additive on product mass functions.", H("Product Additivity of Finite Classical KL Divergence"), Blocks(
+            Describe.Lean(DescribeId.Create("finite-classical-kl-divergence-is-additive-on-products"), DeclarationHandle.Create("D5/S3/Divergence/ProductAdditivity.kl_divergence_product_additive"), H("Finite classical KL divergence is additive on products"), StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Comma, Sp, Kappa, Esc,
                     OpenBracket,
@@ -65,9 +55,7 @@ internal sealed class ProductAdditivityDocument : IScribeDocumentDefinition
                     F.Id("D"), Open,
                     F.Id("a"), Apos, Vert, Vert, Sp,
                     F.Id("b"), Apos, Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
-                Blocks(
+                    End, Grp(F.Id("gathered"))))), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text(
                         "Let iota and kappa be finite types. Let a and b be strictly positive " +
                         "real functions on iota, and let a' and b' be strictly positive real " +
@@ -86,5 +74,5 @@ internal sealed class ProductAdditivityDocument : IScribeDocumentDefinition
                         "InformationTheory.klDiv_compProd_eq_add is not used, and no bridge " +
                         "between the ENNReal measure divergence and this finite real sum is " +
                         "established here. The declaration therefore does not identify this " +
-                        "finite divergence with any measure-valued KL divergence.")))))));
+                        "finite divergence with any measure-valued KL divergence."))), DescribeRole.Theorem))));
 }

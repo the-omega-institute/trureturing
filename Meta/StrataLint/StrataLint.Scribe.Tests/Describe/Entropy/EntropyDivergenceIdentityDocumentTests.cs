@@ -13,7 +13,8 @@ public sealed class EntropyDivergenceIdentityDocumentTests
         Assert.Equal(
             "D5/S3/Entropy/EntropyDivergenceIdentity.kl_divergence_uniform_eq",
             Assert.IsType<DescribeStatement.LeanDeclaration>(describe.Statement).Value.Value);
-        Assert.Equal(DescribeProvenanceKind.RepoDerived, describe.Provenance.Kind);
+        DocumentFactAssertions.RepoDerived(describe);
+        DocumentFactAssertions.Declaration(describe, LeanDeclarationKind.Theorem);
 
         var latex = LatexWriter.WriteStatement(
             describe.StatementFormula
