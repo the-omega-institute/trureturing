@@ -6,18 +6,15 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.History;
 
 internal sealed class LedgerLimitDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S0/History/LedgerLimit",
-            "A finitely revised ledger has a unique pointwise terminal grading."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A finitely revised ledger has a unique pointwise terminal grading.",
         H("The Pointwise Ledger Limit"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("finite-revisions-determine-a-unique-terminal-grading"),
+                DeclarationHandle.Create("D5/S0/History/LedgerLimit.ledger_limit_exists_unique"),
                 H("Finite revisions determine a unique terminal grading"),
-                LeanTheorem(
-                    "D5/S0/History/LedgerLimit.ledger_limit_exists_unique"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Operatorname, Grp(F.Id("FiniteRevisions")), Open, SigmaLower, Close,
                     Sp, Rightarrow, Sp,
                     Exists, Bang, Sp, SigmaLower, Underscore, Grp(Infty), Comma, Sp,
@@ -26,8 +23,8 @@ internal sealed class LedgerLimitDocument : IScribeDocumentDefinition
                     Forall, Sp, F.Id("t"), Sp, Geq, Sp, F.Id("N"), Comma, Sp,
                     SigmaLower, Underscore, Grp(F.Id("t")), Open, F.Id("s"), Close,
                     Sp, Eq, Sp,
-                    SigmaLower, Underscore, Grp(Infty), Open, F.Id("s"), Close, Dot)),
-                DescribeProvenance.RepoDerived(),
+                    SigmaLower, Underscore, Grp(Infty), Open, F.Id("s"), Close, Dot))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "A ledger history contains every eventually enrolled statement, its "
@@ -53,19 +50,18 @@ internal sealed class LedgerLimitDocument : IScribeDocumentDefinition
                         + "assumed. The word limit means eventual equality in this discrete "
                         + "grading model; no convergence claim for an arbitrary topology is made. "
                         + "The construction and proof are elementary and assembled in this "
-                        + "repository, so the theorem is recorded as repository-derived.")))
-            ),
-            DocumentBlock.Describe.Theorem(
+                        + "repository, so the theorem is recorded as repository-derived."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("permanent-alternation-has-no-terminal-grade"),
+                DeclarationHandle.Create("D5/S0/History/LedgerLimit.alternating_grade_has_no_terminal_value"),
                 H("Permanent alternation has no terminal grade"),
-                LeanTheorem(
-                    "D5/S0/History/LedgerLimit.alternating_grade_has_no_terminal_value"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Neg, Exists, Sp, F.Id("g"), Comma, F.Id("N"), Comma, Sp,
                     Forall, Sp, F.Id("t"), Sp, Geq, Sp, F.Id("N"), Comma, Sp,
                     Operatorname, Grp(F.Id("alternate")), Open, F.Id("t"), Close,
-                    Sp, Eq, Sp, F.Id("g"), Dot)),
-                DescribeProvenance.RepoDerived(),
+                    Sp, Eq, Sp, F.Id("g"), Dot))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The two-grade counterexample starts at false and negates its grade at "
@@ -75,6 +71,6 @@ internal sealed class LedgerLimitDocument : IScribeDocumentDefinition
                         + "unequal. The same argument, composed with the stabilization theorem, "
                         + "proves that the counterexample has infinitely many revision times. "
                         + "This discharges the source theorem's necessity clause rather than "
-                        + "silently treating finite revision as cosmetic.")))
-            ))));
+                        + "silently treating finite revision as cosmetic."))),
+                DescribeRole.Theorem))));
 }
