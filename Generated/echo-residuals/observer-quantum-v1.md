@@ -1,8 +1,8 @@
-<!-- echo-residual-summary:v4 source=observer-quantum-v1 residual=sha256:17248df9e09147c8d7bff165195bbcc61ac8a59d9a26533c512a28b15b96dc60 -->
+<!-- echo-residual-summary:v4 source=observer-quantum-v1 residual=sha256:643ae322ca177847127a1510a96294ef0aaedee4b9a7238a740159b3ac052a92 -->
 # Echo Residual Summary — `observer-quantum-v1`
 
-- unresolved_subitems: 60
-- mother_residual_atom_ids: 21
+- unresolved_subitems: 58
+- mother_residual_atom_ids: 19
 
 Mother residual atoms:
 
@@ -24,8 +24,6 @@ Mother residual atoms:
   - `global-system-record-unitarity-premise`
   - `no-third-collapse-dynamics-interpretive-premise`
   - `objective-collapse-model-demarcation`
-- `observer-residual-3fd76409f8ea3cfe2c3722c92b767875991a4572f1d62575f6ded1a5150b92c6` (1)
-  - `monogamy-unique-classical-pairing`
 - `observer-residual-41d280b2ed3f2dea88b5349db0a8180037ef5cc783f6668adeeccd6a93c4b2b8` (1)
   - `streamline-decomposition-existence-and-canonicity`
 - `observer-residual-52f4218f9195e554aad17c30ebe5b0a7b5f4474beaea97b1bdb87dc9a415a303` (1)
@@ -41,8 +39,6 @@ Mother residual atoms:
   - `rieffel-metric-bundle-over-torus`
   - `streamline-infinity-at-nonintegral-fiber-offset`
   - `type-II-infinity-classification`
-- `observer-residual-5caee6c1c0969f146242d6f7444a71d30e04dc9fb7ae8b941bc5f04d36a23ee0` (1)
-  - `monogamy-unique-classical-pairing`
 - `observer-residual-7957064151dd9375db6308e290488a9d7836e42e1d2151f8dc586a21a6bb9995` (1)
   - `center-equals-continuous-torus-functions-crossed-product-form`
 - `observer-residual-7c9486a5ed7ca3264cd32d9aaaa07bb8af9e81a547a163dd202042efa51b920c` (6)
