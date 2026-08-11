@@ -21,9 +21,9 @@ public sealed class DagEmitterTests
             var exit = DagEmitter.Emit(root, dag, Provenance, check: false, output, TextWriter.Null);
 
             Assert.Equal(0, exit);
-            var written = File.ReadAllBytes(Path.Combine(root, DagEmitter.RelativePath));
+            var written = TemporaryFileSystem.File.ReadAllBytes(Path.Combine(root, DagEmitter.RelativePath));
             Assert.True(written.AsSpan().SequenceEqual(CanonicalDagWriter.Write(dag).AsSpan()));
-            var truthGraph = File.ReadAllBytes(Path.Combine(root, DagEmitter.TruthGraphRelativePath));
+            var truthGraph = TemporaryFileSystem.File.ReadAllBytes(Path.Combine(root, DagEmitter.TruthGraphRelativePath));
             Assert.True(truthGraph.AsSpan().SequenceEqual(
                 TruthGraphJsonWriter.Write(TruthGraphExportModel.Create(dag, Provenance)).AsSpan()));
             Assert.Contains(DagEmitter.RelativePath, output.ToString(), StringComparison.Ordinal);
@@ -40,7 +40,7 @@ public sealed class DagEmitterTests
             var exit = DagEmitter.Emit(root, Build(), Provenance, check: true, TextWriter.Null, error);
 
             Assert.Equal(1, exit);
-            Assert.False(File.Exists(Path.Combine(root, DagEmitter.RelativePath)));
+            Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, DagEmitter.RelativePath)));
             Assert.Contains("out of date", error.ToString(), StringComparison.Ordinal);
         });
     }
@@ -65,14 +65,14 @@ public sealed class DagEmitterTests
         WithRoot(root =>
         {
             var path = Path.Combine(root, DagEmitter.RelativePath);
-            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+            TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(path)!);
             var stale = Encoding.UTF8.GetBytes("# Truth DAG\n\nstale\n");
-            File.WriteAllBytes(path, stale);
+            TemporaryFileSystem.File.WriteAllBytes(path, stale);
 
             var exit = DagEmitter.Emit(root, Build(), Provenance, check: true, TextWriter.Null, TextWriter.Null);
 
             Assert.Equal(1, exit);
-            Assert.True(File.ReadAllBytes(path).AsSpan().SequenceEqual(stale));
+            Assert.True(TemporaryFileSystem.File.ReadAllBytes(path).AsSpan().SequenceEqual(stale));
         });
     }
 
@@ -82,14 +82,14 @@ public sealed class DagEmitterTests
         WithRoot(root =>
         {
             var path = Path.Combine(root, DagEmitter.RelativePath);
-            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-            File.WriteAllBytes(path, Encoding.UTF8.GetBytes("stale\n"));
+            TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+            TemporaryFileSystem.File.WriteAllBytes(path, Encoding.UTF8.GetBytes("stale\n"));
             var dag = Build();
 
             var exit = DagEmitter.Emit(root, dag, Provenance, check: false, TextWriter.Null, TextWriter.Null);
 
             Assert.Equal(0, exit);
-            Assert.True(File.ReadAllBytes(path).AsSpan()
+            Assert.True(TemporaryFileSystem.File.ReadAllBytes(path).AsSpan()
                 .SequenceEqual(CanonicalDagWriter.Write(dag).AsSpan()));
         });
     }
@@ -113,10 +113,10 @@ public sealed class DagEmitterTests
             Assert.Equal(0, DagEmitter.Emit(
                 secondRoot, dag, Provenance, check: false, TextWriter.Null, TextWriter.Null, secondProjection));
 
-            Assert.True(File.ReadAllBytes(Path.Combine(firstRoot, DagEmitter.RelativePath)).AsSpan()
-                .SequenceEqual(File.ReadAllBytes(Path.Combine(secondRoot, DagEmitter.RelativePath))));
-            Assert.False(File.ReadAllBytes(Path.Combine(firstRoot, DagEmitter.TruthGraphRelativePath)).AsSpan()
-                .SequenceEqual(File.ReadAllBytes(Path.Combine(secondRoot, DagEmitter.TruthGraphRelativePath))));
+            Assert.True(TemporaryFileSystem.File.ReadAllBytes(Path.Combine(firstRoot, DagEmitter.RelativePath)).AsSpan()
+                .SequenceEqual(TemporaryFileSystem.File.ReadAllBytes(Path.Combine(secondRoot, DagEmitter.RelativePath))));
+            Assert.False(TemporaryFileSystem.File.ReadAllBytes(Path.Combine(firstRoot, DagEmitter.TruthGraphRelativePath)).AsSpan()
+                .SequenceEqual(TemporaryFileSystem.File.ReadAllBytes(Path.Combine(secondRoot, DagEmitter.TruthGraphRelativePath))));
         }));
     }
 
@@ -140,14 +140,14 @@ public sealed class DagEmitterTests
         var root = Path.Combine(
             Path.GetTempPath(),
             "stratalint-scribe-dag-" + Guid.NewGuid().ToString("N"));
-        Directory.CreateDirectory(root);
+        TemporaryFileSystem.Directory.CreateDirectory(root);
         try
         {
             body(root);
         }
         finally
         {
-            Directory.Delete(root, recursive: true);
+            TemporaryFileSystem.Directory.Delete(root, recursive: true);
         }
     }
 

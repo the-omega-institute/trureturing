@@ -153,21 +153,21 @@ public sealed class LibraryNoteTests
     {
         var root = Path.Combine(Path.GetTempPath(), "stratalint-library-" + Guid.NewGuid().ToString("N"));
         var directory = Path.Combine(root, "Library", "notes");
-        Directory.CreateDirectory(directory);
+        TemporaryFileSystem.Directory.CreateDirectory(directory);
         try
         {
             foreach (var (name, content) in notes)
             {
                 var path = Path.GetFullPath(Path.Combine(directory, name));
-                Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-                File.WriteAllText(path, content, new UTF8Encoding(false, true));
+                TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+                TemporaryFileSystem.File.WriteAllText(path, content, new UTF8Encoding(false, true));
             }
 
             assertion(root);
         }
         finally
         {
-            Directory.Delete(root, recursive: true);
+            TemporaryFileSystem.Directory.Delete(root, recursive: true);
         }
     }
 

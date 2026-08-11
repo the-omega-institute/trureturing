@@ -49,8 +49,8 @@ public sealed class DescribeValidationTests
         WithRepository(root =>
         {
             var formalPath = Path.Combine(root, "D5", "S1", "Phase", "Basic.lean");
-            Directory.CreateDirectory(Path.GetDirectoryName(formalPath)!);
-            File.WriteAllText(formalPath, "namespace D5.S1.Phase\n", new UTF8Encoding(false, true));
+            TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(formalPath)!);
+            TemporaryFileSystem.File.WriteAllText(formalPath, "namespace D5.S1.Phase\n", new UTF8Encoding(false, true));
             WriteNote(root, "D5/S1/Phase/Basic");
             var document = CreateDocument(
                 GidRef.Create("D5/S1/Phase/Basic"),
@@ -232,8 +232,8 @@ public sealed class DescribeValidationTests
         string bucket = "notes")
     {
         var directory = Path.Combine(root, "Library", bucket);
-        Directory.CreateDirectory(directory);
-        File.WriteAllText(
+        TemporaryFileSystem.Directory.CreateDirectory(directory);
+        TemporaryFileSystem.File.WriteAllText(
             Path.Combine(directory, "sos1957threegap.md"),
             "---\n"
             + "bibkey: sos1957threegap\n"
@@ -253,17 +253,17 @@ public sealed class DescribeValidationTests
     private static void WithRepository(Action<string> assertion)
     {
         var root = Path.Combine(Path.GetTempPath(), "stratalint-describe-" + Guid.NewGuid().ToString("N"));
-        Directory.CreateDirectory(root);
+        TemporaryFileSystem.Directory.CreateDirectory(root);
         try
         {
             var formalPath = Path.Combine(root, "D5", "S1", "Phase", "Basic.lean");
-            Directory.CreateDirectory(Path.GetDirectoryName(formalPath)!);
-            File.WriteAllText(formalPath, "namespace D5.S1.Phase\n", new UTF8Encoding(false, true));
+            TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(formalPath)!);
+            TemporaryFileSystem.File.WriteAllText(formalPath, "namespace D5.S1.Phase\n", new UTF8Encoding(false, true));
             assertion(root);
         }
         finally
         {
-            Directory.Delete(root, recursive: true);
+            TemporaryFileSystem.Directory.Delete(root, recursive: true);
         }
     }
 }

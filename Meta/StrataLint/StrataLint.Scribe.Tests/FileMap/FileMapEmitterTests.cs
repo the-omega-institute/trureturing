@@ -74,13 +74,13 @@ public sealed class FileMapEmitterTests
     [Fact]
     public void FileMapEmitterCheckRejectsCommittedByteDrift()
     {
-        var sourceRoot = FindRepositoryRoot();
+        var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.FileMapDirectoryNotFound);
         var root = Path.Combine(Path.GetTempPath(), "stratalint-filemap-" + Guid.NewGuid().ToString("N"));
         try
         {
             var manifestPath = Path.Combine(root, FileMapLoader.RelativePath);
-            Directory.CreateDirectory(Path.GetDirectoryName(manifestPath)!);
-            File.Copy(Path.Combine(sourceRoot, FileMapLoader.RelativePath), manifestPath);
+            TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(manifestPath)!);
+            repository.CopyTo(RepositoryRelativePath.Create(FileMapLoader.RelativePath), manifestPath);
             using var output = new StringWriter();
             using var error = new StringWriter();
 
@@ -89,16 +89,16 @@ public sealed class FileMapEmitterTests
             Assert.Equal(string.Empty, error.ToString());
 
             var path = Path.Combine(root, FileMapEmitter.RelativePath);
-            File.AppendAllText(path, "drift\n", new UTF8Encoding(false, true));
-            var drifted = File.ReadAllBytes(path);
+            TemporaryFileSystem.File.AppendAllText(path, "drift\n", new UTF8Encoding(false, true));
+            var drifted = TemporaryFileSystem.File.ReadAllBytes(path);
 
             Assert.Equal(1, FileMapEmitter.Emit(root, check: true, output, error));
-            Assert.Equal(drifted, File.ReadAllBytes(path));
+            Assert.Equal(drifted, TemporaryFileSystem.File.ReadAllBytes(path));
             Assert.Contains("out of date", error.ToString(), StringComparison.Ordinal);
         }
         finally
         {
-            if (Directory.Exists(root)) Directory.Delete(root, recursive: true);
+            if (TemporaryFileSystem.Directory.Exists(root)) TemporaryFileSystem.Directory.Delete(root, recursive: true);
         }
     }
 
@@ -124,20 +124,5 @@ public sealed class FileMapEmitterTests
             .ToArray();
 
         Assert.Equal(expected, paths);
-    }
-
-    private static string FindRepositoryRoot()
-    {
-        for (var current = new DirectoryInfo(AppContext.BaseDirectory);
-             current is not null;
-             current = current.Parent)
-        {
-            if (File.Exists(Path.Combine(current.FullName, FileMapLoader.RelativePath)))
-            {
-                return current.FullName;
-            }
-        }
-
-        throw new DirectoryNotFoundException("Could not locate repository FILEMAP.");
     }
 }
