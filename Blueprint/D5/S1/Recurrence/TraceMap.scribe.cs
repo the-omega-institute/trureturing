@@ -6,18 +6,14 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Recurrence;
 
 internal sealed class TraceMapDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S1/Recurrence/TraceMap",
-            "Per-axis admissible-word partial sums satisfy the closed golden trace-map recursion."),
-        H("The Per-Axis Trace-Map Recursion"),
-        Blocks(
-            DocumentBlock.Describe.Theorem(
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Per-axis admissible-word partial sums satisfy the closed golden trace-map recursion.",
+H("The Per-Axis Trace-Map Recursion"),
+Blocks(
+            Describe.Lean(
                 DescribeId.Create("per-axis-trace-map-recursion"),
+                DeclarationHandle.Create("D5/S1/Recurrence/TraceMap.trace_map_recursion"),
                 H("Partial sums and weights close under the trace-map recursion"),
-                LeanTheorem(
-                    "D5/S1/Recurrence/TraceMap.trace_map_recursion"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     F.Id("W"), Underscore, Grp(F.Id("K"), Plus, D(1)), Eq,
                     F.Id("W"), Underscore, F.Id("K"), Plus,
                     F.Id("t"), Underscore, Grp(F.Id("K"), Plus, D(1)),
@@ -25,8 +21,8 @@ internal sealed class TraceMapDocument : IScribeDocumentDefinition
                     Comma, Sp,
                     F.Id("t"), Underscore, Grp(F.Id("K"), Plus, D(1)), Eq,
                     F.Id("t"), Underscore, F.Id("K"),
-                    F.Id("t"), Underscore, Grp(F.Id("K"), Minus, D(1)))),
-                DescribeProvenance.RepoDerived(),
+                    F.Id("t"), Underscore, Grp(F.Id("K"), Minus, D(1))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The per-axis partial sum of bit depth K ranges over admissible "
@@ -50,6 +46,6 @@ internal sealed class TraceMapDocument : IScribeDocumentDefinition
                         + "so the exponential weights are multiplicative along consecutive "
                         + "indices. Together the pair drives the whole tower of per-axis "
                         + "partial sums from its two lowest depths, which is the "
-                        + "trace-map mechanism of the source atom.")))
-            ))));
+                        + "trace-map mechanism of the source atom."))),
+                DescribeRole.Theorem))));
 }
