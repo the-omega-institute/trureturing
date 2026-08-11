@@ -83,6 +83,17 @@ internal static class DigestionIngestor
                     }
 
                     var captured = AddCasObject(item.Atom.RawBytes.AsSpan(), casObjects);
+                    var priorGenerations = source.Entries
+                        .Where(entry => entry.AstPath == item.Atom.AstPath)
+                        .ToArray();
+                    var inheritedCoverage = priorGenerations
+                        .SelectMany(static entry => entry.CoverageGids)
+                        .Distinct(StringComparer.Ordinal)
+                        .ToImmutableArray();
+                    var inheritedUnresolvedSubitems = priorGenerations
+                        .SelectMany(static entry => entry.Receipts.UnresolvedSubitems)
+                        .Distinct(StringComparer.Ordinal)
+                        .ToImmutableArray();
                     entries.Add(new DigestionLedgerEntry(
                         source.SourceId,
                         source.SourcePath,
@@ -91,8 +102,8 @@ internal static class DigestionIngestor
                         item.Atom.AstPath,
                         Boundary: null,
                         item.Atom.Fingerprints,
-                        CoverageGids: [],
-                        new DigestionReceipts([], [], [], [], null),
+                        CoverageGids: inheritedCoverage,
+                        new DigestionReceipts([], [], inheritedUnresolvedSubitems, [], null),
                         item.ProjectedStatus,
                         ReceiptSyntax: null,
                         CasRef: captured.Reference));

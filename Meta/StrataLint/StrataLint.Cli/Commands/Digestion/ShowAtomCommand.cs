@@ -32,9 +32,20 @@ internal static class ShowAtomCommand
             };
             var source = document.RequireDigestionSources()
                 .Single(item => item.SourceId == entry.SourceId);
-            var rawBytes = Replay(snapshot, source, entry);
-            VerifyHashes(snapshot, entry, rawBytes);
-            return new CommandResult(true, Render(entry, rawBytes), string.Empty);
+            var casBytes = ReadVerifiedCas(snapshot, entry);
+            if (source.AcknowledgedStale.Contains(entry.AtomId, StringComparer.Ordinal))
+            {
+                return new CommandResult(true, Render(entry, casBytes, stale: true), string.Empty);
+            }
+
+            var replayedBytes = Replay(snapshot, source, entry);
+            if (HasVerifiedCurrentGeneration(snapshot, source, entry, replayedBytes))
+            {
+                return new CommandResult(true, Render(entry, casBytes, stale: true), string.Empty);
+            }
+
+            VerifyReplay(entry, replayedBytes, casBytes);
+            return new CommandResult(true, Render(entry, replayedBytes, stale: false), string.Empty);
         }
         catch (Exception exception) when (
             exception is FormatException
@@ -98,10 +109,9 @@ internal static class ShowAtomCommand
         return replayed.ResolveClaim(entry.AstPath).RawBytes;
     }
 
-    private static void VerifyHashes(
+    private static ImmutableArray<byte> ReadVerifiedCas(
         RepositorySnapshot snapshot,
-        DigestionLedgerEntry entry,
-        ImmutableArray<byte> rawBytes)
+        DigestionLedgerEntry entry)
     {
         if (!DigestionFingerprint.IsCanonicalSha256(entry.CasRef))
         {
@@ -131,7 +141,66 @@ internal static class ShowAtomCommand
                 + $"actual {capturedCas.Reference}");
         }
 
-        var replayed = DigestionFingerprint.Compute(rawBytes.AsSpan());
+        var capturedFingerprints = DigestionFingerprint.Compute(casBlob.RawBytes.AsSpan());
+        if (capturedFingerprints.RawSha256 != entry.Fingerprints.RawSha256)
+        {
+            throw new FormatException(
+                $"atom {entry.AtomId} CAS raw hash mismatch: expected "
+                + $"{entry.Fingerprints.RawSha256}, actual {capturedFingerprints.RawSha256}");
+        }
+
+        if (capturedFingerprints.NormalizedSha256 != entry.Fingerprints.NormalizedSha256)
+        {
+            throw new FormatException(
+                $"atom {entry.AtomId} CAS normalized hash mismatch: expected "
+                + $"{entry.Fingerprints.NormalizedSha256}, actual "
+                + capturedFingerprints.NormalizedSha256);
+        }
+
+        if (capturedFingerprints.RawSha256 != entry.CasRef)
+        {
+            throw new FormatException(
+                $"atom {entry.AtomId} CAS bytes mismatch cas_ref {entry.CasRef}");
+        }
+
+        return casBlob.RawBytes;
+    }
+
+    private static bool HasVerifiedCurrentGeneration(
+        RepositorySnapshot snapshot,
+        DigestionLedgerSource source,
+        DigestionLedgerEntry requested,
+        ImmutableArray<byte> replayedBytes)
+    {
+        var replayed = DigestionFingerprint.Compute(replayedBytes.AsSpan());
+        var replacements = source.Entries.Where(entry =>
+                entry.AtomId != requested.AtomId
+                && entry.AstPath == requested.AstPath
+                && entry.Fingerprints == replayed
+                && entry.CasRef == replayed.RawSha256)
+            .ToArray();
+        if (replacements.Length == 0)
+        {
+            return false;
+        }
+
+        if (replacements.Length > 1)
+        {
+            throw new FormatException(
+                $"atom {requested.AtomId} current generation is ambiguous at {requested.AstPath}");
+        }
+
+        var replacementCas = ReadVerifiedCas(snapshot, replacements[0]);
+        VerifyReplay(replacements[0], replayedBytes, replacementCas);
+        return true;
+    }
+
+    private static void VerifyReplay(
+        DigestionLedgerEntry entry,
+        ImmutableArray<byte> replayedBytes,
+        ImmutableArray<byte> casBytes)
+    {
+        var replayed = DigestionFingerprint.Compute(replayedBytes.AsSpan());
         if (replayed.RawSha256 != entry.Fingerprints.RawSha256)
         {
             throw new FormatException(
@@ -147,7 +216,7 @@ internal static class ShowAtomCommand
         }
 
         if (replayed.RawSha256 != entry.CasRef
-            || !rawBytes.AsSpan().SequenceEqual(casBlob.RawBytes.AsSpan()))
+            || !replayedBytes.AsSpan().SequenceEqual(casBytes.AsSpan()))
         {
             throw new FormatException(
                 $"atom {entry.AtomId} replayed bytes mismatch cas_ref {entry.CasRef}");
@@ -156,7 +225,8 @@ internal static class ShowAtomCommand
 
     private static string Render(
         DigestionLedgerEntry entry,
-        ImmutableArray<byte> rawBytes)
+        ImmutableArray<byte> rawBytes,
+        bool stale)
     {
         var rawText = StrictUtf8.GetString(rawBytes.AsSpan());
         var normalizedText = DigestionFingerprint.NormalizeText(rawBytes.AsSpan());
@@ -164,6 +234,11 @@ internal static class ShowAtomCommand
         writer.WriteLine(
             $"SHOW_ATOM atom_id={entry.AtomId} source_id={entry.SourceId} "
             + $"source_path={entry.SourcePath} atomizer={entry.Atomizer} ast_path={entry.AstPath}");
+        if (stale)
+        {
+            writer.WriteLine("STALE_READ status=stale source=cas");
+        }
+
         writer.WriteLine(
             $"HASH_VERIFY raw_sha256={entry.Fingerprints.RawSha256} "
             + $"normalized_sha256={entry.Fingerprints.NormalizedSha256} "
