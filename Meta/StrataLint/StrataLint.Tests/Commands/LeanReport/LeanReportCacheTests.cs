@@ -15,7 +15,7 @@ namespace StrataLint.Tests;
 // supervisor (the #452 tar pit). They drive the real lean-report-pair.sh and the
 // real lean-report-input.sh against a stub producer + stub supervisor so the cache
 // logic is exercised in isolation and in well under a second.
-public sealed class LeanReportCacheTests
+[Trait("Category", "Script")] public sealed class LeanReportCacheTests
 {
     private const string MergeCommandPath = "Meta/StrataLint/StrataLint.Cli/Commands/LeanReport/LeanReportMergeCommand.cs";
     private const string RawReportPath = "Meta/StrataLint/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs";

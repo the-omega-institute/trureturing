@@ -191,7 +191,7 @@ public sealed class LeanCacheEnsureCommandTests
         ReviewRegressionTests.RunGit(root, arguments);
 }
 
-public sealed class LeanCacheEnsureScriptTests
+[Trait("Category", "Script")] public sealed class LeanCacheEnsureScriptTests
 {
     [Fact]
     public void MissingLakeDelegatesToCanonicalWorktreeEnsureCacheCommand()

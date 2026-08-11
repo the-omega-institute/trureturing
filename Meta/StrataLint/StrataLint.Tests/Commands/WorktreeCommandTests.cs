@@ -3,7 +3,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-public sealed class WorktreeCommandTests
+[Trait("Category", "Script")] public sealed class WorktreeCommandTests
 {
     [Fact]
     public void RootUsageListsWorktreeCommand()
