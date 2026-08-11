@@ -1,7 +1,7 @@
-<!-- echo-residual-summary:v4 source=pzg-v170 residual=sha256:4500327a8fe8c80d65178c8b1ba37033941d4b2fe04d24eef52deecf2e3e15b7 -->
+<!-- echo-residual-summary:v4 source=pzg-v170 residual=sha256:c1396b405abf4868d85fa36be72036d5139f34c0543fd9f1571319de1d0e5411 -->
 # Echo Residual Summary — `pzg-v170`
 
-- unresolved_subitems: 353
+- unresolved_subitems: 352
 - mother_residual_atom_ids: 53
 
 Mother residual atoms:
@@ -121,7 +121,7 @@ Mother residual atoms:
   - `symmetry-chain-cannot-distinguish-rh-worlds`
   - `toy-spectrum-satisfies-five-symmetries-certificate`
   - `wigner-classification-does-not-produce-hamiltonian`
-- `pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b` (35)
+- `pzg-residual-5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b` (34)
   - `direction-law-counterexamples`
   - `fixed-ray-character-counterexample`
   - `fixed-ray-nineteen-witness-certificate`
@@ -155,7 +155,6 @@ Mother residual atoms:
   - `zero-only-prime-equivalence`
   - `zolotarev-144-case-certificate`
   - `zolotarev-congruence-to-selector-numerator`
-  - `zolotarev-jacobi-factorization`
   - `zolotarev-selector-congruence`
 - `pzg-residual-61364dcfb96879a529a59450892412c60c668fa0cb3dc0438a59318cbc29ca71` (2)
   - `c3b-local-scaling-ledger-zero-qualification`
