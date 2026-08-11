@@ -13,7 +13,7 @@ dotnet:
 	@/bin/bash Meta/StrataLint/scripts/dotnet-build.sh
 
 test:
-	@dotnet test Meta/StrataLint/StrataLint.sln --configuration Release --verbosity normal --filter 'Category!=PrAEffectiveness'
+	@dotnet test Meta/StrataLint/StrataLint.sln --configuration Release --verbosity normal
 
 lean-cache-ensure:
 	@/bin/bash Meta/StrataLint/scripts/worktree/lean-cache-ensure.sh

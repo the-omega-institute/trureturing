@@ -103,7 +103,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: .canonical-lean-report-cache
-          key: stratalint-canonical-lean-report-v1-${{ steps.lean-report-input.outputs.address }}
+          key: stratalint-canonical-lean-report-v2-${{ steps.lean-report-input.outputs.address }}
 
       - name: Restore elan and pinned Lean toolchain cache on cache miss
         if: steps.lean-report-cache.outputs.cache-hit != 'true'
