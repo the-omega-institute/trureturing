@@ -113,7 +113,7 @@ public sealed partial class ProductionEnvironmentTests
         ReviewRegressionTests.RunGit(candidateRoot, "add", ".");
         ReviewRegressionTests.RunGit(candidateRoot, "commit", "-m", "protected baseline");
         var baselineCommit = GitText(candidateRoot, "rev-parse", "HEAD");
-        fixture.Files[RuleFixture.BlueprintPath] += "\n";
+        fixture.Files["Library/queries.yaml"] += "\n";
         WriteFiles(candidateRoot, fixture.Files);
         ReviewRegressionTests.RunGit(candidateRoot, "add", ".");
         ReviewRegressionTests.RunGit(candidateRoot, "commit", "-m", "candidate ordinary change");
