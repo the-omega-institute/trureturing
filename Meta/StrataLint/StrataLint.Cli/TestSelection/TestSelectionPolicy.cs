@@ -16,8 +16,6 @@ internal static class TestSelectionPolicy
         "Meta/StrataLint/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj";
 
     private const string AcceptedEvidencePrefix = "Meta/StrataLint/Golden/Frozen/accepted/";
-    private const string BlueprintPrefix = "Blueprint/";
-    private const string ScribeSuffix = ".scribe.cs";
 
     internal static IReadOnlyList<string> Select(
         TestSelectionEvent eventKind,
@@ -34,16 +32,11 @@ internal static class TestSelectionPolicy
             return FullSuite();
         }
 
-        // R-A and R-B are deliberately named code branches. Adding a rule requires
+        // R-A is deliberately a named code branch. Adding a rule requires
         // editing this policy and extending its architecture proof.
         if (changedPaths.All(IsAcceptedEvidence))
         {
             return [ArchitectureTests];
-        }
-
-        if (changedPaths.All(IsBlueprintScribeDefinition))
-        {
-            return [ArchitectureTests, ScribeTests];
         }
 
         return FullSuite();
@@ -76,10 +69,6 @@ internal static class TestSelectionPolicy
 
     private static bool IsAcceptedEvidence(string path) =>
         path.StartsWith(AcceptedEvidencePrefix, StringComparison.Ordinal);
-
-    private static bool IsBlueprintScribeDefinition(string path) =>
-        path.StartsWith(BlueprintPrefix, StringComparison.Ordinal)
-        && path.EndsWith(ScribeSuffix, StringComparison.Ordinal);
 
     private static bool AreCanonical(IReadOnlyList<string> paths) =>
         paths.Count > 0
