@@ -6,18 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Divergence;
 
 internal sealed class StrictGibbsDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Divergence/StrictGibbs",
-            "Distinct finite probability mass functions have strictly positive classical KL divergence."),
-        H("Strict Positivity of Finite Classical KL Divergence"),
-        Blocks(
-            DocumentBlock.Describe.Theorem(
-                DescribeId.Create("distinct-finite-probability-masses-have-positive-kl-divergence"),
-                H("Distinct finite probability masses have positive KL divergence"),
-                LeanTheorem(
-                    "D5/S3/Divergence/StrictGibbs.kl_divergence_pos_of_ne"),
-                Disp(Seq(
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Distinct finite probability mass functions have strictly positive classical KL divergence.", H("Strict Positivity of Finite Classical KL Divergence"), Blocks(
+            Describe.Lean(DescribeId.Create("distinct-finite-probability-masses-have-positive-kl-divergence"), DeclarationHandle.Create("D5/S3/Divergence/StrictGibbs.kl_divergence_pos_of_ne"), H("Distinct finite probability masses have positive KL divergence"), StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, F.Id("I"), Esc,
                     OpenBracket,
@@ -50,9 +40,7 @@ internal sealed class StrictGibbsDocument : IScribeDocumentDefinition
                     D(0), Lt,
                     F.Id("D"), Open,
                     F.Id("p"), Vert, Sp, F.Id("q"), Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
-                Blocks(
+                    End, Grp(F.Id("gathered"))))), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text(
                         "Let I be a finite alphabet. Strict Gibbs assumes nonnegativity, " +
                         "normalization, and discrete absolute continuity; it does not assume " +
@@ -80,5 +68,5 @@ internal sealed class StrictGibbsDocument : IScribeDocumentDefinition
                         "The divergence here is the finite real-valued klDivergence of " +
                         "ClassicalDPI, not a measure-theoretic divergence. Its domain is a finite " +
                         "type and its values are real numbers; no measure-valued or ENNReal bridge " +
-                        "is claimed.")))))));
+                        "is claimed."))), DescribeRole.Theorem))));
 }
