@@ -3,8 +3,7 @@
    mirror-B: D5/B/S1/Phase/Interference/M1728Countershot
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: A concrete alternating phase walk evaluates to the nonzero residue -48,
-     divisible by both twenty-four and forty-eight. -/
+   digest: A concrete alternating walk evaluates to -48, divisible by 24 and 48. -/
 
 import D5.S1.Phase.WalkFormula
 
