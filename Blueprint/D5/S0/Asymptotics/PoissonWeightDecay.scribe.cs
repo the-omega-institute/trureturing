@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S0.Diagonal;
+namespace StrataLint.Scribe.Blueprint.D5.S0.Asymptotics;
 
 internal sealed class PoissonWeightDecayDocument : IScribeDocumentDefinition
 {
@@ -13,7 +13,7 @@ internal sealed class PoissonWeightDecayDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("poisson-weight-tends-to-zero"),
                 DeclarationHandle.Create(
-                    "D5/S0/Diagonal/PoissonWeightDecay.poisson_weight_tendsto_zero"),
+                    "D5/S0/Asymptotics/PoissonWeightDecay.poisson_weight_tendsto_zero"),
                 H("The Poisson weight tends to zero"),
                 StatementSource.FromAuthor(Disp(Seq(
                     Forall, Sp, F.Id("n"), Comma, F.Id("k"), InMacro, Mathbb, Grp(F.Id("N")),

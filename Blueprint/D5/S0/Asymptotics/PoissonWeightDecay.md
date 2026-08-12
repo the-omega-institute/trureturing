@@ -8,7 +8,7 @@ Fixed finite weights times geometric listing decay tend to zero.
 
 $$\forall n,k\in\mathbb{N}, n \ge 2 \land k \le n \Rightarrow \left(\left(\forall A\in\mathbb{N}, 0 \le kAn^{-A} \le An^{1-A} \le A2^{1-A}\right) \land \lim_{A\to\infty} kAn^{-A} = 0 \land \forall \lambda\in\mathbb{R}, \lambda > 0 \Rightarrow \neg\left(\lim_{A\to\infty} kAn^{-A} = \lambda\right)\right).$$
 
-*Proof.* Machine-checked in Lean as `D5/S0/Diagonal/PoissonWeightDecay.poisson_weight_tendsto_zero` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S0/Asymptotics/PoissonWeightDecay.poisson_weight_tendsto_zero` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,4 +22,4 @@ This is a partial closure of clause (iv) of the source corollary. Clauses (i) an
 
 ## References
 
-- Truth anchor: `D5/S0/Diagonal/PoissonWeightDecay.poisson_weight_tendsto_zero`
+- Truth anchor: `D5/S0/Asymptotics/PoissonWeightDecay.poisson_weight_tendsto_zero`

@@ -1,13 +1,13 @@
-/- GID: D5/S0/Diagonal/PoissonWeightDecay
+/- GID: D5/S0/Asymptotics/PoissonWeightDecay
    generality: G
-   mirror-B: D5/B/S0/Diagonal/PoissonWeightDecay
+   mirror-B: D5/B/S0/Asymptotics/PoissonWeightDecay
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Geometric listing weights tend to zero, excluding positive limits. -/
 
 import Mathlib.Analysis.SpecificLimits.Normed
 
-namespace D5.S0.Diagonal.PoissonWeightDecay
+namespace D5.S0.Asymptotics.PoissonWeightDecay
 
 open Filter
 
@@ -79,4 +79,4 @@ theorem poisson_weight_tendsto_zero (n k : Nat) (hn : 2 <= n) (hk : k <= n) :
 /-- The natural-number domain and the source conditions are simultaneously inhabited. -/
 example : exists n k : Nat, 2 <= n /\ k <= n := ⟨2, 1, by decide, by decide⟩
 
-end D5.S0.Diagonal.PoissonWeightDecay
+end D5.S0.Asymptotics.PoissonWeightDecay
