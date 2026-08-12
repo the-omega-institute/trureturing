@@ -489,7 +489,7 @@ jobs:
           echo "FORK_SHA=$fork_sha" >> "$GITHUB_ENV"
           echo "HEAD_SHA=$head_sha" >> "$GITHUB_ENV"
 
-      - name: Install pinned SDK and Lean toolchain
+      - name: Install pinned SDK
         uses: actions/setup-dotnet@v4
         with:
           global-json-file: global.json
@@ -512,6 +512,32 @@ jobs:
           path: .canonical-lean-report-cache
           key: stratalint-canonical-lean-report-v2-${{ steps.old-side-address.outputs.address }}
 
+      - name: Restore elan and pinned Lean toolchains
+        if: steps.old-side-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.elan
+          key: ${{ runner.os }}-${{ runner.arch }}-elan-${{ hashFiles('lean-toolchain') }}
+
+      - name: Install pinned Lean toolchains
+        id: old-side-toolchain
+        if: steps.old-side-cache.outputs.cache-hit != 'true'
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ ! -x "$HOME/.elan/bin/elan" ]]; then
+            curl --proto '=https' --tlsv1.2 -sSf https://elan.lean-lang.org/elan-init.sh \
+              | sh -s -- -y --default-toolchain none
+          fi
+          toolchain="$(tr -d '\r\n' < lean-toolchain)"
+          test -n "$toolchain"
+          if ! "$HOME/.elan/bin/elan" toolchain list 2>/dev/null | grep -qF "$toolchain"; then
+            "$HOME/.elan/bin/elan" toolchain install "$toolchain"
+          fi
+          "$HOME/.elan/bin/elan" default "$toolchain"
+          "$HOME/.elan/bin/lake" --version
+
       - name: Verify cached old-side report
         if: steps.old-side-cache.outputs.cache-hit == 'true'
         shell: bash
@@ -520,20 +546,70 @@ jobs:
           report="$GITHUB_WORKSPACE/.canonical-lean-report-cache/raw-lean-report.json"
           for suffix in '' .sha256 .input.attestation .provenance.json; do test -s "${report}${suffix}"; done
           "$GITHUB_WORKSPACE/Meta/StrataLint/scripts/report/lean-report-input.sh" verify --repository "$GITHUB_WORKSPACE" --report "$report"
-          printf '%s\n' '{"pr_number":'"${{ github.event.pull_request.number || 0 }}"',"head_sha":"'$HEAD_SHA"'","run_id":'"${{ github.run_id }}"',"run_attempt":'"${{ github.run_attempt }}"',"outcome":"hit","wall_seconds":null,"address":"'${{ steps.old-side-address.outputs.address }}'"}' >> "$GITHUB_STEP_SUMMARY"
+          pr_number='${{ github.event.pull_request.number || 0 }}'
+          head_sha="$HEAD_SHA"
+          run_id='${{ github.run_id }}'
+          run_attempt='${{ github.run_attempt }}'
+          address='${{ steps.old-side-address.outputs.address }}'
+          jq -nc \
+            --argjson pr_number "$pr_number" \
+            --arg head_sha "$head_sha" \
+            --argjson run_id "$run_id" \
+            --argjson run_attempt "$run_attempt" \
+            --arg address "$address" \
+            '{pr_number:$pr_number, head_sha:$head_sha, run_id:$run_id, run_attempt:$run_attempt, outcome:"hit", wall_seconds:null, address:$address}' \
+            >> "$GITHUB_STEP_SUMMARY"
 
       - name: Produce and verify old-side report on cache miss
-        if: steps.old-side-cache.outputs.cache-hit != 'true'
+        if: always() && steps.old-side-cache.outputs.cache-hit != 'true'
         shell: bash
         run: |
           set -euo pipefail
-          start_ns="$(date +%s%N)"
-          make lean-report
+          read -r start_seconds _ < /proc/uptime
+          status=0
+          failure_stage=""
+          if [[ "${{ steps.old-side-toolchain.outcome }}" != "success" ]]; then
+            status=1
+            failure_stage="toolchain"
+          else
+            make lean-report || status=$?
+            if [[ "$status" -ne 0 ]]; then
+              failure_stage="produce"
+            fi
+          fi
           report="$GITHUB_WORKSPACE/.lake/build/stratalint/raw-lean-report.json"
-          "$GITHUB_WORKSPACE/Meta/StrataLint/scripts/report/lean-report-input.sh" verify --repository "$GITHUB_WORKSPACE" --report "$report"
-          end_ns="$(date +%s%N)"
-          wall_seconds="$(awk -v s="$start_ns" -v e="$end_ns" 'BEGIN { printf "%.3f", (e-s)/1000000000 }')"
-          printf '%s\n' '{"pr_number":'"${{ github.event.pull_request.number || 0 }}"',"head_sha":"'$HEAD_SHA"'","run_id":'"${{ github.run_id }}"',"run_attempt":'"${{ github.run_attempt }}"',"outcome":"miss","wall_seconds":'$wall_seconds',"address":"'${{ steps.old-side-address.outputs.address }}'"}' >> "$GITHUB_STEP_SUMMARY"
+          if [[ "$status" -eq 0 ]]; then
+            "$GITHUB_WORKSPACE/Meta/StrataLint/scripts/report/lean-report-input.sh" verify --repository "$GITHUB_WORKSPACE" --report "$report" || status=$?
+            if [[ "$status" -ne 0 ]]; then
+              failure_stage="verify"
+            fi
+          fi
+          read -r end_seconds _ < /proc/uptime
+          wall_seconds="$(awk -v s="$start_seconds" -v e="$end_seconds" 'BEGIN { printf "%.3f", e-s }')"
+          if [[ "$status" -eq 0 ]]; then
+            outcome="miss"
+          else
+            outcome="miss-failed"
+          fi
+          pr_number='${{ github.event.pull_request.number || 0 }}'
+          head_sha="$HEAD_SHA"
+          run_id='${{ github.run_id }}'
+          run_attempt='${{ github.run_attempt }}'
+          address='${{ steps.old-side-address.outputs.address }}'
+          exit_code="$status"
+          jq -nc \
+            --argjson pr_number "$pr_number" \
+            --arg head_sha "$head_sha" \
+            --argjson run_id "$run_id" \
+            --argjson run_attempt "$run_attempt" \
+            --arg outcome "$outcome" \
+            --argjson wall_seconds "$wall_seconds" \
+            --arg address "$address" \
+            --arg failure_stage "$failure_stage" \
+            --argjson exit_code "$exit_code" \
+            '{pr_number:$pr_number, head_sha:$head_sha, run_id:$run_id, run_attempt:$run_attempt, outcome:$outcome, wall_seconds:$wall_seconds, address:$address} + (if $outcome == "miss-failed" then {failure_stage:$failure_stage, exit_code:$exit_code} else {} end)' \
+            >> "$GITHUB_STEP_SUMMARY"
+          exit "$status"
 
   baseline-admission:
     name: Content-addressed dev baseline admission
