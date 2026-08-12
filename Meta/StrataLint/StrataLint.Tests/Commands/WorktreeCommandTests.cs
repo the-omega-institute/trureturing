@@ -16,9 +16,12 @@ public sealed class WorktreeCommandTests
             console);
 
         Assert.Equal(2, exitCode);
-        Assert.Contains(
-            "check|clean-lanes|coverage|cover-atom|digest-status|echo-verify|emit-formalization-receipt|ingest|golden-record|lean-report-merge|ledger-genesis|papergen|route|selftest|show-atom|topology|validate-blueprint-pins|worktree",
-            console.Error);
+        // usage 由 dispatch 表渲染,所以这里验「它列出了每一个实现着的动词」,而不是再抄
+        // 一份会漂移的清单——原先那份手抄仍在点名早已删除的 golden-record。
+        Assert.Contains("worktree", CliApplication.ImplementedCommands);
+        Assert.All(
+            CliApplication.ImplementedCommands,
+            command => Assert.Contains(command, console.Error, StringComparison.Ordinal));
         Assert.DoesNotContain("|lean-cache|", console.Error, StringComparison.Ordinal);
     }
 
