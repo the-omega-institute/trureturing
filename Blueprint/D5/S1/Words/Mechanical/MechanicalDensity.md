@@ -2,45 +2,36 @@
 
 ## Abstract
 
-For every real slope alpha with `0 <= alpha < 1`, every real intercept rho, and every
-window start, lower mechanical true counts have a uniform strict discrepancy bound. The
-corresponding quotient converges to alpha at each fixed start. No irrationality assumption
-is used.
+General discrepancy and density for lower mechanical words.
+
+For every real slope alpha in the half-open interval from zero to one, every real intercept rho, and every window start, the lower mechanical true count differs from its expected count by strictly less than one. Dividing by the window length then gives the density alpha at every fixed start; no irrationality assumption is used.
 
 **Theorem 1.1 (Every lower mechanical window has discrepancy below one).**
 
-$$
-\left|\operatorname{lowerMechanicalWindowTrueCount}(\alpha,\rho,i,n)-n\alpha\right|<1
-$$
+$$\left|\operatorname{windowTrueCount}\left(alpha, rho, i, n\right) - n \cdot alpha\right| < 1$$
 
-*Proof.* Machine-checked in Lean as
-`D5/S1/Words/Mechanical/MechanicalDensity.lower_mechanical_window_true_discrepancy`
-(`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Mechanical/MechanicalDensity.lower_mechanical_window_true_discrepancy` (`✓ std3`). ∎
 
-The existing endpoint-floor telescope rewrites the count as a difference of endpoint
-floors. Writing each endpoint as its floor plus fractional part leaves the error as the
-difference of two fractional parts. `Int.fract_nonneg` and `Int.fract_lt_one` at both
-endpoints give the two strict inequalities.
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The existing endpoint-floor telescope rewrites the count difference as the difference of two fractional parts. Nonnegativity and strict upper bounds for those fractional parts give both sides of the absolute-value inequality.
 
 **Theorem 1.2 (Every fixed-start lower mechanical density tends to the slope).**
 
-$$
-\lim_{n\to\infty}
-\frac{\operatorname{lowerMechanicalWindowTrueCount}(\alpha,\rho,i,n)}{n}=\alpha
-$$
+$$\lim_{n\to\infty}\frac{\operatorname{windowTrueCount}\left(alpha, rho, i, n\right)}n=alpha.$$
 
-*Proof.* Machine-checked in Lean as
-`D5/S1/Words/Mechanical/MechanicalDensity.lower_mechanical_window_true_density`
-(`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Mechanical/MechanicalDensity.lower_mechanical_window_true_density` (`✓ std3`). ∎
 
-For `n >= 1`, divide the discrepancy bound by the positive real cast of `n`. The quotient
-is squeezed between `alpha - 1/n` and `alpha + 1/n`; both bounds tend to alpha.
+*Source.* Repository-derived.
 
-The private rational check in the Lean module evaluates the boundary-free case
-`alpha = 1/3`, `rho = 0`, `i = 0`, `n = 3`, confirming the strict bound by kernel reduction.
+*Commentary.*
+
+For positive window lengths, the discrepancy inequality places the quotient between alpha minus 1 over n and alpha plus 1 over n. Both bounds converge to alpha, so the squeeze theorem proves the fixed-start density limit.
 
 ## References
 
-- Truth anchor: `D5/S1/Words/Mechanical/MechanicalDensity.lower_mechanical_window_true_discrepancy`
 - Truth anchor: `D5/S1/Words/Mechanical/MechanicalDensity.lower_mechanical_window_true_density`
+- Truth anchor: `D5/S1/Words/Mechanical/MechanicalDensity.lower_mechanical_window_true_discrepancy`
 - Dependency: [D5/S1/Words/Mechanical/MechanicalBalance](MechanicalBalance.md)
