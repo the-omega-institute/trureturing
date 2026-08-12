@@ -572,7 +572,7 @@ jobs:
             outcome="hit-error"
           fi
           exit_code="$status"
-          jq -nc \
+          record="$(jq -nc \
             --argjson pr_number "$pr_number" \
             --arg head_sha "$head_sha" \
             --argjson run_id "$run_id" \
@@ -581,8 +581,9 @@ jobs:
             --arg outcome "$outcome" \
             --arg stage "$stage" \
             --argjson exit_code "$exit_code" \
-            '{pr_number:$pr_number, head_sha:$head_sha, run_id:$run_id, run_attempt:$run_attempt, outcome:$outcome, wall_seconds:null, address:$address} + (if $outcome == "hit-error" then {stage:$stage, exit_code:$exit_code} else {} end)' \
-            >> "$GITHUB_STEP_SUMMARY"
+            '{pr_number:$pr_number, head_sha:$head_sha, run_id:$run_id, run_attempt:$run_attempt, outcome:$outcome, wall_seconds:null, address:$address} + (if $outcome == "hit-error" then {stage:$stage, exit_code:$exit_code} else {} end)')"
+          printf '%s\n' "$record" > "$RUNNER_TEMP/old-side-shadow-record.json"
+          printf '%s\n' "$record" >> "$GITHUB_STEP_SUMMARY"
           touch "$RUNNER_TEMP/old-side-shadow-recorded"
           exit "$status"
 
@@ -627,7 +628,7 @@ jobs:
           run_attempt='${{ github.run_attempt }}'
           address="$SHADOW_ADDRESS"
           exit_code="$status"
-          jq -nc \
+          record="$(jq -nc \
             --argjson pr_number "$pr_number" \
             --arg head_sha "$head_sha" \
             --argjson run_id "$run_id" \
@@ -637,8 +638,9 @@ jobs:
             --arg address "$address" \
             --arg stage "$stage" \
             --argjson exit_code "$exit_code" \
-            '{pr_number:$pr_number, head_sha:$head_sha, run_id:$run_id, run_attempt:$run_attempt, outcome:$outcome, wall_seconds:$wall_seconds, address:$address} + (if $outcome == "miss-error" then {stage:$stage, exit_code:$exit_code} else {} end)' \
-            >> "$GITHUB_STEP_SUMMARY"
+            '{pr_number:$pr_number, head_sha:$head_sha, run_id:$run_id, run_attempt:$run_attempt, outcome:$outcome, wall_seconds:$wall_seconds, address:$address} + (if $outcome == "miss-error" then {stage:$stage, exit_code:$exit_code} else {} end)')"
+          printf '%s\n' "$record" > "$RUNNER_TEMP/old-side-shadow-record.json"
+          printf '%s\n' "$record" >> "$GITHUB_STEP_SUMMARY"
           touch "$RUNNER_TEMP/old-side-shadow-recorded"
           exit "$status"
 
@@ -656,14 +658,23 @@ jobs:
           run_attempt='${{ github.run_attempt }}'
           head_sha="$SHADOW_HEAD_SHA"
           step_outcomes="$SHADOW_STEP_OUTCOMES"
-          jq -nc \
+          record="$(jq -nc \
             --argjson pr_number "$pr_number" \
             --argjson run_id "$run_id" \
             --argjson run_attempt "$run_attempt" \
             --arg head_sha "$head_sha" \
             --arg step_outcomes "$step_outcomes" \
-            '{pr_number:$pr_number, head_sha:$head_sha, run_id:$run_id, run_attempt:$run_attempt, outcome:"no-record", wall_seconds:null, address:"unknown", stage:"unreported-step", exit_code:null, step_outcomes:$step_outcomes}' \
-            >> "$GITHUB_STEP_SUMMARY"
+            '{pr_number:$pr_number, head_sha:$head_sha, run_id:$run_id, run_attempt:$run_attempt, outcome:"no-record", wall_seconds:null, address:"unknown", stage:"unreported-step", exit_code:null, step_outcomes:$step_outcomes}')"
+          printf '%s\n' "$record" > "$RUNNER_TEMP/old-side-shadow-record.json"
+          printf '%s\n' "$record" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload old-side shadow record
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: old-side-shadow-record-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/old-side-shadow-record.json
+          if-no-files-found: error
 
   baseline-admission:
     name: Content-addressed dev baseline admission
