@@ -6,27 +6,26 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Observer;
 
 internal sealed class ConditioningCertificateDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Observer/ConditioningCertificate",
-            "The matrix defect of finite record conditioning vanishes exactly, without a tolerance term."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The matrix defect of finite record conditioning vanishes exactly, without a tolerance term.",
         H("Exact Conditioning Certificate"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("the-conditioning-certificate-defect-vanishes-exactly"),
+                DeclarationHandle.Create("D5/S3/Observer/ConditioningCertificate.certificate_identity_zero_tolerance"),
                 H("The conditioning certificate defect vanishes exactly"),
-                LeanTheorem(
-                    "D5/S3/Observer/ConditioningCertificate.certificate_identity_zero_tolerance"),
-                CertificateFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(CertificateFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Let P be a finite complete family of pairwise orthogonal self-adjoint "
-                    + "projections and let rho be positive semidefinite. Define the certificate "
-                    + "defect as the unread matrix minus the record-weighted ensemble of the totalized "
-                    + "conditional branches. Zero-weight branches cause no residual because their "
-                    + "positive compressed blocks vanish. The established weighted-ensemble "
-                    + "identity therefore makes the matrix-valued defect exactly zero; no norm, "
-                    + "error bound, or approximation parameter is introduced.")))))));
+                                    "Let P be a finite complete family of pairwise orthogonal self-adjoint "
+                                    + "projections and let rho be positive semidefinite. Define the certificate "
+                                    + "defect as the unread matrix minus the record-weighted ensemble of the totalized "
+                                    + "conditional branches. Zero-weight branches cause no residual because their "
+                                    + "positive compressed blocks vanish. The established weighted-ensemble "
+                                    + "identity therefore makes the matrix-valued defect exactly zero; no norm, "
+                                    + "error bound, or approximation parameter is introduced."))),
+                DescribeRole.Theorem
+            ))));
 
     private static Formula CertificateFormula() => Disp(Seq(
         Ambient(),

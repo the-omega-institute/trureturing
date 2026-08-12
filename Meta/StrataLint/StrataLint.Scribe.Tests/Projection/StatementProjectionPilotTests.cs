@@ -239,10 +239,21 @@ public sealed class StatementProjectionPilotTests
         var sources = repository.EnumerateFiles(RepositoryRelativePath.Create("Blueprint"), "*.scribe.cs")
             .Select(repository.ReadAllText).ToArray();
 
-        var projected = sources.Sum(source => source.Split(
-            "StatementProjectionFixtureLoader.FromLean(", StringSplitOptions.None).Length - 1);
+        // Projection-derived statements are written two ways while the migration runs:
+        // the legacy loader call, and StatementSource.FromLean() on the report-derived entry.
+        // Both count.
+        var projected = sources.Sum(source =>
+            source.Split("StatementProjectionFixtureLoader.FromLean(", StringSplitOptions.None).Length - 1
+            + source.Split("StatementSource.FromLean()", StringSplitOptions.None).Length - 1);
 
-        Assert.Equal(7, projected);
+        // A floor, not an equality. This quantity only grows: exclusivity makes an authored
+        // statement illegal wherever the projector can produce one, so every migration and every
+        // projector improvement moves declarations into this set and none ever leave it. Pinning
+        // it to a constant would reject that growth. The real enforcement is the emit-time
+        // exclusivity check, which is stronger than any count; this test only catches regression.
+        Assert.True(
+            projected >= 7,
+            $"projection-derived statements regressed to {projected}, below the floor of 7");
     }
 
     [LiveReportFact]
