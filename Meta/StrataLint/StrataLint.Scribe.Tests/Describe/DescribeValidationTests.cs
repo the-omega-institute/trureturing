@@ -14,7 +14,7 @@ public sealed class DescribeValidationTests
         {
             var document = CreateDocument(
                 GidRef.Create("D5/S1/Phase/Missing"),
-                DescribeProvenance.LiteratureAttested(
+                AssessedProvenance.FromLiterature(
                     LibraryNoteRef.Create("D5/L/sos1957threegap")));
 
             var findings = DescribeRepositoryValidator.Validate(root, [document]);
@@ -32,7 +32,7 @@ public sealed class DescribeValidationTests
             WriteNote(root, "D5/S1/Phase/Missing");
             var document = CreateDocument(
                 GidRef.Create("D5/S1/Phase/Basic"),
-                DescribeProvenance.LiteratureAttested(
+                AssessedProvenance.FromLiterature(
                     LibraryNoteRef.Create("D5/L/sos1957threegap")));
 
             var findings = DescribeRepositoryValidator.Validate(root, [document]);
@@ -54,7 +54,7 @@ public sealed class DescribeValidationTests
             WriteNote(root, "D5/S1/Phase/Basic");
             var document = CreateDocument(
                 GidRef.Create("D5/S1/Phase/Basic"),
-                DescribeProvenance.LiteratureAttested(
+                AssessedProvenance.FromLiterature(
                     LibraryNoteRef.Create("D5/L/sos1957threegap")));
 
             var findings = DescribeRepositoryValidator.Validate(root, [document]);
@@ -71,7 +71,7 @@ public sealed class DescribeValidationTests
             WriteNote(root, "D5/S1/Phase/Basic", bucket: "Zeros");
             var document = CreateDocument(
                 GidRef.Create("D5/S1/Phase/Basic"),
-                DescribeProvenance.LiteratureAttested(
+                AssessedProvenance.FromLiterature(
                     LibraryNoteRef.Create("D5/L/Weil/sos1957threegap")));
 
             var finding = Assert.Single(DescribeRepositoryValidator.Validate(root, [document]));
@@ -94,7 +94,7 @@ public sealed class DescribeValidationTests
             var document = CreateDocument(
                 header,
                 GidRef.Create("D5/S1/Phase/Basic"),
-                DescribeProvenance.RepoDerived());
+                AssessedProvenance.FromRepo());
 
             var findings = DescribeRepositoryValidator.Validate(root, [document]);
 
@@ -111,7 +111,7 @@ public sealed class DescribeValidationTests
             WriteNote(root, "D5/S1/Phase/Basic", bucket: "Zeros");
             var document = CreateDocument(
                 GidRef.Create("D5/S1/Phase/Basic"),
-                DescribeProvenance.RepoDerived());
+                AssessedProvenance.FromRepo());
 
             var findings = DescribeRepositoryValidator.Validate(root, [document]);
 
@@ -126,7 +126,7 @@ public sealed class DescribeValidationTests
         {
             var document = CreateDocument(
                 GidRef.Create("D5/S1/Phase/Basic.missing_declaration"),
-                DescribeProvenance.RepoDerived());
+                AssessedProvenance.FromRepo());
             var report = LeanAxiomReport.Create(
                 new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
                 {
@@ -152,7 +152,7 @@ public sealed class DescribeValidationTests
                 triage: "task(D5/S1/Phase/Missing)");
             var document = CreateDocument(
                 GidRef.Create("D5/S1/Phase/Basic"),
-                DescribeProvenance.RepoDerived());
+                AssessedProvenance.FromRepo());
 
             var finding = Assert.Single(DescribeRepositoryValidator.Validate(root, [document]));
 
@@ -169,7 +169,7 @@ public sealed class DescribeValidationTests
             var missingDocument = CreateDocument(
                 DefinitionDsl.Header("D5/S1/Phase/Missing", "Missing document fixture."),
                 GidRef.Create("D5/S1/Phase/Basic"),
-                DescribeProvenance.RepoDerived());
+                AssessedProvenance.FromRepo());
             var evidenceHeader = DocumentHeader.Create(
                 GidRef.Create("D5/S1/Phase/Basic"),
                 Generality.Instance,
@@ -181,7 +181,7 @@ public sealed class DescribeValidationTests
             var missingEvidence = CreateDocument(
                 evidenceHeader,
                 GidRef.Create("D5/S1/Phase/Basic"),
-                DescribeProvenance.RepoDerived());
+                AssessedProvenance.FromRepo());
 
             var findings = DescribeRepositoryValidator.Validate(
                 root,
@@ -200,7 +200,7 @@ public sealed class DescribeValidationTests
 
     private static ScribeDocument CreateDocument(
         GidRef inlineReference,
-        DescribeProvenance provenance) => CreateDocument(
+        AssessedProvenance provenance) => CreateDocument(
         DefinitionDsl.Header("D5/S1/Phase/Basic", "Validation fixture."),
         inlineReference,
         provenance);
@@ -208,15 +208,15 @@ public sealed class DescribeValidationTests
     private static ScribeDocument CreateDocument(
         DocumentHeader header,
         GidRef inlineReference,
-        DescribeProvenance provenance) => ScribeDocument.Create(
+        AssessedProvenance provenance) => ScribeDocument.Create(
         header,
         Heading.Create("Validation"),
         BlockSequence.Create(
         [
-            DocumentBlock.Describe.Remark(
+            Describe.Remark(
                 DescribeId.Create("validated-claim"),
                 Heading.Create("Validated claim"),
-                DescribeStatement.FromFormula(new Formula.Phi()),
+                new Formula.Phi(),
                 provenance,
                 BlockSequence.Create(
                 [

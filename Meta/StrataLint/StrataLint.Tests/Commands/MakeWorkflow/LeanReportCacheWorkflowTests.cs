@@ -2,7 +2,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-[Trait("Category", "Script")] public sealed class LeanReportCacheWorkflowTests
+public sealed class LeanReportCacheWorkflowTests
 {
     private const string AdmissionWorkflowPath = ".github/workflows/ci.yml";
     private static readonly string PairScriptPath = string.Join(

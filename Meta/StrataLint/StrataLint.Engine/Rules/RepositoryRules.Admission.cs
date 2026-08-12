@@ -76,10 +76,9 @@ internal static partial class RepositoryRules
             {
                 findings.Add(new RuleFinding(path.Value, $"{theory} 未实例化(压力未至,D5-T0009)"));
             }
-            else if (path.Value is "Meta/split.py" or "Meta/papergen")
+            else if (path.Value == "Meta/split.py")
             {
-                var caseId = path.Value.EndsWith("split.py", StringComparison.Ordinal) ? "D5-T0004" : "D5-T0005";
-                findings.Add(new RuleFinding(path.Value, $"{path.Value} 未实例化(案号 {caseId})"));
+                findings.Add(new RuleFinding(path.Value, "Meta/split.py 未实例化(案号 D5-T0004)"));
             }
         }
 

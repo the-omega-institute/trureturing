@@ -5,7 +5,6 @@ using StrataLint.Engine;
 namespace StrataLint.Tests;
 
 [Collection("Lean report environment")]
-[Trait("Category", "Script")]
 public sealed class LeanReportInputScriptTests
 {
     private const string InputHelperPath = "Meta/StrataLint/scripts/report/lean-report-input.sh";

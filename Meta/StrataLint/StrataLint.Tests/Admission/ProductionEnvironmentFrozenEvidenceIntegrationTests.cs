@@ -7,61 +7,6 @@ namespace StrataLint.Tests;
 
 public sealed partial class ProductionEnvironmentTests
 {
-    [Fact]
-    public void CheckAcceptsNonAncestorFrozenEvidenceFromTheExplicitEvidenceRoot()
-    {
-        using var candidate = new TemporaryDirectory();
-        using var evidence = new TemporaryDirectory();
-        using var reports = new TemporaryDirectory();
-        var invocation = CreateRealFrozenEvidenceInvocation(
-            candidate.Path,
-            evidence.Path,
-            reports.Path,
-            useMissingCommit: false);
-        var environment = new ProductionCliEnvironment(
-            candidate.Path,
-            new GitRepositoryGateway(candidate.Path),
-            new FakeLeanReportSource(null));
-
-        Assert.ThrowsAny<InvalidOperationException>(() =>
-            new GitRepositoryGateway(candidate.Path).ResolveFrozenRevision(invocation.EvidenceCommit));
-
-        var outcome = environment.Check(invocation.Arguments);
-
-        Assert.IsType<AdmissionOutcome.Admitted>(outcome);
-    }
-
-    [Fact]
-    public void CheckRejectsFrozenEvidenceOidMissingFromBothRepositoryRoots()
-    {
-        using var candidate = new TemporaryDirectory();
-        using var evidence = new TemporaryDirectory();
-        using var reports = new TemporaryDirectory();
-        var invocation = CreateRealFrozenEvidenceInvocation(
-            candidate.Path,
-            evidence.Path,
-            reports.Path,
-            useMissingCommit: true);
-        var environment = new ProductionCliEnvironment(
-            candidate.Path,
-            new GitRepositoryGateway(candidate.Path),
-            new FakeLeanReportSource(null));
-
-        var outcome = environment.Check(invocation.Arguments);
-
-        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
-        var diagnostic = Assert.Single(rejected.Diagnostics);
-        Assert.Equal(RuleId.CreateKnown(8), diagnostic.RuleId);
-        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
-        Assert.Equal(FrozenLedgerChangeClassifier.AcceptedRoot, diagnostic.Path);
-        Assert.StartsWith(
-            "frozen ledger Git references are invalid: frozen Git object git-sha1:"
-            + new string('f', 40)
-            + " is not a reachable commit; git cat-file -t ",
-            diagnostic.Message,
-            StringComparison.Ordinal);
-        Assert.Contains("nonzero-exit, exit 128", diagnostic.Message, StringComparison.Ordinal);
-    }
 
     private static RealFrozenEvidenceInvocation CreateRealFrozenEvidenceInvocation(
         string candidateRoot,

@@ -278,11 +278,11 @@ public sealed class DocumentGraphTests
                 Digest.Create("Test document.")),
             Heading.Create(gid),
             BlockSequence.Create([
-                DocumentBlock.Describe.Remark(
+                Describe.Remark(
                     DescribeId.Create("target"),
                     Heading.Create("Target"),
-                    DescribeStatement.FromFormula(new Formula.Number(1)),
-                    DescribeProvenance.RepoDerived(),
+                    new Formula.Number(1),
+                    AssessedProvenance.FromRepo(),
                     BlockSequence.Create([
                         new DocumentBlock.Paragraph(InlineSequence.Create([
                             new Inline.Text(TextRun.Create("Body.")),
@@ -305,16 +305,18 @@ public sealed class DocumentGraphTests
                 Digest.Create("Test document.")),
             Heading.Create(gid),
             BlockSequence.Create([
-                DocumentBlock.Describe.Definition(
+                Describe.Lean(
                     DescribeId.Create("anchor"),
+                    DeclarationHandle.Create(declaration),
                     Heading.Create("Anchor"),
-                    LeanDeclarationRef.Create(declaration),
-                    DescribeProvenance.RepoDerived(),
+                    StatementSource.WithoutFormula(),
+                    AssessedProvenance.FromRepo(),
                     BlockSequence.Create([
                         new DocumentBlock.Paragraph(InlineSequence.Create([
                             new Inline.Text(TextRun.Create("Body.")),
                         ])),
-                    ])),
+                    ]),
+                    DescribeRole.Definition),
             ]));
 
     private static ScribeDocument DocumentWithTwoLeanAnchors(string gid, LeanDeclarationRef declaration) =>
@@ -324,10 +326,12 @@ public sealed class DocumentGraphTests
                 new EvidenceMirror.Waiver(WaiverReason.Create("test-only")), [], Digest.Create("Test document.")),
             Heading.Create(gid),
             BlockSequence.Create([
-                DocumentBlock.Describe.Definition(DescribeId.Create("first"), Heading.Create("First"), declaration,
-                    DescribeProvenance.RepoDerived(), Body()),
-                DocumentBlock.Describe.Definition(DescribeId.Create("second"), Heading.Create("Second"), declaration,
-                    DescribeProvenance.RepoDerived(), Body()),
+                Describe.Lean(DescribeId.Create("first"), DeclarationHandle.Create(declaration.Value),
+                    Heading.Create("First"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                    Body(), DescribeRole.Definition),
+                Describe.Lean(DescribeId.Create("second"), DeclarationHandle.Create(declaration.Value),
+                    Heading.Create("Second"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                    Body(), DescribeRole.Definition),
             ]));
 
     private static BlockSequence Body() => BlockSequence.Create([
