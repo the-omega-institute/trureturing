@@ -38,5 +38,6 @@
 - `Quantum/Algebra/`: representation-independent covariance and commutator algebra.
 - `Observer/HiddenFlow/`: continuous hidden-parameter flow exclusion over discrete addresses.
 - `Observer/WindowAlgebra/`: finite read-write generation of window matrix algebras.
-- `Observer/MetricGeometry/`: observable-supremum metrics on observer update orbits.
+- `Observer/MetricGeometry/`: observable-supremum metrics on observer update orbits, including
+  `VisiblePhaseInfinity.lean` for the ENNReal visible-phase infinity shadow.
 - `Entropy/Forgetting/`: finite entropy and uniform-capacity laws under forgetting channels.
