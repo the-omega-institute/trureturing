@@ -488,7 +488,7 @@ public sealed partial class CoverAtomTests
         var (result, after, before) = Execute(new CoverSpec { EnvelopeAtomId = "other-atom" });
 
         Assert.False(result.Success);
-        Assert.Contains("atom_id other-atom does not match --cover-atom", result.Error, StringComparison.Ordinal);
+        Assert.Contains("atom_id other-atom does not match atom", result.Error, StringComparison.Ordinal);
         Assert.Equal(before, after);
     }
 
