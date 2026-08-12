@@ -3,8 +3,7 @@
    mirror-B: D5/B/S1/Solenoid/StreamlineDecomposition
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Every continuous solenoid path has a unique base-normalized real
-     lift and constant hidden offset. -/
+   digest: Unique base-normalized real lift with constant hidden offset. -/
 
 /- Library-search audit trail (2026-08-12):
    * `AddCircle.isCoveringMap_coe` and

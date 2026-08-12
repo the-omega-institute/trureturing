@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Observer/HiddenFlow/StreamlineExistence
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Canonical solenoid streamline data instantiate the frozen observer
-     decomposition with constant throat. -/
+   digest: Streamline data instantiate the frozen decomposition, throat constant. -/
 
 import D5.S1.Solenoid.StreamlineDecomposition
 import D5.S3.Factorization.SolenoidProfiniteKernel
