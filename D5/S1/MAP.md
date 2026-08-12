@@ -34,3 +34,6 @@
   12-file limit; opened the local subdomain `Phase/Interference/` under the route
   engine's one-level split rule. Existing Phase paths remain unmoved, and the first
   module is `Interference/DominantPartialQuotientGap.lean`.
+- 2026-08-12 SL-003 continuation: `Phase/Interference/` remains the recorded
+  one-level host for additive countershot certificates; `M1728Countershot.lean`
+  is appended there without moving existing paths.
