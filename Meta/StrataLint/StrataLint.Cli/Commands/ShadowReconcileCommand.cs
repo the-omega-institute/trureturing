@@ -221,9 +221,10 @@ internal sealed class ShadowGitHubFetcher
 
 internal static class ShadowReconciler
 {
-    internal static ShadowReconcileResult Reconcile(IEnumerable<ShadowJob> jobs, int windowSize = 40)
+    internal static ShadowReconcileResult Reconcile(IEnumerable<ShadowJob> jobs, int windowSize = 40, long? sinceRun = null)
     {
-        var members = jobs.OrderBy(j => j.RunId).ThenBy(j => j.RunAttempt).GroupBy(j => j.PrNumber).Select(g => g.First()).Take(windowSize).ToArray();
+        var eligibleJobs = sinceRun is { } boundary ? jobs.Where(job => job.RunId > boundary) : jobs;
+        var members = eligibleJobs.OrderBy(j => j.RunId).ThenBy(j => j.RunAttempt).GroupBy(j => j.PrNumber).Select(g => g.First()).Take(windowSize).ToArray();
         var closed = members.Length == windowSize;
         var selected = members.Select(m => m with { Records = m.Records.Where(r => r.RunId == m.RunId && r.RunAttempt == 1).ToArray() }).ToArray();
         var bad = selected.FirstOrDefault(m => !m.Terminal || m.Records.Count(r => r.Outcome is "hit" or "miss") != 1);
@@ -244,6 +245,15 @@ internal static class ShadowReconcileCommand
     {
         try
         {
+            long? sinceRun = null;
+            if (arguments.Count >= 2 && string.Equals(arguments[0], "--since-run", StringComparison.Ordinal))
+            {
+                if (!long.TryParse(arguments[1], NumberStyles.None, CultureInfo.InvariantCulture, out var parsedSinceRun) || parsedSinceRun <= 0)
+                    throw new InvalidOperationException("--since-run requires a positive run_id");
+                sinceRun = parsedSinceRun;
+                arguments = arguments.Skip(2).ToArray();
+            }
+
             IReadOnlyList<ShadowJob> jobs;
             if (arguments.Count == 1)
             {
@@ -255,9 +265,9 @@ internal static class ShadowReconcileCommand
             }
             else
             {
-                throw new InvalidOperationException("USAGE: shadow-reconcile <jobs.json> | shadow-reconcile --github <owner/repository> <workflow>");
+                throw new InvalidOperationException("USAGE: shadow-reconcile [--since-run <run_id>] (<jobs.json> | --github <owner/repository> <workflow>)");
             }
-            return new(true, JsonSerializer.Serialize(ShadowReconciler.Reconcile(jobs)), string.Empty);
+            return new(true, JsonSerializer.Serialize(ShadowReconciler.Reconcile(jobs, sinceRun: sinceRun)), string.Empty);
         }
         catch (Exception e) when (e is IOException or JsonException or InvalidOperationException)
         { return new(false, string.Empty, $"INFRASTRUCTURE_FAILURE shadow-reconcile: {e.Message}\n"); }

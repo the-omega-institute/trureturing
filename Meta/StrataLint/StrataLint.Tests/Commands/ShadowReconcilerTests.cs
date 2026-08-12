@@ -12,4 +12,86 @@ public sealed class ShadowReconcilerTests
     [Fact] public void MaxHalts() { var j=Enumerable.Range(1,40).Select(i=>Job(i,i,i==40?"miss":"hit",i==40?181:null)).ToArray(); Assert.True(ShadowReconciler.Reconcile(j).Halted); }
     [Fact] public void MissingRecordHalts() { var j=Enumerable.Range(1,40).Select(i=>i==7?new ShadowJob(7,7,1,true,Array.Empty<ShadowRecord>()):Job(i,i)).ToArray(); Assert.True(ShadowReconciler.Reconcile(j).Halted); }
     [Fact] public void FirstAttemptWins() { var j=new[]{Job(1,10,"miss",5),Job(1,11,"hit"),Job(2,20)}; var r=ShadowReconciler.Reconcile(j,2); Assert.True(r.Halted); Assert.Equal(2.5,r.AmortisedMissSeconds); }
+
+    [Fact]
+    public void SinceRunExcludesRunsAtOrBeforeBoundary()
+    {
+        var jobs = new[]
+        {
+            new ShadowJob(899, 99, 1, true, Array.Empty<ShadowRecord>()),
+            new ShadowJob(900, 100, 1, true, Array.Empty<ShadowRecord>()),
+        }.Concat(Enumerable.Range(101, 40).Select(run => Job(run, run))).ToArray();
+
+        var reopened = ShadowReconciler.Reconcile(jobs, sinceRun: 100);
+        var negativeControl = ShadowReconciler.Reconcile(jobs);
+
+        Assert.True(reopened.WindowClosed);
+        Assert.False(reopened.Halted);
+        Assert.Equal(40, reopened.N);
+        Assert.Equal(40, reopened.HitCount);
+        Assert.True(negativeControl.Halted);
+        Assert.Equal("PR #899: job terminal/record reconciliation failed", negativeControl.HaltReason);
+    }
+
+    [Fact]
+    public void SameSinceRunProducesSameDecision()
+    {
+        var jobs = Enumerable.Range(501, 40).Select(run => Job(run, run)).ToArray();
+
+        var first = ShadowReconciler.Reconcile(jobs, sinceRun: 500);
+        var second = ShadowReconciler.Reconcile(jobs, sinceRun: 500);
+        var negativeControl = ShadowReconciler.Reconcile(jobs, sinceRun: 501);
+
+        Assert.Equal(first, second);
+        Assert.True(first.WindowClosed);
+        Assert.False(negativeControl.WindowClosed);
+        Assert.NotEqual(first, negativeControl);
+    }
+
+    [Fact]
+    public void OmittingSinceRunPreservesEarliestRunWindow()
+    {
+        var jobs = new[]
+        {
+            Job(71, 20),
+            Job(71, 10, "miss", 5),
+            Job(72, 30),
+        };
+
+        var omitted = ShadowReconciler.Reconcile(jobs, windowSize: 2);
+        var explicitDefault = ShadowReconciler.Reconcile(jobs, windowSize: 2, sinceRun: null);
+        var negativeControl = ShadowReconciler.Reconcile(jobs, windowSize: 2, sinceRun: 10);
+
+        Assert.Equal(explicitDefault, omitted);
+        Assert.True(omitted.WindowClosed);
+        Assert.True(omitted.Halted);
+        Assert.Equal("hit rate below 80%", omitted.HaltReason);
+        Assert.Equal(2.5, omitted.AmortisedMissSeconds);
+        Assert.False(negativeControl.Halted);
+    }
+
+    [Fact]
+    public void CommandAcceptsExplicitSinceRun()
+    {
+        var path = Path.GetTempFileName();
+        try
+        {
+            var jobs = new[]
+            {
+                new ShadowJob(999, 100, 1, true, Array.Empty<ShadowRecord>()),
+                Job(101, 101),
+            };
+            File.WriteAllText(path, System.Text.Json.JsonSerializer.Serialize(jobs));
+
+            var result = ShadowReconcileCommand.Run(["--since-run", "100", path]);
+
+            Assert.True(result.Success);
+            Assert.Contains("\"Halted\":false", result.Output, StringComparison.Ordinal);
+            Assert.Contains("\"N\":1", result.Output, StringComparison.Ordinal);
+        }
+        finally
+        {
+            File.Delete(path);
+        }
+    }
 }
