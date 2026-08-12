@@ -6,7 +6,7 @@ For amplitude damping on the Bloch axis, the SLD coherence contraction ratio is 
 
 **Definition 1.1 (Amplitude damping is affine on the Bloch axis).**
 
-Lean statement: `D5/S3/QuantumChannels/AmplitudeDampingContraction.dampedAxis`
+$$u'=(1-\Gamma)u+\Gamma$$
 
 *Formalization.* `D5/S3/QuantumChannels/AmplitudeDampingContraction.dampedAxis` (`✓ std3`).
 
@@ -18,7 +18,7 @@ The amplitude-damping parameter gamma sends an axial Bloch coordinate u to the a
 
 **Definition 1.2 (The SLD radial profile is constant).**
 
-Lean statement: `D5/S3/QuantumChannels/AmplitudeDampingContraction.sldRadialProfile`
+$$\phi_{SLD}(u)=1$$
 
 *Formalization.* `D5/S3/QuantumChannels/AmplitudeDampingContraction.sldRadialProfile` (`✓ std3`).
 
@@ -30,7 +30,7 @@ The SLD radial profile assigns one to every axial coordinate.
 
 **Definition 1.3 (The KM radial profile is the hyperbolic ratio).**
 
-Lean statement: `D5/S3/QuantumChannels/AmplitudeDampingContraction.kmRadialProfile`
+$$\phi_{KM}(u)=\operatorname{artanh}(u)/u, u\neq0$$
 
 *Formalization.* `D5/S3/QuantumChannels/AmplitudeDampingContraction.kmRadialProfile` (`✓ std3`).
 
@@ -42,7 +42,7 @@ The KM radial profile is artanh of u divided by u away from zero, with its conti
 
 **Definition 1.4 (The RLD radial profile has a quadratic boundary pole).**
 
-Lean statement: `D5/S3/QuantumChannels/AmplitudeDampingContraction.rldRadialProfile`
+$$\phi_{RLD}(u)=\frac{1}{1-u^2}$$
 
 *Formalization.* `D5/S3/QuantumChannels/AmplitudeDampingContraction.rldRadialProfile` (`✓ std3`).
 
@@ -54,7 +54,7 @@ The RLD radial profile is the reciprocal of one minus the squared axial coordina
 
 **Definition 1.5 (The coherence ratio compares radial profiles before and after damping).**
 
-Lean statement: `D5/S3/QuantumChannels/AmplitudeDampingContraction.coherenceRatio`
+$$eta_{\phi}(\Gamma,u)=(1-\Gamma)\frac{\phi(u')}{\phi(u)}$$
 
 *Formalization.* `D5/S3/QuantumChannels/AmplitudeDampingContraction.coherenceRatio` (`✓ std3`).
 
@@ -66,7 +66,7 @@ The axial coherence contraction ratio multiplies the profile quotient at the dam
 
 **Definition 1.6 (A pure-state boundary endpoint combines an interior bound and a one-sided limit).**
 
-Lean statement: `D5/S3/QuantumChannels/AmplitudeDampingContraction.HasPureBoundaryEndpoint`
+$$\operatorname{Endpoint}(r,b)\Leftrightarrow(\forall u\in(-1,1), r(u) \le b) \land \lim_{u\to1^-}r(u)=b$$
 
 *Formalization.* `D5/S3/QuantumChannels/AmplitudeDampingContraction.HasPureBoundaryEndpoint` (`✓ std3`).
 
