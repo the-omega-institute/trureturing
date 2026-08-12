@@ -47,13 +47,28 @@ namespace StrataLint.Tests;
         var workflow = AdmissionWorkflow();
         var shadow = Job(workflow, "old-side-report-shadow");
         var steps = Assert.IsType<YamlSequenceNode>(shadow.Children[new YamlScalarNode("steps")]);
-        var finalStep = Assert.IsType<YamlMappingNode>(steps.Children[^1]);
+        var finalStep = steps.Children.OfType<YamlMappingNode>().Single(step =>
+            Assert.IsType<YamlScalarNode>(step.Children[new YamlScalarNode("name")]).Value ==
+            "Record unreported old-side shadow outcome");
         Assert.Equal("Record unreported old-side shadow outcome",
             Assert.IsType<YamlScalarNode>(finalStep.Children[new YamlScalarNode("name")]).Value);
         Assert.Equal("always()", Assert.IsType<YamlScalarNode>(finalStep.Children[new YamlScalarNode("if")]).Value);
         Assert.Contains("outcome=\"hit-error\"", workflow, StringComparison.Ordinal);
         Assert.Contains("outcome:\"no-record\"", workflow, StringComparison.Ordinal);
         Assert.Contains("--arg stage", workflow, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void OldSideShadowRecordIsUploadedAsRequiredArtifact()
+    {
+        var workflow = AdmissionWorkflow();
+        Assert.True(ShadowRecordArtifactUploadIsRequired(workflow));
+
+        var tampered = workflow.Replace(
+            "      - name: Upload old-side shadow record\n        if: always()\n        uses: actions/upload-artifact@v4\n        with:\n          name: old-side-shadow-record-${{ github.run_id }}-${{ github.run_attempt }}\n          path: ${{ runner.temp }}/old-side-shadow-record.json\n          if-no-files-found: error\n",
+            "",
+            StringComparison.Ordinal);
+        Assert.False(ShadowRecordArtifactUploadIsRequired(tampered));
     }
 
     [Fact]
@@ -236,6 +251,32 @@ namespace StrataLint.Tests;
         var passesAbsoluteLake = missRun.Contains(
             "LAKE_BIN=\"$HOME/.elan/bin/lake\" make lean-report", StringComparison.Ordinal);
         return exportsElanBin || passesAbsoluteLake;
+    }
+
+    private static bool ShadowRecordArtifactUploadIsRequired(string workflow)
+    {
+        var shadow = Job(workflow, "old-side-report-shadow");
+        var steps = Assert.IsType<YamlSequenceNode>(shadow.Children[new YamlScalarNode("steps")]);
+        var upload = steps.Children.OfType<YamlMappingNode>().SingleOrDefault(step =>
+            step.Children.TryGetValue(new YamlScalarNode("name"), out var name) &&
+            name is YamlScalarNode scalar && scalar.Value == "Upload old-side shadow record");
+        if (upload is null) return false;
+        if (!upload.Children.TryGetValue(new YamlScalarNode("uses"), out var uses) ||
+            uses is not YamlScalarNode { Value: "actions/upload-artifact@v4" }) return false;
+        if (!upload.Children.TryGetValue(new YamlScalarNode("if"), out var condition) ||
+            condition is not YamlScalarNode { Value: "always()" }) return false;
+        if (upload.Children.TryGetValue(new YamlScalarNode("with"), out var withNode) &&
+            withNode is YamlMappingNode with)
+        {
+            var name = with.Children.TryGetValue(new YamlScalarNode("name"), out var nameNode) &&
+                nameNode is YamlScalarNode { Value: string value } &&
+                value.Contains("${{ github.run_id }}", StringComparison.Ordinal) &&
+                value.Contains("${{ github.run_attempt }}", StringComparison.Ordinal);
+            var noFiles = with.Children.TryGetValue(new YamlScalarNode("if-no-files-found"), out var noFilesNode) &&
+                noFilesNode is YamlScalarNode { Value: "error" };
+            return name && noFiles;
+        }
+        return false;
     }
 
     private static bool BaselineNeedsExactlyLeanInspect(string workflow) =>
