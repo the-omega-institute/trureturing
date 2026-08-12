@@ -161,6 +161,37 @@ step 级 `always()` 无法在 job timeout、workflow cancellation 或 runner 丢
 
 因此使用禁令继续有效且范围更精确：聚合端已经实现，但窗口未闭合且已经停案，**本节读数只可用于修正估算与指出下一步实验，仍不得据此下最终判决**。
 
+## 7.2 暖缓存读数：跨树复用机制已证，第三份 report 成本待验证
+
+§7.1 提出的决定性问题，现有 `lean-inspect` CI 数据已经回答了机制部分，不需要新实验。dev push run 在已 restore 构建缓存的**暖态**下，step 耗时实测为：
+
+```text
+Restore candidate and baseline Lean build artifacts   102 s / 108 s
+Produce source-bound canonical Lean reports           209 s / 258 s   ← 产【两份】report
+（部分 run 连这两步都没有：report 地址完全命中，直接复用）
+```
+
+对比 §7.1 的 shadow **全冷**单份 miss **816–873 s**，暖态生产两份 report 的 `209 s / 258 s` 折成单份边际约 **105–129 s**；暖态单份边际与全冷单份 miss 相差约 **7 倍**，差额几乎全是 mathlib 从头编译。这里的 **105–129 s 是由现有两份 report 的 step 总耗时除以二所得的推算，不是迁移后第三份 old-side report 的实测**。
+
+跨树复用来自 `.github/workflows/ci.yml` 的构建缓存配置：
+
+```yaml
+path:  candidate/.lake, baseline/.lake, ~/.cache/mathlib
+key:   ...-lake-<hashFiles(lake-manifest.json)>-<hashFiles(lean-toolchain)>-<head.sha>-<baseline.sha>
+restore-keys:
+       ...-lake-<hashFiles(lake-manifest.json)>-<hashFiles(lean-toolchain)>-
+```
+
+精确 key 绑定 head SHA 与 baseline SHA，但 `restore-keys` 的前缀回退使命中条件只剩 `lake-manifest` 与 `lean-toolchain` 的 hash，**不绑定任何树 SHA**；同时 `~/.cache/mathlib` 是共享路径。因此，只要依赖版本未变，任意树（包括 merge-base 树）都能命中同一份缓存。shadow 的 800+ s 来自另一种口径：它不 restore 这些 `.lake` / mathlib 构建缓存，因而支付了 mathlib 从头编译的全冷成本。
+
+据此，§7.1 的 **111.4 s/PR 是全冷口径，不可直接代入迁移成本估算**。迁移后的 old-side report 若在 `lean-inspect` 内生产，并共享已 restore 的 `.lake` 与 mathlib，其量级**应接近暖态边际而非全冷**；这句话是基于现有 CI 读数与缓存键机制的**推算，不是实测**。我没有测迁移后第三份 old-side report 的实际耗时，因为当前 workflow 尚未生产这第三份 report；剩余不确定性已经缩小为三项待验证：
+
+1. 产**第三份** report 是否与前两份同量级（可能有共享开销，也可能不线性）。
+2. 缓存 `path` 目前只列 `candidate/.lake` 与 `baseline/.lake`，**迁移时须把 old-side 树的 `.lake` 一并纳入**，否则那棵树仍是冷的。
+3. merge-base 树若跨越了依赖升级（`lake-manifest` / `lean-toolchain` 变更），前缀回退不命中。
+
+使用禁令不变：固定窗口仍为 **22/40、未闭合且已停案**，因此仍不得据此下“迁移应当进行”或“工程应当取消”的最终判决。本节只把下一个实验从“未知”缩小为上述三条具体的待验证项。
+
 ## 8. 40 个样本的原始地址
 
 SHA 列为 8 位展示，两个 address 为 helper 第一列的完整 64 hex。`cross-other` 排除自身。
