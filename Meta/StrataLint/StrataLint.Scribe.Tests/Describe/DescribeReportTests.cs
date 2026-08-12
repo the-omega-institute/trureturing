@@ -74,7 +74,9 @@ public sealed class DescribeReportTests
             var rootElement = json.RootElement;
             Assert.Equal("DESCRIBE-NODES", rootElement.GetProperty("case_id").GetString());
             Assert.Equal("classified", rootElement.GetProperty("status").GetString());
-            Assert.Equal(0, rootElement.GetProperty("open_count").GetInt32());
+            // open_count counted unassessed nodes. No node can carry that provenance any more,
+            // so the field is gone rather than pinned at zero — a constant assertion measures nothing.
+            Assert.False(rootElement.TryGetProperty("open_count", out _));
             var stats = rootElement.GetProperty("node_stats");
             Assert.Equal(3, stats.GetProperty("total").GetInt32());
             Assert.Equal(2, stats.GetProperty("formula_content_slots").GetInt32());
@@ -84,7 +86,7 @@ public sealed class DescribeReportTests
             Assert.Equal(1, byProvenance.GetProperty("literature-attested").GetInt32());
             Assert.Equal(1, byProvenance.GetProperty("suspected-novel").GetInt32());
             Assert.Single(rootElement.GetProperty("suspected_novel").EnumerateArray());
-            Assert.Empty(rootElement.GetProperty("unassessed").EnumerateArray());
+            Assert.False(rootElement.TryGetProperty("unassessed", out _));
             Assert.Empty(rootElement.GetProperty("red_findings").EnumerateArray());
             var observationCodes = rootElement.GetProperty("observations")
                 .EnumerateArray()
@@ -98,7 +100,7 @@ public sealed class DescribeReportTests
     }
 
     [Fact]
-    public void ClassifiedReportClosesTheUnassessedCountButKeepsNovelCandidatesQueryable()
+    public void ClassifiedReportHasNoOpenAssessedCountButKeepsNovelCandidatesQueryable()
     {
         WithRepository(root =>
         {
@@ -117,7 +119,6 @@ public sealed class DescribeReportTests
             var report = DescribeReport.Build(root, [document]);
             var text = DescribeReportWriter.WriteText(report);
 
-            Assert.Equal(0, report.OpenCount);
             Assert.Equal("classified", report.Status);
             Assert.Single(report.SuspectedNovel);
             Assert.Contains("suspected_novel=1", text, StringComparison.Ordinal);
