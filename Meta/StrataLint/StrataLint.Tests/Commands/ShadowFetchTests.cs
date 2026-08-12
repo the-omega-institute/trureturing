@@ -49,14 +49,21 @@ public sealed class ShadowFetchTests
     }
 
     [Fact]
-    public void ApiPullRequestNumberMismatchWithArtifactIsRejected()
+    public void ApiPullRequestNumberMismatchUsesArtifactAndProducesWarning()
     {
         var run = new ShadowRunSnapshot(31596893884, 1, 1433, true, "open-head");
         var artifact = "{\"pr_number\":1434,\"head_sha\":\"open-head\",\"run_id\":31596893884,\"run_attempt\":1,\"outcome\":\"hit\",\"wall_seconds\":null,\"address\":\"mismatched-pr\"}";
 
-        var exception = Assert.Throws<JsonException>(() => ShadowJobConverter.FromArtifact(run, artifact));
+        var job = ShadowJobConverter.FromArtifact(run, artifact);
 
-        Assert.Equal("shadow artifact pull request does not match workflow run: api_pr=1433 artifact_pr=1434; run_id=31596893884 run_attempt=1 artifact_ref=<inline>", exception.Message);
+        Assert.Equal(1434, job.PrNumber);
+        Assert.Equal(1434, Assert.Single(job.Records).PrNumber);
+        var warning = Assert.Single(job.Warnings!);
+        Assert.Contains("run_id=31596893884", warning);
+        Assert.Contains("api_pr=1433", warning);
+        Assert.Contains("artifact_pr=1434", warning);
+        var result = ShadowReconciler.Reconcile(new[] { job }, windowSize: 1);
+        Assert.Contains(warning, result.Warnings);
     }
 
     [Fact]

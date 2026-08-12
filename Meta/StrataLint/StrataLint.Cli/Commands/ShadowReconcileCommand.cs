@@ -6,9 +6,24 @@ using System.Text.RegularExpressions;
 namespace StrataLint.Cli;
 
 internal sealed record ShadowRecord(int PrNumber, long RunId, int RunAttempt, string HeadSha, string Outcome, double? WallSeconds);
-internal sealed record ShadowJob(int PrNumber, long RunId, int RunAttempt, bool Terminal, IReadOnlyList<ShadowRecord> Records);
+internal sealed record ShadowJob(
+    int PrNumber,
+    long RunId,
+    int RunAttempt,
+    bool Terminal,
+    IReadOnlyList<ShadowRecord> Records,
+    IReadOnlyList<string>? Warnings = null);
 internal sealed record ShadowRunSnapshot(long RunId, int RunAttempt, int? PrNumber, bool Terminal, string HeadSha = "");
-internal sealed record ShadowReconcileResult(bool WindowClosed, bool Halted, string? HaltReason, int N, int HitCount, double? HitRate, double? AmortisedMissSeconds, double? MaxMissSeconds);
+internal sealed record ShadowReconcileResult(
+    bool WindowClosed,
+    bool Halted,
+    string? HaltReason,
+    int N,
+    int HitCount,
+    double? HitRate,
+    double? AmortisedMissSeconds,
+    double? MaxMissSeconds,
+    IReadOnlyList<string> Warnings);
 
 internal static class ShadowJobConverter
 {
@@ -19,7 +34,7 @@ internal static class ShadowJobConverter
 
     internal static ShadowJob FromArtifact(ShadowRunSnapshot run, string? artifactJson, string? artifactRef = null)
     {
-        if (artifactJson is null) return new(run.PrNumber ?? 0, run.RunId, run.RunAttempt, run.Terminal, Array.Empty<ShadowRecord>());
+        if (artifactJson is null) return new(run.PrNumber ?? 0, run.RunId, run.RunAttempt, run.Terminal, Array.Empty<ShadowRecord>(), Array.Empty<string>());
 
         try
         {
@@ -43,15 +58,16 @@ internal static class ShadowJobConverter
             double? wallSeconds = wall.ValueKind == JsonValueKind.Number ? wall.GetDouble() : null;
             if (runId != run.RunId || runAttempt != run.RunAttempt)
                 throw new JsonException($"shadow artifact identity does not match workflow run: expected_run_id={run.RunId} actual_run_id={runId} expected_run_attempt={run.RunAttempt} actual_run_attempt={runAttempt}");
-            // The workflow writes pr_number from github.event.pull_request.number at run time, so the
-            // artifact is the authoritative fact. GitHub's later pull_requests[] lookup is only
-            // corroboration because GitHub clears it after merge; when present, it must still agree.
+            var warnings = new List<string>();
+            // The artifact is the run-time fact. A head branch can be reused by a later PR, and
+            // GitHub then retargets the old run's pull_requests[] to the active PR; that field
+            // cannot answer which PR this run belonged to at execution time.
             if (run.PrNumber is { } apiPrNumber && prNumber != apiPrNumber)
-                throw new JsonException($"shadow artifact pull request does not match workflow run: api_pr={apiPrNumber} artifact_pr={prNumber}");
+                warnings.Add($"shadow artifact pull request differs from workflow run: run_id={run.RunId} api_pr={apiPrNumber} artifact_pr={prNumber} artifact_ref={artifactRef ?? "<inline>"}");
             if (run.HeadSha.Length != 0 && !string.Equals(headSha, run.HeadSha, StringComparison.Ordinal))
                 throw new JsonException($"shadow artifact head_sha does not match workflow run: expected_head_sha={run.HeadSha} artifact_head_sha={headSha}");
             return new(prNumber, run.RunId, run.RunAttempt, run.Terminal,
-                new[] { new ShadowRecord(prNumber, runId, runAttempt, headSha, outcome, wallSeconds) });
+                new[] { new ShadowRecord(prNumber, runId, runAttempt, headSha, outcome, wallSeconds) }, warnings);
         }
         catch (JsonException exception)
         {
@@ -235,7 +251,7 @@ internal static class ShadowReconciler
 {
     internal static ShadowReconcileResult Reconcile(IEnumerable<ShadowJob> jobs, int windowSize = 40, long? sinceRun = null)
     {
-        var eligibleJobs = sinceRun is { } boundary ? jobs.Where(job => job.RunId > boundary) : jobs;
+        var eligibleJobs = (sinceRun is { } boundary ? jobs.Where(job => job.RunId > boundary) : jobs).ToArray();
         var members = eligibleJobs.OrderBy(j => j.RunId).ThenBy(j => j.RunAttempt).GroupBy(j => j.PrNumber).Select(g => g.First()).Take(windowSize).ToArray();
         var closed = members.Length == windowSize;
         var selected = members.Select(m => m with { Records = m.Records.Where(r => r.RunId == m.RunId && r.RunAttempt == 1).ToArray() }).ToArray();
@@ -248,9 +264,10 @@ internal static class ShadowReconciler
         var hitRate = completeRecords && n != 0 ? hits / (double)n : (double?)null;
         var budget = completeRecords && n != 0 ? misses.Sum(r => r.WallSeconds ?? double.NaN) / n : (double?)null;
         var max = completeRecords && n != 0 ? (misses.Length == 0 ? 0 : misses.Max(r => r.WallSeconds ?? double.NaN)) : (double?)null;
-        if (bad is not null) return new(false, true, $"PR #{bad.PrNumber}: job terminal/record reconciliation failed", n, hits, hitRate, budget, max);
+        var warnings = eligibleJobs.SelectMany(j => j.Warnings ?? Array.Empty<string>()).ToArray();
+        if (bad is not null) return new(false, true, $"PR #{bad.PrNumber}: job terminal/record reconciliation failed", n, hits, hitRate, budget, max, warnings);
         string? reason = hitRate is { } rate && rate < .8 ? "hit rate below 80%" : budget is { } amortised && amortised > 30 ? "amortised miss budget above 30.0s/PR" : max is { } maximum && maximum > 180 ? "single miss above 180.0s" : null;
-        return new(closed, reason is not null, reason, n, hits, hitRate, budget, max);
+        return new(closed, reason is not null, reason, n, hits, hitRate, budget, max, warnings);
     }
 }
 
