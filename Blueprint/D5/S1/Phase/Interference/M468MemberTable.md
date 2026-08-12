@@ -2,45 +2,39 @@
 
 ## Abstract
 
-The phase classifier `Psi mod 24` and the frozen Jacobi selector are independent. The side of a split-prime label is defined from the split-factor value `J(-384 | p)` in the frozen selector factorization, using the m468 datum `beta = -384`; the checked labels are `J(-384 | 7) = 1` and `J(-384 | 67) = -1`. The finite m468 phase-member table contains only the prime labels and residue classes, and does not assume those Jacobi values.
+The m468 side column is computed by the frozen Jacobi selector; unsupported m-side and 1729 orbit claims are omitted.
+
+The phase classifier and the frozen selector column are separate definitions. The finite phase-member table records only prime labels and residue classes; it does not assume selector values.
 
 **Theorem 1.1 (Frozen selector side characterization).**
 
-For every phase member `(p, Psi)` of the m468 relation,
+$$\forall p \in \mathbb{N},\ \forall Psi \in \mathbb{Z},\ (phaseMember(p,Psi)\Rightarrow (sameSide(p,Psi) \Leftrightarrow Psi \operatorname{mod} 24=0 \land differentSide(p,Psi) \Leftrightarrow Psi \operatorname{mod} 24=12)$$
 
-$$
-\operatorname{sameSide}(p,\Psi) \Longleftrightarrow \Psi \bmod 24=0,
-\qquad
-\operatorname{differentSide}(p,\Psi) \Longleftrightarrow \Psi \bmod 24=12.
-$$
+*Proof.* Machine-checked in Lean as `D5/S1/Phase/Interference/M468MemberTable.m468_split_prime_characterization` (`✓ std3`). ∎
 
-Here `sameSide` and `differentSide` are computed from the frozen Jacobi factor `J(-384 | p)`, not defined from the residue classifier or supplied by the member premise. The two selector values are kernel-checked at `p = 7` and `p = 67`.
+*Source.* Repository-derived.
 
-*Proof.* Machine-checked in Lean as `D5/S1/Phase/Interference/M468MemberTable.m468_split_prime_characterization` (`std3`). ∎
+*Commentary.*
 
-**Theorem 1.2 (Zero-only selector column).**
+The side is defined from the split-factor Jacobi value J(-384 | p) in the frozen selector factorization. The checked selector column is J(-384 | 7) = 1 and J(-384 | 67) = -1; the independent phase-member table then connects those computed values to the two residue classes.
 
-Define `zeroOnly_468` by requiring `J(-384 | p) = 0` for every proper prime divisor `p` of `469`. Then
+**Theorem 1.2 (Zero-only selector column fails at m468).**
 
-$$
-\operatorname{zeroOnly}_{468}\Longleftrightarrow \operatorname{Prime}(469),
-\qquad
-469=7\cdot67,
-\qquad
-\neg\operatorname{zeroOnly}_{468}.
-$$
+$$\ \neg zeroOnly_{468}$$
 
-The proper divisor `7` is prime, divides `469`, is neither `1` nor `469`, and has selector value `J(-384 | 7) = 1`; this is the explicit anti-vacuity witness.
+*Proof.* Machine-checked in Lean as `D5/S1/Phase/Interference/M468MemberTable.m468_zero_only_fails` (`✓ std3`). ∎
 
-*Proof.* Machine-checked in Lean as `m468_zero_only_iff_successor_prime`, `m468_successor_factorization`, `m468_zero_only_anti_vacuity_witness`, and `m468_zero_only_fails` (`std3`). ∎
+*Source.* Repository-derived.
 
-## Scope
+*Commentary.*
 
-This companion does not claim a literal 24-row coordinate enumeration. It also omits the m-side bystander clause and the 1729 three-orbit claim: the frozen checkout has no selector semantics for the former and no orbit-to-choice bridge for the latter.
+Zero-only means that every proper prime divisor has frozen selector value zero. The equivalence to successor primality is proved separately; 469 = 7 * 67 and the prime divisor 7 with selector value J(-384 | 7) = 1 provides the non-vacuity witness.
+
+Disclosure: the frozen repository surface provides no m-side selector semantics and no three-prime orbit bridge at 1729, so neither claim is asserted here.
 
 ## References
 
 - Truth anchor: `D5/S1/Phase/Interference/M468MemberTable.m468_split_prime_characterization`
 - Truth anchor: `D5/S1/Phase/Interference/M468MemberTable.m468_zero_only_fails`
-- Dependency: [D5/S1/Phase/SeatTowerArithmetic](../SeatTowerArithmetic.md)
 - Dependency: [D5/S1/Phase/Interference/ZolotarevSelector](ZolotarevSelector.md)
+- Dependency: [D5/S1/Phase/SeatTowerArithmetic](../SeatTowerArithmetic.md)

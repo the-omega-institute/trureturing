@@ -38,7 +38,7 @@ internal sealed class M468MemberTableDocument : IScribeDocumentDefinition
                     "D5/S1/Phase/Interference/M468MemberTable.m468_zero_only_fails"),
                 H("Zero-only selector column fails at m468"),
                 StatementSource.FromAuthor(Disp(Seq(
-                    Esc, Neg, F.Id("zeroOnly"), Underscore, Grp(D(4, 6, 8))))),
+                    Esc, Neg, Sp, F.Id("zeroOnly"), Underscore, Grp(D(4, 6, 8))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Zero-only means that every proper prime divisor has frozen selector value zero. "
