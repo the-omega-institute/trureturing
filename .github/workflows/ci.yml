@@ -567,21 +567,21 @@ jobs:
           set -euo pipefail
           read -r start_seconds _ < /proc/uptime
           status=0
-          failure_stage=""
+          stage=""
           if [[ "${{ steps.old-side-toolchain.outcome }}" != "success" ]]; then
             status=1
-            failure_stage="toolchain"
+            stage="toolchain"
           else
             make lean-report || status=$?
             if [[ "$status" -ne 0 ]]; then
-              failure_stage="produce"
+              stage="produce"
             fi
           fi
           report="$GITHUB_WORKSPACE/.lake/build/stratalint/raw-lean-report.json"
           if [[ "$status" -eq 0 ]]; then
             "$GITHUB_WORKSPACE/Meta/StrataLint/scripts/report/lean-report-input.sh" verify --repository "$GITHUB_WORKSPACE" --report "$report" || status=$?
             if [[ "$status" -ne 0 ]]; then
-              failure_stage="verify"
+                stage="verify"
             fi
           fi
           read -r end_seconds _ < /proc/uptime
@@ -605,9 +605,9 @@ jobs:
             --arg outcome "$outcome" \
             --argjson wall_seconds "$wall_seconds" \
             --arg address "$address" \
-            --arg failure_stage "$failure_stage" \
+            --arg stage "$stage" \
             --argjson exit_code "$exit_code" \
-            '{pr_number:$pr_number, head_sha:$head_sha, run_id:$run_id, run_attempt:$run_attempt, outcome:$outcome, wall_seconds:$wall_seconds, address:$address} + (if $outcome == "miss-failed" then {failure_stage:$failure_stage, exit_code:$exit_code} else {} end)' \
+            '{pr_number:$pr_number, head_sha:$head_sha, run_id:$run_id, run_attempt:$run_attempt, outcome:$outcome, wall_seconds:$wall_seconds, address:$address} + (if $outcome == "miss-failed" then {stage:$stage, exit_code:$exit_code} else {} end)' \
             >> "$GITHUB_STEP_SUMMARY"
           exit "$status"
 
