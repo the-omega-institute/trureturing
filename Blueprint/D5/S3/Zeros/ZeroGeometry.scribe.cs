@@ -6,12 +6,6 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Zeros;
 
 internal sealed class ZeroGeometryDocument : IScribeDocumentDefinition
 {
-    private static LeanDeclarationRef LeanDefinition(string value) =>
-        LeanDeclarationRef.Create(
-            value,
-            expectedKind: LeanDeclarationKind.Definition,
-            requireNoSorry: true);
-
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Projected zero cancellation, mirror pairing, and local balance delimit the open O-6 bridge.", H("Zero Geometry Beneath Weil Positivity"), Blocks(
             Describe.Lean(DescribeId.Create("projected-zero-does-not-erase-the-labeled-vector"), DeclarationHandle.Create("D5/S3/Zeros/ZeroGeometry.projection_zero_labeled_vector_spec"), H("A projected zero does not erase the labeled vector"), StatementSource.FromAuthor(Disp(Seq(Forall, Sp, F.Id("A"), Esc, OpenBracket, Operatorname, Grp(F.Id("AddMonoid")), Open, F.Id("A"), Close, CloseBracket, Comma, Esc, Forall, Sp, Ell, Colon, F.Id("A"), To, Underscore, Grp(Plus), Mathbb, Grp(F.Id("R")), Comma, Esc, Forall, Sp, Rho, InMacro, Mathbb, Grp(F.Id("C")), Comma, Esc, Operatorname, Grp(F.Id("classicalZeta")), Open, Rho, Close, Eq, D(0), Sp, Rightarrow, Sp, Operatorname, Grp(F.Id("classicalZeta")), Open, Rho, Close, Eq, D(0), Sp, Land, Sp, Operatorname, Grp(F.Id("labeledZeta")), Open, Ell, Comma, Rho, Close, Neq, Sp, D(0)))), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
                     "A supplied classical zeta zero is retained alongside nonvanishing of its labeled coefficient function for every additive ledger. The scalar zero is an explicit hypothesis, so the declaration proves no zero exists. No analytic projection operator is defined, and no projection identity outside the Dirichlet convergence half-plane is claimed. On the O-6 path, this prevents cancellation in zeroSum from being mistaken for vacuous disappearance of the labeled data."))), DescribeRole.Theorem),

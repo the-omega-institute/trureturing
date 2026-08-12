@@ -109,10 +109,4 @@ internal sealed class GoldenGapFrequencyDocument : IScribeDocumentDefinition
                     GidRef.Create("D5/S0/Tower/GoldenSubstitution")),
             ]));
     }
-
-    private static LeanDeclarationRef LeanDefinition(string value) =>
-        LeanDeclarationRef.Create(
-            value,
-            expectedKind: LeanDeclarationKind.Definition,
-            requireNoSorry: true);
 }

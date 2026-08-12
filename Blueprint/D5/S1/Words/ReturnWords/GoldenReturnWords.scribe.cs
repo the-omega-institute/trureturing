@@ -148,10 +148,4 @@ internal sealed class GoldenReturnWordsDocument : IScribeDocumentDefinition
             DocumentEdge.Dependency.Create(
                 GidRef.Create("D5/S1/Words/GoldenSubstFixed")),
         ]));
-
-    private static LeanDeclarationRef LeanDefinition(string value) =>
-        LeanDeclarationRef.Create(
-            value,
-            expectedKind: LeanDeclarationKind.Definition,
-            requireNoSorry: true);
 }
