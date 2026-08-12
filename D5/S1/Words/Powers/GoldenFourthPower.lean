@@ -322,6 +322,11 @@ theorem golden_cube_witness :
     goldenFactor 9 5 = wordPower 3 [true, false, true] := by
   decide
 
+/-- `IsGoldenPowerFactor` is inhabited, so fourth power freeness is a statement about the
+exponent `4` and not an artifact of an unsatisfiable predicate. -/
+theorem golden_cube_is_power_factor : IsGoldenPowerFactor 3 [true, false, true] 5 :=
+  golden_cube_witness
+
 theorem golden_no_fourth_power_small :
     ∀ i < 6, ∀ p < 4, 0 < p →
       goldenFactor (4 * p) i ≠ wordPower 4 (goldenFactor p i) := by
