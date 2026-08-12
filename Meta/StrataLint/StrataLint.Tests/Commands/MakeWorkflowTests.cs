@@ -338,7 +338,7 @@ namespace StrataLint.Tests;
         // admission 侧此前只有 save 一处,故省了 Distinct;现在它也 restore 同一个 key
         // (关键路径复用报告),两侧遂对称。保留的判据仍是「distinct key 恰好一个且两侧相等」。
         var admissionJob = admission.Split("  lean-inspect:\n", StringSplitOptions.None)[1]
-            .Split("  old-side-report-shadow:\n", StringSplitOptions.None)[0];
+            .Split("  baseline-admission:\n", StringSplitOptions.None)[0];
         var admissionCacheKey = Assert.Single(
             admissionJob.Split('\n')
                 .Where(static line => line.TrimStart().StartsWith(
@@ -394,7 +394,7 @@ namespace StrataLint.Tests;
     }
 
     [Fact]
-    public void TheoryIngestUsesBaseClosureJudgeWithoutWriteback()
+    public void TheoryIngestUsesSingleOverlaySourceForBaseClosureWithoutWriteback()
     {
         var root = FindRepositoryRoot();
         var workflow = File.ReadAllText(Path.Combine(root, TheoryIngestWorkflowPath));
@@ -407,9 +407,45 @@ namespace StrataLint.Tests;
         var closureIndex = workflow.IndexOf(TheoryIngestClosureScriptPath, StringComparison.Ordinal);
         Assert.True(closureIndex > ingestIndex, "closure judge must run after ingest");
         Assert.Contains("$GITHUB_WORKSPACE/judge/" + TheoryIngestClosureScriptPath, workflow, StringComparison.Ordinal);
-        Assert.Contains("--exclude Meta/StrataLint", workflow, StringComparison.Ordinal);
-        Assert.Contains("--exclude Makefile", workflow, StringComparison.Ordinal);
-        Assert.Contains("--exclude global.json", workflow, StringComparison.Ordinal);
+
+        const string overlaySource = "THEORY_INGEST_OVERLAY_PATHS";
+        var overlayIndex = workflow.IndexOf(
+            "      - name: Overlay judge harness onto candidate data",
+            StringComparison.Ordinal);
+        var overlayEndIndex = workflow.IndexOf(
+            "      - name: ",
+            overlayIndex + "      - name: ".Length,
+            StringComparison.Ordinal);
+        Assert.True(overlayIndex >= 0, "the judge overlay step must exist");
+        Assert.True(overlayEndIndex > overlayIndex, "the judge overlay step must be bounded");
+
+        var overlayStep = workflow[overlayIndex..overlayEndIndex];
+        var closureStep = workflow[workflow.LastIndexOf(
+            "      - name: Enforce theory ingest closure",
+            StringComparison.Ordinal)..];
+        Assert.Single(Regex.Matches(
+            workflow,
+            $@"(?m)^\s*{overlaySource}:\s*\|-\s*$",
+            RegexOptions.CultureInvariant | RegexOptions.NonBacktracking));
+        var overlayDeclaration = workflow[
+            workflow.IndexOf($"      {overlaySource}: |-", StringComparison.Ordinal)..overlayIndex];
+        Assert.Contains("Meta/StrataLint\n", overlayDeclaration, StringComparison.Ordinal);
+        Assert.DoesNotContain("Meta/StrataLint/\n", overlayDeclaration, StringComparison.Ordinal);
+        Assert.Equal(3, Regex.Matches(workflow, overlaySource).Count);
+        Assert.Contains($"\"${overlaySource}\"", overlayStep, StringComparison.Ordinal);
+        Assert.Contains($"\"${overlaySource}\"", closureStep, StringComparison.Ordinal);
+        Assert.Contains("if [ -d \"$source\" ]", overlayStep, StringComparison.Ordinal);
+        Assert.Contains("rsync -a --delete \"$source/\" \"$destination\"", overlayStep, StringComparison.Ordinal);
+        Assert.Contains("cp \"$source\" \"$destination\"", overlayStep, StringComparison.Ordinal);
+        Assert.Single(Regex.Matches(overlayStep, @"(?m)^\s*rsync\b"));
+        Assert.Single(Regex.Matches(overlayStep, @"(?m)^\s*cp\b"));
+        Assert.Contains("closure_args+=(--exclude \"$path\")", closureStep, StringComparison.Ordinal);
+        Assert.DoesNotContain("${path%/}", closureStep, StringComparison.Ordinal);
+        Assert.DoesNotMatch(
+            new Regex(
+                @"(?m)--exclude\s+[\""']?[A-Za-z0-9_.-]+(?:/[A-Za-z0-9_.-]+)*/?[\""']?(?:\s|\\|$)",
+                RegexOptions.CultureInvariant | RegexOptions.NonBacktracking),
+            closureStep);
     }
 
     [Fact]
