@@ -6,18 +6,16 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic;
 
 internal sealed class AlternatingPoleCoefficientsDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Analytic/AlternatingPoleCoefficients",
-            "A pole of order d+1 at minus one has alternating binomial coefficients of degree d."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A pole of order d+1 at minus one has alternating binomial coefficients of degree d.",
         H("Alternating Coefficients from a Pole at Minus One"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("pole-order-controls-the-alternating-coefficient-polynomial"),
-                H("Pole order controls the alternating coefficient polynomial"),
-                LeanTheorem(
+                DeclarationHandle.Create(
                     "D5/S3/Analytic/AlternatingPoleCoefficients.alternating_pole_coefficients"),
-                Disp(Seq(
+                H("Pole order controls the alternating coefficient polynomial"),
+                StatementSource.FromAuthor(Disp(Seq(
                     Forall, Sp, F.Id("d"), Comma, F.Id("n"), InMacro, Mathbb,
                     Grp(F.Id("N")), Comma, Esc,
                     OpenBracket, F.Id("v"), Caret, Grp(F.Id("n")), CloseBracket,
@@ -25,8 +23,8 @@ internal sealed class AlternatingPoleCoefficientsDocument : IScribeDocumentDefin
                     Grp(Minus, Open, F.Id("d"), Plus, D(1), Close), Sp, Eq, Sp,
                     Open, Minus, D(1), Close, Caret, Grp(F.Id("n")), Cdot,
                     Operatorname, Grp(F.Id("choose")), Open, F.Id("d"), Plus,
-                    F.Id("n"), Comma, F.Id("d"), Close, Dot)),
-                DescribeProvenance.RepoDerived(),
+                    F.Id("n"), Comma, F.Id("d"), Close, Dot))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "For every nonnegative degree d, the formal expansion with a pole "
@@ -45,6 +43,6 @@ internal sealed class AlternatingPoleCoefficientsDocument : IScribeDocumentDefin
                         + "declared thin honest wrapper: it rescales X by minus one and reads "
                         + "the resulting coefficient. No matching D5 theorem was found, and "
                         + "the wrapper adds the exact pole-at-minus-one formulation needed by "
-                        + "the source atom without claiming a new library proof.")))
-            ))));
+                        + "the source atom without claiming a new library proof."))),
+                DescribeRole.Theorem))));
 }
