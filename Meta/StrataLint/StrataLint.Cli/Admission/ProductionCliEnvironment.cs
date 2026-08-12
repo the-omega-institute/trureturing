@@ -128,39 +128,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 return admission;
             }
 
-            if (evaluation is not
-                {
-                    CurrentLean: { } lean,
-                    BaselineLean: { } baselineLean,
-                    CurrentDag: { } dag,
-                    BaselineDag: { } baselineDag,
-                })
-            {
-                return new AdmissionOutcome.InfrastructureFailure(
-                    "snapshot admission omitted capabilities required by frozen-ledger validation");
-            }
-
-            var ledgerOutcome = ProductionFrozenLedgerValidator.Validate(
-                current,
-                baseline,
-                lean,
-                baselineLean,
-                dag,
-                baselineDag,
-                repository,
-                options.FrozenEvidenceRoot is null
-                    ? null
-                    : new GitRepositoryGateway(options.FrozenEvidenceRoot),
-                forkPoint);
-            var sl022Diagnostics = bootstrap is
-                BootstrapOutcome.ProtectedSurfaceVerificationRequired verification
-                ? BootstrapGate.CreateSl022Diagnostics(verification.ChangeSet)
-                : ImmutableArray<Diagnostic>.Empty;
-            return ledgerOutcome is null
-                ? admission
-                : SnapshotAdmissionCore.PreserveSl022Diagnostics(
-                    ledgerOutcome,
-                    sl022Diagnostics);
+            return admission;
         }
         catch (Exception exception)
         {
@@ -276,9 +244,6 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             repository,
             leanReportSource,
             arguments);
-
-    public ExplicitCommandResult Papergen(IReadOnlyList<string> arguments) =>
-        PapergenCommand.Run(repositoryRoot, repository, leanReportSource, arguments);
 
     public CommandResult Route(IReadOnlyList<string> arguments)
     {

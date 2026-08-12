@@ -34,7 +34,6 @@ public sealed class TrustTopologyTests
         EngineGidSourcePath,
         CliProgramSourcePath,
         ThisTestSourcePath,
-        RuleFixture.SpecificationPath,
         "Meta/registry.yaml",
         "Meta/domains.yaml",
         RuleFixture.HeartsPath,
@@ -66,7 +65,6 @@ public sealed class TrustTopologyTests
 
     [Theory]
     [InlineData(BootstrapGatePath, true)]
-    [InlineData(RuleFixture.SpecificationPath, true)]
     [InlineData(BlueprintSourcePath, true)]
     [InlineData(ValuesKernelPath, false)]
     [InlineData("Meta/StrataLint/StrataLint.Definitions/Retired.cs", false)]

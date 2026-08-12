@@ -101,6 +101,9 @@ domains:
   QuantumContext:
     stratum: S3
     definition: Finite-dimensional quantum contextuality witnesses and context-dependent quantities.
+  QuantumStates:
+    stratum: S3
+    definition: Finite-dimensional quantum states and their positive normalized expectation functionals.
   Recurrence:
     stratum: S1
     definition: Linear recurrence solution spaces, shift eigenstructure, and self-similar weight lifts.
