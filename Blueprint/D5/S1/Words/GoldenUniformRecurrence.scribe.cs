@@ -76,10 +76,4 @@ internal sealed class GoldenUniformRecurrenceDocument : IScribeDocumentDefinitio
             DocumentEdge.Dependency.Create(
                 GidRef.Create("D5/S1/Words/GoldenWord")),
         ]));
-
-    private static LeanDeclarationRef LeanDefinition(string value) =>
-        LeanDeclarationRef.Create(
-            value,
-            expectedKind: LeanDeclarationKind.Definition,
-            requireNoSorry: true);
 }

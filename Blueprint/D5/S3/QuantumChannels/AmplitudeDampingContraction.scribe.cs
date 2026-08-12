@@ -6,12 +6,6 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.QuantumChannels;
 
 internal sealed class AmplitudeDampingContractionDocument : IScribeDocumentDefinition
 {
-    private static LeanDeclarationRef LeanDefinition(string value) =>
-        LeanDeclarationRef.Create(
-            value,
-            expectedKind: LeanDeclarationKind.Definition,
-            requireNoSorry: true);
-
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "For amplitude damping on the Bloch axis, the SLD coherence contraction ratio is the constant one minus gamma, while the RLD ratio is bounded by one in the open Bloch interval and tends to one at the pure-state boundary.",
         H("Amplitude-Damping Coherence Contraction Endpoints"),

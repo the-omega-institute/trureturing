@@ -6,12 +6,6 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Factorization;
 
 internal sealed class PositiveRationalGroupDocument : IScribeDocumentDefinition
 {
-    private static LeanDeclarationRef LeanDefinition(string value) =>
-        LeanDeclarationRef.Create(
-            value,
-            expectedKind: LeanDeclarationKind.Definition,
-            requireNoSorry: true);
-
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Signed prime exponents give the additive presentation of positive rationals.",
         H("Positive Rationals from Signed Prime Exponents"),

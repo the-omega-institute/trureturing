@@ -6,18 +6,6 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Zeros;
 
 internal sealed class ScalingRegisterRigidityDocument : IScribeDocumentDefinition
 {
-    private static LeanDeclarationRef LeanDefinition(string value) =>
-        LeanDeclarationRef.Create(
-            value,
-            expectedKind: LeanDeclarationKind.Definition,
-            requireNoSorry: true);
-
-    private static LeanDeclarationRef LeanInductive(string value) =>
-        LeanDeclarationRef.Create(
-            value,
-            expectedKind: LeanDeclarationKind.Inductive,
-            requireNoSorry: true);
-
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Typed realization carries analytic uniqueness through the registered action to conditional total-code rigidity.",
         H("Scaling-Register Rigidity"),

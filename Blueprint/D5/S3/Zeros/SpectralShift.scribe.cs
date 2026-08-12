@@ -6,12 +6,6 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Zeros;
 
 internal sealed class SpectralShiftDocument : IScribeDocumentDefinition
 {
-    private static LeanDeclarationRef LeanDefinition(string value) =>
-        LeanDeclarationRef.Create(
-            value,
-            expectedKind: LeanDeclarationKind.Definition,
-            requireNoSorry: true);
-
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Multiplicative address pullbacks act pointwise by the labeled-zeta character on the O-6 spectral foundation.",
         H("Multiplicative Address Shifts and Labeled Zeta"),

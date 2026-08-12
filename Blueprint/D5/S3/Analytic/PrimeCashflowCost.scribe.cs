@@ -6,12 +6,6 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic;
 
 internal sealed class PrimeCashflowCostDocument : IScribeDocumentDefinition
 {
-    private static LeanDeclarationRef LeanDefinition(string value) =>
-        LeanDeclarationRef.Create(
-            value,
-            expectedKind: LeanDeclarationKind.Definition,
-            requireNoSorry: true);
-
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The cumulative logarithmic length of a signed prime-event stream strictly increases at every nonzero event.",
         H("Strict Growth of Prime Cashflow Cost"),
