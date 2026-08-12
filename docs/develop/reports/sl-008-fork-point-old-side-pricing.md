@@ -1,6 +1,6 @@
 # SL-008 fork-point 旧侧迁移离线定价
 
-> **REPORT-ONLY / 测量 worker 产物。** 本轮不修改 harness、CI、admission 或 SL-008。测量窗口固定锚定在 `55a4369ce4962d8c979d4418b62555c69c1ec09b`（#1358）及其之前 40 个 merge PR；报告修订前先执行 `git fetch origin dev`（`EXIT=0`）与 `git merge origin/dev`（`EXIT=0`，`ort`，无冲突），合并后的真实 `origin/dev` tip 为 `6846ea58566a5177e914500473fb87d494d5bc53`（#1363），合并提交后的本分支 `HEAD` 为 `88a8907894ade2df6635ca175655c66d36e6711e`。本轮没有把锚点后的提交混入固定窗口，也没有重做全部测量。
+> **REPORT-ONLY / 测量 worker 产物。** 本轮不修改 harness、CI、admission 或 SL-008。测量窗口固定锚定在 `55a4369ce4962d8c979d4418b62555c69c1ec09b`（#1358）及其之前 40 个 merge PR；报告修订前先执行 `git fetch origin dev`（`EXIT=0`）与 `git merge origin/dev`（`EXIT=0`，`ort`，无冲突），合并后的真实 `origin/dev` tip 为 `29887674a0952d5003cdd0689953f1416fbf6a60`，合并提交后的本分支 `HEAD` 为 `c94bab7c78e55612aefae376fe65e878610d85af`。本轮没有把锚点后的提交混入固定窗口，也没有重做全部测量。
 
 ## 0. 一句话结论
 
@@ -19,9 +19,12 @@ SL-008 当前逐字节要求候选保留 protected base 的冻结账本。冻结
 样本选择命令与原始样本数：
 
 ```bash
-git log --first-parent --format='%H%x09%P%x09%s' origin/dev \
+git log --first-parent --format='%H%x09%P%x09%s' \
+  55a4369ce4962d8c979d4418b62555c69c1ec09b \
   --grep='^Merge pull request' -n 40
-# 40 lines; #1358 through #1313
+# RERUN_EXIT=0; 40 lines
+# first: #1358 at 55a4369ce4962d8c979d4418b62555c69c1ec09b
+# last:  #1313 at 72193105ec9bf57671dce685fbeddfe19d542543
 ```
 
 这个离线窗口的选择口径是 **first-parent 上标题匹配 `^Merge pull request` 的 merge commit**，不是“所有 PR”。它会漏掉以 squash commit 或直接提交形式进入 `dev`、因而没有该标题/双亲形状的 PR，例如 #1337。故下文 `37/40` 只对这 40 个 merge-commit 样本成立，不能冒充全体 PR 的抽样比例。该漏样不改变本窗口的命中结论：窗口成员和 80 个已测地址均未变化，按同一既定样本重算仍是 `37/40 = 92.5%`；**未测**被漏 PR 的离线地址，所以不对窗口外命中率作外推。
@@ -100,7 +103,7 @@ cold_root=$(mktemp -d /tmp/oldside-cold-report-cache.XXXXXXXX)
 
 在线观测单位写死为**一个真实 PR**，所以 `N` 是窗口内不同 PR 的数量，一个 PR 恰好贡献一个 hit 或 miss。样本包括最终未 merge、workflow 其它 job 失败或后来关闭的 PR，不以 merge 成功为入样条件，避免成功者偏差。对每个 PR，只选择测量起点之后按 GitHub `run_id` 最小的 workflow run，并只取该 run 的 `run_attempt=1`；该记录同时钉死当时的 `head_sha`。同一 PR 的 rerun、re-run failed jobs、取消后重跑和后续新 SHA 触发的 run 都保留原始记录，但一律不进入 `N`、hit/miss 或生产墙钟聚合。首次 miss 后重跑即使命中也不能改写首次样本，因此放行结果不能被重跑预热 cache 操纵。每个入样 shadow job 发出结构化的 restore `hit=1,miss=0` 或 `hit=0,miss=1`；只有 restore 后 provenance/verify 成功才可记 hit，provenance/verify 失败不是 miss 插补而是直接停案。
 
-窗口起点写死为 shadow workflow 首次部署后的首个 workflow `run_id`。从该起点按 `run_id` 严格递增扫描，首次出现的前 40 个不同 PR 构成固定成员集；第 40 个不同 PR 首次出现时立即闭合成员集。闭合后才等待这 40 个 PR 各自被选中的 `run_attempt=1` shadow job 到达终态并计算结果；闭合后到达的任何新 PR、新 SHA 或 rerun 均记录但排除，不扩窗、不替换成员。任一固定成员的被选中 job 取消、基础设施失败、非恰好一个 hit/miss，或 provenance/verify 失败，直接停案，不用后到样本补位。
+窗口起点写死为 shadow workflow 首次部署后的首个 workflow `run_id`。从该起点按 `run_id` 严格递增扫描，首次出现的前 40 个不同 PR 构成固定成员集；第 40 个不同 PR 首次出现时立即闭合成员集。闭合后才等待这 40 个 PR 各自被选中的 `run_attempt=1` shadow job 到达终态并计算结果；闭合后到达的任何新 PR、新 SHA 或 rerun 均记录但排除，不扩窗、不替换成员。任一固定成员的被选中 job 取消、基础设施失败、非恰好一个 hit/miss，或 provenance/verify 失败，直接停案，不用后到样本补位。这里的停案只终止本轮测量，不永久禁止重新测量；原窗口内禁止替换或补位任何成员。若要重开，必须取得新授权、选择全新起点并从该起点建立全新的 40-PR 固定窗口；新窗口不得复用原窗口任何已知 hit/miss、墙钟或验证结果，每个成员都须按新窗口规则重新产生结果。
 
 选项写死为 **A（降格 + 另设闸门）**：独立 shadow job 是当前最低成本且不污染 admission 的测量拓扑，但正因为它没有通向 `baseline-admission` 的 `needs` 路径，它在结构上测不到未来串行链的完整端到端增量。机器判据如下；前四项须同时成立，其中第 4 项必须在进入整侧迁移之前由另行授权的串行链实验补测：
 
