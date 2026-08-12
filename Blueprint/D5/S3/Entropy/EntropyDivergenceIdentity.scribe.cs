@@ -6,18 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Entropy;
 
 internal sealed class EntropyDivergenceIdentityDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Entropy/EntropyDivergenceIdentity",
-            "Divergence from the uniform law equals the finite Shannon entropy deficit in nats."),
-        H("The Entropy-Divergence Consistency Identity"),
-        Blocks(
-            DocumentBlock.Describe.Theorem(
-                DescribeId.Create("uniform-divergence-is-the-entropy-deficit"),
-                H("Divergence from uniform is the entropy deficit"),
-                LeanTheorem(
-                    "D5/S3/Entropy/EntropyDivergenceIdentity.kl_divergence_uniform_eq"),
-                Disp(Seq(
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Divergence from the uniform law equals the finite Shannon entropy deficit in nats.", H("The Entropy-Divergence Consistency Identity"), Blocks(
+            Describe.Lean(DescribeId.Create("uniform-divergence-is-the-entropy-deficit"), DeclarationHandle.Create("D5/S3/Entropy/EntropyDivergenceIdentity.kl_divergence_uniform_eq"), H("Divergence from uniform is the entropy deficit"), StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Esc,
                     OpenBracket,
@@ -44,9 +34,7 @@ internal sealed class EntropyDivergenceIdentityDocument : IScribeDocumentDefinit
                     Operatorname, Grp(F.Id("card")), Open, Iota, Close,
                     Close, Minus,
                     F.Id("H"), Open, F.Id("p"), Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
-                Blocks(
+                    End, Grp(F.Id("gathered"))))), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text(
                         "The theorem identifies the divergence of p from the uniform law with " +
                         "the entropy deficit log |iota| - H(p). Both sides use the repository's " +
@@ -82,5 +70,5 @@ internal sealed class EntropyDivergenceIdentityDocument : IScribeDocumentDefinit
                         "step, but that step is not citable from outside the proof. This theorem is " +
                         "the first citable source of the fact and introduces no new definition. " +
                         "Frozen modules cannot gain declarations, so the relation is re-proved " +
-                        "here rather than lifted out of MaxEntropy.")))))));
+                        "here rather than lifted out of MaxEntropy."))), DescribeRole.Theorem))));
 }
