@@ -3,9 +3,9 @@
    mirror-B: none(waiver:paper-timing-ticket)
    mirror-E: none(waiver:S3-evidence-not-yet-born)
    anchors: []
-   digest: Validate the first parseable D5-P001 recipe; defer LaTeX assembly and freezing to M5. -/
+   digest: Retire the sample recipe with papergen; the paper itself remains unwritten at M5. -/
 
-/-- TASK D5-T0006 | 难度:4 | 依赖:欠(papergen-latex-assembly, signed-freeze) | 尝试:0
-    提示:The recipe validates now; assemble and freeze the signed paper only at M5.
-    尸检:none -/
+/-- TASK D5-T0006 | 难度:4 | 依赖:欠(papergen-latex-assembly, signed-freeze) | 尝试:1
+    提示:No recipe exists; the paper is still due at M5, its assembler must be built first, and the recipe should be written when there is something to assemble it with.
+    尸检:attempt-1 wrote Papers/recipes/D5-P001.yaml as the sole input of a papergen that only ever validated it, and both were retired together because the recipe's only consumer was that validator and FILEMAP admits no data pattern without a real verifier, so keeping the file would have meant keeping the machinery it existed to feed; the declared dependency on papergen-latex-assembly is unchanged and remains unmet. -/
 def d5p001Ticket : Unit := ()

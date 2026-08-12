@@ -277,9 +277,6 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             leanReportSource,
             arguments);
 
-    public ExplicitCommandResult Papergen(IReadOnlyList<string> arguments) =>
-        PapergenCommand.Run(repositoryRoot, repository, leanReportSource, arguments);
-
     public CommandResult Route(IReadOnlyList<string> arguments)
     {
         try
