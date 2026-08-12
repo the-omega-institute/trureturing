@@ -12,10 +12,8 @@ internal sealed class SpectralShiftDocument : IScribeDocumentDefinition
             expectedKind: LeanDeclarationKind.Definition,
             requireNoSorry: true);
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Zeros/SpectralShift",
-            "Multiplicative address pullbacks act pointwise by the labeled-zeta character on the O-6 spectral foundation."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Multiplicative address pullbacks act pointwise by the labeled-zeta character on the O-6 spectral foundation.",
         H("Multiplicative Address Shifts and Labeled Zeta"),
         Blocks(
             Describe.Lean(

@@ -6,10 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Zeros;
 
 internal sealed class CompletionLedgerDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Zeros/CompletionLedger",
-            "Address independence exposes the completed-zeta factors as explicit global entries."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Address independence exposes the completed-zeta factors as explicit global entries.",
         H("Completed Zeta Factors as Explicit Ledger Entries"),
         Blocks(
             Describe.Lean(

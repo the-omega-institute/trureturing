@@ -6,10 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.TotalVariation;
 
 internal sealed class DataProcessingDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/TotalVariation/DataProcessing",
-            "A nonnegative row-stochastic finite channel contracts total variation for arbitrary real input functions."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A nonnegative row-stochastic finite channel contracts total variation for arbitrary real input functions.",
         H("Data Processing for Finite Total Variation"),
         Blocks(
             Describe.Lean(

@@ -7,10 +7,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Solenoid;
 internal sealed class HiddenFiberCompactDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() =>
-        DocumentDefinition.Create(ScribeDocument.Create(
-            Header(
-                "D5/S1/Solenoid/HiddenFiberCompact",
-                "The hidden fiber is closed, compact, and sequentially compact coordinatewise."),
+        DocumentDefinition.Create(ScribeNode.Create(
+            "The hidden fiber is closed, compact, and sequentially compact coordinatewise.",
             H("Hidden Fiber Compactness"),
             Blocks(
                 Describe.Lean(

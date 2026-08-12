@@ -6,10 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Weil;
 
 internal sealed class LabeledZetaDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Weil/LabeledZeta",
-            "A labeled Dirichlet vector remains nonzero at every spectral parameter."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A labeled Dirichlet vector remains nonzero at every spectral parameter.",
         H("Labeled Zeta Vectors"),
         Blocks(
             Describe.Lean(

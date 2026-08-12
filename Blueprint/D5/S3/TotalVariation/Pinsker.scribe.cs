@@ -6,10 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.TotalVariation;
 
 internal sealed class PinskerDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/TotalVariation/Pinsker",
-            "Finite total variation is pinned by an equal-mass identity and bounded by relative entropy in nats."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Finite total variation is pinned by an equal-mass identity and bounded by relative entropy in nats.",
         H("Finite Total Variation and Pinsker's Inequality"),
         Blocks(
             DocumentBlock.Describe.Definition(

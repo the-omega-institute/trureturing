@@ -6,11 +6,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Words;
 
 internal sealed class GoldenSubstFixedDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S1/Words/GoldenSubstFixed",
-            "Locate consecutive Fibonacci-substitution blocks and identify each block "
-            + "pointwise with the infinite golden word."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Locate consecutive Fibonacci-substitution blocks and identify each block "
+            + "pointwise with the infinite golden word.",
         H("Pointwise Substitution Fixed Point of the Golden Word"),
         Blocks(
             Describe.Lean(

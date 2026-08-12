@@ -12,10 +12,8 @@ internal sealed class DecoherenceFreezeDocument : IScribeDocumentDefinition
             expectedKind: LeanDeclarationKind.Definition,
             requireNoSorry: true);
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/QuantumChannels/DecoherenceFreeze",
-            "The decoherence-freeze deposit is positive exactly above its critical inverse temperature."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The decoherence-freeze deposit is positive exactly above its critical inverse temperature.",
         H("Decoherence-Freeze Critical Temperature Criterion"),
         Blocks(
             Describe.Lean(

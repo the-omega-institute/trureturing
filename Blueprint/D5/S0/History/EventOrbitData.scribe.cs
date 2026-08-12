@@ -4,10 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.History;
 
 internal sealed class EventOrbitDataDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S0/History/EventOrbitData",
-            "An event sequence uniquely determines its state orbit, while the history component records the same sequence one event at a time."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "An event sequence uniquely determines its state orbit, while the history component records the same sequence one event at a time.",
         H("Event Orbit Data"),
         Blocks(
             Paragraph(

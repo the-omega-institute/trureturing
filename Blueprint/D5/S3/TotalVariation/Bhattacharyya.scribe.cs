@@ -6,10 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.TotalVariation;
 
 internal sealed class BhattacharyyaDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/TotalVariation/Bhattacharyya",
-            "Finite Bhattacharyya affinity links total variation and relative entropy through the complementary Bretagnolle--Huber bound."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Finite Bhattacharyya affinity links total variation and relative entropy through the complementary Bretagnolle--Huber bound.",
         H("Bhattacharyya Affinity and the Bretagnolle--Huber Bound"),
         Blocks(
             Describe.Lean(
