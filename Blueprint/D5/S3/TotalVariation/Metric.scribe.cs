@@ -6,10 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.TotalVariation;
 
 internal sealed class MetricDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/TotalVariation/Metric",
-            "Finite total variation satisfies the metric laws, the probability unit bound, and an attained event-gap characterization."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Finite total variation satisfies the metric laws, the probability unit bound, and an attained event-gap characterization.",
         H("Metric Laws and Variational Characterization for Finite Total Variation"),
         Blocks(
             Describe.Lean(

@@ -9,10 +9,8 @@ internal sealed class GoldenNamesDocument : IScribeDocumentDefinition
         var q = Id("Q");
         var naturals = Id("N");
 
-        return DocumentDefinition.Create(ScribeDocument.Create(
-            Header(
-                "D5/S0/Tower/GoldenNames",
-                "Bounded Zeckendorf strings form injectively valued Fibonacci-sized layers."),
+        return DocumentDefinition.Create(ScribeNode.Create(
+            "Bounded Zeckendorf strings form injectively valued Fibonacci-sized layers.",
             H("Golden Names"),
             Blocks(
                 Paragraph(Text(

@@ -6,10 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.TotalVariation;
 
 internal sealed class ProductSubadditiveDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/TotalVariation/ProductSubadditive",
-            "Total variation is subadditive over finite products under absolute-mass bounds in exactly the two hybrid scaling positions, and the bound is strict on a concrete Bool product."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Total variation is subadditive over finite products under absolute-mass bounds in exactly the two hybrid scaling positions, and the bound is strict on a concrete Bool product.",
         H("Product Subadditivity of Total Variation"),
         Blocks(
             Describe.Lean(

@@ -5,10 +5,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Dynamics;
 internal sealed class GoldenFractionalPartDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() =>
-        DocumentDefinition.Create(ScribeDocument.Create(
-            Header(
-                "D5/S1/Dynamics/GoldenFractionalPart",
-                "Natural golden-rotation indices have canonical fractional representatives."),
+        DocumentDefinition.Create(ScribeNode.Create(
+            "Natural golden-rotation indices have canonical fractional representatives.",
             H("Golden Fractional Part"),
             Blocks(
                 Paragraph(
