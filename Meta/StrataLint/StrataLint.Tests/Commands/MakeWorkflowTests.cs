@@ -45,13 +45,10 @@ namespace StrataLint.Tests;
         "lean",
         "lean-report",
         "build",
-        "c0-verify",
-        "c0-reconcile-trust-root",
         "clean-lanes",
         "emit",
         "ingest",
         "echo-residual-summary",
-        "record-golden",
         "selftest",
         "scratch-sweep",
         "gate",
@@ -338,7 +335,7 @@ namespace StrataLint.Tests;
         // admission 侧此前只有 save 一处,故省了 Distinct;现在它也 restore 同一个 key
         // (关键路径复用报告),两侧遂对称。保留的判据仍是「distinct key 恰好一个且两侧相等」。
         var admissionJob = admission.Split("  lean-inspect:\n", StringSplitOptions.None)[1]
-            .Split("  old-side-report-shadow:\n", StringSplitOptions.None)[0];
+            .Split("  baseline-admission:\n", StringSplitOptions.None)[0];
         var admissionCacheKey = Assert.Single(
             admissionJob.Split('\n')
                 .Where(static line => line.TrimStart().StartsWith(
@@ -366,7 +363,7 @@ namespace StrataLint.Tests;
         Assert.True(producerEndIndex > producerIndex, "the cache-miss producer must be a bounded step");
         Assert.True(verifyIndex > producerIndex, "both restored and fresh reports must be verified");
         Assert.Contains(
-            "timeout-minutes: 15",
+            "timeout-minutes: 30",
             workflow[producerIndex..producerEndIndex],
             StringComparison.Ordinal);
         Assert.Single(Regex.Matches(workflow, "id: lean-report-cache"));
@@ -384,7 +381,7 @@ namespace StrataLint.Tests;
         Assert.Contains(LeanReportInputScriptPath, workflow, StringComparison.Ordinal);
         Assert.Contains("\" verify \\", workflow, StringComparison.Ordinal);
         Assert.Contains(".lake/build/stratalint/raw-lean-report.json", workflow, StringComparison.Ordinal);
-        Assert.Contains("timeout-minutes: 30", workflow, StringComparison.Ordinal);
+        Assert.Contains("timeout-minutes: 36", workflow, StringComparison.Ordinal);
         Assert.Contains("actions: read", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("          make lean\n", workflow, StringComparison.Ordinal);
         Assert.Contains("          make lean-report\n", workflow, StringComparison.Ordinal);

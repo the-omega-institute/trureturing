@@ -29,7 +29,7 @@ public static class ValuesEvaluator
         return definition.Computation switch
         {
             ValueComputation.ExactQuadratic exact => EvaluateExact(definition, exact),
-            ValueComputation.Cphi cphi => EvaluateCphi(cphi.Spec),
+            ValueComputation.Cphi cphi => EvaluateCphi(definition, cphi.Spec),
             null => throw new InvalidOperationException(
                 $"Registered-open value {definition.Id} has no executable computation."),
             _ => throw new InvalidOperationException("Unknown values computation type."),
@@ -68,16 +68,24 @@ public static class ValuesEvaluator
                 ["decimal_lower"] = RoundDecimal(lower, EmittedDecimalPlaces + 1),
                 ["decimal_upper"] = RoundDecimal(upper, EmittedDecimalPlaces + 1),
             });
+        var exactValue = definition.ExactValue
+            ?? throw new InvalidOperationException($"Exact value {definition.Id} has no canonical formula.");
+        if (!string.Equals(definition.ReferenceValue, exactValue, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException(
+                $"Exact value {definition.Id} publishes reference '{definition.ReferenceValue}' "
+                + $"but its canonical formula is '{exactValue}'.");
+        }
+
         return new ValueEvaluation(
-            definition.ExactValue
-                ?? throw new InvalidOperationException($"Exact value {definition.Id} has no canonical formula."),
+            exactValue,
             decimalValue,
             "0",
             "reference-exact",
             [new KernelReceipt("exact-quadratic", parameters, results)]);
     }
 
-    private static ValueEvaluation EvaluateCphi(CphiKernelSpec spec)
+    private static ValueEvaluation EvaluateCphi(ValueDefinition definition, CphiKernelSpec spec)
     {
         var result = CphiKernel.Compute(spec);
         if (result.WindowMeans.Length < 4)
@@ -114,7 +122,7 @@ public static class ValuesEvaluator
             value,
             value,
             error,
-            "reference-mismatch-open",
+            CompareToReference(definition, value, error),
             [
                 new KernelReceipt("exact-fractional-parts", fractionalParameters, Results()),
                 new KernelReceipt(
@@ -123,6 +131,42 @@ public static class ValuesEvaluator
                     Results(("summed_terms", result.TermCount.ToString(CultureInfo.InvariantCulture)))),
                 new KernelReceipt("full-period-window-average", windowParameters, windowResults),
             ]);
+    }
+
+    private static string CompareToReference(ValueDefinition definition, string value, string error)
+    {
+        if (definition.ReferenceValue is null || definition.ReferenceError is null)
+        {
+            throw new InvalidOperationException(
+                $"Computed value {definition.Id} has no reference to compare against.");
+        }
+
+        if (!string.Equals(definition.Error, error, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException(
+                $"Computed value {definition.Id} declares error '{definition.Error}' "
+                + $"but its kernel produced '{error}'.");
+        }
+
+        var computed = ParseInvariant(definition.Id, "value", value);
+        var reference = ParseInvariant(definition.Id, "reference_value", definition.ReferenceValue);
+        var tolerance = ParseInvariant(definition.Id, "error", error)
+            + ParseInvariant(definition.Id, "reference_error", definition.ReferenceError);
+        return Math.Abs(computed - reference) <= tolerance
+            ? "reference-consistent"
+            : "reference-mismatch-open";
+    }
+
+    private static double ParseInvariant(string id, string field, string text)
+    {
+        if (!double.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, out var parsed)
+            || !double.IsFinite(parsed))
+        {
+            throw new InvalidOperationException(
+                $"Value {id} has a non-numeric {field} '{text}'.");
+        }
+
+        return parsed;
     }
 
     private static ImmutableDictionary<string, string> Parameters(
