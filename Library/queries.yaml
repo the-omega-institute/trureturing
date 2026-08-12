@@ -1,7 +1,2 @@
 schema_version: 1
-queries:
-  - id: D5-Q0004
-    query: diffraction avoidance theorem package and reproducible zero scan for D5-P001
-    target_gid: D5/P/D5-P001
-    source_path: docs/develop/spec/golden-ledger-repo-spec.md
-    pending_case: D5-T0006
+queries: []

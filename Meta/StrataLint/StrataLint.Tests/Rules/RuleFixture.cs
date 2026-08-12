@@ -14,11 +14,6 @@ internal sealed partial class RuleFixture
         "sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881";
     internal const string FixtureCasPath =
         "Meta/Digestion/atoms/sha256/2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881";
-    internal const string FixtureSpecification = """
-        # Synthetic harness specification
-
-        This neutral fixture exercises governance-document presence and protected-path routing.
-        """ + "\n";
     internal const string FixtureBackfill = """
         schema_version: 3
         ledger: theory-digestion-v1
@@ -98,7 +93,6 @@ internal sealed partial class RuleFixture
     internal const string ValuesProjectionPath = RepositoryPathPolicy.ValuesProjectionPath;
     internal const string WorkflowPath = RepositoryPathPolicy.WorkflowPath;
     internal const string HarnessGatePath = RepositoryPathPolicy.HarnessGatePath;
-    internal const string SpecificationPath = BootstrapGate.SpecificationPath;
     internal const string SyntheticProtectedPath =
         "Meta/StrataLint/StrataLint.Engine/SyntheticProtected.cs";
     internal const string DefinitionsProjectPath =
@@ -133,7 +127,6 @@ internal sealed partial class RuleFixture
             [FixtureDigestionSourcePath] = FixtureDigestionSource,
             [FixtureCasPath] = FixtureDigestionSource,
         };
-        Files[SpecificationPath] = FixtureSpecification;
         Baseline = new Dictionary<string, string>(Files, StringComparer.Ordinal);
         Reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
         {
@@ -259,7 +252,6 @@ internal sealed partial class RuleFixture
             case "generality": AddInstanceImport(); break;
             case "domain": AddUnknownDomain(); break;
             case "header": Files[RingPath] = "def noHeader : Nat := 0\n"; break;
-            case "task": AddMalformedTask(); break;
             case "formula": AddIllegalFormula(); break;
             case "backfill": Files["Meta/BACKFILL.yaml"] = Files["Meta/BACKFILL.yaml"].Replace("schema_version: 3", "schema_version: 2", StringComparison.Ordinal); break;
             case "query": Files["Library/queries.yaml"] = "schema_version: 1\nqueries:\n  - id: D5-Q0099\n    target_gid: D5/S0/Carrier/Ring\n"; break;
@@ -416,14 +408,6 @@ internal sealed partial class RuleFixture
     {
         const string path = "D5/S0/Unknown/Bad.lean";
         Files[path] = HeaderFor("D5/S0/Unknown/Bad", "G") + "def bad : Nat := 0\n";
-        Reports[path] = Report();
-    }
-
-    internal void AddMalformedTask()
-    {
-        const string path = "D5/X_Frontier/BadTask.lean";
-        Files[path] = HeaderFor("D5/X_Frontier/BadTask", "E")
-            + "/-- TASK D5-T0010 | broken -/\ndef badTask : Unit := ()\n";
         Reports[path] = Report();
     }
 

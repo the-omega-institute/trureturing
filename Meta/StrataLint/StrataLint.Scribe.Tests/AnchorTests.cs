@@ -9,6 +9,7 @@ public sealed class AnchorTests
         { "lit/sos1957threegap", typeof(LiteratureAnchor), AnchorScheme.Literature },
         { "mathlib/module/Mathlib.Data.Nat.Fib.Zeckendorf", typeof(MathlibAnchor), AnchorScheme.Mathlib },
         { "mathlib/decl/Nat.zeckendorf", typeof(MathlibAnchor), AnchorScheme.Mathlib },
+        { "lake/module/Mathlib.Data.Nat.Fib.Zeckendorf", typeof(LakeModuleAnchor), AnchorScheme.Lake },
     };
 
     [Theory]
@@ -33,8 +34,16 @@ public sealed class AnchorTests
         "",
         "lit/Sos1957threegap",
         "lit/sos-1957-threegap",
+        "lake/module",
+        "lake/module/Mathlib.Data.Nat.Fib.Zeckendorf/extra",
+        "lake/decl/Nat.zeckendorf",
+        "lake/module/Mathlib..Zeckendorf",
         "mathlib/symbol/Nat.zeckendorf",
         "mathlib/module/Mathlib..Zeckendorf",
+        "gict/module/Gict.Core",
+        "pzg/module/Pzg.Core",
+        "spec/module/Spec.Core",
+        "batteries/module/Batteries.Data.Array.Lemmas",
         "unknown/value",
     };
 
@@ -74,6 +83,19 @@ public sealed class AnchorTests
     }
 
     [Fact]
+    public void ExternalFamilyUsesTheCanonicalSchemeSet()
+    {
+        Assert.True(Anchor.IsExternalFamily("lit/sos1957threegap"));
+        Assert.True(Anchor.IsExternalFamily(
+            string.Concat("mathlib", "/module/Mathlib.Data.Nat.Fib.Basic")));
+        Assert.True(Anchor.IsExternalFamily("lake/module/Mathlib.Data.Nat.Fib.Zeckendorf"));
+        Assert.False(Anchor.IsExternalFamily("gict/module/Gict.Core"));
+        Assert.False(Anchor.IsExternalFamily("pzg/module/Pzg.Core"));
+        Assert.False(Anchor.IsExternalFamily("spec/module/Spec.Core"));
+        Assert.False(Anchor.IsExternalFamily("batteries/module/Batteries.Data.Array.Lemmas"));
+    }
+
+    [Fact]
     public void ParsedAnchorsUseOrdinalValueEquality()
     {
         var first = Anchor.ParseCanonical("lit/sos1957threegap");
@@ -98,6 +120,7 @@ public sealed class AnchorTests
         {
             typeof(LiteratureAnchor),
             typeof(MathlibAnchor),
+            typeof(LakeModuleAnchor),
         };
 
         Assert.All(subtypes, static type => Assert.Empty(type.GetConstructors()));

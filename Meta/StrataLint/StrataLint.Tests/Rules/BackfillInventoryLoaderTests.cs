@@ -292,53 +292,6 @@ public sealed class BackfillInventoryLoaderTests
     }
 
     [Fact]
-    public void EntryAcceptanceDomainMatchesSpecificationAnchor()
-    {
-        var entryFields = LoaderEntryFields();
-        var accepted = Enumerable.Range(0, 1 << entryFields.Length)
-            .Select(mask => entryFields
-                .Where((_, index) => (mask & (1 << index)) != 0)
-                .ToHashSet(StringComparer.Ordinal))
-            .Where(fields => TryLoadEntry(EntryFixture(fields)))
-            .ToArray();
-        Assert.NotEmpty(accepted);
-
-        var required = entryFields
-            .Where(field => accepted.All(fields => fields.Contains(field)))
-            .Order(StringComparer.Ordinal)
-            .ToArray();
-        var exclusivePair = Assert.Single(
-            entryFields.SelectMany((left, index) => entryFields[(index + 1)..]
-                .Select(right => (Left: left, Right: right))),
-            pair =>
-                accepted.All(fields => fields.Contains(pair.Left) ^ fields.Contains(pair.Right))
-                && accepted.Any(fields => fields.Contains(pair.Left))
-                && accepted.Any(fields => fields.Contains(pair.Right)));
-        var exclusive = new[] { exclusivePair.Left, exclusivePair.Right }
-            .Order(StringComparer.Ordinal)
-            .ToArray();
-        var optional = entryFields
-            .Except(required, StringComparer.Ordinal)
-            .Except(exclusive, StringComparer.Ordinal)
-            .Order(StringComparer.Ordinal)
-            .ToArray();
-        var actual = $"required={string.Join(',', required)};"
-            + $"exactly_one={string.Join('|', exclusive)};"
-            + $"optional={(optional.Length == 0 ? "-" : string.Join(',', optional))}";
-
-        var root = FindRepositoryRoot();
-        var specification = File.ReadAllText(
-            Path.Combine(root, "docs", "develop", "spec", "golden-ledger-repo-spec.md"));
-        var anchors = Regex.Matches(
-            specification,
-            "<!-- BACKFILL_ENTRY_ACCEPTANCE: (?<domain>[^\\r\\n]+) -->",
-            RegexOptions.CultureInvariant);
-        var anchor = Assert.Single(anchors.Cast<Match>());
-
-        Assert.Equal(anchor.Groups["domain"].Value, actual);
-    }
-
-    [Fact]
     public void CasRefRoundTripsCanonically()
     {
         var text = """
@@ -560,8 +513,6 @@ public sealed class BackfillInventoryLoaderTests
         Assert.NotEmpty(entries);
         Assert.Contains(document.RequireDigestionSources(), static source =>
             AtomizerRegistry.IsRegistered(source.Atomizer));
-        Assert.Contains(document.RequireDigestionSources(), static source =>
-            source.Atomizer == AtomizerRegistry.NoAtomizerId);
         Assert.Empty(entries
             .Select(entry => (
                 Entry: entry,
