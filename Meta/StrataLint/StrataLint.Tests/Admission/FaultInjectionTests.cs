@@ -45,23 +45,31 @@ namespace StrataLint.Tests;
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
             RawRepositorySnapshot.Create(fixture.Files.Select(pair => RawRepositoryEntry.FromText(pair.Key, pair.Value))))).Snapshot;
         var missing = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>());
-        var malformed = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>
-        {
-            [RuleFixture.RingPath] = new(
-                ImmutableArray<string>.Empty,
-                ImmutableArray<LeanDeclaration>.Empty,
-                "malformed trusted report"),
-        });
-        var unknownAxiom = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>
-        {
-            [RuleFixture.RingPath] = new(
-                ImmutableArray<string>.Empty,
-                ImmutableArray.Create(new LeanDeclaration(
-                    "invented",
-                    "axiom",
-                    "False",
-                    ImmutableArray.Create("invented")))),
-        });
+
+        // Both cases below must reach the malformed/unknown-axiom branches, so every other managed
+        // Lean file still needs a well-formed entry — a report missing any of them short-circuits
+        // to InfrastructureFailure first. Deriving the base from fixture.Reports keeps that true as
+        // the fixture grows; naming one path here is what silently disabled this assertion when
+        // ValuesBinding.lean was added.
+        var malformed = LeanAxiomReport.Create(
+            new Dictionary<string, LeanFileReport>(fixture.Reports, StringComparer.Ordinal)
+            {
+                [RuleFixture.RingPath] = new(
+                    ImmutableArray<string>.Empty,
+                    ImmutableArray<LeanDeclaration>.Empty,
+                    "malformed trusted report"),
+            });
+        var unknownAxiom = LeanAxiomReport.Create(
+            new Dictionary<string, LeanFileReport>(fixture.Reports, StringComparer.Ordinal)
+            {
+                [RuleFixture.RingPath] = new(
+                    ImmutableArray<string>.Empty,
+                    ImmutableArray.Create(new LeanDeclaration(
+                        "invented",
+                        "axiom",
+                        "False",
+                        ImmutableArray.Create("invented")))),
+            });
 
         Assert.IsType<LeanValidationOutcome.InfrastructureFailure>(LeanClosureValidator.Validate(snapshot, missing));
         Assert.IsType<LeanValidationOutcome.Accepted>(LeanClosureValidator.Validate(snapshot, malformed));
