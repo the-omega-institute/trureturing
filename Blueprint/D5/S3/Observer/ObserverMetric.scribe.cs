@@ -6,102 +6,100 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Observer;
 
 internal sealed class ObserverMetricDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Observer/ObserverMetric",
-            "Permutation update defects characterize commutation, cyclic invariants, and a finite perturbation seminorm."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Permutation update defects characterize commutation, cyclic invariants, and a finite perturbation seminorm.",
         H("Observer Update Defects and Their Perturbation Seminorm"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("read-update-commutation-is-equivalent-to-zero-defect"),
+                DeclarationHandle.Create("D5/S3/Observer/ObserverMetric.commute_iff_updateDefect_eq_zero"),
                 H("Read-update commutation is equivalent to zero defect"),
-                LeanTheorem(
-                    "D5/S3/Observer/ObserverMetric.commute_iff_updateDefect_eq_zero"),
-                CommuteFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(CommuteFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text(
-                        "Let a register on I be a complex-valued amplitude function. The read "
-                        + "R_f multiplies amplitudes pointwise by f, while the permutation update "
-                        + "U_tau acts by pullback. The update defect is "
-                        + "delta_tau f(i) = f(tau^{-1} i) - f(i). The established read-update "
-                        + "commutator formula identifies this defect as the coefficient of the "
-                        + "represented commutator. If every register commutes, applying the "
-                        + "identity to the constant-one register extracts each coefficient. "
-                        + "Conversely, zero defect makes every coefficient times every predecessor "
-                        + "amplitude vanish. This finite-register theorem asserts no universal "
-                        + "C*-algebra, operator norm, Connes metric, or Rieffel structure.")))
+                                    Paragraph(Text(
+                                        "Let a register on I be a complex-valued amplitude function. The read "
+                                        + "R_f multiplies amplitudes pointwise by f, while the permutation update "
+                                        + "U_tau acts by pullback. The update defect is "
+                                        + "delta_tau f(i) = f(tau^{-1} i) - f(i). The established read-update "
+                                        + "commutator formula identifies this defect as the coefficient of the "
+                                        + "represented commutator. If every register commutes, applying the "
+                                        + "identity to the constant-one register extracts each coefficient. "
+                                        + "Conversely, zero defect makes every coefficient times every predecessor "
+                                        + "amplitude vanish. This finite-register theorem asserts no universal "
+                                        + "C*-algebra, operator norm, Connes metric, or Rieffel structure."))),
+                DescribeRole.Theorem
             ),
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("zero-defect-is-equivalent-to-update-invariance"),
+                DeclarationHandle.Create("D5/S3/Observer/ObserverMetric.updateDefect_eq_zero_iff_invariant"),
                 H("Zero defect is equivalent to update invariance"),
-                LeanTheorem(
-                    "D5/S3/Observer/ObserverMetric.updateDefect_eq_zero_iff_invariant"),
-                InvarianceFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(InvarianceFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "The defect uses the inverse permutation because updates act by pullback, "
-                    + "whereas invariance is stated in the forward coordinate. Evaluating a zero "
-                    + "defect at tau(i) gives f(i) = f(tau(i)); in the reverse direction, applying "
-                    + "forward invariance at tau^{-1}(i) cancels every defect coordinate. Thus the "
-                    + "kernel is characterized without a finiteness or inhabitance assumption.")))
+                                    "The defect uses the inverse permutation because updates act by pullback, "
+                                    + "whereas invariance is stated in the forward coordinate. Evaluating a zero "
+                                    + "defect at tau(i) gives f(i) = f(tau(i)); in the reverse direction, applying "
+                                    + "forward invariance at tau^{-1}(i) cancels every defect coordinate. Thus the "
+                                    + "kernel is characterized without a finiteness or inhabitance assumption."))),
+                DescribeRole.Theorem
             ),
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("cyclic-window-invariants-are-exactly-constant"),
+                DeclarationHandle.Create("D5/S3/Observer/ObserverMetric.invariant_iff_const_on_cyclic_window"),
                 H("Cyclic-window invariants are exactly constant"),
-                LeanTheorem(
-                    "D5/S3/Observer/ObserverMetric.invariant_iff_const_on_cyclic_window"),
-                CyclicWindowFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(CyclicWindowFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "On the nonempty cyclic window ZMod M, the update is addition by one. Zero "
-                    + "defect first becomes invariance under this successor. Every residue has a "
-                    + "natural-number representative, so induction along successive additions "
-                    + "shows that its value equals f(0). Constant functions are invariant "
-                    + "immediately. This is the precise finite-window form of the statement that "
-                    + "the common observables are constants.")))
+                                    "On the nonempty cyclic window ZMod M, the update is addition by one. Zero "
+                                    + "defect first becomes invariance under this successor. Every residue has a "
+                                    + "natural-number representative, so induction along successive additions "
+                                    + "shows that its value equals f(0). Constant functions are invariant "
+                                    + "immediately. This is the precise finite-window form of the statement that "
+                                    + "the common observables are constants."))),
+                DescribeRole.Theorem
             ),
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("the-perturbation-seminorm-vanishes-exactly-on-invariants"),
+                DeclarationHandle.Create("D5/S3/Observer/ObserverMetric.perturbationSeminorm_eq_zero_iff"),
                 H("The perturbation seminorm vanishes exactly on invariants"),
-                LeanTheorem(
-                    "D5/S3/Observer/ObserverMetric.perturbationSeminorm_eq_zero_iff"),
-                SeminormKernelFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(SeminormKernelFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For a finite nonempty index type, define L_tau(f) as the maximum of "
-                    + "|delta_tau f(i)| over all indices. If this maximum is zero, every "
-                    + "nonnegative coordinate norm is bounded above by zero and hence every "
-                    + "defect coordinate vanishes. The converse is immediate from the same finite "
-                    + "maximum. Combining this fact with the forward-invariance characterization "
-                    + "identifies the seminorm kernel exactly.")))
+                                    "For a finite nonempty index type, define L_tau(f) as the maximum of "
+                                    + "|delta_tau f(i)| over all indices. If this maximum is zero, every "
+                                    + "nonnegative coordinate norm is bounded above by zero and hence every "
+                                    + "defect coordinate vanishes. The converse is immediate from the same finite "
+                                    + "maximum. Combining this fact with the forward-invariance characterization "
+                                    + "identifies the seminorm kernel exactly."))),
+                DescribeRole.Theorem
             ),
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("the-perturbation-seminorm-is-subadditive"),
+                DeclarationHandle.Create("D5/S3/Observer/ObserverMetric.perturbationSeminorm_add_le"),
                 H("The perturbation seminorm is subadditive"),
-                LeanTheorem(
-                    "D5/S3/Observer/ObserverMetric.perturbationSeminorm_add_le"),
-                SeminormAddFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(SeminormAddFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "The update defect is additive in the observable. At each index, the complex "
-                    + "triangle inequality bounds the defect of f + g by the sum of the two "
-                    + "defect norms. Each summand is then bounded by its own finite maximum, "
-                    + "yielding subadditivity of L_tau.")))
+                                    "The update defect is additive in the observable. At each index, the complex "
+                                    + "triangle inequality bounds the defect of f + g by the sum of the two "
+                                    + "defect norms. Each summand is then bounded by its own finite maximum, "
+                                    + "yielding subadditivity of L_tau."))),
+                DescribeRole.Theorem
             ),
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("the-perturbation-seminorm-is-absolutely-homogeneous"),
+                DeclarationHandle.Create("D5/S3/Observer/ObserverMetric.perturbationSeminorm_smul"),
                 H("The perturbation seminorm is absolutely homogeneous"),
-                LeanTheorem(
-                    "D5/S3/Observer/ObserverMetric.perturbationSeminorm_smul"),
-                SeminormSmulFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(SeminormSmulFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Scalar multiplication factors c out of every defect coordinate, and the "
-                    + "complex norm converts that factor to |c|. Since |c| is nonnegative, it "
-                    + "also factors through the finite maximum. Together with subadditivity and "
-                    + "the kernel theorem, this establishes the claimed perturbation seminorm "
-                    + "laws on finite nonempty windows.")))
+                                    "Scalar multiplication factors c out of every defect coordinate, and the "
+                                    + "complex norm converts that factor to |c|. Since |c| is nonnegative, it "
+                                    + "also factors through the finite maximum. Together with subadditivity and "
+                                    + "the kernel theorem, this establishes the claimed perturbation seminorm "
+                                    + "laws on finite nonempty windows."))),
+                DescribeRole.Theorem
             ))));
 
     private static Formula CommuteFormula() => Disp(Seq(
