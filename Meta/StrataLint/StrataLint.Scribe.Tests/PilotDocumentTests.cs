@@ -130,7 +130,6 @@ public sealed class DocumentDiscoveryTests
         // 它不等价于 admission 的完整验证。准入侧两处保持不动,
         // 是否该删须另行按四项合取裁决(裁决时不得再以 FILEMAP 自声明字段为据)。
         Assert.NotEmpty(DocumentDefinitions.All);
-        var statementChanges = MigratedStatementChanges();
         foreach (var definition in DocumentDefinitions.All)
         {
             var catalog = DeclarationCatalog.Create(report);
@@ -140,67 +139,9 @@ public sealed class DocumentDiscoveryTests
                 RepositoryRelativePath.Create(definition.RelativePath.Value));
 
             Assert.Equal(first.ToArray(), second.ToArray());
-            if (statementChanges.TryGetValue(definition.RelativePath.Value, out var change))
-            {
-                var oldLines = System.Text.Encoding.UTF8.GetString(committed).Split('\n');
-                var newLines = System.Text.Encoding.UTF8.GetString(first.ToArray()).Split('\n');
-                Assert.Equal(change.Old, oldLines.Intersect(change.Old, StringComparer.Ordinal));
-                Assert.Equal(change.New, newLines.Intersect(change.New, StringComparer.Ordinal));
-                Assert.Equal(
-                    oldLines.Except(change.Old, StringComparer.Ordinal),
-                    newLines.Except(change.New, StringComparer.Ordinal));
-                continue;
-            }
-
             Assert.Equal(committed, first.ToArray());
         }
     }
-
-    private static IReadOnlyDictionary<string, (string[] Old, string[] New)> MigratedStatementChanges() =>
-        new Dictionary<string, (string[], string[])>(StringComparer.Ordinal)
-        {
-            ["Blueprint/D5/S3/QuantumChannels/AmplitudeDampingContraction.md"] = (
-                [
-                    "$$u'=(1-\\Gamma)u+\\Gamma$$",
-                    "$$\\phi_{SLD}(u)=1$$",
-                    "$$\\phi_{KM}(u)=\\operatorname{artanh}(u)/u, u\\neq0$$",
-                    "$$\\phi_{RLD}(u)=\\frac{1}{1-u^2}$$",
-                    "$$eta_{\\phi}(\\Gamma,u)=(1-\\Gamma)\\frac{\\phi(u')}{\\phi(u)}$$",
-                    "$$\\operatorname{Endpoint}(r,b)\\Leftrightarrow(\\forall u\\in(-1,1), r(u) \\le b) \\land \\lim_{u\\to1^-}r(u)=b$$",
-                ],
-                [
-                    "Lean statement: `D5/S3/QuantumChannels/AmplitudeDampingContraction.dampedAxis`",
-                    "Lean statement: `D5/S3/QuantumChannels/AmplitudeDampingContraction.sldRadialProfile`",
-                    "Lean statement: `D5/S3/QuantumChannels/AmplitudeDampingContraction.kmRadialProfile`",
-                    "Lean statement: `D5/S3/QuantumChannels/AmplitudeDampingContraction.rldRadialProfile`",
-                    "Lean statement: `D5/S3/QuantumChannels/AmplitudeDampingContraction.coherenceRatio`",
-                    "Lean statement: `D5/S3/QuantumChannels/AmplitudeDampingContraction.HasPureBoundaryEndpoint`",
-                ]),
-            ["Blueprint/D5/S3/QuantumChannels/DecoherenceFreeze.md"] = (
-                [
-                    "$$\\operatorname{freezeDeposit}(\\beta,\\Delta S,\\Delta E_{pass})=\\Delta E_{pass}-\\frac{\\Delta S}{\\beta}$$",
-                    "$$\\operatorname{criticalInverseTemperature}(\\Delta S,\\Delta E_{pass})=\\frac{\\Delta S}{\\Delta E_{pass}}$$",
-                ],
-                [
-                    "Lean statement: `D5/S3/QuantumChannels/DecoherenceFreeze.freezeDeposit`",
-                    "Lean statement: `D5/S3/QuantumChannels/DecoherenceFreeze.criticalInverseTemperature`",
-                ]),
-            ["Blueprint/D5/S3/QuantumChannels/Pinching.md"] = (
-                [
-                    "$$P(\\rho)=\\operatorname{phaseDamping}(0,\\rho)$$",
-                    "$$\\langle A, B\\rangle_{HS}=\\operatorname{Tr}(A^{*}B)$$",
-                ],
-                [
-                    "Lean statement: `D5/S3/QuantumChannels/Pinching.pinching`",
-                    "Lean statement: `D5/S3/QuantumChannels/Pinching.hilbertSchmidtInner`",
-                ]),
-            ["Blueprint/D5/S3/RenyiDivergence/Basic.md"] = (
-                ["$$\\begin{gathered}\\forall \\iota\\ [\\operatorname{Fintype}(\\iota)],\\\\\\forall \\alpha \\in \\mathbb{R},\\\\\\forall p, q: \\iota\\to \\mathbb{R},\\\\D_{\\alpha }(p\\Vert \\Vert q):=\\frac{1}{\\alpha -1}\\log (\\sum _{i} p(i)^{\\alpha } q(i)^{1-\\alpha }).\\end{gathered}$$"],
-                ["Lean statement: `D5/S3/RenyiDivergence/Basic.renyiDivergence`"]),
-            ["Blueprint/D5/S3/TotalVariation/Bhattacharyya.md"] = (
-                ["$$\\begin{gathered}\\forall \\iota\\ [\\operatorname{Fintype}(\\iota)],\\\\\\forall p, q: \\iota\\to \\mathbb{R},\\\\\\operatorname{BC}(p, q):=\\sum _{i} \\sqrt {p(i)q(i)}.\\end{gathered}$$"],
-                ["Lean statement: `D5/S3/TotalVariation/Bhattacharyya.bhattacharyya`"]),
-        };
 
     private sealed class LiveReportFactAttribute : FactAttribute
     {
