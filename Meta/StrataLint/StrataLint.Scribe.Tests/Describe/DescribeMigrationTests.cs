@@ -5,6 +5,40 @@ namespace StrataLint.Scribe.Tests;
 public sealed class DescribeMigrationTests
 {
     [Fact]
+    public void DisplayedStatementFormulasNeverDisappear()
+    {
+        var withFormula = DocumentDefinitions.All
+            .SelectMany(static definition => EnumerateDescribe(definition.Document.Content))
+            .Count(static node => node.StatementFormula is not null);
+
+        // A floor on how many Describe nodes actually display a statement formula.
+        //
+        // It exists because a real regression reached dev unseen. PR #1381 replaced twelve
+        // hand-authored formulas with the writer's `Lean statement: <gid>` fallback across six
+        // documents, and every gate stayed green: `.md` is a projection of `.scribe.cs`, so the
+        // determinism test compares the emitted tree against a re-emission of the same source.
+        // When the source loses a formula the projection loses it too and the comparison still
+        // holds. Content quality is outside what that test can see.
+        //
+        // The quantity is read from the documents themselves, not from any `.md` file, so this
+        // guards the source rather than the projection. It is monotone in the right direction:
+        // teaching the projector to render a declaration it could not render before *adds* a
+        // formula to that node, and migrating an authored statement to `FromLean()` keeps one.
+        // Only deleting a displayed statement subtracts. Counting `FromAuthor` occurrences instead
+        // would have the opposite monotonicity and would fail on exactly the projector improvements
+        // this facility is meant to encourage.
+        //
+        // Replaying #1381 against this quantity drops it by twelve, which is the number of formulas
+        // that commit removed.
+        //
+        // Raise the floor when the corpus grows. Lowering it is legitimate only when a node loses a
+        // statement it should never have displayed; say which node and why in the same change.
+        Assert.True(
+            withFormula >= 634,
+            $"documents displaying a statement formula fell to {withFormula}, below the floor of 634");
+    }
+
+    [Fact]
     public void InventoryCurrentDescribeKindContracts()
     {
         var inventory = DocumentDefinitions.All
