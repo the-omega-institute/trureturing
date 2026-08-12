@@ -228,7 +228,7 @@ internal static partial class RepositoryRules
         // Hearts.lean 字节没变 ⇒ 语义没变(同一份源码、同一个钉版 toolchain),不必为了
         // 比对而重编一整棵旧侧 Lean 树。这是全仓唯一读旧侧 Lean 报告的地方,而该文件近
         // 200 次提交只动过 5 次 —— 其余每个 PR 都在为它白付一次编译。
-        if (!ContentDiffers(context.Current, context.ForkPoint, path))
+        if (!SnapshotContentDiffers(context.Current, context.ForkPoint, path))
         {
             return ImmutableArray<RuleFinding>.Empty;
         }
@@ -292,6 +292,17 @@ internal static partial class RepositoryRules
 
         return ImmutableArray.Create(
             new RuleFinding(path, "semantic declaration identities and types are frozen"));
+    }
+
+    private static bool SnapshotContentDiffers(
+        RepositorySnapshot current,
+        RepositorySnapshot baseline,
+        string path)
+    {
+        var hasCurrent = current.TryGetFile(path, out var currentFile);
+        var hasBaseline = baseline.TryGetFile(path, out var baselineFile);
+        return hasCurrent != hasBaseline
+            || hasCurrent && !currentFile!.RawBytes.SequenceEqual(baselineFile!.RawBytes);
     }
 
     private static ImmutableArray<RuleFinding> Generality(RuleEvaluationContext context)
