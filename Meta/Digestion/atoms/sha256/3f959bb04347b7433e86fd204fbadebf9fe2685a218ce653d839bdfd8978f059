@@ -1,0 +1,3 @@
+**规格 2.1(开放态)。** 判词应含 `THEORY-INGEST-CLOSURE-001`,并点名未闭合的具体路径,
+其中应出现本卷对应的 `Meta/Digestion/backfill/<source_id>/` 下条目与 `Meta/Digestion/atoms/` 下 CAS blob。
+
