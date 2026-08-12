@@ -24,6 +24,7 @@ import D5.S1.Words.GoldenDensity
 import D5.S1.Words.GoldenSubstFixed
 import D5.S1.Words.ReturnWords.GoldenGapFirstReturn
 import D5.S1.Words.ReturnWords.GoldenArcFirstReturn
+import D5.S1.Words.Palindromes.GoldenPalindromicFactorComplexity
 import D5.S1.Scale.Embedding
 import D5.S1.Scale.Log
 import D5.S1.Phase.Basic
