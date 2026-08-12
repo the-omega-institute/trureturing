@@ -50,10 +50,22 @@ public sealed class ScribeLegacyConstructorBudgetTests
     }
 
     [Fact]
-    public void ByteIdenticalRenameIsAllowed()
+    public void ByteIdenticalRenameOfACleanFileIsAllowed()
     {
-        const string text = "DefinitionDsl.LeanTheorem(x);";
+        const string text = "ScribeNode.Create(handle);";
         Assert.Empty(Evaluate(Fixture((PathA, text, null), (PathB, null, text))));
+    }
+
+    [Fact]
+    public void ByteIdenticalRenameNoLongerCarriesALegacyConstructorAcross()
+    {
+        // While the migration ran, moving a file that still held a legacy constructor was allowed:
+        // the count had not increased, and refusing the move would have blocked bucket splits.
+        // The migration is finished and every Blueprint document holds zero, so the question is no
+        // longer "did this file get worse" but "does this file hold one at all". A rename cannot
+        // launder one back in.
+        const string text = "DefinitionDsl.LeanTheorem(x);";
+        Assert.Single(Evaluate(Fixture((PathA, text, null), (PathB, null, text))));
     }
 
     [Fact]
@@ -61,11 +73,19 @@ public sealed class ScribeLegacyConstructorBudgetTests
         Assert.Single(Evaluate(Fixture((PathA, "DefinitionDsl.LeanTheorem(x);", null), (PathB, null, "DefinitionDsl.LeanTheorem(x); DefinitionDsl.LeanTheorem(y);"))));
 
     [Fact]
-    public void AmbiguousByteIdenticalRenameFailsClosed()
+    public void AmbiguousRenameNeedsNoSpecialCaseNow()
     {
+        // The rule used to pair deleted and added files by identical bytes so that a pure move kept
+        // its old budget, and it failed closed when that pairing was not unique. With the budget
+        // gone there is nothing to carry across, so the ambiguity has no meaning: the surviving file
+        // is judged on what it holds, exactly like any other.
         const string text = "DefinitionDsl.LeanTheorem(x);";
-        var findings = Evaluate(Fixture((PathA, text, null), ("Blueprint/Test/C.scribe.cs", text, null), (PathB, null, text)));
-        Assert.Contains(findings, finding => finding.Message.Contains("无法证明为纯搬移", StringComparison.Ordinal));
+        var findings = Evaluate(Fixture(
+            (PathA, text, null),
+            ("Blueprint/Test/C.scribe.cs", text, null),
+            (PathB, null, text)));
+        Assert.Single(findings);
+        Assert.Contains(findings, finding => finding.Message.Contains("is present", StringComparison.Ordinal));
     }
 
     [Fact] public void NewFileUsingOnlyNewApiIsAllowed() => Assert.Empty(Evaluate(null, "ScribeNode.Create(handle);"));
