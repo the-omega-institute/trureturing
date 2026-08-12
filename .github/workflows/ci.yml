@@ -188,7 +188,7 @@ jobs:
           if [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
             # 法官取候选的**分叉点**,不是 dev 的当前 tip。dev 在候选在飞期间前进时,
             # tip 上新落地的规则会追溯审判候选没碰过的东西;分叉点让候选只对它出发时
-            # 已存在的 harness 负责。这也让法官二进制、冻结账本与 --baseline-lean-report
+            # 已存在的 harness 负责。这也让法官二进制、冻结账本与旧侧 Lean 报告
             # 取自同一棵树,故不会重演 PR #1144 的两树一报。
             base="${{ github.event.pull_request.base.sha }}"
             head="${{ github.event.pull_request.head.sha }}"
@@ -584,8 +584,8 @@ jobs:
           set -euo pipefail
           # 候选用自己的法官审自己的内容。法官程序在 43% 的合并里与 base 逐字节相同,
           # 那些情况下用哪个是恒等的;其余情况新规则本就该立即对自己生效。
-          # base 仍然提供 --base 指向的旧侧 git 快照,不需要编译 base 的代码 —— 而正是
-          # 那次编译让 dev 一坏就谁都进不来
+          # base 仍然提供**数据**(旧侧快照与旧侧 Lean 报告),那是 git
+          # 就能给的,不需要编译 base 的代码 —— 而正是那次编译让 dev 一坏就谁都进不来
           # (2026-08-13 两次:SL-003 锁死七个在飞 PR;法官自检失败后连修它的 PR 也挡在外面)。
           gate="$GITHUB_WORKSPACE/candidate/.github/scripts/harness-gate.sh"
           if [[ ! -x "$gate" ]]; then
