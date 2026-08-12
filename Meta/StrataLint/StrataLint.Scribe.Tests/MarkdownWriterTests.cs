@@ -27,11 +27,11 @@ public sealed class MarkdownWriterTests
             Heading.Create("Boundary sample"),
             BlockSequence.Create(
             [
-                DocumentBlock.Describe.Example(
+                Describe.Example(
                     DescribeId.Create("control-word-boundary"),
                     Heading.Create("Control word boundary"),
                     formula,
-                    DescribeProvenance.RepoDerived(),
+                    AssessedProvenance.FromRepo(),
                     BlockSequence.Create([Paragraph(new Inline.Text(TextRun.Create("Stable.")))])),
             ]));
 
@@ -61,11 +61,11 @@ public sealed class MarkdownWriterTests
             Heading.Create("Sample"),
             BlockSequence.Create(
             [
-                DocumentBlock.Describe.Remark(
+                Describe.Remark(
                     DescribeId.Create("legacy"),
                     Heading.Create("Legacy"),
-                    DescribeStatement.FromFormula(new Formula.Number(1)),
-                    DescribeProvenance.RepoDerived(),
+                    new Formula.Number(1),
+                    AssessedProvenance.FromRepo(),
                     BlockSequence.Create([Paragraph(new Inline.Text(TextRun.Create("Stable.")))])),
             ]));
 
@@ -111,20 +111,21 @@ public sealed class MarkdownWriterTests
                     Heading.Create("Results"),
                     BlockSequence.Create(
                     [
-                        DocumentBlock.Describe.Example(
+                        Describe.Example(
                             DescribeId.Create("formula"),
                             Heading.Create("Formula"),
                             identity,
-                            DescribeProvenance.RepoDerived(),
+                            AssessedProvenance.FromRepo(),
                             BlockSequence.Create([paragraph])),
-                        DocumentBlock.Describe.Theorem(
+                        Describe.Lean(
                             DescribeId.Create("injectivity"),
-                            Heading.Create("Injectivity"),
-                            LeanDeclarationRef.Create(
+                            DeclarationHandle.Create(
                                 "D5/S1/Scale/Embedding.embedding_injective"),
-                            EmbedInjectiveFormula(),
-                            DescribeProvenance.RepoDerived(),
-                            BlockSequence.Create([paragraph])
+                            Heading.Create("Injectivity"),
+                            StatementSource.FromAuthor(EmbedInjectiveFormula()),
+                            AssessedProvenance.FromRepo(),
+                            BlockSequence.Create([paragraph]),
+                            DescribeRole.Theorem
                         ),
                     ])),
             ]));
@@ -183,11 +184,11 @@ public sealed class MarkdownWriterTests
             Heading.Create("Literature sample"),
             BlockSequence.Create(
             [
-                DocumentBlock.Describe.Remark(
+                Describe.Remark(
                     DescribeId.Create("three-gap-context"),
                     Heading.Create("Three-gap context"),
-                    DescribeStatement.FromFormula(new Formula.Phi()),
-                    DescribeProvenance.LiteratureAttested(reference),
+                    new Formula.Phi(),
+                    AssessedProvenance.FromLiterature(reference),
                     BlockSequence.Create(
                     [
                         Paragraph(new Inline.Text(TextRun.Create("Referenced context."))),
@@ -224,14 +225,15 @@ public sealed class MarkdownWriterTests
             Heading.Create("Critical line"),
             BlockSequence.Create(
             [
-                DocumentBlock.Describe.Theorem(
+                Describe.Lean(
                     DescribeId.Create("critical-line"),
-                    Heading.Create("Critical line"),
-                    LeanDeclarationRef.Create(
+                    DeclarationHandle.Create(
                         "D5/S1/Scale/Embedding.embedding_injective"),
-                    CriticalLineFormula(),
-                    DescribeProvenance.RepoDerived(),
-                    BlockSequence.Create([Paragraph(new Inline.Text(TextRun.Create("Commentary.")))])
+                    Heading.Create("Critical line"),
+                    StatementSource.FromAuthor(CriticalLineFormula()),
+                    AssessedProvenance.FromRepo(),
+                    BlockSequence.Create([Paragraph(new Inline.Text(TextRun.Create("Commentary.")))]),
+                    DescribeRole.Theorem
                 ),
             ]));
 

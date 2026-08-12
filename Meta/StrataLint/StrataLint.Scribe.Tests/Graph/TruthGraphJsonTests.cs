@@ -382,10 +382,12 @@ public sealed class TruthGraphJsonTests
                 new EvidenceMirror.Waiver(WaiverReason.Create("test-only")), [], Digest.Create("Test document.")),
             Heading.Create(gid),
             BlockSequence.Create([
-                DocumentBlock.Describe.Definition(DescribeId.Create("first"), Heading.Create("First"), declaration,
-                    DescribeProvenance.RepoDerived(), Body()),
-                DocumentBlock.Describe.Definition(DescribeId.Create("second"), Heading.Create("Second"), declaration,
-                    DescribeProvenance.RepoDerived(), Body()),
+                Describe.Lean(DescribeId.Create("first"), DeclarationHandle.Create(declaration.Value),
+                    Heading.Create("First"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                    Body(), DescribeRole.Definition),
+                Describe.Lean(DescribeId.Create("second"), DeclarationHandle.Create(declaration.Value),
+                    Heading.Create("Second"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                    Body(), DescribeRole.Definition),
             ]));
 
     private static BlockSequence Body() => BlockSequence.Create([
