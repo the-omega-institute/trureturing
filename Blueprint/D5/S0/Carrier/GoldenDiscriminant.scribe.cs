@@ -5,10 +5,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.Carrier;
 
 internal sealed class GoldenDiscriminantDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S0/Carrier/GoldenDiscriminant",
-            "The golden polynomial has discriminant five and the golden ratio satisfies it."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The golden polynomial has discriminant five and the golden ratio satisfies it.",
         H("Golden Discriminant"),
         Blocks(
             Describe.Lean(

@@ -6,18 +6,29 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.TotalVariation;
 
 internal sealed class PinskerDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/TotalVariation/Pinsker",
-            "Finite total variation is pinned by an equal-mass identity and bounded by relative entropy in nats."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Finite total variation is pinned by an equal-mass identity and bounded by relative entropy in nats.",
         H("Finite Total Variation and Pinsker's Inequality"),
         Blocks(
-            DocumentBlock.Describe.Definition(
+            Describe.Lean(
                 DescribeId.Create("finite-total-variation-is-half-l1-distance"),
+                DeclarationHandle.Create("D5/S3/TotalVariation/Pinsker.totalVariation"),
                 H("Finite total variation is half the L1 distance"),
-                LeanDefinition(
-                    "D5/S3/TotalVariation/Pinsker.totalVariation"),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Begin, Grp(F.Id("gathered")),
+                    Forall, Sp, Iota, Esc,
+                    OpenBracket,
+                    Operatorname, Grp(F.Id("Fintype")), Open, Iota, Close,
+                    CloseBracket, Comma, RowBreak,
+                    Forall, Sp, F.Id("p"), Comma, Sp, F.Id("q"), Colon, Sp,
+                    Iota, To, Sp, Mathbb, Grp(F.Id("R")), Comma, RowBreak,
+                    Operatorname, Grp(F.Id("TV")), Open, F.Id("p"), Comma, Sp, F.Id("q"), Close,
+                    Colon, Eq, Frac, Grp(D(1)), Grp(D(2)),
+                    Sum, Underscore, Grp(F.Id("i")),
+                    Vert, Sp, F.Id("p"), Open, F.Id("i"), Close, Minus,
+                    F.Id("q"), Open, F.Id("i"), Close, Sp, Vert, Dot,
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "For finite real mass functions p and q, totalVariation is one half " +
@@ -31,27 +42,12 @@ internal sealed class PinskerDocument : IScribeDocumentDefinition
                         "replaced by any uniformly smaller quantity. The normalization and the " +
                         "absolute-value structure are therefore pinned by an identity, not by " +
                         "the later inequality."))),
-                Disp(Seq(
-                    Begin, Grp(F.Id("gathered")),
-                    Forall, Sp, Iota, Esc,
-                    OpenBracket,
-                    Operatorname, Grp(F.Id("Fintype")), Open, Iota, Close,
-                    CloseBracket, Comma, RowBreak,
-                    Forall, Sp, F.Id("p"), Comma, Sp, F.Id("q"), Colon, Sp,
-                    Iota, To, Sp, Mathbb, Grp(F.Id("R")), Comma, RowBreak,
-                    Operatorname, Grp(F.Id("TV")), Open, F.Id("p"), Comma, Sp, F.Id("q"), Close,
-                    Colon, Eq, Frac, Grp(D(1)), Grp(D(2)),
-                    Sum, Underscore, Grp(F.Id("i")),
-                    Vert, Sp, F.Id("p"), Open, F.Id("i"), Close, Minus,
-                    F.Id("q"), Open, F.Id("i"), Close, Sp, Vert, Dot,
-                    End, Grp(F.Id("gathered"))))
-            ),
-            DocumentBlock.Describe.Theorem(
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("equal-mass-total-variation-is-positive-excess"),
+                DeclarationHandle.Create("D5/S3/TotalVariation/Pinsker.total_variation_eq_sum_positive"),
                 H("Equal-mass total variation is positive excess"),
-                LeanTheorem(
-                    "D5/S3/TotalVariation/Pinsker.total_variation_eq_sum_positive"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Esc,
                     OpenBracket,
@@ -71,8 +67,8 @@ internal sealed class PinskerDocument : IScribeDocumentDefinition
                         F.Id("p"), Open, F.Id("i"), Close),
                     Open, F.Id("p"), Open, F.Id("i"), Close, Minus,
                     F.Id("q"), Open, F.Id("i"), Close, Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "This identity is the methodological pin for the definition. Equal " +
@@ -91,13 +87,13 @@ internal sealed class PinskerDocument : IScribeDocumentDefinition
                         "2c = 1, hence c = 1/2. Dropping the absolute values produces the signed " +
                         "total 0, while reversing the dominance set produces the negative excess " +
                         "-1; both corruptions fail the identity. This witness was compiled " +
-                        "independently of the formal proof.")))),
-            DocumentBlock.Describe.Theorem(
+                        "independently of the formal proof."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("binary-pinsker-carries-the-analytic-content"),
+                DeclarationHandle.Create("D5/S3/TotalVariation/Pinsker.binary_pinsker"),
                 H("Binary Pinsker carries the analytic content"),
-                LeanTheorem(
-                    "D5/S3/TotalVariation/Pinsker.binary_pinsker"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, F.Id("a"), Comma, Sp, F.Id("b"), InMacro,
                     OpenBracket, D(0), Comma, Sp, D(1), CloseBracket, Comma, RowBreak,
@@ -113,8 +109,8 @@ internal sealed class PinskerDocument : IScribeDocumentDefinition
                     Log, Open,
                     Frac, Grp(D(1), Minus, F.Id("a")), Grp(D(1), Minus, F.Id("b")),
                     Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "This two-point scalar theorem is where the genuine analytic content of " +
@@ -127,13 +123,13 @@ internal sealed class PinskerDocument : IScribeDocumentDefinition
                         "both endpoints. The condition b = 0 implies a = 0 controls the first " +
                         "atom, while 1-b = 0 implies 1-a = 0 controls the complementary atom. " +
                         "Both are required because a two-point reference law can degenerate at " +
-                        "either end.")))),
-            DocumentBlock.Describe.Theorem(
+                        "either end."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("zero-support-data-processing-is-an-identity-corollary"),
+                DeclarationHandle.Create("D5/S3/TotalVariation/Pinsker.kl_divergence_channel_le_zero_support"),
                 H("Zero-support data processing is an identity corollary"),
-                LeanTheorem(
-                    "D5/S3/TotalVariation/Pinsker.kl_divergence_channel_le_zero_support"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, F.Id("X"), Comma, Sp, F.Id("Y"), Esc,
                     OpenBracket,
@@ -173,8 +169,8 @@ internal sealed class PinskerDocument : IScribeDocumentDefinition
                     F.Id("D"), Open, F.Id("W"), F.Id("p"), Vert, Vert, Sp,
                     F.Id("W"), F.Id("q"), Close, Le, Sp,
                     F.Id("D"), Open, F.Id("p"), Vert, Vert, Sp, F.Id("q"), Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "This theorem is not an independent reproof of data processing. It is " +
@@ -200,13 +196,13 @@ internal sealed class PinskerDocument : IScribeDocumentDefinition
                         "currently has exactly one consumer: the assembly below. The repository " +
                         "lifts an abstraction when a second instance or demonstrated pressure " +
                         "appears, not in anticipation. A second consumer should therefore cause " +
-                        "this lemma to be lifted to DivergenceSupport.")))),
-            DocumentBlock.Describe.Theorem(
+                        "this lemma to be lifted to DivergenceSupport."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("pinsker-reduces-through-the-dominance-channel"),
+                DeclarationHandle.Create("D5/S3/TotalVariation/Pinsker.pinsker_inequality"),
                 H("Pinsker reduces through the dominance channel"),
-                LeanTheorem(
-                    "D5/S3/TotalVariation/Pinsker.pinsker_inequality"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Esc,
                     OpenBracket,
@@ -233,8 +229,8 @@ internal sealed class PinskerDocument : IScribeDocumentDefinition
                     D(2), Operatorname, Grp(F.Id("TV")), Open, F.Id("p"), Comma, Sp, F.Id("q"), Close,
                     Caret, Grp(D(2)), Le, Sp,
                     F.Id("D"), Open, F.Id("p"), Vert, Vert, Sp, F.Id("q"), Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The proof has three layers. First, binary_pinsker supplies the genuine " +
@@ -260,7 +256,8 @@ internal sealed class PinskerDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "No reverse bound of Bretagnolle-Huber type is claimed. The module gives " +
                         "no continuous or measure-theoretic analogue and no analysis of sharpness " +
-                        "or equality cases.")))))));
+                        "or equality cases."))),
+                DescribeRole.Theorem))));
 
     private static LeanDeclarationRef LeanDefinition(string value) =>
         LeanDeclarationRef.Create(

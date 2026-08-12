@@ -6,10 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.TotalVariation;
 
 internal sealed class HellingerDataProcessingDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/TotalVariation/HellingerDataProcessing",
-            "A nonnegative row-stochastic finite channel increases Bhattacharyya affinity and contracts squared Hellinger distance."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A nonnegative row-stochastic finite channel increases Bhattacharyya affinity and contracts squared Hellinger distance.",
         H("Hellinger Data Processing Through Affinity"),
         Blocks(
             Describe.Lean(

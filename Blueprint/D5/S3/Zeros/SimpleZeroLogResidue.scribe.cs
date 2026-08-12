@@ -6,10 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Zeros;
 
 internal sealed class SimpleZeroLogResidueDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Zeros/SimpleZeroLogResidue",
-            "A simple analytic zero has unit normalized logarithmic residue."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A simple analytic zero has unit normalized logarithmic residue.",
         H("Simple-Zero Logarithmic Residue"),
         Blocks(
             Describe.Lean(

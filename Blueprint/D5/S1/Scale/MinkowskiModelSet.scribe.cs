@@ -19,16 +19,14 @@ internal sealed class MinkowskiModelSetDocument : IScribeDocumentDefinition
                                     "The physical and conjugate embeddings give an injective diagonal range. An internal-space window selects physical projections, and the labeled extension pairs selected points with their joint golden coordinates."))),
                 DescribeRole.Definition
             ),
-            DocumentBlock.Describe.Remark(
+            Describe.Remark(
                 DescribeId.Create("value-and-code-geometries"),
+                DeclarationHandle.Create("D5/S1/Scale/MinkowskiModelSet.minkowski_model_set_spec"),
                 H("Value and code geometries"),
-                DescribeStatement.FromLean(LeanTheorem(
-                    "D5/S1/Scale/MinkowskiModelSet.minkowski_model_set_spec")),
-                DescribeProvenance.LiteratureAttested(
+                AssessedProvenance.FromLiterature(
                     LibraryNoteRef.Create("D5/L/baakefrankgrimm2021three")),
                 Blocks(Paragraph(Text(
-                    "The same carrier admits a lattice-like value reading and a cut-and-project code reading. The internal window justifies calling the code geometry a model set; it does not by itself provide a Bloch decomposition, a spectral gap theorem, or a periodic classifier for the code layer.")))
-            ),
+                    "The same carrier admits a lattice-like value reading and a cut-and-project code reading. The internal window justifies calling the code geometry a model set; it does not by itself provide a Bloch decomposition, a spectral gap theorem, or a periodic classifier for the code layer.")))),
             DocumentBlock.Describe.Remark(
                 DescribeId.Create("off-diagonal-load-and-diagonal-blindness"),
                 H("Off-diagonal load and diagonal blindness"),

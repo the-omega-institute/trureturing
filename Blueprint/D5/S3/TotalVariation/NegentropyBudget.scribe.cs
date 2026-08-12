@@ -6,10 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.TotalVariation;
 
 internal sealed class NegentropyBudgetDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/TotalVariation/NegentropyBudget",
-            "Distance from the uniform law is controlled by the finite Shannon entropy deficit in nats."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Distance from the uniform law is controlled by the finite Shannon entropy deficit in nats.",
         H("The Finite Negentropy Budget"),
         Blocks(
             Describe.Lean(
