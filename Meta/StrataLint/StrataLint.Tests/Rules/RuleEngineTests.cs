@@ -19,7 +19,6 @@ public sealed class RuleEngineTests
         { 10, "generality" },
         { 11, "domain" },
         { 12, "header" },
-        { 13, "task" },
         { 15, "formula" },
         { 16, "backfill" },
         { 17, "query" },
@@ -186,6 +185,9 @@ public sealed class RuleEngineTests
             var text = $"CAS object {index}\n";
             var captured = DigestionCasStore.Capture(Encoding.UTF8.GetBytes(text));
             fixture.Files[captured.RelativePath] = text;
+            // The change has to touch the store, or the capacity rule skips it for being
+            // untouched and this stops testing the exclusion it is named for.
+            fixture.Changes.Add(captured.RelativePath);
         }
 
         var diagnostics = RuleCatalog.Default.EvaluateSingle(
@@ -195,6 +197,49 @@ public sealed class RuleEngineTests
         Assert.DoesNotContain(diagnostics, diagnostic =>
             diagnostic.Path.StartsWith(DigestionCasStore.RootPath, StringComparison.Ordinal)
             || diagnostic.Path == DigestionCasStore.RootPath.TrimEnd('/'));
+    }
+
+    [Fact]
+    public void Sl003RefusesAnOverfullBucketTheChangeTouches()
+    {
+        var fixture = OverfullBucket();
+        fixture.Changes.Add($"{OverfullBucketPath}/Member00.lean");
+
+        var diagnostic = Assert.Single(
+            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics,
+            item => item.Path == OverfullBucketPath);
+
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Equal("directory contains 13 files (maximum 12)", diagnostic.Message);
+    }
+
+    [Fact]
+    public void Sl003LeavesAnOverfullBucketAloneWhenTheChangeDoesNotTouchIt()
+    {
+        var fixture = OverfullBucket();
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(3),
+            fixture.Build()).Diagnostics;
+
+        Assert.DoesNotContain(diagnostics, diagnostic => diagnostic.Path == OverfullBucketPath);
+    }
+
+    private const string OverfullBucketPath = "D5/S0/Overfull";
+
+    private static RuleFixture OverfullBucket()
+    {
+        var fixture = new RuleFixture();
+        for (var index = 0; index < 13; index++)
+        {
+            var path = $"{OverfullBucketPath}/Member{index:00}.lean";
+            fixture.Files[path] = "-- member\n";
+            fixture.Reports[path] = new LeanFileReport(
+                ImmutableArray<string>.Empty,
+                ImmutableArray<LeanDeclaration>.Empty);
+        }
+
+        return fixture;
     }
 
     [Fact]
