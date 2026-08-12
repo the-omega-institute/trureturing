@@ -41,30 +41,29 @@ internal sealed class DecoherenceFreezeDocument : IScribeDocumentDefinition
                     + "passive-energy shift."))),
                 DescribeRole.Definition
             ),
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create(
-                    "the-freeze-deposit-is-positive-exactly-above-the-critical-inverse-temperature"),
+                                    "the-freeze-deposit-is-positive-exactly-above-the-critical-inverse-temperature"),
+                DeclarationHandle.Create("D5/S3/QuantumChannels/DecoherenceFreeze.decoherence_freeze_iff_above_critical"),
                 H("The freeze deposit is positive exactly above the critical inverse temperature"),
-                LeanTheorem(
-                    "D5/S3/QuantumChannels/DecoherenceFreeze."
-                    + "decoherence_freeze_iff_above_critical"),
-                Disp(Seq(
-                    D(0), Lt, Beta, Sp, Land, Sp,
-                    D(0), Lt, Delta, Sp, F.Id("E"), Underscore, Grp(F.Id("pass")),
-                    Sp, Rightarrow, Sp, Open,
-                    D(0), Lt, Operatorname, Grp(F.Id("freezeDeposit")), Open,
-                    Beta, Comma, Delta, Sp, F.Id("S"), Comma,
-                    Delta, Sp, F.Id("E"), Underscore, Grp(F.Id("pass")), Close,
-                    Sp, Leftrightarrow, Sp,
-                    Operatorname, Grp(F.Id("criticalInverseTemperature")), Open,
-                    Delta, Sp, F.Id("S"), Comma,
-                    Delta, Sp, F.Id("E"), Underscore, Grp(F.Id("pass")), Close,
-                    Lt, Beta, Close)),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(Disp(Seq(
+                                    D(0), Lt, Beta, Sp, Land, Sp,
+                                    D(0), Lt, Delta, Sp, F.Id("E"), Underscore, Grp(F.Id("pass")),
+                                    Sp, Rightarrow, Sp, Open,
+                                    D(0), Lt, Operatorname, Grp(F.Id("freezeDeposit")), Open,
+                                    Beta, Comma, Delta, Sp, F.Id("S"), Comma,
+                                    Delta, Sp, F.Id("E"), Underscore, Grp(F.Id("pass")), Close,
+                                    Sp, Leftrightarrow, Sp,
+                                    Operatorname, Grp(F.Id("criticalInverseTemperature")), Open,
+                                    Delta, Sp, F.Id("S"), Comma,
+                                    Delta, Sp, F.Id("E"), Underscore, Grp(F.Id("pass")), Close,
+                                    Lt, Beta, Close))),
+                AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "When beta and the passive-energy shift are positive, dividing and "
-                    + "cross-multiplying preserve strict inequalities. Consequently, positivity "
-                    + "of the freeze deposit is equivalent to beta exceeding the critical "
-                    + "entropy-energy ratio.")))
+                                    "When beta and the passive-energy shift are positive, dividing and "
+                                    + "cross-multiplying preserve strict inequalities. Consequently, positivity "
+                                    + "of the freeze deposit is equivalent to beta exceeding the critical "
+                                    + "entropy-energy ratio."))),
+                DescribeRole.Theorem
             ))));
 }

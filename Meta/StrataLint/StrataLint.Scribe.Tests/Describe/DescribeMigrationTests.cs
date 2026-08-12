@@ -425,10 +425,10 @@ public sealed class DescribeMigrationTests
             "D5/S3/Weil/LabeledZeta.labeled_zeta_vector_ne_zero",
             labeledStatement.Value.Value);
         Assert.Equal(DescribeKind.Theorem, labeled.Kind);
-        Assert.Equal(DescribeProvenanceKind.LiteratureAttested, labeled.Provenance.Kind);
+        Assert.Equal(DescribeProvenanceKind.LiteratureAttested, labeled.ProvenanceKind);
         Assert.Equal(
             "D5/L/hedenmalm1997hilbert",
-            labeled.Provenance.LiteratureReference?.Value);
+            labeled.LiteratureReference?.Value);
 
         var reflection = documents["D5/S3/Weil/ReflectionLedger"].Document.Content.Items
             .OfType<DocumentBlock.Describe>()
