@@ -11,10 +11,16 @@ public abstract record Anchor
     // The external schemes are named here and nowhere else. A caller asking "is this
     // string in the external family?" must not re-spell the prefixes: that is how the
     // duplicated anchor grammar (the deleted ExternalAnchorSyntax) came about.
-    public static bool IsExternalFamily(string? value) =>
-        value is not null
-        && (value.StartsWith("lit/", StringComparison.Ordinal)
-            || value.StartsWith("mathlib/", StringComparison.Ordinal));
+    public static bool IsExternalFamily(string? value)
+    {
+        if (value is null)
+        {
+            return false;
+        }
+
+        var separator = value.IndexOf('/');
+        return separator > 0 && ParseScheme(value[..separator]) is not null;
+    }
 
     public static AnchorParseResult TryParseCanonical(string? value)
     {
@@ -23,15 +29,16 @@ public abstract record Anchor
             return new AnchorParseResult.Invalid(error);
         }
 
-        if (segments[0] is not ("lit" or "mathlib"))
+        if (ParseScheme(segments[0]) is not { } scheme)
         {
             return new AnchorParseResult.Invalid("Anchor scheme is unknown.");
         }
 
-        Anchor? parsed = segments[0] switch
+        Anchor? parsed = scheme switch
         {
-            "lit" => ParseLiterature(segments),
-            "mathlib" => ParseMathlib(segments),
+            CanonicalScheme.Literature => ParseLiterature(segments),
+            CanonicalScheme.Mathlib => ParseMathlib(segments),
+            CanonicalScheme.Lake => ParseLake(segments),
             _ => throw new System.Diagnostics.UnreachableException(),
         };
 
@@ -51,6 +58,21 @@ public abstract record Anchor
             : throw new FormatException("Anchor is malformed or noncanonical.");
 
     public override string ToString() => CanonicalString;
+
+    private enum CanonicalScheme
+    {
+        Literature,
+        Mathlib,
+        Lake,
+    }
+
+    private static CanonicalScheme? ParseScheme(string value) => value switch
+    {
+        "lit" => CanonicalScheme.Literature,
+        "mathlib" => CanonicalScheme.Mathlib,
+        "lake" => CanonicalScheme.Lake,
+        _ => null,
+    };
 
     private static bool TrySplitCanonical(
         string? value,
@@ -110,6 +132,13 @@ public abstract record Anchor
             _ => null,
         };
     }
+
+    private static LakeModuleAnchor? ParseLake(string[] segments) =>
+        segments.Length == 3
+        && segments[1] == "module"
+        && LeanQualifiedName.TryCreate(segments[2]) is { } name
+            ? new LakeModuleAnchor(name)
+            : null;
 }
 
 public abstract record AnchorParseResult
@@ -142,6 +171,20 @@ public sealed record LiteratureAnchor : Anchor
     public override AnchorScheme Scheme => AnchorScheme.Literature;
 
     public override string CanonicalString => $"lit/{BibKey.Value}";
+
+    public override string ToString() => CanonicalString;
+}
+
+public sealed record LakeModuleAnchor : Anchor
+{
+    internal LakeModuleAnchor(LeanQualifiedName name) =>
+        Name = name ?? throw new ArgumentNullException(nameof(name));
+
+    public LeanQualifiedName Name { get; }
+
+    public override AnchorScheme Scheme => AnchorScheme.Lake;
+
+    public override string CanonicalString => $"lake/module/{Name.Value}";
 
     public override string ToString() => CanonicalString;
 }
