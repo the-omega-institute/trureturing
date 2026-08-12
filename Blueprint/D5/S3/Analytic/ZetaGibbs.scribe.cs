@@ -6,12 +6,6 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic;
 
 internal sealed class ZetaGibbsDocument : IScribeDocumentDefinition
 {
-    private static LeanDeclarationRef LeanDefinition(string value) =>
-        LeanDeclarationRef.Create(
-            value,
-            expectedKind: LeanDeclarationKind.Definition,
-            requireNoSorry: true);
-
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The zeta distribution is the Gibbs measure for logarithmic integer energy.",
         H("The Zeta Distribution as an Integer Gibbs Measure"),

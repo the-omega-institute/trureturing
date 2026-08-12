@@ -207,8 +207,8 @@ runtime_disposition = "committed-source"
 pattern = "Golden/values-kernels.toml"
 kind = "data"
 produced_by = "none"
-consumed_by = ["ValuesKernelDataLoader"]
-verified_by = ["ValuesKernelDataLoader"]
+consumed_by = ["SL-018", "ValuesKernelDataLoader"]
+verified_by = ["SL-018", "ValuesKernelDataLoader"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
