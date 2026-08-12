@@ -73,14 +73,13 @@ jobs:
           toolchain="$(tr -d '\r\n' < "$LEAN_TOOLCHAIN_FILE")"
           test -n "$toolchain"
           elan_install_with_retry() {
-            local attempt
             for attempt in 1 2 3; do
               if curl --proto '=https' --tlsv1.2 -sSf https://elan.lean-lang.org/elan-init.sh \
                 | sh -s -- -y --default-toolchain none; then
                 return 0
               fi
               printf '%s\n' "elan install attempt $attempt failed" >&2
-              sleep $((attempt * 5))
+              sleep 5
             done
             return 1
           }
@@ -323,14 +322,13 @@ jobs:
         run: |
           set -euo pipefail
           elan_install_with_retry() {
-            local attempt
             for attempt in 1 2 3; do
               if curl --proto '=https' --tlsv1.2 -sSf https://elan.lean-lang.org/elan-init.sh \
                 | sh -s -- -y --default-toolchain none; then
                 return 0
               fi
               printf '%s\n' "elan install attempt $attempt failed" >&2
-              sleep $((attempt * 5))
+              sleep 5
             done
             return 1
           }

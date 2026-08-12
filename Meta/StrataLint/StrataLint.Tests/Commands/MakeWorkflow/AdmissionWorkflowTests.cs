@@ -51,7 +51,7 @@ public sealed class AdmissionWorkflowTests
         // 的配对,不是某个标识符出现几次(函数定义与调用各算一次会把计数弄错)。
         var installs = Regex.Matches(workflow, @"elan-init\.sh").Count;
         Assert.Equal(2, installs);
-        Assert.Equal(installs, Regex.Matches(workflow, @"for attempt in 1 2 3").Count);
+        Assert.Equal(installs, Regex.Matches(workflow, @"elan_install_with_retry\(\) \{").Count);
 
         // 用 YAML 解析而非正则:步骤上方的注释会把「name 紧跟 if」的文本假设打断。
         var leanInspect = Assert.IsType<YamlMappingNode>(
