@@ -6,18 +6,14 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.TotalVariation;
 
 internal sealed class BhattacharyyaProductDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/TotalVariation/BhattacharyyaProduct",
-            "Bhattacharyya affinity is multiplicative on finite products under nonnegativity of only the first marginal radicands, consistently with half-order Renyi additivity."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Bhattacharyya affinity is multiplicative on finite products under nonnegativity of only the first marginal radicands, consistently with half-order Renyi additivity.",
         H("Bhattacharyya Affinity on Finite Products"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("bhattacharyya-affinity-is-multiplicative-on-products"),
+                DeclarationHandle.Create("D5/S3/TotalVariation/BhattacharyyaProduct.bhattacharyya_product_multiplicative"),
                 H("Bhattacharyya affinity is multiplicative on products"),
-                LeanTheorem(
-                    "D5/S3/TotalVariation/BhattacharyyaProduct.bhattacharyya_product_multiplicative"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Begin, Grp(F.Id("gathered")),
                     Forall, Sp, Iota, Comma, Sp, Kappa, Esc,
                     OpenBracket,
@@ -51,8 +47,8 @@ internal sealed class BhattacharyyaProductDocument : IScribeDocumentDefinition
                     Operatorname, Grp(F.Id("BC")), Open,
                     F.Id("p"), Apos, Vert, Sp, Vert, Sp,
                     F.Id("q"), Apos, Close, Dot,
-                    End, Grp(F.Id("gathered")))),
-                DescribeProvenance.RepoDerived(),
+                    End, Grp(F.Id("gathered"))))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The Bhattacharyya affinity of a product is the product of the two " +
@@ -96,5 +92,6 @@ internal sealed class BhattacharyyaProductDocument : IScribeDocumentDefinition
                         "the check's frozen-theorem side rather than to the new product law.")),
                     Paragraph(Text(
                         "No n-fold product or i.i.d. form, statement at any other Renyi order, " +
-                        "equality characterization, or measure-theoretic analogue is claimed.")))))));
+                        "equality characterization, or measure-theoretic analogue is claimed."))),
+                DescribeRole.Theorem))));
 }

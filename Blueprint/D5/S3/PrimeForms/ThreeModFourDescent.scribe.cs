@@ -9,21 +9,17 @@ internal sealed class ThreeModFourDescentDocument : IScribeDocumentDefinition
     private static readonly LibraryNoteRef Grosswald =
         LibraryNoteRef.Create("D5/L/Arith/grosswald1985representations");
 
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/PrimeForms/ThreeModFourDescent",
-            "A prime congruent to three modulo four dividing a sum of two squares"
-            + " divides both bases."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A prime congruent to three modulo four dividing a sum of two squares"
+        + " divides both bases.",
         H("Descent at Primes Three Modulo Four"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("three-mod-four-descent"),
+                DeclarationHandle.Create("D5/S3/PrimeForms/ThreeModFourDescent.prime_dvd_dvd_of_dvd_sq_add_sq"),
                 H("A prime congruent to three modulo four dividing a sum of two"
                   + " squares divides both bases"),
-                LeanTheorem(
-                    "D5/S3/PrimeForms/ThreeModFourDescent."
-                    + "prime_dvd_dvd_of_dvd_sq_add_sq"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     F.Id("q"), Sp, F.Text, Grp(F.Id("prime")), Comma, Esc,
                     F.Id("q"), Equiv, Sp, D(3), Esc,
                     Open, Operatorname, Grp(F.Id("mod")), Esc, D(4), Close, Comma, Esc,
@@ -31,8 +27,8 @@ internal sealed class ThreeModFourDescentDocument : IScribeDocumentDefinition
                     F.Id("a"), Caret, D(2), Plus, F.Id("b"), Caret, D(2),
                     Quad, Rightarrow, Quad, Sp,
                     F.Id("q"), Esc, Mid, Esc, F.Id("a"), Sp, Land, Sp,
-                    F.Id("q"), Esc, Mid, Esc, F.Id("b"))),
-                DescribeProvenance.LiteratureAttested(Grosswald),
+                    F.Id("q"), Esc, Mid, Esc, F.Id("b")))),
+                AssessedProvenance.FromLiterature(Grosswald),
                 Blocks(Paragraph(Text(
                     "If a prime q congruent to three modulo four divides a sum of two "
                     + "natural squares, then q divides both bases: otherwise the "
@@ -49,6 +45,6 @@ internal sealed class ThreeModFourDescentDocument : IScribeDocumentDefinition
                     + "parenthetical consequence that the q-adic valuation of a sum "
                     + "of two squares is always even is not part of this deposit. "
                     + "Original numerical-certificate disposition: the source lemma "
-                    + "is purely universal and contains no numerical certificate.")))
-            ))));
+                    + "is purely universal and contains no numerical certificate."))),
+                DescribeRole.Theorem))));
 }

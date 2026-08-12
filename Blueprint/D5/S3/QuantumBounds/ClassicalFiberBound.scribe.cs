@@ -6,22 +6,18 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.QuantumBounds;
 
 internal sealed class ClassicalFiberBoundDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/QuantumBounds/ClassicalFiberBound",
-            "Finite deterministic local-fiber models have exact absolute CHSH bound two."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Finite deterministic local-fiber models have exact absolute CHSH bound two.",
         H("Exact Classical Local-Fiber CHSH Bound"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("the-classical-local-fiber-chsh-bound-is-exactly-two"),
+                DeclarationHandle.Create("D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_bound_is_exact"),
                 H("The classical local-fiber CHSH bound is exactly two"),
-                LeanTheorem(
-                    "D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_bound_is_exact"),
-                Disp(Seq(
+                StatementSource.FromAuthor(Disp(Seq(
                     Max, Underscore, Grp(Mathrm, Grp(F.Id("local"))), Sp,
                     Vert, Sp, F.Id("S"), Underscore, Grp(Mathrm, Grp(F.Id("cl"))),
-                    Open, Mu, Close, Vert, Eq, D(2), Dot)),
-                DescribeProvenance.RepoDerived(),
+                    Open, Mu, Close, Vert, Eq, D(2), Dot))),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "Let Fiber be finite. A deterministic local model assigns Boolean answer " +
@@ -47,5 +43,6 @@ internal sealed class ClassicalFiberBoundDocument : IScribeDocumentDefinition
                         "finite quantum witness with value two times square root two. This module " +
                         "does not reprove that value or a quantum upper bound, and it introduces " +
                         "no infinite fiber, measure-theoretic generalization, or general theory of " +
-                        "Bell inequalities.")))))));
+                        "Bell inequalities."))),
+                DescribeRole.Theorem))));
 }

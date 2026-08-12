@@ -6,32 +6,28 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Observer;
 
 internal sealed class WindowRegisterDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/Observer/WindowRegister",
-            "Finite cyclic clock and shift matrices obey Weyl, periodicity, unitarity, and scalar-commutant relations."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("Finite cyclic clock and shift matrices obey Weyl, periodicity, unitarity, and scalar-commutant relations.",
         H("Finite Cyclic Window Register"),
         Blocks(
-            DocumentBlock.Describe.Theorem(
+            Describe.Lean(
                 DescribeId.Create("the-window-phase-is-a-primitive-root"),
+                DeclarationHandle.Create("D5/S3/Observer/WindowRegister.windowRoot_isPrimitiveRoot"),
                 H("The window phase is a primitive root"),
-                LeanTheorem(
-                    "D5/S3/Observer/WindowRegister.windowRoot_isPrimitiveRoot"),
-                PrimitiveRootFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(PrimitiveRootFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "For every positive natural window cardinality M, the standard phase " +
                         "omega_M = exp(2 pi i/M) is a primitive M-th root of unity. The positivity " +
                         "condition is the displayed form of the formal NeZero M instance; the " +
-                        "declaration makes no claim for a zero-cardinality window.")))
-            ),
-            DocumentBlock.Describe.Theorem(
+                        "declaration makes no claim for a zero-cardinality window."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("the-clock-and-shift-obey-the-finite-weyl-relation"),
+                DeclarationHandle.Create("D5/S3/Observer/WindowRegister.window_weyl"),
                 H("The clock and shift obey the finite Weyl relation"),
-                LeanTheorem("D5/S3/Observer/WindowRegister.window_weyl"),
-                WeylFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(WeylFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "Write V_M for the diagonal clock with entries omega_M raised to the " +
@@ -43,54 +39,51 @@ internal sealed class WindowRegisterDocument : IScribeDocumentDefinition
                         "the standard Z/MZ character advances the clock phase by omega_M; every " +
                         "other entry vanishes on both sides. The section-3 provenance is restricted " +
                         "here to this fixed finite matrix window: no crossed-product universal " +
-                        "property or central winding relation is asserted.")))
-            ),
-            DocumentBlock.Describe.Theorem(
+                        "property or central winding relation is asserted."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("the-cyclic-shift-closes-at-the-window-cardinality"),
+                DeclarationHandle.Create("D5/S3/Observer/WindowRegister.shiftMatrix_pow_card"),
                 H("The cyclic shift closes at the window cardinality"),
-                LeanTheorem(
-                    "D5/S3/Observer/WindowRegister.shiftMatrix_pow_card"),
-                ShiftPowerFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(ShiftPowerFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The circulant shift U_M is the permutation matrix for translation by one " +
                         "on Z/MZ. Applying that permutation M times is the identity, so its M-th " +
                         "matrix power is I_M. This is only the fixed-window closure U_M^M = I_M; it " +
-                        "does not introduce a central winding phase.")))
-            ),
-            DocumentBlock.Describe.Theorem(
+                        "does not introduce a central winding phase."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("the-clock-phases-close-at-the-window-cardinality"),
+                DeclarationHandle.Create("D5/S3/Observer/WindowRegister.clockMatrix_pow_card"),
                 H("The clock phases close at the window cardinality"),
-                LeanTheorem(
-                    "D5/S3/Observer/WindowRegister.clockMatrix_pow_card"),
-                ClockPowerFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(ClockPowerFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "Each diagonal entry of V_M is a power of the primitive phase omega_M. " +
                         "Raising V_M to the M-th power therefore raises every entry to a multiple " +
-                        "of M, giving the identity matrix I_M.")))
-            ),
-            DocumentBlock.Describe.Theorem(
+                        "of M, giving the identity matrix I_M."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("the-finite-window-generators-are-unitary"),
+                DeclarationHandle.Create("D5/S3/Observer/WindowRegister.window_unitary"),
                 H("The finite-window generators are unitary"),
-                LeanTheorem("D5/S3/Observer/WindowRegister.window_unitary"),
-                UnitaryFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(UnitaryFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The shift U_M is a permutation matrix, so its conjugate transpose is its " +
                         "inverse. The clock V_M is diagonal and every diagonal phase has complex " +
-                        "norm one. Consequently both displayed star-products are the identity.")))
-            ),
-            DocumentBlock.Describe.Theorem(
+                        "norm one. Consequently both displayed star-products are the identity."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("the-joint-commutant-consists-of-scalars"),
+                DeclarationHandle.Create("D5/S3/Observer/WindowRegister.window_commutant_eq_scalars"),
                 H("The joint commutant consists of scalars"),
-                LeanTheorem(
-                    "D5/S3/Observer/WindowRegister.window_commutant_eq_scalars"),
-                CommutantFormula(),
-                DescribeProvenance.RepoDerived(),
+                StatementSource.FromAuthor(CommutantFormula()),
+                AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "Let A be an M-by-M complex matrix indexed by Z/MZ. Commutation with the " +
@@ -102,8 +95,8 @@ internal sealed class WindowRegisterDocument : IScribeDocumentDefinition
                         "This is the scalar joint-commutant statement for the two concrete finite " +
                         "generators. The section-3 provenance supplies the motivating observer " +
                         "language only; the theorem does not identify an abstract crossed product, " +
-                        "a continuous field, or a holonomy class.")))
-            ))));
+                        "a continuous field, or a holonomy class."))),
+                DescribeRole.Theorem))));
 
     private static Formula PrimitiveRootFormula() => Disp(Seq(
         Forall, Sp, F.Id("M"), Sp, InMacro, Sp,
