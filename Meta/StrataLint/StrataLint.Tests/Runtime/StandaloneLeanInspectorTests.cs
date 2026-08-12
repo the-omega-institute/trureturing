@@ -5,7 +5,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-[Trait("Category", "Script")] public sealed class StandaloneLeanInspectorTests
+public sealed class StandaloneLeanInspectorTests
 {
     private const string Lakefile = """
         name = "snapshot_probe"
