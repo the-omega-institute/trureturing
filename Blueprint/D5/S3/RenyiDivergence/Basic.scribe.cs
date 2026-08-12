@@ -283,10 +283,4 @@ internal sealed class BasicDocument : IScribeDocumentDefinition
                                         "analogue is claimed. All logarithms are natural, so the units are nats."))),
                 DescribeRole.Theorem
             ))));
-
-    private static LeanDeclarationRef LeanDefinition(string value) =>
-        LeanDeclarationRef.Create(
-            value,
-            expectedKind: LeanDeclarationKind.Definition,
-            requireNoSorry: true);
 }

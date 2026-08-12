@@ -14,8 +14,7 @@ Blocks(
                     "This module makes the normalization denominator endogenous. Its finite partial-quotient tail is computed from the rational input itself by Mathlib's Euclidean continued-fraction algorithm, then placed in the odd-tail terminal convention before taking its maximum. No independent scale parameter remains. The sample-to-rational provenance remains open, and the moat, envelope, and diffusion residuals remain open.")),
                 Describe.Lean(
                     DescribeId.Create("partial-quotient-extraction"),
-                    DeclarationHandle.Create((LeanDefinition(
-                        "D5/S1/Depth/PartialQuotientExtraction.partialQuotients")).Value),
+                    DeclarationHandle.Create("D5/S1/Depth/PartialQuotientExtraction.partialQuotients"),
                     H("A rational mechanically determines its finite partial-quotient tail"),
                     StatementSource.FromAuthor(Disp(Seq(F.Id("C"), Open, F.Id("q"), Close, Eq, Operatorname, Grp(F.Id("OddTail")), NegThin, Left, Open, Operatorname, Grp(F.Id("toList")), Open, Operatorname, Grp(F.Id("partDens")), Open, Operatorname, Grp(F.Id("GenContFract"), Dot, F.Id("of")), Open, F.Id("q"), Close, Close, Close, Right, Close))),
                     AssessedProvenance.FromRepo(),
@@ -24,8 +23,7 @@ Blocks(
                     DescribeRole.Definition),
                 Describe.Lean(
                     DescribeId.Create("maximum-partial-quotient"),
-                    DeclarationHandle.Create((LeanDefinition(
-                        "D5/S1/Depth/PartialQuotientExtraction.aMax")).Value),
+                    DeclarationHandle.Create("D5/S1/Depth/PartialQuotientExtraction.aMax"),
                     H("The normalization denominator is the extracted maximum"),
                     StatementSource.FromAuthor(Disp(Seq(F.Id("A"), Open, F.Id("q"), Close, Eq, Max, Sp, F.Id("C"), Open, F.Id("q"), Close))),
                     AssessedProvenance.FromRepo(),
@@ -63,10 +61,4 @@ Blocks(
                             DocumentEdge.Dependency.Create(
                                 GidRef.Create("D5/S1/Depth/TwelveScaleReduction")),
                         ]));
-
-    private static LeanDeclarationRef LeanDefinition(string value) =>
-        LeanDeclarationRef.Create(
-            value,
-            expectedKind: LeanDeclarationKind.Definition,
-            requireNoSorry: true);
 }

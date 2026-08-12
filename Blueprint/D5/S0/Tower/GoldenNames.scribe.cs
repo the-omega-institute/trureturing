@@ -82,10 +82,4 @@ internal sealed class GoldenNamesDocument : IScribeDocumentDefinition
                     GidRef.Create("D5/S0/Conventions/WDigits")),
             ]));
     }
-
-    private static LeanDeclarationRef LeanDefinition(string value) =>
-        LeanDeclarationRef.Create(
-            value,
-            expectedKind: LeanDeclarationKind.Definition,
-            requireNoSorry: true);
 }

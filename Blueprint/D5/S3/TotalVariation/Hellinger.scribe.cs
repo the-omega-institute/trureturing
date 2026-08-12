@@ -360,10 +360,4 @@ internal sealed class HellingerDocument : IScribeDocumentDefinition
                         "No Renyi divergence, Hellinger-to-KL bound, equality analysis, or " +
                         "measure-theoretic analogue is claimed."))),
                 DescribeRole.Theorem))));
-
-    private static LeanDeclarationRef LeanDefinition(string value) =>
-        LeanDeclarationRef.Create(
-            value,
-            expectedKind: LeanDeclarationKind.Definition,
-            requireNoSorry: true);
 }
