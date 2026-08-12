@@ -84,6 +84,20 @@ namespace StrataLint.Tests;
     }
 
     [Fact]
+    public void OldSideShadowToolchainInstallHasBoundedRetry()
+    {
+        var workflow = AdmissionWorkflow();
+        Assert.True(ShadowToolchainInstallHasBoundedRetry(workflow));
+
+        var tampered = workflow.Replace(
+            "          max_attempts=3\n",
+            "          max_attempts=1\n",
+            StringComparison.Ordinal);
+        Assert.NotEqual(workflow, tampered);
+        Assert.False(ShadowToolchainInstallHasBoundedRetry(tampered));
+    }
+
+    [Fact]
     public void ReconcilesStatementProjectionAfterProducingLiveReport()
     {
         var root = FindRepositoryRoot();
@@ -251,6 +265,28 @@ namespace StrataLint.Tests;
         var passesAbsoluteLake = missRun.Contains(
             "LAKE_BIN=\"$HOME/.elan/bin/lake\" make lean-report", StringComparison.Ordinal);
         return exportsElanBin || passesAbsoluteLake;
+    }
+
+    private static bool ShadowToolchainInstallHasBoundedRetry(string workflow)
+    {
+        var shadow = Job(workflow, "old-side-report-shadow");
+        var steps = Assert.IsType<YamlSequenceNode>(shadow.Children[new YamlScalarNode("steps")]);
+        var install = steps.Children.OfType<YamlMappingNode>().Single(step =>
+            step.Children.TryGetValue(new YamlScalarNode("name"), out var name) &&
+            name is YamlScalarNode { Value: "Install pinned Lean toolchains" });
+        var run = Assert.IsType<YamlScalarNode>(install.Children[new YamlScalarNode("run")]).Value!;
+        var attempts = Regex.Match(run, @"(?m)^max_attempts=(?<count>[0-9]+)$");
+
+        return attempts.Success && attempts.Groups["count"].Value == "3" &&
+            run.Contains("delay_seconds=5", StringComparison.Ordinal) &&
+            run.Contains("install_toolchain || status=$?", StringComparison.Ordinal) &&
+            run.Contains("if (( attempt >= max_attempts )); then", StringComparison.Ordinal) &&
+            run.Contains("exit 1", StringComparison.Ordinal) &&
+            run.Contains("sleep \"$delay_seconds\"", StringComparison.Ordinal) &&
+            run.Contains("attempt=$((attempt + 1))", StringComparison.Ordinal) &&
+            run.Contains("delay_seconds=$((delay_seconds * 2))", StringComparison.Ordinal) &&
+            run.Contains("retry_attempt=", StringComparison.Ordinal) &&
+            run.Contains("exit_code=", StringComparison.Ordinal);
     }
 
     private static bool ShadowRecordArtifactUploadIsRequired(string workflow)
