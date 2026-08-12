@@ -275,6 +275,34 @@ public abstract record DocumentBlock
                 id, DescribeKind.Remark, title, statement,
                 Legacy(provenance), content);
 
+        /// <summary>
+        /// A remark about a declaration, naming it by handle rather than by a hand-built reference.
+        /// </summary>
+        /// <remarks>
+        /// A remark carries no statement source. The statement-source exclusivity exists to stop a
+        /// document from restating what Lean already owns, and a remark restates nothing: it emits a
+        /// reference to the declaration and prose about it, never a formula. Giving it a
+        /// <see cref="StatementSource"/> would force a remark whose subject is a projectable theorem
+        /// to display that theorem's statement, turning commentary into a restatement — the opposite
+        /// of what the invariant is for.
+        /// </remarks>
+        internal static Describe RemarkOn(
+            DescribeId id,
+            DeclarationHandle handle,
+            Heading title,
+            AssessedProvenance provenance,
+            BlockSequence content) =>
+            new(
+                id,
+                DescribeKind.Remark,
+                title,
+                DescribeStatement.FromLean(LeanDeclarationRef.Create(handle.Value)),
+                new DescribeProvenanceSource.Assessed(
+                    provenance ?? throw new ArgumentNullException(nameof(provenance))),
+                content,
+                statementFormula: null,
+                kindSource: new DescribeKindSource.ReportDerived(handle, DescribeRole.Remark));
+
         internal static Describe ReportDerived(
             DescribeId id,
             Heading title,
