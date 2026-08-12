@@ -12,11 +12,11 @@ public sealed class PdfWriterTests
             Heading.Create("Describe PDF"),
             BlockSequence.Create(
             [
-                DocumentBlock.Describe.Example(
+                Describe.Example(
                     DescribeId.Create("golden-identity"),
                     Heading.Create("Golden identity"),
                     new Formula.Phi(),
-                    DescribeProvenance.RepoDerived(),
+                    AssessedProvenance.FromRepo(),
                     BlockSequence.Create(
                     [
                         DefinitionDsl.Paragraph(DefinitionDsl.Text("Typed content.")),
@@ -37,17 +37,18 @@ public sealed class PdfWriterTests
             Heading.Create("Describe PDF LaTeX"),
             BlockSequence.Create(
             [
-                DocumentBlock.Describe.Theorem(
+                Describe.Lean(
                     DescribeId.Create("critical-line"),
-                    Heading.Create("Critical line"),
-                    LeanDeclarationRef.Create(
+                    DeclarationHandle.Create(
                         "D5/S1/Scale/Embedding.embedding_injective"),
-                    CriticalLineFormula(),
-                    DescribeProvenance.RepoDerived(),
+                    Heading.Create("Critical line"),
+                    StatementSource.FromAuthor(CriticalLineFormula()),
+                    AssessedProvenance.FromRepo(),
                     BlockSequence.Create(
                     [
                         DefinitionDsl.Paragraph(DefinitionDsl.Text("Commentary.")),
-                    ])
+                    ]),
+                    DescribeRole.Theorem
                 ),
             ]));
 
@@ -76,11 +77,11 @@ public sealed class PdfWriterTests
             Heading.Create("Academic citation"),
             BlockSequence.Create(
             [
-                DocumentBlock.Describe.Remark(
+                Describe.Remark(
                     DescribeId.Create("three-gap-context"),
                     Heading.Create("Three-gap context"),
-                    DescribeStatement.FromFormula(new Formula.Phi()),
-                    DescribeProvenance.LiteratureAttested(reference),
+                    new Formula.Phi(),
+                    AssessedProvenance.FromLiterature(reference),
                     BlockSequence.Create(
                     [
                         DefinitionDsl.Paragraph(DefinitionDsl.Text("Referenced context.")),
