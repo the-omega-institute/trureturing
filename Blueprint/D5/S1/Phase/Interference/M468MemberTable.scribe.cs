@@ -47,5 +47,5 @@ internal sealed class M468MemberTableDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Paragraph(Text(
                 "Disclosure: the frozen repository surface provides no m-side selector semantics and no "
-                + "three-prime orbit bridge at 1729, so neither claim is asserted here."))));
+                + "three-prime orbit bridge at 1729, so neither claim is asserted here.")))));
 }
