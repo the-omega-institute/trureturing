@@ -578,22 +578,26 @@ jobs:
           sha256sum -c candidate-lean-report.json.sha256
           sha256sum -c baseline-lean-report.json.sha256
 
-      - name: Run the shared baseline harness gate
+      - name: Run the harness gate with the candidate's own judge
         shell: bash
         run: |
           set -euo pipefail
-          gate="$GITHUB_WORKSPACE/baseline/.github/scripts/harness-gate.sh"
+          # 候选用自己的法官审自己的内容。法官程序在 43% 的合并里与 base 逐字节相同,
+          # 那些情况下用哪个是恒等的;其余情况新规则本就该立即对自己生效。
+          # base 仍然提供**数据**(--base 的旧侧快照、--baseline-lean-report),那是 git
+          # 就能给的,不需要编译 base 的代码 —— 而正是那次编译让 dev 一坏就谁都进不来
+          # (2026-08-13 两次:SL-003 锁死七个在飞 PR;法官自检失败后连修它的 PR 也挡在外面)。
+          gate="$GITHUB_WORKSPACE/candidate/.github/scripts/harness-gate.sh"
           if [[ ! -x "$gate" ]]; then
-            printf '%s\n' "content-addressed baseline harness gate is absent" >&2
+            printf '%s\n' "candidate harness gate is absent" >&2
             exit 1
           elif ! grep -qF -- '--candidate-lean-report' "$gate"; then
-            printf '%s\n' "content-addressed baseline gate cannot consume canonical Lean reports" >&2
+            printf '%s\n' "candidate gate cannot consume canonical Lean reports" >&2
             exit 1
           fi
           set +e
           "$gate" \
             --candidate "$GITHUB_WORKSPACE/candidate" \
-            --judge-root "$GITHUB_WORKSPACE/baseline" \
             --base "$DEV_BASELINE_SHA" \
             --candidate-lean-report "$RUNNER_TEMP/raw-lean-reports/candidate-lean-report.json" \
             --baseline-lean-report "$RUNNER_TEMP/raw-lean-reports/baseline-lean-report.json" \
