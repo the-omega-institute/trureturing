@@ -44,7 +44,6 @@ public enum DescribeProvenanceKind
     LiteratureAttested,
     RepoDerived,
     SuspectedNovel,
-    Unassessed,
 }
 
 public abstract record DescribeStatement
@@ -82,38 +81,6 @@ public abstract record DescribeStatement
         ArgumentNullException.ThrowIfNull(value);
         return LeanDeclaration.Create(value);
     }
-}
-
-public sealed record DescribeProvenance
-{
-    private DescribeProvenance(
-        DescribeProvenanceKind kind,
-        LibraryNoteRef? literatureReference)
-    {
-        Kind = kind;
-        LiteratureReference = literatureReference;
-    }
-
-    public DescribeProvenanceKind Kind { get; }
-
-    public LibraryNoteRef? LiteratureReference { get; }
-
-    public static DescribeProvenance LiteratureAttested(LibraryNoteRef reference)
-    {
-        ArgumentNullException.ThrowIfNull(reference);
-        return new DescribeProvenance(
-            DescribeProvenanceKind.LiteratureAttested,
-            reference);
-    }
-
-    public static DescribeProvenance RepoDerived() =>
-        new(DescribeProvenanceKind.RepoDerived, null);
-
-    public static DescribeProvenance SuspectedNovel() =>
-        new(DescribeProvenanceKind.SuspectedNovel, null);
-
-    public static DescribeProvenance Unassessed() =>
-        new(DescribeProvenanceKind.Unassessed, null);
 }
 
 public abstract record AssessedProvenance
@@ -218,14 +185,6 @@ public abstract record StatementSource
             assessment.DeclarationContentDigest);
 }
 
-internal abstract record DescribeProvenanceSource
-{
-    private DescribeProvenanceSource() { }
-
-    internal sealed record Legacy(DescribeProvenance Value) : DescribeProvenanceSource;
-    internal sealed record Assessed(AssessedProvenance Value) : DescribeProvenanceSource;
-}
-
 public static class Describe
 {
     public static DocumentBlock.Describe Lean(
@@ -307,7 +266,6 @@ internal static class DescribeVocabulary
         DescribeProvenanceKind.LiteratureAttested => "literature-attested",
         DescribeProvenanceKind.RepoDerived => "repo-derived",
         DescribeProvenanceKind.SuspectedNovel => "suspected-novel",
-        DescribeProvenanceKind.Unassessed => "unassessed",
         _ => throw new ArgumentOutOfRangeException(nameof(provenance)),
     };
 

@@ -17,7 +17,6 @@ internal static class DescribeReportWriter
             schema = "scribe-describe-report-v1",
             case_id = DescribeReport.CaseId,
             status = report.Status,
-            open_count = report.OpenCount,
             projection_open_count = report.ProjectionOpenCount,
             node_stats = new
             {
@@ -29,7 +28,6 @@ internal static class DescribeReportWriter
                 by_provenance = report.NodeStats.ByProvenance,
             },
             suspected_novel = report.SuspectedNovel.Select(Node),
-            unassessed = report.Unassessed.Select(Node),
             unprojectable = report.Unprojectable.Select(Node),
             nodes = report.Nodes.Select(Node),
             red_findings = report.RedFindings.Select(static finding => new
@@ -54,7 +52,7 @@ internal static class DescribeReportWriter
         var writer = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
         writer.WriteLine(
             $"DESCRIBE_STATUS case={DescribeReport.CaseId} status={report.Status} "
-            + $"nodes={report.NodeStats.Total} open={report.OpenCount} "
+            + $"nodes={report.NodeStats.Total} "
             + $"suspected_novel={report.SuspectedNovel.Length} "
             + $"formula_content_slots={report.NodeStats.FormulaContentSlots} "
             + $"formula_statements={report.NodeStats.FormulaStatements} "
@@ -62,10 +60,6 @@ internal static class DescribeReportWriter
         foreach (var node in report.SuspectedNovel)
         {
             writer.WriteLine($"SUSPECTED_NOVEL node={node.NodeId} title={JsonSerializer.Serialize(node.Title)}");
-        }
-        foreach (var node in report.Unassessed)
-        {
-            writer.WriteLine($"UNASSESSED node={node.NodeId} title={JsonSerializer.Serialize(node.Title)}");
         }
         foreach (var node in report.Unprojectable)
         {
