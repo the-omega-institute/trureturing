@@ -124,6 +124,12 @@ step 级 `always()` 无法在 job timeout、workflow cancellation 或 runner 丢
 
 影子阶段三项分别只读当前 workflow 文件、固定窗口的每 PR 唯一 hit/miss 计数和同一次 miss 运行的 monotonic-clock 墙钟；不与别的 PR 历史 P95 相减。完整端到端闸只读另行授权的实际串行链实验。任一适用读数不达标、成员不是 40 个不同 PR、计数不守恒、被选中运行失败或 provenance/verify 失败，立即停案并移除影子 job，保持现行 admission，不得进入整侧迁移。
 
+**成功路径退役（迁移落地后的 contract）：**
+
+1. **统一退役义务与时机：**无论本窗口的判决是三判据达标还是停案，`old-side-report-shadow` 影子 job 都必须移除；区别只在时机与后续动作：停案按上一款立即移除，保持现行 admission，不进入整侧迁移；达标且进入整侧迁移时，必须在迁移落地后移除，不能因迁移完成而继续保留。
+2. **达标路径的具体移除范围：**迁移落地后，必须一并移除 `old-side-report-shadow` job 本身、该 job 的 artifact 上传步骤，以及仅为该 shadow job 存在的一致性测试：`OldSideShadowHasNoNeedsKey`、`OldSideShadowHasNoNeedsPathToBaselineAdmission`、`OldSideShadowRecordsHitFailuresAndHasFinalNoRecordFallback`、`OldSideShadowMakesAbsoluteLakeAvailableToLeanReport`、`OldSideShadowUploadsArtifactRecordWithRunIdentity` 一族。此时 old-side report 已由 `lean-inspect` 内的真实生产路径产出，shadow 的观测职能由真实链路取代。`BaselineAdmissionNeedsExactlyLeanInspect` 断言的是 admission 自身的拓扑，不是 shadow 专有测试，必须保留，不得随 shadow 一并删除。
+3. **`shadow-reconcile` 单独裁决：**`shadow-reconcile` 是判决工具而非观测件；是否保留必须在迁移收尾时显式裁决：迁移后仍需对账历史窗口则保留，否则一并退役。本报告不替该命令下结论，且不得默认将其留在仓库中。
+
 若且仅若上述吸收条件实测达标，后续方案仍只保留六席共识骨架：树 + report + DAG + ledger 作为不可拆 old-side 能力包整侧同迁；类型上拒绝混侧；迁移必须分步；每一步都须预先给出机器判据与回退点。本报告不决定影子双跑、旧入口 Contract 删除等具体实施设计。
 
 ## 7.1 首批实测读数：命中率成立，但全冷成本击穿
