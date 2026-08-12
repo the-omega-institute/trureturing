@@ -6,10 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.TotalVariation;
 
 internal sealed class HellingerDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/TotalVariation/Hellinger",
-            "Intrinsic squared Hellinger distance is pinned on arbitrary finite real functions and compared sharply with total variation."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Intrinsic squared Hellinger distance is pinned on arbitrary finite real functions and compared sharply with total variation.",
         H("Squared Hellinger Distance and Total Variation"),
         Blocks(
             DocumentBlock.Describe.Definition(

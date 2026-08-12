@@ -6,10 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.TotalVariation;
 
 internal sealed class HellingerDivergenceDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/TotalVariation/HellingerDivergence",
-            "Squared Hellinger distance is dominated by KL divergence and satisfies its finite square-root metric laws."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Squared Hellinger distance is dominated by KL divergence and satisfies its finite square-root metric laws.",
         H("Squared Hellinger Distance, Divergence, and Metric Laws"),
         Blocks(
             Describe.Lean(

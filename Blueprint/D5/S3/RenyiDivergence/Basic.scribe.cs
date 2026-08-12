@@ -6,10 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.RenyiDivergence;
 
 internal sealed class BasicDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S3/RenyiDivergence/Basic",
-            "Finite Renyi divergence is defined for real orders and pinned by complementary half-order, self, and order-two identities."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Finite Renyi divergence is defined for real orders and pinned by complementary half-order, self, and order-two identities.",
         H("Finite Renyi Divergence"),
         Blocks(
             Describe.Lean(

@@ -7,11 +7,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.Diagonal;
 internal sealed class MarginVanishingDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() =>
-        DocumentDefinition.Create(ScribeDocument.Create(
-            Header(
-                "D5/S0/Diagonal/MarginVanishing",
-                "Corrected KL margin bounds and the associated failure probabilities vanish "
-                + "as the address cardinality grows."),
+        DocumentDefinition.Create(ScribeNode.Create(
+            "Corrected KL margin bounds and the associated failure probabilities vanish "
+                + "as the address cardinality grows.",
             H("Vanishing Linear-Margin Failure"),
             Blocks(
                 Describe.Lean(

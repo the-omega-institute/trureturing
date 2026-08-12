@@ -4,10 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S0.Conventions;
 
 internal sealed class CanonicalInterchangeabilityDocument : IScribeDocumentDefinition
 {
-    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
-        Header(
-            "D5/S0/Conventions/CanonicalInterchangeability",
-            "Faithful digit specifications are canonically interchangeable through decoding."),
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Faithful digit specifications are canonically interchangeable through decoding.",
         H("Canonical Interchangeability"),
         Blocks(
             Paragraph(
