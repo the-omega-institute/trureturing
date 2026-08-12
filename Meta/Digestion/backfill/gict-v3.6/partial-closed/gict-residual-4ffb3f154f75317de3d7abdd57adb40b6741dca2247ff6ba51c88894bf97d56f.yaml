@@ -4,6 +4,7 @@ fingerprints:
   normalized_sha256: sha256:4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f
 cas_ref: sha256:4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f
 coverage_gids:
+  - D5/S1/Phase/PythagoreanInputValidator.accepts_iff
   - D5/S1/Phase/Interference/DominantPartialQuotientGap.dominant_partial_quotient_gap
   - D5/S1/Phase/SeatTowerArithmetic.pythagorean_gate_iff_eisenstein_norm
   - D5/S1/Phase/SeatTowerConsequences.cosecant_peak_identity
